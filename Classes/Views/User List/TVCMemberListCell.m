@@ -250,8 +250,8 @@
 
 	NSInteger rowIndex = [self.memberList rowAtPoint:cellFrame.origin];
 	
+	BOOL isKeyWindow = self.masterController.mainWindowIsActive;
 	BOOL isGraphite = ([NSColor currentControlTint] == NSGraphiteControlTint);
-	BOOL isKeyWindow = [self.masterController.mainWindow isOnCurrentWorkspace];
 	BOOL isSelected = ([self.memberList.selectedRows containsObject:@(rowIndex)]);
 
 	/* Draw Background */

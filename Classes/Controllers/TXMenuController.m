@@ -876,8 +876,6 @@
         } else {
             [self.worldController clearContentsOfClient:u];
         }
-        
-        [self.worldController reloadTree];
     }
 }
 
@@ -1991,7 +1989,17 @@
 
 - (void)sortChannelListNames:(id)sender
 {
+	TVCServerList *serverList = self.masterController.serverList;
+
+	id oldSelection = self.worldController.selectedItem;
+
 	for (IRCClient *u in self.worldController.clients) {
+		BOOL isExpanded = u.config.sidebarItemExpanded;
+		
+		if (isExpanded) {
+			[serverList.animator collapseItem:u];
+		}
+
 		NSArray *clientChannels = [u.channels sortedArrayUsingFunction:IRCChannelDataSort context:nil];
 		
 		[u.channels removeAllObjects];
@@ -2001,8 +2009,13 @@
 		}
 		
 		[u updateConfig:u.storedConfig];
+
+		if (isExpanded) {
+			[serverList.animator expandItem:u];
+		}
 	}
-	
+
+	[self.worldController select:oldSelection];
 	[self.worldController save];
 }
 

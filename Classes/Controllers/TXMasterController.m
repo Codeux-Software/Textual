@@ -98,6 +98,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	 
 	 On a 2009 Intel i7 2.80 GHz iMac running 10.8.2 the time it took 
 	 to pop our window was on average 0.058 seconds or 58 milliseconds. */
+
+	self.mainWindowIsActive = YES;
 	
 	[self.mainWindow makeKeyAndOrderFront:nil];
 	[self.mainWindow setAlphaValue:[TPCPreferences themeTransparency]];
@@ -136,6 +138,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[self.serverList reloadData];
 	
 	[self.worldController setupTree];
+
 
 	[self.memberList setTarget:self.menuController];
 	[self.memberList setDoubleAction:@selector(memberListDoubleClicked:)];
@@ -209,7 +212,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
     [self.worldController updateIcon];
 }
 
-- (void)applicationDidBecomeActive:(NSNotification *)note
+- (void)windowDidBecomeKey:(NSNotification *)notification
 {
 	id sel = self.worldController.selectedItem;
     
@@ -217,23 +220,33 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		[sel resetState];
 	}
 
-    [self.worldController reloadTree];
-    [self.worldController updateIcon];
+	/* Using self.mainWindowIsActive is much more accurate than asking
+	 the window each time we want to know whether it is accurate because
+	 this will always be either YES or NO during a draw. */
 	
-	[self.inputTextField.backgroundView setWindowIsActive:YES];
+	self.mainWindowIsActive = YES;
+
+	[self.serverList updateBackgroundColor];
+	[self.memberList updateBackgroundColor];
+	
+	[self.worldController reloadTree];
+    [self.worldController updateIcon];
 }
 
-- (void)applicationDidResignActive:(NSNotification *)note
+- (void)windowDidResignKey:(NSNotification *)notification
 {
 	id sel = self.worldController.selectedItem;
     
 	if (sel) {
 		[sel resetState];
 	}
-
-    [self.worldController reloadTree];
 	
-	[self.inputTextField.backgroundView setWindowIsActive:NO];
+	self.mainWindowIsActive = NO;
+
+	[self.serverList updateBackgroundColor];
+	[self.memberList updateBackgroundColor];
+
+	[self.worldController reloadTree];
 }
 
 - (BOOL)queryTerminate
@@ -342,18 +355,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 - (void)windowDidResize:(NSNotification *)notification
 {
 	[self.inputTextField resetTextFieldCellSize:YES];
-}
-
-- (void)windowDidBecomeKey:(NSNotification *)notification
-{
-	id sel = self.worldController.selectedItem;
-	
-	if (sel) {
-		[sel resetState];
-	}
-
-    [self.worldController reloadTree];
-    [self.worldController updateIcon];
 }
 
 - (void)windowWillEnterFullScreen:(NSNotification *)notification
@@ -1160,7 +1161,8 @@ typedef enum TXMoveKind : NSInteger {
 				forKey:TPCPreferencesMigrationAssistantVersionKey];
 	
 	IRCClient *u = [self.worldController createClient:dic reload:YES];
-	
+
+	[self.worldController select:u];
 	[self.worldController save];
 	
 	if (u.config.autoConnect) {

@@ -297,22 +297,6 @@
 
 @implementation TVCInputTextFieldBackground
 
-- (void)setWindowIsActive:(BOOL)value
-{
-	/* We set a property stating we are active instead of
-	 calling our NSWindow and asking it because there are
-	 times that we are going to be drawing to a focused
-	 window, but it has not became visible yet. Therefore,
-	 the call to NSWindow would tell us to draw an inactive
-	 input box when it should be active. */
-	
-	if (NSDissimilarObjects(value, self.windowIsActive)) {
-		_windowIsActive = value;
-	}
-	
-	[self setNeedsDisplay:YES];
-}
-
 - (NSColor *)inputFieldBackgroundColor
 {
 	return [NSColor defineUserInterfaceItem:[NSColor whiteColor]
@@ -345,7 +329,7 @@
 	[controlPath fill];
 	
 	/* Black Outline. */
-	if (self.windowIsActive) {
+	if (self.masterController.mainWindowIsActive) {
 		controlColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.4];
 	} else {
 		controlColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.23];

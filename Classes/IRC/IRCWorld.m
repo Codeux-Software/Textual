@@ -89,10 +89,17 @@
 
 - (void)setupTree
 {
+	/* Set double click action. */
 	[self.serverList setTarget:self];
 	[self.serverList setDoubleAction:@selector(outlineViewDoubleClicked:)];
+
+	/* We handle selection internally, ignore system style. */
+	[self.serverList setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
+
+	/* Inform the table we want drag events. */
 	[self.serverList registerForDraggedTypes:_treeDragItemTypes];
-	
+
+	/* Prepare our first selection. */
 	IRCClient *firstSelection = nil;
 	
 	for (IRCClient *e in self.clients) {
@@ -397,34 +404,26 @@
 
 - (void)reloadTreeItem:(IRCTreeItem *)item
 {
-	[self.serverList reloadItem:item reloadChildren:NO];
+	[self.serverList updateDrawingForItem:item];
 }
 
 - (void)reloadTreeGroup:(IRCTreeItem *)item
 {
-	[self.serverList reloadItem:item reloadChildren:YES];
+	[self.serverList updateDrawingForItem:item];
+
+	for (IRCChannel *channel in item.client.channels) {
+		[self reloadTreeItem:channel];
+	}
 }
 
 - (void)reloadTree
 {
-	if (self.isReloadingTree) {
-		[self.serverList setNeedsDisplay];
-		
-		return;
-	}
-	
-	self.isReloadingTree = YES;
-	
-	[self.serverList reloadData];
-	
-	[self.masterController updateSegmentedController];
-
-	self.isReloadingTree = NO;
+	[self.serverList reloadAllDrawings];
 }
 
 - (void)expandClient:(IRCClient *)client
 {
-	[self.serverList expandItem:client];
+	[self.serverList.animator expandItem:client];
 }
 
 - (void)adjustSelection
@@ -434,8 +433,6 @@
 
 	if (0 <= selectedRow && NSDissimilarObjects(selectedRow, selectionRow)) {
 		[self.serverList selectItemAtIndex:selectionRow];
-		
-		[self reloadTree];
 	}
 }
 
@@ -616,7 +613,7 @@
 	IRCClient *client = (IRCClient *)[item client];
 	
 	if (isClient == NO) {
-		[self.serverList expandItem:client];
+		[self.serverList.animator expandItem:client];
 	}
 	
 	NSInteger i = [self.serverList rowForItem:item];
@@ -646,7 +643,8 @@
 			[c.viewController reloadTheme];
 		}
 	}
-	
+
+	[self.serverList reloadAllDrawings];
 	[self.serverList updateBackgroundColor];
 	[self.memberList updateBackgroundColor];
 
@@ -685,6 +683,8 @@
 	}
 	
 	[c.viewController setTopic:c.topic];
+
+	[self reloadTreeItem:c];
 }
 
 - (void)clearContentsOfClient:(IRCClient *)u
@@ -699,6 +699,8 @@
 	if ([u.treeUUID isEqualToString:self.selectedClient.treeUUID]) {
 		[self outlineViewSelectionDidChange:nil];
 	}
+
+	[self reloadTreeItem:u];
 }
 
 - (IRCClient *)createClient:(id)seed reload:(BOOL)reload
@@ -723,7 +725,9 @@
 	[self.clients safeAddObject:c];
 	
 	if (reload) {
-		[self reloadTree];
+		NSInteger index = [self.clients indexOfObject:c];
+
+		[self.serverList addItemToList:index inParent:nil];
 	}
 
 	[self reloadLoadingScreen];
@@ -772,7 +776,9 @@
 	}
 	
 	if (reload) {
-		[self reloadTree];
+		NSInteger index = [client.channels indexOfObject:c];
+
+		[self.serverList addItemToList:index inParent:client];
 	}
 	
 	if (adjust) {
@@ -863,8 +869,8 @@
 	} else {		
 		[target.client.channels removeObjectIdenticalTo:target];
 	}
-	
-	[self reloadTree];
+
+	[self.serverList removeItemFromList:target];
 	
 	if (self.selectedItem) {
 		[self.serverList selectItemAtIndex:[self.serverList rowForItem:sel]];
@@ -879,8 +885,9 @@
 		[self selectOtherAndDestroy:u];
 	} else {		
 		[self.clients removeObjectIdenticalTo:u];
-		
-		[self reloadTree];
+
+		[self.serverList removeItemFromList:u];
+
 		[self adjustSelection];
 	}
 
@@ -912,8 +919,9 @@
 		[self selectOtherAndDestroy:c];
 	} else {
 		[u.channels removeObjectIdenticalTo:c];
-		
-		[self reloadTree];
+
+		[self.serverList removeItemFromList:c];
+
 		[self adjustSelection];
 	}
 }
@@ -1056,22 +1064,53 @@
 	return _treeChannelHeight;
 }
 
-- (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(TVCServerListCell *)cell forTableColumn:(NSTableColumn *)tableColumn item:(IRCTreeItem *)item
+- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(IRCTreeItem *)item
 {
-	cell.cellItem = item;
+	/* Ask our view controller what we are. */
+	if (PointerIsEmpty(item.viewController.channel)) {
+		/* We are a group item. A client. */
+
+		NSView *newView = [outlineView makeViewWithIdentifier:@"GroupView" owner:self];
+
+		if ([newView isKindOfClass:[TVCServerListCellGroupItem class]]) {
+			TVCServerListCellGroupItem *groupItem = (TVCServerListCellGroupItem *)newView;
+
+			[groupItem setCellItem:item];
+		}
+
+		return newView;
+	} else {
+		/* We are a child item. A channel. */
+		NSView *newView = [outlineView makeViewWithIdentifier:@"ChildView" owner:self];
+
+		if ([newView isKindOfClass:[TVCServerListCellChildItem class]]) {
+			TVCServerListCellChildItem *childItem = (TVCServerListCellChildItem *)newView;
+
+			[childItem setCellItem:item];
+		}
+
+		return newView;
+	}
+
+	return nil;
+}
+
+- (void)outlineView:(NSOutlineView *)outlineView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
+{
+	[self.serverList updateDrawingForRow:row];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldExpandItem:(IRCTreeItem *)item
 {
 	[item.client.config setSidebarItemExpanded:YES];
-	
+
 	return YES;
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(IRCTreeItem *)item
 {
 	[item.client.config setSidebarItemExpanded:NO];
-	
+
 	return YES;
 }
 
@@ -1082,36 +1121,6 @@
 	[self select:self.selectedClient];
 }
 
-- (void)outlineView:(NSOutlineView *)outlineView willDisplayOutlineCell:(NSButtonCell *)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
-{
-	if (PointerIsEmpty(self.serverList.defaultDisclosureTriangle)) {
-		self.serverList.defaultDisclosureTriangle = [cell image];
-	}
-
-	if (PointerIsEmpty(self.serverList.alternateDisclosureTriangle)) {
-		self.serverList.alternateDisclosureTriangle = [cell alternateImage];
-	}
-
-	BOOL selected = (self.selectedItem == item);
-
-	NSImage *primary = [self.serverList disclosureTriangleInContext:YES selected:selected];
-	NSImage *alterna = [self.serverList disclosureTriangleInContext:NO selected:selected];
-
-	if ([cell.image isEqual:primary] == NO) {
-		[cell setImage:primary];
-		
-		if (selected) {
-			[cell setBackgroundStyle:NSBackgroundStyleLowered];
-		} else {
-			[cell setBackgroundStyle:NSBackgroundStyleRaised];
-		}
-	}
-
-	if ([cell.alternateImage isEqual:alterna] == NO) {
-		[cell setAlternateImage:alterna];
-	}
-}
-
 - (void)outlineViewSelectionDidChange:(NSNotification *)note
 {
 	TVCInputTextField *textField = self.masterController.inputTextField;
@@ -1119,8 +1128,11 @@
 	[RZSpellChecker() setIgnoredWords:@[] inSpellDocumentWithTag:textField.spellCheckerDocumentTag];
 	
 	id nextItem = [self.serverList itemAtRow:self.serverList.selectedRow];
-	
+
+	[self.selectedItem resetState]; // Reset state of old item.
 	self.selectedItem = nextItem;
+
+    [self reloadTreeItem:self.selectedItem]; // Draw new item.
 	
 	if (PointerIsEmpty(self.selectedItem)) {
 		[self.channelViewBox setContentView:nil];
@@ -1195,8 +1207,6 @@
 
 	[self updateIcon];
 	[self updateTitle];
-
-    [self.serverList setNeedsDisplay];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)sender writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
@@ -1310,7 +1320,9 @@
         
 		NSMutableArray *low = [[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy];
 		NSMutableArray *high = [[ary subarrayWithRange:NSMakeRange(index, (ary.count - index))] mutableCopy];
-		
+
+		NSInteger originalIndex = [ary indexOfObject:i];
+
 		[low removeObjectIdenticalTo:i];
 		[high removeObjectIdenticalTo:i];
 		
@@ -1319,8 +1331,30 @@
 		[ary addObjectsFromArray:low];
 		[ary safeAddObject:i];
 		[ary addObjectsFromArray:high];
+
+		NSArray *childItems = [self.serverList groupItems];
+
+		NSObjectIsEmptyAssertReturn(childItems, NO);
+
+		NSInteger oldIndex = [childItems indexOfObject:i];
+		NSInteger newIndex = 0;
+
+		id lastObject = low.lastObject;
+
+		if (lastObject) {
+			newIndex = [childItems indexOfObject:lastObject];
+
+			if (originalIndex <= oldIndex && newIndex < (childItems.count - 1)) {
+				newIndex += 1;
+			}
+		}
+
+		if (oldIndex == newIndex) {
+			return NO;
+		}
+
+		[self.serverList moveItemAtIndex:oldIndex inParent:nil toIndex:newIndex inParent:nil];
 		
-		[self reloadTree];
 		[self save];
 	} else {
 		if (PointerIsEmpty(item) || NSDissimilarObjects(item, i.client)) {
@@ -1333,6 +1367,8 @@
         
 		NSMutableArray *low = [[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy];
 		NSMutableArray *high = [[ary subarrayWithRange:NSMakeRange(index, (ary.count - index))] mutableCopy];
+
+		NSInteger originalIndex = [ary indexOfObject:i];
 		
 		[low removeObjectIdenticalTo:i];
 		[high removeObjectIdenticalTo:i];
@@ -1342,8 +1378,31 @@
 		[ary addObjectsFromArray:low];
 		[ary safeAddObject:i];
 		[ary addObjectsFromArray:high];
+
+		NSArray *childItems = [self.serverList rowsFromParentGroup:u];
+
+		NSObjectIsEmptyAssertReturn(childItems, NO);
+
+		NSInteger oldIndex = [childItems indexOfObject:i];
+		NSInteger newIndex = 0;
 		
-		[self reloadTree];
+		id lastObject = low.lastObject;
+
+		if (lastObject) {
+			newIndex  = [childItems indexOfObject:lastObject];
+			newIndex += 1;
+			
+			if (newIndex > originalIndex) {
+				newIndex -= 1;
+			}
+		}
+
+		if (oldIndex == newIndex) {
+			return NO;
+		}
+
+		[self.serverList moveItemAtIndex:oldIndex inParent:u toIndex:newIndex inParent:u];
+
 		[self save];
 	}
 	

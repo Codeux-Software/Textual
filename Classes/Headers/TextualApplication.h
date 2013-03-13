@@ -127,6 +127,9 @@
 	@class TVCMemberListCell;
     @class TVCMemberListUserInfoPopover;
 	@class TVCServerList;
+	@class TVCServerListCellGroupItem;
+	@class TVCServerListCellChildItem;
+	@class TVCServerListCellItemTextField;
 	@class TVCServerListCell;
 	@class TVCTextFieldSTextView;
 	@class TVCTextFormatterMenu;

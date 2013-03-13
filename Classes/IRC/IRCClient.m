@@ -570,7 +570,7 @@
 		return YES;
 	}
 
-	if ([TPCPreferences stopGrowlOnActive] && [self.masterController.mainWindow isOnCurrentWorkspace]) {
+	if ([TPCPreferences stopGrowlOnActive] && self.masterController.mainWindowIsActive) {
 		return YES;
 	}
 
@@ -616,7 +616,7 @@
 		return YES;
 	}
 
-	if ([TPCPreferences stopGrowlOnActive] && [self.masterController.mainWindow isOnCurrentWorkspace]) {
+	if ([TPCPreferences stopGrowlOnActive] && self.masterController.mainWindowIsActive) {
 		return YES;
 	}
 
@@ -691,7 +691,7 @@
 
 - (void)setKeywordState:(IRCChannel *)t
 {
-	BOOL isActiveWindow = [self.masterController.mainWindow isOnCurrentWorkspace];
+	BOOL isActiveWindow = self.masterController.mainWindowIsActive;
 
 	if (NSDissimilarObjects(self.worldController.selectedItem, t) || isActiveWindow == NO) {
 		t.nicknameHighlightCount += 1;
@@ -716,7 +716,7 @@
 
 - (void)setUnreadState:(IRCChannel *)t popDockIcon:(BOOL)popIcon
 {
-	BOOL isActiveWindow = [self.masterController.mainWindow isOnCurrentWorkspace];
+	BOOL isActiveWindow = self.masterController.mainWindowIsActive;
 
 	if (t.isPrivateMessage || ([TPCPreferences displayPublicMessageCountOnDockBadge] && t.isChannel)) {
 		if (NSDissimilarObjects(self.worldController.selectedItem, t) || isActiveWindow == NO) {
@@ -2357,7 +2357,7 @@
 
 	if (channel) {
 		if ([TPCPreferences autoAddScrollbackMark]) {
-			if (NSDissimilarObjects(channel, self.worldController.selectedChannel) || [self.masterController.mainWindow isOnCurrentWorkspace] == NO) {
+			if (NSDissimilarObjects(channel, self.worldController.selectedChannel) || self.masterController.mainWindowIsActive == NO) {
 				if (channel.isUnread == NO) {
 					if (type == TVCLogLinePrivateMessageType ||
 						type == TVCLogLineActionType ||
@@ -4872,7 +4872,15 @@
 
 - (void)performAutoJoin
 {
-    if ([TPCPreferences autojoinWaitsForNickServ]) {
+	if (NSObjectIsEmpty(self.channels)) {
+		/* What are we joining? */
+
+		self.isAutojoined = YES;
+
+		return;
+	}
+
+	if ([TPCPreferences autojoinWaitsForNickServ]) {
         if (self.serverHasNickServ && self.isIdentifiedWithNickServ == NO) {
             return;
         }
