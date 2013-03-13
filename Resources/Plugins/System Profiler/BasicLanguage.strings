@@ -79,6 +79,10 @@
 
 "SystemInformationStyleCommandResultBundle" = "\002Current Style:\002 %@";
 "SystemInformationStyleCommandResultCustom" = "\002Current Style:\002 %@ (Custom)";
+"SystemInformationStyleCommandResultDarkMode" = ", with dark mode and system wide ";
+"SystemInformationStyleCommandResultLightMode" = ", with system wide ";
+"SystemInformationStyleCommandResultAquaMode" = "aqua enabled.";
+"SystemInformationStyleCommandResultGraphiteMode" = "graphite enabled.";
 
 "SystemInformationScreensCommandResultSingle" = "\002Screen Resolution:\002 %1$.0f x %2$.0f";
 "SystemInformationScreensCommandResultMultiBase" = "\002Screen Resolutions:\002 Monitor %1$ld: %2$.0f x %3$.0f";
