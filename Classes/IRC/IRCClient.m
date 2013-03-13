@@ -2424,6 +2424,7 @@
 {
 	self.tryingNickNumber = -1;
 
+	self.CAPawayNotify = NO;
 	self.CAPidentifyCTCP = NO;
 	self.CAPidentifyMsg = NO;
 	self.CAPinSASLRequest = NO;
@@ -4379,8 +4380,10 @@
 			// Field Syntax: <H|G>[*][@|+]
 			// Strip G or H (away status).
             if ([flfields hasPrefix:@"G"] && self.inUserInvokedWhoRequest == NO) {
-                isAway = YES;
-            }
+				if ([TPCPreferences trackUserAwayStatusMaximumChannelSize] > 0 || self.CAPawayNotify) {
+					isAway = YES;
+				}
+			}
 
 			flfields = [flfields substringFromIndex:1];
 
