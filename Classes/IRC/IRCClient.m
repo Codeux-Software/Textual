@@ -2988,7 +2988,7 @@
 				}
 
 				/* Mark channel as unread. */
-				if (postevent && (highlight || c.config.pushNotifications)) {
+				if (postevent) {
 					[self setUnreadState:c];
 				}
 			}];
