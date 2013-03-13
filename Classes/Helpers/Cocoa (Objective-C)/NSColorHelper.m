@@ -241,3 +241,18 @@
 }
 
 @end
+
+@implementation NSGradient (TXGradientHelper)
+
++ (NSGradient *)gradientWithStartingColor:(NSColor *)startingColor endingColor:(NSColor *)endingColor
+{
+	return [[self alloc] initWithStartingColor:startingColor endingColor:endingColor];
+}
+
++ (NSGradient *)sourceListBackgroundGradientColor
+{
+	return [self gradientWithStartingColor:[NSColor internalCalibratedRed:234 green:237 blue:242 alpha:1]
+							   endingColor:[NSColor internalCalibratedRed:209 green:216 blue:223 alpha:1]];
+}
+
+@end

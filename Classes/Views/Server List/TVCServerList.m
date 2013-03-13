@@ -242,6 +242,17 @@
 	return nrect;
 }
 
+- (void)drawBackgroundInClipRect:(NSRect)clipRect
+{
+	if (self.masterController.mainWindowIsActive) {
+		if ([TPCPreferences invertSidebarColors] == NO) {
+			NSGradient *theGradient = [NSGradient sourceListBackgroundGradientColor];
+
+			[theGradient drawInRect:clipRect angle:90];
+		}
+	}
+}
+
 #pragma mark -
 #pragma mark User Interface Design Elements
 
@@ -258,7 +269,7 @@
 
 - (NSColor *)activeWindowListBackgroundColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:226.0 green:230.0 blue:236.0 alpha:1]
+	return [NSColor defineUserInterfaceItem:[NSColor clearColor]
 							   invertedItem:[NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1]];
 }
 
