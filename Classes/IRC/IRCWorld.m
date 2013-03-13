@@ -1118,7 +1118,13 @@
 {
 	PointerIsEmptyAssert(self.selectedChannel);
 
-	[self select:self.selectedClient];
+	/* If the item being collapsed is the one our selected channel is on,
+	 then move selection to the console of the collapsed server. */
+	id itemBeingCollapsed = [notification.userInfo objectForKey:@"NSObject"];
+
+	if (itemBeingCollapsed == self.selectedClient) {
+		[self select:self.selectedClient];
+	}
 }
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)note
