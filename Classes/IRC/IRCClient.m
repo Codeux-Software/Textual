@@ -1311,7 +1311,7 @@
 				reason = self.config.normalLeavingComment;
 			}
 
-			[self partUnlistedChannel:targetChannelName withComment:reason];
+			[self send:IRCPrivateCommandIndex("part"), targetChannelName, reason, nil];
 
 			break;
 		}
