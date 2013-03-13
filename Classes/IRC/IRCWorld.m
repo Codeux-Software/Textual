@@ -673,7 +673,7 @@
 {
 	[c resetState];
 
-	[c.operationQueue cancelAllOperations];
+	[c.operationQueue destroyOperationsForChannel:c];
 
 	[c.viewController clear];
 	[c.viewController notifyDidBecomeVisible];
@@ -691,7 +691,7 @@
 {
 	[u resetState];
 
-	[u.operationQueue cancelAllOperations];
+	[u.operationQueue destroyOperationsForClient:u];
 
 	[u.viewController clear];
 	[u.viewController notifyDidBecomeVisible];
@@ -748,10 +748,6 @@
 	c = [IRCChannel new];
 	
 	c.client = client;
-
-    if ([TPCPreferences operationQueueIsChannelSpecific]) {
-        c.operationQueue = [TVCLogControllerOperationQueue new];
-    }
 
 	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
 		c.inputHistory = [TLOInputHistory new];
