@@ -222,7 +222,7 @@
     /* Where is our cell? */
 	NSInteger rowIndex = [self.memberList rowAtPoint:cellFrame.origin];
     
-    cellFrame = [self.memberList rectOfRow:rowIndex];
+    cellFrame = [self.memberList frameOfCellAtColumn:0 row:rowIndex];
 
     /* Pop our popover. */
     userInfoPopover.nicknameField.stringValue = nickname;
@@ -232,7 +232,7 @@
 
     [userInfoPopover showRelativeToRect:cellFrame
                                  ofView:view
-                          preferredEdge:NSMinXEdge];
+                          preferredEdge:NSMaxXEdge];
 }
 
 - (NSColor *)highlightColorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
