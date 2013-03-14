@@ -48,8 +48,8 @@
 	<key>TXBundleBuildCodeName</key>
 	<string>Mud Pie</string>
 	<key>TXBundleBuildNumber</key>
-	<string>15467</string>
+	<string>15547</string>
 	<key>TXBundleBuildReference</key>
-	<string>3.0.0b4-308-ga18cbd5-debug</string>
+	<string>3.0.0b4-309-g6bcd7a9-stdbuild</string>
 </dict>
 </plist>

@@ -814,6 +814,11 @@
 	return [[NSAttributedString alloc] initWithString:base];
 }
 
++ (NSAttributedString *)stringWithBase:(NSString *)base attributes:(NSDictionary *)baseAttributes
+{
+	return [[NSAttributedString alloc] initWithString:base attributes:baseAttributes];
+}
+
 - (NSDictionary *)attributes
 {
     return [self safeAttributesAtIndex:0 longestEffectiveRange:NULL inRange:NSMakeRange(0, self.length)];
@@ -968,6 +973,11 @@
 @end
 
 @implementation NSMutableAttributedString (NSMutableAttributedStringHelper)
+
++ (NSMutableAttributedString *)mutableStringWithBase:(NSString *)base attributes:(NSDictionary *)baseAttributes
+{
+	return [[NSMutableAttributedString alloc] initWithString:base attributes:baseAttributes];
+}
 
 - (NSAttributedString *)getToken
 {
