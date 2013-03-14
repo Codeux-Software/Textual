@@ -252,7 +252,7 @@
 + (NSGradient *)sourceListBackgroundGradientColor
 {
 	return [self gradientWithStartingColor:[NSColor internalCalibratedRed:234 green:237 blue:242 alpha:1]
-							   endingColor:[NSColor internalCalibratedRed:209 green:216 blue:223 alpha:1]];
+							   endingColor:[NSColor internalCalibratedRed:199 green:207 blue:216 alpha:1]];
 }
 
 @end
