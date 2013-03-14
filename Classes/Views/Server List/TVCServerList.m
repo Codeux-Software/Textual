@@ -496,3 +496,58 @@
 }
 
 @end
+
+#pragma mark -
+#pragma mark Scroll View Clip View
+
+@implementation TVCServerListScrollClipView
+
+- (id)initWithFrame:(NSRect)frame
+{
+	if ((self = [super initWithFrame:frame])) {
+		self.layerContentsRedrawPolicy = NSViewLayerContentsRedrawNever;
+
+		return self;
+	}
+
+	return nil;
+}
+
+@end
+
+#pragma mark -
+#pragma mark Scroll View
+
+@implementation TVCServerListScrollView
+
+- (void)swapClipView
+{
+    id documentView = self.documentView;
+
+	TVCServerListScrollClipView *clipView = [[TVCServerListScrollClipView alloc] initWithFrame:self.contentView.frame];
+
+	self.contentView = clipView;
+	self.documentView = documentView;
+}
+
+- (id)initWithFrame:(NSRect)frame
+{
+	if ((self = [super initWithFrame:frame])) {
+		[self swapClipView];
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+
+    if ([self.contentView isKindOfClass:[TVCServerListScrollClipView class]] == NO) {
+        [self swapClipView];
+    }
+}
+
+@end

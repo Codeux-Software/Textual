@@ -302,7 +302,7 @@
 		[origBackgroundImage drawInRect:backgdRect
 							   fromRect:NSZeroRect
 							  operation:NSCompositeSourceOver
-							   fraction:1
+							   fraction:1.0
 						 respectFlipped:YES
 								  hints:nil];
 	}

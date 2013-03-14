@@ -111,8 +111,6 @@
 	@class TVCInputTextFieldBackground;
 	@class TVCListSeparatorCell;
 	@class TVCListView;
-	@class TVCListViewScrollView;
-	@class TVCListViewScrollClipView;
     @class TVCLogController;
     @class TVCLogControllerOperationQueue;
 	@class TVCLogLine;
@@ -125,13 +123,17 @@
 	@class TVCMainWindowSegmentedControl;
 	@class TVCMemberList;
 	@class TVCMemberListCell;
+	@class TVCMemberListScrollView;
+	@class TVCMemberListScrollClipView;
     @class TVCMemberListUserInfoPopover;
-	@class TVCServerList;
+	@class TVCServerList; // This has a lot of classes. 
+	@class TVCServerListCell;
 	@class TVCServerListCellBadge;
 	@class TVCServerListCellGroupItem;
 	@class TVCServerListCellChildItem;
 	@class TVCServerListCellItemTextField;
-	@class TVCServerListCell;
+	@class TVCServerListScrollView;
+	@class TVCServerListScrollClipView;
 	@class TVCTextFieldSTextView;
 	@class TVCTextFormatterMenu;
 	@class TVCThinSplitView;
@@ -194,6 +196,7 @@
 	#import "NSDateHelper.h"
 	#import "NSDictionaryHelper.h"
 	#import "NSFontHelper.h"
+	#import "NSImageHelper.h"
 	#import "NSNumberHelper.h"
 	#import "NSOutlineViewHelper.h"
 	#import "NSPasteboardHelper.h"

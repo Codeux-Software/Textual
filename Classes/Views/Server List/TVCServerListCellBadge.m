@@ -131,12 +131,6 @@
 			NSImage *finalBadge = [self completeDrawFor:mcstring inFrame:badgeRect];
 
 			PointerIsEmptyAssertReturn(finalBadge, nil);
-	
-			/* Save to file… */
-			/* This is for debugging purposes. It writes the new image to the container root path. */
-			//NSString *filepath = [NSString stringWithFormat:@"%@/%@.tiff", NSHomeDirectory(), channel.name];
-
-			//[[finalBadge TIFFRepresentation] writeToFile:filepath atomically:YES];
 
 			/* Update cache. */
 			self.cachedBadgeImage = finalBadge;
@@ -207,7 +201,7 @@
 	/* 1 point is added to size to allow room for a shadow. */
 	NSSize imageSize = NSMakeSize(badgeFrame.size.width, (badgeFrame.size.height + 1));
 	
-	NSImage *newDrawImage = [[NSImage alloc] initWithSize:imageSize];
+	NSImage *newDrawImage = [NSImage newImageWithSize:imageSize];
 
 	/* Lock focus for drawing. */
 	[newDrawImage lockFocus];
@@ -281,7 +275,16 @@
 	}
 	
 	/* The actual draw. */
+	if ([TPCPreferences useLogAntialiasing] == NO) {
+		[RZGraphicsCurrentContext() saveGraphicsState];
+		[RZGraphicsCurrentContext() setShouldAntialias:NO];
+	}
+
 	[mcstring drawAtPoint:badgeTextPoint];
+	
+	if ([TPCPreferences useLogAntialiasing] == NO) {
+		[RZGraphicsCurrentContext() restoreGraphicsState];
+	}
 
 	/*************************************************************/
 	/* Finish drawing. */
