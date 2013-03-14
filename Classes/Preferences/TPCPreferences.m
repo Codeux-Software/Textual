@@ -98,7 +98,7 @@ static NSArray *IRCInternalUseCommandIndexMap;
 		@[@"zline", 			@"ZLINE",				@(1049),		@(YES),			@(2)],
 	];
 
-	IRCUserAccessibleCommandIndexMap = @[ // Open Key: 5092
+	IRCUserAccessibleCommandIndexMap = @[ // Open Key: 5093
 	//		 key						 command				 index		developer mode
 		@[@"adchat",					@"ADCHAT",				@(5001),		@(NO)],
 		@[@"ame",						@"AME",					@(5002),		@(NO)],
@@ -121,6 +121,7 @@ static NSArray *IRCInternalUseCommandIndexMap;
 		@[@"dehalfop",					@"DEHALFOP",			@(5019),		@(NO)],
 		@[@"deop",						@"DEOP",				@(5020),		@(NO)],
 		@[@"devoice",					@"DEVOICE",				@(5021),		@(NO)],
+		@[@"defaults",					@"DEFAULTS",			@(5092),		@(YES)],
 		@[@"echo",						@"ECHO",				@(5022),		@(NO)],
 		@[@"fakerawdata",				@"FAKERAWDATA",			@(5087),		@(YES)],
 		@[@"gline",						@"GLINE",				@(5023),		@(NO)],
