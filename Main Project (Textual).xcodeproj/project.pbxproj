@@ -43,6 +43,117 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		4C0444E016F1552A00EBB665 /* TVCServerListCellBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0444DF16F1552A00EBB665 /* TVCServerListCellBadge.m */; };
+		4C0444E716F1553C00EBB665 /* TVCServerListCellBadge.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0444E616F1553C00EBB665 /* TVCServerListCellBadge.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C0444E816F1555800EBB665 /* TVCServerListCellBadge.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0444E616F1553C00EBB665 /* TVCServerListCellBadge.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C0444F616F1603B00EBB665 /* TXGlobalModels.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF510158E99520026668C /* TXGlobalModels.m */; };
+		4C0444F716F1603B00EBB665 /* TXMasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF511158E99520026668C /* TXMasterController.m */; };
+		4C0444F816F1603B00EBB665 /* TXMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF512158E99520026668C /* TXMenuController.m */; };
+		4C0444F916F1603B00EBB665 /* TDCPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF515158E99520026668C /* TDCPreferencesController.m */; };
+		4C0444FA16F1603B00EBB665 /* TDCPreferencesScriptWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF516158E99520026668C /* TDCPreferencesScriptWrapper.m */; };
+		4C0444FB16F1603B00EBB665 /* TDCPreferencesSoundWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF517158E99520026668C /* TDCPreferencesSoundWrapper.m */; };
+		4C0444FC16F1603B00EBB665 /* TDCAboutPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF518158E99520026668C /* TDCAboutPanel.m */; };
+		4C0444FD16F1603B00EBB665 /* TDCAddressBookSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF519158E99520026668C /* TDCAddressBookSheet.m */; };
+		4C0444FE16F1603B00EBB665 /* TDChanBanExceptionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF51A158E99520026668C /* TDChanBanExceptionSheet.m */; };
+		4C0444FF16F1603B00EBB665 /* TDChanBanSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF51B158E99520026668C /* TDChanBanSheet.m */; };
+		4C04450016F1603B00EBB665 /* TDChanInviteExceptionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF51C158E99520026668C /* TDChanInviteExceptionSheet.m */; };
+		4C04450116F1603B00EBB665 /* TDChannelSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF51D158E99520026668C /* TDChannelSheet.m */; };
+		4C04450216F1603B00EBB665 /* TDCHighlightSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF51E158E99520026668C /* TDCHighlightSheet.m */; };
+		4C04450316F1603B00EBB665 /* TDCInviteSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF51F158E99520026668C /* TDCInviteSheet.m */; };
+		4C04450416F1603B00EBB665 /* TDCListDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF520158E99520026668C /* TDCListDialog.m */; };
+		4C04450516F1603B00EBB665 /* TDCModeSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF521158E99520026668C /* TDCModeSheet.m */; };
+		4C04450616F1603B00EBB665 /* TDCNickSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF522158E99520026668C /* TDCNickSheet.m */; };
+		4C04450716F1603B00EBB665 /* TDCServerSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF523158E99520026668C /* TDCServerSheet.m */; };
+		4C04450816F1603B00EBB665 /* TDCSheetBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF524158E99520026668C /* TDCSheetBase.m */; };
+		4C04450916F1603B00EBB665 /* TDCTopicSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF525158E99520026668C /* TDCTopicSheet.m */; };
+		4C04450A16F1603B00EBB665 /* TDCWelcomeSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF526158E99520026668C /* TDCWelcomeSheet.m */; };
+		4C04458716F1603B00EBB665 /* NSArrayHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF59A158E99520026668C /* NSArrayHelper.m */; };
+		4C04458816F1603B00EBB665 /* NSColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF59C158E99520026668C /* NSColorHelper.m */; };
+		4C04458916F1603B00EBB665 /* NSDateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF59E158E99520026668C /* NSDateHelper.m */; };
+		4C04458A16F1603B00EBB665 /* NSDictionaryHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF59F158E99520026668C /* NSDictionaryHelper.m */; };
+		4C04458B16F1603B00EBB665 /* NSFontHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A0158E99520026668C /* NSFontHelper.m */; };
+		4C04458C16F1603B00EBB665 /* NSNumberHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A1158E99520026668C /* NSNumberHelper.m */; };
+		4C04458D16F1603B00EBB665 /* NSOutlineViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A2158E99520026668C /* NSOutlineViewHelper.m */; };
+		4C04458E16F1603B00EBB665 /* NSPasteboardHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A3158E99520026668C /* NSPasteboardHelper.m */; };
+		4C04458F16F1603B00EBB665 /* NSRangeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8D624E16D02688007D6C60 /* NSRangeHelper.m */; };
+		4C04459016F1603B00EBB665 /* NSRectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A4158E99520026668C /* NSRectHelper.m */; };
+		4C04459116F1603B00EBB665 /* NSScreenHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5A6DC015C39BD600143574 /* NSScreenHelper.m */; };
+		4C04459216F1603B00EBB665 /* NSSplitViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A5158E99520026668C /* NSSplitViewHelper.m */; };
+		4C04459316F1603B00EBB665 /* NSStringHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A6158E99520026668C /* NSStringHelper.m */; };
+		4C04459416F1603B00EBB665 /* NSTextFieldHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A7158E99520026668C /* NSTextFieldHelper.m */; };
+		4C04459516F1603B00EBB665 /* NSWindowHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A8158E99520026668C /* NSWindowHelper.m */; };
+		4C04459616F1603B00EBB665 /* GTMEncodeHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5AC158E99520026668C /* GTMEncodeHTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4C04459716F1603B00EBB665 /* GTMEncodeURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5AD158E99520026668C /* GTMEncodeURL.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4C04459816F1603B00EBB665 /* THOPluginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5AE158E99520026668C /* THOPluginItem.m */; };
+		4C04459916F1603B00EBB665 /* THOPluginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBCF89D16C7CE9700DC3521 /* THOPluginManager.m */; };
+		4C04459A16F1603B00EBB665 /* DDExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B1158E99520026668C /* DDExtensions.m */; };
+		4C04459B16F1603B00EBB665 /* DDInvocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B2158E99520026668C /* DDInvocation.m */; };
+		4C04459C16F1603B00EBB665 /* IRCAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B5158E99520026668C /* IRCAddressBook.m */; };
+		4C04459D16F1603B00EBB665 /* IRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B6158E99520026668C /* IRCChannel.m */; };
+		4C04459E16F1603B00EBB665 /* IRCChannelConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B7158E99520026668C /* IRCChannelConfig.m */; };
+		4C04459F16F1603B00EBB665 /* IRCChannelMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B8158E99520026668C /* IRCChannelMode.m */; };
+		4C0445A016F1603B00EBB665 /* IRCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B9158E99520026668C /* IRCClient.m */; };
+		4C0445A116F1603B00EBB665 /* IRCClientConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5BA158E99520026668C /* IRCClientConfig.m */; };
+		4C0445A216F1603B00EBB665 /* IRCConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5BB158E99520026668C /* IRCConnection.m */; };
+		4C0445A316F1603C00EBB665 /* IRCConnectionSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */; };
+		4C0445A416F1603C00EBB665 /* IRCExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5BC158E99520026668C /* IRCExtras.m */; };
+		4C0445A516F1603C00EBB665 /* IRCISupportInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5BD158E99520026668C /* IRCISupportInfo.m */; };
+		4C0445A616F1603C00EBB665 /* IRCMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5BE158E99520026668C /* IRCMessage.m */; };
+		4C0445A716F1603C00EBB665 /* IRCModeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5BF158E99520026668C /* IRCModeInfo.m */; };
+		4C0445A816F1603C00EBB665 /* IRCPrefix.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5C0158E99520026668C /* IRCPrefix.m */; };
+		4C0445A916F1603C00EBB665 /* IRCSendingMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5C1158E99520026668C /* IRCSendingMessage.m */; };
+		4C0445AA16F1603C00EBB665 /* IRCTreeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5C2158E99520026668C /* IRCTreeItem.m */; };
+		4C0445AB16F1603C00EBB665 /* IRCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5C3158E99520026668C /* IRCUser.m */; };
+		4C0445AC16F1603C00EBB665 /* IRCWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5C4158E99520026668C /* IRCWorld.m */; };
+		4C0445AD16F1603C00EBB665 /* IRCColorFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5C8158E99520026668C /* IRCColorFormat.m */; };
+		4C0445AE16F1603C00EBB665 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5D5158E99520026668C /* GCDAsyncSocket.m */; };
+		4C0445AF16F1603C00EBB665 /* GCDAsyncSocketExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5D6158E99520026668C /* GCDAsyncSocketExtensions.m */; };
+		4C0445B016F1603C00EBB665 /* RLMAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5D7158E99520026668C /* RLMAsyncSocket.m */; };
+		4C0445B116F1603C00EBB665 /* AGKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5D1158E99520026668C /* AGKeychain.m */; };
+		4C0445B216F1603C00EBB665 /* TLOFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5D8158E99520026668C /* TLOFileLogger.m */; };
+		4C0445B316F1603C00EBB665 /* TLOGrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5DA158E99520026668C /* TLOGrowlController.m */; };
+		4C0445B416F1603C00EBB665 /* TLOInputHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5DB158E99520026668C /* TLOInputHistory.m */; };
+		4C0445B516F1603C00EBB665 /* TLOKeyEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5DC158E99520026668C /* TLOKeyEventHandler.m */; };
+		4C0445B616F1603C00EBB665 /* TLOLanguagePreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5DD158E99520026668C /* TLOLanguagePreferences.m */; };
+		4C0445B716F1603C00EBB665 /* TLOLinkParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5DE158E99520026668C /* TLOLinkParser.m */; };
+		4C0445B816F1603C00EBB665 /* TLONickCompletionStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5DF158E99520026668C /* TLONickCompletionStatus.m */; };
+		4C0445B916F1603C00EBB665 /* TLOpenLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E0158E99520026668C /* TLOpenLink.m */; };
+		4C0445BA16F1603C00EBB665 /* TLOPopupPrompts.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E1158E99520026668C /* TLOPopupPrompts.m */; };
+		4C0445BB16F1603C00EBB665 /* TLORegularExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E2158E99520026668C /* TLORegularExpression.m */; };
+		4C0445BC16F1603C00EBB665 /* TLOSoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E4158E99520026668C /* TLOSoundPlayer.m */; };
+		4C0445BD16F1603C00EBB665 /* TLOTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E5158E99520026668C /* TLOTimer.m */; };
+		4C0445BE16F1603C00EBB665 /* TLOTimerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E6158E99520026668C /* TLOTimerCommand.m */; };
+		4C0445BF16F1603C00EBB665 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E8158E99520026668C /* main.m */; };
+		4C0445C016F1603C00EBB665 /* TPCPreferencesMigrationAssistant.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D0B781594908B00567623 /* TPCPreferencesMigrationAssistant.m */; };
+		4C0445C116F1603C00EBB665 /* TPCThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5ED158E99520026668C /* TPCThemeController.m */; };
+		4C0445C216F1603C00EBB665 /* TPCThemeSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5EC158E99520026668C /* TPCThemeSettings.m */; };
+		4C0445C316F1603C00EBB665 /* TPCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5EE158E99520026668C /* TPCPreferences.m */; };
+		4C0445C416F1603C00EBB665 /* TVCLogControllerOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C419A0416E91C470093B006 /* TVCLogControllerOperationQueue.m */; };
+		4C0445C516F1603C00EBB665 /* TVCImageURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F2158E99520026668C /* TVCImageURLParser.m */; };
+		4C0445C616F1603C00EBB665 /* TVCLogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F3158E99520026668C /* TVCLogController.m */; };
+		4C0445C716F1603C00EBB665 /* TVCLogLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F4158E99520026668C /* TVCLogLine.m */; };
+		4C0445C816F1603C00EBB665 /* TVCLogPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F5158E99520026668C /* TVCLogPolicy.m */; };
+		4C0445C916F1603C00EBB665 /* TVCLogRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F1158E99520026668C /* TVCLogRenderer.m */; };
+		4C0445CA16F1603C00EBB665 /* TVCLogScriptEventSink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F6158E99520026668C /* TVCLogScriptEventSink.m */; };
+		4C0445CB16F1603C00EBB665 /* TVCLogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F7158E99520026668C /* TVCLogView.m */; };
+		4C0445CC16F1603C00EBB665 /* TVCWebViewAutoScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F8158E99520026668C /* TVCWebViewAutoScroll.m */; };
+		4C0445CD16F1603C00EBB665 /* TVCInputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FA158E99520026668C /* TVCInputTextField.m */; };
+		4C0445CE16F1603C00EBB665 /* TVCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FB158E99520026668C /* TVCTextField.m */; };
+		4C0445CF16F1603C00EBB665 /* TVCTextFormatterMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FC158E99520026668C /* TVCTextFormatterMenu.m */; };
+		4C0445D316F1603C00EBB665 /* TVCServerList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0444EA16F15F8200EBB665 /* TVCServerList.m */; };
+		4C0445D416F1603C00EBB665 /* TVCServerListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0444EB16F15F8200EBB665 /* TVCServerListCell.m */; };
+		4C0445D516F1603C00EBB665 /* TVCServerListCellBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0444EC16F15F8200EBB665 /* TVCServerListCellBadge.m */; };
+		4C0445D616F1603C00EBB665 /* TVCMemberList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF607158E99520026668C /* TVCMemberList.m */; };
+		4C0445D716F1603C00EBB665 /* TVCMemberListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF608158E99520026668C /* TVCMemberListCell.m */; };
+		4C0445D816F1603C00EBB665 /* TVCMemberListUserInfoPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBBD19D16E356F400D2FEFE /* TVCMemberListUserInfoPopover.m */; };
+		4C0445D916F1603C00EBB665 /* TVCDockIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF600158E99520026668C /* TVCDockIcon.m */; };
+		4C0445DA16F1603C00EBB665 /* TVCInputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF601158E99520026668C /* TVCInputPromptDialog.m */; };
+		4C0445DB16F1603C00EBB665 /* TVCListSeparatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF602158E99520026668C /* TVCListSeparatorCell.m */; };
+		4C0445DC16F1603C00EBB665 /* TVCListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF603158E99520026668C /* TVCListView.m */; };
+		4C0445DD16F1603C00EBB665 /* TVCMainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF604158E99520026668C /* TVCMainWindow.m */; };
+		4C0445DE16F1603C00EBB665 /* TVCMainWindowLoadingScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8EE97916C64A8200D5B1F4 /* TVCMainWindowLoadingScreen.m */; };
+		4C0445DF16F1603C00EBB665 /* TVCMainWindowSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */; };
+		4C0445E016F1603C00EBB665 /* TVCThinSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF605158E99520026668C /* TVCThinSplitView.m */; };
 		4C08885A16E7A6C7006FD7D8 /* TVCLogControllerOperationQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C08885916E7A6C7006FD7D8 /* TVCLogControllerOperationQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C1ED4A116CEA081006DD0CA /* IRCConnectionSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C1ED4A316CEA0A9006DD0CA /* IRCConnectionSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */; };
@@ -303,113 +414,6 @@
 		4C5BA46616F1302F00A96CA2 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC11580469E00846B64 /* SystemConfiguration.framework */; };
 		4C5BA46716F1302F00A96CA2 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC21580469E00846B64 /* WebKit.framework */; };
 		4C5BA46816F1302F00A96CA2 /* SystemInformation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C78926716C6259D0081E859 /* SystemInformation.framework */; };
-		4C5BA46A16F1302F00A96CA2 /* NSScreenHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5A6DC015C39BD600143574 /* NSScreenHelper.m */; };
-		4C5BA46B16F1302F00A96CA2 /* TXGlobalModels.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF510158E99520026668C /* TXGlobalModels.m */; };
-		4C5BA46C16F1302F00A96CA2 /* TXMasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF511158E99520026668C /* TXMasterController.m */; };
-		4C5BA46D16F1302F00A96CA2 /* TXMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF512158E99520026668C /* TXMenuController.m */; };
-		4C5BA46E16F1302F00A96CA2 /* TDCPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF515158E99520026668C /* TDCPreferencesController.m */; };
-		4C5BA46F16F1302F00A96CA2 /* TDCPreferencesScriptWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF516158E99520026668C /* TDCPreferencesScriptWrapper.m */; };
-		4C5BA47016F1302F00A96CA2 /* TDCPreferencesSoundWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF517158E99520026668C /* TDCPreferencesSoundWrapper.m */; };
-		4C5BA47116F1302F00A96CA2 /* TDCAboutPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF518158E99520026668C /* TDCAboutPanel.m */; };
-		4C5BA47216F1302F00A96CA2 /* TDCAddressBookSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF519158E99520026668C /* TDCAddressBookSheet.m */; };
-		4C5BA47316F1302F00A96CA2 /* TDChanBanExceptionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF51A158E99520026668C /* TDChanBanExceptionSheet.m */; };
-		4C5BA47416F1302F00A96CA2 /* TDChanBanSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF51B158E99520026668C /* TDChanBanSheet.m */; };
-		4C5BA47516F1302F00A96CA2 /* TDChanInviteExceptionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF51C158E99520026668C /* TDChanInviteExceptionSheet.m */; };
-		4C5BA47616F1302F00A96CA2 /* TDChannelSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF51D158E99520026668C /* TDChannelSheet.m */; };
-		4C5BA47716F1302F00A96CA2 /* TDCHighlightSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF51E158E99520026668C /* TDCHighlightSheet.m */; };
-		4C5BA47816F1302F00A96CA2 /* TDCInviteSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF51F158E99520026668C /* TDCInviteSheet.m */; };
-		4C5BA47916F1302F00A96CA2 /* TDCListDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF520158E99520026668C /* TDCListDialog.m */; };
-		4C5BA47A16F1302F00A96CA2 /* TDCModeSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF521158E99520026668C /* TDCModeSheet.m */; };
-		4C5BA47B16F1302F00A96CA2 /* TDCNickSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF522158E99520026668C /* TDCNickSheet.m */; };
-		4C5BA47C16F1302F00A96CA2 /* TDCServerSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF523158E99520026668C /* TDCServerSheet.m */; };
-		4C5BA47D16F1302F00A96CA2 /* TDCSheetBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF524158E99520026668C /* TDCSheetBase.m */; };
-		4C5BA47E16F1302F00A96CA2 /* TDCTopicSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF525158E99520026668C /* TDCTopicSheet.m */; };
-		4C5BA47F16F1302F00A96CA2 /* TDCWelcomeSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF526158E99520026668C /* TDCWelcomeSheet.m */; };
-		4C5BA48016F1302F00A96CA2 /* NSArrayHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF59A158E99520026668C /* NSArrayHelper.m */; };
-		4C5BA48116F1302F00A96CA2 /* NSColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF59C158E99520026668C /* NSColorHelper.m */; };
-		4C5BA48216F1302F00A96CA2 /* NSDateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF59E158E99520026668C /* NSDateHelper.m */; };
-		4C5BA48316F1302F00A96CA2 /* NSDictionaryHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF59F158E99520026668C /* NSDictionaryHelper.m */; };
-		4C5BA48416F1302F00A96CA2 /* NSFontHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A0158E99520026668C /* NSFontHelper.m */; };
-		4C5BA48516F1302F00A96CA2 /* NSNumberHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A1158E99520026668C /* NSNumberHelper.m */; };
-		4C5BA48616F1302F00A96CA2 /* NSOutlineViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A2158E99520026668C /* NSOutlineViewHelper.m */; };
-		4C5BA48716F1302F00A96CA2 /* NSPasteboardHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A3158E99520026668C /* NSPasteboardHelper.m */; };
-		4C5BA48816F1302F00A96CA2 /* NSRectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A4158E99520026668C /* NSRectHelper.m */; };
-		4C5BA48916F1302F00A96CA2 /* NSSplitViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A5158E99520026668C /* NSSplitViewHelper.m */; };
-		4C5BA48A16F1302F00A96CA2 /* NSStringHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A6158E99520026668C /* NSStringHelper.m */; };
-		4C5BA48B16F1302F00A96CA2 /* NSTextFieldHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A7158E99520026668C /* NSTextFieldHelper.m */; };
-		4C5BA48C16F1302F00A96CA2 /* NSWindowHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A8158E99520026668C /* NSWindowHelper.m */; };
-		4C5BA48D16F1302F00A96CA2 /* GTMEncodeHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5AC158E99520026668C /* GTMEncodeHTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		4C5BA48E16F1302F00A96CA2 /* GTMEncodeURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5AD158E99520026668C /* GTMEncodeURL.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		4C5BA48F16F1302F00A96CA2 /* THOPluginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5AE158E99520026668C /* THOPluginItem.m */; };
-		4C5BA49016F1302F00A96CA2 /* DDExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B1158E99520026668C /* DDExtensions.m */; };
-		4C5BA49116F1302F00A96CA2 /* DDInvocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B2158E99520026668C /* DDInvocation.m */; };
-		4C5BA49216F1302F00A96CA2 /* IRCAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B5158E99520026668C /* IRCAddressBook.m */; };
-		4C5BA49316F1302F00A96CA2 /* IRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B6158E99520026668C /* IRCChannel.m */; };
-		4C5BA49416F1302F00A96CA2 /* IRCChannelConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B7158E99520026668C /* IRCChannelConfig.m */; };
-		4C5BA49516F1302F00A96CA2 /* IRCChannelMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B8158E99520026668C /* IRCChannelMode.m */; };
-		4C5BA49616F1302F00A96CA2 /* IRCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B9158E99520026668C /* IRCClient.m */; };
-		4C5BA49716F1302F00A96CA2 /* IRCClientConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5BA158E99520026668C /* IRCClientConfig.m */; };
-		4C5BA49816F1302F00A96CA2 /* IRCConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5BB158E99520026668C /* IRCConnection.m */; };
-		4C5BA49916F1302F00A96CA2 /* IRCExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5BC158E99520026668C /* IRCExtras.m */; };
-		4C5BA49A16F1302F00A96CA2 /* IRCISupportInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5BD158E99520026668C /* IRCISupportInfo.m */; };
-		4C5BA49B16F1302F00A96CA2 /* IRCMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5BE158E99520026668C /* IRCMessage.m */; };
-		4C5BA49C16F1302F00A96CA2 /* IRCModeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5BF158E99520026668C /* IRCModeInfo.m */; };
-		4C5BA49D16F1302F00A96CA2 /* IRCPrefix.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5C0158E99520026668C /* IRCPrefix.m */; };
-		4C5BA49E16F1302F00A96CA2 /* IRCSendingMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5C1158E99520026668C /* IRCSendingMessage.m */; };
-		4C5BA49F16F1302F00A96CA2 /* IRCTreeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5C2158E99520026668C /* IRCTreeItem.m */; };
-		4C5BA4A016F1302F00A96CA2 /* IRCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5C3158E99520026668C /* IRCUser.m */; };
-		4C5BA4A116F1302F00A96CA2 /* IRCWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5C4158E99520026668C /* IRCWorld.m */; };
-		4C5BA4A216F1302F00A96CA2 /* IRCColorFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5C8158E99520026668C /* IRCColorFormat.m */; };
-		4C5BA4A316F1302F00A96CA2 /* AGKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5D1158E99520026668C /* AGKeychain.m */; };
-		4C5BA4A416F1302F00A96CA2 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5D5158E99520026668C /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		4C5BA4A516F1302F00A96CA2 /* GCDAsyncSocketExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5D6158E99520026668C /* GCDAsyncSocketExtensions.m */; };
-		4C5BA4A616F1302F00A96CA2 /* RLMAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5D7158E99520026668C /* RLMAsyncSocket.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		4C5BA4A716F1302F00A96CA2 /* TLOFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5D8158E99520026668C /* TLOFileLogger.m */; };
-		4C5BA4A816F1302F00A96CA2 /* TLOGrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5DA158E99520026668C /* TLOGrowlController.m */; };
-		4C5BA4A916F1302F00A96CA2 /* TLOInputHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5DB158E99520026668C /* TLOInputHistory.m */; };
-		4C5BA4AA16F1302F00A96CA2 /* TLOKeyEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5DC158E99520026668C /* TLOKeyEventHandler.m */; };
-		4C5BA4AB16F1302F00A96CA2 /* TLOLanguagePreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5DD158E99520026668C /* TLOLanguagePreferences.m */; };
-		4C5BA4AC16F1302F00A96CA2 /* TLOLinkParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5DE158E99520026668C /* TLOLinkParser.m */; };
-		4C5BA4AD16F1302F00A96CA2 /* TLONickCompletionStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5DF158E99520026668C /* TLONickCompletionStatus.m */; };
-		4C5BA4AE16F1302F00A96CA2 /* TLOpenLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E0158E99520026668C /* TLOpenLink.m */; };
-		4C5BA4AF16F1302F00A96CA2 /* TLOPopupPrompts.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E1158E99520026668C /* TLOPopupPrompts.m */; };
-		4C5BA4B016F1302F00A96CA2 /* TLORegularExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E2158E99520026668C /* TLORegularExpression.m */; };
-		4C5BA4B116F1302F00A96CA2 /* TLOSoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E4158E99520026668C /* TLOSoundPlayer.m */; };
-		4C5BA4B216F1302F00A96CA2 /* TLOTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E5158E99520026668C /* TLOTimer.m */; };
-		4C5BA4B316F1302F00A96CA2 /* TLOTimerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E6158E99520026668C /* TLOTimerCommand.m */; };
-		4C5BA4B416F1302F00A96CA2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E8158E99520026668C /* main.m */; };
-		4C5BA4B516F1302F00A96CA2 /* TPCThemeSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5EC158E99520026668C /* TPCThemeSettings.m */; };
-		4C5BA4B616F1302F00A96CA2 /* TPCThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5ED158E99520026668C /* TPCThemeController.m */; };
-		4C5BA4B716F1302F00A96CA2 /* TPCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5EE158E99520026668C /* TPCPreferences.m */; };
-		4C5BA4B816F1302F00A96CA2 /* TVCLogRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F1158E99520026668C /* TVCLogRenderer.m */; };
-		4C5BA4B916F1302F00A96CA2 /* TVCImageURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F2158E99520026668C /* TVCImageURLParser.m */; };
-		4C5BA4BA16F1302F00A96CA2 /* TVCLogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F3158E99520026668C /* TVCLogController.m */; };
-		4C5BA4BB16F1302F00A96CA2 /* TVCLogLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F4158E99520026668C /* TVCLogLine.m */; };
-		4C5BA4BC16F1302F00A96CA2 /* TVCLogPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F5158E99520026668C /* TVCLogPolicy.m */; };
-		4C5BA4BD16F1302F00A96CA2 /* TVCLogScriptEventSink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F6158E99520026668C /* TVCLogScriptEventSink.m */; };
-		4C5BA4BE16F1302F00A96CA2 /* TVCLogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F7158E99520026668C /* TVCLogView.m */; };
-		4C5BA4BF16F1302F00A96CA2 /* TVCWebViewAutoScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F8158E99520026668C /* TVCWebViewAutoScroll.m */; };
-		4C5BA4C016F1302F00A96CA2 /* TVCInputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FA158E99520026668C /* TVCInputTextField.m */; };
-		4C5BA4C116F1302F00A96CA2 /* TVCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FB158E99520026668C /* TVCTextField.m */; };
-		4C5BA4C216F1302F00A96CA2 /* TVCTextFormatterMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FC158E99520026668C /* TVCTextFormatterMenu.m */; };
-		4C5BA4C316F1302F00A96CA2 /* TVCServerList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FE158E99520026668C /* TVCServerList.m */; };
-		4C5BA4C416F1302F00A96CA2 /* TVCServerListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FF158E99520026668C /* TVCServerListCell.m */; };
-		4C5BA4C516F1302F00A96CA2 /* TVCDockIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF600158E99520026668C /* TVCDockIcon.m */; };
-		4C5BA4C616F1302F00A96CA2 /* TVCInputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF601158E99520026668C /* TVCInputPromptDialog.m */; };
-		4C5BA4C716F1302F00A96CA2 /* TVCListSeparatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF602158E99520026668C /* TVCListSeparatorCell.m */; };
-		4C5BA4C816F1302F00A96CA2 /* TVCListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF603158E99520026668C /* TVCListView.m */; };
-		4C5BA4C916F1302F00A96CA2 /* TVCMainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF604158E99520026668C /* TVCMainWindow.m */; };
-		4C5BA4CA16F1302F00A96CA2 /* TVCThinSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF605158E99520026668C /* TVCThinSplitView.m */; };
-		4C5BA4CB16F1302F00A96CA2 /* TVCMemberList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF607158E99520026668C /* TVCMemberList.m */; };
-		4C5BA4CC16F1302F00A96CA2 /* TVCMemberListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF608158E99520026668C /* TVCMemberListCell.m */; };
-		4C5BA4CD16F1302F00A96CA2 /* TVCMainWindowSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */; };
-		4C5BA4CE16F1302F00A96CA2 /* TPCPreferencesMigrationAssistant.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D0B781594908B00567623 /* TPCPreferencesMigrationAssistant.m */; };
-		4C5BA4CF16F1302F00A96CA2 /* TVCMainWindowLoadingScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8EE97916C64A8200D5B1F4 /* TVCMainWindowLoadingScreen.m */; };
-		4C5BA4D016F1302F00A96CA2 /* THOPluginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBCF89D16C7CE9700DC3521 /* THOPluginManager.m */; };
-		4C5BA4D116F1302F00A96CA2 /* IRCConnectionSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */; };
-		4C5BA4D216F1302F00A96CA2 /* NSRangeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8D624E16D02688007D6C60 /* NSRangeHelper.m */; };
-		4C5BA4D316F1302F00A96CA2 /* TVCMemberListUserInfoPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBBD19D16E356F400D2FEFE /* TVCMemberListUserInfoPopover.m */; };
-		4C5BA4D416F1302F00A96CA2 /* TVCLogControllerOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C419A0416E91C470093B006 /* TVCLogControllerOperationQueue.m */; };
 		4C5BA4DD16F1302F00A96CA2 /* Acknowledgments.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4CCF2EF1158047C8006FFE21 /* Acknowledgments.pdf */; };
 		4C5BA4DE16F1302F00A96CA2 /* Contributors.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4CCF2EF2158047C8006FFE21 /* Contributors.pdf */; };
 		4C5BA4E016F1302F00A96CA2 /* Textual IRC Client Extras.pkg in Copy Installers */ = {isa = PBXBuildFile; fileRef = 4CB1361F16D881080025DD7F /* Textual IRC Client Extras.pkg */; };
@@ -921,6 +925,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4C0444DF16F1552A00EBB665 /* TVCServerListCellBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCServerListCellBadge.m; sourceTree = "<group>"; };
+		4C0444E616F1553C00EBB665 /* TVCServerListCellBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCServerListCellBadge.h; sourceTree = "<group>"; };
+		4C0444EA16F15F8200EBB665 /* TVCServerList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCServerList.m; sourceTree = "<group>"; };
+		4C0444EB16F15F8200EBB665 /* TVCServerListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCServerListCell.m; sourceTree = "<group>"; };
+		4C0444EC16F15F8200EBB665 /* TVCServerListCellBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCServerListCellBadge.m; sourceTree = "<group>"; };
 		4C08885916E7A6C7006FD7D8 /* TVCLogControllerOperationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCLogControllerOperationQueue.h; sourceTree = "<group>"; };
 		4C1DC5521580420500A47BC9 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCConnectionSocket.h; path = Classes/Headers/IRCConnectionSocket.h; sourceTree = SOURCE_ROOT; };
@@ -1335,6 +1344,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C0444E916F15F8200EBB665 /* Server List */ = {
+			isa = PBXGroup;
+			children = (
+				4C0444EA16F15F8200EBB665 /* TVCServerList.m */,
+				4C0444EB16F15F8200EBB665 /* TVCServerListCell.m */,
+				4C0444EC16F15F8200EBB665 /* TVCServerListCellBadge.m */,
+			);
+			name = "Server List";
+			sourceTree = "<group>";
+		};
 		4C1DC5471580420500A47BC9 = {
 			isa = PBXGroup;
 			children = (
@@ -1890,6 +1909,7 @@
 				4CBBD1A416E3570800D2FEFE /* TVCMemberListUserInfoPopover.h */,
 				4C8AF58F158E99520026668C /* TVCServerList.h */,
 				4C8AF590158E99520026668C /* TVCServerListCell.h */,
+				4C0444E616F1553C00EBB665 /* TVCServerListCellBadge.h */,
 				4C8AF591158E99520026668C /* TVCTextField.h */,
 				4C8AF592158E99520026668C /* TVCTextFormatterMenu.h */,
 				4C8AF593158E99520026668C /* TVCThinSplitView.h */,
@@ -2048,6 +2068,8 @@
 			children = (
 				4C8AF5FE158E99520026668C /* TVCServerList.m */,
 				4C8AF5FF158E99520026668C /* TVCServerListCell.m */,
+				4C0444DF16F1552A00EBB665 /* TVCServerListCellBadge.m */,
+				4C0444E916F15F8200EBB665 /* Server List */,
 			);
 			path = "Server List";
 			sourceTree = "<group>";
@@ -2397,6 +2419,7 @@
 				4C5BA45416F1302F00A96CA2 /* TXGlobalModels.h in Headers */,
 				4C5BA45516F1302F00A96CA2 /* TXMasterController.h in Headers */,
 				4C5BA45616F1302F00A96CA2 /* TXMenuController.h in Headers */,
+				4C0444E816F1555800EBB665 /* TVCServerListCellBadge.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2529,6 +2552,7 @@
 				4C8AF68A158E99520026668C /* TXGlobalModels.h in Headers */,
 				4C8AF68B158E99520026668C /* TXMasterController.h in Headers */,
 				4C8AF68C158E99520026668C /* TXMenuController.h in Headers */,
+				4C0444E716F1553C00EBB665 /* TVCServerListCellBadge.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2571,7 +2595,7 @@
 				4C5BA3D416F1302F00A96CA2 /* Copy Additional Frameworks */,
 				4C5BA3D916F1302F00A96CA2 /* Headers */,
 				4C5BA45716F1302F00A96CA2 /* Frameworks */,
-				4C5BA46916F1302F00A96CA2 /* Sources */,
+				4C0444F316F1602900EBB665 /* Sources */,
 				4C5BA4DC16F1302F00A96CA2 /* Copy Acknowledgements */,
 				4C5BA4DF16F1302F00A96CA2 /* Copy Installers */,
 			);
@@ -2927,6 +2951,121 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4C0444F316F1602900EBB665 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C0444F616F1603B00EBB665 /* TXGlobalModels.m in Sources */,
+				4C0444F716F1603B00EBB665 /* TXMasterController.m in Sources */,
+				4C0444F816F1603B00EBB665 /* TXMenuController.m in Sources */,
+				4C0444F916F1603B00EBB665 /* TDCPreferencesController.m in Sources */,
+				4C0444FA16F1603B00EBB665 /* TDCPreferencesScriptWrapper.m in Sources */,
+				4C0444FB16F1603B00EBB665 /* TDCPreferencesSoundWrapper.m in Sources */,
+				4C0444FC16F1603B00EBB665 /* TDCAboutPanel.m in Sources */,
+				4C0444FD16F1603B00EBB665 /* TDCAddressBookSheet.m in Sources */,
+				4C0444FE16F1603B00EBB665 /* TDChanBanExceptionSheet.m in Sources */,
+				4C0444FF16F1603B00EBB665 /* TDChanBanSheet.m in Sources */,
+				4C04450016F1603B00EBB665 /* TDChanInviteExceptionSheet.m in Sources */,
+				4C04450116F1603B00EBB665 /* TDChannelSheet.m in Sources */,
+				4C04450216F1603B00EBB665 /* TDCHighlightSheet.m in Sources */,
+				4C04450316F1603B00EBB665 /* TDCInviteSheet.m in Sources */,
+				4C04450416F1603B00EBB665 /* TDCListDialog.m in Sources */,
+				4C04450516F1603B00EBB665 /* TDCModeSheet.m in Sources */,
+				4C04450616F1603B00EBB665 /* TDCNickSheet.m in Sources */,
+				4C04450716F1603B00EBB665 /* TDCServerSheet.m in Sources */,
+				4C04450816F1603B00EBB665 /* TDCSheetBase.m in Sources */,
+				4C04450916F1603B00EBB665 /* TDCTopicSheet.m in Sources */,
+				4C04450A16F1603B00EBB665 /* TDCWelcomeSheet.m in Sources */,
+				4C04458716F1603B00EBB665 /* NSArrayHelper.m in Sources */,
+				4C04458816F1603B00EBB665 /* NSColorHelper.m in Sources */,
+				4C04458916F1603B00EBB665 /* NSDateHelper.m in Sources */,
+				4C04458A16F1603B00EBB665 /* NSDictionaryHelper.m in Sources */,
+				4C04458B16F1603B00EBB665 /* NSFontHelper.m in Sources */,
+				4C04458C16F1603B00EBB665 /* NSNumberHelper.m in Sources */,
+				4C04458D16F1603B00EBB665 /* NSOutlineViewHelper.m in Sources */,
+				4C04458E16F1603B00EBB665 /* NSPasteboardHelper.m in Sources */,
+				4C04458F16F1603B00EBB665 /* NSRangeHelper.m in Sources */,
+				4C04459016F1603B00EBB665 /* NSRectHelper.m in Sources */,
+				4C04459116F1603B00EBB665 /* NSScreenHelper.m in Sources */,
+				4C04459216F1603B00EBB665 /* NSSplitViewHelper.m in Sources */,
+				4C04459316F1603B00EBB665 /* NSStringHelper.m in Sources */,
+				4C04459416F1603B00EBB665 /* NSTextFieldHelper.m in Sources */,
+				4C04459516F1603B00EBB665 /* NSWindowHelper.m in Sources */,
+				4C04459616F1603B00EBB665 /* GTMEncodeHTML.m in Sources */,
+				4C04459716F1603B00EBB665 /* GTMEncodeURL.m in Sources */,
+				4C04459816F1603B00EBB665 /* THOPluginItem.m in Sources */,
+				4C04459916F1603B00EBB665 /* THOPluginManager.m in Sources */,
+				4C04459A16F1603B00EBB665 /* DDExtensions.m in Sources */,
+				4C04459B16F1603B00EBB665 /* DDInvocation.m in Sources */,
+				4C04459C16F1603B00EBB665 /* IRCAddressBook.m in Sources */,
+				4C04459D16F1603B00EBB665 /* IRCChannel.m in Sources */,
+				4C04459E16F1603B00EBB665 /* IRCChannelConfig.m in Sources */,
+				4C04459F16F1603B00EBB665 /* IRCChannelMode.m in Sources */,
+				4C0445A016F1603B00EBB665 /* IRCClient.m in Sources */,
+				4C0445A116F1603B00EBB665 /* IRCClientConfig.m in Sources */,
+				4C0445A216F1603B00EBB665 /* IRCConnection.m in Sources */,
+				4C0445A316F1603C00EBB665 /* IRCConnectionSocket.m in Sources */,
+				4C0445A416F1603C00EBB665 /* IRCExtras.m in Sources */,
+				4C0445A516F1603C00EBB665 /* IRCISupportInfo.m in Sources */,
+				4C0445A616F1603C00EBB665 /* IRCMessage.m in Sources */,
+				4C0445A716F1603C00EBB665 /* IRCModeInfo.m in Sources */,
+				4C0445A816F1603C00EBB665 /* IRCPrefix.m in Sources */,
+				4C0445A916F1603C00EBB665 /* IRCSendingMessage.m in Sources */,
+				4C0445AA16F1603C00EBB665 /* IRCTreeItem.m in Sources */,
+				4C0445AB16F1603C00EBB665 /* IRCUser.m in Sources */,
+				4C0445AC16F1603C00EBB665 /* IRCWorld.m in Sources */,
+				4C0445AD16F1603C00EBB665 /* IRCColorFormat.m in Sources */,
+				4C0445AE16F1603C00EBB665 /* GCDAsyncSocket.m in Sources */,
+				4C0445AF16F1603C00EBB665 /* GCDAsyncSocketExtensions.m in Sources */,
+				4C0445B016F1603C00EBB665 /* RLMAsyncSocket.m in Sources */,
+				4C0445B116F1603C00EBB665 /* AGKeychain.m in Sources */,
+				4C0445B216F1603C00EBB665 /* TLOFileLogger.m in Sources */,
+				4C0445B316F1603C00EBB665 /* TLOGrowlController.m in Sources */,
+				4C0445B416F1603C00EBB665 /* TLOInputHistory.m in Sources */,
+				4C0445B516F1603C00EBB665 /* TLOKeyEventHandler.m in Sources */,
+				4C0445B616F1603C00EBB665 /* TLOLanguagePreferences.m in Sources */,
+				4C0445B716F1603C00EBB665 /* TLOLinkParser.m in Sources */,
+				4C0445B816F1603C00EBB665 /* TLONickCompletionStatus.m in Sources */,
+				4C0445B916F1603C00EBB665 /* TLOpenLink.m in Sources */,
+				4C0445BA16F1603C00EBB665 /* TLOPopupPrompts.m in Sources */,
+				4C0445BB16F1603C00EBB665 /* TLORegularExpression.m in Sources */,
+				4C0445BC16F1603C00EBB665 /* TLOSoundPlayer.m in Sources */,
+				4C0445BD16F1603C00EBB665 /* TLOTimer.m in Sources */,
+				4C0445BE16F1603C00EBB665 /* TLOTimerCommand.m in Sources */,
+				4C0445BF16F1603C00EBB665 /* main.m in Sources */,
+				4C0445C016F1603C00EBB665 /* TPCPreferencesMigrationAssistant.m in Sources */,
+				4C0445C116F1603C00EBB665 /* TPCThemeController.m in Sources */,
+				4C0445C216F1603C00EBB665 /* TPCThemeSettings.m in Sources */,
+				4C0445C316F1603C00EBB665 /* TPCPreferences.m in Sources */,
+				4C0445C416F1603C00EBB665 /* TVCLogControllerOperationQueue.m in Sources */,
+				4C0445C516F1603C00EBB665 /* TVCImageURLParser.m in Sources */,
+				4C0445C616F1603C00EBB665 /* TVCLogController.m in Sources */,
+				4C0445C716F1603C00EBB665 /* TVCLogLine.m in Sources */,
+				4C0445C816F1603C00EBB665 /* TVCLogPolicy.m in Sources */,
+				4C0445C916F1603C00EBB665 /* TVCLogRenderer.m in Sources */,
+				4C0445CA16F1603C00EBB665 /* TVCLogScriptEventSink.m in Sources */,
+				4C0445CB16F1603C00EBB665 /* TVCLogView.m in Sources */,
+				4C0445CC16F1603C00EBB665 /* TVCWebViewAutoScroll.m in Sources */,
+				4C0445CD16F1603C00EBB665 /* TVCInputTextField.m in Sources */,
+				4C0445CE16F1603C00EBB665 /* TVCTextField.m in Sources */,
+				4C0445CF16F1603C00EBB665 /* TVCTextFormatterMenu.m in Sources */,
+				4C0445D316F1603C00EBB665 /* TVCServerList.m in Sources */,
+				4C0445D416F1603C00EBB665 /* TVCServerListCell.m in Sources */,
+				4C0445D516F1603C00EBB665 /* TVCServerListCellBadge.m in Sources */,
+				4C0445D616F1603C00EBB665 /* TVCMemberList.m in Sources */,
+				4C0445D716F1603C00EBB665 /* TVCMemberListCell.m in Sources */,
+				4C0445D816F1603C00EBB665 /* TVCMemberListUserInfoPopover.m in Sources */,
+				4C0445D916F1603C00EBB665 /* TVCDockIcon.m in Sources */,
+				4C0445DA16F1603C00EBB665 /* TVCInputPromptDialog.m in Sources */,
+				4C0445DB16F1603C00EBB665 /* TVCListSeparatorCell.m in Sources */,
+				4C0445DC16F1603C00EBB665 /* TVCListView.m in Sources */,
+				4C0445DD16F1603C00EBB665 /* TVCMainWindow.m in Sources */,
+				4C0445DE16F1603C00EBB665 /* TVCMainWindowLoadingScreen.m in Sources */,
+				4C0445DF16F1603C00EBB665 /* TVCMainWindowSegmentedControl.m in Sources */,
+				4C0445E016F1603C00EBB665 /* TVCThinSplitView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4C1DC54E1580420500A47BC9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -3038,120 +3177,7 @@
 				4C8D624F16D02688007D6C60 /* NSRangeHelper.m in Sources */,
 				4CBBD19E16E356F400D2FEFE /* TVCMemberListUserInfoPopover.m in Sources */,
 				4C419A0516E91C470093B006 /* TVCLogControllerOperationQueue.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4C5BA46916F1302F00A96CA2 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4C5BA46A16F1302F00A96CA2 /* NSScreenHelper.m in Sources */,
-				4C5BA46B16F1302F00A96CA2 /* TXGlobalModels.m in Sources */,
-				4C5BA46C16F1302F00A96CA2 /* TXMasterController.m in Sources */,
-				4C5BA46D16F1302F00A96CA2 /* TXMenuController.m in Sources */,
-				4C5BA46E16F1302F00A96CA2 /* TDCPreferencesController.m in Sources */,
-				4C5BA46F16F1302F00A96CA2 /* TDCPreferencesScriptWrapper.m in Sources */,
-				4C5BA47016F1302F00A96CA2 /* TDCPreferencesSoundWrapper.m in Sources */,
-				4C5BA47116F1302F00A96CA2 /* TDCAboutPanel.m in Sources */,
-				4C5BA47216F1302F00A96CA2 /* TDCAddressBookSheet.m in Sources */,
-				4C5BA47316F1302F00A96CA2 /* TDChanBanExceptionSheet.m in Sources */,
-				4C5BA47416F1302F00A96CA2 /* TDChanBanSheet.m in Sources */,
-				4C5BA47516F1302F00A96CA2 /* TDChanInviteExceptionSheet.m in Sources */,
-				4C5BA47616F1302F00A96CA2 /* TDChannelSheet.m in Sources */,
-				4C5BA47716F1302F00A96CA2 /* TDCHighlightSheet.m in Sources */,
-				4C5BA47816F1302F00A96CA2 /* TDCInviteSheet.m in Sources */,
-				4C5BA47916F1302F00A96CA2 /* TDCListDialog.m in Sources */,
-				4C5BA47A16F1302F00A96CA2 /* TDCModeSheet.m in Sources */,
-				4C5BA47B16F1302F00A96CA2 /* TDCNickSheet.m in Sources */,
-				4C5BA47C16F1302F00A96CA2 /* TDCServerSheet.m in Sources */,
-				4C5BA47D16F1302F00A96CA2 /* TDCSheetBase.m in Sources */,
-				4C5BA47E16F1302F00A96CA2 /* TDCTopicSheet.m in Sources */,
-				4C5BA47F16F1302F00A96CA2 /* TDCWelcomeSheet.m in Sources */,
-				4C5BA48016F1302F00A96CA2 /* NSArrayHelper.m in Sources */,
-				4C5BA48116F1302F00A96CA2 /* NSColorHelper.m in Sources */,
-				4C5BA48216F1302F00A96CA2 /* NSDateHelper.m in Sources */,
-				4C5BA48316F1302F00A96CA2 /* NSDictionaryHelper.m in Sources */,
-				4C5BA48416F1302F00A96CA2 /* NSFontHelper.m in Sources */,
-				4C5BA48516F1302F00A96CA2 /* NSNumberHelper.m in Sources */,
-				4C5BA48616F1302F00A96CA2 /* NSOutlineViewHelper.m in Sources */,
-				4C5BA48716F1302F00A96CA2 /* NSPasteboardHelper.m in Sources */,
-				4C5BA48816F1302F00A96CA2 /* NSRectHelper.m in Sources */,
-				4C5BA48916F1302F00A96CA2 /* NSSplitViewHelper.m in Sources */,
-				4C5BA48A16F1302F00A96CA2 /* NSStringHelper.m in Sources */,
-				4C5BA48B16F1302F00A96CA2 /* NSTextFieldHelper.m in Sources */,
-				4C5BA48C16F1302F00A96CA2 /* NSWindowHelper.m in Sources */,
-				4C5BA48D16F1302F00A96CA2 /* GTMEncodeHTML.m in Sources */,
-				4C5BA48E16F1302F00A96CA2 /* GTMEncodeURL.m in Sources */,
-				4C5BA48F16F1302F00A96CA2 /* THOPluginItem.m in Sources */,
-				4C5BA49016F1302F00A96CA2 /* DDExtensions.m in Sources */,
-				4C5BA49116F1302F00A96CA2 /* DDInvocation.m in Sources */,
-				4C5BA49216F1302F00A96CA2 /* IRCAddressBook.m in Sources */,
-				4C5BA49316F1302F00A96CA2 /* IRCChannel.m in Sources */,
-				4C5BA49416F1302F00A96CA2 /* IRCChannelConfig.m in Sources */,
-				4C5BA49516F1302F00A96CA2 /* IRCChannelMode.m in Sources */,
-				4C5BA49616F1302F00A96CA2 /* IRCClient.m in Sources */,
-				4C5BA49716F1302F00A96CA2 /* IRCClientConfig.m in Sources */,
-				4C5BA49816F1302F00A96CA2 /* IRCConnection.m in Sources */,
-				4C5BA49916F1302F00A96CA2 /* IRCExtras.m in Sources */,
-				4C5BA49A16F1302F00A96CA2 /* IRCISupportInfo.m in Sources */,
-				4C5BA49B16F1302F00A96CA2 /* IRCMessage.m in Sources */,
-				4C5BA49C16F1302F00A96CA2 /* IRCModeInfo.m in Sources */,
-				4C5BA49D16F1302F00A96CA2 /* IRCPrefix.m in Sources */,
-				4C5BA49E16F1302F00A96CA2 /* IRCSendingMessage.m in Sources */,
-				4C5BA49F16F1302F00A96CA2 /* IRCTreeItem.m in Sources */,
-				4C5BA4A016F1302F00A96CA2 /* IRCUser.m in Sources */,
-				4C5BA4A116F1302F00A96CA2 /* IRCWorld.m in Sources */,
-				4C5BA4A216F1302F00A96CA2 /* IRCColorFormat.m in Sources */,
-				4C5BA4A316F1302F00A96CA2 /* AGKeychain.m in Sources */,
-				4C5BA4A416F1302F00A96CA2 /* GCDAsyncSocket.m in Sources */,
-				4C5BA4A516F1302F00A96CA2 /* GCDAsyncSocketExtensions.m in Sources */,
-				4C5BA4A616F1302F00A96CA2 /* RLMAsyncSocket.m in Sources */,
-				4C5BA4A716F1302F00A96CA2 /* TLOFileLogger.m in Sources */,
-				4C5BA4A816F1302F00A96CA2 /* TLOGrowlController.m in Sources */,
-				4C5BA4A916F1302F00A96CA2 /* TLOInputHistory.m in Sources */,
-				4C5BA4AA16F1302F00A96CA2 /* TLOKeyEventHandler.m in Sources */,
-				4C5BA4AB16F1302F00A96CA2 /* TLOLanguagePreferences.m in Sources */,
-				4C5BA4AC16F1302F00A96CA2 /* TLOLinkParser.m in Sources */,
-				4C5BA4AD16F1302F00A96CA2 /* TLONickCompletionStatus.m in Sources */,
-				4C5BA4AE16F1302F00A96CA2 /* TLOpenLink.m in Sources */,
-				4C5BA4AF16F1302F00A96CA2 /* TLOPopupPrompts.m in Sources */,
-				4C5BA4B016F1302F00A96CA2 /* TLORegularExpression.m in Sources */,
-				4C5BA4B116F1302F00A96CA2 /* TLOSoundPlayer.m in Sources */,
-				4C5BA4B216F1302F00A96CA2 /* TLOTimer.m in Sources */,
-				4C5BA4B316F1302F00A96CA2 /* TLOTimerCommand.m in Sources */,
-				4C5BA4B416F1302F00A96CA2 /* main.m in Sources */,
-				4C5BA4B516F1302F00A96CA2 /* TPCThemeSettings.m in Sources */,
-				4C5BA4B616F1302F00A96CA2 /* TPCThemeController.m in Sources */,
-				4C5BA4B716F1302F00A96CA2 /* TPCPreferences.m in Sources */,
-				4C5BA4B816F1302F00A96CA2 /* TVCLogRenderer.m in Sources */,
-				4C5BA4B916F1302F00A96CA2 /* TVCImageURLParser.m in Sources */,
-				4C5BA4BA16F1302F00A96CA2 /* TVCLogController.m in Sources */,
-				4C5BA4BB16F1302F00A96CA2 /* TVCLogLine.m in Sources */,
-				4C5BA4BC16F1302F00A96CA2 /* TVCLogPolicy.m in Sources */,
-				4C5BA4BD16F1302F00A96CA2 /* TVCLogScriptEventSink.m in Sources */,
-				4C5BA4BE16F1302F00A96CA2 /* TVCLogView.m in Sources */,
-				4C5BA4BF16F1302F00A96CA2 /* TVCWebViewAutoScroll.m in Sources */,
-				4C5BA4C016F1302F00A96CA2 /* TVCInputTextField.m in Sources */,
-				4C5BA4C116F1302F00A96CA2 /* TVCTextField.m in Sources */,
-				4C5BA4C216F1302F00A96CA2 /* TVCTextFormatterMenu.m in Sources */,
-				4C5BA4C316F1302F00A96CA2 /* TVCServerList.m in Sources */,
-				4C5BA4C416F1302F00A96CA2 /* TVCServerListCell.m in Sources */,
-				4C5BA4C516F1302F00A96CA2 /* TVCDockIcon.m in Sources */,
-				4C5BA4C616F1302F00A96CA2 /* TVCInputPromptDialog.m in Sources */,
-				4C5BA4C716F1302F00A96CA2 /* TVCListSeparatorCell.m in Sources */,
-				4C5BA4C816F1302F00A96CA2 /* TVCListView.m in Sources */,
-				4C5BA4C916F1302F00A96CA2 /* TVCMainWindow.m in Sources */,
-				4C5BA4CA16F1302F00A96CA2 /* TVCThinSplitView.m in Sources */,
-				4C5BA4CB16F1302F00A96CA2 /* TVCMemberList.m in Sources */,
-				4C5BA4CC16F1302F00A96CA2 /* TVCMemberListCell.m in Sources */,
-				4C5BA4CD16F1302F00A96CA2 /* TVCMainWindowSegmentedControl.m in Sources */,
-				4C5BA4CE16F1302F00A96CA2 /* TPCPreferencesMigrationAssistant.m in Sources */,
-				4C5BA4CF16F1302F00A96CA2 /* TVCMainWindowLoadingScreen.m in Sources */,
-				4C5BA4D016F1302F00A96CA2 /* THOPluginManager.m in Sources */,
-				4C5BA4D116F1302F00A96CA2 /* IRCConnectionSocket.m in Sources */,
-				4C5BA4D216F1302F00A96CA2 /* NSRangeHelper.m in Sources */,
-				4C5BA4D316F1302F00A96CA2 /* TVCMemberListUserInfoPopover.m in Sources */,
-				4C5BA4D416F1302F00A96CA2 /* TVCLogControllerOperationQueue.m in Sources */,
+				4C0444E016F1552A00EBB665 /* TVCServerListCellBadge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

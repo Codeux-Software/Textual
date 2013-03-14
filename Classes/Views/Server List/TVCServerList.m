@@ -191,6 +191,28 @@
 	/* Ignore this. */
 }
 
+- (NSScrollView *)scrollView
+{
+	return (id)self.superview.superview;
+}
+
+- (void)drawBackgroundInClipRect:(NSRect)clipRect
+{
+	if (self.masterController.mainWindowIsActive) {
+		if ([TPCPreferences invertSidebarColors] == NO) {
+			NSRect visibleRect = [self.scrollView documentVisibleRect];
+			
+			NSGradient *theGradient = [NSGradient sourceListBackgroundGradientColor];
+
+			[theGradient drawInRect:visibleRect angle:90];
+
+			return;
+		}
+	}
+
+	[super drawBackgroundInClipRect:clipRect];
+}
+
 #pragma mark -
 #pragma mark Events
 
@@ -242,21 +264,6 @@
 	return nrect;
 }
 
-- (void)drawBackgroundInClipRect:(NSRect)clipRect
-{
-	if (self.masterController.mainWindowIsActive) {
-		if ([TPCPreferences invertSidebarColors] == NO) {
-			NSGradient *theGradient = [NSGradient sourceListBackgroundGradientColor];
-
-			[theGradient drawInRect:clipRect angle:90];
-
-			return;
-		}
-	}
-
-	[super drawBackgroundInClipRect:clipRect];
-}
-
 #pragma mark -
 #pragma mark User Interface Design Elements
 
@@ -303,11 +310,6 @@
 	return [NSFont fontWithName:@"LucidaGrande-Bold" size:11.0];
 }
 
-- (NSInteger)channelCellStatusIconMargin
-{
-	return 6.0;
-}
-
 - (NSInteger)messageCountBadgeHeight
 {
 	return 14.0;
@@ -325,7 +327,7 @@
 
 - (NSInteger)messageCountBadgeRightMargin
 {
-	return 4.0;
+	return 2.0;
 }
 
 - (NSColor *)messageCountBadgeHighlightBackgroundColor
