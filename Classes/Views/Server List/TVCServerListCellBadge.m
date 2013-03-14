@@ -134,9 +134,9 @@
 	
 			/* Save to file… */
 			/* This is for debugging purposes. It writes the new image to the container root path. */
-			NSString *filepath = [NSString stringWithFormat:@"%@/%@.tiff", NSHomeDirectory(), channel.name];
+			//NSString *filepath = [NSString stringWithFormat:@"%@/%@.tiff", NSHomeDirectory(), channel.name];
 
-			[[finalBadge TIFFRepresentation] writeToFile:filepath atomically:YES];
+			//[[finalBadge TIFFRepresentation] writeToFile:filepath atomically:YES];
 
 			/* Update cache. */
 			self.cachedBadgeImage = finalBadge;
