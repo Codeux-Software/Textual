@@ -170,6 +170,8 @@
 + (NSAttributedString *)emptyString;
 + (NSAttributedString *)emptyStringWithBase:(NSString *)base;
 
++ (NSAttributedString *)stringWithBase:(NSString *)base attributes:(NSDictionary *)baseAttributes;
+
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set;
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set frontChop:(NSRangePointer)front;
 
@@ -191,5 +193,7 @@
 #pragma mark Mutable Attributed String Helpers
 
 @interface NSMutableAttributedString (TXMutableAttributedStringHelper)
++ (NSMutableAttributedString *)mutableStringWithBase:(NSString *)base attributes:(NSDictionary *)baseAttributes;
+
 - (NSAttributedString *)getToken;
 @end

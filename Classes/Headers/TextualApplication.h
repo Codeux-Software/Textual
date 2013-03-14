@@ -127,6 +127,7 @@
 	@class TVCMemberListCell;
     @class TVCMemberListUserInfoPopover;
 	@class TVCServerList;
+	@class TVCServerListCellBadge;
 	@class TVCServerListCellGroupItem;
 	@class TVCServerListCellChildItem;
 	@class TVCServerListCellItemTextField;
@@ -274,6 +275,7 @@
 	#import "TVCMainWindowSegmentedControl.h"
 	#import "TVCMemberList.h"
 	#import "TVCMemberListCell.h"
+	#import "TVCServerListCellBadge.h"
     #import "TVCMemberListUserInfoPopover.h"
 	#import "TVCServerList.h"
 	#import "TVCServerListCell.h"

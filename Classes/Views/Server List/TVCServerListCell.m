@@ -37,6 +37,13 @@
 
 #import "TextualApplication.h"
 
+#pragma mark -
+#pragma mark Private Headers
+
+@interface TVCServerListCellItemTextField ()
+@property (nonatomic, strong) TVCServerListCellBadge *badgeDraw;
+@end
+
 @implementation TVCServerListCell
 
 #pragma mark -
@@ -50,6 +57,32 @@
 - (TVCServerList *)serverList
 {
 	return self.masterController.serverList;
+}
+
+- (NSDictionary *)drawingContext
+{
+	/* This information is used by every drawing method defined below. */
+	/* The information itself should be brief and not validated to allow
+	 it to be passed as fast as possible. Allow the actual method doing
+	 the drawing to validate the values passed to it. */
+
+	/* These are not the only keys that may be seen in this dictionary.
+	 Each drawing method will add custom ones to do their own actions. 
+	 I don't know who I am even talking to writing this. Like, really,
+	 who is going to read this besides myself? I guess I am doing this
+	 as a note to future self to remember how this freaking thing works
+	 in a year or so when it probably needs editing again. -.- */
+
+	NSInteger rowIndex = [self rowIndex];
+
+	return @{
+		@"rowIndex"		: @(rowIndex),
+		@"isInverted"	: @([TPCPreferences invertSidebarColors]),
+		@"isRetina"		: @([TPCPreferences runningInHighResolutionMode]),
+		@"isSelected"	: @(rowIndex == self.serverList.selectedRow),
+		@"isKeyWindow"	: @(self.masterController.mainWindowIsActive),
+		@"isGraphite"	: @([NSColor currentControlTint] == NSGraphiteControlTint)
+	};
 }
 
 #pragma mark -
@@ -68,7 +101,7 @@
 - (void)updateGroupDisclosureTriangle /* DO NOT CALL DIRECTLY FROM THIS CLASS. */
 {
 	/* View based outline views do not tell us when we are showing our triangle thingy
-	 or even provide us the pointer to the button. We are going to hack the views to 
+	 or even provide us the pointer to the button. We are going to hack the views to
 	 find the button and do it ourself. Thanks Fapple! */
 
 	NSButtonCell *theButton;
@@ -115,16 +148,18 @@
 	/* Define context variables. */
 	/****************************************************************/
 
-	BOOL invertedColors = [TPCPreferences invertSidebarColors];
-	BOOL isKeyWindow = self.masterController.mainWindowIsActive;
-	BOOL isGraphite = ([NSColor currentControlTint] == NSGraphiteControlTint);
+	NSDictionary *drawContext = [self drawingContext];
+
+	BOOL invertedColors = [drawContext boolForKey:@"isInverted"];
+	BOOL isKeyWindow = [drawContext boolForKey:@"isKeyWindow"];
+	BOOL isGraphite = [drawContext boolForKey:@"isGraphite"];
 
 	IRCChannel *channel = self.cellItem.viewController.channel;
 
 	/****************************************************************/
 	/* Find the name of the image to be drawn. */
 	/****************************************************************/
-	
+
 	NSString *backgroundImage;
 
 	if (channel.isChannel || channel.isPrivateMessage) {
@@ -157,14 +192,21 @@
 	/* Put the background to screen. */
 	/****************************************************************/
 
+	/* When our image view is visible for the selected item, right clicking on
+	 it will not do anything unless we define a menu to use with our view. Below,
+	 we define the menu that matches the selection. */
 	NSMenu *menu = self.masterController.serverMenuItem.submenu;
-	
+
 	if (channel) {
 		menu = self.masterController.channelMenuItem.submenu;
 	}
 
+	/* Setting the menu on our imageView, not only backgroundImageCell, makes it
+	 so right clicking on the channel status produces the same menu that is given
+	 clicking anywhere else in the server list. */
 	[self.imageView setMenu:menu];
 
+	/* Populate the background image cell. */
 	[self.backgroundImageCell setMenu:menu];
 	[self.backgroundImageCell setImage:origBackgroundImage];
 	[self.backgroundImageCell setHidden:NO];
@@ -192,21 +234,26 @@
 	/* Define our context variables. */
 	/**************************************************************/
 
-	NSInteger rowIndex = [self rowIndex];
+	NSDictionary *drawContext = [self drawingContext];
 
-	BOOL invertedColors = [TPCPreferences invertSidebarColors];
-	BOOL isSelected = (rowIndex == self.serverList.selectedRow);
-	BOOL isKeyWindow = self.masterController.mainWindowIsActive;
+	BOOL invertedColors = [drawContext boolForKey:@"isInverted"];
+	BOOL isKeyWindow = [drawContext boolForKey:@"isKeyWindow"];
+	BOOL isSelected = [drawContext boolForKey:@"isSelected"];
 
+	/* The viewController always has a reference to either a channel or client. It is also
+	 defined for every item in our server list. It is the most reliable way to access the
+	 outside information. */
 	IRCClient *client = self.cellItem.viewController.client;
 
 	/**************************************************************/
 	/* Create our new string from scratch. */
 	/**************************************************************/
-	
-	NSMutableAttributedString *newStrValue = [[NSMutableAttributedString alloc] initWithString:self.cellItem.label
-																					attributes:self.textField.attributedStringValue.attributes];
-	
+
+	/* The new string inherits the attributes of the text field so that stuff that we do not
+	 define like the paragraph style is passed along and not lost when we define a new value. */
+	NSMutableAttributedString *newStrValue = [NSMutableAttributedString mutableStringWithBase:self.cellItem.label
+																				   attributes:self.textField.attributedStringValue.attributes];
+
 	/* Text font and color. */
 	NSColor *controlColor = self.serverList.serverCellNormalTextColor;
 
@@ -247,7 +294,7 @@
 	/**************************************************************/
 	/* Set attributes on the new string. */
 	/**************************************************************/
-	
+
 	NSRange textRange = NSMakeRange(0, newStrValue.length);
 
 	[newStrValue addAttribute:NSShadowAttributeName	value:itemShadow range:textRange];
@@ -268,33 +315,32 @@
 {
 	NSImage *oldImage = [NSImage imageNamed:iconName];
 	NSImage *newImage = oldImage;
-	
+
 	/* Draw an image with alpha. */
 	/* We already know all these images will be 16x16. */
-
 	if (alpha < 1.0) {
 		newImage = [[NSImage alloc] initWithSize:NSMakeSize(16, 16)];
 
 		[newImage lockFocus];
-		
+
 		[oldImage drawInRect:NSMakeRect(0, 0, 16, 16)
 					fromRect:NSZeroRect
 				   operation:NSCompositeSourceOver
 					fraction:alpha
 			  respectFlipped:YES
 					   hints:nil];
-		
+
 		[newImage unlockFocus];
 	}
 
 	/* Set the new image. */
 	[self.imageView setImage:newImage];
-	
+
 	/* The private message icon is designed a little different than the
 	 channel status icon. Therefore, we have to change its origin to make
 	 up for the difference in design. */
 	if ([iconName hasPrefix:@"colloquy"] == NO) {
-		static BOOL frameUpdated = NO;
+		static BOOL frameUpdated = NO; // Saves the value so we do not push frame every draw. 
 
 		if (frameUpdated == NO) {
 			NSRect oldRect = [self.imageView frame];
@@ -314,13 +360,12 @@
 	/* Define our context variables. */
 	/**************************************************************/
 
-	NSInteger rowIndex = [self rowIndex];
+	NSDictionary *drawContext = [self drawingContext];
 
-	BOOL invertedColors = [TPCPreferences invertSidebarColors];
-
-	BOOL isSelected = (rowIndex == self.serverList.selectedRow);
-	BOOL isGraphite = ([NSColor currentControlTint] == NSGraphiteControlTint);
-	BOOL isKeyWindow = self.masterController.mainWindowIsActive;
+	BOOL invertedColors = [drawContext boolForKey:@"isInverted"];
+	BOOL isKeyWindow = [drawContext boolForKey:@"isKeyWindow"];
+	BOOL isGraphite = [drawContext boolForKey:@"isGraphite"];
+	BOOL isSelected = [drawContext boolForKey:@"isSelected"];
 
 	IRCChannel *channel = self.cellItem.viewController.channel;
 
@@ -333,16 +378,20 @@
 	if ([textFieldCell isKindOfClass:[TVCServerListCellItemTextField class]]) {
 		TVCServerListCellItemTextField *textField = (TVCServerListCellItemTextField *)textFieldCell;
 
-		[textField setDrawMessageCountBadge:YES];
-		[textField setChannelPointer:channel];
-		[textField setIsSelected:isSelected];
-		[textField setIsKeyWindow:isKeyWindow];
+		NSMutableDictionary *context = [@{
+			@"drawBadgeCount" : @(YES),
+			@"ownerCellItem" : self
+		} mutableCopy];
+
+		[context addEntriesFromDictionary:drawContext];
+
+		[textField setDrawContext:context];
 	}
 
 	/**************************************************************/
 	/* Draw status icon for channel. */
 	/**************************************************************/
-	
+
 	/* Status icon. */
 	if (channel.isChannel) {
 		if (channel.isActive) {
@@ -357,9 +406,9 @@
 	/**************************************************************/
 	/* Create our new string from scratch. */
 	/**************************************************************/
-	
-	NSMutableAttributedString *newStrValue = [[NSMutableAttributedString alloc] initWithString:self.cellItem.label
-																					attributes:self.textField.attributedStringValue.attributes];
+
+	NSMutableAttributedString *newStrValue = [NSMutableAttributedString mutableStringWithBase:self.cellItem.label
+																				   attributes:self.textField.attributedStringValue.attributes];
 
 	/* Define the text shadow information. */
 	NSShadow *itemShadow = [NSShadow new];
@@ -388,12 +437,12 @@
 	/**************************************************************/
 	/* Set attributes on the new string. */
 	/**************************************************************/
-	
+
 	NSRange textRange = NSMakeRange(0, newStrValue.length);
 
 	if (isSelected) {
 		[newStrValue addAttribute:NSFontAttributeName value:self.serverList.selectedChannelCellFont range:textRange];
-		
+
 		if (isKeyWindow) {
 			[newStrValue addAttribute:NSForegroundColorAttributeName value:self.serverList.channelCellSelectedTextColorForActiveWindow range:textRange];
 		} else {
@@ -401,7 +450,7 @@
 		}
 	} else {
 		[newStrValue addAttribute:NSForegroundColorAttributeName value:self.serverList.channelCellNormalTextColor range:textRange];
-		
+
 		[newStrValue addAttribute:NSFontAttributeName value:self.serverList.normalChannelCellFont range:textRange];
 	}
 
@@ -417,9 +466,11 @@
 @end
 
 @implementation TVCServerListCellGroupItem
+/* For future use. */
 @end
 
 @implementation TVCServerListCellChildItem
+/* For future use. */
 @end
 
 @implementation TVCServerListCellItemTextField
@@ -431,34 +482,49 @@
 		[RZGraphicsCurrentContext() setShouldAntialias:NO];
 	}
 
-	if (self.drawMessageCountBadge) {
-		PointerIsEmptyAssert(self.channelPointer);
-
-		/* Gather information about this badge draw. */
-		BOOL drawMessageBadge = (self.isSelected == NO || (self.isKeyWindow == NO && self.isSelected));
-
-		NSInteger channelTreeUnreadCount = self.channelPointer.treeUnreadCount;
-		NSInteger nicknameHighlightCount = self.channelPointer.nicknameHighlightCount;
-
-		BOOL isHighlight = (nicknameHighlightCount >= 1);
-
-		/* Begin draw if we want to. */
-		if (channelTreeUnreadCount >= 1 && drawMessageBadge) {
-			/* Get the string being draw. */
-			NSAttributedString *mcstring = [self messageCountBadgeText:channelTreeUnreadCount selected:(self.isSelected && isHighlight == NO)];
-
-			/* Get the rect being drawn. */
-			NSRect badgeRect = [self messageCountBadgeRect:cellFrame withText:mcstring];
-
-			/* Draw the badge. */
-			[self drawMessageCountBadge:mcstring inCell:badgeRect withHighlighgt:isHighlight];
-
-			/* Trim our text field to make room for the newly drawn badge. */
-			cellFrame.size.width -= badgeRect.size.width;
+	/* Prepare for badge drawing. */
+	if (self.drawContext) {
+		if (PointerIsEmpty(self.badgeDraw)) {
+			self.badgeDraw = [TVCServerListCellBadge new];
 		}
 
-		/* Trim our rect a little bit more. */
-		cellFrame.size.width -= (self.serverList.messageCountBadgeRightMargin * 2);
+		/* Gather context information. */
+		BOOL drawBadge = [self.drawContext boolForKey:@"drawBadgeCount"];
+
+		TVCServerListCell *owningCell = [self.drawContext objectForKey:@"ownerCellItem"];
+
+		/* Are we going to even draw anything? */
+		if (drawBadge && owningCell) {
+			/* Build the image. */
+			NSImage *badgeImage = [self.badgeDraw drawBadgeForCellItem:owningCell.cellItem
+													withDrawingContext:self.drawContext];
+
+			/* Do we have an image? */
+			if (badgeImage) {
+				/* Build frame information. */
+				NSSize scaledSize = [self.badgeDraw scaledSize];
+
+				NSRect badgeFrame = cellFrame;
+
+				badgeFrame.origin.x = (NSMaxX(cellFrame) - (scaledSize.width + self.serverList.messageCountBadgeRightMargin));
+				badgeFrame.origin.y = (cellFrame.origin.y + 2);
+
+				badgeFrame.size.width = scaledSize.width;
+				badgeFrame.size.height = scaledSize.height;
+				
+				/* Draw the badge. */
+				[badgeImage drawInRect:badgeFrame
+							  fromRect:NSZeroRect
+							 operation:NSCompositeSourceOver
+							  fraction:1
+						respectFlipped:YES
+								 hints:nil];
+
+				/* Correct frame information for the text to follow. */
+				cellFrame.size.width -= badgeFrame.size.width;
+				cellFrame.size.width -= (self.serverList.messageCountBadgeRightMargin * 2);
+			}
+		}
 	}
 
 	/* Draw the actual text field. */
@@ -467,111 +533,6 @@
 	if ([TPCPreferences useLogAntialiasing] == NO) {
 		[RZGraphicsCurrentContext() restoreGraphicsState];
 	}
-}
-
-#pragma mark -
-#pragma mark Badge Drawing 
-
-- (NSAttributedString *)messageCountBadgeText:(NSInteger)messageCount selected:(BOOL)isSelected
-{
-	NSString *messageCountString = TXFormattedNumber(messageCount);
-
-    /* Pick which font size best aligns with the badge. */
-	NSColor *textColor = self.serverList.messageCountBadgeNormalTextColor;
-
-	if (isSelected) {
-		textColor = self.serverList.messageCountBadgeSelectedTextColor;
-	}
-
-	NSDictionary *attributes = @{
-		NSForegroundColorAttributeName : textColor,
-		NSFontAttributeName : self.serverList.messageCountBadgeFont
-	};
-
-	NSAttributedString *mcstring = [[NSAttributedString alloc] initWithString:messageCountString
-																   attributes:attributes];
-
-	return mcstring;
-}
-
-- (NSRect)messageCountBadgeRect:(NSRect)cellFrame withText:(NSAttributedString *)mcstring
-{
-	NSInteger messageCountWidth = (mcstring.size.width + (self.serverList.messageCountBadgePadding * 2));
-
-	NSRect badgeFrame = NSMakeRect((NSMaxX(cellFrame) - (self.serverList.messageCountBadgeRightMargin + messageCountWidth)),
-								   (NSMidY(cellFrame) - (self.serverList.messageCountBadgeHeight / 2.0)),
-								   messageCountWidth, self.serverList.messageCountBadgeHeight);
-
-	if (badgeFrame.size.width < self.serverList.messageCountBadgeMinimumWidth) {
-		NSInteger widthDiff = (self.serverList.messageCountBadgeMinimumWidth - badgeFrame.size.width);
-
-		badgeFrame.size.width += widthDiff;
-		badgeFrame.origin.x -= widthDiff;
-	}
-
-	return badgeFrame;
-}
-
-- (NSInteger)drawMessageCountBadge:(NSAttributedString *)mcstring inCell:(NSRect)badgeFrame withHighlighgt:(BOOL)highlight
-{
-	NSBezierPath *badgePath;
-
-	/* Draw the badge's drop shadow. */
-	if (self.isSelected == NO) {
-		NSRect shadowFrame = badgeFrame;
-
-		shadowFrame.origin.y += 1;
-
-		badgePath = [NSBezierPath bezierPathWithRoundedRect:shadowFrame
-													xRadius:(self.serverList.messageCountBadgeHeight / 2.0)
-													yRadius:(self.serverList.messageCountBadgeHeight / 2.0)];
-
-		[self.serverList.messageCountBadgeShadowColor set];
-
-		[badgePath fill];
-	}
-
-	/* Draw the background color. */
-	NSColor *backgroundColor;
-
-	if (highlight) {
-		backgroundColor = self.serverList.messageCountBadgeHighlightBackgroundColor;
-	} else {
-		if (self.isSelected) {
-			backgroundColor = self.serverList.messageCountBadgeSelectedBackgroundColor;
-		} else {
-			if ([NSColor currentControlTint] == NSGraphiteControlTint) {
-				backgroundColor = self.serverList.messageCountBadgeGraphtieBackgroundColor;
-			} else {
-				backgroundColor = self.serverList.messageCountBadgeAquaBackgroundColor;
-			}
-		}
-	}
-
-	badgePath = [NSBezierPath bezierPathWithRoundedRect:badgeFrame
-												xRadius:(self.serverList.messageCountBadgeHeight / 2.0)
-												yRadius:(self.serverList.messageCountBadgeHeight / 2.0)];
-
-	[backgroundColor set];
-
-	[badgePath fill];
-
-	/* Center the text relative to the badge itself. */
-	NSPoint badgeTextPoint;
-
-	badgeTextPoint = NSMakePoint((NSMidX(badgeFrame) - (mcstring.size.width / 2.0)),
-								((NSMidY(badgeFrame) - (mcstring.size.height / 2.0)) + 1));
-
-	/* Mountain Lion did not like our origin. */
-	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
-		badgeTextPoint.y -= 1;
-	}
-	
-	/* The actual draw. */
-	[mcstring drawAtPoint:badgeTextPoint];
-
-	/* Return the frame of the badge. */
-	return badgeFrame.size.width;
 }
 
 #pragma mark -

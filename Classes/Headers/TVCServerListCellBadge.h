@@ -37,24 +37,12 @@
 
 #import "TextualApplication.h"
 
-@interface TVCServerListCell : NSTableCellView
-@property (nonatomic, nweak) IRCTreeItem *cellItem;
+/* TVCServerListCellBadge is used exclusively by the server list to draw badges
+ for channels. Its internal renderer relies entirely on the presence of the server
+ list and related items so do not try and call this through a plugin. */
 
-/* Image view holding the image for selected cell. */
-@property (nonatomic, nweak) NSImageView *backgroundImageCell;
+@interface TVCServerListCellBadge : NSObject
+- (NSImage *)drawBadgeForCellItem:(id)cellItem withDrawingContext:(NSDictionary *)drawContext;
 
-- (void)updateDrawing:(NSRect)cellFrame;
-
-- (void)updateGroupDisclosureTriangle;
-- (void)updateSelectionBackgroundView;
-@end
-
-@interface TVCServerListCellChildItem : TVCServerListCell
-@end
-
-@interface TVCServerListCellGroupItem : TVCServerListCell
-@end
-
-@interface TVCServerListCellItemTextField : NSTextFieldCell
-@property (nonatomic, strong) NSDictionary *drawContext; // Passed by parent for badge drawing.
+- (NSSize)scaledSize;
 @end
