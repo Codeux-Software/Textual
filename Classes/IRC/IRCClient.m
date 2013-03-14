@@ -5276,6 +5276,33 @@
 		NSObjectIsEmptyAssert(outputString);
 
 		[self.worldController.iomt inputText:outputString command:IRCPrivateCommandIndex("privmsg")];
+
+		/* We probably should do something with this eventually. */
+		/*
+		 
+		NSURL *userScriptURL = [NSURL fileURLWithPath:scriptPath];
+
+		NSError *aserror = nil;
+
+		NSUserUnixTask *unixTask = [[NSUserUnixTask alloc] initWithURL:userScriptURL error:&aserror];
+
+		NSFileHandle *standardOutput = [NSFileHandle fileHandleWithStandardOutput];
+
+		[unixTask setStandardOutput:standardOutput];
+
+		if (PointerIsEmpty(unixTask) || aserror) {
+			[self outputTextualCmdScriptError:scriptPath input:scriptInput context:[aserror userInfo] error:aserror];
+		} else {
+			[unixTask executeWithArguments:arguments completionHandler:^(NSError *err) {
+				if (err) {
+					// Failure.
+				} else {
+					// Success.
+				}
+			}];
+		} 
+		 
+		*/
 	}
 }
 
