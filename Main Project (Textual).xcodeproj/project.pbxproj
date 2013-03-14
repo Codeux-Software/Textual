@@ -43,7 +43,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		4C0444E016F1552A00EBB665 /* TVCServerListCellBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0444DF16F1552A00EBB665 /* TVCServerListCellBadge.m */; };
 		4C0444E716F1553C00EBB665 /* TVCServerListCellBadge.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0444E616F1553C00EBB665 /* TVCServerListCellBadge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0444E816F1555800EBB665 /* TVCServerListCellBadge.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0444E616F1553C00EBB665 /* TVCServerListCellBadge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0444F616F1603B00EBB665 /* TXGlobalModels.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF510158E99520026668C /* TXGlobalModels.m */; };
@@ -155,6 +154,9 @@
 		4C0445DF16F1603C00EBB665 /* TVCMainWindowSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */; };
 		4C0445E016F1603C00EBB665 /* TVCThinSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF605158E99520026668C /* TVCThinSplitView.m */; };
 		4C08885A16E7A6C7006FD7D8 /* TVCLogControllerOperationQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C08885916E7A6C7006FD7D8 /* TVCLogControllerOperationQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C0E363516F192F200B426C2 /* TVCServerList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0444EA16F15F8200EBB665 /* TVCServerList.m */; };
+		4C0E363616F192F200B426C2 /* TVCServerListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0444EB16F15F8200EBB665 /* TVCServerListCell.m */; };
+		4C0E363716F192F200B426C2 /* TVCServerListCellBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0444EC16F15F8200EBB665 /* TVCServerListCellBadge.m */; };
 		4C1ED4A116CEA081006DD0CA /* IRCConnectionSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C1ED4A316CEA0A9006DD0CA /* IRCConnectionSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */; };
 		4C211D5715BF21BA00E218DA /* libmustache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C211D5615BF21BA00E218DA /* libmustache.a */; };
@@ -651,8 +653,6 @@
 		4C8AF6DB158E99520026668C /* TVCInputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FA158E99520026668C /* TVCInputTextField.m */; };
 		4C8AF6DC158E99520026668C /* TVCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FB158E99520026668C /* TVCTextField.m */; };
 		4C8AF6DD158E99520026668C /* TVCTextFormatterMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FC158E99520026668C /* TVCTextFormatterMenu.m */; };
-		4C8AF6DE158E99520026668C /* TVCServerList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FE158E99520026668C /* TVCServerList.m */; };
-		4C8AF6DF158E99520026668C /* TVCServerListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FF158E99520026668C /* TVCServerListCell.m */; };
 		4C8AF6E0158E99520026668C /* TVCDockIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF600158E99520026668C /* TVCDockIcon.m */; };
 		4C8AF6E1158E99520026668C /* TVCInputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF601158E99520026668C /* TVCInputPromptDialog.m */; };
 		4C8AF6E2158E99520026668C /* TVCListSeparatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF602158E99520026668C /* TVCListSeparatorCell.m */; };
@@ -925,7 +925,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4C0444DF16F1552A00EBB665 /* TVCServerListCellBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCServerListCellBadge.m; sourceTree = "<group>"; };
 		4C0444E616F1553C00EBB665 /* TVCServerListCellBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCServerListCellBadge.h; sourceTree = "<group>"; };
 		4C0444EA16F15F8200EBB665 /* TVCServerList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCServerList.m; sourceTree = "<group>"; };
 		4C0444EB16F15F8200EBB665 /* TVCServerListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCServerListCell.m; sourceTree = "<group>"; };
@@ -1192,8 +1191,6 @@
 		4C8AF5FA158E99520026668C /* TVCInputTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCInputTextField.m; sourceTree = "<group>"; };
 		4C8AF5FB158E99520026668C /* TVCTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCTextField.m; sourceTree = "<group>"; };
 		4C8AF5FC158E99520026668C /* TVCTextFormatterMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCTextFormatterMenu.m; sourceTree = "<group>"; };
-		4C8AF5FE158E99520026668C /* TVCServerList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCServerList.m; sourceTree = "<group>"; };
-		4C8AF5FF158E99520026668C /* TVCServerListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCServerListCell.m; sourceTree = "<group>"; };
 		4C8AF600158E99520026668C /* TVCDockIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCDockIcon.m; sourceTree = "<group>"; };
 		4C8AF601158E99520026668C /* TVCInputPromptDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCInputPromptDialog.m; sourceTree = "<group>"; };
 		4C8AF602158E99520026668C /* TVCListSeparatorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCListSeparatorCell.m; sourceTree = "<group>"; };
@@ -2066,9 +2063,6 @@
 		4C8AF5FD158E99520026668C /* Server List */ = {
 			isa = PBXGroup;
 			children = (
-				4C8AF5FE158E99520026668C /* TVCServerList.m */,
-				4C8AF5FF158E99520026668C /* TVCServerListCell.m */,
-				4C0444DF16F1552A00EBB665 /* TVCServerListCellBadge.m */,
 				4C0444E916F15F8200EBB665 /* Server List */,
 			);
 			path = "Server List";
@@ -3070,6 +3064,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C0E363516F192F200B426C2 /* TVCServerList.m in Sources */,
+				4C0E363616F192F200B426C2 /* TVCServerListCell.m in Sources */,
+				4C0E363716F192F200B426C2 /* TVCServerListCellBadge.m in Sources */,
 				4CD63F3015C59C5B00E8DE92 /* NSScreenHelper.m in Sources */,
 				4C8AF609158E99520026668C /* TXGlobalModels.m in Sources */,
 				4C8AF60A158E99520026668C /* TXMasterController.m in Sources */,
@@ -3159,8 +3156,6 @@
 				4C8AF6DB158E99520026668C /* TVCInputTextField.m in Sources */,
 				4C8AF6DC158E99520026668C /* TVCTextField.m in Sources */,
 				4C8AF6DD158E99520026668C /* TVCTextFormatterMenu.m in Sources */,
-				4C8AF6DE158E99520026668C /* TVCServerList.m in Sources */,
-				4C8AF6DF158E99520026668C /* TVCServerListCell.m in Sources */,
 				4C8AF6E0158E99520026668C /* TVCDockIcon.m in Sources */,
 				4C8AF6E1158E99520026668C /* TVCInputPromptDialog.m in Sources */,
 				4C8AF6E2158E99520026668C /* TVCListSeparatorCell.m in Sources */,
@@ -3177,7 +3172,6 @@
 				4C8D624F16D02688007D6C60 /* NSRangeHelper.m in Sources */,
 				4CBBD19E16E356F400D2FEFE /* TVCMemberListUserInfoPopover.m in Sources */,
 				4C419A0516E91C470093B006 /* TVCLogControllerOperationQueue.m in Sources */,
-				4C0444E016F1552A00EBB665 /* TVCServerListCellBadge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
