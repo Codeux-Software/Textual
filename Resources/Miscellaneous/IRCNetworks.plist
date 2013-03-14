@@ -38,6 +38,8 @@
 	<string>irc.technoid-irc.net</string>
 	<key>Undernet</key>
 	<string>irc.undernet.org</string>
+	<key>Snyde</key>
+	<string>irc.snyde.net</string>
 	<key>OFTC</key>
 	<string>irc.oftc.net</string>
 	<key>Thinkstack</key>
