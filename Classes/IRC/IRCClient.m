@@ -2101,6 +2101,56 @@
 
 			break;
 		}
+		case 5092: // Command: DEFAULTS
+		{
+			NSObjectIsEmptyAssertLoopBreak(uncutInput);
+
+			/* Command to write setting to NSUserDefaults. 
+			 Syntax: /defaults [-[b|i|s|del]] <key> <value> */
+
+			if ([uncutInput hasPrefix:@"-b "] || // Boolean: YES, NO
+				[uncutInput hasPrefix:@"-s "] || // String.
+				[uncutInput hasPrefix:@"-i "])   // Integer.
+			{
+				NSString *dataType = s.getToken.string;
+
+				NSString *settingKey = s.getToken.string;
+				NSString *settingValue = s.getToken.string;
+
+				NSObjectIsEmptyAssertLoopBreak(settingKey);
+				NSObjectIsEmptyAssertLoopBreak(settingValue);
+
+				if ([dataType isEqualToString:@"-b"]) {
+					[RZUserDefaults() setBool:[settingValue boolValue] forKey:settingKey];
+				} else if ([dataType isEqualToString:@"-i"]) {
+					[RZUserDefaults() setInteger:[settingValue integerValue] forKey:settingKey];
+				} else {
+					[RZUserDefaults() setObject:settingValue forKey:settingKey];
+				}
+			} else if ([uncutInput hasPrefix:@"-del "]) { // Delete Item
+				NSString *dataType = s.getToken.string;
+
+#pragma unused(dataType)
+
+				NSString *settingKey = s.string;
+
+				NSObjectIsEmptyAssertLoopBreak(settingKey);
+
+				[RZUserDefaults() removeObjectForKey:settingKey];
+			} else {
+				id settingValue = [RZUserDefaults() objectForKey:uncutInput];
+
+				NSString *message = [NSString stringWithFormat:@"%@", settingValue];
+
+				NSArray *messages = [message split:NSStringNewlinePlaceholder];
+
+				for (NSString *value in messages) {
+					[self printDebugInformation:[NSString stringWithFormat:@"%@ => %@", uncutInput, value]];
+				}
+			}
+
+			break;
+		}
 		default:
 		{
 			/* Scan scripts first. */
