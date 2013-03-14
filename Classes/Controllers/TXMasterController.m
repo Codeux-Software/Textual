@@ -82,7 +82,12 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 	/* That's a long var name. */
 	if (disableWindowSizeRequirement) {
-		[self.mainWindow setMinSize:NSMakeSize(0, 0)];
+		/* Fine, it is not an actual zero requirement for window size, but who would possibly go below this
+		 size? You cannot even see the chat view or anything in that area at this size. It is being forced 
+		 at this size to fix a bug with the input field breaking when it hits a negative draw rect. This 
+		 can just be considered a lazy man fix. */
+		
+		[self.mainWindow setMinSize:NSMakeSize(200, 58)];
 	}
 
 	[self loadWindowState:YES];
