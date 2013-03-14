@@ -155,6 +155,10 @@
 		badgeTextPoint.y -= 1;
 	}
 
+	if ([TPCPreferences runningInHighResolutionMode]) {
+		badgeTextPoint.y -= 0.5;
+	}
+	
 	/* Mountain Lion didn't like our origin. */
 	if ([TPCPreferences featureAvailableToOSXMountainLion] && [TPCPreferences runningInHighResolutionMode] == NO) {
 		badgeTextPoint.y -= 1;
