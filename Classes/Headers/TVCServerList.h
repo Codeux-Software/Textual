@@ -115,6 +115,12 @@
 - (NSColor *)graphiteTextSelectionShadowColor;
 @end
 
+@interface TVCServerListScrollClipView : NSClipView
+@end
+
+@interface TVCServerListScrollView : NSScrollView
+@end
+
 @interface NSObject (TVCServerListDelegate)
 - (void)serverListKeyDown:(NSEvent *)e;
 @end

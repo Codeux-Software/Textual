@@ -37,48 +37,11 @@
 
 #import "TextualApplication.h"
 
-@interface TVCMemberList : TVCListView
-- (void)updateBackgroundColor;
+@implementation NSImage (TXImageHelper)
 
-/* User interface elements. */
-- (NSColor *)normalCellTextColor;
-- (NSColor *)awayUserCellTextColor;
++ (NSImage *)newImageWithSize:(NSSize)size
+{
+	return [[NSImage alloc] initWithSize:size];
+}
 
-- (NSColor *)normalCellTextShadowColor;
-- (NSColor *)normalSelectedCellTextShadowColorForActiveWindow;
-- (NSColor *)normalSelectedCellTextShadowColorForInactiveWindow;
-- (NSColor *)graphiteSelectedCellTextShadowColorForActiveWindow;
-
-- (NSColor *)selectedCellTextColor;
-
-- (NSColor *)userMarkBadgeBackgroundColor_Y;
-- (NSColor *)userMarkBadgeBackgroundColor_A;
-- (NSColor *)userMarkBadgeBackgroundColor_H;
-- (NSColor *)userMarkBadgeBackgroundColor_O;
-- (NSColor *)userMarkBadgeBackgroundColor_Q;
-- (NSColor *)userMarkBadgeBackgroundColor_V;
-- (NSColor *)userMarkBadgeBackgroundColor_XAqua;
-- (NSColor *)userMarkBadgeBackgroundColor_XGraphite;
-- (NSColor *)userMarkBadgeNormalTextColor;
-- (NSColor *)userMarkBadgeSelectedBackgroundColor;
-- (NSColor *)userMarkBadgeSelectedTextColor;
-- (NSColor *)userMarkBadgeShadowColor;
-
-- (NSFont *)normalCellFont;
-- (NSFont *)selectedCellFont;
-- (NSFont *)userMarkBadgeFont;
-
-- (NSInteger)userMarkBadgeHeight;
-- (NSInteger)userMarkBadgeMargin;
-- (NSInteger)userMarkBadgeWidth;
-@end
-
-@interface TVCMemberListScrollClipView : NSClipView
-@end
-
-@interface TVCMemberListScrollView : NSScrollView
-@end
-
-@interface NSObject (TVCMemberListDelegate)
-- (void)memberListViewKeyDown:(NSEvent *)e;
 @end

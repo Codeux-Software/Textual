@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 @implementation TVCMemberList
 
 - (void)keyDown:(NSEvent *)e
@@ -225,6 +227,66 @@
 - (NSColor *)graphiteSelectedCellTextShadowColorForActiveWindow
 {
 	return [NSColor internalCalibratedRed:17 green:73 blue:126 alpha:1.00];
+}
+
+@end
+
+#pragma mark -
+#pragma mark Scroll View Clip View
+
+@implementation TVCMemberListScrollClipView
+
+- (id)initWithFrame:(NSRect)frame
+{
+	if ((self = [super initWithFrame:frame])) {
+		self.layer = [CAScrollLayer layer];
+
+		self.wantsLayer = YES;
+		self.layerContentsRedrawPolicy = NSViewLayerContentsRedrawNever;
+
+		return self;
+	}
+
+	return nil;
+}
+
+@end
+
+#pragma mark -
+#pragma mark Scroll View
+
+@implementation TVCMemberListScrollView
+
+- (void)swapClipView
+{
+	self.wantsLayer = YES;
+
+    id documentView = self.documentView;
+
+	TVCMemberListScrollClipView *clipView = [[TVCMemberListScrollClipView alloc] initWithFrame:self.contentView.frame];
+
+	self.contentView = clipView;
+	self.documentView = documentView;
+}
+
+- (id)initWithFrame:(NSRect)frame
+{
+	if ((self = [super initWithFrame:frame])) {
+		[self swapClipView];
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+
+    if ([self.contentView isKindOfClass:[TVCMemberListScrollClipView class]] == NO) {
+        [self swapClipView];
+    }
 }
 
 @end

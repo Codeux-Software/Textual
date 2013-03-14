@@ -104,11 +104,14 @@
 	 or even provide us the pointer to the button. We are going to hack the views to
 	 find the button and do it ourself. Thanks Fapple! */
 
+	NSButton *theButtonParent;
 	NSButtonCell *theButton;
 
 	for (id view in self.superview.subviews) {
 		if ([view isKindOfClass:[NSButton class]]) {
-			theButton = [(NSButton *)view cell];
+			theButtonParent = view;
+			
+			theButton = [theButtonParent cell];
 		}
 	}
 
@@ -132,13 +135,26 @@
 	NSImage *primary = [self.serverList disclosureTriangleInContext:YES selected:isSelected];
 	NSImage *alterna = [self.serverList disclosureTriangleInContext:NO selected:isSelected];
 
+	BOOL imageChanged = ([theButton.image isEqual:primary] == NO);
+
 	[theButton setImage:primary];
 	[theButton setAlternateImage:alterna];
 
 	if (isSelected) {
+		imageChanged = (theButton.backgroundStyle == NSBackgroundStyleRaised);
+
 		[theButton setBackgroundStyle:NSBackgroundStyleLowered];
 	} else {
+		imageChanged = (theButton.backgroundStyle == NSBackgroundStyleLowered);
+		
 		[theButton setBackgroundStyle:NSBackgroundStyleRaised];
+	}
+
+	if (imageChanged) {
+		/* In our layered back scroll view this forces the disclosure triangle to be redrawn. */
+
+		[theButtonParent setHidden:YES];
+		[theButtonParent setHidden:NO];
 	}
 }
 
@@ -253,7 +269,7 @@
 	 define like the paragraph style is passed along and not lost when we define a new value. */
 	NSMutableAttributedString *newStrValue = [NSMutableAttributedString mutableStringWithBase:self.cellItem.label
 																				   attributes:self.textField.attributedStringValue.attributes];
-
+	
 	/* Text font and color. */
 	NSColor *controlColor = self.serverList.serverCellNormalTextColor;
 
@@ -287,7 +303,6 @@
 			[itemShadow setShadowColor:self.serverList.serverCellNormalTextShadowColorForActiveWindow];
 		} else {
 			[itemShadow setShadowColor:self.serverList.serverCellNormalTextShadowColorForInactiveWindow];
-
 		}
 	}
 
@@ -319,7 +334,7 @@
 	/* Draw an image with alpha. */
 	/* We already know all these images will be 16x16. */
 	if (alpha < 1.0) {
-		newImage = [[NSImage alloc] initWithSize:NSMakeSize(16, 16)];
+		newImage = [NSImage newImageWithSize:NSMakeSize(16, 16)];
 
 		[newImage lockFocus];
 
@@ -368,26 +383,7 @@
 	BOOL isSelected = [drawContext boolForKey:@"isSelected"];
 
 	IRCChannel *channel = self.cellItem.viewController.channel;
-
-	/**************************************************************/
-	/* Prepare for badge drawing. */
-	/**************************************************************/
-
-	NSTextFieldCell *textFieldCell = [self.textField cell];
-
-	if ([textFieldCell isKindOfClass:[TVCServerListCellItemTextField class]]) {
-		TVCServerListCellItemTextField *textField = (TVCServerListCellItemTextField *)textFieldCell;
-
-		NSMutableDictionary *context = [@{
-			@"drawBadgeCount" : @(YES),
-			@"ownerCellItem" : self
-		} mutableCopy];
-
-		[context addEntriesFromDictionary:drawContext];
-
-		[textField setDrawContext:context];
-	}
-
+	
 	/**************************************************************/
 	/* Draw status icon for channel. */
 	/**************************************************************/
@@ -409,6 +405,26 @@
 
 	NSMutableAttributedString *newStrValue = [NSMutableAttributedString mutableStringWithBase:self.cellItem.label
 																				   attributes:self.textField.attributedStringValue.attributes];
+
+	/**************************************************************/
+	/* Prepare for badge drawing. */
+	/**************************************************************/
+
+	NSTextFieldCell *textFieldCell = [self.textField cell];
+
+	if ([textFieldCell isKindOfClass:[TVCServerListCellItemTextField class]]) {
+		TVCServerListCellItemTextField *textField = (TVCServerListCellItemTextField *)textFieldCell;
+
+		/* Build badge context. */
+		NSMutableDictionary *context = [@{
+			@"drawBadgeCount" : @(YES),
+			@"ownerCellItem" : self
+		} mutableCopy];
+
+		[context addEntriesFromDictionary:drawContext];
+
+		[textField setDrawContext:context];
+	}
 
 	/* Define the text shadow information. */
 	NSShadow *itemShadow = [NSShadow new];
@@ -477,11 +493,6 @@
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	if ([TPCPreferences useLogAntialiasing] == NO) {
-		[RZGraphicsCurrentContext() saveGraphicsState];
-		[RZGraphicsCurrentContext() setShouldAntialias:NO];
-	}
-
 	/* Prepare for badge drawing. */
 	if (self.drawContext) {
 		if (PointerIsEmpty(self.badgeDraw)) {
@@ -516,7 +527,7 @@
 				[badgeImage drawInRect:badgeFrame
 							  fromRect:NSZeroRect
 							 operation:NSCompositeSourceOver
-							  fraction:1
+							  fraction:1.0
 						respectFlipped:YES
 								 hints:nil];
 
@@ -527,7 +538,12 @@
 		}
 	}
 
-	/* Draw the actual text field. */
+	/* Draw text. */
+	if ([TPCPreferences useLogAntialiasing] == NO) {
+		[RZGraphicsCurrentContext() saveGraphicsState];
+		[RZGraphicsCurrentContext() setShouldAntialias:NO];
+	}
+
 	[self.attributedStringValue drawInRect:cellFrame];
 
 	if ([TPCPreferences useLogAntialiasing] == NO) {
