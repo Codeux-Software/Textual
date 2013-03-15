@@ -151,7 +151,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	
 	[self.worldController setupTree];
 
-
 	[self.memberList setTarget:self.menuController];
 	[self.memberList setDoubleAction:@selector(memberListDoubleClicked:)];
 
@@ -175,6 +174,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)note
 {
+	[self.serverList updateBackgroundColor];
+	
 	if (self.worldController.clients.count < 1) {
 		[self.mainWindowLoadingScreen hideAll:NO];
 		[self.mainWindowLoadingScreen popWelcomeAddServerView];
@@ -184,7 +185,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 #endif
 	} else {
 		[self.mainWindowLoadingScreen hideLoadingConfigurationView];
-		
+
 		[self.worldController autoConnectAfterWakeup:NO];	
 	}
 }
