@@ -475,6 +475,8 @@
 	NSRect serverListFrame = self.serverList.frame;
 	NSRect textFieldFrame = self.textField.frame;
 
+	textFieldFrame.origin.y = 0;
+
 	if (badgeImage) {
 		NSSize scaledSize = [self.badgeRenderer scaledSize];
 
