@@ -336,7 +336,11 @@
 	/* Update our origin. Probaby not a good idea to have such values hard-coded into
 	 here, but stuff like this is all over the codebase of Textual so it is not something
 	 that is new to us. */
-	cellFrame.origin.y += 1;
+
+	if ([TPCPreferences useLargeFontForSidebars] == NO) {
+		cellFrame.origin.y += 1;
+	}
+	
 	cellFrame.origin.x += 29;
 	
 	cellFrame.size.width -= 29;

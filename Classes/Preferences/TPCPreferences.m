@@ -681,6 +681,11 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() boolForKey:@"DisableRemoteNicknameColorHashing"];
 }
 
++ (BOOL)useLargeFontForSidebars
+{
+	return [RZUserDefaults() boolForKey:@"UseLargeFontForSidebars"];
+}
+
 + (BOOL)rightToLeftFormatting
 {
 	return [RZUserDefaults() boolForKey:@"RightToLeftTextFormatting"];
