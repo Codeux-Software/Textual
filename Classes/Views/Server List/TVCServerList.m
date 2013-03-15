@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 @implementation TVCServerList
 
 #pragma mark -
@@ -184,6 +186,16 @@
 - (void)updateBackgroundColor
 {
 	[self setBackgroundColor:self.properBackgroundColor];
+	
+	if (self.masterController.mainWindowIsActive) {
+		if ([TPCPreferences invertSidebarColors] == NO) {
+			[self.scrollView.contentView.layer setBackgroundColor:[[NSColor sourceListBackgroundColorTop] CGColor]];
+
+			return;
+		}
+	}
+
+	[self.scrollView.contentView.layer setBackgroundColor:[self.properBackgroundColor CGColor]];
 }
 
 - (void)highlightSelectionInClipRect:(NSRect)clipRect
@@ -310,6 +322,13 @@
 	return [NSFont fontWithName:@"LucidaGrande-Bold" size:11.0];
 }
 
+- (NSInteger)channelCellTextFieldLeftMargin
+{
+	/* Keep this in sync with the interface builder file. */
+
+	return 38.0;
+}
+
 - (NSInteger)messageCountBadgeHeight
 {
 	return 14.0;
@@ -327,7 +346,7 @@
 
 - (NSInteger)messageCountBadgeRightMargin
 {
-	return 2.0;
+	return 5.0;
 }
 
 - (NSColor *)messageCountBadgeHighlightBackgroundColor
@@ -505,8 +524,11 @@
 - (id)initWithFrame:(NSRect)frame
 {
 	if ((self = [super initWithFrame:frame])) {
-		self.layerContentsRedrawPolicy = NSViewLayerContentsRedrawNever;
+		self.layer = [CAScrollLayer layer];
 
+		self.wantsLayer = YES;
+		self.layerContentsRedrawPolicy = NSViewLayerContentsRedrawNever;
+		
 		return self;
 	}
 
@@ -522,6 +544,8 @@
 
 - (void)swapClipView
 {
+	self.wantsLayer = YES;
+	
     id documentView = self.documentView;
 
 	TVCServerListScrollClipView *clipView = [[TVCServerListScrollClipView alloc] initWithFrame:self.contentView.frame];
