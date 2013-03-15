@@ -42,6 +42,7 @@
 
 /* Image view holding the image for selected cell. */
 @property (nonatomic, nweak) NSImageView *backgroundImageCell;
+@property (nonatomic, nweak) NSImageView *badgeCountImageCell;
 
 - (void)updateDrawing:(NSRect)cellFrame;
 
@@ -53,8 +54,4 @@
 @end
 
 @interface TVCServerListCellGroupItem : TVCServerListCell
-@end
-
-@interface TVCServerListCellItemTextField : NSTextFieldCell
-@property (nonatomic, strong) NSDictionary *drawContext; // Passed by parent for badge drawing.
 @end

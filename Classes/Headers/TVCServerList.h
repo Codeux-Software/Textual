@@ -83,6 +83,8 @@
 - (NSFont *)selectedChannelCellFont;
 - (NSFont *)serverCellFont;
 
+- (NSInteger)channelCellTextFieldLeftMargin;
+
 - (NSInteger)messageCountBadgeHeight;
 - (NSInteger)messageCountBadgeMinimumWidth;
 - (NSInteger)messageCountBadgePadding;
