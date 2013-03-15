@@ -106,18 +106,16 @@
 	 find the button and do it ourself. Thanks Fapple! */
 
 	NSButton *theButtonParent;
-	
-	NSButtonCell *theButton;
 
 	for (id view in self.superview.subviews) {
 		if ([view isKindOfClass:[NSButton class]]) {
 			theButtonParent = view;
-			
-			theButton = [theButtonParent cell];
 		}
 	}
 
-	PointerIsEmptyAssert(theButton);
+	PointerIsEmptyAssert(theButtonParent);
+
+	[self updateGroupDisclosureTriangle:theButtonParent];
 }
 
 - (void)updateGroupDisclosureTriangle:(NSButton *)theButtonParent
