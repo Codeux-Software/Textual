@@ -126,7 +126,8 @@
 	@class TVCMemberListScrollView;
 	@class TVCMemberListScrollClipView;
     @class TVCMemberListUserInfoPopover;
-	@class TVCServerList; // This has a lot of classes. 
+	@class TVCServerList; // This has a lot of classes.
+	@class TVCserverlistRowCell;
 	@class TVCServerListCell;
 	@class TVCServerListCellBadge;
 	@class TVCServerListCellGroupItem;

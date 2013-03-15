@@ -47,6 +47,8 @@
 - (void)updateDrawing:(NSRect)cellFrame;
 
 - (void)updateGroupDisclosureTriangle;
+- (void)updateGroupDisclosureTriangle:(NSButton *)theButtonParent;
+
 - (void)updateSelectionBackgroundView;
 @end
 
@@ -54,4 +56,7 @@
 @end
 
 @interface TVCServerListCellGroupItem : TVCServerListCell
+@end
+
+@interface TVCserverlistRowCell : NSTableRowView
 @end
