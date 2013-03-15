@@ -321,12 +321,20 @@
 
 - (NSFont *)normalChannelCellFont
 {
-	return [NSFont fontWithName:@"LucidaGrande" size:11.0];
+	if ([TPCPreferences useLargeFontForSidebars]) {
+		return [NSFont fontWithName:@"LucidaGrande" size:12.0];
+	} else {
+		return [NSFont fontWithName:@"LucidaGrande" size:11.0];
+	}
 }
 
 - (NSFont *)selectedChannelCellFont
 {
-	return [NSFont fontWithName:@"LucidaGrande-Bold" size:11.0];
+	if ([TPCPreferences useLargeFontForSidebars]) {
+		return [NSFont fontWithName:@"LucidaGrande-Bold" size:12.0];
+	} else {
+		return [NSFont fontWithName:@"LucidaGrande-Bold" size:11.0];
+	}
 }
 
 - (NSInteger)channelCellTextFieldLeftMargin

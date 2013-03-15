@@ -496,6 +496,7 @@
 	textFieldFrame.size.width -= self.serverList.messageCountBadgeRightMargin;
 
 	[self.textField setFrame:textFieldFrame];
+	
 	[self.badgeCountImageCell setFrame:badgeViewFrame];
 }
 
