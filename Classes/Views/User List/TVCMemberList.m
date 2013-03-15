@@ -271,17 +271,6 @@
 	self.documentView = documentView;
 }
 
-- (id)initWithFrame:(NSRect)frame
-{
-	if ((self = [super initWithFrame:frame])) {
-		[self swapClipView];
-
-		return self;
-	}
-
-	return nil;
-}
-
 - (void)awakeFromNib
 {
     [super awakeFromNib];
