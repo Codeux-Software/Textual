@@ -61,9 +61,26 @@
 
 - (void)updateBackgroundColor
 {
+	CALayer *scrollLayer = self.scrollView.contentView.layer;
+
 	[self setBackgroundColor:self.properBackgroundColor];
 
-	[self setNeedsDisplay:YES];
+	if (self.masterController.mainWindowIsActive) {
+		if ([TPCPreferences invertSidebarColors] == NO) {
+			[scrollLayer setBackgroundColor:[NSColor.clearColor CGColor]];
+			[scrollLayer setNeedsDisplay];
+
+			return;
+		}
+	}
+
+	[scrollLayer setBackgroundColor:[self.properBackgroundColor CGColor]];
+	[scrollLayer setNeedsDisplay];
+}
+
+- (NSScrollView *)scrollView
+{
+	return (id)self.superview.superview;
 }
 
 - (void)drawContextMenuHighlightForRow:(int)row
