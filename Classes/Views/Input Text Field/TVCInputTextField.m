@@ -251,11 +251,6 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-	if ([TPCPreferences useLogAntialiasing] == NO) {
-		[RZGraphicsCurrentContext() saveGraphicsState];
-		[RZGraphicsCurrentContext() setShouldAntialias:NO];
-	}
-	
 	NSString *value = [self stringValue];
 	
 	if (NSObjectIsEmpty(value)) {
@@ -264,10 +259,6 @@
 		}
 	} else {
 		[super drawRect:dirtyRect];
-	}
-	
-	if ([TPCPreferences useLogAntialiasing] == NO) {
-		[RZGraphicsCurrentContext() restoreGraphicsState];
 	}
 }
 

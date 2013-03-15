@@ -1117,12 +1117,6 @@
 
 	// ---- //
 
-	if ([TPCPreferences useLogAntialiasing] == NO) {
-		templateTokens[@"windowAntialiasingDisabled"] = @(YES);
-	}
-
-	// ---- //
-
 	NSInteger indentOffset = self.themeSettings.indentationOffset;
 
 	if (indentOffset == TXThemeDisabledIndentationOffset || [TPCPreferences rightToLeftFormatting]) {
