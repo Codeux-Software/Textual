@@ -186,16 +186,18 @@
 - (void)updateBackgroundColor
 {
 	[self setBackgroundColor:self.properBackgroundColor];
+
+	CALayer *scrollLayer = self.scrollView.contentView.layer;
 	
 	if (self.masterController.mainWindowIsActive) {
 		if ([TPCPreferences invertSidebarColors] == NO) {
-			[self.scrollView.contentView.layer setBackgroundColor:[[NSColor sourceListBackgroundColorTop] CGColor]];
+			[scrollLayer setBackgroundColor:[NSColor.sourceListBackgroundColorTop CGColor]];
 
 			return;
 		}
 	}
 
-	[self.scrollView.contentView.layer setBackgroundColor:[self.properBackgroundColor CGColor]];
+	[scrollLayer setBackgroundColor:[self.properBackgroundColor CGColor]];
 }
 
 - (void)highlightSelectionInClipRect:(NSRect)clipRect
