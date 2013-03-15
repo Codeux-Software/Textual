@@ -39,7 +39,6 @@
 
 @interface TVCServerListCell ()
 @property (nonatomic, strong) TVCServerListCellBadge *badgeRenderer;
-@property (nonatomic, assign) BOOL frameUpdated; // Saves the value so we do not push frame every draw.
 @end
 
 #pragma mark -
@@ -351,15 +350,11 @@
 	 channel status icon. Therefore, we have to change its origin to make
 	 up for the difference in design. */
 	if ([iconName hasPrefix:@"colloquy"] == NO) {
-		if (self.frameUpdated == NO) {
-			NSRect oldRect = [self.imageView frame];
+		NSRect oldRect = [self.imageView frame];
 
-			oldRect.origin.y += 1;
+		oldRect.origin.y = 1;
 
-			[self.imageView setFrame:oldRect];
-
-			self.frameUpdated = YES;
-		}
+		[self.imageView setFrame:oldRect];
 	}
 }
 
