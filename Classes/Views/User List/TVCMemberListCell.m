@@ -306,7 +306,7 @@
 	[self drawModeBadge:cellFrame isSelected:isSelected];
 	
 	NSMutableAttributedString *newStrValue = [[NSMutableAttributedString alloc] initWithString:self.memberPointer.nickname
-																					attributes:@{}];
+																					attributes:self.attributedStringValue.attributes];
 
 	/* Prepare the drop shadow. */
 	NSShadow *itemShadow = [NSShadow new];
