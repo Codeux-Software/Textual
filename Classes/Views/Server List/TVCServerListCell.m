@@ -106,6 +106,7 @@
 	 find the button and do it ourself. Thanks Fapple! */
 
 	NSButton *theButtonParent;
+	
 	NSButtonCell *theButton;
 
 	for (id view in self.superview.subviews) {
@@ -117,7 +118,12 @@
 	}
 
 	PointerIsEmptyAssert(theButton);
+}
 
+- (void)updateGroupDisclosureTriangle:(NSButton *)theButtonParent
+{
+	NSButtonCell *theButton = [theButtonParent cell];
+	
 	/* Button, yay! */
 	NSInteger rowIndex = [self rowIndex];
 
@@ -508,4 +514,23 @@
 
 @implementation TVCServerListCellChildItem
 /* For future use. */
+@end
+
+@implementation TVCserverlistRowCell
+
+- (void)didAddSubview:(NSView *)subview
+{
+	id firstObject = [self.subviews objectAtIndex:0];
+
+	if ([firstObject isKindOfClass:[TVCServerListCellGroupItem class]]) {
+		if ([subview isKindOfClass:[NSButton class]]) {
+			TVCServerListCellGroupItem *groupItem = firstObject;
+
+			[groupItem updateGroupDisclosureTriangle:(id)subview];
+		}
+	}
+
+	[super didAddSubview:subview];
+}
+
 @end

@@ -1061,6 +1061,13 @@
 	return _treeChannelHeight;
 }
 
+- (NSTableRowView *)outlineView:(NSOutlineView *)outlineView rowViewForItem:(id)item
+{
+	TVCserverlistRowCell *rowView = [[TVCserverlistRowCell alloc] initWithFrame:NSZeroRect];
+
+	return rowView;
+}
+
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(IRCTreeItem *)item
 {
 	/* Ask our view controller what we are. */
