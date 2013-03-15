@@ -501,6 +501,10 @@
 	textFieldFrame.size.width -= badgeViewFrame.size.width;
 	textFieldFrame.size.width -= self.serverList.messageCountBadgeRightMargin;
 
+	if ([TPCPreferences useLargeFontForSidebars] && [TPCPreferences runningInHighResolutionMode]) {
+		textFieldFrame.origin.y = -0.5;
+	}
+
 	[self.textField setFrame:textFieldFrame];
 	
 	[self.badgeCountImageCell setFrame:badgeViewFrame];

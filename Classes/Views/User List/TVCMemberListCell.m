@@ -337,10 +337,12 @@
 	 here, but stuff like this is all over the codebase of Textual so it is not something
 	 that is new to us. */
 
-	if ([TPCPreferences useLargeFontForSidebars] == NO) {
-		cellFrame.origin.y += 1;
+	cellFrame.origin.y += 1;
+
+	if ([TPCPreferences runningInHighResolutionMode]) {
+		cellFrame.origin.y += 0.5;
 	}
-	
+
 	cellFrame.origin.x += 29;
 	
 	cellFrame.size.width -= 29;
