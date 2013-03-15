@@ -62,6 +62,8 @@
 - (void)updateBackgroundColor
 {
 	[self setBackgroundColor:self.properBackgroundColor];
+
+	[self setNeedsDisplay:YES];
 }
 
 - (void)drawContextMenuHighlightForRow:(int)row
