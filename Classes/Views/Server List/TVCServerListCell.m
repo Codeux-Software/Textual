@@ -482,6 +482,7 @@
 
 		badgeViewFrame.size = scaledSize;
 
+		badgeViewFrame.origin.y  = 1;
 		badgeViewFrame.origin.x  = serverListFrame.size.width;
 		badgeViewFrame.origin.x -= scaledSize.width;
 		badgeViewFrame.origin.x -= self.serverList.messageCountBadgeRightMargin;
