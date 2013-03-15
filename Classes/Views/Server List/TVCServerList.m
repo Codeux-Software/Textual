@@ -219,7 +219,7 @@
 {
 	if (self.masterController.mainWindowIsActive) {
 		if ([TPCPreferences invertSidebarColors] == NO) {
-			NSRect visibleRect = [self.scrollView documentVisibleRect];
+			NSRect visibleRect = [self.scrollView.contentView visibleRect];
 			
 			NSGradient *theGradient = [NSGradient sourceListBackgroundGradientColor];
 
