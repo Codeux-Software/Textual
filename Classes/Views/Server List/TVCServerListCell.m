@@ -264,7 +264,7 @@
 	/* The new string inherits the attributes of the text field so that stuff that we do not
 	 define like the paragraph style is passed along and not lost when we define a new value. */
 	NSMutableAttributedString *newStrValue = [NSMutableAttributedString mutableStringWithBase:self.cellItem.label
-																				   attributes:self.textField.attributedStringValue.attributes];
+																				   attributes:self.customTextField.attributedStringValue.attributes];
 	
 	/* Text font and color. */
 	NSColor *controlColor = self.serverList.serverCellNormalTextColor;
@@ -316,7 +316,7 @@
 	/* Set the text field value to our new string. */
 	/**************************************************************/
 
-	[self.textField setAttributedStringValue:newStrValue];
+	[self.customTextField setAttributedStringValue:newStrValue];
 }
 
 #pragma mark -
@@ -398,7 +398,7 @@
 	/**************************************************************/
 
 	NSMutableAttributedString *newStrValue = [NSMutableAttributedString mutableStringWithBase:self.cellItem.label
-																				   attributes:self.textField.attributedStringValue.attributes];
+																				   attributes:self.customTextField.attributedStringValue.attributes];
 	
 	/* Build badge context. */
 	[self updateMessageCountBadge:drawContext];
@@ -453,7 +453,7 @@
 	/* Set the text field value to our new string. */
 	/**************************************************************/
 
-	[self.textField setAttributedStringValue:newStrValue];
+	[self.customTextField setAttributedStringValue:newStrValue];
 }
 
 - (void)updateMessageCountBadge:(NSDictionary *)drawContext
@@ -472,8 +472,8 @@
 	 these frame calculations for an example. Go team! */
 	
 	NSRect badgeViewFrame = self.badgeCountImageCell.frame;
+	NSRect textFieldFrame = self.customTextField.frame;
 	NSRect serverListFrame = self.serverList.frame;
-	NSRect textFieldFrame = self.textField.frame;
 
 	textFieldFrame.origin.y = 0;
 
@@ -506,8 +506,7 @@
 		textFieldFrame.origin.y = -0.5;
 	}
 
-	[self.textField setFrame:textFieldFrame];
-	
+	[self.customTextField setFrame:textFieldFrame];
 	[self.badgeCountImageCell setFrame:badgeViewFrame];
 }
 
@@ -522,6 +521,16 @@
 @end
 
 @implementation TVCserverlistRowCell
+
+- (void)drawDraggingDestinationFeedbackInRect:(NSRect)dirtyRect
+{
+	/* Ignore this. */
+}
+
+- (void)drawSelectionInRect:(NSRect)dirtyRect
+{
+	/* Ignore this. */
+}
 
 - (void)didAddSubview:(NSView *)subview
 {

@@ -98,8 +98,6 @@
 		 passed to drawContext see TVCServerListCell.m. */
 		[newContext removeObjectForKey:@"rowIndex"];
 		[newContext removeObjectForKey:@"isKeyWindow"];
-		[newContext removeObjectForKey:@"drawBadgeCount"];
-		[newContext removeObjectForKey:@"ownerCellItem"];
 
 		/* Add new items. */
 		[newContext setBool:isHighlight forKey:@"isHighlight"];
