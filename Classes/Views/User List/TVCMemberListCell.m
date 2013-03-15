@@ -163,18 +163,9 @@
 	if ([TPCPreferences featureAvailableToOSXMountainLion] && [TPCPreferences runningInHighResolutionMode] == NO) {
 		badgeTextPoint.y -= 1;
 	}
-    
-	if ([TPCPreferences useLogAntialiasing] == NO) {
-		[RZGraphicsCurrentContext() saveGraphicsState];
-		[RZGraphicsCurrentContext() setShouldAntialias:NO];
-	}
-
+	
 	/* The actual draw. */
     [modeString drawAtPoint:badgeTextPoint];
-	
-	if ([TPCPreferences useLogAntialiasing] == NO) {
-		[RZGraphicsCurrentContext() restoreGraphicsState];
-	}
 }
 
 #pragma mark -
@@ -368,17 +359,8 @@
 	
 	[newStrValue addAttribute:NSShadowAttributeName value:itemShadow range:textRange];
 	
-	if ([TPCPreferences useLogAntialiasing] == NO) {
-		[RZGraphicsCurrentContext() saveGraphicsState];
-		[RZGraphicsCurrentContext() setShouldAntialias:NO];
-	}
-
 	/* Do the actual draw. */
 	[newStrValue drawInRect:cellFrame];
-	
-	if ([TPCPreferences useLogAntialiasing] == NO) {
-		[RZGraphicsCurrentContext() restoreGraphicsState];
-	}
 }
 
 - (IRCChannel *)channelPointer

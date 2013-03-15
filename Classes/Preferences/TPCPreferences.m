@@ -676,11 +676,6 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() boolForKey:@"RemoveIRCTextFormatting"];
 }
 
-+ (BOOL)useLogAntialiasing
-{
-	return [RZUserDefaults() boolForKey:@"DisplayMainWindowWithAntialiasing"];
-}
-
 + (BOOL)disableNicknameColorHashing
 {
 	return [RZUserDefaults() boolForKey:@"DisableRemoteNicknameColorHashing"];

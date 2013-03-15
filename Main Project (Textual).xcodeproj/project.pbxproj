@@ -1347,16 +1347,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4C0444E916F15F8200EBB665 /* Server List */ = {
-			isa = PBXGroup;
-			children = (
-				4C0444EA16F15F8200EBB665 /* TVCServerList.m */,
-				4C0444EB16F15F8200EBB665 /* TVCServerListCell.m */,
-				4C0444EC16F15F8200EBB665 /* TVCServerListCellBadge.m */,
-			);
-			name = "Server List";
-			sourceTree = "<group>";
-		};
 		4C1DC5471580420500A47BC9 = {
 			isa = PBXGroup;
 			children = (
@@ -2071,7 +2061,9 @@
 		4C8AF5FD158E99520026668C /* Server List */ = {
 			isa = PBXGroup;
 			children = (
-				4C0444E916F15F8200EBB665 /* Server List */,
+				4C0444EA16F15F8200EBB665 /* TVCServerList.m */,
+				4C0444EB16F15F8200EBB665 /* TVCServerListCell.m */,
+				4C0444EC16F15F8200EBB665 /* TVCServerListCellBadge.m */,
 			);
 			path = "Server List";
 			sourceTree = "<group>";

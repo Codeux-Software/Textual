@@ -275,16 +275,7 @@
 	}
 	
 	/* The actual draw. */
-	if ([TPCPreferences useLogAntialiasing] == NO) {
-		[RZGraphicsCurrentContext() saveGraphicsState];
-		[RZGraphicsCurrentContext() setShouldAntialias:NO];
-	}
-
 	[mcstring drawAtPoint:badgeTextPoint];
-	
-	if ([TPCPreferences useLogAntialiasing] == NO) {
-		[RZGraphicsCurrentContext() restoreGraphicsState];
-	}
 
 	/*************************************************************/
 	/* Finish drawing. */

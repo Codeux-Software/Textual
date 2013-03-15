@@ -171,7 +171,6 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 
 + (NSInteger)trackUserAwayStatusMaximumChannelSize;
 
-+ (BOOL)useLogAntialiasing;
 + (BOOL)invertSidebarColors;
 + (BOOL)invertInputTextFieldColors;
 + (BOOL)hideMainWindowSegmentedController;
