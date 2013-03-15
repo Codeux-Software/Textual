@@ -57,9 +57,7 @@
 
 		self.defaultModes	= NSStringEmptyPlaceholder;
 		self.defaultTopic	= NSStringEmptyPlaceholder;
-		self.encryptionKey	= NSStringEmptyPlaceholder;
 		self.channelName	= NSStringEmptyPlaceholder;
-		self.secretKey		= NSStringEmptyPlaceholder;
 	}
     
 	return self;
