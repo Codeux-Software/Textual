@@ -34,12 +34,6 @@
 					width: {{predefinedTimestampWidth}}px;
 				}
 			{{/nicknameIndentationAvailable}}
-			
-			{{#windowAntialiasingDisabled}}
-				body {
-					-webkit-font-smoothing: none;
-				}
-			{{/windowAntialiasingDisabled}}
 		</style>
 	</head>
 	
@@ -54,11 +48,11 @@
 		{{/isPrivateMessageView}}
 		
 		dir="{{textDirectionToken}}">
-			<!-- The elements "body_home," "loading_screen," "topic_bar," and "mark" must always 
-			remain the same as the ID value of these elements are used internally by Textual. -->
+			{{! The elements "body_home," "loading_screen," "topic_bar," and "mark" must always 
+			remain the same as the ID value of these elements are used internally by Textual. }}
 			
 			<div id="loading_screen">View is Loading…</div>
-			<div id="body_home"><!-- Filled at runtime. --></div>
+			<div id="body_home">{{! Filled at runtime. }}</div>
 		
 			{{#isChannelView}}
 				<div id="topic_bar">{{{formattedTopicValue}}}</div>
