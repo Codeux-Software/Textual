@@ -190,20 +190,21 @@
 
 - (void)updateBackgroundColor
 {
-	[self setBackgroundColor:self.properBackgroundColor];
-	
 	CALayer *scrollLayer = self.scrollView.contentView.layer;
+
+	[self setBackgroundColor:self.properBackgroundColor];
 
 	if (self.masterController.mainWindowIsActive) {
 		if ([TPCPreferences invertSidebarColors] == NO) {
 			[scrollLayer setBackgroundColor:[NSColor.clearColor CGColor]];
+			[scrollLayer setNeedsDisplay];
 
 			return;
 		}
 	}
 
 	[scrollLayer setBackgroundColor:[self.properBackgroundColor CGColor]];
-
+	[scrollLayer setNeedsDisplay];
 }
 
 - (NSScrollView *)scrollView
