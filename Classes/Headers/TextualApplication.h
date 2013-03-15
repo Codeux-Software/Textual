@@ -131,7 +131,6 @@
 	@class TVCServerListCellBadge;
 	@class TVCServerListCellGroupItem;
 	@class TVCServerListCellChildItem;
-	@class TVCServerListCellItemTextField;
 	@class TVCServerListScrollView;
 	@class TVCServerListScrollClipView;
 	@class TVCTextFieldSTextView;

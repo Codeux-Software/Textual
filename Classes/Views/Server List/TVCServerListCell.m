@@ -37,12 +37,12 @@
 
 #import "TextualApplication.h"
 
+@interface TVCServerListCell ()
+@property (nonatomic, strong) TVCServerListCellBadge *badgeRenderer;
+@end
+
 #pragma mark -
 #pragma mark Private Headers
-
-@interface TVCServerListCellItemTextField ()
-@property (nonatomic, strong) TVCServerListCellBadge *badgeDraw;
-@end
 
 @implementation TVCServerListCell
 
@@ -135,27 +135,18 @@
 	NSImage *primary = [self.serverList disclosureTriangleInContext:YES selected:isSelected];
 	NSImage *alterna = [self.serverList disclosureTriangleInContext:NO selected:isSelected];
 
-	BOOL imageChanged = ([theButton.image isEqual:primary] == NO);
-
 	[theButton setImage:primary];
 	[theButton setAlternateImage:alterna];
 
 	if (isSelected) {
-		imageChanged = (theButton.backgroundStyle == NSBackgroundStyleRaised);
-
 		[theButton setBackgroundStyle:NSBackgroundStyleLowered];
 	} else {
-		imageChanged = (theButton.backgroundStyle == NSBackgroundStyleLowered);
-		
 		[theButton setBackgroundStyle:NSBackgroundStyleRaised];
 	}
 
-	if (imageChanged) {
-		/* In our layered back scroll view this forces the disclosure triangle to be redrawn. */
-
-		[theButtonParent setHidden:YES];
-		[theButtonParent setHidden:NO];
-	}
+	/* In our layered back scroll view this forces the disclosure triangle to be redrawn. */
+	[theButtonParent setHidden:YES];
+	[theButtonParent setHidden:NO];
 }
 
 - (void)updateSelectionBackgroundView /* DO NOT CALL DIRECTLY FROM THIS CLASS. */
@@ -405,26 +396,9 @@
 
 	NSMutableAttributedString *newStrValue = [NSMutableAttributedString mutableStringWithBase:self.cellItem.label
 																				   attributes:self.textField.attributedStringValue.attributes];
-
-	/**************************************************************/
-	/* Prepare for badge drawing. */
-	/**************************************************************/
-
-	NSTextFieldCell *textFieldCell = [self.textField cell];
-
-	if ([textFieldCell isKindOfClass:[TVCServerListCellItemTextField class]]) {
-		TVCServerListCellItemTextField *textField = (TVCServerListCellItemTextField *)textFieldCell;
-
-		/* Build badge context. */
-		NSMutableDictionary *context = [@{
-			@"drawBadgeCount" : @(YES),
-			@"ownerCellItem" : self
-		} mutableCopy];
-
-		[context addEntriesFromDictionary:drawContext];
-
-		[textField setDrawContext:context];
-	}
+	
+	/* Build badge context. */
+	[self updateMessageCountBadge:drawContext];
 
 	/* Define the text shadow information. */
 	NSShadow *itemShadow = [NSShadow new];
@@ -479,6 +453,53 @@
 	[self.textField setAttributedStringValue:newStrValue];
 }
 
+- (void)updateMessageCountBadge:(NSDictionary *)drawContext
+{
+	NSObjectIsEmptyAssert(drawContext);
+	
+	if (PointerIsEmpty(self.badgeRenderer)) {
+		self.badgeRenderer = [TVCServerListCellBadge new];
+	}
+
+	NSImage *badgeImage = [self.badgeRenderer drawBadgeForCellItem:self.cellItem
+												withDrawingContext:drawContext];
+
+	/* Had someone tell me how much they hate math. Bitch, please… you cannot call
+	 yourself a programmer and not know math. Math is used everywhere in code. Take
+	 these frame calculations for an example. Go team! */
+	
+	NSRect badgeViewFrame = self.badgeCountImageCell.frame;
+	NSRect serverListFrame = self.serverList.frame;
+	NSRect textFieldFrame = self.textField.frame;
+
+	if (badgeImage) {
+		NSSize scaledSize = [self.badgeRenderer scaledSize];
+
+		badgeViewFrame.size = scaledSize;
+
+		badgeViewFrame.origin.x  = serverListFrame.size.width;
+		badgeViewFrame.origin.x -= scaledSize.width;
+		badgeViewFrame.origin.x -= self.serverList.messageCountBadgeRightMargin;
+
+		[self.badgeCountImageCell setImage:badgeImage];
+		[self.badgeCountImageCell setHidden:NO];
+	} else {
+		badgeViewFrame.size = NSZeroSize;
+
+		[self.badgeCountImageCell setImage:nil];
+		[self.badgeCountImageCell setHidden:YES];
+	}
+
+	textFieldFrame.origin.x = self.serverList.channelCellTextFieldLeftMargin;
+
+	textFieldFrame.size.width  = (serverListFrame.size.width - self.serverList.channelCellTextFieldLeftMargin);
+	textFieldFrame.size.width -= badgeViewFrame.size.width;
+	textFieldFrame.size.width -= self.serverList.messageCountBadgeRightMargin;
+
+	[self.textField setFrame:textFieldFrame];
+	[self.badgeCountImageCell setFrame:badgeViewFrame];
+}
+
 @end
 
 @implementation TVCServerListCellGroupItem
@@ -487,76 +508,4 @@
 
 @implementation TVCServerListCellChildItem
 /* For future use. */
-@end
-
-@implementation TVCServerListCellItemTextField
-
-- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
-{
-	/* Prepare for badge drawing. */
-	if (self.drawContext) {
-		if (PointerIsEmpty(self.badgeDraw)) {
-			self.badgeDraw = [TVCServerListCellBadge new];
-		}
-
-		/* Gather context information. */
-		BOOL drawBadge = [self.drawContext boolForKey:@"drawBadgeCount"];
-
-		TVCServerListCell *owningCell = [self.drawContext objectForKey:@"ownerCellItem"];
-
-		/* Are we going to even draw anything? */
-		if (drawBadge && owningCell) {
-			/* Build the image. */
-			NSImage *badgeImage = [self.badgeDraw drawBadgeForCellItem:owningCell.cellItem
-													withDrawingContext:self.drawContext];
-
-			/* Do we have an image? */
-			if (badgeImage) {
-				/* Build frame information. */
-				NSSize scaledSize = [self.badgeDraw scaledSize];
-
-				NSRect badgeFrame = cellFrame;
-
-				badgeFrame.origin.x = (NSMaxX(cellFrame) - (scaledSize.width + self.serverList.messageCountBadgeRightMargin));
-				badgeFrame.origin.y = (cellFrame.origin.y + 2);
-
-				badgeFrame.size.width = scaledSize.width;
-				badgeFrame.size.height = scaledSize.height;
-				
-				/* Draw the badge. */
-				[badgeImage drawInRect:badgeFrame
-							  fromRect:NSZeroRect
-							 operation:NSCompositeSourceOver
-							  fraction:1.0
-						respectFlipped:YES
-								 hints:nil];
-
-				/* Correct frame information for the text to follow. */
-				cellFrame.size.width -= badgeFrame.size.width;
-				cellFrame.size.width -= (self.serverList.messageCountBadgeRightMargin * 2);
-			}
-		}
-	}
-
-	/* Draw text. */
-	if ([TPCPreferences useLogAntialiasing] == NO) {
-		[RZGraphicsCurrentContext() saveGraphicsState];
-		[RZGraphicsCurrentContext() setShouldAntialias:NO];
-	}
-
-	[self.attributedStringValue drawInRect:cellFrame];
-
-	if ([TPCPreferences useLogAntialiasing] == NO) {
-		[RZGraphicsCurrentContext() restoreGraphicsState];
-	}
-}
-
-#pragma mark -
-#pragma mark Cell Information
-
-- (TVCServerList *)serverList
-{
-	return self.masterController.serverList;
-}
-
 @end
