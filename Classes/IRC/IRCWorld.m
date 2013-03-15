@@ -644,8 +644,9 @@
 		}
 	}
 
-	[self.serverList reloadAllDrawings];
+	[self.serverList reloadAllDrawingsIgnoringOtherReloads];
 	[self.serverList updateBackgroundColor];
+	
 	[self.memberList updateBackgroundColor];
 
 	[self.masterController.serverSplitView setNeedsDisplay:YES];

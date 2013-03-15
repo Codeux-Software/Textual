@@ -63,6 +63,7 @@
  updates you may need to make to a item. */
 
 - (void)reloadAllDrawings;
+- (void)reloadAllDrawingsIgnoringOtherReloads;
 
 - (void)updateDrawingForItem:(IRCTreeItem *)cellItem;
 - (void)updateDrawingForRow:(NSInteger)rowIndex;
