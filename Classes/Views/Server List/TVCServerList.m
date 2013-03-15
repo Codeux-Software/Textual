@@ -103,15 +103,20 @@
 
 	_isDrawing = YES;
 
+	[self reloadAllDrawingsIgnoringOtherReloads];
+
+	_isDrawing = NO;
+}
+
+- (void)reloadAllDrawingsIgnoringOtherReloads
+{
 	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
 		[self updateDrawingForRow:i withSelectionUpdate:NO];
 	}
 
 	[self updateSelectionBackground:NO];
-	
-	[self setNeedsDisplay:YES];
 
-	_isDrawing = NO;
+	[self setNeedsDisplay:YES];
 }
 
 - (void)updateDrawingForItem:(IRCTreeItem *)cellItem

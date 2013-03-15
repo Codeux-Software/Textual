@@ -771,8 +771,9 @@
 
 - (void)onChangedSidebarColorInversion:(id)sender
 {
-	[self.masterController.serverList reloadAllDrawings];
+	[self.masterController.serverList reloadAllDrawingsIgnoringOtherReloads];
 	[self.masterController.serverList updateBackgroundColor];
+	
 	[self.masterController.memberList updateBackgroundColor];
 
 	[self.masterController.serverSplitView setNeedsDisplay:YES];
