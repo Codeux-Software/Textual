@@ -93,9 +93,6 @@
 	[self.serverList setTarget:self];
 	[self.serverList setDoubleAction:@selector(outlineViewDoubleClicked:)];
 
-	/* We handle selection internally, ignore system style. */
-	[self.serverList setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
-
 	/* Inform the table we want drag events. */
 	[self.serverList registerForDraggedTypes:_treeDragItemTypes];
 
