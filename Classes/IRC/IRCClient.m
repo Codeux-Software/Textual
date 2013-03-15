@@ -3371,6 +3371,10 @@
 
 	BOOL myself = [sendern isEqualIgnoringCase:self.localNickname];
 
+	if (self.autojoinInProgress == NO && myself) {
+		[self.worldController expandClient:self];
+	}
+	
 	IRCChannel *c = [self findChannelOrCreate:channel];
 
 	PointerIsEmptyAssert(c);
