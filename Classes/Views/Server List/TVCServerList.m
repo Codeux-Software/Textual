@@ -191,45 +191,24 @@
 - (void)updateBackgroundColor
 {
 	[self setBackgroundColor:self.properBackgroundColor];
-
-	CALayer *scrollLayer = self.scrollView.contentView.layer;
 	
+	CALayer *scrollLayer = self.scrollView.contentView.layer;
+
 	if (self.masterController.mainWindowIsActive) {
 		if ([TPCPreferences invertSidebarColors] == NO) {
-			[scrollLayer setBackgroundColor:[NSColor.sourceListBackgroundColorTop CGColor]];
+			[scrollLayer setBackgroundColor:[NSColor.clearColor CGColor]];
 
 			return;
 		}
 	}
 
 	[scrollLayer setBackgroundColor:[self.properBackgroundColor CGColor]];
-}
 
-- (void)highlightSelectionInClipRect:(NSRect)clipRect
-{
-	/* Ignore this. */
 }
 
 - (NSScrollView *)scrollView
 {
 	return (id)self.superview.superview;
-}
-
-- (void)drawBackgroundInClipRect:(NSRect)clipRect
-{
-	if (self.masterController.mainWindowIsActive) {
-		if ([TPCPreferences invertSidebarColors] == NO) {
-			NSRect visibleRect = [self.scrollView.contentView visibleRect];
-			
-			NSGradient *theGradient = [NSGradient sourceListBackgroundGradientColor];
-
-			[theGradient drawInRect:visibleRect angle:90];
-
-			return;
-		}
-	}
-
-	[super drawBackgroundInClipRect:clipRect];
 }
 
 #pragma mark -
@@ -277,7 +256,7 @@
 {
 	NSRect nrect = [super frameOfCellAtColumn:column row:row];
 
-	nrect.size.width += 3;
+	nrect.size.width += 11;
 	nrect.origin.x = 0;
 
 	return nrect;
@@ -299,7 +278,7 @@
 
 - (NSColor *)activeWindowListBackgroundColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor clearColor]
+	return [NSColor defineUserInterfaceItem:[NSColor sourceListBackgroundColor]
 							   invertedItem:[NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1]];
 }
 

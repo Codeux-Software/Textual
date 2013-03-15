@@ -39,8 +39,7 @@
 
 @interface TVCServerListCell : NSTableCellView
 @property (nonatomic, nweak) IRCTreeItem *cellItem;
-
-/* Image view holding the image for selected cell. */
+@property (nonatomic, nweak) NSTextField *customTextField;
 @property (nonatomic, nweak) NSImageView *backgroundImageCell;
 @property (nonatomic, nweak) NSImageView *badgeCountImageCell;
 
