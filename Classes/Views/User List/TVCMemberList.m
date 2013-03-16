@@ -63,19 +63,26 @@
 {
 	CALayer *scrollLayer = self.scrollView.contentView.layer;
 
-	[self setBackgroundColor:self.properBackgroundColor];
-
-	if (self.masterController.mainWindowIsActive) {
-		if ([TPCPreferences invertSidebarColors] == NO) {
-			[scrollLayer setBackgroundColor:[NSColor.clearColor CGColor]];
-			[scrollLayer setNeedsDisplay];
-
-			return;
-		}
+	if ([TPCPreferences invertSidebarColors]) {
+		[scrollLayer setBackgroundColor:[self.properBackgroundColor CGColor]];
+	} else {
+		[scrollLayer setBackgroundColor:[NSColor.clearColor CGColor]];
 	}
 
-	[scrollLayer setBackgroundColor:[self.properBackgroundColor CGColor]];
-	[scrollLayer setNeedsDisplay];
+	[self setNeedsDisplay:YES];
+}
+
+- (void)drawBackgroundInClipRect:(NSRect)clipRect
+{
+	if ([TPCPreferences invertSidebarColors]) {
+		[self.properBackgroundColor set];
+
+		NSRectFill(clipRect);
+
+		return;
+	}
+
+	[super drawBackgroundInClipRect:clipRect];
 }
 
 - (NSScrollView *)scrollView
