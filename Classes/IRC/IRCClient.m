@@ -1720,6 +1720,10 @@
 				self.rawModeEnabled = NO;
 
 				[self printDebugInformation:TXTLS(@"IRCRawModeIsDisabled")];
+			} else if ([uncutInput isEqualIgnoringCase:@"devmode on"]) {
+				[RZUserDefaults() setBool:YES forKey:TXDeveloperEnvironmentToken];
+			} else if ([uncutInput isEqualIgnoringCase:@"devmode off"]) {
+				[RZUserDefaults() setBool:NO forKey:TXDeveloperEnvironmentToken];
 			} else {
 				[self printDebugInformation:uncutInput];
 			}
