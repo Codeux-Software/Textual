@@ -174,12 +174,12 @@
 
 - (BOOL)processWikipediaLinks
 {
-    return [RZUserDefaults() boolForKey:@"TPIWikipediaLinkParserEnabled"];
+    return [RZUserDefaults() boolForKey:@"Wikipedia Link Parser Extension -> Service Enabled"];
 }
 
 - (NSString *)wikipediaLinkPrefix
 {
-    NSString *prefix = [RZUserDefaults() objectForKey:@"TPIWikipediaLinkParserLinkPrefix"];
+    NSString *prefix = [RZUserDefaults() objectForKey:@"Wikipedia Link Parser Extension -> Link Prefix"];
     
     NSObjectIsEmptyAssertReturn(prefix, _defaultLinkPrefix);
 
