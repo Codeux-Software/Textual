@@ -61,7 +61,6 @@
 @property (nonatomic, strong) NSString *myNick;
 @property (nonatomic, strong) NSString *sentNick;
 @property (nonatomic, strong) TLOFileLogger *logFile;
-@property (nonatomic, strong) TLOTimer *autoJoinTimer;
 @property (nonatomic, strong) TLOTimer *isonTimer;
 @property (nonatomic, strong) TLOTimer *pongTimer;
 @property (nonatomic, strong) TLOTimer *reconnectTimer;
@@ -101,11 +100,6 @@
 		self.retryTimer.reqeatTimer	= NO;
 		self.retryTimer.selector	= @selector(onRetryTimer:);
 
-		self.autoJoinTimer				= [TLOTimer new];
-		self.autoJoinTimer.delegate		= self;
-		self.autoJoinTimer.reqeatTimer	= YES;
-		self.autoJoinTimer.selector		= @selector(onAutoJoinTimer:);
-
 		self.commandQueueTimer				= [TLOTimer new];
 		self.commandQueueTimer.delegate		= self;
 		self.commandQueueTimer.reqeatTimer	= NO;
@@ -137,7 +131,6 @@
 	[self.isonTimer	stop];
 	[self.pongTimer	stop];
 	[self.retryTimer stop];
-	[self.autoJoinTimer	stop];
 	[self.reconnectTimer stop];
 	[self.commandQueueTimer stop];
 
