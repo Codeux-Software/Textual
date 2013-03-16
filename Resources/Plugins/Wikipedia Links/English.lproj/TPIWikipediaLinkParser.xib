@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
 		<string key="IBDocument.SystemVersion">12C60</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
+		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">2844</string>
+			<string key="NS.object.0">3084</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSButton</string>
@@ -338,6 +338,7 @@ wGw</bytes>
 								<string key="NSFrame">{{243, 0}, {16, 15}}</string>
 								<reference key="NSSuperview" ref="636243530"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:83</string>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<reference key="NSTarget" ref="636243530"/>
@@ -788,51 +789,51 @@ wGw</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.TPIWikipediaLinkParserEnabled</string>
+						<string key="label">value: values.Wikipedia Link Parser Extension -&gt; Service Enabled</string>
 						<reference key="source" ref="895292163"/>
 						<reference key="destination" ref="429744628"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="895292163"/>
 							<reference key="NSDestination" ref="429744628"/>
-							<string key="NSLabel">value: values.TPIWikipediaLinkParserEnabled</string>
+							<string key="NSLabel">value: values.Wikipedia Link Parser Extension -&gt; Service Enabled</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.TPIWikipediaLinkParserEnabled</string>
+							<string key="NSKeyPath">values.Wikipedia Link Parser Extension -&gt; Service Enabled</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">75</int>
+					<int key="connectionID">84</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: values.TPIWikipediaLinkParserEnabled</string>
+						<string key="label">enabled: values.Wikipedia Link Parser Extension -&gt; Service Enabled</string>
 						<reference key="source" ref="518280424"/>
 						<reference key="destination" ref="429744628"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="518280424"/>
 							<reference key="NSDestination" ref="429744628"/>
-							<string key="NSLabel">enabled: values.TPIWikipediaLinkParserEnabled</string>
+							<string key="NSLabel">enabled: values.Wikipedia Link Parser Extension -&gt; Service Enabled</string>
 							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">values.TPIWikipediaLinkParserEnabled</string>
+							<string key="NSKeyPath">values.Wikipedia Link Parser Extension -&gt; Service Enabled</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">76</int>
+					<int key="connectionID">85</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.TPIWikipediaLinkParserLinkPrefix</string>
+						<string key="label">value: values.Wikipedia Link Parser Extension -&gt; Link Prefix</string>
 						<reference key="source" ref="518280424"/>
 						<reference key="destination" ref="429744628"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="518280424"/>
 							<reference key="NSDestination" ref="429744628"/>
-							<string key="NSLabel">value: values.TPIWikipediaLinkParserLinkPrefix</string>
+							<string key="NSLabel">value: values.Wikipedia Link Parser Extension -&gt; Link Prefix</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.TPIWikipediaLinkParserLinkPrefix</string>
+							<string key="NSKeyPath">values.Wikipedia Link Parser Extension -&gt; Link Prefix</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">77</int>
+					<int key="connectionID">86</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1011,24 +1012,13 @@ wGw</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">83</int>
+			<int key="maxID">86</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">TPIWikipediaLinkParser</string>
 					<string key="superclassName">NSObject</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">preferencePane</string>
-						<string key="NS.object.0">NSView</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">preferencePane</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">preferencePane</string>
-							<string key="candidateClassName">NSView</string>
-						</object>
-					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/TPIWikipediaLinkParser.h</string>
