@@ -3187,7 +3187,7 @@
 													<string key="NSFrameSize">{476, 18}</string>
 													<reference key="NSSuperview" ref="922763053"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="103002844"/>
+													<reference key="NSNextKeyView" ref="727576827"/>
 													<string key="NSReuseIdentifierKey">_NS:3760</string>
 													<object class="NSTextContainer" key="NSTextContainer" id="809641099">
 														<object class="NSLayoutManager" key="NSLayoutManager">
@@ -3295,7 +3295,7 @@
 									<string key="NSFrame">{{166, 9}, {476, 18}}</string>
 									<reference key="NSSuperview" ref="1064184631"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="922763053"/>
+									<reference key="NSNextKeyView" ref="103002844"/>
 									<string key="NSReuseIdentifierKey">_NS:148</string>
 									<int key="NSsFlags">133648</int>
 									<reference key="NSVScroller" ref="727576827"/>
@@ -3390,7 +3390,7 @@
 															<string key="NSFrameSize">{119, 513}</string>
 															<reference key="NSSuperview" ref="436031898"/>
 															<reference key="NSWindow"/>
-															<reference key="NSNextKeyView" ref="328509521"/>
+															<reference key="NSNextKeyView" ref="895365117"/>
 															<bool key="NSEnabled">YES</bool>
 															<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 															<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -3456,8 +3456,15 @@
 															<double key="NSIntercellSpacingWidth">3</double>
 															<double key="NSIntercellSpacingHeight">0.0</double>
 															<object class="NSColor" key="NSBackgroundColor">
-																<int key="NSColorSpace">2</int>
-																<bytes key="NSRGB">MC4yMTk2MDc4NDMxIDAuNDU4ODIzNTI5NCAwLjg0MzEzNzI1NDkgMAA</bytes>
+																<int key="NSColorSpace">6</int>
+																<string key="NSCatalogName">System</string>
+																<string key="NSColorName">_sourceListBackgroundColor</string>
+																<object class="NSColor" key="NSColor" id="504861444">
+																	<int key="NSColorSpace">6</int>
+																	<string key="NSCatalogName">System</string>
+																	<string key="NSColorName">alternateSelectedControlColor</string>
+																	<reference key="NSColor" ref="375176648"/>
+																</object>
 															</object>
 															<object class="NSColor" key="NSGridColor" id="133783201">
 																<int key="NSColorSpace">6</int>
@@ -3468,7 +3475,7 @@
 																	<bytes key="NSWhite">MC41AA</bytes>
 																</object>
 															</object>
-															<double key="NSRowHeight">21</double>
+															<double key="NSRowHeight">20</double>
 															<int key="NSTvFlags">1111490560</int>
 															<reference key="NSDelegate"/>
 															<reference key="NSDataSource"/>
@@ -3480,7 +3487,7 @@
 															<int key="NSTableViewDraggingDestinationStyle">1</int>
 															<int key="NSTableViewGroupRowStyle">1</int>
 															<bool key="NSOutlineViewAutoresizesOutlineColumnKey">NO</bool>
-															<float key="NSOutlineViewIndentationPerLevelKey">0.0</float>
+															<float key="NSOutlineViewIndentationPerLevelKey">14</float>
 															<bool key="NSOutlineViewIndentationMarkerFollowsCellKey">NO</bool>
 														</object>
 													</array>
@@ -3521,12 +3528,12 @@
 											<string key="NSFrameSize">{119, 513}</string>
 											<reference key="NSSuperview" ref="940292970"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="436031898"/>
+											<reference key="NSNextKeyView" ref="328509521"/>
 											<int key="NSsFlags">150032</int>
 											<reference key="NSVScroller" ref="702373225"/>
 											<reference key="NSHScroller" ref="328509521"/>
 											<reference key="NSContentView" ref="436031898"/>
-											<bytes key="NSScrollAmts">AAAAAAAAAABBqAAAQagAAA</bytes>
+											<bytes key="NSScrollAmts">AAAAAAAAAABBoAAAQaAAAA</bytes>
 											<double key="NSMinMagnification">0.25</double>
 											<double key="NSMaxMagnification">8</double>
 											<double key="NSMagnification">1</double>
@@ -3596,7 +3603,7 @@
 																			<string key="NSFrameSize">{256, 513}</string>
 																			<reference key="NSSuperview" ref="377263203"/>
 																			<reference key="NSWindow"/>
-																			<reference key="NSNextKeyView" ref="904503538"/>
+																			<reference key="NSNextKeyView" ref="856756753"/>
 																			<bool key="NSEnabled">YES</bool>
 																			<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 																			<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -3638,8 +3645,10 @@
 																			<double key="NSIntercellSpacingWidth">3</double>
 																			<double key="NSIntercellSpacingHeight">2</double>
 																			<object class="NSColor" key="NSBackgroundColor">
-																				<int key="NSColorSpace">2</int>
-																				<bytes key="NSRGB">MC4yMTk2MDc4NDMxIDAuNDU4ODIzNTI5NCAwLjg0MzEzNzI1NDkgMAA</bytes>
+																				<int key="NSColorSpace">6</int>
+																				<string key="NSCatalogName">System</string>
+																				<string key="NSColorName">_sourceListBackgroundColor</string>
+																				<reference key="NSColor" ref="504861444"/>
 																			</object>
 																			<reference key="NSGridColor" ref="133783201"/>
 																			<double key="NSRowHeight">135</double>
@@ -3692,7 +3701,7 @@
 															<string key="NSFrame">{{-1, 0}, {256, 513}}</string>
 															<reference key="NSSuperview" ref="407302536"/>
 															<reference key="NSWindow"/>
-															<reference key="NSNextKeyView" ref="377263203"/>
+															<reference key="NSNextKeyView" ref="904503538"/>
 															<int key="NSsFlags">133648</int>
 															<reference key="NSVScroller" ref="856756753"/>
 															<reference key="NSHScroller" ref="904503538"/>
@@ -6614,7 +6623,7 @@
 									<int key="NSvFlags">266</int>
 									<string key="NSFrame">{{16, 2}, {95, 17}}</string>
 									<reference key="NSSuperview" ref="703134112"/>
-									<reference key="NSNextKeyView" ref="895365117"/>
+									<reference key="NSNextKeyView" ref="702373225"/>
 									<string key="NSAntiCompressionPriority">{250, 750}</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="452984761">
@@ -6688,7 +6697,7 @@
 									<int key="NSvFlags">266</int>
 									<string key="NSFrame">{{38, 0}, {59, 18}}</string>
 									<reference key="NSSuperview" ref="895365117"/>
-									<reference key="NSNextKeyView" ref="702373225"/>
+									<reference key="NSNextKeyView" ref="692974135"/>
 									<string key="NSAntiCompressionPriority">{250, 750}</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="751219671">
@@ -6747,6 +6756,7 @@
 									</set>
 									<string key="NSFrame">{{95, 2}, {16, 16}}</string>
 									<reference key="NSSuperview" ref="895365117"/>
+									<reference key="NSNextKeyView" ref="703134112"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSImageCell" key="NSCell" id="421337764">
@@ -10064,17 +10074,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">TVCServerListCell</string>
 					<string key="superclassName">NSTableCellView</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">customTextField</string>
-						<string key="NS.object.0">NSTextField</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">customTextField</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">customTextField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/TVCServerListCell.h</string>
