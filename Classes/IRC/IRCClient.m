@@ -1918,6 +1918,27 @@
 
 			break;
 		}
+		case 5093: // Command: TAGE
+		{
+			/* Textual Age — Developr mode only. */
+
+			/* The reference date is the date & time of the first commit to the
+			 Textual repo. Textual existed before then, of course, but the date 
+			 will remain as the official reference date for its birthday. */
+			NSTimeInterval referenceDate = 1279871580.000000; // July 23, 2010 03:53:00 AM
+
+			NSTimeInterval timeDiff = [NSDate secondsSinceUnixTimestamp:referenceDate];
+
+			NSString *message = TXTFLS(@"TimeIntervalSinceFirstCommit", TXReadableTime(timeDiff));
+
+			if (PointerIsEmpty(selChannel)) {
+				[self printDebugInformationToConsole:message];
+			} else {
+				[self sendPrivmsgToSelectedChannel:message];
+			}
+			
+			break;
+		}
 		case 5091: // Command: LOADED_PLUGINS
 		{
 			NSArray *loadedBundles = [RZPluginManager() allLoadedExtensions];

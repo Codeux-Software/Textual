@@ -290,6 +290,8 @@
 "ThemeChangeOverridePromptWindowColors" = "• Window Colors";
 "ThemeChangeOverridePromptTitle" = "Preferred Selection";
 
+"TimeIntervalSinceFirstCommit" = "\002Time Since First Commit:\002 %@";
+
 "TimeAgo" = "%@ Ago";
 
 "TimeConvertPlural[DAY]" = "Days";
