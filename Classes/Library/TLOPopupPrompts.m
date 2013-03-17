@@ -53,13 +53,19 @@
 	NSString *suppressionKey = sheetInfo[0];
 	NSString *selectorName   = sheetInfo[2];
 
+	BOOL isForcedSuppression = [sheetInfo boolAtIndex:3];
+
 	id  targetClass  = sheetInfo[1];
 	SEL targetAction = NSSelectorFromString(selectorName);
 
 	if (NSObjectIsNotEmpty(suppressionKey)) {
-		NSButton *button = [alert suppressionButton];
+		if (isForcedSuppression) {
+			[RZUserDefaults() setBool:YES forKey:suppressionKey];
+		} else {
+			NSButton *button = [alert suppressionButton];
 
-		[RZUserDefaults() setBool:button.state forKey:suppressionKey];
+			[RZUserDefaults() setBool:button.state forKey:suppressionKey];
+		}
 	}
 
 	if ([targetClass isKindOfClass:[self class]]) {
@@ -105,6 +111,8 @@
 		suppressText = TXTLS(@"PromptSuppressionButtonDefaultTitle");
 	}
 
+	BOOL isForcedSuppression = [suppressText isEqualToString:TXPopupPromptSpecialSuppressionTextValue];
+
 	/* Pop sheet. */
 	NSAlert *alert = [NSAlert new];
 
@@ -116,13 +124,13 @@
 	[alert addButtonWithTitle:buttonAlternate];
 	[alert addButtonWithTitle:otherButton];
 
-	if (useSupression) {
+	if (useSupression && isForcedSuppression == NO) {
 		[alert setShowsSuppressionButton:useSupression];
 
 		[alert.suppressionButton setTitle:suppressText];
 	}
 	
-	NSArray *context = @[privateSuppressionKey, targetClass, NSStringFromSelector(actionSelector)];
+	NSArray *context = @[privateSuppressionKey, targetClass, NSStringFromSelector(actionSelector), @(isForcedSuppression)];
 
 	[alert beginSheetModalForWindow:window
 					  modalDelegate:[self class]
@@ -162,6 +170,8 @@
 		suppressText = TXTLS(@"PromptSuppressionButtonDefaultTitle");
 	}
 
+	BOOL isForcedSuppression = [suppressText isEqualToString:TXPopupPromptSpecialSuppressionTextValue];
+
 	/* Pop dialog. */
 	NSAlert *alert = [NSAlert alertWithMessageText:titleText
 									 defaultButton:buttonDefault
@@ -171,7 +181,7 @@
 
 	NSButton *suppressionButton = [alert suppressionButton];
 	
-	if (useSupression) {
+	if (useSupression && isForcedSuppression == NO) {
 		[alert setShowsSuppressionButton:useSupression];
 
 		[suppressionButton setTitle:suppressText];
@@ -180,11 +190,21 @@
 	/* Return result. */
 	if ([alert runModal] == NSAlertDefaultReturn) {
 		if (useSupression) {
-			[RZUserDefaults() setBool:suppressionButton.state forKey:privateSuppressionKey];
+			if (isForcedSuppression) {
+				[RZUserDefaults() setBool:YES forKey:privateSuppressionKey];
+			} else {
+				[RZUserDefaults() setBool:suppressionButton.state forKey:privateSuppressionKey];
+			}
 		}
 
 		return YES;
 	} else {
+		if (useSupression) {
+			if (isForcedSuppression) {
+				[RZUserDefaults() setBool:YES forKey:privateSuppressionKey];
+			}
+		}
+		
 		return NO;
 	}
 }

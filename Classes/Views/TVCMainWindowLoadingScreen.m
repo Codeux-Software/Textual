@@ -54,14 +54,8 @@
 		
 		[self.welcomePurchaseTextualButton setAction:@selector(openMacAppStoreDownloadPage:)];
 		[self.welcomePurchaseTextualButton setTarget:self.masterController.menuController];
-		
-		[self.welcomeAddServerViewButton setAction:@selector(openWelcomeSheet:)];
-		[self.welcomeAddServerViewButton setTarget:self.masterController];
 #else
 		[self displayView:self.welcomeAddServerView];
-
-		[self.welcomeAddServerViewButton setAction:@selector(addServer:)];
-		[self.welcomeAddServerViewButton setTarget:self.masterController.menuController];
 #endif
 	}
 }

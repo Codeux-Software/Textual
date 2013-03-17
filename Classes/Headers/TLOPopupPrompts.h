@@ -37,7 +37,11 @@
 
 #import "TextualApplication.h"
 
-#define TXPopupPromptSuppressionPrefix		@"Text Input Prompt Suppression -> "
+#define TXPopupPromptSuppressionPrefix					@"Text Input Prompt Suppression -> "
+
+/* TXPopupPromptSpecialSuppressionTextValue tells the dialog to force suppression on
+ the dialog using the given key as soon as it closes instead of actually asking the user. */
+#define TXPopupPromptSpecialSuppressionTextValue		@"<TXPopupPromptSpecialSuppressionTextValue>"	
 
 typedef enum TLOPopupPromptReturnType : NSInteger {
 	TLOPopupPromptReturnPrimaryType,
