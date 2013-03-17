@@ -3208,7 +3208,7 @@
 														<int key="NSTCFlags">1</int>
 													</object>
 													<object class="NSTextViewSharedData" key="NSSharedData">
-														<int key="NSFlags">67153540</int>
+														<int key="NSFlags">44676</int>
 														<int key="NSTextCheckingTypes">0</int>
 														<nil key="NSMarkedAttributes"/>
 														<object class="NSColor" key="NSBackgroundColor" id="317973488">
@@ -3466,14 +3466,9 @@
 																	<reference key="NSColor" ref="375176648"/>
 																</object>
 															</object>
-															<object class="NSColor" key="NSGridColor" id="133783201">
-																<int key="NSColorSpace">6</int>
-																<string key="NSCatalogName">System</string>
-																<string key="NSColorName">gridColor</string>
-																<object class="NSColor" key="NSColor">
-																	<int key="NSColorSpace">3</int>
-																	<bytes key="NSWhite">MC41AA</bytes>
-																</object>
+															<object class="NSColor" key="NSGridColor">
+																<int key="NSColorSpace">4</int>
+																<bytes key="NSWhite">MSAwAA</bytes>
 															</object>
 															<double key="NSRowHeight">20</double>
 															<int key="NSTvFlags">1111490560</int>
@@ -3650,7 +3645,15 @@
 																				<string key="NSColorName">_sourceListBackgroundColor</string>
 																				<reference key="NSColor" ref="504861444"/>
 																			</object>
-																			<reference key="NSGridColor" ref="133783201"/>
+																			<object class="NSColor" key="NSGridColor">
+																				<int key="NSColorSpace">6</int>
+																				<string key="NSCatalogName">System</string>
+																				<string key="NSColorName">gridColor</string>
+																				<object class="NSColor" key="NSColor">
+																					<int key="NSColorSpace">3</int>
+																					<bytes key="NSWhite">MC41AA</bytes>
+																				</object>
+																			</object>
 																			<double key="NSRowHeight">135</double>
 																			<int key="NSTvFlags">1514143744</int>
 																			<reference key="NSDelegate"/>
@@ -3758,6 +3761,7 @@
 													<string key="NSFrame">{{225, 5}, {16, 16}}</string>
 													<reference key="NSSuperview" ref="986144230"/>
 													<reference key="NSWindow"/>
+													<reference key="NSNextKeyView"/>
 													<string key="NSReuseIdentifierKey">_NS:945</string>
 													<int key="NSpiFlags">20746</int>
 													<double key="NSMaxValue">100</double>
@@ -4366,7 +4370,7 @@
 											<int key="NSTCFlags">1</int>
 										</object>
 										<object class="NSTextViewSharedData" key="NSSharedData">
-											<int key="NSFlags">67120868</int>
+											<int key="NSFlags">12004</int>
 											<int key="NSTextCheckingTypes">0</int>
 											<nil key="NSMarkedAttributes"/>
 											<reference key="NSBackgroundColor" ref="317973488"/>
@@ -4477,7 +4481,7 @@
 											<int key="NSTCFlags">1</int>
 										</object>
 										<object class="NSTextViewSharedData" key="NSSharedData">
-											<int key="NSFlags">67120868</int>
+											<int key="NSFlags">12004</int>
 											<int key="NSTextCheckingTypes">0</int>
 											<nil key="NSMarkedAttributes"/>
 											<object class="NSColor" key="NSBackgroundColor">
@@ -4587,7 +4591,7 @@
 											<int key="NSTCFlags">1</int>
 										</object>
 										<object class="NSTextViewSharedData" key="NSSharedData">
-											<int key="NSFlags">67120868</int>
+											<int key="NSFlags">12004</int>
 											<int key="NSTextCheckingTypes">0</int>
 											<nil key="NSMarkedAttributes"/>
 											<reference key="NSBackgroundColor" ref="317973488"/>
@@ -4694,7 +4698,7 @@
 											<int key="NSTCFlags">1</int>
 										</object>
 										<object class="NSTextViewSharedData" key="NSSharedData">
-											<int key="NSFlags">67120868</int>
+											<int key="NSFlags">12004</int>
 											<int key="NSTextCheckingTypes">0</int>
 											<nil key="NSMarkedAttributes"/>
 											<reference key="NSBackgroundColor" ref="317973488"/>

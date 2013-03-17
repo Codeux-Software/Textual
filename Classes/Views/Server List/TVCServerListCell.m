@@ -527,6 +527,11 @@
 	/* Ignore this. */
 }
 
+- (void)drawRect:(NSRect)dirtyRect
+{
+	/* Ignore this. */
+}
+
 - (void)didAddSubview:(NSView *)subview
 {
 	id firstObject = [self.subviews objectAtIndex:0];
