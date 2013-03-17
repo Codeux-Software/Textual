@@ -72,19 +72,6 @@
 	[self setNeedsDisplay:YES];
 }
 
-- (void)drawBackgroundInClipRect:(NSRect)clipRect
-{
-	if ([TPCPreferences invertSidebarColors]) {
-		[self.properBackgroundColor set];
-
-		NSRectFill(clipRect);
-
-		return;
-	}
-
-	[super drawBackgroundInClipRect:clipRect];
-}
-
 - (NSScrollView *)scrollView
 {
 	return (id)self.superview.superview;
