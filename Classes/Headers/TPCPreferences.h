@@ -81,7 +81,6 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (BOOL)isDefaultIRCClient;
 
 + (BOOL)sandboxEnabled;
-+ (BOOL)securityScopedBookmarksAvailable;
 
 + (NSTimeInterval)timeIntervalSinceApplicationLaunch;
 + (NSTimeInterval)timeIntervalSinceApplicationInstall;
