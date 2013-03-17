@@ -217,6 +217,8 @@
 	 clicking anywhere else in the server list. */
 	[self.imageView setMenu:menu];
 
+	[self.badgeCountImageCell setMenu:menu];
+
 	/* Populate the background image cell. */
 	[self.backgroundImageCell setMenu:menu];
 	[self.backgroundImageCell setImage:origBackgroundImage];
