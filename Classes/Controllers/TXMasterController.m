@@ -190,10 +190,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	if (self.worldController.clients.count < 1) {
 		[self.mainWindowLoadingScreen hideAll:NO];
 		[self.mainWindowLoadingScreen popWelcomeAddServerView];
-
-#ifndef TEXTUAL_TRIAL_BINARY
-		[self openWelcomeSheet:nil];
-#endif
 	} else {
 		[self.mainWindowLoadingScreen hideLoadingConfigurationView];
 

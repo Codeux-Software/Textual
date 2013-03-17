@@ -42,9 +42,10 @@
 @property (nonatomic, nweak) NSButton *addChannelButton;
 @property (nonatomic, nweak) NSButton *deleteChannelButton;
 @property (nonatomic, nweak) NSTextField *nicknameField;
-@property (nonatomic, nweak) NSTextField *serverAddressField;
+@property (nonatomic, nweak) NSComboBox *serverAddressField;
 @property (nonatomic, nweak) TVCListView *channelTable;
 @property (nonatomic, strong) NSMutableArray *channelList;
+@property (nonatomic, strong) NSDictionary *serverList;
 
 - (void)show;
 - (void)close;
