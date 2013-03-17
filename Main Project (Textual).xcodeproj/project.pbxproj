@@ -164,7 +164,6 @@
 		4C28F442159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F440159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif */; };
 		4C28F4461592019900CD2CDE /* colloquyRoomTabRegular@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F4441592019900CD2CDE /* colloquyRoomTabRegular@2x.tif */; };
 		4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */; };
-		4C34F94716E24040009F573D /* WikipediaLinkParser.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C34F94516E2402F009F573D /* WikipediaLinkParser.bundle */; };
 		4C3D0B791594908B00567623 /* TPCPreferencesMigrationAssistant.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D0B781594908B00567623 /* TPCPreferencesMigrationAssistant.m */; };
 		4C3D0B7C159490C800567623 /* TPCPreferencesMigrationAssistant.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3D0B7B159490C800567623 /* TPCPreferencesMigrationAssistant.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C3ED27A15A0E0E40063880C /* DarkServerListViewSelectedPrivateMessageUser.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C3ED27915A0E0E40063880C /* DarkServerListViewSelectedPrivateMessageUser.tif */; };
@@ -749,13 +748,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		4C34F94C16E24056009F573D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4C34F94816E24056009F573D /* Wikipedia Links Extension.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D576316048677EA00EA77CD;
-			remoteInfo = WikipediaLinkParser;
-		};
 		4C5BA37616F1302F00A96CA2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4C1DC5491580420500A47BC9 /* Project object */;
@@ -825,7 +817,6 @@
 				4C68426916C5B12A0005A59E /* BragSpam.bundle in Copy Extensions */,
 				4C68426A16C5B12B0005A59E /* SpammerParadise.bundle in Copy Extensions */,
 				4C68426B16C5B12D0005A59E /* SystemProfiler.bundle in Copy Extensions */,
-				4C34F94716E24040009F573D /* WikipediaLinkParser.bundle in Copy Extensions */,
 			);
 			name = "Copy Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -942,8 +933,6 @@
 		4C28F440159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "FormattingColor_Rainbow@2x.tif"; path = "Resources/Images/IRC Formatting Colors/FormattingColor_Rainbow@2x.tif"; sourceTree = SOURCE_ROOT; };
 		4C28F4441592019900CD2CDE /* colloquyRoomTabRegular@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "colloquyRoomTabRegular@2x.tif"; path = "Resources/Images/Status Badges/colloquyRoomTabRegular@2x.tif"; sourceTree = SOURCE_ROOT; };
 		4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = ../../../../System/Library/Frameworks/SecurityInterface.framework; sourceTree = "<group>"; };
-		4C34F94516E2402F009F573D /* WikipediaLinkParser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = WikipediaLinkParser.bundle; path = .tmp/SharedBuildProducts/WikipediaLinkParser.bundle; sourceTree = SOURCE_ROOT; };
-		4C34F94816E24056009F573D /* Wikipedia Links Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Wikipedia Links Extension.xcodeproj"; path = "Resources/Plugins/Wikipedia Links/Wikipedia Links Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Spammer Paradise Extension.xcodeproj"; path = "Resources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj"; sourceTree = "<group>"; };
 		4C3D0B781594908B00567623 /* TPCPreferencesMigrationAssistant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCPreferencesMigrationAssistant.m; path = "Migration Assistant/TPCPreferencesMigrationAssistant.m"; sourceTree = "<group>"; };
 		4C3D0B7B159490C800567623 /* TPCPreferencesMigrationAssistant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPreferencesMigrationAssistant.h; sourceTree = "<group>"; };
@@ -1398,14 +1387,6 @@
 			name = "External Libraries";
 			sourceTree = "<group>";
 		};
-		4C34F94916E24056009F573D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4C34F94D16E24056009F573D /* WikipediaLinkParser.bundle */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		4C3D0B7A1594909500567623 /* Migration Assistant */ = {
 			isa = PBXGroup;
 			children = (
@@ -1623,7 +1604,6 @@
 				4C68426116C5B1020005A59E /* BragSpam.bundle */,
 				4C68426216C5B1020005A59E /* SpammerParadise.bundle */,
 				4C68426316C5B1020005A59E /* SystemProfiler.bundle */,
-				4C34F94516E2402F009F573D /* WikipediaLinkParser.bundle */,
 			);
 			name = Binaries;
 			sourceTree = "<group>";
@@ -1635,7 +1615,6 @@
 				4CCC6B6E158E8CDA003A102B /* Brag Spam Extension.xcodeproj */,
 				4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */,
 				4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */,
-				4C34F94816E24056009F573D /* Wikipedia Links Extension.xcodeproj */,
 			);
 			name = Projects;
 			sourceTree = "<group>";
@@ -2642,10 +2621,6 @@
 					ProductGroup = 4CCC6B78158E8CF6003A102B /* Products */;
 					ProjectRef = 4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */;
 				},
-				{
-					ProductGroup = 4C34F94916E24056009F573D /* Products */;
-					ProjectRef = 4C34F94816E24056009F573D /* Wikipedia Links Extension.xcodeproj */;
-				},
 			);
 			projectRoot = "";
 			targets = (
@@ -2659,13 +2634,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		4C34F94D16E24056009F573D /* WikipediaLinkParser.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = WikipediaLinkParser.bundle;
-			remoteRef = 4C34F94C16E24056009F573D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		4CCC6B6A158E8CCC003A102B /* BlowfishCommandLine.bundle */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -2928,7 +2896,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\ncd \"${PROJECT_DIR}/Resources/Plugins/Blowfish Key Control\"\nxcodebuild -alltargets -configuration \"Release\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\"\n\ncd \"${PROJECT_DIR}/Resources/Plugins/Brag Spam\"\nxcodebuild -alltargets -configuration \"Release\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\"\n\ncd \"${PROJECT_DIR}/Resources/Plugins/System Profiler\"\nxcodebuild -alltargets -configuration \"Release\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\"\n\ncd \"${PROJECT_DIR}/Resources/Plugins/Spammer Paradise\"\nxcodebuild -alltargets -configuration \"Release\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\"\n\ncd \"${PROJECT_DIR}/Resources/Plugins/Wikipedia Links\"\nxcodebuild -alltargets -configuration \"Release\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\"\n";
+			shellScript = "\ncd \"${PROJECT_DIR}/Resources/Plugins/Blowfish Key Control\"\nxcodebuild -alltargets -configuration \"Release\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\"\n\ncd \"${PROJECT_DIR}/Resources/Plugins/Brag Spam\"\nxcodebuild -alltargets -configuration \"Release\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\"\n\ncd \"${PROJECT_DIR}/Resources/Plugins/System Profiler\"\nxcodebuild -alltargets -configuration \"Release\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\"\n\ncd \"${PROJECT_DIR}/Resources/Plugins/Spammer Paradise\"\nxcodebuild -alltargets -configuration \"Release\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4CCF301715804DD1006FFE21 /* ShellScript */ = {

@@ -17,9 +17,6 @@
       location = "group:Resources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Resources/Plugins/Wikipedia Links/Wikipedia Links Extension.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:Frameworks/Blowfish Encryption/Source/Blowfish Encryption Framework.xcodeproj">
    </FileRef>
    <FileRef
