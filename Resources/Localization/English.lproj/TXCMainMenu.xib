@@ -4077,7 +4077,7 @@
 													<object class="NSButtonCell" key="NSCell" id="1055844252">
 														<int key="NSCellFlags">67108864</int>
 														<int key="NSCellFlags2">134217728</int>
-														<string key="NSContents">Add New Server</string>
+														<string key="NSContents">Continue</string>
 														<reference key="NSSupport" ref="963614601"/>
 														<string key="NSCellIdentifier">_NS:9</string>
 														<reference key="NSControlView" ref="165618339"/>

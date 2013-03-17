@@ -39,16 +39,48 @@
 
 @implementation TDCWelcomeSheet
 
+#pragma mark -
+#pragma mark Init.
+
 - (id)init
 {
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"TDCWelcomeSheet" owner:self];
 		
 		self.channelList = [NSMutableArray new];
+
+		/* Load the list of available IRC networks. */
+		NSString *slp = [[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"IRCNetworks.plist"];
+
+		self.serverList = [NSDictionary dictionaryWithContentsOfFile:slp];
+
+		/* Populate the server address field with the IRC network list. */
+		NSArray *sortedKeys = [self.serverList sortedDictionaryKeys];
+
+		for (NSString *key in sortedKeys) {
+			[self.serverAddressField addItemWithObjectValue:key];
+		}
 	}
 	
 	return self;
 }
+
+#pragma mark -
+#pragma mark Server List Factory
+
+- (NSString *)nameMatchesServerInList:(NSString *)name
+{
+	for (NSString *key in self.serverList) {
+		if ([name isEqualIgnoringCase:key]) {
+			return key;
+		}
+	}
+
+	return nil;
+}
+
+#pragma mark -
+#pragma mark Controls
 
 - (void)show
 {
@@ -80,13 +112,23 @@
 
 		[channels safeAddObjectWithoutDuplication:s];
 	}
+
+	NSString *userServAddress = [self.serverAddressField.firstTokenStringValue cleanedServerHostmask];
+
+	NSString *realhost = [self nameMatchesServerInList:userServAddress];
+
+	if (NSObjectIsEmpty(realhost)) {
+		realhost = userServAddress;
+	} else {
+		realhost = (self.serverList)[realhost];
+	}
 	
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
 	dic[@"channelList"]			= channels;
+	dic[@"serverAddress"]		= realhost;
 	dic[@"connectOnLaunch"]		= @(self.autoConnectCheck.state);
 	dic[@"identityNickname"]	= self.nicknameField.firstTokenStringValue;
-	dic[@"serverAddress"]		= self.serverAddressField.firstTokenStringValue.cleanedServerHostmask;
 
 	if ([self.delegate respondsToSelector:@selector(welcomeSheet:onOK:)]) {
 		[self.delegate welcomeSheet:self onOK:dic];
@@ -132,12 +174,36 @@
 
 - (void)controlTextDidChange:(NSNotification *)note
 {
+	[self askAboutTheSupportChannel];
+	
 	[self updateOKButton];
 }
 
 - (void)onServerAddressChanged:(id)sender
 {
+	[self askAboutTheSupportChannel];
+	
 	[self updateOKButton];
+}
+
+- (void)askAboutTheSupportChannel
+{
+	NSString *host = self.serverAddressField.stringValue;
+
+	if ([host hasSuffix:@"freenode.net"] || [host isEqualIgnoringCase:@"Freenode"]) {
+		BOOL addSupportChannel = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"ConnectToSupportChannelQuestionDialogMessage")
+																	 title:TXTLS(@"ConnectToSupportChannelQuestionDialogTitle")
+															 defaultButton:TXTLS(@"YesButton")
+														   alternateButton:TXTLS(@"NoButton")
+															suppressionKey:@"welcomesheet_join_support_channel"
+														   suppressionText:TXPopupPromptSpecialSuppressionTextValue];
+
+		if (addSupportChannel) {
+			[self.channelList safeAddObjectWithoutDuplication:@"#textual"];
+
+			[self.channelTable reloadData];
+		}
+	}
 }
 
 - (void)updateOKButton
