@@ -68,6 +68,17 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 	// ---- //
 
+#ifdef TEXTUAL_SANDBOX_DISABLED
+	[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"RunningUnsupportedNonsandboxedBuildWarningMessage")
+										title:TXTLS(@"RunningUnsupportedNonsandboxedBuildWarningTitle")
+								defaultButton:TXTLS(@"OkButton")
+							  alternateButton:nil
+							   suppressionKey:@"nonsandboxed_version_warning"
+							  suppressionText:nil];
+#endif
+	
+	// ---- //
+
 	if ([NSEvent modifierFlags] & NSShiftKeyMask) {
 		self.ghostMode = YES;
 	}
