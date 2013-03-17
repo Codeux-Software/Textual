@@ -75,46 +75,74 @@
 		for (NSString *key in sortedKeys) {
 			[self.serverAddressCombo addItemWithObjectValue:key];
 		}
-
-        /* Build list of encodings. */
-        self.encodingList = [NSString supportedStringEncodingsWithTitle:NO];
-
-        /* What we are basically doing now is sorting all the encodings, then removing
-         UTF-8 from the sorted list and inserting it at the top of the list. */
-        NSString *utf8title = [NSString localizedNameOfStringEncoding:NSUTF8StringEncoding];
-
-        NSMutableArray *encodingAdditions = [self.encodingList.sortedDictionaryKeys mutableCopy];
-
-        [encodingAdditions removeObject:utf8title];
-
-        [self.primaryEncodingButton addItemWithTitle:utf8title];
-        [self.fallbackEncodingButton addItemWithTitle:utf8title];
-
-		/* Add the encodings to the popup list. This for loop will find the first
-		 parentheses opening and compare everything before it to the one found for
-		 the previous encoding. If the prefix has changed, then a separator is 
-		 inserted. This groups the encodings. */
-
-		NSString *previosEncodingPrefix = nil;
-
-		for (NSString *encodingTitle in encodingAdditions) {
-			NSInteger parePos = [encodingTitle stringPosition:@" ("];
-
-			NSString *encodingPrefix = [encodingTitle safeSubstringToIndex:parePos];
-
-			if ([encodingPrefix isEqualToString:previosEncodingPrefix] == NO) {
-				[self.primaryEncodingButton.menu addItem:[NSMenuItem separatorItem]];
-				[self.fallbackEncodingButton.menu addItem:[NSMenuItem separatorItem]];
-
-				previosEncodingPrefix = encodingPrefix;
-			}
-
-			[self.primaryEncodingButton addItemWithTitle:encodingTitle];
-			[self.fallbackEncodingButton addItemWithTitle:encodingTitle];
-		}
 	}
     
 	return self;
+}
+
+- (void)populateEncodings
+{
+	[self.primaryEncodingButton removeAllItems];
+	[self.fallbackEncodingButton removeAllItems];
+	
+	/* Build list of encodings. */
+	self.encodingList = [NSString supportedStringEncodingsWithTitle:NO];
+
+	/* What we are basically doing now is sorting all the encodings, then removing
+	 UTF-8 from the sorted list and inserting it at the top of the list. */
+	NSString *utf8title = [NSString localizedNameOfStringEncoding:NSUTF8StringEncoding];
+
+	NSMutableArray *encodingAdditions = [self.encodingList.sortedDictionaryKeys mutableCopy];
+
+	[encodingAdditions removeObject:utf8title];
+
+	[self.primaryEncodingButton addItemWithTitle:utf8title];
+	[self.fallbackEncodingButton addItemWithTitle:utf8title];
+
+	/* Add the encodings to the popup list. This for loop will find the first
+	 parentheses opening and compare everything before it to the one found for
+	 the previous encoding. If the prefix has changed, then a separator is
+	 inserted. This groups the encodings.
+
+	 We do this two times. The first time setups up preferred encodings at
+	 the top of the list. The next handles everything else. */
+
+	NSArray *favoredEncodings = @[@"Unicode", @"Western", @"Central European"];
+
+	[self populateEncodingPopup:encodingAdditions preferredEncodings:favoredEncodings ignoreFavored:NO];
+
+	BOOL includeAdvancedEncodings = [RZUserDefaults() boolForKey:@"Server Properties Window Sheet —> Include Advanced Encodings"];
+
+	if (includeAdvancedEncodings) {
+		[self populateEncodingPopup:encodingAdditions preferredEncodings:favoredEncodings ignoreFavored:YES];
+	}
+}
+
+- (void)populateEncodingPopup:(NSArray *)encodingAdditions preferredEncodings:(NSArray *)favoredEncodings ignoreFavored:(BOOL)favoredIgnored
+{
+	NSString *previosEncodingPrefix = nil;
+
+	for (NSString *encodingTitle in encodingAdditions) {
+		NSInteger parePos = [encodingTitle stringPosition:@" ("];
+
+		NSString *encodingPrefix = [encodingTitle safeSubstringToIndex:parePos];
+
+		if (favoredIgnored && [favoredEncodings containsObject:encodingPrefix]) {
+			continue;
+		} else if (favoredIgnored == NO && [favoredEncodings containsObject:encodingPrefix] == NO) {
+			continue;
+		}
+
+		if ([encodingPrefix isEqualToString:previosEncodingPrefix] == NO) {
+			[self.primaryEncodingButton.menu addItem:[NSMenuItem separatorItem]];
+			[self.fallbackEncodingButton.menu addItem:[NSMenuItem separatorItem]];
+
+			previosEncodingPrefix = encodingPrefix;
+		}
+
+		[self.primaryEncodingButton addItemWithTitle:encodingTitle];
+		[self.fallbackEncodingButton addItemWithTitle:encodingTitle];
+	}
 }
 
 #pragma mark -
@@ -155,12 +183,13 @@
 
     [self.ignoreTable setTarget:self];
     [self.ignoreTable setDoubleAction:@selector(tableViewDoubleClicked:)];
-	
+
 	[self load];
 	
 	[self updateConnectionPage];
 	[self updateChannelsPage];
 	[self updateIgnoresPage];
+	[self toggleAdvancedEncodings:nil];
 
 	[self proxyTypeChanged:nil];
     [self floodControlChanged:nil];
@@ -276,13 +305,9 @@
 	/* Messages */
 	self.sleepModeQuitMessageField.stringValue = self.config.sleepModeLeavingComment;
 	self.normalLeavingCommentField.stringValue = self.config.normalLeavingComment;
-	
-	/* Encoding */
-    NSString *primaryEncodingTitle = [self.encodingList firstKeyForObject:@(self.config.primaryEncoding)];
-    NSString *fallbackEncodingTitle = [self.encodingList firstKeyForObject:@(self.config.fallbackEncoding)];
 
-    [self.primaryEncodingButton selectItemWithTitle:primaryEncodingTitle];
-    [self.fallbackEncodingButton selectItemWithTitle:fallbackEncodingTitle];
+	/* Encoding */
+	/* Encoding settings are delegated to toggleAdvancedEncodings: */
 	
 	/* Proxy Server */
 	[self.proxyTypeButton selectItemWithTag:self.config.proxyType];
@@ -492,6 +517,18 @@
 	[self.proxyAddressField	setEnabled:enabled];
 	[self.proxyUsernameField setEnabled:enabled];
 	[self.proxyPasswordField setEnabled:enabled];
+}
+
+- (void)toggleAdvancedEncodings:(id)sender
+{
+	[self populateEncodings];
+
+	/* Encoding */
+    NSString *primaryEncodingTitle = [self.encodingList firstKeyForObject:@(self.config.primaryEncoding)];
+    NSString *fallbackEncodingTitle = [self.encodingList firstKeyForObject:@(self.config.fallbackEncoding)];
+
+    [self.primaryEncodingButton selectItemWithTitle:primaryEncodingTitle];
+    [self.fallbackEncodingButton selectItemWithTitle:fallbackEncodingTitle];
 }
 
 #pragma mark -
