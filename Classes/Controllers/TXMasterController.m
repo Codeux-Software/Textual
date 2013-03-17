@@ -543,7 +543,11 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 - (void)loadWindowState:(BOOL)honorFullscreen
 {
 	NSDictionary *dic = [TPCPreferences loadWindowStateWithName:@"Window -> Main Window"];
-	
+
+	[self.inputTextField setGrammarCheckingEnabled:[RZUserDefaults() boolForKey:@"TextFieldAutomaticGrammarCheck"]];
+	[self.inputTextField setContinuousSpellCheckingEnabled:[RZUserDefaults() boolForKey:@"TextFieldAutomaticSpellCheck"]];
+	[self.inputTextField setAutomaticSpellingCorrectionEnabled:[RZUserDefaults() boolForKey:@"TextFieldAutomaticSpellCorrection"]];
+
 	if (dic) {
 		NSInteger x = [dic integerForKey:@"x"];
 		NSInteger y = [dic integerForKey:@"y"];
@@ -553,10 +557,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		BOOL fullscreen = [dic boolForKey:@"fullscreen"];
 		
 		[self.mainWindow setFrame:NSMakeRect(x, y, w, h) display:YES animate:self.isInFullScreenMode];
-		
-		[self.inputTextField setGrammarCheckingEnabled:[RZUserDefaults() boolForKey:@"TextFieldAutomaticGrammarCheck"]];
-		[self.inputTextField setContinuousSpellCheckingEnabled:[RZUserDefaults() boolForKey:@"TextFieldAutomaticSpellCheck"]];
-		[self.inputTextField setAutomaticSpellingCorrectionEnabled:[RZUserDefaults() boolForKey:@"TextFieldAutomaticSpellCorrection"]];
 		
 		self.serverSplitView.dividerPosition = [dic integerForKey:@"serverList"];
 		self.memberSplitView.dividerPosition = [dic integerForKey:@"memberList"];
