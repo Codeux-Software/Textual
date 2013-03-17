@@ -476,23 +476,19 @@
 			if (returnCode == NSOKButton) {
 				NSURL *pathURL = [d.URLs safeObjectAtIndex:0];
 
-				if ([TPCPreferences sandboxEnabled] && [TPCPreferences securityScopedBookmarksAvailable]) {
-					NSError *error = nil;
-					
-					NSData *bookmark = [pathURL bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
-										 includingResourceValuesForKeys:nil
-														  relativeToURL:nil
-																  error:&error];
-					
-					if (error) {
-						LogToConsole(@"Error creating bookmark for URL (%@): %@", pathURL, [error localizedDescription]);
-					} else {
-						[TPCPreferences setTranscriptFolder:bookmark];
-					}
-				} else {
-					[TPCPreferences setTranscriptFolder:[pathURL.path stringByAbbreviatingWithTildeInPath]];
-				}
+				NSError *error = nil;
 				
+				NSData *bookmark = [pathURL bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
+									 includingResourceValuesForKeys:nil
+													  relativeToURL:nil
+															  error:&error];
+				
+				if (error) {
+					LogToConsole(@"Error creating bookmark for URL (%@): %@", pathURL, [error localizedDescription]);
+				} else {
+					[TPCPreferences setTranscriptFolder:bookmark];
+				}
+
 				[self updateTranscriptFolder];
 			}
 		}];

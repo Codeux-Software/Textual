@@ -456,9 +456,6 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (void)startUsingTranscriptFolderSecurityScopedBookmark
 {
-	NSAssertReturn([self sandboxEnabled]);
-	NSAssertReturn([self securityScopedBookmarksAvailable]);
-
 	NSData *bookmark = [RZUserDefaults() dataForKey:@"LogTranscriptDestinationSecurityBookmark"];
 
 	NSObjectIsEmptyAssert(bookmark);
@@ -496,33 +493,18 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (NSString *)transcriptFolder
 {
-	if ([self sandboxEnabled]) {
-		if (NSObjectIsEmpty(transcriptFolderResolvedBookmark)) {
-			[self startUsingTranscriptFolderSecurityScopedBookmark];
-		} 
+	if (NSObjectIsEmpty(transcriptFolderResolvedBookmark)) {
+		[self startUsingTranscriptFolderSecurityScopedBookmark];
+	} 
 
-		return [transcriptFolderResolvedBookmark path];
-	} else {
-		NSString *base = [RZUserDefaults() objectForKey:@"LogTranscriptDestination"];
-
-		return [base stringByExpandingTildeInPath];
-	}
+	return [transcriptFolderResolvedBookmark path];
 }
 
 + (void)setTranscriptFolder:(id)value
 {
-	// "value" can either be returned as an absolute path on non-sandboxed
-	// versions of Textual or as an NSData object on sandboxed versions.
+	[self stopUsingTranscriptFolderSecurityScopedBookmark];
 
-	if ([self sandboxEnabled]) {
-		NSAssertReturn([self securityScopedBookmarksAvailable]);
-
-		[self stopUsingTranscriptFolderSecurityScopedBookmark];
-
-		[RZUserDefaults() setObject:value forKey:@"LogTranscriptDestinationSecurityBookmark"];
-	} else {
-		[RZUserDefaults() setObject:value forKey:@"LogTranscriptDestination"];
-	}
+	[RZUserDefaults() setObject:value forKey:@"LogTranscriptDestinationSecurityBookmark"];
 }
 
 #pragma mark -
@@ -533,19 +515,6 @@ static NSURL *transcriptFolderResolvedBookmark;
 	NSString *suffix = [NSString stringWithFormat:@"Containers/%@/Data", [self applicationBundleIdentifier]];
 
 	return [NSHomeDirectory() hasSuffix:suffix];
-}
-
-+ (BOOL)securityScopedBookmarksAvailable
-{
-	if ([self featureAvailableToOSXMountainLion]) { // Covers 10.8 and later.
-		return YES;
-	} else {
-		NSString *osxversion = [CSFWSystemInformation systemStandardVersion];
-
-		NSArray *matches = @[@"10.7", @"10.7.0", @"10.7.1", @"10.7.2"];
-
-		return ([matches containsObject:osxversion] == NO);
-	}
 }
 
 #pragma mark -
@@ -1328,8 +1297,6 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"Theme -> Nickname Format"]		= TXLogLineUndefinedNicknameFormat;
 	d[@"Theme -> Timestamp Format"]		= TXDefaultTextualTimestampFormat;
 
-	d[@"LogTranscriptDestination"] = @"~/Documents/Textual Logs";
-
     d[@"TrackUserAwayStatusMaximumChannelSize"] = @(0);
 	d[@"AutojoinMaximumChannelJoinCount"]		= @(2);
 	d[@"ScrollbackMaximumLineCount"]			= @(300);
@@ -1360,7 +1327,9 @@ static NSMutableArray *excludeKeywords = nil;
 	/* Sandbox Check */
 
 	[RZUserDefaults() setBool:[self sandboxEnabled]						forKey:@"Security -> Sandbox Enabled"];
-	[RZUserDefaults() setBool:[self securityScopedBookmarksAvailable]	forKey:@"Security -> Scoped Bookmarks Available"];
+
+	[RZUserDefaults() setBool:[self featureAvailableToOSXLion]			forKey:@"System —> Running Mac OS Lion Or Newer"];
+	[RZUserDefaults() setBool:[self featureAvailableToOSXMountainLion]  forKey:@"System —> Running Mac OS Mountain Lion Or Newer"];
 
 	/* Font Check */
 
