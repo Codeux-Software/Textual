@@ -90,11 +90,28 @@
         [self.primaryEncodingButton addItemWithTitle:utf8title];
         [self.fallbackEncodingButton addItemWithTitle:utf8title];
 
-        [self.primaryEncodingButton.menu addItem:[NSMenuItem separatorItem]];
-        [self.fallbackEncodingButton.menu addItem:[NSMenuItem separatorItem]];
-        
-        [self.primaryEncodingButton addItemsWithTitles:encodingAdditions];
-        [self.fallbackEncodingButton addItemsWithTitles:encodingAdditions];
+		/* Add the encodings to the popup list. This for loop will find the first
+		 parentheses opening and compare everything before it to the one found for
+		 the previous encoding. If the prefix has changed, then a separator is 
+		 inserted. This groups the encodings. */
+
+		NSString *previosEncodingPrefix = nil;
+
+		for (NSString *encodingTitle in encodingAdditions) {
+			NSInteger parePos = [encodingTitle stringPosition:@" ("];
+
+			NSString *encodingPrefix = [encodingTitle safeSubstringToIndex:parePos];
+
+			if ([encodingPrefix isEqualToString:previosEncodingPrefix] == NO) {
+				[self.primaryEncodingButton.menu addItem:[NSMenuItem separatorItem]];
+				[self.fallbackEncodingButton.menu addItem:[NSMenuItem separatorItem]];
+
+				previosEncodingPrefix = encodingPrefix;
+			}
+
+			[self.primaryEncodingButton addItemWithTitle:encodingTitle];
+			[self.fallbackEncodingButton addItemWithTitle:encodingTitle];
+		}
 	}
     
 	return self;
