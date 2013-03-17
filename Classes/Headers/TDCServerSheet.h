@@ -102,6 +102,7 @@
 - (void)floodControlChanged:(id)sender;
 - (void)proxyTypeChanged:(id)sender;
 - (void)serverAddressChanged:(id)sender;
+- (void)toggleAdvancedEncodings:(id)sender;
 
 - (void)addChannel:(id)sender;
 - (void)editChannel:(id)sender;
