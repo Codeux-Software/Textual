@@ -53,13 +53,16 @@
 	NSString *bundleVersion = [TPCPreferences textualInfoPlist][@"CFBundleVersion"];
 	
 	[self.versionInfoField setStringValue:TXTFLS(@"AboutWindowBuildNumber", bundleVersion)];
+
+	[self.window restoreWindowStateUsingKeyword:NSStringFromClass(self.class)];
 	
-	[self.window center];
 	[self.window makeKeyAndOrderFront:nil];
 }
 
 - (void)windowWillClose:(NSNotification *)note
 {
+	[self.window saveWindowStateUsingKeyword:NSStringFromClass(self.class)];
+	
 	if ([self.delegate respondsToSelector:@selector(aboutPanelWillClose:)]) {
 		[self.delegate aboutPanelWillClose:self];
 	}
