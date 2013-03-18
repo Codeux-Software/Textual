@@ -37,6 +37,96 @@
 
 #import "TextualApplication.h"
 
+/*
+	Tag Reference:
+
+	The tag used for each menu item was usually randomly picked
+	during development. Do not try and look for any relation
+	from one tag to another as they have none. They are simply
+	a unique way to identify a specific menu item.
+
+	2001: "Get Info (Whois)"
+	2002: "Private Message (Query)"
+	2005: "Invite To…"
+	2024: "Look Up In Dictionary"
+	2433: "Sort Channel List"
+	3001: "Copy URL"
+	313: "Paste"
+	3301: "Join Channel"
+	331: "Search on Google"
+	32345: "Mark Scrollback"
+	32346: "Scrollback Marker"
+	32347: "Mark All As Read"
+	32348: "Clear Scrollback"
+	32349: "Increase Font Size"
+	32350: "Decrease Font Size"
+	4564: "Find…"
+	4565: "Find Next"
+	4566: "Find Previous"
+	50001: "Next Server"
+	50002: "Previous Server"
+	50003: "Next Active Server"
+	50004: "Previous Active Server"
+	50005: "Next Channel"
+	50006: "Previous Channel"
+	50007: "Next Active Channel"
+	50008: "Previous Active Channel"
+	50009: "Next Unread Channel"
+	50010: "Previous Unread Channel"
+	50011: "Previous Selection"
+	50012: "Move Forward"
+	501: "Connect"
+	502: "Disconnect"
+	503: "Cancel Reconnect"
+	504810: "Take Op (-o)"
+	504811: "Take Halfop (-h)"
+	504812: "Take Voice (-v)"
+	504813: "All Modes Taken"
+	504910: "Give Op (+o)"
+	504911: "Give Halfop (+h)"
+	504912: "Give Voice (+v)"
+	504913: "All Modes Given"
+	511: "Change Nickname…"
+	519: "Channel List…"
+	521: "Add Server…"
+	522: "Duplicate Server"
+	523: "Delete Server…"
+	54092: "Enable Developer Mode"
+	541: "Server Properties…"
+	5421: "Query Logs"
+	5422: "Channel" (Submenu)
+	542: "Logs"
+	549: "Copy"
+	589: "Main Window"
+	590: "Address Book"
+	591: "Ignore List"
+	592: "Textual Logs"
+	593: "Highlight List"
+	5675: "Connect to Help Channel"
+	5676: "Connect to Testing Channel"
+	601: "Join Channel"
+	602: "Leave Channel"
+	651: "Add Channel…"
+	652: "Delete Channel"
+	691: "Add Channel…"
+	6876: "Topic"
+	6877: "Ban List"
+	6878: "Ban Exceptions"
+	6879: "Invite Exceptions"
+	6880: "General Settings"
+	6881: "Moderated (+m)"
+	6882: "Unmoderated (-m)"
+	6883: "Invite Only (+i)"
+	6884: "Anyone Can Join (-i)"
+	6885: "Manage All Modes"
+	935: Menu Separator
+	936: Menu Separator
+	937: Menu Separator
+	9631: "Close Window"
+	990002: "Next Highlight"
+	990003: "Previous Highlight"
+ */
+
 @interface TXMenuController : NSObject
 @property (nonatomic, strong) NSString *pointedUrl;
 @property (nonatomic, strong) NSString *pointedNickname;
@@ -50,6 +140,9 @@
 - (NSArray *)selectedMembers:(NSMenuItem *)sender;
 - (BOOL)checkSelectedMembers:(NSMenuItem *)item;
 - (void)deselectMembers:(NSMenuItem *)sender;
+
+- (BOOL)validateMenuItem:(NSMenuItem *)item;
+- (BOOL)validateMenuItemTag:(NSInteger)tag forItem:(NSMenuItem *)item;
 
 - (void)addWindowToWindowList:(id)window;
 - (void)removeWindowFromWindowList:(NSString *)windowClass;
