@@ -95,6 +95,13 @@
 	NSWindowNegateActionWithAttachedSheetR(@[]);
 	
 	NSMutableArray *ary = [NSMutableArray array];
+
+	/* Invalidate passed information if we are in console. */
+	TVCLogController *controller = self.worldController.selectedViewController;
+	
+	if (PointerIsEmpty(controller.channel)) {
+		self.nickname = nil;
+	}
 	
 	if (self.anchorURL) {
 		self.menuController.pointedUrl = self.anchorURL;
