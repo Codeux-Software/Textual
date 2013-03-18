@@ -68,12 +68,10 @@
 
 - (void)show
 {
-	if ([self.window isVisible] == NO) {
-		[self.window center];
-	}
-
     [self.networkNameField setStringValue:TXTFLS(@"ChannelListNetworkName", self.client.altNetworkName)];
 
+	[self.window restoreWindowStateUsingKeyword:NSStringFromClass(self.class)];
+	
 	[self.window makeKeyAndOrderFront:nil];
 }
 
@@ -336,6 +334,8 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void *context)
 
 - (void)windowWillClose:(NSNotification *)note
 {
+	[self.window saveWindowStateUsingKeyword:NSStringFromClass(self.class)];
+	
 	if ([self.delegate respondsToSelector:@selector(listDialogWillClose:)]) {
 		[self.delegate listDialogWillClose:self];
 	}
