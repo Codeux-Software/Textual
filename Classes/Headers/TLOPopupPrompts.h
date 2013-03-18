@@ -40,7 +40,10 @@
 #define TXPopupPromptSuppressionPrefix					@"Text Input Prompt Suppression -> "
 
 /* TXPopupPromptSpecialSuppressionTextValue tells the dialog to force suppression on
- the dialog using the given key as soon as it closes instead of actually asking the user. */
+ the dialog using the given key as soon as it closes instead of actually asking the user. 
+ 
+ When using this, it is the job of the caller to validate the suppression value. The alert
+ will always return YES for suppressed alerts so make sure that is the value you want. */
 #define TXPopupPromptSpecialSuppressionTextValue		@"<TXPopupPromptSpecialSuppressionTextValue>"	
 
 typedef enum TLOPopupPromptReturnType : NSInteger {
@@ -50,6 +53,12 @@ typedef enum TLOPopupPromptReturnType : NSInteger {
 } TLOPopupPromptReturnType;
 
 @interface TLOPopupPrompts : NSObject
+/* Return the actual suppression key used internally. Do not feed this to
+ the suppressionKey: field of these alerts. This is what is fed to that field
+ turns into once the alert is processed. */
++ (NSString *)suppressionKeyWithBase:(NSString *)base;
+
+/* Alerts. */
 + (void)popupPromptNilSelector:(TLOPopupPromptReturnType)returnCode;
 
 + (BOOL)dialogWindowWithQuestion:(NSString *)bodyText
