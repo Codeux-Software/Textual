@@ -75,7 +75,7 @@
 
 - (NSString *)encryptionKey
 {
-	NSString *kcPassword = nil;
+	NSString *kcPassword = NSStringEmptyPlaceholder;
 
 	if (NSObjectIsEmpty(_encryptionKey)) {
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Blowfish Encryption)"
@@ -96,7 +96,7 @@
 
 - (NSString *)secretKey
 {
-	NSString *kcPassword = nil;
+	NSString *kcPassword = NSStringEmptyPlaceholder;
 
 	if (NSObjectIsEmpty(_secretKey)) {
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Channel JOIN Key)"
