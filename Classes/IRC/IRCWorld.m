@@ -1215,6 +1215,8 @@
 		[self.masterController showMemberListSplitView:YES];
 	}
 
+	[self.masterController updateSegmentedController];
+
 	[self updateIcon];
 	[self updateTitle];
 }
