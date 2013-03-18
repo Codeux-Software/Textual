@@ -41,6 +41,17 @@
 
 @implementation TLOPopupPrompts
 
++ (NSString *)suppressionKeyWithBase:(NSString *)base
+{
+	NSObjectIsEmptyAssertReturn(base, nil);
+
+	if ([base hasPrefix:TXPopupPromptSuppressionPrefix]) {
+		return base;
+	}
+
+	return [TXPopupPromptSuppressionPrefix stringByAppendingString:base];
+}
+
 #pragma mark -
 #pragma mark Alert Sheets
 
