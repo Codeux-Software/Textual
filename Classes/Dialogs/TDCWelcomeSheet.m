@@ -191,17 +191,23 @@
 	NSString *host = self.serverAddressField.stringValue;
 
 	if ([host hasSuffix:@"freenode.net"] || [host isEqualIgnoringCase:@"Freenode"]) {
-		BOOL addSupportChannel = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"ConnectToSupportChannelQuestionDialogMessage")
-																	 title:TXTLS(@"ConnectToSupportChannelQuestionDialogTitle")
-															 defaultButton:TXTLS(@"YesButton")
-														   alternateButton:TXTLS(@"NoButton")
-															suppressionKey:@"welcomesheet_join_support_channel"
-														   suppressionText:TXPopupPromptSpecialSuppressionTextValue];
+		NSString *key = [TLOPopupPrompts suppressionKeyWithBase:@"welcomesheet_join_support_channel"];
 
-		if (addSupportChannel) {
-			[self.channelList safeAddObjectWithoutDuplication:@"#textual"];
+		BOOL enableDialog = [RZUserDefaults() boolForKey:key];
 
-			[self.channelTable reloadData];
+		if (enableDialog == NO) {
+			BOOL addSupportChannel = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"ConnectToSupportChannelQuestionDialogMessage")
+																		 title:TXTLS(@"ConnectToSupportChannelQuestionDialogTitle")
+																 defaultButton:TXTLS(@"YesButton")
+															   alternateButton:TXTLS(@"NoButton")
+																suppressionKey:@"welcomesheet_join_support_channel"
+															   suppressionText:TXPopupPromptSpecialSuppressionTextValue];
+
+			if (addSupportChannel) {
+				[self.channelList safeAddObjectWithoutDuplication:@"#textual"];
+
+				[self.channelTable reloadData];
+			}
 		}
 	}
 }
