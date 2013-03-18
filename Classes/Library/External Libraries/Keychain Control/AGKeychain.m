@@ -133,7 +133,7 @@
 												  forUsername:username
 												  serviceName:service];
 
-	NSObjectIsEmptyAssertReturn(passwordData, nil);
+	NSObjectIsEmptyAssertReturn(passwordData, NSStringEmptyPlaceholder);
 
 	return [NSString stringWithData:passwordData encoding:NSUTF8StringEncoding];
 }
