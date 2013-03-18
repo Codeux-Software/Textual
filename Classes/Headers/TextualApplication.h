@@ -65,8 +65,7 @@
 	@class IRCTreeItem;
 	@class IRCUser;
 	@class IRCWorld;
-	@class TVCLogRenderer;
-	@class TDCAboutPanelSWindowController;
+	@class TDCAboutPanel;
 	@class TDCAddressBookSheet;
 	@class TDCHighlightSheet;
 	@class TDCInviteSheet;
@@ -111,10 +110,11 @@
 	@class TVCInputTextFieldBackground;
 	@class TVCListSeparatorCell;
 	@class TVCListView;
-    @class TVCLogController;
-    @class TVCLogControllerOperationQueue;
+	@class TVCLogController;
+	@class TVCLogControllerOperationQueue;
 	@class TVCLogLine;
 	@class TVCLogPolicy;
+	@class TVCLogRenderer;
 	@class TVCLogScriptEventSink;
 	@class TVCLogView;
 	@class TVCMainWindow;
@@ -123,21 +123,21 @@
 	@class TVCMainWindowSegmentedControl;
 	@class TVCMemberList;
 	@class TVCMemberListCell;
-	@class TVCMemberListScrollView;
 	@class TVCMemberListScrollClipView;
-    @class TVCMemberListUserInfoPopover;
+	@class TVCMemberListScrollView;
+	@class TVCMemberListUserInfoPopover;
 	@class TVCServerList; // This has a lot of classes.
-	@class TVCserverlistRowCell;
 	@class TVCServerListCell;
 	@class TVCServerListCellBadge;
-	@class TVCServerListCellGroupItem;
 	@class TVCServerListCellChildItem;
-	@class TVCServerListScrollView;
+	@class TVCServerListCellGroupItem;
 	@class TVCServerListScrollClipView;
-	@class TVCTextFieldSTextView;
+	@class TVCServerListScrollView;
+	@class TVCTextField;
 	@class TVCTextFormatterMenu;
 	@class TVCThinSplitView;
 	@class TVCWebViewAutoScroll;
+	@class TVCserverlistRowCell;
 	@class TXMasterController;
 	@class TXMenuController;
 
@@ -148,24 +148,24 @@
 	#import "DDInvocation.h"
 	#import "GCDAsyncSocket.h"
 	#import "GCDAsyncSocketExtensions.h"
+	#import "GRMustache.h"
+	#import "GRMustacheAvailabilityMacros.h"
+	#import "GRMustacheConfiguration.h"
+	#import "GRMustacheContext.h"
+	#import "GRMustacheError.h"
+	#import "GRMustacheFilter.h"
+	#import "GRMustacheLocalizer.h"
+	#import "GRMustacheRendering.h"
+	#import "GRMustacheTag.h"
+	#import "GRMustacheTagDelegate.h"
+	#import "GRMustacheTemplate.h"
+	#import "GRMustacheTemplateRepository.h"
+	#import "GRMustacheVersion.h"
 	#import "GTMDefines.h"
-	#import "GTMGarbageCollection.h"
 	#import "GTMEncodeHTML.h"
 	#import "GTMEncodeURL.h"
-    #import "RLMAsyncSocket.h"
-    #import "GRMustache.h"
-    #import "GRMustacheAvailabilityMacros.h"
-    #import "GRMustacheConfiguration.h"
-    #import "GRMustacheContext.h"
-    #import "GRMustacheError.h"
-    #import "GRMustacheFilter.h"
-    #import "GRMustacheLocalizer.h"
-    #import "GRMustacheRendering.h"
-    #import "GRMustacheTag.h"
-    #import "GRMustacheTagDelegate.h"
-    #import "GRMustacheTemplate.h"
-    #import "GRMustacheTemplateRepository.h"
-    #import "GRMustacheVersion.h"
+	#import "GTMGarbageCollection.h"
+	#import "RLMAsyncSocket.h"
 
 	/* IRC Controllers — Core. */
 
@@ -266,8 +266,8 @@
 	#import "TVCInputTextField.h"
 	#import "TVCListSeparatorCell.h"
 	#import "TVCListView.h"
-    #import "TVCLogController.h"
-    #import "TVCLogControllerOperationQueue.h"
+	#import "TVCLogController.h"
+	#import "TVCLogControllerOperationQueue.h"
 	#import "TVCLogLine.h"
 	#import "TVCLogPolicy.h"
 	#import "TVCLogRenderer.h"
@@ -278,10 +278,10 @@
 	#import "TVCMainWindowSegmentedControl.h"
 	#import "TVCMemberList.h"
 	#import "TVCMemberListCell.h"
-	#import "TVCServerListCellBadge.h"
-    #import "TVCMemberListUserInfoPopover.h"
+	#import "TVCMemberListUserInfoPopover.h"
 	#import "TVCServerList.h"
 	#import "TVCServerListCell.h"
+	#import "TVCServerListCellBadge.h"
 	#import "TVCTextField.h"
 	#import "TVCTextFormatterMenu.h"
 	#import "TVCThinSplitView.h"

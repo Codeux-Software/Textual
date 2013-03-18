@@ -111,15 +111,16 @@
 	IRCChannel *c = [self.worldController selectedChannel];
 
 	switch (tag) {
-		case 4564: // "Find…"
-		case 4565: // "Find Next"
-		case 4566: // "Find Previous"
+		case 2433: // "Sort Channel List"
 		case 32345: // "Mark Scrollback"
 		case 32346: // "Scrollback Marker"
 		case 32347: // "Mark All As Read"
 		case 32348: // "Clear Scrollback"
 		case 32349: // "Increase Font Size"
 		case 32350: // "Decrease Font Size"
+		case 4564: // "Find…"
+		case 4565: // "Find Next"
+		case 4566: // "Find Previous"
 		case 50001: // "Next Server"
 		case 50002: // "Previous Server"
 		case 50003: // "Next Active Server"
@@ -132,9 +133,10 @@
 		case 50010: // "Previous Unread Channel"
 		case 50011: // "Previous Selection"
 		case 50012: // "Move Forward"
+		case 521: // "Add Server…"
+		case 542: // "Logs"
 		case 5675: // "Connect to Help Channel"
 		case 5676: // "Connect to Testing Channel"
-		case 2433: // "Sort Channel List"
 		case 6876: // "Topic"
 		case 6877: // "Ban List"
 		case 6878: // "Ban Exceptions"
@@ -145,8 +147,6 @@
 		case 6883: // "Invite Only (+i)"
 		case 6884: // "Anyone Can Join (-i)"
 		case 6885: // "Manage All Modes"
-		case 542: // "Logs"
-		case 521: // "Add Server…"
 		{
 			return _disableInSheet(YES);
 
