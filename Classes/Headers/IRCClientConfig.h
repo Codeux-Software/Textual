@@ -42,6 +42,9 @@
 #define TXFloodControlDefaultDelayTimer       2
 #define TXFloodControlDefaultMessageCount     6
 
+#define TXDefaultPrimaryTextEncoding		NSUTF8StringEncoding
+#define TXDefaultFallbackTextEncoding		NSISOLatin1StringEncoding
+
 typedef enum TXConnectionProxyType : NSInteger {
 	TXConnectionNoProxyType = 0,
 	TXConnectionSystemSocksProxyType = 1,

@@ -1174,7 +1174,7 @@ typedef enum TXMoveKind : NSInteger {
 	dic[@"identityNickname"]			= nickname;
 	dic[@"channelList"]					= channels;
 	dic[@"connectOnLaunch"]				= config[@"connectOnLaunch"];
-	dic[@"characterEncodingDefault"]	= @(NSUTF8StringEncoding);
+	dic[@"characterEncodingDefault"]	= @(TXDefaultPrimaryTextEncoding);
 
 	/* Migration Assistant Dictionary Addition. */
 	[dic safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
