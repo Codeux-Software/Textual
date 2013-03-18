@@ -54,7 +54,7 @@
 		
 		rect = NSMakeRect((p.x - (w / 2)), (p.y - (h / 2)), w, h);
 		
-		[self setFrame:rect display:YES];
+		[self setFrame:rect display:YES animate:YES];
 	}	
 }
 
@@ -107,7 +107,7 @@
 	}
 
 	if (invalidateSavedState) {
-		[self center];
+		[self exactlyCenterWindow];
 
 		return;
 	}
