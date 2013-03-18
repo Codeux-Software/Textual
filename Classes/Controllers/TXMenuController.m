@@ -335,15 +335,17 @@
 			TVCMainWindow *mainWindow = self.masterController.mainWindow;
 			
 			if ([mainWindow isKeyWindow]) {
-				if (_noClientOrChannel) {
+				TXCommandWKeyAction keyAction = [TPCPreferences commandWKeyAction];
+				
+				if (_noClientOrChannel && NSDissimilarObjects(keyAction, TXCommandWKeyCloseWindowAction)) {
 					return NO;
 				}
 
-				switch ([TPCPreferences commandWKeyAction]) {
+				switch (keyAction) {
 					case TXCommandWKeyCloseWindowAction:
 					{
 						[item setTitle:TXTLS(@"CmdWShortcutCloseWindowType")];
-						
+
 						break;
 					}
 					case TXCommandWKeyPartChannelAction:
