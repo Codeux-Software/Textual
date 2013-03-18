@@ -77,6 +77,13 @@
     return self;
 }
 
+- (void)rightMouseDown:(NSEvent *)theEvent
+{
+	NSWindowNegateActionWithAttachedSheet();
+
+	[super rightMouseDown:theEvent];
+}
+
 - (void)redrawOriginPoints
 {
 	NSInteger defaultSegmentX = _WindowSegmentedControllerDefaultX;

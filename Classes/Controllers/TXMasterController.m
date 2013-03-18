@@ -330,6 +330,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 - (void)handleURLEvent:(NSAppleEventDescriptor *)event
 		withReplyEvent:(NSAppleEventDescriptor *)replyEvent
 {
+	NSWindowNegateActionWithAttachedSheet();
+
 	NSAppleEventDescriptor *desc = [event descriptorAtIndex:1];
 
 	[IRCExtras parseIRCProtocolURI:desc.stringValue];
@@ -665,6 +667,8 @@ typedef enum TXMoveKind : NSInteger {
 
 - (void)move:(TXMoveKind)dir target:(TXMoveKind)target
 {
+	NSWindowNegateActionWithAttachedSheet();
+	
 	/* ************************************************************** */
 	/* Start: Channel Movement Actions.								  */
 	/* Design: The channel movement actions are designed to be local
@@ -812,10 +816,6 @@ typedef enum TXMoveKind : NSInteger {
 	/* Start: All Movement Actions.									  */
 	/* Design: Move to next item regardless of its type.			  */
 	/* ************************************************************** */
-	
-	/* ************************************************************** */
-	/* End: All Movement Actions.									  */
-	/* ************************************************************** */
 
 	if (dir == TXMoveAllKind && target == TXMoveDownKind)
 	{
@@ -826,7 +826,7 @@ typedef enum TXMoveKind : NSInteger {
 		NSInteger count = self.serverList.numberOfRows;
 
 		NSAssertReturn(count > 1);
-		
+
 		NSInteger n = [self.serverList rowForItem:selected];
 
 		n += 1;
@@ -841,6 +841,10 @@ typedef enum TXMoveKind : NSInteger {
 		
 		return;
 	}
+	
+	/* ************************************************************** */
+	/* End: All Movement Actions.									  */
+	/* ************************************************************** */
 }
 
 - (void)selectPreviousChannel:(NSEvent *)e
@@ -905,6 +909,8 @@ typedef enum TXMoveKind : NSInteger {
 
 - (void)tab:(NSEvent *)e
 {
+	NSWindowNegateActionWithAttachedSheet();
+
 	TXTabKeyAction tabKeyAction = [TPCPreferences tabKeyAction];
 
 	if (tabKeyAction == TXTabKeyNickCompleteAction) {
@@ -916,6 +922,8 @@ typedef enum TXMoveKind : NSInteger {
 
 - (void)shiftTab:(NSEvent *)e
 {
+	NSWindowNegateActionWithAttachedSheet();
+
 	TXTabKeyAction tabKeyAction = [TPCPreferences tabKeyAction];
 
 	if (tabKeyAction == TXTabKeyNickCompleteAction) {
@@ -927,11 +935,15 @@ typedef enum TXMoveKind : NSInteger {
 
 - (void)sendMsgAction:(NSEvent *)e
 {
+	NSWindowNegateActionWithAttachedSheet();
+
 	[self sendText:IRCPrivateCommandIndex("action")];
 }
 
 - (void)moveInputHistory:(BOOL)up checkScroller:(BOOL)scroll event:(NSEvent *)event
 {
+	NSWindowNegateActionWithAttachedSheet();
+
 	if (scroll) {
 		NSInteger nol = [self.inputTextField numberOfLines];
 		
@@ -987,6 +999,8 @@ typedef enum TXMoveKind : NSInteger {
 
 - (void)textFormattingBold:(NSEvent *)e
 {
+	NSWindowNegateActionWithAttachedSheet();
+
 	if ([self.formattingMenu boldSet]) {
 		[self.formattingMenu removeBoldCharFromTextBox:nil];
 	} else {
@@ -996,6 +1010,8 @@ typedef enum TXMoveKind : NSInteger {
 
 - (void)textFormattingItalic:(NSEvent *)e
 {
+	NSWindowNegateActionWithAttachedSheet();
+
 	if ([self.formattingMenu italicSet]) {
 		[self.formattingMenu removeItalicCharFromTextBox:nil];
 	} else {
@@ -1005,6 +1021,8 @@ typedef enum TXMoveKind : NSInteger {
 
 - (void)textFormattingUnderline:(NSEvent *)e
 {
+	NSWindowNegateActionWithAttachedSheet();
+
 	if ([self.formattingMenu underlineSet]) {
 		[self.formattingMenu removeUnderlineCharFromTextBox:nil];
 	} else {
@@ -1014,6 +1032,8 @@ typedef enum TXMoveKind : NSInteger {
 
 - (void)textFormattingForegroundColor:(NSEvent *)e
 {
+	NSWindowNegateActionWithAttachedSheet();
+
 	if ([self.formattingMenu foregroundColorSet]) {
 		[self.formattingMenu removeForegroundColorCharFromTextBox:nil];
 	} else {
@@ -1028,6 +1048,8 @@ typedef enum TXMoveKind : NSInteger {
 
 - (void)textFormattingBackgroundColor:(NSEvent *)e
 {
+	NSWindowNegateActionWithAttachedSheet();
+
 	if ([self.formattingMenu foregroundColorSet]) {
 		if ([self.formattingMenu backgroundColorSet]) {
 			[self.formattingMenu removeForegroundColorCharFromTextBox:nil];
@@ -1053,6 +1075,8 @@ typedef enum TXMoveKind : NSInteger {
 
 - (void)focusWebview
 {
+	NSWindowNegateActionWithAttachedSheet();
+	
     [self.mainWindow makeFirstResponder:self.worldController.selectedViewController.view];
 }
 

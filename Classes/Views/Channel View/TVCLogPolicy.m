@@ -92,6 +92,8 @@
 
 - (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
 {
+	NSWindowNegateActionWithAttachedSheetR(@[]);
+	
 	NSMutableArray *ary = [NSMutableArray array];
 	
 	if (self.anchorURL) {

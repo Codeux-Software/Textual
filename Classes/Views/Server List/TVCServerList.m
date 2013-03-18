@@ -222,6 +222,13 @@
 	return self.menu;
 }
 
+- (void)rightMouseDown:(NSEvent *)theEvent
+{
+	NSWindowNegateActionWithAttachedSheet();
+
+	[super rightMouseDown:theEvent];
+}
+
 - (void)keyDown:(NSEvent *)e
 {
 	if (self.keyDelegate) {
