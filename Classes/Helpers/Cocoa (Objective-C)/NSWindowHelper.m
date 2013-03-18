@@ -58,6 +58,66 @@
 	}	
 }
 
+- (void)saveWindowStateUsingKeyword:(NSString *)keyword
+{
+	NSObjectIsEmptyAssert(keyword);
+
+	keyword = [NSString stringWithFormat:@"Saved Window State —> Internal —> %@", keyword];
+
+	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+
+	NSRect rect = self.frame;
+
+	[dic setInteger:rect.origin.x forKey:@"x"];
+	[dic setInteger:rect.origin.y forKey:@"y"];
+	[dic setInteger:rect.size.width forKey:@"w"];
+	[dic setInteger:rect.size.height forKey:@"h"];
+
+	[TPCPreferences saveWindowState:dic name:keyword];
+}
+
+- (void)restoreWindowStateUsingKeyword:(NSString *)keyword
+{
+	NSObjectIsEmptyAssert(keyword);
+
+	keyword = [NSString stringWithFormat:@"Saved Window State —> Internal —> %@", keyword];
+
+	NSDictionary *dic = [TPCPreferences loadWindowStateWithName:keyword];
+
+	BOOL invalidateSavedState = NSDissimilarObjects(dic.count, 4);
+
+	NSRect visibleRect = [RZMainScreen() frame];
+
+	NSRect currFrame = self.frame;
+	
+	NSInteger x = [dic integerForKey:@"x"];
+	NSInteger y = [dic integerForKey:@"y"];
+
+	NSInteger oldHeight = [dic integerForKey:@"h"];
+	NSInteger heightDff = (oldHeight - currFrame.size.height);
+
+	y += heightDff;
+	
+	if ((x + currFrame.size.width) > visibleRect.size.width) {
+		invalidateSavedState = YES;
+	}
+
+	if ((y + currFrame.size.height) > visibleRect.size.height) {
+		invalidateSavedState = YES;
+	}
+
+	if (invalidateSavedState) {
+		[self center];
+
+		return;
+	}
+
+	currFrame.origin.x = x;
+	currFrame.origin.y = y;
+
+	[self setFrame:currFrame display:YES animate:YES];
+}
+
 - (BOOL)isInFullscreenMode
 {
 	return ((self.styleMask & NSFullScreenWindowMask) == NSFullScreenWindowMask);

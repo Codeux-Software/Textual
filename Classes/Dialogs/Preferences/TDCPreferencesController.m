@@ -102,11 +102,9 @@
 	[self onChangedHighlightType:nil];
 
 	[self.setAsDefaultIRCClientButton setEnabled:BOOLReverseValue([TPCPreferences isDefaultIRCClient])];
-	
-	if ([self.window isVisible] == NO) {
-		[self.window center];
-	}
-	
+
+	[self.window restoreWindowStateUsingKeyword:NSStringFromClass(self.class)];
+
 	[self.window makeKeyAndOrderFront:nil];
 	
 	[self firstPane:self.generalView selectedItem:0];
@@ -865,6 +863,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
+	[self.window saveWindowStateUsingKeyword:NSStringFromClass(self.class)];
+	
 	[TPCPreferences cleanUpHighlightKeywords];
 	[TPCPreferences sync];
 	
