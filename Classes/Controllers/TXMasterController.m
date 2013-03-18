@@ -148,9 +148,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	self.serverSplitView.delegate = self;
 	self.memberSplitView.delegate = self;
 
-	[self.serverList updateBackgroundColor];
-	[self.memberList updateBackgroundColor];
-
 	[self.worldController setupConfiguration];
 
 	self.serverList.delegate = self.worldController;

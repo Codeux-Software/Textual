@@ -124,6 +124,9 @@
 	}
 
 	[self outlineViewSelectionDidChange:nil];
+
+	[self.serverList updateBackgroundColor];
+	[self.memberList updateBackgroundColor];
 }
 
 - (NSMutableDictionary *)dictionaryValue
