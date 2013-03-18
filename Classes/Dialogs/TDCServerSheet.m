@@ -184,6 +184,8 @@
     [self.ignoreTable setTarget:self];
     [self.ignoreTable setDoubleAction:@selector(tableViewDoubleClicked:)];
 
+	[self populateEncodings];
+
 	[self load];
 	
 	[self updateConnectionPage];
@@ -307,7 +309,11 @@
 	self.normalLeavingCommentField.stringValue = self.config.normalLeavingComment;
 
 	/* Encoding */
-	/* Encoding settings are delegated to toggleAdvancedEncodings: */
+    NSString *primaryEncodingTitle = [self.encodingList firstKeyForObject:@(self.config.primaryEncoding)];
+    NSString *fallbackEncodingTitle = [self.encodingList firstKeyForObject:@(self.config.fallbackEncoding)];
+
+    [self.primaryEncodingButton selectItemWithTitle:primaryEncodingTitle];
+    [self.fallbackEncodingButton selectItemWithTitle:fallbackEncodingTitle];
 	
 	/* Proxy Server */
 	[self.proxyTypeButton selectItemWithTag:self.config.proxyType];
@@ -521,14 +527,28 @@
 
 - (void)toggleAdvancedEncodings:(id)sender
 {
+	NSString *selectedPrimary = self.primaryEncodingButton.selectedItem.title;
+	NSString *selectedFallback = self.fallbackEncodingButton.selectedItem.title;
+
 	[self populateEncodings];
 
-	/* Encoding */
-    NSString *primaryEncodingTitle = [self.encodingList firstKeyForObject:@(self.config.primaryEncoding)];
-    NSString *fallbackEncodingTitle = [self.encodingList firstKeyForObject:@(self.config.fallbackEncoding)];
+	/* If advanced encodings were toggled off and we had one selected, reset the primary
+	 and fallback encoding popups to the default encodings. */
+	
+	NSMenuItem *primaryItem = [self.primaryEncodingButton itemWithTitle:selectedPrimary];
+	NSMenuItem *fallbackItem = [self.fallbackEncodingButton itemWithTitle:selectedFallback];
 
-    [self.primaryEncodingButton selectItemWithTitle:primaryEncodingTitle];
-    [self.fallbackEncodingButton selectItemWithTitle:fallbackEncodingTitle];
+	if (PointerIsEmpty(primaryItem)) {
+		selectedPrimary = [NSString localizedNameOfStringEncoding:TXDefaultPrimaryTextEncoding];
+	}
+
+	if (PointerIsEmpty(fallbackItem)) {
+		selectedFallback = [NSString localizedNameOfStringEncoding:TXDefaultFallbackTextEncoding];
+	}
+
+	/* Select items. */
+	[self.primaryEncodingButton selectItemWithTitle:selectedPrimary];
+	[self.fallbackEncodingButton selectItemWithTitle:selectedFallback];
 }
 
 #pragma mark -

@@ -77,8 +77,8 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 
         self.connectionPrefersIPv6 = NO;
 		
-		self.primaryEncoding = NSUTF8StringEncoding;
-		self.fallbackEncoding = NSISOLatin1StringEncoding;
+		self.primaryEncoding = TXDefaultPrimaryTextEncoding;
+		self.fallbackEncoding = TXDefaultFallbackTextEncoding;
         
         self.outgoingFloodControl            = YES;
         self.floodControlMaximumMessages     = TXFloodControlDefaultMessageCount;
