@@ -59,6 +59,13 @@
 	}
 }
 
+- (void)rightMouseDown:(NSEvent *)theEvent
+{
+	NSWindowNegateActionWithAttachedSheet();
+
+	[super rightMouseDown:theEvent];
+}
+
 - (void)updateBackgroundColor
 {
 	CALayer *scrollLayer = self.scrollView.contentView.layer;

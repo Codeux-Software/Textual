@@ -48,6 +48,8 @@
 #define _notActive					(c && c.isActive == NO)
 #define _notConnected				(u && u.isConnected == NO && u.isLoggedIn == NO && u.isConnecting == NO)
 
+#define _disableInSheet(c)			[self changeConditionInSheet:c]
+
 @implementation TXMenuController
 
 - (id)init
@@ -60,73 +62,6 @@
 	
 	return self;
 }
-
-/*
-	Tag Reference:
-
-		The tag used for each menu item was usually randomly picked
-		during development. Do not try and look for any relation 
-		from one tag to another as they have none. They are simply 
-		a unique way to identify a specific menu item.
-
-		2001: "Get Info (Whois)"
-		2002: "Private Message (Query)"
-		2005: "Invite To…"
-		2024: "Look Up In Dictionary"
-		3001: "Copy URL"
-		313: "Paste"
-		3301: "Join Channel"
-		331: "Search on Google"
-		50001: "Next Server"
-		50001: "Previous Server"
-		50003: "Next Active Server"
-		50004: "Previous Active Server"
-		50005: "Next Channel"
-		50006: "Previous Channel"
-		50007: "Next Active Channel"
-		50008: "Previous Active Channel"
-		50009: "Next Unread Channel"
-		50010: "Previous Unread Channel"
-		50011: "Previous Selection"
-		50012: "Move Forward"
-		501: "Connect"
-		502: "Disconnect"
-		503: "Cancel Reconnect"
-		504810: "Take Op (-o)"
-		504811: "Take Halfop (-h)"
-		504812: "Take Voice (-v)"
-		504813: "All Modes Taken"
-		504910: "Give Op (+o)"
-		504911: "Give Halfop (+h)"
-		504912: "Give Voice (+v)"
-		504913: "All Modes Given"
-		511: "Change Nickname…"
-		519: "Channel List…"
-		521: "Add Server…"
-		522: "Duplicate Server"
-		523: "Delete Server…"
-		54092: "Enable Developer Mode"
-		541: "Server Properties…"
-		5421: "Query Logs"
-		5422: "Channel" (Submenu)
-		542: "Logs"
-		549: "Copy"
-		590: "Address Book"
-		591: "Ignore List"
-		592: "Textual Logs"
-		593: "Highlight List"
-		601: "Join Channel"
-		602: "Leave Channel"
-		651: "Add Channel…"
-		652: "Delete Channel"
-		691: "Add Channel…"
-		935: Menu Separator
-		936: Menu Separator
-		937: Menu Separator
-		9631: "Close Window"
-		990002: "Next Highlight"
-		990003: "Previous Highlight"
- */
 
 - (void)terminate
 {
@@ -158,14 +93,65 @@
 	[logMenuItem setEnabled:[TPCPreferences logTranscript]];
 }
 
+- (BOOL)changeConditionInSheet:(BOOL)condition
+{
+	NSWindowNegateActionWithAttachedSheetR(NO);
+
+	return condition;
+}
+
 - (BOOL)validateMenuItem:(NSMenuItem *)item
+{
+	return [self validateMenuItemTag:item.tag forItem:item];
+}
+
+- (BOOL)validateMenuItemTag:(NSInteger)tag forItem:(NSMenuItem *)item
 {
 	IRCClient *u = [self.worldController selectedClient];
 	IRCChannel *c = [self.worldController selectedChannel];
-	
-	NSInteger tag = item.tag;
-	
+
 	switch (tag) {
+		case 4564: // "Find…"
+		case 4565: // "Find Next"
+		case 4566: // "Find Previous"
+		case 32345: // "Mark Scrollback"
+		case 32346: // "Scrollback Marker"
+		case 32347: // "Mark All As Read"
+		case 32348: // "Clear Scrollback"
+		case 32349: // "Increase Font Size"
+		case 32350: // "Decrease Font Size"
+		case 50001: // "Next Server"
+		case 50002: // "Previous Server"
+		case 50003: // "Next Active Server"
+		case 50004: // "Previous Active Server"
+		case 50005: // "Next Channel"
+		case 50006: // "Previous Channel"
+		case 50007: // "Next Active Channel"
+		case 50008: // "Previous Active Channel"
+		case 50009: // "Next Unread Channel"
+		case 50010: // "Previous Unread Channel"
+		case 50011: // "Previous Selection"
+		case 50012: // "Move Forward"
+		case 5675: // "Connect to Help Channel"
+		case 5676: // "Connect to Testing Channel"
+		case 2433: // "Sort Channel List"
+		case 6876: // "Topic"
+		case 6877: // "Ban List"
+		case 6878: // "Ban Exceptions"
+		case 6879: // "Invite Exceptions"
+		case 6880: // "General Settings"
+		case 6881: // "Moderated (+m)"
+		case 6882: // "Unmoderated (-m)"
+		case 6883: // "Invite Only (+i)"
+		case 6884: // "Anyone Can Join (-i)"
+		case 6885: // "Manage All Modes"
+		case 542: // "Logs"
+		case 521: // "Add Server…"
+		{
+			return _disableInSheet(YES);
+
+			break;
+		}
 		case 331: // "Search on Google"
 		{
 			[self validateChannelMenuSubmenus:item];
@@ -174,7 +160,7 @@
 
 			PointerIsEmptyAssertReturn(web, NO);
 			
-			return [web hasSelection];
+			return _disableInSheet([web hasSelection]);
 			
 			break;
 		}
@@ -184,7 +170,7 @@
 			
 			[item setHidden:condition];
 			
-			return (condition == NO && u.isQuitting == NO);
+			return _disableInSheet((condition == NO && u.isQuitting == NO));
 			
 			break;
 		}
@@ -194,7 +180,7 @@
 			
 			[item setHidden:BOOLReverseValue(condition)];
 			
-			return condition;
+			return _disableInSheet(condition);
 			
 			break;
 		}
@@ -204,20 +190,20 @@
 			
 			[item setHidden:BOOLReverseValue(condition)];
 			
-			return condition;
+			return _disableInSheet(condition);
 			
 			break;
 		}
 		case 511: // "Change Nickname…"
 		case 519: // "Channel List…"
 		{
-			return _connected;
+			return _disableInSheet(_connected);
 			
 			break;
 		}
 		case 523: // "Delete Server"
 		{
-			return _notConnected;
+			return _disableInSheet(_notConnected);
 			
 			break;
 		}
@@ -226,13 +212,13 @@
 		case 590: // "Address Book"
 		case 591: // "Ignore List"
 		{
-			return BOOLValueFromObject(u);
+			return _disableInSheet(BOOLValueFromObject(u));
 			
 			break;
 		}
 		case 592: // "Textual Logs"
 		{
-			return [TPCPreferences logTranscript];
+			return _disableInSheet([TPCPreferences logTranscript]);
 			
 			break;
 		}
@@ -243,7 +229,7 @@
 			if (_isQuery) {
 				[item setHidden:YES];
 				
-				return NO;
+				return _disableInSheet(NO);
 			} else {
 				BOOL condition = (_connected && _notActive && _isChannel);
 				
@@ -253,7 +239,7 @@
 					[item setHidden:NO];
 				}
 				
-				return condition;
+				return _disableInSheet(condition);
 			}
 			
 			break;
@@ -263,11 +249,11 @@
 			if (_isQuery) {
 				[item setHidden:YES];
 				
-				return NO;
+				return _disableInSheet(NO);
 			} else {
 				[item setHidden:_notActive];
 				
-				return _activate;
+				return _disableInSheet(_activate);
 			}
 			
 			break;
@@ -277,11 +263,11 @@
 			if (_isQuery) {
 				[item setHidden:YES];
 				
-				return NO;
+				return _disableInSheet(NO);
 			} else {
 				[item setHidden:NO];
 				
-				return BOOLValueFromObject(u);
+				return _disableInSheet(BOOLValueFromObject(u));
 			}
 			
 			break;
@@ -291,25 +277,25 @@
 			if (_isQuery) {
 				[item setTitle:TXTLS(@"DeletePrivateMessageMenuItem")];
 				
-				return YES;
+				return _disableInSheet(YES);
 			} else {
 				[item setTitle:TXTLS(@"DeleteChannelMenuItem")];
 				
-				return _isChannel;
+				return _disableInSheet(_isChannel);
 			}
 			
 			break;
 		}
 		case 691: // "Add Channel…" — Server Menu
 		{
-			return BOOLValueFromObject(u);
+			return _disableInSheet(BOOLValueFromObject(u));
 			
 			break;
 		}
 		case 2005: // "Invite To…"
 		{
 			if (_notConnected || [self checkSelectedMembers:item] == NO) {
-				return NO;
+				return _disableInSheet(NO);
 			}
 			
 			NSInteger count = 0;
@@ -320,7 +306,7 @@
 				}
 			}
 			
-			return (count > 0);
+			return _disableInSheet((count > 0));
 			
 			break;
 		}
@@ -333,13 +319,13 @@
 				
 				[separator1 setHidden:YES]; 
 				
-				return [TPCPreferences logTranscript];
+				return _disableInSheet([TPCPreferences logTranscript]);
 			} else {
 				[item setHidden:YES];
 				
 				[separator1 setHidden:NO];
 				
-				return NO;
+				return _disableInSheet(NO);
 			}
 			
 			break;
@@ -350,7 +336,7 @@
 			
 			if ([mainWindow isKeyWindow]) {
 				if (_noClientOrChannel) {
-					return YES;
+					return NO;
 				}
 
 				switch ([TPCPreferences commandWKeyAction]) {
@@ -364,7 +350,7 @@
 					{
 						if (_isClient) {
 							[item setTitle:TXTLS(@"CmdWShortcutCloseWindowType")];
-							
+
 							return NO;
 						} else {
 							if (_isChannel) {
@@ -407,7 +393,7 @@
 		}
 		case 593: // "Highlight List"
 		{
-			return ([TPCPreferences logHighlights] && _connected);
+			return _disableInSheet(([TPCPreferences logHighlights] && _connected));
 			
 			break;
 		}
@@ -437,7 +423,7 @@
 				[allModesGiven setHidden:YES];
 				[allModesTaken setHidden:YES];
 				
-				return YES;
+				return _disableInSheet(YES);
 			} else {
 				IRCUser *m = [nicknames safeObjectAtIndex:0];
 				
@@ -459,23 +445,23 @@
 				[allModesTaken setHidden:hideGiveSepItem];
 
 				if (tag == 504813 || tag == 504913) {
-					return NO;
+					return _disableInSheet(NO);
 				}
 				
-				return YES;
+				return _disableInSheet(YES);
 			}
 			
 			break;
 		}
 		case 990002: // "Next Highlight"
 		{
-			return [self.worldController.selectedViewController highlightAvailable:NO];
+			return _disableInSheet([self.worldController.selectedViewController highlightAvailable:NO]);
 			
 			break;
 		}
 		case 990003: // "Previous Highlight"
 		{
-			return [self.worldController.selectedViewController highlightAvailable:YES];
+			return _disableInSheet([self.worldController.selectedViewController highlightAvailable:YES]);
 			
 			break;
 		}
@@ -486,7 +472,7 @@
 			break;
 		}
 	}
-	
+
 	return YES;
 }
 
@@ -672,10 +658,10 @@
 
 - (void)showFindPanel:(id)sender
 {
-	if ([sender tag] == 1 || NSObjectIsEmpty(self.currentSearchPhrase)) {
+	if ([sender tag] == 4564 || NSObjectIsEmpty(self.currentSearchPhrase)) {
 		[self.invokeInBackgroundThread internalOpenFindPanel:sender];
 	} else {
-		if ([sender tag] == 2) {
+		if ([sender tag] == 4565) {
 			[[self currentWebView] searchFor:self.currentSearchPhrase direction:YES caseSensitive:NO wrap:YES];
 		} else {
 			[[self currentWebView] searchFor:self.currentSearchPhrase direction:NO caseSensitive:NO wrap:YES];
@@ -2033,7 +2019,7 @@
 		return;
 	}
 
-	[c.client sendCommand:[NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("mode"), [c name], (([sender tag] == 1) ? @"-m" : @"+m")]];
+	[c.client sendCommand:[NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("mode"), [c name], (([sender tag] == 6882) ? @"-m" : @"+m")]];
 }
 
 - (void)toggleChannelInviteMode:(id)sender
@@ -2044,7 +2030,7 @@
 		return;
 	}
 
-	[c.client sendCommand:[NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("mode"), [c name], (([sender tag] == 1) ? @"-i" : @"+i")]];
+	[c.client sendCommand:[NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("mode"), [c name], (([sender tag] == 6884) ? @"-i" : @"+i")]];
 }
 
 - (void)toggleDeveloperMode:(id)sender
