@@ -233,9 +233,10 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	self.mainWindowIsActive = YES;
 
 	[self.serverList updateBackgroundColor];
-	[self.memberList updateBackgroundColor];
+	[self.serverList reloadAllDrawingsIgnoringOtherReloads];
 	
-	[self.worldController reloadTree];
+	[self.memberList updateBackgroundColor];
+
     [self.worldController updateIcon];
 }
 
@@ -250,9 +251,9 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	self.mainWindowIsActive = NO;
 
 	[self.serverList updateBackgroundColor];
+	[self.serverList reloadAllDrawingsIgnoringOtherReloads];
+	
 	[self.memberList updateBackgroundColor];
-
-	[self.worldController reloadTree];
 }
 
 - (BOOL)queryTerminate
