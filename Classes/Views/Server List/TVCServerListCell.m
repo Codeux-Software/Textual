@@ -38,8 +38,6 @@
 #import "TextualApplication.h"
 
 @interface TVCServerListCell ()
-@property (nonatomic, assign) BOOL isAwaitingRedraw;
-@property (nonatomic, assign) CFAbsoluteTime lastDrawTime;
 @property (nonatomic, strong) NSString *cachedStatusBadgeFile;
 @property (nonatomic, strong) TVCServerListCellBadge *badgeRenderer;
 @end
@@ -88,24 +86,6 @@
 		@"isKeyWindow"	: @(self.masterController.mainWindowIsActive),
 		@"isGraphite"	: @([NSColor currentControlTint] == NSGraphiteControlTint)
 	};
-}
-
-- (BOOL)isReadyForDraw
-{
-	/* We only allow draws to occur every 1.0 second at minimum so that our badge
-	 does not have to be stressed during possible flood events. */
-
-	if (self.lastDrawTime == 0) {
-		return YES;
-	}
-
-	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
-
-	if ((now - self.lastDrawTime) >= _delayedDrawLimit) {
-		return YES;
-	}
-
-	return NO;
 }
 
 #pragma mark -
@@ -242,12 +222,6 @@
 	[self.backgroundImageCell setHidden:NO];
 }
 
-- (void)performTimedDrawInFrame:(id)frameString
-{
-	[self updateDrawing:NSRectFromString(frameString) skipDrawingCheck:YES];
-
-	self.isAwaitingRedraw = NO;
-}
 
 - (void)updateDrawing:(NSRect)cellFrame
 {
@@ -256,22 +230,6 @@
 
 - (void)updateDrawing:(NSRect)cellFrame skipDrawingCheck:(BOOL)doNotLimit
 {
-	if (doNotLimit == NO) {
-		BOOL drawReady = [self isReadyForDraw];
-
-		if (drawReady == NO) {
-			if (self.isAwaitingRedraw == NO) {
-				self.isAwaitingRedraw = YES;
-				
-				[self performSelector:@selector(performTimedDrawInFrame:)
-						   withObject:NSStringFromRect(cellFrame)
-						   afterDelay:_delayedDrawLimit];
-			}
-
-			return;
-		}
-	}
-	
 	PointerIsEmptyAssert(self.cellItem);
 
 	BOOL isGroupItem = [self.serverList isGroupItem:self.cellItem];
@@ -281,8 +239,6 @@
 	} else {
 		[self updateDrawingForChildItem:cellFrame];
 	}
-
-	self.lastDrawTime = CFAbsoluteTimeGetCurrent();
 }
 
 #pragma mark -
@@ -364,11 +320,11 @@
 	/* Set the text field value to our new string. */
 	/**************************************************************/
 
-	//if ([self.customTextField.attributedStringValue isEqual:newStrValue] == NO) {
+	if ([self.customTextField.attributedStringValue isEqual:newStrValue] == NO) {
 		/* Only tell the text field of changes if there are actual ones. Why draw the same value again. */
 		
 		[self.customTextField setAttributedStringValue:newStrValue];
-	//}
+	}
 }
 
 #pragma mark -
@@ -513,11 +469,11 @@
 	/* Set the text field value to our new string. */
 	/**************************************************************/
 
-	//if ([self.customTextField.attributedStringValue isEqual:newStrValue] == NO) {
+	if ([self.customTextField.attributedStringValue isEqual:newStrValue] == NO) {
 		/* Only tell the text field of changes if there are actual ones. Why draw the same value again. */
 
 		[self.customTextField setAttributedStringValue:newStrValue];
-	//}
+	}
 }
 
 - (void)updateMessageCountBadge:(NSDictionary *)drawContext
