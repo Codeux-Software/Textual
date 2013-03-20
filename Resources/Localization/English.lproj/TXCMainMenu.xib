@@ -3172,7 +3172,7 @@
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<string key="NSWindowContentMinSize">{600, 250}</string>
 				<object class="NSView" key="NSWindowView" id="606779342">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSView" id="1064184631">
@@ -3630,7 +3630,11 @@
 																						<string key="NSContents">Text Cell</string>
 																						<reference key="NSSupport" ref="826350039"/>
 																						<reference key="NSControlView" ref="426151871"/>
-																						<reference key="NSBackgroundColor" ref="375145136"/>
+																						<bool key="NSDrawsBackground">YES</bool>
+																						<object class="NSColor" key="NSBackgroundColor">
+																							<int key="NSColorSpace">4</int>
+																							<bytes key="NSWhite">MSAwAA</bytes>
+																						</object>
 																						<reference key="NSTextColor" ref="995889855"/>
 																					</object>
 																					<int key="NSResizingMask">3</int>
@@ -4189,6 +4193,7 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{652, 550}</string>
+					<reference key="NSSuperview"/>
 					<reference key="NSNextKeyView" ref="1064184631"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
