@@ -164,57 +164,49 @@
 	 keeping track of our selection or we are screwed up here. */
 	
 	IRCTreeItem *newSelection = self.worldController.selectedItem;
-	IRCTreeItem *oldSelection = self.worldController.previouslySelectedItem;
 
-	BOOL wasClient = [oldSelection isKindOfClass:[IRCClient class]];
 	BOOL isClient = [newSelection isKindOfClass:[IRCClient class]];
 
-	BOOL hasValidOldSelection = (oldSelection && [newSelection isEqualTo:oldSelection] == NO);
+	NSInteger selectedIndex = -1;
 
 	PointerIsEmptyAssert(newSelection);
 
-	/* It is possible for conflicts. */
-	if (hasValidOldSelection) {
-		NSInteger i = [self rowForItem:oldSelection];
+	if (newSelection) {
+		selectedIndex = [self rowForItem:newSelection];
 
-		if (i >= 0) {
-			TVCServerListCell *rowView = [self viewAtColumn:0 row:i makeIfNecessary:NO];
+		if (selectedIndex >= 0) {
+			TVCServerListCell *rowView = [self viewAtColumn:0 row:selectedIndex makeIfNecessary:NO];
 
-			[rowView.backgroundImageCell setHidden:YES]; // All that is needed.
+			[rowView updateSelectionBackgroundView];
 
 			if (forceRedraw) {
-				[self updateDrawingForRow:i skipDrawingCheck:YES updateDisclosureTriangle:NO];
+				[self updateDrawingForRow:selectedIndex skipDrawingCheck:YES updateDisclosureTriangle:NO];
 			}
-			
-			if (wasClient) {
+
+			if (isClient) {
 				[rowView updateGroupDisclosureTriangle];
 			}
 		}
 	}
 
-	if (newSelection) {
-		NSInteger i = [self rowForItem:newSelection];
+	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
+		TVCServerListCell *rowView = [self viewAtColumn:0 row:i makeIfNecessary:NO];
 
-		if (i >= 0) {
-			TVCServerListCell *rowView = [self viewAtColumn:0 row:i makeIfNecessary:NO];
+		PointerIsEmptyAssertLoopContinue(rowView);
 
-			if (PointerIsEmpty(oldSelection)) {
-				/* If we have no old selection, then turn off our image view so that when
-				 we toggle it back on it will draw right away through our layered view. 
-				 Normally, the oldSelection will disable our background for us, but he is
-				 not on the job right now. */
+		/* We only care about this item if the selection background is not hidden when
+		 it is supposed to be. */
+		if ([rowView.backgroundImageCell isHidden] == NO) {
+			if (NSDissimilarObjects(selectedIndex, i)) {
+				[rowView.backgroundImageCell setHidden:YES]; // All that is needed.
 
-				[rowView.backgroundImageCell setHidden:YES];
-			}
+				if (forceRedraw) {
+					[self updateDrawingForRow:i skipDrawingCheck:YES updateDisclosureTriangle:NO];
+				}
 
-			[rowView updateSelectionBackgroundView];
-
-			if (forceRedraw) {
-				[self updateDrawingForRow:i skipDrawingCheck:YES updateDisclosureTriangle:NO];
-			}
-
-			if (isClient) {
-				[rowView updateGroupDisclosureTriangle];
+				if ([rowView isKindOfClass:[TVCServerListCellGroupItem class]]) {
+					[rowView updateGroupDisclosureTriangle];
+				}
 			}
 		}
 	}
