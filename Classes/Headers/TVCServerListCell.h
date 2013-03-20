@@ -43,7 +43,10 @@
 @property (nonatomic, nweak) NSImageView *backgroundImageCell;
 @property (nonatomic, nweak) NSImageView *badgeCountImageCell;
 
+- (NSDictionary *)drawingContext;
+
 - (void)updateDrawing:(NSRect)cellFrame;
+- (void)updateDrawing:(NSRect)cellFrame skipDrawingCheck:(BOOL)doNotLimit;
 
 - (void)updateGroupDisclosureTriangle;
 - (void)updateGroupDisclosureTriangle:(NSButton *)theButtonParent;

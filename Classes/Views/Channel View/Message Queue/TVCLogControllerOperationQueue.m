@@ -41,12 +41,13 @@
 #pragma mark Define Private Header
 
 @interface TVCLogControllerOperationItem : NSOperation
-@property (nonatomic, strong) NSDictionary *context;
 @property (nonatomic, nweak) TVCLogController *controller;
 
-+ (TVCLogControllerOperationItem *)operationWithBlock:(void(^)(void))block
-                                        forController:(TVCLogController *)controller
-                                          withContext:(NSDictionary *)context;
++ (TVCLogControllerOperationItem *)operationForViewController:(TVCLogController *)controller;
+@end
+
+@interface TVCLogControllerOperationQueue ()
+@property (strong) NSMutableDictionary *cachedOperations;
 @end
 
 #pragma mark -
@@ -57,78 +58,65 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		self.maxConcurrentOperationCount = 1;
+		/* Cached blocks never actually hit the queue. They are used primarily for style reloads and such where
+		 hundreds of messages will be rendered at the same time. Instead of inserting each block to process as
+		 an individual queue item, we instead ask for the block that already contains the HTML result and append
+		 that to our cached operations array. The array can then be processed to create a single, large HTML
+		 block to append to WebKit at the same time instead of processing each message one-by-one.
 
-		/* cachedOperations are primarly used by application start message playback
-		 and style reloads. Instead of adding a new operation for thousands of lines
-		 used by these two actions, we will add the actual blocks to our cache array
-		 and then only add one operation to the operation queue.
+		 Cached operations are stored an array in the format: @[<callbackBlock>, <context>] — their key is a 
+		 unique identifier assigned to each view controller.
 		 
-		 When this operation is called, it has a context that tells the recieving
-		 method that our cachedOperations array should be flushed. The cached 
-		 operations array is never called during normal prints that may occur
-		 during the above mentioned actions. 
-		 
-		 As long as new operations added use the operation that calls our cached
-		 operations array as a dependant, the others should execute in order because
-		 they will have to wait until this is finished. 
-		 
-		 Each cache entry is an array with the format: Index 0 = messageBlock; 
-		 Index 1 = the controller, Index 2 = the context. */
+		 These operations are never executed within this class. They are only cached here. */
 		
-		_cachedOperations = [NSMutableArray array];
-
+		_cachedOperations = [NSMutableDictionary dictionary];
+		
 		return self;
 	}
 
 	return nil;
 }
 
-- (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender
+#pragma mark -
+#pragma mark Queue Additions
+
+- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender
 {
-    [self enqueueMessageBlock:messageBlock fromSender:sender withContext:nil];
+	[self enqueueMessageBlock:callbackBlock for:sender context:nil];
 }
 
-- (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender withContext:(NSDictionary *)context
+- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender context:(NSDictionary *)context
 {
-	/* Ask our context whether this item should be inserted into our cache instead of the queue. */
-	if (context && [context[@"cacheOperation"] boolValue] == YES) {
-		[self.cachedOperations addObject:@[messageBlock, sender, context]];
+	PointerIsEmptyAssert(callbackBlock);
+	PointerIsEmptyAssert(sender);
 
-		return;
-	}
+	TVCLogControllerOperationItem *operation = [TVCLogControllerOperationItem operationForViewController:sender];
 
-	/* It wants in the queue. Create operation and insert. */
-	[self addOperation:[TVCLogControllerOperationItem operationWithBlock:^{
-		[sender handleMessageBlock:messageBlock withContext:context];
-	} forController:sender withContext:context]];
+	operation.completionBlock = ^{
+		callbackBlock(context);
+	};
+
+	[self addOperation:operation];
 }
 
 #pragma mark -
-
-- (void)destroyCachedOperationsFor:(TVCLogController *)controller
-{
-	NSArray *cacheCopy = [self.cachedOperations copy];
-
-	for (NSArray *cacheItem in cacheCopy) {
-		NSAssertReturnLoopContinue(cacheItem.count == 3);
-
-		TVCLogController *cont = cacheItem[1];
-
-		if (cont == controller) {
-			[self.cachedOperations removeObject:cacheItem];
-		}
-	}
-}
+#pragma mark cancelAllOperations Substitue
 
 - (void)cancelOperationsForViewController:(TVCLogController *)controller
 {
 	PointerIsEmptyAssert(controller);
 	
-	NSArray *queues = [self operations];
+	/* Controller key. */
+	NSString *controllerKey = [controller operationQueueHash];
 
-	for (TVCLogControllerOperationItem *op in queues) {
-		if (op.controller == controller) {
+	/* Pending operations. */
+	NSArray *pendingOperations = [self operations];
+
+	/* Cancel the operations. */
+	for (TVCLogControllerOperationItem *op in pendingOperations) {
+		NSString *ophash = op.controller.operationQueueHash;
+
+		if ([controllerKey isEqualToString:ophash]) {
 			[op cancel];
 		}
 	}
@@ -145,24 +133,111 @@
 }
 
 #pragma mark -
+#pragma mark Cached Operations
 
-- (void)updateReadinessState
+- (void)enqueueMessageCachedBlock:(TVCLogMessageBlock)callbackBlock for:(TVCLogController *)sender context:(NSDictionary *)context
 {
-	NSArray *queues = [self operations];
+	PointerIsEmptyAssert(callbackBlock);
+	PointerIsEmptyAssert(sender);
+	PointerIsEmptyAssert(context); // context != nil
 
-	for (TVCLogControllerOperationItem *op in queues) {
-        [op willChangeValueForKey:@"isReady"];
-        [op didChangeValueForKey:@"isReady"];
+	/* Controller key. */
+	NSString *controllerKey = [sender operationQueueHash];
+
+	/* Get list of pending operations. */
+	NSArray *pendingOperations = [self.cachedOperations arrayForKey:controllerKey];
+
+	/* Are there any? */
+	if (pendingOperations == nil) {
+		pendingOperations = [NSArray array];
+	}
+
+	/* Prepare array for changes. */
+	NSMutableArray *mutableOperations = [pendingOperations mutableCopy];
+
+	/* Add operation to dictionary. */
+	[mutableOperations addObject:@[callbackBlock, context]];
+
+	/* Save array. */
+	[self.cachedOperations setObject:mutableOperations forKey:controllerKey];
+}
+
+- (NSArray *)cachedOperationsFor:(TVCLogController *)controller
+{
+	PointerIsEmptyAssertReturn(controller, nil);
+
+	/* Controller key. */
+	NSString *controllerKey = [controller operationQueueHash];
+
+	/* Return cache. */
+	return [self.cachedOperations arrayForKey:controllerKey];
+}
+
+- (void)destroyCachedOperationsFor:(TVCLogController *)controller
+{
+	PointerIsEmptyAssert(controller);
+	
+	/* Controller key. */
+	NSString *controllerKey = [controller operationQueueHash];
+
+	/* Destroy cache. */
+	[self.cachedOperations removeObjectForKey:controllerKey];
+}
+
+#pragma mark -
+#pragma mark State Changes
+
+- (void)updateReadinessState:(TVCLogController *)controller
+{
+	PointerIsEmptyAssert(controller);
+
+	/* Controller key. */
+	NSString *controllerKey = [controller operationQueueHash];
+
+	/* We only need to update the first object in our queue beause 
+	 that object is dependent on WebKit. All other queue items are
+	 dependent on that first object. If it is gone, then it means 
+	 WebKit is ready to process all of them. */
+
+	/* Pending operations. */
+	NSArray *pendingOperations = self.operations;
+
+	/* Cancel the operations. */
+	for (TVCLogControllerOperationItem *op in pendingOperations) {
+		NSString *ophash = op.controller.operationQueueHash;
+
+		if ([controllerKey isEqualToString:ophash]) {
+			[op willChangeValueForKey:@"isReady"];
+			[op didChangeValueForKey:@"isReady"];
+
+			return;
+		}
 	}
 }
 
-- (NSOperation *)dependencyOfLastQueueItem
+#pragma mark -
+#pragma mark Dependency
+
+- (NSOperation *)dependencyOfLastQueueItem:(TVCLogController *)controller
 {
-    NSArray *items = [self operations];
+	PointerIsEmptyAssertReturn(controller, nil);
 
-    NSObjectIsEmptyAssertReturn(items, nil);
+	/* Controller key. */
+	NSString *controllerKey = [controller operationQueueHash];
 
-    return [items lastObject];
+	/* Pending operations. */
+	NSArray *pendingOperations = self.operations.reverseObjectEnumerator.allObjects;
+
+	/* Cancel the operations. */
+	for (TVCLogControllerOperationItem *op in pendingOperations) {
+		NSString *ophash = op.controller.operationQueueHash;
+
+		if ([controllerKey isEqualToString:ophash]) {
+			return op;
+		}
+	}
+
+	return nil;
 }
 
 @end
@@ -172,22 +247,15 @@
 
 @implementation TVCLogControllerOperationItem
 
-+ (TVCLogControllerOperationItem *)operationWithBlock:(void(^)(void))block
-                                        forController:(TVCLogController *)controller
-                                          withContext:(NSDictionary *)context
++ (TVCLogControllerOperationItem *)operationForViewController:(TVCLogController *)controller
 {
-	PointerIsEmptyAssertReturn(block, nil);
 	PointerIsEmptyAssertReturn(controller, nil);
 
     TVCLogControllerOperationItem *retval = [TVCLogControllerOperationItem new];
 
-	retval.controller		= controller;
-	retval.context			= context;
+	retval.controller = controller;
 
-	retval.queuePriority	= NSOperationQueuePriorityNormal;
-	retval.completionBlock	= block;
-
-    NSOperation *lastOp = [controller.operationQueue dependencyOfLastQueueItem];
+    NSOperation *lastOp = [controller.operationQueue dependencyOfLastQueueItem:controller];
 
     if (lastOp) {
         /* Make this queue item dependent on the execution on the item above it to
@@ -201,7 +269,11 @@
 
 - (BOOL)isReady
 {
-	return ([self.controller.view isLoading] == NO);
+	if (self.dependencies.count < 1) {
+		return ([self.controller.view isLoading] == NO && self.controller.isLoaded);
+	} else {
+		return [self.dependencies[0] isFinished];
+	}
 }
 
 @end

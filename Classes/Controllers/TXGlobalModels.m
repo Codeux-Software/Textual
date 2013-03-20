@@ -194,6 +194,8 @@ NSString *TSBFLS(NSString *key, NSBundle *bundle, ...)
 
 NSInteger TXRandomNumber(NSInteger maxset)
 {
+	NSAssertReturnR((maxset > 0), 0); // Only Chuck Norris can divide by zero.
+	
 	return ((1 + arc4random()) % (maxset + 1));
 }
 

@@ -60,7 +60,6 @@ typedef enum TVCLogLineType : NSInteger {
 	TVCLogLinePrivateMessageType,
 	TVCLogLinePrivateMessageNoHighlightType,
 	TVCLogLineQuitType,
-	TVCLogLineRawHTMLType,
 	TVCLogLineTopicType,
 	TVCLogLineWebsiteType,
 } TVCLogLineType;
