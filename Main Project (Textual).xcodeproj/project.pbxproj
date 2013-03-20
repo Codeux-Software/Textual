@@ -3344,14 +3344,6 @@
 			};
 			name = "Release (Trial)";
 		};
-		4C01BA011580C592007E2DAF /* Release + No Sandbox */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = "Release + No Sandbox";
-		};
 		4C01BA0615810DD8007E2DAF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3381,16 +3373,6 @@
 				TEXTUAL_GITREF_BUILD_ID = trial;
 			};
 			name = "Release (Trial)";
-		};
-		4C01BA0915810DD8007E2DAF /* Release + No Sandbox */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
-				TEXTUAL_GITREF_BUILD_ID = "stdbuild,nosndbox";
-			};
-			name = "Release + No Sandbox";
 		};
 		4C1DC56E1580420500A47BC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -3464,40 +3446,6 @@
 			};
 			name = "Release (Trial)";
 		};
-		4C5BA4E516F1302F00A96CA2 /* Release + No Sandbox */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "";
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-			};
-			name = "Release + No Sandbox";
-		};
-		4CCF2F8E1580497B006FFE21 /* Release + No Sandbox */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4CD6203016E31F2A00D780D6 /* Shared Release Configuration.xcconfig */;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = "TEXTUAL_SANDBOX_DISABLED=1";
-				INFOPLIST_FILE = Resources/Info.plist;
-				PRODUCT_NAME = Textual;
-				STRIPFLAGS = "-S";
-				STRIP_STYLE = "non-global";
-				TEXTUAL_BUNDLE_ID = "";
-				TEXTUAL_GITREF_BUILD_ID = "";
-				WRAPPER_EXTENSION = app;
-			};
-			name = "Release + No Sandbox";
-		};
-		4CCF2F8F1580497B006FFE21 /* Release + No Sandbox */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "";
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-			};
-			name = "Release + No Sandbox";
-		};
 		4CCF2F9015804987006FFE21 /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4CD6203016E31F2A00D780D6 /* Shared Release Configuration.xcconfig */;
@@ -3546,14 +3494,6 @@
 			};
 			name = "Release (Trial)";
 		};
-		4CCF301515804DCE006FFE21 /* Release + No Sandbox */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = "Release + No Sandbox";
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -3563,7 +3503,6 @@
 				4C01B9FE1580C592007E2DAF /* Debug */,
 				4C01B9FF1580C592007E2DAF /* Release */,
 				4C01BA001580C592007E2DAF /* Release (Trial) */,
-				4C01BA011580C592007E2DAF /* Release + No Sandbox */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3574,7 +3513,6 @@
 				4C01BA0615810DD8007E2DAF /* Debug */,
 				4C01BA0715810DD8007E2DAF /* Release */,
 				4C01BA0815810DD8007E2DAF /* Release (Trial) */,
-				4C01BA0915810DD8007E2DAF /* Release + No Sandbox */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3585,7 +3523,6 @@
 				4C1DC56E1580420500A47BC9 /* Debug */,
 				4C1DC56F1580420500A47BC9 /* Release */,
 				4CCF2F9015804987006FFE21 /* Release (Trial) */,
-				4CCF2F8E1580497B006FFE21 /* Release + No Sandbox */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3596,7 +3533,6 @@
 				4C1DC5711580420500A47BC9 /* Debug */,
 				4C1DC5721580420500A47BC9 /* Release */,
 				4CCF2F9115804987006FFE21 /* Release (Trial) */,
-				4CCF2F8F1580497B006FFE21 /* Release + No Sandbox */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3607,7 +3543,6 @@
 				4C5BA4E216F1302F00A96CA2 /* Debug */,
 				4C5BA4E316F1302F00A96CA2 /* Release */,
 				4C5BA4E416F1302F00A96CA2 /* Release (Trial) */,
-				4C5BA4E516F1302F00A96CA2 /* Release + No Sandbox */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3618,7 +3553,6 @@
 				4CCF301215804DCE006FFE21 /* Debug */,
 				4CCF301315804DCE006FFE21 /* Release */,
 				4CCF301415804DCE006FFE21 /* Release (Trial) */,
-				4CCF301515804DCE006FFE21 /* Release + No Sandbox */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
