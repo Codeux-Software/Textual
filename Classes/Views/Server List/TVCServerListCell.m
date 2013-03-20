@@ -369,6 +369,16 @@
 
 		[self.customTextField setAttributedStringValue:newStrValue];
 	}
+
+#ifdef DEBUG
+	NSAttributedString *attrStr = [self.customTextField attributedStringValue];
+
+	NSDictionary *attributes = [attrStr attributes];
+
+	NSColor *color = [attributes objectForKey:NSForegroundColorAttributeName];
+
+	LogToConsole(@"%@ %@ %@", self.cellItem.label, controlColor, color);
+#endif
 }
 
 
