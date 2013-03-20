@@ -65,17 +65,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 - (void)awakeFromNib
 {
 	DebugLogToConsole(@"Temporary Folder: %@", [TPCPreferences applicationTemporaryFolderPath]);
-
-	// ---- //
-
-#ifdef TEXTUAL_SANDBOX_DISABLED
-	[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"RunningUnsupportedNonsandboxedBuildWarningMessage")
-										title:TXTLS(@"RunningUnsupportedNonsandboxedBuildWarningTitle")
-								defaultButton:TXTLS(@"OkButton")
-							  alternateButton:nil
-							   suppressionKey:@"nonsandboxed_version_warning"
-							  suppressionText:nil];
-#endif
 	
 	// ---- //
 

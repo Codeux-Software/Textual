@@ -326,9 +326,6 @@
 "UserHostmaskHoverTooltipMode_IRCop" = " — Server Staff Member";
 "UserHostmaskHoverTooltipNoInfo" = "Information Not Available";
 
-"RunningUnsupportedNonsandboxedBuildWarningTitle" = "Unsupported Build";
-"RunningUnsupportedNonsandboxedBuildWarningMessage" = "Copies of Textual running outside of the Mac OS sandbox are no longer supported. The ability to build Textual without the sandbox may be unavailable in future copies.\n\nThere are no features part of Textual that require the sandbox to be disabled. Even scripts can run outside of the sandbox on Mountain Lion.\n\nAs of version 3.0.0 of Textual, the non-sandboxed copy of Textual will be considered deprecated. Please migrate to the sandboxed version.";
-
 "UserTrackingHostmaskConnected" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" connected.";
 "UserTrackingHostmaskNoLongerAvailable" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" is no longer available.";
 "UserTrackingHostmaskNowAvailable" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" is now available.";
