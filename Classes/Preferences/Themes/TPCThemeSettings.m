@@ -121,9 +121,11 @@
 
 - (NSString *)customTemplateRepositoryPath
 {
-	NSString *baseURL = [self.masterController.themeController.baseURL absoluteString];
+	NSString *filename = [TPCThemeController extractThemeName:[TPCPreferences themeName]];
 
-	return [baseURL stringByAppendingPathComponent:@"/Data/Templates/"];
+	NSString *path = [[TPCPreferences customThemeFolderPath] stringByAppendingPathComponent:filename];
+
+	return [path stringByAppendingPathComponent:@"/Data/Templates/"];
 }
 
 - (GRMustacheTemplate *)templateWithLineType:(TVCLogLineType)type
@@ -143,7 +145,6 @@
 	NSString *applicationPath = [[self applicationTemplateRepositoryPath] stringByAppendingPathComponent:name];
 
 	/* First look for a custom template. */
-
 	GRMustacheTemplate *tmpl = [GRMustacheTemplate templateFromContentsOfFile:customTemplPath error:&load_error];
 
 	if (PointerIsEmpty(tmpl) || load_error) {
