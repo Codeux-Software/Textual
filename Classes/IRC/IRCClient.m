@@ -4395,8 +4395,10 @@
 				[self printUnknownReply:m];
 			} else {
                 NSArray *users = [m.sequence split:NSStringWhitespacePlaceholder];
-				
-				for (NSString *name in self.trackedUsers) {
+
+				NSDictionary *trackedUsers = [self.trackedUsers copy];
+
+				for (NSString *name in trackedUsers) {
 					NSString *langkey = nil;
 
 					BOOL ison = [self.trackedUsers boolForKey:name];
