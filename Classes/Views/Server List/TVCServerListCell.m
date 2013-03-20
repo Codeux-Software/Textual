@@ -364,11 +364,11 @@
 	/* Set the text field value to our new string. */
 	/**************************************************************/
 
-	if ([self.customTextField.attributedStringValue isEqual:newStrValue] == NO) {
+	//if ([self.customTextField.attributedStringValue isEqual:newStrValue] == NO) {
 		/* Only tell the text field of changes if there are actual ones. Why draw the same value again. */
 		
 		[self.customTextField setAttributedStringValue:newStrValue];
-	}
+	//}
 }
 
 #pragma mark -
@@ -513,11 +513,11 @@
 	/* Set the text field value to our new string. */
 	/**************************************************************/
 
-	if ([self.customTextField.attributedStringValue isEqual:newStrValue] == NO) {
+	//if ([self.customTextField.attributedStringValue isEqual:newStrValue] == NO) {
 		/* Only tell the text field of changes if there are actual ones. Why draw the same value again. */
 
 		[self.customTextField setAttributedStringValue:newStrValue];
-	}
+	//}
 }
 
 - (void)updateMessageCountBadge:(NSDictionary *)drawContext
