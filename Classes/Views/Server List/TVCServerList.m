@@ -54,8 +54,6 @@
 
 	if (parent) {
 		[self reloadItem:parent];
-
-		[self updateSelectionBackground:NO]; // Redraws disclosure triangle if one just appeared.
 	}
 }
 
@@ -97,26 +95,25 @@
 #pragma mark Drawing Updates
 
 /* These drawing things are pretty sophisticaked so i do not even know how they work… */
-- (void)reloadAllDrawings
-{
-	NSAssertReturn(_isDrawing == NO);
-
-	_isDrawing = YES;
-
-	[self reloadAllDrawingsIgnoringOtherReloads];
-
-	_isDrawing = NO;
-}
-
-- (void)reloadAllDrawingsIgnoringOtherReloads
+- (void)reloadAllDrawings:(BOOL)doNotLimit
 {
 	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
-		[self updateDrawingForRow:i withSelectionUpdate:NO];
+		[self updateDrawingForRow:i skipDrawingCheck:doNotLimit updateDisclosureTriangle:YES];
 	}
 
 	[self updateSelectionBackground:NO];
 
 	[self setNeedsDisplay:YES];
+}
+
+- (void)reloadAllDrawings
+{
+	[self reloadAllDrawings:NO];
+}
+
+- (void)reloadAllDrawingsIgnoringOtherReloads
+{
+	[self reloadAllDrawings:YES];
 }
 
 - (void)updateDrawingForItem:(IRCTreeItem *)cellItem
@@ -132,25 +129,26 @@
 
 - (void)updateDrawingForRow:(NSInteger)rowIndex
 {
-	[self updateDrawingForRow:rowIndex withSelectionUpdate:YES];
+	[self updateDrawingForRow:rowIndex skipDrawingCheck:NO updateDisclosureTriangle:NO];
 }
 
-- (void)updateDrawingForRow:(NSInteger)rowIndex withSelectionUpdate:(BOOL)updateSelection
+- (void)updateDrawingForRow:(NSInteger)rowIndex skipDrawingCheck:(BOOL)doNotLimit updateDisclosureTriangle:(BOOL)updateTriangle
 {
 	NSAssertReturn(rowIndex >= 0);
 
 	id rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
 
-	if ([rowView isKindOfClass:[TVCServerListCellGroupItem class]] ||
-		[rowView isKindOfClass:[TVCServerListCellChildItem class]])
-	{
+	BOOL isGroupItem = [rowView isKindOfClass:[TVCServerListCellGroupItem class]];
+	BOOL isChildItem = [rowView isKindOfClass:[TVCServerListCellChildItem class]];
+
+	if (isGroupItem || isChildItem) {
 		NSRect cellFrame = [self frameOfCellAtColumn:0 row:rowIndex];
+		
+		[rowView updateDrawing:cellFrame skipDrawingCheck:doNotLimit];
 
-		if (updateSelection) {
-			[self updateSelectionBackground:NO];
+		if (updateTriangle && isGroupItem) {
+			[rowView updateGroupDisclosureTriangle];
 		}
-
-		[rowView updateDrawing:cellFrame];
 	}
 }
 
@@ -161,27 +159,61 @@
 
 - (void)updateSelectionBackground:(BOOL)forceRedraw
 {
-	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
-		TVCServerListCell *rowView = [self viewAtColumn:0 row:i makeIfNecessary:NO];
+	/* Selection changes are not hard to manage because the server list cannot have more
+	 than one item selected at a time. We just hope the world controller is any good at
+	 keeping track of our selection or we are screwed up here. */
+	
+	IRCTreeItem *newSelection = self.worldController.selectedItem;
+	IRCTreeItem *oldSelection = self.worldController.previouslySelectedItem;
 
-		BOOL isGroup = [rowView isKindOfClass:[TVCServerListCellGroupItem class]];
-		BOOL isChild = [rowView isKindOfClass:[TVCServerListCellChildItem class]];
-		
-		if (isGroup || isChild) {
-			if (i == self.selectedRow) {
-				[rowView updateSelectionBackgroundView];
-			} else {
-				if (rowView.backgroundImageCell.isHidden == NO) {
-					[rowView.backgroundImageCell setHidden:YES];
-					
-					/* If our background was not hidden, then it means this view has a
-					 history of being selected. Therefore, we will redraw it. */
+	BOOL wasClient = [oldSelection isKindOfClass:[IRCClient class]];
+	BOOL isClient = [newSelection isKindOfClass:[IRCClient class]];
 
-					[self updateDrawingForRow:i withSelectionUpdate:NO];
-				}
+	BOOL hasValidOldSelection = (oldSelection && [newSelection isEqualTo:oldSelection] == NO);
+
+	PointerIsEmptyAssert(newSelection);
+
+	/* It is possible for conflicts. */
+	if (hasValidOldSelection) {
+		NSInteger i = [self rowForItem:oldSelection];
+
+		if (i >= 0) {
+			TVCServerListCell *rowView = [self viewAtColumn:0 row:i makeIfNecessary:NO];
+
+			[rowView.backgroundImageCell setHidden:YES]; // All that is needed.
+
+			if (forceRedraw) {
+				[self updateDrawingForRow:i skipDrawingCheck:YES updateDisclosureTriangle:NO];
 			}
 			
-			if (isGroup) {
+			if (wasClient) {
+				[rowView updateGroupDisclosureTriangle];
+			}
+		}
+	}
+
+	if (newSelection) {
+		NSInteger i = [self rowForItem:newSelection];
+
+		if (i >= 0) {
+			TVCServerListCell *rowView = [self viewAtColumn:0 row:i makeIfNecessary:NO];
+
+			if (PointerIsEmpty(oldSelection)) {
+				/* If we have no old selection, then turn off our image view so that when
+				 we toggle it back on it will draw right away through our layered view. 
+				 Normally, the oldSelection will disable our background for us, but he is
+				 not on the job right now. */
+
+				[rowView.backgroundImageCell setHidden:YES];
+			}
+
+			[rowView updateSelectionBackgroundView];
+
+			if (forceRedraw) {
+				[self updateDrawingForRow:i skipDrawingCheck:YES updateDisclosureTriangle:NO];
+			}
+
+			if (isClient) {
 				[rowView updateGroupDisclosureTriangle];
 			}
 		}

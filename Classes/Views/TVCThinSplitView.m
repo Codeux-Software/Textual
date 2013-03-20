@@ -105,8 +105,6 @@
 
 - (void)drawDividerInRect:(NSRect)rect
 {
-	NSAssertReturn(self.viewIsHidden == NO);
-
 	NSColor *dividerColor = [NSColor colorWithCalibratedWhite:0.65 alpha:1];
 
 	if ([TPCPreferences invertSidebarColors]) {

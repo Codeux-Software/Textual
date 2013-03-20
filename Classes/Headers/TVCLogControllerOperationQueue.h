@@ -37,26 +37,31 @@
 
 #import "TextualApplication.h"
 
+typedef void (^TVCLogControllerOperationBlock)(NSDictionary *context);
+
 @interface TVCLogControllerOperationQueue : NSOperationQueue
-@property (nonatomic, strong, readonly) NSMutableArray *cachedOperations;
-
 /* Add new operations. */
-- (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender;
-- (void)enqueueMessageBlock:(id)messageBlock fromSender:(TVCLogController *)sender withContext:(NSDictionary *)context;
+- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender;
+- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender context:(NSDictionary *)context;
 
-/* Clear cached operations. */
+/* Cached operations. */
+- (void)enqueueMessageCachedBlock:(TVCLogMessageBlock)callbackBlock for:(TVCLogController *)sender context:(NSDictionary *)context;
+
+- (NSArray *)cachedOperationsFor:(TVCLogController *)controller;
 - (void)destroyCachedOperationsFor:(TVCLogController *)controller;
 
 /* Limit scope of cancelAllOperations. */
 - (void)destroyOperationsForChannel:(IRCChannel *)channel;
 - (void)destroyOperationsForClient:(IRCClient *)client;
 
+- (void)cancelOperationsForViewController:(TVCLogController *)controller;
+
 /* Update isReady state. */
-- (void)updateReadinessState;
+- (void)updateReadinessState:(TVCLogController *)controller;
 
 /* Return the queue item that was last added to the list of operations. This item
  will be used as a dependency of the next item added so each item is only executed
  after the one above it has finished. This ensures that the queue is executed in the
  order that each item is added to it. May be nil. */
-- (NSOperation *)dependencyOfLastQueueItem;
+- (NSOperation *)dependencyOfLastQueueItem:(TVCLogController *)controller;
 @end

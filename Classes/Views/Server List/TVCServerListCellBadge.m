@@ -38,8 +38,8 @@
 #import "TextualApplication.h"
 
 @interface TVCServerListCellBadge ()
-@property (nonatomic, strong) NSDictionary *cachedDrawContext;
 @property (nonatomic, strong) NSImage *cachedBadgeImage;
+@property (nonatomic, strong) NSDictionary *cachedDrawContext;
 @end
 
 @implementation TVCServerListCellBadge
@@ -57,7 +57,6 @@
 
 - (NSSize)scaledSize
 {
-	/* Scale down @2x image by dividing width and heigh on non-retina displays. */
 	PointerIsEmptyAssertReturn(self.cachedBadgeImage, NSZeroSize);
 
 	NSSize imageSize = self.cachedBadgeImage.size;
@@ -68,9 +67,7 @@
 - (NSImage *)drawBadgeForCellItem:(id)cellItem withDrawingContext:(NSDictionary *)drawContext
 {
 	/* Do input validation. */
-	if (PointerIsEmpty(cellItem) || [cellItem isKindOfClass:[IRCChannel class]] == NO) {
-		return nil;
-	}
+	PointerIsEmptyAssertReturn(cellItem, nil);
 
 	NSObjectIsEmptyAssertReturn(drawContext, nil);
 

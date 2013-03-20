@@ -77,7 +77,9 @@
 {
 	NSString *kcPassword = NSStringEmptyPlaceholder;
 
-	if (NSObjectIsEmpty(_encryptionKey)) {
+	/* Only read from keychain if our value is nil. Let the set command
+	 handle any changes to the actual property after that. */
+	if (_encryptionKey == nil) {
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Blowfish Encryption)"
 												withItemKind:@"application password"
 												 forUsername:nil
@@ -98,7 +100,7 @@
 {
 	NSString *kcPassword = NSStringEmptyPlaceholder;
 
-	if (NSObjectIsEmpty(_secretKey)) {
+	if (_secretKey == nil) {
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Channel JOIN Key)"
 												withItemKind:@"application password"
 												 forUsername:nil
