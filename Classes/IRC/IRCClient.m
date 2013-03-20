@@ -2324,33 +2324,34 @@
 	return nmformat;
 }
 
-- (BOOL)printAndLog:(TVCLogLine *)line withHTML:(BOOL)rawHTML
+- (void)printAndLog:(TVCLogLine *)line completionBlock:(void(^)(BOOL highlighted))completionBlock
 {
-	BOOL result = [self.viewController print:line withHTML:rawHTML];
-
-	if (rawHTML == NO) {
-		[self writeToLogFile:line];
-	}
-
-	return result;
+	[self.viewController print:line completionBlock:completionBlock];
+	
+	[self writeToLogFile:line];
 }
 
-- (BOOL)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text
 {
-	return [self print:chan type:type nick:nick text:text encrypted:NO receivedAt:[NSDate date]];
+	[self print:chan type:type nick:nick text:text encrypted:NO receivedAt:[NSDate date] completionBlock:NULL];
 }
 
-- (BOOL)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt
 {
-	return [self print:chan type:type nick:nick text:text encrypted:NO receivedAt:receivedAt];
+	[self print:chan type:type nick:nick text:text encrypted:NO receivedAt:receivedAt completionBlock:NULL];
 }
 
-- (BOOL)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt
 {
-	NSObjectIsEmptyAssertReturn(text, NO);
+	[self print:chan type:type nick:nick text:text encrypted:isEncrypted receivedAt:receivedAt completionBlock:NULL];
+}
+
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt completionBlock:(void(^)(BOOL highlighted))completionBlock
+{
+	NSObjectIsEmptyAssert(text);
 	
 	if ([self outputRuleMatchedInMessage:text inChannel:chan withLineType:type] == YES) {
-		return NO;
+		return;
 	}
 
 	IRCChannel *channel = nil;
@@ -2376,7 +2377,7 @@
 		 ignored and stopped from printing. */
 		
 		if (NSObjectIsNotEmpty(chan)) {
-			return NO;
+			return;
 		}
 	}
 
@@ -2446,35 +2447,35 @@
 			}
 		}
 
-		return [channel print:c withHTML:NO];
+		[channel print:c completionBlock:completionBlock];
 	} else {
-		return [self printAndLog:c withHTML:NO];
+		[self printAndLog:c completionBlock:completionBlock];
 	}
 }
 
 - (void)printReply:(IRCMessage *)m
 {
-	[self print:nil type:TVCLogLineDebugType nick:nil text:[m sequence:1] encrypted:NO receivedAt:m.receivedAt];
+	[self print:nil type:TVCLogLineDebugType nick:nil text:[m sequence:1] encrypted:NO receivedAt:m.receivedAt completionBlock:NULL];
 }
 
 - (void)printUnknownReply:(IRCMessage *)m
 {
-	[self print:nil type:TVCLogLineDebugType nick:nil text:[m sequence:1] encrypted:NO receivedAt:m.receivedAt];
+	[self print:nil type:TVCLogLineDebugType nick:nil text:[m sequence:1] encrypted:NO receivedAt:m.receivedAt completionBlock:NULL];
 }
 
 - (void)printDebugInformation:(NSString *)m
 {
-	[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date]];
+	[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] completionBlock:NULL];
 }
 
 - (void)printDebugInformationToConsole:(NSString *)m
 {
-	[self print:nil type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date]];
+	[self print:nil type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] completionBlock:NULL];
 }
 
 - (void)printDebugInformation:(NSString *)m channel:(IRCChannel *)channel
 {
-	[self print:channel type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date]];
+	[self print:channel type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] completionBlock:NULL];
 }
 
 - (void)printErrorReply:(IRCMessage *)m
@@ -2486,12 +2487,12 @@
 {
 	NSString *text = TXTFLS(@"IRCHadRawError", m.numericReply, [m sequence]);
 
-	[self print:channel type:TVCLogLineDebugType nick:nil text:text encrypted:NO receivedAt:m.receivedAt];
+	[self print:channel type:TVCLogLineDebugType nick:nil text:text encrypted:NO receivedAt:m.receivedAt completionBlock:NULL];
 }
 
 - (void)printError:(NSString *)error
 {
-	[self print:nil type:TVCLogLineDebugType nick:nil text:error encrypted:NO receivedAt:[NSDate date]];
+	[self print:nil type:TVCLogLineDebugType nick:nil text:error encrypted:NO receivedAt:[NSDate date] completionBlock:NULL];
 }
 
 #pragma mark -
@@ -2959,30 +2960,38 @@
 
 		if (type == TVCLogLineNoticeType) {
 			/* Post notice and inform Growl. */
-			
+
 			[self print:c type:type nick:sender text:text encrypted:isEncrypted receivedAt:m.receivedAt];
 
 			[self notifyText:TXNotificationChannelNoticeType lineType:type target:c nick:sender text:text];
 		} else {
 			/* Post regular message and inform Growl. */
 			
-			BOOL highlight = [self print:c type:type nick:sender text:text encrypted:isEncrypted receivedAt:m.receivedAt];
-			BOOL postevent = NO;
+			[self print:c
+				   type:type
+				   nick:sender
+				   text:text
+			  encrypted:isEncrypted
+			 receivedAt:m.receivedAt
+		completionBlock:^(BOOL highlight)
+			 {
+				BOOL postevent = NO;
 
-			if (highlight) {
-				postevent = [self notifyText:TXNotificationHighlightType lineType:type target:c nick:sender text:text];
+				if (highlight) {
+					postevent = [self notifyText:TXNotificationHighlightType lineType:type target:c nick:sender text:text];
 
-				if (postevent) {
-					[self setKeywordState:c];
+					if (postevent) {
+						[self setKeywordState:c];
+					}
+				} else {
+					postevent = [self notifyText:TXNotificationChannelMessageType lineType:type target:c nick:sender text:text];
 				}
-			} else {
-				postevent = [self notifyText:TXNotificationChannelMessageType lineType:type target:c nick:sender text:text];
-			}
 
-			/* Mark channel as unread. */
-			if (postevent && (highlight || c.config.pushNotifications)) {
-				[self setUnreadState:c];
-			}
+				/* Mark channel as unread. */
+				if (postevent && (highlight || c.config.pushNotifications)) {
+					[self setUnreadState:c];
+				}
+			}];
 
 			/* Weights. */
 			IRCUser *owner = [c findMember:sender];
@@ -3189,32 +3198,40 @@
 				[self notifyText:TXNotificationPrivateNoticeType lineType:type target:c nick:sender text:text];
 			} else {
 				/* Post regular message and inform Growl. */
-				BOOL highlight = [self print:c type:type nick:sender text:text encrypted:isEncrypted receivedAt:m.receivedAt];
-				BOOL postevent = NO;
-				BOOL popicon = NO;
+				[self print:c
+					   type:type
+					   nick:sender
+					   text:text
+				  encrypted:isEncrypted
+				 receivedAt:m.receivedAt
+				 completionBlock:^(BOOL highlight)
+				{
+					BOOL postevent = NO;
+					BOOL popicon = NO;
 
-				if (highlight) {
-					postevent = [self notifyText:TXNotificationHighlightType lineType:type target:c nick:sender text:text];
-
-					if (postevent) {
-						[self setKeywordState:c];
-					}
-				} else {
-					if (newPrivateMessage) {
-						postevent = [self notifyText:TXNotificationNewPrivateMessageType lineType:type target:c nick:sender text:text];
+					if (highlight) {
+						postevent = [self notifyText:TXNotificationHighlightType lineType:type target:c nick:sender text:text];
 
 						if (postevent) {
-							popicon = YES;
+							[self setKeywordState:c];
 						}
 					} else {
-						postevent = [self notifyText:TXNotificationPrivateMessageType lineType:type target:c nick:sender text:text];
-					}
-				}
+						if (newPrivateMessage) {
+							postevent = [self notifyText:TXNotificationNewPrivateMessageType lineType:type target:c nick:sender text:text];
 
-				/* Mark query as unread. */
-				if (postevent) {
-					[self setUnreadState:c popDockIcon:popicon];
-				}
+							if (postevent) {
+								popicon = YES;
+							}
+						} else {
+							postevent = [self notifyText:TXNotificationPrivateMessageType lineType:type target:c nick:sender text:text];
+						}
+					}
+
+					/* Mark query as unread. */
+					if (postevent) {
+						[self setUnreadState:c popDockIcon:popicon];
+					}
+				}];
 
 				/* Set the query topic to the host of the sender. */
 				NSString *hostTopic = m.sender.hostmask;

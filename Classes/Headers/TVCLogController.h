@@ -37,7 +37,8 @@
 
 #import "TextualApplication.h"
 
-typedef id (^TVCLogMessageBlock)(void);
+/* The behavior of this block is completely internal & undefined. Do not trust it. */
+typedef NSArray *(^TVCLogMessageBlock)(void);
 
 @interface TVCLogController : NSObject
 @property (nonatomic, nweak) IRCClient *client;
@@ -90,15 +91,14 @@ typedef id (^TVCLogMessageBlock)(void);
 - (void)changeTextSize:(BOOL)bigger;
 
 - (TVCLogControllerOperationQueue *)operationQueue;
+- (NSString *)operationQueueHash;
 
-- (BOOL)print:(TVCLogLine *)line;
-- (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)stripHTML;
+- (void)print:(TVCLogLine *)logLine;
+- (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock;
 
 - (NSString *)renderedBodyForTranscriptLog:(TVCLogLine *)line;
 
 - (void)logViewOnDoubleClick:(NSString *)e;
 
 - (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args;
-
-- (void)handleMessageBlock:(id)messageBlock withContext:(NSDictionary *)context;
 @end

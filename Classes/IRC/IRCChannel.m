@@ -246,20 +246,16 @@
 	}
 }
 
-- (BOOL)print:(TVCLogLine *)line
+- (void)print:(TVCLogLine *)logLine
 {
-	return [self print:line withHTML:NO];
+	[self print:logLine completionBlock:NULL];
 }
 
-- (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)rawHTML
+- (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock
 {
-	BOOL result = [self.viewController print:line withHTML:rawHTML];
+	[self.viewController print:logLine completionBlock:completionBlock];
 	
-	if (rawHTML == NO) {
-		[self writeToLogFile:line];
-	}
-	
-	return result;
+	[self writeToLogFile:logLine];
 }
 
 #pragma mark -
@@ -426,19 +422,33 @@
 	NSObjectIsEmptyAssertReturn(nick, -1);
 	
 	NSInteger index = 0;
-	
-	for (IRCUser *m in self.memberList) {
-		if (mask & NSCaseInsensitiveSearch) {
-			if ([nick isEqualIgnoringCase:m.nickname]) {
-				return index;
-			}
-		} else {
-			if ([nick isEqualToString:m.nickname]) {
-				return index;
-			}
-		}
+	NSInteger result = -1;
 
-		index += 1;
+	@try {
+		/* Incase memberList is modified while reading. */
+		for (IRCUser *m in self.memberList) {
+			if (mask & NSCaseInsensitiveSearch) {
+				if ([nick isEqualIgnoringCase:m.nickname]) {
+					result = index;
+
+					break;
+				}
+			} else {
+				if ([nick isEqualToString:m.nickname]) {
+					result = index;
+
+					break;
+				}
+			}
+
+			index += 1;
+		}
+	}
+	@catch (NSException *exception) {
+		LogToConsole(@"%@", exception);
+	}
+	@finally {
+		return result;
 	}
 	
 	return -1;

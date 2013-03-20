@@ -57,7 +57,6 @@
 		case TVCLogLinePrivateMessageType:					{ return @"privmsg";	}
 		case TVCLogLinePrivateMessageNoHighlightType:		{ return @"privmsg";	}
 		case TVCLogLineQuitType:							{ return @"quit";		}
-		case TVCLogLineRawHTMLType:							{ return @"rawhtml";	}
 		case TVCLogLineTopicType:							{ return @"topic";		}
 		case TVCLogLineWebsiteType:							{ return @"website";	}
 	}
@@ -115,7 +114,7 @@
 		self.highlightKeywords	= NSDictionaryObjectKeyValueCompare(dic, @"highlightKeywords", @[]);
 		self.excludeKeywords	= NSDictionaryObjectKeyValueCompare(dic, @"excludeKeywords", @[]);
 
-		self.lineType			= NSDictionaryIntegerKeyValueCompare(dic, @"lineType", TVCLogLineRawHTMLType);
+		self.lineType			= NSDictionaryIntegerKeyValueCompare(dic, @"lineType", TVCLogLinePrivateMessageType);
 		self.memberType			= NSDictionaryIntegerKeyValueCompare(dic, @"memberType", TVCLogMemberNormalType);
 
 		self.isHistoric		= NSDictionaryBOOLKeyValueCompare(dic, @"isHistoric", self.isHistoric);

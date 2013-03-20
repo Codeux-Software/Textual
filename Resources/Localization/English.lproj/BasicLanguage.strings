@@ -270,7 +270,7 @@
 "SoundIsNotMuted" = "Sound is not muted.";
 "SoundIsNowMuted" = "Sound has been muted.";
 
-"StyleTemplateLoadFailed" = "Template Load Failed (\"%1$@\"): %2$@";
+"StyleTemplateLoadFailed" = "Template Load Failed: %@";
 
 "TXEmptySoundAlertLabel" = "None";
 

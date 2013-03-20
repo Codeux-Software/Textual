@@ -74,8 +74,8 @@ typedef enum IRCChannelStatus : NSInteger {
 
 - (void)writeToLogFile:(TVCLogLine *)line;
 
-- (BOOL)print:(TVCLogLine *)line;
-- (BOOL)print:(TVCLogLine *)line withHTML:(BOOL)rawHTML;
+- (void)print:(TVCLogLine *)logLine;
+- (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock;
 
 - (void)addMember:(IRCUser *)user;
 - (void)addMember:(IRCUser *)user reload:(BOOL)reload;
