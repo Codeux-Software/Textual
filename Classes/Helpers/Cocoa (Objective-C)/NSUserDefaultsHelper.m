@@ -37,55 +37,20 @@
 
 #import "TextualApplication.h"
 
-@interface TVCMemberList : TVCListView
-- (void)updateBackgroundColor;
+@implementation NSUserDefaults (TXUserDefaultsHelper)
 
-/* User interface elements. */
-- (NSColor *)normalCellTextColor;
-- (NSColor *)awayUserCellTextColor;
+- (NSColor *)colorForKey:(NSString *)aKey
+{
+    NSData *colorData = [self dataForKey:aKey];
 
-- (NSColor *)normalCellTextShadowColor;
-- (NSColor *)normalSelectedCellTextShadowColorForActiveWindow;
-- (NSColor *)normalSelectedCellTextShadowColorForInactiveWindow;
-- (NSColor *)graphiteSelectedCellTextShadowColorForActiveWindow;
+	NSObjectIsEmptyAssertReturn(colorData, nil);
 
-- (NSColor *)selectedCellTextColor;
+    return [NSUnarchiver unarchiveObjectWithData:colorData];
+}
 
-- (NSColor *)userMarkBadgeBackgroundColor_YDefault;
-- (NSColor *)userMarkBadgeBackgroundColor_ADefault;
-- (NSColor *)userMarkBadgeBackgroundColor_HDefault;
-- (NSColor *)userMarkBadgeBackgroundColor_ODefault;
-- (NSColor *)userMarkBadgeBackgroundColor_QDefault;
-- (NSColor *)userMarkBadgeBackgroundColor_VDefault;
+- (void)setColor:(NSColor *)aColor forKey:(NSString *)aKey
+{
+	[self setObject:[NSArchiver archivedDataWithRootObject:aColor] forKey:aKey];
+}
 
-- (NSColor *)userMarkBadgeBackgroundColor_Y;
-- (NSColor *)userMarkBadgeBackgroundColor_A;
-- (NSColor *)userMarkBadgeBackgroundColor_H;
-- (NSColor *)userMarkBadgeBackgroundColor_O;
-- (NSColor *)userMarkBadgeBackgroundColor_Q;
-- (NSColor *)userMarkBadgeBackgroundColor_V;
-- (NSColor *)userMarkBadgeBackgroundColor_XAqua;
-- (NSColor *)userMarkBadgeBackgroundColor_XGraphite;
-- (NSColor *)userMarkBadgeNormalTextColor;
-- (NSColor *)userMarkBadgeSelectedBackgroundColor;
-- (NSColor *)userMarkBadgeSelectedTextColor;
-- (NSColor *)userMarkBadgeShadowColor;
-
-- (NSFont *)normalCellFont;
-- (NSFont *)selectedCellFont;
-- (NSFont *)userMarkBadgeFont;
-
-- (NSInteger)userMarkBadgeHeight;
-- (NSInteger)userMarkBadgeMargin;
-- (NSInteger)userMarkBadgeWidth;
-@end
-
-@interface TVCMemberListScrollClipView : NSClipView
-@end
-
-@interface TVCMemberListScrollView : NSScrollView
-@end
-
-@interface NSObject (TVCMemberListDelegate)
-- (void)memberListViewKeyDown:(NSEvent *)e;
 @end

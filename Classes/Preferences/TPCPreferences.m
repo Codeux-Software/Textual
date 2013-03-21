@@ -1290,6 +1290,15 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"IRCopDefaultLocalizaiton -> Kill Reason"]	= TXTLS(@"KillReason");
 	d[@"IRCopDefaultLocalizaiton -> G:Line Reason"] = TXTLS(@"GlineReason");
 
+	TVCMemberList *memberList = self.masterController.memberList;
+
+	d[@"User List Mode Badge Colors —> +y"] = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_YDefault];
+	d[@"User List Mode Badge Colors —> +q"] = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_QDefault];
+	d[@"User List Mode Badge Colors —> +a"] = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_ADefault];
+	d[@"User List Mode Badge Colors —> +o"] = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_ODefault];
+	d[@"User List Mode Badge Colors —> +h"] = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_HDefault];
+	d[@"User List Mode Badge Colors —> +v"] = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_VDefault];
+
 	d[@"ChannelOperatorDefaultLocalization -> Kick Reason"] = TXTLS(@"KickReason");
 
 	d[@"Theme -> Name"]					= TXDefaultTextualLogStyle;
