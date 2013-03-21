@@ -2,6 +2,7 @@
 
 Textual.viewFinishedLoading = function()
 {
+	app.logToConsole("loaded!");
 	Textual.fadeInLoadingScreen(1.00, 0.95);
 
 	setTimeout(function() {
