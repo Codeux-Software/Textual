@@ -424,7 +424,7 @@
 - (NSColor *)serverCellDisabledTextColor
 {
 	return [NSColor defineUserInterfaceItem:[NSColor outlineViewHeaderDisabledTextColor]
-							   invertedItem:[NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:0.7]];
+							   invertedItem:[NSColor internalCalibratedRed:169.0 green:169.0 blue:169.0 alpha:1]];
 }
 
 - (NSColor *)serverCellSelectedTextColorForActiveWindow
