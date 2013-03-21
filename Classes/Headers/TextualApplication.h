@@ -207,6 +207,7 @@
 	#import "NSStringHelper.h"
 	#import "NSTextFieldHelper.h"
 	#import "NSWindowHelper.h"
+	#import "NSUserDefaultsHelper.h"
 
 	/* Dialogs. */
 

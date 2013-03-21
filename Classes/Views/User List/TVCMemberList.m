@@ -125,35 +125,64 @@
 							   invertedItem:[NSColor internalCalibratedRed:48 green:48 blue:48 alpha:1]];
 }
 
-- (NSColor *)userMarkBadgeBackgroundColor_Y // InspIRCd-2.0
+- (NSColor *)userMarkBadgeBackgroundColor_YDefault // InspIRCd-2.0
 {
 	return [NSColor internalCalibratedRed:105 green:73 blue:2 alpha:1];
 }
 
-- (NSColor *)userMarkBadgeBackgroundColor_Q
+- (NSColor *)userMarkBadgeBackgroundColor_QDefault
 {
 	return [NSColor internalCalibratedRed:186 green:0 blue:0 alpha:1];
 }
 
-- (NSColor *)userMarkBadgeBackgroundColor_A
+- (NSColor *)userMarkBadgeBackgroundColor_ADefault
 {
 	return [NSColor internalCalibratedRed:157 green:0 blue:89 alpha:1];
 }
 
-- (NSColor *)userMarkBadgeBackgroundColor_O
+- (NSColor *)userMarkBadgeBackgroundColor_ODefault
 {
 	return [NSColor internalCalibratedRed:90 green:51 blue:156 alpha:1];
 }
 
-- (NSColor *)userMarkBadgeBackgroundColor_H
+- (NSColor *)userMarkBadgeBackgroundColor_HDefault
 {
 	return [NSColor internalCalibratedRed:17 green:125 blue:19 alpha:1];
 }
 
+- (NSColor *)userMarkBadgeBackgroundColor_VDefault
+{
+    return [NSColor internalCalibratedRed:51 green:123 blue:156 alpha:1];
+}
+
+- (NSColor *)userMarkBadgeBackgroundColor_Y // InspIRCd-2.0
+{
+	return [RZUserDefaults() colorForKey:@"User List Mode Badge Colors —> +y"];
+}
+
+- (NSColor *)userMarkBadgeBackgroundColor_Q
+{
+	return [RZUserDefaults() colorForKey:@"User List Mode Badge Colors —> +q"];
+}
+
+- (NSColor *)userMarkBadgeBackgroundColor_A
+{
+	return [RZUserDefaults() colorForKey:@"User List Mode Badge Colors —> +a"];
+}
+
+- (NSColor *)userMarkBadgeBackgroundColor_O
+{
+	return [RZUserDefaults() colorForKey:@"User List Mode Badge Colors —> +o"];
+}
+
+- (NSColor *)userMarkBadgeBackgroundColor_H
+{
+	return [RZUserDefaults() colorForKey:@"User List Mode Badge Colors —> +h"];
+}
+
 - (NSColor *)userMarkBadgeBackgroundColor_V
 {
-    return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:57 green:154 blue:199 alpha:1]
-                               invertedItem:[NSColor internalCalibratedRed:51 green:123 blue:156 alpha:1]];
+	return [RZUserDefaults() colorForKey:@"User List Mode Badge Colors —> +v"];
 }
 
 - (NSColor *)userMarkBadgeSelectedBackgroundColor

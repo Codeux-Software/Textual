@@ -37,55 +37,8 @@
 
 #import "TextualApplication.h"
 
-@interface TVCMemberList : TVCListView
-- (void)updateBackgroundColor;
+@interface NSUserDefaults (TXUserDefaultsHelper)
+- (void)setColor:(NSColor *)aColor forKey:(NSString *)aKey;
 
-/* User interface elements. */
-- (NSColor *)normalCellTextColor;
-- (NSColor *)awayUserCellTextColor;
-
-- (NSColor *)normalCellTextShadowColor;
-- (NSColor *)normalSelectedCellTextShadowColorForActiveWindow;
-- (NSColor *)normalSelectedCellTextShadowColorForInactiveWindow;
-- (NSColor *)graphiteSelectedCellTextShadowColorForActiveWindow;
-
-- (NSColor *)selectedCellTextColor;
-
-- (NSColor *)userMarkBadgeBackgroundColor_YDefault;
-- (NSColor *)userMarkBadgeBackgroundColor_ADefault;
-- (NSColor *)userMarkBadgeBackgroundColor_HDefault;
-- (NSColor *)userMarkBadgeBackgroundColor_ODefault;
-- (NSColor *)userMarkBadgeBackgroundColor_QDefault;
-- (NSColor *)userMarkBadgeBackgroundColor_VDefault;
-
-- (NSColor *)userMarkBadgeBackgroundColor_Y;
-- (NSColor *)userMarkBadgeBackgroundColor_A;
-- (NSColor *)userMarkBadgeBackgroundColor_H;
-- (NSColor *)userMarkBadgeBackgroundColor_O;
-- (NSColor *)userMarkBadgeBackgroundColor_Q;
-- (NSColor *)userMarkBadgeBackgroundColor_V;
-- (NSColor *)userMarkBadgeBackgroundColor_XAqua;
-- (NSColor *)userMarkBadgeBackgroundColor_XGraphite;
-- (NSColor *)userMarkBadgeNormalTextColor;
-- (NSColor *)userMarkBadgeSelectedBackgroundColor;
-- (NSColor *)userMarkBadgeSelectedTextColor;
-- (NSColor *)userMarkBadgeShadowColor;
-
-- (NSFont *)normalCellFont;
-- (NSFont *)selectedCellFont;
-- (NSFont *)userMarkBadgeFont;
-
-- (NSInteger)userMarkBadgeHeight;
-- (NSInteger)userMarkBadgeMargin;
-- (NSInteger)userMarkBadgeWidth;
-@end
-
-@interface TVCMemberListScrollClipView : NSClipView
-@end
-
-@interface TVCMemberListScrollView : NSScrollView
-@end
-
-@interface NSObject (TVCMemberListDelegate)
-- (void)memberListViewKeyDown:(NSEvent *)e;
+- (NSColor*)colorForKey:(NSString *)aKey;
 @end

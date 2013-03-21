@@ -157,6 +157,10 @@
 		4C0E363516F192F200B426C2 /* TVCServerList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0444EA16F15F8200EBB665 /* TVCServerList.m */; };
 		4C0E363616F192F200B426C2 /* TVCServerListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0444EB16F15F8200EBB665 /* TVCServerListCell.m */; };
 		4C0E363716F192F200B426C2 /* TVCServerListCellBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0444EC16F15F8200EBB665 /* TVCServerListCellBadge.m */; };
+		4C1E2BEF16FB1F13007C9717 /* NSUserDefaultsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1E2BEE16FB1F13007C9717 /* NSUserDefaultsHelper.m */; };
+		4C1E2BF516FB1F22007C9717 /* NSUserDefaultsHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1E2BF416FB1F22007C9717 /* NSUserDefaultsHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C1E2BF616FB2483007C9717 /* NSUserDefaultsHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1E2BF416FB1F22007C9717 /* NSUserDefaultsHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C1E2BF716FB2497007C9717 /* NSUserDefaultsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1E2BEE16FB1F13007C9717 /* NSUserDefaultsHelper.m */; };
 		4C1ED4A116CEA081006DD0CA /* IRCConnectionSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C1ED4A316CEA0A9006DD0CA /* IRCConnectionSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */; };
 		4C211D5715BF21BA00E218DA /* libmustache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C211D5615BF21BA00E218DA /* libmustache.a */; };
@@ -926,6 +930,8 @@
 		4C0444EC16F15F8200EBB665 /* TVCServerListCellBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCServerListCellBadge.m; sourceTree = "<group>"; };
 		4C08885916E7A6C7006FD7D8 /* TVCLogControllerOperationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCLogControllerOperationQueue.h; sourceTree = "<group>"; };
 		4C1DC5521580420500A47BC9 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C1E2BEE16FB1F13007C9717 /* NSUserDefaultsHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSUserDefaultsHelper.m; sourceTree = "<group>"; };
+		4C1E2BF416FB1F22007C9717 /* NSUserDefaultsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSUserDefaultsHelper.h; sourceTree = "<group>"; };
 		4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCConnectionSocket.h; path = Classes/Headers/IRCConnectionSocket.h; sourceTree = SOURCE_ROOT; };
 		4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCConnectionSocket.m; path = IRC/IRCConnectionSocket.m; sourceTree = "<group>"; };
 		4C211D5615BF21BA00E218DA /* libmustache.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmustache.a; path = "Frameworks/Mustache Templates/libmustache.a"; sourceTree = "<group>"; };
@@ -1370,7 +1376,6 @@
 			isa = PBXGroup;
 			children = (
 				4CCC6B46158E8C1B003A102B /* Build Settings */,
-				4C46CC8E158042C600846B64 /* Documents */,
 				4C46CC96158042DD00846B64 /* Images */,
 				4C46CC97158042E700846B64 /* Styles & Scripts */,
 				4C46CC5A158042B600846B64 /* User Interface */,
@@ -1472,6 +1477,7 @@
 		4C46CC97158042E700846B64 /* Styles & Scripts */ = {
 			isa = PBXGroup;
 			children = (
+				4C46CC8E158042C600846B64 /* Documents */,
 				4CA218B416D81F8F0012DAA8 /* Script Installers */,
 				4C52379115C0E0CA00414852 /* Styles */,
 				4C46CCA6158043BB00846B64 /* Extensions */,
@@ -1822,6 +1828,7 @@
 				4C8AF551158E99520026668C /* NSSplitViewHelper.h */,
 				4C8AF552158E99520026668C /* NSStringHelper.h */,
 				4C8AF553158E99520026668C /* NSTextFieldHelper.h */,
+				4C1E2BF416FB1F22007C9717 /* NSUserDefaultsHelper.h */,
 				4C8AF554158E99520026668C /* NSWindowHelper.h */,
 				4C8AF558158E99520026668C /* TDCAboutPanel.h */,
 				4C8AF559158E99520026668C /* TDCAddressBookSheet.h */,
@@ -1913,6 +1920,7 @@
 				4C8AF5A6158E99520026668C /* NSStringHelper.m */,
 				4C8AF5A7158E99520026668C /* NSTextFieldHelper.m */,
 				4C8AF5A8158E99520026668C /* NSWindowHelper.m */,
+				4C1E2BEE16FB1F13007C9717 /* NSUserDefaultsHelper.m */,
 			);
 			name = "Cocoa (Objective-C)";
 			path = "Helpers/Cocoa (Objective-C)";
@@ -2392,6 +2400,7 @@
 				4C5BA45416F1302F00A96CA2 /* TXGlobalModels.h in Headers */,
 				4C5BA45516F1302F00A96CA2 /* TXMasterController.h in Headers */,
 				4C5BA45616F1302F00A96CA2 /* TXMenuController.h in Headers */,
+				4C1E2BF616FB2483007C9717 /* NSUserDefaultsHelper.h in Headers */,
 				4CB331BE16F1BBE000D65CBE /* NSImageHelper.h in Headers */,
 				4C0444E816F1555800EBB665 /* TVCServerListCellBadge.h in Headers */,
 			);
@@ -2526,6 +2535,7 @@
 				4C8AF689158E99520026668C /* TVCWebViewAutoScroll.h in Headers */,
 				4C8AF68A158E99520026668C /* TXGlobalModels.h in Headers */,
 				4C8AF68B158E99520026668C /* TXMasterController.h in Headers */,
+				4C1E2BF516FB1F22007C9717 /* NSUserDefaultsHelper.h in Headers */,
 				4C8AF68C158E99520026668C /* TXMenuController.h in Headers */,
 				4C0444E716F1553C00EBB665 /* TVCServerListCellBadge.h in Headers */,
 			);
@@ -2919,6 +2929,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C1E2BF716FB2497007C9717 /* NSUserDefaultsHelper.m in Sources */,
 				4C0444F616F1603B00EBB665 /* TXGlobalModels.m in Sources */,
 				4C0444F716F1603B00EBB665 /* TXMasterController.m in Sources */,
 				4C0444F816F1603B00EBB665 /* TXMenuController.m in Sources */,
@@ -3144,6 +3155,7 @@
 				4CBBD19E16E356F400D2FEFE /* TVCMemberListUserInfoPopover.m in Sources */,
 				4C419A0516E91C470093B006 /* TVCLogControllerOperationQueue.m in Sources */,
 				4CB331B516F1BBC700D65CBE /* NSImageHelper.m in Sources */,
+				4C1E2BEF16FB1F13007C9717 /* NSUserDefaultsHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
