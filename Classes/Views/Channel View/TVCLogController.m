@@ -501,7 +501,11 @@
 			/* Command+F "messageBlock_1" for details about this array. */
 			NSArray *blockResult = ((TVCLogMessageBlock)blockInfo[0])();
 
-			[postedLineNumbers addObject:blockResult[0]];
+			NSNumber *lineNumber = blockResult[0];
+
+			PointerIsEmptyAssertLoopContinue(lineNumber);
+
+			[postedLineNumbers safeAddObject:lineNumber];
 
 			[bodyAppend appendString:blockResult[1]];
 		}
