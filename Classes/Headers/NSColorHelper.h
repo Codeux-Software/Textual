@@ -43,6 +43,8 @@
 + (id)defineUserInterfaceItem:(id)normalItem invertedItem:(id)invertedItem;
 + (id)defineUserInterfaceItem:(id)normalItem invertedItem:(id)invertedItem withOperator:(BOOL)specialCondition;
 
+- (CGColorRef)aCGColor;
+
 - (NSColor *)invertColor;
 
 + (NSColor *)formatterWhiteColor;

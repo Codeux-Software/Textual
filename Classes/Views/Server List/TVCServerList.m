@@ -217,9 +217,9 @@
 	CALayer *scrollLayer = self.scrollView.contentView.layer;
 
 	if ([TPCPreferences invertSidebarColors]) {
-		[scrollLayer setBackgroundColor:[self.properBackgroundColor CGColor]];
+		[scrollLayer setBackgroundColor:[self.properBackgroundColor aCGColor]];
 	} else {
-		[scrollLayer setBackgroundColor:[NSColor.clearColor CGColor]];
+		[scrollLayer setBackgroundColor:[NSColor.clearColor aCGColor]];
 	}
 }
 
