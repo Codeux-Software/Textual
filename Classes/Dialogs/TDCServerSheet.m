@@ -535,8 +535,16 @@
 	/* If advanced encodings were toggled off and we had one selected, reset the primary
 	 and fallback encoding popups to the default encodings. */
 	
-	NSMenuItem *primaryItem = [self.primaryEncodingButton itemWithTitle:selectedPrimary];
-	NSMenuItem *fallbackItem = [self.fallbackEncodingButton itemWithTitle:selectedFallback];
+	NSMenuItem *primaryItem;
+	NSMenuItem *fallbackItem;
+
+	if (NSObjectIsNotEmpty(selectedPrimary)) {
+		primaryItem = [self.primaryEncodingButton itemWithTitle:selectedPrimary];
+	}
+
+	if (NSObjectIsNotEmpty(selectedFallback)) {
+		fallbackItem = [self.fallbackEncodingButton itemWithTitle:selectedFallback];
+	}
 
 	if (PointerIsEmpty(primaryItem)) {
 		selectedPrimary = [NSString localizedNameOfStringEncoding:TXDefaultPrimaryTextEncoding];
