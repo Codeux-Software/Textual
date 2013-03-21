@@ -127,7 +127,7 @@
 
 - (NSColor *)userMarkBadgeBackgroundColor_Y // InspIRCd-2.0
 {
-	return [NSColor internalCalibratedRed:224 green:27 blue:93 alpha:1];
+	return [NSColor internalCalibratedRed:105 green:73 blue:2 alpha:1];
 }
 
 - (NSColor *)userMarkBadgeBackgroundColor_Q
