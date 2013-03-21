@@ -1255,6 +1255,48 @@
 				 [self description], [self.channel description], [self.client description], [error localizedDescription]);
 }
 
+- (void)postViwLoadedJavaScript:(NSNumber *)loopCount
+{
+	/* Check for a valid script object. */
+
+	WebScriptObject *js_api = [self.view javaScriptAPI];
+
+	if (PointerIsEmpty(js_api) || [js_api isKindOfClass:[WebUndefined class]]) {
+		NSInteger loopDepth = ([loopCount integerValue] + 1);
+
+		/* The JavaScript object is not available yet, so instead of looking dumb
+		 and letting our loading screen stay up forever because we cannot tell the 
+		 style we are finished loading, we will instead loop this method a few times
+		 using a timer hoping the object appears. */
+
+		if (loopDepth <= 8) {
+			[self performSelector:@selector(postViwLoadedJavaScript:)
+					   withObject:@(loopDepth)
+					   afterDelay:0.4]; // Post event every 400ms, 1/5 second.
+		}
+
+		return;
+	}
+
+	/* Post events. */
+	NSString *viewType = @"server";
+
+	if (self.channel) {
+		viewType = [self.channel channelTypeString];
+	}
+
+	[self internalExecuteScriptCommand:@"viewInitiated" withArguments:@[
+		NSStringNilValueSubstitute(viewType),
+		NSStringNilValueSubstitute(self.client.config.itemUUID),
+		NSStringNilValueSubstitute(self.channel.config.itemUUID),
+		NSStringNilValueSubstitute(self.channel.name)
+	 ]];
+
+	if (self.reloadingBacklog == NO) {
+		[self internalExecuteScriptCommand:@"viewFinishedLoading" withArguments:@[]];
+	}
+}
+
 - (void)webView:(WebView *)sender didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
 {
 	[windowObject setValue:self.sink forKey:@"app"];
@@ -1262,23 +1304,8 @@
 
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
 {
-	NSString *viewType = @"server";
-    
-	if (self.channel) {
-		viewType = [self.channel channelTypeString];
-	}
-    
-	[self internalExecuteScriptCommand:@"viewInitiated" withArguments:@[
-		 NSStringNilValueSubstitute(viewType),
-		 NSStringNilValueSubstitute(self.client.config.itemUUID),
-		 NSStringNilValueSubstitute(self.channel.config.itemUUID),
-		 NSStringNilValueSubstitute(self.channel.name)
-	 ]];
-
-	if (self.reloadingBacklog == NO) {
-		[self internalExecuteScriptCommand:@"viewFinishedLoading" withArguments:@[]];
-	}
-
+	[self postViwLoadedJavaScript:@(0)];
+	
 	self.isLoaded = YES;
 
 	[self.operationQueue updateReadinessState:self];
