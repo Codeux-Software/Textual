@@ -173,6 +173,7 @@
 									<reference key="NSControlView" ref="67646161"/>
 									<int key="NSButtonFlags">-2044182528</int>
 									<int key="NSButtonFlags2">2</int>
+									<reference key="NSNormalImage" ref="293674941"/>
 									<string key="NSAlternateContents"/>
 									<string key="NSKeyEquivalent"/>
 									<int key="NSPeriodicDelay">400</int>
@@ -602,7 +603,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrameSize">{534, 195}</string>
 							<reference key="NSSuperview" ref="620616621"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSClassName">NSView</string>
 						</object>
 					</array>
@@ -6080,7 +6080,7 @@ wGw</bytes>
 										<object class="NSTextField" id="719440290">
 											<reference key="NSNextResponder" ref="497543062"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{119, 211}, {164, 16}}</string>
+											<string key="NSFrame">{{119, 211}, {168, 16}}</string>
 											<reference key="NSSuperview" ref="497543062"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="472291797"/>
@@ -6088,7 +6088,7 @@ wGw</bytes>
 											<object class="NSTextFieldCell" key="NSCell" id="123156309">
 												<int key="NSCellFlags">68157504</int>
 												<int key="NSCellFlags2">272630784</int>
-												<string key="NSContents">Channel Administrator (+a)</string>
+												<string key="NSContents">Channel Administrator (+a):</string>
 												<reference key="NSSupport" ref="90392730"/>
 												<reference key="NSControlView" ref="719440290"/>
 												<reference key="NSBackgroundColor" ref="326222776"/>
@@ -6118,7 +6118,7 @@ wGw</bytes>
 										<object class="NSTextField" id="384083935">
 											<reference key="NSNextResponder" ref="497543062"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{119, 180}, {136, 16}}</string>
+											<string key="NSFrame">{{119, 180}, {140, 16}}</string>
 											<reference key="NSSuperview" ref="497543062"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="808160944"/>
@@ -6126,7 +6126,7 @@ wGw</bytes>
 											<object class="NSTextFieldCell" key="NSCell" id="749382213">
 												<int key="NSCellFlags">68157504</int>
 												<int key="NSCellFlags2">272630784</int>
-												<string key="NSContents">Channel Operator (+o)</string>
+												<string key="NSContents">Channel Operator (+o):</string>
 												<reference key="NSSupport" ref="90392730"/>
 												<reference key="NSControlView" ref="384083935"/>
 												<reference key="NSBackgroundColor" ref="326222776"/>
@@ -6156,7 +6156,7 @@ wGw</bytes>
 										<object class="NSTextField" id="647080340">
 											<reference key="NSNextResponder" ref="497543062"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{119, 149}, {166, 16}}</string>
+											<string key="NSFrame">{{119, 149}, {170, 16}}</string>
 											<reference key="NSSuperview" ref="497543062"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="850037993"/>
@@ -6164,7 +6164,7 @@ wGw</bytes>
 											<object class="NSTextFieldCell" key="NSCell" id="625482684">
 												<int key="NSCellFlags">68157504</int>
 												<int key="NSCellFlags2">272630784</int>
-												<string key="NSContents">Channel Half-Operator (+h)</string>
+												<string key="NSContents">Channel Half-Operator (+h):</string>
 												<reference key="NSSupport" ref="90392730"/>
 												<reference key="NSControlView" ref="647080340"/>
 												<reference key="NSBackgroundColor" ref="326222776"/>
