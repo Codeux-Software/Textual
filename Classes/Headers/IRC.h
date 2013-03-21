@@ -42,7 +42,7 @@
 #define TXMaximumNodesPerModeCommand		4
 
 /* "*" is not actually considered a valid character for a nickname. We include it for ZNC. */
-#define IRCNicknameValidCharacters          @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-\[]{}^`|*"
+#define IRCNicknameValidCharacters          @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-\\[]{}^`|*"
 
 TEXTUAL_EXTERN NSString *IRCPrivateCommandIndex(const char *key); 
 TEXTUAL_EXTERN NSString *IRCPublicCommandIndex(const char *key); 
