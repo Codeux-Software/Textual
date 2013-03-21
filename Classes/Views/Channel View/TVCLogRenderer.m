@@ -444,6 +444,8 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		 keyword may be found. */
 		if (exactWordMatching == NO) {
 			for (NSString *excludeWord in excludeWords) {
+				PointerIsEmptyAssertLoopContinue(excludeWord);
+
 				start = 0;
 				
 				while (start < length) {
@@ -503,6 +505,8 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			// ---- //
 			
             for (__strong NSString *keyword in highlightWords) {
+				PointerIsEmptyAssertLoopContinue(keyword);
+
 				BOOL continueSearch = YES;
 
 				if (currentNickname && channelName) {
@@ -699,6 +703,9 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 					
 				for (IRCUser *user in sortedMembers) {
 					start = 0;
+
+					PointerIsEmptyAssertLoopContinue(user);
+					PointerIsEmptyAssertLoopContinue(user.nickname);
 					
 					while (start < length) {
 						NSRange r = [body rangeOfString:user.nickname
