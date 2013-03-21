@@ -763,6 +763,39 @@
 	[self.masterController reloadSegmentedControllerOrigin];
 }
 
+- (void)onChangedUserListModeColor:(id)sender
+{
+	[self.masterController.memberList setNeedsDisplay:YES];
+}
+
+- (void)onResetUserListModeColorsToDefaults:(id)sender
+{
+	TVCMemberList *memberList = self.masterController.memberList;
+
+	NSData *modeycolor = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_YDefault];
+	NSData *modeqcolor = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_QDefault];
+	NSData *modeacolor = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_ADefault];
+	NSData *modeocolor = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_ODefault];
+	NSData *modehcolor = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_HDefault];
+	NSData *modevcolor = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_VDefault];
+
+	[RZUserDefaults() setObject:modeycolor forKey:@"User List Mode Badge Colors —> +y"];
+	[RZUserDefaults() setObject:modeqcolor forKey:@"User List Mode Badge Colors —> +q"];
+	[RZUserDefaults() setObject:modeacolor forKey:@"User List Mode Badge Colors —> +a"];
+	[RZUserDefaults() setObject:modeocolor forKey:@"User List Mode Badge Colors —> +o"];
+	[RZUserDefaults() setObject:modehcolor forKey:@"User List Mode Badge Colors —> +h"];
+	[RZUserDefaults() setObject:modevcolor forKey:@"User List Mode Badge Colors —> +v"];
+
+	[[RZUserDefaultsController() values] setValue:modeycolor forKey:@"User List Mode Badge Colors —> +y"];
+	[[RZUserDefaultsController() values] setValue:modeqcolor forKey:@"User List Mode Badge Colors —> +q"];
+	[[RZUserDefaultsController() values] setValue:modeacolor forKey:@"User List Mode Badge Colors —> +a"];
+	[[RZUserDefaultsController() values] setValue:modeocolor forKey:@"User List Mode Badge Colors —> +o"];
+	[[RZUserDefaultsController() values] setValue:modehcolor forKey:@"User List Mode Badge Colors —> +h"];
+	[[RZUserDefaultsController() values] setValue:modevcolor forKey:@"User List Mode Badge Colors —> +v"];
+
+	[self onChangedUserListModeColor:sender];
+}
+
 - (void)onChangedSidebarColorInversion:(id)sender
 {
 	[self.masterController.serverList reloadAllDrawingsIgnoringOtherReloads];

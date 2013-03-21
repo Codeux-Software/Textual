@@ -97,6 +97,9 @@
 - (void)onChangedTheme:(id)sender;
 - (void)onChangedTranscriptFolder:(id)sender;
 - (void)onChangedTransparency:(id)sender;
+- (void)onChangedUserListModeColor:(id)sender;
+
+- (void)onResetUserListModeColorsToDefaults:(id)sender;
 
 - (void)onOpenPathToScripts:(id)sender;
 - (void)onOpenPathToThemes:(id)sender;
