@@ -42,6 +42,19 @@
 #pragma mark -
 #pragma mark Custom Methods
 
+- (CGColorRef)aCGColor
+{
+	NSInteger numberOfComponents = [self numberOfComponents];
+
+	CGFloat components[numberOfComponents];
+	
+    CGColorSpaceRef colorSpace = [self.colorSpace CGColorSpace];
+
+    [self getComponents:(CGFloat *)&components];
+
+    return CGColorCreate(colorSpace, components);
+}
+
 + (NSColor *)internalCalibratedRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
 {
 	if (red   > 1.0) {
