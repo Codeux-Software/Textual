@@ -255,7 +255,7 @@
 
 + (NSColor *)outlineViewHeaderDisabledTextColor
 {
-	return [self colorWithSRGBRed:0.439216 green:0.494118 blue:0.54902 alpha:0.7];
+	return [NSColor internalCalibratedRed:158 green:162 blue:173 alpha:1];
 }
 
 @end
