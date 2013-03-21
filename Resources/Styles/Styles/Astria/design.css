@@ -116,6 +116,17 @@ a:hover {
 	border-bottom: 1px solid #1f1f1f;
 	-webkit-box-shadow: 0 1px 5px #777;
 	-webkit-transition: opacity 0.8s linear;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+/* Topic bar hover additions contributed with permission from the project:
+	<https://github.com/hbang/Simplified-Light-Modifications> */
+
+#topic_bar:hover {
+	overflow: visible;
+	white-space: normal;
 }
 
 #topic_bar a {
