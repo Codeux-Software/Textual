@@ -720,9 +720,11 @@
 	}
 
 	if (isActiveWindow == NO || (NSDissimilarObjects(self.worldController.selectedItem, t) && isActiveWindow)) {
-		t.treeUnreadCount += 1;
+		if (t.config.showTreeBadgeCount) {
+			t.treeUnreadCount += 1;
 
-        [self.worldController reloadTreeItem:t];
+			[self.worldController reloadTreeItem:t];
+		}
 	}
 
 	if (isActiveWindow == NO && popIcon) {
@@ -2988,7 +2990,7 @@
 				}
 
 				/* Mark channel as unread. */
-				if (postevent && (highlight || c.config.pushNotifications)) {
+				if (postevent) {
 					[self setUnreadState:c];
 				}
 			}];
