@@ -245,17 +245,17 @@
 
 + (NSColor *)sourceListBackgroundColorTop
 {
-	return [NSColor internalCalibratedRed:234 green:237 blue:242 alpha:1];
+	return [NSColor internalCalibratedRed:234 green:237 blue:242 alpha:1.0];
 }
 
 + (NSColor *)outlineViewHeaderTextColor
 {
-	return [self colorWithSRGBRed:0.439216 green:0.494118 blue:0.54902 alpha:1.0];
+	return [self internalCalibratedRed:0.439216 green:0.494118 blue:0.54902 alpha:1.0];
 }
 
 + (NSColor *)outlineViewHeaderDisabledTextColor
 {
-	return [NSColor internalCalibratedRed:158 green:162 blue:173 alpha:1];
+	return [NSColor internalCalibratedRed:158 green:162 blue:173 alpha:1.0];
 }
 
 @end
@@ -269,8 +269,8 @@
 
 + (NSGradient *)sourceListBackgroundGradientColor
 {
-	return [self gradientWithStartingColor:[NSColor internalCalibratedRed:234 green:237 blue:242 alpha:1]
-							   endingColor:[NSColor internalCalibratedRed:199 green:207 blue:216 alpha:1]];
+	return [self gradientWithStartingColor:[NSColor internalCalibratedRed:234 green:237 blue:242 alpha:1.0]
+							   endingColor:[NSColor internalCalibratedRed:199 green:207 blue:216 alpha:1.0]];
 }
 
 @end
