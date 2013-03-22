@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">12C60</string>
+		<string key="IBDocument.SystemVersion">12D78</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.34</string>
-		<string key="IBDocument.HIToolboxVersion">625.00</string>
+		<string key="IBDocument.AppKitVersion">1187.37</string>
+		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">3084</string>
@@ -3293,7 +3293,7 @@
 											<reference key="NSDocView" ref="991887117"/>
 											<reference key="NSBGColor" ref="317973488"/>
 											<object class="NSCursor" key="NSCursor" id="298637364">
-												<string key="NSHotSpot">{5, 5}</string>
+												<string key="NSHotSpot">{1, -1}</string>
 												<int key="NSCursorType">0</int>
 											</object>
 											<int key="NScvFlags">2</int>
@@ -6688,7 +6688,7 @@
 									<object class="NSTextFieldCell" key="NSCell" id="452984761">
 										<int key="NSCellFlags">67108928</int>
 										<int key="NSCellFlags2">1346377728</int>
-										<string key="NSContents"/>
+										<string key="NSContents">Do you like corn?</string>
 										<reference key="NSSupport" ref="29"/>
 										<reference key="NSControlView" ref="636420868"/>
 										<bool key="NSDrawsBackground">YES</bool>
