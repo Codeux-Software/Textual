@@ -121,6 +121,11 @@
 #define PointerIsEmptyAssertLoopContinue(o)		if (PointerIsEmpty(o)) { continue; }
 #define PointerIsEmptyAssertLoopBreak(o)		if (PointerIsEmpty(o)) { break; }
 
+#define NSObjectIsKindOfClassAssert(o,c)				if ([o isKindOfClass:[c class]] == NO) { return; }
+#define NSObjectIsKindOfClassAssertReturn(o, c, r)		if ([o isKindOfClass:[c class]] == NO) { return r; }
+#define NSObjectIsKindOfClassAssertContinue(o, c)		if ([o isKindOfClass:[c class]] == NO) { continue; }
+#define NSObjectIsKindOfClassAssertBreak(o,c)			if ([o isKindOfClass:[c class]] == NO) { break; }
+
 /* Deprecation and symbol visibility. */
 #define TEXTUAL_EXTERN							__attribute__((visibility("default")))
 #define TEXTUAL_DEPRECATED						__attribute__((deprecated))

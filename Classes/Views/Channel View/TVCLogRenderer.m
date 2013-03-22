@@ -59,17 +59,6 @@ typedef uint32_t attr_t;
 									_rendererBackgroundColorAttribute			\
 								)
 
-NSComparisonResult IRCNicknameLengthSort(IRCUser *s1, IRCUser *s2, void *context)
-{
-	PointerIsEmptyAssertReturn(s1, NSOrderedSame);
-	PointerIsEmptyAssertReturn(s2, NSOrderedSame);
-
-	NSObjectIsEmptyAssertReturn(s1.nickname, NSOrderedSame);
-	NSObjectIsEmptyAssertReturn(s2.nickname, NSOrderedSame);
-
-	return (s1.nickname.length <= s2.nickname.length);
-}
-
 static void setFlag(attr_t *attrBuf, attr_t flag, NSInteger start, NSInteger len)
 {
 	attr_t *target = (attrBuf + start);
@@ -705,7 +694,19 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			if (log && isNormalMsg) {
 				IRCChannel *logChannel = log.channel;
 
-				NSArray *sortedMembers = [logChannel.memberList sortedArrayUsingFunction:IRCNicknameLengthSort context:nil];
+				NSArray *rawMemberList = [logChannel.memberList copy];
+				NSArray *sortedMembers = [rawMemberList sortedArrayWithOptions:NSSortStable usingComparator:^NSComparisonResult(id obj1, id obj2) {
+					PointerIsEmptyAssertReturn(obj1, NO);
+					PointerIsEmptyAssertReturn(obj1, NO);
+
+					NSObjectIsKindOfClassAssertReturn(obj1, IRCUser, NO);
+					NSObjectIsKindOfClassAssertReturn(obj2, IRCUser, NO);
+
+					IRCUser *s1 = obj1;
+					IRCUser *s2 = obj2;
+
+					return (s1.nickname.length <= s2.nickname.length);
+				}];
 					
 				for (IRCUser *user in sortedMembers) {
 					start = 0;
