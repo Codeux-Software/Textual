@@ -111,6 +111,7 @@
 	self.pushNotificationsCheck.state	= self.config.pushNotifications;
     self.JPQActivityCheck.state			= self.config.ignoreJPQActivity;
     self.inlineImagesCheck.state		= self.config.ignoreInlineImages;
+	self.showTreeBadgeCountCheck.state  = self.config.showTreeBadgeCount;
 }
 
 - (void)save
@@ -122,6 +123,7 @@
 	self.config.encryptionKey	= self.encryptionKeyField.stringValue;
     
 	self.config.autoJoin			= self.autoJoinCheck.state;
+	self.config.showTreeBadgeCount  = self.showTreeBadgeCountCheck.state;
 	self.config.pushNotifications	= self.pushNotificationsCheck.state;
     self.config.ignoreHighlights	= self.ignoreHighlightsCheck.state;
     self.config.ignoreInlineImages	= self.inlineImagesCheck.state;

@@ -51,6 +51,7 @@
 @property (nonatomic, nweak) NSButton *ignoreHighlightsCheck;
 @property (nonatomic, nweak) NSButton *inlineImagesCheck;
 @property (nonatomic, nweak) NSButton *pushNotificationsCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *showTreeBadgeCountCheck;
 @property (nonatomic, nweak) NSButton *JPQActivityCheck;
 @property (nonatomic, nweak) NSSegmentedControl *contentViewTabView;
 @property (nonatomic, nweak) NSView *contentView;
