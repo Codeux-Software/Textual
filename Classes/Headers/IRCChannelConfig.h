@@ -52,6 +52,7 @@ typedef enum IRCChannelType : NSInteger {
 @property (nonatomic, strong) NSString *secretKey;
 @property (nonatomic, assign) BOOL autoJoin;
 @property (nonatomic, assign) BOOL pushNotifications;
+@property (nonatomic, assign) BOOL showTreeBadgeCount;
 @property (nonatomic, assign) BOOL ignoreInlineImages;
 @property (nonatomic, assign) BOOL ignoreHighlights;
 @property (nonatomic, assign) BOOL ignoreJPQActivity;

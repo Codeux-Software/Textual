@@ -54,6 +54,7 @@
         self.ignoreInlineImages	= NO;
         self.ignoreJPQActivity	= NO;
 		self.pushNotifications	= YES;
+		self.showTreeBadgeCount = YES;
 
 		self.defaultModes	= NSStringEmptyPlaceholder;
 		self.defaultTopic	= NSStringEmptyPlaceholder;
@@ -205,7 +206,8 @@
 		self.ignoreInlineImages	= NSDictionaryBOOLKeyValueCompare(dic, @"disableInlineMedia", self.ignoreInlineImages);
 		self.ignoreJPQActivity	= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreJPQActivity", self.ignoreJPQActivity);
 		self.pushNotifications	= NSDictionaryBOOLKeyValueCompare(dic, @"enableNotifications", self.pushNotifications);
-		
+		self.showTreeBadgeCount = NSDictionaryBOOLKeyValueCompare(dic, @"enableTreeBadgeCountDrawing", self.showTreeBadgeCount);
+
 		self.defaultModes		= NSDictionaryObjectKeyValueCompare(dic, @"defaultMode", self.defaultModes);
 		self.defaultTopic		= NSDictionaryObjectKeyValueCompare(dic, @"defaultTopic", self.defaultTopic);
 
@@ -239,6 +241,7 @@
     [dic setBool:self.ignoreHighlights		forKey:@"ignoreHighlights"];
     [dic setBool:self.ignoreInlineImages	forKey:@"disableInlineMedia"];
     [dic setBool:self.ignoreJPQActivity		forKey:@"ignoreJPQActivity"];
+	[dic setBool:self.showTreeBadgeCount	forKey:@"enableTreeBadgeCountDrawing"];
 
 	[dic safeSetObject:self.itemUUID			forKey:@"uniqueIdentifier"];
 	[dic safeSetObject:self.channelName			forKey:@"channelName"];
