@@ -833,8 +833,8 @@
 														<object class="NSMenuItem" id="809170009">
 															<reference key="NSMenu" ref="1006033885"/>
 															<string key="NSTitle">Moderated (+m)</string>
-															<string key="NSKeyEquiv">m</string>
-															<int key="NSKeyEquivModMask">1572864</int>
+															<string key="NSKeyEquiv">M</string>
+															<int key="NSKeyEquivModMask">1310720</int>
 															<int key="NSMnemonicLoc">2147483647</int>
 															<reference key="NSOnImage" ref="222848805"/>
 															<reference key="NSMixedImage" ref="852898728"/>
@@ -863,8 +863,8 @@
 														<object class="NSMenuItem" id="995849926">
 															<reference key="NSMenu" ref="1006033885"/>
 															<string key="NSTitle">Invite Only (+i)</string>
-															<string key="NSKeyEquiv">i</string>
-															<int key="NSKeyEquivModMask">1572864</int>
+															<string key="NSKeyEquiv">I</string>
+															<int key="NSKeyEquivModMask">1310720</int>
 															<int key="NSMnemonicLoc">2147483647</int>
 															<reference key="NSOnImage" ref="222848805"/>
 															<reference key="NSMixedImage" ref="852898728"/>
@@ -874,7 +874,7 @@
 															<reference key="NSMenu" ref="1006033885"/>
 															<string key="NSTitle">Anyone Can Join (-i)</string>
 															<string key="NSKeyEquiv">i</string>
-															<int key="NSKeyEquivModMask">1835008</int>
+															<int key="NSKeyEquivModMask">1310720</int>
 															<int key="NSMnemonicLoc">2147483647</int>
 															<reference key="NSOnImage" ref="222848805"/>
 															<reference key="NSMixedImage" ref="852898728"/>
@@ -4213,7 +4213,7 @@
 					<string key="NSFrameSize">{652, 550}</string>
 					<reference key="NSNextKeyView" ref="1064184631"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMinSize">{600, 272}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSAutorecalculatesContentBorderThicknessMinY">NO</bool>
