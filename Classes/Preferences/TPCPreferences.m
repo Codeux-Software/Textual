@@ -1137,7 +1137,12 @@ static NSMutableArray *excludeKeywords = nil;
 {
 	NSRunningApplication *runningApp = [NSRunningApplication currentApplication];
 
-	return [NSDate secondsSinceUnixTimestamp:runningApp.launchDate.timeIntervalSince1970];
+	/* This can be nil when launched from something not launchd. i.e. Xcode */
+	NSDate *launchDate = runningApp.launchDate;
+
+	PointerIsEmptyAssertReturn(launchDate, 0);
+
+	return [NSDate secondsSinceUnixTimestamp:launchDate.timeIntervalSince1970];
 }
 
 + (NSTimeInterval)timeIntervalSinceApplicationInstall
