@@ -3711,8 +3711,11 @@
 																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="426151871"/>
 																	<reference key="NSDocView" ref="426151871"/>
-																	<reference key="NSBGColor" ref="375145136"/>
-																	<int key="NScvFlags">2</int>
+																	<object class="NSColor" key="NSBGColor">
+																		<int key="NSColorSpace">4</int>
+																		<bytes key="NSWhite">MSAwAA</bytes>
+																	</object>
+																	<int key="NScvFlags">6</int>
 																</object>
 																<object class="NSScroller" id="856756753">
 																	<reference key="NSNextResponder" ref="940704480"/>
