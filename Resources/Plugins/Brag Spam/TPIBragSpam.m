@@ -83,7 +83,7 @@
 
 				channelCount += 1;
 				
-				IRCUser *myself = [ch findMember:client.localNickname];
+				IRCUser *myself = [ch findMember:c.localNickname];
 				
 				if (myself.q || myself.a || myself.o) {
 					chanOpCount++;
@@ -94,8 +94,10 @@
 				}
 				
 				for (IRCUser *m in ch.memberList) {
-					if ([m isEqual:myself]) continue;
-					
+					if ([m isEqual:myself]) {
+						continue;
+					}
+				
 					BOOL addUser = NO;
 					
 					if (myself.q && m.q == NO) {
