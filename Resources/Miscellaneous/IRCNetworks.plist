@@ -8,6 +8,8 @@
 	<string>irc.dal.net</string>
 	<key>EFnet</key>
 	<string>irc.efnet.org</string>
+	<key>EsperNet</key>
+	<string>irc.esper.net</string>
 	<key>Freenode</key>
 	<string>chat.freenode.net</string>
 	<key>GameSurge</key>
