@@ -214,13 +214,29 @@
 
 - (void)updateBackgroundColor
 {
-	CALayer *scrollLayer = self.scrollView.contentView.layer;
+	BOOL enableScrollViewLayers = [RZUserDefaults() boolForKey:@"TVCListViewEnableLayeredBackViews"];
 
-	if ([TPCPreferences invertSidebarColors]) {
-		[scrollLayer setBackgroundColor:[self.properBackgroundColor aCGColor]];
+	if (enableScrollViewLayers) {
+		CALayer *scrollLayer = self.scrollView.contentView.layer;
+
+		if ([TPCPreferences invertSidebarColors]) {
+			[scrollLayer setBackgroundColor:[self.properBackgroundColor aCGColor]];
+		} else {
+			[scrollLayer setBackgroundColor:[NSColor.clearColor aCGColor]];
+		}
 	} else {
-		[scrollLayer setBackgroundColor:[NSColor.clearColor aCGColor]];
+		if ([TPCPreferences invertSidebarColors] || self.masterController.mainWindowIsActive == NO) {
+			[self setBackgroundColor:[NSColor clearColor]];
+			
+			[self.scrollView setBackgroundColor:self.properBackgroundColor];
+		} else {
+			[self setBackgroundColor:self.properBackgroundColor];
+
+			[self.scrollView setBackgroundColor:[NSColor clearColor]];
+		}
 	}
+	
+	[self setNeedsDisplay:YES];
 }
 
 - (NSScrollView *)scrollView
@@ -581,11 +597,15 @@
 
 - (void)awakeFromNib
 {
-    [super awakeFromNib];
+	BOOL enableScrollViewLayers = [RZUserDefaults() boolForKey:@"TVCListViewEnableLayeredBackViews"];
 
-    if ([self.contentView isKindOfClass:[TVCServerListScrollClipView class]] == NO) {
-        [self swapClipView];
-    }
+	if (enableScrollViewLayers) {
+		[super awakeFromNib];
+
+		if ([self.contentView isKindOfClass:[TVCMemberListScrollClipView class]] == NO) {
+			[self swapClipView];
+		}
+	}
 }
 
 @end
