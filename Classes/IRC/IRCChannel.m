@@ -422,35 +422,26 @@
 	NSObjectIsEmptyAssertReturn(nick, -1);
 	
 	NSInteger index = 0;
-	NSInteger result = -1;
 
-	@try {
-		/* Incase memberList is modified while reading. */
-		for (IRCUser *m in self.memberList) {
-			if (mask & NSCaseInsensitiveSearch) {
-				if ([nick isEqualIgnoringCase:m.nickname]) {
-					result = index;
+	/* Incase memberList is modified while reading. */
+	for (IRCUser *m in self.memberList.copy) {
+		if (mask & NSCaseInsensitiveSearch) {
+			if ([nick isEqualIgnoringCase:m.nickname]) {
+				return index;
 
-					break;
-				}
-			} else {
-				if ([nick isEqualToString:m.nickname]) {
-					result = index;
-
-					break;
-				}
+				break;
 			}
+		} else {
+			if ([nick isEqualToString:m.nickname]) {
+				return index;
 
-			index += 1;
+				break;
+			}
 		}
+
+		index += 1;
 	}
-	@catch (NSException *exception) {
-		LogToConsole(@"%@", exception);
-	}
-	@finally {
-		return result;
-	}
-	
+
 	return -1;
 }
 

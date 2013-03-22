@@ -105,7 +105,7 @@
 
 - (void)drawDividerInRect:(NSRect)rect
 {
-	NSColor *dividerColor = [NSColor colorWithCalibratedWhite:0.65 alpha:1];
+	NSColor *dividerColor = [NSColor colorWithCalibratedWhite:0.65 alpha:1.0];
 
 	if ([TPCPreferences invertSidebarColors]) {
 		dividerColor = [dividerColor invertColor];
