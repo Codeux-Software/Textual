@@ -61,6 +61,12 @@ typedef uint32_t attr_t;
 
 NSComparisonResult IRCNicknameLengthSort(IRCUser *s1, IRCUser *s2, void *context)
 {
+	PointerIsEmptyAssertReturn(s1, NSOrderedSame);
+	PointerIsEmptyAssertReturn(s2, NSOrderedSame);
+
+	NSObjectIsEmptyAssertReturn(s1.nickname, NSOrderedSame);
+	NSObjectIsEmptyAssertReturn(s2.nickname, NSOrderedSame);
+
 	return (s1.nickname.length <= s2.nickname.length);
 }
 
