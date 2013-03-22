@@ -310,13 +310,13 @@
 - (NSColor *)activeWindowListBackgroundColor
 {
 	return [NSColor defineUserInterfaceItem:[NSColor sourceListBackgroundColor]
-							   invertedItem:[NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1]];
+							   invertedItem:[NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1.0]];
 }
 
 - (NSColor *)inactiveWindowListBackgroundColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:237.0 green:237.0 blue:237.0 alpha:1]
-							   invertedItem:[NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1]];
+	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:237.0 green:237.0 blue:237.0 alpha:1.0]
+							   invertedItem:[NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1.0]];
 }
 
 - (NSFont *)messageCountBadgeFont
@@ -376,20 +376,20 @@
 
 - (NSColor *)messageCountBadgeHighlightBackgroundColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:210 green:15 blue:15 alpha:1]
-							   invertedItem:[NSColor internalCalibratedRed:141.0 green:0.0 blue:0.0  alpha:1]];
+	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:210 green:15 blue:15 alpha:1.0]
+							   invertedItem:[NSColor internalCalibratedRed:141.0 green:0.0 blue:0.0  alpha:1.0]];
 }
 
 - (NSColor *)messageCountBadgeAquaBackgroundColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:152 green:168 blue:202 alpha:1]
-							   invertedItem:[NSColor internalCalibratedRed:48.0 green:48.0 blue:48.0 alpha:1]];
+	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:152 green:168 blue:202 alpha:1.0]
+							   invertedItem:[NSColor internalCalibratedRed:48.0 green:48.0 blue:48.0 alpha:1.0]];
 }
 
 - (NSColor *)messageCountBadgeGraphtieBackgroundColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:132 green:147 blue:163 alpha:1]
-							   invertedItem:[NSColor internalCalibratedRed:48.0 green:48.0 blue:48.0 alpha:1]];
+	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:132 green:147 blue:163 alpha:1.0]
+							   invertedItem:[NSColor internalCalibratedRed:48.0 green:48.0 blue:48.0 alpha:1.0]];
 }
 
 - (NSColor *)messageCountBadgeSelectedBackgroundColor
@@ -401,7 +401,7 @@
 - (NSColor *)messageCountBadgeShadowColor
 {
 	return [NSColor defineUserInterfaceItem:[NSColor colorWithCalibratedWhite:1.00 alpha:0.60]
-							   invertedItem:[NSColor internalCalibratedRed:60.0 green:60.0 blue:60.0 alpha:1]];
+							   invertedItem:[NSColor internalCalibratedRed:60.0 green:60.0 blue:60.0 alpha:1.0]];
 }
 
 - (NSColor *)messageCountBadgeNormalTextColor
@@ -411,32 +411,32 @@
 
 - (NSColor *)messageCountBadgeSelectedTextColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:158 green:169 blue:197 alpha:1]
+	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:158 green:169 blue:197 alpha:1.0]
 							   invertedItem:[NSColor whiteColor]];
 }
 
 - (NSColor *)serverCellNormalTextColor
 {
 	return [NSColor defineUserInterfaceItem:[NSColor outlineViewHeaderTextColor]
-							   invertedItem:[NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:1]];
+							   invertedItem:[NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:1.0]];
 }
 
 - (NSColor *)serverCellDisabledTextColor
 {
 	return [NSColor defineUserInterfaceItem:[NSColor outlineViewHeaderDisabledTextColor]
-							   invertedItem:[NSColor internalCalibratedRed:169.0 green:169.0 blue:169.0 alpha:1]];
+							   invertedItem:[NSColor internalCalibratedRed:169.0 green:169.0 blue:169.0 alpha:1.0]];
 }
 
 - (NSColor *)serverCellSelectedTextColorForActiveWindow
 {
 	return [NSColor defineUserInterfaceItem:[NSColor whiteColor]
-							   invertedItem:[NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1]];
+							   invertedItem:[NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1.0]];
 }
 
 - (NSColor *)serverCellSelectedTextColorForInactiveWindow
 {
 	return [NSColor defineUserInterfaceItem:[NSColor whiteColor]
-							   invertedItem:[NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1]];
+							   invertedItem:[NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1.0]];
 }
 
 - (NSColor *)serverCellNormalTextShadowColorForActiveWindow
@@ -466,19 +466,19 @@
 - (NSColor *)channelCellNormalTextColor
 {
 	return [NSColor defineUserInterfaceItem:[NSColor blackColor]
-							   invertedItem:[NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:1]];
+							   invertedItem:[NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:1.0]];
 }
 
 - (NSColor *)channelCellSelectedTextColorForActiveWindow
 {
 	return [NSColor defineUserInterfaceItem:[NSColor whiteColor]
-							   invertedItem:[NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1]];
+							   invertedItem:[NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1.0]];
 }
 
 - (NSColor *)channelCellSelectedTextColorForInactiveWindow
 {
 	return [NSColor defineUserInterfaceItem:[NSColor whiteColor]
-							   invertedItem:[NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1]];
+							   invertedItem:[NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1.0]];
 }
 
 - (NSColor *)channelCellNormalTextShadowColor

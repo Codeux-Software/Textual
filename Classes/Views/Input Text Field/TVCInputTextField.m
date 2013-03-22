@@ -298,7 +298,7 @@
 - (NSColor *)inputFieldBackgroundColor
 {
 	return [NSColor defineUserInterfaceItem:[NSColor whiteColor]
-							   invertedItem:[NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1]
+							   invertedItem:[NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1.0]
 							   withOperator:[TPCPreferences invertInputTextFieldColors]];
 }
 
