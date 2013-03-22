@@ -364,7 +364,7 @@
 	}
 	
 	[newStrValue addAttribute:NSShadowAttributeName value:itemShadow range:textRange];
-	
+
 	/* Do the actual draw. */
 	[newStrValue drawInRect:cellFrame];
 }
