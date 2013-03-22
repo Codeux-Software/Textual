@@ -50,6 +50,7 @@
 
 @property (nonatomic, strong) IRCConnection *socket;
 @property (nonatomic, assign) BOOL inFirstISONRun;
+@property (nonatomic, assign) BOOL inUserInvokedNamesRequest;
 @property (nonatomic, assign) BOOL inUserInvokedWhoRequest;
 @property (nonatomic, assign) BOOL inUserInvokedWhowasRequest;
 @property (nonatomic, assign) BOOL sendLagcheckReplyToChannel;
@@ -1357,6 +1358,16 @@
 			self.inUserInvokedWhoRequest = YES;
 
 			[self send:IRCPrivateCommandIndex("who"), uncutInput, nil];
+
+			break;
+		}
+		case 5094: // Command: NAMES
+		{
+			NSObjectIsEmptyAssert(uncutInput);
+
+			self.inUserInvokedNamesRequest = YES;
+
+			[self send:IRCPrivateCommandIndex("names"), uncutInput, nil];
 
 			break;
 		}
@@ -4557,6 +4568,10 @@
 
 			NSString *channel = [m paramAt:2];
 			NSString *nameblob = [m paramAt:3];
+			
+			if (self.inUserInvokedNamesRequest) {
+				[self printUnknownReply:m];
+			}
 
 			IRCChannel *c = [self findChannel:channel];
 
@@ -4638,6 +4653,10 @@
 
 			if ([TPCPreferences processChannelModes]) {
 				[self requestUserHosts:c];
+			}
+
+			if (self.inUserInvokedNamesRequest) {
+				self.inUserInvokedNamesRequest = NO;
 			}
             
             [self.worldController updateTitleFor:c];
