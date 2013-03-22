@@ -4321,6 +4321,10 @@
 				[self print:c type:TVCLogLineModeType nick:nil text:TXTFLS(@"IRCChannelHasModes", modestr) receivedAt:m.receivedAt];
 			}
 
+			if (c && c.isGatheringModeInfo) {
+				c.isGatheringModeInfo = NO;
+			}
+			
 			break;
 		}
 		case 332: // RPL_TOPIC
@@ -4449,10 +4453,6 @@
 			NSString *channel = [m paramAt:1];
 
 			IRCChannel *c = [self findChannel:channel];
-
-			if (c && c.isGatheringModeInfo) {
-				c.isGatheringModeInfo = NO;
-			}
 			
 			if (self.inUserInvokedWhoRequest) {
 				[self printUnknownReply:m];
