@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.0.0b4</string>
+	<string>3.0.0b5</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -34,7 +34,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>3.0.0 beta #4</string>
+	<string>3.0.0 beta #5</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.social-networking</string>
 	<key>LSMinimumSystemVersion</key>
@@ -48,8 +48,8 @@
 	<key>TXBundleBuildCodeName</key>
 	<string>Mud Pie</string>
 	<key>TXBundleBuildNumber</key>
-	<string>16606</string>
+	<string>16607</string>
 	<key>TXBundleBuildReference</key>
-	<string>3.0.0b4-422-gd8b310d-debug</string>
+	<string>3.0.0b4-423-g557ddf2-stdbuild</string>
 </dict>
 </plist>
