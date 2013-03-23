@@ -131,7 +131,18 @@ Textual = {
 
 	includeStyleResourceFile: function(file)
 	{
-		document.write('<link href="' + file + '" media="screen" rel="stylesheet" type="text/css" />'); 
+		if (/loaded|complete/.test(document.readyState)) {
+			var css = document.createElement("link");
+			
+			css.href = file;
+			css.media = "screen";
+			css.rel = "stylesheet";
+			css.type = "text/css";
+			
+			document.getElementsByTagName("HEAD")[0].appendChild(css);
+		} else {
+			document.write('<link href="' + file + '" media="screen" rel="stylesheet" type="text/css" />'); 
+		}
 	},
 	
 	includeScriptResourceFile: function(file)
