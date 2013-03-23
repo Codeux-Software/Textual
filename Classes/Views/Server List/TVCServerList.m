@@ -370,6 +370,13 @@
 	return 38.0;
 }
 
+- (NSInteger)serverCellTextFieldLeftMargin
+{
+	/* Keep this in sync with the interface builder file. */
+
+	return 16.0;
+}
+
 - (NSInteger)messageCountBadgeHeight
 {
 	return 14.0;
