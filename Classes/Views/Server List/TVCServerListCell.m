@@ -374,9 +374,14 @@
 	 field being all funky wrong. This resets the frame to the correct origin. */
 
 	NSRect textFieldFrame = self.customTextField.frame;
+	NSRect serverListFrame = self.serverList.frame;
 
 	textFieldFrame.origin.y = 2;
 	textFieldFrame.origin.x = self.serverList.serverCellTextFieldLeftMargin;
+	
+	textFieldFrame.size.width  = serverListFrame.size.width;
+	textFieldFrame.size.width -= self.serverList.serverCellTextFieldLeftMargin;
+	textFieldFrame.size.width -= self.serverList.serverCellTextFieldRightMargin;
 
 	[self.customTextField setFrame:textFieldFrame];
 }
