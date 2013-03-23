@@ -58,7 +58,7 @@
 "ChannelApplicationTitleModeValue" = " (%@)";
 "ChannelApplicationTitleUserCount" = " (%ld Users)";
 
-"ChannelDeletePromptMessage" = "There is no undo and all data related to this channel will be erased.";
+"ChannelDeletePromptMessage" = "There is no undo and all data related to this, except for logs, channel will be erased.";
 "ChannelDeletePromptTitle" = "Do you want to delete the selection?";
 
 "ChannelListNetworkName" = "Channel List for \"%@\"";
@@ -236,7 +236,7 @@
 
 "SelfBanDetectedMessage" = "Textual has prevented you from banning yourself on %@.";
 
-"ServerDeletePromptMessage" = "There is no undo and all data related to this server will be erased.";
+"ServerDeletePromptMessage" = "There is no undo and all data related to this server, except for logs, will be erased.";
 "ServerDeletePromptTitle" = "Do you want to delete the selection?";
 
 "ServerNotConnectedLineSendError" = "Failed to send data to server. Not connected.";
