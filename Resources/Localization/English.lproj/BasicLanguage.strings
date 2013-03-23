@@ -58,7 +58,7 @@
 "ChannelApplicationTitleModeValue" = " (%@)";
 "ChannelApplicationTitleUserCount" = " (%ld Users)";
 
-"ChannelDeletePromptMessage" = "There is no undo and all data related to this, except for logs, channel will be erased.";
+"ChannelDeletePromptMessage" = "There is no undo and all data related to this channel, except for logs, will be erased.";
 "ChannelDeletePromptTitle" = "Do you want to delete the selection?";
 
 "ChannelListNetworkName" = "Channel List for \"%@\"";
