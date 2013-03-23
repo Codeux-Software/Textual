@@ -38,7 +38,7 @@
 #import "TextualApplication.h"
 
 #define _linesMin			100
-#define _linesMax			10000
+#define _linesMax			15000
 #define _inlineImageMax		5000
 #define _inlineImageMin		40
 
