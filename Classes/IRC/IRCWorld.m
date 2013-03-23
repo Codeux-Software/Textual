@@ -668,6 +668,20 @@
 }
 
 #pragma mark -
+#pragma mark JavaScript
+
+- (void)executeScriptCommandOnAllViews:(NSString *)command arguments:(NSArray *)args
+{
+	for (IRCClient *u in self.clients) {
+		[u.viewController executeScriptCommand:command withArguments:args];
+
+		for (IRCChannel *c in u.channels) {
+			[c.viewController executeScriptCommand:command withArguments:args];
+		}
+	}
+}
+
+#pragma mark -
 #pragma mark Factory
 
 - (void)clearContentsOfChannel:(IRCChannel *)c inClient:(IRCClient *)u
