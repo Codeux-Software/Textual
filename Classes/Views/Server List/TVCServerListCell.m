@@ -369,6 +369,16 @@
 
 		[self.customTextField setAttributedStringValue:newStrValue];
 	}
+
+	/* There is a freak bug when animations will result in our frame for our text
+	 field being all funky wrong. This resets the frame to the correct origin. */
+
+	NSRect textFieldFrame = self.customTextField.frame;
+
+	textFieldFrame.origin.y = 2;
+	textFieldFrame.origin.x = self.serverList.serverCellTextFieldLeftMargin;
+
+	[self.customTextField setFrame:textFieldFrame];
 }
 
 
