@@ -173,6 +173,11 @@
     return self.owner.channel.isActive;
 }
 
+- (BOOL)sidebarInversionIsEnabled
+{
+	return [TPCPreferences invertSidebarColors];
+}
+
 - (void)print:(NSString *)s
 {
 }

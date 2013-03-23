@@ -50,9 +50,12 @@ Textual = {
 	viewInitiated: function(viewType, serverHash, channelHash, channelName) {},
 
 	newMessagePostedToView: 				function(lineNumber) {},
+	
 	historyIndicatorAddedToView:	 		function() {},
 	historyIndicatorRemovedFromView: 		function() {},
+	
 	topicBarValueChanged: 					function(newTopic) {},
+	
 	viewContentsBeingCleared: 				function() {},
 	viewFinishedLoading: 					function() {},
 	viewFinishedReload: 					function() {},
@@ -61,6 +64,8 @@ Textual = {
 	viewPositionMovedToHistoryIndicator: 	function() {},
 	viewPositionMovedToLine: 				function(lineNumber) {},
 	viewPositionMovedToTop: 				function() {},
+	
+	sidebarInversionPreferenceChanged:		function() {},
     
     /* 
         handleEvent allows a theme to recieve status information about several
@@ -94,6 +99,7 @@ Textual = {
    // app.serverChannelCount()         — Number of channels part of the server associated with this view.
    //                                    This number does not count against the status of the channels being
    //                                    against. They can be joined or all parted. It is only a raw count.
+   // app.sidebarInversionIsEnabled()  - Boolean if sidebar colors are inverted.
 
 	/* *********************************************************************** */
 	

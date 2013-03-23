@@ -113,6 +113,8 @@
 - (void)destroyChannel:(IRCChannel *)c;
 - (void)destroyChannel:(IRCChannel *)c part:(BOOL)forcePart;
 
+- (void)executeScriptCommandOnAllViews:(NSString *)command arguments:(NSArray *)args;
+
 - (void)logKeyDown:(NSEvent *)e;
 - (void)logDoubleClick:(NSString *)s;
 

@@ -808,6 +808,8 @@
 
 	[self.masterController.inputTextField updateTextColor];
 	[self.masterController.inputTextField setNeedsDisplay:YES];
+	
+	[self.worldController executeScriptCommandOnAllViews:@"sidebarInversionPreferenceChanged" arguments:@[]];
 }
 
 + (void)openPathToThemesCallback:(TLOPopupPromptReturnType)returnCode
