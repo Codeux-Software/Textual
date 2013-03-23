@@ -915,7 +915,6 @@
 			}
 		}
 
-
 		attributes[@"inlineMediaAvailable"] = @(NSObjectIsNotEmpty(inlineImageLinks));
 		attributes[@"inlineMediaArray"]		= [NSMutableArray array];
 

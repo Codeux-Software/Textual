@@ -53,6 +53,7 @@
 @property (nonatomic, assign) BOOL inUserInvokedNamesRequest;
 @property (nonatomic, assign) BOOL inUserInvokedWhoRequest;
 @property (nonatomic, assign) BOOL inUserInvokedWhowasRequest;
+@property (nonatomic, assign) BOOL inUserInvokedJoinRequest;
 @property (nonatomic, assign) BOOL sendLagcheckReplyToChannel;
 @property (nonatomic, assign) NSInteger lastMessageReceived;
 @property (nonatomic, assign) NSInteger tryingNickNumber;
@@ -1081,6 +1082,8 @@
 					targetChannelName = [@"#" stringByAppendingString:targetChannelName];
 				}
 			}
+
+			self.inUserInvokedJoinRequest = YES;
 
 			[self send:IRCPrivateCommandIndex("join"), targetChannelName, s.string, nil];
 
@@ -3431,6 +3434,8 @@
 		if (c.status == IRCChannelJoined) {
 			return;
 		}
+
+		BOOL isJoining = (c.status == IRCChannelJoining); // active overrides this. Put it before it.
 		
 		[c activate];
 
@@ -3439,8 +3444,17 @@
 		self.myHost = m.sender.hostmask;
 
 		if (self.autojoinInProgress == NO) {
-			[self.worldController expandClient:c.client];
-			[self.worldController select:c];
+			if (self.inUserInvokedJoinRequest || isJoining) {
+				[self.worldController expandClient:c.client];
+				[self.worldController select:c];
+			}
+
+			if (self.inUserInvokedJoinRequest) {
+				/* Null out BOOL after first join so a switch does not occur after
+				 every single join if the user did a target with more than one channel. */
+
+				self.inUserInvokedJoinRequest = NO;
+			}
 		}
 
 		if (NSObjectIsNotEmpty(c.config.encryptionKey)) {
