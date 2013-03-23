@@ -377,6 +377,11 @@
 	return 16.0;
 }
 
+- (NSInteger)serverCellTextFieldRightMargin
+{
+	return 5.0;
+}
+
 - (NSInteger)messageCountBadgeHeight
 {
 	return 14.0;
