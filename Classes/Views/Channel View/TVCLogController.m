@@ -37,8 +37,11 @@
 
 #import "TextualApplication.h"
 
+#define _internalPlaybackLineCountLimit			100
+
 @interface TVCLogController ()
 @property (nonatomic, readonly, uweak) TPCThemeSettings *themeSettings;
+@property (nonatomic, assign) BOOL historyLoaded;
 @end
 
 @implementation TVCLogController
@@ -110,10 +113,6 @@
 	[self.view.preferences setCacheModel:WebCacheModelDocumentViewer];
 	[self.view.preferences setUsesPageCache:NO];
 
-	if ([TPCPreferences reloadScrollbackOnLaunch]) {
-		[self reloadHistory];
-	}
-
 	[self loadAlternateHTML:[self initialDocument:nil]];
 }
 
@@ -143,7 +142,7 @@
 	self.historicLogFile.flatFileStructure = YES;
 	self.historicLogFile.writePlainText = NO;
 	self.historicLogFile.fileWritePath = [TPCPreferences applicationTemporaryFolderPath];
-	self.historicLogFile.maxEntryCount = [TPCPreferences maxLogLines];
+	self.historicLogFile.maxEntryCount = _internalPlaybackLineCountLimit;
 
 	if (PointerIsEmpty(self.channel)) {
 		self.historicLogFile.filenameOverride = self.client.config.itemUUID;
@@ -195,8 +194,6 @@
 		if (self.maximumLineCount > 0 && self.activeLineCount > self.maximumLineCount) {
 			[self setNeedsLimitNumberOfLines];
 		}
-
-		self.historicLogFile.maxEntryCount = value;
 	}
 }
 
@@ -537,7 +534,7 @@
 - (void)reloadHistory
 {
 	self.reloadingHistory = YES;
-	
+
 	[self.operationQueue enqueueMessageBlock:^(NSDictionary *context) {
 		NSInteger reloadCount =	[self reloadOldLines:YES];
 		
@@ -546,6 +543,7 @@
 		}
 
 		self.reloadingHistory = NO;
+		self.historyLoaded = YES;
 	} for:self];
 }
 
@@ -1294,6 +1292,12 @@
 		NSStringNilValueSubstitute(self.channel.config.itemUUID),
 		NSStringNilValueSubstitute(self.channel.name)
 	 ]];
+
+	if (self.historyLoaded == NO) {
+		if ([TPCPreferences reloadScrollbackOnLaunch]) {
+			[self reloadHistory];
+		}
+	}
 
 	if (self.reloadingBacklog == NO) {
 		[self internalExecuteScriptCommand:@"viewFinishedLoading" withArguments:@[]];
