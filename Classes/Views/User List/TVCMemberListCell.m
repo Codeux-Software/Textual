@@ -109,7 +109,14 @@
     NSColor *backgroundColor = [NSColor whiteColor];
 	
     if (selected == NO) {
-        if (puser.isCop) {
+		/* See IRCUser.m for an explantion of what favorIRCop does. */
+		BOOL favorIRCop = [puser.supportInfo modeIsSupportedUserPrefix:@"y"];
+
+		if (favorIRCop == NO) {
+			favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
+		}
+		
+        if (puser.isCop && favorIRCop) {
             backgroundColor = [self.memberList userMarkBadgeBackgroundColor_Y];
 		} else if (puser.q) {
             backgroundColor = [self.memberList userMarkBadgeBackgroundColor_Q];

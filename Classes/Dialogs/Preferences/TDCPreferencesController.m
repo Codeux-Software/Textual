@@ -893,6 +893,15 @@
 	[TPCPreferences defaultIRCClientPrompt:YES];
 }
 
+- (void)onChangedUserListModeSortOrder:(id)sender
+{
+	IRCChannel *channel = self.worldController.selectedChannel;
+
+	if (channel) {
+		[channel sortedMemberListReload];
+	}
+}
+
 #pragma mark -
 #pragma mark NSWindow Delegate
 

@@ -151,6 +151,8 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (BOOL)nickAllConnections;
 + (BOOL)clearAllOnlyOnActiveServer;
 
++ (BOOL)memberListSortFavorsServerStaff;
+
 + (TXNoticeSendLocationType)locationToSendNotices;
 
 + (BOOL)trackConversations;

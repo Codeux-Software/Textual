@@ -98,6 +98,7 @@
 - (void)onChangedTranscriptFolder:(id)sender;
 - (void)onChangedTransparency:(id)sender;
 - (void)onChangedUserListModeColor:(id)sender;
+- (void)onChangedUserListModeSortOrder:(id)sender;
 
 - (void)onResetUserListModeColorsToDefaults:(id)sender;
 

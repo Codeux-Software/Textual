@@ -101,6 +101,7 @@ typedef enum IRCChannelStatus : NSInteger {
 - (NSInteger)numberOfMembers;
 
 - (void)reloadMemberList;
+- (void)sortedMemberListReload;
 
 - (void)detectOutgoingConversation:(NSString *)text;
 @end

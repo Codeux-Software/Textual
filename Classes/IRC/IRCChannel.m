@@ -261,6 +261,15 @@
 #pragma mark -
 #pragma mark Member List
 
+- (void)sortedMemberListReload
+{
+	[self.memberList sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+		return [obj1 compare:obj2];
+	}];
+
+	[self reloadMemberList];
+}
+
 - (void)sortedInsert:(IRCUser *)item
 {
 	PointerIsEmptyAssert(item);
