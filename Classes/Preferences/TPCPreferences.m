@@ -1328,6 +1328,24 @@ static NSMutableArray *excludeKeywords = nil;
 
 	// ====================================================== //
 
+	/* The following defaults are defined in here even though they 
+	 are part of the System Profiler extension for one reason: crashes.
+	 
+	 For some reason, which I have yet to understand, calling NSUserDefault
+	 registerDefaults: within a plugin works great the first time, but it
+	 will crash if the plugin is unloaded and reloaded. The crash only 
+	 occurs when a nib is involved. I am assuming there is an issue with
+	 the objects part the shared user defaults controller being accessed
+	 from within the nib resulting in a crash. Just haven't figured out 
+	 the exact details yet. Until then… these go here. */
+
+	d[@"System Profiler Extension -> Feature Disabled -> GPU Model"] = YES;
+	d[@"System Profiler Extension -> Feature Disabled -> Disk Information"] = YES;
+	d[@"System Profiler Extension -> Feature Disabled -> Screen Resolution"] = YES;
+	d[@"System Profiler Extension -> Feature Disabled -> OS Version"] = YES;
+
+	// ====================================================== //
+
 	[TPCPreferencesMigrationAssistant convertExistingGlobalPreferences];
 
 	[RZUserDefaults() registerDefaults:d];
