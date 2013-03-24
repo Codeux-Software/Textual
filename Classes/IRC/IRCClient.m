@@ -200,7 +200,8 @@
 
 	[self.config.channelList removeAllObjects];
 
-	[self.worldController reloadTreeGroup:self];
+	[self.masterController.serverList reloadItem:self reloadChildren:YES];
+
 	[self.worldController adjustSelection];
 }
 
