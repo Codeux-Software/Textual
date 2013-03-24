@@ -1342,7 +1342,6 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"System Profiler Extension -> Feature Disabled -> GPU Model"] = @(YES);
 	d[@"System Profiler Extension -> Feature Disabled -> Disk Information"] = @(YES);
 	d[@"System Profiler Extension -> Feature Disabled -> Screen Resolution"] = @(YES);
-	d[@"System Profiler Extension -> Feature Disabled -> OS Version"] = @(YES);
 
 	// ====================================================== //
 

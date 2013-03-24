@@ -237,8 +237,6 @@
 	NSUInteger _cpu_count_p		= [TPI_SP_SysInfo processorPhysicalCoreCount];
 	NSUInteger _cpu_count_v		= [TPI_SP_SysInfo processorVirtualCoreCount];
 
-	NSString *_cpu_l2		= [TPI_SP_SysInfo processorL2CacheSize];
-	NSString *_cpu_l3		= [TPI_SP_SysInfo processorL3CacheSize];
 	NSString *_memory		= [TPI_SP_SysInfo formattedTotalMemorySize];
 	NSString *_gpu_model	= [TPI_SP_SysInfo formattedGraphicsCardInformation];
 	NSString *_loadavg		= [TPI_SP_SysInfo loadAverageWithCores:_cpu_count_v];
@@ -282,19 +280,6 @@
 		/* CPU Information. */
 		if (_cpu_count_p >= 1 && NSObjectIsNotEmpty(_cpu_speed)) {
 			_new = TPIFLS(@"SystemInformationCompiledOutputCPUCore", _cpu_model, _cpu_count_v, _cpu_count_p, _cpu_speed);
-
-			sysinfo = [sysinfo stringByAppendingString:_new];
-		}
-
-		/* L2 & L3 Cache. */
-		if (_cpu_l2) {
-			_new = TPIFLS(@"SystemInformationCompiledOutputL2,3Cache", 2, _cpu_l2);
-
-			sysinfo = [sysinfo stringByAppendingString:_new];
-		}
-
-		if (_cpu_l3) {
-			_new = TPIFLS(@"SystemInformationCompiledOutputL2,3Cache", 3, _cpu_l3);
 
 			sysinfo = [sysinfo stringByAppendingString:_new];
 		}
@@ -679,32 +664,6 @@
 	}
 
 	return 0;
-}
-
-+ (NSString *)processorL2CacheSize
-{
-	u_int64_t size = 0L;
-	
-	size_t len = sizeof(size);
-	
-	if (sysctlbyname("hw.l2cachesize", &size, &len, NULL, 0) >= 0) {
-		return [self formattedDiskSize:(TXFSLongInt)size];
-	} 
-
-	return nil;
-}
-
-+ (NSString *)processorL3CacheSize
-{
-	u_int64_t size = 0L;
-	
-	size_t len = sizeof(size);
-	
-	if (sysctlbyname("hw.l3cachesize", &size, &len, NULL, 0) >= 0) {
-		return [self formattedDiskSize:(TXFSLongInt)size];
-	}
-
-	return nil;
 }
 
 + (NSString *)processorClockSpeed
