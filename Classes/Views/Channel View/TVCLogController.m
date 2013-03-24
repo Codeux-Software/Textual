@@ -1223,9 +1223,6 @@
 
 	[scrollView setHasHorizontalScroller:NO];
 	[scrollView setHasVerticalScroller:YES];
-
-	[scrollView setHorizontalScrollElasticity:NSScrollElasticityNone];
-	[scrollView setVerticalScrollElasticity:NSScrollElasticityNone];
 }
 
 #pragma mark -
