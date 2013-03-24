@@ -52,7 +52,11 @@
 
     [self getComponents:(CGFloat *)&components];
 
-    return CGColorCreate(colorSpace, components);
+	CGColorRef colorRef = CGColorCreate(colorSpace, components);
+
+	CGColorRelease(colorRef);
+
+    return colorRef;
 }
 
 + (NSColor *)internalCalibratedRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
