@@ -798,8 +798,10 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			result = [TVCLogRenderer renderAttributedRange:result attributes:t start:start length:n baseFont:attributedStringFont];
 		} else {
 			NSString *renderedRange = [TVCLogRenderer renderRange:body attributes:t start:start length:n for:log];
-			
-			[result appendString:renderedRange];
+
+			if (NSObjectIsNotEmpty(renderedRange)) {
+				[result appendString:renderedRange];
+			}
 		}
 		
 		start += n;
