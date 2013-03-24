@@ -1339,10 +1339,10 @@ static NSMutableArray *excludeKeywords = nil;
 	 from within the nib resulting in a crash. Just haven't figured out 
 	 the exact details yet. Until then… these go here. */
 
-	d[@"System Profiler Extension -> Feature Disabled -> GPU Model"] = YES;
-	d[@"System Profiler Extension -> Feature Disabled -> Disk Information"] = YES;
-	d[@"System Profiler Extension -> Feature Disabled -> Screen Resolution"] = YES;
-	d[@"System Profiler Extension -> Feature Disabled -> OS Version"] = YES;
+	d[@"System Profiler Extension -> Feature Disabled -> GPU Model"] = @(YES);
+	d[@"System Profiler Extension -> Feature Disabled -> Disk Information"] = @(YES);
+	d[@"System Profiler Extension -> Feature Disabled -> Screen Resolution"] = @(YES);
+	d[@"System Profiler Extension -> Feature Disabled -> OS Version"] = @(YES);
 
 	// ====================================================== //
 
