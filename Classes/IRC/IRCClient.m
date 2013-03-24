@@ -5655,7 +5655,7 @@
 	[self send:IRCPrivateCommandIndex("kick"), channel.name, nick, [TPCPreferences defaultKickMessage], nil];
 }
 
-- (void)quickJoin:(NSArray *)chans
+- (void)quickJoin:(NSArray *)chans withKeys:(BOOL)passKeys
 {
 	NSMutableString *channelList = [NSMutableString string];
 	NSMutableString *passwordList = [NSMutableString string];
@@ -5668,19 +5668,27 @@
 
 		c.status = IRCChannelJoining;
 
-		if (NSObjectIsNotEmpty(channelList)) {
-			[channelList appendString:@","];
-		}
-
-		[channelList appendString:c.name];
-
 		if (NSObjectIsNotEmpty(c.secretKey)) {
+			if (passKeys == NO) {
+				continue;
+			}
+			
 			if (NSObjectIsNotEmpty(passwordList)) {
 				[passwordList appendString:@","];
 			}
 
 			[passwordList appendString:c.secretKey];
+		} else {
+			if (passKeys) {
+				continue;
+			}
 		}
+
+		if (NSObjectIsNotEmpty(channelList)) {
+			[channelList appendString:@","];
+		}
+
+		[channelList appendString:c.name];
 
 		if (channelCount > [TPCPreferences autojoinMaxChannelJoins]) {
 			if (NSObjectIsEmpty(previousPasswordList)) {
@@ -5705,6 +5713,12 @@
 			[self send:IRCPrivateCommandIndex("join"), channelList, passwordList, nil];
 		}
 	}
+}
+
+- (void)quickJoin:(NSArray *)chans
+{
+	[self quickJoin:chans withKeys:NO];
+	[self quickJoin:chans withKeys:YES];
 }
 
 - (void)toggleAwayStatus:(BOOL)setAway
