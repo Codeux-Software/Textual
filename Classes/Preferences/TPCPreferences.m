@@ -697,6 +697,11 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() boolForKey:@"FocusSelectionOnMessageCommandExecution"];
 }
 
++ (BOOL)memberListSortFavorsServerStaff
+{
+	return [RZUserDefaults() boolForKey:@"MemberListSortFavorsServerStaff"];
+}
+
 + (BOOL)nickAllConnections
 {
 	return [RZUserDefaults() boolForKey:@"ApplyCommandToAllConnections -> nick"];

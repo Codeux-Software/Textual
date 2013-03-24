@@ -200,9 +200,21 @@
 {
 	/* Not even going to touch this mess… */
 
-	if (NSDissimilarObjects(self.isCop, other.isCop)) {
+	/* Mode y is used by InspIRCd-2.0 to denote an IRCop. If we actually have that available to us,
+	 then we will favor the IRCop at the top of list regardless of what the user is said. This is 
+	 done because the IRCop has his own prefix so it would look strange for it to be sorted any
+	 other place then in its own section with the others. Also, since the list is ranked based on
+	 power, the IRCop will always go at top. */
+
+	BOOL favorIRCop = [self.supportInfo modeIsSupportedUserPrefix:@"y"];
+
+	if (favorIRCop == NO) {
+		favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
+	}
+
+	if (NSDissimilarObjects(self.isCop, other.isCop) && favorIRCop) {
 		return ((self.isCop) ? NSOrderedAscending : NSOrderedDescending);
-	} else if (self.isCop) {
+	} else if (self.isCop && favorIRCop) {
 		return [self.nickname caseInsensitiveCompare:other.nickname];
 	} else if (NSDissimilarObjects(self.q, other.q)) {
 		return ((self.q) ? NSOrderedAscending : NSOrderedDescending);
