@@ -430,13 +430,15 @@
 	/* The private message icon is designed a little different than the
 	 channel status icon. Therefore, we have to change its origin to make
 	 up for the difference in design. */
-	if ([iconName hasPrefix:@"colloquy"] == NO) {
-		NSRect oldRect = [self.imageView frame];
+	NSRect oldRect = [self.imageView frame];
 
+	if ([iconName hasPrefix:@"colloquy"]) {
+		oldRect.origin.y = 0;
+	} else {
 		oldRect.origin.y = 1;
-
-		[self.imageView setFrame:oldRect];
 	}
+	
+	[self.imageView setFrame:oldRect];
 }
 
 - (void)updateDrawingForChildItem:(NSRect)cellFrame
