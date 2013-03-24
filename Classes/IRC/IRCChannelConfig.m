@@ -85,12 +85,12 @@
 												withItemKind:@"application password"
 												 forUsername:nil
 												 serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
-	}
 
-	if (kcPassword) {
-		if ([kcPassword isEqualToString:_encryptionKey] == NO) {
-			_encryptionKey = nil;
-			_encryptionKey = kcPassword;
+		if (kcPassword) {
+			if ([kcPassword isEqualToString:_encryptionKey] == NO) {
+				_encryptionKey = nil;
+				_encryptionKey = kcPassword;
+			}
 		}
 	}
 
@@ -107,12 +107,11 @@
 												 forUsername:nil
 												 serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
 
-	}
-
-	if (kcPassword) {
-		if ([kcPassword isEqualToString:_secretKey] == NO) {
-			_secretKey = nil;
-			_secretKey = kcPassword;
+		if (kcPassword) {
+			if ([kcPassword isEqualToString:_secretKey] == NO) {
+				_secretKey = nil;
+				_secretKey = kcPassword;
+			}
 		}
 	}
 
