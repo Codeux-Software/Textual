@@ -40,7 +40,6 @@
 "SystemInformationCompiledOutputPrefix" = "System Information:";
 "SystemInformationCompiledOutputModel" = " \002Model:\002 %@ \002•\002";
 "SystemInformationCompiledOutputCPUCore" = " \002CPU:\002 %1$@ (%2$lu Threads, %3$lu Cores) @ %4$@ \002•\002";
-"SystemInformationCompiledOutputL2,3Cache" = " \002L%1$ld:\002 %2$@ \002•\002";
 "SystemInformationCompiledOutputMemory" = " \002Memory:\002 %@ \002•\002";
 "SystemInformationCompiledOutputUptime" = " \002Uptime:\002 %@ \002•\002";
 "SystemInformationCompiledOutputDiskspace" = " \002Disk Space:\002 %@ \002•\002";

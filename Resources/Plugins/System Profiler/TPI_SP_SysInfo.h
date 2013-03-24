@@ -58,8 +58,6 @@
 + (NSString *)processor;
 + (NSUInteger)processorPhysicalCoreCount;
 + (NSUInteger)processorVirtualCoreCount;
-+ (NSString *)processorL2CacheSize;
-+ (NSString *)processorL3CacheSize;
 + (NSString *)processorClockSpeed;
 
 + (NSString *)operatingSystemName;
