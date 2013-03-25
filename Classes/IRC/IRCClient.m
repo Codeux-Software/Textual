@@ -2848,7 +2848,8 @@
         @"if you do not change your nickname",
         @"authentication required",
         @"authenticate yourself",
-        @"identify yourself"
+        @"identify yourself",
+		@"type /msg NickServ IDENTIFY password"
     ];
 }
 
@@ -3175,9 +3176,15 @@
 
                     BOOL continueNickServScan = YES;
 
+					NSString *cleanedText = text;
+
+					if ([TPCPreferences removeAllFormatting] == NO) {
+						cleanedText = [cleanedText stripIRCEffects];
+					}
+
                     /* Scan for messages telling us that we need to identify. */
                     for (NSString *token in [self nickServSupportedNeedIdentificationTokens]) {
-                        if ([text containsIgnoringCase:token]) {
+                        if ([cleanedText containsIgnoringCase:token]) {
                             continueNickServScan = NO;
 
                             NSObjectIsEmptyAssertLoopBreak(self.config.nicknamePassword);
@@ -3195,13 +3202,15 @@
                                     [self send:IRCPrivateCommandIndex("privmsg"), @"NickServ", IDMessage, nil];
                                 }
                             }
+
+							break;
                         }
                     }
 
                     /* Scan for messages telling us that we are now identified. */
                     if (continueNickServScan) {
                         for (NSString *token in [self nickServSupportedSuccessfulIdentificationTokens]) {
-                            if ([text containsIgnoringCase:token]) {
+                            if ([cleanedText containsIgnoringCase:token]) {
                                 self.isIdentifiedWithNickServ = YES;
                                 
                                 if ([TPCPreferences autojoinWaitsForNickServ]) {
