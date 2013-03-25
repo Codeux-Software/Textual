@@ -200,8 +200,13 @@
 
 	[self.config.channelList removeAllObjects];
 
+	/* reloadItem will drop the views and reload them. We need to remember
+	 the selection because of this. */
+	id selectedItem = self.worldController.selectedItem;
+
 	[self.masterController.serverList reloadItem:self reloadChildren:YES];
 
+	[self.worldController select:selectedItem];
 	[self.worldController adjustSelection];
 }
 
