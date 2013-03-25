@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>files</key>
+	<dict>
+		<key>Resources/BasicLanguage.strings</key>
+		<data>
+		cfeytDUf6bbArPucCh0c8PnisvU=
+		</data>
+		<key>Resources/English.lproj/TPISmileyConverter.nib</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			JWguix6Ji/P+Ruu/SmwXYzGYu9o=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>Resources/conversionTable.plist</key>
+		<data>
+		XyIkleKflPLvuwfpkdbP55kz+HA=
+		</data>
+	</dict>
+	<key>rules</key>
+	<dict>
+		<key>^Resources/</key>
+		<true/>
+		<key>^Resources/.*\.lproj/</key>
+		<dict>
+			<key>optional</key>
+			<true/>
+			<key>weight</key>
+			<real>1000</real>
+		</dict>
+		<key>^Resources/.*\.lproj/locversion.plist$</key>
+		<dict>
+			<key>omit</key>
+			<true/>
+			<key>weight</key>
+			<real>1100</real>
+		</dict>
+		<key>^version.plist$</key>
+		<true/>
+	</dict>
+</dict>
+</plist>
