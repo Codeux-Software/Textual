@@ -1,0 +1,270 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4C0271F616FFBD4800717900 /* TPISmileyConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0271F516FFBD4800717900 /* TPISmileyConverter.m */; };
+		4C34F94416E23BF8009F573D /* TPISmileyConverter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C34F94216E23BF8009F573D /* TPISmileyConverter.xib */; };
+		4C393B2E121AE5D5004C66F4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C393B2D121AE5D5004C66F4 /* Cocoa.framework */; };
+		4C67617C16FFB63D00C82300 /* conversionTable.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C67617B16FFB63D00C82300 /* conversionTable.plist */; };
+		4CE6B68916E25B42003AD1A3 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6B68816E25B42003AD1A3 /* BasicLanguage.strings */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
+		4C0271F416FFBD4800717900 /* TPISmileyConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPISmileyConverter.h; sourceTree = "<group>"; };
+		4C0271F516FFBD4800717900 /* TPISmileyConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPISmileyConverter.m; sourceTree = "<group>"; };
+		4C34F94316E23BF8009F573D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TPISmileyConverter.xib; sourceTree = "<group>"; };
+		4C393B2D121AE5D5004C66F4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		4C588BAE16E34BF1007EFF6D /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Code Signing Identity.xcconfig"; sourceTree = "<group>"; };
+		4C67617B16FFB63D00C82300 /* conversionTable.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = conversionTable.plist; sourceTree = "<group>"; };
+		4C69189916E3276C00BDE3A8 /* Shared Extension Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Shared Extension Configuration.xcconfig"; sourceTree = "<group>"; };
+		4C69189B16E3276C00BDE3A8 /* Shared Release Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Shared Release Configuration.xcconfig"; sourceTree = "<group>"; };
+		4CE6B68816E25B42003AD1A3 /* BasicLanguage.strings */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; fileEncoding = 4; path = BasicLanguage.strings; sourceTree = "<group>"; };
+		8D576316048677EA00EA77CD /* SmileyConverter.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmileyConverter.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D576313048677EA00EA77CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C393B2E121AE5D5004C66F4 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* BragSpam */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AFFE84173DC02AAC07 /* Source */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				089C1671FE841209C02AAC07 /* Frameworks */,
+				19C28FB6FE9D52B211CA2CBB /* Products */,
+			);
+			name = BragSpam;
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */,
+				4C393B2D121AE5D5004C66F4 /* Cocoa.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4C69189716E3276C00BDE3A8 /* Build Configurations */,
+				4CE6B68B16E25B70003AD1A3 /* Language Files */,
+				4C34F94116E23BC9009F573D /* User Interface */,
+				4CD4026316C8CB2A00FEA686 /* Property Lists */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77AFFE84173DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				4C0271F416FFBD4800717900 /* TPISmileyConverter.h */,
+				4C0271F516FFBD4800717900 /* TPISmileyConverter.m */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		19C28FB6FE9D52B211CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D576316048677EA00EA77CD /* SmileyConverter.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4C34F94116E23BC9009F573D /* User Interface */ = {
+			isa = PBXGroup;
+			children = (
+				4C34F94216E23BF8009F573D /* TPISmileyConverter.xib */,
+			);
+			name = "User Interface";
+			sourceTree = "<group>";
+		};
+		4C69189716E3276C00BDE3A8 /* Build Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				4C588BAE16E34BF1007EFF6D /* Code Signing Identity.xcconfig */,
+				4C69189916E3276C00BDE3A8 /* Shared Extension Configuration.xcconfig */,
+				4C69189B16E3276C00BDE3A8 /* Shared Release Configuration.xcconfig */,
+			);
+			name = "Build Configurations";
+			path = "../../Build Configurations";
+			sourceTree = "<group>";
+		};
+		4CD4026316C8CB2A00FEA686 /* Property Lists */ = {
+			isa = PBXGroup;
+			children = (
+				4C67617B16FFB63D00C82300 /* conversionTable.plist */,
+				8D576317048677EA00EA77CD /* Info.plist */,
+			);
+			name = "Property Lists";
+			sourceTree = "<group>";
+		};
+		4CE6B68B16E25B70003AD1A3 /* Language Files */ = {
+			isa = PBXGroup;
+			children = (
+				4CE6B68816E25B42003AD1A3 /* BasicLanguage.strings */,
+			);
+			name = "Language Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D57630D048677EA00EA77CD /* SmileyConverter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "SmileyConverter" */;
+			buildPhases = (
+				8D57630F048677EA00EA77CD /* Resources */,
+				8D576311048677EA00EA77CD /* Sources */,
+				8D576313048677EA00EA77CD /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SmileyConverter;
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = BragSpam;
+			productReference = 8D576316048677EA00EA77CD /* SmileyConverter.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+			};
+			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "Smiley Converter Extension" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 089C166AFE841209C02AAC07 /* BragSpam */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D57630D048677EA00EA77CD /* SmileyConverter */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D57630F048677EA00EA77CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C34F94416E23BF8009F573D /* TPISmileyConverter.xib in Resources */,
+				4CE6B68916E25B42003AD1A3 /* BasicLanguage.strings in Resources */,
+				4C67617C16FFB63D00C82300 /* conversionTable.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D576311048677EA00EA77CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C0271F616FFBD4800717900 /* TPISmileyConverter.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		4C34F94216E23BF8009F573D /* TPISmileyConverter.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C34F94316E23BF8009F573D /* English */,
+			);
+			name = TPISmileyConverter.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB911B08733D790010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+			};
+			name = Debug;
+		};
+		1DEB911C08733D790010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+			};
+			name = Release;
+		};
+		1DEB911F08733D790010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4C69189916E3276C00BDE3A8 /* Shared Extension Configuration.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = Info.plist;
+				PRODUCT_NAME = SmileyConverter;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		1DEB912008733D790010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4C69189916E3276C00BDE3A8 /* Shared Extension Configuration.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = Info.plist;
+				PRODUCT_NAME = SmileyConverter;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "SmileyConverter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB911B08733D790010E9CD /* Debug */,
+				1DEB911C08733D790010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "Smiley Converter Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB911F08733D790010E9CD /* Debug */,
+				1DEB912008733D790010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}
