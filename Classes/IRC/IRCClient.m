@@ -1887,12 +1887,19 @@
 			NSString *name = [TPCPreferences applicationName];
 			NSString *vers = [TPCPreferences textualInfoPlist][@"CFBundleVersion"];
 			NSString *code = [TPCPreferences textualInfoPlist][@"TXBundleBuildCodeName"];
+			NSString *ccnt = [TPCPreferences textualInfoPlist][@"TXBundleCommitCount"];
 
 			if (NSObjectIsEmpty(gref)) {
 				gref = TXTLS(@"Unknown");
 			}
 
-			NSString *text = [NSString stringWithFormat:TXTLS(@"IRCCTCPVersionInfo"), name, vers, gref, code];
+			NSString *text;
+			
+			if ([uncutInput isEqualIgnoringCase:@"-d"]) {
+				text = [NSString stringWithFormat:TXTLS(@"IRCCTCPVersionInfoDetailed_2"), name, vers, gref, code];
+			} else {
+				text = [NSString stringWithFormat:TXTLS(@"IRCCTCPVersionInfoDetailed_1"), name, vers, ccnt];
+			}
 
 			if (PointerIsEmpty(selChannel)) {
 				[self printDebugInformationToConsole:text];
@@ -3320,16 +3327,11 @@
 			if (NSObjectIsNotEmpty(fakever)) {
 				[self sendCTCPReply:sendern command:command text:fakever];
 			} else {
-				NSString *gref = [TPCPreferences gitBuildReference];
 				NSString *name = [TPCPreferences applicationName];
 				NSString *vers = [TPCPreferences textualInfoPlist][@"CFBundleVersion"];
 				NSString *code = [TPCPreferences textualInfoPlist][@"TXBundleBuildCodeName"];
 
-				if (NSObjectIsEmpty(gref)) {
-					gref = TXTLS(@"Unknown");
-				}
-
-				NSString *textoc = [NSString stringWithFormat:TXTLS(@"IRCCTCPVersionInfo"), name, vers, gref, code];
+				NSString *textoc = [NSString stringWithFormat:TXTLS(@"IRCCTCPVersionInfoBasic"), name, vers, code];
 
 				[self sendCTCPReply:sendern command:command text:textoc];
 			}
