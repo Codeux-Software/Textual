@@ -97,10 +97,14 @@
 "ExcessFloodIRCDisconnectAlertMessage" = "A disconnection has occured due to excess flood. Reconnect?";
 "ExcessFloodIRCDisconnectAlertOpenFloodControlButton" = "Configure Flood Control";
 
+"IRCCTCPVersionInfoBasic" = "%1$@ %2$@ (Flavor: %4$@)";
+
+"IRCCTCPVersionInfoDetailed_1" = "%1$@ %2$@ (Build #%3$@)";
+"IRCCTCPVersionInfoDetailed_2" = "%1$@ %2$@ (Git Reference: %3$@) (Flavor: %4$@)";
+
 "IRCAwayCommandDefaultReason" = "Be back later.";
 "IRCCTCPRequestIgnored" = "\002-CTCP-\002 %1$@ from %2$@ was ignored.";
 "IRCCTCPSupportedReplies" = "VERSION CLIENTINFO USERINFO PING TIME";
-"IRCCTCPVersionInfo" = "%1$@ %2$@ (Git Reference: %3$@) (Flavor: %4$@)";
 "IRCCTCPVersionTitle" = "\002Current Version:\002 %@";
 "IRCCapCurrentlyEnabledNone" = "There are no capabilities in use.";
 "IRCCapCurrentlyEnbaled" = "The following capabilities are currently enabled: %@";
