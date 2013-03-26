@@ -203,6 +203,9 @@
 		[upperChoices safeAddObject:@"ChanServ"];
 		[upperChoices safeAddObject:@"MemoServ"];
 		[upperChoices safeAddObject:[TPCPreferences applicationName]];
+
+		/* Complete network name. */
+		[upperChoices safeAddObject:client.isupport.networkNameActual];
 	}
 
 	lowerChoices = [upperChoices mutableCopy];

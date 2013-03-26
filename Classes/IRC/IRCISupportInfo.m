@@ -61,7 +61,9 @@
     _cachedConfiguration = @[];
     
 	self.networkAddress = nil;
+	
 	self.networkName = nil;
+	self.networkNameActual = nil;
 
 	self.nicknameLength = 9; // Default for IRC protocol.
 	self.modesCount = TXMaximumNodesPerModeCommand;
@@ -115,6 +117,7 @@
 			} else if ([vakey isEqualIgnoringCase:@"MODES"]) {
 				self.modesCount = [value integerValue];
 			} else if ([vakey isEqualIgnoringCase:@"NETWORK"]) {
+				self.networkNameActual = value;
 				self.networkName = TXTFLS(@"IRCServerNetworkName", value);
 			}
 		}

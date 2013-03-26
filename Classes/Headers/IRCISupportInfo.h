@@ -51,6 +51,7 @@
 @property (nonatomic, assign) NSInteger modesCount;
 @property (nonatomic, strong) NSString *networkAddress;
 @property (nonatomic, strong) NSString *networkName;
+@property (nonatomic, strong) NSString *networkNameActual;
 @property (nonatomic, strong) NSDictionary *userModePrefixes;
 @property (nonatomic, readonly, strong) NSArray *cachedConfiguration;
 
