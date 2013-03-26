@@ -42,8 +42,9 @@
 
 @interface TVCLogControllerOperationItem : NSOperation
 @property (nonatomic, nweak) TVCLogController *controller;
+@property (nonatomic, strong) void (^executionBlock)(void);
 
-+ (TVCLogControllerOperationItem *)operationForViewController:(TVCLogController *)controller;
++ (TVCLogControllerOperationItem *)operationWithBlock:(void(^)(void))block forController:(TVCLogController *)controller;
 @end
 
 @interface TVCLogControllerOperationQueue ()
@@ -90,11 +91,9 @@
 	PointerIsEmptyAssert(callbackBlock);
 	PointerIsEmptyAssert(sender);
 
-	TVCLogControllerOperationItem *operation = [TVCLogControllerOperationItem operationForViewController:sender];
-
-	operation.completionBlock = ^{
+	TVCLogControllerOperationItem *operation = [TVCLogControllerOperationItem operationWithBlock:^{
 		callbackBlock(context);
-	};
+	} forController:sender];
 
 	[self addOperation:operation];
 }
@@ -247,13 +246,15 @@
 
 @implementation TVCLogControllerOperationItem
 
-+ (TVCLogControllerOperationItem *)operationForViewController:(TVCLogController *)controller
++ (TVCLogControllerOperationItem *)operationWithBlock:(void(^)(void))block forController:(TVCLogController *)controller;
 {
+	PointerIsEmptyAssertReturn(block, nil);
 	PointerIsEmptyAssertReturn(controller, nil);
 
     TVCLogControllerOperationItem *retval = [TVCLogControllerOperationItem new];
 
 	retval.controller = controller;
+	retval.executionBlock = block;
 
     NSOperation *lastOp = [controller.operationQueue dependencyOfLastQueueItem:controller];
 
@@ -265,6 +266,11 @@
     }
 
 	return retval;
+}
+
+- (void)main
+{
+	self.executionBlock();
 }
 
 - (BOOL)isReady
