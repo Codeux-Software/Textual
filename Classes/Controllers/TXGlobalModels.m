@@ -72,7 +72,7 @@ NSString *TXFormattedTimestampWithOverride(NSDate *date, NSString *format, NSStr
 	if (NSObjectIsNotEmpty(override)) {
 		format = override;
 	}
-	
+
 	return [NSString stringWithFormat:@"%@", [date dateWithCalendarFormat:format timeZone:nil]];
 }
 
