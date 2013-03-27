@@ -1111,18 +1111,6 @@
 - (void)outlineView:(NSOutlineView *)outlineView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
 {
 	[self.serverList updateDrawingForRow:row];
-
-	/* outlineViewSelectionDidChange: is the only place outside of the server list itself that
-	 performs drawing of selection changes. However, during launch, it is not always fast enough
-	 to handle selection changes because of the views being populated so it sometimes gets a nil
-	 row when it tries to draw. We check if the added row here is a group item and selected and
-	 then handle the selection drawing here as well. */
-
-	TVCServerListCell *cell = [self.serverList viewAtColumn:0 row:row makeIfNecessary:NO];
-
-	if (cell && [cell.cellItem isEqual:self.selectedItem]) {
-		[self.serverList updateSelectionBackground];
-	}
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldExpandItem:(IRCTreeItem *)item
@@ -1164,8 +1152,6 @@
 
 	[self.selectedItem resetState]; // Reset state of old item.
 	self.selectedItem = nextItem;
-
-	[self.serverList updateSelectionBackground];
 	
 	if (PointerIsEmpty(self.selectedItem)) {
 		[self.channelViewBox setContentView:nil];
@@ -1243,6 +1229,9 @@
 
 	[self updateIcon];
 	[self updateTitle];
+
+	[self.serverList updateDrawingForItem:self.selectedItem skipDrawingCheck:YES];
+	[self.serverList updateDrawingForItem:self.previouslySelectedItem skipDrawingCheck:YES];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)sender writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard

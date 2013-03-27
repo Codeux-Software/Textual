@@ -98,10 +98,8 @@
 - (void)reloadAllDrawings:(BOOL)doNotLimit
 {
 	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
-		[self updateDrawingForRow:i skipDrawingCheck:doNotLimit updateDisclosureTriangle:YES];
+		[self updateDrawingForRow:i skipDrawingCheck:doNotLimit];
 	}
-
-	[self updateSelectionBackground:NO];
 
 	[self setNeedsDisplay:YES];
 }
@@ -118,21 +116,26 @@
 
 - (void)updateDrawingForItem:(IRCTreeItem *)cellItem
 {
+	[self updateDrawingForItem:cellItem skipDrawingCheck:NO];
+}
+
+- (void)updateDrawingForItem:(IRCTreeItem *)cellItem skipDrawingCheck:(BOOL)doNotLimit
+{
 	PointerIsEmptyAssert(cellItem);
 
 	NSInteger rowIndex = [self rowForItem:cellItem];
 
 	NSAssertReturn(rowIndex >= 0);
 
-	[self updateDrawingForRow:rowIndex];
+	[self updateDrawingForRow:rowIndex skipDrawingCheck:doNotLimit];
 }
 
 - (void)updateDrawingForRow:(NSInteger)rowIndex
 {
-	[self updateDrawingForRow:rowIndex skipDrawingCheck:NO updateDisclosureTriangle:NO];
+	[self updateDrawingForRow:rowIndex skipDrawingCheck:NO];
 }
 
-- (void)updateDrawingForRow:(NSInteger)rowIndex skipDrawingCheck:(BOOL)doNotLimit updateDisclosureTriangle:(BOOL)updateTriangle
+- (void)updateDrawingForRow:(NSInteger)rowIndex skipDrawingCheck:(BOOL)doNotLimit
 {
 	NSAssertReturn(rowIndex >= 0);
 
@@ -146,68 +149,8 @@
 		
 		[rowView updateDrawing:cellFrame skipDrawingCheck:doNotLimit];
 
-		if (updateTriangle && isGroupItem) {
+		if (isGroupItem) {
 			[rowView updateGroupDisclosureTriangle];
-		}
-	}
-}
-
-- (void)updateSelectionBackground
-{
-	[self updateSelectionBackground:YES];
-}
-
-- (void)updateSelectionBackground:(BOOL)forceRedraw
-{
-	/* Selection changes are not hard to manage because the server list cannot have more
-	 than one item selected at a time. We just hope the world controller is any good at
-	 keeping track of our selection or we are screwed up here. */
-	
-	IRCTreeItem *newSelection = self.worldController.selectedItem;
-
-	BOOL isClient = [newSelection isKindOfClass:[IRCClient class]];
-
-	NSInteger selectedIndex = -1;
-
-	PointerIsEmptyAssert(newSelection);
-
-	if (newSelection) {
-		selectedIndex = [self rowForItem:newSelection];
-
-		if (selectedIndex >= 0) {
-			TVCServerListCell *rowView = [self viewAtColumn:0 row:selectedIndex makeIfNecessary:NO];
-
-			[rowView updateSelectionBackgroundView];
-
-			if (forceRedraw) {
-				[self updateDrawingForRow:selectedIndex skipDrawingCheck:YES updateDisclosureTriangle:NO];
-			}
-
-			if (isClient) {
-				[rowView updateGroupDisclosureTriangle];
-			}
-		}
-	}
-
-	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
-		TVCServerListCell *rowView = [self viewAtColumn:0 row:i makeIfNecessary:NO];
-
-		PointerIsEmptyAssertLoopContinue(rowView);
-
-		/* We only care about this item if the selection background is not hidden when
-		 it is supposed to be. */
-		if ([rowView.backgroundImageCell isHidden] == NO) {
-			if (NSDissimilarObjects(selectedIndex, i)) {
-				[rowView.backgroundImageCell setHidden:YES]; // All that is needed.
-
-				if (forceRedraw) {
-					[self updateDrawingForRow:i skipDrawingCheck:YES updateDisclosureTriangle:NO];
-				}
-
-				if ([rowView isKindOfClass:[TVCServerListCellGroupItem class]]) {
-					[rowView updateGroupDisclosureTriangle];
-				}
-			}
 		}
 	}
 }
