@@ -40,6 +40,7 @@
 @interface IRCWorld : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate>
 @property (nonatomic, assign) NSInteger messagesSent;
 @property (nonatomic, assign) NSInteger messagesReceived;
+@property (nonatomic, assign) NSInteger textSizeMultiplier;
 @property (nonatomic, assign) TXFSLongInt bandwidthIn;
 @property (nonatomic, assign) TXFSLongInt bandwidthOut;
 @property (nonatomic, strong) NSMutableArray *clients;

@@ -66,6 +66,8 @@
 {
 	if ((self = [super init])) {
 		self.clients = [NSMutableArray new];
+
+		self.textSizeMultiplier = 0;
 	}
 	
 	return self;
@@ -658,6 +660,20 @@
 
 - (void)changeTextSize:(BOOL)bigger
 {
+	if (bigger) {
+		self.textSizeMultiplier += 1;
+
+		if (self.textSizeMultiplier > 6) {
+			self.textSizeMultiplier = 6;
+		}
+	} else {
+		self.textSizeMultiplier -= 1;
+
+		if (self.textSizeMultiplier < -3) {
+			self.textSizeMultiplier = -3;
+		}
+	}
+
 	for (IRCClient *u in self.clients) {
 		[u.viewController changeTextSize:bigger];
 		
