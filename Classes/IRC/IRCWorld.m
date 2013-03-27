@@ -1110,7 +1110,7 @@
 
 - (void)outlineView:(NSOutlineView *)outlineView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
 {
-	[self.serverList updateDrawingForRow:row];
+	[self.serverList updateDrawingForRow:row skipDrawingCheck:YES];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldExpandItem:(IRCTreeItem *)item
