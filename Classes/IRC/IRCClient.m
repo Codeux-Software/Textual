@@ -712,10 +712,10 @@
 
 - (void)setUnreadState:(IRCChannel *)t
 {
-	[self setUnreadState:t popDockIcon:NO];
+	[self setUnreadState:t popDockIcon:NO isHighlight:NO];
 }
 
-- (void)setUnreadState:(IRCChannel *)t popDockIcon:(BOOL)popIcon
+- (void)setUnreadState:(IRCChannel *)t popDockIcon:(BOOL)popIcon isHighlight:(BOOL)isHighlight
 {
 	BOOL isActiveWindow = self.masterController.mainWindowIsActive;
 
@@ -728,7 +728,7 @@
 	}
 
 	if (isActiveWindow == NO || (NSDissimilarObjects(self.worldController.selectedItem, t) && isActiveWindow)) {
-		if (t.config.showTreeBadgeCount) {
+		if (t.config.showTreeBadgeCount || (t.config.showTreeBadgeCount == NO && isHighlight)) {
 			t.treeUnreadCount += 1;
 
 			[self.worldController reloadTreeItem:t];
@@ -3019,7 +3019,7 @@
 
 				/* Mark channel as unread. */
 				if (postevent) {
-					[self setUnreadState:c];
+					[self setUnreadState:c popDockIcon:NO isHighlight:highlight];
 				}
 			}];
 
@@ -3267,7 +3267,7 @@
 
 					/* Mark query as unread. */
 					if (postevent) {
-						[self setUnreadState:c popDockIcon:popicon];
+						[self setUnreadState:c popDockIcon:popicon isHighlight:highlight];
 					}
 				}];
 
