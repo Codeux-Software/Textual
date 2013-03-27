@@ -172,7 +172,7 @@
 	[theButtonParent setHidden:NO];
 }
 
-- (void)updateSelectionBackgroundView /* DO NOT CALL DIRECTLY FROM THIS CLASS. */
+- (void)updateSelectionBackgroundView
 {
 	/****************************************************************/
 	/* Define context variables. */
@@ -183,6 +183,13 @@
 	BOOL invertedColors = [drawContext boolForKey:@"isInverted"];
 	BOOL isKeyWindow = [drawContext boolForKey:@"isKeyWindow"];
 	BOOL isGraphite = [drawContext boolForKey:@"isGraphite"];
+	BOOL isSelected = [drawContext boolForKey:@"isSelected"];
+
+	if (isSelected == NO) {
+		[self.backgroundImageCell setHidden:YES];
+
+		return;
+	}
 
 	IRCChannel *channel = self.cellItem.viewController.channel;
 
@@ -256,6 +263,8 @@
 
 - (void)updateDrawing:(NSRect)cellFrame skipDrawingCheck:(BOOL)doNotLimit
 {
+	[self updateSelectionBackgroundView]; // Selection always takes precedence.
+	
 	if (doNotLimit == NO) {
 		BOOL drawReady = [self isReadyForDraw];
 
@@ -530,7 +539,7 @@
 	/**************************************************************/
 	/* Set the text field value to our new string. */
 	/**************************************************************/
-
+	
 	if ([self.customTextField.attributedStringValue isEqual:newStrValue] == NO) {
 		/* Only tell the text field of changes if there are actual ones. Why draw the same value again. */
 

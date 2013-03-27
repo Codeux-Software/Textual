@@ -66,10 +66,12 @@
 - (void)reloadAllDrawingsIgnoringOtherReloads;
 
 - (void)updateDrawingForItem:(IRCTreeItem *)cellItem;
+- (void)updateDrawingForItem:(IRCTreeItem *)cellItem skipDrawingCheck:(BOOL)doNotLimit;
+
 - (void)updateDrawingForRow:(NSInteger)rowIndex;
+- (void)updateDrawingForRow:(NSInteger)rowIndex skipDrawingCheck:(BOOL)doNotLimit;
 
 - (void)updateBackgroundColor;
-- (void)updateSelectionBackground;
 
 /* User interface elements. */
 - (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected;
