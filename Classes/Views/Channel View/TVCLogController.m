@@ -114,6 +114,21 @@
 	[self.view.preferences setUsesPageCache:NO];
 
 	[self loadAlternateHTML:[self initialDocument:nil]];
+
+	/* Change the font size to the one of others for new views. */
+	NSInteger math = self.worldController.textSizeMultiplier;
+
+	LogToConsole(@"%i", math);
+
+	if (math > 0) {
+		for (NSInteger i = 0; i < math; i++) {
+			[self changeTextSize:YES];
+		}
+	} else if (math < 0) {
+		for (NSInteger i = 0; i > math; i--) {
+			[self changeTextSize:NO];
+		}
+	}
 }
 
 - (void)loadAlternateHTML:(NSString *)newHTML
