@@ -71,7 +71,11 @@
 		 These operations are never executed within this class. They are only cached here. */
 		
 		_cachedOperations = [NSMutableDictionary dictionary];
-		
+
+		/* Limit our queue to four threads per client. Our queue is actually client specific not view specific,
+		 it is only designed into the view controller because that is where it is used. */
+		self.maxConcurrentOperationCount = 4;
+
 		return self;
 	}
 
