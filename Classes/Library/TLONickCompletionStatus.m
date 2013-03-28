@@ -186,8 +186,13 @@
 		[upperChoices addObjectsFromArray:[RZPluginManager() supportedUserInputCommands]];
 		[upperChoices addObjectsFromArray:[RZPluginManager() supportedAppleScriptCommands]];
 	} else if (channelMode) {
+		// Prioritize selected channel for channel completion
+		[upperChoices safeAddObject:channel.name];
+
 		for (IRCChannel *c in client.channels) {
-			[upperChoices safeAddObject:c.name];
+			if (c != channel) {
+				[upperChoices safeAddObject:c.name];
+			}
 		}
 	} else {
 		NSArray *memberList = [channel.memberList sortedArrayUsingSelector:@selector(compareUsingWeights:)];
