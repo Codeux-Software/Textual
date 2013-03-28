@@ -118,8 +118,6 @@
 	/* Change the font size to the one of others for new views. */
 	NSInteger math = self.worldController.textSizeMultiplier;
 
-	LogToConsole(@"%i", math);
-
 	if (math > 0) {
 		for (NSInteger i = 0; i < math; i++) {
 			[self changeTextSize:YES];
@@ -1305,7 +1303,7 @@
 		NSStringNilValueSubstitute(self.channel.name)
 	 ]];
 
-	if (self.historyLoaded == NO) {
+	if (self.historyLoaded == NO && (PointerIsEmpty(self.channel) || self.channel.isPrivateMessage == NO)) {
 		if ([TPCPreferences reloadScrollbackOnLaunch]) {
 			[self reloadHistory];
 		}
