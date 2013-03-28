@@ -581,6 +581,11 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() boolForKey:@"SetAwayOnScreenSleep"];
 }
 
++ (NSString *)awayNick
+{
+    return [RZUserDefaults() stringForKey:@"AwayNick"];
+}
+
 + (BOOL)invertSidebarColors
 {
 	TXMasterController *master = [self masterController];
