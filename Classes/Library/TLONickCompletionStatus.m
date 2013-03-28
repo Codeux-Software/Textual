@@ -190,7 +190,7 @@
 		[upperChoices safeAddObject:channel.name];
 
 		for (IRCChannel *c in client.channels) {
-			if (c != channel) {
+			if (![c isEqual:channel]) {
 				[upperChoices safeAddObject:c.name];
 			}
 		}
