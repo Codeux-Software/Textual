@@ -37,15 +37,6 @@
 
 #import "TextualApplication.h"
 
-#define TXEmptySoundAlertLabel			TXTLS(@"TXEmptySoundAlertLabel")
-
-@interface TDCPreferencesSoundWrapper : NSObject
-@property (nonatomic, assign) TXNotificationType eventType;
-@property (nonatomic, nweak) NSString *displayName;
-@property (nonatomic, nweak) NSString *alertSound;
-@property (nonatomic, assign) BOOL speakEvent;
-@property (nonatomic, assign) BOOL pushNotification;
-@property (nonatomic, assign) BOOL disabledWhileAway;
-
-+ (TDCPreferencesSoundWrapper *)soundWrapperWithEventType:(TXNotificationType)eventType;
+@interface TLOSpeechSynthesizer : NSObject
++ (void)speak:(NSString *)message;
 @end

@@ -96,6 +96,7 @@
 	@class TLOPopupPrompts;
 	@class TLORegularExpression;
 	@class TLOSoundPlayer;
+	@class TLOSpeechSynthesizer;
 	@class TLOTimer;
 	@class TLOTimerCommand;
 	@class TLOpenLink;
@@ -248,6 +249,7 @@
 	#import "TLOPopupPrompts.h"
 	#import "TLORegularExpression.h"
 	#import "TLOSoundPlayer.h"
+	#import "TLOSpeechSynthesizer.h"
 	#import "TLOTimer.h"
 	#import "TLOTimerCommand.h"
 	#import "TLOpenLink.h"

@@ -92,6 +92,16 @@
 	[TPCPreferences setGrowlEnabled:value forEvent:self.eventType];
 }
 
+- (BOOL)speakEvent
+{
+	return [TPCPreferences speakEvent:self.eventType];
+}
+
+- (void)setSpeakEvent:(BOOL)value
+{
+	[TPCPreferences setEventIsSpoken:value forEvent:self.eventType];
+}
+
 - (BOOL)disabledWhileAway
 {
 	return [TPCPreferences disabledWhileAwayForEvent:self.eventType];

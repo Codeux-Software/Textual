@@ -1030,6 +1030,28 @@ static NSURL *transcriptFolderResolvedBookmark;
 	[RZUserDefaults() setBool:value forKey:key];
 }
 
++ (BOOL)speakEvent:(TXNotificationType)event
+{
+	NSString *okey = [self keyForEvent:event];
+
+	NSObjectIsEmptyAssertReturn(okey, NO);
+
+	NSString *key = [okey stringByAppendingString:@" -> Speak"];
+
+	return [RZUserDefaults() boolForKey:key];
+}
+
++ (void)setEventIsSpoken:(BOOL)value forEvent:(TXNotificationType)event
+{
+	NSString *okey = [self keyForEvent:event];
+
+	NSObjectIsEmptyAssert(okey);
+
+	NSString *key = [okey stringByAppendingString:@" -> Speak"];
+
+	[RZUserDefaults() setBool:value forKey:key];
+}
+
 #pragma mark -
 #pragma mark World
 
