@@ -5757,6 +5757,18 @@
 	} else {
 		[self send:IRCPrivateCommandIndex("away"), nil];
 	}
+
+	NSString *newNick = nil;
+	if (setAway) {
+		self.preAwayNickname = [self localNickname];
+		newNick = self.config.awayNickname;
+	} else {
+		newNick = self.preAwayNickname;
+	}
+
+	if (NSObjectIsNotEmpty(newNick)) {
+		[self changeNick:newNick];
+	}
 }
 
 #pragma mark -

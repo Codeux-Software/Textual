@@ -76,6 +76,7 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 @property (nonatomic, strong) NSString *itemUUID; // Unique Identifier (UUID)
 @property (nonatomic, strong) NSString *clientName;
 @property (nonatomic, strong) NSString *nickname;
+@property (nonatomic, strong) NSString *awayNickname;
 @property (nonatomic, strong) NSString *nicknamePassword;
 @property (nonatomic, strong) NSString *proxyAddress;
 @property (nonatomic, assign) NSInteger proxyPort;

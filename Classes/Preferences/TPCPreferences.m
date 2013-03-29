@@ -526,6 +526,12 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() objectForKey:@"DefaultIdentity -> Nickname"];
 }
 
++ (NSString *)defaultAwayNickname
+{
+	return [RZUserDefaults() objectForKey:@"DefaultIdentity -> AwayNickname"];
+}
+
+
 + (NSString *)defaultUsername
 {
 	return [RZUserDefaults() objectForKey:@"DefaultIdentity -> Username"];
@@ -1294,6 +1300,7 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"ScanForIRCopAlertInServerNoticesMatch"]	= @"ircop alert";
 
 	d[@"DefaultIdentity -> Nickname"] = @"Guest";
+	d[@"DefaultIdentity -> AwayNickname"] = @"";
 	d[@"DefaultIdentity -> Username"] = @"textual";
 	d[@"DefaultIdentity -> Realname"] = @"Textual User";
 

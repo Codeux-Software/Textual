@@ -65,6 +65,7 @@
 @property (nonatomic, nweak) NSSlider *floodControlMessageCountSlider;
 @property (nonatomic, nweak) NSTextField *alternateNicknamesField;
 @property (nonatomic, nweak) NSTextField *nicknameField;
+@property (nonatomic, nweak) NSTextField *awayNicknameField;
 @property (nonatomic, nweak) NSTextField *nicknamePasswordField;
 @property (nonatomic, nweak) NSTextField *proxyAddressField;
 @property (nonatomic, nweak) NSTextField *proxyPortField;
