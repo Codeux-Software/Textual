@@ -10,17 +10,17 @@ chgrp -R staff .
 # because we do not know if any of these files will actually
 # exist based on what the user picked to install.
 #
-# Therefore, to stop the installer from producing an error 
-# because either mv or rm returned an error, we just call 
+# Therefore, to stop the installer from producing an error
+# because either mv or rm returned an error, we just call
 # find which only does the commands if it finds something.
 #
 
 BUNDLEPATH="/Users/$USER/Library/Containers/com.codeux.irc.textual/Data/Library/Application Support/Textual IRC/Extensions/"
 SCRIPTPATH="/Users/$USER/Library/Application Scripts/com.codeux.irc.textual/"
 
-find . -name "*.bundle" -exec mv '{}' "$BUNDLEPATH" \; -exec rm '{}' \;
+find . -name "*.bundle" -exec mv '{}' "$BUNDLEPATH" \;
 
-find . -name "*.scpt" -exec mv '{}' "$SCRIPTPATH" \; -exec rm '{}' \;
-find . -name "*.php" -exec mv '{}' "$SCRIPTPATH" \; -exec rm '{}' \;
+find . -name "*.scpt" -exec mv '{}' "$SCRIPTPATH" \;
+find . -name "*.php" -exec mv '{}' "$SCRIPTPATH" \;
 
 exit
