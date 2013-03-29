@@ -72,6 +72,8 @@
 
 - (NSString *)stringCharacterAtIndex:(NSInteger)anIndex;
 
+- (NSString *)channelNameToken;
+
 - (NSString *)nicknameFromHostmask;
 - (NSString *)usernameFromHostmask;
 - (NSString *)addressFromHostmask;
