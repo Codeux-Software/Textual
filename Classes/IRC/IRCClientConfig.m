@@ -87,6 +87,7 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 		self.clientName = TXTLS(@"DefaultNewConnectionName");
 		
 		self.nickname = [TPCPreferences defaultNickname];
+		self.awayNickname = [TPCPreferences defaultAwayNickname];
 		self.username = [TPCPreferences defaultUsername];
 		self.realname = [TPCPreferences defaultRealname];
 		
@@ -225,6 +226,7 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 		self.itemUUID		= NSDictionaryObjectKeyValueCompare(dic, @"uniqueIdentifier", self.itemUUID);
 		self.clientName		= NSDictionaryObjectKeyValueCompare(dic, @"connectionName", self.clientName);
 		self.nickname		= NSDictionaryObjectKeyValueCompare(dic, @"identityNickname", self.nickname);
+		self.awayNickname	= NSDictionaryObjectKeyValueCompare(dic, @"identityAwayNickname", self.awayNickname);
 		self.realname		= NSDictionaryObjectKeyValueCompare(dic, @"identityRealname", self.realname);
 		self.serverAddress	= NSDictionaryObjectKeyValueCompare(dic, @"serverAddress", self.serverAddress);
 		self.serverPort		= NSDictionaryIntegerKeyValueCompare(dic, @"serverPort", self.serverPort);
@@ -308,6 +310,7 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 	[dic safeSetObject:self.itemUUID					forKey:@"uniqueIdentifier"];
 	[dic safeSetObject:self.loginCommands				forKey:@"onConnectCommands"];
 	[dic safeSetObject:self.nickname					forKey:@"identityNickname"];
+	[dic safeSetObject:self.awayNickname				forKey:@"identityAwayNickname"];
 	[dic safeSetObject:self.normalLeavingComment		forKey:@"connectionDisconnectDefaultMessage"];
 	[dic safeSetObject:self.proxyAddress				forKey:@"proxyServerAddress"];
 	[dic safeSetObject:self.proxyPassword				forKey:@"proxyServerPassword"];

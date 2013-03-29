@@ -283,6 +283,12 @@
 	} else {
 		self.nicknameField.stringValue = self.config.nickname;
 	}
+
+	if (NSObjectIsEmpty(self.config.awayNickname)) {
+		self.awayNicknameField.stringValue = [TPCPreferences defaultAwayNickname];
+	} else {
+		self.awayNicknameField.stringValue = self.config.awayNickname;
+	}
 	
 	if (NSObjectIsEmpty(self.config.username)) {
 		self.usernameField.stringValue = [TPCPreferences defaultUsername];
@@ -382,6 +388,7 @@
 	
 	/* Identity */
 	self.config.nickname			= self.nicknameField.firstTokenStringValue;
+	self.config.awayNickname		= self.awayNicknameField.firstTokenStringValue;
 	self.config.username			= self.usernameField.firstTokenStringValue;
 	self.config.realname			= self.realnameField.stringValue;
 	self.config.nicknamePassword	= self.nicknamePasswordField.firstTokenStringValue;

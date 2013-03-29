@@ -134,6 +134,7 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (NSString *)defaultRealname;
 + (NSString *)defaultUsername;
 + (NSString *)defaultNickname;
++ (NSString *)defaultAwayNickname;
 + (NSString *)defaultKickMessage;
 
 + (BOOL)handleIRCopAlerts;

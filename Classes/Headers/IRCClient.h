@@ -88,6 +88,7 @@ typedef enum IRCDisconnectMode : NSInteger {
 @property (nonatomic, strong) IRCChannel *lastSelectedChannel;
 @property (nonatomic, strong) NSMutableArray *channels;
 @property (nonatomic, strong) NSMutableArray *highlights;
+@property (nonatomic, strong) NSString *preAwayNickname;
 
 - (void)setup:(id)seed;
 - (void)updateConfig:(IRCClientConfig *)seed;
