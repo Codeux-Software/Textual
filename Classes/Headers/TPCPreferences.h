@@ -162,6 +162,7 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (BOOL)displayPublicMessageCountOnDockBadge;
 
 + (BOOL)setAwayOnScreenSleep;
++ (NSString *)awayNick;
 
 + (BOOL)autoAddScrollbackMark;
 + (BOOL)showInlineImages;
