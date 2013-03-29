@@ -2844,15 +2844,6 @@
 
     PointerIsEmptyAssert(m);
 
-    /* If we have a nickname, it better have a host associated with it. */
-	if (m.sender.nickname.length >= 1 && [m.sender.nickname isNickname]) {
-		/* Who decided UMODE replies would come with a nickname and no host? */
-		if ([m.command isEqualToString:IRCPrivateCommandIndex("mode")] == NO) {
-			NSObjectIsEmptyAssert(m.sender.username);
-			NSObjectIsEmptyAssert(m.sender.address);
-		}
-	}
-
 	if (m.numericReply > 0) {
 		[self receiveNumericReply:m];
 	} else {
