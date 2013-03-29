@@ -659,7 +659,11 @@ typedef enum TXMoveKind : NSInteger {
 - (void)move:(TXMoveKind)dir target:(TXMoveKind)target
 {
 	NSWindowNegateActionWithAttachedSheet();
-	
+
+	IRCTreeItem *selected = self.worldController.selectedItem;
+
+	PointerIsEmptyAssert(selected);
+
 	/* ************************************************************** */
 	/* Start: Channel Movement Actions.								  */
 	/* Design: The channel movement actions are designed to be local
@@ -670,11 +674,7 @@ typedef enum TXMoveKind : NSInteger {
 	
 	if (dir == TXMoveUpKind || dir == TXMoveDownKind)
 	{
-		IRCTreeItem *selected = self.worldController.selectedItem;
-
 		NSArray *scannedRows = [self.serverList rowsFromParentGroup:selected];
-
-		PointerIsEmptyAssert(selected);
 
 		NSInteger n = -1;
 
@@ -685,7 +685,7 @@ typedef enum TXMoveKind : NSInteger {
 		NSInteger start = n;
 		NSInteger count = scannedRows.count;
 
-		NSAssertReturn(count > 1);
+		NSAssertReturn(count > 0);
 
 		while (1 == 1) {
 			if (dir == TXMoveDownKind) {
@@ -745,11 +745,9 @@ typedef enum TXMoveKind : NSInteger {
 
 	if (dir == TXMoveLeftKind || dir == TXMoveRightKind)
 	{
-		IRCClient *selected = self.worldController.selectedClient;
+		selected = selected.client;
 
 		NSArray *scannedRows = [self.serverList groupItems];
-
-		PointerIsEmptyAssert(selected);
 
 		NSInteger n = [scannedRows indexOfObject:selected];
 
@@ -806,10 +804,6 @@ typedef enum TXMoveKind : NSInteger {
 
 	if (dir == TXMoveAllKind && target == TXMoveDownKind)
 	{
-		IRCTreeItem *selected = self.worldController.selectedItem;
-
-		PointerIsEmptyAssert(selected);
-
 		NSInteger count = self.serverList.numberOfRows;
 
 		NSAssertReturn(count > 1);
