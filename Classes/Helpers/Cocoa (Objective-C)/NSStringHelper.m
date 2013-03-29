@@ -272,6 +272,18 @@
 	return (self.length >= 1 && (c == '#' || c == '&' || c == '!' || c == '~' || c == '?'));
 }
 
+- (NSString *)channelNameToken
+{
+	/* Remove any prefix from in front of channel (e.g. #) or return
+	 an untouched copy of the string if there is none. */
+
+	if ([self isChannelName] && self.length > 1) {
+		return [self safeSubstringFromIndex:1];
+	}
+
+	return self;
+}
+
 - (NSString *)hostmaskFromRawString
 {
 	NSAssertReturnR([self isHostmask], nil);

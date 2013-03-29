@@ -550,9 +550,7 @@
 {
 	IRCUser *user = [self memberAtIndex:row];
 
-	NSString *nname = [self.name safeSubstringFromIndex:1]; // Remove symbol from in front of name.
-	
-	return TXTFLS(@"AccessibilityMemberListDescription", user.nickname, nname);
+	return TXTFLS(@"AccessibilityMemberListDescription", user.nickname, [self.name channelNameToken]);
 }
 
 - (void)tableView:(NSTableView *)sender willDisplayCell:(TVCMemberListCell *)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row

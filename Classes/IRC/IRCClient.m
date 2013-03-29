@@ -566,13 +566,13 @@
 	/* Is the target of this event the selected channel? */
 	BOOL targetIsSelected = [self.worldController.selectedChannel isEqual:target];
 
+	NSString *formattedMessage;
+
 	switch (type) {
 		case TXNotificationHighlightType:
 		{
 			/* A local highlight is a highlight that occurs in the selected channel.
 			 One that is distant occured in a channel that is not selected. */
-
-			NSString *formattedMessage;
 
 			if (targetIsSelected) {
 				NSString *nformatString = TXTLS(@"NotificationLocalHighlightSpokenMessage");
@@ -581,17 +581,8 @@
 			} else {
 				NSString *nformatString = TXTLS(@"NotificationDistantHighlightSpokenMessage");
 
-				/* Remove # from in front of channel name. */
-				NSString *name = target.name;
-
-				if (name.length > 1) { // To make sure its not just "#"
-					name = [name safeSubstringFromIndex:1];
-				}
-
-				formattedMessage = TXTFLS(nformatString, name, nick, text);
+				formattedMessage = TXTFLS(nformatString, [target.name channelNameToken], nick, text);
 			}
-
-			[TLOSpeechSynthesizer speak:formattedMessage];
 
 			break;
 		}
@@ -607,41 +598,23 @@
 
 			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
 
-			NSString *formattedMessage = TXTFLS(nformatString, nick, text);
-
-			[TLOSpeechSynthesizer speak:formattedMessage];
+			formattedMessage = TXTFLS(nformatString, nick, text);
 			
 			break;
 		}
 		case TXNotificationKickType:
 		{
-			NSString *name = target.name;
-
-			if (name.length > 1) { // To make sure its not just "#"
-				name = [name safeSubstringFromIndex:1];
-			}
-
 			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
 
-			NSString *formattedMessage = TXTFLS(nformatString, name, nick);
-
-			[TLOSpeechSynthesizer speak:formattedMessage];
+			formattedMessage = TXTFLS(nformatString, [target.name channelNameToken], nick);
 
 			break;
 		}
 		case TXNotificationInviteType:
 		{
-			NSString *name = text;
-
-			if (name.length > 1) { // To make sure its not just "#"
-				name = [name safeSubstringFromIndex:1];
-			}
-
 			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
 
-			NSString *formattedMessage = TXTFLS(nformatString, name, nick);
-
-			[TLOSpeechSynthesizer speak:formattedMessage];
+			formattedMessage = TXTFLS(nformatString, [text channelNameToken], nick);
 
 			break;
 		}
@@ -650,19 +623,21 @@
 		{
 			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
 
-			NSString *formattedMessage = TXTFLS(nformatString, self.altNetworkName);
-
-			[TLOSpeechSynthesizer speak:formattedMessage];
+			formattedMessage = TXTFLS(nformatString, self.altNetworkName);
 			
 			break;
 		}
 		case TXNotificationAddressBookMatchType:
 		{
-			[TLOSpeechSynthesizer speak:text];
+			formattedMessage = text;
 
 			break;
 		}
 	}
+
+	NSObjectIsEmptyAssert(formattedMessage);
+
+	[TLOSpeechSynthesizer speak:formattedMessage];
 }
 
 - (BOOL)notifyText:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nick:(NSString *)nick text:(NSString *)text
@@ -692,10 +667,10 @@
 
 	if (self.worldController.isSoundMuted == NO) {
 		[TLOSoundPlayer play:[TPCPreferences soundForEvent:type]];
-	}
 
-	if ([TPCPreferences speakEvent:type]) {
-		[self speakEvent:type lineType:ltype target:target nick:nick text:text];
+		if ([TPCPreferences speakEvent:type]) {
+			[self speakEvent:type lineType:ltype target:target nick:nick text:text];
+		}
 	}
 
 	if ([TPCPreferences growlEnabledForEvent:type] == NO) {
@@ -742,10 +717,10 @@
 
 	if (self.worldController.isSoundMuted == NO) {
 		[TLOSoundPlayer play:[TPCPreferences soundForEvent:type]];
-	}
-	
-	if ([TPCPreferences speakEvent:type]) {
-		[self speakEvent:type lineType:ltype target:target nick:nick text:text];
+		
+		if ([TPCPreferences speakEvent:type]) {
+			[self speakEvent:type lineType:ltype target:target nick:nick text:text];
+		}
 	}
 
 	if ([TPCPreferences growlEnabledForEvent:type] == NO) {
