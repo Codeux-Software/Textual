@@ -1085,7 +1085,11 @@ typedef enum TXMoveKind : NSInteger {
 
 - (void)selectViewWithKeyboard:(NSEvent *)e
 {
-	NSAssertReturn(self.isAwaitingEscapeKeyChannelCode);
+	if (self.isAwaitingEscapeKeyChannelCode == NO) {
+        [self.inputTextField keyDown:e];
+
+		return;
+	}
 
 	self.isAwaitingEscapeKeyChannelCode = NO;
 
