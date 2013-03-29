@@ -57,6 +57,7 @@
 @property (nonatomic, nweak) NSArrayController *excludeKeywordsArrayController;
 @property (nonatomic, nweak) NSArrayController *matchKeywordsArrayController;
 @property (nonatomic, nweak) NSButton *addExcludeKeywordButton;
+@property (nonatomic, nweak) NSButton *alertSpeakEventButton;
 @property (nonatomic, nweak) NSButton *alertDisableWhileAwayButton;
 @property (nonatomic, nweak) NSButton *alertPushNotificationButton;
 @property (nonatomic, nweak) NSButton *highlightNicknameButton;
@@ -83,6 +84,7 @@
 
 - (void)setTextualAsDefaultIRCClient:(id)sender;
 
+- (void)onChangedAlertSpoken:(id)sender;
 - (void)onChangedAlertSound:(id)sender;
 - (void)onChangedAlertDisableWhileAway:(id)sender;
 - (void)onChangedAlertNotification:(id)sender;

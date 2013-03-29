@@ -231,12 +231,14 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (NSString *)titleForEvent:(TXNotificationType)event;
 + (NSString *)soundForEvent:(TXNotificationType)event;
 
++ (BOOL)speakEvent:(TXNotificationType)event;
 + (BOOL)growlEnabledForEvent:(TXNotificationType)event;
 + (BOOL)disabledWhileAwayForEvent:(TXNotificationType)event;
 
 + (void)setSound:(NSString *)value forEvent:(TXNotificationType)event;
 + (void)setGrowlEnabled:(BOOL)value forEvent:(TXNotificationType)event;
 + (void)setDisabledWhileAway:(BOOL)value forEvent:(TXNotificationType)event;
++ (void)setEventIsSpoken:(BOOL)value forEvent:(TXNotificationType)event;
 
 + (TXTabKeyAction)tabKeyAction;
 

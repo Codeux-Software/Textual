@@ -357,7 +357,8 @@
 	TXNotificationType alertType = (TXNotificationType)self.alertTypeChoiceButton.selectedItem.tag;
 	
     TDCPreferencesSoundWrapper *alert = [TDCPreferencesSoundWrapper soundWrapperWithEventType:alertType];
-	
+
+	[self.alertSpeakEventButton setState:alert.speakEvent];
     [self.alertPushNotificationButton setState:alert.pushNotification];
     [self.alertDisableWhileAwayButton setState:alert.disabledWhileAway];
 	
@@ -371,6 +372,15 @@
     TDCPreferencesSoundWrapper *alert = [TDCPreferencesSoundWrapper soundWrapperWithEventType:alertType];
 
     [alert setPushNotification:self.alertPushNotificationButton.state];
+}
+
+- (void)onChangedAlertSpoken:(id)sender
+{
+	TXNotificationType alertType = (TXNotificationType)self.alertTypeChoiceButton.selectedItem.tag;
+
+    TDCPreferencesSoundWrapper *alert = [TDCPreferencesSoundWrapper soundWrapperWithEventType:alertType];
+
+	[alert setSpeakEvent:self.alertSpeakEventButton.state];
 }
 
 - (void)onChangedAlertDisableWhileAway:(id)sender 
