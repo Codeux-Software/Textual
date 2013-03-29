@@ -1300,7 +1300,7 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"ScanForIRCopAlertInServerNoticesMatch"]	= @"ircop alert";
 
 	d[@"DefaultIdentity -> Nickname"] = @"Guest";
-	d[@"DefaultIdentity -> AwayNickname"] = @"";
+	d[@"DefaultIdentity -> AwayNickname"] = NSStringEmptyPlaceholder;
 	d[@"DefaultIdentity -> Username"] = @"textual";
 	d[@"DefaultIdentity -> Realname"] = @"Textual User";
 
