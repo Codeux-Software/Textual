@@ -745,17 +745,13 @@ typedef enum TXMoveKind : NSInteger {
 
 	if (dir == TXMoveLeftKind || dir == TXMoveRightKind)
 	{
-		IRCTreeItem *selected = self.worldController.selectedItem;
+		IRCClient *selected = self.worldController.selectedClient;
 
 		NSArray *scannedRows = [self.serverList groupItems];
 
 		PointerIsEmptyAssert(selected);
 
-		NSInteger n = -1;
-
-		if ([selected isClient]) {
-			n = [scannedRows indexOfObject:selected];
-		}
+		NSInteger n = [scannedRows indexOfObject:selected];
 
 		NSInteger start = n;
 		NSInteger count = scannedRows.count;
