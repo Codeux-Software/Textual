@@ -204,6 +204,21 @@
 
 "NoButton" = "No";
 
+/* If an event is not defined below for spoken events, then the odds are
+ good that the text to be spoken is localized somewhere else. For example,
+ the address book event type is defined near the end of this file. */
+"NotificationChannelMessageSpokenMessage"		= "Channel Message, %1$@, %2$@";
+"NotificationChannelNoticeSpokenMessage"		= "Channel Notice, %1$@, %2$@";
+"NotificationConnectedSpokenMessage"			= "Connected to %@";
+"NotificationDisconnectSpokenMessage"			= "Disconnected from %@";
+"NotificationDistantHighlightSpokenMessage"		= "Highlight in %1$@ by %2$@, %3$@";
+"NotificationLocalHighlightSpokenMessage"		= "Highlight, %1$@, %2$@";
+"NotificationInvitedSpokenMessage"				= "Invited to %1$@ by %2$@";
+"NotificationKickedSpokenMessage"				= "Kicked from %1$@ by %2$@";
+"NotificationNewPrivateMessageSpokenMessage"	= "New Private Message from %1$@, %2$@";
+"NotificationPrivateMessageSpokenMessage"		= "Private Message from %1$@, %2$@";
+"NotificationPrivateNoticeSpokenMessage"		= "Private Notice from %1$@, %2$@";
+
 "NotificationAddressBookMatchMessageTitle"	= "Address Book Notification";
 "NotificationChannelMessageMessageTitle"	= "Channel Message: %@";
 "NotificationChannelNoticeMessageTitle"		= "Channel Notice: %@";
