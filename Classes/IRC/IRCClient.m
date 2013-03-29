@@ -538,6 +538,133 @@
 #pragma mark -
 #pragma mark Growl
 
+/* Spoken events are only called from within the following calls so we are going to 
+ shove the key value matching in here to make it all in one place for management. */
+
+- (NSString *)localizedSpokenMessageForEvent:(TXNotificationType)event
+{
+	switch (event) {
+		case TXNotificationChannelMessageType:		{ return TXTLS(@"NotificationChannelMessageSpokenMessage");			}
+		case TXNotificationChannelNoticeType:		{ return TXTLS(@"NotificationChannelNoticeSpokenMessage");			}
+		case TXNotificationConnectType:				{ return TXTLS(@"NotificationConnectedSpokenMessage");				}
+		case TXNotificationDisconnectType:			{ return TXTLS(@"NotificationDisconnectSpokenMessage");				}
+		case TXNotificationInviteType:				{ return TXTLS(@"NotificationInvitedSpokenMessage");				}
+		case TXNotificationKickType:				{ return TXTLS(@"NotificationKickedSpokenMessage");					}
+		case TXNotificationNewPrivateMessageType:	{ return TXTLS(@"NotificationNewPrivateMessageSpokenMessage");		}
+		case TXNotificationPrivateMessageType:		{ return TXTLS(@"NotificationPrivateMessageSpokenMessage");			}
+		case TXNotificationPrivateNoticeType:		{ return TXTLS(@"NotificationPrivateNoticeSpokenMessage");			}
+		default: { return nil; }
+	}
+
+	return nil;
+}
+
+- (void)speakEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nick:(NSString *)nick text:(NSString *)text
+{
+	text = text.trim; // Do not leave spaces in text to be spoken.
+
+	/* Is the target of this event the selected channel? */
+	BOOL targetIsSelected = [self.worldController.selectedChannel isEqual:target];
+
+	switch (type) {
+		case TXNotificationHighlightType:
+		{
+			/* A local highlight is a highlight that occurs in the selected channel.
+			 One that is distant occured in a channel that is not selected. */
+
+			NSString *formattedMessage;
+
+			if (targetIsSelected) {
+				NSString *nformatString = TXTLS(@"NotificationLocalHighlightSpokenMessage");
+
+				formattedMessage = TXTFLS(nformatString, nick, text);
+			} else {
+				NSString *nformatString = TXTLS(@"NotificationDistantHighlightSpokenMessage");
+
+				/* Remove # from in front of channel name. */
+				NSString *name = target.name;
+
+				if (name.length > 1) { // To make sure its not just "#"
+					name = [name safeSubstringFromIndex:1];
+				}
+
+				formattedMessage = TXTFLS(nformatString, name, nick, text);
+			}
+
+			[TLOSpeechSynthesizer speak:formattedMessage];
+
+			break;
+		}
+		case TXNotificationNewPrivateMessageType:
+		case TXNotificationChannelMessageType:
+		case TXNotificationChannelNoticeType:
+		case TXNotificationPrivateMessageType:
+		case TXNotificationPrivateNoticeType:
+		{
+			NSObjectIsEmptyAssertLoopBreak(text); // Do not speak empty messages.
+
+			NSAssertReturnLoopBreak(targetIsSelected); // These events only post for front-most channel.
+
+			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
+
+			NSString *formattedMessage = TXTFLS(nformatString, nick, text);
+
+			[TLOSpeechSynthesizer speak:formattedMessage];
+			
+			break;
+		}
+		case TXNotificationKickType:
+		{
+			NSString *name = target.name;
+
+			if (name.length > 1) { // To make sure its not just "#"
+				name = [name safeSubstringFromIndex:1];
+			}
+
+			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
+
+			NSString *formattedMessage = TXTFLS(nformatString, name, nick);
+
+			[TLOSpeechSynthesizer speak:formattedMessage];
+
+			break;
+		}
+		case TXNotificationInviteType:
+		{
+			NSString *name = text;
+
+			if (name.length > 1) { // To make sure its not just "#"
+				name = [name safeSubstringFromIndex:1];
+			}
+
+			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
+
+			NSString *formattedMessage = TXTFLS(nformatString, name, nick);
+
+			[TLOSpeechSynthesizer speak:formattedMessage];
+
+			break;
+		}
+		case TXNotificationConnectType:
+		case TXNotificationDisconnectType:
+		{
+			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
+
+			NSString *formattedMessage = TXTFLS(nformatString, self.altNetworkName);
+
+			[TLOSpeechSynthesizer speak:formattedMessage];
+			
+			break;
+		}
+		case TXNotificationAddressBookMatchType:
+		{
+			[TLOSpeechSynthesizer speak:text];
+
+			break;
+		}
+	}
+}
+
 - (BOOL)notifyText:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nick:(NSString *)nick text:(NSString *)text
 {
 	if ([self outputRuleMatchedInMessage:text inChannel:target withLineType:ltype] == YES) {
@@ -565,6 +692,10 @@
 
 	if (self.worldController.isSoundMuted == NO) {
 		[TLOSoundPlayer play:[TPCPreferences soundForEvent:type]];
+	}
+
+	if ([TPCPreferences speakEvent:type]) {
+		[self speakEvent:type lineType:ltype target:target nick:nick text:text];
 	}
 
 	if ([TPCPreferences growlEnabledForEvent:type] == NO) {
@@ -611,6 +742,10 @@
 
 	if (self.worldController.isSoundMuted == NO) {
 		[TLOSoundPlayer play:[TPCPreferences soundForEvent:type]];
+	}
+	
+	if ([TPCPreferences speakEvent:type]) {
+		[self speakEvent:type lineType:ltype target:target nick:nick text:text];
 	}
 
 	if ([TPCPreferences growlEnabledForEvent:type] == NO) {
