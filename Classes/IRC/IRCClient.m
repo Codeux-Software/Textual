@@ -5761,6 +5761,7 @@
 	NSString *newNick = nil;
 	if (setAway) {
 		self.preAwayNickname = [self localNickname];
+
 		newNick = self.config.awayNickname;
 	} else {
 		newNick = self.preAwayNickname;

@@ -46,6 +46,10 @@
 
 __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
+@interface TXMasterController ()
+@property (nonatomic, assign) BOOL isAwaitingEscapeKeyChannelCode;
+@end
+
 @implementation TXMasterController
 
 - (id)init
@@ -1051,13 +1055,48 @@ typedef enum TXMoveKind : NSInteger {
 	}
 }
 
+- (void)handleEscapeKeyEvent:(NSEvent *)e
+{
+	NSAssertReturn(self.isAwaitingEscapeKeyChannelCode == NO);
+
+	self.isAwaitingEscapeKeyChannelCode = YES;
+
+	[self performSelector:@selector(exitFullscreenMode:)
+			   withObject:e
+			   afterDelay:1.0];
+}
+
 - (void)exitFullscreenMode:(NSEvent *)e
 {
+	/* If self.isAwaitingEscapeKeyChannelCode is still YES at this point, then
+	 the user did not enter a channel number to switch to. Therefore, we will 
+	 use the escape event to exit full screen. */
+
+	NSAssertReturn(self.isAwaitingEscapeKeyChannelCode);
+
+	self.isAwaitingEscapeKeyChannelCode = NO;
+
     if (self.isInFullScreenMode && [self.inputTextField isFocused] == NO) {
         [self.menuController toggleFullscreenMode:nil];
     } else {
         [self.inputTextField keyDown:e];
     }
+}
+
+- (void)selectViewWithKeyboard:(NSEvent *)e
+{
+	NSAssertReturn(self.isAwaitingEscapeKeyChannelCode);
+
+	self.isAwaitingEscapeKeyChannelCode = NO;
+
+	/* Switch to a number if user recently pressed the escape key. */
+	NSString *charv = [e charactersIgnoringModifiers];
+
+	NSInteger charInt = [charv integerValue];
+
+	if (NSNumberInRange(charInt, 0, 9)) {
+		[self.serverList selectItemAtIndex:charInt];
+	}
 }
 
 - (void)focusWebview
@@ -1092,7 +1131,7 @@ typedef enum TXMoveKind : NSInteger {
 	[self.mainWindow setKeyHandlerTarget:self];
 	[self.inputTextField setKeyHandlerTarget:self];
     
-    [self handler:@selector(exitFullscreenMode:) code:TXKeyEscapeCode mods:0];
+    [self handler:@selector(handleEscapeKeyEvent:) code:TXKeyEscapeCode mods:0];
 	
 	[self handler:@selector(tab:) code:TXKeyTabCode mods:0];
 	[self handler:@selector(shiftTab:) code:TXKeyTabCode mods:NSShiftKeyMask];
@@ -1104,7 +1143,11 @@ typedef enum TXMoveKind : NSInteger {
 	[self handler:@selector(textFormattingItalic:)			char:'i' mods:(NSCommandKeyMask | NSAlternateKeyMask)];
     [self handler:@selector(textFormattingForegroundColor:) char:'c' mods:(NSCommandKeyMask | NSAlternateKeyMask)];
 	[self handler:@selector(textFormattingBackgroundColor:) char:'h' mods:(NSCommandKeyMask | NSAlternateKeyMask)];
-	
+
+	for (NSInteger i = 0; i < 10; i++) {
+		[self handler:@selector(selectViewWithKeyboard:) char:('0' + i) mods:0];
+	}
+
 	[self handler:@selector(inputHistoryUp:) char:'p' mods:NSControlKeyMask];
 	[self handler:@selector(inputHistoryDown:) char:'n' mods:NSControlKeyMask];
 
