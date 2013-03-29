@@ -260,7 +260,7 @@
 
 	UniChar c = [self characterAtIndex:0];
 
-	return (self.length > 1 && (c == '#' || c == '&' || c == '+' || c == '!' || c == '~' || c == '?'));
+	return (self.length >= 1 && (c == '#' || c == '&' || c == '+' || c == '!' || c == '~' || c == '?'));
 }
 
 - (BOOL)isModeChannelName
@@ -269,7 +269,7 @@
 
 	UniChar c = [self characterAtIndex:0];
 
-	return (self.length > 1 && (c == '#' || c == '&' || c == '!' || c == '~' || c == '?'));
+	return (self.length >= 1 && (c == '#' || c == '&' || c == '!' || c == '~' || c == '?'));
 }
 
 - (NSString *)hostmaskFromRawString
