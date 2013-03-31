@@ -71,6 +71,7 @@
 @property (nonatomic, nweak) TVCMainWindowSegmentedCell *mainWindowButtonControllerCell;
 @property (nonatomic, nweak) TVCMainWindowSegmentedControl *mainWindowButtonController;
 @property (nonatomic, nweak) TVCMemberListUserInfoPopover *memberListUserInfoPopover;
+@property (nonatomic, strong) TLOSpeechSynthesizer *speechSynthesizer;
 @property (nonatomic, assign) NSInteger memberSplitViewOldPosition;
 
 - (void)loadWindowState:(BOOL)honorFullscreen;

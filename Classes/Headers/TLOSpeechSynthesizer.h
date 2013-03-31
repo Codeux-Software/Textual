@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
-@interface TLOSpeechSynthesizer : NSObject
-+ (void)speak:(NSString *)message;
+@interface TLOSpeechSynthesizer : NSObject <NSSpeechSynthesizerDelegate>
+- (void)speak:(NSString *)message;
+
+- (void)stopSpeakingAndMoveForward;
 @end

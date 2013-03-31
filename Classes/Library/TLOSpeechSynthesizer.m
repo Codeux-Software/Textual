@@ -37,19 +37,85 @@
 
 #import "TextualApplication.h"
 
+@interface TLOSpeechSynthesizer ()
+@property (nonatomic, strong) NSSpeechSynthesizer *speechSynthesizer;
+@property (nonatomic, strong) NSMutableArray *itemsToBeSpoken;
+@property (nonatomic, assign) BOOL isSpeaking;
+@end
+
 @implementation TLOSpeechSynthesizer
 
-static NSSpeechSynthesizer *speechSynthesizer;
-
-+ (void)speak:(NSString *)message
+- (id)init
 {
-	NSObjectIsEmptyAssert(message);
-	
-	if (PointerIsEmpty(speechSynthesizer)) {
-		speechSynthesizer = [NSSpeechSynthesizer new];
+	if ((self = [super init])) {
+		self.isSpeaking = NO;
+		
+		self.itemsToBeSpoken = [NSMutableArray array];
+
+		self.speechSynthesizer = [NSSpeechSynthesizer new];
+		self.speechSynthesizer.delegate = self;
+
+		return self;
 	}
 
-	[speechSynthesizer startSpeakingString:message];
+	return nil;
+}
+
+#pragma mark -
+#pragma mark Public API
+
+- (void)speak:(NSString *)message
+{
+	NSObjectIsEmptyAssert(message);
+
+	if (self.isSpeaking == NO) {
+		/* If we are already speaking, then we will allow the 
+		 delegate to the call the next queue entry once it is
+		 finished. We will only call it directly from here if
+		 nothing is being spoken because the delegate would
+		 never be called. */
+
+		self.isSpeaking = YES;
+
+		[self.speechSynthesizer startSpeakingString:message];
+	} else {
+		/* If we are talking right now, then add the message to the queue
+		 so that it can be processed after the delegate has called us. */
+
+		[self.itemsToBeSpoken safeAddObject:message];
+	}
+}
+
+- (void)stopSpeakingAndMoveForward
+{
+	NSAssertReturn(self.isSpeaking);
+
+	[self.speechSynthesizer stopSpeaking]; // Will call delegate to do next item.
+}
+
+- (void)speakNextQueueEntry
+{
+	NSObjectIsEmptyAssert(self.itemsToBeSpoken);
+
+	self.isSpeaking = YES;
+
+	NSString *nextMessage = [self.itemsToBeSpoken safeObjectAtIndex:0];
+
+	[self.itemsToBeSpoken removeObjectAtIndex:0];
+
+	[self.speechSynthesizer startSpeakingString:nextMessage];
+}
+
+#pragma mark -
+#pragma mark Delegate Callback
+
+- (void)speechSynthesizer:(NSSpeechSynthesizer *)sender didFinishSpeaking:(BOOL)finishedSpeaking
+{
+	self.isSpeaking = NO;
+
+	NSObjectIsEmptyAssert(self.itemsToBeSpoken); // Nothing to do.
+	
+	[self speakNextQueueEntry];
 }
 
 @end

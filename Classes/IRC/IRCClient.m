@@ -637,7 +637,7 @@
 
 	NSObjectIsEmptyAssert(formattedMessage);
 
-	[TLOSpeechSynthesizer speak:formattedMessage];
+	[self.masterController.speechSynthesizer speak:formattedMessage];
 }
 
 - (BOOL)notifyText:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nick:(NSString *)nick text:(NSString *)text
