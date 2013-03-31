@@ -135,7 +135,9 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[self registerKeyHandlers];
 
 	[self.formattingMenu enableWindowField:self.inputTextField];
-	
+
+	self.speechSynthesizer = [TLOSpeechSynthesizer new];
+
 	self.world = [IRCWorld new];
 
 	self.serverSplitView.delegate = self;
@@ -1093,6 +1095,11 @@ typedef enum TXMoveKind : NSInteger {
 	}
 }
 
+- (void)speakPendingNotifications:(NSEvent *)e
+{
+	[self.speechSynthesizer stopSpeakingAndMoveForward];
+}
+
 - (void)focusWebview
 {
 	NSWindowNegateActionWithAttachedSheet();
@@ -1141,6 +1148,8 @@ typedef enum TXMoveKind : NSInteger {
 	for (NSInteger i = 0; i < 10; i++) {
 		[self handler:@selector(selectViewWithKeyboard:) char:('0' + i) mods:0];
 	}
+
+	[self handler:@selector(speakPendingNotifications:) char:'.' mods:NSCommandKeyMask];
 
 	[self handler:@selector(inputHistoryUp:) char:'p' mods:NSControlKeyMask];
 	[self handler:@selector(inputHistoryDown:) char:'n' mods:NSControlKeyMask];
