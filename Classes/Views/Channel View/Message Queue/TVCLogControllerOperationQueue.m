@@ -74,7 +74,8 @@
 
 		/* Limit our queue to four threads per client. Our queue is actually client specific not view specific,
 		 it is only designed into the view controller because that is where it is used. */
-		self.maxConcurrentOperationCount = 4;
+		//self.maxConcurrentOperationCount = 4;
+		self.maxConcurrentOperationCount = 1; // Temporary.
 
 		return self;
 	}
