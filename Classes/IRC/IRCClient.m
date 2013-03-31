@@ -553,6 +553,7 @@
 		case TXNotificationNewPrivateMessageType:	{ return TXTLS(@"NotificationNewPrivateMessageSpokenMessage");		}
 		case TXNotificationPrivateMessageType:		{ return TXTLS(@"NotificationPrivateMessageSpokenMessage");			}
 		case TXNotificationPrivateNoticeType:		{ return TXTLS(@"NotificationPrivateNoticeSpokenMessage");			}
+		case TXNotificationHighlightType:			{ return TXTLS(@"NotificationHighlightSpokenMessage");				}
 		default: { return nil; }
 	}
 
@@ -563,38 +564,26 @@
 {
 	text = text.trim; // Do not leave spaces in text to be spoken.
 
-	/* Is the target of this event the selected channel? */
-	BOOL targetIsSelected = [self.worldController.selectedChannel isEqual:target];
-
 	NSString *formattedMessage;
-
+	
 	switch (type) {
 		case TXNotificationHighlightType:
+		case TXNotificationChannelMessageType:
+		case TXNotificationChannelNoticeType:
 		{
-			/* A local highlight is a highlight that occurs in the selected channel.
-			 One that is distant occured in a channel that is not selected. */
+			NSObjectIsEmptyAssertLoopBreak(text); // Do not speak empty messages.
 
-			if (targetIsSelected) {
-				NSString *nformatString = TXTLS(@"NotificationLocalHighlightSpokenMessage");
-
-				formattedMessage = TXTFLS(nformatString, nick, text);
-			} else {
-				NSString *nformatString = TXTLS(@"NotificationDistantHighlightSpokenMessage");
-
-				formattedMessage = TXTFLS(nformatString, [target.name channelNameToken], nick, text);
-			}
+			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
+			
+			formattedMessage = TXTFLS(nformatString, target.name.channelNameToken, nick, text);
 
 			break;
 		}
 		case TXNotificationNewPrivateMessageType:
-		case TXNotificationChannelMessageType:
-		case TXNotificationChannelNoticeType:
 		case TXNotificationPrivateMessageType:
 		case TXNotificationPrivateNoticeType:
 		{
 			NSObjectIsEmptyAssertLoopBreak(text); // Do not speak empty messages.
-
-			NSAssertReturnLoopBreak(targetIsSelected); // These events only post for front-most channel.
 
 			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
 
@@ -606,7 +595,7 @@
 		{
 			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
 
-			formattedMessage = TXTFLS(nformatString, [target.name channelNameToken], nick);
+			formattedMessage = TXTFLS(nformatString, target.name.channelNameToken, nick);
 
 			break;
 		}
@@ -614,7 +603,7 @@
 		{
 			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
 
-			formattedMessage = TXTFLS(nformatString, [text channelNameToken], nick);
+			formattedMessage = TXTFLS(nformatString, text.channelNameToken, nick);
 
 			break;
 		}
