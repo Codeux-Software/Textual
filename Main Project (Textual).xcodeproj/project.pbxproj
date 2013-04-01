@@ -2889,7 +2889,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\nif [ \"${TEXTUAL_GITREF_BUILD_ID}\" == \"debug\" ]; then exit; fi;\n\nrm -rf \"${PROJECT_DIR}/Build Results/\"\nrm -rf \"${PROJECT_DIR}/.tmp/\"\n";
+			shellScript = "exec \"${PROJECT_FILE_PATH}/CleanUpResources.sh\"";
 		};
 		4C01BA0B15810DDE007E2DAF /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2902,7 +2902,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\ncd \"${PROJECT_DIR}/Resources/\"\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print \\\"TXBundleBuildNumber\\\"\" Info.plist)\nbundleVersion=$(/usr/libexec/PlistBuddy -c \"Print \\\"CFBundleShortVersionString\\\"\" Info.plist)\n\nbuildNumber=$(($buildNumber + 1))\n\ngitBundle=`which git`\ngitDescribe=`${gitBundle} describe`\ngitRefInfo=$(echo $gitDescribe | grep -oE \"([0-9]{1,3})\\-([a-zA-Z0-9]{8})\")\ngitCommitCount=`${gitBundle} rev-list HEAD --count`\n\nbuildRef=\"${bundleVersion}-${gitRefInfo}-${TEXTUAL_GITREF_BUILD_ID}\"\n\necho \"Building Textual (Build Reference: ${gitRefInfo})\"\n\nif [ ${#gitRefInfo} -gt 5 ]; then\n    /usr/libexec/PlistBuddy -c \"Set :\\\"CFBundleIdentifier\\\" ${TEXTUAL_BUNDLE_ID}\" Info.plist\n    /usr/libexec/PlistBuddy -c \"Set :\\\"TXBundleBuildReference\\\" ${buildRef}\" Info.plist\n    /usr/libexec/PlistBuddy -c \"Set :\\\"TXBundleBuildNumber\\\" ${buildNumber}\" Info.plist\n    /usr/libexec/PlistBuddy -c \"Set :\\\"TXBundleCommitCount\\\" ${gitCommitCount}\" Info.plist\nfi\n";
+			shellScript = "exec \"${PROJECT_FILE_PATH}/UpdateVersionInfo.sh\"\n\n";
 		};
 		4C01BA101581104D007E2DAF /* Build Extensions */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2930,7 +2930,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\ncd \"${PROJECT_DIR}/Frameworks/Auto Hyperlinks/Source/\"\nxcodebuild -alltargets -configuration \"Release\"\n\ncd \"${PROJECT_DIR}/Frameworks/Blowfish Encryption/Source/\"\nxcodebuild -alltargets -configuration \"Release\"\n\ncd \"${PROJECT_DIR}/Frameworks/System Information/Source/\"\nxcodebuild -alltargets -configuration \"Release\"\n";
+			shellScript = "exec \"${PROJECT_FILE_PATH}/BuildFrameworks.sh\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
