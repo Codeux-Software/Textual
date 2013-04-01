@@ -102,6 +102,7 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (NSInteger)applicationProcessID;
 
 + (NSString *)gitBuildReference;
++ (NSString *)gitCommitCount;
 
 + (NSDictionary *)textualInfoPlist;
 

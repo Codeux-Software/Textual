@@ -2,10 +2,7 @@
 
 cd "${PROJECT_DIR}/Resources/"
 
-buildNumber=$(/usr/libexec/PlistBuddy -c "Print \"TXBundleBuildNumber\"" Info.plist)
 bundleVersion=$(/usr/libexec/PlistBuddy -c "Print \"CFBundleShortVersionString\"" Info.plist)
-
-buildNumber=$(($buildNumber + 1))
 
 gitBundle=`which git`
 gitDescribe=`${gitBundle} describe`
@@ -16,9 +13,11 @@ buildRef="${bundleVersion}-${gitRefInfo}-${TEXTUAL_GITREF_BUILD_ID}"
 
 echo "Building Textual (Build Reference: ${gitRefInfo})"
 
-if [ ${#gitRefInfo} -gt 5 ]; then
-    /usr/libexec/PlistBuddy -c "Set :\"CFBundleIdentifier\" ${TEXTUAL_BUNDLE_ID}" Info.plist
-    /usr/libexec/PlistBuddy -c "Set :\"TXBundleBuildReference\" ${buildRef}" Info.plist
-    /usr/libexec/PlistBuddy -c "Set :\"TXBundleBuildNumber\" ${buildNumber}" Info.plist
-    /usr/libexec/PlistBuddy -c "Set :\"TXBundleCommitCount\" ${gitCommitCount}" Info.plist
-fi
+bundleIdentifier=$(/usr/libexec/PlistBuddy -c "Print \"CFBundleIdentifier\"" Info.plist)
+test "${bundleIdentifier}" != "${TEXTUAL_BUNDLE_ID}" && \
+	/usr/libexec/PlistBuddy -c "Set :\"CFBundleIdentifier\" ${TEXTUAL_BUNDLE_ID}" Info.plist
+
+echo "/* ANY CHANGES TO THIS FILE WILL NOT BE SAVED AND WILL NOT BE COMMITTED */" > BuildConfig.h
+echo "" >> BuildConfig.h
+echo "#define TXBundleBuildReference	@\"${buildRef}\"" >> BuildConfig.h
+echo "#define TXBundleCommitCount		@\"${gitCommitCount}\"" >> BuildConfig.h
