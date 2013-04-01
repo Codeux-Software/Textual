@@ -1298,6 +1298,7 @@
 		5D9B8EB6170A0EB400919CB0 /* BuildFrameworks.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = BuildFrameworks.sh; path = "Main Project (Textual).xcodeproj/BuildFrameworks.sh"; sourceTree = SOURCE_ROOT; };
 		5D9B8EB7170A0EB400919CB0 /* CleanUpResources.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = CleanUpResources.sh; path = "Main Project (Textual).xcodeproj/CleanUpResources.sh"; sourceTree = SOURCE_ROOT; };
 		5D9B8EB8170A0EB400919CB0 /* UpdateVersionInfo.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = UpdateVersionInfo.sh; path = "Main Project (Textual).xcodeproj/UpdateVersionInfo.sh"; sourceTree = SOURCE_ROOT; };
+		5D9B8EB9170A10F200919CB0 /* BuildExtensions.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = BuildExtensions.sh; path = "Main Project (Textual).xcodeproj/BuildExtensions.sh"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2287,6 +2288,7 @@
 		5D9B8EB1170A0EA700919CB0 /* Build */ = {
 			isa = PBXGroup;
 			children = (
+				5D9B8EB9170A10F200919CB0 /* BuildExtensions.sh */,
 				5D9B8EB6170A0EB400919CB0 /* BuildFrameworks.sh */,
 				5D9B8EB7170A0EB400919CB0 /* CleanUpResources.sh */,
 				5D9B8EB8170A0EB400919CB0 /* UpdateVersionInfo.sh */,
@@ -2936,7 +2938,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\ncd \"${PROJECT_DIR}/Resources/Plugins/Blowfish Key Control\"\nxcodebuild -alltargets -configuration \"Release\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\"\n\ncd \"${PROJECT_DIR}/Resources/Plugins/Brag Spam\"\nxcodebuild -alltargets -configuration \"Release\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\"\n\ncd \"${PROJECT_DIR}/Resources/Plugins/System Profiler\"\nxcodebuild -alltargets -configuration \"Release\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\"\n\ncd \"${PROJECT_DIR}/Resources/Plugins/Spammer Paradise\"\nxcodebuild -alltargets -configuration \"Release\" BUNDLE_LOADER=\"${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}\"\n";
+			shellScript = "exec \"${PROJECT_FILE_PATH}/BuildExtensions.sh\"";
 			showEnvVarsInLog = 0;
 		};
 		4CCF301715804DD1006FFE21 /* ShellScript */ = {
