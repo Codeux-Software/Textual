@@ -36,6 +36,7 @@
  *********************************************************************** */
 
 #import "TextualApplication.h"
+#import "BuildConfig.h"
 
 @implementation TPCPreferences
 
@@ -336,7 +337,12 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 + (NSString *)gitBuildReference
 {
-	return [RZMainBundle() infoDictionary][@"TXBundleBuildReference"];
+	return TXBundleBuildReference;
+}
+
++ (NSString *)gitCommitCount
+{
+	return TXBundleCommitCount;
 }
 
 #pragma mark -

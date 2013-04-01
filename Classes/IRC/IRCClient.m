@@ -1986,7 +1986,7 @@
 			NSString *name = [TPCPreferences applicationName];
 			NSString *vers = [TPCPreferences textualInfoPlist][@"CFBundleVersion"];
 			NSString *code = [TPCPreferences textualInfoPlist][@"TXBundleBuildCodeName"];
-			NSString *ccnt = [TPCPreferences textualInfoPlist][@"TXBundleCommitCount"];
+			NSString *ccnt = [TPCPreferences gitCommitCount];
 
 			if (NSObjectIsEmpty(gref)) {
 				gref = TXTLS(@"Unknown");

@@ -10,3 +10,4 @@
 Build Results/*
 xcuserdata
 *.xcworkspace
+Resources/BuildConfig.h
