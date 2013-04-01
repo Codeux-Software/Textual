@@ -72,7 +72,7 @@
 - (void)setAlertSound:(NSString *)value
 {
 	if ([value isEqualToString:TXEmptySoundAlertLabel]) {
-		value = NSStringEmptyPlaceholder;
+		value = TXEmptySoundAlertPreference;
 	}
 	
 	if (NSObjectIsNotEmpty(value)) {

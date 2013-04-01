@@ -43,7 +43,9 @@
 {
 	NSObjectIsEmptyAssert(name);
 	
-	if ([name isEqualToString:@"Beep"]) {
+	if ([name isEqualToString:TXEmptySoundAlertPreference]) {
+		return;
+	} else if ([name isEqualToString:@"Beep"]) {
 		NSBeep();
 	} else {
 		NSSound *sound = [NSSound soundNamed:name];
