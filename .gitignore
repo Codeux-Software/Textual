@@ -7,6 +7,6 @@
 *.perspectivev3
 *.pyc
 .tmp
-Build*
+Build Results/*
 xcuserdata
 *.xcworkspace
