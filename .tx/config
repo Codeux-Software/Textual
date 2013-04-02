@@ -1,0 +1,93 @@
+[main]
+host = https://www.transifex.com
+
+[textual.BasicLanguage]
+source_file = Resources/Localization/English.lproj/BasicLanguage.strings
+source_lang = en
+type = STRINGS
+
+[textual.TDCAboutPanel]
+source_file = Resources/Localization/English.lproj/TDCAboutPanel.strings
+source_lang = en
+type = STRINGS
+
+[textual.TDCAddressBookSheet]
+source_file = Resources/Localization/English.lproj/TDCAddressBookSheet.strings
+source_lang = en
+type = STRINGS
+
+[textual.TDCHighlightSheet]
+source_file = Resources/Localization/English.lproj/TDCHighlightSheet.strings
+source_lang = en
+type = STRINGS
+
+[textual.TDCInviteSheet]
+source_file = Resources/Localization/English.lproj/TDCInviteSheet.strings
+source_lang = en
+type = STRINGS
+
+[textual.TDCListDialog]
+source_file = Resources/Localization/English.lproj/TDCListDialog.strings
+source_lang = en
+type = STRINGS
+
+[textual.TDCModeSheet]
+source_file = Resources/Localization/English.lproj/TDCModeSheet.strings
+source_lang = en
+type = STRINGS
+
+[textual.TDCNickSheet]
+source_file = Resources/Localization/English.lproj/TDCNickSheet.strings
+source_lang = en
+type = STRINGS
+
+[textual.TDCPreferences]
+source_file = Resources/Localization/English.lproj/TDCPreferences.strings
+source_lang = en
+type = STRINGS
+
+[textual.TDCServerSheet]
+source_file = Resources/Localization/English.lproj/TDCServerSheet.strings
+source_lang = en
+type = STRINGS
+
+[textual.TDCTopicSheet]
+source_file = Resources/Localization/English.lproj/TDCTopicSheet.strings
+source_lang = en
+type = STRINGS
+
+[textual.TDCWelcomeSheet]
+source_file = Resources/Localization/English.lproj/TDCWelcomeSheet.strings
+source_lang = en
+type = STRINGS
+
+[textual.TDChanBanExceptionSheet]
+source_file = Resources/Localization/English.lproj/TDChanBanExceptionSheet.strings
+source_lang = en
+type = STRINGS
+
+[textual.TDChanBanSheet]
+source_file = Resources/Localization/English.lproj/TDChanBanSheet.strings
+source_lang = en
+type = STRINGS
+
+[textual.TDChanInviteExceptionSheet]
+source_file = Resources/Localization/English.lproj/TDChanInviteExceptionSheet.strings
+source_lang = en
+type = STRINGS
+
+[textual.TDChannelSheet]
+source_file = Resources/Localization/English.lproj/TDChannelSheet.strings
+source_lang = en
+type = STRINGS
+
+[textual.TVCInputPromptDialog]
+source_file = Resources/Localization/English.lproj/TVCInputPromptDialog.strings
+source_lang = en
+type = STRINGS
+
+[textual.TXCMainMenu]
+source_file = Resources/Localization/English.lproj/TXCMainMenu.strings
+source_lang = en
+type = STRINGS
+
