@@ -99,8 +99,10 @@
 					}
 				
 					BOOL addUser = NO;
-					
-					if (myself.q && m.q == NO) {
+
+					if (client.hasIRCopAccess && m.isCop == NO) {
+						addUser = YES;
+					} else if (myself.q && m.q == NO) {
 						addUser = YES;
 					} else if (myself.a && m.q == NO && m.a == NO) {
 						addUser = YES;
