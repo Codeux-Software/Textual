@@ -102,6 +102,7 @@
 	@class TLOpenLink;
 	@class TPCPreferences;
 	@class TPCPreferencesMigrationAssistant;
+	@class TPCPreferencesImportExport;
 	@class TPCThemeController;
 	@class TPCThemeSettings;
 	@class TVCDockIcon;
@@ -258,6 +259,7 @@
 
 	#import "TPCPreferences.h"
 	#import "TPCPreferencesMigrationAssistant.h"
+	#import "TPCPreferencesImportExport.h"
 	#import "TPCThemeController.h"
 	#import "TPCThemeSettings.h"
 

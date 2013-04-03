@@ -250,4 +250,7 @@
 - (void)centerMainWindow:(id)sender;
 
 - (void)forceReloadTheme:(id)sender;
+
+- (void)importPreferences:(id)sender;
+- (void)exportPreferences:(id)sender;
 @end

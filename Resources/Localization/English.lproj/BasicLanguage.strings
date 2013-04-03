@@ -194,13 +194,7 @@
 "LogFileBeginOfSessionHeader" = "————————————— Begin Session —————————————";
 "LogFileEndOfSessionHeader" = "————————————— End Session —————————————";
 
-/* OldSandboxContainerFoundDialog* messages are actually not used in Textual 
- as of the time that this comment was written. It used to be during beta testing
- of an older version of Textual. It is being kept around in case it is needed again. */
-"OldSandboxContainerFoundDialogTitle" = "Migration Assistant";
-"OldSandboxContainerFoundDialogMessage" = "A set of configuration files associated with an earlier version of Textual have been found.\n\nTextual does not have permission to move the old files while within the Mac OS Sandbox so please download our migration assistant to move them into the correct location.";
-"OldSandboxContainerFoundDialogPrimaryButton" = "Quit & Download Assistant";
-"OldSandboxContainerFoundDialogSecondaryButton" = "Do Not Download";
+"PreferencesExportSaveLocationDialogMessage" = "Please select the location in which to save the file.\n\nIMPORTANT: The file that will be saved does not contain passwords\nas those are considered sensitive information. It also does not include\nany custom addons such as scripts and styles.";
 
 "NoButton" = "No";
 
