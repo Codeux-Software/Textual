@@ -2086,4 +2086,17 @@
 	[self.worldController.selectedViewController previousHighlight];
 }
 
+#pragma mark -
+#pragma mark Import/Export
+
+- (void)importPreferences:(id)sender
+{
+	
+}
+
+- (void)exportPreferences:(id)sender
+{
+	[TPCPreferencesImportExport export];
+}
+
 @end
