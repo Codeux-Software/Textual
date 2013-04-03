@@ -10,7 +10,7 @@
 	<string>irc.efnet.org</string>
 	<key>EsperNet</key>
 	<string>irc.esper.net</string>
-	<key>Freenode</key>
+	<key>freenode</key>
 	<string>chat.freenode.net</string>
 	<key>GameSurge</key>
 	<string>irc.gamesurge.net</string>

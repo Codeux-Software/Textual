@@ -51,7 +51,7 @@
 "BlowfishEncryptionStopped" = "Encryption stopped.";
 
 "ConnectToSupportChannelQuestionDialogTitle" = "Connect to Support Channel";
-"ConnectToSupportChannelQuestionDialogMessage" = "The Textual IRC Client support channel is located on Freenode. Would you like to add this channel?";
+"ConnectToSupportChannelQuestionDialogMessage" = "The Textual IRC Client support channel is located on freenode. Would you like to add this channel?";
 
 "CancelButton" = "Cancel";
 

@@ -77,7 +77,7 @@
 
     if ([message hasPrefix:@"+"]) {
         /* For some reason, NOTICE has a + prefix for key exchange on
-         Freenode. This fixex that. */
+         freenode. This fixex that. */
         
         message = [message safeSubstringFromIndex:1];
     }

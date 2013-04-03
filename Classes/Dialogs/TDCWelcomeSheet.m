@@ -190,7 +190,7 @@
 {
 	NSString *host = self.serverAddressField.stringValue;
 
-	if ([host hasSuffix:@"freenode.net"] || [host isEqualIgnoringCase:@"Freenode"]) {
+	if ([host hasSuffix:@"freenode.net"] || [host isEqualIgnoringCase:@"freenode"]) {
 		NSString *key = [TLOPopupPrompts suppressionKeyWithBase:@"welcomesheet_join_support_channel"];
 
 		BOOL enableDialog = [RZUserDefaults() boolForKey:key];
