@@ -4259,7 +4259,7 @@
 
 			break;
 		}
-		case 290: // RPL_CAPAB (Freenode)
+		case 290: // RPL_CAPAB (freenode)
 		{
 			NSAssertReturnLoopBreak(m.params.count >= 2);
 

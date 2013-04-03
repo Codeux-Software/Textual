@@ -113,7 +113,7 @@
 
         /* Reload table instantly until we reach at least 200 channels. 
          At that point we begin reloading every 2.0 seconds. For networks
-         large as Freenode with 12,000 channels. This is much better than 
+         large as freenode with 12,000 channels. This is much better than 
          a reload for each. */
         
         if (self.unfilteredList.count < 200) {
