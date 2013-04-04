@@ -54,7 +54,7 @@
 	if ((self = [super init])) {
 		[NSBundle loadNibNamed:@"TDCPreferences" owner:self];
 	}
-	
+
 	return self;
 }
 
@@ -86,14 +86,14 @@
 	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationNewPrivateMessageType]];
 	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationPrivateMessageType]];
 	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationPrivateNoticeType]];
-	
+
 	[self.scriptsController populateData];
-	
+
 	self.installedScriptsTable.dataSource = self.scriptsController;
 	[self.installedScriptsTable reloadData];
 
 	[self setUpToolbarItemsAndMenus];
-	
+
 	[self updateThemeSelection];
     [self updateAlertSelection];
 	[self updateTranscriptFolder];
@@ -106,7 +106,7 @@
 	[self.window restoreWindowStateUsingKeyword:NSStringFromClass(self.class)];
 
 	[self.window makeKeyAndOrderFront:nil];
-	
+
 	[self firstPane:self.generalView selectedItem:0];
 }
 
@@ -114,49 +114,49 @@
 #pragma mark NSToolbar Delegates
 
 /*
-	Toolbar Design:
-		[tag]: [label]
- 
-		0: General
- 
-			— Blank Space —
- 
-		3: Alerts
-		1: Highlights
-		4: Style
-		2: Interface
-		9: Identity
- 
-			— Blank Space —
- 
-		13: Addons — Menu that includes list of preference
-				panes created by loaded extensions. Top item of 
-				list is "Installed Addons" with tag 10. The tag 
-				of each other item is dynamically determined based 
-				on the _addonsToolbarItemMultiplier. 
- 
-		10: Addons — Button, "Installed Addons" — no menu. Used
-				if there are no extensions loaded that create
-				custom preference panes.
- 
-		11: Advanced — Menu. 
- 
-					7:	IRCop Services
-					8:	Channel Management
-					12: Command Scope
-					6:	Flood Control
-					5:	Log Location
-					11: Experimental Settings
- 
-	The tag of each toolbar item (and menu item) should not 
-	conflict with any other in order to function with 
-	onPrefPaneSelected: properly which each item calls.
+ Toolbar Design:
+ [tag]: [label]
+
+ 0: General
+
+ — Blank Space —
+
+ 3: Alerts
+ 1: Highlights
+ 4: Style
+ 2: Interface
+ 9: Identity
+
+ — Blank Space —
+
+ 13: Addons — Menu that includes list of preference
+ panes created by loaded extensions. Top item of
+ list is "Installed Addons" with tag 10. The tag
+ of each other item is dynamically determined based
+ on the _addonsToolbarItemMultiplier.
+
+ 10: Addons — Button, "Installed Addons" — no menu. Used
+ if there are no extensions loaded that create
+ custom preference panes.
+
+ 11: Advanced — Menu.
+
+ 7:	IRCop Services
+ 8:	Channel Management
+ 12: Command Scope
+ 6:	Flood Control
+ 5:	Log Location
+ 11: Experimental Settings
+
+ The tag of each toolbar item (and menu item) should not
+ conflict with any other in order to function with
+ onPrefPaneSelected: properly which each item calls.
  */
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
 {
 	NSArray *bundles = [RZPluginManager() pluginsWithPreferencePanes];
-	
+
 	if (NSObjectIsEmpty(bundles)) {
 		return @[@"0", NSToolbarFlexibleSpaceItemIdentifier, @"3", @"1", @"4", @"2", @"9", NSToolbarFlexibleSpaceItemIdentifier, @"10", @"11"];
 	} else {
@@ -170,19 +170,19 @@
 
 	for (THOPluginItem *plugin in bundles) {
 		NSInteger tagIndex = ([bundles indexOfObject:plugin] + _addonsToolbarItemMultiplier);
-		
+
 		NSMenuItem *pluginMenu = [NSMenuItem new];
 
 		[pluginMenu setTag:tagIndex];
 		[pluginMenu setTarget:self];
 		[pluginMenu setAction:@selector(onPrefPaneSelected:)];
 		[pluginMenu setTitle:[plugin.primaryClass preferencesMenuItemName]];
-		
+
 		[self.installedScriptsMenu addItem:pluginMenu];
 	}
 }
 
-- (void)onPrefPaneSelected:(id)sender 
+- (void)onPrefPaneSelected:(id)sender
 {
 	NSInteger pluginIndex = ([sender tag] - _addonsToolbarItemMultiplier);
 
@@ -203,42 +203,42 @@
 		default:
 		{
 			THOPluginItem *plugin = [RZPluginManager() pluginsWithPreferencePanes][pluginIndex];
-			
+
 			if (plugin) {
 				NSView *prefsView = [plugin.primaryClass preferencesView];
-				
+
 				if (prefsView) {
 					[self firstPane:prefsView selectedItem:13];
 				}
 			} else {
 				[self firstPane:self.generalView selectedItem:0];
 			}
-			
+
 			break;
 		}
 	}
-} 
+}
 
 - (void)firstPane:(NSView *)view selectedItem:(NSInteger)key
-{							   
+{
 	NSRect windowFrame = self.window.frame;
-	
+
 	windowFrame.size.width = view.frame.size.width;
 	windowFrame.size.height = (view.frame.size.height + _TXWindowToolbarHeight);
-	
+
 	windowFrame.origin.y = (NSMaxY(self.window.frame) - windowFrame.size.height);
-	
+
 	if (NSObjectIsNotEmpty(self.contentView.subviews)) {
 		[self.contentView.subviews[0] removeFromSuperview];
 	}
-	
+
 	[self.window setFrame:windowFrame display:YES animate:YES];
-	
+
 	[self.contentView setFrame:view.frame];
-	[self.contentView addSubview:view];	
-	
+	[self.contentView addSubview:view];
+
 	[self.window recalculateKeyViewLoop];
-	
+
 	[self.preferenceSelectToolbar setSelectedItemIdentifier:[NSString stringWithInteger:key]];
 }
 
@@ -292,7 +292,7 @@
 {
 	if ([key isEqualToString:@"maxLogLines"]) {
 		NSInteger n = [*value integerValue];
-		
+
 		if (n < _linesMin) {
 			*value = NSNumberWithInteger(_linesMin);
 		} else if (n > _linesMax) {
@@ -300,14 +300,14 @@
 		}
 	} else if ([key isEqualToString:@"inlineImageMaxWidth"]) {
 		NSInteger n = [*value integerValue];
-		
+
 		if (n < _inlineImageMin) {
 			*value = NSNumberWithInteger(_inlineImageMin);
 		} else if (_inlineImageMax < n) {
 			*value = NSNumberWithInteger(_inlineImageMax);
 		}
 	}
-	
+
 	return YES;
 }
 
@@ -317,25 +317,25 @@
 - (void)updateAlertSelection
 {
 	[self.alertSoundChoiceButton removeAllItems];
-	
+
 	NSArray *alertSounds = [self availableSounds];
-	
+
     for (NSString *alertSound in alertSounds) {
         NSMenuItem *item = [NSMenuItem new];
-		
+
         [item setTitle:alertSound];
-        
+
         [self.alertSoundChoiceButton.menu addItem:item];
     }
 
     [self.alertSoundChoiceButton selectItemAtIndex:0];
 
 	// ---- //
-	
+
     [self.alertTypeChoiceButton removeAllItems];
-	
+
     NSMutableArray *alerts = self.alertSounds;
-	
+
     for (id alert in alerts) {
 		if ([alert isKindOfClass:[TDCPreferencesSoundWrapper class]]) {
 			NSMenuItem *item = [NSMenuItem new];
@@ -348,24 +348,24 @@
 			[self.alertTypeChoiceButton.menu addItem:[NSMenuItem separatorItem]];
 		}
     }
-	
+
     [self.alertTypeChoiceButton selectItemAtIndex:0];
 }
 
-- (void)onChangedAlertType:(id)sender 
+- (void)onChangedAlertType:(id)sender
 {
 	TXNotificationType alertType = (TXNotificationType)self.alertTypeChoiceButton.selectedItem.tag;
-	
+
     TDCPreferencesSoundWrapper *alert = [TDCPreferencesSoundWrapper soundWrapperWithEventType:alertType];
 
 	[self.alertSpeakEventButton setState:alert.speakEvent];
     [self.alertPushNotificationButton setState:alert.pushNotification];
     [self.alertDisableWhileAwayButton setState:alert.disabledWhileAway];
-	
+
 	[self.alertSoundChoiceButton selectItemAtIndex:[self.availableSounds indexOfObject:alert.alertSound]];
 }
 
-- (void)onChangedAlertNotification:(id)sender 
+- (void)onChangedAlertNotification:(id)sender
 {
 	TXNotificationType alertType = (TXNotificationType)self.alertTypeChoiceButton.selectedItem.tag;
 
@@ -383,7 +383,7 @@
 	[alert setSpeakEvent:self.alertSpeakEventButton.state];
 }
 
-- (void)onChangedAlertDisableWhileAway:(id)sender 
+- (void)onChangedAlertDisableWhileAway:(id)sender
 {
 	TXNotificationType alertType = (TXNotificationType)self.alertTypeChoiceButton.selectedItem.tag;
 
@@ -406,7 +406,7 @@
 	NSMutableArray *soundList = [NSMutableArray array];
 
 	NSString *systemSoundFolder = @"/System/Library/Sounds";
-	
+
 	NSURL *userSoundFolderURL = [RZFileManager() URLForDirectory:NSLibraryDirectory
 														inDomain:NSUserDomainMask
 											   appropriateForURL:nil
@@ -414,13 +414,13 @@
 														   error:NULL];
 
 	NSString *userSoundFolder = [userSoundFolderURL.relativePath stringByAppendingPathComponent:@"/Sounds"];
-	
+
 	NSArray *homeDirectoryContents = [RZFileManager() contentsOfDirectoryAtPath:userSoundFolder error:NULL];
 	NSArray *systemDirectoryContents = [RZFileManager() contentsOfDirectoryAtPath:systemSoundFolder error:NULL];
-	
+
 	[soundList safeAddObject:TXEmptySoundAlertLabel];
 	[soundList safeAddObject:@"Beep"];
-	
+
 	if (NSObjectIsNotEmpty(systemDirectoryContents)) {
 		for (__strong NSString *s in systemDirectoryContents) {
 			if ([s contains:@"."]) {
@@ -430,19 +430,19 @@
 			[soundList safeAddObject:s];
 		}
 	}
-	
+
 	if (NSObjectIsNotEmpty(homeDirectoryContents)) {
 		[soundList safeAddObject:TXEmptySoundAlertLabel];
-		
+
 		for (__strong NSString *s in homeDirectoryContents) {
 			if ([s contains:@"."]) {
 				s = [s safeSubstringToIndex:[s stringPosition:@"."]];
 			}
 
 			[soundList safeAddObject:s];
-		}		
+		}
 	}
-	
+
 	return soundList;
 }
 
@@ -459,9 +459,9 @@
 		[item setTitle:TXTLS(@"NoLogLocationDefinedMenuItem")];
 	} else {
 		NSImage *icon = [RZWorkspace() iconForFile:path];
-		
+
 		[icon setSize:NSMakeSize(16, 16)];
-		
+
 		[item setImage:icon];
 		[item setTitle:[path.lastPathComponent decodeURIFragement]];
 	}
@@ -471,7 +471,7 @@
 {
 	if ([self.transcriptFolderButton selectedTag] == 2) {
 		NSOpenPanel *d = [NSOpenPanel openPanel];
-		
+
 		[d setCanChooseFiles:NO];
 		[d setResolvesAliases:YES];
 		[d setCanChooseDirectories:YES];
@@ -480,17 +480,17 @@
 
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
 			[self.transcriptFolderButton selectItem:[self.transcriptFolderButton itemAtIndex:0]];
-			
+
 			if (returnCode == NSOKButton) {
 				NSURL *pathURL = [d.URLs safeObjectAtIndex:0];
 
 				NSError *error = nil;
-				
+
 				NSData *bookmark = [pathURL bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
 									 includingResourceValuesForKeys:nil
 													  relativeToURL:nil
 															  error:&error];
-				
+
 				if (error) {
 					LogToConsole(@"Error creating bookmark for URL (%@): %@", pathURL, [error localizedDescription]);
 				} else {
@@ -509,26 +509,26 @@
 - (void)updateThemeSelection
 {
 	[self.themeSelectionButton removeAllItems];
-	
+
 	NSInteger tag = 0;
-	
+
 	NSArray *paths = @[[TPCPreferences bundledThemeFolderPath],
-					   [TPCPreferences customThemeFolderPath]];
-	
+					[TPCPreferences customThemeFolderPath]];
+
 	for (NSString *path in paths) {
 		NSMutableSet *set = [NSMutableSet set];
 
 		NSArray *files = [RZFileManager() contentsOfDirectoryAtPath:path error:NULL];
-		
+
 		for (NSString *file in files) {
 			NSString *filename = file.lastPathComponent;
-			
+
 			if ([path isEqualToString:paths[0]]) {
 				/* If a custom theme with the same name of this bundled theme exists,
 				 then ignore the bundled them. Custom themes always take priority. */
-				
+
 				NSString *cfip = [paths[1] stringByAppendingPathComponent:filename];
-				
+
 				if ([RZFileManager() fileExistsAtPath:cfip]) {
 					continue;
 				}
@@ -543,12 +543,12 @@
 		}
 
 		// ---- //
-		
+
 		files = [set.allObjects sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-		
+
 		if (NSObjectIsNotEmpty(files)) {
 			NSInteger i = 0;
-			
+
 			for (NSString *f in files) {
 				NSMenuItem *cell = [NSMenuItem new];
 
@@ -556,35 +556,35 @@
 				[cell setTitle:f];
 				[cell setAction:nil];
 				[cell setKeyEquivalent:NSStringEmptyPlaceholder];
-				
+
 				[self.themeSelectionButton.menu addItem:cell];
-				
+
 				i += 1;
 			}
 		}
-		
+
 		tag += 1;
 	}
 
 	// ---- //
-	
+
 	NSString *kind = [TPCThemeController extractThemeSource:[TPCPreferences themeName]];
 	NSString *name = [TPCThemeController extractThemeName:[TPCPreferences themeName]];
-	
+
 	NSInteger targetTag = 0;
-	
+
 	if ([kind isEqualToString:@"resource"] == NO) {
 		targetTag = 1;
 	}
-	
+
 	NSInteger count = [self.themeSelectionButton numberOfItems];
-	
+
 	for (NSInteger i = 0; i < count; i++) {
 		NSMenuItem *item = [self.themeSelectionButton itemAtIndex:i];
 
 		if ([item tag] == targetTag && [item.title isEqualToString:name]) {
 			[self.themeSelectionButton selectItemAtIndex:i];
-			
+
 			break;
 		}
 	}
@@ -593,20 +593,20 @@
 - (void)onChangedTheme:(id)sender
 {
 	NSMenuItem *item = [self.themeSelectionButton selectedItem];
-	
+
 	NSString *newThemeName = nil;
 	NSString *oldThemeName = [TPCPreferences themeName];
-	
+
 	if (item.tag == 0) {
 		newThemeName = [TPCThemeController buildResourceFilename:item.title];
 	} else {
 		newThemeName = [TPCThemeController buildUserFilename:item.title];
 	}
-	
+
 	if ([oldThemeName isEqual:newThemeName]) {
 		return;
 	}
-	
+
 	[TPCPreferences setThemeName:newThemeName];
 
 	[self onChangedStyle:nil];
@@ -658,7 +658,7 @@
 - (void)onSelectNewFont:(id)sender
 {
 	NSFont *logfont = [TPCPreferences themeChannelViewFont];
-	
+
 	[RZFontManager() setSelectedFont:logfont isMultiple:NO];
 	[RZFontManager() orderFrontFontPanel:self];
 	[RZFontManager() setAction:@selector(changeItemFont:)];
@@ -667,15 +667,15 @@
 - (void)changeItemFont:(NSFontManager *)sender
 {
 	NSFont *logfont = [TPCPreferences themeChannelViewFont];
-	
+
 	NSFont *newFont = [sender convertFont:logfont];
-	
+
 	[TPCPreferences setThemeChannelViewFontName:[newFont fontName]];
 	[TPCPreferences setThemeChannelViewFontSize:[newFont pointSize]];
-	
+
 	[self setValue:  [newFont fontName]		forKey:@"themeChannelViewFontName"];
 	[self setValue:@([newFont pointSize])	forKey:@"themeChannelViewFontSize"];
-	
+
 	[self onChangedStyle:nil];
 }
 
@@ -695,7 +695,7 @@
         [self.excludeKeywordsTable setEnabled:YES];
     } else {
         [self.highlightNicknameButton setEnabled:YES];
-        
+
         if ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightPartialMatchType) {
             [self.addExcludeKeywordButton setEnabled:YES];
             [self.excludeKeywordsTable setEnabled:YES];
@@ -709,7 +709,7 @@
 - (void)editTable:(NSTableView *)table
 {
 	NSInteger row = ([table numberOfRows] - 1);
-	
+
 	[table scrollRowToVisible:row];
 	[table editColumn:0 row:row withEvent:nil select:YES];
 }
@@ -717,21 +717,21 @@
 - (void)onAddKeyword:(id)sender
 {
 	[self.matchKeywordsArrayController add:nil];
-	
+
 	[self performSelector:@selector(editTable:) withObject:self.keywordsTable afterDelay:0.3];
 }
 
 - (void)onAddExcludeKeyword:(id)sender
 {
 	[self.excludeKeywordsArrayController add:nil];
-	
+
 	[self performSelector:@selector(editTable:) withObject:self.excludeKeywordsTable afterDelay:0.3];
 }
 
 - (void)onChangedInputHistoryScheme:(id)sender
 {
 	TXMasterController *master = self.masterController;
-	
+
 	if (master.inputHistory) {
 		master.inputHistory = nil;
 	}
@@ -810,7 +810,7 @@
 {
 	[self.masterController.serverList reloadAllDrawingsIgnoringOtherReloads];
 	[self.masterController.serverList updateBackgroundColor];
-	
+
 	[self.masterController.memberList updateBackgroundColor];
 
 	[self.masterController.serverSplitView setNeedsDisplay:YES];
@@ -818,21 +818,21 @@
 
 	[self.masterController.inputTextField updateTextColor];
 	[self.masterController.inputTextField setNeedsDisplay:YES];
-	
+
 	[self.worldController executeScriptCommandOnAllViews:@"sidebarInversionPreferenceChanged" arguments:@[]];
 }
 
 + (void)openPathToThemesCallback:(TLOPopupPromptReturnType)returnCode
-{	
+{
 	NSString *name = [TPCThemeController extractThemeName:[TPCPreferences themeName]];
-	
+
 	if (returnCode == TLOPopupPromptReturnSecondaryType) {
 		return;
 	}
-    
+
 	if (returnCode == TLOPopupPromptReturnPrimaryType) {
 		NSString *path = [[TPCPreferences bundledThemeFolderPath] stringByAppendingPathComponent:name];
-		
+
 		[RZWorkspace() openFile:path];
 	} else {
 		NSString *newpath = [[TPCPreferences customThemeFolderPath]	stringByAppendingPathComponent:name];
@@ -857,20 +857,20 @@
 
     if ([kind isEqualIgnoringCase:@"resource"]) {
 		TLOPopupPrompts *prompt = [TLOPopupPrompts new];
-		
+
 		[prompt sheetWindowWithQuestion:[NSApp keyWindow]
 								 target:[TDCPreferencesController class]
-								 action:@selector(openPathToThemesCallback:) 
+								 action:@selector(openPathToThemesCallback:)
 								   body:TXTFLS(@"OpeningLocalStyleResourcesMessage", name)
 								  title:TXTLS(@"OpeningLocalStyleResourcesTitle")
 						  defaultButton:TXTLS(@"ContinueButton")
-						alternateButton:TXTLS(@"CancelButton") 
+						alternateButton:TXTLS(@"CancelButton")
 							otherButton:TXTLS(@"OpeningLocalStyleResourcesCopyButton")
-						 suppressionKey:@"opening_local_style" 
+						 suppressionKey:@"opening_local_style"
 						suppressionText:nil];
     } else {
 		NSString *path = [[TPCPreferences customThemeFolderPath] stringByAppendingPathComponent:name];
-		
+
 		[RZWorkspace() openFile:path];
     }
 }
@@ -883,7 +883,7 @@
 - (void)onChangedHighlightLogging:(id)sender
 {
 	IRCWorld *world = TPCPreferences.masterController.world;
-	
+
 	if ([TPCPreferences logHighlights] == NO) {
 		for (IRCClient *u in world.clients) {
 			[u.highlights removeAllObjects];
@@ -918,12 +918,12 @@
 - (void)windowWillClose:(NSNotification *)note
 {
 	[self.window saveWindowStateUsingKeyword:NSStringFromClass(self.class)];
-	
+
 	[TPCPreferences cleanUpHighlightKeywords];
 	[TPCPreferences sync];
-	
+
 	[RZUserDefaults() synchronize];
-	
+
 	if ([self.delegate respondsToSelector:@selector(preferencesDialogWillClose:)]) {
 		[self.delegate preferencesDialogWillClose:self];
 	}

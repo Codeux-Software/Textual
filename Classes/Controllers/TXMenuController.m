@@ -2091,7 +2091,7 @@
 
 - (void)importPreferences:(id)sender
 {
-	
+	[TPCPreferencesImportExport import];
 }
 
 - (void)exportPreferences:(id)sender
