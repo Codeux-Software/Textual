@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+#define _TVCSwipeMinimumLength 0.3
+
 @implementation TVCMainWindow
 
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation
@@ -63,13 +65,73 @@
 	[self.keyHandler registerSelector:selector character:c modifiers:mods];
 }
 
+/* Three Finger Swipe Event
+	This event will only work if 
+		System Preferences -> Trackpad -> More Gestures -> Swipe between full-screen apps
+	is not set to "Swipe left or right with three fingers"
+ */
 - (void)swipeWithEvent:(NSEvent *)event
 {
     CGFloat x = [event deltaX];
     if (x > 0) {
-        [self.masterController selectNextChannel:nil];
+        [self.masterController selectNextSelection:nil];
     } else if (x < 0) {
-        [self.masterController selectPreviousChannel:nil];
+        [self.masterController selectPreviousWindow:nil];
+    }
+}
+
+- (void)beginGestureWithEvent:(NSEvent *)event
+{
+
+	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseAny inView:nil];
+
+	self.twoFingerTouches = [NSMutableDictionary dictionary];
+
+	for (NSTouch *touch in touches) {
+		// Cannot use safeSetObject because identiy is not an NSString
+		// It's cool though cause touch is guarunteed not to be nil
+		self.twoFingerTouches[touch.identity] = touch;
+	}
+}
+
+- (void)endGestureWithEvent:(NSEvent *)event
+{
+	NSObjectIsEmptyAssert(self.twoFingerTouches);
+
+	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseAny inView:nil];
+
+	NSMutableDictionary *beginTouches = [self.twoFingerTouches copy];
+    self.twoFingerTouches = nil;
+
+	NSMutableArray *magnitudes = [NSMutableArray array];
+
+	for (NSTouch *touch in touches) {
+		NSTouch *beginTouch = [beginTouches objectForKey:touch.identity];
+
+		PointerIsEmptyAssertLoopContinue(beginTouch);
+
+		float magnitude = touch.normalizedPosition.x - beginTouch.normalizedPosition.x;
+		[magnitudes safeAddObject:@(magnitude)];
+	}
+
+	if (magnitudes.count < 2) {
+		return;
+	}
+
+	float sum = 0.f;
+	for (NSNumber *magnitude in magnitudes) {
+		sum += magnitude.floatValue;
+	}
+	float absSum = fabsf(sum);
+
+	if (absSum < _TVCSwipeMinimumLength) {
+		return;
+	}
+
+	if (sum > 0) {
+		[self.masterController selectNextSelection:nil];
+    } else if (sum < 0) {
+		[self.masterController selectPreviousWindow:nil];
     }
 }
 
