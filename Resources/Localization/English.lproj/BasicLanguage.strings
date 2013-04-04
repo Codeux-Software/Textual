@@ -197,7 +197,7 @@
 "PreferencesExportSaveLocationDialogMessage" = "Please select the location in which to save the file.\n\nIMPORTANT: The file that will be saved does not contain passwords\nas those are considered sensitive information. It also does not include\nany custom addons such as scripts and styles.";
 
 "PreferencesImportPreflightDialogTitle" = "Import Preferences";
-"PreferencesImportPreflightDialogMessage" = "During import, all connections will be disconnected and the contents of all channels cleared.\n\nPlease take note that the following preferences cannot be imported:\n\n    • Log location.\n    • Main window interface layout (size).\n    • Any custom addons. Styles or scripts.\n\nAll other preferences will apply immediately.";
+"PreferencesImportPreflightDialogMessage" = "During import, all connections will be disconnected and the contents of all channels cleared.\n\nPlease take note that the following preferences cannot be imported:\n\n    • Log location.\n    • Any custom addons. Styles or scripts.\n\nAll other preferences will apply immediately.";
 "PreferencesImportPreflightDialogSelectFileButton" = "Select File";
 
 "NoButton" = "No";
