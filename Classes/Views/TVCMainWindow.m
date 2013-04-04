@@ -63,6 +63,16 @@
 	[self.keyHandler registerSelector:selector character:c modifiers:mods];
 }
 
+- (void)swipeWithEvent:(NSEvent *)event
+{
+    CGFloat x = [event deltaX];
+    if (x > 0) {
+        [self.masterController selectNextChannel:nil];
+    } else if (x < 0) {
+        [self.masterController selectPreviousChannel:nil];
+    }
+}
+
 - (void)sendEvent:(NSEvent *)e
 {
 	if ([e type] == NSKeyDown) {
