@@ -98,6 +98,7 @@
 - (void)selectPreviousActiveServer:(NSEvent *)e;
 - (void)selectPreviousUnreadChannel:(NSEvent *)e;
 - (void)selectPreviousActiveChannel:(NSEvent *)e;
+- (void)selectPreviousWindow:(NSEvent *)e;
 @end
 
 @interface NSObject (TXMasterControllerObjectExtension)

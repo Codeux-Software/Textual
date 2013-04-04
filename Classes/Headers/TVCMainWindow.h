@@ -39,6 +39,7 @@
 
 @interface TVCMainWindow : NSWindow
 @property (nonatomic, strong) TLOKeyEventHandler *keyHandler;
+@property (nonatomic, strong) NSMutableDictionary *twoFingerTouches;
 
 - (void)setKeyHandlerTarget:(id)target;
 
