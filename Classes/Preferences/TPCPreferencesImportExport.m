@@ -1,25 +1,25 @@
-/* ********************************************************************* 
-       _____        _               _    ___ ____   ____
-      |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
-       | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
-       | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
-       |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
+/* *********************************************************************
+ _____        _               _    ___ ____   ____
+ |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
+ | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
+ | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
+ |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
  Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
-        Please see Contributors.pdf and Acknowledgements.pdf
+ Please see Contributors.pdf and Acknowledgements.pdf
 
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
  are met:
 
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-    * Neither the name of the Textual IRC Client & Codeux Software nor the
-      names of its contributors may be used to endorse or promote products
-      derived from this software without specific prior written permission.
+ * Redistributions of source code must retain the above copyright
+ notice, this list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright
+ notice, this list of conditions and the following disclaimer in the
+ documentation and/or other materials provided with the distribution.
+ * Neither the name of the Textual IRC Client & Codeux Software nor the
+ names of its contributors may be used to endorse or promote products
+ derived from this software without specific prior written permission.
 
  THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -37,10 +37,12 @@
 
 #import "TextualApplication.h"
 
-/* 
+/*
 	Everything related to import/export is handled within this class. This class
 	should only be called by awakeFromNib in master controller and the associated
-	menu items in the menu controller. 
+	menu items in the menu controller.
+
+	Sheets are used to lock focus to the task at hand.
  */
 
 @implementation TPCPreferencesImportExport
@@ -48,18 +50,56 @@
 /* -import handles the actual import menu item. */
 + (void)import
 {
+	TLOPopupPrompts *prompt = [TLOPopupPrompts new];
 
+	[prompt sheetWindowWithQuestion:self.masterController.mainWindow
+							 target:self
+							 action:@selector(importPreflight:)
+							   body:TXTLS(@"PreferencesImportPreflightDialogMessage")
+							  title:TXTLS(@"PreferencesImportPreflightDialogTitle")
+					  defaultButton:TXTLS(@"PreferencesImportPreflightDialogSelectFileButton")
+					alternateButton:TXTLS(@"CancelButton")
+						otherButton:nil
+					 suppressionKey:nil
+					suppressionText:nil];
 }
 
 /* Master controller internal handles for import. */
-+ (void)importPreflight
++ (void)importPreflight:(TLOPopupPromptReturnType)buttonPressed
 {
-	
+	/* What button? */
+	if (buttonPressed == TLOPopupPromptReturnPrimaryType) {
+		NSOpenPanel *d = [NSOpenPanel openPanel];
+
+		[d setCanChooseFiles:YES];
+		[d setResolvesAliases:YES];
+		[d setCanChooseDirectories:NO];
+		[d setCanCreateDirectories:NO];
+		[d setAllowsMultipleSelection:NO];
+
+		[d beginWithCompletionHandler:^(NSInteger returnCode) {
+			if (returnCode == NSOKButton) {
+				NSURL *pathURL = [d.URLs safeObjectAtIndex:0];
+
+				[self importPostflight:pathURL];
+			}
+		}];
+	}
 }
 
-+ (void)importPostflight
++ (void)importPostflight:(NSURL *)pathURL
 {
+	/* The loading screen is a generic way to show something during import. */
+	[self.masterController.mainWindowLoadingScreen popLoadingConfigurationView];
 
+	/* Disconnect and clear all. */
+	IRCWorld *theWorld = self.worldController;
+
+	for (IRCClient *u in theWorld.clients) {
+		[u quit];
+	}
+
+	/* Begin import. */
 }
 
 #pragma mark -
@@ -80,12 +120,33 @@
 
 	/* Cocoa filter. */
 	/* Go through each top level object in our dictionary and remove any that
-	 start with NS* and do not contain a space. These are considered part of 
+	 start with NS* and do not contain a space. These are considered part of
 	 theh cocoa namespace and we do not want them between different installs. */
 	for (NSString *key in settings) {
-		if ([key hasPrefix:@"NS"] && [key contains:NSStringWhitespacePlaceholder] == NO) {
+		if ([key hasPrefix:@"NS"] ||
+			[key hasPrefix:@"Apple"] ||
+			[key hasPrefix:@"WebKit"] ||
+			[key hasPrefix:@"com.apple."])
+		{
+			[mutsettings removeObjectForKey:key];
+		} else if ([key hasPrefix:@"Saved Window State —> Internal —> "]) {
+			/* While we are going through the list, also remove window frames. */
+			
 			[mutsettings removeObjectForKey:key];
 		}
+	}
+
+	/* Custom filter. */
+	/* Some settings such as log folder scoped bookmark cannot be exported/imported so we will
+	 drop that from our exported dictionary. Other things that cannot be handled is the main 
+	 window frame. Also, any custom styles. */
+	[mutsettings removeObjectForKey:@"LogTranscriptDestinationSecurityBookmark"];
+	[mutsettings removeObjectForKey:@"Window -> Main Window"];
+
+	NSString *themeName = [settings objectForKey:@"Theme -> Name"];
+
+	if ([themeName hasPrefix:@"resource:"] == NO) { // It is custom.
+ 		[mutsettings removeObjectForKey:@"Theme -> Name"];
 	}
 
 	/* The export will be saved as binary. Two reasons: 1) Discourages user from
@@ -118,7 +179,7 @@
 
 	[d setCanCreateDirectories:YES];
 	[d setNameFieldStringValue:@"TextualPrefrences.plist"];
-	
+
 	[d setMessage:TXTLS(@"PreferencesExportSaveLocationDialogMessage")];
 
 	[d beginWithCompletionHandler:^(NSInteger returnCode) {

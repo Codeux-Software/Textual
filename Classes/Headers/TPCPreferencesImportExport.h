@@ -40,9 +40,5 @@
 /* Absolutely no plugin should call this class. */
 @interface TPCPreferencesImportExport : NSObject
 + (void)import;
-
-+ (void)importPreflight;
-+ (void)importPostflight;
-
 + (void)export;
 @end
