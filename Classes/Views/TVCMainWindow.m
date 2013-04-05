@@ -112,7 +112,7 @@
 
 		PointerIsEmptyAssertLoopContinue(beginTouch);
 
-		CGFloat magnitude = touch.normalizedPosition.x - beginTouch.normalizedPosition.x;
+		CGFloat magnitude = (touch.normalizedPosition.x - beginTouch.normalizedPosition.x);
 
 		[magnitudes safeAddObject:@(magnitude)];
 	}
