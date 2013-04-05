@@ -169,7 +169,11 @@
         /* Reset our file if we do not want to load historic items. */
 
         [self.historicLogFile reset];
-    }
+    } else {
+		if (self.historyLoaded == NO && (self.channel && self.channel.isPrivateMessage == NO)) {
+			[self reloadHistory];
+		}
+	}
 }
 
 - (void)closeHistoricLog
@@ -185,7 +189,7 @@
 	 then we call a save before terminating. Or, we just erase the file from the
 	 path that it is written to entirely. */
 
-	if ([TPCPreferences reloadScrollbackOnLaunch] && (self.channel.isChannel || PointerIsEmpty(self.channel))) {
+	if ([TPCPreferences reloadScrollbackOnLaunch] && (self.channel.isChannel && self.channel)) {
 		[self.historicLogFile updateCache];
 	} else {
 		[self.historicLogFile reset];
@@ -1302,12 +1306,6 @@
 		NSStringNilValueSubstitute(self.channel.config.itemUUID),
 		NSStringNilValueSubstitute(self.channel.name)
 	 ]];
-
-	if (self.historyLoaded == NO && (PointerIsEmpty(self.channel) || self.channel.isPrivateMessage == NO)) {
-		if ([TPCPreferences reloadScrollbackOnLaunch]) {
-			[self reloadHistory];
-		}
-	}
 
 	if (self.reloadingBacklog == NO) {
 		[self internalExecuteScriptCommand:@"viewFinishedLoading" withArguments:@[]];
