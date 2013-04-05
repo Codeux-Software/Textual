@@ -299,6 +299,9 @@
 		
 		if ([t compare:item] == NSOrderedDescending) {
 			[userList safeInsertObject:item atIndex:i];
+
+			self.memberList = nil;
+			self.memberList = userList;
 			
 			return;
 		}
