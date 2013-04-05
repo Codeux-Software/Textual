@@ -263,7 +263,8 @@
 
 - (void)sortedMemberListReload
 {
-	[self.memberList sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+	/* Do not call this unless needed. */
+	self.memberList = [self.memberList sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
 		return [obj1 compare:obj2];
 	}];
 
@@ -278,6 +279,8 @@
 	
 	NSInteger left = 0;
 	NSInteger right = self.memberList.count;
+
+	NSMutableArray *userList = [self.memberList mutableCopy];
 	
 	while ((right - left) > LINEAR_SEARCH_THRESHOLD) {
 		NSInteger i = ((left + right) / 2);
@@ -295,13 +298,16 @@
 		IRCUser *t = [self memberAtIndex:i];
 		
 		if ([t compare:item] == NSOrderedDescending) {
-			[self.memberList safeInsertObject:item atIndex:i];
+			[userList safeInsertObject:item atIndex:i];
 			
 			return;
 		}
 	}
 	
-	[self.memberList safeAddObject:item];
+	[userList safeAddObject:item];
+
+	self.memberList = nil;
+	self.memberList = userList;
 }
 
 #pragma mark -
@@ -342,9 +348,14 @@
 	NSObjectIsEmptyAssert(nick);
 	
 	NSInteger n = [self indexOfMember:nick];
+
+	NSMutableArray *userList = [self.memberList mutableCopy];
 	
 	if (n >= 0) {
-		[self.memberList safeRemoveObjectAtIndex:n];
+		[userList safeRemoveObjectAtIndex:n];
+
+		self.memberList = nil;
+		self.memberList = userList;
 
         [self.client postEventToViewController:@"channelMemberRemoved" forChannel:self];
 	}
@@ -414,7 +425,8 @@
 
 - (void)clearMembers
 {
-	[self.memberList removeAllObjects];
+	self.memberList = nil;
+	self.memberList = @[];
 	
 	[self reloadMemberList];
 }

@@ -51,9 +51,10 @@ typedef enum IRCChannelStatus : NSInteger {
 @property (nonatomic, strong) IRCChannelMode *modeInfo;
 @property (nonatomic, strong) IRCChannelConfig *config;
 @property (nonatomic, assign) IRCChannelStatus status;
-@property (nonatomic, strong) NSMutableArray *memberList;
 @property (nonatomic, assign) BOOL errorOnLastJoinAttempt;
 @property (nonatomic, assign) BOOL isGatheringModeInfo;
+
+@property (strong) NSArray *memberList;
 
 - (void)setup:(IRCChannelConfig *)seed;
 - (void)updateConfig:(IRCChannelConfig *)seed;
