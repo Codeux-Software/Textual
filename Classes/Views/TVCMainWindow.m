@@ -73,6 +73,7 @@
 - (void)swipeWithEvent:(NSEvent *)event
 {
     CGFloat x = [event deltaX];
+	
     if (x > 0) {
         [self.masterController selectNextSelection:nil];
     } else if (x < 0) {
@@ -82,7 +83,6 @@
 
 - (void)beginGestureWithEvent:(NSEvent *)event
 {
-
 	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseAny inView:nil];
 
 	self.twoFingerTouches = [NSMutableDictionary dictionary];
@@ -90,6 +90,7 @@
 	for (NSTouch *touch in touches) {
 		// Cannot use safeSetObject because identiy is not an NSString
 		// It's cool though cause touch is guarunteed not to be nil
+
 		self.twoFingerTouches[touch.identity] = touch;
 	}
 }
@@ -101,7 +102,8 @@
 	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseAny inView:nil];
 
 	NSMutableDictionary *beginTouches = [self.twoFingerTouches copy];
-    self.twoFingerTouches = nil;
+
+	self.twoFingerTouches = nil;
 
 	NSMutableArray *magnitudes = [NSMutableArray array];
 
@@ -110,7 +112,8 @@
 
 		PointerIsEmptyAssertLoopContinue(beginTouch);
 
-		float magnitude = touch.normalizedPosition.x - beginTouch.normalizedPosition.x;
+		CGFloat magnitude = touch.normalizedPosition.x - beginTouch.normalizedPosition.x;
+
 		[magnitudes safeAddObject:@(magnitude)];
 	}
 
@@ -118,17 +121,20 @@
 		return;
 	}
 
-	float sum = 0.f;
+	CGFloat sum = 0.f;
+	
 	for (NSNumber *magnitude in magnitudes) {
 		sum += magnitude.floatValue;
 	}
-	float absSum = fabsf(sum);
+	
+	CGFloat absSum = fabsf(sum);
 
 	if (absSum < _TVCSwipeMinimumLength) {
 		return;
 	}
 
-	BOOL naturalDirectionEnabled = [[RZUserDefaults() valueForKey:@"com.apple.swipescrolldirection"] boolValue];
+	BOOL naturalDirectionEnabled = [RZUserDefaults() boolForKey:@"com.apple.swipescrolldirection"];
+
 	if (naturalDirectionEnabled) {
 		sum *= -1;
 	}
