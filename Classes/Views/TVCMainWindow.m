@@ -128,10 +128,6 @@
 		return;
 	}
 
-	if ([event isDirectionInvertedFromDevice]) {
-		sum *= -1;
-	}
-
 	if (sum > 0) {
 		[self.masterController selectNextSelection:nil];
     } else if (sum < 0) {
