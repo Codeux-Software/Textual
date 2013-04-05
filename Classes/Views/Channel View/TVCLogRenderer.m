@@ -694,14 +694,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			if (log && isNormalMsg) {
 				IRCChannel *logChannel = log.channel;
 
-				NSArray *rawMemberList = [logChannel.memberList copy];
-				NSArray *sortedMembers = [rawMemberList sortedArrayWithOptions:NSSortStable usingComparator:^NSComparisonResult(id obj1, id obj2) {
-					PointerIsEmptyAssertReturn(obj1, NO);
-					PointerIsEmptyAssertReturn(obj1, NO);
-
-					NSObjectIsKindOfClassAssertReturn(obj1, IRCUser, NO);
-					NSObjectIsKindOfClassAssertReturn(obj2, IRCUser, NO);
-
+				NSArray *sortedMembers = [logChannel.memberList sortedArrayWithOptions:NSSortStable usingComparator:^NSComparisonResult(id obj1, id obj2) {
 					IRCUser *s1 = obj1;
 					IRCUser *s2 = obj2;
 

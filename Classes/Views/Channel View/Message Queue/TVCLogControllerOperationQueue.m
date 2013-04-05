@@ -48,7 +48,7 @@
 @end
 
 @interface TVCLogControllerOperationQueue ()
-@property (strong) NSMutableDictionary *cachedOperations;
+@property (strong) NSDictionary *cachedOperations;
 @end
 
 #pragma mark -
@@ -163,7 +163,12 @@
 	[mutableOperations addObject:@[callbackBlock, context]];
 
 	/* Save array. */
-	[self.cachedOperations setObject:mutableOperations forKey:controllerKey];
+	NSMutableDictionary *mutops = [self.cachedOperations mutableCopy];
+	
+	[mutops setObject:mutableOperations forKey:controllerKey];
+
+	self.cachedOperations = nil;
+	self.cachedOperations = mutops;
 }
 
 - (NSArray *)cachedOperationsFor:(TVCLogController *)controller
@@ -185,7 +190,12 @@
 	NSString *controllerKey = [controller operationQueueHash];
 
 	/* Destroy cache. */
-	[self.cachedOperations removeObjectForKey:controllerKey];
+	NSMutableDictionary *mutops = [self.cachedOperations mutableCopy];
+
+	[mutops removeObjectForKey:controllerKey];
+
+	self.cachedOperations = nil;
+	self.cachedOperations = mutops;
 }
 
 #pragma mark -
