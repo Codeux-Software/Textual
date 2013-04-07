@@ -1779,6 +1779,17 @@
 
 			break;
 		}
+		case 5095: // Command: AQUOTE
+		case 5096: // Command: ARAW
+		{
+			NSObjectIsEmptyAssert(uncutInput);
+
+			for (IRCClient *client in self.worldController.clients) {
+				[client sendLine:uncutInput];
+			}
+
+			break;
+		}
 		case 5056: // Command: QUERY
 		{
 			NSString *nickname = s.getToken.string;
