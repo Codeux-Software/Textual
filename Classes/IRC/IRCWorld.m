@@ -86,6 +86,12 @@
 		[self createClient:e reload:YES];
 	}
 
+	if ([config boolForKey:@"IsSoundMuted"]) {
+		[self muteSound];
+	} else {
+		[self unmuteSound];
+	}
+
 	self.isPopulatingSeeds = NO;
 }
 
@@ -139,7 +145,11 @@
 		[ary safeAddObject:[u dictionaryValue]];
 	}
 
-	return [@{@"clients" : ary} mutableCopy];
+	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+	[dict safeSetObject:ary						forKey:@"clients"];
+	[dict safeSetObject:@(self.isSoundMuted)	forKey:@"IsSoundMuted"];
+
+	return dict;
 }
 
 - (void)save
