@@ -136,7 +136,7 @@
 @property (nonatomic, assign) BOOL findPanelOpened;
 @property (nonatomic, strong) NSDictionary *openWindowList;
 
-@property (weak) IBOutlet NSMenuItem *muteSound;
+@property (nonatomic, nweak) NSMenuItem *muteSound;
 
 - (void)terminate;
 
