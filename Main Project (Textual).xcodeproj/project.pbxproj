@@ -2590,6 +2590,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4C1DC5701580420500A47BC9 /* Build configuration list for PBXNativeTarget "Textual" */;
 			buildPhases = (
+				5D52F2491717762500AD0DF6 /* Code Sign Warning */,
 				4C1DC5501580420500A47BC9 /* Resources */,
 				4CCF2F9815804BB9006FFE21 /* Copy JavaScript Files */,
 				4CCF2F9A15804BE1006FFE21 /* Copy Additional Frameworks */,
@@ -2617,6 +2618,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4C5BA4E116F1302F00A96CA2 /* Build configuration list for PBXNativeTarget "Textual (No Addons)" */;
 			buildPhases = (
+				5D52F24A1717764C00AD0DF6 /* Code Sign Warning */,
 				4C5BA37916F1302F00A96CA2 /* Resources */,
 				4C5BA3D216F1302F00A96CA2 /* Copy JavaScript Files */,
 				4C5BA3D416F1302F00A96CA2 /* Copy Additional Frameworks */,
@@ -2963,6 +2965,34 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "exec \"${PROJECT_FILE_PATH}/BuildFrameworks.sh\"";
+		};
+		5D52F2491717762500AD0DF6 /* Code Sign Warning */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Code Sign Warning";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "exec \"${PROJECT_FILE_PATH}/CodeSignWarning.sh\"";
+		};
+		5D52F24A1717764C00AD0DF6 /* Code Sign Warning */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Code Sign Warning";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "exec \"${PROJECT_FILE_PATH}/CodeSignWarning.sh\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
