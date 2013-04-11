@@ -1,9 +1,0 @@
-Code sign your build
-
-Textual uses OS Sandbox exceptions which will not work without code signing.
-
-If you are a member of the iOS Developer Program or Mac Developer Program, you already have
-such an identity.  If you need to create an identity for the sole purpose of signing your
-builds, you can read Apple's Code Signing guide:
-
-http://goo.gl/owfUx
