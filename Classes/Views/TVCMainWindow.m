@@ -133,12 +133,6 @@
 		return;
 	}
 
-	BOOL naturalDirectionEnabled = [RZUserDefaults() boolForKey:@"com.apple.swipescrolldirection"];
-
-	if (naturalDirectionEnabled) {
-		sum *= -1;
-	}
-
 	if (sum > 0) {
 		[self.masterController selectNextSelection:nil];
     } else if (sum < 0) {
