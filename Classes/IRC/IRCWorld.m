@@ -1466,4 +1466,18 @@
 	[self logKeyDown:e];
 }
 
+#pragma mark -
+#pragma mark Mute Sound
+
+- (void)muteSound
+{
+    [self setIsSoundMuted:YES];
+    [self.masterController.menuController.muteSound setState:NSOnState];
+}
+
+- (void)unmuteSound
+{
+    [self setIsSoundMuted:NO];
+    [self.masterController.menuController.muteSound setState:NSOffState];
+}
 @end
