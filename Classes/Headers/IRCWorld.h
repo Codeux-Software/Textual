@@ -123,4 +123,7 @@
 - (void)clearContentsOfChannel:(IRCChannel *)c inClient:(IRCClient *)u;
 
 - (void)destroyAllEvidence;
+
+- (void)muteSound;
+- (void)unmuteSound;
 @end
