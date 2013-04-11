@@ -2099,4 +2099,15 @@
 	[TPCPreferencesImportExport export];
 }
 
+#pragma mark -
+#pragma mark Toggle Mute
+
+- (IBAction)toggleMute:(id)sender {
+    if ([self.worldController isSoundMuted]) {
+        [self.worldController unmuteSound];
+    } else {
+        [self.worldController muteSound];
+    }
+}
+
 @end
