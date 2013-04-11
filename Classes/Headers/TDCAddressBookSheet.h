@@ -50,8 +50,8 @@
 @property (nonatomic, nweak) NSButton *notifyJoinsCheck;
 @property (nonatomic, nweak) NSTextField *hostmaskField;
 @property (nonatomic, nweak) NSTextField *nicknameField;
-@property (nonatomic, nweak) NSWindow *ignoreView;
-@property (nonatomic, nweak) NSWindow *notifyView;
+@property (nonatomic, uweak) NSWindow *ignoreView;
+@property (nonatomic, uweak) NSWindow *notifyView;
 
 - (void)start;
 @end
