@@ -2017,7 +2017,7 @@
 			} else {
 				[self printDebugInformation:TXTLS(@"SoundIsNowMuted")];
 
-				[self.worldController setIsSoundMuted:YES];
+				[self.worldController muteSound];
 			}
 
 			break;
@@ -2027,7 +2027,7 @@
 			if (self.worldController.isSoundMuted) {
 				[self printDebugInformation:TXTLS(@"SoundIsNoLongerMuted")];
 
-				[self.worldController setIsSoundMuted:NO];
+				[self.worldController unmuteSound];
 			} else {
 				[self printDebugInformation:TXTLS(@"SoundIsNotMuted")];
 			}
