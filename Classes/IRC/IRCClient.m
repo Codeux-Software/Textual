@@ -5451,28 +5451,35 @@
 
 			return;
 		}
-		
-		NSArray *arguments = [scriptInput split:NSStringWhitespacePlaceholder];
 
-        NSTask *scriptTask = [NSTask new];
-        NSPipe *outputPipe = [NSPipe pipe];
+		@try {
+			NSArray *arguments = [scriptInput split:NSStringWhitespacePlaceholder];
 
-        [scriptTask setStandardOutput:outputPipe];
-        [scriptTask setLaunchPath:scriptPath];
-        [scriptTask setArguments:arguments];
+			NSTask *scriptTask = [NSTask new];
+			NSPipe *outputPipe = [NSPipe pipe];
 
-        NSFileHandle *filehandle = [outputPipe fileHandleForReading];
+			[scriptTask setStandardOutput:outputPipe];
+			[scriptTask setLaunchPath:scriptPath];
+			[scriptTask setArguments:arguments];
 
-        [scriptTask launch];
-        [scriptTask waitUntilExit];
+			NSFileHandle *filehandle = [outputPipe fileHandleForReading];
 
-        NSData *outputData = [filehandle readDataToEndOfFile];
+			[scriptTask launch];
+			[scriptTask waitUntilExit];
 
-		NSString *outputString  = [NSString stringWithData:outputData encoding:NSUTF8StringEncoding];
+			NSData *outputData = [filehandle readDataToEndOfFile];
 
-		NSObjectIsEmptyAssert(outputString);
+			NSString *outputString  = [NSString stringWithData:outputData encoding:NSUTF8StringEncoding];
 
-		[self.worldController.iomt inputText:outputString command:IRCPrivateCommandIndex("privmsg")];
+			NSObjectIsEmptyAssert(outputString);
+
+			[self.worldController.iomt inputText:outputString command:IRCPrivateCommandIndex("privmsg")];
+		}
+		@catch (NSException *ex) {
+			LogToConsole(@"Exception handling %@: %@", scriptPath, ex)
+			// There should probably be some kind of output to the user saying
+			// that the script failed.
+		}
 
 		/* We probably should do something with this eventually. */
 		/*
