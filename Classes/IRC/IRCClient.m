@@ -5453,9 +5453,11 @@
 		}
 
 		NSArray *arguments = [scriptInput split:NSStringWhitespacePlaceholder];
+		
 		NSURL *userScriptURL = [NSURL fileURLWithPath:scriptPath];
 
 		NSError *aserror = nil;
+		
 		NSUserUnixTask *unixTask = [[NSUserUnixTask alloc] initWithURL:userScriptURL error:&aserror];
 
 		if (PointerIsEmpty(unixTask) || aserror) {
@@ -5464,8 +5466,10 @@
 		}
 
 		NSPipe *standardOutputPipe = [NSPipe pipe];
+		
 		NSFileHandle *writingPipe = [standardOutputPipe fileHandleForWriting];
 		NSFileHandle *readingPipe = [standardOutputPipe fileHandleForReading];
+		
 		[unixTask setStandardOutput:writingPipe];
 
 		[unixTask executeWithArguments:arguments completionHandler:^(NSError *err) {
@@ -5473,6 +5477,7 @@
 				[self outputTextualCmdScriptError:scriptPath input:scriptInput context:nil error:err];
 			} else {
 				NSData *outputData = [readingPipe readDataToEndOfFile];
+
 				NSString *outputString = [NSString stringWithData:outputData encoding:NSUTF8StringEncoding];
 				
 				[self.worldController.iomt inputText:outputString command:IRCPrivateCommandIndex("privmsg")];

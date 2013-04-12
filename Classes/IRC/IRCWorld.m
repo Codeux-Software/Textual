@@ -86,7 +86,7 @@
 		[self createClient:e reload:YES];
 	}
 
-	if ([config boolForKey:@"IsSoundMuted"]) {
+	if ([config boolForKey:@"soundIsMuted"]) {
 		[self muteSound];
 	} else {
 		[self unmuteSound];
@@ -146,8 +146,9 @@
 	}
 
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+	
 	[dict safeSetObject:ary						forKey:@"clients"];
-	[dict safeSetObject:@(self.isSoundMuted)	forKey:@"IsSoundMuted"];
+	[dict safeSetObject:@(self.isSoundMuted)	forKey:@"soundIsMuted"];
 
 	return dict;
 }
@@ -1482,12 +1483,15 @@
 - (void)muteSound
 {
     [self setIsSoundMuted:YES];
+	
     [self.masterController.menuController.muteSound setState:NSOnState];
 }
 
 - (void)unmuteSound
 {
     [self setIsSoundMuted:NO];
+	
     [self.masterController.menuController.muteSound setState:NSOffState];
 }
+
 @end
