@@ -5452,67 +5452,32 @@
 			return;
 		}
 
-		@try {
-			NSArray *arguments = [scriptInput split:NSStringWhitespacePlaceholder];
-
-			NSTask *scriptTask = [NSTask new];
-			NSPipe *outputPipe = [NSPipe pipe];
-
-			[scriptTask setStandardOutput:outputPipe];
-			[scriptTask setLaunchPath:scriptPath];
-			[scriptTask setArguments:arguments];
-
-			NSFileHandle *filehandle = [outputPipe fileHandleForReading];
-
-			[scriptTask launch];
-			[scriptTask waitUntilExit];
-
-			NSData *outputData = [filehandle readDataToEndOfFile];
-
-			NSString *outputString  = [NSString stringWithData:outputData encoding:NSUTF8StringEncoding];
-
-			NSObjectIsEmptyAssert(outputString);
-
-			[self.worldController.iomt inputText:outputString command:IRCPrivateCommandIndex("privmsg")];
-		}
-		@catch (NSException *ex) {
-			NSMutableDictionary *errdict = [ex.userInfo mutableCopy];
-			if (PointerIsEmpty(errdict)) {
-				errdict = [NSMutableDictionary dictionary];
-			}
-			
-			[errdict safeSetObject:[NSString stringWithFormat:@"%@: %@", ex.name, ex.reason] forKey:NSLocalizedDescriptionKey];
-
-			NSError *error = [NSError errorWithDomain:NSMachErrorDomain code:0 userInfo:errdict];
-			[self outputTextualCmdScriptError:scriptPath input:scriptInput context:[ex userInfo] error:error];
-		}
-
-		/* We probably should do something with this eventually. */
-		/*
-		 
+		NSArray *arguments = [scriptInput split:NSStringWhitespacePlaceholder];
 		NSURL *userScriptURL = [NSURL fileURLWithPath:scriptPath];
 
 		NSError *aserror = nil;
-
 		NSUserUnixTask *unixTask = [[NSUserUnixTask alloc] initWithURL:userScriptURL error:&aserror];
 
-		NSFileHandle *standardOutput = [NSFileHandle fileHandleWithStandardOutput];
-
-		[unixTask setStandardOutput:standardOutput];
-
 		if (PointerIsEmpty(unixTask) || aserror) {
-			[self outputTextualCmdScriptError:scriptPath input:scriptInput context:[aserror userInfo] error:aserror];
-		} else {
-			[unixTask executeWithArguments:arguments completionHandler:^(NSError *err) {
-				if (err) {
-					// Failure.
-				} else {
-					// Success.
-				}
-			}];
-		} 
-		 
-		*/
+			[self outputTextualCmdScriptError:scriptPath input:scriptInput context:aserror.userInfo error:aserror];
+			return;
+		}
+
+		NSPipe *standardOutputPipe = [NSPipe pipe];
+		NSFileHandle *writingPipe = [standardOutputPipe fileHandleForWriting];
+		NSFileHandle *readingPipe = [standardOutputPipe fileHandleForReading];
+		[unixTask setStandardOutput:writingPipe];
+
+		[unixTask executeWithArguments:arguments completionHandler:^(NSError *err) {
+			if (err) {
+				[self outputTextualCmdScriptError:scriptPath input:scriptInput context:err.userInfo error:err];
+			} else {
+				NSData *outputData = [readingPipe readDataToEndOfFile];
+				NSString *outputString = [NSString stringWithData:outputData encoding:NSUTF8StringEncoding];
+				
+				[self.worldController.iomt inputText:outputString command:IRCPrivateCommandIndex("privmsg")];
+			}
+		}];
 	}
 }
 
