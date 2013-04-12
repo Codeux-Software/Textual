@@ -442,11 +442,13 @@ NSString *IRCPublicCommandIndex(const char *key)
 {
 	if ([self featureAvailableToOSXMountainLion]) {
 		static NSString *path = NSStringEmptyPlaceholder;
-
+		
 		static dispatch_once_t onceToken;
+
 		dispatch_once(&onceToken, ^{
 			@autoreleasepool {
 				NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationScriptsDirectory, NSUserDomainMask, YES);
+
 				if (NSObjectIsNotEmpty(searchArray)) {
 					path = [searchArray[0] copy];
 				}
