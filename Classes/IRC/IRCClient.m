@@ -5476,9 +5476,15 @@
 			[self.worldController.iomt inputText:outputString command:IRCPrivateCommandIndex("privmsg")];
 		}
 		@catch (NSException *ex) {
-			LogToConsole(@"Exception handling %@: %@", scriptPath, ex)
-			// There should probably be some kind of output to the user saying
-			// that the script failed.
+			NSMutableDictionary *errdict = [ex.userInfo mutableCopy];
+			if (PointerIsEmpty(errdict)) {
+				errdict = [NSMutableDictionary dictionary];
+			}
+			
+			[errdict safeSetObject:[NSString stringWithFormat:@"%@: %@", ex.name, ex.reason] forKey:NSLocalizedDescriptionKey];
+
+			NSError *error = [NSError errorWithDomain:NSMachErrorDomain code:0 userInfo:errdict];
+			[self outputTextualCmdScriptError:scriptPath input:scriptInput context:[ex userInfo] error:error];
 		}
 
 		/* We probably should do something with this eventually. */
