@@ -1287,9 +1287,9 @@ static NSMutableArray *excludeKeywords = nil;
 {
 	[self updateApplicationRunCount];
 
-	NSInteger numberOfRuns = [self applicationRunCount];
-	
 #ifndef TEXTUAL_TRIAL_BINARY
+	NSInteger numberOfRuns = [self applicationRunCount];
+
 	if (numberOfRuns >= 2) {
 		[self.invokeInBackgroundThread defaultIRCClientPrompt:NO];
 	}
