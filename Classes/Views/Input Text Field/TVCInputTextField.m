@@ -72,6 +72,8 @@
         attrs[NSForegroundColorAttributeName] = [NSColor grayColor];
         
         self.placeholderString = [[NSAttributedString alloc] initWithString:TXTLS(@"InputTextFieldPlaceholderValue") attributes:attrs];
+
+        [self sanitizeTextField:NO];
     }
 	
     return self;
