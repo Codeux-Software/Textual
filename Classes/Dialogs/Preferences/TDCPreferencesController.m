@@ -486,16 +486,19 @@
 
 				NSError *error = nil;
 
-				NSData *bookmark = [pathURL bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
-									 includingResourceValuesForKeys:nil
-													  relativeToURL:nil
-															  error:&error];
+                if ([TPCPreferences sandboxEnabled]) {
+                    NSData *bookmark = [pathURL bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
+                                         includingResourceValuesForKeys:nil
+                                                          relativeToURL:nil
+                                                                  error:&error];
 
-				if (error) {
-					LogToConsole(@"Error creating bookmark for URL (%@): %@", pathURL, [error localizedDescription]);
-				} else {
-					[TPCPreferences setTranscriptFolder:bookmark];
-				}
+                    if (error) {
+                        LogToConsole(@"Error creating bookmark for URL (%@): %@", pathURL, [error localizedDescription]);
+                    } else {
+                        [TPCPreferences setTranscriptFolder:bookmark];
+                    }
+                } else
+                    [TPCPreferences setTranscriptFolder:[pathURL path]];
 
 				[self updateTranscriptFolder];
 			}
