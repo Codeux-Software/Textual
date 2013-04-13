@@ -482,7 +482,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 			[self stopUsingTranscriptFolderSecurityScopedBookmark];
 		}
 
-		 transcriptFolderResolvedBookmark = resolvedBookmark;
+		transcriptFolderResolvedBookmark = resolvedBookmark;
 		[transcriptFolderResolvedBookmark startAccessingSecurityScopedResource];  
 	}
 }
@@ -500,18 +500,25 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (NSString *)transcriptFolder
 {
-	if (NSObjectIsEmpty(transcriptFolderResolvedBookmark)) {
-		[self startUsingTranscriptFolderSecurityScopedBookmark];
-	} 
+    if ([TPCPreferences sandboxEnabled]) {
+        if (NSObjectIsEmpty(transcriptFolderResolvedBookmark)) {
+            [self startUsingTranscriptFolderSecurityScopedBookmark];
+        }
 
-	return [transcriptFolderResolvedBookmark path];
+        return [transcriptFolderResolvedBookmark path];
+    } else {
+        return [RZUserDefaults() stringForKey:@"LogTranscriptDestinationPath"];
+    }
 }
 
 + (void)setTranscriptFolder:(id)value
 {
-	[self stopUsingTranscriptFolderSecurityScopedBookmark];
+    if ([TPCPreferences sandboxEnabled]) {
+        [self stopUsingTranscriptFolderSecurityScopedBookmark];
 
-	[RZUserDefaults() setObject:value forKey:@"LogTranscriptDestinationSecurityBookmark"];
+        [RZUserDefaults() setObject:value forKey:@"LogTranscriptDestinationSecurityBookmark"];
+    } else
+        [RZUserDefaults() setObject:value forKey:@"LogTranscriptDestinationPath"];
 }
 
 #pragma mark -
