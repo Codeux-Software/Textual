@@ -73,6 +73,7 @@
 @property (nonatomic, nweak) TVCMemberListUserInfoPopover *memberListUserInfoPopover;
 @property (nonatomic, strong) TLOSpeechSynthesizer *speechSynthesizer;
 @property (nonatomic, assign) NSInteger memberSplitViewOldPosition;
+@property (atomic, assign) NSInteger terminatingClientCount;
 
 - (void)loadWindowState:(BOOL)honorFullscreen;
 - (void)saveWindowState;
