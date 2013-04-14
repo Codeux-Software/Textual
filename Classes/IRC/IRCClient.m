@@ -2836,10 +2836,6 @@
 	/* We are terminating and thusly do not give a shit about the data
 	 and our view is probably gone by now anyways */
 	if (self.masterController.terminating) {
-		if (self.rawModeEnabled == NO) {
-			DebugLogToConsole(@">> %@", s);
-		}
-		DebugLogToConsole(@"Did receive data after terminate began");
 		return;
 	}
 
