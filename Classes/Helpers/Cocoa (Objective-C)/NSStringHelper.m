@@ -254,6 +254,31 @@
 	return ([self isNotEqualTo:@"*"] && self.length <= TXMaximumIRCNicknameLength);
 }
 
+- (BOOL)isChannelName:(IRCClient *)client
+{
+	NSObjectIsEmptyAssertReturn(self, NO);
+	
+	if (PointerIsEmpty(client)) {
+		return [self isChannelName];
+	}
+
+	NSString *validChars = client.isupport.channelNamePrefixes;
+
+	if (self.length == 1) {
+		NSString *c = [self stringCharacterAtIndex:0];
+		
+		return [validChars contains:c];
+	} else {
+		NSString *c1 = [self stringCharacterAtIndex:0];
+		NSString *c2 = [self stringCharacterAtIndex:1];
+		
+		/* The ~ prefix is considered special. It is used by the ZNC partyline plugin. */
+		BOOL isPartyline = ([c1 isEqualToString:@"~"] && [c2 isEqualToString:@"#"]);
+
+		return ([validChars contains:c1] || isPartyline);
+	}
+}
+
 - (BOOL)isChannelName
 {
 	NSObjectIsEmptyAssertReturn(self, NO);
