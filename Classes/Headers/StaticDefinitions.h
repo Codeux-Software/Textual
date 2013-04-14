@@ -92,6 +92,8 @@
 #define RZWorkspace()							[NSWorkspace sharedWorkspace]
 #define RZWorkspaceNotificationCenter()			[RZWorkspace() notificationCenter]
 #define RZRunningApplication()					[NSRunningApplication currentApplication]
+#define RZMainRunLoop()							[NSRunLoop mainRunLoop]
+#define RZCurrentRunLoop()						[NSRunLoop currentRunLoop]
 
 #ifdef TXForceNativeNotificationCenterDispatch
 #define RZUserNotificationCenter()				[NSUserNotificationCenter defaultUserNotificationCenter]
