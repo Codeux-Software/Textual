@@ -119,8 +119,10 @@
 - (BOOL)isHostmask;
 - (BOOL)isNickname;
 - (BOOL)isIPv6Address;
-- (BOOL)isChannelName;
 - (BOOL)isModeChannelName;
+
+- (BOOL)isChannelName;
+- (BOOL)isChannelName:(IRCClient *)client; // Client to parse CHANTYPES from.
 
 - (NSString *)stringWithValidURIScheme;
 

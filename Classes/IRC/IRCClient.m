@@ -1155,7 +1155,7 @@
 
 			NSMutableArray *nicks = [NSMutableArray arrayWithArray:[uncutInput componentsSeparatedByString:NSStringWhitespacePlaceholder]];
 
-			if (NSObjectIsNotEmpty(nicks) && [nicks.lastObject isChannelName]) {
+			if (NSObjectIsNotEmpty(nicks) && [nicks.lastObject isChannelName:self]) {
 				targetChannelName = [nicks lastObject];
 
 				[nicks removeLastObject];
@@ -1166,7 +1166,7 @@
 			}
 
 			for (NSString *nick in nicks) {
-				if ([nick isNickname] && [nick isChannelName] == NO) {
+				if ([nick isNickname] && [nick isChannelName:self] == NO) {
 					[self send:uppercaseCommand, nick, targetChannelName, nil];
 				}
 			}
@@ -1183,7 +1183,7 @@
 
 				targetChannelName = s.getToken.string;
 
-				if ([targetChannelName isChannelName] == NO && [targetChannelName isEqualToString:@"0"] == NO) {
+				if ([targetChannelName isChannelName:self] == NO && [targetChannelName isEqualToString:@"0"] == NO) {
 					targetChannelName = [@"#" stringByAppendingString:targetChannelName];
 				}
 			}
@@ -1198,13 +1198,13 @@
 		{
 			NSObjectIsEmptyAssert(uncutInput);
 				
-			if (selChannel && selChannel.isChannel && [uncutInput isChannelName] == NO) {
+			if (selChannel && selChannel.isChannel && [uncutInput isChannelName:self] == NO) {
 				targetChannelName = selChannel.name;
 			} else {
 				targetChannelName = s.getToken.string;
 			}
 
-			NSAssertReturn([targetChannelName isChannelName]);
+			NSAssertReturn([targetChannelName isChannelName:self]);
 
 			NSString *nickname = s.getToken.string;
 			NSString *reason = s.string.trim;
@@ -1327,7 +1327,7 @@
 			/* Destination. */
 			if (selChannel && type == TVCLogLineActionType && secretMsg == NO) {
 				targetChannelName = selChannel.name;
-			} else if (selChannel && selChannel.isChannel && opMsg && [s.string isChannelName] == NO) {
+			} else if (selChannel && selChannel.isChannel && opMsg && [s.string isChannelName:self] == NO) {
 				targetChannelName = selChannel.name;
 			} else {
 				targetChannelName = s.getToken.string;
@@ -1365,7 +1365,7 @@
 					IRCChannel *channel = [self findChannel:channelName];
 
 					if (PointerIsEmpty(channel) && secretMsg == NO) {
-						if ([channelName isChannelName] == NO) {
+						if ([channelName isChannelName:self] == NO) {
 							channel = [self.worldController createPrivateMessage:channelName client:self];
 						}
 					}
@@ -1380,7 +1380,7 @@
                         }
                     }
 
-					if ([channelName isChannelName]) {
+					if ([channelName isChannelName:self]) {
 						if (opMsg || opPrefix) {
 							channelName = [@"@" stringByAppendingString:channelName];
 						}
@@ -1404,9 +1404,9 @@
 		case 5054: // Command: PART
 		case 5036: // Command: LEAVE
 		{
-			if (selChannel && selChannel.isChannel && [uncutInput isChannelName] == NO) {
+			if (selChannel && selChannel.isChannel && [uncutInput isChannelName:self] == NO) {
 				targetChannelName = selChannel.name;
-			} else if (selChannel && selChannel.isPrivateMessage && [uncutInput isChannelName] == NO) {
+			} else if (selChannel && selChannel.isPrivateMessage && [uncutInput isChannelName:self] == NO) {
 				[self.worldController destroyChannel:selChannel];
 
 				return;
@@ -1416,7 +1416,7 @@
 				targetChannelName = s.getToken.string;
 			}
 
-			NSAssertReturn([targetChannelName isChannelName]);
+			NSAssertReturn([targetChannelName isChannelName:self]);
 
 			NSString *reason = s.string.trim;
 
@@ -1437,13 +1437,13 @@
 		case 5070: // Command: TOPIC
 		case 5067: // Command: T
 		{
-			if (selChannel && selChannel.isChannel && [uncutInput isChannelName] == NO) {
+			if (selChannel && selChannel.isChannel && [uncutInput isChannelName:self] == NO) {
 				targetChannelName = selChannel.name;
 			} else {
 				targetChannelName = s.getToken.string;
 			}
 
-			NSAssertReturn([targetChannelName isChannelName]);
+			NSAssertReturn([targetChannelName isChannelName:self]);
 
 			NSString *topic = [s attributedStringToASCIIFormatting];
 
@@ -1543,13 +1543,13 @@
 		{
 			NSObjectIsEmptyAssert(uncutInput);
 			
-			if (selChannel && selChannel.isChannel && [uncutInput isChannelName] == NO) {
+			if (selChannel && selChannel.isChannel && [uncutInput isChannelName:self] == NO) {
 				targetChannelName = selChannel.name;
 			} else {
 				targetChannelName = s.getToken.string;
 			}
 
-			NSAssertReturn([targetChannelName isChannelName]);
+			NSAssertReturn([targetChannelName isChannelName:self]);
 
 			NSString *banmask = s.getToken.string;
 			
@@ -1799,7 +1799,7 @@
 					[self.worldController destroyChannel:selChannel];
 				}
 			} else {
-				if ([nickname isChannelName] == NO && [nickname isNickname]) {
+				if ([nickname isChannelName:self] == NO && [nickname isNickname]) {
 					IRCChannel *channel = [self findChannelOrCreate:nickname isPrivateMessage:YES];
 
 					[self.worldController select:channel];
@@ -1923,13 +1923,13 @@
 		{
 			NSObjectIsEmptyAssert(uncutInput);
 
-			if (selChannel && selChannel.isChannel && [uncutInput isChannelName] == NO) {
+			if (selChannel && selChannel.isChannel && [uncutInput isChannelName:self] == NO) {
 				targetChannelName = selChannel.name;
 			} else {
 				targetChannelName = s.getToken.string;
 			}
 
-			NSAssertReturn([targetChannelName isChannelName]);
+			NSAssertReturn([targetChannelName isChannelName:self]);
 
 			NSString *nickname = s.getToken.string;
 			NSString *banmask = nickname;
@@ -3072,7 +3072,7 @@
 	}
 
 	/* Is the target a channel? */
-	if ([target isChannelName]) {
+	if ([target isChannelName:self]) {
 		/* Ignore message? */
 		if ([ignoreChecks ignoreNotices] && type == TVCLogLineNoticeType) {
 			return;
@@ -3824,7 +3824,7 @@
 	NSString *targetc = [m paramAt:0];
 	NSString *modestr = [m sequence:1];
 
-	if ([targetc isChannelName]) {
+	if ([targetc isChannelName:self]) {
 		IRCChannel *c = [self findChannel:targetc];
 
 		PointerIsEmptyAssert(c);
@@ -5698,7 +5698,7 @@
 {
 	NSObjectIsEmptyAssert(channel);
 	
-	if ([channel isChannelName]) {
+	if ([channel isChannelName:self]) {
 		IRCChannel *chan = [self findChannel:channel];
 
 		if (chan) {
@@ -5743,7 +5743,7 @@
 {
 	NSObjectIsEmptyAssert(channel);
 	
-	if ([channel isChannelName]) {
+	if ([channel isChannelName:self]) {
 		IRCChannel *chan = [self findChannel:channel];
 
 		if (chan) {
