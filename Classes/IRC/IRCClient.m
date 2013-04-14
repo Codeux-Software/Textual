@@ -4445,14 +4445,16 @@
 
 			PointerIsEmptyAssertLoopBreak(c);
 
-			if (c.isGatheringModeInfo == NO || NSObjectIsEmpty(c.modeInfo.modeInformation)) {
+			if (NSObjectIsEmpty(c.modeInfo.modeInformation)) {
 				if (c.isActive) {
 					[c.modeInfo clear];
 					[c.modeInfo update:modestr];
 
 					c.isGatheringModeInfo = YES;
 				}
+			}
 
+			if (c.isGatheringModeInfo == NO) {
 				[self print:c type:TVCLogLineModeType nick:nil text:TXTFLS(@"IRCChannelHasModes", modestr) receivedAt:m.receivedAt];
 			}
 
