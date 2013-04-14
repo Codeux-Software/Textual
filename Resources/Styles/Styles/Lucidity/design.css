@@ -85,13 +85,13 @@ body[dir=rtl] .time {
 	margin: 0;
 	padding: 0;
 	height: 11px;
-	margin-top: 2px;
+	margin-bottom: -1px;
 	padding-left: 10px;
 }
 
 a {
-	color: #FF7F00;
-	border-color: #FF7F00;
+	color: #3297e5;
+	border-color: #3297e5;
 	text-decoration: none;
 	border-bottom: dotted 1px;
 }
@@ -115,17 +115,6 @@ a:hover {
 	border-bottom: 1px solid #b6b6b6;
 	background: #e8ecf1;
 	-webkit-transition: opacity 0.8s linear;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-}
-
-/* Topic bar hover additions contributed with permission from the project:
-	<https://github.com/hbang/Simplified-Light-Modifications> */
-
-#topic_bar:hover {
-	overflow: visible;
-	white-space: normal;
 }
 
 /* Images */
@@ -257,18 +246,41 @@ body div.line[type*=rawhtml] {
 }
 
 /* GENERAL EVENT */
-
-body div.line[type*=join],
-body div.line[type*=part],
-body div.line[type*=kick],
-body div.line[type*=quit],
-body div.line[type*=kill],
-body div.line[type*=nick],
-body div.line[type*=mode],
 body div.line[type*=topic],
 body div.line[type*=website] {
  	padding: 3px 5px 3px 5px;
 	color: #6a6a6a;
+}
+
+body div.line[type*=join] {
+ 	padding: 3px 5px 3px 5px;
+	color: #125400;
+}
+
+body div.line[type*=part] {
+ 	padding: 3px 5px 3px 5px;
+	color: #753718;
+}
+
+body div.line[type*=quit] {
+ 	padding: 3px 5px 3px 5px;
+	color: #002054;
+}
+
+body div.line[type*=nick] {
+ 	padding: 3px 5px 3px 5px;
+	color: #450048;
+}
+
+body div.line[type*=mode] {
+ 	padding: 3px 5px 3px 5px;
+	color: #005441;
+}
+
+body div.line[type*=kick],
+body div.line[type*=kill] {
+ 	padding: 3px 5px 3px 5px;
+	color: #9e1f1f;
 }
 
 body[dir=ltr] div[type*=join] .message:before {
@@ -318,7 +330,7 @@ body .inline_nickname {
 }
 
 body div[type*=privmsg] .sender[type*=myself] { 	
-	color: #472000; 
+	color: #2b507a; 
 }
 
 body .sender[type*=normal][colornumber='0'], 
@@ -348,7 +360,7 @@ body .inline_nickname[colornumber='4'] {
 
 body .sender[type*=normal][colornumber='5'], 
 body .inline_nickname[colornumber='5'] { 
-	color: #1BDD4D; 
+	color: #6bce85; 
 }
 
 body .sender[type*=normal][colornumber='6'],
@@ -398,7 +410,7 @@ body .inline_nickname[colornumber='14'] {
 
 body .sender[type*=normal][colornumber='15'], 
 body .inline_nickname[colornumber='15'] { 
-	color: #00E989;
+	color: #35ad7c;
 }
 
 body .sender[type*=normal][colornumber='16'], 
