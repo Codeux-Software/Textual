@@ -3525,12 +3525,7 @@
 		c.isGatheringModeInfo = YES;
 		
 		[self send:IRCPrivateCommandIndex("mode"), c.name, nil];
-
-		if (self.CAPuserhostInNames == NO || self.CAPawayNotify) {
-			// We can skip requesting WHO, we already have this information.
-
-			[self send:IRCPrivateCommandIndex("who"), c.name, nil, nil];
-		}
+		[self send:IRCPrivateCommandIndex("who"), c.name, nil, nil];
 	}
 }
 
@@ -4466,10 +4461,6 @@
 
 				[self print:c type:TVCLogLineModeType nick:nil text:TXTFLS(@"IRCChannelHasModes", modestr) receivedAt:m.receivedAt];
 			}
-
-			if (c && c.isGatheringModeInfo) {
-				c.isGatheringModeInfo = NO;
-			}
 			
 			break;
 		}
@@ -4604,6 +4595,10 @@
 				[self printUnknownReply:m];
 
 				self.inUserInvokedWhoRequest = NO;
+			}
+
+			if (c && c.isGatheringModeInfo) {
+				c.isGatheringModeInfo = NO;
 			}
 
             [self.worldController updateTitleFor:c];
