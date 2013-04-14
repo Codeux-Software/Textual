@@ -1,3 +1,5 @@
+By Alex Sørlie (alex@delexious.com)
+
 This style is a modified and stripped down version of 
 the "Simplified" theme developed by "Cowboy" Ben Alman
 (http://benalman.com/). Copyright © 2010, 2011, 2012.
