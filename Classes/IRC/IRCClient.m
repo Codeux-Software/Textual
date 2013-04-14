@@ -5339,6 +5339,43 @@
 	LogToConsole(TXTLS(@"ScriptExecutionFailureBasic"), errorb);
 }
 
+- (void)postTextualCmdScriptResult:(NSString *)resultString to:(NSString *)destination
+{
+	resultString = [resultString trim];
+	
+	NSObjectIsEmptyAssert(resultString);
+
+	/* If our resultString does not begin with a / (meaning a command), then we will tell Textual it is a
+	 MSG command so that it posts as a normal message and goes to the correct destination. Each result 
+	 line is thrown through inputText:command: to have Textual treat it like any other user input. */
+
+	/* -splitIntoLines is only available to NSAttributedString and I was too lazy to add it to NSString
+	 so fuck it… just convert our input over. */
+	NSAttributedString *resultBase = [NSAttributedString emptyStringWithBase:resultString];
+
+	NSArray *lines = [resultBase splitIntoLines];
+
+	for (NSAttributedString *s in lines) {
+		if ([s.string hasPrefix:@"/"]) {
+			/* We do not have to worry about whether this is an actual command or an escaped one
+			 by using double slashes (//) at this point because inputText:command: will do all that
+			 hard work for us. We only care if it starts with a slash. */
+			
+			[self inputText:s command:IRCPrivateCommandIndex("privmsg")];
+		} else {
+			/* If there is no destination, then we are fucked. */
+
+			if (NSObjectIsEmpty(destination)) {
+				/* Do not send a normal message to the console. What? */
+			} else {
+				NSString *msgcmd = [NSString stringWithFormat:@"/msg %@ %@", destination, s.string];
+
+				[self inputText:msgcmd command:IRCPrivateCommandIndex("privmsg")];
+			}
+		}
+	}
+}
+
 - (void)executeTextualCmdScript:(NSDictionary *)details
 {
 	/* Gather information about the script to be executed. */
@@ -5346,6 +5383,8 @@
 
 	NSString *scriptInput = details[@"input"];
 	NSString *scriptPath  = details[@"path"];
+
+	NSString *destinationChannel = details[@"channel"];
 
 	BOOL MLNonsandboxedScript = NO;
 
@@ -5404,11 +5443,7 @@
 					 if (PointerIsEmpty(result)) {
 						 [self outputTextualCmdScriptError:scriptPath input:scriptInput context:[error userInfo] error:error];
 					 } else {
-						 NSString *finalResult = result.stringValue.trim;
-
-						 NSObjectIsEmptyAssert(finalResult);
-
-						 [self.worldController.iomt inputText:finalResult command:IRCPrivateCommandIndex("privmsg")];
+						 [self postTextualCmdScriptResult:result.stringValue to:destinationChannel];
 					 }
 				}];
 			}
@@ -5430,11 +5465,7 @@
 			if (errors && PointerIsEmpty(result)) {
 				[self outputTextualCmdScriptError:scriptPath input:scriptInput context:errors error:nil];
 			} else {
-				NSString *finalResult = result.stringValue.trim;
-
-				NSObjectIsEmptyAssert(finalResult);
-
-				[self.worldController.iomt inputText:finalResult command:IRCPrivateCommandIndex("privmsg")];
+				[self postTextualCmdScriptResult:result.stringValue to:destinationChannel];
 			}
 		} else {
 			[self outputTextualCmdScriptError:scriptPath input:scriptInput context:errors error:nil];
@@ -5479,8 +5510,8 @@
 				NSData *outputData = [readingPipe readDataToEndOfFile];
 
 				NSString *outputString = [NSString stringWithData:outputData encoding:NSUTF8StringEncoding];
-				
-				[self.worldController.iomt inputText:outputString command:IRCPrivateCommandIndex("privmsg")];
+
+				[self postTextualCmdScriptResult:outputString to:destinationChannel];
 			}
 		}];
 	}
