@@ -187,19 +187,36 @@
 
 - (void)detectOutgoingConversation:(NSString *)text
 {
-	NSString *suffix = [TPCPreferences tabCompletionSuffix];
+	/* This is a lot quicker than iterating through the string and searching the
+	   list for every word. And allows for other "stuff" touching the name besides
+	   the tab completion suffix and more than one name in a line */
+	static NSCharacterSet *nonNicknameCharacters = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		nonNicknameCharacters = [[NSCharacterSet characterSetWithCharactersInString:IRCNicknameValidCharacters] invertedSet];
+	});
 
-	NSObjectIsEmptyAssert(suffix);
+	[self.memberList enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(IRCUser *member, NSUInteger idx, BOOL *stop) {
+		NSRange loc = [text rangeOfString:member.nickname options:NSCaseInsensitiveSearch];
+		
+		NSAssertReturn(NSRangeIsValid(loc));
 
-	NSArray *pieces = [text split:suffix];
-
-	if ([pieces count] > 1) {
-		IRCUser *talker = [self findMember:[pieces safeObjectAtIndex:0]];
-
-		if (talker) {
-			[talker incomingConversation];
+		if (loc.location > 0) {
+			loc.location -= 1;
+			loc.length += 1;
 		}
-	}
+
+		if (loc.length < (text.length - loc.location)) {
+			loc.length += 1;
+		}
+
+		NSString *nickPlus = [text safeSubstringWithRange:loc];
+		nickPlus = [nickPlus stringByTrimmingCharactersInSet:nonNicknameCharacters];
+
+		NSAssertReturn([nickPlus isEqualIgnoringCase:member.nickname]);
+		
+		[member outgoingConversation];
+	}];
 }
 
 #pragma mark -
