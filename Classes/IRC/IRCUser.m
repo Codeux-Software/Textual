@@ -45,6 +45,7 @@
 {
 	if ((self = [super init])) {
 		self.colorNumber = -1;
+		self.lastWeightFade = CFAbsoluteTimeGetCurrent();
 	}
 	
 	return self;
@@ -151,14 +152,14 @@
 {
 	CGFloat change = ((self.incomingWeight == 0) ? 100 : 20);
 
-	_outgoingWeight += change;
+	_incomingWeight += change;
 }
 
 - (void)conversation
 {
-	CGFloat change = ((self.outgoingWeight == 0) ? 4 : 1);
+	CGFloat change = ((self.incomingWeight == 0) ? 4 : 1);
 
-	_outgoingWeight += change;
+	_incomingWeight += change;
 }
 
 - (void)decayConversation
@@ -193,7 +194,7 @@
 		return NSOrderedDescending;
 	}
 
-	return [self.nickname.lowercaseString compare:other.nickname.lowercaseString];
+	return [self compare:other];
 }
 
 - (NSComparisonResult)compare:(IRCUser *)other
