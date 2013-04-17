@@ -71,6 +71,7 @@
 @property (nonatomic, strong) TLOTimer *commandQueueTimer;
 @property (nonatomic, strong) NSMutableArray *commandQueue;
 @property (nonatomic, strong) NSMutableDictionary *trackedUsers;
+@property (nonatomic, strong) Reachability *hostReachability;
 @end
 
 @implementation IRCClient
@@ -138,6 +139,8 @@
 
 	[self.socket close];
 
+	[self destroyReachability];
+
 #ifdef TEXTUAL_TRIAL_BINARY
 	[self.trialPeriodTimer stop];
 #endif
@@ -158,6 +161,8 @@
 	} else {
 		return;
 	}
+
+	[self setupReachability];
 
 	[self resetAllPropertyValues];
 }
@@ -208,6 +213,8 @@
 
 	[self.worldController select:selectedItem];
 	[self.worldController adjustSelection];
+
+	[self setupReachability];
 }
 
 - (IRCClientConfig *)storedConfig
@@ -319,6 +326,45 @@
 - (BOOL)isReconnecting
 {
 	return (self.reconnectTimer && self.reconnectTimer.timerIsActive);
+}
+
+- (void)setupReachability
+{
+	[self destroyReachability];
+
+	self.hostReachability = [Reachability reachabilityWithHostname:self.config.serverAddress];
+
+	[RZNotificationCenter() addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:self.hostReachability];
+
+	[self.hostReachability startNotifier];
+}
+
+- (void)destroyReachability
+{
+	self.isHostReachable = NO;
+
+	if (PointerIsNotEmpty(self.hostReachability)) {
+		[RZNotificationCenter() removeObserver:self name:kReachabilityChangedNotification object:self.hostReachability];
+
+		[self.hostReachability stopNotifier];
+
+		self.hostReachability = nil;
+	}
+}
+
+- (void)reachabilityChanged:(NSNotification *)note
+{
+#ifndef DEBUG
+	if (self.rawModeEnabled) {
+#endif
+		LogToConsole(@"%@ %@ %@", self.config.serverAddress,
+								  self.hostReachability.currentReachabilityString,
+								  self.hostReachability.currentReachabilityFlags);
+#ifndef DEBUG
+	}
+#endif
+
+	self.isHostReachable = self.hostReachability.isReachable;
 }
 
 #pragma mark -
@@ -5608,7 +5654,16 @@
 {
 	_connectDelay = delay;
 
-	[self connect];
+	[self autoConnect];
+}
+
+- (void)autoConnect
+{
+	if (self.isHostReachable) {
+		[self connect];
+	} else {
+		[self performSelector:@selector(autoConnect) withObject:nil afterDelay:self.connectDelay];
+	}
 }
 
 - (void)disconnect
