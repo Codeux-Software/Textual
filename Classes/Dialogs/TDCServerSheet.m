@@ -70,8 +70,14 @@
 		self.serverList = [NSDictionary dictionaryWithContentsOfFile:slp];
 
 		/* Populate the server address field with the IRC network list. */
-		NSArray *sortedKeys = [self.serverList sortedDictionaryKeys];
-		
+		NSArray *sortedKeys = [self.serverList allKeys];
+
+		sortedKeys = [sortedKeys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+			/* We are sorting keys. They are NSString values. */
+			/* Sort without case so that "freenode" is under servers with a capital F. */
+			return [obj1 compare:obj2 options:NSCaseInsensitiveSearch];
+		}];
+
 		for (NSString *key in sortedKeys) {
 			[self.serverAddressCombo addItemWithObjectValue:key];
 		}
