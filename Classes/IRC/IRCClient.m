@@ -2263,11 +2263,12 @@
 			NSObjectIsEmptyAssertLoopBreak(uncutInput);
 
 			/* Command to write setting to NSUserDefaults. 
-			 Syntax: /defaults [-[b|i|s|del]] <key> <value> */
+			 Syntax: /defaults [-[b|i|s|f|del]] <key> <value> */
 
 			if ([uncutInput hasPrefix:@"-b "] || // Boolean: YES, NO
 				[uncutInput hasPrefix:@"-s "] || // String.
-				[uncutInput hasPrefix:@"-i "])   // Integer.
+				[uncutInput hasPrefix:@"-i "] || // Integer.
+				[uncutInput hasPrefix:@"-f "])   // Doublle.
 			{
 				NSString *dataType = s.getToken.string;
 
@@ -2281,6 +2282,8 @@
 					[RZUserDefaults() setBool:[settingValue boolValue] forKey:settingKey];
 				} else if ([dataType isEqualToString:@"-i"]) {
 					[RZUserDefaults() setInteger:[settingValue integerValue] forKey:settingKey];
+				} else if ([dataType isEqualToString:@"-f"]) {
+					[RZUserDefaults() setDouble:[settingValue doubleValue] forKey:settingKey];
 				} else {
 					[RZUserDefaults() setObject:settingValue forKey:settingKey];
 				}
