@@ -45,7 +45,7 @@
 "ApplicationWantsToTerminatePromptMessage" = "Quitting will disconnect you from any IRC server that you are connected to until you restart Textual.";
 "ApplicationWantsToTerminatePromptTitle" = "Do you want to quit Textual?";
 
-"AutoConnectAfterWakeUpHostNotReachable" = "%1$@ is not reachable. Delaying auto connect after waking up for %2$@ seconds. To force connect, use command /conn or right-click server and click Connect";
+"AutoConnectAfterWakeUpHostNotReachable" = "%1$@ is not reachable. Delaying auto connect after waking up for %2$@ seconds. To force connect, use command /conn or right-click server and click Connect.";
 
 "BlowfishEncryptionFailed" = "Encryption of message failed. Not sending to server.";
 "BlowfishEncryptionKeyChanged" = "Encryption key changed. Adjusting accordingly.";
