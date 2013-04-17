@@ -62,7 +62,7 @@ typedef enum IRCDisconnectMode : NSInteger {
 @property (nonatomic, strong) IRCISupportInfo *isupport;
 @property (nonatomic, assign) IRCConnectMode connectType;
 @property (nonatomic, assign) IRCDisconnectMode disconnectType;
-@property (nonatomic, assign, setter=autoConnect:) NSInteger connectDelay;
+@property (nonatomic, assign) NSInteger connectDelay;
 @property (nonatomic, assign) BOOL autojoinInProgress;			// YES if autojoin is running, else NO.
 @property (nonatomic, assign) BOOL hasIRCopAccess;				// YES if local user is IRCOp, else NO.
 @property (nonatomic, assign) BOOL isAutojoined;				// YES if autojoin has been completed, else NO.
@@ -104,7 +104,7 @@ typedef enum IRCDisconnectMode : NSInteger {
 - (NSString *)localNickname;
 - (NSString *)localHostmask;
 
-- (void)autoConnect:(NSInteger)delay;
+- (void)autoConnect:(NSInteger)delay afterWakeUp:(BOOL)afterWakeUp;
 
 - (void)terminate;
 - (void)closeDialogs;

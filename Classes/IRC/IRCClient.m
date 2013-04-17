@@ -5650,19 +5650,23 @@
 	[self.worldController reloadTreeGroup:self];
 }
 
-- (void)autoConnect:(NSInteger)delay
+- (void)autoConnect:(NSInteger)delay afterWakeUp:(BOOL)afterWakeUp
 {
-	_connectDelay = delay;
+	self.connectDelay = delay;
 
-	[self autoConnect];
+	if (afterWakeUp) {
+		[self autoConnectAfterWakeUp];
+	} else {
+		[self performSelector:@selector(connect) withObject:nil afterDelay:self.connectDelay];
+	}
 }
 
-- (void)autoConnect
+- (void)autoConnectAfterWakeUp
 {
 	if (self.isHostReachable) {
 		[self connect];
 	} else {
-		[self performSelector:@selector(autoConnect) withObject:nil afterDelay:self.connectDelay];
+		[self performSelector:@selector(autoConnectAfterWakeUp) withObject:nil afterDelay:self.connectDelay];
 	}
 }
 
