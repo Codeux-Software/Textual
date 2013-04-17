@@ -257,6 +257,8 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (BOOL)logHighlights;
 + (BOOL)highlightCurrentNickname;
 
++ (CGFloat)swipeMinimumLength;
+
 + (NSArray *)highlightMatchKeywords;
 + (NSArray *)highlightExcludeKeywords;
 

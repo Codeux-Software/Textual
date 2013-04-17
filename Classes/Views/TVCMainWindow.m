@@ -37,8 +37,6 @@
 
 #import "TextualApplication.h"
 
-#define _TVCSwipeMinimumLength 0.3
-
 @implementation TVCMainWindow
 
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation
@@ -83,6 +81,9 @@
 
 - (void)beginGestureWithEvent:(NSEvent *)event
 {
+	CGFloat TVCSwipeMinimumLength = [TPCPreferences swipeMinimumLength];
+	NSAssertReturn(TVCSwipeMinimumLength > 0);
+
 	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseAny inView:nil];
 
 	self.twoFingerTouches = [NSMutableDictionary dictionary];
@@ -97,8 +98,11 @@
 
 - (void)endGestureWithEvent:(NSEvent *)event
 {
-	NSObjectIsEmptyAssert(self.twoFingerTouches);
+	CGFloat TVCSwipeMinimumLength = [TPCPreferences swipeMinimumLength];
+	NSAssertReturn(TVCSwipeMinimumLength > 0);
 
+	NSObjectIsEmptyAssert(self.twoFingerTouches);
+	
 	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseAny inView:nil];
 
 	NSMutableDictionary *beginTouches = [self.twoFingerTouches copy];
@@ -129,7 +133,7 @@
 	
 	CGFloat absSum = fabsf(sum);
 
-	if (absSum < _TVCSwipeMinimumLength) {
+	if (absSum < TVCSwipeMinimumLength) {
 		return;
 	}
 

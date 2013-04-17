@@ -810,6 +810,11 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() boolForKey:@"TrackNicknameHighlightsOfLocalUser"];
 }
 
++ (CGFloat)swipeMinimumLength
+{
+	return [RZUserDefaults() doubleForKey:@"SwipeMinimumLength"];
+}
+
 + (NSInteger)trackUserAwayStatusMaximumChannelSize
 {
     return [RZUserDefaults() integerForKey:@"TrackUserAwayStatusMaximumChannelSize"];
@@ -1327,6 +1332,11 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"TrackConversationsWithColorHashing"]			= @(YES);
 	d[@"TrackNicknameHighlightsOfLocalUser"]			= @(YES);
 	d[@"WebKitDeveloperExtras"]							= @(YES);
+
+	/* This controls the two-finger swipe sensitivity. The lower it is, the more
+		sensitive the swipe left/right detection is. The higher it is, the less 
+		sensitive the swipe detection is. <= 0 means off. */
+	d[@"SwipeMinimumLength"]							= @(0.3);
 
     d[@"TextFieldAutomaticSpellCorrection"]             = @(NO);
 
