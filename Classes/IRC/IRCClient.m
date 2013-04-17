@@ -5666,6 +5666,8 @@
 	if (self.isHostReachable) {
 		[self connect];
 	} else {
+		[self printDebugInformationToConsole:TXTFLS(@"AutoConnectAfterWakeUpHostNotReachable", self.config.serverAddress, @(self.connectDelay))];
+
 		[self performSelector:@selector(autoConnectAfterWakeUp) withObject:nil afterDelay:self.connectDelay];
 	}
 }
