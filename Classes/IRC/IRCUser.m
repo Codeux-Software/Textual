@@ -240,6 +240,16 @@
 	}
 }
 
++ (NSComparator)sortByNicknameLength
+{
+	return [^(id obj1, id obj2){
+		IRCUser *s1 = obj1;
+		IRCUser *s2 = obj2;
+
+		return (s1.nickname.length <= s2.nickname.length);
+	} copy];
+}
+
 - (NSString *)description
 {
 	return [NSString stringWithFormat:@"<IRCUser %@%@>", self.mark, self.nickname];

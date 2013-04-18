@@ -244,9 +244,7 @@
 - (void)sortedMemberListReload
 {
 	/* Do not call this unless needed. */
-	self.memberList = [self.memberList sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-		return [obj1 compare:obj2];
-	}];
+	self.memberList = [self.memberList sortedArrayUsingComparator:NSDefaultComparator];
 
 	[self reloadMemberList];
 }
@@ -254,61 +252,11 @@
 - (void)sortedInsert:(IRCUser *)item
 {
 	PointerIsEmptyAssert(item);
-	
-	const NSInteger LINEAR_SEARCH_THRESHOLD = 5;
-	
-	NSInteger left = 0;
-	NSInteger right = self.memberList.count;
 
-	NSMutableArray *userList = [self.memberList mutableCopy];
-	
-	while ((right - left) > LINEAR_SEARCH_THRESHOLD) {
-		NSInteger i = ((left + right) / 2);
-		
-		IRCUser *t = [self memberAtIndex:i];
-		
-		if ([t compare:item] == NSOrderedAscending) {
-			left = (i + 1);
-		} else {
-			right = (i + 1);
-		}
-	}
-	
-	for (NSInteger i = left; i < right; ++i) {
-		IRCUser *t = [self memberAtIndex:i];
-		
-		if ([t compare:item] == NSOrderedDescending) {
-			[userList safeInsertObject:item atIndex:i];
+	self.memberList = [self.memberList arrayByBinaryInsertingSortedObject:item usingComparator:NSDefaultComparator];
 
-			self.memberList = nil;
-			self.memberList = userList;
-
-			[self updateLengthSortedMemberList];
-			
-			return;
-		}
-	}
-	
-	[userList safeAddObject:item];
-
-	self.memberList = nil;
-	self.memberList = userList;
-
-	[self updateLengthSortedMemberList];
-}
-
-- (void)updateLengthSortedMemberList
-{
 	/* Conversation tracking scans based on nickname length. */
-	NSArray *sortedMembers = [self.memberList sortedArrayWithOptions:NSSortStable usingComparator:^NSComparisonResult(id obj1, id obj2) {
-		IRCUser *s1 = obj1;
-		IRCUser *s2 = obj2;
-
-		return (s1.nickname.length <= s2.nickname.length);
-	}];
-
-	self.memberListLengthSorted = nil;
-	self.memberListLengthSorted = sortedMembers;
+	self.memberListLengthSorted = [self.memberList sortedArrayUsingComparator:[IRCUser sortByNicknameLength]];
 }
 
 #pragma mark -
@@ -350,13 +298,8 @@
 	
 	NSInteger n = [self indexOfMember:nick];
 
-	NSMutableArray *userList = [self.memberList mutableCopy];
-	
 	if (n >= 0) {
-		[userList safeRemoveObjectAtIndex:n];
-
-		self.memberList = nil;
-		self.memberList = userList;
+		self.memberList = [self.memberList arrayByRemovingObjectAtIndex:n];
 
         [self.client postEventToViewController:@"channelMemberRemoved" forChannel:self];
 	}
