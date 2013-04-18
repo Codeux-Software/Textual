@@ -42,7 +42,6 @@
 @property (nonatomic, nweak) IRCClient *client;
 @property (nonatomic, nweak) NSButton *updateButton;
 @property (nonatomic, nweak) NSSearchField *searchField;
-@property (nonatomic, nweak) NSTextField *channelCountField;
 @property (nonatomic, nweak) NSTextField *networkNameField;
 @property (nonatomic, nweak) TVCListView *channelListTable;
 @property (nonatomic, strong) NSMutableArray *unfilteredList;
@@ -60,6 +59,7 @@
 - (void)onClose:(id)sender;
 
 - (void)onUpdate:(id)sender;
+- (void)onJoinChannels:(id)sender;
 - (void)onSearchFieldChange:(id)sender;
 @end
 
