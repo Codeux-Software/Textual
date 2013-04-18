@@ -56,6 +56,10 @@
 - (NSArray *)arrayByInsertingSortedObject:(id)obj usingComparator:(NSComparator)comparator;
 
 - (NSArray *)arrayByRemovingObjectAtIndex:(NSUInteger)idx;
+
+- (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath;
+
+- (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath usingSelector:(SEL)comparison;
 @end
 
 @interface NSMutableArray (TXMutableArrayHelper)
