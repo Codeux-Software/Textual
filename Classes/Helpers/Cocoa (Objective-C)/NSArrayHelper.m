@@ -39,6 +39,8 @@
 
 #include <objc/message.h>
 
+typedef BOOL (*EqualityMethodType)(id, SEL, id);
+
 @implementation NSArray (TXArrayHelper)
 
 - (id)safeObjectAtIndex:(NSInteger)n
@@ -172,6 +174,35 @@
 	[arry safeRemoveObjectAtIndex:idx];
 
 	return [arry copy];
+}
+
+- (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath
+{
+	return [self indexOfObjectMatchingValue:value withKeyPath:keyPath usingSelector:@selector(isEqual:)];
+}
+
+- (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath usingSelector:(SEL)comparison
+{
+	__block NSUInteger retval = NSNotFound;
+
+	[self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+		id objval = [obj valueForKeyPath:keyPath];
+		if ([objval respondsToSelector:comparison] == NO) {
+			return;
+		}
+
+		// Shutup clang, can't you see that I'm testing to make sure that it
+		// actually accepts this selector?
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+		if ((BOOL)[objval performSelector:comparison withObject:value]) {
+#pragma clang diagnostic pop
+			retval = idx;
+			*stop = YES;
+		}
+	}];
+
+	return retval;
 }
 
 @end

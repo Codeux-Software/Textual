@@ -299,7 +299,7 @@
 	
 	NSInteger n = [self indexOfMember:nick];
 
-	if (n >= 0) {
+	if (n != NSNotFound) {
 		IRCUser *user = [self.memberList objectAtIndex:n];
 
 		self.memberList = [self.memberList arrayByRemovingObjectAtIndex:n];
@@ -324,17 +324,17 @@
 	NSObjectIsEmptyAssert(toNick);
 	
 	NSInteger n = [self indexOfMember:fromNick];
-	
-	if (n >= 0) {
-		IRCUser *m = [self memberAtIndex:n];
-		
-		m.nickname = toNick;
 
-		[self removeMember:m.nickname reload:NO];
-		
-		[self sortedInsert:m];
-		[self reloadMemberList];
-	}
+	NSAssertReturn(n != NSNotFound);
+	
+	IRCUser *m = [self memberAtIndex:n];
+	
+	m.nickname = toNick;
+
+	[self removeMember:m.nickname reload:NO];
+	
+	[self sortedInsert:m];
+	[self reloadMemberList];
 }
 
 #pragma mark -
@@ -345,31 +345,31 @@
 	NSObjectIsEmptyAssert(mode);
 	
 	NSInteger n = [self indexOfMember:nick];
+
+	NSAssertReturn(n != NSNotFound);
 	
-	if (n >= 0) {
-		IRCUser *m = [self memberAtIndex:n];
-		
-		switch ([mode characterAtIndex:0]) {
-			case 'q': { m.q = value; break; }
-			case 'a': { m.a = value; break; }
-			case 'o': { m.o = value; break; }
-			case 'h': { m.h = value; break; }
-			case 'v': { m.v = value; break; }
-		}
-		
-		[self removeMember:m.nickname reload:NO];
-
-		IRCISupportInfo *isupport = self.client.isupport;
-
-		m.q = (m.q && [isupport modeIsSupportedUserPrefix:@"q"]);
-		m.a = (m.a && [isupport modeIsSupportedUserPrefix:@"a"]);
-		m.o = (m.o && [isupport modeIsSupportedUserPrefix:@"o"]);
-		m.h = (m.h && [isupport modeIsSupportedUserPrefix:@"h"]);
-		m.v = (m.v && [isupport modeIsSupportedUserPrefix:@"v"]);
-		
-		[self sortedInsert:m];
-		[self reloadMemberList];
+	IRCUser *m = [self memberAtIndex:n];
+	
+	switch ([mode characterAtIndex:0]) {
+		case 'q': { m.q = value; break; }
+		case 'a': { m.a = value; break; }
+		case 'o': { m.o = value; break; }
+		case 'h': { m.h = value; break; }
+		case 'v': { m.v = value; break; }
 	}
+	
+	[self removeMember:m.nickname reload:NO];
+
+	IRCISupportInfo *isupport = self.client.isupport;
+
+	m.q = (m.q && [isupport modeIsSupportedUserPrefix:@"q"]);
+	m.a = (m.a && [isupport modeIsSupportedUserPrefix:@"a"]);
+	m.o = (m.o && [isupport modeIsSupportedUserPrefix:@"o"]);
+	m.h = (m.h && [isupport modeIsSupportedUserPrefix:@"h"]);
+	m.v = (m.v && [isupport modeIsSupportedUserPrefix:@"v"]);
+	
+	[self sortedInsert:m];
+	[self reloadMemberList];
 }
 
 #pragma mark -
@@ -392,29 +392,14 @@
 - (NSInteger)indexOfMember:(NSString *)nick options:(NSStringCompareOptions)mask
 {
 	NSObjectIsEmptyAssertReturn(nick, -1);
-	
-	NSInteger index = 0;
 
-	/* Incase memberList is modified while reading. */
-	for (IRCUser *m in self.memberList.copy) {
-		if (mask & NSCaseInsensitiveSearch) {
-			if ([nick isEqualIgnoringCase:m.nickname]) {
-				return index;
+	//[self.memberList indexOfObjectMatchingValue:nick withKeyPath:@"nickname"];
 
-				break;
-			}
-		} else {
-			if ([nick isEqualToString:m.nickname]) {
-				return index;
-
-				break;
-			}
-		}
-
-		index += 1;
+	if (mask & NSCaseInsensitiveSearch) {
+		return [self.memberList indexOfObjectMatchingValue:nick withKeyPath:@"nickname" usingSelector:@selector(isEqualIgnoringCase:)];
+	} else {
+		return [self.memberList indexOfObjectMatchingValue:nick withKeyPath:@"nickname" usingSelector:@selector(isEqualToString:)];
 	}
-
-	return -1;
 }
 
 #pragma mark -
@@ -434,12 +419,10 @@
 - (IRCUser *)findMember:(NSString *)nick options:(NSStringCompareOptions)mask
 {
 	NSInteger n = [self indexOfMember:nick options:mask];
+
+	NSAssertReturnR(n != NSNotFound, nil);
 	
-	if (n >= 0) {
-		return [self memberAtIndex:n];
-	}
-	
-	return nil;
+	return [self memberAtIndex:n];
 }
 
 #pragma mark -
