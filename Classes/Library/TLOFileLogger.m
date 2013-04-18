@@ -394,6 +394,7 @@
 	}
 
 	NSString *buildPath = self.buildPath;
+
 	NSObjectIsEmptyAssertReturn(buildPath, NSStringEmptyPlaceholder);
 
 	return [NSString stringWithFormat:@"%@%@.%@", buildPath, filename, extension];
