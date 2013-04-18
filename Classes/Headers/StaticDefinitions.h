@@ -92,39 +92,41 @@
 #define RZWorkspace()							[NSWorkspace sharedWorkspace]
 #define RZWorkspaceNotificationCenter()			[RZWorkspace() notificationCenter]
 #define RZRunningApplication()					[NSRunningApplication currentApplication]
+#define RZMainRunLoop()							[NSRunLoop mainRunLoop]
+#define RZCurrentRunLoop()						[NSRunLoop currentRunLoop]
 
 #ifdef TXForceNativeNotificationCenterDispatch
 #define RZUserNotificationCenter()				[NSUserNotificationCenter defaultUserNotificationCenter]
 #endif
 
 /* Lazy-man defines. */
-#define PointerIsEmpty(s)						(s == NULL || s == nil)
-#define PointerIsNotEmpty(s)					(s != NULL && s != nil)
+#define PointerIsEmpty(s)						((s) == NULL || (s) == nil)
+#define PointerIsNotEmpty(s)					((s) != NULL && (s) != nil)
 
 #define BOOLReverseValue(b)						((b == YES) ? NO : YES)
 #define BOOLValueFromObject(b)					PointerIsNotEmpty(b)
-#define CFItemRefToID(s)						(id)s
-#define NSDissimilarObjects(o,n)				(o != n)
+#define CFItemRefToID(s)						((id)(s))
+#define NSDissimilarObjects(o,n)				((o) != (n))
 
-#define NSAssertReturn(c)						if (c == NO) { return; }
-#define NSAssertReturnR(c, r)					if (c == NO) { return r; }
-#define NSAssertReturnLoopContinue(c)			if (c == NO) { continue; }
-#define NSAssertReturnLoopBreak(c)				if (c == NO) { break; }
+#define NSAssertReturn(c)						if ((c) == NO) { return; }
+#define NSAssertReturnR(c, r)					if ((c) == NO) { return (r); }
+#define NSAssertReturnLoopContinue(c)			if ((c) == NO) { continue; }
+#define NSAssertReturnLoopBreak(c)				if ((c) == NO) { break; }
 
 #define NSObjectIsEmptyAssert(o)				if (NSObjectIsEmpty(o)) { return; }
-#define NSObjectIsEmptyAssertReturn(o, r)		if (NSObjectIsEmpty(o)) { return r; }
+#define NSObjectIsEmptyAssertReturn(o, r)		if (NSObjectIsEmpty(o)) { return (r); }
 #define NSObjectIsEmptyAssertLoopContinue(o)	if (NSObjectIsEmpty(o)) { continue; }
 #define NSObjectIsEmptyAssertLoopBreak(o)		if (NSObjectIsEmpty(o)) { break; }
 
 #define PointerIsEmptyAssert(o)					if (PointerIsEmpty(o)) { return; }
-#define PointerIsEmptyAssertReturn(o, r)		if (PointerIsEmpty(o)) { return r; }
+#define PointerIsEmptyAssertReturn(o, r)		if (PointerIsEmpty(o)) { return (r); }
 #define PointerIsEmptyAssertLoopContinue(o)		if (PointerIsEmpty(o)) { continue; }
 #define PointerIsEmptyAssertLoopBreak(o)		if (PointerIsEmpty(o)) { break; }
 
-#define NSObjectIsKindOfClassAssert(o,c)				if ([o isKindOfClass:[c class]] == NO) { return; }
-#define NSObjectIsKindOfClassAssertReturn(o, c, r)		if ([o isKindOfClass:[c class]] == NO) { return r; }
-#define NSObjectIsKindOfClassAssertContinue(o, c)		if ([o isKindOfClass:[c class]] == NO) { continue; }
-#define NSObjectIsKindOfClassAssertBreak(o,c)			if ([o isKindOfClass:[c class]] == NO) { break; }
+#define NSObjectIsKindOfClassAssert(o,c)				if ([(o) isKindOfClass:[c class]] == NO) { return; }
+#define NSObjectIsKindOfClassAssertReturn(o, c, r)		if ([(o) isKindOfClass:[c class]] == NO) { return (r); }
+#define NSObjectIsKindOfClassAssertContinue(o, c)		if ([(o) isKindOfClass:[c class]] == NO) { continue; }
+#define NSObjectIsKindOfClassAssertBreak(o,c)			if ([(o) isKindOfClass:[c class]] == NO) { break; }
 
 /* Deprecation and symbol visibility. */
 #define TEXTUAL_EXTERN							__attribute__((visibility("default")))

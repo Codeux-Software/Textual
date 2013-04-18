@@ -693,13 +693,10 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		if ([TPCPreferences trackConversations]) {
 			if (log && isNormalMsg) {
 				IRCChannel *logChannel = log.channel;
+				
+				NSMutableSet *mentionedUsers = [NSMutableSet set];
 
-				NSArray *sortedMembers = [logChannel.memberList sortedArrayWithOptions:NSSortStable usingComparator:^NSComparisonResult(id obj1, id obj2) {
-					IRCUser *s1 = obj1;
-					IRCUser *s2 = obj2;
-
-					return (s1.nickname.length <= s2.nickname.length);
-				}];
+				NSArray *sortedMembers = logChannel.memberListLengthSorted;
 					
 				for (IRCUser *user in sortedMembers) {
 					start = 0;
@@ -753,11 +750,17 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 								isClear(attrBuf, _rendererKeywordHighlightAttribute, r.location, r.length))
 							{
 								setFlag(attrBuf, _rendererConversationTrackerAttribute, r.location, r.length);
+
+								[mentionedUsers addObject:user];
 							}
 						}
 						
 						start = (NSMaxRange(r) + 1);
 					}
+				}
+
+				if (NSObjectIsNotEmpty(mentionedUsers)) {
+					[resultInfo safeSetObject:[mentionedUsers allObjects] forKey:@"mentionedUsers"];
 				}
 			}
 		}

@@ -337,6 +337,8 @@
 {
 	NSString *base = self.fileWritePath;
 
+	NSObjectIsEmptyAssertReturn(base, nil);
+
 	if (self.flatFileStructure == NO) {
 		NSString *serv = [self.client.name safeFilename];
 		NSString *chan = [self.channel.name safeFilename];
@@ -390,8 +392,12 @@
 	if (NSObjectIsEmpty(filename)) {
 		filename = [[NSDate date] dateWithCalendarFormat:@"%Y-%m-%d" timeZone:nil];
 	}
-	
-	return [NSString stringWithFormat:@"%@%@.%@", self.buildPath, filename, extension];
+
+	NSString *buildPath = self.buildPath;
+
+	NSObjectIsEmptyAssertReturn(buildPath, NSStringEmptyPlaceholder);
+
+	return [NSString stringWithFormat:@"%@%@.%@", buildPath, filename, extension];
 }
 
 #pragma mark -
