@@ -65,8 +65,8 @@
 
 "ChannelListDialogNetworkName" = "Channel List for \"%@\"";
 "ChannelListDialogTitle" = "Channel List — %@"; // %@ = channel count.
-"ChannelListDialogHasChannels" = "%ld Public Channels";
-"ChannelListDialogHasSearchResults" = "%1$ld Public Channels - %2$ld Search Results";
+"ChannelListDialogHasChannels" = "%@ Public Channels";
+"ChannelListDialogHasSearchResults" = "%@ Public Channels - %@ Search Results";
 
 "CloseButton" = "Close";
 

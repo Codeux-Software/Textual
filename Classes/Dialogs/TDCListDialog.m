@@ -132,10 +132,13 @@
 
 	NSString *titleCount;
 
+	NSString *count1 = TXFormattedNumber(self.unfilteredList.count);
+	NSString *count2 = TXFormattedNumber(self.filteredList.count);
+
 	if (NSObjectIsNotEmpty(self.searchField.stringValue) && NSDissimilarObjects(self.unfilteredList.count, self.filteredList.count)) {
-		titleCount = TXTFLS(@"ChannelListDialogHasSearchResults", self.unfilteredList.count, self.filteredList.count);
+		titleCount = TXTFLS(@"ChannelListDialogHasSearchResults", count1, count2);
 	} else {
-		titleCount = TXTFLS(@"ChannelListDialogHasChannels", self.unfilteredList.count);
+		titleCount = TXTFLS(@"ChannelListDialogHasChannels", count1);
 	}
 
 	[self.window setTitle:TXTFLS(@"ChannelListDialogTitle", titleCount)];
