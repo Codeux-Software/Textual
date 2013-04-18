@@ -73,7 +73,7 @@
 											<string key="NSFrameSize">{818, 380}</string>
 											<reference key="NSSuperview" ref="363273225"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="862570851"/>
+											<reference key="NSNextKeyView" ref="934369256"/>
 											<bool key="NSEnabled">YES</bool>
 											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 											<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -288,7 +288,7 @@
 							<string key="NSFrame">{{-1, 47}, {790, 398}}</string>
 							<reference key="NSSuperview" ref="797869287"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="934369256"/>
+							<reference key="NSNextKeyView" ref="363273225"/>
 							<int key="NSsFlags">133810</int>
 							<reference key="NSVScroller" ref="862570851"/>
 							<reference key="NSHScroller" ref="17276569"/>
@@ -434,7 +434,7 @@
 						</object>
 						<object class="NSButton" id="70531033">
 							<reference key="NSNextResponder" ref="797869287"/>
-							<int key="NSvFlags">289</int>
+							<int key="NSvFlags">292</int>
 							<string key="NSFrame">{{7, 6}, {183, 32}}</string>
 							<reference key="NSSuperview" ref="797869287"/>
 							<reference key="NSWindow"/>
@@ -810,17 +810,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">TDCListDialog</string>
 					<string key="superclassName">NSWindowController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">onJoinChannels:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">onJoinChannels:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">onJoinChannels:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/TDCListDialog.h</string>
