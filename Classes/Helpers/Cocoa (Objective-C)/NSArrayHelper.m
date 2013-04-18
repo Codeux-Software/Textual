@@ -151,6 +151,34 @@
 	return [self containsObject:anObject];
 }
 
+- (NSRange)range
+{
+	return NSMakeRange(0, self.count);
+}
+
+- (NSArray *)arrayByBinaryInsertingSortedObject:(id)obj usingComparator:(NSComparator)comparator
+{
+	return [self arrayByInsertingSortedObject:obj options:NSBinarySearchingInsertionIndex usingComparator:comparator];
+}
+
+- (NSArray *)arrayByInsertingSortedObject:(id)obj options:(NSBinarySearchingOptions)options usingComparator:(NSComparator)comparator
+{
+	NSMutableArray *arry = [self mutableCopy];
+
+	[arry insertSortedObject:obj options:options usingComparator:comparator];
+
+	return [arry copy];
+}
+
+- (NSArray *)arrayByRemovingObjectAtIndex:(NSUInteger)idx
+{
+	NSMutableArray *arry = [self mutableCopy];
+
+	[arry safeRemoveObjectAtIndex:idx];
+
+	return [arry copy];
+}
+
 @end
 
 @implementation NSMutableArray (TXMutableArrayHelper)
@@ -246,6 +274,20 @@
 
 		[self safeAddObject:object];
 	}
+}
+
+- (void)binarySearchInsertSortedObject:(id)obj usingComparator:(NSComparator)comparator
+{
+	[self insertSortedObject:obj options:NSBinarySearchingInsertionIndex usingComparator:comparator];
+}
+
+- (void)insertSortedObject:(id)obj options:(NSBinarySearchingOptions)options usingComparator:(NSComparator)comparator
+{
+	PointerIsEmptyAssert(obj);
+
+	NSUInteger idx = [self indexOfObject:obj inSortedRange:self.range options:options usingComparator:comparator];
+
+	[self insertObject:obj atIndex:idx];
 }
 
 @end
