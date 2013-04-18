@@ -874,6 +874,7 @@
 		BOOL drawLinks = BOOLReverseValue([TLOLinkParser.bannedURLRegexLineTypes containsObject:lineTypeStng]);
 
 		NSArray *urlRanges;
+		NSArray *mentionedUsers;
 
 		// ---- //
 
@@ -895,6 +896,7 @@
 
 		urlRanges = [outputDictionary arrayForKey:@"URLRanges"];
 		highlighted = [outputDictionary boolForKey:@"wordMatchFound"];
+		mentionedUsers = [outputDictionary arrayForKey:@"mentionedUsers"];
 
 		// ************************************************************************** /
 		// Draw to display.                                                                /
@@ -1029,6 +1031,18 @@
 			[self.worldController addHighlightInChannel:self.channel withLogLine:line];
 		}
 		
+		/* Why reinvent the wheel with conversation detection. LogRenderer does that
+		 automatically when color hashing UUID option is turned on. Which is default */
+		if (NSObjectIsNotEmpty(mentionedUsers)) {
+			dispatch_async(dispatch_get_main_queue(), ^{
+				if (logLine.memberType == TVCLogMemberLocalUserType) {
+					[mentionedUsers makeObjectsPerformSelector:@selector(outgoingConversation)];
+				} else {
+					[mentionedUsers makeObjectsPerformSelector:@selector(conversation)];
+				}
+			});
+		}
+
 		PointerIsEmptyAssert(completionBlock);
 		
 		dispatch_sync(dispatch_get_main_queue(), ^{

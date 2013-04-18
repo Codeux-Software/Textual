@@ -49,6 +49,7 @@
 @property (nonatomic, strong) NSDictionary *channelModes;
 @property (nonatomic, assign) NSInteger nicknameLength;
 @property (nonatomic, assign) NSInteger modesCount;
+@property (nonatomic, strong) NSString *channelNamePrefixes;
 @property (nonatomic, strong) NSString *networkAddress;
 @property (nonatomic, strong) NSString *networkName;
 @property (nonatomic, strong) NSString *networkNameActual;

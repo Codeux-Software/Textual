@@ -55,6 +55,7 @@ typedef enum IRCChannelStatus : NSInteger {
 @property (nonatomic, assign) BOOL isGatheringModeInfo;
 
 @property (strong) NSArray *memberList;
+@property (strong) NSArray *memberListLengthSorted; // Sorted member list based on nickname length. Used by conversation tracking.
 
 - (void)setup:(IRCChannelConfig *)seed;
 - (void)updateConfig:(IRCChannelConfig *)seed;
@@ -103,6 +104,4 @@ typedef enum IRCChannelStatus : NSInteger {
 
 - (void)reloadMemberList;
 - (void)sortedMemberListReload;
-
-- (void)detectOutgoingConversation:(NSString *)text;
 @end

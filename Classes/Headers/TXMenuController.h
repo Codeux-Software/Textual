@@ -125,6 +125,7 @@
 	9631: "Close Window"
 	990002: "Next Highlight"
 	990003: "Previous Highlight"
+    6666: "Mute Sound"
  */
 
 @interface TXMenuController : NSObject
@@ -134,6 +135,8 @@
 @property (nonatomic, strong) NSString *currentSearchPhrase;
 @property (nonatomic, assign) BOOL findPanelOpened;
 @property (nonatomic, strong) NSDictionary *openWindowList;
+
+@property (nonatomic, nweak) NSMenuItem *muteSound;
 
 - (void)terminate;
 

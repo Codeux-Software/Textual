@@ -38,6 +38,8 @@
 #import "TextualApplication.h"
 
 @interface NSArray (TXArrayHelper)
+@property (nonatomic, readonly, assign) NSRange range;
+
 - (id)safeObjectAtIndex:(NSInteger)n;
 
 - (BOOL)boolAtIndex:(NSInteger)n;
@@ -50,6 +52,14 @@
 - (void *)pointerAtIndex:(NSInteger)n;
 
 - (BOOL)containsObjectIgnoringCase:(id)anObject;
+
+- (NSArray *)arrayByInsertingSortedObject:(id)obj usingComparator:(NSComparator)comparator;
+
+- (NSArray *)arrayByRemovingObjectAtIndex:(NSUInteger)idx;
+
+- (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath;
+
+- (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath usingSelector:(SEL)comparison;
 @end
 
 @interface NSMutableArray (TXMutableArrayHelper)
@@ -73,6 +83,8 @@
 - (void)insertPointer:(void *)value atIndex:(NSUInteger)index;
 
 - (void)performSelectorOnObjectValueAndReplace:(SEL)performSelector;
+
+- (void)insertSortedObject:(id)obj usingComparator:(NSComparator)comparator;
 @end
 
 @interface NSIndexSet (TXIndexSetHelper)

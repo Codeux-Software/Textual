@@ -39,6 +39,8 @@
 
 #include <objc/message.h>
 
+typedef BOOL (*EqualityMethodType)(id, SEL, id);
+
 @implementation NSArray (TXArrayHelper)
 
 - (id)safeObjectAtIndex:(NSInteger)n
@@ -151,6 +153,58 @@
 	return [self containsObject:anObject];
 }
 
+- (NSRange)range
+{
+	return NSMakeRange(0, self.count);
+}
+
+- (NSArray *)arrayByInsertingSortedObject:(id)obj usingComparator:(NSComparator)comparator
+{
+	NSMutableArray *arry = [self mutableCopy];
+
+	[arry insertSortedObject:obj usingComparator:comparator];
+
+	return [arry copy];
+}
+
+- (NSArray *)arrayByRemovingObjectAtIndex:(NSUInteger)idx
+{
+	NSMutableArray *arry = [self mutableCopy];
+
+	[arry safeRemoveObjectAtIndex:idx];
+
+	return [arry copy];
+}
+
+- (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath
+{
+	return [self indexOfObjectMatchingValue:value withKeyPath:keyPath usingSelector:@selector(isEqual:)];
+}
+
+- (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath usingSelector:(SEL)comparison
+{
+	__block NSUInteger retval = NSNotFound;
+
+	[self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+		id objval = [obj valueForKeyPath:keyPath];
+		if ([objval respondsToSelector:comparison] == NO) {
+			return;
+		}
+
+		// Shutup clang, can't you see that I'm testing to make sure that it
+		// actually accepts this selector?
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+		if ((BOOL)[objval performSelector:comparison withObject:value]) {
+#pragma clang diagnostic pop
+			retval = idx;
+			*stop = YES;
+		}
+	}];
+
+	return retval;
+}
+
 @end
 
 @implementation NSMutableArray (TXMutableArrayHelper)
@@ -246,6 +300,18 @@
 
 		[self safeAddObject:object];
 	}
+}
+
+- (void)insertSortedObject:(id)obj usingComparator:(NSComparator)comparator
+{
+	PointerIsEmptyAssert(obj);
+
+	NSUInteger idx = [self indexOfObject:obj
+						   inSortedRange:self.range
+								 options:NSBinarySearchingInsertionIndex
+						 usingComparator:comparator];
+
+	[self insertObject:obj atIndex:idx];
 }
 
 @end

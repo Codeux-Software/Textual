@@ -71,6 +71,7 @@
 @property (nonatomic, strong) TLOTimer *commandQueueTimer;
 @property (nonatomic, strong) NSMutableArray *commandQueue;
 @property (nonatomic, strong) NSMutableDictionary *trackedUsers;
+@property (nonatomic, strong) Reachability *hostReachability;
 @end
 
 @implementation IRCClient
@@ -138,6 +139,8 @@
 
 	[self.socket close];
 
+	[self destroyReachability];
+
 #ifdef TEXTUAL_TRIAL_BINARY
 	[self.trialPeriodTimer stop];
 #endif
@@ -158,6 +161,8 @@
 	} else {
 		return;
 	}
+
+	[self setupReachability];
 
 	[self resetAllPropertyValues];
 }
@@ -208,6 +213,8 @@
 
 	[self.worldController select:selectedItem];
 	[self.worldController adjustSelection];
+
+	[self setupReachability];
 }
 
 - (IRCClientConfig *)storedConfig
@@ -319,6 +326,45 @@
 - (BOOL)isReconnecting
 {
 	return (self.reconnectTimer && self.reconnectTimer.timerIsActive);
+}
+
+- (void)setupReachability
+{
+	[self destroyReachability];
+
+	self.hostReachability = [Reachability reachabilityWithHostname:self.config.serverAddress];
+
+	[RZNotificationCenter() addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:self.hostReachability];
+
+	[self.hostReachability startNotifier];
+}
+
+- (void)destroyReachability
+{
+	self.isHostReachable = NO;
+
+	if (PointerIsNotEmpty(self.hostReachability)) {
+		[RZNotificationCenter() removeObserver:self name:kReachabilityChangedNotification object:self.hostReachability];
+
+		[self.hostReachability stopNotifier];
+
+		self.hostReachability = nil;
+	}
+}
+
+- (void)reachabilityChanged:(NSNotification *)note
+{
+#ifndef DEBUG
+	if (self.rawModeEnabled) {
+#endif
+		LogToConsole(@"%@ %@ %@", self.config.serverAddress,
+								  self.hostReachability.currentReachabilityString,
+								  self.hostReachability.currentReachabilityFlags);
+#ifndef DEBUG
+	}
+#endif
+
+	self.isHostReachable = self.hostReachability.isReachable;
 }
 
 #pragma mark -
@@ -1028,9 +1074,6 @@
 				command = IRCPrivateCommandIndex("privmsg");
 
 				newstr = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, IRCPrivateCommandIndex("action"), newstr, 0x01];
-			} else if (type == TVCLogLinePrivateMessageType) {
-				/* Weights. */
-				[channel detectOutgoingConversation:newstr];
 			}
 
 			[self send:command, channel.name, newstr, nil];
@@ -1155,7 +1198,7 @@
 
 			NSMutableArray *nicks = [NSMutableArray arrayWithArray:[uncutInput componentsSeparatedByString:NSStringWhitespacePlaceholder]];
 
-			if (NSObjectIsNotEmpty(nicks) && [nicks.lastObject isChannelName]) {
+			if (NSObjectIsNotEmpty(nicks) && [nicks.lastObject isChannelName:self]) {
 				targetChannelName = [nicks lastObject];
 
 				[nicks removeLastObject];
@@ -1166,7 +1209,7 @@
 			}
 
 			for (NSString *nick in nicks) {
-				if ([nick isNickname] && [nick isChannelName] == NO) {
+				if ([nick isNickname] && [nick isChannelName:self] == NO) {
 					[self send:uppercaseCommand, nick, targetChannelName, nil];
 				}
 			}
@@ -1183,7 +1226,7 @@
 
 				targetChannelName = s.getToken.string;
 
-				if ([targetChannelName isChannelName] == NO && [targetChannelName isEqualToString:@"0"] == NO) {
+				if ([targetChannelName isChannelName:self] == NO && [targetChannelName isEqualToString:@"0"] == NO) {
 					targetChannelName = [@"#" stringByAppendingString:targetChannelName];
 				}
 			}
@@ -1198,13 +1241,13 @@
 		{
 			NSObjectIsEmptyAssert(uncutInput);
 				
-			if (selChannel && selChannel.isChannel && [uncutInput isChannelName] == NO) {
+			if (selChannel && selChannel.isChannel && [uncutInput isChannelName:self] == NO) {
 				targetChannelName = selChannel.name;
 			} else {
 				targetChannelName = s.getToken.string;
 			}
 
-			NSAssertReturn([targetChannelName isChannelName]);
+			NSAssertReturn([targetChannelName isChannelName:self]);
 
 			NSString *nickname = s.getToken.string;
 			NSString *reason = s.string.trim;
@@ -1327,7 +1370,7 @@
 			/* Destination. */
 			if (selChannel && type == TVCLogLineActionType && secretMsg == NO) {
 				targetChannelName = selChannel.name;
-			} else if (selChannel && selChannel.isChannel && opMsg && [s.string isChannelName] == NO) {
+			} else if (selChannel && selChannel.isChannel && opMsg && [s.string isChannelName:self] == NO) {
 				targetChannelName = selChannel.name;
 			} else {
 				targetChannelName = s.getToken.string;
@@ -1365,7 +1408,7 @@
 					IRCChannel *channel = [self findChannel:channelName];
 
 					if (PointerIsEmpty(channel) && secretMsg == NO) {
-						if ([channelName isChannelName] == NO) {
+						if ([channelName isChannelName:self] == NO) {
 							channel = [self.worldController createPrivateMessage:channelName client:self];
 						}
 					}
@@ -1380,7 +1423,7 @@
                         }
                     }
 
-					if ([channelName isChannelName]) {
+					if ([channelName isChannelName:self]) {
 						if (opMsg || opPrefix) {
 							channelName = [@"@" stringByAppendingString:channelName];
 						}
@@ -1404,9 +1447,9 @@
 		case 5054: // Command: PART
 		case 5036: // Command: LEAVE
 		{
-			if (selChannel && selChannel.isChannel && [uncutInput isChannelName] == NO) {
+			if (selChannel && selChannel.isChannel && [uncutInput isChannelName:self] == NO) {
 				targetChannelName = selChannel.name;
-			} else if (selChannel && selChannel.isPrivateMessage && [uncutInput isChannelName] == NO) {
+			} else if (selChannel && selChannel.isPrivateMessage && [uncutInput isChannelName:self] == NO) {
 				[self.worldController destroyChannel:selChannel];
 
 				return;
@@ -1416,7 +1459,7 @@
 				targetChannelName = s.getToken.string;
 			}
 
-			NSAssertReturn([targetChannelName isChannelName]);
+			NSAssertReturn([targetChannelName isChannelName:self]);
 
 			NSString *reason = s.string.trim;
 
@@ -1437,13 +1480,13 @@
 		case 5070: // Command: TOPIC
 		case 5067: // Command: T
 		{
-			if (selChannel && selChannel.isChannel && [uncutInput isChannelName] == NO) {
+			if (selChannel && selChannel.isChannel && [uncutInput isChannelName:self] == NO) {
 				targetChannelName = selChannel.name;
 			} else {
 				targetChannelName = s.getToken.string;
 			}
 
-			NSAssertReturn([targetChannelName isChannelName]);
+			NSAssertReturn([targetChannelName isChannelName:self]);
 
 			NSString *topic = [s attributedStringToASCIIFormatting];
 
@@ -1543,13 +1586,13 @@
 		{
 			NSObjectIsEmptyAssert(uncutInput);
 			
-			if (selChannel && selChannel.isChannel && [uncutInput isChannelName] == NO) {
+			if (selChannel && selChannel.isChannel && [uncutInput isChannelName:self] == NO) {
 				targetChannelName = selChannel.name;
 			} else {
 				targetChannelName = s.getToken.string;
 			}
 
-			NSAssertReturn([targetChannelName isChannelName]);
+			NSAssertReturn([targetChannelName isChannelName:self]);
 
 			NSString *banmask = s.getToken.string;
 			
@@ -1779,6 +1822,17 @@
 
 			break;
 		}
+		case 5095: // Command: AQUOTE
+		case 5096: // Command: ARAW
+		{
+			NSObjectIsEmptyAssert(uncutInput);
+
+			for (IRCClient *client in self.worldController.clients) {
+				[client sendLine:uncutInput];
+			}
+
+			break;
+		}
 		case 5056: // Command: QUERY
 		{
 			NSString *nickname = s.getToken.string;
@@ -1788,7 +1842,7 @@
 					[self.worldController destroyChannel:selChannel];
 				}
 			} else {
-				if ([nickname isChannelName] == NO && [nickname isNickname]) {
+				if ([nickname isChannelName:self] == NO && [nickname isNickname]) {
 					IRCChannel *channel = [self findChannelOrCreate:nickname isPrivateMessage:YES];
 
 					[self.worldController select:channel];
@@ -1912,13 +1966,13 @@
 		{
 			NSObjectIsEmptyAssert(uncutInput);
 
-			if (selChannel && selChannel.isChannel && [uncutInput isChannelName] == NO) {
+			if (selChannel && selChannel.isChannel && [uncutInput isChannelName:self] == NO) {
 				targetChannelName = selChannel.name;
 			} else {
 				targetChannelName = s.getToken.string;
 			}
 
-			NSAssertReturn([targetChannelName isChannelName]);
+			NSAssertReturn([targetChannelName isChannelName:self]);
 
 			NSString *nickname = s.getToken.string;
 			NSString *banmask = nickname;
@@ -2017,7 +2071,7 @@
 			} else {
 				[self printDebugInformation:TXTLS(@"SoundIsNowMuted")];
 
-				[self.worldController setIsSoundMuted:YES];
+				[self.worldController muteSound];
 			}
 
 			break;
@@ -2027,7 +2081,7 @@
 			if (self.worldController.isSoundMuted) {
 				[self printDebugInformation:TXTLS(@"SoundIsNoLongerMuted")];
 
-				[self.worldController setIsSoundMuted:NO];
+				[self.worldController unmuteSound];
 			} else {
 				[self printDebugInformation:TXTLS(@"SoundIsNotMuted")];
 			}
@@ -2252,11 +2306,12 @@
 			NSObjectIsEmptyAssertLoopBreak(uncutInput);
 
 			/* Command to write setting to NSUserDefaults. 
-			 Syntax: /defaults [-[b|i|s|del]] <key> <value> */
+			 Syntax: /defaults [-[b|i|s|f|del]] <key> <value> */
 
 			if ([uncutInput hasPrefix:@"-b "] || // Boolean: YES, NO
 				[uncutInput hasPrefix:@"-s "] || // String.
-				[uncutInput hasPrefix:@"-i "])   // Integer.
+				[uncutInput hasPrefix:@"-i "] || // Integer.
+				[uncutInput hasPrefix:@"-f "])   // Doublle.
 			{
 				NSString *dataType = s.getToken.string;
 
@@ -2270,6 +2325,8 @@
 					[RZUserDefaults() setBool:[settingValue boolValue] forKey:settingKey];
 				} else if ([dataType isEqualToString:@"-i"]) {
 					[RZUserDefaults() setInteger:[settingValue integerValue] forKey:settingKey];
+				} else if ([dataType isEqualToString:@"-f"]) {
+					[RZUserDefaults() setDouble:[settingValue doubleValue] forKey:settingKey];
 				} else {
 					[RZUserDefaults() setObject:settingValue forKey:settingKey];
 				}
@@ -2822,6 +2879,12 @@
 		LogToConsole(@">> %@", s);
 	}
 
+	/* We are terminating and thusly do not give a shit about the data
+	 and our view is probably gone by now anyways */
+	if (self.masterController.terminating) {
+		return;
+	}
+
 	if ([TPCPreferences removeAllFormatting]) {
 		s = [s stripIRCEffects];
 	}
@@ -3061,7 +3124,7 @@
 	}
 
 	/* Is the target a channel? */
-	if ([target isChannelName]) {
+	if ([target isChannelName:self]) {
 		/* Ignore message? */
 		if ([ignoreChecks ignoreNotices] && type == TVCLogLineNoticeType) {
 			return;
@@ -3514,12 +3577,7 @@
 		c.isGatheringModeInfo = YES;
 		
 		[self send:IRCPrivateCommandIndex("mode"), c.name, nil];
-
-		if (self.CAPuserhostInNames == NO || self.CAPawayNotify) {
-			// We can skip requesting WHO, we already have this information.
-
-			[self send:IRCPrivateCommandIndex("who"), c.name, nil, nil];
-		}
+		[self send:IRCPrivateCommandIndex("who"), c.name, nil, nil];
 	}
 }
 
@@ -3818,7 +3876,7 @@
 	NSString *targetc = [m paramAt:0];
 	NSString *modestr = [m sequence:1];
 
-	if ([targetc isChannelName]) {
+	if ([targetc isChannelName:self]) {
 		IRCChannel *c = [self findChannel:targetc];
 
 		PointerIsEmptyAssert(c);
@@ -4455,10 +4513,6 @@
 
 				[self print:c type:TVCLogLineModeType nick:nil text:TXTFLS(@"IRCChannelHasModes", modestr) receivedAt:m.receivedAt];
 			}
-
-			if (c && c.isGatheringModeInfo) {
-				c.isGatheringModeInfo = NO;
-			}
 			
 			break;
 		}
@@ -4593,6 +4647,10 @@
 				[self printUnknownReply:m];
 
 				self.inUserInvokedWhoRequest = NO;
+			}
+
+			if (c && c.isGatheringModeInfo) {
+				c.isGatheringModeInfo = NO;
 			}
 
             [self.worldController updateTitleFor:c];
@@ -5328,6 +5386,43 @@
 	LogToConsole(TXTLS(@"ScriptExecutionFailureBasic"), errorb);
 }
 
+- (void)postTextualCmdScriptResult:(NSString *)resultString to:(NSString *)destination
+{
+	resultString = [resultString trim];
+	
+	NSObjectIsEmptyAssert(resultString);
+
+	/* If our resultString does not begin with a / (meaning a command), then we will tell Textual it is a
+	 MSG command so that it posts as a normal message and goes to the correct destination. Each result 
+	 line is thrown through inputText:command: to have Textual treat it like any other user input. */
+
+	/* -splitIntoLines is only available to NSAttributedString and I was too lazy to add it to NSString
+	 so fuck it… just convert our input over. */
+	NSAttributedString *resultBase = [NSAttributedString emptyStringWithBase:resultString];
+
+	NSArray *lines = [resultBase splitIntoLines];
+
+	for (NSAttributedString *s in lines) {
+		if ([s.string hasPrefix:@"/"]) {
+			/* We do not have to worry about whether this is an actual command or an escaped one
+			 by using double slashes (//) at this point because inputText:command: will do all that
+			 hard work for us. We only care if it starts with a slash. */
+			
+			[self inputText:s command:IRCPrivateCommandIndex("privmsg")];
+		} else {
+			/* If there is no destination, then we are fucked. */
+
+			if (NSObjectIsEmpty(destination)) {
+				/* Do not send a normal message to the console. What? */
+			} else {
+				NSString *msgcmd = [NSString stringWithFormat:@"/msg %@ %@", destination, s.string];
+
+				[self inputText:msgcmd command:IRCPrivateCommandIndex("privmsg")];
+			}
+		}
+	}
+}
+
 - (void)executeTextualCmdScript:(NSDictionary *)details
 {
 	/* Gather information about the script to be executed. */
@@ -5335,6 +5430,8 @@
 
 	NSString *scriptInput = details[@"input"];
 	NSString *scriptPath  = details[@"path"];
+
+	NSString *destinationChannel = details[@"channel"];
 
 	BOOL MLNonsandboxedScript = NO;
 
@@ -5393,11 +5490,7 @@
 					 if (PointerIsEmpty(result)) {
 						 [self outputTextualCmdScriptError:scriptPath input:scriptInput context:[error userInfo] error:error];
 					 } else {
-						 NSString *finalResult = result.stringValue.trim;
-
-						 NSObjectIsEmptyAssert(finalResult);
-
-						 [self.worldController.iomt inputText:finalResult command:IRCPrivateCommandIndex("privmsg")];
+						 [self postTextualCmdScriptResult:result.stringValue to:destinationChannel];
 					 }
 				}];
 			}
@@ -5419,11 +5512,7 @@
 			if (errors && PointerIsEmpty(result)) {
 				[self outputTextualCmdScriptError:scriptPath input:scriptInput context:errors error:nil];
 			} else {
-				NSString *finalResult = result.stringValue.trim;
-
-				NSObjectIsEmptyAssert(finalResult);
-
-				[self.worldController.iomt inputText:finalResult command:IRCPrivateCommandIndex("privmsg")];
+				[self postTextualCmdScriptResult:result.stringValue to:destinationChannel];
 			}
 		} else {
 			[self outputTextualCmdScriptError:scriptPath input:scriptInput context:errors error:nil];
@@ -5440,55 +5529,38 @@
 
 			return;
 		}
-		
+
 		NSArray *arguments = [scriptInput split:NSStringWhitespacePlaceholder];
-
-        NSTask *scriptTask = [NSTask new];
-        NSPipe *outputPipe = [NSPipe pipe];
-
-        [scriptTask setStandardOutput:outputPipe];
-        [scriptTask setLaunchPath:scriptPath];
-        [scriptTask setArguments:arguments];
-
-        NSFileHandle *filehandle = [outputPipe fileHandleForReading];
-
-        [scriptTask launch];
-        [scriptTask waitUntilExit];
-
-        NSData *outputData = [filehandle readDataToEndOfFile];
-
-		NSString *outputString  = [NSString stringWithData:outputData encoding:NSUTF8StringEncoding];
-
-		NSObjectIsEmptyAssert(outputString);
-
-		[self.worldController.iomt inputText:outputString command:IRCPrivateCommandIndex("privmsg")];
-
-		/* We probably should do something with this eventually. */
-		/*
-		 
+		
 		NSURL *userScriptURL = [NSURL fileURLWithPath:scriptPath];
 
 		NSError *aserror = nil;
-
+		
 		NSUserUnixTask *unixTask = [[NSUserUnixTask alloc] initWithURL:userScriptURL error:&aserror];
 
-		NSFileHandle *standardOutput = [NSFileHandle fileHandleWithStandardOutput];
-
-		[unixTask setStandardOutput:standardOutput];
-
 		if (PointerIsEmpty(unixTask) || aserror) {
-			[self outputTextualCmdScriptError:scriptPath input:scriptInput context:[aserror userInfo] error:aserror];
-		} else {
-			[unixTask executeWithArguments:arguments completionHandler:^(NSError *err) {
-				if (err) {
-					// Failure.
-				} else {
-					// Success.
-				}
-			}];
-		} 
-		 
-		*/
+			[self outputTextualCmdScriptError:scriptPath input:scriptInput context:nil error:aserror];
+			return;
+		}
+
+		NSPipe *standardOutputPipe = [NSPipe pipe];
+		
+		NSFileHandle *writingPipe = [standardOutputPipe fileHandleForWriting];
+		NSFileHandle *readingPipe = [standardOutputPipe fileHandleForReading];
+		
+		[unixTask setStandardOutput:writingPipe];
+
+		[unixTask executeWithArguments:arguments completionHandler:^(NSError *err) {
+			if (err) {
+				[self outputTextualCmdScriptError:scriptPath input:scriptInput context:nil error:err];
+			} else {
+				NSData *outputData = [readingPipe readDataToEndOfFile];
+
+				NSString *outputString = [NSString stringWithData:outputData encoding:NSUTF8StringEncoding];
+
+				[self postTextualCmdScriptResult:outputString to:destinationChannel];
+			}
+		}];
 	}
 }
 
@@ -5575,11 +5647,26 @@
 	[self.worldController reloadTreeGroup:self];
 }
 
-- (void)autoConnect:(NSInteger)delay
+- (void)autoConnect:(NSInteger)delay afterWakeUp:(BOOL)afterWakeUp
 {
-	_connectDelay = delay;
+	self.connectDelay = delay;
 
-	[self connect];
+	if (afterWakeUp) {
+		[self autoConnectAfterWakeUp];
+	} else {
+		[self performSelector:@selector(connect) withObject:nil afterDelay:self.connectDelay];
+	}
+}
+
+- (void)autoConnectAfterWakeUp
+{
+	if (self.isHostReachable) {
+		[self connect];
+	} else {
+		[self printDebugInformationToConsole:TXTFLS(@"AutoConnectAfterWakeUpHostNotReachable", self.config.serverAddress, @(self.connectDelay))];
+
+		[self performSelector:@selector(autoConnectAfterWakeUp) withObject:nil afterDelay:self.connectDelay];
+	}
 }
 
 - (void)disconnect
@@ -5590,7 +5677,11 @@
 
 	[self changeStateOff];
 
-    [self postEventToViewController:@"serverDisconnected"];
+	if (self.masterController.terminating) {
+		self.masterController.terminatingClientCount -= 1;
+	} else {
+		[self postEventToViewController:@"serverDisconnected"];
+	}
 }
 
 - (void)quit
@@ -5678,7 +5769,7 @@
 {
 	NSObjectIsEmptyAssert(channel);
 	
-	if ([channel isChannelName]) {
+	if ([channel isChannelName:self]) {
 		IRCChannel *chan = [self findChannel:channel];
 
 		if (chan) {
@@ -5723,7 +5814,7 @@
 {
 	NSObjectIsEmptyAssert(channel);
 	
-	if ([channel isChannelName]) {
+	if ([channel isChannelName:self]) {
 		IRCChannel *chan = [self findChannel:channel];
 
 		if (chan) {

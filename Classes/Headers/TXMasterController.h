@@ -74,6 +74,8 @@
 @property (nonatomic, strong) TLOSpeechSynthesizer *speechSynthesizer;
 @property (nonatomic, assign) NSInteger memberSplitViewOldPosition;
 
+@property (assign) NSInteger terminatingClientCount;
+
 - (void)loadWindowState:(BOOL)honorFullscreen;
 - (void)saveWindowState;
 

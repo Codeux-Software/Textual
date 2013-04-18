@@ -86,6 +86,12 @@
 		[self createClient:e reload:YES];
 	}
 
+	if ([config boolForKey:@"soundIsMuted"]) {
+		[self muteSound];
+	} else {
+		[self unmuteSound];
+	}
+
 	self.isPopulatingSeeds = NO;
 }
 
@@ -139,7 +145,12 @@
 		[ary safeAddObject:[u dictionaryValue]];
 	}
 
-	return [@{@"clients" : ary} mutableCopy];
+	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+	
+	[dict safeSetObject:ary						forKey:@"clients"];
+	[dict safeSetObject:@(self.isSoundMuted)	forKey:@"soundIsMuted"];
+
+	return dict;
 }
 
 - (void)save
@@ -268,7 +279,7 @@
 	for (IRCClient *c in self.clients) {
         if ((afterWakeUp && c.disconnectType == IRCDisconnectComputerSleepMode && c.config.autoSleepModeDisconnect) || afterWakeUp == NO) {
             if (c.config.autoConnect) {
-                [c autoConnect:delay];
+                [c autoConnect:delay afterWakeUp:afterWakeUp];
 				
                 delay += _autoConnectDelay;
             }
@@ -1464,6 +1475,23 @@
 - (void)serverListKeyDown:(NSEvent *)e
 {
 	[self logKeyDown:e];
+}
+
+#pragma mark -
+#pragma mark Mute Sound
+
+- (void)muteSound
+{
+    [self setIsSoundMuted:YES];
+	
+    [self.masterController.menuController.muteSound setState:NSOnState];
+}
+
+- (void)unmuteSound
+{
+    [self setIsSoundMuted:NO];
+	
+    [self.masterController.menuController.muteSound setState:NSOffState];
 }
 
 @end

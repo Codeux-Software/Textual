@@ -99,11 +99,13 @@ static NSArray *IRCInternalUseCommandIndexMap;
 		@[@"zline", 			@"ZLINE",				@(1049),		@(YES),			@(2)],
 	];
 
-	IRCUserAccessibleCommandIndexMap = @[ // Open Key: 5095
+	IRCUserAccessibleCommandIndexMap = @[ // Open Key: 5097
 	//		 key						 command				 index		developer mode
 		@[@"adchat",					@"ADCHAT",				@(5001),		@(NO)],
 		@[@"ame",						@"AME",					@(5002),		@(NO)],
 		@[@"amsg",						@"AMSG",				@(5003),		@(NO)],
+		@[@"aquote",					@"AQUOTE",				@(5095),		@(NO)],
+		@[@"araw",						@"ARAW",				@(5096),		@(NO)],
 		@[@"away",						@"AWAY",				@(5004),		@(NO)],
 		@[@"ban",						@"BAN",					@(5005),		@(NO)],
 		@[@"cap",						@"CAP",					@(5006),		@(NO)],
@@ -439,14 +441,23 @@ NSString *IRCPublicCommandIndex(const char *key)
 + (NSString *)systemUnsupervisedScriptFolderPath
 {
 	if ([self featureAvailableToOSXMountainLion]) {
-		//NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationScriptsDirectory, NSUserDomainMask, YES);
-
-		//return searchArray[0];
-
-		/* The above code created a lot of leaks in the Security framework. It did, at least for me. Hard coding the path
-		 for now. I probably should file a radar about it, but I am not in the mood. Someone want to dit for me? */
+		static NSString *path = NSStringEmptyPlaceholder;
 		
-		return [NSString stringWithFormat:@"%@/Library/Application Scripts/%@", NSHomeDirectory(), [self applicationBundleIdentifier]];
+		static dispatch_once_t onceToken;
+
+		dispatch_once(&onceToken, ^{
+			@autoreleasepool {
+				NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationScriptsDirectory, NSUserDomainMask, YES);
+
+				if (NSObjectIsNotEmpty(searchArray)) {
+					path = [searchArray[0] copy];
+				}
+			}
+
+			DebugLogToConsole(@"NSApplicationScriptsDirectory = \"%@\"", path);
+		});
+
+		return path;
 	}
 
 	/* We return an empty string instead of nil because
@@ -463,6 +474,13 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (void)startUsingTranscriptFolderSecurityScopedBookmark
 {
+	// URLByResolvingBookmarkData throws some weird shit during shutdown.
+	// We're just going to loose whatever long we were wanting to save.
+	// Probably the disconnect message. Oh well.
+	if (self.masterController.terminating) {
+		return;
+	}
+	
 	NSData *bookmark = [RZUserDefaults() dataForKey:@"LogTranscriptDestinationSecurityBookmark"];
 
 	NSObjectIsEmptyAssert(bookmark);
@@ -797,6 +815,11 @@ static NSURL *transcriptFolderResolvedBookmark;
 + (BOOL)highlightCurrentNickname
 {
 	return [RZUserDefaults() boolForKey:@"TrackNicknameHighlightsOfLocalUser"];
+}
+
++ (CGFloat)swipeMinimumLength
+{
+	return [RZUserDefaults() doubleForKey:@"SwipeMinimumLength"];
 }
 
 + (NSInteger)trackUserAwayStatusMaximumChannelSize
@@ -1287,9 +1310,9 @@ static NSMutableArray *excludeKeywords = nil;
 {
 	[self updateApplicationRunCount];
 
-	NSInteger numberOfRuns = [self applicationRunCount];
-	
 #ifndef TEXTUAL_TRIAL_BINARY
+	NSInteger numberOfRuns = [self applicationRunCount];
+
 	if (numberOfRuns >= 2) {
 		[self.invokeInBackgroundThread defaultIRCClientPrompt:NO];
 	}
@@ -1316,6 +1339,11 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"TrackConversationsWithColorHashing"]			= @(YES);
 	d[@"TrackNicknameHighlightsOfLocalUser"]			= @(YES);
 	d[@"WebKitDeveloperExtras"]							= @(YES);
+
+	/* This controls the two-finger swipe sensitivity. The lower it is, the more
+		sensitive the swipe left/right detection is. The higher it is, the less 
+		sensitive the swipe detection is. <= 0 means off. */
+	d[@"SwipeMinimumLength"]							= @(0.3);
 
     d[@"TextFieldAutomaticSpellCorrection"]             = @(NO);
 

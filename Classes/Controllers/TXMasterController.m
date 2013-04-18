@@ -294,17 +294,27 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 - (void)applicationWillTerminate:(NSNotification *)note
 {
-	NSAppleEventManager *em = [NSAppleEventManager sharedAppleEventManager];
-	
-	[em removeEventHandlerForEventClass:KInternetEventClass andEventID:KAEGetURL];
+	[RZAppleEventManager() removeEventHandlerForEventClass:KInternetEventClass andEventID:KAEGetURL];
+
+	if (self.skipTerminateSave == NO) {
+		[self saveWindowState];
+	}
+
+	[self.mainWindow close];
+	self.mainWindow = nil;
 
 	if (self.skipTerminateSave == NO) {
 		[self.worldController save];
+
+		self.terminatingClientCount = self.worldController.clients.count;
+
 		[self.worldController terminate];
 		
+		while (self.terminatingClientCount > 0) {
+			[RZMainRunLoop() runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+		}
+
 		[self.menuController terminate];
-		
-		[self saveWindowState];
 	}
 	
 	[TPCPreferences saveTimeIntervalSinceApplicationInstall];
