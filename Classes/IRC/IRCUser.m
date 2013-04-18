@@ -240,7 +240,7 @@
 	}
 }
 
-+ (NSComparator)sortByNicknameLength
++ (NSComparator)nicknameLengthComparator
 {
 	return [^(id obj1, id obj2){
 		IRCUser *s1 = obj1;

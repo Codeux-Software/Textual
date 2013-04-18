@@ -245,7 +245,7 @@
 {
 	/* Do not call this unless needed. */
 	self.memberList = [self.memberList sortedArrayUsingComparator:NSDefaultComparator];
-	self.memberListLengthSorted = [self.memberList sortedArrayUsingComparator:[IRCUser sortByNicknameLength]];
+	self.memberListLengthSorted = [self.memberList sortedArrayUsingComparator:[IRCUser nicknameLengthComparator]];
 
 	[self reloadMemberList];
 }
@@ -257,7 +257,7 @@
 	self.memberList = [self.memberList arrayByInsertingSortedObject:item usingComparator:NSDefaultComparator];
 
 	/* Conversation tracking scans based on nickname length. */
-	self.memberListLengthSorted = [self.memberList arrayByInsertingSortedObject:item usingComparator:[IRCUser sortByNicknameLength]];
+	self.memberListLengthSorted = [self.memberList arrayByInsertingSortedObject:item usingComparator:[IRCUser nicknameLengthComparator]];
 }
 
 #pragma mark -
