@@ -69,5 +69,5 @@
 
 - (NSComparisonResult)compare:(IRCUser *)other;
 
-+ (NSComparator)sortByNicknameLength;
++ (NSComparator)nicknameLengthComparator;
 @end
