@@ -291,6 +291,17 @@
 
 	self.memberList = nil;
 	self.memberList = userList;
+
+	/* Conversation tracking scans based on nickname length. */
+	NSArray *sortedMembers = [self.memberList sortedArrayWithOptions:NSSortStable usingComparator:^NSComparisonResult(id obj1, id obj2) {
+		IRCUser *s1 = obj1;
+		IRCUser *s2 = obj2;
+
+		return (s1.nickname.length <= s2.nickname.length);
+	}];
+
+	self.memberListLengthSorted = nil;
+	self.memberListLengthSorted = sortedMembers;
 }
 
 #pragma mark -
