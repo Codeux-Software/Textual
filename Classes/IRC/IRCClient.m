@@ -1074,9 +1074,6 @@
 				command = IRCPrivateCommandIndex("privmsg");
 
 				newstr = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, IRCPrivateCommandIndex("action"), newstr, 0x01];
-			} else if (type == TVCLogLinePrivateMessageType) {
-				/* Weights. */
-				[channel detectOutgoingConversation:newstr];
 			}
 
 			[self send:command, channel.name, newstr, nil];
