@@ -52,8 +52,6 @@
 
 		self.sortKey = 1;
 		self.sortOrder = NSOrderedDescending;
-
-        [self.channelListTable setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
 	}
 
 	return self;
@@ -68,7 +66,7 @@
 
 - (void)show
 {
-    [self.networkNameField setStringValue:TXTFLS(@"ChannelListNetworkName", self.client.altNetworkName)];
+    [self.networkNameField setStringValue:TXTFLS(@"ChannelListDialogNetworkName", self.client.altNetworkName)];
 
 	[self.window restoreWindowStateUsingKeyword:NSStringFromClass(self.class)];
 	
@@ -131,12 +129,16 @@
 - (void)reloadTable
 {
     self.waitingForReload = NO;
-    
+
+	NSString *titleCount;
+
 	if (NSObjectIsNotEmpty(self.searchField.stringValue) && NSDissimilarObjects(self.unfilteredList.count, self.filteredList.count)) {
-		[self.channelCountField setStringValue:TXTFLS(@"ListDialogHasSearchResults", self.unfilteredList.count, self.filteredList.count)];
+		titleCount = TXTFLS(@"ChannelListDialogHasSearchResults", self.unfilteredList.count, self.filteredList.count);
 	} else {
-		[self.channelCountField setStringValue:TXTFLS(@"ListDialogHasChannels", self.unfilteredList.count)];
+		titleCount = TXTFLS(@"ChannelListDialogHasChannels", self.unfilteredList.count);
 	}
+
+	[self.window setTitle:TXTFLS(@"ChannelListDialogTitle", titleCount)];
 
 	[self.channelListTable reloadData];
 }
@@ -219,6 +221,13 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void *context)
     [self reloadTable];
 }
 
+/* onJoinChannels: handles join for selected items. */
+- (void)onJoinChannels:(id)sender
+{
+	[self onJoin:sender];
+}
+
+/* onJoin: is a legacy method. It handles join on double click. */
 - (void)onJoin:(id)sender
 {
 	NSArray *list = self.unfilteredList;
