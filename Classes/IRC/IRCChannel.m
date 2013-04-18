@@ -282,6 +282,8 @@
 
 			self.memberList = nil;
 			self.memberList = userList;
+
+			[self updateLengthSortedMemberList];
 			
 			return;
 		}
@@ -292,6 +294,11 @@
 	self.memberList = nil;
 	self.memberList = userList;
 
+	[self updateLengthSortedMemberList];
+}
+
+- (void)updateLengthSortedMemberList
+{
 	/* Conversation tracking scans based on nickname length. */
 	NSArray *sortedMembers = [self.memberList sortedArrayWithOptions:NSSortStable usingComparator:^NSComparisonResult(id obj1, id obj2) {
 		IRCUser *s1 = obj1;
