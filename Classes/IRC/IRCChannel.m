@@ -245,6 +245,7 @@
 {
 	/* Do not call this unless needed. */
 	self.memberList = [self.memberList sortedArrayUsingComparator:NSDefaultComparator];
+	self.memberListLengthSorted = [self.memberList sortedArrayUsingComparator:[IRCUser sortByNicknameLength]];
 
 	[self reloadMemberList];
 }
@@ -256,7 +257,7 @@
 	self.memberList = [self.memberList arrayByBinaryInsertingSortedObject:item usingComparator:NSDefaultComparator];
 
 	/* Conversation tracking scans based on nickname length. */
-	self.memberListLengthSorted = [self.memberList sortedArrayUsingComparator:[IRCUser sortByNicknameLength]];
+	self.memberListLengthSorted = [self.memberList arrayByBinaryInsertingSortedObject:item usingComparator:[IRCUser sortByNicknameLength]];
 }
 
 #pragma mark -
@@ -299,9 +300,15 @@
 	NSInteger n = [self indexOfMember:nick];
 
 	if (n >= 0) {
+		IRCUser *user = [self.memberList objectAtIndex:n];
+
 		self.memberList = [self.memberList arrayByRemovingObjectAtIndex:n];
 
         [self.client postEventToViewController:@"channelMemberRemoved" forChannel:self];
+
+		n = [self.memberListLengthSorted indexOfObject:user];
+
+		self.memberListLengthSorted = [self.memberListLengthSorted arrayByRemovingObjectAtIndex:n];
 	}
 	
 	if (reload) {
