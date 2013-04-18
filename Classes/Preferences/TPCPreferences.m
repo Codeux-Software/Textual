@@ -477,7 +477,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 	// URLByResolvingBookmarkData throws some weird shit during shutdown.
 	// We're just going to loose whatever long we were wanting to save.
 	// Probably the disconnect message. Oh well.
-	if ([self masterController].terminating) {
+	if (self.masterController.terminating) {
 		return;
 	}
 	
