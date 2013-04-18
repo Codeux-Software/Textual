@@ -254,10 +254,10 @@
 {
 	PointerIsEmptyAssert(item);
 
-	self.memberList = [self.memberList arrayByBinaryInsertingSortedObject:item usingComparator:NSDefaultComparator];
+	self.memberList = [self.memberList arrayByInsertingSortedObject:item usingComparator:NSDefaultComparator];
 
 	/* Conversation tracking scans based on nickname length. */
-	self.memberListLengthSorted = [self.memberList arrayByBinaryInsertingSortedObject:item usingComparator:[IRCUser sortByNicknameLength]];
+	self.memberListLengthSorted = [self.memberList arrayByInsertingSortedObject:item usingComparator:[IRCUser sortByNicknameLength]];
 }
 
 #pragma mark -

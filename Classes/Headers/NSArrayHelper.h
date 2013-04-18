@@ -53,8 +53,7 @@
 
 - (BOOL)containsObjectIgnoringCase:(id)anObject;
 
-- (NSArray *)arrayByBinaryInsertingSortedObject:(id)obj usingComparator:(NSComparator)comparator;
-- (NSArray *)arrayByInsertingSortedObject:(id)obj options:(NSBinarySearchingOptions)options usingComparator:(NSComparator)comparator;
+- (NSArray *)arrayByInsertingSortedObject:(id)obj usingComparator:(NSComparator)comparator;
 
 - (NSArray *)arrayByRemovingObjectAtIndex:(NSUInteger)idx;
 @end
@@ -81,8 +80,7 @@
 
 - (void)performSelectorOnObjectValueAndReplace:(SEL)performSelector;
 
-- (void)binarySearchInsertSortedObject:(id)obj usingComparator:(NSComparator)comparator;
-- (void)insertSortedObject:(id)obj options:(NSBinarySearchingOptions)options usingComparator:(NSComparator)comparator;
+- (void)insertSortedObject:(id)obj usingComparator:(NSComparator)comparator;
 @end
 
 @interface NSIndexSet (TXIndexSetHelper)
