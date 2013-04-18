@@ -299,7 +299,7 @@
 	
 	NSInteger n = [self indexOfMember:nick];
 
-	if (n != NSNotFound) {
+	if (NSDissimilarObjects(n, NSNotFound)) {
 		IRCUser *user = [self.memberList objectAtIndex:n];
 
 		self.memberList = [self.memberList arrayByRemovingObjectAtIndex:n];
@@ -325,7 +325,7 @@
 	
 	NSInteger n = [self indexOfMember:fromNick];
 
-	NSAssertReturn(n != NSNotFound);
+	NSAssertReturn(NSDissimilarObjects(n, NSNotFound));
 	
 	IRCUser *m = [self memberAtIndex:n];
 	
@@ -346,7 +346,7 @@
 	
 	NSInteger n = [self indexOfMember:nick];
 
-	NSAssertReturn(n != NSNotFound);
+	NSAssertReturn(NSDissimilarObjects(n, NSNotFound));
 	
 	IRCUser *m = [self memberAtIndex:n];
 	
@@ -420,7 +420,7 @@
 {
 	NSInteger n = [self indexOfMember:nick options:mask];
 
-	NSAssertReturnR(n != NSNotFound, nil);
+	NSAssertReturnR(NSDissimilarObjects(n, NSNotFound), nil);
 	
 	return [self memberAtIndex:n];
 }
