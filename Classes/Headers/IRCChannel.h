@@ -52,7 +52,6 @@ typedef enum IRCChannelStatus : NSInteger {
 @property (nonatomic, strong) IRCChannelConfig *config;
 @property (nonatomic, assign) IRCChannelStatus status;
 @property (nonatomic, assign) BOOL errorOnLastJoinAttempt;
-@property (nonatomic, assign) BOOL isGatheringModeInfo;
 
 @property (strong) NSArray *memberList;
 @property (strong) NSArray *memberListLengthSorted; // Sorted member list based on nickname length. Used by conversation tracking.

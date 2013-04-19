@@ -146,7 +146,6 @@
 - (void)resetStatus:(IRCChannelStatus)newStatus
 {
 	self.errorOnLastJoinAttempt = NO;
-	self.isGatheringModeInfo = NO;
 	
 	self.status = newStatus;
 
