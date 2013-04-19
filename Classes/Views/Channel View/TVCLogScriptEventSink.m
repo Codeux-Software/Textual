@@ -115,8 +115,11 @@
 
 - (NSString *)toggleInlineImage:(id)object
 {
-	NSAssertReturnR([object isKindOfClass:[DOMHTMLAnchorElement class]], @"true");
-	NSAssertReturnR([NSEvent modifierFlags] & NSShiftKeyMask, @"true")
+	NSObjectIsKindOfClassAssertReturn(object, DOMHTMLAnchorElement, @"true");
+
+	if (([NSEvent modifierFlags] & NSShiftKeyMask) == NO) {
+		return @"true";
+	}
 
 	DOMHTMLAnchorElement *anchor = object;
 	
@@ -128,17 +131,20 @@
 
 	for (unsigned index = 0; index < images.length; index++) {
 		DOMNode *node = [images item:index];
-		NSAssertReturnLoopContinue([node isKindOfClass:[DOMHTMLImageElement class]]);
+
+		NSObjectIsKindOfClassAssertContinue(node, DOMHTMLImageElement);
 
 		DOMHTMLImageElement *image = (DOMHTMLImageElement *)node;
 
 		node = [image parentElement];
-		NSAssertReturnLoopContinue([node isKindOfClass:[DOMHTMLAnchorElement class]]);
 
+		NSObjectIsKindOfClassAssertContinue(node, DOMHTMLAnchorElement);
+		
 		DOMHTMLAnchorElement *a = (DOMHTMLAnchorElement *)node;
 		NSAssertReturnLoopContinue([a.href isEqualIgnoringCase:anchor.href]);
 
 		imageElement = image;
+		
 		break;
 	}
 
@@ -159,8 +165,11 @@
 
 - (NSString *)hideInlineImage:(id)object
 {
-	NSAssertReturnR([object isKindOfClass:[DOMHTMLAnchorElement class]], @"true");
-	NSAssertReturnR([NSEvent modifierFlags] & NSShiftKeyMask, @"true");
+	NSObjectIsKindOfClassAssertReturn(object, DOMHTMLAnchorElement, @"true");
+
+	if (([NSEvent modifierFlags] & NSShiftKeyMask) == NO) {
+		return @"true";
+	}
 
 	DOMHTMLImageElement *imageElement = (DOMHTMLImageElement *)[[object getElementsByTagName:@"img"] item:0];
 
