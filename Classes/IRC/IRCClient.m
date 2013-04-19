@@ -3571,16 +3571,6 @@
 	[self print:c type:TVCLogLineCTCPType nick:nil text:text receivedAt:m.receivedAt];
 }
 
-- (void)requestUserHosts:(IRCChannel *)c
-{
-	if (c.isChannel) {
-		c.isGatheringModeInfo = YES;
-		
-		[self send:IRCPrivateCommandIndex("mode"), c.name, nil];
-		[self send:IRCPrivateCommandIndex("who"), c.name, nil, nil];
-	}
-}
-
 - (void)receiveJoin:(IRCMessage *)m
 {
 	NSAssertReturn(m.params.count >= 1);
@@ -4503,16 +4493,12 @@
 
 			PointerIsEmptyAssertLoopBreak(c);
 
-			if (c.isGatheringModeInfo == NO || NSObjectIsEmpty(c.modeInfo.modeInformation)) {
-				if (c.isActive) {
-					[c.modeInfo clear];
-					[c.modeInfo update:modestr];
-
-					c.isGatheringModeInfo = YES;
-				}
-
-				[self print:c type:TVCLogLineModeType nick:nil text:TXTFLS(@"IRCChannelHasModes", modestr) receivedAt:m.receivedAt];
+			if (c.isActive) {
+				[c.modeInfo clear];
+				[c.modeInfo update:modestr];
 			}
+
+			[self print:c type:TVCLogLineModeType nick:nil text:TXTFLS(@"IRCChannelHasModes", modestr) receivedAt:m.receivedAt];
 			
 			break;
 		}
@@ -4649,8 +4635,16 @@
 				self.inUserInvokedWhoRequest = NO;
 			}
 
-			if (c && c.isGatheringModeInfo) {
-				c.isGatheringModeInfo = NO;
+			if ([TPCPreferences processChannelModes]) {
+				/* The end of our WHO request will come after everything has been completed
+				 during a join so this is when we will request mode information. We only
+				 request mode information here if we did not already get some from the
+				 server. We do not get modes from the server when joining when using a
+				 bouncer like ZNC when a channel is reattached. */
+
+				if (c && NSObjectIsEmpty(c.modeInfo.modeInformation)) {
+					[self send:IRCPrivateCommandIndex("mode"), c.name, nil];
+				}
 			}
 
             [self.worldController updateTitleFor:c];
@@ -4819,8 +4813,6 @@
 				if (NSObjectIsNotEmpty(m)) {
 					[self send:IRCPrivateCommandIndex("mode"), c.name, mode, nil];
 				}
-
-				c.isGatheringModeInfo = YES;
 			}
 
 			if (c.numberOfMembers <= 1 && [channel isModeChannelName]) {
@@ -4834,7 +4826,7 @@
 			}
 
 			if ([TPCPreferences processChannelModes]) {
-				[self requestUserHosts:c];
+				[self send:IRCPrivateCommandIndex("who"), c.name, nil, nil];
 			}
 
 			if (self.inUserInvokedNamesRequest) {
