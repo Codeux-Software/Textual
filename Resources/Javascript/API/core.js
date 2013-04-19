@@ -184,6 +184,14 @@ Textual = {
 
 		app.nicknameDoubleClicked();
 	},
+	
+	toggleInlineImage: function(object) {
+		if (app.toggleInlineImage(object) == "false") {
+			return false;
+		}
+		
+		return true;
+	},
     
     hideInlineImage: function(object) {
         if (app.hideInlineImage(object) == "false") {

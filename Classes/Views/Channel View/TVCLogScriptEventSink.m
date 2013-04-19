@@ -113,31 +113,60 @@
     LogToConsole(@"JavaScript: %@", message);
 }
 
-- (NSString *)hideInlineImage:(id)object
+- (NSString *)toggleInlineImage:(id)object
 {
-	if ([object isKindOfClass:[DOMHTMLAnchorElement class]]) {
-		DOMHTMLAnchorElement *anchor = object;
-		
-		if ([NSEvent modifierFlags] & NSShiftKeyMask) {
-			DOMHTMLImageElement *imageElement = (DOMHTMLImageElement *)[[object getElementsByTagName:@"img"] item:0];
+	NSAssertReturnR([object isKindOfClass:[DOMHTMLAnchorElement class]], @"true");
+	NSAssertReturnR([NSEvent modifierFlags] & NSShiftKeyMask, @"true")
 
-			int height = imageElement.height;
-			int width  = imageElement.width;
+	DOMHTMLAnchorElement *anchor = object;
+	
+	DOMHTMLImageElement *imageElement = nil;
 
-			if ( ! [imageElement.src isEqualToString:anchor.href]) {
-				imageElement.src    = anchor.href;
-			}
-			else {
-				imageElement.src    = [[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"FormattingColor_15" ofType:@"png"]] relativePath];
-				imageElement.height = height;
-				imageElement.width  = width;
-			}
-			
-			return @"false";
-		}
+	DOMElement *span = [anchor parentElement];
+
+	DOMNodeList *images = [span getElementsByClassName:@"inlineimage"];
+
+	for (unsigned index = 0; index < images.length; index++) {
+		DOMNode *node = [images item:index];
+		NSAssertReturnLoopContinue([node isKindOfClass:[DOMHTMLImageElement class]]);
+
+		DOMHTMLImageElement *image = (DOMHTMLImageElement *)node;
+
+		node = [image parentElement];
+		NSAssertReturnLoopContinue([node isKindOfClass:[DOMHTMLAnchorElement class]]);
+
+		DOMHTMLAnchorElement *a = (DOMHTMLAnchorElement *)node;
+		NSAssertReturnLoopContinue([a.href isEqualIgnoringCase:anchor.href]);
+
+		imageElement = image;
+		break;
 	}
 
-	return @"true";
+	PointerIsEmptyAssertReturn(imageElement, @"true");
+
+	NSString *display = imageElement.style.display;
+
+	if ([display isEqualIgnoringCase:@"none"]) {
+		display = NSStringEmptyPlaceholder;
+	} else {
+		display = @"none";
+	}
+
+	imageElement.style.display = display;
+
+	return @"false";
+}
+
+- (NSString *)hideInlineImage:(id)object
+{
+	NSAssertReturnR([object isKindOfClass:[DOMHTMLAnchorElement class]], @"true");
+	NSAssertReturnR([NSEvent modifierFlags] & NSShiftKeyMask, @"true");
+
+	DOMHTMLImageElement *imageElement = (DOMHTMLImageElement *)[[object getElementsByTagName:@"img"] item:0];
+
+	imageElement.style.display = @"none";
+
+	return @"false";
 }
 
 - (void)setURLAddress:(NSString *)s
