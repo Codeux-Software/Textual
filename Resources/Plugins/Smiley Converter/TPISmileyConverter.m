@@ -172,7 +172,7 @@
 
 		/* Find smiley. */
 		NSRange r = [body.string rangeOfString:smiley
-									   options:0 // Search is not case sensitive.
+									   options:NSCaseInsensitiveSearch // Search is not case sensitive.
 										 range:NSMakeRange(start, (body.length - start))];
 
 		/* Anything found? */
