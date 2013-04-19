@@ -2854,7 +2854,7 @@
 		}
 	}
 
-	[self changeStateOff];
+	[self disconnect];
 }
 
 #pragma mark -
@@ -5663,6 +5663,10 @@
 
 - (void)disconnect
 {
+	/* This does nothing if there was no previous call to performSelector:withObject:afterDelay:
+		but is super important to call if there was. */
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(disconnect) object:nil];
+
 	if (self.socket) {
 		[self.socket close];
 	}
