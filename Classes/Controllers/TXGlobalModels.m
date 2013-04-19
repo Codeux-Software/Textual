@@ -204,6 +204,7 @@ NSString *TXFormattedNumber(NSInteger number)
 	return [NSNumberFormatter localizedStringFromNumber:@(number) numberStyle:NSNumberFormatterDecimalStyle];
 }
 
-NSComparator NSDefaultComparator = ^(id obj1, id obj2){
+NSComparator NSDefaultComparator = ^(id obj1, id obj2)
+{
 	return [obj1 compare:obj2];
 };
