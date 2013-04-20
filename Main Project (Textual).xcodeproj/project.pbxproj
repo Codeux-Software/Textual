@@ -1262,6 +1262,7 @@
 		4C937BD4170618940050CEF3 /* TLOSpeechSynthesizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOSpeechSynthesizer.m; path = Library/TLOSpeechSynthesizer.m; sourceTree = "<group>"; };
 		4C937BDA170618A80050CEF3 /* TLOSpeechSynthesizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLOSpeechSynthesizer.h; sourceTree = "<group>"; };
 		4C970758158D740A0005CF68 /* colloquyRoomTabRegular.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = colloquyRoomTabRegular.tif; path = "Resources/Images/Status Badges/colloquyRoomTabRegular.tif"; sourceTree = SOURCE_ROOT; };
+		4CA7FB401722116800B260E1 /* Shared Trial Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Shared Trial Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Trial Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4CB1361F16D881080025DD7F /* Textual IRC Client Extras.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Textual IRC Client Extras.pkg"; path = "Resources/All Scripts/Sandbox Exceptions/Installers/Textual IRC Client Extras.pkg"; sourceTree = SOURCE_ROOT; };
 		4CB331B416F1BBC700D65CBE /* NSImageHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSImageHelper.m; sourceTree = "<group>"; };
 		4CB331BC16F1BBE000D65CBE /* NSImageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSImageHelper.h; sourceTree = "<group>"; };
@@ -2253,6 +2254,7 @@
 				4C588BB816E34C1D007EFF6D /* Code Signing Identity.xcconfig */,
 				4CD6202F16E31F2A00D780D6 /* Shared Debug Configuration.xcconfig */,
 				4CD6203016E31F2A00D780D6 /* Shared Release Configuration.xcconfig */,
+				4CA7FB401722116800B260E1 /* Shared Trial Configuration.xcconfig */,
 			);
 			name = Configurations;
 			sourceTree = "<group>";
@@ -3518,7 +3520,7 @@
 		};
 		4CCF2F9015804987006FFE21 /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4CD6203016E31F2A00D780D6 /* Shared Release Configuration.xcconfig */;
+			baseConfigurationReference = 4CA7FB401722116800B260E1 /* Shared Trial Configuration.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = "TEXTUAL_TRIAL_BINARY=1";
