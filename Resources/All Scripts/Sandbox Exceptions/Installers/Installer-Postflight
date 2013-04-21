@@ -15,11 +15,11 @@ chgrp -R staff .
 # find which only does the commands if it finds something.
 #
 
-BUNDLEPATH="/Users/$USER/Library/Containers/com.codeux.irc.textual/Data/Library/Application Support/Textual IRC/Extensions/"
-SCRIPTPATH="/Users/$USER/Library/Application Scripts/com.codeux.irc.textual/"
+BUNDLEPATH="$HOME/Library/Containers/com.codeux.irc.textual/Data/Library/Application Support/Textual IRC/Extensions/"
+SCRIPTPATH="$HOME/Library/Application Scripts/com.codeux.irc.textual/"
 
-mkdir -p $BUNDLEPATH
-mkdir -p $SCRIPTPATH
+mkdir -p "$BUNDLEPATH"
+mkdir -p "$SCRIPTPATH"
 
 find . -name "*.bundle" -exec mv '{}' "$BUNDLEPATH" \;
 
