@@ -676,6 +676,64 @@ typedef enum TXMoveKind : NSInteger {
 
 	PointerIsEmptyAssert(selected);
 
+	// This hidden setting allows the user to use the old method if they're so
+	// inclined
+	BOOL oldChannelMovementAction = [RZUserDefaults() boolForKey:@"TXOldChannelMovementAction"];
+	if ((dir == TXMoveUpKind || dir == TXMoveDownKind) && oldChannelMovementAction) {
+		NSInteger count = self.serverList.numberOfRows;
+
+		NSAssertReturn(count > 1);
+
+		NSInteger n = [self.serverList rowForItem:selected];
+		NSInteger start = n;
+
+		while (1 == 1) {
+			if (dir == TXMoveDownKind) {
+				n += 1;
+			} else {
+				n -= 1;
+			}
+
+			if (n >= count || n < 0) {
+				if (dir == TXMoveUpKind && n < 0) {
+					n = (count - 1);
+				} else {
+					n = 0;
+				}
+			}
+
+			if (n == start) break;
+
+			id i = [self.serverList itemAtRow:n];
+
+			if ([i isClient]) {
+				continue;
+			}
+
+			if ([i isChannel] || [i isPrivateMessage]) {
+				if (target == TXMoveAllKind) {
+					[self.worldController select:i];
+
+					break;
+				} else if (target == TXMoveActiveKind) {
+					if ([i isActive]) {
+						[self.worldController select:i];
+
+						break;
+					}
+				} else if (target == TXMoveUnreadKind) {
+					if ([i isUnread]) {
+						[self.worldController select:i];
+
+						break;
+					}
+				}
+			}
+		}
+
+		return;
+	}
+
 	/* ************************************************************** */
 	/* Start: Channel Movement Actions.								  */
 	/* Design: The channel movement actions are designed to be local
