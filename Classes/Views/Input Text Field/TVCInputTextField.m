@@ -50,6 +50,16 @@
 #define _WindowSegmentedControllerDefaultX		10.0
 #define _InputTextFieldOriginDefaultX			166.0
 
+#define _KeyObservingArray 	@[	@"TextFieldAutomaticSpellCheck", \
+								@"TextFieldAutomaticGrammarCheck", \
+								@"TextFieldAutomaticSpellCorrection", \
+								@"TextFieldSmartCopyPaste", \
+								@"TextFieldSmartQuotes", \
+								@"TextFieldSmartDashes", \
+								@"TextFieldSmartLinks", \
+								@"TextFieldDataDetectors", \
+								@"TextFieldTextReplacement"]
+
 @interface TVCInputTextField ()
 @property (nonatomic, assign) NSInteger lastDrawLineCount;
 @end
@@ -74,9 +84,23 @@
         self.placeholderString = [[NSAttributedString alloc] initWithString:TXTLS(@"InputTextFieldPlaceholderValue") attributes:attrs];
 
         [self sanitizeTextField:NO];
+
+		for (NSString *key in _KeyObservingArray) {
+			[RZUserDefaults() addObserver:self
+							   forKeyPath:key
+								  options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew)
+								  context:NULL];
+		}
     }
 	
     return self;
+}
+
+- (void)dealloc
+{
+	for (NSString *key in _KeyObservingArray) {
+		[RZUserDefaults() removeObserver:self forKeyPath:key];
+	}
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent
@@ -291,6 +315,98 @@
     }
     
     return NO;
+}
+
+#pragma mark -
+#pragma mark NSTextView Context Menu Preferences
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+	if ([keyPath isEqualIgnoringCase:@"TextFieldAutomaticSpellCheck"]) {
+		[self setContinuousSpellCheckingEnabled:[TPCPreferences textFieldAutomaticSpellCheck]];
+
+	} else if ([keyPath isEqualIgnoringCase:@"TextFieldAutomaticGrammarCheck"]) {
+		[self setGrammarCheckingEnabled:[TPCPreferences textFieldAutomaticGrammarCheck]];
+
+	} else if ([keyPath isEqualIgnoringCase:@"TextFieldAutomaticSpellCorrection"]) {
+		[self setAutomaticSpellingCorrectionEnabled:[TPCPreferences textFieldAutomaticSpellCorrection]];
+
+	} else if ([keyPath isEqualIgnoringCase:@"TextFieldSmartCopyPaste"]) {
+		[self setSmartInsertDeleteEnabled:[TPCPreferences textFieldSmartCopyPaste]];
+
+	} else if ([keyPath isEqualIgnoringCase:@"TextFieldSmartQuotes"]) {
+		[self setAutomaticQuoteSubstitutionEnabled:[TPCPreferences textFieldSmartQuotes]];
+
+	} else if ([keyPath isEqualIgnoringCase:@"TextFieldSmartDashes"]) {
+		[self setAutomaticDashSubstitutionEnabled:[TPCPreferences textFieldSmartDashes]];
+
+	} else if ([keyPath isEqualIgnoringCase:@"TextFieldSmartLinks"]) {
+		[self setAutomaticLinkDetectionEnabled:[TPCPreferences textFieldSmartLinks]];
+
+	} else if ([keyPath isEqualIgnoringCase:@"TextFieldDataDetectors"]) {
+		[self setAutomaticDataDetectionEnabled:[TPCPreferences textFieldDataDetectors]];
+
+	} else if ([keyPath isEqualIgnoringCase:@"TextFieldTextReplacement"]) {
+		[self setAutomaticTextReplacementEnabled:[TPCPreferences textFieldTextReplacement]];
+
+	} else if ([super respondsToSelector:@selector(observeValueForKeyPath:ofObject:change:context:)]) {
+		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+
+	}
+}
+
+- (void)setContinuousSpellCheckingEnabled:(BOOL)flag
+{
+	[TPCPreferences setTextFieldAutomaticSpellCheck:flag];
+	[super setContinuousSpellCheckingEnabled:flag];
+}
+
+- (void)setGrammarCheckingEnabled:(BOOL)flag
+{
+	[TPCPreferences setTextFieldAutomaticGrammarCheck:flag];
+	[super setGrammarCheckingEnabled:flag];
+}
+
+- (void)setAutomaticSpellingCorrectionEnabled:(BOOL)flag
+{
+	[TPCPreferences setTextFieldAutomaticSpellCorrection:flag];
+	[super setAutomaticSpellingCorrectionEnabled:flag];
+}
+
+- (void)setSmartInsertDeleteEnabled:(BOOL)flag
+{
+	[TPCPreferences setTextFieldSmartCopyPaste:flag];
+	[super setSmartInsertDeleteEnabled:flag];
+}
+
+- (void)setAutomaticQuoteSubstitutionEnabled:(BOOL)flag
+{
+	[TPCPreferences setTextFieldSmartQuotes:flag];
+	[super setAutomaticQuoteSubstitutionEnabled:flag];
+}
+
+- (void)setAutomaticDashSubstitutionEnabled:(BOOL)flag
+{
+	[TPCPreferences setTextFieldSmartDashes:flag];
+	[super setAutomaticDashSubstitutionEnabled:flag];
+}
+
+- (void)setAutomaticLinkDetectionEnabled:(BOOL)flag
+{
+	[TPCPreferences setTextFieldSmartLinks:flag];
+	[super setAutomaticLinkDetectionEnabled:flag];
+}
+
+- (void)setAutomaticDataDetectionEnabled:(BOOL)flag
+{
+	[TPCPreferences setTextFieldDataDetectors:flag];
+	[super setAutomaticDataDetectionEnabled:flag];
+}
+
+- (void)setAutomaticTextReplacementEnabled:(BOOL)flag
+{
+	[TPCPreferences setTextFieldTextReplacement:flag];
+	[super setAutomaticTextReplacementEnabled:flag];
 }
 
 @end

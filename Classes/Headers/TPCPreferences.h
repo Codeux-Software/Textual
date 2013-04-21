@@ -268,4 +268,35 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 
 + (void)initPreferences;
 + (void)sync;
+
+#pragma mark -
+#pragma mark NSTextView Preferences
+
++ (BOOL)textFieldAutomaticSpellCheck;
++ (void)setTextFieldAutomaticSpellCheck:(BOOL)value;
+
++ (BOOL)textFieldAutomaticGrammarCheck;
++ (void)setTextFieldAutomaticGrammarCheck:(BOOL)value;
+
++ (BOOL)textFieldAutomaticSpellCorrection;
++ (void)setTextFieldAutomaticSpellCorrection:(BOOL)value;
+
++ (BOOL)textFieldSmartCopyPaste;
++ (void)setTextFieldSmartCopyPaste:(BOOL)value;
+
++ (BOOL)textFieldSmartQuotes;
++ (void)setTextFieldSmartQuotes:(BOOL)value;
+
++ (BOOL)textFieldSmartDashes;
++ (void)setTextFieldSmartDashes:(BOOL)value;
+
++ (BOOL)textFieldSmartLinks;
++ (void)setTextFieldSmartLinks:(BOOL)value;
+
++ (BOOL)textFieldDataDetectors;
++ (void)setTextFieldDataDetectors:(BOOL)value;
+
++ (BOOL)textFieldTextReplacement;
++ (void)setTextFieldTextReplacement:(BOOL)value;
+
 @end

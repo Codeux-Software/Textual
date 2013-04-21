@@ -1334,18 +1334,21 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"LogHighlights"]									= @(YES);
 	d[@"ProcessChannelModesOnJoin"]						= @(YES);
 	d[@"ReplyUnignoredExternalCTCPRequests"]			= @(YES);
-	d[@"TextFieldAutomaticGrammarCheck"]				= @(YES);
-	d[@"TextFieldAutomaticSpellCheck"]					= @(YES);
 	d[@"TrackConversationsWithColorHashing"]			= @(YES);
 	d[@"TrackNicknameHighlightsOfLocalUser"]			= @(YES);
 	d[@"WebKitDeveloperExtras"]							= @(YES);
+
+	/* Settings for the NSTextView context menu. */
+	d[@"TextFieldAutomaticSpellCheck"]					= @(YES);
+	d[@"TextFieldAutomaticGrammarCheck"]				= @(YES);
+    d[@"TextFieldAutomaticSpellCorrection"]             = @(NO);
+	d[@"TextFieldSmartCopyPaste"]						= @(YES);
+	d[@"TextFieldTextReplacement"]						= @(YES);
 
 	/* This controls the two-finger swipe sensitivity. The lower it is, the more
 		sensitive the swipe left/right detection is. The higher it is, the less 
 		sensitive the swipe detection is. <= 0 means off. */
 	d[@"SwipeMinimumLength"]							= @(0.3);
-
-    d[@"TextFieldAutomaticSpellCorrection"]             = @(NO);
 
 	d[@"NotificationType -> Highlight -> Enabled"]				= @(YES);
 	d[@"NotificationType -> Highlight -> Sound"]				= @"Glass";
@@ -1461,6 +1464,117 @@ static NSMutableArray *excludeKeywords = nil;
 + (void)sync
 {
 	[RZUserDefaults() synchronize];
+}
+
+#pragma mark -
+#pragma mark NSTextView Preferences
+
++ (BOOL)textFieldAutomaticSpellCheck
+{
+	return [RZUserDefaults() boolForKey:@"TextFieldAutomaticSpellCheck"];
+}
+
++ (void)setTextFieldAutomaticSpellCheck:(BOOL)value
+{
+	if (NSDissimilarObjects(value, [self textFieldAutomaticSpellCheck])) {
+		[RZUserDefaults() setBool:value forKey:@"TextFieldAutomaticSpellCheck"];
+	}
+}
+
++ (BOOL)textFieldAutomaticGrammarCheck
+{
+	return [RZUserDefaults() boolForKey:@"TextFieldAutomaticGrammarCheck"];
+}
+
++ (void)setTextFieldAutomaticGrammarCheck:(BOOL)value
+{
+	if (NSDissimilarObjects(value, [self textFieldAutomaticGrammarCheck])) {
+		[RZUserDefaults() setBool:value forKey:@"TextFieldAutomaticGrammarCheck"];
+	}
+}
+
++ (BOOL)textFieldAutomaticSpellCorrection
+{
+	return [RZUserDefaults() boolForKey:@"TextFieldAutomaticSpellCorrection"];
+}
+
++ (void)setTextFieldAutomaticSpellCorrection:(BOOL)value
+{
+	if (NSDissimilarObjects(value, [self textFieldAutomaticSpellCorrection])) {
+		[RZUserDefaults() setBool:value forKey:@"TextFieldAutomaticSpellCorrection"];
+	}
+}
+
++ (BOOL)textFieldSmartCopyPaste
+{
+	return [RZUserDefaults() boolForKey:@"TextFieldSmartCopyPaste"];
+}
+
++ (void)setTextFieldSmartCopyPaste:(BOOL)value
+{
+	if (NSDissimilarObjects(value, [self textFieldSmartCopyPaste])) {
+		[RZUserDefaults() setBool:value forKey:@"TextFieldSmartCopyPaste"];
+	}
+}
+
++ (BOOL)textFieldSmartQuotes
+{
+	return [RZUserDefaults() boolForKey:@"TextFieldSmartQuotes"];
+}
+
++ (void)setTextFieldSmartQuotes:(BOOL)value
+{
+	if (NSDissimilarObjects(value, [self textFieldSmartQuotes])) {
+		[RZUserDefaults() setBool:value forKey:@"TextFieldSmartQuotes"];
+	}
+}
+
++ (BOOL)textFieldSmartDashes
+{
+	return [RZUserDefaults() boolForKey:@"TextFieldSmartDashes"];
+}
+
++ (void)setTextFieldSmartDashes:(BOOL)value
+{
+	if (NSDissimilarObjects(value, [self textFieldSmartDashes])) {
+		[RZUserDefaults() setBool:value forKey:@"TextFieldSmartDashes"];
+	}
+}
+
++ (BOOL)textFieldSmartLinks
+{
+	return [RZUserDefaults() boolForKey:@"TextFieldSmartLinks"];
+}
+
++ (void)setTextFieldSmartLinks:(BOOL)value
+{
+	if (NSDissimilarObjects(value, [self textFieldSmartLinks])) {
+		[RZUserDefaults() setBool:value forKey:@"TextFieldSmartLinks"];
+	}
+}
+
++ (BOOL)textFieldDataDetectors
+{
+	return [RZUserDefaults() boolForKey:@"TextFieldDataDetectors"];
+}
+
++ (void)setTextFieldDataDetectors:(BOOL)value
+{
+	if (NSDissimilarObjects(value, [self textFieldDataDetectors])) {
+		[RZUserDefaults() setBool:value forKey:@"TextFieldDataDetectors"];
+	}
+}
+
++ (BOOL)textFieldTextReplacement
+{
+	return [RZUserDefaults() boolForKey:@"TextFieldTextReplacement"];
+}
+
++ (void)setTextFieldTextReplacement:(BOOL)value
+{
+	if (NSDissimilarObjects(value, [self textFieldTextReplacement])) {
+		[RZUserDefaults() setBool:value forKey:@"TextFieldTextReplacement"];
+	}
 }
 
 @end

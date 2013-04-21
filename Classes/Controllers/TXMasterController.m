@@ -549,10 +549,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 {
 	NSDictionary *dic = [TPCPreferences loadWindowStateWithName:@"Window -> Main Window"];
 
-	[self.inputTextField setGrammarCheckingEnabled:[RZUserDefaults() boolForKey:@"TextFieldAutomaticGrammarCheck"]];
-	[self.inputTextField setContinuousSpellCheckingEnabled:[RZUserDefaults() boolForKey:@"TextFieldAutomaticSpellCheck"]];
-	[self.inputTextField setAutomaticSpellingCorrectionEnabled:[RZUserDefaults() boolForKey:@"TextFieldAutomaticSpellCorrection"]];
-
 	if (dic) {
 		NSInteger x = [dic integerForKey:@"x"];
 		NSInteger y = [dic integerForKey:@"y"];
@@ -631,10 +627,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 	[dic setBool:fullscreen forKey:@"fullscreen"];
 	
-	[RZUserDefaults() setBool:[self.inputTextField isGrammarCheckingEnabled] forKey:@"TextFieldAutomaticGrammarCheck"];
-	[RZUserDefaults() setBool:[self.inputTextField isContinuousSpellCheckingEnabled] forKey:@"TextFieldAutomaticSpellCheck"];
-	[RZUserDefaults() setBool:[self.inputTextField isAutomaticSpellingCorrectionEnabled] forKey:@"TextFieldAutomaticSpellCorrection"];
-
 	if (self.terminating) {
 		[TPCPreferences stopUsingTranscriptFolderSecurityScopedBookmark];
 	}
