@@ -668,10 +668,17 @@ typedef enum TXMoveKind : NSInteger {
 
 	PointerIsEmptyAssert(selected);
 
-	// This hidden setting allows the user to use the old method if they're so
-	// inclined
-	BOOL oldChannelMovementAction = [RZUserDefaults() boolForKey:@"TXOldChannelMovementAction"];
-	if ((dir == TXMoveUpKind || dir == TXMoveDownKind) && oldChannelMovementAction) {
+	/* ************************************************************** */
+	/* Start: Channel Movement Actions.								  */
+	/* Design: Switch channel regardless of server location. This
+	 was the behavior used by version 2.1.1 and was cut out in 3.0.0
+	 to favor server specific navigation, but everybody would not 
+	 stop complaining so here you go… */
+	/* ************************************************************** */
+
+	BOOL moveBetweenServers = [TPCPreferences channelNavigationIsServerSpecific];
+
+	if ((dir == TXMoveUpKind || dir == TXMoveDownKind) && moveBetweenServers == NO) {
 		NSInteger count = self.serverList.numberOfRows;
 
 		NSAssertReturn(count > 1);
@@ -725,6 +732,10 @@ typedef enum TXMoveKind : NSInteger {
 
 		return;
 	}
+
+	/* ************************************************************** */
+	/* End: Channel Movement Actions.								  */
+	/* ************************************************************** */
 
 	/* ************************************************************** */
 	/* Start: Channel Movement Actions.								  */

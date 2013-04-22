@@ -118,6 +118,8 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (NSString *)bundledScriptFolderPath;
 + (NSString *)systemUnsupervisedScriptFolderPath;
 
++ (BOOL)channelNavigationIsServerSpecific;
+
 + (BOOL)logTranscript;
 
 + (NSString *)transcriptFolder;

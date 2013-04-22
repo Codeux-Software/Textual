@@ -606,6 +606,11 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() objectForKey:@"ApplicationCTCPVersionMasquerade"];
 }
 
++ (BOOL)channelNavigationIsServerSpecific
+{
+	return [RZUserDefaults() boolForKey:@"ChannelNavigationIsServerSpecific"];
+}
+
 + (BOOL)setAwayOnScreenSleep
 {
 	return [RZUserDefaults() boolForKey:@"SetAwayOnScreenSleep"];
@@ -1324,6 +1329,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 	d[@"AutomaticallyAddScrollbackMarker"]				= @(YES);
 	d[@"ConfirmApplicationQuit"]						= @(YES);
+	d[@"ChannelNavigationIsServerSpecific"]				= @(YES);
 	d[@"DisableNotificationsForActiveWindow"]			= @(YES);
 	d[@"DisplayDockBadges"]								= @(YES);
 	d[@"DisplayEventInLogView -> Join, Part, Quit"]		= @(YES);
