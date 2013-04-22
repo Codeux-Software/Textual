@@ -199,44 +199,55 @@
 
 - (NSComparisonResult)compare:(IRCUser *)other
 {
-	/* Not even going to touch this mess… */
+	/* If the user specifically requests that the IRCops get placed higher but
+	 the server doesn't support the y prefix, place them at the top, but sort
+	 them by their ranks within the channel instead of just alphabetically.
 
-	/* Mode y is used by InspIRCd-2.0 to denote an IRCop. If we actually have that available to us,
-	 then we will favor the IRCop at the top of list regardless of what the user is said. This is 
-	 done because the IRCop has his own prefix so it would look strange for it to be sorted any
-	 other place then in its own section with the others. Also, since the list is ranked based on
-	 power, the IRCop will always go at top. */
+	 Otherwise we sort by their channel rank since the y prefix will naturally
+	 float to the top. 
+	 
+	 Example on a server without the y prefix:
+	 
+	 q and IRCop is the topmost
+	 a and IRCop next
+	 ...
+	 no rank and IRCop next
+	 q and NOT IRCop next
+	 a and NOT IRCop next
+	 and so on
+	 */
 
-	BOOL favorIRCop = [self.supportInfo modeIsSupportedUserPrefix:@"y"];
+	BOOL favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
 
-	if (favorIRCop == NO) {
-		favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
-	}
+	NSComparisonResult rank = NSInvertedComparisonResult([@(self.channelRank) compare:@(other.channelRank)]);
 
-	if (NSDissimilarObjects(self.isCop, other.isCop) && favorIRCop) {
-		return ((self.isCop) ? NSOrderedAscending : NSOrderedDescending);
-	} else if (self.isCop && favorIRCop) {
+	if (favorIRCop && self.isCop && BOOLReverseValue(other.isCop)) {
+		return NSOrderedAscending;
+	} else if (favorIRCop && BOOLReverseValue(self.isCop) && other.isCop) {
+		return NSOrderedDescending;
+	} else if (rank == NSOrderedSame) {
 		return [self.nickname caseInsensitiveCompare:other.nickname];
-	} else if (NSDissimilarObjects(self.q, other.q)) {
-		return ((self.q) ? NSOrderedAscending : NSOrderedDescending);
-	} else if (self.q) {
-		return [self.nickname caseInsensitiveCompare:other.nickname];
-	} else if (NSDissimilarObjects(self.a, other.a)) {
-		return ((self.a) ? NSOrderedAscending : NSOrderedDescending);
-	} else if (self.a) {
-		return [self.nickname caseInsensitiveCompare:other.nickname];
-	} else if (NSDissimilarObjects(self.o, other.o)) {
-		return ((self.o) ? NSOrderedAscending : NSOrderedDescending);
-	} else if (self.o) {
-		return [self.nickname caseInsensitiveCompare:other.nickname];
-	} else if (NSDissimilarObjects(self.h, other.h)) {
-		return ((self.h) ? NSOrderedAscending : NSOrderedDescending);
-	} else if (self.h) {
-		return [self.nickname caseInsensitiveCompare:other.nickname];
-	} else if (NSDissimilarObjects(self.v, other.v)) {
-		return ((self.v) ? NSOrderedAscending : NSOrderedDescending);
 	} else {
-		return [self.nickname caseInsensitiveCompare:other.nickname];
+		return rank;
+	}
+}
+
+- (NSInteger)channelRank
+{
+	if (self.isCop && [self.supportInfo modeIsSupportedUserPrefix:@"y"]) {
+		return 6;
+	} else if (self.q) {
+		return 5;
+	} else if (self.a) {
+		return 4;
+	} else if (self.o) {
+		return 3;
+	} else if (self.h) {
+		return 2;
+	} else if (self.v) {
+		return 1;
+	} else {
+		return 0;
 	}
 }
 

@@ -128,6 +128,8 @@
 #define NSObjectIsKindOfClassAssertContinue(o, c)		if ([(o) isKindOfClass:[c class]] == NO) { continue; }
 #define NSObjectIsKindOfClassAssertBreak(o,c)			if ([(o) isKindOfClass:[c class]] == NO) { break; }
 
+#define NSInvertedComparisonResult(c)			((c) * (-1))
+
 /* Deprecation and symbol visibility. */
 #define TEXTUAL_EXTERN							__attribute__((visibility("default")))
 #define TEXTUAL_DEPRECATED						__attribute__((deprecated))
