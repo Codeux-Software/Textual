@@ -18,6 +18,7 @@ bundleIdentifier=$(/usr/libexec/PlistBuddy -c "Print \"CFBundleIdentifier\"" Inf
 test "${bundleIdentifier}" != "${TEXTUAL_BUNDLE_ID}" && \
 	/usr/libexec/PlistBuddy -c "Set :\"CFBundleIdentifier\" ${TEXTUAL_BUNDLE_ID}" Info.plist
 
+mkdir -p "${PROJECT_DIR}/.tmp/"
 cd "${PROJECT_DIR}/.tmp/"
 
 echo "/* ANY CHANGES TO THIS FILE WILL NOT BE SAVED AND WILL NOT BE COMMITTED */" > BuildConfig.h
