@@ -4642,7 +4642,7 @@
 				 server. We do not get modes from the server when joining when using a
 				 bouncer like ZNC when a channel is reattached. */
 
-				if (c && NSObjectIsEmpty(c.modeInfo.modeInformation)) {
+				if (c && c.isChannel && NSObjectIsEmpty(c.modeInfo.modeInformation)) {
 					[self send:IRCPrivateCommandIndex("mode"), c.name, nil];
 				}
 			}
