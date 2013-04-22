@@ -5,7 +5,7 @@ cd "${PROJECT_DIR}/Resources/"
 bundleVersion=$(/usr/libexec/PlistBuddy -c "Print \"CFBundleShortVersionString\"" Info.plist)
 
 gitBundle=`which git`
-gitDescribe=`${gitBundle} describe`
+gitDescribe=`${gitBundle} describe --long`
 gitRefInfo=$(echo $gitDescribe | grep -oE "([0-9]{1,3})\-([a-zA-Z0-9]{8})")
 gitCommitCount=`${gitBundle} rev-list HEAD --count`
 
