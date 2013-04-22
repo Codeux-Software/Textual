@@ -358,54 +358,63 @@
 - (void)setContinuousSpellCheckingEnabled:(BOOL)flag
 {
 	[TPCPreferences setTextFieldAutomaticSpellCheck:flag];
+	
 	[super setContinuousSpellCheckingEnabled:flag];
 }
 
 - (void)setGrammarCheckingEnabled:(BOOL)flag
 {
 	[TPCPreferences setTextFieldAutomaticGrammarCheck:flag];
+	
 	[super setGrammarCheckingEnabled:flag];
 }
 
 - (void)setAutomaticSpellingCorrectionEnabled:(BOOL)flag
 {
 	[TPCPreferences setTextFieldAutomaticSpellCorrection:flag];
+	
 	[super setAutomaticSpellingCorrectionEnabled:flag];
 }
 
 - (void)setSmartInsertDeleteEnabled:(BOOL)flag
 {
 	[TPCPreferences setTextFieldSmartCopyPaste:flag];
+	
 	[super setSmartInsertDeleteEnabled:flag];
 }
 
 - (void)setAutomaticQuoteSubstitutionEnabled:(BOOL)flag
 {
 	[TPCPreferences setTextFieldSmartQuotes:flag];
+	
 	[super setAutomaticQuoteSubstitutionEnabled:flag];
 }
 
 - (void)setAutomaticDashSubstitutionEnabled:(BOOL)flag
 {
 	[TPCPreferences setTextFieldSmartDashes:flag];
+	
 	[super setAutomaticDashSubstitutionEnabled:flag];
 }
 
 - (void)setAutomaticLinkDetectionEnabled:(BOOL)flag
 {
 	[TPCPreferences setTextFieldSmartLinks:flag];
+	
 	[super setAutomaticLinkDetectionEnabled:flag];
 }
 
 - (void)setAutomaticDataDetectionEnabled:(BOOL)flag
 {
 	[TPCPreferences setTextFieldDataDetectors:flag];
+	
 	[super setAutomaticDataDetectionEnabled:flag];
 }
 
 - (void)setAutomaticTextReplacementEnabled:(BOOL)flag
 {
 	[TPCPreferences setTextFieldTextReplacement:flag];
+	
 	[super setAutomaticTextReplacementEnabled:flag];
 }
 
