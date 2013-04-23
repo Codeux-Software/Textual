@@ -301,7 +301,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	}
 
 	[self.mainWindow close];
-	self.mainWindow = nil;
 
 	if (self.skipTerminateSave == NO) {
 		[self.worldController save];
