@@ -11,3 +11,6 @@ xcodebuild -alltargets -configuration "Release" BUNDLE_LOADER="${CODESIGNING_FOL
 
 cd "${PROJECT_DIR}/Resources/Plugins/Spammer Paradise"
 xcodebuild -alltargets -configuration "Release" BUNDLE_LOADER="${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}"
+
+cd "${PROJECT_DIR}/Resources/Plugins/ZNC Additions"
+xcodebuild -alltargets -configuration "Release" BUNDLE_LOADER="${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}"
