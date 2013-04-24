@@ -139,6 +139,12 @@
 
 #define TXDeveloperEnvironmentToken				@"TextualDeveloperEnvironment"
 
+/* The reference date is the date & time of the first commit to the
+ Textual repo. Textual existed before then, of course, but the date
+ will remain as the official reference date for its birthday. */
+
+#define TXBirthdayReferenceDate		1279871580.000000 // July 23, 2010 03:53:00 AM
+
 /* nweak and uweak are pretty useless defines. They are
  only defined to make a long list of properties easier to 
  read by making the types the same length. Easier to follow
