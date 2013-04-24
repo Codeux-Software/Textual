@@ -73,6 +73,8 @@
 
 		[c deactivate];
 	}
+
+	[self.worldController reloadTreeGroup:client];
 }
 
 @end
