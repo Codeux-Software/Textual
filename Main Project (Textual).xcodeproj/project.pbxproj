@@ -731,6 +731,7 @@
 		4CBCF89E16C7CE9700DC3521 /* THOPluginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBCF89D16C7CE9700DC3521 /* THOPluginManager.m */; };
 		4CC70203171E1CB400BDFAE0 /* BuildConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC70202171E1CB400BDFAE0 /* BuildConfig.h */; };
 		4CC70204171E1CB400BDFAE0 /* BuildConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC70202171E1CB400BDFAE0 /* BuildConfig.h */; };
+		4CC851F017283500002BD461 /* ZNCAdditions.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4CC851E5172834D0002BD461 /* ZNCAdditions.bundle */; };
 		4CCC6B61158E8C48003A102B /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4CCC6B60158E8C48003A102B /* Scripts */; };
 		4CCF2EE2158046F9006FFE21 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
 		4CCF2EEB15804790006FFE21 /* IRCNetworks.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2EEA15804790006FFE21 /* IRCNetworks.plist */; };
@@ -794,6 +795,13 @@
 			remoteGlobalIDString = 4C01BA0415810DD8007E2DAF;
 			remoteInfo = "Update Version Info";
 		};
+		4CC851EE172834E4002BD461 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4CC851EA172834E4002BD461 /* ZNC Additions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D576316048677EA00EA77CD;
+			remoteInfo = ZNCAdditions;
+		};
 		4CCC6B69158E8CCC003A102B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4CCC6B62158E8CCC003A102B /* Blowfish Key Control Extension.xcodeproj */;
@@ -835,6 +843,7 @@
 				4C68426916C5B12A0005A59E /* BragSpam.bundle in Copy Extensions */,
 				4C68426A16C5B12B0005A59E /* SpammerParadise.bundle in Copy Extensions */,
 				4C68426B16C5B12D0005A59E /* SystemProfiler.bundle in Copy Extensions */,
+				4CC851F017283500002BD461 /* ZNCAdditions.bundle in Copy Extensions */,
 			);
 			name = "Copy Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1271,6 +1280,8 @@
 		4CBCF89B16C7CD9200DC3521 /* THOPluginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THOPluginManager.h; sourceTree = "<group>"; };
 		4CBCF89D16C7CE9700DC3521 /* THOPluginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THOPluginManager.m; sourceTree = "<group>"; };
 		4CC70202171E1CB400BDFAE0 /* BuildConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BuildConfig.h; path = .tmp/BuildConfig.h; sourceTree = SOURCE_ROOT; };
+		4CC851E5172834D0002BD461 /* ZNCAdditions.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ZNCAdditions.bundle; path = .tmp/SharedBuildProducts/ZNCAdditions.bundle; sourceTree = SOURCE_ROOT; };
+		4CC851EA172834E4002BD461 /* ZNC Additions.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "ZNC Additions.xcodeproj"; path = "Resources/Plugins/ZNC Additions/ZNC Additions.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4CCC6B47158E8C27003A102B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = SOURCE_ROOT; };
 		4CCC6B60158E8C48003A102B /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = "Resources/All Scripts/Bundled Scripts/Scripts"; sourceTree = SOURCE_ROOT; };
 		4CCC6B62158E8CCC003A102B /* Blowfish Key Control Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Blowfish Key Control Extension.xcodeproj"; path = "Resources/Plugins/Blowfish Key Control/Blowfish Key Control Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
@@ -1638,6 +1649,7 @@
 				4C68426116C5B1020005A59E /* BragSpam.bundle */,
 				4C68426216C5B1020005A59E /* SpammerParadise.bundle */,
 				4C68426316C5B1020005A59E /* SystemProfiler.bundle */,
+				4CC851E5172834D0002BD461 /* ZNCAdditions.bundle */,
 			);
 			name = Binaries;
 			sourceTree = "<group>";
@@ -1649,6 +1661,7 @@
 				4CCC6B6E158E8CDA003A102B /* Brag Spam Extension.xcodeproj */,
 				4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */,
 				4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */,
+				4CC851EA172834E4002BD461 /* ZNC Additions.xcodeproj */,
 			);
 			name = Projects;
 			sourceTree = "<group>";
@@ -2204,6 +2217,14 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		4CC851EB172834E4002BD461 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4CC851EF172834E4002BD461 /* ZNCAdditions.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		4CCC6B46158E8C1B003A102B /* Build Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -2685,6 +2706,10 @@
 					ProductGroup = 4CCC6B78158E8CF6003A102B /* Products */;
 					ProjectRef = 4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */;
 				},
+				{
+					ProductGroup = 4CC851EB172834E4002BD461 /* Products */;
+					ProjectRef = 4CC851EA172834E4002BD461 /* ZNC Additions.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -2698,6 +2723,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		4CC851EF172834E4002BD461 /* ZNCAdditions.bundle */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ZNCAdditions.bundle;
+			remoteRef = 4CC851EE172834E4002BD461 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		4CCC6B6A158E8CCC003A102B /* BlowfishCommandLine.bundle */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
