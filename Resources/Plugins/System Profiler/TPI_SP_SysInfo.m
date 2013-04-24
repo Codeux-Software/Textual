@@ -108,9 +108,19 @@
 
 + (NSString *)applicationRuntimeStatistics
 {
+	NSTimeInterval runtime = [TPCPreferences timeIntervalSinceApplicationInstall];
+
+	NSTimeInterval birthday = [NSDate secondsSinceUnixTimestamp:TXBirthdayReferenceDate];
+
+	/* DO NOT ALLOW RUNTIME TO BE GREATER THAN THE AGE OF TEXTUAL. (For Fudge) */
+
+	if (runtime > birthday) {
+		runtime = birthday;
+	}
+
 	return TPIFLS(@"SystemInformationRuncountCommandResult",
 				  TXFormattedNumber([TPCPreferences applicationRunCount]),
-				  TXReadableTime([TPCPreferences timeIntervalSinceApplicationInstall]));
+				  TXReadableTime(runtime));
 }
 
 + (NSString *)systemCPULoadInformation
