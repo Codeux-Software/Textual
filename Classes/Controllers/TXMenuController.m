@@ -137,6 +137,7 @@
 		case 542: // "Logs"
 		case 5675: // "Connect to Help Channel"
 		case 5676: // "Connect to Testing Channel"
+		case 6666: // "Mute Sound"
 		case 6876: // "Topic"
 		case 6877: // "Ban List"
 		case 6878: // "Ban Exceptions"

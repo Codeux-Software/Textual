@@ -108,6 +108,7 @@
 	602: "Leave Channel"
 	651: "Add Channel…"
 	652: "Delete Channel"
+	6666: "Mute Sound"
 	6876: "Topic"
 	6877: "Ban List"
 	6878: "Ban Exceptions"
