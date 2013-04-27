@@ -12,12 +12,13 @@ https://itunes.apple.com/us/app/textual-irc-client/id403012667
 
 There are no differences between the code on GitHub and the binaries on
 the Mac App Store. Be that as it may, we will not provide any support or
-assistance to forks or self-built versions of Textual. We provide
-support for the current Mac App Store version. Sometimes the Mac App
-Store version may take a while to update, and that is not for lack of
-trying. Apple is notoriously known for how slow they approve apps in the
-Mac AppStore. If you wish to build Textual for yourself, proceed at your
-own risk.
+assistance to forks or self-built versions of Textual. We provide support 
+for the current Mac App Store version. 
+
+Sometimes the Mac App Store version may take a while to update, and that 
+is not for lack of trying. Apple is notoriously known for how slow they 
+approve apps in the Mac App Store. If you wish to build Textual for 
+yourself, proceed at your own risk.
 
 #### License ####
 
