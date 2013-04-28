@@ -57,6 +57,7 @@
 @property (nonatomic, assign) BOOL sendLagcheckReplyToChannel;
 @property (nonatomic, assign) NSInteger lastMessageReceived;
 @property (nonatomic, assign) NSInteger tryingNickNumber;
+@property (nonatomic, assign) NSInteger connectionReconnectCount;
 @property (nonatomic, assign) NSUInteger CAPpausedStatus;
 @property (nonatomic, assign) NSTimeInterval lastLagCheck;
 @property (nonatomic, strong) NSString *myHost;
@@ -4155,6 +4156,8 @@
 	self.isConnected = YES;
 	self.inFirstISONRun = YES;
 
+	self.connectionReconnectCount = 0;
+
 	self.myNick	= [m paramAt:0];
 	self.sentNick = self.myNick;
 
@@ -5603,6 +5606,12 @@
 	[self logFileWriteSessionBegin];
 
 	if (mode == IRCConnectReconnectMode || mode == IRCConnectBadSSLCertificateMode) {
+		self.connectionReconnectCount += 1;
+
+		NSString *reconnectCount = TXFormattedNumber(self.connectionReconnectCount);
+		
+		[self printDebugInformationToConsole:TXTFLS(@"IRCIsReconnectingWithAttemptCount", reconnectCount)];
+	} else if ( mode == IRCConnectBadSSLCertificateMode) {
 		[self printDebugInformationToConsole:TXTLS(@"IRCIsReconnecting")];
 	} else if (mode == IRCConnectRetryMode) {
 		[self printDebugInformationToConsole:TXTLS(@"IRCIsRetryingConnection")];
@@ -5719,6 +5728,8 @@
 
 - (void)cancelReconnect
 {
+	self.connectionReconnectCount = 0;
+
 	[self stopReconnectTimer];
 }
 
