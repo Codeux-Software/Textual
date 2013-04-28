@@ -131,6 +131,7 @@
 "IRCIsConnectingWithNormalProxy" = "Connecting to [%1$@, port %2$ld] via [%3$@, port %4$ld]";
 "IRCIsConnectingWithSystemProxy" = "Connecting to [%1$@, port %2$ld] via System Socks";
 "IRCIsReconnecting" = "Reconnecting …";
+"IRCIsReconnectingWithAttemptCount" = "Reconnecting (attempt #%@) …";
 "IRCIsRetryingConnection" = "Retrying …";
 "IRCModeSet" = "\002%1$@\002 sets mode \002%2$@\002";
 "IRCRawModeIsDisabled" = "Raw mode has been disabled. Textual will no longer output raw data.";
