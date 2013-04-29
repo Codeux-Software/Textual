@@ -134,6 +134,11 @@
 	return [self.nickname isEqualIgnoringCase:[other nickname]];
 }
 
+- (NSUInteger)hash
+{
+	return self.nickname.lowercaseString.hash;
+}
+
 - (CGFloat)totalWeight
 {
 	[self decayConversation];
