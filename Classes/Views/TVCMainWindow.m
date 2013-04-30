@@ -37,6 +37,20 @@
 
 #import "TextualApplication.h"
 
+static NSValue * _originPoint = nil;
+
+static NSValue *touchesToPoint(NSTouch *fingerA, NSTouch *fingerB) {
+	PointerIsEmptyAssertReturn(fingerA, nil);
+	PointerIsEmptyAssertReturn(fingerB, nil);
+
+	NSSize deviceSize = fingerA.deviceSize;
+
+	CGFloat x = (fingerA.normalizedPosition.x + fingerB.normalizedPosition.x) / 2 * deviceSize.width;
+	CGFloat y = (fingerA.normalizedPosition.y + fingerB.normalizedPosition.y) / 2 * deviceSize.height;
+
+	return [NSValue valueWithPoint:NSMakePoint(x, y)];
+}
+
 @implementation TVCMainWindow
 
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation
@@ -84,16 +98,12 @@
 	CGFloat TVCSwipeMinimumLength = [TPCPreferences swipeMinimumLength];
 	NSAssertReturn(TVCSwipeMinimumLength > 0);
 
-	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseAny inView:nil];
+	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseTouching inView:nil];
+	NSAssertReturn(touches.count == 2);
 
-	self.twoFingerTouches = [NSMutableDictionary dictionary];
+	NSArray *touchArray = touches.allObjects;
 
-	for (NSTouch *touch in touches) {
-		// Cannot use safeSetObject because identiy is not an NSString
-		// It's cool though cause touch is guarunteed not to be nil
-
-		self.twoFingerTouches[touch.identity] = touch;
-	}
+	_originPoint = touchesToPoint(touchArray[0], touchArray[1]);
 }
 
 - (void)endGestureWithEvent:(NSEvent *)event
@@ -101,47 +111,35 @@
 	CGFloat TVCSwipeMinimumLength = [TPCPreferences swipeMinimumLength];
 	NSAssertReturn(TVCSwipeMinimumLength > 0);
 
-	NSObjectIsEmptyAssert(self.twoFingerTouches);
-	
 	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseAny inView:nil];
 
-	NSMutableDictionary *beginTouches = [self.twoFingerTouches copy];
-
-	self.twoFingerTouches = nil;
-
-	NSMutableArray *magnitudes = [NSMutableArray array];
-
-	for (NSTouch *touch in touches) {
-		NSTouch *beginTouch = [beginTouches objectForKey:touch.identity];
-
-		PointerIsEmptyAssertLoopContinue(beginTouch);
-
-		CGFloat magnitude = (touch.normalizedPosition.x - beginTouch.normalizedPosition.x);
-
-		[magnitudes safeAddObject:@(magnitude)];
-	}
-
-	if (magnitudes.count < 2) {
+	if (PointerIsEmpty(_originPoint) || NSDissimilarObjects(touches.count, 2)) {
+		_originPoint = nil;
 		return;
 	}
 
-	CGFloat sum = 0.f;
-	
-	for (NSNumber *magnitude in magnitudes) {
-		sum += magnitude.floatValue;
-	}
-	
-	CGFloat absSum = fabsf(sum);
+	NSArray *touchArray = touches.allObjects;
 
-	if (absSum < TVCSwipeMinimumLength) {
+	NSPoint origin = _originPoint.pointValue;
+	NSPoint dest = touchesToPoint(touchArray[0], touchArray[1]).pointValue;
+
+	_originPoint = nil;
+
+    NSPoint delta = NSMakePoint(origin.x - dest.x, origin.y - dest.y);
+
+	if (fabs(delta.y) > fabs(delta.x)) {
 		return;
 	}
 
-	if (sum > 0) {
-		[self.masterController selectNextSelection:nil];
-    } else if (sum < 0) {
+	if (fabs(delta.x) < TVCSwipeMinimumLength) {
+		return;
+	}
+
+	if (delta.x > 0) {
 		[self.masterController selectPreviousWindow:nil];
-    }
+	} else {
+		[self.masterController selectNextSelection:nil];
+	}
 }
 
 - (void)sendEvent:(NSEvent *)e
