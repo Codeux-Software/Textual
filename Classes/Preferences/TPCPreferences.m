@@ -1354,7 +1354,7 @@ static NSMutableArray *excludeKeywords = nil;
 	/* This controls the two-finger swipe sensitivity. The lower it is, the more
 		sensitive the swipe left/right detection is. The higher it is, the less 
 		sensitive the swipe detection is. <= 0 means off. */
-	d[@"SwipeMinimumLength"]							= @(0.3);
+	d[@"SwipeMinimumLength"]							= @(30);
 
 	d[@"NotificationType -> Highlight -> Enabled"]				= @(YES);
 	d[@"NotificationType -> Highlight -> Sound"]				= @"Glass";
