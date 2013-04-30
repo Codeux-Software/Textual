@@ -747,17 +747,12 @@ typedef enum TXMoveKind : NSInteger {
 	if (dir == TXMoveUpKind || dir == TXMoveDownKind)
 	{
 		NSArray *scannedRows = [self.serverList rowsFromParentGroup:selected];
+		scannedRows = [@[[selected client]] arrayByAddingObjectsFromArray:scannedRows];
 
-		NSInteger n = -1;
-
-		if ([selected isClient] == NO) {
-			n = [scannedRows indexOfObject:selected];
-		}
+		NSInteger n = [scannedRows indexOfObject:selected];
 
 		NSInteger start = n;
 		NSInteger count = scannedRows.count;
-
-		NSAssertReturn(count > 0);
 
 		while (1 == 1) {
 			if (dir == TXMoveDownKind) {
