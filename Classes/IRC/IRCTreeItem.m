@@ -65,6 +65,16 @@
 	return NO;
 }
 
+- (BOOL)isChannel
+{
+	return NO;
+}
+
+- (BOOL)isPrivateMessage
+{
+	return NO;
+}
+
 - (BOOL)isActive
 {
 	return NO;
