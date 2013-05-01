@@ -59,6 +59,7 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 		self.autoConnect				= NO;
 		self.autoReconnect				= NO;
 		self.autoSleepModeDisconnect	= YES;
+		self.performPongTimer			= YES;
 		
 		self.connectionUsesSSL	= NO;
 		self.nicknamePassword	= NSStringEmptyPlaceholder;
@@ -245,6 +246,7 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 		self.autoReconnect				= NSDictionaryBOOLKeyValueCompare(dic, @"connectOnDisconnect", self.autoReconnect);
 		self.autoSleepModeDisconnect	= NSDictionaryBOOLKeyValueCompare(dic, @"disconnectOnSleepMode", self.autoSleepModeDisconnect);
 		self.connectionUsesSSL			= NSDictionaryBOOLKeyValueCompare(dic, @"connectUsingSSL", self.connectionUsesSSL);
+		self.performPongTimer			= NSDictionaryBOOLKeyValueCompare(dic, @"performPongTimer", self.performPongTimer);
 		
 		self.fallbackEncoding			= NSDictionaryIntegerKeyValueCompare(dic, @"characterEncodingFallback", self.fallbackEncoding);
 		self.normalLeavingComment		= NSDictionaryObjectKeyValueCompare(dic, @"connectionDisconnectDefaultMessage", self.normalLeavingComment);
@@ -300,6 +302,7 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 	[dic setBool:self.autoReconnect				forKey:@"connectOnDisconnect"];
 	[dic setBool:self.autoSleepModeDisconnect	forKey:@"disconnectOnSleepMode"];
 	[dic setBool:self.connectionUsesSSL			forKey:@"connectUsingSSL"];
+	[dic setBool:self.performPongTimer			forKey:@"performPongTimer"];
 	[dic setBool:self.invisibleMode				forKey:@"setInvisibleOnConnect"];
 	[dic setBool:self.isTrustedConnection		forKey:@"trustedSSLConnection"];
     [dic setBool:self.connectionPrefersIPv6		forKey:@"DNSResolverPrefersIPv6"];

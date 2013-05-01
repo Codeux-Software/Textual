@@ -282,6 +282,8 @@
 	self.serverPortField.stringValue		= [NSString stringWithInteger:self.config.serverPort];
 
     self.prefersIPv6Check.state				= self.config.connectionPrefersIPv6;
+
+	self.pongTimerCheck.state				= self.config.performPongTimer;
 	
 	/* Identity */
 	if (NSObjectIsEmpty(self.config.nickname)) {
@@ -357,6 +359,7 @@
 	self.config.autoSleepModeDisconnect		= self.autoDisconnectOnSleepCheck.state;
 	self.config.connectionPrefersIPv6		= self.prefersIPv6Check.state;
 	self.config.connectionUsesSSL			= self.connectionUsesSSLCheck.state;
+	self.config.performPongTimer			= self.pongTimerCheck.state;
 	self.config.serverPassword				= self.serverPasswordField.firstTokenStringValue;
 	
 	NSString *realhost = nil;

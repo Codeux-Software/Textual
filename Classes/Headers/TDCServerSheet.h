@@ -56,6 +56,7 @@
 @property (nonatomic, nweak) NSButton *floodControlCheck;
 @property (nonatomic, nweak) NSButton *invisibleModeCheck;
 @property (nonatomic, nweak) NSButton *prefersIPv6Check;
+@property (nonatomic, nweak) NSButton *pongTimerCheck;
 @property (nonatomic, nweak) NSComboBox *serverAddressCombo;
 @property (nonatomic, nweak) NSMenu *addIgnoreMenu;
 @property (nonatomic, nweak) NSPopUpButton *fallbackEncodingButton;
