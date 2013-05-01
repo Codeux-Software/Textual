@@ -412,7 +412,7 @@
 					<object class="NSButton" id="1033509982">
 						<reference key="NSNextResponder" ref="573791842"/>
 						<int key="NSvFlags">256</int>
-						<string key="NSFrame">{{113, 18}, {366, 18}}</string>
+						<string key="NSFrame">{{113, 18}, {352, 18}}</string>
 						<reference key="NSSuperview" ref="573791842"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -420,7 +420,7 @@
 						<object class="NSButtonCell" key="NSCell" id="837253072">
 							<int key="NSCellFlags">67108864</int>
 							<int key="NSCellFlags2">0</int>
-							<string key="NSContents">Periodically send a PING to server to verify connection.</string>
+							<string key="NSContents">Periodically PING the server to verify the connection.</string>
 							<reference key="NSSupport" ref="788253527"/>
 							<reference key="NSControlView" ref="1033509982"/>
 							<int key="NSButtonFlags">1211912448</int>
