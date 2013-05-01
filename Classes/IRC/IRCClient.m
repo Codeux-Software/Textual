@@ -5249,6 +5249,15 @@
 		return [self stopPongTimer];
 	}
 
+	/* Instead of stopping and starting the timer every time this changes, it
+	 it is easier to check if we should do it every timer iteration.
+	 The ability to disable this is important on PSYBNC connectiongs because
+	 PSYBNC doesn't respond to PING commands. There are other irc daemons that
+	 don't reply to PING either and they should all be shot. */
+	if (BOOLReverseValue(self.config.performPongTimer)) {
+		return;
+	}
+
 	NSInteger timeSpent = [NSDate secondsSinceUnixTimestamp:self.lastMessageReceived];
 
 	if (timeSpent >= _timeoutInterval) {
