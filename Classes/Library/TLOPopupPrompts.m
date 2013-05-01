@@ -143,10 +143,17 @@
 	
 	NSArray *context = @[privateSuppressionKey, targetClass, NSStringFromSelector(actionSelector), @(isForcedSuppression)];
 
-	[alert beginSheetModalForWindow:window
-					  modalDelegate:[self class]
-					 didEndSelector:@selector(sheetWindowWithQuestionCallback:returnCode:contextInfo:)
-						contextInfo:(void *)CFBridgingRetain(context)];
+	if (NSIsCurrentThreadMain()) {
+		[alert beginSheetModalForWindow:window
+						  modalDelegate:[self class]
+						 didEndSelector:@selector(sheetWindowWithQuestionCallback:returnCode:contextInfo:)
+							contextInfo:(void *)CFBridgingRetain(context)];
+	} else {
+		[alert.iomt beginSheetModalForWindow:window
+							   modalDelegate:[self class]
+							  didEndSelector:@selector(sheetWindowWithQuestionCallback:returnCode:contextInfo:)
+								 contextInfo:(void *)CFBridgingRetain(context)];
+	}
 }
 
 + (void)popupPromptNilSelector:(TLOPopupPromptReturnType)returnCode
@@ -197,27 +204,39 @@
 
 		[suppressionButton setTitle:suppressText];
 	}
-	
-	/* Return result. */
-	if ([alert runModal] == NSAlertDefaultReturn) {
-		if (useSupression) {
-			if (isForcedSuppression) {
-				[RZUserDefaults() setBool:YES forKey:privateSuppressionKey];
-			} else {
-				[RZUserDefaults() setBool:suppressionButton.state forKey:privateSuppressionKey];
-			}
-		}
 
-		return YES;
-	} else {
-		if (useSupression) {
-			if (isForcedSuppression) {
-				[RZUserDefaults() setBool:YES forKey:privateSuppressionKey];
+	__block BOOL result = NO;
+
+	void(^runblock)(void) = ^{
+		/* Return result. */
+		if ([alert runModal] == NSAlertDefaultReturn) {
+			if (useSupression) {
+				if (isForcedSuppression) {
+					[RZUserDefaults() setBool:YES forKey:privateSuppressionKey];
+				} else {
+					[RZUserDefaults() setBool:suppressionButton.state forKey:privateSuppressionKey];
+				}
 			}
+
+			result = YES;
+		} else {
+			if (useSupression) {
+				if (isForcedSuppression) {
+					[RZUserDefaults() setBool:YES forKey:privateSuppressionKey];
+				}
+			}
+
+			result = NO;
 		}
-		
-		return NO;
+	};
+
+	if (NSIsCurrentThreadMain()) {
+		runblock();
+	} else {
+		dispatch_sync(dispatch_get_main_queue(), runblock);
 	}
+
+	return result;
 }
 
 /* TLOPopupPrompts and TVCInputPromptDialog were originally developed because

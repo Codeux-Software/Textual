@@ -130,6 +130,8 @@
 
 #define NSInvertedComparisonResult(c)			((c) * (-1))
 
+#define NSIsCurrentThreadMain()					[[NSThread currentThread] isEqual:[NSThread mainThread]]
+
 /* Deprecation and symbol visibility. */
 #define TEXTUAL_EXTERN							__attribute__((visibility("default")))
 #define TEXTUAL_DEPRECATED						__attribute__((deprecated))
