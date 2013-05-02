@@ -230,6 +230,7 @@
 - (void)toggleChannelInviteMode:(id)sender;
 
 - (void)sortChannelListNames:(id)sender;
+- (void)resetWindowSize:(id)sender;
 - (void)showMainWindow:(id)sender;
 - (void)showChannelIgnoreList:(id)sender;
 - (void)showAboutWindow:(id)sender;

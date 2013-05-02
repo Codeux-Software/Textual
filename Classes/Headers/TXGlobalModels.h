@@ -42,6 +42,9 @@
 TEXTUAL_EXTERN BOOL NSObjectIsEmpty(id obj);
 TEXTUAL_EXTERN BOOL NSObjectIsNotEmpty(id obj);
 
+TEXTUAL_EXTERN NSRect NSMakeRectThatFitsMainScreen(CGFloat x, CGFloat y, CGFloat w, CGFloat h);
+TEXTUAL_EXTERN NSRect NSMakeRectFitMainScreen(NSRect rect);
+
 TEXTUAL_EXTERN NSString *TXTLS(NSString *key); // Textual Language String
 TEXTUAL_EXTERN NSString *TXTFLS(NSString *key, ...); // Textual Formatted Language String
 
