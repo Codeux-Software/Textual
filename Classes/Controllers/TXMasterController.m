@@ -82,17 +82,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 	[TPCPreferences initPreferences];
 
-	BOOL disableWindowSizeRequirement = [RZUserDefaults() boolForKey:@"MinimumWindowSizeIsNotForced"];
-
-	/* That's a long var name. */
-	if (disableWindowSizeRequirement) {
-		/* Fine, it is not an actual zero requirement for window size, but who would possibly go below this
-		 size? You cannot even see the chat view or anything in that area at this size. It is being forced 
-		 at this size to fix a bug with the input field breaking when it hits a negative draw rect. This 
-		 can just be considered a lazy man fix. */
-		
-		[self.mainWindow setMinSize:NSMakeSize(200, 58)];
-	}
+	[self.mainWindow setMinSize:TPCPreferences.minimumWindowSize];
 
 	[self loadWindowState:YES];
 
@@ -555,8 +545,10 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		NSInteger h = [dic integerForKey:@"h"];
 
 		BOOL fullscreen = [dic boolForKey:@"fullscreen"];
+
+		NSRect frame = NSMakeRectThatFitsMainScreen(x, y, w, h);
 		
-		[self.mainWindow setFrame:NSMakeRect(x, y, w, h) display:YES animate:self.isInFullScreenMode];
+		[self.mainWindow setFrame:frame display:YES animate:BOOLReverseValue(self.isInFullScreenMode)];
 		
 		self.serverSplitView.dividerPosition = [dic integerForKey:@"serverList"];
 		self.memberSplitView.dividerPosition = [dic integerForKey:@"memberList"];
@@ -573,17 +565,10 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 			[self.menuController performSelector:@selector(toggleFullscreenMode:) withObject:nil afterDelay:2.0];
 		}
 	} else {
-		NSRect rect = [RZMainScreen() visibleFrame];
-		
-		NSPoint p = NSMakePoint((rect.origin.x + (rect.size.width / 2)), 
-								(rect.origin.y + (rect.size.height / 2)));
-		
-		NSInteger w = 800;
-		NSInteger h = 474;
-		
-		rect = NSMakeRect((p.x - (w / 2)), (p.y - (h / 2)), w, h);
-		
-		[self.mainWindow setFrame:rect display:YES animate:self.isInFullScreenMode];
+
+		[self.mainWindow setFrame:TPCPreferences.defaultWindowFrame
+						  display:YES
+						  animate:BOOLReverseValue(self.isInFullScreenMode)];
 
 		self.serverSplitView.dividerPosition = 165;
 		self.memberSplitView.dividerPosition = 120;
@@ -602,8 +587,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		[self.menuController toggleFullscreenMode:nil];
 	}
 	
-	NSRect rect = self.mainWindow.frame;
-	
+	NSRect rect = NSMakeRectFitMainScreen(self.mainWindow.frame);
+
 	[dic setInteger:rect.origin.x forKey:@"x"];
 	[dic setInteger:rect.origin.y forKey:@"y"];
 	[dic setInteger:rect.size.width	forKey:@"w"];

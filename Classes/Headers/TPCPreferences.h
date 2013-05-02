@@ -89,6 +89,9 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (NSInteger)applicationRunCount;
 + (void)updateApplicationRunCount;
 
++ (NSSize)minimumWindowSize;
++ (NSRect)defaultWindowFrame;
+
 + (BOOL)featureAvailableToOSXLion;
 + (BOOL)featureAvailableToOSXMountainLion;
 

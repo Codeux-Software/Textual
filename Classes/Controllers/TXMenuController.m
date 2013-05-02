@@ -2010,6 +2010,19 @@
 	[self.worldController save];
 }
 
+- (void)resetWindowSize:(id)sender
+{
+	if (self.masterController.mainWindow.isInFullscreenMode) {
+		[self toggleFullscreenMode:sender];
+	}
+
+	[self.masterController.mainWindow setFrame:TPCPreferences.defaultWindowFrame
+									   display:YES
+									   animate:YES];
+
+	[self.masterController saveWindowState];
+}
+
 - (void)forceReloadTheme:(id)sender
 {
 	[self.worldController reloadTheme];

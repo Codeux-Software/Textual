@@ -1235,6 +1235,34 @@ static NSMutableArray *excludeKeywords = nil;
 	[RZUserDefaults() setInteger:([self applicationRunCount] + 1) forKey:@"TXRunCount"];
 }
 
++ (NSSize)minimumWindowSize
+{
+	/* Fine, it is not an actual zero requirement for window size, but who would
+	 possibly go below this size? You cannot even see the chat view or anything 
+	 in that area at this size. It is being forced at this size to fix a bug 
+	 with the input field breaking when it hits a negative draw rect. This can
+	 just be considered a lazy man fix. */
+
+	if ([RZUserDefaults() boolForKey:@"MinimumWindowSizeIsNotForced"]) {
+		return NSMakeSize(200, 50);
+	} else {
+		return NSMakeSize(600, 250);
+	}
+}
+
++ (NSRect)defaultWindowFrame
+{
+	NSRect usable = RZMainScreen().visibleFrame;
+
+	CGFloat w = 800;
+	CGFloat h = 474;
+
+	CGFloat x = (usable.origin.x + (usable.size.width / 2)) - (w / 2);
+	CGFloat y = (usable.origin.y + (usable.size.height / 2)) - (h / 2);
+
+	return NSMakeRect(x, y, w, h);
+}
+
 #pragma mark -
 #pragma mark Key-Value Observing
 
