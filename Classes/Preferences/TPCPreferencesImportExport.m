@@ -38,9 +38,7 @@
 #import "TextualApplication.h"
 
 /*
-	Everything related to import/export is handled within this class. This class
-	should only be called by awakeFromNib in master controller and the associated
-	menu items in the menu controller.
+	Everything related to import/export is handled within this class.
 
 	Sheets are used to lock focus to the task at hand.
  */
@@ -92,6 +90,8 @@
 	/* The loading screen is a generic way to show something during import. */
 	[self.masterController.mainWindowLoadingScreen popLoadingConfigurationView];
 
+	/* isPopulatingSeeds tells the world to not close the loading screen on state
+	 changes when creating new connections. */
 	self.worldController.isPopulatingSeeds = YES;
 
 	/* Before we do anything at all, we create a backup of the old configuration. */
