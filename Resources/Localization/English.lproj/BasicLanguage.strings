@@ -111,7 +111,8 @@
 
 "IRCAwayCommandDefaultReason" = "Be back later.";
 "IRCCTCPRequestIgnored" = "\002-CTCP-\002 %1$@ from %2$@ was ignored.";
-"IRCCTCPSupportedReplies" = "VERSION CLIENTINFO USERINFO PING TIME";
+
+"IRCCTCPSupportedReplies" = "CLIENTINFO FINGER PING TIME USERINFO VERSION";
 "IRCCTCPVersionTitle" = "\002Current Version:\002 %@";
 "IRCCapCurrentlyEnabledNone" = "There are no capabilities in use.";
 "IRCCapCurrentlyEnbaled" = "The following capabilities are currently enabled: %@";
