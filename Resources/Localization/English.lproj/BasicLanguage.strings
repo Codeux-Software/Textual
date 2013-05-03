@@ -104,7 +104,7 @@
 
 "HalfopCommandNotSupportedOnServer" = "The half-op (+h) mode is not supported on this server.";
 
-"IRCCTCPVersionInfoBasic" = "%1$@ %2$@ (Flavor: %4$@)";
+"IRCCTCPVersionInfoBasic" = "%1$@ IRC Client: www.textualapp.com — v%2$@ (Flavor: %4$@)";
 
 "IRCCTCPVersionInfoDetailed_1" = "%1$@ %2$@ (Build #%3$@)";
 "IRCCTCPVersionInfoDetailed_2" = "%1$@ %2$@ (Git Reference: %3$@) (Flavor: %4$@)";
