@@ -52,6 +52,16 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 @implementation TXMasterController
 
++ (void)initialize
+{
+#if defined(DEBUG)
+	// iVersion.sharedInstance.previewMode = YES; // (Only do this to test iVersion)
+	// iVersion.sharedInstance.verboseLogging = YES;
+#endif
+
+	iVersion.sharedInstance.appStoreID = 403012667;
+}
+
 - (id)init
 {
     if ((self = [super init])) {
