@@ -1529,6 +1529,22 @@
 	[self deselectMembers:sender];
 }
 
+- (void)memberSendCTCPFinger:(id)sender
+{
+	IRCClient *u = [self.worldController selectedClient];
+	IRCChannel *c = [self.worldController selectedChannel];
+
+	if (_noClient || _isClient) {
+		return;
+	}
+
+	for (IRCUser *m in [self selectedMembers:sender]) {
+		[u sendCTCPQuery:m.nickname command:IRCPrivateCommandIndex("ctcp_finger") text:nil];
+	}
+
+	[self deselectMembers:sender];
+}
+
 - (void)memberSendCTCPTime:(id)sender
 {
 	IRCClient *u = [self.worldController selectedClient];

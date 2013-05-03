@@ -211,6 +211,7 @@
 - (void)memberSendCTCPVersion:(id)sender;
 - (void)memberSendCTCPUserinfo:(id)sender;
 - (void)memberSendCTCPClientInfo:(id)sender;
+- (void)memberSendCTCPFinger:(id)sender;
 - (void)memberModeChangeOp:(id)sender;
 - (void)memberModeChangeDeop:(id)sender;
 - (void)memberModeChangeHalfop:(id)sender;
