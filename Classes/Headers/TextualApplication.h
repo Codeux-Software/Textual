@@ -169,6 +169,7 @@
 	#import "GTMGarbageCollection.h"
 	#import "Reachability.h"
 	#import "RLMAsyncSocket.h"
+	#import "iVersion.h"
 
 	/* IRC Controllers — Core. */
 
