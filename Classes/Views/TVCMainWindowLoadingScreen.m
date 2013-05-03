@@ -66,7 +66,7 @@
 		[self displayView:self.loadingConfigurationView];
 
 		[self.loadingConfigurationViewPI startAnimation:nil];
-		[self.loadingConfigurationViewPI setDisplayedWhenStopped:NO];
+		[self.loadingConfigurationViewPI setDisplayedWhenStopped:YES];
 	}	
 }
 
@@ -77,6 +77,7 @@
 {
 	if (self.stackLocked == NO) {
 		[self.loadingConfigurationViewPI stopAnimation:nil];
+		[self.loadingConfigurationViewPI setDisplayedWhenStopped:NO];
 	}
 	
 	[self hideAll:YES];
