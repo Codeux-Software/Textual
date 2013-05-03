@@ -1,5 +1,5 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
-{\fonttbl\f0\fswiss\fcharset0 ArialMT;\f1\fmodern\fcharset0 Courier;}
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf370
+\cocoascreenfonts1{\fonttbl\f0\fswiss\fcharset0 ArialMT;\f1\fmodern\fcharset0 Courier;}
 {\colortbl;\red255\green255\blue255;\red83\green85\blue0;\red0\green0\blue118;\red10\green121\blue0;
 }
 \margl1440\margr1440\vieww10180\viewh12420\viewkind0
@@ -7,7 +7,7 @@
 
 \itap1\trowd \taflags0 \trgaph108\trleft-108 \trwWidth15680\trftsWidth3 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
 \clvertalt \clshdrawnil \clwWidth15680\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\ql\qnatural
+\pard\intbl\itap1\pardeftab720
 
 \f0\b\fs24 \cf0 Scripting With Textual\
 \
@@ -48,6 +48,31 @@ The return value for scripts can be any command defined that is \
 native to Textual. If no command is presented, then Textual will \
 send the return to the channel that is currently selected. \
 \
+
+\b Where do I store scripts?
+\b0 \
+\
+Scripts are stored in the following folder:\
+\
+
+\b [home folder] > Library > Application Scripts > com.codeux.irc.textual
+\b0 \
+\
+This folder does not always exist and may need to be created\
+manually. Textual does not have write permission to the location so\
+it cannot create it itself. \
+\
+Any script placed within this folder will be ran outside of the Mac \
+sandbox environment. \
+\
+
+\b My script did nothing. What is wrong?\
+\
+
+\b0 Textual outputs all errors that it captures to the Mac OS Console. \
+This can be reached by typing "Console" into spotlight or browsing\
+to Console.app under the Utilities folder. \
+\
 --------\
 \
 
@@ -61,13 +86,13 @@ send the return to the channel that is currently selected. \
 \i Command: /example 
 \i0 \
 \
-\pard\intbl\itap1\pardeftab720\ql\qnatural
+\pard\intbl\itap1\pardeftab720
 
 \f1 \cf0 	on textualcmd\cf2 ()\cf0 \
 \'a0 \'a0 \'a0 \'a0 \cf3 return\cf0  \cf4 "This message will be sent to selected channel."\cf0 \
 \cf3 	end\cf0  textualcmd\
 \
-\pard\intbl\itap1\pardeftab720\ql\qnatural
+\pard\intbl\itap1\pardeftab720
 
 \f0 \cf0 --------\
 \
@@ -80,13 +105,13 @@ send the return to the channel that is currently selected. \
 Command: /example does this thing work?\
 
 \i0 \
-\pard\intbl\itap1\pardeftab720\ql\qnatural
+\pard\intbl\itap1\pardeftab720
 
 \f1 \cf0 	on textualcmd\cf2 (\cf0 cmd\cf2 )\cf0 \
 \'a0 \'a0 \'a0 \'a0 \cf3 return\cf0  cmd\
 \cf3 	end\cf0  textualcmd\
 \
-\pard\intbl\itap1\pardeftab720\ql\qnatural
+\pard\intbl\itap1\pardeftab720
 
 \f0 \cf0 This example takes in the "does this thing work?" input from the user \
 and returns it right back to them. The 
