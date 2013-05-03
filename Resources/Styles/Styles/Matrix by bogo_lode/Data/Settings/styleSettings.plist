@@ -17,5 +17,7 @@
 	<integer>6</integer>
 	<key>Underlying Window Color</key>
 	<string>#000000</string>
+	<key>Force Invert Sidebars</key>
+	<false/>
 </dict>
 </plist>
