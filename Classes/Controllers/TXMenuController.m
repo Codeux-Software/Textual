@@ -440,6 +440,16 @@
 						
 					default: { break; }
 				}
+
+				BOOL halfOpModeSupported = [u.isupport modeIsSupportedUserPrefix:@"h"];
+
+				if (tag == 504811 || tag == 504911) {
+					/* Do not provide halfop as option on servers that do not use it. */
+
+					if (halfOpModeSupported == NO) {
+						[item setHidden:YES];
+					}
+				}
 				
 				BOOL hideTakeSepItem = (m.o == NO || m.h == NO || m.v == NO);
 				BOOL hideGiveSepItem = (m.o || m.h || m.v);

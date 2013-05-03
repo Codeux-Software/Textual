@@ -1633,6 +1633,20 @@
 				//rawcaseCommand = uppercaseCommand; // Analyze: Never read.
 			}
 
+			if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("halfop")] ||
+				[uppercaseCommand isEqualToString:IRCPublicCommandIndex("dehalfop")])
+			{
+				/* Do not try mode changes when they are not supported. */
+
+				BOOL modeHSupported = [self.isupport modeIsSupportedUserPrefix:@"h"];
+
+				if (modeHSupported == NO) {
+					[self printDebugInformation:TXTLS(@"HalfopCommandNotSupportedOnServer")];
+
+					return;
+				}
+			}
+
 			if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("mode")]) {
 				if (selChannel && selChannel.isChannel && [s.string isModeChannelName] == NO) {
 					targetChannelName = selChannel.name;
