@@ -6140,7 +6140,7 @@
 
     if ([TPCPreferences processChannelModes] && self.CAPawayNotify == NO) {
         for (IRCChannel *channel in self.channels) {
-            if (channel.isChannel && channel.memberList.count <= [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
+            if (channel.isChannel && channel.isActive && channel.memberList.count <= [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
                 [self send:IRCPrivateCommandIndex("who"), channel.name, nil];
             }
         }
