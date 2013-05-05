@@ -56,6 +56,7 @@ typedef enum TXTabKeyAction : NSInteger {
 typedef enum TXUserDoubleClickAction : NSInteger {
 	TXUserDoubleClickWhoisAction = 100,
 	TXUserDoubleClickPrivateMessageAction = 200,
+	TXUserDoubleClickInsertTextFieldAction = 300,
 } TXUserDoubleClickAction;
 
 typedef enum TXNoticeSendLocationType : NSInteger {
