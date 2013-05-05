@@ -1421,8 +1421,62 @@
 			[self whoisSelectedMembers:nil deselect:NO];
 		} else if (action == TXUserDoubleClickPrivateMessageAction) {
 			[self memberStartPrivateMessage:nil];
+		} else if (action == TXUserDoubleClickInsertTextFieldAction) {
+			[self memberInsertNameIntoTextField:nil];
 		}
     }
+}
+
+- (void)memberInsertNameIntoTextField:(id)sender
+{
+	IRCClient *u = [self.worldController selectedClient];
+	IRCChannel *c = [self.worldController selectedChannel];
+
+	if (_noClient || _isClient) {
+		return;
+	}
+
+	/* Get list of users. */
+	NSMutableArray *users = [NSMutableArray array];
+
+	for (IRCUser *m in [self selectedMembers:sender]) {
+		[users safeAddObject:m.nickname];
+	}
+
+	/* The text field. */
+	TVCInputTextField *textField = self.masterController.inputTextField;
+
+	NSRange selectedRange = textField.selectedRange;
+
+	NSInteger insertLocation = selectedRange.location;
+
+	/* Build insert string. */
+	NSString *insertString;
+
+	if (insertLocation > 0) {
+		UniChar prev = [textField.stringValue characterAtIndex:(insertLocation - 1)];
+
+		if (prev == ' ') {
+			insertString = NSStringEmptyPlaceholder;
+		} else {
+			insertString = NSStringWhitespacePlaceholder;
+		}
+	} else {
+		insertString = NSStringEmptyPlaceholder;
+	}
+
+	insertString = [insertString stringByAppendingString:[users componentsJoinedByString:@", "]];
+	insertString = [insertString stringByAppendingString:[TPCPreferences tabCompletionSuffix]];
+
+	/* Insert names. */
+	NSAttributedString *stringInsert = [NSAttributedString emptyStringWithBase:insertString];
+
+	NSData *stringData = [stringInsert RTFFromRange:NSMakeRange(0, [stringInsert length]) documentAttributes:nil];
+
+    [textField replaceCharactersInRange:selectedRange withRTF:stringData];
+
+	/* Close users. */
+	[self deselectMembers:sender];
 }
 
 - (void)memberSendWhois:(id)sender
