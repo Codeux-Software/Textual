@@ -4908,7 +4908,7 @@ wGw</bytes>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomView" id="701308596">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSTextField" id="948562989">
@@ -5210,6 +5210,7 @@ wGw</bytes>
 					</object>
 				</array>
 				<string key="NSFrameSize">{534, 339}</string>
+				<reference key="NSSuperview"/>
 				<reference key="NSNextKeyView" ref="460208236"/>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -5422,7 +5423,7 @@ wGw</bytes>
 											<string key="NSFrame">{{11, 127}, {325, 18}}</string>
 											<reference key="NSSuperview" ref="158203649"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="617805785"/>
+											<reference key="NSNextKeyView"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="704940261">
 												<int key="NSCellFlags">67108864</int>
@@ -5725,18 +5726,7 @@ wGw</bytes>
 												<string key="NSKeyEquivalent"/>
 												<int key="NSPeriodicDelay">400</int>
 												<int key="NSPeriodicInterval">75</int>
-												<object class="NSMenuItem" key="NSMenuItem" id="240526216">
-													<reference key="NSMenu" ref="753605547"/>
-													<string key="NSTitle">Insert Name Into Text Field</string>
-													<string key="NSKeyEquiv"/>
-													<int key="NSKeyEquivModMask">1048576</int>
-													<int key="NSMnemonicLoc">2147483647</int>
-													<reference key="NSOnImage" ref="93802364"/>
-													<reference key="NSMixedImage" ref="746962281"/>
-													<string key="NSAction">_popUpItemAction:</string>
-													<int key="NSTag">300</int>
-													<reference key="NSTarget" ref="675359616"/>
-												</object>
+												<nil key="NSMenuItem"/>
 												<bool key="NSMenuItemRespectAlignment">YES</bool>
 												<object class="NSMenu" key="NSMenu" id="753605547">
 													<string key="NSTitle">OtherViews</string>
@@ -5765,11 +5755,22 @@ wGw</bytes>
 															<int key="NSTag">100</int>
 															<reference key="NSTarget" ref="675359616"/>
 														</object>
-														<reference ref="240526216"/>
+														<object class="NSMenuItem" id="240526216">
+															<reference key="NSMenu" ref="753605547"/>
+															<string key="NSTitle">Insert Name Into Text Field</string>
+															<string key="NSKeyEquiv"/>
+															<int key="NSKeyEquivModMask">1048576</int>
+															<int key="NSMnemonicLoc">2147483647</int>
+															<reference key="NSOnImage" ref="93802364"/>
+															<reference key="NSMixedImage" ref="746962281"/>
+															<string key="NSAction">_popUpItemAction:</string>
+															<int key="NSTag">300</int>
+															<reference key="NSTarget" ref="675359616"/>
+														</object>
 													</array>
 													<reference key="NSMenuFont" ref="325354301"/>
 												</object>
-												<int key="NSSelectedIndex">2</int>
+												<int key="NSSelectedIndex">-1</int>
 												<int key="NSPreferredEdge">1</int>
 												<bool key="NSUsesItemFromMenu">YES</bool>
 												<bool key="NSAltersState">YES</bool>
@@ -5813,11 +5814,13 @@ wGw</bytes>
 												<string key="NSKeyEquivalent"/>
 												<int key="NSPeriodicDelay">400</int>
 												<int key="NSPeriodicInterval">75</int>
-												<object class="NSMenuItem" key="NSMenuItem" id="742067696">
+												<object class="NSMenuItem" key="NSMenuItem" id="473180140">
 													<reference key="NSMenu" ref="439189180"/>
-													<string key="NSTitle">Disconnect and Quit Application</string>
+													<string key="NSTitle">Close Main Window</string>
 													<string key="NSKeyEquiv"/>
+													<int key="NSKeyEquivModMask">1048576</int>
 													<int key="NSMnemonicLoc">2147483647</int>
+													<int key="NSState">1</int>
 													<reference key="NSOnImage" ref="93802364"/>
 													<reference key="NSMixedImage" ref="746962281"/>
 													<string key="NSAction">_popUpItemAction:</string>
@@ -5827,17 +5830,7 @@ wGw</bytes>
 												<object class="NSMenu" key="NSMenu" id="439189180">
 													<string key="NSTitle">OtherViews</string>
 													<array class="NSMutableArray" key="NSMenuItems">
-														<object class="NSMenuItem" id="473180140">
-															<reference key="NSMenu" ref="439189180"/>
-															<string key="NSTitle">Close Main Window</string>
-															<string key="NSKeyEquiv"/>
-															<int key="NSKeyEquivModMask">1048576</int>
-															<int key="NSMnemonicLoc">2147483647</int>
-															<reference key="NSOnImage" ref="93802364"/>
-															<reference key="NSMixedImage" ref="746962281"/>
-															<string key="NSAction">_popUpItemAction:</string>
-															<reference key="NSTarget" ref="518125068"/>
-														</object>
+														<reference ref="473180140"/>
 														<object class="NSMenuItem" id="72122451">
 															<reference key="NSMenu" ref="439189180"/>
 															<string key="NSTitle">Close Selected Channel/Query</string>
@@ -5860,11 +5853,19 @@ wGw</bytes>
 															<string key="NSAction">_popUpItemAction:</string>
 															<reference key="NSTarget" ref="518125068"/>
 														</object>
-														<reference ref="742067696"/>
+														<object class="NSMenuItem" id="742067696">
+															<reference key="NSMenu" ref="439189180"/>
+															<string key="NSTitle">Disconnect and Quit Application</string>
+															<string key="NSKeyEquiv"/>
+															<int key="NSMnemonicLoc">2147483647</int>
+															<reference key="NSOnImage" ref="93802364"/>
+															<reference key="NSMixedImage" ref="746962281"/>
+															<string key="NSAction">_popUpItemAction:</string>
+															<reference key="NSTarget" ref="518125068"/>
+														</object>
 													</array>
 													<reference key="NSMenuFont" ref="325354301"/>
 												</object>
-												<int key="NSSelectedIndex">3</int>
 												<int key="NSPreferredEdge">1</int>
 												<bool key="NSUsesItemFromMenu">YES</bool>
 												<bool key="NSAltersState">YES</bool>
