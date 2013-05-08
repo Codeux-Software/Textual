@@ -1409,9 +1409,11 @@
 					IRCChannel *channel = [self findChannel:channelName];
 
 					if (PointerIsEmpty(channel) && secretMsg == NO) {
-						if ([channelName isChannelName:self] == NO) {
-							channel = [self.worldController createPrivateMessage:channelName client:self];
-						}
+						if ([channelName isChannelName:self] == NO && type == TVCLogLineNoticeType) {
+							channel = [self.worldController selectedChannel];
+						} else if ([channelName isChannelName:self]) {
+                            channel = [self.worldController createPrivateMessage:channelName client:self];
+                        }
 					}
 
 					if (channel) {
