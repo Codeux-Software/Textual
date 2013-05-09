@@ -360,7 +360,7 @@
 	self.config.connectionPrefersIPv6		= self.prefersIPv6Check.state;
 	self.config.connectionUsesSSL			= self.connectionUsesSSLCheck.state;
 	self.config.performPongTimer			= self.pongTimerCheck.state;
-	self.config.serverPassword				= self.serverPasswordField.firstTokenStringValue;
+	self.config.serverPassword				= self.serverPasswordField.stringValue;
 	
 	NSString *realhost = nil;
 	NSString *hostname = [self.serverAddressCombo.firstTokenStringValue cleanedServerHostmask];
@@ -400,7 +400,7 @@
 	self.config.awayNickname		= self.awayNicknameField.firstTokenStringValue;
 	self.config.username			= self.usernameField.firstTokenStringValue;
 	self.config.realname			= self.realnameField.stringValue;
-	self.config.nicknamePassword	= self.nicknamePasswordField.firstTokenStringValue;
+	self.config.nicknamePassword	= self.nicknamePasswordField.stringValue;
 	
 	NSArray *nicks = [self.alternateNicknamesField.stringValue split:NSStringWhitespacePlaceholder];
 	
@@ -428,7 +428,7 @@
 	self.config.proxyAddress	= self.proxyAddressField.firstTokenStringValue;
 	self.config.proxyPort		= self.proxyPortField.integerValue;
 	self.config.proxyUsername	= self.proxyUsernameField.firstTokenStringValue;
-	self.config.proxyPassword	= self.proxyPasswordField.firstTokenStringValue;
+	self.config.proxyPassword	= self.proxyPasswordField.stringValue;
 
     self.config.proxyAddress = self.config.proxyAddress.lowercaseString;
 
