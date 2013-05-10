@@ -158,15 +158,6 @@
 	return (self.superview.superview.superview.subviews)[0];
 }
 
-- (void)updateTextColor
-{
-	[self setTextColor:self.defaultTextColor];
-	
-	[self setInsertionPointColor:self.defaultTextColor];
-
-	[self.backgroundView setNeedsDisplay:YES];
-}
-
 - (void)updateTextDirection
 {
 	if ([TPCPreferences rightToLeftFormatting]) {
@@ -424,16 +415,12 @@
 
 - (NSColor *)inputFieldBackgroundColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor whiteColor]
-							   invertedItem:[NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1.0]
-							   withOperator:[TPCPreferences invertInputTextFieldColors]];
+	return [NSColor whiteColor];
 }
 
 - (NSColor *)inputFieldInsideShadowColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor colorWithCalibratedWhite:0.88 alpha:1.0]
-							   invertedItem:[NSColor colorWithCalibratedWhite:0.27 alpha:1.0]
-							   withOperator:[TPCPreferences invertInputTextFieldColors]];
+	return [NSColor colorWithCalibratedWhite:0.88 alpha:1.0];
 }
 
 - (void)drawRect:(NSRect)dirtyRect

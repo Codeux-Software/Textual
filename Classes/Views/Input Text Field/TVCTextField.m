@@ -83,34 +83,6 @@
 }
 
 #pragma mark -
-#pragma mark Color
-
-- (NSColor *)defaultTextColor
-{
-	/* The IRC color formatting engine is a subclass of TVCTextField because the
-	 input text field on the main window is not the only input source that supports
-	 formatting. The topic sheet does as well. The formatting engine needs to know
-	 the default text color to use when there is no formatting. Therefore, we must
-	 place the color inversion in TVCTextField and not TVCInputTextField. The local
-	 property allowColorInversion is defined exclusively for TVCInputTextField so 
-	 that we know to invert those colors and not those for other input fields such
-	 as the channel topic sheet. 
-	 
-	 Color inversion is a hidden setting for the input text field right now. This is
-	 done because even though the code is there to reverse the color to a darker one,
-	 the actual surrounding user interface is still a gray gradient. I am not a graphics
-	 designer so I cannot redesign the default Apple UI to a darker one with matching 
-	 buttons that represent different states such as mouse click or disabled. 
-	 
-	 Simply reversing the color of the input text field and nothing around it seemed 
-	 very cheap. */
-	
-	return [NSColor defineUserInterfaceItem:TXDefaultTextFieldFontColor
-							   invertedItem:[NSColor colorWithCalibratedWhite:0.98 alpha:1.0]
-							   withOperator:(self.allowColorInversion && [TPCPreferences invertInputTextFieldColors])];
-}
-
-#pragma mark -
 #pragma mark Keyboard Shorcuts
 
 - (void)setKeyHandlerTarget:(id)target

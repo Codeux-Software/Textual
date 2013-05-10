@@ -123,10 +123,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	self.themeController = [TPCThemeController new];
 	[self.themeController load];
 
-	[self.inputTextField setAllowColorInversion:YES];
-
 	[self.inputTextField focus];
-	[self.inputTextField updateTextColor];
 	[self.inputTextField redrawOriginPoints];
 	[self.inputTextField updateTextDirection];
 

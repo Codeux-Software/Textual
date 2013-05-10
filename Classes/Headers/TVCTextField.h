@@ -43,9 +43,6 @@
 @interface TVCTextField : NSTextView 
 @property (nonatomic, strong) TLOKeyEventHandler *keyHandler;
 @property (nonatomic, assign) dispatch_queue_t formattingQueue;
-@property (nonatomic, assign) BOOL allowColorInversion; // Do not call. 
-
-- (NSColor *)defaultTextColor;
 
 - (BOOL)isAtTopOfView;
 - (BOOL)isAtBottomOfView;

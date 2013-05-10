@@ -41,7 +41,6 @@
 @property (nonatomic, strong) NSAttributedString *placeholderString;
 
 - (void)updateTextDirection;
-- (void)updateTextColor;
 - (void)redrawOriginPoints;
 - (void)resetTextFieldCellSize:(BOOL)force;
 
