@@ -46,7 +46,7 @@
 @property (nonatomic, strong) NSString *timestampFormat;
 @property (nonatomic, strong) NSColor *underlyingWindowColor;
 @property (nonatomic, strong) NSDictionary *languageLocalizations;
-@property (nonatomic, assign) TXNSDouble indentationOffset;
+@property (nonatomic, assign) double indentationOffset;
 
 - (void)reloadWithPath:(NSString *)path;
 

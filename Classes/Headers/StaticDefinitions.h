@@ -158,7 +158,6 @@
 #define uweak									unsafe_unretained
 
 /* Just like nweak and uweak, these are useless, but hey, whatever. */
-typedef double									TXNSDouble;
 typedef unsigned long long						TXFSLongInt;
 
 /* @end */

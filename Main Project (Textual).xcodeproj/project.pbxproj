@@ -760,16 +760,16 @@
 		4CDDF34A1678C5DF00FE8684 /* encryptionLockIconLight@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3461678C5DF00FE8684 /* encryptionLockIconLight@2x.tif */; };
 		4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC11580469E00846B64 /* SystemConfiguration.framework */; };
 		4CF8B41016E631EF00F2A68F /* birthdayIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4CF8B40F16E631EF00F2A68F /* birthdayIcon.icns */; };
-		5D4846C3171F0AC00015F2B0 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D4846C2171F0AC00015F2B0 /* Reachability.m */; };
-		5D4846C4171F0AC00015F2B0 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D4846C2171F0AC00015F2B0 /* Reachability.m */; };
-		5D4846CA171F0ACD0015F2B0 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D4846C9171F0ACD0015F2B0 /* Reachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5D4846CB171F0ACD0015F2B0 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D4846C9171F0ACD0015F2B0 /* Reachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5DAE489D173371230020B0D3 /* iVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DAE489C173371230020B0D3 /* iVersion.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5DAE489E173371230020B0D3 /* iVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DAE489C173371230020B0D3 /* iVersion.h */; };
+		5D4846C3171F0AC00015F2B0 /* OELReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D4846C2171F0AC00015F2B0 /* OELReachability.m */; };
+		5D4846C4171F0AC00015F2B0 /* OELReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D4846C2171F0AC00015F2B0 /* OELReachability.m */; };
+		5D4846CA171F0ACD0015F2B0 /* OELReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D4846C9171F0ACD0015F2B0 /* OELReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5D4846CB171F0ACD0015F2B0 /* OELReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D4846C9171F0ACD0015F2B0 /* OELReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DAE489D173371230020B0D3 /* OELiVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DAE489C173371230020B0D3 /* OELiVersion.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DAE489E173371230020B0D3 /* OELiVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DAE489C173371230020B0D3 /* OELiVersion.h */; };
 		5DAE48A7173371680020B0D3 /* iVersion.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5DAE48A5173371680020B0D3 /* iVersion.bundle */; };
 		5DAE48A8173371680020B0D3 /* iVersion.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5DAE48A5173371680020B0D3 /* iVersion.bundle */; };
-		5DAE48A9173371680020B0D3 /* iVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAE48A6173371680020B0D3 /* iVersion.m */; };
-		5DAE48AA173371680020B0D3 /* iVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAE48A6173371680020B0D3 /* iVersion.m */; };
+		5DAE48A9173371680020B0D3 /* OELiVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAE48A6173371680020B0D3 /* OELiVersion.m */; };
+		5DAE48AA173371680020B0D3 /* OELiVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAE48A6173371680020B0D3 /* OELiVersion.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1323,15 +1323,15 @@
 		4CDDF3451678C5DF00FE8684 /* encryptionLockIconLight.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = encryptionLockIconLight.tif; sourceTree = "<group>"; };
 		4CDDF3461678C5DF00FE8684 /* encryptionLockIconLight@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "encryptionLockIconLight@2x.tif"; sourceTree = "<group>"; };
 		4CF8B40F16E631EF00F2A68F /* birthdayIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = birthdayIcon.icns; path = Resources/Images/Application/birthdayIcon.icns; sourceTree = SOURCE_ROOT; };
-		5D4846C2171F0AC00015F2B0 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		5D4846C9171F0ACD0015F2B0 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		5D4846C2171F0AC00015F2B0 /* OELReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OELReachability.m; sourceTree = "<group>"; };
+		5D4846C9171F0ACD0015F2B0 /* OELReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OELReachability.h; sourceTree = "<group>"; };
 		5D9B8EB6170A0EB400919CB0 /* BuildFrameworks.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = BuildFrameworks.sh; path = "Main Project (Textual).xcodeproj/BuildFrameworks.sh"; sourceTree = SOURCE_ROOT; };
 		5D9B8EB7170A0EB400919CB0 /* CleanUpResources.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = CleanUpResources.sh; path = "Main Project (Textual).xcodeproj/CleanUpResources.sh"; sourceTree = SOURCE_ROOT; };
 		5D9B8EB8170A0EB400919CB0 /* UpdateVersionInfo.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = UpdateVersionInfo.sh; path = "Main Project (Textual).xcodeproj/UpdateVersionInfo.sh"; sourceTree = SOURCE_ROOT; };
 		5D9B8EB9170A10F200919CB0 /* BuildExtensions.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = BuildExtensions.sh; path = "Main Project (Textual).xcodeproj/BuildExtensions.sh"; sourceTree = SOURCE_ROOT; };
-		5DAE489C173371230020B0D3 /* iVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iVersion.h; sourceTree = "<group>"; };
+		5DAE489C173371230020B0D3 /* OELiVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OELiVersion.h; sourceTree = "<group>"; };
 		5DAE48A5173371680020B0D3 /* iVersion.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iVersion.bundle; sourceTree = "<group>"; };
-		5DAE48A6173371680020B0D3 /* iVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iVersion.m; sourceTree = "<group>"; };
+		5DAE48A6173371680020B0D3 /* OELiVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OELiVersion.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2030,7 +2030,7 @@
 			children = (
 				4C8AF5D5158E99520026668C /* GCDAsyncSocket.m */,
 				4C8AF5D6158E99520026668C /* GCDAsyncSocketExtensions.m */,
-				5D4846C2171F0AC00015F2B0 /* Reachability.m */,
+				5D4846C2171F0AC00015F2B0 /* OELReachability.m */,
 				4C8AF5D7158E99520026668C /* RLMAsyncSocket.m */,
 			);
 			path = Sockets;
@@ -2132,8 +2132,8 @@
 				4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */,
 				4C8AF747158EB6CA0026668C /* GTMEncodeURL.h */,
 				4C8AF748158EB6CA0026668C /* GTMGarbageCollection.h */,
-				5DAE489C173371230020B0D3 /* iVersion.h */,
-				5D4846C9171F0ACD0015F2B0 /* Reachability.h */,
+				5DAE489C173371230020B0D3 /* OELiVersion.h */,
+				5D4846C9171F0ACD0015F2B0 /* OELReachability.h */,
 				4C8AF74A158EB6CA0026668C /* RLMAsyncSocket.h */,
 			);
 			path = "External Libraries";
@@ -2350,7 +2350,7 @@
 			isa = PBXGroup;
 			children = (
 				5DAE48A5173371680020B0D3 /* iVersion.bundle */,
-				5DAE48A6173371680020B0D3 /* iVersion.m */,
+				5DAE48A6173371680020B0D3 /* OELiVersion.m */,
 			);
 			path = iVersion;
 			sourceTree = "<group>";
@@ -2491,10 +2491,10 @@
 				4CB331BE16F1BBE000D65CBE /* NSImageHelper.h in Headers */,
 				4C937BDC17061A3F0050CEF3 /* TLOSpeechSynthesizer.h in Headers */,
 				4C0444E816F1555800EBB665 /* TVCServerListCellBadge.h in Headers */,
-				5D4846CB171F0ACD0015F2B0 /* Reachability.h in Headers */,
+				5D4846CB171F0ACD0015F2B0 /* OELReachability.h in Headers */,
 				4C5A0318170C31010016BB1A /* TPCPreferencesImportExport.h in Headers */,
 				4CC70204171E1CB400BDFAE0 /* BuildConfig.h in Headers */,
-				5DAE489E173371230020B0D3 /* iVersion.h in Headers */,
+				5DAE489E173371230020B0D3 /* OELiVersion.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2629,11 +2629,11 @@
 				4C8AF68B158E99520026668C /* TXMasterController.h in Headers */,
 				4C1E2BF516FB1F22007C9717 /* NSUserDefaultsHelper.h in Headers */,
 				4C8AF68C158E99520026668C /* TXMenuController.h in Headers */,
-				5D4846CA171F0ACD0015F2B0 /* Reachability.h in Headers */,
+				5D4846CA171F0ACD0015F2B0 /* OELReachability.h in Headers */,
 				4C937BDB170618A80050CEF3 /* TLOSpeechSynthesizer.h in Headers */,
 				4C0444E716F1553C00EBB665 /* TVCServerListCellBadge.h in Headers */,
 				4C5A0317170C2C170016BB1A /* TPCPreferencesImportExport.h in Headers */,
-				5DAE489D173371230020B0D3 /* iVersion.h in Headers */,
+				5DAE489D173371230020B0D3 /* OELiVersion.h in Headers */,
 				4CC70203171E1CB400BDFAE0 /* BuildConfig.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3151,8 +3151,8 @@
 				4C0445DF16F1603C00EBB665 /* TVCMainWindowSegmentedControl.m in Sources */,
 				4C0445E016F1603C00EBB665 /* TVCThinSplitView.m in Sources */,
 				4CB331B616F1BBC700D65CBE /* NSImageHelper.m in Sources */,
-				5D4846C4171F0AC00015F2B0 /* Reachability.m in Sources */,
-				5DAE48AA173371680020B0D3 /* iVersion.m in Sources */,
+				5D4846C4171F0AC00015F2B0 /* OELReachability.m in Sources */,
+				5DAE48AA173371680020B0D3 /* OELiVersion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3272,8 +3272,8 @@
 				4C1E2BEF16FB1F13007C9717 /* NSUserDefaultsHelper.m in Sources */,
 				4C937BD5170618940050CEF3 /* TLOSpeechSynthesizer.m in Sources */,
 				4C5A0311170C2C010016BB1A /* TPCPreferencesImportExport.m in Sources */,
-				5D4846C3171F0AC00015F2B0 /* Reachability.m in Sources */,
-				5DAE48A9173371680020B0D3 /* iVersion.m in Sources */,
+				5D4846C3171F0AC00015F2B0 /* OELReachability.m in Sources */,
+				5DAE48A9173371680020B0D3 /* OELiVersion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

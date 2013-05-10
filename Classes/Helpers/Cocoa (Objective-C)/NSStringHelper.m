@@ -798,7 +798,7 @@
 + (NSString *)stringWithUnsignedLongLong:(unsigned long long)value		{ return [NSString stringWithFormat:@"%qu", value]; }
 
 + (NSString *)stringWithFloat:(float)value								{ return [NSString stringWithFormat:@"%f", value]; }
-+ (NSString *)stringWithDouble:(TXNSDouble)value						{ return [NSString stringWithFormat:@"%f", value]; }
++ (NSString *)stringWithDouble:(double)value						{ return [NSString stringWithFormat:@"%f", value]; }
 
 @end
 
