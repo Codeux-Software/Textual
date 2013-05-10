@@ -182,7 +182,6 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 
 + (BOOL)useLargeFontForSidebars;
 + (BOOL)invertSidebarColors;
-+ (BOOL)invertInputTextFieldColors;
 + (BOOL)hideMainWindowSegmentedController;
 
 + (BOOL)reloadScrollbackOnLaunch;

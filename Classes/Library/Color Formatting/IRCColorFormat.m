@@ -364,7 +364,7 @@
 				 only the color of the text field itself. */
 				
                 if (PointerIsNotEmpty(foregroundColor)) {
-					NSColor *defaultColor = [self defaultTextColor];
+					NSColor *defaultColor = TXDefaultTextFieldFontColor;
 					NSColor *compareColor = [foregroundColor colorUsingColorSpace:[NSColorSpace genericGrayColorSpace]];
 					
 					CGFloat defaultWhite = [defaultColor whiteComponent];
@@ -406,7 +406,7 @@
 	if (clearAttributes) {
 		NSDictionary *attributes = @{
 			NSFontAttributeName				: TXDefaultTextFieldFont,
-			NSForegroundColorAttributeName	: [self defaultTextColor]
+			NSForegroundColorAttributeName	: TXDefaultTextFieldFontColor,
 		};
 
 		[self setTypingAttributes:attributes];

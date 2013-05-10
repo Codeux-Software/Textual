@@ -1474,12 +1474,7 @@
 	NSData *stringData = [stringInsert RTFFromRange:NSMakeRange(0, [stringInsert length]) documentAttributes:nil];
     
     [textField replaceCharactersInRange:selectedRange withRTF:stringData];
-    
-    if([TPCPreferences invertInputTextFieldColors] == YES){
-        [self.masterController.inputTextField updateTextColor];
-        [self.masterController.inputTextField setNeedsDisplay:YES];
-    }
-    
+
 	/* Close users. */
 	[self deselectMembers:sender];
 }

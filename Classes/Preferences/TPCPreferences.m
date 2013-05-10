@@ -627,11 +627,6 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() boolForKey:@"InvertSidebarColors"];
 }
 
-+ (BOOL)invertInputTextFieldColors
-{
-	return [RZUserDefaults() boolForKey:@"InvertInputTextFieldColors"];
-}
-
 + (BOOL)hideMainWindowSegmentedController
 {
 	return [RZUserDefaults() boolForKey:@"DisableMainWindowSegmentedController"];
