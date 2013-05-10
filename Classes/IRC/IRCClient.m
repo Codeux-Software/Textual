@@ -3514,10 +3514,10 @@
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_clientinfo")]) {
 			[self sendCTCPReply:sendern command:command text:TXTLS(@"IRCCTCPSupportedReplies")];
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_lagcheck")]) {
-			TXNSDouble time = [NSDate epochTime];
+			double time = [NSDate epochTime];
 
 			if (time >= self.lastLagCheck && self.lastLagCheck > 0 && [sendern isEqualIgnoringCase:self.localNickname]) {
-				TXNSDouble delta = (time - self.lastLagCheck);
+				double delta = (time - self.lastLagCheck);
 
 				NSString *rating;
 
@@ -3571,7 +3571,7 @@
 	}
 
 	if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_ping")]) {
-		TXNSDouble delta = ([NSDate epochTime] - [s doubleValue]);
+		double delta = ([NSDate epochTime] - [s doubleValue]);
 		
 		text = TXTFLS(@"IRCRecievedCTCPPingReply", sendern, command, delta);
 	} else {

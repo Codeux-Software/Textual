@@ -49,7 +49,7 @@
 - (NSDictionary *)dictionaryForKey:(NSString *)key;
 - (NSInteger)integerForKey:(NSString *)key;
 - (long long)longLongForKey:(NSString *)key;
-- (TXNSDouble)doubleForKey:(NSString *)key;
+- (double)doubleForKey:(NSString *)key;
 - (void *)pointerForKey:(NSString *)key;
 
 - (NSString *)firstKeyForObject:(id)object;
@@ -73,6 +73,6 @@
 - (void)setBool:(BOOL)value forKey:(NSString *)key;
 - (void)setInteger:(NSInteger)value forKey:(NSString *)key;
 - (void)setLongLong:(long long)value forKey:(NSString *)key;
-- (void)setDouble:(TXNSDouble)value forKey:(NSString *)key;
+- (void)setDouble:(double)value forKey:(NSString *)key;
 - (void)setPointer:(void *)value forKey:(NSString *)key;
 @end

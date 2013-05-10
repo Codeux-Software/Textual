@@ -72,7 +72,7 @@
 	return 0;
 }
 
-- (TXNSDouble)doubleForKey:(NSString *)key
+- (double)doubleForKey:(NSString *)key
 {
 	id obj = self[key];
 	
@@ -236,7 +236,7 @@
 	[self safeSetObject:@(value) forKey:key];
 }
 
-- (void)setDouble:(TXNSDouble)value forKey:(NSString *)key
+- (void)setDouble:(double)value forKey:(NSString *)key
 {
 	[self safeSetObject:@(value) forKey:key];
 }

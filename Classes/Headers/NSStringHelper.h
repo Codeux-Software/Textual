@@ -151,7 +151,7 @@
 + (NSString *)stringWithLongLong:(long long)value;
 + (NSString *)stringWithUnsignedLongLong:(unsigned long long)value;
 + (NSString *)stringWithFloat:(float)value;
-+ (NSString *)stringWithDouble:(TXNSDouble)value;
++ (NSString *)stringWithDouble:(double)value;
 + (NSString *)stringWithInteger:(NSInteger)value;
 + (NSString *)stringWithUnsignedInteger:(NSUInteger)value;
 @end

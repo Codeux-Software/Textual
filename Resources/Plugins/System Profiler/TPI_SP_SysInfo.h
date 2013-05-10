@@ -76,5 +76,5 @@
 + (NSString *)formattedLocalVolumeDiskUsage;
 + (NSString *)formattedTotalMemorySize;
 + (NSString *)formattedDiskSize:(TXFSLongInt)size;
-+ (NSString *)formattedCPUFrequency:(TXNSDouble)rate;
++ (NSString *)formattedCPUFrequency:(double)rate;
 @end

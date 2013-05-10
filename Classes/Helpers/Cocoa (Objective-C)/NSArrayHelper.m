@@ -118,7 +118,7 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 	return 0;
 }
 
-- (TXNSDouble)doubleAtIndex:(NSInteger)n
+- (double)doubleAtIndex:(NSInteger)n
 {
 	id obj = [self safeObjectAtIndex:n];
 	
@@ -252,7 +252,7 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 	[self safeInsertObject:@(value) atIndex:index];
 }
 
-- (void)insertDouble:(TXNSDouble)value atIndex:(NSUInteger)index
+- (void)insertDouble:(double)value atIndex:(NSUInteger)index
 {
 	[self safeInsertObject:@(value) atIndex:index];
 }
@@ -277,7 +277,7 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 	[self safeAddObject:@(value)];
 }
 	 
-- (void)addDouble:(TXNSDouble)value
+- (void)addDouble:(double)value
 {
 	[self safeAddObject:@(value)];
 }

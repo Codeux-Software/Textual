@@ -64,7 +64,7 @@
 	return [dict integerForKey:key];
 }
 
-- (TXNSDouble)doubleForKey:(NSString *)key fromDictionary:(NSDictionary *)dict
+- (double)doubleForKey:(NSString *)key fromDictionary:(NSDictionary *)dict
 {
 	return [dict doubleForKey:key];
 }

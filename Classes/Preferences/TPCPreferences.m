@@ -885,12 +885,12 @@ static NSURL *transcriptFolderResolvedBookmark;
 	[RZUserDefaults() setObject:value forKey:@"Theme -> Font Name"];
 }
 
-+ (TXNSDouble)themeChannelViewFontSize
++ (double)themeChannelViewFontSize
 {
 	return [RZUserDefaults() doubleForKey:@"Theme -> Font Size"];
 }
 
-+ (void)setThemeChannelViewFontSize:(TXNSDouble)value
++ (void)setThemeChannelViewFontSize:(double)value
 {
 	[RZUserDefaults() setDouble:value forKey:@"Theme -> Font Size"];
 }
@@ -916,7 +916,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() objectForKey:@"Theme -> Timestamp Format"];
 }
 
-+ (TXNSDouble)themeTransparency
++ (double)themeTransparency
 {
 	return [RZUserDefaults() doubleForKey:@"MainWindowTransparencyLevel"];
 }

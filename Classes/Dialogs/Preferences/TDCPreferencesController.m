@@ -280,7 +280,7 @@
 	return [TPCPreferences themeChannelViewFontName];
 }
 
-- (TXNSDouble)themeChannelViewFontSize
+- (double)themeChannelViewFontSize
 {
 	return [TPCPreferences themeChannelViewFontSize];
 }

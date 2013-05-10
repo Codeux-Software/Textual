@@ -485,7 +485,7 @@
 	}
 }
 
-+ (NSString *)formattedCPUFrequency:(TXNSDouble)rate
++ (NSString *)formattedCPUFrequency:(double)rate
 {
 	if ((rate / 1000000) >= 990) {
 		return TPIFLS(@"SystemInformationCPUClockSpeedGHz", ((rate / 100000000.0) / 10.0));
@@ -604,7 +604,7 @@
 
 + (NSString *)loadAverageWithCores:(NSInteger)cores
 {
-	TXNSDouble load_ave[3];
+	double load_ave[3];
 	
 	if (getloadavg(load_ave, 3) == 3) {
 		if (cores > 0) {

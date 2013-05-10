@@ -220,15 +220,15 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (NSString *)themeNicknameFormat;
 + (NSString *)themeTimestampFormat;
 
-+ (TXNSDouble)themeTransparency;
++ (double)themeTransparency;
 
 + (NSFont *)themeChannelViewFont;
 + (NSString *)themeChannelViewFontName;
-+ (TXNSDouble)themeChannelViewFontSize;
++ (double)themeChannelViewFontSize;
 
 + (void)setThemeName:(NSString *)value;
 + (void)setThemeChannelViewFontName:(NSString *)value;
-+ (void)setThemeChannelViewFontSize:(TXNSDouble)value;
++ (void)setThemeChannelViewFontSize:(double)value;
 
 + (NSInteger)maxLogLines;
 + (void)setMaxLogLines:(NSInteger)value;
