@@ -52,15 +52,13 @@ static NSInteger _cachedHighlightCount = 0;
      
      Birthday icon designed by Alex Sørlie Glomsaas. */
 
-    BOOL forceEnable = [RZUserDefaults() boolForKey:@"Force Enable Bugfix #96905433"];
-
 	NSCalendar *sysCalendar = [NSCalendar currentCalendar];
 
     NSDateComponents *breakdownInfo = [sysCalendar components:(NSDayCalendarUnit | NSMonthCalendarUnit) fromDate:[NSDate date]];
 
     /* The first public commit of Textual occured on July, 23, 2010. This is the day
      that we consider the birthday of the application. */
-    if (([breakdownInfo month] == 7 && [breakdownInfo day] == 23) || forceEnable) {
+    if ([breakdownInfo month] == 7 && [breakdownInfo day] == 23) {
         return [NSImage imageNamed:@"birthdayIcon"];
     } else {
         return [NSImage imageNamed:@"NSApplicationIcon"];
