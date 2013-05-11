@@ -944,10 +944,6 @@
 
 - (void)sendLine:(NSString *)str
 {
-	if (self.rawModeEnabled) {
-		LogToConsole(@"<< %@", str);
-	}
-
 	if (self.isConnected == NO) {
 		return [self printDebugInformationToConsole:TXTLS(@"ServerNotConnectedLineSendError")];
 	}
@@ -3006,7 +3002,9 @@
 
 - (void)ircConnectionWillSend:(NSString *)line
 {
-	DebugLogToConsole(@"<< %@", line);
+	if (self.rawModeEnabled) {
+		LogToConsole(@"<< %@", line);
+	}
 }
 
 #pragma mark -
