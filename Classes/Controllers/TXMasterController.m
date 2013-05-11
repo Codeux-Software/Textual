@@ -572,8 +572,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 			[self.menuController performSelector:@selector(toggleFullscreenMode:) withObject:nil afterDelay:2.0];
 		}
 	} else {
-
-		[self.mainWindow setFrame:TPCPreferences.defaultWindowFrame
+		[self.mainWindow setFrame:[TPCPreferences defaultWindowFrame]
 						  display:YES
 						  animate:BOOLReverseValue(self.isInFullScreenMode)];
 
