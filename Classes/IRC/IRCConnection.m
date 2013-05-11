@@ -73,7 +73,8 @@
 - (void)open
 {
 	[self close]; // Reset state.
-	
+
+	[self startTimer];
 	[self openSocket];
 }
 
@@ -129,13 +130,14 @@
 	[self.sendQueue safeAddObject:line];
 
 	[self tryToSend];
-	[self updateTimer];
 }
 
 - (BOOL)tryToSend
 {
 	/* Build the queue if we are already sending… */
 	NSAssertReturnR((self.isSending == NO), NO);
+
+	NSObjectIsEmptyAssertReturn(self.sendQueue, NO);
 
 	/* We are not sending so we need to check our numbers. */
 	/* Only count flood control once we are fully connected since the initial connect
@@ -182,21 +184,10 @@
 - (void)clearSendQueue
 {
 	[self.sendQueue removeAllObjects];
-
-	[self updateTimer];
 }
 
 #pragma mark -
 #pragma mark Flood Control Timer
-
-- (void)updateTimer
-{
-	if (NSObjectIsEmpty(self.sendQueue) && self.floodControlCurrentMessageCount < 1) {
-		[self stopTimer];
-	} else {
-		[self startTimer];
-	}
-}
 
 - (void)startTimer
 {
@@ -218,14 +209,8 @@
 {
 	self.floodControlCurrentMessageCount = 0;
 
-	if (NSObjectIsNotEmpty(self.sendQueue)) {
-		while (self.sendQueue.count >= 1) {
-			NSAssertReturnLoopBreak([self tryToSend]);
-			
-			[self updateTimer];
-		}
-	} else {
-		[self updateTimer];
+	while ([self tryToSend] == YES) {
+		// …
 	}
 }
 
@@ -279,7 +264,6 @@
 	self.isSending = NO;
 	
 	[self tryToSend];
-	[self updateTimer];
 }
 
 @end
