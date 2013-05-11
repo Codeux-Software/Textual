@@ -333,7 +333,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 	NSAppleEventDescriptor *desc = [event descriptorAtIndex:1];
 
-	[IRCExtras parseIRCProtocolURI:desc.stringValue];
+	[IRCExtras parseIRCProtocolURI:desc.stringValue withDescriptor:event];
 }
 
 - (void)computerScreenWillSleep:(NSNotification *)note

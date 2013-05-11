@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">12C60</string>
+		<string key="IBDocument.SystemVersion">12D78</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.34</string>
-		<string key="IBDocument.HIToolboxVersion">625.00</string>
+		<string key="IBDocument.AppKitVersion">1187.37</string>
+		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">3084</string>
@@ -70,7 +70,7 @@
 											<string key="NSFrameSize">{791, 246}</string>
 											<reference key="NSSuperview" ref="86922448"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="114413946"/>
+											<reference key="NSNextKeyView" ref="586223888"/>
 											<bool key="NSEnabled">YES</bool>
 											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 											<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -297,7 +297,7 @@
 							<string key="NSFrame">{{-1, 44}, {793, 264}}</string>
 							<reference key="NSSuperview" ref="459955935"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="586223888"/>
+							<reference key="NSNextKeyView" ref="86922448"/>
 							<int key="NSsFlags">133682</int>
 							<reference key="NSVScroller" ref="114413946"/>
 							<reference key="NSHScroller" ref="188300049"/>
@@ -337,7 +337,6 @@
 							<string key="NSFrame">{{692, 5}, {85, 32}}</string>
 							<reference key="NSSuperview" ref="459955935"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="685205676">
 								<int key="NSCellFlags">67108864</int>
@@ -538,9 +537,9 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="390584746"/>
 							<reference ref="463809352"/>
-							<reference ref="957867410"/>
 							<reference ref="887075163"/>
 							<reference ref="918197425"/>
+							<reference ref="957867410"/>
 						</array>
 						<reference key="parent" ref="808668403"/>
 					</object>

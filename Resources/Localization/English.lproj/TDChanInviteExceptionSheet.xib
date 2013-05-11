@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">12C60</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
-		<string key="IBDocument.AppKitVersion">1187.34</string>
-		<string key="IBDocument.HIToolboxVersion">625.00</string>
+		<string key="IBDocument.SystemVersion">12D78</string>
+		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
+		<string key="IBDocument.AppKitVersion">1187.37</string>
+		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">2844</string>
+			<string key="NS.object.0">3084</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSButton</string>
@@ -332,7 +332,7 @@
 						<object class="NSButton" id="994670714">
 							<reference key="NSNextResponder" ref="81603315"/>
 							<int key="NSvFlags">289</int>
-							<string key="NSFrame">{{574, 4}, {111, 32}}</string>
+							<string key="NSFrame">{{568, 4}, {111, 32}}</string>
 							<reference key="NSSuperview" ref="81603315"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="665688807"/>
@@ -355,7 +355,7 @@
 						<object class="NSButton" id="665688807">
 							<reference key="NSNextResponder" ref="81603315"/>
 							<int key="NSvFlags">289</int>
-							<string key="NSFrame">{{685, 4}, {85, 32}}</string>
+							<string key="NSFrame">{{679, 4}, {85, 32}}</string>
 							<reference key="NSSuperview" ref="81603315"/>
 							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
@@ -537,9 +537,9 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="629526610"/>
 							<reference ref="915916210"/>
+							<reference ref="891047629"/>
 							<reference ref="994670714"/>
 							<reference ref="665688807"/>
-							<reference ref="891047629"/>
 						</array>
 						<reference key="parent" ref="368304152"/>
 					</object>
@@ -712,39 +712,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">TDCSheetBase</string>
 					<string key="superclassName">NSObject</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="cancel:">id</string>
-						<string key="ok:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="cancel:">
-							<string key="name">cancel:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="ok:">
-							<string key="name">ok:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="cancelButton">NSButton</string>
-						<string key="okButton">NSButton</string>
-						<string key="sheet">NSWindow</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="cancelButton">
-							<string key="name">cancelButton</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="okButton">
-							<string key="name">okButton</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="sheet">
-							<string key="name">sheet</string>
-							<string key="candidateClassName">NSWindow</string>
-						</object>
-					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/TDCSheetBase.h</string>
@@ -753,39 +720,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">TDChanInviteExceptionSheet</string>
 					<string key="superclassName">TDCSheetBase</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="ok:">id</string>
-						<string key="onRemoveExceptions:">id</string>
-						<string key="onUpdate:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="ok:">
-							<string key="name">ok:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="onRemoveExceptions:">
-							<string key="name">onRemoveExceptions:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="onUpdate:">
-							<string key="name">onUpdate:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="exceptionTable">TVCListView</string>
-						<string key="headerTitleField">NSTextField</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="exceptionTable">
-							<string key="name">exceptionTable</string>
-							<string key="candidateClassName">TVCListView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="headerTitleField">
-							<string key="name">headerTitleField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/TDChanInviteExceptionSheet.h</string>
