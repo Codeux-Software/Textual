@@ -95,6 +95,82 @@
 	NSString *serverAddress = [baseURL host];
 	NSString *addressScheme = [baseURL scheme];
 
+	/* 
+	 Reserved space checks. Textual has for sometime supported the
+	 textual:// scheme, but until now it has done nothing except mimic
+	 irc:// — it now has a purpose. A quicker way to access resources. 
+	 
+	 These can prove to be very helpful in #textual 
+	 
+	 Syntax: textual://<token> 
+	 
+	 Reserved tokens:
+
+		 acknowledgements					— Open acknowledgements file.
+		 appstore-page						— Open our Mac App Store page.
+		 contributors						— Open contributors file. 
+		 custom-style-folder				— Open the custom style storage location folder.
+		 custom-styles-folder				— Same as custom-style-folder except plural.
+		 support-channel					— Connect to the #textual channel.
+		 support-group						— Open the homepage of our support group.
+		 testing-channel					— Connect to the #textual-testing channel.
+		 unsupervised-script-folder			— Open the unsupervised scripts folder.
+		 unsupervised-scripts-folder		— Same as unsupervised-script-folder except plural.
+		 wiki								— Open the homepage of our wiki.
+	 */
+
+	if ([addressScheme isEqualToString:@"textual"]) {
+		/* We will use the menu controller often so just make a local var. */
+		TXMenuController *menuc = self.masterController.menuController;
+		
+		if ([serverAddress isEqualToString:@"acknowledgements"])
+		{
+			[menuc showAcknowledgments:nil];
+		}
+		else if ([serverAddress isEqualToString:@"appstore-page"])
+		{
+			/* It is easier to use textualapp.com which we can always update
+			 just incase you know… */
+
+			[TLOpenLink openWithString:@"http://www.textualapp.com/"];
+		}
+		else if ([serverAddress isEqualToString:@"contributors"])
+		{
+			[menuc showContributors:nil];
+		}
+		else if ([serverAddress isEqualToString:@"custom-style-folder"] ||
+				 [serverAddress isEqualToString:@"custom-styles-folder"])
+		{
+			[RZWorkspace() openFile:[TPCPreferences customThemeFolderPath]];
+		}
+		else if ([serverAddress isEqualToString:@"support-channel"])
+		{
+			[menuc connectToTextualHelpChannel:nil];
+		}
+		else if ([serverAddress isEqualToString:@"support-group"])
+		{
+			/* I am without Internet right now so cannot find the link 
+			 for this right now, but you can imagine it would be epic
+			 if I did have it right now… */
+		}
+		else if ([serverAddress isEqualToString:@"testing-channel"])
+		{
+			[menuc connectToTextualTestingChannel:nil];
+		}
+		else if ([serverAddress isEqualToString:@"unsupervised-script-folder"] ||
+				 [serverAddress isEqualToString:@"unsupervised-scripts-folder"])
+		{
+			[RZWorkspace() openFile:[TPCPreferences systemUnsupervisedScriptFolderPath]];
+		}
+		else if ([serverAddress isEqualToString:@"wiki"])
+		{
+			[TLOpenLink openWithString:@"https://wiki.github.com/codeux/Textual/"];
+		}
+
+		return;
+	}
+
+	/* Continue normal parsing… */
 	NSNumber *serverPort = [baseURL port];
 
 	if (PointerIsEmpty(serverPort)) {

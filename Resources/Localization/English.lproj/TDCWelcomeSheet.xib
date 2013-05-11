@@ -346,6 +346,7 @@
 							<string key="NSFrame">{{243, 13}, {138, 32}}</string>
 							<reference key="NSSuperview" ref="986584432"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="43017797">
 								<int key="NSCellFlags">67108864</int>
@@ -707,7 +708,7 @@
 															<reference key="NSFont" ref="760903308"/>
 															<object class="NSURL" key="NSLink">
 																<nil key="NS.base"/>
-																<string key="NS.relative">support-channel-placeholder-link://</string>
+																<string key="NS.relative">textual://support-channel</string>
 															</object>
 															<object class="NSParagraphStyle" key="NSParagraphStyle">
 																<double key="NSTighteningFactorForTruncation">0.05000000074505806</double>
