@@ -60,42 +60,6 @@ BOOL NSObjectIsNotEmpty(id obj)
 	return BOOLReverseValue(NSObjectIsEmpty(obj));
 }
 
-/* Make a rectangle that'll fit in the screen... because sometimes the stored
- rect is stupid and makes the window practically invisible. */
-NSRect NSMakeRectThatFitsMainScreen(CGFloat x, CGFloat y, CGFloat w, CGFloat h)
-{
-
-	NSRect usable = RZMainScreen().visibleFrame;
-	NSSize minimum = TPCPreferences.minimumWindowSize;
-
-	if (w < minimum.width) {
-		w = minimum.width;
-	}
-
-	if (h < minimum.height) {
-		h = minimum.height;
-	}
-
-	if (x < usable.origin.x) {
-		x = usable.origin.x;
-	} else if (x > (usable.size.width - w)) {
-		x = usable.size.width - w;
-	}
-
-	if (y < usable.origin.y) {
-		y = usable.origin.y;
-	} else if (y > (usable.size.height - h)) {
-		y = usable.size.height - h;
-	}
-
-	return NSMakeRect(x, y, w, h);
-}
-
-NSRect NSMakeRectFitMainScreen(NSRect rect)
-{
-	return NSMakeRectThatFitsMainScreen(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
-}
-
 #pragma mark -
 #pragma mark Time.
 
