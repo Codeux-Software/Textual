@@ -115,6 +115,23 @@
 
 - (void)sendLine:(NSString *)line
 {
+	/* PONG replies are extremely important. There is no reason they should be
+	 placed in the flood control queue. This writes them directly to the socket
+	 instead of actuallying waiting for the queue. We only need this check if
+	 we actually have flood control enabled. */
+	if (self.client.config.outgoingFloodControl) {
+		BOOL isPong = [line hasPrefix:IRCPrivateCommandIndex("pong")];
+
+		if (isPong) {
+			NSData *data = [self convertToCommonEncoding:line];
+
+			if (data) {
+				[self write:data];
+			}
+		}
+	}
+
+	/* Normal send. */
 	[self.sendQueue safeAddObject:line];
 
 	[self tryToSend];
