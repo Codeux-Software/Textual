@@ -40,41 +40,7 @@
 @interface IRCExtras : NSObject
 
 /*
-	Textual supports the following syntax for irc, ircs, and textual links.
-
-	irc://irc.example.com:0000/#channel,needssl
-
-	irc:// is a normal IRC connection.
-	ircs:// is an IRC connection that defaults to SSL.
-	textual:// is an alias of irc:// — forces connection through Textual.
-
-	IPv6 addresses can be used by surrounding them by the standard square
-	brackets used by the HTTP scheme.
-
-	The port is not required nor is anything after the forward slash.
-
-	"needssl" should appear last in URL and should be proceeded by a comma.
-	It tells Textual to favor SSL when ircs:// is not used.
-
-	The channel wanted to be joined is the first item after the forward
-	slash. ONLY A SINGLE CHANNEL IS RECOMMENDED, but Textual does allow
-	up to five comma seperated channels. Anything above five will be 
-	ignored to prevent abuse. 
-
-	All URLs are also considered untrusted and are set to not auto connect.
-
-	Examples:
-
-	irc://irc.example.com
-	irc://irc.example.com:6667
-	irc://irc.example.com/#channel — normal connection to #channel
-
-	ircs://irc.example.com:6697/#channel			— SSL based connection to #channel
-	irc://irc.example.com:6697/#channel,needssl		— SSL based connection to #channel
-
-	parseIRCProtocolURI: does not actually create any connections. It only
-	formats the input into a form that +createConnectionAndJoinChannel:channel:autoConnect:
-	can understand. See comments below for more information.
+	See the wiki (textual://wiki) for more information about the URL parser. 
  */
 
 + (void)parseIRCProtocolURI:(NSString *)location;
@@ -109,4 +75,5 @@
  */
 
 + (void)createConnectionAndJoinChannel:(NSString *)serverInfo channel:(NSString *)channelList autoConnect:(BOOL)autoConnect;
++ (void)createConnectionAndJoinChannel:(NSString *)serverInfo channel:(NSString *)channelList autoConnect:(BOOL)autoConnect focusChannel:(BOOL)focusChannel;
 @end

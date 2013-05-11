@@ -246,6 +246,11 @@
 
 + (void)createConnectionAndJoinChannel:(NSString *)serverInfo channel:(NSString *)channelList autoConnect:(BOOL)autoConnect
 {
+	[self createConnectionAndJoinChannel:serverInfo channel:channelList autoConnect:autoConnect focusChannel:NO];
+}
+
++ (void)createConnectionAndJoinChannel:(NSString *)serverInfo channel:(NSString *)channelList autoConnect:(BOOL)autoConnect focusChannel:(BOOL)focusChannel
+{
 	NSObjectIsEmptyAssert(serverInfo);
 
 	/* Establish our variables. */
@@ -395,16 +400,32 @@
 				forKey:TPCPreferencesMigrationAssistantVersionKey];
 
 	/* Feed the world our seed and finish up. */
-	IRCClient *uf = [[self worldController] createClient:dic reload:YES];
+	IRCClient *uf = [self.worldController createClient:dic reload:YES];
 
 	if (NSObjectIsNotEmpty(serverPassword)) {
 		[uf.config setServerPassword:serverPassword];
 	}
 	
-	[[self worldController] save];
+	[self.worldController save];
 
 	if (autoConnect) {
 		[uf connect];
+	}
+
+	/* Focus the newly added connection? */
+	if (focusChannel) {
+		[self.worldController expandClient:uf];
+		
+		/* select: can only work on one channel so we only ask for the top-most one. */
+		NSObjectIsEmptyAssert(channels);
+
+		NSDictionary *channelSeed = (id)channels[0];
+		
+		IRCChannel *fc = [uf findChannel:channelSeed[@"channelName"]];
+
+		if (fc) {
+			[self.worldController select:fc];
+		}
 	}
 }
 
