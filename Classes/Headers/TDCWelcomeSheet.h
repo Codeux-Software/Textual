@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-@interface TDCWelcomeSheet : TDCSheetBase
+@interface TDCWelcomeSheet : TDCSheetBase <NSTextViewDelegate>
 @property (nonatomic, nweak) NSButton *autoConnectCheck;
 @property (nonatomic, nweak) NSButton *addChannelButton;
 @property (nonatomic, nweak) NSButton *deleteChannelButton;

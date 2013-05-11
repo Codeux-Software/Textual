@@ -41,6 +41,11 @@
 
 + (void)parseIRCProtocolURI:(NSString *)location
 {
+	[self parseIRCProtocolURI:location withDescriptor:nil];
+}
+
++ (void)parseIRCProtocolURI:(NSString *)location withDescriptor:(NSAppleEventDescriptor *)event
+{
 	NSObjectIsEmptyAssert(location);
 
 	/* Basic input clean up. */
@@ -110,12 +115,11 @@
 	 server address, the URL scheme, and associated channel information. */
 
 	/* We will now parse the actual channel information. */
-	/* As mentioned in the comment block above, this method does not
-	 actually create the connection. It only formats the input so that
-	 another can. Therefore, we do not have to take much care with the
-	 channel information. Just a basic parse to establish if the "needssl"
-	 token is present as well as the channel name having a pound (#) sign
-	 in front of it. */
+	/* This method does not actually create the connection. It only formats 
+	 the input so that another can. Therefore, we do not have to take much 
+	 care with the channel information. Just a basic parse to establish if 
+	 the "needssl" token is present as well as the channel name having a 
+	 pound (#) sign in front of it. */
 
 	NSMutableString *channelList = [NSMutableString string];
 

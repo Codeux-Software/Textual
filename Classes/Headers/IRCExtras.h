@@ -78,6 +78,7 @@
  */
 
 + (void)parseIRCProtocolURI:(NSString *)location;
++ (void)parseIRCProtocolURI:(NSString *)location withDescriptor:(NSAppleEventDescriptor *)event;
 
 /*
 	+createConnectionAndJoinChannel:channel:autoConnect: is the method used to

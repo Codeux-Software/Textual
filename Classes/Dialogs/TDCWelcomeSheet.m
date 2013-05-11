@@ -229,6 +229,20 @@
 }
 
 #pragma mark -
+#pragma mark NSTextView Delegate (for support channel link)
+
+- (BOOL)textView:(NSTextView *)textView clickedOnLink:(NSURL *)link atIndex:(NSUInteger)charIndex
+{
+	if ([link.absoluteString isEqualToString:@"support-channel-placeholder-link://"]) {
+		[self.masterController.menuController connectToTextualHelpChannel:nil];
+		
+		[self cancel:nil];
+	}
+
+	return NO;
+}
+
+#pragma mark -
 #pragma mark NSTableView Delegate
 
 - (void)textDidEndEditing:(NSNotification *)note

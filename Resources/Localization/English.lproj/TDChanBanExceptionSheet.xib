@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">12C60</string>
+		<string key="IBDocument.SystemVersion">12D78</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.34</string>
-		<string key="IBDocument.HIToolboxVersion">625.00</string>
+		<string key="IBDocument.AppKitVersion">1187.37</string>
+		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">3084</string>
@@ -320,7 +320,7 @@
 						<object class="NSButton" id="823344825">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">289</int>
-							<string key="NSFrame">{{571, 4}, {111, 32}}</string>
+							<string key="NSFrame">{{568, 4}, {111, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="1038096040"/>
@@ -343,7 +343,7 @@
 						<object class="NSButton" id="1038096040">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">289</int>
-							<string key="NSFrame">{{682, 4}, {85, 32}}</string>
+							<string key="NSFrame">{{679, 4}, {85, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
@@ -525,9 +525,9 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="584376579"/>
 							<reference ref="404099830"/>
+							<reference ref="241616504"/>
 							<reference ref="823344825"/>
 							<reference ref="1038096040"/>
-							<reference ref="241616504"/>
 						</array>
 						<reference key="parent" ref="1005"/>
 					</object>

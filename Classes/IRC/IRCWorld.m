@@ -771,6 +771,15 @@
 		[self.serverList addItemToList:index inParent:nil];
 	}
 
+	if (self.clients.count == 1) {
+		/* If our client count is 1, then it means we just added our
+		 first client ever. We want to force the selection to this 
+		 because if we had no client beforehand, then we did not have
+		 any selection at all. */
+
+		[self select:c];
+	}
+
 	[self reloadLoadingScreen];
 	
 	return c;
