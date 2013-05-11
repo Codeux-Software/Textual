@@ -54,7 +54,7 @@
 		self.floodTimer.delegate = self;
         self.floodTimer.selector = @selector(timerOnTimer:);
 
-		self.maxMsgCount = 0;
+		self.floodControlCurrentMessageCount = 0;
 
 		self.socketBuffer = [NSMutableData new];
 	}
@@ -82,8 +82,8 @@
 	self.isConnected = NO;
 	self.isConnecting = NO;
 	self.isSending = NO;
-	
-	self.maxMsgCount = 0;
+
+	self.floodControlCurrentMessageCount = 0;
 
 	[self.sendQueue removeAllObjects];
 	
@@ -107,19 +107,13 @@
 #pragma mark -
 #pragma mark Send Data
 
-- (BOOL)readyToSend
-{
-	return (self.isSending == NO && NSObjectIsNotEmpty(self.sendQueue) &&
-			self.maxMsgCount < self.client.config.floodControlMaximumMessages);
-}
-
 - (void)sendLine:(NSString *)line
 {
 	/* PONG replies are extremely important. There is no reason they should be
 	 placed in the flood control queue. This writes them directly to the socket
 	 instead of actuallying waiting for the queue. We only need this check if
 	 we actually have flood control enabled. */
-	if (self.client.config.outgoingFloodControl) {
+	if (self.connectionUsesFloodControl) {
 		BOOL isPong = [line hasPrefix:IRCPrivateCommandIndex("pong")];
 
 		if (isPong) {
@@ -140,33 +134,49 @@
 
 - (BOOL)tryToSend
 {
-	NSAssertReturnR([self readyToSend], NO);
+	/* Build the queue if we are already sending… */
+	NSAssertReturnR((self.isSending == NO), NO);
+
+	/* We are not sending so we need to check our numbers. */
+	/* Only count flood control once we are fully connected since the initial connect
+	 will flood the server regardless so we do not want to timeout waiting for ourself. */
+	if (self.connectionUsesFloodControl && self.client.isLoggedIn) {
+		if (self.floodControlCurrentMessageCount > self.floodControlMaximumMessageCount) {
+			/* The number of lines sent during our timer period has gone above the 
+			 maximum allowed count so we have to return NO to let everyone know we
+			 cannot send at this point. */
+
+			return NO;
+		}
+
+		self.floodControlCurrentMessageCount += 1;
+	}
+
+	/* Send next line. */
+	[self sendNextLine];
+	
+	return YES;
+}
+
+- (void)sendNextLine
+{
+	NSObjectIsEmptyAssert(self.sendQueue);
 
 	NSString *firstItem = [self.sendQueue[0] stringByAppendingString:@"\r\n"];
-	
+
 	[self.sendQueue safeRemoveObjectAtIndex:0];
-	
+
 	NSData *data = [self convertToCommonEncoding:firstItem];
-	
+
 	if (data) {
 		self.isSending = YES;
 
-		/* isLoggedIn is set on the client when it receives raw numeric 005 from
-		 the server. We wait until then before we begin counting against flood
-		 control because the initial connect may send a lot of data resulting in
-		 it kicking in prematurely. */
-		if (self.client.isLoggedIn && self.client.config.outgoingFloodControl) {
-			self.maxMsgCount++;
-		}
-		
 		[self write:data];
-		
+
 		if ([self.client respondsToSelector:@selector(ircConnectionWillSend:)]) {
 			[self.client ircConnectionWillSend:firstItem];
 		}
 	}
-	
-	return YES;
 }
 
 - (void)clearSendQueue
@@ -181,7 +191,7 @@
 
 - (void)updateTimer
 {
-	if (NSObjectIsEmpty(self.sendQueue) && self.maxMsgCount < 1) {
+	if (NSObjectIsEmpty(self.sendQueue) && self.floodControlCurrentMessageCount < 1) {
 		[self stopTimer];
 	} else {
 		[self startTimer];
@@ -191,10 +201,8 @@
 - (void)startTimer
 {
 	if (self.floodTimer.timerIsActive == NO) {
-		IRCClientConfig *config = self.client.config;
-
-		if (config.outgoingFloodControl) {
-			[self.floodTimer start:config.floodControlDelayTimerInterval];
+		if (self.connectionUsesFloodControl) {
+			[self.floodTimer start:self.floodControlDelayInterval];
 		}
 	}
 }
@@ -208,8 +216,8 @@
 
 - (void)timerOnTimer:(id)sender
 {
-	self.maxMsgCount = 0;
-	
+	self.floodControlCurrentMessageCount = 0;
+
 	if (NSObjectIsNotEmpty(self.sendQueue)) {
 		while (self.sendQueue.count >= 1) {
 			NSAssertReturnLoopBreak([self tryToSend]);
@@ -271,6 +279,7 @@
 	self.isSending = NO;
 	
 	[self tryToSend];
+	[self updateTimer];
 }
 
 @end

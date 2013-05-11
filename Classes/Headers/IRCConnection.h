@@ -48,7 +48,10 @@
 @property (nonatomic, assign) BOOL connectionUsesSSL;
 @property (nonatomic, assign) BOOL connectionUsesNormalSocks;
 @property (nonatomic, assign) BOOL connectionUsesSystemSocks;
-@property (nonatomic, assign) NSInteger maxMsgCount;
+@property (nonatomic, assign) BOOL connectionUsesFloodControl;
+@property (nonatomic, assign) NSInteger floodControlDelayInterval;
+@property (nonatomic, assign) NSInteger floodControlMaximumMessageCount;
+@property (nonatomic, assign) NSInteger floodControlCurrentMessageCount;
 @property (nonatomic, strong) NSString *serverAddress;
 @property (nonatomic, assign) NSInteger serverPort;
 @property (nonatomic, strong) NSString *proxyAddress;
