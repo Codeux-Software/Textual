@@ -292,11 +292,11 @@
 		self.nicknameField.stringValue = self.config.nickname;
 	}
 
-	if (NSObjectIsEmpty(self.config.awayNickname)) {
-		self.awayNicknameField.stringValue = [TPCPreferences defaultAwayNickname];
-	} else {
+	//if (NSObjectIsEmpty(self.config.awayNickname)) {
+	//	self.awayNicknameField.stringValue = [TPCPreferences defaultAwayNickname];
+	//} else {
 		self.awayNicknameField.stringValue = self.config.awayNickname;
-	}
+	//}
 	
 	if (NSObjectIsEmpty(self.config.username)) {
 		self.usernameField.stringValue = [TPCPreferences defaultUsername];
