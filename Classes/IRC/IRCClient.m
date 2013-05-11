@@ -3006,6 +3006,7 @@
 
 - (void)ircConnectionWillSend:(NSString *)line
 {
+	DebugLogToConsole(@"<< %@", line);
 }
 
 #pragma mark -
@@ -5660,6 +5661,11 @@
 	} else {
 		[self printDebugInformationToConsole:TXTFLS(@"IRCIsConnecting", host, self.config.serverPort)];
 	}
+
+	self.socket.connectionUsesFloodControl = self.config.outgoingFloodControl;
+
+	self.socket.floodControlDelayInterval = self.config.floodControlDelayTimerInterval;
+	self.socket.floodControlMaximumMessageCount = self.config.floodControlMaximumMessages;
 
 	[self.socket open];
 
