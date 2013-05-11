@@ -1636,6 +1636,14 @@
 												<reference key="NSOnImage" ref="222848805"/>
 												<reference key="NSMixedImage" ref="852898728"/>
 											</object>
+											<object class="NSMenuItem" id="233454599">
+												<reference key="NSMenu" ref="902768892"/>
+												<string key="NSTitle">Open "Welcome to Textual" Dialog</string>
+												<string key="NSKeyEquiv"/>
+												<int key="NSMnemonicLoc">2147483647</int>
+												<reference key="NSOnImage" ref="222848805"/>
+												<reference key="NSMixedImage" ref="852898728"/>
+											</object>
 											<object class="NSMenuItem" id="595059169">
 												<reference key="NSMenu" ref="902768892"/>
 												<bool key="NSIsDisabled">YES</bool>
@@ -3374,7 +3382,7 @@
 											<reference key="NSDocView" ref="991887117"/>
 											<reference key="NSBGColor" ref="317973488"/>
 											<object class="NSCursor" key="NSCursor" id="298637364">
-												<string key="NSHotSpot">{5, 5}</string>
+												<string key="NSHotSpot">{1, -1}</string>
 												<int key="NSCursorType">0</int>
 											</object>
 											<int key="NScvFlags">2</int>
@@ -5209,6 +5217,14 @@
 						<reference key="destination" ref="642133329"/>
 					</object>
 					<int key="connectionID">2932</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">openWelcomeSheet:</string>
+						<reference key="source" ref="569757849"/>
+						<reference key="destination" ref="233454599"/>
+					</object>
+					<int key="connectionID">3105</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -8548,6 +8564,7 @@
 							<reference ref="906076834"/>
 							<reference ref="236705399"/>
 							<reference ref="595059169"/>
+							<reference ref="233454599"/>
 						</array>
 						<reference key="parent" ref="42278017"/>
 					</object>
@@ -9695,6 +9712,11 @@
 						<reference key="object" ref="906076834"/>
 						<reference key="parent" ref="902768892"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">3103</int>
+						<reference key="object" ref="233454599"/>
+						<reference key="parent" ref="902768892"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -10157,6 +10179,7 @@
 				<string key="3098.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="3100.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="3101.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="3103.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="319.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="320.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="327.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -10198,7 +10221,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">3102</int>
+			<int key="maxID">3105</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -10357,6 +10380,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">TXMasterController</string>
 					<string key="superclassName">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">openWelcomeSheet:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">openWelcomeSheet:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">openWelcomeSheet:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/TXMasterController.h</string>

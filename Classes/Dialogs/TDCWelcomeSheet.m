@@ -233,13 +233,13 @@
 
 - (BOOL)textView:(NSTextView *)textView clickedOnLink:(NSURL *)link atIndex:(NSUInteger)charIndex
 {
-	if ([link.absoluteString isEqualToString:@"support-channel-placeholder-link://"]) {
-		[self.masterController.menuController connectToTextualHelpChannel:nil];
-		
+	if ([link.absoluteString hasPrefix:@"textual://"]) {
 		[self cancel:nil];
+
+		return NO; // Tell delegate we did not handle it.
 	}
 
-	return NO;
+	return YES;
 }
 
 #pragma mark -
