@@ -1380,7 +1380,13 @@ static NSMutableArray *excludeKeywords = nil;
 
 	d[@"NotificationType -> Highlight -> Enabled"]				= @(YES);
 	d[@"NotificationType -> Highlight -> Sound"]				= @"Glass";
+
+	d[@"NotificationType -> Private Message (New) -> Enabled"]	= @(YES);
+	d[@"NotificationType -> Private Message (New) -> Sound"]	= @"Submarine";
 	
+	d[@"NotificationType -> Private Message -> Enabled"]		= @(YES);
+	d[@"NotificationType -> Private Message -> Sound"]			= @"Submarine";
+
 	d[@"NotificationType -> Address Bok Match -> Enabled"]		= @(YES);
 	d[@"NotificationType -> Private Message (New) -> Enabled"]	= @(YES);
 	
