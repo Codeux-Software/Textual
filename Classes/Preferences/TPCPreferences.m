@@ -555,7 +555,6 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() objectForKey:@"DefaultIdentity -> AwayNickname"];
 }
 
-
 + (NSString *)defaultUsername
 {
 	return [RZUserDefaults() objectForKey:@"DefaultIdentity -> Username"];
