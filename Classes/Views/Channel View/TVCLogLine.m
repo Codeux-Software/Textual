@@ -111,6 +111,8 @@
 		
 		self.messageBody		= NSDictionaryObjectKeyValueCompare(dic, @"messageBody", NSStringEmptyPlaceholder);
 
+		self.rawCommand			= NSDictionaryObjectKeyValueCompare(dic, @"rawCommand", TXLogLineDefaultRawCommandValue);
+		
 		self.highlightKeywords	= NSDictionaryObjectKeyValueCompare(dic, @"highlightKeywords", @[]);
 		self.excludeKeywords	= NSDictionaryObjectKeyValueCompare(dic, @"excludeKeywords", @[]);
 
@@ -134,11 +136,12 @@
 
 	[dict safeSetObject:@([self.receivedAt timeIntervalSince1970])		forKey:@"receivedAt"];
 
-	[dict safeSetObject:self.highlightKeywords		forKey:@"highlightKeywords"];
 	[dict safeSetObject:self.excludeKeywords		forKey:@"excludeKeywords"];
+	[dict safeSetObject:self.highlightKeywords		forKey:@"highlightKeywords"];
 	[dict safeSetObject:self.messageBody			forKey:@"messageBody"];
 	[dict safeSetObject:self.nickname				forKey:@"nickname"];
-
+	[dict safeSetObject:self.rawCommand				forKey:@"rawCommand"];
+	
 	[dict safeSetObject:@(self.lineType)				forKey:@"lineType"];
 	[dict safeSetObject:@(self.memberType)				forKey:@"memberType"];
 	[dict safeSetObject:@(self.nicknameColorNumber)		forKey:@"nicknameColorNumber"];

@@ -44,6 +44,8 @@
 
 #define TXLogLineSpecialNoticeMessageFormat		@"[%@]: %@"
 
+#define TXLogLineDefaultRawCommandValue			@"000"
+
 typedef enum TVCLogLineType : NSInteger {
 	TVCLogLineActionType,
 	TVCLogLineActionNoHighlightType,
@@ -77,6 +79,7 @@ typedef enum TVCLogMemberType : NSInteger {
 @property (nonatomic, strong) NSDate *receivedAt;
 @property (nonatomic, strong) NSString *nickname;
 @property (nonatomic, strong) NSString *messageBody;
+@property (nonatomic, strong) NSString *rawCommand; // Can be the actual command (PRIVMSG, NOTICE, etc.) or the raw numeric (001, 002, etc.)
 @property (nonatomic, assign) TVCLogLineType lineType;
 @property (nonatomic, assign) TVCLogMemberType memberType;
 @property (nonatomic, strong) NSArray *highlightKeywords;
