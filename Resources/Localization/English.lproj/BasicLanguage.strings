@@ -80,6 +80,11 @@
 
 "CopyLogAsHTMLMenuItem" = "Copy Log as HTML";
 
+"ChannelKeySetDetectedDialogTitle" = "Secret Key Changed";
+"ChannelKeySetDetectedDialogMessage" = "The secret key for the channel %1$@ was changed by %2$@ to \"%3$@\" — would you like Textual to automatically update the channel configuration to remember this new key?";
+"ChannelKeySetDetectedDialogSuppressionMessage" = "Update configuration for all key changes";
+"ChannelKeySetDetectedDialogDefaultButton" = "Update";
+
 "DCCRequestErrorMessage" = "The Textual IRC Client has received a DCC request that could not be processed.";
 
 "DefaultDisconnectQuitMessage" = "Textual IRC Client: www.textualapp.com";
