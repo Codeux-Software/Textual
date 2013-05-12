@@ -256,7 +256,7 @@
 "OkButton" = "OK";
 
 "OpeningLocalStyleResourcesCopyButton" = "Make Local Copy";
-"OpeningLocalStyleResourcesMessage" = "The style being opened is a read-only version bundled with Textual.";
+"OpeningLocalStyleResourcesMessage" = "The style being opened is a read-only version bundled with Textual.\n\nWould you like to create a local copy? It will become the selected style and can then be modified.";
 "OpeningLocalStyleResourcesTitle" = "Resource Files";
 
 "PluginCommandClashErrorMessage" = "Error: The command %@ is shared by both a script and plugin. Sending to server because of inability to determine priority.";
