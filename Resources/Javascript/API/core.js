@@ -38,8 +38,12 @@
 Textual = {
 	/* Callbacks for each WebView in Textual. — Self explanatory. */
 	
+	/* These callbacks are limited to the context of this view. The view can represent either 
+	the console, a channel, or a private message. See viewInitiated() for information about 
+	determining which view this view represents. */
+	
 	/* 
-	 viewInitiated:
+	 viewInitiated():
 
 		@viewType:		Type of view being represented. Server console, channel, query, etc. 
 						Possible values: server, channel, query. — query = private message.
@@ -65,11 +69,13 @@ Textual = {
 	viewPositionMovedToLine: 				function(lineNumber) {},
 	viewPositionMovedToTop: 				function() {},
 	
+	/* Allows a style to respond to the user switching between light and
+	dark mode. */
 	sidebarInversionPreferenceChanged:		function() {},
     
     /* 
-        handleEvent allows a theme to recieve status information about several
-        actions going on behind the schenes. The following event tokens are 
+        handleEvent allows a style to receive status information about several
+        actions going on behind the scenes. The following event tokens are 
         currently supported. 
         
         serverConnected                 - Server associated with this view has connected.
@@ -79,14 +85,14 @@ Textual = {
         channelJoined                   - Channel associated with this view has been joined.
         channelParted                   — Channel associated with this view has been parted.
         channelMemberAdded              — Member added to the channel associated with this view.
-        channelMemberRemoved            — Member removed from the channel list associated with this view.
+        channelMemberRemoved            — Member removed from the channel associated with this view.
         
-        These events are pushed when they occur. When a style is reloaded by Textual or
+		THESE EVENTS ARE PUSHED WHEN THEY OCCUR. When a style is reloaded by Textual or
         the end user, these events are not sent again. It is recommended to use a feature
         of WebKit known as sessionStorage if these events are required to be known between
         reloads. When a reload occurs to a style, the entire HTML and JavaScript is replaced
-        so the previous style will actuallly have no knowledge of the new one unless it is 
-        stored in a local database. 
+        so the previous style will actually have no knowledge of the new one unless it is 
+        stored in a local database.  
     */
     handleEvent:                            function(eventToken) {}, 
 	
@@ -97,8 +103,8 @@ Textual = {
    // app.channelIsJoined()            — Boolean if associated channel is joined.
    // app.channelMemberCount()         — Number of members on the channel associated with this view.
    // app.serverChannelCount()         — Number of channels part of the server associated with this view.
-   //                                    This number does not count against the status of the channels being
-   //                                    against. They can be joined or all parted. It is only a raw count.
+   //                                    This number does not count against the status of the channels.
+   //                                    They can be joined or all parted. It is only a raw count.
    // app.sidebarInversionIsEnabled()  - Boolean if sidebar colors are inverted.
 
 	/* *********************************************************************** */
@@ -125,6 +131,15 @@ Textual = {
 		if (tbe != null) {
 			tbe.style.opacity = topicOp;
 		}
+		
+		/* The fade time for the loading screen depends on the CSS of the actual
+		style, but there is no reason it should take more than five (5) seconds.
+		We will wait that amount of time before setting the overlay to hidden. 
+		Setting it to hidden makes it not copiable after it is not visible. */
+		
+		setTimeout(function() {
+			lbe.style.display = "none";
+		}, 5000);
 	},
 
 	/* Resource management. */
@@ -200,18 +215,4 @@ Textual = {
         
         return true;
     },
-    
-    /* The following API calls are deprecated. */
-    
-	include_js: function(file) {
-		Textual.includeScriptResourceFile(file);
-	},
-
-	include_css: function(file) {
-		Textual.includeStyleResourceFile(file);
-	},
-
-	newMessagePostedToDisplay: function(lineNumber) {
-		Textual.newMessagePostedToView(lineNumber);
-	},
 }
