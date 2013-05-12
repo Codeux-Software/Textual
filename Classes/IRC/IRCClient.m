@@ -1046,6 +1046,12 @@
 	} else {
 		type = TVCLogLinePrivateMessageType;
 	}
+	
+	NSString *commandActual = IRCPrivateCommandIndex("privmsg");
+
+	if (type == TVCLogLineNoticeType) {
+		commandActual = IRCPrivateCommandIndex("notice");
+	}
 
 	NSArray *lines = [str performSelector:@selector(splitIntoLines)];
 
@@ -1061,7 +1067,13 @@
 
             BOOL encrypted = (encryptChat && [self isSupportedMessageEncryptionFormat:newstr channel:channel]);
 
-            [self print:channel type:type nick:self.localNickname text:newstr encrypted:encrypted receivedAt:[NSDate date]];
+            [self print:channel
+				   type:type
+				   nick:self.localNickname
+				   text:newstr
+			  encrypted:encrypted
+			 receivedAt:[NSDate date]
+				command:commandActual];
 
             if (encrypted) {
                 NSAssertReturnLoopContinue([self encryptOutgoingMessage:&newstr channel:channel]);
@@ -1413,7 +1425,13 @@
 					if (channel) {
                         BOOL encrypted = (doNotEncrypt == NO && [self isSupportedMessageEncryptionFormat:t channel:channel]);
 
-                        [self print:channel type:type nick:self.localNickname text:t encrypted:encrypted receivedAt:[NSDate date]];
+                        [self print:channel
+							   type:type
+							   nick:self.localNickname
+							   text:t
+						  encrypted:encrypted
+						 receivedAt:[NSDate date]
+							command:uppercaseCommand];
 
                         if (encrypted) {
                             NSAssertReturnLoopContinue([self encryptOutgoingMessage:&t channel:channel]);
@@ -2522,24 +2540,25 @@
 	[self writeToLogFile:line];
 }
 
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text command:(NSString *)command
 {
-	[self print:chan type:type nick:nick text:text encrypted:NO receivedAt:[NSDate date] completionBlock:NULL];
+	[self print:chan type:type nick:nick text:text encrypted:NO receivedAt:[NSDate date] command:command completionBlock:NULL];
 }
 
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt command:(NSString *)command
 {
-	[self print:chan type:type nick:nick text:text encrypted:NO receivedAt:receivedAt completionBlock:NULL];
+	[self print:chan type:type nick:nick text:text encrypted:NO receivedAt:receivedAt command:command completionBlock:NULL];
 }
 
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command
 {
-	[self print:chan type:type nick:nick text:text encrypted:isEncrypted receivedAt:receivedAt completionBlock:NULL];
+	[self print:chan type:type nick:nick text:text encrypted:isEncrypted receivedAt:receivedAt command:command completionBlock:NULL];
 }
 
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt completionBlock:(void(^)(BOOL highlighted))completionBlock
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command completionBlock:(void(^)(BOOL highlighted))completionBlock
 {
 	NSObjectIsEmptyAssert(text);
+	NSObjectIsEmptyAssert(command);
 	
 	if ([self outputRuleMatchedInMessage:text inChannel:chan withLineType:type] == YES) {
 		return;
@@ -2623,6 +2642,7 @@
 	c.nickname				= nick;
 	c.nicknameColorNumber	= colorNumber;
 	c.receivedAt			= receivedAt;
+	c.rawCommand			= [command lowercaseString];
 
 	if (channel) {
 		if ([TPCPreferences autoAddScrollbackMark]) {
@@ -2646,27 +2666,42 @@
 
 - (void)printReply:(IRCMessage *)m
 {
-	[self print:nil type:TVCLogLineDebugType nick:nil text:[m sequence:1] encrypted:NO receivedAt:m.receivedAt completionBlock:NULL];
+	[self print:nil type:TVCLogLineDebugType nick:nil text:[m sequence:1] encrypted:NO receivedAt:m.receivedAt command:m.command completionBlock:NULL];
 }
 
 - (void)printUnknownReply:(IRCMessage *)m
 {
-	[self print:nil type:TVCLogLineDebugType nick:nil text:[m sequence:1] encrypted:NO receivedAt:m.receivedAt completionBlock:NULL];
+	[self print:nil type:TVCLogLineDebugType nick:nil text:[m sequence:1] encrypted:NO receivedAt:m.receivedAt command:m.command completionBlock:NULL];
 }
 
 - (void)printDebugInformation:(NSString *)m
 {
-	[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] completionBlock:NULL];
+	[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] command:TXLogLineDefaultRawCommandValue completionBlock:NULL];
+}
+
+- (void)printDebugInformation:(NSString *)m forCommand:(NSString *)command
+{
+	[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] command:command completionBlock:NULL];
 }
 
 - (void)printDebugInformationToConsole:(NSString *)m
 {
-	[self print:nil type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] completionBlock:NULL];
+	[self print:nil type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] command:TXLogLineDefaultRawCommandValue completionBlock:NULL];
+}
+
+- (void)printDebugInformationToConsole:(NSString *)m forCommand:(NSString *)command
+{
+	[self print:nil type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] command:command completionBlock:NULL];
 }
 
 - (void)printDebugInformation:(NSString *)m channel:(IRCChannel *)channel
 {
-	[self print:channel type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] completionBlock:NULL];
+	[self print:channel type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] command:TXLogLineDefaultRawCommandValue completionBlock:NULL];
+}
+
+- (void)printDebugInformation:(NSString *)m channel:(IRCChannel *)channel command:(NSString *)command
+{
+	[self print:channel type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] command:command completionBlock:NULL];
 }
 
 - (void)printErrorReply:(IRCMessage *)m
@@ -2678,12 +2713,12 @@
 {
 	NSString *text = TXTFLS(@"IRCHadRawError", m.numericReply, [m sequence]);
 
-	[self print:channel type:TVCLogLineDebugType nick:nil text:text encrypted:NO receivedAt:m.receivedAt completionBlock:NULL];
+	[self print:channel type:TVCLogLineDebugType nick:nil text:text encrypted:NO receivedAt:m.receivedAt command:m.command completionBlock:NULL];
 }
 
-- (void)printError:(NSString *)error
+- (void)printError:(NSString *)error forCommand:(NSString *)command
 {
-	[self print:nil type:TVCLogLineDebugType nick:nil text:error encrypted:NO receivedAt:[NSDate date] completionBlock:NULL];
+	[self print:nil type:TVCLogLineDebugType nick:nil text:error encrypted:NO receivedAt:[NSDate date] command:command completionBlock:NULL];
 }
 
 #pragma mark -
@@ -2867,7 +2902,7 @@
 
 - (void)ircConnectionDidError:(NSString *)error
 {
-	[self printError:error];
+	[self printError:error forCommand:TXLogLineDefaultRawCommandValue];
 }
 
 - (void)ircConnectionDidReceive:(NSString *)data
@@ -3156,7 +3191,13 @@
 		if (type == TVCLogLineNoticeType) {
 			/* Post notice and inform Growl. */
 
-			[self print:c type:type nick:sender text:text encrypted:isEncrypted receivedAt:m.receivedAt];
+			[self print:c
+				   type:type
+				   nick:sender
+				   text:text
+			  encrypted:isEncrypted
+			 receivedAt:m.receivedAt
+				command:m.command];
 
 			[self notifyText:TXNotificationChannelNoticeType lineType:type target:c nick:sender text:text];
 		} else {
@@ -3168,6 +3209,7 @@
 				   text:text
 			  encrypted:isEncrypted
 			 receivedAt:m.receivedAt
+				command:m.command
 		completionBlock:^(BOOL highlight)
 			 {
 				BOOL postevent = NO;
@@ -3269,7 +3311,12 @@
 														langitem:@"UserTrackingHostmaskConnected"];
 						}
 						
-						[self print:nil type:type nick:nil text:text receivedAt:m.receivedAt];
+						[self print:nil
+							   type:type
+							   nick:nil
+							   text:text
+						 receivedAt:m.receivedAt
+							command:m.command];
 					} else {
 						/* Notice was not connection related. Now we scan the message for the
 						 IRCop alert string or forward to the "Server Notices" window. */
@@ -3290,16 +3337,16 @@
 							/* Mark the channel as unread. */
 							[self setUnreadState:c];
 
-							[self print:c type:type nick:nil text:text receivedAt:m.receivedAt];
+							[self print:c type:type nick:nil text:text receivedAt:m.receivedAt command:m.command];
 						} else {
-							[self print:nil type:type nick:nil text:text receivedAt:m.receivedAt];
+							[self print:nil type:type nick:nil text:text receivedAt:m.receivedAt command:m.command];
 						}
 					}
 				} else {
-					[self print:nil type:type nick:nil text:text receivedAt:m.receivedAt];
+					[self print:nil type:type nick:nil text:text receivedAt:m.receivedAt command:m.command];
 				}
 			} else {
-				[self print:nil type:type nick:nil text:text receivedAt:m.receivedAt];
+				[self print:nil type:type nick:nil text:text receivedAt:m.receivedAt command:m.command];
 			}
 		} else {
 			if (targetOurself == NO) {
@@ -3340,7 +3387,13 @@
 				}
 
 				/* Post the notice. */
-				[self print:c type:type nick:sender text:text encrypted:isEncrypted receivedAt:m.receivedAt];
+				[self print:c
+					   type:type
+					   nick:sender
+					   text:text
+				  encrypted:isEncrypted
+				 receivedAt:m.receivedAt
+					command:m.command];
 
 				/* Nice to see you, NickServ. */
 				if ([sender isEqualIgnoringCase:@"NickServ"]) {
@@ -3407,34 +3460,35 @@
 					   text:text
 				  encrypted:isEncrypted
 				 receivedAt:m.receivedAt
-				 completionBlock:^(BOOL highlight)
-				{
-					BOOL postevent = NO;
-					BOOL popicon = NO;
+					command:m.command
+			completionBlock:^(BOOL highlight)
+				 {
+					 BOOL postevent = NO;
+					 BOOL popicon = NO;
 
-					if (highlight) {
-						postevent = [self notifyText:TXNotificationHighlightType lineType:type target:c nick:sender text:text];
+					 if (highlight) {
+						 postevent = [self notifyText:TXNotificationHighlightType lineType:type target:c nick:sender text:text];
 
-						if (postevent) {
-							[self setKeywordState:c];
-						}
-					} else {
-						if (newPrivateMessage) {
-							postevent = [self notifyText:TXNotificationNewPrivateMessageType lineType:type target:c nick:sender text:text];
+						 if (postevent) {
+							 [self setKeywordState:c];
+						 }
+					 } else {
+						 if (newPrivateMessage) {
+							 postevent = [self notifyText:TXNotificationNewPrivateMessageType lineType:type target:c nick:sender text:text];
 
-							if (postevent) {
-								popicon = YES;
-							}
-						} else {
-							postevent = [self notifyText:TXNotificationPrivateMessageType lineType:type target:c nick:sender text:text];
-						}
-					}
+							 if (postevent) {
+								 popicon = YES;
+							 }
+						 } else {
+							 postevent = [self notifyText:TXNotificationPrivateMessageType lineType:type target:c nick:sender text:text];
+						 }
+					 }
 
-					/* Mark query as unread. */
-					if (postevent) {
-						[self setUnreadState:c popDockIcon:popicon isHighlight:highlight];
-					}
-				}];
+					 /* Mark query as unread. */
+					 if (postevent) {
+						 [self setUnreadState:c popDockIcon:popicon isHighlight:highlight];
+					 }
+				 }];
 
 				/* Set the query topic to the host of the sender. */
 				NSString *hostTopic = m.sender.hostmask;
@@ -3479,7 +3533,12 @@
 		NSString *textm = TXTFLS(@"IRCRecievedCTCPRequest", command, sendern);
 
 		if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_lagcheck")] == NO) {
-			[self print:target type:TVCLogLineCTCPType nick:nil text:textm receivedAt:m.receivedAt];
+			[self print:target
+				   type:TVCLogLineCTCPType
+				   nick:nil
+				   text:textm
+			 receivedAt:m.receivedAt
+				command:m.command];
 		}
 
 		if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_ping")]) {
@@ -3577,7 +3636,12 @@
 		text = TXTFLS(@"IRCRecievedCTCPReply", sendern, command, s);
 	}
 
-	[self print:c type:TVCLogLineCTCPType nick:nil text:text receivedAt:m.receivedAt];
+	[self print:c
+		   type:TVCLogLineCTCPType
+		   nick:nil
+		   text:text
+	 receivedAt:m.receivedAt
+		command:m.command];
 }
 
 - (void)receiveJoin:(IRCMessage *)m
@@ -3660,7 +3724,12 @@
 	if ([TPCPreferences showJoinLeave]) {
 		NSString *text = TXTFLS(@"IRCUserJoinedChannel", sendern, m.sender.username, m.sender.address);
 
-		[self print:c type:TVCLogLineJoinType nick:nil text:text receivedAt:m.receivedAt];
+		[self print:c
+			   type:TVCLogLineJoinType
+			   nick:nil
+			   text:text
+		 receivedAt:m.receivedAt
+			command:m.command];
 	}
 
     [self.worldController updateTitleFor:c];
@@ -3700,7 +3769,12 @@
 			message = [message stringByAppendingFormat:@" (%@)", comment];
 		}
 
-		[self print:c type:TVCLogLinePartType nick:nil text:message receivedAt:m.receivedAt];
+		[self print:c
+			   type:TVCLogLinePartType
+			   nick:nil
+			   text:message
+		 receivedAt:m.receivedAt
+			command:m.command];
 	}
 
     [self.worldController updateTitleFor:c];
@@ -3745,7 +3819,12 @@
 
 		NSString *message = TXTFLS(@"IRCUserKickedFromChannel", sendern, targetu, comment);
 
-		[self print:c type:TVCLogLineKickType nick:nil text:message receivedAt:m.receivedAt];
+		[self print:c
+			   type:TVCLogLineKickType
+			   nick:nil
+			   text:message
+		 receivedAt:m.receivedAt
+			command:m.command];
 	}
 
     [self.worldController updateTitleFor:c];
@@ -3776,7 +3855,12 @@
 	for (IRCChannel *c in self.channels) {
 		if ([c findMember:sendern]) {
 			if ([TPCPreferences showJoinLeave] && [ignoreChecks ignoreJPQE] == NO && c.config.ignoreJPQActivity == NO) {
-				[self print:c type:TVCLogLineQuitType nick:nil text:text receivedAt:m.receivedAt];
+				[self print:c
+					   type:TVCLogLineQuitType
+					   nick:nil
+					   text:text
+				 receivedAt:m.receivedAt
+					command:m.command];
 			}
 
 			[c removeMember:sendern];
@@ -3846,7 +3930,12 @@
 			if ((myself == NO && [ignoreChecks ignoreJPQE] == NO) || myself == YES) {
 				NSString *text = TXTFLS(@"IRCUserChangedNickname", oldNick, newNick);
 
-				[self print:c type:TVCLogLineNickType nick:nil text:text receivedAt:m.receivedAt];
+				[self print:c
+					   type:TVCLogLineNickType
+					   nick:nil
+					   text:text
+				 receivedAt:m.receivedAt
+					command:m.command];
 			}
 
 			[c renameMember:oldNick to:newNick];
@@ -3904,7 +3993,12 @@
 			[self send:IRCPrivateCommandIndex("who"), c.name, nil, nil];
 		}
 
-		[self print:c type:TVCLogLineModeType nick:nil text:TXTFLS(@"IRCModeSet", sendern, modestr) receivedAt:m.receivedAt];
+		[self print:c
+			   type:TVCLogLineModeType
+			   nick:nil
+			   text:TXTFLS(@"IRCModeSet", sendern, modestr)
+		 receivedAt:m.receivedAt
+			command:m.command];
 
 		[self.worldController updateTitleFor:c];
 
@@ -3933,7 +4027,12 @@
 			}
 		}
 	} else {
-		[self print:nil type:TVCLogLineModeType nick:nil text:TXTFLS(@"IRCModeSet", sendern, modestr) receivedAt:m.receivedAt];
+		[self print:nil
+			   type:TVCLogLineModeType
+			   nick:nil
+			   text:TXTFLS(@"IRCModeSet", sendern, modestr)
+		 receivedAt:m.receivedAt
+			command:m.command];
 	}
 }
 
@@ -3955,7 +4054,13 @@
 	
 	[c setTopic:topicav];
 
-	[self print:c type:TVCLogLineTopicType nick:nil text:TXTFLS(@"IRCChannelTopicChanged", sendern, topicav) encrypted:isEncrypted receivedAt:m.receivedAt];
+	[self print:c
+		   type:TVCLogLineTopicType
+		   nick:nil
+		   text:TXTFLS(@"IRCChannelTopicChanged", sendern, topicav)
+	  encrypted:isEncrypted
+	 receivedAt:m.receivedAt
+		command:m.command];
 }
 
 - (void)receiveInvite:(IRCMessage *)m
@@ -3967,7 +4072,12 @@
 	
 	NSString *text = TXTFLS(@"IRCUserInvitedYouToJoinChannel", sendern, m.sender.username, m.sender.address, channel);
 	
-	[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineInviteType nick:nil text:text receivedAt:m.receivedAt];
+	[self print:[self.worldController selectedChannelOn:self]
+		   type:TVCLogLineInviteType
+		   nick:nil
+		   text:text
+	 receivedAt:m.receivedAt
+		command:m.command];
 	
 	[self notifyEvent:TXNotificationInviteType lineType:TVCLogLineInviteType target:nil nick:sendern text:channel];
 	
@@ -4021,7 +4131,7 @@
                          suppressionKey:nil
                         suppressionText:nil];
     } else {
-        [self printError:m.sequence];
+        [self printError:m.sequence forCommand:m.command];
     }
 }
 
@@ -4292,7 +4402,7 @@
                 NSArray *configRep = [self.isupport buildConfigurationRepresentation];
 
                 /* Just updated our configuration so pull last object from our rep to get last insert. */
-                [self printDebugInformationToConsole:[configRep lastObject]];
+                [self printDebugInformationToConsole:[configRep lastObject] forCommand:m.command];
             }
 
 			[self.worldController reloadTreeGroup:self];
@@ -4319,7 +4429,13 @@
                 message = [m sequence:3];
             }
 
-            [self print:nil type:TVCLogLineDebugType nick:nil text:message encrypted:NO receivedAt:m.receivedAt];
+            [self print:nil
+				   type:TVCLogLineDebugType
+				   nick:nil
+				   text:message
+			  encrypted:NO
+			 receivedAt:m.receivedAt
+				command:m.command];
         }
 
 		case 372: // RPL_MOTD
@@ -4347,7 +4463,12 @@
 				break;
 			}
 			
-			[self print:nil type:TVCLogLineDebugType nick:nil text:TXTFLS(@"IRCUserHasModes", modestr) receivedAt:m.receivedAt];
+			[self print:nil
+				   type:TVCLogLineDebugType
+				   nick:nil
+				   text:TXTFLS(@"IRCUserHasModes", modestr)
+			 receivedAt:m.receivedAt
+				command:m.command];
 
 			break;
 		}
@@ -4380,9 +4501,19 @@
 			NSString *text = TXTFLS(@"IRCUserIsAway", awaynick, comment);
 
             if (ac) {
-                [self print:ac type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
+                [self print:ac
+					   type:TVCLogLineDebugType
+					   nick:nil
+					   text:text
+				 receivedAt:m.receivedAt
+					command:m.command];
             } else {
-                [self print:sc type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
+                [self print:sc
+					   type:TVCLogLineDebugType
+					   nick:nil
+					   text:text
+				 receivedAt:m.receivedAt
+					command:m.command];
             }
 
 			break;
@@ -4423,7 +4554,12 @@
 
 			NSString *text = [NSString stringWithFormat:@"%@ %@", [m paramAt:1], [m paramAt:2]];
 
-            [self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
+            [self print:[self.worldController selectedChannelOn:self]
+				   type:TVCLogLineDebugType
+				   nick:nil
+				   text:text
+			 receivedAt:m.receivedAt
+				command:m.command];
 
 			break;
 		}
@@ -4433,7 +4569,12 @@
 
 			NSString *text = [NSString stringWithFormat:@"%@ %@ %@", [m paramAt:1], [m sequence:3], [m paramAt:2]];
 
-            [self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
+            [self print:[self.worldController selectedChannelOn:self]
+				   type:TVCLogLineDebugType
+				   nick:nil
+				   text:text
+			 receivedAt:m.receivedAt
+				command:m.command];
 
 			break;
 		}
@@ -4461,7 +4602,12 @@
 				text = TXTFLS(@"IRCUserWhoisHostmask", nickname, username, hostmask, realname);
 			}
 
-			[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
+			[self print:[self.worldController selectedChannelOn:self]
+				   type:TVCLogLineDebugType
+				   nick:nil
+				   text:text
+			 receivedAt:m.receivedAt
+				command:m.command];
 
 			break;
 		}
@@ -4485,7 +4631,12 @@
 				text = TXTFLS(@"IRCUserWhoisConnectedFrom", nickname, serverHost, serverInfo);
 			}
 
-			[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
+			[self print:[self.worldController selectedChannelOn:self]
+				   type:TVCLogLineDebugType
+				   nick:nil
+				   text:text
+			 receivedAt:m.receivedAt
+				command:m.command];
 
 			break;
 		}
@@ -4505,7 +4656,12 @@
 
 			NSString *text = TXTFLS(@"IRCUserWhoisUptime", nickname, connTime, idleTime);
 
-			[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
+			[self print:[self.worldController selectedChannelOn:self]
+				   type:TVCLogLineDebugType
+				   nick:nil
+				   text:text
+			 receivedAt:m.receivedAt
+				command:m.command];
 
 			break;
 		}
@@ -4518,7 +4674,12 @@
 
 			NSString *text = TXTFLS(@"IRCUserWhoisChannels", nickname, channels);
 
-			[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
+			[self print:[self.worldController selectedChannelOn:self]
+				   type:TVCLogLineDebugType
+				   nick:nil
+				   text:text
+			 receivedAt:m.receivedAt
+				command:m.command];
 
 			break;
 		}
@@ -4542,7 +4703,12 @@
 				[c.modeInfo update:modestr];
 			}
 
-			[self print:c type:TVCLogLineModeType nick:nil text:TXTFLS(@"IRCChannelHasModes", modestr) receivedAt:m.receivedAt];
+			[self print:c
+				   type:TVCLogLineModeType
+				   nick:nil
+				   text:TXTFLS(@"IRCChannelHasModes", modestr)
+			 receivedAt:m.receivedAt
+				command:m.command];
 
 			NSString *secretKey = [c.modeInfo modeInfoFor:@"k"].modeParamater;
 
@@ -4596,7 +4762,13 @@
 			if (c.isActive) {
 				[c setTopic:topicva];
 
-				[self print:c type:TVCLogLineTopicType nick:nil text:TXTFLS(@"IRCChannelHasTopic", topicva) encrypted:isEncrypted receivedAt:m.receivedAt];
+				[self print:c
+					   type:TVCLogLineTopicType
+					   nick:nil
+					   text:TXTFLS(@"IRCChannelHasTopic", topicva)
+				  encrypted:isEncrypted
+				 receivedAt:m.receivedAt
+					command:m.command];
 			}
 
 			break;
@@ -4622,7 +4794,12 @@
 			if (c.isActive) {
 				NSString *text = [NSString stringWithFormat:TXTLS(@"IRCChannelHasTopicAuthor"), topicow, settime];
 
-				[self print:c type:TVCLogLineTopicType nick:nil text:text receivedAt:m.receivedAt];
+				[self print:c
+					   type:TVCLogLineTopicType
+					   nick:nil
+					   text:text
+				 receivedAt:m.receivedAt
+					command:m.command];
 			}
 			
 			break;
@@ -4639,7 +4816,12 @@
 			PointerIsEmptyAssertLoopBreak(c);
 
 			if (c.isActive) {
-				[self print:c type:TVCLogLineDebugType nick:nil text:TXTFLS(@"IRCUserInvitedToJoinChannel", nickname, channel) receivedAt:m.receivedAt];
+				[self print:c
+					   type:TVCLogLineDebugType
+					   nick:nil
+					   text:TXTFLS(@"IRCUserInvitedToJoinChannel", nickname, channel)
+				 receivedAt:m.receivedAt
+					command:m.command];
 			}
 			
 			break;
@@ -4917,7 +5099,12 @@
 			
 			NSString *text = [NSString stringWithFormat:@"%@ %@", [m paramAt:1], [m sequence:2]];
 
-			[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
+			[self print:[self.worldController selectedChannelOn:self]
+				   type:TVCLogLineDebugType
+				   nick:nil
+				   text:text
+			 receivedAt:m.receivedAt
+				command:m.command];
 
 			break;
 		}
@@ -4962,7 +5149,12 @@
 
 			NSString *text = [NSString stringWithFormat:@"%@ %@ %@", [m paramAt:1], [m sequence:3], [m paramAt:2]];
 
-			[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
+			[self print:[self.worldController selectedChannelOn:self]
+				   type:TVCLogLineDebugType
+				   nick:nil
+				   text:text
+			 receivedAt:m.receivedAt
+				command:m.command];
 
 			break;
 		}
@@ -5039,7 +5231,12 @@
 				 We will assume that if we are seeing it again, then it is the result of a
 				 user opening two connections to a single bouncer session. */
 
-				[self print:nil type:TVCLogLineDebugType nick:nil text:TXTFLS(@"IRCUserIsNowIRCOperator", m.sender.nickname) receivedAt:m.receivedAt];
+				[self print:nil
+					   type:TVCLogLineDebugType
+					   nick:nil
+					   text:TXTFLS(@"IRCUserIsNowIRCOperator", m.sender.nickname)
+				 receivedAt:m.receivedAt
+					command:m.command];
 
 				self.hasIRCopAccess = YES;
 			}
@@ -5056,7 +5253,12 @@
 			IRCChannel *c = [self findChannel:channel];
 
 			if (c && website) {
-				[self print:c type:TVCLogLineWebsiteType nick:nil text:TXTFLS(@"IRCChannelHasWebsite", website) receivedAt:m.receivedAt];
+				[self print:c
+					   type:TVCLogLineWebsiteType
+					   nick:nil
+					   text:TXTFLS(@"IRCChannelHasWebsite", website)
+				 receivedAt:m.receivedAt
+					command:m.command];
 			}
 
 			break;
@@ -5065,7 +5267,12 @@
 		{
 			self.inUserInvokedWhowasRequest = NO;
 
-			[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:[m sequence] receivedAt:m.receivedAt];
+			[self print:[self.worldController selectedChannelOn:self]
+				   type:TVCLogLineDebugType
+				   nick:nil
+				   text:[m sequence]
+			 receivedAt:m.receivedAt
+				command:m.command];
 
 			break;
 		}
@@ -5075,7 +5282,12 @@
 			
 			self.CAPisIdentifiedWithSASL = YES;
 
-			[self print:self type:TVCLogLineDebugType nick:nil text:[m sequence:3] receivedAt:m.receivedAt];
+			[self print:self
+				   type:TVCLogLineDebugType
+				   nick:nil
+				   text:[m sequence:3]
+			 receivedAt:m.receivedAt
+				command:m.command];
 
 			break;
 		}
@@ -5086,7 +5298,12 @@
 		case 907: // ERR_SASLALREADY
 		{
 			if (n == 903) { // success
-				[self print:self type:TVCLogLineNoticeType nick:nil text:[m sequence:1] receivedAt:m.receivedAt];
+				[self print:self
+					   type:TVCLogLineNoticeType
+					   nick:nil
+					   text:[m sequence:1]
+				 receivedAt:m.receivedAt
+					command:m.command];
 			} else {
 				[self printReply:m];
 			}
@@ -5135,7 +5352,12 @@
 		{
 			NSString *text = TXTFLS(@"IRCHadRawError", m.numericReply, [m sequence:1]);
 
-			[self print:nil type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
+			[self print:nil
+				   type:TVCLogLineDebugType
+				   nick:nil
+				   text:text
+			 receivedAt:m.receivedAt
+				command:m.command];
 
 			break;
 		}
@@ -5156,7 +5378,12 @@
 
 			IRCChannel *c = [self findChannel:[m paramAt:1]];
 			
-			[self print:c type:TVCLogLineDebugType nick:nil text:text receivedAt:m.receivedAt];
+			[self print:c
+				   type:TVCLogLineDebugType
+				   nick:nil
+				   text:text
+			 receivedAt:m.receivedAt
+				command:m.command];
 
 			break;
 		}
@@ -6446,6 +6673,29 @@
 - (void)listDialogWillClose:(TDCListDialog *)sender
 {
     [self.masterController.menuController removeWindowFromWindowList:@"TDCListDialog"];
+}
+
+#pragma mark -
+#pragma mark Deprecated
+
+- (void)printError:(NSString *)error
+{
+	TEXTUAL_DEPRECATED_ASSERT;
+}
+
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text
+{
+	TEXTUAL_DEPRECATED_ASSERT;
+}
+
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt
+{
+	TEXTUAL_DEPRECATED_ASSERT;
+}
+
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt
+{
+	TEXTUAL_DEPRECATED_ASSERT;
 }
 
 @end

@@ -973,6 +973,8 @@
 
 		attributes[@"lineType"] = lineTypeStng;
 
+		attributes[@"rawCommand"] = line.rawCommand;
+
 		// ---- //
 
 		NSString *classRep = NSStringEmptyPlaceholder;

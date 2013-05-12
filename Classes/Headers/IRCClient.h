@@ -190,18 +190,44 @@ typedef enum IRCDisconnectMode : NSInteger {
 
 #pragma mark -
 
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text;
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt;
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt;
+/* ------ */
+/* All print calls point to this single one: */
+- (void)print:(id)chan					// An IRCChannel or nil for the console.
+		 type:(TVCLogLineType)type		// The line type. See TVCLogLine.h
+		 nick:(NSString *)nick			// The nickname associated with the print.
+		 text:(NSString *)text			// The actual text being printed.
+	encrypted:(BOOL)isEncrypted			// Is the text encrypted?
+   receivedAt:(NSDate *)receivedAt		// The time the message was received at for the timestamp.
+	  command:(NSString *)command;		// Can be the actual command (PRIVMSG, NOTICE, etc.) or a raw numeric (001, 002, etc.) — 000 = internal debug command.
+/* ------ */
+
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text command:(NSString *)command;
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt command:(NSString *)command;
 
 - (void)printReply:(IRCMessage *)m;
 - (void)printUnknownReply:(IRCMessage *)m;
 
 - (void)printDebugInformation:(NSString *)m;
-- (void)printDebugInformationToConsole:(NSString *)m;
-- (void)printDebugInformation:(NSString *)m channel:(IRCChannel *)channel;
+- (void)printDebugInformation:(NSString *)m forCommand:(NSString *)command;
 
-- (void)printError:(NSString *)error;
+- (void)printDebugInformationToConsole:(NSString *)m;
+- (void)printDebugInformationToConsole:(NSString *)m forCommand:(NSString *)command;
+
+- (void)printDebugInformation:(NSString *)m channel:(IRCChannel *)channel;
+- (void)printDebugInformation:(NSString *)m channel:(IRCChannel *)channel command:(NSString *)command;
+
+- (void)printError:(NSString *)error forCommand:(NSString *)command;
+
 - (void)printErrorReply:(IRCMessage *)m;
 - (void)printErrorReply:(IRCMessage *)m channel:(IRCChannel *)channel;
+
+/* ******************************** Deprecated ********************************  */
+/* Use of these methods will throw an exception.								 */
+/* ****************************************************************************  */
+
+- (void)printError:(NSString *)error TEXTUAL_DEPRECATED;
+
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text TEXTUAL_DEPRECATED;
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt TEXTUAL_DEPRECATED;
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt TEXTUAL_DEPRECATED;
 @end
