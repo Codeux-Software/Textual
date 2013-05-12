@@ -244,7 +244,7 @@ body[dir=rtl] div[type*=action] .sender:after {
 /* DEBUG/INVITE/WHOIS */
 
 body div.line[type*=invite],
-body div.line[type*=debug] ,
+body div.line[type*=debug],
 body div.line[type*=rawhtml] {
 	color: #343434;
   	z-index: 190;
@@ -255,7 +255,16 @@ body div.line[type*=rawhtml] {
 	border-bottom: 1px solid #BBBBBB;
 }
 
+/* Message of the Day (MOTD) */
+
+body div.line[command="372"] .message,
+body div.line[command="375"] .message,
+body div.line[command="376"] .message {
+	font-family: "Menlo" !important;
+}
+
 /* GENERAL EVENT */
+
 body div.line[type*=topic],
 body div.line[type*=website] {
  	padding: 3px 5px 3px 5px;
