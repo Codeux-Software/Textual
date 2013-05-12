@@ -101,7 +101,7 @@
 	[self onChangedAlertType:nil];
 	[self onChangedHighlightType:nil];
 
-	[self.setAsDefaultIRCClientButton setEnabled:BOOLReverseValue([TPCPreferences isDefaultIRCClient])];
+	[self.setAsDefaultIRCClientButton setHidden:[TPCPreferences isDefaultIRCClient]];
 
 	[self.window restoreWindowStateUsingKeyword:NSStringFromClass(self.class)];
 
@@ -835,7 +835,7 @@
 	[self.worldController executeScriptCommandOnAllViews:@"sidebarInversionPreferenceChanged" arguments:@[]];
 }
 
-+ (void)openPathToThemesCallback:(TLOPopupPromptReturnType)returnCode
+- (void)openPathToThemesCallback:(TLOPopupPromptReturnType)returnCode
 {
 	NSString *name = [TPCThemeController extractThemeName:[TPCPreferences themeName]];
 
@@ -859,6 +859,12 @@
 			LogToConsole(@"%@", [copyError localizedDescription]);
 		} else {
 			[RZWorkspace() openFile:newpath];
+
+			NSString *newThemeLocal = [TPCThemeController buildUserFilename:name];
+
+			[TPCPreferences setThemeName:newThemeLocal];
+
+			[self updateThemeSelection];
 		}
 	}
 }
@@ -872,7 +878,7 @@
 		TLOPopupPrompts *prompt = [TLOPopupPrompts new];
 
 		[prompt sheetWindowWithQuestion:[NSApp keyWindow]
-								 target:[TDCPreferencesController class]
+								 target:self
 								 action:@selector(openPathToThemesCallback:)
 								   body:TXTFLS(@"OpeningLocalStyleResourcesMessage", name)
 								  title:TXTLS(@"OpeningLocalStyleResourcesTitle")
