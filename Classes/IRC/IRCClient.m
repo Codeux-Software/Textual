@@ -3880,7 +3880,12 @@
 
 		PointerIsEmptyAssert(c);
 
+		NSString *oldSecretKey = [c.modeInfo modeInfoFor:@"k"].modeParamater;
+		NSString *newSecretKey;
+		
 		NSArray *info = [c.modeInfo update:modestr];
+
+		newSecretKey = [c.modeInfo modeInfoFor:@"k"].modeParamater;
 
 		BOOL performWho = NO;
 
@@ -3899,6 +3904,20 @@
 		[self print:c type:TVCLogLineModeType nick:nil text:TXTFLS(@"IRCModeSet", sendern, modestr) receivedAt:m.receivedAt];
 
 		[self.worldController updateTitleFor:c];
+
+		/* Offer user to remember the key for them. */
+		if ([oldSecretKey isEqualToString:newSecretKey] == NO) {
+			BOOL saveKey = [TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"ChannelKeySetDetectedDialogMessage", c.name, sendern, newSecretKey)
+															   title:TXTLS(@"ChannelKeySetDetectedDialogTitle")
+													   defaultButton:TXTLS(@"ChannelKeySetDetectedDialogDefaultButton")
+													 alternateButton:TXTLS(@"CancelButton")
+													  suppressionKey:@"channel_key_set_detected"
+													 suppressionText:TXTLS(@"ChannelKeySetDetectedDialogSuppressionMessage")];
+
+			if (saveKey) {
+				[c.config setSecretKey:newSecretKey];
+			}
+		}
 	} else {
 		[self print:nil type:TVCLogLineModeType nick:nil text:TXTFLS(@"IRCModeSet", sendern, modestr) receivedAt:m.receivedAt];
 	}
