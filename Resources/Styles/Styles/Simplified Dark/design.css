@@ -256,7 +256,7 @@ body[dir=rtl] div[type*=action] .sender:after {
 /* DEBUG/INVITE */
 
 body div.line[type*=invite],
-body div.line[type*=debug] ,
+body div.line[type*=debug],
 body div.line[type*=rawhtml] {
 	color: #777;
   	z-index: 190;
@@ -265,6 +265,14 @@ body div.line[type*=rawhtml] {
  	padding: 2px 5px 2px 5px;
 	border-top: 1px solid #444;
 	border-bottom: 1px solid #444;
+}
+
+/* Message of the Day (MOTD) */
+
+body div.line[command="372"] .message,
+body div.line[command="375"] .message,
+body div.line[command="376"] .message {
+	font-family: "Menlo" !important;
 }
 
 /* GENERAL EVENT */
