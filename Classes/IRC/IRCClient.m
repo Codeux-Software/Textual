@@ -3880,12 +3880,15 @@
 
 		PointerIsEmptyAssert(c);
 
-		NSString *oldSecretKey = [c.modeInfo modeInfoFor:@"k"].modeParamater;
-		NSString *newSecretKey;
+		IRCModeInfo *oldSecretKey = [c.modeInfo modeInfoFor:@"k"];
+		IRCModeInfo *newSecretKey;
 		
 		NSArray *info = [c.modeInfo update:modestr];
 
-		newSecretKey = [c.modeInfo modeInfoFor:@"k"].modeParamater;
+		newSecretKey = [c.modeInfo modeInfoFor:@"k"];
+
+		NSString *oldSecretKeyActual = [oldSecretKey modeParamater];
+		NSString *newSecretKeyActual = [newSecretKey modeParamater];
 
 		BOOL performWho = NO;
 
@@ -3906,16 +3909,27 @@
 		[self.worldController updateTitleFor:c];
 
 		/* Offer user to remember the key for them. */
-		if ([oldSecretKey isEqualToString:newSecretKey] == NO) {
-			BOOL saveKey = [TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"ChannelKeySetDetectedDialogMessage", c.name, sendern, newSecretKey)
+		if ([oldSecretKeyActual isEqualToString:newSecretKeyActual] == NO) {
+			BOOL saveKey = [TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"ChannelKeySetDetectedDialogMessage", c.name, sendern, newSecretKeyActual)
 															   title:TXTLS(@"ChannelKeySetDetectedDialogTitle")
-													   defaultButton:TXTLS(@"ChannelKeySetDetectedDialogDefaultButton")
-													 alternateButton:TXTLS(@"CancelButton")
+													   defaultButton:TXTLS(@"YesButton")
+													 alternateButton:TXTLS(@"NoButton")
 													  suppressionKey:@"channel_key_set_detected"
 													 suppressionText:TXTLS(@"ChannelKeySetDetectedDialogSuppressionMessage")];
 
 			if (saveKey) {
-				[c.config setSecretKey:newSecretKey];
+				[c.config setSecretKey:newSecretKeyActual];
+			}
+		} else if (oldSecretKey.modeIsSet == YES && newSecretKey.modeIsSet == NO) {
+			BOOL saveKey = [TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"ChannelKeyRemovalDetectedDialogMessage", c.name)
+															   title:TXTLS(@"ChannelKeyRemovalDetectedDialogTitle")
+													   defaultButton:TXTLS(@"YesButton")
+													 alternateButton:TXTLS(@"NoButton")
+													  suppressionKey:@"channel_key_set_detected"
+													 suppressionText:TXTLS(@"ChannelKeyRemovalDetectedialogSuppressionMessage")];
+
+			if (saveKey) {
+				[c.config setSecretKey:nil];
 			}
 		}
 	} else {
@@ -4538,13 +4552,25 @@
 
 				BOOL saveKey = [TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"ChannelOldKeyDetectedDialogMessage", c.name)
 																   title:TXTLS(@"ChannelOldKeyDetectedDialogTitle")
-														   defaultButton:TXTLS(@"ChannelOldKeyDetectedDialogDefaultButton")
-														 alternateButton:TXTLS(@"CancelButton")
+														   defaultButton:TXTLS(@"YesButton")
+														 alternateButton:TXTLS(@"NoButton")
 														  suppressionKey:@"channel_key_set_detected"
 														 suppressionText:TXTLS(@"ChannelOldKeyDetectedDialogSuppressionMessage")];
 
 				if (saveKey) {
 					[c.config setSecretKey:secretKey];
+				}
+			} else if (NSObjectIsEmpty(secretKey) && NSObjectIsNotEmpty(c.secretKey)) {
+				/* We have a key set on a channel that no longer has one. */
+				BOOL saveKey = [TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"ChannelKeyRemovalDetectedDialogMessage", c.name)
+																   title:TXTLS(@"ChannelKeyRemovalDetectedDialogTitle")
+														   defaultButton:TXTLS(@"YesButton")
+														 alternateButton:TXTLS(@"NoButton")
+														  suppressionKey:@"channel_key_set_detected"
+														 suppressionText:TXTLS(@"ChannelKeyRemovalDetectedialogSuppressionMessage")];
+
+				if (saveKey) {
+					[c.config setSecretKey:nil];
 				}
 			}
 			
