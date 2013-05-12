@@ -720,6 +720,10 @@
 		4C97075A158D740A0005CF68 /* colloquyRoomTabRegular.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C970758158D740A0005CF68 /* colloquyRoomTabRegular.tif */; };
 		4C9E534515B4C19C000E84A9 /* Contributors.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4CCF2EF2158047C8006FFE21 /* Contributors.pdf */; };
 		4C9E534615B4C1A6000E84A9 /* Acknowledgments.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4CCF2EF1158047C8006FFE21 /* Acknowledgments.pdf */; };
+		4CA899A8174021FD001176C8 /* TPWTB_Alerts_NC.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CA899A6174021FD001176C8 /* TPWTB_Alerts_NC.tif */; };
+		4CA899A9174021FD001176C8 /* TPWTB_Alerts_NC.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CA899A6174021FD001176C8 /* TPWTB_Alerts_NC.tif */; };
+		4CA899AA174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CA899A7174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif */; };
+		4CA899AB174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CA899A7174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif */; };
 		4CB1362116D881150025DD7F /* Textual IRC Client Extras.pkg in Copy Installers */ = {isa = PBXBuildFile; fileRef = 4CB1361F16D881080025DD7F /* Textual IRC Client Extras.pkg */; };
 		4CB331B516F1BBC700D65CBE /* NSImageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB331B416F1BBC700D65CBE /* NSImageHelper.m */; };
 		4CB331B616F1BBC700D65CBE /* NSImageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB331B416F1BBC700D65CBE /* NSImageHelper.m */; };
@@ -1278,6 +1282,8 @@
 		4C937BDA170618A80050CEF3 /* TLOSpeechSynthesizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLOSpeechSynthesizer.h; sourceTree = "<group>"; };
 		4C970758158D740A0005CF68 /* colloquyRoomTabRegular.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = colloquyRoomTabRegular.tif; path = "Resources/Images/Status Badges/colloquyRoomTabRegular.tif"; sourceTree = SOURCE_ROOT; };
 		4CA7FB401722116800B260E1 /* Shared Trial Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Shared Trial Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Trial Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
+		4CA899A6174021FD001176C8 /* TPWTB_Alerts_NC.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TPWTB_Alerts_NC.tif; sourceTree = "<group>"; };
+		4CA899A7174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "TPWTB_Alerts_NC@2x.tif"; sourceTree = "<group>"; };
 		4CB1361F16D881080025DD7F /* Textual IRC Client Extras.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Textual IRC Client Extras.pkg"; path = "Resources/All Scripts/Sandbox Exceptions/Installers/Textual IRC Client Extras.pkg"; sourceTree = SOURCE_ROOT; };
 		4CB331B416F1BBC700D65CBE /* NSImageHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSImageHelper.m; sourceTree = "<group>"; };
 		4CB331BC16F1BBE000D65CBE /* NSImageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSImageHelper.h; sourceTree = "<group>"; };
@@ -1724,14 +1730,16 @@
 		4C63C6AD1592F0B0009F1635 /* Toolbar Icons */ = {
 			isa = PBXGroup;
 			children = (
+				4C63C6B01592F0B0009F1635 /* TPWTB_Alerts.tif */,
+				4C63C6B11592F0B0009F1635 /* TPWTB_Alerts@2x.tif */,
+				4CA899A6174021FD001176C8 /* TPWTB_Alerts_NC.tif */,
+				4CA899A7174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif */,
+				4C63C6BA1592F360009F1635 /* TPWTB_Extensions.tif */,
+				4C63C6BB1592F360009F1635 /* TPWTB_Extensions@2x.tif */,
 				4C63C6C21592FF4E009F1635 /* TPWTB_Interface.tif */,
 				4C63C6C31592FF4E009F1635 /* TPWTB_Interface@2x.tif */,
 				4C63C6BE1592F710009F1635 /* TPWTB_Mentions.tif */,
 				4C63C6BF1592F710009F1635 /* TPWTB_Mentions@2x.tif */,
-				4C63C6BA1592F360009F1635 /* TPWTB_Extensions.tif */,
-				4C63C6BB1592F360009F1635 /* TPWTB_Extensions@2x.tif */,
-				4C63C6B01592F0B0009F1635 /* TPWTB_Alerts.tif */,
-				4C63C6B11592F0B0009F1635 /* TPWTB_Alerts@2x.tif */,
 			);
 			name = "Toolbar Icons";
 			path = "Resources/Images/Preferences/Toolbar Icons";
@@ -2876,6 +2884,8 @@
 				4CDDF34A1678C5DF00FE8684 /* encryptionLockIconLight@2x.tif in Resources */,
 				4CF8B41016E631EF00F2A68F /* birthdayIcon.icns in Resources */,
 				5DAE48A7173371680020B0D3 /* iVersion.bundle in Resources */,
+				4CA899A8174021FD001176C8 /* TPWTB_Alerts_NC.tif in Resources */,
+				4CA899AA174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2972,6 +2982,8 @@
 				4C5BA3D016F1302F00A96CA2 /* encryptionLockIconLight@2x.tif in Resources */,
 				4C5BA3D116F1302F00A96CA2 /* birthdayIcon.icns in Resources */,
 				5DAE48A8173371680020B0D3 /* iVersion.bundle in Resources */,
+				4CA899A9174021FD001176C8 /* TPWTB_Alerts_NC.tif in Resources */,
+				4CA899AB174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

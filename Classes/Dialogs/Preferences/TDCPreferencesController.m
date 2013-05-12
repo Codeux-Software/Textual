@@ -114,43 +114,43 @@
 #pragma mark NSToolbar Delegates
 
 /*
- Toolbar Design:
- [tag]: [label]
+	 Toolbar Design:
+	 [tag]: [label]
 
- 0: General
+	 0: General
 
- — Blank Space —
+	 — Blank Space —
 
- 3: Alerts
- 1: Highlights
- 4: Style
- 2: Interface
- 9: Identity
+	 3: Alerts
+	 1: Highlights
+	 4: Style
+	 2: Interface
+	 9: Identity
 
- — Blank Space —
+	 — Blank Space —
 
- 13: Addons — Menu that includes list of preference
- panes created by loaded extensions. Top item of
- list is "Installed Addons" with tag 10. The tag
- of each other item is dynamically determined based
- on the _addonsToolbarItemMultiplier.
+	 13: Addons — Menu that includes list of preference
+	 panes created by loaded extensions. Top item of
+	 list is "Installed Addons" with tag 10. The tag
+	 of each other item is dynamically determined based
+	 on the _addonsToolbarItemMultiplier.
 
- 10: Addons — Button, "Installed Addons" — no menu. Used
- if there are no extensions loaded that create
- custom preference panes.
+	 10: Addons — Button, "Installed Addons" — no menu. Used
+	 if there are no extensions loaded that create
+	 custom preference panes.
 
- 11: Advanced — Menu.
+	 11: Advanced — Menu.
 
- 7:	IRCop Services
- 8:	Channel Management
- 12: Command Scope
- 6:	Flood Control
- 5:	Log Location
- 11: Experimental Settings
+	 7:	IRCop Services
+	 8:	Channel Management
+	 12: Command Scope
+	 6:	Flood Control
+	 5:	Log Location
+	 11: Experimental Settings
 
- The tag of each toolbar item (and menu item) should not
- conflict with any other in order to function with
- onPrefPaneSelected: properly which each item calls.
+	 The tag of each toolbar item (and menu item) should not
+	 conflict with any other in order to function with
+	 onPrefPaneSelected: properly which each item calls.
  */
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
@@ -166,6 +166,22 @@
 
 - (void)setUpToolbarItemsAndMenus
 {
+	/* Growl check. */
+	BOOL growlRunning = [GrowlApplicationBridge isGrowlRunning];
+
+	/* We only have notification center on mountain lion or newer so we have to
+	 check what OS we are running on before we even doing anything. */
+	if ([TPCPreferences featureAvailableToOSXMountainLion] == NO || growlRunning) {
+		/* Show growl icon if it is running or we are not on mountain lion. */
+		
+		[self.alertToolbarItem setImage:[NSImage imageNamed:@"TPWTB_Alerts"]];
+	} else {
+		/* Show notification center icon if we are on ML and growl is not running. */
+
+		[self.alertToolbarItem setImage:[NSImage imageNamed:@"TPWTB_Alerts_NC"]];
+	}
+
+	/* Extensions. */
 	NSArray *bundles = [RZPluginManager() pluginsWithPreferencePanes];
 
 	for (THOPluginItem *plugin in bundles) {

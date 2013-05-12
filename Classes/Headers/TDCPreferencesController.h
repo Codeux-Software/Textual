@@ -71,6 +71,7 @@
 @property (nonatomic, nweak) NSTableView *installedScriptsTable;
 @property (nonatomic, nweak) NSTableView *keywordsTable;
 @property (nonatomic, nweak) NSToolbar *preferenceSelectToolbar;
+@property (nonatomic, nweak) NSToolbarItem *alertToolbarItem;
 @property (nonatomic, strong) TDCPreferencesScriptWrapper *scriptsController;
 
 - (void)show;
