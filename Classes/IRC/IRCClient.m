@@ -4529,6 +4529,24 @@
 			}
 
 			[self print:c type:TVCLogLineModeType nick:nil text:TXTFLS(@"IRCChannelHasModes", modestr) receivedAt:m.receivedAt];
+
+			NSString *secretKey = [c.modeInfo modeInfoFor:@"k"].modeParamater;
+
+			if (NSObjectIsEmpty(c.secretKey) && NSObjectIsNotEmpty(secretKey)) {
+				/* We offer to remember the key when we found one and our configuration does not
+				 already have one. */
+
+				BOOL saveKey = [TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"ChannelOldKeyDetectedDialogMessage", c.name)
+																   title:TXTLS(@"ChannelOldKeyDetectedDialogTitle")
+														   defaultButton:TXTLS(@"ChannelOldKeyDetectedDialogDefaultButton")
+														 alternateButton:TXTLS(@"CancelButton")
+														  suppressionKey:@"channel_key_set_detected"
+														 suppressionText:TXTLS(@"ChannelOldKeyDetectedDialogSuppressionMessage")];
+
+				if (saveKey) {
+					[c.config setSecretKey:secretKey];
+				}
+			}
 			
 			break;
 		}
