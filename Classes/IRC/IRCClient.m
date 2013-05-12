@@ -3920,7 +3920,7 @@
 			if (saveKey) {
 				[c.config setSecretKey:newSecretKeyActual];
 			}
-		} else if (oldSecretKey.modeIsSet == YES && newSecretKey.modeIsSet == NO) {
+		} else if (oldSecretKey.modeIsSet == YES && newSecretKey.modeIsSet == NO && NSObjectIsNotEmpty(c.secretKey)) {
 			BOOL saveKey = [TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"ChannelKeyRemovalDetectedDialogMessage", c.name)
 															   title:TXTLS(@"ChannelKeyRemovalDetectedDialogTitle")
 													   defaultButton:TXTLS(@"YesButton")
