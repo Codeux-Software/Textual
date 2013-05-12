@@ -85,6 +85,11 @@
 "ChannelKeySetDetectedDialogSuppressionMessage" = "Update configuration for all key changes";
 "ChannelKeySetDetectedDialogDefaultButton" = "Update";
 
+"ChannelOldKeyDetectedDialogTitle" = "Secret Key Found";
+"ChannelOldKeyDetectedDialogMessage" = "Textual has found a secret key set for the channel %@. Would you like the configuration for this channel updated to remember the key?";
+"ChannelOldKeyDetectedDialogSuppressionMessage" = "Automatically remember all secret keys";
+"ChannelOldKeyDetectedDialogDefaultButton" = "Update";
+
 "DCCRequestErrorMessage" = "The Textual IRC Client has received a DCC request that could not be processed.";
 
 "DefaultDisconnectQuitMessage" = "Textual IRC Client: www.textualapp.com";
