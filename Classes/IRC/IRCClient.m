@@ -4436,8 +4436,9 @@
 			  encrypted:NO
 			 receivedAt:m.receivedAt
 				command:m.command];
-        }
 
+			break;
+        }
 		case 372: // RPL_MOTD
 		case 375: // RPL_MOTDSTART
 		case 376: // RPL_ENDOFMOTD
