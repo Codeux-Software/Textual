@@ -112,8 +112,6 @@
 
 	NSTimeInterval birthday = [NSDate secondsSinceUnixTimestamp:TXBirthdayReferenceDate];
 
-	/* DO NOT ALLOW RUNTIME TO BE GREATER THAN THE AGE OF TEXTUAL. (For Fudge) */
-
 	if (runtime > birthday) {
 		runtime = birthday;
 	}
@@ -420,14 +418,24 @@
 	NSInteger objectIndex = 0;
 
 	for (ifa = ifa_list; ifa; ifa = ifa->ifa_next) {
-		if ((AF_LINK == ifa->ifa_addr->sa_family) == NO) continue;
-		if ((ifa->ifa_flags & IFF_UP) == NO && (ifa->ifa_flags & IFF_RUNNING) == NO) continue;
-		if (ifa->ifa_data == 0) continue;
+		if ((AF_LINK == ifa->ifa_addr->sa_family) == NO) {
+			continue;
+		}
+		
+		if ((ifa->ifa_flags & IFF_UP) == NO && (ifa->ifa_flags & IFF_RUNNING) == NO) {
+			continue;
+		}
+
+		if (ifa->ifa_data == 0) {
+			continue;
+		}
 
 		if (strncmp(ifa->ifa_name, "lo", 2)) {
 			struct if_data *if_data = (struct if_data *)ifa->ifa_data;
 
-			if (if_data->ifi_ibytes < 20000000 || if_data->ifi_obytes < 2000000) continue;
+			if (if_data->ifi_ibytes < 20000000 || if_data->ifi_obytes < 2000000) {
+				continue;
+			}
 
 			net_obytes += if_data->ifi_obytes;
 			net_ibytes += if_data->ifi_ibytes;
@@ -470,6 +478,12 @@
 
 + (NSString *)formattedDiskSize:(TXFSLongInt)size
 {
+	/* Use cocoa API if available. */
+	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+		return [NSByteCountFormatter stringFromByteCountWithPaddedDigits:size];
+	}
+
+	/* Use our own math. */
 	if (size >= 1000000000000.0) {
 		return TPIFLS(@"SystemInformationFilesizeTB", (size / 1000000000000.0));
 	} else {
