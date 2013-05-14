@@ -79,7 +79,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 - (void)awakeFromNib
 {
 	DebugLogToConsole(@"Temporary Folder: %@", [TPCPreferences applicationTemporaryFolderPath]);
-	
+	DebugLogToConsole(@"Caches Folder: %@", [TPCPreferences applicationCachesFolderPath]);
+
 	// ---- //
 
 	if ([NSEvent modifierFlags] & NSShiftKeyMask) {

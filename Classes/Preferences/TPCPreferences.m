@@ -355,6 +355,19 @@ NSString *IRCPublicCommandIndex(const char *key)
 	return NSTemporaryDirectory();
 }
 
++ (NSString *)applicationCachesFolderPath
+{
+	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+
+	NSString *basePath = [searchArray safeObjectAtIndex:0];
+
+	NSObjectIsEmptyAssertReturn(basePath, nil);
+
+	NSString *endPath = [NSString stringWithFormat:@"/%@/", [TPCPreferences applicationBundleIdentifier]];
+
+	return [basePath stringByAppendingString:endPath];
+}
+
 + (NSString *)applicationSupportFolderPath
 {
 	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
