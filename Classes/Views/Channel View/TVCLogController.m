@@ -154,7 +154,7 @@
 	self.historicLogFile = [TLOFileLogger new];
 	self.historicLogFile.flatFileStructure = YES;
 	self.historicLogFile.writePlainText = NO;
-	self.historicLogFile.fileWritePath = [TPCPreferences applicationTemporaryFolderPath];
+	self.historicLogFile.fileWritePath = [TPCPreferences applicationCachesFolderPath];
 	self.historicLogFile.maxEntryCount = _internalPlaybackLineCountLimit;
 
 	if (PointerIsEmpty(self.channel)) {
