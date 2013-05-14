@@ -273,7 +273,7 @@
 			NSAssert(NO, @"_all_models");
 		}
 
-		NSString *_exact_model = _model;
+		NSString *_exact_model = [CSFWSystemInformation systemModelName];
 
 		if ([_all_models containsKey:_model]) {
 			_exact_model = _all_models[_model];
