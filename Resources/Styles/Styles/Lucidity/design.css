@@ -257,6 +257,23 @@ body div.line[type*=rawhtml] {
 
 /* Message of the Day (MOTD) */
 
+body div.line[command="372"] {
+	border: none;
+	margin-bottom: 1px;
+}
+
+body div.line[command="375"] { /* Start. */
+	border-top: 1px solid #BBBBBB;
+	border-bottom: none;
+	margin-bottom: 1px;
+}
+
+body div.line[command="376"] { /* End. */
+	border-top: none;
+	border-bottom: 1px solid #BBBBBB;
+	margin-bottom: 1px;
+}
+
 body div.line[command="372"] .message,
 body div.line[command="375"] .message,
 body div.line[command="376"] .message {
