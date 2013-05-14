@@ -127,6 +127,8 @@
 	BOOL returnAsString = NO;
 	
 	if ([input isKindOfClass:[NSString class]]) {
+		returnAsString = YES;
+
 		finalResult = [NSAttributedString emptyStringWithBase:input];
 	} else {
 		finalResult = input;
