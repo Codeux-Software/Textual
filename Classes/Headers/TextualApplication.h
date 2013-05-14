@@ -196,6 +196,7 @@
 	/* Framework Extensions (Helpers). */
 
 	#import "NSArrayHelper.h"
+	#import "NSByteCountFormatterHelper.h"
 	#import "NSColorHelper.h"
 	#import "NSDateHelper.h"
 	#import "NSDictionaryHelper.h"
