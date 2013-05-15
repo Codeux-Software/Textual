@@ -72,12 +72,6 @@
 	[self updateRemoveConditionButton];
 }
 
-- (void)dealloc
-{
-	[self.rnewConditionWindow close];
-	self.rnewConditionWindow = nil;
-}
-
 #pragma mark -
 #pragma mark Server Input.
 
@@ -314,14 +308,22 @@
 	}
 
 	/* Pop the new window and center it. */
-	[self.rnewConditionWindow center];
-	[self.rnewConditionWindow makeKeyAndOrderFront:nil];
+	[NSApp beginSheet:self.rnewConditionWindow
+	   modalForWindow:[NSApp keyWindow]
+		modalDelegate:self
+	   didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:)
+		  contextInfo:nil];
 
 	/* Make text field the first responder. */
 	[self.rnewConditionWindow makeFirstResponder:self.rnewConditionLinkPrefixField];
 
 	/* Update save button state. */
 	[self updateNewConditionWindowSaveButton:nil];
+}
+
+- (void)sheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+	[sheet close];
 }
 
 - (void)removeCondition:(id)sender
@@ -366,12 +368,7 @@
 	[self.linkPrefixesTable reloadData];
 	
 	/* Update buttons and close window. */
-	[self.addConditionButton setEnabled:YES];
-	[self.removeConditionButton setEnabled:YES];
-
-	[self.rnewConditionWindow close];
-
-	[self updateRemoveConditionButton];
+	[self cancelNewCondition:nil];
 }
 
 - (void)cancelNewCondition:(id)sender
@@ -379,7 +376,7 @@
 	[self.addConditionButton setEnabled:YES];
 	[self.removeConditionButton setEnabled:YES];
 
-	[self.rnewConditionWindow close];
+	[NSApp endSheet:self.rnewConditionWindow];
 
 	[self updateRemoveConditionButton];
 }
