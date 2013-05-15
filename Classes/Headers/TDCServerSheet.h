@@ -111,6 +111,7 @@
 - (void)proxyTypeChanged:(id)sender;
 - (void)serverAddressChanged:(id)sender;
 - (void)toggleAdvancedEncodings:(id)sender;
+- (void)toggleAdvancedSettings:(id)sender;
 
 - (void)addChannel:(id)sender;
 - (void)editChannel:(id)sender;
