@@ -79,19 +79,19 @@
 
 	NSMutableArray *tabViewList = [NSMutableArray new];
 
-	[tabViewList addObject:@[@"General",						@"1"]];
-	[tabViewList addObject:@[@"Identity",						@"2"]];
-	[tabViewList addObject:@[@"Mentions",						@"3"]];
-	[tabViewList addObject:@[@"Message",						@"4"]];
-	[tabViewList addObject:@[@"Encoding",						@"5"]];
-	[tabViewList addObject:@[@"Autojoin",						@"6"]];
-	[tabViewList addObject:@[@"Ignores",						@"7"]];
-	[tabViewList addObject:@[@"Commands",						@"8"]];
+	[tabViewList addObject:@[@"Ignores",						@"1"]];
+	[tabViewList addObject:@[@"Autojoin",						@"2"]];
+	[tabViewList addObject:@[@"Commands",						@"3"]];
+	[tabViewList addObject:@[@"Encoding",						@"4"]];
+	[tabViewList addObject:@[@"General",						@"5"]];
+	[tabViewList addObject:@[@"Identity",						@"6"]];
+	[tabViewList addObject:@[@"Message",						@"7"]];
+	[tabViewList addObject:@[@"Mentions",						@"8"]];
 
 	if (includeAdvanced) {
 		[tabViewList addObject:@[TXDefaultListSeperatorCellIndex,	@"-"]];
-		[tabViewList addObject:@[@"Proxy",							@"9"]];
-		[tabViewList addObject:@[@"FloodControl",					@"10"]];
+		[tabViewList addObject:@[@"FloodControl",					@"9"]];
+		[tabViewList addObject:@[@"Proxy",							@"10"]];
 	}
 
 	self.tabViewList = tabViewList;
@@ -223,7 +223,7 @@
 	if ([viewToken isEqualToString:@"floodControl"]) {
         [self showWithDefaultView:self.floodControlView andSegment:9];
     } else if ([viewToken isEqualToString:@"addressBook"]) {
-		[self showWithDefaultView:self.ignoresView andSegment:5];
+		[self showWithDefaultView:self.ignoresView andSegment:0];
 		
 		if ([context isEqualToString:@"-"] == NO) {
 			self.ignoreSheet = nil;
@@ -243,7 +243,7 @@
 			[self.ignoreSheet start];
 		}
 	} else {
-		[self showWithDefaultView:self.generalView andSegment:0];
+		[self showWithDefaultView:self.generalView andSegment:4];
     }
 }
 
@@ -1080,16 +1080,16 @@
 		NSInteger row = [self.tabView selectedRow];
 		
         switch (row) {
-            case 0:  { [self focusView:self.generalView			atRow:0]; break; }
-            case 1:  { [self focusView:self.identityView		atRow:1]; break; }
-			case 2:  { [self focusView:self.highlightsView		atRow:2]; break; }
-            case 3:  { [self focusView:self.messagesView		atRow:3]; break; }
-            case 4:  { [self focusView:self.encodingView		atRow:4]; break; }
-            case 5:  { [self focusView:self.autojoinView		atRow:5]; break; }
-            case 6:  { [self focusView:self.ignoresView			atRow:6]; break; }
-            case 7:  { [self focusView:self.commandsView		atRow:7]; break; }
-            case 9:  { [self focusView:self.proxyServerView		atRow:9]; break; }
-            case 10: { [self focusView:self.floodControlView	atRow:10]; break; }
+            case 0:  { [self focusView:self.ignoresView			atRow:0]; break; }
+            case 1:  { [self focusView:self.autojoinView		atRow:1]; break; }
+            case 2:  { [self focusView:self.commandsView		atRow:2]; break; }
+            case 3:  { [self focusView:self.encodingView		atRow:3]; break; }
+            case 4:  { [self focusView:self.generalView			atRow:4]; break; }
+            case 5:  { [self focusView:self.identityView		atRow:5]; break; }
+            case 6:  { [self focusView:self.messagesView		atRow:6]; break; }
+			case 7:  { [self focusView:self.highlightsView		atRow:7]; break; }
+            case 9:  { [self focusView:self.floodControlView	atRow:9]; break; }
+            case 10: { [self focusView:self.proxyServerView		atRow:10]; break; }
 
             default: { break; }
         }

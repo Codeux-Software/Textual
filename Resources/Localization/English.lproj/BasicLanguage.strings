@@ -281,7 +281,7 @@
 
 "ServerNoticeTreeItemTitle"	= "Server Notices";
 
-"ServerSheetAutojoinNavigationTreeItem"	= "Autojoin";
+"ServerSheetAutojoinNavigationTreeItem"	= "Channel List";
 "ServerSheetCommandsNavigationTreeItem"	= "Connect Commands";
 "ServerSheetEncodingNavigationTreeItem"	= "Encoding";
 "ServerSheetFloodControlNavigationTreeItem"	= "Flood Control";
