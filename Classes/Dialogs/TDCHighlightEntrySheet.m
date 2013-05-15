@@ -121,7 +121,7 @@
 			IRCChannel *channel = [client findChannel:selectedTitle];
 
 			if (channel) {
-				zeroOutChannel = YES;
+				zeroOutChannel = NO;
 				
 				self.config.matchChannelID = channel.config.itemUUID;
 			}
