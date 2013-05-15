@@ -273,7 +273,6 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (void)defaultIRCClientPrompt:(BOOL)forced;
 
 + (void)initPreferences;
-+ (void)sync;
 
 #pragma mark -
 #pragma mark NSTextView Preferences

@@ -156,7 +156,6 @@
 - (void)save
 {
 	[TPCPreferences saveWorld:[self dictionaryValue]];
-	[TPCPreferences sync];
 }
 
 - (void)terminate

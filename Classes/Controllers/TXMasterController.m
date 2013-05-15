@@ -623,7 +623,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	}
 
 	[TPCPreferences saveWindowState:dic name:@"Window -> Main Window"];
-	[TPCPreferences sync];
 }
 
 #pragma mark -
