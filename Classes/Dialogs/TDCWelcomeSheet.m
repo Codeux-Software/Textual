@@ -220,8 +220,8 @@
 
 - (void)updateOKButton
 {
-	NSString *nick = self.nicknameField.stringValue;
-	NSString *host = self.serverAddressField.stringValue;
+	NSString *nick = self.nicknameField.trimmedStringValue;
+	NSString *host = self.serverAddressField.trimmedStringValue;
 	
 	BOOL enabled = (NSObjectIsNotEmpty(nick) && NSObjectIsNotEmpty(host));
 	

@@ -39,7 +39,7 @@
 
 @implementation NSTextField (TXTextFieldHelper)
 
-- (NSString *)stringValue
+- (NSString *)trimmedStringValue
 {
 	NSString *value = [super stringValue];
 
@@ -48,7 +48,7 @@
 
 - (NSString *)firstTokenStringValue
 {
-	NSString *value = self.stringValue;
+	NSString *value = self.trimmedStringValue;
 
 	NSInteger spacePosition = [value stringPosition:NSStringWhitespacePlaceholder];
 

@@ -360,7 +360,7 @@
 	self.config.connectionPrefersIPv6		= self.prefersIPv6Check.state;
 	self.config.connectionUsesSSL			= self.connectionUsesSSLCheck.state;
 	self.config.performPongTimer			= self.pongTimerCheck.state;
-	self.config.serverPassword				= self.serverPasswordField.stringValue;
+	self.config.serverPassword				= self.serverPasswordField.trimmedStringValue;
 	
 	NSString *realhost = nil;
 	NSString *hostname = [self.serverAddressCombo.firstTokenStringValue cleanedServerHostmask];
@@ -379,14 +379,14 @@
 
     self.config.serverAddress = self.config.serverAddress.lowercaseString;
 	
-	if (NSObjectIsEmpty(self.serverNameField.stringValue)) {
+	if (NSObjectIsEmpty(self.serverNameField.trimmedStringValue)) {
 		if (NSObjectIsEmpty(realhost)) {
 			self.config.clientName = TXTLS(@"DefaultNewConnectionName");
 		} else {
 			self.config.clientName = realhost;
 		}
 	} else {
-		self.config.clientName = self.serverNameField.stringValue;
+		self.config.clientName = self.serverNameField.trimmedStringValue;
 	}
 	
 	if (self.serverPortField.integerValue < 1) {
@@ -399,10 +399,10 @@
 	self.config.nickname			= self.nicknameField.firstTokenStringValue;
 	self.config.awayNickname		= self.awayNicknameField.firstTokenStringValue;
 	self.config.username			= self.usernameField.firstTokenStringValue;
-	self.config.realname			= self.realnameField.stringValue;
-	self.config.nicknamePassword	= self.nicknamePasswordField.stringValue;
+	self.config.realname			= self.realnameField.trimmedStringValue;
+	self.config.nicknamePassword	= self.nicknamePasswordField.trimmedStringValue;
 	
-	NSArray *nicks = [self.alternateNicknamesField.stringValue split:NSStringWhitespacePlaceholder];
+	NSArray *nicks = [self.alternateNicknamesField.trimmedStringValue split:NSStringWhitespacePlaceholder];
 	
 	[self.config.alternateNicknames removeAllObjects];
 	
@@ -413,8 +413,8 @@
 	}
 	
 	/* Messages */
-	self.config.sleepModeLeavingComment		= self.sleepModeQuitMessageField.stringValue;
-	self.config.normalLeavingComment		= self.normalLeavingCommentField.stringValue;
+	self.config.sleepModeLeavingComment		= self.sleepModeQuitMessageField.trimmedStringValue;
+	self.config.normalLeavingComment		= self.normalLeavingCommentField.trimmedStringValue;
 	
 	/* Encoding */
     NSInteger primaryEncoding = [self.encodingList integerForKey:self.primaryEncodingButton.title];
@@ -428,7 +428,7 @@
 	self.config.proxyAddress	= self.proxyAddressField.firstTokenStringValue;
 	self.config.proxyPort		= self.proxyPortField.integerValue;
 	self.config.proxyUsername	= self.proxyUsernameField.firstTokenStringValue;
-	self.config.proxyPassword	= self.proxyPasswordField.stringValue;
+	self.config.proxyPassword	= self.proxyPasswordField.trimmedStringValue;
 
     self.config.proxyAddress = self.config.proxyAddress.lowercaseString;
 
@@ -460,9 +460,9 @@
 
 - (void)updateConnectionPage
 {
-	NSString *name = self.serverNameField.stringValue;
-	NSString *host = self.serverAddressCombo.stringValue;
-	NSString *nick = self.nicknameField.stringValue;
+	NSString *name = self.serverNameField.trimmedStringValue;
+	NSString *host = self.serverAddressCombo.trimmedStringValue;
+	NSString *nick = self.nicknameField.trimmedStringValue;
 	
 	NSInteger port = self.serverPortField.integerValue;
 	

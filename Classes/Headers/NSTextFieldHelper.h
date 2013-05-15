@@ -38,7 +38,7 @@
 #import "TextualApplication.h"
 
 @interface NSTextField (TXTextFieldHelper)
-- (NSString *)stringValue;
+- (NSString *)trimmedStringValue;
 - (NSString *)firstTokenStringValue;
 @end
 

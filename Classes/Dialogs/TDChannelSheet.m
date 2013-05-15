@@ -117,10 +117,10 @@
 - (void)save
 {
 	self.config.channelName		= self.channelNameField.firstTokenStringValue;
-	self.config.defaultModes	= self.defaultModesField.stringValue;
-	self.config.defaultTopic	= self.defaultTopicField.stringValue;
+	self.config.defaultModes	= self.defaultModesField.trimmedStringValue;
+	self.config.defaultTopic	= self.defaultTopicField.trimmedStringValue;
 	self.config.secretKey		= self.secretKeyField.firstTokenStringValue;
-	self.config.encryptionKey	= self.encryptionKeyField.stringValue;
+	self.config.encryptionKey	= self.encryptionKeyField.trimmedStringValue;
     
 	self.config.autoJoin			= self.autoJoinCheck.state;
 	self.config.showTreeBadgeCount  = self.showTreeBadgeCountCheck.state;
@@ -136,7 +136,7 @@
 
 - (void)update
 {
-	NSString *s = self.channelNameField.stringValue;
+	NSString *s = self.channelNameField.trimmedStringValue;
 	
 	[self.okButton setEnabled:[s isChannelName]];
 	
