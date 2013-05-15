@@ -40,6 +40,12 @@
 #define _DefaultTextFieldWidthPadding		1.0
 #define _DefaultTextFieldHeightPadding		2.0
 
+/* We just stress the text field trying to count this much. I am adding htis
+ limit because I was stress testing copy/paste and Textual was running the
+ math on so many lines when it did not have to. I made 1000 because even on
+ vertical displays, I don't seeing it reaching this high. */
+#define _maximumLineCount			1000
+
 @implementation TVCTextField
 
 - (id)initWithCoder:(NSCoder *)coder
@@ -238,6 +244,8 @@
 		if (NSEqualRanges(blr, lineRange)) {
 			return (numberOfLines + 1);
 		}
+
+		NSAssertReturnLoopBreak(numberOfLines < _maximumLineCount);
 		
 		index = NSMaxRange(lineRange);
 	}
@@ -256,7 +264,9 @@
 	
 	for (numberOfLines = 0, index = 0; index < numberOfGlyphs; numberOfLines++) {
 		[layoutManager lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
-		
+
+		NSAssertReturnLoopBreak(numberOfLines < _maximumLineCount);
+
 		index = NSMaxRange(lineRange);
 	}
 	
