@@ -33,7 +33,7 @@
 		</object>
 		<array class="NSMutableArray" key="IBDocument.RootObjects" id="285530636">
 			<object class="NSCustomObject" id="786816735">
-				<string key="NSClassName">TDCHighlightSheet</string>
+				<string key="NSClassName">TDCHighlightListSheet</string>
 			</object>
 			<object class="NSCustomObject" id="535433247">
 				<string key="NSClassName">FirstResponder</string>
@@ -52,7 +52,7 @@
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<string key="NSWindowContentMinSize">{778, 350}</string>
 				<object class="NSView" key="NSWindowView" id="459955935">
-					<reference key="NSNextResponder"/>
+					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSScrollView" id="463809352">
@@ -69,7 +69,6 @@
 											<array class="NSMutableArray" key="NSSubviews"/>
 											<string key="NSFrameSize">{791, 246}</string>
 											<reference key="NSSuperview" ref="86922448"/>
-											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="586223888"/>
 											<bool key="NSEnabled">YES</bool>
 											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -79,7 +78,6 @@
 												<int key="NSvFlags">256</int>
 												<string key="NSFrameSize">{791, 17}</string>
 												<reference key="NSSuperview" ref="586223888"/>
-												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="86922448"/>
 												<reference key="NSTableView" ref="929335627"/>
 											</object>
@@ -248,7 +246,6 @@
 									</array>
 									<string key="NSFrame">{{1, 17}, {791, 246}}</string>
 									<reference key="NSSuperview" ref="463809352"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="929335627"/>
 									<reference key="NSDocView" ref="929335627"/>
 									<reference key="NSBGColor" ref="300696518"/>
@@ -259,7 +256,6 @@
 									<int key="NSvFlags">-2147483392</int>
 									<string key="NSFrame">{{764, 17}, {15, 229.52600000000001}}</string>
 									<reference key="NSSuperview" ref="463809352"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="188300049"/>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<reference key="NSTarget" ref="463809352"/>
@@ -271,7 +267,6 @@
 									<int key="NSvFlags">-2147483392</int>
 									<string key="NSFrame">{{1, 249}, {893, 15}}</string>
 									<reference key="NSSuperview" ref="463809352"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="957867410"/>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<int key="NSsFlags">1</int>
@@ -287,7 +282,6 @@
 									</array>
 									<string key="NSFrame">{{1, 0}, {791, 17}}</string>
 									<reference key="NSSuperview" ref="463809352"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="741920194"/>
 									<reference key="NSDocView" ref="741920194"/>
 									<reference key="NSBGColor" ref="300696518"/>
@@ -296,7 +290,6 @@
 							</array>
 							<string key="NSFrame">{{-1, 44}, {793, 264}}</string>
 							<reference key="NSSuperview" ref="459955935"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="86922448"/>
 							<int key="NSsFlags">133682</int>
 							<reference key="NSVScroller" ref="114413946"/>
@@ -313,7 +306,6 @@
 							<int key="NSvFlags">289</int>
 							<string key="NSFrame">{{581, 5}, {111, 32}}</string>
 							<reference key="NSSuperview" ref="459955935"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="918197425"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="984249461">
@@ -336,7 +328,6 @@
 							<int key="NSvFlags">289</int>
 							<string key="NSFrame">{{692, 5}, {85, 32}}</string>
 							<reference key="NSSuperview" ref="459955935"/>
-							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="685205676">
 								<int key="NSCellFlags">67108864</int>
@@ -358,7 +349,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{17, 320}, {486, 17}}</string>
 							<reference key="NSSuperview" ref="459955935"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="463809352"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="360239044">
@@ -386,7 +376,6 @@
 							<int key="NSvFlags">294</int>
 							<string key="NSFrame">{{17, 15}, {357, 17}}</string>
 							<reference key="NSSuperview" ref="459955935"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="887075163"/>
 							<string key="NSReuseIdentifierKey">_NS:3937</string>
 							<bool key="NSEnabled">YES</bool>
@@ -404,8 +393,6 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{791, 350}</string>
-					<reference key="NSSuperview"/>
-					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="390584746"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
@@ -709,22 +696,6 @@
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<object class="IBPartialClassDescription">
-					<string key="className">TDCHighlightSheet</string>
-					<string key="superclassName">TDCSheetBase</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/TDCHighlightSheet.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">TDCSheetBase</string>
-					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/TDCSheetBase.h</string>
-					</object>
-				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">TVCListView</string>
 					<string key="superclassName">NSTableView</string>

@@ -73,6 +73,7 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 @property (nonatomic, strong) NSMutableArray *alternateNicknames;
 @property (nonatomic, strong) NSMutableArray *channelList;
 @property (nonatomic, strong) NSMutableArray *ignoreList;
+@property (nonatomic, strong) NSMutableArray *highlightList;
 @property (nonatomic, strong) NSMutableArray *loginCommands;
 @property (nonatomic, strong) NSString *itemUUID; // Unique Identifier (UUID)
 @property (nonatomic, strong) NSString *clientName;

@@ -275,6 +275,10 @@
 
 "ServerNotConnectedLineSendError" = "Failed to send data to server. Not connected.";
 
+"ServerSheetHighlightListTableAllChannels" = "All Channels";
+"ServerSheetHighlightListTableExcludeEntry" = "Exclude";
+"ServerSheetHighlightListTableIncludeEntry" = "Match";
+
 "ServerNoticeTreeItemTitle"	= "Server Notices";
 
 "ServerSheetAutojoinNavigationTreeItem"	= "Autojoin";
@@ -287,6 +291,7 @@
 "ServerSheetMessageNavigationTreeItem" = "Messages";
 "ServerSheetMiscNavigationTreeItem" = "Miscellaneous";
 "ServerSheetProxyNavigationTreeItem" = "Proxy Server";
+"ServerSheetMentionsNavigationTreeItem" = "Mentions";
 
 "SetAsDefaultIRCClientPromptMessage" = "Textual is not set as the default IRC client for this copy of Mac OS X. Set it?";
 "SetAsDefaultIRCClientPromptTitle" = "Default IRC Client";

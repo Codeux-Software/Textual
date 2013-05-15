@@ -37,34 +37,17 @@
 
 #import "TextualApplication.h"
 
-@interface TDChannelSheet : TDCSheetBase
-@property (nonatomic, assign) BOOL newItem;
-@property (nonatomic, strong) NSString *clientID;
-@property (nonatomic, strong) NSString *channelID;
-@property (nonatomic, strong) IRCChannelConfig *config;
-@property (nonatomic, nweak) NSTextField *channelNameField;
-@property (nonatomic, nweak) NSTextField *defaultModesField;
-@property (nonatomic, nweak) NSTextField *defaultTopicField;
-@property (nonatomic, nweak) NSTextField *encryptionKeyField;
-@property (nonatomic, nweak) NSTextField *secretKeyField;
-@property (nonatomic, nweak) NSButton *autoJoinCheck;
-@property (nonatomic, nweak) NSButton *ignoreHighlightsCheck;
-@property (nonatomic, nweak) NSButton *inlineImagesCheck;
-@property (nonatomic, nweak) NSButton *pushNotificationsCheck;
-@property (nonatomic, nweak) NSButton *showTreeBadgeCountCheck;
-@property (nonatomic, nweak) NSButton *JPQActivityCheck;
-@property (nonatomic, nweak) NSSegmentedControl *contentViewTabView;
-@property (nonatomic, nweak) NSView *contentView;
-@property (nonatomic, nweak) NSView *defaultsView;
-@property (nonatomic, nweak) NSView *encryptionView;
-@property (nonatomic, nweak) NSView *generalView;
+@interface TDCHighlightListSheet : TDCSheetBase
+@property (nonatomic, nweak) NSTextField *headerTitleField;
+@property (nonatomic, nweak) TVCListView *highlightListTable;
 
-- (void)start;
+- (void)show;
 
-- (void)onMenuBarItemChanged:(id)sender;
+- (void)reloadTable;
+
+- (void)onClearList:(id)sender;
 @end
 
-@interface NSObject (TDChannelSheetDelegate)
-- (void)channelSheetOnOK:(TDChannelSheet *)sender;
-- (void)channelSheetWillClose:(TDChannelSheet *)sender;
+@interface NSObject (TDCHighlightListSheetDelegate)
+- (void)highlightListSheetWillClose:(TDCHighlightListSheet *)sender;
 @end

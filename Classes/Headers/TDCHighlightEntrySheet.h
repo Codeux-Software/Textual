@@ -37,17 +37,32 @@
 
 #import "TextualApplication.h"
 
-@interface TDCHighlightSheet : TDCSheetBase
-@property (nonatomic, nweak) NSTextField *headerTitleField;
-@property (nonatomic, nweak) TVCListView *highlightListTable;
+/* TDCHighlightEntrySheet handles management of highlights inside TDCServerSheet. */
+/* It should not be mistaken for TDCHighlightListSheet which shows the actual list of
+highlights for a server by using Command+5 or the actual Windows menu bar item. */
 
-- (void)show;
+@interface TDCHighlightEntrySheet : TDCSheetBase
+@property (nonatomic, assign) BOOL newItem;
+@property (nonatomic, strong) NSString *clientID; // To reference a channel list.
+@property (nonatomic, nweak) NSTextField *matchKeywordTextField;
+@property (nonatomic, nweak) NSPopUpButton *matchTypePopupButton;
+@property (nonatomic, nweak) NSPopUpButton *matchChannelPopupButton;
+@property (nonatomic, strong) TDCHighlightEntryMatchCondition *config;
 
-- (void)reloadTable;
-
-- (void)onClearList:(id)sender;
+- (void)start;
 @end
 
-@interface NSObject (TDCHighlightSheetDelegate)
-- (void)highlightSheetWillClose:(TDCHighlightSheet *)sender;
+@interface TDCHighlightEntryMatchCondition : NSObject <NSMutableCopying>
+@property (nonatomic, strong) NSString *itemUUID; // Unique Identifier (UUID)
+@property (nonatomic, strong) NSString *matchKeyword;
+@property (nonatomic, strong) NSString *matchChannelID; // The itemUUID of the IRCChannelConfig
+@property (nonatomic, assign) BOOL matchIsExcluded;
+
+- (id)initWithDictionary:(NSDictionary *)dic;
+- (NSDictionary *)dictionaryValue;
+@end
+
+@interface NSObject (TDCHighlightEntrySheetDelegate)
+- (void)highlightEntrySheetOnOK:(TDCHighlightEntrySheet *)sender;
+- (void)highlightEntrySheetWillClose:(TDCHighlightEntrySheet *)sender;
 @end
