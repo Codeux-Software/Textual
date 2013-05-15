@@ -111,7 +111,9 @@
 	NSInteger selectedItem = self.matchChannelPopupButton.indexOfSelectedItem;
 
 	NSString *selectedTitle = self.matchChannelPopupButton.titleOfSelectedItem;
-	
+
+	BOOL zeroOutChannel = YES;
+
 	if (selectedItem > 0) { // 0 = ALL CHANNELS
 		IRCClient *client = [self.worldController findClientById:self.clientID];
 
@@ -119,9 +121,15 @@
 			IRCChannel *channel = [client findChannel:selectedTitle];
 
 			if (channel) {
+				zeroOutChannel = YES;
+				
 				self.config.matchChannelID = channel.config.itemUUID;
 			}
 		}
+	}
+
+	if (zeroOutChannel) {
+		self.config.matchChannelID = NSStringEmptyPlaceholder;
 	}
 
 	/* Entry type. */
