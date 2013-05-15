@@ -242,14 +242,12 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	BOOL renderLinks = [inputDictionary boolForKey:@"renderLinks"];
 	BOOL isNormalMsg = [inputDictionary boolForKey:@"isNormalMessage"];
 
-	NSString *currentNickname = [inputDictionary objectForKey:@"nickname"];
-
 	BOOL exactWordMatching = ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightExactMatchType);
     BOOL regexWordMatching = ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightRegularExpressionMatchType);
 	
-	NSArray *highlightWords	= [inputDictionary arrayForKey:@"highlightKeywords"];
-	NSArray *excludeWords = [inputDictionary arrayForKey:@"excludeKeywords"];
-    
+	NSMutableArray *highlightWords	= [[inputDictionary arrayForKey:@"highlightKeywords"] mutableCopy];
+	NSMutableArray *excludeWords = [[inputDictionary arrayForKey:@"excludeKeywords"] mutableCopy];
+
     NSFont *attributedStringFont = inputDictionary[@"attributedStringFont"];
 
 	/* This is the most important part of the entire process of rendering each line.
@@ -429,6 +427,31 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			resultInfo[@"URLRanges"] = urlAry;
 		}
 		
+		/* Add server/channel specific matches. */
+		IRCClientConfig *clientConfig = log.client.config;
+
+		for (TDCHighlightEntryMatchCondition *e in clientConfig.highlightList) {
+			BOOL addKeyword = NO;
+
+			if (NSObjectIsNotEmpty(e.matchChannelID)) {
+				NSString *channelID = log.channel.config.itemUUID;
+
+				if ([e.matchChannelID isEqualToString:channelID]) {
+					addKeyword = YES;
+				}
+			} else {
+				addKeyword = YES;
+			}
+
+			if (addKeyword) {
+				if (e.matchIsExcluded) {
+					[excludeWords safeAddObjectWithoutDuplication:e.matchKeyword];
+				} else {
+					[highlightWords safeAddObjectWithoutDuplication:e.matchKeyword];
+				}
+			}
+		}
+		
 		/* Word Matching — Highlights. */
 		BOOL foundKeyword = NO;
 		
@@ -491,260 +514,161 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
             }
         } else {
 			/* Normal keyword matching. Partial and absolute. */
-			NSString *channelName = nil;
-			
-			if (log && isNormalMsg) {
-				channelName = log.channel.name.lowercaseString;
-			}
-
-			// ---- //
-			
             for (__strong NSString *keyword in highlightWords) {
 				PointerIsEmptyAssertLoopContinue(keyword);
 
-				BOOL continueSearch = YES;
+				start = 0;
 
-				if (currentNickname && channelName) {
-					if ([keyword contains:@";"] && ([keyword contains:@"-"] || [keyword contains:@"+"]))
-					{
-						// ---- //
-						
-						NSRange range = [keyword rangeOfString:@";" options:NSBackwardsSearch];
+				while (start < length) {
+					NSRange r = [body rangeOfString:keyword
+											options:NSCaseInsensitiveSearch
+											  range:NSMakeRange(start, (length - start))];
 
-						NSString *cutBody = [keyword safeSubstringAfterIndex:range.location];
-						
-						NSArray *limitList = [cutBody split:NSStringWhitespacePlaceholder];
-
-						// ---- //
-
-						keyword = [keyword safeSubstringToIndex:range.location];
-						
-						NSMutableArray *includeChannels	 = [NSMutableArray array];
-						NSMutableArray *excludeChannels	 = [NSMutableArray array];
-						NSMutableArray *includeNicks	 = [NSMutableArray array];
-						NSMutableArray *excludeNicks	 = [NSMutableArray array];
-						
-						for (__strong NSString *limit in limitList) {
-							limit = limit.lowercaseString;
-							
-							BOOL include = [limit hasPrefix:@"+"];
-							BOOL exclude = [limit hasPrefix:@"-"];
-							
-							if (exclude == NO && include == NO) {
-								continue;
-							}
-							
-							limit = [limit safeSubstringFromIndex:1];
-							
-							if ([limit isChannelName]) {
-								if (include) {
-									[includeChannels addObject:limit];
-								} else {
-									[excludeChannels addObject:limit];
-								}
-							} else {
-								if (include) {
-									[includeNicks addObject:limit];
-								} else {
-									[excludeNicks addObject:limit];
-								}
-							}
-						}
-
-						// ---- //
-
-						BOOL hasIncludedChannels = NSObjectIsNotEmpty(includeChannels);
-						BOOL hasExcludedChannels = NSObjectIsNotEmpty(excludeChannels);
-						
-						if ([channelName isChannelName]) {
-							if (hasIncludedChannels && hasExcludedChannels == NO) {
-								if ([includeChannels containsObject:channelName] == NO) {
-									continueSearch = NO;
-								}
-							} else {
-								if ([includeChannels containsObject:channelName]) {
-									continueSearch = YES;
-								}
-								
-								if ([excludeChannels containsObject:channelName]) {
-									continueSearch = NO;
-								}
-							}
-						}
-						
-						if (continueSearch) {
-							if (hasIncludedChannels && hasExcludedChannels == NO) {
-								if ([includeNicks containsObject:currentNickname] == NO) {
-									continueSearch = NO;
-								}
-							} else {
-								if ([includeNicks containsObject:currentNickname]) {
-									continueSearch = YES;
-								}
-								
-								if ([excludeNicks containsObject:currentNickname]) {
-									continueSearch = NO;
-								}
-							}
-						}
-					}
-				}
-
-				// ---- //
-				
-				if (continueSearch) {
-					start = 0;
-					
-					while (start < length) {
-						NSRange r = [body rangeOfString:keyword 
-												options:NSCaseInsensitiveSearch 
-												  range:NSMakeRange(start, (length - start))];
-						
-						if (r.location == NSNotFound) {
-							break;
-						}
-						
-						BOOL enabled = YES;
-						
-						for (NSValue *e in excludeRanges) {
-							if (NSIntersectionRange(r, e.rangeValue).length > 0) {
-								enabled = NO;
-								
-								break;
-							}
-						}
-						
-						if (exactWordMatching) {
-							if (enabled) {
-								UniChar c = [body characterAtIndex:r.location];
-								
-								if (TXStringIsAlphabeticNumeric(c)) {
-									NSInteger prev = (r.location - 1);
-									
-									if (0 <= prev && prev < length) {
-										UniChar c = [body characterAtIndex:prev];
-										
-										if (TXStringIsAlphabeticNumeric(c)) {
-											enabled = NO;
-										}
-									}
-								}
-							}
-							
-							if (enabled) {
-								UniChar c = [body characterAtIndex:(NSMaxRange(r) - 1)];
-								
-								if (TXStringIsAlphabeticNumeric(c)) {
-									NSInteger next = NSMaxRange(r);
-									
-									if (next < length) {
-										UniChar c = [body characterAtIndex:next];
-										
-										if (TXStringIsAlphabeticNumeric(c)) {
-											enabled = NO;
-										}
-									}
-								}
-							}
-						}
-						
-						if (enabled) {
-							if (isClear(attrBuf, _rendererURLAttribute, r.location, r.length)) {
-								setFlag(attrBuf, _rendererKeywordHighlightAttribute, r.location, r.length);
-								
-								foundKeyword = YES;
-								
-								break;
-							}
-						}
-						
-						start = (NSMaxRange(r) + 1);
-					}
-
-					/* We break after finding a keyword because as long as there is one
-					 amongst many, that is all the end user really cares about. */
-					if (foundKeyword) {
+					if (r.location == NSNotFound) {
 						break;
 					}
+
+					BOOL enabled = YES;
+
+					for (NSValue *e in excludeRanges) {
+						if (NSIntersectionRange(r, e.rangeValue).length > 0) {
+							enabled = NO;
+
+							break;
+						}
+					}
+
+					if (exactWordMatching) {
+						if (enabled) {
+							UniChar c = [body characterAtIndex:r.location];
+
+							if (TXStringIsAlphabeticNumeric(c)) {
+								NSInteger prev = (r.location - 1);
+
+								if (0 <= prev && prev < length) {
+									UniChar c = [body characterAtIndex:prev];
+
+									if (TXStringIsAlphabeticNumeric(c)) {
+										enabled = NO;
+									}
+								}
+							}
+						}
+
+						if (enabled) {
+							UniChar c = [body characterAtIndex:(NSMaxRange(r) - 1)];
+
+							if (TXStringIsAlphabeticNumeric(c)) {
+								NSInteger next = NSMaxRange(r);
+
+								if (next < length) {
+									UniChar c = [body characterAtIndex:next];
+
+									if (TXStringIsAlphabeticNumeric(c)) {
+										enabled = NO;
+									}
+								}
+							}
+						}
+					}
+
+					if (enabled) {
+						if (isClear(attrBuf, _rendererURLAttribute, r.location, r.length)) {
+							setFlag(attrBuf, _rendererKeywordHighlightAttribute, r.location, r.length);
+
+							foundKeyword = YES;
+
+							break;
+						}
+					}
+
+					start = (NSMaxRange(r) + 1);
 				}
+
+				/* We break after finding a keyword because as long as there is one
+				 amongst many, that is all the end user really cares about. */
+				if (foundKeyword) {
+					break;
+				}
+
             }
         }
-        
+
 		[resultInfo setBool:foundKeyword forKey:@"wordMatchFound"];
-		
+
 		/* Channel Name Detection. */
 		start = 0;
-		
+
 		while (start < length) {
 			NSRange r = [body rangeOfChannelNameStart:start];
-			
+
 			if (r.location == NSNotFound) {
 				break;
 			}
-			
+
 			if (isClear(attrBuf, _rendererURLAttribute, r.location, r.length)) {
 				setFlag(attrBuf, _rendererChannelNameAttribute, r.location, r.length);
 			}
-			
+
 			start = (NSMaxRange(r) + 1);
 		}
-		
+
 		/* Conversation Tracking */
 		if ([TPCPreferences trackConversations]) {
 			if (log && isNormalMsg) {
 				IRCChannel *logChannel = log.channel;
-				
+
 				NSMutableSet *mentionedUsers = [NSMutableSet set];
 
 				NSArray *sortedMembers = logChannel.memberListLengthSorted;
-					
+
 				for (IRCUser *user in sortedMembers) {
 					start = 0;
 
 					PointerIsEmptyAssertLoopContinue(user);
 					PointerIsEmptyAssertLoopContinue(user.nickname);
-					
+
 					while (start < length) {
 						NSRange r = [body rangeOfString:user.nickname
-												options:NSCaseInsensitiveSearch 
+												options:NSCaseInsensitiveSearch
 												  range:NSMakeRange(start, (length - start))];
-						
+
 						if (r.location == NSNotFound) {
 							break;
 						}
-						
+
 						BOOL cleanMatch = YES;
-						
+
 						UniChar c = [body characterAtIndex:r.location];
-						
+
 						if (TXStringIsAlphabeticNumeric(c)) {
 							NSInteger prev = (r.location - 1);
-							
+
 							if (0 <= prev && prev < length) {
 								UniChar c = [body characterAtIndex:prev];
-								
+
 								if (TXStringIsAlphabeticNumeric(c)) {
 									cleanMatch = NO;
 								}
 							}
 						}
-						
+
 						if (cleanMatch) {
 							UniChar c = [body characterAtIndex:(NSMaxRange(r) - 1)];
-							
+
 							if (TXStringIsAlphabeticNumeric(c)) {
 								NSInteger next = NSMaxRange(r);
-								
+
 								if (next < length) {
 									UniChar c = [body characterAtIndex:next];
-									
+
 									if (TXStringIsAlphabeticNumeric(c)) {
 										cleanMatch = NO;
 									}
 								}
 							}
 						}
-						
+
 						if (cleanMatch) {
 							if (isClear(attrBuf, _rendererURLAttribute, r.location, r.length) &&
 								isClear(attrBuf, _rendererKeywordHighlightAttribute, r.location, r.length))
@@ -754,7 +678,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 								[mentionedUsers addObject:user];
 							}
 						}
-						
+
 						start = (NSMaxRange(r) + 1);
 					}
 				}
@@ -764,7 +688,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				}
 			}
 		}
-		
+
 		if (PointerIsEmpty(outputDictionary) == NO) {
 			*outputDictionary = resultInfo;
 		}
