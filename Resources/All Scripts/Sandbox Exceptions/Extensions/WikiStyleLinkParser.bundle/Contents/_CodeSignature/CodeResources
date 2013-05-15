@@ -6,13 +6,13 @@
 	<dict>
 		<key>Resources/BasicLanguage.strings</key>
 		<data>
-		GQhRbANJ5/mJfiIkyIswrPXQAp8=
+		ZPQzT7nhOpljvMwTuvjGidhJvhw=
 		</data>
-		<key>Resources/English.lproj/TPIWikipediaLinkParser.nib</key>
+		<key>Resources/English.lproj/TPIWikiStyleLinkParser.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			5ZB7wYtaT8h3uvQ601o6ABAv0pk=
+			nd+3ZVtZbuJlZoKEVvAk2I9uRsg=
 			</data>
 			<key>optional</key>
 			<true/>

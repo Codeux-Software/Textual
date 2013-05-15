@@ -35,11 +35,11 @@
 
  *********************************************************************** */
 
-#import "TPIWikipediaLinkParser.h"
+#import "TPIWikiStyleLinkParser.h"
 
 #define _linkMatchRegex             @"\\[\\[([^\\]]+)\\]\\]"
 
-@interface TPIWikipediaLinkParser ()
+@interface TPIWikiStyleLinkParser ()
 @property (nonatomic, weak) NSView *preferencePane;
 @property (nonatomic, unsafe_unretained) NSWindow *rnewConditionWindow;
 @property (nonatomic, weak) NSTextField *rnewConditionLinkPrefixField;
@@ -60,14 +60,14 @@
 - (void)updateNewConditionWindowSaveButton:(id)sender;
 @end
 
-@implementation TPIWikipediaLinkParser
+@implementation TPIWikiStyleLinkParser
 
 #pragma mark -
 #pragma mark Init.
 
 - (void)pluginLoadedIntoMemory:(IRCWorld *)world
 {
-    [NSBundle loadNibNamed:@"TPIWikipediaLinkParser" owner:self];
+    [NSBundle loadNibNamed:@"TPIWikiStyleLinkParser" owner:self];
 	
 	[self updateRemoveConditionButton];
 }
@@ -134,7 +134,7 @@
 - (id)interceptUserInput:(id)input command:(NSString *)command
 {
 	/* Return input if we are not going to process anything. */
-    NSAssertReturnR([self processWikipediaLinks], input);
+    NSAssertReturnR([self processWikiStyleLinks], input);
 
     /* Do not handle NSString. */
     if ([input isKindOfClass:[NSAttributedString class]] == NO) {
@@ -190,7 +190,7 @@
 
 - (NSString *)preferencesMenuItemName
 {
-    return TPILS(@"WikipediaLinkParserPreferencePaneMenuItemTitle");
+    return TPILS(@"WikiStyleLinkParserPreferencePaneMenuItemTitle");
 }
 
 - (NSView *)preferencesView
@@ -220,7 +220,7 @@
 	if ([tableColumn.identifier isEqualToString:@"channel"]) {
 		NSString *entryName = [self channelNameFromID:entryInfo[0]];
 
-		NSObjectIsEmptyAssertReturn(entryName, TPILS(@"WikipediaLinkParserChannelNoLongerExists"));
+		NSObjectIsEmptyAssertReturn(entryName, TPILS(@"WikiStyleLinkParserChannelNoLongerExists"));
 
 		return entryName;
 	} else {
@@ -339,7 +339,7 @@
 	[mutOldPrefixes removeObjectAtIndex:selectedRow];
 
 	/* Update defaults. */
-	[RZUserDefaults() setObject:mutOldPrefixes forKey:@"Wikipedia Link Parser Extension -> Link Prefixes"];
+	[RZUserDefaults() setObject:mutOldPrefixes forKey:@"Wiki-style Link Parser Extension -> Link Prefixes"];
 
 	/* Reload the table. */
 	[self.linkPrefixesTable reloadData];
@@ -359,7 +359,7 @@
 	[mutOldPrefixes safeAddObjectWithoutDuplication:@[channelUUID, linkPrefix]];
 
 	/* Update defaults. */
-	[RZUserDefaults() setObject:mutOldPrefixes forKey:@"Wikipedia Link Parser Extension -> Link Prefixes"];
+	[RZUserDefaults() setObject:mutOldPrefixes forKey:@"Wiki-style Link Parser Extension -> Link Prefixes"];
 
 	/* Clear the matrix. */
 	self.rnewConditionChannelMatrix = nil;
@@ -399,9 +399,9 @@
 #pragma mark -
 #pragma mark Utilities.
 
-- (BOOL)processWikipediaLinks
+- (BOOL)processWikiStyleLinks
 {
-    return [RZUserDefaults() boolForKey:@"Wikipedia Link Parser Extension -> Service Enabled"];
+    return [RZUserDefaults() boolForKey:@"Wiki-style Link Parser Extension -> Service Enabled"];
 }
 
 /* -linkPrefixes returns an array of all link prefixes. Each link prefix is stored as an 
@@ -410,7 +410,7 @@
 
 - (NSArray *)linkPrefixes
 {
-	NSArray *prefixes = [RZUserDefaults() arrayForKey:@"Wikipedia Link Parser Extension -> Link Prefixes"];
+	NSArray *prefixes = [RZUserDefaults() arrayForKey:@"Wiki-style Link Parser Extension -> Link Prefixes"];
 
 	PointerIsEmptyAssertReturn(prefixes, [NSArray array]);
 

@@ -35,21 +35,6 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+"WikiStyleLinkParserPreferencePaneMenuItemTitle" = "Wiki-style Link Parser";
 
-@interface TPIWikipediaLinkParser : NSObject <THOPluginProtocol, NSTextDelegate, NSTableViewDataSource, NSTableViewDelegate>
-
-- (void)pluginLoadedIntoMemory:(IRCWorld *)world;
-
-- (void)messageReceivedByServer:(IRCClient *)client
-                         sender:(NSDictionary *)senderDict
-                        message:(NSDictionary *)messageDict;
-
-- (NSArray *)pluginSupportsServerInputCommands;
-
-- (id)interceptUserInput:(id)input command:(NSString *)command;
-
-- (NSString *)preferencesMenuItemName;
-- (NSView *)preferencesView;
-
-@end
+"WikiStyleLinkParserChannelNoLongerExists" = "Channel Does Not Exist";
