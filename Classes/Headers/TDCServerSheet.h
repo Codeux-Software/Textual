@@ -45,14 +45,17 @@
 @property (nonatomic, strong) IRCClientConfig *config;
 @property (nonatomic, nweak) NSButton *addChannelButton;
 @property (nonatomic, nweak) NSButton *addIgnoreButton;
+@property (nonatomic, nweak) NSButton *addHighlightButton;
 @property (nonatomic, nweak) NSButton *autoConnectCheck;
 @property (nonatomic, nweak) NSButton *autoDisconnectOnSleepCheck;
 @property (nonatomic, nweak) NSButton *autoReconnectCheck;
 @property (nonatomic, nweak) NSButton *connectionUsesSSLCheck;
 @property (nonatomic, nweak) NSButton *deleteChannelButton;
 @property (nonatomic, nweak) NSButton *deleteIgnoreButton;
+@property (nonatomic, nweak) NSButton *deleteHighlightButton;
 @property (nonatomic, nweak) NSButton *editChannelButton;
 @property (nonatomic, nweak) NSButton *editIgnoreButton;
+@property (nonatomic, nweak) NSButton *editHighlightButton;
 @property (nonatomic, nweak) NSButton *floodControlCheck;
 @property (nonatomic, nweak) NSButton *invisibleModeCheck;
 @property (nonatomic, nweak) NSButton *prefersIPv6Check;
@@ -91,11 +94,14 @@
 @property (nonatomic, nweak) NSView *ignoresView;
 @property (nonatomic, nweak) NSView *messagesView;
 @property (nonatomic, nweak) NSView *proxyServerView;
+@property (nonatomic, nweak) NSView *highlightsView;
 @property (nonatomic, nweak) TVCListView *tabView;
 @property (nonatomic, nweak) TVCListView *channelTable;
 @property (nonatomic, nweak) TVCListView *ignoreTable;
+@property (nonatomic, nweak) TVCListView *highlightsTable;
 @property (nonatomic, strong) TDChannelSheet *channelSheet;
 @property (nonatomic, strong) TDCAddressBookSheet *ignoreSheet;
+@property (nonatomic, strong) TDCHighlightEntrySheet *highlightSheet;
 
 - (void)start:(NSString *)viewToken withContext:(NSString *)context;
 
@@ -109,6 +115,10 @@
 - (void)addChannel:(id)sender;
 - (void)editChannel:(id)sender;
 - (void)deleteChannel:(id)sender;
+
+- (void)addHighlight:(id)sender;
+- (void)editHighlight:(id)sender;
+- (void)deleteHighlight:(id)sender;
 
 - (void)addIgnore:(id)sender;
 - (void)editIgnore:(id)sender;

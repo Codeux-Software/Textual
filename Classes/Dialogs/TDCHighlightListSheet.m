@@ -39,16 +39,16 @@
 
 #define _rowHeightMultiplier		17
 
-@interface TDCHighlightSheet ()
+@interface TDCHighlightListSheet ()
 @property (nonatomic, readonly, nweak) NSMutableArray *highlightList;
 @end
 
-@implementation TDCHighlightSheet
+@implementation TDCHighlightListSheet
 
 - (id)init
 {
     if ((self = [super init])) {
-		[NSBundle loadNibNamed:@"TDCHighlightSheet" owner:self];
+		[NSBundle loadNibNamed:@"TDCHighlightListSheet" owner:self];
     }
     
     return self;
@@ -129,8 +129,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([self.delegate respondsToSelector:@selector(highlightSheetWillClose:)]) {
-		[self.delegate highlightSheetWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(highlightListSheetWillClose:)]) {
+		[self.delegate highlightListSheetWillClose:self];
 	}
 }
 

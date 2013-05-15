@@ -253,7 +253,7 @@
 		[channel.client.highlights insertObject:entry atIndex:0];
 
 		/* Reload table if the window is open. */
-		id highlightSheet = [self.masterController.menuController windowFromWindowList:@"TDCHighlightSheet"];
+		id highlightSheet = [self.masterController.menuController windowFromWindowList:@"TDCHighlightListSheet"];
 
 		if (highlightSheet) {
             [highlightSheet performSelector:@selector(reloadTable) withObject:nil afterDelay:2.0];
@@ -578,7 +578,7 @@
 - (IRCClient *)findClientById:(NSString *)uid
 {
 	for (IRCClient *u in self.clients) {
-		if ([u.treeUUID isEqualToString:uid]) {
+		if ([u.treeUUID isEqualToString:uid] || [u.config.itemUUID isEqualToString:uid]) {
 			return u;
 		}
 	}
@@ -589,9 +589,9 @@
 - (IRCChannel *)findChannelByClientId:(NSString *)uid channelId:(NSString *)cid
 {
 	for (IRCClient *u in self.clients) {
-		if ([u.treeUUID isEqualToString:uid]) {
+		if ([u.treeUUID isEqualToString:uid] || [u.config.itemUUID isEqualToString:uid]) {
 			for (IRCChannel *c in u.channels) {
-				if ([c.treeUUID isEqualToString:cid]) {
+				if ([c.treeUUID isEqualToString:cid] || [c.config.itemUUID isEqualToString:cid]) {
 					return c;
 				}
 			}

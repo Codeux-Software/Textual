@@ -1150,7 +1150,7 @@
 		return;
 	}
 	
-	TDCHighlightSheet *d = [TDCHighlightSheet new];
+	TDCHighlightListSheet *d = [TDCHighlightListSheet new];
 	
 	d.delegate = self;
 	d.window = self.masterController.mainWindow;
@@ -1160,9 +1160,9 @@
 	[self addWindowToWindowList:d];
 }
 
-- (void)highlightSheetWillClose:(TDCHighlightSheet *)sender
+- (void)highlightListSheetWillClose:(TDCHighlightListSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDCHighlightSheet"];
+	[self removeWindowFromWindowList:@"TDCHighlightListSheet"];
 }
 
 #pragma mark -

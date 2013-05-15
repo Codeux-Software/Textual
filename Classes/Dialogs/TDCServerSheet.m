@@ -50,14 +50,15 @@
 		
 		[tabViewList addObject:@[@"General",						@"1", NSNumberWithBOOL(NO)]];
 		[tabViewList addObject:@[@"Identity",						@"2", NSNumberWithBOOL(NO)]];
-		[tabViewList addObject:@[@"Message",						@"3", NSNumberWithBOOL(NO)]];
-		[tabViewList addObject:@[@"Encoding",						@"4", NSNumberWithBOOL(NO)]];
-		[tabViewList addObject:@[@"Autojoin",						@"5", NSNumberWithBOOL(NO)]];
-		[tabViewList addObject:@[@"Ignores",						@"6", NSNumberWithBOOL(NO)]];
-		[tabViewList addObject:@[@"Commands",						@"7", NSNumberWithBOOL(NO)]];
+		[tabViewList addObject:@[@"Mentions",						@"3", NSNumberWithBOOL(NO)]];
+		[tabViewList addObject:@[@"Message",						@"4", NSNumberWithBOOL(NO)]];
+		[tabViewList addObject:@[@"Encoding",						@"5", NSNumberWithBOOL(NO)]];
+		[tabViewList addObject:@[@"Autojoin",						@"6", NSNumberWithBOOL(NO)]];
+		[tabViewList addObject:@[@"Ignores",						@"7", NSNumberWithBOOL(NO)]];
+		[tabViewList addObject:@[@"Commands",						@"8", NSNumberWithBOOL(NO)]];
 		[tabViewList addObject:@[TXDefaultListSeperatorCellIndex,	@"-", NSNumberWithBOOL(NO)]];
-		[tabViewList addObject:@[@"Proxy",							@"8", NSNumberWithBOOL(NO)]];
-		[tabViewList addObject:@[@"FloodControl",					@"9", NSNumberWithBOOL(NO)]];
+		[tabViewList addObject:@[@"Proxy",							@"9", NSNumberWithBOOL(NO)]];
+		[tabViewList addObject:@[@"FloodControl",					@"10", NSNumberWithBOOL(NO)]];
 
 		self.tabViewList = tabViewList;
 
@@ -190,11 +191,15 @@
     [self.ignoreTable setTarget:self];
     [self.ignoreTable setDoubleAction:@selector(tableViewDoubleClicked:)];
 
+	[self.highlightsTable setTarget:self];
+	[self.highlightsTable setDoubleAction:@selector(tableViewDoubleClicked:)];
+
 	[self populateEncodings];
 
 	[self load];
 	
 	[self updateConnectionPage];
+	[self updateHighlightsPage];
 	[self updateChannelsPage];
 	[self updateIgnoresPage];
 	[self toggleAdvancedEncodings:nil];
@@ -491,13 +496,26 @@
 {
 	NSInteger i = self.ignoreTable.selectedRow;
 	
-	[self.editIgnoreButton	setEnabled:(i >= 0)];
+	[self.editIgnoreButton setEnabled:(i >= 0)];
 	[self.deleteIgnoreButton setEnabled:(i >= 0)];
 }
 
 - (void)reloadIgnoreTable
 {
 	[self.ignoreTable reloadData];
+}
+
+- (void)updateHighlightsPage
+{
+	NSInteger i = self.highlightsTable.selectedRow;
+
+	[self.editHighlightButton setEnabled:(i >= 0)];
+	[self.deleteHighlightButton setEnabled:(i >= 0)];
+}
+
+- (void)reloadHighlightsTable
+{
+	[self.highlightsTable reloadData];
 }
 
 - (void)floodControlChanged:(id)sender
@@ -573,6 +591,104 @@
 	/* Select items. */
 	[self.primaryEncodingButton selectItemWithTitle:selectedPrimary];
 	[self.fallbackEncodingButton selectItemWithTitle:selectedFallback];
+}
+
+#pragma mark -
+#pragma mark Highlight Actions
+
+- (void)addHighlight:(id)sender
+{
+	self.highlightSheet = nil;
+	self.highlightSheet = [TDCHighlightEntrySheet new];
+
+	self.highlightSheet.newItem = YES;
+	self.highlightSheet.delegate = self;
+	self.highlightSheet.window = self.sheet;
+	self.highlightSheet.clientID = self.clientID;
+	self.highlightSheet.config = [TDCHighlightEntryMatchCondition new];
+
+	[self.highlightSheet start];
+}
+
+- (void)editHighlight:(id)sender
+{
+	NSInteger sel = self.highlightsTable.selectedRow;
+
+	NSAssertReturn(sel >= 0);
+
+	TDCHighlightEntryMatchCondition *c = [self.config.highlightList safeObjectAtIndex:sel];
+
+	self.highlightSheet = nil;
+	self.highlightSheet = [TDCHighlightEntrySheet new];
+
+	self.highlightSheet.newItem = NO;
+	self.highlightSheet.delegate = self;
+	self.highlightSheet.window = self.sheet;
+	self.highlightSheet.clientID = self.clientID;
+	self.highlightSheet.config = c.mutableCopy;
+
+	[self.highlightSheet start];
+}
+
+- (void)highlightEntrySheetOnOK:(TDCHighlightEntrySheet *)sender
+{
+	TDCHighlightEntryMatchCondition *match = sender.config;
+
+	BOOL emptyKeyword = NSObjectIsEmpty(match.matchKeyword);
+
+	if (sender.newItem) {
+		if (emptyKeyword == NO) {
+			[self.config.highlightList safeAddObject:match];
+		}
+	} else {
+		NSArray *ignoreList = self.config.highlightList.copy;
+
+		for (TDCHighlightEntryMatchCondition *g in ignoreList) {
+			NSInteger index = [ignoreList indexOfObject:g];
+
+			if ([g.itemUUID isEqualToString:match.itemUUID]) {
+				if (emptyKeyword) {
+					/* Remove empty entry. */
+
+					[self.config.highlightList removeObjectAtIndex:index];
+				} else {
+					/* Replace old entry. */
+
+					[self.config.highlightList replaceObjectAtIndex:index withObject:match];
+				}
+
+				break;
+			}
+		}
+	}
+
+	[self reloadHighlightsTable];
+}
+
+- (void)highlightEntrySheetWillClose:(TDCHighlightEntrySheet *)sender
+{
+	self.highlightSheet = nil;
+}
+
+- (void)deleteHighlight:(id)sender
+{
+	NSInteger sel = self.highlightsTable.selectedRow;
+
+	NSAssertReturn(sel >= 0);
+
+	[self.config.highlightList safeRemoveObjectAtIndex:sel];
+
+	NSInteger count = self.config.highlightList.count;
+
+	if (count) {
+		if (count <= sel) {
+			[self.highlightsTable selectItemAtIndex:(count - 1)];
+		} else {
+			[self.highlightsTable selectItemAtIndex:sel];
+		}
+	}
+
+	[self reloadHighlightsTable];
 }
 
 #pragma mark -
@@ -818,6 +934,10 @@
 		/* Navigation Table. */
 		
 		return self.tabViewList.count;
+	} else if (sender == self.highlightsTable) {
+		/* Highlight Table. */
+		
+		return self.config.highlightList.count;
 	} else {
 		/* Address Book Table. */
 		
@@ -855,6 +975,31 @@
         } else {
             return TXDefaultListSeperatorCellIndex;
         }
+	} else if (sender == self.highlightsTable) {
+		/* Highlight Table. */
+		TDCHighlightEntryMatchCondition *c = [self.config.highlightList safeObjectAtIndex:row];
+
+		if ([columnId isEqualToString:@"keyword"]) {
+			return c.matchKeyword;
+		} else if ([columnId isEqualToString:@"channel"]) {
+			if (NSObjectIsEmpty(c.matchChannelID)) {
+				return TXTLS(@"ServerSheetHighlightListTableAllChannels");
+			} else {
+				IRCChannel *channel = [self.worldController findChannelByClientId:self.clientID channelId:c.matchChannelID];
+
+				if (channel) {
+					return channel.name;
+				} else {
+					return TXTLS(@"ServerSheetHighlightListTableAllChannels");
+				}
+			}
+		} else if ([columnId isEqualToString:@"type"]) {
+			if (c.matchIsExcluded) {
+				return TXTLS(@"ServerSheetHighlightListTableExcludeEntry");
+			} else {
+				return TXTLS(@"ServerSheetHighlightListTableIncludeEntry");
+			}
+		}
 	} else {
 		/* Address Book Table. */
 
@@ -920,16 +1065,21 @@
         switch (row) {
             case 0:  { [self focusView:self.generalView			atRow:0]; break; }
             case 1:  { [self focusView:self.identityView		atRow:1]; break; }
-            case 2:  { [self focusView:self.messagesView		atRow:2]; break; }
-            case 3:  { [self focusView:self.encodingView		atRow:3]; break; }
-            case 4:  { [self focusView:self.autojoinView		atRow:4]; break; }
-            case 5:  { [self focusView:self.ignoresView			atRow:5]; break; }
-            case 6:  { [self focusView:self.commandsView		atRow:6]; break; }
-            case 8:  { [self focusView:self.proxyServerView		atRow:8]; break; }
-            case 9:  { [self focusView:self.floodControlView	atRow:9]; break; }
+			case 2:  { [self focusView:self.highlightsView		atRow:2]; break; }
+            case 3:  { [self focusView:self.messagesView		atRow:3]; break; }
+            case 4:  { [self focusView:self.encodingView		atRow:4]; break; }
+            case 5:  { [self focusView:self.autojoinView		atRow:5]; break; }
+            case 6:  { [self focusView:self.ignoresView			atRow:6]; break; }
+            case 7:  { [self focusView:self.commandsView		atRow:7]; break; }
+            case 9:  { [self focusView:self.proxyServerView		atRow:9]; break; }
+            case 10: { [self focusView:self.floodControlView	atRow:10]; break; }
 
             default: { break; }
         }
+	} else if (sender == self.highlightsTable) {
+		/* Highlight Table. */
+
+		[self updateHighlightsPage];
     } else {
 		/* Ignore Table. */
 
@@ -947,6 +1097,10 @@
 		/* Navigation Table. */
 		
 		// ...
+	} else if (sender == self.highlightsTable) {
+		/* Highlight Table. */
+
+		[self editHighlight:nil];
 	} else {
 		/* Ignore Table. */
 		

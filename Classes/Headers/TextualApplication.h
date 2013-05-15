@@ -67,7 +67,9 @@
 	@class IRCWorld;
 	@class TDCAboutPanel;
 	@class TDCAddressBookSheet;
-	@class TDCHighlightSheet;
+	@class TDCHighlightEntryMatchCondition;
+	@class TDCHighlightEntrySheet;
+	@class TDCHighlightListSheet;
 	@class TDCInviteSheet;
 	@class TDCListDialog;
 	@class TDCModeSheet;
@@ -101,8 +103,8 @@
 	@class TLOTimerCommand;
 	@class TLOpenLink;
 	@class TPCPreferences;
-	@class TPCPreferencesMigrationAssistant;
 	@class TPCPreferencesImportExport;
+	@class TPCPreferencesMigrationAssistant;
 	@class TPCThemeController;
 	@class TPCThemeSettings;
 	@class TVCDockIcon;
@@ -219,7 +221,8 @@
 	#import "TDCSheetBase.h"
 	#import "TDCAboutPanel.h"
 	#import "TDCAddressBookSheet.h"
-	#import "TDCHighlightSheet.h"
+	#import "TDCHighlightEntrySheet.h"
+	#import "TDCHighlightListSheet.h"
 	#import "TDCInviteSheet.h"
 	#import "TDCListDialog.h"
 	#import "TDCModeSheet.h"

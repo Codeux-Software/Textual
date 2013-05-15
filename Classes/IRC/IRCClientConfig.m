@@ -52,9 +52,10 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 		self.itemUUID = [NSString stringWithUUID];
 		
 		self.alternateNicknames		= [NSMutableArray new];
+		self.loginCommands			= [NSMutableArray new];
+		self.highlightList			= [NSMutableArray new];
 		self.channelList			= [NSMutableArray new];
 		self.ignoreList				= [NSMutableArray new];
-		self.loginCommands			= [NSMutableArray new];
 
 		self.autoConnect				= NO;
 		self.autoReconnect				= NO;
@@ -270,6 +271,12 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 			
 			[self.ignoreList safeAddObject:ignore];
 		}
+
+		for (NSDictionary *e in [dic arrayForKey:@"highlightList"]) {
+			TDCHighlightEntryMatchCondition *c = [[TDCHighlightEntryMatchCondition alloc] initWithDictionary:e];
+
+			[self.highlightList safeAddObject:c];
+		}
 		
 		if ([dic containsKey:@"floodControl"]) {
 			NSDictionary *e = [dic dictionaryForKey:@"floodControl"];
@@ -331,7 +338,8 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
     [floodControl setBool:self.outgoingFloodControl forKey:@"serviceEnabled"];
     
 	[dic safeSetObject:floodControl forKey:@"floodControl"];
-	
+
+	NSMutableArray *highlightAry = [NSMutableArray array];
 	NSMutableArray *channelAry = [NSMutableArray array];
 	NSMutableArray *ignoreAry = [NSMutableArray array];
 	
@@ -342,10 +350,15 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 	for (IRCAddressBook *e in self.ignoreList) {
 		[ignoreAry safeAddObject:[e dictionaryValue]];
 	}
-	
+
+	for (TDCHighlightEntryMatchCondition *e in self.highlightList) {
+		[highlightAry safeAddObject:[e dictionaryValue]];
+	}
+
+	[dic safeSetObject:highlightAry forKey:@"highlightList"];
 	[dic safeSetObject:channelAry forKey:@"channelList"];
 	[dic safeSetObject:ignoreAry forKey:@"ignoreList"];
-	
+
 	/* Migration Assistant Dictionary Addition. */
 	[dic safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
 				forKey:TPCPreferencesMigrationAssistantVersionKey];
