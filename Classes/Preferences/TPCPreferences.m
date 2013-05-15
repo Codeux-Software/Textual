@@ -1508,11 +1508,6 @@ static NSMutableArray *excludeKeywords = nil;
     }
 }
 
-+ (void)sync
-{
-	[RZUserDefaults() synchronize];
-}
-
 #pragma mark -
 #pragma mark NSTextView Preferences
 

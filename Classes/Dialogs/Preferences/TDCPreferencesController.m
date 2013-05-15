@@ -939,9 +939,6 @@
 	[self.window saveWindowStateUsingKeyword:NSStringFromClass(self.class)];
 
 	[TPCPreferences cleanUpHighlightKeywords];
-	[TPCPreferences sync];
-
-	[RZUserDefaults() synchronize];
 
 	if ([self.delegate respondsToSelector:@selector(preferencesDialogWillClose:)]) {
 		[self.delegate preferencesDialogWillClose:self];
