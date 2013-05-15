@@ -60,6 +60,7 @@
 						<string key="NSFrame">{{490, 19}, {30, 23}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:22</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="430332274">
@@ -130,7 +131,7 @@
 										<string key="NSFrameSize">{492, 114}</string>
 										<reference key="NSSuperview" ref="319417533"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="588844274"/>
+										<reference key="NSNextKeyView" ref="559901514"/>
 										<string key="NSReuseIdentifierKey">_NS:13</string>
 										<bool key="NSEnabled">YES</bool>
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -324,7 +325,7 @@
 						<string key="NSFrame">{{26, 49}, {494, 132}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="319417533"/>
+						<reference key="NSNextKeyView" ref="588844274"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<int key="NSsFlags">133682</int>
 						<reference key="NSVScroller" ref="559901514"/>
@@ -427,7 +428,7 @@
 										<string key="NSFrameSize">{468, 136}</string>
 										<reference key="NSSuperview" ref="598608539"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="294223064"/>
+										<reference key="NSNextKeyView" ref="237127398"/>
 										<string key="NSReuseIdentifierKey">_NS:13</string>
 										<object class="NSTextContainer" key="NSTextContainer" id="255800171">
 											<object class="NSLayoutManager" key="NSLayoutManager">
@@ -717,7 +718,7 @@ wGw</bytes>
 						<string key="NSFrame">{{21, 249}, {468, 136}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="598608539"/>
+						<reference key="NSNextKeyView" ref="294223064"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<int key="NSsFlags">153616</int>
 						<reference key="NSVScroller" ref="237127398"/>
@@ -1036,19 +1037,19 @@ wGw</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.Wikipedia Link Parser Extension -&gt; Service Enabled</string>
+						<string key="label">value: values.Wiki-style Link Parser Extension -&gt; Service Enabled</string>
 						<reference key="source" ref="895292163"/>
 						<reference key="destination" ref="429744628"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="895292163"/>
 							<reference key="NSDestination" ref="429744628"/>
-							<string key="NSLabel">value: values.Wikipedia Link Parser Extension -&gt; Service Enabled</string>
+							<string key="NSLabel">value: values.Wiki-style Link Parser Extension -&gt; Service Enabled</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.Wikipedia Link Parser Extension -&gt; Service Enabled</string>
+							<string key="NSKeyPath">values.Wiki-style Link Parser Extension -&gt; Service Enabled</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">84</int>
+					<int key="connectionID">311</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1470,7 +1471,7 @@ wGw</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">309</int>
+			<int key="maxID">311</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
