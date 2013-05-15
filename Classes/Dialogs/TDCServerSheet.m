@@ -46,21 +46,7 @@
 {
 	if ((self = [super init])) {
 		/* Populate the navigation tree. */
-		NSMutableArray *tabViewList = [NSMutableArray new];
-		
-		[tabViewList addObject:@[@"General",						@"1", NSNumberWithBOOL(NO)]];
-		[tabViewList addObject:@[@"Identity",						@"2", NSNumberWithBOOL(NO)]];
-		[tabViewList addObject:@[@"Mentions",						@"3", NSNumberWithBOOL(NO)]];
-		[tabViewList addObject:@[@"Message",						@"4", NSNumberWithBOOL(NO)]];
-		[tabViewList addObject:@[@"Encoding",						@"5", NSNumberWithBOOL(NO)]];
-		[tabViewList addObject:@[@"Autojoin",						@"6", NSNumberWithBOOL(NO)]];
-		[tabViewList addObject:@[@"Ignores",						@"7", NSNumberWithBOOL(NO)]];
-		[tabViewList addObject:@[@"Commands",						@"8", NSNumberWithBOOL(NO)]];
-		[tabViewList addObject:@[TXDefaultListSeperatorCellIndex,	@"-", NSNumberWithBOOL(NO)]];
-		[tabViewList addObject:@[@"Proxy",							@"9", NSNumberWithBOOL(NO)]];
-		[tabViewList addObject:@[@"FloodControl",					@"10", NSNumberWithBOOL(NO)]];
-
-		self.tabViewList = tabViewList;
+		[self populateTabViewList];
 
 		/* Load our views. */
 		[NSBundle loadNibNamed:@"TDCServerSheet" owner:self];
@@ -85,6 +71,30 @@
 	}
     
 	return self;
+}
+
+- (void)populateTabViewList
+{
+	BOOL includeAdvanced = [RZUserDefaults() boolForKey:@"Server Properties Window Sheet —> Show Advanced Settings"];
+
+	NSMutableArray *tabViewList = [NSMutableArray new];
+
+	[tabViewList addObject:@[@"General",						@"1"]];
+	[tabViewList addObject:@[@"Identity",						@"2"]];
+	[tabViewList addObject:@[@"Mentions",						@"3"]];
+	[tabViewList addObject:@[@"Message",						@"4"]];
+	[tabViewList addObject:@[@"Encoding",						@"5"]];
+	[tabViewList addObject:@[@"Autojoin",						@"6"]];
+	[tabViewList addObject:@[@"Ignores",						@"7"]];
+	[tabViewList addObject:@[@"Commands",						@"8"]];
+
+	if (includeAdvanced) {
+		[tabViewList addObject:@[TXDefaultListSeperatorCellIndex,	@"-"]];
+		[tabViewList addObject:@[@"Proxy",							@"9"]];
+		[tabViewList addObject:@[@"FloodControl",					@"10"]];
+	}
+
+	self.tabViewList = tabViewList;
 }
 
 - (void)populateEncodings
@@ -591,6 +601,13 @@
 	/* Select items. */
 	[self.primaryEncodingButton selectItemWithTitle:selectedPrimary];
 	[self.fallbackEncodingButton selectItemWithTitle:selectedFallback];
+}
+
+- (void)toggleAdvancedSettings:(id)sender
+{
+	[self populateTabViewList];
+
+	[self.tabView reloadData];
 }
 
 #pragma mark -

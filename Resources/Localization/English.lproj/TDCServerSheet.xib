@@ -96,7 +96,7 @@
 				</object>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="867497291">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSBox" id="798352958">
@@ -120,6 +120,7 @@
 															<int key="NSvFlags">4352</int>
 															<string key="NSFrameSize">{94, 272}</string>
 															<reference key="NSSuperview" ref="483843969"/>
+															<reference key="NSWindow"/>
 															<reference key="NSNextKeyView" ref="864893982"/>
 															<string key="NSReuseIdentifierKey">_NS:1197</string>
 															<bool key="NSEnabled">YES</bool>
@@ -215,6 +216,7 @@
 													</array>
 													<string key="NSFrame">{{1, 1}, {94, 272}}</string>
 													<reference key="NSSuperview" ref="835641034"/>
+													<reference key="NSWindow"/>
 													<reference key="NSNextKeyView" ref="371014869"/>
 													<string key="NSReuseIdentifierKey">_NS:1195</string>
 													<reference key="NSDocView" ref="371014869"/>
@@ -226,6 +228,7 @@
 													<int key="NSvFlags">-2147483392</int>
 													<string key="NSFrame">{{224, 17}, {15, 102}}</string>
 													<reference key="NSSuperview" ref="835641034"/>
+													<reference key="NSWindow"/>
 													<reference key="NSNextKeyView" ref="655133237"/>
 													<string key="NSReuseIdentifierKey">_NS:1214</string>
 													<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -238,6 +241,7 @@
 													<int key="NSvFlags">-2147483392</int>
 													<string key="NSFrame">{{1, 119}, {223, 15}}</string>
 													<reference key="NSSuperview" ref="835641034"/>
+													<reference key="NSWindow"/>
 													<reference key="NSNextKeyView" ref="845925929"/>
 													<string key="NSReuseIdentifierKey">_NS:1216</string>
 													<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -249,6 +253,7 @@
 											</array>
 											<string key="NSFrame">{{18, 28}, {96, 274}}</string>
 											<reference key="NSSuperview" ref="668865475"/>
+											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="483843969"/>
 											<string key="NSReuseIdentifierKey">_NS:1193</string>
 											<int key="NSsFlags">133682</int>
@@ -265,6 +270,7 @@
 											<int key="NSvFlags">268</int>
 											<string key="NSFrame">{{128, 21}, {517, 303}}</string>
 											<reference key="NSSuperview" ref="668865475"/>
+											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="1818365"/>
 											<string key="NSReuseIdentifierKey">_NS:499</string>
 											<string key="NSClassName">NSView</string>
@@ -272,12 +278,14 @@
 									</array>
 									<string key="NSFrame">{{1, 1}, {663, 329}}</string>
 									<reference key="NSSuperview" ref="798352958"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="835641034"/>
 									<string key="NSReuseIdentifierKey">_NS:632</string>
 								</object>
 							</array>
 							<string key="NSFrame">{{7, 50}, {665, 331}}</string>
 							<reference key="NSSuperview" ref="867497291"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="668865475"/>
 							<string key="NSReuseIdentifierKey">_NS:630</string>
 							<string key="NSOffsets">{0, 0}</string>
@@ -308,6 +316,8 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{569, 9}, {96, 32}}</string>
 							<reference key="NSSuperview" ref="867497291"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:161</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="651492990">
@@ -335,6 +345,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{473, 9}, {96, 32}}</string>
 							<reference key="NSSuperview" ref="867497291"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="649904396"/>
 							<string key="NSReuseIdentifierKey">_NS:161</string>
 							<bool key="NSEnabled">YES</bool>
@@ -359,6 +370,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{18, 17}, {177, 18}}</string>
 							<reference key="NSSuperview" ref="867497291"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="663089158"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
@@ -387,6 +399,8 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{679, 389}</string>
+					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="798352958"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
@@ -1739,7 +1753,7 @@
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomView" id="693392601">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSScrollView" id="442618136">
@@ -1753,7 +1767,7 @@
 									<object class="NSTextView" id="830640415">
 										<reference key="NSNextResponder" ref="854272859"/>
 										<int key="NSvFlags">2322</int>
-										<string key="NSFrameSize">{440, 34}</string>
+										<string key="NSFrame">{{0, 2}, {440, 32}}</string>
 										<reference key="NSSuperview" ref="854272859"/>
 										<reference key="NSNextKeyView" ref="291031372"/>
 										<string key="NSReuseIdentifierKey">_NS:13</string>
@@ -1871,7 +1885,6 @@
 										</object>
 										<int key="NSTVFlags">6</int>
 										<string key="NSMaxSize">{463, 10000000}</string>
-										<string key="NSMinize">{440, 32}</string>
 										<nil key="NSDelegate"/>
 									</object>
 								</array>
@@ -2201,7 +2214,6 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{517, 303}</string>
-				<reference key="NSSuperview"/>
 				<reference key="NSNextKeyView" ref="442618136"/>
 				<string key="NSReuseIdentifierKey">_NS:499</string>
 				<string key="NSClassName">NSView</string>
@@ -4009,6 +4021,14 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 						<reference key="destination" ref="222924854"/>
 					</object>
 					<int key="connectionID">2483</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleAdvancedSettings:</string>
+						<reference key="source" ref="108852464"/>
+						<reference key="destination" ref="1818365"/>
+					</object>
+					<int key="connectionID">2484</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -6272,13 +6292,24 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2483</int>
+			<int key="maxID">2484</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">TDCServerSheet</string>
 					<string key="superclassName">TDCSheetBase</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">toggleAdvancedSettings:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">toggleAdvancedSettings:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">toggleAdvancedSettings:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/TDCServerSheet.h</string>
