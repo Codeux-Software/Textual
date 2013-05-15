@@ -79,6 +79,8 @@
                          sender:(NSDictionary *)senderDict
                         message:(NSDictionary *)messageDict
 {
+    NSAssertReturn([self processWikiStyleLinks]);
+	
 	/* Gather information about message. */
     NSArray *params = messageDict[@"messageParamaters"];
 
