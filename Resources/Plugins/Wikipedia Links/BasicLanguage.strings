@@ -35,4 +35,6 @@
 
  *********************************************************************** */
 
-"TPIWikipediaLinkParserPreferencePaneMenuItemTitle" = "Wikipedia Link Parser";
+"WikipediaLinkParserPreferencePaneMenuItemTitle" = "Wikipedia Link Parser";
+
+"WikipediaLinkParserChannelNoLongerExists" = "Channel Does Not Exist";

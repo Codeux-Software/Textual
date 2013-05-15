@@ -37,11 +37,27 @@
 
 #import "TPIWikipediaLinkParser.h"
 
-#define _defaultLinkPrefix          @"https://en.wikipedia.org/wiki/"
 #define _linkMatchRegex             @"\\[\\[([^\\]]+)\\]\\]"
 
 @interface TPIWikipediaLinkParser ()
 @property (nonatomic, weak) NSView *preferencePane;
+@property (nonatomic, unsafe_unretained) NSWindow *rnewConditionWindow;
+@property (nonatomic, weak) NSTextField *rnewConditionLinkPrefixField;
+@property (nonatomic, weak) NSPopUpButton *rnewConditionChannelPopup;
+@property (nonatomic, weak) NSButton *rnewConditionSaveButton;
+@property (nonatomic, weak) NSButton *rnewConditionCancelButton;
+@property (nonatomic, weak) NSButton *addConditionButton;
+@property (nonatomic, weak) NSButton *removeConditionButton;
+@property (nonatomic, weak) NSTableView *linkPrefixesTable;
+@property (nonatomic, strong) NSMutableDictionary *rnewConditionChannelMatrix;
+
+- (void)addCondition:(id)sender;
+- (void)removeCondition:(id)sender;
+
+- (void)saveNewCondition:(id)sender;
+- (void)cancelNewCondition:(id)sender;
+
+- (void)updateNewConditionWindowSaveButton:(id)sender;
 @end
 
 @implementation TPIWikipediaLinkParser
@@ -52,6 +68,14 @@
 - (void)pluginLoadedIntoMemory:(IRCWorld *)world
 {
     [NSBundle loadNibNamed:@"TPIWikipediaLinkParser" owner:self];
+	
+	[self updateRemoveConditionButton];
+}
+
+- (void)dealloc
+{
+	[self.rnewConditionWindow close];
+	self.rnewConditionWindow = nil;
 }
 
 #pragma mark -
@@ -61,7 +85,7 @@
                          sender:(NSDictionary *)senderDict
                         message:(NSDictionary *)messageDict
 {
-    /* Gather information about message. */
+	/* Gather information about message. */
     NSArray *params = messageDict[@"messageParamaters"];
 
 	NSString *message = messageDict[@"messageSequence"];
@@ -69,6 +93,10 @@
 	IRCChannel *channel = [client findChannel:params[0]];
 
     PointerIsEmptyAssert(channel);
+
+	NSString *linkPrefix = [self linkPrefixFromID:channel.config.itemUUID];
+
+	NSObjectIsEmptyAssert(linkPrefix);
 
     /* Parse the message for all possible matches. */
     NSArray *linkMatches = [TLORegularExpression matchesInString:[message stripIRCEffects] withRegex:_linkMatchRegex];
@@ -94,7 +122,7 @@
             }
 
             /* Create our message and post it. */
-            NSString *message = [NSString stringWithFormat:@" %i: %@ —> %@%@", loopIndex, linkRaw, [self wikipediaLinkPrefix], [linkRaw encodeURIComponent]];
+            NSString *message = [NSString stringWithFormat:@" %i: %@ —> %@%@", loopIndex, linkRaw, linkPrefix, [linkRaw encodeURIComponent]];
 
             [client printDebugInformation:message channel:channel];
         }
@@ -111,13 +139,20 @@
 
 - (id)interceptUserInput:(id)input command:(NSString *)command
 {
-    /* Return input if we are not going to process anything. */
+	/* Return input if we are not going to process anything. */
     NSAssertReturnR([self processWikipediaLinks], input);
 
     /* Do not handle NSString. */
     if ([input isKindOfClass:[NSAttributedString class]] == NO) {
         return input;
     }
+
+	/* Link prefix. */
+	IRCChannel *channel = self.worldController.selectedChannel;
+
+	NSString *linkPrefix = [self linkPrefixFromID:channel.config.itemUUID];
+
+	NSObjectIsEmptyAssertReturn(linkPrefix, input);
 
     /* Start parser. */
     NSMutableAttributedString *muteString = [input mutableCopy];
@@ -148,7 +183,7 @@
         }
 
         /* Build our link and replace it in the input. */
-        linkInside = [[self wikipediaLinkPrefix] stringByAppendingString:linkInside.encodeURIComponent];
+        linkInside = [linkPrefix stringByAppendingString:linkInside.encodeURIComponent];
 
         [muteString replaceCharactersInRange:linkRange withString:linkInside];
     }
@@ -161,12 +196,207 @@
 
 - (NSString *)preferencesMenuItemName
 {
-    return TPILS(@"TPIWikipediaLinkParserPreferencePaneMenuItemTitle");
+    return TPILS(@"WikipediaLinkParserPreferencePaneMenuItemTitle");
 }
 
 - (NSView *)preferencesView
 {
     return self.preferencePane;
+}
+
+#pragma mark -
+#pragma mark Table delegate. 
+
+- (void)tableViewSelectionDidChange:(NSNotification *)notification
+{
+	[self updateRemoveConditionButton];
+}
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
+{
+	return [self.linkPrefixes count];
+}
+
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+	NSArray *entryInfo = self.linkPrefixes[row];
+
+	NSAssertReturnR((entryInfo.count == 2), nil);
+
+	if ([tableColumn.identifier isEqualToString:@"channel"]) {
+		NSString *entryName = [self channelNameFromID:entryInfo[0]];
+
+		NSObjectIsEmptyAssertReturn(entryName, TPILS(@"WikipediaLinkParserChannelNoLongerExists"));
+
+		return entryName;
+	} else {
+		return entryInfo[1];
+	}
+}
+
+#pragma mark -
+#pragma mark Condition Management.
+
+- (void)controlTextDidChange:(NSNotification *)obj
+{
+	[self updateNewConditionWindowSaveButton:nil];
+}
+
+- (void)addCondition:(id)sender
+{
+	/* Reset conditions. */
+	[self.rnewConditionLinkPrefixField setStringValue:NSStringEmptyPlaceholder];
+
+	[self.rnewConditionChannelPopup removeAllItems];
+
+	/* Disable adding new conditions when we are already doing one. */
+	[self.addConditionButton setEnabled:NO];
+	[self.removeConditionButton setEnabled:NO];
+
+	/* We need some way to match the tag to the UUID of the channel we
+	 want to track. To do that, we keep a dictionary matching the tags
+	 to the UUID of each channel. That way, when the user picks a channel
+	 in the "New Condition" dialog we only have to reference the tag and
+	 then we have the UUID that we need saved. We do not save the actual
+	 channel names. We save the UUID of that channel since it is unique,
+	 always and forever. Even between restarts. */
+	self.rnewConditionChannelMatrix = [NSMutableDictionary dictionary];
+
+	NSInteger channelTag = 1;
+
+	/* Start populating. */
+	for (IRCClient *u in self.worldController.clients) {
+		/* We keep track of the number of channels we add because we do not add
+		 channels that we do not already track. Therefore, if our count is zero,
+		 then we have to know so we do not add the client title. */
+		NSInteger channelCount = 0;
+
+		/* Add the client title. */
+		NSMenuItem *umi = [NSMenuItem new];
+
+		[umi setEnabled:NO]; // Do not let user pick only a client.
+		[umi setTitle:u.config.clientName];
+
+		[self.rnewConditionChannelPopup.menu addItem:umi];
+
+		/* Build list of channels part of this client. */
+		for (IRCChannel *c in u.channels) {
+			/* Do we already track it? */
+			NSString *existingPrefix = [self linkPrefixFromID:c.config.itemUUID];
+
+			if (NSObjectIsNotEmpty(existingPrefix)) {
+				continue;
+			}
+
+			/* Add item. */
+			NSMenuItem *cmi = [NSMenuItem new];
+
+			/* Create the menu. */
+			[cmi setEnabled:YES];
+			[cmi setTag:channelTag];
+			[cmi setTitle:[NSString stringWithFormat:@"    %@", c.name]];
+
+			/* Update the tag --> UUID dictionary. */
+			[self.rnewConditionChannelMatrix setObject:c.config.itemUUID forKey:@(channelTag)];
+
+			/* Add the actual menu item. */
+			[self.rnewConditionChannelPopup.menu addItem:cmi];
+
+			/* Bump the tag by one. */
+			channelTag += 1;
+			channelCount += 1;
+		}
+
+		/* Remove the client title? */
+		if (channelCount <= 0) {
+			[self.rnewConditionChannelPopup.menu removeItem:umi];
+		}
+	}
+
+	/* Pop the new window and center it. */
+	[self.rnewConditionWindow center];
+	[self.rnewConditionWindow makeKeyAndOrderFront:nil];
+
+	/* Make text field the first responder. */
+	[self.rnewConditionWindow makeFirstResponder:self.rnewConditionLinkPrefixField];
+
+	/* Update save button state. */
+	[self updateNewConditionWindowSaveButton:nil];
+}
+
+- (void)removeCondition:(id)sender
+{
+	NSInteger selectedRow = self.linkPrefixesTable.selectedRow;
+
+	NSAssertReturn(selectedRow >= 0);
+
+	/* Get the old links. */
+	NSMutableArray *mutOldPrefixes = [self.linkPrefixes mutableCopy];
+
+	/* Remove the old. */
+	[mutOldPrefixes removeObjectAtIndex:selectedRow];
+
+	/* Update defaults. */
+	[RZUserDefaults() setObject:mutOldPrefixes forKey:@"Wikipedia Link Parser Extension -> Link Prefixes"];
+
+	/* Reload the table. */
+	[self.linkPrefixesTable reloadData];
+}
+
+- (void)saveNewCondition:(id)sender
+{
+	/* Get the old links. */
+	NSMutableArray *mutOldPrefixes = [self.linkPrefixes mutableCopy];
+
+	/* Get the information to save. */
+	NSString *linkPrefix = self.rnewConditionLinkPrefixField.stringValue;
+
+	NSString *channelUUID = [self.rnewConditionChannelMatrix objectForKey:@(self.rnewConditionChannelPopup.selectedTag)];
+
+	/* Add to dictionary. */
+	[mutOldPrefixes safeAddObjectWithoutDuplication:@[channelUUID, linkPrefix]];
+
+	/* Update defaults. */
+	[RZUserDefaults() setObject:mutOldPrefixes forKey:@"Wikipedia Link Parser Extension -> Link Prefixes"];
+
+	/* Clear the matrix. */
+	self.rnewConditionChannelMatrix = nil;
+
+	/* Reload the table. */
+	[self.linkPrefixesTable reloadData];
+	
+	/* Update buttons and close window. */
+	[self.addConditionButton setEnabled:YES];
+	[self.removeConditionButton setEnabled:YES];
+
+	[self.rnewConditionWindow close];
+
+	[self updateRemoveConditionButton];
+}
+
+- (void)cancelNewCondition:(id)sender
+{
+	[self.addConditionButton setEnabled:YES];
+	[self.removeConditionButton setEnabled:YES];
+
+	[self.rnewConditionWindow close];
+
+	[self updateRemoveConditionButton];
+}
+
+- (void)updateNewConditionWindowSaveButton:(id)sender
+{
+	BOOL cond1 = (self.rnewConditionLinkPrefixField.stringValue.length > 0);
+	BOOL cond2 = (self.rnewConditionChannelPopup.selectedTag > 0);
+
+	[self.rnewConditionSaveButton setEnabled:(cond1 && cond2)];
+}
+
+- (void)updateRemoveConditionButton
+{
+	NSInteger selectedRow = self.linkPrefixesTable.selectedRow;
+
+	[self.removeConditionButton setEnabled:(selectedRow >= 0)];
 }
 
 #pragma mark -
@@ -177,13 +407,56 @@
     return [RZUserDefaults() boolForKey:@"Wikipedia Link Parser Extension -> Service Enabled"];
 }
 
-- (NSString *)wikipediaLinkPrefix
-{
-    NSString *prefix = [RZUserDefaults() objectForKey:@"Wikipedia Link Parser Extension -> Link Prefix"];
-    
-    NSObjectIsEmptyAssertReturn(prefix, _defaultLinkPrefix);
+/* -linkPrefixes returns an array of all link prefixes. Each link prefix is stored as an 
+ array with the first index being the channel UUID and the second as the actual link. 
+ Template: @[<channel UUID>, <link prefix>] */
 
-    return prefix;
+- (NSArray *)linkPrefixes
+{
+	NSArray *prefixes = [RZUserDefaults() arrayForKey:@"Wikipedia Link Parser Extension -> Link Prefixes"];
+
+	PointerIsEmptyAssertReturn(prefixes, [NSArray array]);
+
+	return prefixes;
+}
+
+/* This will scan the Textual server tree for the actual UUID and return the
+ channel name matching the UUID that we have. */
+- (NSString *)channelNameFromID:(NSString *)itemUUID
+{
+	/* Textual does not have any mapping methods so we have to actually scan 
+	 every server and every channel to find our ID. */
+
+	NSObjectIsEmptyAssertReturn(itemUUID, nil);
+
+	for (IRCClient *u in self.worldController.clients) {
+		for (IRCChannel *c in u.channels) {
+			if ([c.config.itemUUID isEqualToString:itemUUID]) {
+				return c.name;
+			}
+		}
+	}
+
+	return nil;
+}
+
+/* This will scan our actual link prefix array for the UUID. */
+- (NSString *)linkPrefixFromID:(NSString *)itemUUID
+{
+	NSObjectIsEmptyAssertReturn(itemUUID, nil);
+	
+	for (NSArray *entry in self.linkPrefixes) {
+		NSAssertReturnLoopContinue(entry.count == 2);
+
+		NSString *entryUUID = entry[0];
+		NSString *entryLink = entry[1];
+
+		if ([itemUUID isEqualToString:entryUUID]) {
+			return entryLink;
+		}
+	}
+
+	return nil;
 }
 
 @end

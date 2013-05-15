@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-@interface TPIWikipediaLinkParser : NSObject <THOPluginProtocol>
+@interface TPIWikipediaLinkParser : NSObject <THOPluginProtocol, NSTextDelegate, NSTableViewDataSource, NSTableViewDelegate>
 
 - (void)pluginLoadedIntoMemory:(IRCWorld *)world;
 
