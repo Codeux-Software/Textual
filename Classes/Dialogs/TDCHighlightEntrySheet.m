@@ -61,6 +61,24 @@
 		[self.matchTypePopupButton selectItemWithTag:1];
 	}
 
+	/* Exact word matching mode does not use exclude words. Therefore,
+	 if we are in that mode, we have to inform the end user. We do that
+	 by disabling the exclude menu item that they can select and showing
+	 one with a message explaining this instead. */
+
+	NSMenuItem *normalExclude = [self.matchTypePopupButton itemAtIndex:1];
+	NSMenuItem *specialExclude = [self.matchTypePopupButton itemAtIndex:2];
+
+	if ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightExactMatchType) {
+		[normalExclude setHidden:YES];
+		
+		[specialExclude setHidden:NO];
+		[specialExclude setEnabled:NO];
+	} else {
+		[normalExclude setHidden:NO];
+		[specialExclude setHidden:YES];
+	}
+
 	/* Channel list. */
 	IRCClient *client = [self.worldController findClientById:self.clientID];
 
