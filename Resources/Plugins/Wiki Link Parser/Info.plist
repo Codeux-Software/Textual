@@ -5,7 +5,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.codeux.irc.textual.extension.WikipediaLinkParser</string>
+	<string>com.codeux.irc.textual.extension.WikiStyleLinkParser</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
@@ -13,6 +13,6 @@
 	<key>CFBundleVersion</key>
 	<string>1.0.1</string>
 	<key>NSPrincipalClass</key>
-	<string>TPIWikipediaLinkParser</string>
+	<string>TPIWikiStyleLinkParser</string>
 </dict>
 </plist>

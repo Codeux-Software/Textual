@@ -1,0 +1,50 @@
+#!/bin/bash
+
+SYSTEM_BUNDLE_PATH="/Library/Containers/com.codeux.irc.textual/Data/Library/Application Support/Textual IRC/Extensions/"
+SYSTEM_SCRIPT_PATH="/Library/Application Scripts/com.codeux.irc.textual/"
+
+USER_BUNDLE_PATH="$HOME/Library/Containers/com.codeux.irc.textual/Data/Library/Application Support/Textual IRC/Extensions/"
+USER_SCRIPT_PATH="$HOME/Library/Application Scripts/com.codeux.irc.textual/"
+
+mkdir -p "${USER_BUNDLE_PATH}"
+mkdir -p "${USER_SCRIPT_PATH}"
+
+cd "${SYSTEM_BUNDLE_PATH}"
+
+chown -R $USER .
+chgrp -R staff .
+
+BUNDLES=`find . -name "*.bundle"`
+
+for BUNDLE in $BUNDLES; do
+	BUNDLE_PATH="${USER_BUNDLE_PATH}/${BUNDLE}"
+	
+	if [ -d "${BUNDLE_PATH}" ]; then
+		rm -rf "${BUNDLE_PATH}"
+	fi
+	
+	mv "${BUNDLE}" "${BUNDLE_PATH}"
+done
+
+cd "${SYSTEM_SCRIPT_PATH}"
+
+chown -R $USER .
+chgrp -R staff .
+
+SCRIPT_EXTENSIONS="php scpt"
+
+for EXTENSION in $SCRIPT_EXTENSIONS; do
+	SCRIPTS=`find . -name "*.${EXTENSION}"`
+	
+	for SCRIPT in $SCRIPTS; do
+		SCRIPT_PATH="${USER_SCRIPT_PATH}/${SCRIPT}"
+		
+		if [ -f "${SCRIPT_PATH}" ]; then
+			rm "${SCRIPT_PATH}"
+		fi
+		
+		mv "${SCRIPT}" "${SCRIPT_PATH}"
+	done
+done
+
+exit
