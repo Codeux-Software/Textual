@@ -68,7 +68,7 @@
 {
     [self.networkNameField setStringValue:TXTFLS(@"ChannelListDialogNetworkName", self.client.altNetworkName)];
 
-	[self.window restoreWindowStateUsingKeyword:NSStringFromClass(self.class)];
+	[self.window restoreWindowStateForClass:self.class];
 	
 	[self.window makeKeyAndOrderFront:nil];
 }
@@ -346,7 +346,7 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void *context)
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	[self.window saveWindowStateUsingKeyword:NSStringFromClass(self.class)];
+	[self.window saveWindowStateForClass:self.class];
 	
 	if ([self.delegate respondsToSelector:@selector(listDialogWillClose:)]) {
 		[self.delegate listDialogWillClose:self];

@@ -53,4 +53,7 @@
 
 - (void)saveWindowStateUsingKeyword:(NSString *)keyword;
 - (void)restoreWindowStateUsingKeyword:(NSString *)keyword;
+
+- (void)saveWindowStateForClass:(Class)owner;
+- (void)restoreWindowStateForClass:(Class)owner;
 @end
