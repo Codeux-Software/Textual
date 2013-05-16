@@ -58,6 +58,16 @@
 	}	
 }
 
+- (void)saveWindowStateForClass:(Class)owner
+{
+	[self saveWindowStateUsingKeyword:NSStringFromClass(owner)];
+}
+
+- (void)restoreWindowStateForClass:(Class)owner
+{
+	[self restoreWindowStateUsingKeyword:NSStringFromClass(owner)];
+}
+
 - (void)saveWindowStateUsingKeyword:(NSString *)keyword
 {
 	NSObjectIsEmptyAssert(keyword);

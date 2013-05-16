@@ -103,7 +103,7 @@
 
 	[self.setAsDefaultIRCClientButton setHidden:[TPCPreferences isDefaultIRCClient]];
 
-	[self.window restoreWindowStateUsingKeyword:NSStringFromClass(self.class)];
+	[self.window restoreWindowStateForClass:self.class];
 
 	[self.window makeKeyAndOrderFront:nil];
 
@@ -936,7 +936,7 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	[self.window saveWindowStateUsingKeyword:NSStringFromClass(self.class)];
+	[self.window saveWindowStateForClass:self.class];
 
 	[TPCPreferences cleanUpHighlightKeywords];
 

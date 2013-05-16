@@ -62,7 +62,7 @@
 
 	[self displayAcknowledgments:nil];
 
-	[self.window restoreWindowStateUsingKeyword:NSStringFromClass(self.class)];
+	[self.window restoreWindowStateForClass:self.class];
 	
 	[self.window makeKeyAndOrderFront:nil];
 }
@@ -93,7 +93,7 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	[self.window saveWindowStateUsingKeyword:NSStringFromClass(self.class)];
+	[self.window saveWindowStateForClass:self.class];
 	
 	if ([self.delegate respondsToSelector:@selector(aboutPanelWillClose:)]) {
 		[self.delegate aboutPanelWillClose:self];
