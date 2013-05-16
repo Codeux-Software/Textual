@@ -37,11 +37,17 @@
 
 #import "TextualApplication.h"
 
+#import <PDFKit/PDFKit.h>
+
 @interface TDCAboutPanel : NSWindowController
 @property (nonatomic, uweak) id delegate;
 @property (nonatomic, nweak) NSTextField *versionInfoField;
+@property (nonatomic, uweak) PDFView *documentPDFView;
 
 - (void)show;
+
+- (void)displayAcknowledgments:(id)sender;
+- (void)displayContributors:(id)sender;
 @end
 
 @interface NSObject (TDCAboutPanelDelegate)
