@@ -162,6 +162,21 @@
 
 					[mut_e setObject:newChannelList forKey:@"channelList"];
 
+					/* Do the highlight list. */
+					NSMutableArray *newHighlightList = [NSMutableArray array];
+
+					for (NSDictionary *ce in e[@"highlightList"]) {
+						NSMutableDictionary *mut_ce = [ce mutableCopy];
+
+						/* Reset the channel UUID. */
+						[mut_ce setObject:[NSString stringWithUUID] forKey:@"uniqueIdentifier"];
+
+						/* Set new entry. */
+						[newHighlightList addObject:mut_ce];
+					}
+
+					[mut_e setObject:newHighlightList forKey:@"highlightList"];
+
 					/* Do the ignore list. */
 					NSMutableArray *newIgnoreList = [NSMutableArray array];
 
