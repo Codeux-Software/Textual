@@ -251,6 +251,7 @@
 - (void)openMacAppStoreDownloadPage:(id)sender;
 - (void)showContributors:(id)sender;
 - (void)showAcknowledgments:(id)sender;
+- (void)showScriptingDocumentation:(id)sender;
 - (void)processNavigationItem:(id)sender;
 - (void)toggleFullscreenMode:(id)sender;
 - (void)centerMainWindow:(id)sender;
