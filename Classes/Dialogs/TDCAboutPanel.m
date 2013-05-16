@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+#import <PDFKit/PDFKit.h>
+
 @interface TDCAboutPanel ()
 /* Cache the documents we load so they load faster switching. */
 @property (nonatomic, strong) PDFDocument *acknowledgmentsDocument;
@@ -75,7 +77,8 @@
 		self.acknowledgmentsDocument = [[PDFDocument alloc] initWithURL:[NSURL fileURLWithPath:acknowledgmentsPath]];
 	}
 	
-	[self.documentPDFView setDocument:self.acknowledgmentsDocument];
+	[(PDFView *)self.documentPDFView setDocument:self.acknowledgmentsDocument];
+
 	[self.documentPDFView setScaleFactor:1.1];
 }
 
@@ -87,7 +90,8 @@
 		self.contributorsDocument = [[PDFDocument alloc] initWithURL:[NSURL fileURLWithPath:contributorsPath]];
 	}
 
-	[self.documentPDFView setDocument:self.contributorsDocument];
+	[(PDFView *)self.documentPDFView setDocument:self.contributorsDocument];
+
 	[self.documentPDFView setScaleFactor:1.1];
 }
 
