@@ -37,6 +37,12 @@
 
 #import "TextualApplication.h"
 
+@interface TDCAboutPanel ()
+/* Cache the documents we load so they load faster switching. */
+@property (nonatomic, strong) PDFDocument *acknowledgmentsDocument;
+@property (nonatomic, strong) PDFDocument *contributorsDocument;
+@end
+
 @implementation TDCAboutPanel
 
 - (id)init
@@ -54,9 +60,35 @@
 	
 	[self.versionInfoField setStringValue:TXTFLS(@"AboutWindowBuildNumber", bundleVersion)];
 
+	[self displayAcknowledgments:nil];
+
 	[self.window restoreWindowStateUsingKeyword:NSStringFromClass(self.class)];
 	
 	[self.window makeKeyAndOrderFront:nil];
+}
+
+- (void)displayAcknowledgments:(id)sender
+{
+	if (self.acknowledgmentsDocument == nil) {
+		NSString *acknowledgmentsPath =	[[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Documentation/Acknowledgments.pdf"];
+
+		self.acknowledgmentsDocument = [[PDFDocument alloc] initWithURL:[NSURL fileURLWithPath:acknowledgmentsPath]];
+	}
+	
+	[self.documentPDFView setDocument:self.acknowledgmentsDocument];
+	[self.documentPDFView setScaleFactor:1.1];
+}
+
+- (void)displayContributors:(id)sender
+{
+	if (self.contributorsDocument == nil) {
+		NSString *contributorsPath = [[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Documentation/Contributors.pdf"];
+
+		self.contributorsDocument = [[PDFDocument alloc] initWithURL:[NSURL fileURLWithPath:contributorsPath]];
+	}
+
+	[self.documentPDFView setDocument:self.contributorsDocument];
+	[self.documentPDFView setScaleFactor:1.1];
 }
 
 - (void)windowWillClose:(NSNotification *)note
