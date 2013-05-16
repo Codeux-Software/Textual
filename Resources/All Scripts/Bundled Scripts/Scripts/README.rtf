@@ -48,6 +48,9 @@ The return value for scripts can be any command defined that is \
 native to Textual. If no command is presented, then Textual will \
 send the return to the channel that is currently selected. \
 \
+Additionally, scripts can output multiple lines of text (or execute\
+multiple commands) by using new lines.\
+\
 
 \b Where do I store scripts?
 \b0 \
@@ -72,6 +75,19 @@ sandbox environment. \
 \b0 Textual outputs all errors that it captures to the Mac OS Console. \
 This can be reached by typing "Console" into spotlight or browsing\
 to Console.app under the Utilities folder. \
+\
+
+\b Is AppleScript the only supported scripting language?\
+\
+No, but it is the recommended one and the only one officially\
+supported. 
+\b0 Textual supports Python (.py), Ruby (.rb), Perl (.pl),\
+Shell Executables (.sh, .bash), and PHP (.php) for scripts. \
+\
+These follow the same design. They are supplied the user input and \
+are expected to return one or more lines of text to be processed.\
+They cannot return something then continue to run. Death occurs\
+after Textual has processed the first result.\
 \
 --------\
 \
