@@ -818,6 +818,11 @@
 	[RZWorkspace() openFile:[[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"Documentation/Contributors.pdf"]];
 }
 
+- (void)showScriptingDocumentation:(id)sender
+{
+	[RZWorkspace() openFile:[[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"Scripts/README.rtf"]];
+}
+
 - (void)searchGoogle:(id)sender
 {
 	TVCLogView *web = [self currentWebView];
