@@ -48,6 +48,11 @@
 	return self;
 }
 
+- (void)controlTextDidChange:(NSNotification *)obj
+{
+	[self updateSaveButton];
+}
+
 - (void)start
 {
 	/* Start populating. */
@@ -100,6 +105,8 @@
 
 	/* Pop the sheet. */
 	[self startSheet];
+
+	[self updateSaveButton];
 }
 
 - (void)ok:(id)sender
@@ -142,6 +149,13 @@
 	}
 	
 	[super ok:nil];
+}
+
+- (void)updateSaveButton
+{
+	NSString *keyword = self.matchKeywordTextField.trimmedStringValue;
+
+	[self.okButton setEnabled:(keyword.length > 0)];
 }
 
 #pragma mark -
