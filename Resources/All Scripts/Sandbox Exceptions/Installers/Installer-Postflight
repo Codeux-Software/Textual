@@ -9,6 +9,12 @@ USER_SCRIPT_PATH="$HOME/Library/Application Scripts/com.codeux.irc.textual/"
 mkdir -p "${USER_BUNDLE_PATH}"
 mkdir -p "${USER_SCRIPT_PATH}"
 
+OLD_WIKILINKPARSER_PATH="${USER_BUNDLE_PATH}/WikipediaLinkParser.bundle"
+
+if [ -d "${OLD_WIKILINKPARSER_PATH}" ]; then
+	rm -rf "${OLD_WIKILINKPARSER_PATH}"
+fi
+
 cd "${SYSTEM_BUNDLE_PATH}"
 
 chown -R $USER .
