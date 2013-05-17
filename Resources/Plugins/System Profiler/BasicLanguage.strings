@@ -93,4 +93,4 @@
 "SystemInformationSysmemCommandResult" = "\002System Memory:\002 Free: %1$@; Used: %2$@; Total: %3$@; — [%4$@]";
 "SystemInformationRuncountCommandResult" = "Textual has been opened \002%1$@\002 times with a total runtime of %2$@";
 "SystemInformationLoadavgCommandResult" = "\002Load Average:\002 %1$@";
-"SystemInformationMsgcountCommandResult" = "Textual has sent \002%1$@\002 messages since startup with a total of \002%2$@\002 messages received. That equals roughly \002%3$@ in\002 and \002%4$@ out\002 worth of bandwidth.";
+"SystemInformationMsgcountCommandResult" = "Textual has sent \002%1$@\002 messages since startup with a total of \002%2$@\002 messages received. The last message received on this connection occured %3$@ ago. This all equals roughly \002%4$@ in\002 and \002%5$@ out\002 worth of bandwidth.";

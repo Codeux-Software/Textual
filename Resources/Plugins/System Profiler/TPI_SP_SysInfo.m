@@ -89,9 +89,14 @@
 {
     IRCWorld *world = [TPI_SP_CompiledOutput worldController];
 
+	IRCClient *client = world.selectedClient;
+
+	NSTimeInterval lastMsg = [NSDate secondsSinceUnixTimestamp:client.lastMessageReceived];
+	
 	return TPIFLS(@"SystemInformationMsgcountCommandResult",
 				  TXFormattedNumber(world.messagesSent),
 				  TXFormattedNumber(world.messagesReceived),
+				  TXSpecialReadableTime(lastMsg, YES, @[@"second"]),
 				  [TPI_SP_SysInfo formattedDiskSize:world.bandwidthIn],
 				  [TPI_SP_SysInfo formattedDiskSize:world.bandwidthOut]);
 }

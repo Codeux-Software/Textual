@@ -55,7 +55,6 @@
 @property (nonatomic, assign) BOOL inUserInvokedWhowasRequest;
 @property (nonatomic, assign) BOOL inUserInvokedJoinRequest;
 @property (nonatomic, assign) BOOL sendLagcheckReplyToChannel;
-@property (nonatomic, assign) NSInteger lastMessageReceived;
 @property (nonatomic, assign) NSInteger tryingNickNumber;
 @property (nonatomic, assign) NSInteger connectionReconnectCount;
 @property (nonatomic, assign) NSUInteger CAPpausedStatus;
