@@ -17,7 +17,7 @@
       location = "group:Resources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Frameworks/System Information/Source/../../../Resources/Plugins/ZNC Additions/ZNC Additions.xcodeproj">
+      location = "group:Resources/Plugins/ZNC Additions/ZNC Additions Extension.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Frameworks/Blowfish Encryption/Source/Blowfish Encryption Framework.xcodeproj">

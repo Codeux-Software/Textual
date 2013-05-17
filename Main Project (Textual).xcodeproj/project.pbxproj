@@ -817,9 +817,9 @@
 			remoteGlobalIDString = 4C01BA0415810DD8007E2DAF;
 			remoteInfo = "Update Version Info";
 		};
-		4CC851EE172834E4002BD461 /* PBXContainerItemProxy */ = {
+		4CC9D8A51745BE1700461F05 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 4CC851EA172834E4002BD461 /* ZNC Additions.xcodeproj */;
+			containerPortal = 4CC9D8A11745BE1700461F05 /* ZNC Additions Extension.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
 			remoteInfo = ZNCAdditions;
@@ -1311,7 +1311,7 @@
 		4CBE64C91743722100831D69 /* TDCHighlightEntrySheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCHighlightEntrySheet.h; sourceTree = "<group>"; };
 		4CC70202171E1CB400BDFAE0 /* BuildConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BuildConfig.h; path = .tmp/BuildConfig.h; sourceTree = SOURCE_ROOT; };
 		4CC851E5172834D0002BD461 /* ZNCAdditions.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ZNCAdditions.bundle; path = .tmp/SharedBuildProducts/ZNCAdditions.bundle; sourceTree = SOURCE_ROOT; };
-		4CC851EA172834E4002BD461 /* ZNC Additions.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "ZNC Additions.xcodeproj"; path = "Resources/Plugins/ZNC Additions/ZNC Additions.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		4CC9D8A11745BE1700461F05 /* ZNC Additions Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "ZNC Additions Extension.xcodeproj"; path = "Resources/Plugins/ZNC Additions/ZNC Additions Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4CCC6B47158E8C27003A102B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = SOURCE_ROOT; };
 		4CCC6B60158E8C48003A102B /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = "Resources/All Scripts/Bundled Scripts/Scripts"; sourceTree = SOURCE_ROOT; };
 		4CCC6B62158E8CCC003A102B /* Blowfish Key Control Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Blowfish Key Control Extension.xcodeproj"; path = "Resources/Plugins/Blowfish Key Control/Blowfish Key Control Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
@@ -1695,7 +1695,7 @@
 				4CCC6B6E158E8CDA003A102B /* Brag Spam Extension.xcodeproj */,
 				4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */,
 				4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */,
-				4CC851EA172834E4002BD461 /* ZNC Additions.xcodeproj */,
+				4CC9D8A11745BE1700461F05 /* ZNC Additions Extension.xcodeproj */,
 			);
 			name = Projects;
 			sourceTree = "<group>";
@@ -2260,10 +2260,10 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		4CC851EB172834E4002BD461 /* Products */ = {
+		4CC9D8A21745BE1700461F05 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4CC851EF172834E4002BD461 /* ZNCAdditions.bundle */,
+				4CC9D8A61745BE1700461F05 /* ZNCAdditions.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2765,8 +2765,8 @@
 					ProjectRef = 4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */;
 				},
 				{
-					ProductGroup = 4CC851EB172834E4002BD461 /* Products */;
-					ProjectRef = 4CC851EA172834E4002BD461 /* ZNC Additions.xcodeproj */;
+					ProductGroup = 4CC9D8A21745BE1700461F05 /* Products */;
+					ProjectRef = 4CC9D8A11745BE1700461F05 /* ZNC Additions Extension.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -2781,11 +2781,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		4CC851EF172834E4002BD461 /* ZNCAdditions.bundle */ = {
+		4CC9D8A61745BE1700461F05 /* ZNCAdditions.bundle */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = ZNCAdditions.bundle;
-			remoteRef = 4CC851EE172834E4002BD461 /* PBXContainerItemProxy */;
+			remoteRef = 4CC9D8A51745BE1700461F05 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		4CCC6B6A158E8CCC003A102B /* BlowfishCommandLine.bundle */ = {
