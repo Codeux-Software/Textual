@@ -89,7 +89,7 @@ typedef enum IRCDisconnectMode : NSInteger {
 @property (nonatomic, strong) NSMutableArray *channels;
 @property (nonatomic, strong) NSMutableArray *highlights;
 @property (nonatomic, strong) NSString *preAwayNickname; // Nickname before away was set.
-
+@property (nonatomic, assign) NSInteger lastMessageReceived;
 @property (nonatomic, assign) BOOL isHostReachable;
 
 - (void)setup:(id)seed;
