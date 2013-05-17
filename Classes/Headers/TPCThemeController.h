@@ -37,6 +37,12 @@
 
 #import "TextualApplication.h"
 
+#define TPCThemeControllerCustomStyleNameBasicPrefix			@"user"
+#define TPCThemeControllerCustomStyleNameCompletePrefix			@"user:"
+
+#define TPCThemeControllerBundledStyleNameBasicPrefix			@"resource"
+#define TPCThemeControllerBundledStyleNameCompletePrefix		@"resource:"
+
 @interface TPCThemeController : NSObject
 @property (nonatomic, strong) NSURL *baseURL;
 

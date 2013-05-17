@@ -54,7 +54,7 @@
 
 	NSMutableString *resultString = [NSMutableString string];
 
-    if ([ftype isEqualIgnoringCase:@"user"]) {
+    if ([ftype isEqualIgnoringCase:TPCThemeControllerCustomStyleNameBasicPrefix]) {
 		[resultString appendString:TPIFLS(@"SystemInformationStyleCommandResultCustom", fname)];
     } else {
 		[resultString appendString:TPIFLS(@"SystemInformationStyleCommandResultBundle", fname)];
