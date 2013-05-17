@@ -59,7 +59,7 @@
 	NSString *path = nil;
 
 	/* Determine the path. */
-	if ([filekind isEqualToString:@"resource"]) {
+	if ([filekind isEqualToString:TPCThemeControllerBundledStyleNameBasicPrefix]) {
 		path = [[TPCPreferences bundledThemeFolderPath] stringByAppendingPathComponent:filename];
 	} else {
 		path = [[TPCPreferences customThemeFolderPath] stringByAppendingPathComponent:filename];
@@ -70,7 +70,7 @@
 		/* Path does not exist. If the path is to a custom theme, then check whether a
 		 bundled theme with the same name exists. If it does not, throw exception. */
 		
-		if ([filekind isEqualToString:@"resource"] == NO) {
+		if ([filekind isEqualToString:TPCThemeControllerBundledStyleNameBasicPrefix] == NO) {
 			path = [[TPCPreferences bundledThemeFolderPath] stringByAppendingPathComponent:filename];
 
 			if ([RZFileManager() fileExistsAtPath:path] == NO) {
@@ -96,17 +96,19 @@
 
 + (NSString *)buildResourceFilename:(NSString *)name
 {
-	return [NSString stringWithFormat:@"resource:%@", name];
+	return [TPCThemeControllerBundledStyleNameCompletePrefix stringByAppendingString:name];
 }
 
 + (NSString *)buildUserFilename:(NSString *)name
 {
-	return [NSString stringWithFormat:@"user:%@", name];
+	return [TPCThemeControllerCustomStyleNameCompletePrefix stringByAppendingString:name];
 }
 
 + (NSString *)extractThemeSource:(NSString *)source
 {
-	if ([source hasPrefix:@"user:"] == NO && [source hasPrefix:@"resource:"] == NO) {
+	if ([source hasPrefix:TPCThemeControllerCustomStyleNameCompletePrefix] == NO &&
+		[source hasPrefix:TPCThemeControllerBundledStyleNameCompletePrefix] == NO)
+	{
 		return nil;
     }
 
@@ -115,7 +117,9 @@
 
 + (NSString *)extractThemeName:(NSString *)source
 {
-	if ([source hasPrefix:@"user:"] == NO && [source hasPrefix:@"resource:"] == NO) {
+	if ([source hasPrefix:TPCThemeControllerCustomStyleNameCompletePrefix] == NO &&
+		[source hasPrefix:TPCThemeControllerBundledStyleNameCompletePrefix] == NO)
+	{
 		return nil;
     }
 	

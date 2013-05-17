@@ -589,7 +589,7 @@
 
 	NSInteger targetTag = 0;
 
-	if ([kind isEqualToString:@"resource"] == NO) {
+	if ([kind isEqualToString:TPCThemeControllerBundledStyleNameBasicPrefix] == NO) {
 		targetTag = 1;
 	}
 

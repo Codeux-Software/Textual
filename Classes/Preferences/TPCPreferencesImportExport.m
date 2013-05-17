@@ -267,7 +267,7 @@
 		/* Is it custom style? */
 		NSString *themeName = [settings objectForKey:@"Theme -> Name"];
 
-		if ([themeName hasPrefix:@"resource:"] == NO) { // It is custom.
+		if ([themeName hasPrefix:TPCThemeControllerBundledStyleNameCompletePrefix] == NO) { // It is custom.
 			[mutsettings removeObjectForKey:@"Theme -> Name"];
 		}
 	}

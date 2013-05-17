@@ -1499,7 +1499,7 @@ static NSMutableArray *excludeKeywords = nil;
         if ([RZFileManager() fileExistsAtPath:bundlePath] == NO) {
             [self setThemeName:TXDefaultTextualLogStyle];
         } else {
-            if ([themeType isEqualToString:@"resource"] == NO) {
+            if ([themeType isEqualToString:TPCThemeControllerBundledStyleNameBasicPrefix] == NO) {
                 NSString *newName = [TPCThemeController buildResourceFilename:themeName];
 
                 [self setThemeName:newName];
