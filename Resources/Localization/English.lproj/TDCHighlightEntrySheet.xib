@@ -44,7 +44,7 @@
 				<int key="NSWindowStyleMask">1</int>
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{283, 305}, {434, 129}}</string>
-				<int key="NSWTFlags">611845120</int>
+				<int key="NSWTFlags">1954022400</int>
 				<string key="NSWindowTitle">Window</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
@@ -78,29 +78,30 @@
 								<string key="NSKeyEquivalent"/>
 								<int key="NSPeriodicDelay">400</int>
 								<int key="NSPeriodicInterval">75</int>
-								<nil key="NSMenuItem"/>
+								<object class="NSMenuItem" key="NSMenuItem" id="50703684">
+									<reference key="NSMenu" ref="1013417136"/>
+									<string key="NSTitle">Match</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<int key="NSState">1</int>
+									<object class="NSCustomResource" key="NSOnImage" id="1030248787">
+										<string key="NSClassName">NSImage</string>
+										<string key="NSResourceName">NSMenuCheckmark</string>
+									</object>
+									<object class="NSCustomResource" key="NSMixedImage" id="72213487">
+										<string key="NSClassName">NSImage</string>
+										<string key="NSResourceName">NSMenuMixedState</string>
+									</object>
+									<string key="NSAction">_popUpItemAction:</string>
+									<int key="NSTag">1</int>
+									<reference key="NSTarget" ref="293643928"/>
+								</object>
 								<bool key="NSMenuItemRespectAlignment">YES</bool>
 								<object class="NSMenu" key="NSMenu" id="1013417136">
 									<string key="NSTitle">OtherViews</string>
 									<array class="NSMutableArray" key="NSMenuItems">
-										<object class="NSMenuItem" id="50703684">
-											<reference key="NSMenu" ref="1013417136"/>
-											<string key="NSTitle">Match</string>
-											<string key="NSKeyEquiv"/>
-											<int key="NSKeyEquivModMask">1048576</int>
-											<int key="NSMnemonicLoc">2147483647</int>
-											<object class="NSCustomResource" key="NSOnImage" id="1030248787">
-												<string key="NSClassName">NSImage</string>
-												<string key="NSResourceName">NSMenuCheckmark</string>
-											</object>
-											<object class="NSCustomResource" key="NSMixedImage" id="72213487">
-												<string key="NSClassName">NSImage</string>
-												<string key="NSResourceName">NSMenuMixedState</string>
-											</object>
-											<string key="NSAction">_popUpItemAction:</string>
-											<int key="NSTag">1</int>
-											<reference key="NSTarget" ref="293643928"/>
-										</object>
+										<reference ref="50703684"/>
 										<object class="NSMenuItem" id="221951582">
 											<reference key="NSMenu" ref="1013417136"/>
 											<string key="NSTitle">Exclude</string>
@@ -134,9 +135,46 @@
 															<double key="NSSize">13</double>
 															<int key="NSfFlags">16</int>
 														</object>
-														<object class="NSParagraphStyle" key="NSParagraphStyle" id="570943342">
+														<object class="NSParagraphStyle" key="NSParagraphStyle">
 															<int key="NSAlignment">4</int>
-															<nil key="NSTabStops"/>
+															<array key="NSTabStops">
+																<object class="NSTextTab">
+																	<double key="NSLocation">28</double>
+																</object>
+																<object class="NSTextTab">
+																	<double key="NSLocation">56</double>
+																</object>
+																<object class="NSTextTab">
+																	<double key="NSLocation">84</double>
+																</object>
+																<object class="NSTextTab">
+																	<double key="NSLocation">112</double>
+																</object>
+																<object class="NSTextTab">
+																	<double key="NSLocation">140</double>
+																</object>
+																<object class="NSTextTab">
+																	<double key="NSLocation">168</double>
+																</object>
+																<object class="NSTextTab">
+																	<double key="NSLocation">196</double>
+																</object>
+																<object class="NSTextTab">
+																	<double key="NSLocation">224</double>
+																</object>
+																<object class="NSTextTab">
+																	<double key="NSLocation">252</double>
+																</object>
+																<object class="NSTextTab">
+																	<double key="NSLocation">280</double>
+																</object>
+																<object class="NSTextTab">
+																	<double key="NSLocation">308</double>
+																</object>
+																<object class="NSTextTab">
+																	<double key="NSLocation">336</double>
+																</object>
+															</array>
 														</object>
 													</dictionary>
 													<dictionary>
@@ -146,7 +184,10 @@
 															<int key="NSfFlags">16</int>
 														</object>
 														<reference key="NSOriginalFont" ref="929094083"/>
-														<reference key="NSParagraphStyle" ref="570943342"/>
+														<object class="NSParagraphStyle" key="NSParagraphStyle">
+															<int key="NSAlignment">4</int>
+															<nil key="NSTabStops"/>
+														</object>
 													</dictionary>
 												</array>
 												<object class="NSMutableData" key="NSAttributeInfo">
@@ -339,7 +380,7 @@
 								<int key="NSButtonFlags">-2038284288</int>
 								<int key="NSButtonFlags2">129</int>
 								<string key="NSAlternateContents"/>
-								<string type="base64-UTF8" key="NSKeyEquivalent">Gw</string>
+								<string key="NSKeyEquivalent"/>
 								<int key="NSPeriodicDelay">200</int>
 								<int key="NSPeriodicInterval">25</int>
 							</object>
@@ -351,6 +392,7 @@
 							<string key="NSFrame">{{325, 13}, {95, 32}}</string>
 							<reference key="NSSuperview" ref="25280673"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="234108057">
@@ -507,8 +549,8 @@
 							<reference ref="160228245"/>
 							<reference ref="898012790"/>
 							<reference ref="698877847"/>
-							<reference ref="765004312"/>
 							<reference ref="802862079"/>
+							<reference ref="765004312"/>
 						</array>
 						<reference key="parent" ref="718771710"/>
 					</object>
