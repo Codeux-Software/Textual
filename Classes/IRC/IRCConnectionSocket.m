@@ -223,17 +223,15 @@
 		[self performSelector:@selector(tcpClientDidConnect)];
 	}
 
-#ifndef DEBUG
 	if (self.client.rawModeEnabled) {
-#endif
-		
 		LogToConsole(@"Debug Information:");
 		LogToConsole(@"	Connected Host: %@", [sock connectedHost]);
 		LogToConsole(@"	Connected Port: %hu", [sock connectedPort]);
-
-#ifndef DEBUG
+	} else {
+		DebugLogToConsole(@"Debug Information:");
+		DebugLogToConsole(@"	Connected Host: %@", [sock connectedHost]);
+		DebugLogToConsole(@"	Connected Port: %hu", [sock connectedPort]);
 	}
-#endif
 }
 
 - (void)onSocketDidDisconnect:(id)sock
