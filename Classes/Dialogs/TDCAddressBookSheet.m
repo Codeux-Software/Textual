@@ -55,13 +55,17 @@
 		
 		if (NSObjectIsNotEmpty(self.ignore.hostmask)) {
 			[self.hostmaskField setStringValue:self.ignore.hostmask];
-		} 
+		}
+
+		[self.window makeFirstResponder:self.hostmaskField];
 	} else {
 		self.sheet = self.notifyView;
 		
 		if (NSObjectIsNotEmpty(self.ignore.hostmask)) {
 			[self.nicknameField setStringValue:self.ignore.hostmask];
-		} 
+		}
+
+		[self.window makeFirstResponder:self.nicknameField];
 	}
 	
 	[self.ignoreCTCPCheck				setState:self.ignore.ignoreCTCP];

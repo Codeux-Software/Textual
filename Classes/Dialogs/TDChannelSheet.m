@@ -53,15 +53,29 @@
 #pragma mark -
 #pragma mark NSToolbar Delegates
 
-- (void)onMenuBarItemChanged:(id)sender 
+- (void)onMenuBarItemChanged:(id)sender
 {
-	switch ([sender indexOfSelectedItem]) {
+	NSInteger row = [sender indexOfSelectedItem];
+
+	switch (row) {
 		case 0:	{	[self firstPane:self.generalView]; break;		}
 		case 1: {	[self firstPane:self.encryptionView]; break;	}
         case 2: {	[self firstPane:self.defaultsView]; break;		}
 		default: {	[self firstPane:self.generalView]; break;		}
 	}
-} 
+
+	[self makeFirstResponderForRow:row];
+}
+
+- (void)makeFirstResponderForRow:(NSInteger)row
+{
+	switch (row) {
+		case 0:	{	[self.window makeFirstResponder:self.channelNameField]; break;		}
+		case 1: {	[self.window makeFirstResponder:self.encryptionKeyField]; break;	}
+        case 2: {	[self.window makeFirstResponder:self.defaultTopicField]; break;		}
+		default: { break; }
+	}
+}
 
 - (void)firstPane:(NSView *)view 
 {
@@ -94,6 +108,10 @@
 	
 	[self startSheet];
 	[self firstPane:self.generalView];
+
+	if (self.newItem) {
+		[self.window makeFirstResponder:self.channelNameField];
+	}
 	
 	[self.contentViewTabView setSelectedSegment:0];
 }

@@ -265,6 +265,19 @@
 	[self.tabView selectItemAtIndex:row];
 	
 	[self.window recalculateKeyViewLoop]; // This makes tab work for switching input fields.
+
+	[self makeFirstResponderForRow:row];
+}
+
+- (void)makeFirstResponderForRow:(NSInteger)row
+{
+	switch (row) {
+		case 2: { [self.window makeFirstResponder:self.loginCommandsField];				break; } /* self.commandsView */
+		case 4: { [self.window makeFirstResponder:self.serverNameField];				break; } /* self.generalView */
+		case 5: { [self.window makeFirstResponder:self.nicknameField];					break; } /* self.identityView */
+		case 6: { [self.window makeFirstResponder:self.normalLeavingCommentField];		break; } /* self.messagesView */
+		default: { break; }
+	}
 }
 
 - (void)close
