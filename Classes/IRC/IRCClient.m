@@ -4703,10 +4703,12 @@
 				[c.modeInfo update:modestr];
 			}
 
+			NSString *fmodestr = [c.modeInfo format:NO];
+
 			[self print:c
 				   type:TVCLogLineModeType
 				   nick:nil
-				   text:TXTFLS(@"IRCChannelHasModes", modestr)
+				   text:TXTFLS(@"IRCChannelHasModes", fmodestr)
 			 receivedAt:m.receivedAt
 				command:m.command];
 
