@@ -1774,40 +1774,40 @@
 															<object class="NSParagraphStyle" key="NSParagraphStyle" id="449602399">
 																<double key="NSTighteningFactorForTruncation">0.05000000074505806</double>
 																<array key="NSTabStops">
-																	<object class="NSTextTab" id="441493716">
+																	<object class="NSTextTab">
 																		<double key="NSLocation">28</double>
 																	</object>
-																	<object class="NSTextTab" id="1039607613">
+																	<object class="NSTextTab">
 																		<double key="NSLocation">56</double>
 																	</object>
-																	<object class="NSTextTab" id="278558457">
+																	<object class="NSTextTab">
 																		<double key="NSLocation">84</double>
 																	</object>
-																	<object class="NSTextTab" id="331651290">
+																	<object class="NSTextTab">
 																		<double key="NSLocation">112</double>
 																	</object>
-																	<object class="NSTextTab" id="189104684">
+																	<object class="NSTextTab">
 																		<double key="NSLocation">140</double>
 																	</object>
-																	<object class="NSTextTab" id="954246529">
+																	<object class="NSTextTab">
 																		<double key="NSLocation">168</double>
 																	</object>
-																	<object class="NSTextTab" id="199820235">
+																	<object class="NSTextTab">
 																		<double key="NSLocation">196</double>
 																	</object>
-																	<object class="NSTextTab" id="624715141">
+																	<object class="NSTextTab">
 																		<double key="NSLocation">224</double>
 																	</object>
-																	<object class="NSTextTab" id="873616762">
+																	<object class="NSTextTab">
 																		<double key="NSLocation">252</double>
 																	</object>
-																	<object class="NSTextTab" id="682793855">
+																	<object class="NSTextTab">
 																		<double key="NSLocation">280</double>
 																	</object>
-																	<object class="NSTextTab" id="819337476">
+																	<object class="NSTextTab">
 																		<double key="NSLocation">308</double>
 																	</object>
-																	<object class="NSTextTab" id="1033216336">
+																	<object class="NSTextTab">
 																		<double key="NSLocation">336</double>
 																	</object>
 																</array>
@@ -2518,28 +2518,8 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 											<object class="NSLayoutManager" key="NSLayoutManager">
 												<object class="NSTextStorage" key="NSTextStorage">
 													<object class="NSMutableString" key="NSString">
-														<characters key="NS.bytes"> </characters>
+														<characters key="NS.bytes"/>
 													</object>
-													<dictionary key="NSAttributes">
-														<reference key="NSFont" ref="668846546"/>
-														<object class="NSParagraphStyle" key="NSParagraphStyle">
-															<int key="NSAlignment">4</int>
-															<array key="NSTabStops">
-																<reference ref="441493716"/>
-																<reference ref="1039607613"/>
-																<reference ref="278558457"/>
-																<reference ref="331651290"/>
-																<reference ref="189104684"/>
-																<reference ref="954246529"/>
-																<reference ref="199820235"/>
-																<reference ref="624715141"/>
-																<reference ref="873616762"/>
-																<reference ref="682793855"/>
-																<reference ref="819337476"/>
-																<reference ref="1033216336"/>
-															</array>
-														</object>
-													</dictionary>
 													<nil key="NSDelegate"/>
 												</object>
 												<array class="NSMutableArray" key="NSTextContainers">
