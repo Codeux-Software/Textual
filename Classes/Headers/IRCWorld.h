@@ -40,7 +40,6 @@
 @interface IRCWorld : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate>
 @property (nonatomic, assign) NSInteger messagesSent;
 @property (nonatomic, assign) NSInteger messagesReceived;
-@property (nonatomic, assign) NSInteger textSizeMultiplier;
 @property (nonatomic, assign) TXFSLongInt bandwidthIn;
 @property (nonatomic, assign) TXFSLongInt bandwidthOut;
 @property (nonatomic, strong) NSMutableArray *clients;
@@ -103,6 +102,7 @@
 - (void)preferencesChanged;
 
 - (void)changeTextSize:(BOOL)bigger;
+- (NSInteger)textSizeMultiplier;
 
 - (IRCClient *)createClient:(id)seed reload:(BOOL)reload;
 - (IRCChannel *)createChannel:(IRCChannelConfig *)seed client:(IRCClient *)client reload:(BOOL)reload adjust:(BOOL)adjust;

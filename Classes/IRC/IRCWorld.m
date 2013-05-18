@@ -66,8 +66,6 @@
 {
 	if ((self = [super init])) {
 		self.clients = [NSMutableArray new];
-
-		self.textSizeMultiplier = 0;
 	}
 	
 	return self;
@@ -669,27 +667,30 @@
 
 - (void)changeTextSize:(BOOL)bigger
 {
-	if (bigger) {
-		self.textSizeMultiplier += 1;
-
-		if (self.textSizeMultiplier > 6) {
-			self.textSizeMultiplier = 6;
-		}
-	} else {
-		self.textSizeMultiplier -= 1;
-
-		if (self.textSizeMultiplier < -3) {
-			self.textSizeMultiplier = -3;
-		}
-	}
-
 	for (IRCClient *u in self.clients) {
 		[u.viewController changeTextSize:bigger];
-		
+
 		for (IRCChannel *c in u.channels) {
 			[c.viewController changeTextSize:bigger];
 		}
 	}
+}
+
+- (NSInteger)textSizeMultiplier
+{
+	/* The text size multiplier is used when creating new views to match
+	 existing font size changes using cmd+=/- which is dynamic in the 
+	 changeTextSize: call above. We get the multiplier by asking the
+	 first view that exists in Textual what its multiplier is. If there
+	 is no first view, then we default to 1.0 which is 100%. */
+
+	IRCClient *c = [self.clients safeObjectAtIndex:0];
+
+	if (c) {
+		return c.viewController.view.textSizeMultiplier;
+	}
+
+	return 1;
 }
 
 #pragma mark -
