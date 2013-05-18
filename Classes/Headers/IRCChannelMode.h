@@ -51,6 +51,8 @@
 - (NSString *)string;
 - (NSString *)titleString;
 
+- (NSString *)format:(BOOL)maskK;
+
 - (NSString *)getChangeCommand:(IRCChannelMode *)mode;
 
 - (BOOL)modeIsDefined:(NSString *)mode;
