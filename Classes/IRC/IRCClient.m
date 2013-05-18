@@ -1919,10 +1919,14 @@
 				self.rawModeEnabled = YES;
 
 				[self printDebugInformation:TXTLS(@"IRCRawModeIsEnabled")];
+
+				LogToConsole(@"%@", TXTLS(@"IRCRawModeIsEnabledSessionStart"));
 			} else if ([uncutInput isEqualIgnoringCase:@"raw off"]) {
 				self.rawModeEnabled = NO;
 
 				[self printDebugInformation:TXTLS(@"IRCRawModeIsDisabled")];
+
+				LogToConsole(@"%@", TXTLS(@"IRCRawModeIsDisabledSessionStart"));
 			} else if ([uncutInput isEqualIgnoringCase:@"devmode on"]) {
 				[RZUserDefaults() setBool:YES forKey:TXDeveloperEnvironmentToken];
 			} else if ([uncutInput isEqualIgnoringCase:@"devmode off"]) {
@@ -2915,9 +2919,7 @@
 	self.worldController.messagesReceived++;
 	self.worldController.bandwidthIn += s.length;
 
-	if (self.rawModeEnabled) {
-		LogToConsole(@">> %@", s);
-	}
+	[self logToConsoleIncomingTraffic:s];
 
 	/* We are terminating and thusly do not give a shit about the data
 	 and our view is probably gone by now anyways */
@@ -3036,8 +3038,20 @@
 
 - (void)ircConnectionWillSend:(NSString *)line
 {
+	[self logToConsoleOutgoingTraffic:line];
+}
+
+- (void)logToConsoleOutgoingTraffic:(NSString *)line
+{
 	if (self.rawModeEnabled) {
-		LogToConsole(@"<< %@", line);
+		LogToConsole(@"OUTGOING [\"%@\"]: << %@", self.altNetworkName, line);
+	}
+}
+
+- (void)logToConsoleIncomingTraffic:(NSString *)line
+{
+	if (self.rawModeEnabled) {
+		LogToConsole(@"INCOMING [\"%@\"]: >> %@", self.altNetworkName, line);
 	}
 }
 
