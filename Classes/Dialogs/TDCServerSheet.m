@@ -68,6 +68,12 @@
 		for (NSString *key in sortedKeys) {
 			[self.serverAddressCombo addItemWithObjectValue:key];
 		}
+
+		/* Connect commands text box better font. */
+		NSFont *goodFont = [NSFont fontWithName:@"Lucida Grande" size:13.0];
+
+		[self.loginCommandsField setTextContainerInset:NSMakeSize(1, 3)];
+		[self.loginCommandsField setFont:goodFont];
 	}
     
 	return self;
@@ -272,7 +278,7 @@
 - (void)makeFirstResponderForRow:(NSInteger)row
 {
 	switch (row) {
-		case 2: { [self.window makeFirstResponder:self.loginCommandsField];				break; } /* self.commandsView */
+		//case 2: { [self.window makeFirstResponder:self.loginCommandsField];				break; } /* self.commandsView */
 		case 4: { [self.window makeFirstResponder:self.serverNameField];				break; } /* self.generalView */
 		case 5: { [self.window makeFirstResponder:self.nicknameField];					break; } /* self.identityView */
 		case 6: { [self.window makeFirstResponder:self.normalLeavingCommentField];		break; } /* self.messagesView */
@@ -561,8 +567,17 @@
 		[self.delegate serverSheetOnOK:self];
 	}
 
+	[self.window makeFirstResponder:nil];
+
 	/* Tell super. */
 	[super ok:nil];
+}
+
+- (void)cancel:(id)sender
+{
+	[self.window makeFirstResponder:nil];
+
+	[super cancel:nil]; 
 }
 
 - (void)serverAddressChanged:(id)sender
