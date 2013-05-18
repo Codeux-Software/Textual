@@ -41,6 +41,7 @@
 @property (nonatomic, strong) IRCWorld *world;
 @property (nonatomic, assign) BOOL ghostMode;
 @property (nonatomic, assign) BOOL terminating;
+@property (nonatomic, assign) BOOL debugModeOn;
 @property (nonatomic, assign) BOOL skipTerminateSave;
 @property (nonatomic, assign) BOOL isInFullScreenMode;
 @property (nonatomic, assign) BOOL mainWindowIsActive;

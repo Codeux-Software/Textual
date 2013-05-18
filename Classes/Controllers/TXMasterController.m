@@ -67,6 +67,16 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
     if ((self = [super init])) {
 		TXGlobalMasterControllerClassReference = self;
 
+		// ---- //
+
+		if ([NSEvent modifierFlags] & NSControlKeyMask) {
+			self.debugModeOn = YES;
+
+			LogToConsole(@"Launching in debug mode.");
+		}
+
+		// ---- //
+
 		return self;
     }
 

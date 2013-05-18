@@ -354,15 +354,15 @@
 
 - (void)reachabilityChanged:(NSNotification *)note
 {
-#ifndef DEBUG
 	if (self.rawModeEnabled) {
-#endif
 		LogToConsole(@"%@ %@ %@", self.config.serverAddress,
-								  self.hostReachability.currentReachabilityString,
-								  self.hostReachability.currentReachabilityFlags);
-#ifndef DEBUG
+								self.hostReachability.currentReachabilityString,
+								self.hostReachability.currentReachabilityFlags);
+	} else {
+		DebugLogToConsole(@"%@ %@ %@", self.config.serverAddress,
+						  self.hostReachability.currentReachabilityString,
+						  self.hostReachability.currentReachabilityFlags);
 	}
-#endif
 
 	self.isHostReachable = self.hostReachability.isReachable;
 }

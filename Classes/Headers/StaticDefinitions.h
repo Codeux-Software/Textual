@@ -70,7 +70,9 @@
 #ifdef DEBUG
 	#define DebugLogToConsole(fmt, ...)			LogToConsole(fmt, ##__VA_ARGS__);
 #else
-	#define DebugLogToConsole(...)
+	#define DebugLogToConsole(fmt, ...)			if (self.masterController.debugModeOn) {		\
+													LogToConsole(fmt, ##__VA_ARGS__);			\
+												}
 #endif
 
 /* Shortcut defines. */
