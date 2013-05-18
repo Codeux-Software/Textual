@@ -38,6 +38,9 @@
 #import "TextualApplication.h"
 
 #import <objc/objc-runtime.h>
+#import <time.h>
+
+#define _timeBufferSize		256 /* Let's hope to God no one tries to overflow this… */
 
 #pragma mark -
 #pragma mark Validity.
@@ -73,7 +76,16 @@ NSString *TXFormattedTimestampWithOverride(NSDate *date, NSString *format, NSStr
 		format = override;
 	}
 
-	return [NSString stringWithFormat:@"%@", [date dateWithCalendarFormat:format timeZone:nil]];
+	time_t global = time(NULL);
+	
+	struct tm *local = localtime(&global);
+	char buf[(_timeBufferSize + 1)];
+	
+	strftime(buf, _timeBufferSize, [format UTF8String], local);
+
+	buf[_timeBufferSize] = 0;
+
+	return [NSString stringWithBytes:buf length:strlen(buf) encoding:NSUTF8StringEncoding];
 }
 
 NSString *TXFormattedTimestamp(NSDate *date, NSString *format) 
