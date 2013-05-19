@@ -3550,7 +3550,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
-				TEXTUAL_GITREF_BUILD_ID = stdbuild;
+				TEXTUAL_GITREF_BUILD_ID = "stdbuild,devid";
 			};
 			name = Release;
 		};
@@ -3715,7 +3715,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
-				TEXTUAL_GITREF_BUILD_ID = stdbuild;
+				TEXTUAL_GITREF_BUILD_ID = "stdbuild,appstore";
 			};
 			name = "Release (Trial)";
 		};
