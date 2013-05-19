@@ -3559,6 +3559,8 @@
 		}
 
 		if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_ping")]) {
+			NSAssertReturn(s.length < 50);
+
 			[self sendCTCPReply:sendern command:command text:s];
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_time")]) {
 			[self sendCTCPReply:sendern command:command text:[[NSDate date] descriptionWithLocale:[NSLocale currentLocale]]];
