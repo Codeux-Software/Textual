@@ -111,7 +111,8 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 {
 	NSRange r = NSMakeRange(rangeStart, rangeLength);
 
-	if (attrArray & _effectMask) {
+	if (attrArray & _effectMask)
+	{
 		NSFont *boldItalic = defaultFont;
 
 		if (attrArray & _rendererBoldFormatAttribute) {
@@ -153,6 +154,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 + (id)renderRange:(NSString *)body attributes:(attr_t)attrArray start:(NSInteger)rangeStart length:(NSInteger)rangeLength for:(TVCLogController *)logController
 {
 	NSString *contentne = [body safeSubstringWithRange:NSMakeRange(rangeStart, rangeLength)];
+
 	NSString *contentes = [TVCLogRenderer escapeString:contentne];
 
 	NSMutableDictionary *templateTokens = [NSMutableDictionary dictionary];
@@ -414,20 +416,20 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	 sent to, any links (with or without a scheme), highlight keywords, and
 	 channel names. This information is completely ignored when rendering the
 	 body into an attributed string. */
+
 	if (drawingType == TVCLogRendererHTMLType) {
 		/* Scan the body for links. */
-		
 		if (renderLinks) {
 			NSMutableArray *urlAry = [NSMutableArray array];
-			
+
 			NSArray *urlAryRanges = [TLOLinkParser locatedLinksForString:body];
-			
+
 			for (NSString *rn in urlAryRanges) {
 				NSRange r = NSRangeFromString(rn);
-				
+
 				if (r.length >= 1) {
 					setFlag(attrBuf, _rendererURLAttribute, r.location, r.length);
-					
+
 					[urlAry safeAddObject:[NSValue valueWithRange:r]];
 				}
 			}
@@ -707,6 +709,8 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	
 	if (drawingType == TVCLogRendererAttributedStringType) {
 		result = [[NSMutableAttributedString alloc] initWithString:body];
+
+		[result beginEditing];
 	} else {
 		result = [NSMutableString string];
 	}
@@ -731,6 +735,10 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		}
 		
 		start += n;
+	}
+
+	if (drawingType == TVCLogRendererAttributedStringType) {
+		[result endEditing];
 	}
 	
 	return result;
