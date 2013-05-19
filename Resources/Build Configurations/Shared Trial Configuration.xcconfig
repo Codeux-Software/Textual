@@ -1,3 +1,0 @@
-#include "Shared Release Configuration.xcconfig"
-
-CODE_SIGN_IDENTITY = Developer ID Application

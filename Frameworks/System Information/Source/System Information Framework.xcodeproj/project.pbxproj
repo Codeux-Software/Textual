@@ -21,7 +21,7 @@
 		4C69187516E3242F00BDE3A8 /* Shared Framework Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Shared Framework Configuration.xcconfig"; sourceTree = "<group>"; };
 		4C6B5F3516C62084000AD629 /* SystemInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemInformation.m; sourceTree = "<group>"; };
 		4C6B5F3616C62084000AD629 /* SystemInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemInformation.h; sourceTree = "<group>"; };
-		4CED78E116E323260012AFDA /* Shared Release Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Shared Release Configuration.xcconfig"; sourceTree = "<group>"; };
+		4C86B0161748B92A0028C7AE /* Shared Developer ID Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Shared Developer ID Release Configuration.xcconfig"; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* SystemInformation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SystemInformation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -114,8 +114,8 @@
 			isa = PBXGroup;
 			children = (
 				4C588BAA16E34BDC007EFF6D /* Code Signing Identity.xcconfig */,
+				4C86B0161748B92A0028C7AE /* Shared Developer ID Release Configuration.xcconfig */,
 				4C69187516E3242F00BDE3A8 /* Shared Framework Configuration.xcconfig */,
-				4CED78E116E323260012AFDA /* Shared Release Configuration.xcconfig */,
 			);
 			name = "Build Configurations";
 			path = "../../../Resources/Build Configurations";

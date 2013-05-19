@@ -1,8 +1,8 @@
 
-// Code signing identity used by the Debug and Release build
-// configurations of Textual. Trial builds have their own
-// own configuration file for this. This code signing
-// identity is inherited by both the frameworks and
-// extensions built by Textual.
+// This is the code signing identity used by the Developer ID Release
+// and Debug builds of Textual. This is all you should have to edit,
+// but if you really want to edit everything then look at the "App
+// Store Release" configuration file. That supersedes this value when
+// that configuration is being targetted.
 
-CODE_SIGN_IDENTITY = 3rd Party Mac Developer Application
+CODE_SIGN_IDENTITY = Developer ID Application

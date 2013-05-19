@@ -18,7 +18,7 @@
 		4C588BB616E34C0F007EFF6D /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Code Signing Identity.xcconfig"; sourceTree = "<group>"; };
 		4C68426C16C5B3E10005A59E /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = ../../../.tmp/SharedBuildProducts/BlowfishEncryption.framework; sourceTree = "<group>"; };
 		4C69187E16E3275700BDE3A8 /* Shared Extension Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Shared Extension Configuration.xcconfig"; sourceTree = "<group>"; };
-		4C69188016E3275700BDE3A8 /* Shared Release Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Shared Release Configuration.xcconfig"; sourceTree = "<group>"; };
+		4C86B0131748B8A60028C7AE /* Shared Developer ID Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Shared Developer ID Release Configuration.xcconfig"; sourceTree = "<group>"; };
 		4CD4026916C8CC5800FEA686 /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = BasicLanguage.strings; sourceTree = "<group>"; };
 		4CEE0DD012E09A1900C5096E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4CEE0E8712E09A9800C5096E /* TPI_BlowfishCommands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPI_BlowfishCommands.h; sourceTree = "<group>"; };
@@ -91,8 +91,8 @@
 			isa = PBXGroup;
 			children = (
 				4C588BB616E34C0F007EFF6D /* Code Signing Identity.xcconfig */,
+				4C86B0131748B8A60028C7AE /* Shared Developer ID Release Configuration.xcconfig */,
 				4C69187E16E3275700BDE3A8 /* Shared Extension Configuration.xcconfig */,
-				4C69188016E3275700BDE3A8 /* Shared Release Configuration.xcconfig */,
 			);
 			name = "Build Configurations";
 			path = "../../Build Configurations";
