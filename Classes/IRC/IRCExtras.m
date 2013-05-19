@@ -111,6 +111,7 @@
 		 contributors						— Open contributors file. 
 		 custom-style-folder				— Open the custom style storage location folder.
 		 custom-styles-folder				— Same as custom-style-folder except plural.
+		 newsletter							— Open the subscription page for the newsletter.
 		 support-channel					— Connect to the #textual channel.
 		 support-group						— Open the homepage of our support group.
 		 testing-channel					— Connect to the #textual-testing channel.
@@ -143,15 +144,17 @@
 		{
 			[RZWorkspace() openFile:[TPCPreferences customThemeFolderPath]];
 		}
+		else if ([serverAddress isEqualToString:@"newsletter"])
+		{
+			[TLOpenLink openWithString:@"http://www.codeux.com/textual/newsletter/"];
+		}
 		else if ([serverAddress isEqualToString:@"support-channel"])
 		{
 			[menuc connectToTextualHelpChannel:nil];
 		}
 		else if ([serverAddress isEqualToString:@"support-group"])
 		{
-			/* I am without Internet right now so cannot find the link 
-			 for this right now, but you can imagine it would be epic
-			 if I did have it right now… */
+			[TLOpenLink openWithString:@"http://www.codeux.com/textual/support-group/"];
 		}
 		else if ([serverAddress isEqualToString:@"testing-channel"])
 		{
@@ -164,7 +167,7 @@
 		}
 		else if ([serverAddress isEqualToString:@"wiki"])
 		{
-			[TLOpenLink openWithString:@"https://wiki.github.com/codeux/Textual/"];
+			[TLOpenLink openWithString:@"http://www.codeux.com/textual/wiki/"];
 		}
 
 		return;
