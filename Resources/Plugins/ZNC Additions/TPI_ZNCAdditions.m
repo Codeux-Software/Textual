@@ -70,7 +70,8 @@
 {
 	for (IRCChannel *c in client.channels) {
 		NSAssertReturnLoopContinue(c.isActive);
-        NSAssertReturnLoopContinue(![c.name hasPrefix:@"~#"]);
+        NSAssertReturnLoopContinue([c.name hasPrefix:@"~#"] == NO);
+		
         [c deactivate];
 	}
 
