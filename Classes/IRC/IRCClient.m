@@ -3562,6 +3562,10 @@
 			[self sendCTCPReply:sendern command:command text:s];
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_time")]) {
 			[self sendCTCPReply:sendern command:command text:[[NSDate date] descriptionWithLocale:[NSLocale currentLocale]]];
+		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_cap")]) {
+			if ([s isEqualIgnoringCase:@"LS"]) {
+				[self sendCTCPReply:sendern command:command text:TXTFLS(@"IRCClientSupportedCapacities")];
+			}
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_userinfo")] ||
 				   [command isEqualToString:IRCPrivateCommandIndex("ctcp_version")])
 		{

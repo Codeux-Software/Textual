@@ -124,6 +124,7 @@
 "IRCAwayCommandDefaultReason" = "Be back later.";
 "IRCCTCPRequestIgnored" = "\002-CTCP-\002 %1$@ from %2$@ was ignored.";
 
+"IRCClientSupportedCapacities" = "away-notify multi-prefix userhost-in-names sasl server-time";
 "IRCCTCPSupportedReplies" = "CLIENTINFO FINGER PING TIME USERINFO VERSION";
 "IRCCTCPVersionTitle" = "\002Current Version:\002 %@";
 "IRCCTCPFingerCommandReply" = "Stop fingering me pervert!";
