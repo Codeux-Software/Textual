@@ -128,7 +128,9 @@
 
 + (NSString *)systemCPULoadInformation
 {
-	return TPIFLS(@"SystemInformationLoadavgCommandResult", [TPI_SP_SysInfo loadAverageWithCores:0]);
+	NSUInteger _cpu_count_v	= [TPI_SP_SysInfo processorVirtualCoreCount];
+	
+	return TPIFLS(@"SystemInformationLoadavgCommandResult", [TPI_SP_SysInfo loadAverageWithCores:_cpu_count_v]);
 }
 
 + (NSString *)systemDiskspaceInformation
@@ -626,14 +628,7 @@
 	double load_ave[3];
 	
 	if (getloadavg(load_ave, 3) == 3) {
-		if (cores > 0) {
-			return [NSString stringWithFormat:@"%.0f", ((load_ave[0] * 100) / cores)];
-		} else {
-			return [NSString stringWithFormat:@"%.2f %.2f %.2f",
-					(CGFloat)load_ave[0],
-					(CGFloat)load_ave[1],
-					(CGFloat)load_ave[2]];
-		}
+		return [NSString stringWithFormat:@"%.0f", ((load_ave[0] * 100) / cores)];
 	}
 	
 	return nil;
