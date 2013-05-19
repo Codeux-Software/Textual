@@ -420,15 +420,9 @@
 		[self.worldController expandClient:uf];
 		
 		/* select: can only work on one channel so we only ask for the top-most one. */
-		NSObjectIsEmptyAssert(channels);
+		NSObjectIsEmptyAssert(uf.channels);
 
-		NSDictionary *channelSeed = (id)channels[0];
-		
-		IRCChannel *fc = [uf findChannel:channelSeed[@"channelName"]];
-
-		if (fc) {
-			[self.worldController select:fc];
-		}
+		[self.worldController select:uf.channels[0]];
 	}
 }
 

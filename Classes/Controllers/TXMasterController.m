@@ -1318,13 +1318,17 @@ typedef enum TXMoveKind : NSInteger {
 	
 	IRCClient *u = [self.worldController createClient:dic reload:YES];
 
-	[self.worldController select:u];
+	[self.worldController expandClient:u];
 	[self.worldController save];
 	
 	if (u.config.autoConnect) {
 		[u connect];
 	}
-	
+
+	NSObjectIsEmptyAssert(u.channels);
+
+	[self.worldController select:u.channels[0]];
+
 	[self.mainWindow makeKeyAndOrderFront:nil];
 }
 
