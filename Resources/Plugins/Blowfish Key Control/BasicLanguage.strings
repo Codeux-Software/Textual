@@ -40,6 +40,9 @@
 
 "BlowfishEncryptionStartedInPrivateMessage" = "Encryption started in query. If this query is closed, then the key must be set again.";
 
+"BlowfishKeyExchangeNotAvailable_1" = "Key exchange support is not available at this time because the Textual developers lack the experience to continue work on it.";
+"BlowfishKeyExchangeNotAvailable_2" = "If you are a developer and would like to contribute to this feature, then please be sure to let us know in #textual-dev on freenode.";
+
 "BlowfishKeyExchangeSuccessful_1" = "Successful key exchange. Messages sent to \002%@\002 will now be encrypted.";
 "BlowfishKeyExchangeSuccessful_2" = "\002Warning:\002 If this query is closed, then a new key exchange is required to continue encrypted chat.";
 "BlowfishKeyExchangeForQueriesOnly" = "Key exchange is for queries only.";
