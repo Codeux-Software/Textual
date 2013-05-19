@@ -2062,7 +2062,11 @@
 				[self quit];
 			}
 
-			[self performSelector:@selector(connect) withObject:nil afterDelay:2.0];
+			if (self.isQuitting) {
+				[self performSelector:@selector(connect) withObject:nil afterDelay:2.0];
+			} else {
+				[self connect];
+			}
 
 			break;
 		}
