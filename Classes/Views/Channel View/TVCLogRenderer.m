@@ -244,9 +244,17 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 	BOOL exactWordMatching = ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightExactMatchType);
     BOOL regexWordMatching = ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightRegularExpressionMatchType);
+
+	IRCClientConfig *clientConfig = log.client.config;
 	
-	NSMutableArray *highlightWords	= [[inputDictionary arrayForKey:@"highlightKeywords"] mutableCopy];
-	NSMutableArray *excludeWords = [[inputDictionary arrayForKey:@"excludeKeywords"] mutableCopy];
+	id highlightWords = [inputDictionary arrayForKey:@"highlightKeywords"];
+	id excludeWords = [inputDictionary arrayForKey:@"excludeKeywords"];
+
+	/* Only bother spending time creating a copy if we actually need them. */
+	if (clientConfig.highlightList.count >= 1) {
+		highlightWords = [highlightWords mutableCopy];
+		excludeWords = [excludeWords mutableCopy];
+	}
 
     NSFont *attributedStringFont = inputDictionary[@"attributedStringFont"];
 
@@ -428,8 +436,6 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		}
 		
 		/* Add server/channel specific matches. */
-		IRCClientConfig *clientConfig = log.client.config;
-
 		for (TDCHighlightEntryMatchCondition *e in clientConfig.highlightList) {
 			BOOL addKeyword = NO;
 
