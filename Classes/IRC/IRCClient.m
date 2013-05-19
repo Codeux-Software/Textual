@@ -3558,7 +3558,9 @@
 			[self sendCTCPReply:sendern command:command text:s];
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_time")]) {
 			[self sendCTCPReply:sendern command:command text:[[NSDate date] descriptionWithLocale:[NSLocale currentLocale]]];
-		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_version")]) {
+		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_userinfo")] ||
+				   [command isEqualToString:IRCPrivateCommandIndex("ctcp_version")])
+		{
 			NSString *fakever = [TPCPreferences masqueradeCTCPVersion];
 
 			if (NSObjectIsNotEmpty(fakever)) {
@@ -3572,16 +3574,8 @@
 
 				[self sendCTCPReply:sendern command:command text:textoc];
 			}
-		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_userinfo")] ||
-				   [command isEqualToString:IRCPrivateCommandIndex("ctcp_finger")])
-		{
-			NSString *userinfo = [NSString stringWithFormat:@"%@ — %@ %@ (%@)",
-								  [CSFWSystemInformation systemModelName],
-								  [CSFWSystemInformation systemOperatingSystemName],
-								  [CSFWSystemInformation systemStandardVersion],
-								  [CSFWSystemInformation systemBuildVersion]];
-			
-			[self sendCTCPReply:sendern command:command text:userinfo];
+		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_finger")]) {
+			[self sendCTCPReply:sendern command:command text:TXTFLS(@"IRCCTCPFingerCommandReply")];
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_clientinfo")]) {
 			[self sendCTCPReply:sendern command:command text:TXTLS(@"IRCCTCPSupportedReplies")];
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_lagcheck")]) {

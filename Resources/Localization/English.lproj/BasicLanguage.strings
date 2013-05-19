@@ -126,6 +126,7 @@
 
 "IRCCTCPSupportedReplies" = "CLIENTINFO FINGER PING TIME USERINFO VERSION";
 "IRCCTCPVersionTitle" = "\002Current Version:\002 %@";
+"IRCCTCPFingerCommandReply" = "Stop fingering me pervert!";
 "IRCCapCurrentlyEnabledNone" = "There are no capabilities in use.";
 "IRCCapCurrentlyEnbaled" = "The following capabilities are currently enabled: %@";
 "IRCChannelEmptyTopic" = "(No Topic)";
