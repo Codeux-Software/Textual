@@ -1469,7 +1469,7 @@
     
 	insertString = [insertString stringByAppendingString:[users componentsJoinedByString:@", "]];
     
-    if([TPCPreferences tabCompletionSuffix]) {
+    if ([TPCPreferences tabCompletionSuffix]) {
         insertString = [insertString stringByAppendingString:[TPCPreferences tabCompletionSuffix]];
     }
     
@@ -1482,6 +1482,9 @@
 
 	/* Close users. */
 	[self deselectMembers:sender];
+	
+	/* Set focus to the input textfield. */
+	[textField focus];
 }
 
 - (void)memberSendWhois:(id)sender
