@@ -70,8 +70,8 @@
 {
 	for (IRCChannel *c in client.channels) {
 		NSAssertReturnLoopContinue(c.isActive);
-
-		[c deactivate];
+        NSAssertReturnLoopContinue(![c.name hasPrefix:@"~#"]);
+        [c deactivate];
 	}
 
 	[self.worldController reloadTreeGroup:client];
