@@ -1,4 +1,4 @@
-#include "Shared Release Configuration.xcconfig"
+#include "Shared Developer ID Release Configuration.xcconfig"
 
 // This configuration is designed for the Plugins folder of
 // Textual and assumes that the paths are relative to that
@@ -20,8 +20,10 @@ HEADER_SEARCH_PATHS = "${TEXTUAL_PROJECT_ROOT}/Classes/Headers/**"
 LIBRARY_SEARCH_PATHS = "${TEXTUAL_PROJECT_ROOT}/Frameworks/**"
 FRAMEWORK_SEARCH_PATHS = "${TEXTUAL_PROJECT_ROOT}/Frameworks/**" "${TEXTUAL_PROJECT_ROOT}/.tmp/SharedBuildProducts/**"
 
-// BUNDLE_LOADER is passed during the run script.
-//BUNDLE_LOADER = 
+// The actual path of the copy of Textual being built is passed during during
+// the time that these are compiled. However, we still pass the installed
+// location by default so we can build the extensions by themselves.
+BUNDLE_LOADER = /Applications/Textual.app/Contents/MacOS/Textual
 
 DEAD_CODE_STRIPPING = YES
 PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES

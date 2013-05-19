@@ -27,8 +27,8 @@
 		4C57A680131D378900252759 /* TPISystemProfiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPISystemProfiler.m; sourceTree = "<group>"; };
 		4C588BB216E34C00007EFF6D /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Code Signing Identity.xcconfig"; sourceTree = "<group>"; };
 		4C69189016E3276200BDE3A8 /* Shared Extension Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Shared Extension Configuration.xcconfig"; sourceTree = "<group>"; };
-		4C69189216E3276200BDE3A8 /* Shared Release Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Shared Release Configuration.xcconfig"; sourceTree = "<group>"; };
 		4C78926A16C628040081E859 /* SystemInformation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemInformation.framework; path = ../../../.tmp/SharedBuildProducts/SystemInformation.framework; sourceTree = "<group>"; };
+		4C86B0151748B8DF0028C7AE /* Shared Developer ID Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Shared Developer ID Release Configuration.xcconfig"; sourceTree = "<group>"; };
 		4CD4025F16C8C0EF00FEA686 /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = BasicLanguage.strings; sourceTree = "<group>"; };
 		4CD69D81131E2BD200F4618E /* MacintoshModels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MacintoshModels.plist; sourceTree = "<group>"; };
 		4CEE0DD012E09A1900C5096E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -125,8 +125,8 @@
 			isa = PBXGroup;
 			children = (
 				4C588BB216E34C00007EFF6D /* Code Signing Identity.xcconfig */,
+				4C86B0151748B8DF0028C7AE /* Shared Developer ID Release Configuration.xcconfig */,
 				4C69189016E3276200BDE3A8 /* Shared Extension Configuration.xcconfig */,
-				4C69189216E3276200BDE3A8 /* Shared Release Configuration.xcconfig */,
 			);
 			name = "Build Configurations";
 			path = "../../Build Configurations";

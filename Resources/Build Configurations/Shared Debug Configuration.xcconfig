@@ -1,4 +1,5 @@
-#include "Shared Release Configuration.xcconfig"
+#include "Shared Developer ID Release Configuration.xcconfig"
 
 GCC_OPTIMIZATION_LEVEL = 0
 VERSION_INFO_BUILDER = ${USER}
+GCC_PREPROCESSOR_DEFINITIONS = DEBUG

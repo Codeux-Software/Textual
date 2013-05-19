@@ -1,4 +1,4 @@
-#include "Shared Release Configuration.xcconfig"
+#include "Shared Developer ID Release Configuration.xcconfig"
 
 // This configuration is designed for the Frameworks folder
 // of Textual and assumes that the paths are relative to that

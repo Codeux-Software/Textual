@@ -31,7 +31,7 @@
 		4C68FF45130D813900AE3A7C /* Copyright.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Copyright.txt; path = Resources/Copyright.txt; sourceTree = "<group>"; };
 		4C68FF46130D813900AE3A7C /* License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = License.txt; path = Resources/License.txt; sourceTree = "<group>"; };
 		4C69187316E3242000BDE3A8 /* Shared Framework Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Shared Framework Configuration.xcconfig"; sourceTree = "<group>"; };
-		4CD2128616E322D1002FDD21 /* Shared Release Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Shared Release Configuration.xcconfig"; sourceTree = "<group>"; };
+		4C86B0171748B9380028C7AE /* Shared Developer ID Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Shared Developer ID Release Configuration.xcconfig"; sourceTree = "<group>"; };
 		4CEA502B158B06C700D6CC72 /* AHLinkLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AHLinkLexer.h; path = Source/AHLinkLexer.h; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* AutoHyperlinks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AutoHyperlinks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,8 +130,8 @@
 			isa = PBXGroup;
 			children = (
 				4C588BAB16E34BE5007EFF6D /* Code Signing Identity.xcconfig */,
+				4C86B0171748B9380028C7AE /* Shared Developer ID Release Configuration.xcconfig */,
 				4C69187316E3242000BDE3A8 /* Shared Framework Configuration.xcconfig */,
-				4CD2128616E322D1002FDD21 /* Shared Release Configuration.xcconfig */,
 			);
 			name = "Build Configurations";
 			path = "../../../Resources/Build Configurations";
