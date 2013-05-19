@@ -1482,6 +1482,9 @@
 
 	/* Close users. */
 	[self deselectMembers:sender];
+    
+    /* Set focus to the input textfield. */
+    [[textField window] makeFirstResponder:textField];
 }
 
 - (void)memberSendWhois:(id)sender
