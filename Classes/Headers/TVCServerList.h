@@ -99,6 +99,7 @@
 - (NSColor *)messageCountBadgeAquaBackgroundColor;
 - (NSColor *)messageCountBadgeGraphtieBackgroundColor;
 - (NSColor *)messageCountBadgeHighlightBackgroundColor;
+- (NSColor *)privateMessageCountBadgeHighlightBackgroundColor;
 - (NSColor *)messageCountBadgeNormalTextColor;
 - (NSColor *)messageCountBadgeSelectedBackgroundColor;
 - (NSColor *)messageCountBadgeSelectedTextColor;
