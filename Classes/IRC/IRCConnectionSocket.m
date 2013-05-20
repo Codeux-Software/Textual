@@ -246,7 +246,9 @@
 - (void)onSocket:(id)sender willDisconnectWithError:(NSError *)error
 {
 	if (PointerIsEmpty(error) || [error code] == errSSLClosedGraceful) {
-		[self onSocketDidDisconnect:sender];
+		if ([self useNewSocketEngine]) {
+			[self onSocketDidDisconnect:sender];
+		}
 	} else {
 		NSString *errorMessage = nil;
 
