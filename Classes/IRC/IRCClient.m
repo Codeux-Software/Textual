@@ -55,6 +55,7 @@
 @property (nonatomic, assign) BOOL inUserInvokedWhowasRequest;
 @property (nonatomic, assign) BOOL inUserInvokedJoinRequest;
 @property (nonatomic, assign) BOOL sendLagcheckReplyToChannel;
+@property (nonatomic, assign) BOOL timeoutWarningShownToUser;
 @property (nonatomic, assign) NSInteger tryingNickNumber;
 @property (nonatomic, assign) NSInteger connectionReconnectCount;
 @property (nonatomic, assign) NSUInteger CAPpausedStatus;
@@ -2760,6 +2761,7 @@
 	self.reconnectEnabled = NO;
 	self.sendLagcheckReplyToChannel = NO;
 	self.serverHasNickServ = NO;
+	self.timeoutWarningShownToUser = NO;
 
 	self.myHost = nil;
 	self.myNick = self.config.nickname;
@@ -5587,9 +5589,11 @@
 	NSInteger timeSpent = [NSDate secondsSinceUnixTimestamp:self.lastMessageReceived];
 
 	if (timeSpent >= _timeoutInterval) {
-		[self printDebugInformation:TXTFLS(@"IRCDisconnectedByTimeout", (timeSpent / 60)) channel:nil];
+		if (self.timeoutWarningShownToUser == NO) {
+			[self printDebugInformation:TXTFLS(@"IRCMightDisconnectWithTimeout", (timeSpent / 60)) channel:nil];
 
-		[self disconnect];
+			self.timeoutWarningShownToUser = YES;
+		}
 	} else if (timeSpent >= _pingInterval) {
 		[self send:IRCPrivateCommandIndex("ping"), [self networkAddress], nil];
 	}
