@@ -271,19 +271,24 @@ body div.line[type*=rawhtml] {
 }
 
 /* Message of the Day (MOTD) */
+/* 720, 721, 722 are used by ShadowIRCd for Oper MOTD. */
+/* 372, 375, 376 are normal MOTD shared by several IRCds. */ 
 
-body div.line[command="372"] {
+body div.line[command="372"],
+body div.line[command="721"] {
 	border: none;
 	margin-bottom: 1px;
 }
 
-body div.line[command="375"] { /* Start. */
+body div.line[command="375"],
+body div.line[command="720"] { /* Start. */
 	border-top: 1px solid #444;
 	border-bottom: none;
 	margin-bottom: 1px;
 }
 
-body div.line[command="376"] { /* End. */
+body div.line[command="376"],
+body div.line[command="722"] { /* End. */
 	border-top: none;
 	border-bottom: 1px solid #444;
 	margin-bottom: 1px;
@@ -291,7 +296,10 @@ body div.line[command="376"] { /* End. */
 
 body div.line[command="372"] .message,
 body div.line[command="375"] .message,
-body div.line[command="376"] .message {
+body div.line[command="376"] .message 
+body div.line[command="720"] .message,
+body div.line[command="721"] .message,
+body div.line[command="722"] .message {
 	font-family: "Menlo" !important;
 }
 
