@@ -347,8 +347,14 @@
 
 - (NSColor *)messageCountBadgeHighlightBackgroundColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:210 green:15 blue:15 alpha:1.0]
-							   invertedItem:[NSColor internalCalibratedRed:141.0 green:0.0 blue:0.0  alpha:1.0]];
+	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:122 green:178 blue:72 alpha:1.0]
+           						   invertedItem:[NSColor internalCalibratedRed:0.0 green:100.0 blue:0.0  alpha:1.0]];
+}
+
+- (NSColor *)privateMessageCountBadgeHighlightBackgroundColor
+{
+	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:213 green:112 blue:110 alpha:1.0]
+                              invertedItem:[NSColor internalCalibratedRed:141.0 green:0.0 blue:0.0  alpha:1.0]];
 }
 
 - (NSColor *)messageCountBadgeAquaBackgroundColor

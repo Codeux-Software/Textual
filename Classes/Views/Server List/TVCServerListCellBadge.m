@@ -84,6 +84,7 @@
 	NSInteger nicknameHighlightCount = channel.nicknameHighlightCount;
 
 	BOOL isHighlight = (nicknameHighlightCount >= 1);
+	BOOL isPrivateMessage = channel.isPrivateMessage;
 
 	/* Begin draw if we want to. */
 	if (channelTreeUnreadCount >= 1 && drawMessageBadge) {
@@ -98,6 +99,7 @@
 
 		/* Add new items. */
 		[newContext setBool:isHighlight forKey:@"isHighlight"];
+		[newContext setBool:isPrivateMessage forKey:@"isPrivateMessage"];
 		
 		[newContext setInteger:channelTreeUnreadCount forKey:@"unreadCount"];
 
@@ -117,7 +119,8 @@
 
 		/* { */
 			/* Get the string being draw. */
-			NSAttributedString *mcstring = [self messageCountBadgeText:channelTreeUnreadCount selected:(isSelected && isHighlight == NO)];
+			NSAttributedString *mcstring = [self messageCountBadgeText:channelTreeUnreadCount
+								highlightCount:nicknameHighlightCount selected:isSelected];
 
 			/* Get the rect being drawn. */
 			NSRect badgeRect = [self messageCountBadgeRectWithText:mcstring];
@@ -146,26 +149,51 @@
 #pragma mark -
 #pragma mark Internal Drawing
 
-- (NSAttributedString *)messageCountBadgeText:(NSInteger)messageCount selected:(BOOL)isSelected
+- (NSAttributedString *)messageCountBadgeText:(NSInteger)messageCount highlightCount:(NSInteger)highlightCount selected:(BOOL)isSelected
 {
 	NSString *messageCountString = TXFormattedNumber(messageCount);
-
-    /* Pick which font size best aligns with the badge. */
-	NSColor *textColor = self.serverList.messageCountBadgeNormalTextColor;
-
+	NSString *highlightCountString = TXFormattedNumber(highlightCount);
+   
+	NSColor *textMessageColor = self.serverList.messageCountBadgeNormalTextColor;
+	NSColor *textHighlightColor = self.serverList.messageCountBadgeNormalTextColor;
+   
 	if (isSelected) {
-		textColor = self.serverList.messageCountBadgeSelectedTextColor;
+		textMessageColor = self.serverList.messageCountBadgeSelectedTextColor;
+		textHighlightColor = self.serverList.messageCountBadgeSelectedTextColor;
 	}
-
+   
 	NSFont *textFont = self.serverList.messageCountBadgeFont;
-
-	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-
-	[attributes setObject:textFont forKey:NSFontAttributeName];
-	[attributes setObject:textColor forKey:NSForegroundColorAttributeName];
-
-	NSAttributedString *mcstring = [NSAttributedString stringWithBase:messageCountString attributes:attributes];
-
+   
+	// attributes for regular unread messages
+	NSMutableDictionary *messageAttributes = [NSMutableDictionary dictionary];
+	[messageAttributes setObject:textFont forKey:NSFontAttributeName];
+	[messageAttributes setObject:textMessageColor forKey:NSForegroundColorAttributeName];
+   
+	// attributes for highlighted messages
+	NSMutableDictionary *highlightAttributes = [NSMutableDictionary dictionary];
+	[highlightAttributes setObject:textFont forKey:NSFontAttributeName];
+	[highlightAttributes setObject:textHighlightColor forKey:NSForegroundColorAttributeName];
+   
+	// attributes strings created here
+	NSAttributedString *messageString = [NSAttributedString stringWithBase:messageCountString attributes:messageAttributes];
+	NSAttributedString *highlightString = [NSAttributedString stringWithBase:highlightCountString attributes:highlightAttributes];
+   
+	NSMutableAttributedString *mcstring = [messageString mutableCopy];
+	if (highlightCount > 0) {
+		NSAttributedString *firstSpacerString = [NSAttributedString stringWithBase:@"" attributes:messageAttributes];
+		NSAttributedString *spacerString = [NSAttributedString stringWithBase:@"   " attributes:messageAttributes];
+		if (highlightCount < 10) {
+			spacerString = [NSAttributedString stringWithBase:@"    " attributes:messageAttributes];
+			if (messageCount >= 10)
+				firstSpacerString = [NSAttributedString stringWithBase:@" " attributes:messageAttributes];
+		}
+      
+		mcstring = [firstSpacerString mutableCopy];
+		[mcstring appendAttributedString:highlightString];
+		[mcstring appendAttributedString:spacerString];
+		[mcstring appendAttributedString:messageString];
+	}
+   
 	return mcstring;
 }
 
@@ -173,7 +201,7 @@
 {
 	NSInteger messageCountWidth = (mcstring.size.width + (self.serverList.messageCountBadgePadding * 2));
 
-	NSRect badgeFrame = NSMakeRect(0, 1, messageCountWidth, self.serverList.messageCountBadgeHeight);
+	NSRect badgeFrame = NSMakeRect(0, 1, messageCountWidth + 2, self.serverList.messageCountBadgeHeight + 1);
 
 	if (badgeFrame.size.width < self.serverList.messageCountBadgeMinimumWidth) {
 		badgeFrame.size.width = self.serverList.messageCountBadgeMinimumWidth;
@@ -191,6 +219,7 @@
 	BOOL isGraphite = [self.cachedDrawContext boolForKey:@"isGraphite"];
 	BOOL isSelected = [self.cachedDrawContext boolForKey:@"isSelected"];
 	BOOL isHighlight = [self.cachedDrawContext boolForKey:@"isHighlight"];
+	BOOL isPrivateMessage = [self.cachedDrawContext boolForKey:@"isPrivateMessage"];
 	
 	/* Create blank badge image. */
 	/* 1 point is added to size to allow room for a shadow. */
@@ -232,8 +261,8 @@
 	/* Draw the background color. */
 	NSColor *backgroundColor;
 
-	if (isHighlight) {
-		backgroundColor = self.serverList.messageCountBadgeHighlightBackgroundColor;
+	if (isPrivateMessage) {
+		backgroundColor = self.serverList.privateMessageCountBadgeHighlightBackgroundColor;;
 	} else {
 		if (isSelected) {
 			backgroundColor = self.serverList.messageCountBadgeSelectedBackgroundColor;
@@ -253,6 +282,24 @@
 	[backgroundColor set];
 
 	[badgePath fill];
+   
+	if (isHighlight)
+	{
+		NSRect firstHalf = NSMakeRect(badgeFrame.origin.x, badgeFrame.origin.y,
+						badgeFrame.size.width / 2.0, badgeFrame.size.height);
+      
+		badgePath = [NSBezierPath bezierPathWithRoundedRect:firstHalf
+						xRadius:(self.serverList.messageCountBadgeHeight / 2.0)
+						yRadius:(self.serverList.messageCountBadgeHeight / 2.0)];
+      
+		NSRect firstHalf2 = NSMakeRect(firstHalf.size.width / 2.0, firstHalf.origin.y,
+						firstHalf.size.width / 2.0, firstHalf.size.height);
+		[badgePath appendBezierPathWithRect:firstHalf2];
+      
+		backgroundColor = self.serverList.messageCountBadgeHighlightBackgroundColor;
+		[backgroundColor set];
+		[badgePath fill];
+	}
 
 	/*************************************************************/
 	/* Badge text drawing. */
