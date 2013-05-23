@@ -76,7 +76,7 @@ NSString *TXFormattedTimestampWithOverride(NSDate *date, NSString *format, NSStr
 		format = override;
 	}
 
-	time_t global = time(NULL);
+	time_t global = (time_t) [date timeIntervalSince1970];
 	
 	struct tm *local = localtime(&global);
 	char buf[(_timeBufferSize + 1)];
