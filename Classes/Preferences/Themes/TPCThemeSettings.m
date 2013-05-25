@@ -119,6 +119,15 @@
 	return [baseURL stringByAppendingPathComponent:@"/Style Default Templates/"];
 }
 
+- (NSString *)standardTemplateRepositoryPath
+{
+	NSString *filename = [TPCThemeController extractThemeName:[TPCPreferences themeName]];
+   
+	NSString *path = [[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"Styles/%@/", filename]];
+   
+	return [path stringByAppendingPathComponent:@"/Data/Templates/"];
+}
+
 - (NSString *)customTemplateRepositoryPath
 {
 	NSString *filename = [TPCThemeController extractThemeName:[TPCPreferences themeName]];
@@ -141,18 +150,29 @@
 	
 	NSError *load_error = nil;
 
+	NSString *defaultTempPath = [[self standardTemplateRepositoryPath] stringByAppendingPathComponent:name];
 	NSString *customTemplPath = [[self customTemplateRepositoryPath] stringByAppendingPathComponent:name];
 	NSString *applicationPath = [[self applicationTemplateRepositoryPath] stringByAppendingPathComponent:name];
 
-	/* First look for a custom template. */
-	GRMustacheTemplate *tmpl = [GRMustacheTemplate templateFromContentsOfFile:customTemplPath error:&load_error];
-
+	/* First look for a standard style template. */
+	GRMustacheTemplate *tmpl = [GRMustacheTemplate templateFromContentsOfFile:defaultTempPath error:&load_error];
+   
 	if (PointerIsEmpty(tmpl) || load_error) {
-		/* If no custom template is found, then revert to application defaults. */
+		/* If no standard style template is found, then try a custom template. */
 		if (load_error.code == GRMustacheErrorCodeTemplateNotFound || load_error.code == 260) {
 			load_error = nil;
-			
-			tmpl = [GRMustacheTemplate templateFromContentsOfFile:applicationPath error:&load_error];
+	
+			/* Now look for a custom template. */
+			tmpl = [GRMustacheTemplate templateFromContentsOfFile:customTemplPath error:&load_error];
+         
+			if (PointerIsEmpty(tmpl) || load_error) {
+				/* If no custom template is found, then revert to application defaults. */
+				if (load_error.code == GRMustacheErrorCodeTemplateNotFound || load_error.code == 260) {
+					load_error = nil;
+               
+					tmpl = [GRMustacheTemplate templateFromContentsOfFile:applicationPath error:&load_error];
+				}
+			}
 
 			if (PointerIsNotEmpty(tmpl)) {
 				return tmpl; // Return default template. 
@@ -160,9 +180,9 @@
 		}
 
 		/* If either template failed to load, then log a error. */
-        if (load_error) {
+		if (load_error) {
 			LogToConsole(TXTLS(@"StyleTemplateLoadFailed"), load_error);
-        }
+		}
         
 		return nil;
 	}
