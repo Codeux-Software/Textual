@@ -30,6 +30,8 @@
 	<string>irc.mozor.net</string>
 	<key>NixtrixIRC</key>
 	<string>irc.nixtrixirc.net</string>
+	<key>PonyChat</key>
+	<string>irc.ponychat.net</string>
 	<key>QuakeNet</key>
 	<string>irc.quakenet.org</string>
 	<key>Rizon</key>
