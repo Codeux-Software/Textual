@@ -234,6 +234,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
+	NSAssertReturn(self.terminating == NO);
+
 	id sel = self.worldController.selectedItem;
     
 	if (sel) {
@@ -256,6 +258,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 - (void)windowDidResignKey:(NSNotification *)notification
 {
+	NSAssertReturn(self.terminating == NO);
+
 	id sel = self.worldController.selectedItem;
     
 	if (sel) {
@@ -302,6 +306,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 - (void)applicationWillTerminate:(NSNotification *)note
 {
+	[RZWorkspaceNotificationCenter() removeObserver:self];
+
 	[RZAppleEventManager() removeEventHandlerForEventClass:KInternetEventClass andEventID:KAEGetURL];
 
 	if (self.skipTerminateSave == NO) {
