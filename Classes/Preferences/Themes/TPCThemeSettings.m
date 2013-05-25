@@ -122,8 +122,15 @@
 - (NSString *)customTemplateRepositoryPath
 {
 	NSString *filename = [TPCThemeController extractThemeName:[TPCPreferences themeName]];
+	NSString *source = [TPCThemeController extractThemeSource:[TPCPreferences themeName]];
 
-	NSString *path = [[TPCPreferences customThemeFolderPath] stringByAppendingPathComponent:filename];
+	NSString *path;
+
+	if ([source isEqualToString:TPCThemeControllerBundledStyleNameBasicPrefix]) {
+		path = [[TPCPreferences bundledThemeFolderPath] stringByAppendingPathComponent:filename];
+	} else {
+		path = [[TPCPreferences customThemeFolderPath] stringByAppendingPathComponent:filename];
+	}
 
 	return [path stringByAppendingPathComponent:@"/Data/Templates/"];
 }
