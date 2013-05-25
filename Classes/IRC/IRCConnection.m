@@ -118,7 +118,9 @@
 		BOOL isPong = [line hasPrefix:IRCPrivateCommandIndex("pong")];
 
 		if (isPong) {
-			NSData *data = [self convertToCommonEncoding:line];
+			NSString *firstItem = [line stringByAppendingString:@"\r\n"];
+
+			NSData *data = [self convertToCommonEncoding:firstItem];
 
 			if (data) {
 				[self write:data];
