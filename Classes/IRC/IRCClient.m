@@ -3727,7 +3727,20 @@
 		IRCChannel *query = [self findChannel:sendern];
 
 		if (query) {
-			[query addMember:u];
+			IRCUser *qu = [query findMember:sendern];
+
+			if (PointerIsEmpty(qu)) {
+				/* Only announce the user return if they already do not exist in the query. */
+
+				[query addMember:u];
+
+				[self print:query
+					   type:TVCLogLineJoinType
+					   nick:nil
+					   text:TXTFLS(@"IRCUserReconnectedToPrivateMessage", sendern)
+				 receivedAt:m.receivedAt
+					command:m.command];
+			}
 		}
 	}
 
@@ -3873,7 +3886,12 @@
 
 	for (IRCChannel *c in self.channels) {
 		if ([c findMember:sendern]) {
-			if ([TPCPreferences showJoinLeave] && [ignoreChecks ignoreJPQE] == NO && c.config.ignoreJPQActivity == NO) {
+			/* We send quit messages to private messages regardless of user preference. */
+			if (([TPCPreferences showJoinLeave] && [ignoreChecks ignoreJPQE] == NO && c.config.ignoreJPQActivity == NO) || c.isPrivateMessage) {
+				if (c.isPrivateMessage) {
+					text = TXTFLS(@"IRCUserDisconnectedFromPrivateMessage", sendern);
+				}
+
 				[self print:c
 					   type:TVCLogLineQuitType
 					   nick:nil
