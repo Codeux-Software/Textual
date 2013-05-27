@@ -163,6 +163,8 @@
 "IRCTimerCommandRequiresInteger" = "Timer command requires number for interval. Syntax: \"/timer <seconds> <command>\"";
 "IRCUserChangedNickname" = "%1$@ is now known as \002%2$@\002";
 "IRCUserDisconnected" = "\002%1$@\002 (%2$@@%3$@) left IRC.";
+"IRCUserDisconnectedFromPrivateMessage" = "\002%1$@\002 left the query by disconnecting from IRC.";
+"IRCUserReconnectedToPrivateMessage" = "\002%1$@\002 joined the query by connecting to IRC.";
 "IRCUserHasModes" = "Your user mode is %@";
 "IRCUserInvitedToJoinChannel" = "Inviting %1$@ to join %2$@";
 "IRCUserInvitedYouToJoinChannel" = "%1$@!%2$@@%3$@ invited you to join %4$@";
