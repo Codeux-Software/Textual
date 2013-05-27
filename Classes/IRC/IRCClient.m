@@ -2055,17 +2055,23 @@
 		}
 		case 5013: // Command: CONN
 		{
-			if (NSObjectIsNotEmpty(uncutInput)) {
-				[self.config setServerAddress:s.getToken.string];
-			}
-
 			if (self.isConnected) {
 				[self quit];
 			}
 
 			if (self.isQuitting) {
+				if (NSObjectIsNotEmpty(uncutInput)) {
+					/* We have to chase -disconnect from destroying this… */
+
+					[self performSelector:@selector(setServerRedirectAddressTemporaryStore:) withObject:s.getToken.string afterDelay:2.0];
+				}
+
 				[self performSelector:@selector(connect) withObject:nil afterDelay:2.0];
 			} else {
+				if (NSObjectIsNotEmpty(uncutInput)) {
+					self.serverRedirectAddressTemporaryStore = s.getToken.string;
+				}
+				
 				[self connect];
 			}
 
@@ -2767,6 +2773,9 @@
 	self.myNick = self.config.nickname;
 	self.sentNick = self.config.nickname;
 
+	self.serverRedirectAddressTemporaryStore = nil;
+	self.serverRedirectPortTemporaryStore = 0;
+
 	self.lastLagCheck = 0;
 	self.lastMessageReceived = 0;
 
@@ -2804,6 +2813,7 @@
 		case IRCDisconnectComputerSleepMode:		{ dcntmsg = @"IRCDisconnectedBySleepMode"; break; }
 		case IRCDisconnectTrialPeriodMode:			{ dcntmsg = @"IRCDisconnectedByTrialPeriodTimer"; break; }
 		case IRCDisconnectBadSSLCertificateMode:	{ dcntmsg = @"IRCDisconnectedByBadSSLCertificate"; break; }
+		case IRCDisconnectServerRedirectMode:		{ dcntmsg = @"IRCDisconnectedByServerRedirect"; break; }
 		default: break;
 	}
 
@@ -4350,6 +4360,9 @@
 	self.inFirstISONRun = YES;
 
 	self.connectionReconnectCount = 0;
+	
+	self.serverRedirectAddressTemporaryStore = nil;
+	self.serverRedirectPortTemporaryStore = 0;
 
 	self.myNick	= [m paramAt:0];
 	self.sentNick = self.myNick;
@@ -4446,7 +4459,25 @@
 
 			break;
 		}
-		case 10: // RPL_(?????) — Legacy code. What goes here?
+		case 10: // RPL_REDIR
+		{
+			NSAssertReturnLoopBreak(m.params.count >= 3);
+
+			NSString *address = [m paramAt:1];
+			NSString *portraw = [m paramAt:2];
+
+			self.disconnectType = IRCDisconnectServerRedirectMode;
+
+			[self disconnect]; // No worry about gracefully disconnecting by using quit: since it is just a redirect.
+
+			/* -disconnect would destroy this so we set them after… */
+			self.serverRedirectAddressTemporaryStore = address;
+			self.serverRedirectPortTemporaryStore = [portraw integerValue];
+
+			[self connect];
+
+			break;
+		}
 		case 20: // RPL_(?????) — Legacy code. What goes here?
 		case 42: // RPL_(?????) — Legacy code. What goes here?
 		case 250 ... 255: // RPL_STATSCONN, RPL_LUSERCLIENT, RPL_LUSERHOP, RPL_LUSERUNKNOWN, RPL_LUSERCHANNELS, RPL_LUSERME
@@ -5947,6 +5978,20 @@
 	self.reconnectEnabled = YES;
 
 	NSString *host = self.config.serverAddress;
+
+	NSInteger port = self.config.serverPort;
+
+	/* Do we have a temporary redirect? */
+
+	if (NSObjectIsNotEmpty(self.serverRedirectAddressTemporaryStore)) {
+		host = self.serverRedirectAddressTemporaryStore;
+	}
+
+	if (self.serverRedirectPortTemporaryStore > 0) {
+		port = self.serverRedirectPortTemporaryStore;
+	}
+
+	/* Continue connection… */
 	
 	[self logFileWriteSessionBegin];
 
@@ -5968,14 +6013,14 @@
 	}
 
 	self.socket.serverAddress = host;
-	self.socket.serverPort = self.config.serverPort;
+	self.socket.serverPort = port;
 	
 	self.socket.connectionUsesSSL = self.config.connectionUsesSSL;
 
 	if (self.config.proxyType == TXConnectionSystemSocksProxyType) {
 		self.socket.connectionUsesSystemSocks = YES;
 
-		[self printDebugInformationToConsole:TXTFLS(@"IRCIsConnectingWithSystemProxy", host, self.config.serverPort)];
+		[self printDebugInformationToConsole:TXTFLS(@"IRCIsConnectingWithSystemProxy", host, port)];
 	} else if (self.config.proxyType == TXConnectionSocks4ProxyType ||
 			   self.config.proxyType == TXConnectionSocks5ProxyType)
 	{
@@ -5987,9 +6032,9 @@
 		self.socket.proxyUsername = self.config.proxyUsername;
 		self.socket.proxySocksVersion = self.config.proxyType;
 
-		[self printDebugInformationToConsole:TXTFLS(@"IRCIsConnectingWithNormalProxy", host, self.config.serverPort, self.config.proxyAddress, self.config.proxyPort)];
+		[self printDebugInformationToConsole:TXTFLS(@"IRCIsConnectingWithNormalProxy", host, port, self.config.proxyAddress, self.config.proxyPort)];
 	} else {
-		[self printDebugInformationToConsole:TXTFLS(@"IRCIsConnecting", host, self.config.serverPort)];
+		[self printDebugInformationToConsole:TXTFLS(@"IRCIsConnecting", host, port)];
 	}
 
 	self.socket.connectionUsesFloodControl = self.config.outgoingFloodControl;
