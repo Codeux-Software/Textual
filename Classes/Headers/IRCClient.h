@@ -52,6 +52,7 @@ typedef enum IRCDisconnectMode : NSInteger {
 	IRCDisconnectTrialPeriodMode,
 	IRCDisconnectComputerSleepMode,
 	IRCDisconnectBadSSLCertificateMode,
+	IRCDisconnectServerRedirectMode,
 } IRCDisconnectMode;
 
 @interface IRCClient : IRCTreeItem
@@ -89,7 +90,9 @@ typedef enum IRCDisconnectMode : NSInteger {
 @property (nonatomic, strong) NSMutableArray *channels;
 @property (nonatomic, strong) NSMutableArray *highlights;
 @property (nonatomic, strong) NSString *preAwayNickname; // Nickname before away was set.
-@property (nonatomic, assign) NSInteger lastMessageReceived;
+@property (nonatomic, assign) NSTimeInterval lastMessageReceived;
+@property (nonatomic, strong) NSString *serverRedirectAddressTemporaryStore; // Temporary store for RPL_BOUNCE (010) redirects.
+@property (nonatomic, assign) NSInteger serverRedirectPortTemporaryStore; // Temporary store for RPL_BOUNCE (010) redirects.
 @property (nonatomic, assign) BOOL isHostReachable;
 
 - (void)setup:(id)seed;
