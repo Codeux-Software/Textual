@@ -54,6 +54,7 @@
 @property (nonatomic, assign) BOOL inUserInvokedWhoRequest;
 @property (nonatomic, assign) BOOL inUserInvokedWhowasRequest;
 @property (nonatomic, assign) BOOL inUserInvokedJoinRequest;
+@property (nonatomic, assign) BOOL inUserInvokedWatchRequest;
 @property (nonatomic, assign) BOOL sendLagcheckReplyToChannel;
 @property (nonatomic, assign) BOOL timeoutWarningShownToUser;
 @property (nonatomic, assign) NSInteger tryingNickNumber;
@@ -1527,6 +1528,14 @@
 
 			break;
 		}
+		case 5097: // Command: WATCH
+		{
+			self.inUserInvokedWatchRequest = YES;
+
+			[self send:IRCPrivateCommandIndex("watch"), nil];
+
+			break;
+		}
 		case 5094: // Command: NAMES
 		{
 			NSObjectIsEmptyAssert(uncutInput);
@@ -2748,12 +2757,14 @@
 	self.CAPinSASLRequest = NO;
 	self.CAPisIdentifiedWithSASL = NO;
 	self.CAPmultiPrefix = NO;
+	self.CAPWatchCommand = NO;
 	self.CAPpausedStatus = 0;
 	self.CAPuserhostInNames = NO;
 
 	self.autojoinInProgress = NO;
 	self.hasIRCopAccess = NO;
 	self.inFirstISONRun = NO;
+	self.inUserInvokedWatchRequest = NO;
 	self.inUserInvokedWhoRequest = NO;
 	self.inUserInvokedWhowasRequest = NO;
 	self.isAutojoined = NO;
@@ -4416,8 +4427,9 @@
 
         [self performSelector:@selector(performAutoJoin) withObject:nil afterDelay:3.0];
     }
-	
-	[self populateISONTrackedUsersList:self.config.ignoreList];
+
+	/* We need time for the server to send its configuration. */
+	[self performSelector:@selector(populateISONTrackedUsersList:) withObject:self.config.ignoreList afterDelay:3.0];
 }
 
 - (void)receiveNumericReply:(IRCMessage *)m
@@ -4899,7 +4911,7 @@
 		}
 		case 303: // RPL_ISON
 		{
-			if (self.hasIRCopAccess) {
+			if (self.hasIRCopAccess || self.CAPWatchCommand) {
 				[self printUnknownReply:m];
 			} else {
                 NSArray *users = [m.sequence split:NSStringWhitespacePlaceholder];
@@ -4949,7 +4961,6 @@
 
 			break;
 		}
-
 		case 315: // RPL_ENDOFWHO
 		{
 			NSString *channel = [m paramAt:1];
@@ -5347,10 +5358,87 @@
 
 			break;
 		}
+		case 602: // RPL_WATCHOFF
+		case 606: // RPL_WATCHLIST
+		case 607: // RPL_ENDOFWATCHLIST
+		case 608: // RPL_CLEARWATCH
+		{
+			if (self.inUserInvokedWatchRequest) {
+				[self printUnknownReply:m];
+			}
+
+			if (n == 608 || n == 607) {
+				self.inUserInvokedWatchRequest = NO;
+			}
+
+			break;
+		}
+		case 600: // RPL_LOGON
+		case 601: // RPL_LOGOFF
+		case 604: // RPL_NOWON
+		case 605: // RPL_NOWOFF
+		{
+			NSAssertReturnLoopBreak(m.params.count >= 5);
+
+			if (self.inUserInvokedWatchRequest) {
+				[self printUnknownReply:m];
+
+				return;
+			}
+
+			NSString *sendern = [m paramAt:1];
+			NSString *username = [m paramAt:2];
+			NSString *address = [m paramAt:3];
+
+			NSString *hostmaskwon = nil; // Hostmask without nickname
+			NSString *hostmaskwnn = nil; // Hostmask with nickname
+
+			IRCAddressBook *ignoreChecks = nil;
+
+			if (NSDissimilarObjects(n, 605)) {
+				/* 605 does not have the host, but the rest do. */
+				
+				hostmaskwon = [NSString stringWithFormat:@"%@@%@", username, address];
+				hostmaskwnn = [NSString stringWithFormat:@"%@!%@", sendern, hostmaskwon];
+
+				ignoreChecks = [self checkIgnoreAgainstHostmask:hostmaskwnn withMatches:@[@"notifyJoins"]];
+			} else {
+				ignoreChecks = [self checkIgnoreAgainstHostmask:[sendern stringByAppendingString:@"!-@-"]
+													withMatches:@[@"notifyJoins"]];
+			}
+
+			/* We only continue if there is an actual address book match for the nickname. */
+			PointerIsEmptyAssertLoopBreak(ignoreChecks);
+
+			if (n == 600)
+			{ // logged online
+				[self handleUserTrackingNotification:ignoreChecks
+											nickname:sendern
+											hostmask:hostmaskwon
+											langitem:@"UserTrackingHostmaskNowAvailable"];
+			}
+			else if (n == 601)
+			{ // logged offline
+				[self handleUserTrackingNotification:ignoreChecks
+											nickname:sendern
+											hostmask:hostmaskwon
+											langitem:@"UserTrackingHostmaskNoLongerAvailable"];
+			}
+			else if (n == 604)
+			{ // is online
+				[self.trackedUsers setBool:YES forKey:sendern];
+			}
+			else if (n == 605)
+			{ // is offline
+				[self.trackedUsers setBool:NO forKey:sendern];
+			}
+
+			break;
+		}
 		case 900: // RPL_LOGGEDIN
 		{
 			NSAssertReturnLoopBreak(m.params.count >= 4);
-			
+
 			self.CAPisIdentifiedWithSASL = YES;
 
 			[self print:self
@@ -6463,40 +6551,71 @@
 		self.trackedUsers = [NSMutableDictionary new];
 	}
 
-	if (NSObjectIsNotEmpty(self.trackedUsers)) {
-		NSMutableDictionary *oldEntries = [NSMutableDictionary dictionary];
-		NSMutableDictionary *newEntries = [NSMutableDictionary dictionary];
+	/* Create a copy of all old entries. */
+	NSDictionary *oldEntries = [self.trackedUsers copy];
 
-		for (NSString *lname in self.trackedUsers) {
-			oldEntries[lname] = (self.trackedUsers)[lname];
-		}
+	NSMutableDictionary *oldEntriesNicknames = [NSMutableDictionary dictionary];
 
-		for (IRCAddressBook *g in ignores) {
-			if (g.notifyJoins) {
-				NSString *lname = [g trackingNickname];
+	for (NSString *lname in oldEntries) {
+		oldEntriesNicknames[lname] = (self.trackedUsers)[lname];
+	}
 
-				if ([lname isNickname]) {
-					if ([oldEntries containsKeyIgnoringCase:lname]) {
-						newEntries[lname] = oldEntries[lname];
-					} else {
-						[newEntries setBool:NO forKey:lname];
+	/* Store for the new entries. */
+	NSMutableDictionary *newEntries = [NSMutableDictionary dictionary];
+
+	/* Additions & Removels for WATCH command. ISON does not access these. */
+	NSMutableArray *watchAdditions = [NSMutableArray array];
+	NSMutableArray *watchRemovals = [NSMutableArray array];
+
+	/* First we go through all the new entries fed to this method and add them. */
+	for (IRCAddressBook *g in ignores) {
+		if (g.notifyJoins) {
+			NSString *lname = [g trackingNickname];
+
+			if ([lname isNickname]) {
+				if ([oldEntriesNicknames containsKeyIgnoringCase:lname]) {
+					newEntries[lname] = oldEntriesNicknames[lname];
+				} else {
+					[newEntries setBool:NO forKey:lname];
+
+					if (self.CAPWatchCommand) {
+						/* We only add to the watch list if existing entry is not found. */
+
+						[watchAdditions safeAddObject:lname];
 					}
 				}
 			}
 		}
+	}
 
-		self.trackedUsers = newEntries;
-	} else {
-		for (IRCAddressBook *g in ignores) {
-			if (g.notifyJoins) {
-				NSString *lname = [g trackingNickname];
-
-				if ([lname isNickname]) {
-					[self.trackedUsers setBool:NO forKey:[g trackingNickname]];
-				}
+	/* Now that we have an established list of entries that either already
+	 existed or are newly added; we now have to go through the old entries
+	 and find ones that are not in the new. Those are removals. */
+	if (self.CAPWatchCommand) {
+		for (NSString *lname in oldEntriesNicknames) {
+			if ([newEntries containsKeyIgnoringCase:lname] == NO) {
+				[watchRemovals safeAddObject:lname];
 			}
 		}
+
+		/* Send additions. */
+		if (NSObjectIsNotEmpty(watchAdditions)) {
+			NSString *addString = [watchAdditions componentsJoinedByString:@" +"];
+
+			[self send:IRCPrivateCommandIndex("watch"), [@"+" stringByAppendingString:addString], nil];
+		}
+
+		/* Send removals. */
+		if (NSObjectIsNotEmpty(watchRemovals)) {
+			NSString *delString = [watchRemovals componentsJoinedByString:@" -"];
+
+			[self send:IRCPrivateCommandIndex("watch"), [@"-" stringByAppendingString:delString], nil];
+		}
 	}
+
+	/* Finish up. */
+
+	self.trackedUsers = newEntries;
 
     [self startISONTimer];
 }
@@ -6527,7 +6646,7 @@
         }
     }
 
-    if (NSObjectIsEmpty(self.trackedUsers) || self.hasIRCopAccess) {
+    if (NSObjectIsEmpty(self.trackedUsers) || self.hasIRCopAccess || self.CAPWatchCommand) {
         return;
     }
 
@@ -6543,6 +6662,8 @@
 - (void)checkAddressBookForTrackedUser:(IRCAddressBook *)abEntry inMessage:(IRCMessage *)message
 {
     PointerIsEmptyAssert(abEntry);
+
+	NSAssertReturn(self.CAPWatchCommand == NO);
     
     NSString *tracker = [abEntry trackingNickname];
 

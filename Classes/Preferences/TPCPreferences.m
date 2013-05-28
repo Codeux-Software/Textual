@@ -48,7 +48,7 @@ static NSArray *IRCInternalUseCommandIndexMap;
 
 + (void)populateCommandIndex
 {
-	IRCInternalUseCommandIndexMap = @[ // Open Key: 1053
+	IRCInternalUseCommandIndexMap = @[ // Open Key: 1054
 	//		 key					  command				 index		  is special	  outgoing colon index
 		@[@"action",				@"ACTION",				@(1002),		@(NO),			@(NSNotFound)],
 		@[@"adchat",				@"ADCHAT",				@(1003),		@(YES),			@(0)],
@@ -93,6 +93,7 @@ static NSArray *IRCInternalUseCommandIndexMap;
 		@[@"tempshun",				@"TEMPSHUN",			@(1046),		@(YES),			@(1)],
 		@[@"topic",					@"TOPIC",				@(1039),		@(YES),			@(1)],
 		@[@"user",					@"USER",				@(1037),		@(YES),			@(3)],
+		@[@"watch",					@"WATCH",				@(1053),		@(YES),			@(NSNotFound)],
 		@[@"wallops",				@"WALLOPS",				@(1038),		@(YES),			@(0)],
 		@[@"who",					@"WHO",					@(1040),		@(YES),			@(NSNotFound)],
 		@[@"whois",					@"WHOIS",				@(1042),		@(YES),			@(NSNotFound)],
@@ -100,7 +101,7 @@ static NSArray *IRCInternalUseCommandIndexMap;
 		@[@"zline",					@"ZLINE",				@(1049),		@(YES),			@(2)],
 	];
 
-	IRCUserAccessibleCommandIndexMap = @[ // Open Key: 5097
+	IRCUserAccessibleCommandIndexMap = @[ // Open Key: 5098
 	//		 key						 command				 index		developer mode
 		@[@"adchat",					@"ADCHAT",				@(5001),		@(NO)],
 		@[@"ame",						@"AME",					@(5002),		@(NO)],
@@ -190,6 +191,7 @@ static NSArray *IRCInternalUseCommandIndexMap;
         @[@"ume",                       @"UME",                 @(5089),		@(NO)],
         @[@"unotice",					@"UNOTICE",				@(5090),		@(NO)],
 		@[@"voice",						@"VOICE",				@(5076),		@(NO)],
+		@[@"watch",						@"WATCH",				@(5097),		@(NO)],
 		@[@"wallops",					@"WALLOPS",				@(5077),		@(NO)],
 		@[@"who",						@"WHO",					@(5079),		@(NO)],
 		@[@"whois",						@"WHOIS",				@(5080),		@(NO)],
