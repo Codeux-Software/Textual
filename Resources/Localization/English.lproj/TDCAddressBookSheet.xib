@@ -158,7 +158,7 @@
 							<string key="NSFrame">{{16, 58}, {334, 5}}</string>
 							<reference key="NSSuperview" ref="217074493"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="997459135"/>
+							<reference key="NSNextKeyView" ref="574153604"/>
 							<string key="NSOffsets">{0, 0}</string>
 							<object class="NSTextFieldCell" key="NSTitleCell">
 								<int key="NSCellFlags">67108864</int>
@@ -206,6 +206,7 @@
 							<string key="NSFrame">{{272, 12}, {82, 32}}</string>
 							<reference key="NSSuperview" ref="217074493"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="594140064">
 								<int key="NSCellFlags">67108864</int>
@@ -292,7 +293,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="169079955">
 								<int key="NSCellFlags">69206017</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">        Textual monitors Join, Part, and Quit activity on channels in which you are present to establish the activity pattern of someone that you would like to track. On servers which supports it, Textual will also use commands such as ISON to check for the user you specify, even if you are not in the same channel.</string>
+								<string key="NSContents">        Textual monitors Join, Part, and Quit activity on channels in which you are present to establish the activity pattern of someone that you would like to track. On servers which supports it, Textual will also use commands such as              to check for the user you specify, even if you are not in the same channel.</string>
 								<object class="NSFont" key="NSSupport" id="570868298">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">11</double>
@@ -318,7 +319,7 @@
 							<string key="NSFrame">{{28, 148}, {38, 14}}</string>
 							<reference key="NSSuperview" ref="217074493"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="268240546"/>
+							<reference key="NSNextKeyView" ref="997459135"/>
 							<string key="NSReuseIdentifierKey">_NS:3937</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="371920444">
@@ -340,16 +341,16 @@
 						<object class="NSTextField" id="997459135">
 							<reference key="NSNextResponder" ref="217074493"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{133, 92}, {32, 14}}</string>
+							<string key="NSFrame">{{133, 92}, {47, 14}}</string>
 							<reference key="NSSuperview" ref="217074493"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="574153604"/>
+							<reference key="NSNextKeyView" ref="268240546"/>
 							<string key="NSReuseIdentifierKey">_NS:3937</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="42740323">
 								<int key="NSCellFlags">68157504</int>
 								<int key="NSCellFlags2">272630784</int>
-								<string key="NSContents">ISON</string>
+								<string key="NSContents">WATCH</string>
 								<reference key="NSSupport" ref="859276269"/>
 								<string key="NSCellIdentifier">_NS:3937</string>
 								<reference key="NSControlView" ref="997459135"/>
@@ -384,7 +385,7 @@
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<string key="NSWindowContentMinSize">{213, 107}</string>
 				<object class="NSView" key="NSWindowView" id="384784036">
-					<reference key="NSNextResponder"/>
+					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSTextField" id="481879213">
@@ -812,7 +813,6 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{369, 438}</string>
-					<reference key="NSSuperview"/>
 					<reference key="NSNextKeyView" ref="481879213"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>

@@ -125,8 +125,10 @@
 				self.channelNamePrefixes = value;
 			}
 		}
-		
-		if ([vakey isEqualIgnoringCase:@"NAMESX"] && client.CAPmultiPrefix == NO) {
+
+		if ([vakey isEqualIgnoringCase:@"WATCH"]) {
+			client.CAPWatchCommand = YES;
+		} else if ([vakey isEqualIgnoringCase:@"NAMESX"] && client.CAPmultiPrefix == NO) {
 			[client sendLine:@"PROTOCTL NAMESX"];
 			
 			client.CAPmultiPrefix = YES;
