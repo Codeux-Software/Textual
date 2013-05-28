@@ -482,7 +482,7 @@
 
 - (NSString *)stripIRCEffects
 {
-	NSObjectIsEmptyAssertReturn(self, NO);
+	NSObjectIsEmptyAssertReturn(self, nil);
 
 	NSInteger pos = 0;
 	NSInteger len = self.length;
