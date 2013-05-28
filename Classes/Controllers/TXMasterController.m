@@ -314,7 +314,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		[self saveWindowState];
 	}
 
-	[self.mainWindow close];
+	[NSApp hide];
 
 	if (self.skipTerminateSave == NO) {
 		[self.worldController save];
