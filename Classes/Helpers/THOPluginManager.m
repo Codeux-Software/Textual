@@ -314,6 +314,7 @@
 	};
 
 	NSDictionary *messageData = @{
+		@"messageReceived"      : message.receivedAt,
 		@"messageParamaters"	: message.params,
 		@"messageCommand"		: NSStringNilValueSubstitute(message.command),
 		@"messageSequence"		: NSStringNilValueSubstitute(message.sequence),
