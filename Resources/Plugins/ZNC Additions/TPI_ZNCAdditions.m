@@ -54,7 +54,10 @@
 		 disconnect from the server ZNC was connected to. ZNC does not localize 
 		 itself so detecting these disconnects is not very hard… */
 
-		[self handleIRCSideDisconnect:client];
+		/* handleIRCSideDisconnect: calls -deactivate on IRCChannel. That call in 
+		 IRCChannel posts a script event to the active style. Therefore, we have to
+		 invoke the calls on the main thread because WebKit is not thread safe. */
+		[self.iomt handleIRCSideDisconnect:client];
 	}
 }
 
