@@ -5865,25 +5865,27 @@
 
 	NSArray *lines = [resultBase splitIntoLines];
 
-	for (NSAttributedString *s in lines) {
-		if ([s.string hasPrefix:@"/"]) {
-			/* We do not have to worry about whether this is an actual command or an escaped one
-			 by using double slashes (//) at this point because inputText:command: will do all that
-			 hard work for us. We only care if it starts with a slash. */
-			
-			[self inputText:s command:IRCPrivateCommandIndex("privmsg")];
-		} else {
-			/* If there is no destination, then we are fucked. */
+	dispatch_sync(dispatch_get_main_queue(), ^{
+		for (NSAttributedString *s in lines) {
+			if ([s.string hasPrefix:@"/"]) {
+				/* We do not have to worry about whether this is an actual command or an escaped one
+				 by using double slashes (//) at this point because inputText:command: will do all that
+				 hard work for us. We only care if it starts with a slash. */
 
-			if (NSObjectIsEmpty(destination)) {
-				/* Do not send a normal message to the console. What? */
+				[self inputText:s command:IRCPrivateCommandIndex("privmsg")];
 			} else {
-				NSString *msgcmd = [NSString stringWithFormat:@"/msg %@ %@", destination, s.string];
+				/* If there is no destination, then we are fucked. */
 
-				[self inputText:msgcmd command:IRCPrivateCommandIndex("privmsg")];
+				if (NSObjectIsEmpty(destination)) {
+					/* Do not send a normal message to the console. What? */
+				} else {
+					NSString *msgcmd = [NSString stringWithFormat:@"/msg %@ %@", destination, s.string];
+
+					[self inputText:msgcmd command:IRCPrivateCommandIndex("privmsg")];
+				}
 			}
 		}
-	}
+	});
 }
 
 - (void)executeTextualCmdScript:(NSDictionary *)details
