@@ -275,7 +275,7 @@
 	
 	for (IRCClient *c in self.clients) {
         if ((afterWakeUp && c.disconnectType == IRCDisconnectComputerSleepMode && c.config.autoSleepModeDisconnect) || afterWakeUp == NO) {
-            if (c.config.autoConnect) {
+            if (afterWakeUp || (c.config.autoConnect && afterWakeUp == NO)) {
                 [c autoConnect:delay afterWakeUp:afterWakeUp];
 				
                 delay += _autoConnectDelay;
