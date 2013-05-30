@@ -119,20 +119,16 @@
 		NSObjectIsEmptyAssertReturn(path, nil);
 
 		NSString *p = [path safeSubstringFromIndex:1];
-        NSString *s = p;
-
-		if ([s contains:@"/"]) {
-			s = [s safeSubstringToIndex:[s stringPosition:@"/"]];
-		}
-
-		if ([s length] == 20) {
-			return [NSString stringWithFormat:@"http://cl.ly/%@/content", s];
-		}
         
         NSArray *components = [p componentsSeparatedByString:@"/"];
-        if (components.count == 2
-            && [[[components objectAtIndex:0] lowercaseString] isEqual:@"image"]) {
-            return [NSString stringWithFormat:@"http://cl.ly/%@/content", components[1]];
+
+		NSAssertReturnR((components.count == 2), nil);
+
+		NSString *p1 = components[0];
+		NSString *p2 = components[1];
+
+        if ([p1 isEqualIgnoringCase:@"image"]) {
+            return [NSString stringWithFormat:@"http://cl.ly/%@/content", p2];
         }
 	} else if ([host hasSuffix:@"tweetphoto.com"]) {
 		NSObjectIsEmptyAssertReturn(path, nil);
