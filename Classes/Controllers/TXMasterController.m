@@ -314,7 +314,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		[self saveWindowState];
 	}
 
-	[NSApp hide];
+	[RZRunningApplication() hide];
 
 	if (self.skipTerminateSave == NO) {
 		[self.worldController save];
