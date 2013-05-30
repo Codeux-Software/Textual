@@ -81,8 +81,6 @@
 - (void)onAddKeyword:(id)sender;
 - (void)onAddExcludeKeyword:(id)sender;
 
-- (void)onDownloadExtraAddons:(id)sender;
-
 - (void)setTextualAsDefaultIRCClient:(id)sender;
 
 - (void)onChangedAlertSpoken:(id)sender;

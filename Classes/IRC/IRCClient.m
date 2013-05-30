@@ -2348,6 +2348,14 @@
 
 			break;
 		}
+		case 5098: // Command: GETSCRIPTS
+		{
+			NSString *installer = [[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Script Installers/Textual IRC Client Extras.pkg"];
+
+			[RZWorkspace() openFile:installer withApplication:@"Installer"];
+
+			break;
+		}
 		case 5092: // Command: DEFAULTS
 		{
 			NSObjectIsEmptyAssertLoopBreak(uncutInput);

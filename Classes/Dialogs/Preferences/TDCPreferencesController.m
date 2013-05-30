@@ -910,13 +910,6 @@
 	}
 }
 
-- (void)onDownloadExtraAddons:(id)sender
-{
-	NSString *installer = [[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Script Installers/Textual IRC Client Extras.pkg"];
-
-	[RZWorkspace() openFile:installer withApplication:@"Installer"];
-}
-
 - (void)setTextualAsDefaultIRCClient:(id)sender
 {
 	[TPCPreferences defaultIRCClientPrompt:YES];
