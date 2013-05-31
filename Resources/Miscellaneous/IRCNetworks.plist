@@ -2,57 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>AlphaChat</key>
-	<string>irc.alphachat.net</string>
-	<key>DALnet</key>
-	<string>irc.dal.net</string>
-	<key>EFnet</key>
-	<string>irc.efnet.org</string>
-	<key>EsperNet</key>
-	<string>irc.esper.net</string>
-	<key>freenode</key>
-	<string>chat.freenode.net</string>
-	<key>GameSurge</key>
-	<string>irc.gamesurge.net</string>
-	<key>German Elite</key>
-	<string>irc.german-elite.net</string>
-	<key>IRCHighWay</key>
-	<string>irc.irchighway.net</string>
-	<key>IRCNet</key>
-	<string>ircnet.choopa.net</string>
 	<key>IRCNode</key>
 	<string>irc.ircnode.org</string>
-	<key>Mibbit</key>
-	<string>irc.mibbit.com</string>
-	<key>Mozilla</key>
-	<string>irc.mozilla.org</string>
-	<key>Mozor</key>
-	<string>irc.mozor.net</string>
-	<key>NixtrixIRC</key>
-	<string>irc.nixtrixirc.net</string>
-	<key>PonyChat</key>
-	<string>irc.ponychat.net</string>
-	<key>QuakeNet</key>
-	<string>irc.quakenet.org</string>
-	<key>Rizon</key>
-	<string>irc.rizon.net</string>
-	<key>Snoonet</key>
-	<string>irc.snoonet.com</string>
-	<key>Technoid-IRC</key>
-	<string>irc.technoid-irc.net</string>
-	<key>Undernet</key>
-	<string>irc.undernet.org</string>
-	<key>Snyde</key>
-	<string>irc.snyde.net</string>
-	<key>OFTC</key>
-	<string>irc.oftc.net</string>
-	<key>Thinkstack</key>
-	<string>irc.thinstack.net</string>
-	<key>Flux.cd</key>
-	<string>irc.flux.cd</string>
-	<key>Japoland</key>
-	<string>irc.japoland.net</string>
-	<key>TWiT</key>
-	<string>irc.twit.tv</string>
 </dict>
 </plist>
