@@ -34,7 +34,19 @@
 					width: {{predefinedTimestampWidth}}px;
 				}
 			{{/nicknameIndentationAvailable}}
-			
+
+			{{!
+				The following CSS definitions exist for the internal use of Textual.
+				If you are a style developer reading this and plan on using custom 
+				templates, then DO NOT modify these. You can touch anything else you
+				want, but we are trying to have some consistency between styles. 
+			}}
+
+			/* Reserved lines. */
+			body div.line[command="-101"] .message {
+				font-family: "Menlo" !important;
+			}
+
 			/* mIRC Color Codes */
 
 			.effect[color-number='0']  { color: #ffffff; }
