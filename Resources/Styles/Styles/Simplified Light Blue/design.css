@@ -276,21 +276,22 @@ body div.line[type*=rawhtml] {
 body div.line[command="372"],
 body div.line[command="721"] {
 	border: none;
-	margin-bottom: 1px;
+	padding-top: 3px;
+	padding-bottom: 3px;
 }
 
 body div.line[command="375"],
 body div.line[command="720"] { /* Start. */
-	border-top: 1px solid #ddd;
 	border-bottom: none;
-	margin-bottom: 1px;
+	padding-top: 2px;
+	padding-bottom: 3px;
 }
 
 body div.line[command="376"],
 body div.line[command="722"] { /* End. */
 	border-top: none;
-	border-bottom: 1px solid #ddd;
-	margin-bottom: 1px;
+	padding-top: 3px;
+	padding-bottom: 3px;
 }
 
 body div.line[command="372"] .message,
