@@ -44,7 +44,7 @@
 
 #define TXLogLineSpecialNoticeMessageFormat		@"[%@]: %@"
 
-#define TXLogLineDefaultRawCommandValue			@"-101"
+#define TXLogLineDefaultRawCommandValue			@"-100"
 
 typedef enum TVCLogLineType : NSInteger {
 	TVCLogLineActionType,
