@@ -493,12 +493,19 @@
 
 - (void)preferencesChanged
 {
-	if ([TPCPreferences displayDockBadge] == NO) {
-		[TVCDockIcon drawWithoutCount];
-	}
-
 	for (IRCClient *c in self.clients) {
 		[c preferencesChanged];
+	}
+
+	/* Redraw dock icon on changes. There is possiblity the downstream
+	 preferencesChanged made modifications for the counts so we must 
+	 honor those by attempting a redraw. */
+	if ([TPCPreferences displayDockBadge] == NO) {
+		[TVCDockIcon drawWithoutCount];
+	} else {
+		[TVCDockIcon resetCachedCount];
+
+		[self updateIcon];
 	}
 }
 

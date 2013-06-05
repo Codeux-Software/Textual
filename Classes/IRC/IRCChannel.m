@@ -136,7 +136,13 @@
 - (void)preferencesChanged
 {
 	[self.viewController preferencesChanged];
-	
+
+	if ([TPCPreferences displayPublicMessageCountOnDockBadge] == NO) {
+		if (self.isPrivateMessage == NO) {
+			self.dockUnreadCount = 0; // Reset counter on changes.
+		}
+	}
+
 	[self reopenLogFileIfNeeded];
 }
 
