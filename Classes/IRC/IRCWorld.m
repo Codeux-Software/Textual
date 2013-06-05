@@ -133,6 +133,10 @@
 
 	[self.serverList updateBackgroundColor];
 	[self.memberList updateBackgroundColor];
+
+	/* Draw default icon as soon as we setup… */
+	/* This is done to apply birthday icon as soon as we start. */
+	[TVCDockIcon drawWithoutCount];
 }
 
 - (NSMutableDictionary *)dictionaryValue
@@ -489,6 +493,10 @@
 
 - (void)preferencesChanged
 {
+	if ([TPCPreferences displayDockBadge] == NO) {
+		[TVCDockIcon drawWithoutCount];
+	}
+
 	for (IRCClient *c in self.clients) {
 		[c preferencesChanged];
 	}
