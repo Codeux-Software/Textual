@@ -65,6 +65,12 @@ static NSInteger _cachedHighlightCount = -1;
     }
 }
 
++ (void)resetCachedCount
+{
+	_cachedHighlightCount = -1;
+	_cachedMessageCount = -1;
+}
+
 + (void)drawWithoutCount
 {
     if (_cachedHighlightCount == 0 && _cachedMessageCount == 0) {
