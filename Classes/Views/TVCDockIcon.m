@@ -43,8 +43,8 @@
 
 @implementation TVCDockIcon
 
-static NSInteger _cachedMessageCount = 0;
-static NSInteger _cachedHighlightCount = 0;
+static NSInteger _cachedMessageCount = -1;
+static NSInteger _cachedHighlightCount = -1;
 
 + (NSImage *)applicationIcon
 {
