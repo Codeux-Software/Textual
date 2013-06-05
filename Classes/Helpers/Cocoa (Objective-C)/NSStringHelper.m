@@ -813,7 +813,8 @@
 
 - (NSString *)getToken
 {
-	NSRange r = [self rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
+	NSRange r = [self rangeOfString:NSStringWhitespacePlaceholder];
+	//NSRange r = [self rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
 	
 	if (NSDissimilarObjects(r.location, NSNotFound)) {
 		NSString *cutString = [self safeSubstringToIndex:r.location];
@@ -1018,7 +1019,8 @@
 
 - (NSAttributedString *)getToken
 {
-	NSRange r = [self.string rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
+	NSRange r = [self.string rangeOfString:NSStringWhitespacePlaceholder];
+	//NSRange r = [self.string rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
 	
 	if (NSDissimilarObjects(r.location, NSNotFound)) {
         NSRange cutRange = NSMakeRange(0, r.location);

@@ -3336,7 +3336,7 @@
 							NSString *hostmask = nil;
 							NSString *nickname = nil;
 
-							NSArray *chunks = [text componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+							NSArray *chunks = [text componentsSeparatedByString:NSStringWhitespacePlaceholder];
 
 							/* The index represents each word separated by a regular 
 							 space. The matchMath increases the index depending on 
@@ -5099,7 +5099,7 @@
 
 			PointerIsEmptyAssertLoopBreak(c);
 
-			NSArray *items = [nameblob componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+			NSArray *items = [nameblob componentsSeparatedByString:NSStringWhitespacePlaceholder];
 
 			for (__strong NSString *nickname in items) {
                 NSObjectIsEmptyAssertLoopContinue(nickname);
