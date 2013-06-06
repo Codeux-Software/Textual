@@ -60,6 +60,7 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 @property (nonatomic, assign) BOOL autoSleepModeDisconnect;
 @property (nonatomic, assign) BOOL connectionPrefersIPv6;
 @property (nonatomic, assign) BOOL performPongTimer;
+@property (nonatomic, assign) BOOL performDisconnectOnPongTimer;
 @property (nonatomic, assign) BOOL connectionUsesSSL;
 @property (nonatomic, assign) BOOL invisibleMode;
 @property (nonatomic, assign) BOOL isTrustedConnection;

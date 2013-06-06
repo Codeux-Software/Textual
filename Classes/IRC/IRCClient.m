@@ -5727,17 +5727,24 @@
 	 The ability to disable this is important on PSYBNC connectiongs because
 	 PSYBNC doesn't respond to PING commands. There are other irc daemons that
 	 don't reply to PING either and they should all be shot. */
-	if (BOOLReverseValue(self.config.performPongTimer)) {
+	if (self.config.performPongTimer == NO) {
 		return;
 	}
 
 	NSInteger timeSpent = [NSDate secondsSinceUnixTimestamp:self.lastMessageReceived];
 
 	if (timeSpent >= _timeoutInterval) {
-		if (self.timeoutWarningShownToUser == NO) {
-			[self printDebugInformation:TXTFLS(@"IRCMightDisconnectWithTimeout", (timeSpent / 60)) channel:nil];
 
-			self.timeoutWarningShownToUser = YES;
+		if (self.config.performDisconnectOnPongTimer) {
+			[self printDebugInformation:TXTFLS(@"IRCDisconnectedByTimeout", (timeSpent / 60)) channel:nil];
+
+			[self disconnect];
+		} else {
+			if (self.timeoutWarningShownToUser == NO) {
+				[self printDebugInformation:TXTFLS(@"IRCMightDisconnectWithTimeout", (timeSpent / 60)) channel:nil];
+
+				self.timeoutWarningShownToUser = YES;
+			}
 		}
 	} else if (timeSpent >= _pingInterval) {
 		[self send:IRCPrivateCommandIndex("ping"), [self networkAddress], nil];
