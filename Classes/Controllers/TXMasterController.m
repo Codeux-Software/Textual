@@ -1005,7 +1005,11 @@ typedef enum TXMoveKind : NSInteger {
 {
 	NSWindowNegateActionWithAttachedSheet();
 
-	[self sendText:IRCPrivateCommandIndex("action")];
+	if ([TPCPreferences commandReturnSendsMessageAsAction]) {
+		[self sendText:IRCPrivateCommandIndex("action")];
+	} else {
+		[self textEntered];
+	}
 }
 
 - (void)moveInputHistory:(BOOL)up checkScroller:(BOOL)scroll event:(NSEvent *)event

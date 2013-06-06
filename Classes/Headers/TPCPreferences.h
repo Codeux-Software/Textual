@@ -200,6 +200,8 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 
 + (TXCommandWKeyAction)commandWKeyAction;
 
++ (BOOL)commandReturnSendsMessageAsAction;
+
 + (BOOL)openBrowserInBackground;
 
 + (BOOL)connectOnDoubleclick;

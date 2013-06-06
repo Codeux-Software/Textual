@@ -818,6 +818,11 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() boolForKey:@"DisplayEventInLogView -> Join, Part, Quit"];
 }
 
++ (BOOL)commandReturnSendsMessageAsAction
+{
+	return [RZUserDefaults() boolForKey:@"CommandReturnSendsMessageAsAction"];
+}
+
 + (BOOL)stopGrowlOnActive
 {
 	return [RZUserDefaults() boolForKey:@"DisableNotificationsForActiveWindow"];
@@ -1369,6 +1374,7 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"AutomaticallyAddScrollbackMarker"]				= @(YES);
 	d[@"ConfirmApplicationQuit"]						= @(YES);
 	d[@"ChannelNavigationIsServerSpecific"]				= @(YES);
+	d[@"CommandReturnSendsMessageAsAction"]				= @(YES);
 	d[@"DisableNotificationsForActiveWindow"]			= @(YES);
 	d[@"DisplayDockBadges"]								= @(YES);
 	d[@"DisplayEventInLogView -> Join, Part, Quit"]		= @(YES);
