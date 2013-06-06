@@ -465,31 +465,27 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		
 		NSMutableArray *excludeRanges = [NSMutableArray array];
 
-		/* If we are not looking for the exact match of a keyword, we have
-		 to scan the message body first to find any place that an excluded
-		 keyword may be found. */
-		if (exactWordMatching == NO) {
-			for (NSString *excludeWord in excludeWords) {
-				PointerIsEmptyAssertLoopContinue(excludeWord);
+		/* Exclude word matching. */
+		for (NSString *excludeWord in excludeWords) {
+			PointerIsEmptyAssertLoopContinue(excludeWord);
 
-				start = 0;
+			start = 0;
+			
+			while (start < length) {
+				NSRange r = [body rangeOfString:excludeWord 
+										options:NSCaseInsensitiveSearch 
+										  range:NSMakeRange(start, (length - start))];
 				
-				while (start < length) {
-					NSRange r = [body rangeOfString:excludeWord 
-											options:NSCaseInsensitiveSearch 
-											  range:NSMakeRange(start, (length - start))];
-					
-					if (r.location == NSNotFound) {
-						break;
-					}
-					
-					[excludeRanges safeAddObject:[NSValue valueWithRange:r]];
-					
-					start = (NSMaxRange(r) + 1);
+				if (r.location == NSNotFound) {
+					break;
 				}
+				
+				[excludeRanges safeAddObject:[NSValue valueWithRange:r]];
+				
+				start = (NSMaxRange(r) + 1);
 			}
 		}
-		
+
         if (regexWordMatching) {
 			/* Regular expression keyword matching. */
 			

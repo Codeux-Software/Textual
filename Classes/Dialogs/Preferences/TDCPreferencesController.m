@@ -707,19 +707,12 @@
 {
     if ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightRegularExpressionMatchType) {
         [self.highlightNicknameButton setEnabled:NO];
-        [self.addExcludeKeywordButton setEnabled:YES];
-        [self.excludeKeywordsTable setEnabled:YES];
     } else {
         [self.highlightNicknameButton setEnabled:YES];
-
-        if ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightPartialMatchType) {
-            [self.addExcludeKeywordButton setEnabled:YES];
-            [self.excludeKeywordsTable setEnabled:YES];
-        } else {
-            [self.addExcludeKeywordButton setEnabled:NO];
-            [self.excludeKeywordsTable setEnabled:NO];
-        }
     }
+	
+	[self.addExcludeKeywordButton setEnabled:YES];
+	[self.excludeKeywordsTable setEnabled:YES];
 }
 
 - (void)editTable:(NSTableView *)table
