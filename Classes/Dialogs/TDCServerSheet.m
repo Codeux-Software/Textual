@@ -97,7 +97,8 @@
 	if (includeAdvanced) {
 		[tabViewList addObject:@[TXDefaultListSeperatorCellIndex,	@"-"]];
 		[tabViewList addObject:@[@"FloodControl",					@"9"]];
-		[tabViewList addObject:@[@"Proxy",							@"10"]];
+		[tabViewList addObject:@[@"Network",						@"10"]];
+		[tabViewList addObject:@[@"Proxy",							@"11"]];
 	}
 
 	self.tabViewList = tabViewList;
@@ -318,6 +319,7 @@
     self.prefersIPv6Check.state				= self.config.connectionPrefersIPv6;
 
 	self.pongTimerCheck.state				= self.config.performPongTimer;
+	self.pongTimerDisconnectCheck.state		= self.config.performDisconnectOnPongTimer;
 	
 	/* Identity */
 	if (NSObjectIsEmpty(self.config.nickname)) {
@@ -393,8 +395,10 @@
 	self.config.autoSleepModeDisconnect		= self.autoDisconnectOnSleepCheck.state;
 	self.config.connectionPrefersIPv6		= self.prefersIPv6Check.state;
 	self.config.connectionUsesSSL			= self.connectionUsesSSLCheck.state;
-	self.config.performPongTimer			= self.pongTimerCheck.state;
 	self.config.serverPassword				= self.serverPasswordField.trimmedStringValue;
+
+	self.config.performPongTimer				= self.pongTimerCheck.state;
+	self.config.performDisconnectOnPongTimer	= self.pongTimerDisconnectCheck.state;
 	
 	NSString *realhost = nil;
 	NSString *hostname = [self.serverAddressCombo.firstTokenStringValue cleanedServerHostmask];
@@ -1117,7 +1121,8 @@
             case 6:  { [self focusView:self.messagesView		atRow:6]; break; }
 			case 7:  { [self focusView:self.highlightsView		atRow:7]; break; }
             case 9:  { [self focusView:self.floodControlView	atRow:9]; break; }
-            case 10: { [self focusView:self.proxyServerView		atRow:10]; break; }
+			case 10: { [self focusView:self.networkingView		atRow:10]; break; }
+            case 11: { [self focusView:self.proxyServerView		atRow:11]; break; }
 
             default: { break; }
         }
