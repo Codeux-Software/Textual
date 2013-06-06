@@ -57,10 +57,11 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 		self.channelList			= [NSMutableArray new];
 		self.ignoreList				= [NSMutableArray new];
 
-		self.autoConnect				= NO;
-		self.autoReconnect				= NO;
-		self.autoSleepModeDisconnect	= YES;
-		self.performPongTimer			= YES;
+		self.autoConnect					= NO;
+		self.autoReconnect					= NO;
+		self.autoSleepModeDisconnect		= YES;
+		self.performPongTimer				= YES;
+		self.performDisconnectOnPongTimer	= NO;
 		
 		self.connectionUsesSSL	= NO;
 		self.nicknamePassword	= NSStringEmptyPlaceholder;
@@ -247,8 +248,10 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 		self.autoReconnect				= NSDictionaryBOOLKeyValueCompare(dic, @"connectOnDisconnect", self.autoReconnect);
 		self.autoSleepModeDisconnect	= NSDictionaryBOOLKeyValueCompare(dic, @"disconnectOnSleepMode", self.autoSleepModeDisconnect);
 		self.connectionUsesSSL			= NSDictionaryBOOLKeyValueCompare(dic, @"connectUsingSSL", self.connectionUsesSSL);
-		self.performPongTimer			= NSDictionaryBOOLKeyValueCompare(dic, @"performPongTimer", self.performPongTimer);
-		
+
+		self.performPongTimer				= NSDictionaryBOOLKeyValueCompare(dic, @"performPongTimer", self.performPongTimer);
+		self.performDisconnectOnPongTimer	= NSDictionaryBOOLKeyValueCompare(dic, @"performDisconnectOnPongTimer", self.performDisconnectOnPongTimer);
+
 		self.fallbackEncoding			= NSDictionaryIntegerKeyValueCompare(dic, @"characterEncodingFallback", self.fallbackEncoding);
 		self.normalLeavingComment		= NSDictionaryObjectKeyValueCompare(dic, @"connectionDisconnectDefaultMessage", self.normalLeavingComment);
 		self.primaryEncoding			= NSDictionaryIntegerKeyValueCompare(dic, @"characterEncodingDefault", self.primaryEncoding);
@@ -305,15 +308,16 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 	[dic setInteger:self.proxyType			forKey:@"proxyServerType"];
 	[dic setInteger:self.serverPort			forKey:@"serverPort"];
 	
-	[dic setBool:self.autoConnect				forKey:@"connectOnLaunch"];
-	[dic setBool:self.autoReconnect				forKey:@"connectOnDisconnect"];
-	[dic setBool:self.autoSleepModeDisconnect	forKey:@"disconnectOnSleepMode"];
-	[dic setBool:self.connectionUsesSSL			forKey:@"connectUsingSSL"];
-	[dic setBool:self.performPongTimer			forKey:@"performPongTimer"];
-	[dic setBool:self.invisibleMode				forKey:@"setInvisibleOnConnect"];
-	[dic setBool:self.isTrustedConnection		forKey:@"trustedSSLConnection"];
-    [dic setBool:self.connectionPrefersIPv6		forKey:@"DNSResolverPrefersIPv6"];
-    [dic setBool:self.sidebarItemExpanded       forKey:@"serverListItemIsExpanded"];
+	[dic setBool:self.autoConnect					forKey:@"connectOnLaunch"];
+	[dic setBool:self.autoReconnect					forKey:@"connectOnDisconnect"];
+	[dic setBool:self.autoSleepModeDisconnect		forKey:@"disconnectOnSleepMode"];
+	[dic setBool:self.connectionUsesSSL				forKey:@"connectUsingSSL"];
+	[dic setBool:self.performPongTimer				forKey:@"performPongTimer"];
+	[dic setBool:self.performDisconnectOnPongTimer	forKey:@"performDisconnectOnPongTimer"];	
+	[dic setBool:self.invisibleMode					forKey:@"setInvisibleOnConnect"];
+	[dic setBool:self.isTrustedConnection			forKey:@"trustedSSLConnection"];
+    [dic setBool:self.connectionPrefersIPv6			forKey:@"DNSResolverPrefersIPv6"];
+    [dic setBool:self.sidebarItemExpanded			forKey:@"serverListItemIsExpanded"];
 	
 	[dic safeSetObject:self.alternateNicknames			forKey:@"identityAlternateNicknames"];
 	[dic safeSetObject:self.clientName					forKey:@"connectionName"];
