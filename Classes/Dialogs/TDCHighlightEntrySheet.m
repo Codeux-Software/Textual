@@ -76,6 +76,8 @@
 	} else {
 		/* Start populating channels. */
 		for (IRCChannel *channel in client.channels) {
+			NSAssertReturnLoopContinue(channel.isChannel);
+			
 			[self.matchChannelPopupButton addItemWithTitle:channel.name];
 
 			/* Select the channel with matching IDs. */

@@ -277,6 +277,9 @@
 
 		/* Build list of channels part of this client. */
 		for (IRCChannel *c in u.channels) {
+			/* Only include channels. */
+			NSAssertReturnLoopContinue(c.isChannel);
+			
 			/* Do we already track it? */
 			NSString *existingPrefix = [self linkPrefixFromID:c.config.itemUUID];
 
