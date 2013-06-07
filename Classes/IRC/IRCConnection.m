@@ -147,7 +147,7 @@
 	/* Only count flood control once we are fully connected since the initial connect
 	 will flood the server regardless so we do not want to timeout waiting for ourself. */
 	if (self.connectionUsesFloodControl && self.client.isLoggedIn) {
-		if (self.floodControlCurrentMessageCount > self.floodControlMaximumMessageCount) {
+		if (self.floodControlCurrentMessageCount >= self.floodControlMaximumMessageCount) {
 			/* The number of lines sent during our timer period has gone above the 
 			 maximum allowed count so we have to return NO to let everyone know we
 			 cannot send at this point. */
