@@ -291,7 +291,7 @@
 - (void)prepareForSleep
 {
 	for (IRCClient *c in self.clients) {
-		if (c.config.autoSleepModeDisconnect) {
+		if (c.config.autoSleepModeDisconnect && c.isLoggedIn) {
 			c.disconnectType = IRCDisconnectComputerSleepMode;
         
 			[c quit:c.config.sleepModeLeavingComment];
