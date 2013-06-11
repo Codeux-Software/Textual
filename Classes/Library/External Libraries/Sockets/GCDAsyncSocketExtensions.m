@@ -173,7 +173,7 @@
 	CFDictionaryRef settings = SCDynamicStoreCopyProxies(NULL);
 
     // Check to see if there _is_ a system SOCKS proxy set.
-    if (CFDictionaryGetValueIfPresent(settings,CFItemRefToID(kCFStreamPropertySOCKSProxyHost), NULL)) {
+    if (CFDictionaryGetValueIfPresent(settings, CFItemRefToID(kCFStreamPropertySOCKSProxyHost), NULL)) {
         CFReadStreamSetProperty(theReadStream, kCFStreamPropertySOCKSProxy, settings);
         CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySOCKSProxy, settings);
     }
