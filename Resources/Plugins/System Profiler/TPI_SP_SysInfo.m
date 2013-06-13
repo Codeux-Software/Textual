@@ -714,6 +714,10 @@
 	if ([productVersion hasPrefix:@"10.8"]) {
 		return TPILS(@"SystemInformationOSVersionMountainLion");
 	}
+
+	if ([productVersion hasPrefix:@"10.9"]) {
+		return TPIFLS(@"SystemInformationOSVersionMavericks");
+	}
 	
 	return nil;
 }

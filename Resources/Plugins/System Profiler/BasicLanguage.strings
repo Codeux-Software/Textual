@@ -55,6 +55,7 @@
 
 "SystemInformationOSVersionLion" = "Lion";
 "SystemInformationOSVersionMountainLion" = "Mountain Lion";
+"SystemInformationOSVersionMavericks" = "Mavericks";
 
 "SystemInformationApplicationMemoryUse" = "Textual is privately using %1$@ of memory. It is also sharing %2$@ with other processes. ";
 
