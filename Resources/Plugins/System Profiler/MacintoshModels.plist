@@ -34,6 +34,10 @@
 	<string>MacBook Air (11-inch Mid-2012)</string>
 	<key>MacBookAir5,2</key>
 	<string>MacBook Air (13-inch Mid-2012)</string>
+	<key>MacBookAir6,1</key>
+	<string>MacBook Air (11-inch Mid-2013)</string>
+	<key>MacBookAir6,2</key>
+	<string>MacBook Air (13-inch Mid-2013)</string>
 	<key>MacBookPro1,1</key>
 	<string>MacBook Pro (Original)</string>
 	<key>MacBookPro1,2</key>
