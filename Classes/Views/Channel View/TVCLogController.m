@@ -886,6 +886,14 @@
 									   properties:inputDictionary
 									   resultInfo:&outputDictionary];
 
+		if (renderedBody == nil) {
+			/* Stop printing on messages containing ignored nicknames. */
+			
+			if ([outputDictionary containsKey:@"containsIgnoredNickname"]) {
+				return;
+			}
+		}
+
 		urlRanges = [outputDictionary arrayForKey:@"URLRanges"];
 		highlighted = [outputDictionary boolForKey:@"wordMatchFound"];
 		mentionedUsers = [outputDictionary arrayForKey:@"mentionedUsers"];
