@@ -47,6 +47,7 @@
 @property (nonatomic, assign) BOOL speakEvent;
 @property (nonatomic, assign) BOOL pushNotification;
 @property (nonatomic, assign) BOOL disabledWhileAway;
+@property (nonatomic, assign) BOOL bounceDockIcon;
 
 + (TDCPreferencesSoundWrapper *)soundWrapperWithEventType:(TXNotificationType)eventType;
 @end
