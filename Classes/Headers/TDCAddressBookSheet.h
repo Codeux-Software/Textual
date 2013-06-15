@@ -47,6 +47,7 @@
 @property (nonatomic, nweak) NSButton *ignorePrivateMessagesCheck;
 @property (nonatomic, nweak) NSButton *ignorePublicHighlightsCheck;
 @property (nonatomic, nweak) NSButton *ignorePublicMessagesCheck;
+@property (nonatomic, nweak) NSButton *hideMessagesContainingMatchCheck;
 @property (nonatomic, nweak) NSButton *notifyJoinsCheck;
 @property (nonatomic, nweak) NSTextField *hostmaskField;
 @property (nonatomic, nweak) NSTextField *nicknameField;
