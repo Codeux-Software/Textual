@@ -1080,28 +1080,6 @@ static NSURL *transcriptFolderResolvedBookmark;
 	[RZUserDefaults() setBool:value forKey:key];
 }
 
-+ (BOOL)bounceDockIconForEvent:(TXNotificationType)event
-{
-    NSString *okey = [self keyForEvent:event];
-    
-    NSObjectIsEmptyAssertReturn(okey, NO);
-    
-    NSString *key = [okey stringByAppendingString:@" -> Bounce Dock Icon"];
-    
-    return [RZUserDefaults() boolForKey:key];
-}
-
-+ (void)setBounceDockIcon:(BOOL)value forEvent:(TXNotificationType)event
-{
-    NSString *okey = [self keyForEvent:event];
-    
-	NSObjectIsEmptyAssert(okey);
-    
-	NSString *key = [okey stringByAppendingString:@" -> Bounce Dock Icon"];
-    
-	[RZUserDefaults() setBool:value forKey:key];
-}
-
 + (BOOL)speakEvent:(TXNotificationType)event
 {
 	NSString *okey = [self keyForEvent:event];
@@ -1425,15 +1403,12 @@ static NSMutableArray *excludeKeywords = nil;
 
 	d[@"NotificationType -> Highlight -> Enabled"]				= @(YES);
 	d[@"NotificationType -> Highlight -> Sound"]				= @"Glass";
-    d[@"NotificationType -> Highlight -> Bounce Dock Icon"] = @(YES);
 
 	d[@"NotificationType -> Private Message (New) -> Enabled"]	= @(YES);
 	d[@"NotificationType -> Private Message (New) -> Sound"]	= @"Submarine";
-    d[@"NotificationType -> Private Message (New) -> Bounce Dock Icon"] = @(YES);
 	
 	d[@"NotificationType -> Private Message -> Enabled"]		= @(YES);
 	d[@"NotificationType -> Private Message -> Sound"]			= @"Submarine";
-    d[@"NotificationType -> Private Message -> Bounce Dock Icon"] = @(YES);
 
 	d[@"NotificationType -> Address Bok Match -> Enabled"]		= @(YES);
 	d[@"NotificationType -> Private Message (New) -> Enabled"]	= @(YES);
