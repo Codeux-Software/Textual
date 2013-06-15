@@ -59,6 +59,7 @@
 @property (nonatomic, nweak) NSButton *addExcludeKeywordButton;
 @property (nonatomic, nweak) NSButton *alertSpeakEventButton;
 @property (nonatomic, nweak) NSButton *alertDisableWhileAwayButton;
+@property (nonatomic, nweak) NSButton *alertBounceDockIconButton;
 @property (nonatomic, nweak) NSButton *alertPushNotificationButton;
 @property (nonatomic, nweak) NSButton *highlightNicknameButton;
 @property (nonatomic, nweak) NSButton *setAsDefaultIRCClientButton;
@@ -86,6 +87,7 @@
 - (void)onChangedAlertSpoken:(id)sender;
 - (void)onChangedAlertSound:(id)sender;
 - (void)onChangedAlertDisableWhileAway:(id)sender;
+- (void)onChangedAlertBounceDockIcon:(id)sender;
 - (void)onChangedAlertNotification:(id)sender;
 - (void)onChangedAlertType:(id)sender;
 
