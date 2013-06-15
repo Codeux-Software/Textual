@@ -620,6 +620,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		/* Conversation Tracking */
 		if ([TPCPreferences trackConversations]) {
 			if (log && isNormalMsg) {
+				IRCClient *logClient = log.client;
 				IRCChannel *logChannel = log.channel;
 
 				NSMutableSet *mentionedUsers = [NSMutableSet set];
@@ -677,6 +678,19 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 							if (isClear(attrBuf, _rendererURLAttribute, r.location, r.length) &&
 								isClear(attrBuf, _rendererKeywordHighlightAttribute, r.location, r.length))
 							{
+								/* Check if the nickname conversation tracking found is matched to an ignore
+								 that is set to hide them. */
+								IRCAddressBook *ignoreCheck = [logClient checkIgnoreAgainstHostmask:user.hostmask withMatches:@[@"hideMessagesContainingMatch"]];
+
+								if (PointerIsNotEmpty(ignoreCheck) && ignoreCheck.hideMessagesContainingMatch) {
+									if (outputDictionary) {
+										*outputDictionary = @{@"containsIgnoredNickname" : @(YES)};
+									}
+
+									return nil;
+								}
+
+								/* Continue normally. */
 								setFlag(attrBuf, _rendererConversationTrackerAttribute, r.location, r.length);
 
 								[mentionedUsers addObject:user];
