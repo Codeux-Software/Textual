@@ -112,14 +112,4 @@
 	[TPCPreferences setDisabledWhileAway:value forEvent:self.eventType];
 }
 
-- (BOOL)bounceDockIcon
-{
-    return [TPCPreferences bounceDockIconForEvent:self.eventType];
-}
-
-
-- (void)setBounceDockIcon:(BOOL)value
-{
-    [TPCPreferences setBounceDockIcon:value forEvent:self.eventType];
-}
 @end

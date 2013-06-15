@@ -701,11 +701,7 @@
 	} else if (target.config.pushNotifications == NO) {
 		return YES;
 	}
-    
-    if ([TPCPreferences bounceDockIconForEvent:type]) {
-        [NSApp requestUserAttention:NSInformationalRequest];
-    }
-    
+
 	if (self.worldController.isSoundMuted == NO) {
 		[TLOSoundPlayer play:[TPCPreferences soundForEvent:type]];
 
@@ -855,14 +851,18 @@
 	if (t.isUnread || (isActiveWindow && self.worldController.selectedItem == t)) {
 		return;
 	}
+
+	if (isActiveWindow == NO) {
+		[NSApp requestUserAttention:NSInformationalRequest];
+	}
 }
 
 - (void)setUnreadState:(IRCChannel *)t
 {
-	[self setUnreadState:t isHighlight:NO];
+	[self setUnreadState:t popDockIcon:NO isHighlight:NO];
 }
 
-- (void)setUnreadState:(IRCChannel *)t isHighlight:(BOOL)isHighlight
+- (void)setUnreadState:(IRCChannel *)t popDockIcon:(BOOL)popIcon isHighlight:(BOOL)isHighlight
 {
 	BOOL isActiveWindow = self.masterController.mainWindowIsActive;
 
@@ -880,6 +880,10 @@
 
 			[self.worldController reloadTreeItem:t];
 		}
+	}
+
+	if (isActiveWindow == NO && popIcon) {
+		[NSApp requestUserAttention:NSInformationalRequest];
 	}
 }
 
@@ -3270,7 +3274,7 @@
 
 				/* Mark channel as unread. */
 				if (postevent) {
-					[self setUnreadState:c isHighlight:highlight];
+					[self setUnreadState:c popDockIcon:NO isHighlight:highlight];
 				}
 			}];
 
@@ -3508,6 +3512,7 @@
 			completionBlock:^(BOOL highlight)
 				 {
 					 BOOL postevent = NO;
+					 BOOL popicon = NO;
 
 					 if (highlight) {
 						 postevent = [self notifyText:TXNotificationHighlightType lineType:type target:c nick:sender text:text];
@@ -3518,6 +3523,10 @@
 					 } else {
 						 if (newPrivateMessage) {
 							 postevent = [self notifyText:TXNotificationNewPrivateMessageType lineType:type target:c nick:sender text:text];
+
+							 if (postevent) {
+								 popicon = YES;
+							 }
 						 } else {
 							 postevent = [self notifyText:TXNotificationPrivateMessageType lineType:type target:c nick:sender text:text];
 						 }
@@ -3525,7 +3534,7 @@
 
 					 /* Mark query as unread. */
 					 if (postevent) {
-						 [self setUnreadState:c isHighlight:highlight];
+						 [self setUnreadState:c popDockIcon:popicon isHighlight:highlight];
 					 }
 				 }];
 

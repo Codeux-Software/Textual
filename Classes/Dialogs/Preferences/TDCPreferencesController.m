@@ -377,7 +377,6 @@
 	[self.alertSpeakEventButton setState:alert.speakEvent];
     [self.alertPushNotificationButton setState:alert.pushNotification];
     [self.alertDisableWhileAwayButton setState:alert.disabledWhileAway];
-    [self.alertBounceDockIconButton setState:alert.bounceDockIcon];
 
 	[self.alertSoundChoiceButton selectItemAtIndex:[self.availableSounds indexOfObject:alert.alertSound]];
 }
@@ -407,14 +406,6 @@
     TDCPreferencesSoundWrapper *alert = [TDCPreferencesSoundWrapper soundWrapperWithEventType:alertType];
 
     [alert setDisabledWhileAway:self.alertDisableWhileAwayButton.state];
-}
-
-- (void)onChangedAlertBounceDockIcon:(id)sender {
-    TXNotificationType alertType = (TXNotificationType)self.alertTypeChoiceButton.selectedItem.tag;
-    
-    TDCPreferencesSoundWrapper *alert = [TDCPreferencesSoundWrapper soundWrapperWithEventType:alertType];
-    
-    [alert setBounceDockIcon:self.alertBounceDockIconButton.state];
 }
 
 - (void)onChangedAlertSound:(id)sender
