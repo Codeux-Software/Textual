@@ -5053,7 +5053,9 @@
 			for (i = 0; i < flfields.length; i++) {
 				NSString *prefix = [flfields safeSubstringWithRange:NSMakeRange(i, 1)];
 
-				if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"q"]]) {
+				if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"q"]] ||
+					[prefix isEqualTo:[self.isupport userModePrefixSymbol:@"O"]]) // binircd-1.0.0
+				{
 					u.q = YES;
 				} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"a"]]) {
 					u.a = YES;
@@ -5102,7 +5104,9 @@
 				for (i = 0; i < nickname.length; i++) {
 					NSString *prefix = [nickname safeSubstringWithRange:NSMakeRange(i, 1)];
 
-					if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"q"]]) {
+					if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"q"]] ||
+						[prefix isEqualTo:[self.isupport userModePrefixSymbol:@"O"]]) // binircd-1.0.0
+					{
 						member.q = YES;
 					} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"a"]]) {
 						member.a = YES;

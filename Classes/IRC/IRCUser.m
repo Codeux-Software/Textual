@@ -86,6 +86,10 @@
 - (NSString *)mark
 {
 	if (self.q) {
+		if ([self.supportInfo modeIsSupportedUserPrefix:@"O"]) {
+			return [self.supportInfo userModePrefixSymbol:@"O"]; // binircd-1.0.0
+		}
+		
 		return [self.supportInfo userModePrefixSymbol:@"q"];
 	} else if (self.a) {
 		return [self.supportInfo userModePrefixSymbol:@"a"];
@@ -96,9 +100,11 @@
 	} else if (self.v) {
 		return [self.supportInfo userModePrefixSymbol:@"v"];
 	} else if (self.isCop) {
-		return [self.supportInfo userModePrefixSymbol:@"y"]; // InspIRCd-2.0
+		if ([self.supportInfo modeIsSupportedUserPrefix:@"y"]) { 
+			return [self.supportInfo userModePrefixSymbol:@"y"]; // InspIRCd-2.0
+		}
 	}
-	
+
 	return nil;
 }
 
