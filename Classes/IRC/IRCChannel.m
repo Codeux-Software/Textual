@@ -356,6 +356,7 @@
 	IRCUser *m = [self memberAtIndex:n];
 	
 	switch ([mode characterAtIndex:0]) {
+		case 'O': { m.q = value; break; } // binircd-1.0.0
 		case 'q': { m.q = value; break; }
 		case 'a': { m.a = value; break; }
 		case 'o': { m.o = value; break; }
@@ -367,11 +368,11 @@
 
 	IRCISupportInfo *isupport = self.client.isupport;
 
-	m.q = (m.q && [isupport modeIsSupportedUserPrefix:@"q"]);
-	m.a = (m.a && [isupport modeIsSupportedUserPrefix:@"a"]);
-	m.o = (m.o && [isupport modeIsSupportedUserPrefix:@"o"]);
-	m.h = (m.h && [isupport modeIsSupportedUserPrefix:@"h"]);
-	m.v = (m.v && [isupport modeIsSupportedUserPrefix:@"v"]);
+	m.q = (m.q && ([isupport modeIsSupportedUserPrefix:@"q"] || [isupport modeIsSupportedUserPrefix:@"O"] /* binircd-1.0.0 */));
+	m.a = (m.a &&  [isupport modeIsSupportedUserPrefix:@"a"]);
+	m.o = (m.o &&  [isupport modeIsSupportedUserPrefix:@"o"]);
+	m.h = (m.h &&  [isupport modeIsSupportedUserPrefix:@"h"]);
+	m.v = (m.v &&  [isupport modeIsSupportedUserPrefix:@"v"]);
 	
 	[self sortedInsert:m];
 	[self reloadMemberList];
