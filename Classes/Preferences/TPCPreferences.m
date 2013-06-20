@@ -743,6 +743,11 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() boolForKey:@"FocusSelectionOnMessageCommandExecution"];
 }
 
++ (BOOL)giveFocusOnJoinCommand
+{
+	return [RZUserDefaults() boolForKey:@"ChangeFocusOnChannelJoin"];
+}
+
 + (BOOL)memberListSortFavorsServerStaff
 {
 	return [RZUserDefaults() boolForKey:@"MemberListSortFavorsServerStaff"];
@@ -1396,6 +1401,7 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"AutomaticallyAddScrollbackMarker"]				= @(YES);
 	d[@"ConfirmApplicationQuit"]						= @(YES);
 	d[@"ChannelNavigationIsServerSpecific"]				= @(YES);
+	d[@"ChangeFocusOnChannelJoin"]						= @(YES);
 	d[@"CommandReturnSendsMessageAsAction"]				= @(YES);
 	d[@"DisableNotificationsForActiveWindow"]			= @(YES);
 	d[@"DisplayDockBadges"]								= @(YES);
