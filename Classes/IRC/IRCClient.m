@@ -3695,7 +3695,7 @@
 	if (self.autojoinInProgress == NO && myself) {
 		[self.worldController expandClient:self];
 	}
-	
+
 	IRCChannel *c = [self findChannelOrCreate:channel];
 
 	PointerIsEmptyAssert(c);
@@ -3714,7 +3714,7 @@
 		self.myHost = m.sender.hostmask;
 
 		if (self.autojoinInProgress == NO) {
-			if (self.inUserInvokedJoinRequest || isJoining) {
+			if ((self.inUserInvokedJoinRequest || isJoining) && [TPCPreferences giveFocusOnJoinCommand]) {
 				[self.worldController expandClient:c.client];
 				[self.worldController select:c];
 			}
@@ -5672,7 +5672,7 @@
 
 	[self quickJoin:ary];
 
-	[self performSelector:@selector(updateAutoJoinStatus) withObject:nil afterDelay:5.0];
+	[self performSelector:@selector(updateAutoJoinStatus) withObject:nil afterDelay:15.0];
 }
 
 #pragma mark -

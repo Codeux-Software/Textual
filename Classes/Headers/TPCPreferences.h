@@ -154,6 +154,7 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (NSString *)IRCopAlertMatch;
 
 + (BOOL)giveFocusOnMessageCommand;
++ (BOOL)giveFocusOnJoinCommand;
 
 + (BOOL)amsgAllConnections;
 + (BOOL)awayAllConnections;
