@@ -3789,6 +3789,12 @@
 	}
 
     [self.worldController updateTitleFor:c];
+
+	if ([TPCPreferences processChannelModes]) {
+		c.inUserInvokedModeRequest = YES;
+
+		[self send:IRCPrivateCommandIndex("mode"), c.name, nil];
+	}
 }
 
 - (void)receivePart:(IRCMessage *)m
@@ -4787,7 +4793,7 @@
 				[c.modeInfo update:modestr];
 			}
 
-			if (self.inUserInvokedModeRequest) {
+			if (self.inUserInvokedModeRequest || c.inUserInvokedModeRequest) {
 				NSString *fmodestr = [c.modeInfo format:NO];
 
 				[self print:c
@@ -4797,7 +4803,11 @@
 				 receivedAt:m.receivedAt
 					command:m.command];
 
-				self.inUserInvokedModeRequest = NO;
+				if (c.inUserInvokedModeRequest) {
+					c.inUserInvokedModeRequest = NO;
+				} else {
+					self.inUserInvokedModeRequest = NO;
+				}
 			}
 
 			NSString *secretKey = [c.modeInfo modeInfoFor:@"k"].modeParamater;
@@ -4978,20 +4988,6 @@
 				[self printUnknownReply:m];
 
 				self.inUserInvokedWhoRequest = NO;
-			}
-
-			if ([TPCPreferences processChannelModes]) {
-				/* The end of our WHO request will come after everything has been completed
-				 during a join so this is when we will request mode information. We only
-				 request mode information here if we did not already get some from the
-				 server. We do not get modes from the server when joining when using a
-				 bouncer like ZNC when a channel is reattached. */
-
-				if (c && c.isChannel && NSObjectIsEmpty(c.modeInfo.modeInformation)) {
-					self.inUserInvokedModeRequest = YES;
-
-					[self send:IRCPrivateCommandIndex("mode"), c.name, nil];
-				}
 			}
 
             [self.worldController updateTitleFor:c];
