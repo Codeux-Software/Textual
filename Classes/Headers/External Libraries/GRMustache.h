@@ -102,6 +102,8 @@ typedef struct {
 /**
  * @return The GRMustache standard library.
  *
+ * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/standard_library.md
+ *
  * @since v6.4
  */
 + (NSObject *)standardLibrary AVAILABLE_GRMUSTACHE_VERSION_6_4_AND_LATER;
