@@ -3790,7 +3790,7 @@
 
     [self.worldController updateTitleFor:c];
 
-	if ([TPCPreferences processChannelModes]) {
+	if ([TPCPreferences processChannelModes] && myself) {
 		c.inUserInvokedModeRequest = YES;
 
 		[self send:IRCPrivateCommandIndex("mode"), c.name, nil];
