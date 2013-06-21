@@ -780,12 +780,6 @@
 		5D4846C4171F0AC00015F2B0 /* OELReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D4846C2171F0AC00015F2B0 /* OELReachability.m */; };
 		5D4846CA171F0ACD0015F2B0 /* OELReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D4846C9171F0ACD0015F2B0 /* OELReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D4846CB171F0ACD0015F2B0 /* OELReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D4846C9171F0ACD0015F2B0 /* OELReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5DAE489D173371230020B0D3 /* OELiVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DAE489C173371230020B0D3 /* OELiVersion.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5DAE489E173371230020B0D3 /* OELiVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DAE489C173371230020B0D3 /* OELiVersion.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5DAE48A7173371680020B0D3 /* iVersion.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5DAE48A5173371680020B0D3 /* iVersion.bundle */; };
-		5DAE48A8173371680020B0D3 /* iVersion.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5DAE48A5173371680020B0D3 /* iVersion.bundle */; };
-		5DAE48A9173371680020B0D3 /* OELiVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAE48A6173371680020B0D3 /* OELiVersion.m */; };
-		5DAE48AA173371680020B0D3 /* OELiVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAE48A6173371680020B0D3 /* OELiVersion.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1356,9 +1350,6 @@
 		5D9B8EB7170A0EB400919CB0 /* CleanUpResources.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = CleanUpResources.sh; path = "Main Project (Textual).xcodeproj/CleanUpResources.sh"; sourceTree = SOURCE_ROOT; };
 		5D9B8EB8170A0EB400919CB0 /* UpdateVersionInfo.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = UpdateVersionInfo.sh; path = "Main Project (Textual).xcodeproj/UpdateVersionInfo.sh"; sourceTree = SOURCE_ROOT; };
 		5D9B8EB9170A10F200919CB0 /* BuildExtensions.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = BuildExtensions.sh; path = "Main Project (Textual).xcodeproj/BuildExtensions.sh"; sourceTree = SOURCE_ROOT; };
-		5DAE489C173371230020B0D3 /* OELiVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OELiVersion.h; sourceTree = "<group>"; };
-		5DAE48A5173371680020B0D3 /* iVersion.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iVersion.bundle; sourceTree = "<group>"; };
-		5DAE48A6173371680020B0D3 /* OELiVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OELiVersion.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2044,7 +2035,6 @@
 		4C8AF5C9158E99520026668C /* External Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				5DAE48A4173371680020B0D3 /* iVersion */,
 				4C8AF5D4158E99520026668C /* Sockets */,
 				4C8AF5D0158E99520026668C /* Keychain Control */,
 			);
@@ -2167,7 +2157,6 @@
 				4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */,
 				4C8AF747158EB6CA0026668C /* GTMEncodeURL.h */,
 				4C8AF748158EB6CA0026668C /* GTMGarbageCollection.h */,
-				5DAE489C173371230020B0D3 /* OELiVersion.h */,
 				5D4846C9171F0ACD0015F2B0 /* OELReachability.h */,
 				4C8AF74A158EB6CA0026668C /* RLMAsyncSocket.h */,
 			);
@@ -2384,15 +2373,6 @@
 			name = Build;
 			sourceTree = "<group>";
 		};
-		5DAE48A4173371680020B0D3 /* iVersion */ = {
-			isa = PBXGroup;
-			children = (
-				5DAE48A5173371680020B0D3 /* iVersion.bundle */,
-				5DAE48A6173371680020B0D3 /* OELiVersion.m */,
-			);
-			path = iVersion;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -2531,7 +2511,6 @@
 				4C0444E816F1555800EBB665 /* TVCServerListCellBadge.h in Headers */,
 				5D4846CB171F0ACD0015F2B0 /* OELReachability.h in Headers */,
 				4C5A0318170C31010016BB1A /* TPCPreferencesImportExport.h in Headers */,
-				5DAE489E173371230020B0D3 /* OELiVersion.h in Headers */,
 				4CBE64CB1743722100831D69 /* TDCHighlightEntrySheet.h in Headers */,
 				4C0C720E1742C444000F82C4 /* NSByteCountFormatterHelper.h in Headers */,
 				4CC70204171E1CB400BDFAE0 /* BuildConfig.h in Headers */,
@@ -2674,7 +2653,6 @@
 				4C0444E716F1553C00EBB665 /* TVCServerListCellBadge.h in Headers */,
 				4C5A0317170C2C170016BB1A /* TPCPreferencesImportExport.h in Headers */,
 				4C0C720D1742C444000F82C4 /* NSByteCountFormatterHelper.h in Headers */,
-				5DAE489D173371230020B0D3 /* OELiVersion.h in Headers */,
 				4CBE64CA1743722100831D69 /* TDCHighlightEntrySheet.h in Headers */,
 				4CC70203171E1CB400BDFAE0 /* BuildConfig.h in Headers */,
 			);
@@ -2917,7 +2895,6 @@
 				4CDDF3491678C5DF00FE8684 /* encryptionLockIconLight.tif in Resources */,
 				4CDDF34A1678C5DF00FE8684 /* encryptionLockIconLight@2x.tif in Resources */,
 				4CF8B41016E631EF00F2A68F /* birthdayIcon.icns in Resources */,
-				5DAE48A7173371680020B0D3 /* iVersion.bundle in Resources */,
 				4CA899A8174021FD001176C8 /* TPWTB_Alerts_NC.tif in Resources */,
 				4CA899AA174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif in Resources */,
 				4CBE64C4174371C700831D69 /* TDCHighlightEntrySheet.xib in Resources */,
@@ -3016,7 +2993,6 @@
 				4C5BA3CF16F1302F00A96CA2 /* encryptionLockIconLight.tif in Resources */,
 				4C5BA3D016F1302F00A96CA2 /* encryptionLockIconLight@2x.tif in Resources */,
 				4C5BA3D116F1302F00A96CA2 /* birthdayIcon.icns in Resources */,
-				5DAE48A8173371680020B0D3 /* iVersion.bundle in Resources */,
 				4CA899A9174021FD001176C8 /* TPWTB_Alerts_NC.tif in Resources */,
 				4CA899AB174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif in Resources */,
 				4CBE64C5174371C700831D69 /* TDCHighlightEntrySheet.xib in Resources */,
@@ -3200,7 +3176,6 @@
 				4C0445E016F1603C00EBB665 /* TVCThinSplitView.m in Sources */,
 				4CB331B616F1BBC700D65CBE /* NSImageHelper.m in Sources */,
 				5D4846C4171F0AC00015F2B0 /* OELReachability.m in Sources */,
-				5DAE48AA173371680020B0D3 /* OELiVersion.m in Sources */,
 				4C0C72061742C431000F82C4 /* NSByteCountFormatterHelper.m in Sources */,
 				4CBE64C81743720600831D69 /* TDCHighlightEntrySheet.m in Sources */,
 			);
@@ -3323,7 +3298,6 @@
 				4C937BD5170618940050CEF3 /* TLOSpeechSynthesizer.m in Sources */,
 				4C5A0311170C2C010016BB1A /* TPCPreferencesImportExport.m in Sources */,
 				5D4846C3171F0AC00015F2B0 /* OELReachability.m in Sources */,
-				5DAE48A9173371680020B0D3 /* OELiVersion.m in Sources */,
 				4C0C72051742C431000F82C4 /* NSByteCountFormatterHelper.m in Sources */,
 				4CBE64C71743720600831D69 /* TDCHighlightEntrySheet.m in Sources */,
 			);
