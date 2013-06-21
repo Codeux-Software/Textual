@@ -55,6 +55,7 @@
 @property (nonatomic, assign) BOOL inUserInvokedWhowasRequest;
 @property (nonatomic, assign) BOOL inUserInvokedJoinRequest;
 @property (nonatomic, assign) BOOL inUserInvokedWatchRequest;
+@property (nonatomic, assign) BOOL inUserInvokedModeRequest;
 @property (nonatomic, assign) BOOL sendLagcheckReplyToChannel;
 @property (nonatomic, assign) BOOL timeoutWarningShownToUser;
 @property (nonatomic, assign) NSInteger tryingNickNumber;
@@ -1672,6 +1673,8 @@
 				} else if (([s.string hasPrefix:@"+"] || [s.string hasPrefix:@"-"]) == NO) {
 					targetChannelName = s.getToken.string;
 				}
+
+				self.inUserInvokedModeRequest = YES;
 			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("umode")]) {
 				[s insertAttributedString:[NSAttributedString emptyStringWithBase:NSStringWhitespacePlaceholder]	atIndex:0];
 				[s insertAttributedString:[NSAttributedString emptyStringWithBase:self.localNickname]				atIndex:0];
@@ -2771,6 +2774,7 @@
 	self.inUserInvokedWatchRequest = NO;
 	self.inUserInvokedWhoRequest = NO;
 	self.inUserInvokedWhowasRequest = NO;
+	self.inUserInvokedModeRequest = NO;
 	self.isAutojoined = NO;
 	self.isAway = NO;
 	self.isConnected = NO;
@@ -4783,14 +4787,18 @@
 				[c.modeInfo update:modestr];
 			}
 
-			NSString *fmodestr = [c.modeInfo format:NO];
+			if (self.inUserInvokedModeRequest) {
+				NSString *fmodestr = [c.modeInfo format:NO];
 
-			[self print:c
-				   type:TVCLogLineModeType
-				   nick:nil
-				   text:TXTFLS(@"IRCChannelHasModes", fmodestr)
-			 receivedAt:m.receivedAt
-				command:m.command];
+				[self print:c
+					   type:TVCLogLineModeType
+					   nick:nil
+					   text:TXTFLS(@"IRCChannelHasModes", fmodestr)
+				 receivedAt:m.receivedAt
+					command:m.command];
+
+				self.inUserInvokedModeRequest = NO;
+			}
 
 			NSString *secretKey = [c.modeInfo modeInfoFor:@"k"].modeParamater;
 
@@ -4980,6 +4988,8 @@
 				 bouncer like ZNC when a channel is reattached. */
 
 				if (c && c.isChannel && NSObjectIsEmpty(c.modeInfo.modeInformation)) {
+					self.inUserInvokedModeRequest = YES;
+
 					[self send:IRCPrivateCommandIndex("mode"), c.name, nil];
 				}
 			}
