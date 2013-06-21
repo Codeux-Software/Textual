@@ -6,9 +6,9 @@ makes customization easy through the use of CSS 3 and HTML 5. Plugins
 written in Objective-C and scripts made with AppleScript (and other 
 languages) are also supported.
 
-#### App Store vs. GitHub ###
+#### App Store vs. GitHub ####
 
-https://itunes.apple.com/us/app/textual-irc-client/id403012667
+App Store Page: http://www.textualapp.com/
 
 There are no differences between the code on GitHub and the binaries on
 the Mac App Store. Be that as it may, we will not provide any support or
