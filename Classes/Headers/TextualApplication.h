@@ -170,7 +170,6 @@
 	#import "GTMEncodeURL.h"
 	#import "GTMGarbageCollection.h"
 	#import "OELReachability.h"
-	#import "OELiVersion.h"
 	#import "RLMAsyncSocket.h"
 
 	/* IRC Controllers — Core. */
