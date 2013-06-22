@@ -60,7 +60,9 @@
 - (void)parseLine:(NSString *)line
 {
 	self.command = NSStringEmptyPlaceholder;
-	
+
+	self.isHistoric = YES;
+
 	self.sender = [IRCPrefix new];
 	self.params = [NSMutableArray new];
 	
@@ -115,6 +117,8 @@
 		
 		if (PointerIsEmpty(date)) {
 			date = [NSDate date];
+		} else {
+			self.isHistoric = YES;
 		}
 		
 		self.receivedAt = date;

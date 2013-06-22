@@ -153,6 +153,8 @@
 {
 	self.errorOnLastJoinAttempt = NO;
 	self.inUserInvokedModeRequest = NO;
+
+	self.channelJoinTime = -1;
 	
 	self.status = newStatus;
 
@@ -168,6 +170,8 @@
     [self.client postEventToViewController:@"channelJoined" forChannel:self];
     
 	[self resetStatus:IRCChannelJoined];
+
+	self.channelJoinTime = [NSDate epochTime];
 }
 
 - (void)deactivate
@@ -177,6 +181,8 @@
     [self.viewController setTopic:nil];
     
 	[self resetStatus:IRCChannelParted];
+
+	self.channelJoinTime = -1;
 }
 
 - (void)terminate
