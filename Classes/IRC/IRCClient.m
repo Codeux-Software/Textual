@@ -5211,7 +5211,7 @@
 		}
 		case 322: // RPL_LIST
 		{
-			NSAssertReturnLoopBreak(m.params.count >= 4);
+			NSAssertReturnLoopBreak(m.params.count >= 3);
 			
 			NSString *channel = [m paramAt:1];
 			NSString *uscount = [m paramAt:2];
