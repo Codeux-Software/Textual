@@ -38,6 +38,7 @@
 #import "TextualApplication.h"
 
 @interface IRCMessage : NSObject
+@property (nonatomic, assign) BOOL isHistoric; // Whether a custom @time= was supplied during parsing.
 @property (nonatomic, strong) NSDate *receivedAt;
 @property (nonatomic, strong) IRCPrefix *sender;
 @property (nonatomic, strong) NSString *command;
