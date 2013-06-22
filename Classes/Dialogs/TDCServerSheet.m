@@ -93,12 +93,14 @@
 	[tabViewList addObject:@[@"Identity",						@"6"]];
 	[tabViewList addObject:@[@"Message",						@"7"]];
 	[tabViewList addObject:@[@"Mentions",						@"8"]];
+	[tabViewList addObject:@[TXDefaultListSeperatorCellIndex,	@"-"]];
+	[tabViewList addObject:@[@"ZNCBouncer",						@"9"]];
 
 	if (includeAdvanced) {
 		[tabViewList addObject:@[TXDefaultListSeperatorCellIndex,	@"-"]];
-		[tabViewList addObject:@[@"FloodControl",					@"9"]];
-		[tabViewList addObject:@[@"Network",						@"10"]];
-		[tabViewList addObject:@[@"Proxy",							@"11"]];
+		[tabViewList addObject:@[@"FloodControl",					@"10"]];
+		[tabViewList addObject:@[@"Network",						@"11"]];
+		[tabViewList addObject:@[@"Proxy",							@"12"]];
 	}
 
 	self.tabViewList = tabViewList;
@@ -228,7 +230,7 @@
 	[self reloadIgnoreTable];
 	
 	if ([viewToken isEqualToString:@"floodControl"]) {
-        [self showWithDefaultView:self.floodControlView andSegment:9];
+        [self showWithDefaultView:self.floodControlView andSegment:10];
     } else if ([viewToken isEqualToString:@"addressBook"]) {
 		[self showWithDefaultView:self.ignoresView andSegment:0];
 		
@@ -316,6 +318,9 @@
 	self.serverPasswordField.stringValue	= self.config.serverPassword;
 	self.serverPortField.stringValue		= [NSString stringWithInteger:self.config.serverPort];
 
+	self.zncConnectionIsBouncerCheck.state		= self.config.ZNCConnectionIsBouncer;
+	self.zncThrottlePlaybackBufferCheck.state	= self.config.ZNCThrottlePlaybackBuffer;
+
     self.prefersIPv6Check.state				= self.config.connectionPrefersIPv6;
 
 	self.pongTimerCheck.state				= self.config.performPongTimer;
@@ -396,6 +401,9 @@
 	self.config.connectionPrefersIPv6		= self.prefersIPv6Check.state;
 	self.config.connectionUsesSSL			= self.connectionUsesSSLCheck.state;
 	self.config.serverPassword				= self.serverPasswordField.trimmedStringValue;
+
+	self.config.ZNCConnectionIsBouncer		= self.zncConnectionIsBouncerCheck.state;
+	self.config.ZNCThrottlePlaybackBuffer	= self.zncThrottlePlaybackBufferCheck.state;
 
 	self.config.performPongTimer				= self.pongTimerCheck.state;
 	self.config.performDisconnectOnPongTimer	= self.pongTimerDisconnectCheck.state;
@@ -1120,9 +1128,10 @@
             case 5:  { [self focusView:self.identityView		atRow:5]; break; }
             case 6:  { [self focusView:self.messagesView		atRow:6]; break; }
 			case 7:  { [self focusView:self.highlightsView		atRow:7]; break; }
-            case 9:  { [self focusView:self.floodControlView	atRow:9]; break; }
-			case 10: { [self focusView:self.networkingView		atRow:10]; break; }
-            case 11: { [self focusView:self.proxyServerView		atRow:11]; break; }
+			case 9:  { [self focusView:self.zncBouncerView		atRow:9]; break; }
+            case 11: { [self focusView:self.floodControlView	atRow:11]; break; }
+			case 12: { [self focusView:self.networkingView		atRow:12]; break; }
+            case 13: { [self focusView:self.proxyServerView		atRow:13]; break; }
 
             default: { break; }
         }

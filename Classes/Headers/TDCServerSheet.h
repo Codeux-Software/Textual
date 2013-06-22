@@ -61,6 +61,8 @@
 @property (nonatomic, nweak) NSButton *prefersIPv6Check;
 @property (nonatomic, nweak) NSButton *pongTimerCheck;
 @property (nonatomic, nweak) NSButton *pongTimerDisconnectCheck;
+@property (nonatomic, nweak) NSButton *zncConnectionIsBouncerCheck;
+@property (nonatomic, nweak) NSButton *zncThrottlePlaybackBufferCheck;
 @property (nonatomic, nweak) NSComboBox *serverAddressCombo;
 @property (nonatomic, nweak) NSMenu *addIgnoreMenu;
 @property (nonatomic, nweak) NSPopUpButton *fallbackEncodingButton;
@@ -97,6 +99,7 @@
 @property (nonatomic, nweak) NSView *proxyServerView;
 @property (nonatomic, nweak) NSView *highlightsView;
 @property (nonatomic, nweak) NSView *networkingView;
+@property (nonatomic, nweak) NSView *zncBouncerView;
 @property (nonatomic, nweak) TVCListView *tabView;
 @property (nonatomic, nweak) TVCListView *channelTable;
 @property (nonatomic, nweak) TVCListView *ignoreTable;
