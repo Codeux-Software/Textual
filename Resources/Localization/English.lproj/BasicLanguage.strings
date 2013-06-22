@@ -301,6 +301,7 @@
 "ServerSheetProxyNavigationTreeItem" = "Proxy Server";
 "ServerSheetMentionsNavigationTreeItem" = "Mentions";
 "ServerSheetNetworkNavigationTreeItem" = "Network Socket";
+"ServerSheetZNCBouncerNavigationTreeItem" = "ZNC Bouncer";
 
 "SetAsDefaultIRCClientPromptMessage" = "Textual is not set as the default IRC client for this copy of Mac OS X. Set it?";
 "SetAsDefaultIRCClientPromptTitle" = "Default IRC Client";

@@ -72,6 +72,9 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 		self.invisibleMode       = NO;
 		self.isTrustedConnection = NO;
 
+		self.ZNCConnectionIsBouncer = NO;
+		self.ZNCThrottlePlaybackBuffer = YES;
+
 		self.proxyType		 = TXConnectionNoProxyType;
 		self.proxyAddress    = NSStringEmptyPlaceholder;
 		self.proxyPort       = 1080;
@@ -234,7 +237,10 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 		self.serverAddress	= NSDictionaryObjectKeyValueCompare(dic, @"serverAddress", self.serverAddress);
 		self.serverPort		= NSDictionaryIntegerKeyValueCompare(dic, @"serverPort", self.serverPort);
 		self.username		= NSDictionaryObjectKeyValueCompare(dic, @"identityUsername", self.username);
-		
+
+		self.ZNCConnectionIsBouncer		= NSDictionaryBOOLKeyValueCompare(dic, @"ZNC —> ZNC Services Enabled", self.ZNCConnectionIsBouncer);
+		self.ZNCThrottlePlaybackBuffer	= NSDictionaryBOOLKeyValueCompare(dic, @"ZNC —> Throttle Playback Buffer", self.ZNCThrottlePlaybackBuffer);
+
 		[self.alternateNicknames addObjectsFromArray:[dic arrayForKey:@"identityAlternateNicknames"]];
 		
 		self.proxyType       = (TXConnectionProxyType)NSDictionaryIntegerKeyValueCompare(dic, @"proxyServerType", self.proxyType);
@@ -318,7 +324,10 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 	[dic setBool:self.isTrustedConnection			forKey:@"trustedSSLConnection"];
     [dic setBool:self.connectionPrefersIPv6			forKey:@"DNSResolverPrefersIPv6"];
     [dic setBool:self.sidebarItemExpanded			forKey:@"serverListItemIsExpanded"];
-	
+
+	[dic setBool:self.ZNCConnectionIsBouncer		forKey:@"ZNC —> ZNC Services Enabled"];
+	[dic setBool:self.ZNCThrottlePlaybackBuffer		forKey:@"ZNC —> Throttle Playback Buffer"];
+
 	[dic safeSetObject:self.alternateNicknames			forKey:@"identityAlternateNicknames"];
 	[dic safeSetObject:self.clientName					forKey:@"connectionName"];
 	[dic safeSetObject:self.itemUUID					forKey:@"uniqueIdentifier"];
