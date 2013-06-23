@@ -40,17 +40,16 @@
 @interface TVCLogController : NSObject
 @property (nonatomic, nweak) IRCClient *client;
 @property (nonatomic, nweak) IRCChannel *channel;
-@property (nonatomic, assign) BOOL isLoaded;
-@property (nonatomic, assign) BOOL needsLimitNumberOfLines;
-@property (nonatomic, strong) TLOFileLogger *historicLogFile;
-@property (nonatomic, assign) NSInteger activeLineCount;
-@property (nonatomic, assign) NSInteger activeLineNumber;
-@property (nonatomic, assign) NSInteger lastVisitedHighlight;
-@property (nonatomic, assign) NSInteger maximumLineCount;
 @property (nonatomic, strong) TVCLogView *view;
 @property (nonatomic, strong) TVCLogPolicy *policy;
 @property (nonatomic, strong) TVCLogScriptEventSink *sink;
 @property (nonatomic, strong) TVCWebViewAutoScroll *autoScroller;
+@property (nonatomic, assign) BOOL isLoaded;
+@property (nonatomic, assign) BOOL needsLimitNumberOfLines;
+@property (nonatomic, strong) TLOFileLogger *historicLogFile;
+@property (nonatomic, assign) NSInteger activeLineCount;
+@property (nonatomic, assign) NSInteger maximumLineCount;
+@property (nonatomic, strong) NSString *lastVisitedHighlight;
 @property (nonatomic, strong) NSMutableArray *highlightedLineNumbers;
 
 /* These two properties are VERY important to be in sync accross 
