@@ -773,6 +773,8 @@
 {
 	if ([NSThread isMainThread] == NO) {
 		[self.iomt print:logLine specialWrite:isSpecial completionBlock:completionBlock];
+		
+		return;
 	}
 
 	TVCLogLine *line = logLine;
