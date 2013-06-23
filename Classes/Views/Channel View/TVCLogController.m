@@ -55,7 +55,7 @@
 		self.highlightedLineNumbers	= [NSMutableArray new];
 
 		self.activeLineCount = 0;
-		self.lastVisitedHighlight = -1;
+		self.lastVisitedHighlight = nil;
 
 		self.isLoaded = NO;
 		self.reloadingBacklog = NO;
@@ -501,12 +501,12 @@
 #pragma mark -
 #pragma mark Utilities
 
-- (void)jumpToLine:(NSInteger)line
+- (void)jumpToLine:(NSString *)line
 {
-	NSString *lid = [NSString stringWithFormat:@"line%ld", line];
+	NSString *lid = [NSString stringWithFormat:@"line-%@", line];
 
 	if ([self jumpToElementID:lid]) {
-		[self executeScriptCommand:@"viewPositionMovedToLine" withArguments:@[@(line)]];
+		[self executeScriptCommand:@"viewPositionMovedToLine" withArguments:@[line]];
 	}
 }
 
@@ -560,15 +560,15 @@
 {
 	NSObjectIsEmptyAssertReturn(self.highlightedLineNumbers, NO);
 
-	if ([self.highlightedLineNumbers containsObject:@(self.lastVisitedHighlight)] == NO) {
-		self.lastVisitedHighlight = [self.highlightedLineNumbers integerAtIndex:0];
+	if ([self.highlightedLineNumbers containsObject:self.lastVisitedHighlight] == NO) {
+		self.lastVisitedHighlight = [self.highlightedLineNumbers safeObjectAtIndex:0];
 	}
 
-	if (previous && [self.highlightedLineNumbers integerAtIndex:0] == self.lastVisitedHighlight) {
+	if (previous && [self.lastVisitedHighlight isEqualToString:self.highlightedLineNumbers[0]]) {
 		return NO;
 	}
 
-	if ((previous == NO) && [self.highlightedLineNumbers.lastObject integerValue] == self.lastVisitedHighlight) {
+	if ((previous == NO) && [self.lastVisitedHighlight isEqualToString:self.highlightedLineNumbers.lastObject]) {
 		return NO;
 	}
 
@@ -584,7 +584,7 @@
 
 	NSObjectIsEmptyAssert(self.highlightedLineNumbers);
 
-	id bhli = @(self.lastVisitedHighlight);
+	NSString *bhli = self.lastVisitedHighlight;
 
 	if ([self.highlightedLineNumbers containsObject:bhli]) {
 		NSInteger hli_ci = [self.highlightedLineNumbers indexOfObject:bhli];
@@ -594,10 +594,10 @@
 			// Return method since the last highlight we
 			// visited was the end of array. Nothing ahead.
 		} else {
-			self.lastVisitedHighlight = [self.highlightedLineNumbers integerAtIndex:(hli_ci + 1)];
+			self.lastVisitedHighlight = [self.highlightedLineNumbers safeObjectAtIndex:(hli_ci + 1)];
 		}
 	} else {
-		self.lastVisitedHighlight = [self.highlightedLineNumbers integerAtIndex:0];
+		self.lastVisitedHighlight = [self.highlightedLineNumbers safeObjectAtIndex:0];
 	}
 
 	[self jumpToLine:self.lastVisitedHighlight];
@@ -612,7 +612,7 @@
 
 	NSObjectIsEmptyAssert(self.highlightedLineNumbers);
 
-	id bhli = @(self.lastVisitedHighlight);
+	NSString *bhli = self.lastVisitedHighlight;
 
 	if ([self.highlightedLineNumbers containsObject:bhli]) {
 		NSInteger hli_ci = [self.highlightedLineNumbers indexOfObject:bhli];
@@ -621,10 +621,10 @@
 			// Return method since the last highlight we
 			// visited was the start of array. Nothing ahead.
 		} else {
-			self.lastVisitedHighlight = [self.highlightedLineNumbers integerAtIndex:(hli_ci - 1)];
+			self.lastVisitedHighlight = [self.highlightedLineNumbers safeObjectAtIndex:(hli_ci + 1)];
 		}
 	} else {
-		self.lastVisitedHighlight = [self.highlightedLineNumbers integerAtIndex:0];
+		self.lastVisitedHighlight = [self.highlightedLineNumbers safeObjectAtIndex:0];
 	}
 
 	[self jumpToLine:self.lastVisitedHighlight];
@@ -670,8 +670,8 @@
 
 	NSMutableArray *newList = [NSMutableArray array];
 
-	for (NSNumber *lineNumber in self.highlightedLineNumbers) {
-		NSString *lid = [NSString stringWithFormat:@"line%ld", lineNumber.integerValue];
+	for (NSString *lineNumber in self.highlightedLineNumbers) {
+		NSString *lid = [NSString stringWithFormat:@"line-%@", lineNumber];
 
 		DOMElement *e = [doc getElementById:lid];
 
@@ -703,7 +703,7 @@
 	}
 
 	self.activeLineCount = 0;
-	self.lastVisitedHighlight = -1;
+	self.lastVisitedHighlight = nil;
 
 	self.isLoaded = NO;
 	//self.reloadingBacklog = NO;
@@ -750,6 +750,15 @@
 
 #pragma mark -
 
+- (NSString *)uniquePrintIdentifier
+{
+	NSString *randomUUID = [NSString stringWithUUID]; // Example: 68753A44-4D6F-1226-9C60-0050E4C00067
+
+	NSAssert((randomUUID.length > 20), @"Bad identifier.");
+
+	return [randomUUID substringFromIndex:19]; // Example: 9C60-0050E4C00067
+}
+
 - (void)print:(TVCLogLine *)logLine
 {
 	[self print:logLine specialWrite:NO completionBlock:NULL];
@@ -762,13 +771,13 @@
 
 - (void)print:(TVCLogLine *)logLine specialWrite:(BOOL)isSpecial completionBlock:(void(^)(BOOL highlighted))completionBlock
 {
-	TVCLogLine *line = logLine;
-	
-	NSObjectIsEmptyAssert(line.messageBody);
-
 	if ([NSThread isMainThread] == NO) {
 		[self.iomt print:logLine specialWrite:isSpecial completionBlock:completionBlock];
 	}
+
+	TVCLogLine *line = logLine;
+
+	NSObjectIsEmptyAssert(line.messageBody);
 
 	// ************************************************************************** /
 	// Render our body.                                                           /
@@ -969,14 +978,18 @@
 	completionBlock(highlighted);
 }
 
+- (void)renderLogLine:(TVCLogLine *)logLine specialWrite:(BOOL)isSpecial
+{
+	
+}
+
 - (void)handlePrintBlockAppend:(TVCLogLine *)line withAttributes:(NSMutableDictionary *)attributes specialWrite:(BOOL)isSpecial
 {
-	self.activeLineNumber += 1;
 	self.activeLineCount += 1;
 
-	NSInteger newLinenNumber = self.activeLineNumber;
+	NSString *newLinenNumber = [self uniquePrintIdentifier];
 
-	attributes[@"lineNumber"] = @(newLinenNumber);
+	attributes[@"lineNumber"] = newLinenNumber;
 
 	NSString *templateName = [self.themeSettings templateNameWithLineType:line.lineType];
 
@@ -985,15 +998,15 @@
 	NSObjectIsEmptyAssert(html);
 
 	if ([attributes[@"highlightAttributeRepresentation"] isEqualToString:@"true"]) {
-		[self.highlightedLineNumbers safeAddObject:@(newLinenNumber)];
+		[self.highlightedLineNumbers safeAddObject:newLinenNumber];
 	}
 
 	[self.historicLogFile writePropertyListEntry:[line dictionaryValue]
-										   toKey:[@(newLinenNumber) integerWithLeadingZero:10]];
+										   toKey:newLinenNumber];
 
 	[self appendToDocumentBody:html];
 		
-	[self executeScriptCommand:@"newMessagePostedToView" withArguments:@[@(newLinenNumber)]];
+	[self executeScriptCommand:@"newMessagePostedToView" withArguments:@[newLinenNumber]];
 
 	/* Limit lines. */
 	if (isSpecial == NO) {
