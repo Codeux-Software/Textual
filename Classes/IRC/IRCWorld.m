@@ -729,8 +729,6 @@
 {
 	[c resetState];
 
-	[c.operationQueue destroyOperationsForChannel:c];
-
 	[c.viewController clear];
 	[c.viewController notifyDidBecomeVisible];
 
@@ -746,8 +744,6 @@
 - (void)clearContentsOfClient:(IRCClient *)u
 {
 	[u resetState];
-
-	[u.operationQueue destroyOperationsForClient:u];
 
 	[u.viewController clear];
 	[u.viewController notifyDidBecomeVisible];
@@ -768,7 +764,6 @@
 	PointerIsEmptyAssertReturn(c.config, nil);
 
 	c.viewController = [self createLogWithClient:c channel:nil];
-    c.operationQueue = [TVCLogControllerOperationQueue new];
 
 	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
 		c.inputHistory = [TLOInputHistory new];

@@ -37,9 +37,6 @@
 
 #import "TextualApplication.h"
 
-/* The behavior of this block is completely internal & undefined. Do not trust it. */
-typedef NSArray *(^TVCLogMessageBlock)(void);
-
 @interface TVCLogController : NSObject
 @property (nonatomic, nweak) IRCClient *client;
 @property (nonatomic, nweak) IRCChannel *channel;
@@ -90,9 +87,6 @@ typedef NSArray *(^TVCLogMessageBlock)(void);
 
 - (void)changeTextSize:(BOOL)bigger;
 
-- (TVCLogControllerOperationQueue *)operationQueue;
-- (NSString *)operationQueueHash;
-
 - (void)print:(TVCLogLine *)logLine;
 - (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock;
 
@@ -100,8 +94,5 @@ typedef NSArray *(^TVCLogMessageBlock)(void);
 
 - (void)logViewOnDoubleClick:(NSString *)e;
 
-- (void)internalExecuteScriptCommand:(NSString *)command withArguments:(NSArray *)args;
-
 - (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args;
-- (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args onQueue:(BOOL)addToQueue;
 @end

@@ -5686,7 +5686,7 @@
 
 - (void)postEventToViewController:(NSString *)eventToken
 {
-    [self.viewController internalExecuteScriptCommand:@"handleEvent" withArguments:@[eventToken]];
+    [self.viewController executeScriptCommand:@"handleEvent" withArguments:@[eventToken]];
 
     for (IRCChannel *channel in self.channels) {
         [self postEventToViewController:eventToken forChannel:channel];
@@ -5695,7 +5695,7 @@
 
 - (void)postEventToViewController:(NSString *)eventToken forChannel:(IRCChannel *)channel
 {
-	[channel.viewController internalExecuteScriptCommand:@"handleEvent" withArguments:@[eventToken]];
+	[channel.viewController executeScriptCommand:@"handleEvent" withArguments:@[eventToken]];
 }
 
 #pragma mark -
