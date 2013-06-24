@@ -713,11 +713,16 @@
 
 - (void)executeScriptCommandOnAllViews:(NSString *)command arguments:(NSArray *)args
 {
+	[self executeScriptCommandOnAllViews:command arguments:args onQueue:YES];
+}
+
+- (void)executeScriptCommandOnAllViews:(NSString *)command arguments:(NSArray *)args onQueue:(BOOL)onQueue
+{
 	for (IRCClient *u in self.clients) {
-		[u.viewController executeScriptCommand:command withArguments:args];
+		[u.viewController executeScriptCommand:command withArguments:args onQueue:onQueue];
 
 		for (IRCChannel *c in u.channels) {
-			[c.viewController executeScriptCommand:command withArguments:args];
+			[c.viewController executeScriptCommand:command withArguments:args onQueue:onQueue];
 		}
 	}
 }
@@ -728,6 +733,8 @@
 - (void)clearContentsOfChannel:(IRCChannel *)c inClient:(IRCClient *)u
 {
 	[c resetState];
+	
+	[c.printingQueue destroyOperationsForChannel:c];
 
 	[c.viewController clear];
 	[c.viewController notifyDidBecomeVisible];
@@ -744,6 +751,8 @@
 - (void)clearContentsOfClient:(IRCClient *)u
 {
 	[u resetState];
+
+	[u.printingQueue destroyOperationsForClient:u];
 
 	[u.viewController clear];
 	[u.viewController notifyDidBecomeVisible];
@@ -764,6 +773,8 @@
 	PointerIsEmptyAssertReturn(c.config, nil);
 
 	c.viewController = [self createLogWithClient:c channel:nil];
+
+	c.printingQueue = [TVCLogControllerOperationQueue new];
 
 	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
 		c.inputHistory = [TLOInputHistory new];
