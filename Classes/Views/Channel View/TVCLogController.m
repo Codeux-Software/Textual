@@ -338,22 +338,28 @@
 		topic = TXTLS(@"IRCChannelEmptyTopic");
 	}
 
-	if ([self.topicValue isEqualToString:topic] == NO)
-	{
-		DOMElement *topicBar = [self documentChannelTopicBar];
+	[self.printingQueue enqueueMessageBlock:^(id operation, NSDictionary *context) {
+		dispatch_async(dispatch_get_main_queue(), ^{
+			if ([self.topicValue isEqualToString:topic] == NO)
+			{
+				DOMElement *topicBar = [self documentChannelTopicBar];
 
-		PointerIsEmptyAssert(topicBar);
+				PointerIsEmptyAssert(topicBar);
 
-		NSString *body = [TVCLogRenderer renderBody:topic
-										 controller:self
-										 renderType:TVCLogRendererHTMLType
-										 properties:@{@"renderLinks" : NSNumberWithBOOL(YES)}
-										 resultInfo:NULL];
+				NSString *body = [TVCLogRenderer renderBody:topic
+												 controller:self
+												 renderType:TVCLogRendererHTMLType
+												 properties:@{@"renderLinks" : NSNumberWithBOOL(YES)}
+												 resultInfo:NULL];
 
-		[(id)topicBar setInnerHTML:body];
+				[(id)topicBar setInnerHTML:body];
 
-		[self executeScriptCommand:@"topicBarValueChanged" withArguments:@[topic]];
-	}
+				[self executeScriptCommand:@"topicBarValueChanged" withArguments:@[topic]];
+			}
+		});
+
+		[self.printingQueue updateCompletionStatusForOperation:operation];
+	} for:self];
 }
 
 #pragma mark -
@@ -537,16 +543,16 @@
 
 - (void)reloadHistory
 {
-	/*self.reloadingHistory = YES;
+	self.reloadingHistory = YES;
 
-	NSInteger reloadCount =	[self reloadOldLines:YES];
-	
-	if (reloadCount >= 1) {
-		[self mark];
-	}
+	[self.printingQueue enqueueMessageBlock:^(id operation, NSDictionary *context) {
+		[self reloadOldLines:YES];
 
-	self.reloadingHistory = NO;
-	self.historyLoaded = YES;*/
+		self.reloadingHistory = NO;
+		self.historyLoaded = YES;
+		
+		[self.printingQueue updateCompletionStatusForOperation:operation];
+	} for:self];
 }
 
 - (void)reloadTheme
@@ -841,15 +847,10 @@
 
 - (void)print:(TVCLogLine *)logLine
 {
-	[self print:logLine specialWrite:NO completionBlock:NULL];
+	[self print:logLine completionBlock:NULL];
 }
 
 - (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock
-{
-	[self print:logLine specialWrite:NO completionBlock:completionBlock];
-}
-
-- (void)print:(TVCLogLine *)logLine specialWrite:(BOOL)isSpecial completionBlock:(void(^)(BOOL highlighted))completionBlock
 {
 	TVCLogControllerOperationBlock printBlock = ^(id operation, NSDictionary *context) {
 		/* Increment by one. */
@@ -874,9 +875,7 @@
 			if (highlighted) {
 				[self.highlightedLineNumbers safeAddObject:lineNumber];
 
-				if (isSpecial == NO) {
-					[self.worldController addHighlightInChannel:self.channel withLogLine:logLine];
-				}
+				[self.worldController addHighlightInChannel:self.channel withLogLine:logLine];
 			}
 
 			/* Record the actual line printed. */
@@ -889,10 +888,8 @@
 			[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
 
 			/* Limit lines. */
-			if (isSpecial == NO) {
-				if (self.maximumLineCount > 0 && (self.activeLineCount - 10) > self.maximumLineCount) {
-					[self setNeedsLimitNumberOfLines];
-				}
+			if (self.maximumLineCount > 0 && (self.activeLineCount - 10) > self.maximumLineCount) {
+				[self setNeedsLimitNumberOfLines];
 			}
 
 			/* Finish up. */
