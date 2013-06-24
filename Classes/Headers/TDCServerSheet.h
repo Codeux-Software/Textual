@@ -63,6 +63,7 @@
 @property (nonatomic, nweak) NSButton *pongTimerDisconnectCheck;
 @property (nonatomic, nweak) NSButton *zncConnectionIsBouncerCheck;
 @property (nonatomic, nweak) NSButton *zncThrottlePlaybackBufferCheck;
+@property (nonatomic, nweak) NSButton *zncIgnorePlaybackNotificationsCheck;
 @property (nonatomic, nweak) NSComboBox *serverAddressCombo;
 @property (nonatomic, nweak) NSMenu *addIgnoreMenu;
 @property (nonatomic, nweak) NSPopUpButton *fallbackEncodingButton;
@@ -115,6 +116,7 @@
 - (void)floodControlChanged:(id)sender;
 - (void)proxyTypeChanged:(id)sender;
 - (void)serverAddressChanged:(id)sender;
+- (void)zncBouncerEnabledChagned:(id)sender;
 - (void)toggleAdvancedEncodings:(id)sender;
 - (void)toggleAdvancedSettings:(id)sender;
 

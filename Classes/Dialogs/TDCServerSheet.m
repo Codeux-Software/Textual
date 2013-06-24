@@ -216,7 +216,9 @@
 	[self populateEncodings];
 
 	[self load];
-	
+
+	[self zncBouncerEnabledChagned:nil];
+
 	[self updateConnectionPage];
 	[self updateHighlightsPage];
 	[self updateChannelsPage];
@@ -318,8 +320,9 @@
 	self.serverPasswordField.stringValue	= self.config.serverPassword;
 	self.serverPortField.stringValue		= [NSString stringWithInteger:self.config.serverPort];
 
-	self.zncConnectionIsBouncerCheck.state		= self.config.ZNCConnectionIsBouncer;
-	self.zncThrottlePlaybackBufferCheck.state	= self.config.ZNCThrottlePlaybackBuffer;
+	self.zncConnectionIsBouncerCheck.state			= self.config.zncConnectionIsBouncer;
+	self.zncThrottlePlaybackBufferCheck.state		= self.config.zncThrottlePlaybackBuffer;
+	self.zncIgnorePlaybackNotificationsCheck.state	= self.config.zncIgnorePlaybackNotifications;
 
     self.prefersIPv6Check.state				= self.config.connectionPrefersIPv6;
 
@@ -402,8 +405,9 @@
 	self.config.connectionUsesSSL			= self.connectionUsesSSLCheck.state;
 	self.config.serverPassword				= self.serverPasswordField.trimmedStringValue;
 
-	self.config.ZNCConnectionIsBouncer		= self.zncConnectionIsBouncerCheck.state;
-	self.config.ZNCThrottlePlaybackBuffer	= self.zncThrottlePlaybackBufferCheck.state;
+	self.config.zncConnectionIsBouncer			= self.zncConnectionIsBouncerCheck.state;
+	self.config.zncThrottlePlaybackBuffer		= self.zncThrottlePlaybackBufferCheck.state;
+	self.config.zncIgnorePlaybackNotifications	= self.zncIgnorePlaybackNotificationsCheck.state;
 
 	self.config.performPongTimer				= self.pongTimerCheck.state;
 	self.config.performDisconnectOnPongTimer	= self.pongTimerDisconnectCheck.state;
@@ -564,6 +568,14 @@
     BOOL match = (self.floodControlCheck.state == NSOnState);
 	
     [self.floodControlToolView setHidden:BOOLReverseValue(match)];
+}
+
+- (void)zncBouncerEnabledChagned:(id)sender
+{
+	BOOL match = (self.zncConnectionIsBouncerCheck.state == NSOnState);
+
+	[self.zncThrottlePlaybackBufferCheck setEnabled:match];
+	[self.zncIgnorePlaybackNotificationsCheck setEnabled:match];
 }
 
 #pragma mark -

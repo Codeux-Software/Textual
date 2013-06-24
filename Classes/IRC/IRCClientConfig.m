@@ -72,8 +72,9 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 		self.invisibleMode       = NO;
 		self.isTrustedConnection = NO;
 
-		self.ZNCConnectionIsBouncer = NO;
-		self.ZNCThrottlePlaybackBuffer = YES;
+		self.zncConnectionIsBouncer = NO;
+		self.zncThrottlePlaybackBuffer = YES;
+		self.zncIgnorePlaybackNotifications = YES;
 
 		self.proxyType		 = TXConnectionNoProxyType;
 		self.proxyAddress    = NSStringEmptyPlaceholder;
@@ -238,8 +239,9 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 		self.serverPort		= NSDictionaryIntegerKeyValueCompare(dic, @"serverPort", self.serverPort);
 		self.username		= NSDictionaryObjectKeyValueCompare(dic, @"identityUsername", self.username);
 
-		self.ZNCConnectionIsBouncer		= NSDictionaryBOOLKeyValueCompare(dic, @"ZNC —> ZNC Services Enabled", self.ZNCConnectionIsBouncer);
-		self.ZNCThrottlePlaybackBuffer	= NSDictionaryBOOLKeyValueCompare(dic, @"ZNC —> Throttle Playback Buffer", self.ZNCThrottlePlaybackBuffer);
+		self.zncConnectionIsBouncer				= NSDictionaryBOOLKeyValueCompare(dic, @"ZNC —> ZNC Services Enabled", self.zncConnectionIsBouncer);
+		self.zncThrottlePlaybackBuffer			= NSDictionaryBOOLKeyValueCompare(dic, @"ZNC —> Throttle Playback Buffer", self.zncThrottlePlaybackBuffer);
+		self.zncIgnorePlaybackNotifications		= NSDictionaryBOOLKeyValueCompare(dic, @"ZNC —> Ignore Playback Buffer Highlights", self.zncIgnorePlaybackNotifications);
 
 		[self.alternateNicknames addObjectsFromArray:[dic arrayForKey:@"identityAlternateNicknames"]];
 		
@@ -325,8 +327,9 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
     [dic setBool:self.connectionPrefersIPv6			forKey:@"DNSResolverPrefersIPv6"];
     [dic setBool:self.sidebarItemExpanded			forKey:@"serverListItemIsExpanded"];
 
-	[dic setBool:self.ZNCConnectionIsBouncer		forKey:@"ZNC —> ZNC Services Enabled"];
-	[dic setBool:self.ZNCThrottlePlaybackBuffer		forKey:@"ZNC —> Throttle Playback Buffer"];
+	[dic setBool:self.zncConnectionIsBouncer			forKey:@"ZNC —> ZNC Services Enabled"];
+	[dic setBool:self.zncThrottlePlaybackBuffer			forKey:@"ZNC —> Throttle Playback Buffer"];
+	[dic setBool:self.zncIgnorePlaybackNotifications	forKey:@"ZNC —> Ignore Playback Buffer Highlights"];
 
 	[dic safeSetObject:self.alternateNicknames			forKey:@"identityAlternateNicknames"];
 	[dic safeSetObject:self.clientName					forKey:@"connectionName"];
