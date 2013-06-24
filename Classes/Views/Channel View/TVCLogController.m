@@ -512,7 +512,7 @@
 		
 		[patchedAppend appendString:html];
 
-		[lineNumbers addObject:@[lineTime, lineNumber]];
+		[lineNumbers addObject:@[line, lineNumber]];
 		
 		/* Was it a highlight? */
 		BOOL highlighted = [resultInfo boolForKey:@"wordMatchFound"];
@@ -532,11 +532,17 @@
 			/* Update count. */
 			self.activeLineCount += 1;
 
+			/* Line info. */
+			TVCLogLine *line = lineInfo[0];
+
+			NSString *lineNumber = lineInfo[1];
+
 			/* Inform the style of the addition. */
-			[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineInfo[1]]];
+			[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
 
 			/* Add to history. */
-			[self.historicLogFile writePropertyListEntry:oldLines[lineInfo[0]] toKey:[self propertyListIdentifier]];
+			[self.historicLogFile writePropertyListEntry:[line dictionaryValue]
+												   toKey:[self propertyListIdentifier:line]];
 		}
 	});
 }
@@ -840,9 +846,9 @@
 	return [randomUUID substringFromIndex:19]; // Example: 9C60-0050E4C00067
 }
 
-- (NSString *)propertyListIdentifier
+- (NSString *)propertyListIdentifier:(TVCLogLine *)line
 {
-	return [NSString stringWithDouble:CFAbsoluteTimeGetCurrent()];
+	return [NSString stringWithDouble:[line.receivedAt timeIntervalSince1970]];
 }
 
 - (void)print:(TVCLogLine *)logLine
@@ -879,7 +885,8 @@
 			}
 
 			/* Record the actual line printed. */
-			[self.historicLogFile writePropertyListEntry:[logLine dictionaryValue] toKey:[self propertyListIdentifier]];
+			[self.historicLogFile writePropertyListEntry:[logLine dictionaryValue]
+												   toKey:[self propertyListIdentifier:logLine]];
 
 			/* Do the actual append to WebKit. */
 			[self appendToDocumentBody:html];
