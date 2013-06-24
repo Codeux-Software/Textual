@@ -42,6 +42,7 @@
 @implementation IRCChannel
 
 @synthesize client = _client;
+@synthesize printingQueue = _printingQueue;
 
 - (id)init
 {
@@ -484,6 +485,11 @@
 - (IRCClient *)client
 {
 	return _client;
+}
+
+- (TVCLogControllerOperationQueue *)printingQueue
+{
+    return [_client printingQueue];
 }
 
 #pragma mark -

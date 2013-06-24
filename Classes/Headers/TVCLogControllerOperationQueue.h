@@ -37,63 +37,32 @@
 
 #import "TextualApplication.h"
 
-@interface TVCLogController : NSObject
-@property (nonatomic, nweak) IRCClient *client;
-@property (nonatomic, nweak) IRCChannel *channel;
-@property (nonatomic, strong) TVCLogView *view;
-@property (nonatomic, strong) TVCLogPolicy *policy;
-@property (nonatomic, strong) TVCLogScriptEventSink *sink;
-@property (nonatomic, strong) TVCWebViewAutoScroll *autoScroller;
-@property (nonatomic, assign) BOOL isLoaded;
-@property (nonatomic, assign) BOOL needsLimitNumberOfLines;
-@property (nonatomic, strong) TLOFileLogger *historicLogFile;
-@property (nonatomic, assign) NSInteger activeLineCount;
-@property (nonatomic, assign) NSInteger maximumLineCount;
-@property (nonatomic, strong) NSString *lastVisitedHighlight;
-@property (nonatomic, strong) NSMutableArray *highlightedLineNumbers;
+/* No plugins should be accessing this. */
+@class TVCLogControllerOperationItem;
 
-/* These three properties are VERY important to be in sync accross 
- multiple threads. Therefore, these are not delcared nonatomic. */
-@property (assign) BOOL reloadingBacklog;
-@property (assign) BOOL reloadingHistory;
-@property (strong) NSMutableArray *pendingPrintOperations; // Plugins… do not try and modify this array. EVER!
+typedef void (^TVCLogControllerOperationBlock)(NSOperation *sender, NSDictionary *context);
 
-- (void)setUp;
-- (void)notifyDidBecomeVisible;
+@interface TVCLogControllerOperationQueue : NSOperationQueue
+/* Add new operations. */
+- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender;
+- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender context:(NSDictionary *)context;
 
-- (void)preferencesChanged;
-- (void)terminate;
+/* Limit scope of cancelAllOperations. */
+- (void)destroyOperationsForChannel:(IRCChannel *)channel;
+- (void)destroyOperationsForClient:(IRCClient *)client;
 
-- (void)nextHighlight;
-- (void)previousHighlight;
+- (void)cancelOperationsForViewController:(TVCLogController *)controller;
 
-- (BOOL)highlightAvailable:(BOOL)previous;
+/* Update state. */
+- (void)updateReadinessState:(TVCLogController *)controller;
 
-- (DOMDocument *)mainFrameDocument;
-
-- (void)moveToTop;
-- (void)moveToBottom;
-
-- (NSString *)topicValue;
-- (void)setTopic:(NSString *)topic;
-
-- (void)mark;
-- (void)unmark;
-- (void)goToMark;
-
-- (void)clear;
-
-- (void)reloadTheme;
-
-- (void)changeTextSize:(BOOL)bigger;
-
-- (void)print:(TVCLogLine *)logLine;
-- (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock;
-
-- (NSString *)renderedBodyForTranscriptLog:(TVCLogLine *)line;
-
-- (void)logViewOnDoubleClick:(NSString *)e;
-
-- (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args; // Defaults to onQueue YES
-- (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args onQueue:(BOOL)onQueue;
+/* The block being executed is not declared finished until it actually tells the queue
+ that it is done. The design behind this idea is deep. WebKit requires us to append on 
+ the main thread but the blocks draw in the background. Once drawing is complete, we 
+ execute the rest of the work on the main thread, but that work is not always instant.
+ 
+ By calilng this on the main thread after the work has completed instead of relying on
+ the default implementation of isFinish we are making sure our queue can be concurrent
+ but also keep stuff in sync. */
+- (void)updateCompletionStatusForOperation:(TVCLogControllerOperationItem *)operation;
 @end

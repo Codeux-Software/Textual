@@ -52,6 +52,7 @@
 @property (nonatomic, assign) NSInteger nicknameHighlightCount;
 @property (nonatomic, strong) TLOInputHistory *inputHistory;
 @property (nonatomic, strong) TVCLogController *viewController;
+@property (nonatomic, strong) TVCLogControllerOperationQueue *printingQueue;
 
 - (void)resetState;
 

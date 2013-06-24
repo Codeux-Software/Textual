@@ -834,7 +834,7 @@
 	[self.masterController.serverSplitView setNeedsDisplay:YES];
 	[self.masterController.memberSplitView setNeedsDisplay:YES];
 
-	[self.worldController executeScriptCommandOnAllViews:@"sidebarInversionPreferenceChanged" arguments:@[]];
+	[self.worldController executeScriptCommandOnAllViews:@"sidebarInversionPreferenceChanged" arguments:@[] onQueue:NO];
 }
 
 - (void)openPathToThemesCallback:(TLOPopupPromptReturnType)returnCode

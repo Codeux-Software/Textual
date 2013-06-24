@@ -53,6 +53,7 @@
 {
 	if ((self = [super init])) {
 		self.highlightedLineNumbers	= [NSMutableArray new];
+		self.pendingPrintOperations = [NSMutableArray new];
 
 		self.activeLineCount = 0;
 		self.lastVisitedHighlight = nil;
@@ -70,6 +71,10 @@
 
 - (void)terminate
 {
+	[self.pendingPrintOperations removeAllObjects];
+
+	[self.printingQueue cancelOperationsForViewController:self];
+	
 	[self closeHistoricLog];
 }
 
@@ -216,6 +221,11 @@
 	return self.masterController.themeController.baseURL;
 }
 
+- (TVCLogControllerOperationQueue *)printingQueue;
+{
+    return self.client.printingQueue;
+}
+
 - (NSInteger)scrollbackCorrectionInit
 {
 	return (self.view.frame.size.height / 2);
@@ -281,6 +291,28 @@
 
 - (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args
 {
+	[self executeScriptCommand:command withArguments:args onQueue:YES];
+}
+
+- (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args onQueue:(BOOL)onQueue
+{
+	if (onQueue) {
+		TVCLogControllerOperationBlock scriptBlock = ^(id operation, NSDictionary *context) {
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[self executeQuickScriptCommand:command withArguments:args];
+
+				[self.printingQueue updateCompletionStatusForOperation:operation];
+			});
+		};
+		
+		[self.printingQueue enqueueMessageBlock:scriptBlock for:self];
+	} else {
+		[self executeQuickScriptCommand:command withArguments:args];
+	}
+}
+
+- (void)executeQuickScriptCommand:(NSString *)command withArguments:(NSArray *)args
+{
 	WebScriptObject *js_api = [self.view javaScriptAPI];
 
 	if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
@@ -339,7 +371,7 @@
 
 	[body setValue:@0 forKey:@"scrollTop"];
 
-	[self executeScriptCommand:@"viewPositionMovedToTop" withArguments:@[]];
+	[self executeQuickScriptCommand:@"viewPositionMovedToTop" withArguments:@[]];
 }
 
 - (void)moveToBottom
@@ -358,7 +390,7 @@
 
 	[body setValue:[body valueForKey:@"scrollHeight"] forKey:@"scrollTop"];
 
-	[self executeScriptCommand:@"viewPositionMovedToBottom" withArguments:@[]];
+	[self executeQuickScriptCommand:@"viewPositionMovedToBottom" withArguments:@[]];
 }
 
 - (BOOL)viewingBottom
@@ -403,7 +435,7 @@
 
 	[self appendToDocumentBody:html];
 	
-	[self executeScriptCommand:@"historyIndicatorAddedToView" withArguments:@[]];
+	[self executeQuickScriptCommand:@"historyIndicatorAddedToView" withArguments:@[]];
 }
 
 - (void)unmark
@@ -421,13 +453,13 @@
 		e = [doc getElementById:@"mark"];
 	}
 
-	[self executeScriptCommand:@"historyIndicatorRemovedFromView" withArguments:@[]];
+	[self executeQuickScriptCommand:@"historyIndicatorRemovedFromView" withArguments:@[]];
 }
 
 - (void)goToMark
 {
 	if ([self jumpToElementID:@"mark"]) {
-		[self executeScriptCommand:@"viewPositionMovedToHistoryIndicator" withArguments:@[]];
+		[self executeQuickScriptCommand:@"viewPositionMovedToHistoryIndicator" withArguments:@[]];
 	}
 }
 
@@ -435,7 +467,7 @@
 #pragma mark Reload Scrollback
 
 /* reloadOldLines: is supposed to be called from inside a queue. */
-- (NSInteger)reloadOldLines:(BOOL)markHistoric
+- (void)reloadOldLines:(BOOL)markHistoric
 {
 	/* What lines are we reloading? */
 	NSDictionary *oldLines = self.historicLogFile.data;
@@ -443,14 +475,18 @@
 	/* We have what we are going to load. Reset the old. */
 	[self.historicLogFile reset];
 
-	NSObjectIsEmptyAssertReturn(oldLines, 0);
+	NSObjectIsEmptyAssert(oldLines);
 
-	/* Sort the data we are going to reload and insert it into our
-	 cache queue. After that, we will process the cache. */
-	NSArray *keys = oldLines.sortedDictionaryKeys;
+	/* Misc. data. */
+	NSMutableArray *lineNumbers = [NSMutableArray array];
 
-	for (NSString *key in keys) {
-		TVCLogLine *line = [[TVCLogLine alloc] initWithDictionary:[oldLines objectForKey:key]];
+	NSMutableString *patchedAppend = [NSMutableString string];
+
+	/* Begin processing. */
+	NSArray *lineKeys = oldLines.sortedDictionaryKeys;
+	
+	for (NSString *lineTime in lineKeys) {
+		TVCLogLine *line = [[TVCLogLine alloc] initWithDictionary:oldLines[lineTime]];
 
 		PointerIsEmptyAssertLoopContinue(line);
 
@@ -458,11 +494,45 @@
 			line.isHistoric = YES;
 		}
 
-		/* Special write tells print: that we want our write cached, not sent to the queue. */
-		[self print:line specialWrite:YES completionBlock:NULL];
+		/* Render everything. */
+		NSDictionary *resultInfo = nil;
+
+		NSString *html = [self renderLogLine:line resultInfo:&resultInfo];
+
+		NSObjectIsEmptyAssertLoopContinue(html);
+
+		/* Gather result information. */
+		NSString *lineNumber = [resultInfo objectForKey:@"lineNumber"];
+		
+		[patchedAppend appendString:html];
+
+		[lineNumbers addObject:@[lineTime, lineNumber]];
+		
+		/* Was it a highlight? */
+		BOOL highlighted = [resultInfo boolForKey:@"wordMatchFound"];
+
+		if (highlighted) {
+			[self.highlightedLineNumbers safeAddObject:lineNumber];
+		}
 	}
 	
-	return oldLines.count;
+	/* Update WebKit. */
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[self appendToDocumentBody:patchedAppend];
+
+		[self mark];
+
+		for (NSArray *lineInfo in lineNumbers) {
+			/* Update count. */
+			self.activeLineCount += 1;
+
+			/* Inform the style of the addition. */
+			[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineInfo[1]]];
+
+			/* Add to history. */
+			[self.historicLogFile writePropertyListEntry:oldLines[lineInfo[0]] toKey:[self propertyListIdentifier]];
+		}
+	});
 }
 
 - (void)reloadHistory
@@ -486,16 +556,18 @@
 	self.reloadingBacklog = YES;
 	
 	[self clearWithReset:NO];
+	
+	[self.printingQueue enqueueMessageBlock:^(id operation, NSDictionary *context) {
+		[self reloadOldLines:NO];
 
-	NSInteger reloadCount =	[self reloadOldLines:NO];
+		self.reloadingBacklog = NO;
 
-	if (reloadCount >= 1) {
-		[self mark];
-	}
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self executeQuickScriptCommand:@"viewFinishedReload" withArguments:@[]];
+		});
 
-	self.reloadingBacklog = NO;
-
-	[self executeScriptCommand:@"viewFinishedReload" withArguments:@[]];
+		[self.printingQueue updateCompletionStatusForOperation:operation];
+	} for:self];
 }
 
 #pragma mark -
@@ -506,7 +578,7 @@
 	NSString *lid = [NSString stringWithFormat:@"line-%@", line];
 
 	if ([self jumpToElementID:lid]) {
-		[self executeScriptCommand:@"viewPositionMovedToLine" withArguments:@[line]];
+		[self executeQuickScriptCommand:@"viewPositionMovedToLine" withArguments:@[line]];
 	}
 }
 
@@ -550,7 +622,7 @@
 		[self.view makeTextSmaller:nil];
 	}
 
-	[self executeScriptCommand:@"viewFontSizeChanged" withArguments:@[@(bigger)]];
+	[self executeQuickScriptCommand:@"viewFontSizeChanged" withArguments:@[@(bigger)]];
 }
 
 #pragma mark -
@@ -702,6 +774,9 @@
 		[self.historicLogFile reset];
 	}
 
+	[self.pendingPrintOperations removeAllObjects];
+	[self.highlightedLineNumbers removeAllObjects];
+
 	self.activeLineCount = 0;
 	self.lastVisitedHighlight = nil;
 
@@ -759,6 +834,11 @@
 	return [randomUUID substringFromIndex:19]; // Example: 9C60-0050E4C00067
 }
 
+- (NSString *)propertyListIdentifier
+{
+	return [NSString stringWithDouble:CFAbsoluteTimeGetCurrent()];
+}
+
 - (void)print:(TVCLogLine *)logLine
 {
 	[self print:logLine specialWrite:NO completionBlock:NULL];
@@ -771,15 +851,75 @@
 
 - (void)print:(TVCLogLine *)logLine specialWrite:(BOOL)isSpecial completionBlock:(void(^)(BOOL highlighted))completionBlock
 {
-	if ([NSThread isMainThread] == NO) {
-		[self.iomt print:logLine specialWrite:isSpecial completionBlock:completionBlock];
-		
-		return;
-	}
+	TVCLogControllerOperationBlock printBlock = ^(id operation, NSDictionary *context) {
+		/* Increment by one. */
+		self.activeLineCount += 1;
 
-	TVCLogLine *line = logLine;
+		/* Render everything. */
+		NSDictionary *resultInfo = nil;
 
-	NSObjectIsEmptyAssert(line.messageBody);
+		NSString *html = [self renderLogLine:logLine resultInfo:&resultInfo];
+
+		NSObjectIsEmptyAssert(html);
+
+		/* Gather result information. */
+		BOOL highlighted = [resultInfo boolForKey:@"wordMatchFound"];
+
+		NSString *lineNumber = [resultInfo objectForKey:@"lineNumber"];
+
+		NSArray *mentionedUsers = [resultInfo arrayForKey:@"mentionedUsers"];
+
+		dispatch_async(dispatch_get_main_queue(), ^{
+			/* Record highlights. */
+			if (highlighted) {
+				[self.highlightedLineNumbers safeAddObject:lineNumber];
+
+				if (isSpecial == NO) {
+					[self.worldController addHighlightInChannel:self.channel withLogLine:logLine];
+				}
+			}
+
+			/* Record the actual line printed. */
+			[self.historicLogFile writePropertyListEntry:[logLine dictionaryValue] toKey:[self propertyListIdentifier]];
+
+			/* Do the actual append to WebKit. */
+			[self appendToDocumentBody:html];
+
+			/* Inform the style of the new append. */
+			[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
+
+			/* Limit lines. */
+			if (isSpecial == NO) {
+				if (self.maximumLineCount > 0 && (self.activeLineCount - 10) > self.maximumLineCount) {
+					[self setNeedsLimitNumberOfLines];
+				}
+			}
+
+			/* Finish up. */
+			PointerIsEmptyAssert(completionBlock);
+
+			completionBlock(highlighted);
+		});
+
+		[self.printingQueue updateCompletionStatusForOperation:operation];
+
+		/* Using informationi provided by conversation tracking we can update our internal
+		 array of favored nicknames for nick completion. */
+		if (NSObjectIsNotEmpty(mentionedUsers)) {
+			if (logLine.memberType == TVCLogMemberLocalUserType) {
+				[mentionedUsers makeObjectsPerformSelector:@selector(outgoingConversation)];
+			} else {
+				[mentionedUsers makeObjectsPerformSelector:@selector(conversation)];
+			}
+		}
+	};
+
+	[self.printingQueue enqueueMessageBlock:printBlock for:self];
+}
+
+- (NSString *)renderLogLine:(TVCLogLine *)line resultInfo:(NSDictionary **)resultInfo
+{
+	NSObjectIsEmptyAssertReturn(line.messageBody, nil);
 
 	// ************************************************************************** /
 	// Render our body.                                                           /
@@ -820,9 +960,9 @@
 
 	if (renderedBody == nil) {
 		/* Stop printing on messages containing ignored nicknames. */
-		
+
 		if ([outputDictionary containsKey:@"containsIgnoredNickname"]) {
-			return;
+			return nil;
 		}
 	}
 
@@ -851,6 +991,7 @@
 		if (self.channel.config.ignoreInlineImages == NO) {
 			for (NSValue *linkRange in urlRanges) {
 				NSString *nurl = [line.messageBody safeSubstringWithRange:linkRange.rangeValue];
+				
 				NSString *iurl = [TVCImageURLParser imageURLFromBase:nurl];
 
 				NSObjectIsEmptyAssertLoopContinue(iurl);
@@ -951,71 +1092,31 @@
 
 	attributes[@"configuredServerName"] = self.client.config.clientName;
 
-	// ************************************************************************** /
-	// Write to WebKit.															  /
-	// ************************************************************************** /
-
-	[self handlePrintBlockAppend:line withAttributes:attributes specialWrite:isSpecial];
-	
-	// ************************************************************************** /
-	// Finish up.																  /
-	// ************************************************************************** /
-
-	if (highlighted && isSpecial == NO) {
-		[self.worldController addHighlightInChannel:self.channel withLogLine:line];
-	}
-	
-	/* Why reinvent the wheel with conversation detection. LogRenderer does that
-	 automatically when color hashing UUID option is turned on. Which is default */
-	if (NSObjectIsNotEmpty(mentionedUsers)) {
-		if (logLine.memberType == TVCLogMemberLocalUserType) {
-			[mentionedUsers makeObjectsPerformSelector:@selector(outgoingConversation)];
-		} else {
-			[mentionedUsers makeObjectsPerformSelector:@selector(conversation)];
-		}
-	}
-
-	PointerIsEmptyAssert(completionBlock);
-	
-	completionBlock(highlighted);
-}
-
-- (void)renderLogLine:(TVCLogLine *)logLine specialWrite:(BOOL)isSpecial
-{
-	
-}
-
-- (void)handlePrintBlockAppend:(TVCLogLine *)line withAttributes:(NSMutableDictionary *)attributes specialWrite:(BOOL)isSpecial
-{
-	self.activeLineCount += 1;
+	// ---- //
 
 	NSString *newLinenNumber = [self uniquePrintIdentifier];
 
 	attributes[@"lineNumber"] = newLinenNumber;
 
+	[outputDictionary setObject:newLinenNumber forKey:@"lineNumber"];
+
+	// ************************************************************************** /
+	// Return information.											              /
+	// ************************************************************************** /
+
+	if (PointerIsNotEmpty(resultInfo)) {
+		*resultInfo = outputDictionary;
+	}
+
+	// ************************************************************************** /
+	// Render the actual HTML.												      /
+	// ************************************************************************** /
+
 	NSString *templateName = [self.themeSettings templateNameWithLineType:line.lineType];
 
 	NSString *html = [TVCLogRenderer renderTemplate:templateName attributes:attributes];
 
-	NSObjectIsEmptyAssert(html);
-
-	if ([attributes[@"highlightAttributeRepresentation"] isEqualToString:@"true"]) {
-		[self.highlightedLineNumbers safeAddObject:newLinenNumber];
-	}
-
-	[self.historicLogFile writePropertyListEntry:[line dictionaryValue]
-										   toKey:newLinenNumber];
-
-	[self appendToDocumentBody:html];
-		
-	[self executeScriptCommand:@"newMessagePostedToView" withArguments:@[newLinenNumber]];
-
-	/* Limit lines. */
-	if (isSpecial == NO) {
-		if (self.maximumLineCount > 0 && (self.activeLineCount - 10) > self.maximumLineCount) {
-			[self setNeedsLimitNumberOfLines];
-		}
-	}
+	return html;
 }
 
 #pragma mark -
@@ -1194,7 +1295,7 @@
 		viewType = [self.channel channelTypeString];
 	}
 
-	[self executeScriptCommand:@"viewInitiated" withArguments:@[
+	[self executeQuickScriptCommand:@"viewInitiated" withArguments:@[
 		NSStringNilValueSubstitute(viewType),
 		NSStringNilValueSubstitute(self.client.config.itemUUID),
 		NSStringNilValueSubstitute(self.channel.config.itemUUID),
@@ -1202,7 +1303,7 @@
 	 ]];
 
 	if (self.reloadingBacklog == NO) {
-		[self executeScriptCommand:@"viewFinishedLoading" withArguments:@[]];
+		[self executeQuickScriptCommand:@"viewFinishedLoading" withArguments:@[]];
 	}
 }
 
@@ -1216,6 +1317,8 @@
 	[self postViwLoadedJavaScript:@(0)];
 	
 	self.isLoaded = YES;
+
+	[self.printingQueue updateReadinessState:self];
 
 	[self setUpScroller];
 	[self moveToBottom];
