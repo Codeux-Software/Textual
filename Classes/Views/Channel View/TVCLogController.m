@@ -71,8 +71,6 @@
 
 - (void)terminate
 {
-	[self.pendingPrintOperations removeAllObjects];
-
 	[self.printingQueue cancelOperationsForViewController:self];
 	
 	[self closeHistoricLog];
@@ -786,18 +784,21 @@
 		[self.historicLogFile reset];
 	}
 
-	[self.pendingPrintOperations removeAllObjects];
-	[self.highlightedLineNumbers removeAllObjects];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[self.highlightedLineNumbers removeAllObjects];
 
-	self.activeLineCount = 0;
-	self.lastVisitedHighlight = nil;
+		[self.printingQueue cancelOperationsForViewController:self];
 
-	self.isLoaded = NO;
-	//self.reloadingBacklog = NO;
-	//self.reloadingHistory = NO;
-	self.needsLimitNumberOfLines = NO;
+		self.activeLineCount = 0;
+		self.lastVisitedHighlight = nil;
 
-	[self loadAlternateHTML:[self initialDocument:self.topicValue]];
+		self.isLoaded = NO;
+		//self.reloadingBacklog = NO;
+		//self.reloadingHistory = NO;
+		self.needsLimitNumberOfLines = NO;
+
+		[self loadAlternateHTML:[self initialDocument:self.topicValue]];
+	});
 }
 
 - (void)clear

@@ -87,22 +87,21 @@
 #pragma mark -
 #pragma mark cancelAllOperations Substitue
 
+/* cancelOperationsForViewController should be called from the main queue. */
 - (void)cancelOperationsForViewController:(TVCLogController *)controller
 {
-	dispatch_async(dispatch_get_main_queue(), ^{
-		/* Pending operations. */
-		NSArray *pendingOperations = controller.pendingPrintOperations;
+	/* Pending operations. */
+	NSArray *pendingOperations = controller.pendingPrintOperations;
 
-		NSObjectIsEmptyAssert(pendingOperations);
+	NSObjectIsEmptyAssert(pendingOperations);
 
-		/* Cancel all. */
-		for (NSOperation *operation in pendingOperations) {
-			[operation cancel];
-		}
+	/* Cancel all. */
+	for (NSOperation *operation in pendingOperations) {
+		[operation cancel];
+	}
 
-		/* Remove them. */
-		[controller.pendingPrintOperations removeAllObjects];
-	});
+	/* Remove them. */
+	[controller.pendingPrintOperations removeAllObjects];
 }
 
 - (void)destroyOperationsForChannel:(IRCChannel *)channel
