@@ -848,7 +848,7 @@
 
 - (NSString *)propertyListIdentifier:(TVCLogLine *)line
 {
-	return [NSString stringWithDouble:[line.receivedAt timeIntervalSince1970]];
+	return [NSString stringWithDouble:[NSDate epochTime]];
 }
 
 - (void)print:(TVCLogLine *)logLine
