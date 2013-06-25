@@ -83,6 +83,17 @@
 	return 0;
 }
 
+- (float)floatForKey:(NSString *)key
+{
+	id obj = self[key];
+
+	if ([obj respondsToSelector:@selector(floatValue)]) {
+		return [obj floatValue];
+	}
+
+	return 0;
+}
+
 - (NSString *)stringForKey:(NSString *)key
 {
 	id obj = self[key];
@@ -237,6 +248,11 @@
 }
 
 - (void)setDouble:(double)value forKey:(NSString *)key
+{
+	[self safeSetObject:@(value) forKey:key];
+}
+
+- (void)setFloat:(float)value forKey:(NSString *)key
 {
 	[self safeSetObject:@(value) forKey:key];
 }

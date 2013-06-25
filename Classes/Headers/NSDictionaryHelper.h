@@ -40,6 +40,8 @@
 #define NSDictionaryObjectKeyValueCompare(o,n,s)			   (id)(([o containsKey:n]) ? [o objectForKey:n]  : s) 
 #define NSDictionaryIntegerKeyValueCompare(o,n,s)		(NSInteger)(([o containsKey:n]) ? [o integerForKey:n] : s)
 #define NSDictionaryBOOLKeyValueCompare(o,n,s)               (BOOL)(([o containsKey:n]) ? [o boolForKey:n]    : s)
+#define NSDictionaryFloatKeyValueCompare(o,n,s)				(float)(([o containsKey:n]) ? [o floatForKey:n]   : s)
+#define NSDictionaryDoubleKeyValueCompare(o,n,s)		   (double)(([o containsKey:n]) ? [o doubleForKey:n]  : s)
 
 @interface NSDictionary (TXDictionaryHelper)
 - (NSString *)stringForKey:(NSString *)key;
@@ -50,6 +52,7 @@
 - (NSInteger)integerForKey:(NSString *)key;
 - (long long)longLongForKey:(NSString *)key;
 - (double)doubleForKey:(NSString *)key;
+- (float)floatForKey:(NSString *)key;
 - (void *)pointerForKey:(NSString *)key;
 
 - (NSString *)firstKeyForObject:(id)object;
@@ -74,5 +77,6 @@
 - (void)setInteger:(NSInteger)value forKey:(NSString *)key;
 - (void)setLongLong:(long long)value forKey:(NSString *)key;
 - (void)setDouble:(double)value forKey:(NSString *)key;
+- (void)setFloat:(float)value forKey:(NSString *)key;
 - (void)setPointer:(void *)value forKey:(NSString *)key;
 @end
