@@ -733,8 +733,6 @@
 - (void)clearContentsOfChannel:(IRCChannel *)c inClient:(IRCClient *)u
 {
 	[c resetState];
-	
-	[c.printingQueue destroyOperationsForChannel:c];
 
 	[c.viewController clear];
 	[c.viewController notifyDidBecomeVisible];
@@ -751,8 +749,6 @@
 - (void)clearContentsOfClient:(IRCClient *)u
 {
 	[u resetState];
-
-	[u.printingQueue destroyOperationsForClient:u];
 
 	[u.viewController clear];
 	[u.viewController notifyDidBecomeVisible];
