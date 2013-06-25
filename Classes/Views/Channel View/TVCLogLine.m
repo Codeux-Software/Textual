@@ -104,7 +104,7 @@
 - (id)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [self init])) {
-		NSInteger receivedAt = NSDictionaryIntegerKeyValueCompare(dic, @"receivedAt", [NSDate epochTime]);
+		double receivedAt = NSDictionaryDoubleKeyValueCompare(dic, @"receivedAt", [NSDate epochTime]);
 
 		self.nickname				= NSDictionaryObjectKeyValueCompare(dic, @"nickname", NSStringEmptyPlaceholder);
 		self.nicknameColorNumber	= NSDictionaryIntegerKeyValueCompare(dic, @"nicknameColorNumber", 0);
@@ -134,7 +134,9 @@
 {
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 
-	[dict safeSetObject:@([self.receivedAt timeIntervalSince1970])		forKey:@"receivedAt"];
+	NSString *dateValue = [NSString stringWithDouble:[self.receivedAt timeIntervalSince1970]];
+
+	[dict safeSetObject:dateValue	forKey:@"receivedAt"];
 
 	[dict safeSetObject:self.excludeKeywords		forKey:@"excludeKeywords"];
 	[dict safeSetObject:self.highlightKeywords		forKey:@"highlightKeywords"];
