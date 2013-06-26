@@ -861,6 +861,8 @@
 	NSAssertReturnR(self.CAPServerTime, NO);
 	NSAssertReturnR(self.isZNCBouncerConnection, NO);
 
+
+
 	/* When Textual is using the server-time CAP with ZNC it does not tell us when
 	 the playback buffer begins and when it ends. Therefore, we must make a best 
 	 guess. We do this by checking if the message being parsed has a @time= attached
@@ -2608,20 +2610,25 @@
 
 - (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text command:(NSString *)command
 {
-	[self print:chan type:type nick:nick text:text encrypted:NO receivedAt:[NSDate date] command:command completionBlock:NULL];
+	[self print:chan type:type nick:nick text:text encrypted:NO receivedAt:[NSDate date] command:command message:nil completionBlock:NULL];
 }
 
 - (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt command:(NSString *)command
 {
-	[self print:chan type:type nick:nick text:text encrypted:NO receivedAt:receivedAt command:command completionBlock:NULL];
+	[self print:chan type:type nick:nick text:text encrypted:NO receivedAt:receivedAt command:command message:nil completionBlock:NULL];
 }
 
 - (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command
 {
-	[self print:chan type:type nick:nick text:text encrypted:isEncrypted receivedAt:receivedAt command:command completionBlock:NULL];
+	[self print:chan type:type nick:nick text:text encrypted:isEncrypted receivedAt:receivedAt command:command message:nil completionBlock:NULL];
 }
 
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command completionBlock:(void(^)(BOOL highlighted))completionBlock
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command message:(IRCMessage *)rawMessage
+{
+	[self print:chan type:type nick:nick text:text encrypted:isEncrypted receivedAt:receivedAt command:command message:rawMessage completionBlock:NULL];
+}
+
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command message:(IRCMessage *)rawMessage completionBlock:(void(^)(BOOL highlighted))completionBlock
 {
 	NSObjectIsEmptyAssert(text);
 	NSObjectIsEmptyAssert(command);
@@ -2711,6 +2718,15 @@
 	c.rawCommand			= [command lowercaseString];
 
 	if (channel) {
+		if (rawMessage) {
+			if (type == TVCLogLinePrivateMessageType ||
+				type == TVCLogLineActionType ||
+				type == TVCLogLineNoticeType)
+			{
+				c.isZNCPlaybackBufferItem = [self messageIsPartOfZNCPlaybackBuffer:rawMessage inChannel:channel];
+			}
+		}
+			
 		if ([TPCPreferences autoAddScrollbackMark]) {
 			if (NSDissimilarObjects(channel, self.worldController.selectedChannel) || self.masterController.mainWindowIsActive == NO) {
 				if (channel.isUnread == NO) {
@@ -2732,42 +2748,42 @@
 
 - (void)printReply:(IRCMessage *)m
 {
-	[self print:nil type:TVCLogLineDebugType nick:nil text:[m sequence:1] encrypted:NO receivedAt:m.receivedAt command:m.command completionBlock:NULL];
+	[self print:nil type:TVCLogLineDebugType nick:nil text:[m sequence:1] encrypted:NO receivedAt:m.receivedAt command:m.command message:nil completionBlock:NULL];
 }
 
 - (void)printUnknownReply:(IRCMessage *)m
 {
-	[self print:nil type:TVCLogLineDebugType nick:nil text:[m sequence:1] encrypted:NO receivedAt:m.receivedAt command:m.command completionBlock:NULL];
+	[self print:nil type:TVCLogLineDebugType nick:nil text:[m sequence:1] encrypted:NO receivedAt:m.receivedAt command:m.command message:nil completionBlock:NULL];
 }
 
 - (void)printDebugInformation:(NSString *)m
 {
-	[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] command:TXLogLineDefaultRawCommandValue completionBlock:NULL];
+	[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] command:TXLogLineDefaultRawCommandValue message:nil completionBlock:NULL];
 }
 
 - (void)printDebugInformation:(NSString *)m forCommand:(NSString *)command
 {
-	[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] command:command completionBlock:NULL];
+	[self print:[self.worldController selectedChannelOn:self] type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] command:command message:nil completionBlock:NULL];
 }
 
 - (void)printDebugInformationToConsole:(NSString *)m
 {
-	[self print:nil type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] command:TXLogLineDefaultRawCommandValue completionBlock:NULL];
+	[self print:nil type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] command:TXLogLineDefaultRawCommandValue message:nil completionBlock:NULL];
 }
 
 - (void)printDebugInformationToConsole:(NSString *)m forCommand:(NSString *)command
 {
-	[self print:nil type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] command:command completionBlock:NULL];
+	[self print:nil type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] command:command message:nil completionBlock:NULL];
 }
 
 - (void)printDebugInformation:(NSString *)m channel:(IRCChannel *)channel
 {
-	[self print:channel type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] command:TXLogLineDefaultRawCommandValue completionBlock:NULL];
+	[self print:channel type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] command:TXLogLineDefaultRawCommandValue message:nil completionBlock:NULL];
 }
 
 - (void)printDebugInformation:(NSString *)m channel:(IRCChannel *)channel command:(NSString *)command
 {
-	[self print:channel type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] command:command completionBlock:NULL];
+	[self print:channel type:TVCLogLineDebugType nick:nil text:m encrypted:NO receivedAt:[NSDate date] command:command message:nil completionBlock:NULL];
 }
 
 - (void)printErrorReply:(IRCMessage *)m
@@ -2779,12 +2795,12 @@
 {
 	NSString *text = TXTFLS(@"IRCHadRawError", m.numericReply, [m sequence]);
 
-	[self print:channel type:TVCLogLineDebugType nick:nil text:text encrypted:NO receivedAt:m.receivedAt command:m.command completionBlock:NULL];
+	[self print:channel type:TVCLogLineDebugType nick:nil text:text encrypted:NO receivedAt:m.receivedAt command:m.command message:nil completionBlock:NULL];
 }
 
 - (void)printError:(NSString *)error forCommand:(NSString *)command
 {
-	[self print:nil type:TVCLogLineDebugType nick:nil text:error encrypted:NO receivedAt:[NSDate date] command:command completionBlock:NULL];
+	[self print:nil type:TVCLogLineDebugType nick:nil text:error encrypted:NO receivedAt:[NSDate date] command:command message:nil completionBlock:NULL];
 }
 
 #pragma mark -
@@ -3300,7 +3316,8 @@
 				   text:text
 			  encrypted:isEncrypted
 			 receivedAt:m.receivedAt
-				command:m.command];
+				command:m.command
+				message:m];
 
 			if ([self isSafeToPostNotificationForMessage:m inChannel:c]) {
 				[self notifyText:TXNotificationChannelNoticeType lineType:type target:c nick:sender text:text];
@@ -3315,6 +3332,7 @@
 			  encrypted:isEncrypted
 			 receivedAt:m.receivedAt
 				command:m.command
+				message:m
 		completionBlock:^(BOOL highlight)
 			 {
 				 if ([self isSafeToPostNotificationForMessage:m inChannel:c]) {
@@ -3506,7 +3524,8 @@
 					   text:text
 				  encrypted:isEncrypted
 				 receivedAt:m.receivedAt
-					command:m.command];
+					command:m.command
+					message:m];
 
 				/* Nice to see you, NickServ. */
 				if ([sender isEqualIgnoringCase:@"NickServ"]) {
@@ -3576,6 +3595,7 @@
 				  encrypted:isEncrypted
 				 receivedAt:m.receivedAt
 					command:m.command
+					message:m
 			completionBlock:^(BOOL highlight)
 				 {
 					 if ([self isSafeToPostNotificationForMessage:m inChannel:c]) {

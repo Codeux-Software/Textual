@@ -540,7 +540,7 @@
 
 			/* Add to history. */
 			[self.historicLogFile writePropertyListEntry:[line dictionaryValue]
-												   toKey:[self propertyListIdentifier:line]];
+												   toKey:lineNumber];
 		}
 	});
 }
@@ -840,15 +840,6 @@
 
 - (NSString *)uniquePrintIdentifier
 {
-	NSString *randomUUID = [NSString stringWithUUID]; // Example: 68753A44-4D6F-1226-9C60-0050E4C00067
-
-	NSAssert((randomUUID.length > 20), @"Bad identifier.");
-
-	return [randomUUID substringFromIndex:19]; // Example: 9C60-0050E4C00067
-}
-
-- (NSString *)propertyListIdentifier:(TVCLogLine *)line
-{
 	return [NSString stringWithDouble:[NSDate epochTime]];
 }
 
@@ -887,7 +878,7 @@
 
 			/* Record the actual line printed. */
 			[self.historicLogFile writePropertyListEntry:[logLine dictionaryValue]
-												   toKey:[self propertyListIdentifier:logLine]];
+												   toKey:lineNumber];
 
 			/* Do the actual append to WebKit. */
 			[self appendToDocumentBody:html];
