@@ -468,6 +468,76 @@
 }
 
 #pragma mark -
+#pragma mark ZNC Playback Buffer Controls
+
+- (void)startZNCPlaybackBufferTimer
+{
+	/* Check the context… */
+	NSAssertReturn(self.client.isZNCBouncerConnection);
+	NSAssertReturn(self.client.config.zncThrottlePlaybackBuffer);
+	
+	/* Setup timer if it does not exist. */
+	if (PointerIsEmpty(self.zncPlaybackTimer)) {
+		self.zncPlaybackTimer = [TLOTimer new];
+
+		self.zncPlaybackTimer.delegate = self;
+		self.zncPlaybackTimer.reqeatTimer = NO;
+		self.zncPlaybackTimer.selector = @selector(processZNCPlaybackBuffer);
+	}
+
+	if (self.zncPlaybackTimer.timerIsActive == NO) {
+		/* Setup the storage. */
+		self.zncPlaybackBufferOperations = nil;
+		self.zncPlaybackBufferOperations = [NSMutableArray array];
+
+		/* Start the timer. */
+		[self.zncPlaybackTimer start:ZNCBufferPlaybackDelayTimerInterval];
+	}
+}
+
+- (void)stopZNCPlaybackBufferTimer
+{
+	/* Empty the storage. */
+	if (self.zncPlaybackBufferOperations) {
+		self.zncPlaybackBufferOperations = nil;
+	}
+
+	/* Stop the actual timer. */
+	if (self.zncPlaybackTimer) {
+		[self.zncPlaybackTimer stop];
+		
+		self.zncPlaybackTimer = nil;
+	}
+}
+
+/* Process actual playback buffer. */
+- (void)processZNCPlaybackBuffer
+{
+	/* The timer playback works like reloadOldLines: … it takes each log line,
+	 renders the HTML, and appends it to a mutable string. The mutable string
+	 is then appended to WebKit at a single time. The difference though is how
+	 the lines are recorded and where they are placed. 
+	 
+	 First, we have to scan the node list and find the first PRIVMSG, ACTION, or
+	 NOTICE in the channel. When we find that, we append above it. If none exists,
+	 then we append to the end of the node list. 
+	 
+	 We then have to take the line number (which is actually a timestamp) and use 
+	 that to add the additions in the same position in the historic property list. 
+	 This is done by removing a few milliseconds from the one we append above so 
+	 that they are in order when the property list keys are sorted. */
+
+	LogToConsole(@"%@", self.zncPlaybackBufferOperations);
+
+
+
+	/* Do something here… */
+
+	/* Kill timer and storage. */
+	[self stopZNCPlaybackBufferTimer];
+}
+
+#pragma mark -
 #pragma mark Reload Scrollback
 
 /* reloadOldLines: is supposed to be called from inside a queue. */
@@ -850,6 +920,20 @@
 
 - (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock
 {
+	/* Record ZNC playback items. */
+	if (logLine.isZNCPlaybackBufferItem) {
+		/* The timer should have already setup the storage, but just incase… */
+		if (PointerIsEmpty(self.zncPlaybackBufferOperations)) {
+			self.zncPlaybackBufferOperations = [NSMutableArray array];
+		}
+
+		/* Add entry. */
+		[self.zncPlaybackBufferOperations addObject:logLine];
+
+		return;
+	}
+
+	/* Continue with a normal print job. */
 	TVCLogControllerOperationBlock printBlock = ^(id operation, NSDictionary *context) {
 		/* Increment by one. */
 		self.activeLineCount += 1;

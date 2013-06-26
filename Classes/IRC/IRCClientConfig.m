@@ -72,7 +72,7 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 		self.invisibleMode       = NO;
 		self.isTrustedConnection = NO;
 
-		self.zncThrottlePlaybackBuffer = YES;
+		self.zncThrottlePlaybackBuffer = NO;
 		self.zncIgnorePlaybackNotifications = YES;
 
 		self.proxyType		 = TXConnectionNoProxyType;

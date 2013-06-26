@@ -70,7 +70,7 @@
 				</object>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="867497291">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSBox" id="798352958">
@@ -361,6 +361,7 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{679, 389}</string>
+					<reference key="NSSuperview"/>
 					<reference key="NSNextKeyView" ref="798352958"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
@@ -1401,10 +1402,55 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
+					<object class="NSTextField" id="499427863">
+						<reference key="NSNextResponder" ref="575911949"/>
+						<int key="NSvFlags">268</int>
+						<string key="NSFrame">{{93, 17}, {407, 17}}</string>
+						<reference key="NSSuperview" ref="575911949"/>
+						<reference key="NSWindow"/>
+						<string key="NSReuseIdentifierKey">_NS:1535</string>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSTextFieldCell" key="NSCell" id="1034930653">
+							<int key="NSCellFlags">68157504</int>
+							<int key="NSCellFlags2">272630784</int>
+							<string key="NSContents">Using this setting will also ignore notifications for the playback.</string>
+							<object class="NSFont" key="NSSupport">
+								<string key="NSName">LucidaGrande-Bold</string>
+								<double key="NSSize">11</double>
+								<int key="NSfFlags">16</int>
+							</object>
+							<string key="NSCellIdentifier">_NS:1535</string>
+							<reference key="NSControlView" ref="499427863"/>
+							<reference key="NSBackgroundColor" ref="719856035"/>
+							<reference key="NSTextColor" ref="455806945"/>
+						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+					</object>
+					<object class="NSTextField" id="544505377">
+						<reference key="NSNextResponder" ref="575911949"/>
+						<int key="NSvFlags">268</int>
+						<string key="NSFrame">{{93, 48}, {366, 70}}</string>
+						<reference key="NSSuperview" ref="575911949"/>
+						<reference key="NSWindow"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<string key="NSAntiCompressionPriority">{250, 750}</string>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSTextFieldCell" key="NSCell" id="1040854237">
+							<int key="NSCellFlags">67108864</int>
+							<int key="NSCellFlags2">272629760</int>
+							<string key="NSContents">This is recommended when a large playback buffer is in use. By delaying the playback buffer, Textual will gather the entire buffer in the background and process it all at once to reduce load on WebKit. The actual delay is for a total of ten seconds. When the delay is over, the buffer is will appear at the top of the chat view.</string>
+							<reference key="NSSupport" ref="26055054"/>
+							<string key="NSCellIdentifier">_NS:9</string>
+							<reference key="NSControlView" ref="544505377"/>
+							<reference key="NSBackgroundColor" ref="719856035"/>
+							<reference key="NSTextColor" ref="455806945"/>
+						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+					</object>
 					<object class="NSButton" id="649735427">
 						<reference key="NSNextResponder" ref="575911949"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{70, 105}, {332, 18}}</string>
+						<string key="NSFrame">{{64, 154}, {332, 18}}</string>
 						<reference key="NSSuperview" ref="575911949"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="457990703"/>
@@ -1428,43 +1474,19 @@
 						</object>
 						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
-					<object class="NSTextField" id="187118461">
-						<reference key="NSNextResponder" ref="575911949"/>
-						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{116, 57}, {231, 14}}</string>
-						<reference key="NSSuperview" ref="575911949"/>
-						<reference key="NSWindow"/>
-						<string key="NSReuseIdentifierKey">_NS:3937</string>
-						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="259192044">
-							<int key="NSCellFlags">70254657</int>
-							<int key="NSCellFlags2">272630784</int>
-							<string key="NSContents">This behavior is recommended.</string>
-							<object class="NSFont" key="NSSupport">
-								<string key="NSName">LucidaGrande-Bold</string>
-								<double key="NSSize">11</double>
-								<int key="NSfFlags">16</int>
-							</object>
-							<string key="NSCellIdentifier">_NS:3937</string>
-							<reference key="NSControlView" ref="187118461"/>
-							<reference key="NSBackgroundColor" ref="719856035"/>
-							<reference key="NSTextColor" ref="455806945"/>
-						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-					</object>
 					<object class="NSButton" id="457990703">
 						<reference key="NSNextResponder" ref="575911949"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{70, 77}, {261, 18}}</string>
+						<string key="NSFrame">{{64, 126}, {187, 18}}</string>
 						<reference key="NSSuperview" ref="575911949"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="187118461"/>
+						<reference key="NSNextKeyView" ref="544505377"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="984995836">
 							<int key="NSCellFlags">-2080374784</int>
 							<int key="NSCellFlags2">268435456</int>
-							<string key="NSContents">Automatically handle playback buffer.</string>
+							<string key="NSContents">Delay the playback buffer.</string>
 							<reference key="NSSupport" ref="788253527"/>
 							<string key="NSCellIdentifier">_NS:9</string>
 							<reference key="NSControlView" ref="457990703"/>
@@ -1493,7 +1515,7 @@
 										<string key="NSFrameSize">{443, 81}</string>
 										<reference key="NSSuperview" ref="414245186"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="823894951"/>
+										<reference key="NSNextKeyView" ref="649735427"/>
 										<string key="NSReuseIdentifierKey">_NS:13</string>
 										<object class="NSTextContainer" key="NSTextContainer" id="549246383">
 											<object class="NSLayoutManager" key="NSLayoutManager">
@@ -1696,10 +1718,10 @@ dmlvci4gA</bytes>
 								<double key="NSPercent">0.94565218687057495</double>
 							</object>
 						</array>
-						<string key="NSFrame">{{37, 165}, {443, 81}}</string>
+						<string key="NSFrame">{{37, 201}, {443, 81}}</string>
 						<reference key="NSSuperview" ref="575911949"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="414245186"/>
+						<reference key="NSNextKeyView" ref="823894951"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<int key="NSsFlags">153600</int>
 						<reference key="NSVScroller" ref="823894951"/>
@@ -6381,8 +6403,9 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 						<array class="NSMutableArray" key="children">
 							<reference ref="815445297"/>
 							<reference ref="457990703"/>
-							<reference ref="187118461"/>
 							<reference ref="649735427"/>
+							<reference ref="544505377"/>
+							<reference ref="499427863"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">ZNC View</string>
@@ -6426,19 +6449,6 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 						<reference key="parent" ref="457990703"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">2578</int>
-						<reference key="object" ref="187118461"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="259192044"/>
-						</array>
-						<reference key="parent" ref="575911949"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">2579</int>
-						<reference key="object" ref="259192044"/>
-						<reference key="parent" ref="187118461"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">2580</int>
 						<reference key="object" ref="649735427"/>
 						<array class="NSMutableArray" key="children">
@@ -6450,6 +6460,32 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 						<int key="objectID">2581</int>
 						<reference key="object" ref="769032266"/>
 						<reference key="parent" ref="649735427"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2586</int>
+						<reference key="object" ref="544505377"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="1040854237"/>
+						</array>
+						<reference key="parent" ref="575911949"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2587</int>
+						<reference key="object" ref="1040854237"/>
+						<reference key="parent" ref="544505377"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2588</int>
+						<reference key="object" ref="499427863"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="1034930653"/>
+						</array>
+						<reference key="parent" ref="575911949"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2589</int>
+						<reference key="object" ref="1034930653"/>
+						<reference key="parent" ref="499427863"/>
 					</object>
 				</array>
 			</object>
@@ -6746,10 +6782,12 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 				<string key="2564.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2571.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2572.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2578.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2579.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2580.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2581.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="2586.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="2587.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="2588.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="2589.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBWindowTemplateEditedContentRect">{{691, 290}, {344, 538}}</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6758,7 +6796,7 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2585</int>
+			<int key="maxID">2589</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
