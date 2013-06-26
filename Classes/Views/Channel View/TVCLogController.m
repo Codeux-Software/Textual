@@ -527,9 +527,48 @@
 	 This is done by removing a few milliseconds from the one we append above so 
 	 that they are in order when the property list keys are sorted. */
 
-	LogToConsole(@"%@", self.zncPlaybackBufferOperations);
+	/* Find where we are going to append to. */
+	DOMNode *nodeToAppendTo;
 
+	DOMDocument *doc = [self mainFrameDocument];
+	PointerIsEmptyAssert(doc);
 
+	DOMElement *body = [self documentBody];
+	PointerIsEmptyAssert(body);
+
+	DOMNodeList *nodeList = [body childNodes];
+	PointerIsEmptyAssert(nodeList);
+
+	for (unsigned i = 0; i < nodeList.length; i++) {
+		/* Get the actual type= value part of the highest object. */
+		DOMNamedNodeMap *attributeMap = [[nodeList item:i] attributes];
+
+		DOMNode *typeAttribute = [attributeMap getNamedItem:@"type"];
+		DOMNode *timeAttribute = [attributeMap getNamedItem:@"time"];
+
+		PointerIsEmptyAssertLoopContinue(typeAttribute);
+
+		/* The actual type= value. */
+		NSString *typeValue = [typeAttribute nodeValue];
+		NSString *timeValue = [timeAttribute nodeValue];
+
+		NSObjectIsEmptyAssertLoopContinue(typeValue);
+		NSObjectIsEmptyAssertLoopContinue(timeValue);
+
+		/* Determine value importance. */
+		if ([IRCCommandFromLineType(TVCLogLinePrivateMessageType) isEqualToString:typeValue] ||
+			[IRCCommandFromLineType(TVCLogLineActionType) isEqualToString:typeValue] ||
+			[IRCCommandFromLineType(TVCLogLineNoticeType) isEqualToString:typeValue])
+		{
+			/* We found a node we want to post above. */
+
+			nodeToAppendTo = [nodeList item:i];
+
+			break;
+		}
+	}
+
+	BOOL appendToBottom = PointerIsEmpty(nodeToAppendTo);
 
 	/* Do something here… */
 
@@ -577,10 +616,11 @@
 
 		/* Gather result information. */
 		NSString *lineNumber = [resultInfo objectForKey:@"lineNumber"];
+		NSString *renderTime = [resultInfo objectForKey:@"lineRenderTime"];
 		
 		[patchedAppend appendString:html];
 
-		[lineNumbers addObject:@[line, lineNumber]];
+		[lineNumbers addObject:@[line, lineNumber, renderTime]];
 		
 		/* Was it a highlight? */
 		BOOL highlighted = [resultInfo boolForKey:@"wordMatchFound"];
@@ -604,13 +644,14 @@
 			TVCLogLine *line = lineInfo[0];
 
 			NSString *lineNumber = lineInfo[1];
+			NSString *renderTime = lineInfo[2];
 
 			/* Inform the style of the addition. */
 			[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
 
 			/* Add to history. */
 			[self.historicLogFile writePropertyListEntry:[line dictionaryValue]
-												   toKey:lineNumber];
+												   toKey:renderTime];
 		}
 	});
 }
@@ -910,7 +951,11 @@
 
 - (NSString *)uniquePrintIdentifier
 {
-	return [NSString stringWithDouble:[NSDate epochTime]];
+	NSString *randomUUID = [NSString stringWithUUID]; // Example: 68753A44-4D6F-1226-9C60-0050E4C00067
+
+	NSAssert((randomUUID.length > 20), @"Bad identifier.");
+
+	return [randomUUID substringFromIndex:19]; // Example: 9C60-0050E4C00067
 }
 
 - (void)print:(TVCLogLine *)logLine
@@ -949,6 +994,7 @@
 		BOOL highlighted = [resultInfo boolForKey:@"wordMatchFound"];
 
 		NSString *lineNumber = [resultInfo objectForKey:@"lineNumber"];
+		NSString *renderTime = [resultInfo objectForKey:@"lineRenderTime"];
 
 		NSArray *mentionedUsers = [resultInfo arrayForKey:@"mentionedUsers"];
 
@@ -962,7 +1008,7 @@
 
 			/* Record the actual line printed. */
 			[self.historicLogFile writePropertyListEntry:[logLine dictionaryValue]
-												   toKey:lineNumber];
+												   toKey:renderTime];
 
 			/* Do the actual append to WebKit. */
 			[self appendToDocumentBody:html];
@@ -1175,10 +1221,13 @@
 	// ---- //
 
 	NSString *newLinenNumber = [self uniquePrintIdentifier];
+	NSString *lineRenderTime = [NSString stringWithDouble:[NSDate epochTime]];
 
 	attributes[@"lineNumber"] = newLinenNumber;
+	attributes[@"lineRenderTime"] = lineRenderTime;
 
 	[outputDictionary setObject:newLinenNumber forKey:@"lineNumber"];
+	[outputDictionary setObject:lineRenderTime forKey:@"lineRenderTime"];
 
 	// ************************************************************************** /
 	// Return information.											              /

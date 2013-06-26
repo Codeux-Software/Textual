@@ -66,7 +66,7 @@
 {
 	self.command = NSStringEmptyPlaceholder;
 
-	self.isHistoric = YES;
+	self.isHistoric = NO;
 
 	self.sender = [IRCPrefix new];
 	self.params = [NSMutableArray new];
