@@ -1401,7 +1401,7 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="NSTextField" id="374973489">
+					<object class="NSTextField" id="598742288">
 						<reference key="NSNextResponder" ref="575911949"/>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{73, 105}, {400, 42}}</string>
@@ -1411,18 +1411,17 @@
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSAntiCompressionPriority">{250, 750}</string>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="939043901">
+						<object class="NSTextFieldCell" key="NSCell" id="222236780">
 							<int key="NSCellFlags">67108864</int>
 							<int key="NSCellFlags2">272629760</int>
 							<string key="NSContents">Under normal circumstances this setting is ignored completely by Textual because it will automatically detect connections that are ZNC based. This setting should be used when that fails or to edit the settings that follow.</string>
 							<reference key="NSSupport" ref="26055054"/>
 							<string key="NSCellIdentifier">_NS:9</string>
-							<reference key="NSControlView" ref="374973489"/>
+							<reference key="NSControlView" ref="598742288"/>
 							<reference key="NSBackgroundColor" ref="719856035"/>
 							<reference key="NSTextColor" ref="455806945"/>
 						</object>
 						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-						<bool key="NSControlAutosetMaxLayoutWidth">YES</bool>
 					</object>
 					<object class="NSButton" id="649735427">
 						<reference key="NSNextResponder" ref="575911949"/>
@@ -1508,7 +1507,7 @@
 						<string key="NSFrame">{{49, 153}, {259, 18}}</string>
 						<reference key="NSSuperview" ref="575911949"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="374973489"/>
+						<reference key="NSNextKeyView" ref="598742288"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="987184309">
@@ -6450,7 +6449,7 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 							<reference ref="457990703"/>
 							<reference ref="187118461"/>
 							<reference ref="649735427"/>
-							<reference ref="374973489"/>
+							<reference ref="598742288"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">ZNC View</string>
@@ -6534,16 +6533,16 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2584</int>
-						<reference key="object" ref="374973489"/>
+						<reference key="object" ref="598742288"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="939043901"/>
+							<reference ref="222236780"/>
 						</array>
 						<reference key="parent" ref="575911949"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2585</int>
-						<reference key="object" ref="939043901"/>
-						<reference key="parent" ref="374973489"/>
+						<reference key="object" ref="222236780"/>
+						<reference key="parent" ref="598742288"/>
 					</object>
 				</array>
 			</object>
