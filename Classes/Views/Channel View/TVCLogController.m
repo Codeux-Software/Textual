@@ -287,6 +287,19 @@
 	}
 }
 
+- (void)insertOntoDocumentBody:(NSString *)html beforeNode:(DOMNode *)dnode
+{
+	DOMDocument *doc = [self mainFrameDocument];
+	PointerIsEmptyAssert(doc);
+
+	DOMElement *body = [self documentBody];
+	PointerIsEmptyAssert(body);
+
+	DOMDocumentFragment *frag = [(id)doc createDocumentFragmentWithMarkupString:html baseURL:[self baseURL]];
+
+	[body insertBefore:frag refChild:dnode];
+}
+
 - (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args
 {
 	[self executeScriptCommand:command withArguments:args onQueue:YES];
@@ -529,13 +542,100 @@
 	 This is done by removing a few milliseconds from the one we append above so 
 	 that they are in order when the property list keys are sorted. */
 
+	NSObjectIsEmptyAssert(self.zncPlaybackBufferOperations); // Don't do anything if we have nothing…
+
 	/* Find where we are going to append to. */
-	DOMNode *nodeToAppendTo;
+	DOMNode *placementNode;
 
-	double timeOfAppendedNode;
+	__block double placementTimestamp;
 
-	BOOL appendAboveNode = NO;
+	[self findZNCBufferPlaybackPlacementNode:&placementNode timestamp:&placementTimestamp];
 
+	/* Setup the queue. */
+	[self.printingQueue enqueueMessageBlock:^(id operation, NSDictionary *context) {
+		/* Begin processing. */
+		NSMutableArray *lineNumbers = [NSMutableArray array];
+
+		NSMutableString *patchedAppend = [NSMutableString string];
+
+		NSArray *playbackBuffer = self.zncPlaybackBufferOperations;
+
+		/* Workout some timestamp math… */
+		if (PointerIsEmpty(placementNode)) {
+			placementTimestamp = [NSDate epochTime];
+		} else {
+			placementTimestamp -= ((0.000001 * playbackBuffer.count) + 0.000001);
+		}
+
+		for (TVCLogLine *line in playbackBuffer) {
+			PointerIsEmptyAssertLoopContinue(line);
+
+			/* Math. */
+			/* The small additions we are doing is just to have a unique key to use 
+			 in the historic property list. The timestamp has no actual meaning other
+			 than to order the messages in the proeprty list. */
+			placementTimestamp += 0.000001;
+
+			/* Render everything. */
+			NSDictionary *resultInfo = nil;
+
+			NSString *html = [self renderLogLine:line resultInfo:&resultInfo];
+
+			NSObjectIsEmptyAssertLoopContinue(html);
+
+			/* Gather result information. */
+			NSString *lineNumber = [resultInfo objectForKey:@"lineNumber"];
+			
+			NSString *renderTime = [NSString stringWithDouble:placementTimestamp];
+
+			[patchedAppend appendString:html];
+
+			[lineNumbers addObject:@[line, lineNumber, renderTime]];
+
+			/* Was it a highlight? */
+			BOOL highlighted = [resultInfo boolForKey:@"wordMatchFound"];
+
+			if (highlighted) {
+				[self.highlightedLineNumbers safeAddObject:lineNumber];
+			}
+		}
+
+		/* Update WebKit. */
+		dispatch_async(dispatch_get_main_queue(), ^{
+			if (placementNode) {
+				[self insertOntoDocumentBody:patchedAppend beforeNode:placementNode];
+			} else {
+				[self appendToDocumentBody:patchedAppend];
+			}
+
+			for (NSArray *lineInfo in lineNumbers) {
+				/* Update count. */
+				self.activeLineCount += 1;
+
+				/* Line info. */
+				TVCLogLine *line = lineInfo[0];
+
+				NSString *lineNumber = lineInfo[1];
+				NSString *renderTime = lineInfo[2];
+
+				/* Inform the style of the addition. */
+				[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
+
+				/* Add to history. */
+				[self.historicLogFile writePropertyListEntry:[line dictionaryValue]
+													   toKey:renderTime];
+			}
+		});
+		
+		[self.printingQueue updateCompletionStatusForOperation:operation];
+
+		/* Kill timer and storage. */
+		[self stopZNCPlaybackBufferTimer];
+	} for:self];
+}
+
+- (void)findZNCBufferPlaybackPlacementNode:(DOMNode **)nodeptr timestamp:(double *)timeptr
+{
 	DOMDocument *doc = [self mainFrameDocument];
 	PointerIsEmptyAssert(doc);
 
@@ -576,28 +676,33 @@
 								[IRCCommandFromLineType(TVCLogLineNoticeType) isEqualToString:typeValue]);
 
 		if (canAppendToMode || canAppendToText) {
-			/* We found a node we want to post above. */
-
-			nodeToAppendTo = [nodeList item:i];
-			
-			timeOfAppendedNode = timeActual;
+			/* We found a node we want to post next to. The actual node we hand back will
+			 have insertBefore:refChild: called on it so we want to either define ourselves
+			 as the node to have the string inserted before or the next node after us so
+			 that it can be place between us and that other node. */
 
 			if (canAppendToMode) {
-				appendAboveNode = NO; // Append below the mode node.
-			} else {
-				appendAboveNode = YES; // Append above text nodes.
-			}
+				/* Try and find node after us. */
 
-			break;
+				/* Is this the last node? */
+				if ((i + 1) == nodeList.length) {
+					/* If there is nothing after us… then just return. 
+					 We will just append to the end of the body since there
+					 is nothing after us. Easy! */
+				}
+
+				*nodeptr = [nodeList item:(i + 1)];
+				*timeptr = timeActual; // We still return the time of the orignal node. Less math up above.
+			} else {
+				/* It is safe to prepend the node we already found. */
+
+				*nodeptr = [nodeList item:i];
+				*timeptr = timeActual;
+			}
+			
+			return;
 		}
 	}
-
-	BOOL appendToBottom = PointerIsEmpty(nodeToAppendTo);
-
-	/* Do something here… */
-
-	/* Kill timer and storage. */
-	[self stopZNCPlaybackBufferTimer];
 }
 
 #pragma mark -
