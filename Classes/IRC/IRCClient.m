@@ -861,8 +861,6 @@
 	NSAssertReturnR(self.CAPServerTime, NO);
 	NSAssertReturnR(self.isZNCBouncerConnection, NO);
 
-
-
 	/* When Textual is using the server-time CAP with ZNC it does not tell us when
 	 the playback buffer begins and when it ends. Therefore, we must make a best 
 	 guess. We do this by checking if the message being parsed has a @time= attached
@@ -870,7 +868,7 @@
 	 
 	 This is all best guess… */
 
-	if ([NSDate secondsSinceUnixTimestamp:channel.channelJoinTime] <= 10.0) {
+	if ([NSDate secondsSinceUnixTimestamp:channel.channelJoinTime] <= ZNCBufferPlaybackChannelJoinTimeInterval) {
 		return m.isHistoric;
 	}
 

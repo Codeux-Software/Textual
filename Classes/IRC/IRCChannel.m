@@ -172,6 +172,9 @@
 	[self resetStatus:IRCChannelJoined];
 
 	self.channelJoinTime = [NSDate epochTime];
+
+	/* ZNC playback. */
+	[self.viewController startZNCPlaybackBufferTimer];
 }
 
 - (void)deactivate
@@ -183,6 +186,9 @@
 	[self resetStatus:IRCChannelParted];
 
 	self.channelJoinTime = -1;
+	
+	/* ZNC playback. */
+	[self.viewController stopZNCPlaybackBufferTimer];
 }
 
 - (void)terminate

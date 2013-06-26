@@ -37,6 +37,7 @@
 
 #import "TextualApplication.h"
 
+/* Hard limits. */
 #define TXMaximumIRCBodyLength				512
 #define TXMaximumIRCNicknameLength			50
 #define TXMaximumNodesPerModeCommand		4
@@ -44,5 +45,16 @@
 /* "*" is not actually considered a valid character for a nickname. We include it for ZNC. */
 #define IRCNicknameValidCharacters          @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-\\[]{}^`|*"
 
+/* The amount of time to gather the buffer playback in the background
+ before actually processing it. Ten seconds is the recommended value. */
+#define ZNCBufferPlaybackDelayTimerInterval				10.0
+
+/* This value will be checked when determining whether a message is part
+ of ZNC's buffer playback. If a message occurs X seconds after the channel
+ was joined, then we will not count it. Do not make this larger than the 
+ timer interval defined above. That wouldn't make sense. */
+#define ZNCBufferPlaybackChannelJoinTimeInterval		9.0
+
+/* Command index. */
 TEXTUAL_EXTERN NSString *IRCPrivateCommandIndex(const char *key); 
 TEXTUAL_EXTERN NSString *IRCPublicCommandIndex(const char *key); 
