@@ -840,6 +840,41 @@
 }
 
 #pragma mark -
+#pragma mark ZNC Bouncer Accessories
+
+- (BOOL)isSafeToPostNotificationForMessage:(IRCMessage *)m inChannel:(IRCChannel *)channel
+{
+	PointerIsEmptyAssertReturn(m, NO);
+	PointerIsEmptyAssertReturn(channel, NO);
+
+	NSAssertReturnR(self.config.zncConnectionIsBouncer, YES); // Post if we aren't ZNC connection.
+	NSAssertReturnR(self.config.zncIgnorePlaybackNotifications, YES); // Post if user doesn't give a shit.
+
+	return ([self messageIsPartOfZNCPlaybackBuffer:m inChannel:channel] == NO); // Do playback check…
+}
+
+- (BOOL)messageIsPartOfZNCPlaybackBuffer:(IRCMessage *)m inChannel:(IRCChannel *)channel
+{
+	PointerIsEmptyAssertReturn(m, NO);
+	PointerIsEmptyAssertReturn(channel, NO);
+
+	NSAssertReturnR(self.config.zncConnectionIsBouncer, NO);
+
+	/* When Textual is using the server-time CAP with ZNC it does not tell us when
+	 the playback buffer begins and when it ends. Therefore, we must make a best 
+	 guess. We do this by checking if the message being parsed has a @time= attached
+	 to it from server-time and also if it was sent during join.
+	 
+	 This is all best guess… */
+
+	if ([NSDate secondsSinceUnixTimestamp:channel.channelJoinTime] <= 10.0) {
+		return m.isHistoric;
+	}
+
+	return NO;
+}
+
+#pragma mark -
 #pragma mark Channel States
 
 - (void)setKeywordState:(IRCChannel *)t
@@ -3247,7 +3282,9 @@
 			 receivedAt:m.receivedAt
 				command:m.command];
 
-			[self notifyText:TXNotificationChannelNoticeType lineType:type target:c nick:sender text:text];
+			if ([self isSafeToPostNotificationForMessage:m inChannel:c]) {
+				[self notifyText:TXNotificationChannelNoticeType lineType:type target:c nick:sender text:text];
+			}
 		} else {
 			/* Post regular message and inform Growl. */
 			
@@ -3260,22 +3297,30 @@
 				command:m.command
 		completionBlock:^(BOOL highlight)
 			 {
-				BOOL postevent = NO;
+				 if ([self isSafeToPostNotificationForMessage:m inChannel:c]) {
+					 BOOL postevent = NO;
 
-				if (highlight) {
-					postevent = [self notifyText:TXNotificationHighlightType lineType:type target:c nick:sender text:text];
+					 if (highlight) {
+						 postevent = [self notifyText:TXNotificationHighlightType lineType:type target:c nick:sender text:text];
 
-					if (postevent) {
-						[self setKeywordState:c];
-					}
-				} else {
-					postevent = [self notifyText:TXNotificationChannelMessageType lineType:type target:c nick:sender text:text];
-				}
+						 if (postevent) {
+							 [self setKeywordState:c];
+						 }
+					 } else {
+						 postevent = [self notifyText:TXNotificationChannelMessageType lineType:type target:c nick:sender text:text];
+					 }
 
-				/* Mark channel as unread. */
-				if (postevent) {
-					[self setUnreadState:c isHighlight:highlight];
-				}
+					 /* Mark channel as unread. */
+					 if (postevent) {
+						 [self setUnreadState:c isHighlight:highlight];
+					 }
+				 } else {
+					 if (highlight) {
+						 [self setKeywordState:c];
+					 }
+					 
+					 [self setUnreadState:c isHighlight:highlight];
+				 }
 			}];
 
 			/* Weights. */
@@ -3499,7 +3544,9 @@
 				/* Set the query as unread and inform Growl. */
 				[self setUnreadState:c];
 
-				[self notifyText:TXNotificationPrivateNoticeType lineType:type target:c nick:sender text:text];
+				if ([self isSafeToPostNotificationForMessage:m inChannel:c]) {
+					[self notifyText:TXNotificationPrivateNoticeType lineType:type target:c nick:sender text:text];
+				}
 			} else {
 				/* Post regular message and inform Growl. */
 				[self print:c
@@ -3511,24 +3558,32 @@
 					command:m.command
 			completionBlock:^(BOOL highlight)
 				 {
-					 BOOL postevent = NO;
+					 if ([self isSafeToPostNotificationForMessage:m inChannel:c]) {
+						 BOOL postevent = NO;
 
-					 if (highlight) {
-						 postevent = [self notifyText:TXNotificationHighlightType lineType:type target:c nick:sender text:text];
+						 if (highlight) {
+							 postevent = [self notifyText:TXNotificationHighlightType lineType:type target:c nick:sender text:text];
 
+							 if (postevent) {
+								 [self setKeywordState:c];
+							 }
+						 } else {
+							 if (newPrivateMessage) {
+								 postevent = [self notifyText:TXNotificationNewPrivateMessageType lineType:type target:c nick:sender text:text];
+							 } else {
+								 postevent = [self notifyText:TXNotificationPrivateMessageType lineType:type target:c nick:sender text:text];
+							 }
+						 }
+
+						 /* Mark query as unread. */
 						 if (postevent) {
-							 [self setKeywordState:c];
+							 [self setUnreadState:c isHighlight:highlight];
 						 }
 					 } else {
-						 if (newPrivateMessage) {
-							 postevent = [self notifyText:TXNotificationNewPrivateMessageType lineType:type target:c nick:sender text:text];
-						 } else {
-							 postevent = [self notifyText:TXNotificationPrivateMessageType lineType:type target:c nick:sender text:text];
+						 if (highlight) {
+							 [self setKeywordState:c];
 						 }
-					 }
 
-					 /* Mark query as unread. */
-					 if (postevent) {
 						 [self setUnreadState:c isHighlight:highlight];
 					 }
 				 }];
