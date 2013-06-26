@@ -513,6 +513,8 @@
 /* Process actual playback buffer. */
 - (void)processZNCPlaybackBuffer
 {
+	PointerIsEmptyAssert(self.channel); // We only ever append to channels…
+
 	/* The timer playback works like reloadOldLines: … it takes each log line,
 	 renders the HTML, and appends it to a mutable string. The mutable string
 	 is then appended to WebKit at a single time. The difference though is how
@@ -529,6 +531,10 @@
 
 	/* Find where we are going to append to. */
 	DOMNode *nodeToAppendTo;
+
+	double timeOfAppendedNode;
+
+	BOOL appendAboveNode = NO;
 
 	DOMDocument *doc = [self mainFrameDocument];
 	PointerIsEmptyAssert(doc);
@@ -555,14 +561,32 @@
 		NSObjectIsEmptyAssertLoopContinue(typeValue);
 		NSObjectIsEmptyAssertLoopContinue(timeValue);
 
+		double timeActual = [timeValue doubleValue];
+
+		/* Only search nodes that have a time that is after the time we joined. */
+		NSAssertReturnLoopContinue(self.channel.channelJoinTime < timeActual);
+
 		/* Determine value importance. */
-		if ([IRCCommandFromLineType(TVCLogLinePrivateMessageType) isEqualToString:typeValue] ||
-			[IRCCommandFromLineType(TVCLogLineActionType) isEqualToString:typeValue] ||
-			[IRCCommandFromLineType(TVCLogLineNoticeType) isEqualToString:typeValue])
-		{
+		/* If Textual is set to get channel modes on join… then we can put the playback below that… */
+		/* If we can't find that, then find the first normal text message. */
+
+		BOOL canAppendToMode = ([IRCCommandFromLineType(TVCLogLineModeType) isEqualToString:typeValue] && [TPCPreferences processChannelModes]);
+		BOOL canAppendToText = ([IRCCommandFromLineType(TVCLogLinePrivateMessageType) isEqualToString:typeValue] ||
+								[IRCCommandFromLineType(TVCLogLineActionType) isEqualToString:typeValue] ||
+								[IRCCommandFromLineType(TVCLogLineNoticeType) isEqualToString:typeValue]);
+
+		if (canAppendToMode || canAppendToText) {
 			/* We found a node we want to post above. */
 
 			nodeToAppendTo = [nodeList item:i];
+			
+			timeOfAppendedNode = timeActual;
+
+			if (canAppendToMode) {
+				appendAboveNode = NO; // Append below the mode node.
+			} else {
+				appendAboveNode = YES; // Append above text nodes.
+			}
 
 			break;
 		}
