@@ -59,6 +59,11 @@
 
 - (void)parseLine:(NSString *)line
 {
+	[self parseLine:line forClient:nil];
+}
+
+- (void)parseLine:(NSString *)line forClient:(IRCClient *)client
+{
 	self.command = NSStringEmptyPlaceholder;
 
 	self.isHistoric = YES;
@@ -95,33 +100,37 @@
      source code. The first value presented to it is an NSDictionary, the second is the key to search
      for in that dictionary. The third value is what should be returned if the key does not exist in
      the dictionary. It is designed as an easy way to set a default value for a missing dictionary key. */
-    
-	NSString *serverTime = NSDictionaryObjectKeyValueCompare(extensions, @"t", [extensions objectForKey:@"time"]);
 
-	if (NSObjectIsNotEmpty(serverTime)) {
-		NSDateFormatter *dateFormatter = [NSDateFormatter new];
-		
-		[dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-		[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"]; //2011-10-19T16:40:51.620Z
-		
-		NSDate *date = [dateFormatter dateFromString:serverTime];
+	if (client && client.CAPServerTime) {
+		NSString *serverTime = NSDictionaryObjectKeyValueCompare(extensions, @"t", [extensions objectForKey:@"time"]);
 
-        /* If no date is returned by using the defined date format, then we are going to 
-         take the doubleValue of our input and compare it against the epoch start time.
-         If that does not return anything either, then we will simply set the date that
-         this message was processed as the date used. */
-        
-		if (PointerIsEmpty(date)) {
-			date = [NSDate dateWithTimeIntervalSince1970:[serverTime doubleValue]];
-		}
-		
-		if (PointerIsEmpty(date)) {
-			date = [NSDate date];
+		if (NSObjectIsNotEmpty(serverTime)) {
+			NSDateFormatter *dateFormatter = [NSDateFormatter new];
+			
+			[dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+			[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"]; //2011-10-19T16:40:51.620Z
+			
+			NSDate *date = [dateFormatter dateFromString:serverTime];
+
+			/* If no date is returned by using the defined date format, then we are going to 
+			 take the doubleValue of our input and compare it against the epoch start time.
+			 If that does not return anything either, then we will simply set the date that
+			 this message was processed as the date used. */
+			
+			if (PointerIsEmpty(date)) {
+				date = [NSDate dateWithTimeIntervalSince1970:[serverTime doubleValue]];
+			}
+			
+			if (PointerIsEmpty(date)) {
+				date = [NSDate date];
+			} else {
+				self.isHistoric = YES;
+			}
+			
+			self.receivedAt = date;
 		} else {
-			self.isHistoric = YES;
+			self.receivedAt = [NSDate date];
 		}
-		
-		self.receivedAt = date;
 	} else {
 		self.receivedAt = [NSDate date];
 	}
@@ -141,7 +150,9 @@
         if ([t isHostmask]) {
             self.sender.username = [t usernameFromHostmask];
             self.sender.address = [t addressFromHostmask];
-        }
+        } else {
+			self.sender.isServer = YES;
+		}
 	}
 
     /* Now that we have the sender information… continue to the

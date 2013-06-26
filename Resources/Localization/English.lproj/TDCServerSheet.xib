@@ -70,7 +70,7 @@
 				</object>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="867497291">
-					<reference key="NSNextResponder"/>
+					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSBox" id="798352958">
@@ -361,7 +361,6 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{679, 389}</string>
-					<reference key="NSSuperview"/>
 					<reference key="NSNextKeyView" ref="798352958"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
@@ -1402,10 +1401,33 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
+					<object class="NSTextField" id="374973489">
+						<reference key="NSNextResponder" ref="575911949"/>
+						<int key="NSvFlags">268</int>
+						<string key="NSFrame">{{73, 105}, {400, 42}}</string>
+						<reference key="NSSuperview" ref="575911949"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="649735427"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<string key="NSAntiCompressionPriority">{250, 750}</string>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSTextFieldCell" key="NSCell" id="939043901">
+							<int key="NSCellFlags">67108864</int>
+							<int key="NSCellFlags2">272629760</int>
+							<string key="NSContents">Under normal circumstances this setting is ignored completely by Textual because it will automatically detect connections that are ZNC based. This setting should be used when that fails or to edit the settings that follow.</string>
+							<reference key="NSSupport" ref="26055054"/>
+							<string key="NSCellIdentifier">_NS:9</string>
+							<reference key="NSControlView" ref="374973489"/>
+							<reference key="NSBackgroundColor" ref="719856035"/>
+							<reference key="NSTextColor" ref="455806945"/>
+						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+						<bool key="NSControlAutosetMaxLayoutWidth">YES</bool>
+					</object>
 					<object class="NSButton" id="649735427">
 						<reference key="NSNextResponder" ref="575911949"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{49, 119}, {332, 18}}</string>
+						<string key="NSFrame">{{49, 79}, {332, 18}}</string>
 						<reference key="NSSuperview" ref="575911949"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="457990703"/>
@@ -1432,10 +1454,9 @@
 					<object class="NSTextField" id="187118461">
 						<reference key="NSNextResponder" ref="575911949"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{95, 73}, {231, 14}}</string>
+						<string key="NSFrame">{{95, 31}, {231, 14}}</string>
 						<reference key="NSSuperview" ref="575911949"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:3937</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="259192044">
@@ -1457,7 +1478,7 @@
 					<object class="NSButton" id="457990703">
 						<reference key="NSNextResponder" ref="575911949"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{49, 91}, {261, 18}}</string>
+						<string key="NSFrame">{{49, 51}, {261, 18}}</string>
 						<reference key="NSSuperview" ref="575911949"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="187118461"/>
@@ -1484,10 +1505,10 @@
 					<object class="NSButton" id="42237535">
 						<reference key="NSNextResponder" ref="575911949"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{49, 147}, {259, 18}}</string>
+						<string key="NSFrame">{{49, 153}, {259, 18}}</string>
 						<reference key="NSSuperview" ref="575911949"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="649735427"/>
+						<reference key="NSNextKeyView" ref="374973489"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="987184309">
@@ -1519,7 +1540,7 @@
 									<object class="NSTextView" id="855722319">
 										<reference key="NSNextResponder" ref="414245186"/>
 										<int key="NSvFlags">2322</int>
-										<string key="NSFrameSize">{481, 34}</string>
+										<string key="NSFrameSize">{481, 81}</string>
 										<reference key="NSSuperview" ref="414245186"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="42237535"/>
@@ -1528,7 +1549,11 @@
 											<object class="NSLayoutManager" key="NSLayoutManager">
 												<object class="NSTextStorage" key="NSTextStorage">
 													<object class="NSMutableString" key="NSString">
-														<characters key="NS.bytes">ZNC is the preferred IRC bouncer for Textual. The following settings are specific to the ZNC bouncer and should only be enabled when it is in use.</characters>
+														<bytes key="NS.bytes">Wk5DIGlzIHRoZSBwcmVmZXJyZWQgSVJDIGJvdW5jZXIgZm9yIFRleHR1YWwuIFRoZSBmb2xsb3dpbmcg
+c2V0dGluZ3MgYXJlIHNwZWNpZmljIHRvIHRoZSBaTkMgYm91bmNlciBhbmQgc2hvdWxkIG9ubHkgYmUg
+ZW5hYmxlZCB3aGVuIGl0IGlzIGluIHVzZS4KClRoZXNlIHNldHRpbmdzIHRhcmdldCB2ZXJzaW9uIDEu
+MCBvZiBaTkMgb3IgbGF0ZXIuIFVzaW5nIGFuIGVhcmxpZXIgdmVyc2lvbiBtYXkgcmVzdWx0IGluIHVu
+ZGVmaW5lZCBiZWhhdmlvci4gA</bytes>
 													</object>
 													<array class="NSMutableArray" key="NSAttributes">
 														<dictionary>
@@ -1609,7 +1634,7 @@
 														</dictionary>
 													</array>
 													<object class="NSMutableData" key="NSAttributeInfo">
-														<bytes key="NS.bytes">AwASAQsCcgE</bytes>
+														<bytes key="NS.bytes">AwASAQsC4gEBA</bytes>
 													</object>
 													<nil key="NSDelegate"/>
 												</object>
@@ -1663,7 +1688,7 @@
 										<nil key="NSDelegate"/>
 									</object>
 								</array>
-								<string key="NSFrameSize">{481, 34}</string>
+								<string key="NSFrameSize">{481, 81}</string>
 								<reference key="NSSuperview" ref="815445297"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="855722319"/>
@@ -1721,7 +1746,7 @@
 								<double key="NSPercent">0.94565218687057495</double>
 							</object>
 						</array>
-						<string key="NSFrame">{{18, 220}, {481, 34}}</string>
+						<string key="NSFrame">{{18, 197}, {481, 81}}</string>
 						<reference key="NSSuperview" ref="575911949"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="823894951"/>
@@ -6420,11 +6445,12 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 						<int key="objectID">2542</int>
 						<reference key="object" ref="575911949"/>
 						<array class="NSMutableArray" key="children">
+							<reference ref="815445297"/>
 							<reference ref="42237535"/>
-							<reference ref="649735427"/>
 							<reference ref="457990703"/>
 							<reference ref="187118461"/>
-							<reference ref="815445297"/>
+							<reference ref="649735427"/>
+							<reference ref="374973489"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">ZNC View</string>
@@ -6505,6 +6531,19 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 						<int key="objectID">2581</int>
 						<reference key="object" ref="769032266"/>
 						<reference key="parent" ref="649735427"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2584</int>
+						<reference key="object" ref="374973489"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="939043901"/>
+						</array>
+						<reference key="parent" ref="575911949"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2585</int>
+						<reference key="object" ref="939043901"/>
+						<reference key="parent" ref="374973489"/>
 					</object>
 				</array>
 			</object>
@@ -6788,7 +6827,13 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 				<string key="2536.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2537.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2542.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<array class="NSMutableArray" key="2542.IBUserGuides"/>
+				<array key="2542.IBUserGuides">
+					<object class="IBUserGuide">
+						<reference key="view" ref="575911949"/>
+						<double key="location">49</double>
+						<int key="affinity">0</int>
+					</object>
+				</array>
 				<string key="2561.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2562.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2563.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6801,6 +6846,8 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 				<string key="2579.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2580.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2581.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="2584.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="2585.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBWindowTemplateEditedContentRect">{{691, 290}, {344, 538}}</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6809,35 +6856,13 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2583</int>
+			<int key="maxID">2585</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">TDCServerSheet</string>
 					<string key="superclassName">TDCSheetBase</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">zncBouncerEnabledChagned:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">zncBouncerEnabledChagned:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">zncBouncerEnabledChagned:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">zncIgnorePlaybackNotificationsCheck</string>
-						<string key="NS.object.0">NSButton</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">zncIgnorePlaybackNotificationsCheck</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">zncIgnorePlaybackNotificationsCheck</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/TDCServerSheet.h</string>

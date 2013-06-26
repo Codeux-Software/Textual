@@ -47,6 +47,9 @@
 
 - (id)initWithLine:(NSString *)line;
 
+- (void)parseLine:(NSString *)line;
+- (void)parseLine:(NSString *)line forClient:(IRCClient *)client;
+
 - (NSString *)paramAt:(NSInteger)index;
 
 - (NSString *)sequence;
