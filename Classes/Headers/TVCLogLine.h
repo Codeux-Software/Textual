@@ -75,7 +75,7 @@ typedef enum TVCLogMemberType : NSInteger {
 
 @interface TVCLogLine : NSObject
 @property (nonatomic, assign) BOOL isEncrypted;
-@property (nonatomic, assign) BOOL isHistoric;
+@property (nonatomic, assign) BOOL isHistoric; /* Identifies a line restored from previous session. */
 @property (nonatomic, strong) NSDate *receivedAt;
 @property (nonatomic, strong) NSString *nickname;
 @property (nonatomic, strong) NSString *messageBody;
@@ -85,6 +85,7 @@ typedef enum TVCLogMemberType : NSInteger {
 @property (nonatomic, strong) NSArray *highlightKeywords;
 @property (nonatomic, strong) NSArray *excludeKeywords;
 @property (nonatomic, assign) NSInteger nicknameColorNumber;
+@property (nonatomic, assign) BOOL isZNCPlaybackBufferItem; /* This value is volatile. Not saved in dictionary. */
 
 - (NSString *)formattedTimestamp;
 - (NSString *)formattedNickname:(IRCChannel *)owner;

@@ -198,17 +198,21 @@ typedef enum IRCDisconnectMode : NSInteger {
 
 /* ------ */
 /* All print calls point to this single one: */
-- (void)print:(id)chan					// An IRCChannel or nil for the console.
-		 type:(TVCLogLineType)type		// The line type. See TVCLogLine.h
-		 nick:(NSString *)nick			// The nickname associated with the print.
-		 text:(NSString *)text			// The actual text being printed.
-	encrypted:(BOOL)isEncrypted			// Is the text encrypted?
-   receivedAt:(NSDate *)receivedAt		// The time the message was received at for the timestamp.
-	  command:(NSString *)command;		// Can be the actual command (PRIVMSG, NOTICE, etc.) or a raw numeric (001, 002, etc.) — 000 = internal debug command.
+- (void)print:(id)chan											// An IRCChannel or nil for the console.
+		 type:(TVCLogLineType)type								// The line type. See TVCLogLine.h
+		 nick:(NSString *)nick									// The nickname associated with the print.
+		 text:(NSString *)text									// The actual text being printed.
+	encrypted:(BOOL)isEncrypted									// Is the text encrypted?
+   receivedAt:(NSDate *)receivedAt								// The time the message was received at for the timestamp.
+	  command:(NSString *)command								// Can be the actual command (PRIVMSG, NOTICE, etc.) or a raw numeric (001, 002, etc.) — … -100 = internal debug command.
+	  message:(IRCMessage *)rawMessage							// Actual IRCMessage to associate with the print job. 
+completionBlock:(void(^)(BOOL highlighted))completionBlock;		// A block to call when the actual print occurs.
 /* ------ */
 
 - (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text command:(NSString *)command;
 - (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt command:(NSString *)command;
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command;
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command message:(IRCMessage *)rawMessage;
 
 - (void)printReply:(IRCMessage *)m;
 - (void)printUnknownReply:(IRCMessage *)m;
