@@ -6163,8 +6163,6 @@
 	self.isConnecting = YES;
 	self.reconnectEnabled = YES;
 
-	self.isZNCBouncerConnection = self.config.zncConnectionIsBouncer;
-
 	NSString *host = self.config.serverAddress;
 
 	NSInteger port = self.config.serverPort;

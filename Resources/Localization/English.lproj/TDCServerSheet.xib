@@ -1401,32 +1401,10 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="NSTextField" id="598742288">
-						<reference key="NSNextResponder" ref="575911949"/>
-						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{73, 105}, {400, 42}}</string>
-						<reference key="NSSuperview" ref="575911949"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="649735427"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<string key="NSAntiCompressionPriority">{250, 750}</string>
-						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="222236780">
-							<int key="NSCellFlags">67108864</int>
-							<int key="NSCellFlags2">272629760</int>
-							<string key="NSContents">Under normal circumstances this setting is ignored completely by Textual because it will automatically detect connections that are ZNC based. This setting should be used when that fails or to edit the settings that follow.</string>
-							<reference key="NSSupport" ref="26055054"/>
-							<string key="NSCellIdentifier">_NS:9</string>
-							<reference key="NSControlView" ref="598742288"/>
-							<reference key="NSBackgroundColor" ref="719856035"/>
-							<reference key="NSTextColor" ref="455806945"/>
-						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-					</object>
 					<object class="NSButton" id="649735427">
 						<reference key="NSNextResponder" ref="575911949"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{49, 79}, {332, 18}}</string>
+						<string key="NSFrame">{{70, 105}, {332, 18}}</string>
 						<reference key="NSSuperview" ref="575911949"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="457990703"/>
@@ -1453,7 +1431,7 @@
 					<object class="NSTextField" id="187118461">
 						<reference key="NSNextResponder" ref="575911949"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{95, 31}, {231, 14}}</string>
+						<string key="NSFrame">{{116, 57}, {231, 14}}</string>
 						<reference key="NSSuperview" ref="575911949"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:3937</string>
@@ -1477,7 +1455,7 @@
 					<object class="NSButton" id="457990703">
 						<reference key="NSNextResponder" ref="575911949"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{49, 51}, {261, 18}}</string>
+						<string key="NSFrame">{{70, 77}, {261, 18}}</string>
 						<reference key="NSSuperview" ref="575911949"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="187118461"/>
@@ -1501,33 +1479,6 @@
 						</object>
 						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
-					<object class="NSButton" id="42237535">
-						<reference key="NSNextResponder" ref="575911949"/>
-						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{49, 153}, {259, 18}}</string>
-						<reference key="NSSuperview" ref="575911949"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="598742288"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<bool key="NSEnabled">YES</bool>
-						<object class="NSButtonCell" key="NSCell" id="987184309">
-							<int key="NSCellFlags">-2080374784</int>
-							<int key="NSCellFlags2">268435456</int>
-							<string key="NSContents">Connection is a ZNC bouncer.</string>
-							<reference key="NSSupport" ref="788253527"/>
-							<string key="NSCellIdentifier">_NS:9</string>
-							<reference key="NSControlView" ref="42237535"/>
-							<int key="NSButtonFlags">1211912448</int>
-							<int key="NSButtonFlags2">2</int>
-							<reference key="NSNormalImage" ref="295341342"/>
-							<reference key="NSAlternateImage" ref="335051110"/>
-							<string key="NSAlternateContents"/>
-							<string key="NSKeyEquivalent"/>
-							<int key="NSPeriodicDelay">200</int>
-							<int key="NSPeriodicInterval">25</int>
-						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-					</object>
 					<object class="NSScrollView" id="815445297">
 						<reference key="NSNextResponder" ref="575911949"/>
 						<int key="NSvFlags">256</int>
@@ -1539,20 +1490,20 @@
 									<object class="NSTextView" id="855722319">
 										<reference key="NSNextResponder" ref="414245186"/>
 										<int key="NSvFlags">2322</int>
-										<string key="NSFrameSize">{481, 81}</string>
+										<string key="NSFrameSize">{443, 81}</string>
 										<reference key="NSSuperview" ref="414245186"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="42237535"/>
+										<reference key="NSNextKeyView" ref="823894951"/>
 										<string key="NSReuseIdentifierKey">_NS:13</string>
 										<object class="NSTextContainer" key="NSTextContainer" id="549246383">
 											<object class="NSLayoutManager" key="NSLayoutManager">
 												<object class="NSTextStorage" key="NSTextStorage">
 													<object class="NSMutableString" key="NSString">
 														<bytes key="NS.bytes">Wk5DIGlzIHRoZSBwcmVmZXJyZWQgSVJDIGJvdW5jZXIgZm9yIFRleHR1YWwuIFRoZSBmb2xsb3dpbmcg
-c2V0dGluZ3MgYXJlIHNwZWNpZmljIHRvIHRoZSBaTkMgYm91bmNlciBhbmQgc2hvdWxkIG9ubHkgYmUg
-ZW5hYmxlZCB3aGVuIGl0IGlzIGluIHVzZS4KClRoZXNlIHNldHRpbmdzIHRhcmdldCB2ZXJzaW9uIDEu
-MCBvZiBaTkMgb3IgbGF0ZXIuIFVzaW5nIGFuIGVhcmxpZXIgdmVyc2lvbiBtYXkgcmVzdWx0IGluIHVu
-ZGVmaW5lZCBiZWhhdmlvci4gA</bytes>
+c2V0dGluZ3Mgd2lsbCBhdXRvbWF0aWNhbGx5IGtpY2sgaW4gaWYgVGV4dHVhbCBkZXRlY3RzIHRoYXQg
+Wk5DIGlzIGluIHVzZS4KClRoZXNlIHNldHRpbmdzIHRhcmdldCB2ZXJzaW9uIDEuMCBvZiBaTkMgb3Ig
+bGF0ZXIuIFVzaW5nIGFuIGVhcmxpZXIgdmVyc2lvbiBtYXkgcmVzdWx0IGluIHVuZGVmaW5lZCBiZWhh
+dmlvci4gA</bytes>
 													</object>
 													<array class="NSMutableArray" key="NSAttributes">
 														<dictionary>
@@ -1633,7 +1584,7 @@ ZGVmaW5lZCBiZWhhdmlvci4gA</bytes>
 														</dictionary>
 													</array>
 													<object class="NSMutableData" key="NSAttributeInfo">
-														<bytes key="NS.bytes">AwASAQsC4gEBA</bytes>
+														<bytes key="NS.bytes">AwASAQsC1gEBA</bytes>
 													</object>
 													<nil key="NSDelegate"/>
 												</object>
@@ -1644,7 +1595,7 @@ ZGVmaW5lZCBiZWhhdmlvci4gA</bytes>
 												<nil key="NSDelegate"/>
 											</object>
 											<reference key="NSTextView" ref="855722319"/>
-											<double key="NSWidth">481</double>
+											<double key="NSWidth">443</double>
 											<int key="NSTCFlags">1</int>
 										</object>
 										<object class="NSTextViewSharedData" key="NSSharedData">
@@ -1687,7 +1638,7 @@ ZGVmaW5lZCBiZWhhdmlvci4gA</bytes>
 										<nil key="NSDelegate"/>
 									</object>
 								</array>
-								<string key="NSFrameSize">{481, 81}</string>
+								<string key="NSFrameSize">{443, 81}</string>
 								<reference key="NSSuperview" ref="815445297"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="855722319"/>
@@ -1745,10 +1696,10 @@ ZGVmaW5lZCBiZWhhdmlvci4gA</bytes>
 								<double key="NSPercent">0.94565218687057495</double>
 							</object>
 						</array>
-						<string key="NSFrame">{{18, 197}, {481, 81}}</string>
+						<string key="NSFrame">{{37, 165}, {443, 81}}</string>
 						<reference key="NSSuperview" ref="575911949"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="823894951"/>
+						<reference key="NSNextKeyView" ref="414245186"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<int key="NSsFlags">153600</int>
 						<reference key="NSVScroller" ref="823894951"/>
@@ -4412,27 +4363,11 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">zncConnectionIsBouncerCheck</string>
-						<reference key="source" ref="108852464"/>
-						<reference key="destination" ref="42237535"/>
-					</object>
-					<int key="connectionID">2576</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">zncThrottlePlaybackBufferCheck</string>
 						<reference key="source" ref="108852464"/>
 						<reference key="destination" ref="457990703"/>
 					</object>
 					<int key="connectionID">2577</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">zncBouncerEnabledChagned:</string>
-						<reference key="source" ref="108852464"/>
-						<reference key="destination" ref="42237535"/>
-					</object>
-					<int key="connectionID">2582</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -6445,11 +6380,9 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 						<reference key="object" ref="575911949"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="815445297"/>
-							<reference ref="42237535"/>
 							<reference ref="457990703"/>
 							<reference ref="187118461"/>
 							<reference ref="649735427"/>
-							<reference ref="598742288"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">ZNC View</string>
@@ -6478,19 +6411,6 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 						<int key="objectID">2564</int>
 						<reference key="object" ref="823894951"/>
 						<reference key="parent" ref="815445297"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">2565</int>
-						<reference key="object" ref="42237535"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="987184309"/>
-						</array>
-						<reference key="parent" ref="575911949"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">2566</int>
-						<reference key="object" ref="987184309"/>
-						<reference key="parent" ref="42237535"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2571</int>
@@ -6530,19 +6450,6 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 						<int key="objectID">2581</int>
 						<reference key="object" ref="769032266"/>
 						<reference key="parent" ref="649735427"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">2584</int>
-						<reference key="object" ref="598742288"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="222236780"/>
-						</array>
-						<reference key="parent" ref="575911949"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">2585</int>
-						<reference key="object" ref="222236780"/>
-						<reference key="parent" ref="598742288"/>
 					</object>
 				</array>
 			</object>
@@ -6837,16 +6744,12 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 				<string key="2562.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2563.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2564.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2565.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2566.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2571.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2572.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2578.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2579.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2580.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2581.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2584.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2585.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBWindowTemplateEditedContentRect">{{691, 290}, {344, 538}}</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>

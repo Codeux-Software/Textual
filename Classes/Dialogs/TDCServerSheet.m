@@ -217,8 +217,6 @@
 
 	[self load];
 
-	[self zncBouncerEnabledChagned:nil];
-
 	[self updateConnectionPage];
 	[self updateHighlightsPage];
 	[self updateChannelsPage];
@@ -320,7 +318,6 @@
 	self.serverPasswordField.stringValue	= self.config.serverPassword;
 	self.serverPortField.stringValue		= [NSString stringWithInteger:self.config.serverPort];
 
-	self.zncConnectionIsBouncerCheck.state			= self.config.zncConnectionIsBouncer;
 	self.zncThrottlePlaybackBufferCheck.state		= self.config.zncThrottlePlaybackBuffer;
 	self.zncIgnorePlaybackNotificationsCheck.state	= self.config.zncIgnorePlaybackNotifications;
 
@@ -405,7 +402,6 @@
 	self.config.connectionUsesSSL			= self.connectionUsesSSLCheck.state;
 	self.config.serverPassword				= self.serverPasswordField.trimmedStringValue;
 
-	self.config.zncConnectionIsBouncer			= self.zncConnectionIsBouncerCheck.state;
 	self.config.zncThrottlePlaybackBuffer		= self.zncThrottlePlaybackBufferCheck.state;
 	self.config.zncIgnorePlaybackNotifications	= self.zncIgnorePlaybackNotificationsCheck.state;
 
@@ -568,14 +564,6 @@
     BOOL match = (self.floodControlCheck.state == NSOnState);
 	
     [self.floodControlToolView setHidden:BOOLReverseValue(match)];
-}
-
-- (void)zncBouncerEnabledChagned:(id)sender
-{
-	BOOL match = (self.zncConnectionIsBouncerCheck.state == NSOnState);
-
-	[self.zncThrottlePlaybackBufferCheck setEnabled:match];
-	[self.zncIgnorePlaybackNotificationsCheck setEnabled:match];
 }
 
 #pragma mark -
