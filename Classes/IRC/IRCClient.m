@@ -847,7 +847,7 @@
 	PointerIsEmptyAssertReturn(m, NO);
 	PointerIsEmptyAssertReturn(channel, NO);
 
-	NSAssertReturnR(self.config.zncConnectionIsBouncer, YES); // Post if we aren't ZNC connection.
+	NSAssertReturnR(self.isZNCBouncerConnection, YES); // Post if we aren't ZNC connection.
 	NSAssertReturnR(self.config.zncIgnorePlaybackNotifications, YES); // Post if user doesn't give a shit.
 
 	return ([self messageIsPartOfZNCPlaybackBuffer:m inChannel:channel] == NO); // Do playback check…
@@ -858,7 +858,8 @@
 	PointerIsEmptyAssertReturn(m, NO);
 	PointerIsEmptyAssertReturn(channel, NO);
 
-	NSAssertReturnR(self.config.zncConnectionIsBouncer, NO);
+	NSAssertReturnR(self.CAPServerTime, NO);
+	NSAssertReturnR(self.isZNCBouncerConnection, NO);
 
 	/* When Textual is using the server-time CAP with ZNC it does not tell us when
 	 the playback buffer begins and when it ends. Therefore, we must make a best 
@@ -2802,14 +2803,19 @@
 	self.CAPWatchCommand = NO;
 	self.CAPpausedStatus = 0;
 	self.CAPuserhostInNames = NO;
-
+	self.CAPServerTime = NO;
+	
 	self.autojoinInProgress = NO;
 	self.hasIRCopAccess = NO;
 	self.inFirstISONRun = NO;
+	self.inUserInvokedNamesRequest = NO;
 	self.inUserInvokedWatchRequest = NO;
 	self.inUserInvokedWhoRequest = NO;
 	self.inUserInvokedWhowasRequest = NO;
 	self.inUserInvokedModeRequest = NO;
+	self.inUserInvokedJoinRequest = NO;
+	self.inUserInvokedWatchRequest = NO;
+	self.isZNCBouncerConnection = NO;
 	self.isAutojoined = NO;
 	self.isAway = NO;
 	self.isConnected = NO;
@@ -3001,7 +3007,9 @@
 		s = [s stripIRCEffects];
 	}
 
-	IRCMessage *m = [[IRCMessage alloc] initWithLine:s];
+	IRCMessage *m = [IRCMessage new];
+
+	[m parseLine:s forClient:self];
 
     /* Intercept input. */
     m = [RZPluginManager() processInterceptedServerInput:m for:self];
@@ -3093,7 +3101,19 @@
 			case 1005: // Command: AUTHENTICATE
 			case 1004: // Command: CAP
 			{
+				if (self.isZNCBouncerConnection == NO) {
+					/* ZNC sends CAPs using its own server hostmask so we will use that to detect 
+					 if the connection is ZNC based. */
+
+					if ([@"irc.znc.in" isEqualToString:m.sender.nickname] && m.sender.isServer) {
+						self.isZNCBouncerConnection = YES;
+
+						DebugLogToConsole(@"ZNC based connection detected…");
+					}
+				}
+				
 				[self receiveCapacityOrAuthenticationRequest:m];
+				
 				break;
 			}
             case 1050: // Command: AWAY (away-notify CAP)
@@ -4321,7 +4341,12 @@
 			self.CAPidentifyCTCP = YES;
 		} else if ([cap isEqualIgnoringCase:@"away-notify"]) {
             self.CAPawayNotify = YES;
-        }
+        } else if ([cap isEqualIgnoringCase:@"server-time"] ||
+				   [cap isEqualIgnoringCase:@"znc.in/server-time"] ||
+				   [cap isEqualIgnoringCase:@"znc.in/server-time-iso"])
+		{
+			self.CAPServerTime = YES;
+		}
 	}
 }
 
@@ -6138,12 +6163,13 @@
 	self.isConnecting = YES;
 	self.reconnectEnabled = YES;
 
+	self.isZNCBouncerConnection = self.config.zncConnectionIsBouncer;
+
 	NSString *host = self.config.serverAddress;
 
 	NSInteger port = self.config.serverPort;
 
 	/* Do we have a temporary redirect? */
-
 	if (NSObjectIsNotEmpty(self.serverRedirectAddressTemporaryStore)) {
 		host = self.serverRedirectAddressTemporaryStore;
 	}
@@ -6153,7 +6179,6 @@
 	}
 
 	/* Continue connection… */
-	
 	[self logFileWriteSessionBegin];
 
 	if (mode == IRCConnectReconnectMode || mode == IRCConnectBadSSLCertificateMode) {

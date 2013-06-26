@@ -74,6 +74,7 @@ typedef enum IRCDisconnectMode : NSInteger {
 @property (nonatomic, assign) BOOL isLoggedIn;					// YES if connected to server, else NO. Set to YES on raw numeric 001.
 @property (nonatomic, assign) BOOL isQuitting;					// YES if connection to IRC server is being quit, else NO.
 @property (nonatomic, assign) BOOL isWaitingForNickServ;		// YES if NickServ identification is pending, else NO.
+@property (nonatomic, assign) BOOL isZNCBouncerConnection;		// YES if Textual detected that this connection is ZNC based.
 @property (nonatomic, assign) BOOL rawModeEnabled;				// YES if sent & received data should be logged to console, else NO.
 @property (nonatomic, assign) BOOL reconnectEnabled;			// YES if reconnection is allowed, else NO.
 @property (nonatomic, assign) BOOL serverHasNickServ;			// YES if NickServ service was found on server, else NO.
@@ -85,6 +86,7 @@ typedef enum IRCDisconnectMode : NSInteger {
 @property (nonatomic, assign) BOOL CAPuserhostInNames;			// YES if userhost-in-names CAP supported.
 @property (nonatomic, assign) BOOL CAPawayNotify;               // YES if away-notify CAP supported.
 @property (nonatomic, assign) BOOL CAPWatchCommand;				// YES if the WATCH command is supported.
+@property (nonatomic, assign) BOOL CAPServerTime;				// YES if server-time CAP supported.
 @property (nonatomic, strong) NSMutableArray *CAPacceptedCaps;
 @property (nonatomic, strong) NSMutableArray *CAPpendingCaps;
 @property (nonatomic, strong) IRCChannel *lastSelectedChannel;
