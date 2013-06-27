@@ -93,10 +93,10 @@
 	[tabViewList addObject:@[@"Identity",						@"6"]];
 	[tabViewList addObject:@[@"Message",						@"7"]];
 	[tabViewList addObject:@[@"Mentions",						@"8"]];
-	[tabViewList addObject:@[TXDefaultListSeperatorCellIndex,	@"-"]];
-	[tabViewList addObject:@[@"ZNCBouncer",						@"9"]];
 
 	if (includeAdvanced) {
+		[tabViewList addObject:@[TXDefaultListSeperatorCellIndex,	@"-"]];
+		[tabViewList addObject:@[@"ZNCBouncer",						@"9"]];
 		[tabViewList addObject:@[TXDefaultListSeperatorCellIndex,	@"-"]];
 		[tabViewList addObject:@[@"FloodControl",					@"10"]];
 		[tabViewList addObject:@[@"Network",						@"11"]];
