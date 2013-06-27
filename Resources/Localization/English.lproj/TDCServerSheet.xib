@@ -70,7 +70,7 @@
 				</object>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="867497291">
-					<reference key="NSNextResponder"/>
+					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSBox" id="798352958">
@@ -361,7 +361,6 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{679, 389}</string>
-					<reference key="NSSuperview"/>
 					<reference key="NSNextKeyView" ref="798352958"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
@@ -1402,25 +1401,23 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="NSTextField" id="499427863">
+					<object class="NSTextField" id="784598093">
 						<reference key="NSNextResponder" ref="575911949"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{93, 17}, {407, 17}}</string>
+						<string key="NSFrame">{{92, 141}, {366, 29}}</string>
 						<reference key="NSSuperview" ref="575911949"/>
 						<reference key="NSWindow"/>
-						<string key="NSReuseIdentifierKey">_NS:1535</string>
+						<reference key="NSNextKeyView"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<string key="NSAntiCompressionPriority">{250, 750}</string>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="1034930653">
-							<int key="NSCellFlags">68157504</int>
-							<int key="NSCellFlags2">272630784</int>
-							<string key="NSContents">Using this setting will also ignore notifications for the playback.</string>
-							<object class="NSFont" key="NSSupport">
-								<string key="NSName">LucidaGrande-Bold</string>
-								<double key="NSSize">11</double>
-								<int key="NSfFlags">16</int>
-							</object>
-							<string key="NSCellIdentifier">_NS:1535</string>
-							<reference key="NSControlView" ref="499427863"/>
+						<object class="NSTextFieldCell" key="NSCell" id="394461444">
+							<int key="NSCellFlags">67108864</int>
+							<int key="NSCellFlags2">272629760</int>
+							<string key="NSContents">If the setting "Delay the playback buffer" is enabled, then notifications are ignored regardless of whether this one is set.</string>
+							<reference key="NSSupport" ref="26055054"/>
+							<string key="NSCellIdentifier">_NS:9</string>
+							<reference key="NSControlView" ref="784598093"/>
 							<reference key="NSBackgroundColor" ref="719856035"/>
 							<reference key="NSTextColor" ref="455806945"/>
 						</object>
@@ -1429,9 +1426,10 @@
 					<object class="NSTextField" id="544505377">
 						<reference key="NSNextResponder" ref="575911949"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{93, 48}, {366, 70}}</string>
+						<string key="NSFrame">{{93, 34}, {366, 70}}</string>
 						<reference key="NSSuperview" ref="575911949"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="784598093"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSAntiCompressionPriority">{250, 750}</string>
 						<bool key="NSEnabled">YES</bool>
@@ -1450,7 +1448,7 @@
 					<object class="NSButton" id="649735427">
 						<reference key="NSNextResponder" ref="575911949"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{64, 154}, {332, 18}}</string>
+						<string key="NSFrame">{{65, 178}, {332, 18}}</string>
 						<reference key="NSSuperview" ref="575911949"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="457990703"/>
@@ -1477,7 +1475,7 @@
 					<object class="NSButton" id="457990703">
 						<reference key="NSNextResponder" ref="575911949"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{64, 126}, {187, 18}}</string>
+						<string key="NSFrame">{{64, 112}, {187, 18}}</string>
 						<reference key="NSSuperview" ref="575911949"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="544505377"/>
@@ -1521,11 +1519,7 @@
 											<object class="NSLayoutManager" key="NSLayoutManager">
 												<object class="NSTextStorage" key="NSTextStorage">
 													<object class="NSMutableString" key="NSString">
-														<bytes key="NS.bytes">Wk5DIGlzIHRoZSBwcmVmZXJyZWQgSVJDIGJvdW5jZXIgZm9yIFRleHR1YWwuIFRoZSBmb2xsb3dpbmcg
-c2V0dGluZ3Mgd2lsbCBhdXRvbWF0aWNhbGx5IGtpY2sgaW4gaWYgVGV4dHVhbCBkZXRlY3RzIHRoYXQg
-Wk5DIGlzIGluIHVzZS4KClRoZXNlIHNldHRpbmdzIHRhcmdldCB2ZXJzaW9uIDEuMCBvZiBaTkMgb3Ig
-bGF0ZXIuIFVzaW5nIGFuIGVhcmxpZXIgdmVyc2lvbiBtYXkgcmVzdWx0IGluIHVuZGVmaW5lZCBiZWhh
-dmlvci4gA</bytes>
+														<characters key="NS.bytes">ZNC is the preferred IRC bouncer for Textual. The following settings will automatically kick in if Textual detects that ZNC is in use.</characters>
 													</object>
 													<array class="NSMutableArray" key="NSAttributes">
 														<dictionary>
@@ -1606,7 +1600,7 @@ dmlvci4gA</bytes>
 														</dictionary>
 													</array>
 													<object class="NSMutableData" key="NSAttributeInfo">
-														<bytes key="NS.bytes">AwASAQsC1gEBA</bytes>
+														<bytes key="NS.bytes">AwASAQsCZgE</bytes>
 													</object>
 													<nil key="NSDelegate"/>
 												</object>
@@ -1718,7 +1712,7 @@ dmlvci4gA</bytes>
 								<double key="NSPercent">0.94565218687057495</double>
 							</object>
 						</array>
-						<string key="NSFrame">{{37, 201}, {443, 81}}</string>
+						<string key="NSFrame">{{37, 187}, {443, 81}}</string>
 						<reference key="NSSuperview" ref="575911949"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="823894951"/>
@@ -6403,9 +6397,9 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 						<array class="NSMutableArray" key="children">
 							<reference ref="815445297"/>
 							<reference ref="457990703"/>
-							<reference ref="649735427"/>
 							<reference ref="544505377"/>
-							<reference ref="499427863"/>
+							<reference ref="649735427"/>
+							<reference ref="784598093"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">ZNC View</string>
@@ -6475,17 +6469,17 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 						<reference key="parent" ref="544505377"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">2588</int>
-						<reference key="object" ref="499427863"/>
+						<int key="objectID">2590</int>
+						<reference key="object" ref="784598093"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="1034930653"/>
+							<reference ref="394461444"/>
 						</array>
 						<reference key="parent" ref="575911949"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">2589</int>
-						<reference key="object" ref="1034930653"/>
-						<reference key="parent" ref="499427863"/>
+						<int key="objectID">2591</int>
+						<reference key="object" ref="394461444"/>
+						<reference key="parent" ref="784598093"/>
 					</object>
 				</array>
 			</object>
@@ -6772,7 +6766,7 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 				<array key="2542.IBUserGuides">
 					<object class="IBUserGuide">
 						<reference key="view" ref="575911949"/>
-						<double key="location">49</double>
+						<double key="location">48</double>
 						<int key="affinity">0</int>
 					</object>
 				</array>
@@ -6786,8 +6780,8 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 				<string key="2581.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2586.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2587.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2588.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2589.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="2590.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="2591.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBWindowTemplateEditedContentRect">{{691, 290}, {344, 538}}</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6796,7 +6790,7 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2589</int>
+			<int key="maxID">2591</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
