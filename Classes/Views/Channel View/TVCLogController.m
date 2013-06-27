@@ -531,18 +531,20 @@
 	/* The timer playback works like reloadOldLines: … it takes each log line,
 	 renders the HTML, and appends it to a mutable string. The mutable string
 	 is then appended to WebKit at a single time. The difference though is how
-	 the lines are recorded and where they are placed. 
-	 
+	 the lines are recorded and where they are placed.
+
 	 First, we have to scan the node list and find the first PRIVMSG, ACTION, or
 	 NOTICE in the channel. When we find that, we append above it. If none exists,
-	 then we append to the end of the node list. 
-	 
-	 We then have to take the line number (which is actually a timestamp) and use 
-	 that to add the additions in the same position in the historic property list. 
-	 This is done by removing a few milliseconds from the one we append above so 
+	 then we append to the end of the node list.
+
+	 We then have to take the line number (which is actually a timestamp) and use
+	 that to add the additions in the same position in the historic property list.
+	 This is done by removing a few milliseconds from the one we append above so
 	 that they are in order when the property list keys are sorted. */
 
 	NSObjectIsEmptyAssert(self.zncPlaybackBufferOperations); // Don't do anything if we have nothing…
+
+	BOOL viewingBottom = [self viewingBottom];
 
 	/* Find where we are going to append to. */
 	DOMNode *placementNode;
@@ -571,7 +573,7 @@
 			PointerIsEmptyAssertLoopContinue(line);
 
 			/* Math. */
-			/* The small additions we are doing is just to have a unique key to use 
+			/* The small additions we are doing is just to have a unique key to use
 			 in the historic property list. The timestamp has no actual meaning other
 			 than to order the messages in the proeprty list. */
 			placementTimestamp += 0.000001;
@@ -585,7 +587,7 @@
 
 			/* Gather result information. */
 			NSString *lineNumber = [resultInfo objectForKey:@"lineNumber"];
-			
+
 			NSString *renderTime = [NSString stringWithDouble:placementTimestamp];
 
 			[patchedAppend appendString:html];
@@ -625,10 +627,14 @@
 				[self.historicLogFile writePropertyListEntry:[line dictionaryValue]
 													   toKey:renderTime];
 			}
-		});
-		
-		[self.printingQueue updateCompletionStatusForOperation:operation];
 
+			if (viewingBottom) {
+				[self moveToBottom];
+			}
+		});
+
+		[self.printingQueue updateCompletionStatusForOperation:operation];
+		
 		/* Kill timer and storage. */
 		[self stopZNCPlaybackBufferTimer];
 	} for:self];
