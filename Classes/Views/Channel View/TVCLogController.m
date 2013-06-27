@@ -1226,6 +1226,7 @@
 
 	[inputDictionary setBool:drawLinks forKey:@"renderLinks"];
 	[inputDictionary setBool:isNormalMsg forKey:@"isNormalMessage"];
+	[inputDictionary setBool:isPlainText forKey:@"isPlainTextMessage"];
 
 	renderedBody = [TVCLogRenderer renderBody:line.messageBody
 								   controller:self
