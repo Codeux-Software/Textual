@@ -524,6 +524,7 @@
 }
 
 /* Process actual playback buffer. */
+/* This is pretty ugly hack… */
 - (void)processZNCPlaybackBuffer
 {
 	PointerIsEmptyAssert(self.channel); // We only ever append to channels…
@@ -569,6 +570,8 @@
 			placementTimestamp -= ((0.000001 * playbackBuffer.count) + 0.000001);
 		}
 
+		BOOL containsHighlight = NO;
+
 		for (TVCLogLine *line in playbackBuffer) {
 			PointerIsEmptyAssertLoopContinue(line);
 
@@ -598,6 +601,8 @@
 			BOOL highlighted = [resultInfo boolForKey:@"wordMatchFound"];
 
 			if (highlighted) {
+				containsHighlight = YES;
+				
 				[self.highlightedLineNumbers safeAddObject:lineNumber];
 			}
 		}
@@ -626,7 +631,16 @@
 				/* Add to history. */
 				[self.historicLogFile writePropertyListEntry:[line dictionaryValue]
 													   toKey:renderTime];
+
+				/* Update channel list badges. */
+				self.channel.treeUnreadCount += 1;
 			}
+
+			if (containsHighlight) {
+				self.channel.nicknameHighlightCount += 1;
+			}
+
+			[self.worldController reloadTreeItem:self.channel];
 
 			if (viewingBottom) {
 				[self moveToBottom];
