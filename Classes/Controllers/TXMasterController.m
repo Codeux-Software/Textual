@@ -587,9 +587,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 		BOOL fullscreen = [dic boolForKey:@"fullscreen"];
 
-		NSRect frame = NSMakeRectThatFitsMainScreen(x, y, w, h);
-		
-		[self.mainWindow setFrame:frame display:YES animate:BOOLReverseValue(self.isInFullScreenMode)];
+		[self.mainWindow setFrame:NSMakeRect(x, y, w, h) display:YES animate:BOOLReverseValue(self.isInFullScreenMode)];
 		
 		self.serverSplitView.dividerPosition = [dic integerForKey:@"serverList"];
 		self.memberSplitView.dividerPosition = [dic integerForKey:@"memberList"];
@@ -627,7 +625,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		[self.menuController toggleFullscreenMode:nil];
 	}
 	
-	NSRect rect = NSMakeRectFitMainScreen(self.mainWindow.frame);
+	NSRect rect = self.mainWindow.frame;
 
 	[dic setInteger:rect.origin.x forKey:@"x"];
 	[dic setInteger:rect.origin.y forKey:@"y"];
