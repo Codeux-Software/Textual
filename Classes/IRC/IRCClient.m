@@ -6035,9 +6035,12 @@
 		/* /////////////////////////////////////////////////////// */
 
 		NSAppleEventDescriptor *firstParameter	= [NSAppleEventDescriptor descriptorWithString:scriptInput];
+		NSAppleEventDescriptor *secondParameter = [NSAppleEventDescriptor descriptorWithString:destinationChannel];
+		
 		NSAppleEventDescriptor *parameters		= [NSAppleEventDescriptor listDescriptor];
 
 		[parameters insertDescriptor:firstParameter atIndex:1];
+		[parameters insertDescriptor:secondParameter atIndex:2];
 
 		ProcessSerialNumber psn = { 0, kCurrentProcess };
 
@@ -6113,7 +6116,10 @@
 			return;
 		}
 
-		NSArray *arguments = [scriptInput split:NSStringWhitespacePlaceholder];
+		NSArray *arguments1 = [scriptInput split:NSStringWhitespacePlaceholder];
+		NSArray *arguments2 = [NSArray arrayWithObject:NSStringNilValueSubstitute(destinationChannel)];
+
+		NSArray *arguments = [arguments2 arrayByAddingObjectsFromArray:arguments1];
 		
 		NSURL *userScriptURL = [NSURL fileURLWithPath:scriptPath];
 
@@ -6123,6 +6129,7 @@
 
 		if (PointerIsEmpty(unixTask) || aserror) {
 			[self outputTextualCmdScriptError:scriptPath input:scriptInput context:nil error:aserror];
+
 			return;
 		}
 
