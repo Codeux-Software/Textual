@@ -28,13 +28,21 @@
 
 	/* Is the calendar requested valid? */
 
-	$calendarVerbose = trim($GLOBALS['argv'][1]);
+	$calendarVerbose = trim($GLOBALS['argv'][2]);
 	$calendarIsVerbose = false;
+	
+	$destinationChannel = trim($GLOBALS['argv'][1]);
+	
+	if (empty($destinationChannel)) {
+		echo "/debug Invalid destination channel.";
+		
+		exit();
+	}
 	
 	if ($calendarVerbose == "-v") {
 		$calendarIsVerbose = true;
 		
-		$calendarKey = trim($GLOBALS['argv'][2]);
+		$calendarKey = trim($GLOBALS['argv'][3]);
 	} else {
 		$calendarKey = $calendarVerbose;
 	}
@@ -122,7 +130,7 @@
 	$entryCount = count($calendarItemsNew);
 
 	if ($entryCount <= 0) {
-		echo "/me does not see any entries in the \002{$calendarTitle}\002 calendar for today.";
+		echo "/sme {$destinationChannel} does not see any entries in the \002{$calendarTitle}\002 calendar for today.";
 	} else {
 		if ($entryCount == 1) {
 			if ($calendarIsVerbose == true) {
