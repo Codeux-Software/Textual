@@ -231,7 +231,7 @@
 			}
 
 			if ([screen runningInHighResolutionMode]) {
-				[result appendString:@"SystemInformationScreensCommandResultHighResoMode"];
+				[result appendString:TPILS(@"SystemInformationScreensCommandResultHighResoMode")];
 			}
 		}
 
