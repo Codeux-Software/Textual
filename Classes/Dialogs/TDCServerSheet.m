@@ -56,6 +56,21 @@
 		
 		self.serverList = [NSDictionary dictionaryWithContentsOfFile:slp];
 
+		/* Update some controls. */
+		TPCThemeSettings *themeSettings = self.masterController.themeController.customSettings;
+
+		if (themeSettings.zncDelayedPlaybackBufferSupported) {
+			[self.zncThrottlePlaybackBufferCheck setEnabled:YES];
+
+			[self.zncThrottlePlaybackCheckNormalFootnode setHidden:NO];
+			[self.zncThrottlePlaybackCheckUnavailableFootnode setHidden:YES];
+		} else {
+			[self.zncThrottlePlaybackBufferCheck setEnabled:NO];
+
+			[self.zncThrottlePlaybackCheckNormalFootnode setHidden:YES];
+			[self.zncThrottlePlaybackCheckUnavailableFootnode setHidden:NO];
+		}
+
 		/* Populate the server address field with the IRC network list. */
 		NSArray *sortedKeys = [self.serverList allKeys];
 

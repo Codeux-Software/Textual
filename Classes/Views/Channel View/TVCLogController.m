@@ -39,6 +39,8 @@
 
 #define _internalPlaybackLineCountLimit			100
 
+#define  _zncPlaybackBufferItemTimeAddition			0.000001
+
 @interface TVCLogController ()
 @property (nonatomic, readonly, uweak) TPCThemeSettings *themeSettings;
 @property (nonatomic, assign) BOOL historyLoaded;
@@ -476,7 +478,7 @@
 - (void)goToMark
 {
 	if ([self jumpToElementID:@"mark"]) {
-		[self executeQuickScriptCommand:@"viewPositionMovedToHistoryIndicator" withArguments:@[]];
+		[self executeQuickScriptCommand:@"viewPositionModToHistoryIndicator" withArguments:@[]];
 	}
 }
 
@@ -512,6 +514,8 @@
 {
 	/* Empty the storage. */
 	if (self.zncPlaybackBufferOperations) {
+		[self.zncPlaybackBufferOperations removeAllObjects];
+		
 		self.zncPlaybackBufferOperations = nil;
 	}
 
@@ -567,7 +571,8 @@
 		if (PointerIsEmpty(placementNode)) {
 			placementTimestamp = [NSDate epochTime];
 		} else {
-			placementTimestamp -= ((0.000001 * playbackBuffer.count) + 0.000001);
+			placementTimestamp -= ((_zncPlaybackBufferItemTimeAddition * playbackBuffer.count) +
+								    _zncPlaybackBufferItemTimeAddition);
 		}
 
 		BOOL containsHighlight = NO;
@@ -579,7 +584,7 @@
 			/* The small additions we are doing is just to have a unique key to use
 			 in the historic property list. The timestamp has no actual meaning other
 			 than to order the messages in the proeprty list. */
-			placementTimestamp += 0.000001;
+			placementTimestamp += _zncPlaybackBufferItemTimeAddition;
 
 			/* Render everything. */
 			NSDictionary *resultInfo = nil;
@@ -1114,13 +1119,8 @@
 
 - (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock
 {
-	/* Record ZNC playback items. */
-	if (logLine.isZNCPlaybackBufferItem) {
-		/* The timer should have already setup the storage, but just incase… */
-		if (PointerIsEmpty(self.zncPlaybackBufferOperations)) {
-			self.zncPlaybackBufferOperations = [NSMutableArray array];
-		}
-
+	/* Record  playback items. */
+	if (logLine.isZNCPlaybackBufferItem && self.zncPlaybackTimer.timerIsActive) {
 		/* Add entry. */
 		[self.zncPlaybackBufferOperations addObject:logLine];
 

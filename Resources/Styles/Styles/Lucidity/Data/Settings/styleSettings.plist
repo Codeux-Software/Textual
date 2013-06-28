@@ -19,5 +19,7 @@
 	<string>#FFFFFF</string>
 	<key>Force Invert Sidebars</key>
 	<false/>
+	<key>Supports ZNC Playback</key>
+	<true/>
 </dict>
 </plist>

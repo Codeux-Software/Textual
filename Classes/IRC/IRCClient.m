@@ -861,6 +861,10 @@
 	NSAssertReturnR(self.CAPServerTime, NO);
 	NSAssertReturnR(self.isZNCBouncerConnection, NO);
 
+	TPCThemeSettings *themeSettings = self.masterController.themeController.customSettings;
+
+	NSAssertReturnR(themeSettings.zncDelayedPlaybackBufferSupported, NO);
+
 	/* When Textual is using the server-time CAP with ZNC it does not tell us when
 	 the playback buffer begins and when it ends. Therefore, we must make a best 
 	 guess. We do this by checking if the message being parsed has a @time= attached
