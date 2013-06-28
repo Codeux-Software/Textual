@@ -222,46 +222,73 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
     [self.worldController updateIcon];
 }
 
-- (void)windowDidBecomeKey:(NSNotification *)notification
+- (void)updateMainWindowInterface:(BOOL)becomingActive
 {
 	NSAssertReturn(self.terminating == NO);
 
 	id sel = self.worldController.selectedItem;
-    
+
 	if (sel) {
 		[sel resetState];
 	}
 
-	/* Using self.mainWindowIsActive is much more accurate than asking
-	 the window each time we want to know whether it is accurate because
-	 this will always be either YES or NO during a draw. */
-	
-	self.mainWindowIsActive = YES;
-
 	[self.serverList updateBackgroundColor];
 	[self.serverList reloadAllDrawingsIgnoringOtherReloads];
-	
+
 	[self.memberList updateBackgroundColor];
 
-    [self.worldController updateIcon];
+	if (becomingActive) {
+		[self.worldController updateIcon];
+	}
+}
+
+- (void)applicationWillResignActive:(NSNotification *)notification
+{
+	self.applicationIsActive = NO;
+	self.applicationIsChangingActiveState = YES;
+}
+
+- (void)applicationWillBecomeActive:(NSNotification *)notification
+{
+	self.applicationIsActive = YES;
+	self.applicationIsChangingActiveState = YES;
+}
+
+- (void)applicationDidResignActive:(NSNotification *)notification
+{
+	self.applicationIsChangingActiveState = NO;
+	self.mainWindowIsActive = NO;
+
+	[self updateMainWindowInterface:NO];
+}
+
+- (void)applicationDidBecomeActive:(NSNotification *)notification
+{
+	self.applicationIsChangingActiveState = NO;
+
+	if ([self.mainWindow isEqual:[NSApp keyWindow]]) {
+		self.mainWindowIsActive = YES;
+	}
+	
+	[self updateMainWindowInterface:YES];
+}
+
+- (void)windowDidBecomeKey:(NSNotification *)notification
+{
+	self.mainWindowIsActive = YES;
+	
+	if (self.applicationIsChangingActiveState == NO) {
+		[self updateMainWindowInterface:YES];
+	}
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification
 {
-	NSAssertReturn(self.terminating == NO);
-
-	id sel = self.worldController.selectedItem;
-    
-	if (sel) {
-		[sel resetState];
-	}
-	
 	self.mainWindowIsActive = NO;
-
-	[self.serverList updateBackgroundColor];
-	[self.serverList reloadAllDrawingsIgnoringOtherReloads];
 	
-	[self.memberList updateBackgroundColor];
+	if (self.applicationIsChangingActiveState == NO) {
+		[self updateMainWindowInterface:NO];
+	}
 }
 
 - (BOOL)queryTerminate

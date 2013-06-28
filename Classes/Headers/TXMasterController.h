@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-@interface TXMasterController : NSObject <NSSplitViewDelegate>
+@interface TXMasterController : NSObject <NSSplitViewDelegate, NSApplicationDelegate, NSWindowDelegate>
 @property (nonatomic, strong) IRCWorld *world;
 @property (nonatomic, assign) BOOL ghostMode;
 @property (nonatomic, assign) BOOL terminating;
@@ -45,6 +45,8 @@
 @property (nonatomic, assign) BOOL skipTerminateSave;
 @property (nonatomic, assign) BOOL isInFullScreenMode;
 @property (nonatomic, assign) BOOL mainWindowIsActive;
+@property (nonatomic, assign) BOOL applicationIsActive;
+@property (nonatomic, assign) BOOL applicationIsChangingActiveState;
 @property (nonatomic, nweak) NSBox *channelViewBox;
 @property (nonatomic, nweak) NSMenu *addServerMenu;
 @property (nonatomic, nweak) NSMenu *channelViewMenu;
