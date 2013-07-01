@@ -223,6 +223,36 @@
     return self.owner.channel.isActive;
 }
 
+- (NSString *)channelName
+{
+	return self.owner.channel.name;
+}
+
+- (NSString *)serverAddress
+{
+	return self.owner.client.networkAddress;
+}
+
+- (NSString *)localUserNickname
+{
+	return self.owner.client.localNickname;
+}
+
+- (NSString *)localUserHostmask
+{
+	return self.owner.client.localHostmask;
+}
+
+- (void)printDebugInformationToConsole:(NSString *)m
+{
+	[self.owner.client printDebugInformationToConsole:m];
+}
+
+- (void)printDebugInformation:(NSString *)m
+{
+	[self.owner.client printDebugInformation:m channel:self.owner.channel];
+}
+
 - (BOOL)sidebarInversionIsEnabled
 {
 	return [TPCPreferences invertSidebarColors];

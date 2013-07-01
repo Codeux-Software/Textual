@@ -98,14 +98,31 @@ Textual = {
 	
     /* The following API calls can be called at any time. */
     
-   // app.logToConsole(<input>)        - Log a message to the Mac OS console.
-   // app.serverIsConnected()          - Boolean if associated server is connected.
-   // app.channelIsJoined()            — Boolean if associated channel is joined.
-   // app.channelMemberCount()         — Number of members on the channel associated with this view.
-   // app.serverChannelCount()         — Number of channels part of the server associated with this view.
-   //                                    This number does not count against the status of the channels.
-   //                                    They can be joined or all parted. It is only a raw count.
-   // app.sidebarInversionIsEnabled()  - Boolean if sidebar colors are inverted.
+	// app.logToConsole(<input>)        - Log a message to the Mac OS console.
+	
+	// app.serverIsConnected()          - Boolean if associated server is connected.
+	// app.channelIsJoined()            — Boolean if associated channel is joined.
+	// app.channelMemberCount()         — Number of members on the channel associated with this view.
+   
+	// app.serverChannelCount()         — Number of channels part of the server associated with this view.
+	//                                    This number does not count against the status of the channels.
+	//                                    They can be joined or all parted. It is only a raw count.
+  
+    // app.sidebarInversionIsEnabled()  - Boolean if sidebar colors are inverted.
+
+	// app.channelName()				— Channel name of associated channel. Can be an actual channel name,
+	//									  a nickname for a private message, or blank for the console.
+
+	// app.serverAddress()				— Actual server address (e.g. verne.freenode.net) of the associated
+	//									  server. This value is not available until raw numeric 005 is posted.
+
+	// app.localUserNickname()			— Nickname of the local user.
+	// app.localUserHostmask()			— Hostmask of the local user obtained during join.
+	
+	// app.printDebugInformationToConsole(message)		— Show a debug message to the user in the server console. 
+	//													  This is the equivalent of a script using the /debug command.
+
+	// app.printDebugInformation(message)				— Show a debug message to the user in the associated channel.
 
 	/* *********************************************************************** */
 	

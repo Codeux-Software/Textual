@@ -63,8 +63,8 @@
 @property (nonatomic, nweak) NSButton *pongTimerDisconnectCheck;
 @property (nonatomic, nweak) NSButton *zncThrottlePlaybackBufferCheck;
 @property (nonatomic, nweak) NSButton *zncIgnorePlaybackNotificationsCheck;
-@property (nonatomic, nweak) IBOutlet NSTextField *zncThrottlePlaybackCheckNormalFootnode;
-@property (nonatomic, nweak) IBOutlet NSTextField *zncThrottlePlaybackCheckUnavailableFootnode;
+@property (nonatomic, nweak) NSTextField *zncThrottlePlaybackCheckNormalFootnode;
+@property (nonatomic, nweak) NSTextField *zncThrottlePlaybackCheckUnavailableFootnode;
 @property (nonatomic, nweak) NSComboBox *serverAddressCombo;
 @property (nonatomic, nweak) NSMenu *addIgnoreMenu;
 @property (nonatomic, nweak) NSPopUpButton *fallbackEncodingButton;
