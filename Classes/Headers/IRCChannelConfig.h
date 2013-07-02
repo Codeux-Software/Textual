@@ -4,7 +4,8 @@
        | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
-
+ 
+ Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
