@@ -441,7 +441,7 @@
 	 up for the difference in design. */
 	NSRect oldRect = [self.imageView frame];
 
-	if ([iconName hasPrefix:@"colloquy"]) {
+	if ([iconName hasPrefix:@"channelRoomStatusIcon"]) {
 		oldRect.origin.y = 0;
 	} else {
 		oldRect.origin.y = 1;
@@ -472,9 +472,9 @@
 	/* Status icon. */
 	if (channel.isChannel) {
 		if (channel.isActive) {
-			[self drawStatusBadge:@"colloquyRoomTabRegular" withAlpha:1.0];
+			[self drawStatusBadge:@"channelRoomStatusIcon" withAlpha:1.0];
 		} else {
-			[self drawStatusBadge:@"colloquyRoomTabRegular" withAlpha:0.5];
+			[self drawStatusBadge:@"channelRoomStatusIcon" withAlpha:0.5];
 		}
 	} else {
 		[self drawStatusBadge:[self.serverList privateMessageStatusIconFilename:isSelected] withAlpha:0.8];
