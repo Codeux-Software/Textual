@@ -472,10 +472,18 @@
 
 	/* Status icon. */
 	if (channel.isChannel) {
-		if (channel.isActive) {
-			[self drawStatusBadge:@"channelRoomStatusIcon" withAlpha:1.0];
+		NSString *iconName = @"channelRoomStatusIcon";
+
+		if (invertedColors) {
+			iconName = [iconName stringByAppendingString:@"_Dark"];
 		} else {
-			[self drawStatusBadge:@"channelRoomStatusIcon" withAlpha:0.5];
+			iconName = [iconName stringByAppendingString:@"_Aqua"];
+		}
+		
+		if (channel.isActive) {
+			[self drawStatusBadge:iconName withAlpha:1.0];
+		} else {
+			[self drawStatusBadge:iconName withAlpha:0.5];
 		}
 	} else {
 		[self drawStatusBadge:[self.serverList privateMessageStatusIconFilename:isSelected] withAlpha:0.8];
