@@ -110,6 +110,22 @@
 	[super rightMouseDown:theEvent];
 }
 
+- (void)mouseDown:(NSEvent *)theEvent
+{
+	NSWindowNegateActionWithAttachedSheet();
+
+	/* Don't know why control click is broken in the text field. 
+	 Possibly because of how hacked together it is… anyways, this
+	 is a quick fix for control click to open the right click menu. */
+	if ([NSEvent modifierFlags] & NSControlKeyMask) {
+		[super rightMouseDown:theEvent];
+
+		return;
+	}
+
+	[super mouseDown:theEvent];
+}
+
 - (void)redrawOriginPoints
 {
 	NSInteger defaultSegmentX = _WindowSegmentedControllerDefaultX;
