@@ -443,10 +443,6 @@
 		4C68426916C5B12A0005A59E /* BragSpam.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C68426116C5B1020005A59E /* BragSpam.bundle */; };
 		4C68426A16C5B12B0005A59E /* SpammerParadise.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C68426216C5B1020005A59E /* SpammerParadise.bundle */; };
 		4C68426B16C5B12D0005A59E /* SystemProfiler.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C68426316C5B1020005A59E /* SystemProfiler.bundle */; };
-		4C6BFAB81783072E0000B63E /* channelRoomStatusIcon.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C6BFAB61783072E0000B63E /* channelRoomStatusIcon.tif */; };
-		4C6BFAB91783072E0000B63E /* channelRoomStatusIcon.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C6BFAB61783072E0000B63E /* channelRoomStatusIcon.tif */; };
-		4C6BFABA1783072E0000B63E /* channelRoomStatusIcon@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C6BFAB71783072E0000B63E /* channelRoomStatusIcon@2x.tif */; };
-		4C6BFABB1783072E0000B63E /* channelRoomStatusIcon@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C6BFAB71783072E0000B63E /* channelRoomStatusIcon@2x.tif */; };
 		4C6ED7F115901562001AD200 /* TVCMainWindowSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */; };
 		4C6ED7F315901579001AD200 /* TVCMainWindowSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7188C61591AB7A00FC5E54 /* DIRedBadgeCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7188C31591AB7A00FC5E54 /* DIRedBadgeCenter.png */; };
@@ -726,6 +722,14 @@
 		4CA899A9174021FD001176C8 /* TPWTB_Alerts_NC.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CA899A6174021FD001176C8 /* TPWTB_Alerts_NC.tif */; };
 		4CA899AA174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CA899A7174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif */; };
 		4CA899AB174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CA899A7174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif */; };
+		4CB1257C1783DC6600D0214E /* channelRoomStatusIcon_Aqua.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB125781783DC6600D0214E /* channelRoomStatusIcon_Aqua.tif */; };
+		4CB1257D1783DC6600D0214E /* channelRoomStatusIcon_Aqua.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB125781783DC6600D0214E /* channelRoomStatusIcon_Aqua.tif */; };
+		4CB1257E1783DC6600D0214E /* channelRoomStatusIcon_Aqua@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB125791783DC6600D0214E /* channelRoomStatusIcon_Aqua@2x.tif */; };
+		4CB1257F1783DC6600D0214E /* channelRoomStatusIcon_Aqua@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB125791783DC6600D0214E /* channelRoomStatusIcon_Aqua@2x.tif */; };
+		4CB125801783DC6600D0214E /* channelRoomStatusIcon_Dark.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB1257A1783DC6600D0214E /* channelRoomStatusIcon_Dark.tif */; };
+		4CB125811783DC6600D0214E /* channelRoomStatusIcon_Dark.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB1257A1783DC6600D0214E /* channelRoomStatusIcon_Dark.tif */; };
+		4CB125821783DC6600D0214E /* channelRoomStatusIcon_Dark@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB1257B1783DC6600D0214E /* channelRoomStatusIcon_Dark@2x.tif */; };
+		4CB125831783DC6600D0214E /* channelRoomStatusIcon_Dark@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB1257B1783DC6600D0214E /* channelRoomStatusIcon_Dark@2x.tif */; };
 		4CB1362116D881150025DD7F /* Textual IRC Client Extras.pkg in Copy Installers */ = {isa = PBXBuildFile; fileRef = 4CB1361F16D881080025DD7F /* Textual IRC Client Extras.pkg */; };
 		4CB331B516F1BBC700D65CBE /* NSImageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB331B416F1BBC700D65CBE /* NSImageHelper.m */; };
 		4CB331B616F1BBC700D65CBE /* NSImageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB331B416F1BBC700D65CBE /* NSImageHelper.m */; };
@@ -1015,8 +1019,6 @@
 		4C68426216C5B1020005A59E /* SpammerParadise.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SpammerParadise.bundle; path = .tmp/SharedBuildProducts/SpammerParadise.bundle; sourceTree = SOURCE_ROOT; };
 		4C68426316C5B1020005A59E /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = .tmp/SharedBuildProducts/SystemProfiler.bundle; sourceTree = SOURCE_ROOT; };
 		4C69F55016EED9F1007E0AA3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = ../../../../System/Library/Frameworks/QuartzCore.framework; sourceTree = "<group>"; };
-		4C6BFAB61783072E0000B63E /* channelRoomStatusIcon.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = channelRoomStatusIcon.tif; path = "Resources/Images/Status Badges/channelRoomStatusIcon.tif"; sourceTree = SOURCE_ROOT; };
-		4C6BFAB71783072E0000B63E /* channelRoomStatusIcon@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "channelRoomStatusIcon@2x.tif"; path = "Resources/Images/Status Badges/channelRoomStatusIcon@2x.tif"; sourceTree = SOURCE_ROOT; };
 		4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMainWindowSegmentedControl.m; sourceTree = "<group>"; };
 		4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowSegmentedControl.h; sourceTree = "<group>"; };
 		4C7188C31591AB7A00FC5E54 /* DIRedBadgeCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DIRedBadgeCenter.png; path = "Resources/Images/Dock Icon Badges/Red/DIRedBadgeCenter.png"; sourceTree = SOURCE_ROOT; };
@@ -1296,6 +1298,10 @@
 		4C937BDA170618A80050CEF3 /* TLOSpeechSynthesizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLOSpeechSynthesizer.h; sourceTree = "<group>"; };
 		4CA899A6174021FD001176C8 /* TPWTB_Alerts_NC.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TPWTB_Alerts_NC.tif; sourceTree = "<group>"; };
 		4CA899A7174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "TPWTB_Alerts_NC@2x.tif"; sourceTree = "<group>"; };
+		4CB125781783DC6600D0214E /* channelRoomStatusIcon_Aqua.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = channelRoomStatusIcon_Aqua.tif; path = "Resources/Images/Status Badges/channelRoomStatusIcon_Aqua.tif"; sourceTree = SOURCE_ROOT; };
+		4CB125791783DC6600D0214E /* channelRoomStatusIcon_Aqua@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "channelRoomStatusIcon_Aqua@2x.tif"; path = "Resources/Images/Status Badges/channelRoomStatusIcon_Aqua@2x.tif"; sourceTree = SOURCE_ROOT; };
+		4CB1257A1783DC6600D0214E /* channelRoomStatusIcon_Dark.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = channelRoomStatusIcon_Dark.tif; path = "Resources/Images/Status Badges/channelRoomStatusIcon_Dark.tif"; sourceTree = SOURCE_ROOT; };
+		4CB1257B1783DC6600D0214E /* channelRoomStatusIcon_Dark@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "channelRoomStatusIcon_Dark@2x.tif"; path = "Resources/Images/Status Badges/channelRoomStatusIcon_Dark@2x.tif"; sourceTree = SOURCE_ROOT; };
 		4CB1361F16D881080025DD7F /* Textual IRC Client Extras.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Textual IRC Client Extras.pkg"; path = "Resources/All Scripts/Sandbox Exceptions/Installers/Textual IRC Client Extras.pkg"; sourceTree = SOURCE_ROOT; };
 		4CB331B416F1BBC700D65CBE /* NSImageHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSImageHelper.m; sourceTree = "<group>"; };
 		4CB331BC16F1BBE000D65CBE /* NSImageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSImageHelper.h; sourceTree = "<group>"; };
@@ -1596,8 +1602,10 @@
 		4C46CC9C1580432400846B64 /* Status Badges */ = {
 			isa = PBXGroup;
 			children = (
-				4C6BFAB61783072E0000B63E /* channelRoomStatusIcon.tif */,
-				4C6BFAB71783072E0000B63E /* channelRoomStatusIcon@2x.tif */,
+				4CB125781783DC6600D0214E /* channelRoomStatusIcon_Aqua.tif */,
+				4CB125791783DC6600D0214E /* channelRoomStatusIcon_Aqua@2x.tif */,
+				4CB1257A1783DC6600D0214E /* channelRoomStatusIcon_Dark.tif */,
+				4CB1257B1783DC6600D0214E /* channelRoomStatusIcon_Dark@2x.tif */,
 			);
 			name = "Status Badges";
 			sourceTree = "<group>";
@@ -2897,8 +2905,10 @@
 				4CA899A8174021FD001176C8 /* TPWTB_Alerts_NC.tif in Resources */,
 				4CA899AA174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif in Resources */,
 				4CBE64C4174371C700831D69 /* TDCHighlightEntrySheet.xib in Resources */,
-				4C6BFAB81783072E0000B63E /* channelRoomStatusIcon.tif in Resources */,
-				4C6BFABA1783072E0000B63E /* channelRoomStatusIcon@2x.tif in Resources */,
+				4CB1257C1783DC6600D0214E /* channelRoomStatusIcon_Aqua.tif in Resources */,
+				4CB1257E1783DC6600D0214E /* channelRoomStatusIcon_Aqua@2x.tif in Resources */,
+				4CB125801783DC6600D0214E /* channelRoomStatusIcon_Dark.tif in Resources */,
+				4CB125821783DC6600D0214E /* channelRoomStatusIcon_Dark@2x.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2995,8 +3005,10 @@
 				4CA899A9174021FD001176C8 /* TPWTB_Alerts_NC.tif in Resources */,
 				4CA899AB174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif in Resources */,
 				4CBE64C5174371C700831D69 /* TDCHighlightEntrySheet.xib in Resources */,
-				4C6BFAB91783072E0000B63E /* channelRoomStatusIcon.tif in Resources */,
-				4C6BFABB1783072E0000B63E /* channelRoomStatusIcon@2x.tif in Resources */,
+				4CB1257D1783DC6600D0214E /* channelRoomStatusIcon_Aqua.tif in Resources */,
+				4CB1257F1783DC6600D0214E /* channelRoomStatusIcon_Aqua@2x.tif in Resources */,
+				4CB125811783DC6600D0214E /* channelRoomStatusIcon_Dark.tif in Resources */,
+				4CB125831783DC6600D0214E /* channelRoomStatusIcon_Dark@2x.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

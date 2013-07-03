@@ -220,7 +220,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	}
 
 	/* Redraw dock icon on potential screen resolution changes. */
-    [self.worldController updateIcon];
+    [self reloadUserInterfaceItems:YES];
 }
 
 - (void)updateMainWindowInterface:(BOOL)becomingActive
@@ -233,12 +233,17 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		[sel resetState];
 	}
 
+	[self reloadUserInterfaceItems:becomingActive];
+}
+
+- (void)reloadUserInterfaceItems:(BOOL)redrawIcon
+{
 	[self.serverList updateBackgroundColor];
 	[self.serverList reloadAllDrawingsIgnoringOtherReloads];
 
 	[self.memberList updateBackgroundColor];
 
-	if (becomingActive) {
+	if (redrawIcon) {
 		[self.worldController updateIcon];
 	}
 }
