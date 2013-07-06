@@ -3914,7 +3914,7 @@
 		return;
 	}
 
-	if ([TPCPreferences showJoinLeave]) {
+	if ([TPCPreferences showJoinLeave] || myself) {
 		NSString *text = TXTFLS(@"IRCUserJoinedChannel", sendern, m.sender.username, m.sender.address);
 
 		[self print:c
@@ -3953,12 +3953,14 @@
 	}
 
 	[c removeMember:sendern];
+	
+	BOOL myself = [sendern isEqualIgnoringCase:self.localNickname];
 
-	if ([TPCPreferences showJoinLeave]) {
+	if ([TPCPreferences showJoinLeave] || myself) {
 		IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
 															withMatches:@[@"ignoreJPQE"]];
 
-		if ([ignoreChecks ignoreJPQE] || c.config.ignoreJPQActivity) {
+		if (([ignoreChecks ignoreJPQE] || c.config.ignoreJPQActivity) && myself == NO) {
 			return;
 		}
 
@@ -4008,11 +4010,13 @@
 	
 	[c removeMember:targetu];
 
-	if ([TPCPreferences showJoinLeave]) {
+	BOOL myself = [sendern isEqualIgnoringCase:self.localNickname];
+
+	if ([TPCPreferences showJoinLeave] || myself) {
 		IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
 															withMatches:@[@"ignoreJPQE"]];
 
-		if ([ignoreChecks ignoreJPQE] || c.config.ignoreJPQActivity) {
+		if (([ignoreChecks ignoreJPQE] || c.config.ignoreJPQActivity) && myself == NO) {
 			return;
 		}
 
@@ -4054,7 +4058,7 @@
 	for (IRCChannel *c in self.channels) {
 		if ([c findMember:sendern]) {
 			/* We send quit messages to private messages regardless of user preference. */
-			if (([TPCPreferences showJoinLeave] && [ignoreChecks ignoreJPQE] == NO && c.config.ignoreJPQActivity == NO) || c.isPrivateMessage) {
+			if (([TPCPreferences showJoinLeave] && [ignoreChecks ignoreJPQE] == NO && c.config.ignoreJPQActivity == NO) || myself || c.isPrivateMessage) {
 				if (c.isPrivateMessage) {
 					text = TXTFLS(@"IRCUserDisconnectedFromPrivateMessage", sendern);
 				}
