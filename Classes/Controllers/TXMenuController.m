@@ -2013,15 +2013,15 @@
 - (void)openHelpMenuLinkItem:(id)sender
 {
 	switch ([sender tag]) {
-		case 101: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/"]]; break;									}
-		case 103: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/text-formatting"]]; break;						}
-		case 104: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/ommand-reference"]]; break;					}
-		case 105: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/memory-management"]]; break;					}
-		case 106: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/styles"]]; break;								}
-		case 108: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/feature-requests"]]; break;					}
-		case 208: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/DCC-File-Transfer-Information"]]; break;		}
-		case 209: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Keyboard-Shortcuts"]]; break;					}
-		case 210: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/IRC-URL-Scheme"]]; break;						}
+		case 101: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/"]]; break;											}
+		case 103: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Text-Formatting.wiki"]]; break;						}
+		case 104: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Command-Reference.wiki"]]; break;						}
+		case 105: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Memory-Management.wiki"]]; break;						}
+		case 106: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Styles.wiki"]]; break;									}
+		case 108: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Support.wiki"]]; break;								}
+		case 208: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/DCC-File-Transfer-Information.wiki"]];	break;			}
+		case 209: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Keyboard-Shortcuts.wiki"]]; break;						}
+		case 210: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/IRC-URL-Scheme.wiki"]]; break;							}
 	}
 }
 
