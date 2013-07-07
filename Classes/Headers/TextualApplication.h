@@ -115,6 +115,7 @@
 	@class TVCListSeparatorCell;
 	@class TVCListView;
 	@class TVCLogController;
+	@class TVCLogControllerHistoricLogFile;
 	@class TVCLogControllerOperationQueue;
 	@class TVCLogLine;
 	@class TVCLogPolicy;
@@ -277,6 +278,7 @@
 	#import "TVCListSeparatorCell.h"
 	#import "TVCListView.h"
 	#import "TVCLogController.h"
+	#import "TVCLogControllerHistoricLogFile.h"
 	#import "TVCLogControllerOperationQueue.h"
 	#import "TVCLogLine.h"
 	#import "TVCLogPolicy.h"

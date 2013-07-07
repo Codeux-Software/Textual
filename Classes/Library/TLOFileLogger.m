@@ -38,56 +38,13 @@
 
 #import "TextualApplication.h"
 
-#define _emptyDictionary			[NSDictionary dictionary]
-
-@interface TLOFileLogger ()
-@property (nonatomic, strong) NSMutableDictionary *temporaryPropertyList;
-@end
-
 @implementation TLOFileLogger
-
-#pragma mark -
-#pragma mark Read Data
-
-- (id)data
-{
-	if (self.writePlainText) {
-		/* This logger is not designed to be read for plain text logs. 
-		 Why would those be read at all? That is why we have not put
-		 too much care into this read method for them. */
-		
-		return [self.file availableData];
-	} else {
-		NSMutableDictionary *propertyList = [NSMutableDictionary dictionary];
-
-		[propertyList addEntriesFromDictionary:self.propertyList];
-		[propertyList addEntriesFromDictionary:self.temporaryPropertyList];
-
-		if (self.maxEntryCount && propertyList.count > self.maxEntryCount) {
-			NSArray *sortedKeys = propertyList.sortedDictionaryKeys;
-
-			for (NSString *skey in sortedKeys) {
-				NSAssertReturnLoopBreak(propertyList.count > self.maxEntryCount);
-
-				/* We cut out each object in order until the dictionary
-				 count is below or equal to the max entry count. */
-				[propertyList removeObjectForKey:skey];
-			}
-		}
-
-		return [propertyList sortedDictionary];
-	}
-
-	return nil;
-}
 
 #pragma mark -
 #pragma mark Plain Text API
 
 - (void)writePlainTextLine:(NSString *)s
 {
-	NSAssertReturn(self.writePlainText);
-
 	[self reopenIfNeeded];
 
 	PointerIsEmptyAssert(self.file);
@@ -102,151 +59,23 @@
 }
 
 #pragma mark -
-#pragma mark Property List API
-
-- (void)writePropertyListEntry:(NSDictionary *)s toKey:(NSString *)key
-{
-	NSAssertReturn(self.writePlainText == NO);
-
-	/* We use a temporary store for property list writes because we do not
-	 write to disk for every new entry. */
-	
-	[self reopenIfNeeded];
-
-	PointerIsEmptyAssert(self.temporaryPropertyList);
-
-	[self.temporaryPropertyList safeSetObject:s forKey:key];
-}
-
-- (void)updateCache
-{
-	NSAssertReturn(self.writePlainText == NO);
-	
-	[NSObject cancelPreviousPerformRequestsWithTarget:self];
-
-	[self updatePropertyListCache];
-}
-
-- (void)updatePropertyListCache /* @private */
-{
-	NSAssertReturn(self.writePlainText == NO);
-
-	/* We loop updatePropertyListCache every one minute to write any unsaved property
-	 list items to disk. Creating a property list and writing it to disk every time a new
-	 entry is created is probably a bad idea so we save periodically. */
-	[self performSelector:@selector(updatePropertyListCache) withObject:nil afterDelay:60.0];
-
-	/* If our temporary store is empty, then there is nothing to write. */
-	NSObjectIsEmptyAssert(self.temporaryPropertyList);
-
-	/* [self data] combines disk reads and our temporary store to create 
-	 our property list to make the call a seamless experience. */
-	NSDictionary *propertyList = [self data];
-	
-	NSString *parseError;
-
-	/* When we are debugging, write the property list as plain text. In production
-	 version we save in binary because it is faster and smaller. */
-#ifdef DEBUG
-	NSPropertyListFormat format = NSPropertyListXMLFormat_v1_0;
-#else
-	NSPropertyListFormat format = NSPropertyListBinaryFormat_v1_0;
-#endif
-
-	/* Create the new property list. */
-	NSData *plist = [NSPropertyListSerialization dataFromPropertyList:propertyList
-															   format:format
-													 errorDescription:&parseError];
-
-	/* Report results. */
-	if (NSObjectIsEmpty(plist) || parseError) {
-		/* What happens if plist = nil, but parseError is too? What error
-		  are we reporting. This error reporting needs some work. */
-		
-		LogToConsole(@"Error Creating Property List: %@", parseError);
-	} else {
-		/* Do the write. */
-		BOOL writeResult = [plist writeToFile:self.filename atomically:YES];
-
-		if (writeResult) {
-			/* Successful write. Clear our temporary store. */
-
-			[self.temporaryPropertyList removeAllObjects];
-		} else {
-			/* 
-				 When I was in fourth grade I asked my English teacher
-				 how to spell "write" when referring to the process of 
-				 putting pen/pencil to paper. I was sure it was W R I T E. 
-				 I made the question very clear to her, but still she insisted
-				 that I was wrong. She said that it was spelled R I G H T.
-				 Wrong word! I tried explaining. Only got me in trouble.
-				 
-				 True story. 'MERICA! 
-			 */
-			
-			LogToConsole(@"Write failed.");
-		}
-	}
-}
-
-- (NSDictionary *)propertyList /* @private */
-{
-	NSAssertReturnR((self.writePlainText == NO), _emptyDictionary);
-
-	NSData *rawData = [NSData dataWithContentsOfFile:self.filename];
-	
-	NSObjectIsEmptyAssertReturn(rawData, _emptyDictionary);
-
-	NSDictionary *plist = [NSPropertyListSerialization propertyListFromData:rawData
-														   mutabilityOption:NSPropertyListImmutable
-																	 format:NULL
-														   errorDescription:NULL];
-	
-	NSObjectIsEmptyAssertReturn(plist, _emptyDictionary);
-
-	return plist;
-}
-
-#pragma mark -
 #pragma mark File Handle Management
 
 - (void)reset
 {
-	if (self.writePlainText) {
-		/* Reset plain text file. */
-		
-		PointerIsEmptyAssert(self.file);
+	/* Reset plain text file. */
+	PointerIsEmptyAssert(self.file);
 
-		[self.file truncateFileAtOffset:0];
-	} else {
-		/* Reset property list. */
-
-		[RZFileManager() removeItemAtPath:self.filename error:NULL];
-
-		[NSObject cancelPreviousPerformRequestsWithTarget:self];
-
-		[self.temporaryPropertyList removeAllObjects];
-
-		self.filename = nil; // Invalidate everything.
-	}
+	[self.file truncateFileAtOffset:0];
 }
 
 - (void)close
 {
-	if (self.writePlainText) {
-		/* Close plain text file. */
-		
-		PointerIsEmptyAssert(self.file);
+	/* Close plain text file. */
+	PointerIsEmptyAssert(self.file);
 
-		[self.file closeFile];
-		self.file = nil;
-	} else {
-		/* Close property list. */
-		
-		self.temporaryPropertyList = nil;
-
-		[NSObject cancelPreviousPerformRequestsWithTarget:self];
-	}
+	[self.file closeFile];
+	self.file = nil;
 
 	self.filename = nil; // Invalidate everything. 
 }
@@ -298,24 +127,11 @@
 		[RZFileManager() createFileAtPath:self.filename contents:[NSData data] attributes:nil];
 	}
 
-	if (self.writePlainText == NO) {
-		/* Property list specific additions. */
+	/* Open our file handle. */
+	self.file = [NSFileHandle fileHandleForUpdatingAtPath:self.filename];
 
-		self.temporaryPropertyList = [NSMutableDictionary dictionary];
-
-		[self updatePropertyListCache];
-	} else {
-		/* Open our file handle. This is only used for plain text logging. 
-		 The property list writing requires the entire file to be replaced.
-		 This does not work well with a handle. It is best to use NSData 
-		 write and read APIs instead. A handle is better for plain text 
-		 logging where we are only appending data. Not replacing it. */
-		
-		self.file = [NSFileHandle fileHandleForUpdatingAtPath:self.filename];
-
-		if (self.file) {
-			[self.file seekToEndOfFile];
-		}
+	if (self.file) {
+		[self.file seekToEndOfFile];
 	}
 }
 
@@ -324,9 +140,7 @@
 
 - (NSString *)fileWritePath
 {
-	NSObjectIsEmptyAssertReturn(_fileWritePath, [TPCPreferences transcriptFolder]);
-
-	return _fileWritePath;
+	return [TPCPreferences transcriptFolder];
 }
 
 - (NSString *)buildPath
@@ -340,42 +154,40 @@
 
 	NSObjectIsEmptyAssertReturn(base, nil);
 
-	if (self.flatFileStructure == NO) {
-		NSString *serv = [self.client.name safeFilename];
-		NSString *chan = [self.channel.name safeFilename];
+	NSString *serv = [self.client.name safeFilename];
+	NSString *chan = [self.channel.name safeFilename];
 
-		/* When our folder structure is not flat, then we have to make sure the folders
-		 that we create our unique. The check of whether our folders are unique was not
-		 added until version 3.0.0. To keep backwards compatible, we first see if our 
-		 folder exists using the old naming scheme. If it does, then we use that for
-		 our write path. This makes the transition to the new naming scheme seamless
-		 for the end user. */
+	/* When our folder structure is not flat, then we have to make sure the folders
+	 that we create our unique. The check of whether our folders are unique was not
+	 added until version 3.0.0. To keep backwards compatible, we first see if our 
+	 folder exists using the old naming scheme. If it does, then we use that for
+	 our write path. This makes the transition to the new naming scheme seamless
+	 for the end user. */
 
-		/* To make the folder unique, we take the first five characters of the client's
-		 UUID which does not change between restarts. Not 100% accurate, but still works
-		 99.9999% of the time. */
+	/* To make the folder unique, we take the first five characters of the client's
+	 UUID which does not change between restarts. Not 100% accurate, but still works
+	 99.9999% of the time. */
 
-		if (forceUUID) {
-			NSString *oldPath = [self buildPath:NO];
+	if (forceUUID) {
+		NSString *oldPath = [self buildPath:NO];
 
-			/* Does the old path exist? */
-			if ([RZFileManager() fileExistsAtPath:oldPath]) {
-				return oldPath;
-			}
-
-			/* It did not exist… use new naming scheme. */
-			NSString *servHead = [self.client.config.itemUUID safeSubstringToIndex:5];
-
-			serv = [serv stringByAppendingFormat:@" (%@)", servHead];
+		/* Does the old path exist? */
+		if ([RZFileManager() fileExistsAtPath:oldPath]) {
+			return oldPath;
 		}
-		
-		if (PointerIsEmpty(self.channel)) {
-			return [base stringByAppendingFormat:@"/%@/%@/", serv, TLOFileLoggerConsoleDirectoryName];
-		} else if (self.channel.isPrivateMessage) {
-			return [base stringByAppendingFormat:@"/%@/%@/%@/", serv, TLOFileLoggerPrivateMessageDirectoryName, chan];
-		} else {
-			return [base stringByAppendingFormat:@"/%@/%@/%@/", serv, TLOFileLoggerChannelDirectoryName, chan];
-		}
+
+		/* It did not exist… use new naming scheme. */
+		NSString *servHead = [self.client.config.itemUUID safeSubstringToIndex:5];
+
+		serv = [serv stringByAppendingFormat:@" (%@)", servHead];
+	}
+	
+	if (PointerIsEmpty(self.channel)) {
+		return [base stringByAppendingFormat:@"/%@/%@/", serv, TLOFileLoggerConsoleDirectoryName];
+	} else if (self.channel.isPrivateMessage) {
+		return [base stringByAppendingFormat:@"/%@/%@/%@/", serv, TLOFileLoggerPrivateMessageDirectoryName, chan];
+	} else {
+		return [base stringByAppendingFormat:@"/%@/%@/%@/", serv, TLOFileLoggerChannelDirectoryName, chan];
 	}
 
 	return base;
@@ -383,22 +195,13 @@
 
 - (NSString *)buildFileName
 {
-	id filename = self.filenameOverride;
-	id extension = @"txt";
-	
-	if (self.flatFileStructure) {
-		extension = @"plist";
-	}
-
-	if (NSObjectIsEmpty(filename)) {
-		filename = [[NSDate date] dateWithCalendarFormat:@"%Y-%m-%d" timeZone:nil];
-	}
+	NSDate *filename = [[NSDate date] dateWithCalendarFormat:@"%Y-%m-%d" timeZone:nil];
 
 	NSString *buildPath = self.buildPath;
 
 	NSObjectIsEmptyAssertReturn(buildPath, NSStringEmptyPlaceholder);
 
-	return [NSString stringWithFormat:@"%@%@.%@", buildPath, filename, extension];
+	return [NSString stringWithFormat:@"%@%@.txt", buildPath, filename];
 }
 
 #pragma mark -

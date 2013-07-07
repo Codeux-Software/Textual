@@ -40,7 +40,7 @@
 
 #define _internalPlaybackLineCountLimit			100
 
-#define  _zncPlaybackBufferItemTimeAddition			0.000001
+#define _zncPlaybackBufferItemTimeAddition			0.000001
 
 @interface TVCLogController ()
 @property (nonatomic, readonly, uweak) TPCThemeSettings *themeSettings;
@@ -149,17 +149,10 @@
 		return;
 	}
 
-	self.historicLogFile = [TLOFileLogger new];
-	self.historicLogFile.flatFileStructure = YES;
-	self.historicLogFile.writePlainText = NO;
-	self.historicLogFile.fileWritePath = [TPCPreferences applicationCachesFolderPath];
+	self.historicLogFile = [TVCLogControllerHistoricLogFile new];
+	
+	self.historicLogFile.owner = self;
 	self.historicLogFile.maxEntryCount = _internalPlaybackLineCountLimit;
-
-	if (PointerIsEmpty(self.channel)) {
-		self.historicLogFile.filenameOverride = self.client.config.itemUUID;
-	} else {
-		self.historicLogFile.filenameOverride = [NSString stringWithFormat:@"%@-%@", self.client.config.itemUUID, self.channel.name];
-	}
 
 	[self.historicLogFile reopenIfNeeded];
 
