@@ -5,7 +5,6 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.pdf and Acknowledgements.pdf
 
@@ -38,25 +37,18 @@
 
 #import "TextualApplication.h"
 
-/* This is the class used for logging to text in Textual… */
-
-#define TLOFileLoggerConsoleDirectoryName				@"Console"
-#define TLOFileLoggerChannelDirectoryName				@"Channels"
-#define TLOFileLoggerPrivateMessageDirectoryName		@"Queries"
-
-@interface TLOFileLogger : NSObject
-@property (nonatomic, nweak) IRCClient *client;
-@property (nonatomic, nweak) IRCChannel *channel;
-@property (nonatomic, strong) NSString *filename;
-@property (nonatomic, strong) NSString *fileWritePath;
-@property (nonatomic, strong) NSFileHandle *file;
+@interface TVCLogControllerHistoricLogFile : NSObject
+@property (nonatomic, nweak) TVCLogController *owner;
+@property (nonatomic, assign) NSInteger maxEntryCount;
 
 - (void)open;
 - (void)close;
 - (void)reset;
 - (void)reopenIfNeeded;
 
-- (NSString *)buildPath;
+- (void)updateCache; // Force update property list cache.
 
-- (void)writePlainTextLine:(NSString *)s;
+- (NSDictionary *)data;;
+
+- (void)writePropertyListEntry:(NSDictionary *)s toKey:(NSString *)key;
 @end

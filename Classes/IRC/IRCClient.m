@@ -2550,8 +2550,6 @@
 		if (PointerIsEmpty(self.logFile)) {
 			self.logFile = [TLOFileLogger new];
 			self.logFile.client = self;
-			self.logFile.writePlainText = YES;
-			self.logFile.flatFileStructure = NO;
 		}
 
 		NSString *logstr = [self.viewController renderedBodyForTranscriptLog:line];

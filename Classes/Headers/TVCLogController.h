@@ -45,9 +45,9 @@
 @property (nonatomic, strong) TVCLogPolicy *policy;
 @property (nonatomic, strong) TVCLogScriptEventSink *sink;
 @property (nonatomic, strong) TVCWebViewAutoScroll *autoScroller;
+@property (nonatomic, strong) TVCLogControllerHistoricLogFile *historicLogFile;
 @property (nonatomic, assign) BOOL isLoaded;
 @property (nonatomic, assign) BOOL needsLimitNumberOfLines;
-@property (nonatomic, strong) TLOFileLogger *historicLogFile;
 @property (nonatomic, assign) NSInteger activeLineCount;
 @property (nonatomic, assign) NSInteger maximumLineCount;
 @property (nonatomic, strong) NSString *lastVisitedHighlight;
