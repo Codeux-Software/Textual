@@ -56,6 +56,9 @@
 - (void)reset;
 - (void)reopenIfNeeded;
 
+- (void)updateWriteCache;
+- (void)updateWriteCacheTimer;
+
 - (NSString *)buildPath;
 
 - (void)writePlainTextLine:(NSString *)s;

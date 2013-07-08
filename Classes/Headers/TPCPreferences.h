@@ -127,6 +127,7 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (BOOL)channelNavigationIsServerSpecific;
 
 + (BOOL)logTranscript;
++ (BOOL)logTranscriptInBatches;
 
 + (NSString *)transcriptFolder;
 + (void)setTranscriptFolder:(id)value;

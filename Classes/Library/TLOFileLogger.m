@@ -38,6 +38,10 @@
 
 #import "TextualApplication.h"
 
+@interface TLOFileLogger ()
+@property (strong) NSMutableString *temporaryWriteString;
+@end
+
 @implementation TLOFileLogger
 
 #pragma mark -
@@ -51,11 +55,63 @@
 
 	NSString *writeString = [NSString stringWithFormat:@"%@%@", s, NSStringNewlinePlaceholder];
 
-	NSData *writeData = [self.client convertToCommonEncoding:writeString];
+	NSObjectIsEmptyAssert(writeString);
+	
+	if ([TPCPreferences logTranscriptInBatches]) {
+		/* If we are going to log in batches, then make sure we have
+		 a string to append data to. */
+		if (PointerIsEmpty(self.temporaryWriteString)) {
+			self.temporaryWriteString = [NSMutableString string];
+		}
 
-	NSObjectIsEmptyAssert(writeData);
+		[self.temporaryWriteString appendString:writeString];
+	} else {
+		/* Write straight to file. */
+		NSData *writeData = [self.client convertToCommonEncoding:writeString];
+		
+		NSObjectIsEmptyAssert(writeData);
+
+		[self.file writeData:writeData];
+	}
+}
+
+- (void)updateWriteCacheInternalInit
+{
+	/* Twenty seconds seems a fair value… */
+	[self performSelector:@selector(updateWriteCacheInternalInit) withObject:nil afterDelay:20.0];
+
+	/* Write buffer. */
+	[self updateWriteCache];
+}
+
+- (void)updateWriteCache
+{
+	NSObjectIsEmptyAssert(self.temporaryWriteString);
+	
+	/* Write cache to the file. */
+	NSData *writeData = [self.client convertToCommonEncoding:self.temporaryWriteString];
 
 	[self.file writeData:writeData];
+
+	/* Remove cache. */
+	[self.temporaryWriteString setString:NSStringEmptyPlaceholder];
+}
+
+- (void)updateWriteCacheTimer
+{
+	/* Cancel any previous perform requests. aka timers. */
+	[NSObject cancelPreviousPerformRequestsWithTarget:self];
+
+	if ([TPCPreferences logTranscriptInBatches]) {
+		/* Clear any existing buffer and reset timer. */
+		[self updateWriteCacheInternalInit];
+	} else {
+		/* We aren't writing in batches anymore. Do we have a previous cache? */
+		[self updateWriteCache];
+
+		/* nil out any existing cache store. */
+		self.temporaryWriteString = nil;
+	}
 }
 
 #pragma mark -
@@ -66,6 +122,8 @@
 	/* Reset plain text file. */
 	PointerIsEmptyAssert(self.file);
 
+	self.temporaryWriteString = nil;
+
 	[self.file truncateFileAtOffset:0];
 }
 
@@ -73,6 +131,8 @@
 {
 	/* Close plain text file. */
 	PointerIsEmptyAssert(self.file);
+
+	[self updateWriteCache];
 
 	[self.file closeFile];
 	self.file = nil;
@@ -133,6 +193,8 @@
 	if (self.file) {
 		[self.file seekToEndOfFile];
 	}
+
+	[self updateWriteCacheInternalInit];
 }
 
 #pragma mark -
