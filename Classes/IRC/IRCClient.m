@@ -295,7 +295,9 @@
 - (void)terminate
 {
 	[self quit];
+	
 	[self closeDialogs];
+	[self closeLogFile];
 
 	for (IRCChannel *c in self.channels) {
 		[c terminate];
@@ -314,6 +316,8 @@
 
 - (void)preferencesChanged
 {
+	[self reopenLogFileIfNeeded];
+
 	[self.viewController preferencesChanged];
 
 	for (IRCChannel *c in self.channels) {
@@ -2543,6 +2547,25 @@
 
 #pragma mark -
 #pragma mark Log File
+
+- (void)reopenLogFileIfNeeded
+{
+	if ([TPCPreferences logTranscript]) {
+		PointerIsEmptyAssert(self.logFile);
+
+		[self.logFile updateWriteCacheTimer];
+		[self.logFile reopenIfNeeded];
+	} else {
+		[self closeLogFile];
+	}
+}
+
+- (void)closeLogFile
+{
+	PointerIsEmptyAssert(self.logFile);
+
+	[self.logFile close];
+}
 
 - (void)writeToLogFile:(TVCLogLine *)line
 {

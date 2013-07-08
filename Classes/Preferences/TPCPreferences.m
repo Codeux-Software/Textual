@@ -809,6 +809,12 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() boolForKey:@"LogTranscript"];
 }
 
+
++ (BOOL)logTranscriptInBatches
+{
+	return [RZUserDefaults() boolForKey:@"LogTranscriptInBatches"];
+}
+
 + (BOOL)openBrowserInBackground
 {
 	return [RZUserDefaults() boolForKey:@"OpenClickedLinksInBackgroundBrowser"];
@@ -1412,6 +1418,7 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"DisplayUserListNoModeSymbol"]					= @(YES);
 	d[@"FocusSelectionOnMessageCommandExecution"]		= @(YES);
 	d[@"LogHighlights"]									= @(YES);
+	d[@"LogTranscriptInBatches"]						= @(YES);
 	d[@"ProcessChannelModesOnJoin"]						= @(YES);
 	d[@"ReplyUnignoredExternalCTCPRequests"]			= @(YES);
 	d[@"TrackConversationsWithColorHashing"]			= @(YES);
