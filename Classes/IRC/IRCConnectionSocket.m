@@ -150,6 +150,14 @@
 	NSRange _CRRange = [*refString rangeOfString:[NSString stringWithFormat:@"%C", _CR]];
 
 	if (_LFRange.location == NSNotFound) {
+		/* If we do not have any line end for this fragment and the refString is not
+		 empty, then we save the remaining fragment for processing once we have more
+		 information. */
+
+		NSObjectIsEmptyAssertReturn(*refString, nil);
+
+		self.bufferOverflowString = *refString;
+	
 		return nil;
 	}
 
@@ -260,7 +268,19 @@
 {
 	NSString *newData = [self convertFromCommonEncoding:data];
 
-	NSMutableString *readBuffer = [newData mutableCopy];
+	NSMutableString *readBuffer;
+	
+	BOOL hasOverflowPrefix = NSObjectIsNotEmpty(self.bufferOverflowString);
+
+	if (hasOverflowPrefix) {
+		readBuffer = [self.bufferOverflowString mutableCopy];
+
+		self.bufferOverflowString = nil; // Destroy old overflow;
+
+		[readBuffer appendString:newData];
+	} else {
+		readBuffer = [newData mutableCopy];
+	}
 
 	while (1 == 1) {
 		NSString *data = [self readLine:&readBuffer];
