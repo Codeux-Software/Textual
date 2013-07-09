@@ -140,41 +140,28 @@
 #pragma mark -
 #pragma mark Socket Read & Write
 
-- (NSString *)readLine
+- (NSString *)readLine:(NSMutableString **)refString
 {
-	NSObjectIsEmptyAssertReturn(self.socketBuffer, nil);
-
-	NSString *buffer = [self convertFromCommonEncoding:self.socketBuffer];
-
-	NSObjectIsEmptyAssertReturn(buffer, nil);
+	NSObjectIsEmptyAssertReturn(*refString, nil);
 	
 	NSInteger messageSubstringIndex = 0;
-	NSInteger newlineSubstringIndex = 0;
 
-	NSRange _LFRange = [buffer rangeOfString:[NSString stringWithFormat:@"%C", _LF]];
-	NSRange _CRRange = [buffer rangeOfString:[NSString stringWithFormat:@"%C", _CR]];
+	NSRange _LFRange = [*refString rangeOfString:[NSString stringWithFormat:@"%C", _LF]];
+	NSRange _CRRange = [*refString rangeOfString:[NSString stringWithFormat:@"%C", _CR]];
 
 	if (_LFRange.location == NSNotFound) {
 		return nil;
 	}
 
-	messageSubstringIndex =  _LFRange.location;
-	newlineSubstringIndex = (_LFRange.location + 1);
+	messageSubstringIndex = _LFRange.location;
 
 	if ((_LFRange.location - 1) == _CRRange.location) {
 		messageSubstringIndex -= 1;
 	}
 
-	NSString *readLine = [buffer safeSubstringToIndex:messageSubstringIndex];
-	NSString *newBuffer = [buffer safeSubstringFromIndex:newlineSubstringIndex];
+	NSString *readLine = [*refString substringToIndex:messageSubstringIndex];;
 
-	if (NSObjectIsEmpty(newBuffer)) {
-		self.socketBuffer = [NSMutableData new];
-	} else {
-		NSData *newBufferD = [self convertToCommonEncoding:newBuffer];
-
-		self.socketBuffer = [newBufferD mutableCopy];
-	}
+	[*refString deleteCharactersInRange:NSMakeRange(0, (messageSubstringIndex + 1))];
 
 	return readLine;
 }
@@ -220,9 +207,7 @@
 	self.isConnecting = NO;
 	self.isConnected = YES;
 
-	if ([self respondsToSelector:@selector(tcpClientDidConnect)]) {
-		[self performSelector:@selector(tcpClientDidConnect)];
-	}
+	[self performSelector:@selector(tcpClientDidConnect)];
 
 	if (self.client.rawModeEnabled) {
 		LogToConsole(@"Debug Information:");
@@ -239,9 +224,7 @@
 {
 	[self closeSocket];
 
-	if ([self respondsToSelector:@selector(tcpClientDidDisconnect)]) {
-		[self performSelector:@selector(tcpClientDidDisconnect)];
-	}
+	[self performSelector:@selector(tcpClientDidDisconnect)];
 }
 
 - (void)onSocket:(id)sender willDisconnectWithError:(NSError *)error
@@ -264,9 +247,7 @@
 				errorMessage = [error localizedDescription];
 			}
 
-			if ([self respondsToSelector:@selector(tcpClientDidError:)]) {
-				[self performSelector:@selector(tcpClientDidError:) withObject:errorMessage];
-			}
+			[self performSelector:@selector(tcpClientDidError:) withObject:errorMessage];
 		}
 
 		if ([self useNewSocketEngine]) {
@@ -277,10 +258,20 @@
 
 - (void)onSocket:(id)sock didReadData:(NSData *)data withTag:(long)tag
 {
-	[self.socketBuffer appendData:data];
+	NSString *newData = [self convertFromCommonEncoding:data];
 
-	if ([self respondsToSelector:@selector(tcpClientDidReceiveData)]) {
-		[self performSelector:@selector(tcpClientDidReceiveData)];
+	NSMutableString *readBuffer = [newData mutableCopy];
+
+	while (1 == 1) {
+		NSString *data = [self readLine:&readBuffer];
+
+		if (data == nil) {
+			break;
+		}
+
+		dispatch_sync(dispatch_get_main_queue(), ^{
+			[self performSelector:@selector(tcpClientDidReceiveData:) withObject:data];
+		});
 	}
 
 	[self.socketConnection readDataWithTimeout:(-1) tag:0];
@@ -288,9 +279,7 @@
 
 - (void)onSocket:(id)sock didWriteDataWithTag:(long)tag
 {
-	if ([self respondsToSelector:@selector(tcpClientDidSendData)]) {
-		[self performSelector:@selector(tcpClientDidSendData)];
-	}
+	[self performSelector:@selector(tcpClientDidSendData)];
 }
 
 #pragma mark -
@@ -314,9 +303,7 @@
 
 - (void)socket:(id)sock didReadData:(NSData *)data withTag:(long)tag
 {
-	dispatch_sync(dispatch_get_main_queue(), ^{
-		[self onSocket:sock didReadData:data withTag:tag];
-	});
+	[self onSocket:sock didReadData:data withTag:tag];
 }
 
 - (void)socket:(id)sock didWriteDataWithTag:(long)tag

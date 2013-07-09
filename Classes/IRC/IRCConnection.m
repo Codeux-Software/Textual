@@ -56,8 +56,6 @@
         self.floodTimer.selector = @selector(timerOnTimer:);
 
 		self.floodControlCurrentMessageCount = 0;
-
-		self.socketBuffer = [NSMutableData new];
 	}
 	
 	return self;
@@ -249,18 +247,10 @@
 	}
 }
 
-- (void)tcpClientDidReceiveData
+- (void)tcpClientDidReceiveData:(NSString *)data
 {
-	while (1 == 1) {
-		NSString *data = [self readLine];
-		
-		if (data == nil) {
-			break;
-		}
-		
-		if ([self.client respondsToSelector:@selector(ircConnectionDidReceive:)]) {
-			[self.client ircConnectionDidReceive:data];
-		}
+	if ([self.client respondsToSelector:@selector(ircConnectionDidReceive:)]) {
+		[self.client ircConnectionDidReceive:data];
 	}
 }
 
