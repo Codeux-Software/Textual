@@ -271,14 +271,6 @@
 
 	/* Conversation tracking scans based on nickname length. */
 	self.memberListLengthSorted = [self.memberList arrayByInsertingSortedObject:item usingComparator:[IRCUser nicknameLengthComparator]];
-
-	/* Check ignore. */
-	IRCAddressBook *ignoreChecks = [self.client checkIgnoreAgainstHostmask:item.hostmask
-															   withMatches:@[@"hideInMemberList"]];
-
-	if (PointerIsEmpty(ignoreChecks) || (ignoreChecks && [ignoreChecks hideInMemberList] == NO)) {
-		self.memberListIgnoreSorted = [self.memberListIgnoreSorted arrayByInsertingSortedObject:item usingComparator:NSDefaultComparator];
-	}
 }
 
 #pragma mark -
