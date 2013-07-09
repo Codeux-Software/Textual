@@ -1048,6 +1048,8 @@
 
 		[self.printingQueue cancelOperationsForViewController:self];
 
+		[self stopZNCPlaybackBufferTimer];
+
 		self.activeLineCount = 0;
 		self.lastVisitedHighlight = nil;
 
