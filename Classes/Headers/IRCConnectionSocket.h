@@ -42,7 +42,6 @@
 - (void)openSocket;
 - (void)closeSocket;
 
-- (NSString *)readLine;
 - (void)write:(NSData *)data;
 
 - (void)openSSLCertificateTrustDialog;
