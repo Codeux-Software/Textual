@@ -86,7 +86,6 @@ typedef enum TVCLogMemberType : NSInteger {
 @property (nonatomic, strong) NSArray *highlightKeywords;
 @property (nonatomic, strong) NSArray *excludeKeywords;
 @property (nonatomic, assign) NSInteger nicknameColorNumber;
-@property (nonatomic, assign) BOOL isZNCPlaybackBufferItem; /* This value is volatile. Not saved in dictionary. */
 
 - (NSString *)formattedTimestamp;
 - (NSString *)formattedNickname:(IRCChannel *)owner;

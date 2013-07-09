@@ -905,22 +905,13 @@
 	NSAssertReturnR(self.CAPServerTime, NO);
 	NSAssertReturnR(self.isZNCBouncerConnection, NO);
 
-	TPCThemeSettings *themeSettings = self.masterController.themeController.customSettings;
-
-	NSAssertReturnR(themeSettings.zncDelayedPlaybackBufferSupported, NO);
-
 	/* When Textual is using the server-time CAP with ZNC it does not tell us when
 	 the playback buffer begins and when it ends. Therefore, we must make a best 
 	 guess. We do this by checking if the message being parsed has a @time= attached
 	 to it from server-time and also if it was sent during join.
 	 
 	 This is all best guess… */
-
-	if ([NSDate secondsSinceUnixTimestamp:channel.channelJoinTime] <= ZNCBufferPlaybackChannelJoinTimeInterval) {
-		return m.isHistoric;
-	}
-
-	return NO;
+	return m.isHistoric;
 }
 
 #pragma mark -
@@ -2781,15 +2772,6 @@
 	c.rawCommand			= [command lowercaseString];
 
 	if (channel) {
-		if (rawMessage) {
-			if (type == TVCLogLinePrivateMessageType ||
-				type == TVCLogLineActionType ||
-				type == TVCLogLineNoticeType)
-			{
-				c.isZNCPlaybackBufferItem = [self messageIsPartOfZNCPlaybackBuffer:rawMessage inChannel:channel];
-			}
-		}
-			
 		if ([TPCPreferences autoAddScrollbackMark]) {
 			if (NSDissimilarObjects(channel, self.worldController.selectedChannel) || self.masterController.mainWindowIsActive == NO) {
 				if (channel.isUnread == NO) {

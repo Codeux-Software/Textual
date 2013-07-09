@@ -42,7 +42,6 @@
 
 @interface TPCThemeSettings : NSObject
 @property (nonatomic, assign) BOOL forceInvertSidebarColors;
-@property (nonatomic, assign) BOOL zncDelayedPlaybackBufferSupported;
 @property (nonatomic, strong) NSFont *channelViewFont;
 @property (nonatomic, strong) NSString *nicknameFormat;
 @property (nonatomic, strong) NSString *timestampFormat;

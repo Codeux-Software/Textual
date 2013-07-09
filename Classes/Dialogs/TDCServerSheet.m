@@ -57,21 +57,6 @@
 		
 		self.serverList = [NSDictionary dictionaryWithContentsOfFile:slp];
 
-		/* Update some controls. */
-		TPCThemeSettings *themeSettings = self.masterController.themeController.customSettings;
-
-		if (themeSettings.zncDelayedPlaybackBufferSupported) {
-			[self.zncThrottlePlaybackBufferCheck setEnabled:YES];
-
-			[self.zncThrottlePlaybackCheckNormalFootnode setHidden:NO];
-			[self.zncThrottlePlaybackCheckUnavailableFootnode setHidden:YES];
-		} else {
-			[self.zncThrottlePlaybackBufferCheck setEnabled:NO];
-
-			[self.zncThrottlePlaybackCheckNormalFootnode setHidden:YES];
-			[self.zncThrottlePlaybackCheckUnavailableFootnode setHidden:NO];
-		}
-
 		/* Populate the server address field with the IRC network list. */
 		NSArray *sortedKeys = [self.serverList allKeys];
 
@@ -334,7 +319,6 @@
 	self.serverPasswordField.stringValue	= self.config.serverPassword;
 	self.serverPortField.stringValue		= [NSString stringWithInteger:self.config.serverPort];
 
-	self.zncThrottlePlaybackBufferCheck.state		= self.config.zncThrottlePlaybackBuffer;
 	self.zncIgnorePlaybackNotificationsCheck.state	= self.config.zncIgnorePlaybackNotifications;
 
     self.prefersIPv6Check.state				= self.config.connectionPrefersIPv6;
@@ -418,7 +402,6 @@
 	self.config.connectionUsesSSL			= self.connectionUsesSSLCheck.state;
 	self.config.serverPassword				= self.serverPasswordField.trimmedStringValue;
 
-	self.config.zncThrottlePlaybackBuffer		= self.zncThrottlePlaybackBufferCheck.state;
 	self.config.zncIgnorePlaybackNotifications	= self.zncIgnorePlaybackNotificationsCheck.state;
 
 	self.config.performPongTimer				= self.pongTimerCheck.state;

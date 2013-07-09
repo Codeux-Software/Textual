@@ -197,7 +197,6 @@
 		self.timestampFormat			= [self stringForKey:@"Timestamp Format" fromDictionary:styleSettings];
 
 		self.forceInvertSidebarColors			= [self boolForKey:@"Force Invert Sidebars" fromDictionary:styleSettings];
-		self.zncDelayedPlaybackBufferSupported	= [self boolForKey:@"Supports ZNC Playback" fromDictionary:styleSettings];
 
 		self.underlyingWindowColor		= [self colorForKey:@"Underlying Window Color" fromDictionary:styleSettings];
 
