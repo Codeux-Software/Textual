@@ -821,7 +821,7 @@
 
 - (void)showScriptingDocumentation:(id)sender
 {
-	[RZWorkspace() openFile:[[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"Scripts/README.rtf"]];
+	[RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Writing-Scripts.wiki"]];
 }
 
 - (void)searchGoogle:(id)sender
