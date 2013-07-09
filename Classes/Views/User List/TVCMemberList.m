@@ -103,6 +103,17 @@
     // Do not draw focus ring …
 }
 
+- (void)reloadData
+{
+	if ([self.worldController.selectedItem isChannel]) {
+		/* Populate data for member list. */
+		
+		[(IRCChannel *)self.worldController.selectedItem reloadIgnoreSortedMemberList];
+	}
+	
+	[super reloadData];
+}
+
 #pragma mark -
 #pragma mark User Interface Design Elements
 

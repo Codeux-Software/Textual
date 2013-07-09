@@ -453,29 +453,25 @@
 
 - (void)reloadIgnoreSortedMemberList
 {
-	if (NSObjectIsEmpty(self.memberListIgnoreSorted)) {
-		NSMutableArray *listCopy = [self.memberList mutableCopy];
+	NSMutableArray *listCopy = [self.memberList mutableCopy];
 
-		for (IRCUser *user in self.memberList) {
-			NSObjectIsEmptyAssertLoopContinue(user.hostmask);
+	for (IRCUser *user in self.memberList) {
+		NSObjectIsEmptyAssertLoopContinue(user.hostmask);
 
-			IRCAddressBook *ignoreChecks = [self.client checkIgnoreAgainstHostmask:user.hostmask
-																	   withMatches:@[@"hideInMemberList"]];
+		IRCAddressBook *ignoreChecks = [self.client checkIgnoreAgainstHostmask:user.hostmask
+																   withMatches:@[@"hideInMemberList"]];
 
-			if (ignoreChecks && [ignoreChecks hideInMemberList]) {
-				[listCopy removeObject:user];
-			}
+		if (ignoreChecks && [ignoreChecks hideInMemberList]) {
+			[listCopy removeObject:user];
 		}
-
-		self.memberListIgnoreSorted = listCopy;
 	}
+
+	self.memberListIgnoreSorted = listCopy;
 }
 
 - (void)reloadMemberList
 {
 	if (self.worldController.selectedItem == self) {
-		[self reloadIgnoreSortedMemberList];
-
 		[self.masterController.memberList reloadData];
 	}
 }
