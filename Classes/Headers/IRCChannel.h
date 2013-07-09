@@ -58,6 +58,7 @@ typedef enum IRCChannelStatus : NSInteger {
 
 @property (strong) NSArray *memberList;
 @property (strong) NSArray *memberListLengthSorted; // Sorted member list based on nickname length. Used by conversation tracking.
+@property (strong) NSArray *memberListIgnoreSorted; // memberList with excluded ignored users. Actual data source for the member list table.
 
 - (void)setup:(IRCChannelConfig *)seed;
 - (void)updateConfig:(IRCChannelConfig *)seed;

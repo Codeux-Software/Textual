@@ -1227,8 +1227,12 @@
 	
 	[log notifyDidBecomeVisible];
 	
-	if ([self.selectedItem isClient]) {
-		self.serverList.menu = self.masterController.serverMenuItem.submenu;
+	if ([self.selectedItem isClient] || [self.selectedItem isPrivateMessage]) {
+		if ([self.selectedItem isClient]) {
+			self.serverList.menu = self.masterController.serverMenuItem.submenu;
+		} else {
+			self.serverList.menu = self.masterController.channelMenuItem.submenu;
+		}
 		
 		self.memberList.dataSource = nil;
 		self.memberList.delegate = nil;
@@ -1239,8 +1243,14 @@
 		
 		self.memberList.dataSource = self.selectedItem;
 		self.memberList.delegate = self.selectedItem;
-		
-		[self.memberList reloadData];
+
+		if ([self.previouslySelectedItem isChannel]) {
+			IRCChannel *previousChan = (id)self.previouslySelectedItem;
+
+			previousChan.memberListIgnoreSorted = @[];
+		}
+
+		[(IRCChannel *)self.selectedItem reloadMemberList];
 	}
 	
 	[self.memberList deselectAll:nil];

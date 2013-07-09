@@ -257,6 +257,7 @@
 {
 	/* Do not call this unless needed. */
 	self.memberList = [self.memberList sortedArrayUsingComparator:NSDefaultComparator];
+
 	self.memberListLengthSorted = [self.memberList sortedArrayUsingComparator:[IRCUser nicknameLengthComparator]];
 
 	[self reloadMemberList];
@@ -270,6 +271,14 @@
 
 	/* Conversation tracking scans based on nickname length. */
 	self.memberListLengthSorted = [self.memberList arrayByInsertingSortedObject:item usingComparator:[IRCUser nicknameLengthComparator]];
+
+	/* Check ignore. */
+	IRCAddressBook *ignoreChecks = [self.client checkIgnoreAgainstHostmask:item.hostmask
+															   withMatches:@[@"hideInMemberList"]];
+
+	if (PointerIsEmpty(ignoreChecks) || (ignoreChecks && [ignoreChecks hideInMemberList] == NO)) {
+		self.memberListIgnoreSorted = [self.memberListIgnoreSorted arrayByInsertingSortedObject:item usingComparator:NSDefaultComparator];
+	}
 }
 
 #pragma mark -
@@ -391,6 +400,9 @@
 {
 	self.memberList = nil;
 	self.memberList = @[];
+
+	self.memberListLengthSorted = @[];
+	self.memberListIgnoreSorted = @[];
 	
 	[self reloadMemberList];
 }
@@ -447,9 +459,31 @@
 
 #pragma mark -
 
+- (void)reloadIgnoreSortedMemberList
+{
+	if (NSObjectIsEmpty(self.memberListIgnoreSorted)) {
+		NSMutableArray *listCopy = [self.memberList mutableCopy];
+
+		for (IRCUser *user in self.memberList) {
+			NSObjectIsEmptyAssertLoopContinue(user.hostmask);
+
+			IRCAddressBook *ignoreChecks = [self.client checkIgnoreAgainstHostmask:user.hostmask
+																	   withMatches:@[@"hideInMemberList"]];
+
+			if (ignoreChecks && [ignoreChecks hideInMemberList]) {
+				[listCopy removeObject:user];
+			}
+		}
+
+		self.memberListIgnoreSorted = listCopy;
+	}
+}
+
 - (void)reloadMemberList
 {
 	if (self.worldController.selectedItem == self) {
+		[self reloadIgnoreSortedMemberList];
+
 		[self.masterController.memberList reloadData];
 	}
 }
@@ -497,7 +531,7 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-	return [self numberOfMembers];
+	return [self.memberListIgnoreSorted count];
 }
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
@@ -507,14 +541,14 @@
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	IRCUser *user = [self memberAtIndex:row];
+	IRCUser *user = self.memberListIgnoreSorted[row];
 
 	return TXTFLS(@"AccessibilityMemberListDescription", user.nickname, [self.name channelNameToken]);
 }
 
 - (void)tableView:(NSTableView *)sender willDisplayCell:(TVCMemberListCell *)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	cell.memberPointer = self.memberList[row];
+	cell.memberPointer = self.memberListIgnoreSorted[row];
 }
 
 @end
