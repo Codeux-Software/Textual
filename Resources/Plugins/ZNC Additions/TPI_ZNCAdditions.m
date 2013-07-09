@@ -46,18 +46,20 @@
 						 sender:(NSDictionary *)senderDict
 						message:(NSDictionary *)messageDict
 {
-	NSString *sender = [senderDict objectForKey:@"senderNickname"];
-	NSString *message = [messageDict objectForKey:@"messageSequence"];
+	if (client.isZNCBouncerConnection) {
+		NSString *sender = [senderDict objectForKey:@"senderNickname"];
+		NSString *message = [messageDict objectForKey:@"messageSequence"];
 
-	if ([sender isEqualToString:@"*status"] && [message hasPrefix:@"Disconnected from IRC"]) {
-		/* We listen for ZNC disconnects so that we can terminate channels when we
-		 disconnect from the server ZNC was connected to. ZNC does not localize 
-		 itself so detecting these disconnects is not very hard… */
+		if ([sender isEqualToString:@"*status"] && [message hasPrefix:@"Disconnected from IRC"]) {
+			/* We listen for ZNC disconnects so that we can terminate channels when we
+			 disconnect from the server ZNC was connected to. ZNC does not localize 
+			 itself so detecting these disconnects is not very hard… */
 
-		/* handleIRCSideDisconnect: calls -deactivate on IRCChannel. That call in 
-		 IRCChannel posts a script event to the active style. Therefore, we have to
-		 invoke the calls on the main thread because WebKit is not thread safe. */
-		[self.iomt handleIRCSideDisconnect:client];
+			/* handleIRCSideDisconnect: calls -deactivate on IRCChannel. That call in 
+			 IRCChannel posts a script event to the active style. Therefore, we have to
+			 invoke the calls on the main thread because WebKit is not thread safe. */
+			[self.iomt handleIRCSideDisconnect:client];
+		}
 	}
 }
 
