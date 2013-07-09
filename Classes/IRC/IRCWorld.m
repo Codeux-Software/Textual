@@ -1195,17 +1195,21 @@
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)note
 {
+	/* Store previous selection. */
 	[self storePreviousSelection];
-	
+
+	/* Reset spelling for text field. */
 	TVCInputTextField *textField = self.masterController.inputTextField;
 	
 	[RZSpellChecker() setIgnoredWords:@[] inSpellDocumentWithTag:textField.spellCheckerDocumentTag];
-	
+
+	/* Prepare next item. */
 	id nextItem = [self.serverList itemAtRow:self.serverList.selectedRow];
 
 	[self.selectedItem resetState]; // Reset state of old item.
 	self.selectedItem = nextItem;
-	
+
+	/* Destroy member list if we have no selection. */
 	if (PointerIsEmpty(self.selectedItem)) {
 		[self.channelViewBox setContentView:nil];
 		
@@ -1219,21 +1223,44 @@
 		return;
 	}
 	
-	[self.selectedItem resetState];
-	
+	/* Setup WebKit. */
 	TVCLogController *log = self.selectedViewController;
 
 	[self.channelViewBox setContentView:log.view];
 	
 	[log notifyDidBecomeVisible];
-	
-	if ([self.selectedItem isClient] || [self.selectedItem isPrivateMessage]) {
+
+	[log.view clearSelection];
+
+	/* Some common defines. */
+	IRCChannel *previousChannel;
+	IRCChannel *newChannel;
+
+	if (self.previouslySelectedItem && [self.previouslySelectedItem isChannel]) {
+		previousChannel = (id)self.previouslySelectedItem;
+	}
+
+	if (self.selectedItem && [self.selectedItem isChannel]) {
+		newChannel = (id)self.selectedItem;
+	}
+
+	/* Destroy old cached member list. */
+	if (previousChannel) {
+		previousChannel.memberListIgnoreSorted = nil;
+	}
+
+	/* Prepare the member list for the selection. */
+	if ([self.selectedItem isClient] ||
+		[self.selectedItem isPrivateMessage])
+	{
 		if ([self.selectedItem isClient]) {
 			self.serverList.menu = self.masterController.serverMenuItem.submenu;
 		} else {
 			self.serverList.menu = self.masterController.channelMenuItem.submenu;
 		}
-		
+
+		/* Private messages and the client console
+		 do not have a member list. */
 		self.memberList.dataSource = nil;
 		self.memberList.delegate = nil;
 		
@@ -1244,23 +1271,19 @@
 		self.memberList.dataSource = self.selectedItem;
 		self.memberList.delegate = self.selectedItem;
 
-		if ([self.previouslySelectedItem isChannel]) {
-			IRCChannel *previousChan = (id)self.previouslySelectedItem;
-
-			previousChan.memberListIgnoreSorted = @[];
-		}
-
-		[(IRCChannel *)self.selectedItem reloadMemberList];
+		[self.memberList reloadData];
 	}
-	
+
+	/* Finish member list. */
 	[self.memberList deselectAll:nil];
 	[self.memberList scrollRowToVisible:0];
 	[self.memberList updateBackgroundColor];
-    
+
+	/* Begin work on text field. */
     [textField focus];
-	
-	[log.view clearSelection];
-	
+
+	/* Setup text field value with history item when we have 
+	 history setup to be channel specific. */
 	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
 		NSAttributedString *inputValue = [textField attributedStringValue];
 		
@@ -1279,22 +1302,21 @@
 			[textField setAttributedStringValue:newHistory.lastHistoryItem];
 		}
 	}
-
-	IRCChannel *channel = (IRCChannel *)self.selectedItem;
 	
-	if (self.selectedItem.isClient || channel.isPrivateMessage) {
+	if (self.selectedItem.isClient || self.selectedItem.isPrivateMessage) {
 		[self.masterController showMemberListSplitView:NO];
 	} else {
 		[self.masterController showMemberListSplitView:YES];
 	}
 
+	/* Finish up. */
 	[self.masterController updateSegmentedController];
 
 	[self updateIcon];
 	[self updateTitle];
 
-	[self.serverList updateDrawingForItem:self.selectedItem skipDrawingCheck:YES];
-	[self.serverList updateDrawingForItem:self.previouslySelectedItem skipDrawingCheck:YES];
+	[self.serverList updateDrawingForItem:self.selectedItem				skipDrawingCheck:YES];
+	[self.serverList updateDrawingForItem:self.previouslySelectedItem	skipDrawingCheck:YES];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)sender writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
