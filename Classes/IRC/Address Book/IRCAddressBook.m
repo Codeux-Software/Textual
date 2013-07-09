@@ -54,7 +54,8 @@
 		self.ignorePublicHighlights		= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreHighlights", NO);
 		self.ignorePublicMessages		= NSDictionaryBOOLKeyValueCompare(dic, @"ignorePublicMsg", NO);
 
-		self.hideMessagesContainingMatch = NSDictionaryBOOLKeyValueCompare(dic, @"hideMessagesContainingMatch", NO);
+		self.hideMessagesContainingMatch	= NSDictionaryBOOLKeyValueCompare(dic, @"hideMessagesContainingMatch", NO);
+		self.hideInMemberList				= NSDictionaryBOOLKeyValueCompare(dic, @"hideInMemberList", NO);
 
 		/* entryType must be set above hostmask since setHostmask: reads entryType. */
 		self.entryType = NSDictionaryIntegerKeyValueCompare(dic, @"entryType", IRCAddressBookIgnoreEntryType);
@@ -149,6 +150,7 @@
 
 	[dic setInteger:self.entryType forKey:@"entryType"];
 
+	[dic setBool:self.hideInMemberList				forKey:@"hideInMemberList"];
 	[dic setBool:self.hideMessagesContainingMatch	forKey:@"hideMessagesContainingMatch"];
 
 	[dic setBool:self.ignorePublicMessages		forKey:@"ignorePublicMsg"];
