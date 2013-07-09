@@ -52,12 +52,10 @@
 @property (nonatomic, assign) NSInteger maximumLineCount;
 @property (nonatomic, strong) NSString *lastVisitedHighlight;
 @property (nonatomic, strong) NSMutableArray *highlightedLineNumbers;
-@property (nonatomic, strong) TLOTimer *zncPlaybackTimer;
 
 @property (assign) BOOL reloadingBacklog;
 @property (assign) BOOL reloadingHistory;
 @property (strong) NSMutableArray *pendingPrintOperations; // Plugins… do not try and modify this array. EVER!
-@property (strong) NSMutableArray *zncPlaybackBufferOperations; // Pending print jobs for the ZNC playback buffer.
 
 - (void)setUp;
 - (void)notifyDidBecomeVisible;
@@ -94,9 +92,6 @@
 - (NSString *)renderedBodyForTranscriptLog:(TVCLogLine *)line;
 
 - (void)logViewOnDoubleClick:(NSString *)e;
-
-- (void)startZNCPlaybackBufferTimer;
-- (void)stopZNCPlaybackBufferTimer;
 
 - (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args; // Defaults to onQueue YES
 - (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args onQueue:(BOOL)onQueue;

@@ -73,7 +73,6 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 		self.invisibleMode       = NO;
 		self.isTrustedConnection = NO;
 
-		self.zncThrottlePlaybackBuffer = NO;
 		self.zncIgnorePlaybackNotifications = YES;
 
 		self.proxyType		 = TXConnectionNoProxyType;
@@ -239,7 +238,6 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 		self.serverPort		= NSDictionaryIntegerKeyValueCompare(dic, @"serverPort", self.serverPort);
 		self.username		= NSDictionaryObjectKeyValueCompare(dic, @"identityUsername", self.username);
 
-		self.zncThrottlePlaybackBuffer			= NSDictionaryBOOLKeyValueCompare(dic, @"ZNC —> Throttle Playback Buffer", self.zncThrottlePlaybackBuffer);
 		self.zncIgnorePlaybackNotifications		= NSDictionaryBOOLKeyValueCompare(dic, @"ZNC —> Ignore Playback Buffer Highlights", self.zncIgnorePlaybackNotifications);
 
 		[self.alternateNicknames addObjectsFromArray:[dic arrayForKey:@"identityAlternateNicknames"]];
@@ -326,7 +324,6 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
     [dic setBool:self.connectionPrefersIPv6			forKey:@"DNSResolverPrefersIPv6"];
     [dic setBool:self.sidebarItemExpanded			forKey:@"serverListItemIsExpanded"];
 
-	[dic setBool:self.zncThrottlePlaybackBuffer			forKey:@"ZNC —> Throttle Playback Buffer"];
 	[dic setBool:self.zncIgnorePlaybackNotifications	forKey:@"ZNC —> Ignore Playback Buffer Highlights"];
 
 	[dic safeSetObject:self.alternateNicknames			forKey:@"identityAlternateNicknames"];

@@ -1407,7 +1407,6 @@
 						<string key="NSFrame">{{130, 13}, {257, 13}}</string>
 						<reference key="NSSuperview" ref="575911949"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSAntiCompressionPriority">{250, 750}</string>
 						<bool key="NSEnabled">YES</bool>
@@ -1427,67 +1426,23 @@
 						</object>
 						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
-					<object class="NSTextField" id="878025153">
-						<reference key="NSNextResponder" ref="575911949"/>
-						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{93, 58}, {366, 70}}</string>
-						<reference key="NSSuperview" ref="575911949"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="1027273183"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<string key="NSAntiCompressionPriority">{250, 750}</string>
-						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="393887768">
-							<int key="NSCellFlags">67108864</int>
-							<int key="NSCellFlags2">272629760</int>
-							<string key="NSContents">This feature is not available because the active style does not support it. Please try switching to a style bundled with Textual.</string>
-							<reference key="NSSupport" ref="26055054"/>
-							<string key="NSCellIdentifier">_NS:9</string>
-							<reference key="NSControlView" ref="878025153"/>
-							<reference key="NSBackgroundColor" ref="719856035"/>
-							<reference key="NSTextColor" ref="455806945"/>
-						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-					</object>
 					<object class="NSTextField" id="784598093">
 						<reference key="NSNextResponder" ref="575911949"/>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{92, 165}, {366, 29}}</string>
 						<reference key="NSSuperview" ref="575911949"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="457990703"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSAntiCompressionPriority">{250, 750}</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="394461444">
 							<int key="NSCellFlags">67108864</int>
 							<int key="NSCellFlags2">272629760</int>
-							<string key="NSContents">Notifications are not posted regardless of whether this setting is checked or not if the playback buffer is set to be delayed.</string>
+							<string key="NSContents">Do not show notification bubbles or play sounds for messages that are part of the ZNC playback buffer.</string>
 							<reference key="NSSupport" ref="26055054"/>
 							<string key="NSCellIdentifier">_NS:9</string>
 							<reference key="NSControlView" ref="784598093"/>
-							<reference key="NSBackgroundColor" ref="719856035"/>
-							<reference key="NSTextColor" ref="455806945"/>
-						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-					</object>
-					<object class="NSTextField" id="544505377">
-						<reference key="NSNextResponder" ref="575911949"/>
-						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{93, 58}, {366, 70}}</string>
-						<reference key="NSSuperview" ref="575911949"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="878025153"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<string key="NSAntiCompressionPriority">{250, 750}</string>
-						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="1040854237">
-							<int key="NSCellFlags">67108864</int>
-							<int key="NSCellFlags2">272629760</int>
-							<string key="NSContents">This is recommended when a large playback buffer is in use. By delaying the playback buffer, Textual will gather the entire buffer in the background and process it all at once to reduce load on WebKit. The actual delay is for a total of ten seconds. When the delay is over, the buffer is will appear at the top of the chat view.</string>
-							<reference key="NSSupport" ref="26055054"/>
-							<string key="NSCellIdentifier">_NS:9</string>
-							<reference key="NSControlView" ref="544505377"/>
 							<reference key="NSBackgroundColor" ref="719856035"/>
 							<reference key="NSTextColor" ref="455806945"/>
 						</object>
@@ -1520,33 +1475,6 @@
 						</object>
 						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
-					<object class="NSButton" id="457990703">
-						<reference key="NSNextResponder" ref="575911949"/>
-						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{64, 136}, {187, 18}}</string>
-						<reference key="NSSuperview" ref="575911949"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="544505377"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<bool key="NSEnabled">YES</bool>
-						<object class="NSButtonCell" key="NSCell" id="984995836">
-							<int key="NSCellFlags">-2080374784</int>
-							<int key="NSCellFlags2">268435456</int>
-							<string key="NSContents">Delay the playback buffer.</string>
-							<reference key="NSSupport" ref="788253527"/>
-							<string key="NSCellIdentifier">_NS:9</string>
-							<reference key="NSControlView" ref="457990703"/>
-							<int key="NSButtonFlags">1211912448</int>
-							<int key="NSButtonFlags2">2</int>
-							<reference key="NSNormalImage" ref="295341342"/>
-							<reference key="NSAlternateImage" ref="335051110"/>
-							<string key="NSAlternateContents"/>
-							<string key="NSKeyEquivalent"/>
-							<int key="NSPeriodicDelay">200</int>
-							<int key="NSPeriodicInterval">25</int>
-						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-					</object>
 					<object class="NSScrollView" id="815445297">
 						<reference key="NSNextResponder" ref="575911949"/>
 						<int key="NSvFlags">256</int>
@@ -1561,7 +1489,7 @@
 										<string key="NSFrameSize">{443, 81}</string>
 										<reference key="NSSuperview" ref="414245186"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="649735427"/>
+										<reference key="NSNextKeyView" ref="823894951"/>
 										<string key="NSReuseIdentifierKey">_NS:13</string>
 										<object class="NSTextContainer" key="NSTextContainer" id="549246383">
 											<object class="NSLayoutManager" key="NSLayoutManager">
@@ -1763,7 +1691,7 @@
 						<string key="NSFrame">{{37, 199}, {443, 81}}</string>
 						<reference key="NSSuperview" ref="575911949"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="823894951"/>
+						<reference key="NSNextKeyView" ref="414245186"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<int key="NSsFlags">153600</int>
 						<reference key="NSVScroller" ref="823894951"/>
@@ -3702,7 +3630,7 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomView" id="672887615">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSButton" id="577534171">
@@ -3710,7 +3638,6 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 						<int key="NSvFlags">256</int>
 						<string key="NSFrame">{{74, 122}, {368, 18}}</string>
 						<reference key="NSSuperview" ref="672887615"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="256858996">
 							<int key="NSCellFlags">67108864</int>
@@ -3779,7 +3706,6 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 					</object>
 				</array>
 				<string key="NSFrameSize">{517, 303}</string>
-				<reference key="NSSuperview"/>
 				<reference key="NSNextKeyView" ref="519075805"/>
 				<string key="NSReuseIdentifierKey">_NS:499</string>
 				<string key="NSClassName">NSView</string>
@@ -4429,14 +4355,6 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">zncThrottlePlaybackBufferCheck</string>
-						<reference key="source" ref="108852464"/>
-						<reference key="destination" ref="457990703"/>
-					</object>
-					<int key="connectionID">2577</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">zncIgnorePlaybackNotificationsCheck</string>
 						<reference key="source" ref="108852464"/>
 						<reference key="destination" ref="649735427"/>
@@ -4450,22 +4368,6 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 						<reference key="destination" ref="519075805"/>
 					</object>
 					<int key="connectionID">2592</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">zncThrottlePlaybackCheckUnavailableFootnode</string>
-						<reference key="source" ref="108852464"/>
-						<reference key="destination" ref="878025153"/>
-					</object>
-					<int key="connectionID">2597</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">zncThrottlePlaybackCheckNormalFootnode</string>
-						<reference key="source" ref="108852464"/>
-						<reference key="destination" ref="544505377"/>
-					</object>
-					<int key="connectionID">2598</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -6470,11 +6372,8 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 						<reference key="object" ref="575911949"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="815445297"/>
-							<reference ref="457990703"/>
 							<reference ref="649735427"/>
-							<reference ref="544505377"/>
 							<reference ref="784598093"/>
-							<reference ref="878025153"/>
 							<reference ref="1027273183"/>
 						</array>
 						<reference key="parent" ref="0"/>
@@ -6506,19 +6405,6 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 						<reference key="parent" ref="815445297"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">2571</int>
-						<reference key="object" ref="457990703"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="984995836"/>
-						</array>
-						<reference key="parent" ref="575911949"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">2572</int>
-						<reference key="object" ref="984995836"/>
-						<reference key="parent" ref="457990703"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">2580</int>
 						<reference key="object" ref="649735427"/>
 						<array class="NSMutableArray" key="children">
@@ -6532,17 +6418,17 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 						<reference key="parent" ref="649735427"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">2586</int>
-						<reference key="object" ref="544505377"/>
+						<int key="objectID">2599</int>
+						<reference key="object" ref="1027273183"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="1040854237"/>
+							<reference ref="176473673"/>
 						</array>
 						<reference key="parent" ref="575911949"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">2587</int>
-						<reference key="object" ref="1040854237"/>
-						<reference key="parent" ref="544505377"/>
+						<int key="objectID">2600</int>
+						<reference key="object" ref="176473673"/>
+						<reference key="parent" ref="1027273183"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2590</int>
@@ -6556,32 +6442,6 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 						<int key="objectID">2591</int>
 						<reference key="object" ref="394461444"/>
 						<reference key="parent" ref="784598093"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">2593</int>
-						<reference key="object" ref="878025153"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="393887768"/>
-						</array>
-						<reference key="parent" ref="575911949"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">2594</int>
-						<reference key="object" ref="393887768"/>
-						<reference key="parent" ref="878025153"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">2599</int>
-						<reference key="object" ref="1027273183"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="176473673"/>
-						</array>
-						<reference key="parent" ref="575911949"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">2600</int>
-						<reference key="object" ref="176473673"/>
-						<reference key="parent" ref="1027273183"/>
 					</object>
 				</array>
 			</object>
@@ -6876,16 +6736,10 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 				<string key="2562.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2563.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2564.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2571.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2572.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2580.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2581.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2586.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2587.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2590.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2591.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2593.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2594.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2599.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2600.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6903,20 +6757,6 @@ cmUgeW91ciBlbmVtaWVzLg</string>
 				<object class="IBPartialClassDescription">
 					<string key="className">TDCServerSheet</string>
 					<string key="superclassName">TDCSheetBase</string>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="zncThrottlePlaybackCheckNormalFootnode">NSTextField</string>
-						<string key="zncThrottlePlaybackCheckUnavailableFootnode">NSTextField</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="zncThrottlePlaybackCheckNormalFootnode">
-							<string key="name">zncThrottlePlaybackCheckNormalFootnode</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="zncThrottlePlaybackCheckUnavailableFootnode">
-							<string key="name">zncThrottlePlaybackCheckUnavailableFootnode</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/TDCServerSheet.h</string>
