@@ -459,29 +459,20 @@ NSString *IRCPublicCommandIndex(const char *key)
 + (NSString *)systemUnsupervisedScriptFolderPath
 {
 	if ([self featureAvailableToOSXMountainLion]) {
-		static NSString *path = NSStringEmptyPlaceholder;
-		
-		static dispatch_once_t onceToken;
+		//NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationScriptsDirectory, NSUserDomainMask, YES);
 
-		dispatch_once(&onceToken, ^{
-			@autoreleasepool {
-				NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationScriptsDirectory, NSUserDomainMask, YES);
+		//return searchArray[0];
 
-				if (NSObjectIsNotEmpty(searchArray)) {
-					path = [searchArray[0] copy];
-				}
-			}
+		/* The above code created a lot of leaks in the Security framework. It did, at least for me. Hard coding the path
+		 for now. I probably should file a radar about it, but I am not in the mood. Someone want to dit for me? */
 
-			DebugLogToConsole(@"NSApplicationScriptsDirectory = \"%@\"", path);
-		});
-
-		return path;
+		return [NSString stringWithFormat:@"%@/Library/Application Scripts/%@", NSHomeDirectory(), [self applicationBundleIdentifier]];
 	}
 
 	/* We return an empty string instead of nil because
-	 the result of this method may be inserted into an 
+	 the result of this method may be inserted into an
 	 array and a nil value would throw an exception. */
-	
+
 	return NSStringEmptyPlaceholder;
 }
 
