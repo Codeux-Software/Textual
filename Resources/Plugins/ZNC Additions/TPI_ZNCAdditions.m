@@ -63,6 +63,26 @@
 	}
 }
 
+- (void)messageSentByUser:(IRCClient *)client
+				  message:(NSString *)messageString
+				  command:(NSString *)commandString
+{
+	if (client.isZNCBouncerConnection == NO) {
+		[client printDebugInformation:TPILS(@"ZNCIsNotAvailable")];
+
+		return;
+	}
+
+	if ([commandString isEqualIgnoringCase:@"DETACH"]) {
+		[client sendLine:[NSString stringWithFormat:@"%@ %@", commandString, messageString]];
+	}
+}
+
+- (NSArray *)pluginSupportsUserInputCommands
+{
+	return @[@"detach"];
+}
+
 - (NSArray *)pluginSupportsServerInputCommands
 {
 	return @[@"privmsg"];
