@@ -874,8 +874,27 @@
 	
 	tableRect.origin.y += (tableRect.size.height);
 	tableRect.origin.y += 34;
+
+	NSMenu *addIgnoreMenu = [NSMenu new];
+
+	NSMenuItem *item1 = [[NSMenuItem alloc] initWithTitle:TXTLS(@"ServerSheetAddressBookAdditionMenuAddIgnore")
+												   action:@selector(addIgnore:)
+											keyEquivalent:NSStringEmptyPlaceholder];
+
+	NSMenuItem *item2 = [[NSMenuItem alloc] initWithTitle:TXTLS(@"ServerSheetAddressBookAdditionMenuAddTracker")
+												   action:@selector(addIgnore:)
+											keyEquivalent:NSStringEmptyPlaceholder];
+
+	[item1 setTarget:self];
+	[item2 setTarget:self];
+
+	[item1 setTag:3];
+	[item2 setTag:4];
+
+	[addIgnoreMenu addItem:item1];
+	[addIgnoreMenu addItem:item2];
     
-	[self.addIgnoreMenu popUpMenuPositioningItem:nil atLocation:tableRect.origin inView:self.ignoreTable];
+	[addIgnoreMenu popUpMenuPositioningItem:nil atLocation:tableRect.origin inView:self.ignoreTable];
 }
 
 - (void)addIgnore:(id)sender

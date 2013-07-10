@@ -303,6 +303,9 @@
 "ServerSheetNetworkNavigationTreeItem" = "Network Socket";
 "ServerSheetZNCBouncerNavigationTreeItem" = "ZNC Bouncer";
 
+"ServerSheetAddressBookAdditionMenuAddIgnore" = "Add User Ignore Entry";
+"ServerSheetAddressBookAdditionMenuAddTracker" = "Add User Tracking Entry";
+
 "SetAsDefaultIRCClientPromptMessage" = "Textual is not set as the default IRC client for this copy of Mac OS X. Set it?";
 "SetAsDefaultIRCClientPromptTitle" = "Default IRC Client";
 

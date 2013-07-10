@@ -64,7 +64,6 @@
 @property (nonatomic, nweak) NSButton *pongTimerDisconnectCheck;
 @property (nonatomic, nweak) NSButton *zncIgnorePlaybackNotificationsCheck;
 @property (nonatomic, nweak) NSComboBox *serverAddressCombo;
-@property (nonatomic, nweak) NSMenu *addIgnoreMenu;
 @property (nonatomic, nweak) NSPopUpButton *fallbackEncodingButton;
 @property (nonatomic, nweak) NSPopUpButton *primaryEncodingButton;
 @property (nonatomic, nweak) NSPopUpButton *proxyTypeButton;
