@@ -90,12 +90,6 @@
 
 @property (nonatomic, strong) IRCConnection *socket;
 @property (nonatomic, assign) BOOL inFirstISONRun;
-@property (nonatomic, assign) BOOL inUserInvokedNamesRequest;
-@property (nonatomic, assign) BOOL inUserInvokedWhoRequest;
-@property (nonatomic, assign) BOOL inUserInvokedWhowasRequest;
-@property (nonatomic, assign) BOOL inUserInvokedJoinRequest;
-@property (nonatomic, assign) BOOL inUserInvokedWatchRequest;
-@property (nonatomic, assign) BOOL inUserInvokedModeRequest;
 @property (nonatomic, assign) BOOL sendLagcheckReplyToChannel;
 @property (nonatomic, assign) BOOL timeoutWarningShownToUser;
 @property (nonatomic, assign) NSInteger tryingNickNumber;
@@ -1895,7 +1889,7 @@
 				g.hideMessagesContainingMatch = NO;
 				g.hideInMemberList = YES;
 
-				g.notifyJoins	= NO;
+				g.notifyJoins = NO;
 
 				if (isIgnoreCommand) {
 					BOOL found = NO;
@@ -3852,8 +3846,6 @@
 			return;
 		}
 
-		BOOL isJoining = (c.status == IRCChannelJoining); // active overrides this. Put it before it.
-		
 		[c activate];
 
 		[self.worldController reloadTreeItem:c];
@@ -3861,7 +3853,7 @@
 		self.myHost = m.sender.hostmask;
 
 		if (self.autojoinInProgress == NO) {
-			if ((self.inUserInvokedJoinRequest || isJoining) && [TPCPreferences giveFocusOnJoinCommand]) {
+			if (self.inUserInvokedJoinRequest) {
 				[self.worldController expandClient:c.client];
 				[self.worldController select:c];
 			}
@@ -7050,6 +7042,8 @@
 
 - (void)listDialogOnJoin:(TDCListDialog *)sender channel:(NSString *)channel
 {
+	self.inUserInvokedJoinRequest = YES;
+	
 	[self joinUnlistedChannel:channel];
 }
 

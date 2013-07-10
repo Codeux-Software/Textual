@@ -1123,6 +1123,8 @@
 	if (_noClientOrChannel || _isClient || _isQuery || _activate || _notConnected) {
 		return;
 	}
+
+	u.inUserInvokedJoinRequest = YES;
 	
 	[u joinChannel:c];
 }
@@ -1690,6 +1692,8 @@
 	}
 
 	NSObjectIsEmptyAssert(self.pointedChannelName);
+
+	u.inUserInvokedJoinRequest = YES;
 	
 	[u joinUnlistedChannel:self.pointedChannelName];
 		
