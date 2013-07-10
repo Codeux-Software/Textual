@@ -1892,6 +1892,9 @@
 				g.ignorePublicHighlights = YES;
 				g.ignorePrivateHighlights = YES;
 
+				g.hideMessagesContainingMatch = NO;
+				g.hideInMemberList = YES;
+
 				g.notifyJoins	= NO;
 
 				if (isIgnoreCommand) {
