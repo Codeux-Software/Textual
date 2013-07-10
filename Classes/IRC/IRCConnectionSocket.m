@@ -82,13 +82,15 @@
 
 - (void)createDispatchQueue
 {
-	NSAssertReturn([self useNewSocketEngine]);
-
 	NSString *dqname = [@"socketDispatchQueue." stringByAppendingString:self.client.config.itemUUID];
-	NSString *sqname = [@"socketReadWriteQueue." stringByAppendingString:self.client.config.itemUUID];
 
-	self.socketQueue = dispatch_queue_create([sqname UTF8String], NULL);
 	self.dispatchQueue = dispatch_queue_create([dqname UTF8String], NULL);
+
+	if ([self useNewSocketEngine]) {
+		NSString *sqname = [@"socketReadWriteQueue." stringByAppendingString:self.client.config.itemUUID];
+
+		self.socketQueue = dispatch_queue_create([sqname UTF8String], NULL);
+	}
 }
 
 #pragma mark -
@@ -264,12 +266,12 @@
 	}
 }
 
-- (void)onSocket:(id)sock didReadData:(NSData *)data withTag:(long)tag
+- (void)completeReadForData:(NSData *)data
 {
 	NSString *newData = [self convertFromCommonEncoding:data];
 
 	NSMutableString *readBuffer;
-	
+
 	BOOL hasOverflowPrefix = NSObjectIsNotEmpty(self.bufferOverflowString);
 
 	if (hasOverflowPrefix) {
@@ -292,6 +294,17 @@
 		dispatch_sync(dispatch_get_main_queue(), ^{
 			[self performSelector:@selector(tcpClientDidReceiveData:) withObject:data];
 		});
+	}
+}
+
+- (void)onSocket:(id)sock didReadData:(NSData *)data withTag:(long)tag
+{
+	if ([self useNewSocketEngine] == NO) {
+		dispatch_async(self.dispatchQueue, ^{
+			[self completeReadForData:data];
+		});
+	} else {
+		[self completeReadForData:data];
 	}
 
 	[self.socketConnection readDataWithTimeout:(-1) tag:0];
