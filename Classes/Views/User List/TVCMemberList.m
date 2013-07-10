@@ -74,7 +74,7 @@
 		CALayer *scrollLayer = self.scrollView.contentView.layer;
 
 		if ([TPCPreferences invertSidebarColors]) {
-			[scrollLayer setBackgroundColor:[self.properBackgroundColor aCGColor]];
+			[scrollLayer setBackgroundColor:[NSColor.blackColor aCGColor]];
 		} else {
 			[scrollLayer setBackgroundColor:[NSColor.clearColor aCGColor]];
 		}
@@ -82,9 +82,9 @@
 		if ([TPCPreferences invertSidebarColors] || self.masterController.mainWindowIsActive == NO) {
 			[self setBackgroundColor:[NSColor clearColor]];
 
-			[self.scrollView setBackgroundColor:self.properBackgroundColor];
+			[self.scrollView setBackgroundColor:NSColor.blackColor];
 		} else {
-			[self setBackgroundColor:self.properBackgroundColor];
+			[self setBackgroundColor:NSColor.blackColor];
 
 			[self.scrollView setBackgroundColor:[NSColor clearColor]];
 		}

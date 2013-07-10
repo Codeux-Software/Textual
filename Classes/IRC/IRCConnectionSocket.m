@@ -68,6 +68,11 @@
 
 - (void)destroyDispatchQueue
 {
+    // These things I edited out do not work with ARC. Not sure what you guys are thinking.
+    
+#if NEEDS_DISPATCH_RETAIN_RELEASE
+    
+
 	if (self.dispatchQueue) {
 		dispatch_release(self.dispatchQueue);
 	}
@@ -75,7 +80,7 @@
 	if (self.socketQueue) {
 		dispatch_release(self.socketQueue);
 	}
-
+#endif
 	self.dispatchQueue = NULL;
 	self.socketQueue = NULL;
 }
