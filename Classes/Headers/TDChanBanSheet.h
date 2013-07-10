@@ -6,7 +6,7 @@
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
  Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
-        Please see Contributors.pdf and Acknowledgements.pdf
+        Please see Contributors.rtfd and Acknowledgements.rtfd
 
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions

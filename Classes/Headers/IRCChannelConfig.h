@@ -7,7 +7,7 @@
  
  Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
-        Please see Contributors.pdf and Acknowledgements.pdf
+        Please see Contributors.rtfd and Acknowledgements.rtfd
 
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
