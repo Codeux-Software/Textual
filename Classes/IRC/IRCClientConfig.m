@@ -225,8 +225,6 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 - (id)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [self init])) {
-		dic = [TPCPreferencesMigrationAssistant convertIRCClientConfiguration:dic];
-
         self.sidebarItemExpanded = NSDictionaryBOOLKeyValueCompare(dic, @"serverListItemIsExpanded", YES);
 
 		self.itemUUID		= NSDictionaryObjectKeyValueCompare(dic, @"uniqueIdentifier", self.itemUUID);
@@ -369,10 +367,6 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 	[dic safeSetObject:highlightAry forKey:@"highlightList"];
 	[dic safeSetObject:channelAry forKey:@"channelList"];
 	[dic safeSetObject:ignoreAry forKey:@"ignoreList"];
-
-	/* Migration Assistant Dictionary Addition. */
-	[dic safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
-				forKey:TPCPreferencesMigrationAssistantVersionKey];
 	
 	return [dic sortedDictionary];
 }

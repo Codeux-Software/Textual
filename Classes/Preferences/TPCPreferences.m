@@ -1497,8 +1497,6 @@ static NSMutableArray *excludeKeywords = nil;
 
 	// ====================================================== //
 
-	[TPCPreferencesMigrationAssistant convertExistingGlobalPreferences];
-
 	[RZUserDefaults() registerDefaults:d];
 
 	[RZUserDefaults() addObserver:(id)self forKeyPath:@"Highlight List -> Primary Matches"  options:NSKeyValueObservingOptionNew context:NULL];

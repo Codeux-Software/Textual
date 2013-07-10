@@ -399,10 +399,6 @@
 
 	dic[@"channelList"] = channels;
 
-	/* Migration Assistant Dictionary Addition. */
-	[dic safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
-				forKey:TPCPreferencesMigrationAssistantVersionKey];
-
 	/* Feed the world our seed and finish up. */
 	IRCClient *uf = [self.worldController createClient:dic reload:YES];
 
