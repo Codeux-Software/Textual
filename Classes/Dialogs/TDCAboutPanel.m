@@ -6,7 +6,7 @@
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
  Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
-        Please see Contributors.pdf and Acknowledgements.pdf
+        Please see Contributors.rtfd and Acknowledgements.rtfd
 
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
@@ -37,14 +37,6 @@
 
 #import "TextualApplication.h"
 
-#import <PDFKit/PDFKit.h>
-
-@interface TDCAboutPanel ()
-/* Cache the documents we load so they load faster switching. */
-@property (nonatomic, strong) PDFDocument *acknowledgmentsDocument;
-@property (nonatomic, strong) PDFDocument *contributorsDocument;
-@end
-
 @implementation TDCAboutPanel
 
 - (id)init
@@ -71,28 +63,16 @@
 
 - (void)displayAcknowledgments:(id)sender
 {
-	if (self.acknowledgmentsDocument == nil) {
-		NSString *acknowledgmentsPath =	[[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Documentation/Acknowledgments.pdf"];
+	NSString *acknowledgmentsPath =	[[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Documentation/Acknowledgments.rtfd"];
 
-		self.acknowledgmentsDocument = [[PDFDocument alloc] initWithURL:[NSURL fileURLWithPath:acknowledgmentsPath]];
-	}
-	
-	[(PDFView *)self.documentPDFView setDocument:self.acknowledgmentsDocument];
-
-	[self.documentPDFView setScaleFactor:1.1];
+	[self.documentView readRTFDFromFile:acknowledgmentsPath];
 }
 
 - (void)displayContributors:(id)sender
 {
-	if (self.contributorsDocument == nil) {
-		NSString *contributorsPath = [[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Documentation/Contributors.pdf"];
+	NSString *contributorsPath = [[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Documentation/Contributors.rtfd"];
 
-		self.contributorsDocument = [[PDFDocument alloc] initWithURL:[NSURL fileURLWithPath:contributorsPath]];
-	}
-
-	[(PDFView *)self.documentPDFView setDocument:self.contributorsDocument];
-
-	[self.documentPDFView setScaleFactor:1.1];
+	[self.documentView readRTFDFromFile:contributorsPath];
 }
 
 - (void)windowWillClose:(NSNotification *)note
