@@ -123,7 +123,6 @@
 		4C0445BD16F1603C00EBB665 /* TLOTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E5158E99520026668C /* TLOTimer.m */; };
 		4C0445BE16F1603C00EBB665 /* TLOTimerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E6158E99520026668C /* TLOTimerCommand.m */; };
 		4C0445BF16F1603C00EBB665 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E8158E99520026668C /* main.m */; };
-		4C0445C016F1603C00EBB665 /* TPCPreferencesMigrationAssistant.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D0B781594908B00567623 /* TPCPreferencesMigrationAssistant.m */; };
 		4C0445C116F1603C00EBB665 /* TPCThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5ED158E99520026668C /* TPCThemeController.m */; };
 		4C0445C216F1603C00EBB665 /* TPCThemeSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5EC158E99520026668C /* TPCThemeSettings.m */; };
 		4C0445C316F1603C00EBB665 /* TPCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5EE158E99520026668C /* TPCPreferences.m */; };
@@ -171,8 +170,6 @@
 		4C28F441159200C900CD2CDE /* FormattingColor_Rainbow.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F43F159200C900CD2CDE /* FormattingColor_Rainbow.tif */; };
 		4C28F442159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F440159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif */; };
 		4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */; };
-		4C3D0B791594908B00567623 /* TPCPreferencesMigrationAssistant.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3D0B781594908B00567623 /* TPCPreferencesMigrationAssistant.m */; };
-		4C3D0B7C159490C800567623 /* TPCPreferencesMigrationAssistant.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3D0B7B159490C800567623 /* TPCPreferencesMigrationAssistant.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C3E69881789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E69861789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m */; };
 		4C3E69891789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E69861789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m */; };
 		4C3E698A1789A31E00B1CB6B /* TVCLogControllerOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E69871789A31E00B1CB6B /* TVCLogControllerOperationQueue.m */; };
@@ -306,7 +303,6 @@
 		4C5BA3EB16F1302F00A96CA2 /* THOPluginManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBCF89B16C7CD9200DC3521 /* THOPluginManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA3EC16F1302F00A96CA2 /* TVCMainWindowLoadingScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA3ED16F1302F00A96CA2 /* NSScreenHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5A6DBE15C39B1900143574 /* NSScreenHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C5BA3EE16F1302F00A96CA2 /* TPCPreferencesMigrationAssistant.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3D0B7B159490C800567623 /* TPCPreferencesMigrationAssistant.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA3EF16F1302F00A96CA2 /* TVCMainWindowSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA3F016F1302F00A96CA2 /* AGKeychain.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF73F158EB6CA0026668C /* AGKeychain.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA3F116F1302F00A96CA2 /* DDExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF740158EB6CA0026668C /* DDExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -985,8 +981,6 @@
 		4C28F440159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "FormattingColor_Rainbow@2x.tif"; path = "Resources/Images/IRC Formatting Colors/FormattingColor_Rainbow@2x.tif"; sourceTree = SOURCE_ROOT; };
 		4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = ../../../../System/Library/Frameworks/SecurityInterface.framework; sourceTree = "<group>"; };
 		4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Spammer Paradise Extension.xcodeproj"; path = "Resources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj"; sourceTree = "<group>"; };
-		4C3D0B781594908B00567623 /* TPCPreferencesMigrationAssistant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCPreferencesMigrationAssistant.m; path = "Migration Assistant/TPCPreferencesMigrationAssistant.m"; sourceTree = "<group>"; };
-		4C3D0B7B159490C800567623 /* TPCPreferencesMigrationAssistant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPreferencesMigrationAssistant.h; sourceTree = "<group>"; };
 		4C3E69861789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogControllerHistoricLogFile.m; sourceTree = "<group>"; };
 		4C3E69871789A31E00B1CB6B /* TVCLogControllerOperationQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogControllerOperationQueue.m; sourceTree = "<group>"; };
 		4C3EB79C17898FD600D21A07 /* TVCLogControllerHistoricLogFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCLogControllerHistoricLogFile.h; sourceTree = "<group>"; };
@@ -1467,7 +1461,6 @@
 			isa = PBXGroup;
 			children = (
 				4C5A0310170C2C010016BB1A /* TPCPreferencesImportExport.m */,
-				4C3D0B781594908B00567623 /* TPCPreferencesMigrationAssistant.m */,
 			);
 			name = "Migration Assistant";
 			path = Preferences;
@@ -1951,7 +1944,6 @@
 				4C8AF57C158E99520026668C /* TLOTimerCommand.h */,
 				4C8AF57E158E99520026668C /* TPCPreferences.h */,
 				4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */,
-				4C3D0B7B159490C800567623 /* TPCPreferencesMigrationAssistant.h */,
 				4C8AF57F158E99520026668C /* TPCThemeController.h */,
 				4C8AF57D158E99520026668C /* TPCThemeSettings.h */,
 				4C8AF580158E99520026668C /* TVCDockIcon.h */,
@@ -2409,7 +2401,6 @@
 				4C5BA3EB16F1302F00A96CA2 /* THOPluginManager.h in Headers */,
 				4C5BA3EC16F1302F00A96CA2 /* TVCMainWindowLoadingScreen.h in Headers */,
 				4C5BA3ED16F1302F00A96CA2 /* NSScreenHelper.h in Headers */,
-				4C5BA3EE16F1302F00A96CA2 /* TPCPreferencesMigrationAssistant.h in Headers */,
 				4C5BA3EF16F1302F00A96CA2 /* TVCMainWindowSegmentedControl.h in Headers */,
 				4C5BA3F016F1302F00A96CA2 /* AGKeychain.h in Headers */,
 				4C5BA3F116F1302F00A96CA2 /* DDExtensions.h in Headers */,
@@ -2551,7 +2542,6 @@
 				4CBCF89C16C7CD9200DC3521 /* THOPluginManager.h in Headers */,
 				4C8EE97C16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h in Headers */,
 				4C5A6DBF15C39B1900143574 /* NSScreenHelper.h in Headers */,
-				4C3D0B7C159490C800567623 /* TPCPreferencesMigrationAssistant.h in Headers */,
 				4C6ED7F315901579001AD200 /* TVCMainWindowSegmentedControl.h in Headers */,
 				4C8AF74B158EB6CA0026668C /* AGKeychain.h in Headers */,
 				4C8AF74C158EB6CA0026668C /* DDExtensions.h in Headers */,
@@ -3160,7 +3150,6 @@
 				4C0445BD16F1603C00EBB665 /* TLOTimer.m in Sources */,
 				4C0445BE16F1603C00EBB665 /* TLOTimerCommand.m in Sources */,
 				4C0445BF16F1603C00EBB665 /* main.m in Sources */,
-				4C0445C016F1603C00EBB665 /* TPCPreferencesMigrationAssistant.m in Sources */,
 				4C0445C116F1603C00EBB665 /* TPCThemeController.m in Sources */,
 				4C0445C216F1603C00EBB665 /* TPCThemeSettings.m in Sources */,
 				4C0445C316F1603C00EBB665 /* TPCPreferences.m in Sources */,
@@ -3303,7 +3292,6 @@
 				4C8AF6E6158E99520026668C /* TVCMemberList.m in Sources */,
 				4C8AF6E7158E99520026668C /* TVCMemberListCell.m in Sources */,
 				4C6ED7F115901562001AD200 /* TVCMainWindowSegmentedControl.m in Sources */,
-				4C3D0B791594908B00567623 /* TPCPreferencesMigrationAssistant.m in Sources */,
 				4C8EE97A16C64A8200D5B1F4 /* TVCMainWindowLoadingScreen.m in Sources */,
 				4CBCF89E16C7CE9700DC3521 /* THOPluginManager.m in Sources */,
 				4C1ED4A316CEA0A9006DD0CA /* IRCConnectionSocket.m in Sources */,

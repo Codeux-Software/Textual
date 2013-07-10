@@ -1342,10 +1342,6 @@ typedef enum TXMoveKind : NSInteger {
 	dic[@"channelList"]					= channels;
 	dic[@"connectOnLaunch"]				= config[@"connectOnLaunch"];
 	dic[@"characterEncodingDefault"]	= @(TXDefaultPrimaryTextEncoding);
-
-	/* Migration Assistant Dictionary Addition. */
-	[dic safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
-				forKey:TPCPreferencesMigrationAssistantVersionKey];
 	
 	IRCClient *u = [self.worldController createClient:dic reload:YES];
 

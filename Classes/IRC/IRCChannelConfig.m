@@ -182,9 +182,6 @@
 	if ([channelName isChannelName]) {
 		return @{
 			@"channelName" : channelName,
-
-			/* Migration Assistant Dictionary Addition. */
-			TPCPreferencesMigrationAssistantVersionKey : TPCPreferencesMigrationAssistantUpgradePath
 		};
 	}
 
@@ -194,8 +191,6 @@
 - (id)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [self init])) {
-		dic = [TPCPreferencesMigrationAssistant convertIRCChannelConfiguration:dic];
-
 		self.type			= (IRCChannelType)NSDictionaryIntegerKeyValueCompare(dic, @"channelType", self.type);
 
 		self.itemUUID			= NSDictionaryObjectKeyValueCompare(dic, @"uniqueIdentifier", self.itemUUID);
@@ -247,10 +242,6 @@
 	[dic safeSetObject:self.channelName			forKey:@"channelName"];
 	[dic safeSetObject:self.defaultModes		forKey:@"defaultMode"];
 	[dic safeSetObject:self.defaultTopic		forKey:@"defaultTopic"];
-	
-	/* Migration Assistant Dictionary Addition. */
-	[dic safeSetObject:TPCPreferencesMigrationAssistantUpgradePath
-				forKey:TPCPreferencesMigrationAssistantVersionKey];
 	
 	return [dic sortedDictionary];
 }
