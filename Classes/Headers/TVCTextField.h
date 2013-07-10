@@ -42,7 +42,15 @@
 
 @interface TVCTextField : NSTextView 
 @property (nonatomic, strong) TLOKeyEventHandler *keyHandler;
+
+#if NEEDS_DISPATCH_RETAIN_RELEASE
 @property (nonatomic, assign) dispatch_queue_t formattingQueue;
+
+#else
+@property (nonatomic, strong) dispatch_queue_t formattingQueue;
+
+#endif
+
 
 - (BOOL)isAtTopOfView;
 - (BOOL)isAtBottomOfView;

@@ -76,7 +76,10 @@
 
 - (void)dealloc
 {
-	dispatch_release(self.formattingQueue);
+#if NEEDS_DISPATCH_RETAIN_RELEASE
+    dispatch_release(self.formattingQueue);
+#endif
+
 
 	self.formattingQueue = NULL;
 }
