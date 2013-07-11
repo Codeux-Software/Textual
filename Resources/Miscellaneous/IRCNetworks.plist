@@ -54,6 +54,8 @@
 	<string>irc.japoland.net</string>
 	<key>TWiT</key>
 	<string>irc.twit.tv</string>
+	<key>Ewnix</key>
+	<string>irc.ewnix.net</string>
 	<key>ValleyNode</key>
 	<string>irc.valleynode.net</string>
 </dict>
