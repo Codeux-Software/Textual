@@ -168,8 +168,25 @@
 
 - (void)activate
 {
-    [self.client postEventToViewController:@"channelJoined" forChannel:self];
-    
+	if (self.isChannel) {
+		[self.client postEventToViewController:@"channelJoined" forChannel:self];
+    }
+
+	if (self.isPrivateMessage) {
+		IRCUser *m = nil;
+
+		/* Populate private message users. */
+		m = [IRCUser new];
+		m.nickname = [self.client localNickname];
+		m.supportInfo = [self.client isupport];
+		[self addMember:m];
+
+		m = [IRCUser new];
+		m.nickname = self.name;
+		m.supportInfo = [self.client isupport];
+		[self addMember:m];
+	}
+
 	[self resetStatus:IRCChannelJoined];
 
 	self.channelJoinTime = [NSDate epochTime];
@@ -177,10 +194,12 @@
 
 - (void)deactivate
 {
-    [self.client postEventToViewController:@"channelParted" forChannel:self];
+	if (self.isChannel) {
+		[self.client postEventToViewController:@"channelParted" forChannel:self];
 
-    [self.viewController setTopic:nil];
-    
+		[self.viewController setTopic:nil];
+    }
+
 	[self resetStatus:IRCChannelParted];
 
 	self.channelJoinTime = -1;
@@ -453,6 +472,8 @@
 
 - (void)reloadIgnoreSortedMemberList
 {
+	NSAssertReturn(self.isChannel);
+
 	NSMutableArray *listCopy = [self.memberList mutableCopy];
 
 	for (IRCUser *user in self.memberList) {
@@ -471,7 +492,7 @@
 
 - (void)reloadMemberList
 {
-	if (self.worldController.selectedItem == self) {
+	if (self.worldController.selectedItem == self && self.isChannel) {
 		[self.masterController.memberList reloadData];
 	}
 }

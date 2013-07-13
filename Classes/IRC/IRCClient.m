@@ -3424,103 +3424,7 @@
 
 		/* Is the sender a server? */
 		if ([sender isNickname] == NO) {
-			if (type == TVCLogLineNoticeType) {
-				if (self.hasIRCopAccess) {
-					/* Sender was a server, we have a notice, and the local
-					 user is an IRCop. We have two things to do now. If the
-					 notice is connection related, then check it against the
-					 address book. If it is not connection related, then check
-					 it for the IRCop alert string. */
-
-					if ([text hasPrefix:@"*** Notice -- Client connecting"] ||
-						[text hasPrefix:@"*** Notice -- Client exiting"] ||
-						[text hasPrefix:@"*** You are connected to"] ||
-						[text hasPrefix:@"Forbidding Q-lined nick"] ||
-						[text hasPrefix:@"Exiting ssl client"])
-					{
-						/* Notice is connection related. Using the known length
-						 and layout of the "Client Connecting" and "Client Exiting"
-						 messages we will get the host and check it against the
-						 address book. The following needs to be reworked in the
-						 future to work with other variants of the connection 
-						 message. This was designed around UnrealIRCd. */
-						
-						BOOL processData = NO;
-
-						NSInteger matchMath = 0;
-
-						if ([text hasPrefix:@"*** Notice -- Client connecting at"]) {
-							processData = YES;
-						} else if ([text hasPrefix:@"*** Notice -- Client connecting on port"]) {
-							processData = YES;
-
-							matchMath = 1;
-						}
-
-						if (processData) {
-							NSString *hostmask = nil;
-							NSString *nickname = nil;
-
-							NSArray *chunks = [text componentsSeparatedByString:NSStringWhitespacePlaceholder];
-
-							/* The index represents each word separated by a regular 
-							 space. The matchMath increases the index depending on 
-							 whether the notice was about a connect or disconnect since
-							 each message has a different section count. */
-							hostmask = [chunks safeObjectAtIndex:(8 + matchMath)];
-							nickname = [chunks safeObjectAtIndex:(7 + matchMath)];
-
-							hostmask = [hostmask safeSubstringFromIndex:1]; // Remove brackets.
-							hostmask = [hostmask safeSubstringToIndex:(hostmask.length - 1)];
-
-							NSString *fullHost = [nickname stringByAppendingFormat:@"!%@", hostmask];
-
-							ignoreChecks = [self checkIgnoreAgainstHostmask:fullHost
-																withMatches:@[@"notifyJoins"]];
-
-							[self handleUserTrackingNotification:ignoreChecks
-														nickname:nickname
-														hostmask:hostmask
-														langitem:@"UserTrackingHostmaskConnected"];
-						}
-						
-						[self print:nil
-							   type:type
-							   nick:nil
-							   text:text
-						 receivedAt:m.receivedAt
-							command:m.command];
-					} else {
-						/* Notice was not connection related. Now we scan the message for the
-						 IRCop alert string or forward to the "Server Notices" window. */
-
-						if ([TPCPreferences handleServerNotices]) {
-							IRCChannel *c;
-							
-							if ([TPCPreferences handleIRCopAlerts] && [text containsIgnoringCase:[TPCPreferences IRCopAlertMatch]]) {
-								/* Match found. Set the destination to the selected channel. */
-
-								c = [self.worldController selectedChannelOn:self];
-							} else {
-								/* No match found. Find the window or create it; if we have to */
-								
-								c = [self findChannelOrCreate:TXTLS(@"ServerNoticeTreeItemTitle") isPrivateMessage:YES];
-							}
-
-							/* Mark the channel as unread. */
-							[self setUnreadState:c];
-
-							[self print:c type:type nick:nil text:text receivedAt:m.receivedAt command:m.command];
-						} else {
-							[self print:nil type:type nick:nil text:text receivedAt:m.receivedAt command:m.command];
-						}
-					}
-				} else {
-					[self print:nil type:type nick:nil text:text receivedAt:m.receivedAt command:m.command];
-				}
-			} else {
-				[self print:nil type:type nick:nil text:text receivedAt:m.receivedAt command:m.command];
-			}
+			[self print:nil type:type nick:nil text:text receivedAt:m.receivedAt command:m.command];
 		} else {
 			if (targetOurself == NO) {
 				// Who else would be the target if this is not a channel or server?…
@@ -3677,6 +3581,11 @@
 					[c setTopic:hostTopic];
 
                     [self.worldController updateTitleFor:c];
+				}
+
+				/* Update query status. */
+				if (c.isActive == NO) {
+					[c activate];
 				}
 			}
 		}
@@ -3885,21 +3794,15 @@
 		/* Add to existing query? */
 		IRCChannel *query = [self findChannel:sendern];
 
-		if (query) {
-			IRCUser *qu = [query findMember:sendern];
+		if (query && query.isActive == NO) {
+			[query activate];
 
-			if (PointerIsEmpty(qu)) {
-				/* Only announce the user return if they already do not exist in the query. */
-
-				[query addMember:u];
-
-				[self print:query
-					   type:TVCLogLineJoinType
-					   nick:nil
-					   text:TXTFLS(@"IRCUserReconnectedToPrivateMessage", sendern)
-				 receivedAt:m.receivedAt
-					command:m.command];
-			}
+			[self print:query
+				   type:TVCLogLineJoinType
+				   nick:nil
+				   text:TXTFLS(@"IRCUserReconnectedToPrivateMessage", sendern)
+			 receivedAt:m.receivedAt
+				command:m.command];
 		}
 	}
 
@@ -4071,7 +3974,7 @@
 
 			[c removeMember:sendern];
 
-			if (myself) {
+			if (myself || c.isPrivateMessage) {
 				[c deactivate];
 			}
 		}
@@ -4547,18 +4450,6 @@
 	for (IRCChannel *c in self.channels) {
 		if (c.isPrivateMessage) {
 			[c activate];
-
-			IRCUser *user;
-
-			user = [IRCUser new];
-			user.supportInfo = self.isupport;
-			user.nickname = self.myNick;
-			[c addMember:user];
-
-			user = [IRCUser new];
-			user.supportInfo = self.isupport;
-			user.nickname = c.name;
-			[c addMember:user];
 		}
 	}
 
@@ -4569,7 +4460,7 @@
 	if ([TPCPreferences autojoinWaitsForNickServ] == NO || self.CAPisIdentifiedWithSASL) {
 		[self performAutoJoin];
 	} else {
-        /* If we wait for NickServ we set a timer of 3.0 seconds before performing NickServ.
+        /* If we wait for NickServ we set a timer of 3.0 seconds before performing auto join.
          When this timer is executed, if we do not have any knowledge of NickServ existing
          on the current server, then we perform the autojoin. This is primarly a fix for the
          ZNC SASL module which will complete identification before connecting and once connected
@@ -5072,51 +4963,75 @@
 		}
 		case 303: // RPL_ISON
 		{
-			if (self.hasIRCopAccess || self.CAPWatchCommand) {
-				[self printUnknownReply:m];
-			} else {
-                NSArray *users = [m.sequence split:NSStringWhitespacePlaceholder];
+			/* Cut the users up. */
+			NSArray *users = [m.sequence split:NSStringWhitespacePlaceholder];
 
-				NSDictionary *trackedUsers = [self.trackedUsers copy];
+			/* Start going over the list of tracked nicknames. */
+			NSDictionary *trackedUsers = [self.trackedUsers copy];
 
-				for (NSString *name in trackedUsers) {
-					NSString *langkey = nil;
+			for (NSString *name in trackedUsers) {
+				NSString *langkey = nil;
 
-					BOOL ison = [self.trackedUsers boolForKey:name];
+				/* Was the user on during the last check? */
+				BOOL ison = [self.trackedUsers boolForKey:name];
 
-					if (ison) {
-						if ([users containsObjectIgnoringCase:name] == NO) {
-							if (self.inFirstISONRun == NO) {
-								langkey = @"UserTrackingNicknameNoLongerAvailable";
-							}
-
-							[self.trackedUsers setBool:NO forKey:name];
+				if (ison) {
+					/* If the user was on before, but is not in the list of ISON 
+					 users in this reply, then they are considered gone. Log that. */
+					if ([users containsObjectIgnoringCase:name] == NO) {
+						if (self.inFirstISONRun == NO) {
+							langkey = @"UserTrackingNicknameNoLongerAvailable";
 						}
-					} else {
-						if ([users containsObjectIgnoringCase:name]) {
-                            if (self.inFirstISONRun) {
-                                langkey = @"UserTrackingNicknameIsAvailable";
-                            } else {
-                                langkey = @"UserTrackingNicknameNowAvailable";
-                            }
-                            
-							[self.trackedUsers setBool:YES forKey:name];
-						}
+
+						[self.trackedUsers setBool:NO forKey:name];
 					}
-
-					if (NSObjectIsNotEmpty(langkey)) {
-						for (IRCAddressBook *g in self.config.ignoreList) {
-							NSString *trname = [g trackingNickname];
-
-							if ([trname isEqualIgnoringCase:name]) {
-								[self handleUserTrackingNotification:g nickname:name hostmask:name langitem:langkey];
-							}
+				} else {
+					/* If they were not on but now are, then log that too. */
+					if ([users containsObjectIgnoringCase:name]) {
+						if (self.inFirstISONRun) {
+							langkey = @"UserTrackingNicknameIsAvailable";
+						} else {
+							langkey = @"UserTrackingNicknameNowAvailable";
 						}
+						
+						[self.trackedUsers setBool:YES forKey:name];
 					}
 				}
 
-				if (self.inFirstISONRun) {
-					self.inFirstISONRun = NO;
+				/* If we have a langkey, then there was something logged. We will now
+				 find the actual tracking rule that matches the name and post that to the
+				 end user to see the user status. */
+				NSObjectIsEmptyAssertLoopContinue(langkey);
+				
+				for (IRCAddressBook *g in self.config.ignoreList) {
+					NSString *trname = [g trackingNickname];
+
+					if ([trname isEqualIgnoringCase:name]) {
+						[self handleUserTrackingNotification:g nickname:name hostmask:name langitem:langkey];
+					}
+				}
+			}
+
+			if (self.inFirstISONRun) { // Reset internal var.
+				self.inFirstISONRun = NO;
+			}
+
+			/* Update private messages. */
+			for (IRCChannel *channel in self.channels) {
+				NSAssertReturnLoopContinue(channel.isPrivateMessage);
+
+				/* Does the private message contain users? */
+				if (channel.isActive) {
+					/* If the user is no longer on, deactivate the private message. */
+
+					if ([users containsObjectIgnoringCase:channel.name] == NO) {
+						[channel deactivate];
+					}
+				} else {
+					/* Activate the private message if the user is back on. */
+					if ([users containsObjectIgnoringCase:channel.name]) {
+						[channel activate];
+					}
 				}
 			}
 
@@ -5186,8 +5101,6 @@
 				u = [IRCUser new];
 
 				u.nickname = nickname;
-                
-				u.supportInfo = self.isupport;
 			}
 
 			if (NSObjectIsEmpty(u.address)) {
@@ -5197,6 +5110,7 @@
             
             u.isCop = isIRCop;
             u.isAway = isAway;
+			u.supportInfo = self.isupport;
 
 			NSInteger i;
 
@@ -6711,7 +6625,6 @@
 
 - (void)populateISONTrackedUsersList:(NSMutableArray *)ignores
 {
-    NSAssertReturn(self.hasIRCopAccess == NO);
     NSAssertReturn(self.isLoggedIn);
 
 	if (PointerIsEmpty(self.trackedUsers)) {
@@ -6781,7 +6694,6 @@
 	}
 
 	/* Finish up. */
-
 	self.trackedUsers = newEntries;
 
     [self startISONTimer];
@@ -6805,23 +6717,28 @@
 {
     NSAssertReturn(self.isLoggedIn);
 
-    if ([TPCPreferences processChannelModes] && self.CAPawayNotify == NO) {
-        for (IRCChannel *channel in self.channels) {
+    NSMutableString *userstr = [NSMutableString string];
+
+	for (IRCChannel *channel in self.channels) {
+		if ([TPCPreferences processChannelModes] && self.CAPawayNotify == NO) {
             if (channel.isChannel && channel.isActive && channel.memberList.count <= [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
                 [self send:IRCPrivateCommandIndex("who"), channel.name, nil];
             }
         }
+
+		if (channel.isPrivateMessage) {
+			[userstr appendFormat:@" %@", channel.name];
+		}
     }
 
-    if (NSObjectIsEmpty(self.trackedUsers) || self.hasIRCopAccess || self.CAPWatchCommand) {
-        return;
-    }
+	if (self.CAPWatchCommand) {
+		for (NSString *name in self.trackedUsers) {
+			[userstr appendFormat:@" %@", name]; 
+		}
+	}
 
-    NSMutableString *userstr = [NSMutableString string];
-
-    for (NSString *name in self.trackedUsers) {
-        [userstr appendFormat:@" %@", name];
-    }
+	/* We send a ISON request to track private messages as well as tracked users. */
+	NSObjectIsEmptyAssert(userstr);
 
     [self send:IRCPrivateCommandIndex("ison"), userstr, nil];
 }

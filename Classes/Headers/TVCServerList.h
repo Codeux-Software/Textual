@@ -115,6 +115,7 @@
 
 - (NSColor *)channelCellNormalTextColor;
 - (NSColor *)channelCellNormalTextShadowColor;
+- (NSColor *)channelCellDisabledItemTextColor;
 - (NSColor *)channelCellSelectedTextColorForActiveWindow;
 - (NSColor *)channelCellSelectedTextColorForInactiveWindow;
 - (NSColor *)channelCellSelectedTextShadowColorForActiveWindow;
