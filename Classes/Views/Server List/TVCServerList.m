@@ -440,6 +440,12 @@
 							   invertedItem:[NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:1.0]];
 }
 
+- (NSColor *)channelCellDisabledItemTextColor
+{
+	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:0.0 green:0.0 blue:0.0 alpha:0.7]
+							   invertedItem:[NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:0.7]];
+}
+
 - (NSColor *)channelCellSelectedTextColorForActiveWindow
 {
 	return [NSColor defineUserInterfaceItem:[NSColor whiteColor]

@@ -486,7 +486,11 @@
 			[self drawStatusBadge:iconName withAlpha:0.5];
 		}
 	} else {
-		[self drawStatusBadge:[self.serverList privateMessageStatusIconFilename:isSelected] withAlpha:0.8];
+		if (channel.isActive) {
+			[self drawStatusBadge:[self.serverList privateMessageStatusIconFilename:isSelected] withAlpha:0.8];
+		} else {
+			[self drawStatusBadge:[self.serverList privateMessageStatusIconFilename:isSelected] withAlpha:0.5];
+		}
 	}
 
 	/**************************************************************/
@@ -538,7 +542,11 @@
 			[newStrValue addAttribute:NSForegroundColorAttributeName value:self.serverList.channelCellSelectedTextColorForInactiveWindow range:textRange];
 		}
 	} else {
-		[newStrValue addAttribute:NSForegroundColorAttributeName value:self.serverList.channelCellNormalTextColor range:textRange];
+		if (channel.isActive) {
+			[newStrValue addAttribute:NSForegroundColorAttributeName value:self.serverList.channelCellNormalTextColor range:textRange];
+		} else {
+			[newStrValue addAttribute:NSForegroundColorAttributeName value:self.serverList.channelCellDisabledItemTextColor range:textRange];
+		}
 
 		[newStrValue addAttribute:NSFontAttributeName value:self.serverList.normalChannelCellFont range:textRange];
 	}

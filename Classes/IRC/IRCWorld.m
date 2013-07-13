@@ -867,16 +867,6 @@
 	
 	if (client.isLoggedIn) {
 		[c activate];
-		
-		IRCUser *m = nil;
-		
-		m = [IRCUser new];
-		m.nickname = client.localNickname;
-		[c addMember:m];
-		
-		m = [IRCUser new];
-		m.nickname = c.name;
-		[c addMember:m];
 	}
 	
 	return c;
