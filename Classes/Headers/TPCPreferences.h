@@ -96,6 +96,7 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 
 + (BOOL)featureAvailableToOSXLion;
 + (BOOL)featureAvailableToOSXMountainLion;
++ (BOOL)featureAvailableToOSXMavericks;
 
 + (BOOL)runningInHighResolutionMode;
 

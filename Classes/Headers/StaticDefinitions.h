@@ -35,12 +35,6 @@
 
  *********************************************************************** */
 
-/* This define was no longer needed as of version 3.0.0. It may return 
- in the next major version of Mac OS when Apple adds a API feature
- specific to that version. */
-
-// #define TXLoadMacOSVersionSpecificFeatures	1
-
 #ifndef kASAppleScriptSuite
 	#define kASAppleScriptSuite 'ascr'
 #endif
@@ -53,15 +47,12 @@
 	#define keyASSubroutineName 'snam'
 #endif
 
-// #if TXLoadMacOSVersionSpecificFeatures
-// 	#if defined(AVAILABLE_MAC_OS_X_VERSION_10_8_AND_LATER)
-// 		#define TXSystemIsMacOSMountainLionOrNewer
-// 	#endif
-// #endif
-
-#define NSAppKitVersionNumber10_6		1038
-#define NSAppKitVersionNumber10_7		1138
-#define NSAppKitVersionNumber10_7_2		1138.23
+#define NSAppKitVersionNumber10_6	1038
+#define NSAppKitVersionNumber10_7	1138
+#define NSAppKitVersionNumber10_7_2 1138.23
+#define NSAppKitVersionNumber10_7_3 1138.32
+#define NSAppKitVersionNumber10_7_4 1138.47
+#define NSAppKitVersionNumber10_8	1187
 
 //#define TXForceNativeNotificationCenterDispatch		— Force notification center use regardless of Growl's installation.
 
