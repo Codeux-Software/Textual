@@ -248,6 +248,11 @@
 	} else {
 		nrect.size.width += 39;
 	}
+
+	/* Mavericks changed this math a little… */
+	if ([TPCPreferences featureAvailableToOSXMavericks]) {
+		nrect.size.width += 3;
+	}
 	
 	return nrect;
 }

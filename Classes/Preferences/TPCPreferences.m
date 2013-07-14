@@ -304,6 +304,11 @@ NSString *IRCPublicCommandIndex(const char *key)
 	return (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_7);
 }
 
++ (BOOL)featureAvailableToOSXMavericks
+{
+	return (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_8);
+}
+
 #pragma mark -
 #pragma mark Application Information
 
