@@ -149,8 +149,15 @@
 		case 6883: // "Invite Only (+i)"
 		case 6884: // "Anyone Can Join (-i)"
 		case 6885: // "Manage All Modes"
+		case 51065: // "Toggle Visbility of Server List"
 		{
 			return _disableInSheet(YES);
+
+			break;
+		}
+		case 51066: // "Toggle Visbility of Member List"
+		{
+			return _disableInSheet(self.worldController.selectedItem.isChannel);
 
 			break;
 		}
@@ -2216,6 +2223,19 @@
     } else {
         [self.worldController muteSound];
     }
+}
+
+#pragma mark -
+#pragma mark Splitview Toggles
+
+- (void)toggleServerListVisibility:(id)sender
+{
+	[self.masterController showServerListSplitView:self.masterController.serverSplitView.viewIsHidden];
+}
+
+- (void)toggleMemberListVisibility:(id)sender
+{
+	[self.masterController showMemberListSplitView:self.masterController.memberSplitView.viewIsHidden];
 }
 
 @end

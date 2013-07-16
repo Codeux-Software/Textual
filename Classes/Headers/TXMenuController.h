@@ -87,6 +87,8 @@
 	504911: "Give Halfop (+h)"
 	504912: "Give Voice (+v)"
 	504913: "All Modes Given"
+	51065: "Toggle Visbility of Server List"
+	51066: "Toggle Visbility of Member List"
 	511: "Change Nickname…"
 	519: "Channel List…"
 	521: "Add Server…"
@@ -261,4 +263,7 @@
 
 - (void)importPreferences:(id)sender;
 - (void)exportPreferences:(id)sender;
+
+- (IBAction)toggleServerListVisibility:(id)sender;
+- (IBAction)toggleMemberListVisibility:(id)sender;
 @end

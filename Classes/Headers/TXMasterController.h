@@ -77,6 +77,7 @@
 @property (nonatomic, nweak) TVCMemberListUserInfoPopover *memberListUserInfoPopover;
 @property (nonatomic, strong) TLOSpeechSynthesizer *speechSynthesizer;
 @property (nonatomic, assign) NSInteger memberSplitViewOldPosition;
+@property (nonatomic, assign) NSInteger serverListSplitViewOldPosition;
 
 @property (assign) NSInteger terminatingClientCount;
 
@@ -84,6 +85,7 @@
 - (void)saveWindowState;
 
 - (void)showMemberListSplitView:(BOOL)showList;
+- (void)showServerListSplitView:(BOOL)showList;
 
 - (void)openWelcomeSheet:(id)sender;
 
