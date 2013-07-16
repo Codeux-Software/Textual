@@ -46,6 +46,29 @@
 @implementation THOPluginManager
 
 #pragma mark -
+#pragma mark Init.
+
+- (id)init
+{
+	if ((self = [super init])) {
+		_dispatchQueue = dispatch_queue_create("PluginManagerDispatchQueue", NULL);
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (void)dealloc
+{
+	if (_dispatchQueue) {
+		dispatch_release(_dispatchQueue);
+
+		_dispatchQueue = NULL;
+	}
+}
+
+#pragma mark -
 #pragma mark Easy Pointer.
 
 + (THOPluginManager *)defaultManager
@@ -292,43 +315,47 @@
 
 - (void)sendUserInputDataToBundles:(IRCClient *)client message:(NSString *)message command:(NSString *)command
 {
-	NSString *cmdu = command.uppercaseString;
-	NSString *cmdl = command.lowercaseString;
-	
-	for (THOPluginItem *plugin in self.allLoadedPlugins) {
-		if ([plugin.supportedUserInputCommands containsObject:cmdl]) {
-			[plugin.primaryClass messageSentByUser:client message:message command:cmdu];
+	dispatch_async(_dispatchQueue, ^{
+		NSString *cmdu = command.uppercaseString;
+		NSString *cmdl = command.lowercaseString;
+		
+		for (THOPluginItem *plugin in self.allLoadedPlugins) {
+			if ([plugin.supportedUserInputCommands containsObject:cmdl]) {
+				[plugin.primaryClass messageSentByUser:client message:message command:cmdu];
+			}
 		}
-	}
+	});
 }
 
 - (void)sendServerInputDataToBundles:(IRCClient *)client message:(IRCMessage *)message
 {
-	NSString *cmdl = message.command.lowercaseString;
+	dispatch_async(_dispatchQueue, ^{
+		NSString *cmdl = message.command.lowercaseString;
 
-	NSDictionary *senderData = @{
-		@"senderHostmask"	: NSStringNilValueSubstitute(message.sender.hostmask),
-		@"senderNickname"	: NSStringNilValueSubstitute(message.sender.nickname),
-		@"senderUsername"	: NSStringNilValueSubstitute(message.sender.username),
-		@"senderDNSMask"	: NSStringNilValueSubstitute(message.sender.address),
-		@"senderIsServer"	: @(message.sender.isServer)
-	};
+		NSDictionary *senderData = @{
+			@"senderHostmask"	: NSStringNilValueSubstitute(message.sender.hostmask),
+			@"senderNickname"	: NSStringNilValueSubstitute(message.sender.nickname),
+			@"senderUsername"	: NSStringNilValueSubstitute(message.sender.username),
+			@"senderDNSMask"	: NSStringNilValueSubstitute(message.sender.address),
+			@"senderIsServer"	: @(message.sender.isServer)
+		};
 
-	NSDictionary *messageData = @{
-		@"messageReceived"      : message.receivedAt,
-		@"messageParamaters"	: message.params,
-		@"messageCommand"		: NSStringNilValueSubstitute(message.command),
-		@"messageSequence"		: NSStringNilValueSubstitute(message.sequence),
-		@"messageServer"		: NSStringNilValueSubstitute([client networkAddress]),
-		@"messageNetwork"		: NSStringNilValueSubstitute([client networkName]),
-		@"messageNumericReply"	: @(message.numericReply)
-	};
-	
-	for (THOPluginItem *plugin in self.allLoadedPlugins) {
-		if ([plugin.supportedServerInputCommands containsObject:cmdl]) {
-			[plugin.primaryClass messageReceivedByServer:client sender:senderData message:messageData];
+		NSDictionary *messageData = @{
+			@"messageReceived"      : message.receivedAt,
+			@"messageParamaters"	: message.params,
+			@"messageCommand"		: NSStringNilValueSubstitute(message.command),
+			@"messageSequence"		: NSStringNilValueSubstitute(message.sequence),
+			@"messageServer"		: NSStringNilValueSubstitute([client networkAddress]),
+			@"messageNetwork"		: NSStringNilValueSubstitute([client networkName]),
+			@"messageNumericReply"	: @(message.numericReply)
+		};
+		
+		for (THOPluginItem *plugin in self.allLoadedPlugins) {
+			if ([plugin.supportedServerInputCommands containsObject:cmdl]) {
+				[plugin.primaryClass messageReceivedByServer:client sender:senderData message:messageData];
+			}
 		}
-	}
+	});
 }
 
 #pragma mark -

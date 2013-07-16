@@ -40,6 +40,8 @@
 #define RZPluginManager()			[THOPluginManager defaultManager]
 
 @interface THOPluginManager : NSObject
+@property (nonatomic, assign, readonly) dispatch_queue_t dispatchQueue;
+
 + (THOPluginManager *)defaultManager;
 
 /* Manage loaded plugins. */
