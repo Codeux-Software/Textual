@@ -90,6 +90,9 @@
 /* cancelOperationsForViewController should be called from the main queue. */
 - (void)cancelOperationsForViewController:(TVCLogController *)controller
 {
+	/* Pause queue. */
+	[self setSuspended:YES];
+
 	/* Pending operations. */
 	NSArray *pendingOperations = controller.pendingPrintOperations;
 
@@ -102,6 +105,9 @@
 
 	/* Remove them. */
 	[controller.pendingPrintOperations removeAllObjects];
+
+	/* Resume queue. */
+	[self setSuspended:NO];
 }
 
 - (void)destroyOperationsForChannel:(IRCChannel *)channel
