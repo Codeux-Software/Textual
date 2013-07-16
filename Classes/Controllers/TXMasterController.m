@@ -529,6 +529,46 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	}
 }
 
+- (void)showServerListSplitView:(BOOL)showList
+{
+	self.serverListSplitViewOldPosition = self.serverSplitView.dividerPosition;
+
+	if (showList) {
+		NSView *leftView = [self.serverSplitView.subviews safeObjectAtIndex:0];
+
+		self.serverSplitView.viewIsHidden = NO;
+		self.serverSplitView.viewIsInverted = NO;
+
+		if ([self.serverSplitView isSubviewCollapsed:leftView] == NO) {
+			if (self.serverListSplitViewOldPosition < _minimumSplitViewWidth) {
+				self.serverListSplitViewOldPosition = _minimumSplitViewWidth;
+			}
+
+			self.serverSplitView.dividerPosition = self.serverListSplitViewOldPosition;
+		}
+	} else {
+		if (self.serverSplitView.viewIsHidden == NO) {
+			self.serverSplitView.viewIsHidden = YES;
+			self.serverSplitView.viewIsInverted = YES;
+		}
+	}
+}
+
+- (NSRect)splitView:(NSSplitView *)splitView effectiveRect:(NSRect)proposedEffectiveRect forDrawnRect:(NSRect)drawnRect ofDividerAtIndex:(NSInteger)dividerIndex
+{
+	if ([splitView isEqual:self.memberSplitView]) {
+		if (self.memberSplitView.viewIsHidden) {
+			return NSZeroRect;
+		}
+	} else if ([splitView isEqual:self.serverSplitView]) {
+		if (self.serverSplitView.viewIsHidden) {
+			return NSZeroRect;
+		}
+	}
+
+	return proposedEffectiveRect;
+}
+
 - (CGFloat)splitView:(NSSplitView *)splitView constrainMaxCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)dividerIndex
 {
 	if ([splitView isEqual:self.memberSplitView]) {
@@ -561,21 +601,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 - (BOOL)splitView:(NSSplitView *)splitView canCollapseSubview:(NSView *)subview
 {
-	if ([splitView isEqual:self.memberSplitView]) {
-		NSView *leftSide = splitView.subviews[0];
-        
-		if ([leftSide isEqual:subview]) {
-			return NO;
-		}
-	} else if ([splitView isEqual:self.serverSplitView]) {
-		NSView *rightSide = splitView.subviews[1];
-		
-		if ([rightSide isEqual:subview] || NSObjectIsEmpty(self.worldController.clients)) {
-			return NO;		
-		} 
-	}
-	
-	return YES;
+	return NO;
 }
 
 #pragma mark -
@@ -617,7 +643,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		self.serverSplitView.dividerPosition = 165;
 		self.memberSplitView.dividerPosition = 120;
 	}
-	
+
+	self.serverListSplitViewOldPosition = self.serverSplitView.dividerPosition;
 	self.memberSplitViewOldPosition = self.memberSplitView.dividerPosition;
 }
 
@@ -639,7 +666,11 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[dic setInteger:rect.size.height forKey:@"h"];
 	
 	if (self.serverSplitView.dividerPosition < _minimumSplitViewWidth) {
-		self.serverSplitView.dividerPosition = _defaultSplitViewWidth;
+		if (self.serverListSplitViewOldPosition < _minimumSplitViewWidth) {
+			self.serverSplitView.dividerPosition = _defaultSplitViewWidth;
+		} else {
+			self.serverSplitView.dividerPosition = self.serverListSplitViewOldPosition;
+		}
 	}
 	
 	if (self.memberSplitView.dividerPosition < _minimumSplitViewWidth) {
