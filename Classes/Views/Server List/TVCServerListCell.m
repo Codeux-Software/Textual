@@ -483,7 +483,7 @@
 		if (channel.isActive) {
 			[self drawStatusBadge:iconName withAlpha:1.0];
 		} else {
-			[self drawStatusBadge:iconName withAlpha:0.5];
+			[self drawStatusBadge:iconName withAlpha:0.4];
 		}
 	} else {
 		if (channel.isActive) {
