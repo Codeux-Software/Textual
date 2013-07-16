@@ -39,13 +39,13 @@
 
 @implementation TPIBragSpam
 
-- (void)appendPluralOrSingular:(NSMutableString **)resultString valueToken:(NSString *)valueToken value:(NSInteger)valueActual
+- (void)appendPluralOrSingular:(NSString **)resultString valueToken:(NSString *)valueToken value:(NSInteger)valueActual
 {
 	if (NSDissimilarObjects(valueActual, 1)) {
 		valueToken = [valueToken stringByAppendingString:@"[PLURAL]"];
 	}
 
-	[*resultString appendString:TPIFLS(valueToken, valueActual)];
+	*resultString = [*resultString stringByAppendingString:TPIFLS(valueToken, valueActual)];
 }
 
 - (void)messageSentByUser:(IRCClient*)client
@@ -124,7 +124,7 @@
 			
 		}
 
-		NSMutableString *resultString = [NSMutableString string];
+		NSString *resultString = NSStringEmptyPlaceholder;
 
 		[self appendPluralOrSingular:&resultString valueToken:@"BragspamPluginNormalResultChannel" value:channelCount];
 		[self appendPluralOrSingular:&resultString valueToken:@"BragspamPluginNormalResultNetwork" value:networkCount];
