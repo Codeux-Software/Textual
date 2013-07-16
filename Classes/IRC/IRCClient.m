@@ -1156,7 +1156,7 @@
 		}
 	}
 	
-	[self.invokeInBackgroundThread processBundlesUserMessage:str.string command:NSStringEmptyPlaceholder];
+	[self processBundlesUserMessage:str.string command:NSStringEmptyPlaceholder];
 }
 
 - (void)sendPrivmsgToSelectedChannel:(NSString *)message
@@ -2503,7 +2503,7 @@
 				LogToConsole(TXTLS(@"PluginCommandClashErrorMessage"), uppercaseCommand);
 			} else {
 				if (pluginFound) {
-					[self.invokeInBackgroundThread processBundlesUserMessage:uncutInput command:lowercaseCommand];
+					[self processBundlesUserMessage:uncutInput command:lowercaseCommand];
 					
 					return;
 				} else {
@@ -2516,7 +2516,7 @@
 							@"target"			: NSStringNilValueSubstitute(targetChannelName)
 						};
 						
-						[self.invokeInBackgroundThread executeTextualCmdScript:inputInfo];
+						[self executeTextualCmdScript:inputInfo];
 						
 						return;
 					}
@@ -3181,7 +3181,7 @@
 		}
 	}
 
-	[self.invokeInBackgroundThread processBundlesServerMessage:m];
+	[self processBundlesServerMessage:m];
 }
 
 - (void)ircConnectionWillSend:(NSString *)line
@@ -5963,6 +5963,13 @@
 }
 
 - (void)executeTextualCmdScript:(NSDictionary *)details
+{
+	dispatch_async([RZPluginManager() dispatchQueue], ^{
+		[self internalExecuteTextualCmdScript:details];
+	});
+}
+
+- (void)internalExecuteTextualCmdScript:(NSDictionary *)details
 {
 	/* Gather information about the script to be executed. */
 	NSAssertReturn([details containsKey:@"path"]);
