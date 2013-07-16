@@ -537,7 +537,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		NSView *leftView = [self.serverSplitView.subviews safeObjectAtIndex:0];
 
 		self.serverSplitView.viewIsHidden = NO;
-		self.serverSplitView.viewIsInverted = NO;
 
 		if ([self.serverSplitView isSubviewCollapsed:leftView] == NO) {
 			if (self.serverListSplitViewOldPosition < _minimumSplitViewWidth) {
@@ -549,7 +548,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	} else {
 		if (self.serverSplitView.viewIsHidden == NO) {
 			self.serverSplitView.viewIsHidden = YES;
-			self.serverSplitView.viewIsInverted = YES;
 		}
 	}
 }
