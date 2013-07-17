@@ -220,10 +220,24 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	}
 
 	/* Redraw dock icon on potential screen resolution changes. */
-    [self reloadUserInterfaceItems:YES];
+    [self reloadUserInterfaceItems];
+
+	[TVCDockIcon resetCachedCount];
+
+	[self.worldController updateIcon];
 }
 
-- (void)updateMainWindowInterface:(BOOL)becomingActive
+- (void)reloadUserInterfaceItems
+{
+	NSAssertReturn(self.terminating == NO);
+	
+	[self.serverList updateBackgroundColor];
+	[self.serverList reloadAllDrawingsIgnoringOtherReloads];
+
+	[self.memberList updateBackgroundColor];
+}
+
+- (void)resetSelectedItemState
 {
 	NSAssertReturn(self.terminating == NO);
 
@@ -233,19 +247,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		[sel resetState];
 	}
 
-	[self reloadUserInterfaceItems:becomingActive];
-}
-
-- (void)reloadUserInterfaceItems:(BOOL)redrawIcon
-{
-	[self.serverList updateBackgroundColor];
-	[self.serverList reloadAllDrawingsIgnoringOtherReloads];
-
-	[self.memberList updateBackgroundColor];
-
-	if (redrawIcon) {
-		[self.worldController updateIcon];
-	}
+	[self.worldController updateIcon];
 }
 
 - (void)applicationWillResignActive:(NSNotification *)notification
@@ -265,7 +267,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	self.applicationIsChangingActiveState = NO;
 	self.mainWindowIsActive = NO;
 
-	[self updateMainWindowInterface:NO];
+	[self reloadUserInterfaceItems];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification
@@ -275,8 +277,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	if ([self.mainWindow isEqual:[NSApp keyWindow]]) {
 		self.mainWindowIsActive = YES;
 	}
-	
-	[self updateMainWindowInterface:YES];
+
+	[self reloadUserInterfaceItems];
 }
 
 - (void)windowDidBecomeKey:(NSNotification *)notification
@@ -284,8 +286,10 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	self.mainWindowIsActive = YES;
 	
 	if (self.applicationIsChangingActiveState == NO) {
-		[self updateMainWindowInterface:YES];
+		[self reloadUserInterfaceItems];
 	}
+
+	[self resetSelectedItemState];
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification
@@ -293,7 +297,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	self.mainWindowIsActive = NO;
 	
 	if (self.applicationIsChangingActiveState == NO) {
-		[self updateMainWindowInterface:NO];
+		[self reloadUserInterfaceItems];
 	}
 }
 
