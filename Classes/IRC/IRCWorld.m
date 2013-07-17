@@ -1199,6 +1199,8 @@
 	[self.selectedItem resetState]; // Reset state of old item.
 	self.selectedItem = nextItem;
 
+	[self.selectedItem resetState]; // Reset state of new item.
+
 	/* Destroy member list if we have no selection. */
 	if (PointerIsEmpty(self.selectedItem)) {
 		[self.channelViewBox setContentView:nil];
