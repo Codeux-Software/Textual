@@ -6190,7 +6190,8 @@
 
 	self.socket.serverAddress = host;
 	self.socket.serverPort = port;
-	
+
+	self.socket.connectionPrefersIPv6 = self.config.connectionPrefersIPv6;
 	self.socket.connectionUsesSSL = self.config.connectionUsesSSL;
 
 	if (self.config.proxyType == TXConnectionSystemSocksProxyType) {
