@@ -52,7 +52,6 @@ extern AH_BUFFER_STATE			AH_scan_string(const char *, yyscan_t scanner);
 
 @implementation AHHyperlinkScanner
 {
-	NSDictionary		*__weak m_urlSchemes;
 	NSString			*__weak m_scanString;
 	
 	BOOL				m_strictChecking;
@@ -72,7 +71,6 @@ static NSCharacterSet			*enclosureSet					= nil;
 static NSArray					*enclosureStopArray				= nil;
 static NSArray					*encKeys						= nil;
 
-@synthesize urlSchemes			= m_urlSchemes;
 @synthesize scanString			= m_scanString;
 @synthesize strictChecking		= m_strictChecking;
 @synthesize scanLocation		= m_scanLocation;
@@ -121,7 +119,6 @@ static NSArray					*encKeys						= nil;
 	m_strictChecking = NO;
 	m_scanString = inString;
 	m_scanStringLength = [m_scanString length];
-	m_urlSchemes = @{@"ftp": @"ftp://"};
 	
 	return [self _allMatches];
 }
@@ -131,7 +128,6 @@ static NSArray					*encKeys						= nil;
 	m_strictChecking = YES;
 	m_scanString = inString;
 	m_scanStringLength = [m_scanString length];
-	m_urlSchemes = @{@"ftp": @"ftp://"};
 	
 	return [self _allMatches];
 }
