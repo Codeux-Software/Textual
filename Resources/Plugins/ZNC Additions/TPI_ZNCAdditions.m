@@ -74,7 +74,15 @@
 	}
 
 	if ([commandString isEqualIgnoringCase:@"DETACH"]) {
-		[client sendLine:[NSString stringWithFormat:@"%@ %@", commandString, messageString]];
+		if ([messageString isChannelName:client]) {
+			[client sendLine:[NSString stringWithFormat:@"%@ %@", commandString, messageString]];
+		} else {
+			IRCChannel *channel = self.worldController.selectedChannel;
+
+			if ([channel isChannel]) {
+				[client sendLine:[NSString stringWithFormat:@"%@ %@", commandString, channel.name]];
+			}
+		}
 	}
 }
 
