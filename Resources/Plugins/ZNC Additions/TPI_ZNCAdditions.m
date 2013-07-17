@@ -67,13 +67,13 @@
 				  message:(NSString *)messageString
 				  command:(NSString *)commandString
 {
-	if (client.isZNCBouncerConnection == NO) {
-		[client printDebugInformation:TPILS(@"ZNCIsNotAvailable")];
-
-		return;
-	}
-
 	if ([commandString isEqualIgnoringCase:@"DETACH"]) {
+		if (client.isZNCBouncerConnection == NO) {
+			[client printDebugInformation:TPILS(@"ZNCIsNotAvailable")];
+
+			return;
+		}
+		
 		if ([messageString isChannelName:client]) {
 			[client sendLine:[NSString stringWithFormat:@"%@ %@", commandString, messageString]];
 		} else {
