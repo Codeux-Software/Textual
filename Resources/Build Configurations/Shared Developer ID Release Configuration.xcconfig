@@ -1,5 +1,6 @@
 ARCHS = $(ARCHS_STANDARD_64_BIT)
 SYMROOT = Build Results
+ONLY_ACTIVE_ARCH = NO
 OBJROOT = ${SRCROOT}/.tmp/SharedBuildResults
 SHARED_PRECOMPS_DIR = ${SRCROOT}/.tmp/SharedPCH
 CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements
