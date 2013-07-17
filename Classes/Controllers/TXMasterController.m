@@ -301,6 +301,19 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	}
 }
 
+- (BOOL)window:(NSWindow *)window shouldPopUpDocumentPathMenu:(NSMenu *)menu
+{
+	/* Return NO so that we can use the document icon feature to show an icon
+	 for an SSL unlock and lock locked and not allow user to click it. */
+
+	return NO;
+}
+
+- (BOOL)window:(NSWindow *)window shouldDragDocumentWithEvent:(NSEvent *)event from:(NSPoint)dragImageLocation withPasteboard:(NSPasteboard *)pasteboard
+{
+	return NO;
+}
+
 - (BOOL)queryTerminate
 {
 	if (self.terminating) {
