@@ -166,12 +166,13 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		templateTokens[@"anchorLocation"]	= [contentne stringWithValidURIScheme];
 
 		/* Find unique ID (if any?). */
-		if (resultContext) {
+		if (resultContext && [logController inlineImagesEnabledForView]) {
 			NSDictionary *urlMatches = [resultContext dictionaryForKey:@"InlineImageURLMatches"];
 
-			NSString *keyValue = [urlMatches firstKeyForObject:templateTokens[@"anchorLocation"]];
+			NSString *keyValue = [urlMatches objectForKey:templateTokens[@"anchorLocation"]];
 
 			if (keyValue) {
+				templateTokens[@"anchorInlineImageAvailable"] = @(YES);
 				templateTokens[@"anchorInlineImageUniqueID"] = keyValue;
 			}
 		}
@@ -445,17 +446,22 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				if (r.length >= 1) {
 					setFlag(attrBuf, _rendererURLAttribute, r.location, r.length);
 
-					NSString *matchedURL = [body safeSubstringWithRange:r];
+					if (isNormalMsg && (log && [log inlineImagesEnabledForView])) {
+						NSString *matchedURL;
 
-					/* We search for a key matching this string. */
-					NSString *keyMatch = [urlAry firstKeyForObject:matchedURL];
+						matchedURL = [body safeSubstringWithRange:r];
+						matchedURL = [matchedURL stringWithValidURIScheme];
 
-					/* Do we have a key already or no? */
-					if (NSObjectIsEmpty(keyMatch)) {
-						/* If we do not already have a key, then we add one. */
-						NSString *itemID = [NSString stringWithUUID];
+						/* We search for a key matching this string. */
+						NSString *keyMatch = [urlAry objectForKey:matchedURL];
 
-						[urlAry setObject:[matchedURL stringWithValidURIScheme] forKey:itemID];
+						/* Do we have a key already or no? */
+						if (NSObjectIsEmpty(keyMatch)) {
+							/* If we do not already have a key, then we add one. */
+							NSString *itemID = [NSString stringWithUUID];
+
+							[urlAry setObject:itemID forKey:matchedURL];
+						}
 					}
 				}
 			}

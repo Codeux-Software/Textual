@@ -218,6 +218,13 @@
     return self.client.printingQueue;
 }
 
+- (BOOL)inlineImagesEnabledForView
+{
+	PointerIsEmptyAssertReturn(self.channel, NO);
+
+	return ([TPCPreferences showInlineImages] && self.channel.config.ignoreInlineImages == NO);
+}
+
 - (NSInteger)scrollbackCorrectionInit
 {
 	return (self.view.frame.size.height / 2);
@@ -999,29 +1006,33 @@
 	// Find all inline media.                                                     /
 	// ************************************************************************** /
 
-	NSMutableArray *inlineImageLinks = [NSMutableArray array];
+	if ([self inlineImagesEnabledForView] == NO) {
+		attributes[@"inlineMediaAvailable"] = @(NO);
+	} else {
+		NSMutableArray *inlineImageLinks = [NSMutableArray array];
 
-	if (isNormalMsg && [TPCPreferences showInlineImages]) {
-		if (self.channel.config.ignoreInlineImages == NO) {
-			for (NSString *uniqueKey in inlineImageMatches) {
-				NSString *nurl = (id)inlineImageMatches[uniqueKey];
+		if (isNormalMsg && [TPCPreferences showInlineImages]) {
+			if (self.channel.config.ignoreInlineImages == NO) {
+				for (NSString *nurl in inlineImageMatches) {
+					NSString *uniqueKey = (id)inlineImageMatches[nurl];
 
-				NSString *iurl = [TVCImageURLParser imageURLFromBase:nurl];
+					NSString *iurl = [TVCImageURLParser imageURLFromBase:nurl];
 
-				NSObjectIsEmptyAssertLoopContinue(iurl);
+					NSObjectIsEmptyAssertLoopContinue(iurl);
 
-				[inlineImageLinks addObject:@{
-					@"preferredMaximumWidth"		: @([TPCPreferences inlineImagesMaxWidth]),
-					@"anchorInlineImageUniqueID"	: uniqueKey,
-					@"anchorLink"					: nurl,
-					@"imageURL"						: iurl,
-				}];
+					[inlineImageLinks addObject:@{
+						  @"preferredMaximumWidth"		: @([TPCPreferences inlineImagesMaxWidth]),
+						  @"anchorInlineImageUniqueID"	: uniqueKey,
+						  @"anchorLink"					: nurl,
+						  @"imageURL"					: iurl,
+					}];
+				}
 			}
 		}
-	}
 
-	attributes[@"inlineMediaAvailable"] = @(NSObjectIsNotEmpty(inlineImageLinks));
-	attributes[@"inlineMediaArray"]		= inlineImageLinks;
+		attributes[@"inlineMediaAvailable"] = @(NSObjectIsNotEmpty(inlineImageLinks));
+		attributes[@"inlineMediaArray"]		= inlineImageLinks;
+	}
 
 	// ---- //
 
