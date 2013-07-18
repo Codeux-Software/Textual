@@ -5,9 +5,8 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
-        Please see Contributors.rtfd and Acknowledgements.rtfd
+        Contributors.rtfd and Acknowledgements.rtfd
 
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
@@ -38,12 +37,13 @@
 
 #import "TextualApplication.h"
 
-@interface TVCLogScriptEventSink : NSObject
-@property (nonatomic, nweak) TVCLogController *owner;
-@property (nonatomic, assign) NSInteger x;
-@property (nonatomic, assign) NSInteger y;
-@property (nonatomic, assign) NSTimeInterval lastClickTime;
+#import "TVCLogController.h" // for class extension
 
-/* Used internally to toggle inline image state. */
-- (NSString *)toggleInlineImage:(NSString *)object withKeyCheck:(BOOL)checkShiftKey;
+/* Do not call this crap with a plugin. Okay? */
+@interface TVCImageURLoader : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
+- (void)assesURL:(NSString *)baseURL withID:(NSString *)uniqueID forController:(TVCLogController *)controller;
+@end
+
+@interface TVCLogController (TVCImageURLoaderControllerExtension)
+- (void)imageLoaderFinishedLoadingForImageWithID:(NSString *)uniqueID withSize:(TXFSLongInt)sizeInBytes contentType:(NSString *)imageContentType;
 @end

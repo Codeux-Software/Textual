@@ -114,17 +114,26 @@
     LogToConsole(@"JavaScript: %@", message);
 }
 
-- (NSString *)toggleInlineImage:(id)object
+- (NSString *)toggleInlineImage:(NSString *)object
 {
-	NSObjectIsKindOfClassAssertReturn(object, NSString, @"true");
+	return [self toggleInlineImage:object withKeyCheck:YES];
+}
 
-	if (([NSEvent modifierFlags] & NSShiftKeyMask) == NO) {
+- (NSString *)toggleInlineImage:(NSString *)object withKeyCheck:(BOOL)checkShiftKey
+{
+	if (([NSEvent modifierFlags] & NSShiftKeyMask) == NO && checkShiftKey) {
 		return @"true";
+	}
+
+	NSObjectIsEmptyAssertReturn(object, @"true");
+
+	if ([object hasPrefix:@"inlineImage-"] == NO) {
+		object = [@"inlineImage-" stringByAppendingString:object];
 	}
 
 	DOMElement *imageNode = [self.owner.mainFrameDocument getElementById:object];
 
-	PointerIsEmptyAssertReturn(object, @"true");
+	PointerIsEmptyAssertReturn(imageNode, @"true");
 
 	NSString *display = imageNode.style.display;
 

@@ -108,6 +108,7 @@
 	@class TPCThemeSettings;
 	@class TVCDockIcon;
 	@class TVCImageURLParser;
+	@class TVCImageURLoader;
 	@class TVCInputPromptDialog;
 	@class TVCInputTextField;
 	@class TVCInputTextFieldBackground;
@@ -271,6 +272,7 @@
 
 	#import "TVCDockIcon.h"
 	#import "TVCImageURLParser.h"
+	#import "TVCImageURLoader.h"
 	#import "TVCInputPromptDialog.h"
 	#import "TVCInputTextField.h"
 	#import "TVCListSeparatorCell.h"
