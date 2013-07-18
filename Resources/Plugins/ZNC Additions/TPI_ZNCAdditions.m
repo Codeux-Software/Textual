@@ -96,6 +96,138 @@
 	return @[@"privmsg"];
 }
 
+- (IRCMessage *)interceptServerInput:(IRCMessage *)input for:(IRCClient *)client
+{
+	NSAssertReturnR(client.isZNCBouncerConnection, input);
+
+	/* Who is sending this message? */
+	if ([input.sender.nickname isEqualToString:@"*buffextras"] == NO) {
+		return input;
+	}
+
+	/* What type of message is this person sending? */
+	if ([input.command isEqualToString:IRCPrivateCommandIndex("privmsg")] == NO) {
+		return input;
+	}
+
+	/* Begin processing input… */
+	NSAssertReturnR((input.params.count == 2), input);
+
+	NSMutableString *s = [input.params[1] mutableCopy];
+
+	/* Define user information. */
+	NSString *hostmask = s.getToken;
+
+	input.sender.hostmask =  hostmask;
+	input.sender.nickname = [hostmask nicknameFromHostmask];
+
+	if ([hostmask isHostmask]) {
+		input.sender.username = [hostmask usernameFromHostmask];
+		input.sender.address = [hostmask addressFromHostmask];
+	} else {
+		input.sender.isServer = YES;
+	}
+
+	/* Start actual work. */
+	if ([s hasPrefix:@"is now known as "]) {
+		/* Begin nickname change. */
+		[s deleteCharactersInRange:NSMakeRange(0, [@"is now known as " length])];
+
+		NSString *newNickname = s.getToken;
+
+		NSObjectIsEmptyAssertReturn(newNickname, input);
+
+		input.command = IRCPrivateCommandIndex("nick");
+
+		[input.params removeAllObjects];
+		[input.params safeAddObject:newNickname];
+		/* End nickname change. */
+	}
+	else if ([s isEqualToString:@"joined"])
+	{
+		/* Begin channel join. */
+		input.command = IRCPrivateCommandIndex("join");
+
+		[input.params removeObjectAtIndex:1];
+		/* End channel join. */
+	}
+	else if ([s hasPrefix:@"set mode: "])
+	{
+		/* Begin mode processing. */
+		[s deleteCharactersInRange:NSMakeRange(0, [@"set mode: " length])];
+
+		input.command = IRCPrivateCommandIndex("mode");
+
+		NSString *modesSet = s.getToken;
+
+		NSObjectIsEmptyAssertReturn(modesSet, input);
+
+		[input.params removeObjectAtIndex:1];
+
+		[input.params safeAddObject:modesSet];
+		[input.params safeAddObject:s];
+		/* End mode processing. */
+	}
+	else if ([s hasPrefix:@"quit with message: ["] && [s hasSuffix:@"]"])
+	{
+		/* Begin quit message. */
+		[s deleteCharactersInRange:NSMakeRange(0, [@"quit with message: [" length])];
+		[s deleteCharactersInRange:NSMakeRange((s.length - 1), 1)];
+
+		input.command = IRCPrivateCommandIndex("quit");
+
+		[input.params removeAllObjects];
+
+		[input.params safeAddObject:s];
+		/* End quit message. */
+	}
+	else if ([s hasPrefix:@"parted with message: ["] && [s hasSuffix:@"]"])
+	{
+		/* Begin part message. */
+		[s deleteCharactersInRange:NSMakeRange(0, [@"parted with message: [" length])];
+		[s deleteCharactersInRange:NSMakeRange((s.length - 1), 1)];
+
+		input.command = IRCPrivateCommandIndex("part");
+
+		[input.params removeObjectAtIndex:1];
+
+		[input.params safeAddObject:s];
+		/* End part message. */
+	}
+	else if ([s hasPrefix:@"kicked "] && [s hasSuffix:@"]"])
+	{
+		/* Begin kick message. */
+		[s deleteCharactersInRange:NSMakeRange(0, [@"kicked " length])];
+		[s deleteCharactersInRange:NSMakeRange((s.length - 1), 1)];
+
+		NSString *whoKicked = s.getToken;
+
+		if (NSObjectIsEmpty(whoKicked) || [s hasPrefix:@"Reason: ["] == NO) {
+			return input;
+		}
+
+		[s deleteCharactersInRange:NSMakeRange(0, [@"Reason: [" length])];
+
+		input.command = IRCPrivateCommandIndex("kick");
+
+		[input.params removeObjectAtIndex:1];
+
+		[input.params safeAddObject:whoKicked];
+		[input.params safeAddObject:s];
+		/* End kick message. */
+	}
+	else if ([s hasPrefix:@"changed the topic to: "])
+	{
+		/* Begin topic change. */
+		/* We get the latest topic on join so we tell Textual to ignore this line. */
+
+		return nil;
+		/* End topic change. */
+	}
+
+	return input;
+}
+
 #pragma mark -
 #pragma mark Private API
 
