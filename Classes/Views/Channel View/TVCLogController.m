@@ -40,8 +40,6 @@
 
 #define _internalPlaybackLineCountLimit			100
 
-#define _maximumInlineImageFilesize				5242880 // five megabytes
-
 @interface TVCLogController ()
 @property (nonatomic, readonly, uweak) TPCThemeSettings *themeSettings;
 @property (nonatomic, assign) BOOL historyLoaded;
@@ -1176,7 +1174,7 @@
 	NSAssertReturn([self inlineImagesEnabledForView]);
 
 	/* Check size. */
-	if (sizeInBytes > _maximumInlineImageFilesize || sizeInBytes < 10) {
+	if (sizeInBytes > [TPCPreferences inlineImagesMaxFilesize] || sizeInBytes < 10) {
 		return;
 	}
 

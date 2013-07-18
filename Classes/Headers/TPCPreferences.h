@@ -218,6 +218,8 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 
 + (TXHostmaskBanFormat)banFormat;
 
++ (TXFSLongInt)inlineImagesMaxFilesize;
+
 + (NSInteger)inlineImagesMaxWidth;
 + (void)setInlineImagesMaxWidth:(NSInteger)value;
 

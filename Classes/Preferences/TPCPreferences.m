@@ -951,6 +951,27 @@ static NSURL *transcriptFolderResolvedBookmark;
 #pragma mark -
 #pragma mark Inline Image Size
 
++ (TXFSLongInt)inlineImagesMaxFilesize
+{
+	NSInteger filesizeTag = [RZUserDefaults() integerForKey:@"inlineImageMaxFilesize"];
+
+	switch (filesizeTag) {
+		case 1: return			(TXFSLongInt)1048576;			// 1 MB
+		case 2: return			(TXFSLongInt)2097152;			// 2 MB
+		case 3: return			(TXFSLongInt)3145728;			// 3 MB
+		case 4: return			(TXFSLongInt)4194304;			// 4 MB
+		case 5: return			(TXFSLongInt)5242880;			// 5 MB
+		case 6: return			(TXFSLongInt)10485760;			// 10 MB
+		case 7: return			(TXFSLongInt)15728640;			// 15 MB
+		case 8: return			(TXFSLongInt)20971520;			// 20 MB
+		case 9: return			(TXFSLongInt)52428800;			// 50 MB
+		case 10: return			(TXFSLongInt)104857600;			// 100 MB
+		case 11: return			(TXFSLongInt)1073741824;		// 1 GB
+		case 12: return			(TXFSLongInt)1099511627776;		// 1 TB
+		default: return			(TXFSLongInt)5242880;			// 5 MB
+	}
+}
+
 + (NSInteger)inlineImagesMaxWidth
 {
 	return [RZUserDefaults() integerForKey:@"InlineMediaScalingWidth"];
@@ -1469,6 +1490,7 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"Theme -> Nickname Format"]		= TXLogLineUndefinedNicknameFormat;
 	d[@"Theme -> Timestamp Format"]		= TXDefaultTextualTimestampFormat;
 
+	d[@"inlineImageMaxFilesize"]				= @(5);
     d[@"TrackUserAwayStatusMaximumChannelSize"] = @(0);
 	d[@"AutojoinMaximumChannelJoinCount"]		= @(2);
 	d[@"ScrollbackMaximumLineCount"]			= @(300);
