@@ -76,6 +76,8 @@
 - (NSString *)topicValue;
 - (void)setTopic:(NSString *)topic;
 
+- (BOOL)inlineImagesEnabledForView;
+
 - (void)mark;
 - (void)unmark;
 - (void)goToMark;
