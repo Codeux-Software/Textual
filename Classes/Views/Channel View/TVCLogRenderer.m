@@ -152,7 +152,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	return body;
 }
 
-+ (id)renderRange:(NSString *)body attributes:(attr_t)attrArray start:(NSInteger)rangeStart length:(NSInteger)rangeLength for:(TVCLogController *)logController
++ (id)renderRange:(NSString *)body attributes:(attr_t)attrArray start:(NSInteger)rangeStart length:(NSInteger)rangeLength for:(TVCLogController *)logController context:(NSDictionary *)resultContext
 {
 	NSString *contentne = [body safeSubstringWithRange:NSMakeRange(rangeStart, rangeLength)];
 
@@ -165,6 +165,18 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		templateTokens[@"anchorTitle"]		=  contentes;
 		templateTokens[@"anchorLocation"]	= [contentne stringWithValidURIScheme];
 
+		/* Find unique ID (if any?). */
+		if (resultContext) {
+			NSDictionary *urlMatches = [resultContext dictionaryForKey:@"InlineImageURLMatches"];
+
+			NSString *keyValue = [urlMatches firstKeyForObject:templateTokens[@"anchorLocation"]];
+
+			if (keyValue) {
+				templateTokens[@"anchorInlineImageUniqueID"] = keyValue;
+			}
+		}
+
+		/* Render template. */
 		return [TVCLogRenderer renderTemplate:@"renderedStandardAnchorLinkResource" attributes:templateTokens];
 	}
 	else if (attrArray & _rendererChannelNameAttribute)
@@ -422,8 +434,9 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	if (drawingType == TVCLogRendererHTMLType) {
 		/* Scan the body for links. */
 		if (renderLinks) {
-			NSMutableArray *urlAry = [NSMutableArray array];
+			NSMutableDictionary *urlAry = [NSMutableDictionary dictionary];
 
+			/* Do scan. */
 			NSArray *urlAryRanges = [TLOLinkParser locatedLinksForString:body];
 
 			for (NSString *rn in urlAryRanges) {
@@ -432,11 +445,22 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				if (r.length >= 1) {
 					setFlag(attrBuf, _rendererURLAttribute, r.location, r.length);
 
-					[urlAry safeAddObject:[NSValue valueWithRange:r]];
+					NSString *matchedURL = [body safeSubstringWithRange:r];
+
+					/* We search for a key matching this string. */
+					NSString *keyMatch = [urlAry firstKeyForObject:matchedURL];
+
+					/* Do we have a key already or no? */
+					if (NSObjectIsEmpty(keyMatch)) {
+						/* If we do not already have a key, then we add one. */
+						NSString *itemID = [NSString stringWithUUID];
+
+						[urlAry setObject:[matchedURL stringWithValidURIScheme] forKey:itemID];
+					}
 				}
 			}
 
-			resultInfo[@"URLRanges"] = urlAry;
+			resultInfo[@"InlineImageURLMatches"] = urlAry;
 		}
 
 		if (isPlainText) {
@@ -740,7 +764,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		if (drawingType == TVCLogRendererAttributedStringType) {
 			result = [TVCLogRenderer renderAttributedRange:result attributes:t start:start length:n baseFont:attributedStringFont];
 		} else {
-			NSString *renderedRange = [TVCLogRenderer renderRange:body attributes:t start:start length:n for:log];
+			NSString *renderedRange = [TVCLogRenderer renderRange:body attributes:t start:start length:n for:log context:resultInfo];
 
 			if (NSObjectIsNotEmpty(renderedRange)) {
 				[result appendString:renderedRange];

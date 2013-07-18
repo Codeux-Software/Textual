@@ -224,12 +224,4 @@ Textual = {
 		
 		return true;
 	},
-    
-    hideInlineImage: function(object) {
-        if (app.hideInlineImage(object) == "false") {
-            return false;
-        }
-        
-        return true;
-    },
 }
