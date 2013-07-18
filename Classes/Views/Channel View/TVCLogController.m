@@ -40,6 +40,8 @@
 
 #define _internalPlaybackLineCountLimit			100
 
+#define _maximumInlineImageFilesize				5242880 // five megabytes
+
 @interface TVCLogController ()
 @property (nonatomic, readonly, uweak) TPCThemeSettings *themeSettings;
 @property (nonatomic, assign) BOOL historyLoaded;
@@ -522,10 +524,16 @@
 		/* Gather result information. */
 		NSString *lineNumber = [resultInfo objectForKey:@"lineNumber"];
 		NSString *renderTime = [resultInfo objectForKey:@"lineRenderTime"];
-		
+
+		NSDictionary *inlineImageMatches = [resultInfo dictionaryForKey:@"InlineImagesToValidate"];
+
+		if (inlineImageMatches == nil) {
+			inlineImageMatches = @{}; // So the array below does not throw exception.
+		}
+
 		[patchedAppend appendString:html];
 
-		[lineNumbers addObject:@[line, lineNumber, renderTime]];
+		[lineNumbers addObject:@[line, lineNumber, renderTime, inlineImageMatches]];
 		
 		/* Was it a highlight? */
 		BOOL highlighted = [resultInfo boolForKey:@"wordMatchFound"];
@@ -550,6 +558,15 @@
 
 			NSString *lineNumber = lineInfo[1];
 			NSString *renderTime = lineInfo[2];
+
+			NSDictionary *inlineImageMatches = lineInfo[3];
+
+			/* Begin processing inline images. */
+			for (NSString *nurl in inlineImageMatches) {
+				TVCImageURLoader *loader = [TVCImageURLoader new];
+
+				[loader assesURL:nurl withID:inlineImageMatches[nurl] forController:self];
+			}
 
 			/* Inform the style of the addition. */
 			[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
@@ -890,6 +907,8 @@
 
 		NSArray *mentionedUsers = [resultInfo arrayForKey:@"mentionedUsers"];
 
+		NSDictionary *inlineImageMatches = [resultInfo dictionaryForKey:@"InlineImagesToValidate"];
+
 		dispatch_async(dispatch_get_main_queue(), ^{
 			/* Record highlights. */
 			if (highlighted) {
@@ -913,12 +932,22 @@
 				[self setNeedsLimitNumberOfLines];
 			}
 
+			/* Begin processing inline images. */
+			/* We go through the inline image list here and pass to the loader now so that
+			 we know the links have hit the webview before we even try loading them. */
+			for (NSString *nurl in inlineImageMatches) {
+				TVCImageURLoader *loader = [TVCImageURLoader new];
+
+				[loader assesURL:nurl withID:inlineImageMatches[nurl] forController:self];
+			}
+
 			/* Finish up. */
 			PointerIsEmptyAssert(completionBlock);
 
 			completionBlock(highlighted);
 		});
 
+		/* Finish our printing operations. */
 		[self.printingQueue updateCompletionStatusForOperation:operation];
 
 		/* Using informationi provided by conversation tracking we can update our internal
@@ -1011,27 +1040,31 @@
 	} else {
 		NSMutableArray *inlineImageLinks = [NSMutableArray array];
 
-		if (isNormalMsg && [TPCPreferences showInlineImages]) {
-			if (self.channel.config.ignoreInlineImages == NO) {
-				for (NSString *nurl in inlineImageMatches) {
-					NSString *uniqueKey = (id)inlineImageMatches[nurl];
+		NSMutableDictionary *inlineImagesToValidate = [NSMutableDictionary dictionary];
 
-					NSString *iurl = [TVCImageURLParser imageURLFromBase:nurl];
+		if (isNormalMsg && [self inlineImagesEnabledForView]) {
+			for (NSString *nurl in inlineImageMatches) {
+				NSString *uniqueKey = (id)inlineImageMatches[nurl];
 
-					NSObjectIsEmptyAssertLoopContinue(iurl);
+				NSString *iurl = [TVCImageURLParser imageURLFromBase:nurl];
 
-					[inlineImageLinks addObject:@{
-						  @"preferredMaximumWidth"		: @([TPCPreferences inlineImagesMaxWidth]),
-						  @"anchorInlineImageUniqueID"	: uniqueKey,
-						  @"anchorLink"					: nurl,
-						  @"imageURL"					: iurl,
-					}];
-				}
+				NSObjectIsEmptyAssertLoopContinue(iurl);
+
+				[inlineImagesToValidate setObject:uniqueKey forKey:iurl];
+
+				[inlineImageLinks addObject:@{
+					  @"preferredMaximumWidth"		: @([TPCPreferences inlineImagesMaxWidth]),
+					  @"anchorInlineImageUniqueID"	: uniqueKey,
+					  @"anchorLink"					: nurl,
+					  @"imageURL"					: iurl,
+				}];
 			}
 		}
 
 		attributes[@"inlineMediaAvailable"] = @(NSObjectIsNotEmpty(inlineImageLinks));
 		attributes[@"inlineMediaArray"]		= inlineImageLinks;
+
+		[outputDictionary setObject:inlineImagesToValidate forKey:@"InlineImagesToValidate"];
 	}
 
 	// ---- //
@@ -1136,6 +1169,28 @@
 	NSString *html = [TVCLogRenderer renderTemplate:templateName attributes:attributes];
 
 	return html;
+}
+
+- (void)imageLoaderFinishedLoadingForImageWithID:(NSString *)uniqueID withSize:(TXFSLongInt)sizeInBytes contentType:(NSString *)imageContentType;
+{
+	NSAssertReturn([self inlineImagesEnabledForView]);
+
+	/* Check size. */
+	if (sizeInBytes > _maximumInlineImageFilesize || sizeInBytes < 10) {
+		return;
+	}
+
+	/* Check type. */
+	NSArray *validContentTypes = [TVCImageURLParser validImageContentTypes];
+
+	if ([validContentTypes containsObject:imageContentType] == NO) {
+		return;
+	}
+
+	/* Toggle visibility. */
+	NSObjectIsEmptyAssert(uniqueID);
+
+	[self.sink toggleInlineImage:uniqueID withKeyCheck:NO];
 }
 
 #pragma mark -

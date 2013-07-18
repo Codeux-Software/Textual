@@ -39,6 +39,13 @@
 
 @implementation TVCImageURLParser
 
++ (NSArray *)validImageContentTypes
+{
+	/* List based off https://en.wikipedia.org/wiki/Internet_media_type#Type_image */
+
+	return @[@"image/gif", @"image/jpeg", @"image/png", @"image/svg+xml"];
+}
+
 + (NSString *)imageURLFromBase:(NSString *)url
 {
 	NSString *lowerUrl = [url lowercaseString];
