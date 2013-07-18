@@ -116,42 +116,17 @@
 
 - (NSString *)toggleInlineImage:(id)object
 {
-	NSObjectIsKindOfClassAssertReturn(object, DOMHTMLAnchorElement, @"true");
+	NSObjectIsKindOfClassAssertReturn(object, NSString, @"true");
 
 	if (([NSEvent modifierFlags] & NSShiftKeyMask) == NO) {
 		return @"true";
 	}
 
-	DOMHTMLAnchorElement *anchor = object;
-	
-	DOMHTMLImageElement *imageElement = nil;
+	DOMElement *imageNode = [self.owner.mainFrameDocument getElementById:object];
 
-	DOMElement *span = [anchor parentElement];
+	PointerIsEmptyAssertReturn(object, @"true");
 
-	DOMNodeList *images = [span getElementsByClassName:@"inlineimage"];
-
-	for (unsigned index = 0; index < images.length; index++) {
-		DOMNode *node = [images item:index];
-
-		NSObjectIsKindOfClassAssertContinue(node, DOMHTMLImageElement);
-
-		DOMHTMLImageElement *image = (DOMHTMLImageElement *)node;
-
-		node = [image parentElement];
-
-		NSObjectIsKindOfClassAssertContinue(node, DOMHTMLAnchorElement);
-		
-		DOMHTMLAnchorElement *a = (DOMHTMLAnchorElement *)node;
-		NSAssertReturnLoopContinue([a.href isEqualIgnoringCase:anchor.href]);
-
-		imageElement = image;
-		
-		break;
-	}
-
-	PointerIsEmptyAssertReturn(imageElement, @"true");
-
-	NSString *display = imageElement.style.display;
+	NSString *display = imageNode.style.display;
 
 	if ([display isEqualIgnoringCase:@"none"]) {
 		display = NSStringEmptyPlaceholder;
@@ -159,22 +134,7 @@
 		display = @"none";
 	}
 
-	imageElement.style.display = display;
-
-	return @"false";
-}
-
-- (NSString *)hideInlineImage:(id)object
-{
-	NSObjectIsKindOfClassAssertReturn(object, DOMHTMLAnchorElement, @"true");
-
-	if (([NSEvent modifierFlags] & NSShiftKeyMask) == NO) {
-		return @"true";
-	}
-
-	DOMHTMLImageElement *imageElement = (DOMHTMLImageElement *)[[object getElementsByTagName:@"img"] item:0];
-
-	imageElement.style.display = @"none";
+	imageNode.style.display = display;
 
 	return @"false";
 }

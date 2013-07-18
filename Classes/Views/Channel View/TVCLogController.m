@@ -948,7 +948,8 @@
 
 	BOOL drawLinks = BOOLReverseValue([TLOLinkParser.bannedURLRegexLineTypes containsObject:lineTypeStng]);
 
-	NSArray *urlRanges;
+	NSDictionary *inlineImageMatches;
+
 	NSArray *mentionedUsers;
 
 	// ---- //
@@ -977,10 +978,11 @@
 			return nil;
 		}
 	}
-
-	urlRanges = [outputDictionary arrayForKey:@"URLRanges"];
+	
 	highlighted = [outputDictionary boolForKey:@"wordMatchFound"];
 	mentionedUsers = [outputDictionary arrayForKey:@"mentionedUsers"];
+
+	inlineImageMatches = [outputDictionary dictionaryForKey:@"InlineImageURLMatches"];
 
 	// ************************************************************************** /
 	// Draw to display.                                                                /
@@ -997,38 +999,29 @@
 	// Find all inline media.                                                     /
 	// ************************************************************************** /
 
-	NSMutableDictionary *inlineImageLinks = [NSMutableDictionary dictionary];
+	NSMutableArray *inlineImageLinks = [NSMutableArray array];
 
 	if (isNormalMsg && [TPCPreferences showInlineImages]) {
 		if (self.channel.config.ignoreInlineImages == NO) {
-			for (NSValue *linkRange in urlRanges) {
-				NSString *nurl = [line.messageBody safeSubstringWithRange:linkRange.rangeValue];
-				
+			for (NSString *uniqueKey in inlineImageMatches) {
+				NSString *nurl = (id)inlineImageMatches[uniqueKey];
+
 				NSString *iurl = [TVCImageURLParser imageURLFromBase:nurl];
 
 				NSObjectIsEmptyAssertLoopContinue(iurl);
 
-				if ([inlineImageLinks containsKey:iurl]) {
-					continue;
-				} else {
-					[inlineImageLinks safeSetObject:nurl forKey:iurl];
-				}
+				[inlineImageLinks addObject:@{
+					@"preferredMaximumWidth"		: @([TPCPreferences inlineImagesMaxWidth]),
+					@"anchorInlineImageUniqueID"	: uniqueKey,
+					@"anchorLink"					: nurl,
+					@"imageURL"						: iurl,
+				}];
 			}
 		}
 	}
 
 	attributes[@"inlineMediaAvailable"] = @(NSObjectIsNotEmpty(inlineImageLinks));
-	attributes[@"inlineMediaArray"]		= [NSMutableArray array];
-
-	for (NSString *iurl in inlineImageLinks) {
-		NSString *nurl = [inlineImageLinks objectForKey:iurl];
-
-		[(id)attributes[@"inlineMediaArray"] addObject:@{
-			 @"preferredMaximumWidth"	: @([TPCPreferences inlineImagesMaxWidth]),
-			 @"anchorLink"				: [nurl stringWithValidURIScheme],
-			 @"imageURL"				: [iurl stringWithValidURIScheme],
-		 }];
-	}
+	attributes[@"inlineMediaArray"]		= inlineImageLinks;
 
 	// ---- //
 
