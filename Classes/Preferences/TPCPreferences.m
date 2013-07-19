@@ -1021,7 +1021,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 + (NSString *)keyForEvent:(TXNotificationType)event
 {
 	switch (event) {
-		case TXNotificationAddressBookMatchType:	{ return @"NotificationType -> Address Bok Match";				}
+		case TXNotificationAddressBookMatchType:	{ return @"NotificationType -> Address Book Match";				}
 		case TXNotificationChannelMessageType:		{ return @"NotificationType -> Public Message";					}
 		case TXNotificationChannelNoticeType:		{ return @"NotificationType -> Public Notice";					}
 		case TXNotificationConnectType:				{ return @"NotificationType -> Connected";						}
@@ -1460,7 +1460,7 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"NotificationType -> Private Message -> Sound"]			= @"Submarine";
     d[@"NotificationType -> Private Message -> Bounce Dock Icon"] = @(YES);
 
-	d[@"NotificationType -> Address Bok Match -> Enabled"]		= @(YES);
+	d[@"NotificationType -> Address Book Match -> Enabled"]		= @(YES);
 	d[@"NotificationType -> Private Message (New) -> Enabled"]	= @(YES);
 	
 	d[@"ScanForIRCopAlertInServerNoticesMatch"]	= @"ircop alert";
