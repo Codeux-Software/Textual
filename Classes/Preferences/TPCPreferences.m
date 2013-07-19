@@ -339,7 +339,7 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 + (BOOL)runningInHighResolutionMode
 {
-	return [RZMainScreen() runningInHighResolutionMode];
+	return self.masterController.applicationIsRunningInHighResMode;
 }
 
 + (NSDictionary *)textualInfoPlist
