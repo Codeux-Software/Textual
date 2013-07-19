@@ -106,18 +106,10 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[self.mainWindowLoadingScreen hideAll:NO];
 	[self.mainWindowLoadingScreen popLoadingConfigurationView];
 
-	/* The most important part of this call is to get the main window
-	 to the user as soon as possible. We only put what is absolutely 
-	 needed above this request for the main window. The more time we
-	 take to get to the main window, the longer the end user has to
-	 wait for it. That is the purpose of the loading screen. To give
-	 the end user acknowledgement that we are waking up and not just
-	 sitting here doing nothing. 
-	 
-	 On a 2009 Intel i7 2.80 GHz iMac running 10.8.2 the time it took 
-	 to pop our window was on average 0.058 seconds or 58 milliseconds. */
-
 	self.mainWindowIsActive = YES;
+
+	/* We keep high-res mode value cached since it is costly to ask for every draw. */
+	self.applicationIsRunningInHighResMode = [RZMainScreen() runningInHighResolutionMode];
 	
 	[self.mainWindow makeKeyAndOrderFront:nil];
 	[self.mainWindow setAlphaValue:[TPCPreferences themeTransparency]];
@@ -191,6 +183,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *)aNotification
 {
+	self.applicationIsRunningInHighResMode = [RZMainScreen() runningInHighResolutionMode];
+
 	if (self.isInFullScreenMode) {
 		/* Reset window frame if screen resolution is changed. */
 		

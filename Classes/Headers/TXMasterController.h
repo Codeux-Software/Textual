@@ -48,6 +48,7 @@
 @property (nonatomic, assign) BOOL mainWindowIsActive;
 @property (nonatomic, assign) BOOL applicationIsActive;
 @property (nonatomic, assign) BOOL applicationIsChangingActiveState;
+@property (nonatomic, assign) BOOL applicationIsRunningInHighResMode;
 @property (nonatomic, nweak) NSBox *channelViewBox;
 @property (nonatomic, nweak) NSMenu *addServerMenu;
 @property (nonatomic, nweak) NSMenu *channelViewMenu;
