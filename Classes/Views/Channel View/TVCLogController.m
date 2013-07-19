@@ -222,7 +222,12 @@
 {
 	PointerIsEmptyAssertReturn(self.channel, NO);
 
-	return ([TPCPreferences showInlineImages] && self.channel.config.ignoreInlineImages == NO);
+	/* If global showInlineImages is YES, then the value of ignoreInlineImages is designed to
+	 be as it is named. Disable them for specific channels. However if showInlineImages is NO
+	 on a global scale, then ignoreInlineImages actually enables them for specific channels. */
+
+	return (([TPCPreferences showInlineImages]			&& self.channel.config.ignoreInlineImages == NO) ||
+			([TPCPreferences showInlineImages] == NO	&& self.channel.config.ignoreInlineImages));
 }
 
 - (NSInteger)scrollbackCorrectionInit
