@@ -120,6 +120,14 @@
 		if ([path hasPrefix:@"/s/"] && hadExtension) {
 			return [@"https://dl.dropboxusercontent.com" stringByAppendingString:path];
 		}
+	} else if ([host hasSuffix:@"instacod.es"]) {
+		NSObjectIsEmptyAssertReturn(path, nil);
+
+		NSString *s = [path safeSubstringFromIndex:1];
+
+		if ([s isNumericOnly]) {
+			return [@"http://instacod.es/file/" stringByAppendingString:s];
+		}
 	} else if ([host hasSuffix:@"twitpic.com"]) {
 		NSObjectIsEmptyAssertReturn(path, nil);
 
