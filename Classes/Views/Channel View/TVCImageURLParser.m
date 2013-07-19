@@ -93,6 +93,8 @@
 	// it is not of high priority. Only when a user requests an addition will any be done.
 	// Beyond that, it is only updated to match changes to the underlying codebase. 
 
+	BOOL hadExtension = NO;
+
 	if ([lowerUrl hasSuffix:@".jpg"] ||
 		[lowerUrl hasSuffix:@".jpeg"] ||
 		[lowerUrl hasSuffix:@".png"] ||
@@ -101,16 +103,24 @@
 		[lowerUrl hasSuffix:@".tiff"] ||
 		[lowerUrl hasSuffix:@".bmp"])
 	{
+		hadExtension = YES;
+
         if ([host hasSuffix:@"wikipedia.org"]) {
             return nil;
         } else if ([url hasPrefix:@"http://fukung.net/v/"]) {
-            url = [url stringByReplacingOccurrencesOfString:@"http://fukung.net/v/" withString:@"http://media.fukung.net/images/"];
-        }
-
-		return url;
+			return [url stringByReplacingOccurrencesOfString:@"http://fukung.net/v/" withString:@"http://media.fukung.net/images/"];
+        } else if ([host hasSuffix:@"dropbox.com"]) {
+			// Continue to processing…
+		} else {
+			return url;
+		}
 	}
 
-    if ([host hasSuffix:@"twitpic.com"]) {
+	if ([host hasSuffix:@"dropbox.com"]) {
+		if ([path hasPrefix:@"/s/"] && hadExtension) {
+			return [@"https://dl.dropboxusercontent.com" stringByAppendingString:path];
+		}
+	} else if ([host hasSuffix:@"twitpic.com"]) {
 		NSObjectIsEmptyAssertReturn(path, nil);
 
 		NSString *s = [path safeSubstringFromIndex:1];
