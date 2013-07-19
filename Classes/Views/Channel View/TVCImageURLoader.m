@@ -52,6 +52,16 @@
 #pragma mark -
 #pragma mark Public API
 
+- (NSArray *)headRequestExceptions
+{
+	/* List of services that will only respond successfully to a 
+	 GET request instead of a HEAD request. */
+
+	return @[
+		@"docs.google.com"
+	];
+}
+
 - (void)destroyConnectionRequest
 {
 	if (self.requestConnection) {
@@ -77,11 +87,17 @@
 
 	/* Create the request. */
 	/* We use a mutable request because we are going to set the HTTP method. */
-	NSMutableURLRequest *baseRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:baseURL]
+	NSURL *requestURL = [NSURL URLWithString:baseURL];
+
+	NSMutableURLRequest *baseRequest = [NSMutableURLRequest requestWithURL:requestURL
 															   cachePolicy:NSURLRequestReloadIgnoringCacheData
 														   timeoutInterval:_imageLoaderMaxRequestTime];
 
-	[baseRequest setHTTPMethod:@"HEAD"]; // We only want the HEAD which contains file information.
+	if ([self.headRequestExceptions containsObject:requestURL.host]) {
+		[baseRequest setHTTPMethod:@"GET"];
+	} else {
+		[baseRequest setHTTPMethod:@"HEAD"]; // We only want the HEAD which contains file information.
+	}
 
 	/* Send the actual request off. */
 	self.requestImageUniqeID = uniqueID;
@@ -101,7 +117,7 @@
     NSString *imageContentType;
 
 	TXFSLongInt sizeInBytes = 0;
-
+	LogToConsole(@"%i", self.requestResponse.statusCode);
 	BOOL isValidResponse = (self.requestResponse.statusCode == 200); // Setting as a var incase I end up adding more conditions down the line.
 
     if (isValidResponse) {

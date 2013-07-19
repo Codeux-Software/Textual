@@ -128,6 +128,26 @@
 		if ([s isNumericOnly]) {
 			return [@"http://instacod.es/file/" stringByAppendingString:s];
 		}
+	} else if ([host hasPrefix:@"docs.google.com"]) {
+		if ([path hasPrefix:@"/file/d/"]) {
+			NSArray *parts = [path componentsSeparatedByString:@"/"];
+
+			NSAssertReturnR((parts.count == 4 || parts.count == 5), nil);
+
+			NSString *photoID;
+
+			if (parts.count == 5) {
+				if ([parts[4] isEqualToString:@"edit"]) { // Add a little validation.
+					photoID = parts[3];
+				}
+			} else {
+				photoID = parts[3];
+			}
+
+			if (photoID) {
+				return [@"https://docs.google.com/uc?id=" stringByAppendingString:photoID];
+			}
+		}
 	} else if ([host hasSuffix:@"twitpic.com"]) {
 		NSObjectIsEmptyAssertReturn(path, nil);
 
