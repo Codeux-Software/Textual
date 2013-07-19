@@ -50,7 +50,8 @@
 @property (nonatomic, nweak) NSTextField *secretKeyField;
 @property (nonatomic, nweak) NSButton *autoJoinCheck;
 @property (nonatomic, nweak) NSButton *ignoreHighlightsCheck;
-@property (nonatomic, nweak) NSButton *inlineImagesCheck;
+@property (nonatomic, nweak) NSButton *enableInlineImagesCheck;
+@property (nonatomic, nweak) NSButton *disableInlineImagesCheck;
 @property (nonatomic, nweak) NSButton *pushNotificationsCheck;
 @property (nonatomic, nweak) NSButton *showTreeBadgeCountCheck;
 @property (nonatomic, nweak) NSButton *JPQActivityCheck;

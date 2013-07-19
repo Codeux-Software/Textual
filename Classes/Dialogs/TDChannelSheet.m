@@ -129,8 +129,13 @@
 	self.ignoreHighlightsCheck.state	= self.config.ignoreHighlights;
 	self.pushNotificationsCheck.state	= self.config.pushNotifications;
     self.JPQActivityCheck.state			= self.config.ignoreJPQActivity;
-    self.inlineImagesCheck.state		= self.config.ignoreInlineImages;
 	self.showTreeBadgeCountCheck.state  = self.config.showTreeBadgeCount;
+
+	if ([TPCPreferences showInlineImages]) {
+		self.disableInlineImagesCheck.state = self.config.ignoreInlineImages;
+	} else {
+		self.enableInlineImagesCheck.state = self.config.ignoreInlineImages;
+	}
 }
 
 - (void)save
@@ -145,8 +150,13 @@
 	self.config.showTreeBadgeCount  = self.showTreeBadgeCountCheck.state;
 	self.config.pushNotifications	= self.pushNotificationsCheck.state;
     self.config.ignoreHighlights	= self.ignoreHighlightsCheck.state;
-    self.config.ignoreInlineImages	= self.inlineImagesCheck.state;
     self.config.ignoreJPQActivity	= self.JPQActivityCheck.state;
+
+	if ([TPCPreferences showInlineImages]) {
+		self.config.ignoreInlineImages = self.disableInlineImagesCheck.state;
+	} else {
+		self.config.ignoreInlineImages = self.enableInlineImagesCheck.state;
+	}
 	
 	if ([self.config.channelName isChannelName] == NO) {
 		self.config.channelName = [@"#" stringByAppendingString:self.config.channelName];
