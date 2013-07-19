@@ -78,61 +78,51 @@
 
     /* Get extensions from in front of input string. See IRCv3.atheme.org for
      more information regarding extensions in the IRC protocol. */
-	
-	NSMutableDictionary *extensions = [NSMutableDictionary dictionary];
-	
-	if ([s hasPrefix:@"@"]) {
-		NSString *t = [s.getToken substringFromIndex:1]; //Get token and remove @.
-		
-		NSArray *values = [t componentsSeparatedByString:@","];
 
-		for (NSString *comp in values) {
-			NSArray *info = [comp componentsSeparatedByString:@"="];
+	/* We only bother searching for extensions if we already have a CAP that
+	 is in relation to one. */
 
-            NSAssertReturnLoopContinue(info.count == 2);
+	if (client && client.CAPServerTime) {
+		if ([s hasPrefix:@"@"]) {
+			NSString *t = [s.getToken substringFromIndex:1]; //Get token and remove @.
 			
-			[extensions safeSetObject:info[1] forKey:info[0]];
+			NSArray *values = [t componentsSeparatedByString:@","];
+
+			for (NSString *comp in values) {
+				NSArray *info = [comp componentsSeparatedByString:@"="];
+
+				NSAssertReturnLoopContinue(info.count == 2);
+
+				NSString *extKey = info[0];
+				NSString *extVal = info[1];
+
+				/* Process @time= and @t= values inline for server-time. */
+
+				BOOL hasEpochTimeExt = [extKey isEqualToString:@"t"];
+				BOOL hasISOTimeExt = [extKey isEqualToString:@"time"];
+
+				NSAssertReturnLoopBreak(hasEpochTimeExt == YES || hasISOTimeExt == YES);
+
+				NSDate *date;
+
+				if (hasEpochTimeExt) {
+					date = [NSDate dateWithTimeIntervalSince1970:[extVal doubleValue]];
+				} else if (hasISOTimeExt) {
+					date = [self.worldController.isoStandardDateFormatter dateFromString:extVal];
+				}
+
+				if (date) {
+					self.isHistoric = YES;
+
+					self.receivedAt = date;
+				}
+
+				/* End inline procesing of the @time= and @t= extensions. */
+			}
 		}
 	}
 
-    /* Process value of supported extensions. */
-
-    /* NSDictionaryObjectKeyValueCompare() is not documented, but it is used throughout the Textual
-     source code. The first value presented to it is an NSDictionary, the second is the key to search
-     for in that dictionary. The third value is what should be returned if the key does not exist in
-     the dictionary. It is designed as an easy way to set a default value for a missing dictionary key. */
-
-	if (client && client.CAPServerTime) {
-		NSString *serverTime = NSDictionaryObjectKeyValueCompare(extensions, @"t", [extensions objectForKey:@"time"]);
-
-		if (NSObjectIsNotEmpty(serverTime)) {
-			NSDateFormatter *dateFormatter = [NSDateFormatter new];
-			
-			[dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-			[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"]; //2011-10-19T16:40:51.620Z
-			
-			NSDate *date = [dateFormatter dateFromString:serverTime];
-
-			/* If no date is returned by using the defined date format, then we are going to 
-			 take the doubleValue of our input and compare it against the epoch start time.
-			 If that does not return anything either, then we will simply set the date that
-			 this message was processed as the date used. */
-			
-			if (PointerIsEmpty(date)) {
-				date = [NSDate dateWithTimeIntervalSince1970:[serverTime doubleValue]];
-			}
-			
-			if (PointerIsEmpty(date)) {
-				date = [NSDate date];
-			} else {
-				self.isHistoric = YES;
-			}
-			
-			self.receivedAt = date;
-		} else {
-			self.receivedAt = [NSDate date];
-		}
-	} else {
+	if (PointerIsEmpty(self.receivedAt)) {
 		self.receivedAt = [NSDate date];
 	}
 
@@ -141,7 +131,7 @@
     /* Begin the parsing of the actual input string. */
     /* First thing to do is get the sender information from in 
      front of the message. */
-    
+
 	if ([s hasPrefix:@":"]) {
 		NSString *t = [s.getToken safeSubstringFromIndex:1];
 		
