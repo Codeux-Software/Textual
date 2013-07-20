@@ -263,6 +263,26 @@
 	}
 }
 
+- (void)migrate:(IRCUser *)from
+{
+	/* Lazy-man copy. */
+	self.nickname = from.nickname;
+	self.username = from.username;
+	self.address = from.address;
+
+	self.colorNumber = -1;
+	self.supportInfo = from.supportInfo;
+
+	self.q = from.q;
+	self.a = from.a;
+	self.o = from.o;
+	self.h = from.h;
+	self.v = from.v;
+
+	self.isCop = from.isCop;
+	self.isAway = from.isAway;
+}
+
 + (NSComparator)nicknameLengthComparator
 {
 	return [^(id obj1, id obj2){

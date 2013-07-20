@@ -794,7 +794,7 @@
 
 - (void)onChangedUserListModeColor:(id)sender
 {
-	[self.masterController.memberList setNeedsDisplay:YES];
+	[self.masterController.memberList reloadAllDrawings];
 }
 
 - (void)onResetUserListModeColorsToDefaults:(id)sender
@@ -827,10 +827,11 @@
 
 - (void)onChangedSidebarColorInversion:(id)sender
 {
-	[self.masterController.serverList reloadAllDrawingsIgnoringOtherReloads];
 	[self.masterController.serverList updateBackgroundColor];
+	[self.masterController.serverList reloadAllDrawingsIgnoringOtherReloads];
 
 	[self.masterController.memberList updateBackgroundColor];
+	[self.masterController.memberList reloadAllDrawings];
 
 	[self.masterController.serverSplitView setNeedsDisplay:YES];
 	[self.masterController.memberSplitView setNeedsDisplay:YES];
@@ -923,7 +924,7 @@
 	IRCChannel *channel = self.worldController.selectedChannel;
 
 	if (channel) {
-		[channel sortedMemberListReload];
+		[channel reloadDataForTableViewBySortingMembers];
 	}
 }
 

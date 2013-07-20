@@ -628,7 +628,7 @@
 /* For future use. */
 @end
 
-@implementation TVCserverlistRowCell
+@implementation TVCServerListRowCell
 
 - (void)drawDraggingDestinationFeedbackInRect:(NSRect)dirtyRect
 {

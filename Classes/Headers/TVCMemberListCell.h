@@ -37,6 +37,19 @@
 
 #import "TextualApplication.h"
 
-@interface TVCMemberListCell : NSTextFieldCell
+@interface TVCMemberListCell : NSTableCellView
 @property (nonatomic, nweak) IRCUser *memberPointer;
+@property (nonatomic, nweak) NSTextField *customTextField;
+@property (nonatomic, nweak) NSImageView *backgroundImageCell;
+@property (nonatomic, assign) BOOL rowIsSelected; // We track this to know whether to reload on selection changes.
+
+- (NSDictionary *)drawingContext;
+
+- (void)updateDrawing;
+
+- (void)disableSelectionBackgroundImage;
+- (void)enableSelectionBackgroundImage;
+@end
+
+@interface TVCMemberListRowCell : NSTableRowView
 @end

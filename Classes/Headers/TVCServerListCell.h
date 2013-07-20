@@ -60,5 +60,5 @@
 @interface TVCServerListCellGroupItem : TVCServerListCell
 @end
 
-@interface TVCserverlistRowCell : NSTableRowView
+@interface TVCServerListRowCell : NSTableRowView
 @end

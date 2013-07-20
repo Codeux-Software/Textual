@@ -68,6 +68,8 @@
 - (void)incomingConversation;
 - (void)conversation;
 
+- (void)migrate:(IRCUser *)from;
+
 - (NSComparisonResult)compare:(IRCUser *)other;
 
 + (NSComparator)nicknameLengthComparator;
