@@ -37,8 +37,6 @@
 
 #import "TextualApplication.h"
 
-#import <QuartzCore/QuartzCore.h>
-
 @implementation TVCMemberList
 
 #pragma mark -
@@ -176,26 +174,14 @@
 
 - (void)updateBackgroundColor
 {
-	BOOL enableScrollViewLayers = [RZUserDefaults() boolForKey:@"TVCListViewEnableLayeredBackViews"];
+	if ([TPCPreferences invertSidebarColors] || self.masterController.mainWindowIsActive == NO) {
+		[self setBackgroundColor:[NSColor clearColor]];
 
-	if (enableScrollViewLayers) {
-		CALayer *scrollLayer = self.scrollView.contentView.layer;
-
-		if ([TPCPreferences invertSidebarColors]) {
-			[scrollLayer setBackgroundColor:[self.properBackgroundColor aCGColor]];
-		} else {
-			[scrollLayer setBackgroundColor:[NSColor.clearColor aCGColor]];
-		}
+		[self.scrollView setBackgroundColor:self.properBackgroundColor];
 	} else {
-		if ([TPCPreferences invertSidebarColors] || self.masterController.mainWindowIsActive == NO) {
-			[self setBackgroundColor:[NSColor clearColor]];
+		[self setBackgroundColor:self.properBackgroundColor];
 
-			[self.scrollView setBackgroundColor:self.properBackgroundColor];
-		} else {
-			[self setBackgroundColor:self.properBackgroundColor];
-
-			[self.scrollView setBackgroundColor:[NSColor clearColor]];
-		}
+		[self.scrollView setBackgroundColor:[NSColor clearColor]];
 	}
 
 	[self setNeedsDisplay:YES];
@@ -430,59 +416,6 @@
 - (NSColor *)graphiteSelectedCellTextShadowColorForActiveWindow
 {
 	return [NSColor internalCalibratedRed:17 green:73 blue:126 alpha:1.00];
-}
-
-@end
-
-#pragma mark -
-#pragma mark Scroll View Clip View
-
-@implementation TVCMemberListScrollClipView
-
-- (id)initWithFrame:(NSRect)frame
-{
-	if ((self = [super initWithFrame:frame])) {
-		self.layer = [CAScrollLayer layer];
-
-		self.wantsLayer = YES;
-		self.layerContentsRedrawPolicy = NSViewLayerContentsRedrawNever;
-
-		return self;
-	}
-
-	return nil;
-}
-
-@end
-
-#pragma mark -
-#pragma mark Scroll View
-
-@implementation TVCMemberListScrollView
-
-- (void)swapClipView
-{
-	self.wantsLayer = YES;
-
-    id documentView = self.documentView;
-
-	TVCMemberListScrollClipView *clipView = [[TVCMemberListScrollClipView alloc] initWithFrame:self.contentView.frame];
-
-	self.contentView = clipView;
-	self.documentView = documentView;
-}
-
-- (void)awakeFromNib
-{
-	BOOL enableScrollViewLayers = [RZUserDefaults() boolForKey:@"TVCListViewEnableLayeredBackViews"];
-
-	if (enableScrollViewLayers) {
-		[super awakeFromNib];
-
-		if ([self.contentView isKindOfClass:[TVCMemberListScrollClipView class]] == NO) {
-			[self swapClipView];
-		}
-	}
 }
 
 @end
