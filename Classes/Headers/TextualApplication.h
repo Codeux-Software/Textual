@@ -129,16 +129,12 @@
 	@class TVCMemberList;
 	@class TVCMemberListCell;
 	@class TVCMemberListRowCell;
-	@class TVCMemberListScrollClipView;
-	@class TVCMemberListScrollView;
 	@class TVCMemberListUserInfoPopover;
 	@class TVCServerList; // This has a lot of classes.
 	@class TVCServerListCell;
 	@class TVCServerListCellBadge;
 	@class TVCServerListCellChildItem;
 	@class TVCServerListCellGroupItem;
-	@class TVCServerListScrollClipView;
-	@class TVCServerListScrollView;
 	@class TVCTextField;
 	@class TVCTextFormatterMenu;
 	@class TVCThinSplitView;
