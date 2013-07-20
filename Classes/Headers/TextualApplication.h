@@ -128,6 +128,7 @@
 	@class TVCMainWindowSegmentedControl;
 	@class TVCMemberList;
 	@class TVCMemberListCell;
+	@class TVCMemberListRowCell;
 	@class TVCMemberListScrollClipView;
 	@class TVCMemberListScrollView;
 	@class TVCMemberListUserInfoPopover;
@@ -142,7 +143,7 @@
 	@class TVCTextFormatterMenu;
 	@class TVCThinSplitView;
 	@class TVCWebViewAutoScroll;
-	@class TVCserverlistRowCell;
+	@class TVCServerListRowCell;
 	@class TXMasterController;
 	@class TXMenuController;
 

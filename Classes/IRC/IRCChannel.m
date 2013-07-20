@@ -38,7 +38,9 @@
 
 #import "TextualApplication.h"
 
-#define _treeUserlistHeight			16.0
+#define _treeUserlistHeight					18.0
+
+#define _cancelOnNotSelectedChannel			NSAssertReturn(self.isSelectedChannel && self.isChannel);
 
 @implementation IRCChannel
 
@@ -164,6 +166,7 @@
 	[self.modeInfo clear];
 
 	[self clearMembers];
+	[self reloadDataForTableView];
 }
 
 - (void)activate
@@ -272,137 +275,181 @@
 #pragma mark -
 #pragma mark Member List
 
-- (void)sortedMemberListReload
-{
-	/* Do not call this unless needed. */
-	self.memberList = [self.memberList sortedArrayUsingComparator:NSDefaultComparator];
-
-	self.memberListLengthSorted = [self.memberList sortedArrayUsingComparator:[IRCUser nicknameLengthComparator]];
-
-	[self reloadMemberList];
-}
-
 - (void)sortedInsert:(IRCUser *)item
 {
 	PointerIsEmptyAssert(item);
 
+	/* Normal member list used internally by Textual. */
 	self.memberList = [self.memberList arrayByInsertingSortedObject:item usingComparator:NSDefaultComparator];
 
 	/* Conversation tracking scans based on nickname length. */
 	self.memberListLengthSorted = [self.memberList arrayByInsertingSortedObject:item usingComparator:[IRCUser nicknameLengthComparator]];
 }
 
-#pragma mark -
-
 - (void)addMember:(IRCUser *)user
 {
-	[self addMember:user reload:YES];
-}
-
-- (void)updateOrAddMember:(IRCUser *)user
-{
-	[self addMember:user reload:NO];
-}
-
-- (void)addMember:(IRCUser *)user reload:(BOOL)reload
-{
 	PointerIsEmptyAssert(user);
-	
-	[self removeMember:user.nickname reload:NO];
+
+	/* Remove any existing copies of this nickname. */
+	[self removeMember:user.nickname fromTable:YES];
+
+	/* Do sorted insert. */
 	[self sortedInsert:user];
 
-    [self.client postEventToViewController:@"channelMemberAdded" forChannel:self];
-	
-	if (reload) {
-		[self reloadMemberList];
+	/* Post event to the style. */
+	if (self.isChannel) {
+		[self.client postEventToViewController:@"channelMemberAdded" forChannel:self];
 	}
-}
 
-#pragma mark -
+	/* Update the actual member list view. */
+	[self informMemberListViewOfAdditionalUser:user];
+}
 
 - (void)removeMember:(NSString *)nick
 {
-	[self removeMember:nick reload:YES];
+	[self removeMember:nick fromTable:YES];
 }
 
-- (void)removeMember:(NSString *)nick reload:(BOOL)reload
+- (void)removeMember:(NSString *)nick fromTable:(BOOL)fromTable
 {
 	NSObjectIsEmptyAssert(nick);
-	
-	NSInteger n = [self indexOfMember:nick];
 
-	if (NSDissimilarObjects(n, NSNotFound)) {
-		IRCUser *user = [self.memberList objectAtIndex:n];
+	self.memberListLengthSorted	= [self removeMember:nick fromList:self.memberListLengthSorted blockBeforeRemoval:NULL];
 
-		self.memberList = [self.memberList arrayByRemovingObjectAtIndex:n];
+	self.memberList = [self removeMember:nick fromList:self.memberList blockBeforeRemoval:^(NSUInteger idx) {
+		/* Find user on member list table and remove if they exist there. */
+		if (fromTable && self.isChannel && self.isSelectedChannel) {
+			IRCUser *member = self.memberList[idx];
 
-        [self.client postEventToViewController:@"channelMemberRemoved" forChannel:self];
+			NSInteger tableIndex = [self.memberListView rowForItem:member];
 
-		n = [self.memberListLengthSorted indexOfObject:user];
+			if (tableIndex > -1) { // Did they exist on list?
+				[self.memberListView removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:tableIndex]
+												 inParent:nil
+											withAnimation:NSTableViewAnimationEffectNone]; // Do the actual removal.
+			}
+		}
 
-		self.memberListLengthSorted = [self.memberListLengthSorted arrayByRemovingObjectAtIndex:n];
-	}
-	
-	if (reload) {
-		[self reloadMemberList];
-	}
+		/* Post event to the style. */
+		if (self.isChannel) {
+			[self.client postEventToViewController:@"channelMemberRemoved" forChannel:self];
+		}
+	}];
 }
 
-#pragma mark -
+- (NSArray *)removeMember:(NSString *)nick fromList:(NSArray *)memberList blockBeforeRemoval:(void (^)(NSUInteger idx))block
+{
+	NSInteger n = [self indexOfMember:nick options:NSCaseInsensitiveSearch inList:memberList];
 
-- (void)renameMember:(NSString *)fromNick to:(NSString *)toNick
+	if (n == NSNotFound || n < 0) {
+		return memberList;
+	}
+
+	if (PointerIsNotEmpty(block)) {
+		block(n);
+	}
+
+	return [memberList arrayByRemovingObjectAtIndex:n];
+}
+
+- (void)renameMember:(NSString *)fromNick to:(NSString *)toNick performOnChange:(void (^)(IRCUser *user))block
 {
 	NSObjectIsEmptyAssert(fromNick);
 	NSObjectIsEmptyAssert(toNick);
-	
-	NSInteger n = [self indexOfMember:fromNick];
+
+	/* Find user. */
+	NSInteger n = [self indexOfMember:fromNick options:NSCaseInsensitiveSearch];
 
 	NSAssertReturn(NSDissimilarObjects(n, NSNotFound));
-	
-	IRCUser *m = [self memberAtIndex:n];
-	
-	m.nickname = toNick;
 
-	[self removeMember:m.nickname reload:NO];
-	
-	[self sortedInsert:m];
-	[self reloadMemberList];
+	IRCUser *m = [self memberAtIndex:n];
+
+	/* Rename. */
+	m.nickname = toNick; // The IRCUser instance is shared so we only have to update it and the view will inherit that.
+
+	/* Inform upstream. */
+	PointerIsEmptyAssert(block);
+
+	block(m);
 }
 
 #pragma mark -
 
-- (void)changeMember:(NSString *)nick mode:(NSString *)mode value:(BOOL)value
+- (void)updateMember:(IRCUser *)user performOnChange:(void (^)(IRCUser *user))block
+{
+	PointerIsEmptyAssert(user);
+
+	/* Find member. */
+	NSInteger n = [self indexOfMember:user.nickname options:NSCaseInsensitiveSearch];
+
+	if (NSDissimilarObjects(n, NSNotFound)) {
+		/* Who was it? */
+		IRCUser *m = [self.memberList objectAtIndex:n];
+
+		BOOL resortTable = NO;
+
+		if (NSDissimilarObjects(user.isCop, m.isCop)			|| // <--------/
+			NSDissimilarObjects(user.q, m.q)					|| // <-------/ Different mode information.
+			NSDissimilarObjects(user.a, m.a)					|| // <------/
+			NSDissimilarObjects(user.o, m.o)					|| // <-----/
+			NSDissimilarObjects(user.h, m.h)					|| // <----/
+			NSDissimilarObjects(user.v, m.v))					   // <---/
+		{
+			resortTable = YES; // Doing a resort is costly so we only do if we need to.
+		}
+
+		/* Migrate details. */
+		[m migrate:user];
+
+		/* Remove any existing copies of this nickname. */
+		[self removeMember:m.nickname fromTable:NO];
+
+		/* Do sorted insert. */
+		[self sortedInsert:m];
+
+		/* Reload data. */
+		if (resortTable) {
+			[self reloadDataForTableViewBySortingMembersForUser:m];
+
+			PointerIsEmptyAssert(block);
+
+			block(m);
+		}
+	}
+}
+
+- (void)changeMember:(NSString *)nick mode:(NSString *)mode value:(BOOL)value performOnChange:(void (^)(IRCUser *user))block
 {
 	NSObjectIsEmptyAssert(nick);
 	NSObjectIsEmptyAssert(mode);
 	
-	NSInteger n = [self indexOfMember:nick];
+	NSInteger n = [self indexOfMember:nick options:NSCaseInsensitiveSearch];
 
 	NSAssertReturn(NSDissimilarObjects(n, NSNotFound));
-	
-	IRCUser *m = [self memberAtIndex:n];
-	
+
+	/* We create new instance so updateMember: does not compare against the same object. */
+	IRCUser *mn = [IRCUser new];
+
+	[mn migrate:self.memberList[n]];
+
 	switch ([mode characterAtIndex:0]) {
-		case 'O': { m.q = value; break; } // binircd-1.0.0
-		case 'q': { m.q = value; break; }
-		case 'a': { m.a = value; break; }
-		case 'o': { m.o = value; break; }
-		case 'h': { m.h = value; break; }
-		case 'v': { m.v = value; break; }
+		case 'O': { mn.q = value; break; } // binircd-1.0.0
+		case 'q': { mn.q = value; break; }
+		case 'a': { mn.a = value; break; }
+		case 'o': { mn.o = value; break; }
+		case 'h': { mn.h = value; break; }
+		case 'v': { mn.v = value; break; }
 	}
-	
-	[self removeMember:m.nickname reload:NO];
 
 	IRCISupportInfo *isupport = self.client.isupport;
 
-	m.q = (m.q && ([isupport modeIsSupportedUserPrefix:@"q"] || [isupport modeIsSupportedUserPrefix:@"O"] /* binircd-1.0.0 */));
-	m.a = (m.a &&  [isupport modeIsSupportedUserPrefix:@"a"]);
-	m.o = (m.o &&  [isupport modeIsSupportedUserPrefix:@"o"]);
-	m.h = (m.h &&  [isupport modeIsSupportedUserPrefix:@"h"]);
-	m.v = (m.v &&  [isupport modeIsSupportedUserPrefix:@"v"]);
-	
-	[self sortedInsert:m];
-	[self reloadMemberList];
+	mn.q = (mn.q && ([isupport modeIsSupportedUserPrefix:@"q"] || [isupport modeIsSupportedUserPrefix:@"O"] /* binircd-1.0.0 */));
+	mn.a = (mn.a &&  [isupport modeIsSupportedUserPrefix:@"a"]);
+	mn.o = (mn.o &&  [isupport modeIsSupportedUserPrefix:@"o"]);
+	mn.h = (mn.h &&  [isupport modeIsSupportedUserPrefix:@"h"]);
+	mn.v = (mn.v &&  [isupport modeIsSupportedUserPrefix:@"v"]);
+
+	[self updateMember:mn performOnChange:block];
 }
 
 #pragma mark -
@@ -412,13 +459,22 @@
 	self.memberList = nil;
 	self.memberList = @[];
 
+	self.memberListLengthSorted = nil;
 	self.memberListLengthSorted = @[];
-	self.memberListIgnoreSorted = @[];
-	
-	[self reloadMemberList];
+}
+
+- (NSInteger)numberOfMembers
+{
+	return self.memberList.count;
 }
 
 #pragma mark -
+#pragma mark User Search
+
+- (IRCUser *)memberAtIndex:(NSInteger)index
+{
+	return [self.memberList safeObjectAtIndex:index];
+}
 
 - (NSInteger)indexOfMember:(NSString *)nick
 {
@@ -427,25 +483,19 @@
 
 - (NSInteger)indexOfMember:(NSString *)nick options:(NSStringCompareOptions)mask
 {
+	return [self indexOfMember:nick options:mask inList:self.memberList];
+}
+
+- (NSInteger)indexOfMember:(NSString *)nick options:(NSStringCompareOptions)mask inList:(NSArray *)memberList
+{
 	NSObjectIsEmptyAssertReturn(nick, -1);
 
-	//[self.memberList indexOfObjectMatchingValue:nick withKeyPath:@"nickname"];
-
 	if (mask & NSCaseInsensitiveSearch) {
-		return [self.memberList indexOfObjectMatchingValue:nick withKeyPath:@"nickname" usingSelector:@selector(isEqualIgnoringCase:)];
+		return [memberList indexOfObjectMatchingValue:nick withKeyPath:@"nickname" usingSelector:@selector(isEqualIgnoringCase:)];
 	} else {
-		return [self.memberList indexOfObjectMatchingValue:nick withKeyPath:@"nickname" usingSelector:@selector(isEqualToString:)];
+		return [memberList indexOfObjectMatchingValue:nick withKeyPath:@"nickname" usingSelector:@selector(isEqualToString:)];
 	}
 }
-
-#pragma mark -
-
-- (IRCUser *)memberAtIndex:(NSInteger)index
-{
-	return [self.memberList safeObjectAtIndex:index];
-}
-
-#pragma mark -
 
 - (IRCUser *)findMember:(NSString *)nick
 {
@@ -462,43 +512,155 @@
 }
 
 #pragma mark -
+#pragma mark Table View Internal Management
 
-- (NSInteger)numberOfMembers
+- (void)informMemberListViewOfAdditionalUser:(IRCUser *)user
 {
-	return self.memberList.count;
-}
+	_cancelOnNotSelectedChannel;
 
-#pragma mark -
+	/* Do not ask me how this fucking works … I don't even know. */
+	NSInteger mlindx = [self.memberList indexOfObject:user];
 
-- (void)reloadIgnoreSortedMemberList
-{
-	NSAssertReturn(self.isChannel);
+	NSAssertReturn(NSDissimilarObjects(mlindx, NSNotFound));
 
-	NSMutableArray *listCopy = [self.memberList mutableCopy];
+	if (mlindx > 0) {
+		IRCUser *prevItem = [self.memberList objectAtIndex:(mlindx - 1)];
 
-	for (IRCUser *user in self.memberList) {
-		NSObjectIsEmptyAssertLoopContinue(user.hostmask);
+		NSInteger prevIndex = [self.memberListView rowForItem:prevItem];
 
-		IRCAddressBook *ignoreChecks = [self.client checkIgnoreAgainstHostmask:user.hostmask
-																   withMatches:@[@"hideInMemberList"]];
-
-		if (ignoreChecks && [ignoreChecks hideInMemberList]) {
-			[listCopy removeObject:user];
+		if (prevIndex == NSNotFound) {
+			[self.memberListView addItemToList:self.memberListView.numberOfRows];
+		} else {
+			[self.memberListView addItemToList:(prevIndex + 1)];
 		}
+	} else {
+		[self.memberListView addItemToList:0];
 	}
-
-	self.memberListIgnoreSorted = listCopy;
 }
 
-- (void)reloadMemberList
+- (void)reloadDataForTableViewBySortingMembers
 {
-	if (self.worldController.selectedItem == self && self.isChannel) {
-		[self.masterController.memberList reloadData];
+	_cancelOnNotSelectedChannel;
+
+	self.memberList = [self.memberList sortedArrayUsingComparator:NSDefaultComparator];
+
+	[self reloadDataForTableView];
+}
+
+- (void)reloadDataForTableViewBySortingMembersForUser:(IRCUser *)user
+{
+	_cancelOnNotSelectedChannel;
+
+	/* We are basically comparing the position of an user in the member list to that
+	 of the actual table. If one is different, then we move them. This is done so 
+	 mode changes can move positions in the list. */
+	NSInteger selfIndex = [self.memberList indexOfObject:user];
+
+	NSInteger tablIndex = [self.memberListView rowForItem:user];
+
+	if (NSDissimilarObjects(selfIndex, tablIndex)) {
+		[self.memberListView moveItemAtIndex:tablIndex
+									inParent:nil
+									 toIndex:selfIndex
+									inParent:nil];
 	}
+}
+
+- (void)reloadDataForTableView
+{
+	_cancelOnNotSelectedChannel;
+
+	[self.memberListView reloadData];
+}
+
+- (void)updateAllMembersOnTableView
+{
+	_cancelOnNotSelectedChannel;
+
+	[self.memberListView reloadAllDrawings];
+}
+
+- (void)updateMemberOnTableView:(IRCUser *)user
+{
+	_cancelOnNotSelectedChannel;
+
+	[self.memberListView updateDrawingForMember:user];
 }
 
 #pragma mark -
-#pragma mark IRCTreeItem
+#pragma mark Table View Delegate
+
+- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
+{
+	return [self.memberList count];
+}
+
+- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
+{
+	return NO;
+}
+
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
+{
+	return self.memberList[index];
+}
+
+- (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(IRCUser *)item
+{
+	return [item nickname];
+}
+
+- (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
+{
+    return _treeUserlistHeight;
+}
+
+- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(IRCUser *)item
+{
+	IRCAddressBook *ignoreChecks = [self.client checkIgnoreAgainstHostmask:[item hostmask] withMatches:@[@"hideInMemberList"]];
+
+	if (ignoreChecks && [ignoreChecks hideInMemberList]) {
+		return nil;
+	}
+
+	NSView *newView = [outlineView makeViewWithIdentifier:@"GroupView" owner:self];
+
+	if ([newView isKindOfClass:[TVCMemberListCell class]]) {
+		TVCMemberListCell *groupItem = (TVCMemberListCell *)newView;
+
+		[groupItem setMemberPointer:item];
+	}
+
+	return newView;
+}
+
+- (NSTableRowView *)outlineView:(NSOutlineView *)outlineView rowViewForItem:(id)item
+{
+	TVCMemberListRowCell *rowView = [[TVCMemberListRowCell alloc] initWithFrame:NSZeroRect];
+
+	return rowView;
+}
+
+- (void)outlineView:(NSOutlineView *)outlineView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
+{
+	[self.memberListView updateDrawingForRow:row];
+}
+
+- (NSIndexSet *)outlineView:(NSOutlineView *)outlineView selectionIndexesForProposedSelection:(NSIndexSet *)proposedSelectionIndexes
+{
+	/* I could make that method name longer if you would like? */
+	[self.memberListView reloadSelectionDrawingBySelectingItemsInIndexSet:proposedSelectionIndexes];
+
+	return proposedSelectionIndexes;
+}
+
+#pragma mark -
+#pragma mark IRCTreeItem Properties
+
+- (BOOL)isSelectedChannel
+{
+	return [self isEqual:self.worldController.selectedChannel];
+}
 
 - (BOOL)isActive
 {
@@ -535,29 +697,9 @@
     return [_client printingQueue];
 }
 
-#pragma mark -
-#pragma mark NSTableView Delegate
-
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
+- (TVCMemberList *)memberListView
 {
-	return [self.memberListIgnoreSorted count];
-}
-
-- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
-{
-    return _treeUserlistHeight;
-}
-
-- (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
-{
-	IRCUser *user = self.memberListIgnoreSorted[row];
-
-	return TXTFLS(@"AccessibilityMemberListDescription", user.nickname, [self.name channelNameToken]);
-}
-
-- (void)tableView:(NSTableView *)sender willDisplayCell:(TVCMemberListCell *)cell forTableColumn:(NSTableColumn *)column row:(NSInteger)row
-{
-	cell.memberPointer = self.memberListIgnoreSorted[row];
+	return self.masterController.memberList;
 }
 
 @end

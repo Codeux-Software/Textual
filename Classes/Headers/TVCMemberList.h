@@ -37,7 +37,21 @@
 
 #import "TextualApplication.h"
 
-@interface TVCMemberList : TVCListView
+@interface TVCMemberList : NSOutlineView
+@property (nonatomic, uweak) id keyDelegate;
+
+- (void)addItemToList:(NSInteger)index;
+
+- (void)removeItemFromList:(id)oldObject;
+
+/* Drawing. */
+- (void)reloadAllDrawings;
+
+- (void)updateDrawingForMember:(IRCUser *)cellItem;
+- (void)updateDrawingForRow:(NSInteger)rowIndex;
+
+- (void)reloadSelectionDrawingBySelectingItemsInIndexSet:(NSIndexSet *)rows;
+
 - (void)updateBackgroundColor;
 
 /* User interface elements. */

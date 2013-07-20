@@ -4047,7 +4047,9 @@
 					command:m.command];
 			}
 
-			[c renameMember:oldNick to:newNick];
+			[c renameMember:oldNick to:newNick performOnChange:^(IRCUser *user) {
+				[c updateMemberOnTableView:user];
+			}];
 		}
 	}
 
@@ -4091,7 +4093,9 @@
 		BOOL performWho = NO;
 
 		for (IRCModeInfo *h in info) {
-			[c changeMember:h.modeParamater mode:h.modeToken value:h.modeIsSet];
+			[c changeMember:h.modeParamater mode:h.modeToken value:h.modeIsSet performOnChange:^(IRCUser *user) {
+				[c updateMemberOnTableView:user];
+			}];
 
 			if (h.modeIsSet == NO && self.CAPmultiPrefix == NO) {
 				performWho = YES;
@@ -4402,9 +4406,9 @@
         PointerIsEmptyAssertLoopContinue(user);
 
         user.isAway = isAway;
-    }
 
-    [self.worldController.selectedChannel reloadMemberList];
+		[channel updateMemberOnTableView:user]; // Redraw the user in the user list.
+    }
 }
 
 - (void)receiveInit:(IRCMessage *)m
@@ -4661,9 +4665,9 @@
                 PointerIsEmptyAssertLoopContinue(myself); // This *should* never be empty.
                 
                 myself.isAway = self.isAway;
-            }
 
-            [self.worldController.selectedChannel reloadMemberList];
+				[channel updateMemberOnTableView:myself]; // Redraw the user in the user list.
+            }
 
 			break;
 		}
@@ -5051,10 +5055,6 @@
 
             [self.worldController updateTitleFor:c];
 
-            if ([TPCPreferences processChannelModes]) {
-                [self.worldController.selectedChannel reloadMemberList];
-            }
-
 			break;
 		}
 		case 352: // RPL_WHOREPLY
@@ -5136,8 +5136,9 @@
 				}
 			}
 
-			[c updateOrAddMember:u];
-			[c reloadMemberList];
+			[c updateMember:u performOnChange:^(IRCUser *user) {
+				[c updateMemberOnTableView:user]; // Redraw the user in the user list.
+			}];
 
 			break;
 		}
@@ -5195,10 +5196,8 @@
                 member.username = [nickname usernameFromHostmask];
                 member.address = [nickname addressFromHostmask];
 
-				[c addMember:member reload:NO];
+				[c addMember:member];
 			}
-
-			[c reloadMemberList];
 
 			break;
 		}

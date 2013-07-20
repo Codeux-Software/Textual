@@ -45,7 +45,7 @@ typedef enum IRCChannelStatus : NSInteger {
 	IRCChannelTerminated,
 } IRCChannelStatus;
 
-@interface IRCChannel : IRCTreeItem
+@interface IRCChannel : IRCTreeItem <NSOutlineViewDataSource, NSOutlineViewDelegate>
 @property (nonatomic, nweak) NSString *name;
 @property (nonatomic, strong) NSString *topic;
 @property (nonatomic, strong) TLOFileLogger *logFile;
@@ -58,7 +58,6 @@ typedef enum IRCChannelStatus : NSInteger {
 
 @property (strong) NSArray *memberList;
 @property (strong) NSArray *memberListLengthSorted; // Sorted member list based on nickname length. Used by conversation tracking.
-@property (strong) NSArray *memberListIgnoreSorted; // memberList with excluded ignored users. Actual data source for the member list table.
 
 - (void)setup:(IRCChannelConfig *)seed;
 - (void)updateConfig:(IRCChannelConfig *)seed;
@@ -83,15 +82,12 @@ typedef enum IRCChannelStatus : NSInteger {
 - (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock;
 
 - (void)addMember:(IRCUser *)user;
-- (void)addMember:(IRCUser *)user reload:(BOOL)reload;
-
 - (void)removeMember:(NSString *)nick;
-- (void)removeMember:(NSString *)nick reload:(BOOL)reload;
 
-- (void)renameMember:(NSString *)fromNick to:(NSString *)toNick;
-
-- (void)updateOrAddMember:(IRCUser *)user;
-- (void)changeMember:(NSString *)nick mode:(NSString *)mode value:(BOOL)value;
+/* performOnChange blocks allow us to relaod interface elements for the user that the changes happened to without reloading the entire list. */
+- (void)changeMember:(NSString *)nick mode:(NSString *)mode value:(BOOL)value performOnChange:(void (^)(IRCUser *user))block;
+- (void)renameMember:(NSString *)fromNick to:(NSString *)toNick performOnChange:(void (^)(IRCUser *user))block;
+- (void)updateMember:(IRCUser *)user performOnChange:(void (^)(IRCUser *user))block;
 
 - (void)clearMembers;
 
@@ -100,12 +96,12 @@ typedef enum IRCChannelStatus : NSInteger {
 - (IRCUser *)findMember:(NSString *)nick;
 - (IRCUser *)findMember:(NSString *)nick options:(NSStringCompareOptions)mask;
 
-- (NSInteger)indexOfMember:(NSString *)nick;
-- (NSInteger)indexOfMember:(NSString *)nick options:(NSStringCompareOptions)mask;
-
 - (NSInteger)numberOfMembers;
 
-- (void)reloadMemberList;
-- (void)reloadIgnoreSortedMemberList;
-- (void)sortedMemberListReload;
+/* For redrawing the member cells in table view. */
+- (void)updateAllMembersOnTableView;
+- (void)updateMemberOnTableView:(IRCUser *)user;
+
+- (void)reloadDataForTableView;
+- (void)reloadDataForTableViewBySortingMembers;
 @end

@@ -680,10 +680,11 @@
 		}
 	}
 
-	[self.serverList reloadAllDrawingsIgnoringOtherReloads];
 	[self.serverList updateBackgroundColor];
+	[self.serverList reloadAllDrawingsIgnoringOtherReloads];
 	
 	[self.memberList updateBackgroundColor];
+	[self.memberList reloadAllDrawings];
 
 	[self.masterController.serverSplitView setNeedsDisplay:YES];
 	[self.masterController.memberSplitView setNeedsDisplay:YES];
@@ -1125,7 +1126,7 @@
 
 - (NSTableRowView *)outlineView:(NSOutlineView *)outlineView rowViewForItem:(id)item
 {
-	TVCserverlistRowCell *rowView = [[TVCserverlistRowCell alloc] initWithFrame:NSZeroRect];
+	TVCServerListRowCell *rowView = [[TVCServerListRowCell alloc] initWithFrame:NSZeroRect];
 
 	return rowView;
 }
@@ -1246,11 +1247,6 @@
 		newChannel = (id)self.selectedItem;
 	}
 
-	/* Destroy old cached member list. */
-	if (previousChannel) {
-		previousChannel.memberListIgnoreSorted = nil;
-	}
-
 	/* Prepare the member list for the selection. */
 	if ([self.selectedItem isClient] ||
 		[self.selectedItem isPrivateMessage])
@@ -1270,10 +1266,10 @@
 	} else {		
 		self.serverList.menu = self.masterController.channelMenuItem.submenu;
 		
-		self.memberList.dataSource = self.selectedItem;
-		self.memberList.delegate = self.selectedItem;
+		self.memberList.dataSource = (id)self.selectedItem;
+		self.memberList.delegate = (id)self.selectedItem;
 
-		[self.memberList reloadData];
+		[newChannel reloadDataForTableView];
 	}
 
 	/* Finish member list. */

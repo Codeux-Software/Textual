@@ -230,6 +230,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[self.serverList reloadAllDrawingsIgnoringOtherReloads];
 
 	[self.memberList updateBackgroundColor];
+	[self.memberList reloadAllDrawings];
 }
 
 - (void)resetSelectedItemState

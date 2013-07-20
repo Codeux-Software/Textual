@@ -41,6 +41,47 @@
 
 @implementation TVCMemberList
 
+#pragma mark -
+#pragma mark Additions/Removal
+
+- (void)addItemToList:(NSInteger)index
+{
+	NSAssertReturn(index >= 0);
+
+	[self insertItemsAtIndexes:[NSIndexSet indexSetWithIndex:index]
+					  inParent:nil
+				 withAnimation:NSTableViewAnimationEffectNone];
+}
+
+- (void)removeItemFromList:(id)oldObject
+{
+	/* Get the row. */
+	NSInteger rowIndex = [self rowForItem:oldObject];
+
+	NSAssertReturn(rowIndex >= 0);
+
+	/* Remove object. */
+	[self removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:rowIndex]
+					  inParent:nil
+				 withAnimation:NSTableViewAnimationEffectNone];
+}
+
+#pragma mark -
+#pragma mark Events
+
+- (NSMenu *)menuForEvent:(NSEvent *)e
+{
+	NSPoint p = [self convertPoint:e.locationInWindow fromView:nil];
+
+	NSInteger i = [self rowAtPoint:p];
+
+	if (i >= 0 && NSDissimilarObjects(i, self.selectedRow)) {
+		[self selectItemAtIndex:i];
+	}
+
+	return self.masterController.userControlMenu;
+}
+
 - (void)keyDown:(NSEvent *)e
 {
 	if (self.keyDelegate) {
@@ -64,6 +105,73 @@
 	NSWindowNegateActionWithAttachedSheet();
 
 	[super rightMouseDown:theEvent];
+}
+
+#pragma mark -
+#pragma mark Drawing Updates
+
+- (void)updateDrawingForMember:(IRCUser *)cellItem
+{
+	PointerIsEmptyAssert(cellItem);
+
+	NSInteger rowIndex = [self rowForItem:cellItem];
+
+	NSAssertReturn(rowIndex >= 0);
+
+	[self updateDrawingForRow:rowIndex];
+}
+
+#pragma mark -
+
+- (void)reloadAllDrawings
+{
+	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
+		[self updateDrawingForRow:i];
+	}
+
+	[self setNeedsDisplay:YES];
+}
+
+- (void)reloadSelectionDrawingBySelectingItemsInIndexSet:(NSIndexSet *)rows
+{
+	PointerIsEmptyAssert(rows);
+
+	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
+		[self updateSelectionDrawingForRow:i byEnabling:[rows containsIndex:i]];
+	}
+}
+
+- (void)updateDrawingForRow:(NSInteger)rowIndex
+{
+	NSAssertReturn(rowIndex >= 0);
+
+	id rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
+
+	[rowView updateDrawing];
+}
+
+- (void)updateSelectionDrawingForRow:(NSInteger)rowIndex byEnabling:(BOOL)isSelected
+{
+	NSAssertReturn(rowIndex >= 0);
+
+	TVCMemberListCell *rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
+
+	if (rowView.rowIsSelected && isSelected) {
+		return; // We do not have to do anything…
+	}
+
+	/* Update the actual drawing. */
+	if (isSelected) {
+		[rowView enableSelectionBackgroundImage];
+
+		rowView.rowIsSelected = YES;
+	} else {
+		[rowView disableSelectionBackgroundImage];
+
+		rowView.rowIsSelected = NO;
+	}
+
+	[rowView updateDrawing]; // Redraw on selection changes.
 }
 
 - (void)updateBackgroundColor
@@ -103,15 +211,28 @@
     // Do not draw focus ring …
 }
 
-- (void)reloadData
+/* We handle frameOfCellAtColumn:row: to make it so our selected cell background
+  draw stretches all the way from one end to the other of our list. */
+- (NSRect)frameOfCellAtColumn:(NSInteger)column row:(NSInteger)row
 {
-	if ([self.worldController.selectedItem isChannel]) {
-		/* Populate data for member list. */
-		
-		[(IRCChannel *)self.worldController.selectedItem reloadIgnoreSortedMemberList];
+	NSRect nrect = [super frameOfCellAtColumn:column row:row];
+
+	id childItem = [self itemAtRow:row];
+
+	nrect.origin.x = 0;
+
+	if ([self isGroupItem:childItem]) {
+		nrect.size.width += 25;
+	} else {
+		nrect.size.width += 39;
 	}
-	
-	[super reloadData];
+
+	/* Mavericks changed this math a little… */
+	if ([TPCPreferences featureAvailableToOSXMavericks]) {
+		nrect.size.width += 3;
+	}
+
+	return nrect;
 }
 
 #pragma mark -
