@@ -39,7 +39,7 @@
 
 @interface TDCAboutPanel : NSWindowController
 @property (nonatomic, uweak) id delegate;
-@property (nonatomic, uweak) IBOutlet NSTextView *documentView;
+@property (nonatomic, uweak) NSTextView *documentView;
 @property (nonatomic, nweak) NSTextField *versionInfoField;
 
 - (void)show;

@@ -48,6 +48,8 @@
 
 - (void)updateDrawing;
 
+- (void)drawWithExpansionFrame;
+
 - (void)disableSelectionBackgroundImage;
 - (void)enableSelectionBackgroundImage;
 @end

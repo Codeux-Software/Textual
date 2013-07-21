@@ -39,6 +39,9 @@
 
 @implementation TVCMemberListCell
 
+#pragma mark -
+#pragma mark Cell Drawing
+
 - (void)updateDrawing
 {
 	/**************************************************************/
@@ -185,6 +188,70 @@
 			[self.modeSymbolTextField setFrame:symbolTextFieldRectNew];
 		}
 	}
+}
+
+#pragma mark -
+#pragma mark Expansion Frame
+
+- (void)drawWithExpansionFrame
+{
+    /* Begin popover. */
+    TVCMemberListUserInfoPopover *userInfoPopover = self.masterController.memberListUserInfoPopover;
+
+    /* What permissions does the user have? */
+    NSString *permissions = @"UserHostmaskHoverTooltipMode_NA";
+
+    if (self.memberPointer.q) {
+        permissions = @"UserHostmaskHoverTooltipMode_Q";
+    } else if (self.memberPointer.a) {
+        permissions = @"UserHostmaskHoverTooltipMode_A";
+    } else if (self.memberPointer.o) {
+        permissions = @"UserHostmaskHoverTooltipMode_O";
+    } else if (self.memberPointer.h) {
+        permissions = @"UserHostmaskHoverTooltipMode_H";
+    } else if (self.memberPointer.v) {
+        permissions = @"UserHostmaskHoverTooltipMode_V";
+    }
+
+    permissions = TXTLS(permissions);
+
+    if (self.memberPointer.isCop) {
+        permissions = [permissions stringByAppendingString:TXTLS(@"UserHostmaskHoverTooltipMode_IRCop")];
+    }
+
+    /* User info. */
+    NSString *nickname = self.memberPointer.nickname;
+    NSString *username = self.memberPointer.username;
+    NSString *address = self.memberPointer.address;
+
+    if (NSObjectIsEmpty(username)) {
+        username = TXTLS(@"UserHostmaskHoverTooltipNoInfo");
+    }
+
+    if (NSObjectIsEmpty(address)) {
+        address = TXTLS(@"UserHostmaskHoverTooltipNoInfo");
+    }
+
+    /* Where is our cell? */
+	NSInteger rowIndex = [self rowIndex];
+
+    NSRect cellFrame = [self.memberList frameOfCellAtColumn:0 row:rowIndex];
+
+    /* Pop our popover. */
+    userInfoPopover.nicknameField.stringValue = nickname;
+    userInfoPopover.usernameField.stringValue = username;
+    userInfoPopover.addressField.stringValue = address;
+    userInfoPopover.privilegesField.stringValue = permissions;
+
+	if (self.memberPointer.isAway) {
+		userInfoPopover.awayStatusField.stringValue = TXTLS(@"UserHostmaskHoverTooltipUserIsAway");
+	} else {
+		userInfoPopover.awayStatusField.stringValue = TXTLS(@"UserHostmaskHoverTooltipUserIsNotAway");
+	}
+
+    [userInfoPopover showRelativeToRect:cellFrame
+                                 ofView:self.memberList
+                          preferredEdge:NSMaxXEdge];
 }
 
 #pragma mark -

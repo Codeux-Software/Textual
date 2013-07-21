@@ -60,6 +60,10 @@
 /* Badge renderer. */
 - (void)createBadgeRenderer;
 
+/* Event monitor. */
+- (void)createMouseMovedEventMonitor;
+- (void)destroyMouseMovedEventMonitor;
+
 /* User interface elements. */
 - (NSColor *)normalCellTextColor;
 - (NSColor *)awayUserCellTextColor;
