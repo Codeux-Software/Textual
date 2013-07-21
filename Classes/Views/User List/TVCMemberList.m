@@ -106,6 +106,18 @@
 }
 
 #pragma mark -
+#pragma mark Badge Renderer
+
+- (void)createBadgeRenderer
+{
+	if (PointerIsEmpty(self.badgeRenderer)) {
+		self.badgeRenderer = [TVCMemberListCellBadge new];
+
+		[self.badgeRenderer invalidateBadgeImageCacheAndRebuild];
+	}
+}
+
+#pragma mark -
 #pragma mark Drawing Updates
 
 - (void)updateDrawingForMember:(IRCUser *)cellItem
@@ -123,10 +135,31 @@
 
 - (void)reloadAllDrawings
 {
+	/* Reload drawings for all rows. */
 	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
 		[self updateDrawingForRow:i];
 	}
 
+	/* Set display. */
+	[self setNeedsDisplay:YES];
+}
+
+- (void)reloadAllUserInterfaceElements
+{
+	/* Destroy badge cache and create new. */
+	[self.badgeRenderer invalidateBadgeImageCacheAndRebuild];
+
+	/* Update background color. */
+	[self updateBackgroundColor];
+
+	/* Clear selection and re-draw it. */
+	NSIndexSet *selectedRows = [self selectedRowIndexes];
+
+	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
+		[self updateSelectionDrawingForRow:i byEnabling:[selectedRows containsIndex:i] forcefully:YES];
+	}
+
+	/* Set display. */
 	[self setNeedsDisplay:YES];
 }
 
@@ -135,7 +168,7 @@
 	PointerIsEmptyAssert(rows);
 
 	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
-		[self updateSelectionDrawingForRow:i byEnabling:[rows containsIndex:i]];
+		[self updateSelectionDrawingForRow:i byEnabling:[rows containsIndex:i] forcefully:NO];
 	}
 }
 
@@ -148,24 +181,24 @@
 	[rowView updateDrawing];
 }
 
-- (void)updateSelectionDrawingForRow:(NSInteger)rowIndex byEnabling:(BOOL)isSelected
+- (void)updateSelectionDrawingForRow:(NSInteger)rowIndex byEnabling:(BOOL)isSelected forcefully:(BOOL)forceRedraw
 {
 	NSAssertReturn(rowIndex >= 0);
 
 	TVCMemberListCell *rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
 
-	if (rowView.rowIsSelected && isSelected) {
+	if (rowView.rowIsSelected && isSelected && forceRedraw == NO) {
 		return; // We do not have to do anything…
 	}
 
 	/* Update the actual drawing. */
+	[rowView disableSelectionBackgroundImage];
+
 	if (isSelected) {
 		[rowView enableSelectionBackgroundImage];
 
 		rowView.rowIsSelected = YES;
 	} else {
-		[rowView disableSelectionBackgroundImage];
-
 		rowView.rowIsSelected = NO;
 	}
 
@@ -341,7 +374,7 @@
 
 - (NSFont *)userMarkBadgeFont
 {
-	return [RZFontManager() fontWithFamily:@"Helvetica" traits:NSBoldFontMask weight:15 size:10.5];
+	return [RZFontManager() fontWithFamily:@"Helvetica" traits:NSBoldFontMask weight:15 size:11.0];
 }
 
 - (NSInteger)userMarkBadgeMargin
@@ -357,6 +390,26 @@
 - (NSInteger)userMarkBadgeHeight
 {
 	return 14.0;
+}
+
+- (NSPoint)userMarkBadgeTextOrigin_Normal
+{
+	return NSMakePoint(7, 5);
+}
+
+- (NSPoint)userMarkBadgeTextOrigin_AtSign /* @ */
+{
+	return NSMakePoint(5, 4);
+}
+
+- (NSPoint)userMarkBadgeTextOrigin_AndSign /* & */
+{
+	return NSMakePoint(6, 4);
+}
+
+- (NSPoint)userMarkBadgeTextOrigin_PercentSign /* % */
+{
+	return NSMakePoint(5, 4);
 }
 
 - (NSFont *)normalCellFont

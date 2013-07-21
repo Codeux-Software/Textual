@@ -128,6 +128,7 @@
 	@class TVCMainWindowSegmentedControl;
 	@class TVCMemberList;
 	@class TVCMemberListCell;
+	@class TVCMemberListCellBadge;
 	@class TVCMemberListRowCell;
 	@class TVCMemberListUserInfoPopover;
 	@class TVCServerList; // This has a lot of classes.
@@ -287,6 +288,7 @@
 	#import "TVCMainWindowSegmentedControl.h"
 	#import "TVCMemberList.h"
 	#import "TVCMemberListCell.h"
+	#import "TVCMemberListCellBadge.h"
 	#import "TVCMemberListUserInfoPopover.h"
 	#import "TVCServerList.h"
 	#import "TVCServerListCell.h"

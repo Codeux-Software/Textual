@@ -573,6 +573,25 @@
 	[self.memberListView reloadData];
 }
 
+- (void)updateTableViewByRemovingIgnoredUsers
+{
+	NSMutableIndexSet *rowsToRemove = [NSMutableIndexSet indexSet];
+
+	for (NSInteger i = 0; i < [self.memberListView numberOfRows]; i++) {
+		IRCUser *uar = [self.memberListView itemAtRow:i];
+
+		IRCAddressBook *ignoreChecks = [self.client checkIgnoreAgainstHostmask:[uar hostmask] withMatches:@[@"hideInMemberList"]];
+
+		if (ignoreChecks && [ignoreChecks hideInMemberList]) {
+			[rowsToRemove addIndex:i];
+		}
+	}
+
+	NSObjectIsEmptyAssert(rowsToRemove);
+
+	[self.memberListView removeItemsAtIndexes:rowsToRemove inParent:nil withAnimation:NSTableViewAnimationEffectNone];
+}
+
 - (void)updateAllMembersOnTableView
 {
 	_cancelOnNotSelectedChannel;
@@ -617,12 +636,6 @@
 
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(IRCUser *)item
 {
-	IRCAddressBook *ignoreChecks = [self.client checkIgnoreAgainstHostmask:[item hostmask] withMatches:@[@"hideInMemberList"]];
-
-	if (ignoreChecks && [ignoreChecks hideInMemberList]) {
-		return nil;
-	}
-
 	NSView *newView = [outlineView makeViewWithIdentifier:@"GroupView" owner:self];
 
 	if ([newView isKindOfClass:[TVCMemberListCell class]]) {

@@ -6,7 +6,7 @@
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
  Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
-        Please see Contributors.rtfd and Acknowledgements.rtfd
+        Contributors.rtfd and Acknowledgements.rtfd
 
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
@@ -37,20 +37,15 @@
 
 #import "TextualApplication.h"
 
-@interface TVCMemberListCell : NSTableCellView
-@property (nonatomic, nweak) IRCUser *memberPointer;
-@property (nonatomic, nweak) NSTextField *customTextField;
-@property (nonatomic, nweak) NSTextField *modeSymbolTextField;
-@property (nonatomic, nweak) NSImageView *backgroundImageCell;
-@property (nonatomic, assign) BOOL rowIsSelected; // We track this to know whether to reload on selection changes.
+@interface TVCMemberListCellBadge : NSObject
+@property (nonatomic, strong, readonly) NSImage *userModeBadgeImage_Y;
+@property (nonatomic, strong, readonly) NSImage *userModeBadgeImage_Q;
+@property (nonatomic, strong, readonly) NSImage *userModeBadgeImage_A;
+@property (nonatomic, strong, readonly) NSImage *userModeBadgeImage_O;
+@property (nonatomic, strong, readonly) NSImage *userModeBadgeImage_H;
+@property (nonatomic, strong, readonly) NSImage *userModeBadgeImage_V;
+@property (nonatomic, strong, readonly) NSImage *userModeBadgeImage_X;
+@property (nonatomic, strong, readonly) NSImage *userModeBadgeImage_Selected;
 
-- (NSDictionary *)drawingContext;
-
-- (void)updateDrawing;
-
-- (void)disableSelectionBackgroundImage;
-- (void)enableSelectionBackgroundImage;
-@end
-
-@interface TVCMemberListRowCell : NSTableRowView
+- (void)invalidateBadgeImageCacheAndRebuild;
 @end

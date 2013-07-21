@@ -682,9 +682,8 @@
 
 	[self.serverList updateBackgroundColor];
 	[self.serverList reloadAllDrawingsIgnoringOtherReloads];
-	
-	[self.memberList updateBackgroundColor];
-	[self.memberList reloadAllDrawings];
+
+	[self.memberList reloadAllUserInterfaceElements];
 
 	[self.masterController.serverSplitView setNeedsDisplay:YES];
 	[self.masterController.memberSplitView setNeedsDisplay:YES];
@@ -1269,12 +1268,14 @@
 		self.memberList.dataSource = (id)self.selectedItem;
 		self.memberList.delegate = (id)self.selectedItem;
 
+		[self.memberList deselectAll:nil];
+		[self.memberList scrollRowToVisible:0];
+		
 		[newChannel reloadDataForTableView];
+		[newChannel updateTableViewByRemovingIgnoredUsers];
 	}
 
 	/* Finish member list. */
-	[self.memberList deselectAll:nil];
-	[self.memberList scrollRowToVisible:0];
 	[self.memberList updateBackgroundColor];
 
 	/* Begin work on text field. */
