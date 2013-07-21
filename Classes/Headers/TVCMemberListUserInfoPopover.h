@@ -42,4 +42,5 @@
 @property (nonatomic, nweak) NSTextField *usernameField;
 @property (nonatomic, nweak) NSTextField *addressField;
 @property (nonatomic, nweak) NSTextField *privilegesField;
+@property (nonatomic, nweak) NSTextField *awayStatusField;
 @end

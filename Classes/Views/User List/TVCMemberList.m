@@ -37,6 +37,11 @@
 
 #import "TextualApplication.h"
 
+@interface TVCMemberList ()
+@property (nonatomic, strong) id eventMonitor;
+@property (nonatomic, assign) NSInteger lastRowShownTooltip;
+@end
+
 @implementation TVCMemberList
 
 #pragma mark -
@@ -103,6 +108,43 @@
 	NSWindowNegateActionWithAttachedSheet();
 
 	[super rightMouseDown:theEvent];
+}
+
+- (void)createMouseMovedEventMonitor
+{
+	self.eventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:NSMouseMovedMask handler:^NSEvent *(NSEvent *event) {
+		[self mouseHasMoved:event];
+
+		return event;
+	}];
+}
+
+- (void)destroyMouseMovedEventMonitor
+{
+	[NSEvent removeMonitor:self.eventMonitor];
+}
+
+- (void)mouseHasMoved:(NSEvent *)theEvent
+{
+	NSPoint localPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+
+	NSInteger row = [self rowAtPoint:localPoint];
+
+	if (row > -1) {
+		if (NSDissimilarObjects(self.lastRowShownTooltip, row)) {
+			self.lastRowShownTooltip = row;
+
+			id rowView = [self viewAtColumn:0 row:row makeIfNecessary:NO];
+
+			[rowView drawWithExpansionFrame];
+		}
+	} else {
+		if (NSDissimilarObjects(self.lastRowShownTooltip, -1)) {
+			[self.masterController.memberListUserInfoPopover close];
+
+			self.lastRowShownTooltip = -1;
+		}
+	}
 }
 
 #pragma mark -

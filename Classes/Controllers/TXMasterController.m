@@ -295,6 +295,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	}
 
 	[self resetSelectedItemState];
+	
+	[self.memberList createMouseMovedEventMonitor];
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification
@@ -304,6 +306,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	if (self.applicationIsChangingActiveState == NO) {
 		[self reloadUserInterfaceItems];
 	}
+
+	[self.memberList destroyMouseMovedEventMonitor];
 }
 
 - (BOOL)window:(NSWindow *)window shouldPopUpDocumentPathMenu:(NSMenu *)menu

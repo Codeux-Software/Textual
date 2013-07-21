@@ -376,6 +376,8 @@
 "UserHostmaskHoverTooltipMode_A" = "Super Admin";
 "UserHostmaskHoverTooltipMode_Q" = "Channel Owner";
 "UserHostmaskHoverTooltipMode_IRCop" = " — Server Staff Member";
+"UserHostmaskHoverTooltipUserIsAway" = "User is Away";
+"UserHostmaskHoverTooltipUserIsNotAway" = "User is NOT Away";
 "UserHostmaskHoverTooltipNoInfo" = "Information Not Available";
 
 "UserTrackingHostmaskConnected" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" connected.";
