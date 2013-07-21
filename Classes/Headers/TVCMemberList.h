@@ -39,20 +39,26 @@
 
 @interface TVCMemberList : NSOutlineView
 @property (nonatomic, uweak) id keyDelegate;
+@property (nonatomic, strong) id badgeRenderer;
 
+/* Additions & Removals. */
 - (void)addItemToList:(NSInteger)index;
 
 - (void)removeItemFromList:(id)oldObject;
 
 /* Drawing. */
 - (void)reloadAllDrawings;
+- (void)reloadAllUserInterfaceElements;
+
+- (void)reloadSelectionDrawingBySelectingItemsInIndexSet:(NSIndexSet *)rows;
 
 - (void)updateDrawingForMember:(IRCUser *)cellItem;
 - (void)updateDrawingForRow:(NSInteger)rowIndex;
 
-- (void)reloadSelectionDrawingBySelectingItemsInIndexSet:(NSIndexSet *)rows;
-
 - (void)updateBackgroundColor;
+
+/* Badge renderer. */
+- (void)createBadgeRenderer;
 
 /* User interface elements. */
 - (NSColor *)normalCellTextColor;
@@ -64,6 +70,11 @@
 - (NSColor *)graphiteSelectedCellTextShadowColorForActiveWindow;
 
 - (NSColor *)selectedCellTextColor;
+
+- (NSPoint)userMarkBadgeTextOrigin_Normal;
+- (NSPoint)userMarkBadgeTextOrigin_AtSign; /* @ */
+- (NSPoint)userMarkBadgeTextOrigin_AndSign; /* & */
+- (NSPoint)userMarkBadgeTextOrigin_PercentSign; /* % */
 
 - (NSColor *)userMarkBadgeBackgroundColor_YDefault;
 - (NSColor *)userMarkBadgeBackgroundColor_ADefault;

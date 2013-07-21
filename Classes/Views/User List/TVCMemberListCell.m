@@ -52,15 +52,7 @@
 	BOOL isKeyWindow = [drawContext boolForKey:@"isKeyWindow"];
 	BOOL isGraphite = [drawContext boolForKey:@"isGraphite"];
 
-	/* ************************** This is only temporary. ************************** */
-	NSString *nickname = self.memberPointer.nickname;
-
-	if (NSObjectIsEmpty(self.memberPointer.mark) == NO) {
-		nickname = [self.memberPointer.mark stringByAppendingString:nickname];
-	}
-	/* ****************************************************************************** */
-
-	NSMutableAttributedString *newStrValue = [NSMutableAttributedString mutableStringWithBase:nickname attributes:self.customTextField.attributedStringValue.attributes];
+	NSMutableAttributedString *newStrValue = [NSMutableAttributedString mutableStringWithBase:self.memberPointer.nickname attributes:self.customTextField.attributedStringValue.attributes];
 
 	/* Prepare the drop shadow for text. */
 	NSShadow *itemShadow = [NSShadow new];
@@ -107,7 +99,92 @@
 	[newStrValue addAttribute:NSShadowAttributeName value:itemShadow range:textRange];
 
 	/* Set the new attributed string. */
-	[self.customTextField setAttributedStringValue:newStrValue];
+	if ([self.customTextField.attributedStringValue isEqual:newStrValue] == NO) {
+		[self.customTextField setAttributedStringValue:newStrValue];
+	}
+
+	/**************************************************************/
+	/* Prepare the badge image and text. */
+	/**************************************************************/
+
+	/* Setup badge image. */
+	NSImage *badgeImage;
+
+	/* See IRCUser.m for an explantion of what favorIRCop does. */
+	BOOL favorIRCop = [self.memberPointer.supportInfo modeIsSupportedUserPrefix:@"y"];
+
+	if (favorIRCop == NO) {
+		favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
+	}
+
+	if (self.rowIsSelected) {
+		badgeImage = [self.badgeRenderer userModeBadgeImage_Selected];
+	} else if (self.memberPointer.isCop && favorIRCop) {
+		badgeImage = [self.badgeRenderer userModeBadgeImage_Y];
+	} else if (self.memberPointer.q) {
+		badgeImage = [self.badgeRenderer userModeBadgeImage_Q];
+	} else if (self.memberPointer.a) {
+		badgeImage = [self.badgeRenderer userModeBadgeImage_A];
+	} else if (self.memberPointer.o) {
+		badgeImage = [self.badgeRenderer userModeBadgeImage_O];
+	} else if (self.memberPointer.h) {
+		badgeImage = [self.badgeRenderer userModeBadgeImage_H];
+	} else if (self.memberPointer.v) {
+		badgeImage = [self.badgeRenderer userModeBadgeImage_V];
+	} else {
+		badgeImage = [self.badgeRenderer userModeBadgeImage_X];
+	}
+
+	if ([badgeImage isEqual:[self.imageView image]] == NO) {
+		[self.imageView setImage:badgeImage];
+	}
+
+	/* Setup badge text. */
+	NSString *mcnstring = self.memberPointer.mark;
+
+	if (NSObjectIsEmpty(mcnstring)) {
+		if ([RZUserDefaults() boolForKey:@"DisplayUserListNoModeSymbol"]) {
+			mcnstring = @"x";
+		} else {
+			mcnstring = NSStringEmptyPlaceholder;
+		}
+	}
+
+	/* Pick which font size best aligns with the badge. */
+	NSColor *textColor = self.memberList.userMarkBadgeNormalTextColor;
+
+	if (self.rowIsSelected) {
+		textColor = self.memberList.userMarkBadgeSelectedTextColor;
+	}
+
+	NSAttributedString *mcstring = [NSAttributedString stringWithBase:mcnstring attributes:@{
+		 NSForegroundColorAttributeName		: textColor,
+		 NSFontAttributeName				: self.memberList.userMarkBadgeFont
+	}];
+
+	if ([self.modeSymbolTextField.attributedStringValue isEqual:mcstring] == NO) {
+		/* Set the actual mode badge text. */
+		[self.modeSymbolTextField setAttributedStringValue:mcstring];
+
+		/* Change frame. */
+
+		NSRect symbolTextFieldRectOld = [self.modeSymbolTextField frame];
+		NSRect symbolTextFieldRectNew = symbolTextFieldRectOld;
+
+		if ([mcnstring isEqualToString:@"@"]) {
+			symbolTextFieldRectNew.origin = [self.memberList userMarkBadgeTextOrigin_AtSign];
+		} else if ([mcnstring isEqualToString:@"&"]) {
+			symbolTextFieldRectNew.origin = [self.memberList userMarkBadgeTextOrigin_AndSign];
+		} else if ([mcnstring isEqualToString:@"%"]) {
+			symbolTextFieldRectNew.origin = [self.memberList userMarkBadgeTextOrigin_PercentSign];
+		} else {
+			symbolTextFieldRectNew.origin = [self.memberList userMarkBadgeTextOrigin_Normal];
+		}
+
+		if (NSEqualRects(symbolTextFieldRectOld, symbolTextFieldRectNew) == NO) {
+			[self.modeSymbolTextField setFrame:symbolTextFieldRectNew];
+		}
+	}
 }
 
 #pragma mark -
@@ -168,7 +245,7 @@
 	/* Setting the menu on our imageView, not only backgroundImageCell, makes it
 	 so right clicking on the channel status produces the same menu that is given
 	 clicking anywhere else in the server list. */
-	//[self.imageView setMenu:menu];
+	[self.imageView setMenu:menu];
 
 	/* Populate the background image cell. */
 	[self.backgroundImageCell setImage:origBackgroundImage];
@@ -185,6 +262,11 @@
 - (TVCMemberList *)memberList
 {
 	return self.masterController.memberList;
+}
+
+- (TVCMemberListCellBadge *)badgeRenderer
+{
+	return self.masterController.memberList.badgeRenderer;
 }
 
 #pragma mark -

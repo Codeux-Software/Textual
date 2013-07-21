@@ -794,6 +794,8 @@
 
 - (void)onChangedUserListModeColor:(id)sender
 {
+	[self.masterController.memberList.badgeRenderer invalidateBadgeImageCacheAndRebuild];
+
 	[self.masterController.memberList reloadAllDrawings];
 }
 
@@ -830,8 +832,7 @@
 	[self.masterController.serverList updateBackgroundColor];
 	[self.masterController.serverList reloadAllDrawingsIgnoringOtherReloads];
 
-	[self.masterController.memberList updateBackgroundColor];
-	[self.masterController.memberList reloadAllDrawings];
+	[self.masterController.memberList reloadAllUserInterfaceElements];
 
 	[self.masterController.serverSplitView setNeedsDisplay:YES];
 	[self.masterController.memberSplitView setNeedsDisplay:YES];

@@ -141,6 +141,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
     self.memberList.keyDelegate	= self.worldController;
 	self.serverList.keyDelegate	= self.worldController;
 
+	[self.memberList createBadgeRenderer];
+
 	[self.serverList reloadData];
 	
 	[self.worldController setupTree];
@@ -183,8 +185,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *)aNotification
 {
-	self.applicationIsRunningInHighResMode = [RZMainScreen() runningInHighResolutionMode];
-
+	/* Make sure the main window can fit in the new screen resolution. */
 	if (self.isInFullScreenMode) {
 		/* Reset window frame if screen resolution is changed. */
 		
@@ -215,11 +216,19 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	}
 
 	/* Redraw dock icon on potential screen resolution changes. */
-    [self reloadUserInterfaceItems];
-
 	[TVCDockIcon resetCachedCount];
 
 	[self.worldController updateIcon];
+
+	/* Update wether we are in high-resolution mode and redraw some stuff if we move state. */
+	BOOL inHighResMode = [RZMainScreen() runningInHighResolutionMode];
+
+	if (NSDissimilarObjects(self.applicationIsRunningInHighResMode, inHighResMode)) {
+		[self.memberList reloadAllUserInterfaceElements];
+		[self.serverList reloadAllDrawings];
+	}
+
+	self.applicationIsRunningInHighResMode = [RZMainScreen() runningInHighResolutionMode];
 }
 
 - (void)reloadUserInterfaceItems
@@ -472,19 +481,25 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 - (id)windowWillReturnFieldEditor:(NSWindow *)sender toObject:(id)client
 {
-    NSMenu	   *editorMenu = self.inputTextField.menu;
-    NSMenuItem *formatMenu = self.formattingMenu.formatterMenu;
-    
-    if (formatMenu) {
-        NSInteger fmtrIndex = [editorMenu indexOfItemWithTitle:formatMenu.title];
-        
-        if (fmtrIndex == -1) {
-            [editorMenu addItem:[NSMenuItem separatorItem]];
-            [editorMenu addItem:formatMenu];
-        }
-        
-        [self.inputTextField setMenu:editorMenu];
-    }
+	static BOOL formattingMenuSet;
+
+	if (formattingMenuSet == NO) {
+		NSMenu	   *editorMenu = self.inputTextField.menu;
+		NSMenuItem *formatMenu = self.formattingMenu.formatterMenu;
+		
+		if (formatMenu) {
+			NSInteger fmtrIndex = [editorMenu indexOfItemWithTitle:formatMenu.title];
+			
+			if (fmtrIndex == -1) {
+				[editorMenu addItem:[NSMenuItem separatorItem]];
+				[editorMenu addItem:formatMenu];
+			}
+			
+			[self.inputTextField setMenu:editorMenu];
+		}
+
+		formattingMenuSet = YES;
+	}
     
     return self.inputTextField;
 }

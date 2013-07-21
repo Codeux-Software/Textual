@@ -158,8 +158,6 @@
 		4C0E363516F192F200B426C2 /* TVCServerList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0444EA16F15F8200EBB665 /* TVCServerList.m */; };
 		4C0E363616F192F200B426C2 /* TVCServerListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0444EB16F15F8200EBB665 /* TVCServerListCell.m */; };
 		4C0E363716F192F200B426C2 /* TVCServerListCellBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0444EC16F15F8200EBB665 /* TVCServerListCellBadge.m */; };
-		4C16678A17404BDF00BEDA51 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C69F55016EED9F1007E0AA3 /* QuartzCore.framework */; };
-		4C16678B17404BDF00BEDA51 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C69F55016EED9F1007E0AA3 /* QuartzCore.framework */; };
 		4C1893EC17980F060091D173 /* TVCImageURLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1893EB17980F060091D173 /* TVCImageURLoader.m */; };
 		4C1893ED17980F060091D173 /* TVCImageURLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1893EB17980F060091D173 /* TVCImageURLoader.m */; };
 		4C1893F317980F460091D173 /* TVCImageURLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1893F217980F460091D173 /* TVCImageURLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -192,6 +190,10 @@
 		4C46CCCB1580469E00846B64 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC21580469E00846B64 /* WebKit.framework */; };
 		4C52379415C18F6700414852 /* Style Default Templates in Resources */ = {isa = PBXBuildFile; fileRef = 4C52379215C18F6700414852 /* Style Default Templates */; };
 		4C52379515C18F6700414852 /* Styles in Resources */ = {isa = PBXBuildFile; fileRef = 4C52379315C18F6700414852 /* Styles */; };
+		4C5798B3179B44F500968800 /* TVCMemberListCellBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5798B2179B44F500968800 /* TVCMemberListCellBadge.m */; };
+		4C5798B4179B44F500968800 /* TVCMemberListCellBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5798B2179B44F500968800 /* TVCMemberListCellBadge.m */; };
+		4C5798BA179B451400968800 /* TVCMemberListCellBadge.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5798B9179B451400968800 /* TVCMemberListCellBadge.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C5798BB179B451400968800 /* TVCMemberListCellBadge.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5798B9179B451400968800 /* TVCMemberListCellBadge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5A0311170C2C010016BB1A /* TPCPreferencesImportExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5A0310170C2C010016BB1A /* TPCPreferencesImportExport.m */; };
 		4C5A0317170C2C170016BB1A /* TPCPreferencesImportExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5A0318170C31010016BB1A /* TPCPreferencesImportExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1003,6 +1005,8 @@
 		4C46CCC21580469E00846B64 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		4C52379215C18F6700414852 /* Style Default Templates */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Style Default Templates"; path = "Resources/Styles/Style Default Templates"; sourceTree = SOURCE_ROOT; };
 		4C52379315C18F6700414852 /* Styles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Styles; path = Resources/Styles/Styles; sourceTree = SOURCE_ROOT; };
+		4C5798B2179B44F500968800 /* TVCMemberListCellBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberListCellBadge.m; sourceTree = "<group>"; };
+		4C5798B9179B451400968800 /* TVCMemberListCellBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMemberListCellBadge.h; sourceTree = "<group>"; };
 		4C5A0310170C2C010016BB1A /* TPCPreferencesImportExport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCPreferencesImportExport.m; sourceTree = "<group>"; };
 		4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPreferencesImportExport.h; sourceTree = "<group>"; };
 		4C5A6DBE15C39B1900143574 /* NSScreenHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSScreenHelper.h; sourceTree = "<group>"; };
@@ -1022,7 +1026,6 @@
 		4C68426116C5B1020005A59E /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = .tmp/SharedBuildProducts/BragSpam.bundle; sourceTree = SOURCE_ROOT; };
 		4C68426216C5B1020005A59E /* SpammerParadise.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SpammerParadise.bundle; path = .tmp/SharedBuildProducts/SpammerParadise.bundle; sourceTree = SOURCE_ROOT; };
 		4C68426316C5B1020005A59E /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = .tmp/SharedBuildProducts/SystemProfiler.bundle; sourceTree = SOURCE_ROOT; };
-		4C69F55016EED9F1007E0AA3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = ../../../../System/Library/Frameworks/QuartzCore.framework; sourceTree = "<group>"; };
 		4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMainWindowSegmentedControl.m; sourceTree = "<group>"; };
 		4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowSegmentedControl.h; sourceTree = "<group>"; };
 		4C7188C31591AB7A00FC5E54 /* DIRedBadgeCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DIRedBadgeCenter.png; path = "Resources/Images/Dock Icon Badges/Red/DIRedBadgeCenter.png"; sourceTree = SOURCE_ROOT; };
@@ -1377,7 +1380,6 @@
 				4C46CCB71580468900846B64 /* libcrypto.dylib in Frameworks */,
 				4C46CCB81580468900846B64 /* libicucore.dylib in Frameworks */,
 				4C211D5715BF21BA00E218DA /* libmustache.a in Frameworks */,
-				4C16678A17404BDF00BEDA51 /* QuartzCore.framework in Frameworks */,
 				4C46CCC91580469E00846B64 /* Security.framework in Frameworks */,
 				4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */,
 				4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */,
@@ -1401,7 +1403,6 @@
 				4C5BA46016F1302F00A96CA2 /* libcrypto.dylib in Frameworks */,
 				4C5BA46116F1302F00A96CA2 /* libicucore.dylib in Frameworks */,
 				4C5BA46216F1302F00A96CA2 /* libmustache.a in Frameworks */,
-				4C16678B17404BDF00BEDA51 /* QuartzCore.framework in Frameworks */,
 				4C5BA46416F1302F00A96CA2 /* Security.framework in Frameworks */,
 				4C5BA46516F1302F00A96CA2 /* SecurityInterface.framework in Frameworks */,
 				4C5BA46616F1302F00A96CA2 /* SystemConfiguration.framework in Frameworks */,
@@ -1721,7 +1722,6 @@
 				4C46CCBD1580469E00846B64 /* CoreServices.framework */,
 				4C46CCBE1580469E00846B64 /* Foundation.framework */,
 				4C46CCBF1580469E00846B64 /* IOKit.framework */,
-				4C69F55016EED9F1007E0AA3 /* QuartzCore.framework */,
 				4C46CCC01580469E00846B64 /* Security.framework */,
 				4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */,
 				4C46CCC11580469E00846B64 /* SystemConfiguration.framework */,
@@ -1973,6 +1973,7 @@
 				4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */,
 				4C8AF58D158E99520026668C /* TVCMemberList.h */,
 				4C8AF58E158E99520026668C /* TVCMemberListCell.h */,
+				4C5798B9179B451400968800 /* TVCMemberListCellBadge.h */,
 				4CBBD1A416E3570800D2FEFE /* TVCMemberListUserInfoPopover.h */,
 				4C8AF58F158E99520026668C /* TVCServerList.h */,
 				4C8AF590158E99520026668C /* TVCServerListCell.h */,
@@ -2148,6 +2149,7 @@
 			children = (
 				4C8AF607158E99520026668C /* TVCMemberList.m */,
 				4C8AF608158E99520026668C /* TVCMemberListCell.m */,
+				4C5798B2179B44F500968800 /* TVCMemberListCellBadge.m */,
 				4CBBD19D16E356F400D2FEFE /* TVCMemberListUserInfoPopover.m */,
 			);
 			path = "User List";
@@ -2547,6 +2549,7 @@
 				4C5A0318170C31010016BB1A /* TPCPreferencesImportExport.h in Headers */,
 				4CBE64CB1743722100831D69 /* TDCHighlightEntrySheet.h in Headers */,
 				4C1893F417980F460091D173 /* TVCImageURLoader.h in Headers */,
+				4C5798BB179B451400968800 /* TVCMemberListCellBadge.h in Headers */,
 				4C0C720E1742C444000F82C4 /* NSByteCountFormatterHelper.h in Headers */,
 				4CC70204171E1CB400BDFAE0 /* BuildConfig.h in Headers */,
 			);
@@ -2689,6 +2692,7 @@
 				4CC6F51C1778AB2E00930E6E /* TVCLogControllerOperationQueue.h in Headers */,
 				4CBE64CA1743722100831D69 /* TDCHighlightEntrySheet.h in Headers */,
 				4C1893F317980F460091D173 /* TVCImageURLoader.h in Headers */,
+				4C5798BA179B451400968800 /* TVCMemberListCellBadge.h in Headers */,
 				4C3EB79D17898FD600D21A07 /* TVCLogControllerHistoricLogFile.h in Headers */,
 				4CC70203171E1CB400BDFAE0 /* BuildConfig.h in Headers */,
 			);
@@ -3137,6 +3141,7 @@
 				4C04458E16F1603B00EBB665 /* NSPasteboardHelper.m in Sources */,
 				4C04458F16F1603B00EBB665 /* NSRangeHelper.m in Sources */,
 				4C04459016F1603B00EBB665 /* NSRectHelper.m in Sources */,
+				4C5798B4179B44F500968800 /* TVCMemberListCellBadge.m in Sources */,
 				4C04459116F1603B00EBB665 /* NSScreenHelper.m in Sources */,
 				4C04459216F1603B00EBB665 /* NSSplitViewHelper.m in Sources */,
 				4C04459316F1603B00EBB665 /* NSStringHelper.m in Sources */,
@@ -3260,6 +3265,7 @@
 				4C8AF695158E99520026668C /* NSOutlineViewHelper.m in Sources */,
 				4C8AF696158E99520026668C /* NSPasteboardHelper.m in Sources */,
 				4C8AF697158E99520026668C /* NSRectHelper.m in Sources */,
+				4C5798B3179B44F500968800 /* TVCMemberListCellBadge.m in Sources */,
 				4C8AF698158E99520026668C /* NSSplitViewHelper.m in Sources */,
 				4C8AF699158E99520026668C /* NSStringHelper.m in Sources */,
 				4C8AF69A158E99520026668C /* NSTextFieldHelper.m in Sources */,

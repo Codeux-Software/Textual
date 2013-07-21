@@ -3949,6 +3949,7 @@
 																			<int key="NSDraggingSourceMaskForLocal">-1</int>
 																			<int key="NSDraggingSourceMaskForNonLocal">0</int>
 																			<bool key="NSAllowsTypeSelect">YES</bool>
+																			<int key="NSTableViewSelectionHighlightStyle">1</int>
 																			<int key="NSTableViewDraggingDestinationStyle">1</int>
 																			<int key="NSTableViewGroupRowStyle">1</int>
 																			<bool key="NSOutlineViewAutoresizesOutlineColumnKey">NO</bool>
@@ -7408,7 +7409,7 @@
 									</set>
 									<string key="NSFrame">{{-1, 0}, {257, 18}}</string>
 									<reference key="NSSuperview" ref="401053645"/>
-									<reference key="NSNextKeyView" ref="556957307"/>
+									<reference key="NSNextKeyView" ref="408782972"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSImageCell" key="NSCell" id="116866022">
 										<int key="NSCellFlags">0</int>
@@ -7425,7 +7426,7 @@
 									<reference key="NSNextResponder" ref="401053645"/>
 									<int key="NSvFlags">1802</int>
 									<object class="NSPSMatrix" key="NSFrameMatrix"/>
-									<string key="NSFrame">{{3, 0}, {247, 18}}</string>
+									<string key="NSFrame">{{26, 0}, {219, 18}}</string>
 									<reference key="NSSuperview" ref="401053645"/>
 									<reference key="NSNextKeyView" ref="905334613"/>
 									<string key="NSAntiCompressionPriority">{250, 750}</string>
@@ -7440,6 +7441,63 @@
 											<int key="NSfFlags">2072</int>
 										</object>
 										<reference key="NSControlView" ref="556957307"/>
+										<bool key="NSDrawsBackground">YES</bool>
+										<object class="NSColor" key="NSBackgroundColor">
+											<int key="NSColorSpace">1</int>
+											<bytes key="NSRGB">MCAwIDAgMAA</bytes>
+										</object>
+										<reference key="NSTextColor" ref="1070739763"/>
+									</object>
+									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+								</object>
+								<object class="NSImageView" id="408782972">
+									<reference key="NSNextResponder" ref="401053645"/>
+									<int key="NSvFlags">1804</int>
+									<set class="NSMutableSet" key="NSDragTypes">
+										<string>Apple PDF pasteboard type</string>
+										<string>Apple PICT pasteboard type</string>
+										<string>Apple PNG pasteboard type</string>
+										<string>NSFilenamesPboardType</string>
+										<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
+										<string>NeXT TIFF v4.0 pasteboard type</string>
+									</set>
+									<string key="NSFrame">{{4, 1}, {20, 15}}</string>
+									<reference key="NSSuperview" ref="401053645"/>
+									<reference key="NSNextKeyView" ref="662914987"/>
+									<string key="NSReuseIdentifierKey">_NS:9</string>
+									<string key="NSHuggingPriority">{251, 251}</string>
+									<bool key="NSEnabled">YES</bool>
+									<object class="NSImageCell" key="NSCell" id="543272411">
+										<int key="NSCellFlags">134217728</int>
+										<int key="NSCellFlags2">33554432</int>
+										<string key="NSCellIdentifier">_NS:9</string>
+										<int key="NSAlign">0</int>
+										<int key="NSScale">2</int>
+										<int key="NSStyle">0</int>
+										<bool key="NSAnimates">NO</bool>
+									</object>
+									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+									<bool key="NSEditable">YES</bool>
+								</object>
+								<object class="NSTextField" id="662914987">
+									<reference key="NSNextResponder" ref="401053645"/>
+									<int key="NSvFlags">1832</int>
+									<object class="NSPSMatrix" key="NSFrameMatrix"/>
+									<string key="NSFrame">{{7, 0}, {15, 12}}</string>
+									<reference key="NSSuperview" ref="401053645"/>
+									<reference key="NSNextKeyView" ref="556957307"/>
+									<string key="NSAntiCompressionPriority">{250, 750}</string>
+									<bool key="NSEnabled">YES</bool>
+									<object class="NSTextFieldCell" key="NSCell" id="961293348">
+										<int key="NSCellFlags">67108928</int>
+										<int key="NSCellFlags2">1212160000</int>
+										<string key="NSContents"/>
+										<object class="NSFont" key="NSSupport">
+											<string key="NSName">.LucidaGrandeUI-Bold</string>
+											<double key="NSSize">12</double>
+											<int key="NSfFlags">2072</int>
+										</object>
+										<reference key="NSControlView" ref="662914987"/>
 										<bool key="NSDrawsBackground">YES</bool>
 										<object class="NSColor" key="NSBackgroundColor">
 											<int key="NSColorSpace">1</int>
@@ -7465,6 +7523,22 @@
 						<reference key="destination" ref="936723084"/>
 					</object>
 					<string key="id">gMu-cY-yrq</string>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">imageView</string>
+						<reference key="source" ref="401053645"/>
+						<reference key="destination" ref="408782972"/>
+					</object>
+					<string key="id">rtv-Wq-yFq</string>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">modeSymbolTextField</string>
+						<reference key="source" ref="401053645"/>
+						<reference key="destination" ref="662914987"/>
+					</object>
+					<string key="id">f77-ZE-hmj</string>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -10260,11 +10334,21 @@
 						<string key="id">OV9-mP-4Xl</string>
 						<reference key="object" ref="401053645"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="556957307"/>
 							<reference ref="936723084"/>
+							<reference ref="408782972"/>
+							<reference ref="556957307"/>
+							<reference ref="662914987"/>
 						</array>
 						<reference key="parent" ref="924706868"/>
 						<string key="objectName">Member List Cell Child Item</string>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">WAI-Gd-hhu</string>
+						<reference key="object" ref="408782972"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="543272411"/>
+						</array>
+						<reference key="parent" ref="401053645"/>
 					</object>
 					<object class="IBObjectRecord">
 						<string key="id">EGP-5r-1SX</string>
@@ -10291,6 +10375,25 @@
 						<string key="id">SCc-0o-8Uk</string>
 						<reference key="object" ref="935547634"/>
 						<reference key="parent" ref="556957307"/>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">xaW-eB-qAB</string>
+						<reference key="object" ref="543272411"/>
+						<reference key="parent" ref="408782972"/>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">9v2-wZ-z3P</string>
+						<reference key="object" ref="662914987"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="961293348"/>
+						</array>
+						<reference key="parent" ref="401053645"/>
+						<string key="objectName">Text Field</string>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">WeJ-uN-1sU</string>
+						<reference key="object" ref="961293348"/>
+						<reference key="parent" ref="662914987"/>
 					</object>
 				</array>
 			</object>
@@ -11255,6 +11358,9 @@
 				<boolean value="NO" key="963.showNotes"/>
 				<string key="964.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="NO" key="964.showNotes"/>
+				<string key="9v2-wZ-z3P.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<reference key="9v2-wZ-z3P.IBUserGuides" ref="0"/>
+				<boolean value="NO" key="9v2-wZ-z3P.showNotes"/>
 				<string key="BfG-Qj-vW8.CustomClassName">TVCMemberList</string>
 				<string key="BfG-Qj-vW8.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<reference key="BfG-Qj-vW8.IBUserGuides" ref="0"/>
@@ -11278,6 +11384,9 @@
 				<string key="VfW-Q0-igm.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<reference key="VfW-Q0-igm.IBUserGuides" ref="0"/>
 				<boolean value="NO" key="VfW-Q0-igm.showNotes"/>
+				<string key="WAI-Gd-hhu.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="WeJ-uN-1sU.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<boolean value="NO" key="WeJ-uN-1sU.showNotes"/>
 				<string key="fuj-to-hha.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<reference key="fuj-to-hha.IBUserGuides" ref="0"/>
 				<boolean value="NO" key="fuj-to-hha.showNotes"/>
@@ -11294,6 +11403,7 @@
 				<string key="vhV-ex-ySL.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<reference key="vhV-ex-ySL.IBUserGuides" ref="0"/>
 				<boolean value="NO" key="vhV-ex-ySL.showNotes"/>
+				<string key="xaW-eB-qAB.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
