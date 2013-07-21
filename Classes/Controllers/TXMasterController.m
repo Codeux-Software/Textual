@@ -163,6 +163,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerScreenDidWake:) name:NSWorkspaceScreensDidWakeNotification object:nil];
 	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerScreenWillSleep:) name:NSWorkspaceScreensDidSleepNotification object:nil];
 
+	[RZNotificationCenter() addObserver:self selector:@selector(systemTintChangedNotification:) name:NSControlTintDidChangeNotification object:nil];
+
 	[RZAppleEventManager() setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
 
 	self.pluginManager = [THOPluginManager new];
@@ -181,6 +183,13 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 		[self.worldController autoConnectAfterWakeup:NO];	
 	}
+}
+
+- (void)systemTintChangedNotification:(NSNotification *)notification;
+{
+	[self.memberList reloadAllUserInterfaceElements];
+
+	[self.serverList reloadAllDrawings];
 }
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *)aNotification
@@ -225,6 +234,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 	if (NSDissimilarObjects(self.applicationIsRunningInHighResMode, inHighResMode)) {
 		[self.memberList reloadAllUserInterfaceElements];
+
 		[self.serverList reloadAllDrawings];
 	}
 
@@ -356,6 +366,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 - (void)applicationWillTerminate:(NSNotification *)note
 {
 	[RZWorkspaceNotificationCenter() removeObserver:self];
+
+	[RZNotificationCenter() removeObserver:self];
 
 	[RZAppleEventManager() removeEventHandlerForEventClass:KInternetEventClass andEventID:KAEGetURL];
 
