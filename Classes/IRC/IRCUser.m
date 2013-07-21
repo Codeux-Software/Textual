@@ -270,7 +270,7 @@
 	self.username = from.username;
 	self.address = from.address;
 
-	self.colorNumber = -1;
+	self.colorNumber = from.colorNumber;
 	self.supportInfo = from.supportInfo;
 
 	self.q = from.q;
