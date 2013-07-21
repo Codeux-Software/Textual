@@ -393,7 +393,8 @@
 			NSDissimilarObjects(user.a, m.a)					|| // <------/
 			NSDissimilarObjects(user.o, m.o)					|| // <-----/
 			NSDissimilarObjects(user.h, m.h)					|| // <----/
-			NSDissimilarObjects(user.v, m.v))					   // <---/
+			NSDissimilarObjects(user.v, m.v)					|| // <---/
+			NSDissimilarObjects(user.isAway, m.isAway))			   // <--/ Away state.
 		{
 			resortTable = YES; // Doing a resort is costly so we only do if we need to.
 		}
