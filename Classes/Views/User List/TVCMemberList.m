@@ -39,7 +39,10 @@
 
 @interface TVCMemberList ()
 @property (nonatomic, strong) id eventMonitor;
+@property (nonatomic, assign) BOOL mouseEntryTimerIsRunning;
+@property (nonatomic, assign) CFAbsoluteTime mouseEntryTime;
 @property (nonatomic, assign) NSInteger lastRowShownTooltip;
+@property (nonatomic, assign) NSPoint mouseEntryLastLocation;
 @end
 
 @implementation TVCMemberList
@@ -110,10 +113,21 @@
 	[super rightMouseDown:theEvent];
 }
 
+#pragma mark -
+#pragma mark Mouse Tracking
+
+- (void)awakeFromNib
+{
+	self.mouseEntryTimerIsRunning = NO;
+	self.mouseEntryLastLocation = NSZeroPoint;
+	self.lastRowShownTooltip = -1;
+	self.mouseEntryTime = 0;
+}
+
 - (void)createMouseMovedEventMonitor
 {
 	self.eventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:NSMouseMovedMask handler:^NSEvent *(NSEvent *event) {
-		[self mouseHasMoved:event];
+		[self mouseHasMoved:[event locationInWindow] skipCheck:NO];
 
 		return event;
 	}];
@@ -124,10 +138,54 @@
 	[NSEvent removeMonitor:self.eventMonitor];
 }
 
-- (void)mouseHasMoved:(NSEvent *)theEvent
+- (void)mouseHasMoved:(NSPoint)atPoint skipCheck:(BOOL)skipCheck
 {
-	NSPoint localPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+	NSPoint localPoint = atPoint;
 
+	if (skipCheck == NO) {
+		localPoint = [self convertPoint:atPoint fromView:nil];
+
+		if ([self mouse:localPoint inRect:self.frame]) {
+			self.mouseEntryLastLocation = localPoint;
+
+			if (self.mouseEntryTime == 0) {
+				self.mouseEntryTime = CFAbsoluteTimeGetCurrent();
+
+				return; // We do not want to draw as soon as we entered.
+			} else {
+				/* We want a 0.6 second delay before displaying the popover. 
+				 This is done so the mouse traveling through the view does 
+				 not trigger it when we are just going past it. */
+
+				if ((CFAbsoluteTimeGetCurrent() - self.mouseEntryTime) < 0.6) {
+					if (self.mouseEntryTimerIsRunning == NO) {
+						self.mouseEntryTimerIsRunning = YES;
+
+						[self performSelector:@selector(mouseHasMovedEntryTimer) withObject:nil afterDelay:0.6];
+					}
+
+					return;
+				}
+			}
+		} else {
+			if ([self.masterController.memberListUserInfoPopover isShown]) {
+				[self.masterController.memberListUserInfoPopover close];
+			}
+
+			if (self.mouseEntryTimerIsRunning) {
+				[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(mouseHasMovedEntryTimer:) object:nil];
+			}
+
+			self.mouseEntryTimerIsRunning = NO;
+			self.mouseEntryLastLocation = NSZeroPoint;
+			self.lastRowShownTooltip = -1;
+			self.mouseEntryTime = 0;
+
+			return;
+		}
+	}
+
+	/* Setup actual popover. */
 	NSInteger row = [self rowAtPoint:localPoint];
 
 	if (row > -1) {
@@ -138,13 +196,18 @@
 
 			[rowView drawWithExpansionFrame];
 		}
-	} else {
-		if (NSDissimilarObjects(self.lastRowShownTooltip, -1)) {
-			[self.masterController.memberListUserInfoPopover close];
+	}
+}
 
-			self.lastRowShownTooltip = -1;
+- (void)mouseHasMovedEntryTimer
+{
+	if (NSEqualPoints(self.mouseEntryLastLocation, NSZeroPoint) == NO) {
+		if ([self.masterController.memberListUserInfoPopover isShown] == NO) {
+			[self mouseHasMoved:self.mouseEntryLastLocation skipCheck:YES];
 		}
 	}
+
+	self.mouseEntryTimerIsRunning = NO;
 }
 
 #pragma mark -
