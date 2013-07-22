@@ -341,7 +341,7 @@ Gw
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" id="1595">
-                    <rect key="frame" x="223" y="224" width="187" height="22"/>
+                    <rect key="frame" x="222" y="246" width="187" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Guest" drawsBackground="YES" id="1619">
                         <font key="font" metaFont="system"/>
@@ -353,7 +353,7 @@ Gw
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1596">
-                    <rect key="frame" x="128" y="226" width="92" height="17"/>
+                    <rect key="frame" x="127" y="248" width="92" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Nickname:" id="1618">
                         <font key="font" metaFont="system"/>
@@ -362,7 +362,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1597">
-                    <rect key="frame" x="221" y="100" width="188" height="22"/>
+                    <rect key="frame" x="220" y="122" width="188" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="textual" drawsBackground="YES" id="1617">
                         <font key="font" metaFont="system"/>
@@ -371,7 +371,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1598">
-                    <rect key="frame" x="141" y="102" width="75" height="17"/>
+                    <rect key="frame" x="140" y="124" width="75" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Username:" id="1616">
                         <font key="font" metaFont="system"/>
@@ -380,7 +380,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1599">
-                    <rect key="frame" x="221" y="70" width="188" height="22"/>
+                    <rect key="frame" x="220" y="92" width="188" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Textual User" drawsBackground="YES" id="1615">
                         <font key="font" metaFont="system"/>
@@ -389,7 +389,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1600">
-                    <rect key="frame" x="137" y="72" width="80" height="17"/>
+                    <rect key="frame" x="136" y="94" width="80" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Real name:" id="1614">
                         <font key="font" metaFont="system"/>
@@ -398,7 +398,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1601" customClass="NSSecureTextField">
-                    <rect key="frame" x="221" y="40" width="188" height="22"/>
+                    <rect key="frame" x="220" y="62" width="188" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1613">
                         <font key="font" metaFont="system"/>
@@ -407,7 +407,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1602">
-                    <rect key="frame" x="222" y="164" width="187" height="22"/>
+                    <rect key="frame" x="221" y="186" width="187" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1612">
                         <font key="font" metaFont="system"/>
@@ -416,7 +416,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1603">
-                    <rect key="frame" x="112" y="166" width="107" height="20"/>
+                    <rect key="frame" x="111" y="188" width="107" height="20"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Alternatives:" id="1611">
                         <font key="font" metaFont="system"/>
@@ -425,7 +425,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1604">
-                    <rect key="frame" x="255" y="150" width="161" height="13"/>
+                    <rect key="frame" x="254" y="172" width="161" height="13"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="** This field is space separated." id="1610">
                         <font key="font" metaFont="system" size="10"/>
@@ -434,7 +434,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1606">
-                    <rect key="frame" x="171" y="158" width="48" height="11"/>
+                    <rect key="frame" x="170" y="180" width="48" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="1608">
                         <font key="font" metaFont="miniSystem"/>
@@ -443,14 +443,14 @@ Gw
                     </textFieldCell>
                 </textField>
                 <box autoresizesSubviews="NO" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="1607">
-                    <rect key="frame" x="114" y="136" width="295" height="5"/>
+                    <rect key="frame" x="113" y="158" width="295" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <textField verticalHuggingPriority="750" id="1623">
-                    <rect key="frame" x="112" y="42" width="107" height="20"/>
+                    <rect key="frame" x="111" y="64" width="107" height="20"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="NickServ Auth:" id="1626">
                         <font key="font" metaFont="system"/>
@@ -459,7 +459,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1624">
-                    <rect key="frame" x="171" y="34" width="48" height="11"/>
+                    <rect key="frame" x="170" y="56" width="48" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="1625">
                         <font key="font" metaFont="miniSystem"/>
@@ -468,7 +468,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="2335">
-                    <rect key="frame" x="222" y="194" width="187" height="22"/>
+                    <rect key="frame" x="221" y="216" width="187" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="2342">
                         <font key="font" metaFont="system"/>
@@ -477,7 +477,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="2336">
-                    <rect key="frame" x="100" y="196" width="119" height="20"/>
+                    <rect key="frame" x="99" y="218" width="119" height="20"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Away Nickname:" id="2341">
                         <font key="font" metaFont="system"/>
@@ -486,7 +486,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="2338">
-                    <rect key="frame" x="171" y="188" width="48" height="11"/>
+                    <rect key="frame" x="170" y="210" width="48" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="2339">
                         <font key="font" metaFont="miniSystem"/>
@@ -494,6 +494,44 @@ Gw
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="cuw-Hi-NWh">
+                    <rect key="frame" x="126" y="12" width="285" height="17"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="9ZH-Ec-wpv">
+                        <rect key="frame" x="0.0" y="0.0" width="285" height="17"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" continuousSpellChecking="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="Qub-SZ-oKj">
+                                <rect key="frame" x="0.0" y="0.0" width="285" height="17"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="minSize" width="285" height="17"/>
+                                <size key="maxSize" width="481" height="10000000"/>
+                                <attributedString key="textStorage">
+                                    <fragment content="Information about using SASL with Textual.">
+                                        <attributes>
+                                            <font key="NSFont" size="13" name="LucidaGrande"/>
+                                            <url key="NSLink" string="http://www.codeux.com/textual/wiki/Frequently-Asked-Questions.wiki#faq-entry-3"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="minSize" width="285" height="17"/>
+                                <size key="maxSize" width="481" height="10000000"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" id="S86-Q5-29T">
+                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" id="u4c-Pe-djU">
+                        <rect key="frame" x="-100" y="-100" width="16" height="34"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
             </subviews>
         </customView>
         <customView id="1627" userLabel="Messages View">
@@ -547,7 +585,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="1714">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="1715"/>
                     </popUpButtonCell>
                 </popUpButton>
@@ -556,7 +594,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="1692">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="1693"/>
                     </popUpButtonCell>
                 </popUpButton>
@@ -623,7 +661,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="0qP-mQ-Ud0">
                         <rect key="frame" x="0.0" y="0.0" width="443" height="81"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" continuousSpellChecking="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="2562">
                                 <rect key="frame" x="0.0" y="0.0" width="443" height="81"/>
@@ -927,7 +965,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView drawsBackground="NO" importsGraphics="NO" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="2471">
-                                <rect key="frame" x="0.0" y="2" width="440" height="32"/>
+                                <rect key="frame" x="0.0" y="0.0" width="440" height="34"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="minSize" width="440" height="32"/>
@@ -1237,7 +1275,7 @@ your friends and ignore your enemies.</string>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="SOCKS 4 Proxy" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="4" imageScaling="proportionallyDown" inset="2" selectedItem="1911" id="1906">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="1907">
                             <items>
                                 <menuItem title="None" id="1912"/>
