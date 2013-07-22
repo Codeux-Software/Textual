@@ -263,6 +263,16 @@
 	}
 }
 
++ (NSComparator)nicknameLengthComparator
+{
+	return [^(id obj1, id obj2){
+		IRCUser *s1 = obj1;
+		IRCUser *s2 = obj2;
+
+		return (s1.nickname.length <= s2.nickname.length);
+	} copy];
+}
+
 - (void)migrate:(IRCUser *)from
 {
 	/* Lazy-man copy. */
@@ -283,14 +293,13 @@
 	self.isAway = from.isAway;
 }
 
-+ (NSComparator)nicknameLengthComparator
+- (id)copyWithZone:(NSZone *)zone
 {
-	return [^(id obj1, id obj2){
-		IRCUser *s1 = obj1;
-		IRCUser *s2 = obj2;
+	IRCUser *newUser = [[IRCUser allocWithZone:zone] init];
 
-		return (s1.nickname.length <= s2.nickname.length);
-	} copy];
+	[newUser migrate:self];
+
+	return newUser;
 }
 
 - (NSString *)description
