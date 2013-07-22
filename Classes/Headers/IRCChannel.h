@@ -85,9 +85,8 @@ typedef enum IRCChannelStatus : NSInteger {
 - (void)removeMember:(NSString *)nick;
 
 /* performOnChange blocks allow us to relaod interface elements for the user that the changes happened to without reloading the entire list. */
-- (void)changeMember:(NSString *)nick mode:(NSString *)mode value:(BOOL)value performOnChange:(void (^)(IRCUser *user))block;
-- (void)renameMember:(NSString *)fromNick to:(NSString *)toNick performOnChange:(void (^)(IRCUser *user))block;
-- (void)updateMember:(IRCUser *)user performOnChange:(void (^)(IRCUser *user))block;
+- (void)changeMember:(NSString *)nick mode:(NSString *)mode value:(BOOL)value performOnChange:(void (^)(IRCUser *user))block; // -changeMember:value:performOnChange: is used for mode changs.
+- (void)renameMember:(NSString *)fromNick to:(NSString *)toNick performOnChange:(void (^)(IRCUser *user))block; // -renameMember:to:performOnChange: is used for nickname changes.
 
 - (void)clearMembers;
 
@@ -99,11 +98,16 @@ typedef enum IRCChannelStatus : NSInteger {
 - (NSInteger)numberOfMembers;
 
 /* For redrawing the member cells in table view. */
+- (BOOL)memberRequiresRedraw:(IRCUser *)user1 comparedTo:(IRCUser *)user2;
+
+- (void)migrateUser:(IRCUser *)user1 from:(IRCUser *)user2;
+
 - (void)updateAllMembersOnTableView;
 - (void)updateMemberOnTableView:(IRCUser *)user;
 
 - (void)reloadDataForTableView;
 - (void)reloadDataForTableViewBySortingMembers;
+- (void)reloadDataForTableViewBySortingMembersForUser:(IRCUser *)user;
 
 - (void)updateTableViewByRemovingIgnoredUsers;
 @end

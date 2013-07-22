@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-@interface IRCUser : NSObject
+@interface IRCUser : NSObject <NSCopying>
 @property (nonatomic, nweak) IRCISupportInfo *supportInfo;
 @property (nonatomic, strong) NSString *nickname;
 @property (nonatomic, strong) NSString *username;

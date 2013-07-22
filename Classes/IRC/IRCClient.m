@@ -5095,22 +5095,31 @@
                 isIRCop = YES;
 			}
 
-			IRCUser *u = [c findMember:nickname];
+			BOOL checkForDiff = YES;
 
-			if (PointerIsEmpty(u)) {
-				u = [IRCUser new];
+			IRCUser *ou = [c findMember:nickname];
+			IRCUser *nu;
 
-				u.nickname = nickname;
+			if (PointerIsEmpty(ou)) {
+				nu = [IRCUser new];
+				nu.nickname = nickname;
+
+				checkForDiff = NO;
 			}
 
-			if (NSObjectIsEmpty(u.address)) {
-				u.address = hostmask;
-				u.username = username;
+			if (checkForDiff) {
+				nu = [ou copy];
+			}
+
+			if (NSObjectIsEmpty(nu.address)) {
+				nu.address = hostmask;
+				nu.username = username;
 			}
             
-            u.isCop = isIRCop;
-            u.isAway = isAway;
-			u.supportInfo = self.isupport;
+            nu.isCop = isIRCop;
+            nu.isAway = isAway;
+
+			nu.supportInfo = self.isupport;
 
 			NSInteger i;
 
@@ -5120,25 +5129,31 @@
 				if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"q"]] ||
 					[prefix isEqualTo:[self.isupport userModePrefixSymbol:@"O"]]) // binircd-1.0.0
 				{
-					u.q = YES;
+					nu.q = YES;
 				} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"a"]]) {
-					u.a = YES;
+					nu.a = YES;
 				} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"o"]]) {
-					u.o = YES;
+					nu.o = YES;
 				} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"h"]]) {
-					u.h = YES;
+					nu.h = YES;
 				} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"v"]]) {
-					u.v = YES;
+					nu.v = YES;
 				} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"y"]]) { // InspIRCd-2.0
-					u.isCop = YES;
+					nu.isCop = YES;
 				} else {
 					break;
 				}
 			}
 
-			[c updateMember:u performOnChange:^(IRCUser *user) {
-				[c updateMemberOnTableView:user]; // Redraw the user in the user list.
-			}];
+			if (checkForDiff) {
+				if ([c memberRequiresRedraw:ou comparedTo:nu]) {
+					[c migrateUser:ou from:nu]; // Migrate nu to ou.
+
+					[c updateMemberOnTableView:ou]; // Redraw the user in the user list.
+				}
+			} else {
+				[c addMember:nu]; // User was never on channel. Add them…
+			}
 
 			break;
 		}

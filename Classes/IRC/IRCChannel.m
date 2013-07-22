@@ -365,7 +365,10 @@
 	IRCUser *m = [self memberAtIndex:n];
 
 	/* Rename. */
-	m.nickname = toNick; // The IRCUser instance is shared so we only have to update it and the view will inherit that.
+	m.nickname = toNick;
+
+	/* Migrate user so that it does a sorted insert. */
+	[self migrateUser:m from:m];
 
 	/* Inform upstream. */
 	PointerIsEmptyAssert(block);
@@ -375,48 +378,43 @@
 
 #pragma mark -
 
-- (void)updateMember:(IRCUser *)user performOnChange:(void (^)(IRCUser *user))block
+- (BOOL)memberRequiresRedraw:(IRCUser *)user1 comparedTo:(IRCUser *)user2
 {
-	PointerIsEmptyAssert(user);
+	PointerIsEmptyAssertReturn(user1, NO);
+	PointerIsEmptyAssertReturn(user2, NO);
 
-	/* Find member. */
-	NSInteger n = [self indexOfMember:user.nickname options:NSCaseInsensitiveSearch];
-
-	if (NSDissimilarObjects(n, NSNotFound)) {
-		/* Who was it? */
-		IRCUser *m = [self.memberList objectAtIndex:n];
-
-		BOOL resortTable = NO;
-
-		if (NSDissimilarObjects(user.isCop, m.isCop)			|| // <--------/
-			NSDissimilarObjects(user.q, m.q)					|| // <-------/ Different mode information.
-			NSDissimilarObjects(user.a, m.a)					|| // <------/
-			NSDissimilarObjects(user.o, m.o)					|| // <-----/
-			NSDissimilarObjects(user.h, m.h)					|| // <----/
-			NSDissimilarObjects(user.v, m.v)					|| // <---/
-			NSDissimilarObjects(user.isAway, m.isAway))			   // <--/ Away state.
-		{
-			resortTable = YES; // Doing a resort is costly so we only do if we need to.
-		}
-
-		/* Migrate details. */
-		[m migrate:user];
-
-		/* Remove any existing copies of this nickname. */
-		[self removeMember:m.nickname fromTable:NO];
-
-		/* Do sorted insert. */
-		[self sortedInsert:m];
-
-		/* Reload data. */
-		if (resortTable) {
-			[self reloadDataForTableViewBySortingMembersForUser:m];
-
-			PointerIsEmptyAssert(block);
-
-			block(m);
-		}
+	if (NSDissimilarObjects(user1.isCop, user2.isCop)			|| // <--------/
+		NSDissimilarObjects(user1.q, user2.q)					|| // <-------/ Different mode information.
+		NSDissimilarObjects(user1.a, user2.a)					|| // <------/
+		NSDissimilarObjects(user1.o, user2.o)					|| // <-----/
+		NSDissimilarObjects(user1.h, user2.h)					|| // <----/
+		NSDissimilarObjects(user1.v, user2.v)					|| // <---/
+		NSDissimilarObjects(user1.isAway, user2.isAway))		   // <--/ Away state.
+	{
+		return YES;
 	}
+
+	return NO;
+}
+
+- (void)migrateUser:(IRCUser *)user1 from:(IRCUser *)user2
+{
+	PointerIsEmptyAssert(user1);
+	PointerIsEmptyAssert(user2);
+
+	/* Migrate data to the old instance so that the pointer in the table view
+	 does not have to be taken out. */
+	[user1 migrate:user2];
+
+	/* Remove any existing copies of this nickname. From self.memberList while
+	 retaining the actual pointer in the table view. */
+	[self removeMember:user1.nickname fromTable:NO];
+
+	/* Do sorted insert. */
+	[self sortedInsert:user1];
+
+	/* Reload the position of the user in table view. */
+	[self reloadDataForTableViewBySortingMembersForUser:user1];
 }
 
 - (void)changeMember:(NSString *)nick mode:(NSString *)mode value:(BOOL)value performOnChange:(void (^)(IRCUser *user))block
@@ -428,10 +426,10 @@
 
 	NSAssertReturn(NSDissimilarObjects(n, NSNotFound));
 
-	/* We create new instance so updateMember: does not compare against the same object. */
-	IRCUser *mn = [IRCUser new];
-
-	[mn migrate:self.memberList[n]];
+	/* We create new copy of this user in order to compare them and deterine
+	 if there are changes when we are done. */
+	IRCUser *on = self.memberList[n];
+	IRCUser *mn = [on copy];
 
 	switch ([mode characterAtIndex:0]) {
 		case 'O': { mn.q = value; break; } // binircd-1.0.0
@@ -450,7 +448,18 @@
 	mn.h = (mn.h &&  [isupport modeIsSupportedUserPrefix:@"h"]);
 	mn.v = (mn.v &&  [isupport modeIsSupportedUserPrefix:@"v"]);
 
-	[self updateMember:mn performOnChange:block];
+	/* Did something change. */
+	if ([self memberRequiresRedraw:on comparedTo:mn]) {
+		/* Migrate data. We want to move any changes applied to the new
+		 copy to the old pointer so that we do not have to remove it from
+		 the table view. We only have to redraw it. */
+		[self migrateUser:on from:mn];
+
+		/* Tell the upstream about the updates. */
+		PointerIsEmptyAssert(block);
+
+		block(on);
+	}
 }
 
 #pragma mark -
