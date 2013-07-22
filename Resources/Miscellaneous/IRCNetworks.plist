@@ -56,6 +56,8 @@
 	<string>irc.twit.tv</string>
 	<key>Ewnix</key>
 	<string>irc.ewnix.net</string>
+	<key>Xeonet</key>
+	<string>irc.xeonet.es</string>
 	<key>ValleyNode</key>
 	<string>irc.valleynode.net</string>
 </dict>
