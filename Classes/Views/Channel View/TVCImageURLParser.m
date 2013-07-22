@@ -54,8 +54,8 @@
 
 	NSString *scheme = u.scheme;
 	
-	NSString *host = u.host.lowercaseString;
-	NSString *path = u.path;
+	NSString *host = [u.host lowercaseString];
+	NSString *path = [u.path encodeURIFragment];
 
 	if ([scheme isEqualToString:@"file"]) {
 		// If the file is a local file (file:// scheme), then let us ignore it.
@@ -224,11 +224,11 @@
 	} else if ([host isEqualToString:@"puu.sh"]) {
 		NSObjectIsEmptyAssertReturn(path, nil);
 
-			NSString *s = [path safeSubstringFromIndex:1];
+		NSString *s = [path safeSubstringFromIndex:1];
 
-			if ([s isAlphabeticNumericOnly]) {
-				return [NSString stringWithFormat:@"http://puu.sh/%@.jpg", s];
-			}
+		if ([s isAlphabeticNumericOnly]) {
+			return [NSString stringWithFormat:@"http://puu.sh/%@.jpg", s];
+		}
 	/* } else if ([host hasSuffix:@"imgur.com"]) {
 		if ([path hasPrefix:@"/gallery/"]) {
 			NSString *s = [path safeSubstringFromIndex:9];
