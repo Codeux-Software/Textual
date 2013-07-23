@@ -123,8 +123,8 @@
 		return input; // Do not post these events for self.
 	}
 
-	input.sender.hostmask =  hostmask;
-	input.sender.nickname = [hostmask nicknameFromHostmask];
+	input.sender.hostmask = hostmask;
+	input.sender.nickname = nickname;
 
 	if ([hostmask isHostmask]) {
 		input.sender.username = [hostmask usernameFromHostmask];
