@@ -314,6 +314,14 @@
 
 			return [NSString stringWithFormat:@"http://tn-skr%qi.smilevideo.jp/smile?i=%qi", ((vidNum % 4) + 1), vidNum];
 		}
+	} else if ([path hasPrefix:@"/image/"]) {
+		/* Try our best to regonize cl.ly custom domains. */
+
+		NSString *s = [path safeSubstringFromIndex:7];
+
+		if ([s isAlphabeticNumericOnly] && s.length == 12) {
+			return [NSString stringWithFormat:@"http://cl.ly%@/content", path];
+		}
 	}
 
 	return nil;
