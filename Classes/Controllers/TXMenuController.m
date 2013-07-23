@@ -2235,6 +2235,8 @@
 
 - (void)toggleMemberListVisibility:(id)sender
 {
+	self.masterController.memberList.setHiddenByUser = BOOLReverseValue(self.masterController.memberList.setHiddenByUser);
+
 	[self.masterController showMemberListSplitView:self.masterController.memberSplitView.viewIsHidden];
 }
 

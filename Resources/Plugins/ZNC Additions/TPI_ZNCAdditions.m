@@ -117,6 +117,11 @@
 
 	/* Define user information. */
 	NSString *hostmask = s.getToken;
+	NSString *nickname = [hostmask nicknameFromHostmask];
+
+	if ([nickname isEqualToString:[client localNickname]]) {
+		return input; // Do not post these events for self.
+	}
 
 	input.sender.hostmask =  hostmask;
 	input.sender.nickname = [hostmask nicknameFromHostmask];

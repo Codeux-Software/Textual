@@ -1305,7 +1305,9 @@
 	if (self.selectedItem.isClient || self.selectedItem.isPrivateMessage) {
 		[self.masterController showMemberListSplitView:NO];
 	} else {
-		[self.masterController showMemberListSplitView:YES];
+		if (self.memberList.setHiddenByUser == NO) {
+			[self.masterController showMemberListSplitView:YES];
+		}
 	}
 
 	/* Finish up. */

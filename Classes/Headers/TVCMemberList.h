@@ -40,6 +40,7 @@
 @interface TVCMemberList : NSOutlineView
 @property (nonatomic, uweak) id keyDelegate;
 @property (nonatomic, strong) id badgeRenderer;
+@property (nonatomic, assign) BOOL setHiddenByUser;
 
 /* Additions & Removals. */
 - (void)addItemToList:(NSInteger)index;
