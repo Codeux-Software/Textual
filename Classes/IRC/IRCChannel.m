@@ -175,6 +175,8 @@
 		[self.client postEventToViewController:@"channelJoined" forChannel:self];
     }
 
+	[self resetStatus:IRCChannelJoined];
+
 	if (self.isPrivateMessage) {
 		IRCUser *m = nil;
 
@@ -189,8 +191,6 @@
 		m.supportInfo = [self.client isupport];
 		[self addMember:m];
 	}
-
-	[self resetStatus:IRCChannelJoined];
 
 	self.channelJoinTime = [NSDate epochTime];
 }
