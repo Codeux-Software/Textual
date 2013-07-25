@@ -281,7 +281,7 @@
 			}
 		}
 
-		if (vid && [vid isAlphabeticNumericOnly]) {
+		if (vid) {
 			if (vid.length > 11) {
 				/* This behavior is was found by accident but is quite interesting. YouTube
 				 links limit the video ID to a maximum length of eleven. If it exceeds that,
