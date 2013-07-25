@@ -45,5 +45,5 @@
 @end
 
 @interface TVCLogController (TVCImageURLoaderControllerExtension)
-- (void)imageLoaderFinishedLoadingForImageWithID:(NSString *)uniqueID withSize:(TXFSLongInt)sizeInBytes contentType:(NSString *)imageContentType;
+- (void)imageLoaderFinishedLoadingForImageWithID:(NSString *)uniqueID;
 @end

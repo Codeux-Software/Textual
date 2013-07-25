@@ -977,9 +977,19 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() integerForKey:@"InlineMediaScalingWidth"];
 }
 
++ (NSInteger)inlineImagesMaxHeight
+{
+	return [RZUserDefaults() integerForKey:@"InlineMediaMaximumHeight"];
+}
+
 + (void)setInlineImagesMaxWidth:(NSInteger)value
 {
 	[RZUserDefaults() setInteger:value forKey:@"InlineMediaScalingWidth"];
+}
+
++ (void)setInlineImagesMaxHeight:(NSInteger)value
+{
+	[RZUserDefaults() setInteger:value forKey:@"InlineMediaMaximumHeight"];
 }
 
 #pragma mark -
@@ -1490,11 +1500,12 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"Theme -> Nickname Format"]		= TXLogLineUndefinedNicknameFormat;
 	d[@"Theme -> Timestamp Format"]		= TXDefaultTextualTimestampFormat;
 
-	d[@"inlineImageMaxFilesize"]				= @(5);
+	d[@"inlineImageMaxFilesize"]				= @(2);
     d[@"TrackUserAwayStatusMaximumChannelSize"] = @(0);
 	d[@"AutojoinMaximumChannelJoinCount"]		= @(2);
 	d[@"ScrollbackMaximumLineCount"]			= @(300);
 	d[@"InlineMediaScalingWidth"]				= @(300);
+	d[@"InlineMediaMaximumHeight"]				= @(1460);
 	d[@"Keyboard -> Tab Key Action"]			= @(TXTabKeyNickCompleteAction);
 	d[@"Keyboard -> Command+W Action"]			= @(TXCommandWKeyCloseWindowAction);
 	d[@"NicknameHighlightMatchingType"]			= @(TXNicknameHighlightExactMatchType);

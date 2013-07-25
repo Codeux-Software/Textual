@@ -223,6 +223,9 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (NSInteger)inlineImagesMaxWidth;
 + (void)setInlineImagesMaxWidth:(NSInteger)value;
 
++ (NSInteger)inlineImagesMaxHeight;
++ (void)setInlineImagesMaxHeight:(NSInteger)value;
+
 + (NSString *)themeName;
 + (NSString *)themeNicknameFormat;
 + (NSString *)themeTimestampFormat;
