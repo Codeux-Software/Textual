@@ -39,6 +39,9 @@
 
 #define _imageLoaderMaxRequestTime			30
 
+/* We shouldn't want to load anything larger than this. */
+#define _imageMaximumImageWidth				5000
+
 /* Private stuff. =) */
 @interface TVCImageURLoader ()
 @property (nonatomic, nweak) TVCLogController *requestOwner;
@@ -168,7 +171,7 @@
 			 0, 0 for itself unless we check the first rep. */
 			NSBitmapImageRep *firstRep = [[loadedImage representations] objectAtIndex:0];
 
-			if ([firstRep pixelsHigh] > [TPCPreferences inlineImagesMaxHeight]) { // So what's up with the size?
+			if ([firstRep pixelsHigh] > [TPCPreferences inlineImagesMaxHeight] || [firstRep pixelsWide] > _imageMaximumImageWidth) { // So what's up with the size?
 				firstRep = nil;
 				loadedImage = nil;
 
