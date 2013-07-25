@@ -1174,22 +1174,8 @@
 	return html;
 }
 
-- (void)imageLoaderFinishedLoadingForImageWithID:(NSString *)uniqueID withSize:(TXFSLongInt)sizeInBytes contentType:(NSString *)imageContentType;
+- (void)imageLoaderFinishedLoadingForImageWithID:(NSString *)uniqueID
 {
-	NSAssertReturn([self inlineImagesEnabledForView]);
-
-	/* Check size. */
-	if (sizeInBytes > [TPCPreferences inlineImagesMaxFilesize] || sizeInBytes < 10) {
-		return;
-	}
-
-	/* Check type. */
-	NSArray *validContentTypes = [TVCImageURLParser validImageContentTypes];
-
-	if ([validContentTypes containsObject:imageContentType] == NO) {
-		return;
-	}
-
 	/* Toggle visibility. */
 	NSObjectIsEmptyAssert(uniqueID);
 

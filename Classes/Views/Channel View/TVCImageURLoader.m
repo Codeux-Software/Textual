@@ -42,9 +42,11 @@
 /* Private stuff. =) */
 @interface TVCImageURLoader ()
 @property (nonatomic, nweak) TVCLogController *requestOwner;
+@property (nonatomic, strong) NSMutableData *responseData;
 @property (nonatomic, strong) NSString *requestImageUniqeID;
 @property (nonatomic, strong) NSURLConnection *requestConnection;
 @property (nonatomic, strong) NSHTTPURLResponse *requestResponse;
+@property (nonatomic, assign) BOOL isInRequestWithCheckForMaximumHeight;
 @end
 
 @implementation TVCImageURLoader
@@ -72,6 +74,7 @@
 	self.requestConnection = nil;
 	self.requestResponse = nil;
 	self.requestOwner = nil;
+	self.responseData = nil;
 }
 
 - (void)assesURL:(NSString *)baseURL withID:(NSString *)uniqueID forController:(TVCLogController *)controller
@@ -93,10 +96,20 @@
 															   cachePolicy:NSURLRequestReloadIgnoringCacheData
 														   timeoutInterval:_imageLoaderMaxRequestTime];
 
-	if ([self.headRequestExceptions containsObject:requestURL.host]) {
+	/* This is stored in a local variable so that a user changing something during a load in
+	 progess, it does not fuck up any of the already existing requests. */
+	self.isInRequestWithCheckForMaximumHeight = ([TPCPreferences inlineImagesMaxHeight] > 0);
+
+	if (self.isInRequestWithCheckForMaximumHeight) {
+		self.responseData = [NSMutableData data];
+
 		[baseRequest setHTTPMethod:@"GET"];
 	} else {
-		[baseRequest setHTTPMethod:@"HEAD"]; // We only want the HEAD which contains file information.
+		if ([self.headRequestExceptions containsObject:requestURL.host]) {
+			[baseRequest setHTTPMethod:@"GET"];
+		} else {
+			[baseRequest setHTTPMethod:@"HEAD"]; // We only want the HEAD which contains file information.
+		}
 	}
 
 	/* Send the actual request off. */
@@ -111,27 +124,62 @@
 #pragma mark -
 #pragma mark NSURLConnection Delegate
 
+- (BOOL)continueWithImageProcessing
+{
+	PointerIsEmptyAssertReturn(self.requestResponse, NO);
+
+	/* Get data from headers. */
+	NSDictionary *headers = self.requestResponse.allHeaderFields;
+
+	TXFSLongInt sizeInBytes = [headers longLongForKey:@"Content-Length"];
+
+	NSString *imageContentType = [headers stringForKey:@"Content-Type"];
+
+	/* Check size. */
+	if (sizeInBytes > [TPCPreferences inlineImagesMaxFilesize] || sizeInBytes < 10) {
+		return NO;
+	}
+
+	/* Check type. */
+	NSArray *validContentTypes = [TVCImageURLParser validImageContentTypes];
+
+	if ([validContentTypes containsObject:imageContentType] == NO) {
+		return NO;
+	}
+
+	return YES;
+}
+
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
 	/* Yay! It finished loading. Time to check the data out. :-D */
-    NSString *imageContentType;
-
-	TXFSLongInt sizeInBytes = 0;
-	LogToConsole(@"%i", self.requestResponse.statusCode);
 	BOOL isValidResponse = (self.requestResponse.statusCode == 200); // Setting as a var incase I end up adding more conditions down the line.
 
     if (isValidResponse) {
-		/* Get information we want. */
-        NSDictionary *headers = self.requestResponse.allHeaderFields;
+		if (self.isInRequestWithCheckForMaximumHeight) { // Are we checking the actual image size?
+			PointerIsEmptyAssert(self.responseData); // I hope we had some data…
 
-		sizeInBytes = [headers longLongForKey:@"Content-Length"];
+			NSImage *loadedImage = [[NSImage alloc] initWithData:self.responseData]; // Create the NSImage instance of the image.
 
-		imageContentType = [headers stringForKey:@"Content-Type"];
+			PointerIsEmptyAssert(loadedImage); // Did something fail?
+
+			/* The first image rep of the NSImage we have is taken in order to check the height
+			 of the image because it may be an animated gif so NSImage will return a size of
+			 0, 0 for itself unless we check the first rep. */
+			NSBitmapImageRep *firstRep = [[loadedImage representations] objectAtIndex:0];
+
+			if ([firstRep pixelsHigh] > [TPCPreferences inlineImagesMaxHeight]) { // So what's up with the size?
+				firstRep = nil;
+				loadedImage = nil;
+
+				[self destroyConnectionRequest]; // Destroy local vars.
+
+				return; // Image is too big, don't do crap with it.
+			}
+		}
 
 		/* Send the information off. We will validate the information higher up. */
-		[self.requestOwner imageLoaderFinishedLoadingForImageWithID:self.requestImageUniqeID
-														   withSize:sizeInBytes
-														contentType:imageContentType];
+		[self.requestOwner imageLoaderFinishedLoadingForImageWithID:self.requestImageUniqeID];
 	}
 
 	/* Cleaning. */
@@ -147,9 +195,20 @@
 	LogToConsole(@"Failed to complete connection request with error: %@", [error localizedDescription]);
 }
 
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+	if (self.isInRequestWithCheckForMaximumHeight) {
+		[self.responseData appendData:data]; // We only care about the data if we are going to be checking its size.
+	}
+}
+
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
 	self.requestResponse = (id)response; // Save a reference to our response.
+
+	if ([self continueWithImageProcessing] == NO) { // Check the headers.
+		[self destroyConnectionRequest]; // Destroy the connection if we do not want to continue.
+	}
 }
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse

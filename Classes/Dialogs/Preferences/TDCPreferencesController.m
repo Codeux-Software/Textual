@@ -38,10 +38,12 @@
 
 #import "TextualApplication.h"
 
-#define _linesMin			100
-#define _linesMax			15000
-#define _inlineImageMax		5000
-#define _inlineImageMin		40
+#define _linesMin					100
+#define _linesMax					15000
+#define _inlineImageWidthMax		2000
+#define _inlineImageWidthMin		40
+#define _inlineImageHeightMax		6000
+#define _inlineImageHeightMin		0
 
 #define _TXWindowToolbarHeight				82
 
@@ -287,9 +289,19 @@
 	return [TPCPreferences inlineImagesMaxWidth];
 }
 
+- (NSInteger)inlineImageMaxHeight
+{
+	return [TPCPreferences inlineImagesMaxHeight];
+}
+
 - (void)setInlineImageMaxWidth:(NSInteger)value
 {
 	[TPCPreferences setInlineImagesMaxWidth:value];
+}
+
+- (void)setInlineImageMaxHeight:(NSInteger)value
+{
+	[TPCPreferences setInlineImagesMaxHeight:value];
 }
 
 - (NSString *)themeChannelViewFontName
@@ -318,10 +330,18 @@
 	} else if ([key isEqualToString:@"inlineImageMaxWidth"]) {
 		NSInteger n = [*value integerValue];
 
-		if (n < _inlineImageMin) {
-			*value = NSNumberWithInteger(_inlineImageMin);
-		} else if (_inlineImageMax < n) {
-			*value = NSNumberWithInteger(_inlineImageMax);
+		if (n < _inlineImageWidthMin) {
+			*value = NSNumberWithInteger(_inlineImageWidthMin);
+		} else if (_inlineImageWidthMax < n) {
+			*value = NSNumberWithInteger(_inlineImageWidthMax);
+		}
+	} else if ([key isEqualToString:@"inlineImageMaxHeight"]) {
+		NSInteger n = [*value integerValue];
+
+		if (n < _inlineImageHeightMin) {
+			*value = NSNumberWithInteger(_inlineImageHeightMin);
+		} else if (_inlineImageHeightMax < n) {
+			*value = NSNumberWithInteger(_inlineImageHeightMax);
 		}
 	}
 
