@@ -568,7 +568,7 @@
 
 	NSInteger tablIndex = [self.memberListView rowForItem:user];
 
-	if (NSDissimilarObjects(selfIndex, tablIndex)) {
+	if (NSDissimilarObjects(selfIndex, tablIndex) && tablIndex > -1) {
 		[self.memberListView moveItemAtIndex:tablIndex
 									inParent:nil
 									 toIndex:selfIndex
