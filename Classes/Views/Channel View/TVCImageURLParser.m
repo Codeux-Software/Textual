@@ -281,8 +281,26 @@
 			}
 		}
 
-		if (vid) {
-			return [NSString stringWithFormat:@"http://img.youtube.com/vi/%@/default.jpg", vid];
+		if (vid && [vid isAlphabeticNumericOnly]) {
+			if (vid.length > 11) {
+				/* This behavior is was found by accident but is quite interesting. YouTube
+				 links limit the video ID to a maximum length of eleven. If it exceeds that,
+				 it only takes the first eleven characters. So a video link like:
+				 
+				 http://www.youtube.com/watch?v=qMkYlIA7mgw7435345354354343
+				 
+				 will actually be seen as:
+				 
+				 http://www.youtube.com/watch?v=qMkYlIA7mgw
+				 
+				 This is all fine and cool, but their image server does not do the same.
+				 Therefore, this is a fix in Textual to catch the length and resize so that
+				 we provide valid images for the weird links. */
+
+				vid = [vid safeSubstringToIndex:11];
+			}
+
+			return [NSString stringWithFormat:@"http://i.ytimg.com/vi/%@/mqdefault.jpg", vid];
 		}
 	} else if ([host hasSuffix:@"nicovideo.jp"] || [host isEqualToString:@"nico.ms"]) {
 		NSString *vid = nil;
