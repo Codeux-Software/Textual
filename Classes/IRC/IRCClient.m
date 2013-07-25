@@ -3463,6 +3463,31 @@
 					c = [self.worldController selectedChannelOn:self];
 				}
 
+				if ([sender isEqualIgnoringCase:@"ChanServ"]) {
+					/* Forward entry messages to the channel they are associated with. */
+					/* Format we are going for: -ChanServ- [#channelname] blah blah… */
+					NSInteger spacePos = [text stringPosition:NSStringWhitespacePlaceholder];
+
+					if ([text hasPrefix:@"["] && spacePos > 3) {
+						NSString *textHead = [text safeSubstringToIndex:spacePos];
+
+						if ([textHead hasSuffix:@"]"]) {
+							textHead = [textHead safeSubstringToIndex:(textHead.length - 1)]; // Remove the ]
+							textHead = [textHead safeSubstringFromIndex:1]; // Remove the [
+
+							if ([textHead isChannelName:self]) {
+								IRCChannel *thisChannel = [self findChannel:textHead];
+
+								if (thisChannel) {
+									text = [text safeSubstringFromIndex:(textHead.length + 2)]; // Remove the [#channelname] from the text.'
+
+									c = thisChannel;
+								}
+							}
+						}
+					}
+				}
+
 				/* Post the notice. */
 				[self print:c
 					   type:type
