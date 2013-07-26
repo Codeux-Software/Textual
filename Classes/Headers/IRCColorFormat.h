@@ -50,10 +50,10 @@ typedef enum IRCTextFormatterEffectType : NSInteger {
 
 @interface NSAttributedString (IRCTextFormatter)
 - (NSString *)attributedStringToASCIIFormatting;
-- (NSString *)attributedStringToASCIIFormatting:(NSMutableAttributedString **)string 
-                                       lineType:(TVCLogLineType)type 
-                                        channel:(NSString *)chan 
-                                       hostmask:(NSString *)host; // Only Textual should be calling this.
+- (NSString *)attributedStringToASCIIFormatting:(NSMutableAttributedString **)string
+                                       lineType:(TVCLogLineType)type
+                                        channel:(NSString *)channelName
+                                       hostmask:(NSString *)hostmask; // Only Textual should be calling this.
 @end
 
 @interface TVCTextField (TVCTextFieldFormattingHelper) 

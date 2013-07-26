@@ -116,8 +116,10 @@
 	if (NSRangeIsValidInBounds(range, self.length) == NO) {
 		return nil;
 	}
+
+	NSRange safeRange = [self rangeOfComposedCharacterSequencesForRange:range];
 	
-	return [self substringWithRange:range];
+	return [self substringWithRange:safeRange];
 }
 
 - (NSString *)safeSubstringFromIndex:(NSInteger)anIndex
@@ -126,7 +128,9 @@
 		return nil;
 	}
 
-	return [self substringFromIndex:anIndex];
+	NSRange cutRange = NSMakeRange(anIndex, (self.length - anIndex));
+
+	return [self safeSubstringWithRange:cutRange];
 }
 
 - (NSString *)safeSubstringToIndex:(NSInteger)anIndex
@@ -135,7 +139,9 @@
 		return nil;
 	}
 
-	return [self substringToIndex:anIndex];
+	NSRange cutRange = NSMakeRange(0, anIndex);
+
+	return [self safeSubstringWithRange:cutRange];
 }
 
 - (UniChar)safeCharacterAtIndex:(NSInteger)anIndex
