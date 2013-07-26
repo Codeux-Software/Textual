@@ -38,7 +38,9 @@
 #import "TextualApplication.h"
 
 #define	_textTruncationPRIVMSGCommandConstant				14
+#define _textTruncationNOTICECommandConstant				14
 #define	_textTruncationACTIONCommandConstant				8
+
 #define	_textTruncationSpacePositionMaxDifferential			10
 
 @implementation NSAttributedString (IRCTextFormatter)
@@ -97,17 +99,14 @@
 	return result;
 }
 
-- (NSString *)attributedStringToASCIIFormatting:(NSMutableAttributedString **)string 
-                                       lineType:(TVCLogLineType)type 
-                                        channel:(NSString *)chan 
-                                       hostmask:(NSString *)host
+- (NSString *)attributedStringToASCIIFormatting:(NSMutableAttributedString **)string
+                                       lineType:(TVCLogLineType)type
+                                        channel:(NSString *)channelName
+                                       hostmask:(NSString *)hostmask
 {
     NSMutableAttributedString *base = [*string copy];
-	
+
 	NSMutableString *result = [NSMutableString string];
-    
-    NSInteger startCharCount = 0;
-	NSInteger stopCharCount  = 0;
 	
 	/* ///////////////////////////////////////////////////// */
 	/* 
@@ -123,33 +122,43 @@
 	 PRIVMSG command, :, and additional spaces as part of the data we 
 	 are sending. We add an extra two as a buffer just to be safe.
 	 
-	 This method being called only is used for PRIVMSG so we do not have
-	 to worry about anything else. That is, unless it is an action. In that
-	 case, we simply add in a little more math. An ACTION accounts for eight 
-	 additional characters occupied. This math also adds an additional one
-	 character buffer same as the above mentioned math. 
+	 This truncation engine also supports NOTICE and ACTION lines, but
+	 that is it. Textual should only care about regular text.
 	 */
 	/* ///////////////////////////////////////////////////// */
 	
     NSInteger baseMath = 0;
 	
-	baseMath += (chan.length + host.length);
-	baseMath += _textTruncationPRIVMSGCommandConstant; 
-	
-	if (type == TVCLogLineActionType) {
-		baseMath += _textTruncationACTIONCommandConstant;
+	baseMath += (channelName.length + hostmask.length);
+
+	if (type == TVCLogLinePrivateMessageType || type == TVCLogLineActionType) {
+		baseMath += _textTruncationPRIVMSGCommandConstant;
+
+		if (type == TVCLogLineActionType) {
+			baseMath += _textTruncationACTIONCommandConstant;
+		}
+	} else if (type == TVCLogLineNoticeType) {
+		baseMath += _textTruncationNOTICECommandConstant;
+	} else {
+		NSAssert(NO, @"Bad line type.");
 	}
 	
-	NSInteger totalCalculatedLength = 0;
+	/* Begin actual work. */
+	NSInteger totalCalculatedLength = baseMath;
 	NSInteger stringDeletionLength  = 0;
+
+	NSInteger startCharCount = 0;
+	NSInteger stopCharCount = 0;
 	
 	NSRange effectiveRange;
-	NSRange limitRange = NSMakeRange(0, base.string.length);
+	NSRange limitRange = NSMakeRange(0, base.length);
 	
 	while (limitRange.length > 0) {
+		/* Reset locals. */
 		BOOL breakLoopAfterAppend = NO;
-		
-		totalCalculatedLength = 0;
+
+		startCharCount = 0;
+		stopCharCount = 0;
 		
 		/* ///////////////////////////////////////////////////// */
 		/* Gather information about the attributes present and calculate the total
@@ -188,128 +197,137 @@
 		 of characters required to support formatting we can start building up our
 		 formatted string value containing our ASCII characters. */
 		/* ///////////////////////////////////////////////////// */
-		
-		NSString *cake = NSStringEmptyPlaceholder; // this variable name tells you a lot…
-		
+
 		NSInteger newLength = 0;
-		
-		/* Calculate our total length of our string minus any formatting. */
-		if (effectiveRange.location == 0) { // Handle the legnth for the beginning of our string.
-			newLength = (baseMath + effectiveRange.length + formattingCharacterCount);
-			
-			if (newLength >= TXMaximumIRCBodyLength) { 
-				breakLoopAfterAppend = YES;
-				
-				newLength = (TXMaximumIRCBodyLength - (baseMath + formattingCharacterCount));
-				
-				totalCalculatedLength = newLength;
-			} 
-		} else { // Length calculations for the middle of our string.
+
+		/* At this point we do not care what the actaul length of this segment is. 
+		 The math below only checks two things. Whether the formatting characters 
+		 found above will fit into this segment as well as at least one unicode
+		 character with a length of two. If neither of those can fit, then this 
+		 piece of formatted segment is junk and we can break from it. */
+
+		/* If the starting location of our location is at 0, then we should not
+		 have to worry about checking the length yet. Since the formatting
+		 characters will occupy at maximum 13 entries at location 0, we can
+		 do our append until the next, middle or end segment. */
+
+		if (effectiveRange.location > 0) { // Length calculations for the middle of our string.
 			// Sally sold seashells down by the seashore.
 			//        |----------------------| <--- section we have to find
-			
-			newLength = (stringDeletionLength		+		// Length of already parsed segments.
-						 effectiveRange.length		+		// Our own length.
-						 formattingCharacterCount	+		// Our formatting characters.
-						 baseMath);							// Lastly, our base length.
-			
+
+			newLength = (baseMath					+ // The base length. Beginning of string.
+						 totalCalculatedLength		+ // Length of what we have already formatted.
+						 formattingCharacterCount	+ // The formatting characters for this segment.
+						 2);						 // The sad little two. A single unicode character.
+
+			/* Will this new segment exceed the maximum size? */
 			if (newLength >= TXMaximumIRCBodyLength) {
-				newLength = (TXMaximumIRCBodyLength - (baseMath + formattingCharacterCount + stringDeletionLength));
-				
-				if (newLength <= 0) {
-					/* If our new length would reduce our substringed cake to nothing,
-					 then we simply break the loop because there is nothing more we 
-					 can do at this point. */
-					
-					break;
-				}
-				
-				totalCalculatedLength = newLength;
-				
-				breakLoopAfterAppend = YES;
+				/* Yes? Break that shit! */
+
+				break;
 			} 
 		}
-		
-		/* If our calculated string length is still nil, then just
-		 assume we did not have to make any calculations to fix it
-		 within the context of our maximum message length limit. 
-		 There is no other way it would be nil as we would have 
-		 broken the loop for any errors that might have happened
-		 prior to reaching this point. */
-		
-		if (totalCalculatedLength == 0) { 
-			totalCalculatedLength = effectiveRange.length;
-		}
-		
-		/* See? "cake" was a poor variable name for us. You would have never
-		 guessed it was going to be assigned to the substringed value. */
-		cake = [base.string safeSubstringWithRange:NSMakeRange(effectiveRange.location, totalCalculatedLength)];
-		
-		//DebugLogToConsole(@"cake: %@\nLength: %i", cake, totalCalculatedLength);
-		
-		/* Truncate at first available space as long as it is within range. */
-		if (breakLoopAfterAppend && cake.length >= _textTruncationSpacePositionMaxDifferential) {
-			NSRange spaceCharSearchBase = NSMakeRange((cake.length - _textTruncationSpacePositionMaxDifferential),
-																	 _textTruncationSpacePositionMaxDifferential);
-			
-			NSRange spaceChar = [cake rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]
-													  options:NSBackwardsSearch
-														range:spaceCharSearchBase];
-			
-			//DebugLogToConsole(@"spaceCharacter: %@", NSStringFromRange(spaceChar));
-			
-			if (NSDissimilarObjects(spaceChar.location, NSNotFound)) {
-				totalCalculatedLength = spaceChar.location;
-				
-				cake = [base.string safeSubstringWithRange:NSMakeRange(effectiveRange.location, totalCalculatedLength)];
 
-				//DebugLogToConsole(@"newCake: %@\nLength: %i", cake, totalCalculatedLength);
-			}
-		}
-		
+		/* Add the formatting characters to the final math before append. */
+		totalCalculatedLength += formattingCharacterCount;
+
+		/* Now is the point at which we begin to append. */
 		/* Append the actual formatting. This uses the same technology used
 		 in the above defined -attributedStringToASCIIFormatting method. */
 		if (underlineText)  { [result appendFormat:@"%c", 0x1F]; }
 		if (italicText)     { [result appendFormat:@"%c", 0x16]; }
 		if (boldText)       { [result appendFormat:@"%c", 0x02]; }
-		
+
 		if (foregroundColorD) {
 			[result appendFormat:@"%c%@", 0x03, [foregroundNumber integerWithLeadingZero]];
-			
+
 			if (backgroundColorD) {
 				[result appendFormat:@",%@", [backgroundNumber integerWithLeadingZero]];
 			}
 		}
-		
-		[result appendString:cake];
-		
+
+		/* Okay, at this point we know two things. The the formatting characters above and below
+		 the following append will fit within this segment plus at least one unicode character with
+		 a length of two. Now here is where it gets tricky… we will go character by character in
+		 our segment and append that. Any character below 0x7f will count against only one towards
+		 the final result. Anything above it, is equal to two. We keep adding until the segment
+		 is completed or we run out of space. At that point, we break. We have already added 
+		 the formatting characters into the math so any math checked against in the loop will 
+		 only be counted towards the actual characters. */
+
+		for (NSInteger i = 0; i < effectiveRange.length; i ++) {
+			NSInteger clocal = (effectiveRange.location + i);
+
+			UniChar c = [base.string characterAtIndex:clocal];
+
+			/* Update math. */
+			NSInteger characterSize = 1;
+
+			if (c > 0x7f) {
+				characterSize = 2;
+			}
+
+			/* Would this character go over the max body length? */
+			if ((totalCalculatedLength + characterSize) >= TXMaximumIRCBodyLength) {
+				/* We are leaving after this. */
+				breakLoopAfterAppend = YES;
+
+				/* Looking for spaces. */
+				/* Now this is where the append gets a little technical. We want clean
+				 truncation. Not half-assed ones. Therefore, if we have a space character
+				 and it is within a certain range of the end of the line, then we will stop
+				 append at that instead of breaking inside of a word. */
+
+				NSRange searchRange = NSMakeRange(0, result.length);
+
+				NSRange spaceRange = [result rangeOfString:NSStringWhitespacePlaceholder
+												   options:NSBackwardsSearch
+													 range:searchRange];
+
+				if (NSDissimilarObjects(spaceRange.location, NSNotFound)) {
+					/* Is the space within the range of this segment? */
+
+					if (spaceRange.location < effectiveRange.location) {
+						/* If the space is out of our segment, we don't want to use it. */
+					} else {
+						NSInteger indxDiff = (result.length - spaceRange.location);
+
+						[result deleteCharactersInRange:NSMakeRange(spaceRange.location, indxDiff)];
+
+						stringDeletionLength -= indxDiff;
+					}
+				}
+
+				break; // Stop here if it goes out of bounds.
+			}
+
+			/* Update locals. */
+			totalCalculatedLength += characterSize;
+			stringDeletionLength += 1;
+
+			/* Do the actual append. */
+			[result appendFormat:@"%C", c];
+		}
+
 		if (foregroundColorD)   { [result appendFormat:@"%c", 0x03]; }
 		if (boldText)           { [result appendFormat:@"%c", 0x02]; }
 		if (italicText)         { [result appendFormat:@"%c", 0x16]; }
 		if (underlineText)      { [result appendFormat:@"%c", 0x1F]; }
-		
-		/* Skip to next attributed section if we have not broken out of the loop by now. */
-		stringDeletionLength += totalCalculatedLength;
-		
+
 		if (breakLoopAfterAppend) {
-			break;
+			break; // We cannot go any further in this line.
 		}
-		
-		effectiveRange.location += totalCalculatedLength;
-		effectiveRange.length    = (base.string.length - stringDeletionLength);
-		
-		//DebugLogToConsole(@"effectiveRange: %@", NSStringFromRange(effectiveRange));
-		
+
+		effectiveRange.location = stringDeletionLength;
+		effectiveRange.length   = (base.string.length - stringDeletionLength);
+
 		limitRange = effectiveRange;
 	}
 	
 	/* Return our attributed string to caller with our formatted line
 	 so that the next one can be served up. */
-	
     [*string deleteCharactersInRange:NSMakeRange(0, stringDeletionLength)];
-	
-	//DebugLogToConsole(@"string: %@\nresult: %@\nrange: 0, %i", [*string string], result, stringDeletionLength);
-	
+
     return result;
 }
 
