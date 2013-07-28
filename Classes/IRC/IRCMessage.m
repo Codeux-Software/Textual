@@ -96,18 +96,15 @@
 				NSString *extKey = info[0];
 				NSString *extVal = info[1];
 
-				/* Process @time= and @t= values inline for server-time. */
+				/* Process @time= value inline for server-time. */
 
-				BOOL hasEpochTimeExt = [extKey isEqualToString:@"t"];
-				BOOL hasISOTimeExt = [extKey isEqualToString:@"time"];
+				BOOL hasTimeExt = [extKey isEqualToString:@"time"];
 
-				NSAssertReturnLoopBreak(hasEpochTimeExt == YES || hasISOTimeExt == YES);
+				NSAssertReturnLoopBreak(hasTimeExt);
 
-				NSDate *date;
+				NSDate *date = [NSDate dateWithTimeIntervalSince1970:[extVal doubleValue]];
 
-				if (hasEpochTimeExt) {
-					date = [NSDate dateWithTimeIntervalSince1970:[extVal doubleValue]];
-				} else if (hasISOTimeExt) {
+				if (PointerIsEmpty(date)) {
 					date = [self.worldController.isoStandardDateFormatter dateFromString:extVal];
 				}
 
