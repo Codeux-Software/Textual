@@ -37,6 +37,11 @@
 
 #import "TextualApplication.h"
 
+@interface TPCThemeSettings ()
+@property (nonatomic, strong) NSString *applicationTemplateRepostiryPath;
+@property (nonatomic, strong) NSString *styleResourcesTemplateRepositoryPath;
+@end
+
 @implementation TPCThemeSettings
 
 #pragma mark -
@@ -112,7 +117,7 @@
 	return [@"Line Types/" stringByAppendingString:typestr];
 }
 
-- (NSString *)applicationTemplateRepositoryPath
+- (NSString *)applicationDefaultTemplateRepositoryPath
 {
 	NSString *baseURL = [TPCPreferences applicationResourcesFolderPath];
 	
@@ -148,18 +153,19 @@
 	
 	NSError *load_error = nil;
 
-	NSString *customTemplPath = [[self customTemplateRepositoryPath] stringByAppendingPathComponent:name];
-	NSString *applicationPath = [[self applicationTemplateRepositoryPath] stringByAppendingPathComponent:name];
+	NSString *templatePath = [self.styleResourcesTemplateRepositoryPath stringByAppendingPathComponent:name];
 
 	/* First look for a custom template. */
-	GRMustacheTemplate *tmpl = [GRMustacheTemplate templateFromContentsOfFile:customTemplPath error:&load_error];
+	GRMustacheTemplate *tmpl = [GRMustacheTemplate templateFromContentsOfFile:templatePath error:&load_error];
 
 	if (PointerIsEmpty(tmpl) || load_error) {
 		/* If no custom template is found, then revert to application defaults. */
 		if (load_error.code == GRMustacheErrorCodeTemplateNotFound || load_error.code == 260) {
 			load_error = nil;
-			
-			tmpl = [GRMustacheTemplate templateFromContentsOfFile:applicationPath error:&load_error];
+
+			templatePath = [self.applicationTemplateRepostiryPath stringByAppendingPathComponent:name];
+
+			tmpl = [GRMustacheTemplate templateFromContentsOfFile:templatePath error:&load_error];
 
 			if (PointerIsNotEmpty(tmpl)) {
 				return tmpl; // Return default template. 
@@ -182,6 +188,10 @@
 
 - (void)reloadWithPath:(NSString *)path
 {
+	/* Cache common paths. */
+	self.applicationTemplateRepostiryPath = [self applicationDefaultTemplateRepositoryPath];
+	self.styleResourcesTemplateRepositoryPath = [self customTemplateRepositoryPath];
+
 	/* Load style settings dictionary. */
 	NSDictionary *styleSettings = nil;
 	
