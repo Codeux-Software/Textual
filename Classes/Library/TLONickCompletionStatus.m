@@ -155,7 +155,7 @@
 		/* Skip everything that is not a space or ":" then break the string
 		 there so that a completion like "Nickname: " or "/command " will
 		 be seen as only "Nickname" and "/command" */
-		if (NSDissimilarObjects(c, ' ') && NSDissimilarObjects(c, ':')) {
+		if (NSDissimilarObjects(c, ' ') && NSDissimilarObjects(c, ':') && NSDissimilarObjects(c, ',')) {
 			;
 		} else {
 			currentCombined = [currentCombined safeSubstringToIndex:i];
