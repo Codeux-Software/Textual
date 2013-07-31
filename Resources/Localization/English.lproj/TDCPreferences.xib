@@ -1,64 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4471.1" systemVersion="13A524d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4488.1" systemVersion="13A524d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4471.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4488.1"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCPreferencesController">
             <connections>
-                <action selector="onAddExcludeKeyword:" destination="4868" id="7363"/>
-                <action selector="onAddKeyword:" destination="4865" id="6576"/>
-                <action selector="onChangedAlertBounceDockIcon:" destination="7708" id="7711"/>
-                <action selector="onChangedAlertDisableWhileAway:" destination="6627" id="7361"/>
-                <action selector="onChangedAlertNotification:" destination="6623" id="7360"/>
-                <action selector="onChangedAlertSound:" destination="6633" id="7362"/>
-                <action selector="onChangedAlertSpoken:" destination="7592" id="7596"/>
-                <action selector="onChangedAlertType:" destination="6614" id="7359"/>
-                <action selector="onChangedHighlightLogging:" destination="5699" id="7365"/>
-                <action selector="onChangedHighlightType:" destination="4863" id="7366"/>
-                <action selector="onChangedInputHistoryScheme:" destination="7608" id="7612"/>
-                <action selector="onChangedInputHistoryScheme:" destination="7703" id="7706"/>
-                <action selector="onChangedMainWindowSegmentedController:" destination="7264" id="7368"/>
-                <action selector="onChangedSidebarColorInversion:" destination="7255" id="7369"/>
-                <action selector="onChangedSidebarColorInversion:" destination="7503" id="7507"/>
-                <action selector="onChangedStyle:" destination="6013" id="7372"/>
-                <action selector="onChangedStyle:" destination="6015" id="7373"/>
-                <action selector="onChangedStyle:" destination="5991" id="7374"/>
-                <action selector="onChangedStyle:" destination="6231" id="7375"/>
-                <action selector="onChangedStyle:" destination="6475" id="7376"/>
-                <action selector="onChangedStyle:" destination="6243" id="7377"/>
-                <action selector="onChangedStyle:" destination="DWU-U8-oas" id="XTo-Jo-jPA"/>
-                <action selector="onChangedTheme:" destination="5777" id="6602"/>
-                <action selector="onChangedTranscriptFolder:" destination="6771" id="7379"/>
-                <action selector="onChangedTransparency:" destination="6370" id="6603"/>
-                <action selector="onChangedUserListModeColor:" destination="7533" id="7557"/>
-                <action selector="onChangedUserListModeColor:" destination="7530" id="7558"/>
-                <action selector="onChangedUserListModeColor:" destination="7527" id="7559"/>
-                <action selector="onChangedUserListModeColor:" destination="7524" id="7560"/>
-                <action selector="onChangedUserListModeColor:" destination="7521" id="7561"/>
-                <action selector="onChangedUserListModeColor:" destination="7518" id="7562"/>
-                <action selector="onChangedUserListModeSortOrder:" destination="7578" id="7582"/>
-                <action selector="onOpenPathToScripts:" destination="6419" id="6421"/>
-                <action selector="onOpenPathToThemes:" destination="6395" id="6397"/>
-                <action selector="onPrefPaneSelected:" destination="6289" id="6298"/>
-                <action selector="onPrefPaneSelected:" destination="6292" id="6299"/>
-                <action selector="onPrefPaneSelected:" destination="6290" id="6300"/>
-                <action selector="onPrefPaneSelected:" destination="6285" id="6301"/>
-                <action selector="onPrefPaneSelected:" destination="6291" id="6302"/>
-                <action selector="onPrefPaneSelected:" destination="6287" id="6303"/>
-                <action selector="onPrefPaneSelected:" destination="6295" id="6304"/>
-                <action selector="onPrefPaneSelected:" destination="6318" id="6321"/>
-                <action selector="onPrefPaneSelected:" destination="6319" id="6322"/>
-                <action selector="onPrefPaneSelected:" destination="6320" id="6323"/>
-                <action selector="onPrefPaneSelected:" destination="6326" id="6327"/>
-                <action selector="onPrefPaneSelected:" destination="6454" id="6465"/>
-                <action selector="onPrefPaneSelected:" destination="6684" id="6685"/>
-                <action selector="onPrefPaneSelected:" destination="7290" id="7291"/>
-                <action selector="onResetUserListModeColorsToDefaults:" destination="7541" id="7563"/>
-                <action selector="onSelectNewFont:" destination="6388" id="7364"/>
-                <action selector="setTextualAsDefaultIRCClient:" destination="7327" id="7329"/>
                 <outlet property="IRCopServicesView" destination="5556" id="5609"/>
                 <outlet property="addExcludeKeywordButton" destination="4868" id="7349"/>
                 <outlet property="alertBounceDockIconButton" destination="7708" id="7710"/>
@@ -103,7 +52,6 @@
                 <string>string</string>
             </declaredKeys>
             <connections>
-                <action selector="remove:" destination="4866" id="4895"/>
                 <binding destination="1247" name="contentArray" keyPath="values.Highlight List -> Primary Matches" id="7245">
                     <dictionary key="options">
                         <bool key="NSHandlesContentAsCompoundValue" value="YES"/>
@@ -116,7 +64,6 @@
                 <string>string</string>
             </declaredKeys>
             <connections>
-                <action selector="remove:" destination="4869" id="4893"/>
                 <binding destination="1247" name="contentArray" keyPath="values.Highlight List -> Excluded Matches" id="7246">
                     <dictionary key="options">
                         <bool key="NSHandlesContentAsCompoundValue" value="YES"/>
@@ -143,13 +90,41 @@
                 <allowedToolbarItems>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="6288"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="6283"/>
-                    <toolbarItem implicitItemIdentifier="A20CDDE4-DC6E-4194-BC71-68E3D384B4B9" explicitItemIdentifier="0" label="General" paletteLabel="General" image="application" selectable="YES" id="6295"/>
-                    <toolbarItem implicitItemIdentifier="F57E32CC-7364-4DCF-95D1-71A0A33E3FC4" explicitItemIdentifier="1" label="Mentions" paletteLabel="Mentions" tag="1" image="TPWTB_Mentions" selectable="YES" id="6285"/>
-                    <toolbarItem implicitItemIdentifier="958A6A84-49BA-4231-ACAF-4DCC2FA84E0D" explicitItemIdentifier="2" label="Interface" paletteLabel="Interface" tag="2" image="TPWTB_Interface" selectable="YES" id="6290"/>
-                    <toolbarItem implicitItemIdentifier="960C6001-79AF-4590-AE06-F1E90305BF84" explicitItemIdentifier="3" label="Alerts" paletteLabel="Alerts" tag="3" image="TPWTB_Alerts" selectable="YES" id="6292"/>
-                    <toolbarItem implicitItemIdentifier="87347723-8C28-480D-B3F9-7B190195A1DC" explicitItemIdentifier="4" label="Style" paletteLabel="Style" tag="4" image="NSColorPanel" selectable="YES" id="6289"/>
-                    <toolbarItem implicitItemIdentifier="168951FA-8D93-4B5B-BF0A-25EFB5F8EE48" explicitItemIdentifier="9" label="Identity" paletteLabel="Identity" tag="9" image="NSUser" selectable="YES" id="6287"/>
-                    <toolbarItem implicitItemIdentifier="37BB605F-6566-4230-88C8-414D90A26F97" explicitItemIdentifier="10" label="Addons" paletteLabel="Addons" tag="10" image="TPWTB_Extensions" selectable="YES" id="6291"/>
+                    <toolbarItem implicitItemIdentifier="A20CDDE4-DC6E-4194-BC71-68E3D384B4B9" explicitItemIdentifier="0" label="General" paletteLabel="General" image="application" selectable="YES" id="6295">
+                        <connections>
+                            <action selector="onPrefPaneSelected:" target="-2" id="6304"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="F57E32CC-7364-4DCF-95D1-71A0A33E3FC4" explicitItemIdentifier="1" label="Mentions" paletteLabel="Mentions" tag="1" image="TPWTB_Mentions" selectable="YES" id="6285">
+                        <connections>
+                            <action selector="onPrefPaneSelected:" target="-2" id="6301"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="958A6A84-49BA-4231-ACAF-4DCC2FA84E0D" explicitItemIdentifier="2" label="Interface" paletteLabel="Interface" tag="2" image="TPWTB_Interface" selectable="YES" id="6290">
+                        <connections>
+                            <action selector="onPrefPaneSelected:" target="-2" id="6300"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="960C6001-79AF-4590-AE06-F1E90305BF84" explicitItemIdentifier="3" label="Alerts" paletteLabel="Alerts" tag="3" image="TPWTB_Alerts" selectable="YES" id="6292">
+                        <connections>
+                            <action selector="onPrefPaneSelected:" target="-2" id="6299"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="87347723-8C28-480D-B3F9-7B190195A1DC" explicitItemIdentifier="4" label="Style" paletteLabel="Style" tag="4" image="NSColorPanel" selectable="YES" id="6289">
+                        <connections>
+                            <action selector="onPrefPaneSelected:" target="-2" id="6298"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="168951FA-8D93-4B5B-BF0A-25EFB5F8EE48" explicitItemIdentifier="9" label="Identity" paletteLabel="Identity" tag="9" image="NSUser" selectable="YES" id="6287">
+                        <connections>
+                            <action selector="onPrefPaneSelected:" target="-2" id="6303"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="37BB605F-6566-4230-88C8-414D90A26F97" explicitItemIdentifier="10" label="Addons" paletteLabel="Addons" tag="10" image="TPWTB_Extensions" selectable="YES" id="6291">
+                        <connections>
+                            <action selector="onPrefPaneSelected:" target="-2" id="6302"/>
+                        </connections>
+                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="7CB94C09-B401-4077-A7FA-4243CD17D536" explicitItemIdentifier="13" label="Addons" paletteLabel="Addons" tag="13" image="TPWTB_Extensions" selectable="YES" id="6450">
                         <nil key="toolTip"/>
                         <size key="minSize" width="55" height="32"/>
@@ -167,6 +142,9 @@
                                         </menuItem>
                                         <menuItem title="Installed Addons" onStateImage="7D5F93E4-0292-4AC8-9D2D-68CAEC630A19" mixedStateImage="BD1C3604-35B0-4FA4-8915-801547CFE54B" tag="10" id="6454">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="onPrefPaneSelected:" target="-2" id="6465"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="6463"/>
                                     </items>
@@ -191,19 +169,34 @@
                                         </menuItem>
                                         <menuItem title=" IRCop Services" tag="7" id="6319">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="onPrefPaneSelected:" target="-2" id="6322"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem title=" Channel Management" tag="8" id="6320">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="onPrefPaneSelected:" target="-2" id="6323"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="7307"/>
                                         <menuItem title=" Command Scope" tag="12" id="7290">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="onPrefPaneSelected:" target="-2" id="7291"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem title=" Flood Control" tag="6" id="6318">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="onPrefPaneSelected:" target="-2" id="6321"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem title=" Log Location" tag="5" id="6326">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="onPrefPaneSelected:" target="-2" id="6327"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="6639">
                                             <connections>
@@ -217,6 +210,7 @@
                                         <menuItem title=" Experimental Settings" tag="11" id="6684">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
+                                                <action selector="onPrefPaneSelected:" target="-2" id="6685"/>
                                                 <binding destination="1247" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="6690">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
@@ -332,6 +326,9 @@
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="smallSystem"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="setTextualAsDefaultIRCClient:" target="-2" id="7329"/>
+                    </connections>
                 </button>
                 <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7339">
                     <rect key="frame" x="46" y="168" width="442" height="5"/>
@@ -520,6 +517,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
+                        <action selector="onChangedHighlightType:" target="-2" id="7366"/>
                         <binding destination="1247" name="selectedTag" keyPath="values.NicknameHighlightMatchingType" id="7176"/>
                     </connections>
                 </popUpButton>
@@ -578,6 +576,9 @@
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                     <accessibility description="New highlight word"/>
+                    <connections>
+                        <action selector="onAddKeyword:" target="-2" id="6576"/>
+                    </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="4866">
                     <rect key="frame" x="56" y="21" width="23" height="23"/>
@@ -588,6 +589,7 @@
                     </buttonCell>
                     <accessibility description="Remove highlight word"/>
                     <connections>
+                        <action selector="remove:" target="4310" id="4895"/>
                         <binding destination="4310" name="enabled" keyPath="canRemove" id="4898"/>
                     </connections>
                 </button>
@@ -652,6 +654,7 @@
                     </buttonCell>
                     <accessibility description="New exclude word"/>
                     <connections>
+                        <action selector="onAddExcludeKeyword:" target="-2" id="7363"/>
                         <binding destination="1247" name="enabled" keyPath="values.NicknameHighlightMatchingType" id="7240">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
@@ -668,6 +671,7 @@
                     </buttonCell>
                     <accessibility description="Remove exclude word"/>
                     <connections>
+                        <action selector="remove:" target="4313" id="4893"/>
                         <binding destination="4313" name="enabled2" keyPath="canRemove" previousBinding="7619" id="7620">
                             <dictionary key="options">
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
@@ -687,6 +691,7 @@
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
+                        <action selector="onChangedHighlightLogging:" target="-2" id="7365"/>
                         <binding destination="1247" name="value" keyPath="values.LogHighlights" id="7177"/>
                     </connections>
                 </button>
@@ -771,6 +776,9 @@
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <connections>
+                        <action selector="onChangedAlertType:" target="-2" id="7359"/>
+                    </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" id="6621">
                     <rect key="frame" x="75" y="176" width="86" height="17"/>
@@ -788,6 +796,9 @@
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="onChangedAlertNotification:" target="-2" id="7360"/>
+                    </connections>
                 </button>
                 <button id="6627">
                     <rect key="frame" x="166" y="86" width="322" height="18"/>
@@ -796,6 +807,9 @@
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="onChangedAlertDisableWhileAway:" target="-2" id="7361"/>
+                    </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="6629">
                     <rect key="frame" x="184" y="31" width="129" height="17"/>
@@ -820,9 +834,12 @@
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <connections>
+                        <action selector="onChangedAlertSound:" target="-2" id="7362"/>
+                    </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" id="6744">
-                    <rect key="frame" x="305" y="87" width="43" height="16"/>
+                    <rect key="frame" x="304" y="87" width="43" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="/away" id="6745">
                         <font key="font" metaFont="systemBold" size="12"/>
@@ -844,6 +861,9 @@
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="onChangedAlertSpoken:" target="-2" id="7596"/>
+                    </connections>
                 </button>
                 <button id="7708">
                     <rect key="frame" x="166" y="58" width="161" height="18"/>
@@ -852,6 +872,9 @@
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="onChangedAlertBounceDockIcon:" target="-2" id="7711"/>
+                    </connections>
                 </button>
             </subviews>
         </customView>
@@ -884,6 +907,9 @@
                                             <font key="font" metaFont="smallSystem"/>
                                             <menu key="menu" title="OtherViews" id="5843"/>
                                         </popUpButtonCell>
+                                        <connections>
+                                            <action selector="onChangedTheme:" target="-2" id="6602"/>
+                                        </connections>
                                     </popUpButton>
                                     <textField verticalHuggingPriority="750" id="5778">
                                         <rect key="frame" x="43" y="285" width="44" height="17"/>
@@ -976,6 +1002,7 @@
                                         <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="0.20000000000000001" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="6377"/>
                                         <connections>
                                             <accessibilityConnection property="title" destination="6369" id="6497"/>
+                                            <action selector="onChangedTransparency:" target="-2" id="6603"/>
                                             <binding destination="1247" name="value" keyPath="values.MainWindowTransparencyLevel" id="7179"/>
                                         </connections>
                                     </slider>
@@ -1015,6 +1042,7 @@
                                         </buttonCell>
                                         <connections>
                                             <accessibilityConnection property="title" destination="6373" id="6495"/>
+                                            <action selector="onSelectNewFont:" target="-2" id="7364"/>
                                             <binding destination="1247" name="enabled" keyPath="values.Theme -> Channel Font Preference Enabled" id="7192"/>
                                         </connections>
                                     </button>
@@ -1025,6 +1053,9 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
                                         </buttonCell>
+                                        <connections>
+                                            <action selector="onOpenPathToThemes:" target="-2" id="6397"/>
+                                        </connections>
                                     </button>
                                     <button id="7145">
                                         <rect key="frame" x="72" y="28" width="264" height="18"/>
@@ -1064,6 +1095,7 @@
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
+                                            <action selector="onChangedStyle:" target="-2" id="XTo-Jo-jPA"/>
                                             <binding destination="1247" name="value" keyPath="values.DisplayEventInLogView -> Inline Media" id="Yp1-Tg-oEV"/>
                                         </connections>
                                     </button>
@@ -1481,6 +1513,7 @@
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
+                                            <action selector="onChangedStyle:" target="-2" id="7374"/>
                                             <binding destination="1247" name="value" keyPath="values.RightToLeftTextFormatting" id="7185"/>
                                         </connections>
                                     </button>
@@ -1501,6 +1534,7 @@
                                         </comboBoxCell>
                                         <connections>
                                             <accessibilityConnection property="title" destination="6391" id="6498"/>
+                                            <action selector="onChangedStyle:" target="-2" id="7372"/>
                                             <binding destination="1247" name="value" keyPath="values.Theme -> Nickname Format" id="7183"/>
                                             <binding destination="1247" name="enabled" keyPath="values.Theme -> Nickname Format Preference Enabled" id="7188">
                                                 <dictionary key="options">
@@ -1525,6 +1559,7 @@
                                         </comboBoxCell>
                                         <connections>
                                             <accessibilityConnection property="title" destination="6393" id="6499"/>
+                                            <action selector="onChangedStyle:" target="-2" id="7373"/>
                                             <binding destination="1247" name="value" keyPath="values.Theme -> Timestamp Format" id="7184"/>
                                             <binding destination="1247" name="enabled" keyPath="values.Theme -> Timestamp Format Preference Enabled" id="7190">
                                                 <dictionary key="options">
@@ -1541,6 +1576,7 @@
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
+                                            <action selector="onChangedStyle:" target="-2" id="7375"/>
                                             <binding destination="1247" name="value" keyPath="values.DisableRemoteNicknameColorHashing" id="7186"/>
                                         </connections>
                                     </button>
@@ -1567,6 +1603,7 @@
                                         </comboBoxCell>
                                         <connections>
                                             <accessibilityConnection property="title" destination="5895" id="6500"/>
+                                            <action selector="onChangedStyle:" target="-2" id="7377"/>
                                             <binding destination="-2" name="value" keyPath="maxLogLines" id="6247">
                                                 <dictionary key="options">
                                                     <bool key="NSValidatesImmediately" value="YES"/>
@@ -1600,6 +1637,7 @@
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
+                                            <action selector="onChangedStyle:" target="-2" id="7376"/>
                                             <binding destination="1247" name="value" keyPath="values.TrackConversationsWithColorHashing" id="7187"/>
                                         </connections>
                                     </button>
@@ -1920,6 +1958,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
+                        <action selector="onChangedTranscriptFolder:" target="-2" id="7379"/>
                         <binding destination="1247" name="enabled" keyPath="values.LogTranscript" id="7234"/>
                     </connections>
                 </popUpButton>
@@ -2040,6 +2079,9 @@
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="cellTitle"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="onOpenPathToScripts:" target="-2" id="6421"/>
+                    </connections>
                 </button>
             </subviews>
         </customView>
@@ -2729,6 +2771,7 @@
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
+                                            <action selector="onChangedSidebarColorInversion:" target="-2" id="7369"/>
                                             <binding destination="1247" name="value" keyPath="values.InvertSidebarColors" id="7261"/>
                                             <binding destination="1247" name="enabled" keyPath="values.Theme -> Invert Sidebar Colors Preference Enabled" id="7263"/>
                                         </connections>
@@ -2741,6 +2784,7 @@
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
+                                            <action selector="onChangedMainWindowSegmentedController:" target="-2" id="7368"/>
                                             <binding destination="1247" name="value" keyPath="values.DisableMainWindowSegmentedController" id="7270"/>
                                         </connections>
                                     </button>
@@ -2759,6 +2803,7 @@
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
+                                            <action selector="onChangedSidebarColorInversion:" target="-2" id="7507"/>
                                             <binding destination="1247" name="value" keyPath="values.UseLargeFontForSidebars" id="7510"/>
                                         </connections>
                                     </button>
@@ -2770,6 +2815,7 @@
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
+                                            <action selector="onChangedUserListModeSortOrder:" target="-2" id="7582"/>
                                             <binding destination="1247" name="value" keyPath="values.MemberListSortFavorsServerStaff" id="7581"/>
                                         </connections>
                                     </button>
@@ -3074,6 +3120,7 @@
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
+                                            <action selector="onChangedInputHistoryScheme:" target="-2" id="7612"/>
                                             <binding destination="1247" name="value" keyPath="values.SaveInputHistoryPerSelection" id="7611"/>
                                         </connections>
                                     </button>
@@ -3099,6 +3146,7 @@
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
+                                            <action selector="onChangedInputHistoryScheme:" target="-2" id="7706"/>
                                             <binding destination="1247" name="value" keyPath="values.CommandReturnSendsMessageAsAction" id="7707"/>
                                         </connections>
                                     </button>
@@ -3119,6 +3167,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
+                                            <action selector="onChangedUserListModeColor:" target="-2" id="7562"/>
                                             <binding destination="1247" name="value" keyPath="values.User List Mode Badge Colors —> +y" id="7551">
                                                 <dictionary key="options">
                                                     <string key="NSValueTransformerName">NSUnarchiveFromData</string>
@@ -3140,6 +3189,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
+                                            <action selector="onChangedUserListModeColor:" target="-2" id="7561"/>
                                             <binding destination="1247" name="value" keyPath="values.User List Mode Badge Colors —> +q" id="7552">
                                                 <dictionary key="options">
                                                     <string key="NSValueTransformerName">NSUnarchiveFromData</string>
@@ -3161,6 +3211,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
+                                            <action selector="onChangedUserListModeColor:" target="-2" id="7560"/>
                                             <binding destination="1247" name="value" keyPath="values.User List Mode Badge Colors —> +a" id="7553">
                                                 <dictionary key="options">
                                                     <string key="NSValueTransformerName">NSUnarchiveFromData</string>
@@ -3182,6 +3233,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
+                                            <action selector="onChangedUserListModeColor:" target="-2" id="7559"/>
                                             <binding destination="1247" name="value" keyPath="values.User List Mode Badge Colors —> +o" id="7554">
                                                 <dictionary key="options">
                                                     <string key="NSValueTransformerName">NSUnarchiveFromData</string>
@@ -3203,6 +3255,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
+                                            <action selector="onChangedUserListModeColor:" target="-2" id="7558"/>
                                             <binding destination="1247" name="value" keyPath="values.User List Mode Badge Colors —> +h" id="7555">
                                                 <dictionary key="options">
                                                     <string key="NSValueTransformerName">NSUnarchiveFromData</string>
@@ -3224,6 +3277,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
+                                            <action selector="onChangedUserListModeColor:" target="-2" id="7557"/>
                                             <binding destination="1247" name="value" keyPath="values.User List Mode Badge Colors —> +v" id="7556">
                                                 <dictionary key="options">
                                                     <string key="NSValueTransformerName">NSUnarchiveFromData</string>
@@ -3270,6 +3324,9 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
+                                        <connections>
+                                            <action selector="onResetUserListModeColorsToDefaults:" target="-2" id="7563"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </view>
