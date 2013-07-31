@@ -104,6 +104,7 @@
 	@class TLOpenLink;
 	@class TPCPreferences;
 	@class TPCPreferencesImportExport;
+	@class TPCResourceManager;
 	@class TPCThemeController;
 	@class TPCThemeSettings;
 	@class TVCDockIcon;
@@ -263,6 +264,7 @@
 
 	#import "TPCPreferences.h"
 	#import "TPCPreferencesImportExport.h"
+	#import "TPCResourceManager.h"
 	#import "TPCThemeController.h"
 	#import "TPCThemeSettings.h"
 

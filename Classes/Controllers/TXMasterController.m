@@ -169,6 +169,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 	self.pluginManager = [THOPluginManager new];
 	[self.pluginManager loadPlugins];
+
+	[TPCResourceManager copyResourcesToCustomAddonsFolder];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)note
