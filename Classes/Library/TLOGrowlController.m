@@ -50,13 +50,11 @@
 - (id)init
 {
 	if ((self = [super init])) {
-#ifdef TXForceNativeNotificationCenterDispatch
 		if ([TPCPreferences featureAvailableToOSXMountainLion]) {
 			[RZUserNotificationCenter() setDelegate:self];
 			
 			return self;
 		}
-#endif
 		
 		[GrowlApplicationBridge setGrowlDelegate:self];
 	}
@@ -148,21 +146,34 @@
 
 	eventDescription = [eventDescription stripIRCEffects];
 
-#ifdef TXForceNativeNotificationCenterDispatch
+	/* Send to notification center? */
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
-		NSUserNotification *notification = [NSUserNotification new];
-		
-		notification.title = eventTitle;
-		notification.informativeText = eventDescription;
-		notification.deliveryDate = [NSDate date];
-		notification.userInfo = eventContext;
-		
-		[RZUserNotificationCenter() scheduleNotification:notification];
-		
-		return;
+		if ([GrowlApplicationBridge isGrowlRunning] == NO) {
+			NSUserNotification *notification = [NSUserNotification new];
+			
+			notification.title = eventTitle;
+			notification.informativeText = eventDescription;
+			notification.deliveryDate = [NSDate date];
+			notification.userInfo = eventContext;
+
+			if ([TPCPreferences featureAvailableToOSXMavericks]) {
+				/* These are the only event types we want to support for now. */
+
+				if (eventType == TXNotificationNewPrivateMessageType ||
+					eventType == TXNotificationPrivateMessageType)
+				{
+					notification.hasReplyButton = YES;
+					notification.responsePlaceholder = TXTFLS(@"NotificationDialogPrivateMessageReplyPlaceholder");
+				}
+			}
+			
+			[RZUserNotificationCenter() scheduleNotification:notification];
+
+			return; // Do not continue to Growl…
+		}
 	}
-#endif
-	
+
+	/* Nope, let Growl handle. */
 	[GrowlApplicationBridge notifyWithTitle:eventTitle
 								description:eventDescription
 						   notificationName:eventKind
@@ -174,17 +185,23 @@
 
 /* NSUserNotificationCenter */
 
-#ifdef TXForceNativeNotificationCenterDispatch
-
 - (void)userNotificationCenter:(NSUserNotificationCenter *)center
 	   didActivateNotification:(NSUserNotification *)notification
 {
 	[RZUserNotificationCenter() removeDeliveredNotification:notification];
-	
+
+	if ([TPCPreferences featureAvailableToOSXMavericks]) {
+		if (notification.activationType == NSUserNotificationActivationTypeReplied) {
+			NSString *replyMessage = notification.response.string; // It is attributed string, we only want string.
+
+			[self growlNotificationWasClicked:[notification userInfo] withReplyMessage:replyMessage changeFocus:NO];
+
+			return; // Do not continue this method.
+		}
+	}
+
 	[self growlNotificationWasClicked:[notification userInfo]];
 }
-
-#endif
 
 /* Growl delegate */
 
@@ -215,7 +232,12 @@
 	};
 }
 
-- (void)growlNotificationWasClicked:(NSDictionary *)context 
+- (void)growlNotificationWasClicked:(NSDictionary *)context
+{
+	[self growlNotificationWasClicked:context withReplyMessage:nil changeFocus:YES];
+}
+
+- (void)growlNotificationWasClicked:(NSDictionary *)context withReplyMessage:(NSString *)message changeFocus:(BOOL)changeFocus
 {
 	NSTimeInterval now = [NSDate epochTime];
 	
@@ -246,11 +268,30 @@
 		} else {
 			u = [self.worldController findClientById:uid];
 		}
-		
-		if (c) {
-			[self.worldController select:c];
-		} else if (u) {
-			[self.worldController select:u];
+
+		if (changeFocus) {
+			if (c) {
+				[self.worldController select:c];
+			} else if (u) {
+				[self.worldController select:u];
+			}
+		}
+
+		NSObjectIsEmptyAssert(message);
+
+		if (c) { // We want both a client and channel.
+			/* A user may want to do an action… #yolo */
+			if ([message hasPrefix:@"/"] && [message hasPrefix:@"//"] == NO && message.length > 1) {
+				message = [message safeSubstringFromIndex:1];
+
+				[c.client sendCommand:message
+					   completeTarget:YES
+							   target:c.name];
+			} else {
+				[c.client sendText:[NSAttributedString emptyStringWithBase:message]
+						   command:IRCPrivateCommandIndex("privmsg")
+						   channel:c];
+			}
 		}
 	}
 }

@@ -61,13 +61,7 @@ typedef enum TXNotificationType : NSInteger {
 #define TXNotificationHighlightLogStandardMessageFormat			@"%@ %@"
 #define TXNotificationHighlightLogAlternativeActionFormat		@"• %@ %@"
 
-#ifdef TXForceNativeNotificationCenterDispatch
-	#define GrowlControllerDelegate GrowlApplicationBridgeDelegate,NSUserNotificationCenterDelegate
-#else
-	#define GrowlControllerDelegate GrowlApplicationBridgeDelegate
-#endif
-
-@interface TLOGrowlController : NSObject <GrowlControllerDelegate>
+@interface TLOGrowlController : NSObject <GrowlApplicationBridgeDelegate, NSUserNotificationCenterDelegate>
 - (void)notify:(TXNotificationType)eventType
 		 title:(NSString *)eventTitle
    description:(NSString *)eventDescription
