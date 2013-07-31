@@ -54,8 +54,6 @@
 #define NSAppKitVersionNumber10_7_4 1138.47
 #define NSAppKitVersionNumber10_8	1187
 
-//#define TXForceNativeNotificationCenterDispatch		— Force notification center use regardless of Growl's installation.
-
 #define LogToConsole(fmt, ...) NSLog([@"%s [Line %d]: " stringByAppendingString:fmt], __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
 
 #ifdef DEBUG
@@ -69,28 +67,25 @@
 /* Shortcut defines. */
 #define RZAnimationCurrentContext()				[NSAnimationContext	currentContext]
 #define RZAppleEventManager()					[NSAppleEventManager sharedAppleEventManager]
+#define RZCurrentRunLoop()						[NSRunLoop currentRunLoop]
 #define RZDistributedNotificationCenter()		[NSDistributedNotificationCenter defaultCenter]
 #define RZFileManager()							[NSFileManager defaultManager]
 #define RZFontManager()							[NSFontManager sharedFontManager]
 #define RZGraphicsCurrentContext()				[NSGraphicsContext currentContext]
 #define RZMainBundle()							[NSBundle mainBundle]
+#define RZMainRunLoop()							[NSRunLoop mainRunLoop]
 #define RZMainScreen()							[NSScreen mainScreen]
 #define RZNotificationCenter()					[NSNotificationCenter defaultCenter]
 #define RZPasteboard()							[NSPasteboard generalPasteboard]
 #define RZProcessInfo()							[NSProcessInfo processInfo]
+#define RZRunningApplication()					[NSRunningApplication currentApplication]
 #define RZSharedApplication()					[NSApplication sharedApplication]
 #define RZSpellChecker()						[NSSpellChecker	sharedSpellChecker]
 #define RZUserDefaults()						[NSUserDefaults	standardUserDefaults]
 #define RZUserDefaultsController()				[NSUserDefaultsController sharedUserDefaultsController]
+#define RZUserNotificationCenter()				[NSUserNotificationCenter defaultUserNotificationCenter]
 #define RZWorkspace()							[NSWorkspace sharedWorkspace]
 #define RZWorkspaceNotificationCenter()			[RZWorkspace() notificationCenter]
-#define RZRunningApplication()					[NSRunningApplication currentApplication]
-#define RZMainRunLoop()							[NSRunLoop mainRunLoop]
-#define RZCurrentRunLoop()						[NSRunLoop currentRunLoop]
-
-#ifdef TXForceNativeNotificationCenterDispatch
-#define RZUserNotificationCenter()				[NSUserNotificationCenter defaultUserNotificationCenter]
-#endif
 
 /* Lazy-man defines. */
 #define PointerIsEmpty(s)						((s) == NULL || (s) == nil)

@@ -259,6 +259,8 @@
 "NotificationInvitedMessageDescription"		= "%1$@ has invited you to %2$@";
 "NotificationKickedMessageDescription"		= "%1$@ has kicked you out: %2$@";
 
+"NotificationDialogPrivateMessageReplyPlaceholder"	= "Enter message to reply to this private message.";
+
 "OSXGoingToSleepQuitMessage" = "My %@ has gone to sleep. ZZZzzz…";
 
 "OkButton" = "OK";
