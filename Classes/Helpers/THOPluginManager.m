@@ -176,7 +176,6 @@
 
 	NSArray *scriptPaths = @[
         NSStringNilValueSubstitute([TPCPreferences systemUnsupervisedScriptFolderPath]),
-		NSStringNilValueSubstitute([TPCPreferences customScriptFolderPath]),
 		NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),
 	];
 

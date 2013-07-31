@@ -118,7 +118,6 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (NSString *)applicationCachesFolderPath;
 + (NSString *)applicationResourcesFolderPath;
 + (NSString *)customExtensionFolderPath;
-+ (NSString *)customScriptFolderPath;
 + (NSString *)customThemeFolderPath;
 + (NSString *)bundledThemeFolderPath;
 + (NSString *)bundledExtensionFolderPath;
