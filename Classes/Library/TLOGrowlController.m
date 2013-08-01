@@ -52,11 +52,11 @@
 	if ((self = [super init])) {
 		if ([TPCPreferences featureAvailableToOSXMountainLion]) {
 			[RZUserNotificationCenter() setDelegate:self];
-			
-			return self;
 		}
 		
 		[GrowlApplicationBridge setGrowlDelegate:self];
+
+		return self;
 	}
 	
 	return self;
