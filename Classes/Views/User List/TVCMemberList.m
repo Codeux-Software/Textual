@@ -140,6 +140,8 @@
 
 - (void)mouseHasMoved:(NSPoint)atPoint skipCheck:(BOOL)skipCheck
 {
+	NSWindowNegateActionWithAttachedSheet();
+
 	NSPoint localPoint = atPoint;
 
 	if (skipCheck == NO) {
