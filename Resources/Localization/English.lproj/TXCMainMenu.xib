@@ -66,13 +66,19 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="File" id="1746">
+                <menuItem title="File" tag="2" id="1746">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="File" id="1747">
                         <items>
-                            <menuItem title="Mute Sound" tag="6666" keyEquivalent="M" id="3092">
+                            <menuItem title="Disable All Notifications" tag="6667" id="QNy-Fk-SRO">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="toggleMute:" target="267" id="3095"/>
+                                    <action selector="toggleMuteOnAllNotifcations:" target="267" id="EfG-70-kEg"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Disable All Notification Sounds" tag="6666" keyEquivalent="M" id="3092">
+                                <connections>
+                                    <action selector="toggleMuteOnNotificationSounds:" target="267" id="Ox8-g0-Y9n"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="3093"/>
@@ -886,7 +892,6 @@ CQ
         </customObject>
         <customObject id="267" userLabel="MenuController" customClass="TXMenuController">
             <connections>
-                <outlet property="muteSound" destination="3092" id="3094"/>
                 <outlet property="openDefaultIRCClientDialog" destination="2730" id="2732"/>
             </connections>
         </customObject>

@@ -111,7 +111,8 @@
 	602: "Leave Channel"
 	651: "Add Channel…"
 	652: "Delete Channel"
-	6666: "Mute Sound"
+	6666: "Disable All Notification Sounds"
+	6667: "Disable All Notifications"
 	6876: "Topic"
 	6877: "Ban List"
 	6878: "Ban Exceptions"
@@ -129,7 +130,6 @@
 	9631: "Close Window"
 	990002: "Next Highlight"
 	990003: "Previous Highlight"
-    6666: "Mute Sound"
  */
 
 @interface TXMenuController : NSObject
@@ -139,8 +139,6 @@
 @property (nonatomic, strong) NSString *currentSearchPhrase;
 @property (nonatomic, assign) BOOL findPanelOpened;
 @property (nonatomic, strong) NSDictionary *openWindowList;
-
-@property (nonatomic, nweak) NSMenuItem *muteSound;
 
 - (void)terminate;
 
@@ -264,6 +262,9 @@
 - (void)importPreferences:(id)sender;
 - (void)exportPreferences:(id)sender;
 
-- (IBAction)toggleServerListVisibility:(id)sender;
-- (IBAction)toggleMemberListVisibility:(id)sender;
+- (void)toggleServerListVisibility:(id)sender;
+- (void)toggleMemberListVisibility:(id)sender;
+
+- (void)toggleMuteOnNotificationSounds:(id)sender;
+- (void)toggleMuteOnAllNotifcations:(id)sender;
 @end

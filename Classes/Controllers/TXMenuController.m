@@ -138,7 +138,8 @@
 		case 542: // "Logs"
 		case 5675: // "Connect to Help Channel"
 		case 5676: // "Connect to Testing Channel"
-		case 6666: // "Mute Sound"
+		case 6666: // "Disable All Notification Sounds"
+		case 6667: // "Disable All Notifications"
 		case 6876: // "Topic"
 		case 6877: // "Ban List"
 		case 6878: // "Ban Exceptions"
@@ -2216,13 +2217,35 @@
 #pragma mark -
 #pragma mark Toggle Mute
 
-- (void)toggleMute:(id)sender
+- (void)toggleMuteOnNotificationSounds:(id)sender
 {
+	NSMenu *fileMenu = [[[NSApp mainMenu] itemWithTag:2] submenu];
+
     if ([self.worldController isSoundMuted]) {
-        [self.worldController unmuteSound];
+        self.worldController.isSoundMuted = NO;
+		
+		[[fileMenu itemWithTag:6666] setState:NSOffState];
     } else {
-        [self.worldController muteSound];
+		self.worldController. = YES;
+
+		[[fileMenu itemWithTag:6666] setState:NSOnState];
     }
+}
+
+- (void)toggleMuteOnAllNotifcations:(id)sender
+{
+	/* Dig for the menu. */
+	NSMenu *fileMenu = [[[NSApp mainMenu] itemWithTag:2] submenu];
+
+	if ([self.worldController areNotificationsDisabled]) {
+		self.worldController.areNotificationsDisabled = NO;
+
+		[[fileMenu itemWithTag:6667] setState:NSOffState];
+	} else {
+		self.worldController.areNotificationsDisabled = YES;
+
+		[[fileMenu itemWithTag:6667] setState:NSOnState];
+	}
 }
 
 #pragma mark -

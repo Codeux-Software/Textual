@@ -86,9 +86,9 @@
 	}
 
 	if ([config boolForKey:@"soundIsMuted"]) {
-		[self muteSound];
-	} else {
-		[self unmuteSound];
+		self.isSoundMuted = NO;
+		
+		[self.masterController.menuController toggleMuteOnNotificationSounds:nil];
 	}
 
 	self.isPopulatingSeeds = NO;
@@ -1534,23 +1534,6 @@
 - (void)serverListKeyDown:(NSEvent *)e
 {
 	[self logKeyDown:e];
-}
-
-#pragma mark -
-#pragma mark Mute Sound
-
-- (void)muteSound
-{
-    [self setIsSoundMuted:YES];
-	
-    [self.masterController.menuController.muteSound setState:NSOnState];
-}
-
-- (void)unmuteSound
-{
-    [self setIsSoundMuted:NO];
-	
-    [self.masterController.menuController.muteSound setState:NSOffState];
 }
 
 @end
