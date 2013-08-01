@@ -1,37 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4471.1" systemVersion="13A510d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4488.1" systemVersion="13A524d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4471.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4488.1"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
             <connections>
-                <action selector="hide:" destination="134" id="152"/>
-                <action selector="hideOtherApplications:" destination="145" id="146"/>
-                <action selector="terminate:" destination="136" id="139"/>
-                <action selector="unhideAllApplications:" destination="150" id="153"/>
                 <outlet property="delegate" destination="196" id="197"/>
             </connections>
         </customObject>
-        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder">
-            <connections>
-                <action selector="arrangeInFront:" destination="5" id="39"/>
-                <action selector="checkSpelling:" destination="189" id="190"/>
-                <action selector="copy:" destination="157" id="2028"/>
-                <action selector="copy:" destination="379" id="2029"/>
-                <action selector="cut:" destination="160" id="175"/>
-                <action selector="delete:" destination="164" id="195"/>
-                <action selector="performMiniaturize:" destination="23" id="37"/>
-                <action selector="performZoom:" destination="1364" id="1377"/>
-                <action selector="redo:" destination="173" id="178"/>
-                <action selector="selectAll:" destination="172" id="179"/>
-                <action selector="showGuessPanel:" destination="187" id="188"/>
-                <action selector="toggleContinuousSpellChecking:" destination="191" id="192"/>
-                <action selector="undo:" destination="158" id="180"/>
-            </connections>
-        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application"/>
         <menu title="MainMenu" systemMenu="main" id="29" userLabel="MainMenu">
             <items>
@@ -40,9 +20,16 @@
                         <items>
                             <menuItem title="About Textual" id="58">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showAboutWindow:" target="267" id="2575"/>
+                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1001"/>
-                            <menuItem title="Preferences…" tag="102" keyEquivalent="," id="129"/>
+                            <menuItem title="Preferences…" tag="102" keyEquivalent="," id="129">
+                                <connections>
+                                    <action selector="showPreferencesDialog:" target="267" id="2588"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="143">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
@@ -52,15 +39,30 @@
                             <menuItem isSeparatorItem="YES" id="144">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Hide Textual" keyEquivalent="h" id="134"/>
+                            <menuItem title="Hide Textual" keyEquivalent="h" id="134">
+                                <connections>
+                                    <action selector="hide:" target="-2" id="152"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Hide Others" keyEquivalent="h" id="145">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="hideOtherApplications:" target="-2" id="146"/>
+                                </connections>
                             </menuItem>
-                            <menuItem title="Show All" id="150"/>
+                            <menuItem title="Show All" id="150">
+                                <connections>
+                                    <action selector="unhideAllApplications:" target="-2" id="153"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="149">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Quit Textual &amp; IRC" keyEquivalent="q" id="136"/>
+                            <menuItem title="Quit Textual &amp; IRC" keyEquivalent="q" id="136">
+                                <connections>
+                                    <action selector="terminate:" target="-2" id="139"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
@@ -68,37 +70,83 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="File" id="1747">
                         <items>
-                            <menuItem title="Mute Sound" tag="6666" keyEquivalent="M" id="3092"/>
+                            <menuItem title="Mute Sound" tag="6666" keyEquivalent="M" id="3092">
+                                <connections>
+                                    <action selector="toggleMute:" target="267" id="3095"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="3093"/>
-                            <menuItem title="Close Window" tag="9631" keyEquivalent="w" id="1770"/>
+                            <menuItem title="Close Window" tag="9631" keyEquivalent="w" id="1770">
+                                <connections>
+                                    <action selector="commandWShortcutUsed:" target="267" id="1771"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
                 <menuItem title="Edit" id="163">
                     <menu key="submenu" title="Edit" id="169">
                         <items>
-                            <menuItem title="Undo" keyEquivalent="z" id="158"/>
-                            <menuItem title="Redo" keyEquivalent="Z" id="173"/>
+                            <menuItem title="Undo" keyEquivalent="z" id="158">
+                                <connections>
+                                    <action selector="undo:" target="-1" id="180"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Redo" keyEquivalent="Z" id="173">
+                                <connections>
+                                    <action selector="redo:" target="-1" id="178"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="156">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Cut" keyEquivalent="x" id="160"/>
-                            <menuItem title="Copy" tag="549" keyEquivalent="c" id="157"/>
-                            <menuItem title="Paste" tag="313" keyEquivalent="v" id="1780"/>
+                            <menuItem title="Cut" keyEquivalent="x" id="160">
+                                <connections>
+                                    <action selector="cut:" target="-1" id="175"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Copy" tag="549" keyEquivalent="c" id="157">
+                                <connections>
+                                    <action selector="copy:" target="-1" id="2028"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Paste" tag="313" keyEquivalent="v" id="1780">
+                                <connections>
+                                    <action selector="paste:" target="267" id="2997"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Delete" id="164">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="delete:" target="-1" id="195"/>
+                                </connections>
                             </menuItem>
-                            <menuItem title="Select All" keyEquivalent="a" id="172"/>
+                            <menuItem title="Select All" keyEquivalent="a" id="172">
+                                <connections>
+                                    <action selector="selectAll:" target="-1" id="179"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="174">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
                             <menuItem title="Find" id="168">
                                 <menu key="submenu" title="Find" showsStateColumn="NO" id="159">
                                     <items>
-                                        <menuItem title="Find…" tag="4564" keyEquivalent="f" id="1453"/>
-                                        <menuItem title="Find Next" tag="4565" keyEquivalent="g" id="1454"/>
+                                        <menuItem title="Find…" tag="4564" keyEquivalent="f" id="1453">
+                                            <connections>
+                                                <action selector="showFindPanel:" target="267" id="2564"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Find Next" tag="4565" keyEquivalent="g" id="1454">
+                                            <connections>
+                                                <action selector="showFindPanel:" target="267" id="2566"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Find Previous" tag="4566" keyEquivalent="G" id="1455">
                                             <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="showFindPanel:" target="267" id="2565"/>
+                                            </connections>
                                         </menuItem>
                                     </items>
                                 </menu>
@@ -106,16 +154,32 @@
                             <menuItem title="Spelling" id="184">
                                 <menu key="submenu" title="Spelling" id="185">
                                     <items>
-                                        <menuItem title="Spelling…" keyEquivalent=":" id="187"/>
-                                        <menuItem title="Check Spelling" keyEquivalent=";" id="189"/>
-                                        <menuItem title="Check Spelling as You Type" id="191"/>
+                                        <menuItem title="Spelling…" keyEquivalent=":" id="187">
+                                            <connections>
+                                                <action selector="showGuessPanel:" target="-1" id="188"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Check Spelling" keyEquivalent=";" id="189">
+                                            <connections>
+                                                <action selector="checkSpelling:" target="-1" id="190"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Check Spelling as You Type" id="191">
+                                            <connections>
+                                                <action selector="toggleContinuousSpellChecking:" target="-1" id="192"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="395">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Search in Google" tag="331" id="394"/>
+                            <menuItem title="Search in Google" tag="331" id="394">
+                                <connections>
+                                    <action selector="searchGoogle:" target="267" id="2592"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
@@ -123,19 +187,45 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="View" id="1783">
                         <items>
-                            <menuItem title="Mark Scrollback" tag="32345" keyEquivalent="l" id="1786"/>
+                            <menuItem title="Mark Scrollback" tag="32345" keyEquivalent="l" id="1786">
+                                <connections>
+                                    <action selector="markScrollback:" target="267" id="2593"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Scrollback Marker" tag="32346" keyEquivalent="l" id="2305">
                                 <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                <connections>
+                                    <action selector="gotoScrollbackMarker:" target="267" id="2595"/>
+                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="2307"/>
-                            <menuItem title="Mark All As Read" tag="32347" keyEquivalent="U" id="1924"/>
-                            <menuItem title="Clear Scrollback" tag="32348" keyEquivalent="k" id="2299"/>
+                            <menuItem title="Mark All As Read" tag="32347" keyEquivalent="U" id="1924">
+                                <connections>
+                                    <action selector="markAllAsRead:" target="267" id="2596"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Clear Scrollback" tag="32348" keyEquivalent="k" id="2299">
+                                <connections>
+                                    <action selector="clearScrollback:" target="267" id="2594"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="1788"/>
-                            <menuItem title="Increase Font Size" tag="32349" keyEquivalent="=" id="1919"/>
-                            <menuItem title="Decrease Font Size" tag="32350" keyEquivalent="-" id="1921"/>
+                            <menuItem title="Increase Font Size" tag="32349" keyEquivalent="=" id="1919">
+                                <connections>
+                                    <action selector="increaseLogFontSize:" target="267" id="2597"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Decrease Font Size" tag="32350" keyEquivalent="-" id="1921">
+                                <connections>
+                                    <action selector="decreaseLogFontSize:" target="267" id="2598"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="1918"/>
                             <menuItem title="Toggle Fullscreen" keyEquivalent="f" id="1790">
                                 <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleFullscreenMode:" target="267" id="2555"/>
+                                </connections>
                             </menuItem>
                         </items>
                     </menu>
@@ -143,98 +233,191 @@
                 <menuItem title="Server" id="286">
                     <menu key="submenu" title="Server" id="287">
                         <items>
-                            <menuItem title="Connect" tag="501" id="288"/>
-                            <menuItem title="Disconnect" tag="502" id="289"/>
-                            <menuItem title="Cancel Reconnect" tag="503" id="406"/>
+                            <menuItem title="Connect" tag="501" id="288">
+                                <connections>
+                                    <action selector="connect:" target="267" id="2599"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Disconnect" tag="502" id="289">
+                                <connections>
+                                    <action selector="disconnect:" target="267" id="2600"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Cancel Reconnect" tag="503" id="406">
+                                <connections>
+                                    <action selector="cancelReconnection:" target="267" id="2601"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="293">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
                             <menuItem title="Channel List…" tag="519" id="492">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showServerChannelList:" target="267" id="2604"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Change Nickname…" tag="511" id="297">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showNicknameChangeDialog:" target="267" id="2603"/>
+                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="298">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
                             <menuItem title="Add Server…" tag="521" id="300">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="addServer:" target="267" id="2605"/>
+                                </connections>
                             </menuItem>
-                            <menuItem title="Duplicate Server" tag="522" keyEquivalent="d" id="304"/>
+                            <menuItem title="Duplicate Server" tag="522" keyEquivalent="d" id="304">
+                                <connections>
+                                    <action selector="copyServer:" target="267" id="2607"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Delete Server…" tag="523" id="301">
                                 <string key="keyEquivalent" base64-UTF8="YES">
 CA
 </string>
+                                <connections>
+                                    <action selector="deleteServer:" target="267" id="2608"/>
+                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="303">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
                             <menuItem title="Add Channel…" tag="691" keyEquivalent="+" id="320">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                <connections>
+                                    <action selector="addChannel:" target="267" id="2619"/>
+                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="319">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Server Properties…" tag="541" keyEquivalent="u" id="302"/>
+                            <menuItem title="Server Properties…" tag="541" keyEquivalent="u" id="302">
+                                <connections>
+                                    <action selector="showServerPropertiesDialog:" target="267" id="2609"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
                 <menuItem title="Channel" id="276">
                     <menu key="submenu" title="Channel" id="277">
                         <items>
-                            <menuItem title="Join Channel" tag="601" id="290"/>
-                            <menuItem title="Leave Channel" tag="602" id="291"/>
+                            <menuItem title="Join Channel" tag="601" id="290">
+                                <connections>
+                                    <action selector="joinChannel:" target="267" id="2610"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Leave Channel" tag="602" id="291">
+                                <connections>
+                                    <action selector="leaveChannel:" target="267" id="2612"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" tag="935" id="292">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
                             <menuItem title="Add Channel…" tag="651" keyEquivalent="+" id="305">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                <connections>
+                                    <action selector="addChannel:" target="267" id="2618"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Delete Channel" tag="652" id="306">
                                 <string key="keyEquivalent" base64-UTF8="YES">
 CA
 </string>
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                <connections>
+                                    <action selector="deleteChannel:" target="267" id="2621"/>
+                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" tag="937" id="307">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Query Logs" tag="5421" keyEquivalent="L" id="1515"/>
+                            <menuItem title="Query Logs" tag="5421" keyEquivalent="L" id="1515">
+                                <connections>
+                                    <action selector="openChannelLogs:" target="267" id="2573"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Channel Properties" tag="5422" id="1500">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Channel Properties" id="1501">
                                     <items>
-                                        <menuItem title="Logs" tag="542" keyEquivalent="L" id="1505"/>
-                                        <menuItem title="Topic" tag="6876" keyEquivalent="t" id="1504"/>
+                                        <menuItem title="Logs" tag="542" keyEquivalent="L" id="1505">
+                                            <connections>
+                                                <action selector="openChannelLogs:" target="267" id="2572"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Topic" tag="6876" keyEquivalent="t" id="1504">
+                                            <connections>
+                                                <action selector="showChannelTopicDialog:" target="267" id="2615"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Modes" id="1719">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Modes" id="1720">
                                                 <items>
                                                     <menuItem title="Moderated (+m)" tag="6881" keyEquivalent="M" id="1721">
                                                         <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                                        <connections>
+                                                            <action selector="toggleChannelModerationMode:" target="267" id="2583"/>
+                                                        </connections>
                                                     </menuItem>
                                                     <menuItem title="Unmoderated (-m)" tag="6882" keyEquivalent="m" id="1722">
                                                         <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                                        <connections>
+                                                            <action selector="toggleChannelModerationMode:" target="267" id="2580"/>
+                                                        </connections>
                                                     </menuItem>
                                                     <menuItem isSeparatorItem="YES" id="1723"/>
                                                     <menuItem title="Invite Only (+i)" tag="6883" keyEquivalent="I" id="1724">
                                                         <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                                        <connections>
+                                                            <action selector="toggleChannelInviteMode:" target="267" id="2587"/>
+                                                        </connections>
                                                     </menuItem>
                                                     <menuItem title="Anyone Can Join (-i)" tag="6884" keyEquivalent="i" id="1725">
                                                         <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                                        <connections>
+                                                            <action selector="toggleChannelInviteMode:" target="267" id="2584"/>
+                                                        </connections>
                                                     </menuItem>
                                                     <menuItem isSeparatorItem="YES" id="1726"/>
-                                                    <menuItem title="Manage All Modes" tag="6885" keyEquivalent="o" id="1502"/>
+                                                    <menuItem title="Manage All Modes" tag="6885" keyEquivalent="o" id="1502">
+                                                        <connections>
+                                                            <action selector="showChannelModeDialog:" target="267" id="2617"/>
+                                                        </connections>
+                                                    </menuItem>
                                                 </items>
                                             </menu>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="1685"/>
-                                        <menuItem title="Ban List" tag="6877" keyEquivalent="B" id="1503"/>
-                                        <menuItem title="Ban Exceptions" tag="6878" keyEquivalent="E" id="1683"/>
-                                        <menuItem title="Invite Exceptions" tag="6879" keyEquivalent="I" id="2030"/>
+                                        <menuItem title="Ban List" tag="6877" keyEquivalent="B" id="1503">
+                                            <connections>
+                                                <action selector="showChannelBanList:" target="267" id="2562"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Ban Exceptions" tag="6878" keyEquivalent="E" id="1683">
+                                            <connections>
+                                                <action selector="showChannelBanExceptionList:" target="267" id="2560"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Invite Exceptions" tag="6879" keyEquivalent="I" id="2030">
+                                            <connections>
+                                                <action selector="showChannelInviteExceptionList:" target="267" id="2558"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="1506"/>
-                                        <menuItem title="General Settings" tag="6880" keyEquivalent="i" id="1507"/>
+                                        <menuItem title="General Settings" tag="6880" keyEquivalent="i" id="1507">
+                                            <connections>
+                                                <action selector="showChannelPropertiesDialog:" target="267" id="2624"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -251,16 +434,28 @@ CA
                                     <items>
                                         <menuItem title="Next Server" tag="50001" keyEquivalent="" id="1547">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="processNavigationItem:" target="267" id="1578"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem title="Previous Server" tag="50002" keyEquivalent="" id="1566">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="processNavigationItem:" target="267" id="1579"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="1575"/>
                                         <menuItem title="Next Active Server" tag="50003" keyEquivalent="" id="1567">
                                             <modifierMask key="keyEquivalentModifierMask" control="YES" option="YES"/>
+                                            <connections>
+                                                <action selector="processNavigationItem:" target="267" id="1580"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem title="Previous Active Server" tag="50004" keyEquivalent="" id="1568">
                                             <modifierMask key="keyEquivalentModifierMask" control="YES" option="YES"/>
+                                            <connections>
+                                                <action selector="processNavigationItem:" target="267" id="1581"/>
+                                            </connections>
                                         </menuItem>
                                     </items>
                                 </menu>
@@ -269,14 +464,28 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Channels" id="1549">
                                     <items>
-                                        <menuItem title="Next Channel" tag="50005" keyEquivalent="]" id="1552"/>
-                                        <menuItem title="Previous Channel" tag="50006" keyEquivalent="[" id="1553"/>
+                                        <menuItem title="Next Channel" tag="50005" keyEquivalent="]" id="1552">
+                                            <connections>
+                                                <action selector="processNavigationItem:" target="267" id="1582"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Previous Channel" tag="50006" keyEquivalent="[" id="1553">
+                                            <connections>
+                                                <action selector="processNavigationItem:" target="267" id="1583"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="1564"/>
                                         <menuItem title="Next Active Channel" tag="50007" keyEquivalent="]" id="1550">
                                             <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="processNavigationItem:" target="267" id="1584"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem title="Previous Active Channel" tag="50008" keyEquivalent="[" id="1551">
                                             <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="processNavigationItem:" target="267" id="1585"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="1565"/>
                                         <menuItem title="Next Unread Channel" tag="50009" id="1554">
@@ -284,12 +493,18 @@ CA
 CQ
 </string>
                                             <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="processNavigationItem:" target="267" id="1586"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem title="Previous Unread Channel" tag="50010" id="1555">
                                             <string key="keyEquivalent" base64-UTF8="YES">
 CQ
 </string>
                                             <modifierMask key="keyEquivalentModifierMask" shift="YES" control="YES"/>
+                                            <connections>
+                                                <action selector="processNavigationItem:" target="267" id="1587"/>
+                                            </connections>
                                         </menuItem>
                                     </items>
                                 </menu>
@@ -300,19 +515,31 @@ CQ
 CQ
 </string>
                                 <modifierMask key="keyEquivalentModifierMask" control="YES"/>
+                                <connections>
+                                    <action selector="processNavigationItem:" target="267" id="1593"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Previous Selection" tag="50011" id="1591">
                                 <string key="keyEquivalent" base64-UTF8="YES">
 CQ
 </string>
                                 <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                <connections>
+                                    <action selector="processNavigationItem:" target="267" id="1592"/>
+                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="2278"/>
                             <menuItem title="Next Highlight" tag="990002" keyEquivalent="" id="2276">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                <connections>
+                                    <action selector="onNextHighlight:" target="267" id="2303"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Previous Highlight" tag="990003" keyEquivalent="" id="2277">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                <connections>
+                                    <action selector="onPreviousHighlight:" target="267" id="2304"/>
+                                </connections>
                             </menuItem>
                         </items>
                     </menu>
@@ -320,44 +547,91 @@ CQ
                 <menuItem title="Window" id="19">
                     <menu key="submenu" title="Window" systemMenu="window" id="24">
                         <items>
-                            <menuItem title="Minimize" keyEquivalent="m" id="23"/>
+                            <menuItem title="Minimize" keyEquivalent="m" id="23">
+                                <connections>
+                                    <action selector="performMiniaturize:" target="-1" id="37"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Zoom" id="1364">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="performZoom:" target="-1" id="1377"/>
+                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="477">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
                             <menuItem title="Toggle Visibility of Member List" tag="51066" keyEquivalent="u" id="qom-q3-cE2">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleMemberListVisibility:" target="267" id="BE4-sJ-zAs"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Toggle Visibility of Server List" tag="51065" keyEquivalent="s" id="6od-OR-qNS">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleServerListVisibility:" target="267" id="QZ5-GG-Vjc"/>
+                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="Jza-lS-TTR">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Sort Channel List" tag="2433" keyEquivalent="r" id="1306"/>
+                            <menuItem title="Sort Channel List" tag="2433" keyEquivalent="r" id="1306">
+                                <connections>
+                                    <action selector="sortChannelListNames:" target="267" id="2579"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="EnE-LZ-pWA">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
                             <menuItem title="Center Main Window" id="1524">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="centerMainWindow:" target="267" id="2554"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Reset Window to Default Size" id="3096">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="resetWindowSize:" target="267" id="3097"/>
+                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1308">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Main Window" tag="589" keyEquivalent="1" id="1309"/>
-                            <menuItem title="Address Book" tag="590" keyEquivalent="2" id="1310"/>
-                            <menuItem title="Ignore List" tag="591" keyEquivalent="3" id="1451"/>
-                            <menuItem title="Textual Logs" tag="592" keyEquivalent="4" id="1378"/>
-                            <menuItem title="Highlight List" tag="593" keyEquivalent="5" id="2268"/>
+                            <menuItem title="Main Window" tag="589" keyEquivalent="1" id="1309">
+                                <connections>
+                                    <action selector="showMainWindow:" target="267" id="2578"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Address Book" tag="590" keyEquivalent="2" id="1310">
+                                <connections>
+                                    <action selector="showChannelIgnoreList:" target="267" id="2576"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Ignore List" tag="591" keyEquivalent="3" id="1451">
+                                <connections>
+                                    <action selector="showChannelIgnoreList:" target="267" id="2577"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Textual Logs" tag="592" keyEquivalent="4" id="1378">
+                                <connections>
+                                    <action selector="openLogLocation:" target="267" id="2574"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Highlight List" tag="593" keyEquivalent="5" id="2268">
+                                <connections>
+                                    <action selector="showHighlightSheet:" target="267" id="2272"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="92">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Bring All to Front" id="5"/>
+                            <menuItem title="Bring All to Front" id="5">
+                                <connections>
+                                    <action selector="arrangeInFront:" target="-1" id="39"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
@@ -367,9 +641,15 @@ CQ
                         <items>
                             <menuItem title="Connect to Help Channel" tag="5675" id="1392">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="connectToTextualHelpChannel:" target="267" id="2568"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Connect to Testing Channel" tag="5676" id="2706">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="connectToTextualTestingChannel:" target="267" id="2708"/>
+                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1661"/>
                             <menuItem title="Helpful Links" id="1686">
@@ -378,39 +658,72 @@ CQ
                                     <items>
                                         <menuItem title="Acknowledgments" id="1796">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="showAcknowledgments:" target="267" id="2556"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem title="Contributors" id="2296">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="showContributors:" target="267" id="2557"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="2279"/>
                                         <menuItem title="Wiki Home" tag="101" id="1710">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openHelpMenuLinkItem:" target="267" id="1711"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="1709"/>
                                         <menuItem title="Command Reference" tag="104" id="1667">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openHelpMenuLinkItem:" target="267" id="1668"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem title="Keyboard Shortcuts" tag="209" id="3080">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openHelpMenuLinkItem:" target="267" id="3081"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem title="Feature Requests" tag="108" id="1689">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openHelpMenuLinkItem:" target="267" id="1690"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem title="IRC URL Scheme Explained" tag="210" id="3082">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openHelpMenuLinkItem:" target="267" id="3083"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem title="Memory Management" tag="105" id="1691">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openHelpMenuLinkItem:" target="267" id="1692"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem title="Text Formatting" tag="103" id="1693">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openHelpMenuLinkItem:" target="267" id="1694"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem title="Styling Information" tag="106" id="1695">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openHelpMenuLinkItem:" target="267" id="1696"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="3079"/>
                                         <menuItem title="DCC Deprecation Information" tag="208" id="3064">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openHelpMenuLinkItem:" target="267" id="3065"/>
+                                            </connections>
                                         </menuItem>
                                     </items>
                                 </menu>
@@ -422,6 +735,9 @@ CQ
                                     <items>
                                         <menuItem title="Enable Developer Mode" tag="54092" id="2280">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="toggleDeveloperMode:" target="267" id="2281"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="2721">
                                             <connections>
@@ -435,6 +751,7 @@ CQ
                                         <menuItem title="Load Extensions" id="2722">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
+                                                <action selector="loadExtensionsIntoMemory:" target="267" id="2727"/>
                                                 <binding destination="3106" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="3129">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
@@ -445,6 +762,7 @@ CQ
                                         <menuItem title="Unload Extensions" id="2723">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
+                                                <action selector="unloadExtensionsFromMemory:" target="267" id="2728"/>
                                                 <binding destination="3106" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="3127">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
@@ -464,6 +782,7 @@ CQ
                                         <menuItem title="Reset &quot;Don't Ask Me&quot; Warnings" id="2725">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
+                                                <action selector="resetDoNotAskMePopupWarnings:" target="267" id="2729"/>
                                                 <binding destination="3106" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="3122">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
@@ -474,6 +793,7 @@ CQ
                                         <menuItem title="Open &quot;Default IRC Client&quot; Dialog" id="2730">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
+                                                <action selector="openDefaultIRCClientDialog:" target="267" id="2733"/>
                                                 <binding destination="3106" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="3120">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
@@ -484,6 +804,7 @@ CQ
                                         <menuItem title="Open &quot;Welcome to Textual&quot; Dialog" id="3103">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
+                                                <action selector="openWelcomeSheet:" target="196" id="3105"/>
                                                 <binding destination="3106" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="3118">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
@@ -503,6 +824,7 @@ CQ
                                         <menuItem title="Export Preferences" id="3088">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
+                                                <action selector="exportPreferences:" target="267" id="3091"/>
                                                 <binding destination="3106" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="3113">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
@@ -513,6 +835,7 @@ CQ
                                         <menuItem title="Import Preferences" id="3086">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
+                                                <action selector="importPreferences:" target="267" id="3090"/>
                                                 <binding destination="3106" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="3111">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
@@ -526,6 +849,9 @@ CQ
                             <menuItem isSeparatorItem="YES" id="3132"/>
                             <menuItem title="Introduction to Writing Scripts" id="3130">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showScriptingDocumentation:" target="267" id="3133"/>
+                                </connections>
                             </menuItem>
                         </items>
                     </menu>
@@ -534,10 +860,6 @@ CQ
         </menu>
         <customObject id="196" userLabel="AppController" customClass="TXMasterController">
             <connections>
-                <action selector="openWelcomeSheet:" destination="2907" id="2910"/>
-                <action selector="openWelcomeSheet:" destination="3000" id="3008"/>
-                <action selector="openWelcomeSheet:" destination="3009" id="3011"/>
-                <action selector="openWelcomeSheet:" destination="3103" id="3105"/>
                 <outlet property="addServerMenu" destination="367" id="2941"/>
                 <outlet property="channelMenuItem" destination="276" id="2946"/>
                 <outlet property="channelViewBox" destination="2806" id="2925"/>
@@ -564,185 +886,12 @@ CQ
         </customObject>
         <customObject id="267" userLabel="MenuController" customClass="TXMenuController">
             <connections>
-                <action selector="addChannel:" destination="305" id="2618"/>
-                <action selector="addChannel:" destination="320" id="2619"/>
-                <action selector="addChannel:" destination="1881" id="2620"/>
-                <action selector="addChannel:" destination="2958" id="2959"/>
-                <action selector="addServer:" destination="300" id="2605"/>
-                <action selector="addServer:" destination="369" id="2606"/>
-                <action selector="addServer:" destination="2954" id="2955"/>
-                <action selector="cancelReconnection:" destination="406" id="2601"/>
-                <action selector="centerMainWindow:" destination="1524" id="2554"/>
-                <action selector="clearScrollback:" destination="2299" id="2594"/>
-                <action selector="commandWShortcutUsed:" destination="1770" id="1771"/>
-                <action selector="connect:" destination="288" id="2599"/>
-                <action selector="connectToTextualHelpChannel:" destination="1392" id="2568"/>
-                <action selector="connectToTextualTestingChannel:" destination="2706" id="2708"/>
-                <action selector="copyServer:" destination="304" id="2607"/>
-                <action selector="copyUrl:" destination="427" id="2645"/>
-                <action selector="decreaseLogFontSize:" destination="1921" id="2598"/>
-                <action selector="deleteChannel:" destination="306" id="2621"/>
-                <action selector="deleteChannel:" destination="1882" id="2622"/>
-                <action selector="deleteServer:" destination="301" id="2608"/>
-                <action selector="disconnect:" destination="289" id="2600"/>
-                <action selector="exportPreferences:" destination="3088" id="3091"/>
-                <action selector="gotoScrollbackMarker:" destination="2305" id="2595"/>
-                <action selector="importPreferences:" destination="3086" id="3090"/>
-                <action selector="increaseLogFontSize:" destination="1919" id="2597"/>
-                <action selector="joinChannel:" destination="290" id="2610"/>
-                <action selector="joinChannel:" destination="1878" id="2611"/>
-                <action selector="joinChannel:" destination="964" id="2646"/>
-                <action selector="leaveChannel:" destination="291" id="2612"/>
-                <action selector="leaveChannel:" destination="1879" id="2613"/>
-                <action selector="loadExtensionsIntoMemory:" destination="2722" id="2727"/>
-                <action selector="markAllAsRead:" destination="1924" id="2596"/>
-                <action selector="markScrollback:" destination="1786" id="2593"/>
-                <action selector="memberBanFromServer:" destination="1329" id="2640"/>
-                <action selector="memberGlineFromServer:" destination="1335" id="2643"/>
-                <action selector="memberKickFromChannel:" destination="1350" id="2639"/>
-                <action selector="memberKickbanFromChannel:" destination="1330" id="2641"/>
-                <action selector="memberKillFromServer:" destination="1333" id="2642"/>
-                <action selector="memberModeChangeDehalfop:" destination="1322" id="2636"/>
-                <action selector="memberModeChangeDeop:" destination="1320" id="2634"/>
-                <action selector="memberModeChangeDevoice:" destination="1324" id="2638"/>
-                <action selector="memberModeChangeHalfop:" destination="1321" id="2635"/>
-                <action selector="memberModeChangeOp:" destination="1319" id="2633"/>
-                <action selector="memberModeChangeVoice:" destination="1323" id="2637"/>
-                <action selector="memberSendCTCPClientInfo:" destination="443" id="2632"/>
-                <action selector="memberSendCTCPFinger:" destination="3098" id="3102"/>
-                <action selector="memberSendCTCPPing:" destination="439" id="2628"/>
-                <action selector="memberSendCTCPTime:" destination="440" id="2629"/>
-                <action selector="memberSendCTCPUserinfo:" destination="442" id="2631"/>
-                <action selector="memberSendCTCPVersion:" destination="441" id="2630"/>
-                <action selector="memberSendInvite:" destination="1003" id="2627"/>
-                <action selector="memberSendWhois:" destination="328" id="2625"/>
-                <action selector="memberShunFromServer:" destination="1334" id="2644"/>
-                <action selector="memberStartPrivateMessage:" destination="329" id="2924"/>
-                <action selector="onNextHighlight:" destination="2276" id="2303"/>
-                <action selector="onPreviousHighlight:" destination="2277" id="2304"/>
-                <action selector="openChannelLogs:" destination="1892" id="2569"/>
-                <action selector="openChannelLogs:" destination="1884" id="2570"/>
-                <action selector="openChannelLogs:" destination="1492" id="2571"/>
-                <action selector="openChannelLogs:" destination="1505" id="2572"/>
-                <action selector="openChannelLogs:" destination="1515" id="2573"/>
-                <action selector="openDefaultIRCClientDialog:" destination="2730" id="2733"/>
-                <action selector="openHelpMenuLinkItem:" destination="1667" id="1668"/>
-                <action selector="openHelpMenuLinkItem:" destination="1689" id="1690"/>
-                <action selector="openHelpMenuLinkItem:" destination="1691" id="1692"/>
-                <action selector="openHelpMenuLinkItem:" destination="1693" id="1694"/>
-                <action selector="openHelpMenuLinkItem:" destination="1695" id="1696"/>
-                <action selector="openHelpMenuLinkItem:" destination="1710" id="1711"/>
-                <action selector="openHelpMenuLinkItem:" destination="3064" id="3065"/>
-                <action selector="openHelpMenuLinkItem:" destination="3080" id="3081"/>
-                <action selector="openHelpMenuLinkItem:" destination="3082" id="3083"/>
-                <action selector="openLogLocation:" destination="1378" id="2574"/>
-                <action selector="paste:" destination="1780" id="2997"/>
-                <action selector="paste:" destination="1778" id="2998"/>
-                <action selector="processNavigationItem:" destination="1547" id="1578"/>
-                <action selector="processNavigationItem:" destination="1566" id="1579"/>
-                <action selector="processNavigationItem:" destination="1567" id="1580"/>
-                <action selector="processNavigationItem:" destination="1568" id="1581"/>
-                <action selector="processNavigationItem:" destination="1552" id="1582"/>
-                <action selector="processNavigationItem:" destination="1553" id="1583"/>
-                <action selector="processNavigationItem:" destination="1550" id="1584"/>
-                <action selector="processNavigationItem:" destination="1551" id="1585"/>
-                <action selector="processNavigationItem:" destination="1554" id="1586"/>
-                <action selector="processNavigationItem:" destination="1555" id="1587"/>
-                <action selector="processNavigationItem:" destination="1591" id="1592"/>
-                <action selector="processNavigationItem:" destination="1577" id="1593"/>
-                <action selector="resetDoNotAskMePopupWarnings:" destination="2725" id="2729"/>
-                <action selector="resetWindowSize:" destination="3096" id="3097"/>
-                <action selector="searchGoogle:" destination="397" id="2591"/>
-                <action selector="searchGoogle:" destination="394" id="2592"/>
-                <action selector="showAboutWindow:" destination="58" id="2575"/>
-                <action selector="showAcknowledgments:" destination="1796" id="2556"/>
-                <action selector="showChannelBanExceptionList:" destination="1683" id="2560"/>
-                <action selector="showChannelBanExceptionList:" destination="1889" id="2561"/>
-                <action selector="showChannelBanList:" destination="1503" id="2562"/>
-                <action selector="showChannelBanList:" destination="1894" id="2563"/>
-                <action selector="showChannelIgnoreList:" destination="1310" id="2576"/>
-                <action selector="showChannelIgnoreList:" destination="1451" id="2577"/>
-                <action selector="showChannelInviteExceptionList:" destination="2030" id="2558"/>
-                <action selector="showChannelInviteExceptionList:" destination="2033" id="2559"/>
-                <action selector="showChannelModeDialog:" destination="1902" id="2616"/>
-                <action selector="showChannelModeDialog:" destination="1502" id="2617"/>
-                <action selector="showChannelPropertiesDialog:" destination="1890" id="2623"/>
-                <action selector="showChannelPropertiesDialog:" destination="1507" id="2624"/>
-                <action selector="showChannelTopicDialog:" destination="1893" id="2614"/>
-                <action selector="showChannelTopicDialog:" destination="1504" id="2615"/>
-                <action selector="showContributors:" destination="2296" id="2557"/>
-                <action selector="showFindPanel:" destination="1453" id="2564"/>
-                <action selector="showFindPanel:" destination="1455" id="2565"/>
-                <action selector="showFindPanel:" destination="1454" id="2566"/>
-                <action selector="showHighlightSheet:" destination="2268" id="2272"/>
-                <action selector="showMainWindow:" destination="1309" id="2578"/>
-                <action selector="showNicknameChangeDialog:" destination="377" id="2602"/>
-                <action selector="showNicknameChangeDialog:" destination="297" id="2603"/>
-                <action selector="showPreferencesDialog:" destination="129" id="2588"/>
-                <action selector="showScriptingDocumentation:" destination="3130" id="3133"/>
-                <action selector="showServerChannelList:" destination="492" id="2604"/>
-                <action selector="showServerPropertiesDialog:" destination="302" id="2609"/>
-                <action selector="showSetVhostPrompt:" destination="1411" id="2567"/>
-                <action selector="sortChannelListNames:" destination="1306" id="2579"/>
-                <action selector="toggleChannelInviteMode:" destination="1725" id="2584"/>
-                <action selector="toggleChannelInviteMode:" destination="1898" id="2585"/>
-                <action selector="toggleChannelInviteMode:" destination="1897" id="2586"/>
-                <action selector="toggleChannelInviteMode:" destination="1724" id="2587"/>
-                <action selector="toggleChannelModerationMode:" destination="1722" id="2580"/>
-                <action selector="toggleChannelModerationMode:" destination="1900" id="2581"/>
-                <action selector="toggleChannelModerationMode:" destination="1901" id="2582"/>
-                <action selector="toggleChannelModerationMode:" destination="1721" id="2583"/>
-                <action selector="toggleDeveloperMode:" destination="2280" id="2281"/>
-                <action selector="toggleFullscreenMode:" destination="1790" id="2555"/>
-                <action selector="toggleMemberListVisibility:" destination="qom-q3-cE2" id="BE4-sJ-zAs"/>
-                <action selector="toggleMute:" destination="3092" id="3095"/>
-                <action selector="toggleServerListVisibility:" destination="6od-OR-qNS" id="QZ5-GG-Vjc"/>
-                <action selector="unloadExtensionsFromMemory:" destination="2723" id="2728"/>
                 <outlet property="muteSound" destination="3092" id="3094"/>
                 <outlet property="openDefaultIRCClientDialog" destination="2730" id="2732"/>
             </connections>
         </customObject>
         <customObject id="1930" userLabel="FormatTextController" customClass="TVCTextFormatterMenu">
             <connections>
-                <action selector="insertBackgroundColorCharIntoTextBox:" destination="2469" id="2505"/>
-                <action selector="insertBackgroundColorCharIntoTextBox:" destination="2475" id="2508"/>
-                <action selector="insertBackgroundColorCharIntoTextBox:" destination="2468" id="2510"/>
-                <action selector="insertBackgroundColorCharIntoTextBox:" destination="2473" id="2515"/>
-                <action selector="insertBackgroundColorCharIntoTextBox:" destination="2476" id="2519"/>
-                <action selector="insertBackgroundColorCharIntoTextBox:" destination="2478" id="2521"/>
-                <action selector="insertBackgroundColorCharIntoTextBox:" destination="2483" id="2524"/>
-                <action selector="insertBackgroundColorCharIntoTextBox:" destination="2470" id="2526"/>
-                <action selector="insertBackgroundColorCharIntoTextBox:" destination="2479" id="2527"/>
-                <action selector="insertBackgroundColorCharIntoTextBox:" destination="2472" id="2529"/>
-                <action selector="insertBackgroundColorCharIntoTextBox:" destination="2481" id="2530"/>
-                <action selector="insertBackgroundColorCharIntoTextBox:" destination="2480" id="2532"/>
-                <action selector="insertBackgroundColorCharIntoTextBox:" destination="2474" id="2533"/>
-                <action selector="insertBackgroundColorCharIntoTextBox:" destination="2477" id="2534"/>
-                <action selector="insertBackgroundColorCharIntoTextBox:" destination="2466" id="2536"/>
-                <action selector="insertBackgroundColorCharIntoTextBox:" destination="2482" id="2537"/>
-                <action selector="insertBackgroundColorCharIntoTextBox:" destination="2471" id="2540"/>
-                <action selector="insertBoldCharIntoTextBox:" destination="2457" id="2525"/>
-                <action selector="insertForegroundColorCharIntoTextBox:" destination="2488" id="2506"/>
-                <action selector="insertForegroundColorCharIntoTextBox:" destination="2504" id="2507"/>
-                <action selector="insertForegroundColorCharIntoTextBox:" destination="2493" id="2509"/>
-                <action selector="insertForegroundColorCharIntoTextBox:" destination="2500" id="2511"/>
-                <action selector="insertForegroundColorCharIntoTextBox:" destination="2496" id="2512"/>
-                <action selector="insertForegroundColorCharIntoTextBox:" destination="2492" id="2513"/>
-                <action selector="insertForegroundColorCharIntoTextBox:" destination="2502" id="2514"/>
-                <action selector="insertForegroundColorCharIntoTextBox:" destination="2494" id="2516"/>
-                <action selector="insertForegroundColorCharIntoTextBox:" destination="2499" id="2517"/>
-                <action selector="insertForegroundColorCharIntoTextBox:" destination="2491" id="2520"/>
-                <action selector="insertForegroundColorCharIntoTextBox:" destination="2501" id="2522"/>
-                <action selector="insertForegroundColorCharIntoTextBox:" destination="2490" id="2528"/>
-                <action selector="insertForegroundColorCharIntoTextBox:" destination="2498" id="2531"/>
-                <action selector="insertForegroundColorCharIntoTextBox:" destination="2495" id="2535"/>
-                <action selector="insertForegroundColorCharIntoTextBox:" destination="2487" id="2541"/>
-                <action selector="insertForegroundColorCharIntoTextBox:" destination="2489" id="2542"/>
-                <action selector="insertForegroundColorCharIntoTextBox:" destination="2497" id="2543"/>
-                <action selector="insertItalicCharIntoTextBox:" destination="2456" id="2539"/>
-                <action selector="insertUnderlineCharIntoTextBox:" destination="2455" id="2538"/>
-                <action selector="removeBackgroundColorCharFromTextBox:" destination="2462" id="2523"/>
-                <action selector="removeForegroundColorCharFromTextBox:" destination="2461" id="2518"/>
                 <outlet property="backgroundColorMenu" destination="2463" id="2951"/>
                 <outlet property="foregroundColorMenu" destination="2484" id="2952"/>
                 <outlet property="formatterMenu" destination="1929" id="2005"/>
@@ -776,6 +925,9 @@ CQ
                                 </attributes>
                             </fragment>
                         </attributedString>
+                        <connections>
+                            <action selector="insertBoldCharIntoTextBox:" target="1930" id="2525"/>
+                        </connections>
                     </menuItem>
                     <menuItem title="Italics" tag="95002" keyEquivalent="i" id="2456">
                         <attributedString key="attributedTitle">
@@ -802,6 +954,9 @@ CQ
                             </fragment>
                         </attributedString>
                         <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                        <connections>
+                            <action selector="insertItalicCharIntoTextBox:" target="1930" id="2539"/>
+                        </connections>
                     </menuItem>
                     <menuItem title="Underline" tag="95003" keyEquivalent="u" id="2455">
                         <attributedString key="attributedTitle">
@@ -830,10 +985,16 @@ CQ
                             </fragment>
                         </attributedString>
                         <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                        <connections>
+                            <action selector="insertUnderlineCharIntoTextBox:" target="1930" id="2538"/>
+                        </connections>
                     </menuItem>
                     <menuItem isSeparatorItem="YES" id="2458"/>
                     <menuItem title="Text Color" state="on" tag="95004" hidden="YES" keyEquivalent="c" id="2461">
                         <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                        <connections>
+                            <action selector="removeForegroundColorCharFromTextBox:" target="1930" id="2518"/>
+                        </connections>
                     </menuItem>
                     <menuItem title="Text Color" tag="95005" id="2459">
                         <modifierMask key="keyEquivalentModifierMask"/>
@@ -845,51 +1006,99 @@ CQ
                                 <menuItem isSeparatorItem="YES" id="2485"/>
                                 <menuItem title=" White" onStateImage="FormattingColor_0" offStateImage="FormattingColor_0" mixedStateImage="FormattingColor_0" id="2502">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertForegroundColorCharIntoTextBox:" target="1930" id="2514"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Black" onStateImage="FormattingColor_1" offStateImage="FormattingColor_1" tag="1" id="2501">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertForegroundColorCharIntoTextBox:" target="1930" id="2522"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Blue (Navy)" onStateImage="FormattingColor_3" offStateImage="FormattingColor_3" tag="2" id="2500">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertForegroundColorCharIntoTextBox:" target="1930" id="2511"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Green" onStateImage="FormattingColor_2" offStateImage="FormattingColor_2" tag="3" id="2499">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertForegroundColorCharIntoTextBox:" target="1930" id="2517"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Red" onStateImage="FormattingColor_4" offStateImage="FormattingColor_4" tag="4" id="2498">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertForegroundColorCharIntoTextBox:" target="1930" id="2531"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Brown (Maroon)" onStateImage="FormattingColor_5" offStateImage="FormattingColor_5" tag="5" id="2497">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertForegroundColorCharIntoTextBox:" target="1930" id="2543"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Purple" onStateImage="FormattingColor_7" offStateImage="FormattingColor_7" tag="6" id="2496">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertForegroundColorCharIntoTextBox:" target="1930" id="2512"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Orange" onStateImage="FormattingColor_6" offStateImage="FormattingColor_6" tag="7" id="2495">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertForegroundColorCharIntoTextBox:" target="1930" id="2535"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Yellow" onStateImage="FormattingColor_13" offStateImage="FormattingColor_13" tag="8" id="2494">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertForegroundColorCharIntoTextBox:" target="1930" id="2516"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Light Green (Lime)" onStateImage="FormattingColor_12" offStateImage="FormattingColor_12" tag="9" id="2493">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertForegroundColorCharIntoTextBox:" target="1930" id="2509"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Teal (Green/Blue Cyan)" onStateImage="FormattingColor_10" offStateImage="FormattingColor_10" tag="10" id="2492">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertForegroundColorCharIntoTextBox:" target="1930" id="2513"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Light Cyan (Cyan) (Aqua)" onStateImage="FormattingColor_11" offStateImage="FormattingColor_11" tag="11" id="2491">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertForegroundColorCharIntoTextBox:" target="1930" id="2520"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Light Blue (Royal)" onStateImage="FormattingColor_9" offStateImage="FormattingColor_9" tag="12" id="2490">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertForegroundColorCharIntoTextBox:" target="1930" id="2528"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Pink (Light Purple) (Fuchsia)" onStateImage="FormattingColor_8" offStateImage="FormattingColor_8" tag="13" id="2489">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertForegroundColorCharIntoTextBox:" target="1930" id="2542"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Grey" onStateImage="FormattingColor_14" offStateImage="FormattingColor_14" tag="14" id="2488">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertForegroundColorCharIntoTextBox:" target="1930" id="2506"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Light Grey (Silver)" onStateImage="FormattingColor_15" offStateImage="FormattingColor_15" tag="15" id="2487">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertForegroundColorCharIntoTextBox:" target="1930" id="2541"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem isSeparatorItem="YES" tag="99" id="2503"/>
                                 <menuItem title=" Rainbow" onStateImage="FormattingColor_Rainbow" offStateImage="FormattingColor_Rainbow" mixedStateImage="FormattingColor_Rainbow" tag="100" id="2504">
@@ -1072,12 +1281,18 @@ CQ
                                         </fragment>
                                     </attributedString>
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertForegroundColorCharIntoTextBox:" target="1930" id="2507"/>
+                                    </connections>
                                 </menuItem>
                             </items>
                         </menu>
                     </menuItem>
                     <menuItem title="Background Color" state="on" tag="95006" hidden="YES" keyEquivalent="h" id="2462">
                         <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                        <connections>
+                            <action selector="removeBackgroundColorCharFromTextBox:" target="1930" id="2523"/>
+                        </connections>
                     </menuItem>
                     <menuItem title="Background Color" tag="95007" id="2460">
                         <modifierMask key="keyEquivalentModifierMask"/>
@@ -1089,51 +1304,99 @@ CQ
                                 <menuItem isSeparatorItem="YES" id="2464"/>
                                 <menuItem title=" White" onStateImage="FormattingColor_0" offStateImage="FormattingColor_0" mixedStateImage="FormattingColor_0" id="2468">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertBackgroundColorCharIntoTextBox:" target="1930" id="2510"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Black" onStateImage="FormattingColor_1" offStateImage="FormattingColor_1" tag="1" id="2469">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertBackgroundColorCharIntoTextBox:" target="1930" id="2505"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Blue (Navy)" onStateImage="FormattingColor_3" offStateImage="FormattingColor_3" tag="2" id="2470">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertBackgroundColorCharIntoTextBox:" target="1930" id="2526"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Green" onStateImage="FormattingColor_2" offStateImage="FormattingColor_2" tag="3" id="2471">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertBackgroundColorCharIntoTextBox:" target="1930" id="2540"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Red" onStateImage="FormattingColor_4" offStateImage="FormattingColor_4" tag="4" id="2472">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertBackgroundColorCharIntoTextBox:" target="1930" id="2529"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Brown (Maroon)" onStateImage="FormattingColor_5" offStateImage="FormattingColor_5" tag="5" id="2473">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertBackgroundColorCharIntoTextBox:" target="1930" id="2515"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Purple" onStateImage="FormattingColor_7" offStateImage="FormattingColor_7" tag="6" id="2474">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertBackgroundColorCharIntoTextBox:" target="1930" id="2533"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Orange" onStateImage="FormattingColor_6" offStateImage="FormattingColor_6" tag="7" id="2475">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertBackgroundColorCharIntoTextBox:" target="1930" id="2508"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Yellow" onStateImage="FormattingColor_13" offStateImage="FormattingColor_13" tag="8" id="2476">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertBackgroundColorCharIntoTextBox:" target="1930" id="2519"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Light Green (Lime)" onStateImage="FormattingColor_12" offStateImage="FormattingColor_12" tag="9" id="2477">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertBackgroundColorCharIntoTextBox:" target="1930" id="2534"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Teal (Green/Blue Cyan)" onStateImage="FormattingColor_10" offStateImage="FormattingColor_10" tag="10" id="2478">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertBackgroundColorCharIntoTextBox:" target="1930" id="2521"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Light Cyan (Cyan) (Aqua)" onStateImage="FormattingColor_11" offStateImage="FormattingColor_11" tag="11" id="2479">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertBackgroundColorCharIntoTextBox:" target="1930" id="2527"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Light Blue (Royal)" onStateImage="FormattingColor_9" offStateImage="FormattingColor_9" tag="12" id="2480">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertBackgroundColorCharIntoTextBox:" target="1930" id="2532"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Pink (Light Purple) (Fuchsia)" onStateImage="FormattingColor_8" offStateImage="FormattingColor_8" tag="13" id="2481">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertBackgroundColorCharIntoTextBox:" target="1930" id="2530"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Grey" onStateImage="FormattingColor_14" offStateImage="FormattingColor_14" tag="14" id="2482">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertBackgroundColorCharIntoTextBox:" target="1930" id="2537"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title=" Light Grey (Silver)" onStateImage="FormattingColor_15" offStateImage="FormattingColor_15" tag="15" id="2483">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertBackgroundColorCharIntoTextBox:" target="1930" id="2524"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem isSeparatorItem="YES" tag="99" id="2467"/>
                                 <menuItem title=" Rainbow" onStateImage="FormattingColor_Rainbow" offStateImage="FormattingColor_Rainbow" mixedStateImage="FormattingColor_Rainbow" tag="100" id="2466">
@@ -1316,6 +1579,9 @@ CQ
                                         </fragment>
                                     </attributedString>
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertBackgroundColorCharIntoTextBox:" target="1930" id="2536"/>
+                                    </connections>
                                 </menuItem>
                             </items>
                         </menu>
@@ -1327,21 +1593,41 @@ CQ
             <items>
                 <menuItem title="Invite to..." tag="2005" id="1003">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="memberSendInvite:" target="267" id="2627"/>
+                    </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="1777"/>
-                <menuItem title="Get Info (Whois)" tag="2001" keyEquivalent="W" id="328"/>
-                <menuItem title="Private Message (Query)" tag="2002" id="329"/>
+                <menuItem title="Get Info (Whois)" tag="2001" keyEquivalent="W" id="328">
+                    <connections>
+                        <action selector="memberSendWhois:" target="267" id="2625"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Private Message (Query)" tag="2002" id="329">
+                    <connections>
+                        <action selector="memberStartPrivateMessage:" target="267" id="2924"/>
+                    </connections>
+                </menuItem>
                 <menuItem isSeparatorItem="YES" id="331">
                     <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                 </menuItem>
                 <menuItem title="Give Op (+o)" tag="504910" keyEquivalent="O" id="1319">
                     <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                    <connections>
+                        <action selector="memberModeChangeOp:" target="267" id="2633"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Give Halfop (+h)" tag="504911" keyEquivalent="H" id="1321">
                     <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                    <connections>
+                        <action selector="memberModeChangeHalfop:" target="267" id="2635"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Give Voice (+v)" tag="504912" keyEquivalent="V" id="1323">
                     <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                    <connections>
+                        <action selector="memberModeChangeVoice:" target="267" id="2637"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="All Modes Given" tag="504913" id="2553">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -1349,19 +1635,42 @@ CQ
                 <menuItem isSeparatorItem="YES" id="1315">
                     <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                 </menuItem>
-                <menuItem title="Take Op (-o)" tag="504810" keyEquivalent="O" id="1320"/>
-                <menuItem title="Take Halfop (-h)" tag="504811" keyEquivalent="H" id="1322"/>
-                <menuItem title="Take Voice (-v)" tag="504812" keyEquivalent="V" id="1324"/>
+                <menuItem title="Take Op (-o)" tag="504810" keyEquivalent="O" id="1320">
+                    <connections>
+                        <action selector="memberModeChangeDeop:" target="267" id="2634"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Take Halfop (-h)" tag="504811" keyEquivalent="H" id="1322">
+                    <connections>
+                        <action selector="memberModeChangeDehalfop:" target="267" id="2636"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Take Voice (-v)" tag="504812" keyEquivalent="V" id="1324">
+                    <connections>
+                        <action selector="memberModeChangeDevoice:" target="267" id="2638"/>
+                    </connections>
+                </menuItem>
                 <menuItem title="All Modes Taken" tag="504813" id="2552">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="2295">
                     <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                 </menuItem>
-                <menuItem title="Ban" keyEquivalent="b" id="1329"/>
-                <menuItem title="Kick" keyEquivalent="k" id="1350"/>
+                <menuItem title="Ban" keyEquivalent="b" id="1329">
+                    <connections>
+                        <action selector="memberBanFromServer:" target="267" id="2640"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Kick" keyEquivalent="k" id="1350">
+                    <connections>
+                        <action selector="memberKickFromChannel:" target="267" id="2639"/>
+                    </connections>
+                </menuItem>
                 <menuItem title="Ban and Kick" keyEquivalent="k" id="1330">
                     <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                    <connections>
+                        <action selector="memberKickbanFromChannel:" target="267" id="2641"/>
+                    </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="1316">
                     <modifierMask key="keyEquivalentModifierMask" command="YES"/>
@@ -1369,14 +1678,38 @@ CQ
                 <menuItem title="CTCP Requests" id="437">
                     <menu key="submenu" title="CTCP Requests" id="438">
                         <items>
-                            <menuItem title="Lag (PING)" tag="2101" id="439"/>
-                            <menuItem title="Local Time (TIME)" tag="2102" id="440"/>
+                            <menuItem title="Lag (PING)" tag="2101" id="439">
+                                <connections>
+                                    <action selector="memberSendCTCPPing:" target="267" id="2628"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Local Time (TIME)" tag="2102" id="440">
+                                <connections>
+                                    <action selector="memberSendCTCPTime:" target="267" id="2629"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="3101"/>
-                            <menuItem title="Client Version (VERSION)" tag="2103" id="441"/>
-                            <menuItem title="Client Information (ClENTINFO)" tag="2105" id="443"/>
+                            <menuItem title="Client Version (VERSION)" tag="2103" id="441">
+                                <connections>
+                                    <action selector="memberSendCTCPVersion:" target="267" id="2630"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Client Information (ClENTINFO)" tag="2105" id="443">
+                                <connections>
+                                    <action selector="memberSendCTCPClientInfo:" target="267" id="2632"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="3100"/>
-                            <menuItem title="User Information (FINGER)" tag="2104" id="3098"/>
-                            <menuItem title="User Information (USERINFO)" tag="2104" id="442"/>
+                            <menuItem title="User Information (FINGER)" tag="2104" id="3098">
+                                <connections>
+                                    <action selector="memberSendCTCPFinger:" target="267" id="3102"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="User Information (USERINFO)" tag="2104" id="442">
+                                <connections>
+                                    <action selector="memberSendCTCPUserinfo:" target="267" id="2631"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
@@ -1386,16 +1719,28 @@ CQ
                         <items>
                             <menuItem title="Set Virtual Host (vHost)" id="1411">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showSetVhostPrompt:" target="267" id="2567"/>
+                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1410"/>
                             <menuItem title="Kill from Server" id="1333">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="memberKillFromServer:" target="267" id="2642"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Shun on Server" id="1334">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="memberShunFromServer:" target="267" id="2644"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Ban from Server (G:Line)" id="1335">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="memberGlineFromServer:" target="267" id="2643"/>
+                                </connections>
                             </menuItem>
                         </items>
                     </menu>
@@ -1407,15 +1752,26 @@ CQ
         </menu>
         <menu title="Menu" showsStateColumn="NO" id="367" userLabel="Add Server Menu">
             <items>
-                <menuItem title="Add Server…" tag="521" id="369"/>
+                <menuItem title="Add Server…" tag="521" id="369">
+                    <connections>
+                        <action selector="addServer:" target="267" id="2606"/>
+                    </connections>
+                </menuItem>
             </items>
         </menu>
         <menu title="Menu" id="2953" userLabel="Segmented Controller Menu">
             <items>
-                <menuItem title="Add Server…" tag="521" id="2954"/>
+                <menuItem title="Add Server…" tag="521" id="2954">
+                    <connections>
+                        <action selector="addServer:" target="267" id="2955"/>
+                    </connections>
+                </menuItem>
                 <menuItem isSeparatorItem="YES" id="2957"/>
                 <menuItem title="Add Channel…" tag="651" keyEquivalent="+" id="2958">
                     <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                    <connections>
+                        <action selector="addChannel:" target="267" id="2959"/>
+                    </connections>
                 </menuItem>
             </items>
         </menu>
@@ -1423,94 +1779,178 @@ CQ
             <items>
                 <menuItem title="Change Nickname..." tag="511" id="377">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="showNicknameChangeDialog:" target="267" id="2602"/>
+                    </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="378">
                     <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                 </menuItem>
-                <menuItem title="Search on Google" tag="331" id="397"/>
+                <menuItem title="Search on Google" tag="331" id="397">
+                    <connections>
+                        <action selector="searchGoogle:" target="267" id="2591"/>
+                    </connections>
+                </menuItem>
                 <menuItem title="Look Up in Dictionary" tag="2024" id="1676">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="472">
                     <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                 </menuItem>
-                <menuItem title="Copy" tag="549" keyEquivalent="c" id="379"/>
-                <menuItem title="Paste" tag="313" keyEquivalent="v" id="1778"/>
+                <menuItem title="Copy" tag="549" keyEquivalent="c" id="379">
+                    <connections>
+                        <action selector="copy:" target="-1" id="2029"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Paste" tag="313" keyEquivalent="v" id="1778">
+                    <connections>
+                        <action selector="paste:" target="267" id="2998"/>
+                    </connections>
+                </menuItem>
                 <menuItem isSeparatorItem="YES" tag="936" id="1397"/>
                 <menuItem title="Channel" tag="5422" id="1471">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Channel" id="1484">
                         <items>
-                            <menuItem title="Join Channel" tag="601" id="1878"/>
-                            <menuItem title="Leave Channel" tag="602" id="1879"/>
+                            <menuItem title="Join Channel" tag="601" id="1878">
+                                <connections>
+                                    <action selector="joinChannel:" target="267" id="2611"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Leave Channel" tag="602" id="1879">
+                                <connections>
+                                    <action selector="leaveChannel:" target="267" id="2613"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" tag="935" id="1880">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
                             <menuItem title="Add Channel…" tag="651" keyEquivalent="+" id="1881">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                <connections>
+                                    <action selector="addChannel:" target="267" id="2620"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Delete Channel" tag="652" id="1882">
                                 <string key="keyEquivalent" base64-UTF8="YES">
 CA
 </string>
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                <connections>
+                                    <action selector="deleteChannel:" target="267" id="2622"/>
+                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" tag="937" id="1883">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Query Logs" tag="5421" keyEquivalent="L" id="1884"/>
+                            <menuItem title="Query Logs" tag="5421" keyEquivalent="L" id="1884">
+                                <connections>
+                                    <action selector="openChannelLogs:" target="267" id="2570"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Channel Properties" tag="5422" id="1885">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Channel Properties" autoenablesItems="NO" id="1886">
                                     <items>
-                                        <menuItem title="Logs" tag="542" keyEquivalent="L" id="1892"/>
-                                        <menuItem title="Topic" keyEquivalent="t" id="1893"/>
+                                        <menuItem title="Logs" tag="542" keyEquivalent="L" id="1892">
+                                            <connections>
+                                                <action selector="openChannelLogs:" target="267" id="2569"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Topic" keyEquivalent="t" id="1893">
+                                            <connections>
+                                                <action selector="showChannelTopicDialog:" target="267" id="2614"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Modes" id="1887">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Modes" id="1895">
                                                 <items>
                                                     <menuItem title="Moderated (+m)" keyEquivalent="M" id="1901">
                                                         <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                                        <connections>
+                                                            <action selector="toggleChannelModerationMode:" target="267" id="2582"/>
+                                                        </connections>
                                                     </menuItem>
                                                     <menuItem title="Unmoderated (-m)" tag="1" keyEquivalent="m" id="1900">
                                                         <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                                        <connections>
+                                                            <action selector="toggleChannelModerationMode:" target="267" id="2581"/>
+                                                        </connections>
                                                     </menuItem>
                                                     <menuItem isSeparatorItem="YES" id="1899"/>
                                                     <menuItem title="Invite Only (+i)" keyEquivalent="I" id="1898">
                                                         <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                                        <connections>
+                                                            <action selector="toggleChannelInviteMode:" target="267" id="2585"/>
+                                                        </connections>
                                                     </menuItem>
                                                     <menuItem title="Anyone Can Join (-i)" tag="1" keyEquivalent="i" id="1897">
                                                         <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                                        <connections>
+                                                            <action selector="toggleChannelInviteMode:" target="267" id="2586"/>
+                                                        </connections>
                                                     </menuItem>
                                                     <menuItem isSeparatorItem="YES" id="1896"/>
-                                                    <menuItem title="Manage All Modes" keyEquivalent="o" id="1902"/>
+                                                    <menuItem title="Manage All Modes" keyEquivalent="o" id="1902">
+                                                        <connections>
+                                                            <action selector="showChannelModeDialog:" target="267" id="2616"/>
+                                                        </connections>
+                                                    </menuItem>
                                                 </items>
                                             </menu>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="1888"/>
-                                        <menuItem title="Ban List" keyEquivalent="B" id="1894"/>
-                                        <menuItem title="Ban Exceptions" keyEquivalent="E" id="1889"/>
-                                        <menuItem title="Invite Exceptions" keyEquivalent="I" id="2033"/>
+                                        <menuItem title="Ban List" keyEquivalent="B" id="1894">
+                                            <connections>
+                                                <action selector="showChannelBanList:" target="267" id="2563"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Ban Exceptions" keyEquivalent="E" id="1889">
+                                            <connections>
+                                                <action selector="showChannelBanExceptionList:" target="267" id="2561"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Invite Exceptions" keyEquivalent="I" id="2033">
+                                            <connections>
+                                                <action selector="showChannelInviteExceptionList:" target="267" id="2559"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="1891"/>
-                                        <menuItem title="General Settings" keyEquivalent="i" id="1890"/>
+                                        <menuItem title="General Settings" keyEquivalent="i" id="1890">
+                                            <connections>
+                                                <action selector="showChannelPropertiesDialog:" target="267" id="2623"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Query Logs" tag="5421" keyEquivalent="L" id="1492"/>
+                <menuItem title="Query Logs" tag="5421" keyEquivalent="L" id="1492">
+                    <connections>
+                        <action selector="openChannelLogs:" target="267" id="2571"/>
+                    </connections>
+                </menuItem>
             </items>
         </menu>
         <menu title="Menu" showsStateColumn="NO" id="426" userLabel="Open URL Menu">
             <items>
-                <menuItem title="Copy URL" tag="3001" id="427"/>
+                <menuItem title="Copy URL" tag="3001" id="427">
+                    <connections>
+                        <action selector="copyUrl:" target="267" id="2645"/>
+                    </connections>
+                </menuItem>
             </items>
         </menu>
         <menu showsStateColumn="NO" id="963" userLabel="Join Channel Menu">
             <items>
                 <menuItem title="Join Channel" tag="3301" id="964">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="joinChannel:" target="267" id="2646"/>
+                    </connections>
                 </menuItem>
             </items>
         </menu>
@@ -1593,14 +2033,14 @@ CA
                                 <rect key="frame" x="0.0" y="37" width="652" height="513"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="20" horizontalPageScroll="0.0" verticalLineScroll="20" verticalPageScroll="0.0" hasHorizontalScroller="NO" maxMagnification="8" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" id="2800" customClass="TVCServerListScrollView">
+                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="0.0" verticalLineScroll="17" verticalPageScroll="0.0" hasHorizontalScroller="NO" maxMagnification="8" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" id="2800" customClass="TVCServerListScrollView">
                                         <rect key="frame" x="0.0" y="0.0" width="119" height="513"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <clipView key="contentView" copiesOnScroll="NO" id="FP0-Cu-NfW">
                                             <rect key="frame" x="0.0" y="0.0" width="119" height="513"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="20" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="14" indentationMarkerFollowsCell="NO" outlineTableColumn="2804" id="2801" customClass="TVCServerList">
+                                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="14" indentationMarkerFollowsCell="NO" outlineTableColumn="2804" id="2801" customClass="TVCServerList">
                                                     <rect key="frame" x="0.0" y="0.0" width="119" height="513"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="0.0"/>
@@ -1716,14 +2156,14 @@ CA
                                                 <rect key="frame" x="277" y="0.0" width="255" height="513"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
-                                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="20" horizontalPageScroll="0.0" verticalLineScroll="20" verticalPageScroll="0.0" hasHorizontalScroller="NO" maxMagnification="8" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" id="VfW-Q0-igm" userLabel="Member List Scroll View" customClass="TVCMemberListScrollView">
+                                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="0.0" verticalLineScroll="17" verticalPageScroll="0.0" hasHorizontalScroller="NO" maxMagnification="8" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" id="VfW-Q0-igm" userLabel="Member List Scroll View" customClass="TVCMemberListScrollView">
                                                         <rect key="frame" x="0.0" y="0.0" width="256" height="513"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <clipView key="contentView" copiesOnScroll="NO" id="3fo-hb-41L">
                                                             <rect key="frame" x="0.0" y="0.0" width="256" height="513"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" autosaveColumns="NO" rowHeight="20" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="14" indentationMarkerFollowsCell="NO" outlineTableColumn="npr-ez-jah" id="BfG-Qj-vW8" userLabel="Member List" customClass="TVCMemberList">
+                                                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="14" indentationMarkerFollowsCell="NO" outlineTableColumn="npr-ez-jah" id="BfG-Qj-vW8" userLabel="Member List" customClass="TVCMemberList">
                                                                     <rect key="frame" x="0.0" y="0.0" width="256" height="513"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                     <size key="intercellSpacing" width="3" height="0.0"/>
@@ -1892,6 +2332,9 @@ CA
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="openWelcomeSheet:" target="196" id="3008"/>
+                                            </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" id="3009">
                                             <rect key="frame" x="283" y="-1" width="164" height="32"/>
@@ -1900,6 +2343,9 @@ CA
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="openWelcomeSheet:" target="196" id="3011"/>
+                                            </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="3012">
                                             <rect key="frame" x="100" y="129" width="366" height="51"/>
@@ -1961,6 +2407,9 @@ CA
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="openWelcomeSheet:" target="196" id="2910"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                 </customView>
@@ -1989,7 +2438,7 @@ CA
                 <outlet property="view" destination="2965" id="2966"/>
             </connections>
         </viewController>
-        <popover behavior="t" id="2963" userLabel="User Info Popover" customClass="TVCMemberListUserInfoPopover">
+        <popover id="2963" userLabel="User Info Popover" customClass="TVCMemberListUserInfoPopover">
             <connections>
                 <outlet property="addressField" destination="2989" id="2995"/>
                 <outlet property="awayStatusField" destination="FDn-T9-61V" id="CfP-mh-fDP"/>
@@ -2190,7 +2639,7 @@ CA
                         <color key="color" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </shadow>
                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" selectable="YES" sendsActionOnEndEditing="YES" title="################################" id="2986">
-                        <font key="font" metaFont="titleBar" size="12"/>
+                        <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" red="0.07796198008011801" green="0.07796198008011801" blue="0.07796198008011801" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -2203,7 +2652,7 @@ CA
                         <color key="color" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </shadow>
                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" selectable="YES" sendsActionOnEndEditing="YES" title="################################" id="2988">
-                        <font key="font" metaFont="titleBar" size="12"/>
+                        <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" red="0.07796198008011801" green="0.07796198008011801" blue="0.07796198008011801" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -2216,7 +2665,7 @@ CA
                         <color key="color" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </shadow>
                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" selectable="YES" sendsActionOnEndEditing="YES" title="################################" id="2990">
-                        <font key="font" metaFont="titleBar" size="12"/>
+                        <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" red="0.07796198008011801" green="0.07796198008011801" blue="0.07796198008011801" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -2229,7 +2678,7 @@ CA
                         <color key="color" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </shadow>
                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="################################" id="2992">
-                        <font key="font" metaFont="titleBar" size="12"/>
+                        <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" red="0.07796198008011801" green="0.07796198008011801" blue="0.07796198008011801" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -2286,7 +2735,7 @@ CA
                         <color key="color" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </shadow>
                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="################################" id="jvH-0Q-SL4">
-                        <font key="font" metaFont="titleBar" size="12"/>
+                        <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" red="0.07796198008011801" green="0.07796198008011801" blue="0.07796198008011801" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
