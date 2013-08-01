@@ -744,6 +744,10 @@
     if ([TPCPreferences bounceDockIconForEvent:type]) {
         [NSApp requestUserAttention:NSInformationalRequest];
     }
+
+	if (self.worldController.areNotificationsDisabled) {
+		return YES;
+	}
     
 	if (self.worldController.isSoundMuted == NO) {
 		[TLOSoundPlayer play:[TPCPreferences soundForEvent:type]];
@@ -794,6 +798,10 @@
 	
 	//NSObjectIsEmptyAssertReturn(text, NO);
 	//NSObjectIsEmptyAssertReturn(nick, NO);
+
+	if (self.worldController.areNotificationsDisabled) {
+		return YES;
+	}
 
 	if (self.worldController.isSoundMuted == NO) {
 		[TLOSoundPlayer play:[TPCPreferences soundForEvent:type]];
@@ -2194,7 +2202,9 @@
 			} else {
 				[self printDebugInformation:TXTLS(@"SoundIsNowMuted")];
 
-				[self.worldController muteSound];
+				self.worldController.isSoundMuted = NO;
+
+				[self.masterController.menuController toggleMuteOnNotificationSounds:nil];
 			}
 
 			break;
@@ -2204,7 +2214,9 @@
 			if (self.worldController.isSoundMuted) {
 				[self printDebugInformation:TXTLS(@"SoundIsNoLongerMuted")];
 
-				[self.worldController unmuteSound];
+				self.worldController.isSoundMuted = YES;
+
+				[self.masterController.menuController toggleMuteOnNotificationSounds:nil];
 			} else {
 				[self printDebugInformation:TXTLS(@"SoundIsNotMuted")];
 			}
