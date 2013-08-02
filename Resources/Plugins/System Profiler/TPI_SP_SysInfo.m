@@ -280,10 +280,16 @@
 			NSAssert(NO, @"_all_models");
 		}
 
-		NSString *_exact_model = [CSFWSystemInformation systemModelName];
+		NSString *_exact_model;
 
-		if ([_all_models containsKey:_model]) {
-			_exact_model = _all_models[_model];
+		if ([_model hasPrefix:@"VMware"]) {
+			_exact_model = [_all_models objectForKey:@"VMware"];
+		} else {
+			_exact_model = [CSFWSystemInformation systemModelName];
+
+			if ([_all_models containsKey:_model]) {
+				_exact_model = _all_models[_model];
+			}
 		}
 
 		_new = TPIFLS(@"SystemInformationCompiledOutputModel", _exact_model);
