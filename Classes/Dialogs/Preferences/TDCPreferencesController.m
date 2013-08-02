@@ -497,14 +497,14 @@
 
 - (void)updateTranscriptFolder
 {
-	NSString *path = [TPCPreferences transcriptFolder];
+	NSURL *path = [TPCPreferences transcriptFolder];
 
 	NSMenuItem *item = [self.transcriptFolderButton itemAtIndex:0];
 
 	if (NSObjectIsEmpty(path)) {
 		[item setTitle:TXTLS(@"NoLogLocationDefinedMenuItem")];
 	} else {
-		NSImage *icon = [RZWorkspace() iconForFile:path];
+		NSImage *icon = [RZWorkspace() iconForFile:[path path]];
 
 		[icon setSize:NSMakeSize(16, 16)];
 

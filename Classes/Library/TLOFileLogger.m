@@ -145,8 +145,8 @@
 	/* This call is designed to reopen the file pointer when using 
 	 the date as the filename. When the date changes, the log path
 	 will have to change as well. This handles that. */
-	
-	if ([self.filename isEqualToString:self.buildFileName] == NO) {
+
+	if ([self.filename isEqual:self.buildFileName] == NO) {
 		[self open];
 	}
 }
@@ -157,7 +157,7 @@
 	[self close];
 
 	/* Where are we writing to? */
-	NSString *path = self.fileWritePath;
+	NSURL *path = self.fileWritePath;
 
 	NSObjectIsEmptyAssert(path);
 
@@ -170,25 +170,39 @@
 	 check instead of using "path" because the generation
 	 of self.filename may have added extra directories to 
 	 the structure of the path beyond what "path" provided. */
-	NSString *folder = [self.filename stringByDeletingLastPathComponent];
-	
-	if ([RZFileManager() fileExistsAtPath:folder isDirectory:NULL] == NO) {
+	NSURL *folder = [self.filename URLByDeletingLastPathComponent];
+
+	if ([RZFileManager() fileExistsAtPath:[folder path] isDirectory:NULL] == NO) {
 		NSError *fmerr;
-		
-		[RZFileManager() createDirectoryAtPath:folder withIntermediateDirectories:YES attributes:nil error:&fmerr];
+
+		[RZFileManager() createDirectoryAtURL:folder withIntermediateDirectories:YES attributes:nil error:&fmerr];
 
 		if (fmerr) {
 			LogToConsole(@"Error Creating Folder: %@", [fmerr localizedDescription]);
+
+			[self close]; // We couldn't create the folder. Destroy everything.
+
+			return;
 		}
 	}
 
 	/* Does the file exist? */
-	if ([RZFileManager() fileExistsAtPath:self.filename] == NO) {
-		[RZFileManager() createFileAtPath:self.filename contents:[NSData data] attributes:nil];
+	if ([RZFileManager() fileExistsAtPath:[self.filename path]] == NO) {
+		NSError *fcerr;
+
+		[NSStringEmptyPlaceholder writeToURL:self.filename atomically:NO encoding:NSUTF8StringEncoding error:&fcerr];
+
+		if (fcerr) {
+			LogToConsole(@"Error Creating File: %@", [fcerr localizedDescription]);
+
+			[self close]; // We couldn't create the file. Destroy everything.
+
+			return;
+		}
 	}
 
 	/* Open our file handle. */
-	self.file = [NSFileHandle fileHandleForUpdatingAtPath:self.filename];
+	self.file = [NSFileHandle fileHandleForUpdatingAtPath:[self.filename path]];
 
 	if (self.file) {
 		[self.file seekToEndOfFile];
@@ -200,19 +214,19 @@
 #pragma mark -
 #pragma mark File Handler Path
 
-- (NSString *)fileWritePath
+- (NSURL *)fileWritePath
 {
 	return [TPCPreferences transcriptFolder];
 }
 
-- (NSString *)buildPath
+- (NSURL *)buildPath
 {
 	return [self buildPath:YES];
 }
 
-- (NSString *)buildPath:(BOOL)forceUUID
+- (NSURL *)buildPath:(BOOL)forceUUID
 {
-	NSString *base = self.fileWritePath;
+	NSURL *base = self.fileWritePath;
 
 	NSObjectIsEmptyAssertReturn(base, nil);
 
@@ -231,10 +245,10 @@
 	 99.9999% of the time. */
 
 	if (forceUUID) {
-		NSString *oldPath = [self buildPath:NO];
+		NSURL *oldPath = [self buildPath:NO];
 
 		/* Does the old path exist? */
-		if ([RZFileManager() fileExistsAtPath:oldPath]) {
+		if ([RZFileManager() fileExistsAtPath:[oldPath path]]) {
 			return oldPath;
 		}
 
@@ -245,25 +259,25 @@
 	}
 	
 	if (PointerIsEmpty(self.channel)) {
-		return [base stringByAppendingFormat:@"/%@/%@/", serv, TLOFileLoggerConsoleDirectoryName];
+		return [base URLByAppendingPathComponent:[NSString stringWithFormat:@"/%@/%@/", serv, TLOFileLoggerConsoleDirectoryName] isDirectory:YES];
 	} else if (self.channel.isPrivateMessage) {
-		return [base stringByAppendingFormat:@"/%@/%@/%@/", serv, TLOFileLoggerPrivateMessageDirectoryName, chan];
+		return [base URLByAppendingPathComponent:[NSString stringWithFormat:@"/%@/%@/%@/", serv, TLOFileLoggerPrivateMessageDirectoryName, chan] isDirectory:YES];
 	} else {
-		return [base stringByAppendingFormat:@"/%@/%@/%@/", serv, TLOFileLoggerChannelDirectoryName, chan];
+		return [base URLByAppendingPathComponent:[NSString stringWithFormat:@"/%@/%@/%@/", serv, TLOFileLoggerChannelDirectoryName, chan] isDirectory:YES];
 	}
 
 	return base;
 }
 
-- (NSString *)buildFileName
+- (NSURL *)buildFileName
 {
 	NSDate *filename = [[NSDate date] dateWithCalendarFormat:@"%Y-%m-%d" timeZone:nil];
 
-	NSString *buildPath = self.buildPath;
+	NSURL *buildPath = self.buildPath;
 
-	NSObjectIsEmptyAssertReturn(buildPath, NSStringEmptyPlaceholder);
+	NSObjectIsEmptyAssertReturn(buildPath, nil);
 
-	return [NSString stringWithFormat:@"%@%@.txt", buildPath, filename];
+	return [buildPath URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt", filename] isDirectory:NO];
 }
 
 #pragma mark -

@@ -468,9 +468,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 	// URLByResolvingBookmarkData throws some weird shit during shutdown.
 	// We're just going to loose whatever long we were wanting to save.
 	// Probably the disconnect message. Oh well.
-	if (self.masterController.terminating) {
-		return;
-	}
+	NSAssertReturn(self.masterController.terminating == NO);
 	
 	NSData *bookmark = [RZUserDefaults() dataForKey:@"LogTranscriptDestinationSecurityBookmark"];
 
@@ -478,49 +476,45 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 	NSError *resolveError;
 
+	BOOL isStale = YES;
+
 	NSURL *resolvedBookmark = [NSURL URLByResolvingBookmarkData:bookmark
 														options:NSURLBookmarkResolutionWithSecurityScope
 												  relativeToURL:nil
-											bookmarkDataIsStale:NO
+											bookmarkDataIsStale:&isStale
 														  error:&resolveError];
 
 	if (resolveError) {
-		LogToConsole(@"Error creating bookmark for URL: %@", [resolveError localizedDescription]);
+		DebugLogToConsole(@"Error creating bookmark for URL: %@", [resolveError localizedDescription]);
 	} else {
-		if (transcriptFolderResolvedBookmark) {
-			[self stopUsingTranscriptFolderSecurityScopedBookmark];
+		transcriptFolderResolvedBookmark = resolvedBookmark;
+
+		if ([transcriptFolderResolvedBookmark startAccessingSecurityScopedResource] == NO) {
+			DebugLogToConsole(@"Failed to access bookmark.");
 		}
-
-		 transcriptFolderResolvedBookmark = resolvedBookmark;
-		[transcriptFolderResolvedBookmark startAccessingSecurityScopedResource];  
 	}
-}
-
-+ (void)stopUsingTranscriptFolderSecurityScopedBookmark
-{
-	NSObjectIsEmptyAssert(transcriptFolderResolvedBookmark);
-
-	[transcriptFolderResolvedBookmark stopAccessingSecurityScopedResource];
-
-	transcriptFolderResolvedBookmark = nil;
 }
 
 #pragma mark -
 
-+ (NSString *)transcriptFolder
++ (NSURL *)transcriptFolder
 {
-	if (NSObjectIsEmpty(transcriptFolderResolvedBookmark)) {
-		[self startUsingTranscriptFolderSecurityScopedBookmark];
-	} 
-
-	return [transcriptFolderResolvedBookmark path];
+	return transcriptFolderResolvedBookmark;
 }
 
 + (void)setTranscriptFolder:(id)value
 {
-	[self stopUsingTranscriptFolderSecurityScopedBookmark];
+	/* Destroy old pointer if needed. */
+	if (PointerIsNotEmpty(transcriptFolderResolvedBookmark)) {
+		[transcriptFolderResolvedBookmark stopAccessingSecurityScopedResource];
+		 transcriptFolderResolvedBookmark = nil;
+	}
 
+	/* Set new location. */
 	[RZUserDefaults() setObject:value forKey:@"LogTranscriptDestinationSecurityBookmark"];
+
+	/* Reset our folder. */
+	[self startUsingTranscriptFolderSecurityScopedBookmark];
 }
 
 #pragma mark -
@@ -1400,6 +1394,8 @@ static NSMutableArray *excludeKeywords = nil;
 	}
 #endif
 
+	[self startUsingTranscriptFolderSecurityScopedBookmark];
+
 	// ====================================================== //
 
 	NSMutableDictionary *d = [NSMutableDictionary dictionary];
@@ -1553,6 +1549,9 @@ static NSMutableArray *excludeKeywords = nil;
             }
         }
     }
+
+	/* Setup loggin. */
+	[self startUsingTranscriptFolderSecurityScopedBookmark];
 }
 
 #pragma mark -
