@@ -1903,10 +1903,10 @@
 
 - (void)openLogLocation:(id)sender
 {	
-	NSString *path = [TPCPreferences transcriptFolder];
+	NSURL *path = [TPCPreferences transcriptFolder];
 	
-	if ([RZFileManager() fileExistsAtPath:path]) {
-		[RZWorkspace() openURL:[NSURL fileURLWithPath:path]];
+	if ([RZFileManager() fileExistsAtPath:[path path]]) {
+		[RZWorkspace() openURL:path];
 	} else {
 		[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"LogPathDoesNotExistMessage")
 											title:TXTLS(@"LogPathDoesNotExistTitle")
@@ -1926,10 +1926,10 @@
 		return;
 	}
 	
-	NSString *path = [c.logFile buildPath];
+	NSURL *path = [c.logFile buildPath];
 	
-	if ([RZFileManager() fileExistsAtPath:path]) {
-		[RZWorkspace() openURL:[NSURL fileURLWithPath:path]];
+	if ([RZFileManager() fileExistsAtPath:[path path]]) {
+		[RZWorkspace() openURL:path];
 	} else {
 		[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"LogPathDoesNotExistMessage")
 											title:TXTLS(@"LogPathDoesNotExistTitle")
@@ -2226,7 +2226,7 @@
 		
 		[[fileMenu itemWithTag:6666] setState:NSOffState];
     } else {
-		self.worldController. = YES;
+		self.worldController.isSoundMuted = YES;
 
 		[[fileMenu itemWithTag:6666] setState:NSOnState];
     }

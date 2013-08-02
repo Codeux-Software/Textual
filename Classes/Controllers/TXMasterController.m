@@ -729,10 +729,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[dic setInteger:self.memberSplitView.dividerPosition forKey:@"memberList"];
 
 	[dic setBool:fullscreen forKey:@"fullscreen"];
-	
-	if (self.terminating) {
-		[TPCPreferences stopUsingTranscriptFolderSecurityScopedBookmark];
-	}
 
 	[TPCPreferences saveWindowState:dic name:@"Window -> Main Window"];
 }

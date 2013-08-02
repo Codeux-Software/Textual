@@ -39,7 +39,6 @@
 #import "TextualApplication.h"
 
 /* This is the class used for logging to text in Textual… */
-
 #define TLOFileLoggerConsoleDirectoryName				@"Console"
 #define TLOFileLoggerChannelDirectoryName				@"Channels"
 #define TLOFileLoggerPrivateMessageDirectoryName		@"Queries"
@@ -47,8 +46,8 @@
 @interface TLOFileLogger : NSObject
 @property (nonatomic, nweak) IRCClient *client;
 @property (nonatomic, nweak) IRCChannel *channel;
-@property (nonatomic, strong) NSString *filename;
-@property (nonatomic, strong) NSString *fileWritePath;
+@property (nonatomic, strong) NSURL *filename;
+@property (nonatomic, strong) NSURL *fileWritePath;
 @property (nonatomic, strong) NSFileHandle *file;
 
 - (void)open;
@@ -59,7 +58,7 @@
 - (void)updateWriteCache;
 - (void)updateWriteCacheTimer;
 
-- (NSString *)buildPath;
+- (NSURL *)buildPath;
 
 - (void)writePlainTextLine:(NSString *)s;
 @end

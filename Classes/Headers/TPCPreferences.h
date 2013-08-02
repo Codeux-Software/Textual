@@ -129,11 +129,8 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (BOOL)logTranscript;
 + (BOOL)logTranscriptInBatches;
 
-+ (NSString *)transcriptFolder;
++ (NSURL *)transcriptFolder;
 + (void)setTranscriptFolder:(id)value;
-
-+ (void)startUsingTranscriptFolderSecurityScopedBookmark;
-+ (void)stopUsingTranscriptFolderSecurityScopedBookmark;
 
 + (NSArray *)publicIRCCommandList;
 + (NSInteger)indexOfIRCommand:(NSString *)command;
