@@ -43,13 +43,11 @@
 {
 	/* List based off https://en.wikipedia.org/wiki/Internet_media_type#Type_image */
 
-	return @[@"image/gif", @"image/jpeg", @"image/png", @"image/svg+xml"];
+	return @[@"image/gif", @"image/jpeg", @"image/png", @"image/svg+xml", @"image/tiff", @"image/x-ms-bmp"];
 }
 
 + (NSString *)imageURLFromBase:(NSString *)url
 {
-	NSString *lowerUrl = [url lowercaseString];
-
 	NSURL *u = [NSURL URLWithString:[url encodeURIFragment]];
 
 	NSString *scheme = u.scheme;
@@ -59,24 +57,9 @@
 
 	if ([scheme isEqualToString:@"file"]) {
 		// If the file is a local file (file:// scheme), then let us ignore it.
-		// Because Textual is in a sandbox, we will not have permission to linked
-		// local files unless they are stored relative to our container.
-		//
-		// For example, the user may post the URL "file:///Users/Michael/Desktop/mom.jpg"
-		// because they have a file named mom.jpg on their Desktop. Textual does not have
-		// access to the actual users Desktop unless the user explicitly tells us that we
-		// do. Therefore, this image would create an error trying to display it.
-		//
-		// Our sandbox path is returned using NSHomeDirectory() so we can at least
-		// check for that within the link and pass it along if it is there. Even doing
-		// this is unsafe to an extent and normally pointless.
-		//
-		// Who would push something to our sandbox to just link for themselves? No one
-		// on IRC would actually be able to see the linked image. 
+		// Only the local user can see their own files.
 
-		if ([lowerUrl containsIgnoringCase:NSHomeDirectory()] == NO) {
-			return nil;
-		}
+		return nil;
 	}
 
 	NSString *plguinResult = [RZPluginManager() processInlineMediaContentURL:url];
@@ -85,23 +68,12 @@
 		return plguinResult;
 	}
 
-	// The following parsing engine is mostly unmainted by Codeux Software. Nearly all, if
-	// not all, is left over legacy code from Limechat when we forked it. There are one or
-	// two exceptions from push requests, but it is mostly unchanged.
-	//
-	// It is encouraged that developers with the knowledge contribute to this class as
-	// it is not of high priority. Only when a user requests an addition will any be done.
-	// Beyond that, it is only updated to match changes to the underlying codebase. 
-
 	BOOL hadExtension = NO;
 
-	if ([lowerUrl hasSuffix:@".jpg"] ||
-		[lowerUrl hasSuffix:@".jpeg"] ||
-		[lowerUrl hasSuffix:@".png"] ||
-		[lowerUrl hasSuffix:@".gif"] ||
-		[lowerUrl hasSuffix:@".tif"] ||
-		[lowerUrl hasSuffix:@".tiff"] ||
-		[lowerUrl hasSuffix:@".bmp"])
+	if ([path hasSuffix:@".jpg"] || [path hasSuffix:@".jpeg"] ||
+		[path hasSuffix:@".png"] || [path hasSuffix:@".gif"] ||
+		[path hasSuffix:@".tif"] || [path hasSuffix:@".tiff"] ||
+		[path hasSuffix:@".bmp"])
 	{
 		hadExtension = YES;
 
