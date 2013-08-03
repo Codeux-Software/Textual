@@ -110,8 +110,7 @@
 
 - (NSString *)stripIRCEffects;
 
-- (NSRange)rangeOfChannelName;
-- (NSRange)rangeOfChannelNameStart:(NSInteger)start;
+- (NSRange)rangeOfNextSegmentMatchingRegularExpression:(NSString *)regex startingAt:(NSInteger)start;
 
 - (NSString *)encodeURIComponent;
 - (NSString *)encodeURIFragment;

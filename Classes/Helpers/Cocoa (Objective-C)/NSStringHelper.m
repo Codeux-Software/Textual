@@ -614,12 +614,7 @@
 	return [NSString stringWithCharacters:buf length:pos];
 }
 
-- (NSRange)rangeOfChannelName
-{
-	return [self rangeOfChannelNameStart:0];
-}
-
-- (NSRange)rangeOfChannelNameStart:(NSInteger)start
+- (NSRange)rangeOfNextSegmentMatchingRegularExpression:(NSString *)regex startingAt:(NSInteger)start
 {
 	NSInteger stringLength = self.length;
 	
@@ -627,7 +622,7 @@
 	
 	NSString *searchString = [self safeSubstringFromIndex:start];
 	
-	NSRange searchRange = [TLORegularExpression string:searchString rangeOfRegex:@"#([a-zA-Z0-9\\#\\-]+)"];
+	NSRange searchRange = [TLORegularExpression string:searchString rangeOfRegex:regex];
 
 	if (searchRange.location == NSNotFound) {
 		return NSEmptyRange();
