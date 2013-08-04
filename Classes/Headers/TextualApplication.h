@@ -199,6 +199,7 @@
 	#import "NSArrayHelper.h"
 	#import "NSByteCountFormatterHelper.h"
 	#import "NSColorHelper.h"
+	#import "NSDataHelper.h"
 	#import "NSDateHelper.h"
 	#import "NSDictionaryHelper.h"
 	#import "NSFontHelper.h"
@@ -212,8 +213,8 @@
 	#import "NSSplitViewHelper.h"
 	#import "NSStringHelper.h"
 	#import "NSTextFieldHelper.h"
-	#import "NSWindowHelper.h"
 	#import "NSUserDefaultsHelper.h"
+	#import "NSWindowHelper.h"
 
 	/* Dialogs. */
 
