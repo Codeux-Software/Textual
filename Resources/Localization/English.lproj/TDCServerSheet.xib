@@ -1,30 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4471.1" systemVersion="13A510d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4488.1" systemVersion="13A524d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4471.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4488.1"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCServerSheet">
             <connections>
-                <action selector="addChannel:" destination="1794" id="1815"/>
-                <action selector="addHighlight:" destination="2449" id="2481"/>
-                <action selector="cancel:" destination="1456" id="1465"/>
-                <action selector="deleteChannel:" destination="1796" id="1814"/>
-                <action selector="deleteHighlight:" destination="2447" id="2483"/>
-                <action selector="deleteIgnore:" destination="1845" id="1855"/>
-                <action selector="editChannel:" destination="1795" id="1816"/>
-                <action selector="editHighlight:" destination="2448" id="2482"/>
-                <action selector="editIgnore:" destination="1844" id="1857"/>
-                <action selector="floodControlChanged:" destination="2170" id="2225"/>
-                <action selector="ok:" destination="1455" id="1466"/>
-                <action selector="proxyTypeChanged:" destination="1905" id="2289"/>
-                <action selector="serverAddressChanged:" destination="1548" id="2287"/>
-                <action selector="serverAddressChanged:" destination="1539" id="2288"/>
-                <action selector="showAddIgnoreMenu:" destination="1843" id="1999"/>
-                <action selector="toggleAdvancedEncodings:" destination="2315" id="2319"/>
-                <action selector="toggleAdvancedSettings:" destination="2347" id="2484"/>
                 <outlet property="addChannelButton" destination="1794" id="1947"/>
                 <outlet property="addHighlightButton" destination="2449" id="2478"/>
                 <outlet property="addIgnoreButton" destination="1843" id="1951"/>
@@ -172,6 +155,9 @@
 DQ
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="ok:" target="-2" id="1466"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="1456">
                         <rect key="frame" x="473" y="9" width="96" height="32"/>
@@ -183,6 +169,9 @@ DQ
 Gw
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="cancel:" target="-2" id="1465"/>
+                        </connections>
                     </button>
                     <button id="2347">
                         <rect key="frame" x="18" y="17" width="177" height="18"/>
@@ -192,6 +181,7 @@ Gw
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
+                            <action selector="toggleAdvancedSettings:" target="-2" id="2484"/>
                             <binding destination="2317" name="value" keyPath="values.Server Properties Window Sheet —> Show Advanced Settings" id="2349"/>
                         </connections>
                     </button>
@@ -239,6 +229,9 @@ Gw
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <action selector="serverAddressChanged:" target="-2" id="2288"/>
+                    </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1540">
                     <rect key="frame" x="93" y="200" width="107" height="17"/>
@@ -325,6 +318,9 @@ Gw
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </comboBoxCell>
+                    <connections>
+                        <action selector="serverAddressChanged:" target="-2" id="2287"/>
+                    </connections>
                 </comboBox>
                 <button id="2250">
                     <rect key="frame" x="113" y="48" width="310" height="18"/>
@@ -644,6 +640,7 @@ Gw
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
+                        <action selector="toggleAdvancedEncodings:" target="-2" id="2319"/>
                         <binding destination="2317" name="value" keyPath="values.Server Properties Window Sheet —> Include Advanced Encodings" id="2318"/>
                     </connections>
                 </button>
@@ -731,9 +728,9 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="2599">
-                    <rect key="frame" x="130" y="13" width="257" height="13"/>
+                    <rect key="frame" x="127" y="14" width="296" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="These features target 1.0 of ZNC and later." id="2600">
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="These features target version 1.0 of ZNC and later." id="2600">
                         <font key="font" metaFont="smallSystemBold"/>
                         <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -826,6 +823,9 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="addChannel:" target="-2" id="1815"/>
+                    </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="1795">
                     <rect key="frame" x="414" y="30" width="55" height="23"/>
@@ -834,6 +834,9 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="editChannel:" target="-2" id="1816"/>
+                    </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="1796">
                     <rect key="frame" x="70" y="30" width="23" height="23"/>
@@ -842,6 +845,9 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="deleteChannel:" target="-2" id="1814"/>
+                    </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="1797">
                     <rect key="frame" x="45" y="254" width="207" height="17"/>
@@ -940,6 +946,9 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="addHighlight:" target="-2" id="2481"/>
+                    </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="2448">
                     <rect key="frame" x="408" y="23" width="55" height="23"/>
@@ -948,6 +957,9 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="editHighlight:" target="-2" id="2482"/>
+                    </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="2447">
                     <rect key="frame" x="64" y="23" width="23" height="23"/>
@@ -956,6 +968,9 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="deleteHighlight:" target="-2" id="2483"/>
+                    </connections>
                 </button>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="2470">
                     <rect key="frame" x="38" y="247" width="440" height="32"/>
@@ -1084,6 +1099,9 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="showAddIgnoreMenu:" target="-2" id="1999"/>
+                    </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="1844">
                     <rect key="frame" x="414" y="22" width="55" height="23"/>
@@ -1092,6 +1110,9 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="editIgnore:" target="-2" id="1857"/>
+                    </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="1845">
                     <rect key="frame" x="72" y="22" width="23" height="23"/>
@@ -1100,6 +1121,9 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="deleteIgnore:" target="-2" id="1855"/>
+                    </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="2358">
                     <rect key="frame" x="44" y="246" width="255" height="34"/>
@@ -1288,6 +1312,9 @@ your friends and ignore your enemies.</string>
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <connections>
+                        <action selector="proxyTypeChanged:" target="-2" id="2289"/>
+                    </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" id="1978">
                     <rect key="frame" x="205" y="192" width="201" height="14"/>
@@ -1311,6 +1338,9 @@ your friends and ignore your enemies.</string>
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="floodControlChanged:" target="-2" id="2225"/>
+                    </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="2178">
                     <rect key="frame" x="30" y="198" width="435" height="56"/>
