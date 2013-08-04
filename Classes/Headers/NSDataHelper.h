@@ -41,6 +41,5 @@
 @interface NSData (TXDataHelper)
 - (BOOL)isValidUTF8;
 
-- (NSString *)validateUTF8WithCharacter:(UniChar)malformChar;
-- (NSString *)validateUTF8;
+- (NSData *)repairedCharacterBufferForUTF8Encoding;
 @end
