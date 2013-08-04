@@ -459,7 +459,7 @@
 	NSArray *encodings = [self encodingDictionary];
 
 	for (id base in encodings) {
-		NSData *s = [data dataUsingEncoding:[base integerValue]];
+		NSData *s = [data dataUsingEncoding:[base integerValue] allowLossyConversion:YES];
 
 		NSObjectIsEmptyAssertLoopContinue(s);
 
@@ -469,7 +469,7 @@
     encodings = [self fallbackEncodingDictionary];
 
 	for (id base in encodings) {
-		NSData *s = [data dataUsingEncoding:[base integerValue]];
+		NSData *s = [data dataUsingEncoding:[base integerValue] allowLossyConversion:YES];
 
 		NSObjectIsEmptyAssertLoopContinue(s);
 
@@ -487,7 +487,7 @@
 	NSArray *encodings = [self encodingDictionary];
 
 	for (id base in encodings) {
-		NSString *s = [NSString stringWithData:data encoding:[base integerValue]];
+		NSString *s = [NSString stringWithBytes:[data bytes] length:[data length] encoding:[base integerValue]];
 
 		NSObjectIsEmptyAssertLoopContinue(s);
 
@@ -497,7 +497,7 @@
     encodings = [self fallbackEncodingDictionary];
 
 	for (id base in encodings) {
-		NSString *s = [NSString stringWithData:data encoding:[base integerValue]];
+		NSString *s = [NSString stringWithBytes:[data bytes] length:[data length] encoding:[base integerValue]];
 
 		NSObjectIsEmptyAssertLoopContinue(s);
 
