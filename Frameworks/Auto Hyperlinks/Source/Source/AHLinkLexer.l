@@ -67,6 +67,7 @@ gtalkSpec       gtalk:(chat|call|gtalk)\?jid={mailSpec}(&from_jid={mailSpec})?
 myimSpec        myim:(addContact|sendIM)\?(((uID|cID)=[0-9]*&?)|(auto=(true|false)&?))+
 msnSpec         msnim:(chat|add|voice|video)\?contact={mailSpec}
 dictSpec		dict:{urlPath}
+magnetSpec		magnet:\?xt\=urn:btih:([A-Fa-f0-9]{40})[^[:space:]]*
 
 ignoreable      (b\.sc|m\.in)
 
@@ -120,6 +121,7 @@ x-man-page:\/\/         {yyextra = yyleng; BEGIN CANONICAL;}
 {rdarSpec}              |
 {msnSpec}               |
 {dictSpec}				|
+{magnetSpec}			|
 {spotifySpec}           {return AHValidURL;}
 
 .                       {return AHInvalidURL;}
