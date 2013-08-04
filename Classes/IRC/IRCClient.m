@@ -486,8 +486,24 @@
 {
 	NSArray *encodings = [self encodingDictionary];
 
+	NSString *(^convertEncoding)(NSData *ndata, NSStringEncoding encoding) =
+							   ^(NSData *ndata, NSStringEncoding encoding)
+	{
+		if (encoding == NSUTF8StringEncoding) {
+			if ([data isValidUTF8] == NO) {
+				BOOL convertEncoding = [RZUserDefaults() boolForKey:@"EncodingReplaceCorruptUTF8Characters"];
+
+				if (convertEncoding) {
+					ndata = [ndata repairedCharacterBufferForUTF8Encoding];
+				}
+			}
+		}
+
+		return (NSString *)[NSString stringWithBytes:[ndata bytes] length:[ndata length] encoding:encoding];
+	};
+
 	for (id base in encodings) {
-		NSString *s = [NSString stringWithBytes:[data bytes] length:[data length] encoding:[base integerValue]];
+		NSString *s = convertEncoding(data, [base integerValue]);
 
 		NSObjectIsEmptyAssertLoopContinue(s);
 
@@ -497,7 +513,7 @@
     encodings = [self fallbackEncodingDictionary];
 
 	for (id base in encodings) {
-		NSString *s = [NSString stringWithBytes:[data bytes] length:[data length] encoding:[base integerValue]];
+		NSString *s = convertEncoding(data, [base integerValue]);
 
 		NSObjectIsEmptyAssertLoopContinue(s);
 

@@ -2622,7 +2622,7 @@
             </subviews>
         </customView>
         <customView id="6648" userLabel="Hidden Settings">
-            <rect key="frame" x="0.0" y="0.0" width="534" height="258"/>
+            <rect key="frame" x="0.0" y="0.0" width="534" height="284"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <userGuides>
                 <userLayoutGuide location="32" affinity="minX"/>
@@ -2631,7 +2631,7 @@
             </userGuides>
             <subviews>
                 <textField verticalHuggingPriority="750" id="6649">
-                    <rect key="frame" x="31" y="214" width="473" height="28"/>
+                    <rect key="frame" x="31" y="240" width="473" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" id="6665">
                         <font key="font" metaFont="systemBold" size="10"/>
@@ -2641,7 +2641,7 @@
                     </textFieldCell>
                 </textField>
                 <button id="6807">
-                    <rect key="frame" x="31" y="173" width="285" height="18"/>
+                    <rect key="frame" x="31" y="199" width="285" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Base nickname color hashing off a UUID." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6808">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2652,7 +2652,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="7022">
-                    <rect key="frame" x="31" y="73" width="117" height="13"/>
+                    <rect key="frame" x="30" y="71" width="117" height="13"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Fake CTCP Version:" id="7023">
                         <font key="font" metaFont="cellTitle"/>
@@ -2661,7 +2661,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="7038">
-                    <rect key="frame" x="45" y="22" width="459" height="45"/>
+                    <rect key="frame" x="44" y="20" width="459" height="45"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="7039">
                         <font key="font" metaFont="cellTitle"/>
@@ -2673,21 +2673,21 @@
                     </connections>
                 </textField>
                 <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7345">
-                    <rect key="frame" x="46" y="202" width="442" height="5"/>
+                    <rect key="frame" x="46" y="228" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7346">
-                    <rect key="frame" x="47" y="99" width="442" height="5"/>
+                    <rect key="frame" x="46" y="97" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <button id="7414">
-                    <rect key="frame" x="31" y="145" width="260" height="18"/>
+                    <rect key="frame" x="31" y="171" width="260" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Toggle away status on display sleep." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="7415">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2698,7 +2698,7 @@
                     </connections>
                 </button>
                 <button id="7496">
-                    <rect key="frame" x="30" y="117" width="251" height="18"/>
+                    <rect key="frame" x="30" y="143" width="251" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Do not force minimum window size." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="7497">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2709,7 +2709,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="7499">
-                    <rect key="frame" x="316" y="117" width="201" height="14"/>
+                    <rect key="frame" x="316" y="143" width="201" height="14"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="** Restart required to apply changes." id="7500">
                         <font key="font" metaFont="system" size="10"/>
@@ -2717,6 +2717,17 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button id="1YZ-be-Umy">
+                    <rect key="frame" x="30" y="115" width="403" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Replace corrupt Unicode characters with question marks." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="eh9-9V-L2n">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="1247" name="value" keyPath="values.EncodingReplaceCorruptUTF8Characters" id="5jl-D7-H1m"/>
+                    </connections>
+                </button>
             </subviews>
         </customView>
         <customView id="6832" userLabel="Interface Settings">
