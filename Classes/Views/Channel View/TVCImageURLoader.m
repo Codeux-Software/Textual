@@ -162,27 +162,31 @@
 		if (self.isInRequestWithCheckForMaximumHeight) { // Are we checking the actual image size?
 			PointerIsEmptyAssert(self.responseData); // I hope we had some data…
 
-			NSImage *loadedImage = [[NSImage alloc] initWithData:self.responseData]; // Create the NSImage instance of the image.
+			CGImageSourceRef imageSource = CGImageSourceCreateWithData ((__bridge CFDataRef)self.responseData, NULL);
 
-			PointerIsEmptyAssert(loadedImage); // Did something fail?
+			PointerIsEmptyAssert(imageSource);
 
-			/* The first image rep of the NSImage we have is taken in order to check the height
-			 of the image because it may be an animated gif so NSImage will return a size of
-			 0, 0 for itself unless we check the first rep. */
-			NSBitmapImageRep *firstRep = [[loadedImage representations] objectAtIndex:0];
+			CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, NULL);
 
-			if ([firstRep pixelsHigh] > [TPCPreferences inlineImagesMaxHeight] || [firstRep pixelsWide] > _imageMaximumImageWidth) { // So what's up with the size?
-				firstRep = nil;
-				loadedImage = nil;
+			NSNumber *orientation = CFDictionaryGetValue(properties, kCGImagePropertyOrientation);
 
+			NSNumber *width = CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth);
+			NSNumber *height = CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight);
+
+			if ([height integerValue] > [TPCPreferences inlineImagesMaxHeight] || [width integerValue] > _imageMaximumImageWidth) { // So what's up with the size?
 				[self destroyConnectionRequest]; // Destroy local vars.
 
 				return; // Image is too big, don't do crap with it.
 			}
+
+			/* Post the image. */
+			[self.requestOwner imageLoaderFinishedLoadingForImageWithID:self.requestImageUniqeID orientation:[orientation integerValue]];
+
+			return;
 		}
 
 		/* Send the information off. We will validate the information higher up. */
-		[self.requestOwner imageLoaderFinishedLoadingForImageWithID:self.requestImageUniqeID];
+		[self.requestOwner imageLoaderFinishedLoadingForImageWithID:self.requestImageUniqeID orientation:(-1)];
 	}
 
 	/* Cleaning. */

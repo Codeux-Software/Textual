@@ -116,25 +116,42 @@
 
 - (NSString *)toggleInlineImage:(NSString *)object
 {
-	return [self toggleInlineImage:object withKeyCheck:YES];
+	return [self toggleInlineImage:object withKeyCheck:YES orientation:(-1)];
 }
 
-- (NSString *)toggleInlineImage:(NSString *)object withKeyCheck:(BOOL)checkShiftKey
+- (NSString *)toggleInlineImage:(NSString *)object withKeyCheck:(BOOL)checkShiftKey orientation:(NSInteger)orientationIndex
 {
+	/* Possible values for orientation index:
+	
+	 -1 Do nothing
+	  1 Top, left
+	  2 Top, right
+	  3 Bottom, right
+	  4 Bottom, left
+	  5 Left, top
+	  6 Right, top
+	  7 Right, bottom
+	  8 Left, bottom
+	 */
+
+	/* What type of request is this? */
 	if (([NSEvent modifierFlags] & NSShiftKeyMask) == NO && checkShiftKey) {
 		return @"true";
 	}
 
 	NSObjectIsEmptyAssertReturn(object, @"true");
 
+	/* Do we have a properly formatted ID? */
 	if ([object hasPrefix:@"inlineImage-"] == NO) {
 		object = [@"inlineImage-" stringByAppendingString:object];
 	}
 
+	/* Find the element. */
 	DOMElement *imageNode = [self.owner.mainFrameDocument getElementById:object];
 
 	PointerIsEmptyAssertReturn(imageNode, @"true");
 
+	/* Update the display information. */
 	NSString *display = imageNode.style.display;
 
 	if ([display isEqualIgnoringCase:@"none"]) {
@@ -145,6 +162,7 @@
 
 	imageNode.style.display = display;
 
+	/* Update upstream. */
 	return @"false";
 }
 
