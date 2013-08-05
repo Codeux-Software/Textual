@@ -706,11 +706,6 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() boolForKey:@"ConfirmApplicationQuit"];
 }
 
-+ (BOOL)processChannelModes
-{
-	return [RZUserDefaults() boolForKey:@"ProcessChannelModesOnJoin"];
-}
-
 + (BOOL)rejoinOnKick
 {
 	return [RZUserDefaults() boolForKey:@"RejoinChannelOnLocalKick"];
@@ -1387,7 +1382,6 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"FocusSelectionOnMessageCommandExecution"]		= @(YES);
 	d[@"LogHighlights"]									= @(YES);
 	d[@"LogTranscriptInBatches"]						= @(YES);
-	d[@"ProcessChannelModesOnJoin"]						= @(YES);
 	d[@"ReplyUnignoredExternalCTCPRequests"]			= @(YES);
 	d[@"TrackNicknameHighlightsOfLocalUser"]			= @(YES);
 	d[@"WebKitDeveloperExtras"]							= @(YES);

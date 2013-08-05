@@ -244,7 +244,7 @@
             </connections>
         </window>
         <customView id="4778" userLabel="General Settings">
-            <rect key="frame" x="0.0" y="0.0" width="534" height="251"/>
+            <rect key="frame" x="0.0" y="0.0" width="534" height="222"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <userGuides>
                 <userLayoutGuide location="32" affinity="minX"/>
@@ -254,19 +254,8 @@
                 <userLayoutGuide location="218" affinity="minY"/>
             </userGuides>
             <subviews>
-                <button id="4794">
-                    <rect key="frame" x="31" y="164" width="375" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Request channel modes and user host information on join." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="4795">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="1247" name="value" keyPath="values.ProcessChannelModesOnJoin" id="7161"/>
-                    </connections>
-                </button>
                 <button id="46">
-                    <rect key="frame" x="31" y="215" width="312" height="18"/>
+                    <rect key="frame" x="31" y="186" width="312" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Request confirmation before quitting Textual." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="4230">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -277,7 +266,7 @@
                     </connections>
                 </button>
                 <button id="4802">
-                    <rect key="frame" x="31" y="136" width="332" height="18"/>
+                    <rect key="frame" x="31" y="135" width="332" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Rejoin a channel after being kicked." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="4803">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -288,7 +277,7 @@
                     </connections>
                 </button>
                 <button id="4804">
-                    <rect key="frame" x="31" y="108" width="302" height="18"/>
+                    <rect key="frame" x="31" y="107" width="302" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Automatically join a channel when invited." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="4805">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -299,7 +288,7 @@
                     </connections>
                 </button>
                 <button id="5415">
-                    <rect key="frame" x="31" y="80" width="452" height="18"/>
+                    <rect key="frame" x="31" y="79" width="452" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Display the Message of the Day (MOTD) of a server upon connection." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="5416">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -310,7 +299,7 @@
                     </connections>
                 </button>
                 <button id="6560">
-                    <rect key="frame" x="31" y="52" width="452" height="18"/>
+                    <rect key="frame" x="31" y="51" width="452" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Wait for NickServ identification before joining channels." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="6561">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -321,7 +310,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="7327">
-                    <rect key="frame" x="346" y="210" width="157" height="28"/>
+                    <rect key="frame" x="346" y="181" width="157" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="Set as Default IRC Client" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7328">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -332,14 +321,14 @@
                     </connections>
                 </button>
                 <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7339">
-                    <rect key="frame" x="46" y="196" width="442" height="5"/>
+                    <rect key="frame" x="46" y="167" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <button id="7414">
-                    <rect key="frame" x="31" y="24" width="260" height="18"/>
+                    <rect key="frame" x="31" y="23" width="260" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Toggle away status on display sleep." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="7415">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>

@@ -182,7 +182,6 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (BOOL)reloadScrollbackOnLaunch;
 
 + (BOOL)autoJoinOnInvite;
-+ (BOOL)processChannelModes;
 
 + (BOOL)confirmQuit;
 + (BOOL)rejoinOnKick;
