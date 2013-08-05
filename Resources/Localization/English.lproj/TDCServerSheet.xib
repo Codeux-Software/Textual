@@ -236,7 +236,7 @@ Gw
                 <textField verticalHuggingPriority="750" id="1540">
                     <rect key="frame" x="93" y="200" width="107" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Primary Server:" id="1557">
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Server Address:" id="1557">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -396,7 +396,7 @@ Gw
                 <textField verticalHuggingPriority="750" id="1601" customClass="NSSecureTextField">
                     <rect key="frame" x="220" y="62" width="188" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1613">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="NickServ or SASL Password" drawsBackground="YES" id="1613">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -446,9 +446,9 @@ Gw
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <textField verticalHuggingPriority="750" id="1623">
-                    <rect key="frame" x="111" y="64" width="107" height="20"/>
+                    <rect key="frame" x="89" y="50" width="129" height="34"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="NickServ Auth:" id="1626">
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title=" Personal Password:" id="1626">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -747,7 +747,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" id="62B-H4-nWl">
                         <rect key="frame" x="1" y="17" width="419" height="171"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" headerView="1802" id="1805" customClass="TVCListView">
                                 <rect key="frame" x="0.0" y="0.0" width="419" height="171"/>
@@ -869,7 +869,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" id="IEW-we-0cv">
                         <rect key="frame" x="1" y="17" width="419" height="171"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" headerView="2451" id="2454" customClass="TVCListView">
                                 <rect key="frame" x="0.0" y="0.0" width="419" height="171"/>
@@ -977,7 +977,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="VK7-65-SNO">
                         <rect key="frame" x="0.0" y="0.0" width="440" height="32"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView drawsBackground="NO" importsGraphics="NO" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="2471">
                                 <rect key="frame" x="0.0" y="0.0" width="440" height="34"/>
@@ -1180,7 +1180,7 @@ your friends and ignore your enemies.</string>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" id="ei9-j9-hhs">
                         <rect key="frame" x="1" y="1" width="419" height="181"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView importsGraphics="NO" richText="NO" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="2310">
                                 <rect key="frame" x="0.0" y="0.0" width="419" height="181"/>
