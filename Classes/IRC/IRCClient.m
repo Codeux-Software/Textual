@@ -317,7 +317,7 @@
 	for (IRCChannel *c in self.channels) {
 		[c preferencesChanged];
 
-        if ([TPCPreferences processChannelModes] && self.CAPawayNotify == NO) {
+        if (self.CAPawayNotify == NO) {
             if (c.memberList.count > [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
                 for (IRCUser *u in c.memberList) {
                     u.isAway = NO;
@@ -3864,7 +3864,7 @@
 
     [self.worldController updateTitleFor:c];
 
-	if ([TPCPreferences processChannelModes] && myself) {
+	if (myself) {
 		c.inUserInvokedModeRequest = YES;
 
 		[self send:IRCPrivateCommandIndex("mode"), c.name, nil];
@@ -5280,9 +5280,7 @@
 				}
 			}
 
-			if ([TPCPreferences processChannelModes]) {
-				[self send:IRCPrivateCommandIndex("who"), c.name, nil, nil];
-			}
+			[self send:IRCPrivateCommandIndex("who"), c.name, nil, nil];
 
 			if (self.inUserInvokedNamesRequest) {
 				self.inUserInvokedNamesRequest = NO;
@@ -6778,7 +6776,7 @@
     NSMutableString *userstr = [NSMutableString string];
 
 	for (IRCChannel *channel in self.channels) {
-		if ([TPCPreferences processChannelModes] && self.CAPawayNotify == NO) {
+		if (self.CAPawayNotify == NO) {
             if (channel.isChannel && channel.isActive && channel.memberList.count <= [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
                 [self send:IRCPrivateCommandIndex("who"), channel.name, nil];
             }
