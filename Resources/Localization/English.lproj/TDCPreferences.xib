@@ -2099,7 +2099,7 @@
             </subviews>
         </customView>
         <customView id="5556" userLabel="IRCop Services">
-            <rect key="frame" x="0.0" y="0.0" width="534" height="449"/>
+            <rect key="frame" x="0.0" y="0.0" width="534" height="262"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <userGuides>
                 <userLayoutGuide location="32" affinity="minX"/>
@@ -2108,60 +2108,8 @@
                 <userLayoutGuide location="417" affinity="minY"/>
             </userGuides>
             <subviews>
-                <button id="6071">
-                    <rect key="frame" x="31" y="413" width="514" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Automatically sort server notices." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6095">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="1247" name="value" keyPath="values.ProcessServerNoticesForIRCop" id="7216"/>
-                    </connections>
-                </button>
-                <textField verticalHuggingPriority="750" id="6072">
-                    <rect key="frame" x="50" y="367" width="420" height="40"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="6094">
-                        <font key="font" metaFont="system" size="10"/>
-                        <string key="title">All important non-connection related notices that an IRC operator requires attention to will be placed in a "Server Notices" window for quick scanning of all meaningful information coming from the server.</string>
-                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <button id="6073">
-                    <rect key="frame" x="30" y="339" width="514" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Send alerts to current channel." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6093">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="1247" name="enabled" keyPath="values.ProcessServerNoticesForIRCop" id="7217"/>
-                        <binding destination="1247" name="value" keyPath="values.ScanForIRCopAlertInServerNotices" id="7219"/>
-                    </connections>
-                </button>
-                <textField verticalHuggingPriority="750" id="6074">
-                    <rect key="frame" x="49" y="303" width="420" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="6092">
-                        <font key="font" metaFont="system" size="10"/>
-                        <string key="title">Push any server notices containing a specific string to the selected channel.           This will display the notice in the channel; not send it the channel members. </string>
-                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField verticalHuggingPriority="750" id="6075">
-                    <rect key="frame" x="49" y="284" width="76" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Alert String: " id="6091">
-                        <font key="font" metaFont="cellTitle"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <textField verticalHuggingPriority="750" id="6076">
-                    <rect key="frame" x="30" y="229" width="172" height="14"/>
+                    <rect key="frame" x="29" y="230" width="172" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Default Kill Reason: " id="6090">
                         <font key="font" metaFont="cellTitle"/>
@@ -2169,35 +2117,8 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" id="6077">
-                    <rect key="frame" x="130" y="282" width="209" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="6089">
-                        <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                    <connections>
-                        <accessibilityConnection property="title" destination="6075" id="6493"/>
-                        <binding destination="1247" name="enabled2" keyPath="values.ProcessServerNoticesForIRCop" previousBinding="7238" id="7286">
-                            <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                <integer key="NSNullPlaceholder" value="-1"/>
-                            </dictionary>
-                        </binding>
-                        <binding destination="1247" name="editable" keyPath="values.ScanForIRCopAlertInServerNotices" id="7236"/>
-                        <binding destination="1247" name="enabled" keyPath="values.ScanForIRCopAlertInServerNotices" previousBinding="7236" id="7238"/>
-                        <binding destination="1247" name="value" keyPath="values.ScanForIRCopAlertInServerNoticesMatch" id="7220">
-                            <dictionary key="options">
-                                <bool key="NSContinuouslyUpdatesValue" value="YES"/>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </textField>
                 <textField verticalHuggingPriority="750" id="6080">
-                    <rect key="frame" x="30" y="153" width="172" height="14"/>
+                    <rect key="frame" x="29" y="154" width="172" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Default G:Line Reason: " id="6087">
                         <font key="font" metaFont="cellTitle"/>
@@ -2206,7 +2127,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="6082">
-                    <rect key="frame" x="30" y="77" width="172" height="14"/>
+                    <rect key="frame" x="29" y="78" width="172" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Default Shun Reason: " id="6085">
                         <font key="font" metaFont="cellTitle"/>
@@ -2215,7 +2136,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="7046">
-                    <rect key="frame" x="44" y="177" width="434" height="42"/>
+                    <rect key="frame" x="43" y="178" width="434" height="42"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="7047">
                         <font key="font" metaFont="cellTitle"/>
@@ -2228,7 +2149,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="7054">
-                    <rect key="frame" x="44" y="101" width="434" height="42"/>
+                    <rect key="frame" x="43" y="102" width="434" height="42"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="7055">
                         <font key="font" metaFont="cellTitle"/>
@@ -2241,7 +2162,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="7059">
-                    <rect key="frame" x="44" y="25" width="434" height="42"/>
+                    <rect key="frame" x="43" y="26" width="434" height="42"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="7060">
                         <font key="font" metaFont="cellTitle"/>
@@ -2254,7 +2175,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" id="7282">
-                    <rect key="frame" x="362" y="153" width="124" height="12"/>
+                    <rect key="frame" x="361" y="154" width="124" height="12"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(Includes Ban Length)" id="7283">
                         <font key="font" metaFont="smallSystem"/>
@@ -2263,7 +2184,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="7284">
-                    <rect key="frame" x="365" y="77" width="124" height="12"/>
+                    <rect key="frame" x="364" y="78" width="124" height="12"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(Includes Ban Length)" id="7285">
                         <font key="font" metaFont="smallSystem"/>
@@ -2271,13 +2192,6 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7342">
-                    <rect key="frame" x="43" y="261" width="442" height="5"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
             </subviews>
         </customView>
         <customView id="5425" userLabel="Flood Control">

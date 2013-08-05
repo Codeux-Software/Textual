@@ -144,13 +144,9 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (NSString *)defaultAwayNickname;
 + (NSString *)defaultKickMessage;
 
-+ (BOOL)handleIRCopAlerts;
-+ (BOOL)handleServerNotices;
-
 + (NSString *)IRCopDefaultKillMessage;
 + (NSString *)IRCopDefaultGlineMessage;
 + (NSString *)IRCopDefaultShunMessage;
-+ (NSString *)IRCopAlertMatch;
 
 + (BOOL)giveFocusOnMessageCommand;
 

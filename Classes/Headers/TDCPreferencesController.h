@@ -64,7 +64,7 @@
 @property (nonatomic, nweak) NSButton *alertPushNotificationButton;
 @property (nonatomic, nweak) NSButton *highlightNicknameButton;
 @property (nonatomic, nweak) NSButton *setAsDefaultIRCClientButton;
-@property (nonatomic, nweak) IBOutlet NSTextField *alertNotificationDestinationTextField;
+@property (nonatomic, nweak) NSTextField *alertNotificationDestinationTextField;
 @property (nonatomic, nweak) NSMenu *installedScriptsMenu;
 @property (nonatomic, nweak) NSPopUpButton *alertSoundChoiceButton;
 @property (nonatomic, nweak) NSPopUpButton *alertTypeChoiceButton;
