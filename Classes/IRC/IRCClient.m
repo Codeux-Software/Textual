@@ -4764,6 +4764,14 @@
 			if (self.inUserInvokedWhowasRequest) {
 				text = TXTFLS(@"IRCUserWhowasHostmask", nickname, username, hostmask, realname);
 			} else {
+				/* Update local cache of our hostmask. */
+				if ([self.myNick isEqualIgnoringCase:nickname]) {
+					NSString *completehost = [NSString stringWithFormat:@"%@!%@@%@", nickname, username, hostmask];
+
+					self.myHost = completehost;
+				}
+
+				/* Continue normal WHOIS event. */
 				text = TXTFLS(@"IRCUserWhoisHostmask", nickname, username, hostmask, realname);
 			}
 
@@ -5181,6 +5189,14 @@
 				}
 			}
 
+			/* Update local cache of our hostmask. */
+			if ([self.myNick isEqualIgnoringCase:nickname]) {
+				NSString *completehost = [NSString stringWithFormat:@"%@!%@@%@", nickname, username, hostmask];
+
+				self.myHost = completehost;
+			}
+
+			/* Continue normal WHO reply tracking. */
 			if (checkForDiff) {
 				if ([c memberRequiresRedraw:ou comparedTo:nu]) {
 					[c migrateUser:ou from:nu]; // Migrate nu to ou.
