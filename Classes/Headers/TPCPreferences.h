@@ -159,7 +159,6 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 
 + (TXNoticeSendLocationType)locationToSendNotices;
 
-+ (BOOL)trackConversations;
 + (BOOL)disableNicknameColorHashing;
 
 + (BOOL)displayDockBadge;
