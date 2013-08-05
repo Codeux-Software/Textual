@@ -580,11 +580,6 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() objectForKey:@"IRCopDefaultLocalizaiton -> Shun Reason"];
 }
 
-+ (NSString *)IRCopAlertMatch
-{
-	return [RZUserDefaults() objectForKey:@"ScanForIRCopAlertInServerNoticesMatch"];
-}
-
 + (NSString *)masqueradeCTCPVersion
 {
 	return [RZUserDefaults() objectForKey:@"ApplicationCTCPVersionMasquerade"];
@@ -684,16 +679,6 @@ static NSURL *transcriptFolderResolvedBookmark;
 + (BOOL)displayDockBadge
 {
 	return [RZUserDefaults() boolForKey:@"DisplayDockBadges"];
-}
-
-+ (BOOL)handleIRCopAlerts
-{
-	return [RZUserDefaults() boolForKey:@"ScanForIRCopAlertInServerNotices"];
-}
-
-+ (BOOL)handleServerNotices
-{
-	return [RZUserDefaults() boolForKey:@"ProcessServerNoticesForIRCop"];
 }
 
 + (BOOL)amsgAllConnections
@@ -1439,8 +1424,6 @@ static NSMutableArray *excludeKeywords = nil;
 
 	d[@"NotificationType -> Address Book Match -> Enabled"]		= @(YES);
 	d[@"NotificationType -> Private Message (New) -> Enabled"]	= @(YES);
-	
-	d[@"ScanForIRCopAlertInServerNoticesMatch"]	= @"ircop alert";
 
 	d[@"DefaultIdentity -> Nickname"] = @"Guest";
 	d[@"DefaultIdentity -> AwayNickname"] = NSStringEmptyPlaceholder;
