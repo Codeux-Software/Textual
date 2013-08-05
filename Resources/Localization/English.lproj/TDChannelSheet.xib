@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4471.1" systemVersion="13A510d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4488.1" systemVersion="13A524d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4471.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4488.1"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDChannelSheet">
             <connections>
-                <action selector="cancel:" destination="125" id="337"/>
-                <action selector="cancel:" destination="246" id="349"/>
-                <action selector="cancel:" destination="149" id="350"/>
-                <action selector="ok:" destination="126" id="338"/>
-                <action selector="ok:" destination="148" id="351"/>
-                <action selector="ok:" destination="244" id="352"/>
-                <action selector="onMenuBarItemChanged:" destination="185" id="353"/>
                 <outlet property="JPQActivityCheck" destination="281" id="336"/>
                 <outlet property="autoJoinCheck" destination="122" id="332"/>
                 <outlet property="cancelButton" destination="125" id="342"/>
@@ -60,6 +53,9 @@
                                 <segment label="Defaults"/>
                             </segments>
                         </segmentedCell>
+                        <connections>
+                            <action selector="onMenuBarItemChanged:" target="-2" id="353"/>
+                        </connections>
                     </segmentedControl>
                     <customView id="187">
                         <rect key="frame" x="0.0" y="0.0" width="325" height="388"/>
@@ -120,6 +116,9 @@
 DQ
 </string>
                     </buttonCell>
+                    <connections>
+                        <action selector="ok:" target="-2" id="338"/>
+                    </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="125">
                     <rect key="frame" x="147" y="12" width="82" height="32"/>
@@ -128,6 +127,9 @@ DQ
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="cancel:" target="-2" id="337"/>
+                    </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="123">
                     <rect key="frame" x="93" y="307" width="209" height="22"/>
@@ -149,9 +151,9 @@ DQ
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <button id="112">
-                    <rect key="frame" x="24" y="189" width="181" height="18"/>
+                    <rect key="frame" x="24" y="189" width="210" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Allow notifications." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="141">
+                    <buttonCell key="cell" type="check" title="Post notifications for channel." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="141">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -200,9 +202,9 @@ DQ
                     </connections>
                 </button>
                 <button id="281">
-                    <rect key="frame" x="24" y="81" width="216" height="18"/>
+                    <rect key="frame" x="24" y="81" width="243" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Disable join, part, quit activity." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="282">
+                    <buttonCell key="cell" type="check" title="Disable join, part, and quit activity." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="282">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                         <connections>
@@ -284,6 +286,9 @@ DQ
 DQ
 </string>
                     </buttonCell>
+                    <connections>
+                        <action selector="ok:" target="-2" id="352"/>
+                    </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="246">
                     <rect key="frame" x="148" y="12" width="82" height="32"/>
@@ -292,6 +297,9 @@ DQ
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="cancel:" target="-2" id="349"/>
+                    </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="249">
                     <rect key="frame" x="89" y="76" width="210" height="56"/>
@@ -335,6 +343,9 @@ DQ
 DQ
 </string>
                     </buttonCell>
+                    <connections>
+                        <action selector="ok:" target="-2" id="351"/>
+                    </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="149">
                     <rect key="frame" x="147" y="12" width="82" height="32"/>
@@ -343,6 +354,9 @@ DQ
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="cancel:" target="-2" id="350"/>
+                    </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="151" customClass="NSSecureTextField">
                     <rect key="frame" x="102" y="147" width="203" height="22"/>
