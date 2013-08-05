@@ -611,11 +611,6 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() boolForKey:@"DisableMainWindowSegmentedController"];
 }
 
-+ (BOOL)trackConversations
-{
-	return [RZUserDefaults() boolForKey:@"TrackConversationsWithColorHashing"];
-}
-
 + (BOOL)autojoinWaitsForNickServ
 {
 	return [RZUserDefaults() boolForKey:@"AutojoinWaitsForNickservIdentification"];
@@ -1394,7 +1389,6 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"LogTranscriptInBatches"]						= @(YES);
 	d[@"ProcessChannelModesOnJoin"]						= @(YES);
 	d[@"ReplyUnignoredExternalCTCPRequests"]			= @(YES);
-	d[@"TrackConversationsWithColorHashing"]			= @(YES);
 	d[@"TrackNicknameHighlightsOfLocalUser"]			= @(YES);
 	d[@"WebKitDeveloperExtras"]							= @(YES);
 

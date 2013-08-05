@@ -299,7 +299,7 @@
                     </connections>
                 </button>
                 <button id="5415">
-                    <rect key="frame" x="30" y="80" width="452" height="18"/>
+                    <rect key="frame" x="31" y="80" width="452" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Display the Message of the Day (MOTD) of a server upon connection." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="5416">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -310,7 +310,7 @@
                     </connections>
                 </button>
                 <button id="6560">
-                    <rect key="frame" x="30" y="52" width="452" height="18"/>
+                    <rect key="frame" x="31" y="52" width="452" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Wait for NickServ identification before joining channels." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="6561">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -538,7 +538,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" id="3Wr-hi-fyE">
                         <rect key="frame" x="1" y="1" width="227" height="152"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="4879">
                                 <rect key="frame" x="0.0" y="0.0" width="227" height="152"/>
@@ -610,7 +610,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" id="nYM-nu-WOI">
                         <rect key="frame" x="1" y="1" width="227" height="152"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="4872">
                                 <rect key="frame" x="0.0" y="0.0" width="227" height="152"/>
@@ -903,7 +903,7 @@
             </subviews>
         </customView>
         <customView id="4791" userLabel="Style Settings">
-            <rect key="frame" x="0.0" y="0.0" width="541" height="387"/>
+            <rect key="frame" x="0.0" y="0.0" width="541" height="335"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <userGuides>
                 <userLayoutGuide location="22" affinity="minY"/>
@@ -911,12 +911,12 @@
             </userGuides>
             <subviews>
                 <tabView controlSize="small" id="5772">
-                    <rect key="frame" x="13" y="12" width="515" height="364"/>
+                    <rect key="frame" x="13" y="10" width="515" height="314"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <tabViewItems>
                         <tabViewItem label="General" identifier="1" id="5773">
                             <view key="view" id="5776">
-                                <rect key="frame" x="10" y="29" width="495" height="322"/>
+                                <rect key="frame" x="10" y="25" width="495" height="276"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <userGuides>
                                     <userLayoutGuide location="69" affinity="minX"/>
@@ -924,7 +924,7 @@
                                 </userGuides>
                                 <subviews>
                                     <popUpButton verticalHuggingPriority="750" id="5777">
-                                        <rect key="frame" x="91" y="281" width="208" height="22"/>
+                                        <rect key="frame" x="91" y="237" width="208" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" id="5842">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -936,7 +936,7 @@
                                         </connections>
                                     </popUpButton>
                                     <textField verticalHuggingPriority="750" id="5778">
-                                        <rect key="frame" x="43" y="285" width="44" height="17"/>
+                                        <rect key="frame" x="43" y="241" width="44" height="17"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Style:" id="5841">
                                             <font key="font" metaFont="system"/>
@@ -945,7 +945,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <button id="6037">
-                                        <rect key="frame" x="72" y="128" width="289" height="19"/>
+                                        <rect key="frame" x="74" y="121" width="289" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Remove formatting from incoming messages." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6040">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -956,7 +956,7 @@
                                         </connections>
                                     </button>
                                     <button id="6038">
-                                        <rect key="frame" x="73" y="56" width="252" height="18"/>
+                                        <rect key="frame" x="75" y="50" width="279" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Automatically add scrollback markers." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6039">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -966,34 +966,25 @@
                                             <binding destination="1247" name="value" keyPath="values.AutomaticallyAddScrollbackMarker" id="7182"/>
                                         </connections>
                                     </button>
-                                    <textField verticalHuggingPriority="750" id="6044">
-                                        <rect key="frame" x="90" y="111" width="334" height="14"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Strips away formatting such as colors, bold, underline, etc." id="6045">
-                                            <font key="font" metaFont="smallSystem"/>
-                                            <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
                                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="6052">
-                                        <rect key="frame" x="26" y="257" width="442" height="5"/>
+                                        <rect key="frame" x="26" y="214" width="442" height="5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="6366">
-                                        <rect key="frame" x="26" y="169" width="442" height="5"/>
+                                        <rect key="frame" x="26" y="159" width="442" height="5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <textField verticalHuggingPriority="750" id="6367">
-                                        <rect key="frame" x="165" y="221" width="180" height="18"/>
+                                        <rect key="frame" x="165" y="180" width="180" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="6380">
-                                            <font key="font" metaFont="system" size="10"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="LOL" drawsBackground="YES" id="6380">
+                                            <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -1011,45 +1002,8 @@
                                             <binding destination="1247" name="enabled" keyPath="values.Theme -> Channel Font Preference Enabled" id="7191"/>
                                         </connections>
                                     </textField>
-                                    <textField verticalHuggingPriority="750" id="6369">
-                                        <rect key="frame" x="74" y="193" width="87" height="16"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Transparency:" id="6378">
-                                            <font key="font" metaFont="cellTitle"/>
-                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <slider verticalHuggingPriority="750" id="6370">
-                                        <rect key="frame" x="191" y="192" width="197" height="15"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="0.20000000000000001" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="6377"/>
-                                        <connections>
-                                            <accessibilityConnection property="title" destination="6369" id="6497"/>
-                                            <action selector="onChangedTransparency:" target="-2" id="6603"/>
-                                            <binding destination="1247" name="value" keyPath="values.MainWindowTransparencyLevel" id="7179"/>
-                                        </connections>
-                                    </slider>
-                                    <textField verticalHuggingPriority="750" id="6371">
-                                        <rect key="frame" x="163" y="194" width="25" height="11"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="80%" id="6376">
-                                            <font key="font" metaFont="miniSystem"/>
-                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField verticalHuggingPriority="750" id="6372">
-                                        <rect key="frame" x="397" y="195" width="23" height="11"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0%" id="6375">
-                                            <font key="font" metaFont="miniSystem"/>
-                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
                                     <textField verticalHuggingPriority="750" id="6373">
-                                        <rect key="frame" x="79" y="222" width="84" height="16"/>
+                                        <rect key="frame" x="76" y="181" width="84" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Channel font:" id="6374">
                                             <font key="font" metaFont="cellTitle"/>
@@ -1058,7 +1012,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <button verticalHuggingPriority="750" id="6388">
-                                        <rect key="frame" x="353" y="220" width="63" height="19"/>
+                                        <rect key="frame" x="353" y="179" width="63" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="roundRect" title="Select" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6389">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1071,7 +1025,7 @@
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" id="6395">
-                                        <rect key="frame" x="308" y="283" width="140" height="19"/>
+                                        <rect key="frame" x="308" y="239" width="140" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="roundRect" title="Browse Style Files" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6396">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1082,7 +1036,7 @@
                                         </connections>
                                     </button>
                                     <button id="7145">
-                                        <rect key="frame" x="72" y="28" width="264" height="18"/>
+                                        <rect key="frame" x="75" y="22" width="264" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Show channel join, part, and quit activity." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="7146">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1093,7 +1047,7 @@
                                         </connections>
                                     </button>
                                     <button id="efy-Tp-Fqe">
-                                        <rect key="frame" x="72" y="84" width="303" height="18"/>
+                                        <rect key="frame" x="74" y="78" width="325" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Remember old messages when closing Textual." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="mIl-C9-fqw">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1103,16 +1057,313 @@
                                             <binding destination="1247" name="value" keyPath="values.ReloadScrollbackOnLaunch" id="7oY-l5-oro"/>
                                         </connections>
                                     </button>
+                                    <scrollView borderType="none" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="jla-12-9TQ">
+                                        <rect key="frame" x="90" y="102" width="329" height="13"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="298-TO-w26">
+                                            <rect key="frame" x="0.0" y="0.0" width="329" height="13"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" id="ylZ-nQ-CYN">
+                                                    <rect key="frame" x="0.0" y="0.0" width="329" height="13"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <size key="minSize" width="329" height="13"/>
+                                                    <size key="maxSize" width="463" height="10000000"/>
+                                                    <attributedString key="textStorage">
+                                                        <fragment content="Strips away formatting such as ">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="36"/>
+                                                                        <textTab alignment="left" location="72"/>
+                                                                        <textTab alignment="left" location="108"/>
+                                                                        <textTab alignment="left" location="144"/>
+                                                                        <textTab alignment="left" location="180"/>
+                                                                        <textTab alignment="left" location="216"/>
+                                                                        <textTab alignment="left" location="252"/>
+                                                                        <textTab alignment="left" location="288"/>
+                                                                        <textTab alignment="left" location="324"/>
+                                                                        <textTab alignment="left" location="360"/>
+                                                                        <textTab alignment="left" location="396"/>
+                                                                        <textTab alignment="left" location="432"/>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="c">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.80784313725490198" green="0.23137254901960785" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="36"/>
+                                                                        <textTab alignment="left" location="72"/>
+                                                                        <textTab alignment="left" location="108"/>
+                                                                        <textTab alignment="left" location="144"/>
+                                                                        <textTab alignment="left" location="180"/>
+                                                                        <textTab alignment="left" location="216"/>
+                                                                        <textTab alignment="left" location="252"/>
+                                                                        <textTab alignment="left" location="288"/>
+                                                                        <textTab alignment="left" location="324"/>
+                                                                        <textTab alignment="left" location="360"/>
+                                                                        <textTab alignment="left" location="396"/>
+                                                                        <textTab alignment="left" location="432"/>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="o">
+                                                            <attributes>
+                                                                <color key="NSColor" red="1" green="0.15294117647058825" blue="0.070588235294117646" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="36"/>
+                                                                        <textTab alignment="left" location="72"/>
+                                                                        <textTab alignment="left" location="108"/>
+                                                                        <textTab alignment="left" location="144"/>
+                                                                        <textTab alignment="left" location="180"/>
+                                                                        <textTab alignment="left" location="216"/>
+                                                                        <textTab alignment="left" location="252"/>
+                                                                        <textTab alignment="left" location="288"/>
+                                                                        <textTab alignment="left" location="324"/>
+                                                                        <textTab alignment="left" location="360"/>
+                                                                        <textTab alignment="left" location="396"/>
+                                                                        <textTab alignment="left" location="432"/>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="l">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.6588235294117647" green="0.094117647058823528" blue="0.29411764705882354" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="36"/>
+                                                                        <textTab alignment="left" location="72"/>
+                                                                        <textTab alignment="left" location="108"/>
+                                                                        <textTab alignment="left" location="144"/>
+                                                                        <textTab alignment="left" location="180"/>
+                                                                        <textTab alignment="left" location="216"/>
+                                                                        <textTab alignment="left" location="252"/>
+                                                                        <textTab alignment="left" location="288"/>
+                                                                        <textTab alignment="left" location="324"/>
+                                                                        <textTab alignment="left" location="360"/>
+                                                                        <textTab alignment="left" location="396"/>
+                                                                        <textTab alignment="left" location="432"/>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="o">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.52156862745098043" green="0.0" blue="0.68627450980392157" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="36"/>
+                                                                        <textTab alignment="left" location="72"/>
+                                                                        <textTab alignment="left" location="108"/>
+                                                                        <textTab alignment="left" location="144"/>
+                                                                        <textTab alignment="left" location="180"/>
+                                                                        <textTab alignment="left" location="216"/>
+                                                                        <textTab alignment="left" location="252"/>
+                                                                        <textTab alignment="left" location="288"/>
+                                                                        <textTab alignment="left" location="324"/>
+                                                                        <textTab alignment="left" location="360"/>
+                                                                        <textTab alignment="left" location="396"/>
+                                                                        <textTab alignment="left" location="432"/>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="r">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.23137254901960785" green="0.0" blue="0.64313725490196083" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="36"/>
+                                                                        <textTab alignment="left" location="72"/>
+                                                                        <textTab alignment="left" location="108"/>
+                                                                        <textTab alignment="left" location="144"/>
+                                                                        <textTab alignment="left" location="180"/>
+                                                                        <textTab alignment="left" location="216"/>
+                                                                        <textTab alignment="left" location="252"/>
+                                                                        <textTab alignment="left" location="288"/>
+                                                                        <textTab alignment="left" location="324"/>
+                                                                        <textTab alignment="left" location="360"/>
+                                                                        <textTab alignment="left" location="396"/>
+                                                                        <textTab alignment="left" location="432"/>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="s">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.0" green="0.26666666666666666" blue="0.99607843137254903" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="36"/>
+                                                                        <textTab alignment="left" location="72"/>
+                                                                        <textTab alignment="left" location="108"/>
+                                                                        <textTab alignment="left" location="144"/>
+                                                                        <textTab alignment="left" location="180"/>
+                                                                        <textTab alignment="left" location="216"/>
+                                                                        <textTab alignment="left" location="252"/>
+                                                                        <textTab alignment="left" location="288"/>
+                                                                        <textTab alignment="left" location="324"/>
+                                                                        <textTab alignment="left" location="360"/>
+                                                                        <textTab alignment="left" location="396"/>
+                                                                        <textTab alignment="left" location="432"/>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content=", ">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="36"/>
+                                                                        <textTab alignment="left" location="72"/>
+                                                                        <textTab alignment="left" location="108"/>
+                                                                        <textTab alignment="left" location="144"/>
+                                                                        <textTab alignment="left" location="180"/>
+                                                                        <textTab alignment="left" location="216"/>
+                                                                        <textTab alignment="left" location="252"/>
+                                                                        <textTab alignment="left" location="288"/>
+                                                                        <textTab alignment="left" location="324"/>
+                                                                        <textTab alignment="left" location="360"/>
+                                                                        <textTab alignment="left" location="396"/>
+                                                                        <textTab alignment="left" location="432"/>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="bold">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="11" name="LucidaGrande-Bold"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="36"/>
+                                                                        <textTab alignment="left" location="72"/>
+                                                                        <textTab alignment="left" location="108"/>
+                                                                        <textTab alignment="left" location="144"/>
+                                                                        <textTab alignment="left" location="180"/>
+                                                                        <textTab alignment="left" location="216"/>
+                                                                        <textTab alignment="left" location="252"/>
+                                                                        <textTab alignment="left" location="288"/>
+                                                                        <textTab alignment="left" location="324"/>
+                                                                        <textTab alignment="left" location="360"/>
+                                                                        <textTab alignment="left" location="396"/>
+                                                                        <textTab alignment="left" location="432"/>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content=", ">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="36"/>
+                                                                        <textTab alignment="left" location="72"/>
+                                                                        <textTab alignment="left" location="108"/>
+                                                                        <textTab alignment="left" location="144"/>
+                                                                        <textTab alignment="left" location="180"/>
+                                                                        <textTab alignment="left" location="216"/>
+                                                                        <textTab alignment="left" location="252"/>
+                                                                        <textTab alignment="left" location="288"/>
+                                                                        <textTab alignment="left" location="324"/>
+                                                                        <textTab alignment="left" location="360"/>
+                                                                        <textTab alignment="left" location="396"/>
+                                                                        <textTab alignment="left" location="432"/>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="underline">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="36"/>
+                                                                        <textTab alignment="left" location="72"/>
+                                                                        <textTab alignment="left" location="108"/>
+                                                                        <textTab alignment="left" location="144"/>
+                                                                        <textTab alignment="left" location="180"/>
+                                                                        <textTab alignment="left" location="216"/>
+                                                                        <textTab alignment="left" location="252"/>
+                                                                        <textTab alignment="left" location="288"/>
+                                                                        <textTab alignment="left" location="324"/>
+                                                                        <textTab alignment="left" location="360"/>
+                                                                        <textTab alignment="left" location="396"/>
+                                                                        <textTab alignment="left" location="432"/>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                                <integer key="NSUnderline" value="1"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content=", etc.">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="36"/>
+                                                                        <textTab alignment="left" location="72"/>
+                                                                        <textTab alignment="left" location="108"/>
+                                                                        <textTab alignment="left" location="144"/>
+                                                                        <textTab alignment="left" location="180"/>
+                                                                        <textTab alignment="left" location="216"/>
+                                                                        <textTab alignment="left" location="252"/>
+                                                                        <textTab alignment="left" location="288"/>
+                                                                        <textTab alignment="left" location="324"/>
+                                                                        <textTab alignment="left" location="360"/>
+                                                                        <textTab alignment="left" location="396"/>
+                                                                        <textTab alignment="left" location="432"/>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <size key="minSize" width="329" height="13"/>
+                                                    <size key="maxSize" width="463" height="10000000"/>
+                                                </textView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </clipView>
+                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" id="vEV-gN-nfV">
+                                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" id="FT1-Rn-q3F">
+                                            <rect key="frame" x="-100" y="-100" width="15" height="17"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                    </scrollView>
                                 </subviews>
                             </view>
                         </tabViewItem>
                         <tabViewItem label="Inline Media" identifier="" id="eOG-BV-32g">
                             <view key="view" id="wfN-l4-7Cl">
-                                <rect key="frame" x="10" y="25" width="495" height="326"/>
+                                <rect key="frame" x="10" y="25" width="495" height="276"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <button id="DWU-U8-oas">
-                                        <rect key="frame" x="15" y="287" width="186" height="18"/>
+                                        <rect key="frame" x="20" y="242" width="186" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Show linked images inline." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="xHj-F8-r9R">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1124,7 +1375,7 @@
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" id="56K-8v-xe7">
-                                        <rect key="frame" x="200" y="176" width="60" height="19"/>
+                                        <rect key="frame" x="205" y="133" width="60" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="300" drawsBackground="YES" id="CKh-0c-jHJ">
                                             <font key="font" metaFont="smallSystem"/>
@@ -1140,7 +1391,7 @@
                                         </connections>
                                     </textField>
                                     <popUpButton verticalHuggingPriority="750" id="kVA-Ui-bhA">
-                                        <rect key="frame" x="310" y="198" width="114" height="22"/>
+                                        <rect key="frame" x="315" y="155" width="114" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <popUpButtonCell key="cell" type="push" title="50 Megabytes" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="9" imageScaling="proportionallyDown" inset="2" selectedItem="QXf-Zr-EOZ" id="G5L-HV-2qv">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1167,7 +1418,7 @@
                                         </connections>
                                     </popUpButton>
                                     <textField verticalHuggingPriority="750" id="bvR-Gw-AMD">
-                                        <rect key="frame" x="14" y="202" width="299" height="16"/>
+                                        <rect key="frame" x="19" y="159" width="299" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Limit images shown inline to a maxium file size of " id="HE6-l7-AGf">
                                             <font key="font" metaFont="cellTitle"/>
@@ -1176,7 +1427,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" id="KGu-c0-9L5">
-                                        <rect key="frame" x="14" y="178" width="182" height="16"/>
+                                        <rect key="frame" x="19" y="135" width="182" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Scale images to a maximum of" id="Qjt-gq-4DB">
                                             <font key="font" metaFont="cellTitle"/>
@@ -1185,7 +1436,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" id="O3I-uy-7V6">
-                                        <rect key="frame" x="265" y="178" width="73" height="16"/>
+                                        <rect key="frame" x="270" y="135" width="73" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="pixels wide." id="atR-F8-M2R">
                                             <font key="font" metaFont="cellTitle"/>
@@ -1194,14 +1445,14 @@
                                         </textFieldCell>
                                     </textField>
                                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="AFE-ID-wH4">
-                                        <rect key="frame" x="26" y="157" width="442" height="5"/>
+                                        <rect key="frame" x="31" y="114" width="442" height="5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <textField verticalHuggingPriority="750" id="W9E-uw-ZDI">
-                                        <rect key="frame" x="14" y="125" width="288" height="16"/>
+                                        <rect key="frame" x="21" y="81" width="288" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Do not display images with a height greater than" id="Vjh-SW-I1b">
                                             <font key="font" metaFont="cellTitle"/>
@@ -1210,7 +1461,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" id="ol6-zb-D0h">
-                                        <rect key="frame" x="305" y="123" width="60" height="19"/>
+                                        <rect key="frame" x="312" y="79" width="60" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="300" drawsBackground="YES" id="wM6-6h-BcB">
                                             <font key="font" metaFont="smallSystem"/>
@@ -1226,7 +1477,7 @@
                                         </connections>
                                     </textField>
                                     <textField verticalHuggingPriority="750" id="ZPl-SW-5Qh">
-                                        <rect key="frame" x="368" y="125" width="42" height="16"/>
+                                        <rect key="frame" x="375" y="81" width="42" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="pixels." id="i5Z-ts-9hn">
                                             <font key="font" metaFont="cellTitle"/>
@@ -1235,7 +1486,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <scrollView borderType="none" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="8kq-5x-u4h">
-                                        <rect key="frame" x="29" y="61" width="386" height="54"/>
+                                        <rect key="frame" x="36" y="17" width="386" height="54"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="af3-BN-8NZ">
                                             <rect key="frame" x="0.0" y="0.0" width="386" height="54"/>
@@ -1402,7 +1653,7 @@
                                         </scroller>
                                     </scrollView>
                                     <scrollView borderType="none" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="rkq-s6-jeh">
-                                        <rect key="frame" x="32" y="255" width="381" height="24"/>
+                                        <rect key="frame" x="37" y="210" width="381" height="24"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="7vH-o3-bRU">
                                             <rect key="frame" x="0.0" y="0.0" width="381" height="24"/>
@@ -1501,7 +1752,7 @@
                                         </scroller>
                                     </scrollView>
                                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="IAg-Vm-Ts1">
-                                        <rect key="frame" x="26" y="234" width="442" height="5"/>
+                                        <rect key="frame" x="31" y="189" width="442" height="5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1512,7 +1763,7 @@
                         </tabViewItem>
                         <tabViewItem label="Advanced" identifier="2" id="5774">
                             <view key="view" id="5775">
-                                <rect key="frame" x="10" y="25" width="495" height="326"/>
+                                <rect key="frame" x="10" y="25" width="495" height="276"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <userGuides>
                                     <userLayoutGuide location="70" affinity="minX"/>
@@ -1521,7 +1772,7 @@
                                 </userGuides>
                                 <subviews>
                                     <textField verticalHuggingPriority="750" id="5895">
-                                        <rect key="frame" x="136" y="44" width="102" height="14"/>
+                                        <rect key="frame" x="138" y="38" width="102" height="14"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Scrollback Size:" id="5921">
                                             <font key="font" metaFont="cellTitle"/>
@@ -1530,7 +1781,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <button id="5991">
-                                        <rect key="frame" x="97" y="157" width="302" height="18"/>
+                                        <rect key="frame" x="94" y="115" width="302" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Right to left text (for languages such as Arabic)." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="5992">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1542,7 +1793,7 @@
                                         </connections>
                                     </button>
                                     <comboBox verticalHuggingPriority="750" id="6013">
-                                        <rect key="frame" x="162" y="285" width="227" height="22"/>
+                                        <rect key="frame" x="163" y="238" width="227" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="&lt;%@%n>" drawsBackground="YES" completes="NO" numberOfVisibleItems="100" id="6028">
                                             <font key="font" metaFont="smallSystem"/>
@@ -1568,7 +1819,7 @@
                                         </connections>
                                     </comboBox>
                                     <comboBox verticalHuggingPriority="750" id="6015">
-                                        <rect key="frame" x="162" y="233" width="227" height="22"/>
+                                        <rect key="frame" x="163" y="186" width="227" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="[%H:%M:%S]" drawsBackground="YES" completes="NO" numberOfVisibleItems="100" id="6026">
                                             <font key="font" metaFont="smallSystem"/>
@@ -1593,7 +1844,7 @@
                                         </connections>
                                     </comboBox>
                                     <button id="6231">
-                                        <rect key="frame" x="96" y="129" width="291" height="18"/>
+                                        <rect key="frame" x="94" y="87" width="291" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Disable colors attached to remote nicknames." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6232">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1605,7 +1856,7 @@
                                         </connections>
                                     </button>
                                     <comboBox verticalHuggingPriority="750" id="6243">
-                                        <rect key="frame" x="241" y="39" width="117" height="22"/>
+                                        <rect key="frame" x="243" y="33" width="117" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="6244">
                                             <font key="font" metaFont="smallSystem"/>
@@ -1636,7 +1887,7 @@
                                         </connections>
                                     </comboBox>
                                     <textField verticalHuggingPriority="750" id="6391">
-                                        <rect key="frame" x="46" y="289" width="111" height="16"/>
+                                        <rect key="frame" x="47" y="242" width="111" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Nickname Format:" id="6392">
                                             <font key="font" metaFont="cellTitle"/>
@@ -1645,7 +1896,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" id="6393">
-                                        <rect key="frame" x="38" y="237" width="119" height="16"/>
+                                        <rect key="frame" x="39" y="190" width="119" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Timestamp Format:" id="6394">
                                             <font key="font" metaFont="cellTitle"/>
@@ -1653,20 +1904,8 @@
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <button id="6475">
-                                        <rect key="frame" x="97" y="101" width="290" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" title="Track conversations using nickname coloring." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6476">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" metaFont="titleBar" size="12"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="onChangedStyle:" target="-2" id="7376"/>
-                                            <binding destination="1247" name="value" keyPath="values.TrackConversationsWithColorHashing" id="7187"/>
-                                        </connections>
-                                    </button>
                                     <scrollView borderType="none" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="6548">
-                                        <rect key="frame" x="77" y="215" width="376" height="13"/>
+                                        <rect key="frame" x="78" y="168" width="376" height="13"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="ta9-7k-CAW">
                                             <rect key="frame" x="0.0" y="0.0" width="376" height="13"/>
@@ -1743,7 +1982,7 @@
                                         </scroller>
                                     </scrollView>
                                     <scrollView borderType="none" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="6552">
-                                        <rect key="frame" x="158" y="259" width="252" height="20"/>
+                                        <rect key="frame" x="159" y="212" width="252" height="20"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="pDC-N3-5D5">
                                             <rect key="frame" x="0.0" y="0.0" width="252" height="20"/>
@@ -1819,21 +2058,21 @@
                                         </scroller>
                                     </scrollView>
                                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7334">
-                                        <rect key="frame" x="27" y="79" width="442" height="5"/>
+                                        <rect key="frame" x="30" y="68" width="442" height="5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7335">
-                                        <rect key="frame" x="25" y="192" width="442" height="5"/>
+                                        <rect key="frame" x="26" y="147" width="442" height="5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <scrollView borderType="none" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="RWg-K1-9ut">
-                                        <rect key="frame" x="89" y="22" width="314" height="13"/>
+                                        <rect key="frame" x="91" y="16" width="314" height="13"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="teV-jE-vVR">
                                             <rect key="frame" x="0.0" y="0.0" width="314" height="13"/>
@@ -1968,16 +2207,16 @@
                 <popUpButton verticalHuggingPriority="750" id="6771">
                     <rect key="frame" x="236" y="109" width="230" height="26"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="6772">
+                    <popUpButtonCell key="cell" type="push" title=" " bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="6776" id="6772">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" showsStateColumn="NO" id="6773">
                             <items>
-                                <menuItem title=" " id="6776"/>
+                                <menuItem title=" " state="on" id="6776"/>
                                 <menuItem isSeparatorItem="YES" id="6774">
                                     <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                 </menuItem>
-                                <menuItem title="Other…" tag="2" id="6775"/>
+                                <menuItem title="Select Destination…" tag="2" id="6775"/>
                             </items>
                         </menu>
                     </popUpButtonCell>
@@ -2283,7 +2522,7 @@
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="P7t-5E-TWZ">
                         <rect key="frame" x="0.0" y="0.0" width="172" height="40"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" id="6559">
                                 <rect key="frame" x="0.0" y="0.0" width="172" height="40"/>
@@ -2352,7 +2591,7 @@
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="A41-Pe-2lT">
                         <rect key="frame" x="0.0" y="0.0" width="457" height="40"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" id="7473">
                                 <rect key="frame" x="0.0" y="0.0" width="457" height="40"/>
@@ -2662,7 +2901,7 @@
                     <tabViewItems>
                         <tabViewItem label="General" identifier="1" id="6913">
                             <view key="view" id="6914">
-                                <rect key="frame" x="10" y="25" width="495" height="380"/>
+                                <rect key="frame" x="10" y="29" width="495" height="376"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <userGuides>
                                     <userLayoutGuide location="35" affinity="maxY"/>
@@ -2680,7 +2919,7 @@
                                         </connections>
                                     </button>
                                     <button id="6702">
-                                        <rect key="frame" x="10" y="262" width="357" height="18"/>
+                                        <rect key="frame" x="10" y="258" width="357" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Use &quot;x&quot; to indicate user with no mode set in user list." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6703">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2691,7 +2930,7 @@
                                         </connections>
                                     </button>
                                     <button id="7255">
-                                        <rect key="frame" x="10" y="178" width="201" height="18"/>
+                                        <rect key="frame" x="10" y="174" width="201" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Darken main window colors." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7256">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2704,7 +2943,7 @@
                                         </connections>
                                     </button>
                                     <button id="7264">
-                                        <rect key="frame" x="11" y="290" width="275" height="18"/>
+                                        <rect key="frame" x="11" y="286" width="275" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Hide the buttons left of the input text field." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7265">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2716,14 +2955,14 @@
                                         </connections>
                                     </button>
                                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7332">
-                                        <rect key="frame" x="25" y="322" width="442" height="5"/>
+                                        <rect key="frame" x="25" y="318" width="442" height="5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <button id="7503">
-                                        <rect key="frame" x="10" y="206" width="284" height="18"/>
+                                        <rect key="frame" x="10" y="202" width="284" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Use large font for the server list and user list." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7504">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2735,7 +2974,7 @@
                                         </connections>
                                     </button>
                                     <button id="7578">
-                                        <rect key="frame" x="10" y="234" width="357" height="18"/>
+                                        <rect key="frame" x="10" y="230" width="357" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Place known server staff members at top of user list." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="7579">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2746,6 +2985,50 @@
                                             <binding destination="1247" name="value" keyPath="values.MemberListSortFavorsServerStaff" id="7581"/>
                                         </connections>
                                     </button>
+                                    <textField verticalHuggingPriority="750" id="kL4-Js-8e7">
+                                        <rect key="frame" x="46" y="123" width="134" height="16"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Window Transparency:" id="bNd-e3-dZf">
+                                            <font key="font" metaFont="cellTitle"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <slider verticalHuggingPriority="750" id="D0f-oB-97t">
+                                        <rect key="frame" x="213" y="122" width="197" height="15"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="0.20000000000000001" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="f75-2j-XO9"/>
+                                        <connections>
+                                            <accessibilityConnection property="title" destination="kL4-Js-8e7" id="HCs-b4-ejU"/>
+                                            <action selector="onChangedTransparency:" target="-2" id="38G-0v-edM"/>
+                                            <binding destination="1247" name="value" keyPath="values.MainWindowTransparencyLevel" id="bGc-79-FBV"/>
+                                        </connections>
+                                    </slider>
+                                    <textField verticalHuggingPriority="750" id="2Db-0T-2Gc">
+                                        <rect key="frame" x="185" y="124" width="25" height="11"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="80%" id="k58-Xg-O9e">
+                                            <font key="font" metaFont="miniSystem"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField verticalHuggingPriority="750" id="k84-6p-82M">
+                                        <rect key="frame" x="419" y="125" width="23" height="11"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0%" id="z0u-Fe-ni8">
+                                            <font key="font" metaFont="miniSystem"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="SKs-oC-6WA">
+                                        <rect key="frame" x="29" y="155" width="442" height="5"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <font key="titleFont" metaFont="system"/>
+                                    </box>
                                 </subviews>
                             </view>
                         </tabViewItem>

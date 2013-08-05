@@ -678,98 +678,96 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			}
 
 			/* Conversation Tracking */
-			if ([TPCPreferences trackConversations]) {
-				if (log && isNormalMsg) {
-					IRCClient *logClient = log.client;
-					IRCChannel *logChannel = log.channel;
+			if (log && isNormalMsg) {
+				IRCClient *logClient = log.client;
+				IRCChannel *logChannel = log.channel;
 
-					NSMutableSet *mentionedUsers = [NSMutableSet set];
+				NSMutableSet *mentionedUsers = [NSMutableSet set];
 
-					NSArray *sortedMembers = logChannel.memberListLengthSorted;
+				NSArray *sortedMembers = logChannel.memberListLengthSorted;
 
-					for (IRCUser *user in sortedMembers) {
-						start = 0;
+				for (IRCUser *user in sortedMembers) {
+					start = 0;
 
-						PointerIsEmptyAssertLoopContinue(user.nickname);
+					PointerIsEmptyAssertLoopContinue(user.nickname);
 
-						while (start < length) {
-							NSRange r = [body rangeOfString:user.nickname
-													options:NSCaseInsensitiveSearch
-													  range:NSMakeRange(start, (length - start))];
+					while (start < length) {
+						NSRange r = [body rangeOfString:user.nickname
+												options:NSCaseInsensitiveSearch
+												  range:NSMakeRange(start, (length - start))];
 
-							if (r.location == NSNotFound) {
-								break;
+						if (r.location == NSNotFound) {
+							break;
+						}
+
+						BOOL cleanMatch = YES;
+
+						UniChar c = [body characterAtIndex:r.location];
+
+						if (TXStringIsAlphabeticNumeric(c)) {
+							NSInteger prev = (r.location - 1);
+
+							if (0 <= prev && prev < length) {
+								UniChar c = [body characterAtIndex:prev];
+
+								if (TXStringIsAlphabeticNumeric(c)) {
+									cleanMatch = NO;
+								}
 							}
+						}
 
-							BOOL cleanMatch = YES;
-
-							UniChar c = [body characterAtIndex:r.location];
+						if (cleanMatch) {
+							UniChar c = [body characterAtIndex:(NSMaxRange(r) - 1)];
 
 							if (TXStringIsAlphabeticNumeric(c)) {
-								NSInteger prev = (r.location - 1);
+								NSInteger next = NSMaxRange(r);
 
-								if (0 <= prev && prev < length) {
-									UniChar c = [body characterAtIndex:prev];
+								if (next < length) {
+									UniChar c = [body characterAtIndex:next];
 
 									if (TXStringIsAlphabeticNumeric(c)) {
 										cleanMatch = NO;
 									}
 								}
 							}
-
-							if (cleanMatch) {
-								UniChar c = [body characterAtIndex:(NSMaxRange(r) - 1)];
-
-								if (TXStringIsAlphabeticNumeric(c)) {
-									NSInteger next = NSMaxRange(r);
-
-									if (next < length) {
-										UniChar c = [body characterAtIndex:next];
-
-										if (TXStringIsAlphabeticNumeric(c)) {
-											cleanMatch = NO;
-										}
-									}
-								}
-							}
-
-							if (cleanMatch) {
-								if (isClear(attrBuf, _rendererURLAttribute, r.location, r.length) &&
-									isClear(attrBuf, _rendererKeywordHighlightAttribute, r.location, r.length))
-								{
-									/* Check if the nickname conversation tracking found is matched to an ignore
-									 that is set to hide them. */
-									IRCAddressBook *ignoreCheck = [logClient checkIgnoreAgainstHostmask:user.hostmask withMatches:@[@"hideMessagesContainingMatch"]];
-
-									if (PointerIsNotEmpty(ignoreCheck) && ignoreCheck.hideMessagesContainingMatch) {
-										if (outputDictionary) {
-											*outputDictionary = @{@"containsIgnoredNickname" : @(YES)};
-										}
-
-										return nil;
-									}
-
-									/* Continue normally. */
-									setFlag(attrBuf, _rendererConversationTrackerAttribute, r.location, r.length);
-
-									[mentionedUsers addObject:user];
-								}
-							}
-
-							start = (NSMaxRange(r) + 1);
 						}
-					}
 
-					if (NSObjectIsNotEmpty(mentionedUsers)) {
-						[resultInfo safeSetObject:[mentionedUsers allObjects] forKey:@"mentionedUsers"];
+						if (cleanMatch) {
+							if (isClear(attrBuf, _rendererURLAttribute, r.location, r.length) &&
+								isClear(attrBuf, _rendererKeywordHighlightAttribute, r.location, r.length))
+							{
+								/* Check if the nickname conversation tracking found is matched to an ignore
+								 that is set to hide them. */
+								IRCAddressBook *ignoreCheck = [logClient checkIgnoreAgainstHostmask:user.hostmask withMatches:@[@"hideMessagesContainingMatch"]];
+
+								if (PointerIsNotEmpty(ignoreCheck) && ignoreCheck.hideMessagesContainingMatch) {
+									if (outputDictionary) {
+										*outputDictionary = @{@"containsIgnoredNickname" : @(YES)};
+									}
+
+									return nil;
+								}
+
+								/* Continue normally. */
+								setFlag(attrBuf, _rendererConversationTrackerAttribute, r.location, r.length);
+
+								[mentionedUsers addObject:user];
+							}
+						}
+
+						start = (NSMaxRange(r) + 1);
 					}
+				}
+
+				if (NSObjectIsNotEmpty(mentionedUsers)) {
+					[resultInfo safeSetObject:[mentionedUsers allObjects] forKey:@"mentionedUsers"];
 				}
 			}
 
 			if (PointerIsEmpty(outputDictionary) == NO) {
 				*outputDictionary = resultInfo;
 			}
-
+			
 			/* End HTML drawing. */
 		}
 	} // isPlainText
