@@ -760,7 +760,7 @@
 		return YES;
 	}
 
-	if ([TPCPreferences stopGrowlOnActive] && self.masterController.mainWindowIsActive) {
+	if (self.masterController.mainWindowIsActive) {
 		return YES;
 	}
 
@@ -814,7 +814,7 @@
 		return YES;
 	}
 
-	if ([TPCPreferences stopGrowlOnActive] && self.masterController.mainWindowIsActive) {
+	if (self.masterController.mainWindowIsActive) {
 		return YES;
 	}
 

@@ -239,8 +239,6 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (NSInteger)maxLogLines;
 + (void)setMaxLogLines:(NSInteger)value;
 
-+ (BOOL)stopGrowlOnActive;
-
 + (NSString *)titleForEvent:(TXNotificationType)event;
 + (NSString *)soundForEvent:(TXNotificationType)event;
 
