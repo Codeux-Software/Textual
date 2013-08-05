@@ -66,7 +66,7 @@
 
 @property (nonatomic, assign) dispatch_queue_t dispatchQueue;
 @property (nonatomic, assign) dispatch_queue_t socketQueue;
-@property (nonatomic, strong) NSString *bufferOverflowString;
+@property (nonatomic, strong) NSData *bufferOverflowString;
 
 /* Textual cannot pass proxy information to the GCD version of the
  AsyncSocket library because it does not give us access to the
