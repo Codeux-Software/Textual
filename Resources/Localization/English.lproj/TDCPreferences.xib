@@ -244,7 +244,7 @@
             </connections>
         </window>
         <customView id="4778" userLabel="General Settings">
-            <rect key="frame" x="0.0" y="0.0" width="534" height="223"/>
+            <rect key="frame" x="0.0" y="0.0" width="534" height="251"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <userGuides>
                 <userLayoutGuide location="32" affinity="minX"/>
@@ -255,7 +255,7 @@
             </userGuides>
             <subviews>
                 <button id="4794">
-                    <rect key="frame" x="31" y="136" width="375" height="18"/>
+                    <rect key="frame" x="31" y="164" width="375" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Request channel modes and user host information on join." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="4795">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -266,7 +266,7 @@
                     </connections>
                 </button>
                 <button id="46">
-                    <rect key="frame" x="31" y="187" width="312" height="18"/>
+                    <rect key="frame" x="31" y="215" width="312" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Request confirmation before quitting Textual." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="4230">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -277,7 +277,7 @@
                     </connections>
                 </button>
                 <button id="4802">
-                    <rect key="frame" x="31" y="108" width="332" height="18"/>
+                    <rect key="frame" x="31" y="136" width="332" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Rejoin a channel after being kicked." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="4803">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -288,7 +288,7 @@
                     </connections>
                 </button>
                 <button id="4804">
-                    <rect key="frame" x="31" y="80" width="302" height="18"/>
+                    <rect key="frame" x="31" y="108" width="302" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Automatically join a channel when invited." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="4805">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -299,7 +299,7 @@
                     </connections>
                 </button>
                 <button id="5415">
-                    <rect key="frame" x="30" y="52" width="452" height="18"/>
+                    <rect key="frame" x="30" y="80" width="452" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Display the Message of the Day (MOTD) of a server upon connection." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="5416">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -310,7 +310,7 @@
                     </connections>
                 </button>
                 <button id="6560">
-                    <rect key="frame" x="30" y="24" width="452" height="18"/>
+                    <rect key="frame" x="30" y="52" width="452" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Wait for NickServ identification before joining channels." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="6561">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -321,7 +321,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="7327">
-                    <rect key="frame" x="346" y="182" width="157" height="28"/>
+                    <rect key="frame" x="346" y="210" width="157" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="Set as Default IRC Client" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7328">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -332,12 +332,23 @@
                     </connections>
                 </button>
                 <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7339">
-                    <rect key="frame" x="46" y="168" width="442" height="5"/>
+                    <rect key="frame" x="46" y="196" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
+                <button id="7414">
+                    <rect key="frame" x="31" y="24" width="260" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Toggle away status on display sleep." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="7415">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="cellTitle"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="1247" name="value" keyPath="values.SetAwayOnScreenSleep" id="7417"/>
+                    </connections>
+                </button>
             </subviews>
         </customView>
         <customView id="5347" userLabel="Default Identity">
@@ -2549,7 +2560,7 @@
             </subviews>
         </customView>
         <customView id="6648" userLabel="Hidden Settings">
-            <rect key="frame" x="0.0" y="0.0" width="534" height="256"/>
+            <rect key="frame" x="0.0" y="0.0" width="534" height="231"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <userGuides>
                 <userLayoutGuide location="32" affinity="minX"/>
@@ -2558,7 +2569,7 @@
             </userGuides>
             <subviews>
                 <textField verticalHuggingPriority="750" id="6649">
-                    <rect key="frame" x="31" y="212" width="473" height="28"/>
+                    <rect key="frame" x="31" y="187" width="473" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" id="6665">
                         <font key="font" metaFont="systemBold" size="10"/>
@@ -2568,7 +2579,7 @@
                     </textFieldCell>
                 </textField>
                 <button id="6807">
-                    <rect key="frame" x="31" y="171" width="285" height="18"/>
+                    <rect key="frame" x="31" y="146" width="285" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Base nickname color hashing off a UUID." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6808">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2579,7 +2590,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="7022">
-                    <rect key="frame" x="29" y="71" width="117" height="13"/>
+                    <rect key="frame" x="30" y="74" width="117" height="13"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Fake CTCP Version:" id="7023">
                         <font key="font" metaFont="cellTitle"/>
@@ -2588,7 +2599,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="7038">
-                    <rect key="frame" x="43" y="20" width="459" height="45"/>
+                    <rect key="frame" x="44" y="23" width="459" height="45"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="7039">
                         <font key="font" metaFont="cellTitle"/>
@@ -2600,32 +2611,21 @@
                     </connections>
                 </textField>
                 <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7345">
-                    <rect key="frame" x="46" y="200" width="442" height="5"/>
+                    <rect key="frame" x="46" y="175" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7346">
-                    <rect key="frame" x="45" y="97" width="442" height="5"/>
+                    <rect key="frame" x="46" y="100" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <button id="7414">
-                    <rect key="frame" x="31" y="143" width="260" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Toggle away status on display sleep." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="7415">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="1247" name="value" keyPath="values.SetAwayOnScreenSleep" id="7417"/>
-                    </connections>
-                </button>
                 <button id="7496">
-                    <rect key="frame" x="30" y="115" width="251" height="18"/>
+                    <rect key="frame" x="31" y="118" width="251" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Do not force minimum window size." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="7497">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2636,7 +2636,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="7499">
-                    <rect key="frame" x="316" y="115" width="201" height="14"/>
+                    <rect key="frame" x="317" y="118" width="201" height="14"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="** Restart required to apply changes." id="7500">
                         <font key="font" metaFont="system" size="10"/>
@@ -2656,14 +2656,14 @@
                 <userLayoutGuide location="416" affinity="minY"/>
             </userGuides>
             <subviews>
-                <tabView autoresizesSubviews="NO" controlSize="small" initialItem="6913" id="6911">
+                <tabView controlSize="small" initialItem="6913" id="6911">
                     <rect key="frame" x="10" y="13" width="515" height="418"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <tabViewItems>
                         <tabViewItem label="General" identifier="1" id="6913">
                             <view key="view" id="6914">
-                                <rect key="frame" x="10" y="29" width="495" height="376"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                                <rect key="frame" x="10" y="25" width="495" height="380"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <userGuides>
                                     <userLayoutGuide location="35" affinity="maxY"/>
                                 </userGuides>
@@ -2680,7 +2680,7 @@
                                         </connections>
                                     </button>
                                     <button id="6702">
-                                        <rect key="frame" x="10" y="258" width="357" height="18"/>
+                                        <rect key="frame" x="10" y="262" width="357" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Use &quot;x&quot; to indicate user with no mode set in user list." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6703">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2691,7 +2691,7 @@
                                         </connections>
                                     </button>
                                     <button id="7255">
-                                        <rect key="frame" x="10" y="174" width="201" height="18"/>
+                                        <rect key="frame" x="10" y="178" width="201" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Darken main window colors." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7256">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2704,7 +2704,7 @@
                                         </connections>
                                     </button>
                                     <button id="7264">
-                                        <rect key="frame" x="11" y="286" width="275" height="18"/>
+                                        <rect key="frame" x="11" y="290" width="275" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Hide the buttons left of the input text field." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7265">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2716,16 +2716,16 @@
                                         </connections>
                                     </button>
                                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7332">
-                                        <rect key="frame" x="25" y="318" width="442" height="5"/>
+                                        <rect key="frame" x="25" y="322" width="442" height="5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <button id="7503">
-                                        <rect key="frame" x="10" y="202" width="259" height="18"/>
+                                        <rect key="frame" x="10" y="206" width="284" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" title="Use large font for the server &amp; user lists." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7504">
+                                        <buttonCell key="cell" type="check" title="Use large font for the server list and user list." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7504">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
@@ -2735,7 +2735,7 @@
                                         </connections>
                                     </button>
                                     <button id="7578">
-                                        <rect key="frame" x="10" y="230" width="357" height="18"/>
+                                        <rect key="frame" x="10" y="234" width="357" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Place known server staff members at top of user list." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="7579">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2752,7 +2752,7 @@
                         <tabViewItem label="Keyboard &amp; Mouse" identifier="2" id="6912">
                             <view key="view" id="6954">
                                 <rect key="frame" x="10" y="25" width="495" height="380"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <userGuides>
                                     <userLayoutGuide location="30" affinity="minX"/>
                                     <userLayoutGuide location="433.46487426757812" affinity="minX"/>
@@ -3004,7 +3004,7 @@
                         <tabViewItem label="Input" identifier="" id="7597">
                             <view key="view" id="7598">
                                 <rect key="frame" x="10" y="25" width="495" height="380"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <button id="7599">
                                         <rect key="frame" x="10" y="341" width="186" height="18"/>
@@ -3083,7 +3083,7 @@
                         <tabViewItem label="Mode Colors" identifier="" id="7516">
                             <view key="view" id="7517">
                                 <rect key="frame" x="10" y="25" width="495" height="380"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <userGuides>
                                     <userLayoutGuide location="30" affinity="minX"/>
                                     <userLayoutGuide location="347" affinity="minY"/>
@@ -3261,7 +3261,7 @@
                         <tabViewItem label="Navigation" identifier="" id="7627">
                             <view key="view" id="7628">
                                 <rect key="frame" x="10" y="25" width="495" height="380"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <button id="7698">
                                         <rect key="frame" x="11" y="341" width="325" height="18"/>
@@ -3401,7 +3401,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="6732">
-                    <rect key="frame" x="233" y="99" width="36" height="16"/>
+                    <rect key="frame" x="232" y="99" width="36" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="/msg" id="6733">
                         <font key="font" metaFont="systemBold" size="12"/>
@@ -3410,7 +3410,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="6748">
-                    <rect key="frame" x="269" y="99" width="138" height="16"/>
+                    <rect key="frame" x="268" y="99" width="138" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="command." id="6749">
                         <font key="font" metaFont="cellTitle"/>
