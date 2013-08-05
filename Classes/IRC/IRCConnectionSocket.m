@@ -142,14 +142,15 @@
 #pragma mark -
 #pragma mark Socket Read & Write
 
-- (NSString *)readLine:(NSMutableString **)refString
+- (NSData *)readLine:(NSMutableData **)refString
 {
 	NSObjectIsEmptyAssertReturn(*refString, nil);
 	
 	NSInteger messageSubstringIndex = 0;
+	NSInteger messageDeleteIndex = 0;
 
-	NSRange _LFRange = [*refString rangeOfString:[NSString stringWithFormat:@"%C", _LF]];
-	NSRange _CRRange = [*refString rangeOfString:[NSString stringWithFormat:@"%C", _CR]];
+	NSRange _LFRange = [*refString rangeOfData:[GCDAsyncSocket LFData] options:0 range:NSMakeRange(0, [*refString length])];
+	NSRange _CRRange = [*refString rangeOfData:[GCDAsyncSocket CRData] options:0 range:NSMakeRange(0, [*refString length])];
 
 	if (_LFRange.location == NSNotFound) {
 		/* If we do not have any line end for this fragment and the refString is not
@@ -164,14 +165,15 @@
 	}
 
 	messageSubstringIndex = _LFRange.location;
+	messageDeleteIndex = (_LFRange.location + 1);
 
 	if ((_LFRange.location - 1) == _CRRange.location) {
 		messageSubstringIndex -= 1;
 	}
+	
+	NSData *readLine = [*refString subdataWithRange:NSMakeRange(0, messageSubstringIndex)];
 
-	NSString *readLine = [*refString substringToIndex:messageSubstringIndex];;
-
-	[*refString deleteCharactersInRange:NSMakeRange(0, (messageSubstringIndex + 1))];
+	[*refString replaceBytesInRange:NSMakeRange(0, messageDeleteIndex) withBytes:NULL length:0];
 
 	return readLine;
 }
@@ -268,9 +270,7 @@
 
 - (void)completeReadForData:(NSData *)data
 {
-	NSString *newData = [self convertFromCommonEncoding:data];
-
-	NSMutableString *readBuffer;
+	NSMutableData *readBuffer;
 
 	BOOL hasOverflowPrefix = NSObjectIsNotEmpty(self.bufferOverflowString);
 
@@ -279,20 +279,26 @@
 
 		self.bufferOverflowString = nil; // Destroy old overflow;
 
-		[readBuffer appendString:newData];
+		[readBuffer appendBytes:[data bytes] length:[data length]];
 	} else {
-		readBuffer = [newData mutableCopy];
+		readBuffer = [data mutableCopy];
 	}
 
 	while (1 == 1) {
-		NSString *data = [self readLine:&readBuffer];
+		NSData *data = [self readLine:&readBuffer];
 
 		if (data == nil) {
 			break;
 		}
 
+		NSString *sdata = [self convertFromCommonEncoding:data];
+
+		if (sdata == nil) {
+			break;
+		}
+
 		dispatch_sync(dispatch_get_main_queue(), ^{
-			[self performSelector:@selector(tcpClientDidReceiveData:) withObject:data];
+			[self performSelector:@selector(tcpClientDidReceiveData:) withObject:sdata];
 		});
 	}
 }
