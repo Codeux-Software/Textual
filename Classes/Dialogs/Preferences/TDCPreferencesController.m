@@ -178,10 +178,19 @@
 		/* Show growl icon if it is running or we are not on mountain lion. */
 		
 		[self.alertToolbarItem setImage:[NSImage imageNamed:@"TPWTB_Alerts"]];
+
+		if (growlRunning) {
+			self.alertNotificationDestinationTextField.stringValue = TXTFLS(@"PreferencesAlertSettingsGrowlIsDestination");
+		} else {
+			self.alertNotificationDestinationTextField.stringValue = TXTFLS(@"PreferencesAlertSettingsNoDestinationForNotifications");
+
+		}
 	} else {
 		/* Show notification center icon if we are on ML and growl is not running. */
 
 		[self.alertToolbarItem setImage:[NSImage imageNamed:@"TPWTB_Alerts_NC"]];
+		
+		self.alertNotificationDestinationTextField.stringValue = TXTFLS(@"PreferencesAlertSettingsNotificationCenterIsDestination");
 	}
 
 	/* Extensions. */

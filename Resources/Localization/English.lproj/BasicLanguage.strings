@@ -226,6 +226,10 @@
 "PreferencesImportPreflightDialogMessage" = "During import, all connections will be disconnected and the contents of all channels cleared.\n\nPlease take note that the following preferences cannot be imported:\n\n    • Passwords.\n    • Log location.\n    • Any custom addons. Styles or scripts.\n\nAll other preferences will apply immediately.";
 "PreferencesImportPreflightDialogSelectFileButton" = "Select File";
 
+"PreferencesAlertSettingsGrowlIsDestination" = "Growl is running. Notifications will be forwarded to it.";
+"PreferencesAlertSettingsNotificationCenterIsDestination" = "Notifications will be posted using Notification Center.";
+"PreferencesAlertSettingsNoDestinationForNotifications" = "Growl is not running. Notifications will not be posted."; /* For Lion. It does not have NC. */
+
 "NoButton" = "No";
 
 /* If an event is not defined below for spoken events, then the odds are

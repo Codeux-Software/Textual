@@ -12,6 +12,7 @@
                 <outlet property="addExcludeKeywordButton" destination="4868" id="7349"/>
                 <outlet property="alertBounceDockIconButton" destination="7708" id="7710"/>
                 <outlet property="alertDisableWhileAwayButton" destination="6627" id="7355"/>
+                <outlet property="alertNotificationDestinationTextField" destination="Xnn-X9-iyC" id="3J4-PU-W2t"/>
                 <outlet property="alertPushNotificationButton" destination="6623" id="7354"/>
                 <outlet property="alertSoundChoiceButton" destination="6633" id="7356"/>
                 <outlet property="alertSpeakEventButton" destination="7592" id="7595"/>
@@ -717,28 +718,17 @@
             </subviews>
         </customView>
         <customView id="4790" userLabel="Alert Settings">
-            <rect key="frame" x="0.0" y="0.0" width="531" height="320"/>
+            <rect key="frame" x="0.0" y="0.0" width="531" height="317"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <userGuides>
                 <userLayoutGuide location="502" affinity="minX"/>
-                <userLayoutGuide location="226" affinity="minY"/>
+                <userLayoutGuide location="493" affinity="minY"/>
                 <userLayoutGuide location="32" affinity="minX"/>
                 <userLayoutGuide location="29" affinity="minY"/>
             </userGuides>
             <subviews>
-                <button id="4943">
-                    <rect key="frame" x="31" y="228" width="415" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Disable notifications when Textual is in focus." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="4944">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="1247" name="value" keyPath="values.DisableNotificationsForActiveWindow" id="7159"/>
-                    </connections>
-                </button>
                 <button id="5343">
-                    <rect key="frame" x="30" y="284" width="465" height="18"/>
+                    <rect key="frame" x="33" y="53" width="465" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Display a badge on the dock to indicate a new highlight or private message." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="5344">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -749,7 +739,7 @@
                     </connections>
                 </button>
                 <button id="6142">
-                    <rect key="frame" x="31" y="256" width="436" height="18"/>
+                    <rect key="frame" x="34" y="25" width="436" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Include public channel messages in the above mentioned badge count." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6143">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -763,7 +753,7 @@
                     </connections>
                 </button>
                 <popUpButton verticalHuggingPriority="750" id="6614">
-                    <rect key="frame" x="163" y="171" width="208" height="26"/>
+                    <rect key="frame" x="205" y="277" width="208" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" id="6615">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -781,7 +771,7 @@
                     </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" id="6621">
-                    <rect key="frame" x="75" y="176" width="86" height="17"/>
+                    <rect key="frame" x="117" y="282" width="86" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="Current Alert:" id="6622">
                         <font key="font" metaFont="cellTitle"/>
@@ -790,7 +780,7 @@
                     </textFieldCell>
                 </textField>
                 <button id="6623">
-                    <rect key="frame" x="166" y="142" width="252" height="18"/>
+                    <rect key="frame" x="101" y="244" width="252" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Display notification for alert." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6624">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -801,7 +791,7 @@
                     </connections>
                 </button>
                 <button id="6627">
-                    <rect key="frame" x="166" y="86" width="322" height="18"/>
+                    <rect key="frame" x="101" y="169" width="322" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Disable alert when /away command is set." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6628">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -812,7 +802,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="6629">
-                    <rect key="frame" x="184" y="31" width="129" height="17"/>
+                    <rect key="frame" x="119" y="114" width="129" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Play sound on alert:" id="6630">
                         <font key="font" metaFont="system"/>
@@ -821,7 +811,7 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" id="6633">
-                    <rect key="frame" x="315" y="25" width="141" height="26"/>
+                    <rect key="frame" x="250" y="108" width="141" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" id="6634">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -839,7 +829,7 @@
                     </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" id="6744">
-                    <rect key="frame" x="304" y="87" width="43" height="16"/>
+                    <rect key="frame" x="239" y="170" width="43" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="/away" id="6745">
                         <font key="font" metaFont="systemBold" size="12"/>
@@ -848,14 +838,14 @@
                     </textFieldCell>
                 </textField>
                 <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7341">
-                    <rect key="frame" x="44" y="209" width="442" height="5"/>
+                    <rect key="frame" x="33" y="287" width="79" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <button id="7592">
-                    <rect key="frame" x="166" y="114" width="234" height="18"/>
+                    <rect key="frame" x="101" y="197" width="234" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Speak using system voice." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="7593">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -866,7 +856,7 @@
                     </connections>
                 </button>
                 <button id="7708">
-                    <rect key="frame" x="166" y="58" width="161" height="18"/>
+                    <rect key="frame" x="101" y="141" width="161" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Bounce dock icon." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7709">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -876,6 +866,29 @@
                         <action selector="onChangedAlertBounceDockIcon:" target="-2" id="7711"/>
                     </connections>
                 </button>
+                <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="5ca-pM-S2H">
+                    <rect key="frame" x="418" y="287" width="84" height="5"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="YYQ-mg-BrA">
+                    <rect key="frame" x="44" y="88" width="442" height="5"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Xnn-X9-iyC">
+                    <rect key="frame" x="116" y="221" width="386" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Growl is running. Notifications will be forwarded to it." id="5Wq-vi-reG">
+                        <font key="font" size="11" name="LucidaGrande"/>
+                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
         </customView>
         <customView id="4791" userLabel="Style Settings">
