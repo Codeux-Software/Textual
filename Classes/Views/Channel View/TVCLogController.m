@@ -1174,12 +1174,12 @@
 	return html;
 }
 
-- (void)imageLoaderFinishedLoadingForImageWithID:(NSString *)uniqueID
+- (void)imageLoaderFinishedLoadingForImageWithID:(NSString *)uniqueID orientation:(NSInteger)orientationIndex
 {
 	/* Toggle visibility. */
 	NSObjectIsEmptyAssert(uniqueID);
 
-	[self.sink toggleInlineImage:uniqueID withKeyCheck:NO];
+	[self.sink toggleInlineImage:uniqueID withKeyCheck:NO orientation:orientationIndex];
 }
 
 #pragma mark -

@@ -45,5 +45,5 @@
 @end
 
 @interface TVCLogController (TVCImageURLoaderControllerExtension)
-- (void)imageLoaderFinishedLoadingForImageWithID:(NSString *)uniqueID;
+- (void)imageLoaderFinishedLoadingForImageWithID:(NSString *)uniqueID orientation:(NSInteger)orientationIndex;
 @end
