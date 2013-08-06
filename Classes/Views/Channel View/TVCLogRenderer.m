@@ -49,7 +49,6 @@ typedef uint32_t attr_t;
 #define _rendererBackgroundColorAttribute		(1 << 24)
 #define _rendererConversationTrackerAttribute	(1 << 23)
 #define _rendererKeywordHighlightAttribute		(1 << 22)
-#define _rendererRedditSubNameLinkAttribute		(1 << 21)
 
 #define _backgroundColorMask	(0xF0)
 #define _textColorMask			(0x0F)
@@ -177,15 +176,6 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				templateTokens[@"anchorInlineImageUniqueID"] = keyValue;
 			}
 		}
-
-		/* Render template. */
-		return [TVCLogRenderer renderTemplate:@"renderedStandardAnchorLinkResource" attributes:templateTokens];
-	}
-	else if (attrArray & _rendererRedditSubNameLinkAttribute)
-	{
-		/* Define attributes. */
-		templateTokens[@"anchorTitle"]		=  contentes;
-		templateTokens[@"anchorLocation"]	= [NSString stringWithFormat:@"http://www.reddit.com%@", contentes];
 
 		/* Render template. */
 		return [TVCLogRenderer renderTemplate:@"renderedStandardAnchorLinkResource" attributes:templateTokens];
@@ -655,23 +645,6 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 				if (isClear(attrBuf, _rendererURLAttribute, r.location, r.length)) {
 					setFlag(attrBuf, _rendererChannelNameAttribute, r.location, r.length);
-				}
-
-				start = (NSMaxRange(r) + 1);
-			}
-
-			/* Find Reddit subreddit names cause you know #yolo */
-			start = 0;
-
-			while (start < length) {
-				NSRange r = [body rangeOfNextSegmentMatchingRegularExpression:@"/r/[A-Za-z0-9][A-Za-z0-9_]{2,20}" startingAt:start];
-
-				if (r.location == NSNotFound) {
-					break;
-				}
-
-				if (isClear(attrBuf, _rendererURLAttribute, r.location, r.length)) {
-					setFlag(attrBuf, _rendererRedditSubNameLinkAttribute, r.location, r.length);
 				}
 
 				start = (NSMaxRange(r) + 1);

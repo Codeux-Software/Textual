@@ -420,6 +420,12 @@
 
 - (NSString *)stringWithValidURIScheme
 {
+	/* Fix reddit links. */
+	if ([self hasPrefix:@"/r/"] && [self length] < 25) {
+		return [@"http://www.reddit.com" stringByAppendingString:self];
+	}
+
+	/* Normal links. */
 	if ([self contains:@"://"] == NO) {
 		return [NSString stringWithFormat:@"http://%@", self];
 	}
