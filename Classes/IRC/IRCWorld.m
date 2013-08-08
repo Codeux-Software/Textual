@@ -358,13 +358,23 @@
 
 - (void)markAllAsRead:(IRCClient *)limitedClient
 {
+	BOOL markScrollback = [TPCPreferences autoAddScrollbackMark];
+
 	for (IRCClient *u in self.clients) {
 		if (PointerIsNotEmpty(limitedClient) && NSDissimilarObjects(u, limitedClient)) {
 			continue;
 		}
+
+		if (markScrollback) {
+			[u.viewController mark];
+		}
 		
 		for (IRCChannel *c in u.channels) {
 			[c resetState];
+
+			if (markScrollback) {
+				[c.viewController mark];
+			}
 		}
 	}
 
@@ -374,7 +384,7 @@
 		[self reloadTree];
 	}
 
-	[self markAllScrollbacks];
+	[self updateIcon];
 }
 
 - (void)markAllScrollbacks
