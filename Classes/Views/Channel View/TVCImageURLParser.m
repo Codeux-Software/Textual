@@ -209,6 +209,14 @@
 				return [NSString stringWithFormat:@"http://i.imgur.com/%@.png", s];
 			}
 		} */
+	} else if ([host hasSuffix:@"ubuntuone.com"]) {
+		if ([path hasPrefix:@"/"]) {
+			NSString *s = [path safeSubstringFromIndex:1];
+
+			if ([s isAlphabeticNumericOnly] && s.length == 22) {
+				return url;
+			}
+		}
 	} else if ([host hasSuffix:@"d.pr"]) {
 		if ([path hasPrefix:@"/i/"]) {
 			NSString *s = [path safeSubstringFromIndex:3];
