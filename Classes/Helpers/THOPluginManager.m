@@ -383,6 +383,9 @@
     for (THOPluginItem *plugin in self.allLoadedPlugins) {
         if ([plugin.primaryClass respondsToSelector:@selector(interceptUserInput:command:)]) {
             input = [plugin.primaryClass interceptUserInput:input command:command];
+
+			/* If this plugin returned nil, then stop here. Do not pass it on to others. */
+			PointerIsEmptyAssertReturn(input, nil);
         }
     }
 
@@ -393,7 +396,10 @@
 {
     for (THOPluginItem *plugin in self.allLoadedPlugins) {
         if ([plugin.primaryClass respondsToSelector:@selector(interceptServerInput:for:)]) {
-            input = [plugin.primaryClass interceptServerInput:input for:client];
+			input = [plugin.primaryClass interceptServerInput:input for:client];
+
+			/* If this plugin returned nil, then stop here. Do not pass it on to others. */
+			PointerIsEmptyAssertReturn(input, nil);
         }
     }
 
