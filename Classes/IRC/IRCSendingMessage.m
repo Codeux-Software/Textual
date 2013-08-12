@@ -76,8 +76,6 @@
 	NSInteger colonIndexCount = 0;
 
 	for (NSString *param in argList) {
-		NSObjectIsEmptyAssertLoopContinue(param);
-		
 		[builtString appendString:NSStringWhitespacePlaceholder];
 
 		if (colonIndexBase == -1) {
