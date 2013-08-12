@@ -51,13 +51,37 @@
 	if (channel.isChannel) {
 		if ([commandString isEqualToString:@"CLONES"]) {
 			[self findAllClonesIn:channel on:client];
+		} else if ([commandString isEqualToString:@"NAMEL"]) {
+			[self buildListOfUsersOn:channel on:client];
 		}
 	}
 }
 
 - (NSArray *)pluginSupportsUserInputCommands
 {
-	return @[@"clones"];
+	return @[@"clones", @"namel"];
+}
+
+- (void)buildListOfUsersOn:(IRCChannel *)channel on:(IRCClient *)client
+{
+	if (NSObjectIsEmpty(channel.memberList)) {
+		[client printDebugInformation:TPIFLS(@"SpammerParadiseNoUsersInChannel", channel.name) channel:channel];
+
+		return; // We cannot do anything with no users now can we?
+	}
+
+	/* Build list of users and print it. */
+	NSMutableArray *users = [NSMutableArray array];
+
+	for (IRCUser *u in channel.memberList) {
+		[users safeAddObject:u.nickname];
+	}
+
+	[users sortUsingSelector:@selector(compare:)];
+
+	NSString *printedList = [users componentsJoinedByString:NSStringWhitespacePlaceholder];
+
+	[client printDebugInformation:printedList channel:channel];
 }
 
 - (void)findAllClonesIn:(IRCChannel *)channel on:(IRCClient *)client

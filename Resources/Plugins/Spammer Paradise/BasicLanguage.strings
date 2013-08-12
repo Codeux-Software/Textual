@@ -38,4 +38,5 @@
 
 "SpammerParadiseNoClonesFound" = "No clones found.";
 "SpammerParadiseNumberOfClonesFound" = "%1$ld clones found in %2$@ on %3$@.";
-
+"SpammerParadiseInvalidInput" = "Invalid input.";
+"SpammerParadiseNoUsersInChannel" = "No users found in %@.";
