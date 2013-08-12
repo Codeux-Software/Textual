@@ -242,7 +242,7 @@
 
 - (NSArray *)dangerousCommandNames
 {
-    return @[@"clone", @"cloned", @"unclone", @"hspam", @"spam"];
+    return @[@"clone", @"cloned", @"unclone", @"hspam", @"spam", @"namel"];
 }
 
 /* Everything else. */
