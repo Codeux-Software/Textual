@@ -519,6 +519,11 @@
 	return NSMakePoint(5, 4);
 }
 
+- (NSPoint)userMarkBadgeTextOrigin_ExclamationMark /* ! */
+{
+	return NSMakePoint(7, 4);
+}
+
 - (NSFont *)normalCellFont
 {
 	if ([TPCPreferences useLargeFontForSidebars]) {

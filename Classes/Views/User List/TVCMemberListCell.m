@@ -180,6 +180,8 @@
 			symbolTextFieldRectNew.origin = [self.memberList userMarkBadgeTextOrigin_AndSign];
 		} else if ([mcnstring isEqualToString:@"%"]) {
 			symbolTextFieldRectNew.origin = [self.memberList userMarkBadgeTextOrigin_PercentSign];
+		} else if ([mcnstring isEqualToString:@"!"]) {
+			symbolTextFieldRectNew.origin = [self.memberList userMarkBadgeTextOrigin_ExclamationMark];
 		} else {
 			symbolTextFieldRectNew.origin = [self.memberList userMarkBadgeTextOrigin_Normal];
 		}

@@ -80,6 +80,7 @@
 - (NSPoint)userMarkBadgeTextOrigin_AtSign; /* @ */
 - (NSPoint)userMarkBadgeTextOrigin_AndSign; /* & */
 - (NSPoint)userMarkBadgeTextOrigin_PercentSign; /* % */
+- (NSPoint)userMarkBadgeTextOrigin_ExclamationMark; /* ! */
 
 - (NSColor *)userMarkBadgeBackgroundColor_YDefault;
 - (NSColor *)userMarkBadgeBackgroundColor_ADefault;
