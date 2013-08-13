@@ -38,11 +38,11 @@
 #import "TextualApplication.h"
 
 @interface TVCMemberList ()
-@property (nonatomic, strong) id eventMonitor;
-@property (nonatomic, assign) BOOL mouseEntryTimerIsRunning;
-@property (nonatomic, assign) CFAbsoluteTime mouseEntryTime;
-@property (nonatomic, assign) NSInteger lastRowShownTooltip;
-@property (nonatomic, assign) NSPoint mouseEntryLastLocation;
+@property (nonatomic, strong) id userPopoverTrackingArea;
+@property (nonatomic, assign) BOOL userPopoverMouseIsInView;
+@property (nonatomic, assign) BOOL userPopoverTimerIsActive;
+@property (nonatomic, assign) NSPoint userPopoverLastKnonwnLocalPoint;
+@property (nonatomic, assign) NSInteger lastRowShownUserInfoPopover;
 @end
 
 @implementation TVCMemberList
@@ -116,83 +116,91 @@
 #pragma mark -
 #pragma mark Mouse Tracking
 
-- (void)awakeFromNib
+- (id)initWithFrame:(NSRect)frame
 {
-	self.mouseEntryTimerIsRunning = NO;
-	self.mouseEntryLastLocation = NSZeroPoint;
-	self.lastRowShownTooltip = -1;
-	self.mouseEntryTime = 0;
-}
+	if ((self = [super initWithFrame:frame])) {
+		self.userPopoverTrackingArea = [[NSTrackingArea alloc] initWithRect:frame
+																	options:(NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveInKeyWindow)
+																	  owner:self
+																   userInfo:nil];
 
-- (void)createMouseMovedEventMonitor
-{
-	self.eventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:NSMouseMovedMask handler:^NSEvent *(NSEvent *event) {
-		[self mouseHasMoved:[event locationInWindow] skipCheck:NO];
+		[self addTrackingArea:self.userPopoverTrackingArea];
 
-		return event;
-	}];
-}
-
-- (void)destroyMouseMovedEventMonitor
-{
-	[NSEvent removeMonitor:self.eventMonitor];
-}
-
-- (void)mouseHasMoved:(NSPoint)atPoint skipCheck:(BOOL)skipCheck
-{
-	NSWindowNegateActionWithAttachedSheet();
-
-	NSPoint localPoint = atPoint;
-
-	if (skipCheck == NO) {
-		localPoint = [self convertPoint:atPoint fromView:nil];
-
-		if ([self mouse:localPoint inRect:self.frame]) {
-			self.mouseEntryLastLocation = localPoint;
-
-			if (self.mouseEntryTime == 0) {
-				self.mouseEntryTime = CFAbsoluteTimeGetCurrent();
-
-				return; // We do not want to draw as soon as we entered.
-			} else {
-				/* We want a 0.6 second delay before displaying the popover. 
-				 This is done so the mouse traveling through the view does 
-				 not trigger it when we are just going past it. */
-
-				if ((CFAbsoluteTimeGetCurrent() - self.mouseEntryTime) < 0.6) {
-					if (self.mouseEntryTimerIsRunning == NO) {
-						self.mouseEntryTimerIsRunning = YES;
-
-						[self performSelector:@selector(mouseHasMovedEntryTimer) withObject:nil afterDelay:0.6];
-					}
-
-					return;
-				}
-			}
-		} else {
-			if ([self.masterController.memberListUserInfoPopover isShown]) {
-				[self.masterController.memberListUserInfoPopover close];
-			}
-
-			if (self.mouseEntryTimerIsRunning) {
-				[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(mouseHasMovedEntryTimer:) object:nil];
-			}
-
-			self.mouseEntryTimerIsRunning = NO;
-			self.mouseEntryLastLocation = NSZeroPoint;
-			self.lastRowShownTooltip = -1;
-			self.mouseEntryTime = 0;
-
-			return;
-		}
+		return self;
 	}
 
-	/* Setup actual popover. */
+	return nil;
+}
+
+- (void)updateTrackingAreas
+{
+    [self removeTrackingArea:self.userPopoverTrackingArea];
+
+	self.userPopoverTrackingArea = [[NSTrackingArea alloc] initWithRect:self.frame
+																options:(NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveInKeyWindow)
+																  owner:self
+															   userInfo:nil];
+
+	[self addTrackingArea:self.userPopoverTrackingArea];
+}
+
+- (void)destroyUserInfoPopoverOnWindowKeyChange
+{
+	[self destroyUserInfoPopover]; // Destroy anything shown.
+}
+
+- (void)destroyUserInfoPopover
+{
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(popDelayedUserInfoExpansionFrame) object:nil];
+
+	self.lastRowShownUserInfoPopover = -1;
+
+	self.userPopoverMouseIsInView = NO;
+	self.userPopoverTimerIsActive = NO;
+
+	self.userPopoverLastKnonwnLocalPoint = NSZeroPoint;
+
+	if ([self.masterController.memberListUserInfoPopover isShown]) {
+		[self.masterController.memberListUserInfoPopover close];
+	}
+}
+
+- (void)mouseEntered:(NSEvent *)theEvent
+{
+	self.userPopoverMouseIsInView = YES;
+
+	if (self.userPopoverTimerIsActive == NO) {
+		self.userPopoverTimerIsActive = YES;
+
+		[self performSelector:@selector(popDelayedUserInfoExpansionFrame) withObject:nil afterDelay:1.0];
+	}
+}
+
+- (void)mouseExited:(NSEvent *)theEvent
+{
+	[self destroyUserInfoPopover];
+}
+
+- (void)mouseMoved:(NSEvent *)theEvent
+{
+	NSPoint localPoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+
+	[self popUserInfoExpansionFrameAtPoint:localPoint ignoreTimerCheck:NO];
+}
+
+- (void)popUserInfoExpansionFrameAtPoint:(NSPoint)localPoint ignoreTimerCheck:(BOOL)ignoreTimer
+{
+	self.userPopoverLastKnonwnLocalPoint = localPoint;
+
+	if (ignoreTimer == NO && self.userPopoverTimerIsActive) {
+		return; // Only allow the timer to pop it.
+	}
+
 	NSInteger row = [self rowAtPoint:localPoint];
 
 	if (row > -1) {
-		if (NSDissimilarObjects(self.lastRowShownTooltip, row)) {
-			self.lastRowShownTooltip = row;
+		if (NSDissimilarObjects(self.lastRowShownUserInfoPopover, row)) {
+			self.lastRowShownUserInfoPopover = row;
 
 			id rowView = [self viewAtColumn:0 row:row makeIfNecessary:NO];
 
@@ -201,15 +209,19 @@
 	}
 }
 
-- (void)mouseHasMovedEntryTimer
+- (void)popDelayedUserInfoExpansionFrame
 {
-	if (NSEqualPoints(self.mouseEntryLastLocation, NSZeroPoint) == NO) {
-		if ([self.masterController.memberListUserInfoPopover isShown] == NO) {
-			[self mouseHasMoved:self.mouseEntryLastLocation skipCheck:YES];
-		}
+	/* Basically we delay the expansion frame (also known as the popover)
+	 by one second from the time the user enters the frame so that if they
+	 are just moving the mouse through it to another portion of the window
+	 we do not try to show a popover. We only want to show a popover if the
+	 user has some intention of being in the list. */
+
+	if (self.userPopoverMouseIsInView) {
+		[self popUserInfoExpansionFrameAtPoint:self.userPopoverLastKnonwnLocalPoint ignoreTimerCheck:YES];
 	}
 
-	self.mouseEntryTimerIsRunning = NO;
+	self.userPopoverTimerIsActive = NO;
 }
 
 #pragma mark -
