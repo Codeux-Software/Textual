@@ -126,6 +126,8 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 
 + (BOOL)channelNavigationIsServerSpecific;
 
++ (BOOL)automaticallyDetectHighlightSpam;
+
 + (BOOL)logTranscript;
 + (BOOL)logTranscriptInBatches;
 

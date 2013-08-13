@@ -655,6 +655,9 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				IRCClient *logClient = log.client;
 				IRCChannel *logChannel = log.channel;
 
+				NSInteger totalNicknameLength = 0;
+				NSInteger totalNicknameCount = 0;
+
 				NSMutableSet *mentionedUsers = [NSMutableSet set];
 
 				NSArray *sortedMembers = logChannel.memberListLengthSorted;
@@ -724,6 +727,9 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 								/* Continue normally. */
 								setFlag(attrBuf, _rendererConversationTrackerAttribute, r.location, r.length);
 
+								totalNicknameCount += 1;
+								totalNicknameLength += user.nickname.length;
+
 								[mentionedUsers addObject:user];
 							}
 						}
@@ -733,12 +739,22 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				}
 
 				if (NSObjectIsNotEmpty(mentionedUsers)) {
+					/* Calculate how much of the body length is actually nicknames. 
+					 This is used when trying to stop highlight spam messages.
+					 By design, Textual counts anything above 75% spam. It
+					 also only begins counting after a certain number of 
+					 users are present in the message. */
+					if ([TPCPreferences automaticallyDetectHighlightSpam]) {
+						CGFloat nhsp = (((CGFloat)totalNicknameLength / (CGFloat)body.length) * 100.00f);
+
+						if (nhsp > 75.0f && totalNicknameCount > 5) {
+							[resultInfo setBool:NO forKey:@"wordMatchFound"];
+						}
+					}
+
+					/* Return list of mentioned users. This list is used to update weights. */
 					[resultInfo safeSetObject:[mentionedUsers allObjects] forKey:@"mentionedUsers"];
 				}
-			}
-
-			if (PointerIsEmpty(outputDictionary) == NO) {
-				*outputDictionary = resultInfo;
 			}
 			
 			/* End HTML drawing. */
@@ -757,6 +773,8 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	}
 	
 	start = 0;
+
+	NSInteger totalNicknameLength = 0;
 	
 	while (start < length) {
 		NSInteger n = getNextAttributeRange(attrBuf, start, length);
@@ -770,7 +788,14 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		} else {
 			NSString *renderedRange = [TVCLogRenderer renderRange:body attributes:t start:start length:n for:log context:resultInfo];
 
-			if (NSObjectIsNotEmpty(renderedRange)) {
+			if (t & _rendererConversationTrackerAttribute) {
+				/* To fight against highlight spam we count the total length of every
+				 nickname that appears in this message to calculate a percentage later. */
+
+				totalNicknameLength += renderedRange.length;
+			}
+
+			if (renderedRange.length > 0) {
 				[result appendString:renderedRange];
 			}
 		}
@@ -780,6 +805,11 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 	if (drawingType == TVCLogRendererAttributedStringType) {
 		[result endEditing];
+	} else {
+		/* Prepare output dictionary for HTML render. */
+		if (PointerIsEmpty(outputDictionary) == NO) {
+			*outputDictionary = resultInfo;
+		}
 	}
 	
 	return result;
