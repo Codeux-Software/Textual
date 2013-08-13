@@ -651,6 +651,11 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() boolForKey:@"RemoveIRCTextFormatting"];
 }
 
++ (BOOL)automaticallyDetectHighlightSpam
+{
+	return [RZUserDefaults() boolForKey:@"AutomaticallyDetectHighlightSpam"];
+}
+
 + (BOOL)disableNicknameColorHashing
 {
 	return [RZUserDefaults() boolForKey:@"DisableRemoteNicknameColorHashing"];
@@ -1381,6 +1386,7 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"DisplayUserListNoModeSymbol"]					= @(YES);
 	d[@"FocusSelectionOnMessageCommandExecution"]		= @(YES);
 	d[@"LogHighlights"]									= @(YES);
+	d[@"AutomaticallyDetectHighlightSpam"]				= @(YES);
 	d[@"LogTranscriptInBatches"]						= @(YES);
 	d[@"ReplyUnignoredExternalCTCPRequests"]			= @(YES);
 	d[@"TrackNicknameHighlightsOfLocalUser"]			= @(YES);
