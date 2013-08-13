@@ -62,8 +62,7 @@
 - (void)createBadgeRenderer;
 
 /* Event monitor. */
-- (void)createMouseMovedEventMonitor;
-- (void)destroyMouseMovedEventMonitor;
+- (void)destroyUserInfoPopoverOnWindowKeyChange;
 
 /* User interface elements. */
 - (NSColor *)normalCellTextColor;
