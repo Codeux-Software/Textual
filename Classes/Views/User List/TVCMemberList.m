@@ -291,6 +291,13 @@
 	}
 }
 
+- (void)reloadSelectionDrawingForRow:(NSInteger)row
+{
+	NSIndexSet *selectedRows = [self selectedRowIndexes];
+
+	[self updateSelectionDrawingForRow:row byEnabling:[selectedRows containsIndex:row] forcefully:YES];
+}
+
 - (void)updateDrawingForRow:(NSInteger)rowIndex
 {
 	NSAssertReturn(rowIndex >= 0);
