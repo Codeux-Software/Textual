@@ -225,6 +225,16 @@
 				return [NSString stringWithFormat:@"http://d.pr/i/%@.png", s];
 			}
 		}
+	} else if ([host hasSuffix:@"mediacru.sh"]) {
+		if ([path hasPrefix:@"/"] && path.length == 13) {
+			NSString *s = [path safeSubstringFromIndex:1];
+
+			if ([s onlyContainersCharacters:TXWesternAlphabetIncludingUnderscoreDashCharacaterSet]) {
+				/* This site does both http and https. */
+
+				return [NSString stringWithFormat:@"%@://mediacru.sh/%@.png", scheme, s];
+			}
+		}
 	} else if ([host hasSuffix:@"youtube.com"] || [host isEqualToString:@"youtu.be"]) {
 		NSString *vid = nil;
 

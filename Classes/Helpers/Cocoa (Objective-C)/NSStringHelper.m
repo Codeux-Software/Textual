@@ -493,6 +493,19 @@
 	return YES;
 }
 
+- (BOOL)onlyContainersCharacters:(NSString *)validChars
+{
+	NSObjectIsEmptyAssertReturn(self, NO);
+	NSObjectIsEmptyAssertReturn(validChars, NO);
+
+	NSCharacterSet *chars;
+
+	chars = [NSCharacterSet characterSetWithCharactersInString:validChars];
+	chars = [chars invertedSet];
+
+	return ([self rangeOfCharacterFromSet:chars].location == NSNotFound);
+}
+
 - (NSString *)stripIRCEffects
 {
 	NSObjectIsEmptyAssertReturn(self, nil);
