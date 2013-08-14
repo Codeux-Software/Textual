@@ -760,9 +760,9 @@
 		return YES;
 	}
 
-	if (self.masterController.mainWindowIsActive) {
-		return YES;
-	}
+	//if (self.masterController.mainWindowIsActive) {
+	//	return YES;
+	//}
 
 	if ([TPCPreferences disabledWhileAwayForEvent:type] && self.isAway) {
 		return YES;
