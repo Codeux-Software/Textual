@@ -57,16 +57,6 @@
 #pragma mark -
 #pragma mark Public API
 
-- (NSArray *)headRequestExceptions
-{
-	/* List of services that will only respond successfully to a 
-	 GET request instead of a HEAD request. */
-
-	return @[
-		@"docs.google.com"
-	];
-}
-
 - (void)destroyConnectionRequest
 {
 	if (self.requestConnection) {
@@ -105,15 +95,9 @@
 
 	if (self.isInRequestWithCheckForMaximumHeight) {
 		self.responseData = [NSMutableData data];
-
-		[baseRequest setHTTPMethod:@"GET"];
-	} else {
-		if ([self.headRequestExceptions containsObject:requestURL.host]) {
-			[baseRequest setHTTPMethod:@"GET"];
-		} else {
-			[baseRequest setHTTPMethod:@"HEAD"]; // We only want the HEAD which contains file information.
-		}
 	}
+
+	[baseRequest setHTTPMethod:@"GET"];
 
 	/* Send the actual request off. */
 	self.requestImageUniqeID = uniqueID;
@@ -215,6 +199,15 @@
 
 	if ([self continueWithImageProcessing] == NO) { // Check the headers.
 		[self destroyConnectionRequest]; // Destroy the connection if we do not want to continue.
+	} else {
+		if (self.isInRequestWithCheckForMaximumHeight == NO) {
+			/* If we do not care about the height, then we are going
+			 to fake a successful download at this point so that we
+			 can post the image without waiting for the entire thing
+			 to download and waste bandwidth. */
+
+			[self connectionDidFinishLoading:nil]; // This will call -destroyConnectionRequest for us.
+		}
 	}
 }
 
