@@ -747,7 +747,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 					if ([TPCPreferences automaticallyDetectHighlightSpam]) {
 						CGFloat nhsp = (((CGFloat)totalNicknameLength / (CGFloat)body.length) * 100.00f);
 
-						if (nhsp > 75.0f && totalNicknameCount > 5) {
+						if (nhsp > 75.0f && totalNicknameCount > 10) {
 							[resultInfo setBool:NO forKey:@"wordMatchFound"];
 						}
 					}
