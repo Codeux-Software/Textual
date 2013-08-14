@@ -436,7 +436,17 @@
 
 	/* Create our final string. */
 	if (commandMode || channelMode || isAtStart == NO) {
-		if (isAtEnd) {
+		BOOL addWhitespace = YES;
+
+		if (isAtEnd == NO) {
+			if ([selectedCut hasPrefix:NSStringWhitespacePlaceholder]) {
+				if (canContinuePreviousScan) {
+					addWhitespace = NO;
+				}
+			}
+		}
+
+		if (addWhitespace) {
 			t = [t stringByAppendingString:NSStringWhitespacePlaceholder];
 		}
 	} else {
