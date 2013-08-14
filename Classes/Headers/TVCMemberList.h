@@ -51,6 +51,7 @@
 - (void)reloadAllDrawings;
 - (void)reloadAllUserInterfaceElements;
 
+- (void)reloadSelectionDrawingForRow:(NSInteger)row;
 - (void)reloadSelectionDrawingBySelectingItemsInIndexSet:(NSIndexSet *)rows;
 
 - (void)updateDrawingForMember:(IRCUser *)cellItem;
