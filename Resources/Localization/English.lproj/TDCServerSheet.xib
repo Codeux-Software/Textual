@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4488.1" systemVersion="13A524d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4488.2" systemVersion="13A538g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4488.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4488.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCServerSheet">
@@ -94,7 +94,7 @@
                                 <scrollView focusRingType="none" autohidesScrollers="YES" horizontalLineScroll="16" horizontalPageScroll="10" verticalLineScroll="16" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="1440">
                                     <rect key="frame" x="18" y="28" width="96" height="274"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <clipView key="contentView" id="qhE-Bd-RkJ">
+                                    <clipView key="contentView" id="xus-Py-FRC">
                                         <rect key="frame" x="1" y="1" width="94" height="272"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
@@ -493,7 +493,7 @@ Gw
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="cuw-Hi-NWh">
                     <rect key="frame" x="126" y="12" width="285" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="9ZH-Ec-wpv">
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="RZb-Ot-Bh5">
                         <rect key="frame" x="0.0" y="0.0" width="285" height="17"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -656,7 +656,7 @@ Gw
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="2561">
                     <rect key="frame" x="37" y="199" width="443" height="81"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="0qP-mQ-Ud0">
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="fx7-Xc-KPz">
                         <rect key="frame" x="0.0" y="0.0" width="443" height="81"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -745,7 +745,7 @@ Gw
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="1793">
                     <rect key="frame" x="48" y="57" width="421" height="189"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <clipView key="contentView" id="62B-H4-nWl">
+                    <clipView key="contentView" id="LcR-Dy-bmD">
                         <rect key="frame" x="1" y="17" width="419" height="171"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -867,7 +867,7 @@ Gw
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="2450">
                     <rect key="frame" x="42" y="50" width="421" height="189"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <clipView key="contentView" id="IEW-we-0cv">
+                    <clipView key="contentView" id="txe-Gd-Uvj">
                         <rect key="frame" x="1" y="17" width="419" height="171"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -975,7 +975,7 @@ Gw
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="2470">
                     <rect key="frame" x="38" y="247" width="440" height="32"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="VK7-65-SNO">
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="QID-Kt-lWW">
                         <rect key="frame" x="0.0" y="0.0" width="440" height="32"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -1033,7 +1033,7 @@ Gw
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="1842">
                     <rect key="frame" x="47" y="49" width="422" height="189"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <clipView key="contentView" id="xv5-yq-PlF">
+                    <clipView key="contentView" id="wXW-Pe-W5j">
                         <rect key="frame" x="1" y="17" width="420" height="171"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -1178,7 +1178,7 @@ your friends and ignore your enemies.</string>
                 <scrollView focusRingType="exterior" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="2309">
                     <rect key="frame" x="47" y="60" width="421" height="183"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <clipView key="contentView" id="ei9-j9-hhs">
+                    <clipView key="contentView" id="rH8-fa-Y7i">
                         <rect key="frame" x="1" y="1" width="419" height="181"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>

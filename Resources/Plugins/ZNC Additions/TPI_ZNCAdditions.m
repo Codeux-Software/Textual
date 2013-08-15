@@ -123,6 +123,8 @@
 		return input; // Do not post these events for self.
 	}
 
+	input.isPrintOnlyMessage = YES;
+
 	input.sender.hostmask = hostmask;
 	input.sender.nickname = nickname;
 

@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4471.1" systemVersion="13A510d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4488.2" systemVersion="13A538g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4471.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4488.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCTopicSheet">
             <connections>
-                <action selector="cancel:" destination="10" id="49"/>
-                <action selector="ok:" destination="9" id="50"/>
                 <outlet property="cancelButton" destination="10" id="48"/>
                 <outlet property="headerTitle" destination="26" id="42"/>
                 <outlet property="headerTitleField" destination="26" id="52"/>
@@ -41,6 +39,9 @@
 DQ
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="ok:" target="-2" id="50"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="10">
                         <rect key="frame" x="372" y="12" width="82" height="32"/>
@@ -52,6 +53,9 @@ DQ
 Gw
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="cancel:" target="-2" id="49"/>
+                        </connections>
                     </button>
                     <textField verticalHuggingPriority="750" id="26">
                         <rect key="frame" x="17" y="162" width="479" height="17"/>
@@ -65,7 +69,7 @@ Gw
                     <scrollView borderType="groove" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="37">
                         <rect key="frame" x="20" y="60" width="555" height="94"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <clipView key="contentView" id="1eB-xF-cZX">
+                        <clipView key="contentView" id="KLN-Zi-fYz">
                             <rect key="frame" x="2" y="2" width="551" height="90"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
