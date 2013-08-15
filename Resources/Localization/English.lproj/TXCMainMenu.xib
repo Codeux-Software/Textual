@@ -1981,7 +1981,7 @@ CA
                             <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="2852">
                                 <rect key="frame" x="166" y="9" width="476" height="18"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="dBH-8u-tD6">
+                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="qmu-eN-SPq">
                                     <rect key="frame" x="0.0" y="0.0" width="476" height="18"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -2041,7 +2041,7 @@ CA
                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="0.0" verticalLineScroll="17" verticalPageScroll="0.0" hasHorizontalScroller="NO" maxMagnification="8" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" id="2800">
                                         <rect key="frame" x="0.0" y="0.0" width="119" height="513"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <clipView key="contentView" copiesOnScroll="NO" id="FP0-Cu-NfW">
+                                        <clipView key="contentView" copiesOnScroll="NO" id="J8g-Az-QMA">
                                             <rect key="frame" x="0.0" y="0.0" width="119" height="513"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -2164,7 +2164,7 @@ CA
                                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="0.0" verticalLineScroll="17" verticalPageScroll="0.0" hasHorizontalScroller="NO" maxMagnification="8" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" id="VfW-Q0-igm" userLabel="Member List Scroll View">
                                                         <rect key="frame" x="0.0" y="0.0" width="256" height="513"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        <clipView key="contentView" copiesOnScroll="NO" id="3fo-hb-41L">
+                                                        <clipView key="contentView" copiesOnScroll="NO" id="3cN-gg-HxB">
                                                             <rect key="frame" x="0.0" y="0.0" width="256" height="513"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
@@ -2463,21 +2463,21 @@ CA
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="2969">
                     <rect key="frame" x="20" y="87" width="76" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="rH5-mA-egb">
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="HlY-po-5R3">
                         <rect key="frame" x="0.0" y="0.0" width="76" height="18"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="2970">
                                 <rect key="frame" x="0.0" y="0.0" width="76" height="18"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" red="0.07796198008011801" green="0.07796198008011801" blue="0.07796198008011801" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="minSize" width="76" height="18"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="Nickname:">
                                         <attributes>
-                                            <color key="NSColor" red="0.07796198008011801" green="0.07796198008011801" blue="0.07796198008011801" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name="LucidaGrande-Bold"/>
                                             <font key="NSOriginalFont" size="12" name="LucidaGrande-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
@@ -2503,21 +2503,21 @@ CA
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="2973">
                     <rect key="frame" x="20" y="67" width="76" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="9yd-xx-JbX">
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="hRN-sl-Win">
                         <rect key="frame" x="0.0" y="0.0" width="76" height="18"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="2976">
                                 <rect key="frame" x="0.0" y="0.0" width="76" height="18"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" red="0.07796198008011801" green="0.07796198008011801" blue="0.07796198008011801" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="minSize" width="76" height="18"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="Username:">
                                         <attributes>
-                                            <color key="NSColor" red="0.07796198008011801" green="0.07796198008011801" blue="0.07796198008011801" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name="LucidaGrande-Bold"/>
                                             <font key="NSOriginalFont" size="12" name="LucidaGrande-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
@@ -2543,21 +2543,21 @@ CA
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="2977">
                     <rect key="frame" x="31" y="47" width="64" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="q7x-hU-fvU">
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="tlb-gg-Djr">
                         <rect key="frame" x="0.0" y="0.0" width="64" height="18"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="2980">
                                 <rect key="frame" x="0.0" y="0.0" width="64" height="18"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" red="0.07796198008011801" green="0.07796198008011801" blue="0.07796198008011801" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <size key="minSize" width="64" height="18"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="Address:">
                                         <attributes>
-                                            <color key="NSColor" red="0.07796198008011801" green="0.07796198008011801" blue="0.07796198008011801" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name="LucidaGrande-Bold"/>
                                             <font key="NSOriginalFont" size="12" name="LucidaGrande-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
@@ -2583,21 +2583,21 @@ CA
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="2981">
                     <rect key="frame" x="21" y="30" width="76" height="15"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="O8q-yu-Mx7">
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="zhT-8W-ZMg">
                         <rect key="frame" x="0.0" y="0.0" width="76" height="15"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="2984">
                                 <rect key="frame" x="0.0" y="0.0" width="76" height="15"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" red="0.07796198008011801" green="0.07796198008011801" blue="0.07796198008011801" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="minSize" width="76" height="15"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="Privileges:">
                                         <attributes>
-                                            <color key="NSColor" red="0.07796198008011801" green="0.07796198008011801" blue="0.07796198008011801" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name="LucidaGrande-Bold"/>
                                             <font key="NSOriginalFont" size="12" name="LucidaGrande-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
@@ -2624,8 +2624,8 @@ CA
                     <rect key="frame" x="92" y="89" width="253" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" selectable="YES" sendsActionOnEndEditing="YES" title="################################" id="2986">
-                        <font key="font" metaFont="cellTitle"/>
-                        <color key="textColor" red="0.07796198008011801" green="0.07796198008011801" blue="0.07796198008011801" alpha="1" colorSpace="calibratedRGB"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                        <color key="textColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -2633,8 +2633,8 @@ CA
                     <rect key="frame" x="92" y="69" width="253" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" selectable="YES" sendsActionOnEndEditing="YES" title="################################" id="2988">
-                        <font key="font" metaFont="cellTitle"/>
-                        <color key="textColor" red="0.07796198008011801" green="0.07796198008011801" blue="0.07796198008011801" alpha="1" colorSpace="calibratedRGB"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                        <color key="textColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -2642,8 +2642,8 @@ CA
                     <rect key="frame" x="92" y="49" width="253" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" selectable="YES" sendsActionOnEndEditing="YES" title="################################" id="2990">
-                        <font key="font" metaFont="cellTitle"/>
-                        <color key="textColor" red="0.07796198008011801" green="0.07796198008011801" blue="0.07796198008011801" alpha="1" colorSpace="calibratedRGB"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                        <color key="textColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -2651,29 +2651,29 @@ CA
                     <rect key="frame" x="92" y="29" width="253" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="################################" id="2992">
-                        <font key="font" metaFont="cellTitle"/>
-                        <color key="textColor" red="0.07796198008011801" green="0.07796198008011801" blue="0.07796198008011801" alpha="1" colorSpace="calibratedRGB"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                        <color key="textColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="Ou1-Kr-i28">
                     <rect key="frame" x="6" y="10" width="89" height="15"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="VNT-Jo-YJI">
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="AZX-PE-ahe">
                         <rect key="frame" x="0.0" y="0.0" width="89" height="15"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="69t-3a-GRV">
                                 <rect key="frame" x="0.0" y="0.0" width="89" height="15"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" red="0.07796198008011801" green="0.07796198008011801" blue="0.07796198008011801" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="minSize" width="89" height="15"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="Away Status:">
                                         <attributes>
-                                            <color key="NSColor" red="0.07796198008011801" green="0.07796198008011801" blue="0.07796198008011801" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name="LucidaGrande-Bold"/>
                                             <font key="NSOriginalFont" size="12" name="LucidaGrande-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
@@ -2700,8 +2700,8 @@ CA
                     <rect key="frame" x="92" y="9" width="251" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="################################" id="jvH-0Q-SL4">
-                        <font key="font" metaFont="cellTitle"/>
-                        <color key="textColor" red="0.07796198008011801" green="0.07796198008011801" blue="0.07796198008011801" alpha="1" colorSpace="calibratedRGB"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                        <color key="textColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>

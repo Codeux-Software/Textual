@@ -3816,36 +3816,40 @@
 		}
 	}
 
-	if (PointerIsEmpty([c findMember:sendern])) {
-		IRCUser *u = [IRCUser new];
+	if (m.isPrintOnlyMessage == NO) {
+		if (PointerIsEmpty([c findMember:sendern])) {
+			IRCUser *u = [IRCUser new];
 
-		u.nickname = sendern;
-		u.username = m.sender.username;
-		u.address = m.sender.address;
-        
-		u.supportInfo = self.isupport;
+			u.nickname = sendern;
+			u.username = m.sender.username;
+			u.address = m.sender.address;
+			
+			u.supportInfo = self.isupport;
 
-		[c addMember:u];
+			[c addMember:u];
 
-		/* Add to existing query? */
-		IRCChannel *query = [self findChannel:sendern];
+			/* Add to existing query? */
+			IRCChannel *query = [self findChannel:sendern];
 
-		if (query && query.isActive == NO) {
-			[query activate];
+			if (query && query.isActive == NO) {
+				[query activate];
 
-			[self print:query
-				   type:TVCLogLineJoinType
-				   nick:nil
-				   text:TXTFLS(@"IRCUserReconnectedToPrivateMessage", sendern)
-			 receivedAt:m.receivedAt
-				command:m.command];
+				[self print:query
+					   type:TVCLogLineJoinType
+					   nick:nil
+					   text:TXTFLS(@"IRCUserReconnectedToPrivateMessage", sendern)
+				 receivedAt:m.receivedAt
+					command:m.command];
+			}
 		}
 	}
 
 	IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
 														withMatches:@[@"ignoreJPQE", @"notifyJoins"]];
 
-	[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
+	if (m.isPrintOnlyMessage == NO) {
+		[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
+	}
 
 	if (([ignoreChecks ignoreJPQE] || c.config.ignoreJPQActivity) && myself == NO) {
 		return;
@@ -3862,12 +3866,14 @@
 			command:m.command];
 	}
 
-    [self.worldController updateTitleFor:c];
+	if (m.isPrintOnlyMessage == NO) {
+		[self.worldController updateTitleFor:c];
 
-	if (myself) {
-		c.inUserInvokedModeRequest = YES;
+		if (myself) {
+			c.inUserInvokedModeRequest = YES;
 
-		[self send:IRCPrivateCommandIndex("mode"), c.name, nil];
+			[self send:IRCPrivateCommandIndex("mode"), c.name, nil];
+		}
 	}
 }
 
@@ -3883,13 +3889,15 @@
 	
 	PointerIsEmptyAssert(c);
 
-	if ([sendern isEqualIgnoringCase:self.localNickname]) {
-		[c deactivate];
+	if (m.isPrintOnlyMessage == NO) {
+		if ([sendern isEqualIgnoringCase:self.localNickname]) {
+			[c deactivate];
 
-		[self.worldController reloadTreeItem:c];
+			[self.worldController reloadTreeItem:c];
+		}
+
+		[c removeMember:sendern];
 	}
-
-	[c removeMember:sendern];
 	
 	BOOL myself = [sendern isEqualIgnoringCase:self.localNickname];
 
@@ -3915,7 +3923,9 @@
 			command:m.command];
 	}
 
-    [self.worldController updateTitleFor:c];
+	if (m.isPrintOnlyMessage == NO) {
+		[self.worldController updateTitleFor:c];
+	}
 }
 
 - (void)receiveKick:(IRCMessage *)m
@@ -3931,21 +3941,23 @@
 	
 	PointerIsEmptyAssert(c);
 
-	if ([targetu isEqualIgnoringCase:self.localNickname]) {
-		[c deactivate];
+	if (m.isPrintOnlyMessage == NO) {
+		if ([targetu isEqualIgnoringCase:self.localNickname]) {
+			[c deactivate];
 
-		[self.worldController reloadTreeItem:c];
+			[self.worldController reloadTreeItem:c];
 
-		[self notifyEvent:TXNotificationKickType lineType:TVCLogLineKickType target:c nick:sendern text:comment];
+			[self notifyEvent:TXNotificationKickType lineType:TVCLogLineKickType target:c nick:sendern text:comment];
 
-		if ([TPCPreferences rejoinOnKick] && c.errorOnLastJoinAttempt == NO) {
-			[self printDebugInformation:TXTLS(@"IRCChannelPreparingRejoinAttempt") channel:c];
+			if ([TPCPreferences rejoinOnKick] && c.errorOnLastJoinAttempt == NO) {
+				[self printDebugInformation:TXTLS(@"IRCChannelPreparingRejoinAttempt") channel:c];
 
-			[self performSelector:@selector(joinKickedChannel:) withObject:c afterDelay:3.0];
+				[self performSelector:@selector(joinKickedChannel:) withObject:c afterDelay:3.0];
+			}
 		}
+		
+		[c removeMember:targetu];
 	}
-	
-	[c removeMember:targetu];
 
 	BOOL myself = [sendern isEqualIgnoringCase:self.localNickname];
 
@@ -3967,7 +3979,9 @@
 			command:m.command];
 	}
 
-    [self.worldController updateTitleFor:c];
+	if (m.isPrintOnlyMessage == NO) {
+		[self.worldController updateTitleFor:c];
+	}
 }
 
 - (void)receiveQuit:(IRCMessage *)m
@@ -4008,21 +4022,25 @@
 					command:m.command];
 			}
 
-			[c removeMember:sendern];
+			if (m.isPrintOnlyMessage == NO) {
+				[c removeMember:sendern];
 
-			if (myself || c.isPrivateMessage) {
-				[c deactivate];
+				if (myself || c.isPrivateMessage) {
+					[c deactivate];
+				}
 			}
 		}
 	}
 
-	[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
+	if (m.isPrintOnlyMessage == NO) {
+		[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
 
-	if (myself) {
-		[self.worldController reloadTreeGroup:self];
+		if (myself) {
+			[self.worldController reloadTreeGroup:self];
+		}
+
+		[self.worldController updateTitle];
 	}
-
-    [self.worldController updateTitle];
 }
 
 - (void)receiveKill:(IRCMessage *)m
@@ -4053,21 +4071,23 @@
 
 	BOOL myself = [oldNick isEqualIgnoringCase:self.localNickname];
 
-	if (myself) {
-		self.myNick = newNick;
-		self.sentNick = newNick;
-	} else {
-        /* Check new nickname in address book user check. */
-		ignoreChecks = [self checkIgnoreAgainstHostmask:[newNick stringByAppendingString:@"!-@-"]
-											withMatches:@[@"notifyJoins"]];
+	if (m.isPrintOnlyMessage == NO) {
+		if (myself) {
+			self.myNick = newNick;
+			self.sentNick = newNick;
+		} else {
+			/* Check new nickname in address book user check. */
+			ignoreChecks = [self checkIgnoreAgainstHostmask:[newNick stringByAppendingString:@"!-@-"]
+												withMatches:@[@"notifyJoins"]];
 
-		[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
+			[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
 
-        /* Check old nickname in address book user check. */
-		ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
-											withMatches:@[@"ignoreJPQE", @"notifyJoins"]];
+			/* Check old nickname in address book user check. */
+			ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
+												withMatches:@[@"ignoreJPQE", @"notifyJoins"]];
 
-		[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
+			[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
+		}
 	}
 
 	for (IRCChannel *c in self.channels) {
@@ -4083,24 +4103,28 @@
 					command:m.command];
 			}
 
-			[c renameMember:oldNick to:newNick performOnChange:^(IRCUser *user) {
-				[c updateMemberOnTableView:user];
-			}];
+			if (m.isPrintOnlyMessage == NO) {
+				[c renameMember:oldNick to:newNick performOnChange:^(IRCUser *user) {
+					[c updateMemberOnTableView:user];
+				}];
+			}
 		}
 	}
 
-	IRCChannel *c = [self findChannel:oldNick];
-	IRCChannel *t = [self findChannel:newNick];
+	if (m.isPrintOnlyMessage == NO) {
+		IRCChannel *c = [self findChannel:oldNick];
+		IRCChannel *t = [self findChannel:newNick];
 
-	PointerIsEmptyAssert(c);
+		PointerIsEmptyAssert(c);
 
-	if (t && [c.name isEqualIgnoringCase:t.name] == NO) {
-		[self.worldController destroyChannel:t];
+		if (t && [c.name isEqualIgnoringCase:t.name] == NO) {
+			[self.worldController destroyChannel:t];
+		}
+
+		c.name = newNick;
+
+		[self.worldController reloadTreeItem:c];
 	}
-
-	c.name = newNick;
-
-	[self.worldController reloadTreeItem:c];
 }
 
 - (void)receiveMode:(IRCMessage *)m
@@ -4116,30 +4140,37 @@
 
 		PointerIsEmptyAssert(c);
 
-		IRCModeInfo *oldSecretKey = [c.modeInfo modeInfoFor:@"k"];
+		NSString *oldSecretKeyActual;
+		NSString *newSecretKeyActual;
+
+		IRCModeInfo *oldSecretKey;
 		IRCModeInfo *newSecretKey;
-		
-		NSArray *info = [c.modeInfo update:modestr];
 
-		newSecretKey = [c.modeInfo modeInfoFor:@"k"];
+		if (m.isPrintOnlyMessage == NO) {
+			oldSecretKey = [c.modeInfo modeInfoFor:@"k"];
+			
+			NSArray *info = [c.modeInfo update:modestr];
 
-		NSString *oldSecretKeyActual = [oldSecretKey modeParamater];
-		NSString *newSecretKeyActual = [newSecretKey modeParamater];
+			newSecretKey = [c.modeInfo modeInfoFor:@"k"];
 
-		BOOL performWho = NO;
+			oldSecretKeyActual = [oldSecretKey modeParamater];
+			newSecretKeyActual = [newSecretKey modeParamater];
 
-		for (IRCModeInfo *h in info) {
-			[c changeMember:h.modeParamater mode:h.modeToken value:h.modeIsSet performOnChange:^(IRCUser *user) {
-				[c updateMemberOnTableView:user];
-			}];
+			BOOL performWho = NO;
 
-			if (h.modeIsSet == NO && self.CAPmultiPrefix == NO) {
-				performWho = YES;
+			for (IRCModeInfo *h in info) {
+				[c changeMember:h.modeParamater mode:h.modeToken value:h.modeIsSet performOnChange:^(IRCUser *user) {
+					[c updateMemberOnTableView:user];
+				}];
+
+				if (h.modeIsSet == NO && self.CAPmultiPrefix == NO) {
+					performWho = YES;
+				}
 			}
-		}
 
-		if (performWho) {
-			[self send:IRCPrivateCommandIndex("who"), c.name, nil, nil];
+			if (performWho) {
+				[self send:IRCPrivateCommandIndex("who"), c.name, nil, nil];
+			}
 		}
 
 		[self print:c
@@ -4149,30 +4180,32 @@
 		 receivedAt:m.receivedAt
 			command:m.command];
 
-		[self.worldController updateTitleFor:c];
+		if (m.isPrintOnlyMessage == NO) {
+			[self.worldController updateTitleFor:c];
 
-		/* Offer user to remember the key for them. */
-		if ([oldSecretKeyActual isEqualToString:newSecretKeyActual] == NO) {
-			BOOL saveKey = [TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"ChannelKeySetDetectedDialogMessage", c.name, sendern, newSecretKeyActual)
-															   title:TXTLS(@"ChannelKeySetDetectedDialogTitle")
-													   defaultButton:TXTLS(@"YesButton")
-													 alternateButton:TXTLS(@"NoButton")
-													  suppressionKey:@"channel_key_set_detected"
-													 suppressionText:TXTLS(@"ChannelKeySetDetectedDialogSuppressionMessage")];
+			/* Offer user to remember the key for them. */
+			if ([oldSecretKeyActual isEqualToString:newSecretKeyActual] == NO) {
+				BOOL saveKey = [TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"ChannelKeySetDetectedDialogMessage", c.name, sendern, newSecretKeyActual)
+																   title:TXTLS(@"ChannelKeySetDetectedDialogTitle")
+														   defaultButton:TXTLS(@"YesButton")
+														 alternateButton:TXTLS(@"NoButton")
+														  suppressionKey:@"channel_key_set_detected"
+														 suppressionText:TXTLS(@"ChannelKeySetDetectedDialogSuppressionMessage")];
 
-			if (saveKey) {
-				[c.config setSecretKey:newSecretKeyActual];
-			}
-		} else if (oldSecretKey.modeIsSet == YES && newSecretKey.modeIsSet == NO && NSObjectIsNotEmpty(c.secretKey)) {
-			BOOL saveKey = [TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"ChannelKeyRemovalDetectedDialogMessage", c.name)
-															   title:TXTLS(@"ChannelKeyRemovalDetectedDialogTitle")
-													   defaultButton:TXTLS(@"YesButton")
-													 alternateButton:TXTLS(@"NoButton")
-													  suppressionKey:@"channel_key_set_detected"
-													 suppressionText:TXTLS(@"ChannelKeyRemovalDetectedialogSuppressionMessage")];
+				if (saveKey) {
+					[c.config setSecretKey:newSecretKeyActual];
+				}
+			} else if (oldSecretKey.modeIsSet == YES && newSecretKey.modeIsSet == NO && NSObjectIsNotEmpty(c.secretKey)) {
+				BOOL saveKey = [TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"ChannelKeyRemovalDetectedDialogMessage", c.name)
+																   title:TXTLS(@"ChannelKeyRemovalDetectedDialogTitle")
+														   defaultButton:TXTLS(@"YesButton")
+														 alternateButton:TXTLS(@"NoButton")
+														  suppressionKey:@"channel_key_set_detected"
+														 suppressionText:TXTLS(@"ChannelKeyRemovalDetectedialogSuppressionMessage")];
 
-			if (saveKey) {
-				[c.config setSecretKey:nil];
+				if (saveKey) {
+					[c.config setSecretKey:nil];
+				}
 			}
 		}
 	} else {
@@ -4201,7 +4234,9 @@
 		[self decryptIncomingMessage:&topicav channel:c];
 	}
 	
-	[c setTopic:topicav];
+	if (m.isPrintOnlyMessage == NO) {
+		[c setTopic:topicav];
+	}
 
 	[self print:c
 		   type:TVCLogLineTopicType

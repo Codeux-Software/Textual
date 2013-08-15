@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4471.1" systemVersion="13A510d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4488.2" systemVersion="13A538g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4471.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4488.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCModeSheet">
             <connections>
-                <action selector="cancel:" destination="64" id="235"/>
-                <action selector="ok:" destination="65" id="236"/>
-                <action selector="onChangeCheck:" destination="82" id="239"/>
-                <action selector="onChangeCheck:" destination="83" id="240"/>
-                <action selector="onChangeCheck:" destination="172" id="241"/>
-                <action selector="onChangeCheck:" destination="171" id="242"/>
                 <outlet property="cancelButton" destination="64" id="231"/>
                 <outlet property="iCheck" destination="195" id="207"/>
                 <outlet property="kCheck" destination="82" id="229"/>
@@ -319,6 +313,9 @@
 Gw
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="cancel:" target="-2" id="235"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="65">
                         <rect key="frame" x="224" y="12" width="82" height="32"/>
@@ -330,6 +327,9 @@ Gw
 DQ
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="ok:" target="-2" id="236"/>
+                        </connections>
                     </button>
                     <button id="82">
                         <rect key="frame" x="18" y="109" width="116" height="18"/>
@@ -339,6 +339,9 @@ DQ
                             <font key="font" metaFont="system"/>
                             <string key="keyEquivalent">k</string>
                         </buttonCell>
+                        <connections>
+                            <action selector="onChangeCheck:" target="-2" id="239"/>
+                        </connections>
                     </button>
                     <button id="83">
                         <rect key="frame" x="18" y="82" width="193" height="18"/>
@@ -348,6 +351,9 @@ DQ
                             <font key="font" metaFont="system"/>
                             <string key="keyEquivalent">l</string>
                         </buttonCell>
+                        <connections>
+                            <action selector="onChangeCheck:" target="-2" id="240"/>
+                        </connections>
                     </button>
                     <button id="171">
                         <rect key="frame" x="18" y="271" width="212" height="18"/>
@@ -357,6 +363,9 @@ DQ
                             <font key="font" metaFont="system"/>
                             <string key="keyEquivalent">s</string>
                         </buttonCell>
+                        <connections>
+                            <action selector="onChangeCheck:" target="-2" id="242"/>
+                        </connections>
                     </button>
                     <button id="172">
                         <rect key="frame" x="18" y="244" width="212" height="18"/>
@@ -366,6 +375,9 @@ DQ
                             <font key="font" metaFont="system"/>
                             <string key="keyEquivalent">p</string>
                         </buttonCell>
+                        <connections>
+                            <action selector="onChangeCheck:" target="-2" id="241"/>
+                        </connections>
                     </button>
                     <button id="192">
                         <rect key="frame" x="18" y="217" width="246" height="18"/>

@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4471.1" systemVersion="13A510d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4488.2" systemVersion="13A538g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4471.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4488.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCWelcomeSheet">
             <connections>
-                <action selector="cancel:" destination="153" id="209"/>
-                <action selector="ok:" destination="152" id="210"/>
-                <action selector="onAddChannel:" destination="154" id="189"/>
-                <action selector="onDeleteChannel:" destination="155" id="188"/>
-                <action selector="onServerAddressChanged:" destination="216" id="219"/>
                 <outlet property="addChannelButton" destination="154" id="190"/>
                 <outlet property="autoConnectCheck" destination="151" id="191"/>
                 <outlet property="cancelButton" destination="153" id="192"/>
@@ -72,7 +67,7 @@
                     <scrollView focusRingType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="149">
                         <rect key="frame" x="113" y="153" width="233" height="112"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <clipView key="contentView" id="dgS-eb-Tc1">
+                        <clipView key="contentView" id="UXg-Uw-XfU">
                             <rect key="frame" x="1" y="1" width="231" height="110"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -139,6 +134,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="ok:" target="-2" id="210"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="153">
                         <rect key="frame" x="147" y="13" width="96" height="32"/>
@@ -150,6 +148,9 @@
 Gw
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="cancel:" target="-2" id="209"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="154">
                         <rect key="frame" x="113" y="127" width="23" height="23"/>
@@ -158,6 +159,9 @@ Gw
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="onAddChannel:" target="-2" id="189"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="155">
                         <rect key="frame" x="135" y="127" width="23" height="23"/>
@@ -166,6 +170,9 @@ Gw
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="onDeleteChannel:" target="-2" id="188"/>
+                        </connections>
                     </button>
                     <imageView id="156">
                         <rect key="frame" x="12" y="379" width="86" height="81"/>
@@ -224,13 +231,14 @@ Gw
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </comboBoxCell>
                         <connections>
+                            <action selector="onServerAddressChanged:" target="-2" id="219"/>
                             <outlet property="delegate" destination="-2" id="220"/>
                         </connections>
                     </comboBox>
                     <scrollView borderType="none" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="225">
                         <rect key="frame" x="250" y="355" width="113" height="14"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="gyF-NG-VPv">
+                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Bsg-eV-iEN">
                             <rect key="frame" x="0.0" y="0.0" width="113" height="14"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>

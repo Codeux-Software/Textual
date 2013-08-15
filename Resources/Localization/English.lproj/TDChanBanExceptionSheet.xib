@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4471.1" systemVersion="13A510d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4488.2" systemVersion="13A538g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4471.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4488.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDChanBanExceptionSheet">
             <connections>
-                <action selector="cancel:" destination="18" id="53"/>
-                <action selector="onRemoveExceptions:" destination="14" id="54"/>
-                <action selector="onUpdate:" destination="16" id="55"/>
                 <outlet property="cancelButton" destination="18" id="48"/>
                 <outlet property="exceptionTable" destination="6" id="49"/>
                 <outlet property="headerTitleField" destination="33" id="50"/>
@@ -33,7 +30,7 @@
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="3">
                         <rect key="frame" x="-1" y="42" width="780" height="265"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <clipView key="contentView" id="k8Z-GP-2uo">
+                        <clipView key="contentView" id="i0a-Kb-TOE">
                             <rect key="frame" x="1" y="17" width="778" height="247"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -114,6 +111,9 @@
 DQ
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="onRemoveExceptions:" target="-2" id="54"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="16">
                         <rect key="frame" x="568" y="4" width="111" height="32"/>
@@ -122,6 +122,9 @@ DQ
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="onUpdate:" target="-2" id="55"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="18">
                         <rect key="frame" x="679" y="4" width="85" height="32"/>
@@ -133,6 +136,9 @@ DQ
 Gw
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="cancel:" target="-2" id="53"/>
+                        </connections>
                     </button>
                     <textField verticalHuggingPriority="750" id="33">
                         <rect key="frame" x="17" y="320" width="551" height="17"/>

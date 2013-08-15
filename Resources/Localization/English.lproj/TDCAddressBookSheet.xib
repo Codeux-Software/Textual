@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4471.1" systemVersion="13A510d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4488.2" systemVersion="13A538g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4471.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4488.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCAddressBookSheet">
             <connections>
-                <action selector="cancel:" destination="484" id="588"/>
-                <action selector="cancel:" destination="530" id="589"/>
-                <action selector="ok:" destination="529" id="586"/>
-                <action selector="ok:" destination="485" id="587"/>
                 <outlet property="cancelButton" destination="484" id="582"/>
                 <outlet property="hideInMemberListCheck" destination="633" id="637"/>
                 <outlet property="hideMessagesContainingMatchCheck" destination="617" id="631"/>
@@ -81,6 +77,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="cancel:" target="-2" id="589"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="529">
                         <rect key="frame" x="272" y="12" width="82" height="32"/>
@@ -92,6 +91,9 @@
 DQ
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="ok:" target="-2" id="586"/>
+                        </connections>
                     </button>
                     <button id="563">
                         <rect key="frame" x="27" y="195" width="356" height="18"/>
@@ -307,6 +309,9 @@ DQ
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="cancel:" target="-2" id="588"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="485">
                         <rect key="frame" x="430" y="13" width="82" height="32"/>
@@ -318,6 +323,9 @@ DQ
 DQ
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="ok:" target="-2" id="587"/>
+                        </connections>
                     </button>
                     <button id="617">
                         <rect key="frame" x="52" y="106" width="267" height="18"/>

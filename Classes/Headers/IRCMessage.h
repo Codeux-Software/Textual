@@ -39,6 +39,7 @@
 #import "TextualApplication.h"
 
 @interface IRCMessage : NSObject
+@property (nonatomic, assign) BOOL isPrintOnlyMessage; /* The message should be parsed and passed to print: but special actions such as adding/removing user from member list should be ignored. */
 @property (nonatomic, assign) BOOL isHistoric; // Whether a custom @time= was supplied during parsing.
 @property (nonatomic, strong) NSDate *receivedAt;
 @property (nonatomic, strong) IRCPrefix *sender;
