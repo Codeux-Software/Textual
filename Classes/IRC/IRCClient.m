@@ -7069,16 +7069,23 @@
 #pragma mark -
 #pragma mark Network Channel List Dialog
 
+- (NSString *)listDialogWindowKey
+{
+	/* Create a different window so each client can have its own window open. */
+
+	return [NSString stringWithFormat:@"TDCListDialog -> %@", self.config.itemUUID];
+}
+
 - (TDCListDialog *)listDialog
 {
-    return [self.masterController.menuController windowFromWindowList:@"TDCListDialog"];
+    return [self.masterController.menuController windowFromWindowList:self.listDialogWindowKey];
 }
 
 - (void)createChannelListDialog
 {
     TXMenuController *menuController = self.masterController.menuController;
 
-    NSAssertReturn([menuController popWindowViewIfExists:@"TDCListDialog"] == NO);
+    NSAssertReturn([menuController popWindowViewIfExists:self.listDialogWindowKey] == NO);
     
     TDCListDialog *channelListDialog = [TDCListDialog new];
 
@@ -7087,7 +7094,7 @@
     
     [channelListDialog start];
 
-    [menuController addWindowToWindowList:channelListDialog];
+    [menuController addWindowToWindowList:channelListDialog withKeyValue:self.listDialogWindowKey];
 }
 
 - (void)listDialogOnUpdate:(TDCListDialog *)sender
