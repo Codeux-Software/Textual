@@ -3988,12 +3988,25 @@
 {
 	NSString *sendern = m.sender.nickname;
 	NSString *comment = [m paramAt:0];
+	NSString *target = nil;
 
 	BOOL myself = [sendern isEqualIgnoringCase:self.localNickname];
 
 	IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
 														withMatches:@[@"ignoreJPQE", @"notifyJoins"]];
 
+	/* When m.isPrintOnlyMessage is set for quit messages the order in which
+	 the paramas is handled is a little different. Index 0 is the target channel
+	 for the print and index 1 is the quit message. In a normal quit message, 
+	 where m.isPrintOnlyMessage == NO, then 0 is quit message and 1 is nothing. */
+	if (m.isPrintOnlyMessage) {
+		NSAssert((m.params.count == 2), @"Bad m.isPrintOnlyMessage conditions.");
+
+		comment = [m paramAt:1];
+		target = [m paramAt:0];
+	}
+
+	/* Continue. */
 	NSString *text = TXTFLS(@"IRCUserDisconnected", sendern, m.sender.username, m.sender.address);
 
 	if (NSObjectIsNotEmpty(comment)) {
@@ -4006,9 +4019,29 @@
 		text = [text stringByAppendingFormat:@" (%@)", comment];
 	}
 
+	/* Is this a targetted print message? */
+	if (m.isPrintOnlyMessage) {
+		IRCChannel *c = [self findChannel:target];
+
+		if (c) {
+			if ([TPCPreferences showJoinLeave] && [ignoreChecks ignoreJPQE] == NO && c.config.ignoreJPQActivity == NO) {
+				[self print:c
+					   type:TVCLogLineQuitType
+					   nick:nil
+					   text:text
+				 receivedAt:m.receivedAt
+					command:m.command];
+			}
+		}
+
+		/* Once a targetted print occurs, we can stop here. Nothing else
+		 ini this method should be used when it is a print only job. */
+		return;
+	}
+
+	/* Continue with normal operations. */
 	for (IRCChannel *c in self.channels) {
 		if ([c findMember:sendern]) {
-			/* We send quit messages to private messages regardless of user preference. */
 			if (([TPCPreferences showJoinLeave] && [ignoreChecks ignoreJPQE] == NO && c.config.ignoreJPQActivity == NO) || myself || c.isPrivateMessage) {
 				if (c.isPrivateMessage) {
 					text = TXTFLS(@"IRCUserDisconnectedFromPrivateMessage", sendern);
@@ -4032,15 +4065,13 @@
 		}
 	}
 
-	if (m.isPrintOnlyMessage == NO) {
-		[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
+	[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
 
-		if (myself) {
-			[self.worldController reloadTreeGroup:self];
-		}
-
-		[self.worldController updateTitle];
+	if (myself) {
+		[self.worldController reloadTreeGroup:self];
 	}
+
+	[self.worldController updateTitle];
 }
 
 - (void)receiveKill:(IRCMessage *)m
