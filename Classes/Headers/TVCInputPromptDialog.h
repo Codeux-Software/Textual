@@ -40,25 +40,20 @@
 /* This diaog is not designed to be called directly. See
  TLOPopupPrompts.h for methods used to run such dialogs. */
 
-@interface TVCInputPromptDialog : NSObject
-@property (nonatomic, strong) NSString *finalModalValue;
-@property (nonatomic, assign) NSInteger buttonClicked;
+@interface TVCInputPromptDialog : NSWindowController
 @property (nonatomic, nweak) NSButton *defaultButton;
 @property (nonatomic, nweak) NSButton *alternateButton;
 @property (nonatomic, nweak) NSTextField *informationalText;
 @property (nonatomic, nweak) NSTextField *informationalTitle;
 @property (nonatomic, nweak) NSTextField *informationalInput;
-@property (nonatomic, uweak) NSWindow *dialogWindow;
-
-- (void)runModal;
-
-- (NSString *)promptValue;
+@property (nonatomic, strong) void (^completionBlock)(BOOL defaultButtonClicked, NSString *resultString);
 
 - (void)alertWithMessageTitle:(NSString *)messageTitle
 				defaultButton:(NSString *)defaultButtonTitle
 			  alternateButton:(NSString *)alternateButtonTitle
 			  informativeText:(NSString *)informativeText
-			 defaultUserInput:(NSString *)userInputText;
+			 defaultUserInput:(NSString *)userInputText
+			  completionBlock:(void (^)(BOOL defaultButtonClicked, NSString *resultString))callbackBlock;
 
 - (void)modalDidCloseWithDefaultButton:(id)sender;
 - (void)modalDidCloseWithAlternateButton:(id)sender;
