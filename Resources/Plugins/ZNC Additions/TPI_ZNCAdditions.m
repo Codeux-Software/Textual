@@ -183,7 +183,7 @@
 
 		input.command = IRCPrivateCommandIndex("quit");
 
-		[input.params removeAllObjects];
+		[input.params removeObjectAtIndex:1];
 
 		[input.params safeAddObject:s];
 		/* End quit message. */

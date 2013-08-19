@@ -4007,7 +4007,7 @@
 	}
 
 	for (IRCChannel *c in self.channels) {
-		if ([c findMember:sendern]) {
+		if ([c findMember:sendern] || [[m.params objectAtIndex:0] isEqualToString:c.name]) {
 			/* We send quit messages to private messages regardless of user preference. */
 			if (([TPCPreferences showJoinLeave] && [ignoreChecks ignoreJPQE] == NO && c.config.ignoreJPQActivity == NO) || myself || c.isPrivateMessage) {
 				if (c.isPrivateMessage) {
