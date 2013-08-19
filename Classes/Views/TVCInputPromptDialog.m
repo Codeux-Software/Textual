@@ -41,25 +41,40 @@
 
 #define _informativeTextFont		[NSFont fontWithName:@"Lucida Grande" size:11.0] 
 
+@interface TVCInputPromptDialog ()
+@property (nonatomic, assign) BOOL defaultButtonClicked;
+@end
+
 @implementation TVCInputPromptDialog
+
 
 - (void)alertWithMessageTitle:(NSString *)messageTitle
 				defaultButton:(NSString *)defaultButtonTitle
 			  alternateButton:(NSString *)alternateButtonTitle
 			  informativeText:(NSString *)informativeText
 			 defaultUserInput:(NSString *)userInputText
+			  completionBlock:(void (^)(BOOL defaultButtonClicked, NSString *resultString))callbackBlock;
 {
 	[NSBundle loadNibNamed:@"TVCInputPromptDialog" owner:self];
-	
+
 	if (NSObjectIsNotEmpty(userInputText)) {
 		[self.informationalInput setStringValue:userInputText];
 	}
 	
 	[self.defaultButton	setTitle:defaultButtonTitle];
+	[self.defaultButton setAction:@selector(modalDidCloseWithDefaultButton:)];
+	[self.defaultButton setTarget:self];
+
 	[self.alternateButton setTitle:alternateButtonTitle];
+	[self.alternateButton setAction:@selector(modalDidCloseWithAlternateButton:)];
+	[self.alternateButton setTarget:self];
 	
 	[self.informationalText	setStringValue:informativeText];
 	[self.informationalTitle setStringValue:messageTitle];
+
+	self.completionBlock = callbackBlock;
+
+	[self runModal];
 }
 
 - (void)runModal
@@ -70,7 +85,7 @@
 	
 	NSString *informativeText = [self.informationalText stringValue];
 
-	NSRect windowFrame = self.dialogWindow.frame;
+	NSRect windowFrame = self.window.frame;
 	NSRect infoTextFrame = self.informationalText.frame;
 
 	CGFloat newHeight = [informativeText pixelHeightInWidth:infoTextFrame.size.width forcedFont:_informativeTextFont];
@@ -80,37 +95,31 @@
 	windowFrame.size.height = ((windowFrame.size.height - heightDiff) + _textContainerPadding);
 	infoTextFrame.size.height = (newHeight + _textContainerPadding);
 	
-	[self.dialogWindow setFrame:windowFrame display:NO animate:NO];
-	[self.dialogWindow makeKeyAndOrderFront:nil];
+	[self.window setFrame:windowFrame display:NO animate:NO];
+	[self.window makeKeyAndOrderFront:nil];
 	
 	[self.informationalText setFrame:infoTextFrame];
-	
-	while (self.dialogWindow.isVisible) {
-		continue; // Loop until we have a value.
-	}
-}
-
-- (NSString *)promptValue
-{
-	return self.finalModalValue;
 }
 
 - (void)modalDidCloseWithDefaultButton:(id)sender
 {
-	self.buttonClicked = NSAlertDefaultReturn;
-	
-	self.finalModalValue = self.informationalInput.stringValue;
-	
-	[self.dialogWindow close];
+	self.defaultButtonClicked = YES;
+
+	[self.window close];
 }
 
 - (void)modalDidCloseWithAlternateButton:(id)sender
 {
-	self.buttonClicked = NSAlertAlternateReturn;
+	self.defaultButtonClicked = NO;
 
-	self.finalModalValue = self.informationalInput.stringValue;
-	
-	[self.dialogWindow close];
+	[self.window close];
+}
+
+- (void)windowWillClose:(NSNotification *)note
+{
+	if (self.completionBlock) {
+		self.completionBlock(self.defaultButtonClicked, self.informationalInput.stringValue);
+	}
 }
 
 @end

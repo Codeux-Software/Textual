@@ -69,12 +69,6 @@ typedef enum TLOPopupPromptReturnType : NSInteger {
 				  suppressionKey:(NSString *)suppressKey
 				 suppressionText:(NSString *)suppressText;
 
-+ (NSString *)dialogWindowWithInput:(NSString *)bodyText
-							  title:(NSString *)titleText
-					  defaultButton:(NSString *)buttonDefault
-					alternateButton:(NSString *)buttonAlternate
-					   defaultInput:(NSString *)defaultValue;
-
 - (void)sheetWindowWithQuestion:(NSWindow *)window
 						 target:(id)targetClass
 						 action:(SEL)actionSelector

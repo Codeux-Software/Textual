@@ -576,11 +576,16 @@
 
 - (void)addWindowToWindowList:(id)window
 {
+	[self addWindowToWindowList:window withKeyValue:NSStringFromClass([window class])];
+}
+
+- (void)addWindowToWindowList:(id)window withKeyValue:(NSString *)key
+{
 	PointerIsEmptyAssert(window);
 
 	NSMutableDictionary *newList = [self.openWindowList mutableCopy];
 
-	[newList safeSetObjectWithoutOverride:window forKey:NSStringFromClass([window class])];
+	[newList safeSetObjectWithoutOverride:window forKey:key];
 
 	self.openWindowList = newList;
 }
@@ -649,39 +654,40 @@
 
 - (void)internalOpenFindPanel:(id)sender
 {
-	NSAssertReturn(self.findPanelOpened == NO);
+    NSAssertReturn([self popWindowViewIfExists:@"TXMenuControllerFindPanel"] == NO);
 
-	/* Before we asked whether we already had a find panel open,
-	 Textual allowed thousands to be opened at once if the user
-	 tried. You can imagine the mess that would create. */
-	
-	self.findPanelOpened = YES;
+	TVCInputPromptDialog *dialog = [TVCInputPromptDialog new];
 
-	NSString *newPhrase = [TLOPopupPrompts dialogWindowWithInput:TXTLS(@"FindSearchPanelPromptMessage")
-														   title:TXTLS(@"FindSearchPanelPromptTitle")
-												   defaultButton:TXTLS(@"FindSearchPanelPromptButton")
-												 alternateButton:TXTLS(@"CancelButton") 
-													defaultInput:self.currentSearchPhrase];
+	[dialog alertWithMessageTitle:TXTLS(@"FindSearchPanelPromptTitle")
+					defaultButton:TXTLS(@"FindSearchPanelPromptButton")
+				  alternateButton:TXTLS(@"CancelButton")
+				  informativeText:TXTLS(@"FindSearchPanelPromptMessage")
+				 defaultUserInput:self.currentSearchPhrase
+				  completionBlock:^(BOOL defaultButtonClicked, NSString *resultString) {
+					  if (defaultButtonClicked) {
+						  if (NSObjectIsEmpty(resultString)) {
+							  self.currentSearchPhrase = NSStringEmptyPlaceholder;
+						  } else {
+							  if ([resultString isNotEqualTo:self.currentSearchPhrase]) {
+								  self.currentSearchPhrase = resultString;
+							  }
 
-	self.findPanelOpened = NO;
+							  dispatch_async(dispatch_get_main_queue(), ^{
+								  [[self currentWebView] searchFor:resultString direction:YES caseSensitive:NO wrap:YES];
+							  });
+						  }
+					  }
 
-	if (NSObjectIsEmpty(newPhrase)) {
-		self.currentSearchPhrase = NSStringEmptyPlaceholder;
-	} else {
-		if ([newPhrase isNotEqualTo:self.currentSearchPhrase]) {
-			self.currentSearchPhrase = newPhrase;
-		}
+					  [self removeWindowFromWindowList:@"TXMenuControllerFindPanel"];
+				  }];
 
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[[self currentWebView] searchFor:newPhrase direction:YES caseSensitive:NO wrap:YES];
-		});
-	}
+	[self addWindowToWindowList:dialog withKeyValue:@"TXMenuControllerFindPanel"];
 }
 
 - (void)showFindPanel:(id)sender
 {
 	if ([sender tag] == 4564 || NSObjectIsEmpty(self.currentSearchPhrase)) {
-		[self.invokeInBackgroundThread internalOpenFindPanel:sender];
+		[self internalOpenFindPanel:sender];
 	} else {
 		if ([sender tag] == 4565) {
 			[[self currentWebView] searchFor:self.currentSearchPhrase direction:YES caseSensitive:NO wrap:YES];
@@ -1972,18 +1978,29 @@
 
 - (void)onWantHostServVhostSet:(id)sender
 {
-	NSString *vhost = [TLOPopupPrompts dialogWindowWithInput:TXTLS(@"SetUserVhostPromptMessage")
-													   title:TXTLS(@"SetUserVhostPromptTitle") 
-											   defaultButton:TXTLS(@"OkButton")  
-											 alternateButton:TXTLS(@"CancelButton") 
-												defaultInput:nil];
-	
-	[self.iomt onWantHostServVhostSet:sender andVhost:vhost];
+    NSAssertReturn([self popWindowViewIfExists:@"TXMenuControllerSetUserVhostPanel"] == NO);
+
+	TVCInputPromptDialog *dialog = [TVCInputPromptDialog new];
+
+	[dialog alertWithMessageTitle:TXTLS(@"SetUserVhostPromptTitle")
+					defaultButton:TXTLS(@"OkButton")
+				  alternateButton:TXTLS(@"CancelButton")
+				  informativeText:TXTLS(@"SetUserVhostPromptMessage")
+				 defaultUserInput:nil
+				  completionBlock:^(BOOL defaultButtonClicked, NSString *resultString) {
+					  if (defaultButtonClicked) {
+						  [self onWantHostServVhostSet:sender andVhost:resultString];
+					  }
+
+					  [self removeWindowFromWindowList:@"TXMenuControllerSetUserVhostPanel"];
+				  }];
+
+	[self addWindowToWindowList:dialog withKeyValue:@"TXMenuControllerSetUserVhostPanel"];
 }
 
 - (void)showSetVhostPrompt:(id)sender
 {
-	[self.invokeInBackgroundThread onWantHostServVhostSet:sender];
+	[self onWantHostServVhostSet:sender];
 }
 
 - (void)showChannelBanList:(id)sender

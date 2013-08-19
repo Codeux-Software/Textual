@@ -137,7 +137,6 @@
 @property (nonatomic, strong) NSString *pointedNickname;
 @property (nonatomic, strong) NSString *pointedChannelName;
 @property (nonatomic, strong) NSString *currentSearchPhrase;
-@property (nonatomic, assign) BOOL findPanelOpened;
 @property (nonatomic, strong) NSDictionary *openWindowList;
 
 - (void)terminate;
@@ -150,6 +149,8 @@
 - (BOOL)validateMenuItemTag:(NSInteger)tag forItem:(NSMenuItem *)item;
 
 - (void)addWindowToWindowList:(id)window;
+- (void)addWindowToWindowList:(id)window withKeyValue:(NSString *)key;
+
 - (void)removeWindowFromWindowList:(NSString *)windowClass;
 
 - (id)windowFromWindowList:(NSString *)windowClass;
