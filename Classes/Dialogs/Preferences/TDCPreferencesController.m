@@ -828,6 +828,11 @@
 	[self.masterController.memberList reloadAllDrawings];
 }
 
+- (void)onChangedMainInputTextFieldFontSize:(id)sender
+{
+	[self.masterController.inputTextField updateTextBoxBasedOnPreferredFontSize];
+}
+
 - (void)onResetUserListModeColorsToDefaults:(id)sender
 {
 	TVCMemberList *memberList = self.masterController.memberList;

@@ -827,6 +827,11 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return (TXHostmaskBanFormat)[RZUserDefaults() integerForKey:@"DefaultBanCommandHostmaskFormat"];
 }
 
++ (TXMainTextBoxFontSize)mainTextBoxFontSize
+{
+	return (TXMainTextBoxFontSize)[RZUserDefaults() integerForKey:@"Main Input Text Field -> Font Size"];
+}
+
 #pragma mark -
 #pragma mark Theme
 
@@ -1452,6 +1457,7 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"InlineMediaMaximumHeight"]				= @(0);
 	d[@"Keyboard -> Tab Key Action"]			= @(TXTabKeyNickCompleteAction);
 	d[@"Keyboard -> Command+W Action"]			= @(TXCommandWKeyCloseWindowAction);
+	d[@"Main Input Text Field -> Font Size"]	= @(TXMainTextBoxFontNormalSize);
 	d[@"NicknameHighlightMatchingType"]			= @(TXNicknameHighlightExactMatchType);
 	d[@"DefaultBanCommandHostmaskFormat"]		= @(TXHostmaskBanWHAINNFormat);
 	d[@"DestinationOfNonserverNotices"]			= @(TXNoticeSendServerConsoleType);

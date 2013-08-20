@@ -105,6 +105,8 @@
 - (void)onChangedUserListModeColor:(id)sender;
 - (void)onChangedUserListModeSortOrder:(id)sender;
 
+- (void)onChangedMainInputTextFieldFontSize:(id)sender;
+
 - (void)onResetUserListModeColorsToDefaults:(id)sender;
 
 - (void)onOpenPathToScripts:(id)sender;
