@@ -3622,6 +3622,8 @@
 				/* Update query status. */
 				if (c.isActive == NO) {
 					[c activate];
+
+					[self.worldController reloadTreeItem:c];
 				}
 			}
 		}
@@ -3840,6 +3842,8 @@
 					   text:TXTFLS(@"IRCUserReconnectedToPrivateMessage", sendern)
 				 receivedAt:m.receivedAt
 					command:m.command];
+
+				[self.worldController reloadTreeItem:query];
 			}
 		}
 	}
@@ -4060,6 +4064,10 @@
 
 				if (myself || c.isPrivateMessage) {
 					[c deactivate];
+
+					if (myself == NO) {
+						[self.worldController reloadTreeItem:c];
+					}
 				}
 			}
 		}
@@ -5140,11 +5148,15 @@
 
 					if ([users containsObjectIgnoringCase:channel.name] == NO) {
 						[channel deactivate];
+
+						[self.worldController reloadTreeItem:channel];
 					}
 				} else {
 					/* Activate the private message if the user is back on. */
 					if ([users containsObjectIgnoringCase:channel.name]) {
 						[channel activate];
+
+						[self.worldController reloadTreeItem:channel];
 					}
 				}
 			}
