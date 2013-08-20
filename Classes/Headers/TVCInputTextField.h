@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-@interface TVCInputTextField : TVCTextField <NSTextViewDelegate>
+@interface TVCInputTextField : TVCTextField
 @property (nonatomic, strong) NSAttributedString *placeholderString;
 
 - (void)updateTextDirection;
