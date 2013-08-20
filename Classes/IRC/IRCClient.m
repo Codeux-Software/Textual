@@ -3521,7 +3521,7 @@
 						cleanedText = [cleanedText stripIRCEffects];
 					}
 
-					if (self.isWaitingForNickServ) {
+					if (self.isWaitingForNickServ == NO) {
 						/* Scan for messages telling us that we need to identify. */
 						for (NSString *token in [self nickServSupportedNeedIdentificationTokens]) {
 							if ([cleanedText containsIgnoringCase:token]) {
