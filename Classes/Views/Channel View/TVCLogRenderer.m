@@ -579,13 +579,13 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 							if (enabled) {
 								UniChar c = [body characterAtIndex:r.location];
 
-								if (TXStringIsAlphabeticNumeric(c)) {
+								if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || TXStringIsBase10Numeric(c)) {
 									NSInteger prev = (r.location - 1);
 
 									if (0 <= prev && prev < length) {
 										UniChar c = [body characterAtIndex:prev];
 
-										if (TXStringIsAlphabeticNumeric(c)) {
+										if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || TXStringIsBase10Numeric(c)) {
 											enabled = NO;
 										}
 									}
@@ -595,13 +595,13 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 							if (enabled) {
 								UniChar c = [body characterAtIndex:(NSMaxRange(r) - 1)];
 
-								if (TXStringIsAlphabeticNumeric(c)) {
+								if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || TXStringIsBase10Numeric(c)) {
 									NSInteger next = NSMaxRange(r);
 
 									if (next < length) {
 										UniChar c = [body characterAtIndex:next];
 
-										if (TXStringIsAlphabeticNumeric(c)) {
+										if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || TXStringIsBase10Numeric(c)) {
 											enabled = NO;
 										}
 									}
@@ -680,13 +680,13 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 						UniChar c = [body characterAtIndex:r.location];
 
-						if (TXStringIsAlphabeticNumeric(c)) {
+						if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || TXStringIsBase10Numeric(c)) {
 							NSInteger prev = (r.location - 1);
 
 							if (0 <= prev && prev < length) {
 								UniChar c = [body characterAtIndex:prev];
 
-								if (TXStringIsAlphabeticNumeric(c)) {
+								if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || TXStringIsBase10Numeric(c)) {
 									cleanMatch = NO;
 								}
 							}
@@ -695,13 +695,13 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 						if (cleanMatch) {
 							UniChar c = [body characterAtIndex:(NSMaxRange(r) - 1)];
 
-							if (TXStringIsAlphabeticNumeric(c)) {
+							if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || TXStringIsBase10Numeric(c)) {
 								NSInteger next = NSMaxRange(r);
 
 								if (next < length) {
 									UniChar c = [body characterAtIndex:next];
 
-									if (TXStringIsAlphabeticNumeric(c)) {
+									if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || TXStringIsBase10Numeric(c)) {
 										cleanMatch = NO;
 									}
 								}
