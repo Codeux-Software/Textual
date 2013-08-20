@@ -55,7 +55,7 @@
 	
 	[self.headerTitleField setStringValue:[NSString stringWithFormat:self.headerTitleField.stringValue, c.name]];
 	
-	[self.topicValueField setAttributedStringValue:[topic attributedStringWithIRCFormatting:TXDefaultTextFieldFont
+	[self.topicValueField setAttributedStringValue:[topic attributedStringWithIRCFormatting:[self.topicValueField defaultTextFieldFont]
 																  honorFormattingPreference:NO]];
 
 	[self.masterController.formattingMenu enableSheetField:self.topicValueField];

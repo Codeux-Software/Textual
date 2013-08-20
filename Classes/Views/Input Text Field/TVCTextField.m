@@ -37,9 +37,6 @@
 
 #import "TextualApplication.h"
 
-#define _DefaultTextFieldWidthPadding		1.0
-#define _DefaultTextFieldHeightPadding		2.0
-
 /* We just stress the text field trying to count this much. I am adding htis
  limit because I was stress testing copy/paste and Textual was running the
  math on so many lines when it did not have to. I made 1000 because even on
@@ -61,8 +58,10 @@
 
 		[self setTextColor:TXDefaultTextFieldFontColor];
 		[self setInsertionPointColor:TXDefaultTextFieldFontColor];
-        
-        [super setTextContainerInset:NSMakeSize(_DefaultTextFieldWidthPadding, _DefaultTextFieldHeightPadding)];
+
+		[self setDefaultTextFieldFont:TXDefaultTextFieldFont];
+
+        [super setTextContainerInset:NSMakeSize(TXDefaultTextFieldWidthPadding, TXDefaultTextFieldHeightPadding)];
 
         if (PointerIsEmpty(self.keyHandler)) {
             self.keyHandler = [TLOKeyEventHandler new];

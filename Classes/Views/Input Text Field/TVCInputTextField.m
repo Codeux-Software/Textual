@@ -38,13 +38,6 @@
 #import "TextualApplication.h"
 
 /* Much of the following drawing has been created by Dan Messing for the class "SSTextField" */
-
-#define _InputBoxDefaultHeight					18.0
-#define _InputBoxHeightMultiplier				14.0
-#define _InputBoxBackgroundMaxHeight			387.0
-#define _InputBoxBackgroundDefaultHeight		23.0
-#define _InputBoxBackgroundHeightMultiplier		14.0
-
 #define _WindowContentBorderDefaultHeight		38.0
 
 #define _WindowSegmentedControllerDefaultX		10.0
@@ -62,6 +55,7 @@
 
 @interface TVCInputTextField ()
 @property (nonatomic, assign) NSInteger lastDrawLineCount;
+@property (nonatomic, assign) TXMainTextBoxFontSize cachedFontSize;
 @end
 
 @implementation TVCInputTextField
@@ -75,14 +69,8 @@
 	
 	if (self) {
         self.delegate = self;
-        
-        NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
-		
-        attrs[NSFontAttributeName] = TXDefaultTextFieldFont;
-        attrs[NSForegroundColorAttributeName] = [NSColor grayColor];
-        
-        self.placeholderString = [[NSAttributedString alloc] initWithString:TXTLS(@"InputTextFieldPlaceholderValue") attributes:attrs];
 
+		[self updateTextBoxBasedOnPreferredFontSize:NO];
         [self sanitizeTextField:NO];
 
 		for (NSString *key in _KeyObservingArray) {
@@ -102,6 +90,9 @@
 		[RZUserDefaults() removeObserver:self forKeyPath:key];
 	}
 }
+
+#pragma mark -
+#pragma mark Events
 
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
@@ -125,6 +116,9 @@
 
 	[super mouseDown:theEvent];
 }
+
+#pragma mark -
+#pragma mark Segmented Controller
 
 - (void)redrawOriginPoints
 {
@@ -162,17 +156,8 @@
 	}
 }
 
-- (NSView *)splitterView
-{
-	/* Yeah, this is bad… I know! */
-	
-    return [(self.superview.superview.superview.superview.subviews)[1] subviews][0];
-}
-
-- (TVCInputTextFieldBackground *)backgroundView
-{
-	return (self.superview.superview.superview.subviews)[0];
-}
+#pragma mark -
+#pragma mark Everything Else.
 
 - (void)updateTextDirection
 {
@@ -180,103 +165,6 @@
 		[self setBaseWritingDirection:NSWritingDirectionRightToLeft];
 	} else {
 		[self setBaseWritingDirection:NSWritingDirectionLeftToRight];
-	}
-}
-
-- (NSInteger)backgroundViewMaximumHeight
-{
-	return (self.window.frame.size.height - 50);
-}
-
-- (void)resetTextFieldCellSize:(BOOL)force
-{
-	BOOL drawBezel = YES;
-	
-	NSWindow *mainWindow = self.window;
-	
-	NSView *superView = [self splitterView];
-	NSView *background = [self backgroundView];
-	
-    NSScrollView *scroller = [self scrollView];
-	
-	NSRect textBoxFrame = scroller.frame;
-	NSRect superViewFrame = superView.frame;
-	NSRect mainWindowFrame = mainWindow.frame;
-	NSRect backgroundFrame = background.frame;
-	
-	NSInteger contentBorder;
-	
-	NSString *stringv = self.stringValue;
-	
-	if (NSObjectIsEmpty(stringv)) {
-		textBoxFrame.size.height = _InputBoxDefaultHeight;
-		backgroundFrame.size.height = _InputBoxBackgroundDefaultHeight;
-		
-		if (self.lastDrawLineCount >= 2) {
-			drawBezel = YES;
-		}
-		
-		self.lastDrawLineCount = 1;
-	} else {
-		NSInteger totalLinesBase = [self numberOfLines];
-		
-		if (self.lastDrawLineCount == totalLinesBase && force == NO) {
-			drawBezel = NO;
-		}
-		
-		self.lastDrawLineCount = totalLinesBase;
-		
-		if (drawBezel) {
-			NSInteger totalLinesMath = (totalLinesBase - 1);
-
-			/* Calculate unfiltered height. */
-			textBoxFrame.size.height = _InputBoxDefaultHeight;
-			backgroundFrame.size.height	= _InputBoxBackgroundDefaultHeight;
-			
-			textBoxFrame.size.height += (totalLinesMath * _InputBoxHeightMultiplier);
-			backgroundFrame.size.height += (totalLinesMath * _InputBoxBackgroundHeightMultiplier);
-
-			NSInteger backgroundViewMaxHeight = [self backgroundViewMaximumHeight];
-
-			/* Fix height if it exceeds are maximum. */
-			if (backgroundFrame.size.height > backgroundViewMaxHeight) {
-				for (NSInteger i = totalLinesMath; i >= 0; i--) {
-					NSInteger newSize = 0;
-
-					newSize = _InputBoxBackgroundDefaultHeight;
-					newSize += (i * _InputBoxBackgroundHeightMultiplier);
-
-					if (newSize > backgroundViewMaxHeight) {
-						continue;
-					} else {
-						backgroundFrame.size.height = newSize;
-
-						textBoxFrame.size.height = _InputBoxDefaultHeight;
-						textBoxFrame.size.height += (i * _InputBoxHeightMultiplier);
-
-						break;
-					}
-				}
-			}
-		}
-	}
-	
-	if (drawBezel) {
-		contentBorder = (backgroundFrame.size.height + 14);
-		
-		superViewFrame.origin.y = contentBorder;
-		
-		if ([mainWindow isInFullscreenMode]) {
-			superViewFrame.size.height = (mainWindowFrame.size.height - contentBorder);
-		} else {
-			superViewFrame.size.height = (mainWindowFrame.size.height - contentBorder - 22);
-		}
-		
-		[mainWindow setContentBorderThickness:contentBorder forEdge:NSMinYEdge];
-		
-		[scroller setFrame:textBoxFrame];
-		[superView setFrame:superViewFrame];
-		[background setFrame:backgroundFrame];
 	}
 }
 
@@ -295,7 +183,14 @@
 	
 	if (NSObjectIsEmpty(value)) {
 		if (NSDissimilarObjects([self baseWritingDirection], NSWritingDirectionRightToLeft)) {
-			[self.placeholderString drawAtPoint:NSMakePoint(6, 1)];
+			if (self.cachedFontSize == TXMainTextBoxFontNormalSize ||
+				self.cachedFontSize == TXMainTextBoxFontLargeSize)
+			{
+				[self.placeholderString drawAtPoint:NSMakePoint(6, 1)];
+			} else if (self.cachedFontSize == TXMainTextBoxFontExtraLargeSize) {
+				[self.placeholderString drawAtPoint:NSMakePoint(6, 2)];
+			}
+
 		}
 	} else {
 		[super drawRect:dirtyRect];
@@ -325,40 +220,236 @@
 }
 
 #pragma mark -
+#pragma mark Multi-line Text Box Drawing
+
+- (void)updateTextBoxBasedOnPreferredFontSize
+{
+	[self updateTextBoxBasedOnPreferredFontSize:YES];
+}
+
+- (void)updateTextBoxBasedOnPreferredFontSize:(BOOL)reloadDrawing
+{
+	/* Update the font. */
+	self.cachedFontSize = [TPCPreferences mainTextBoxFontSize];
+
+	if (self.cachedFontSize == TXMainTextBoxFontNormalSize) {
+		[self setDefaultTextFieldFont:[NSFont fontWithName:@"Helvetica" size:12.0]];
+	} else if (self.cachedFontSize == TXMainTextBoxFontLargeSize) {
+		[self setDefaultTextFieldFont:[NSFont fontWithName:@"Helvetica" size:14.0]];
+	} else if (self.cachedFontSize == TXMainTextBoxFontExtraLargeSize) {
+		[self setDefaultTextFieldFont:[NSFont fontWithName:@"Helvetica" size:16.0]];
+	}
+
+	/* Update the placeholder string. */
+	NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
+
+	attrs[NSFontAttributeName] = [self defaultTextFieldFont];
+	attrs[NSForegroundColorAttributeName] = [NSColor grayColor];
+
+	self.placeholderString = nil;
+	self.placeholderString = [NSAttributedString stringWithBase:TXTLS(@"InputTextFieldPlaceholderValue") attributes:attrs];
+
+	/* Redraw the box? */
+	if (reloadDrawing) {
+		[self resetTextFieldCellSize:YES];
+		[self sanitizeTextField:YES];
+	}
+}
+
+- (NSView *)splitterView
+{
+    return [(self.superview.superview.superview.superview.subviews)[1] subviews][0]; /* Yeah, this is bad… I know! */
+}
+
+- (TVCInputTextFieldBackground *)backgroundView
+{
+	return (self.superview.superview.superview.subviews)[0]; /* This one is not so bad. */
+}
+
+/* It is easier for us to define predetermined values for these paramaters instead
+ of trying to overcomplicate our math by calculating the point height of our font
+ and other variables. We only support three text sizes so why not hard code? */
+- (NSInteger)backgroundViewMaximumHeight
+{
+	return (self.window.frame.size.height - 50);
+}
+
+- (NSInteger)backgroundViewDefaultHeight
+{
+	if (self.cachedFontSize == TXMainTextBoxFontNormalSize) {
+		return 23.0;
+	} else if (self.cachedFontSize == TXMainTextBoxFontLargeSize) {
+		return 27.0;
+	} else if (self.cachedFontSize == TXMainTextBoxFontExtraLargeSize) {
+		return 30.0;
+	}
+	
+	return 23.0;
+}
+
+- (NSInteger)backgroundViewHeightMultiplier
+{
+	if (self.cachedFontSize == TXMainTextBoxFontNormalSize) {
+		return 14.0;
+	} else if (self.cachedFontSize == TXMainTextBoxFontLargeSize) {
+		return 17.0;
+	} else if (self.cachedFontSize == TXMainTextBoxFontExtraLargeSize) {
+		return 19.0;
+	}
+
+	return 14.0;
+}
+
+- (NSInteger)textBoxDefaultHeight
+{
+	if (self.cachedFontSize == TXMainTextBoxFontNormalSize) {
+		return 18.0;
+	} else if (self.cachedFontSize == TXMainTextBoxFontLargeSize) {
+		return 22.0;
+	} else if (self.cachedFontSize == TXMainTextBoxFontExtraLargeSize) {
+		return 24.0;
+	}
+
+	return 18.0;
+}
+
+- (NSInteger)textBoxHeightMultiplier
+{
+	if (self.cachedFontSize == TXMainTextBoxFontNormalSize) {
+		return 14.0;
+	} else if (self.cachedFontSize == TXMainTextBoxFontLargeSize) {
+		return 17.0;
+	} else if (self.cachedFontSize == TXMainTextBoxFontExtraLargeSize) {
+		return 19.0;
+	}
+
+	return 14.0;
+}
+
+/* Do actual size math. */
+- (void)resetTextFieldCellSize:(BOOL)force
+{
+	BOOL drawBezel = YES;
+
+	NSWindow *mainWindow = self.window;
+
+	NSView *superView = [self splitterView];
+	NSView *background = [self backgroundView];
+
+    NSScrollView *scroller = [self scrollView];
+
+	NSRect textBoxFrame = scroller.frame;
+	NSRect superViewFrame = superView.frame;
+	NSRect mainWindowFrame = mainWindow.frame;
+	NSRect backgroundFrame = background.frame;
+
+	NSInteger contentBorder;
+
+	NSInteger inputBoxDefaultHeight = [self textBoxDefaultHeight];
+	NSInteger inputBoxBackgroundDefaultHeight = [self backgroundViewDefaultHeight];
+
+	NSString *stringv = self.stringValue;
+
+	if (stringv.length < 1) {
+		textBoxFrame.size.height    = inputBoxDefaultHeight;
+		backgroundFrame.size.height = inputBoxBackgroundDefaultHeight;
+
+		if (self.lastDrawLineCount >= 2) {
+			drawBezel = YES;
+		}
+
+		self.lastDrawLineCount = 1;
+	} else {
+		NSInteger totalLinesBase = [self numberOfLines];
+
+		if (self.lastDrawLineCount == totalLinesBase && force == NO) {
+			drawBezel = NO;
+		}
+
+		self.lastDrawLineCount = totalLinesBase;
+
+		if (drawBezel) {
+			NSInteger totalLinesMath = (totalLinesBase - 1);
+
+			NSInteger inputBoxHeightMultiplier = [self textBoxHeightMultiplier];
+			NSInteger inputBoxBackgroundHeightMultiplier = [self backgroundViewHeightMultiplier];
+
+			/* Calculate unfiltered height. */
+			textBoxFrame.size.height    = inputBoxDefaultHeight;
+			backgroundFrame.size.height	= inputBoxBackgroundDefaultHeight;
+
+			textBoxFrame.size.height    += (totalLinesMath * inputBoxHeightMultiplier);
+			backgroundFrame.size.height += (totalLinesMath * inputBoxBackgroundHeightMultiplier);
+
+			NSInteger backgroundViewMaxHeight = [self backgroundViewMaximumHeight];
+
+			/* Fix height if it exceeds are maximum. */
+			if (backgroundFrame.size.height > backgroundViewMaxHeight) {
+				for (NSInteger i = totalLinesMath; i >= 0; i--) {
+					NSInteger newSize = 0;
+
+					newSize  =      inputBoxBackgroundDefaultHeight;
+					newSize += (i * inputBoxBackgroundHeightMultiplier);
+
+					if (newSize > backgroundViewMaxHeight) {
+						continue;
+					} else {
+						backgroundFrame.size.height = newSize;
+
+						textBoxFrame.size.height  =      inputBoxDefaultHeight;
+						textBoxFrame.size.height += (i * inputBoxHeightMultiplier);
+
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	if (drawBezel) {
+		contentBorder = (backgroundFrame.size.height + 14);
+
+		superViewFrame.origin.y = contentBorder;
+
+		if ([mainWindow isInFullscreenMode]) {
+			superViewFrame.size.height = (mainWindowFrame.size.height - contentBorder);
+		} else {
+			superViewFrame.size.height = (mainWindowFrame.size.height - contentBorder - 22);
+		}
+
+		[mainWindow setContentBorderThickness:contentBorder forEdge:NSMinYEdge];
+
+		[scroller setFrame:textBoxFrame];
+		[superView setFrame:superViewFrame];
+		[background setFrame:backgroundFrame];
+	}
+}
+
+#pragma mark -
 #pragma mark NSTextView Context Menu Preferences
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if ([keyPath isEqualIgnoringCase:@"TextFieldAutomaticSpellCheck"]) {
 		[self setContinuousSpellCheckingEnabled:[TPCPreferences textFieldAutomaticSpellCheck]];
-
 	} else if ([keyPath isEqualIgnoringCase:@"TextFieldAutomaticGrammarCheck"]) {
 		[self setGrammarCheckingEnabled:[TPCPreferences textFieldAutomaticGrammarCheck]];
-
 	} else if ([keyPath isEqualIgnoringCase:@"TextFieldAutomaticSpellCorrection"]) {
 		[self setAutomaticSpellingCorrectionEnabled:[TPCPreferences textFieldAutomaticSpellCorrection]];
-
 	} else if ([keyPath isEqualIgnoringCase:@"TextFieldSmartCopyPaste"]) {
 		[self setSmartInsertDeleteEnabled:[TPCPreferences textFieldSmartCopyPaste]];
-
 	} else if ([keyPath isEqualIgnoringCase:@"TextFieldSmartQuotes"]) {
 		[self setAutomaticQuoteSubstitutionEnabled:[TPCPreferences textFieldSmartQuotes]];
-
 	} else if ([keyPath isEqualIgnoringCase:@"TextFieldSmartDashes"]) {
 		[self setAutomaticDashSubstitutionEnabled:[TPCPreferences textFieldSmartDashes]];
-
 	} else if ([keyPath isEqualIgnoringCase:@"TextFieldSmartLinks"]) {
 		[self setAutomaticLinkDetectionEnabled:[TPCPreferences textFieldSmartLinks]];
-
 	} else if ([keyPath isEqualIgnoringCase:@"TextFieldDataDetectors"]) {
 		[self setAutomaticDataDetectionEnabled:[TPCPreferences textFieldDataDetectors]];
-
 	} else if ([keyPath isEqualIgnoringCase:@"TextFieldTextReplacement"]) {
 		[self setAutomaticTextReplacementEnabled:[TPCPreferences textFieldTextReplacement]];
-
 	} else if ([super respondsToSelector:@selector(observeValueForKeyPath:ofObject:change:context:)]) {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-
 	}
 }
 
@@ -426,6 +517,9 @@
 }
 
 @end
+
+#pragma mark -
+#pragma mark Background Drawing
 
 @implementation TVCInputTextFieldBackground
 

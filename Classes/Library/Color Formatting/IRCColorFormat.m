@@ -423,13 +423,13 @@
 {
 	if (clearAttributes) {
 		NSDictionary *attributes = @{
-			NSFontAttributeName				: TXDefaultTextFieldFont,
+			NSFontAttributeName				: [self defaultTextFieldFont],
 			NSForegroundColorAttributeName	: TXDefaultTextFieldFontColor,
 		};
 
 		[self setTypingAttributes:attributes];
 	} else {
-		[self setFont:TXDefaultTextFieldFont];
+		[self setFont:[self defaultTextFieldFont]];
 	}
 }
 

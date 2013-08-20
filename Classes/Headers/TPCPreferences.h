@@ -79,6 +79,12 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 	TXHostmaskBanExactFormat  = 3, // Exact Match
 } TXHostmaskBanFormat;
 
+typedef enum TXMainTextBoxFontSize : NSInteger {
+	TXMainTextBoxFontNormalSize			= 1,
+	TXMainTextBoxFontLargeSize			= 2,
+	TXMainTextBoxFontExtraLargeSize		= 3,
+} TXMainTextBoxFontSize;
+
 @interface TPCPreferences : NSObject
 + (BOOL)isDefaultIRCClient;
 
@@ -127,6 +133,8 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 + (BOOL)channelNavigationIsServerSpecific;
 
 + (BOOL)automaticallyDetectHighlightSpam;
+
++ (TXMainTextBoxFontSize)mainTextBoxFontSize;
 
 + (BOOL)logTranscript;
 + (BOOL)logTranscriptInBatches;
