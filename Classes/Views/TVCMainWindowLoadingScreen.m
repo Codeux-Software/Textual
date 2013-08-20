@@ -201,22 +201,23 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-	NSView *activeView;
+	if ([self needsToDrawRect:dirtyRect]) {
+		NSView *activeView;
 
-	for (NSView *alv in [self allViews]) {
-		if (alv.isHidden == NO) {
-			activeView = alv;
-		} 
-	}
+		for (NSView *alv in [self allViews]) {
+			if (alv.isHidden == NO) {
+				activeView = alv;
+			} 
+		}
 
-	if (activeView) {
-		NSRect newtRect = activeView.frame;
+		if (activeView) {
+			NSRect newtRect = activeView.frame;
 
-		newtRect.origin.x  = ((self.window.frame.size.width  / 2) - (newtRect.size.width / 2));
-		newtRect.origin.y  = ((self.window.frame.size.height / 2) - (newtRect.size.height / 2));
-		newtRect.origin.y -= 24;
+			newtRect.origin.x  = ((self.window.frame.size.width  / 2) - (newtRect.size.width / 2));
+			newtRect.origin.y  = ((self.window.frame.size.height / 2) - (newtRect.size.height / 2));
 
-		[activeView setFrame:newtRect];
+			[activeView setFrame:newtRect];
+		}
 	}
 
 	[super drawRect:dirtyRect];
