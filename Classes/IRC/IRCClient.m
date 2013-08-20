@@ -3521,36 +3521,39 @@
 						cleanedText = [cleanedText stripIRCEffects];
 					}
 
-                    /* Scan for messages telling us that we need to identify. */
-                    for (NSString *token in [self nickServSupportedNeedIdentificationTokens]) {
-                        if ([cleanedText containsIgnoringCase:token]) {
-                            continueNickServScan = NO;
+					if (self.isWaitingForNickServ) {
+						/* Scan for messages telling us that we need to identify. */
+						for (NSString *token in [self nickServSupportedNeedIdentificationTokens]) {
+							if ([cleanedText containsIgnoringCase:token]) {
+								continueNickServScan = NO;
 
-                            NSObjectIsEmptyAssertLoopBreak(self.config.nicknamePassword);
-                            
-                            NSString *IDMessage = [NSString stringWithFormat:@"IDENTIFY %@", self.config.nicknamePassword];
+								NSObjectIsEmptyAssertLoopBreak(self.config.nicknamePassword);
+								
+								NSString *IDMessage = [NSString stringWithFormat:@"IDENTIFY %@", self.config.nicknamePassword];
 
-                            if ([[self networkAddress] hasSuffix:@"dal.net"]) {
-                                self.isWaitingForNickServ = YES;
+								if ([[self networkAddress] hasSuffix:@"dal.net"]) {
+									self.isWaitingForNickServ = YES;
 
-                                [self send:IRCPrivateCommandIndex("privmsg"), @"NickServ@services.dal.net", IDMessage, nil];
-                            } else {
-                                if (self.CAPisIdentifiedWithSASL == NO) {
-                                    self.isWaitingForNickServ = YES;
-                                    
-                                    [self send:IRCPrivateCommandIndex("privmsg"), @"NickServ", IDMessage, nil];
-                                }
-                            }
+									[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ@services.dal.net", IDMessage, nil];
+								} else {
+									if (self.CAPisIdentifiedWithSASL == NO) {
+										self.isWaitingForNickServ = YES;
+										
+										[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ", IDMessage, nil];
+									}
+								}
 
-							break;
-                        }
-                    }
+								break;
+							}
+						}
+					}
 
                     /* Scan for messages telling us that we are now identified. */
                     if (continueNickServScan) {
                         for (NSString *token in [self nickServSupportedSuccessfulIdentificationTokens]) {
                             if ([cleanedText containsIgnoringCase:token]) {
                                 self.isIdentifiedWithNickServ = YES;
+								self.isWaitingForNickServ = NO;
                                 
                                 if ([TPCPreferences autojoinWaitsForNickServ]) {
                                     if (self.isAutojoined == NO) {
