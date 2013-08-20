@@ -44,16 +44,18 @@
     self = [super initWithCoder:coder];
 
 	if (self) {
+		self.delegate = self;
+
 		if ([TPCPreferences rightToLeftFormatting]) {
 			[self setBaseWritingDirection:NSWritingDirectionRightToLeft];
 		} else {
             [self setBaseWritingDirection:NSWritingDirectionLeftToRight];
 		}
 
-		[self setTextColor:TXDefaultTextFieldFontColor];
-		[self setInsertionPointColor:TXDefaultTextFieldFontColor];
-
 		[self setDefaultTextFieldFont:TXDefaultTextFieldFont];
+
+		[self defineDefaultTypeSetterAttributes];
+		[self updateTypeSetterAttributes];
 
         [super setTextContainerInset:NSMakeSize(TXDefaultTextFieldWidthPadding, TXDefaultTextFieldHeightPadding)];
 
@@ -118,7 +120,12 @@
 
 - (NSArray *)readablePasteboardTypes
 {
-    return @[NSPasteboardTypeString];
+	return @[NSPasteboardTypeString, NSFilenamesPboardType];
+}
+
+- (NSArray *)acceptableDragTypes
+{
+	return @[NSPasteboardTypeString, NSFilenamesPboardType];
 }
 
 - (NSAttributedString *)attributedStringValue
@@ -131,6 +138,8 @@
 	NSData *stringData = [string RTFFromRange:NSMakeRange(0, [string length]) documentAttributes:nil];
     
     [self replaceCharactersInRange:[self fullSelectionRange] withRTF:stringData];
+
+	[self didChangeText];
 }
 
 - (NSString *)stringValue
@@ -141,6 +150,8 @@
 - (void)setStringValue:(NSString *)string
 {
     [self replaceCharactersInRange:[self fullSelectionRange] withString:string];
+	
+	[self didChangeText];
 }
 
 #pragma mark -
@@ -190,9 +201,58 @@
 
 #pragma mark -
 
-- (void)sanitizeTextField:(BOOL)paste
+- (void)textDidChange:(NSNotification *)aNotification
 {
-	[self sanitizeIRCCompatibleAttributedString:BOOLReverseValue(paste)];
+	if (self.string.length < 1) {
+		[self defineDefaultTypeSetterAttributes]; // -------------/
+		[self updateTypeSetterAttributes]; // Reset these values when field becomes empty.
+	}
+
+	if ([self respondsToSelector:@selector(internalTextDidChange:)]) {
+		[self performSelector:@selector(internalTextDidChange:) withObject:aNotification];
+	}
+}
+
+#pragma mark -
+
+- (void)updateAllFontSizesToMatchTheDefaultFont
+{
+	CGFloat newPointSize = self.defaultTextFieldFont.pointSize;
+
+    [self.textStorage beginEditing];
+
+    [self.textStorage enumerateAttribute:NSFontAttributeName
+                            inRange:[self fullSelectionRange]
+                            options:0
+                         usingBlock:^(id value, NSRange range, BOOL *stop)
+	{
+		NSFont *oldfont = value;
+
+		if (NSDissimilarObjects(oldfont.pointSize, newPointSize)) {
+			NSFont *font = [RZFontManager() convertFont:value toSize:newPointSize];
+
+			if (PointerIsNotEmpty(font)) {
+				[self.textStorage removeAttribute:NSFontAttributeName range:range];
+				
+				[self.textStorage addAttribute:NSFontAttributeName value:font range:range];
+			}
+		}
+	}];
+
+    [self.textStorage endEditing];
+}
+
+- (void)updateTypeSetterAttributes
+{
+	[self setTypingAttributes:@{NSFontAttributeName : self.defaultTextFieldFont, NSForegroundColorAttributeName : TXDefaultTextFieldFontColor}];
+}
+
+- (void)defineDefaultTypeSetterAttributes
+{
+	[self setFont:self.defaultTextFieldFont];
+
+	[self setTextColor:TXDefaultTextFieldFontColor];
+	[self setInsertionPointColor:TXDefaultTextFieldFontColor];
 }
 
 #pragma mark -

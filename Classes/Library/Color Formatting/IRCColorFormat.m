@@ -417,23 +417,6 @@
 }
 
 #pragma mark -
-#pragma mark Pasted String Sanitization
-
-- (void)sanitizeIRCCompatibleAttributedString:(BOOL)clearAttributes
-{
-	if (clearAttributes) {
-		NSDictionary *attributes = @{
-			NSFontAttributeName				: [self defaultTextFieldFont],
-			NSForegroundColorAttributeName	: TXDefaultTextFieldFontColor,
-		};
-
-		[self setTypingAttributes:attributes];
-	} else {
-		[self setFont:[self defaultTextFieldFont]];
-	}
-}
-
-#pragma mark -
 #pragma mark Adding/Removing Formatting
 
 - (void)setIRCFormatterAttribute:(IRCTextFormatterEffectType)effect 

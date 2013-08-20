@@ -68,10 +68,9 @@
     self = [super initWithCoder:coder];
 	
 	if (self) {
-        self.delegate = self;
-
-		[self updateTextBoxBasedOnPreferredFontSize:NO];
-        [self sanitizeTextField:NO];
+		[self updateTextBoxCachedPreferredFontSize]; // Set preferred font.
+		[self defineDefaultTypeSetterAttributes]; // Have parent text field inherit that.
+		[self updateTypeSetterAttributes]; // --------------/
 
 		for (NSString *key in _KeyObservingArray) {
 			[RZUserDefaults() addObserver:self
@@ -168,32 +167,27 @@
 	}
 }
 
-- (void)textDidChange:(NSNotification *)aNotification
+- (void)internalTextDidChange:(NSNotification *)aNotification
 {
-    [self resetTextFieldCellSize:NO];
-	
-	if (NSObjectIsEmpty(self.stringValue)) {
-		[super sanitizeTextField:NO];
-	}
+	[self resetTextFieldCellSize:NO];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-	NSString *value = [self stringValue];
-	
-	if (NSObjectIsEmpty(value)) {
-		if (NSDissimilarObjects([self baseWritingDirection], NSWritingDirectionRightToLeft)) {
-			if (self.cachedFontSize == TXMainTextBoxFontNormalSize ||
-				self.cachedFontSize == TXMainTextBoxFontLargeSize)
-			{
-				[self.placeholderString drawAtPoint:NSMakePoint(6, 1)];
-			} else if (self.cachedFontSize == TXMainTextBoxFontExtraLargeSize) {
-				[self.placeholderString drawAtPoint:NSMakePoint(6, 2)];
+	if ([self needsToDrawRect:dirtyRect]) {
+		NSString *value = [self stringValue];
+		
+		if (NSObjectIsEmpty(value)) {
+			if (NSDissimilarObjects([self baseWritingDirection], NSWritingDirectionRightToLeft)) {
+				if (self.cachedFontSize == TXMainTextBoxFontLargeSize) {
+					[self.placeholderString drawAtPoint:NSMakePoint(6, 2)];
+				} else {
+					[self.placeholderString drawAtPoint:NSMakePoint(6, 1)];
+				}
 			}
-
+		} else {
+			[super drawRect:dirtyRect];
 		}
-	} else {
-		[super drawRect:dirtyRect];
 	}
 }
 
@@ -202,7 +196,6 @@
     [super paste:self];
     
     [self resetTextFieldCellSize:NO];
-	[self sanitizeTextField:YES];
 }
 
 - (BOOL)textView:(NSTextView *)aTextView doCommandBySelector:(SEL)aSelector
@@ -211,7 +204,6 @@
 		[self.masterController textEntered];
         
         [self resetTextFieldCellSize:NO];
-		[self sanitizeTextField:NO];
         
         return YES;
     }
@@ -222,12 +214,7 @@
 #pragma mark -
 #pragma mark Multi-line Text Box Drawing
 
-- (void)updateTextBoxBasedOnPreferredFontSize
-{
-	[self updateTextBoxBasedOnPreferredFontSize:YES];
-}
-
-- (void)updateTextBoxBasedOnPreferredFontSize:(BOOL)reloadDrawing
+- (void)updateTextBoxCachedPreferredFontSize
 {
 	/* Update the font. */
 	self.cachedFontSize = [TPCPreferences mainTextBoxFontSize];
@@ -249,11 +236,25 @@
 	self.placeholderString = nil;
 	self.placeholderString = [NSAttributedString stringWithBase:TXTLS(@"InputTextFieldPlaceholderValue") attributes:attrs];
 
-	/* Redraw the box? */
-	if (reloadDrawing) {
-		[self resetTextFieldCellSize:YES];
-		[self sanitizeTextField:YES];
+	/* Prepare draw. */
+	[self setNeedsDisplay:YES];
+}
+
+- (void)updateTextBoxBasedOnPreferredFontSize
+{
+	TXMainTextBoxFontSize cachedFontSize = self.cachedFontSize;
+
+	/* Update actual cache. */
+	[self updateTextBoxCachedPreferredFontSize];
+
+	/* We only update the font sizes if there was a chagne. */
+	if (NSDissimilarObjects(cachedFontSize, self.cachedFontSize)) {
+		[self updateAllFontSizesToMatchTheDefaultFont];
+		[self updateTypeSetterAttributes];
 	}
+
+	/* Reset frames. */
+	[self resetTextFieldCellSize:YES];
 }
 
 - (NSView *)splitterView
@@ -279,7 +280,7 @@
 	if (self.cachedFontSize == TXMainTextBoxFontNormalSize) {
 		return 23.0;
 	} else if (self.cachedFontSize == TXMainTextBoxFontLargeSize) {
-		return 27.0;
+		return 28.0;
 	} else if (self.cachedFontSize == TXMainTextBoxFontExtraLargeSize) {
 		return 30.0;
 	}
@@ -535,49 +536,51 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-	NSRect cellBounds = self.frame;
-	NSRect controlFrame;
-	
-	NSColor *controlColor;
-	
-	NSBezierPath *controlPath;
-	
-	/* Control Outside White Shadow. */
-	controlColor = [NSColor colorWithCalibratedWhite:1.0 alpha:0.394];
-	controlFrame = NSMakeRect(0.0, 0.0, cellBounds.size.width, 1.0);
-	controlPath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:3.6 yRadius:3.6];
-	
-	[controlColor set];
-	[controlPath fill];
-	
-	/* Black Outline. */
-	if (self.masterController.mainWindowIsActive) {
-		controlColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.4];
-	} else {
-		controlColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.23];
+	if ([self needsToDrawRect:dirtyRect]) {
+		NSRect cellBounds = self.frame;
+		NSRect controlFrame;
+		
+		NSColor *controlColor;
+		
+		NSBezierPath *controlPath;
+		
+		/* Control Outside White Shadow. */
+		controlColor = [NSColor colorWithCalibratedWhite:1.0 alpha:0.394];
+		controlFrame = NSMakeRect(0.0, 0.0, cellBounds.size.width, 1.0);
+		controlPath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:3.6 yRadius:3.6];
+		
+		[controlColor set];
+		[controlPath fill];
+		
+		/* Black Outline. */
+		if (self.masterController.mainWindowIsActive) {
+			controlColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.4];
+		} else {
+			controlColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.23];
+		}
+		
+		controlFrame = NSMakeRect(0.0, 1.0, cellBounds.size.width, (cellBounds.size.height - 1.0));
+		controlPath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:3.6 yRadius:3.6];
+		
+		[controlColor set];
+		[controlPath fill];
+		
+		/* White Background. */
+		controlColor = [self inputFieldBackgroundColor];
+		controlFrame = NSMakeRect(1, 2, (cellBounds.size.width - 2.0), (cellBounds.size.height - 4.0));
+		controlPath	= [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:2.6 yRadius:2.6];
+		
+		[controlColor set];
+		[controlPath fill];
+		
+		/* Inside White Shadow. */
+		controlColor = [self inputFieldInsideShadowColor];
+		controlFrame = NSMakeRect(2, (cellBounds.size.height - 2.0), (cellBounds.size.width - 4.0), 1.0);
+		controlPath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:2.9 yRadius:2.9];
+		
+		[controlColor set];
+		[controlPath fill];
 	}
-	
-	controlFrame = NSMakeRect(0.0, 1.0, cellBounds.size.width, (cellBounds.size.height - 1.0));
-	controlPath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:3.6 yRadius:3.6];
-	
-	[controlColor set];
-	[controlPath fill];
-	
-	/* White Background. */
-	controlColor = [self inputFieldBackgroundColor];
-	controlFrame = NSMakeRect(1, 2, (cellBounds.size.width - 2.0), (cellBounds.size.height - 4.0));
-	controlPath	= [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:2.6 yRadius:2.6];
-	
-	[controlColor set];
-	[controlPath fill];
-	
-	/* Inside White Shadow. */
-	controlColor = [self inputFieldInsideShadowColor];
-	controlFrame = NSMakeRect(2, (cellBounds.size.height - 2.0), (cellBounds.size.width - 4.0), 1.0);
-	controlPath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:2.9 yRadius:2.9];
-	
-	[controlColor set];
-	[controlPath fill];
 }
 
 @end

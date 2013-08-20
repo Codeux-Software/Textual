@@ -57,8 +57,6 @@ typedef enum IRCTextFormatterEffectType : NSInteger {
 @end
 
 @interface TVCTextField (TVCTextFieldFormattingHelper) 
-- (void)sanitizeIRCCompatibleAttributedString:(BOOL)clearAttributes;
-
 - (BOOL)IRCFormatterAttributeSetInRange:(IRCTextFormatterEffectType)effect 
                                   range:(NSRange)limitRange;
 

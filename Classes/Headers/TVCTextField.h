@@ -42,7 +42,7 @@
 #define TXDefaultTextFieldWidthPadding		1.0
 #define TXDefaultTextFieldHeightPadding		2.0
 
-@interface TVCTextField : NSTextView 
+@interface TVCTextField : NSTextView <NSTextViewDelegate>
 @property (nonatomic, strong) TLOKeyEventHandler *keyHandler;
 @property (nonatomic, assign) dispatch_queue_t formattingQueue;
 @property (nonatomic, strong) NSFont *defaultTextFieldFont;
@@ -66,7 +66,12 @@
 - (NSString *)stringValue;
 - (void)setStringValue:(NSString *)string;
 
-- (void)sanitizeTextField:(BOOL)paste;
+- (void)updateTypeSetterAttributes;
+- (void)defineDefaultTypeSetterAttributes;
+
+- (void)updateAllFontSizesToMatchTheDefaultFont;
+
+- (void)textDidChange:(NSNotification *)aNotification;
 
 - (void)removeAttribute:(id)attr inRange:(NSRange)local;
 - (void)setAttributes:(id)attrs inRange:(NSRange)local;
