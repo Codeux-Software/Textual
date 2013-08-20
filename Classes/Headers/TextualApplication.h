@@ -87,7 +87,7 @@
 	@class TDChannelSheet;
 	@class THOPluginItem;
 	@class THOPluginManager;
-	@class TKMessageBlockOperation;
+	@class THOUnicodeHelper;
 	@class TLOFileLogger;
 	@class TLOGrowlController;
 	@class TLOInputHistory;
@@ -243,6 +243,7 @@
 	#import "THOPluginItem.h"
 	#import "THOPluginManager.h"
 	#import "THOPluginProtocol.h"
+	#import "THOUnicodeHelper.h"
 
 	/* Library. */
 
