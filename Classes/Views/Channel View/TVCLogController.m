@@ -890,6 +890,7 @@
 
 - (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock
 {
+
 	/* Continue with a normal print job. */
 	TVCLogControllerOperationBlock printBlock = ^(id operation, NSDictionary *context) {
 		/* Increment by one. */

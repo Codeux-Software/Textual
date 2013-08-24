@@ -94,7 +94,11 @@
 	if (self.lineType == TVCLogLineActionType) {
 		return [NSString stringWithFormat:TXLogLineActionNicknameFormat, self.nickname];
 	} else if (self.lineType == TVCLogLineNoticeType) {
-		return [NSString stringWithFormat:TXLogLineNoticeNicknameFormat, self.nickname];
+        if (self.memberType == TVCLogMemberLocalUserType) {
+            return [NSString stringWithFormat:TXLogLineOutgoingNoticeNicknameFormat, self.nickname];
+        } else {
+            return [NSString stringWithFormat:TXLogLineNoticeNicknameFormat, self.nickname];
+        }
 	}
 
 	PointerIsEmptyAssertReturn(owner, nil);
