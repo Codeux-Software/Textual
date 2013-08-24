@@ -1491,17 +1491,26 @@
 					IRCChannel *channel = [self findChannel:channelName];
 
 					if (PointerIsEmpty(channel) && secretMsg == NO) {
-						if ([channelName isChannelName:self] == NO) {
+	                    if ([channelName isChannelName:self] == NO && type == TVCLogLineNoticeType) {
+	                        channel = [self.worldController selectedChannel];
+                        } else if ([channelName isChannelName:self]) {
 							channel = [self.worldController createPrivateMessage:channelName client:self];
-						}
+						}	
 					}
 
 					if (channel) {
                         BOOL encrypted = (doNotEncrypt == NO && [self isSupportedMessageEncryptionFormat:t channel:channel]);
 
+                        NSString *nick;
+                        if (type == TVCLogLineNoticeType) {
+                            nick = channelName;
+                        } else {
+                            nick = self.localNickname;
+                        }
+
                         [self print:channel
 							   type:type
-							   nick:self.localNickname
+							   nick:nick
 							   text:t
 						  encrypted:encrypted
 						 receivedAt:[NSDate date]
@@ -2710,7 +2719,7 @@
 
 	TVCLogLine *c = [TVCLogLine new];
 
-	if (nick && [nick isEqualToString:self.localNickname]) {
+	if (nick && rawMessage == nil) {
 		memberType = TVCLogMemberLocalUserType;
 	}
 

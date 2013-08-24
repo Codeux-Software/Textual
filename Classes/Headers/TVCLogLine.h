@@ -41,6 +41,7 @@
 #define TXLogLineUndefinedNicknameFormat	@"<%@%n>"
 #define TXLogLineActionNicknameFormat		@"%@ "
 #define TXLogLineNoticeNicknameFormat		@"-%@-"
+#define TXLogLineOutgoingNoticeNicknameFormat	@">%@<"
 #define TXLogLineCTCPTypeNicknameFormat		@"-%@ CTCP-"
 
 #define TXLogLineSpecialNoticeMessageFormat		@"[%@]: %@"
