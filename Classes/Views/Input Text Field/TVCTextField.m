@@ -83,6 +83,15 @@
     [super mouseDown:theEvent];
 }
 
+
+- (NSColor *)defaultTextColor
+{
+    
+    return [NSColor defineUserInterfaceItem:TXDefaultTextFieldFontColor
+                               invertedItem:[NSColor colorWithCalibratedWhite:0.98 alpha:1.0]
+                               withOperator:[TPCPreferences invertSidebarColors]];
+}
+
 #pragma mark -
 #pragma mark Keyboard Shorcuts
 

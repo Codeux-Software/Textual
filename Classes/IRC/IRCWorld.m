@@ -699,6 +699,7 @@
 	[self.masterController.memberSplitView setNeedsDisplay:YES];
 
 	[self.masterController.inputTextField redrawOriginPoints];
+    [self.masterController.inputTextField updateTextColor];    
 }
 
 - (void)changeTextSize:(BOOL)bigger
