@@ -50,6 +50,8 @@
 - (BOOL)isAtTopOfView;
 - (BOOL)isAtBottomOfView;
 
+- (NSColor *)defaultTextColor;
+
 - (NSInteger)selectedLineNumber;
 - (NSInteger)numberOfLines;
 

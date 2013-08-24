@@ -870,6 +870,10 @@
 
 	[self.masterController.serverSplitView setNeedsDisplay:YES];
 	[self.masterController.memberSplitView setNeedsDisplay:YES];
+    
+    [self.masterController.inputTextField updateTextColor];
+    [self.masterController.inputTextField setNeedsDisplay:YES];
+    
 
 	[self.worldController executeScriptCommandOnAllViews:@"sidebarInversionPreferenceChanged" arguments:@[] onQueue:NO];
 }

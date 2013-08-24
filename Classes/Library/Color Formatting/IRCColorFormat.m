@@ -382,7 +382,7 @@
 				 only the color of the text field itself. */
 				
                 if (PointerIsNotEmpty(foregroundColor)) {
-					NSColor *defaultColor = TXDefaultTextFieldFontColor;
+					NSColor *defaultColor = [self defaultTextColor];
 					NSColor *compareColor = [foregroundColor colorUsingColorSpace:[NSColorSpace genericGrayColorSpace]];
 					
 					CGFloat defaultWhite = [defaultColor whiteComponent];

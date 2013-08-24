@@ -158,6 +158,15 @@
 #pragma mark -
 #pragma mark Everything Else.
 
+- (void)updateTextColor
+{
+    [self setTextColor:self.defaultTextColor];
+    
+    [self setInsertionPointColor:self.defaultTextColor];
+    
+    [self.backgroundView setNeedsDisplay:YES];
+}
+
 - (void)updateTextDirection
 {
 	if ([TPCPreferences rightToLeftFormatting]) {
@@ -170,6 +179,7 @@
 - (void)internalTextDidChange:(NSNotification *)aNotification
 {
 	[self resetTextFieldCellSize:NO];
+    [self updateTextColor];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -526,12 +536,16 @@
 
 - (NSColor *)inputFieldBackgroundColor
 {
-	return [NSColor whiteColor];
+    return [NSColor defineUserInterfaceItem:[NSColor whiteColor]
+                              invertedItem:[NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1.0]
+                              withOperator:[TPCPreferences invertSidebarColors]];
 }
 
 - (NSColor *)inputFieldInsideShadowColor
 {
-	return [NSColor colorWithCalibratedWhite:0.88 alpha:1.0];
+   return [NSColor defineUserInterfaceItem:[NSColor colorWithCalibratedWhite:0.88 alpha:1.0]
+                              invertedItem:[NSColor colorWithCalibratedWhite:0.27 alpha:1.0]
+                              withOperator:[TPCPreferences invertSidebarColors]];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
