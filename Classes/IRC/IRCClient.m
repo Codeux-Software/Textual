@@ -4100,46 +4100,80 @@
 
 - (void)receiveNick:(IRCMessage *)m
 {
-    
 	IRCAddressBook *ignoreChecks;
 
 	NSString *oldNick = m.sender.nickname;
 	NSString *newNick;
-    
+	NSString *target;
+
+	/* Check input conditions. */
 	if (m.isPrintOnlyMessage == NO) {
+		NSAssert((m.params.count == 1), @"Bad receiveNick: conditions.");
+
         newNick = [m paramAt:0];
 	} else {
+		NSAssert((m.params.count == 2), @"Bad m.isPrintOnlyMessage conditions.");
+
+		target = [m paramAt:0];
         newNick = [m paramAt:1];
 	}
 
+	/* Are they exactly the same? */
 	if ([oldNick isEqualToString:newNick]) {
 		return;
 	}
 
+	/* Prepare ignore checks. */
 	BOOL myself = [oldNick isEqualIgnoringCase:self.localNickname];
 
-	if (m.isPrintOnlyMessage == NO) {
-		if (myself) {
+	if (myself) {
+		if (m.isPrintOnlyMessage == NO) {
 			self.myNick = newNick;
 			self.sentNick = newNick;
-		} else {
+		}
+	} else {
+		if (m.isPrintOnlyMessage == NO) {
 			/* Check new nickname in address book user check. */
 			ignoreChecks = [self checkIgnoreAgainstHostmask:[newNick stringByAppendingString:@"!-@-"]
 												withMatches:@[@"notifyJoins"]];
 
 			[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
+		}
 
-			/* Check old nickname in address book user check. */
-			ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
-												withMatches:@[@"ignoreJPQE", @"notifyJoins"]];
+		/* Check old nickname in address book user check. */
+		ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
+											withMatches:@[@"ignoreJPQE", @"notifyJoins"]];
 
+		if (m.isPrintOnlyMessage == NO) {
 			[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
 		}
 	}
 
+	/* Is this a targetted print message? */
+	if (m.isPrintOnlyMessage) {
+		IRCChannel *c = [self findChannel:target];
+
+		if (c) {
+			if ((myself == NO && [ignoreChecks ignoreJPQE] == NO) || myself == YES) {
+				NSString *text = TXTFLS(@"IRCUserChangedNickname", oldNick, newNick);
+
+				[self print:c
+					   type:TVCLogLineNickType
+					   nick:nil
+					   text:text
+				 receivedAt:m.receivedAt
+					command:m.command];
+			}
+		}
+
+		/* Once a targetted print occurs, we can stop here. Nothing else
+		 ini this method should be used when it is a print only job. */
+		return;
+	}
+
+	/* Continue with normal operations. */
 	for (IRCChannel *c in self.channels) {
-		if ([c findMember:oldNick] ||
-            (m.isPrintOnlyMessage && [c.name isEqualToString:[m paramAt:0]])) {
+		if ([c findMember:oldNick]) {
             
 			if ((myself == NO && [ignoreChecks ignoreJPQE] == NO) || myself == YES) {
 				NSString *text = TXTFLS(@"IRCUserChangedNickname", oldNick, newNick);
@@ -4152,28 +4186,24 @@
 					command:m.command];
 			}
 
-			if (m.isPrintOnlyMessage == NO) {
-				[c renameMember:oldNick to:newNick performOnChange:^(IRCUser *user) {
-					[c updateMemberOnTableView:user];
-				}];
-			}
+			[c renameMember:oldNick to:newNick performOnChange:^(IRCUser *user) {
+				[c updateMemberOnTableView:user];
+			}];
 		}
 	}
 
-	if (m.isPrintOnlyMessage == NO) {
-		IRCChannel *c = [self findChannel:oldNick];
-		IRCChannel *t = [self findChannel:newNick];
+	IRCChannel *c = [self findChannel:oldNick];
+	IRCChannel *t = [self findChannel:newNick];
 
-		PointerIsEmptyAssert(c);
+	PointerIsEmptyAssert(c);
 
-		if (t && [c.name isEqualIgnoringCase:t.name] == NO) {
-			[self.worldController destroyChannel:t];
-		}
-
-		c.name = newNick;
-
-		[self.worldController reloadTreeItem:c];
+	if (t && [c.name isEqualIgnoringCase:t.name] == NO) {
+		[self.worldController destroyChannel:t];
 	}
+
+	c.name = newNick;
+
+	[self.worldController reloadTreeItem:c];
 }
 
 - (void)receiveMode:(IRCMessage *)m
