@@ -4100,12 +4100,17 @@
 
 - (void)receiveNick:(IRCMessage *)m
 {
-	NSAssertReturn(m.params.count == 1);
-
+    
 	IRCAddressBook *ignoreChecks;
 
 	NSString *oldNick = m.sender.nickname;
-	NSString *newNick = [m paramAt:0];
+	NSString *newNick;
+    
+	if (m.isPrintOnlyMessage == NO) {
+        newNick = [m paramAt:0];
+	} else {
+        newNick = [m paramAt:1];
+	}
 
 	if ([oldNick isEqualToString:newNick]) {
 		return;
@@ -4133,7 +4138,9 @@
 	}
 
 	for (IRCChannel *c in self.channels) {
-		if ([c findMember:oldNick]) {
+		if ([c findMember:oldNick] ||
+            (m.isPrintOnlyMessage && [c.name isEqualToString:[m paramAt:0]])) {
+            
 			if ((myself == NO && [ignoreChecks ignoreJPQE] == NO) || myself == YES) {
 				NSString *text = TXTFLS(@"IRCUserChangedNickname", oldNick, newNick);
 

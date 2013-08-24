@@ -141,12 +141,12 @@
 		[s deleteCharactersInRange:NSMakeRange(0, [@"is now known as " length])];
 
 		NSString *newNickname = s.getToken;
-
 		NSObjectIsEmptyAssertReturn(newNickname, input);
 
 		input.command = IRCPrivateCommandIndex("nick");
 
-		[input.params removeAllObjects];
+		[input.params removeObjectAtIndex:1];
+        
 		[input.params safeAddObject:newNickname];
 		/* End nickname change. */
 	}
