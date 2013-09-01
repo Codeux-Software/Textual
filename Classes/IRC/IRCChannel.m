@@ -171,11 +171,11 @@
 
 - (void)activate
 {
+	[self resetStatus:IRCChannelJoined];
+  
 	if (self.isChannel) {
 		[self.client postEventToViewController:@"channelJoined" forChannel:self];
     }
-
-	[self resetStatus:IRCChannelJoined];
 
 	if (self.isPrivateMessage) {
 		IRCUser *m = nil;
