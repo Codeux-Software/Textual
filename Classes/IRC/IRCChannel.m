@@ -197,13 +197,12 @@
 
 - (void)deactivate
 {
+	[self resetStatus:IRCChannelParted];
+  
 	if (self.isChannel) {
 		[self.client postEventToViewController:@"channelParted" forChannel:self];
-
 		[self.viewController setTopic:nil];
     }
-
-	[self resetStatus:IRCChannelParted];
 
 	self.channelJoinTime = -1;
 }
