@@ -4571,14 +4571,14 @@
 	[self startPongTimer];
 	[self stopRetryTimer];
 
-    [self postEventToViewController:@"serverConnected"];
-
 	/* Manage local variables. */
 	self.isupport.networkAddress = m.sender.hostmask;
 
 	self.isLoggedIn = YES;
 	self.isConnected = YES;
 	self.inFirstISONRun = YES;
+  
+  [self postEventToViewController:@"serverConnected"];
 
 	self.connectionReconnectCount = 0;
 	
