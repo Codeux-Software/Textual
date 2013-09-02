@@ -372,7 +372,6 @@
 		[upperChoices safeAddObject:client.isupport.networkNameActual];
 	}
 
-    lowerChoices = [upperChoices mutableCopy];
 
   /* Quick method for replacing the value of each array
    object based on a provided selector. */
