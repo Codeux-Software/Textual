@@ -372,11 +372,24 @@
 		[upperChoices safeAddObject:client.isupport.networkNameActual];
 	}
 
-	lowerChoices = [upperChoices mutableCopy];
 
-	/* Quick method for replacing the value of each array
-	 object based on a provided selector. */
-	[lowerChoices performSelectorOnObjectValueAndReplace:@selector(lowercaseString)];
+  /* Quick method for replacing the value of each array
+   object based on a provided selector. */
+
+    NSArray *tempChoices = [upperChoices copy];
+    NSCharacterSet *nonAlpha = [NSCharacterSet characterSetWithCharactersInString:@"^[]-_`{}\\"];
+    [upperChoices removeAllObjects];
+    [lowerChoices removeAllObjects];
+    for (NSString *s in tempChoices) {
+        [upperChoices safeAddObject:s];
+        [lowerChoices safeAddObject:[s lowercaseString]];
+        NSString *stripped = [s stringByTrimmingCharactersInSet:nonAlpha];
+        if (stripped != s) {
+            [upperChoices safeAddObject:s];
+            [lowerChoices safeAddObject:[stripped lowercaseString]];
+        }
+    }
+
 
 	/* We will now get a list of matches to our backward cut. */
 	NSMutableArray *currentUpperChoices = [NSMutableArray array];
