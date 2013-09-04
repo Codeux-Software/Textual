@@ -78,9 +78,14 @@
 {
 	TPCThemeSettings *customSettings = self.masterController.themeController.customSettings;
 
+	return [self formattedTimestampWithForcedFormat:customSettings.timestampFormat];
+}
+
+- (NSString *)formattedTimestampWithForcedFormat:(NSString *)format;
+{
 	NSObjectIsEmptyAssertReturn(self.receivedAt, nil);
-	
-	NSString *time = TXFormattedTimestampWithOverride(self.receivedAt, [TPCPreferences themeTimestampFormat], customSettings.timestampFormat);
+
+	NSString *time = TXFormattedTimestampWithOverride(self.receivedAt, [TPCPreferences themeTimestampFormat], format);
 
 	NSObjectIsEmptyAssertReturn(time, nil);
 
@@ -89,17 +94,24 @@
 
 - (NSString *)formattedNickname:(IRCChannel *)owner
 {
+	return [self formattedNickname:owner withForcedFormat:nil];
+}
+
+- (NSString *)formattedNickname:(IRCChannel *)owner withForcedFormat:(NSString *)format
+{
 	NSObjectIsEmptyAssertReturn(self.nickname, nil);
-	
-	if (self.lineType == TVCLogLineActionType) {
-		return [NSString stringWithFormat:TXLogLineActionNicknameFormat, self.nickname];
-	} else if (self.lineType == TVCLogLineNoticeType) {
-		return [NSString stringWithFormat:TXLogLineNoticeNicknameFormat, self.nickname];
+
+	if (NSObjectIsEmpty(format)) {
+		if (self.lineType == TVCLogLineActionType) {
+			return [NSString stringWithFormat:TXLogLineActionNicknameFormat, self.nickname];
+		} else if (self.lineType == TVCLogLineNoticeType) {
+			return [NSString stringWithFormat:TXLogLineNoticeNicknameFormat, self.nickname];
+		}
 	}
 
 	PointerIsEmptyAssertReturn(owner, nil);
 
-	return [owner.client formatNick:self.nickname channel:owner];
+	return [owner.client formatNick:self.nickname channel:owner formatOverride:format];
 }
 
 - (id)initWithDictionary:(NSDictionary *)dic

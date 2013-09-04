@@ -851,24 +851,33 @@
 
 	NSMutableString *s = [NSMutableString string];
 
-	if (NSObjectIsNotEmpty(line.receivedAt)) {
-		NSString *time = [line formattedTimestamp];
+	/* Format time into a 24 hour universal time. */
+	NSString *time = [line formattedTimestampWithForcedFormat:TLOFileLoggerTwentyFourHourClockFormat];
 
+	if (time) {
 		[s appendString:time];
 	}
 
-	if (NSObjectIsNotEmpty(line.nickname)) {
-		NSString *nick = [line formattedNickname:self.channel];
-		
+	/* Format nickname into a standard format ignoring user preference. */
+	NSString *nick;
+
+	if (line.lineType == TVCLogLineActionType) {
+		nick = [line formattedNickname:self.channel withForcedFormat:TLOFileLoggerActionNicknameFormat];
+	} else if (line.lineType == TVCLogLineNoticeType) {
+		nick = [line formattedNickname:self.channel withForcedFormat:TLOFileLoggerNoticeNicknameFormat];
+	} else {
+		nick = [line formattedNickname:self.channel withForcedFormat:TLOFileLoggerUndefinedNicknameFormat];
+	}
+	
+	if (nick) {
 		[s appendString:nick];
-		
-		if ([nick hasSuffix:NSStringWhitespacePlaceholder] == NO) {
-			[s appendString:NSStringWhitespacePlaceholder];
-		}
+		[s appendString:NSStringWhitespacePlaceholder];
 	}
 
+	/* Append actual body. */
 	[s appendString:line.messageBody];
 
+	/* Return result minus any formatting. */
 	return [s stripIRCEffects];
 }
 

@@ -40,7 +40,7 @@
 
 #define TXDefaultTextualLogStyle			@"resource:Simplified Light"
 #define TXDefaultTextualLogFont				@"Lucida Grande"
-#define TXDefaultTextualTimestampFormat		@"[%H:%M:%S]"
+#define TXDefaultTextualTimestampFormat		TLOFileLoggerTwentyFourHourClockFormat
 
 typedef enum TXNicknameHighlightMatchType : NSInteger {
 	TXNicknameHighlightPartialMatchType = 0,

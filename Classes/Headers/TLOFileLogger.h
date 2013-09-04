@@ -43,6 +43,12 @@
 #define TLOFileLoggerChannelDirectoryName				@"Channels"
 #define TLOFileLoggerPrivateMessageDirectoryName		@"Queries"
 
+#define TLOFileLoggerUndefinedNicknameFormat	@"<%@%n>"
+#define TLOFileLoggerActionNicknameFormat		@"• %n:"
+#define TLOFileLoggerNoticeNicknameFormat		@"-%n-"
+
+#define TLOFileLoggerTwentyFourHourClockFormat		@"[%H:%M:%S]"
+
 @interface TLOFileLogger : NSObject
 @property (nonatomic, nweak) IRCClient *client;
 @property (nonatomic, nweak) IRCChannel *channel;
