@@ -2624,10 +2624,17 @@
 
 - (NSString *)formatNick:(NSString *)nick channel:(IRCChannel *)channel
 {
+	return [self formatNick:nick channel:channel formatOverride:nil];
+}
+
+- (NSString *)formatNick:(NSString *)nick channel:(IRCChannel *)channel formatOverride:(NSString *)forcedFormat
+{
 	NSObjectIsEmptyAssertReturn(nick, nil);
+
 	PointerIsEmptyAssertReturn(channel, nil);
 
 	NSString *nmformat = [TPCPreferences themeNicknameFormat];
+
 	NSString *override = self.masterController.themeController.customSettings.nicknameFormat;
 
 	if (NSObjectIsNotEmpty(override)) {
@@ -2636,6 +2643,10 @@
 
 	if (NSObjectIsEmpty(nmformat)) {
 		nmformat = TXLogLineUndefinedNicknameFormat;
+	}
+
+	if (NSObjectIsNotEmpty(forcedFormat)) {
+		nmformat = forcedFormat;
 	}
 
 	if ([nmformat contains:@"%n"]) {

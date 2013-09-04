@@ -192,6 +192,7 @@ typedef enum IRCDisconnectMode : NSInteger {
 - (NSString *)convertFromCommonEncoding:(NSData *)data;
 
 - (NSString *)formatNick:(NSString *)nick channel:(IRCChannel *)channel;
+- (NSString *)formatNick:(NSString *)nick channel:(IRCChannel *)channel formatOverride:(NSString *)forcedFormat;
 
 - (void)sendPrivmsgToSelectedChannel:(NSString *)message;
 

@@ -88,7 +88,10 @@ typedef enum TVCLogMemberType : NSInteger {
 @property (nonatomic, assign) NSInteger nicknameColorNumber;
 
 - (NSString *)formattedTimestamp;
+- (NSString *)formattedTimestampWithForcedFormat:(NSString *)format;
+
 - (NSString *)formattedNickname:(IRCChannel *)owner;
+- (NSString *)formattedNickname:(IRCChannel *)owner withForcedFormat:(NSString *)format;
 
 + (NSString *)lineTypeString:(TVCLogLineType)type;
 + (NSString *)memberTypeString:(TVCLogMemberType)type;
