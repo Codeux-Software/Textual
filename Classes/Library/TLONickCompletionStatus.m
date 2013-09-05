@@ -49,6 +49,21 @@
 	return self;
 }
 
+- (NSString *)trimNickname:(NSString *)nickname usingCharacterSet:(NSCharacterSet *)charset
+{
+	for (NSInteger i = 0; i < nickname.length; i++) {
+		UniChar c = [nickname characterAtIndex:i];
+
+		if ([charset characterIsMember:c]) {
+			continue;
+		} else {
+			return [nickname safeSubstringFromIndex:i];
+		}
+	}
+
+	return nil;
+}
+
 - (void)completeNick:(BOOL)forward
 {
 	/* Global variables. */
@@ -252,7 +267,7 @@
 			}
 		}
 	} else {
-		backwardCut = [s safeSubstringWithRange:self.lastCompletionFragmentRange];
+		backwardCut = self.cachedBackwardCutStringValue;
 
 		if (self.lastCompletionFragmentRange.location > 0) {
 			isAtStart = NO;
@@ -304,26 +319,6 @@
 
 	NSObjectIsEmptyAssert(backwardCut);
 
-	/* The combined cut is used to compare for the next result. */
-	NSString *combinedCut = [backwardCut stringByAppendingString:selectedCut];
-
-	for (NSInteger i = 0; i < combinedCut.length; ++i) {
-		UniChar c = [combinedCut characterAtIndex:i];
-
-		/* Skip everything that is not a space or ":" then break the string
-		 there so that a completion like "Nickname: " or "/command " will
-		 be seen as only "Nickname" and "/command" */
-		if (NSDissimilarObjects(c, ' ') && NSDissimilarObjects(c, ':') && NSDissimilarObjects(c, ',')) {
-			;
-		} else {
-			combinedCut = [combinedCut safeSubstringToIndex:i];
-
-			break;
-		}
-	}
-
-	NSObjectIsEmptyAssert(combinedCut);
-
 	/* Define our choices for the completion. The upperChoices array
 	 holds all the case-sensitive representations of the completions
 	 while the lowerChoices array holds each completion as a lowercase
@@ -332,7 +327,6 @@
 	 from the upperChoices array. */
 
 	NSString *lowerBackwardCut = backwardCut.lowercaseString;
-	NSString *lowerCombinedCut = combinedCut.lowercaseString;
 
 	NSMutableArray *upperChoices = [NSMutableArray array];
 	NSMutableArray *lowerChoices = [NSMutableArray array];
@@ -372,23 +366,37 @@
 		[upperChoices safeAddObject:client.isupport.networkNameActual];
 	}
 
+	/* Quick method for replacing the value of each array
+	 object based on a provided selector. */
+	if (commandMode || channelMode) {
+		lowerChoices = [upperChoices mutableCopy];
 
-  /* Quick method for replacing the value of each array
-   object based on a provided selector. */
+		[lowerChoices performSelectorOnObjectValueAndReplace:@selector(lowercaseString)];
+	} else {
+		/* For nickname completes we stripout certain characters. */
+		NSArray *tempChoices = [upperChoices copy];
 
-    NSArray *tempChoices = [upperChoices copy];
-    NSCharacterSet *nonAlpha = [NSCharacterSet characterSetWithCharactersInString:@"^[]-_`{}\\"];
-    [upperChoices removeAllObjects];
-    for (NSString *s in tempChoices) {
-        [upperChoices safeAddObject:s];
-        [lowerChoices safeAddObject:[s lowercaseString]];
-        NSString *stripped = [s stringByTrimmingCharactersInSet:nonAlpha];
-        if (stripped != s) {
-            [upperChoices safeAddObject:s];
-            [lowerChoices safeAddObject:[stripped lowercaseString]];
-        }
-    }
+		[upperChoices removeAllObjects];
 
+		/* Add objects to the arrays plus their stripped versions. */
+		NSCharacterSet *nonAlphaChars = [NSCharacterSet characterSetWithCharactersInString:@"^[]-_`{}\\"];
+
+		for (NSString *s in tempChoices) {
+			[upperChoices safeAddObject:s];
+			[lowerChoices safeAddObject:[s lowercaseString]];
+
+			NSString *stripped = [self trimNickname:s usingCharacterSet:nonAlphaChars];
+
+			if ([s isNotEqualTo:stripped] && stripped.length > 0) {
+				stripped = stripped.lowercaseString;
+
+				if ([lowerChoices containsObject:stripped] == NO) {
+					[upperChoices addObject:s];
+					[lowerChoices addObject:[stripped lowercaseString]];
+				}
+			}
+		}
+	}
 
 	/* We will now get a list of matches to our backward cut. */
 	NSMutableArray *currentUpperChoices = [NSMutableArray array];
@@ -410,12 +418,14 @@
 	/* Now that we know the choices that are actually available to the
 	   string being completed; we can filter through each going backwards
 	   or forward depending on the call to this method. */
-	NSString *t = nil;
+	NSString *ut = nil;
 
-	NSUInteger index = [currentLowerChoices indexOfObject:lowerCombinedCut];
+	NSUInteger index = self.lastCompletionSelectionIndex;
 
-	if (index == NSNotFound) {
-		t = [currentUpperChoices safeObjectAtIndex:0];
+	if (index == NSNotFound || index >= currentLowerChoices.count) {
+		ut = [currentUpperChoices safeObjectAtIndex:0];
+
+		self.lastCompletionSelectionIndex = 0;
 	} else {
 		if (forward) {
 			index += 1;
@@ -431,20 +441,22 @@
 			}
 		}
 
-		t = [currentUpperChoices safeObjectAtIndex:index];
+		ut = [currentUpperChoices safeObjectAtIndex:index];
+
+		self.lastCompletionSelectionIndex = index;
 	}
 
 	/* Add prefix back to the string? */
 	if (backwardCutLengthAddition > 0) {
 		backwardCut = [backwardCutStringAddition stringByAppendingString:backwardCut];
 
-		t = [backwardCutStringAddition stringByAppendingString:t];
+		ut = [backwardCutStringAddition stringByAppendingString:ut];
 	}
 
 	/* Add the completed string to the spell checker so that a nickname
 	 wont show up as spelled incorrectly. The spell checker is cleared
 	 of these ignores between channel changes. */
-	[RZSpellChecker() ignoreWord:t inSpellDocumentWithTag:inputTextField.spellCheckerDocumentTag];
+	[RZSpellChecker() ignoreWord:ut inSpellDocumentWithTag:inputTextField.spellCheckerDocumentTag];
 
 	/* Create our final string. */
 	if (commandMode || channelMode || isAtStart == NO) {
@@ -459,13 +471,13 @@
 		}
 
 		if (addWhitespace) {
-			t = [t stringByAppendingString:NSStringWhitespacePlaceholder];
+			ut = [ut stringByAppendingString:NSStringWhitespacePlaceholder];
 		}
 	} else {
 		NSString *completeSuffix = [TPCPreferences tabCompletionSuffix];
 
 		if (NSObjectIsNotEmpty(completeSuffix)) {
-			t = [t stringByAppendingString:completeSuffix];
+			ut = [ut stringByAppendingString:completeSuffix];
 		}
 	}
 
@@ -480,15 +492,15 @@
 
 	fr.location = self.lastCompletionFragmentRange.location;
 
-	if ([inputTextField shouldChangeTextInRange:fr replacementString:t]) {
+	if ([inputTextField shouldChangeTextInRange:fr replacementString:ut]) {
 		[inputTextField.textStorage beginEditing];
-		[inputTextField replaceCharactersInRange:fr withString:t];
+		[inputTextField replaceCharactersInRange:fr withString:ut];
 		[inputTextField.textStorage endEditing];
 	}
 
 	[inputTextField scrollRangeToVisible:inputTextField.selectedRange];
 
-	fr.length = t.length;
+	fr.length = ut.length;
 
 	self.lastCompletionCompletedRange = fr;
 
@@ -499,12 +511,18 @@
 	inputTextField.selectedRange = fr;
 
 	self.lastTextFieldSelectionRange = fr;
+
+	/* Update cached string values. */
 	self.cachedTextFieldStringValue = inputTextField.string;
+	self.cachedBackwardCutStringValue = backwardCut;
 }
 
 - (void)clear
 {
 	self.cachedTextFieldStringValue = nil;
+	self.cachedBackwardCutStringValue = nil;
+
+	self.lastCompletionSelectionIndex = NSNotFound;
 
 	self.lastTextFieldSelectionRange = NSEmptyRange();
 	self.lastCompletionCompletedRange = NSEmptyRange();
