@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4488.2" systemVersion="13A538g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4504" systemVersion="13A558" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4488.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4504"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -2449,19 +2449,20 @@ CA
                 <outlet property="awayStatusField" destination="FDn-T9-61V" id="CfP-mh-fDP"/>
                 <outlet property="contentViewController" destination="2962" id="2964"/>
                 <outlet property="nicknameField" destination="2985" id="2993"/>
+                <outlet property="presenceField" destination="RGe-Bi-XuH" id="qMd-HJ-x1Q"/>
                 <outlet property="privilegesField" destination="2991" id="2996"/>
                 <outlet property="usernameField" destination="2987" id="2994"/>
             </connections>
         </popover>
         <customView id="2965" userLabel="User Info Popover View">
-            <rect key="frame" x="0.0" y="0.0" width="352" height="114"/>
+            <rect key="frame" x="0.0" y="0.0" width="352" height="134"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <userGuides>
                 <userLayoutGuide location="342" affinity="minX"/>
             </userGuides>
             <subviews>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="2969">
-                    <rect key="frame" x="20" y="87" width="76" height="18"/>
+                    <rect key="frame" x="20" y="107" width="76" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="HlY-po-5R3">
                         <rect key="frame" x="0.0" y="0.0" width="76" height="18"/>
@@ -2501,7 +2502,7 @@ CA
                     </scroller>
                 </scrollView>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="2973">
-                    <rect key="frame" x="20" y="67" width="76" height="18"/>
+                    <rect key="frame" x="20" y="87" width="76" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="hRN-sl-Win">
                         <rect key="frame" x="0.0" y="0.0" width="76" height="18"/>
@@ -2541,7 +2542,7 @@ CA
                     </scroller>
                 </scrollView>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="2977">
-                    <rect key="frame" x="31" y="47" width="64" height="18"/>
+                    <rect key="frame" x="31" y="67" width="64" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="tlb-gg-Djr">
                         <rect key="frame" x="0.0" y="0.0" width="64" height="18"/>
@@ -2581,7 +2582,7 @@ CA
                     </scroller>
                 </scrollView>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="2981">
-                    <rect key="frame" x="21" y="30" width="76" height="15"/>
+                    <rect key="frame" x="21" y="50" width="76" height="15"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="zhT-8W-ZMg">
                         <rect key="frame" x="0.0" y="0.0" width="76" height="15"/>
@@ -2621,7 +2622,7 @@ CA
                     </scroller>
                 </scrollView>
                 <textField verticalHuggingPriority="750" id="2985">
-                    <rect key="frame" x="92" y="89" width="253" height="17"/>
+                    <rect key="frame" x="92" y="109" width="253" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" selectable="YES" sendsActionOnEndEditing="YES" title="################################" id="2986">
                         <font key="font" metaFont="cellTitle"/>
@@ -2630,7 +2631,7 @@ CA
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="2987">
-                    <rect key="frame" x="92" y="69" width="253" height="17"/>
+                    <rect key="frame" x="92" y="89" width="253" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" selectable="YES" sendsActionOnEndEditing="YES" title="################################" id="2988">
                         <font key="font" metaFont="cellTitle"/>
@@ -2639,7 +2640,7 @@ CA
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="2989">
-                    <rect key="frame" x="92" y="49" width="253" height="17"/>
+                    <rect key="frame" x="92" y="69" width="253" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" selectable="YES" sendsActionOnEndEditing="YES" title="################################" id="2990">
                         <font key="font" metaFont="cellTitle"/>
@@ -2648,7 +2649,7 @@ CA
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="2991">
-                    <rect key="frame" x="92" y="29" width="253" height="17"/>
+                    <rect key="frame" x="92" y="49" width="253" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="################################" id="2992">
                         <font key="font" metaFont="cellTitle"/>
@@ -2657,7 +2658,7 @@ CA
                     </textFieldCell>
                 </textField>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="Ou1-Kr-i28">
-                    <rect key="frame" x="6" y="10" width="89" height="15"/>
+                    <rect key="frame" x="6" y="30" width="89" height="15"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="AZX-PE-ahe">
                         <rect key="frame" x="0.0" y="0.0" width="89" height="15"/>
@@ -2697,10 +2698,59 @@ CA
                     </scroller>
                 </scrollView>
                 <textField verticalHuggingPriority="750" id="FDn-T9-61V">
-                    <rect key="frame" x="92" y="9" width="251" height="17"/>
+                    <rect key="frame" x="92" y="29" width="251" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="################################" id="jvH-0Q-SL4">
                         <font key="font" metaFont="cellTitle"/>
+                        <color key="textColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="8dC-gX-hWD">
+                    <rect key="frame" x="6" y="10" width="89" height="15"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Unw-Jc-BMu">
+                        <rect key="frame" x="0.0" y="0.0" width="89" height="15"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="LAX-Io-JZb">
+                                <rect key="frame" x="0.0" y="0.0" width="89" height="15"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="textColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="minSize" width="89" height="15"/>
+                                <size key="maxSize" width="463" height="10000000"/>
+                                <attributedString key="textStorage">
+                                    <fragment content="Presence:">
+                                        <attributes>
+                                            <color key="NSColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="12" name="LucidaGrande-Bold"/>
+                                            <font key="NSOriginalFont" size="12" name="LucidaGrande-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="minSize" width="89" height="15"/>
+                                <size key="maxSize" width="463" height="10000000"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" id="FOv-Cx-4wX">
+                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" id="H5A-F7-87S">
+                        <rect key="frame" x="-100" y="-100" width="15" height="15"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
+                <textField verticalHuggingPriority="750" id="RGe-Bi-XuH">
+                    <rect key="frame" x="92" y="9" width="251" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="################################" id="ecz-Yu-Hhp">
+                        <font key="font" metaFont="titleBar" size="12"/>
                         <color key="textColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>

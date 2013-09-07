@@ -234,6 +234,38 @@
         address = TXTLS(@"UserHostmaskHoverTooltipNoInfo");
     }
 
+	/* User presence. */
+	NSString *presence;
+
+	NSInteger channelCount = 0;
+
+	/* Popover is always relative to the selected items. */
+	IRCClient *u = self.worldController.selectedClient;
+	IRCChannel *c = self.worldController.selectedChannel;
+
+	/* Find how many channels this user is in minus the
+	 selected one. */
+	for (IRCChannel *cc in u.channels) {
+		if ([cc isEqual:c] == NO) {
+			IRCUser *uu = [cc findMember:nickname];
+
+			if (uu) {
+				channelCount += 1;
+			}
+		}
+	}
+
+	/* Build result string for user presence. */
+	if (channelCount == 0) {
+		presence = TXTLS(@"UserHostmaskHoverTooltipNoPresence");
+	} else if (channelCount == 1) {
+		presence = TXTLS(@"UserHostmaskHoverTooltipOneChannelPresence");
+	} else if (channelCount == 2) {
+		presence = TXTLS(@"UserHostmaskHoverTooltipTwoChannelPresence");
+	} else {
+		presence = TXTFLS(@"UserHostmaskHoverTooltipMultipleChannelPresence", channelCount);
+	}
+
     /* Where is our cell? */
 	NSInteger rowIndex = [self rowIndex];
 
@@ -244,6 +276,7 @@
     userInfoPopover.usernameField.stringValue = username;
     userInfoPopover.addressField.stringValue = address;
     userInfoPopover.privilegesField.stringValue = permissions;
+	userInfoPopover.presenceField.stringValue = presence;
 
 	if (self.memberPointer.isAway) {
 		userInfoPopover.awayStatusField.stringValue = TXTLS(@"UserHostmaskHoverTooltipUserIsAway");

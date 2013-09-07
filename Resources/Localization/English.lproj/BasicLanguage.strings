@@ -385,6 +385,10 @@
 "UserHostmaskHoverTooltipUserIsAway" = "User is away.";
 "UserHostmaskHoverTooltipUserIsNotAway" = "User is not away.";
 "UserHostmaskHoverTooltipNoInfo" = "Information Not Available";
+"UserHostmaskHoverTooltipNoPresence" = "No other channels shared with this user.";
+"UserHostmaskHoverTooltipOneChannelPresence" = "User is in one other channel with you.";
+"UserHostmaskHoverTooltipTwoChannelPresence" = "User is in two other channels with you.";
+"UserHostmaskHoverTooltipMultipleChannelPresence" = "User is in %i other channels with you.";
 
 "UserTrackingHostmaskConnected" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" connected.";
 "UserTrackingHostmaskNoLongerAvailable" = "User with hostmask \"%1$@\" matching Address Book entry \"%2$@\" is no longer available.";
