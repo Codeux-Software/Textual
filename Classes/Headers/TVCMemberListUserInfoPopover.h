@@ -43,4 +43,5 @@
 @property (nonatomic, nweak) NSTextField *addressField;
 @property (nonatomic, nweak) NSTextField *privilegesField;
 @property (nonatomic, nweak) NSTextField *awayStatusField;
+@property (nonatomic, nweak) NSTextField *presenceField;
 @end
