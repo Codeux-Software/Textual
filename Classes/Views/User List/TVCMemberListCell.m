@@ -227,11 +227,11 @@
     NSString *address = self.memberPointer.address;
 
     if (NSObjectIsEmpty(username)) {
-        username = TXTLS(@"UserHostmaskHoverTooltipNoInfo");
+        username = TXTLS(@"UserHostmaskHoverTooltipNoInformationAvailable");
     }
 
     if (NSObjectIsEmpty(address)) {
-        address = TXTLS(@"UserHostmaskHoverTooltipNoInfo");
+        address = TXTLS(@"UserHostmaskHoverTooltipNoInformationAvailable");
     }
 
 	/* User presence. */
@@ -257,7 +257,7 @@
 
 	/* Build result string for user presence. */
 	if (channelCount == 0) {
-		presence = TXTLS(@"UserHostmaskHoverTooltipNoPresence");
+		presence = TXTLS(@"UserHostmaskHoverTooltipNoUserPresence");
 	} else if (channelCount == 1) {
 		presence = TXTLS(@"UserHostmaskHoverTooltipOneChannelPresence");
 	} else if (channelCount == 2) {
