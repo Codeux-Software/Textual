@@ -5674,15 +5674,15 @@
 			{ // logged online
 				[self handleUserTrackingNotification:ignoreChecks
 											nickname:sendern
-											hostmask:hostmaskwon
-											langitem:@"UserTrackingHostmaskNowAvailable"];
+											hostmask:sendern
+											langitem:@"UserTrackingNicknameNowAvailable"];
 			}
 			else if (n == 601)
 			{ // logged offline
 				[self handleUserTrackingNotification:ignoreChecks
 											nickname:sendern
-											hostmask:hostmaskwon
-											langitem:@"UserTrackingHostmaskNoLongerAvailable"];
+											hostmask:sendern
+											langitem:@"UserTrackingNicknameNoLongerAvailable"];
 			}
 			else if (n == 604)
 			{ // is online
