@@ -35,6 +35,8 @@
 
  *********************************************************************** */
 
+#define TXLoadMacOSVersionSpecificFeatures		1
+
 #ifndef kASAppleScriptSuite
 	#define kASAppleScriptSuite 'ascr'
 #endif
@@ -45,6 +47,12 @@
 
 #ifndef keyASSubroutineName
 	#define keyASSubroutineName 'snam'
+#endif
+
+#if TXLoadMacOSVersionSpecificFeatures
+ 	#if defined(AVAILABLE_MAC_OS_X_VERSION_10_9_AND_LATER)
+ 		#define TXSystemIsMacOSMavericksOrNewer
+ 	#endif
 #endif
 
 #define NSAppKitVersionNumber10_6	1038
