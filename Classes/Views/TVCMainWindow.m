@@ -88,7 +88,7 @@ static NSValue *touchesToPoint(NSTouch *fingerA, NSTouch *fingerB) {
     CGFloat x = [event deltaX];
 	
     if (x > 0) {
-        [self.masterController selectNextSelection:nil];
+        [self.masterController selectNextWindow:nil];
     } else if (x < 0) {
         [self.masterController selectPreviousWindow:nil];
     }
@@ -139,7 +139,7 @@ static NSValue *touchesToPoint(NSTouch *fingerA, NSTouch *fingerB) {
 	if (delta.x > 0) {
 		[self.masterController selectPreviousWindow:nil];
 	} else {
-		[self.masterController selectNextSelection:nil];
+		[self.masterController selectNextWindow:nil];
 	}
 }
 
