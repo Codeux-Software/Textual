@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4504" systemVersion="13A558" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="13A569" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -516,6 +516,12 @@ CQ
                                 </menu>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1576"/>
+                            <menuItem title="Move Backward" tag="50013" id="4BH-0G-zyN">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="processNavigationItem:" target="267" id="vk7-TG-lvN"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Move Forward" tag="50012" id="1577">
                                 <string key="keyEquivalent" base64-UTF8="YES">
 CQ
@@ -525,6 +531,7 @@ CQ
                                     <action selector="processNavigationItem:" target="267" id="1593"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="KcO-aF-w7t"/>
                             <menuItem title="Previous Selection" tag="50011" id="1591">
                                 <string key="keyEquivalent" base64-UTF8="YES">
 CQ
@@ -2750,7 +2757,7 @@ CA
                     <rect key="frame" x="92" y="9" width="251" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="################################" id="ecz-Yu-Hhp">
-                        <font key="font" metaFont="titleBar" size="12"/>
+                        <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
