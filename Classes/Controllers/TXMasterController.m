@@ -1055,7 +1055,7 @@ typedef enum TXMoveKind : NSInteger {
 	[self.worldController selectPreviousItem];
 }
 
-- (void)selectNextSelection:(NSEvent *)e
+- (void)selectNextWindow:(NSEvent *)e
 {
 	[self move:TXMoveAllKind target:TXMoveDownKind];
 }

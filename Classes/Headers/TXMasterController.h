@@ -97,9 +97,10 @@
 
 - (void)selectNextServer:(NSEvent *)e;
 - (void)selectNextChannel:(NSEvent *)e;
-- (void)selectNextSelection:(NSEvent *)e;
+- (void)selectNextWindow:(NSEvent *)e;
 - (void)selectPreviousServer:(NSEvent *)e;
 - (void)selectPreviousChannel:(NSEvent *)e;
+- (void)selectPreviousWindow:(NSEvent *)e;
 - (void)selectNextActiveServer:(NSEvent *)e;
 - (void)selectNextUnreadChannel:(NSEvent *)e;
 - (void)selectNextActiveChannel:(NSEvent *)e;
@@ -107,7 +108,6 @@
 - (void)selectPreviousActiveServer:(NSEvent *)e;
 - (void)selectPreviousUnreadChannel:(NSEvent *)e;
 - (void)selectPreviousActiveChannel:(NSEvent *)e;
-- (void)selectPreviousWindow:(NSEvent *)e;
 @end
 
 @interface NSObject (TXMasterControllerObjectExtension)
