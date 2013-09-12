@@ -425,6 +425,10 @@
 		return [@"http://www.reddit.com" stringByAppendingString:self];
 	}
 
+    /* Short-circuit for message:(\/\/)? links. */
+    if ([self hasPrefix:@"message:"])
+        return self;
+
 	/* Normal links. */
 	if ([self contains:@"://"] == NO) {
 		return [NSString stringWithFormat:@"http://%@", self];
