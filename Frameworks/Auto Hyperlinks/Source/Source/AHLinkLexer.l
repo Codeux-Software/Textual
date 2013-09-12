@@ -95,8 +95,7 @@ feed:\/\/               |
 ssh:\/\/                |
 telnet:\/\/             |
 rts?p:\/\/              |
-irc:\/\/                |
-ircs:\/\/               |
+ircs?:\/\/                |
 textual:\/\/            |
 nntp:\/\/               |
 cifs:\/\/               |

@@ -114,6 +114,99 @@ static NSArray					*encKeys						= nil;
 	return [[self class] new];
 }
 
+NSArray *ahURLPrefixesValidDuringSchemeRewrites(void)
+{
+	return @[
+			 /* Place common ones at top so they would be quicker
+			  to catch when scanning the list. */
+			 @"http://",
+			 @"https://",
+			 @"file:///",
+			 @"ftp://",
+			 @"feed://",
+			 @"irc://",
+			 @"ircs://",
+			 @"sftp://",
+			 @"ssh://",
+			 @"svn+ssh://",
+			 @"svn://",
+			 @"telnet://",
+			 @"textual://",
+
+			 /* Less common. */
+			 @"adiumxtra://",
+			 @"afp://",
+			 @"cifs://",
+			 @"gopher://",
+			 @"hydra://",
+			 @"itms://",
+			 @"nntp://",
+			 @"notes://",
+			 @"rtp://",
+			 @"rtsp://",
+			 @"see://",
+			 @"smb://",
+			 @"webcal://",
+			 @"x-man-page://",
+			 ];
+}
+
+NSArray *ahURLPrefixesExcludedFromSchemeRewrites(void)
+{
+	return @[
+			 @"aim:",
+			 @"dict:",
+			 @"gtalk:",
+			 @"magnet:",
+			 @"message:",
+			 @"msnim:",
+			 @"myim:",
+			 @"radar:",
+			 @"radr:",
+			 @"rdar:",
+			 @"spotify:",
+			 @"x-radar:",
+			 @"xmpp:",
+			 @"yahoo:",
+			 @"ymsgr:",
+			 ];
+}
+
++ (NSString *)URLWithProperScheme:(NSString *)url
+{
+	/* The logic behind this method is not very solid. It is very
+	 basic. It could use improving but it works for now… */
+
+	NSString *lcurl = [url lowercaseString];
+
+	/* Begin comparisons. */
+	NSArray *validSchemes = ahURLPrefixesValidDuringSchemeRewrites();
+
+	for (NSString *scm in validSchemes) {
+		if ([lcurl hasPrefix:scm]) {
+			return url;
+		}
+	}
+
+	/* Check for common exceptions. */
+	NSArray *exceptions = ahURLPrefixesExcludedFromSchemeRewrites();
+
+	for (NSString *exc in exceptions) {
+		if ([lcurl hasPrefix:exc]) {
+			return url;
+		}
+	}
+
+	/* Check for the very rare exceptions. These are hard coded
+	 matches that are very specific. */
+	if ([url hasPrefix:@"/r/"] && [url length] < 25) {
+		return [@"http://www.reddit.com" stringByAppendingString:url];
+	}
+
+	/* Nothing matched. Throw an http:// on it and call it a day. */
+	return [NSString stringWithFormat:@"http://%@", url];
+}
+
 - (NSArray *)matchesForString:(NSString *)inString
 {
 	m_strictChecking = NO;
