@@ -134,6 +134,7 @@
 		case 50010: // "Previous Unread Channel"
 		case 50011: // "Previous Selection"
 		case 50012: // "Move Forward"
+		case 50013: // "Move Backward"
 		case 521: // "Add Server…"
 		case 542: // "Logs"
 		case 5675: // "Connect to Help Channel"
@@ -2073,7 +2074,8 @@
 		case 50009: { [self.masterController selectNextUnreadChannel:nil]; break;			}
 		case 50010: { [self.masterController selectPreviousUnreadChannel:nil]; break;		}
 		case 50011: { [self.masterController selectPreviousSelection:nil]; break;			}
-		case 50012: { [self.masterController selectNextSelection:nil]; break;				}
+		case 50012: { [self.masterController selectNextWindow:nil]; break;				}
+		case 50013: { [self.masterController selectPreviousWindow:nil]; break;				}
 	}
 }
 
