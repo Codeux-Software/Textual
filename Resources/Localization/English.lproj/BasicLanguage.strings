@@ -291,8 +291,6 @@
 "ServerSheetHighlightListTableExcludeEntry" = "Exclude";
 "ServerSheetHighlightListTableIncludeEntry" = "Match";
 
-"ServerNoticeTreeItemTitle"	= "Server Notices";
-
 "ServerSheetAutojoinNavigationTreeItem"	= "Channel List";
 "ServerSheetCommandsNavigationTreeItem"	= "Connect Commands";
 "ServerSheetEncodingNavigationTreeItem"	= "Encoding";

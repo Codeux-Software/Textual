@@ -409,11 +409,10 @@
 	
 	for (IRCClient *u in self.clients) {
 		for (IRCChannel *c in u.channels) {
-			if ([c.name isEqualToString:TXTLS(@"ServerNoticeTreeItemTitle")]) {
-				continue;
+			if (c.config.pushNotifications) {
+				messageCount += c.dockUnreadCount;
 			}
-			
-			messageCount += c.dockUnreadCount;
+
 			highlightCount += c.nicknameHighlightCount;
 		}
 	}
