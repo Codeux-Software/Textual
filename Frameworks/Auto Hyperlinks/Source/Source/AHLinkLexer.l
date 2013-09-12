@@ -69,6 +69,7 @@ msnSpec         msnim:(chat|add|voice|video)\?contact={mailSpec}
 dictSpec		dict:{urlPath}
 magnetSpec		magnet:\?xt\=urn:btih:([A-Fa-f0-9]{40})[^[:space:]]*
 redditSpec		\/r\/[A-Za-z0-9][A-Za-z0-9_]{2,20}
+messageSpec		message:(\/\/)?(%3[Cc]).+(%3[Ee])
 
 ignoreable      (b\.sc|m\.in)
 
@@ -124,6 +125,7 @@ x-man-page:\/\/         {yyextra = yyleng; BEGIN CANONICAL;}
 {dictSpec}				|
 {magnetSpec}			|
 {redditSpec}			|
+{messageSpec}			|
 {spotifySpec}           {return AHValidURL;}
 
 .                       {return AHInvalidURL;}
