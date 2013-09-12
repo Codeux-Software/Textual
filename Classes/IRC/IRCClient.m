@@ -5180,7 +5180,7 @@
 					NSString *trname = [g trackingNickname];
 
 					if ([trname isEqualIgnoringCase:name]) {
-						[self handleUserTrackingNotification:g nickname:name hostmask:name langitem:langkey];
+						[self handleUserTrackingNotification:g nickname:name langitem:langkey];
 					}
 				}
 			}
@@ -5674,14 +5674,12 @@
 			{ // logged online
 				[self handleUserTrackingNotification:ignoreChecks
 											nickname:sendern
-											hostmask:sendern
 											langitem:@"UserTrackingNicknameNowAvailable"];
 			}
 			else if (n == 601)
 			{ // logged offline
 				[self handleUserTrackingNotification:ignoreChecks
 											nickname:sendern
-											hostmask:sendern
 											langitem:@"UserTrackingNicknameNoLongerAvailable"];
 			}
 			else if (n == 604)
@@ -6810,11 +6808,10 @@
 
 - (void)handleUserTrackingNotification:(IRCAddressBook *)ignoreItem
 							  nickname:(NSString *)nick
-							  hostmask:(NSString *)host
 							  langitem:(NSString *)localKey
 {
 	if ([ignoreItem notifyJoins]) {
-		NSString *text = TXTFLS(localKey, host, ignoreItem.hostmask);
+		NSString *text = TXTFLS(localKey, nick, ignoreItem.hostmask);
 
 		[self notifyEvent:TXNotificationAddressBookMatchType
 				 lineType:TVCLogLineNoticeType
@@ -6959,8 +6956,7 @@
         if (ison == NO) {
             [self handleUserTrackingNotification:abEntry
                                         nickname:message.sender.nickname
-                                        hostmask:message.sender.hostmask.hostmaskFromRawString
-                                        langitem:@"UserTrackingHostmaskNowAvailable"];
+                                        langitem:@"UserTrackingNicknameNowAvailable"];
             
             [self.trackedUsers setBool:YES forKey:tracker];
         }
@@ -6973,8 +6969,7 @@
         if (ison) {
             [self handleUserTrackingNotification:abEntry
                                         nickname:message.sender.nickname
-                                        hostmask:message.sender.hostmask.hostmaskFromRawString
-                                        langitem:@"UserTrackingHostmaskNoLongerAvailable"];
+                                        langitem:@"UserTrackingNicknameNoLongerAvailable"];
 
             [self.trackedUsers setBool:NO forKey:tracker];
         }
@@ -6987,13 +6982,11 @@
         if (ison) {
             [self handleUserTrackingNotification:abEntry
                                         nickname:message.sender.nickname
-                                        hostmask:message.sender.hostmask.hostmaskFromRawString
-                                        langitem:@"UserTrackingHostmaskNoLongerAvailable"];
+                                        langitem:@"UserTrackingNicknameNoLongerAvailable"];
         } else {
             [self handleUserTrackingNotification:abEntry
                                         nickname:message.sender.nickname
-                                        hostmask:message.sender.hostmask.hostmaskFromRawString
-                                        langitem:@"UserTrackingHostmaskNowAvailable"];
+                                        langitem:@"UserTrackingNicknameNowAvailable"];
         }
 
         [self.trackedUsers setBool:BOOLReverseValue(ison) forKey:tracker];
