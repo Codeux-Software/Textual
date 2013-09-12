@@ -420,21 +420,7 @@
 
 - (NSString *)stringWithValidURIScheme
 {
-	/* Fix reddit links. */
-	if ([self hasPrefix:@"/r/"] && [self length] < 25) {
-		return [@"http://www.reddit.com" stringByAppendingString:self];
-	}
-
-    /* Short-circuit for message:(\/\/)? links. */
-    if ([self hasPrefix:@"message:"])
-        return self;
-
-	/* Normal links. */
-	if ([self contains:@"://"] == NO) {
-		return [NSString stringWithFormat:@"http://%@", self];
-	}
-
-	return self;
+	return [AHHyperlinkScanner URLWithProperScheme:self];
 }
 
 - (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont honorFormattingPreference:(BOOL)formattingPreference
