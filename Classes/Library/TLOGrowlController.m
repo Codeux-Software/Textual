@@ -156,6 +156,7 @@
 			notification.deliveryDate = [NSDate date];
 			notification.userInfo = eventContext;
 
+#ifdef TXSystemIsMacOSMavericksOrNewer
 			if ([TPCPreferences featureAvailableToOSXMavericks]) {
 				/* These are the only event types we want to support for now. */
 
@@ -166,7 +167,8 @@
 					notification.responsePlaceholder = TXTFLS(@"NotificationDialogPrivateMessageReplyPlaceholder");
 				}
 			}
-			
+#endif 
+
 			[RZUserNotificationCenter() scheduleNotification:notification];
 
 			return; // Do not continue to Growl…
@@ -190,6 +192,7 @@
 {
 	[RZUserNotificationCenter() removeDeliveredNotification:notification];
 
+#ifdef TXSystemIsMacOSMavericksOrNewer
 	if ([TPCPreferences featureAvailableToOSXMavericks]) {
 		if (notification.activationType == NSUserNotificationActivationTypeReplied) {
 			NSString *replyMessage = notification.response.string; // It is attributed string, we only want string.
@@ -199,6 +202,7 @@
 			return; // Do not continue this method.
 		}
 	}
+#endif
 
 	[self growlNotificationWasClicked:[notification userInfo]];
 }
