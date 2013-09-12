@@ -76,6 +76,7 @@
 	50010: "Previous Unread Channel"
 	50011: "Previous Selection"
 	50012: "Move Forward"
+	50013: "Move Backward"
 	501: "Connect"
 	502: "Disconnect"
 	503: "Cancel Reconnect"
