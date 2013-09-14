@@ -111,7 +111,7 @@
 	[self firstPane:self.generalView];
 
 	if (self.newItem) {
-		[self.window makeFirstResponder:self.channelNameField];
+		//[self.window makeFirstResponder:self.channelNameField];
 	}
 	
 	[self.contentViewTabView setSelectedSegment:0];
