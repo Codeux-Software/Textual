@@ -273,8 +273,6 @@
 	[self.contentView addSubview:view];
 	
 	[self.tabView selectItemAtIndex:row];
-	
-	[self.window recalculateKeyViewLoop]; // This makes tab work for switching input fields.
 
 	[self makeFirstResponderForRow:row];
 }
