@@ -6428,6 +6428,10 @@
 
 - (void)autoConnectAfterWakeUp
 {
+	if (self.isLoggedIn) {
+		return;
+	}
+	
 	if (self.isHostReachable) {
 		[self connect];
 	} else {
