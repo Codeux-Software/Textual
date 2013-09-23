@@ -815,7 +815,9 @@
 	}
 
 	if (self.masterController.mainWindowIsActive) {
-		return YES;
+		if (NSDissimilarObjects(type, TXNotificationAddressBookMatchType)) {
+			return YES;
+		}
 	}
 
 	if ([TPCPreferences disabledWhileAwayForEvent:type] && self.isAway == YES) {
