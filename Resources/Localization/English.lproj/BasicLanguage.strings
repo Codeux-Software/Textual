@@ -383,11 +383,6 @@
 
 "UserHostmaskHoverTooltipNoInformationAvailable" = "Information Not Available";
 
-"UserHostmaskHoverTooltipNoUserPresence" = "No other channels shared with this user.";
-"UserHostmaskHoverTooltipOneChannelPresence" = "User is in one other channel with you.";
-"UserHostmaskHoverTooltipTwoChannelPresence" = "User is in two other channels with you.";
-"UserHostmaskHoverTooltipMultipleChannelPresence" = "User is in %i other channels with you.";
-
 "UserTrackingNicknameIsAvailable" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is available.";
 "UserTrackingNicknameNoLongerAvailable" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is no longer available.";
 "UserTrackingNicknameNowAvailable" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is now available.";
