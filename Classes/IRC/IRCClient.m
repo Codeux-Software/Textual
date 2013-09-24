@@ -5301,10 +5301,11 @@
 			for (i = 0; i < flfields.length; i++) {
 				NSString *prefix = [flfields safeSubstringWithRange:NSMakeRange(i, 1)];
 
-				if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"q"]] ||
-					[prefix isEqualTo:[self.isupport userModePrefixSymbol:@"O"]]) // binircd-1.0.0
-				{
+				if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"q"]]) {
 					nu.q = YES;
+				} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"O"]]) { // binircd-1.0.0
+					nu.q = YES;
+					nu.binircd_O = YES;
 				} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"a"]]) {
 					nu.a = YES;
 				} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"o"]]) {
@@ -5315,6 +5316,10 @@
 					nu.v = YES;
 				} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"y"]]) { // InspIRCd-2.0
 					nu.isCop = YES;
+					nu.InspIRCd_y_lower = YES;
+				} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"Y"]]) { // InspIRCd-2.0
+					nu.isCop = YES;
+					nu.InspIRCd_y_upper = YES;
 				} else {
 					break;
 				}
@@ -5367,10 +5372,11 @@
 				for (i = 0; i < nickname.length; i++) {
 					NSString *prefix = [nickname safeSubstringWithRange:NSMakeRange(i, 1)];
 
-					if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"q"]] ||
-						[prefix isEqualTo:[self.isupport userModePrefixSymbol:@"O"]]) // binircd-1.0.0
-					{
+					if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"q"]]) {
 						member.q = YES;
+					} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"O"]]) { // binircd-1.0.0
+						member.q = YES;
+						member.binircd_O = YES;
 					} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"a"]]) {
 						member.a = YES;
 					} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"o"]]) {
@@ -5381,6 +5387,10 @@
 						member.v = YES;
 					} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"y"]]) { // InspIRCd-2.0
 						member.isCop = YES;
+						member.InspIRCd_y_lower = YES;
+					} else if ([prefix isEqualTo:[self.isupport userModePrefixSymbol:@"Y"]]) { // InspIRCd-2.0
+						member.isCop = YES;
+						member.InspIRCd_y_upper = YES;
 					} else {
 						break;
 					}

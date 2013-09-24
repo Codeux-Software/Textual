@@ -49,6 +49,9 @@
 @property (nonatomic, assign) BOOL o;
 @property (nonatomic, assign) BOOL h;
 @property (nonatomic, assign) BOOL v;
+@property (nonatomic, assign) BOOL binircd_O; // Channel mode (+O) for channel owner on binircd.
+@property (nonatomic, assign) BOOL InspIRCd_y_upper; // Channel mode (+Y) for IRCop on InspIRCd-2.0
+@property (nonatomic, assign) BOOL InspIRCd_y_lower; // Channel mode (+y) for IRCop on InspIRCd-2.0
 @property (nonatomic, assign) BOOL isCop;
 @property (nonatomic, assign) BOOL isAway;
 @property (nonatomic, readonly) CGFloat totalWeight;
