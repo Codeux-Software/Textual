@@ -382,14 +382,17 @@
 	PointerIsEmptyAssertReturn(user1, NO);
 	PointerIsEmptyAssertReturn(user2, NO);
 
-	if (NSDissimilarObjects(user1.isCop, user2.isCop)			|| // <--------/
-		NSDissimilarObjects(user1.q, user2.q)					|| // <-------/ Different mode information.
-		NSDissimilarObjects(user1.a, user2.a)					|| // <------/
-		NSDissimilarObjects(user1.o, user2.o)					|| // <-----/
-		NSDissimilarObjects(user1.h, user2.h)					|| // <----/
-		NSDissimilarObjects(user1.v, user2.v)					|| // <---/
-		NSDissimilarObjects(user1.isAway, user2.isAway)			|| // <--/ Away state.
-		[user1.hostmask isEqual:user2.hostmask] == NO)			   // <-/ User host.
+	if (NSDissimilarObjects(user1.binircd_O, user2.binircd_O)						|| // <-----------/
+		NSDissimilarObjects(user1.InspIRCd_y_upper, user2.InspIRCd_y_upper)			|| // <----------/
+		NSDissimilarObjects(user1.InspIRCd_y_lower, user2.InspIRCd_y_lower)			|| // <---------/
+		NSDissimilarObjects(user1.isCop, user2.isCop)								|| // <--------/
+		NSDissimilarObjects(user1.q, user2.q)										|| // <-------/ Different mode information.
+		NSDissimilarObjects(user1.a, user2.a)										|| // <------/
+		NSDissimilarObjects(user1.o, user2.o)										|| // <-----/
+		NSDissimilarObjects(user1.h, user2.h)										|| // <----/
+		NSDissimilarObjects(user1.v, user2.v)										|| // <---/
+		NSDissimilarObjects(user1.isAway, user2.isAway)								|| // <--/ Away state.
+		[user1.hostmask isEqual:user2.hostmask] == NO)			 					   // <-/ User host.
 	{
 		return YES;
 	}

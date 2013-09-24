@@ -114,7 +114,7 @@
 	NSImage *badgeImage;
 
 	/* See IRCUser.m for an explantion of what favorIRCop does. */
-	BOOL favorIRCop = [self.memberPointer.supportInfo modeIsSupportedUserPrefix:@"y"];
+	BOOL favorIRCop = (self.memberPointer.InspIRCd_y_lower || self.memberPointer.InspIRCd_y_upper);
 
 	if (favorIRCop == NO) {
 		favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];

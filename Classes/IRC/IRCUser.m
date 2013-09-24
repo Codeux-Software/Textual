@@ -87,11 +87,11 @@
 - (NSString *)mark
 {
 	if (self.q) {
-		if ([self.supportInfo modeIsSupportedUserPrefix:@"O"]) {
+		if (self.binircd_O) {
 			return [self.supportInfo userModePrefixSymbol:@"O"]; // binircd-1.0.0
+		} else {
+			return [self.supportInfo userModePrefixSymbol:@"q"];
 		}
-		
-		return [self.supportInfo userModePrefixSymbol:@"q"];
 	} else if (self.a) {
 		return [self.supportInfo userModePrefixSymbol:@"a"];
 	} else if (self.o) {
@@ -101,8 +101,10 @@
 	} else if (self.v) {
 		return [self.supportInfo userModePrefixSymbol:@"v"];
 	} else if (self.isCop) {
-		if ([self.supportInfo modeIsSupportedUserPrefix:@"y"]) { 
+		if (self.InspIRCd_y_lower) {
 			return [self.supportInfo userModePrefixSymbol:@"y"]; // InspIRCd-2.0
+		} else if (self.InspIRCd_y_upper) {
+			return [self.supportInfo userModePrefixSymbol:@"Y"]; // InspIRCd-2.0
 		}
 	}
 
@@ -246,7 +248,7 @@
 
 - (NSInteger)channelRank
 {
-	if (self.isCop && [self.supportInfo modeIsSupportedUserPrefix:@"y"]) {
+	if (self.isCop && (self.InspIRCd_y_upper || self.InspIRCd_y_lower)) {
 		return 6;
 	} else if (self.q) {
 		return 5;
