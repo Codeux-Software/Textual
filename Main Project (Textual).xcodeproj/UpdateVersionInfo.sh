@@ -24,8 +24,14 @@ cd "${PROJECT_DIR}/.tmp/"
 
 echo "/* ANY CHANGES TO THIS FILE WILL NOT BE SAVED AND WILL NOT BE COMMITTED */" > BuildConfig.h
 echo "" >> BuildConfig.h
-echo "#define TXBundleBuildReference	@\"${buildRef}\"" >> BuildConfig.h
 echo "#define TXBundleCommitCount		@\"${gitCommitCount}\"" >> BuildConfig.h
+
+if [ -n "$CODE_SIGN_IDENTITY" ]; then
+echo "#define TXBundleBuildReference	@\"${buildRef}\"" >> BuildConfig.h
+else
+echo "#define TXBundleBuildReference	@\"${buildRef},nocdsign\"" >> BuildConfig.h
+echo "#define TXBundleBuiltWithoutCodeSigning                   1" >> BuildConfig.h
+fi
 
 echo "                                                                                        "
 echo " /!\ ***************************************************************************** /!\  "
