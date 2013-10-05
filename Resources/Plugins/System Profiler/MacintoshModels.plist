@@ -132,6 +132,10 @@
 	<string>iMac (21.5-inch Late 2012)</string>
 	<key>iMac13,2</key>
 	<string>iMac (27-inch Late 2012)</string>
+	<key>iMac14,2</key>
+	<string>iMac (27-inch Late 2013)</string>
+	<key>iMac14,1</key>
+	<string>iMac (21.5-inch Late 2013)</string>
 	<key>iMac4,1</key>
 	<string>iMac (Early 2006)</string>
 	<key>iMac4,2</key>
