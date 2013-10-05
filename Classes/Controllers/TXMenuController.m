@@ -2239,15 +2239,18 @@
 - (void)toggleMuteOnNotificationSounds:(id)sender
 {
 	NSMenu *fileMenu = [[[NSApp mainMenu] itemWithTag:2] submenu];
+	NSMenu *dockMenu =  [[NSApp delegate] applicationDockMenu:NSApp];
 
     if ([self.worldController isSoundMuted]) {
         self.worldController.isSoundMuted = NO;
 		
 		[[fileMenu itemWithTag:6666] setState:NSOffState];
+		[[dockMenu itemWithTag:6666] setState:NSOffState];
     } else {
 		self.worldController.isSoundMuted = YES;
 
 		[[fileMenu itemWithTag:6666] setState:NSOnState];
+		[[dockMenu itemWithTag:6666] setState:NSOnState];
     }
 }
 
@@ -2255,15 +2258,18 @@
 {
 	/* Dig for the menu. */
 	NSMenu *fileMenu = [[[NSApp mainMenu] itemWithTag:2] submenu];
+	NSMenu *dockMenu =  [[NSApp delegate] applicationDockMenu:NSApp];
 
 	if ([self.worldController areNotificationsDisabled]) {
 		self.worldController.areNotificationsDisabled = NO;
 
 		[[fileMenu itemWithTag:6667] setState:NSOffState];
+		[[dockMenu itemWithTag:6667] setState:NSOffState];
 	} else {
 		self.worldController.areNotificationsDisabled = YES;
 
 		[[fileMenu itemWithTag:6667] setState:NSOnState];
+		[[dockMenu itemWithTag:6667] setState:NSOnState];
 	}
 }
 

@@ -363,6 +363,11 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	}
 }
 
+- (NSMenu *)applicationDockMenu:(NSApplication *)sender
+{
+	return self.dockMenu;
+}
+
 - (void)applicationWillTerminate:(NSNotification *)note
 {
 	[RZWorkspaceNotificationCenter() removeObserver:self];
