@@ -159,7 +159,7 @@
 
         [self.historicLogFile reset];
     } else {
-		if (self.historyLoaded == NO && (self.channel && self.channel.isPrivateMessage == NO)) {
+		if (self.historyLoaded == NO && (self.channel && (self.channel.isPrivateMessage == NO || [TPCPreferences rememberServerListQueryStates]))) {
 			[self reloadHistory];
 		}
 	}
@@ -178,7 +178,7 @@
 	 then we call a save before terminating. Or, we just erase the file from the
 	 path that it is written to entirely. */
 
-	if ([TPCPreferences reloadScrollbackOnLaunch] && (self.channel.isChannel && self.channel)) {
+	if ([TPCPreferences reloadScrollbackOnLaunch] && ((self.channel.isChannel || [TPCPreferences rememberServerListQueryStates]) && self.channel)) {
 		[self.historicLogFile updateCache];
 	} else {
 		[self.historicLogFile reset];

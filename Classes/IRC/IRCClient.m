@@ -276,7 +276,7 @@
 	NSMutableArray *ary = [NSMutableArray array];
 
 	for (IRCChannel *c in self.channels) {
-		if (c.isChannel) {
+		if (c.isChannel || [TPCPreferences rememberServerListQueryStates]) {
 			[ary safeAddObject:[c dictionaryValue]];
 		}
 	}

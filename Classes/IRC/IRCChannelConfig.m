@@ -230,18 +230,23 @@
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
 	[dic setInteger:self.type forKey:@"channelType"];
-	
-	[dic setBool:self.autoJoin				forKey:@"joinOnConnect"];
-	[dic setBool:self.pushNotifications		forKey:@"enableNotifications"];
-    [dic setBool:self.ignoreHighlights		forKey:@"ignoreHighlights"];
-    [dic setBool:self.ignoreInlineImages	forKey:@"disableInlineMedia"];
-    [dic setBool:self.ignoreJPQActivity		forKey:@"ignoreJPQActivity"];
-	[dic setBool:self.showTreeBadgeCount	forKey:@"enableTreeBadgeCountDrawing"];
+
+	if (self.type == IRCChannelNormalType) {
+		[dic setBool:self.autoJoin				forKey:@"joinOnConnect"];
+		[dic setBool:self.pushNotifications		forKey:@"enableNotifications"];
+		[dic setBool:self.ignoreHighlights		forKey:@"ignoreHighlights"];
+		[dic setBool:self.ignoreInlineImages	forKey:@"disableInlineMedia"];
+		[dic setBool:self.ignoreJPQActivity		forKey:@"ignoreJPQActivity"];
+		[dic setBool:self.showTreeBadgeCount	forKey:@"enableTreeBadgeCountDrawing"];
+	}
 
 	[dic safeSetObject:self.itemUUID			forKey:@"uniqueIdentifier"];
 	[dic safeSetObject:self.channelName			forKey:@"channelName"];
-	[dic safeSetObject:self.defaultModes		forKey:@"defaultMode"];
-	[dic safeSetObject:self.defaultTopic		forKey:@"defaultTopic"];
+
+	if (self.type == IRCChannelNormalType) {
+		[dic safeSetObject:self.defaultModes		forKey:@"defaultMode"];
+		[dic safeSetObject:self.defaultTopic		forKey:@"defaultTopic"];
+	}
 	
 	return [dic sortedDictionary];
 }
