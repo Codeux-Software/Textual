@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4488.2" systemVersion="13A538g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4511" systemVersion="13A598" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4488.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4511"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCPreferencesController">
@@ -2901,7 +2901,7 @@
                     <tabViewItems>
                         <tabViewItem label="General" identifier="1" id="6913">
                             <view key="view" id="6914">
-                                <rect key="frame" x="10" y="25" width="495" height="380"/>
+                                <rect key="frame" x="10" y="29" width="495" height="376"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <userGuides>
                                     <userLayoutGuide location="35" affinity="maxY"/>
@@ -2919,7 +2919,7 @@
                                         </connections>
                                     </button>
                                     <button id="6702">
-                                        <rect key="frame" x="10" y="262" width="357" height="18"/>
+                                        <rect key="frame" x="10" y="258" width="357" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Use &quot;x&quot; to indicate user with no mode set in user list." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6703">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2930,7 +2930,7 @@
                                         </connections>
                                     </button>
                                     <button id="7255">
-                                        <rect key="frame" x="10" y="178" width="201" height="18"/>
+                                        <rect key="frame" x="10" y="146" width="201" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Darken main window colors." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7256">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2943,7 +2943,7 @@
                                         </connections>
                                     </button>
                                     <button id="7264">
-                                        <rect key="frame" x="11" y="290" width="275" height="18"/>
+                                        <rect key="frame" x="11" y="286" width="275" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Hide the buttons left of the input text field." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7265">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2955,14 +2955,14 @@
                                         </connections>
                                     </button>
                                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7332">
-                                        <rect key="frame" x="25" y="322" width="442" height="5"/>
+                                        <rect key="frame" x="25" y="318" width="442" height="5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <button id="7503">
-                                        <rect key="frame" x="10" y="206" width="284" height="18"/>
+                                        <rect key="frame" x="10" y="174" width="284" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Use large font for the server list and user list." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7504">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2974,7 +2974,7 @@
                                         </connections>
                                     </button>
                                     <button id="7578">
-                                        <rect key="frame" x="10" y="234" width="357" height="18"/>
+                                        <rect key="frame" x="10" y="230" width="357" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Place known server staff members at top of user list." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="7579">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2986,7 +2986,7 @@
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" id="kL4-Js-8e7">
-                                        <rect key="frame" x="46" y="127" width="134" height="16"/>
+                                        <rect key="frame" x="46" y="95" width="134" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Window Transparency:" id="bNd-e3-dZf">
                                             <font key="font" metaFont="cellTitle"/>
@@ -2995,7 +2995,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <slider verticalHuggingPriority="750" id="D0f-oB-97t">
-                                        <rect key="frame" x="213" y="126" width="197" height="15"/>
+                                        <rect key="frame" x="213" y="94" width="197" height="15"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="0.20000000000000001" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="f75-2j-XO9"/>
                                         <connections>
@@ -3005,7 +3005,7 @@
                                         </connections>
                                     </slider>
                                     <textField verticalHuggingPriority="750" id="2Db-0T-2Gc">
-                                        <rect key="frame" x="185" y="128" width="25" height="11"/>
+                                        <rect key="frame" x="185" y="96" width="25" height="11"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="80%" id="k58-Xg-O9e">
                                             <font key="font" metaFont="miniSystem"/>
@@ -3014,7 +3014,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" id="k84-6p-82M">
-                                        <rect key="frame" x="419" y="129" width="23" height="11"/>
+                                        <rect key="frame" x="419" y="125" width="23" height="11"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0%" id="z0u-Fe-ni8">
                                             <font key="font" metaFont="miniSystem"/>
@@ -3023,12 +3023,24 @@
                                         </textFieldCell>
                                     </textField>
                                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="SKs-oC-6WA">
-                                        <rect key="frame" x="29" y="159" width="442" height="5"/>
+                                        <rect key="frame" x="29" y="127" width="442" height="5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
+                                    <button id="891-QM-5Ov">
+                                        <rect key="frame" x="10" y="202" width="357" height="18"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="check" title="Save the state of queries between restarts." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="8az-P4-nKq">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="titleBar" size="12"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onChangedUserListModeSortOrder:" target="-2" id="abL-CQ-nFE"/>
+                                            <binding destination="1247" name="value" keyPath="values.ServerListRetainsQueriesBetweenRestarts" id="p2W-nH-beb"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </view>
                         </tabViewItem>

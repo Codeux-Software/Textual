@@ -711,6 +711,11 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() boolForKey:@"ConfirmApplicationQuit"];
 }
 
++ (BOOL)rememberServerListQueryStates
+{
+	return [RZUserDefaults() boolForKey:@"ServerListRetainsQueriesBetweenRestarts"];
+}
+
 + (BOOL)rejoinOnKick
 {
 	return [RZUserDefaults() boolForKey:@"RejoinChannelOnLocalKick"];
