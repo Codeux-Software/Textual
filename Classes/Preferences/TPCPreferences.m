@@ -1398,6 +1398,7 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"LogHighlights"]									= @(YES);
 	d[@"AutomaticallyDetectHighlightSpam"]				= @(YES);
 	d[@"LogTranscriptInBatches"]						= @(YES);
+	d[@"ReloadScrollbackOnLaunch"]						= @(YES);
 	d[@"ReplyUnignoredExternalCTCPRequests"]			= @(YES);
 	d[@"TrackNicknameHighlightsOfLocalUser"]			= @(YES);
 	d[@"WebKitDeveloperExtras"]							= @(YES);
