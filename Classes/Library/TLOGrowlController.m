@@ -254,9 +254,10 @@
 	self.lastClickedTime = now;
 	self.lastClickedContext = context;
 
-	[self.masterController.mainWindow makeKeyAndOrderFront:nil];
-
-	[NSApp activateIgnoringOtherApps:YES];
+	if (changeFocus) {
+		[self.masterController.mainWindow makeKeyAndOrderFront:nil];
+		[NSApp activateIgnoringOtherApps:YES];
+	}
 
 	if ([context isKindOfClass:[NSDictionary class]]) {
 		NSString *uid = [context objectForKey:@"client"];
