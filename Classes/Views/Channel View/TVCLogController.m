@@ -1,4 +1,4 @@
-/* ********************************************************************* 
+/* *********************************************************************
        _____        _               _    ___ ____   ____
       |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
        | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
@@ -73,7 +73,7 @@
 - (void)terminate
 {
 	[self.printingQueue cancelOperationsForViewController:self];
-	
+
 	[self closeHistoricLog];
 }
 
@@ -148,7 +148,7 @@
 	}
 
 	self.historicLogFile = [TVCLogControllerHistoricLogFile new];
-	
+
 	self.historicLogFile.owner = self;
 	self.historicLogFile.maxEntryCount = _internalPlaybackLineCountLimit;
 
@@ -321,7 +321,7 @@
 				[self.printingQueue updateCompletionStatusForOperation:operation];
 			});
 		};
-		
+
 		[self.printingQueue enqueueMessageBlock:scriptBlock for:self];
 	} else {
 		[self executeQuickScriptCommand:command withArguments:args];
@@ -457,7 +457,7 @@
 	NSString *html = [TVCLogRenderer renderTemplate:@"historyIndicator"];
 
 	[self appendToDocumentBody:html];
-	
+
 	[self executeQuickScriptCommand:@"historyIndicatorAddedToView" withArguments:@[]];
 }
 
@@ -507,7 +507,7 @@
 
 	/* Begin processing. */
 	NSArray *lineKeys = oldLines.sortedDictionaryKeys;
-	
+
 	for (NSString *lineTime in lineKeys) {
 		TVCLogLine *line = [[TVCLogLine alloc] initWithDictionary:oldLines[lineTime]];
 
@@ -537,7 +537,7 @@
 		[patchedAppend appendString:html];
 
 		[lineNumbers addObject:@[line, lineNumber, renderTime, inlineImageMatches]];
-		
+
 		/* Was it a highlight? */
 		BOOL highlighted = [resultInfo boolForKey:@"wordMatchFound"];
 
@@ -545,7 +545,7 @@
 			[self.highlightedLineNumbers safeAddObject:lineNumber];
 		}
 	}
-	
+
 	/* Update WebKit. */
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[self appendToDocumentBody:patchedAppend];
@@ -590,7 +590,7 @@
 
 		self.reloadingHistory = NO;
 		self.historyLoaded = YES;
-		
+
 		[self.printingQueue updateCompletionStatusForOperation:operation];
 	} for:self];
 }
@@ -600,9 +600,9 @@
 	NSAssertReturn(self.reloadingHistory == NO);
 
 	self.reloadingBacklog = YES;
-	
+
 	[self clearWithReset:NO];
-	
+
 	[self.printingQueue enqueueMessageBlock:^(id operation, NSDictionary *context) {
 		[self reloadOldLines:NO];
 
@@ -801,6 +801,7 @@
 	}
 
 	self.highlightedLineNumbers = newList;
+  [self.scroller setNeedsDisplay];
 }
 
 - (void)setNeedsLimitNumberOfLines
@@ -824,7 +825,7 @@
 		[self.highlightedLineNumbers removeAllObjects];
 
 		[self.printingQueue cancelOperationsForViewController:self];
-		
+
 		self.activeLineCount = 0;
 		self.lastVisitedHighlight = nil;
 
@@ -834,6 +835,7 @@
 		self.needsLimitNumberOfLines = NO;
 
 		[self loadAlternateHTML:[self initialDocument:self.topicValue]];
+    [self.scroller setNeedsDisplay];
 	});
 }
 
@@ -868,7 +870,7 @@
 	} else {
 		nick = [line formattedNickname:self.channel withForcedFormat:TLOFileLoggerUndefinedNicknameFormat];
 	}
-	
+
 	if (nick) {
 		[s appendString:nick];
 		[s appendString:NSStringWhitespacePlaceholder];
@@ -953,6 +955,11 @@
 				[loader assesURL:nurl withID:inlineImageMatches[nurl] forController:self];
 			}
 
+      if (self.scroller) {
+        [self.scroller updateScroller];
+        [self.scroller setNeedsDisplay];
+      }
+
 			/* Finish up. */
 			PointerIsEmptyAssert(completionBlock);
 
@@ -1026,7 +1033,7 @@
 			return nil;
 		}
 	}
-	
+
 	highlighted = [outputDictionary boolForKey:@"wordMatchFound"];
 	mentionedUsers = [outputDictionary arrayForKey:@"mentionedUsers"];
 
@@ -1290,6 +1297,7 @@
 	}
 
 	self.autoScroller.webFrame = frame;
+  self.autoScroller.scroller = self.scroller;
 
 	// ---- //
 
@@ -1307,6 +1315,19 @@
 
 	[scrollView setHasHorizontalScroller:NO];
 	[scrollView setHasVerticalScroller:YES];
+
+  NSScroller* old = [scrollView verticalScroller];
+  if (old && ![old isKindOfClass:[TVCMarkedScroller class]]) {
+    if (self.scroller) {
+      [self.scroller removeFromSuperview];
+    }
+
+    self.scroller = [[TVCMarkedScroller alloc] initWithFrame:NSMakeRect(-16, -64, 16, 64)];
+    self.scroller.dataSource = self;
+    [self.scroller setFloatValue:[old floatValue]];
+    [self.scroller setKnobProportion:[old knobProportion]];
+    [scrollView setVerticalScroller:self.scroller];
+  }
 }
 
 #pragma mark -
@@ -1347,7 +1368,7 @@
 		NSInteger loopDepth = ([loopCount integerValue] + 1);
 
 		/* The JavaScript object is not available yet, so instead of looking dumb
-		 and letting our loading screen stay up forever because we cannot tell the 
+		 and letting our loading screen stay up forever because we cannot tell the
 		 style we are finished loading, we will instead loop this method a few times
 		 using a timer hoping the object appears. */
 
@@ -1387,7 +1408,7 @@
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
 {
 	[self postViwLoadedJavaScript:@(0)];
-	
+
 	self.isLoaded = YES;
 
 	[self.printingQueue updateReadinessState:self];
@@ -1407,6 +1428,49 @@
 - (void)logViewOnDoubleClick:(NSString *)e
 {
 	[self.worldController logDoubleClick:e];
+}
+
+#pragma mark -
+#pragma mark TVCMarkedScroller Delegate
+
+- (NSArray*)markedScrollerPositions:(TVCMarkedScroller*)sender
+{
+  NSMutableArray *result = [NSMutableArray array];
+
+  DOMDocument *doc = [self mainFrameDocument];
+  PointerIsEmptyAssertReturn(doc, result);
+
+  for (NSString *lineNumber in self.highlightedLineNumbers) {
+		NSString *lid = [NSString stringWithFormat:@"line-%@", lineNumber];
+
+		DOMElement *elm = [doc getElementById:lid];
+    PointerIsEmptyAssertLoopContinue(elm);
+
+    NSInteger y = 0;
+    DOMElement *cur = elm;
+    while (cur) {
+      if ([cur isKindOfClass:[DOMElement class]]) {
+        y += [[cur valueForKey:@"offsetTop"] integerValue];
+      }
+
+      cur = (id)[cur parentNode];
+    }
+
+    [result addObject:@(y)];
+  }
+
+  return result;
+}
+
+- (NSColor*)markedScrollerColor:(TVCMarkedScroller*)sender
+{
+  NSColor *markerColor = self.themeSettings.logScrollerMarkColor;
+
+	if (PointerIsEmpty(markerColor)) {
+		markerColor = [NSColor blackColor];
+	}
+
+  return markerColor;
 }
 
 @end

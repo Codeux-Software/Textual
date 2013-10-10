@@ -47,6 +47,7 @@
 	}
 	
 	self.lastVisibleRect = [clipView.documentView visibleRect];
+  [self.scroller updateScroller];
 }
 
 - (void)webViewDidChangeFrame:(NSNotification *)aNotification
@@ -72,6 +73,7 @@
 			[self scrollViewToBottom:[self.webFrame documentView]];
 		}
 	}
+  [self.scroller updateScroller];
 }
 
 @end

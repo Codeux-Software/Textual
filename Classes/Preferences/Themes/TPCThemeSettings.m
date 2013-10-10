@@ -212,6 +212,8 @@
 
 		self.indentationOffset			= [self doubleForKey:@"Indentation Offset" fromDictionary:styleSettings];
 
+    self.logScrollerMarkColor = [self colorForKey:@"Scrollbar Mark Color" fromDictionary:styleSettings];
+
 		/* Disable indentation? */
 		if (self.indentationOffset <= 0.0) {
 			self.indentationOffset = TXThemeDisabledIndentationOffset;

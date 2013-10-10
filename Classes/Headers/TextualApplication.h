@@ -127,6 +127,7 @@
 	@class TVCMainWindowLoadingScreenView;
 	@class TVCMainWindowSegmentedCell;
 	@class TVCMainWindowSegmentedControl;
+  @class TVCMarkedScroller;
 	@class TVCMemberList;
 	@class TVCMemberListCell;
 	@class TVCMemberListCellBadge;
@@ -290,6 +291,7 @@
 	#import "TVCMainWindow.h"
 	#import "TVCMainWindowLoadingScreen.h"
 	#import "TVCMainWindowSegmentedControl.h"
+  #import "TVCMarkedScroller.h"
 	#import "TVCMemberList.h"
 	#import "TVCMemberListCell.h"
 	#import "TVCMemberListCellBadge.h"
