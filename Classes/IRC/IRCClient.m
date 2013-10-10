@@ -2651,10 +2651,6 @@
 		nmformat = forcedFormat;
 	}
 
-	if ([nmformat contains:@"%n"]) {
-		nmformat = [nmformat stringByReplacingOccurrencesOfString:@"%n" withString:nick];
-	}
-
 	if ([nmformat contains:@"%@"]) {
 		if (channel && channel.isChannel) {
 			IRCUser *m = [channel findMember:nick];
@@ -2673,13 +2669,59 @@
 		}
 	}
 
+  static NSRegularExpression* nickPattern = nil;
+  if (!nickPattern) {
+    nickPattern = [[NSRegularExpression alloc] initWithPattern:@"%(-?[0-9]+)?n" options:0 error:NULL];
+  }
+
+  while (1) {
+    NSTextCheckingResult* result = [nickPattern firstMatchInString:nmformat options:0 range:NSMakeRange(0, nmformat.length)];
+    if (!result || result.numberOfRanges < 2) {
+      break;
+    }
+
+    NSRange r = [result rangeAtIndex:0];
+    NSRange numRange = [result rangeAtIndex:1];
+
+    if (numRange.location != NSNotFound && numRange.length > 0) {
+      NSString* numStr = [nmformat substringWithRange:numRange];
+      int n = [numStr intValue];
+
+      NSString* formattedNick = nick;
+      if (n >= 0) {
+        int pad = n - (int)nick.length;
+        if (pad > 0) {
+          NSMutableString* ms = [NSMutableString stringWithString:nick];
+          for (int i=0; i<pad; ++i) {
+            [ms appendString:@" "];
+          }
+          formattedNick = ms;
+        }
+      } else {
+        int pad = -n - (int)nick.length;
+        if (pad > 0) {
+          NSMutableString* ms = [NSMutableString string];
+          for (int i=0; i<pad; ++i) {
+            [ms appendString:@" "];
+          }
+          [ms appendString:nick];
+          formattedNick = ms;
+        }
+      }
+      nmformat = [nmformat stringByReplacingCharactersInRange:r withString:formattedNick];
+    }
+    else {
+      nmformat = [nmformat stringByReplacingCharactersInRange:r withString:nick];
+    }
+  }
+
 	return nmformat;
 }
 
 - (void)printAndLog:(TVCLogLine *)line completionBlock:(void(^)(BOOL highlighted))completionBlock
 {
 	[self.viewController print:line completionBlock:completionBlock];
-	
+
 	[self writeToLogFile:line];
 }
 
