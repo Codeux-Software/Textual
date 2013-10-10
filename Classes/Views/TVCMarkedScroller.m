@@ -1,4 +1,4 @@
-/* ********************************************************************* 
+/* *********************************************************************
        _____        _               _    ___ ____   ____
       |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
        | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
@@ -38,64 +38,77 @@
 
 #import "TextualApplication.h"
 
-@interface TVCLogController : NSObject
-@property (nonatomic, nweak) IRCClient *client;
-@property (nonatomic, nweak) IRCChannel *channel;
-@property (nonatomic, strong) TVCLogView *view;
-@property (nonatomic, strong) TVCLogPolicy *policy;
-@property (nonatomic, strong) TVCLogScriptEventSink *sink;
-@property (nonatomic, strong) TVCMarkedScroller *scroller;
-@property (nonatomic, strong) TVCWebViewAutoScroll *autoScroller;
-@property (nonatomic, strong) TVCLogControllerHistoricLogFile *historicLogFile;
-@property (nonatomic, assign) BOOL isLoaded;
-@property (nonatomic, assign) BOOL needsLimitNumberOfLines;
-@property (nonatomic, assign) NSInteger activeLineCount;
-@property (nonatomic, assign) NSInteger maximumLineCount;
-@property (nonatomic, strong) NSString *lastVisitedHighlight;
-@property (nonatomic, strong) NSMutableArray *highlightedLineNumbers;
+const static int INSET = 3;
 
-@property (assign) BOOL reloadingBacklog;
-@property (assign) BOOL reloadingHistory;
-@property (strong) NSMutableArray *pendingPrintOperations; // Plugins… do not try and modify this array. EVER!
+@implementation TVCMarkedScroller
 
-- (void)setUp;
-- (void)notifyDidBecomeVisible;
++ (BOOL)isCompatibleWithOverlayScrollers
+{
+  return self == [TVCMarkedScroller class];
+}
 
-- (void)preferencesChanged;
-- (void)terminate;
+- (void)updateScroller
+{
+  self.markData = [self.dataSource markedScrollerPositions:self];
+}
 
-- (void)nextHighlight;
-- (void)previousHighlight;
+- (void)drawContentInMarkedScroller
+{
+  if (!self.dataSource) return;
+  if (![self.dataSource respondsToSelector:@selector(markedScrollerPositions:)]) return;
+  if (![self.dataSource respondsToSelector:@selector(markedScrollerColor:)]) return;
+  if (!self.markData || !self.markData.count) return;
 
-- (BOOL)highlightAvailable:(BOOL)previous;
+  NSScrollView* scrollView = (NSScrollView*)[self superview];
+  int contentHeight = [[scrollView contentView] documentRect].size.height;
 
-- (DOMDocument *)mainFrameDocument;
+  //
+  // prepare transform
+  //
+  NSAffineTransform* transform = [NSAffineTransform transform];
+  int width = [self rectForPart:NSScrollerKnobSlot].size.width - INSET * 2;
+  CGFloat scale = [self rectForPart:NSScrollerKnobSlot].size.height / (CGFloat)contentHeight;
+  int offset = [self rectForPart:NSScrollerKnobSlot].origin.y;
+  int indent = [self rectForPart:NSScrollerKnobSlot].origin.x + INSET;
+  [transform scaleXBy:1 yBy:scale];
+  [transform translateXBy:0 yBy:offset];
 
-- (void)moveToTop;
-- (void)moveToBottom;
+  //
+  // make lines
+  //
+  NSMutableArray* lines = [NSMutableArray array];
+  NSPoint prev = NSMakePoint(-1, -1);
 
-- (NSString *)topicValue;
-- (void)setTopic:(NSString *)topic;
+  for (NSNumber* e in self.markData) {
+    int i = [e intValue];
+    NSPoint pt = NSMakePoint(indent, i);
+    pt = [transform transformPoint:pt];
+    pt.x = ceil(pt.x);
+    pt.y = ceil(pt.y) + 0.5;
+    if (pt.x == prev.x && pt.y == prev.y) continue;
+    prev = pt;
+    NSBezierPath* line = [NSBezierPath bezierPath];
+    [line setLineWidth:1];
+    [line moveToPoint:pt];
+    [line relativeLineToPoint:NSMakePoint(width, 0)];
+    [lines addObject:line];
+  }
 
-- (BOOL)inlineImagesEnabledForView;
+  //
+  // draw lines
+  //
+  NSColor* color = [self.dataSource markedScrollerColor:self];
+  [color set];
 
-- (void)mark;
-- (void)unmark;
-- (void)goToMark;
+  for (NSBezierPath* e in lines) {
+    [e stroke];
+  }
+}
 
-- (void)clear;
+- (void)drawKnob
+{
+  [self drawContentInMarkedScroller];
+  [super drawKnob];
+}
 
-- (void)reloadTheme;
-
-- (void)changeTextSize:(BOOL)bigger;
-
-- (void)print:(TVCLogLine *)logLine;
-- (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock;
-
-- (NSString *)renderedBodyForTranscriptLog:(TVCLogLine *)line;
-
-- (void)logViewOnDoubleClick:(NSString *)e;
-
-- (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args; // Defaults to onQueue YES
-- (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args onQueue:(BOOL)onQueue;
 @end

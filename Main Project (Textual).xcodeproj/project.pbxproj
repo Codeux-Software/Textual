@@ -796,6 +796,10 @@
 		4CECD344178DA5690048B3F6 /* Contributors.rtfd in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4CECD340178DA5480048B3F6 /* Contributors.rtfd */; };
 		4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC11580469E00846B64 /* SystemConfiguration.framework */; };
 		4CF8B41016E631EF00F2A68F /* birthdayIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4CF8B40F16E631EF00F2A68F /* birthdayIcon.icns */; };
+		562FA55818026EB900E6D211 /* TVCMarkedScroller.h in Headers */ = {isa = PBXBuildFile; fileRef = 562FA55518026EB900E6D211 /* TVCMarkedScroller.h */; };
+		562FA55A18026EB900E6D211 /* TVCMarkedScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 562FA55618026EB900E6D211 /* TVCMarkedScroller.m */; };
+		564BF2BA18027A79006ADD2E /* TVCMarkedScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 562FA55618026EB900E6D211 /* TVCMarkedScroller.m */; };
+		564BF2BF18027A93006ADD2E /* TVCMarkedScroller.h in Headers */ = {isa = PBXBuildFile; fileRef = 562FA55518026EB900E6D211 /* TVCMarkedScroller.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D4846C3171F0AC00015F2B0 /* OELReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D4846C2171F0AC00015F2B0 /* OELReachability.m */; };
 		5D4846C4171F0AC00015F2B0 /* OELReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D4846C2171F0AC00015F2B0 /* OELReachability.m */; };
 		5D4846CA171F0ACD0015F2B0 /* OELReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D4846C9171F0ACD0015F2B0 /* OELReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1374,6 +1378,8 @@
 		4CECD33F178DA5480048B3F6 /* Acknowledgments.rtfd */ = {isa = PBXFileReference; lastKnownFileType = wrapper.rtfd; path = Acknowledgments.rtfd; sourceTree = SOURCE_ROOT; };
 		4CECD340178DA5480048B3F6 /* Contributors.rtfd */ = {isa = PBXFileReference; lastKnownFileType = wrapper.rtfd; path = Contributors.rtfd; sourceTree = SOURCE_ROOT; };
 		4CF8B40F16E631EF00F2A68F /* birthdayIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = birthdayIcon.icns; path = Resources/Images/Application/birthdayIcon.icns; sourceTree = SOURCE_ROOT; };
+		562FA55518026EB900E6D211 /* TVCMarkedScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMarkedScroller.h; sourceTree = "<group>"; };
+		562FA55618026EB900E6D211 /* TVCMarkedScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCMarkedScroller.m; path = ../TVCMarkedScroller.m; sourceTree = "<group>"; };
 		5D4846C2171F0AC00015F2B0 /* OELReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OELReachability.m; sourceTree = "<group>"; };
 		5D4846C9171F0ACD0015F2B0 /* OELReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OELReachability.h; sourceTree = "<group>"; };
 		5D9B8EB6170A0EB400919CB0 /* BuildFrameworks.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = BuildFrameworks.sh; path = "Main Project (Textual).xcodeproj/BuildFrameworks.sh"; sourceTree = SOURCE_ROOT; };
@@ -1992,6 +1998,7 @@
 				4C8AF58C158E99520026668C /* TVCMainWindow.h */,
 				4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */,
 				4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */,
+				562FA55518026EB900E6D211 /* TVCMarkedScroller.h */,
 				4C8AF58D158E99520026668C /* TVCMemberList.h */,
 				4C8AF58E158E99520026668C /* TVCMemberListCell.h */,
 				4C5798B9179B451400968800 /* TVCMemberListCellBadge.h */,
@@ -2141,6 +2148,7 @@
 				4C8AF5F1158E99520026668C /* TVCLogRenderer.m */,
 				4C8AF5F6158E99520026668C /* TVCLogScriptEventSink.m */,
 				4C8AF5F7158E99520026668C /* TVCLogView.m */,
+				562FA55618026EB900E6D211 /* TVCMarkedScroller.m */,
 				4C8AF5F8158E99520026668C /* TVCWebViewAutoScroll.m */,
 			);
 			path = "Channel View";
@@ -2576,6 +2584,7 @@
 				4C937BDC17061A3F0050CEF3 /* TLOSpeechSynthesizer.h in Headers */,
 				4C0444E816F1555800EBB665 /* TVCServerListCellBadge.h in Headers */,
 				4C3EB79E17898FD600D21A07 /* TVCLogControllerHistoricLogFile.h in Headers */,
+				562FA55818026EB900E6D211 /* TVCMarkedScroller.h in Headers */,
 				5D4846CB171F0ACD0015F2B0 /* OELReachability.h in Headers */,
 				4CC6F51D1778AB2E00930E6E /* TVCLogControllerOperationQueue.h in Headers */,
 				4C5A0318170C31010016BB1A /* TPCPreferencesImportExport.h in Headers */,
@@ -2726,6 +2735,7 @@
 				4C0C720D1742C444000F82C4 /* NSByteCountFormatterHelper.h in Headers */,
 				4CC6F51C1778AB2E00930E6E /* TVCLogControllerOperationQueue.h in Headers */,
 				4CBE64CA1743722100831D69 /* TDCHighlightEntrySheet.h in Headers */,
+				564BF2BF18027A93006ADD2E /* TVCMarkedScroller.h in Headers */,
 				4C1893F317980F460091D173 /* TVCImageURLoader.h in Headers */,
 				4C5798BA179B451400968800 /* TVCMemberListCellBadge.h in Headers */,
 				4C529E1E17AEFE44009BA0B3 /* NSDataHelper.h in Headers */,
@@ -3164,6 +3174,7 @@
 				4C04450316F1603B00EBB665 /* TDCInviteSheet.m in Sources */,
 				4C04450416F1603B00EBB665 /* TDCListDialog.m in Sources */,
 				4C04450516F1603B00EBB665 /* TDCModeSheet.m in Sources */,
+				562FA55A18026EB900E6D211 /* TVCMarkedScroller.m in Sources */,
 				4C04450616F1603B00EBB665 /* TDCNickSheet.m in Sources */,
 				4C04450716F1603B00EBB665 /* TDCServerSheet.m in Sources */,
 				4C04450816F1603B00EBB665 /* TDCSheetBase.m in Sources */,
@@ -3291,6 +3302,7 @@
 				4C8AF615158E99520026668C /* TDCHighlightListSheet.m in Sources */,
 				4C8AF616158E99520026668C /* TDCInviteSheet.m in Sources */,
 				4C8AF617158E99520026668C /* TDCListDialog.m in Sources */,
+				564BF2BA18027A79006ADD2E /* TVCMarkedScroller.m in Sources */,
 				4C8AF618158E99520026668C /* TDCModeSheet.m in Sources */,
 				4C8AF619158E99520026668C /* TDCNickSheet.m in Sources */,
 				4C8AF61A158E99520026668C /* TDCServerSheet.m in Sources */,

@@ -48,6 +48,7 @@
 @property (nonatomic, strong) NSColor *underlyingWindowColor;
 @property (nonatomic, strong) NSDictionary *languageLocalizations;
 @property (nonatomic, assign) double indentationOffset;
+@property (nonatomic, strong) NSColor *logScrollerMarkColor;
 
 - (void)reloadWithPath:(NSString *)path;
 

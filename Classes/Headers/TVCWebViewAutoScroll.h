@@ -6,4 +6,5 @@
 @property (nonatomic, assign) NSRect lastFrame;
 @property (nonatomic, assign) NSRect lastVisibleRect;
 @property (nonatomic, nweak) WebFrameView *webFrame;
+@property (nonatomic, strong) TVCMarkedScroller* scroller;
 @end
