@@ -555,9 +555,9 @@ CQ
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="4n1-ds-J5l"/>
-                            <menuItem title="Channel List" tag="64611" id="FbN-9g-vFD">
+                            <menuItem title="Channel List…" tag="64611" id="FbN-9g-vFD">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Channel List" id="89a-J1-2zg">
+                                <menu key="submenu" title="Channel List…" id="89a-J1-2zg">
                                     <items>
                                         <menuItem title="Item" id="TxA-XA-q8p">
                                             <modifierMask key="keyEquivalentModifierMask"/>

@@ -544,6 +544,7 @@
 
 				/* The tag identifies each item. */
 				[newItem setUserInfo:[NSString stringWithFormat:@"%@ %@", u.config.itemUUID, c.config.itemUUID]];
+				[newItem setTag:64611]; // Use same tag for each to disable during sheets.
 
 				/* Add to the actaul navigation list. */
 				[self.navigationChannelList addItem:newItem];
