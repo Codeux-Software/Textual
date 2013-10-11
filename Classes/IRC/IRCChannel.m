@@ -435,12 +435,13 @@
 	IRCUser *mn = [on copy];
 
 	switch ([mode characterAtIndex:0]) {
-		case 'O': { mn.q = value; break; } // binircd-1.0.0
+		case 'O': { mn.q = value; mn.binircd_O = value; break; } // binircd-1.0.0
 		case 'q': { mn.q = value; break; }
 		case 'a': { mn.a = value; break; }
 		case 'o': { mn.o = value; break; }
 		case 'h': { mn.h = value; break; }
 		case 'v': { mn.v = value; break; }
+		case 'Y': { mn.InspIRCd_y_upper = value; break; } // Lower cannot change…
 	}
 
 	IRCISupportInfo *isupport = self.client.isupport;
@@ -450,6 +451,15 @@
 	mn.o = (mn.o &&  [isupport modeIsSupportedUserPrefix:@"o"]);
 	mn.h = (mn.h &&  [isupport modeIsSupportedUserPrefix:@"h"]);
 	mn.v = (mn.v &&  [isupport modeIsSupportedUserPrefix:@"v"]);
+
+	/* Handle custom modes. */
+	mn.binircd_O = (mn.q && [isupport modeIsSupportedUserPrefix:@"O"]); /* binircd-1.0.0 */
+
+	mn.InspIRCd_y_upper = (mn.InspIRCd_y_upper && [isupport modeIsSupportedUserPrefix:@"Y"]);
+
+	if (mn.InspIRCd_y_upper && mn.isCop == NO) {
+		mn.isCop = YES; // +Y marks a user as an IRCop in the channel.
+	}
 
 	/* Did something change. */
 	if ([self memberRequiresRedraw:on comparedTo:mn]) {
