@@ -1544,6 +1544,8 @@
 	if (n >= 0) {
 		[self.masterController.serverList selectItemAtIndex:n];
 	}
+
+	[self updateNavigationChannelList]; // Update order on drop.
 	
 	return YES;
 }
