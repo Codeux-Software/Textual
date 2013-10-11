@@ -554,6 +554,17 @@ CQ
                                     <action selector="onPreviousHighlight:" target="267" id="2304"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="4n1-ds-J5l"/>
+                            <menuItem title="Channel List" tag="64611" id="FbN-9g-vFD">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Channel List" id="89a-J1-2zg">
+                                    <items>
+                                        <menuItem title="Item" id="TxA-XA-q8p">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
@@ -900,6 +911,7 @@ CQ
         </customObject>
         <customObject id="267" userLabel="MenuController" customClass="TXMenuController">
             <connections>
+                <outlet property="navigationChannelList" destination="89a-J1-2zg" id="O5d-Jz-eif"/>
                 <outlet property="openDefaultIRCClientDialog" destination="2730" id="2732"/>
             </connections>
         </customObject>

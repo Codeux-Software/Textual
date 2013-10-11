@@ -152,6 +152,7 @@
 		case 6884: // "Anyone Can Join (-i)"
 		case 6885: // "Manage All Modes"
 		case 51065: // "Toggle Visbility of Server List"
+		case 64611: // "Channel List…"
 		{
 			return _disableInSheet(YES);
 
@@ -505,6 +506,22 @@
 - (TVCLogView *)currentWebView
 {
 	return self.worldController.selectedViewController.view;
+}
+
+#pragma mark -
+#pragma mark Navigation Channel List
+
+- (void)populateNavgiationChannelList
+{
+	/* Remove all previous entries. */
+	[self.navigationChannelList removeAllItems];
+
+	/* Begin populating… */
+	NSInteger channelCount = 0;
+
+	for (IRCClient *u in self.worldController.clients) {
+		
+	}
 }
 
 #pragma mark -

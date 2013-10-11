@@ -204,6 +204,7 @@
 	#import "NSDictionaryHelper.h"
 	#import "NSFontHelper.h"
 	#import "NSImageHelper.h"
+	#import "NSMenuHelper.h"
 	#import "NSNumberHelper.h"
 	#import "NSOutlineViewHelper.h"
 	#import "NSPasteboardHelper.h"

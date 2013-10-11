@@ -181,20 +181,11 @@
 				[ary safeAddObject:[inspectElementItem copy]];
 			}
 
-			NSMenuItem *newItem = [NSMenuItem new];
-			
-			[newItem setTarget:self.menuController];
-			[newItem setKeyEquivalent:NSStringEmptyPlaceholder];
+			NSMenuItem *newItem1 = [NSMenuItem menuItemWithTitle:TXTLS(@"CopyLogAsHTMLMenuItem") target:self.menuController action:@selector(copyLogAsHtml:)];
+			NSMenuItem *newItem2 = [NSMenuItem menuItemWithTitle:TXTLS(@"ForceReloadThemeMenuItem") target:self.menuController action:@selector(forceReloadTheme:)];
 
-			[newItem setTitle:TXTLS(@"CopyLogAsHTMLMenuItem")];
-			[newItem setAction:@selector(copyLogAsHtml:)];
-
-			[ary safeAddObject:[newItem copy]];
-
-			[newItem setTitle:TXTLS(@"ForceReloadThemeMenuItem")];
-			[newItem setAction:@selector(forceReloadTheme:)];
-
-			[ary safeAddObject:[newItem copy]];
+			[ary safeAddObject:newItem1];
+			[ary safeAddObject:newItem2];
 		}
 		
 		return ary;

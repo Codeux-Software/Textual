@@ -199,12 +199,11 @@
 	for (THOPluginItem *plugin in bundles) {
 		NSInteger tagIndex = ([bundles indexOfObject:plugin] + _addonsToolbarItemMultiplier);
 
-		NSMenuItem *pluginMenu = [NSMenuItem new];
+		NSMenuItem *pluginMenu = [NSMenuItem menuItemWithTitle:[plugin.primaryClass preferencesMenuItemName]
+														target:self
+														action:@selector(onPrefPaneSelected:)];
 
 		[pluginMenu setTag:tagIndex];
-		[pluginMenu setTarget:self];
-		[pluginMenu setAction:@selector(onPrefPaneSelected:)];
-		[pluginMenu setTitle:[plugin.primaryClass preferencesMenuItemName]];
 
 		[self.installedScriptsMenu addItem:pluginMenu];
 	}
@@ -605,12 +604,9 @@
 			NSInteger i = 0;
 
 			for (NSString *f in files) {
-				NSMenuItem *cell = [NSMenuItem new];
+				NSMenuItem *cell = [NSMenuItem menuItemWithTitle:f target:nil action:nil];
 
 				[cell setTag:tag];
-				[cell setTitle:f];
-				[cell setAction:nil];
-				[cell setKeyEquivalent:NSStringEmptyPlaceholder];
 
 				[self.themeSelectionButton.menu addItem:cell];
 

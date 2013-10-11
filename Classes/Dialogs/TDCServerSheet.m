@@ -875,16 +875,13 @@
 
 	NSMenu *addIgnoreMenu = [NSMenu new];
 
-	NSMenuItem *item1 = [[NSMenuItem alloc] initWithTitle:TXTLS(@"ServerSheetAddressBookAdditionMenuAddIgnore")
-												   action:@selector(addIgnore:)
-											keyEquivalent:NSStringEmptyPlaceholder];
+	NSMenuItem *item1 = [NSMenuItem menuItemWithTitle:TXTLS(@"ServerSheetAddressBookAdditionMenuAddIgnore")
+											   target:self
+											   action:@selector(addIgnore:)];
 
-	NSMenuItem *item2 = [[NSMenuItem alloc] initWithTitle:TXTLS(@"ServerSheetAddressBookAdditionMenuAddTracker")
-												   action:@selector(addIgnore:)
-											keyEquivalent:NSStringEmptyPlaceholder];
-
-	[item1 setTarget:self];
-	[item2 setTarget:self];
+	NSMenuItem *item2 = [NSMenuItem menuItemWithTitle:TXTLS(@"ServerSheetAddressBookAdditionMenuAddTracker")
+											   target:self
+											   action:@selector(addIgnore:)];
 
 	[item1 setTag:3];
 	[item2 setTag:4];

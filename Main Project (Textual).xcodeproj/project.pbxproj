@@ -455,6 +455,10 @@
 		4C68426916C5B12A0005A59E /* BragSpam.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C68426116C5B1020005A59E /* BragSpam.bundle */; };
 		4C68426A16C5B12B0005A59E /* SpammerParadise.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C68426216C5B1020005A59E /* SpammerParadise.bundle */; };
 		4C68426B16C5B12D0005A59E /* SystemProfiler.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C68426316C5B1020005A59E /* SystemProfiler.bundle */; };
+		4C6D4646180830D40098BA12 /* NSMenuHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6D4645180830D40098BA12 /* NSMenuHelper.m */; };
+		4C6D4647180830D40098BA12 /* NSMenuHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6D4645180830D40098BA12 /* NSMenuHelper.m */; };
+		4C6D464D180830E60098BA12 /* NSMenuHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6D464C180830E60098BA12 /* NSMenuHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C6D464E180830E60098BA12 /* NSMenuHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6D464C180830E60098BA12 /* NSMenuHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C6ED7F115901562001AD200 /* TVCMainWindowSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */; };
 		4C6ED7F315901579001AD200 /* TVCMainWindowSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7188C61591AB7A00FC5E54 /* DIRedBadgeCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7188C31591AB7A00FC5E54 /* DIRedBadgeCenter.png */; };
@@ -1042,6 +1046,8 @@
 		4C68426116C5B1020005A59E /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = .tmp/SharedBuildProducts/BragSpam.bundle; sourceTree = SOURCE_ROOT; };
 		4C68426216C5B1020005A59E /* SpammerParadise.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SpammerParadise.bundle; path = .tmp/SharedBuildProducts/SpammerParadise.bundle; sourceTree = SOURCE_ROOT; };
 		4C68426316C5B1020005A59E /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = .tmp/SharedBuildProducts/SystemProfiler.bundle; sourceTree = SOURCE_ROOT; };
+		4C6D4645180830D40098BA12 /* NSMenuHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMenuHelper.m; sourceTree = "<group>"; };
+		4C6D464C180830E60098BA12 /* NSMenuHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMenuHelper.h; sourceTree = "<group>"; };
 		4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMainWindowSegmentedControl.m; sourceTree = "<group>"; };
 		4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowSegmentedControl.h; sourceTree = "<group>"; };
 		4C7188C31591AB7A00FC5E54 /* DIRedBadgeCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DIRedBadgeCenter.png; path = "Resources/Images/Dock Icon Badges/Red/DIRedBadgeCenter.png"; sourceTree = SOURCE_ROOT; };
@@ -1921,6 +1927,7 @@
 				4C8AF54B158E99520026668C /* NSDictionaryHelper.h */,
 				4C8AF54C158E99520026668C /* NSFontHelper.h */,
 				4CB331BC16F1BBE000D65CBE /* NSImageHelper.h */,
+				4C6D464C180830E60098BA12 /* NSMenuHelper.h */,
 				4C8AF54D158E99520026668C /* NSNumberHelper.h */,
 				4C8AF54E158E99520026668C /* NSOutlineViewHelper.h */,
 				4C8AF54F158E99520026668C /* NSPasteboardHelper.h */,
@@ -2021,6 +2028,7 @@
 				4C8AF59F158E99520026668C /* NSDictionaryHelper.m */,
 				4C8AF5A0158E99520026668C /* NSFontHelper.m */,
 				4CB331B416F1BBC700D65CBE /* NSImageHelper.m */,
+				4C6D4645180830D40098BA12 /* NSMenuHelper.m */,
 				4C8AF5A1158E99520026668C /* NSNumberHelper.m */,
 				4C8AF5A2158E99520026668C /* NSOutlineViewHelper.m */,
 				4C8AF5A3158E99520026668C /* NSPasteboardHelper.m */,
@@ -2585,6 +2593,7 @@
 				4C92FECC17A8C8F2003888F4 /* TPCResourceManager.h in Headers */,
 				4C3E729817C39DD7008F2B08 /* THOUnicodeHelper.h in Headers */,
 				4C529E1F17AEFE44009BA0B3 /* NSDataHelper.h in Headers */,
+				4C6D464E180830E60098BA12 /* NSMenuHelper.h in Headers */,
 				4C0C720E1742C444000F82C4 /* NSByteCountFormatterHelper.h in Headers */,
 				4CC70204171E1CB400BDFAE0 /* BuildConfig.h in Headers */,
 			);
@@ -2731,6 +2740,7 @@
 				4C529E1E17AEFE44009BA0B3 /* NSDataHelper.h in Headers */,
 				4C3E729717C39DD7008F2B08 /* THOUnicodeHelper.h in Headers */,
 				4C92FECB17A8C8F2003888F4 /* TPCResourceManager.h in Headers */,
+				4C6D464D180830E60098BA12 /* NSMenuHelper.h in Headers */,
 				4C3EB79D17898FD600D21A07 /* TVCLogControllerHistoricLogFile.h in Headers */,
 				4CC70203171E1CB400BDFAE0 /* BuildConfig.h in Headers */,
 			);
@@ -3194,6 +3204,7 @@
 				4C04459C16F1603B00EBB665 /* IRCAddressBook.m in Sources */,
 				4CB9980A17C39E83008F56D7 /* THOUnicodeHelper.m in Sources */,
 				4C04459D16F1603B00EBB665 /* IRCChannel.m in Sources */,
+				4C6D4647180830D40098BA12 /* NSMenuHelper.m in Sources */,
 				4C04459E16F1603B00EBB665 /* IRCChannelConfig.m in Sources */,
 				4C04459F16F1603B00EBB665 /* IRCChannelMode.m in Sources */,
 				4C0445A016F1603B00EBB665 /* IRCClient.m in Sources */,
@@ -3321,6 +3332,7 @@
 				4C8AF6A5158E99520026668C /* IRCChannelConfig.m in Sources */,
 				4CB9980917C39E83008F56D7 /* THOUnicodeHelper.m in Sources */,
 				4C8AF6A6158E99520026668C /* IRCChannelMode.m in Sources */,
+				4C6D4646180830D40098BA12 /* NSMenuHelper.m in Sources */,
 				4C8AF6A7158E99520026668C /* IRCClient.m in Sources */,
 				4C8AF6A8158E99520026668C /* IRCClientConfig.m in Sources */,
 				4C8AF6A9158E99520026668C /* IRCConnection.m in Sources */,
