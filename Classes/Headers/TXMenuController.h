@@ -169,6 +169,8 @@
 - (void)closeWindow:(id)sender;
 - (void)copyLogAsHtml:(id)sender;
 
+- (void)populateNavgiationChannelList;
+
 - (void)toggleDeveloperMode:(id)sender;
 - (void)loadExtensionsIntoMemory:(id)sender;
 - (void)unloadExtensionsFromMemory:(id)sender;

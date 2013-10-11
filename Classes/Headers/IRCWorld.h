@@ -70,6 +70,8 @@
 - (IRCClient *)findClientById:(NSString *)uid;
 - (IRCChannel *)findChannelByClientId:(NSString *)uid channelId:(NSString *)cid;
 
+- (IRCTreeItem *)findItemFromInfo:(NSString *)s;
+
 - (void)select:(id)item;
 - (void)selectPreviousItem;
 

@@ -624,26 +624,31 @@ CQ
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
                             <menuItem title="Main Window" tag="589" keyEquivalent="1" id="1309">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
                                 <connections>
                                     <action selector="showMainWindow:" target="267" id="2578"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Address Book" tag="590" keyEquivalent="2" id="1310">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
                                 <connections>
                                     <action selector="showChannelIgnoreList:" target="267" id="2576"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Ignore List" tag="591" keyEquivalent="3" id="1451">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
                                 <connections>
                                     <action selector="showChannelIgnoreList:" target="267" id="2577"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Textual Logs" tag="592" keyEquivalent="4" id="1378">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
                                 <connections>
                                     <action selector="openLogLocation:" target="267" id="2574"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Highlight List" tag="593" keyEquivalent="5" id="2268">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
                                 <connections>
                                     <action selector="showHighlightSheet:" target="267" id="2272"/>
                                 </connections>

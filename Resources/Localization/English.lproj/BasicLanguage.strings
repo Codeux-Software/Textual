@@ -230,6 +230,9 @@
 
 "NoButton" = "No";
 
+"NavigationChannelListClientEntryTitle" = "%@";
+"NavigationChannelListChannelEntryTitle" = "   %@";
+
 /* If an event is not defined below for spoken events, then the odds are
  good that the text to be spoken is localized somewhere else. For example,
  the address book event type is defined near the end of this file. */
