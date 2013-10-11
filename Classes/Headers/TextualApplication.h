@@ -144,6 +144,7 @@
 	@class TVCServerListRowCell;
 	@class TXMasterController;
 	@class TXMenuController;
+	@class TXSpecialNSMenuItemHelper;
 
 	/* 3rd Party Extensions. */
 

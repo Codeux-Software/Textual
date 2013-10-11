@@ -520,8 +520,44 @@
 	NSInteger channelCount = 0;
 
 	for (IRCClient *u in self.worldController.clients) {
-		
+		/* Create a menu item for the client title. */
+		TXSpecialNSMenuItemHelper *newItem = [TXSpecialNSMenuItemHelper menuItemWithTitle:TXTFLS(@"NavigationChannelListClientEntryTitle", u.name) target:nil action:nil];
+
+		[self.navigationChannelList addItem:newItem];
+
+		/* Begin populating channels. */
+		for (IRCChannel *c in u.channels) {
+			/* We only care about channels… */
+			if (c.isChannel) {
+				/* Create the menu item. Only first ten items get a key combo. */
+				if (channelCount >= 10) {
+					newItem = [TXSpecialNSMenuItemHelper menuItemWithTitle:TXTFLS(@"NavigationChannelListChannelEntryTitle", c.name)
+																	target:self
+																	action:@selector(navigateToSpecificChannelInNavigationList:)];
+				} else {
+					newItem = [TXSpecialNSMenuItemHelper menuItemWithTitle:TXTFLS(@"NavigationChannelListChannelEntryTitle", c.name)
+																	target:self
+																	action:@selector(navigateToSpecificChannelInNavigationList:)
+															 keyEquivalent:[NSString stringWithUniChar:('0' + channelCount)]
+														 keyEquivalentMask:NSCommandKeyMask];
+				}
+
+				/* The tag identifies each item. */
+				[newItem setUserInfo:[NSString stringWithFormat:@"%@ %@", u.config.itemUUID, c.config.itemUUID]];
+
+				/* Add to the actaul navigation list. */
+				[self.navigationChannelList addItem:newItem];
+			}
+
+			/* Bump the count… */
+			channelCount += 1;
+		}
 	}
+}
+
+- (void)navigateToSpecificChannelInNavigationList:(TXSpecialNSMenuItemHelper *)sender
+{
+	[self.worldController select:[self.worldController findItemFromInfo:sender.userInfo]];
 }
 
 #pragma mark -

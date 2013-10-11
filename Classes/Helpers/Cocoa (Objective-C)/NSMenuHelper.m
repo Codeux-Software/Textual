@@ -42,20 +42,20 @@
 
 @implementation NSMenuItem (TXMenuItemHelper)
 
-+ (NSMenuItem *)menuItemWithTitle:(NSString *)aString
++ (id)menuItemWithTitle:(NSString *)aString
 						   target:(id)aTarget
 						   action:(SEL)aSelector
 {
-	return [NSMenuItem menuItemWithTitle:aString target:aTarget action:aSelector keyEquivalent:NSStringEmptyPlaceholder keyEquivalentMask:0];
+	return [self menuItemWithTitle:aString target:aTarget action:aSelector keyEquivalent:NSStringEmptyPlaceholder keyEquivalentMask:0];
 }
 
-+ (NSMenuItem *)menuItemWithTitle:(NSString *)aString
-						   target:(id)aTarget
-						   action:(SEL)aSelector
-					keyEquivalent:(NSString *)charCode
-				keyEquivalentMask:(NSUInteger)mask
++ (id)menuItemWithTitle:(NSString *)aString
+				 target:(id)aTarget
+				 action:(SEL)aSelector
+		  keyEquivalent:(NSString *)charCode
+	  keyEquivalentMask:(NSUInteger)mask
 {
-	NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:aString action:aSelector keyEquivalent:charCode];
+	id menuItem = [[self alloc] initWithTitle:aString action:aSelector keyEquivalent:charCode];
 
 	[menuItem setKeyEquivalentModifierMask:mask];
 	[menuItem setTarget:aTarget];
@@ -63,4 +63,7 @@
 	return menuItem;
 }
 
+@end
+
+@implementation TXSpecialNSMenuItemHelper
 @end
