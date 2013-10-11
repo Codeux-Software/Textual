@@ -110,6 +110,7 @@
 	593: "Highlight List"
 	601: "Join Channel"
 	602: "Leave Channel"
+	64611: "Channel List…"
 	651: "Add Channel…"
 	652: "Delete Channel"
 	6666: "Disable All Notification Sounds"
@@ -139,6 +140,7 @@
 @property (nonatomic, strong) NSString *pointedChannelName;
 @property (nonatomic, strong) NSString *currentSearchPhrase;
 @property (nonatomic, strong) NSDictionary *openWindowList;
+@property (nonatomic, nweak) IBOutlet NSMenu *navigationChannelList;
 
 - (void)terminate;
 
