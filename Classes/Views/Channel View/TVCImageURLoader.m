@@ -157,6 +157,9 @@
 			NSNumber *width = CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth);
 			NSNumber *height = CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight);
 
+			CFRelease(imageSource);
+			CFRelease(properties);
+
 			if ([height integerValue] > [TPCPreferences inlineImagesMaxHeight] || [width integerValue] > _imageMaximumImageWidth) { // So what's up with the size?
 				[self destroyConnectionRequest]; // Destroy local vars.
 
