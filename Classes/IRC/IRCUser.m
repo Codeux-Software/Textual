@@ -293,6 +293,11 @@
 
 	self.isCop = from.isCop;
 	self.isAway = from.isAway;
+
+	self.InspIRCd_y_upper = from.InspIRCd_y_upper;
+	self.InspIRCd_y_lower = from.InspIRCd_y_lower;
+
+	self.binircd_O = from.binircd_O;
 }
 
 - (id)copyWithZone:(NSZone *)zone
