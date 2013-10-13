@@ -701,6 +701,11 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() boolForKey:@"MemberListSortFavorsServerStaff"];
 }
 
++ (BOOL)postNotificationsWhileInFocus
+{
+	return [RZUserDefaults() boolForKey:@"PostNotificationsWhileInFocus"];
+}
+
 + (BOOL)nickAllConnections
 {
 	return [RZUserDefaults() boolForKey:@"ApplyCommandToAllConnections -> nick"];
@@ -1386,9 +1391,10 @@ static NSMutableArray *excludeKeywords = nil;
 	NSMutableDictionary *d = [NSMutableDictionary dictionary];
 
 	d[@"AutomaticallyAddScrollbackMarker"]				= @(YES);
-	d[@"ConfirmApplicationQuit"]						= @(YES);
+	d[@"AutomaticallyDetectHighlightSpam"]				= @(YES);
 	d[@"ChannelNavigationIsServerSpecific"]				= @(YES);
 	d[@"CommandReturnSendsMessageAsAction"]				= @(YES);
+	d[@"ConfirmApplicationQuit"]						= @(YES);
 	d[@"DisplayDockBadges"]								= @(YES);
 	d[@"DisplayEventInLogView -> Join, Part, Quit"]		= @(YES);
 	d[@"DisplayMainWindowWithAntialiasing"]				= @(YES);
@@ -1396,8 +1402,8 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"DisplayUserListNoModeSymbol"]					= @(YES);
 	d[@"FocusSelectionOnMessageCommandExecution"]		= @(YES);
 	d[@"LogHighlights"]									= @(YES);
-	d[@"AutomaticallyDetectHighlightSpam"]				= @(YES);
 	d[@"LogTranscriptInBatches"]						= @(YES);
+	d[@"PostNotificationsWhileInFocus"]					= @(YES);
 	d[@"ReloadScrollbackOnLaunch"]						= @(YES);
 	d[@"ReplyUnignoredExternalCTCPRequests"]			= @(YES);
 	d[@"TrackNicknameHighlightsOfLocalUser"]			= @(YES);
