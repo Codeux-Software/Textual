@@ -141,6 +141,8 @@ typedef enum TXMainTextBoxFontSize : NSInteger {
 + (BOOL)logTranscript;
 + (BOOL)logTranscriptInBatches;
 
++ (BOOL)postNotificationsWhileInFocus;
+
 + (NSURL *)transcriptFolder;
 + (void)setTranscriptFolder:(id)value;
 

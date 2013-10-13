@@ -760,9 +760,11 @@
 		return YES;
 	}
 
-	//if (self.masterController.mainWindowIsActive) {
-	//	return YES;
-	//}
+	if ([TPCPreferences postNotificationsWhileInFocus] == NO) {
+		if (NSDissimilarObjects(type, TXNotificationAddressBookMatchType)) {
+			return YES;
+		}
+	}
 
 	if ([TPCPreferences disabledWhileAwayForEvent:type] && self.isAway) {
 		return YES;
@@ -814,7 +816,7 @@
 		return YES;
 	}
 
-	if (self.masterController.mainWindowIsActive) {
+	if ([TPCPreferences postNotificationsWhileInFocus] == NO && self.masterController.mainWindowIsActive) {
 		if (NSDissimilarObjects(type, TXNotificationAddressBookMatchType)) {
 			return YES;
 		}
