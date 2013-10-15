@@ -1273,7 +1273,7 @@ typedef enum TXMoveKind : NSInteger {
 	[self.mainWindow setKeyHandlerTarget:self];
 	[self.inputTextField setKeyHandlerTarget:self];
     
-    [self handler:@selector(exitFullscreenMode::) code:TXKeyEscapeCode mods:0];
+    [self handler:@selector(exitFullscreenMode:) code:TXKeyEscapeCode mods:0];
 	
 	[self handler:@selector(tab:) code:TXKeyTabCode mods:0];
 	[self handler:@selector(shiftTab:) code:TXKeyTabCode mods:NSShiftKeyMask];
