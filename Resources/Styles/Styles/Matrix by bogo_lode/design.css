@@ -217,6 +217,7 @@ body div[type*=privmsg] p[type*=myself] .message {
 
 body div[type*=privmsg] .sender {
 	font-weight: normal;
+	white-space: pre-wrap;
 }
 
 /* ACTION */
