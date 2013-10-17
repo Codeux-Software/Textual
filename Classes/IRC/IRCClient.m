@@ -2633,77 +2633,93 @@
 
 - (NSString *)formatNick:(NSString *)nick channel:(IRCChannel *)channel formatOverride:(NSString *)forcedFormat
 {
+	/* Validate input. */
 	NSObjectIsEmptyAssertReturn(nick, nil);
 
 	PointerIsEmptyAssertReturn(channel, nil);
 
+	/* Define default formats. */
 	NSString *nmformat = [TPCPreferences themeNicknameFormat];
 
 	NSString *override = self.masterController.themeController.customSettings.nicknameFormat;
 
+	/* Use theme based format? */
 	if (NSObjectIsNotEmpty(override)) {
 		nmformat = override;
 	}
 
+	/* Use default format? */
 	if (NSObjectIsEmpty(nmformat)) {
 		nmformat = TXLogLineUndefinedNicknameFormat;
 	}
 
+	/* Use a forced format? */
 	if (NSObjectIsNotEmpty(forcedFormat)) {
 		nmformat = forcedFormat;
 	}
 
-  NSString *mark = NSStringEmptyPlaceholder;
-  if (channel && channel.isChannel) {
-    IRCUser *m = [channel findMember:nick];
-    if (m && NSObjectIsNotEmpty(m.mark)) {
-      mark = m.mark;
+	/* Find mark character. */
+	NSString *mark = NSStringEmptyPlaceholder;
+
+	if (channel && channel.isChannel) {
+		IRCUser *m = [channel findMember:nick];
+
+		if (m && NSObjectIsNotEmpty(m.mark)) {
+			mark = m.mark;
 		}
-  }
+	}
 
-  NSString *formatMarker = @"%";
-  NSScanner *scanner = [NSScanner scannerWithString:nmformat];
-  [scanner setCharactersToBeSkipped:nil];
-  NSMutableString *buffer = [NSMutableString new];
-  NSString *chunk = nil;
+	/* Begin parsing format string. */
+	NSString *formatMarker = @"%";
+	NSString *chunk = nil;
 
-  while ([scanner isAtEnd] == NO) {
-    // read any static characters into buffer
-    if ([scanner scanUpToString:formatMarker intoString:&chunk] == YES) {
-      [buffer appendString:chunk];
-    }
+	NSScanner *scanner = [NSScanner scannerWithString:nmformat];
 
-    // eat the format marker
-    if ([scanner scanString:formatMarker intoString:nil] == NO) {
-      break;
-    }
+	[scanner setCharactersToBeSkipped:nil];
 
-    // read width specifier (may be empty)
-    NSInteger width = 0;
-    [scanner scanInteger:&width];
+	NSMutableString *buffer = [NSMutableString new];
 
-    // read the output type marker
-    NSString *oValue = nil;
-    if ([scanner scanString:@"@" intoString:nil] == YES) {
-      oValue = mark;
+	/* Loop for actual scanner. */
+	while ([scanner isAtEnd] == NO) {
+		/* Read any static characters into buffer. */
+		if ([scanner scanUpToString:formatMarker intoString:&chunk] == YES) {
+			[buffer appendString:chunk];
+		}
 
-    } else if ([scanner scanString:@"n" intoString:nil] == YES) {
-      oValue = nick;
+		/* Eat the format marker. */
+		if ([scanner scanString:formatMarker intoString:nil] == NO) {
+			break;
+		}
 
-    } else if ([scanner scanString:formatMarker intoString:nil] == YES) {
-      oValue = formatMarker;
-    }
+		/* Read width specifier (may be empty). */
+		NSInteger width = 0;
 
-    if (oValue != nil) {
-      if (width < 0 && ABS(width) > [oValue length]) {
-        [buffer appendString:[@"" stringByPaddingToLength:ABS(width)-[oValue length] withString:@" " startingAtIndex:0]];
-      }
-      [buffer appendString:oValue];
-      if (width > 0 && width > [oValue length]) {
-        [buffer appendString:[@"" stringByPaddingToLength:width-[oValue length] withString:@" " startingAtIndex:0]];
-      }
-    }
-  }
+		[scanner scanInteger:&width];
+
+		/* Read the output type marker. */
+		NSString *oValue = nil;
+
+		if ([scanner scanString:@"@" intoString:nil] == YES) {
+			oValue = mark; // User mode mark.
+		} else if ([scanner scanString:@"n" intoString:nil] == YES) {
+			oValue = nick; // Actual nickname.
+		} else if ([scanner scanString:formatMarker intoString:nil] == YES) {
+			oValue = formatMarker; // Format marker.
+		}
+
+		if (PointerIsNotEmpty(oValue)) {
+			/* Check math and perform final append. */
+			if (width < 0 && ABS(width) > oValue.length) {
+				[buffer appendString:[@"" stringByPaddingToLength:(ABS(width) - oValue.length) withString:@" " startingAtIndex:0]];
+			}
+
+			[buffer appendString:oValue];
+
+			if (width > 0 && width > oValue.length) {
+				[buffer appendString:[@"" stringByPaddingToLength:(width - oValue.length) withString:@" " startingAtIndex:0]];
+			}
+		}
+	}
 
 	return [NSString stringWithString:buffer];
 }
