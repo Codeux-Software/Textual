@@ -2653,29 +2653,59 @@
 		nmformat = forcedFormat;
 	}
 
-	if ([nmformat contains:@"%n"]) {
-		nmformat = [nmformat stringByReplacingOccurrencesOfString:@"%n" withString:nick];
-	}
-
-	if ([nmformat contains:@"%@"]) {
-		if (channel && channel.isChannel) {
-			IRCUser *m = [channel findMember:nick];
-
-			if (m) {
-				if (NSObjectIsEmpty(m.mark)) {
-					nmformat = [nmformat stringByReplacingOccurrencesOfString:@"%@" withString:NSStringEmptyPlaceholder];
-				} else {
-					nmformat = [nmformat stringByReplacingOccurrencesOfString:@"%@" withString:m.mark];
-				}
-			} else {
-				nmformat = [nmformat stringByReplacingOccurrencesOfString:@"%@" withString:NSStringEmptyPlaceholder];
-			}
-		} else {
-			nmformat = [nmformat stringByReplacingOccurrencesOfString:@"%@" withString:NSStringEmptyPlaceholder];
+  NSString *mark = NSStringEmptyPlaceholder;
+  if (channel && channel.isChannel) {
+    IRCUser *m = [channel findMember:nick];
+    if (m && NSObjectIsNotEmpty(m.mark)) {
+      mark = m.mark;
 		}
-	}
+  }
 
-	return nmformat;
+  NSString *formatMarker = @"%";
+  NSScanner *scanner = [NSScanner scannerWithString:nmformat];
+  [scanner setCharactersToBeSkipped:nil];
+  NSMutableString *buffer = [NSMutableString new];
+  NSString *chunk = nil;
+
+  while ([scanner isAtEnd] == NO) {
+    // read any static characters into buffer
+    if ([scanner scanUpToString:formatMarker intoString:&chunk] == YES) {
+      [buffer appendString:chunk];
+    }
+
+    // eat the format marker
+    if ([scanner scanString:formatMarker intoString:nil] == NO) {
+      break;
+    }
+
+    // read width specifier (may be empty)
+    NSInteger width = 0;
+    [scanner scanInteger:&width];
+
+    // read the output type marker
+    NSString *oValue = nil;
+    if ([scanner scanString:@"@" intoString:nil] == YES) {
+      oValue = mark;
+
+    } else if ([scanner scanString:@"n" intoString:nil] == YES) {
+      oValue = nick;
+
+    } else if ([scanner scanString:formatMarker intoString:nil] == YES) {
+      oValue = formatMarker;
+    }
+
+    if (oValue != nil) {
+      if (width < 0 && ABS(width) > [oValue length]) {
+        [buffer appendString:[@"" stringByPaddingToLength:ABS(width)-[oValue length] withString:@" " startingAtIndex:0]];
+      }
+      [buffer appendString:oValue];
+      if (width > 0 && width > [oValue length]) {
+        [buffer appendString:[@"" stringByPaddingToLength:width-[oValue length] withString:@" " startingAtIndex:0]];
+      }
+    }
+  }
+
+	return [NSString stringWithString:buffer];
 }
 
 - (void)printAndLog:(TVCLogLine *)line completionBlock:(void(^)(BOOL highlighted))completionBlock
