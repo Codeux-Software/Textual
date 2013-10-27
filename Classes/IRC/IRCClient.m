@@ -7231,7 +7231,7 @@
 
 - (void)listDialogWillClose:(TDCListDialog *)sender
 {
-    [self.masterController.menuController removeWindowFromWindowList:@"TDCListDialog"];
+    [self.masterController.menuController removeWindowFromWindowList:self.listDialogWindowKey];
 }
 
 #pragma mark -
