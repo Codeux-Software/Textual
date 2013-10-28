@@ -105,6 +105,8 @@
 - (void)addHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine;
 
 - (void)reloadTheme;
+- (void)reloadTheme:(BOOL)reloadUserInterface;
+
 - (void)preferencesChanged;
 
 - (void)changeTextSize:(BOOL)bigger;

@@ -73,7 +73,20 @@
 - (void)updateConfig:(IRCChannelConfig *)seed
 {
 	PointerIsEmptyAssert(seed);
-	
+
+	BOOL oldKeyEmpty = NSObjectIsEmpty(self.config.encryptionKey);
+	BOOL newKeyEmpty = NSObjectIsEmpty(seed.encryptionKey);
+
+	if (oldKeyEmpty && newKeyEmpty == NO) {
+		[self.client printDebugInformation:TXTLS(@"BlowfishEncryptionStarted") channel:self];
+	} else if (oldKeyEmpty == NO && newKeyEmpty) {
+		[self.client printDebugInformation:TXTLS(@"BlowfishEncryptionStopped") channel:self];
+	} else if (oldKeyEmpty == NO && newKeyEmpty == NO) {
+		if ([self.config.encryptionKey isEqualToString:seed.encryptionKey] == NO) {
+			[self.client printDebugInformation:TXTLS(@"BlowfishEncryptionKeyChanged") channel:self];
+		}
+	}
+
 	self.config = [seed mutableCopy];
 }
 

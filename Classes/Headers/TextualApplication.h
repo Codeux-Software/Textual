@@ -103,6 +103,7 @@
 	@class TLOTimerCommand;
 	@class TLOpenLink;
 	@class TPCPreferences;
+	@class TPCPreferencesCloudSync;
 	@class TPCPreferencesImportExport;
 	@class TPCResourceManager;
 	@class TPCThemeController;
@@ -267,6 +268,7 @@
 	/* Preferences. */
 
 	#import "TPCPreferences.h"
+	#import "TPCPreferencesCloudSync.h"
 	#import "TPCPreferencesImportExport.h"
 	#import "TPCResourceManager.h"
 	#import "TPCThemeController.h"

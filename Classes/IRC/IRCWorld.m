@@ -280,9 +280,7 @@
 		if (highlightSheet) {
             [highlightSheet performSelector:@selector(reloadTable) withObject:nil afterDelay:2.0];
 		}
-	} else {
-		[channel.client.highlights removeAllObjects];
-	}
+	} 
 }
 
 - (void)autoConnectAfterWakeup:(BOOL)afterWakeUp
@@ -688,25 +686,32 @@
 
 - (void)reloadTheme
 {
+	[self reloadTheme:YES];
+}
+
+- (void)reloadTheme:(BOOL)reloadUserInterface
+{
 	[self.masterController.themeController load];
 
 	for (IRCClient *u in self.clients) {
 		[u.viewController reloadTheme];
-		
+
 		for (IRCChannel *c in u.channels) {
 			[c.viewController reloadTheme];
 		}
 	}
 
-	[self.serverList updateBackgroundColor];
-	[self.serverList reloadAllDrawingsIgnoringOtherReloads];
+	if (reloadUserInterface) {
+		[self.serverList updateBackgroundColor];
+		[self.serverList reloadAllDrawingsIgnoringOtherReloads];
 
-	[self.memberList reloadAllUserInterfaceElements];
+		[self.memberList reloadAllUserInterfaceElements];
 
-	[self.masterController.serverSplitView setNeedsDisplay:YES];
-	[self.masterController.memberSplitView setNeedsDisplay:YES];
+		[self.masterController.serverSplitView setNeedsDisplay:YES];
+		[self.masterController.memberSplitView setNeedsDisplay:YES];
 
-	[self.masterController.inputTextField redrawOriginPoints];
+		[self.masterController.inputTextField redrawOriginPoints];
+	}
 }
 
 - (void)changeTextSize:(BOOL)bigger
