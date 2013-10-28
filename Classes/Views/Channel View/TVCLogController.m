@@ -1026,8 +1026,11 @@
 			return nil;
 		}
 	}
-	
-	highlighted = [outputDictionary boolForKey:@"wordMatchFound"];
+
+	if (line.memberType == TVCLogMemberNormalType) {
+		highlighted = [outputDictionary boolForKey:@"wordMatchFound"];
+	}
+
 	mentionedUsers = [outputDictionary arrayForKey:@"mentionedUsers"];
 
 	inlineImageMatches = [outputDictionary dictionaryForKey:@"InlineImageURLMatches"];
