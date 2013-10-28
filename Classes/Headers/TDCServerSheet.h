@@ -62,6 +62,7 @@
 @property (nonatomic, nweak) NSButton *prefersIPv6Check;
 @property (nonatomic, nweak) NSButton *pongTimerCheck;
 @property (nonatomic, nweak) NSButton *pongTimerDisconnectCheck;
+@property (nonatomic, nweak) NSButton *excludedFromCloudSyncingCheck;
 @property (nonatomic, nweak) NSButton *zncIgnorePlaybackNotificationsCheck;
 @property (nonatomic, nweak) NSComboBox *serverAddressCombo;
 @property (nonatomic, nweak) NSPopUpButton *fallbackEncodingButton;

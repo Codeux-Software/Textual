@@ -58,6 +58,8 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 		self.channelList			= [NSMutableArray new];
 		self.ignoreList				= [NSMutableArray new];
 
+		self.excludedFromCloudSyncing = NO;
+
 		self.autoConnect					= NO;
 		self.autoReconnect					= NO;
 		self.autoSleepModeDisconnect		= YES;
@@ -236,7 +238,9 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 		self.serverPort		= NSDictionaryIntegerKeyValueCompare(dic, @"serverPort", self.serverPort);
 		self.username		= NSDictionaryObjectKeyValueCompare(dic, @"identityUsername", self.username);
 
-		self.zncIgnorePlaybackNotifications		= NSDictionaryBOOLKeyValueCompare(dic, @"ZNC —> Ignore Playback Buffer Highlights", self.zncIgnorePlaybackNotifications);
+		self.excludedFromCloudSyncing = NSDictionaryBOOLKeyValueCompare(dic, @"excludeFromCloudSyncing", self.excludedFromCloudSyncing);
+
+		self.zncIgnorePlaybackNotifications	= NSDictionaryBOOLKeyValueCompare(dic, @"ZNC —> Ignore Playback Buffer Highlights", self.zncIgnorePlaybackNotifications);
 
 		[self.alternateNicknames addObjectsFromArray:[dic arrayForKey:@"identityAlternateNicknames"]];
 		
@@ -310,6 +314,8 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 	[dic setInteger:self.proxyPort			forKey:@"proxyServerPort"];
 	[dic setInteger:self.proxyType			forKey:@"proxyServerType"];
 	[dic setInteger:self.serverPort			forKey:@"serverPort"];
+
+	[dic setBool:self.excludedFromCloudSyncing forKey:@"excludeFromCloudSyncing"];
 	
 	[dic setBool:self.autoConnect					forKey:@"connectOnLaunch"];
 	[dic setBool:self.autoReconnect					forKey:@"connectOnDisconnect"];
