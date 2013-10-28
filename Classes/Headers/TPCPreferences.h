@@ -85,6 +85,24 @@ typedef enum TXMainTextBoxFontSize : NSInteger {
 	TXMainTextBoxFontExtraLargeSize		= 3,
 } TXMainTextBoxFontSize;
 
+/* These actions are used for import purposes. */
+typedef enum TPCPreferencesKeyReloadAction : NSInteger {
+	TPCPreferencesKeyReloadDockIconBadgesAction,
+	TPCPreferencesKeyReloadHighlightKeywordsAction,
+	TPCPreferencesKeyReloadHighlightLoggingAction,
+	TPCPreferencesKeyReloadInputHistoryScopeAction,
+	TPCPreferencesKeyReloadMainWindowTransparencyLevelAction,
+	TPCPreferencesKeyReloadMemberListAction,
+	TPCPreferencesKeyReloadMemberListSortOrderAction,
+	TPCPreferencesKeyReloadMemberListUserBadgesAction,
+	TPCPreferencesKeyReloadPreferencesChangedAction,
+	TPCPreferencesKeyReloadServerListAction,
+	TPCPreferencesKeyReloadStyleAction,
+	TPCPreferencesKeyReloadTextDirectionAction,
+	TPCPreferencesKeyReloadTextFieldFontSizeAction,
+	TPCPreferencesKeyReloadTextFieldSegmentedControllerOriginAction
+} TPCPreferencesKeyReloadAction;
+
 @interface TPCPreferences : NSObject
 + (BOOL)isDefaultIRCClient;
 
@@ -163,6 +181,8 @@ typedef enum TXMainTextBoxFontSize : NSInteger {
 + (NSString *)IRCopDefaultShunMessage;
 
 + (BOOL)giveFocusOnMessageCommand;
+
++ (BOOL)syncPreferencesToTheCloud; /* ZE CLOUD! */
 
 + (BOOL)amsgAllConnections;
 + (BOOL)awayAllConnections;
@@ -318,4 +338,7 @@ typedef enum TXMainTextBoxFontSize : NSInteger {
 + (BOOL)textFieldTextReplacement;
 + (void)setTextFieldTextReplacement:(BOOL)value;
 
+/* The following should only be called by TPCPreferencesImportExport */
++ (void)performReloadActionForKeyValues:(NSArray *)prefKeys;
++ (void)performReloadActionForActionType:(TPCPreferencesKeyReloadAction)reloadAction;
 @end

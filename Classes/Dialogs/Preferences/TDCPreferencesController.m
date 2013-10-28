@@ -438,7 +438,8 @@
     [alert setDisabledWhileAway:self.alertDisableWhileAwayButton.state];
 }
 
-- (void)onChangedAlertBounceDockIcon:(id)sender {
+- (void)onChangedAlertBounceDockIcon:(id)sender
+{
     TXNotificationType alertType = (TXNotificationType)self.alertTypeChoiceButton.selectedItem.tag;
     
     TDCPreferencesSoundWrapper *alert = [TDCPreferencesSoundWrapper soundWrapperWithEventType:alertType];
@@ -662,6 +663,9 @@
 
 	[self onChangedStyle:nil];
 
+	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListAction];
+	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
+
 	// ---- //
 
 	NSMutableString *sf = [NSMutableString string];
@@ -772,63 +776,6 @@
 	[self performSelector:@selector(editTable:) withObject:self.excludeKeywordsTable afterDelay:0.3];
 }
 
-- (void)onChangedInputHistoryScheme:(id)sender
-{
-	TXMasterController *master = self.masterController;
-
-	if (master.inputHistory) {
-		master.inputHistory = nil;
-	}
-
-	for (IRCClient *c in self.worldController.clients) {
-		if (c.inputHistory) {
-			c.inputHistory = nil;
-		}
-
-		if ([TPCPreferences inputHistoryIsChannelSpecific]) {
-			c.inputHistory = [TLOInputHistory new];
-		}
-
-		for (IRCChannel *u in c.channels) {
-			if (u.inputHistory) {
-				u.inputHistory = nil;
-			}
-
-			if ([TPCPreferences inputHistoryIsChannelSpecific]) {
-				u.inputHistory = [TLOInputHistory new];
-			}
-		}
-	}
-
-	if ([TPCPreferences inputHistoryIsChannelSpecific] == NO) {
-		master.inputHistory = [TLOInputHistory new];
-	}
-}
-
-- (void)onChangedStyle:(id)sender
-{
-	[self.worldController reloadTheme];
-
-	[self.masterController.inputTextField updateTextDirection];
-}
-
-- (void)onChangedMainWindowSegmentedController:(id)sender
-{
-	[self.masterController reloadSegmentedControllerOrigin];
-}
-
-- (void)onChangedUserListModeColor:(id)sender
-{
-	[self.masterController.memberList.badgeRenderer invalidateBadgeImageCacheAndRebuild];
-
-	[self.masterController.memberList reloadAllDrawings];
-}
-
-- (void)onChangedMainInputTextFieldFontSize:(id)sender
-{
-	[self.masterController.inputTextField updateTextBoxBasedOnPreferredFontSize];
-}
-
 - (void)onResetUserListModeColorsToDefaults:(id)sender
 {
 	TVCMemberList *memberList = self.masterController.memberList;
@@ -857,17 +804,59 @@
 	[self onChangedUserListModeColor:sender];
 }
 
+- (void)onChangedInputHistoryScheme:(id)sender
+{
+	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadInputHistoryScopeAction];
+}
+
 - (void)onChangedSidebarColorInversion:(id)sender
 {
-	[self.masterController.serverList updateBackgroundColor];
-	[self.masterController.serverList reloadAllDrawingsIgnoringOtherReloads];
-
-	[self.masterController.memberList reloadAllUserInterfaceElements];
-
-	[self.masterController.serverSplitView setNeedsDisplay:YES];
-	[self.masterController.memberSplitView setNeedsDisplay:YES];
+	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListAction];
+	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
 
 	[self.worldController executeScriptCommandOnAllViews:@"sidebarInversionPreferenceChanged" arguments:@[] onQueue:NO];
+}
+
+- (void)onChangedStyle:(id)sender
+{
+	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
+	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadTextDirectionAction];
+}
+
+- (void)onChangedMainWindowSegmentedController:(id)sender
+{
+	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadTextFieldSegmentedControllerOriginAction];
+}
+
+- (void)onChangedUserListModeColor:(id)sender
+{
+	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListUserBadgesAction];
+	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
+}
+
+- (void)onChangedMainInputTextFieldFontSize:(id)sender
+{
+	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadTextFieldFontSizeAction];
+}
+
+- (void)onChangedHighlightLogging:(id)sender
+{
+	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadHighlightLoggingAction];
+}
+
+- (void)onChangedUserListModeSortOrder:(id)sender
+{
+	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListSortOrderAction];
+}
+
+- (void)onOpenPathToScripts:(id)sender
+{
+	[RZWorkspace() openFile:[TPCPreferences applicationSupportFolderPath]];
+}
+
+- (void)setTextualAsDefaultIRCClient:(id)sender
+{
+	[TPCPreferences defaultIRCClientPrompt:YES];
 }
 
 - (void)openPathToThemesCallback:(TLOPopupPromptReturnType)returnCode
@@ -927,36 +916,6 @@
 
 		[RZWorkspace() openFile:path];
     }
-}
-
-- (void)onOpenPathToScripts:(id)sender
-{
-	[RZWorkspace() openFile:[TPCPreferences applicationSupportFolderPath]];
-}
-
-- (void)onChangedHighlightLogging:(id)sender
-{
-	IRCWorld *world = TPCPreferences.masterController.world;
-
-	if ([TPCPreferences logHighlights] == NO) {
-		for (IRCClient *u in world.clients) {
-			[u.highlights removeAllObjects];
-		}
-	}
-}
-
-- (void)setTextualAsDefaultIRCClient:(id)sender
-{
-	[TPCPreferences defaultIRCClientPrompt:YES];
-}
-
-- (void)onChangedUserListModeSortOrder:(id)sender
-{
-	IRCChannel *channel = self.worldController.selectedChannel;
-
-	if (channel) {
-		[channel reloadDataForTableViewBySortingMembers];
-	}
 }
 
 #pragma mark -
