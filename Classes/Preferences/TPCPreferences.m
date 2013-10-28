@@ -733,6 +733,8 @@ static NSURL *transcriptFolderResolvedBookmark;
 	if (reloadAction == TPCPreferencesKeyReloadServerListAction) {
 		[self.masterController.serverList updateBackgroundColor];
 		[self.masterController.serverList reloadAllDrawingsIgnoringOtherReloads];
+
+		[self.masterController.serverSplitView setNeedsDisplay:YES];
 	}
 
 	/* Member list user mode badges. */
@@ -753,6 +755,8 @@ static NSURL *transcriptFolderResolvedBookmark;
 	/* Member list redraw. */
 	if (reloadAction == TPCPreferencesKeyReloadMemberListAction) {
 		[self.masterController.memberList reloadAllUserInterfaceElements];
+
+		[self.masterController.memberSplitView setNeedsDisplay:YES];
 	}
 
 	/* World controller preferences changed. */
