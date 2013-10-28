@@ -30,7 +30,7 @@ body div#body_home {
 	-webkit-transition: opacity 0.8s linear;
 }
 
-body[type=channel] div#body_home {
+body[ltype=channel] div#body_home {
 	max-height: 96.5%;
 }
 
@@ -173,9 +173,9 @@ div[id=mark] {
 
 /* NOTICE/CTCP/WALLOPS */
 
-body div.line[type*=ctcp],
-body div.line[type*=notice],
-body div.line[type*=wallops] {
+body div.line[ltype*=ctcp],
+body div.line[ltype*=notice],
+body div.line[ltype*=wallops] {
 	color: #f00;
   	z-index: 191;
 	background: #400;
@@ -185,19 +185,19 @@ body div.line[type*=wallops] {
 	border-bottom: 1px solid #811;
 }
 
-body div[type*=notice] .sender {
+body div[ltype*=notice] .sender {
 	color: #f00;
 	font-weight: 700;
 }
 
 /* PRIVMSG */
 
-body div.line[type*=privmsg][highlight=false] {
+body div.line[ltype*=privmsg][highlight=false] {
  	padding: 3px 5px 3px 5px;
 }
 
-body div.line[type*=privmsg][highlight=true],
-body div.line[type*=action][highlight=true] {
+body div.line[ltype*=privmsg][highlight=true],
+body div.line[ltype*=action][highlight=true] {
 	font-weight: normal;
  	padding: 2px 5px 2px 5px;
 	border-top: 1px solid #06c793;
@@ -205,63 +205,63 @@ body div.line[type*=action][highlight=true] {
   	background-color: #125d35 !important;
 }
 
-body div[type="privmsg"] .message {
+body div[ltype="privmsg"] .message {
 	color: #aaa;
 }
 
-body div[type*=privmsg] p[type*=myself] .message {
+body div[ltype*=privmsg] p[ltype*=myself] .message {
 	color: #fff;
 }
 
-body div[type*=privmsg] .sender {
+body div[ltype*=privmsg] .sender {
 	font-weight: 700;
 	white-space: pre-wrap;
 }
 
 /* ACTION */
 
-body div.line[type*=action] {
+body div.line[ltype*=action] {
  	padding: 3px 5px 3px 5px;
 }
 
-body div[type="action"] .message {
+body div[ltype="action"] .message {
 	color: #00ff9c;
 }
 
-body div[type*=action] .sender {
+body div[ltype*=action] .sender {
 	font-weight: 700;
 }
 
-body div[type*=action] p[type*=myself] .sender,
-body div[type*=action] p[type*=myself] .message {
+body div[ltype*=action] p[ltype*=myself] .sender,
+body div[ltype*=action] p[ltype*=myself] .message {
 	color: #00ff9c;
 }
 
-body[dir=ltr] div[type*=action] .sender:before {
+body[dir=ltr] div[ltype*=action] .sender:before {
 	content: "\2022";
 	margin-right: 0.4em;
 }
 
-body[dir=ltr] div[type*=action] .sender:after {
+body[dir=ltr] div[ltype*=action] .sender:after {
 	content: "";
   	/* margin-right: 0.4em; */
 }
 
-body[dir=rtl] div[type*=action] .sender:before {
+body[dir=rtl] div[ltype*=action] .sender:before {
 	content: "\2022";
 	margin-left: 0.4em;
 }
 
-body[dir=rtl] div[type*=action] .sender:after {
+body[dir=rtl] div[ltype*=action] .sender:after {
 	content: "";
   	/* margin-left: 0.4em; */
 }
 
 /* DEBUG/INVITE */
 
-body div.line[type*=invite],
-body div.line[type*=debug],
-body div.line[type*=rawhtml] {
+body div.line[ltype*=invite],
+body div.line[ltype*=debug],
+body div.line[ltype*=rawhtml] {
 	color: #777;
   	z-index: 190;
 	background: #222;
@@ -307,159 +307,159 @@ body div.line[command="722"] .message {
 
 /* GENERAL EVENT */
 
-body div.line[type*=join],
-body div.line[type*=part],
-body div.line[type*=kick],
-body div.line[type*=quit],
-body div.line[type*=kill],
-body div.line[type*=nick],
-body div.line[type*=mode],
-body div.line[type*=website],
-body div.line[type*=topic] {
+body div.line[ltype*=join],
+body div.line[ltype*=part],
+body div.line[ltype*=kick],
+body div.line[ltype*=quit],
+body div.line[ltype*=kill],
+body div.line[ltype*=nick],
+body div.line[ltype*=mode],
+body div.line[ltype*=website],
+body div.line[ltype*=topic] {
  	padding: 3px 5px 3px 5px;
 	color: #666;
 }
 
-body[dir=ltr] div[type*=join] .message:before {
+body[dir=ltr] div[ltype*=join] .message:before {
 	content: "→";
   	color: #0c0;
   	/* margin-right: 0.4em; */
 }
 
-body[dir=ltr] div[type*=join] .message {
+body[dir=ltr] div[ltype*=join] .message {
   	color: #b589ff;
   	margin-right: 0.4em;
 }
 
-body[dir=ltr] div[type*=kick] .message:before {
+body[dir=ltr] div[ltype*=kick] .message:before {
 	content: "✕";
   	color: #e00;
   	/* margin-right: 0.4em; */
 }
 
-body[dir=ltr] div[type*=part] .message:before,
-body[dir=ltr] div[type*=quit] .message:before {
+body[dir=ltr] div[ltype*=part] .message:before,
+body[dir=ltr] div[ltype*=quit] .message:before {
 	content: "←";
   	color: #e00;
   	/* margin-right: 0.4em; */
 }
 
-body[dir=ltr] div[type*=kick] .message {
+body[dir=ltr] div[ltype*=kick] .message {
   	color: #ff3d3d;
   	margin-right: 0.4em;
 }
 
-body[dir=ltr] div[type*=part] .message {
+body[dir=ltr] div[ltype*=part] .message {
   	color: #ffae01;
   	margin-right: 0.4em;
 }
 
-body[dir=ltr] div[type*=quit] .message {
+body[dir=ltr] div[ltype*=quit] .message {
   	color: #ffee7a;
   	margin-right: 0.4em;
 }
 
-body[dir=ltr] div[type*=nick] .message:before {
+body[dir=ltr] div[ltype*=nick] .message:before {
 	content:"•";
   	color: #0090ff;
   	/* margin-right: 0.4em; */
 }
 
-body[dir=ltr] div[type*=nick] .message {
+body[dir=ltr] div[ltype*=nick] .message {
   	color: #0090ff;
   	margin-right: 0.4em;
 }
 
-body[dir=ltr] div[type*=mode] .message:before {
+body[dir=ltr] div[ltype*=mode] .message:before {
 	content: "❖";
   	color: #b4a355;
   	/* margin-right: 0.4em; */
 }
 
-body[dir=ltr] div[type*=mode] .message {
+body[dir=ltr] div[ltype*=mode] .message {
   	color: #9c9c9c;
   	margin-right: 0.4em;
 }
 
-body[dir=ltr] div[type*=topic] .message:before {
+body[dir=ltr] div[ltype*=topic] .message:before {
 	content: "✦";
   	color: #00a2ff;
   	/* margin-right: 0.4em; */
 }
 
-body[dir=ltr] div[type*=topic] .message {
+body[dir=ltr] div[ltype*=topic] .message {
   	color: #00ffa2;
   	margin-right: 0.4em;
 }
 
-body[dir=rtl] div[type*=join] .message:before {
+body[dir=rtl] div[ltype*=join] .message:before {
 	content: "→";
   	color: #0c0;
   	/* margin-left: 0.4em; */
 }
 
-body[dir=rtl] div[type*=join] .message {
+body[dir=rtl] div[ltype*=join] .message {
   	color: #b589ff;
   	margin-left: 0.4em;
 }
 
-body[dir=rtl] div[type*=kick] .message:before {
+body[dir=rtl] div[ltype*=kick] .message:before {
 	content: "✕";
   	color: #e00;
   	/* margin-left: 0.4em; */
 }
 
-body[dir=rtl] div[type*=part] .message:before,
-body[dir=rtl] div[type*=quit] .message:before {
+body[dir=rtl] div[ltype*=part] .message:before,
+body[dir=rtl] div[ltype*=quit] .message:before {
 	content: "←";
   	color: #e00;
   	/* margin-left: 0.4em; */
 }
 
-body[dir=rtl] div[type*=kick] .message {
+body[dir=rtl] div[ltype*=kick] .message {
   	color: #ff3d3d;
   	margin-left: 0.4em;
 }
 
-body[dir=rtl] div[type*=part] .message {
+body[dir=rtl] div[ltype*=part] .message {
   	color: #ffae01;
   	margin-left: 0.4em;
 }
 
-body[dir=rtl] div[type*=quit] .message {
+body[dir=rtl] div[ltype*=quit] .message {
   	color: #ffee7a;
   	margin-left: 0.4em;
 }
 
-body[dir=rtl] div[type*=nick] .message:before {
+body[dir=rtl] div[ltype*=nick] .message:before {
 	content:"•";
   	color: #0090ff;
   	/* margin-left: 0.4em; */
 }
 
-body[dir=rtl] div[type*=nick] .message {
+body[dir=rtl] div[ltype*=nick] .message {
   	color: #0090ff;
   	margin-left: 0.4em;
 }
 
-body[dir=rtl] div[type*=mode] .message:before {
+body[dir=rtl] div[ltype*=mode] .message:before {
 	content: "❖";
   	color: #b4a355;
   	/* margin-left: 0.4em; */
 }
 
-body[dir=rtl] div[type*=mode] .message {
+body[dir=rtl] div[ltype*=mode] .message {
   	color: #9c9c9c;
   	margin-left: 0.4em;
 }
 
-body[dir=rtl] div[type*=topic] .message:before {
+body[dir=rtl] div[ltype*=topic] .message:before {
 	content: "✦";
   	color: #00a2ff;
   	/* margin-left: 0.4em; */
 }
 
-body[dir=rtl] div[type*=topic] .message {
+body[dir=rtl] div[ltype*=topic] .message {
   	color: #00ffa2;
   	margin-left: 0.4em;
 }
@@ -470,161 +470,161 @@ body .inline_nickname {
 	font-weight: 700;
 }
 
-body div[type*=privmsg] .sender[type*=myself] { 
+body div[ltype*=privmsg] .sender[ltype*=myself] { 
 	color: #B8DFFF; 
 }
 
-body .sender[type*=normal][colornumber='0'], 
+body .sender[ltype*=normal][colornumber='0'], 
 body .inline_nickname[colornumber='0'] {
 	color: #cb5d5a; 
 }
 
-body .sender[type*=normal][colornumber='1'], 
+body .sender[ltype*=normal][colornumber='1'], 
 body .inline_nickname[colornumber='1'] {
 	color: #a3bf75; 
 }
 
-body .sender[type*=normal][colornumber='2'], 
+body .sender[ltype*=normal][colornumber='2'], 
 body .inline_nickname[colornumber='2'] {
 	color: #9b85b3; 
 }
 
-body .sender[type*=normal][colornumber='3'], 
+body .sender[ltype*=normal][colornumber='3'], 
 body .inline_nickname[colornumber='3'] {
 	color: #C083F2; 
 }
 
-body .sender[type*=normal][colornumber='4'], 
+body .sender[ltype*=normal][colornumber='4'], 
 body .inline_nickname[colornumber='4'] {
 	color: #8bd3e5; 
 }
 
-body .sender[type*=normal][colornumber='5'], 
+body .sender[ltype*=normal][colornumber='5'], 
 body .inline_nickname[colornumber='5'] {
 	color: #f4a36c; 
 }
 
-body .sender[type*=normal][colornumber='6'], 
+body .sender[ltype*=normal][colornumber='6'], 
 body .inline_nickname[colornumber='6'] {
 	color: #75ade1; 
 }
 
-body .sender[type*=normal][colornumber='7'], 
+body .sender[ltype*=normal][colornumber='7'], 
 body .inline_nickname[colornumber='7'] {
 	color: #ffbfbd; 
 }
 
-body .sender[type*=normal][colornumber='8'], 
+body .sender[ltype*=normal][colornumber='8'], 
 body .inline_nickname[colornumber='8'] {
 	color: #b2cc00; 
 }
 
-body .sender[type*=normal][colornumber='9'], 
+body .sender[ltype*=normal][colornumber='9'], 
 body .inline_nickname[colornumber='9'] {
 	color: #96ff00; 
 }
 
-body .sender[type*=normal][colornumber='10'], 
+body .sender[ltype*=normal][colornumber='10'], 
 body .inline_nickname[colornumber='10'] {
 	color: #05ffaa; 
 }
 
-body .sender[type*=normal][colornumber='11'], 
+body .sender[ltype*=normal][colornumber='11'], 
 body .inline_nickname[colornumber='11'] {
 	color: #ffe982; 
 }
 
-body .sender[type*=normal][colornumber='12'], 
+body .sender[ltype*=normal][colornumber='12'], 
 body .inline_nickname[colornumber='12'] {
 	color: #aadeff; 
 }
 
-body .sender[type*=normal][colornumber='13'], 
+body .sender[ltype*=normal][colornumber='13'], 
 body .inline_nickname[colornumber='13'] {
 	color: #36ff15; 
 }
 
-body .sender[type*=normal][colornumber='14'], 
+body .sender[ltype*=normal][colornumber='14'], 
 body .inline_nickname[colornumber='14'] {
 	color: #ff6076; 
 }
 
-body .sender[type*=normal][colornumber='15'], 
+body .sender[ltype*=normal][colornumber='15'], 
 body .inline_nickname[colornumber='15'] {
 	color: #8e908f; 
 }
 
-body .sender[type*=normal][colornumber='16'], 
+body .sender[ltype*=normal][colornumber='16'], 
 body .inline_nickname[colornumber='16'] { 
 	color: #706616;
 }
 
-body .sender[type*=normal][colornumber='17'], 
+body .sender[ltype*=normal][colornumber='17'], 
 body .inline_nickname[colornumber='17'] { 
 	color: #46799c;
 }
 
-body .sender[type*=normal][colornumber='18'], 
+body .sender[ltype*=normal][colornumber='18'], 
 body .inline_nickname[colornumber='18'] { 
 	color: #80372e;
 }
 
-body .sender[type*=normal][colornumber='19'], 
+body .sender[ltype*=normal][colornumber='19'], 
 body .inline_nickname[colornumber='19'] { 
 	color: #8F478E;
 }
 
-body .sender[type*=normal][colornumber='20'], 
+body .sender[ltype*=normal][colornumber='20'], 
 body .inline_nickname[colornumber='20'] { 
 	color: #5b9e4c;
 }
 
-body .sender[type*=normal][colornumber='21'], 
+body .sender[ltype*=normal][colornumber='21'], 
 body .inline_nickname[colornumber='21'] { 
 	color: #13826c;
 }
 
-body .sender[type*=normal][colornumber='22'], 
+body .sender[ltype*=normal][colornumber='22'], 
 body .inline_nickname[colornumber='22'] { 
 	color: #b13637;
 }
 
-body .sender[type*=normal][colornumber='23'], 
+body .sender[ltype*=normal][colornumber='23'], 
 body .inline_nickname[colornumber='23'] { 
 	color: #e45d59;
 }
 
-body .sender[type*=normal][colornumber='24'], 
+body .sender[ltype*=normal][colornumber='24'], 
 body .inline_nickname[colornumber='24'] { 
 	color: #1b51ae;
 }
 
-body .sender[type*=normal][colornumber='25'], 
+body .sender[ltype*=normal][colornumber='25'], 
 body .inline_nickname[colornumber='25'] { 
 	color: #4855ac;
 }
 
-body .sender[type*=normal][colornumber='26'], 
+body .sender[ltype*=normal][colornumber='26'], 
 body .inline_nickname[colornumber='26'] { 
 	color: #7f1d86;
 }
 
-body .sender[type*=normal][colornumber='27'], 
+body .sender[ltype*=normal][colornumber='27'], 
 body .inline_nickname[colornumber='27'] { 
 	color: #73643f;
 }
 
-body .sender[type*=normal][colornumber='28'], 
+body .sender[ltype*=normal][colornumber='28'], 
 body .inline_nickname[colornumber='28'] { 
 	color: #0b9578;
 }
 
-body .sender[type*=normal][colornumber='29'], 
+body .sender[ltype*=normal][colornumber='29'], 
 body .inline_nickname[colornumber='29'] { 
 	color: #569c96;
 }
 
-body .sender[type*=normal][colornumber='30'], 
+body .sender[ltype*=normal][colornumber='30'], 
 body .inline_nickname[colornumber='30'] { 
 	color: #08465f;
 }
