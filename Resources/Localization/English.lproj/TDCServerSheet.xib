@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="13A569" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A598" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCServerSheet">
@@ -29,6 +29,7 @@
                 <outlet property="editHighlightButton" destination="2448" id="2476"/>
                 <outlet property="editIgnoreButton" destination="1844" id="1954"/>
                 <outlet property="encodingView" destination="1675" id="1925"/>
+                <outlet property="excludedFromCloudSyncingCheck" destination="dLD-ut-ncd" id="aCB-R6-pq3"/>
                 <outlet property="fallbackEncodingButton" destination="1685" id="2275"/>
                 <outlet property="floodControlCheck" destination="2170" id="2286"/>
                 <outlet property="floodControlDelayTimerSlider" destination="2194" id="2284"/>
@@ -127,11 +128,11 @@
                                         </subviews>
                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </clipView>
-                                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" id="1443">
+                                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="1443">
                                         <rect key="frame" x="1" y="119" width="223" height="15"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                     </scroller>
-                                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" id="1441">
+                                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="1441">
                                         <rect key="frame" x="224" y="17" width="15" height="102"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                     </scroller>
@@ -330,6 +331,21 @@ Gw
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
+                <button id="dLD-ut-ncd">
+                    <rect key="frame" x="113" y="28" width="310" height="18"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <buttonCell key="cell" type="check" title="Exclude from iCloud syncing." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="eql-rS-Io2">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="1we-Ps-Z9v" name="hidden" keyPath="values.SyncPreferencesToTheCloud" id="scC-ZN-NMU">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </button>
             </subviews>
         </customView>
         <customView id="1563" userLabel="Identity View">
@@ -519,11 +535,11 @@ Gw
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" id="S86-Q5-29T">
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="S86-Q5-29T">
                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" id="u4c-Pe-djU">
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="u4c-Pe-djU">
                         <rect key="frame" x="-100" y="-100" width="16" height="34"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
@@ -701,11 +717,11 @@ Gw
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" id="2563">
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2563">
                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" id="2564">
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="2564">
                         <rect key="frame" x="-100" y="-100" width="16" height="34"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
@@ -803,11 +819,11 @@ Gw
                         </subviews>
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" id="1803">
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="1803">
                         <rect key="frame" x="1" y="115" width="419" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" id="1804">
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="1804">
                         <rect key="frame" x="404.90499999999997" y="17" width="15" height="154"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
@@ -926,11 +942,11 @@ Gw
                         </subviews>
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" id="2452">
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="2452">
                         <rect key="frame" x="1" y="115" width="419" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" id="2453">
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="2453">
                         <rect key="frame" x="404.90499999999997" y="17" width="15" height="154"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
@@ -980,7 +996,7 @@ Gw
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView drawsBackground="NO" importsGraphics="NO" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="2471">
-                                <rect key="frame" x="0.0" y="0.0" width="440" height="34"/>
+                                <rect key="frame" x="0.0" y="0.0" width="440" height="32"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="minSize" width="440" height="32"/>
@@ -1015,11 +1031,11 @@ Gw
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" id="2472">
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2472">
                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" id="2473">
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="2473">
                         <rect key="frame" x="-100" y="-100" width="16" height="32"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
@@ -1079,11 +1095,11 @@ Gw
                         </subviews>
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" id="1850">
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="1850">
                         <rect key="frame" x="-100" y="-100" width="307.77800000000002" height="15"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" id="1849">
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="1849">
                         <rect key="frame" x="293.77800000000002" y="17" width="15" height="339.55599999999998"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
@@ -1195,11 +1211,11 @@ your friends and ignore your enemies.</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" id="2311">
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2311">
                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <scroller key="verticalScroller" verticalHuggingPriority="750" id="2312">
+                    <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="2312">
                         <rect key="frame" x="404" y="1" width="16" height="181"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
@@ -1549,6 +1565,7 @@ your friends and ignore your enemies.</string>
                 </button>
             </subviews>
         </customView>
+        <userDefaultsController representsSharedInstance="YES" id="1we-Ps-Z9v"/>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="8" height="8"/>

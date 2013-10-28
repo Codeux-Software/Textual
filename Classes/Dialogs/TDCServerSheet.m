@@ -317,6 +317,7 @@
 	self.serverPasswordField.stringValue	= self.config.serverPassword;
 	self.serverPortField.stringValue		= [NSString stringWithInteger:self.config.serverPort];
 
+	self.excludedFromCloudSyncingCheck.state		= self.config.excludedFromCloudSyncing;
 	self.zncIgnorePlaybackNotificationsCheck.state	= self.config.zncIgnorePlaybackNotifications;
 
     self.prefersIPv6Check.state				= self.config.connectionPrefersIPv6;
@@ -400,6 +401,7 @@
 	self.config.connectionUsesSSL			= self.connectionUsesSSLCheck.state;
 	self.config.serverPassword				= self.serverPasswordField.trimmedStringValue;
 
+	self.config.excludedFromCloudSyncing		= self.excludedFromCloudSyncingCheck.state;
 	self.config.zncIgnorePlaybackNotifications	= self.zncIgnorePlaybackNotificationsCheck.state;
 
 	self.config.performPongTimer				= self.pongTimerCheck.state;

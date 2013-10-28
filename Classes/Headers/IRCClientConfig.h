@@ -67,6 +67,7 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 @property (nonatomic, assign) BOOL isTrustedConnection;
 @property (nonatomic, assign) BOOL outgoingFloodControl;
 @property (nonatomic, assign) BOOL sidebarItemExpanded;
+@property (nonatomic, assign) BOOL excludedFromCloudSyncing;
 @property (nonatomic, assign) BOOL zncIgnorePlaybackNotifications;		/* ZNC Related option. */
 @property (nonatomic, assign) NSInteger floodControlDelayTimerInterval;
 @property (nonatomic, assign) NSInteger floodControlMaximumMessages;
