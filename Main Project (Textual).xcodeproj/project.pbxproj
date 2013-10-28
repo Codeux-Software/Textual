@@ -158,6 +158,10 @@
 		4C0E363516F192F200B426C2 /* TVCServerList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0444EA16F15F8200EBB665 /* TVCServerList.m */; };
 		4C0E363616F192F200B426C2 /* TVCServerListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0444EB16F15F8200EBB665 /* TVCServerListCell.m */; };
 		4C0E363716F192F200B426C2 /* TVCServerListCellBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0444EC16F15F8200EBB665 /* TVCServerListCellBadge.m */; };
+		4C17385718197F540099EEC2 /* TPCPreferencesCloudSync.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C17385618197F540099EEC2 /* TPCPreferencesCloudSync.m */; };
+		4C17385818197F540099EEC2 /* TPCPreferencesCloudSync.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C17385618197F540099EEC2 /* TPCPreferencesCloudSync.m */; };
+		4C17385E18197F800099EEC2 /* TPCPreferencesCloudSync.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C17385D18197F800099EEC2 /* TPCPreferencesCloudSync.h */; };
+		4C17385F18197F800099EEC2 /* TPCPreferencesCloudSync.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C17385D18197F800099EEC2 /* TPCPreferencesCloudSync.h */; };
 		4C1893EC17980F060091D173 /* TVCImageURLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1893EB17980F060091D173 /* TVCImageURLoader.m */; };
 		4C1893ED17980F060091D173 /* TVCImageURLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1893EB17980F060091D173 /* TVCImageURLoader.m */; };
 		4C1893F317980F460091D173 /* TVCImageURLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1893F217980F460091D173 /* TVCImageURLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -993,6 +997,8 @@
 		4C0444EC16F15F8200EBB665 /* TVCServerListCellBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCServerListCellBadge.m; sourceTree = "<group>"; };
 		4C0C72041742C431000F82C4 /* NSByteCountFormatterHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSByteCountFormatterHelper.m; sourceTree = "<group>"; };
 		4C0C720C1742C444000F82C4 /* NSByteCountFormatterHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSByteCountFormatterHelper.h; sourceTree = "<group>"; };
+		4C17385618197F540099EEC2 /* TPCPreferencesCloudSync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCPreferencesCloudSync.m; sourceTree = "<group>"; };
+		4C17385D18197F800099EEC2 /* TPCPreferencesCloudSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesCloudSync.h; path = Classes/Headers/TPCPreferencesCloudSync.h; sourceTree = SOURCE_ROOT; };
 		4C1893EB17980F060091D173 /* TVCImageURLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCImageURLoader.m; path = "Classes/Views/Channel View/TVCImageURLoader.m"; sourceTree = SOURCE_ROOT; };
 		4C1893F217980F460091D173 /* TVCImageURLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCImageURLoader.h; sourceTree = "<group>"; };
 		4C1DC5521580420500A47BC9 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1492,6 +1498,7 @@
 			isa = PBXGroup;
 			children = (
 				4C5A0310170C2C010016BB1A /* TPCPreferencesImportExport.m */,
+				4C17385618197F540099EEC2 /* TPCPreferencesCloudSync.m */,
 			);
 			name = "Migration Assistant";
 			path = Preferences;
@@ -1977,6 +1984,7 @@
 				4C8AF57B158E99520026668C /* TLOTimer.h */,
 				4C8AF57C158E99520026668C /* TLOTimerCommand.h */,
 				4C8AF57E158E99520026668C /* TPCPreferences.h */,
+				4C17385D18197F800099EEC2 /* TPCPreferencesCloudSync.h */,
 				4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */,
 				4C92FECA17A8C8F2003888F4 /* TPCResourceManager.h */,
 				4C8AF57F158E99520026668C /* TPCThemeController.h */,
@@ -2495,6 +2503,7 @@
 				4C5BA40016F1302F00A96CA2 /* IRCClientConfig.h in Headers */,
 				4C5BA40116F1302F00A96CA2 /* IRCColorFormat.h in Headers */,
 				4C5BA40216F1302F00A96CA2 /* IRCConnection.h in Headers */,
+				4C17385F18197F800099EEC2 /* TPCPreferencesCloudSync.h in Headers */,
 				4C5BA40316F1302F00A96CA2 /* IRCExtras.h in Headers */,
 				4C5BA40416F1302F00A96CA2 /* IRCISupportInfo.h in Headers */,
 				4C5BA40516F1302F00A96CA2 /* IRCMessage.h in Headers */,
@@ -2642,6 +2651,7 @@
 				4C8AF62E158E99520026668C /* IRCClientConfig.h in Headers */,
 				4C8AF62F158E99520026668C /* IRCColorFormat.h in Headers */,
 				4C8AF630158E99520026668C /* IRCConnection.h in Headers */,
+				4C17385E18197F800099EEC2 /* TPCPreferencesCloudSync.h in Headers */,
 				4C8AF631158E99520026668C /* IRCExtras.h in Headers */,
 				4C8AF632158E99520026668C /* IRCISupportInfo.h in Headers */,
 				4C8AF633158E99520026668C /* IRCMessage.h in Headers */,
@@ -2807,6 +2817,19 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Codeux Software";
+				TargetAttributes = {
+					4C1DC5511580420500A47BC9 = {
+						DevelopmentTeam = 8482Q6EPL6;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
+					};
+					4C5BA37216F1302F00A96CA2 = {
+						DevelopmentTeam = 8482Q6EPL6;
+					};
+				};
 			};
 			buildConfigurationList = 4C1DC54C1580420500A47BC9 /* Build configuration list for PBXProject "Main Project (Textual)" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -3266,6 +3289,7 @@
 				4C0445DB16F1603C00EBB665 /* TVCListSeparatorCell.m in Sources */,
 				4C0445DC16F1603C00EBB665 /* TVCListView.m in Sources */,
 				4C0445DD16F1603C00EBB665 /* TVCMainWindow.m in Sources */,
+				4C17385818197F540099EEC2 /* TPCPreferencesCloudSync.m in Sources */,
 				4C0445DE16F1603C00EBB665 /* TVCMainWindowLoadingScreen.m in Sources */,
 				4C0445DF16F1603C00EBB665 /* TVCMainWindowSegmentedControl.m in Sources */,
 				4C0445E016F1603C00EBB665 /* TVCThinSplitView.m in Sources */,
@@ -3394,6 +3418,7 @@
 				4C1ED4A316CEA0A9006DD0CA /* IRCConnectionSocket.m in Sources */,
 				4C8D624F16D02688007D6C60 /* NSRangeHelper.m in Sources */,
 				4CBBD19E16E356F400D2FEFE /* TVCMemberListUserInfoPopover.m in Sources */,
+				4C17385718197F540099EEC2 /* TPCPreferencesCloudSync.m in Sources */,
 				4CB331B516F1BBC700D65CBE /* NSImageHelper.m in Sources */,
 				4C1E2BEF16FB1F13007C9717 /* NSUserDefaultsHelper.m in Sources */,
 				4C937BD5170618940050CEF3 /* TLOSpeechSynthesizer.m in Sources */,
@@ -3699,36 +3724,45 @@
 		4C5BA4E216F1302F00A96CA2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Quartz.framework/Versions/A/Frameworks\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
 		4C5BA4E316F1302F00A96CA2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Quartz.framework/Versions/A/Frameworks\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
 		4C5BA4E416F1302F00A96CA2 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Quartz.framework/Versions/A/Frameworks\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				PROVISIONING_PROFILE = "";
 			};
 			name = "Release (App Store)";
 		};
@@ -3762,12 +3796,15 @@
 		4C77A3271748BCDC00D9BD05 /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Quartz.framework/Versions/A/Frameworks\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				PROVISIONING_PROFILE = "";
 			};
 			name = "Release (Trial)";
 		};

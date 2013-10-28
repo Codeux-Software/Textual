@@ -251,6 +251,8 @@
 	[self.worldController select:selectedItem];
 	[self.worldController adjustSelection];
 
+	[self populateISONTrackedUsersList:self.config.ignoreList];
+
 	[self setupReachability];
 }
 
