@@ -3671,7 +3671,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C86B0101748B7B60028C7AE /* Shared Debug Configuration.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = Textual;
@@ -3687,7 +3686,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C86B00F1748B7B60028C7AE /* Shared Developer ID Release Configuration.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = Textual;
@@ -3726,45 +3724,36 @@
 		4C5BA4E216F1302F00A96CA2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Quartz.framework/Versions/A/Frameworks\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
 		4C5BA4E316F1302F00A96CA2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Quartz.framework/Versions/A/Frameworks\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
 		4C5BA4E416F1302F00A96CA2 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Quartz.framework/Versions/A/Frameworks\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				PROVISIONING_PROFILE = "";
 			};
 			name = "Release (App Store)";
 		};
@@ -3772,7 +3761,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C77A31F1748BCCF00D9BD05 /* Shared Trial Release Configuration.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = "Textual Trial";
@@ -3799,15 +3787,12 @@
 		4C77A3271748BCDC00D9BD05 /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Quartz.framework/Versions/A/Frameworks\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				PROVISIONING_PROFILE = "";
 			};
 			name = "Release (Trial)";
 		};
@@ -3841,7 +3826,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C86B0111748B7B60028C7AE /* Shared App Store Release Configuration.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = Textual;
