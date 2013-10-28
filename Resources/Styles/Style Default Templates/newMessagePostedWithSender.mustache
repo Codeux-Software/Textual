@@ -1,6 +1,7 @@
 {{! The 'line types' folder needs to be copied to a custom style to modify this file. }}
 
-<div 	type="{{lineType}}" 
+<div 	ltype="{{lineType}}" 
+		type="{{lineType}}"
 		command="{{rawCommand}}"
 		highlight="{{highlightAttributeRepresentation}}" 
 		class="line {{lineClassAttributeRepresentation}}" 
@@ -10,7 +11,7 @@
 {{#isRemoteMessage}}
 	<p>
 {{^isRemoteMessage}}
-	<p type="{{nicknameType}}">
+	<p ltype="{{nicknameType}}" type="{{nicknameType}}">
 {{/isRemoteMessage}}
 
 		<span class="time">{{formattedTimestamp}} </span>
@@ -19,11 +20,11 @@
 	{{{encryptedMessageLockTemplate}}}
 {{/isEncrypted}}
 
-		<span class="message" type="{{lineType}}">
+		<span class="message" ltype="{{lineType}}" type="{{lineType}}">
 			<span class="sender"
 				ondblclick="Textual.nicknameDoubleClicked()" 
 				oncontextmenu="Textual.openStandardNicknameContextualMenu()" 
-				type="{{nicknameType}}" 
+				ltype="{{nicknameType}}" type="{{nicknameType}}"
 				nick="{{nickname}}" 
 				{{#nicknameColorHashingEnabled}} 
 					colornumber="{{nicknameColorNumber}}"

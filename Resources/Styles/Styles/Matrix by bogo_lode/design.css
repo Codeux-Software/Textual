@@ -29,7 +29,7 @@ body div#body_home {
 	-webkit-transition: opacity 0.8s linear;
 }
 
-body[type=channel] div#body_home {
+body[ltype=channel] div#body_home {
 	max-height: 96.5%;
 }
 
@@ -175,9 +175,9 @@ div[id=mark] {
 
 /* NOTICE/CTCP/WALLOPS */
 
-body div.line[type*=ctcp],
-body div.line[type*=notice],
-body div.line[type*=wallops] {
+body div.line[ltype*=ctcp],
+body div.line[ltype*=notice],
+body div.line[ltype*=wallops] {
 	color: #f00;
   	z-index: 191;
 	background: #400;
@@ -187,19 +187,19 @@ body div.line[type*=wallops] {
 	border-bottom: 1px solid #811;
 }
 
-body div[type*=notice] .sender {
+body div[ltype*=notice] .sender {
 	color: #f00;
 	font-weight: normal;
 }
 
 /* PRIVMSG */
 
-body div.line[type*=privmsg][highlight=false] {
+body div.line[ltype*=privmsg][highlight=false] {
  	padding: 3px 5px 3px 5px;
 }
 
-body div.line[type*=privmsg][highlight=true],
-body div.line[type*=action][highlight=true] {
+body div.line[ltype*=privmsg][highlight=true],
+body div.line[ltype*=action][highlight=true] {
 	font-weight: normal;
  	padding: 2px 5px 2px 5px;
 	border-top: 1px solid #811;
@@ -207,58 +207,58 @@ body div.line[type*=action][highlight=true] {
   	background-color: #400 !important;
 }
 
-body div[type="privmsg"] .message {
+body div[ltype="privmsg"] .message {
 	color: #aaa;
 }
 
-body div[type*=privmsg] p[type*=myself] .message {
+body div[ltype*=privmsg] p[ltype*=myself] .message {
 	color: #fff;
 }
 
-body div[type*=privmsg] .sender {
+body div[ltype*=privmsg] .sender {
 	font-weight: normal;
 	white-space: pre-wrap;
 }
 
 /* ACTION */
 
-body div.line[type*=action] {
+body div.line[ltype*=action] {
  	padding: 3px 5px 3px 5px;
 }
 
-body div[type="action"] .message {
+body div[ltype="action"] .message {
 	color: #aaa;
 }
 
-body div[type*=action] .sender {
+body div[ltype*=action] .sender {
 	font-weight: normal;
 }
 
-body[dir=ltr] div[type*=action] .sender:before {
+body[dir=ltr] div[ltype*=action] .sender:before {
 	content: "\2022";
 	margin-right: 0.4em;
 }
 
-body[dir=ltr] div[type*=action] .sender:after {
+body[dir=ltr] div[ltype*=action] .sender:after {
 	content: "";
   	/* margin-right: 0.4em; */
 }
 
-body[dir=rtl] div[type*=action] .sender:before {
+body[dir=rtl] div[ltype*=action] .sender:before {
 	content: "\2022";
 	margin-left: 0.4em;
 }
 
-body[dir=rtl] div[type*=action] .sender:after {
+body[dir=rtl] div[ltype*=action] .sender:after {
 	content: "";
   	/* margin-left: 0.4em; */
 }
 
 /* DEBUG/INVITE */
 
-body div.line[type*=invite],
-body div.line[type*=debug],
-body div.line[type*=rawhtml] {
+body div.line[ltype*=invite],
+body div.line[ltype*=debug],
+body div.line[ltype*=rawhtml] {
 	color: #777;
   	z-index: 190;
 	background: #222;
@@ -305,55 +305,55 @@ body div.line[command="722"] .message {
 
 /* GENERAL EVENT */
 
-body div.line[type*=join],
-body div.line[type*=part],
-body div.line[type*=kick],
-body div.line[type*=quit],
-body div.line[type*=kill],
-body div.line[type*=nick],
-body div.line[type*=mode],
-body div.line[type*=topic],
-body div.line[type*=website] {
+body div.line[ltype*=join],
+body div.line[ltype*=part],
+body div.line[ltype*=kick],
+body div.line[ltype*=quit],
+body div.line[ltype*=kill],
+body div.line[ltype*=nick],
+body div.line[ltype*=mode],
+body div.line[ltype*=topic],
+body div.line[ltype*=website] {
 	padding: 3px 5px 3px 5px;
 	color: #666;
 	font-weight: normal;
 }
 
-body[dir=ltr] div[type*=join] .message:before {
+body[dir=ltr] div[ltype*=join] .message:before {
 	content: "→";
   	color: #0c0;
   	/* margin-right: 0.4em; */
 }
 
-body[dir=ltr] div[type*=kick] .message:before,
-body[dir=ltr] div[type*=part] .message:before,
-body[dir=ltr] div[type*=quit] .message:before {
+body[dir=ltr] div[ltype*=kick] .message:before,
+body[dir=ltr] div[ltype*=part] .message:before,
+body[dir=ltr] div[ltype*=quit] .message:before {
 	content: "←";
   	color: #e00;
   	/* margin-right: 0.4em; */
 }
 
-body[dir=ltr] div[type*=nick] .message:before {
+body[dir=ltr] div[ltype*=nick] .message:before {
 	content:"•";
   	color: #0c0;
   	/* margin-right: 0.4em; */
 }
 
-body[dir=rtl] div[type*=join] .message:before {
+body[dir=rtl] div[ltype*=join] .message:before {
 	content: "→";
   	color: #0c0;
   	/* margin-left: 0.4em; */
 }
 
-body[dir=rtl] div[type*=kick] .message:before,
-body[dir=rtl] div[type*=part] .message:before,
-body[dir=rtl] div[type*=quit] .message:before {
+body[dir=rtl] div[ltype*=kick] .message:before,
+body[dir=rtl] div[ltype*=part] .message:before,
+body[dir=rtl] div[ltype*=quit] .message:before {
 	content: "←";
   	color: #e00;
   	/* margin-left: 0.4em; */
 }
 
-body[dir=rtl] div[type*=nick] .message:before {
+body[dir=rtl] div[ltype*=nick] .message:before {
 	content:"•";
   	color: #0c0;
   	/* margin-left: 0.4em; */
@@ -363,9 +363,9 @@ body[dir=rtl] div[type*=nick] .message:before {
 
 body .inline_nickname { color: #21DB00; }
 
-body div[type*=privmsg] .sender[type*=myself],
-body div[type*=action] .sender[type*=myself] { 
+body div[ltype*=privmsg] .sender[ltype*=myself],
+body div[ltype*=action] .sender[ltype*=myself] { 
 	color: #aaa; 
 }
 
-body .sender[type*=normal] { color: #FFFFFF; }
+body .sender[ltype*=normal] { color: #FFFFFF; }
