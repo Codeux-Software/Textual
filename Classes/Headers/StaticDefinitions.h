@@ -94,6 +94,7 @@
 #define RZUserNotificationCenter()				[NSUserNotificationCenter defaultUserNotificationCenter]
 #define RZWorkspace()							[NSWorkspace sharedWorkspace]
 #define RZWorkspaceNotificationCenter()			[RZWorkspace() notificationCenter]
+#define RZUbiquitousKeyValueStore()				[NSUbiquitousKeyValueStore defaultStore]
 
 /* Lazy-man defines. */
 #define PointerIsEmpty(s)						((s) == NULL || (s) == nil)

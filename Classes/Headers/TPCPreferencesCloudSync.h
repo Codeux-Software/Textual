@@ -6,7 +6,7 @@
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
  Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
-        Please see Contributors.rtfd and Acknowledgements.rtfd
+        Contributors.rtfd and Acknowledgements.rtfd
 
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
@@ -37,15 +37,8 @@
 
 #import "TextualApplication.h"
 
-#define TPCPreferencesImportExportVersionKeyName		@"Dictionary Version"
-#define TPCPreferencesImportExportVersionKeyValue		@"2.0"
-
-/* Absolutely no plugin should call this class. */
-@interface TPCPreferencesImportExport : NSObject
-+ (void)import;
-+ (void)export;
-
-/* For iCloud purposes. */
-+ (void)importContentsOfDictionary:(NSDictionary *)aDict;
-+ (NSDictionary *)exportedPreferencesDictionaryRepresentation;
+@interface TPCPreferencesCloudSync : NSObject
++ (void)initializeCloudSyncSession;
++ (void)refreshCloudSyncSession:(BOOL)destroyExistingRemoteKeys;
++ (void)closeCloudSyncSession;
 @end

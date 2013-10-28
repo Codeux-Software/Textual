@@ -528,6 +528,240 @@ static NSURL *transcriptFolderResolvedBookmark;
 }
 
 #pragma mark -
+#pragma mark Export/Import Information
+
+/* This method expects a list of key names which were changed during an 
+ import or cloud sync. The method will enumrate over all the keys reloading
+ specific parts of the application based on what is supplied. It an expects
+ an array so that it knows only to perform each action once. */
++ (void)performReloadActionForKeyValues:(NSArray *)prefKeys
+{
+	NSObjectIsEmptyAssert(prefKeys);
+
+	/* Begin the process… */
+	/* Some of these keys may be repeated because they are shared amongst different elements… */
+
+	/* Style specific reloads… */
+	if ([prefKeys containsObject:@"Theme -> Name"] ||									/* Style name. */
+		[prefKeys containsObject:@"Theme -> Font Name"] ||								/* Style font name. */
+		[prefKeys containsObject:@"Theme -> Font Size"] ||								/* Style font size. */
+		[prefKeys containsObject:@"Theme -> Nickname Format"] ||						/* Nickname format. */
+		[prefKeys containsObject:@"Theme -> Timestamp Format"] ||						/* Timestamp format. */
+		[prefKeys containsObject:@"Theme -> Channel Font Preference Enabled"] ||		/* Indicates whether a style overrides a specific preference. */
+		[prefKeys containsObject:@"Theme -> Nickname Format Preference Enabled"] ||		/* Indicates whether a style overrides a specific preference. */
+		[prefKeys containsObject:@"Theme -> Timestamp Format Preference Enabled"] ||	/* Indicates whether a style overrides a specific preference. */
+		[prefKeys containsObject:@"RightToLeftTextFormatting"] ||						/* Text direction. */
+		[prefKeys containsObject:@"DisableRemoteNicknameColorHashing"] ||				/* Do not colorize nicknames. */
+		[prefKeys containsObject:@"DisplayEventInLogView -> Inline Media"])				/* Display inline media. */
+	{
+		[self performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
+	}
+
+	/* Highlight lists. */
+	if ([prefKeys containsObject:@"Highlight List -> Primary Matches"] ||		/* Primary keyword list. */
+		[prefKeys containsObject:@"Highlight List -> Excluded Matches"])		/* Excluded keyword list. */
+	{
+		[self performReloadActionForActionType:TPCPreferencesKeyReloadHighlightKeywordsAction];
+	}
+
+	/* Highlight logging. */
+	if ([prefKeys containsObject:@"LogHighlights"]) {
+		[self performReloadActionForActionType:TPCPreferencesKeyReloadHighlightLoggingAction];
+	}
+
+	/* Text direction: right-to-left, left-to-right */
+	if ([prefKeys containsObject:@"RightToLeftTextFormatting"]) {
+		[self performReloadActionForActionType:TPCPreferencesKeyReloadTextDirectionAction];
+	}
+
+	/* Text field font size. */
+	if ([prefKeys containsObject:@"Main Input Text Field -> Font Size"]) {
+		[self performReloadActionForActionType:TPCPreferencesKeyReloadTextFieldFontSizeAction];
+	}
+
+	/* Input history scope. */
+	if ([prefKeys containsObject:@"SaveInputHistoryPerSelection"]) {
+		[self performReloadActionForActionType:TPCPreferencesKeyReloadInputHistoryScopeAction];
+	}
+
+	/* Main window segmented controller. */
+	if ([prefKeys containsObject:@"DisableMainWindowSegmentedController"]) {
+		[self performReloadActionForActionType:TPCPreferencesKeyReloadTextFieldSegmentedControllerOriginAction];
+	}
+
+	/* Main window alpha level. */
+	if ([prefKeys containsObject:@"MainWindowTransparencyLevel"]) {
+		[self performReloadActionForActionType:TPCPreferencesKeyReloadMainWindowTransparencyLevelAction];
+	}
+
+	/* Dock icon. */
+	if ([prefKeys containsObject:@"DisplayDockBadges"] ||						/* Display dock badges. */
+		[prefKeys containsObject:@"DisplayPublicMessageCountInDockBadge"])		/* Count public messages in dock badges. */
+	{
+		[self performReloadActionForActionType:TPCPreferencesKeyReloadDockIconBadgesAction];
+	}
+
+	/* There are actually multiple keys that could invoke a member list redraw,
+	 so instead of redrawing it two or three times… we will just maintain a BOOL
+	 which tells us whether to do a draw at the end. */
+	BOOL memberListRequiresRedraw = NO;
+
+	/* Server list. */
+	if ([prefKeys containsObject:@"InvertSidebarColors"] ||									/* Dark or light mode UI. */
+		[prefKeys containsObject:@"UseLargeFontForSidebars"] ||								/* Use large font size for list. */
+		[prefKeys containsObject:@"Theme -> Invert Sidebar Colors Preference Enabled"])		/* Indicates whether a style overrides a specific preference. */
+	{
+		[self performReloadActionForActionType:TPCPreferencesKeyReloadServerListAction]; // Redraw server list.
+
+		memberListRequiresRedraw = YES; // Prepare member list for redraw.
+	}
+
+	if ([prefKeys containsObject:@"User List Mode Badge Colors —> +y"] ||	/* User mode badge color. */
+		[prefKeys containsObject:@"User List Mode Badge Colors —> +q"] ||	/* User mode badge color. */
+		[prefKeys containsObject:@"User List Mode Badge Colors —> +a"] ||	/* User mode badge color. */
+		[prefKeys containsObject:@"User List Mode Badge Colors —> +o"] ||	/* User mode badge color. */
+		[prefKeys containsObject:@"User List Mode Badge Colors —> +h"] ||	/* User mode badge color. */
+		[prefKeys containsObject:@"User List Mode Badge Colors —> +v"])		/* User mode badge color. */
+	{
+		/* Prepare member list for redraw. */
+		memberListRequiresRedraw = YES;
+
+		/* Invalidate the cached colors. */
+		[self performReloadActionForActionType:TPCPreferencesKeyReloadMemberListUserBadgesAction];
+	}
+
+	if ([prefKeys containsObject:@"MemberListSortFavorsServerStaff"]) { // Place server staff at top of list…
+		[self performReloadActionForActionType:TPCPreferencesKeyReloadMemberListSortOrderAction];
+
+		memberListRequiresRedraw = NO; // Sort changes will reload it for us…
+	}
+
+	/* Member list redraw time. */
+	if (memberListRequiresRedraw) {
+		[self performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
+	}
+
+	/* After this is all complete; we call preferencesChanged just to take care
+	 of everything else that does not need specific reloads. */
+	[self performReloadActionForActionType:TPCPreferencesKeyReloadPreferencesChangedAction];
+}
+
++ (void)performReloadActionForActionType:(TPCPreferencesKeyReloadAction)reloadAction
+{
+	/* Reload style. */
+	if (reloadAction == TPCPreferencesKeyReloadStyleAction ||
+		reloadAction == TPCPreferencesKeyReloadTextDirectionAction)
+	{
+		[self.worldController reloadTheme:NO];
+	}
+
+	/* Highlight lists. */
+	if (reloadAction == TPCPreferencesKeyReloadHighlightKeywordsAction) {
+		[TPCPreferences cleanUpHighlightKeywords];
+	}
+
+	/* Highlight logging. */
+	if (reloadAction == TPCPreferencesKeyReloadHighlightLoggingAction) {
+		IRCWorld *world = self.masterController.world;
+
+		if ([TPCPreferences logHighlights] == NO) {
+			for (IRCClient *u in world.clients) {
+				[u.highlights removeAllObjects];
+			}
+		}
+	}
+
+	/* Text direction: right-to-left, left-to-right */
+	if (reloadAction == TPCPreferencesKeyReloadTextDirectionAction) {
+		[self.masterController.inputTextField updateTextDirection];
+	}
+
+	/* Text field font size. */
+	if (reloadAction == TPCPreferencesKeyReloadTextFieldFontSizeAction) {
+		[self.masterController.inputTextField updateTextBoxBasedOnPreferredFontSize];
+	}
+
+	/* Input history scope. */
+	if (reloadAction == TPCPreferencesKeyReloadInputHistoryScopeAction) {
+		TXMasterController *master = self.masterController;
+
+		if (master.inputHistory) {
+			master.inputHistory = nil;
+		}
+
+		for (IRCClient *c in self.worldController.clients) {
+			if (c.inputHistory) {
+				c.inputHistory = nil;
+			}
+
+			if ([TPCPreferences inputHistoryIsChannelSpecific]) {
+				c.inputHistory = [TLOInputHistory new];
+			}
+
+			for (IRCChannel *u in c.channels) {
+				if (u.inputHistory) {
+					u.inputHistory = nil;
+				}
+
+				if ([TPCPreferences inputHistoryIsChannelSpecific]) {
+					u.inputHistory = [TLOInputHistory new];
+				}
+			}
+		}
+
+		if ([TPCPreferences inputHistoryIsChannelSpecific] == NO) {
+			master.inputHistory = [TLOInputHistory new];
+		}
+	}
+
+	/* Main window segmented controller. */
+	if (reloadAction == TPCPreferencesKeyReloadTextFieldSegmentedControllerOriginAction) {
+		[self.masterController reloadSegmentedControllerOrigin];
+	}
+
+	/* Main window alpha level. */
+	if (reloadAction == TPCPreferencesKeyReloadMainWindowTransparencyLevelAction) {
+		[self.masterController.mainWindow setAlphaValue:[TPCPreferences themeTransparency]];
+	}
+
+	/* Dock icon. */
+	if (reloadAction == TPCPreferencesKeyReloadDockIconBadgesAction) {
+		[self.worldController updateIcon];
+	}
+
+	/* Server list. */
+	if (reloadAction == TPCPreferencesKeyReloadServerListAction) {
+		[self.masterController.serverList updateBackgroundColor];
+		[self.masterController.serverList reloadAllDrawingsIgnoringOtherReloads];
+	}
+
+	/* Member list user mode badges. */
+	if (reloadAction == TPCPreferencesKeyReloadMemberListUserBadgesAction) {
+		[self.masterController.memberList.badgeRenderer invalidateBadgeImageCacheAndRebuild];
+	}
+
+	/* Member list sort order. */
+	if (reloadAction == TPCPreferencesKeyReloadMemberListSortOrderAction) {
+		/* This reload will handle the redraw for us… */
+		IRCChannel *channel = self.worldController.selectedChannel;
+
+		if (channel && channel.isChannel) {
+			[channel reloadDataForTableViewBySortingMembers];
+		}
+	}
+
+	/* Member list redraw. */
+	if (reloadAction == TPCPreferencesKeyReloadMemberListAction) {
+		[self.masterController.memberList reloadAllUserInterfaceElements];
+	}
+
+	/* World controller preferences changed. */
+	if (reloadAction == TPCPreferencesKeyReloadPreferencesChangedAction) {
+		[self.worldController preferencesChanged];
+	}
+}
+
+#pragma mark -
 #pragma mark Default Identity
 
 + (NSString *)defaultNickname
@@ -629,6 +863,11 @@ static NSURL *transcriptFolderResolvedBookmark;
 + (BOOL)displayServerMOTD
 {
 	return [RZUserDefaults() boolForKey:@"DisplayServerMessageOfTheDayOnConnect"];
+}
+
++ (BOOL)syncPreferencesToTheCloud
+{
+	return [RZUserDefaults() boolForKey:@"SyncPreferencesToTheCloud"];
 }
 
 + (BOOL)copyOnSelect
@@ -1390,48 +1629,52 @@ static NSMutableArray *excludeKeywords = nil;
 
 	NSMutableDictionary *d = [NSMutableDictionary dictionary];
 
+#warning Remember to turn this off by default.
+	// ------------------------------------------------------------|
+	d[@"SyncPreferencesToTheCloud"]						= @(YES);
+	// ------------------------------------------------------------|
+
 	d[@"AutomaticallyAddScrollbackMarker"]				= @(YES);
 	d[@"AutomaticallyDetectHighlightSpam"]				= @(YES);
 	d[@"ChannelNavigationIsServerSpecific"]				= @(YES);
 	d[@"CommandReturnSendsMessageAsAction"]				= @(YES);
 	d[@"ConfirmApplicationQuit"]						= @(YES);
-	d[@"DisplayDockBadges"]								= @(YES);
+	d[@"DisplayDockBadges"]							= @(YES);
 	d[@"DisplayEventInLogView -> Join, Part, Quit"]		= @(YES);
-	d[@"DisplayMainWindowWithAntialiasing"]				= @(YES);
 	d[@"DisplayServerMessageOfTheDayOnConnect"]			= @(YES);
 	d[@"DisplayUserListNoModeSymbol"]					= @(YES);
-	d[@"FocusSelectionOnMessageCommandExecution"]		= @(YES);
-	d[@"LogHighlights"]									= @(YES);
+	d[@"FocusSelectionOnMessageCommandExecution"]			= @(YES);
+	d[@"LogHighlights"]								= @(YES);
 	d[@"LogTranscriptInBatches"]						= @(YES);
 	d[@"PostNotificationsWhileInFocus"]					= @(YES);
 	d[@"ReloadScrollbackOnLaunch"]						= @(YES);
-	d[@"ReplyUnignoredExternalCTCPRequests"]			= @(YES);
-	d[@"TrackNicknameHighlightsOfLocalUser"]			= @(YES);
-	d[@"WebKitDeveloperExtras"]							= @(YES);
+	d[@"ReplyUnignoredExternalCTCPRequests"]				= @(YES);
+	d[@"TrackNicknameHighlightsOfLocalUser"]				= @(YES);
+	d[@"WebKitDeveloperExtras"]						= @(YES);
 
 	/* Settings for the NSTextView context menu. */
 	d[@"TextFieldAutomaticSpellCheck"]					= @(YES);
 	d[@"TextFieldAutomaticGrammarCheck"]				= @(YES);
-    d[@"TextFieldAutomaticSpellCorrection"]             = @(NO);
+	d[@"TextFieldAutomaticSpellCorrection"]				= @(NO);
 	d[@"TextFieldSmartCopyPaste"]						= @(YES);
 	d[@"TextFieldTextReplacement"]						= @(YES);
 
 	/* This controls the two-finger swipe sensitivity. The lower it is, the more
-		sensitive the swipe left/right detection is. The higher it is, the less 
-		sensitive the swipe detection is. <= 0 means off. */
+	 sensitive the swipe left/right detection is. The higher it is, the less
+	 sensitive the swipe detection is. <= 0 means off. */
 	d[@"SwipeMinimumLength"]							= @(30);
 
 	d[@"NotificationType -> Highlight -> Enabled"]				= @(YES);
 	d[@"NotificationType -> Highlight -> Sound"]				= @"Glass";
-    d[@"NotificationType -> Highlight -> Bounce Dock Icon"] = @(YES);
+	d[@"NotificationType -> Highlight -> Bounce Dock Icon"]		= @(YES);
 
-	d[@"NotificationType -> Private Message (New) -> Enabled"]	= @(YES);
-	d[@"NotificationType -> Private Message (New) -> Sound"]	= @"Submarine";
-    d[@"NotificationType -> Private Message (New) -> Bounce Dock Icon"] = @(YES);
-	
+	d[@"NotificationType -> Private Message (New) -> Enabled"]		= @(YES);
+	d[@"NotificationType -> Private Message (New) -> Sound"]			= @"Submarine";
+	d[@"NotificationType -> Private Message (New) -> Bounce Dock Icon"] = @(YES);
+
 	d[@"NotificationType -> Private Message -> Enabled"]		= @(YES);
 	d[@"NotificationType -> Private Message -> Sound"]			= @"Submarine";
-    d[@"NotificationType -> Private Message -> Bounce Dock Icon"] = @(YES);
+	d[@"NotificationType -> Private Message -> Bounce Dock Icon"]	= @(YES);
 
 	d[@"NotificationType -> Address Book Match -> Enabled"]		= @(YES);
 	d[@"NotificationType -> Private Message (New) -> Enabled"]	= @(YES);
@@ -1474,21 +1717,21 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"DefaultBanCommandHostmaskFormat"]		= @(TXHostmaskBanWHAINNFormat);
 	d[@"DestinationOfNonserverNotices"]			= @(TXNoticeSendServerConsoleType);
 	d[@"UserListDoubleClickAction"]				= @(TXUserDoubleClickPrivateMessageAction);
-	
+
 	d[@"MainWindowTransparencyLevel"]		= @(1.0);
 	d[@"Theme -> Font Size"]				= @(12.0);
 
 	// ====================================================== //
 
-	/* The following defaults are defined in here even though they 
+	/* The following defaults are defined in here even though they
 	 are part of the System Profiler extension for one reason: crashes.
-	 
+
 	 For some reason, which I have yet to understand, calling NSUserDefault
 	 registerDefaults: within a plugin works great the first time, but it
-	 will crash if the plugin is unloaded and reloaded. The crash only 
+	 will crash if the plugin is unloaded and reloaded. The crash only
 	 occurs when a nib is involved. I am assuming there is an issue with
 	 the objects part the shared user defaults controller being accessed
-	 from within the nib resulting in a crash. Just haven't figured out 
+	 from within the nib resulting in a crash. Just haven't figured out
 	 the exact details yet. Until then… these go here. */
 
 	d[@"System Profiler Extension -> Feature Disabled -> GPU Model"] = @(YES);
@@ -1541,47 +1784,6 @@ static NSMutableArray *excludeKeywords = nil;
 
 	/* Setup loggin. */
 	[self startUsingTranscriptFolderSecurityScopedBookmark];
-
-	/*
-	 Try to provide a fair warning to people who build themselves.
-
-	 While I don't really care if people build their own copy of Textual,
-	 I would like them to be aware of bugs introduced by disabling code
-	 signing so I am not asked support qeustions related to bugs that
-	 the user introduced themselves.
-
-	 I know some open source nut will end up calling me a theif or something
-	 because I am forcing people to buy my app. No, it's not like that. I am
-	 just tired of being asked about these bugs so it's better to just tell
-	 the user straight up when they will occur.
-	 
-	 The prompt only shows when code signing is disabled. A self signed 
-	 certificate can be generated for free so I am not limiting anyone 
-	 from building Textual for free… so yeah! :)
-	 */
-
-#ifdef TXBundleBuiltWithoutCodeSigning
-	[self displayWarningForNonCodeSignedBundles];
-}
-
-+ (void)displayWarningForNonCodeSignedBundles
-{
-	BOOL question = [TLOPopupPrompts dialogWindowWithQuestion:@"It appears that this copy of Textual was built without code signing. Please be aware, as a result of building Textual without code signing, many instabilities (also known as \"bugs\") have been introduced into the application.\n\nLogging to disk will not work when the application is not code signed. Additionally, configuration files written by the Mac App Store version of Textual cannot be accessed when code signing is disabled. Passwords stored in the keychain may also not be available.\n\nWhile it is within your right to build Textual without code signing; it is recommended to use the version of Textual on the Mac App Store to guarantee the best available experience."
-														title:@"Application Built Without Code Signing"
-												defaultButton:@"OK"
-											  alternateButton:@"Go to Store"
-											   suppressionKey:nil
-											  suppressionText:nil];
-
-	if (question == NO) {
-		[TLOpenLink openWithString:@"http://www.textualapp.com/"];
-
-		self.masterController.skipTerminateSave = YES;
-		self.masterController.terminating = YES;
-
-		[NSApp terminate:nil];
-	}
-#endif
 }
 
 #pragma mark -
