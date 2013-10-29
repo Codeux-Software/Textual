@@ -122,9 +122,15 @@
 	self.channelNameField.stringValue		= self.config.channelName;
 	self.defaultModesField.stringValue		= self.config.defaultModes;
 	self.defaultTopicField.stringValue		= self.config.defaultTopic;
-	self.encryptionKeyField.stringValue		= self.config.encryptionKey;
-	self.secretKeyField.stringValue			= self.config.secretKey;
-	
+
+	if (self.config.encryptionKeyIsSet) {
+		self.encryptionKeyField.stringValue	= self.config.encryptionKey;
+	}
+
+	if (self.config.secretKeyIsSet) {
+		self.secretKeyField.stringValue	= self.config.secretKey;
+	}
+
 	self.autoJoinCheck.state			= self.config.autoJoin;
 	self.ignoreHighlightsCheck.state	= self.config.ignoreHighlights;
 	self.pushNotificationsCheck.state	= self.config.pushNotifications;

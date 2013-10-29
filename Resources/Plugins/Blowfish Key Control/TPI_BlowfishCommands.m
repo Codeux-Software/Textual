@@ -139,7 +139,7 @@
 				
 				[client printDebugInformation:TXTLS(@"BlowfishEncryptionStopped") channel:c];
 			} else {
-				if (NSObjectIsNotEmpty(c.config.encryptionKey)) {
+				if (c.config.encryptionKeyIsSet) {
 					if ([c.config.encryptionKey isEqualToString:messageString] == NO) {
 						[client printDebugInformation:TXTLS(@"BlowfishEncryptionKeyChanged") channel:c];
 					}
@@ -158,7 +158,7 @@
 			
 			[client printDebugInformation:TXTLS(@"BlowfishEncryptionStopped") channel:c];
 		} else if ([commandString isEqualToString:@"KEY"]) {
-			if (NSObjectIsNotEmpty(c.config.encryptionKey)) {
+			if (c.config.encryptionKeyIsSet) {
 				[client printDebugInformation:TPIFLS(@"BlowfishCurrentEncryptionKey", c.config.encryptionKey) channel:c];
 			} else {	
 				[client printDebugInformation:TPILS(@"BlowfishNoEncryptionKeySet") channel:c];
@@ -175,7 +175,7 @@
 			} else {
 				if ([self keyExchangeRequestExists:c]) {
 					[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestAlreadyExists", c.name) channel:c];
-				} else if (NSObjectIsNotEmpty(c.config.encryptionKey)) {
+				} else if (c.config.encryptionKeyIsSet) {
                     [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeCannotHandleEncryptedRequest_2", c.name) channel:c];
                 } else {
 					CFDH1080 *keyRequest = [CFDH1080 new];
@@ -245,7 +245,7 @@
 {
 	IRCChannel *channel = [client findChannelOrCreate:requestSender isPrivateMessage:YES];
 
-    if (NSObjectIsNotEmpty(channel.config.encryptionKey)) {
+    if (channel.config.encryptionKeyIsSet) {
         [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeCannotHandleEncryptedRequest_1", channel.name) channel:channel];
 
         return;
@@ -318,7 +318,7 @@
 		CFDH1080 *request = exchangeData[0];
 		IRCChannel *channel = exchangeData[1];
         
-        if (NSObjectIsNotEmpty(channel.config.encryptionKey)) {
+        if (channel.config.encryptionKeyIsSet) {
             [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeCannotHandleEncryptedRequest_1", channel.name) channel:channel];
 
             return;

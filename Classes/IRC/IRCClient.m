@@ -580,7 +580,7 @@
 	NSObjectIsEmptyAssertReturn(message, NO);
 	
 	if (channel && (channel.isChannel || channel.isPrivateMessage)) {
-		return NSObjectIsNotEmpty(channel.config.encryptionKey);
+		return channel.config.encryptionKeyIsSet;
 	}
 	
 	return NO;
@@ -3066,7 +3066,7 @@
 
 	[self send:IRCPrivateCommandIndex("cap"), @"LS", nil];
 
-	if (NSObjectIsNotEmpty(self.config.serverPassword)) {
+	if (self.config.serverPasswordIsSet) {
 		[self send:IRCPrivateCommandIndex("pass"), self.config.serverPassword, nil];
 	}
 
@@ -3590,7 +3590,7 @@
 							if ([cleanedText containsIgnoringCase:token]) {
 								continueNickServScan = NO;
 
-								NSObjectIsEmptyAssertLoopBreak(self.config.nicknamePassword);
+								NSAssertReturnLoopContinue(self.config.nicknamePasswordIsSet);
 								
 								NSString *IDMessage = [NSString stringWithFormat:@"IDENTIFY %@", self.config.nicknamePassword];
 
@@ -3879,7 +3879,7 @@
 			}
 		}
 
-		if (NSObjectIsNotEmpty(c.config.encryptionKey)) {
+		if (c.config.encryptionKeyIsSet) {
 			[c.client printDebugInformation:TXTLS(@"BlowfishEncryptionStarted") channel:c];
 		}
 	}
@@ -4337,7 +4337,7 @@
 				if (saveKey) {
 					[c.config setSecretKey:newSecretKeyActual];
 				}
-			} else if (oldSecretKey.modeIsSet == YES && newSecretKey.modeIsSet == NO && NSObjectIsNotEmpty(c.secretKey)) {
+			} else if (oldSecretKey.modeIsSet == YES && newSecretKey.modeIsSet == NO && c.config.secretKeyIsSet) {
 				BOOL saveKey = [TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"ChannelKeyRemovalDetectedDialogMessage", c.name)
 																   title:TXTLS(@"ChannelKeyRemovalDetectedDialogTitle")
 														   defaultButton:TXTLS(@"YesButton")
@@ -4504,7 +4504,7 @@
 			[cap isEqualIgnoringCase:@"server-time"]			||
 			[cap isEqualIgnoringCase:@"znc.in/server-time"]     ||
             [cap isEqualIgnoringCase:@"znc.in/server-time-iso"] ||
-		   ([cap isEqualIgnoringCase:@"sasl"] && NSObjectIsNotEmpty(self.config.nicknamePassword)));
+		   ([cap isEqualIgnoringCase:@"sasl"] && self.config.nicknamePasswordIsSet));
 }
 
 - (void)cap:(NSString *)cap result:(BOOL)supported
@@ -5072,7 +5072,7 @@
 
 			NSString *secretKey = [c.modeInfo modeInfoFor:@"k"].modeParamater;
 
-			if (NSObjectIsEmpty(c.secretKey) && NSObjectIsNotEmpty(secretKey)) {
+			if (c.config.secretKeyIsSet == NO && NSObjectIsNotEmpty(secretKey)) {
 				/* We offer to remember the key when we found one and our configuration does not
 				 already have one. */
 
@@ -5086,7 +5086,7 @@
 				if (saveKey) {
 					[c.config setSecretKey:secretKey];
 				}
-			} else if (NSObjectIsEmpty(secretKey) && NSObjectIsNotEmpty(c.secretKey)) {
+			} else if (NSObjectIsEmpty(secretKey) && c.config.secretKeyIsSet) {
 				/* We have a key set on a channel that no longer has one. */
 				BOOL saveKey = [TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"ChannelKeyRemovalDetectedDialogMessage", c.name)
 																   title:TXTLS(@"ChannelKeyRemovalDetectedDialogTitle")
@@ -6595,11 +6595,11 @@
 	channel.status = IRCChannelJoining;
 
 	if (NSObjectIsEmpty(password)) {
-		password = channel.secretKey;
-	}
-
-	if (NSObjectIsEmpty(password)) {
-		password = nil;
+		if (channel.config.secretKey) {
+			password = channel.secretKey;
+		} else {
+			password = nil;
+		}
 	}
 	
 	[self forceJoinChannel:channel.name password:password];
@@ -6708,7 +6708,7 @@
 
 		c.status = IRCChannelJoining;
 
-		if (NSObjectIsNotEmpty(c.secretKey)) {
+		if (c.config.secretKeyIsSet) {
 			if (passKeys == NO) {
 				continue;
 			}
@@ -6738,7 +6738,10 @@
 			}
 
 			[channelList setString:c.name];
-			[passwordList setString:c.secretKey];
+
+			if (c.config.secretKeyIsSet) {
+				[passwordList setString:c.secretKey];
+			}
 
 			channelCount = 1; // To match setString: statements up above.
 		} else {

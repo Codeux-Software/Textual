@@ -44,9 +44,6 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 
 @implementation IRCClientConfig
 
-@synthesize serverPassword = _serverPassword;
-@synthesize nicknamePassword = _nicknamePassword;
-
 - (id)init
 {
 	if ((self = [super init])) {
@@ -113,100 +110,100 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 
 - (NSString *)nicknamePassword
 {
-	NSString *kcPassword = nil;
-	
-	if (NSObjectIsEmpty(_nicknamePassword)) {
+	NSString *kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (NickServ)"
+													  withItemKind:@"application password"
+													   forUsername:nil
+													   serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.itemUUID]];
+
+	if (kcPassword == nil) {
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (NickServ)"
 												withItemKind:@"application password"
-												 forUsername:nil
+												 forUsername:[TPCPreferences applicationName] // Compatible with 2.1.1
 												 serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.itemUUID]];
-
-		if (kcPassword == nil) {
-			kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (NickServ)"
-													withItemKind:@"application password"
-													 forUsername:[TPCPreferences applicationName] // Compatible with 2.1.1
-													 serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.itemUUID]];
-
-		}
+		
 	}
-	
-	if (kcPassword) {
-		if ([kcPassword isEqualToString:_nicknamePassword] == NO) {
-			_nicknamePassword = nil;
-			_nicknamePassword = kcPassword;
-		}
-	}
-	
-	return _nicknamePassword;
+
+	return kcPassword;
 }
 
 - (void)setNicknamePassword:(NSString *)pass
 {
-	if ([_nicknamePassword isEqualToString:pass] == NO) {	
-		if (NSObjectIsEmpty(pass)) {
-			[AGKeychain deleteKeychainItem:@"Textual (NickServ)"
-							  withItemKind:@"application password"
-							   forUsername:nil
-							   serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.itemUUID]];
-		} else {
-			[AGKeychain modifyOrAddKeychainItem:@"Textual (NickServ)"
-								   withItemKind:@"application password"
-									forUsername:nil
-								withNewPassword:pass
-									serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.itemUUID]];
-		}
-		
-		_nicknamePassword = nil;
-		_nicknamePassword = pass;
+	self.nicknamePasswordIsSet = NSObjectIsNotEmpty(pass);
+
+	if (self.nicknamePasswordIsSet == NO) {
+		[AGKeychain deleteKeychainItem:@"Textual (NickServ)"
+						  withItemKind:@"application password"
+						   forUsername:nil
+						   serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.itemUUID]];
+	} else {
+		[AGKeychain modifyOrAddKeychainItem:@"Textual (NickServ)"
+							   withItemKind:@"application password"
+								forUsername:nil
+							withNewPassword:pass
+								serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.itemUUID]];
 	}
 }
 
 - (NSString *)serverPassword
 {
-	NSString *kcPassword = nil;
-	
-	if (NSObjectIsEmpty(_serverPassword)) {
+	NSString *kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Server Password)"
+													  withItemKind:@"application password"
+													   forUsername:nil
+													   serviceName:[NSString stringWithFormat:@"textual.server.%@", self.itemUUID]];
+
+	if (kcPassword == nil) {
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Server Password)"
 												withItemKind:@"application password"
-												 forUsername:nil 
+												 forUsername:[TPCPreferences applicationName] // Compatible with 2.1.1
 												 serviceName:[NSString stringWithFormat:@"textual.server.%@", self.itemUUID]];
+	}
 
-		if (kcPassword == nil) {
-			kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Server Password)"
-													withItemKind:@"application password"
-													 forUsername:[TPCPreferences applicationName] // Compatible with 2.1.1
-													 serviceName:[NSString stringWithFormat:@"textual.server.%@", self.itemUUID]];
-		}
-	}
-	
-	if (kcPassword) {
-		if ([kcPassword isEqualToString:_serverPassword] == NO) {
-			_serverPassword = nil;
-			_serverPassword = kcPassword;
-		}
-	}
-	
-	return _serverPassword;
+	return kcPassword;
 }
 
 - (void)setServerPassword:(NSString *)pass
 {
-	if ([_serverPassword isEqualToString:pass] == NO) {
-		if (NSObjectIsEmpty(pass)) {
-			[AGKeychain deleteKeychainItem:@"Textual (Server Password)"
-							  withItemKind:@"application password"
-							   forUsername:nil
-							   serviceName:[NSString stringWithFormat:@"textual.server.%@", self.itemUUID]];
-		} else {
-			[AGKeychain modifyOrAddKeychainItem:@"Textual (Server Password)"
-								   withItemKind:@"application password"
-									forUsername:nil
-								withNewPassword:pass
-									serviceName:[NSString stringWithFormat:@"textual.server.%@", self.itemUUID]];		
-		}
-		
-		_serverPassword = nil;
-		_serverPassword = pass;
+	self.serverPasswordIsSet = NSObjectIsNotEmpty(pass);
+
+	if (self.serverPasswordIsSet == NO) {
+		[AGKeychain deleteKeychainItem:@"Textual (Server Password)"
+						  withItemKind:@"application password"
+						   forUsername:nil
+						   serviceName:[NSString stringWithFormat:@"textual.server.%@", self.itemUUID]];
+	} else {
+		[AGKeychain modifyOrAddKeychainItem:@"Textual (Server Password)"
+							   withItemKind:@"application password"
+								forUsername:nil
+							withNewPassword:pass
+								serviceName:[NSString stringWithFormat:@"textual.server.%@", self.itemUUID]];		
+	}
+}
+
+- (NSString *)proxyPassword
+{
+	NSString *kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Proxy Server Password)"
+													  withItemKind:@"application password"
+													   forUsername:nil
+													   serviceName:[NSString stringWithFormat:@"textual.proxy-server.%@", self.itemUUID]];
+
+	return kcPassword;
+}
+
+- (void)setProxyPassword:(NSString *)pass
+{
+	self.proxyPasswordIsSet = NSObjectIsNotEmpty(pass);
+
+	if (self.proxyPasswordIsSet == NO) {
+		[AGKeychain deleteKeychainItem:@"Textual (Proxy Server Password)"
+						  withItemKind:@"application password"
+						   forUsername:nil
+						   serviceName:[NSString stringWithFormat:@"textual.proxy-server.%@", self.itemUUID]];
+	} else {
+		[AGKeychain modifyOrAddKeychainItem:@"Textual (Proxy Server Password)"
+							   withItemKind:@"application password"
+								forUsername:nil
+							withNewPassword:pass
+								serviceName:[NSString stringWithFormat:@"textual.proxy-server.%@", self.itemUUID]];
 	}
 }
 
@@ -216,11 +213,20 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 					  withItemKind:@"application password"
 					   forUsername:nil
 					   serviceName:[NSString stringWithFormat:@"textual.server.%@", self.itemUUID]];
-	
+
+	[AGKeychain deleteKeychainItem:@"Textual (Proxy Server Password)"
+					  withItemKind:@"application password"
+					   forUsername:nil
+					   serviceName:[NSString stringWithFormat:@"textual.proxy-server.%@", self.itemUUID]];
+
 	[AGKeychain deleteKeychainItem:@"Textual (NickServ)"
 					  withItemKind:@"application password"
 					   forUsername:nil
 					   serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.itemUUID]];
+
+	self.serverPasswordIsSet = NO;
+	self.nicknamePasswordIsSet = NO;
+	self.proxyPasswordIsSet = NO;
 }
 
 #pragma mark -
@@ -229,6 +235,7 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 - (id)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [self init])) {
+		/* General preferences. */
         self.sidebarItemExpanded = NSDictionaryBOOLKeyValueCompare(dic, @"serverListItemIsExpanded", YES);
 
 		self.itemUUID		= NSDictionaryObjectKeyValueCompare(dic, @"uniqueIdentifier", self.itemUUID);
@@ -251,7 +258,6 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 		self.proxyType       = (TXConnectionProxyType)NSDictionaryIntegerKeyValueCompare(dic, @"proxyServerType", self.proxyType);
 		
 		self.proxyAddress	= NSDictionaryObjectKeyValueCompare(dic, @"proxyServerAddress", self.proxyAddress);
-		self.proxyPassword	= NSDictionaryObjectKeyValueCompare(dic, @"proxyServerPassword", self.proxyPassword);
 		self.proxyPort      = NSDictionaryIntegerKeyValueCompare(dic, @"proxyServerPort", self.proxyPort);
 		self.proxyUsername	= NSDictionaryObjectKeyValueCompare(dic, @"proxyServerUsername", self.proxyUsername);
 		
@@ -273,25 +279,29 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 		self.isTrustedConnection	= NSDictionaryBOOLKeyValueCompare(dic, @"trustedSSLConnection", self.isTrustedConnection);
 		
 		[self.loginCommands addObjectsFromArray:[dic arrayForKey:@"onConnectCommands"]];
-		
+
+		/* Channel list. */
 		for (NSDictionary *e in [dic arrayForKey:@"channelList"]) {
 			IRCChannelConfig *c = [[IRCChannelConfig alloc] initWithDictionary:e];
 			
 			[self.channelList safeAddObject:c];
 		}
-		
+
+		/* Ignore list. */
 		for (NSDictionary *e in [dic arrayForKey:@"ignoreList"]) {
 			IRCAddressBook *ignore = [[IRCAddressBook alloc] initWithDictionary:e];
 			
 			[self.ignoreList safeAddObject:ignore];
 		}
 
+		/* Server specific highlight list. */
 		for (NSDictionary *e in [dic arrayForKey:@"highlightList"]) {
 			TDCHighlightEntryMatchCondition *c = [[TDCHighlightEntryMatchCondition alloc] initWithDictionary:e];
 
 			[self.highlightList safeAddObject:c];
 		}
-		
+
+		/* Flood control. */
 		if ([dic containsKey:@"floodControl"]) {
 			NSDictionary *e = [dic dictionaryForKey:@"floodControl"];
 			
@@ -303,6 +313,19 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 			}
 		}
 
+		/* Migrate to keychain. */
+		NSString *proxyPassword = [dic stringForKey:@"proxyServerPassword"];
+
+		if (NSObjectIsNotEmpty(proxyPassword)) {
+			[self setProxyPassword:proxyPassword];
+		}
+
+		/* Get a base reading. */
+		self.serverPasswordIsSet = NSObjectIsNotEmpty(self.serverPassword);
+		self.nicknamePasswordIsSet = NSObjectIsNotEmpty(self.nicknamePassword);
+		self.proxyPasswordIsSet = NSObjectIsNotEmpty(self.proxyPassword);
+
+		/* We're done. */
 		return self;
 	}
 	
@@ -344,7 +367,6 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 	[dic safeSetObject:self.awayNickname				forKey:@"identityAwayNickname"];
 	[dic safeSetObject:self.normalLeavingComment		forKey:@"connectionDisconnectDefaultMessage"];
 	[dic safeSetObject:self.proxyAddress				forKey:@"proxyServerAddress"];
-	[dic safeSetObject:self.proxyPassword				forKey:@"proxyServerPassword"];
 	[dic safeSetObject:self.proxyUsername				forKey:@"proxyServerUsername"];
 	[dic safeSetObject:self.realname					forKey:@"identityRealname"];
 	[dic safeSetObject:self.serverAddress				forKey:@"serverAddress"];

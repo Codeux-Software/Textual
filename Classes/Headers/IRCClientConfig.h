@@ -100,6 +100,10 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 @property (nonatomic, strong) NSString *normalLeavingComment;
 @property (nonatomic, strong) NSString *sleepModeLeavingComment;
 
+@property (nonatomic, assign) BOOL serverPasswordIsSet;
+@property (nonatomic, assign) BOOL nicknamePasswordIsSet;
+@property (nonatomic, assign) BOOL proxyPasswordIsSet;
+
 - (id)initWithDictionary:(NSDictionary *)dic;
 - (NSMutableDictionary *)dictionaryValue;
 

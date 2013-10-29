@@ -314,7 +314,11 @@
 	self.autoReconnectCheck.state			= self.config.autoReconnect;
 	self.connectionUsesSSLCheck.state		= self.config.connectionUsesSSL;
 	self.serverNameField.stringValue		= self.config.clientName;
-	self.serverPasswordField.stringValue	= self.config.serverPassword;
+
+	if (self.config.serverPasswordIsSet) {
+		self.serverPasswordField.stringValue = self.config.serverPassword;
+	}
+
 	self.serverPortField.stringValue		= [NSString stringWithInteger:self.config.serverPort];
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
@@ -358,9 +362,11 @@
 	} else {
 		self.alternateNicknamesField.stringValue = NSStringEmptyPlaceholder;
 	}
-	
-	self.nicknamePasswordField.stringValue = self.config.nicknamePassword;
-	
+
+	if (self.config.nicknamePasswordIsSet) {
+		self.nicknamePasswordField.stringValue = self.config.nicknamePassword;
+	}
+
 	/* Messages */
 	self.sleepModeQuitMessageField.stringValue = self.config.sleepModeLeavingComment;
 	self.normalLeavingCommentField.stringValue = self.config.normalLeavingComment;
@@ -377,7 +383,11 @@
 	
 	self.proxyAddressField.stringValue		= self.config.proxyAddress;
 	self.proxyUsernameField.stringValue		= self.config.proxyUsername;
-	self.proxyPasswordField.stringValue		= self.config.proxyPassword;
+
+	if (self.config.proxyPasswordIsSet) {
+		self.proxyPasswordField.stringValue	= self.config.proxyPassword;
+	}
+
 	self.proxyPortField.stringValue			= [NSString stringWithInteger:self.config.proxyPort];
 	
 	/* Connect Commands */
@@ -1035,7 +1045,11 @@
 		if ([columnId isEqualToString:@"name"]) {
 			return c.channelName;
 		} else if ([columnId isEqualToString:@"pass"]) {
-			return c.secretKey;
+			if (c.secretKeyIsSet) {
+				return c.secretKey;
+			} else {
+				return NSStringEmptyPlaceholder;
+			}
 		} else if ([columnId isEqualToString:@"join"]) {
 			return @(c.autoJoin);
 		}
