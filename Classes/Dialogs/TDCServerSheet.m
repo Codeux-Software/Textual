@@ -886,10 +886,6 @@
 
 - (void)showAddIgnoreMenu:(id)sender
 {
-	NSRect tableRect = self.ignoreTable.frame;
-	
-	tableRect.origin.y += (tableRect.size.height);
-	tableRect.origin.y += 34;
 
 	NSMenu *addIgnoreMenu = [NSMenu new];
 
@@ -907,7 +903,7 @@
 	[addIgnoreMenu addItem:item1];
 	[addIgnoreMenu addItem:item2];
     
-	[addIgnoreMenu popUpMenuPositioningItem:nil atLocation:tableRect.origin inView:self.ignoreTable];
+	[addIgnoreMenu popUpMenuPositioningItem:nil atLocation:NSMakePoint(156, 265) inView:self.tabView];
 }
 
 - (void)addIgnore:(id)sender
