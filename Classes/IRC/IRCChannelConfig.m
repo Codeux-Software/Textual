@@ -40,9 +40,6 @@
 
 @implementation IRCChannelConfig
 
-@synthesize secretKey = _secretKey;
-@synthesize encryptionKey = _encryptionKey;
-
 - (id)init
 {
 	if ((self = [super init])) {
@@ -77,87 +74,57 @@
 
 - (NSString *)encryptionKey
 {
-	NSString *kcPassword = NSStringEmptyPlaceholder;
+	NSString *kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Blowfish Encryption)"
+													  withItemKind:@"application password"
+													   forUsername:nil
+													   serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
 
-	/* Only read from keychain if our value is nil. Let the set command
-	 handle any changes to the actual property after that. */
-	if (_encryptionKey == nil) {
-		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Blowfish Encryption)"
-												withItemKind:@"application password"
-												 forUsername:nil
-												 serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
-
-		if (kcPassword) {
-			if ([kcPassword isEqualToString:_encryptionKey] == NO) {
-				_encryptionKey = nil;
-				_encryptionKey = kcPassword;
-			}
-		}
-	}
-
-	return _encryptionKey;
+	return kcPassword;
 }
 
 - (NSString *)secretKey
 {
-	NSString *kcPassword = NSStringEmptyPlaceholder;
+	NSString *kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Channel JOIN Key)"
+													  withItemKind:@"application password"
+													   forUsername:nil
+													   serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
 
-	if (_secretKey == nil) {
-		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Channel JOIN Key)"
-												withItemKind:@"application password"
-												 forUsername:nil
-												 serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
-
-		if (kcPassword) {
-			if ([kcPassword isEqualToString:_secretKey] == NO) {
-				_secretKey = nil;
-				_secretKey = kcPassword;
-			}
-		}
-	}
-
-	return _secretKey;
+	return kcPassword;
 }
 
 - (void)setEncryptionKey:(NSString *)pass
 {
-	if ([_encryptionKey isEqualToString:pass] == NO) {
-		if (NSObjectIsEmpty(pass)) {
-			[AGKeychain deleteKeychainItem:@"Textual (Blowfish Encryption)"
-							  withItemKind:@"application password"
-							   forUsername:nil
-							   serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
-		} else {
-			[AGKeychain modifyOrAddKeychainItem:@"Textual (Blowfish Encryption)"
-								   withItemKind:@"application password"
-									forUsername:nil
-								withNewPassword:pass
-									serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
-		}
+	self.encryptionKeyIsSet = NSObjectIsNotEmpty(pass);
 
-		_encryptionKey = nil;
-		_encryptionKey = pass;
+	if (self.encryptionKeyIsSet == NO) {
+		[AGKeychain deleteKeychainItem:@"Textual (Blowfish Encryption)"
+						  withItemKind:@"application password"
+						   forUsername:nil
+						   serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
+	} else {
+		[AGKeychain modifyOrAddKeychainItem:@"Textual (Blowfish Encryption)"
+							   withItemKind:@"application password"
+								forUsername:nil
+							withNewPassword:pass
+								serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
 	}
 }
 
 - (void)setSecretKey:(NSString *)pass
 {
-	if ([_secretKey isEqualToString:pass] == NO) {
-		if (NSObjectIsEmpty(pass)) {
-			[AGKeychain deleteKeychainItem:@"Textual (Channel JOIN Key)"
-							  withItemKind:@"application password"
-							   forUsername:nil
-							   serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
-		} else {
-			[AGKeychain modifyOrAddKeychainItem:@"Textual (Channel JOIN Key)"
-								   withItemKind:@"application password"
-									forUsername:nil
-								withNewPassword:pass
-									serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
-		}
+	self.secretKeyIsSet = NSObjectIsNotEmpty(pass);
 
-		_secretKey = nil;
-		_secretKey = pass;
+	if (self.secretKeyIsSet == NO) {
+		[AGKeychain deleteKeychainItem:@"Textual (Channel JOIN Key)"
+						  withItemKind:@"application password"
+						   forUsername:nil
+						   serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
+	} else {
+		[AGKeychain modifyOrAddKeychainItem:@"Textual (Channel JOIN Key)"
+							   withItemKind:@"application password"
+								forUsername:nil
+							withNewPassword:pass
+								serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
 	}
 }
 
@@ -172,6 +139,9 @@
 					  withItemKind:@"application password"
 					   forUsername:nil
 					   serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
+
+	self.secretKeyIsSet = NO;
+	self.encryptionKeyIsSet = NO;
 }
 
 #pragma mark -
@@ -191,6 +161,7 @@
 - (id)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [self init])) {
+		/* General preferences. */
 		self.type			= (IRCChannelType)NSDictionaryIntegerKeyValueCompare(dic, @"channelType", self.type);
 
 		self.itemUUID			= NSDictionaryObjectKeyValueCompare(dic, @"uniqueIdentifier", self.itemUUID);
@@ -206,8 +177,7 @@
 		self.defaultModes		= NSDictionaryObjectKeyValueCompare(dic, @"defaultMode", self.defaultModes);
 		self.defaultTopic		= NSDictionaryObjectKeyValueCompare(dic, @"defaultTopic", self.defaultTopic);
 
-		// ---- // Migrate to keychain.
-
+		/* Migrate to keychain.*/
 		NSString *oldEncKey = [dic stringForKey:@"encryptionKey"];
 		NSString *oldJoinKey = [dic stringForKey:@"secretJoinKey"];
 
@@ -218,7 +188,11 @@
 		if (NSObjectIsNotEmpty(oldJoinKey)) {
 			[self setSecretKey:oldJoinKey];
 		}
-		
+
+		/* Establish state. */
+		self.secretKeyIsSet = NSObjectIsNotEmpty(self.secretKey);
+		self.encryptionKeyIsSet = NSObjectIsNotEmpty(self.encryptionKey);
+
 		return self;
 	}
 	
