@@ -193,7 +193,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		// --- //
 
 		if (attrArray & _rendererConversationTrackerAttribute) {
-			if ([TPCPreferences disableNicknameColorHashing] == NO) {
+			if ([TPCPreferences disableNicknameColorHashing] == YES) {
 				templateTokens[@"inlineNicknameMatchFound"] = @(NO);
 			} else {
 				IRCUser *user = [logController.channel findMember:contentes options:NSCaseInsensitiveSearch];
