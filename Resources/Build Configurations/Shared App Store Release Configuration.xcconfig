@@ -1,3 +1,9 @@
 #include "Shared Developer ID Release Configuration.xcconfig"
 
 CODE_SIGN_IDENTITY = 3rd Party Mac Developer Application
+OTHER_CODE_SIGN_FLAGS = --deep
+CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements
+
+PROVISIONING_PROFILE = 283A199D-AEB0-45B8-8037-17E644E30092
+
+GCC_PREPROCESSOR_DEFINITIONS = TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT=1

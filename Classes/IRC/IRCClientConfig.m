@@ -58,7 +58,9 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 		self.channelList			= [NSMutableArray new];
 		self.ignoreList				= [NSMutableArray new];
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 		self.excludedFromCloudSyncing = NO;
+#endif
 
 		self.autoConnect					= NO;
 		self.autoReconnect					= NO;
@@ -238,7 +240,9 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 		self.serverPort		= NSDictionaryIntegerKeyValueCompare(dic, @"serverPort", self.serverPort);
 		self.username		= NSDictionaryObjectKeyValueCompare(dic, @"identityUsername", self.username);
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 		self.excludedFromCloudSyncing = NSDictionaryBOOLKeyValueCompare(dic, @"excludeFromCloudSyncing", self.excludedFromCloudSyncing);
+#endif
 
 		self.zncIgnorePlaybackNotifications	= NSDictionaryBOOLKeyValueCompare(dic, @"ZNC —> Ignore Playback Buffer Highlights", self.zncIgnorePlaybackNotifications);
 
@@ -315,8 +319,10 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 	[dic setInteger:self.proxyType			forKey:@"proxyServerType"];
 	[dic setInteger:self.serverPort			forKey:@"serverPort"];
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[dic setBool:self.excludedFromCloudSyncing forKey:@"excludeFromCloudSyncing"];
-	
+#endif
+
 	[dic setBool:self.autoConnect					forKey:@"connectOnLaunch"];
 	[dic setBool:self.autoReconnect					forKey:@"connectOnDisconnect"];
 	[dic setBool:self.autoSleepModeDisconnect		forKey:@"disconnectOnSleepMode"];

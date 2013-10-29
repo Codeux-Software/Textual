@@ -869,10 +869,12 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() boolForKey:@"DisplayServerMessageOfTheDayOnConnect"];
 }
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 + (BOOL)syncPreferencesToTheCloud
 {
 	return [RZUserDefaults() boolForKey:@"SyncPreferencesToTheCloud"];
 }
+#endif
 
 + (BOOL)copyOnSelect
 {
@@ -1633,28 +1635,31 @@ static NSMutableArray *excludeKeywords = nil;
 
 	NSMutableDictionary *d = [NSMutableDictionary dictionary];
 
-#warning Remember to turn this off by default.
-	// ------------------------------------------------------------|
+#warning Remember to turn this off by default for both builds.
+
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	d[@"SyncPreferencesToTheCloud"]						= @(NO);
+#else
 	d[@"SyncPreferencesToTheCloud"]						= @(YES);
-	// ------------------------------------------------------------|
+#endif
 
 	d[@"AutomaticallyAddScrollbackMarker"]				= @(YES);
 	d[@"AutomaticallyDetectHighlightSpam"]				= @(YES);
 	d[@"ChannelNavigationIsServerSpecific"]				= @(YES);
 	d[@"CommandReturnSendsMessageAsAction"]				= @(YES);
 	d[@"ConfirmApplicationQuit"]						= @(YES);
-	d[@"DisplayDockBadges"]							= @(YES);
+	d[@"DisplayDockBadges"]								= @(YES);
 	d[@"DisplayEventInLogView -> Join, Part, Quit"]		= @(YES);
 	d[@"DisplayServerMessageOfTheDayOnConnect"]			= @(YES);
 	d[@"DisplayUserListNoModeSymbol"]					= @(YES);
-	d[@"FocusSelectionOnMessageCommandExecution"]			= @(YES);
-	d[@"LogHighlights"]								= @(YES);
+	d[@"FocusSelectionOnMessageCommandExecution"]		= @(YES);
+	d[@"LogHighlights"]									= @(YES);
 	d[@"LogTranscriptInBatches"]						= @(YES);
 	d[@"PostNotificationsWhileInFocus"]					= @(YES);
 	d[@"ReloadScrollbackOnLaunch"]						= @(YES);
-	d[@"ReplyUnignoredExternalCTCPRequests"]				= @(YES);
-	d[@"TrackNicknameHighlightsOfLocalUser"]				= @(YES);
-	d[@"WebKitDeveloperExtras"]						= @(YES);
+	d[@"ReplyUnignoredExternalCTCPRequests"]			= @(YES);
+	d[@"TrackNicknameHighlightsOfLocalUser"]			= @(YES);
+	d[@"WebKitDeveloperExtras"]							= @(YES);
 
 	/* Settings for the NSTextView context menu. */
 	d[@"TextFieldAutomaticSpellCheck"]					= @(YES);
@@ -1672,12 +1677,12 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"NotificationType -> Highlight -> Sound"]				= @"Glass";
 	d[@"NotificationType -> Highlight -> Bounce Dock Icon"]		= @(YES);
 
-	d[@"NotificationType -> Private Message (New) -> Enabled"]		= @(YES);
+	d[@"NotificationType -> Private Message (New) -> Enabled"]			= @(YES);
 	d[@"NotificationType -> Private Message (New) -> Sound"]			= @"Submarine";
 	d[@"NotificationType -> Private Message (New) -> Bounce Dock Icon"] = @(YES);
 
-	d[@"NotificationType -> Private Message -> Enabled"]		= @(YES);
-	d[@"NotificationType -> Private Message -> Sound"]			= @"Submarine";
+	d[@"NotificationType -> Private Message -> Enabled"]			= @(YES);
+	d[@"NotificationType -> Private Message -> Sound"]				= @"Submarine";
 	d[@"NotificationType -> Private Message -> Bounce Dock Icon"]	= @(YES);
 
 	d[@"NotificationType -> Address Book Match -> Enabled"]		= @(YES);
