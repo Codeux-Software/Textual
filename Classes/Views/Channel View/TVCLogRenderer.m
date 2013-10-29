@@ -193,14 +193,18 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		// --- //
 
 		if (attrArray & _rendererConversationTrackerAttribute) {
-			IRCUser *user = [logController.channel findMember:contentes options:NSCaseInsensitiveSearch];
+			if ([TPCPreferences disableNicknameColorHashing] == NO) {
+				templateTokens[@"inlineNicknameMatchFound"] = @(NO);
+			} else {
+				IRCUser *user = [logController.channel findMember:contentes options:NSCaseInsensitiveSearch];
 
-			if (PointerIsEmpty(user) == NO) {
-                if ([user.nickname isEqualIgnoringCase:logController.client.localNickname] == NO) {
-					templateTokens[@"inlineNicknameMatchFound"] = @(YES);
-					templateTokens[@"inlineNicknameColorNumber"] = @(user.colorNumber);
-                }
-            }
+				if (PointerIsEmpty(user) == NO) {
+					if ([user.nickname isEqualIgnoringCase:logController.client.localNickname] == NO) {
+						templateTokens[@"inlineNicknameMatchFound"] = @(YES);
+						templateTokens[@"inlineNicknameColorNumber"] = @(user.colorNumber);
+					}
+				}
+			}
 		}
 
 		// --- //
