@@ -160,8 +160,8 @@
 		4C0E363716F192F200B426C2 /* TVCServerListCellBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0444EC16F15F8200EBB665 /* TVCServerListCellBadge.m */; };
 		4C17385718197F540099EEC2 /* TPCPreferencesCloudSync.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C17385618197F540099EEC2 /* TPCPreferencesCloudSync.m */; };
 		4C17385818197F540099EEC2 /* TPCPreferencesCloudSync.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C17385618197F540099EEC2 /* TPCPreferencesCloudSync.m */; };
-		4C17385E18197F800099EEC2 /* TPCPreferencesCloudSync.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C17385D18197F800099EEC2 /* TPCPreferencesCloudSync.h */; };
-		4C17385F18197F800099EEC2 /* TPCPreferencesCloudSync.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C17385D18197F800099EEC2 /* TPCPreferencesCloudSync.h */; };
+		4C17385E18197F800099EEC2 /* TPCPreferencesCloudSync.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C17385D18197F800099EEC2 /* TPCPreferencesCloudSync.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C17385F18197F800099EEC2 /* TPCPreferencesCloudSync.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C17385D18197F800099EEC2 /* TPCPreferencesCloudSync.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C1893EC17980F060091D173 /* TVCImageURLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1893EB17980F060091D173 /* TVCImageURLoader.m */; };
 		4C1893ED17980F060091D173 /* TVCImageURLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1893EB17980F060091D173 /* TVCImageURLoader.m */; };
 		4C1893F317980F460091D173 /* TVCImageURLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1893F217980F460091D173 /* TVCImageURLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1332,6 +1332,9 @@
 		4C92FECA17A8C8F2003888F4 /* TPCResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCResourceManager.h; sourceTree = "<group>"; };
 		4C937BD4170618940050CEF3 /* TLOSpeechSynthesizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOSpeechSynthesizer.m; path = Library/TLOSpeechSynthesizer.m; sourceTree = "<group>"; };
 		4C937BDA170618A80050CEF3 /* TLOSpeechSynthesizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLOSpeechSynthesizer.h; sourceTree = "<group>"; };
+		4C994BAB181FB3E0002FECA6 /* Auxiliary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Auxiliary.entitlements; path = Resources/Sandbox/Exceptions/Auxiliary.entitlements; sourceTree = SOURCE_ROOT; };
+		4C994BAC181FB3E0002FECA6 /* Textual.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Textual.entitlements; path = Resources/Sandbox/Exceptions/Textual.entitlements; sourceTree = SOURCE_ROOT; };
+		4C994BAD181FB3E0002FECA6 /* TextualWithoutCloud.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualWithoutCloud.entitlements; path = Resources/Sandbox/Exceptions/TextualWithoutCloud.entitlements; sourceTree = SOURCE_ROOT; };
 		4CA899A6174021FD001176C8 /* TPWTB_Alerts_NC.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TPWTB_Alerts_NC.tif; sourceTree = "<group>"; };
 		4CA899A7174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "TPWTB_Alerts_NC@2x.tif"; sourceTree = "<group>"; };
 		4CB125781783DC6600D0214E /* channelRoomStatusIcon_Aqua.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = channelRoomStatusIcon_Aqua.tif; path = "Resources/Images/Status Badges/channelRoomStatusIcon_Aqua.tif"; sourceTree = SOURCE_ROOT; };
@@ -1880,6 +1883,16 @@
 			name = Dialogs;
 			sourceTree = "<group>";
 		};
+		4C86B4A8181FB40A0043C544 /* Entitlements */ = {
+			isa = PBXGroup;
+			children = (
+				4C994BAB181FB3E0002FECA6 /* Auxiliary.entitlements */,
+				4C994BAC181FB3E0002FECA6 /* Textual.entitlements */,
+				4C994BAD181FB3E0002FECA6 /* TextualWithoutCloud.entitlements */,
+			);
+			name = Entitlements;
+			sourceTree = "<group>";
+		};
 		4C8AF50F158E99520026668C /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -2322,6 +2335,7 @@
 			isa = PBXGroup;
 			children = (
 				4CD6202E16E31EE600D780D6 /* Configurations */,
+				4C86B4A8181FB40A0043C544 /* Entitlements */,
 				4CCC6B47158E8C27003A102B /* Info.plist */,
 				4CC70202171E1CB400BDFAE0 /* BuildConfig.h */,
 			);
@@ -2503,7 +2517,6 @@
 				4C5BA40016F1302F00A96CA2 /* IRCClientConfig.h in Headers */,
 				4C5BA40116F1302F00A96CA2 /* IRCColorFormat.h in Headers */,
 				4C5BA40216F1302F00A96CA2 /* IRCConnection.h in Headers */,
-				4C17385F18197F800099EEC2 /* TPCPreferencesCloudSync.h in Headers */,
 				4C5BA40316F1302F00A96CA2 /* IRCExtras.h in Headers */,
 				4C5BA40416F1302F00A96CA2 /* IRCISupportInfo.h in Headers */,
 				4C5BA40516F1302F00A96CA2 /* IRCMessage.h in Headers */,
@@ -2602,6 +2615,7 @@
 				4C92FECC17A8C8F2003888F4 /* TPCResourceManager.h in Headers */,
 				4C3E729817C39DD7008F2B08 /* THOUnicodeHelper.h in Headers */,
 				4C529E1F17AEFE44009BA0B3 /* NSDataHelper.h in Headers */,
+				4C17385F18197F800099EEC2 /* TPCPreferencesCloudSync.h in Headers */,
 				4C6D464E180830E60098BA12 /* NSMenuHelper.h in Headers */,
 				4C0C720E1742C444000F82C4 /* NSByteCountFormatterHelper.h in Headers */,
 				4CC70204171E1CB400BDFAE0 /* BuildConfig.h in Headers */,
@@ -2651,7 +2665,6 @@
 				4C8AF62E158E99520026668C /* IRCClientConfig.h in Headers */,
 				4C8AF62F158E99520026668C /* IRCColorFormat.h in Headers */,
 				4C8AF630158E99520026668C /* IRCConnection.h in Headers */,
-				4C17385E18197F800099EEC2 /* TPCPreferencesCloudSync.h in Headers */,
 				4C8AF631158E99520026668C /* IRCExtras.h in Headers */,
 				4C8AF632158E99520026668C /* IRCISupportInfo.h in Headers */,
 				4C8AF633158E99520026668C /* IRCMessage.h in Headers */,
@@ -2748,6 +2761,7 @@
 				4C1893F317980F460091D173 /* TVCImageURLoader.h in Headers */,
 				4C5798BA179B451400968800 /* TVCMemberListCellBadge.h in Headers */,
 				4C529E1E17AEFE44009BA0B3 /* NSDataHelper.h in Headers */,
+				4C17385E18197F800099EEC2 /* TPCPreferencesCloudSync.h in Headers */,
 				4C3E729717C39DD7008F2B08 /* THOUnicodeHelper.h in Headers */,
 				4C92FECB17A8C8F2003888F4 /* TPCResourceManager.h in Headers */,
 				4C6D464D180830E60098BA12 /* NSMenuHelper.h in Headers */,
@@ -2821,6 +2835,9 @@
 					4C1DC5511580420500A47BC9 = {
 						DevelopmentTeam = 8482Q6EPL6;
 						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
 							com.apple.iCloud = {
 								enabled = 1;
 							};

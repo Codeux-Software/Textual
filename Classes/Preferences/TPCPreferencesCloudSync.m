@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+
 @implementation TPCPreferencesCloudSync
 
 /* We want to know when we are setting local keys so that
@@ -251,3 +253,5 @@ static BOOL isSyncingLocalKeysUpstream = NO;
 }
 
 @end
+
+#endif

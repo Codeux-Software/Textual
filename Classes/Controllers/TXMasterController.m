@@ -89,7 +89,10 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 #endif
 
 	[TPCPreferences initPreferences];
+
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[TPCPreferencesCloudSync initializeCloudSyncSession];
+#endif
 
 	[self.mainWindow setMinSize:TPCPreferences.minimumWindowSize];
 
@@ -395,7 +398,9 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	
 	[TPCPreferences saveTimeIntervalSinceApplicationInstall];
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[TPCPreferencesCloudSync closeCloudSyncSession];
+#endif
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag

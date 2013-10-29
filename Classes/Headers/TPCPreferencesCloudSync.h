@@ -37,8 +37,12 @@
 
 #import "TextualApplication.h"
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+
 @interface TPCPreferencesCloudSync : NSObject
 + (void)initializeCloudSyncSession;
 + (void)refreshCloudSyncSession:(BOOL)destroyExistingRemoteKeys;
 + (void)closeCloudSyncSession;
 @end
+
+#endif
