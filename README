@@ -1,10 +1,63 @@
 #### Introduction ####
 
 Textual is a highly modified version of the open source project known 
-as LimeChat. Much of the app uses the open standard of WebKit which 
-makes customization easy through the use of CSS 3 and HTML 5. Plugins 
-written in Objective-C and scripts made with AppleScript (and other 
-languages) are also supported.
+as LimeChat created by Satoshi Nakagawa. Much of the app uses the open 
+standard of WebKit which makes customization easy through the use of 
+CSS 3 and HTML 5. Plugins written in Objective-C and scripts made 
+with AppleScript (and other languages) are also supported.
+
+
+#### Building Textual ####
+
+Please be aware while it is within your right to compile Textual and
+redistribute it unlimited times; we will not actively provide support
+for the actual building process as it has been known to introduce 
+some bugs (even while supervised) that do not exist in the Mac App
+Store version of Textual. General support for easy to answer questions
+related to the actual use of the client is still available.
+
+As a side note of the above paragraph: Some people think that denying 
+support to people who build Textual on their own is about being money 
+hungry. That simply is not the case. It is about providing the best 
+available experience for everyone that uses Textual. We do not want 
+some everyday user to see instructions on how to build Textual, try
+it, then be dissatisfied if something fails.
+
+This is espcially important when the repository is usually in a 
+constant state of work which produces unstable code.
+
+Anyways, to build it…
+
+The latest version of Textual requires two things to be built. One is
+a valid (does not need to be trusted) code signing certificate. The
+second is an installation of Xcode 5 or later. 
+
+If you are an Apple registered developer, then obtaining a signing 
+certificate is not very hard. However, if you are not, a self-signed
+certificate for "code signing" will do just as well. The steps to 
+produce one of these is very simple so Google is the best destination
+to check for the steps on making one of these.
+
+It is HIGHLY DISCOURAGED to not try to turn off code signing. Doing
+so will introduce some very common bugs which are a result of Textual
+expecting to be within a code signed sandbox. One bug that will be 
+introduced is the inability to write log files to disk. Another is
+the possibility of Textual being denied write access for passwords. 
+
+These bugs are not intentionally built into Textual to discourage 
+building. They are a result of Apple's own APIs being dependant 
+on the fact that Textual is code signed. 
+
+As long as a self-signed certificate or an Apple Developer issued
+certificate is available with its name containing "Developer ID
+Application" then the only thing required to build Textual is
+to open it and built it within Textual using the "Standard Release"
+build scheme. There is no other special instructions. 
+
+99% of build errors are related to code signing so making sure there
+is some type of certificate available for signing will normally result
+in a successful build every time.
+
 
 #### App Store vs. GitHub ####
 
@@ -19,6 +72,7 @@ Sometimes the Mac App Store version may take a while to update, and that
 is not for lack of trying. Apple is notoriously known for how slow they 
 approve apps in the Mac App Store. If you wish to build Textual for 
 yourself, proceed at your own risk.
+
 
 #### License ####
 
@@ -53,10 +107,6 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGE.
 
-Note: The Textual IRC Client uses the BSD license because it was the one
-in place when we forked the Limechat project. We obtained our copy of the
-original source code before it was converted to a GPL based license. The
-original license is as follows:
 
 The New BSD License
 
@@ -83,3 +133,10 @@ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGE.
+
+
+
+Note: The Textual IRC Client uses the BSD license because it was the one
+in place when we forked the Limechat project. We obtained our copy of the
+original source code before it was converted to a GPL based license. The
+original license is as follows:

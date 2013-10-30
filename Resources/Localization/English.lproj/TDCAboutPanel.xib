@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4488.2" systemVersion="13A538g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A598" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4488.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCAboutPanel">
@@ -18,10 +18,10 @@
         <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="default" id="1">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="1150" y="679" width="676" height="371"/>
+            <rect key="contentRect" x="1150" y="679" width="770" height="371"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <view key="contentView" id="2">
-                <rect key="frame" x="0.0" y="0.0" width="676" height="371"/>
+                <rect key="frame" x="0.0" y="0.0" width="770" height="371"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView id="3">
@@ -77,31 +77,31 @@
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="47">
-                        <rect key="frame" x="201" y="0.0" width="475" height="371"/>
+                        <rect key="frame" x="201" y="0.0" width="569" height="371"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" id="epb-2v-UAi">
-                            <rect key="frame" x="0.0" y="0.0" width="475" height="371"/>
+                            <rect key="frame" x="0.0" y="0.0" width="569" height="371"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" allowsNonContiguousLayout="YES" id="48">
-                                    <rect key="frame" x="0.0" y="0.0" width="475" height="371"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="569" height="371"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="475" height="371"/>
+                                    <size key="minSize" width="569" height="371"/>
                                     <size key="maxSize" width="570" height="10000000"/>
                                     <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="475" height="371"/>
+                                    <size key="minSize" width="569" height="371"/>
                                     <size key="maxSize" width="570" height="10000000"/>
                                 </textView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </clipView>
-                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" id="49">
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="49">
                             <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" id="50">
-                            <rect key="frame" x="459" y="0.0" width="16" height="371"/>
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="50">
+                            <rect key="frame" x="553" y="0.0" width="16" height="371"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
