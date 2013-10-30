@@ -151,9 +151,31 @@
 
 + (void)import:(id)obj withKey:(id)key
 {
+	[self import:obj withKey:key isCloudBasedImport:NO];
+}
+
++ (void)import:(id)obj withKey:(id)key isCloudBasedImport:(BOOL)isCloudImport
+{
+	/* Is it a normal key? */
 	if ([self isKeyNameExcludedFromNormalImportProcess:key] == NO) {
 		[RZUserDefaults() setObject:obj forKey:key];
+	} else {
+		/* It's not, so what special action is needed? */
+		if ([key isEqual:@"World Controller"]) {
+			/* It is the world controller! */
+			NSObjectIsKindOfClassAssert(obj, NSDictionary);
+
+			/* Start import. */
+			id clientList = [obj objectForKey:@"clients"];
+
+			[self importWorldControllerObject:clientList];
+		}
 	}
+}
+
++ (void)importWorldControllerObject:(NSArray *)clientList
+{
+	
 }
 
 + (void)importPostflightCleanup

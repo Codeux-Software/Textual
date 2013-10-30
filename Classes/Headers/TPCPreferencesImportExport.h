@@ -46,7 +46,8 @@
 + (void)export;
 
 /* For iCloud purposes. */
-+ (void)import:(id)obj withKey:(id)key;
++ (void)import:(id)obj withKey:(id)key; // Defaults cloud import to NO.
++ (void)import:(id)obj withKey:(id)key isCloudBasedImport:(BOOL)isCloudImport;
 + (void)importContentsOfDictionary:(NSDictionary *)aDict;
 + (NSDictionary *)exportedPreferencesDictionaryRepresentation;
 @end

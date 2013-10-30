@@ -138,8 +138,11 @@ static BOOL isSyncingLocalKeysUpstream = NO;
 			PointerIsEmptyAssertLoopContinue(objectValue);
 
 			/* Set it to the new dictionary. */
-			[TPCPreferencesImportExport import:objectValue withKey:keyname];
+			[TPCPreferencesImportExport import:objectValue withKey:keyname isCloudBasedImport:YES];
 		}
+
+		/* Perform reload. */
+		[TPCPreferences performReloadActionForKeyValues:changedKeys];
 	}
 
 	/* Allow us to continue work. */
