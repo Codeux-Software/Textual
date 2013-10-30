@@ -339,6 +339,15 @@ Gw
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
+                        <binding destination="1we-Ps-Z9v" name="hidden2" keyPath="values.System —> Built with iCloud Support" previousBinding="scC-ZN-NMU" id="Yua-lO-a7l">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
                         <binding destination="1we-Ps-Z9v" name="hidden" keyPath="values.SyncPreferencesToTheCloud" id="scC-ZN-NMU">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
