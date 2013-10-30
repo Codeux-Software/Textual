@@ -175,6 +175,7 @@ static BOOL isSyncingLocalKeysUpstream = NO;
 
 + (void)cloudStorageLimitExceeded
 {
+#warning TODO: Make user aware of this…
 	LogToConsole(@"The cloud storage limit was exceeded.");
 }
 
@@ -209,31 +210,18 @@ static BOOL isSyncingLocalKeysUpstream = NO;
 	}
 }
 
-+ (void)refreshCloudSyncSession:(BOOL)destroyExistingRemoteKeys
++ (void)purgeDataStoredWithCloud
 {
-	/* Debug data. */
-	DebugLogToConsole(@"iCloud: Reloading session.");
+	/* Sync latest changes from disc for the dictionary. */
+	[RZUbiquitousKeyValueStore() synchronize];
 
-	[self closeCloudSyncSession]; // Close exixting session.
+	/* Get the remote. */
+	NSDictionary *remotedict = [RZUbiquitousKeyValueStore() dictionaryRepresentation];
 
-	/* Should a new session even be opened? */
-	if ([TPCPreferences syncPreferencesToTheCloud]) {
-		[self initializeCloudSyncSession]; // Open new session.
-	}
-
-	/* Destroy existing keys? */
-	if (destroyExistingRemoteKeys) {
-		/* Sync latest changes from disc for the dictionary. */
-		[RZUbiquitousKeyValueStore() synchronize];
-
-		/* Get the remote. */
-		NSDictionary *remotedict = [RZUbiquitousKeyValueStore() dictionaryRepresentation];
-
-		/* Start destroying. */
-		[remotedict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-			[RZUbiquitousKeyValueStore() removeObjectForKey:key];
-		}];
-	}
+	/* Start destroying. */
+	[remotedict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+		[RZUbiquitousKeyValueStore() removeObjectForKey:key];
+	}];
 }
 
 + (void)closeCloudSyncSession

@@ -54,6 +54,7 @@
 @property (nonatomic, nweak) NSView *interfaceView;
 @property (nonatomic, nweak) NSView *logLocationView;
 @property (nonatomic, nweak) NSView *stylesView;
+@property (nonatomic, nweak) NSView *iCloudSyncView;
 @property (nonatomic, nweak) NSView *IRCopServicesView;
 @property (nonatomic, nweak) NSArrayController *excludeKeywordsArrayController;
 @property (nonatomic, nweak) NSArrayController *matchKeywordsArrayController;
@@ -93,6 +94,7 @@
 - (void)onChangedAlertNotification:(id)sender;
 - (void)onChangedAlertType:(id)sender;
 
+- (void)onChangedCloudSyncingServices:(id)sender;
 - (void)onChangedHighlightLogging:(id)sender;
 - (void)onChangedHighlightType:(id)sender;
 - (void)onChangedInputHistoryScheme:(id)sender;
@@ -111,6 +113,8 @@
 
 - (void)onOpenPathToScripts:(id)sender;
 - (void)onOpenPathToThemes:(id)sender;
+
+- (void)onPurgeOfCloudDataRequested:(id)sender;
 
 - (void)onSelectNewFont:(id)sender;
 @end

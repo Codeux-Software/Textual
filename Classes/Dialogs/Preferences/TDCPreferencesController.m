@@ -227,6 +227,7 @@
 		case 10:	{ [self firstPane:self.installedAddonsView			selectedItem:10]; break; }
 		case 11:	{ [self firstPane:self.experimentalSettingsView		selectedItem:11]; break; }
 		case 12:	{ [self firstPane:self.commandScopeSettingsView		selectedItem:11]; break; }
+		case 13:	{ [self firstPane:self.iCloudSyncView				selectedItem:11]; break; }
 		default:
 		{
 			THOPluginItem *plugin = [RZPluginManager() pluginsWithPreferencePanes][pluginIndex];
@@ -857,6 +858,53 @@
 - (void)setTextualAsDefaultIRCClient:(id)sender
 {
 	[TPCPreferences defaultIRCClientPrompt:YES];
+}
+
+- (void)onChangedCloudSyncingServices:(id)sender
+{
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
+		TLOPopupPrompts *popup = [TLOPopupPrompts new];
+
+		[popup sheetWindowWithQuestion:self.window
+								target:[TLOPopupPrompts class]
+								action:@selector(popupPromptNilSelector:)
+								  body:TXTLS(@"iCloudSyncServicesSupportDisabledDialogMessage")
+								 title:TXTLS(@"iCloudSyncServicesSupportDisabledDialogTitle")
+						 defaultButton:TXTLS(@"OkButton")
+					   alternateButton:nil
+						   otherButton:nil
+						suppressionKey:nil
+					   suppressionText:nil];
+	}
+#endif
+}
+
+- (void)onPurgeOfCloudDataRequestedCallback:(TLOPopupPromptReturnType)returnCode
+{
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	if (returnCode == TLOPopupPromptReturnSecondaryType) {
+		[TPCPreferencesCloudSync purgeDataStoredWithCloud];
+	}
+#endif
+}
+
+- (void)onPurgeOfCloudDataRequested:(id)sender
+{
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	TLOPopupPrompts *popup = [TLOPopupPrompts new];
+
+	[popup sheetWindowWithQuestion:self.window
+							target:self
+							action:@selector(onPurgeOfCloudDataRequestedCallback:)
+							  body:TXTLS(@"iCloudSyncDeleteAllDataDialogMessage")
+							 title:TXTLS(@"iCloudSyncDeleteAllDataDialogTitle")
+					 defaultButton:TXTLS(@"CancelButton")
+				   alternateButton:TXTLS(@"ContinueButton")
+					   otherButton:nil
+					suppressionKey:nil
+				   suppressionText:nil];
+#endif
 }
 
 - (void)openPathToThemesCallback:(TLOPopupPromptReturnType)returnCode

@@ -1635,13 +1635,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 	NSMutableDictionary *d = [NSMutableDictionary dictionary];
 
-#warning Remember to turn this off by default for both builds.
-
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	d[@"SyncPreferencesToTheCloud"]						= @(NO);
-#else
-	d[@"SyncPreferencesToTheCloud"]						= @(YES);
-#endif
 
 	d[@"AutomaticallyAddScrollbackMarker"]				= @(YES);
 	d[@"AutomaticallyDetectHighlightSpam"]				= @(YES);
