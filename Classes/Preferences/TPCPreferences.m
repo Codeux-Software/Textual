@@ -1765,6 +1765,12 @@ static NSMutableArray *excludeKeywords = nil;
 	[RZUserDefaults() setBool:[self featureAvailableToOSXLion]			forKey:@"System —> Running Mac OS Lion Or Newer"];
 	[RZUserDefaults() setBool:[self featureAvailableToOSXMountainLion]  forKey:@"System —> Running Mac OS Mountain Lion Or Newer"];
 
+#ifndef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	[RZUserDefaults() setBool:NO forKey:@"System —> Built with iCloud Support"];
+#else
+	[RZUserDefaults() setBool:YES forKey:@"System —> Built with iCloud Support"];
+#endif
+
 	/* Font Check */
 
 	if ([NSFont fontIsAvailable:[self themeChannelViewFontName]] == NO) {
