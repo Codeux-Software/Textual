@@ -155,6 +155,10 @@
 	<key>VMware</key>
 	<string>VMware Fusion Virtual Machine</string>
 	<key>MacBookPro11,3</key>
-	<string>MacBook Pro (15-inch Retina Mid-2013)</string>
+	<string>MacBook Pro (15-inch Retina Late-2013)</string>
+	<key>MacBookPro11,1</key>
+	<string>MacBook Pro (13-inch Retina Late-2013)</string>
+	<key>MacBookPro11,2</key>
+	<string>MacBook Pro (15-inch Retina Late-2013)</string>
 </dict>
 </plist>
