@@ -2831,22 +2831,6 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Codeux Software";
-				TargetAttributes = {
-					4C1DC5511580420500A47BC9 = {
-						DevelopmentTeam = 8482Q6EPL6;
-						SystemCapabilities = {
-							com.apple.Keychain = {
-								enabled = 0;
-							};
-							com.apple.iCloud = {
-								enabled = 1;
-							};
-						};
-					};
-					4C5BA37216F1302F00A96CA2 = {
-						DevelopmentTeam = 8482Q6EPL6;
-					};
-				};
 			};
 			buildConfigurationList = 4C1DC54C1580420500A47BC9 /* Build configuration list for PBXProject "Main Project (Textual)" */;
 			compatibilityVersion = "Xcode 3.2";
