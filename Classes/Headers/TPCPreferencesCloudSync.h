@@ -41,8 +41,9 @@
 
 @interface TPCPreferencesCloudSync : NSObject
 + (void)initializeCloudSyncSession;
-+ (void)refreshCloudSyncSession:(BOOL)destroyExistingRemoteKeys;
 + (void)closeCloudSyncSession;
+
++ (void)purgeDataStoredWithCloud;
 @end
 
 #endif
