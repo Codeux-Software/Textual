@@ -142,13 +142,18 @@
 
 	/* Normal import process. */
 	[aDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-		if ([self isKeyNameExcludedFromNormalImportProcess:key] == NO) {
-			[RZUserDefaults() setObject:obj forKey:key];
-		}
+		[self import:obj withKey:key];
 	}];
 
 	/* Perform reload for changed keys. */
 	[TPCPreferences performReloadActionForKeyValues:aDict.allKeys];
+}
+
++ (void)import:(id)obj withKey:(id)key
+{
+	if ([self isKeyNameExcludedFromNormalImportProcess:key] == NO) {
+		[RZUserDefaults() setObject:obj forKey:key];
+	}
 }
 
 + (void)importPostflightCleanup

@@ -122,9 +122,6 @@ static BOOL isSyncingLocalKeysUpstream = NO;
 		/* Get the list of changed keys. */
 		NSArray *changedKeys = [aNote.userInfo arrayForKey:NSUbiquitousKeyValueStoreChangedKeysKey];
 
-		/* Begin import of new values. */
-		NSMutableDictionary *importedDict = [NSMutableDictionary dictionary];
-
 		/* See the code of syncPreferencesToCloud: for an expalantion of how these keys are hashed. */
 		for (id hashedKey in changedKeys) {
 			id dictObject = [remotedict objectForKey:hashedKey];
@@ -141,12 +138,7 @@ static BOOL isSyncingLocalKeysUpstream = NO;
 			PointerIsEmptyAssertLoopContinue(objectValue);
 
 			/* Set it to the new dictionary. */
-			[importedDict setObject:objectValue forKey:keyname];
-		}
-
-		/* Perform actual import. */
-		if (NSObjectIsNotEmpty(importedDict)) {
-			[TPCPreferencesImportExport importContentsOfDictionary:importedDict];
+			[TPCPreferencesImportExport import:objectValue withKey:keyname];
 		}
 	}
 

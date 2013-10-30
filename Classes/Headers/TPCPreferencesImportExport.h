@@ -46,6 +46,7 @@
 + (void)export;
 
 /* For iCloud purposes. */
++ (void)import:(id)obj withKey:(id)key;
 + (void)importContentsOfDictionary:(NSDictionary *)aDict;
 + (NSDictionary *)exportedPreferencesDictionaryRepresentation;
 @end
