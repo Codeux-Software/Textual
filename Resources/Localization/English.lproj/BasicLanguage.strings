@@ -185,10 +185,10 @@
 "InputTextFieldPlaceholderValue" = "Send Message …";
 
 "iCloudSyncServicesSupportDisabledDialogTitle" = "iCloud Sharing Disabled";
-"iCloudSyncServicesSupportDisabledDialogMessage" = "iCloud sharing has been disabled.\n\nIf sharing is enabled on any other devices, then please take note that it must be disabled on those as well for it to apply to all.\n\nData stored with iCloud can be erased at any time by clicking the \"Configure iCloud\" button and selecting \"Erase Data Stored with iCloud\"";
+"iCloudSyncServicesSupportDisabledDialogMessage" = "iCloud sharing has been disabled.\n\nIf sharing is enabled on any other devices, then please take note that it must be disabled on those as well for it to apply to all.\n\nData stored with iCloud can be erased at any time by clicking the \"Configure iCloud\" button.";
 
 "iCloudSyncDeleteAllDataDialogTitle" = "Are you sure you wish to continue?";
-"iCloudSyncDeleteAllDataDialogMessage" = "Selecting \"Continue\" will erase ALL DATA stored by Textual on iCloud.\n\nPlease keep in mind that if any other copy of Textual is still configured for sharing, then the data you just erased may be placed back on iCloud by the device running that copy.";
+"iCloudSyncDeleteAllDataDialogMessage" = "Selecting \"Continue\" will erase all data stored by Textual on iCloud.\n\nPlease keep in mind that if any other copy of Textual is still configured for sharing, then the data you just erased may be placed back on iCloud by the device running that copy.";
 
 "InviteSheetMultiplePeopleSelected" = "%d users";
 "InviteSheetTargetDescription" = "Invite %@ to:";
@@ -227,7 +227,7 @@
 "PreferencesExportSaveLocationDialogMessage" = "Please select the location in which to save the file.\n\nIMPORTANT: The file that will be saved does not contain passwords\nas those are considered sensitive information. It also does not include\nany custom addons such as scripts and styles.";
 
 "PreferencesImportPreflightDialogTitle" = "Import Preferences";
-"PreferencesImportPreflightDialogMessage" = "During import, all connections will be disconnected and the contents of all channels cleared.\n\nPlease take note that the following preferences cannot be imported:\n\n    • Passwords.\n    • Log location.\n    • Any custom addons. Styles or scripts.\n\nAll other preferences will apply immediately.";
+"PreferencesImportPreflightDialogMessage" = "Please take note that the following preferences cannot be imported:\n\n    • Passwords.\n    • Log location.\n    • Any custom addons. Styles or scripts.\n\nAll other preferences will apply immediately.";
 "PreferencesImportPreflightDialogSelectFileButton" = "Select File";
 
 "PreferencesAlertSettingsGrowlIsDestination" = "Growl is running. Notifications will be forwarded to it.";

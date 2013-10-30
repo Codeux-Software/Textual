@@ -876,6 +876,9 @@
 						   otherButton:nil
 						suppressionKey:nil
 					   suppressionText:nil];
+	} else {
+		/* Poll server for latest. */
+		[RZUbiquitousKeyValueStore() synchronize];
 	}
 #endif
 }
