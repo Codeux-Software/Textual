@@ -273,4 +273,7 @@
 
 - (void)toggleMuteOnNotificationSounds:(id)sender;
 - (void)toggleMuteOnAllNotifcations:(id)sender;
+
+- (void)toggleMuteOnAllNotifcationsShortcut:(NSInteger)state;
+- (void)toggleMuteOnNotificationSoundsShortcut:(NSInteger)state;
 @end

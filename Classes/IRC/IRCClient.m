@@ -2207,9 +2207,7 @@
 			} else {
 				[self printDebugInformation:TXTLS(@"SoundIsNowMuted")];
 
-				self.worldController.isSoundMuted = NO;
-
-				[self.masterController.menuController toggleMuteOnNotificationSounds:nil];
+				[self.masterController.menuController toggleMuteOnNotificationSoundsShortcut:NSOffState];
 			}
 
 			break;
@@ -2219,9 +2217,7 @@
 			if (self.worldController.isSoundMuted) {
 				[self printDebugInformation:TXTLS(@"SoundIsNoLongerMuted")];
 
-				self.worldController.isSoundMuted = YES;
-
-				[self.masterController.menuController toggleMuteOnNotificationSounds:nil];
+				[self.masterController.menuController toggleMuteOnNotificationSoundsShortcut:NSOnState];
 			} else {
 				[self printDebugInformation:TXTLS(@"SoundIsNotMuted")];
 			}

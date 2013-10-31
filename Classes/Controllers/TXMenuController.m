@@ -2278,40 +2278,51 @@
 #pragma mark -
 #pragma mark Toggle Mute
 
-- (void)toggleMuteOnNotificationSounds:(id)sender
+- (void)toggleMuteOnAllNotifcationsShortcut:(NSInteger)state
 {
+	if (state == NSOnState) {
+		self.worldController.areNotificationsDisabled = YES;
+	} else {
+		self.worldController.areNotificationsDisabled = NO;
+	}
+
 	NSMenu *fileMenu = [[[NSApp mainMenu] itemWithTag:2] submenu];
 	NSMenu *dockMenu =  [[NSApp delegate] applicationDockMenu:NSApp];
 
-    if ([self.worldController isSoundMuted]) {
-        self.worldController.isSoundMuted = NO;
-		
-		[[fileMenu itemWithTag:6666] setState:NSOffState];
-		[[dockMenu itemWithTag:6666] setState:NSOffState];
-    } else {
-		self.worldController.isSoundMuted = YES;
+	[[fileMenu itemWithTag:6667] setState:state];
+	[[dockMenu itemWithTag:6667] setState:state];
+}
 
-		[[fileMenu itemWithTag:6666] setState:NSOnState];
-		[[dockMenu itemWithTag:6666] setState:NSOnState];
+- (void)toggleMuteOnNotificationSoundsShortcut:(NSInteger)state
+{
+	if (state == NSOnState) {
+		self.worldController.isSoundMuted = YES;
+	} else {
+		self.worldController.isSoundMuted = NO;
+	}
+
+	NSMenu *fileMenu = [[[NSApp mainMenu] itemWithTag:2] submenu];
+	NSMenu *dockMenu =  [[NSApp delegate] applicationDockMenu:NSApp];
+
+	[[fileMenu itemWithTag:6666] setState:state];
+	[[dockMenu itemWithTag:6666] setState:state];
+}
+
+- (void)toggleMuteOnNotificationSounds:(id)sender
+{
+    if ([self.worldController isSoundMuted]) {
+		[self toggleMuteOnNotificationSoundsShortcut:NSOffState];
+    } else {
+		[self toggleMuteOnNotificationSoundsShortcut:NSOnState];
     }
 }
 
 - (void)toggleMuteOnAllNotifcations:(id)sender
 {
-	/* Dig for the menu. */
-	NSMenu *fileMenu = [[[NSApp mainMenu] itemWithTag:2] submenu];
-	NSMenu *dockMenu =  [[NSApp delegate] applicationDockMenu:NSApp];
-
 	if ([self.worldController areNotificationsDisabled]) {
-		self.worldController.areNotificationsDisabled = NO;
-
-		[[fileMenu itemWithTag:6667] setState:NSOffState];
-		[[dockMenu itemWithTag:6667] setState:NSOffState];
+		[self toggleMuteOnAllNotifcationsShortcut:NSOffState];
 	} else {
-		self.worldController.areNotificationsDisabled = YES;
-
-		[[fileMenu itemWithTag:6667] setState:NSOnState];
-		[[dockMenu itemWithTag:6667] setState:NSOnState];
+		[self toggleMuteOnAllNotifcationsShortcut:NSOnState];
 	}
 }
 
