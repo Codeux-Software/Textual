@@ -16,5 +16,10 @@
 	<true/>
 	<key>com.apple.security.network.client</key>
 	<true/>
+	<key>com.apple.security.temporary-exception.apple-events</key>
+	<array>
+		<string>com.apple.itunes</string>
+		<string>com.apple.safari</string>
+	</array>
 </dict>
 </plist>
