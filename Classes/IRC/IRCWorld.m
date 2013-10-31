@@ -86,9 +86,7 @@
 	}
 
 	if ([config boolForKey:@"soundIsMuted"]) {
-		self.isSoundMuted = NO;
-		
-		[self.masterController.menuController toggleMuteOnNotificationSounds:nil];
+		[self.masterController.menuController toggleMuteOnNotificationSoundsShortcut:NSOnState];
 	}
 
 	self.isPopulatingSeeds = NO;
