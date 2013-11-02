@@ -1,9 +1,0 @@
-<pkg-info format-version="2" identifier="com.codeux.irc.textual.installers.scriptextras.extensions.WikiStyleLinkParser.pkg" version="1.0" overwrite-permissions="false" install-location="/" auth="root">
-<payload installKBytes="86" numberOfFiles="16"/>
-<scripts>
-    <postinstall file="./postinstall"/>
-</scripts>
-<bundle-version>
-    <bundle path="./Users/Shared/com.codeux.irc.textual/Extensions/WikiStyleLinkParser.bundle" CFBundleVersion="1.0.1" id="com.codeux.irc.textual.extension.WikiStyleLinkParser" CFBundleIdentifier="com.codeux.irc.textual.extension.WikiStyleLinkParser"/>
-</bundle-version>
-</pkg-info>

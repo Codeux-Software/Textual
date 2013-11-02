@@ -1,6 +1,0 @@
-<pkg-info format-version="2" identifier="com.codeux.irc.textual.installers.scriptextras.scripts.ml108.pkg" version="1.0" overwrite-permissions="false" install-location="/" auth="root">
-<payload installKBytes="88" numberOfFiles="16"/>
-<scripts>
-    <postinstall file="./postinstall"/>
-</scripts>
-</pkg-info>
