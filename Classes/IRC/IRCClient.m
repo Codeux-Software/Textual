@@ -4213,7 +4213,7 @@
 		IRCChannel *c = [self findChannel:target];
 
 		if (c) {
-			if ((myself == NO && [ignoreChecks ignoreJPQE] == NO) || myself == YES) {
+			if ((myself == NO && [ignoreChecks ignoreJPQE] == NO && [TPCPreferences showJoinLeave] && c.config.ignoreJPQActivity == NO) || myself == YES) {
 				NSString *text = TXTFLS(@"IRCUserChangedNickname", oldNick, newNick);
 
 				[self print:c
@@ -4234,7 +4234,7 @@
 	for (IRCChannel *c in self.channels) {
 		if ([c findMember:oldNick]) {
             
-			if ((myself == NO && [ignoreChecks ignoreJPQE] == NO) || myself == YES) {
+			if ((myself == NO && [ignoreChecks ignoreJPQE] == NO && [TPCPreferences showJoinLeave] && c.config.ignoreJPQActivity == NO) || myself == YES) {
 				NSString *text = TXTFLS(@"IRCUserChangedNickname", oldNick, newNick);
 
 				[self print:c
