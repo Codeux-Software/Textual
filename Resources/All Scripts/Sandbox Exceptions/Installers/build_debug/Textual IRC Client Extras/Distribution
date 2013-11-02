@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<installer-script authoringTool="Packages" authoringToolVersion="1.1.1" authoringToolBuild="2B71" minSpecVersion="1.0">
+    <options rootVolumeOnly="true" customize="always"/>
+    <volume-check script="volume_check()"/>
+    <!--+==========================+
+        |       Presentation       |
+        +==========================+-->
+    <title>DISTRIBUTION_TITLE</title>
+    <background file="background" scaling="proportional" alignment="bottomleft"/>
+    <welcome file="welcome.rtf"/>
+    <readme file="readme.rtf"/>
+    <!--+==========================+
+        |         Installer        |
+        +==========================+-->
+    <choices-outline>
+        <line choice="installer_choice_1"/>
+        <line choice="installer_choice_2">
+            <line choice="installer_choice_2_1"/>
+            <line choice="installer_choice_2_2"/>
+        </line>
+        <line choice="installer_choice_3"/>
+    </choices-outline>
+    <choice id="installer_choice_1" title="INSTALLER_CHOICE_1_TITLE" description="INSTALLER_CHOICE_1_DESCRIPTION">
+        <pkg-ref id="com.codeux.irc.textual.installers.scriptextras.extensions.SmileyConverter.pkg"/>
+    </choice>
+    <choice id="installer_choice_2_1" start_selected="false" title="INSTALLER_CHOICE_2_1_TITLE" description="INSTALLER_CHOICE_2_1_DESCRIPTION">
+        <pkg-ref id="com.codeux.irc.textual.installers.scriptextras.extensions.iTunesPlayerControls.pkg"/>
+    </choice>
+    <choice id="installer_choice_2_2" start_selected="false" title="INSTALLER_CHOICE_2_2_TITLE" description="INSTALLER_CHOICE_2_2_DESCRIPTION">
+        <pkg-ref id="com.codeux.irc.textual.installers.scriptextras.extensions.WikiStyleLinkParser.pkg"/>
+    </choice>
+    <choice id="installer_choice_2" title="INSTALLER_CHOICE_2_TITLE" description="INSTALLER_CHOICE_2_DESCRIPTION"/>
+    <choice id="installer_choice_3" title="Scripts" description="">
+        <pkg-ref id="com.codeux.irc.textual.installers.scriptextras.scripts.ml108.pkg"/>
+    </choice>
+    <!--+==========================+
+        |    Package References    |
+        +==========================+-->
+    <pkg-ref id="com.codeux.irc.textual.installers.scriptextras.scripts.ml108.pkg" version="1.0" auth="Root" installKBytes="88">#Scripts.pkg</pkg-ref>
+    <pkg-ref id="com.codeux.irc.textual.installers.scriptextras.extensions.WikiStyleLinkParser.pkg" version="1.0" auth="Root" installKBytes="86">#Extensions_—_Wiki-style_Link_Parser.pkg</pkg-ref>
+    <pkg-ref id="com.codeux.irc.textual.installers.scriptextras.extensions.iTunesPlayerControls.pkg" version="1.0" auth="Root" installKBytes="159">#Extensions_—_iTunes_Controller.pkg</pkg-ref>
+    <pkg-ref id="com.codeux.irc.textual.installers.scriptextras.extensions.SmileyConverter.pkg" version="1.0" auth="Root" installKBytes="65">#Extensions_—_Smiley_Converter.pkg</pkg-ref>
+    <!--+==========================+
+        |    JavaScript Scripts    |
+        +==========================+-->
+    <script>
+
+	const __IC_FLAT_DISTRIBUTION__=true;
+	const IC_DISK_TYPE_DESTINATION=0;
+	const IC_DISK_TYPE_STARTUP_DISK=1;
+	const IC_OS_DISTRIBUTION_TYPE_ANY=0;
+	const IC_OS_DISTRIBUTION_TYPE_CLIENT=1;
+	const IC_OS_DISTRIBUTION_TYPE_SERVER=2;
+
+	function IC_CheckOS(inDiskType,inMustBeInstalled,inMinimumVersion,inDistributionType)
+	{
+		var tOSVersion=undefined;
+		
+		/* Check Minimum Version */
+		
+		if (inDiskType==IC_DISK_TYPE_DESTINATION)
+		{
+			if (my.target.systemVersion!=undefined)
+			{
+				tOSVersion=my.target.systemVersion.ProductVersion;
+			}
+			
+			/* Check if no OS is installed on the potential target */
+			
+			if (tOSVersion==undefined)
+			{
+				return (inMustBeInstalled==false);
+			}
+		}
+		else
+		{
+			tOSVersion=system.version.ProductVersion;
+		}
+		
+		if (system.compareVersions(tOSVersion,inMinimumVersion)==-1)
+		{
+			return false;
+		}
+		
+		/* Check Distribution Type */
+		
+		if (inDistributionType!=IC_OS_DISTRIBUTION_TYPE_ANY)
+		{
+			var tIsServer;
+			
+			if (inDiskType==IC_DISK_TYPE_DESTINATION)
+			{
+				tIsServer=system.files.fileExistsAtPath(my.target.mountpoint+'/System/Library/CoreServices/ServerVersion.plist');
+			}
+			else
+			{
+				tIsServer=system.files.fileExistsAtPath('/System/Library/CoreServices/ServerVersion.plist');
+			}
+			
+			if (inDistributionType==IC_OS_DISTRIBUTION_TYPE_CLIENT &amp;&amp; tIsServer==true)
+			{
+				return false;
+			}
+			
+			if (inDistributionType==IC_OS_DISTRIBUTION_TYPE_SERVER &amp;&amp; tIsServer==false)
+			{
+				return false;
+			}
+		}
+		
+		return true;
+	}
+
+	function volume_check()
+	{
+		var tResult;
+
+		tResult=IC_CheckOS(IC_DISK_TYPE_DESTINATION,true,'10.8',IC_OS_DISTRIBUTION_TYPE_ANY);
+
+		if (tResult==false)
+		{
+			my.result.message = system.localizedString('REQUIREMENT_FAILED_MESSAGE_VOLUME_CHECK_1');
+			my.result.type = 'Fatal';
+		}
+
+		return tResult;
+	}
+
+    </script>
+</installer-script>
