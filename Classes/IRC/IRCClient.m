@@ -4263,6 +4263,10 @@
 	c.name = newNick;
 
 	[self.worldController reloadTreeItem:c];
+	
+	if (myself) {
+		[self.worldController updateTitleFor:c];
+	}
 }
 
 - (void)receiveMode:(IRCMessage *)m
