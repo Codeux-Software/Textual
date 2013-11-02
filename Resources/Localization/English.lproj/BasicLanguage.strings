@@ -55,8 +55,10 @@
 
 "CancelButton" = "Cancel";
 
+"ChannelApplicationTitleLocalDivider" = " — ";
 "ChannelApplicationTitleModeValue" = " (%@)";
 "ChannelApplicationTitleUserCount" = " (%ld Users)";
+"ChannelApplicationTitleLocalNicknameAndNetwork" = "%1$@ on %2$@";
 
 "ChannelDeletePromptMessage" = "There is no undo and all data related to this channel, except for logs, will be erased.";
 "ChannelDeletePromptTitle" = "Do you want to delete the selection?";

@@ -563,8 +563,8 @@
 	NSMutableString *title = [NSMutableString string];
 
 	if ([selectedItem isClient]) {
-		[title appendString:client.altNetworkName];
-		[title appendString:@" — "];
+		[title appendString:TXTFLS(@"ChannelApplicationTitleLocalNicknameAndNetwork", client.localNickname, client.altNetworkName)];
+		[title appendString:TXTLS(@"ChannelApplicationTitleLocalDivider")];
         
 		NSString *networkAddress = [client networkAddress];
 
@@ -574,8 +574,8 @@
 			[title appendString:networkAddress];
 		}
 	} else {
-		[title appendString:client.altNetworkName];
-		[title appendString:@" — "];
+		[title appendString:TXTFLS(@"ChannelApplicationTitleLocalNicknameAndNetwork", client.localNickname, client.altNetworkName)];
+		[title appendString:TXTLS(@"ChannelApplicationTitleLocalDivider")];
 
         if (channel.isPrivateMessage) {
             /* Textual defines the topic of a private message as the user host. */
