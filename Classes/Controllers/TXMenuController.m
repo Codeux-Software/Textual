@@ -2171,6 +2171,8 @@
 
 	[self.worldController select:oldSelection];
 	[self.worldController save];
+	
+	[self populateNavgiationChannelList];
 }
 
 - (void)resetWindowSize:(id)sender
