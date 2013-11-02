@@ -234,7 +234,7 @@ DQ
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="Ndz-6h-1aN">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="Ndz-6h-1aN">
                     <rect key="frame" x="51" y="80" width="236" height="42"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Hide join, part, and quit messages from showing in the channel. Also includes nickname changes." id="zcH-vF-aVA">
