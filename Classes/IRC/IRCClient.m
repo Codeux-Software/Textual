@@ -2053,10 +2053,14 @@
 
 			if ([TPCPreferences amsgAllConnections]) {
 				for (IRCClient *client in self.worldController.clients) {
-					for (IRCChannel *channel in u.channels) {
-						[client setUnreadState:channel];
-						[client sendText:s command:IRCPrivateCommandIndex("privmsg") channel:channel];
-					}
+                    if(client.isConnected) {
+                        for (IRCChannel *channel in client.channels) {
+                            if(channel.isActive) {
+                                [client setUnreadState:channel];
+                                [client sendText:s command:IRCPrivateCommandIndex("privmsg") channel:channel];
+                            }
+                        }
+                    }
 				}
 			} else {
 				for (IRCChannel *channel in self.channels) {
@@ -2073,10 +2077,14 @@
 
 			if ([TPCPreferences amsgAllConnections]) {
 				for (IRCClient *client in self.worldController.clients) {
-					for (IRCChannel *channel in u.channels) {
-						[client setUnreadState:channel];
-						[client sendText:s command:IRCPrivateCommandIndex("action") channel:channel];
-					}
+                    if(client.isConnected) {
+                        for (IRCChannel *channel in client.channels) {
+                            if(channel.isActive) {
+                                [client setUnreadState:channel];
+                                [client sendText:s command:IRCPrivateCommandIndex("action") channel:channel];
+                            }
+                        }
+                    }
 				}
 			} else {
 				for (IRCChannel *channel in self.channels) {
