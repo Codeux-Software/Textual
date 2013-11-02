@@ -1,0 +1,9 @@
+<pkg-info format-version="2" identifier="com.codeux.irc.textual.installers.scriptextras.extensions.iTunesPlayerControls.pkg" version="1.0" overwrite-permissions="false" install-location="/" auth="root">
+<payload installKBytes="159" numberOfFiles="14"/>
+<scripts>
+    <postinstall file="./postinstall"/>
+</scripts>
+<bundle-version>
+    <bundle path="./Users/Shared/com.codeux.irc.textual/Extensions/iTunesPlayerControls.bundle" CFBundleVersion="1.0" id="de.incnet.iTunesPlayerControls" CFBundleIdentifier="de.incnet.iTunesPlayerControls"/>
+</bundle-version>
+</pkg-info>
