@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SYSTEM_BUNDLE_PATH="/Library/Containers/com.codeux.irc.textual/Data/Library/Application Support/Textual IRC/Extensions/"
-SYSTEM_SCRIPT_PATH="/Library/Application Scripts/com.codeux.irc.textual/"
+SYSTEM_BUNDLE_PATH="/Users/Shared/com.codeux.irc.textual/Extensions/"
+SYSTEM_SCRIPT_PATH="/Users/Shared/com.codeux.irc.textual/Scripts/"
 
 USER_BUNDLE_PATH="$HOME/Library/Containers/com.codeux.irc.textual/Data/Library/Application Support/Textual IRC/Extensions/"
 USER_SCRIPT_PATH="$HOME/Library/Application Scripts/com.codeux.irc.textual/"

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+codesign -s "Developer ID Installer" ./Textual\ IRC\ Client\ Extras.pkg
