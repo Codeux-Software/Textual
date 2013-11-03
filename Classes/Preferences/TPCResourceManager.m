@@ -58,3 +58,116 @@
 }
 
 @end
+
+@implementation TPCResourceManagerDocumentTypeImporter
+
+- (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError *__autoreleasing *)outError
+{
+	PointerIsEmptyAssertReturn(url, NO);
+	
+	if ([url.absoluteString hasSuffix:TPCResourceManagerScriptDocumentTypeExtension]) {
+		[self performImportOfScriptFile:url];
+		
+		return YES;
+	}
+	
+	return NO;
+}
+
+#pragma mark -
+#pragma mark Custom Script Files
+
+- (void)performImportOfScriptFile:(NSURL *)url
+{
+	/* Scripts can only be Mountain Lion or later. */
+	if ([TPCPreferences featureAvailableToOSXMountainLion] == NO) {
+		[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"ResourcesFileImportSystemVersionErrorDialogMessage")
+											title:TXTLS(@"ResourcesFileImportSystemVersionErrorDialogTitle")
+									defaultButton:TXTLS(@"OkButton")
+								  alternateButton:nil
+								   suppressionKey:nil
+								  suppressionText:nil];
+		
+		return; // Cancel.
+	}
+	
+	/* Script install. */
+	NSSavePanel *d = [NSSavePanel savePanel];
+	
+	/* First we need to check which folder exists where. We are going to try
+	 and bring users to the actual scripts folder, but if that does not exist,
+	 then we bring them to the root folder for them to create it. */
+	NSString *txtlsFolder = [TPCPreferences systemUnsupervisedScriptFolderPath];
+	
+	BOOL scriptsFolderExists = NO;
+	
+	if ([RZFileManager() fileExistsAtPath:txtlsFolder isDirectory:&scriptsFolderExists] == NO) {
+		txtlsFolder = [TPCPreferences systemUnsupervisedScriptFolderRootPath];
+	}
+	
+	NSURL *folderRep = [NSURL fileURLWithPath:txtlsFolder isDirectory:YES];
+	
+	/* Show save panel to user. */
+	[d setCanCreateDirectories:YES];
+	[d setDirectoryURL:folderRep];
+	[d setTitle:TXTLS(@"ResourcesFileImportScriptSaveDialogTitle")];
+	[d setMessage:TXTFLS(@"ResourcesFileImportScriptSaveDialogMessage", [TPCPreferences applicationBundleIdentifier])];
+	[d setNameFieldStringValue:[url lastPathComponent]];
+	
+	if ([TPCPreferences featureAvailableToOSXMavericks]) {
+		[d setShowsTagField:NO];
+	}
+	
+	/* Complete the import. */
+	[d beginWithCompletionHandler:^(NSInteger returnCode) {
+		if (returnCode == NSOKButton) {
+			if ([self import:url into:d.URL]) {
+				/* Script was successfully installed. */
+				NSString *filename = [d.URL.lastPathComponent stringByDeletingPathExtension];
+				
+				[[TLOPopupPrompts invokeInBackgroundThread] dialogWindowWithQuestion:TXTFLS(@"ResourcesFileImportScriptSuccessDialogMessage", filename)
+																			   title:TXTLS(@"ResourcesFileImportScriptSuccessDialogTitle")
+																	   defaultButton:TXTLS(@"OkButton")
+																	 alternateButton:nil
+																	  suppressionKey:nil
+																	 suppressionText:nil];
+			}
+		}
+	}];
+}
+
+#pragma mark -
+#pragma mark General Import Controller
+
+- (BOOL)import:(NSURL *)url into:(NSURL *)destination
+{
+	PointerIsEmptyAssertReturn(url, NO);
+	PointerIsEmptyAssertReturn(destination, NO);
+	
+	NSError *instError;
+	
+	/* Try to remove the existing item before continuing. */
+	if ([destination checkResourceIsReachableAndReturnError:NULL]) {
+		BOOL trashed = [RZFileManager() trashItemAtURL:destination resultingItemURL:nil error:&instError];
+		
+		if (trashed == NO && instError) {
+			LogToConsole(@"Install Error:\nFrom: %@\nTo: %@\nError: %@", url, destination, [instError localizedDescription]);
+			
+			return NO;
+		}
+	}
+	
+	/* Move the new item into place. */
+	[RZFileManager() copyItemAtURL:url toURL:destination error:&instError];
+	
+	if (instError) {
+		LogToConsole(@"Install Error:\nFrom: %@\nTo: %@\nError: %@", url, destination, [instError localizedDescription]);
+		
+		return NO;
+	}
+	
+	return YES;
+}
+
+@end
+

@@ -21,9 +21,9 @@
 		4C393B2D121AE5D5004C66F4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4C588BAE16E34BF1007EFF6D /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Code Signing Identity.xcconfig"; sourceTree = "<group>"; };
 		4C69189916E3276C00BDE3A8 /* Shared Extension Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Shared Extension Configuration.xcconfig"; sourceTree = "<group>"; };
-		4C69189B16E3276C00BDE3A8 /* Shared Release Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Shared Release Configuration.xcconfig"; sourceTree = "<group>"; };
+		4C6A0CE01826176F00222CDB /* Shared Developer ID Release Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Shared Developer ID Release Configuration.xcconfig"; sourceTree = "<group>"; };
 		4CE6B68816E25B42003AD1A3 /* BasicLanguage.strings */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; fileEncoding = 4; path = BasicLanguage.strings; sourceTree = "<group>"; };
-		8D576316048677EA00EA77CD /* WikiStyleLinkParser.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WikiStyleLinkParser.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D576316048677EA00EA77CD /* WikiStyleLinkParser.TxtlPlugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WikiStyleLinkParser.TxtlPlugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -82,7 +82,7 @@
 		19C28FB6FE9D52B211CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D576316048677EA00EA77CD /* WikiStyleLinkParser.bundle */,
+				8D576316048677EA00EA77CD /* WikiStyleLinkParser.TxtlPlugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -99,8 +99,8 @@
 			isa = PBXGroup;
 			children = (
 				4C588BAE16E34BF1007EFF6D /* Code Signing Identity.xcconfig */,
+				4C6A0CE01826176F00222CDB /* Shared Developer ID Release Configuration.xcconfig */,
 				4C69189916E3276C00BDE3A8 /* Shared Extension Configuration.xcconfig */,
-				4C69189B16E3276C00BDE3A8 /* Shared Release Configuration.xcconfig */,
 			);
 			name = "Build Configurations";
 			path = "../../Build Configurations";
@@ -140,7 +140,7 @@
 			name = WikiStyleLinkParser;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = BragSpam;
-			productReference = 8D576316048677EA00EA77CD /* WikiStyleLinkParser.bundle */;
+			productReference = 8D576316048677EA00EA77CD /* WikiStyleLinkParser.TxtlPlugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -225,7 +225,6 @@
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = WikiStyleLinkParser;
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
 		};
@@ -235,7 +234,6 @@
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = WikiStyleLinkParser;
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
 		};

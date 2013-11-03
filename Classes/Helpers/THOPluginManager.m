@@ -113,7 +113,7 @@
 	// ---- //
 
     for (NSString *file in resourceBundles) {
-        if ([file hasSuffix:@".bundle"]) {
+        if ([file hasSuffix:@".bundle"] || [file hasSuffix:TPCResourceManagerBundleDocumentTypeExtensionWithotuDot]) {
             NSString *fullPath = [path_1 stringByAppendingPathComponent:file];
 
             if ([RZFileManager() fileExistsAtPath:fullPath] == NO) {
@@ -172,7 +172,7 @@
 
 - (id)supportedAppleScriptCommands:(BOOL)returnPathInfo
 {
-	NSArray *scriptExtensions = @[@"scpt", @"py", @"pyc", @"rb", @"pl", @"sh", @"php", @"bash"];
+	NSArray *scriptExtensions = @[TPCResourceManagerScriptDocumentTypeExtensionWithotuDot, @"scpt", @"py", @"pyc", @"rb", @"pl", @"sh", @"php", @"bash"];
 
 	NSArray *scriptPaths = @[
         NSStringNilValueSubstitute([TPCPreferences systemUnsupervisedScriptFolderPath]),
@@ -194,7 +194,7 @@
 			if (NSObjectIsNotEmpty(resourceFiles)) {
 				for (NSString *file in resourceFiles) {
 					NSString *fullpa = [path stringByAppendingPathComponent:file];
-					NSString *script = [file lowercaseString];
+					NSString *script = file;
 
 					if ([file hasPrefix:@"."] || [file hasSuffix:@".rtf"]) {
 						continue;

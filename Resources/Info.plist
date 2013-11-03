@@ -2,14 +2,65 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>TxtlPlugin</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>TextualBundleIcon</string>
+			<key>CFBundleTypeName</key>
+			<string>Textual Extension</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<integer>1</integer>
+			<key>NSDocumentClass</key>
+			<string>TPCResourceManagerDocumentTypeImporter</string>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>NSBinaryStoreType</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>TxtlScript</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>TextualScriptIcon</string>
+			<key>CFBundleTypeName</key>
+			<string>Textual Script</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<integer>0</integer>
+			<key>NSDocumentClass</key>
+			<string>TPCResourceManagerDocumentTypeImporter</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>TxtlStyle</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>TextualStyleIcon</string>
+			<key>CFBundleTypeName</key>
+			<string>Textual Style</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<integer>1</integer>
+			<key>NSDocumentClass</key>
+			<string>TPCResourceManagerDocumentTypeImporter</string>
+		</dict>
+	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
 	<string>application.icns</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.codeux.irc.textual</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>

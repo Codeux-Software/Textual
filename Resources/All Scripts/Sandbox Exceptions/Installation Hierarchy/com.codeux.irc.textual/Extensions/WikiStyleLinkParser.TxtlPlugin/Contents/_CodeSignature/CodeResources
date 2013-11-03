@@ -4,17 +4,35 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>Resources/PreferencePane.nib</key>
+		<key>Resources/BasicLanguage.strings</key>
 		<data>
-		YfjKG1Hn+ueT7u6o53x2+yEyrHM=
+		ZPQzT7nhOpljvMwTuvjGidhJvhw=
 		</data>
+		<key>Resources/English.lproj/TPIWikiStyleLinkParser.nib</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			CoezdeL2GKq3frEbX0jcPytM9YY=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Resources/PreferencePane.nib</key>
+		<key>Resources/BasicLanguage.strings</key>
 		<data>
-		YfjKG1Hn+ueT7u6o53x2+yEyrHM=
+		ZPQzT7nhOpljvMwTuvjGidhJvhw=
 		</data>
+		<key>Resources/English.lproj/TPIWikiStyleLinkParser.nib</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			CoezdeL2GKq3frEbX0jcPytM9YY=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
 	</dict>
 	<key>rules</key>
 	<dict>
