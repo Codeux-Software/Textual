@@ -282,7 +282,7 @@
 "ResourcesFileImportScriptSaveDialogMessage" = "Select the folder named \"%@\" to install this script within.\nIf this folder does not exist, then create it. No other folder name can be used.";
 
 "ResourcesFileImportScriptInstallSuccessDialogTitle" = "New Script Installed";
-"ResourcesFileImportScriptInstallSuccessDialogMessage" = "The script \"%@\" has been successfully installed and is now available for use.";
+"ResourcesFileImportScriptInstallSuccessDialogMessage" = "The script \"%@\" has been successfully installed and is now available for usage.";
 
 "ResourcesFileImportBundleInstallSuccessDialogTitle" = "New Extension Installed";
 "ResourcesFileImportBundleInstallSuccessDialogMessage" = "The extension \"%@\" has been successfully installed. The services defined by this extension will be available the next time Textual launches.";
