@@ -6,33 +6,41 @@
 	<dict>
 		<key>Resources/BasicLanguage.strings</key>
 		<data>
-		ZPQzT7nhOpljvMwTuvjGidhJvhw=
+		cfeytDUf6bbArPucCh0c8PnisvU=
 		</data>
-		<key>Resources/English.lproj/TPIWikiStyleLinkParser.nib</key>
+		<key>Resources/English.lproj/TPISmileyConverter.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			f+YlWUoi1C93z/AIT7IDkCoIopU=
+			VU+B0AHP54w+Qu/fbd2KGAyxDUE=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
+		<key>Resources/conversionTable.plist</key>
+		<data>
+		tb32l55ieZeEPfBfUxfDKbHTz2E=
+		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
 		<key>Resources/BasicLanguage.strings</key>
 		<data>
-		ZPQzT7nhOpljvMwTuvjGidhJvhw=
+		cfeytDUf6bbArPucCh0c8PnisvU=
 		</data>
-		<key>Resources/English.lproj/TPIWikiStyleLinkParser.nib</key>
+		<key>Resources/English.lproj/TPISmileyConverter.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			f+YlWUoi1C93z/AIT7IDkCoIopU=
+			VU+B0AHP54w+Qu/fbd2KGAyxDUE=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
+		<key>Resources/conversionTable.plist</key>
+		<data>
+		tb32l55ieZeEPfBfUxfDKbHTz2E=
+		</data>
 	</dict>
 	<key>rules</key>
 	<dict>

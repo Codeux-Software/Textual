@@ -40,3 +40,16 @@
 @interface TPCResourceManager : NSObject
 + (void)copyResourcesToCustomAddonsFolder;
 @end
+
+/* I should make these defines longer… */
+#define TPCResourceManagerBundleDocumentTypeExtension				@".TxtlPlugin"
+#define TPCResourceManagerBundleDocumentTypeExtensionWithotuDot		@"TxtlPlugin"
+
+#define TPCResourceManagerScriptDocumentTypeExtension				@".TxtlScript"
+#define TPCResourceManagerScriptDocumentTypeExtensionWithotuDot		@"TxtlScript"
+
+#define TPCResourceManagerStyleDocumentTypeExtension				@".TxtlStyle"
+#define TPCResourceManagerStyleDocumentTypeExtensionWithotuDot		@"TxtlStyle"
+
+@interface TPCResourceManagerDocumentTypeImporter : NSDocument
+@end

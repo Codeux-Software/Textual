@@ -419,7 +419,7 @@
 															<key>GID</key>
 															<integer>0</integer>
 															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual/Extensions/SmileyConverter.bundle</string>
+															<string>../Installation Hierarchy/com.codeux.irc.textual/Extensions/SmileyConverter.TxtlPlugin</string>
 															<key>PATH_TYPE</key>
 															<integer>1</integer>
 															<key>PERMISSIONS</key>
@@ -953,7 +953,7 @@
 															<key>GID</key>
 															<integer>0</integer>
 															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual/Extensions/iTunesPlayerControls.bundle</string>
+															<string>../Installation Hierarchy/com.codeux.irc.textual/Extensions/iTunesPlayerControls.TxtlPlugin</string>
 															<key>PATH_TYPE</key>
 															<integer>1</integer>
 															<key>PERMISSIONS</key>
@@ -1487,7 +1487,7 @@
 															<key>GID</key>
 															<integer>0</integer>
 															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual/Extensions/WikiStyleLinkParser.bundle</string>
+															<string>../Installation Hierarchy/com.codeux.irc.textual/Extensions/WikiStyleLinkParser.TxtlPlugin</string>
 															<key>PATH_TYPE</key>
 															<integer>1</integer>
 															<key>PERMISSIONS</key>

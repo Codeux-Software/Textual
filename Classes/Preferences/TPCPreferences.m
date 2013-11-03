@@ -438,17 +438,19 @@ NSString *IRCPublicCommandIndex(const char *key)
 	return [RZMainBundle() bundlePath];
 }
 
++ (NSString *)systemUnsupervisedScriptFolderRootPath
+{
+	if ([self featureAvailableToOSXMountainLion]) {
+		return [NSString stringWithFormat:@"%@/Library/Application Scripts/", NSHomeDirectory()];
+	}
+	
+	return NSStringEmptyPlaceholder;
+}
+
 + (NSString *)systemUnsupervisedScriptFolderPath
 {
 	if ([self featureAvailableToOSXMountainLion]) {
-		//NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationScriptsDirectory, NSUserDomainMask, YES);
-
-		//return searchArray[0];
-
-		/* The above code created a lot of leaks in the Security framework. It did, at least for me. Hard coding the path
-		 for now. I probably should file a radar about it, but I am not in the mood. Someone want to dit for me? */
-
-		return [NSString stringWithFormat:@"%@/Library/Application Scripts/%@", NSHomeDirectory(), [self applicationBundleIdentifier]];
+		return [[self systemUnsupervisedScriptFolderRootPath] stringByAppendingPathComponent:[self applicationBundleIdentifier]];
 	}
 
 	/* We return an empty string instead of nil because

@@ -9,18 +9,23 @@ USER_SCRIPT_PATH="$HOME/Library/Application Scripts/com.codeux.irc.textual/"
 mkdir -p "${USER_BUNDLE_PATH}"
 mkdir -p "${USER_SCRIPT_PATH}"
 
-OLD_WIKILINKPARSER_PATH="${USER_BUNDLE_PATH}/WikipediaLinkParser.bundle"
+OLD_EXTENSION_NAMES="${USER_BUNDLE_PATH}/WikipediaLinkParser.bundle
+${USER_BUNDLE_PATH}/WikiStyleLinkParser.bundle
+${USER_BUNDLE_PATH}/iTunesPlayerControls.bundle
+${USER_BUNDLE_PATH}/SmileyConverter.bundle"
 
-if [ -d "${OLD_WIKILINKPARSER_PATH}" ]; then
-	rm -rf "${OLD_WIKILINKPARSER_PATH}"
-fi
+for EXTENSION in $OLD_EXTENSION_NAMES; do
+	if [ -d "${EXTENSION}" ]; then
+		rm -rf "${EXTENSION}"
+	fi
+done
 
 cd "${SYSTEM_BUNDLE_PATH}"
 
 chown -R $USER .
 chgrp -R staff .
 
-BUNDLES=`find . -name "*.bundle"`
+BUNDLES=`find . -name "*.TxtlPlugin"`
 
 for BUNDLE in $BUNDLES; do
 	BUNDLE_PATH="${USER_BUNDLE_PATH}/${BUNDLE}"
@@ -37,7 +42,7 @@ cd "${SYSTEM_SCRIPT_PATH}"
 chown -R $USER .
 chgrp -R staff .
 
-SCRIPT_EXTENSIONS="php scpt"
+SCRIPT_EXTENSIONS="php scpt TxtlScript"
 
 for EXTENSION in $SCRIPT_EXTENSIONS; do
 	SCRIPTS=`find . -name "*.${EXTENSION}"`

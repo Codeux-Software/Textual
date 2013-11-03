@@ -278,6 +278,15 @@
 
 "OkButton" = "OK";
 
+"ResourcesFileImportScriptSaveDialogTitle" = "Install Custom Script";
+"ResourcesFileImportScriptSaveDialogMessage" = "Select the folder named \"%@\" to install this script within.\nIf this folder does not exist, then create it. No other folder name can be used.";
+
+"ResourcesFileImportScriptSuccessDialogTitle" = "New Script Installed";
+"ResourcesFileImportScriptSuccessDialogMessage" = "The script \"%@\" has been successfully installed and is now available for use.";
+
+"ResourcesFileImportSystemVersionErrorDialogTitle" = "Incompatiable System Version";
+"ResourcesFileImportSystemVersionErrorDialogMessage" = "A file that you are trying to install cannot be used on this version of Mac OS X.";
+
 "OpeningLocalStyleResourcesCopyButton" = "Make Local Copy";
 "OpeningLocalStyleResourcesMessage" = "The style being opened is a read-only version bundled with Textual.\n\nWould you like to create a local copy? It will become the selected style and can then be modified.";
 "OpeningLocalStyleResourcesTitle" = "Resource Files";
