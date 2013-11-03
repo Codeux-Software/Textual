@@ -65,13 +65,51 @@
 {
 	PointerIsEmptyAssertReturn(url, NO);
 	
+	/* Is it a script? */
 	if ([url.absoluteString hasSuffix:TPCResourceManagerScriptDocumentTypeExtension]) {
 		[self performImportOfScriptFile:url];
 		
 		return YES;
 	}
 	
+	/* Is it a plugin? */
+	NSString *pluginSuffix = [TPCResourceManagerBundleDocumentTypeExtension stringByAppendingString:@"/"]; // It's a folder…
+	
+	if ([url.absoluteString hasSuffix:pluginSuffix]) {
+		[self performImportOfPluginFile:url];
+		
+		return YES;
+	}
+	
 	return NO;
+}
+
+#pragma mark -
+#pragma mark Custom Plugin Files
+
+- (void)performImportOfPluginFile:(NSURL *)url
+{
+	PointerIsEmptyAssert(url);
+	
+	/* Establish install path. */
+	NSString *filename = [url lastPathComponent];
+	
+	NSString *newPath = [[TPCPreferences customExtensionFolderPath] stringByAppendingPathComponent:filename];
+	
+	/* Try to import. */
+	BOOL didImport = [self import:url into:[NSURL fileURLWithPath:newPath]];
+	
+	/* Was it successful? */
+	if (didImport) {
+		filename = [filename stringByDeletingPathExtension];
+		
+		[TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"ResourcesFileImportBundleInstallSuccessDialogMessage", filename)
+											title:TXTLS(@"ResourcesFileImportBundleInstallSuccessDialogTitle")
+									defaultButton:TXTLS(@"OkButton")
+								  alternateButton:nil
+								   suppressionKey:nil
+								  suppressionText:nil];
+	}
 }
 
 #pragma mark -
@@ -125,8 +163,8 @@
 				/* Script was successfully installed. */
 				NSString *filename = [d.URL.lastPathComponent stringByDeletingPathExtension];
 				
-				[[TLOPopupPrompts invokeInBackgroundThread] dialogWindowWithQuestion:TXTFLS(@"ResourcesFileImportScriptSuccessDialogMessage", filename)
-																			   title:TXTLS(@"ResourcesFileImportScriptSuccessDialogTitle")
+				[[TLOPopupPrompts invokeInBackgroundThread] dialogWindowWithQuestion:TXTFLS(@"ResourcesFileImportScriptInstallSuccessDialogMessage", filename)
+																			   title:TXTLS(@"ResourcesFileImportScriptInstallSuccessDialogTitle")
 																	   defaultButton:TXTLS(@"OkButton")
 																	 alternateButton:nil
 																	  suppressionKey:nil
