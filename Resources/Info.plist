@@ -19,8 +19,6 @@
 			<integer>1</integer>
 			<key>NSDocumentClass</key>
 			<string>TPCResourceManagerDocumentTypeImporter</string>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>NSBinaryStoreType</string>
 		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>

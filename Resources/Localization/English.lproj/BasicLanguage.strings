@@ -281,8 +281,11 @@
 "ResourcesFileImportScriptSaveDialogTitle" = "Install Custom Script";
 "ResourcesFileImportScriptSaveDialogMessage" = "Select the folder named \"%@\" to install this script within.\nIf this folder does not exist, then create it. No other folder name can be used.";
 
-"ResourcesFileImportScriptSuccessDialogTitle" = "New Script Installed";
-"ResourcesFileImportScriptSuccessDialogMessage" = "The script \"%@\" has been successfully installed and is now available for use.";
+"ResourcesFileImportScriptInstallSuccessDialogTitle" = "New Script Installed";
+"ResourcesFileImportScriptInstallSuccessDialogMessage" = "The script \"%@\" has been successfully installed and is now available for use.";
+
+"ResourcesFileImportBundleInstallSuccessDialogTitle" = "New Extension Installed";
+"ResourcesFileImportBundleInstallSuccessDialogMessage" = "The extension \"%@\" has been successfully installed. The services defined by this extension will be available the next time Textual launches.";
 
 "ResourcesFileImportSystemVersionErrorDialogTitle" = "Incompatiable System Version";
 "ResourcesFileImportSystemVersionErrorDialogMessage" = "A file that you are trying to install cannot be used on this version of Mac OS X.";
