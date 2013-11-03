@@ -167,7 +167,7 @@
 "IRCUserDisconnected" = "\002%1$@\002 (%2$@@%3$@) left IRC.";
 "IRCUserDisconnectedFromPrivateMessage" = "\002%1$@\002 left the query by disconnecting from IRC.";
 "IRCUserReconnectedToPrivateMessage" = "\002%1$@\002 joined the query by connecting to IRC.";
-"IRCUserHasModes" = "Your user mode is %@";
+"IRCUserHasModes" = "%@, your user mode is %@";
 "IRCUserInvitedToJoinChannel" = "Inviting %1$@ to join %2$@";
 "IRCUserInvitedYouToJoinChannel" = "%1$@!%2$@@%3$@ invited you to join %4$@";
 "IRCUserIsAway" = "%1$@ is away (%2$@)";

@@ -4816,7 +4816,7 @@
 			[self print:nil
 				   type:TVCLogLineDebugType
 				   nick:nil
-				   text:TXTFLS(@"IRCUserHasModes", modestr)
+				   text:TXTFLS(@"IRCUserHasModes", self.localNickname, modestr)
 			 receivedAt:m.receivedAt
 				command:m.command];
 
