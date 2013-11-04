@@ -188,6 +188,61 @@
 }
 
 #pragma mark -
+#pragma mark Cloud Management 
+
+- (NSMutableDictionary *)cloudDictionaryValue
+{
+	NSMutableArray *ary = [NSMutableArray array];
+	
+	for (IRCClient *u in self.clients) {
+		if (u.config.excludedFromCloudSyncing == NO) {
+			[ary safeAddObject:[u dictionaryValue]];
+		}
+	}
+	
+	return [@{@"clients" : ary} mutableCopy];
+}
+
+- (void)addClientToListOfDeletedClients:(NSString *)itemUUID
+{
+	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]); // Are we even syncing?
+	
+	/* Begin work. */
+	NSArray *deletedClients = [RZUserDefaults() arrayForKey:IRCWorldControllerDeletedClientsStorageKey];
+	
+	/* Does the array even exist? */
+	if (PointerIsEmpty(deletedClients)) {
+		deletedClients = @[itemUUID];
+	} else {
+		deletedClients = [deletedClients arrayByAddingObject:itemUUID];
+	}
+	
+	/* Set new array. */
+	[RZUserDefaults() setObject:deletedClients forKey:IRCWorldControllerDeletedClientsStorageKey];
+}
+
+/* If a client set locally was set to not be synced from the cloud, but its UUID appears as a
+ deleted item from another client, then remove that UUID from the deleted clients list if that
+ client is again set to sync to the cloud. */
+- (void)removeClientFromListOfDeletedClients:(NSString *)itemUUID
+{
+	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]); // Are we even syncing?
+	
+	/* Begin work. */
+	NSArray *deletedClients = [RZUserDefaults() arrayForKey:IRCWorldControllerDeletedClientsStorageKey];
+	
+	if (PointerIsNotEmpty(deletedClients)) {
+		NSInteger clientIndex = [deletedClients indexOfObject:itemUUID];
+		
+		if (NSDissimilarObjects(clientIndex, NSNotFound)) {
+			deletedClients = [deletedClients arrayByRemovingObjectAtIndex:clientIndex];
+			
+			[RZUserDefaults() setObject:deletedClients forKey:itemUUID];
+		}
+	}
+}
+
+#pragma mark -
 #pragma mark Properties
 
 - (IRCClient *)selectedClient
@@ -967,6 +1022,10 @@
 - (void)destroyClient:(IRCClient *)u
 {
 	[u terminate];
+	
+	if (u.config.excludedFromCloudSyncing == NO) {
+		[self addClientToListOfDeletedClients:u.config.itemUUID]; // Set client as deleted.
+	}
 	
 	if (self.selectedItem && self.selectedItem.client == u) {
 		[self selectOtherAndDestroy:u];

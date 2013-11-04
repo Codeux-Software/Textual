@@ -206,6 +206,8 @@
 
 - (void)updateConfig:(IRCClientConfig *)seed
 {
+	BOOL syncToCloudChanged = NSDissimilarObjects(self.config.excludedFromCloudSyncing, seed.excludedFromCloudSyncing);
+	
 	self.config = nil;
 	self.config = [seed mutableCopy];
 
@@ -254,6 +256,11 @@
 	[self populateISONTrackedUsersList:self.config.ignoreList];
 
 	[self setupReachability];
+	
+	/* Maybe remove this client from deleted list. */
+	if (syncToCloudChanged && self.config.excludedFromCloudSyncing == NO) {
+		[self.worldController removeClientFromListOfDeletedClients:self.config.itemUUID];
+	}
 }
 
 - (IRCClientConfig *)storedConfig
