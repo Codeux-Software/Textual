@@ -138,7 +138,7 @@
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 			};
 			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "ZNC Additions Extension" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -201,6 +201,7 @@
 			baseConfigurationReference = 4C69188716E3275D00BDE3A8 /* Shared Extension Configuration.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = ZNCAdditions;
 			};
 			name = Debug;
