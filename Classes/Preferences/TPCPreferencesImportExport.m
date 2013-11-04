@@ -132,7 +132,8 @@
 /* Conditional for keys that require special processing during the import process. */
 + (BOOL)isKeyNameExcludedFromNormalImportProcess:(NSString *)key
 {
-	return [key isEqualToString:IRCWorldControllerDefaultsStorageKey];
+	return ([key isEqualToString:IRCWorldControllerDefaultsStorageKey] ||
+			[key isEqualToString:IRCWorldControllerDeletedClientsStorageKey]);
 }
 
 + (void)importContentsOfDictionary:(NSDictionary *)aDict
@@ -168,14 +169,43 @@
 			/* Start import. */
 			id clientList = [obj objectForKey:@"clients"];
 
-			[self importWorldControllerObject:clientList];
+			[self importWorldControllerObject:clientList isCloudBasedImport:isCloudImport];
+		} else if ([key isEqualToString:IRCWorldControllerDeletedClientsStorageKey]) {
+			/* NEVER access this list unless it is from the cloud. Not regular import. */
+			
+			if (isCloudImport) {
+				/* It is the deleted clients list. */
+				NSObjectIsKindOfClassAssert(obj, NSArray);
+				
+				/* Start import. */
+				[self importWorldControllerDeletedClientsObject:obj];
+			}
 		}
 	}
 }
 
-+ (void)importWorldControllerObject:(NSArray *)clientList
++ (void)importWorldControllerObject:(NSArray *)clientList isCloudBasedImport:(BOOL)isCloudImport
 {
 	
+}
+
++ (void)importWorldControllerDeletedClientsObject:(NSArray *)deletedClients
+{
+	NSObjectIsEmptyAssert(deletedClients);
+	
+	[deletedClients enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+		/* Try to find a client from the imported list. */
+		IRCClient *u = [self.worldController findClientById:obj];
+		
+		/* Did we find one? */
+		if (u) {
+			/* We did find one… is it set to sync to cloud? */
+			/* We only delete clients that are set to be synced. */
+			if (u.config.excludedFromCloudSyncing == NO) {
+				[self.worldController destroyClient:u];
+			}
+		}
+	}];
 }
 
 + (void)importPostflightCleanup
