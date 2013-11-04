@@ -215,6 +215,23 @@
 	return newDict;
 }
 
+/* -phash is derived from the Stack Overflow comment located at: http://stackoverflow.com/a/18901217 */
+- (NSUInteger)phash
+{
+    NSUInteger prime = 31;
+    NSUInteger result = 1;
+	
+    for (NSObject *key in [self allKeys]) {
+		result = (prime * result + [key hash]);
+    }
+	
+    for (NSObject *value in [self allValues]) {
+		result = (prime * result + [value hash]);
+    }
+	
+    return result;
+}
+
 @end
 
 @implementation NSMutableDictionary (TXMutableDictionaryHelper)
