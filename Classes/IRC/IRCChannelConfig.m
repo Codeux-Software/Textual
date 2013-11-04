@@ -222,7 +222,7 @@
 		[dic safeSetObject:self.defaultTopic		forKey:@"defaultTopic"];
 	}
 	
-	return [dic sortedDictionary];
+	return dic;
 }
 
 - (id)mutableCopyWithZone:(NSZone *)zone

@@ -88,7 +88,13 @@ static BOOL isSyncingLocalKeysUpstream = NO;
 		[localdict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 			NSString *hashedKey = [NSString stringWithUnsignedInteger:[key hash]];
 
-			[RZUbiquitousKeyValueStore() setObject:@{@"key" : key, @"value" : obj} forKey:hashedKey];
+			if ([key isEqual:IRCWorldControllerDefaultsStorageKey]) {
+				NSDictionary *newobj = [self.worldController cloudDictionaryValue];
+				
+				[RZUbiquitousKeyValueStore() setObject:@{@"key" : key, @"value" : newobj} forKey:hashedKey];
+			} else {
+				[RZUbiquitousKeyValueStore() setObject:@{@"key" : key, @"value" : obj} forKey:hashedKey];
+			}
 		}];
 	}
 

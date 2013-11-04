@@ -132,7 +132,7 @@
 /* Conditional for keys that require special processing during the import process. */
 + (BOOL)isKeyNameExcludedFromNormalImportProcess:(NSString *)key
 {
-	return [key isEqualToString:@"World Controller"];
+	return [key isEqualToString:IRCWorldControllerDefaultsStorageKey];
 }
 
 + (void)importContentsOfDictionary:(NSDictionary *)aDict
@@ -161,7 +161,7 @@
 		[RZUserDefaults() setObject:obj forKey:key];
 	} else {
 		/* It's not, so what special action is needed? */
-		if ([key isEqual:@"World Controller"]) {
+		if ([key isEqual:IRCWorldControllerDefaultsStorageKey]) {
 			/* It is the world controller! */
 			NSObjectIsKindOfClassAssert(obj, NSDictionary);
 

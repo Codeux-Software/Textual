@@ -38,6 +38,9 @@
 
 #import "TextualApplication.h"
 
+#define IRCWorldControllerDefaultsStorageKey				@"World Controller"
+#define IRCWorldControllerDeletedClientsStorageKey			@"World Controller -> Deleted Clients"
+
 @interface IRCWorld : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate>
 @property (nonatomic, assign) NSInteger messagesSent;
 @property (nonatomic, assign) NSInteger messagesReceived;
@@ -58,6 +61,7 @@
 - (void)save;
 
 - (NSMutableDictionary *)dictionaryValue;
+- (NSMutableDictionary *)cloudDictionaryValue;
 
 - (void)terminate;
 
@@ -131,5 +135,8 @@
 - (void)clearContentsOfClient:(IRCClient *)u;
 - (void)clearContentsOfChannel:(IRCChannel *)c inClient:(IRCClient *)u;
 
-- (void)destroyAllEvidence;
+- (void)destroyAllEvidence; // Clears all views everywhere.
+
+- (void)addClientToListOfDeletedClients:(NSString *)itemUUID;
+- (void)removeClientFromListOfDeletedClients:(NSString *)itemUUID;
 @end

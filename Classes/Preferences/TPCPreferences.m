@@ -1371,12 +1371,12 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (NSDictionary *)loadWorld
 {
-	return [RZUserDefaults() objectForKey:@"World Controller"];
+	return [RZUserDefaults() objectForKey:IRCWorldControllerDefaultsStorageKey];
 }
 
 + (void)saveWorld:(NSDictionary *)value
 {
-	[RZUserDefaults() setObject:value forKey:@"World Controller"];
+	[RZUserDefaults() setObject:value forKey:IRCWorldControllerDefaultsStorageKey];
 }
 
 #pragma mark -
