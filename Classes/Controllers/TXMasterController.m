@@ -90,10 +90,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 	[TPCPreferences initPreferences];
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	[TPCPreferencesCloudSync initializeCloudSyncSession];
-#endif
-
 	[self.mainWindow setMinSize:TPCPreferences.minimumWindowSize];
 
 	[self loadWindowState:YES];
@@ -169,6 +165,12 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 	self.pluginManager = [THOPluginManager new];
 	[self.pluginManager loadPlugins];
+	
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	/* This must come after IRCWorld has established all configurations. */
+	
+	[TPCPreferencesCloudSync initializeCloudSyncSession];
+#endif
 
 	[TPCResourceManager copyResourcesToCustomAddonsFolder];
 }
