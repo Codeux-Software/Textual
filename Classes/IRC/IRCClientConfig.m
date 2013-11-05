@@ -402,10 +402,6 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 	[dic safeSetObject:channelAry forKey:@"channelList"];
 	[dic safeSetObject:ignoreAry forKey:@"ignoreList"];
 	
-	NSUInteger dictHash = [dic phash];
-	
-	[dic safeSetObject:@(dictHash) forKey:@"dictionaryHash"];
-	
 	return dic;
 }
 

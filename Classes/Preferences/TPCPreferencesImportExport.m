@@ -132,8 +132,9 @@
 /* Conditional for keys that require special processing during the import process. */
 + (BOOL)isKeyNameExcludedFromNormalImportProcess:(NSString *)key
 {
-	return ([key isEqualToString:IRCWorldControllerDefaultsStorageKey] ||
-			[key isEqualToString:IRCWorldControllerDeletedClientsStorageKey]);
+	return ([key hasPrefix:IRCWorldControllerCloudClientEntryKeyPrefix] ||
+			[key isEqualToString:IRCWorldControllerDefaultsStorageKey] ||
+			[key isEqualToString:IRCWorldControllerCloudDeletedClientsStorageKey]);
 }
 
 + (void)importContentsOfDictionary:(NSDictionary *)aDict
@@ -161,51 +162,59 @@
 	if ([self isKeyNameExcludedFromNormalImportProcess:key] == NO) {
 		[RZUserDefaults() setObject:obj forKey:key];
 	} else {
-		/* It's not, so what special action is needed? */
-		if ([key isEqual:IRCWorldControllerDefaultsStorageKey]) {
-			/* It is the world controller! */
-			NSObjectIsKindOfClassAssert(obj, NSDictionary);
-
-			/* Start import. */
-			id clientList = [obj objectForKey:@"clients"];
-
-			[self importWorldControllerObject:clientList isCloudBasedImport:isCloudImport];
-		} else if ([key isEqualToString:IRCWorldControllerDeletedClientsStorageKey]) {
-			/* NEVER access this list unless it is from the cloud. Not regular import. */
-			
-			if (isCloudImport) {
-				/* It is the deleted clients list. */
-				NSObjectIsKindOfClassAssert(obj, NSArray);
+		
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+		if (isCloudImport) {
+			if ([key hasPrefix:IRCWorldControllerCloudClientEntryKeyPrefix]) {
+				/* It is a client configuration entry. */
+				NSObjectIsKindOfClassAssert(obj, NSDictionary);
 				
 				/* Start import. */
-				[self importWorldControllerDeletedClientsObject:obj];
+				[self importWorldControllerObjectEntry:obj isCloudBasedImport:isCloudImport];
 			}
+		} else {
+#endif
+			
+			if ([key isEqual:IRCWorldControllerDefaultsStorageKey]) {
+				/* It is the world controller! */
+				NSObjectIsKindOfClassAssert(obj, NSDictionary);
+				
+				/* Start import. */
+				id clientList = [obj objectForKey:@"clients"];
+				
+				NSObjectIsKindOfClassAssert(obj, NSArray);
+				
+				/* Bleh, let's get this over with. */
+				[clientList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+					[self importWorldControllerObjectEntry:obj isCloudBasedImport:isCloudImport];
+				}];
+			}
+			
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 		}
+#endif
 	}
 }
 
-+ (void)importWorldControllerObject:(NSArray *)clientList isCloudBasedImport:(BOOL)isCloudImport
-{
-	
-}
 
-+ (void)importWorldControllerDeletedClientsObject:(NSArray *)deletedClients
++ (void)importWorldControllerObjectEntry:(NSDictionary *)client isCloudBasedImport:(BOOL)isCloudImport
 {
-	NSObjectIsEmptyAssert(deletedClients);
+	/* Validate that shiznet. */
+	NSObjectIsEmptyAssert(client);
 	
-	[deletedClients enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-		/* Try to find a client from the imported list. */
-		IRCClient *u = [self.worldController findClientById:obj];
-		
-		/* Did we find one? */
-		if (u) {
-			/* We did find one… is it set to sync to cloud? */
-			/* We only delete clients that are set to be synced. */
-			if (u.config.excludedFromCloudSyncing == NO) {
-				[self.worldController destroyClient:u];
-			}
-		}
-	}];
+	/* Create a configuration rep. */
+	IRCClientConfig *config = [[IRCClientConfig alloc] initWithDictionary:client];
+	
+	PointerIsEmptyAssert(config);
+	
+	/* Try to find any clients matching this value. */
+	IRCClient *u = [self.worldController findClientById:config.itemUUID];
+	
+	if (u) {
+		[u updateConfig:config];
+	} else {
+		[self.worldController createClient:config reload:YES];
+	}
 }
 
 + (void)importPostflightCleanup
@@ -275,11 +284,6 @@
 				[fnlsettings setObject:obj forKey:key];
 			}
 		}];
-
-		/* Insert the dictionary version information. */
-		/* This has no use right now… but it might in the future. */
-		[fnlsettings setObject:TPCPreferencesImportExportVersionKeyValue
-						forKey:TPCPreferencesImportExportVersionKeyName];
 
 		return fnlsettings; // Return modified dictionary.
 	}

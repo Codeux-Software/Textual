@@ -206,7 +206,9 @@
 
 - (void)updateConfig:(IRCClientConfig *)seed
 {
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	BOOL syncToCloudChanged = NSDissimilarObjects(self.config.excludedFromCloudSyncing, seed.excludedFromCloudSyncing);
+#endif
 	
 	self.config = nil;
 	self.config = [seed mutableCopy];
@@ -257,10 +259,14 @@
 
 	[self setupReachability];
 	
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	/* Maybe remove this client from deleted list. */
-	if (syncToCloudChanged && self.config.excludedFromCloudSyncing == NO) {
-		[self.worldController removeClientFromListOfDeletedClients:self.config.itemUUID];
+	if ([TPCPreferences syncPreferencesToTheCloud]) {
+		if (syncToCloudChanged && self.config.excludedFromCloudSyncing == NO) {
+			[self.worldController removeClientFromListOfDeletedClients:self.config.itemUUID];
+		}
 	}
+#endif
 }
 
 - (IRCClientConfig *)storedConfig

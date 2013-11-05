@@ -45,9 +45,107 @@
  syncPreferencesToCloud: is not sent into an infinite loop. */
 static BOOL isSyncingLocalKeysDownstream = NO;
 static BOOL isSyncingLocalKeysUpstream = NO;
+static BOOL isSyncingTemporarilyDisabled = NO;
+static BOOL isSyncingTemporarilyDelayed = NO;
+
+#pragma mark -
+#pragma mark Public API
+
++ (void)setValue:(id)value forKey:(NSString *)key
+{
+	NSObjectIsEmptyAssert(key); // Yeah, we need a key…
+	
+	/* Set it and forget it. */
+	NSString *hashedKey = [NSString stringWithUnsignedInteger:[key hash]];
+	
+	[RZUbiquitousKeyValueStore() setObject:@{@"key" : key, @"value" : value} forKey:hashedKey];
+}
+
++ (id)valueForKey:(NSString *)key
+{
+	NSObjectIsEmptyAssertReturn(key, nil); // Yeah, we need a key…
+	
+	/* Insert pointless comment here. */
+	NSString *hashedKey = [NSString stringWithUnsignedInteger:[key hash]];
+	
+	/* Another pointless comment here. */
+	return [self valueForHashedKey:hashedKey actualKey:NULL];
+}
+
++ (id)valueForHashedKey:(NSString *)key actualKey:(NSString **)realKeyValue /* @private */
+{
+	/* Get initial value. */
+	id dictObject = [RZUbiquitousKeyValueStore() objectForKey:key];
+	
+	/* We are only looking for dictionary entries… */
+	NSObjectIsKindOfClassAssertReturn(dictObject, NSDictionary, nil);
+	
+	/* Gather entry info. */
+	id keyname = [dictObject objectForKey:@"key"];
+	id objectValue = [dictObject objectForKey:@"value"];
+	
+	/* Some validation. Not strict, but meh… */
+	PointerIsEmptyAssertReturn(keyname, nil);
+	PointerIsEmptyAssertReturn(objectValue, nil);
+	
+	/* Give it back. */
+	if (NSDissimilarObjects(realKeyValue, NULL)) {
+		*realKeyValue = keyname;
+	}
+	
+	return objectValue;
+}
+
++ (void)removeObjectForKey:(NSString *)key
+{
+	NSObjectIsEmptyAssert(key); // Yeah, we need a key…
+	
+	/* Set it and forget it. */
+	NSString *hashedKey = [NSString stringWithUnsignedInteger:[key hash]];
+	
+	/* Umm, I just copy and paste these things. */
+	[RZUbiquitousKeyValueStore() removeObjectForKey:hashedKey];
+}
 
 #pragma mark -
 #pragma mark Cloud Sync Management
+
++ (void)synchronizeToCloud /* Manually sync. Not recommended to call. */
+{
+	[self syncPreferencesToCloud:nil];
+}
+
++ (void)setSyncingTemporarilyDisabled:(BOOL)disableSync
+{
+	isSyncingTemporarilyDisabled = disableSync;
+}
+
++ (void)setSyncingTemporarilyDelayed
+{
+	if (isSyncingTemporarilyDelayed == NO) {
+		isSyncingTemporarilyDelayed = YES;
+		
+		/* Resets after five seconds. */
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (5 * NSEC_PER_SEC)), dispatch_get_current_queue(), ^{
+			[TPCPreferencesCloudSync resetSyncingTemporarilyDelayedToken];
+		});
+	}
+}
+
++ (void)resetSyncingTemporarilyDelayedToken
+{
+	if (isSyncingTemporarilyDelayed) {
+		isSyncingTemporarilyDelayed = NO;
+		
+		[self synchronizeToCloud];
+	}
+}
+
++ (BOOL)keyIsNotPermittedInCloud:(NSString *)key
+{
+	return ([key isEqualToString:IRCWorldControllerDefaultsStorageKey] ||
+			[key isEqualToString:@"SyncPreferencesToTheCloud"]);
+}
 
 + (void)syncPreferencesToCloud:(NSNotification *)aNote
 {
@@ -60,11 +158,18 @@ static BOOL isSyncingLocalKeysUpstream = NO;
 	/* Are we already syncing? */
 	NSAssertReturn(isSyncingLocalKeysUpstream == NO);
 	NSAssertReturn(isSyncingLocalKeysDownstream == NO);
+	NSAssertReturn(isSyncingTemporarilyDelayed == NO);
+	NSAssertReturn(isSyncingTemporarilyDisabled == NO);
 
 	isSyncingLocalKeysUpstream = YES;
 
 	/* Gather dictionary representation of all local preferences. */
 	NSDictionary *localdict = [TPCPreferencesImportExport exportedPreferencesDictionaryRepresentation];
+	
+	NSMutableDictionary *clientDict = [self.worldController cloudDictionaryValue];
+	
+	/* Combine these two… */
+	[clientDict addEntriesFromDictionary:localdict];
 
 	/* Sync latest changes from disc for the dictionary. */
 	[RZUbiquitousKeyValueStore() synchronize];
@@ -72,7 +177,7 @@ static BOOL isSyncingLocalKeysUpstream = NO;
 	/* Compare to the remote. */
 	NSDictionary *remotedict = [RZUbiquitousKeyValueStore() dictionaryRepresentation];
 
-	if ([localdict isEqual:remotedict]) {
+	if ([clientDict isEqual:remotedict]) {
 		DebugLogToConsole(@"iCloud: Remote dictionary and local dictionary are the same. Not syncing.");
 	} else {
 		/* Set the remote dictionary. */
@@ -85,15 +190,11 @@ static BOOL isSyncingLocalKeysUpstream = NO;
 		 the entire internals of Textual to use shorter keys? Ha, as-if… Instead
 		 just use a static hash of the key name as the actual key, then have the
 		 value of the key a dictionary with the real key name in it and the value. */
-		[localdict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-			NSString *hashedKey = [NSString stringWithUnsignedInteger:[key hash]];
-
-			if ([key isEqual:IRCWorldControllerDefaultsStorageKey]) {
-				NSDictionary *newobj = [self.worldController cloudDictionaryValue];
-				
-				[RZUbiquitousKeyValueStore() setObject:@{@"key" : key, @"value" : newobj} forKey:hashedKey];
+		[clientDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+			if ([self keyIsNotPermittedInCloud:key]) {
+				// Nobody cares about this…
 			} else {
-				[RZUbiquitousKeyValueStore() setObject:@{@"key" : key, @"value" : obj} forKey:hashedKey];
+				[TPCPreferencesCloudSync setValue:obj forKey:key];
 			}
 		}];
 	}
@@ -122,33 +223,30 @@ static BOOL isSyncingLocalKeysUpstream = NO;
 	if (syncReason == NSUbiquitousKeyValueStoreQuotaViolationChange) {
 		[self cloudStorageLimitExceeded]; // We will not be syncing for this error.
 	} else {
-		/* Get the remote. */
-		NSDictionary *remotedict = [RZUbiquitousKeyValueStore() dictionaryRepresentation];
-
 		/* Get the list of changed keys. */
 		NSArray *changedKeys = [aNote.userInfo arrayForKey:NSUbiquitousKeyValueStoreChangedKeysKey];
 
+		NSMutableArray *actualChangedKeys = [NSMutableArray array];
+		
 		/* See the code of syncPreferencesToCloud: for an expalantion of how these keys are hashed. */
 		for (id hashedKey in changedKeys) {
-			id dictObject = [remotedict objectForKey:hashedKey];
-
-			/* We are only looking for dictionary entries… */
-			NSObjectIsKindOfClassAssertContinue(dictObject, NSDictionary);
-
-			/* Gather entry info. */
-			id keyname = [dictObject objectForKey:@"key"];
-			id objectValue = [dictObject objectForKey:@"value"];
-
-			/* Some validation. Not strict, but meh… */
-			PointerIsEmptyAssertLoopContinue(keyname);
-			PointerIsEmptyAssertLoopContinue(objectValue);
-
-			/* Set it to the new dictionary. */
-			[TPCPreferencesImportExport import:objectValue withKey:keyname isCloudBasedImport:YES];
+			id keyname = nil;
+			id objectValue = [self valueForHashedKey:hashedKey actualKey:&keyname];
+			
+			if (objectValue) {
+				/* Set it to the new dictionary. */
+				if ([keyname isEqual:IRCWorldControllerCloudDeletedClientsStorageKey]) {
+					[self.worldController processCloudCientDeletionList:objectValue];
+				} else {
+					[actualChangedKeys addObject:keyname];
+					
+					[TPCPreferencesImportExport import:objectValue withKey:keyname isCloudBasedImport:YES];
+				}
+			}
 		}
 
 		/* Perform reload. */
-		[TPCPreferences performReloadActionForKeyValues:changedKeys];
+		[TPCPreferences performReloadActionForKeyValues:actualChangedKeys];
 	}
 
 	/* Allow us to continue work. */

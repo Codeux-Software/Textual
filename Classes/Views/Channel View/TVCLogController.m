@@ -72,6 +72,8 @@
 
 - (void)terminate
 {
+	self.isTerminating = YES;
+	
 	[self.printingQueue cancelOperationsForViewController:self];
 	
 	[self closeHistoricLog];
@@ -315,6 +317,8 @@
 {
 	if (onQueue) {
 		TVCLogControllerOperationBlock scriptBlock = ^(id operation, NSDictionary *context) {
+			NSAssertReturn(self.isTerminating == NO);
+			
 			dispatch_async(dispatch_get_main_queue(), ^{
 				[self executeQuickScriptCommand:command withArguments:args];
 
@@ -357,6 +361,8 @@
 
 	[self.printingQueue enqueueMessageBlock:^(id operation, NSDictionary *context) {
 		dispatch_async(dispatch_get_main_queue(), ^{
+			NSAssertReturn(self.isTerminating == NO);
+			
 			if ([self.topicValue isEqualToString:topic] == NO)
 			{
 				DOMElement *topicBar = [self documentChannelTopicBar];
@@ -586,6 +592,8 @@
 	self.reloadingHistory = YES;
 
 	[self.printingQueue enqueueMessageBlock:^(id operation, NSDictionary *context) {
+		NSAssertReturn(self.isTerminating == NO);
+		
 		[self reloadOldLines:YES];
 
 		self.reloadingHistory = NO;
@@ -604,6 +612,8 @@
 	[self clearWithReset:NO];
 	
 	[self.printingQueue enqueueMessageBlock:^(id operation, NSDictionary *context) {
+		NSAssertReturn(self.isTerminating == NO);
+		
 		[self reloadOldLines:NO];
 
 		self.reloadingBacklog = NO;
@@ -901,6 +911,8 @@
 {
 	/* Continue with a normal print job. */
 	TVCLogControllerOperationBlock printBlock = ^(id operation, NSDictionary *context) {
+		NSAssertReturn(self.isTerminating == NO);
+		
 		/* Increment by one. */
 		self.activeLineCount += 1;
 

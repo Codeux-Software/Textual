@@ -39,7 +39,9 @@
 #import "TextualApplication.h"
 
 #define IRCWorldControllerDefaultsStorageKey				@"World Controller"
-#define IRCWorldControllerDeletedClientsStorageKey			@"World Controller -> Deleted Clients"
+
+#define IRCWorldControllerCloudDeletedClientsStorageKey		@"World Controller -> Cloud Deleted Clients"
+#define IRCWorldControllerCloudClientEntryKeyPrefix			@"World Controller -> Cloud Synced Client -> "
 
 @interface IRCWorld : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate>
 @property (nonatomic, assign) NSInteger messagesSent;
@@ -61,7 +63,10 @@
 - (void)save;
 
 - (NSMutableDictionary *)dictionaryValue;
+
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 - (NSMutableDictionary *)cloudDictionaryValue;
+#endif
 
 - (void)terminate;
 
@@ -122,7 +127,9 @@
 
 - (TVCLogController *)createLogWithClient:(IRCClient *)client channel:(IRCChannel *)channel;
 
-- (void)destroyClient:(IRCClient *)client;
+- (void)destroyClient:(IRCClient *)u;
+- (void)destroyClient:(IRCClient *)u bySkippingCloud:(BOOL)skipCloud;
+
 - (void)destroyChannel:(IRCChannel *)c;
 - (void)destroyChannel:(IRCChannel *)c part:(BOOL)forcePart;
 
@@ -137,6 +144,13 @@
 
 - (void)destroyAllEvidence; // Clears all views everywhere.
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 - (void)addClientToListOfDeletedClients:(NSString *)itemUUID;
 - (void)removeClientFromListOfDeletedClients:(NSString *)itemUUID;
+
+- (void)removeClientConfigurationCloudEntry:(NSString *)itemUUID;
+
+- (void)processCloudCientDeletionList:(NSArray *)deletedClients;
+#endif
+
 @end

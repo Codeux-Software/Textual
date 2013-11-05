@@ -40,6 +40,18 @@
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 
 @interface TPCPreferencesCloudSync : NSObject
+// Next three methods use hashed keys.
++ (id)valueForKey:(NSString *)key;
+
++ (void)setValue:(id)value forKey:(NSString *)key;
++ (void)removeObjectForKey:(NSString *)key;
+
++ (void)synchronizeToCloud; /* Manually sync. Not recommended to call. */
+
++ (void)setSyncingTemporarilyDisabled:(BOOL)disableSync;
++ (void)setSyncingTemporarilyDelayed;
+
+// Plugins should not be calling these.
 + (void)initializeCloudSyncSession;
 + (void)closeCloudSyncSession;
 
