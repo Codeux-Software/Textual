@@ -1336,19 +1336,19 @@
 /* These failure calls have never been tested against. They are only here because the delegate provides them. */
 - (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
 {
-	LogToConsole(@"Log [%@] for channel [%@] on [%@] failed to load with error: %@",
+	DebugLogToConsole(@"Log [%@] for channel [%@] on [%@] failed to load with error: %@",
 				 [self description], [self.channel description], [self.client description], [error localizedDescription]);
 }
 
 - (void)webView:(WebView *)sender resource:(id)identifier didFailLoadingWithError:(NSError *)error fromDataSource:(WebDataSource *)dataSource
 {
-	LogToConsole(@"Resource [%@] in log [%@] failed loading for channel [%@] on [%@] with error: %@",
+	DebugLogToConsole(@"Resource [%@] in log [%@] failed loading for channel [%@] on [%@] with error: %@",
 				 identifier, [self description], [self.channel description], [self.client description], [error localizedDescription]);
 }
 
 - (void)webView:(WebView *)sender didFailProvisionalLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
 {
-	LogToConsole(@"Log [%@] for channel [%@] on [%@] failed provisional load with error: %@",
+	DebugLogToConsole(@"Log [%@] for channel [%@] on [%@] failed provisional load with error: %@",
 				 [self description], [self.channel description], [self.client description], [error localizedDescription]);
 }
 

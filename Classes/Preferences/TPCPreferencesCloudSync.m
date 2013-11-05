@@ -152,13 +152,9 @@ static dispatch_queue_t workerQueue = NULL;
 + (void)syncPreferencesToCloud:(NSNotification *)aNote
 {
 	dispatch_async(workerQueue, ^{
-		/* Debug data. */
-		DebugLogToConsole(@"iCloud: Beginning sync upstream.");
-
 		/* We don't even want to sync if user doesn't want to. */
 		NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
-
-		/* Are we already syncing? */
+		
 		if (isSyncingLocalKeysDownstream) {
 			DebugLogToConsole(@"iCloud: Upstream sync cancelled because a downstream sync was already running.");
 			
@@ -182,6 +178,9 @@ static dispatch_queue_t workerQueue = NULL;
 			
 			return; // Cancel this operation;
 		}
+		
+		/* Debug data. */
+		DebugLogToConsole(@"iCloud: Beginning sync upstream.");
 		
 		/* Continue normal work. */
 		isSyncingLocalKeysUpstream = YES;
@@ -240,6 +239,11 @@ static dispatch_queue_t workerQueue = NULL;
 
 		/* Announce our intents… */
 		isSyncingLocalKeysDownstream = YES;
+		
+		/* Delay the workers. */
+		if (isSyncingTemporarilyDelayed == NO) {
+			[self setSyncingTemporarilyDelayed];
+		}
 
 		/* Gather information about the sync request. */
 		NSInteger syncReason = [aNote.userInfo integerForKey:NSUbiquitousKeyValueStoreChangeReasonKey];
@@ -269,7 +273,7 @@ static dispatch_queue_t workerQueue = NULL;
 							[self.worldController processCloudCientDeletionList:objectValue];
 						});
 					}
-					else if ([keyname hasPrefix:IRCWorldControllerCloudDeletedClientsStorageKey])
+					else if ([keyname hasPrefix:IRCWorldControllerCloudClientEntryKeyPrefix])
 					{
 						NSObjectIsKindOfClassAssert(objectValue, NSDictionary);
 						
@@ -294,6 +298,8 @@ static dispatch_queue_t workerQueue = NULL;
 
 		/* Allow us to continue work. */
 		isSyncingLocalKeysDownstream = NO;
+		
+		DebugLogToConsole(@"iCloud: Completeing sync downstream.");
 	});
 }
 
@@ -374,11 +380,6 @@ static dispatch_queue_t workerQueue = NULL;
 
 + (void)closeCloudSyncSession
 {
-	/* Dispatch clean-up. */
-	if (workerQueue) {
-		dispatch_release(workerQueue);
-	}
-	
 	/* Debug data. */
 	DebugLogToConsole(@"iCloud: Closing session.");
 
@@ -391,6 +392,11 @@ static dispatch_queue_t workerQueue = NULL;
     [RZNotificationCenter() removeObserver:[self class]
 									  name:NSUbiquitousKeyValueStoreDidChangeExternallyNotification
 									object:nil];
+	
+	/* Dispatch clean-up. */
+	if (workerQueue) {
+		dispatch_release(workerQueue);
+	}
 }
 
 @end
