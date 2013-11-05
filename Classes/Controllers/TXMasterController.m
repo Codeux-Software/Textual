@@ -91,7 +91,9 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[TPCPreferences initPreferences];
 	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	[TPCPreferencesCloudSync initializeCloudSyncSession];
+	self.cloudSyncManager = [TPCPreferencesCloudSync new];
+	
+	[self.cloudSyncManager initializeCloudSyncSession];
 #endif
 
 	[self.mainWindow setMinSize:TPCPreferences.minimumWindowSize];
@@ -399,7 +401,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[TPCPreferences saveTimeIntervalSinceApplicationInstall];
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	[TPCPreferencesCloudSync closeCloudSyncSession];
+	[self.cloudSyncManager closeCloudSyncSession];
 #endif
 }
 

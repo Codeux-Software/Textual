@@ -1376,15 +1376,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (void)saveWorld:(NSDictionary *)value
 {
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	[TPCPreferencesCloudSync setSyncingTemporarilyDisabled:YES]; // Do not sync for this.
-#endif
-	
 	[RZUserDefaults() setObject:value forKey:IRCWorldControllerDefaultsStorageKey];
-	
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	[TPCPreferencesCloudSync setSyncingTemporarilyDisabled:NO];
-#endif
 }
 
 #pragma mark -

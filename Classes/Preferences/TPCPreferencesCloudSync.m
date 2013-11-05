@@ -39,21 +39,22 @@
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 
+#define _localKeysUpstreamSyncTimerInterval			60.0
+
+@interface TPCPreferencesCloudSync ()
+@property (nonatomic, assign) BOOL localKeysWereUpdated;
+@property (nonatomic, assign) BOOL isSyncingLocalKeysDownstream;
+@property (nonatomic, assign) BOOL isSyncingLocalKeysUpstream;
+@property (nonatomic, assign) dispatch_queue_t workerQueue;
+@property (nonatomic, strong) NSTimer *cloudSyncTimer;
+@end
+
 @implementation TPCPreferencesCloudSync
-
-/* We want to know when we are setting local keys so that
- syncPreferencesToCloud: is not sent into an infinite loop. */
-static BOOL isSyncingLocalKeysDownstream = NO;
-static BOOL isSyncingLocalKeysUpstream = NO;
-static BOOL isSyncingTemporarilyDisabled = NO;
-static BOOL isSyncingTemporarilyDelayed = NO;
-
-static dispatch_queue_t workerQueue = NULL;
 
 #pragma mark -
 #pragma mark Public API
 
-+ (void)setValue:(id)value forKey:(NSString *)key
+- (void)setValue:(id)value forKey:(NSString *)key
 {
 	NSObjectIsEmptyAssert(key); // Yeah, we need a key…
 	
@@ -63,7 +64,7 @@ static dispatch_queue_t workerQueue = NULL;
 	[RZUbiquitousKeyValueStore() setObject:@{@"key" : key, @"value" : value} forKey:hashedKey];
 }
 
-+ (id)valueForKey:(NSString *)key
+- (id)valueForKey:(NSString *)key
 {
 	NSObjectIsEmptyAssertReturn(key, nil); // Yeah, we need a key…
 	
@@ -74,7 +75,7 @@ static dispatch_queue_t workerQueue = NULL;
 	return [self valueForHashedKey:hashedKey actualKey:NULL];
 }
 
-+ (id)valueForHashedKey:(NSString *)key actualKey:(NSString **)realKeyValue /* @private */
+- (id)valueForHashedKey:(NSString *)key actualKey:(NSString **)realKeyValue /* @private */
 {
 	/* Get initial value. */
 	id dictObject = [RZUbiquitousKeyValueStore() objectForKey:key];
@@ -98,7 +99,7 @@ static dispatch_queue_t workerQueue = NULL;
 	return objectValue;
 }
 
-+ (void)removeObjectForKey:(NSString *)key
+- (void)removeObjectForKey:(NSString *)key
 {
 	NSObjectIsEmptyAssert(key); // Yeah, we need a key…
 	
@@ -112,69 +113,42 @@ static dispatch_queue_t workerQueue = NULL;
 #pragma mark -
 #pragma mark Cloud Sync Management
 
-+ (void)synchronizeToCloud /* Manually sync. Not recommended to call. */
+- (void)synchronizeToCloud
 {
-	[self syncPreferencesToCloud:nil];
+	[self syncPreferencesToCloud];
 }
 
-+ (void)setSyncingTemporarilyDisabled:(BOOL)disableSync
+- (void)synchronizeFromCloud
 {
-	isSyncingTemporarilyDisabled = disableSync;
+	[self syncPreferencesFromCloud:nil];
 }
 
-+ (void)setSyncingTemporarilyDelayed
-{
-	if (isSyncingTemporarilyDelayed == NO) {
-		isSyncingTemporarilyDelayed = YES;
-		
-		/* Resets after five seconds. */
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (5 * NSEC_PER_SEC)), dispatch_get_current_queue(), ^{
-			[TPCPreferencesCloudSync resetSyncingTemporarilyDelayedToken];
-		});
-	}
-}
-
-+ (void)resetSyncingTemporarilyDelayedToken
-{
-	if (isSyncingTemporarilyDelayed) {
-		isSyncingTemporarilyDelayed = NO;
-		
-		[self synchronizeToCloud];
-	}
-}
-
-+ (BOOL)keyIsNotPermittedInCloud:(NSString *)key
+- (BOOL)keyIsNotPermittedInCloud:(NSString *)key
 {
 	return ([key isEqualToString:IRCWorldControllerDefaultsStorageKey] ||
 			[key isEqualToString:@"SyncPreferencesToTheCloud"]);
 }
 
-+ (void)syncPreferencesToCloud:(NSNotification *)aNote
+- (void)syncPreferencesToCloud
 {
-	dispatch_async(workerQueue, ^{
+	dispatch_async(self.workerQueue, ^{
 		/* We don't even want to sync if user doesn't want to. */
 		NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
 		
-		if (isSyncingLocalKeysDownstream) {
+		if (self.localKeysWereUpdated == NO) {
+			DebugLogToConsole(@"iCloud: Upstream sync cancelled because nothing has changed.");
+			
+			return; // Cancel this operation;
+		}
+		
+		if (self.isSyncingLocalKeysDownstream) {
 			DebugLogToConsole(@"iCloud: Upstream sync cancelled because a downstream sync was already running.");
 			
 			return; // Cancel this operation;
 		}
 		
-		if (isSyncingLocalKeysUpstream) {
+		if (self.isSyncingLocalKeysUpstream) {
 			DebugLogToConsole(@"iCloud: Upstream sync cancelled because an upstream sync was already running.");
-			
-			return; // Cancel this operation;
-		}
-		
-		if (isSyncingTemporarilyDelayed) {
-			DebugLogToConsole(@"iCloud: Upstream sync cancelled because a delayed sync is set.");
-			
-			return; // Cancel this operation;
-		}
-		
-		if (isSyncingTemporarilyDisabled) {
-			DebugLogToConsole(@"iCloud: Upstream sync cancelled because syncing is disabled.");
 			
 			return; // Cancel this operation;
 		}
@@ -183,7 +157,7 @@ static dispatch_queue_t workerQueue = NULL;
 		DebugLogToConsole(@"iCloud: Beginning sync upstream.");
 		
 		/* Continue normal work. */
-		isSyncingLocalKeysUpstream = YES;
+		self.isSyncingLocalKeysUpstream = YES;
 
 		/* Gather dictionary representation of all local preferences. */
 		NSDictionary *localdict = [TPCPreferencesImportExport exportedPreferencesDictionaryRepresentation];
@@ -216,21 +190,21 @@ static dispatch_queue_t workerQueue = NULL;
 				if ([self keyIsNotPermittedInCloud:key]) {
 					// Nobody cares about this…
 				} else {
-					[TPCPreferencesCloudSync setValue:obj forKey:key];
+					[self setValue:obj forKey:key];
 				}
 			}];
 		}
 
 		/* Allow us to continue work. */
-		isSyncingLocalKeysUpstream = NO;
+		self.isSyncingLocalKeysUpstream = NO;
 
 		DebugLogToConsole(@"iCloud: Completeing sync upstream.");
 	});
 }
 
-+ (void)syncPreferencesFromCloud:(NSNotification *)aNote
+- (void)syncPreferencesFromCloud:(NSArray *)changedKeys
 {
-	dispatch_async(workerQueue, ^{
+	dispatch_async(self.workerQueue, ^{
 		/* Debug data. */
 		DebugLogToConsole(@"iCloud: Beginning sync downstream.");
 
@@ -238,69 +212,112 @@ static dispatch_queue_t workerQueue = NULL;
 		NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
 
 		/* Announce our intents… */
-		isSyncingLocalKeysDownstream = YES;
+		self.isSyncingLocalKeysDownstream = YES;
+
+		/* Get the list of changed keys. */
+		NSArray *changedKeyList = changedKeys;
 		
-		/* Delay the workers. */
-		if (isSyncingTemporarilyDelayed == NO) {
-			[self setSyncingTemporarilyDelayed];
-		}
-
-		/* Gather information about the sync request. */
-		NSInteger syncReason = [aNote.userInfo integerForKey:NSUbiquitousKeyValueStoreChangeReasonKey];
-
-		/* Are we out of memory? */
-		if (syncReason == NSUbiquitousKeyValueStoreQuotaViolationChange) {
-			[self cloudStorageLimitExceeded]; // We will not be syncing for this error.
-		} else {
-			/* Get the list of changed keys. */
-			NSArray *changedKeys = [aNote.userInfo arrayForKey:NSUbiquitousKeyValueStoreChangedKeysKey];
-
-			NSMutableArray *actualChangedKeys = [NSMutableArray array];
+		if (PointerIsEmpty(changedKeyList) || changedKeyList.count <= 0) {
+			/* If the list is empty, then we populate every single key. */
+			NSDictionary *upstreamRep = [RZUbiquitousKeyValueStore() dictionaryRepresentation];
 			
-			/* See the code of syncPreferencesToCloud: for an expalantion of how these keys are hashed. */
-			for (id hashedKey in changedKeys) {
-				id keyname = nil;
-				id objectValue = [self valueForHashedKey:hashedKey actualKey:&keyname];
+			changedKeyList = [upstreamRep allKeys];
+		}
+		
+		/* See the code of syncPreferencesToCloud: for an expalantion of how these keys are hashed. */
+		NSMutableArray *actualChangedKeys = [NSMutableArray array];
+		NSMutableArray *importedClients = [NSMutableArray array];
+		
+		for (id hashedKey in changedKeyList) {
+			id keyname = nil;
+			id objectValue = [self valueForHashedKey:hashedKey actualKey:&keyname];
+			
+			if (objectValue && keyname) {
+				/* Compare the local to the new. */
+				/* This is for when we are going through the entire dictionary. */
+				id localValue = [RZUserDefaults() objectForKey:keyname];
 				
-				if (objectValue) {
-					/* Set it to the new dictionary. */
+				if (localValue && [localValue isEqual:objectValue]) {
+					continue; // They are same. Don't even try to set.
+				}
+				
+				/* Set it to the new dictionary. */
+				if ([keyname isEqual:IRCWorldControllerCloudDeletedClientsStorageKey])
+				{
+					NSObjectIsKindOfClassAssert(objectValue, NSArray);
 					
-					if ([keyname isEqual:IRCWorldControllerCloudDeletedClientsStorageKey])
-					{
-						NSObjectIsKindOfClassAssert(objectValue, NSArray);
-						
-						dispatch_async(dispatch_get_main_queue(), ^{
-							[self.worldController processCloudCientDeletionList:objectValue];
-						});
-					}
-					else if ([keyname hasPrefix:IRCWorldControllerCloudClientEntryKeyPrefix])
-					{
-						NSObjectIsKindOfClassAssert(objectValue, NSDictionary);
-						
-						dispatch_async(dispatch_get_main_queue(), ^{
-							[TPCPreferencesImportExport importWorldControllerClientConfiguratoin:objectValue isCloudBasedImport:YES];
-						});
-					}
-					else
-					{
-						[actualChangedKeys addObject:keyname];
-						
-						[TPCPreferencesImportExport import:objectValue withKey:keyname];
-					}
+					dispatch_async(dispatch_get_main_queue(), ^{
+						[self.worldController processCloudCientDeletionList:objectValue];
+					});
+				}
+				else if ([keyname hasPrefix:IRCWorldControllerCloudClientEntryKeyPrefix])
+				{
+					NSObjectIsKindOfClassAssert(objectValue, NSDictionary);
+					
+					/* Bet you're wondering why this is added to an array instead of
+					 just calling the importWorld… method. Well, it took me a long time
+					 to figure this out too. It used to just call the method directly,
+					 then I realized, doing that creates a new instance of TVCLogController
+					 for each client/channel added. That's all fine, but if the theme
+					 ends up changing when calling the TPCPreferences reload… method 
+					 below, then that will also reload the theme of thenewly created 
+					 view controller instance creating a race condition. Now, we just
+					 reload the theme then create the views afterwars. */
+					
+					[importedClients addObject:objectValue];
+				}
+				else
+				{
+					[actualChangedKeys addObject:keyname];
+					
+					[TPCPreferencesImportExport import:objectValue withKey:keyname];
 				}
 			}
-
-			/* Perform reload. */
-			dispatch_async(dispatch_get_main_queue(), ^{
-				[TPCPreferences performReloadActionForKeyValues:actualChangedKeys];
-			});
 		}
 
+		/* Perform reload. */
+		dispatch_async(dispatch_get_main_queue(), ^{
+				if (actualChangedKeys.count > 0) {
+					[TPCPreferences performReloadActionForKeyValues:actualChangedKeys];
+				}
+				
+				if (importedClients.count > 0) {
+					for (NSDictionary *seed in importedClients) {
+						[TPCPreferencesImportExport importWorldControllerClientConfiguratoin:seed isCloudBasedImport:YES];
+					}
+					
+				}
+			});
+
 		/* Allow us to continue work. */
-		isSyncingLocalKeysDownstream = NO;
+		self.isSyncingLocalKeysDownstream = NO;
 		
 		DebugLogToConsole(@"iCloud: Completeing sync downstream.");
 	});
+}
+
+- (void)syncPreferenceFromCloudNotification:(NSNotification *)aNote
+{
+	/* Gather information about the sync request. */
+	NSInteger syncReason = [aNote.userInfo integerForKey:NSUbiquitousKeyValueStoreChangeReasonKey];
+	
+	/* Are we out of memory? */
+	if (syncReason == NSUbiquitousKeyValueStoreQuotaViolationChange) {
+		[self cloudStorageLimitExceeded]; // We will not be syncing for this error.
+	} else {
+		/* Get the list of changed keys. */
+		NSArray *changedKeys = [aNote.userInfo arrayForKey:NSUbiquitousKeyValueStoreChangedKeysKey];
+
+		/* Do the work. */
+		[self syncPreferencesFromCloud:changedKeys];
+	}
+}
+
+- (void)localKeysDidChangeNotification:(NSNotification *)aNote
+{
+	if (self.localKeysWereUpdated == NO) {
+		self.localKeysWereUpdated = YES;
+	}
 }
 
 #pragma mark -
@@ -322,7 +339,7 @@ static dispatch_queue_t workerQueue = NULL;
 	consume 64 KB) count against a user’s total iCloud allotment."
 */
 
-+ (void)cloudStorageLimitExceeded
+- (void)cloudStorageLimitExceeded
 {
 #warning TODO: Make user aware of this…
 	LogToConsole(@"The cloud storage limit was exceeded.");
@@ -331,7 +348,7 @@ static dispatch_queue_t workerQueue = NULL;
 #pragma mark -
 #pragma mark Session Management
 
-+ (void)initializeCloudSyncSession
+- (void)initializeCloudSyncSession
 {
 	/* Debug data. */
 	DebugLogToConsole(@"iCloud: Beginning session.");
@@ -339,17 +356,25 @@ static dispatch_queue_t workerQueue = NULL;
 	/* Begin actual session. */
 	if (RZUbiquitousKeyValueStore()) {
 		/* Create worker queue. */
-		workerQueue = dispatch_queue_create("iCloudSyncWorkerQueue", NULL);
+		self.workerQueue = dispatch_queue_create("iCloudSyncWorkerQueue", NULL);
 		
 		/* Notification for when a local value through NSUserDefaults is changed. */
-		[RZNotificationCenter() addObserver:[self class]
-								   selector:@selector(syncPreferencesToCloud:)
+		[RZNotificationCenter() addObserver:self
+								   selector:@selector(localKeysDidChangeNotification:)
 									   name:NSUserDefaultsDidChangeNotification
 									 object:nil];
+		
+		NSTimer *syncTimer = [NSTimer scheduledTimerWithTimeInterval:_localKeysUpstreamSyncTimerInterval
+															  target:self
+															selector:@selector(syncPreferencesToCloud)
+															userInfo:nil
+															 repeats:YES];
+		
+		self.cloudSyncTimer = syncTimer;
 
 		/* Notification for when a remote value through the key-value store is changed. */
-		[RZNotificationCenter() addObserver:[self class]
-								   selector:@selector(syncPreferencesFromCloud:)
+		[RZNotificationCenter() addObserver:self
+								   selector:@selector(syncPreferenceFromCloudNotification:)
 									   name:NSUbiquitousKeyValueStoreDidChangeExternallyNotification
 									 object:nil];
 		
@@ -362,9 +387,9 @@ static dispatch_queue_t workerQueue = NULL;
 	}
 }
 
-+ (void)purgeDataStoredWithCloud
+- (void)purgeDataStoredWithCloud
 {
-	dispatch_async(workerQueue, ^{
+	dispatch_async(self.workerQueue, ^{
 		/* Sync latest changes from disc for the dictionary. */
 		[RZUbiquitousKeyValueStore() synchronize];
 
@@ -378,24 +403,28 @@ static dispatch_queue_t workerQueue = NULL;
 	});
 }
 
-+ (void)closeCloudSyncSession
+- (void)closeCloudSyncSession
 {
 	/* Debug data. */
 	DebugLogToConsole(@"iCloud: Closing session.");
 
 	/* Stop listening for notification related to local changes. */
-    [RZNotificationCenter() removeObserver:[self class]
+    [self.cloudSyncTimer invalidate];
+	
+    [RZNotificationCenter() removeObserver:self
 									  name:NSUserDefaultsDidChangeNotification
 									object:nil];
 
 	/* Stop listening for notification related to remote changes. */
-    [RZNotificationCenter() removeObserver:[self class]
+    [RZNotificationCenter() removeObserver:self
 									  name:NSUbiquitousKeyValueStoreDidChangeExternallyNotification
 									object:nil];
 	
 	/* Dispatch clean-up. */
-	if (workerQueue) {
-		dispatch_release(workerQueue);
+	if (self.workerQueue) {
+		dispatch_release(self.workerQueue);
+		
+		self.workerQueue = NULL;
 	}
 }
 
