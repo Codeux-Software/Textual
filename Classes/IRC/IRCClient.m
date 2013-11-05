@@ -1930,15 +1930,11 @@
 
 					if (found == NO) {
 						[self.config.ignoreList safeAddObject:g];
-
-						[self.worldController save];
 					}
 				} else {
 					for (IRCAddressBook *e in self.config.ignoreList) {
 						if ([g.hostmask isEqualToString:e.hostmask]) {
 							[self.config.ignoreList removeObject:e];
-
-							[self.worldController save];
 
 							break;
 						}

@@ -885,11 +885,11 @@
 	} else {
 		/* Poll server for latest. */
 		/* Syncing is temporarily disabled so we can pull the cloud data. */
-		[TPCPreferencesCloudSync setSyncingTemporarilyDelayed]; // Delays for five seconds.
-		
 		[RZUserDefaults() setBool:YES forKey:@"SyncPreferencesToTheCloud"];
 		
 		[RZUbiquitousKeyValueStore() synchronize];
+		
+		[self.masterController.cloudSyncManager synchronizeFromCloud];
 	}
 #endif
 }
@@ -898,7 +898,7 @@
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if (returnCode == TLOPopupPromptReturnSecondaryType) {
-		[TPCPreferencesCloudSync purgeDataStoredWithCloud];
+		[self.masterController.cloudSyncManager purgeDataStoredWithCloud];
 	}
 #endif
 }

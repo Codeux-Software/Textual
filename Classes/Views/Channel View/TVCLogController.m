@@ -136,7 +136,8 @@
 	}
 
 	[(id)self.view setBackgroundColor:windowColor];
-
+	
+	[self.view.mainFrame stopLoading];
 	[self.view.mainFrame loadHTMLString:newHTML baseURL:[self baseURL]];
 }
 

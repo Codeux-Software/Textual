@@ -178,7 +178,7 @@
 	[TPCPreferences saveWorld:[self dictionaryValue]];
 	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	[TPCPreferencesCloudSync synchronizeToCloud];
+	[self.cloudSyncManager synchronizeToCloud];
 #endif
 }
 
@@ -217,7 +217,7 @@
 	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]); // Are we even syncing?
 	
 	/* Begin work. */
-	NSArray *deletedClients = [TPCPreferencesCloudSync valueForKey:IRCWorldControllerCloudDeletedClientsStorageKey];
+	NSArray *deletedClients = [self.cloudSyncManager valueForKey:IRCWorldControllerCloudDeletedClientsStorageKey];
 	
 	/* Does the array even exist? */
 	if (PointerIsEmpty(deletedClients)) {
@@ -227,7 +227,7 @@
 	}
 	
 	/* Set new array. */
-	[TPCPreferencesCloudSync setValue:deletedClients forKey:IRCWorldControllerCloudDeletedClientsStorageKey];
+	[self.cloudSyncManager setValue:deletedClients forKey:IRCWorldControllerCloudDeletedClientsStorageKey];
 }
 
 /* If a client set locally was set to not be synced from the cloud, but its UUID appears as a
@@ -238,7 +238,7 @@
 	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]); // Are we even syncing?
 	
 	/* Begin work. */
-	NSArray *deletedClients = [TPCPreferencesCloudSync valueForKey:IRCWorldControllerCloudDeletedClientsStorageKey];
+	NSArray *deletedClients = [self.cloudSyncManager valueForKey:IRCWorldControllerCloudDeletedClientsStorageKey];
 	
 	if (PointerIsNotEmpty(deletedClients)) {
 		NSInteger clientIndex = [deletedClients indexOfObject:itemUUID];
@@ -246,7 +246,7 @@
 		if (NSDissimilarObjects(clientIndex, NSNotFound)) {
 			deletedClients = [deletedClients arrayByRemovingObjectAtIndex:clientIndex];
 			
-			[TPCPreferencesCloudSync setValue:deletedClients forKey:IRCWorldControllerCloudDeletedClientsStorageKey];
+			[self.cloudSyncManager setValue:deletedClients forKey:IRCWorldControllerCloudDeletedClientsStorageKey];
 		}
 	}
 }
@@ -255,7 +255,7 @@
 {
 	NSString *prefKey = [IRCWorldControllerCloudClientEntryKeyPrefix stringByAppendingString:itemUUID];
 	
-	[TPCPreferencesCloudSync removeObjectForKey:prefKey];
+	[self.cloudSyncManager removeObjectForKey:prefKey];
 }
 
 - (void)processCloudCientDeletionList:(NSArray *)deletedClients
@@ -273,6 +273,11 @@
 			[self destroyClient:u bySkippingCloud:YES];
 		}
 	}];
+}
+
+- (TPCPreferencesCloudSync *)cloudSyncManager
+{
+	return self.masterController.cloudSyncManager;
 }
 #endif
 
@@ -1595,8 +1600,6 @@
 		}
 
 		[self.serverList moveItemAtIndex:oldIndex inParent:nil toIndex:newIndex inParent:nil];
-		
-		[self save];
 	} else {
 		if (PointerIsEmpty(item) || NSDissimilarObjects(item, i.client)) {
             return NO;
@@ -1643,8 +1646,6 @@
 		}
 
 		[self.serverList moveItemAtIndex:oldIndex inParent:u toIndex:newIndex inParent:u];
-
-		[self save];
 	}
 	
 	NSInteger n = [self.serverList rowForItem:self.selectedItem];

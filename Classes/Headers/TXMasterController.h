@@ -60,6 +60,11 @@
 @property (nonatomic, nweak) NSMenuItem *channelMenuItem;
 @property (nonatomic, nweak) NSMenuItem *serverMenuItem;
 @property (nonatomic, nweak) NSMenuItem *closeWindowMenuItem;
+
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+@property (nonatomic, strong) TPCPreferencesCloudSync *cloudSyncManager;
+#endif
+
 @property (nonatomic, strong) THOPluginManager *pluginManager;
 @property (nonatomic, strong) TLOGrowlController *growlController;
 @property (nonatomic, strong) TLONickCompletionStatus *completionStatus;
