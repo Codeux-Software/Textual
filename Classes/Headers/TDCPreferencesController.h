@@ -58,6 +58,11 @@
 @property (nonatomic, nweak) NSView *IRCopServicesView;
 @property (nonatomic, nweak) NSArrayController *excludeKeywordsArrayController;
 @property (nonatomic, nweak) NSArrayController *matchKeywordsArrayController;
+
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+@property (nonatomic, nweak) NSButton *syncPreferencesToTheCloudButton;
+#endif
+
 @property (nonatomic, nweak) NSButton *addExcludeKeywordButton;
 @property (nonatomic, nweak) NSButton *alertSpeakEventButton;
 @property (nonatomic, nweak) NSButton *alertDisableWhileAwayButton;
@@ -94,7 +99,10 @@
 - (void)onChangedAlertNotification:(id)sender;
 - (void)onChangedAlertType:(id)sender;
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 - (void)onChangedCloudSyncingServices:(id)sender;
+#endif
+
 - (void)onChangedHighlightLogging:(id)sender;
 - (void)onChangedHighlightType:(id)sender;
 - (void)onChangedInputHistoryScheme:(id)sender;
@@ -114,7 +122,9 @@
 - (void)onOpenPathToScripts:(id)sender;
 - (void)onOpenPathToThemes:(id)sender;
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 - (void)onPurgeOfCloudDataRequested:(id)sender;
+#endif
 
 - (void)onSelectNewFont:(id)sender;
 @end

@@ -68,8 +68,6 @@
 
 - (NSArray *)sortedDictionaryKeys;
 - (NSArray *)sortedDictionaryReversedKeys;
-
-- (NSUInteger)phash;
 @end
 
 @interface NSMutableDictionary (TXMutableDictionaryHelper)

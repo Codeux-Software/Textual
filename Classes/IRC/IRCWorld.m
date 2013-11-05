@@ -176,6 +176,10 @@
 - (void)save
 {
 	[TPCPreferences saveWorld:[self dictionaryValue]];
+	
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	[TPCPreferencesCloudSync synchronizeToCloud];
+#endif
 }
 
 - (void)terminate
@@ -190,17 +194,22 @@
 #pragma mark -
 #pragma mark Cloud Management 
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 - (NSMutableDictionary *)cloudDictionaryValue
 {
-	NSMutableArray *ary = [NSMutableArray array];
+	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 	
 	for (IRCClient *u in self.clients) {
 		if (u.config.excludedFromCloudSyncing == NO) {
-			[ary safeAddObject:[u dictionaryValue]];
+			NSDictionary *prefs = [u dictionaryValue];
+			
+			NSString *prefKey = [IRCWorldControllerCloudClientEntryKeyPrefix stringByAppendingString:u.config.itemUUID];
+			
+			[dict setObject:prefs forKey:prefKey];
 		}
 	}
 	
-	return [@{@"clients" : ary} mutableCopy];
+	return dict;
 }
 
 - (void)addClientToListOfDeletedClients:(NSString *)itemUUID
@@ -208,7 +217,7 @@
 	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]); // Are we even syncing?
 	
 	/* Begin work. */
-	NSArray *deletedClients = [RZUserDefaults() arrayForKey:IRCWorldControllerDeletedClientsStorageKey];
+	NSArray *deletedClients = [TPCPreferencesCloudSync valueForKey:IRCWorldControllerCloudDeletedClientsStorageKey];
 	
 	/* Does the array even exist? */
 	if (PointerIsEmpty(deletedClients)) {
@@ -218,7 +227,7 @@
 	}
 	
 	/* Set new array. */
-	[RZUserDefaults() setObject:deletedClients forKey:IRCWorldControllerDeletedClientsStorageKey];
+	[TPCPreferencesCloudSync setValue:deletedClients forKey:IRCWorldControllerCloudDeletedClientsStorageKey];
 }
 
 /* If a client set locally was set to not be synced from the cloud, but its UUID appears as a
@@ -229,7 +238,7 @@
 	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]); // Are we even syncing?
 	
 	/* Begin work. */
-	NSArray *deletedClients = [RZUserDefaults() arrayForKey:IRCWorldControllerDeletedClientsStorageKey];
+	NSArray *deletedClients = [TPCPreferencesCloudSync valueForKey:IRCWorldControllerCloudDeletedClientsStorageKey];
 	
 	if (PointerIsNotEmpty(deletedClients)) {
 		NSInteger clientIndex = [deletedClients indexOfObject:itemUUID];
@@ -237,10 +246,35 @@
 		if (NSDissimilarObjects(clientIndex, NSNotFound)) {
 			deletedClients = [deletedClients arrayByRemovingObjectAtIndex:clientIndex];
 			
-			[RZUserDefaults() setObject:deletedClients forKey:itemUUID];
+			[TPCPreferencesCloudSync setValue:deletedClients forKey:IRCWorldControllerCloudDeletedClientsStorageKey];
 		}
 	}
 }
+
+- (void)removeClientConfigurationCloudEntry:(NSString *)itemUUID
+{
+	NSString *prefKey = [IRCWorldControllerCloudClientEntryKeyPrefix stringByAppendingString:itemUUID];
+	
+	[TPCPreferencesCloudSync removeObjectForKey:prefKey];
+}
+
+- (void)processCloudCientDeletionList:(NSArray *)deletedClients
+{
+	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]); // Are we even syncing?
+	
+	NSObjectIsEmptyAssert(deletedClients);
+	
+	[deletedClients enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+		/* Try to find a client from the imported list. */
+		IRCClient *u = [self findClientById:obj];
+		
+		/* We only delete clients that are set to be synced. */
+		if (u && u.config.excludedFromCloudSyncing == NO) {
+			[self destroyClient:u bySkippingCloud:YES];
+		}
+	}];
+}
+#endif
 
 #pragma mark -
 #pragma mark Properties
@@ -1021,11 +1055,23 @@
 
 - (void)destroyClient:(IRCClient *)u
 {
+	[self destroyClient:u bySkippingCloud:NO];
+}
+
+- (void)destroyClient:(IRCClient *)u bySkippingCloud:(BOOL)skipCloud
+{
 	[u terminate];
 	
-	if (u.config.excludedFromCloudSyncing == NO) {
-		[self addClientToListOfDeletedClients:u.config.itemUUID]; // Set client as deleted.
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	if ([TPCPreferences syncPreferencesToTheCloud]) {
+		if (u.config.excludedFromCloudSyncing == NO) {
+			if (skipCloud == NO) {
+				[self addClientToListOfDeletedClients:u.config.itemUUID]; // Set client as deleted.
+				[self removeClientConfigurationCloudEntry:u.config.itemUUID];
+			}
+		}
 	}
+#endif
 	
 	if (self.selectedItem && self.selectedItem.client == u) {
 		[self selectOtherAndDestroy:u];

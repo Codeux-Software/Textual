@@ -103,7 +103,11 @@
 
 	[self onChangedAlertType:nil];
 	[self onChangedHighlightType:nil];
-
+	
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	[self.syncPreferencesToTheCloudButton setState:[TPCPreferences syncPreferencesToTheCloud]];
+#endif
+	
 	[self.setAsDefaultIRCClientButton setHidden:[TPCPreferences isDefaultIRCClient]];
 
 	[self.window restoreWindowStateForClass:self.class];
@@ -863,7 +867,9 @@
 - (void)onChangedCloudSyncingServices:(id)sender
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
+	if ([TPCPreferences syncPreferencesToTheCloud]) {
+		[RZUserDefaults() setBool:NO forKey:@"SyncPreferencesToTheCloud"];
+		
 		TLOPopupPrompts *popup = [TLOPopupPrompts new];
 
 		[popup sheetWindowWithQuestion:self.window
@@ -878,6 +884,11 @@
 					   suppressionText:nil];
 	} else {
 		/* Poll server for latest. */
+		/* Syncing is temporarily disabled so we can pull the cloud data. */
+		[TPCPreferencesCloudSync setSyncingTemporarilyDelayed]; // Delays for five seconds.
+		
+		[RZUserDefaults() setBool:YES forKey:@"SyncPreferencesToTheCloud"];
+		
 		[RZUbiquitousKeyValueStore() synchronize];
 	}
 #endif

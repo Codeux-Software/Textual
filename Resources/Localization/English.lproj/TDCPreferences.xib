@@ -41,6 +41,7 @@
                 <outlet property="preferenceSelectToolbar" destination="6282" id="6307"/>
                 <outlet property="setAsDefaultIRCClientButton" destination="7327" id="7393"/>
                 <outlet property="stylesView" destination="4791" id="4926"/>
+                <outlet property="syncPreferencesToTheCloudButton" destination="oyC-QD-WhE" id="NyA-O9-ecr"/>
                 <outlet property="themeSelectionButton" destination="5777" id="7352"/>
                 <outlet property="transcriptFolderButton" destination="6771" id="6778"/>
                 <outlet property="window" destination="4929" id="4933"/>
@@ -134,7 +135,7 @@
                         <popUpButton key="view" tag="13" id="6451">
                             <rect key="frame" x="3" y="14" width="43" height="32"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" imagePosition="right" lineBreakMode="truncatingTail" borderStyle="bezel" inset="2" pullsDown="YES" selectedItem="6455" id="6452">
+                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="TPWTB_Extensions" imagePosition="right" lineBreakMode="truncatingTail" borderStyle="bezel" inset="2" pullsDown="YES" selectedItem="6455" id="6452">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" title="OtherViews" showsStateColumn="NO" id="6453">
@@ -348,7 +349,6 @@
                     </buttonCell>
                     <connections>
                         <action selector="onChangedCloudSyncingServices:" target="-2" id="smz-bV-8yF"/>
-                        <binding destination="1247" name="value" keyPath="values.SyncPreferencesToTheCloud" id="o6d-LB-QwQ"/>
                         <binding destination="1247" name="enabled" keyPath="values.System —> Built with iCloud Support" id="IYT-32-ECr"/>
                     </connections>
                 </button>
