@@ -48,6 +48,8 @@ static BOOL isSyncingLocalKeysUpstream = NO;
 static BOOL isSyncingTemporarilyDisabled = NO;
 static BOOL isSyncingTemporarilyDelayed = NO;
 
+static dispatch_queue_t workerQueue = NULL;
+
 #pragma mark -
 #pragma mark Public API
 
@@ -149,108 +151,150 @@ static BOOL isSyncingTemporarilyDelayed = NO;
 
 + (void)syncPreferencesToCloud:(NSNotification *)aNote
 {
-	/* Debug data. */
-	DebugLogToConsole(@"iCloud: Beginning sync upstream.");
+	dispatch_async(workerQueue, ^{
+		/* Debug data. */
+		DebugLogToConsole(@"iCloud: Beginning sync upstream.");
 
-	/* We don't even want to sync if user doesn't want to. */
-	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
+		/* We don't even want to sync if user doesn't want to. */
+		NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
 
-	/* Are we already syncing? */
-	NSAssertReturn(isSyncingLocalKeysUpstream == NO);
-	NSAssertReturn(isSyncingLocalKeysDownstream == NO);
-	NSAssertReturn(isSyncingTemporarilyDelayed == NO);
-	NSAssertReturn(isSyncingTemporarilyDisabled == NO);
+		/* Are we already syncing? */
+		if (isSyncingLocalKeysDownstream) {
+			DebugLogToConsole(@"iCloud: Upstream sync cancelled because a downstream sync was already running.");
+			
+			return; // Cancel this operation;
+		}
+		
+		if (isSyncingLocalKeysUpstream) {
+			DebugLogToConsole(@"iCloud: Upstream sync cancelled because an upstream sync was already running.");
+			
+			return; // Cancel this operation;
+		}
+		
+		if (isSyncingTemporarilyDelayed) {
+			DebugLogToConsole(@"iCloud: Upstream sync cancelled because a delayed sync is set.");
+			
+			return; // Cancel this operation;
+		}
+		
+		if (isSyncingTemporarilyDisabled) {
+			DebugLogToConsole(@"iCloud: Upstream sync cancelled because syncing is disabled.");
+			
+			return; // Cancel this operation;
+		}
+		
+		/* Continue normal work. */
+		isSyncingLocalKeysUpstream = YES;
 
-	isSyncingLocalKeysUpstream = YES;
+		/* Gather dictionary representation of all local preferences. */
+		NSDictionary *localdict = [TPCPreferencesImportExport exportedPreferencesDictionaryRepresentation];
+		
+		NSMutableDictionary *clientDict = [self.worldController cloudDictionaryValue];
+		
+		/* Combine these two… */
+		[clientDict addEntriesFromDictionary:localdict];
 
-	/* Gather dictionary representation of all local preferences. */
-	NSDictionary *localdict = [TPCPreferencesImportExport exportedPreferencesDictionaryRepresentation];
-	
-	NSMutableDictionary *clientDict = [self.worldController cloudDictionaryValue];
-	
-	/* Combine these two… */
-	[clientDict addEntriesFromDictionary:localdict];
+		/* Sync latest changes from disc for the dictionary. */
+		[RZUbiquitousKeyValueStore() synchronize];
 
-	/* Sync latest changes from disc for the dictionary. */
-	[RZUbiquitousKeyValueStore() synchronize];
+		/* Compare to the remote. */
+		NSDictionary *remotedict = [RZUbiquitousKeyValueStore() dictionaryRepresentation];
 
-	/* Compare to the remote. */
-	NSDictionary *remotedict = [RZUbiquitousKeyValueStore() dictionaryRepresentation];
+		if ([clientDict isEqual:remotedict]) {
+			DebugLogToConsole(@"iCloud: Remote dictionary and local dictionary are the same. Not syncing.");
+		} else {
+			/* Set the remote dictionary. */
+			/* Some people may look at this code and wonder what the fuck was this
+			 developer thinking? Well, since I know I will be asking myself that in
+			 probably a few months when I need to maintain this code; I will explain.
 
-	if ([clientDict isEqual:remotedict]) {
-		DebugLogToConsole(@"iCloud: Remote dictionary and local dictionary are the same. Not syncing.");
-	} else {
-		/* Set the remote dictionary. */
-		/* Some people may look at this code and wonder what the fuck was this
-		 developer thinking? Well, since I know I will be asking myself that in
-		 probably a few months when I need to maintain this code; I will explain.
+			 You cannot have a key longer than 64 bytes in iCloud so what am I going
+			 to do when there are keys stored by Textual longer than that? Rewrite
+			 the entire internals of Textual to use shorter keys? Ha, as-if… Instead
+			 just use a static hash of the key name as the actual key, then have the
+			 value of the key a dictionary with the real key name in it and the value. */
+			[clientDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+				if ([self keyIsNotPermittedInCloud:key]) {
+					// Nobody cares about this…
+				} else {
+					[TPCPreferencesCloudSync setValue:obj forKey:key];
+				}
+			}];
+		}
 
-		 You cannot have a key longer than 64 bytes in iCloud so what am I going
-		 to do when there are keys stored by Textual longer than that? Rewrite
-		 the entire internals of Textual to use shorter keys? Ha, as-if… Instead
-		 just use a static hash of the key name as the actual key, then have the
-		 value of the key a dictionary with the real key name in it and the value. */
-		[clientDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-			if ([self keyIsNotPermittedInCloud:key]) {
-				// Nobody cares about this…
-			} else {
-				[TPCPreferencesCloudSync setValue:obj forKey:key];
-			}
-		}];
-	}
+		/* Allow us to continue work. */
+		isSyncingLocalKeysUpstream = NO;
 
-	/* Allow us to continue work. */
-	isSyncingLocalKeysUpstream = NO;
-
-	DebugLogToConsole(@"iCloud: Completeing sync upstream.");
+		DebugLogToConsole(@"iCloud: Completeing sync upstream.");
+	});
 }
 
 + (void)syncPreferencesFromCloud:(NSNotification *)aNote
 {
-	/* Debug data. */
-	DebugLogToConsole(@"iCloud: Beginning sync downstream.");
+	dispatch_async(workerQueue, ^{
+		/* Debug data. */
+		DebugLogToConsole(@"iCloud: Beginning sync downstream.");
 
-	/* We don't even want to sync if user doesn't want to. */
-	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
+		/* We don't even want to sync if user doesn't want to. */
+		NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
 
-	/* Announce our intents… */
-	isSyncingLocalKeysDownstream = YES;
+		/* Announce our intents… */
+		isSyncingLocalKeysDownstream = YES;
 
-	/* Gather information about the sync request. */
-	NSInteger syncReason = [aNote.userInfo integerForKey:NSUbiquitousKeyValueStoreChangeReasonKey];
+		/* Gather information about the sync request. */
+		NSInteger syncReason = [aNote.userInfo integerForKey:NSUbiquitousKeyValueStoreChangeReasonKey];
 
-	/* Are we out of memory? */
-	if (syncReason == NSUbiquitousKeyValueStoreQuotaViolationChange) {
-		[self cloudStorageLimitExceeded]; // We will not be syncing for this error.
-	} else {
-		/* Get the list of changed keys. */
-		NSArray *changedKeys = [aNote.userInfo arrayForKey:NSUbiquitousKeyValueStoreChangedKeysKey];
+		/* Are we out of memory? */
+		if (syncReason == NSUbiquitousKeyValueStoreQuotaViolationChange) {
+			[self cloudStorageLimitExceeded]; // We will not be syncing for this error.
+		} else {
+			/* Get the list of changed keys. */
+			NSArray *changedKeys = [aNote.userInfo arrayForKey:NSUbiquitousKeyValueStoreChangedKeysKey];
 
-		NSMutableArray *actualChangedKeys = [NSMutableArray array];
-		
-		/* See the code of syncPreferencesToCloud: for an expalantion of how these keys are hashed. */
-		for (id hashedKey in changedKeys) {
-			id keyname = nil;
-			id objectValue = [self valueForHashedKey:hashedKey actualKey:&keyname];
+			NSMutableArray *actualChangedKeys = [NSMutableArray array];
 			
-			if (objectValue) {
-				/* Set it to the new dictionary. */
-				if ([keyname isEqual:IRCWorldControllerCloudDeletedClientsStorageKey]) {
-					[self.worldController processCloudCientDeletionList:objectValue];
-				} else {
-					[actualChangedKeys addObject:keyname];
+			/* See the code of syncPreferencesToCloud: for an expalantion of how these keys are hashed. */
+			for (id hashedKey in changedKeys) {
+				id keyname = nil;
+				id objectValue = [self valueForHashedKey:hashedKey actualKey:&keyname];
+				
+				if (objectValue) {
+					/* Set it to the new dictionary. */
 					
-					[TPCPreferencesImportExport import:objectValue withKey:keyname isCloudBasedImport:YES];
+					if ([keyname isEqual:IRCWorldControllerCloudDeletedClientsStorageKey])
+					{
+						NSObjectIsKindOfClassAssert(objectValue, NSArray);
+						
+						dispatch_async(dispatch_get_main_queue(), ^{
+							[self.worldController processCloudCientDeletionList:objectValue];
+						});
+					}
+					else if ([keyname hasPrefix:IRCWorldControllerCloudDeletedClientsStorageKey])
+					{
+						NSObjectIsKindOfClassAssert(objectValue, NSDictionary);
+						
+						dispatch_async(dispatch_get_main_queue(), ^{
+							[TPCPreferencesImportExport importWorldControllerClientConfiguratoin:objectValue isCloudBasedImport:YES];
+						});
+					}
+					else
+					{
+						[actualChangedKeys addObject:keyname];
+						
+						[TPCPreferencesImportExport import:objectValue withKey:keyname];
+					}
 				}
 			}
+
+			/* Perform reload. */
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[TPCPreferences performReloadActionForKeyValues:actualChangedKeys];
+			});
 		}
 
-		/* Perform reload. */
-		[TPCPreferences performReloadActionForKeyValues:actualChangedKeys];
-	}
-
-	/* Allow us to continue work. */
-	isSyncingLocalKeysDownstream = NO;
+		/* Allow us to continue work. */
+		isSyncingLocalKeysDownstream = NO;
+	});
 }
 
 #pragma mark -
@@ -288,6 +332,9 @@ static BOOL isSyncingTemporarilyDelayed = NO;
 
 	/* Begin actual session. */
 	if (RZUbiquitousKeyValueStore()) {
+		/* Create worker queue. */
+		workerQueue = dispatch_queue_create("iCloudSyncWorkerQueue", NULL);
+		
 		/* Notification for when a local value through NSUserDefaults is changed. */
 		[RZNotificationCenter() addObserver:[self class]
 								   selector:@selector(syncPreferencesToCloud:)
@@ -311,20 +358,27 @@ static BOOL isSyncingTemporarilyDelayed = NO;
 
 + (void)purgeDataStoredWithCloud
 {
-	/* Sync latest changes from disc for the dictionary. */
-	[RZUbiquitousKeyValueStore() synchronize];
+	dispatch_async(workerQueue, ^{
+		/* Sync latest changes from disc for the dictionary. */
+		[RZUbiquitousKeyValueStore() synchronize];
 
-	/* Get the remote. */
-	NSDictionary *remotedict = [RZUbiquitousKeyValueStore() dictionaryRepresentation];
+		/* Get the remote. */
+		NSDictionary *remotedict = [RZUbiquitousKeyValueStore() dictionaryRepresentation];
 
-	/* Start destroying. */
-	[remotedict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-		[RZUbiquitousKeyValueStore() removeObjectForKey:key];
-	}];
+		/* Start destroying. */
+		[remotedict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+			[RZUbiquitousKeyValueStore() removeObjectForKey:key];
+		}];
+	});
 }
 
 + (void)closeCloudSyncSession
 {
+	/* Dispatch clean-up. */
+	if (workerQueue) {
+		dispatch_release(workerQueue);
+	}
+	
 	/* Debug data. */
 	DebugLogToConsole(@"iCloud: Closing session.");
 

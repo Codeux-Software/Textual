@@ -153,51 +153,28 @@
 
 + (void)import:(id)obj withKey:(id)key
 {
-	[self import:obj withKey:key isCloudBasedImport:NO];
-}
-
-+ (void)import:(id)obj withKey:(id)key isCloudBasedImport:(BOOL)isCloudImport
-{
 	/* Is it a normal key? */
 	if ([self isKeyNameExcludedFromNormalImportProcess:key] == NO) {
 		[RZUserDefaults() setObject:obj forKey:key];
 	} else {
-		
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-		if (isCloudImport) {
-			if ([key hasPrefix:IRCWorldControllerCloudClientEntryKeyPrefix]) {
-				/* It is a client configuration entry. */
-				NSObjectIsKindOfClassAssert(obj, NSDictionary);
-				
-				/* Start import. */
-				[self importWorldControllerObjectEntry:obj isCloudBasedImport:isCloudImport];
-			}
-		} else {
-#endif
+		if ([key isEqual:IRCWorldControllerDefaultsStorageKey]) {
+			/* It is the world controller! */
+			NSObjectIsKindOfClassAssert(obj, NSDictionary);
 			
-			if ([key isEqual:IRCWorldControllerDefaultsStorageKey]) {
-				/* It is the world controller! */
-				NSObjectIsKindOfClassAssert(obj, NSDictionary);
-				
-				/* Start import. */
-				id clientList = [obj objectForKey:@"clients"];
-				
-				NSObjectIsKindOfClassAssert(obj, NSArray);
-				
-				/* Bleh, let's get this over with. */
-				[clientList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-					[self importWorldControllerObjectEntry:obj isCloudBasedImport:isCloudImport];
-				}];
-			}
+			/* Start import. */
+			id clientList = [obj objectForKey:@"clients"];
 			
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+			NSObjectIsKindOfClassAssert(obj, NSArray);
+			
+			/* Bleh, let's get this over with. */
+			[clientList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+				[self importWorldControllerClientConfiguratoin:obj isCloudBasedImport:NO];
+			}];
 		}
-#endif
 	}
 }
 
-
-+ (void)importWorldControllerObjectEntry:(NSDictionary *)client isCloudBasedImport:(BOOL)isCloudImport
++ (void)importWorldControllerClientConfiguratoin:(NSDictionary *)client isCloudBasedImport:(BOOL)isCloudImport;
 {
 	/* Validate that shiznet. */
 	NSObjectIsEmptyAssert(client);
