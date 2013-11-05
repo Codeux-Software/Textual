@@ -43,10 +43,10 @@
 + (void)export;
 
 /* For iCloud purposes. */
-+ (void)import:(id)obj withKey:(id)key; // Defaults cloud import to NO.
-+ (void)import:(id)obj withKey:(id)key isCloudBasedImport:(BOOL)isCloudImport;
++ (void)import:(id)obj withKey:(id)key;
 
 + (void)importContentsOfDictionary:(NSDictionary *)aDict;
++ (void)importWorldControllerClientConfiguratoin:(NSDictionary *)client isCloudBasedImport:(BOOL)isCloudImport;
 
 + (NSDictionary *)exportedPreferencesDictionaryRepresentation;
 @end
