@@ -67,25 +67,33 @@
 				  message:(NSString *)messageString
 				  command:(NSString *)commandString
 {
-	if ([commandString isEqualIgnoringCase:@"DETACH"]) {
+	BOOL isDetach = [commandString isEqualIgnoringCase:@"DETACH"];
+	BOOL isAttach = [commandString isEqualIgnoringCase:@"ATTACH"];
+	
+	if (isAttach || isDetach) {
 		if (client.isZNCBouncerConnection == NO) {
 			[client printDebugInformation:TPILS(@"ZNCIsNotAvailable")];
 
 			return;
 		}
 		
+		IRCChannel *matchedChannel;
+		
 		if ([messageString isChannelName:client]) {
-			[client sendLine:[NSString stringWithFormat:@"%@ %@", commandString, messageString]];
-			for (IRCChannel *channel in self.worldController.selectedClient.channels) {
-			    if ([channel.name isEqualIgnoringCase:messageString] == YES) {
-			        [channel.config setAutoJoin:NO];
-			    }
-			}
+			matchedChannel = [client findChannel:messageString];
 		} else {
-			IRCChannel *channel = self.worldController.selectedChannel;
-			if ([channel isChannel]) {
-				[client sendLine:[NSString stringWithFormat:@"%@ %@", commandString, channel.name]];
-				[channel.config setAutoJoin:NO];
+			matchedChannel = self.worldController.selectedChannel;
+		}
+		
+		if (matchedChannel) {
+			[matchedChannel.config setAutoJoin:isAttach];
+			
+			if (isDetach) {
+				[client sendLine:[NSString stringWithFormat:@"%@ %@", commandString, matchedChannel.name]];
+			
+				[client printDebugInformation:TPIFLS(@"ZNCChannelHasBeenDetached", matchedChannel.name) channel:matchedChannel];
+			} else {
+				[client sendLine:[NSString stringWithFormat:@"%@ %@", IRCPublicCommandIndex("join"), matchedChannel.name]];
 			}
 		}
 	}
@@ -93,7 +101,7 @@
 
 - (NSArray *)pluginSupportsUserInputCommands
 {
-	return @[@"detach"];
+	return @[@"detach", @"attach"];
 }
 
 - (NSArray *)pluginSupportsServerInputCommands
