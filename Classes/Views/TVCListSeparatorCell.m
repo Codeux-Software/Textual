@@ -68,4 +68,9 @@
 	}
 }
 
+- (NSRect)expansionFrameWithFrame:(NSRect)cellFrame inView:(NSView *)view
+{
+	return NSZeroRect;
+}
+
 @end
