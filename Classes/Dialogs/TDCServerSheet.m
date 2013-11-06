@@ -705,6 +705,19 @@
 						suppressionKey:nil
 					   suppressionText:nil];
 	} else {
+		TLOPopupPrompts *popup = [TLOPopupPrompts new];
+		
+		[popup sheetWindowWithQuestion:self.sheet
+								target:[TLOPopupPrompts class]
+								action:@selector(popupPromptNilSelector:)
+								  body:TXTLS(@"iCloudSyncServicesSupportEnabledForServerDialogMessage")
+								 title:TXTLS(@"iCloudSyncServicesSupportEnabledForServerDialogTitle")
+						 defaultButton:TXTLS(@"OkButton")
+					   alternateButton:nil
+						   otherButton:nil
+						suppressionKey:nil
+					   suppressionText:nil];
+		
 		self.requestCloudDeletionOnClose = NO;
 	}
 }
