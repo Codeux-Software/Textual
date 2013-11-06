@@ -187,6 +187,15 @@
 	/* Try to find any clients matching this value. */
 	IRCClient *u = [self.worldController findClientById:config.itemUUID];
 	
+	/* Handle cloud sync logic. */
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	if (isCloudImport) {
+		if (u && u.config.excludedFromCloudSyncing) {
+			return;
+		}
+	}
+#endif
+	
 	if (u) {
 		[u updateConfig:config];
 	} else {
