@@ -76,11 +76,16 @@
 		
 		if ([messageString isChannelName:client]) {
 			[client sendLine:[NSString stringWithFormat:@"%@ %@", commandString, messageString]];
+			for (IRCChannel *channel in self.worldController.selectedClient.channels) {
+			    if ([channel.name isEqualIgnoringCase:messageString] == YES) {
+			        [channel.config setAutoJoin:NO];
+			    }
+			}
 		} else {
 			IRCChannel *channel = self.worldController.selectedChannel;
-
 			if ([channel isChannel]) {
 				[client sendLine:[NSString stringWithFormat:@"%@ %@", commandString, channel.name]];
+				[channel.config setAutoJoin:NO];
 			}
 		}
 	}
