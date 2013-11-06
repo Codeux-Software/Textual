@@ -286,7 +286,6 @@
 					for (NSDictionary *seed in importedClients) {
 						[TPCPreferencesImportExport importWorldControllerClientConfiguratoin:seed isCloudBasedImport:YES];
 					}
-					
 				}
 			});
 
