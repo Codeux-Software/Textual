@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A598" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
@@ -334,22 +334,23 @@ Gw
                 <button id="dLD-ut-ncd">
                     <rect key="frame" x="113" y="28" width="310" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <buttonCell key="cell" type="check" title="Exclude from iCloud syncing." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="eql-rS-Io2">
+                    <buttonCell key="cell" type="check" title="Do not share with other devices using iCloud." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="eql-rS-Io2">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="1we-Ps-Z9v" name="hidden2" keyPath="values.System —> Built with iCloud Support" previousBinding="scC-ZN-NMU" id="Yua-lO-a7l">
+                        <action selector="toggleCloudSyncExclusion:" target="-2" id="LNF-gc-rmb"/>
+                        <binding destination="1we-Ps-Z9v" name="hidden" keyPath="values.SyncPreferencesToTheCloud" id="scC-ZN-NMU">
                             <dictionary key="options">
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSNullPlaceholder" value="-1"/>
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
-                        <binding destination="1we-Ps-Z9v" name="hidden" keyPath="values.SyncPreferencesToTheCloud" id="scC-ZN-NMU">
+                        <binding destination="1we-Ps-Z9v" name="hidden2" keyPath="values.System —> Built with iCloud Support" previousBinding="scC-ZN-NMU" id="Yua-lO-a7l">
                             <dictionary key="options">
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>

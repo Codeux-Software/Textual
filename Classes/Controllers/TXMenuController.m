@@ -1177,6 +1177,13 @@
 	[self.worldController save];
 }
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+- (void)serverSheetRequestedCloudExclusionByDeletion:(TDCServerSheet *)sender
+{
+	[self.worldController addClientToListOfDeletedClients:sender.config.itemUUID];
+}
+#endif
+
 - (void)serverSheetWillClose:(TDCServerSheet *)sender
 {
 	[self removeWindowFromWindowList:@"TDCServerSheet"];

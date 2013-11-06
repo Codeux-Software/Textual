@@ -122,6 +122,10 @@
 - (void)toggleAdvancedEncodings:(id)sender;
 - (void)toggleAdvancedSettings:(id)sender;
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+- (void)toggleCloudSyncExclusion:(id)sender;
+#endif
+
 - (void)addChannel:(id)sender;
 - (void)editChannel:(id)sender;
 - (void)deleteChannel:(id)sender;
@@ -140,4 +144,8 @@
 @interface NSObject (TDCServerSheetDelegate)
 - (void)serverSheetOnOK:(TDCServerSheet *)sender;
 - (void)serverSheetWillClose:(TDCServerSheet *)sender;
+
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+- (void)serverSheetRequestedCloudExclusionByDeletion:(TDCServerSheet *)sender;
+#endif
 @end
