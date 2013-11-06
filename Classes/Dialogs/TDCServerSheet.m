@@ -41,6 +41,12 @@
 #define _tableRowType		@"row"
 #define _tableRowTypes		[NSArray arrayWithObject:_tableRowType]
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+@interface TDCServerSheet ()
+@property (nonatomic, assign) BOOL requestCloudDeletionOnClose;
+@end
+#endif
+
 @implementation TDCServerSheet
 
 - (id)init
@@ -593,6 +599,14 @@
 	if ([self.delegate respondsToSelector:@selector(serverSheetOnOK:)]) {
 		[self.delegate serverSheetOnOK:self];
 	}
+	
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	if (self.requestCloudDeletionOnClose) {
+		if ([self.delegate respondsToSelector:@selector(serverSheetRequestedCloudExclusionByDeletion:)]) {
+			[self.delegate serverSheetRequestedCloudExclusionByDeletion:self];
+		}
+	}
+#endif
 
 	[self.window makeFirstResponder:nil];
 
@@ -664,6 +678,37 @@
 
 	[self.tabView reloadData];
 }
+
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+- (void)toggleCloudSyncExclusionRequestDeletionCallback:(TLOPopupPromptReturnType)returnType
+{
+	if (returnType == TLOPopupPromptReturnSecondaryType) {
+		self.requestCloudDeletionOnClose = YES;
+	} else {
+		self.requestCloudDeletionOnClose = NO;
+	}
+}
+
+- (void)toggleCloudSyncExclusion:(id)sender
+{
+	if (self.excludedFromCloudSyncingCheck.state == NSOnState) {
+		TLOPopupPrompts *popup = [TLOPopupPrompts new];
+		
+		[popup sheetWindowWithQuestion:self.sheet
+								target:self
+								action:@selector(toggleCloudSyncExclusionRequestDeletionCallback:)
+								  body:TXTLS(@"iCloudSyncServicesSupportDisabledForServerDialogMessage")
+								 title:TXTLS(@"iCloudSyncServicesSupportDisabledForServerDialogTitle")
+						 defaultButton:TXTLS(@"NoButton")
+					   alternateButton:TXTLS(@"YesButton")
+						   otherButton:nil
+						suppressionKey:nil
+					   suppressionText:nil];
+	} else {
+		self.requestCloudDeletionOnClose = NO;
+	}
+}
+#endif
 
 #pragma mark -
 #pragma mark Highlight Actions

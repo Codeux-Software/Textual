@@ -2338,7 +2338,7 @@
 		4CC9D8A21745BE1700461F05 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4CC9D8A61745BE1700461F05 /* ZNCAdditions.bundle */,
+				4CC9D8A61745BE1700461F05 /* ZNCAdditions.TxtlPlugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2357,7 +2357,7 @@
 		4CCC6B63158E8CCC003A102B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4CCC6B6A158E8CCC003A102B /* BlowfishCommandLine.bundle */,
+				4CCC6B6A158E8CCC003A102B /* BlowfishCommandLine.TxtlPlugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2365,7 +2365,7 @@
 		4CCC6B6F158E8CDA003A102B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4CCC6B76158E8CDA003A102B /* BragSpam.bundle */,
+				4CCC6B76158E8CDA003A102B /* BragSpam.TxtlPlugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2373,7 +2373,7 @@
 		4CCC6B78158E8CF6003A102B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4CCC6B7F158E8CF6003A102B /* SystemProfiler.bundle */,
+				4CCC6B7F158E8CF6003A102B /* SystemProfiler.TxtlPlugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2889,31 +2889,31 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		4CC9D8A61745BE1700461F05 /* ZNCAdditions.bundle */ = {
+		4CC9D8A61745BE1700461F05 /* ZNCAdditions.TxtlPlugin */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = ZNCAdditions.bundle;
+			path = ZNCAdditions.TxtlPlugin;
 			remoteRef = 4CC9D8A51745BE1700461F05 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		4CCC6B6A158E8CCC003A102B /* BlowfishCommandLine.bundle */ = {
+		4CCC6B6A158E8CCC003A102B /* BlowfishCommandLine.TxtlPlugin */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = BlowfishCommandLine.bundle;
+			path = BlowfishCommandLine.TxtlPlugin;
 			remoteRef = 4CCC6B69158E8CCC003A102B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		4CCC6B76158E8CDA003A102B /* BragSpam.bundle */ = {
+		4CCC6B76158E8CDA003A102B /* BragSpam.TxtlPlugin */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = BragSpam.bundle;
+			path = BragSpam.TxtlPlugin;
 			remoteRef = 4CCC6B75158E8CDA003A102B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		4CCC6B7F158E8CF6003A102B /* SystemProfiler.bundle */ = {
+		4CCC6B7F158E8CF6003A102B /* SystemProfiler.TxtlPlugin */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = SystemProfiler.bundle;
+			path = SystemProfiler.TxtlPlugin;
 			remoteRef = 4CCC6B7E158E8CF6003A102B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};

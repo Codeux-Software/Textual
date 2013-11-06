@@ -189,6 +189,9 @@
 "iCloudSyncServicesSupportDisabledDialogTitle" = "iCloud Sharing Disabled";
 "iCloudSyncServicesSupportDisabledDialogMessage" = "iCloud sharing has been disabled.\n\nIf sharing is enabled on any other devices, then please take note that it must be disabled on those as well for it to apply to all.\n\nData stored with iCloud can be erased at any time by clicking the \"Configure iCloud\" button.";
 
+"iCloudSyncServicesSupportDisabledForServerDialogTitle" = "iCloud Sharing Disabled";
+"iCloudSyncServicesSupportDisabledForServerDialogMessage" = "iCloud sharing has been disabled for this server.\n\nWould you like to remove it from devices it has been shared with?\n\nThis action can be undone by enabling sharing.";
+
 "iCloudSyncDeleteAllDataDialogTitle" = "Are you sure you wish to continue?";
 "iCloudSyncDeleteAllDataDialogMessage" = "Selecting \"Continue\" will erase all data stored by Textual on iCloud.\n\nPlease keep in mind that if any other copy of Textual is still configured for sharing, then the data you just erased may be placed back on iCloud by the device running that copy.";
 
