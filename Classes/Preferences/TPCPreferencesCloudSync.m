@@ -197,6 +197,7 @@
 
 		/* Allow us to continue work. */
 		self.isSyncingLocalKeysUpstream = NO;
+		self.localKeysWereUpdated = NO;
 
 		DebugLogToConsole(@"iCloud: Completeing sync upstream.");
 	});
