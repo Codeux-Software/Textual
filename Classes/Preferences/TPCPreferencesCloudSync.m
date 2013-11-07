@@ -47,6 +47,7 @@
 @property (nonatomic, assign) BOOL isSyncingLocalKeysUpstream;
 @property (nonatomic, assign) dispatch_queue_t workerQueue;
 @property (nonatomic, strong) NSTimer *cloudSyncTimer;
+@property (nonatomic, strong) NSURL *ubiquitousContainerURL;
 @end
 
 @implementation TPCPreferencesCloudSync
@@ -108,6 +109,36 @@
 	
 	/* Umm, I just copy and paste these things. */
 	[RZUbiquitousKeyValueStore() removeObjectForKey:hashedKey];
+}
+
+#pragma mark -
+#pragma mark URL Management
+
+- (NSString *)ubiquitousContainerURLPath
+{
+	/* Handle URL request. */
+	static BOOL ubiquitousContainerURLRequestDispatched;
+	
+	if (ubiquitousContainerURLRequestDispatched == NO) {
+		ubiquitousContainerURLRequestDispatched = YES;
+		
+		dispatch_async(self.workerQueue, ^{
+			/* Apple very clearly states not to do call this on the main thread
+			 since it does a lot of work, so we wont… */
+			NSURL *ucurl = [RZFileManager() URLForUbiquityContainerIdentifier:nil];
+			
+			if (ucurl) {
+				self.ubiquitousContainerURL = ucurl;
+			}
+		});
+	}
+			
+	/* Return a path if we have it… */
+	if (self.ubiquitousContainerURL) {
+		return [self.ubiquitousContainerURL path];
+	}
+	
+	return nil;
 }
 
 #pragma mark -
@@ -380,6 +411,9 @@
 		
 		/* Sync latest changes from disc for the dictionary. */
 		[RZUbiquitousKeyValueStore() synchronize];
+		
+		/* Prepare the container… even if we don't use it. */
+		(void)[self ubiquitousContainerURLPath];
 	} else {
 		/* The key value store is not available. */
 

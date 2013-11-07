@@ -149,6 +149,13 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 + (NSString *)systemUnsupervisedScriptFolderPath; // Textual's folder.
 + (NSString *)systemUnsupervisedScriptFolderRootPath; // Root path.
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
++ (NSString *)applicationUbiquitousContainerPath;
+
++ (NSString *)cloudCustomThemeFolderPath;
++ (NSString *)cloudCustomExtensionFolderPath;
+#endif
+
 + (BOOL)channelNavigationIsServerSpecific;
 
 + (BOOL)automaticallyDetectHighlightSpam;

@@ -94,7 +94,7 @@
 	// ---- //
 
     NSString *path_1 = [TPCPreferences customExtensionFolderPath];
-    NSString *path_2 = [TPCPreferences bundledExtensionFolderPath];;
+    NSString *path_2 = [TPCPreferences bundledExtensionFolderPath];
 
     NSMutableArray *loadedBundles = [NSMutableArray array];
     NSMutableArray *loadedPlugins = [NSMutableArray array];

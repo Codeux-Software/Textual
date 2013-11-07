@@ -63,7 +63,20 @@
 	if ([filekind isEqualToString:TPCThemeControllerBundledStyleNameBasicPrefix]) {
 		path = [[TPCPreferences bundledThemeFolderPath] stringByAppendingPathComponent:filename];
 	} else {
-		path = [[TPCPreferences customThemeFolderPath] stringByAppendingPathComponent:filename];
+		
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+		/* Try looking for the style in the cloud first. */
+		path = [[TPCPreferences cloudCustomThemeFolderPath] stringByAppendingPathComponent:filename];
+		
+		/* If it does not exist there, default back to local path. */
+		if ([RZFileManager() fileExistsAtPath:path] == NO) {
+#endif
+			
+			path = [[TPCPreferences customThemeFolderPath] stringByAppendingPathComponent:filename];
+			
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+		}
+#endif
 	}
 
 	/* Does the path exist? */
