@@ -573,7 +573,13 @@
 	NSInteger tag = 0;
 
 	NSArray *paths = @[[TPCPreferences bundledThemeFolderPath],
-					[TPCPreferences customThemeFolderPath]];
+					   [TPCPreferences customThemeFolderPath],
+					   
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+					   [TPCPreferences cloudCustomThemeFolderPath],
+#endif
+					   
+					   ];
 
 	for (NSString *path in paths) {
 		NSMutableSet *set = [NSMutableSet set];
@@ -586,13 +592,32 @@
 			if ([path isEqualToString:paths[0]]) {
 				/* If a custom theme with the same name of this bundled theme exists,
 				 then ignore the bundled them. Custom themes always take priority. */
-
 				NSString *cfip = [paths[1] stringByAppendingPathComponent:filename];
 
 				if ([RZFileManager() fileExistsAtPath:cfip]) {
 					continue;
 				}
+				
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+				/* Perform same check for cloud based themes too. */
+				cfip = [paths[2] stringByAppendingPathComponent:filename];
+
+				if ([RZFileManager() fileExistsAtPath:cfip]) {
+					continue;
+				}
 			}
+			
+			/* Also select cloud styles over local ones. */
+			if ([path isEqualToString:paths[1]]) {
+				/* If a custom theme with the same name of this bundled theme exists,
+				 then ignore the bundled them. Custom themes always take priority. */
+				NSString *cfip = [paths[2] stringByAppendingPathComponent:filename];
+				
+				if ([RZFileManager() fileExistsAtPath:cfip]) {
+					continue;
+				}
+			}
+#endif
 
 			NSString *cssfilelocal = [path stringByAppendingPathComponent:[file stringByAppendingString:@"/design.css"]];
 
@@ -606,21 +631,23 @@
 
 		files = [set.allObjects sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 
-		if (NSObjectIsNotEmpty(files)) {
-			NSInteger i = 0;
+		NSInteger i = 0;
 
-			for (NSString *f in files) {
-				NSMenuItem *cell = [NSMenuItem menuItemWithTitle:f target:nil action:nil];
+		for (NSString *f in files) {
+			NSMenuItem *cell = [NSMenuItem menuItemWithTitle:f target:nil action:nil];
 
-				[cell setTag:tag];
+			[cell setTag:tag];
 
-				[self.themeSelectionButton.menu addItem:cell];
+			[self.themeSelectionButton.menu addItem:cell];
 
-				i += 1;
-			}
+			i += 1;
 		}
 
-		tag += 1;
+		/* Tag can only be 1 or 0. 0 for bundled. 1 for custom. */
+		
+		if (tag == 0) {
+			tag = 1;
+		}
 	}
 
 	// ---- //
@@ -856,7 +883,17 @@
 
 - (void)onOpenPathToScripts:(id)sender
 {
-	[RZWorkspace() openFile:[TPCPreferences applicationSupportFolderPath]];
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	if ([TPCPreferences syncPreferencesToTheCloud]) {
+		[RZWorkspace() openFile:[TPCPreferences applicationUbiquitousContainerPath]];
+	} else {
+#else
+		
+		[RZWorkspace() openFile:[TPCPreferences applicationSupportFolderPath]];
+		
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	}
+#endif
 }
 
 - (void)setTextualAsDefaultIRCClient:(id)sender
@@ -934,7 +971,20 @@
 
 		[RZWorkspace() openFile:path];
 	} else {
+		
 		NSString *newpath = [[TPCPreferences customThemeFolderPath]	stringByAppendingPathComponent:name];
+		
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+		/* Check to see if the cloud path exists first… */
+		if ([TPCPreferences syncPreferencesToTheCloud]) {
+			NSString *cloudprefix = [TPCPreferences cloudCustomThemeFolderPath];
+		
+			if (cloudprefix.length > 0) {
+				newpath = [[TPCPreferences cloudCustomThemeFolderPath] stringByAppendingPathComponent:name];
+			}
+		}
+#endif
+		
 		NSString *oldpath = [[TPCPreferences bundledThemeFolderPath] stringByAppendingPathComponent:name];
 
 		NSError *copyError;
@@ -960,7 +1010,7 @@
 	NSString *kind = [TPCThemeController extractThemeSource:[TPCPreferences themeName]];
 	NSString *name = [TPCThemeController extractThemeName:[TPCPreferences themeName]];
 
-    if ([kind isEqualIgnoringCase:@"resource"]) {
+    if ([kind isEqualIgnoringCase:TPCThemeControllerBundledStyleNameBasicPrefix]) {
 		TLOPopupPrompts *prompt = [TLOPopupPrompts new];
 
 		[prompt sheetWindowWithQuestion:[NSApp keyWindow]
@@ -974,9 +1024,7 @@
 						 suppressionKey:@"opening_local_style"
 						suppressionText:nil];
     } else {
-		NSString *path = [[TPCPreferences customThemeFolderPath] stringByAppendingPathComponent:name];
-
-		[RZWorkspace() openFile:path];
+		[RZWorkspace() openURL:self.masterController.themeController.baseURL];
     }
 }
 

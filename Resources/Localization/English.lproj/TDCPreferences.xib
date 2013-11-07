@@ -3852,29 +3852,31 @@
         <menuItem title="20 Megabytes" state="on" id="CFR-HM-9FE"/>
         <userDefaultsController id="QfQ-4a-fUo"/>
         <customView id="Ixz-rk-uAe" userLabel="iCloud Settings">
-            <rect key="frame" x="0.0" y="0.0" width="534" height="321"/>
+            <rect key="frame" x="0.0" y="0.0" width="534" height="165"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <userGuides>
                 <userLayoutGuide location="31" affinity="minX"/>
                 <userLayoutGuide location="502" affinity="minX"/>
-                <userLayoutGuide location="289" affinity="minY"/>
+                <userLayoutGuide location="321" affinity="minY"/>
                 <userLayoutGuide location="28" affinity="minY"/>
+                <userLayoutGuide location="184" affinity="minY"/>
+                <userLayoutGuide location="133" affinity="minY"/>
             </userGuides>
             <subviews>
                 <textField verticalHuggingPriority="750" id="F51-75-bIH">
-                    <rect key="frame" x="65" y="67" width="405" height="52"/>
+                    <rect key="frame" x="53" y="67" width="428" height="52"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="QUS-JX-gQv">
                         <font key="font" metaFont="system" size="10"/>
-                        <string key="title">The data stored by Textual on iCloud is very minimal. Preferences and the server list are stored in a very simple key, value list that does not contain any information other than that seen in the configuration screens. Passwords are stored securely in the keychain protected by your login password. </string>
+                        <string key="title">There are two options for erasing the data stored by Textual: The "Erase Data" button erases shared preferences and keychain items leaving custom add-on files such as styles on iCloud. The "Erase Files" button does the complete opposite. Custom add-on files such as styles will be erased leaving shared preferences intact.</string>
                         <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" id="KUq-Sc-urV">
-                    <rect key="frame" x="94" y="26" width="346" height="25"/>
+                    <rect key="frame" x="85" y="26" width="180" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="roundTextured" title="Erase Data Placed on iCloud by Textual" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rKa-1A-BWW">
+                    <buttonCell key="cell" type="roundTextured" title="Erase Data" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rKa-1A-BWW">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -3891,13 +3893,17 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="vom-Ab-dBp">
-                    <rect key="frame" x="46" y="161" width="442" height="5"/>
+                <button verticalHuggingPriority="750" id="5zf-Hr-NG5">
+                    <rect key="frame" x="273" y="26" width="174" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
+                    <buttonCell key="cell" type="roundTextured" title="Erase Files" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="j46-Vm-z2z">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onPurgeOfCloudDataRequested:" target="-2" id="Jvb-3Z-lix"/>
+                    </connections>
+                </button>
             </subviews>
         </customView>
     </objects>

@@ -413,6 +413,43 @@ NSString *IRCPublicCommandIndex(const char *key)
 	return dest;
 }
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
++ (NSString *)applicationUbiquitousContainerPath
+{
+	return [self.masterController.cloudSyncManager ubiquitousContainerURLPath];
+}
+
++ (NSString *)cloudCustomThemeFolderPath
+{
+	NSString *source = [TPCPreferences applicationUbiquitousContainerPath];
+	
+	NSObjectIsEmptyAssertReturn(source, NSStringEmptyPlaceholder); // We need a source folder first…
+	
+	NSString *dest = [source stringByAppendingPathComponent:@"/Styles/"];
+	
+	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
+		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+	}
+	
+	return dest;
+}
+
++ (NSString *)cloudCustomExtensionFolderPath
+{
+	NSString *source = [TPCPreferences applicationUbiquitousContainerPath];
+	
+	NSObjectIsEmptyAssertReturn(source, NSStringEmptyPlaceholder); // We need a source folder first…
+	
+	NSString *dest = [source stringByAppendingPathComponent:@"/Extensions/"];
+	
+	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
+		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+	}
+	
+	return dest;
+}
+#endif
+
 + (NSString *)bundledScriptFolderPath
 {
 	return [[self applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Scripts/"];

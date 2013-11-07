@@ -49,6 +49,8 @@
 - (void)synchronizeToCloud; /* Manually sync. Not recommended to call. */
 - (void)synchronizeFromCloud; /* Manually sync. Not recommended to call. */
 
+- (NSString *)ubiquitousContainerURLPath;
+
 // Plugins should not be calling these.
 - (void)initializeCloudSyncSession;
 - (void)closeCloudSyncSession;
