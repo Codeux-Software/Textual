@@ -887,7 +887,7 @@
 	if ([TPCPreferences syncPreferencesToTheCloud]) {
 		[RZWorkspace() openFile:[TPCPreferences applicationUbiquitousContainerPath]];
 	} else {
-#else
+#endif
 		
 		[RZWorkspace() openFile:[TPCPreferences applicationSupportFolderPath]];
 		
