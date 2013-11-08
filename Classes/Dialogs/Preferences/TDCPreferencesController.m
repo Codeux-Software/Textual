@@ -616,8 +616,9 @@
 				if ([RZFileManager() fileExistsAtPath:cfip]) {
 					continue;
 				}
-			}
 #endif
+				
+			}
 
 			NSString *cssfilelocal = [path stringByAppendingPathComponent:[file stringByAppendingString:@"/design.css"]];
 
