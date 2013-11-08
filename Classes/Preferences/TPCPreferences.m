@@ -1656,26 +1656,12 @@ static NSMutableArray *excludeKeywords = nil;
 	}
 }
 
-+ (void)initPreferences
++ (NSDictionary *)defaultPreferences
 {
-	[self updateApplicationRunCount];
-
-#ifndef TEXTUAL_TRIAL_BINARY
-	NSInteger numberOfRuns = [self applicationRunCount];
-
-	if (numberOfRuns >= 2) {
-		[self.invokeInBackgroundThread defaultIRCClientPrompt:NO];
-	}
-#endif
-
-	[self startUsingTranscriptFolderSecurityScopedBookmark];
-
-	// ====================================================== //
-
 	NSMutableDictionary *d = [NSMutableDictionary dictionary];
-
+	
 	d[@"SyncPreferencesToTheCloud"]						= @(NO);
-
+	
 	d[@"AutomaticallyAddScrollbackMarker"]				= @(YES);
 	d[@"AutomaticallyDetectHighlightSpam"]				= @(YES);
 	d[@"ChannelNavigationIsServerSpecific"]				= @(YES);
@@ -1693,59 +1679,59 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"ReplyUnignoredExternalCTCPRequests"]			= @(YES);
 	d[@"TrackNicknameHighlightsOfLocalUser"]			= @(YES);
 	d[@"WebKitDeveloperExtras"]							= @(YES);
-
+	
 	/* Settings for the NSTextView context menu. */
 	d[@"TextFieldAutomaticSpellCheck"]					= @(YES);
 	d[@"TextFieldAutomaticGrammarCheck"]				= @(YES);
 	d[@"TextFieldAutomaticSpellCorrection"]				= @(NO);
 	d[@"TextFieldSmartCopyPaste"]						= @(YES);
 	d[@"TextFieldTextReplacement"]						= @(YES);
-
+	
 	/* This controls the two-finger swipe sensitivity. The lower it is, the more
 	 sensitive the swipe left/right detection is. The higher it is, the less
 	 sensitive the swipe detection is. <= 0 means off. */
 	d[@"SwipeMinimumLength"]							= @(30);
-
+	
 	d[@"NotificationType -> Highlight -> Enabled"]				= @(YES);
 	d[@"NotificationType -> Highlight -> Sound"]				= @"Glass";
 	d[@"NotificationType -> Highlight -> Bounce Dock Icon"]		= @(YES);
-
+	
 	d[@"NotificationType -> Private Message (New) -> Enabled"]			= @(YES);
 	d[@"NotificationType -> Private Message (New) -> Sound"]			= @"Submarine";
 	d[@"NotificationType -> Private Message (New) -> Bounce Dock Icon"] = @(YES);
-
+	
 	d[@"NotificationType -> Private Message -> Enabled"]			= @(YES);
 	d[@"NotificationType -> Private Message -> Sound"]				= @"Submarine";
 	d[@"NotificationType -> Private Message -> Bounce Dock Icon"]	= @(YES);
-
+	
 	d[@"NotificationType -> Address Book Match -> Enabled"]		= @(YES);
 	d[@"NotificationType -> Private Message (New) -> Enabled"]	= @(YES);
-
+	
 	d[@"DefaultIdentity -> Nickname"] = @"Guest";
 	d[@"DefaultIdentity -> AwayNickname"] = NSStringEmptyPlaceholder;
 	d[@"DefaultIdentity -> Username"] = @"textual";
 	d[@"DefaultIdentity -> Realname"] = @"Textual User";
-
+	
 	d[@"IRCopDefaultLocalizaiton -> Shun Reason"]	= TXTLS(@"ShunReason");
 	d[@"IRCopDefaultLocalizaiton -> Kill Reason"]	= TXTLS(@"KillReason");
 	d[@"IRCopDefaultLocalizaiton -> G:Line Reason"] = TXTLS(@"GlineReason");
-
+	
 	TVCMemberList *memberList = self.masterController.memberList;
-
+	
 	d[@"User List Mode Badge Colors —> +y"] = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_YDefault];
 	d[@"User List Mode Badge Colors —> +q"] = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_QDefault];
 	d[@"User List Mode Badge Colors —> +a"] = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_ADefault];
 	d[@"User List Mode Badge Colors —> +o"] = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_ODefault];
 	d[@"User List Mode Badge Colors —> +h"] = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_HDefault];
 	d[@"User List Mode Badge Colors —> +v"] = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_VDefault];
-
+	
 	d[@"ChannelOperatorDefaultLocalization -> Kick Reason"] = TXTLS(@"KickReason");
-
+	
 	d[@"Theme -> Name"]					= TXDefaultTextualLogStyle;
 	d[@"Theme -> Font Name"]			= TXDefaultTextualLogFont;
 	d[@"Theme -> Nickname Format"]		= TXLogLineUndefinedNicknameFormat;
 	d[@"Theme -> Timestamp Format"]		= TXDefaultTextualTimestampFormat;
-
+	
 	d[@"inlineImageMaxFilesize"]				= @(2);
     d[@"TrackUserAwayStatusMaximumChannelSize"] = @(0);
 	d[@"AutojoinMaximumChannelJoinCount"]		= @(2);
@@ -1759,15 +1745,15 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"DefaultBanCommandHostmaskFormat"]		= @(TXHostmaskBanWHAINNFormat);
 	d[@"DestinationOfNonserverNotices"]			= @(TXNoticeSendServerConsoleType);
 	d[@"UserListDoubleClickAction"]				= @(TXUserDoubleClickPrivateMessageAction);
-
+	
 	d[@"MainWindowTransparencyLevel"]		= @(1.0);
 	d[@"Theme -> Font Size"]				= @(12.0);
-
+	
 	// ====================================================== //
-
+	
 	/* The following defaults are defined in here even though they
 	 are part of the System Profiler extension for one reason: crashes.
-
+	 
 	 For some reason, which I have yet to understand, calling NSUserDefault
 	 registerDefaults: within a plugin works great the first time, but it
 	 will crash if the plugin is unloaded and reloaded. The crash only
@@ -1775,10 +1761,31 @@ static NSMutableArray *excludeKeywords = nil;
 	 the objects part the shared user defaults controller being accessed
 	 from within the nib resulting in a crash. Just haven't figured out
 	 the exact details yet. Until then… these go here. */
-
+	
 	d[@"System Profiler Extension -> Feature Disabled -> GPU Model"] = @(YES);
 	d[@"System Profiler Extension -> Feature Disabled -> Disk Information"] = @(YES);
 	d[@"System Profiler Extension -> Feature Disabled -> Screen Resolution"] = @(YES);
+	
+	return d;
+}
+
++ (void)initPreferences
+{
+	[self updateApplicationRunCount];
+
+#ifndef TEXTUAL_TRIAL_BINARY
+	NSInteger numberOfRuns = [self applicationRunCount];
+
+	if (numberOfRuns >= 2) {
+		[self.invokeInBackgroundThread defaultIRCClientPrompt:NO];
+	}
+#endif
+
+	[self startUsingTranscriptFolderSecurityScopedBookmark];
+
+	// ====================================================== //
+
+	NSDictionary *d = [TPCPreferences defaultPreferences];
 
 	// ====================================================== //
 

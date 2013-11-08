@@ -200,10 +200,17 @@
 
 		/* Sync latest changes from disc for the dictionary. */
 		[RZUbiquitousKeyValueStore() synchronize];
-
+		
 		/* Compare to the remote. */
 		NSDictionary *remotedict = [RZUbiquitousKeyValueStore() dictionaryRepresentation];
-
+		
+		NSArray *remotedictkeys = [remotedict allKeys];
+		
+		/* Get a copy of our defaults. */
+		NSDictionary *defaults = [TPCPreferences defaultPreferences];
+		
+		NSArray *defaultskeys = [defaults allKeys];
+		
 		if ([clientDict isEqual:remotedict]) {
 			DebugLogToConsole(@"iCloud: Remote dictionary and local dictionary are the same. Not syncing.");
 		} else {
@@ -221,6 +228,21 @@
 				if ([self keyIsNotPermittedInCloud:key]) {
 					// Nobody cares about this…
 				} else {
+					/* If the key does not already exist in the cloud, then we check 
+					 if its value matches the default value maintained internally. If
+					 it has not changed from the default, why are we saving it? */
+					
+					BOOL keyExistsInCloud = [remotedictkeys containsObject:key];
+					BOOL keyExistsInDefaults = [defaultskeys containsObject:key];
+					
+					if (keyExistsInCloud == NO && keyExistsInDefaults) {
+						id defaultsValue = [defaults objectForKey:key];
+						
+						if ([defaultsValue isEqual:obj]) {
+							return; // Nothing has changed…
+						}
+					}
+					
 					[self setValue:obj forKey:key];
 				}
 			}];
