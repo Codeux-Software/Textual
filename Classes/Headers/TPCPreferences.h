@@ -316,6 +316,8 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 
 + (void)defaultIRCClientPrompt:(BOOL)forced;
 
++ (NSDictionary *)defaultPreferences;
+
 + (void)initPreferences;
 
 #pragma mark -
