@@ -124,6 +124,7 @@
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 - (void)onPurgeOfCloudDataRequested:(id)sender;
+- (void)onPurgeOfCloudFilesRequested:(id)sender;
 #endif
 
 - (void)onSelectNewFont:(id)sender;

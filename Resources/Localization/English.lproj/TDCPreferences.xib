@@ -3901,7 +3901,7 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="onPurgeOfCloudDataRequested:" target="-2" id="Jvb-3Z-lix"/>
+                        <action selector="onPurgeOfCloudFilesRequested:" target="-2" id="hCM-HC-iWm"/>
                     </connections>
                 </button>
             </subviews>

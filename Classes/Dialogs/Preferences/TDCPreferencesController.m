@@ -941,6 +941,51 @@
 #endif
 }
 
+- (void)onPurgeOfCloudFilesRequestedCallback:(TLOPopupPromptReturnType)returnCode
+{
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	if (returnCode == TLOPopupPromptReturnSecondaryType) {
+		NSString *path = [self.masterController.cloudSyncManager ubiquitousContainerURLPath];
+		
+		NSObjectIsEmptyAssert(path); // Try to see if we even have a path…
+		
+		/* Delete styles folder. */
+		NSError *delError;
+		
+		[RZFileManager() removeItemAtPath:[TPCPreferences cloudCustomThemeFolderPath] error:&delError];
+		
+		if (delError) {
+			LogToConsole(@"Delete Error: %@", [delError localizedDescription]);
+		}
+		
+		/* Delete extensions folder. */
+		[RZFileManager() removeItemAtPath:[TPCPreferences cloudCustomExtensionFolderPath] error:&delError];
+		
+		if (delError) {
+			LogToConsole(@"Delete Error: %@", [delError localizedDescription]);
+		}
+	}
+#endif
+}
+
+- (void)onPurgeOfCloudFilesRequested:(id)sender
+{
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	TLOPopupPrompts *popup = [TLOPopupPrompts new];
+	
+	[popup sheetWindowWithQuestion:self.window
+							target:self
+							action:@selector(onPurgeOfCloudFilesRequestedCallback:)
+							  body:TXTLS(@"iCloudSyncDeleteAllDataDialogMessage")
+							 title:TXTLS(@"iCloudSyncDeleteAllDataDialogTitle")
+					 defaultButton:TXTLS(@"CancelButton")
+				   alternateButton:TXTLS(@"ContinueButton")
+					   otherButton:nil
+					suppressionKey:nil
+				   suppressionText:nil];
+#endif
+}
+
 - (void)onPurgeOfCloudDataRequested:(id)sender
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
