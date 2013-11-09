@@ -457,6 +457,8 @@
 			[RZUbiquitousKeyValueStore() removeObjectForKey:key];
 		}];
 	});
+	
+	self.localKeysWereUpdated = YES;
 }
 
 - (void)closeCloudSyncSession
