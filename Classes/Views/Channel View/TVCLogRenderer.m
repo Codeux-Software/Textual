@@ -71,6 +71,20 @@ static void setFlag(attr_t *attrBuf, attr_t flag, NSInteger start, NSInteger len
 	}
 }
 
+static void removeFlag(attr_t *attrBuf, attr_t flag, NSInteger start, NSInteger len)
+{
+	attr_t *target = (attrBuf + start);
+	attr_t *end = (target + len);
+	
+	while (target < end) {
+		if (*target & flag) {
+			*target &= ~flag;
+		}
+		
+		++target;
+	}
+}
+
 static BOOL isClear(attr_t *attrBuf, attr_t flag, NSInteger start, NSInteger len)
 {
 	attr_t *target = (attrBuf + start);
@@ -449,7 +463,9 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 				if (r.length >= 1) {
 					setFlag(attrBuf, _rendererURLAttribute, r.location, r.length);
-
+					
+					removeFlag(attrBuf, _effectMask, r.location, r.length);
+					
 					if (isNormalMsg && (log && [log inlineImagesEnabledForView])) {
 						NSString *matchedURL;
 
@@ -777,8 +793,6 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	}
 	
 	start = 0;
-
-	NSInteger totalNicknameLength = 0;
 	
 	while (start < length) {
 		NSInteger n = getNextAttributeRange(attrBuf, start, length);
@@ -791,13 +805,6 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			result = [TVCLogRenderer renderAttributedRange:result attributes:t start:start length:n baseFont:attributedStringFont];
 		} else {
 			NSString *renderedRange = [TVCLogRenderer renderRange:body attributes:t start:start length:n for:log context:resultInfo];
-
-			if (t & _rendererConversationTrackerAttribute) {
-				/* To fight against highlight spam we count the total length of every
-				 nickname that appears in this message to calculate a percentage later. */
-
-				totalNicknameLength += renderedRange.length;
-			}
 
 			if (renderedRange.length > 0) {
 				[result appendString:renderedRange];
