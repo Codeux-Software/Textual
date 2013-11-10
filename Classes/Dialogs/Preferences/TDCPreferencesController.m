@@ -906,7 +906,7 @@
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if ([TPCPreferences syncPreferencesToTheCloud]) {
-		[RZUserDefaults() setBool:NO forKey:@"SyncPreferencesToTheCloud"];
+		[RZUserDefaults() setBool:NO forKey:TPCPreferencesCloudSyncDefaultsKey];
 		
 		TLOPopupPrompts *popup = [TLOPopupPrompts new];
 
@@ -923,11 +923,15 @@
 	} else {
 		/* Poll server for latest. */
 		/* Syncing is temporarily disabled so we can pull the cloud data. */
-		[RZUserDefaults() setBool:YES forKey:@"SyncPreferencesToTheCloud"];
+		[RZUserDefaults() setBool:YES forKey:TPCPreferencesCloudSyncDefaultsKey];
 		
 		[RZUbiquitousKeyValueStore() synchronize];
 		
-		[self.masterController.cloudSyncManager synchronizeFromCloud];
+		/* If cloud tried to sync data before, but we ignored it because we were
+		 not configured to sync to the cloud, then try to pull latest. */
+		if ([self.masterController.cloudSyncManager hasUncommittedDataStoredInCloud]) {
+			[self.masterController.cloudSyncManager synchronizeFromCloud];
+		}
 	}
 #endif
 }
@@ -976,8 +980,8 @@
 	[popup sheetWindowWithQuestion:self.window
 							target:self
 							action:@selector(onPurgeOfCloudFilesRequestedCallback:)
-							  body:TXTLS(@"iCloudSyncDeleteAllDataDialogMessage")
-							 title:TXTLS(@"iCloudSyncDeleteAllDataDialogTitle")
+							  body:TXTLS(@"iCloudSyncDeleteAllFilesDialogMessage")
+							 title:TXTLS(@"iCloudSyncDeleteAllFilesDialogTitle")
 					 defaultButton:TXTLS(@"CancelButton")
 				   alternateButton:TXTLS(@"ContinueButton")
 					   otherButton:nil
