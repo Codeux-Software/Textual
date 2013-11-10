@@ -157,7 +157,7 @@
 - (BOOL)keyIsNotPermittedInCloud:(NSString *)key
 {
 	return ([key isEqualToString:IRCWorldControllerDefaultsStorageKey] ||
-			[key isEqualToString:@"SyncPreferencesToTheCloud"]);
+			[key isEqualToString:TPCPreferencesCloudSyncDefaultsKey]);
 }
 
 - (void)syncPreferencesToCloud
@@ -180,6 +180,12 @@
 		
 		if (self.isSyncingLocalKeysUpstream) {
 			DebugLogToConsole(@"iCloud: Upstream sync cancelled because an upstream sync was already running.");
+			
+			return; // Cancel this operation;
+		}
+		
+		if (self.hasUncommittedDataStoredInCloud) {
+			DebugLogToConsole(@"iCloud: Upstream sync cancelled because there is uncommitted data remaining in the cloud.");
 			
 			return; // Cancel this operation;
 		}
@@ -345,6 +351,9 @@
 		/* Allow us to continue work. */
 		self.isSyncingLocalKeysDownstream = NO;
 		
+		/* If we made it this far, reset this notificaiton. */
+		_hasUncommittedDataStoredInCloud = NO;
+		
 		DebugLogToConsole(@"iCloud: Completeing sync downstream.");
 	});
 }
@@ -358,6 +367,11 @@
 	if (syncReason == NSUbiquitousKeyValueStoreQuotaViolationChange) {
 		[self cloudStorageLimitExceeded]; // We will not be syncing for this error.
 	} else {
+		/* It is kind of important to know this. */
+		/* Even if we do not handle it, we still want to know
+		 if iCloud tried to sync something to this client. */
+		_hasUncommittedDataStoredInCloud = YES;
+		
 		/* Get the list of changed keys. */
 		NSArray *changedKeys = [aNote.userInfo arrayForKey:NSUbiquitousKeyValueStoreChangedKeysKey];
 

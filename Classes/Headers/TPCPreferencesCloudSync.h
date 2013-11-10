@@ -39,7 +39,11 @@
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 
+#define TPCPreferencesCloudSyncDefaultsKey		@"SyncPreferencesToTheCloud"
+
 @interface TPCPreferencesCloudSync : NSObject
+@property (nonatomic, assign, readonly) BOOL hasUncommittedDataStoredInCloud;
+
 // Next three methods use hashed keys.
 - (id)valueForKey:(NSString *)key;
 

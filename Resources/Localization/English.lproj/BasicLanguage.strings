@@ -196,7 +196,10 @@
 "iCloudSyncServicesSupportEnabledForServerDialogMessage" = "iCloud sharing has been enabled for this server.\n\nBy saving, Textual will override any copy of this server's configuration already stored on iCloud.";
 
 "iCloudSyncDeleteAllDataDialogTitle" = "Are you sure you wish to continue?";
-"iCloudSyncDeleteAllDataDialogMessage" = "Selecting \"Continue\" will erase all data stored by Textual on iCloud.\n\nPlease keep in mind that if any other copy of Textual is still configured for sharing, then the data you just erased may be placed back on iCloud by the device running that copy.";
+"iCloudSyncDeleteAllDataDialogMessage" = "Selecting \"Continue\" will erase all data stored by Textual on iCloud related to shared preferences.\n\nPlease keep in mind that if any other copy of Textual is still configured for sharing, then the data you just erased may be placed back on iCloud by the device running that copy.";
+
+"iCloudSyncDeleteAllFilesDialogTitle" = "Are you sure you wish to continue?";
+"iCloudSyncDeleteAllFilesDialogMessage" = "Selecting \"Continue\" will erase all files stored by Textual on iCloud.\n\nThis erase will leave shared preferences intact. Only custom files such as shared styles will be erased.";
 
 "InviteSheetMultiplePeopleSelected" = "%d users";
 "InviteSheetTargetDescription" = "Invite %@ to:";
