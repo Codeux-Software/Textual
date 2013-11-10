@@ -68,11 +68,11 @@
             </connections>
         </window>
         <view id="109" userLabel="View">
-            <rect key="frame" x="0.0" y="0.0" width="325" height="405"/>
+            <rect key="frame" x="0.0" y="0.0" width="325" height="356"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <textField verticalHuggingPriority="750" id="119">
-                    <rect key="frame" x="23" y="357" width="65" height="17"/>
+                    <rect key="frame" x="23" y="308" width="65" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Channel:" id="134">
                         <font key="font" metaFont="system"/>
@@ -81,7 +81,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="118">
-                    <rect key="frame" x="17" y="329" width="71" height="17"/>
+                    <rect key="frame" x="17" y="280" width="71" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Password:" id="135">
                         <font key="font" metaFont="system"/>
@@ -90,7 +90,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="124" customClass="NSSecureTextField">
-                    <rect key="frame" x="93" y="324" width="164" height="22"/>
+                    <rect key="frame" x="93" y="275" width="164" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="129">
                         <font key="font" metaFont="system"/>
@@ -99,7 +99,7 @@
                     </textFieldCell>
                 </textField>
                 <button id="122">
-                    <rect key="frame" x="24" y="263" width="195" height="18"/>
+                    <rect key="frame" x="23" y="216" width="195" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Join on connect." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="131">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -132,7 +132,7 @@ DQ
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="123">
-                    <rect key="frame" x="93" y="354" width="209" height="22"/>
+                    <rect key="frame" x="93" y="305" width="209" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="#example" drawsBackground="YES" id="130">
                         <font key="font" metaFont="system"/>
@@ -151,7 +151,7 @@ DQ
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <button id="112">
-                    <rect key="frame" x="24" y="236" width="235" height="18"/>
+                    <rect key="frame" x="23" y="189" width="235" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Post notifications for channel." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="141">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -159,7 +159,7 @@ DQ
                     </buttonCell>
                 </button>
                 <textField verticalHuggingPriority="750" id="117">
-                    <rect key="frame" x="39" y="319" width="49" height="11"/>
+                    <rect key="frame" x="39" y="270" width="49" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="136">
                         <font key="font" metaFont="miniSystem"/>
@@ -168,7 +168,7 @@ DQ
                     </textFieldCell>
                 </textField>
                 <button id="111">
-                    <rect key="frame" x="24" y="155" width="168" height="18"/>
+                    <rect key="frame" x="23" y="108" width="168" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Disable highlights." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="142">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -176,7 +176,7 @@ DQ
                     </buttonCell>
                 </button>
                 <button id="279">
-                    <rect key="frame" x="24" y="182" width="168" height="18"/>
+                    <rect key="frame" x="23" y="135" width="168" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Disable inline images." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="280">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -191,7 +191,7 @@ DQ
                     </connections>
                 </button>
                 <button id="HBZ-KH-HBg">
-                    <rect key="frame" x="24" y="182" width="168" height="18"/>
+                    <rect key="frame" x="23" y="135" width="168" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Show inline images." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="K3N-Px-fl5">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -202,7 +202,7 @@ DQ
                     </connections>
                 </button>
                 <button id="281">
-                    <rect key="frame" x="24" y="128" width="226" height="18"/>
+                    <rect key="frame" x="23" y="81" width="226" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Disable general event messages." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="282">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -220,29 +220,20 @@ DQ
                     </connections>
                 </button>
                 <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="312">
-                    <rect key="frame" x="12" y="299" width="301" height="5"/>
+                    <rect key="frame" x="12" y="250" width="301" height="5"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <button id="356">
-                    <rect key="frame" x="24" y="209" width="267" height="18"/>
+                    <rect key="frame" x="23" y="162" width="267" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Show unread count in channel list." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="357">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="Ndz-6h-1aN">
-                    <rect key="frame" x="51" y="80" width="236" height="42"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Hide join, part, and quit messages from showing in the channel. Also includes nickname changes." id="zcH-vF-aVA">
-                        <font key="font" size="11" name="LucidaGrande"/>
-                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
             </subviews>
         </view>
         <view id="243">
