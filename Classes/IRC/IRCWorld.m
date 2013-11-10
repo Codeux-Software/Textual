@@ -219,6 +219,11 @@
 	/* Begin work. */
 	NSArray *deletedClients = [self.cloudSyncManager valueForKey:IRCWorldControllerCloudDeletedClientsStorageKey];
 	
+	/* Duplicate? */
+	if ([deletedClients containsObject:itemUUID]) {
+		return;
+	}
+	
 	/* Does the array even exist? */
 	if (PointerIsEmpty(deletedClients)) {
 		deletedClients = @[itemUUID];
