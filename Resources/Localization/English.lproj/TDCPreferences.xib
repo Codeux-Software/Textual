@@ -1069,9 +1069,9 @@
                                         </connections>
                                     </button>
                                     <button id="7145">
-                                        <rect key="frame" x="75" y="18" width="373" height="18"/>
+                                        <rect key="frame" x="75" y="18" width="198" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" title="Show channel join, part, quit, and nickname change activity." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="7146">
+                                        <buttonCell key="cell" type="check" title="Show general event messages." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="7146">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
