@@ -561,10 +561,10 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 						/* Found a match. */
 						if (enabled) {
+							foundKeyword = YES;
+							
 							if (isClear(attrBuf, _rendererURLAttribute, matchRange.location, matchRange.length)) {
 								setFlag(attrBuf, _rendererKeywordHighlightAttribute, matchRange.location, matchRange.length);
-								
-								foundKeyword = YES;
 								
 								break;
 							}
