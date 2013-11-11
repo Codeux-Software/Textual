@@ -67,7 +67,7 @@
 		[self.temporaryWriteString appendString:writeString];
 	} else {
 		/* Write straight to file. */
-		NSData *writeData = [self.client convertToCommonEncoding:writeString];
+		NSData *writeData = [writeString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
 		
 		NSObjectIsEmptyAssert(writeData);
 
@@ -89,7 +89,7 @@
 	NSObjectIsEmptyAssert(self.temporaryWriteString);
 	
 	/* Write cache to the file. */
-	NSData *writeData = [self.client convertToCommonEncoding:self.temporaryWriteString];
+	NSData *writeData = [self.temporaryWriteString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
 
 	[self.file writeData:writeData];
 
