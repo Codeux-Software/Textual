@@ -775,7 +775,7 @@
 		return YES;
 	}
 
-	if ([TPCPreferences postNotificationsWhileInFocus] == NO) {
+	if ([TPCPreferences postNotificationsWhileInFocus] == NO && self.masterController.mainWindowIsActive) {
 		if (NSDissimilarObjects(type, TXNotificationAddressBookMatchType)) {
 			return YES;
 		}
