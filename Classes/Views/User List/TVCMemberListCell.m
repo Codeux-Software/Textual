@@ -254,6 +254,8 @@
     [userInfoPopover showRelativeToRect:cellFrame
                                  ofView:self.memberList
                           preferredEdge:NSMaxXEdge];
+	
+	[self.masterController.inputTextField focus]; // Add focus back to text field.
 }
 
 #pragma mark -
