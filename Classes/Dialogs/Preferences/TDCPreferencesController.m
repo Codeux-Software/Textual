@@ -936,11 +936,7 @@
 		
 		[RZUbiquitousKeyValueStore() synchronize];
 		
-		/* If cloud tried to sync data before, but we ignored it because we were
-		 not configured to sync to the cloud, then try to pull latest. */
-		if ([self.masterController.cloudSyncManager hasUncommittedDataStoredInCloud]) {
-			[self.masterController.cloudSyncManager synchronizeFromCloud];
-		}
+		[self.masterController.cloudSyncManager synchronizeFromCloud];
 	}
 #endif
 }
