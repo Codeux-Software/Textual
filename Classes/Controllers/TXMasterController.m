@@ -1102,6 +1102,15 @@ typedef enum TXMoveKind : NSInteger {
 	}
 }
 
+- (void)sendControlEnterMessageMaybe:(NSEvent *)e
+{
+	if ([TPCPreferences controlEnterSnedsMessage]) {
+		[self textEntered];
+	} else {
+		[self.inputTextField keyDownToSuper:e];
+	}
+}
+
 - (void)sendMsgAction:(NSEvent *)e
 {
 	NSWindowNegateActionWithAttachedSheet();
@@ -1301,6 +1310,8 @@ typedef enum TXMoveKind : NSInteger {
 	[self handler:@selector(inputHistoryUp:) char:'p' mods:NSControlKeyMask];
 	[self handler:@selector(inputHistoryDown:) char:'n' mods:NSControlKeyMask];
 
+	[self inputHandler:@selector(sendControlEnterMessageMaybe:) code:TXKeyEnterCode mods:NSControlKeyMask];
+	
 	[self inputHandler:@selector(sendMsgAction:) code:TXKeyReturnCode mods:NSCommandKeyMask];
 	[self inputHandler:@selector(sendMsgAction:) code:TXKeyEnterCode mods:NSCommandKeyMask];
 	
