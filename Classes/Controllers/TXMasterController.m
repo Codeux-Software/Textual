@@ -56,11 +56,16 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 		// ---- //
 
+#warning Disable debugging for file build.
 		if ([NSEvent modifierFlags] & NSControlKeyMask) {
 			self.debugModeOn = YES;
 
 			LogToConsole(@"Launching in debug mode.");
 		}
+		
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+		self.debugModeOn = YES;
+#endif
 
 		// ---- //
 
