@@ -581,8 +581,15 @@
 					   
 					   ];
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	/* This path does not always exist right away. */
+	BOOL cloudPathExists = ([paths[2] length] > 0);
+#endif
+
 	for (NSString *path in paths) {
 		NSMutableSet *set = [NSMutableSet set];
+		
+		NSAssertReturnLoopContinue(path.length > 0);
 
 		NSArray *files = [RZFileManager() contentsOfDirectoryAtPath:path error:NULL];
 
@@ -599,16 +606,18 @@
 				}
 				
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-				/* Perform same check for cloud based themes too. */
-				cfip = [paths[2] stringByAppendingPathComponent:filename];
+				if (cloudPathExists) {
+					/* Perform same check for cloud based themes too. */
+					cfip = [paths[2] stringByAppendingPathComponent:filename];
 
-				if ([RZFileManager() fileExistsAtPath:cfip]) {
-					continue;
+					if ([RZFileManager() fileExistsAtPath:cfip]) {
+						continue;
+					}
 				}
 			}
 			
 			/* Also select cloud styles over local ones. */
-			if ([path isEqualToString:paths[1]]) {
+			if (cloudPathExists && [path isEqualToString:paths[1]]) {
 				/* If a custom theme with the same name of this bundled theme exists,
 				 then ignore the bundled them. Custom themes always take priority. */
 				NSString *cfip = [paths[2] stringByAppendingPathComponent:filename];
