@@ -225,6 +225,30 @@
 }
 
 #pragma mark -
+#pragma mark Scroll View
+
+- (void)awakeFromNib
+{
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(scrollViewBoundsDidChangeNotification:)
+								   name:NSViewBoundsDidChangeNotification
+								 object:[self.enclosingScrollView contentView]];
+}
+
+- (void)scrollViewBoundsDidChangeNotification:(NSNotification *)aNote
+{
+	/* Only responds to events that are related to us… */
+	if ([[aNote object] isEqual:[self.enclosingScrollView contentView]]) {
+		/* Get current mouse position. */
+		NSPoint rawPoint = [self.window convertScreenToBase:[NSEvent mouseLocation]];
+		NSPoint localPoint = [self convertPoint:rawPoint fromView:nil];
+		
+		/* Handle popover. */
+		[self popUserInfoExpansionFrameAtPoint:localPoint ignoreTimerCheck:YES];
+	}
+}
+
+#pragma mark -
 #pragma mark Badge Renderer
 
 - (void)createBadgeRenderer
