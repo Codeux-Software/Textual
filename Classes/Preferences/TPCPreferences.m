@@ -1045,7 +1045,6 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() boolForKey:@"LogTranscript"];
 }
 
-
 + (BOOL)logTranscriptInBatches
 {
 	return [RZUserDefaults() boolForKey:@"LogTranscriptInBatches"];
@@ -1069,6 +1068,11 @@ static NSURL *transcriptFolderResolvedBookmark;
 + (BOOL)commandReturnSendsMessageAsAction
 {
 	return [RZUserDefaults() boolForKey:@"CommandReturnSendsMessageAsAction"];
+}
+
++ (BOOL)controlEnterSnedsMessage;
+{
+	return [RZUserDefaults() boolForKey:@"ControlEnterSendsMessage"];
 }
 
 + (BOOL)displayPublicMessageCountOnDockBadge

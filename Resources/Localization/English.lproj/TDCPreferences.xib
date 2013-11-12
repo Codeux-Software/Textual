@@ -3398,7 +3398,7 @@
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7702">
-                                        <rect key="frame" x="26" y="187" width="442" height="5"/>
+                                        <rect key="frame" x="26" y="159" width="442" height="5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -3417,7 +3417,7 @@
                                         </connections>
                                     </button>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="SjZ-mb-6TC">
-                                        <rect key="frame" x="24" y="155" width="186" height="16"/>
+                                        <rect key="frame" x="24" y="127" width="186" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Text size of the input text field:" id="lFb-SA-pvB">
                                             <font key="font" metaFont="cellTitle"/>
@@ -3426,7 +3426,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <popUpButton verticalHuggingPriority="750" id="Hhs-7X-MyV">
-                                        <rect key="frame" x="213" y="151" width="159" height="22"/>
+                                        <rect key="frame" x="213" y="123" width="159" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <popUpButtonCell key="cell" type="push" title="Extra Large" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="3" imageScaling="proportionallyDown" inset="2" selectedItem="2I2-ZZ-Xgm" id="Q1j-7l-So0">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -3450,6 +3450,18 @@
                                             <binding destination="1247" name="selectedTag" keyPath="values.Main Input Text Field -> Font Size" id="nMD-D2-LMe"/>
                                         </connections>
                                     </popUpButton>
+                                    <button id="kkp-rn-ifq">
+                                        <rect key="frame" x="11" y="178" width="393" height="18"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="check" title="Control Enter (⌃⎆) sends message instead of inserting new line." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="bam-rW-ZKx">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="titleBar" size="12"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onChangedInputHistoryScheme:" target="-2" id="xtL-bE-J98"/>
+                                            <binding destination="1247" name="value" keyPath="values.ControlEnterSendsMessage" id="GrE-oq-Ean"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </view>
                         </tabViewItem>

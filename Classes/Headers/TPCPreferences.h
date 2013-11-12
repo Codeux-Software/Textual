@@ -238,6 +238,7 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 + (TXCommandWKeyAction)commandWKeyAction;
 
 + (BOOL)commandReturnSendsMessageAsAction;
++ (BOOL)controlEnterSnedsMessage;
 
 + (BOOL)openBrowserInBackground;
 
