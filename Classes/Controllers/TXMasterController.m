@@ -56,7 +56,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 		// ---- //
 
-#warning Disable debugging for file build.
+#warning TODO: Disable debugging for final build.
 		if ([NSEvent modifierFlags] & NSControlKeyMask) {
 			self.debugModeOn = YES;
 
