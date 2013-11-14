@@ -861,7 +861,7 @@
 
 - (void)onChangedStyle:(id)sender
 {
-	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
+	//[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction]; // Text direction will reload it too.
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadTextDirectionAction];
 }
 

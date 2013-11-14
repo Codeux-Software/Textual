@@ -134,7 +134,8 @@
 {
 	return ([key hasPrefix:IRCWorldControllerCloudClientEntryKeyPrefix] ||
 			[key isEqualToString:IRCWorldControllerDefaultsStorageKey] ||
-			[key isEqualToString:IRCWorldControllerCloudDeletedClientsStorageKey]);
+			[key isEqualToString:IRCWorldControllerCloudDeletedClientsStorageKey] ||
+			[key isEqualToString:TPCPreferencesThemeNameDefaultsKey]);
 }
 
 + (void)importContentsOfDictionary:(NSDictionary *)aDict
@@ -157,7 +158,14 @@
 	if ([self isKeyNameExcludedFromNormalImportProcess:key] == NO) {
 		[RZUserDefaults() setObject:obj forKey:key];
 	} else {
-		if ([key isEqual:IRCWorldControllerDefaultsStorageKey]) {
+		if ([key isEqual:TPCPreferencesThemeNameDefaultsKey])
+		{
+			NSObjectIsKindOfClassAssert(obj, NSString);
+			
+			[TPCPreferences setThemeNameWithTemporaryStore:obj];
+		}
+		else if ([key isEqual:IRCWorldControllerDefaultsStorageKey])
+		{
 			/* It is the world controller! */
 			NSObjectIsKindOfClassAssert(obj, NSDictionary);
 			
@@ -234,7 +242,8 @@
 		[key hasPrefix:@"Saved Window State —> Internal —> "] ||			/* Textual owned prefix. */
 		[key hasPrefix:@"Text Input Prompt Suppression -> "] ||				/* Textual owned prefix. */
 
-		[key hasPrefix:@"LogTranscriptDestinationSecurityBookmark"])		/* Textual owned prefix. */
+		[key hasPrefix:@"LogTranscriptDestinationSecurityBookmark"] ||			/* Textual owned prefix. */
+		[key hasPrefix:TPCPreferencesThemeNameTemporaryStoreDefaultsKey])		/* Textual owned prefix. */
 	{
 		return YES; // Key has an ignored prefix.
 	}
@@ -253,19 +262,10 @@
 	NSDictionary *settings = [RZUserDefaults() dictionaryRepresentation];
 
 	if (removeJunk) {
-		NSMutableDictionary *mutsettings = [settings mutableCopy];
-
-		/* Is it custom style? */
-		NSString *themeName = [settings objectForKey:@"Theme -> Name"];
-
-		if ([themeName hasPrefix:TPCThemeControllerBundledStyleNameCompletePrefix] == NO) { // It is custom.
-			[mutsettings removeObjectForKey:@"Theme -> Name"];
-		}
-
 		/* Now, it is time for the hashing process. */
 		NSMutableDictionary *fnlsettings = [NSMutableDictionary dictionary];
 
-		[mutsettings enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+		[settings enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 			if ([self isKeyNameSupposedToBeIgnored:key] == NO) {
 				[fnlsettings setObject:obj forKey:key];
 			}
