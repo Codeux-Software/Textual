@@ -51,6 +51,9 @@
 
 - (void)load;
 
++ (BOOL)themeExists:(NSString *)themeName;
++ (NSString *)pathOfThemeWithName:(NSString *)themeName;
+
 + (NSString *)buildResourceFilename:(NSString *)name;
 + (NSString *)buildUserFilename:(NSString *)name;
 

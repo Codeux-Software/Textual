@@ -49,54 +49,60 @@
 	return self;
 }
 
-- (void)validateFilePathExistanceAndReload
++ (BOOL)themeExists:(NSString *)themeName
 {
-	NSString *filekind = [TPCThemeController extractThemeSource:[TPCPreferences themeName]];
-	NSString *filename = [TPCThemeController extractThemeName:[TPCPreferences themeName]];
+	return NSObjectIsNotEmpty([TPCThemeController pathOfThemeWithName:themeName]);
+}
 
-	NSObjectIsEmptyAssert(filekind);
-	NSObjectIsEmptyAssert(filename);
-
++ (NSString *)pathOfThemeWithName:(NSString *)themeName
+{
+	NSString *filekind = [TPCThemeController extractThemeSource:themeName];
+	NSString *filename = [TPCThemeController extractThemeName:themeName];
+	
+	NSObjectIsEmptyAssertReturn(filekind, nil);
+	NSObjectIsEmptyAssertReturn(filename, nil);
+	
 	NSString *path = nil;
+	
+	if ([filekind isEqualToString:TPCThemeControllerCustomStyleNameBasicPrefix]) {
+		/* Does the theme exist in the cloud? */
 
-	/* Determine the path. */
-	if ([filekind isEqualToString:TPCThemeControllerBundledStyleNameBasicPrefix]) {
-		path = [[TPCPreferences bundledThemeFolderPath] stringByAppendingPathComponent:filename];
-	} else {
-		
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-		/* Try looking for the style in the cloud first. */
 		path = [[TPCPreferences cloudCustomThemeFolderPath] stringByAppendingPathComponent:filename];
 		
-		/* If it does not exist there, default back to local path. */
-		if ([RZFileManager() fileExistsAtPath:path] == NO) {
-#endif
-			
-			path = [[TPCPreferences customThemeFolderPath] stringByAppendingPathComponent:filename];
-			
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+		if ([RZFileManager() fileExistsAtPath:path]) {
+			return path;
 		}
 #endif
-	}
-
-	/* Does the path exist? */
-	if ([RZFileManager() fileExistsAtPath:path] == NO) {
-		/* Path does not exist. If the path is to a custom theme, then check whether a
-		 bundled theme with the same name exists. If it does not, throw exception. */
 		
-		if ([filekind isEqualToString:TPCThemeControllerBundledStyleNameBasicPrefix] == NO) {
-			path = [[TPCPreferences bundledThemeFolderPath] stringByAppendingPathComponent:filename];
-
-			if ([RZFileManager() fileExistsAtPath:path] == NO) {
-				NSAssert(NO, @"No path to local resources.");
-			}
-		} else {
-			/* Path that was checked is not a custom theme. Throw exception. */
-			
-			NSAssert(NO, @"No path to local resources.");
+		/* Does it exist locally? */
+		path = [[TPCPreferences customThemeFolderPath] stringByAppendingPathComponent:filename];
+		
+		if ([RZFileManager() fileExistsAtPath:path]) {
+			return path;
+		}
+	} else {
+		/* Does the theme exist in app? */
+		path = [[TPCPreferences bundledThemeFolderPath] stringByAppendingPathComponent:filename];
+		
+		if ([RZFileManager() fileExistsAtPath:path]) {
+			return path;
 		}
 	}
+	
+	return nil;
+}
 
+- (void)validateFilePathExistanceAndReload
+{
+	/* Try to find a theme by the stored name. */
+	NSString *path = [TPCThemeController pathOfThemeWithName:[TPCPreferences themeName]];
+	
+	if (NSObjectIsEmpty(path)) {
+		NSAssert(NO, @"Missing style resource files.");
+	}
+
+	/* We have a path. */
 	self.baseURL = [NSURL fileURLWithPath:path];
 
 	/* Reload theme settings. */

@@ -236,7 +236,7 @@ static NSArray *IRCInternalUseCommandIndexMap;
 
 + (NSString *)IRCCommandFromIndexKey:(NSString *)key publicSearch:(BOOL)isPublic
 {
-	NSArray *searchPath = [self IRCCommandIndex:isPublic];
+	NSArray *searchPath = [TPCPreferences IRCCommandIndex:isPublic];
 
 	for (NSArray *indexInfo in searchPath) {
 		NSString *matchKey = indexInfo[0];
@@ -265,12 +265,12 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 + (NSInteger)indexOfIRCommand:(NSString *)command
 {
-	return [self indexOfIRCommand:command publicSearch:YES];
+	return [TPCPreferences indexOfIRCommand:command publicSearch:YES];
 }
 
 + (NSInteger)indexOfIRCommand:(NSString *)command publicSearch:(BOOL)isPublic
 {
-	NSArray *searchPath = [self IRCCommandIndex:isPublic];
+	NSArray *searchPath = [TPCPreferences IRCCommandIndex:isPublic];
 
 	BOOL inDevMode = [RZUserDefaults() boolForKey:TXDeveloperEnvironmentToken];
 
@@ -393,7 +393,7 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 + (NSString *)customThemeFolderPath
 {
-	NSString *dest = [[self applicationSupportFolderPath] stringByAppendingPathComponent:@"/Styles/"];
+	NSString *dest = [[TPCPreferences applicationSupportFolderPath] stringByAppendingPathComponent:@"/Styles/"];
 
 	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
 		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
@@ -404,7 +404,7 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 + (NSString *)customExtensionFolderPath
 {
-	NSString *dest = [[self applicationSupportFolderPath] stringByAppendingPathComponent:@"/Extensions/"];
+	NSString *dest = [[TPCPreferences applicationSupportFolderPath] stringByAppendingPathComponent:@"/Extensions/"];
 
 	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
 		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
@@ -452,17 +452,17 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 + (NSString *)bundledScriptFolderPath
 {
-	return [[self applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Scripts/"];
+	return [[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Scripts/"];
 }
 
 + (NSString *)bundledThemeFolderPath
 {
-	return [[self applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Styles/"];
+	return [[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Styles/"];
 }
 
 + (NSString *)bundledExtensionFolderPath
 {
-	return [[self applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Extensions/"];
+	return [[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Extensions/"];
 }
 
 + (NSString *)applicationResourcesFolderPath
@@ -477,7 +477,7 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 + (NSString *)systemUnsupervisedScriptFolderRootPath
 {
-	if ([self featureAvailableToOSXMountainLion]) {
+	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
 		return [NSString stringWithFormat:@"%@/Library/Application Scripts/", NSHomeDirectory()];
 	}
 	
@@ -486,8 +486,8 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 + (NSString *)systemUnsupervisedScriptFolderPath
 {
-	if ([self featureAvailableToOSXMountainLion]) {
-		return [[self systemUnsupervisedScriptFolderRootPath] stringByAppendingPathComponent:[self applicationBundleIdentifier]];
+	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+		return [[TPCPreferences systemUnsupervisedScriptFolderRootPath] stringByAppendingPathComponent:[TPCPreferences applicationBundleIdentifier]];
 	}
 
 	/* We return an empty string instead of nil because
@@ -553,7 +553,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 	[RZUserDefaults() setObject:value forKey:@"LogTranscriptDestinationSecurityBookmark"];
 
 	/* Reset our folder. */
-	[self startUsingTranscriptFolderSecurityScopedBookmark];
+	[TPCPreferences startUsingTranscriptFolderSecurityScopedBookmark];
 }
 
 #pragma mark -
@@ -561,13 +561,41 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (BOOL)sandboxEnabled
 {
-	NSString *suffix = [NSString stringWithFormat:@"Containers/%@/Data", [self applicationBundleIdentifier]];
+	NSString *suffix = [NSString stringWithFormat:@"Containers/%@/Data", [TPCPreferences applicationBundleIdentifier]];
 
 	return [NSHomeDirectory() hasSuffix:suffix];
 }
 
 #pragma mark -
 #pragma mark Export/Import Information
+
++ (void)performValidationForKeyValues
+{
+	/* Validate font. */
+	if ([NSFont fontIsAvailable:[TPCPreferences themeChannelViewFontName]] == NO) {
+		[RZUserDefaults() setObject:TXDefaultTextualLogFont forKey:TPCPrefernecesThemeFontNameDefaultsKey];
+	}
+	
+	/* Validate theme. */
+	NSString *activeTheme = [TPCPreferences themeName];
+	
+	if ([TPCThemeController themeExists:activeTheme] == NO) {
+		NSString *filekind = [TPCThemeController extractThemeSource:activeTheme];
+		NSString *filename = [TPCThemeController extractThemeName:activeTheme];
+		
+		if ([filekind isEqualToString:TPCThemeControllerBundledStyleNameBasicPrefix]) {
+			[TPCPreferences setThemeName:TXDefaultTextualLogStyle];
+		} else {
+			activeTheme = [TPCThemeController buildResourceFilename:filename];
+			
+			if ([TPCThemeController themeExists:activeTheme]) {
+				[TPCPreferences setThemeName:activeTheme];
+			} else {
+				[TPCPreferences setThemeName:TXDefaultTextualLogStyle];
+			}
+		}
+	}
+}
 
 /* This method expects a list of key names which were changed during an 
  import or cloud sync. The method will enumrate over all the keys reloading
@@ -581,8 +609,8 @@ static NSURL *transcriptFolderResolvedBookmark;
 	/* Some of these keys may be repeated because they are shared amongst different elements… */
 
 	/* Style specific reloads… */
-	if ([prefKeys containsObject:@"Theme -> Name"] ||									/* Style name. */
-		[prefKeys containsObject:@"Theme -> Font Name"] ||								/* Style font name. */
+	if ([prefKeys containsObject:TPCPreferencesThemeNameDefaultsKey] ||					/* Style name. */
+		[prefKeys containsObject:TPCPrefernecesThemeFontNameDefaultsKey] ||				/* Style font name. */
 		[prefKeys containsObject:@"Theme -> Font Size"] ||								/* Style font size. */
 		[prefKeys containsObject:@"Theme -> Nickname Format"] ||						/* Nickname format. */
 		[prefKeys containsObject:@"Theme -> Timestamp Format"] ||						/* Timestamp format. */
@@ -593,51 +621,51 @@ static NSURL *transcriptFolderResolvedBookmark;
 		[prefKeys containsObject:@"DisableRemoteNicknameColorHashing"] ||				/* Do not colorize nicknames. */
 		[prefKeys containsObject:@"DisplayEventInLogView -> Inline Media"])				/* Display inline media. */
 	{
-		[self performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
+		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
 	}
 
 	/* Highlight lists. */
 	if ([prefKeys containsObject:@"Highlight List -> Primary Matches"] ||		/* Primary keyword list. */
 		[prefKeys containsObject:@"Highlight List -> Excluded Matches"])		/* Excluded keyword list. */
 	{
-		[self performReloadActionForActionType:TPCPreferencesKeyReloadHighlightKeywordsAction];
+		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadHighlightKeywordsAction];
 	}
 
 	/* Highlight logging. */
 	if ([prefKeys containsObject:@"LogHighlights"]) {
-		[self performReloadActionForActionType:TPCPreferencesKeyReloadHighlightLoggingAction];
+		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadHighlightLoggingAction];
 	}
 
 	/* Text direction: right-to-left, left-to-right */
 	if ([prefKeys containsObject:@"RightToLeftTextFormatting"]) {
-		[self performReloadActionForActionType:TPCPreferencesKeyReloadTextDirectionAction];
+		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadTextDirectionAction];
 	}
 
 	/* Text field font size. */
 	if ([prefKeys containsObject:@"Main Input Text Field -> Font Size"]) {
-		[self performReloadActionForActionType:TPCPreferencesKeyReloadTextFieldFontSizeAction];
+		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadTextFieldFontSizeAction];
 	}
 
 	/* Input history scope. */
 	if ([prefKeys containsObject:@"SaveInputHistoryPerSelection"]) {
-		[self performReloadActionForActionType:TPCPreferencesKeyReloadInputHistoryScopeAction];
+		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadInputHistoryScopeAction];
 	}
 
 	/* Main window segmented controller. */
 	if ([prefKeys containsObject:@"DisableMainWindowSegmentedController"]) {
-		[self performReloadActionForActionType:TPCPreferencesKeyReloadTextFieldSegmentedControllerOriginAction];
+		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadTextFieldSegmentedControllerOriginAction];
 	}
 
 	/* Main window alpha level. */
 	if ([prefKeys containsObject:@"MainWindowTransparencyLevel"]) {
-		[self performReloadActionForActionType:TPCPreferencesKeyReloadMainWindowTransparencyLevelAction];
+		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMainWindowTransparencyLevelAction];
 	}
 
 	/* Dock icon. */
 	if ([prefKeys containsObject:@"DisplayDockBadges"] ||						/* Display dock badges. */
 		[prefKeys containsObject:@"DisplayPublicMessageCountInDockBadge"])		/* Count public messages in dock badges. */
 	{
-		[self performReloadActionForActionType:TPCPreferencesKeyReloadDockIconBadgesAction];
+		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadDockIconBadgesAction];
 	}
 
 	/* There are actually multiple keys that could invoke a member list redraw,
@@ -650,7 +678,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 		[prefKeys containsObject:@"UseLargeFontForSidebars"] ||								/* Use large font size for list. */
 		[prefKeys containsObject:@"Theme -> Invert Sidebar Colors Preference Enabled"])		/* Indicates whether a style overrides a specific preference. */
 	{
-		[self performReloadActionForActionType:TPCPreferencesKeyReloadServerListAction]; // Redraw server list.
+		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListAction]; // Redraw server list.
 
 		memberListRequiresRedraw = YES; // Prepare member list for redraw.
 	}
@@ -666,23 +694,23 @@ static NSURL *transcriptFolderResolvedBookmark;
 		memberListRequiresRedraw = YES;
 
 		/* Invalidate the cached colors. */
-		[self performReloadActionForActionType:TPCPreferencesKeyReloadMemberListUserBadgesAction];
+		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListUserBadgesAction];
 	}
 
 	if ([prefKeys containsObject:@"MemberListSortFavorsServerStaff"]) { // Place server staff at top of list…
-		[self performReloadActionForActionType:TPCPreferencesKeyReloadMemberListSortOrderAction];
+		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListSortOrderAction];
 
 		memberListRequiresRedraw = NO; // Sort changes will reload it for us…
 	}
 
 	/* Member list redraw time. */
 	if (memberListRequiresRedraw) {
-		[self performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
+		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
 	}
 
 	/* After this is all complete; we call preferencesChanged just to take care
 	 of everything else that does not need specific reloads. */
-	[self performReloadActionForActionType:TPCPreferencesKeyReloadPreferencesChangedAction];
+	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadPreferencesChangedAction];
 }
 
 + (void)performReloadActionForActionType:(TPCPreferencesKeyReloadAction)reloadAction
@@ -1135,22 +1163,34 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (NSString *)themeName
 {
-	return [RZUserDefaults() objectForKey:@"Theme -> Name"];
+	return [RZUserDefaults() objectForKey:TPCPreferencesThemeNameDefaultsKey];
 }
 
 + (void)setThemeName:(NSString *)value
 {
-	[RZUserDefaults() setObject:value forKey:@"Theme -> Name"];
+	[RZUserDefaults() setObject:value forKey:TPCPreferencesThemeNameDefaultsKey];
+	
+	[RZUserDefaults() removeObjectForKey:TPCPreferencesThemeNameTemporaryStoreDefaultsKey];
+}
+
++ (void)setThemeNameWithTemporaryStore:(NSString *)value
+{
+	/* Did it exist anywhere at all? */
+	if ([TPCThemeController themeExists:value] == NO) {
+		[RZUserDefaults() setObject:value forKey:TPCPreferencesThemeNameTemporaryStoreDefaultsKey];
+	} else {
+		[TPCPreferences setThemeName:value];
+	}
 }
 
 + (NSString *)themeChannelViewFontName
 {
-	return [RZUserDefaults() objectForKey:@"Theme -> Font Name"];
+	return [RZUserDefaults() objectForKey:TPCPrefernecesThemeFontNameDefaultsKey];
 }
 
 + (void)setThemeChannelViewFontName:(NSString *)value
 {
-	[RZUserDefaults() setObject:value forKey:@"Theme -> Font Name"];
+	[RZUserDefaults() setObject:value forKey:TPCPrefernecesThemeFontNameDefaultsKey];
 }
 
 + (double)themeChannelViewFontSize
@@ -1165,8 +1205,8 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (NSFont *)themeChannelViewFont
 {
-	return [NSFont fontWithName:[self themeChannelViewFontName]
-						   size:[self themeChannelViewFontSize]];
+	return [NSFont fontWithName:[TPCPreferences themeChannelViewFontName]
+						   size:[TPCPreferences themeChannelViewFontSize]];
 }
 
 + (NSString *)themeNicknameFormat
@@ -1299,7 +1339,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (NSString *)soundForEvent:(TXNotificationType)event
 {
-	NSString *okey = [self keyForEvent:event];
+	NSString *okey = [TPCPreferences keyForEvent:event];
 
 	NSObjectIsEmptyAssertReturn(okey, nil);
 
@@ -1310,7 +1350,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (void)setSound:(NSString *)value forEvent:(TXNotificationType)event
 {
-	NSString *okey = [self keyForEvent:event];
+	NSString *okey = [TPCPreferences keyForEvent:event];
 
 	NSObjectIsEmptyAssert(okey);
 
@@ -1321,7 +1361,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (BOOL)growlEnabledForEvent:(TXNotificationType)event
 {
-	NSString *okey = [self keyForEvent:event];
+	NSString *okey = [TPCPreferences keyForEvent:event];
 
 	NSObjectIsEmptyAssertReturn(okey, NO);
 
@@ -1332,7 +1372,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (void)setGrowlEnabled:(BOOL)value forEvent:(TXNotificationType)event
 {
-	NSString *okey = [self keyForEvent:event];
+	NSString *okey = [TPCPreferences keyForEvent:event];
 
 	NSObjectIsEmptyAssert(okey);
 
@@ -1343,7 +1383,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (BOOL)disabledWhileAwayForEvent:(TXNotificationType)event
 {
-	NSString *okey = [self keyForEvent:event];
+	NSString *okey = [TPCPreferences keyForEvent:event];
 
 	NSObjectIsEmptyAssertReturn(okey, NO);
 
@@ -1354,7 +1394,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (void)setDisabledWhileAway:(BOOL)value forEvent:(TXNotificationType)event
 {
-	NSString *okey = [self keyForEvent:event];
+	NSString *okey = [TPCPreferences keyForEvent:event];
 
 	NSObjectIsEmptyAssert(okey);
 
@@ -1365,7 +1405,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (BOOL)bounceDockIconForEvent:(TXNotificationType)event
 {
-    NSString *okey = [self keyForEvent:event];
+    NSString *okey = [TPCPreferences keyForEvent:event];
     
     NSObjectIsEmptyAssertReturn(okey, NO);
     
@@ -1376,7 +1416,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (void)setBounceDockIcon:(BOOL)value forEvent:(TXNotificationType)event
 {
-    NSString *okey = [self keyForEvent:event];
+    NSString *okey = [TPCPreferences keyForEvent:event];
     
 	NSObjectIsEmptyAssert(okey);
     
@@ -1387,7 +1427,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (BOOL)speakEvent:(TXNotificationType)event
 {
-	NSString *okey = [self keyForEvent:event];
+	NSString *okey = [TPCPreferences keyForEvent:event];
 
 	NSObjectIsEmptyAssertReturn(okey, NO);
 
@@ -1398,7 +1438,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (void)setEventIsSpoken:(BOOL)value forEvent:(TXNotificationType)event
 {
-	NSString *okey = [self keyForEvent:event];
+	NSString *okey = [TPCPreferences keyForEvent:event];
 
 	NSObjectIsEmptyAssert(okey);
 
@@ -1505,8 +1545,8 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)cleanUpHighlightKeywords
 {
-	[self cleanUpKeywords:@"Highlight List -> Primary Matches"];
-	[self cleanUpKeywords:@"Highlight List -> Excluded Matches"];
+	[TPCPreferences cleanUpKeywords:@"Highlight List -> Primary Matches"];
+	[TPCPreferences cleanUpKeywords:@"Highlight List -> Excluded Matches"];
 }
 
 + (NSArray *)highlightMatchKeywords
@@ -1536,14 +1576,14 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (NSTimeInterval)timeIntervalSinceApplicationInstall
 {
-	NSTimeInterval appStartTime = [self timeIntervalSinceApplicationLaunch];
+	NSTimeInterval appStartTime = [TPCPreferences timeIntervalSinceApplicationLaunch];
 
 	return ([RZUserDefaults() integerForKey:@"TXRunTime"] + appStartTime);
 }
 
 + (void)saveTimeIntervalSinceApplicationInstall
 {
-	[RZUserDefaults() setInteger:[self timeIntervalSinceApplicationInstall] forKey:@"TXRunTime"];
+	[RZUserDefaults() setInteger:[TPCPreferences timeIntervalSinceApplicationInstall] forKey:@"TXRunTime"];
 }
 
 + (NSInteger)applicationRunCount
@@ -1553,7 +1593,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)updateApplicationRunCount
 {
-	[RZUserDefaults() setInteger:([self applicationRunCount] + 1) forKey:@"TXRunCount"];
+	[RZUserDefaults() setInteger:([TPCPreferences applicationRunCount] + 1) forKey:@"TXRunCount"];
 }
 
 + (NSSize)minimumWindowSize
@@ -1590,9 +1630,9 @@ static NSMutableArray *excludeKeywords = nil;
 + (void)observeValueForKeyPath:(NSString *)key ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if ([key isEqualToString:@"Highlight List -> Primary Matches"]) {
-		[self loadMatchKeywords];
+		[TPCPreferences loadMatchKeywords];
 	} else if ([key isEqualToString:@"Highlight List -> Excluded Matches"]) {
-		[self loadExcludeKeywords];
+		[TPCPreferences loadExcludeKeywords];
 	}
 }
 
@@ -1602,7 +1642,7 @@ static NSMutableArray *excludeKeywords = nil;
 + (void)defaultIRCClientSheetCallback:(TLOPopupPromptReturnType)returnCode
 {
 	if (returnCode == TLOPopupPromptReturnPrimaryType) {
-		NSString *bundleID = [self applicationBundleIdentifier];
+		NSString *bundleID = [TPCPreferences applicationBundleIdentifier];
 
 		OSStatus changeResult;
 
@@ -1630,7 +1670,7 @@ static NSMutableArray *excludeKeywords = nil;
 	if (status == noErr) {
 		NSBundle *baseBundle = [NSBundle bundleWithURL:CFBridgingRelease(appURL)];
 
-		return [baseBundle.bundleIdentifier isEqualTo:[self applicationBundleIdentifier]];
+		return [baseBundle.bundleIdentifier isEqualTo:[TPCPreferences applicationBundleIdentifier]];
 	}
 
 	return NO;
@@ -1638,7 +1678,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)defaultIRCClientPrompt:(BOOL)forced
 {
-	if ([self isDefaultIRCClient] == NO || forced) {
+	if ([TPCPreferences isDefaultIRCClient] == NO || forced) {
 		TLOPopupPrompts *prompt = [TLOPopupPrompts new];
 
         NSString *supkey = @"default_irc_client";
@@ -1733,10 +1773,11 @@ static NSMutableArray *excludeKeywords = nil;
 	
 	d[@"ChannelOperatorDefaultLocalization -> Kick Reason"] = TXTLS(@"KickReason");
 	
-	d[@"Theme -> Name"]					= TXDefaultTextualLogStyle;
-	d[@"Theme -> Font Name"]			= TXDefaultTextualLogFont;
-	d[@"Theme -> Nickname Format"]		= TXLogLineUndefinedNicknameFormat;
-	d[@"Theme -> Timestamp Format"]		= TXDefaultTextualTimestampFormat;
+	d[TPCPreferencesThemeNameDefaultsKey]				= TXDefaultTextualLogStyle;
+	d[TPCPrefernecesThemeFontNameDefaultsKey]			= TXDefaultTextualLogFont;
+
+	d[@"Theme -> Nickname Format"]						= TXLogLineUndefinedNicknameFormat;
+	d[@"Theme -> Timestamp Format"]						= TXDefaultTextualTimestampFormat;
 	
 	d[@"inlineImageMaxFilesize"]				= @(2);
     d[@"TrackUserAwayStatusMaximumChannelSize"] = @(0);
@@ -1777,17 +1818,17 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)initPreferences
 {
-	[self updateApplicationRunCount];
+	[TPCPreferences updateApplicationRunCount];
 
 #ifndef TEXTUAL_TRIAL_BINARY
-	NSInteger numberOfRuns = [self applicationRunCount];
+	NSInteger numberOfRuns = [TPCPreferences applicationRunCount];
 
 	if (numberOfRuns >= 2) {
 		[self.invokeInBackgroundThread defaultIRCClientPrompt:NO];
 	}
 #endif
 
-	[self startUsingTranscriptFolderSecurityScopedBookmark];
+	[TPCPreferences startUsingTranscriptFolderSecurityScopedBookmark];
 
 	// ====================================================== //
 
@@ -1800,51 +1841,28 @@ static NSMutableArray *excludeKeywords = nil;
 	[RZUserDefaults() addObserver:(id)self forKeyPath:@"Highlight List -> Primary Matches"  options:NSKeyValueObservingOptionNew context:NULL];
 	[RZUserDefaults() addObserver:(id)self forKeyPath:@"Highlight List -> Excluded Matches" options:NSKeyValueObservingOptionNew context:NULL];
 
-	[self loadMatchKeywords];
-	[self loadExcludeKeywords];
-	[self populateCommandIndex];
+	[TPCPreferences loadMatchKeywords];
+	[TPCPreferences loadExcludeKeywords];
+	[TPCPreferences populateCommandIndex];
 
 	/* Sandbox Check */
 
-	[RZUserDefaults() setBool:[self sandboxEnabled]						forKey:@"Security -> Sandbox Enabled"];
+	[RZUserDefaults() setBool:[TPCPreferences sandboxEnabled]						forKey:@"Security -> Sandbox Enabled"];
 
-	[RZUserDefaults() setBool:[self featureAvailableToOSXLion]			forKey:@"System —> Running Mac OS Lion Or Newer"];
-	[RZUserDefaults() setBool:[self featureAvailableToOSXMountainLion]  forKey:@"System —> Running Mac OS Mountain Lion Or Newer"];
+	[RZUserDefaults() setBool:[TPCPreferences featureAvailableToOSXLion]			forKey:@"System —> Running Mac OS Lion Or Newer"];
+	[RZUserDefaults() setBool:[TPCPreferences featureAvailableToOSXMountainLion]  forKey:@"System —> Running Mac OS Mountain Lion Or Newer"];
 
 #ifndef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[RZUserDefaults() setBool:NO forKey:@"System —> Built with iCloud Support"];
 #else
 	[RZUserDefaults() setBool:YES forKey:@"System —> Built with iCloud Support"];
 #endif
-
-	/* Font Check */
-
-	if ([NSFont fontIsAvailable:[self themeChannelViewFontName]] == NO) {
-		[RZUserDefaults() setObject:TXDefaultTextualLogFont forKey:@"Theme -> Font Name"];
-	}
-
-	/* Theme Check */
-
-	NSString *themeName = [TPCThemeController extractThemeName:[self themeName]];
-	NSString *themeType = [TPCThemeController extractThemeSource:[self themeName]];
-
-    NSString *customPath = [[self customThemeFolderPath] stringByAppendingPathComponent:themeName];
-    NSString *bundlePath = [[self bundledThemeFolderPath] stringByAppendingPathComponent:themeName];
-
-    if ([RZFileManager() fileExistsAtPath:customPath] == NO) {
-        if ([RZFileManager() fileExistsAtPath:bundlePath] == NO) {
-            [self setThemeName:TXDefaultTextualLogStyle];
-        } else {
-            if ([themeType isEqualToString:TPCThemeControllerBundledStyleNameBasicPrefix] == NO) {
-                NSString *newName = [TPCThemeController buildResourceFilename:themeName];
-
-                [self setThemeName:newName];
-            }
-        }
-    }
+	
+	/* Validate some stuff. */
+	[TPCPreferences performValidationForKeyValues];
 
 	/* Setup loggin. */
-	[self startUsingTranscriptFolderSecurityScopedBookmark];
+	[TPCPreferences startUsingTranscriptFolderSecurityScopedBookmark];
 }
 
 #pragma mark -
@@ -1857,7 +1875,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)setTextFieldAutomaticSpellCheck:(BOOL)value
 {
-	if (NSDissimilarObjects(value, [self textFieldAutomaticSpellCheck])) {
+	if (NSDissimilarObjects(value, [TPCPreferences textFieldAutomaticSpellCheck])) {
 		[RZUserDefaults() setBool:value forKey:@"TextFieldAutomaticSpellCheck"];
 	}
 }
@@ -1869,7 +1887,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)setTextFieldAutomaticGrammarCheck:(BOOL)value
 {
-	if (NSDissimilarObjects(value, [self textFieldAutomaticGrammarCheck])) {
+	if (NSDissimilarObjects(value, [TPCPreferences textFieldAutomaticGrammarCheck])) {
 		[RZUserDefaults() setBool:value forKey:@"TextFieldAutomaticGrammarCheck"];
 	}
 }
@@ -1881,7 +1899,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)setTextFieldAutomaticSpellCorrection:(BOOL)value
 {
-	if (NSDissimilarObjects(value, [self textFieldAutomaticSpellCorrection])) {
+	if (NSDissimilarObjects(value, [TPCPreferences textFieldAutomaticSpellCorrection])) {
 		[RZUserDefaults() setBool:value forKey:@"TextFieldAutomaticSpellCorrection"];
 	}
 }
@@ -1893,7 +1911,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)setTextFieldSmartCopyPaste:(BOOL)value
 {
-	if (NSDissimilarObjects(value, [self textFieldSmartCopyPaste])) {
+	if (NSDissimilarObjects(value, [TPCPreferences textFieldSmartCopyPaste])) {
 		[RZUserDefaults() setBool:value forKey:@"TextFieldSmartCopyPaste"];
 	}
 }
@@ -1905,7 +1923,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)setTextFieldSmartQuotes:(BOOL)value
 {
-	if (NSDissimilarObjects(value, [self textFieldSmartQuotes])) {
+	if (NSDissimilarObjects(value, [TPCPreferences textFieldSmartQuotes])) {
 		[RZUserDefaults() setBool:value forKey:@"TextFieldSmartQuotes"];
 	}
 }
@@ -1917,7 +1935,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)setTextFieldSmartDashes:(BOOL)value
 {
-	if (NSDissimilarObjects(value, [self textFieldSmartDashes])) {
+	if (NSDissimilarObjects(value, [TPCPreferences textFieldSmartDashes])) {
 		[RZUserDefaults() setBool:value forKey:@"TextFieldSmartDashes"];
 	}
 }
@@ -1929,7 +1947,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)setTextFieldSmartLinks:(BOOL)value
 {
-	if (NSDissimilarObjects(value, [self textFieldSmartLinks])) {
+	if (NSDissimilarObjects(value, [TPCPreferences textFieldSmartLinks])) {
 		[RZUserDefaults() setBool:value forKey:@"TextFieldSmartLinks"];
 	}
 }
@@ -1941,7 +1959,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)setTextFieldDataDetectors:(BOOL)value
 {
-	if (NSDissimilarObjects(value, [self textFieldDataDetectors])) {
+	if (NSDissimilarObjects(value, [TPCPreferences textFieldDataDetectors])) {
 		[RZUserDefaults() setBool:value forKey:@"TextFieldDataDetectors"];
 	}
 }
@@ -1953,7 +1971,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)setTextFieldTextReplacement:(BOOL)value
 {
-	if (NSDissimilarObjects(value, [self textFieldTextReplacement])) {
+	if (NSDissimilarObjects(value, [TPCPreferences textFieldTextReplacement])) {
 		[RZUserDefaults() setBool:value forKey:@"TextFieldTextReplacement"];
 	}
 }

@@ -154,10 +154,38 @@
 	[self syncPreferencesFromCloud:nil];
 }
 
+- (void)performTimeBasedMaintenance
+{
+	/* Perform a sync. */
+	[self synchronizeToCloud];
+	
+	/* Perform actual maintenance tasks. */
+	dispatch_async(self.workerQueue, ^{
+		/* Have a theme in the temporary store? */
+		NSString *temporaryTheme = [RZUserDefaults() objectForKey:TPCPreferencesThemeNameTemporaryStoreDefaultsKey];
+		
+		/* If we do, pass it through the set property to set it or continue to keep in store. */
+		if (temporaryTheme) {
+			if ([TPCThemeController themeExists:temporaryTheme]) {
+				DebugLogToConsole(@"iCloud: Theme name \"%@\" is stored in the temporary store and will now be applied.", temporaryTheme);
+				
+				[TPCPreferences setThemeName:temporaryTheme]; // Will remove the store.
+				
+				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
+				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
+				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListAction];
+			} else {
+				DebugLogToConsole(@"iCloud: Theme name \"%@\" is stored in the temporary store.", temporaryTheme);
+			}
+		}
+	});
+}
+
 - (BOOL)keyIsNotPermittedInCloud:(NSString *)key
 {
 	return ([key isEqualToString:IRCWorldControllerDefaultsStorageKey] ||
-			[key isEqualToString:TPCPreferencesCloudSyncDefaultsKey]);
+			[key isEqualToString:TPCPreferencesCloudSyncDefaultsKey] ||
+			[key isEqualToString:TPCPreferencesThemeNameTemporaryStoreDefaultsKey]);
 }
 
 - (void)syncPreferencesToCloud
@@ -234,10 +262,19 @@
 				if ([self keyIsNotPermittedInCloud:key]) {
 					// Nobody cares about this…
 				} else {
+					/* Do not save the theme name, if we have something set in
+					 the temporary story. */
+					if ([key isEqualToString:TPCPreferencesThemeNameDefaultsKey]) {
+						id tempTheme = [RZUserDefaults() objectForKey:TPCPreferencesThemeNameTemporaryStoreDefaultsKey];
+						
+						if (tempTheme) {
+							return; // Skip this entry.
+						}
+					}
+					
 					/* If the key does not already exist in the cloud, then we check 
 					 if its value matches the default value maintained internally. If
 					 it has not changed from the default, why are we saving it? */
-					
 					BOOL keyExistsInCloud = [remotedictkeys containsObject:key];
 					BOOL keyExistsInDefaults = [defaultskeys containsObject:key];
 					
@@ -433,7 +470,7 @@
 		
 		NSTimer *syncTimer = [NSTimer scheduledTimerWithTimeInterval:_localKeysUpstreamSyncTimerInterval
 															  target:self
-															selector:@selector(syncPreferencesToCloud)
+															selector:@selector(performTimeBasedMaintenance)
 															userInfo:nil
 															 repeats:YES];
 		
@@ -470,6 +507,9 @@
 		[remotedict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 			[RZUbiquitousKeyValueStore() removeObjectForKey:key];
 		}];
+		
+		/* Destroy local keys not stored on cloud. */
+		[RZUserDefaults() removeObjectForKey:TPCPreferencesThemeNameTemporaryStoreDefaultsKey];
 	});
 	
 	self.localKeysWereUpdated = YES;
