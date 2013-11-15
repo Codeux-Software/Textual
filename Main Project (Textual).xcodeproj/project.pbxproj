@@ -455,12 +455,6 @@
 		4C68425916C5AF900005A59E /* AutoHyperlinks.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425516C5AF730005A59E /* AutoHyperlinks.framework */; };
 		4C68425A16C5AF900005A59E /* BlowfishEncryption.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425616C5AF730005A59E /* BlowfishEncryption.framework */; };
 		4C68425B16C5AF9B0005A59E /* Growl.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
-		4C6C93681825E899006C7FA6 /* TextualBundleIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C6C93651825E899006C7FA6 /* TextualBundleIcon.icns */; };
-		4C6C93691825E899006C7FA6 /* TextualBundleIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C6C93651825E899006C7FA6 /* TextualBundleIcon.icns */; };
-		4C6C936A1825E899006C7FA6 /* TextualScriptIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C6C93661825E899006C7FA6 /* TextualScriptIcon.icns */; };
-		4C6C936B1825E899006C7FA6 /* TextualScriptIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C6C93661825E899006C7FA6 /* TextualScriptIcon.icns */; };
-		4C6C936C1825E899006C7FA6 /* TextualStyleIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C6C93671825E899006C7FA6 /* TextualStyleIcon.icns */; };
-		4C6C936D1825E899006C7FA6 /* TextualStyleIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C6C93671825E899006C7FA6 /* TextualStyleIcon.icns */; };
 		4C6D4646180830D40098BA12 /* NSMenuHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6D4645180830D40098BA12 /* NSMenuHelper.m */; };
 		4C6D4647180830D40098BA12 /* NSMenuHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6D4645180830D40098BA12 /* NSMenuHelper.m */; };
 		4C6D464D180830E60098BA12 /* NSMenuHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6D464C180830E60098BA12 /* NSMenuHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -740,6 +734,11 @@
 		4C937BDB170618A80050CEF3 /* TLOSpeechSynthesizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C937BDA170618A80050CEF3 /* TLOSpeechSynthesizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C937BDC17061A3F0050CEF3 /* TLOSpeechSynthesizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C937BDA170618A80050CEF3 /* TLOSpeechSynthesizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C937BDD17061A4D0050CEF3 /* TLOSpeechSynthesizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C937BD4170618940050CEF3 /* TLOSpeechSynthesizer.m */; };
+		4C9A1D9A1836E6D000C14835 /* BlowfishCommandLine.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D901836E6A100C14835 /* BlowfishCommandLine.bundle */; };
+		4C9A1D9B1836E6D200C14835 /* BragSpam.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D911836E6A100C14835 /* BragSpam.bundle */; };
+		4C9A1D9C1836E6D300C14835 /* SpammerParadise.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */; };
+		4C9A1D9D1836E6D500C14835 /* SystemProfiler.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D931836E6A100C14835 /* SystemProfiler.bundle */; };
+		4C9A1D9E1836E6D700C14835 /* ZNCAdditions.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */; };
 		4CA899A8174021FD001176C8 /* TPWTB_Alerts_NC.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CA899A6174021FD001176C8 /* TPWTB_Alerts_NC.tif */; };
 		4CA899A9174021FD001176C8 /* TPWTB_Alerts_NC.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CA899A6174021FD001176C8 /* TPWTB_Alerts_NC.tif */; };
 		4CA899AA174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CA899A7174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif */; };
@@ -799,11 +798,6 @@
 		4CDDF3481678C5DF00FE8684 /* encryptionLockIconDark@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3441678C5DF00FE8684 /* encryptionLockIconDark@2x.tif */; };
 		4CDDF3491678C5DF00FE8684 /* encryptionLockIconLight.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3451678C5DF00FE8684 /* encryptionLockIconLight.tif */; };
 		4CDDF34A1678C5DF00FE8684 /* encryptionLockIconLight@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3461678C5DF00FE8684 /* encryptionLockIconLight@2x.tif */; };
-		4CE9D45D1826203D000D02CE /* BlowfishCommandLine.TxtlPlugin in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4CE9D45318262020000D02CE /* BlowfishCommandLine.TxtlPlugin */; };
-		4CE9D45E1826203D000D02CE /* BragSpam.TxtlPlugin in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4CE9D45418262020000D02CE /* BragSpam.TxtlPlugin */; };
-		4CE9D45F1826203D000D02CE /* SpammerParadise.TxtlPlugin in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4CE9D45518262020000D02CE /* SpammerParadise.TxtlPlugin */; };
-		4CE9D4601826203D000D02CE /* SystemProfiler.TxtlPlugin in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4CE9D45618262020000D02CE /* SystemProfiler.TxtlPlugin */; };
-		4CE9D4611826203D000D02CE /* ZNCAdditions.TxtlPlugin in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4CE9D45718262020000D02CE /* ZNCAdditions.TxtlPlugin */; };
 		4CECD341178DA5620048B3F6 /* Acknowledgments.rtfd in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4CECD33F178DA5480048B3F6 /* Acknowledgments.rtfd */; };
 		4CECD342178DA5640048B3F6 /* Contributors.rtfd in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4CECD340178DA5480048B3F6 /* Contributors.rtfd */; };
 		4CECD343178DA5680048B3F6 /* Acknowledgments.rtfd in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4CECD33F178DA5480048B3F6 /* Acknowledgments.rtfd */; };
@@ -889,11 +883,11 @@
 			dstPath = Extensions;
 			dstSubfolderSpec = 7;
 			files = (
-				4CE9D45D1826203D000D02CE /* BlowfishCommandLine.TxtlPlugin in Copy Extensions */,
-				4CE9D45E1826203D000D02CE /* BragSpam.TxtlPlugin in Copy Extensions */,
-				4CE9D45F1826203D000D02CE /* SpammerParadise.TxtlPlugin in Copy Extensions */,
-				4CE9D4601826203D000D02CE /* SystemProfiler.TxtlPlugin in Copy Extensions */,
-				4CE9D4611826203D000D02CE /* ZNCAdditions.TxtlPlugin in Copy Extensions */,
+				4C9A1D9A1836E6D000C14835 /* BlowfishCommandLine.bundle in Copy Extensions */,
+				4C9A1D9B1836E6D200C14835 /* BragSpam.bundle in Copy Extensions */,
+				4C9A1D9C1836E6D300C14835 /* SpammerParadise.bundle in Copy Extensions */,
+				4C9A1D9D1836E6D500C14835 /* SystemProfiler.bundle in Copy Extensions */,
+				4C9A1D9E1836E6D700C14835 /* ZNCAdditions.bundle in Copy Extensions */,
 			);
 			name = "Copy Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1054,9 +1048,6 @@
 		4C63C6C31592FF4E009F1635 /* TPWTB_Interface@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "TPWTB_Interface@2x.tif"; sourceTree = "<group>"; };
 		4C68425516C5AF730005A59E /* AutoHyperlinks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AutoHyperlinks.framework; path = .tmp/SharedBuildProducts/AutoHyperlinks.framework; sourceTree = "<group>"; };
 		4C68425616C5AF730005A59E /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = .tmp/SharedBuildProducts/BlowfishEncryption.framework; sourceTree = "<group>"; };
-		4C6C93651825E899006C7FA6 /* TextualBundleIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = TextualBundleIcon.icns; path = Resources/Images/Application/TextualBundleIcon.icns; sourceTree = SOURCE_ROOT; };
-		4C6C93661825E899006C7FA6 /* TextualScriptIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = TextualScriptIcon.icns; path = Resources/Images/Application/TextualScriptIcon.icns; sourceTree = SOURCE_ROOT; };
-		4C6C93671825E899006C7FA6 /* TextualStyleIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = TextualStyleIcon.icns; path = Resources/Images/Application/TextualStyleIcon.icns; sourceTree = SOURCE_ROOT; };
 		4C6D4645180830D40098BA12 /* NSMenuHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMenuHelper.m; sourceTree = "<group>"; };
 		4C6D464C180830E60098BA12 /* NSMenuHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMenuHelper.h; sourceTree = "<group>"; };
 		4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMainWindowSegmentedControl.m; sourceTree = "<group>"; };
@@ -1340,6 +1331,11 @@
 		4C994BAB181FB3E0002FECA6 /* Auxiliary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Auxiliary.entitlements; path = Resources/Sandbox/Exceptions/Auxiliary.entitlements; sourceTree = SOURCE_ROOT; };
 		4C994BAC181FB3E0002FECA6 /* Textual.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Textual.entitlements; path = Resources/Sandbox/Exceptions/Textual.entitlements; sourceTree = SOURCE_ROOT; };
 		4C994BAD181FB3E0002FECA6 /* TextualWithoutCloud.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualWithoutCloud.entitlements; path = Resources/Sandbox/Exceptions/TextualWithoutCloud.entitlements; sourceTree = SOURCE_ROOT; };
+		4C9A1D901836E6A100C14835 /* BlowfishCommandLine.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BlowfishCommandLine.bundle; path = .tmp/SharedBuildProducts/BlowfishCommandLine.bundle; sourceTree = SOURCE_ROOT; };
+		4C9A1D911836E6A100C14835 /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = .tmp/SharedBuildProducts/BragSpam.bundle; sourceTree = SOURCE_ROOT; };
+		4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SpammerParadise.bundle; path = .tmp/SharedBuildProducts/SpammerParadise.bundle; sourceTree = SOURCE_ROOT; };
+		4C9A1D931836E6A100C14835 /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = .tmp/SharedBuildProducts/SystemProfiler.bundle; sourceTree = SOURCE_ROOT; };
+		4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ZNCAdditions.bundle; path = .tmp/SharedBuildProducts/ZNCAdditions.bundle; sourceTree = SOURCE_ROOT; };
 		4CA899A6174021FD001176C8 /* TPWTB_Alerts_NC.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TPWTB_Alerts_NC.tif; sourceTree = "<group>"; };
 		4CA899A7174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "TPWTB_Alerts_NC@2x.tif"; sourceTree = "<group>"; };
 		4CB125781783DC6600D0214E /* channelRoomStatusIcon_Aqua.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = channelRoomStatusIcon_Aqua.tif; path = "Resources/Images/Status Badges/channelRoomStatusIcon_Aqua.tif"; sourceTree = SOURCE_ROOT; };
@@ -1390,11 +1386,6 @@
 		4CDDF3441678C5DF00FE8684 /* encryptionLockIconDark@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "encryptionLockIconDark@2x.tif"; sourceTree = "<group>"; };
 		4CDDF3451678C5DF00FE8684 /* encryptionLockIconLight.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = encryptionLockIconLight.tif; sourceTree = "<group>"; };
 		4CDDF3461678C5DF00FE8684 /* encryptionLockIconLight@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "encryptionLockIconLight@2x.tif"; sourceTree = "<group>"; };
-		4CE9D45318262020000D02CE /* BlowfishCommandLine.TxtlPlugin */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BlowfishCommandLine.TxtlPlugin; path = .tmp/SharedBuildProducts/BlowfishCommandLine.TxtlPlugin; sourceTree = SOURCE_ROOT; };
-		4CE9D45418262020000D02CE /* BragSpam.TxtlPlugin */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BragSpam.TxtlPlugin; path = .tmp/SharedBuildProducts/BragSpam.TxtlPlugin; sourceTree = SOURCE_ROOT; };
-		4CE9D45518262020000D02CE /* SpammerParadise.TxtlPlugin */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SpammerParadise.TxtlPlugin; path = .tmp/SharedBuildProducts/SpammerParadise.TxtlPlugin; sourceTree = SOURCE_ROOT; };
-		4CE9D45618262020000D02CE /* SystemProfiler.TxtlPlugin */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SystemProfiler.TxtlPlugin; path = .tmp/SharedBuildProducts/SystemProfiler.TxtlPlugin; sourceTree = SOURCE_ROOT; };
-		4CE9D45718262020000D02CE /* ZNCAdditions.TxtlPlugin */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ZNCAdditions.TxtlPlugin; path = .tmp/SharedBuildProducts/ZNCAdditions.TxtlPlugin; sourceTree = SOURCE_ROOT; };
 		4CECD33F178DA5480048B3F6 /* Acknowledgments.rtfd */ = {isa = PBXFileReference; lastKnownFileType = wrapper.rtfd; path = Acknowledgments.rtfd; sourceTree = SOURCE_ROOT; };
 		4CECD340178DA5480048B3F6 /* Contributors.rtfd */ = {isa = PBXFileReference; lastKnownFileType = wrapper.rtfd; path = Contributors.rtfd; sourceTree = SOURCE_ROOT; };
 		4CF8B40F16E631EF00F2A68F /* birthdayIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = birthdayIcon.icns; path = Resources/Images/Application/birthdayIcon.icns; sourceTree = SOURCE_ROOT; };
@@ -1611,9 +1602,6 @@
 			children = (
 				4CCF2EF7158047E9006FFE21 /* application.icns */,
 				4CF8B40F16E631EF00F2A68F /* birthdayIcon.icns */,
-				4C6C93651825E899006C7FA6 /* TextualBundleIcon.icns */,
-				4C6C93661825E899006C7FA6 /* TextualScriptIcon.icns */,
-				4C6C93671825E899006C7FA6 /* TextualStyleIcon.icns */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -1730,11 +1718,11 @@
 		4C46CCA7158043C000846B64 /* Binaries */ = {
 			isa = PBXGroup;
 			children = (
-				4CE9D45318262020000D02CE /* BlowfishCommandLine.TxtlPlugin */,
-				4CE9D45418262020000D02CE /* BragSpam.TxtlPlugin */,
-				4CE9D45518262020000D02CE /* SpammerParadise.TxtlPlugin */,
-				4CE9D45618262020000D02CE /* SystemProfiler.TxtlPlugin */,
-				4CE9D45718262020000D02CE /* ZNCAdditions.TxtlPlugin */,
+				4C9A1D901836E6A100C14835 /* BlowfishCommandLine.bundle */,
+				4C9A1D911836E6A100C14835 /* BragSpam.bundle */,
+				4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */,
+				4C9A1D931836E6A100C14835 /* SystemProfiler.bundle */,
+				4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */,
 			);
 			name = Binaries;
 			sourceTree = "<group>";
@@ -2953,7 +2941,6 @@
 				4C8AF728158E9B330026668C /* TDCAboutPanel.xib in Resources */,
 				4C8AF729158E9B330026668C /* TDCAddressBookSheet.xib in Resources */,
 				4C8AF72A158E9B330026668C /* TDChanBanExceptionSheet.xib in Resources */,
-				4C6C936A1825E899006C7FA6 /* TextualScriptIcon.icns in Resources */,
 				4C8AF72B158E9B330026668C /* TDChanBanSheet.xib in Resources */,
 				4C8AF72C158E9B330026668C /* TDChanInviteExceptionSheet.xib in Resources */,
 				4C8AF72D158E9B330026668C /* TDChannelSheet.xib in Resources */,
@@ -2961,7 +2948,6 @@
 				4C8AF72F158E9B330026668C /* TDCInviteSheet.xib in Resources */,
 				4C8AF730158E9B330026668C /* TDCListDialog.xib in Resources */,
 				4C8AF731158E9B330026668C /* TDCModeSheet.xib in Resources */,
-				4C6C936C1825E899006C7FA6 /* TextualStyleIcon.icns in Resources */,
 				4C8AF732158E9B330026668C /* TDCNickSheet.xib in Resources */,
 				4C8AF733158E9B330026668C /* TDCPreferences.xib in Resources */,
 				4C8AF734158E9B330026668C /* TDCServerSheet.xib in Resources */,
@@ -3018,7 +3004,6 @@
 				4CDDF3481678C5DF00FE8684 /* encryptionLockIconDark@2x.tif in Resources */,
 				4CDDF3491678C5DF00FE8684 /* encryptionLockIconLight.tif in Resources */,
 				4CDDF34A1678C5DF00FE8684 /* encryptionLockIconLight@2x.tif in Resources */,
-				4C6C93681825E899006C7FA6 /* TextualBundleIcon.icns in Resources */,
 				4CF8B41016E631EF00F2A68F /* birthdayIcon.icns in Resources */,
 				4CA899A8174021FD001176C8 /* TPWTB_Alerts_NC.tif in Resources */,
 				4CA899AA174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif in Resources */,
@@ -3056,7 +3041,6 @@
 				4C5BA38E16F1302F00A96CA2 /* TDCAboutPanel.xib in Resources */,
 				4C5BA38F16F1302F00A96CA2 /* TDCAddressBookSheet.xib in Resources */,
 				4C5BA39016F1302F00A96CA2 /* TDChanBanExceptionSheet.xib in Resources */,
-				4C6C936B1825E899006C7FA6 /* TextualScriptIcon.icns in Resources */,
 				4C5BA39116F1302F00A96CA2 /* TDChanBanSheet.xib in Resources */,
 				4C5BA39216F1302F00A96CA2 /* TDChanInviteExceptionSheet.xib in Resources */,
 				4C5BA39316F1302F00A96CA2 /* TDChannelSheet.xib in Resources */,
@@ -3064,7 +3048,6 @@
 				4C5BA39516F1302F00A96CA2 /* TDCInviteSheet.xib in Resources */,
 				4C5BA39616F1302F00A96CA2 /* TDCListDialog.xib in Resources */,
 				4C5BA39716F1302F00A96CA2 /* TDCModeSheet.xib in Resources */,
-				4C6C936D1825E899006C7FA6 /* TextualStyleIcon.icns in Resources */,
 				4C5BA39816F1302F00A96CA2 /* TDCNickSheet.xib in Resources */,
 				4C5BA39916F1302F00A96CA2 /* TDCPreferences.xib in Resources */,
 				4C5BA39A16F1302F00A96CA2 /* TDCServerSheet.xib in Resources */,
@@ -3121,7 +3104,6 @@
 				4C5BA3CE16F1302F00A96CA2 /* encryptionLockIconDark@2x.tif in Resources */,
 				4C5BA3CF16F1302F00A96CA2 /* encryptionLockIconLight.tif in Resources */,
 				4C5BA3D016F1302F00A96CA2 /* encryptionLockIconLight@2x.tif in Resources */,
-				4C6C93691825E899006C7FA6 /* TextualBundleIcon.icns in Resources */,
 				4C5BA3D116F1302F00A96CA2 /* birthdayIcon.icns in Resources */,
 				4CA899A9174021FD001176C8 /* TPWTB_Alerts_NC.tif in Resources */,
 				4CA899AB174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif in Resources */,

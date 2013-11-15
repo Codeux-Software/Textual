@@ -33,7 +33,7 @@
 		4CD69D81131E2BD200F4618E /* MacintoshModels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MacintoshModels.plist; sourceTree = "<group>"; };
 		4CEE0DD012E09A1900C5096E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		63EF581215D2D57F001071C8 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
-		8D576316048677EA00EA77CD /* SystemProfiler.TxtlPlugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SystemProfiler.TxtlPlugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D576316048677EA00EA77CD /* SystemProfiler.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SystemProfiler.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,7 +99,7 @@
 		19C28FB6FE9D52B211CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D576316048677EA00EA77CD /* SystemProfiler.TxtlPlugin */,
+				8D576316048677EA00EA77CD /* SystemProfiler.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -158,7 +158,7 @@
 			name = SystemProfiler;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = BlowfishCommandLine;
-			productReference = 8D576316048677EA00EA77CD /* SystemProfiler.TxtlPlugin */;
+			productReference = 8D576316048677EA00EA77CD /* SystemProfiler.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */

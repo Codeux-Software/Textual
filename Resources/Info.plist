@@ -5,30 +5,16 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>****</string>
+			</array>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>TxtlPlugin</string>
+				<string>scpt</string>
 			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>TextualBundleIcon</string>
 			<key>CFBundleTypeName</key>
-			<string>Textual Extension</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSTypeIsPackage</key>
-			<integer>1</integer>
-			<key>NSDocumentClass</key>
-			<string>TPCResourceManagerDocumentTypeImporter</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>TxtlScript</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>TextualScriptIcon</string>
-			<key>CFBundleTypeName</key>
-			<string>Textual Script</string>
+			<string>Textual IRC Client Script</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSTypeIsPackage</key>
@@ -39,14 +25,12 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>TxtlStyle</string>
+				<string>bundle</string>
 			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>TextualStyleIcon</string>
 			<key>CFBundleTypeName</key>
-			<string>Textual Style</string>
+			<string>Textual IRC Client Extension</string>
 			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
+			<string>Editor</string>
 			<key>LSTypeIsPackage</key>
 			<integer>1</integer>
 			<key>NSDocumentClass</key>
@@ -59,6 +43,8 @@
 	<string>application.icns</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.codeux.irc.textual</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
@@ -96,8 +82,6 @@
 	<string>TXCMainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
 	<key>TXBundleBuildCodeName</key>
 	<string>Red Rum</string>
 </dict>
