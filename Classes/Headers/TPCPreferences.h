@@ -42,14 +42,8 @@
 #define TXDefaultTextualLogFont				@"Lucida Grande"
 #define TXDefaultTextualTimestampFormat		TLOFileLoggerTwentyFourHourClockFormat
 
-/* If a cloud sync contains a custom theme, then we store the name in the temporary store
- if it does not exist on the local computer. We then monitor the actual iCloud shared Styles
- folder to see when the theme in the temporary store appears. This value is reset if the
- remote style changes during sync or the local one changes. */
 #define TPCPreferencesThemeNameDefaultsKey						@"Theme -> Name"
-#define TPCPreferencesThemeNameTemporaryStoreDefaultsKey		@"Theme -> Name -> Temporary Store"
-
-#define TPCPrefernecesThemeFontNameDefaultsKey		@"Theme -> Font Name"
+#define TPCPreferencesThemeFontNameDefaultsKey					@"Theme -> Font Name"
 
 typedef enum TXNicknameHighlightMatchType : NSInteger {
 	TXNicknameHighlightPartialMatchType = 0,
@@ -281,8 +275,11 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 + (double)themeChannelViewFontSize;
 
 + (void)setThemeName:(NSString *)value;
-+ (void)setThemeNameWithTemporaryStore:(NSString *)value;
++ (void)setThemeNameWithExistenceCheck:(NSString *)value;
+
 + (void)setThemeChannelViewFontName:(NSString *)value;
++ (void)setThemeChannelViewFontNameWithExistenceCheck:(NSString *)value;
+
 + (void)setThemeChannelViewFontSize:(double)value;
 
 + (NSInteger)maxLogLines;

@@ -573,7 +573,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 {
 	/* Validate font. */
 	if ([NSFont fontIsAvailable:[TPCPreferences themeChannelViewFontName]] == NO) {
-		[RZUserDefaults() setObject:TXDefaultTextualLogFont forKey:TPCPrefernecesThemeFontNameDefaultsKey];
+		[RZUserDefaults() setObject:TXDefaultTextualLogFont forKey:TPCPreferencesThemeFontNameDefaultsKey];
 	}
 	
 	/* Validate theme. */
@@ -610,7 +610,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 	/* Style specific reloads… */
 	if ([prefKeys containsObject:TPCPreferencesThemeNameDefaultsKey] ||					/* Style name. */
-		[prefKeys containsObject:TPCPrefernecesThemeFontNameDefaultsKey] ||				/* Style font name. */
+		[prefKeys containsObject:TPCPreferencesThemeFontNameDefaultsKey] ||				/* Style font name. */
 		[prefKeys containsObject:@"Theme -> Font Size"] ||								/* Style font size. */
 		[prefKeys containsObject:@"Theme -> Nickname Format"] ||						/* Nickname format. */
 		[prefKeys containsObject:@"Theme -> Timestamp Format"] ||						/* Timestamp format. */
@@ -1170,14 +1170,14 @@ static NSURL *transcriptFolderResolvedBookmark;
 {
 	[RZUserDefaults() setObject:value forKey:TPCPreferencesThemeNameDefaultsKey];
 	
-	[RZUserDefaults() removeObjectForKey:TPCPreferencesThemeNameTemporaryStoreDefaultsKey];
+	[RZUserDefaults() removeObjectForKey:TPCPreferencesThemeNameMissingLocallyDefaultsKey];
 }
 
-+ (void)setThemeNameWithTemporaryStore:(NSString *)value
++ (void)setThemeNameWithExistenceCheck:(NSString *)value
 {
 	/* Did it exist anywhere at all? */
 	if ([TPCThemeController themeExists:value] == NO) {
-		[RZUserDefaults() setObject:value forKey:TPCPreferencesThemeNameTemporaryStoreDefaultsKey];
+		[RZUserDefaults() setBool:YES forKey:TPCPreferencesThemeNameMissingLocallyDefaultsKey];
 	} else {
 		[TPCPreferences setThemeName:value];
 	}
@@ -1185,12 +1185,23 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (NSString *)themeChannelViewFontName
 {
-	return [RZUserDefaults() objectForKey:TPCPrefernecesThemeFontNameDefaultsKey];
+	return [RZUserDefaults() objectForKey:TPCPreferencesThemeFontNameDefaultsKey];
 }
 
 + (void)setThemeChannelViewFontName:(NSString *)value
 {
-	[RZUserDefaults() setObject:value forKey:TPCPrefernecesThemeFontNameDefaultsKey];
+	[RZUserDefaults() setObject:value forKey:TPCPreferencesThemeFontNameDefaultsKey];
+	
+	[RZUserDefaults() removeObjectForKey:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey];
+}
+
++ (void)setThemeChannelViewFontNameWithExistenceCheck:(NSString *)value
+{
+	if ([NSFont fontIsAvailable:value] == NO) {
+		[RZUserDefaults() setBool:YES forKey:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey];
+	} else {
+		[TPCPreferences setThemeChannelViewFontName:value];
+	}
 }
 
 + (double)themeChannelViewFontSize
@@ -1774,7 +1785,7 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"ChannelOperatorDefaultLocalization -> Kick Reason"] = TXTLS(@"KickReason");
 	
 	d[TPCPreferencesThemeNameDefaultsKey]				= TXDefaultTextualLogStyle;
-	d[TPCPrefernecesThemeFontNameDefaultsKey]			= TXDefaultTextualLogFont;
+	d[TPCPreferencesThemeFontNameDefaultsKey]			= TXDefaultTextualLogFont;
 
 	d[@"Theme -> Nickname Format"]						= TXLogLineUndefinedNicknameFormat;
 	d[@"Theme -> Timestamp Format"]						= TXDefaultTextualTimestampFormat;
