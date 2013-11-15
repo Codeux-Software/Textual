@@ -65,6 +65,8 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>4.0.0-git</string>
+	<key>CFBundleSignature</key>
+	<string>txtl</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -94,6 +96,8 @@
 	<string>TXCMainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
 	<key>TXBundleBuildCodeName</key>
 	<string>Red Rum</string>
 </dict>
