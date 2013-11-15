@@ -21,7 +21,7 @@
 		4C6918A216E3277A00BDE3A8 /* Shared Extension Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Shared Extension Configuration.xcconfig"; sourceTree = "<group>"; };
 		4C86B01A1748B9670028C7AE /* Shared Developer ID Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Shared Developer ID Release Configuration.xcconfig"; sourceTree = "<group>"; };
 		4CD4026D16C8CCAF00FEA686 /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = BasicLanguage.strings; sourceTree = "<group>"; };
-		8D576316048677EA00EA77CD /* SpammerParadise.TxtlPlugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpammerParadise.TxtlPlugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D576316048677EA00EA77CD /* SpammerParadise.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpammerParadise.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,7 +79,7 @@
 		19C28FB6FE9D52B211CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D576316048677EA00EA77CD /* SpammerParadise.TxtlPlugin */,
+				8D576316048677EA00EA77CD /* SpammerParadise.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -129,7 +129,7 @@
 			name = SpammerParadise;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = BragSpam;
-			productReference = 8D576316048677EA00EA77CD /* SpammerParadise.TxtlPlugin */;
+			productReference = 8D576316048677EA00EA77CD /* SpammerParadise.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */

@@ -6262,7 +6262,7 @@
 	}
 
 	/* Is it AppleScript? */
-	if ([scriptPath hasSuffix:@".scpt"] || [scriptPath hasSuffix:TPCResourceManagerScriptDocumentTypeExtension]) {
+	if ([scriptPath hasSuffix:TPCResourceManagerScriptDocumentTypeExtension]) {
 		/* /////////////////////////////////////////////////////// */
 		/* Event Descriptor */
 		/* /////////////////////////////////////////////////////// */

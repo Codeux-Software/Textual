@@ -42,14 +42,11 @@
 @end
 
 /* I should make these defines longer… */
-#define TPCResourceManagerBundleDocumentTypeExtension				@".TxtlPlugin"
-#define TPCResourceManagerBundleDocumentTypeExtensionWithotuDot		@"TxtlPlugin"
+#define TPCResourceManagerBundleDocumentTypeExtension				@".bundle"
+#define TPCResourceManagerBundleDocumentTypeExtensionWithotuDot		@"bundle"
 
-#define TPCResourceManagerScriptDocumentTypeExtension				@".TxtlScript"
-#define TPCResourceManagerScriptDocumentTypeExtensionWithotuDot		@"TxtlScript"
-
-#define TPCResourceManagerStyleDocumentTypeExtension				@".TxtlStyle"
-#define TPCResourceManagerStyleDocumentTypeExtensionWithotuDot		@"TxtlStyle"
+#define TPCResourceManagerScriptDocumentTypeExtension				@".scpt"
+#define TPCResourceManagerScriptDocumentTypeExtensionWithotuDot		@"scpt"
 
 @interface TPCResourceManagerDocumentTypeImporter : NSDocument
 @end

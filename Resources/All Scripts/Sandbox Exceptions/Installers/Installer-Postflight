@@ -9,10 +9,7 @@ USER_SCRIPT_PATH="$HOME/Library/Application Scripts/com.codeux.irc.textual/"
 mkdir -p "${USER_BUNDLE_PATH}"
 mkdir -p "${USER_SCRIPT_PATH}"
 
-OLD_EXTENSION_NAMES="${USER_BUNDLE_PATH}/WikipediaLinkParser.bundle
-${USER_BUNDLE_PATH}/WikiStyleLinkParser.bundle
-${USER_BUNDLE_PATH}/iTunesPlayerControls.bundle
-${USER_BUNDLE_PATH}/SmileyConverter.bundle"
+OLD_EXTENSION_NAMES="${USER_BUNDLE_PATH}/WikipediaLinkParser.bundle"
 
 for EXTENSION in $OLD_EXTENSION_NAMES; do
 	if [ -d "${EXTENSION}" ]; then
