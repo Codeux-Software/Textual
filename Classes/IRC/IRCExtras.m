@@ -110,11 +110,13 @@
 		 acknowledgements					— Open acknowledgements file.
 		 appstore-page						— Open our Mac App Store page.
 		 contributors						— Open contributors file. 
+		 diagnostic-reports-folder			— System diagnostic reports folder.
 		 custom-style-folder				— Open the custom style storage location folder.
+		 icloud-style-folder				— Open the custom style storage location folder.
 		 custom-styles-folder				— Same as custom-style-folder except plural.
+		 icloud-styles-folder				— Same as custom-style-folder except plural.
 		 newsletter							— Open the subscription page for the newsletter.
 		 support-channel					— Connect to the #textual channel.
-		 support-group						— Open the homepage of our support group.
 		 testing-channel					— Connect to the #textual-testing channel.
 		 unsupervised-script-folder			— Open the unsupervised scripts folder.
 		 unsupervised-scripts-folder		— Same as unsupervised-script-folder except plural.
@@ -149,13 +151,23 @@
 		{
 			[TLOpenLink openWithString:@"http://www.codeux.com/textual/newsletter/"];
 		}
+		else if ([serverAddress isEqualToString:@"diagnostic-reports-folder"])
+		{
+			NSString *userpath = [[TPCPreferences userHomeDirectoryPathOutsideSandbox] stringByAppendingPathComponent:@"/Library/Logs/DiagnosticReports"];
+			
+			[RZWorkspace() openFile:@"/Library/Logs/DiagnosticReports"];
+			[RZWorkspace() openFile:userpath];
+		}
 		else if ([serverAddress isEqualToString:@"support-channel"])
 		{
 			[menuc connectToTextualHelpChannel:nil];
 		}
-		else if ([serverAddress isEqualToString:@"support-group"])
+		else if ([serverAddress isEqualToString:@"icloud-style-folder"] ||
+				 [serverAddress isEqualToString:@"icloud-styles-folder"])
 		{
-			[TLOpenLink openWithString:@"http://www.codeux.com/textual/support-group/"];
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+			[RZWorkspace() openFile:[TPCPreferences cloudCustomThemeFolderPath]];
+#endif
 		}
 		else if ([serverAddress isEqualToString:@"testing-channel"])
 		{
