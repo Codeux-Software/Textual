@@ -40,6 +40,11 @@
 
 #define _internalPlaybackLineCountLimit			100
 
+@interface WebPreferences (WebPreferencesPrivate)
+- (void)_setLocalStorageDatabasePath:(NSString *)path;
+- (void) setLocalStorageEnabled: (BOOL) localStorageEnabled;
+@end
+
 @interface TVCLogController ()
 @property (nonatomic, readonly, uweak) TPCThemeSettings *themeSettings;
 @property (nonatomic, assign) BOOL historyLoaded;
@@ -116,8 +121,11 @@
 
 	self.view.shouldUpdateWhileOffscreen = NO;
 
+  [self.view.preferences setAutosaves:YES];
 	[self.view.preferences setCacheModel:WebCacheModelDocumentViewer];
 	[self.view.preferences setUsesPageCache:NO];
+  [self.view.preferences _setLocalStorageDatabasePath:@"~/Library/Textual/LocalStorage"];
+  [self.view.preferences setLocalStorageEnabled:YES];
 
 	[self loadAlternateHTML:[self initialDocument:nil]];
 
