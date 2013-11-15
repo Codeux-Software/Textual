@@ -135,7 +135,7 @@
                         <popUpButton key="view" tag="13" id="6451">
                             <rect key="frame" x="3" y="14" width="43" height="32"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="TPWTB_Extensions" imagePosition="right" lineBreakMode="truncatingTail" borderStyle="bezel" inset="2" pullsDown="YES" selectedItem="6455" id="6452">
+                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" imagePosition="right" lineBreakMode="truncatingTail" borderStyle="bezel" inset="2" pullsDown="YES" selectedItem="6455" id="6452">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" title="OtherViews" showsStateColumn="NO" id="6453">
@@ -2211,14 +2211,14 @@
             </subviews>
         </customView>
         <customView id="4793" userLabel="Log Settings">
-            <rect key="frame" x="0.0" y="0.0" width="534" height="149"/>
+            <rect key="frame" x="0.0" y="0.0" width="534" height="188"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <userGuides>
                 <userLayoutGuide location="28" affinity="minY"/>
             </userGuides>
             <subviews>
                 <button id="118">
-                    <rect key="frame" x="68" y="113" width="110" height="18"/>
+                    <rect key="frame" x="68" y="152" width="110" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Log transcripts" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="4244">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2229,7 +2229,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="6784">
-                    <rect key="frame" x="176" y="115" width="58" height="16"/>
+                    <rect key="frame" x="176" y="154" width="58" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="to folder:" id="6785">
                         <font key="font" metaFont="cellTitle"/>
@@ -2238,7 +2238,7 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" id="6771">
-                    <rect key="frame" x="236" y="109" width="230" height="26"/>
+                    <rect key="frame" x="236" y="148" width="230" height="26"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title=" " bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="6776" id="6772">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -2259,14 +2259,14 @@
                     </connections>
                 </popUpButton>
                 <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7732">
-                    <rect key="frame" x="47" y="94" width="442" height="5"/>
+                    <rect key="frame" x="46" y="94" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <button id="7734">
-                    <rect key="frame" x="71" y="62" width="118" height="18"/>
+                    <rect key="frame" x="70" y="62" width="118" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Log in batches." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7737">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2277,10 +2277,20 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="7735">
-                    <rect key="frame" x="98" y="25" width="366" height="29"/>
+                    <rect key="frame" x="97" y="25" width="366" height="29"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Textual will write log entries every twenty seconds instead of each time a new entry is created to reduce disk usage. " id="7736">
                         <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="iDO-gu-hlE">
+                    <rect key="frame" x="77" y="115" width="381" height="28"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="2Gi-LP-mOX">
+                        <font key="font" metaFont="smallSystem"/>
+                        <string key="title">The location in which log files are stored cannot be shared with iCloud. This is a limitation of Mac OS that Textual cannot get around.</string>
                         <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>

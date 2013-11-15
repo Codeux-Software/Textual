@@ -135,13 +135,14 @@
 	return ([key hasPrefix:IRCWorldControllerCloudClientEntryKeyPrefix] ||
 			[key isEqualToString:IRCWorldControllerDefaultsStorageKey] ||
 			[key isEqualToString:IRCWorldControllerCloudDeletedClientsStorageKey] ||
-			[key isEqualToString:TPCPreferencesThemeNameDefaultsKey]);
+			[key isEqualToString:TPCPreferencesThemeNameDefaultsKey] ||
+			[key isEqualToString:TPCPreferencesThemeFontNameDefaultsKey]);
 }
 
 + (void)importContentsOfDictionary:(NSDictionary *)aDict
 {
 	/* The expected format of this dictionary should NOT have hashed keys. */
-	 LogToConsole(@"Dictionary to Import: %@", aDict);
+	 //LogToConsole(@"Dictionary to Import: %@", aDict);
 
 	/* Normal import process. */
 	[aDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
@@ -162,7 +163,13 @@
 		{
 			NSObjectIsKindOfClassAssert(obj, NSString);
 			
-			[TPCPreferences setThemeNameWithTemporaryStore:obj];
+			[TPCPreferences setThemeNameWithExistenceCheck:obj];
+		}
+		else if ([key isEqual:TPCPreferencesThemeFontNameDefaultsKey])
+		{
+			NSObjectIsKindOfClassAssert(obj, NSString);
+			
+			[TPCPreferences setThemeChannelViewFontNameWithExistenceCheck:obj];
 		}
 		else if ([key isEqual:IRCWorldControllerDefaultsStorageKey])
 		{
@@ -242,8 +249,10 @@
 		[key hasPrefix:@"Saved Window State —> Internal —> "] ||			/* Textual owned prefix. */
 		[key hasPrefix:@"Text Input Prompt Suppression -> "] ||				/* Textual owned prefix. */
 
-		[key hasPrefix:@"LogTranscriptDestinationSecurityBookmark"] ||			/* Textual owned prefix. */
-		[key hasPrefix:TPCPreferencesThemeNameTemporaryStoreDefaultsKey])		/* Textual owned prefix. */
+		[key hasPrefix:@"LogTranscriptDestinationSecurityBookmark"] ||				/* Textual owned prefix. */
+		
+		[key hasPrefix:TPCPreferencesThemeNameMissingLocallyDefaultsKey] ||			/* Textual owned prefix. */
+		[key hasPrefix:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey])		/* Textual owned prefix. */
 	{
 		return YES; // Key has an ignored prefix.
 	}

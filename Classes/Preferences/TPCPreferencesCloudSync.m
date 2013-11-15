@@ -39,14 +39,23 @@
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 
-#define _localKeysUpstreamSyncTimerInterval			60.0
+/* Internal cloud work is divided into two timers. Important work such as
+ syncing upstream to the cloud is put on a per-minute timer. This timer
+ also checks if a theme stored in the temporary store now exists. 
+ 
+ The second timer is ten-minute (roughly) based and handles less important
+ tasks. When this comment was written, it only handled the checking of
+ whether fonts exist, but it could be changed to include more later. */
+#define _localKeysUpstreamSyncTimerInterval_1			60.0	// 1 minute
+#define _localKeysUpstreamSyncTimerInterval_2			630.0	// 10 minutes, 30 seconds
 
 @interface TPCPreferencesCloudSync ()
 @property (nonatomic, assign) BOOL localKeysWereUpdated;
 @property (nonatomic, assign) BOOL isSyncingLocalKeysDownstream;
 @property (nonatomic, assign) BOOL isSyncingLocalKeysUpstream;
 @property (nonatomic, assign) dispatch_queue_t workerQueue;
-@property (nonatomic, strong) NSTimer *cloudSyncTimer;
+@property (nonatomic, strong) NSTimer *cloudOneMinuteSyncTimer;
+@property (nonatomic, strong) NSTimer *cloudTenMinuteSyncTimer;
 @property (nonatomic, strong) NSURL *ubiquitousContainerURL;
 @end
 
@@ -154,7 +163,36 @@
 	[self syncPreferencesFromCloud:nil];
 }
 
-- (void)performTimeBasedMaintenance
+- (void)performTenMinuteTimeBasedMaintenance
+{
+	DebugLogToConsole(@"iCloud: Performing ten-minute based maintenance.");
+	
+	/* Perform actual maintenance tasks. */
+	dispatch_async(self.workerQueue, ^{
+		/* Compare fonts. */
+		BOOL fontMissing = [RZUserDefaults() boolForKey:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey];
+		
+		if (fontMissing) {
+			NSString *remoteValue = [self valueForKey:TPCPreferencesThemeFontNameDefaultsKey];
+			
+			NSString *localFontVa = [TPCPreferences themeChannelViewFontName];
+			
+			/* Do the actual compare… */
+			if (remoteValue && [localFontVa isEqual:remoteValue] == NO) {
+				if ([NSFont fontIsAvailable:remoteValue]) {
+					DebugLogToConsole(@"iCloud: Remote font does not match local font. Setting font and reloading theme.");
+					
+					[TPCPreferences setThemeChannelViewFontName:remoteValue]; // Will remove the BOOL
+					
+					/* Font only applies to actual theme so we don't have to reload sidebars too… */
+					[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
+				}
+			}
+		}
+	});
+}
+
+- (void)performOneMinuteTimeBasedMaintenance
 {
 	/* Perform a sync. */
 	[self synchronizeToCloud];
@@ -162,14 +200,16 @@
 	/* Perform actual maintenance tasks. */
 	dispatch_async(self.workerQueue, ^{
 		/* Have a theme in the temporary store? */
-		NSString *temporaryTheme = [RZUserDefaults() objectForKey:TPCPreferencesThemeNameTemporaryStoreDefaultsKey];
+		BOOL missingTheme = [RZUserDefaults() boolForKey:TPCPreferencesThemeNameMissingLocallyDefaultsKey];
 		
 		/* If we do, pass it through the set property to set it or continue to keep in store. */
-		if (temporaryTheme) {
+		if (missingTheme) {
+			NSString *temporaryTheme = [self valueForKey:TPCPreferencesThemeNameDefaultsKey];
+			
 			if ([TPCThemeController themeExists:temporaryTheme]) {
 				DebugLogToConsole(@"iCloud: Theme name \"%@\" is stored in the temporary store and will now be applied.", temporaryTheme);
 				
-				[TPCPreferences setThemeName:temporaryTheme]; // Will remove the store.
+				[TPCPreferences setThemeName:temporaryTheme]; // Will reset the BOOL
 				
 				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
 				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
@@ -185,7 +225,8 @@
 {
 	return ([key isEqualToString:IRCWorldControllerDefaultsStorageKey] ||
 			[key isEqualToString:TPCPreferencesCloudSyncDefaultsKey] ||
-			[key isEqualToString:TPCPreferencesThemeNameTemporaryStoreDefaultsKey]);
+			[key isEqualToString:TPCPreferencesThemeNameMissingLocallyDefaultsKey] ||
+			[key isEqualToString:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey]);
 }
 
 - (void)syncPreferencesToCloud
@@ -262,12 +303,23 @@
 				if ([self keyIsNotPermittedInCloud:key]) {
 					// Nobody cares about this…
 				} else {
-					/* Do not save the theme name, if we have something set in
-					 the temporary story. */
+					/* Special save conditions. */
 					if ([key isEqualToString:TPCPreferencesThemeNameDefaultsKey]) {
-						id tempTheme = [RZUserDefaults() objectForKey:TPCPreferencesThemeNameTemporaryStoreDefaultsKey];
+						/* Do not save the theme name, if we have something set in
+						 the temporary story. */
+						/* This defaults key as well as the one for TPCPreferencesThemeFontNameMissingLocallyDefaultsKey
+						 resets if user actually changes these value locally instead of the cloud doing it
+						 so if the user decided to change the value on this machine, it will still sync. */
 						
-						if (tempTheme) {
+						BOOL missingTheme = [RZUserDefaults() boolForKey:TPCPreferencesThemeNameMissingLocallyDefaultsKey];
+						
+						if (missingTheme) {
+							return; // Skip this entry.
+						}
+					} else if ([key isEqualToString:TPCPreferencesThemeFontNameDefaultsKey]) {
+						BOOL fontMissing = [RZUserDefaults() boolForKey:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey];
+		
+						if (fontMissing) {
 							return; // Skip this entry.
 						}
 					}
@@ -468,13 +520,20 @@
 									   name:NSUserDefaultsDidChangeNotification
 									 object:nil];
 		
-		NSTimer *syncTimer = [NSTimer scheduledTimerWithTimeInterval:_localKeysUpstreamSyncTimerInterval
+		NSTimer *syncTimer1 = [NSTimer scheduledTimerWithTimeInterval:_localKeysUpstreamSyncTimerInterval_1
 															  target:self
-															selector:@selector(performTimeBasedMaintenance)
+															selector:@selector(performOneMinuteTimeBasedMaintenance)
 															userInfo:nil
-															 repeats:YES];
+															  repeats:YES];
 		
-		self.cloudSyncTimer = syncTimer;
+		NSTimer *syncTimer2 = [NSTimer scheduledTimerWithTimeInterval:_localKeysUpstreamSyncTimerInterval_2
+															   target:self
+															 selector:@selector(performTenMinuteTimeBasedMaintenance)
+															 userInfo:nil
+															  repeats:YES];
+		
+		self.cloudOneMinuteSyncTimer = syncTimer1;
+		self.cloudTenMinuteSyncTimer = syncTimer2;
 
 		/* Notification for when a remote value through the key-value store is changed. */
 		[RZNotificationCenter() addObserver:self
@@ -509,7 +568,8 @@
 		}];
 		
 		/* Destroy local keys not stored on cloud. */
-		[RZUserDefaults() removeObjectForKey:TPCPreferencesThemeNameTemporaryStoreDefaultsKey];
+		[RZUserDefaults() removeObjectForKey:TPCPreferencesThemeNameMissingLocallyDefaultsKey];
+		[RZUserDefaults() removeObjectForKey:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey];
 	});
 	
 	self.localKeysWereUpdated = YES;
@@ -521,7 +581,8 @@
 	DebugLogToConsole(@"iCloud: Closing session.");
 
 	/* Stop listening for notification related to local changes. */
-    [self.cloudSyncTimer invalidate];
+    [self.cloudOneMinuteSyncTimer invalidate];
+	[self.cloudTenMinuteSyncTimer invalidate];
 	
     [RZNotificationCenter() removeObserver:self
 									  name:NSUserDefaultsDidChangeNotification
