@@ -413,7 +413,13 @@
     [self.alertDisableWhileAwayButton setState:alert.disabledWhileAway];
     [self.alertBounceDockIconButton setState:alert.bounceDockIcon];
 
-	[self.alertSoundChoiceButton selectItemAtIndex:[self.availableSounds indexOfObject:alert.alertSound]];
+	NSInteger soundObject = [self.availableSounds indexOfObject:alert.alertSound];
+	
+	if (soundObject == -1) {
+		[self.alertSoundChoiceButton selectItemAtIndex:0];
+	} else {
+		[self.alertSoundChoiceButton selectItemAtIndex:soundObject];
+	}
 }
 
 - (void)onChangedAlertNotification:(id)sender
