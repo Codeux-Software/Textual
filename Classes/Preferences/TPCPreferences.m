@@ -39,6 +39,10 @@
 #import "TextualApplication.h"
 #import "BuildConfig.h"
 
+#include <unistd.h>         // -------
+#include <sys/types.h>      // --- | For +userHomeDirectoryPathOutsideSandbox
+#include <pwd.h>            // -------
+
 @implementation TPCPreferences
 
 #pragma mark -
@@ -495,6 +499,13 @@ NSString *IRCPublicCommandIndex(const char *key)
 	 array and a nil value would throw an exception. */
 
 	return NSStringEmptyPlaceholder;
+}
+
++ (NSString *)userHomeDirectoryPathOutsideSandbox
+{
+	struct passwd *pw = getpwuid(getuid());
+	
+	return [NSString stringWithUTF8String:pw->pw_dir];
 }
 
 #pragma mark -
