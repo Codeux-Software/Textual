@@ -438,14 +438,10 @@ NSString *IRCPublicCommandIndex(const char *key)
 	return dest;
 }
 
-+ (NSString *)cloudCustomExtensionFolderPath
++ (NSString *)cloudCustomThemeCachedFolderPath
 {
-	NSString *source = [TPCPreferences applicationUbiquitousContainerPath];
-	
-	NSObjectIsEmptyAssertReturn(source, NSStringEmptyPlaceholder); // We need a source folder first…
-	
-	NSString *dest = [source stringByAppendingPathComponent:@"/Extensions/"];
-	
+	NSString *dest = [[TPCPreferences applicationSupportFolderPath] stringByAppendingPathComponent:@"/iCloud Caches/Styles/"];
+
 	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
 		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
 	}

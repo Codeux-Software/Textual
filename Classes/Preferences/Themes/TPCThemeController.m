@@ -68,7 +68,7 @@
 		/* Does the theme exist in the cloud? */
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-		path = [[TPCPreferences cloudCustomThemeFolderPath] stringByAppendingPathComponent:filename];
+		path = [[TPCPreferences cloudCustomThemeCachedFolderPath] stringByAppendingPathComponent:filename];
 		
 		if ([RZFileManager() fileExistsAtPath:path]) {
 			return path;

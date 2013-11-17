@@ -582,7 +582,7 @@
 					   [TPCPreferences customThemeFolderPath],
 					   
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-					   [TPCPreferences cloudCustomThemeFolderPath],
+					   [TPCPreferences cloudCustomThemeCachedFolderPath],
 #endif
 					   
 					   ];
@@ -973,8 +973,8 @@
 			LogToConsole(@"Delete Error: %@", [delError localizedDescription]);
 		}
 		
-		/* Delete extensions folder. */
-		[RZFileManager() removeItemAtPath:[TPCPreferences cloudCustomExtensionFolderPath] error:&delError];
+		/* Delete local caches. */
+		[RZFileManager() removeItemAtPath:[TPCPreferences cloudCustomThemeCachedFolderPath] error:&delError];
 		
 		if (delError) {
 			LogToConsole(@"Delete Error: %@", [delError localizedDescription]);

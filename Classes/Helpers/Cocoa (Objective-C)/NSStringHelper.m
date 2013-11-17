@@ -234,6 +234,17 @@
 	return searchResult.location;
 }
 
+- (NSString *)stringByDeletingPreifx:(NSString *)prefix
+{
+	if (prefix.length >= 1 && self.length > prefix.length) {
+		if ([self hasPrefix:prefix]) {
+			return [self substringFromIndex:prefix.length];
+		}
+	}
+	
+	return self;
+}
+
 - (BOOL)isHostmask
 {
 	NSInteger bang1pos = [self stringPosition:@"!"];

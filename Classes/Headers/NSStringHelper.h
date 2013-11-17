@@ -76,6 +76,8 @@
 
 - (NSString *)stringCharacterAtIndex:(NSInteger)anIndex;
 
+- (NSString *)stringByDeletingPreifx:(NSString *)prefix;
+
 - (NSString *)channelNameToken;
 
 - (NSString *)nicknameFromHostmask;
