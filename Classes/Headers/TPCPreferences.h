@@ -156,8 +156,8 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 + (NSString *)applicationUbiquitousContainerPath;
 
-+ (NSString *)cloudCustomThemeFolderPath;
-+ (NSString *)cloudCustomExtensionFolderPath;
++ (NSString *)cloudCustomThemeFolderPath; // Actual iCloud folder.
++ (NSString *)cloudCustomThemeCachedFolderPath; // Where iCloud folder is cached locally.
 #endif
 
 + (BOOL)channelNavigationIsServerSpecific;

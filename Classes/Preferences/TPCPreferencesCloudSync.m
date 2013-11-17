@@ -57,6 +57,7 @@
 @property (nonatomic, strong) NSTimer *cloudOneMinuteSyncTimer;
 @property (nonatomic, strong) NSTimer *cloudTenMinuteSyncTimer;
 @property (nonatomic, strong) NSURL *ubiquitousContainerURL;
+@property (nonatomic, strong) NSMetadataQuery *cloudContainerNotificationQuery;
 @end
 
 @implementation TPCPreferencesCloudSync
@@ -123,25 +124,23 @@
 #pragma mark -
 #pragma mark URL Management
 
+- (void)setupUbiquitousContainerURLPath
+{
+	dispatch_async(self.workerQueue, ^{
+		/* Apple very clearly states not to do call this on the main thread
+		 since it does a lot of work, so we wont… */
+		NSURL *ucurl = [RZFileManager() URLForUbiquityContainerIdentifier:nil];
+		
+		if (ucurl) {
+			self.ubiquitousContainerURL = ucurl;
+		} else {
+			LogToConsole(@"iCloud Access Is Not Available.");
+		}
+	});
+}
+
 - (NSString *)ubiquitousContainerURLPath
 {
-	/* Handle URL request. */
-	static BOOL ubiquitousContainerURLRequestDispatched;
-	
-	if (ubiquitousContainerURLRequestDispatched == NO) {
-		ubiquitousContainerURLRequestDispatched = YES;
-		
-		dispatch_async(self.workerQueue, ^{
-			/* Apple very clearly states not to do call this on the main thread
-			 since it does a lot of work, so we wont… */
-			NSURL *ucurl = [RZFileManager() URLForUbiquityContainerIdentifier:nil];
-			
-			if (ucurl) {
-				self.ubiquitousContainerURL = ucurl;
-			}
-		});
-	}
-			
 	/* Return a path if we have it… */
 	if (self.ubiquitousContainerURL) {
 		return [self.ubiquitousContainerURL path];
@@ -165,6 +164,9 @@
 
 - (void)performTenMinuteTimeBasedMaintenance
 {
+	/* We don't even want to sync if user doesn't want to. */
+	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
+	
 	DebugLogToConsole(@"iCloud: Performing ten-minute based maintenance.");
 	
 	/* Perform actual maintenance tasks. */
@@ -194,6 +196,9 @@
 
 - (void)performOneMinuteTimeBasedMaintenance
 {
+	/* We don't even want to sync if user doesn't want to. */
+	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
+	
 	/* Perform a sync. */
 	[self synchronizeToCloud];
 	
@@ -231,10 +236,10 @@
 
 - (void)syncPreferencesToCloud
 {
+	/* We don't even want to sync if user doesn't want to. */
+	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
+	
 	dispatch_async(self.workerQueue, ^{
-		/* We don't even want to sync if user doesn't want to. */
-		NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
-		
 		if (self.localKeysWereUpdated == NO) {
 			DebugLogToConsole(@"iCloud: Upstream sync cancelled because nothing has changed.");
 			
@@ -353,12 +358,12 @@
 
 - (void)syncPreferencesFromCloud:(NSArray *)changedKeys
 {
+	/* We don't even want to sync if user doesn't want to. */
+	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
+	
 	dispatch_async(self.workerQueue, ^{
 		/* Debug data. */
 		DebugLogToConsole(@"iCloud: Beginning sync downstream.");
-
-		/* We don't even want to sync if user doesn't want to. */
-		NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
 
 		/* Announce our intents… */
 		self.isSyncingLocalKeysDownstream = YES;
@@ -502,6 +507,220 @@
 }
 
 #pragma mark -
+#pragma mark Container Updates
+
+/* This call has several layers of complexities on it. Therefore, it wont be used for anything
+ more than copying to the cache. The actual detection of theme changes can be handled by the
+ timers which they were designed to do. */
+- (void)cloudMetadataQueryDidUpdate:(NSNotification *)notification
+{
+	dispatch_async(self.workerQueue, ^{
+		/* Do not accept updates during work. */
+		[self.cloudContainerNotificationQuery disableUpdates];
+		
+		/* Get the existing cache path. */
+		NSString *cachePath = [TPCPreferences cloudCustomThemeCachedFolderPath];
+		NSString *ubiqdPath = [TPCPreferences cloudCustomThemeFolderPath];
+		
+		NSURL *cachePahtURL = [NSURL fileURLWithPath:cachePath];
+		NSURL *ubiqdPathURL = [NSURL fileURLWithPath:ubiqdPath];
+		
+		/* ========================================================== */
+	
+		/* We will now enumrate through all existing cache files gathering a list of those that
+		 exist and their modification dates. This information is stored in a dictionary with the
+		 file URL being the dictionary key and the value being its modification date. */
+		NSDirectoryEnumerator *enumerator = [RZFileManager() enumeratorAtURL:cachePahtURL
+												  includingPropertiesForKeys:@[NSURLIsDirectoryKey, NSURLContentModificationDateKey]
+																	 options:NSDirectoryEnumerationSkipsHiddenFiles
+																errorHandler:^(NSURL *url, NSError *error)
+																{
+																	DebugLogToConsole(@"Enumeration Error: %@", [error localizedDescription]);
+																	
+																	return YES; // Continue regardless of error.
+																}];
+		
+		/* Build list of files. */
+		NSMutableDictionary *cachedFiles = [NSMutableDictionary dictionary];
+		
+		/* Enumrate the cache. */
+		for (NSURL *itemURL in enumerator) {
+			NSError *error;
+			
+			NSNumber *isDirectory = nil;
+			
+			/* Directories and files are handled differently. This handles that. */
+			if ([itemURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error]) {
+				/* Get the path of this item minus the prefix path. */
+				NSString *path = [itemURL.path stringByDeletingPreifx:cachePahtURL.path];
+				
+				/* Continus processing… */
+				if ([isDirectory boolValue]) {
+					/* We do not care about modification dates of directories. */
+					[cachedFiles setObject:[NSNull null] forKey:path];
+				} else {
+					/* Path is a file. We need it's modification date. */
+					NSDate *fileDate;
+					
+					if ([itemURL getResourceValue:&fileDate forKey:NSURLContentModificationDateKey error:&error]) {
+						[cachedFiles setObject:fileDate forKey:path];
+					}
+				}
+			}
+		}
+		
+		/* ========================================================== */
+		
+		/* Now that we have an idea of our existing cache, we can
+		 go through our actual iCloud data and update files. */
+		
+		/* Go through each result item and do work. */
+		NSUInteger resultCount = [self.cloudContainerNotificationQuery resultCount];
+		
+		for (int i = 0; i < resultCount; i++) {
+			NSMetadataItem *item = [self.cloudContainerNotificationQuery resultAtIndex:i];
+			
+			/* First thing first is to get the URL. */
+			NSURL *fileURL = [item valueForAttribute:NSMetadataItemURLKey];
+			
+			/* Build some relevant path information. */
+			/* First the path to the file minus its path prefix. */
+			NSString *basicFilePath = [fileURL.path stringByDeletingPreifx:ubiqdPathURL.path];
+			
+			/* Then the actual folder in which the file is stored. */
+			NSString *basicFolderPath = [basicFilePath stringByDeletingLastPathComponent];
+			
+			/* More paths, lol. */
+			NSURL *cachedFolderLocation = [cachePahtURL URLByAppendingPathComponent:basicFolderPath];
+			NSURL *cachedFileLocation = [cachePahtURL URLByAppendingPathComponent:basicFilePath];
+			
+			/* Now, we begin gathering relevant information about the file. */
+			BOOL updateOrAddFile = NO; // Used later on…
+			BOOL removeFromCacheArray = NO; // Setting to YES will remove the file from deletion pool.
+			
+			BOOL cloudFileExists = [RZFileManager() fileExistsAtPath:fileURL.path];
+			BOOL cachedFileExists = [RZFileManager() fileExistsAtPath:cachedFileLocation.path];
+			
+			NSDate *lastChangeDate = [item valueForAttribute:NSMetadataItemFSContentChangeDateKey];
+			
+			NSNumber *isDownloaded = [item valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey];
+			
+			/* ========================================================== */
+			
+			/* Begin work. */
+			if ([isDownloaded boolValue] == NO) {
+				if (cachedFileExists) {
+					removeFromCacheArray = YES; // Do not delete cached file.
+				}
+			} else {
+				if (cachedFileExists == NO) {
+					if (cloudFileExists) {
+						updateOrAddFile = YES;
+					}
+				} else {
+					/* This file exists in the cache, so let's get the modificaiton date we stored for it. */
+					NSDate *cachedFileModDate = [cachedFiles objectForKey:basicFilePath];
+					
+					if (cloudFileExists) {
+						/* If for some reason we do not have either modificaiton date, then
+						 we do not try to change the cached version. */
+						
+						if (PointerIsEmpty(lastChangeDate) || PointerIsEmpty(cachedFileModDate)) {
+							removeFromCacheArray = YES;
+						} else {
+							NSTimeInterval timeDiff = [lastChangeDate timeIntervalSinceDate:cachedFileModDate];
+							
+							/* If we have a negative, then that means the change date for the file
+							 on the cloud is older than the one in the cache. What? Anyways, we
+							 only update the file if the date is in the future. */
+							
+							if (timeDiff > 0) {
+								updateOrAddFile = YES;
+							}
+						}
+					} else {
+						removeFromCacheArray = YES; // Do not delete cached file.
+					}
+				}
+			}
+			
+			/* ========================================================== */
+			
+			/* Begin actual update process for this file. */
+			if (updateOrAddFile || removeFromCacheArray) {
+				/* If a file is marked for update or it was marked to be
+				 removed from the cache array, then we remove it from that
+				 so that when the array is processed later on, the only
+				 files we want in it, are those that will be erased from
+				 the cache folder. */
+				/* Removing it from array reduces calls to fileExistsAtPath
+				 down the line. */
+				
+				/* Remove any known cache entries. */
+				[cachedFiles removeObjectForKey:basicFilePath]; // File cache.
+				[cachedFiles removeObjectForKey:basicFolderPath]; // Folder cache.
+				
+				/* Now we can copy the file if needed. */
+				NSError *updateError;
+				
+				if (updateOrAddFile) {
+					/* Delete old file if we have to. */
+					if (cachedFileExists) {
+						[RZFileManager() removeItemAtURL:cachedFileLocation error:&updateError];
+						
+						if (updateError) {
+							LogToConsole(@"Error Deleting Cached File: %@", [updateError localizedDescription]);
+						}
+					}
+					
+					/* Create the destination. */
+					if ([RZFileManager() fileExistsAtPath:cachedFolderLocation.path] == NO) {
+						[RZFileManager() createDirectoryAtURL:cachedFolderLocation withIntermediateDirectories:YES attributes:nil error:&updateError];
+						
+						if (updateError) {
+							LogToConsole(@"Error Creating Destination Folder: %@", [updateError localizedDescription]);
+						}
+					}
+					
+					/* Copy new item into place. */
+					[RZFileManager() copyItemAtURL:fileURL toURL:cachedFileLocation error:&updateError];
+					
+					if (updateError) {
+						LogToConsole(@"Error Copying Cached File: %@", [updateError localizedDescription]);
+					}
+					
+					/* Debugging data. */
+					DebugLogToConsole(@"Cached file \"%@\" updated with the file \"%@\" (%@)", cachedFileLocation, fileURL, lastChangeDate);
+				}
+			}
+			
+			/* We are done with this file. Do it all again for the next… */
+		}
+		
+		/* ========================================================== */
+		
+		/* Time to destroy old caches. */
+		[cachedFiles enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+			/* Check the folder to see if anything left in the cache does exist in cloud. */
+			NSURL *ubiqdFolderLocation = [ubiqdPathURL URLByAppendingPathComponent:key];
+			NSURL *cacheFolderLocation = [cachePahtURL URLByAppendingPathComponent:key];
+			
+			/* Destroy cached location. */
+			if ([RZFileManager() fileExistsAtPath:ubiqdFolderLocation.path] == NO) {
+				[RZFileManager() removeItemAtURL:cacheFolderLocation error:NULL];
+				
+				DebugLogToConsole(@"Destroying cached item \"%@\" which no longer exists in the cloud.", cacheFolderLocation);
+			}
+		}];
+		
+		/* ========================================================== */
+		
+		/* Accept updates again. */
+		[self.cloudContainerNotificationQuery enableUpdates];
+	});
+}
+
+#pragma mark -
 #pragma mark Session Management
 
 - (void)initializeCloudSyncSession
@@ -513,6 +732,8 @@
 	if (RZUbiquitousKeyValueStore()) {
 		/* Create worker queue. */
 		self.workerQueue = dispatch_queue_create("iCloudSyncWorkerQueue", NULL);
+		
+		[self setupUbiquitousContainerURLPath];
 		
 		/* Notification for when a local value through NSUserDefaults is changed. */
 		[RZNotificationCenter() addObserver:self
@@ -534,6 +755,24 @@
 		
 		self.cloudOneMinuteSyncTimer = syncTimer1;
 		self.cloudTenMinuteSyncTimer = syncTimer2;
+		
+		/* Setup query for container changes. */
+		self.cloudContainerNotificationQuery = [NSMetadataQuery new];
+		
+		[self.cloudContainerNotificationQuery setSearchScopes:@[NSMetadataQueryUbiquitousDataScope]];
+		[self.cloudContainerNotificationQuery setPredicate:[NSPredicate predicateWithFormat:@"%K LIKE %@", NSMetadataItemFSNameKey, @"*"]];
+		
+        [RZNotificationCenter() addObserver:self
+								   selector:@selector(cloudMetadataQueryDidUpdate:)
+									   name:NSMetadataQueryDidFinishGatheringNotification
+									 object:nil];
+		
+        [RZNotificationCenter() addObserver:self
+								   selector:@selector(cloudMetadataQueryDidUpdate:)
+									   name:NSMetadataQueryDidUpdateNotification
+									 object:nil];
+		
+        [self.cloudContainerNotificationQuery startQuery];
 
 		/* Notification for when a remote value through the key-value store is changed. */
 		[RZNotificationCenter() addObserver:self
@@ -583,6 +822,16 @@
 	/* Stop listening for notification related to local changes. */
     [self.cloudOneMinuteSyncTimer invalidate];
 	[self.cloudTenMinuteSyncTimer invalidate];
+	
+	[self.cloudContainerNotificationQuery stopQuery];
+	
+    [RZNotificationCenter() removeObserver:self
+									  name:NSMetadataQueryDidUpdateNotification
+									object:nil];
+	
+    [RZNotificationCenter() removeObserver:self
+									  name:NSMetadataQueryDidFinishGatheringNotification
+									object:nil];
 	
     [RZNotificationCenter() removeObserver:self
 									  name:NSUserDefaultsDidChangeNotification
