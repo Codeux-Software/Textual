@@ -713,6 +713,10 @@
 			}
 		}];
 		
+		/* After everything is updated, run a validation on the 
+		 theme to make sure the active still exists. */
+		[TPCPreferences performValidationForKeyValues];
+		
 		/* ========================================================== */
 		
 		/* Accept updates again. */
