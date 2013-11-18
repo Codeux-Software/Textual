@@ -576,11 +576,15 @@ static NSURL *transcriptFolderResolvedBookmark;
 #pragma mark -
 #pragma mark Export/Import Information
 
-+ (void)performValidationForKeyValues
++ (BOOL)performValidationForKeyValues
 {
 	/* Validate font. */
+	BOOL keyChanged = NO;
+	
 	if ([NSFont fontIsAvailable:[TPCPreferences themeChannelViewFontName]] == NO) {
 		[RZUserDefaults() setObject:TXDefaultTextualLogFont forKey:TPCPreferencesThemeFontNameDefaultsKey];
+		
+		keyChanged = YES;
 	}
 	
 	/* Validate theme. */
@@ -601,7 +605,11 @@ static NSURL *transcriptFolderResolvedBookmark;
 				[TPCPreferences setThemeName:TXDefaultTextualLogStyle];
 			}
 		}
+		
+		keyChanged = YES;
 	}
+	
+	return keyChanged;
 }
 
 /* This method expects a list of key names which were changed during an 
@@ -1877,7 +1885,7 @@ static NSMutableArray *excludeKeywords = nil;
 #endif
 	
 	/* Validate some stuff. */
-	[TPCPreferences performValidationForKeyValues];
+	(void)[TPCPreferences performValidationForKeyValues];
 
 	/* Setup loggin. */
 	[TPCPreferences startUsingTranscriptFolderSecurityScopedBookmark];
