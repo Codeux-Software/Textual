@@ -715,7 +715,11 @@
 		
 		/* After everything is updated, run a validation on the 
 		 theme to make sure the active still exists. */
-		[TPCPreferences performValidationForKeyValues];
+		if ([TPCPreferences performValidationForKeyValues]) {
+			[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
+			[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
+			[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListAction];
+		}
 		
 		/* ========================================================== */
 		
