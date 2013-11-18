@@ -98,6 +98,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	self.cloudSyncManager = [TPCPreferencesCloudSync new];
 	
+	/* Cloud files are synced regardless of user preference
+	 so we still have to initalize it at some point. */
 	[self.cloudSyncManager initializeCloudSyncSession];
 #endif
 

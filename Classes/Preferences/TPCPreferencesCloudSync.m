@@ -828,10 +828,17 @@
 	DebugLogToConsole(@"iCloud: Closing session.");
 
 	/* Stop listening for notification related to local changes. */
-    [self.cloudOneMinuteSyncTimer invalidate];
-	[self.cloudTenMinuteSyncTimer invalidate];
+	if (self.cloudOneMinuteSyncTimer) {
+		[self.cloudOneMinuteSyncTimer invalidate];
+	}
 	
-	[self.cloudContainerNotificationQuery stopQuery];
+	if (self.cloudTenMinuteSyncTimer) {
+		[self.cloudTenMinuteSyncTimer invalidate];
+	}
+	
+	if (self.cloudContainerNotificationQuery) {
+		[self.cloudContainerNotificationQuery stopQuery];
+	}
 	
     [RZNotificationCenter() removeObserver:self
 									  name:NSMetadataQueryDidUpdateNotification
@@ -856,6 +863,15 @@
 		
 		self.workerQueue = NULL;
 	}
+	
+	self.localKeysWereUpdated = NO;
+	self.isSyncingLocalKeysDownstream = NO;
+	self.isSyncingLocalKeysUpstream = NO;
+	
+	self.ubiquitousContainerURL = nil;
+	self.cloudOneMinuteSyncTimer = nil;
+	self.cloudTenMinuteSyncTimer = nil;
+	self.cloudContainerNotificationQuery = nil;
 }
 
 @end

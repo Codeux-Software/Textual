@@ -101,6 +101,8 @@
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 - (void)onChangedCloudSyncingServices:(id)sender;
+
+- (void)onOpenPathToCloudFolder:(id)sender;
 #endif
 
 - (void)onChangedHighlightLogging:(id)sender;

@@ -135,7 +135,7 @@
                         <popUpButton key="view" tag="13" id="6451">
                             <rect key="frame" x="3" y="14" width="43" height="32"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" imagePosition="right" lineBreakMode="truncatingTail" borderStyle="bezel" inset="2" pullsDown="YES" selectedItem="6455" id="6452">
+                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="TPWTB_Extensions" imagePosition="right" lineBreakMode="truncatingTail" borderStyle="bezel" inset="2" pullsDown="YES" selectedItem="6455" id="6452">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" title="OtherViews" showsStateColumn="NO" id="6453">
@@ -2312,7 +2312,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" id="2xM-Sh-Zgw">
                         <rect key="frame" x="1" y="1" width="468" height="208"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" id="5174">
                                 <rect key="frame" x="0.0" y="0.0" width="468" height="208"/>
@@ -3874,19 +3874,18 @@
         <menuItem title="20 Megabytes" state="on" id="CFR-HM-9FE"/>
         <userDefaultsController id="QfQ-4a-fUo"/>
         <customView id="Ixz-rk-uAe" userLabel="iCloud Settings">
-            <rect key="frame" x="0.0" y="0.0" width="534" height="165"/>
+            <rect key="frame" x="0.0" y="0.0" width="534" height="212"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <userGuides>
                 <userLayoutGuide location="31" affinity="minX"/>
                 <userLayoutGuide location="502" affinity="minX"/>
-                <userLayoutGuide location="321" affinity="minY"/>
+                <userLayoutGuide location="299" affinity="minY"/>
                 <userLayoutGuide location="28" affinity="minY"/>
-                <userLayoutGuide location="184" affinity="minY"/>
-                <userLayoutGuide location="133" affinity="minY"/>
+                <userLayoutGuide location="241" affinity="minY"/>
             </userGuides>
             <subviews>
                 <textField verticalHuggingPriority="750" id="F51-75-bIH">
-                    <rect key="frame" x="53" y="67" width="428" height="52"/>
+                    <rect key="frame" x="47" y="67" width="428" height="52"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="QUS-JX-gQv">
                         <font key="font" metaFont="system" size="10"/>
@@ -3896,7 +3895,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" id="KUq-Sc-urV">
-                    <rect key="frame" x="85" y="26" width="180" height="25"/>
+                    <rect key="frame" x="79" y="26" width="180" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundTextured" title="Erase Data" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rKa-1A-BWW">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -3907,7 +3906,7 @@
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Aud-r1-PPJ">
-                    <rect key="frame" x="216" y="127" width="103" height="22"/>
+                    <rect key="frame" x="221" y="125" width="81" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Erase Data" id="q0a-ZE-T7N">
                         <font key="font" size="14" name="LucidaGrande-Bold"/>
@@ -3916,7 +3915,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" id="5zf-Hr-NG5">
-                    <rect key="frame" x="273" y="26" width="174" height="25"/>
+                    <rect key="frame" x="267" y="26" width="174" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundTextured" title="Erase Files" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="j46-Vm-z2z">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -3924,6 +3923,33 @@
                     </buttonCell>
                     <connections>
                         <action selector="onPurgeOfCloudFilesRequested:" target="-2" id="hCM-HC-iWm"/>
+                    </connections>
+                </button>
+                <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="VeC-VG-ZUN">
+                    <rect key="frame" x="40" y="159" width="442" height="5"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <textField verticalHuggingPriority="750" id="aPd-xG-sWR">
+                    <rect key="frame" x="100" y="178" width="210" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iCloud Custom Addons Location:" id="xKi-El-Fn9">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" id="Ppb-WG-kNa">
+                    <rect key="frame" x="316" y="176" width="103" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="roundRect" title="Open In Finder" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="71p-fI-eau">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onOpenPathToCloudFolder:" target="-2" id="vIn-iv-34e"/>
                     </connections>
                 </button>
             </subviews>

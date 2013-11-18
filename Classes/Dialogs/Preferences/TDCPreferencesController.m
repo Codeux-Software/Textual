@@ -897,19 +897,16 @@
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListSortOrderAction];
 }
 
-- (void)onOpenPathToScripts:(id)sender
+- (void)onOpenPathToCloudFolder:(id)sender
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	if ([TPCPreferences syncPreferencesToTheCloud]) {
-		[RZWorkspace() openFile:[TPCPreferences applicationUbiquitousContainerPath]];
-	} else {
+	[RZWorkspace() openFile:[TPCPreferences applicationUbiquitousContainerPath]];
 #endif
-		
-		[RZWorkspace() openFile:[TPCPreferences applicationSupportFolderPath]];
-		
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	}
-#endif
+}
+
+- (void)onOpenPathToScripts:(id)sender
+{
+	[RZWorkspace() openFile:[TPCPreferences applicationSupportFolderPath]];
 }
 
 - (void)setTextualAsDefaultIRCClient:(id)sender
@@ -978,6 +975,14 @@
 		
 		if (delError) {
 			LogToConsole(@"Delete Error: %@", [delError localizedDescription]);
+		}
+		
+		/* After everything is updated, run a validation on the
+		 theme to make sure the active still exists. */
+		if ([TPCPreferences performValidationForKeyValues]) {
+			[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
+			[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
+			[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListAction];
 		}
 	}
 #endif
