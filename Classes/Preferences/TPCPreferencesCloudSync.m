@@ -53,6 +53,7 @@
 @property (nonatomic, assign) BOOL localKeysWereUpdated;
 @property (nonatomic, assign) BOOL isSyncingLocalKeysDownstream;
 @property (nonatomic, assign) BOOL isSyncingLocalKeysUpstream;
+@property (nonatomic, assign) BOOL initialMetadataQueryCompleted;
 @property (nonatomic, assign) dispatch_queue_t workerQueue;
 @property (nonatomic, strong) NSTimer *cloudOneMinuteSyncTimer;
 @property (nonatomic, strong) NSTimer *cloudTenMinuteSyncTimer;
@@ -715,13 +716,19 @@
 		
 		/* After everything is updated, run a validation on the 
 		 theme to make sure the active still exists. */
-		if ([TPCPreferences performValidationForKeyValues]) {
-			[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
-			[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
-			[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListAction];
+		if (self.initialMetadataQueryCompleted) {
+			if ([TPCPreferences performValidationForKeyValues]) {
+				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
+				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
+				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListAction];
+			}
 		}
 		
 		/* ========================================================== */
+		
+		if (self.initialMetadataQueryCompleted == NO) {
+			self.initialMetadataQueryCompleted = YES;
+		}
 		
 		/* Accept updates again. */
 		[self.cloudContainerNotificationQuery enableUpdates];
