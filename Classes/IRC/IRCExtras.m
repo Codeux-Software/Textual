@@ -151,7 +151,7 @@
 		{
 			[TLOpenLink openWithString:@"http://www.codeux.com/textual/newsletter/"];
 		}
-		else if ([serverAddress isEqualToString:@"diagnostic-reports-folder"])
+		else if ([serverAddress isEqualToString:@"	r"])
 		{
 			NSString *userpath = [[TPCPreferences userHomeDirectoryPathOutsideSandbox] stringByAppendingPathComponent:@"/Library/Logs/DiagnosticReports"];
 			

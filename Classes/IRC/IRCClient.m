@@ -602,7 +602,7 @@
 - (BOOL)isMessageEncrypted:(NSString *)message channel:(IRCChannel *)channel
 {
 	if ([self isSupportedMessageEncryptionFormat:message channel:channel]) {
-		return [message hasPrefix:@"+OK "];
+		return ([message hasPrefix:@"+OK "] || [message hasPrefix:@"mcps"]);
 	}
 
 	return NO;
