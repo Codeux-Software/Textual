@@ -53,8 +53,15 @@
 
 + (NSString *)decodeData:(NSString *)input key:(NSString *)phrase encoding:(NSStringEncoding)local
 {
-	if ([input hasPrefix:@"+OK "] && [input length] >= 5) {
-		input = [input substringFromIndex:4];
+	BOOL hasOKPrefix = [input hasPrefix:@"+OK "];
+	BOOL hasMCPSPrefix = [input hasPrefix:@"mcps "];
+	
+	if ((hasOKPrefix || hasMCPSPrefix) && [input length] >= 5) {
+		if (hasOKPrefix) {
+			input = [input substringFromIndex:4];
+		} else if (hasMCPSPrefix) {
+			input = [input substringFromIndex:5];
+		}
 	} else {
 		return nil;
 	}
