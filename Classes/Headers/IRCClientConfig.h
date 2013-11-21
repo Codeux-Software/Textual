@@ -104,6 +104,8 @@ NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *cont
 @property (nonatomic, assign) BOOL nicknamePasswordIsSet;
 @property (nonatomic, assign) BOOL proxyPasswordIsSet;
 
+- (BOOL)isEqualToClientConfiguration:(IRCClientConfig *)seed;
+
 - (id)initWithDictionary:(NSDictionary *)dic;
 - (NSMutableDictionary *)dictionaryValue;
 

@@ -194,7 +194,7 @@
 		
 		self.config = [[IRCClientConfig alloc] initWithDictionary:seed];
 	} else if ([seed isKindOfClass:[IRCClientConfig class]]) {
-		self.config = seed;
+		self.config = [seed mutableCopy];
 	} else {
 		return;
 	}
@@ -206,6 +206,12 @@
 
 - (void)updateConfig:(IRCClientConfig *)seed
 {
+	PointerIsEmptyAssert(seed);
+	
+	if ([self.config isEqualToClientConfiguration:seed]) {
+		return;
+	}
+	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	BOOL syncToCloudChanged = NSDissimilarObjects(self.config.excludedFromCloudSyncing, seed.excludedFromCloudSyncing);
 #endif

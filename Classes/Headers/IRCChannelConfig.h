@@ -66,5 +66,7 @@ typedef enum IRCChannelType : NSInteger {
 - (id)initWithDictionary:(NSDictionary *)dic;
 - (NSMutableDictionary *)dictionaryValue;
 
+- (BOOL)isEqualToChannelConfiguration:(IRCChannelConfig *)seed;
+
 + (NSDictionary *)seedDictionary:(NSString *)channelName;
 @end
