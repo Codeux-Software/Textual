@@ -73,6 +73,10 @@
 - (void)updateConfig:(IRCChannelConfig *)seed
 {
 	PointerIsEmptyAssert(seed);
+	
+	if ([self.config isEqualToChannelConfiguration:seed]) {
+		return;
+	}
 
 	BOOL oldKeyEmpty = NSObjectIsEmpty(self.config.encryptionKey);
 	BOOL newKeyEmpty = NSObjectIsEmpty(seed.encryptionKey);

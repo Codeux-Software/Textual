@@ -199,6 +199,16 @@
 	return nil;
 }
 
+- (BOOL)isEqualToChannelConfiguration:(IRCChannelConfig *)seed
+{
+	PointerIsEmptyAssertReturn(seed, NO);
+	
+	NSDictionary *s1 = [seed dictionaryValue];
+	NSDictionary *s2 = [self dictionaryValue];
+	
+	return ([s2 isEqual:s1]);
+}
+
 - (NSMutableDictionary *)dictionaryValue
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
