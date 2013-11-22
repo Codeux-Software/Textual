@@ -56,16 +56,11 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 		// ---- //
 
-#warning TODO: Disable debugging for final build.
 		if ([NSEvent modifierFlags] & NSControlKeyMask) {
 			self.debugModeOn = YES;
 
 			LogToConsole(@"Launching in debug mode.");
 		}
-		
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-		self.debugModeOn = YES;
-#endif
 
 		// ---- //
 
@@ -208,10 +203,14 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	/* Make sure the main window can fit in the new screen resolution. */
 	if (self.isInFullScreenMode) {
 		/* Reset window frame if screen resolution is changed. */
+		NSRect oldFrame = self.mainWindow.frame;
+		NSRect newFrame = [RZMainScreen() frame];
 		
-		[self.mainWindow setFrame:[RZMainScreen() frame] display:YES animate:YES];
+		oldFrame.size = newFrame.size;
+		
+		[self.mainWindow setFrame:oldFrame display:YES animate:YES];
 	} else {
-		NSRect visibleRect = RZMainScreen().visibleFrame;
+		NSRect visibleRect = [RZMainScreen() visibleFrame];
 		NSRect windowRect = self.mainWindow.frame;
 		
 		BOOL redrawFrame = NO;
@@ -1406,12 +1405,12 @@ typedef enum TXMoveKind : NSInteger {
 	if (u.config.autoConnect) {
 		[u connect];
 	}
+	
+	[self.mainWindow makeKeyAndOrderFront:nil];
 
 	NSObjectIsEmptyAssert(u.channels);
 
 	[self.worldController select:u.channels[0]];
-
-	[self.mainWindow makeKeyAndOrderFront:nil];
 }
 
 - (void)welcomeSheetWillClose:(TDCWelcomeSheet *)sender
