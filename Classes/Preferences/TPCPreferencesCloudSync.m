@@ -50,6 +50,7 @@
 #define _localKeysUpstreamSyncTimerInterval_2			630.0	// 10 minutes, 30 seconds
 
 @interface TPCPreferencesCloudSync ()
+@property (nonatomic, strong) id ubiquityIdentityToken;
 @property (nonatomic, assign) BOOL localKeysWereUpdated;
 @property (nonatomic, assign) BOOL isSyncingLocalKeysDownstream;
 @property (nonatomic, assign) BOOL isSyncingLocalKeysUpstream;
@@ -135,6 +136,8 @@
 		if (ucurl) {
 			self.ubiquitousContainerURL = ucurl;
 		} else {
+			self.ubiquitousContainerURL = nil;
+			
 			LogToConsole(@"iCloud Access Is Not Available.");
 		}
 	});
@@ -523,6 +526,8 @@
 		NSString *cachePath = [TPCPreferences cloudCustomThemeCachedFolderPath];
 		NSString *ubiqdPath = [TPCPreferences cloudCustomThemeFolderPath];
 		
+		NSObjectIsEmptyAssert(ubiqdPath);
+		
 		NSURL *cachePahtURL = [NSURL fileURLWithPath:cachePath];
 		NSURL *ubiqdPathURL = [NSURL fileURLWithPath:ubiqdPath];
 		
@@ -740,6 +745,20 @@
 
 - (void)iCloudAccountAvailabilityChanged:(NSNotification *)aNote
 {
+	/* Get new token first. */
+	id newToken = [RZFileManager() ubiquityIdentityToken];
+	
+	if (PointerIsNotEmpty(newToken)) {
+		if (NSDissimilarObjects(newToken, self.ubiquityIdentityToken)) {
+			/* If the new token is logged in and is different from the old,
+			 then mark local keys as changed to force an upstream sync. */
+			
+			self.localKeysWereUpdated = YES;
+		}
+	}
+	
+	self.ubiquityIdentityToken = newToken;
+	
 	[self setupUbiquitousContainerURLPath];
 }
 
@@ -752,6 +771,8 @@
 	if (RZUbiquitousKeyValueStore()) {
 		/* Create worker queue. */
 		self.workerQueue = dispatch_queue_create("iCloudSyncWorkerQueue", NULL);
+		
+		self.ubiquityIdentityToken = [RZFileManager() ubiquityIdentityToken];
 		
 		[self setupUbiquitousContainerURLPath];
 		
@@ -874,6 +895,7 @@
 	self.isSyncingLocalKeysDownstream = NO;
 	self.isSyncingLocalKeysUpstream = NO;
 	
+	self.ubiquityIdentityToken = nil;
 	self.ubiquitousContainerURL = nil;
 	self.cloudOneMinuteSyncTimer = nil;
 	self.cloudTenMinuteSyncTimer = nil;
