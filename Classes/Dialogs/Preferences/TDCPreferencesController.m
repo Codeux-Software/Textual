@@ -673,7 +673,7 @@
 	}
 
 	NSInteger count = [self.themeSelectionButton numberOfItems];
-	LogToConsole(@"%@ %@ %i", kind, name, targetTag);
+
 	for (NSInteger i = 0; i < count; i++) {
 		NSMenuItem *item = [self.themeSelectionButton itemAtIndex:i];
 
