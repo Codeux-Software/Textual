@@ -56,6 +56,11 @@
 
 + (NSString *)pathOfThemeWithName:(NSString *)themeName
 {
+	return [self pathOfThemeWithName:themeName skipCloudCache:NO];
+}
+
++ (NSString *)pathOfThemeWithName:(NSString *)themeName skipCloudCache:(BOOL)ignoreCloudCache
+{
 	NSString *filekind = [TPCThemeController extractThemeSource:themeName];
 	NSString *filename = [TPCThemeController extractThemeName:themeName];
 	
@@ -68,7 +73,11 @@
 		/* Does the theme exist in the cloud? */
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-		path = [[TPCPreferences cloudCustomThemeCachedFolderPath] stringByAppendingPathComponent:filename];
+		if (ignoreCloudCache) {
+			path = [[TPCPreferences cloudCustomThemeFolderPath] stringByAppendingPathComponent:filename];
+		} else {
+			path = [[TPCPreferences cloudCustomThemeCachedFolderPath] stringByAppendingPathComponent:filename];
+		}
 		
 		if ([RZFileManager() fileExistsAtPath:path]) {
 			return path;

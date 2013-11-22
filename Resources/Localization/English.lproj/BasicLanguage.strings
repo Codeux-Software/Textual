@@ -299,8 +299,10 @@
 "ResourcesFileImportSystemVersionErrorDialogTitle" = "Incompatiable System Version";
 "ResourcesFileImportSystemVersionErrorDialogMessage" = "A file that you are trying to install cannot be used on this version of Mac OS X.";
 
-"OpeningLocalStyleResourcesCopyButton" = "Make Local Copy";
-"OpeningLocalStyleResourcesMessage" = "The style being opened is a read-only version bundled with Textual.\n\nWould you like to create a local copy? It will become the selected style and can then be modified.";
+"OpeningLocalStyleResourcesNormalCopyButton" = "Make Local Copy";
+"OpeningLocalStyleResourcesCloudCopyButton" = "Copy to iCloud";
+"OpeningLocalStyleResourcesNormalMessage" = "The style being opened is a read-only version bundled with Textual.\n\nWould you like to create a local copy of it? It will become the selected style and can then be modified.";
+"OpeningLocalStyleResourcesCloudMessage" = "The style being opened is a read-only version bundled with Textual.\n\nWould you like to create a local copy of it in your iCloud folder? From there, it can be modified then selected for use.";
 "OpeningLocalStyleResourcesTitle" = "Resource Files";
 
 "PluginCommandClashErrorMessage" = "Error: The command %@ is shared by both a script and plugin. Sending to server because of inability to determine priority.";
