@@ -904,7 +904,7 @@
 								target:[TLOPopupPrompts class]
 								action:@selector(popupPromptNilSelector:)
 								  body:TXTLS(@"iCloudSyncServicesNotAvailableDialogMessage")
-								 title:TXTLS(@"iCloudSyncServicesNotAvailableDialogTitl")
+								 title:TXTLS(@"iCloudSyncServicesNotAvailableDialogTitle")
 						 defaultButton:TXTLS(@"OkButton")
 					   alternateButton:nil
 						   otherButton:nil
