@@ -895,7 +895,24 @@
 - (void)onOpenPathToCloudFolder:(id)sender
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	[RZWorkspace() openFile:[TPCPreferences applicationUbiquitousContainerPath]];
+	NSString *path = [TPCPreferences applicationUbiquitousContainerPath];
+	
+	if (NSObjectIsEmpty(path)) {
+		TLOPopupPrompts *popup = [TLOPopupPrompts new];
+		
+		[popup sheetWindowWithQuestion:self.window
+								target:[TLOPopupPrompts class]
+								action:@selector(popupPromptNilSelector:)
+								  body:TXTLS(@"iCloudSyncServicesNotAvailableDialogMessage")
+								 title:TXTLS(@"iCloudSyncServicesNotAvailableDialogTitl")
+						 defaultButton:TXTLS(@"OkButton")
+					   alternateButton:nil
+						   otherButton:nil
+						suppressionKey:nil
+					   suppressionText:nil];
+	} else {
+		[RZWorkspace() openFile:path];
+	}
 #endif
 }
 

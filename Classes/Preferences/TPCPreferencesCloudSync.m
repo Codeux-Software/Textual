@@ -738,6 +738,11 @@
 #pragma mark -
 #pragma mark Session Management
 
+- (void)iCloudAccountAvailabilityChanged:(NSNotification *)aNote
+{
+	[self setupUbiquitousContainerURLPath];
+}
+
 - (void)initializeCloudSyncSession
 {
 	/* Debug data. */
@@ -754,6 +759,11 @@
 		[RZNotificationCenter() addObserver:self
 								   selector:@selector(localKeysDidChangeNotification:)
 									   name:NSUserDefaultsDidChangeNotification
+									 object:nil];
+		
+		[RZNotificationCenter() addObserver:self
+								   selector:@selector(iCloudAccountAvailabilityChanged:)
+									   name:NSUbiquityIdentityDidChangeNotification
 									 object:nil];
 		
 		NSTimer *syncTimer1 = [NSTimer scheduledTimerWithTimeInterval:_localKeysUpstreamSyncTimerInterval_1
@@ -847,22 +857,11 @@
 		[self.cloudContainerNotificationQuery stopQuery];
 	}
 	
-    [RZNotificationCenter() removeObserver:self
-									  name:NSMetadataQueryDidUpdateNotification
-									object:nil];
-	
-    [RZNotificationCenter() removeObserver:self
-									  name:NSMetadataQueryDidFinishGatheringNotification
-									object:nil];
-	
-    [RZNotificationCenter() removeObserver:self
-									  name:NSUserDefaultsDidChangeNotification
-									object:nil];
-
-	/* Stop listening for notification related to remote changes. */
-    [RZNotificationCenter() removeObserver:self
-									  name:NSUbiquitousKeyValueStoreDidChangeExternallyNotification
-									object:nil];
+    [RZNotificationCenter() removeObserver:self name:NSMetadataQueryDidUpdateNotification object:nil];
+    [RZNotificationCenter() removeObserver:self name:NSMetadataQueryDidFinishGatheringNotification object:nil];
+    [RZNotificationCenter() removeObserver:self name:NSUserDefaultsDidChangeNotification object:nil];
+	[RZNotificationCenter() removeObserver:self name:NSUbiquityIdentityDidChangeNotification object:nil];
+    [RZNotificationCenter() removeObserver:self name:NSUbiquitousKeyValueStoreDidChangeExternallyNotification object:nil];
 	
 	/* Dispatch clean-up. */
 	if (self.workerQueue) {
