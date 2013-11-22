@@ -52,7 +52,9 @@
 - (void)load;
 
 + (BOOL)themeExists:(NSString *)themeName;
+
 + (NSString *)pathOfThemeWithName:(NSString *)themeName;
++ (NSString *)pathOfThemeWithName:(NSString *)themeName skipCloudCache:(BOOL)ignoreCloudCache;
 
 + (NSString *)buildResourceFilename:(NSString *)name;
 + (NSString *)buildUserFilename:(NSString *)name;

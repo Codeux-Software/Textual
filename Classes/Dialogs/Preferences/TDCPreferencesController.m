@@ -1032,6 +1032,7 @@
 
 		[RZWorkspace() openFile:path];
 	} else {
+		BOOL updateSelection = YES;
 		
 		NSString *newpath = [[TPCPreferences customThemeFolderPath]	stringByAppendingPathComponent:name];
 		
@@ -1042,6 +1043,8 @@
 		
 			if (cloudprefix.length > 0) {
 				newpath = [[TPCPreferences cloudCustomThemeFolderPath] stringByAppendingPathComponent:name];
+				
+				updateSelection = NO;
 			}
 		}
 #endif
@@ -1057,11 +1060,13 @@
 		} else {
 			[RZWorkspace() openFile:newpath];
 
-			NSString *newThemeLocal = [TPCThemeController buildUserFilename:name];
+			if (updateSelection) {
+				NSString *newThemeLocal = [TPCThemeController buildUserFilename:name];
 
-			[TPCPreferences setThemeName:newThemeLocal];
+				[TPCPreferences setThemeName:newThemeLocal];
 
-			[self updateThemeSelection];
+				[self updateThemeSelection];
+			}
 		}
 	}
 }
@@ -1074,18 +1079,30 @@
     if ([kind isEqualIgnoringCase:TPCThemeControllerBundledStyleNameBasicPrefix]) {
 		TLOPopupPrompts *prompt = [TLOPopupPrompts new];
 
+		NSString *dialogMessage = @"OpeningLocalStyleResourcesNormalMessage";
+		NSString *copyButton = @"OpeningLocalStyleResourcesNormalCopyButton";
+		
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+		if ([TPCPreferences syncPreferencesToTheCloud]) {
+			dialogMessage = @"OpeningLocalStyleResourcesCloudMessage";
+			copyButton = @"OpeningLocalStyleResourcesCloudCopyButton";
+		}
+#endif
+		
 		[prompt sheetWindowWithQuestion:[NSApp keyWindow]
 								 target:self
 								 action:@selector(openPathToThemesCallback:)
-								   body:TXTFLS(@"OpeningLocalStyleResourcesMessage", name)
+								   body:TXTFLS(dialogMessage, name)
 								  title:TXTLS(@"OpeningLocalStyleResourcesTitle")
 						  defaultButton:TXTLS(@"ContinueButton")
 						alternateButton:TXTLS(@"CancelButton")
-							otherButton:TXTLS(@"OpeningLocalStyleResourcesCopyButton")
-						 suppressionKey:@"opening_local_style"
+							otherButton:TXTLS(copyButton)
+						 suppressionKey:nil
 						suppressionText:nil];
     } else {
-		[RZWorkspace() openURL:self.masterController.themeController.baseURL];
+		NSString *filepath = [TPCThemeController pathOfThemeWithName:[TPCPreferences themeName] skipCloudCache:YES];
+		
+		[RZWorkspace() openFile:filepath];
     }
 }
 
