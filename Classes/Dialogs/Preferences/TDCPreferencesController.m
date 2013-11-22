@@ -647,20 +647,15 @@
 
 		files = [set.allObjects sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 
-		NSInteger i = 0;
-
 		for (NSString *f in files) {
 			NSMenuItem *cell = [NSMenuItem menuItemWithTitle:f target:nil action:nil];
 
 			[cell setTag:tag];
 
 			[self.themeSelectionButton.menu addItem:cell];
-
-			i += 1;
 		}
 
 		/* Tag can only be 1 or 0. 0 for bundled. 1 for custom. */
-		
 		if (tag == 0) {
 			tag = 1;
 		}
@@ -678,7 +673,7 @@
 	}
 
 	NSInteger count = [self.themeSelectionButton numberOfItems];
-
+	LogToConsole(@"%@ %@ %i", kind, name, targetTag);
 	for (NSInteger i = 0; i < count; i++) {
 		NSMenuItem *item = [self.themeSelectionButton itemAtIndex:i];
 
