@@ -1054,11 +1054,11 @@
 	if (returnCode == TLOPopupPromptReturnSecondaryType) {
 		return;
 	}
-
+	
+	NSString *oldpath = [TPCThemeController pathOfThemeWithName:[TPCPreferences themeName] skipCloudCache:YES];
+	
 	if (returnCode == TLOPopupPromptReturnPrimaryType) {
-		NSString *path = [[TPCPreferences bundledThemeFolderPath] stringByAppendingPathComponent:name];
-
-		[RZWorkspace() openFile:path];
+		[RZWorkspace() openFile:oldpath];
 	} else {
 		BOOL copyingToCloud = NO;
 		
@@ -1087,8 +1087,6 @@
 		[ps start];
 		
 		/* Continue with a normal copy. */
-		NSString *oldpath = [[TPCPreferences bundledThemeFolderPath] stringByAppendingPathComponent:name];
-
 		NSError *copyError;
 
 		[RZFileManager() copyItemAtPath:oldpath toPath:newpath error:&copyError];
@@ -1130,7 +1128,11 @@
 {
 	NSString *kind = [TPCThemeController extractThemeSource:[TPCPreferences themeName]];
 	NSString *name = [TPCThemeController extractThemeName:[TPCPreferences themeName]];
-
+	
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	BOOL containerURLExists = NSObjectIsNotEmpty(self.masterController.cloudSyncManager.ubiquitousContainerURLPath);
+#endif
+	
     if ([kind isEqualIgnoringCase:TPCThemeControllerBundledStyleNameBasicPrefix]) {
 		TLOPopupPrompts *prompt = [TLOPopupPrompts new];
 
@@ -1138,7 +1140,7 @@
 		NSString *copyButton = @"OpeningLocalStyleResourcesNormalCopyButton";
 		
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-		if ([TPCPreferences syncPreferencesToTheCloud]) {
+		if ([TPCPreferences syncPreferencesToTheCloud] && containerURLExists) {
 			dialogMessage = @"OpeningLocalStyleResourcesCloudMessage";
 			copyButton = @"OpeningLocalStyleResourcesCloudCopyButton";
 		}
@@ -1156,6 +1158,30 @@
 						suppressionText:nil];
     } else {
 		NSString *filepath = [TPCThemeController pathOfThemeWithName:[TPCPreferences themeName] skipCloudCache:YES];
+		
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+		if ([TPCPreferences syncPreferencesToTheCloud] && containerURLExists) {
+			if ([filepath hasPrefix:[TPCPreferences customThemeFolderPath]]) {
+				/* If the theme exists in app support folder, but cloud syncing is available,
+				 then offer to sync it to the cloud. */
+				
+				TLOPopupPrompts *prompt = [TLOPopupPrompts new];
+				
+				[prompt sheetWindowWithQuestion:[NSApp keyWindow]
+										 target:self
+										 action:@selector(openPathToThemesCallback:withOriginalAlert:)
+										   body:TXTFLS(@"OpeningLocalCustomStyleResourcesCloudMessage", name)
+										  title:TXTLS(@"OpeningLocalStyleResourcesTitle")
+								  defaultButton:TXTLS(@"ContinueButton")
+								alternateButton:TXTLS(@"CancelButton")
+									otherButton:TXTLS(@"OpeningLocalStyleResourcesCloudCopyButton")
+								 suppressionKey:nil
+								suppressionText:nil];
+				
+				return;
+			}
+		}
+#endif
 		
 		[RZWorkspace() openFile:filepath];
     }
