@@ -52,7 +52,7 @@
 
 	[prompt sheetWindowWithQuestion:self.masterController.mainWindow
 							 target:self
-							 action:@selector(importPreflight:)
+							 action:@selector(importPreflight:withOriginalAlert:)
 							   body:TXTLS(@"PreferencesImportPreflightDialogMessage")
 							  title:TXTLS(@"PreferencesImportPreflightDialogTitle")
 					  defaultButton:TXTLS(@"PreferencesImportPreflightDialogSelectFileButton")
@@ -63,7 +63,7 @@
 }
 
 /* Master controller internal handles for import. */
-+ (void)importPreflight:(TLOPopupPromptReturnType)buttonPressed
++ (void)importPreflight:(TLOPopupPromptReturnType)buttonPressed withOriginalAlert:(NSAlert *)originalAlert
 {
 	/* What button? */
 	if (buttonPressed == TLOPopupPromptReturnPrimaryType) {

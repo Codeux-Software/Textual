@@ -5,7 +5,6 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
         Please see Contributors.rtfd and Acknowledgements.rtfd
 
@@ -38,45 +37,27 @@
 
 #import "TextualApplication.h"
 
-#define TXPopupPromptSuppressionPrefix					@"Text Input Prompt Suppression -> "
+@implementation TDCProgressInformationSheet
 
-/* TXPopupPromptSpecialSuppressionTextValue tells the dialog to force suppression on
- the dialog using the given key as soon as it closes instead of actually asking the user. 
- 
- When using this, it is the job of the caller to validate the suppression value. The alert
- will always return YES for suppressed alerts so make sure that is the value you want. */
-#define TXPopupPromptSpecialSuppressionTextValue		@"<TXPopupPromptSpecialSuppressionTextValue>"	
+- (id)init
+{
+	if ((self = [super init])) {
+		[NSBundle loadNibNamed:@"TDCProgressInformationSheet" owner:self];
+	}
+	
+	return self;
+}
 
-typedef enum TLOPopupPromptReturnType : NSInteger {
-	TLOPopupPromptReturnPrimaryType,
-	TLOPopupPromptReturnSecondaryType,
-	TLOPopupPromptReturnOtherType,
-} TLOPopupPromptReturnType;
+- (void)start
+{
+	[self startSheet];
+	
+	[self.progressIndicator startAnimation:nil];
+}
 
-@interface TLOPopupPrompts : NSObject
-/* Return the actual suppression key used internally. Do not feed this to
- the suppressionKey: field of these alerts. This is what is fed to that field
- turns into once the alert is processed. */
-+ (NSString *)suppressionKeyWithBase:(NSString *)base;
+- (void)stop
+{
+	[self endSheet];
+}
 
-/* Alerts. */
-+ (void)popupPromptNilSelector:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert;
-
-+ (BOOL)dialogWindowWithQuestion:(NSString *)bodyText
-						   title:(NSString *)titleText
-				   defaultButton:(NSString *)buttonDefault
-				 alternateButton:(NSString *)buttonAlternate
-				  suppressionKey:(NSString *)suppressKey
-				 suppressionText:(NSString *)suppressText;
-
-- (void)sheetWindowWithQuestion:(NSWindow *)window
-						 target:(id)targetClass
-						 action:(SEL)actionSelector
-						   body:(NSString *)bodyText
-						  title:(NSString *)titleText
-				  defaultButton:(NSString *)buttonDefault
-				alternateButton:(NSString *)buttonAlternate
-					otherButton:(NSString *)otherButton
-				 suppressionKey:(NSString *)suppressKey
-				suppressionText:(NSString *)suppressText;
 @end

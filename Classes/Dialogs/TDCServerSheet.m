@@ -680,7 +680,7 @@
 }
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-- (void)toggleCloudSyncExclusionRequestDeletionCallback:(TLOPopupPromptReturnType)returnType
+- (void)toggleCloudSyncExclusionRequestDeletionCallback:(TLOPopupPromptReturnType)returnType withOriginalAlert:(NSAlert *)originalAlert
 {
 	if (returnType == TLOPopupPromptReturnSecondaryType) {
 		self.requestCloudDeletionOnClose = YES;
@@ -696,7 +696,7 @@
 		
 		[popup sheetWindowWithQuestion:self.sheet
 								target:self
-								action:@selector(toggleCloudSyncExclusionRequestDeletionCallback:)
+								action:@selector(toggleCloudSyncExclusionRequestDeletionCallback:withOriginalAlert:)
 								  body:TXTLS(@"iCloudSyncServicesSupportDisabledForServerDialogMessage")
 								 title:TXTLS(@"iCloudSyncServicesSupportDisabledForServerDialogTitle")
 						 defaultButton:TXTLS(@"NoButton")
@@ -709,7 +709,7 @@
 		
 		[popup sheetWindowWithQuestion:self.sheet
 								target:[TLOPopupPrompts class]
-								action:@selector(popupPromptNilSelector:)
+								action:@selector(popupPromptNilSelector:withOriginalAlert:)
 								  body:TXTLS(@"iCloudSyncServicesSupportEnabledForServerDialogMessage")
 								 title:TXTLS(@"iCloudSyncServicesSupportEnabledForServerDialogTitle")
 						 defaultButton:TXTLS(@"OkButton")

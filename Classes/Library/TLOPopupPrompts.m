@@ -91,7 +91,7 @@
 		returnValue = TLOPopupPromptReturnOtherType;
 	}
 
-	objc_msgSend(targetClass, targetAction, returnValue);
+	objc_msgSend(targetClass, targetAction, returnValue, alert);
 }
 
 - (void)sheetWindowWithQuestion:(NSWindow *)window
@@ -156,7 +156,7 @@
 	}
 }
 
-+ (void)popupPromptNilSelector:(TLOPopupPromptReturnType)returnCode
++ (void)popupPromptNilSelector:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
 {
 	return;
 }
