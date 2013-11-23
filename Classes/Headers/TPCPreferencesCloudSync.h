@@ -41,6 +41,9 @@
 
 #define TPCPreferencesCloudSyncDefaultsKey		@"SyncPreferencesToTheCloud"
 
+/* I can make this notification name longer if I wanted to. */
+#define TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification		@"TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification"
+
 @interface TPCPreferencesCloudSync : NSObject
 @property (nonatomic, assign, readonly) BOOL hasUncommittedDataStoredInCloud;
 

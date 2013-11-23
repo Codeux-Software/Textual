@@ -3097,7 +3097,7 @@
 
 #pragma mark -
 
-- (void)ircBadSSLCertificateDisconnectCallback:(TLOPopupPromptReturnType)returnCode
+- (void)ircBadSSLCertificateDisconnectCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
 {
 	if (returnCode == TLOPopupPromptReturnPrimaryType) {
 		self.config.isTrustedConnection = YES;
@@ -3114,7 +3114,7 @@
 
 			[prompt sheetWindowWithQuestion:self.masterController.mainWindow
 									 target:self
-									 action:@selector(ircBadSSLCertificateDisconnectCallback:)
+									 action:@selector(ircBadSSLCertificateDisconnectCallback:withOriginalAlert:)
 									   body:TXTLS(@"SocketBadSSLCertificateErrorMessage")
 									  title:TXTLS(@"SocketBadSSLCertificateErrorTitle")
 							  defaultButton:TXTLS(@"TrustButton")
@@ -4435,7 +4435,7 @@
 	}
 }
 
-- (void)receiveErrorExcessFloodWarningPopupCallback:(TLOPopupPromptReturnType)returnType
+- (void)receiveErrorExcessFloodWarningPopupCallback:(TLOPopupPromptReturnType)returnType withOriginalAlert:(NSAlert *)originalAlert
 {
     if (returnType == TLOPopupPromptReturnPrimaryType) {
         [self startReconnectTimer];
@@ -4471,7 +4471,7 @@
 
         [prompt sheetWindowWithQuestion:self.masterController.mainWindow
                                  target:self
-                                 action:@selector(receiveErrorExcessFloodWarningPopupCallback:)
+                                 action:@selector(receiveErrorExcessFloodWarningPopupCallback:withOriginalAlert:)
                                    body:TXTLS(@"ExcessFloodIRCDisconnectAlertMessage")
                                   title:TXTLS(@"ExcessFloodIRCDisconnectAlertTitle")
                           defaultButton:TXTLS(@"YesButton")

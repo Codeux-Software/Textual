@@ -50,6 +50,12 @@
 #define _addonsToolbarItemIndex				8
 #define _addonsToolbarItemMultiplier		65
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+@interface TDCPreferencesController ()
+@property (nonatomic, strong) TDCProgressInformationSheet *tcopyStyleFilesProgressIndicator;
+@end
+#endif
+
 @implementation TDCPreferencesController
 
 - (id)init
@@ -105,6 +111,11 @@
 	[self onChangedHighlightType:nil];
 	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(onCloudSyncControllerDidRebuildContainerCache:)
+								   name:TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification
+								 object:nil];
+	
 	[self.syncPreferencesToTheCloudButton setState:[TPCPreferences syncPreferencesToTheCloud]];
 #endif
 	
@@ -743,7 +754,7 @@
 
 	[prompt sheetWindowWithQuestion:[NSApp keyWindow]
 							 target:[TLOPopupPrompts class]
-							 action:@selector(popupPromptNilSelector:)
+							 action:@selector(popupPromptNilSelector:withOriginalAlert:)
 							   body:TXTFLS(@"ThemeChangeOverridePromptMessage", item.title, tsf)
 							  title:TXTLS(@"ThemeChangeOverridePromptTitle")
 					  defaultButton:TXTLS(@"OkButton")
@@ -902,7 +913,7 @@
 		
 		[popup sheetWindowWithQuestion:self.window
 								target:[TLOPopupPrompts class]
-								action:@selector(popupPromptNilSelector:)
+								action:@selector(popupPromptNilSelector:withOriginalAlert:)
 								  body:TXTLS(@"iCloudSyncServicesNotAvailableDialogMessage")
 								 title:TXTLS(@"iCloudSyncServicesNotAvailableDialogTitle")
 						 defaultButton:TXTLS(@"OkButton")
@@ -936,7 +947,7 @@
 
 		[popup sheetWindowWithQuestion:self.window
 								target:[TLOPopupPrompts class]
-								action:@selector(popupPromptNilSelector:)
+								action:@selector(popupPromptNilSelector:withOriginalAlert:)
 								  body:TXTLS(@"iCloudSyncServicesSupportDisabledDialogMessage")
 								 title:TXTLS(@"iCloudSyncServicesSupportDisabledDialogTitle")
 						 defaultButton:TXTLS(@"OkButton")
@@ -956,7 +967,7 @@
 #endif
 }
 
-- (void)onPurgeOfCloudDataRequestedCallback:(TLOPopupPromptReturnType)returnCode
+- (void)onPurgeOfCloudDataRequestedCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if (returnCode == TLOPopupPromptReturnSecondaryType) {
@@ -965,7 +976,7 @@
 #endif
 }
 
-- (void)onPurgeOfCloudFilesRequestedCallback:(TLOPopupPromptReturnType)returnCode
+- (void)onPurgeOfCloudFilesRequestedCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if (returnCode == TLOPopupPromptReturnSecondaryType) {
@@ -1007,7 +1018,7 @@
 	
 	[popup sheetWindowWithQuestion:self.window
 							target:self
-							action:@selector(onPurgeOfCloudFilesRequestedCallback:)
+							action:@selector(onPurgeOfCloudFilesRequestedCallback:withOriginalAlert:)
 							  body:TXTLS(@"iCloudSyncDeleteAllFilesDialogMessage")
 							 title:TXTLS(@"iCloudSyncDeleteAllFilesDialogTitle")
 					 defaultButton:TXTLS(@"CancelButton")
@@ -1025,7 +1036,7 @@
 
 	[popup sheetWindowWithQuestion:self.window
 							target:self
-							action:@selector(onPurgeOfCloudDataRequestedCallback:)
+							action:@selector(onPurgeOfCloudDataRequestedCallback:withOriginalAlert:)
 							  body:TXTLS(@"iCloudSyncDeleteAllDataDialogMessage")
 							 title:TXTLS(@"iCloudSyncDeleteAllDataDialogTitle")
 					 defaultButton:TXTLS(@"CancelButton")
@@ -1036,7 +1047,7 @@
 #endif
 }
 
-- (void)openPathToThemesCallback:(TLOPopupPromptReturnType)returnCode
+- (void)openPathToThemesCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
 {
 	NSString *name = [TPCThemeController extractThemeName:[TPCPreferences themeName]];
 
@@ -1049,7 +1060,7 @@
 
 		[RZWorkspace() openFile:path];
 	} else {
-		BOOL updateSelection = YES;
+		BOOL copyingToCloud = NO;
 		
 		NSString *newpath = [[TPCPreferences customThemeFolderPath]	stringByAppendingPathComponent:name];
 		
@@ -1059,13 +1070,23 @@
 			NSString *cloudprefix = [TPCPreferences cloudCustomThemeFolderPath];
 		
 			if (cloudprefix.length > 0) {
-				newpath = [[TPCPreferences cloudCustomThemeFolderPath] stringByAppendingPathComponent:name];
+				newpath = [cloudprefix stringByAppendingPathComponent:name];
 				
-				updateSelection = NO;
+				copyingToCloud = YES;
 			}
 		}
 #endif
 		
+		/* Present progress sheet. */
+		TDCProgressInformationSheet *ps = [TDCProgressInformationSheet new];
+		
+		ps.window = self.window;
+		
+		[originalAlert.window orderOut:nil];
+		
+		[ps start];
+		
+		/* Continue with a normal copy. */
 		NSString *oldpath = [[TPCPreferences bundledThemeFolderPath] stringByAppendingPathComponent:name];
 
 		NSError *copyError;
@@ -1074,15 +1095,24 @@
 
 		if (copyError) {
 			LogToConsole(@"%@", [copyError localizedDescription]);
+			
+			[ps stop];
 		} else {
 			[RZWorkspace() openFile:newpath];
 
-			if (updateSelection) {
-				NSString *newThemeLocal = [TPCThemeController buildUserFilename:name];
+			NSString *newThemeLocal = [TPCThemeController buildUserFilename:name];
 
-				[TPCPreferences setThemeName:newThemeLocal];
+			[TPCPreferences setThemeName:newThemeLocal];
 
+			if (copyingToCloud == NO) {
+				/* Notification for cloud cache rebuilds will do this for us. */
 				[self updateThemeSelection];
+				
+				[ps stop];
+			} else {
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+				self.tcopyStyleFilesProgressIndicator = ps;
+#endif
 			}
 		}
 	}
@@ -1108,7 +1138,7 @@
 		
 		[prompt sheetWindowWithQuestion:[NSApp keyWindow]
 								 target:self
-								 action:@selector(openPathToThemesCallback:)
+								 action:@selector(openPathToThemesCallback:withOriginalAlert:)
 								   body:TXTFLS(dialogMessage, name)
 								  title:TXTLS(@"OpeningLocalStyleResourcesTitle")
 						  defaultButton:TXTLS(@"ContinueButton")
@@ -1124,10 +1154,29 @@
 }
 
 #pragma mark -
+#pragma mark Cloud Work
+
+- (void)onCloudSyncControllerDidRebuildContainerCache:(NSNotification *)aNote
+{
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	if (self.tcopyStyleFilesProgressIndicator) {
+		[self.tcopyStyleFilesProgressIndicator stop];
+		self.tcopyStyleFilesProgressIndicator = nil;
+	}
+	
+	[self updateThemeSelection];
+#endif
+}
+
+#pragma mark -
 #pragma mark NSWindow Delegate
 
 - (void)windowWillClose:(NSNotification *)note
 {
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	[RZNotificationCenter() removeObserver:self name:TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification object:nil];
+#endif
+	
 	[self.window saveWindowStateForClass:self.class];
 
 	[TPCPreferences cleanUpHighlightKeywords];

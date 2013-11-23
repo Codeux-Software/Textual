@@ -1665,7 +1665,7 @@ static NSMutableArray *excludeKeywords = nil;
 #pragma mark -
 #pragma mark Initialization
 
-+ (void)defaultIRCClientSheetCallback:(TLOPopupPromptReturnType)returnCode
++ (void)defaultIRCClientSheetCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
 {
 	if (returnCode == TLOPopupPromptReturnPrimaryType) {
 		NSString *bundleID = [TPCPreferences applicationBundleIdentifier];
@@ -1715,7 +1715,7 @@ static NSMutableArray *excludeKeywords = nil;
         
 		[prompt sheetWindowWithQuestion:[NSApp keyWindow]
 								 target:self
-								 action:@selector(defaultIRCClientSheetCallback:)
+								 action:@selector(defaultIRCClientSheetCallback:withOriginalAlert:)
 								   body:TXTLS(@"SetAsDefaultIRCClientPromptMessage")
 								  title:TXTLS(@"SetAsDefaultIRCClientPromptTitle")
 						  defaultButton:TXTLS(@"YesButton")

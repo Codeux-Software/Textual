@@ -737,6 +737,9 @@
 		
 		/* Accept updates again. */
 		[self.cloudContainerNotificationQuery enableUpdates];
+		
+		/* Post notification. */
+		[RZNotificationCenter() postNotificationName:TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification object:nil];
 	});
 }
 
