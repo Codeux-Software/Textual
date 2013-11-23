@@ -387,6 +387,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	if (self.skipTerminateSave == NO) {
 		[self saveWindowState];
 	}
+	
+	self.mainWindow.delegate = nil;
 
 	[RZRunningApplication() hide];
 
