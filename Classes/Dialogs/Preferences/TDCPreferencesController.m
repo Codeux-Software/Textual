@@ -674,12 +674,11 @@
 
 	// ---- //
 
-	NSString *kind = [TPCThemeController extractThemeSource:[TPCPreferences themeName]];
-	NSString *name = [TPCThemeController extractThemeName:[TPCPreferences themeName]];
+	NSString *name = [self.themeController name];
 
 	NSInteger targetTag = 0;
 
-	if ([kind isEqualToString:TPCThemeControllerBundledStyleNameBasicPrefix] == NO) {
+	if ([self.themeController isBundledTheme] == NO) {
 		targetTag = 1;
 	}
 
@@ -724,24 +723,22 @@
 
 	NSMutableString *sf = [NSMutableString string];
 
-	TPCThemeController *themeController = self.masterController.themeController;
-
-	if (NSObjectIsNotEmpty(themeController.customSettings.nicknameFormat)) {
+	if (NSObjectIsNotEmpty(self.themeController.customSettings.nicknameFormat)) {
 		[sf appendString:TXTLS(@"ThemeChangeOverridePromptNicknameFormat")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 
-	if (NSObjectIsNotEmpty(themeController.customSettings.timestampFormat)) {
+	if (NSObjectIsNotEmpty(self.themeController.customSettings.timestampFormat)) {
 		[sf appendString:TXTLS(@"ThemeChangeOverridePromptTimestampFormat")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 
-	if (themeController.customSettings.channelViewFont) {
+	if (self.themeController.customSettings.channelViewFont) {
 		[sf appendString:TXTLS(@"ThemeChangeOverridePromptChannelFont")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 
-	if (themeController.customSettings.forceInvertSidebarColors) {
+	if (self.themeController.customSettings.forceInvertSidebarColors) {
 		[sf appendString:TXTLS(@"ThemeChangeOverridePromptWindowColors")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
@@ -982,7 +979,12 @@
 	if (returnCode == TLOPopupPromptReturnSecondaryType) {
 		NSString *path = [self.masterController.cloudSyncManager ubiquitousContainerURLPath];
 		
-		NSObjectIsEmptyAssert(path); // Try to see if we even have a path…
+		/* Try to see if we even have a path… */
+		if (NSObjectIsEmpty(path)) {
+			LogToConsole(@"Cannot empty iCloud files at this time because iCloud is not available.");
+			
+			return;
+		}
 		
 		/* Delete styles folder. */
 		NSError *delError;
@@ -1003,9 +1005,7 @@
 		/* After everything is updated, run a validation on the
 		 theme to make sure the active still exists. */
 		if ([TPCPreferences performValidationForKeyValues]) {
-			[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
-			[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
-			[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListAction];
+			[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleWithTableViewsAction];
 		}
 	}
 #endif
@@ -1049,13 +1049,13 @@
 
 - (void)openPathToThemesCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
 {
-	NSString *name = [TPCThemeController extractThemeName:[TPCPreferences themeName]];
+	NSString *name = [self.themeController name];
 
 	if (returnCode == TLOPopupPromptReturnSecondaryType) {
 		return;
 	}
 	
-	NSString *oldpath = [TPCThemeController pathOfThemeWithName:[TPCPreferences themeName] skipCloudCache:YES];
+	NSString *oldpath = [self.themeController actualPath];
 	
 	if (returnCode == TLOPopupPromptReturnPrimaryType) {
 		[RZWorkspace() openFile:oldpath];
@@ -1067,10 +1067,8 @@
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 		/* Check to see if the cloud path exists first… */
 		if ([TPCPreferences syncPreferencesToTheCloud]) {
-			NSString *cloudprefix = [TPCPreferences cloudCustomThemeFolderPath];
-		
-			if (cloudprefix.length > 0) {
-				newpath = [cloudprefix stringByAppendingPathComponent:name];
+			if ([self.masterController.cloudSyncManager ubiquitousContainerIsAvailable]) {
+				newpath = [[TPCPreferences cloudCustomThemeFolderPath] stringByAppendingPathComponent:name];
 				
 				copyingToCloud = YES;
 			}
@@ -1105,9 +1103,7 @@
 			[TPCPreferences setThemeName:newThemeLocal];
 			
 			if (copyingToCloud == NO) {
-				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
-				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
-				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListAction];
+				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleWithTableViewsAction];
 			}
 			
 			if (copyingToCloud == NO) {
@@ -1126,30 +1122,25 @@
 
 - (void)onOpenPathToThemes:(id)sender
 {
-	NSString *kind = [TPCThemeController extractThemeSource:[TPCPreferences themeName]];
-	NSString *name = [TPCThemeController extractThemeName:[TPCPreferences themeName]];
-	
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	BOOL containerURLExists = NSObjectIsNotEmpty(self.masterController.cloudSyncManager.ubiquitousContainerURLPath);
-#endif
-	
-    if ([kind isEqualIgnoringCase:TPCThemeControllerBundledStyleNameBasicPrefix]) {
+    if ([self.themeController isBundledTheme]) {
 		TLOPopupPrompts *prompt = [TLOPopupPrompts new];
 
 		NSString *dialogMessage = @"OpeningLocalStyleResourcesNormalMessage";
 		NSString *copyButton = @"OpeningLocalStyleResourcesNormalCopyButton";
 		
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-		if ([TPCPreferences syncPreferencesToTheCloud] && containerURLExists) {
-			dialogMessage = @"OpeningLocalStyleResourcesCloudMessage";
-			copyButton = @"OpeningLocalStyleResourcesCloudCopyButton";
+		if ([TPCPreferences syncPreferencesToTheCloud]) {
+			if ([self.masterController.cloudSyncManager ubiquitousContainerIsAvailable]) {
+				dialogMessage = @"OpeningLocalStyleResourcesCloudMessage";
+				copyButton = @"OpeningLocalStyleResourcesCloudCopyButton";
+			}
 		}
 #endif
 		
 		[prompt sheetWindowWithQuestion:[NSApp keyWindow]
 								 target:self
 								 action:@selector(openPathToThemesCallback:withOriginalAlert:)
-								   body:TXTFLS(dialogMessage, name)
+								   body:TXTLS(dialogMessage)
 								  title:TXTLS(@"OpeningLocalStyleResourcesTitle")
 						  defaultButton:TXTLS(@"ContinueButton")
 						alternateButton:TXTLS(@"CancelButton")
@@ -1157,11 +1148,9 @@
 						 suppressionKey:nil
 						suppressionText:nil];
     } else {
-		NSString *filepath = [TPCThemeController pathOfThemeWithName:[TPCPreferences themeName] skipCloudCache:YES];
-		
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-		if ([TPCPreferences syncPreferencesToTheCloud] && containerURLExists) {
-			if ([filepath hasPrefix:[TPCPreferences customThemeFolderPath]]) {
+		if ([TPCPreferences syncPreferencesToTheCloud] && [self.masterController.cloudSyncManager ubiquitousContainerIsAvailable]) {
+			if ([self.themeController storageLocation] == TPCThemeControllerStorageCustomLocation) {
 				/* If the theme exists in app support folder, but cloud syncing is available,
 				 then offer to sync it to the cloud. */
 				
@@ -1170,7 +1159,7 @@
 				[prompt sheetWindowWithQuestion:[NSApp keyWindow]
 										 target:self
 										 action:@selector(openPathToThemesCallback:withOriginalAlert:)
-										   body:TXTFLS(@"OpeningLocalCustomStyleResourcesCloudMessage", name)
+										   body:TXTLS(@"OpeningLocalCustomStyleResourcesCloudMessage")
 										  title:TXTLS(@"OpeningLocalStyleResourcesTitle")
 								  defaultButton:TXTLS(@"ContinueButton")
 								alternateButton:TXTLS(@"CancelButton")
@@ -1182,6 +1171,9 @@
 			}
 		}
 #endif
+		
+		/* pathOfTheme… is called to ignore the cloud cache location. */
+		NSString *filepath = [self.themeController actualPath];
 		
 		[RZWorkspace() openFile:filepath];
     }
@@ -1199,11 +1191,10 @@
 		[self.tcopyStyleFilesProgressIndicator stop];
 		self.tcopyStyleFilesProgressIndicator = nil;
 		
-		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
-		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
-		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListAction];
+		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleWithTableViewsAction];
 		
-		NSString *filepath = [TPCThemeController pathOfThemeWithName:[TPCPreferences themeName] skipCloudCache:YES];
+		/* pathOfTheme… is called to ignore the cloud cache location. */
+		NSString *filepath = [self.themeController actualPath];
 		
 		[RZWorkspace() openFile:filepath];
 	}

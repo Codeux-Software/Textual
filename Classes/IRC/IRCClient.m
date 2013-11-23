@@ -2662,7 +2662,7 @@
 	/* Define default formats. */
 	NSString *nmformat = [TPCPreferences themeNicknameFormat];
 
-	NSString *override = self.masterController.themeController.customSettings.nicknameFormat;
+	NSString *override = self.themeController.customSettings.nicknameFormat;
 
 	/* Use theme based format? */
 	if (NSObjectIsNotEmpty(override)) {

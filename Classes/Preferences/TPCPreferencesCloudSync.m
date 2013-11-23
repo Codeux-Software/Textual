@@ -153,6 +153,11 @@
 	return nil;
 }
 
+- (BOOL)ubiquitousContainerIsAvailable
+{
+	return NSObjectIsNotEmpty(self.ubiquitousContainerURLPath);
+}
+
 #pragma mark -
 #pragma mark Cloud Sync Management
 
@@ -220,9 +225,7 @@
 				
 				[TPCPreferences setThemeName:temporaryTheme]; // Will reset the BOOL
 				
-				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
-				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
-				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListAction];
+				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleWithTableViewsAction];
 			} else {
 				DebugLogToConsole(@"iCloud: Theme name \"%@\" is stored in the temporary store.", temporaryTheme);
 			}
@@ -723,9 +726,7 @@
 		 theme to make sure the active still exists. */
 		if (self.initialMetadataQueryCompleted) {
 			if ([TPCPreferences performValidationForKeyValues]) {
-				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
-				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
-				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListAction];
+				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleWithTableViewsAction];
 			}
 		}
 		
