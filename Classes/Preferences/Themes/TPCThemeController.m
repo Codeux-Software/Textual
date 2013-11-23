@@ -51,17 +51,17 @@
 
 - (NSString *)path
 {
-	return [TPCThemeController pathOfThemeWithName:[TPCPreferences themeName] skipCloudCache:NO];
+	return [self.baseURL path];
 }
 
 - (NSString *)actualPath
 {
-	return [TPCThemeController pathOfThemeWithName:[TPCPreferences themeName] skipCloudCache:YES];
+	return [TPCThemeController pathOfThemeWithName:self.associatedThemeName skipCloudCache:YES];
 }
 
 - (NSString *)name
 {
-	return [TPCThemeController extractThemeName:[TPCPreferences themeName]];
+	return self.associatedThemeName;
 }
 
 + (BOOL)themeExists:(NSString *)themeName
@@ -134,7 +134,9 @@
 - (void)validateFilePathExistanceAndReload
 {
 	/* Try to find a theme by the stored name. */
-	NSString *path = [TPCThemeController pathOfThemeWithName:[TPCPreferences themeName]];
+	self.associatedThemeName = [TPCPreferences themeName];
+	
+	NSString *path = [TPCThemeController pathOfThemeWithName:self.associatedThemeName];
 	
 	if (NSObjectIsEmpty(path)) {
 		NSAssert(NO, @"Missing style resource files.");
@@ -159,7 +161,7 @@
 
 - (TPCThemeControllerStorageLocation)storageLocation
 {
-	return [TPCThemeController storageLocationOfThemeAtPath:[self.baseURL path]];
+	return [TPCThemeController storageLocationOfThemeAtPath:[self path]];
 }
 
 + (NSString *)buildResourceFilename:(NSString *)name
