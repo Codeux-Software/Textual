@@ -305,7 +305,7 @@
 "OpeningLocalStyleResourcesNormalCopyButton" = "Make Local Copy";
 "OpeningLocalStyleResourcesCloudCopyButton" = "Copy to iCloud";
 "OpeningLocalStyleResourcesNormalMessage" = "The style being opened is a read-only version bundled with Textual.\n\nWould you like to create a local copy of it? It will become the selected style and can then be modified.";
-"OpeningLocalStyleResourcesCloudMessage" = "The style being opened is a read-only version bundled with Textual.\n\nWould you like to create a local copy of it in your iCloud folder? From there, it can be modified then selected for use.";
+"OpeningLocalStyleResourcesCloudMessage" = "The style being opened is a read-only version bundled with Textual.\n\nWould you like to create a copy of it in your iCloud folder? It will become the selected style and can then be modified across all shared devices.";
 "OpeningLocalStyleResourcesTitle" = "Resource Files";
 
 "PluginCommandClashErrorMessage" = "Error: The command %@ is shared by both a script and plugin. Sending to server because of inability to determine priority.";

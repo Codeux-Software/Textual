@@ -1098,12 +1098,20 @@
 			
 			[ps stop];
 		} else {
-			[RZWorkspace() openFile:newpath];
-
+			if (copyingToCloud == NO) {
+				[RZWorkspace() openFile:newpath];
+			}
+			
 			NSString *newThemeLocal = [TPCThemeController buildUserFilename:name];
 
 			[TPCPreferences setThemeName:newThemeLocal];
-
+			
+			if (copyingToCloud == NO) {
+				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
+				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
+				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListAction];
+			}
+			
 			if (copyingToCloud == NO) {
 				/* Notification for cloud cache rebuilds will do this for us. */
 				[self updateThemeSelection];
@@ -1159,9 +1167,19 @@
 - (void)onCloudSyncControllerDidRebuildContainerCache:(NSNotification *)aNote
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	/* This progress indicator existing means we have to open the path to the
+	 current theme. */
 	if (self.tcopyStyleFilesProgressIndicator) {
 		[self.tcopyStyleFilesProgressIndicator stop];
 		self.tcopyStyleFilesProgressIndicator = nil;
+		
+		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
+		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
+		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListAction];
+		
+		NSString *filepath = [TPCThemeController pathOfThemeWithName:[TPCPreferences themeName] skipCloudCache:YES];
+		
+		[RZWorkspace() openFile:filepath];
 	}
 	
 	[self updateThemeSelection];
