@@ -118,8 +118,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[self.mainWindow makeKeyAndOrderFront:nil];
 	[self.mainWindow setAlphaValue:[TPCPreferences themeTransparency]];
 	
-	self.themeController = [TPCThemeController new];
-	[self.themeController load];
+	self.themeControllerPntr = [TPCThemeController new];
+	[self.themeControllerPntr load];
 
 	[self.inputTextField focus];
 	[self.inputTextField redrawOriginPoints];
@@ -1440,6 +1440,16 @@ typedef enum TXMoveKind : NSInteger {
 + (IRCWorld *)worldController
 {
 	return [TXGlobalMasterControllerClassReference world];
+}
+
+- (TPCThemeController *)themeController
+{
+	return [TXGlobalMasterControllerClassReference themeControllerPntr];
+}
+
++ (TPCThemeController *)themeController
+{
+	return [TXGlobalMasterControllerClassReference themeControllerPntr];
 }
 
 @end

@@ -732,6 +732,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 {
 	/* Reload style. */
 	if (reloadAction == TPCPreferencesKeyReloadStyleAction ||
+		reloadAction == TPCPreferencesKeyReloadStyleWithTableViewsAction ||
 		reloadAction == TPCPreferencesKeyReloadTextDirectionAction)
 	{
 		[self.worldController reloadTheme:NO];
@@ -812,7 +813,9 @@ static NSURL *transcriptFolderResolvedBookmark;
 	}
 
 	/* Server list. */
-	if (reloadAction == TPCPreferencesKeyReloadServerListAction) {
+	if (reloadAction == TPCPreferencesKeyReloadServerListAction ||
+		reloadAction == TPCPreferencesKeyReloadStyleWithTableViewsAction)
+	{
 		[self.masterController.serverList updateBackgroundColor];
 		[self.masterController.serverList reloadAllDrawingsIgnoringOtherReloads];
 
@@ -835,7 +838,9 @@ static NSURL *transcriptFolderResolvedBookmark;
 	}
 
 	/* Member list redraw. */
-	if (reloadAction == TPCPreferencesKeyReloadMemberListAction) {
+	if (reloadAction == TPCPreferencesKeyReloadMemberListAction ||
+		reloadAction == TPCPreferencesKeyReloadStyleWithTableViewsAction)
+	{
 		[self.masterController.memberList reloadAllUserInterfaceElements];
 
 		[self.masterController.memberSplitView setNeedsDisplay:YES];
@@ -917,9 +922,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (BOOL)invertSidebarColors
 {
-	TXMasterController *master = [self masterController];
-	
-	if (master.themeController.customSettings.forceInvertSidebarColors) {
+	if ([self.themeController.customSettings forceInvertSidebarColors]) {
 		return YES;
 	}
 

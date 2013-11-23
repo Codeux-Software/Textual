@@ -208,12 +208,12 @@
 
 - (TPCThemeSettings *)themeSettings
 {
-	return self.masterController.themeController.customSettings;
+	return self.themeController.customSettings;
 }
 
 - (NSURL *)baseURL
 {
-	return self.masterController.themeController.baseURL;
+	return self.themeController.baseURL;
 }
 
 - (TVCLogControllerOperationQueue *)printingQueue;

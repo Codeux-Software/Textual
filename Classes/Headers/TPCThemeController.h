@@ -44,13 +44,31 @@
 #define TPCThemeControllerBundledStyleNameBasicPrefix			@"resource"
 #define TPCThemeControllerBundledStyleNameCompletePrefix		@"resource:"
 
+typedef enum TPCThemeControllerStorageLocation : NSInteger {
+	TPCThemeControllerStorageBundleLocation,
+	TPCThemeControllerStorageCustomLocation,
+	TPCThemeControllerStorageCloudLocation,
+	TPCThemeControllerStorageUnknownLocation
+} TPCThemeControllerStorageLocation;
+
 @interface TPCThemeController : NSObject
 @property (nonatomic, strong) NSURL *baseURL;
 
 @property (nonatomic, strong) TPCThemeSettings *customSettings;
 
+/* Calls for the active theme. */
 - (void)load;
 
+- (NSString *)path;
+- (NSString *)actualPath; // Ignores iCloud cache and queries iCloud directly.
+
+- (NSString *)name;
+
+- (TPCThemeControllerStorageLocation)storageLocation;
+
+- (BOOL)isBundledTheme;
+
+/* Calls for all themes. */
 + (BOOL)themeExists:(NSString *)themeName;
 
 + (NSString *)pathOfThemeWithName:(NSString *)themeName;
@@ -61,4 +79,6 @@
 
 + (NSString *)extractThemeSource:(NSString *)source;
 + (NSString *)extractThemeName:(NSString *)source;
+
++ (TPCThemeControllerStorageLocation)storageLocationOfThemeWithName:(NSString *)themeName;
 @end

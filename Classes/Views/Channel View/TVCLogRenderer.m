@@ -839,9 +839,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 + (NSString *)renderTemplate:(NSString *)templateName attributes:(NSDictionary *)templateTokens
 {
-	TXMasterController *master = [TVCLogRenderer masterController];
-
-	GRMustacheTemplate *tmpl = [master.themeController.customSettings templateWithName:templateName];
+	GRMustacheTemplate *tmpl = [self.themeController.customSettings templateWithName:templateName];
 
 	PointerIsEmptyAssertReturn(tmpl, nil);
 

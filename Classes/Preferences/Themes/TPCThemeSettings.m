@@ -126,7 +126,7 @@
 
 - (NSString *)customTemplateRepositoryPath
 {
-	NSString *path = [self.masterController.themeController.baseURL path];
+	NSString *path = self.themeController.baseURL.path;
 
 	return [path stringByAppendingPathComponent:@"/Data/Templates/"];
 }

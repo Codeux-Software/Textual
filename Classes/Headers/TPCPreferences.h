@@ -101,6 +101,7 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 	TPCPreferencesKeyReloadPreferencesChangedAction,
 	TPCPreferencesKeyReloadServerListAction,
 	TPCPreferencesKeyReloadStyleAction,
+	TPCPreferencesKeyReloadStyleWithTableViewsAction,
 	TPCPreferencesKeyReloadTextDirectionAction,
 	TPCPreferencesKeyReloadTextFieldFontSizeAction,
 	TPCPreferencesKeyReloadTextFieldSegmentedControllerOriginAction

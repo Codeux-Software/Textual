@@ -788,7 +788,7 @@
 
 - (void)reloadTheme:(BOOL)reloadUserInterface
 {
-	[self.masterController.themeController load];
+	[self.themeController load];
 
 	for (IRCClient *u in self.clients) {
 		[u.viewController reloadTheme];

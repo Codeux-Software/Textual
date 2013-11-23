@@ -58,6 +58,8 @@
 
 - (NSString *)ubiquitousContainerURLPath;
 
+- (BOOL)ubiquitousContainerIsAvailable;
+
 // Plugins should not be calling these.
 - (void)initializeCloudSyncSession;
 - (void)closeCloudSyncSession;

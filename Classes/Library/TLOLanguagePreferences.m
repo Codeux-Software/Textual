@@ -46,9 +46,7 @@
 
 + (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle
 {
-	TXMasterController *master = [TLOLanguagePreferences masterController];
-
-	TPCThemeSettings *customSettings = master.themeController.customSettings;
+	TPCThemeSettings *customSettings = self.themeController.customSettings;
 
 	if (customSettings && [customSettings.languageLocalizations containsKey:key]) {
 		NSString *localString = [customSettings.languageLocalizations stringForKey:key];

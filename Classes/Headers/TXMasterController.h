@@ -68,7 +68,7 @@
 @property (nonatomic, strong) THOPluginManager *pluginManager;
 @property (nonatomic, strong) TLOGrowlController *growlController;
 @property (nonatomic, strong) TLONickCompletionStatus *completionStatus;
-@property (nonatomic, strong) TPCThemeController *themeController;
+@property (nonatomic, strong) TPCThemeController *themeControllerPntr;
 @property (nonatomic, strong) TLOInputHistory *inputHistory;
 @property (nonatomic, nweak) TVCMemberList *memberList;
 @property (nonatomic, nweak) TVCServerList *serverList;
@@ -122,4 +122,7 @@
 
 - (IRCWorld *)worldController;
 + (IRCWorld *)worldController;
+
+- (TPCThemeController *)themeController;
++ (TPCThemeController *)themeController;
 @end

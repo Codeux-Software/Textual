@@ -76,7 +76,7 @@
 
 - (NSString *)formattedTimestamp
 {
-	TPCThemeSettings *customSettings = self.masterController.themeController.customSettings;
+	TPCThemeSettings *customSettings = self.themeController.customSettings;
 
 	return [self formattedTimestampWithForcedFormat:customSettings.timestampFormat];
 }

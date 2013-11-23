@@ -49,9 +49,26 @@
 	return self;
 }
 
+- (NSString *)path
+{
+	return [TPCThemeController pathOfThemeWithName:[TPCPreferences themeName] skipCloudCache:NO];
+}
+
+- (NSString *)actualPath
+{
+	return [TPCThemeController pathOfThemeWithName:[TPCPreferences themeName] skipCloudCache:YES];
+}
+
+- (NSString *)name
+{
+	return [TPCThemeController extractThemeName:[TPCPreferences themeName]];
+}
+
 + (BOOL)themeExists:(NSString *)themeName
 {
-	return NSObjectIsNotEmpty([TPCThemeController pathOfThemeWithName:themeName]);
+	TPCThemeControllerStorageLocation location = [TPCThemeController storageLocationOfThemeWithName:themeName];
+	
+	return NSDissimilarObjects(location, TPCThemeControllerStorageUnknownLocation);
 }
 
 + (NSString *)pathOfThemeWithName:(NSString *)themeName
@@ -80,7 +97,11 @@
 		}
 		
 		if ([RZFileManager() fileExistsAtPath:path]) {
-			return path;
+			NSString *cssFile = [path stringByAppendingPathComponent:@"design.css"];
+			
+			if ([RZFileManager() fileExistsAtPath:cssFile]) {
+				return path;
+			}
 		}
 #endif
 		
@@ -88,14 +109,22 @@
 		path = [[TPCPreferences customThemeFolderPath] stringByAppendingPathComponent:filename];
 		
 		if ([RZFileManager() fileExistsAtPath:path]) {
-			return path;
+			NSString *cssFile = [path stringByAppendingPathComponent:@"design.css"];
+			
+			if ([RZFileManager() fileExistsAtPath:cssFile]) {
+				return path;
+			}
 		}
 	} else {
 		/* Does the theme exist in app? */
 		path = [[TPCPreferences bundledThemeFolderPath] stringByAppendingPathComponent:filename];
 		
 		if ([RZFileManager() fileExistsAtPath:path]) {
-			return path;
+			NSString *cssFile = [path stringByAppendingPathComponent:@"design.css"];
+			
+			if ([RZFileManager() fileExistsAtPath:cssFile]) {
+				return path;
+			}
 		}
 	}
 	
@@ -123,6 +152,16 @@
 	[self validateFilePathExistanceAndReload];
 }
 
+- (BOOL)isBundledTheme
+{
+	return ([self storageLocation] == TPCThemeControllerStorageBundleLocation);
+}
+
+- (TPCThemeControllerStorageLocation)storageLocation
+{
+	return [TPCThemeController storageLocationOfThemeAtPath:[self.baseURL path]];
+}
+
 + (NSString *)buildResourceFilename:(NSString *)name
 {
 	return [TPCThemeControllerBundledStyleNameCompletePrefix stringByAppendingString:name];
@@ -131,6 +170,34 @@
 + (NSString *)buildUserFilename:(NSString *)name
 {
 	return [TPCThemeControllerCustomStyleNameCompletePrefix stringByAppendingString:name];
+}
+
++ (TPCThemeControllerStorageLocation)storageLocationOfThemeWithName:(NSString *)themeName
+{
+	NSString *path = [TPCThemeController pathOfThemeWithName:themeName];
+	
+	return [TPCThemeController storageLocationOfThemeAtPath:path];
+}
+
++ (TPCThemeControllerStorageLocation)storageLocationOfThemeAtPath:(NSString *)path
+{
+	NSObjectIsEmptyAssertReturn(path, TPCThemeControllerStorageUnknownLocation);
+	
+	if ([path hasPrefix:[TPCPreferences bundledThemeFolderPath]]) {
+		return TPCThemeControllerStorageBundleLocation;
+	}
+	
+	if ([path hasPrefix:[TPCPreferences customThemeFolderPath]]) {
+		return TPCThemeControllerStorageCustomLocation;
+	}
+	
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	if ([path hasPrefix:[TPCPreferences cloudCustomThemeCachedFolderPath]]) {
+		return TPCThemeControllerStorageCloudLocation;
+	}
+#endif
+	
+	return TPCThemeControllerStorageUnknownLocation;
 }
 
 + (NSString *)extractThemeSource:(NSString *)source
