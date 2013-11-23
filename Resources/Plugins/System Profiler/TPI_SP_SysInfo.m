@@ -49,16 +49,19 @@
 
 + (NSString *)applicationActiveStyle
 {
-	NSString *fname = [TPCThemeController extractThemeName:[TPCPreferences themeName]];
-    NSString *ftype = [TPCThemeController extractThemeSource:[TPCPreferences themeName]];
-
 	NSMutableString *resultString = [NSMutableString string];
 
-    if ([ftype isEqualIgnoringCase:TPCThemeControllerCustomStyleNameBasicPrefix]) {
-		[resultString appendString:TPIFLS(@"SystemInformationStyleCommandResultCustom", fname)];
-    } else {
+	NSString *fname = [self.themeController name];
+	
+	TPCThemeControllerStorageLocation storageLocation = [self.themeController storageLocation];
+	
+    if (storageLocation == TPCThemeControllerStorageBundleLocation) {
 		[resultString appendString:TPIFLS(@"SystemInformationStyleCommandResultBundle", fname)];
-    }
+    } else if (storageLocation == TPCThemeControllerStorageCustomLocation) {
+		[resultString appendString:TPIFLS(@"SystemInformationStyleCommandResultNormalCustom", fname)];
+    } else if (storageLocation == TPCThemeControllerStorageCloudLocation) {
+		[resultString appendString:TPIFLS(@"SystemInformationStyleCommandResultCloudCustom", fname)];
+	}
 
 	if ([TPCPreferences invertSidebarColors]) {
 		[resultString appendString:TPILS(@"SystemInformationStyleCommandResultDarkMode")];
