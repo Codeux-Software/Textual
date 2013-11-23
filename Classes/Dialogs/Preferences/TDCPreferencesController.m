@@ -1066,12 +1066,10 @@
 		
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 		/* Check to see if the cloud path exists first… */
-		if ([TPCPreferences syncPreferencesToTheCloud]) {
-			if ([self.masterController.cloudSyncManager ubiquitousContainerIsAvailable]) {
-				newpath = [[TPCPreferences cloudCustomThemeFolderPath] stringByAppendingPathComponent:name];
-				
-				copyingToCloud = YES;
-			}
+		if ([self.masterController.cloudSyncManager ubiquitousContainerIsAvailable]) {
+			newpath = [[TPCPreferences cloudCustomThemeFolderPath] stringByAppendingPathComponent:name];
+			
+			copyingToCloud = YES;
 		}
 #endif
 		
@@ -1129,11 +1127,9 @@
 		NSString *copyButton = @"OpeningLocalStyleResourcesNormalCopyButton";
 		
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-		if ([TPCPreferences syncPreferencesToTheCloud]) {
-			if ([self.masterController.cloudSyncManager ubiquitousContainerIsAvailable]) {
-				dialogMessage = @"OpeningLocalStyleResourcesCloudMessage";
-				copyButton = @"OpeningLocalStyleResourcesCloudCopyButton";
-			}
+		if ([self.masterController.cloudSyncManager ubiquitousContainerIsAvailable]) {
+			dialogMessage = @"OpeningLocalStyleResourcesCloudMessage";
+			copyButton = @"OpeningLocalStyleResourcesCloudCopyButton";
 		}
 #endif
 		
@@ -1149,7 +1145,7 @@
 						suppressionText:nil];
     } else {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-		if ([TPCPreferences syncPreferencesToTheCloud] && [self.masterController.cloudSyncManager ubiquitousContainerIsAvailable]) {
+		if ([self.masterController.cloudSyncManager ubiquitousContainerIsAvailable]) {
 			if ([self.themeController storageLocation] == TPCThemeControllerStorageCustomLocation) {
 				/* If the theme exists in app support folder, but cloud syncing is available,
 				 then offer to sync it to the cloud. */
