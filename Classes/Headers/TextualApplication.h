@@ -205,6 +205,7 @@
 	#import "NSDataHelper.h"
 	#import "NSDateHelper.h"
 	#import "NSDictionaryHelper.h"
+	#import "NSFileManagerHelper.h"
 	#import "NSFontHelper.h"
 	#import "NSImageHelper.h"
 	#import "NSMenuHelper.h"

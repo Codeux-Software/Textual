@@ -494,6 +494,10 @@
 		4C73F947159DD38E00C1BB5F /* ServerCellSelection_Inverted@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C73F93E159DD38E00C1BB5F /* ServerCellSelection_Inverted@2x.tif */; };
 		4C78926816C6259D0081E859 /* SystemInformation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C78926716C6259D0081E859 /* SystemInformation.framework */; };
 		4C78926916C625C50081E859 /* SystemInformation.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C78926716C6259D0081E859 /* SystemInformation.framework */; };
+		4C83D8EF1842008D00BCC0E1 /* NSFileManagerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C83D8EE1842008D00BCC0E1 /* NSFileManagerHelper.m */; };
+		4C83D8F01842008D00BCC0E1 /* NSFileManagerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C83D8EE1842008D00BCC0E1 /* NSFileManagerHelper.m */; };
+		4C83D8F6184200A100BCC0E1 /* NSFileManagerHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C83D8F5184200A100BCC0E1 /* NSFileManagerHelper.h */; };
+		4C83D8F7184200A100BCC0E1 /* NSFileManagerHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C83D8F5184200A100BCC0E1 /* NSFileManagerHelper.h */; };
 		4C8AF609158E99520026668C /* TXGlobalModels.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF510158E99520026668C /* TXGlobalModels.m */; };
 		4C8AF60A158E99520026668C /* TXMasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF511158E99520026668C /* TXMasterController.m */; };
 		4C8AF60B158E99520026668C /* TXMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF512158E99520026668C /* TXMenuController.m */; };
@@ -1091,6 +1095,8 @@
 		4C73F93E159DD38E00C1BB5F /* ServerCellSelection_Inverted@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "ServerCellSelection_Inverted@2x.tif"; sourceTree = "<group>"; };
 		4C77A31F1748BCCF00D9BD05 /* Shared Trial Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Trial Release Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Trial Release Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C78926716C6259D0081E859 /* SystemInformation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemInformation.framework; path = .tmp/SharedBuildProducts/SystemInformation.framework; sourceTree = "<group>"; };
+		4C83D8EE1842008D00BCC0E1 /* NSFileManagerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFileManagerHelper.m; sourceTree = "<group>"; };
+		4C83D8F5184200A100BCC0E1 /* NSFileManagerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFileManagerHelper.h; sourceTree = "<group>"; };
 		4C86B00D1748B7B60028C7AE /* Shared Framework Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Framework Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Framework Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C86B00E1748B7B60028C7AE /* Shared Extension Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Extension Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Extension Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C86B00F1748B7B60028C7AE /* Shared Developer ID Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Developer ID Release Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Developer ID Release Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
@@ -1956,6 +1962,7 @@
 				4C529E1D17AEFE44009BA0B3 /* NSDataHelper.h */,
 				4C8AF54A158E99520026668C /* NSDateHelper.h */,
 				4C8AF54B158E99520026668C /* NSDictionaryHelper.h */,
+				4C83D8F5184200A100BCC0E1 /* NSFileManagerHelper.h */,
 				4C8AF54C158E99520026668C /* NSFontHelper.h */,
 				4CB331BC16F1BBE000D65CBE /* NSImageHelper.h */,
 				4C6D464C180830E60098BA12 /* NSMenuHelper.h */,
@@ -1985,6 +1992,7 @@
 				4C8AF563158E99520026668C /* TDCPreferencesController.h */,
 				4C8AF564158E99520026668C /* TDCPreferencesScriptWrapper.h */,
 				4C8AF565158E99520026668C /* TDCPreferencesSoundWrapper.h */,
+				4CABE8591840615A002FE4B8 /* TDCProgressInformationSheet.h */,
 				4C8AF566158E99520026668C /* TDCServerSheet.h */,
 				4C8AF567158E99520026668C /* TDCSheetBase.h */,
 				4C8AF568158E99520026668C /* TDCTopicSheet.h */,
@@ -2035,7 +2043,6 @@
 				4C8AF58E158E99520026668C /* TVCMemberListCell.h */,
 				4C5798B9179B451400968800 /* TVCMemberListCellBadge.h */,
 				4CBBD1A416E3570800D2FEFE /* TVCMemberListUserInfoPopover.h */,
-				4CABE8591840615A002FE4B8 /* TDCProgressInformationSheet.h */,
 				4C8AF58F158E99520026668C /* TVCServerList.h */,
 				4C8AF590158E99520026668C /* TVCServerListCell.h */,
 				4C0444E616F1553C00EBB665 /* TVCServerListCellBadge.h */,
@@ -2059,6 +2066,7 @@
 				4C529E1617AEFE17009BA0B3 /* NSDataHelper.m */,
 				4C8AF59E158E99520026668C /* NSDateHelper.m */,
 				4C8AF59F158E99520026668C /* NSDictionaryHelper.m */,
+				4C83D8EE1842008D00BCC0E1 /* NSFileManagerHelper.m */,
 				4C8AF5A0158E99520026668C /* NSFontHelper.m */,
 				4CB331B416F1BBC700D65CBE /* NSImageHelper.m */,
 				4C6D4645180830D40098BA12 /* NSMenuHelper.m */,
@@ -2619,6 +2627,7 @@
 				4C0444E816F1555800EBB665 /* TVCServerListCellBadge.h in Headers */,
 				4C3EB79E17898FD600D21A07 /* TVCLogControllerHistoricLogFile.h in Headers */,
 				5D4846CB171F0ACD0015F2B0 /* OELReachability.h in Headers */,
+				4C83D8F7184200A100BCC0E1 /* NSFileManagerHelper.h in Headers */,
 				4CC6F51D1778AB2E00930E6E /* TVCLogControllerOperationQueue.h in Headers */,
 				4C5A0318170C31010016BB1A /* TPCPreferencesImportExport.h in Headers */,
 				4CBE64CB1743722100831D69 /* TDCHighlightEntrySheet.h in Headers */,
@@ -2768,6 +2777,7 @@
 				4C937BDB170618A80050CEF3 /* TLOSpeechSynthesizer.h in Headers */,
 				4C0444E716F1553C00EBB665 /* TVCServerListCellBadge.h in Headers */,
 				4C5A0317170C2C170016BB1A /* TPCPreferencesImportExport.h in Headers */,
+				4C83D8F6184200A100BCC0E1 /* NSFileManagerHelper.h in Headers */,
 				4C0C720D1742C444000F82C4 /* NSByteCountFormatterHelper.h in Headers */,
 				4CC6F51C1778AB2E00930E6E /* TVCLogControllerOperationQueue.h in Headers */,
 				4CBE64CA1743722100831D69 /* TDCHighlightEntrySheet.h in Headers */,
@@ -3311,6 +3321,7 @@
 				4C0445DE16F1603C00EBB665 /* TVCMainWindowLoadingScreen.m in Sources */,
 				4C0445DF16F1603C00EBB665 /* TVCMainWindowSegmentedControl.m in Sources */,
 				4C0445E016F1603C00EBB665 /* TVCThinSplitView.m in Sources */,
+				4C83D8F01842008D00BCC0E1 /* NSFileManagerHelper.m in Sources */,
 				4CB331B616F1BBC700D65CBE /* NSImageHelper.m in Sources */,
 				4C529E1817AEFE17009BA0B3 /* NSDataHelper.m in Sources */,
 				5D4846C4171F0AC00015F2B0 /* OELReachability.m in Sources */,
@@ -3441,6 +3452,7 @@
 				4CB331B516F1BBC700D65CBE /* NSImageHelper.m in Sources */,
 				4C1E2BEF16FB1F13007C9717 /* NSUserDefaultsHelper.m in Sources */,
 				4C937BD5170618940050CEF3 /* TLOSpeechSynthesizer.m in Sources */,
+				4C83D8EF1842008D00BCC0E1 /* NSFileManagerHelper.m in Sources */,
 				4C5A0311170C2C010016BB1A /* TPCPreferencesImportExport.m in Sources */,
 				4C529E1717AEFE17009BA0B3 /* NSDataHelper.m in Sources */,
 				5D4846C3171F0AC00015F2B0 /* OELReachability.m in Sources */,
