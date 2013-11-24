@@ -440,7 +440,7 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 + (NSString *)cloudCustomThemeCachedFolderPath
 {
-	NSString *dest = [[TPCPreferences applicationSupportFolderPath] stringByAppendingPathComponent:@"/iCloud Caches/Styles/"];
+	NSString *dest = [[TPCPreferences applicationCachesFolderPath] stringByAppendingPathComponent:@"/iCloud Caches/Styles/"];
 
 	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
 		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];

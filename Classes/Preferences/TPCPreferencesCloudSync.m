@@ -832,9 +832,6 @@
 		
 		/* Sync latest changes from disc for the dictionary. */
 		[RZUbiquitousKeyValueStore() synchronize];
-		
-		/* Prepare the container… even if we don't use it. */
-		(void)[self ubiquitousContainerURLPath];
 	} else {
 		/* The key value store is not available. */
 
