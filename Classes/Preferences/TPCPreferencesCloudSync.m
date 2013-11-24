@@ -522,9 +522,6 @@
 - (void)cloudMetadataQueryDidUpdate:(NSNotification *)notification
 {
 	dispatch_async(self.workerQueue, ^{
-		/* Do not accept updates during work. */
-		[self.cloudContainerNotificationQuery disableUpdates];
-		
 		/* Get the existing cache path. */
 		NSString *cachePath = [TPCPreferences cloudCustomThemeCachedFolderPath];
 		NSString *ubiqdPath = [TPCPreferences cloudCustomThemeFolderPath];
@@ -584,11 +581,8 @@
 		 go through our actual iCloud data and update files. */
 		
 		/* Go through each result item and do work. */
-		NSUInteger resultCount = [self.cloudContainerNotificationQuery resultCount];
-		
-		for (int i = 0; i < resultCount; i++) {
-			NSMetadataItem *item = [self.cloudContainerNotificationQuery resultAtIndex:i];
-			
+		[self.cloudContainerNotificationQuery enumerateResultsUsingBlock:^(NSMetadataItem *item, NSUInteger idx, BOOL *stop)
+		{
 			/* First thing first is to get the URL. */
 			NSURL *fileURL = [item valueForAttribute:NSMetadataItemURLKey];
 			
@@ -704,7 +698,7 @@
 			}
 			
 			/* We are done with this file. Do it all again for the next… */
-		}
+		}];
 		
 		/* ========================================================== */
 		
@@ -735,9 +729,6 @@
 		if (self.initialMetadataQueryCompleted == NO) {
 			self.initialMetadataQueryCompleted = YES;
 		}
-		
-		/* Accept updates again. */
-		[self.cloudContainerNotificationQuery enableUpdates];
 		
 		/* Post notification. */
 		[RZNotificationCenter() postNotificationName:TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification object:nil];
