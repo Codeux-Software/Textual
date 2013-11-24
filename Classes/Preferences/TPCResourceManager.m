@@ -53,6 +53,26 @@
 	if ([RZFileManager() fileExistsAtPath:destnPath] == NO) {
 		[RZFileManager() copyItemAtPath:sourePath toPath:destnPath error:NULL]; // We don't care about erros.
 	}
+	
+	/* Add a system link for the unsupervised scripts folder if it exists. */
+	sourePath = [TPCPreferences systemUnsupervisedScriptFolderPath];
+	destnPath = [[TPCPreferences applicationSupportFolderPath] stringByAppendingPathComponent:@"/Custom Scripts/"];
+	
+	if ([RZFileManager() fileExistsAtPath:sourePath] && [RZFileManager() fileExistsAtPath:destnPath] == NO) {
+		[RZFileManager() createSymbolicLinkAtPath:destnPath withDestinationPath:sourePath error:NULL];
+	}
+	
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	/* Add a system link for the iCloud folder if the iCloud folder exists. */
+	destnPath = [[TPCPreferences applicationSupportFolderPath] stringByAppendingPathComponent:@"/iCloud Resources/"];
+	sourePath = [self.masterController.cloudSyncManager ubiquitousContainerURLPath];
+	
+	if ([self.masterController.cloudSyncManager ubiquitousContainerIsAvailable]) {
+		if ([RZFileManager() fileExistsAtPath:destnPath] == NO) {
+			[RZFileManager() createSymbolicLinkAtPath:destnPath withDestinationPath:sourePath error:NULL]; // We don't care about errors.
+		}
+	}
+#endif
 
 	/* We're done here for now… */
 }
