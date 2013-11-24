@@ -61,7 +61,7 @@
 
 - (NSString *)name
 {
-	return self.associatedThemeName;
+	return [TPCThemeController extractThemeName:self.associatedThemeName];
 }
 
 + (BOOL)themeExists:(NSString *)themeName
