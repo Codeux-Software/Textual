@@ -1142,7 +1142,9 @@
 						suppressionText:nil];
     } else {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-		if ([self.masterController.cloudSyncManager ubiquitousContainerIsAvailable]) {
+		BOOL containerAvlb = [self.masterController.cloudSyncManager ubiquitousContainerIsAvailable];
+		
+		if (containerAvlb) {
 			if ([self.themeController storageLocation] == TPCThemeControllerStorageCustomLocation) {
 				/* If the theme exists in app support folder, but cloud syncing is available,
 				 then offer to sync it to the cloud. */
@@ -1162,6 +1164,26 @@
 				
 				return;
 			}
+		} else {
+			if ([self.themeController storageLocation] == TPCThemeControllerStorageCloudLocation) {
+				/* If the current theme is stored in the cloud, but our container is not available, then
+				 we have to tell the user we can't open the files right now. */
+				
+				TLOPopupPrompts *prompt = [TLOPopupPrompts new];
+				
+				[prompt sheetWindowWithQuestion:self.window
+										 target:[TLOPopupPrompts class]
+										 action:@selector(popupPromptNilSelector:withOriginalAlert:)
+										   body:TXTLS(@"iCloudSyncServicesNotAvailableDialogMessage")
+										  title:TXTLS(@"iCloudSyncServicesNotAvailableDialogTitle")
+								  defaultButton:TXTLS(@"OkButton")
+								alternateButton:nil
+									otherButton:nil
+								 suppressionKey:nil
+								suppressionText:nil];
+			}
+			
+			return;
 		}
 #endif
 		
