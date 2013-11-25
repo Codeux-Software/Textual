@@ -322,7 +322,9 @@
 
 "SelfBanDetectedMessage" = "Textual has prevented you from banning yourself on %@.";
 
-"ServerDeletePromptMessage" = "There is no undo and all data related to this server, except for logs, will be erased.";
+"ServerDeletePromptNormalMessage" = "There is no undo and all data related to this server, except for logs, will be erased.";
+"ServerDeletePromptCloudMessage" = "There is no undo and all data related to this server held on this device and shared with iCloud, except for logs, will be erased.\n\nOpen Server Properties and select \"Do not share with other devices using iCloud\" to stop this server from being erased on all shared devices.";
+
 "ServerDeletePromptTitle" = "Do you want to delete the selection?";
 
 "ServerNotConnectedLineSendError" = "Failed to send data to server. Not connected.";
