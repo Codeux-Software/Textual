@@ -140,6 +140,17 @@
 			
 			LogToConsole(@"iCloud Access Is Not Available.");
 		}
+		
+		/* Update monitor based on state of container path. */
+		if (self.cloudContainerNotificationQuery == nil) {
+			if (self.ubiquitousContainerURL) {
+				[self startMonitoringUbiquitousContainer];
+			}
+		} else {
+			if (self.ubiquitousContainerURL == nil) {
+				[self stopMonitoringUbiquitousContainer];
+			}
+		}
 	});
 }
 
@@ -735,6 +746,37 @@
 	});
 }
 
+- (void)startMonitoringUbiquitousContainer
+{
+	/* Setup query for container changes. */
+	self.cloudContainerNotificationQuery = [NSMetadataQuery new];
+	
+	[self.cloudContainerNotificationQuery setSearchScopes:@[NSMetadataQueryUbiquitousDataScope]];
+	[self.cloudContainerNotificationQuery setPredicate:[NSPredicate predicateWithFormat:@"%K LIKE %@", NSMetadataItemFSNameKey, @"*"]];
+	
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(cloudMetadataQueryDidUpdate:)
+								   name:NSMetadataQueryDidFinishGatheringNotification
+								 object:nil];
+	
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(cloudMetadataQueryDidUpdate:)
+								   name:NSMetadataQueryDidUpdateNotification
+								 object:nil];
+	
+	[self.cloudContainerNotificationQuery startQuery];
+}
+
+- (void)stopMonitoringUbiquitousContainer
+{
+	if (self.cloudContainerNotificationQuery) {
+		[self.cloudContainerNotificationQuery stopQuery];
+	}
+	
+    [RZNotificationCenter() removeObserver:self name:NSMetadataQueryDidUpdateNotification object:nil];
+    [RZNotificationCenter() removeObserver:self name:NSMetadataQueryDidFinishGatheringNotification object:nil];
+}
+
 #pragma mark -
 #pragma mark Session Management
 
@@ -796,24 +838,6 @@
 		
 		self.cloudOneMinuteSyncTimer = syncTimer1;
 		self.cloudTenMinuteSyncTimer = syncTimer2;
-		
-		/* Setup query for container changes. */
-		self.cloudContainerNotificationQuery = [NSMetadataQuery new];
-		
-		[self.cloudContainerNotificationQuery setSearchScopes:@[NSMetadataQueryUbiquitousDataScope]];
-		[self.cloudContainerNotificationQuery setPredicate:[NSPredicate predicateWithFormat:@"%K LIKE %@", NSMetadataItemFSNameKey, @"*"]];
-		
-        [RZNotificationCenter() addObserver:self
-								   selector:@selector(cloudMetadataQueryDidUpdate:)
-									   name:NSMetadataQueryDidFinishGatheringNotification
-									 object:nil];
-		
-        [RZNotificationCenter() addObserver:self
-								   selector:@selector(cloudMetadataQueryDidUpdate:)
-									   name:NSMetadataQueryDidUpdateNotification
-									 object:nil];
-		
-        [self.cloudContainerNotificationQuery startQuery];
 
 		/* Notification for when a remote value through the key-value store is changed. */
 		[RZNotificationCenter() addObserver:self
@@ -866,15 +890,12 @@
 		[self.cloudTenMinuteSyncTimer invalidate];
 	}
 	
-	if (self.cloudContainerNotificationQuery) {
-		[self.cloudContainerNotificationQuery stopQuery];
-	}
-	
-    [RZNotificationCenter() removeObserver:self name:NSMetadataQueryDidUpdateNotification object:nil];
-    [RZNotificationCenter() removeObserver:self name:NSMetadataQueryDidFinishGatheringNotification object:nil];
     [RZNotificationCenter() removeObserver:self name:NSUserDefaultsDidChangeNotification object:nil];
+	
 	[RZNotificationCenter() removeObserver:self name:NSUbiquityIdentityDidChangeNotification object:nil];
     [RZNotificationCenter() removeObserver:self name:NSUbiquitousKeyValueStoreDidChangeExternallyNotification object:nil];
+	
+	[self stopMonitoringUbiquitousContainer];
 	
 	/* Dispatch clean-up. */
 	if (self.workerQueue) {
