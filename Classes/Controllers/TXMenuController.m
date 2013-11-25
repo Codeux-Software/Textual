@@ -1109,11 +1109,21 @@
 		return;
 	}
 	
-	BOOL result = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"ServerDeletePromptMessage")
+	NSString *warningToken = @"ServerDeletePromptNormalMessage";
+	
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	if ([TPCPreferences syncPreferencesToTheCloud]) {
+		if (u.config.excludedFromCloudSyncing == NO) {
+			warningToken = @"ServerDeletePromptCloudMessage";
+		}
+	}
+#endif
+	
+	BOOL result = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(warningToken)
 													  title:TXTLS(@"ServerDeletePromptTitle")
 											  defaultButton:TXTLS(@"OkButton") 
 											alternateButton:TXTLS(@"CancelButton")
-											 suppressionKey:@"delete_server"
+											 suppressionKey:nil
 											suppressionText:nil];
 	
 	if (result == NO) {
