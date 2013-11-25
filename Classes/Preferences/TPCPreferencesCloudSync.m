@@ -778,6 +778,8 @@
 	
     [RZNotificationCenter() removeObserver:self name:NSMetadataQueryDidUpdateNotification object:nil];
     [RZNotificationCenter() removeObserver:self name:NSMetadataQueryDidFinishGatheringNotification object:nil];
+
+	self.isSafeToPerformPreferenceValidation = NO;
 }
 
 #pragma mark -
@@ -910,7 +912,6 @@
 	self.localKeysWereUpdated = NO;
 	self.isSyncingLocalKeysDownstream = NO;
 	self.isSyncingLocalKeysUpstream = NO;
-	self.isSafeToPerformPreferenceValidation = NO;
 	
 	self.ubiquityIdentityToken = nil;
 	self.ubiquitousContainerURL = nil;
