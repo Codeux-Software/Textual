@@ -77,6 +77,7 @@
 - (NSString *)stringCharacterAtIndex:(NSInteger)anIndex;
 
 - (NSString *)stringByDeletingPreifx:(NSString *)prefix;
+- (NSString *)stringByDeletingAllCharactersNotInSet:(NSString *)validChars;
 
 - (NSString *)channelNameToken;
 
@@ -86,6 +87,8 @@
 - (NSString *)hostmaskFromRawString;
 
 - (NSString *)cleanedServerHostmask;
+
+- (NSInteger)compareWithWord:(NSString *)stringB matchGain:(NSInteger)gain missingCost:(NSInteger)cost;
 
 - (BOOL)isEqualIgnoringCase:(NSString *)other;
 

@@ -36,6 +36,20 @@
 
  *********************************************************************** */
 
+//
+// This source file contains work that originated
+// from the following others:
+//
+//  Modified by Michael Bianco on 12/2/11.
+//	<http://mabblog.com>
+//
+//  Created by Rick Bourner on Sat Aug 09 2003.
+//  rick@bourner.com
+//
+// In reference to the source code for the call -compareWithWord:matchGain:missingCost:
+// Originating URL: <https://gist.github.com/iloveitaly/1515464>
+//
+
 #import "TextualApplication.h"
 
 @implementation NSString (TXStringHelper)
@@ -210,6 +224,57 @@
 - (NSString *)removeAllNewlines
 {
 	return [self stringByReplacingOccurrencesOfString:NSStringNewlinePlaceholder withString:NSStringEmptyPlaceholder];
+}
+
+- (NSInteger)compareWithWord:(NSString *)stringB matchGain:(NSInteger)gain missingCost:(NSInteger)cost
+{
+	// normalize strings
+	NSString *stringA = [NSString stringWithString:self];
+	
+	stringA = [stringA.trim lowercaseString];
+	stringB = [stringB.trim lowercaseString];
+	
+	// Step 1
+	NSInteger k, i, j, change, *d, distance;
+	
+	NSUInteger n = [stringA length];
+	NSUInteger m = [stringB length];
+	
+	if (NSDissimilarObjects(n++, 0) && NSDissimilarObjects(m++, 0))
+	{
+		d = malloc(sizeof(NSInteger) * m * n );
+		
+		for (k = 0; k < n; k++) {
+			d[k] = k;
+		}
+		
+		for (k = 0; k < m; k++) {
+			d[ k * n ] = k;
+		}
+		
+		for (i = 1; i < n; i++) {
+			for (j = 1; j < m; j++) {
+				if ([stringA characterAtIndex:(i - 1)] == [stringB characterAtIndex:(j - 1)]) {
+					change = -(gain);
+				} else {
+					change = cost;
+				}
+				
+				// Step 6
+				d[ (j * n + i) ] = MIN( (d[ ((j - 1) * n + i) ] + 1),
+								   MIN( (d[  (j * n + i - 1) ] +  1),
+									    (d[ ((j - 1) * n + i -1) ] + change)));
+			}
+		}
+		
+		distance = d[ (n * m - 1) ];
+		
+		free(d);
+		
+		return distance;
+	}
+	
+	return 0;
 }
 
 - (NSInteger)stringPosition:(NSString *)needle
@@ -505,6 +570,30 @@
 	chars = [chars invertedSet];
 
 	return ([self rangeOfCharacterFromSet:chars].location == NSNotFound);
+}
+
+- (NSString *)stringByDeletingAllCharactersNotInSet:(NSString *)validChars
+{
+	NSObjectIsEmptyAssertReturn(self, nil);
+	NSObjectIsEmptyAssertReturn(validChars, nil);
+	
+	NSMutableString *result = [NSMutableString string];
+
+	NSCharacterSet *chars = [NSCharacterSet characterSetWithCharactersInString:validChars];
+	
+	NSScanner *scanner = [NSScanner scannerWithString:self];
+	
+	while ([scanner isAtEnd] == NO) {
+		NSString *buffer;
+		
+		if ([scanner scanCharactersFromSet:chars intoString:&buffer]) {
+			[result appendString:buffer];
+		} else {
+			[scanner setScanLocation:([scanner scanLocation] + 1)];
+		}
+	}
+	
+	return result;
 }
 
 - (NSString *)stripIRCEffects
