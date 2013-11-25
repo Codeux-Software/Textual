@@ -2463,6 +2463,34 @@
 
 			break;
 		}
+		case 5099: // Command: GOTO
+		{
+			NSObjectIsEmptyAssertLoopBreak(uncutInput);
+			
+			NSMutableArray *results = [NSMutableArray array];
+			
+			for (IRCClient *client in [self.worldController clients]) {
+				for (IRCChannel *channel in [client channels]) {
+					NSString *name = [channel.name stringByDeletingAllCharactersNotInSet:TXWesternAlphabetIncludingUnderscoreDashCharacaterSet];
+
+					NSInteger score = [uncutInput compareWithWord:name matchGain:10 missingCost:1];
+					
+					[results addObject:@{@"score" : @(score), @"item" : name}];
+				}
+			}
+			
+			NSObjectIsEmptyAssertLoopBreak(results);
+
+			[results sortUsingComparator:^NSComparisonResult(NSDictionary *obj1, NSDictionary *obj2) {
+				return [obj1[@"score"] compare:obj2[@"score"]];
+			}];
+			
+			NSDictionary *topResult = (id)[results firstObject];
+			
+			[self.worldController select:topResult[@"item"]];
+			
+			break;
+		}
 		case 5092: // Command: DEFAULTS
 		{
 			NSObjectIsEmptyAssertLoopBreak(uncutInput);
