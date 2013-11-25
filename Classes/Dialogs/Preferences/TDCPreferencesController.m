@@ -1002,11 +1002,8 @@
 			LogToConsole(@"Delete Error: %@", [delError localizedDescription]);
 		}
 		
-		/* After everything is updated, run a validation on the
-		 theme to make sure the active still exists. */
-		if ([TPCPreferences performValidationForKeyValues]) {
-			[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleWithTableViewsAction];
-		}
+		// We do not call performValidationForKeyValues here because the
+		// metadata query will do that for us once we change the direcoty by deleting.
 	}
 #endif
 }

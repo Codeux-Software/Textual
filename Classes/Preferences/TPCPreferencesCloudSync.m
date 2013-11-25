@@ -54,7 +54,7 @@
 @property (nonatomic, assign) BOOL localKeysWereUpdated;
 @property (nonatomic, assign) BOOL isSyncingLocalKeysDownstream;
 @property (nonatomic, assign) BOOL isSyncingLocalKeysUpstream;
-@property (nonatomic, assign) BOOL initialMetadataQueryCompleted;
+@property (nonatomic, assign) BOOL isSafeToPerformPreferenceValidation;
 @property (nonatomic, assign) dispatch_queue_t workerQueue;
 @property (nonatomic, strong) NSTimer *cloudOneMinuteSyncTimer;
 @property (nonatomic, strong) NSTimer *cloudTenMinuteSyncTimer;
@@ -126,7 +126,7 @@
 #pragma mark -
 #pragma mark URL Management
 
-- (void)setupUbiquitousContainerURLPath
+- (void)setupUbiquitousContainerURLPath:(BOOL)isCalledFromInit
 {
 	dispatch_async(self.workerQueue, ^{
 		/* Apple very clearly states not to do call this on the main thread
@@ -142,8 +142,12 @@
 		}
 		
 		/* Update monitor based on state of container path. */
+		self.isSafeToPerformPreferenceValidation = NO;
+		
 		if (self.cloudContainerNotificationQuery == nil) {
 			if (self.ubiquitousContainerURL) {
+				self.isSafeToPerformPreferenceValidation = BOOLReverseValue(isCalledFromInit);
+			
 				[self startMonitoringUbiquitousContainer];
 			}
 		} else {
@@ -449,16 +453,16 @@
 
 		/* Perform reload. */
 		dispatch_async(dispatch_get_main_queue(), ^{
-				if (actualChangedKeys.count > 0) {
-					[TPCPreferences performReloadActionForKeyValues:actualChangedKeys];
+			if (actualChangedKeys.count > 0) {
+				[TPCPreferences performReloadActionForKeyValues:actualChangedKeys];
+			}
+			
+			if (importedClients.count > 0) {
+				for (NSDictionary *seed in importedClients) {
+					[TPCPreferencesImportExport importWorldControllerClientConfiguratoin:seed isCloudBasedImport:YES];
 				}
-				
-				if (importedClients.count > 0) {
-					for (NSDictionary *seed in importedClients) {
-						[TPCPreferencesImportExport importWorldControllerClientConfiguratoin:seed isCloudBasedImport:YES];
-					}
-				}
-			});
+			}
+		});
 
 		/* Allow us to continue work. */
 		self.isSyncingLocalKeysDownstream = NO;
@@ -520,7 +524,6 @@
 
 - (void)cloudStorageLimitExceeded
 {
-#warning TODO: Make user aware of this…
 	LogToConsole(@"The cloud storage limit was exceeded.");
 }
 
@@ -532,6 +535,8 @@
  timers which they were designed to do. */
 - (void)cloudMetadataQueryDidUpdate:(NSNotification *)notification
 {
+	BOOL isGatheringNotification = [NSMetadataQueryDidFinishGatheringNotification isEqualToString:[notification name]];
+	
 	dispatch_async(self.workerQueue, ^{
 		/* Get the existing cache path. */
 		NSString *cachePath = [TPCPreferences cloudCustomThemeCachedFolderPath];
@@ -729,16 +734,14 @@
 		
 		/* After everything is updated, run a validation on the 
 		 theme to make sure the active still exists. */
-		if (self.initialMetadataQueryCompleted) {
+		if (self.isSafeToPerformPreferenceValidation) {
 			if ([TPCPreferences performValidationForKeyValues]) {
 				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleWithTableViewsAction];
 			}
-		}
-		
-		/* ========================================================== */
-		
-		if (self.initialMetadataQueryCompleted == NO) {
-			self.initialMetadataQueryCompleted = YES;
+		} else {
+			if (isGatheringNotification) {
+				self.isSafeToPerformPreferenceValidation = YES;
+			}
 		}
 		
 		/* Post notification. */
@@ -796,7 +799,7 @@
 	
 	self.ubiquityIdentityToken = newToken;
 	
-	[self setupUbiquitousContainerURLPath];
+	[self setupUbiquitousContainerURLPath:NO];
 }
 
 - (void)initializeCloudSyncSession
@@ -811,7 +814,7 @@
 		
 		self.ubiquityIdentityToken = [RZFileManager() ubiquityIdentityToken];
 		
-		[self setupUbiquitousContainerURLPath];
+		[self setupUbiquitousContainerURLPath:YES];
 		
 		/* Notification for when a local value through NSUserDefaults is changed. */
 		[RZNotificationCenter() addObserver:self
@@ -907,6 +910,7 @@
 	self.localKeysWereUpdated = NO;
 	self.isSyncingLocalKeysDownstream = NO;
 	self.isSyncingLocalKeysUpstream = NO;
+	self.isSafeToPerformPreferenceValidation = NO;
 	
 	self.ubiquityIdentityToken = nil;
 	self.ubiquitousContainerURL = nil;
