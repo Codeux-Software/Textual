@@ -214,6 +214,8 @@
 					
 					/* Font only applies to actual theme so we don't have to reload sidebars too… */
 					[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
+					
+					[RZNotificationCenter() postNotificationName:TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotification object:nil];
 				}
 			}
 		}
@@ -243,6 +245,8 @@
 				[TPCPreferences setThemeName:temporaryTheme]; // Will reset the BOOL
 				
 				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleWithTableViewsAction];
+			
+				[RZNotificationCenter() postNotificationName:TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification object:nil];
 			} else {
 				DebugLogToConsole(@"iCloud: Theme name \"%@\" is stored in the temporary store.", temporaryTheme);
 			}
