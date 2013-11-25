@@ -539,7 +539,7 @@
 {
 	BOOL isGatheringNotification = [NSMetadataQueryDidFinishGatheringNotification isEqualToString:[notification name]];
 	
-	LogToConsole(@"iCloud: Metadata Query Update: isGathering = %i", isGatheringNotification);
+	DebugLogToConsole(@"iCloud: Metadata Query Update: isGathering = %i", isGatheringNotification);
 	
 	dispatch_async(self.workerQueue, ^{
 		/* Get the existing cache path. */
