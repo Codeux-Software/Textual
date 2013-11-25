@@ -68,6 +68,8 @@ typedef enum TPCThemeControllerStorageLocation : NSInteger {
 
 - (BOOL)isBundledTheme;
 
+- (BOOL)actualPathForCurrentThemeIsEqualToCachedPath;
+
 /* Calls for all themes. */
 + (BOOL)themeExists:(NSString *)themeName;
 

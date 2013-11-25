@@ -64,6 +64,17 @@
 	return [TPCThemeController extractThemeName:self.associatedThemeName];
 }
 
+- (BOOL)actualPathForCurrentThemeIsEqualToCachedPath
+{
+	NSString *updatedPath = [TPCThemeController pathOfThemeWithName:self.associatedThemeName];
+	
+	if (NSObjectIsEmpty(updatedPath) && NSObjectIsNotEmpty(self.path)) {
+		return NO;
+	}
+	
+	return ([updatedPath isEqualToString:self.path]);
+}
+
 + (BOOL)themeExists:(NSString *)themeName
 {
 	TPCThemeControllerStorageLocation location = [TPCThemeController storageLocationOfThemeWithName:themeName];
