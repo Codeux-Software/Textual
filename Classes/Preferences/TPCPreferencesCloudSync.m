@@ -739,8 +739,11 @@
 		/* After everything is updated, run a validation on the 
 		 theme to make sure the active still exists. */
 		if (self.isSafeToPerformPreferenceValidation) {
-			if ([TPCPreferences performValidationForKeyValues]) {
-				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleWithTableViewsAction];
+			/* Only perform update if the current theme location is in the cloud. */
+			if ([self.themeController storageLocation] == TPCThemeControllerStorageCloudLocation) {
+				if ([TPCPreferences performValidationForKeyValues:NO]) {
+					[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleWithTableViewsAction];
+				}
 			}
 		} else {
 			if (isGatheringNotification) {

@@ -577,7 +577,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 #pragma mark -
 #pragma mark Export/Import Information
 
-+ (BOOL)performValidationForKeyValues
++ (BOOL)performValidationForKeyValues:(BOOL)duringInitialization
 {
 	/* Validate font. */
 	BOOL keyChanged = NO;
@@ -591,6 +591,25 @@ static NSURL *transcriptFolderResolvedBookmark;
 	/* Validate theme. */
 	NSString *activeTheme = [TPCPreferences themeName];
 	
+	if (duringInitialization == NO) { // self.themeController is not available during initialization.
+		if ([self.themeController actualPathForCurrentThemeIsEqualToCachedPath]) {
+			return keyChanged;
+		} else {
+			/* If the path is invalid, but the theme still exists, then its possible
+			 it moved from the cloud to the local application support path. */
+			if ([TPCThemeController themeExists:activeTheme]) {
+				/* If it shows up as still existing, then we just mark it as keyChanged
+				 so the controller knows to reload it, but we don't have to do any other
+				 checks at this point since we know it just moved somewhere else. */
+				
+				keyChanged = YES;
+				
+				return keyChanged;
+			}
+		}
+	}
+	
+	/* Continue with normal checks. */
 	if ([TPCThemeController themeExists:activeTheme] == NO) {
 		NSString *filekind = [TPCThemeController extractThemeSource:activeTheme];
 		NSString *filename = [TPCThemeController extractThemeName:activeTheme];
@@ -1889,7 +1908,7 @@ static NSMutableArray *excludeKeywords = nil;
 #endif
 	
 	/* Validate some stuff. */
-	(void)[TPCPreferences performValidationForKeyValues];
+	(void)[TPCPreferences performValidationForKeyValues:YES];
 
 	/* Setup loggin. */
 	[TPCPreferences startUsingTranscriptFolderSecurityScopedBookmark];

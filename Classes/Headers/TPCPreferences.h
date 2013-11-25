@@ -360,7 +360,7 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 + (BOOL)textFieldTextReplacement;
 + (void)setTextFieldTextReplacement:(BOOL)value;
 
-+ (BOOL)performValidationForKeyValues;
++ (BOOL)performValidationForKeyValues:(BOOL)duringInitialization;
 
 /* The following should only be called by TPCPreferencesImportExport */
 + (void)performReloadActionForKeyValues:(NSArray *)prefKeys;
