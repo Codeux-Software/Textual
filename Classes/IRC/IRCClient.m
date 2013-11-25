@@ -2475,7 +2475,7 @@
 
 					NSInteger score = [uncutInput compareWithWord:name matchGain:10 missingCost:1];
 					
-					[results addObject:@{@"score" : @(score), @"item" : name}];
+					[results addObject:@{@"score" : @(score), @"item" : channel}];
 				}
 			}
 			
