@@ -3125,13 +3125,73 @@
 
 #pragma mark -
 
+- (void)ircSSLCertificateInfoCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
+{
+    if (returnCode == TLOPopupPromptReturnOtherType) {
+        // we were asked to connect to the server regardless of the certificate
+        self.config.isTrustedConnection = YES;
+
+		[self connect:IRCConnectBadSSLCertificateMode];
+    }
+}
+
 - (void)ircBadSSLCertificateDisconnectCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
 {
 	if (returnCode == TLOPopupPromptReturnPrimaryType) {
 		self.config.isTrustedConnection = YES;
 
 		[self connect:IRCConnectBadSSLCertificateMode];
-	}
+	} else if (returnCode == TLOPopupPromptReturnOtherType) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            TLOPopupPrompts *prompt = [TLOPopupPrompts new];
+
+#define NSSTRING_OR_EMPTY(x) ((x) ? (x) : @"")
+
+            THOX509Certificate *cert = [[THOX509Certificate alloc] initWithDER:self.serverSSLCertificateDER];
+            NSString *certInfo = [NSString stringWithFormat:
+                                  @"Server certificate info:\n\n"
+                                  "Not valid before: %@\n"
+                                  "Not valid after: %@\n"
+                                  "\n"
+                                  "Issuer:\n"
+                                  "\tCommon Name: %@\n"
+                                  "\tOrganization: %@\n"
+                                  "\tOrganizational unit: %@\n"
+                                  "\tState: %@\n"
+                                  "\tCountry: %@\n"
+                                  "Subject:\n"
+                                  "\tCommon Name: %@\n"
+                                  "\tOrganization: %@\n"
+                                  "\tOrganizational unit: %@\n"
+                                  "\tState: %@\n"
+                                  "\tCountry: %@\n"
+                                  ,
+                                  cert.notBefore, cert.notAfter,
+                                  NSSTRING_OR_EMPTY(cert.issuer.commonName),
+                                  NSSTRING_OR_EMPTY(cert.issuer.organizationName),
+                                  NSSTRING_OR_EMPTY(cert.issuer.organizationalUnitName),
+                                  NSSTRING_OR_EMPTY(cert.issuer.stateOrProvince),
+                                  NSSTRING_OR_EMPTY(cert.issuer.country),
+                                  NSSTRING_OR_EMPTY(cert.subject.commonName),
+                                  NSSTRING_OR_EMPTY(cert.subject.organizationName),
+                                  NSSTRING_OR_EMPTY(cert.subject.organizationalUnitName),
+                                  NSSTRING_OR_EMPTY(cert.subject.stateOrProvince),
+                                  NSSTRING_OR_EMPTY(cert.subject.country)];
+
+#undef NSSTRING_OR_EMPTY
+
+            [prompt sheetWindowWithQuestion:self.masterController.mainWindow
+                                     target:self
+                                     action:@selector(ircSSLCertificateInfoCallback:withOriginalAlert:)
+                                       body:certInfo
+                                      title:TXTLS(@"SocketBadSSLCertificateErrorTitle")
+                              defaultButton:@"Do not connect"
+                            alternateButton:nil
+                                otherButton:@"Connect anyway"
+                             suppressionKey:nil
+                            suppressionText:nil];
+        });
+    }
 }
 
 - (void)ircConnectionDidDisconnect:(IRCConnection *)sender
@@ -3147,7 +3207,7 @@
 									  title:TXTLS(@"SocketBadSSLCertificateErrorTitle")
 							  defaultButton:TXTLS(@"TrustButton")
 							alternateButton:TXTLS(@"CancelButton")
-								otherButton:nil
+								otherButton:@"Show certificate"
 							 suppressionKey:nil
 							suppressionText:nil];
 		}

@@ -249,6 +249,7 @@
 	#import "THOPluginManager.h"
 	#import "THOPluginProtocol.h"
 	#import "THOUnicodeHelper.h"
+    #import "THOX509Certificate.h"
 
 	/* Library. */
 

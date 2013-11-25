@@ -818,6 +818,10 @@
 		5D4846C4171F0AC00015F2B0 /* OELReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D4846C2171F0AC00015F2B0 /* OELReachability.m */; };
 		5D4846CA171F0ACD0015F2B0 /* OELReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D4846C9171F0ACD0015F2B0 /* OELReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D4846CB171F0ACD0015F2B0 /* OELReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D4846C9171F0ACD0015F2B0 /* OELReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		927F2E4C18428A6E0068890D /* THOX509Certificate.h in Headers */ = {isa = PBXBuildFile; fileRef = 927F2E4A18428A6E0068890D /* THOX509Certificate.h */; };
+		927F2E4D18428A6E0068890D /* THOX509Certificate.h in Headers */ = {isa = PBXBuildFile; fileRef = 927F2E4A18428A6E0068890D /* THOX509Certificate.h */; };
+		927F2E4E18428A6E0068890D /* THOX509Certificate.m in Sources */ = {isa = PBXBuildFile; fileRef = 927F2E4B18428A6E0068890D /* THOX509Certificate.m */; };
+		927F2E4F18428A6E0068890D /* THOX509Certificate.m in Sources */ = {isa = PBXBuildFile; fileRef = 927F2E4B18428A6E0068890D /* THOX509Certificate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1410,6 +1414,8 @@
 		5D9B8EB7170A0EB400919CB0 /* CleanUpResources.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = CleanUpResources.sh; path = "Main Project (Textual).xcodeproj/CleanUpResources.sh"; sourceTree = SOURCE_ROOT; };
 		5D9B8EB8170A0EB400919CB0 /* UpdateVersionInfo.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = UpdateVersionInfo.sh; path = "Main Project (Textual).xcodeproj/UpdateVersionInfo.sh"; sourceTree = SOURCE_ROOT; };
 		5D9B8EB9170A10F200919CB0 /* BuildExtensions.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = BuildExtensions.sh; path = "Main Project (Textual).xcodeproj/BuildExtensions.sh"; sourceTree = SOURCE_ROOT; };
+		927F2E4A18428A6E0068890D /* THOX509Certificate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = THOX509Certificate.h; path = ../Helpers/THOX509Certificate.h; sourceTree = "<group>"; };
+		927F2E4B18428A6E0068890D /* THOX509Certificate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = THOX509Certificate.m; path = Helpers/THOX509Certificate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1936,6 +1942,7 @@
 		4C8AF527158E99520026668C /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				927F2E4A18428A6E0068890D /* THOX509Certificate.h */,
 				4C8AF73E158EB6CA0026668C /* External Libraries */,
 				4C8AF533158E99520026668C /* IRC.h */,
 				4C8AF534158E99520026668C /* IRCAddressBook.h */,
@@ -2304,6 +2311,7 @@
 				4CBCF89F16C7D0B300DC3521 /* Plugin Architecture */,
 				4C950C0316D6C64300A93D8D /* Threading */,
 				4CB9980817C39E83008F56D7 /* THOUnicodeHelper.m */,
+				927F2E4B18428A6E0068890D /* THOX509Certificate.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -2624,6 +2632,7 @@
 				4C1E2BF616FB2483007C9717 /* NSUserDefaultsHelper.h in Headers */,
 				4CB331BE16F1BBE000D65CBE /* NSImageHelper.h in Headers */,
 				4C937BDC17061A3F0050CEF3 /* TLOSpeechSynthesizer.h in Headers */,
+				927F2E4D18428A6E0068890D /* THOX509Certificate.h in Headers */,
 				4C0444E816F1555800EBB665 /* TVCServerListCellBadge.h in Headers */,
 				4C3EB79E17898FD600D21A07 /* TVCLogControllerHistoricLogFile.h in Headers */,
 				5D4846CB171F0ACD0015F2B0 /* OELReachability.h in Headers */,
@@ -2774,6 +2783,7 @@
 				4C1E2BF516FB1F22007C9717 /* NSUserDefaultsHelper.h in Headers */,
 				4C8AF68C158E99520026668C /* TXMenuController.h in Headers */,
 				5D4846CA171F0ACD0015F2B0 /* OELReachability.h in Headers */,
+				927F2E4C18428A6E0068890D /* THOX509Certificate.h in Headers */,
 				4C937BDB170618A80050CEF3 /* TLOSpeechSynthesizer.h in Headers */,
 				4C0444E716F1553C00EBB665 /* TVCServerListCellBadge.h in Headers */,
 				4C5A0317170C2C170016BB1A /* TPCPreferencesImportExport.h in Headers */,
@@ -2855,6 +2865,11 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Codeux Software";
+				TargetAttributes = {
+					4C1DC5511580420500A47BC9 = {
+						DevelopmentTeam = J8B76VBZ57;
+					};
+				};
 			};
 			buildConfigurationList = 4C1DC54C1580420500A47BC9 /* Build configuration list for PBXProject "Main Project (Textual)" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -3322,6 +3337,7 @@
 				4C0445DF16F1603C00EBB665 /* TVCMainWindowSegmentedControl.m in Sources */,
 				4C0445E016F1603C00EBB665 /* TVCThinSplitView.m in Sources */,
 				4C83D8F01842008D00BCC0E1 /* NSFileManagerHelper.m in Sources */,
+				927F2E4F18428A6E0068890D /* THOX509Certificate.m in Sources */,
 				4CB331B616F1BBC700D65CBE /* NSImageHelper.m in Sources */,
 				4C529E1817AEFE17009BA0B3 /* NSDataHelper.m in Sources */,
 				5D4846C4171F0AC00015F2B0 /* OELReachability.m in Sources */,
@@ -3453,6 +3469,7 @@
 				4C1E2BEF16FB1F13007C9717 /* NSUserDefaultsHelper.m in Sources */,
 				4C937BD5170618940050CEF3 /* TLOSpeechSynthesizer.m in Sources */,
 				4C83D8EF1842008D00BCC0E1 /* NSFileManagerHelper.m in Sources */,
+				927F2E4E18428A6E0068890D /* THOX509Certificate.m in Sources */,
 				4C5A0311170C2C010016BB1A /* TPCPreferencesImportExport.m in Sources */,
 				4C529E1717AEFE17009BA0B3 /* NSDataHelper.m in Sources */,
 				5D4846C3171F0AC00015F2B0 /* OELReachability.m in Sources */,
@@ -3739,24 +3756,30 @@
 		4C1DC5711580420500A47BC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Quartz.framework/Versions/A/Frameworks\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
 		4C1DC5721580420500A47BC9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Quartz.framework/Versions/A/Frameworks\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -3814,12 +3837,15 @@
 		4C77A3261748BCDC00D9BD05 /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Quartz.framework/Versions/A/Frameworks\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				PROVISIONING_PROFILE = "";
 			};
 			name = "Release (Trial)";
 		};
@@ -3879,12 +3905,15 @@
 		4CCF2F9115804987006FFE21 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Quartz.framework/Versions/A/Frameworks\"",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				PROVISIONING_PROFILE = "";
 			};
 			name = "Release (App Store)";
 		};
