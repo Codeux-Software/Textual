@@ -431,7 +431,7 @@
 
 	NSInteger soundObject = [self.availableSounds indexOfObject:alert.alertSound];
 	
-	if (soundObject == -1) {
+	if (soundObject == NSNotFound) {
 		[self.alertSoundChoiceButton selectItemAtIndex:0];
 	} else {
 		[self.alertSoundChoiceButton selectItemAtIndex:soundObject];
