@@ -38,7 +38,7 @@
 
 //
 // This source file contains work that originated
-// from the following others:
+// from the following authors:
 //
 //  Modified by Michael Bianco on 12/2/11.
 //	<http://mabblog.com>
