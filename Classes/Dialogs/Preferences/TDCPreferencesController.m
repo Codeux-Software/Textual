@@ -116,6 +116,11 @@
 								   name:TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification
 								 object:nil];
 	
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(onCloudSyncControllerDidChangeThemeName:)
+								   name:TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification
+								 object:nil];
+	
 	[self.syncPreferencesToTheCloudButton setState:[TPCPreferences syncPreferencesToTheCloud]];
 #endif
 	
@@ -1197,6 +1202,11 @@
 #pragma mark -
 #pragma mark Cloud Work
 
+- (void)onCloudSyncControllerDidChangeThemeName:(NSNotification *)aNote
+{
+	[self updateThemeSelection];
+}
+
 - (void)onCloudSyncControllerDidRebuildContainerCache:(NSNotification *)aNote
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
@@ -1225,6 +1235,7 @@
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[RZNotificationCenter() removeObserver:self name:TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification object:nil];
+	[RZNotificationCenter() removeObserver:self name:TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification object:nil];
 #endif
 	
 	[self.window saveWindowStateForClass:self.class];

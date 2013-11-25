@@ -44,6 +44,9 @@
 /* I can make this notification name longer if I wanted to. */
 #define TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification		@"TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification"
 
+#define TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification		@"TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification"
+#define TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotification		@"TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotification"
+
 @interface TPCPreferencesCloudSync : NSObject
 @property (nonatomic, assign, readonly) BOOL hasUncommittedDataStoredInCloud;
 
