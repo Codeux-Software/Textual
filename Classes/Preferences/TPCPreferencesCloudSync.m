@@ -142,19 +142,21 @@
 		}
 		
 		/* Update monitor based on state of container path. */
-		self.isSafeToPerformPreferenceValidation = NO;
-		
-		if (self.cloudContainerNotificationQuery == nil) {
-			if (self.ubiquitousContainerURL) {
-				self.isSafeToPerformPreferenceValidation = BOOLReverseValue(isCalledFromInit);
+		dispatch_async(dispatch_get_main_queue(), ^{
+			self.isSafeToPerformPreferenceValidation = NO;
 			
-				[self startMonitoringUbiquitousContainer];
+			if (self.cloudContainerNotificationQuery == nil) {
+				if (self.ubiquitousContainerURL) {
+					self.isSafeToPerformPreferenceValidation = BOOLReverseValue(isCalledFromInit);
+				
+					[self startMonitoringUbiquitousContainer];
+				}
+			} else {
+				if (self.ubiquitousContainerURL == nil) {
+					[self stopMonitoringUbiquitousContainer];
+				}
 			}
-		} else {
-			if (self.ubiquitousContainerURL == nil) {
-				[self stopMonitoringUbiquitousContainer];
-			}
-		}
+		});
 	});
 }
 
@@ -537,6 +539,8 @@
 {
 	BOOL isGatheringNotification = [NSMetadataQueryDidFinishGatheringNotification isEqualToString:[notification name]];
 	
+	LogToConsole(@"iCloud: Metadata Query Update: isGathering = %i", isGatheringNotification);
+	
 	dispatch_async(self.workerQueue, ^{
 		/* Get the existing cache path. */
 		NSString *cachePath = [TPCPreferences cloudCustomThemeCachedFolderPath];
@@ -780,6 +784,8 @@
     [RZNotificationCenter() removeObserver:self name:NSMetadataQueryDidFinishGatheringNotification object:nil];
 
 	self.isSafeToPerformPreferenceValidation = NO;
+	
+	self.cloudContainerNotificationQuery = nil;
 }
 
 #pragma mark -
@@ -917,7 +923,6 @@
 	self.ubiquitousContainerURL = nil;
 	self.cloudOneMinuteSyncTimer = nil;
 	self.cloudTenMinuteSyncTimer = nil;
-	self.cloudContainerNotificationQuery = nil;
 }
 
 @end

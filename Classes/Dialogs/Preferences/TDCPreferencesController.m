@@ -903,9 +903,7 @@
 - (void)onOpenPathToCloudFolder:(id)sender
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	NSString *path = [TPCPreferences applicationUbiquitousContainerPath];
-	
-	if (NSObjectIsEmpty(path)) {
+	if ([self.masterController.cloudSyncManager ubiquitousContainerIsAvailable] == NO) {
 		TLOPopupPrompts *popup = [TLOPopupPrompts new];
 		
 		[popup sheetWindowWithQuestion:self.window
@@ -919,6 +917,8 @@
 						suppressionKey:nil
 					   suppressionText:nil];
 	} else {
+		NSString *path = [TPCPreferences applicationUbiquitousContainerPath];
+		
 		[RZWorkspace() openFile:path];
 	}
 #endif
