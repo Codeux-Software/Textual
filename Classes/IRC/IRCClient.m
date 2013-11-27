@@ -2485,7 +2485,7 @@
 				return [obj1[@"score"] compare:obj2[@"score"]];
 			}];
 			
-			NSDictionary *topResult = (id)[results firstObject];
+			NSDictionary *topResult = (id)results[0];
 			
 			[self.worldController select:topResult[@"item"]];
 			

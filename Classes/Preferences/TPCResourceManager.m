@@ -172,9 +172,11 @@
 	[d setMessage:TXTFLS(@"ResourcesFileImportScriptSaveDialogMessage", [TPCPreferences applicationBundleIdentifier])];
 	[d setNameFieldStringValue:[url lastPathComponent]];
 	
+#ifdef TXSystemIsMacOSMavericksOrNewer
 	if ([TPCPreferences featureAvailableToOSXMavericks]) {
 		[d setShowsTagField:NO];
 	}
+#endif
 	
 	/* Complete the import. */
 	[d beginWithCompletionHandler:^(NSInteger returnCode) {
