@@ -53,16 +53,16 @@
 - (void)initalizeKeyExchange; // Do not call.
 
 - (void)computeKey;
-- (void)setKeyForComputation:(NSString *)publicKey;
+- (void)setKeyForComputation:(NSData *)publicKey;
 
 - (void)resetStatus;
 - (void)resetPublicInformation;
 
 - (NSString *)secretStringValue;
 
-- (NSString *)rawPublicKey;
-- (NSString *)publicKeyValue:(NSString *)publicInput;
+- (NSData *)rawPublicKey;
+- (NSString *)publicKeyValue:(NSData *)publicInput;
 
-- (NSString *)base64Encode:(NSString *)input;
-- (NSString *)base64Decode:(NSString *)input;
+- (NSString *)base64Encode:(NSData *)input;
+- (NSData *)base64Decode:(NSString *)input;
 @end

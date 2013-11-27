@@ -66,26 +66,26 @@
 
 - (NSString *)generatePublicKey
 {
-	NSString *publicKeyRaw = [self.keyExchanger rawPublicKey];
-
+	NSData *publicKeyRaw = [self.keyExchanger rawPublicKey];
+	
     if (publicKeyRaw.length >= 1) {
         return [self.keyExchanger publicKeyValue:publicKeyRaw];
     }
-
+	
 	return nil;
 }
 
 - (NSString *)secretKeyFromPublicKey:(NSString *)publicKey
 {
-	publicKey = [self.keyExchanger base64Decode:publicKey];
+	NSData *publicKeyData = [self.keyExchanger base64Decode:publicKey];
 
-	if (publicKey.length < DH1080RequiredKeyLength ||
-		publicKey.length > DH1080RequiredKeyLength) {
-
+	if (publicKeyData.length < DH1080RequiredKeyLength ||
+		publicKeyData.length > DH1080RequiredKeyLength)
+	{
 		return nil;
 	}
-
-	[self.keyExchanger setKeyForComputation:publicKey];
+	
+	[self.keyExchanger setKeyForComputation:publicKeyData];
 	[self.keyExchanger computeKey];
 
 	NSString *secretString = [self.keyExchanger secretStringValue];

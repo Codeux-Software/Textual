@@ -35,175 +35,26 @@
 
  *********************************************************************** */
 
-/* This source file contains modified work of the original Dirt IRC proxy
- project hosted at: http://sourceforge.net/projects/dirtirc */
-
-// Copyright (c) 2005-2013 Mathias Karlsson
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// Please see License.txt for further information.
-
 #import "Base64Encoding.h"
-
-static NSString *base64CharacterList = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 @implementation CSFWBase64Encoding
 
-#pragma mark -
-#pragma mark Data Encoding.
-
-+ (NSString *)encodeData:(NSString *)input
++ (NSString *)encodeData:(NSData *)input
 {
-	NSInteger inputLength = input.length;
-	
-	if (inputLength <= 0) {
-		return nil;
+	if ([input respondsToSelector:@selector(base64EncodedStringWithOptions:)]) {
+		return [input base64EncodedStringWithOptions:0];
+	} else {
+		return [input base64Encoding];
 	}
-
-	// ================================================ //
-
-	NSMutableString *encodedResult = [NSMutableString string];
-
-	unsigned char *is = (unsigned char *)[input cStringUsingEncoding:[NSString defaultCStringEncoding]];
-
-	unsigned long data;
-	unsigned long di;
-
-	// ================================================ //
-
-	for (NSInteger i = 0; i < inputLength; i += 3)
-	{
-		data  = (*is++ << 16);
-		data += (*is++ << 8);
-		data += (*is++);
-
-		// ================================================ //
-
-		for (NSInteger d = 0; d < 4; d++) {
-			if (d >= 2 && (i + d) > inputLength) {
-				[encodedResult appendString:@"="];
-			} else {
-				di = ((data >> 18) & 63);
-
-				[encodedResult appendFormat:@"%C", [base64CharacterList characterAtIndex:di]];
-			}
-
-			data = (data << 6);
-		}
-	}
-
-	// ================================================ //
-	
-	if (encodedResult.length <= 0) {
-		return nil;
-	}
-
-	return encodedResult;
 }
 
-#pragma mark -
-#pragma mark Data Decoding.
-
-+ (NSString *)decodeData:(NSString *)input
++ (NSData *)decodeData:(NSString *)input
 {
-	NSInteger inputLength = input.length;
-	
-	if (inputLength <= 0 || ((inputLength % 4) == 0) == NO) {
-		return nil;
+	if ([NSData respondsToSelector:@selector(initWithBase64EncodedString:options:)]) {
+		return [[NSData alloc] initWithBase64EncodedString:input options:0];
+	} else {
+		return [[NSData alloc] initWithBase64Encoding:input];
 	}
-
-	// ================================================ //
-
-	unsigned char *is = (unsigned char *)[input cStringUsingEncoding:[NSString defaultCStringEncoding]];
-	unsigned char  di;
-	
-	unsigned long data;
-
-	// ================================================ //
-
-	NSMutableString *decodedResult = [NSMutableString string];
-	
-	NSInteger charPosition = 0;
-	NSInteger charPosShift = 0;
-
-	// ================================================ //
-
-	for (NSInteger i = 0; i < inputLength; i += 4)
-	{
-		di = [input characterAtIndex:i];
-
-		if ((di == '=') == NO && [self find:di in:base64CharacterList] == -1) {
-			return nil; // Cancel decode if we found a di that is not Base64 standard.
-		}
-
-		// ================================================ //
-		
-		charPosition = [self find:(*is++) in:base64CharacterList];
-		if (charPosition > -1) { data = (charPosition << 18);	}
-
-		charPosition = [self find:(*is++) in:base64CharacterList];
-		if (charPosition > -1) { data += (charPosition << 12);	}
-
-		charPosition = [self find:(*is++) in:base64CharacterList];
-		if (charPosition > -1) { data += (charPosition << 6);	}
-
-		charPosition = [self find:(*is++) in:base64CharacterList];
-		if (charPosition > -1) { data += charPosition;			}
-
-		// ================================================ //
-
-		[decodedResult appendFormat:@"%c", ((data >> 16) & 255)];
-
-		// ================================================ //
-
-		charPosShift = (i + 2);
-		
-		if (charPosShift < inputLength) {
-			di = is[charPosShift];
-
-			if ((di == '=') == NO) {
-				[decodedResult appendFormat:@"%c", ((data >> 8) & 255)];
-			}
-		}
-
-		// ================================================ //
-		
-		charPosShift = (i + 3);
-
-		if (charPosShift < inputLength) {
-			di = is[charPosShift];
-
-			if ((di == '=') == NO) {
-				[decodedResult appendFormat:@"%c", (data & 255)];
-			}
-		}
-	}
-
-	// ================================================ //
-	
-	if (decodedResult.length <= 0) {
-		return nil;
-	}
-
-	return decodedResult;
-}
-
-#pragma mark -
-#pragma mark Utilities.
-
-+ (NSInteger)find:(unsigned char)uchar in:(NSString *)stack
-{
-	NSRange r = [stack rangeOfString:[NSString stringWithFormat:@"%c", uchar]];
-
-	if ((r.location == NSNotFound) == NO) {
-		return r.location;
-	}
-
-	return -1;
 }
 
 @end
