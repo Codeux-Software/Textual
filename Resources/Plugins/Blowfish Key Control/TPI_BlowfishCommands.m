@@ -42,9 +42,6 @@
 
 #define TXExchangeReuqestTimeoutDelay		10
 
-/* Comment out to enable. */
-#define TXExchangeIsDisabled				1
-
 @interface TPI_BlowfishCommands ()
 /* 
 	  key format:	STRING("<client UUID> —> <remote nickname>")
@@ -75,10 +72,6 @@
 						 sender:(NSDictionary *)senderDict
 						message:(NSDictionary *)messageDict
 {
-#ifdef TXExchangeIsDisabled
-	return;
-#endif
-	
 	NSString *person  = senderDict[@"senderNickname"];
 	NSString *message = messageDict[@"messageSequence"];
 
@@ -164,12 +157,6 @@
 				[client printDebugInformation:TPILS(@"BlowfishNoEncryptionKeySet") channel:c];
 			}
 		} else if ([commandString isEqualToString:@"KEYX"]) {
-#ifdef TXExchangeIsDisabled
-			[self postKeyExchangeDisabledMessageToClient:client andChannel:c];
-
-			return;
-#endif
-
 			if (c.isPrivateMessage == NO) {
 				[client printDebugInformation:TPILS(@"BlowfishKeyExchangeForQueriesOnly") channel:c];
 			} else {
@@ -229,17 +216,6 @@
 
 #pragma mark -
 #pragma mark Key Exchange.
-
-#ifdef TXExchangeIsDisabled
-- (void)postKeyExchangeDisabledMessageToClient:(IRCClient *)client andChannel:(IRCChannel *)channel
-{
-	PointerIsEmptyAssert(client);
-	PointerIsEmptyAssert(channel);
-	
-	[client printDebugInformation:TPILS(@"BlowfishKeyExchangeNotAvailable_1") channel:channel];
-	[client printDebugInformation:TPILS(@"BlowfishKeyExchangeNotAvailable_2") channel:channel];
-}
-#endif
 
 - (void)keyExchangeRequestReceived:(NSString *)requestDataRaw on:(IRCClient *)client from:(NSString *)requestSender
 {

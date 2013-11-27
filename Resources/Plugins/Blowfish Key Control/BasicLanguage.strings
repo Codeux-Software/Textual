@@ -55,6 +55,3 @@
 
 "BlowfishKeyExchangeCannotHandleEncryptedRequest_1" = "Cannot process key exchange request from \002%@\002 until the active encryption keys are reset.";
 "BlowfishKeyExchangeCannotHandleEncryptedRequest_2" = "Cannot process key exchange request for \002%@\002 until the active encryption keys are reset.";
-
-"BlowfishKeyExchangeErrorOccurred_1" = "Key exchange failed: failure to generate public key.";
-"BlowfishKeyExchangeErrorOccurred_2" = "Key exchange failed: failure to compute secret from public key.";

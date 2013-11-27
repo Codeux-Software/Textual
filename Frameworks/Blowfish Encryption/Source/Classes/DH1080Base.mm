@@ -57,7 +57,7 @@
 
 /* Private Interface. */
 @interface DH1080Base ()
-@property (nonatomic, strong) NSString *secretValue;
+@property (nonatomic, strong) NSData *secretValue;
 @property (nonatomic, unsafe_unretained) DH *DHStatus;
 @property (nonatomic, unsafe_unretained) BIGNUM *publicBigNum;
 @end
@@ -137,7 +137,7 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 	DHAssertNO(self.DHStatus->g == 0);
 	DHAssertNO(self.DHStatus->p == 0);
 	
-	NSString *primeData = [self base64Decode:fishPrimeB64];
+	NSData *primeData = [self base64Decode:fishPrimeB64];
 
 	self.DHStatus->g = BN_new();
 	self.DHStatus->p = BN_new();
@@ -146,9 +146,7 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 
 	DHAssertNO(primeData.length >= 1);
 	
-	unsigned char *primeBuffer = (unsigned char *)[primeData cStringUsingEncoding:[NSString defaultCStringEncoding]];
-
-	BIGNUM *ret = BN_bin2bn(primeBuffer, (int)primeData.length, self.DHStatus->p);
+	BIGNUM *ret = BN_bin2bn((unsigned char *)[primeData bytes], (int)[primeData length], self.DHStatus->p);
 
 	DHAssertYES(ret == 0);
 	DHAssertYES(self.DHStatus->g == 0);
@@ -185,15 +183,15 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 	NSInteger num = DH_compute_key(key, self.publicBigNum, self.DHStatus);
 
 	DHAssertNO(num == size);
-
-	NSString *secretValue = [NSString stringWithCString:(const char *)key encoding:[NSString defaultCStringEncoding]];
+	
+	NSData *secretValue = [[NSData alloc] initWithBytes:key length:sizeof(key)];
 
 	DHAssertNO(secretValue.length >= 1);
 
 	self.secretValue = secretValue;
 }
 
-- (void)setKeyForComputation:(NSString *)publicKey
+- (void)setKeyForComputation:(NSData *)publicKey
 {
 	if (self.publicBigNum == 0) {
 		self.publicBigNum = BN_new();
@@ -201,9 +199,7 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 
 	DHAssertYES(self.publicBigNum == 0);
 
-	unsigned char *publicKeyBuffer = (unsigned char *)[publicKey cStringUsingEncoding:[NSString defaultCStringEncoding]];
-	
-	BIGNUM *ret = BN_bin2bn(publicKeyBuffer, (int)publicKey.length, self.publicBigNum);
+	BIGNUM *ret = BN_bin2bn((unsigned char *)[publicKey bytes], (int)[publicKey length], self.publicBigNum);
 
 	DHAssertYES(ret == 0);
 	DHAssertYES(self.publicBigNum == 0);
@@ -213,30 +209,29 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 
 - (NSString *)secretStringValue
 {
-	NSString *secretValue = self.secretValue;
+	NSData *secretValue = self.secretValue;
 
 	DHAssertNO(secretValue.length >= 1);
 	
-	unsigned char  sha_md[32];
-	unsigned char *secretData = (unsigned char *)[secretValue cStringUsingEncoding:[NSString defaultCStringEncoding]];
+	unsigned char sha_md[32];
+	
+	SHA256((unsigned char *)[secretValue bytes], (int)[secretValue length], sha_md);
 
-	SHA256(secretData, secretValue.length, sha_md);
-
-	NSString *secretHash = [NSString stringWithCString:(const char *)sha_md encoding:[NSString defaultCStringEncoding]];
+	NSData *secretHash = [[NSData alloc] initWithBytes:sha_md length:sizeof(sha_md)];
 
 	DHAssertNO(secretHash.length >= 1);
 
     return [self base64Encode:secretHash];
 }
 
-- (NSString *)publicKeyValue:(NSString *)publicInput
+- (NSString *)publicKeyValue:(NSData *)publicInput
 {
 	DHAssertNO(publicInput.length >= 1);
 
 	return [self base64Encode:publicInput];
 }
 
-- (NSString *)rawPublicKey
+- (NSData *)rawPublicKey
 {
 	DHAssertYES(self.DHStatus	 == 0);
 	DHAssertYES(self.DHStatus->g == 0);
@@ -250,7 +245,7 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 
 	BN_bn2bin(self.DHStatus->pub_key, key);
 
-	NSString *publicInput = [NSString stringWithCString:(const char *)key encoding:[NSString defaultCStringEncoding]];
+	NSData *publicInput = [[NSData alloc] initWithBytes:key length:sizeof(key)];
 
 	DHAssertNO(publicInput.length >= 1);
 
@@ -259,34 +254,34 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 
 #pragma mark -
 
-- (NSString *)base64Encode:(NSString *)input
+- (NSString *)base64Encode:(NSData *)input
 {
-	input = [CSFWBase64Encoding encodeData:input];
+	NSString *output = [CSFWBase64Encoding encodeData:input];
 
-	DHAssertNO(input.length >= 1);
+	DHAssertNO(output.length >= 1);
 
 	BOOL equalFound = NO;
 
 	while (YES) {
-		NSRange equalRange = [input rangeOfString:@"="];
+		NSRange equalRange = [output rangeOfString:@"="];
 
 		if (equalRange.location == NSNotFound) {
 			if (equalFound == NO) {
-				input = [input stringByAppendingString:@"A"];
+				output = [output stringByAppendingString:@"A"];
 			}
 
 			break;
 		} else {
 			equalFound = YES;
 
-			input = [input substringWithRange:NSMakeRange(0, (input.length - 1))];
+			output = [output substringWithRange:NSMakeRange(0, (output.length - 1))];
 		}
 	}
 
-	return input;
+	return output;
 }
 
-- (NSString *)base64Decode:(NSString *)input
+- (NSData *)base64Decode:(NSString *)input
 {
 	NSInteger inputLength = input.length;
 

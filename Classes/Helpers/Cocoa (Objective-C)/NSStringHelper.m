@@ -859,7 +859,9 @@
      *
      */
 
-	NSString *encodedResult = [CSFWBase64Encoding encodeData:self];
+	NSData *baseData = [self dataUsingEncoding:NSUTF8StringEncoding];
+	
+	NSString *encodedResult = [CSFWBase64Encoding encodeData:baseData];
 	
 	if (NSObjectIsNotEmpty(encodedResult)) {
 		NSMutableString *resultString = [NSMutableString string];
