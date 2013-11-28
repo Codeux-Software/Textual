@@ -977,7 +977,12 @@ static NSURL *transcriptFolderResolvedBookmark;
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 + (BOOL)syncPreferencesToTheCloud
 {
-	return [RZUserDefaults() boolForKey:TPCPreferencesCloudSyncDefaultsKey];
+	return [RZUserDefaults() boolForKey:TPCPreferencesCloudSyncKeyValueStoreServicesDefaultsKey];
+}
+
++ (BOOL)syncPreferencesToTheCloudLimitedToServers
+{
+	return [RZUserDefaults() boolForKey:TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDefaultsKey];
 }
 #endif
 
@@ -1754,7 +1759,8 @@ static NSMutableArray *excludeKeywords = nil;
 	NSMutableDictionary *d = [NSMutableDictionary dictionary];
 	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	d[TPCPreferencesCloudSyncDefaultsKey]						= @(NO);
+	d[TPCPreferencesCloudSyncKeyValueStoreServicesDefaultsKey]					= @(NO);
+	d[TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDefaultsKey]	= @(NO);
 #endif
 	
 	d[@"AutomaticallyAddScrollbackMarker"]				= @(YES);

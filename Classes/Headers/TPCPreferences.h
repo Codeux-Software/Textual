@@ -197,6 +197,7 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 + (BOOL)syncPreferencesToTheCloud; /* ZE CLOUD! */
++ (BOOL)syncPreferencesToTheCloudLimitedToServers;
 #endif
 
 + (BOOL)amsgAllConnections;

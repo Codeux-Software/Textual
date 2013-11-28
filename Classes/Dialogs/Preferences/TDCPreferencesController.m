@@ -942,9 +942,7 @@
 - (void)onChangedCloudSyncingServices:(id)sender
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	if ([TPCPreferences syncPreferencesToTheCloud]) {
-		[RZUserDefaults() setBool:NO forKey:TPCPreferencesCloudSyncDefaultsKey];
-		
+	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
 		TLOPopupPrompts *popup = [TLOPopupPrompts new];
 
 		[popup sheetWindowWithQuestion:self.window
@@ -959,9 +957,18 @@
 					   suppressionText:nil];
 	} else {
 		/* Poll server for latest. */
-		/* Syncing is temporarily disabled so we can pull the cloud data. */
-		[RZUserDefaults() setBool:YES forKey:TPCPreferencesCloudSyncDefaultsKey];
+		[RZUbiquitousKeyValueStore() synchronize];
 		
+		[self.masterController.cloudSyncManager synchronizeFromCloud];
+	}
+#endif
+}
+
+- (void)onChangedCloudSyncingServicesServersOnly:(id)sender
+{
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	if ([TPCPreferences syncPreferencesToTheCloud] && [TPCPreferences syncPreferencesToTheCloudLimitedToServers] == NO) {
+		/* Poll server for latest. */
 		[RZUbiquitousKeyValueStore() synchronize];
 		
 		[self.masterController.cloudSyncManager synchronizeFromCloud];

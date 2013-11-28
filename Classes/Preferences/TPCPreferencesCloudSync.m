@@ -138,7 +138,7 @@
 		} else {
 			self.ubiquitousContainerURL = nil;
 			
-			LogToConsole(@"iCloud Access Is Not Available.");
+			LogToConsole(@"iCloud access is not available.");
 		}
 		
 		/* Update monitor based on state of container path. */
@@ -256,10 +256,35 @@
 
 - (BOOL)keyIsNotPermittedInCloud:(NSString *)key
 {
-	return ([key isEqualToString:IRCWorldControllerDefaultsStorageKey] ||
-			[key isEqualToString:TPCPreferencesCloudSyncDefaultsKey] ||
-			[key isEqualToString:TPCPreferencesThemeNameMissingLocallyDefaultsKey] ||
-			[key isEqualToString:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey]);
+	if ([TPCPreferences syncPreferencesToTheCloudLimitedToServers]) {
+		return ([key hasPrefix:IRCWorldControllerCloudClientEntryKeyPrefix] == NO);
+	} else {
+		return ([key isEqualToString:IRCWorldControllerDefaultsStorageKey] ||
+				[key isEqualToString:IRCWorldControllerCloudDeletedClientsStorageKey] ||
+				[key isEqualToString:TPCPreferencesCloudSyncKeyValueStoreServicesDefaultsKey] ||
+				[key isEqualToString:TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDefaultsKey] ||
+				[key isEqualToString:TPCPreferencesThemeNameMissingLocallyDefaultsKey] ||
+				[key isEqualToString:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey]);
+	}
+}
+
+- (BOOL)keyIsNotPermittedFromCloud:(NSString *)key
+{
+	if ([TPCPreferences syncPreferencesToTheCloudLimitedToServers]) {
+		return ([self keyIsRelatedToSavedServerState:key] == NO);
+	} else {
+		return ([key isEqualToString:IRCWorldControllerDefaultsStorageKey] ||
+				[key isEqualToString:TPCPreferencesCloudSyncKeyValueStoreServicesDefaultsKey] ||
+				[key isEqualToString:TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDefaultsKey] ||
+				[key isEqualToString:TPCPreferencesThemeNameMissingLocallyDefaultsKey] ||
+				[key isEqualToString:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey]);
+	}
+}
+
+- (BOOL)keyIsRelatedToSavedServerState:(NSString *)key
+{
+	return ([key isEqualToString:IRCWorldControllerCloudDeletedClientsStorageKey] ||
+				  [key hasPrefix:IRCWorldControllerCloudClientEntryKeyPrefix]);
 }
 
 - (void)syncPreferencesToCloud
@@ -415,6 +440,9 @@
 			id objectValue = [self valueForHashedKey:hashedKey actualKey:&keyname];
 			
 			if (objectValue && keyname) {
+				/* Block stuff from syncing that we did not want. */
+				NSAssertReturnLoopContinue([self keyIsNotPermittedFromCloud:keyname] == NO);
+				
 				/* Compare the local to the new. */
 				/* This is for when we are going through the entire dictionary. */
 				id localValue = [RZUserDefaults() objectForKey:keyname];
