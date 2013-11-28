@@ -274,8 +274,10 @@
 
         [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestReceived", channel.name) channel:channel];
 		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeResponseSent", channel.name) channel:channel];
+		
 		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_1", channel.name) channel:channel];
 		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_2", channel.name) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_3", channel.name) channel:channel];
 	}
 }
 
@@ -318,6 +320,7 @@
 		/* Finish up. */
 		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_1", channel.name) channel:channel];
 		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_2", channel.name) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_3", channel.name) channel:channel];
 		
 		[self.keyExchangeRequests removeObjectForKey:responseKey];
 	}
