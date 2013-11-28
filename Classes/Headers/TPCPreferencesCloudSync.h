@@ -39,7 +39,8 @@
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 
-#define TPCPreferencesCloudSyncDefaultsKey		@"SyncPreferencesToTheCloud"
+#define TPCPreferencesCloudSyncKeyValueStoreServicesDefaultsKey						@"SyncPreferencesToTheCloud"
+#define TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDefaultsKey		@"SyncPreferencesToTheCloudLimitedToServers"
 
 /* I can make this notification name longer if I wanted to. */
 #define TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification		@"TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification"
