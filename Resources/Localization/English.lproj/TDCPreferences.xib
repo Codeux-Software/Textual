@@ -135,7 +135,7 @@
                         <popUpButton key="view" tag="13" id="6451">
                             <rect key="frame" x="3" y="14" width="43" height="32"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="TPWTB_Extensions" imagePosition="right" lineBreakMode="truncatingTail" borderStyle="bezel" inset="2" pullsDown="YES" selectedItem="6454" id="6452">
+                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" imagePosition="right" lineBreakMode="truncatingTail" borderStyle="bezel" inset="2" pullsDown="YES" selectedItem="6454" id="6452">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" title="OtherViews" showsStateColumn="NO" id="6453">
@@ -3874,7 +3874,7 @@
             </subviews>
         </customView>
         <customView id="Ixz-rk-uAe" userLabel="iCloud Settings">
-            <rect key="frame" x="0.0" y="0.0" width="534" height="321"/>
+            <rect key="frame" x="0.0" y="0.0" width="534" height="309"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <userGuides>
                 <userLayoutGuide location="31" affinity="minX"/>
@@ -3885,7 +3885,7 @@
             </userGuides>
             <subviews>
                 <textField verticalHuggingPriority="750" id="F51-75-bIH">
-                    <rect key="frame" x="46" y="66" width="428" height="52"/>
+                    <rect key="frame" x="47" y="67" width="428" height="52"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="QUS-JX-gQv">
                         <font key="font" metaFont="system" size="10"/>
@@ -3895,7 +3895,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" id="KUq-Sc-urV">
-                    <rect key="frame" x="78" y="25" width="180" height="25"/>
+                    <rect key="frame" x="79" y="26" width="180" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundTextured" title="Erase Data" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rKa-1A-BWW">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -3906,7 +3906,7 @@
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Aud-r1-PPJ">
-                    <rect key="frame" x="220" y="124" width="81" height="22"/>
+                    <rect key="frame" x="221" y="125" width="81" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Erase Data" id="q0a-ZE-T7N">
                         <font key="font" size="14" name="LucidaGrande-Bold"/>
@@ -3915,7 +3915,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" id="5zf-Hr-NG5">
-                    <rect key="frame" x="266" y="25" width="174" height="25"/>
+                    <rect key="frame" x="267" y="26" width="174" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundTextured" title="Erase Files" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="j46-Vm-z2z">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -3926,14 +3926,14 @@
                     </connections>
                 </button>
                 <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="VeC-VG-ZUN">
-                    <rect key="frame" x="39" y="158" width="442" height="5"/>
+                    <rect key="frame" x="40" y="159" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <textField verticalHuggingPriority="750" id="aPd-xG-sWR">
-                    <rect key="frame" x="99" y="178" width="224" height="17"/>
+                    <rect key="frame" x="100" y="179" width="224" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iCloud Custom Addons Location:" id="xKi-El-Fn9">
                         <font key="font" metaFont="systemBold"/>
@@ -3942,7 +3942,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" id="Ppb-WG-kNa">
-                    <rect key="frame" x="329" y="176" width="103" height="19"/>
+                    <rect key="frame" x="330" y="177" width="103" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundRect" title="Open In Finder" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="71p-fI-eau">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -3953,14 +3953,14 @@
                     </connections>
                 </button>
                 <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="6dS-U1-ysC">
-                    <rect key="frame" x="39" y="209" width="442" height="5"/>
+                    <rect key="frame" x="40" y="210" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <button id="nyq-nZ-uMS">
-                    <rect key="frame" x="29" y="286" width="273" height="18"/>
+                    <rect key="frame" x="29" y="274" width="273" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Only share IRC servers between devices." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ZbJ-Tw-0YU">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3972,11 +3972,11 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="qbd-tJ-NZy">
-                    <rect key="frame" x="50" y="215" width="384" height="65"/>
+                    <rect key="frame" x="50" y="229" width="384" height="39"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="Azt-CX-yYQ">
                         <font key="font" metaFont="system" size="10"/>
-                        <string key="title">When enabled, Textual will ignore all preferences shared with iCloud that are not related to the configured IRC servers. Additionally, it will refuse to use preferences shared with iCloud by other copies of Textual. Disabling this setting will force an immediate synchronization of all preferences with iCloud.</string>
+                        <string key="title">When enabled, Textual will ignore all preferences shared with iCloud that are not related to the configured IRC servers. Disabling this setting will force an immediate synchronization of all preferences with iCloud.</string>
                         <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
