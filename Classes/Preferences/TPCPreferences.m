@@ -478,8 +478,10 @@ NSString *IRCPublicCommandIndex(const char *key)
 
 + (NSString *)systemUnsupervisedScriptFolderRootPath
 {
-	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
-		return [NSString stringWithFormat:@"%@/Library/Application Scripts/", NSHomeDirectory()];
+	if ([self featureAvailableToOSXMountainLion]) {
+		NSString *oldpath = [TPCPreferences systemUnsupervisedScriptFolderPath]; // Returns our path.
+		
+		return [oldpath stringByDeletingLastPathComponent]; // Remove bundle ID from path.
 	}
 	
 	return NSStringEmptyPlaceholder;
@@ -488,13 +490,14 @@ NSString *IRCPublicCommandIndex(const char *key)
 + (NSString *)systemUnsupervisedScriptFolderPath
 {
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
-		return [[TPCPreferences systemUnsupervisedScriptFolderRootPath] stringByAppendingPathComponent:[TPCPreferences applicationBundleIdentifier]];
+		NSURL *pathurl = [RZFileManager() URLForDirectory:NSApplicationScriptsDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:NULL];
+		
+		return [pathurl path];
 	}
 
 	/* We return an empty string instead of nil because
 	 the result of this method may be inserted into an
 	 array and a nil value would throw an exception. */
-
 	return NSStringEmptyPlaceholder;
 }
 

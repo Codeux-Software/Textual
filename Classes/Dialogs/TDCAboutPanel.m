@@ -63,14 +63,14 @@
 
 - (void)displayAcknowledgments:(id)sender
 {
-	NSString *acknowledgmentsPath =	[[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Documentation/Acknowledgments.rtfd"];
+	NSString *acknowledgmentsPath = [RZMainBundle() pathForResource:@"Acknowledgments" ofType:@"rtfd" inDirectory:@"Documentation"];
 
 	[self.documentView readRTFDFromFile:acknowledgmentsPath];
 }
 
 - (void)displayContributors:(id)sender
 {
-	NSString *contributorsPath = [[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Documentation/Contributors.rtfd"];
+	NSString *contributorsPath = [RZMainBundle() pathForResource:@"Contributors" ofType:@"rtfd" inDirectory:@"Documentation"];
 
 	[self.documentView readRTFDFromFile:contributorsPath];
 }
