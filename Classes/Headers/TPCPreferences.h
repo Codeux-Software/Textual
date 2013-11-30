@@ -174,6 +174,8 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 
 + (BOOL)postNotificationsWhileInFocus;
 
++ (BOOL)conversationTrackingIncludesUserModeSymbol;
+
 + (NSURL *)transcriptFolder;
 + (void)setTranscriptFolder:(id)value;
 

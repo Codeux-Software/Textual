@@ -1024,6 +1024,11 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() boolForKey:@"UseLargeFontForSidebars"];
 }
 
++ (BOOL)conversationTrackingIncludesUserModeSymbol
+{
+	return [RZUserDefaults() boolForKey:@"ConversationTrackingIncludesUserModeSymbol"];
+}
+
 + (BOOL)rightToLeftFormatting
 {
 	return [RZUserDefaults() boolForKey:@"RightToLeftTextFormatting"];

@@ -214,8 +214,15 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 				if (PointerIsEmpty(user) == NO) {
 					if ([user.nickname isEqualIgnoringCase:logController.client.localNickname] == NO) {
+						NSString *modeSymbol = NSStringEmptyPlaceholder;
+						
+						if ([TPCPreferences conversationTrackingIncludesUserModeSymbol]) {
+							modeSymbol = NSStringNilValueSubstitute([user mark]);
+						}
+						
 						templateTokens[@"inlineNicknameMatchFound"] = @(YES);
 						templateTokens[@"inlineNicknameColorNumber"] = @(user.colorNumber);
+						templateTokens[@"inlineNicknameUserModeSymbol"] = modeSymbol;
 					}
 				}
 			}

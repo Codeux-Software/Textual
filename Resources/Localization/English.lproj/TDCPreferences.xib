@@ -2855,7 +2855,7 @@
             </subviews>
         </customView>
         <customView id="6648" userLabel="Hidden Settings">
-            <rect key="frame" x="0.0" y="0.0" width="534" height="231"/>
+            <rect key="frame" x="0.0" y="0.0" width="534" height="259"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <userGuides>
                 <userLayoutGuide location="32" affinity="minX"/>
@@ -2864,7 +2864,7 @@
             </userGuides>
             <subviews>
                 <textField verticalHuggingPriority="750" id="6649">
-                    <rect key="frame" x="31" y="187" width="473" height="28"/>
+                    <rect key="frame" x="31" y="215" width="473" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" id="6665">
                         <font key="font" metaFont="systemBold" size="10"/>
@@ -2874,7 +2874,7 @@
                     </textFieldCell>
                 </textField>
                 <button id="6807">
-                    <rect key="frame" x="31" y="146" width="285" height="18"/>
+                    <rect key="frame" x="31" y="174" width="285" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Base nickname color hashing off a UUID." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6808">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2884,8 +2884,19 @@
                         <binding destination="1247" name="value" keyPath="values.UUIDBasedNicknameColorHashing" id="6811"/>
                     </connections>
                 </button>
+                <button id="vfB-lZ-5if">
+                    <rect key="frame" x="31" y="146" width="332" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Include user mode symbol with inline nicknames." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="9e1-VK-n8o">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="1247" name="value" keyPath="values.ConversationTrackingIncludesUserModeSymbol" id="RLg-2J-CO0"/>
+                    </connections>
+                </button>
                 <textField verticalHuggingPriority="750" id="7022">
-                    <rect key="frame" x="30" y="74" width="117" height="13"/>
+                    <rect key="frame" x="32" y="76" width="117" height="13"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Fake CTCP Version:" id="7023">
                         <font key="font" metaFont="cellTitle"/>
@@ -2906,7 +2917,7 @@
                     </connections>
                 </textField>
                 <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7345">
-                    <rect key="frame" x="46" y="175" width="442" height="5"/>
+                    <rect key="frame" x="46" y="203" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -2931,7 +2942,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="7499">
-                    <rect key="frame" x="317" y="118" width="201" height="14"/>
+                    <rect key="frame" x="315" y="118" width="201" height="14"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="** Restart required to apply changes." id="7500">
                         <font key="font" metaFont="system" size="10"/>
