@@ -184,16 +184,22 @@
 			if ([self import:url into:d.URL]) {
 				/* Script was successfully installed. */
 				NSString *filename = [d.URL.lastPathComponent stringByDeletingPathExtension];
-				
-				[TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"ResourcesFileImportScriptInstallSuccessDialogMessage", filename)
-													title:TXTLS(@"ResourcesFileImportScriptInstallSuccessDialogTitle")
-											defaultButton:TXTLS(@"OkButton")
-										  alternateButton:nil
-										   suppressionKey:nil
-										  suppressionText:nil];
+	
+				/* Perform after a delay to allow sheet to close. */
+				[self performSelector:@selector(performImportOfScriptFilePostflight:) withObject:filename afterDelay:0.5];
 			}
 		}
 	}];
+}
+
+- (void)performImportOfScriptFilePostflight:(NSString *)filename
+{
+	[TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"ResourcesFileImportScriptInstallSuccessDialogMessage", filename)
+										title:TXTLS(@"ResourcesFileImportScriptInstallSuccessDialogTitle")
+								defaultButton:TXTLS(@"OkButton")
+							  alternateButton:nil
+							   suppressionKey:nil
+							  suppressionText:nil];
 }
 
 #pragma mark -
