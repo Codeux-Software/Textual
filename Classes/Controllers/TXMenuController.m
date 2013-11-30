@@ -892,7 +892,7 @@
 {
 	NSString *contributorsPath = [RZMainBundle() pathForResource:@"Contributors" ofType:@"rtfd" inDirectory:@"Documentation"];
 	
-	[RZWorkspace() openFile:contributorsPath]];
+	[RZWorkspace() openFile:contributorsPath];
 }
 
 - (void)showScriptingDocumentation:(id)sender
