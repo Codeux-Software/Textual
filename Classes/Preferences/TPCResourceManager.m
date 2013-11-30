@@ -185,12 +185,12 @@
 				/* Script was successfully installed. */
 				NSString *filename = [d.URL.lastPathComponent stringByDeletingPathExtension];
 				
-				[[TLOPopupPrompts invokeInBackgroundThread] dialogWindowWithQuestion:TXTFLS(@"ResourcesFileImportScriptInstallSuccessDialogMessage", filename)
-																			   title:TXTLS(@"ResourcesFileImportScriptInstallSuccessDialogTitle")
-																	   defaultButton:TXTLS(@"OkButton")
-																	 alternateButton:nil
-																	  suppressionKey:nil
-																	 suppressionText:nil];
+				[TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"ResourcesFileImportScriptInstallSuccessDialogMessage", filename)
+													title:TXTLS(@"ResourcesFileImportScriptInstallSuccessDialogTitle")
+											defaultButton:TXTLS(@"OkButton")
+										  alternateButton:nil
+										   suppressionKey:nil
+										  suppressionText:nil];
 			}
 		}
 	}];
