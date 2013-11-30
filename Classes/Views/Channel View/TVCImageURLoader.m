@@ -144,14 +144,22 @@
 
     if (isValidResponse) {
 		if (self.isInRequestWithCheckForMaximumHeight) { // Are we checking the actual image size?
-			PointerIsEmptyAssert(self.responseData); // I hope we had some data…
-
+			if (PointerIsEmpty(self.responseData)) {
+				return [self destroyConnectionRequest]; // Destroy and return for bad input.
+			}
+			
 			CGImageSourceRef imageSource = CGImageSourceCreateWithData ((__bridge CFDataRef)self.responseData, NULL);
-
-			PointerIsEmptyAssert(imageSource);
-
+			
+			if (PointerIsEmpty(imageSource)) {
+				return [self destroyConnectionRequest]; // Destroy and return for bad input.
+			}
+			
 			CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, NULL);
-
+		
+			if (PointerIsEmpty(properties)) {
+				return [self destroyConnectionRequest]; // Destroy and return for bad input.
+			}
+			
 			NSNumber *orientation = CFDictionaryGetValue(properties, kCGImagePropertyOrientation);
 
 			NSNumber *width = CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth);
@@ -161,9 +169,7 @@
 			CFRelease(properties);
 
 			if ([height integerValue] > [TPCPreferences inlineImagesMaxHeight] || [width integerValue] > _imageMaximumImageWidth) { // So what's up with the size?
-				[self destroyConnectionRequest]; // Destroy local vars.
-
-				return; // Image is too big, don't do crap with it.
+				return [self destroyConnectionRequest]; // Destroy local vars.
 			}
 
 			/* Post the image. */
