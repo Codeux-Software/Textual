@@ -2457,8 +2457,8 @@
 		}
 		case 5098: // Command: GETSCRIPTS
 		{
-			NSString *installer = [[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Script Installers/Textual IRC Client Extras.pkg"];
-
+			NSString *installer = [RZMainBundle() pathForResource:@"Textual IRC Client Extras" ofType:@"pkg" inDirectory:@"Script Installers"];
+			
 			[RZWorkspace() openFile:installer withApplication:@"Installer"];
 
 			break;

@@ -883,12 +883,16 @@
 
 - (void)showAcknowledgments:(id)sender
 {
-	[RZWorkspace() openFile:[[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"Documentation/Acknowledgments.rtfd"]];
+	NSString *acknowledgmentsPath = [RZMainBundle() pathForResource:@"Acknowledgments" ofType:@"rtfd" inDirectory:@"Documentation"];
+	
+	[RZWorkspace() openFile:acknowledgmentsPath];
 }
 
 - (void)showContributors:(id)sender
 {
-	[RZWorkspace() openFile:[[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"Documentation/Contributors.rtfd"]];
+	NSString *contributorsPath = [RZMainBundle() pathForResource:@"Contributors" ofType:@"rtfd" inDirectory:@"Documentation"];
+	
+	[RZWorkspace() openFile:contributorsPath]];
 }
 
 - (void)showScriptingDocumentation:(id)sender
