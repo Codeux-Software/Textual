@@ -177,13 +177,13 @@
 			NSObjectIsKindOfClassAssert(obj, NSDictionary);
 			
 			/* Start import. */
-			id clientList = [obj objectForKey:@"clients"];
+			NSArray *clientList = [obj objectForKey:@"clients"];
 			
-			NSObjectIsKindOfClassAssert(obj, NSArray);
+			NSObjectIsEmptyAssert(clientList);
 			
 			/* Bleh, let's get this over with. */
-			[clientList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-				[self importWorldControllerClientConfiguratoin:obj isCloudBasedImport:NO];
+			[clientList enumerateObjectsUsingBlock:^(id objd, NSUInteger idx, BOOL *stop) {
+				[self importWorldControllerClientConfiguratoin:objd isCloudBasedImport:NO];
 			}];
 		}
 	}
