@@ -217,7 +217,19 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 						NSString *modeSymbol = NSStringEmptyPlaceholder;
 						
 						if ([TPCPreferences conversationTrackingIncludesUserModeSymbol]) {
-							modeSymbol = NSStringNilValueSubstitute([user mark]);
+							NSString *usermark = [user mark];
+							
+							if (rangeStart > 0) {
+								if (usermark) {
+									NSString *prevchar = [body stringCharacterAtIndex:(rangeStart - 1)];
+
+									if ([prevchar isEqualToString:usermark] == NO) {
+										modeSymbol = usermark;
+									}
+								}
+							} else {
+								modeSymbol = NSStringNilValueSubstitute(usermark);
+							}
 						}
 						
 						templateTokens[@"inlineNicknameMatchFound"] = @(YES);
