@@ -406,7 +406,7 @@
 	NSString *cacheToken = [NSString stringWithFormat:@"%@—%f", iconName, alpha];
 
 	if (self.cachedStatusBadgeFile) {
-		if (cacheToken.hash == self.cachedStatusBadgeFile.hash) {
+		if ([cacheToken hash] == [self.cachedStatusBadgeFile hash]) {
 			return;
 		}
 	}

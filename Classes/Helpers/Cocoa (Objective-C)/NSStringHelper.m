@@ -49,8 +49,17 @@
 // In reference to the source code for the call -compareWithWord:matchGain:missingCost:
 // Originating URL: <https://gist.github.com/iloveitaly/1515464>
 //
+// =======================================================
+//
+// Created by Saurabh Sharma on May 3, 2011
+//
+// In reference to the source code for the call -sha1
+// Originating URL: <http://www.makebetterthings.com/iphone/how-to-get-md5-and-sha1-in-objective-c-ios-sdk/>
+//
 
 #import "TextualApplication.h"
+
+#import <CommonCrypto/CommonDigest.h>
 
 @implementation NSString (TXStringHelper)
 
@@ -199,6 +208,23 @@
 - (BOOL)containsIgnoringCase:(NSString *)str
 {
 	return ([self stringPositionIgnoringCase:str] >= 0);
+}
+
+- (NSString *)sha1
+{
+    NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
+	
+    uint8_t digest[CC_SHA1_DIGEST_LENGTH];
+	
+    CC_SHA1(data.bytes, (CC_LONG)data.length, digest);
+	
+    NSMutableString *output = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
+	
+    for (int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++) {
+        [output appendFormat:@"%02x", digest[i]];
+    }
+	
+    return output;
 }
 
 - (NSArray *)split:(NSString *)delimiter
