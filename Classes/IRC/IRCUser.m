@@ -130,7 +130,7 @@
 			hashName = [NSString stringWithUUID];
 		}
 		
-		self.colorNumber = (hashName.hash % _colorNumberMax);
+		self.colorNumber = ([hashName hash] % _colorNumberMax);
 	}
 	
 	return _colorNumber;
@@ -145,7 +145,7 @@
 
 - (NSUInteger)hash
 {
-	return self.nickname.lowercaseString.hash;
+	return [self.nickname.lowercaseString hash];
 }
 
 - (CGFloat)totalWeight

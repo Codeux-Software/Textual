@@ -81,6 +81,8 @@
 
 - (NSString *)channelNameToken;
 
+- (NSString *)sha1;
+
 - (NSString *)nicknameFromHostmask;
 - (NSString *)usernameFromHostmask;
 - (NSString *)addressFromHostmask;

@@ -72,7 +72,7 @@
 	NSObjectIsEmptyAssert(key); // Yeah, we need a key…
 	
 	/* Set it and forget it. */
-	NSString *hashedKey = [NSString stringWithUnsignedInteger:[key hash]];
+	NSString *hashedKey = [key sha1];
 	
 	[RZUbiquitousKeyValueStore() setObject:@{@"key" : key, @"value" : value} forKey:hashedKey];
 }
@@ -82,7 +82,7 @@
 	NSObjectIsEmptyAssertReturn(key, nil); // Yeah, we need a key…
 	
 	/* Insert pointless comment here. */
-	NSString *hashedKey = [NSString stringWithUnsignedInteger:[key hash]];
+	NSString *hashedKey = [key sha1];
 	
 	/* Another pointless comment here. */
 	return [self valueForHashedKey:hashedKey actualKey:NULL];
@@ -117,7 +117,7 @@
 	NSObjectIsEmptyAssert(key); // Yeah, we need a key…
 	
 	/* Set it and forget it. */
-	NSString *hashedKey = [NSString stringWithUnsignedInteger:[key hash]];
+	NSString *hashedKey = [key sha1];
 	
 	/* Umm, I just copy and paste these things. */
 	[RZUbiquitousKeyValueStore() removeObjectForKey:hashedKey];
