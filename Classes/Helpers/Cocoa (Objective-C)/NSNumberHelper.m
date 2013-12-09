@@ -39,33 +39,6 @@
 
 @implementation NSNumber (TXNumberHelper)
 
-+ (BOOL)compareIRCColor:(UniChar)c against:(NSInteger)firstNumber
-{
-	/* An IRC color is interpreted using a value of 00 to 15. This 
-	 method is used mainly in situations in which each character of 
-	 a string is exaimined one by one. 
-	 
-	 The firstNumber given to this method is either a 0 or 1. If it is
-	 neither, then the number is not valid. Next, the c, or second part
-	 of firstNumber has to be 0 to 5 if firstNumber = 1, or it can be 0
-	 to 9 if firstNumber = 0. 
-	 
-	 The method basically combines firstNumber and c to make sure it is
-	 within 00 and 15. */
-	
-	if (TXStringIsBase10Numeric(c) && firstNumber < 2) {
-		NSInteger ci = (c - '0');
-		
-		if ((firstNumber == 0 && ((ci >= 1 && ci <= 9) || ci == 0)) || 
-			(firstNumber == 1 && ((ci >= 1 && ci <= 5) || ci == 0))) {
-			
-			return YES;
-		}
-	}
-	
-	return NO;
-}
-
 + (BOOL)compareCGFloat:(CGFloat)num1 toFloat:(CGFloat)num2
 {
 	NSString *bleh1 = [NSString stringWithFormat:@"%.2f", num1];
