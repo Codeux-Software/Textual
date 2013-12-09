@@ -75,7 +75,7 @@
 		BOOL underlineText  = ([dict integerForKey:NSUnderlineStyleAttributeName] == 1);
 		
 		if (underlineText)  { [result appendFormat:@"%c", 0x1F]; }
-		if (italicText)     { [result appendFormat:@"%c", 0x16]; }
+		if (italicText)     { [result appendFormat:@"%c", 0x1d]; }
 		if (boldText)       { [result appendFormat:@"%c", 0x02]; }
 		
 		if (color) {
@@ -90,7 +90,7 @@
 		
 		if (color)          { [result appendFormat:@"%c", 0x03]; }
 		if (boldText)       { [result appendFormat:@"%c", 0x02]; }
-		if (italicText)     { [result appendFormat:@"%c", 0x16]; }
+		if (italicText)     { [result appendFormat:@"%c", 0x1d]; }
 		if (underlineText)  { [result appendFormat:@"%c", 0x1F]; }
 		
 		limitRange = NSMakeRange(NSMaxRange(effectiveRange), (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
@@ -235,7 +235,7 @@
 		/* Append the actual formatting. This uses the same technology used
 		 in the above defined -attributedStringToASCIIFormatting method. */
 		if (underlineText)  { [result appendFormat:@"%c", 0x1F]; }
-		if (italicText)     { [result appendFormat:@"%c", 0x16]; }
+		if (italicText)     { [result appendFormat:@"%c", 0x1d]; }
 		if (boldText)       { [result appendFormat:@"%c", 0x02]; }
 
 		if (foregroundColorD) {
@@ -311,7 +311,7 @@
 
 		if (foregroundColorD)   { [result appendFormat:@"%c", 0x03]; }
 		if (boldText)           { [result appendFormat:@"%c", 0x02]; }
-		if (italicText)         { [result appendFormat:@"%c", 0x16]; }
+		if (italicText)         { [result appendFormat:@"%c", 0x1d]; }
 		if (underlineText)      { [result appendFormat:@"%c", 0x1F]; }
 
 		if (breakLoopAfterAppend) {
