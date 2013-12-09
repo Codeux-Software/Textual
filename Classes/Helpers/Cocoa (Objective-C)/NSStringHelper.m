@@ -674,7 +674,7 @@
 
 					UniChar e = src[(i + 1)];
 					
-					if (TXStringIsIRCColor(e, (d - '0')) == NO && NSDissimilarObjects(e, ',')) {
+					if (TXStringIsBase10Numeric(e) == NO && NSDissimilarObjects(e, ',')) {
 						continue;
 					}
 					
@@ -720,7 +720,7 @@
 
 					UniChar h = src[(i + 1)];
 
-					if (TXStringIsIRCColor(h, (g - '0')) == NO) {
+					if (TXStringIsBase10Numeric(h) == NO) {
 						continue;
 					}
 					
