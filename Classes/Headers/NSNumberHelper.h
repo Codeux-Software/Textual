@@ -47,7 +47,6 @@
 #define NSNumberInRange(n,s,e)				(n >= s && n <= e)
 
 @interface NSNumber (TXNumberHelper)
-+ (BOOL)compareIRCColor:(UniChar)c against:(NSInteger)firstNumber;
 + (BOOL)compareCGFloat:(CGFloat)num1 toFloat:(CGFloat)num2;
 
 - (NSString *)integerWithLeadingZero;
