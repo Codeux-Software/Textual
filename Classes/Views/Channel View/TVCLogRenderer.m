@@ -362,7 +362,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 							if ((i + 1) < length) {
 								c = source[(i + 1)];
 								
-								if (TXStringIsIRCColor(c, foregoundColor)) {
+								if (TXStringIsBase10Numeric(c)) {
 									++i;
 									
 									foregoundColor = (foregoundColor * 10 + c - '0');
@@ -385,7 +385,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 												if ((i + 1) < length) {
 													c = source[(i + 1)];
 													
-													if (TXStringIsIRCColor(c, backgroundColor)) {
+													if (TXStringIsBase10Numeric(c)) {
 														++i;
 														
 														backgroundColor = (backgroundColor * 10 + c - '0');

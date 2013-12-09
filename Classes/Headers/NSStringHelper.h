@@ -42,7 +42,6 @@
 #define TXStringIsBase10Numeric(c)					('0' <= (c) && (c) <= '9')
 #define TXStringIsAlphabeticNumeric(c)				(TXStringIsAlphabetic(c) || TXStringIsBase10Numeric(c))
 #define TXStringIsWordLetter(c)						(TXStringIsAlphabeticNumeric(c) || (c) == '_')
-#define TXStringIsIRCColor(c,f)						([NSNumber compareIRCColor:c against:f])
 
 #define NSStringEmptyPlaceholder			@""
 #define NSStringNewlinePlaceholder			@"\n"
