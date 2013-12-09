@@ -428,6 +428,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 					
 					continue;
 				}
+				case 0x1d:
 				case 0x16:
 				{
 					if (currentAttr & _rendererItalicFormatAttribute) {

@@ -2167,6 +2167,7 @@
 				4C8AF5F0158E99520026668C /* Channel View */,
 				4C8AF5F9158E99520026668C /* Input Text Field */,
 				4C8AF5FD158E99520026668C /* Server List */,
+				4C8AF606158E99520026668C /* User List */,
 				4C8AF600158E99520026668C /* TVCDockIcon.m */,
 				4C8AF601158E99520026668C /* TVCInputPromptDialog.m */,
 				4C8AF602158E99520026668C /* TVCListSeparatorCell.m */,
@@ -2175,7 +2176,6 @@
 				4C8EE97916C64A8200D5B1F4 /* TVCMainWindowLoadingScreen.m */,
 				4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */,
 				4C8AF605158E99520026668C /* TVCThinSplitView.m */,
-				4C8AF606158E99520026668C /* User List */,
 			);
 			path = Views;
 			sourceTree = "<group>";

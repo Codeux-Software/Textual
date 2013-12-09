@@ -488,7 +488,7 @@
 
 	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithUniChar:0x03] withString:@"▤"]; // color
 	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithUniChar:0x02] withString:@"▥"]; // bold
-	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithUniChar:0x16] withString:@"▧"]; // italics
+	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithUniChar:0x1d] withString:@"▧"]; // italics
 	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithUniChar:0x1F] withString:@"▨"]; // underline
 
 	return s;
@@ -644,6 +644,7 @@
 				case 0x2:
 				case 0xf:
 				case 0x16:
+				case 0x1d:
 				case 0x1f:
 				{
 					break;
