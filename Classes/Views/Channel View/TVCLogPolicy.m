@@ -91,6 +91,11 @@
 	[self.menuController memberListDoubleClicked:nil];
 }
 
+- (void)topicDoubleClicked
+{
+    [self.menuController showChannelTopicDialog:nil];
+}
+
 - (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
 {
 	NSWindowNegateActionWithAttachedSheetR(@[]);
