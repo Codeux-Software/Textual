@@ -216,6 +216,10 @@ Textual = {
 
 		app.nicknameDoubleClicked();
 	},
+
+    topicDoubleClicked: function() {
+        app.topicDoubleClicked();
+    },
 	
 	toggleInlineImage: function(object) {
 		if (app.toggleInlineImage(object) == "false") {
