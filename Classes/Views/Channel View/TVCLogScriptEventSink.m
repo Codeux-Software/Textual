@@ -191,6 +191,11 @@
 	[self.owner.policy nicknameDoubleClicked];
 }
 
+- (void)topicDoubleClicked
+{
+    [self.owner.policy topicDoubleClicked];
+}
+
 - (NSInteger)channelMemberCount
 {
     return self.owner.channel.memberList.count;
