@@ -382,27 +382,18 @@
                         <button id="VRm-jI-leM">
                             <rect key="frame" x="10" y="0.0" width="312" height="18"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <buttonCell key="cell" type="check" title="Share data between devices using iCloud." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="gUN-9j-zFB">
+                            <buttonCell key="cell" type="check" title="Share data between devices using iCloud." bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" state="on" inset="2" id="gUN-9j-zFB">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="titleBar" size="12"/>
                             </buttonCell>
-                            <connections>
-                                <action selector="onChangedCloudSyncingServices:" target="-2" id="WRW-2I-zSH"/>
-                                <binding destination="1247" name="value" keyPath="values.SyncPreferencesToTheCloud" id="SeD-3L-vK8"/>
-                                <binding destination="1247" name="enabled" keyPath="values.System —> Built with iCloud Support" id="Mme-HU-w5D"/>
-                            </connections>
                         </button>
                         <button verticalHuggingPriority="750" tag="13" id="qAR-Xw-tdR">
                             <rect key="frame" x="326" y="-5" width="157" height="28"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="push" title="Manage iCloud" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="kD6-fg-pbA">
+                            <buttonCell key="cell" type="push" title="Manage iCloud" bezelStyle="rounded" alignment="center" controlSize="small" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="kD6-fg-pbA">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
-                            <connections>
-                                <action selector="onPrefPaneSelected:" target="-2" id="Rwi-OK-w0F"/>
-                                <binding destination="1247" name="enabled" keyPath="values.System —> Built with iCloud Support" id="B8v-QJ-boN"/>
-                            </connections>
                         </button>
                         <customView wantsLayer="YES" id="4uD-Es-bQ4">
                             <rect key="frame" x="0.0" y="-38" width="488" height="96"/>
