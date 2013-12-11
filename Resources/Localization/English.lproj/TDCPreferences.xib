@@ -349,13 +349,13 @@
                     </buttonCell>
                     <connections>
                         <action selector="onChangedCloudSyncingServices:" target="-2" id="smz-bV-8yF"/>
+                        <binding destination="1247" name="value" keyPath="values.SyncPreferencesToTheCloud" id="rpJ-vM-hK4"/>
+                        <binding destination="1247" name="enabled" keyPath="values.System —> Built with iCloud Support" id="IYT-32-ECr"/>
                         <binding destination="1247" name="hidden" keyPath="values.System —> Running Mac OS Mountain Lion Or Newer" previousBinding="IYT-32-ECr" id="Xk2-eD-Iz7">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
-                        <binding destination="1247" name="value" keyPath="values.SyncPreferencesToTheCloud" id="rpJ-vM-hK4"/>
-                        <binding destination="1247" name="enabled" keyPath="values.System —> Built with iCloud Support" id="IYT-32-ECr"/>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" tag="13" id="C9P-6C-k4O">
@@ -367,12 +367,12 @@
                     </buttonCell>
                     <connections>
                         <action selector="onPrefPaneSelected:" target="-2" id="or2-cx-aKu"/>
+                        <binding destination="1247" name="enabled" keyPath="values.System —> Built with iCloud Support" id="sRh-6F-1Qc"/>
                         <binding destination="1247" name="hidden" keyPath="values.System —> Running Mac OS Mountain Lion Or Newer" previousBinding="sRh-6F-1Qc" id="8ui-8B-eIc">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
-                        <binding destination="1247" name="enabled" keyPath="values.System —> Built with iCloud Support" id="sRh-6F-1Qc"/>
                     </connections>
                 </button>
                 <customView wantsLayer="YES" id="UzI-UY-gq9">
@@ -388,8 +388,8 @@
                             </buttonCell>
                             <connections>
                                 <action selector="onChangedCloudSyncingServices:" target="-2" id="WRW-2I-zSH"/>
-                                <binding destination="1247" name="enabled" keyPath="values.System —> Built with iCloud Support" id="Mme-HU-w5D"/>
                                 <binding destination="1247" name="value" keyPath="values.SyncPreferencesToTheCloud" id="SeD-3L-vK8"/>
+                                <binding destination="1247" name="enabled" keyPath="values.System —> Built with iCloud Support" id="Mme-HU-w5D"/>
                             </connections>
                         </button>
                         <button verticalHuggingPriority="750" tag="13" id="qAR-Xw-tdR">
@@ -411,9 +411,13 @@
                                 <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Hpl-4d-Whm">
                                     <rect key="frame" x="37" y="40" width="416" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <shadow key="shadow">
+                                        <size key="offset" width="1" height="1"/>
+                                        <color key="color" red="0.90372669453523602" green="0.90372669453523602" blue="0.90372669453523602" alpha="1" colorSpace="calibratedRGB"/>
+                                    </shadow>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iCloud sharing is available for Mac OS Mountain Lion or later." id="j0a-oo-2xy">
                                         <font key="font" size="13" name="LucidaGrande-Bold"/>
-                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
@@ -422,7 +426,7 @@
                                 <ciFilter name="CIGaussianBlur">
                                     <configuration>
                                         <null key="inputImage"/>
-                                        <real key="inputRadius" value="1"/>
+                                        <real key="inputRadius" value="1.5"/>
                                     </configuration>
                                 </ciFilter>
                             </backgroundFilters>
@@ -432,7 +436,7 @@
                         <ciFilter name="CIGaussianBlur">
                             <configuration>
                                 <null key="inputImage"/>
-                                <real key="inputRadius" value="1"/>
+                                <real key="inputRadius" value="2"/>
                             </configuration>
                         </ciFilter>
                     </backgroundFilters>
