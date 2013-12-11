@@ -135,7 +135,7 @@
                         <popUpButton key="view" tag="13" id="6451">
                             <rect key="frame" x="3" y="14" width="43" height="32"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" imagePosition="right" lineBreakMode="truncatingTail" borderStyle="bezel" inset="2" pullsDown="YES" selectedItem="6454" id="6452">
+                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="TPWTB_Extensions" imagePosition="right" lineBreakMode="truncatingTail" borderStyle="bezel" inset="2" pullsDown="YES" selectedItem="6454" id="6452">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" title="OtherViews" showsStateColumn="NO" id="6453">
@@ -349,6 +349,11 @@
                     </buttonCell>
                     <connections>
                         <action selector="onChangedCloudSyncingServices:" target="-2" id="smz-bV-8yF"/>
+                        <binding destination="1247" name="hidden" keyPath="values.System —> Running Mac OS Mountain Lion Or Newer" previousBinding="IYT-32-ECr" id="Xk2-eD-Iz7">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
                         <binding destination="1247" name="value" keyPath="values.SyncPreferencesToTheCloud" id="rpJ-vM-hK4"/>
                         <binding destination="1247" name="enabled" keyPath="values.System —> Built with iCloud Support" id="IYT-32-ECr"/>
                     </connections>
@@ -362,9 +367,79 @@
                     </buttonCell>
                     <connections>
                         <action selector="onPrefPaneSelected:" target="-2" id="or2-cx-aKu"/>
+                        <binding destination="1247" name="hidden" keyPath="values.System —> Running Mac OS Mountain Lion Or Newer" previousBinding="sRh-6F-1Qc" id="8ui-8B-eIc">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
                         <binding destination="1247" name="enabled" keyPath="values.System —> Built with iCloud Support" id="sRh-6F-1Qc"/>
                     </connections>
                 </button>
+                <customView wantsLayer="YES" id="UzI-UY-gq9">
+                    <rect key="frame" x="20" y="186" width="488" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <subviews>
+                        <button id="VRm-jI-leM">
+                            <rect key="frame" x="10" y="0.0" width="312" height="18"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <buttonCell key="cell" type="check" title="Share data between devices using iCloud." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="gUN-9j-zFB">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="titleBar" size="12"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="onChangedCloudSyncingServices:" target="-2" id="WRW-2I-zSH"/>
+                                <binding destination="1247" name="enabled" keyPath="values.System —> Built with iCloud Support" id="Mme-HU-w5D"/>
+                                <binding destination="1247" name="value" keyPath="values.SyncPreferencesToTheCloud" id="SeD-3L-vK8"/>
+                            </connections>
+                        </button>
+                        <button verticalHuggingPriority="750" tag="13" id="qAR-Xw-tdR">
+                            <rect key="frame" x="326" y="-5" width="157" height="28"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="push" title="Manage iCloud" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="kD6-fg-pbA">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="smallSystem"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="onPrefPaneSelected:" target="-2" id="Rwi-OK-w0F"/>
+                                <binding destination="1247" name="enabled" keyPath="values.System —> Built with iCloud Support" id="B8v-QJ-boN"/>
+                            </connections>
+                        </button>
+                        <customView wantsLayer="YES" id="4uD-Es-bQ4">
+                            <rect key="frame" x="0.0" y="-38" width="488" height="96"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <subviews>
+                                <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Hpl-4d-Whm">
+                                    <rect key="frame" x="37" y="40" width="416" height="17"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iCloud sharing is available for Mac OS Mountain Lion or later." id="j0a-oo-2xy">
+                                        <font key="font" size="13" name="LucidaGrande-Bold"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                            </subviews>
+                            <backgroundFilters>
+                                <ciFilter name="CIGaussianBlur">
+                                    <configuration>
+                                        <null key="inputImage"/>
+                                        <real key="inputRadius" value="1"/>
+                                    </configuration>
+                                </ciFilter>
+                            </backgroundFilters>
+                        </customView>
+                    </subviews>
+                    <backgroundFilters>
+                        <ciFilter name="CIGaussianBlur">
+                            <configuration>
+                                <null key="inputImage"/>
+                                <real key="inputRadius" value="1"/>
+                            </configuration>
+                        </ciFilter>
+                    </backgroundFilters>
+                    <connections>
+                        <binding destination="1247" name="hidden" keyPath="values.System —> Running Mac OS Mountain Lion Or Newer" id="Xt2-7h-Tmi"/>
+                    </connections>
+                </customView>
             </subviews>
         </customView>
         <customView id="5347" userLabel="Default Identity">

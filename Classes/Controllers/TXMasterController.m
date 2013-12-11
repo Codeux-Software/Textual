@@ -95,7 +95,9 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	
 	/* Cloud files are synced regardless of user preference
 	 so we still have to initalize it at some point. */
-	[self.cloudSyncManager initializeCloudSyncSession];
+	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+		[self.cloudSyncManager initializeCloudSyncSession];
+	}
 #endif
 
 	[self.mainWindow setMinSize:TPCPreferences.minimumWindowSize];
@@ -409,7 +411,9 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[TPCPreferences saveTimeIntervalSinceApplicationInstall];
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	[self.cloudSyncManager closeCloudSyncSession];
+	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+		[self.cloudSyncManager closeCloudSyncSession];
+	}
 #endif
 }
 
