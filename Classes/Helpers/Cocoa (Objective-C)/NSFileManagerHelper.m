@@ -39,6 +39,15 @@
 
 @implementation NSFileManager (TXFileManagerHelper)
 
+- (id <NSObject, NSCopying, NSCoding>)cloudUbiquityIdentityToken
+{
+	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+		return [RZFileManager() ubiquityIdentityToken];
+	} else {
+		return nil;
+	}
+}
+
 - (BOOL)lockItemAtPath:(NSString *)path error:(NSError **)error
 {
 	NSDictionary *newattrs = @{NSFileImmutable : @(YES)};

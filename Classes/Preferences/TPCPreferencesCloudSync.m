@@ -838,7 +838,7 @@
 - (void)iCloudAccountAvailabilityChanged:(NSNotification *)aNote
 {
 	/* Get new token first. */
-	id newToken = [RZFileManager() ubiquityIdentityToken];
+	id newToken = [RZFileManager() cloudUbiquityIdentityToken];
 	
 	if (PointerIsNotEmpty(newToken)) {
 		if (NSDissimilarObjects(newToken, self.ubiquityIdentityToken)) {
@@ -864,7 +864,7 @@
 		/* Create worker queue. */
 		self.workerQueue = dispatch_queue_create("iCloudSyncWorkerQueue", NULL);
 		
-		self.ubiquityIdentityToken = [RZFileManager() ubiquityIdentityToken];
+		self.ubiquityIdentityToken = [RZFileManager() cloudUbiquityIdentityToken];
 		
 		[self setupUbiquitousContainerURLPath:YES];
 		
