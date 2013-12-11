@@ -71,7 +71,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>4.0.1 (Unstable)</string>
+	<string>4.0.2 (Unstable)</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.social-networking</string>
 	<key>LSMinimumSystemVersion</key>
@@ -83,6 +83,6 @@
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>TXBundleBuildCodeName</key>
-	<string>Cheddar Burgers</string>
+	<string>Blueberry Lavender</string>
 </dict>
 </plist>
