@@ -980,11 +980,15 @@ static NSURL *transcriptFolderResolvedBookmark;
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 + (BOOL)syncPreferencesToTheCloud
 {
+	NSAssertReturnR([TPCPreferences featureAvailableToOSXMountainLion], NO);
+	
 	return [RZUserDefaults() boolForKey:TPCPreferencesCloudSyncKeyValueStoreServicesDefaultsKey];
 }
 
 + (BOOL)syncPreferencesToTheCloudLimitedToServers
 {
+	NSAssertReturnR([TPCPreferences featureAvailableToOSXMountainLion], NO);
+	
 	return [RZUserDefaults() boolForKey:TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDefaultsKey];
 }
 #endif
@@ -1913,8 +1917,9 @@ static NSMutableArray *excludeKeywords = nil;
 	[RZUserDefaults() setBool:[TPCPreferences sandboxEnabled]						forKey:@"Security -> Sandbox Enabled"];
 
 	[RZUserDefaults() setBool:[TPCPreferences featureAvailableToOSXLion]			forKey:@"System —> Running Mac OS Lion Or Newer"];
-	[RZUserDefaults() setBool:[TPCPreferences featureAvailableToOSXMountainLion]  forKey:@"System —> Running Mac OS Mountain Lion Or Newer"];
-
+	[RZUserDefaults() setBool:[TPCPreferences featureAvailableToOSXMountainLion]	forKey:@"System —> Running Mac OS Mountain Lion Or Newer"];
+	[RZUserDefaults() setBool:[TPCPreferences featureAvailableToOSXMavericks]		forKey:@"System —> Running Mac OS Mavericks Or Newer"];
+	
 #ifndef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[RZUserDefaults() setBool:NO forKey:@"System —> Built with iCloud Support"];
 #else
