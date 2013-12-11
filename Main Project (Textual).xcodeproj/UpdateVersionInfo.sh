@@ -32,4 +32,3 @@ else
 echo "#define TXBundleBuildReference	@\"${buildRef},nocdsign\"" >> BuildConfig.h
 echo "#define TXBundleBuiltWithoutCodeSigning                   1" >> BuildConfig.h
 fi
-                                                                                "
