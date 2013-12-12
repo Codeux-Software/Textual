@@ -47,6 +47,7 @@
 #define TLOFileLoggerActionNicknameFormat		@"• %n:"
 #define TLOFileLoggerNoticeNicknameFormat		@"-%n-"
 
+#define TLOFileLoggerISOStandardClockFormat			@"[%Y-%m-%dT%H:%M:%S%z]" // 2008-07-09T16:13:30+12:00
 #define TLOFileLoggerTwentyFourHourClockFormat		@"[%H:%M:%S]"
 
 @interface TLOFileLogger : NSObject

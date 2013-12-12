@@ -863,7 +863,7 @@
 	NSMutableString *s = [NSMutableString string];
 
 	/* Format time into a 24 hour universal time. */
-	NSString *time = [line formattedTimestampWithForcedFormat:TLOFileLoggerTwentyFourHourClockFormat];
+	NSString *time = [line formattedTimestampWithForcedFormat:TLOFileLoggerISOStandardClockFormat];
 
 	if (time) {
 		[s appendString:time];
