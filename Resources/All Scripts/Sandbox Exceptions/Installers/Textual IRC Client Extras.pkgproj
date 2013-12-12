@@ -412,34 +412,17 @@
 											<array>
 												<dict>
 													<key>CHILDREN</key>
-													<array>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual/Extensions/SmileyConverter.bundle</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-													</array>
+													<array/>
 													<key>GID</key>
 													<integer>0</integer>
 													<key>PATH</key>
-													<string>Extensions</string>
+													<string>../Installation Hierarchy/com.codeux.irc.textual/Scripts</string>
 													<key>PATH_TYPE</key>
-													<integer>0</integer>
+													<integer>1</integer>
 													<key>PERMISSIONS</key>
-													<integer>511</integer>
+													<integer>493</integer>
 													<key>TYPE</key>
-													<integer>2</integer>
+													<integer>3</integer>
 													<key>UID</key>
 													<integer>0</integer>
 												</dict>
@@ -525,18 +508,18 @@
 				<key>CONCLUSION_ACTION</key>
 				<integer>0</integer>
 				<key>IDENTIFIER</key>
-				<string>com.codeux.irc.textual.installers.scriptextras.extensions.SmileyConverter.pkg</string>
+				<string>com.codeux.irc.textual.installers.scriptextras.scripts.ml108.pkg</string>
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
-				<string>Extensions — Smiley Converter</string>
+				<string>Scripts</string>
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>VERSION</key>
 				<string>1.0</string>
 			</dict>
 			<key>UUID</key>
-			<string>CCCA972C-E94E-4ED6-AA53-D8D6A163240E</string>
+			<string>23651F27-6601-4F49-9BE2-8EFF3E4D7A21</string>
 		</dict>
 		<dict>
 			<key>PACKAGE_FILES</key>
@@ -1063,14 +1046,16 @@
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
-				<string>Extensions — iTunes Controller</string>
+				<string>iTunesControllerExtension</string>
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>VERSION</key>
 				<string>1.0</string>
 			</dict>
+			<key>TYPE</key>
+			<integer>0</integer>
 			<key>UUID</key>
-			<string>A2DBE9BF-0D1C-43DE-BFF1-8E19CC71A66F</string>
+			<string>C7E83A91-978F-4C92-B05B-5A6F7E935BFE</string>
 		</dict>
 		<dict>
 			<key>PACKAGE_FILES</key>
@@ -1597,14 +1582,16 @@
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
-				<string>Extensions — Wiki-style Link Parser</string>
+				<string>WikiLinkStyleParserExtension</string>
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>VERSION</key>
 				<string>1.0</string>
 			</dict>
+			<key>TYPE</key>
+			<integer>0</integer>
 			<key>UUID</key>
-			<string>53665F41-B9F9-4254-B967-661E34C10888</string>
+			<string>2B743792-07FD-4A91-8488-5314E4C57EF6</string>
 		</dict>
 		<dict>
 			<key>PACKAGE_FILES</key>
@@ -2014,17 +2001,34 @@
 											<array>
 												<dict>
 													<key>CHILDREN</key>
-													<array/>
+													<array>
+														<dict>
+															<key>CHILDREN</key>
+															<array/>
+															<key>GID</key>
+															<integer>0</integer>
+															<key>PATH</key>
+															<string>../Installation Hierarchy/com.codeux.irc.textual/Extensions/SmileyConverter.bundle</string>
+															<key>PATH_TYPE</key>
+															<integer>1</integer>
+															<key>PERMISSIONS</key>
+															<integer>493</integer>
+															<key>TYPE</key>
+															<integer>3</integer>
+															<key>UID</key>
+															<integer>0</integer>
+														</dict>
+													</array>
 													<key>GID</key>
 													<integer>0</integer>
 													<key>PATH</key>
-													<string>../Installation Hierarchy/com.codeux.irc.textual/Scripts</string>
+													<string>Extensions</string>
 													<key>PATH_TYPE</key>
-													<integer>1</integer>
+													<integer>0</integer>
 													<key>PERMISSIONS</key>
-													<integer>493</integer>
+													<integer>511</integer>
 													<key>TYPE</key>
-													<integer>3</integer>
+													<integer>2</integer>
 													<key>UID</key>
 													<integer>0</integer>
 												</dict>
@@ -2110,18 +2114,20 @@
 				<key>CONCLUSION_ACTION</key>
 				<integer>0</integer>
 				<key>IDENTIFIER</key>
-				<string>com.codeux.irc.textual.installers.scriptextras.scripts.ml108.pkg</string>
+				<string>com.codeux.irc.textual.installers.scriptextras.extensions.SmileyConverter.pkg</string>
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
-				<string>Scripts</string>
+				<string>SmileyConverterExtension</string>
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>VERSION</key>
 				<string>1.0</string>
 			</dict>
+			<key>TYPE</key>
+			<integer>0</integer>
 			<key>UUID</key>
-			<string>23651F27-6601-4F49-9BE2-8EFF3E4D7A21</string>
+			<string>B5C9F263-08BA-4C81-9DDC-A6D32990BACD</string>
 		</dict>
 	</array>
 	<key>PROJECT</key>
@@ -2220,7 +2226,7 @@
 											<integer>2</integer>
 										</dict>
 										<key>PACKAGE_UUID</key>
-										<string>A2DBE9BF-0D1C-43DE-BFF1-8E19CC71A66F</string>
+										<string>C7E83A91-978F-4C92-B05B-5A6F7E935BFE</string>
 										<key>REQUIREMENTS</key>
 										<array/>
 										<key>TITLE</key>
@@ -2237,7 +2243,7 @@
 										<key>TYPE</key>
 										<integer>0</integer>
 										<key>UUID</key>
-										<string>4BFD3EBF-C7D0-45D7-9C68-6B633A65BD6E</string>
+										<string>D152B684-8317-4A71-A8AE-7A470B7F8E2C</string>
 									</dict>
 									<dict>
 										<key>DESCRIPTION</key>
@@ -2257,7 +2263,7 @@
 											<integer>2</integer>
 										</dict>
 										<key>PACKAGE_UUID</key>
-										<string>CCCA972C-E94E-4ED6-AA53-D8D6A163240E</string>
+										<string>B5C9F263-08BA-4C81-9DDC-A6D32990BACD</string>
 										<key>REQUIREMENTS</key>
 										<array/>
 										<key>TITLE</key>
@@ -2274,7 +2280,7 @@
 										<key>TYPE</key>
 										<integer>0</integer>
 										<key>UUID</key>
-										<string>CCC61940-9E40-4A1A-88B5-5468A282F2AD</string>
+										<string>C16E7034-FF4B-4D8C-B386-FB91B2EC9F4D</string>
 									</dict>
 									<dict>
 										<key>DESCRIPTION</key>
@@ -2294,7 +2300,7 @@
 											<integer>2</integer>
 										</dict>
 										<key>PACKAGE_UUID</key>
-										<string>53665F41-B9F9-4254-B967-661E34C10888</string>
+										<string>2B743792-07FD-4A91-8488-5314E4C57EF6</string>
 										<key>REQUIREMENTS</key>
 										<array/>
 										<key>TITLE</key>
@@ -2311,7 +2317,7 @@
 										<key>TYPE</key>
 										<integer>0</integer>
 										<key>UUID</key>
-										<string>2FCCEA3D-D91B-4FD2-9491-81A8638E7F9A</string>
+										<string>D3A7F156-B69A-4A1F-BBD2-CA8BEB5A1683</string>
 									</dict>
 								</array>
 								<key>DESCRIPTION</key>
@@ -2344,7 +2350,7 @@
 								<key>TYPE</key>
 								<integer>1</integer>
 								<key>UUID</key>
-								<string>FA4581F1-86EB-4FA3-8345-356B33B5B007</string>
+								<string>B5B8A431-8B70-49EC-AAB7-3CDEA9633C47</string>
 							</dict>
 						</array>
 						<key>REMOVED</key>
