@@ -3550,7 +3550,21 @@
 			if (targetOurself == NO) {
 				// Who else would be the target if this is not a channel or server?…
 				
-				return;
+				/* Try to match global notices which have a weird match like this example
+				 one brought up in #textual: 
+				 
+				 :Global!services@example.com NOTICE $*.example.com :Testing, please ignore. */
+				BOOL breakReturn = YES;
+				
+				if (type == TVCLogLineNoticeType) {
+					if ([target hasPrefix:@"$"]) {
+						breakReturn = NO;
+					}
+				}
+				
+				if (breakReturn) {
+					return;
+				}
 			}
 
 			/* Ignore message? */
