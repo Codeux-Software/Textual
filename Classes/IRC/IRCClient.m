@@ -2471,8 +2471,8 @@
 			
 			for (IRCClient *client in [self.worldController clients]) {
 				for (IRCChannel *channel in [client channels]) {
-					NSString *name = [channel.name stringByDeletingAllCharactersNotInSet:TXWesternAlphabetIncludingUnderscoreDashCharacaterSet];
-
+					NSString *name = [channel.name channelNameTokenByTrimmingAllPrefixes:self];
+					
 					NSInteger score = [uncutInput compareWithWord:name matchGain:10 missingCost:1];
 					
 					[results addObject:@{@"score" : @(score), @"item" : channel}];

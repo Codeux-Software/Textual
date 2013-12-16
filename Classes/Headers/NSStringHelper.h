@@ -76,9 +76,12 @@
 - (NSString *)stringCharacterAtIndex:(NSInteger)anIndex;
 
 - (NSString *)stringByDeletingPreifx:(NSString *)prefix;
+
+- (NSString *)stringByDeletingAllCharactersInSet:(NSString *)validChars;
 - (NSString *)stringByDeletingAllCharactersNotInSet:(NSString *)validChars;
 
 - (NSString *)channelNameToken;
+- (NSString *)channelNameTokenByTrimmingAllPrefixes:(IRCClient *)client;
 
 - (NSString *)sha1;
 

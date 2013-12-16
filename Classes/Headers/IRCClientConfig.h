@@ -53,8 +53,6 @@ typedef enum TXConnectionProxyType : NSInteger {
 	TXConnectionSocks5ProxyType = 5,
 } TXConnectionProxyType;
 
-NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *context);
-
 @interface IRCClientConfig : NSObject <NSMutableCopying>
 @property (nonatomic, assign) BOOL autoConnect;
 @property (nonatomic, assign) BOOL autoReconnect;

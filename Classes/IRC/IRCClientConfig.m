@@ -38,10 +38,6 @@
 
 #import "TextualApplication.h"
 
-NSComparisonResult IRCChannelDataSort(IRCChannel *s1, IRCChannel *s2, void *context) {
-	return [s1.name.lowercaseString compare:s2.name.lowercaseString];
-}
-
 @implementation IRCClientConfig
 
 - (id)init
