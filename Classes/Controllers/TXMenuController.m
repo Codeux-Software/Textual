@@ -2175,7 +2175,18 @@
 			[serverList.animator collapseItem:u];
 		}
 
-		NSArray *clientChannels = [u.channels sortedArrayUsingFunction:IRCChannelDataSort context:nil];
+		NSArray *clientChannels = [u.channels sortedArrayUsingComparator:^NSComparisonResult(IRCChannel *obj1, IRCChannel *obj2)
+		{
+			NSString *name1 = [obj1.name lowercaseString];
+			NSString *name2 = [obj2.name lowercaseString];
+			
+			// if {
+			// name1 = [name1 channelNameTokenByTrimmingAllPrefixes:u];
+			// name2 = [name2 channelNameTokenByTrimmingAllPrefixes:u];
+			// }
+			
+			return [name1 compare:name2];
+		}];
 		
 		[u.channels removeAllObjects];
 		

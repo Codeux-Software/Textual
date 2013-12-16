@@ -418,6 +418,19 @@
 	return self;
 }
 
+- (NSString *)channelNameTokenByTrimmingAllPrefixes:(IRCClient *)client
+{
+	NSObjectIsEmptyAssertReturn(self, NO);
+	
+	if (PointerIsEmpty(client)) {
+		return [self channelNameToken];
+	}
+	
+	NSCharacterSet *validChars = [NSCharacterSet characterSetWithCharactersInString:client.isupport.channelNamePrefixes];
+	
+	return [self stringByTrimmingCharactersInSet:validChars];
+}
+
 - (NSString *)hostmaskFromRawString
 {
 	NSAssertReturnR([self isHostmask], nil);
@@ -598,7 +611,7 @@
 	return ([self rangeOfCharacterFromSet:chars].location == NSNotFound);
 }
 
-- (NSString *)stringByDeletingAllCharactersNotInSet:(NSString *)validChars
+- (NSString *)stringByDeletingAllCharactersInSet:(NSString *)validChars deleteThoseNotInSet:(BOOL)onlyDeleteThoseNotInSet
 {
 	NSObjectIsEmptyAssertReturn(self, nil);
 	NSObjectIsEmptyAssertReturn(validChars, nil);
@@ -612,14 +625,32 @@
 	while ([scanner isAtEnd] == NO) {
 		NSString *buffer;
 		
-		if ([scanner scanCharactersFromSet:chars intoString:&buffer]) {
-			[result appendString:buffer];
+		if (onlyDeleteThoseNotInSet) {
+			if ([scanner scanCharactersFromSet:chars intoString:&buffer]) {
+				[result appendString:buffer];
+			} else {
+				[scanner setScanLocation:([scanner scanLocation] + 1)];
+			}
 		} else {
-			[scanner setScanLocation:([scanner scanLocation] + 1)];
+			if ([scanner scanCharactersFromSet:chars intoString:&buffer]) {
+				[scanner setScanLocation:([scanner scanLocation] + 1)];
+			} else {
+				[result appendString:buffer];
+			}
 		}
 	}
 	
 	return result;
+}
+
+- (NSString *)stringByDeletingAllCharactersInSet:(NSString *)validChars
+{
+	return [self stringByDeletingAllCharactersInSet:validChars deleteThoseNotInSet:NO];
+}
+
+- (NSString *)stringByDeletingAllCharactersNotInSet:(NSString *)validChars
+{
+	return [self stringByDeletingAllCharactersInSet:validChars deleteThoseNotInSet:YES];
 }
 
 - (NSString *)stripIRCEffects
