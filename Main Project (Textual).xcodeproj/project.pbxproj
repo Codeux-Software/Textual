@@ -205,6 +205,8 @@
 		4C5798B4179B44F500968800 /* TVCMemberListCellBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5798B2179B44F500968800 /* TVCMemberListCellBadge.m */; };
 		4C5798BA179B451400968800 /* TVCMemberListCellBadge.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5798B9179B451400968800 /* TVCMemberListCellBadge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5798BB179B451400968800 /* TVCMemberListCellBadge.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5798B9179B451400968800 /* TVCMemberListCellBadge.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C58B572186011B900834882 /* Acknowledgments.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgments.pdf */; };
+		4C58B573186011BE00834882 /* Acknowledgments.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgments.pdf */; };
 		4C5A0311170C2C010016BB1A /* TPCPreferencesImportExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5A0310170C2C010016BB1A /* TPCPreferencesImportExport.m */; };
 		4C5A0317170C2C170016BB1A /* TPCPreferencesImportExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5A0318170C31010016BB1A /* TPCPreferencesImportExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -808,10 +810,6 @@
 		4CDDF3481678C5DF00FE8684 /* encryptionLockIconDark@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3441678C5DF00FE8684 /* encryptionLockIconDark@2x.tif */; };
 		4CDDF3491678C5DF00FE8684 /* encryptionLockIconLight.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3451678C5DF00FE8684 /* encryptionLockIconLight.tif */; };
 		4CDDF34A1678C5DF00FE8684 /* encryptionLockIconLight@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3461678C5DF00FE8684 /* encryptionLockIconLight@2x.tif */; };
-		4CECD341178DA5620048B3F6 /* Acknowledgments.rtfd in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4CECD33F178DA5480048B3F6 /* Acknowledgments.rtfd */; };
-		4CECD342178DA5640048B3F6 /* Contributors.rtfd in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4CECD340178DA5480048B3F6 /* Contributors.rtfd */; };
-		4CECD343178DA5680048B3F6 /* Acknowledgments.rtfd in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4CECD33F178DA5480048B3F6 /* Acknowledgments.rtfd */; };
-		4CECD344178DA5690048B3F6 /* Contributors.rtfd in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4CECD340178DA5480048B3F6 /* Contributors.rtfd */; };
 		4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC11580469E00846B64 /* SystemConfiguration.framework */; };
 		4CF8B41016E631EF00F2A68F /* birthdayIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4CF8B40F16E631EF00F2A68F /* birthdayIcon.icns */; };
 		5D4846C3171F0AC00015F2B0 /* OELReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D4846C2171F0AC00015F2B0 /* OELReachability.m */; };
@@ -933,8 +931,7 @@
 			dstPath = Documentation;
 			dstSubfolderSpec = 7;
 			files = (
-				4CECD343178DA5680048B3F6 /* Acknowledgments.rtfd in Copy Acknowledgements */,
-				4CECD344178DA5690048B3F6 /* Contributors.rtfd in Copy Acknowledgements */,
+				4C58B573186011BE00834882 /* Acknowledgments.pdf in Copy Acknowledgements */,
 			);
 			name = "Copy Acknowledgements";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -956,8 +953,7 @@
 			dstPath = Documentation;
 			dstSubfolderSpec = 7;
 			files = (
-				4CECD341178DA5620048B3F6 /* Acknowledgments.rtfd in Copy Acknowledgements */,
-				4CECD342178DA5640048B3F6 /* Contributors.rtfd in Copy Acknowledgements */,
+				4C58B572186011B900834882 /* Acknowledgments.pdf in Copy Acknowledgements */,
 			);
 			name = "Copy Acknowledgements";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1043,6 +1039,8 @@
 		4C529E2017AF0050009BA0B3 /* TPCResourceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCResourceManager.m; path = Preferences/TPCResourceManager.m; sourceTree = "<group>"; };
 		4C5798B2179B44F500968800 /* TVCMemberListCellBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberListCellBadge.m; sourceTree = "<group>"; };
 		4C5798B9179B451400968800 /* TVCMemberListCellBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMemberListCellBadge.h; sourceTree = "<group>"; };
+		4C58B570186011AC00834882 /* Acknowledgments.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Acknowledgments.pdf; sourceTree = SOURCE_ROOT; };
+		4C58B571186011AC00834882 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
 		4C5A0310170C2C010016BB1A /* TPCPreferencesImportExport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCPreferencesImportExport.m; sourceTree = "<group>"; };
 		4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPreferencesImportExport.h; sourceTree = "<group>"; };
 		4C5A6DBE15C39B1900143574 /* NSScreenHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSScreenHelper.h; sourceTree = "<group>"; };
@@ -1377,7 +1375,6 @@
 		4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "System Profiler Extension.xcodeproj"; path = "Resources/Plugins/System Profiler/System Profiler Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4CCF2EE1158046F9006FFE21 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
 		4CCF2EEA15804790006FFE21 /* IRCNetworks.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = IRCNetworks.plist; path = Resources/Miscellaneous/IRCNetworks.plist; sourceTree = SOURCE_ROOT; };
-		4CCF2EF5158047D1006FFE21 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = SOURCE_ROOT; };
 		4CCF2EF7158047E9006FFE21 /* application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = application.icns; path = Resources/Images/Application/application.icns; sourceTree = SOURCE_ROOT; };
 		4CCF2F091580481E006FFE21 /* FormattingColor_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_0.png; path = "Resources/Images/IRC Formatting Colors/FormattingColor_0.png"; sourceTree = SOURCE_ROOT; };
 		4CCF2F0A1580481E006FFE21 /* FormattingColor_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_1.png; path = "Resources/Images/IRC Formatting Colors/FormattingColor_1.png"; sourceTree = SOURCE_ROOT; };
@@ -1401,8 +1398,6 @@
 		4CDDF3441678C5DF00FE8684 /* encryptionLockIconDark@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "encryptionLockIconDark@2x.tif"; sourceTree = "<group>"; };
 		4CDDF3451678C5DF00FE8684 /* encryptionLockIconLight.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = encryptionLockIconLight.tif; sourceTree = "<group>"; };
 		4CDDF3461678C5DF00FE8684 /* encryptionLockIconLight@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "encryptionLockIconLight@2x.tif"; sourceTree = "<group>"; };
-		4CECD33F178DA5480048B3F6 /* Acknowledgments.rtfd */ = {isa = PBXFileReference; lastKnownFileType = wrapper.rtfd; path = Acknowledgments.rtfd; sourceTree = SOURCE_ROOT; };
-		4CECD340178DA5480048B3F6 /* Contributors.rtfd */ = {isa = PBXFileReference; lastKnownFileType = wrapper.rtfd; path = Contributors.rtfd; sourceTree = SOURCE_ROOT; };
 		4CF8B40F16E631EF00F2A68F /* birthdayIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = birthdayIcon.icns; path = Resources/Images/Application/birthdayIcon.icns; sourceTree = SOURCE_ROOT; };
 		5D4846C2171F0AC00015F2B0 /* OELReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OELReachability.m; sourceTree = "<group>"; };
 		5D4846C9171F0ACD0015F2B0 /* OELReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OELReachability.h; sourceTree = "<group>"; };
@@ -1691,9 +1686,8 @@
 		4C46CCA21580437400846B64 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
-				4CECD33F178DA5480048B3F6 /* Acknowledgments.rtfd */,
-				4CECD340178DA5480048B3F6 /* Contributors.rtfd */,
-				4CCF2EF5158047D1006FFE21 /* README */,
+				4C58B570186011AC00834882 /* Acknowledgments.pdf */,
+				4C58B571186011AC00834882 /* README.md */,
 			);
 			name = Documentation;
 			sourceTree = "<group>";
