@@ -6,8 +6,8 @@
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
  Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- Copyright (c) 2010 — 2013 Codeux Software & respective contributors.
-        Please see Contributors.rtfd and Acknowledgements.rtfd
+ Copyright (c) 2010 — 2014 Codeux Software & respective contributors.
+     Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
@@ -256,7 +256,6 @@
 - (void)commandWShortcutUsed:(id)sender;
 - (void)openHelpMenuLinkItem:(id)sender;
 - (void)openMacAppStoreDownloadPage:(id)sender;
-- (void)showContributors:(id)sender;
 - (void)showAcknowledgments:(id)sender;
 - (void)showScriptingDocumentation:(id)sender;
 - (void)processNavigationItem:(id)sender;
