@@ -2467,27 +2467,24 @@
 		{
 			NSObjectIsEmptyAssertLoopBreak(uncutInput);
 			
-			NSMutableArray *results = [NSMutableArray array];
+            // if we don't find any best match, default to the selected item
+			IRCTreeItem *bestMatch = self.worldController.selectedItem;
+            CGFloat bestScore = 0.0;
 			
 			for (IRCClient *client in [self.worldController clients]) {
 				for (IRCChannel *channel in [client channels]) {
-					NSString *name = [channel.name channelNameTokenByTrimmingAllPrefixes:self];
+					NSString *name = [channel.name stringByDeletingAllCharactersNotInSet:TXWesternAlphabetIncludingUnderscoreDashCharacaterSet];
+
+					CGFloat score = [name compareWithWord:uncutInput lengthPenaltyWeight:0.1];
 					
-					NSInteger score = [uncutInput compareWithWord:name matchGain:10 missingCost:1];
-					
-					[results addObject:@{@"score" : @(score), @"item" : channel}];
+                    if (score > bestScore) {
+                        bestMatch = channel;
+                        bestScore = score;
+                    }
 				}
 			}
 			
-			NSObjectIsEmptyAssertLoopBreak(results);
-
-			[results sortUsingComparator:^NSComparisonResult(NSDictionary *obj1, NSDictionary *obj2) {
-				return [obj1[@"score"] compare:obj2[@"score"]];
-			}];
-			
-			NSDictionary *topResult = (id)results[0];
-			
-			[self.worldController select:topResult[@"item"]];
+			[self.worldController select:bestMatch];
 			
 			break;
 		}

@@ -50,7 +50,7 @@
 #define NSStringNilValueSubstitute(s)		((s == nil) ? NSStringEmptyPlaceholder : s)
 
 /* That is one long define name. */
-#define TXWesternAlphabetIncludingUnderscoreDashCharacaterSet			@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_"
+#define TXWesternAlphabetIncludingUnderscoreDashCharacterSet			@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_"
 
 #pragma mark 
 #pragma mark String Helpers
@@ -92,7 +92,7 @@
 
 - (NSString *)cleanedServerHostmask;
 
-- (NSInteger)compareWithWord:(NSString *)stringB matchGain:(NSInteger)gain missingCost:(NSInteger)cost;
+- (CGFloat)compareWithWord:(NSString *)stringB lengthPenaltyWeight:(CGFloat)weight;
 
 - (BOOL)isEqualIgnoringCase:(NSString *)other;
 
