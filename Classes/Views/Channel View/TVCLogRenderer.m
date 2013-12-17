@@ -232,6 +232,16 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 							}
 						}
 						
+						/* If nickname length = 1 and mode char is +, then we ignore it
+						 becasue someone with nick "m" becoming "+m" might be confused
+						 for a mode symbol. Same could apply to - too, but I do not know
+						 of any network that uses that for status symbol. */
+						if ([user.nickname length] == 1) {
+							if ([modeSymbol isEqualToString:@"+"]) {
+								modeSymbol = NSStringEmptyPlaceholder;
+							}
+						}
+						
 						templateTokens[@"inlineNicknameMatchFound"] = @(YES);
 						templateTokens[@"inlineNicknameColorNumber"] = @(user.colorNumber);
 						templateTokens[@"inlineNicknameUserModeSymbol"] = modeSymbol;
