@@ -92,7 +92,7 @@
 
 - (NSString *)cleanedServerHostmask;
 
-- (NSInteger)compareWithWord:(NSString *)stringB matchGain:(NSInteger)gain missingCost:(NSInteger)cost;
+- (CGFloat)compareWithWord:(NSString *)stringB lengthPenaltyWeight:(CGFloat)weight;
 
 - (BOOL)isEqualIgnoringCase:(NSString *)other;
 

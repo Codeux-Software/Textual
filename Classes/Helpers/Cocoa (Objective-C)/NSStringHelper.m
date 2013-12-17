@@ -40,17 +40,6 @@
 // This source file contains work that originated
 // from the following authors:
 //
-//  Modified by Michael Bianco on 12/2/11.
-//	<http://mabblog.com>
-//
-//  Created by Rick Bourner on Sat Aug 09 2003.
-//  rick@bourner.com
-//
-// In reference to the source code for the call -compareWithWord:matchGain:missingCost:
-// Originating URL: <https://gist.github.com/iloveitaly/1515464>
-//
-// =======================================================
-//
 // Created by Saurabh Sharma on May 3, 2011
 //
 // In reference to the source code for the call -sha1
@@ -252,55 +241,48 @@
 	return [self stringByReplacingOccurrencesOfString:NSStringNewlinePlaceholder withString:NSStringEmptyPlaceholder];
 }
 
-- (NSInteger)compareWithWord:(NSString *)stringB matchGain:(NSInteger)gain missingCost:(NSInteger)cost
+- (CGFloat)compareWithWord:(NSString *)stringB lengthPenaltyWeight:(CGFloat)weight
 {
-	// normalize strings
-	NSString *stringA = [NSString stringWithString:self];
-	
-	stringA = [stringA.trim lowercaseString];
-	stringB = [stringB.trim lowercaseString];
-	
-	// Step 1
-	NSInteger k, i, j, change, *d, distance;
-	
-	NSUInteger n = [stringA length];
-	NSUInteger m = [stringB length];
-	
-	if (NSDissimilarObjects(n++, 0) && NSDissimilarObjects(m++, 0))
-	{
-		d = malloc(sizeof(NSInteger) * m * n );
-		
-		for (k = 0; k < n; k++) {
-			d[k] = k;
-		}
-		
-		for (k = 0; k < m; k++) {
-			d[ k * n ] = k;
-		}
-		
-		for (i = 1; i < n; i++) {
-			for (j = 1; j < m; j++) {
-				if ([stringA characterAtIndex:(i - 1)] == [stringB characterAtIndex:(j - 1)]) {
-					change = -(gain);
-				} else {
-					change = cost;
-				}
-				
-				// Step 6
-				d[ (j * n + i) ] = MIN( (d[ ((j - 1) * n + i) ] + 1),
-								   MIN( (d[  (j * n + i - 1) ] +  1),
-									    (d[ ((j - 1) * n + i -1) ] + change)));
-			}
-		}
-		
-		distance = d[ (n * m - 1) ];
-		
-		free(d);
-		
-		return distance;
-	}
-	
-	return 0;
+    NSString *stringA = [NSString stringWithString:self];
+    
+    // cover the obvious end cases early
+    if (stringB.length == 0) return 0.0;
+    if (stringB.length > stringA.length) return 0.0;
+    
+    // normalize strings
+    stringA = [stringA lowercaseString];
+    stringB = [stringB lowercaseString];
+    
+    NSInteger commonCharacterCount = 0;
+    NSInteger startPosition = 0;
+    CGFloat distancePenalty = 0;
+    
+    for (NSInteger i = 0; i < stringB.length; i++) {
+        BOOL matchFound = NO;
+        
+        // only find matches in the forward-looking direction
+        for (NSInteger j = startPosition; j < stringA.length; j++) {
+            if ([stringB characterAtIndex:i] == [stringA characterAtIndex:j]) {
+                // penalize based on how far we've moved from the last match character
+                NSInteger distance = j - startPosition;
+                if (distance > 0) {
+                    distancePenalty += (distance - 1.0)/distance;
+                }
+                
+                commonCharacterCount++;
+                startPosition = j + 1;
+                matchFound = YES;
+                break;
+            }
+        }
+        // needle character doesn't exist anywhere in the potential match
+        // therefore, this is not possibly a matching string
+        if (matchFound == NO) return 0.0;
+    }
+    
+    // penalize more a string that matches a lower percentage of characters
+    CGFloat lengthPenalty = 1.0 - (CGFloat)stringB.length/stringA.length;
+    return commonCharacterCount - distancePenalty - weight*lengthPenalty;
 }
 
 - (NSInteger)stringPosition:(NSString *)needle
