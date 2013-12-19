@@ -100,8 +100,8 @@ static NSInteger _cachedHighlightCount = -1;
 		highlightCount = 9999;
 	}
 	
-	BOOL showRedBadge = (messageCount >= 1);
-	BOOL showGreenBadge = (highlightCount >= 1);
+	BOOL showRedBadge = (highlightCount >= 1);
+	BOOL showGreenBadge = (messageCount >= 1);
 	
 	/* ////////////////////////////////////////////////////////// */
 	/* Define Text Drawing Globals. */
@@ -146,7 +146,7 @@ static NSInteger _cachedHighlightCount = -1;
 	redBadgeLeftFrame.size.height	= 44;
 	
 	redBadgeLeftFrame.size.width    = 21;
-	redBadgeCenterFrame.size.width	= [self badgeCenterTileWidth:messageCount];
+	redBadgeCenterFrame.size.width	= [self badgeCenterTileWidth:highlightCount];
 	redBadgeRightFrame.size.width	= 20;
 	
 	/* Green Badge Size. */
@@ -155,7 +155,7 @@ static NSInteger _cachedHighlightCount = -1;
 	greenBadgeLeftFrame.size.height		= 44;
 	
 	greenBadgeLeftFrame.size.width		= 21;
-	greenBadgeCenterFrame.size.width	= [self badgeCenterTileWidth:highlightCount];
+	greenBadgeCenterFrame.size.width	= [self badgeCenterTileWidth:messageCount];
 	greenBadgeRightFrame.size.width		= 20;
 	
 	/* ////////////////////////////////////////////////////////// */
