@@ -64,6 +64,7 @@ typedef enum IRCDisconnectMode : NSInteger {
 @property (nonatomic, strong) IRCISupportInfo *isupport;
 @property (nonatomic, assign) IRCConnectMode connectType;
 @property (nonatomic, assign) IRCDisconnectMode disconnectType;
+@property (nonatomic, strong) NSData *serverSSLCertificateDER;
 @property (nonatomic, assign) NSInteger connectDelay;
 @property (nonatomic, assign) BOOL inUserInvokedNamesRequest;
 @property (nonatomic, assign) BOOL inUserInvokedWhoRequest;

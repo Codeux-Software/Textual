@@ -250,6 +250,7 @@
 
 		if ([GCDAsyncSocket badSSLCertificateErrorFound:error]) {
 			self.client.disconnectType = IRCDisconnectBadSSLCertificateMode;
+            self.client.serverSSLCertificateDER = error.userInfo[@"peerCertificateDER"];
 		} else {
 			if ([error.domain isEqualToString:NSPOSIXErrorDomain]) {
 				errorMessage = [GCDAsyncSocket posixErrorStringFromError:error.code];
