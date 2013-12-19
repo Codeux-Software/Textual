@@ -61,6 +61,14 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 			LogToConsole(@"Launching in debug mode.");
 		}
+		
+#ifdef TEXTUAL_BUILT_WITH_APP_NAP_DISABLED
+		// Force disable app nap as it creates a lot of problems.
+		
+		if ([RZProcessInfo() respondsToSelector:@selector(beginActivityWithOptions:reason:)]) {
+			self.appNapProgressInformation = [RZProcessInfo() beginActivityWithOptions:NSActivityUserInitiatedAllowingIdleSystemSleep reason:@"Managing IRC"];
+		}
+#endif
 
 		// ---- //
 
@@ -413,6 +421,12 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
 		[self.cloudSyncManager closeCloudSyncSession];
+	}
+#endif
+	
+#ifdef TEXTUAL_BUILT_WITH_APP_NAP_DISABLED
+	if ([RZProcessInfo() respondsToSelector:@selector(endActivity:)]) {
+		[RZProcessInfo() endActivity:self.appNapProgressInformation];
 	}
 #endif
 }

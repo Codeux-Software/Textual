@@ -157,4 +157,7 @@
 /* Just like nweak and uweak, these are useless, but hey, whatever. */
 typedef unsigned long long						TXFSLongInt;
 
+/* Whether to force disable app nap using NSProcessInfo */
+#define TEXTUAL_BUILT_WITH_APP_NAP_DISABLED				
+
 /* @end */
