@@ -122,7 +122,7 @@
 				didEndSelector:didEndSelector
 				   contextInfo:contextInfo
 						 trust:trust
-					 showGroup:NO];
+					 showGroup:YES];
 }
 
 - (SecTrustRef)sslCertificateTrustInformation /* @private */
