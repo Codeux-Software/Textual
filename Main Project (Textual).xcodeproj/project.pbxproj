@@ -2223,7 +2223,6 @@
 		4C8AF73E158EB6CA0026668C /* External Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				4C8BC0EB16DE552900360EEF /* Mustache */,
 				4C8AF73F158EB6CA0026668C /* AGKeychain.h */,
 				4C8AF740158EB6CA0026668C /* DDExtensions.h */,
 				4C8AF741158EB6CA0026668C /* DDInvocation.h */,
@@ -2233,6 +2232,7 @@
 				4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */,
 				4C8AF747158EB6CA0026668C /* GTMEncodeURL.h */,
 				4C8AF748158EB6CA0026668C /* GTMGarbageCollection.h */,
+				4C8BC0EB16DE552900360EEF /* Mustache */,
 				5D4846C9171F0ACD0015F2B0 /* OELReachability.h */,
 				4C8AF74A158EB6CA0026668C /* RLMAsyncSocket.h */,
 			);
