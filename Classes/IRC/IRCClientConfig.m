@@ -67,8 +67,7 @@
 		self.serverPassword     = NSStringEmptyPlaceholder;
 		self.serverPort         = IRCConnectionDefaultServerPort;
 		
-		self.invisibleMode       = NO;
-		self.isTrustedConnection = NO;
+		self.invisibleMode = NO;
 
 		self.zncIgnorePlaybackNotifications = YES;
 
@@ -272,8 +271,7 @@
 		
 		self.connectionPrefersIPv6  = NSDictionaryBOOLKeyValueCompare(dic, @"DNSResolverPrefersIPv6", self.connectionPrefersIPv6);
 		self.invisibleMode			= NSDictionaryBOOLKeyValueCompare(dic, @"setInvisibleOnConnect", self.invisibleMode);
-		self.isTrustedConnection	= NSDictionaryBOOLKeyValueCompare(dic, @"trustedSSLConnection", self.isTrustedConnection);
-		
+
 		[self.loginCommands addObjectsFromArray:[dic arrayForKey:@"onConnectCommands"]];
 
 		/* Channel list. */
@@ -359,8 +357,7 @@
 	[dic setBool:self.performPongTimer				forKey:@"performPongTimer"];
 	[dic setBool:self.performDisconnectOnPongTimer	forKey:@"performDisconnectOnPongTimer"];	
 	[dic setBool:self.invisibleMode					forKey:@"setInvisibleOnConnect"];
-	[dic setBool:self.isTrustedConnection			forKey:@"trustedSSLConnection"];
-    [dic setBool:self.connectionPrefersIPv6			forKey:@"DNSResolverPrefersIPv6"];
+	[dic setBool:self.connectionPrefersIPv6			forKey:@"DNSResolverPrefersIPv6"];
     [dic setBool:self.sidebarItemExpanded			forKey:@"serverListItemIsExpanded"];
 
 	[dic setBool:self.zncIgnorePlaybackNotifications	forKey:@"ZNC —> Ignore Playback Buffer Highlights"];

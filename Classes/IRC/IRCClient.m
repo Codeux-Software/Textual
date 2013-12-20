@@ -3125,31 +3125,51 @@
 
 #pragma mark -
 
-- (void)ircBadSSLCertificateDisconnectCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
+- (void)ircBadSSLCertificateDisconnectCallback:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
-	if (returnCode == TLOPopupPromptReturnPrimaryType) {
-		self.config.isTrustedConnection = YES;
-
+	if (returnCode == NSAlertDefaultReturn) {
 		[self connect:IRCConnectBadSSLCertificateMode];
 	}
 }
 
-- (void)ircConnectionDidDisconnect:(IRCConnection *)sender
+- (void)ircConnectionDidDisconnect:(IRCConnection *)sender withError:(NSError *)distcError;
 {
 	if (self.disconnectType == IRCDisconnectBadSSLCertificateMode) {
-		if (self.config.isTrustedConnection == NO) {
-			TLOPopupPrompts *prompt = [TLOPopupPrompts new];
-
-			[prompt sheetWindowWithQuestion:self.masterController.mainWindow
-									 target:self
-									 action:@selector(ircBadSSLCertificateDisconnectCallback:withOriginalAlert:)
-									   body:TXTLS(@"SocketBadSSLCertificateErrorMessage")
-									  title:TXTLS(@"SocketBadSSLCertificateErrorTitle")
-							  defaultButton:TXTLS(@"TrustButton")
-							alternateButton:TXTLS(@"CancelButton")
-								otherButton:nil
-							 suppressionKey:nil
-							suppressionText:nil];
+		[self cancelReconnect];
+		
+		if (distcError) {
+			NSData *peerCert = [distcError.userInfo objectForKey:@"peerCertificateDER"];
+			
+			if (NSObjectIsNotEmpty(peerCert)) {
+				SecCertificateRef certFromData = SecCertificateCreateWithData(NULL, (__bridge CFDataRef)(peerCert));
+				
+				if (certFromData) {
+					SecTrustRef trust;
+					
+					SecPolicyRef policy = SecPolicyCreateSSL(true, NULL);
+					
+					OSStatus err = SecTrustCreateWithCertificates(certFromData, policy, &trust);
+					
+					if (err == noErr) {
+						SFCertificateTrustPanel *panel = [SFCertificateTrustPanel sharedCertificateTrustPanel];
+						
+						[panel setAlternateButtonTitle:TXTLS(@"CancelButton")];
+						[panel setInformativeText:TXTLS(@"SocketBadSSLCertificateErrorMessage")];
+						
+						[panel beginSheetForWindow:self.masterController.mainWindow
+									 modalDelegate:self
+									didEndSelector:@selector(ircBadSSLCertificateDisconnectCallback:returnCode:contextInfo:)
+									   contextInfo:nil
+											 trust:trust
+										   message:TXTLS(@"SocketBadSSLCertificateErrorTitle")];
+						
+					}
+					
+					CFRelease(policy);
+					CFRelease(trust);
+					CFRelease(certFromData);
+				}
+			}
 		}
 	}
 
@@ -6622,6 +6642,7 @@
 
 - (void)cancelReconnect
 {
+	self.reconnectEnabled = NO;
 	self.connectionReconnectCount = 0;
 
 	[self stopReconnectTimer];

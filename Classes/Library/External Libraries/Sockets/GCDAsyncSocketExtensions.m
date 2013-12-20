@@ -37,8 +37,6 @@
 
 #import "TextualApplication.h"
 
-#import <SecurityInterface/SFCertificatePanel.h>
-
 @implementation GCDAsyncSocket (GCDsyncSocketExtensions)
 
 + (id)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq
@@ -55,7 +53,7 @@
 	settings[CFItemRefToID(kCFStreamSSLPeerName)] = CFItemRefToID(kCFNull);
 	settings[CFItemRefToID(kCFStreamSSLIsServer)] = CFItemRefToID(kCFBooleanFalse);
 
-	if (client.config.isTrustedConnection) {
+	if (client.connectType == IRCConnectBadSSLCertificateMode) {
 		settings[CFItemRefToID(kCFStreamSSLAllowsAnyRoot)] = CFItemRefToID(kCFBooleanTrue);
 		settings[CFItemRefToID(kCFStreamSSLAllowsExpiredRoots)]	= CFItemRefToID(kCFBooleanTrue);
 		settings[CFItemRefToID(kCFStreamSSLAllowsExpiredCertificates)] = CFItemRefToID(kCFBooleanTrue);

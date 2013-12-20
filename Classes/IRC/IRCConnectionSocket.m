@@ -119,7 +119,7 @@
 		[self onSocket:self.socketConnection willDisconnectWithError:connError];
 
 		if ([self useNewSocketEngine] == NO) {
-			[self onSocketDidDisconnect:self.socketConnection];
+			[self onSocketDidDisconnect:self.socketConnection withError:nil];
 		}
 	}
 }
@@ -232,18 +232,18 @@
 	}
 }
 
-- (void)onSocketDidDisconnect:(id)sock
+- (void)onSocketDidDisconnect:(id)sock withError:(NSError *)distcError;
 {
 	[self closeSocket];
 
-	[self performSelector:@selector(tcpClientDidDisconnect)];
+	[self performSelector:@selector(tcpClientDidDisconnect:) withObject:distcError];
 }
 
 - (void)onSocket:(id)sender willDisconnectWithError:(NSError *)error
 {
 	if (PointerIsEmpty(error) || [error code] == errSSLClosedGraceful) {
 		if ([self useNewSocketEngine]) {
-			[self onSocketDidDisconnect:sender];
+			[self onSocketDidDisconnect:sender withError:nil];
 		}
 	} else {
 		NSString *errorMessage = nil;
@@ -263,7 +263,7 @@
 		}
 
 		if ([self useNewSocketEngine]) {
-			[self onSocketDidDisconnect:sender];
+			[self onSocketDidDisconnect:sender withError:error];
 		}
 	}
 }

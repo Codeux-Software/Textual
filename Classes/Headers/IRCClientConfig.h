@@ -62,7 +62,6 @@ typedef enum TXConnectionProxyType : NSInteger {
 @property (nonatomic, assign) BOOL performDisconnectOnPongTimer;
 @property (nonatomic, assign) BOOL connectionUsesSSL;
 @property (nonatomic, assign) BOOL invisibleMode;
-@property (nonatomic, assign) BOOL isTrustedConnection;
 @property (nonatomic, assign) BOOL outgoingFloodControl;
 @property (nonatomic, assign) BOOL sidebarItemExpanded;
 
