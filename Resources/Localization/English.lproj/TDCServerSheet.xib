@@ -68,6 +68,7 @@
                 <outlet property="sheet" destination="5" id="1059"/>
                 <outlet property="sleepModeQuitMessageField" destination="2294" id="2296"/>
                 <outlet property="sslCertificateCommonNameField" destination="nly-3d-FIq" id="lsx-0q-4fo"/>
+                <outlet property="sslCertificateFingerprintCopyButton" destination="758-2B-Ka3" id="Q1d-yx-R9D"/>
                 <outlet property="sslCertificateFingerprintField" destination="2ie-9H-xb2" id="R0d-n9-vwU"/>
                 <outlet property="sslCertificateResetButton" destination="sab-tw-7nn" id="Sui-ok-96a"/>
                 <outlet property="sslCertificateView" destination="Ti4-Q4-cYX" id="QPI-Iw-CIb"/>
@@ -351,10 +352,10 @@ Gw
                         </binding>
                         <binding destination="1we-Ps-Z9v" name="hidden2" keyPath="values.System —> Built with iCloud Support" previousBinding="scC-ZN-NMU" id="Yua-lO-a7l">
                             <dictionary key="options">
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
@@ -1683,9 +1684,28 @@ your friends and ignore your enemies.</string>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content=" If the fingerprint is not all uppercase, then NickServ will fail to identify you based on the assigned certificate.">
+                                    <fragment content=" ">
                                         <attributes>
                                             <font key="NSFont" size="11" name="LucidaGrande-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Use the ">
+                                        <attributes>
+                                            <font key="NSFont" size="11" name="LucidaGrande"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Copy">
+                                        <attributes>
+                                            <font key="NSFont" size="11" name="LucidaGrande-Bold"/>
+                                            <font key="NSOriginalFont" size="11" name="LucidaGrande-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=" button to copy the exact command to send to NickServ services to avoid mistakes.">
+                                        <attributes>
+                                            <font key="NSFont" size="11" name="LucidaGrande"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
@@ -1756,14 +1776,25 @@ your friends and ignore your enemies.</string>
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="2ie-9H-xb2">
-                    <rect key="frame" x="198" y="128" width="299" height="22"/>
+                    <rect key="frame" x="196" y="125" width="230" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" title="Label" id="Gbb-jh-4mY">
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" alignment="left" title="Label" id="Gbb-jh-4mY">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button verticalHuggingPriority="750" id="758-2B-Ka3">
+                    <rect key="frame" x="426" y="120" width="72" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Copy" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="0nB-im-8PX">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onSSLCertificateFingerprintCopyRequested:" target="-2" id="JmU-wh-zQD"/>
+                    </connections>
+                </button>
             </subviews>
         </customView>
     </objects>
