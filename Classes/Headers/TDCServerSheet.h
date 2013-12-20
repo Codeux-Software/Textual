@@ -63,6 +63,7 @@
 @property (nonatomic, nweak) NSButton *pongTimerCheck;
 @property (nonatomic, nweak) NSButton *pongTimerDisconnectCheck;
 @property (nonatomic, nweak) NSButton *sslCertificateResetButton;
+@property (nonatomic, nweak) NSButton *sslCertificateFingerprintCopyButton;
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 @property (nonatomic, nweak) NSButton *excludedFromCloudSyncingCheck;
@@ -146,6 +147,7 @@
 
 - (void)onSSLCertificateResetRequested:(id)sender;
 - (void)onSSLCertificateChangeRequested:(id)sender;
+- (void)onSSLCertificateFingerprintCopyRequested:(id)sender;
 @end
 
 @interface NSObject (TDCServerSheetDelegate)

@@ -728,6 +728,13 @@
 #pragma mark -
 #pragma mark SSL Certificate
 
+- (void)onSSLCertificateFingerprintCopyRequested:(id)sender
+{
+	NSString *command = [NSString stringWithFormat:@"/msg NickServ cert add %@", [self.sslCertificateFingerprintField stringValue]];
+	
+	[RZPasteboard() setStringContent:command];
+}
+
 - (void)updateSSLCertificatePage
 {
 	NSString *commonName = nil;
@@ -779,6 +786,7 @@
 	}
 	
 	[self.sslCertificateResetButton setEnabled:BOOLReverseValue(hasNoCert)];
+	[self.sslCertificateFingerprintCopyButton setEnabled:BOOLReverseValue(hasNoCert)];
 }
 
 - (void)onSSLCertificateResetRequested:(id)sender
