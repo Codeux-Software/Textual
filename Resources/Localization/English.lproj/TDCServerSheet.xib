@@ -351,10 +351,10 @@ Gw
                         </binding>
                         <binding destination="1we-Ps-Z9v" name="hidden2" keyPath="values.System —> Built with iCloud Support" previousBinding="scC-ZN-NMU" id="Yua-lO-a7l">
                             <dictionary key="options">
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
@@ -1652,33 +1652,44 @@ your friends and ignore your enemies.</string>
                     </scroller>
                 </scrollView>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="6Fq-GY-KbJ">
-                    <rect key="frame" x="68" y="73" width="368" height="41"/>
+                    <rect key="frame" x="98" y="61" width="320" height="54"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="4AG-g6-kIF">
-                        <rect key="frame" x="0.0" y="0.0" width="368" height="41"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="54"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" continuousSpellChecking="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" smartInsertDelete="YES" id="W2t-2n-I0q">
-                                <rect key="frame" x="0.0" y="0.0" width="368" height="41"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="54"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="368" height="41"/>
+                                <size key="minSize" width="320" height="54"/>
                                 <size key="maxSize" width="491" height="10000000"/>
                                 <attributedString key="textStorage">
-                                    <fragment content="The certificate fingerprint is presented in an uppercase format to mimic the official ">
+                                    <fragment content="Click the value shown next to the ">
                                         <attributes>
                                             <font key="NSFont" size="11" name="LucidaGrande"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content="OFTC documentation">
+                                    <fragment content="Certificate Fingerprint ">
                                         <attributes>
-                                            <font key="NSFont" size="11" name="LucidaGrande"/>
-                                            <url key="NSLink" string="http://www.oftc.net/NickServ/CertFP/#add-your-certificate-fingerprint-to-your-nick-in-nickserv"/>
+                                            <font key="NSFont" size="11" name="LucidaGrande-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content=". However, depending on the server being connected to, the case may vary.">
+                                    <fragment content="label, select all, copy it, then use the command &quot;">
+                                        <attributes>
+                                            <font key="NSFont" size="11" name="LucidaGrande"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="/msg NickServ cert add &lt;fingerprint>">
+                                        <attributes>
+                                            <font key="NSFont" size="11" name="LucidaGrande-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="&quot; to add it to NickServ services. It is important that you use the uppercase value.">
                                         <attributes>
                                             <font key="NSFont" size="11" name="LucidaGrande"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
@@ -1686,7 +1697,7 @@ your friends and ignore your enemies.</string>
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="368" height="41"/>
+                                <size key="minSize" width="320" height="54"/>
                                 <size key="maxSize" width="491" height="10000000"/>
                             </textView>
                         </subviews>
