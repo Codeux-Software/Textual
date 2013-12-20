@@ -2445,8 +2445,10 @@
 		}
 		case 5066: // Command: SSLCONTEXT
 		{
-			[self.socket openSSLCertificateTrustDialog];
-
+			if (self.socket.connectionUsesSSL && self.socket.isConnected) {
+				[self.socket openSSLCertificateTrustDialog];
+			}
+			
 			break;
 		}
 		case 5087: // Command: FAKERAWDATA
