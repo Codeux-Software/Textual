@@ -358,7 +358,7 @@
 
 "ShunReason" = "1d Shunned.";
 
-"SocketBadSSLCertificateErrorMessage" = "The server that you are connecting to has a SSL certificate that has either expired or is not trusted. Would you like to connect to the server regardless?";
+"SocketBadSSLCertificateErrorMessage" = "The server that you are connecting to has a SSL certificate that has either expired or is not trusted.\n\nSelect the \"Show Certificate\" button shown below for the option to disable the checking of this particular certificate.";
 "SocketBadSSLCertificateErrorTitle" = "Untrusted Connection";
 
 "SoundIsAlreadyMuted" = "Sound is already muted.";

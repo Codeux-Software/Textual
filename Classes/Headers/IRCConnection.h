@@ -95,7 +95,7 @@
 
 @interface NSObject (IRCConnectionDelegate)
 - (void)ircConnectionDidConnect:(IRCConnection *)sender;
-- (void)ircConnectionDidDisconnect:(IRCConnection *)sender;
+- (void)ircConnectionDidDisconnect:(IRCConnection *)sender withError:(NSError *)distcError;
 - (void)ircConnectionDidError:(NSString *)error;
 - (void)ircConnectionDidReceive:(NSString *)data;
 - (void)ircConnectionWillSend:(NSString *)line;

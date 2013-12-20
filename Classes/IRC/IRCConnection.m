@@ -224,34 +224,26 @@
 {
 	[self clearSendQueue];
 	
-	if ([self.client respondsToSelector:@selector(ircConnectionDidConnect:)]) {
-		[self.client ircConnectionDidConnect:self];
-	}
+	[self.client ircConnectionDidConnect:self];
 }
 
 - (void)tcpClientDidError:(NSString *)error
 {
 	[self clearSendQueue];
 	
-	if ([self.client respondsToSelector:@selector(ircConnectionDidError:)]) {
-		[self.client ircConnectionDidError:error];
-	}
+	[self.client ircConnectionDidError:error];
 }
 
-- (void)tcpClientDidDisconnect
+- (void)tcpClientDidDisconnect:(NSError *)distcError
 {
 	[self clearSendQueue];
 	
-	if ([self.client respondsToSelector:@selector(ircConnectionDidDisconnect:)]) {
-		[self.client ircConnectionDidDisconnect:self];
-	}
+	[self.client ircConnectionDidDisconnect:self withError:distcError];
 }
 
 - (void)tcpClientDidReceiveData:(NSString *)data
 {
-	if ([self.client respondsToSelector:@selector(ircConnectionDidReceive:)]) {
-		[self.client ircConnectionDidReceive:data];
-	}
+	[self.client ircConnectionDidReceive:data];
 }
 
 - (void)tcpClientDidSendData
