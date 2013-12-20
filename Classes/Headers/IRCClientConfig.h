@@ -96,6 +96,7 @@ typedef enum TXConnectionProxyType : NSInteger {
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSString *normalLeavingComment;
 @property (nonatomic, strong) NSString *sleepModeLeavingComment;
+@property (nonatomic, strong) NSData *identitySSLCertificate;
 
 @property (nonatomic, assign) BOOL serverPasswordIsSet;
 @property (nonatomic, assign) BOOL nicknamePasswordIsSet;

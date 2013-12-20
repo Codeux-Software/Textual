@@ -40,8 +40,10 @@
 	#import <WebKit/WebKit.h>
 	#import <Security/Security.h>
 	#import <SystemConfiguration/SystemConfiguration.h>
+
 	#import <SecurityInterface/SFCertificatePanel.h>
 	#import <SecurityInterface/SFCertificateTrustPanel.h>
+	#import <SecurityInterface/SFChooseIdentityPanel.h>
 
 	#import <BlowfishEncryption/BlowfishEncryption.h>
 	#import <SystemInformation/SystemInformation.h>

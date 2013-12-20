@@ -62,6 +62,7 @@
 @property (nonatomic, nweak) NSButton *prefersIPv6Check;
 @property (nonatomic, nweak) NSButton *pongTimerCheck;
 @property (nonatomic, nweak) NSButton *pongTimerDisconnectCheck;
+@property (nonatomic, nweak) NSButton *sslCertificateResetButton;
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 @property (nonatomic, nweak) NSButton *excludedFromCloudSyncingCheck;
@@ -89,6 +90,8 @@
 @property (nonatomic, nweak) NSTextField *usernameField;
 @property (nonatomic, nweak) NSTextField *normalLeavingCommentField;
 @property (nonatomic, nweak) NSTextField *sleepModeQuitMessageField;
+@property (nonatomic, nweak) NSTextField *sslCertificateCommonNameField;
+@property (nonatomic, nweak) NSTextField *sslCertificateFingerprintField;
 @property (nonatomic, uweak) NSTextView *loginCommandsField;
 @property (nonatomic, nweak) NSView *autojoinView;
 @property (nonatomic, nweak) NSView *commandsView;
@@ -104,6 +107,7 @@
 @property (nonatomic, nweak) NSView *highlightsView;
 @property (nonatomic, nweak) NSView *networkingView;
 @property (nonatomic, nweak) NSView *zncBouncerView;
+@property (nonatomic, nweak) NSView *sslCertificateView;
 @property (nonatomic, nweak) TVCListView *tabView;
 @property (nonatomic, nweak) TVCListView *channelTable;
 @property (nonatomic, nweak) TVCListView *ignoreTable;
@@ -139,6 +143,9 @@
 - (void)deleteIgnore:(id)sender;
 
 - (void)showAddIgnoreMenu:(id)sender;
+
+- (void)onSSLCertificateResetRequested:(id)sender;
+- (void)onSSLCertificateChangeRequested:(id)sender;
 @end
 
 @interface NSObject (TDCServerSheetDelegate)

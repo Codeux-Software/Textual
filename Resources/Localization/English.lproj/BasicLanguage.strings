@@ -343,12 +343,17 @@
 "ServerSheetMessageNavigationTreeItem" = "Messages";
 "ServerSheetMiscNavigationTreeItem" = "Miscellaneous";
 "ServerSheetProxyNavigationTreeItem" = "Proxy Server";
+"ServerSheetSSLCertificateNavigationTreeItem" = "SSL Certificate";
 "ServerSheetMentionsNavigationTreeItem" = "Mentions";
 "ServerSheetNetworkNavigationTreeItem" = "Network Socket";
 "ServerSheetZNCBouncerNavigationTreeItem" = "ZNC Bouncer";
 
 "ServerSheetAddressBookAdditionMenuAddIgnore" = "Add User Ignore Entry";
 "ServerSheetAddressBookAdditionMenuAddTracker" = "Add User Tracking Entry";
+
+"ServerSheetSSLCertificateViewNoCertificateSelected" = "No Certificate Selected :-(";
+"ServerSheetSSLCertificateViewSelectIdentityDialogTitle" = "Select Identity";
+"ServerSheetSSLCertificateViewSelectIdentityDialgMessage" = "Below is a list of certificates (also known as \"identities\" or an \"identity\") which Textual has found within the Mac OS keychain. Please select the certificate which you would like sent to the configured IRC server \"%@\" upon connection. ";
 
 "SetAsDefaultIRCClientPromptMessage" = "Textual is not set as the default IRC client for this copy of Mac OS X. Set it?";
 "SetAsDefaultIRCClientPromptTitle" = "Default IRC Client";

@@ -102,7 +102,7 @@
 
 #define BOOLReverseValue(b)						((b == YES) ? NO : YES)
 #define BOOLValueFromObject(b)					PointerIsNotEmpty(b)
-#define CFItemRefToID(s)						((id)(s))
+#define CFSafeRelease(s)						if ((s) != NULL) { CFRelease((s)); }
 #define NSDissimilarObjects(o,n)				((o) != (n))
 
 #define NSAssertReturn(c)						if ((c) == NO) { return; }

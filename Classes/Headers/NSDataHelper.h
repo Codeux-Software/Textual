@@ -40,4 +40,6 @@
 
 @interface NSData (TXDataHelper)
 - (BOOL)isValidUTF8;
+
+- (NSString *)sha1;
 @end

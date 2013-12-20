@@ -50,6 +50,8 @@
 		self.highlightList			= [NSMutableArray new];
 		self.channelList			= [NSMutableArray new];
 		self.ignoreList				= [NSMutableArray new];
+		
+		self.identitySSLCertificate = nil;
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 		self.excludedFromCloudSyncing = NO;
@@ -272,6 +274,8 @@
 		self.connectionPrefersIPv6  = NSDictionaryBOOLKeyValueCompare(dic, @"DNSResolverPrefersIPv6", self.connectionPrefersIPv6);
 		self.invisibleMode			= NSDictionaryBOOLKeyValueCompare(dic, @"setInvisibleOnConnect", self.invisibleMode);
 
+		self.identitySSLCertificate = [dic objectForKey:@"IdentitySSLCertificate"];
+		
 		[self.loginCommands addObjectsFromArray:[dic arrayForKey:@"onConnectCommands"]];
 
 		/* Channel list. */
@@ -361,7 +365,9 @@
     [dic setBool:self.sidebarItemExpanded			forKey:@"serverListItemIsExpanded"];
 
 	[dic setBool:self.zncIgnorePlaybackNotifications	forKey:@"ZNC —> Ignore Playback Buffer Highlights"];
-
+	
+	[dic safeSetObject:self.identitySSLCertificate		forKey:@"IdentitySSLCertificate"];
+	
 	[dic safeSetObject:self.alternateNicknames			forKey:@"identityAlternateNicknames"];
 	[dic safeSetObject:self.clientName					forKey:@"connectionName"];
 	[dic safeSetObject:self.itemUUID					forKey:@"uniqueIdentifier"];

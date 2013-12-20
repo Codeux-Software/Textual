@@ -108,6 +108,7 @@
 		[tabViewList addObject:@[@"FloodControl",					@"10"]];
 		[tabViewList addObject:@[@"Network",						@"11"]];
 		[tabViewList addObject:@[@"Proxy",							@"12"]];
+		[tabViewList addObject:@[@"SSLCertificate",					@"13"]];
 	}
 
 	self.tabViewList = tabViewList;
@@ -228,6 +229,7 @@
 	[self updateHighlightsPage];
 	[self updateChannelsPage];
 	[self updateIgnoresPage];
+	[self updateSSLCertificatePage];
 	[self toggleAdvancedEncodings:nil];
 
 	[self proxyTypeChanged:nil];
@@ -722,6 +724,127 @@
 	}
 }
 #endif
+
+#pragma mark -
+#pragma mark SSL Certificate
+
+- (void)updateSSLCertificatePage
+{
+	NSString *commonName = nil;
+	NSString *fingerprint = nil;
+	
+	if (self.config.identitySSLCertificate) {
+		SecKeychainItemRef cert;
+		
+		CFDataRef rawCertData = (__bridge CFDataRef)(self.config.identitySSLCertificate);
+		
+		OSStatus status = SecKeychainItemCopyFromPersistentReference(rawCertData, &cert);
+		
+		if (status == noErr) {
+			/* Get certificate name. */
+			CFStringRef commName;
+			
+			status = SecCertificateCopyCommonName((SecCertificateRef)cert, &commName);
+			
+			if (status == noErr){
+				commonName = (__bridge NSString *)(commName);
+				
+				CFRelease(commName);
+			}
+			
+			/* Get certificate fingerprint. */
+			CFDataRef data = SecCertificateCopyData((SecCertificateRef)cert);
+			
+			if (data) {
+				NSData *certNormData = [NSData dataWithBytes:CFDataGetBytePtr(data) length:CFDataGetLength(data)];
+				
+				fingerprint = [certNormData sha1];
+				
+				CFRelease(data);
+			}
+			
+			/* Cleaning. */
+			CFRelease(cert);
+		}
+	}
+	
+	BOOL hasNoCert = NSObjectIsEmpty(commonName);
+	
+	if (hasNoCert) {
+		self.sslCertificateCommonNameField.stringValue = TXTLS(@"ServerSheetSSLCertificateViewNoCertificateSelected");
+		self.sslCertificateFingerprintField.stringValue = TXTLS(@"ServerSheetSSLCertificateViewNoCertificateSelected");
+	} else {
+		self.sslCertificateCommonNameField.stringValue = commonName;
+		self.sslCertificateFingerprintField.stringValue = [fingerprint uppercaseString];
+	}
+	
+	[self.sslCertificateResetButton setEnabled:BOOLReverseValue(hasNoCert)];
+}
+
+- (void)onSSLCertificateResetRequested:(id)sender
+{
+	self.config.identitySSLCertificate = nil;
+	
+	[self updateSSLCertificatePage];
+}
+
+- (void)onSSLCertificateChangeRequested:(id)sender
+{
+	/* Before we can present a list of certificates to the end user, we must first
+	 query the keychain and build a list of all of them that exist in there first. */
+    CFArrayRef identities;
+	
+	NSDictionary *query = @{
+		(id)kSecClass		: (id)kSecClassIdentity,
+		(id)kSecMatchLimit	: (id)kSecMatchLimitAll,
+		(id)kSecReturnRef	: (id)kCFBooleanTrue
+	};
+	
+	OSStatus querystatus = SecItemCopyMatching((__bridge CFDictionaryRef)query, (CFTypeRef *)&identities);
+	
+	/* If we have a good list of identities, we present them. */
+	if (querystatus == noErr) {
+		SFChooseIdentityPanel *panel = [SFChooseIdentityPanel sharedChooseIdentityPanel];
+		
+		[panel setInformativeText:TXTFLS(@"ServerSheetSSLCertificateViewSelectIdentityDialgMessage", [self.serverNameField stringValue])];
+		[panel setAlternateButtonTitle:TXTLS(@"CancelButton")];
+		
+		NSInteger returnCode = [panel runModalForIdentities:(__bridge NSArray *)(identities) message:TXTLS(@"ServerSheetSSLCertificateViewSelectIdentityDialogTitle")];
+	
+		/* After the user has chose the identity, we have to update our config value
+		 here and not -save since -save has nothing to reference. */
+		if (returnCode == NSAlertDefaultReturn) {
+			SecIdentityRef identity = [panel identity];
+			
+			CFDataRef certData;
+			
+			if (identity == NULL) {
+				LogToConsole(@"We have no identity."); // Does that even make sense? What did they select?
+			} else {
+				SecCertificateRef identityCert;
+				
+				OSStatus copystatus = SecIdentityCopyCertificate(identity, &identityCert);
+				
+				if (copystatus == noErr) {
+					copystatus = SecKeychainItemCreatePersistentReference((SecKeychainItemRef)identityCert, &certData);
+				
+					if (copystatus == noErr) {
+						self.config.identitySSLCertificate = (__bridge NSData *)(certData);
+					}
+					
+					CFRelease(identityCert);
+					CFRelease(certData);
+				}
+			}
+		}
+	} else {
+		LogToConsole(@"Failed to build list of identities from keychain.");
+	}
+	
+	CFSafeRelease(identities);
+	
+	[self updateSSLCertificatePage];
+}
 
 #pragma mark -
 #pragma mark Highlight Actions
@@ -1221,6 +1344,7 @@
             case 11: { [self focusView:self.floodControlView	atRow:11]; break; }
 			case 12: { [self focusView:self.networkingView		atRow:12]; break; }
             case 13: { [self focusView:self.proxyServerView		atRow:13]; break; }
+			case 14: { [self focusView:self.sslCertificateView  atRow:14]; break; }
 
             default: { break; }
         }
