@@ -18,18 +18,14 @@
 	<string>chat.freenode.net</string>
 	<key>GameSurge</key>
 	<string>irc.gamesurge.net</string>
-	<key>German Elite</key>
+	<key>German-Elite</key>
 	<string>irc.german-elite.net</string>
 	<key>Interlinked</key>
 	<string>irc.interlinked.me</string>
 	<key>IRCHighWay</key>
 	<string>irc.irchighway.net</string>
-	<key>IRCNet</key>
-	<string>ircnet.choopa.net</string>
 	<key>IRCNode</key>
 	<string>irc.ircnode.org</string>
-	<key>Japoland</key>
-	<string>irc.japoland.net</string>
 	<key>Mibbit</key>
 	<string>irc.mibbit.com</string>
 	<key>Mozilla</key>
@@ -47,11 +43,9 @@
 	<key>Rizon</key>
 	<string>irc.rizon.net</string>
 	<key>Snoonet</key>
-	<string>irc.snoonet.com</string>
+	<string>irc.snoonet.org</string>
 	<key>Snyde</key>
 	<string>irc.snyde.net</string>
-	<key>Technoid-IRC</key>
-	<string>irc.technoid-irc.net</string>
 	<key>TinyCrab</key>
 	<string>irc.tinycrab.net</string>
 	<key>Thinkstack</key>
@@ -62,7 +56,5 @@
 	<string>irc.undernet.org</string>
 	<key>ValleyNode</key>
 	<string>irc.valleynode.net</string>
-	<key>Xeonet</key>
-	<string>irc.xeonet.es</string>
 </dict>
 </plist>
