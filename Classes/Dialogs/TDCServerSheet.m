@@ -642,6 +642,8 @@
 	[self.proxyAddressField	setEnabled:enabled];
 	[self.proxyUsernameField setEnabled:enabled];
 	[self.proxyPasswordField setEnabled:enabled];
+	
+	[self updateSSLCertificatePage];
 }
 
 - (void)toggleAdvancedEncodings:(id)sender
@@ -744,7 +746,16 @@
 	NSString *commonName = nil;
 	NSString *fingerprint = nil;
 	
-	if (self.config.identitySSLCertificate) {
+	/* Proxies are ran through an older socket engine which means SSL certificate
+	 validatin is not available when it is enabled. This is the check for that. */
+	NSInteger proxyTag = self.proxyTypeButton.selectedTag;
+	
+	BOOL proxyEnabled = NSDissimilarObjects(proxyTag, TXConnectionNoProxyType);
+	
+	[self.sslCertificateChangeCertButton setEnabled:BOOLReverseValue(proxyEnabled)];
+
+	/* Continue normal operations. */
+	if (self.config.identitySSLCertificate && proxyEnabled == NO) {
 		SecKeychainItemRef cert;
 		
 		CFDataRef rawCertData = (__bridge CFDataRef)(self.config.identitySSLCertificate);

@@ -63,6 +63,7 @@
 @property (nonatomic, nweak) NSButton *pongTimerCheck;
 @property (nonatomic, nweak) NSButton *pongTimerDisconnectCheck;
 @property (nonatomic, nweak) NSButton *sslCertificateResetButton;
+@property (nonatomic, nweak) NSButton *sslCertificateChangeCertButton;
 @property (nonatomic, nweak) NSButton *sslCertificateFingerprintCopyButton;
 @property (nonatomic, nweak) NSButton *validateServerSSLCertificateCheck;
 

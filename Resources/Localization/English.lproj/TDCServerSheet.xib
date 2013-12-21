@@ -67,6 +67,7 @@
                 <outlet property="serverPortField" destination="1541" id="2268"/>
                 <outlet property="sheet" destination="5" id="1059"/>
                 <outlet property="sleepModeQuitMessageField" destination="2294" id="2296"/>
+                <outlet property="sslCertificateChangeCertButton" destination="l36-PJ-JBU" id="j5d-8O-oZz"/>
                 <outlet property="sslCertificateCommonNameField" destination="nly-3d-FIq" id="lsx-0q-4fo"/>
                 <outlet property="sslCertificateFingerprintCopyButton" destination="758-2B-Ka3" id="Q1d-yx-R9D"/>
                 <outlet property="sslCertificateFingerprintField" destination="2ie-9H-xb2" id="R0d-n9-vwU"/>
@@ -1244,7 +1245,7 @@ your friends and ignore your enemies.</string>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" id="1896">
-                    <rect key="frame" x="137" y="213" width="44" height="17"/>
+                    <rect key="frame" x="137" y="239" width="44" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Proxy:" id="1921">
                         <font key="font" metaFont="system"/>
@@ -1253,7 +1254,7 @@ your friends and ignore your enemies.</string>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1897">
-                    <rect key="frame" x="109" y="155" width="72" height="17"/>
+                    <rect key="frame" x="109" y="181" width="72" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Hostname:" id="1920">
                         <font key="font" metaFont="system"/>
@@ -1262,7 +1263,7 @@ your friends and ignore your enemies.</string>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1898">
-                    <rect key="frame" x="143" y="130" width="38" height="17"/>
+                    <rect key="frame" x="143" y="156" width="38" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Port:" id="1919">
                         <font key="font" metaFont="system"/>
@@ -1271,7 +1272,7 @@ your friends and ignore your enemies.</string>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1899">
-                    <rect key="frame" x="113" y="73" width="68" height="17"/>
+                    <rect key="frame" x="113" y="99" width="68" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Password:" id="1918">
                         <font key="font" metaFont="system"/>
@@ -1280,7 +1281,7 @@ your friends and ignore your enemies.</string>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1900">
-                    <rect key="frame" x="110" y="98" width="71" height="17"/>
+                    <rect key="frame" x="110" y="124" width="71" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Username:" id="1917">
                         <font key="font" metaFont="system"/>
@@ -1289,7 +1290,7 @@ your friends and ignore your enemies.</string>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1901">
-                    <rect key="frame" x="186" y="153" width="219" height="22"/>
+                    <rect key="frame" x="186" y="179" width="219" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="proxy.example.com" drawsBackground="YES" id="1916">
                         <font key="font" metaFont="system"/>
@@ -1298,7 +1299,7 @@ your friends and ignore your enemies.</string>
                     </textFieldCell>
                 </textField>
                 <secureTextField verticalHuggingPriority="750" id="1902">
-                    <rect key="frame" x="186" y="71" width="219" height="22"/>
+                    <rect key="frame" x="186" y="97" width="219" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="1915">
                         <font key="font" metaFont="system"/>
@@ -1310,7 +1311,7 @@ your friends and ignore your enemies.</string>
                     </secureTextFieldCell>
                 </secureTextField>
                 <textField verticalHuggingPriority="750" id="1903">
-                    <rect key="frame" x="186" y="128" width="120" height="22"/>
+                    <rect key="frame" x="186" y="154" width="120" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="1080" drawsBackground="YES" id="1914">
                         <font key="font" metaFont="system"/>
@@ -1319,7 +1320,7 @@ your friends and ignore your enemies.</string>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1904">
-                    <rect key="frame" x="186" y="96" width="219" height="22"/>
+                    <rect key="frame" x="186" y="122" width="219" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="admin" drawsBackground="YES" id="1913">
                         <font key="font" metaFont="system"/>
@@ -1328,7 +1329,7 @@ your friends and ignore your enemies.</string>
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" id="1905">
-                    <rect key="frame" x="183" y="207" width="225" height="26"/>
+                    <rect key="frame" x="183" y="233" width="225" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="SOCKS 4 Proxy" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="4" imageScaling="proportionallyDown" inset="2" selectedItem="1911" id="1906">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1350,7 +1351,7 @@ your friends and ignore your enemies.</string>
                     </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" id="1978">
-                    <rect key="frame" x="205" y="192" width="201" height="14"/>
+                    <rect key="frame" x="205" y="218" width="201" height="14"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="** Reconnect required to apply changes." id="1979">
                         <font key="font" metaFont="system" size="10"/>
@@ -1358,6 +1359,44 @@ your friends and ignore your enemies.</string>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="alA-3X-RcV">
+                    <rect key="frame" x="87" y="20" width="343" height="42"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="V3j-AR-uLe">
+                        <rect key="frame" x="0.0" y="0.0" width="343" height="42"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" continuousSpellChecking="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" smartInsertDelete="YES" id="XaD-wA-JZA">
+                                <rect key="frame" x="0.0" y="0.0" width="343" height="42"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="minSize" width="343" height="42"/>
+                                <size key="maxSize" width="491" height="10000000"/>
+                                <attributedString key="textStorage">
+                                    <fragment>
+                                        <string key="content">By enabling a proxy, certain server-specific features may not be available. The most notable feature unavailable with a proxy enabled is NickServ identification using SSL certificates.</string>
+                                        <attributes>
+                                            <font key="NSFont" size="11" name="LucidaGrande"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="minSize" width="343" height="42"/>
+                                <size key="maxSize" width="491" height="10000000"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="xBK-fH-51B">
+                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="szP-jH-qOQ">
+                        <rect key="frame" x="-100" y="-100" width="16" height="34"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
             </subviews>
         </customView>
         <customView id="2078" userLabel="Flood Control">
