@@ -351,7 +351,7 @@
 "ServerSheetAddressBookAdditionMenuAddIgnore" = "Add User Ignore Entry";
 "ServerSheetAddressBookAdditionMenuAddTracker" = "Add User Tracking Entry";
 
-"ServerSheetSSLCertificateViewNoCertificateSelected" = "No Certificate Selected :-(";
+"ServerSheetSSLCertificateViewNoCertificateSelected" = "No Certificate Selected";
 "ServerSheetSSLCertificateViewSelectIdentityDialogTitle" = "Select Identity";
 "ServerSheetSSLCertificateViewSelectIdentityDialgMessage" = "Below is a list of certificates (also known as \"identities\" or an \"identity\") which Textual has found within the Mac OS keychain. Please select the certificate which you would like sent to the configured IRC server \"%@\" upon connection. ";
 
