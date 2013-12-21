@@ -63,6 +63,8 @@
 		self.performPongTimer				= YES;
 		self.performDisconnectOnPongTimer	= NO;
 		
+		self.validateServerSSLCertificate = YES;
+		
 		self.connectionUsesSSL	= NO;
 		self.nicknamePassword	= NSStringEmptyPlaceholder;
 		self.serverAddress      = NSStringEmptyPlaceholder;
@@ -263,6 +265,8 @@
 		self.autoSleepModeDisconnect	= NSDictionaryBOOLKeyValueCompare(dic, @"disconnectOnSleepMode", self.autoSleepModeDisconnect);
 		self.connectionUsesSSL			= NSDictionaryBOOLKeyValueCompare(dic, @"connectUsingSSL", self.connectionUsesSSL);
 
+		self.validateServerSSLCertificate = NSDictionaryBOOLKeyValueCompare(dic, @"validateServerSideSSLCertificate", self.validateServerSSLCertificate);
+		
 		self.performPongTimer				= NSDictionaryBOOLKeyValueCompare(dic, @"performPongTimer", self.performPongTimer);
 		self.performDisconnectOnPongTimer	= NSDictionaryBOOLKeyValueCompare(dic, @"performDisconnectOnPongTimer", self.performDisconnectOnPongTimer);
 
@@ -363,7 +367,8 @@
 	[dic setBool:self.invisibleMode					forKey:@"setInvisibleOnConnect"];
 	[dic setBool:self.connectionPrefersIPv6			forKey:@"DNSResolverPrefersIPv6"];
     [dic setBool:self.sidebarItemExpanded			forKey:@"serverListItemIsExpanded"];
-
+	[dic setBool:self.validateServerSSLCertificate	forKey:@"validateServerSideSSLCertificate"];
+	
 	[dic setBool:self.zncIgnorePlaybackNotifications	forKey:@"ZNC —> Ignore Playback Buffer Highlights"];
 	
 	[dic safeSetObject:self.identitySSLCertificate		forKey:@"IdentitySSLCertificate"];

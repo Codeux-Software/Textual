@@ -74,6 +74,7 @@
                 <outlet property="sslCertificateView" destination="Ti4-Q4-cYX" id="QPI-Iw-CIb"/>
                 <outlet property="tabView" destination="1444" id="1460"/>
                 <outlet property="usernameField" destination="1597" id="2267"/>
+                <outlet property="validateServerSSLCertificateCheck" destination="7Re-Oa-iNx" id="Ep0-zf-9f2"/>
                 <outlet property="zncBouncerView" destination="2542" id="2575"/>
                 <outlet property="zncIgnorePlaybackNotificationsCheck" destination="2580" id="2583"/>
             </connections>
@@ -352,10 +353,10 @@ Gw
                         </binding>
                         <binding destination="1we-Ps-Z9v" name="hidden2" keyPath="values.System —> Built with iCloud Support" previousBinding="scC-ZN-NMU" id="Yua-lO-a7l">
                             <dictionary key="options">
-                                <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
@@ -1573,6 +1574,21 @@ your friends and ignore your enemies.</string>
                     </buttonCell>
                     <connections>
                         <binding destination="2317" name="hidden" keyPath="values.Server Properties Window Sheet —> Show Advanced Settings" id="2538">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </button>
+                <button id="7Re-Oa-iNx">
+                    <rect key="frame" x="74" y="102" width="368" height="18"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <buttonCell key="cell" type="check" title="Refuse connection to servers with bad SSL certificates." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="dz6-nj-V0I">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="2317" name="hidden" keyPath="values.Server Properties Window Sheet —> Show Advanced Settings" id="S4i-vQ-nQ9">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
