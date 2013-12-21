@@ -3127,15 +3127,10 @@
 
 #pragma mark -
 
-- (void)ircBadSSLCertificateDisconnectCallback:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
-{
-	if (returnCode == NSAlertDefaultReturn) {
-		[self connect:IRCConnectBadSSLCertificateMode];
-	}
-}
-
 - (void)ircConnectionDidDisconnect:(IRCConnection *)sender withError:(NSError *)distcError;
 {
+	[self disconnect];
+	
 	if (self.disconnectType == IRCDisconnectBadSSLCertificateMode) {
 		[self cancelReconnect];
 		
@@ -3148,19 +3143,16 @@
 				[panel setAlternateButtonTitle:TXTLS(@"CancelButton")];
 				[panel setInformativeText:TXTLS(@"SocketBadSSLCertificateErrorMessage")];
 				
-				[panel beginSheetForWindow:self.masterController.mainWindow
-							 modalDelegate:self
-							didEndSelector:@selector(ircBadSSLCertificateDisconnectCallback:returnCode:contextInfo:)
-							   contextInfo:nil
-									 trust:trustRef
-								   message:TXTLS(@"SocketBadSSLCertificateErrorTitle")];
+				NSInteger returnCode = [panel runModalForTrust:trustRef message:TXTLS(@"SocketBadSSLCertificateErrorTitle")];
+				
+				if (returnCode == NSAlertDefaultReturn) {
+					[self connect:IRCConnectBadSSLCertificateMode];
+				}
 			
 				CFRelease(trustRef);
 			}
 		}
 	}
-
-	[self disconnect];
 }
 
 #pragma mark -
