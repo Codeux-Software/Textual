@@ -131,9 +131,12 @@
 - (NSString *)decodeURIFragement;
 
 - (BOOL)isHostmask;
-- (BOOL)isNickname;
+
 - (BOOL)isIPv6Address;
 - (BOOL)isModeChannelName;
+
+- (BOOL)isNickname;
+- (BOOL)isNickname:(IRCClient *)client; // Client to parse CHARSET or CASEMAPPING from.
 
 - (BOOL)isChannelName;
 - (BOOL)isChannelName:(IRCClient *)client; // Client to parse CHANTYPES from.
