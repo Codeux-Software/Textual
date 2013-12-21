@@ -299,6 +299,9 @@ Gw
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="useSSLCheckChanged:" target="-2" id="IhZ-Nw-b7g"/>
+                    </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="1546">
                     <rect key="frame" x="151" y="125" width="48" height="11"/>
@@ -354,10 +357,10 @@ Gw
                         </binding>
                         <binding destination="1we-Ps-Z9v" name="hidden2" keyPath="values.System —> Built with iCloud Support" previousBinding="scC-ZN-NMU" id="Yua-lO-a7l">
                             <dictionary key="options">
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>

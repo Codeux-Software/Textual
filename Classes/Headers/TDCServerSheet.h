@@ -147,6 +147,8 @@
 
 - (void)showAddIgnoreMenu:(id)sender;
 
+- (void)useSSLCheckChanged:(id)sender;
+
 - (void)onSSLCertificateResetRequested:(id)sender;
 - (void)onSSLCertificateChangeRequested:(id)sender;
 - (void)onSSLCertificateFingerprintCopyRequested:(id)sender;
