@@ -64,6 +64,7 @@
 @property (nonatomic, nweak) NSButton *pongTimerDisconnectCheck;
 @property (nonatomic, nweak) NSButton *sslCertificateResetButton;
 @property (nonatomic, nweak) NSButton *sslCertificateFingerprintCopyButton;
+@property (nonatomic, nweak) NSButton *validateServerSSLCertificateCheck;
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 @property (nonatomic, nweak) NSButton *excludedFromCloudSyncingCheck;

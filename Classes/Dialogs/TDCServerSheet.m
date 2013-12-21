@@ -340,6 +340,8 @@
 	self.pongTimerCheck.state				= self.config.performPongTimer;
 	self.pongTimerDisconnectCheck.state		= self.config.performDisconnectOnPongTimer;
 	
+	self.validateServerSSLCertificateCheck.state	= self.config.validateServerSSLCertificate;
+	
 	/* Identity */
 	if (NSObjectIsEmpty(self.config.nickname)) {
 		self.nicknameField.stringValue = [TPCPreferences defaultNickname];
@@ -430,6 +432,8 @@
 
 	self.config.performPongTimer				= self.pongTimerCheck.state;
 	self.config.performDisconnectOnPongTimer	= self.pongTimerDisconnectCheck.state;
+	
+	self.config.validateServerSSLCertificate	= self.validateServerSSLCertificateCheck.state;
 	
 	NSString *realhost = nil;
 	NSString *hostname = [self.serverAddressCombo.firstTokenStringValue cleanedServerHostmask];

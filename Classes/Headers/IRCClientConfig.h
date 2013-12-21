@@ -64,6 +64,7 @@ typedef enum TXConnectionProxyType : NSInteger {
 @property (nonatomic, assign) BOOL invisibleMode;
 @property (nonatomic, assign) BOOL outgoingFloodControl;
 @property (nonatomic, assign) BOOL sidebarItemExpanded;
+@property (nonatomic, assign) BOOL validateServerSSLCertificate;
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 @property (nonatomic, assign) BOOL excludedFromCloudSyncing;
