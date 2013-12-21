@@ -2959,13 +2959,13 @@ static NSThread *cfstreamThread;  // Used for CFStreams
 	return [NSError errorWithDomain:@"kCFStreamErrorDomainSSL" code:ssl_error userInfo:userInfo];
 }
 
-- (NSError *)sslError:(OSStatus)ssl_error peerCertificateDER:(NSData *)peerCertificateDER
+- (NSError *)sslError:(OSStatus)ssl_error peerCertificateTrustRef:(SecTrustRef)trustRef
 {
-	NSParameterAssert(peerCertificateDER != NULL);
+	NSParameterAssert(trustRef != NULL);
 
 	NSString *msg = @"Error code definition can be found in Apple's SecureTransport.h";
 	NSDictionary *userInfo = @{NSLocalizedRecoverySuggestionErrorKey : msg,
-							   @"peerCertificateDER" : peerCertificateDER};
+							   @"peerCertificateTrustRef" : (__bridge id)trustRef};
 	
 	return [NSError errorWithDomain:@"kCFStreamErrorDomainSSL" code:ssl_error userInfo:userInfo];
 }
@@ -6574,32 +6574,16 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	}
 	else
 	{
-		NSData *certData = nil;
-		
         SecTrustRef trust = NULL;
 		
         SSLCopyPeerTrust(sslContext, &trust);
 		
-        if (trust) {
-            CFIndex count = SecTrustGetCertificateCount(trust);
-			
-            if (count == 1) {
-                SecCertificateRef cert = SecTrustGetCertificateAtIndex(trust, 0);
-				
-                CFDataRef certDataRef = SecCertificateCopyData(cert);
-				
-                certData = CFBridgingRelease(certDataRef);
-            } else {
-                LogWarn(@"Got too many peer certificated (expected 1 got %d)", count);
-            }
-			
-            CFRelease(trust);
-        }
-		
         NSError *error;
 		
-        if (certData) {
-            error = [self sslError:status peerCertificateDER:certData];
+        if (trust) {
+            error = [self sslError:status peerCertificateTrustRef:trust];
+		
+			CFRelease(trust);
         } else {
             error = [self sslError:status];
         }

@@ -52,13 +52,12 @@
 	
 	settings[(id)kCFStreamSSLPeerName] = (id)kCFNull;
 	settings[(id)kCFStreamSSLIsServer] = (id)kCFBooleanFalse;
-	
-	settings[(id)kCFStreamSSLValidatesCertificateChain] = (id)kCFBooleanFalse;
 
 	if (client.connectType == IRCConnectBadSSLCertificateMode || client.config.validateServerSSLCertificate == NO) {
 		settings[(id)kCFStreamSSLAllowsAnyRoot] = (id)kCFBooleanTrue;
 		settings[(id)kCFStreamSSLAllowsExpiredRoots] = (id)kCFBooleanTrue;
 		settings[(id)kCFStreamSSLAllowsExpiredCertificates] = (id)kCFBooleanTrue;
+		settings[(id)kCFStreamSSLValidatesCertificateChain] = (id)kCFBooleanFalse;
 	}
 	
 	if (client.config.identitySSLCertificate) {
