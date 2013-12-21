@@ -3140,37 +3140,22 @@
 		[self cancelReconnect];
 		
 		if (distcError) {
-			NSData *peerCert = [distcError.userInfo objectForKey:@"peerCertificateDER"];
-			
-			if (NSObjectIsNotEmpty(peerCert)) {
-				SecCertificateRef certFromData = SecCertificateCreateWithData(NULL, (__bridge CFDataRef)(peerCert));
+			SecTrustRef trustRef = (__bridge SecTrustRef)([distcError.userInfo objectForKey:@"peerCertificateTrustRef"]);
+
+			if (trustRef) {
+				SFCertificateTrustPanel *panel = [SFCertificateTrustPanel sharedCertificateTrustPanel];
 				
-				if (certFromData) {
-					SecTrustRef trust;
-					
-					SecPolicyRef policy = SecPolicyCreateSSL(true, NULL);
-					
-					OSStatus err = SecTrustCreateWithCertificates(certFromData, policy, &trust);
-					
-					if (err == noErr) {
-						SFCertificateTrustPanel *panel = [SFCertificateTrustPanel sharedCertificateTrustPanel];
-						
-						[panel setAlternateButtonTitle:TXTLS(@"CancelButton")];
-						[panel setInformativeText:TXTLS(@"SocketBadSSLCertificateErrorMessage")];
-						
-						[panel beginSheetForWindow:self.masterController.mainWindow
-									 modalDelegate:self
-									didEndSelector:@selector(ircBadSSLCertificateDisconnectCallback:returnCode:contextInfo:)
-									   contextInfo:nil
-											 trust:trust
-										   message:TXTLS(@"SocketBadSSLCertificateErrorTitle")];
-						
-					}
-					
-					CFRelease(policy);
-					CFRelease(trust);
-					CFRelease(certFromData);
-				}
+				[panel setAlternateButtonTitle:TXTLS(@"CancelButton")];
+				[panel setInformativeText:TXTLS(@"SocketBadSSLCertificateErrorMessage")];
+				
+				[panel beginSheetForWindow:self.masterController.mainWindow
+							 modalDelegate:self
+							didEndSelector:@selector(ircBadSSLCertificateDisconnectCallback:returnCode:contextInfo:)
+							   contextInfo:nil
+									 trust:trustRef
+								   message:TXTLS(@"SocketBadSSLCertificateErrorTitle")];
+			
+				CFRelease(trustRef);
 			}
 		}
 	}
@@ -6490,13 +6475,13 @@
 	/* Continue connection… */
 	[self logFileWriteSessionBegin];
 
-	if (mode == IRCConnectReconnectMode || mode == IRCConnectBadSSLCertificateMode) {
+	if (mode == IRCConnectReconnectMode) {
 		self.connectionReconnectCount += 1;
 
 		NSString *reconnectCount = TXFormattedNumber(self.connectionReconnectCount);
 		
 		[self printDebugInformationToConsole:TXTFLS(@"IRCIsReconnectingWithAttemptCount", reconnectCount)];
-	} else if ( mode == IRCConnectBadSSLCertificateMode) {
+	} else if (mode == IRCConnectBadSSLCertificateMode) {
 		[self printDebugInformationToConsole:TXTLS(@"IRCIsReconnecting")];
 	} else if (mode == IRCConnectRetryMode) {
 		[self printDebugInformationToConsole:TXTLS(@"IRCIsRetryingConnection")];

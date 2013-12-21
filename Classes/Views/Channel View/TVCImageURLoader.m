@@ -157,6 +157,8 @@
 			CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, NULL);
 		
 			if (PointerIsEmpty(properties)) {
+				CFRelease(imageSource);
+				
 				return [self destroyConnectionRequest]; // Destroy and return for bad input.
 			}
 			
