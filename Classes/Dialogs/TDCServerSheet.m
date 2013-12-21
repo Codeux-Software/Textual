@@ -593,6 +593,23 @@
     [self.floodControlToolView setHidden:BOOLReverseValue(match)];
 }
 
+- (void)useSSLCheckChanged:(id)sender
+{
+	NSInteger serverPort = self.serverPortField.integerValue;
+	
+	BOOL useSSL = (self.connectionUsesSSLCheck.state == NSOnState);
+	
+	if (useSSL) {
+		if (serverPort == 6667) {
+			self.serverPortField.stringValue = @"6697";
+		}
+	} else {
+		if (serverPort == 6697) {
+			self.serverPortField.stringValue = @"6667";
+		}
+	}
+}
+
 #pragma mark -
 #pragma mark Actions
 
@@ -853,6 +870,13 @@
 				
 					if (copystatus == noErr) {
 						self.config.identitySSLCertificate = (__bridge NSData *)(certData);
+					
+						/* Force enable SSL. */
+						if (self.connectionUsesSSLCheck.state == NSOffState) {
+							self.connectionUsesSSLCheck.state = NSOnState;
+							
+							[self useSSLCheckChanged:nil];
+						}
 					}
 					
 					CFRelease(identityCert);
