@@ -54,6 +54,8 @@
 @property (nonatomic, strong) NSString *networkAddress;
 @property (nonatomic, strong) NSString *networkName;
 @property (nonatomic, strong) NSString *networkNameActual;
+@property (nonatomic, strong) NSString *networkCharset;
+@property (nonatomic, assign) BOOL networkUsesCodepageModule; /* See <http://wiki.inspircd.org/Modules/codepage> */
 @property (nonatomic, strong) NSDictionary *userModePrefixes;
 @property (nonatomic, readonly, strong) NSArray *cachedConfiguration;
 

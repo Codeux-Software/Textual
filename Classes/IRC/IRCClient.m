@@ -1317,7 +1317,7 @@
 			}
 
 			for (NSString *nick in nicks) {
-				if ([nick isNickname] && [nick isChannelName:self] == NO) {
+				if ([nick isNickname:self] && [nick isChannelName:self] == NO) {
 					[self send:uppercaseCommand, nick, targetChannelName, nil];
 				}
 			}
@@ -1979,7 +1979,7 @@
 					[self.worldController destroyChannel:selChannel];
 				}
 			} else {
-				if ([nickname isChannelName:self] == NO && [nickname isNickname]) {
+				if ([nickname isChannelName:self] == NO && [nickname isNickname:self]) {
 					IRCChannel *channel = [self findChannelOrCreate:nickname isPrivateMessage:YES];
 
 					[self.worldController select:channel];
@@ -3563,32 +3563,14 @@
 	}
 	else // The target is not a channel.
 	{
-		BOOL targetOurself = [target isEqualIgnoringCase:self.localNickname];
-
 		/* Is the sender a server? */
-		if ([sender isNickname] == NO) {
+		if ([sender isNickname:self] == NO) {
+			if ([text hasPrefix:@"*** Your codepage is '"] && [text hasSuffix:@"'"]) {
+				self.isupport.networkUsesCodepageModule = YES;
+			}
+			
 			[self print:nil type:type nick:nil text:text receivedAt:m.receivedAt command:m.command];
 		} else {
-			if (targetOurself == NO) {
-				// Who else would be the target if this is not a channel or server?…
-				
-				/* Try to match global notices which have a weird match like this example
-				 one brought up in #textual: 
-				 
-				 :Global!services@example.com NOTICE $*.example.com :Testing, please ignore. */
-				BOOL breakReturn = YES;
-				
-				if (type == TVCLogLineNoticeType) {
-					if ([target hasPrefix:@"$"]) {
-						breakReturn = NO;
-					}
-				}
-				
-				if (breakReturn) {
-					return;
-				}
-			}
-
 			/* Ignore message? */
 			if ([ignoreChecks ignoreNotices] && type == TVCLogLineNoticeType) {
 				return;
@@ -3643,43 +3625,30 @@
 							}
 						}
 					}
-				}
-
-				/* Post the notice. */
-				[self print:c
-					   type:type
-					   nick:sender
-					   text:text
-				  encrypted:isEncrypted
-				 receivedAt:m.receivedAt
-					command:m.command
-					message:m];
-
-				/* Nice to see you, NickServ. */
-				if ([sender isEqualIgnoringCase:@"NickServ"]) {
+				} else if ([sender isEqualIgnoringCase:@"NickServ"]) {
 					self.serverHasNickServ = YES;
-
+					
                     BOOL continueNickServScan = YES;
-
+					
 					NSString *cleanedText = text;
-
+					
 					if ([TPCPreferences removeAllFormatting] == NO) {
 						cleanedText = [cleanedText stripIRCEffects];
 					}
-
+					
 					if (self.isWaitingForNickServ == NO) {
 						/* Scan for messages telling us that we need to identify. */
 						for (NSString *token in [self nickServSupportedNeedIdentificationTokens]) {
 							if ([cleanedText containsIgnoringCase:token]) {
 								continueNickServScan = NO;
-
+								
 								NSAssertReturnLoopContinue(self.config.nicknamePasswordIsSet);
 								
 								NSString *IDMessage = [NSString stringWithFormat:@"IDENTIFY %@", self.config.nicknamePassword];
-
+								
 								if ([[self networkAddress] hasSuffix:@"dal.net"]) {
 									self.isWaitingForNickServ = YES;
-
+									
 									[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ@services.dal.net", IDMessage, nil];
 								} else {
 									if (self.CAPisIdentifiedWithSASL == NO) {
@@ -3688,12 +3657,12 @@
 										[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ", IDMessage, nil];
 									}
 								}
-
+								
 								break;
 							}
 						}
 					}
-
+					
                     /* Scan for messages telling us that we are now identified. */
                     if (continueNickServScan) {
                         for (NSString *token in [self nickServSupportedSuccessfulIdentificationTokens]) {
@@ -3710,6 +3679,16 @@
                         }
                     }
 				}
+				
+				/* Post the notice. */
+				[self print:c
+					   type:type
+					   nick:sender
+					   text:text
+				  encrypted:isEncrypted
+				 receivedAt:m.receivedAt
+					command:m.command
+					message:m];
 
 				/* Set the query as unread and inform Growl. */
 				[self setUnreadState:c];
@@ -7007,7 +6986,7 @@
 		if (g.notifyJoins) {
 			NSString *lname = [g trackingNickname];
 
-			if ([lname isNickname]) {
+			if ([lname isNickname:self]) {
 				if ([oldEntriesNicknames containsKeyIgnoringCase:lname]) {
 					newEntries[lname] = oldEntriesNicknames[lname];
 				} else {

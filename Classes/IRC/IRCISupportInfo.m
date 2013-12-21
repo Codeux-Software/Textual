@@ -67,6 +67,10 @@
 	self.networkNameActual = nil;
 
 	self.channelNamePrefixes = @"#";
+	
+	self.networkUsesCodepageModule = NO;
+	
+	self.networkCharset = @"ascii";
 
 	self.nicknameLength = 9; // Default for IRC protocol.
 	self.modesCount = TXMaximumNodesPerModeCommand;
@@ -124,6 +128,10 @@
 				self.networkName = TXTFLS(@"IRCServerNetworkName", value);
 			} else if ([vakey isEqualIgnoringCase:@"CHANTYPES"]) {
 				self.channelNamePrefixes = value;
+			} else if ([vakey isEqualIgnoringCase:@"CHARSET"] ||
+					   [vakey isEqualIgnoringCase:@"CASEMAPPING"])
+			{
+				self.networkCharset = value;
 			}
 		}
 

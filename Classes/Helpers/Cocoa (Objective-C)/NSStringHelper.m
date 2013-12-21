@@ -350,8 +350,23 @@
 
 - (BOOL)isNickname
 {
+	return ([self isNotEqualTo:@"*"] && [self contains:@"."] == NO);
+}
+
+- (BOOL)isNickname:(IRCClient *)client
+{
 	NSObjectIsEmptyAssertReturn(self, NO);
 
+	// If the case mapping is not ASCII, then we use lose checking with isNickname.
+	// This is more of a lazy-man fix for IRC servers that do custom things.
+	BOOL isAscii = ([client.isupport.networkCharset isEqualIgnoringCase:@"ascii"] &&
+					 client.isupport.networkUsesCodepageModule == NO);
+	
+	if (isAscii == NO) {
+		return [self isNickname];
+	}
+	
+	// If the case mapping is ASCII which is a lot of IRC, then it is better to be strict.
 	for (NSInteger i = 0; i < self.length; ++i) {
         NSString *c = [self stringCharacterAtIndex:i];
 
