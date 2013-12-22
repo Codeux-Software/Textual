@@ -1473,7 +1473,7 @@
 			}
 
 			//rawcaseCommand = uppercaseCommand; // Analyze: Never read.
-			lowercaseCommand = uppercaseCommand.lowercaseString;
+			//lowercaseCommand = uppercaseCommand.lowercaseString; // Analyze: Never read.
 
 			/* Destination. */
 			if (selChannel && type == TVCLogLineActionType && secretMsg == NO) {
@@ -3148,8 +3148,6 @@
 				if (returnCode == NSAlertDefaultReturn) {
 					[self connect:IRCConnectBadSSLCertificateMode];
 				}
-			
-				CFRelease(trustRef);
 			}
 		}
 	}

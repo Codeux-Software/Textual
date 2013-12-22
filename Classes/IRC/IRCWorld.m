@@ -1375,12 +1375,7 @@
 	[log.view clearSelection];
 
 	/* Some common defines. */
-	IRCChannel *previousChannel;
 	IRCChannel *newChannel;
-
-	if (self.previouslySelectedItem && [self.previouslySelectedItem isChannel]) {
-		previousChannel = (id)self.previouslySelectedItem;
-	}
 
 	if (self.selectedItem && [self.selectedItem isChannel]) {
 		newChannel = (id)self.selectedItem;

@@ -1011,8 +1011,6 @@
 
 	NSDictionary *inlineImageMatches;
 
-	NSArray *mentionedUsers;
-
 	// ---- //
 
 	NSMutableDictionary *inputDictionary = [NSMutableDictionary dictionary];
@@ -1043,8 +1041,6 @@
 	if (line.memberType == TVCLogMemberNormalType) {
 		highlighted = [outputDictionary boolForKey:@"wordMatchFound"];
 	}
-
-	mentionedUsers = [outputDictionary arrayForKey:@"mentionedUsers"];
 
 	inlineImageMatches = [outputDictionary dictionaryForKey:@"InlineImageURLMatches"];
 
