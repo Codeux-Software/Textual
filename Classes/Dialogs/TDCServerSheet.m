@@ -56,7 +56,7 @@
 		[self populateTabViewList];
 
 		/* Load our views. */
-		[NSBundle loadNibNamed:@"TDCServerSheet" owner:self];
+		[RZMainBundle() loadNibNamed:@"TDCServerSheet" owner:self topLevelObjects:nil];
 
 		/* Load the list of available IRC networks. */
 		NSString *slp = [RZMainBundle() pathForResource:@"IRCNetworks" ofType:@"plist"];

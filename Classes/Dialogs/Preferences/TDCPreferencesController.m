@@ -61,7 +61,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		[NSBundle loadNibNamed:@"TDCPreferences" owner:self];
+		[RZMainBundle() loadNibNamed:@"TDCPreferences" owner:self topLevelObjects:nil];
 	}
 
 	return self;

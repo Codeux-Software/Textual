@@ -39,22 +39,22 @@
 #import "TextualApplication.h"
 
 @interface TDCWelcomeSheet : TDCSheetBase <NSTextViewDelegate>
-@property (nonatomic, nweak) NSButton *autoConnectCheck;
-@property (nonatomic, nweak) NSButton *addChannelButton;
-@property (nonatomic, nweak) NSButton *deleteChannelButton;
-@property (nonatomic, nweak) NSTextField *nicknameField;
-@property (nonatomic, nweak) NSComboBox *serverAddressField;
-@property (nonatomic, nweak) TVCListView *channelTable;
+@property (nonatomic, nweak) IBOutlet NSButton *autoConnectCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *addChannelButton;
+@property (nonatomic, nweak) IBOutlet NSButton *deleteChannelButton;
+@property (nonatomic, nweak) IBOutlet NSTextField *nicknameField;
+@property (nonatomic, nweak) IBOutlet NSComboBox *serverAddressField;
+@property (nonatomic, nweak) IBOutlet TVCListView *channelTable;
 @property (nonatomic, strong) NSMutableArray *channelList;
 @property (nonatomic, strong) NSDictionary *serverList;
 
 - (void)show;
 - (void)close;
 
-- (void)onAddChannel:(id)sender;
-- (void)onDeleteChannel:(id)sender;
+- (IBAction)onAddChannel:(id)sender;
+- (IBAction)onDeleteChannel:(id)sender;
 
-- (void)onServerAddressChanged:(id)sender;
+- (IBAction)onServerAddressChanged:(id)sender;
 @end
 
 @interface NSObject (TDCWelcomeSheetDelegate)

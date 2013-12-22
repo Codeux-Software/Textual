@@ -38,8 +38,8 @@
 #import "TextualApplication.h"
 
 @interface TDChanBanSheet : TDCSheetBase
-@property (nonatomic, nweak) NSTextField *headerTitleField;
-@property (nonatomic, nweak) TVCListView *banTable;
+@property (nonatomic, nweak) IBOutlet NSTextField *headerTitleField;
+@property (nonatomic, nweak) IBOutlet TVCListView *banTable;
 @property (nonatomic, strong) NSMutableArray *banList;
 @property (nonatomic, strong) NSMutableArray *changeModeList;
 
@@ -48,8 +48,8 @@
 
 - (void)addBan:(NSString *)host tset:(NSString *)timeSet setby:(NSString *)owner;
 
-- (void)onUpdate:(id)sender;
-- (void)onRemoveBans:(id)sender;
+- (IBAction)onUpdate:(id)sender;
+- (IBAction)onRemoveBans:(id)sender;
 @end
 
 @interface NSObject (TDChanBanSheetDelegate)

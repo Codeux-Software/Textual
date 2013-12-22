@@ -41,9 +41,9 @@
 
 @interface TVCTextFormatterMenu : NSObject
 @property (nonatomic, uweak) TVCTextField *textField;
-@property (nonatomic, nweak) NSMenuItem *formatterMenu;
-@property (nonatomic, nweak) NSMenu *foregroundColorMenu;
-@property (nonatomic, nweak) NSMenu *backgroundColorMenu;
+@property (nonatomic, nweak) IBOutlet NSMenuItem *formatterMenu;
+@property (nonatomic, nweak) IBOutlet NSMenu *foregroundColorMenu;
+@property (nonatomic, nweak) IBOutlet NSMenu *backgroundColorMenu;
 @property (nonatomic, assign) BOOL sheetOverrideEnabled;
 
 - (void)enableSheetField:(TVCTextField *)field;
@@ -55,15 +55,15 @@
 - (BOOL)foregroundColorSet;
 - (BOOL)backgroundColorSet;
 
-- (void)insertBoldCharIntoTextBox:(id)sender;
-- (void)insertItalicCharIntoTextBox:(id)sender;
-- (void)insertUnderlineCharIntoTextBox:(id)sender;
-- (void)insertForegroundColorCharIntoTextBox:(id)sender;
-- (void)insertBackgroundColorCharIntoTextBox:(id)sender;
+- (IBAction)insertBoldCharIntoTextBox:(id)sender;
+- (IBAction)insertItalicCharIntoTextBox:(id)sender;
+- (IBAction)insertUnderlineCharIntoTextBox:(id)sender;
+- (IBAction)insertForegroundColorCharIntoTextBox:(id)sender;
+- (IBAction)insertBackgroundColorCharIntoTextBox:(id)sender;
 
-- (void)removeBoldCharFromTextBox:(id)sender;
-- (void)removeItalicCharFromTextBox:(id)sender;
-- (void)removeUnderlineCharFromTextBox:(id)sender;
-- (void)removeForegroundColorCharFromTextBox:(id)sender;
-- (void)removeBackgroundColorCharFromTextBox:(id)sender;
+- (IBAction)removeBoldCharFromTextBox:(id)sender;
+- (IBAction)removeItalicCharFromTextBox:(id)sender;
+- (IBAction)removeUnderlineCharFromTextBox:(id)sender;
+- (IBAction)removeForegroundColorCharFromTextBox:(id)sender;
+- (IBAction)removeBackgroundColorCharFromTextBox:(id)sender;
 @end

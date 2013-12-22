@@ -1,4 +1,4 @@
-/* ********************************************************************* 
+/* *********************************************************************
        _____        _               _    ___ ____   ____
       |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
        | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
@@ -44,77 +44,73 @@
 @property (nonatomic, strong) NSDictionary *serverList;
 @property (nonatomic, strong) NSDictionary *encodingList;
 @property (nonatomic, strong) IRCClientConfig *config;
-@property (nonatomic, nweak) NSButton *addChannelButton;
-@property (nonatomic, nweak) NSButton *addIgnoreButton;
-@property (nonatomic, nweak) NSButton *addHighlightButton;
-@property (nonatomic, nweak) NSButton *autoConnectCheck;
-@property (nonatomic, nweak) NSButton *autoDisconnectOnSleepCheck;
-@property (nonatomic, nweak) NSButton *autoReconnectCheck;
-@property (nonatomic, nweak) NSButton *connectionUsesSSLCheck;
-@property (nonatomic, nweak) NSButton *deleteChannelButton;
-@property (nonatomic, nweak) NSButton *deleteIgnoreButton;
-@property (nonatomic, nweak) NSButton *deleteHighlightButton;
-@property (nonatomic, nweak) NSButton *editChannelButton;
-@property (nonatomic, nweak) NSButton *editIgnoreButton;
-@property (nonatomic, nweak) NSButton *editHighlightButton;
-@property (nonatomic, nweak) NSButton *floodControlCheck;
-@property (nonatomic, nweak) NSButton *invisibleModeCheck;
-@property (nonatomic, nweak) NSButton *prefersIPv6Check;
-@property (nonatomic, nweak) NSButton *pongTimerCheck;
-@property (nonatomic, nweak) NSButton *pongTimerDisconnectCheck;
-@property (nonatomic, nweak) NSButton *sslCertificateResetButton;
-@property (nonatomic, nweak) NSButton *sslCertificateChangeCertButton;
-@property (nonatomic, nweak) NSButton *sslCertificateFingerprintCopyButton;
-@property (nonatomic, nweak) NSButton *validateServerSSLCertificateCheck;
-
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-@property (nonatomic, nweak) NSButton *excludedFromCloudSyncingCheck;
-#endif
-
-@property (nonatomic, nweak) NSButton *zncIgnorePlaybackNotificationsCheck;
-@property (nonatomic, nweak) NSComboBox *serverAddressCombo;
-@property (nonatomic, nweak) NSPopUpButton *fallbackEncodingButton;
-@property (nonatomic, nweak) NSPopUpButton *primaryEncodingButton;
-@property (nonatomic, nweak) NSPopUpButton *proxyTypeButton;
-@property (nonatomic, nweak) NSSlider *floodControlDelayTimerSlider;
-@property (nonatomic, nweak) NSSlider *floodControlMessageCountSlider;
-@property (nonatomic, nweak) NSTextField *alternateNicknamesField;
-@property (nonatomic, nweak) NSTextField *nicknameField;
-@property (nonatomic, nweak) NSTextField *awayNicknameField;
-@property (nonatomic, nweak) NSTextField *nicknamePasswordField;
-@property (nonatomic, nweak) NSTextField *proxyAddressField;
-@property (nonatomic, nweak) NSTextField *proxyPortField;
-@property (nonatomic, nweak) NSTextField *proxyPasswordField;
-@property (nonatomic, nweak) NSTextField *proxyUsernameField;
-@property (nonatomic, nweak) NSTextField *realnameField;
-@property (nonatomic, nweak) NSTextField *serverNameField;
-@property (nonatomic, nweak) NSTextField *serverPortField;
-@property (nonatomic, nweak) NSTextField *serverPasswordField;
-@property (nonatomic, nweak) NSTextField *usernameField;
-@property (nonatomic, nweak) NSTextField *normalLeavingCommentField;
-@property (nonatomic, nweak) NSTextField *sleepModeQuitMessageField;
-@property (nonatomic, nweak) NSTextField *sslCertificateCommonNameField;
-@property (nonatomic, nweak) NSTextField *sslCertificateFingerprintField;
-@property (nonatomic, uweak) NSTextView *loginCommandsField;
-@property (nonatomic, nweak) NSView *autojoinView;
-@property (nonatomic, nweak) NSView *commandsView;
-@property (nonatomic, nweak) NSView *contentView;
-@property (nonatomic, nweak) NSView *encodingView;
-@property (nonatomic, nweak) NSView *floodControlToolView;
-@property (nonatomic, nweak) NSView *floodControlView;
-@property (nonatomic, nweak) NSView *generalView;
-@property (nonatomic, nweak) NSView *identityView;
-@property (nonatomic, nweak) NSView *ignoresView;
-@property (nonatomic, nweak) NSView *messagesView;
-@property (nonatomic, nweak) NSView *proxyServerView;
-@property (nonatomic, nweak) NSView *highlightsView;
-@property (nonatomic, nweak) NSView *networkingView;
-@property (nonatomic, nweak) NSView *zncBouncerView;
-@property (nonatomic, nweak) NSView *sslCertificateView;
-@property (nonatomic, nweak) TVCListView *tabView;
-@property (nonatomic, nweak) TVCListView *channelTable;
-@property (nonatomic, nweak) TVCListView *ignoreTable;
-@property (nonatomic, nweak) TVCListView *highlightsTable;
+@property (nonatomic, nweak) IBOutlet NSButton *addChannelButton;
+@property (nonatomic, nweak) IBOutlet NSButton *addHighlightButton;
+@property (nonatomic, nweak) IBOutlet NSButton *addIgnoreButton;
+@property (nonatomic, nweak) IBOutlet NSButton *autoConnectCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *autoDisconnectOnSleepCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *autoReconnectCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *connectionUsesSSLCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *deleteChannelButton;
+@property (nonatomic, nweak) IBOutlet NSButton *deleteHighlightButton;
+@property (nonatomic, nweak) IBOutlet NSButton *deleteIgnoreButton;
+@property (nonatomic, nweak) IBOutlet NSButton *editChannelButton;
+@property (nonatomic, nweak) IBOutlet NSButton *editHighlightButton;
+@property (nonatomic, nweak) IBOutlet NSButton *editIgnoreButton;
+@property (nonatomic, nweak) IBOutlet NSButton *excludedFromCloudSyncingCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *floodControlCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *invisibleModeCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *pongTimerCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *pongTimerDisconnectCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *prefersIPv6Check;
+@property (nonatomic, nweak) IBOutlet NSButton *sslCertificateChangeCertButton;
+@property (nonatomic, nweak) IBOutlet NSButton *sslCertificateFingerprintCopyButton;
+@property (nonatomic, nweak) IBOutlet NSButton *sslCertificateResetButton;
+@property (nonatomic, nweak) IBOutlet NSButton *validateServerSSLCertificateCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *zncIgnorePlaybackNotificationsCheck;
+@property (nonatomic, nweak) IBOutlet NSComboBox *serverAddressCombo;
+@property (nonatomic, nweak) IBOutlet NSPopUpButton *fallbackEncodingButton;
+@property (nonatomic, nweak) IBOutlet NSPopUpButton *primaryEncodingButton;
+@property (nonatomic, nweak) IBOutlet NSPopUpButton *proxyTypeButton;
+@property (nonatomic, nweak) IBOutlet NSSlider *floodControlDelayTimerSlider;
+@property (nonatomic, nweak) IBOutlet NSSlider *floodControlMessageCountSlider;
+@property (nonatomic, nweak) IBOutlet NSTextField *alternateNicknamesField;
+@property (nonatomic, nweak) IBOutlet NSTextField *awayNicknameField;
+@property (nonatomic, nweak) IBOutlet NSTextField *nicknameField;
+@property (nonatomic, nweak) IBOutlet NSTextField *nicknamePasswordField;
+@property (nonatomic, nweak) IBOutlet NSTextField *normalLeavingCommentField;
+@property (nonatomic, nweak) IBOutlet NSTextField *proxyAddressField;
+@property (nonatomic, nweak) IBOutlet NSTextField *proxyPasswordField;
+@property (nonatomic, nweak) IBOutlet NSTextField *proxyPortField;
+@property (nonatomic, nweak) IBOutlet NSTextField *proxyUsernameField;
+@property (nonatomic, nweak) IBOutlet NSTextField *realnameField;
+@property (nonatomic, nweak) IBOutlet NSTextField *serverNameField;
+@property (nonatomic, nweak) IBOutlet NSTextField *serverPasswordField;
+@property (nonatomic, nweak) IBOutlet NSTextField *serverPortField;
+@property (nonatomic, nweak) IBOutlet NSTextField *sleepModeQuitMessageField;
+@property (nonatomic, nweak) IBOutlet NSTextField *sslCertificateCommonNameField;
+@property (nonatomic, nweak) IBOutlet NSTextField *sslCertificateFingerprintField;
+@property (nonatomic, nweak) IBOutlet NSTextField *usernameField;
+@property (nonatomic, nweak) IBOutlet NSView *contentView;
+@property (nonatomic, nweak) IBOutlet TVCListView *channelTable;
+@property (nonatomic, nweak) IBOutlet TVCListView *highlightsTable;
+@property (nonatomic, nweak) IBOutlet TVCListView *ignoreTable;
+@property (nonatomic, nweak) IBOutlet TVCListView *tabView;
+@property (nonatomic, strong) IBOutlet NSView *autojoinView;
+@property (nonatomic, strong) IBOutlet NSView *commandsView;
+@property (nonatomic, strong) IBOutlet NSView *encodingView;
+@property (nonatomic, strong) IBOutlet NSView *floodControlToolView;
+@property (nonatomic, strong) IBOutlet NSView *floodControlView;
+@property (nonatomic, strong) IBOutlet NSView *generalView;
+@property (nonatomic, strong) IBOutlet NSView *highlightsView;
+@property (nonatomic, strong) IBOutlet NSView *identityView;
+@property (nonatomic, strong) IBOutlet NSView *ignoresView;
+@property (nonatomic, strong) IBOutlet NSView *messagesView;
+@property (nonatomic, strong) IBOutlet NSView *networkingView;
+@property (nonatomic, strong) IBOutlet NSView *proxyServerView;
+@property (nonatomic, strong) IBOutlet NSView *sslCertificateView;
+@property (nonatomic, strong) IBOutlet NSView *zncBouncerView;
+@property (nonatomic, uweak) IBOutlet NSTextView *loginCommandsField;
 @property (nonatomic, strong) TDChannelSheet *channelSheet;
 @property (nonatomic, strong) TDCAddressBookSheet *ignoreSheet;
 @property (nonatomic, strong) TDCHighlightEntrySheet *highlightSheet;
@@ -123,35 +119,33 @@
 
 - (void)close;
 
-- (void)floodControlChanged:(id)sender;
-- (void)proxyTypeChanged:(id)sender;
-- (void)serverAddressChanged:(id)sender;
-- (void)toggleAdvancedEncodings:(id)sender;
-- (void)toggleAdvancedSettings:(id)sender;
+- (IBAction)floodControlChanged:(id)sender;
+- (IBAction)proxyTypeChanged:(id)sender;
+- (IBAction)serverAddressChanged:(id)sender;
+- (IBAction)toggleAdvancedEncodings:(id)sender;
+- (IBAction)toggleAdvancedSettings:(id)sender;
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-- (void)toggleCloudSyncExclusion:(id)sender;
-#endif
+- (IBAction)toggleCloudSyncExclusion:(id)sender;
 
-- (void)addChannel:(id)sender;
-- (void)editChannel:(id)sender;
-- (void)deleteChannel:(id)sender;
+- (IBAction)addChannel:(id)sender;
+- (IBAction)editChannel:(id)sender;
+- (IBAction)deleteChannel:(id)sender;
 
-- (void)addHighlight:(id)sender;
-- (void)editHighlight:(id)sender;
-- (void)deleteHighlight:(id)sender;
+- (IBAction)addHighlight:(id)sender;
+- (IBAction)editHighlight:(id)sender;
+- (IBAction)deleteHighlight:(id)sender;
 
-- (void)addIgnore:(id)sender;
-- (void)editIgnore:(id)sender;
-- (void)deleteIgnore:(id)sender;
+- (IBAction)addIgnore:(id)sender;
+- (IBAction)editIgnore:(id)sender;
+- (IBAction)deleteIgnore:(id)sender;
 
-- (void)showAddIgnoreMenu:(id)sender;
+- (IBAction)showAddIgnoreMenu:(id)sender;
 
-- (void)useSSLCheckChanged:(id)sender;
+- (IBAction)useSSLCheckChanged:(id)sender;
 
-- (void)onSSLCertificateResetRequested:(id)sender;
-- (void)onSSLCertificateChangeRequested:(id)sender;
-- (void)onSSLCertificateFingerprintCopyRequested:(id)sender;
+- (IBAction)onSSLCertificateResetRequested:(id)sender;
+- (IBAction)onSSLCertificateChangeRequested:(id)sender;
+- (IBAction)onSSLCertificateFingerprintCopyRequested:(id)sender;
 @end
 
 @interface NSObject (TDCServerSheetDelegate)

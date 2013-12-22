@@ -41,10 +41,10 @@
 @interface TDCListDialog : NSWindowController
 @property (nonatomic, uweak) id delegate;
 @property (nonatomic, nweak) IRCClient *client;
-@property (nonatomic, nweak) NSButton *updateButton;
-@property (nonatomic, nweak) NSSearchField *searchField;
-@property (nonatomic, nweak) NSTextField *networkNameField;
-@property (nonatomic, nweak) TVCListView *channelListTable;
+@property (nonatomic, nweak) IBOutlet NSButton *updateButton;
+@property (nonatomic, nweak) IBOutlet NSSearchField *searchField;
+@property (nonatomic, nweak) IBOutlet NSTextField *networkNameField;
+@property (nonatomic, nweak) IBOutlet TVCListView *channelListTable;
 @property (nonatomic, strong) NSMutableArray *unfilteredList;
 @property (nonatomic, strong) NSMutableArray *filteredList;
 @property (nonatomic, assign) NSComparisonResult sortOrder;
@@ -57,11 +57,11 @@
 
 - (void)addChannel:(NSString *)channel count:(NSInteger)count topic:(NSString *)topic;
 
-- (void)onClose:(id)sender;
+- (IBAction)onClose:(id)sender;
 
-- (void)onUpdate:(id)sender;
-- (void)onJoinChannels:(id)sender;
-- (void)onSearchFieldChange:(id)sender;
+- (IBAction)onUpdate:(id)sender;
+- (IBAction)onJoinChannels:(id)sender;
+- (IBAction)onSearchFieldChange:(id)sender;
 @end
 
 @interface NSObject (TXListDialogDelegate)

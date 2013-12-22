@@ -42,20 +42,20 @@
 @property (nonatomic, strong) IRCChannelMode *mode;
 @property (nonatomic, strong) NSString *clientID;
 @property (nonatomic, strong) NSString *channelID;
-@property (nonatomic, nweak) NSButton *sCheck;
-@property (nonatomic, nweak) NSButton *pCheck;
-@property (nonatomic, nweak) NSButton *nCheck;
-@property (nonatomic, nweak) NSButton *tCheck;
-@property (nonatomic, nweak) NSButton *iCheck;
-@property (nonatomic, nweak) NSButton *mCheck;
-@property (nonatomic, nweak) NSButton *kCheck;
-@property (nonatomic, nweak) NSButton *lCheck;
-@property (nonatomic, nweak) NSTextField *kText;
-@property (nonatomic, nweak) NSTextField *lText;
+@property (nonatomic, nweak) IBOutlet NSButton *sCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *pCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *nCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *tCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *iCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *mCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *kCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *lCheck;
+@property (nonatomic, nweak) IBOutlet NSTextField *kText;
+@property (nonatomic, nweak) IBOutlet NSTextField *lText;
 
 - (void)start;
 
-- (void)onChangeCheck:(id)sender;
+- (IBAction)onChangeCheck:(id)sender;
 @end
 
 @interface NSObject (TDCModeSheetDelegate)

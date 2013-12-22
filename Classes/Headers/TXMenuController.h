@@ -161,117 +161,121 @@
 - (BOOL)popWindowViewIfExists:(NSString *)windowClass;
 - (void)popWindowSheetIfExists;
 
-- (void)showPreferencesDialog:(id)sender;
+- (IBAction)showPreferencesDialog:(id)sender;
 
-- (void)paste:(id)sender;
+- (IBAction)paste:(id)sender;
 
-- (void)searchGoogle:(id)sender;
+- (IBAction)searchGoogle:(id)sender;
+
 - (void)closeWindow:(id)sender;
 - (void)copyLogAsHtml:(id)sender;
 
 - (void)populateNavgiationChannelList;
 
-- (void)toggleDeveloperMode:(id)sender;
-- (void)loadExtensionsIntoMemory:(id)sender;
-- (void)unloadExtensionsFromMemory:(id)sender;
-- (void)resetDoNotAskMePopupWarnings:(id)sender;
-- (void)openDefaultIRCClientDialog:(id)sender;
+- (IBAction)toggleDeveloperMode:(id)sender;
+- (IBAction)loadExtensionsIntoMemory:(id)sender;
+- (IBAction)unloadExtensionsFromMemory:(id)sender;
+- (IBAction)resetDoNotAskMePopupWarnings:(id)sender;
+- (IBAction)openDefaultIRCClientDialog:(id)sender;
 
-- (void)showHighlightSheet:(id)sender;
+- (IBAction)showHighlightSheet:(id)sender;
 
 - (void)showServerPropertyDialog:(IRCClient *)u withDefaultView:(NSString *)viewType andContext:(NSString *)context;
 
-- (void)markScrollback:(id)sender;
-- (void)clearScrollback:(id)sender;
-- (void)gotoScrollbackMarker:(id)sender;
-- (void)markAllAsRead:(id)sender;
-- (void)increaseLogFontSize:(id)sender;
-- (void)decreaseLogFontSize:(id)sender;
+- (IBAction)markScrollback:(id)sender;
+- (IBAction)clearScrollback:(id)sender;
+- (IBAction)gotoScrollbackMarker:(id)sender;
+- (IBAction)markAllAsRead:(id)sender;
+- (IBAction)increaseLogFontSize:(id)sender;
+- (IBAction)decreaseLogFontSize:(id)sender;
 
-- (void)connect:(id)sender;
-- (void)disconnect:(id)sender;
-- (void)cancelReconnection:(id)sender;
-- (void)showNicknameChangeDialog:(id)sender;
-- (void)showServerChannelList:(id)sender;
-- (void)addServer:(id)sender;
-- (void)copyServer:(id)sender;
-- (void)deleteServer:(id)sender;
-- (void)showServerPropertiesDialog:(id)sender;
+- (IBAction)connect:(id)sender;
+- (IBAction)disconnect:(id)sender;
+- (IBAction)cancelReconnection:(id)sender;
+- (IBAction)showNicknameChangeDialog:(id)sender;
+- (IBAction)showServerChannelList:(id)sender;
+- (IBAction)addServer:(id)sender;
+- (IBAction)copyServer:(id)sender;
+- (IBAction)deleteServer:(id)sender;
+- (IBAction)showServerPropertiesDialog:(id)sender;
 
-- (void)onNextHighlight:(id)sender;
-- (void)onPreviousHighlight:(id)sender;
+- (IBAction)onNextHighlight:(id)sender;
+- (IBAction)onPreviousHighlight:(id)sender;
 
-- (void)joinChannel:(id)sender;
-- (void)leaveChannel:(id)sender;
-- (void)showChannelTopicDialog:(id)sender;
-- (void)showChannelModeDialog:(id)sender;
-- (void)addChannel:(id)sender;
-- (void)deleteChannel:(id)sender;
-- (void)showChannelPropertiesDialog:(id)sender;
+- (IBAction)joinChannel:(id)sender;
+- (IBAction)leaveChannel:(id)sender;
+- (IBAction)showChannelTopicDialog:(id)sender;
+- (IBAction)showChannelModeDialog:(id)sender;
+- (IBAction)addChannel:(id)sender;
+- (IBAction)deleteChannel:(id)sender;
+- (IBAction)showChannelPropertiesDialog:(id)sender;
 
 - (void)memberListDoubleClicked:(id)sender;
-- (void)memberSendWhois:(id)sender;
-- (void)memberStartPrivateMessage:(id)sender;
-- (void)memberSendInvite:(id)sender;
-- (void)memberSendCTCPPing:(id)sender;
-- (void)memberSendCTCPTime:(id)sender;
-- (void)memberSendCTCPVersion:(id)sender;
-- (void)memberSendCTCPUserinfo:(id)sender;
-- (void)memberSendCTCPClientInfo:(id)sender;
-- (void)memberSendCTCPFinger:(id)sender;
-- (void)memberModeChangeOp:(id)sender;
-- (void)memberModeChangeDeop:(id)sender;
-- (void)memberModeChangeHalfop:(id)sender;
-- (void)memberModeChangeDehalfop:(id)sender;
-- (void)memberModeChangeVoice:(id)sender;
-- (void)memberModeChangeDevoice:(id)sender;
-- (void)memberKickFromChannel:(id)sender;
-- (void)memberBanFromServer:(id)sender;
-- (void)memberKickbanFromChannel:(id)sender;
-- (void)memberKillFromServer:(id)sender;
-- (void)memberGlineFromServer:(id)sender;
-- (void)memberShunFromServer:(id)sender;
 
-- (void)copyUrl:(id)sender;
+- (IBAction)memberSendWhois:(id)sender;
+- (IBAction)memberStartPrivateMessage:(id)sender;
+- (IBAction)memberSendInvite:(id)sender;
+- (IBAction)memberSendCTCPPing:(id)sender;
+- (IBAction)memberSendCTCPTime:(id)sender;
+- (IBAction)memberSendCTCPVersion:(id)sender;
+- (IBAction)memberSendCTCPUserinfo:(id)sender;
+- (IBAction)memberSendCTCPClientInfo:(id)sender;
+- (IBAction)memberSendCTCPFinger:(id)sender;
+- (IBAction)memberModeChangeOp:(id)sender;
+- (IBAction)memberModeChangeDeop:(id)sender;
+- (IBAction)memberModeChangeHalfop:(id)sender;
+- (IBAction)memberModeChangeDehalfop:(id)sender;
+- (IBAction)memberModeChangeVoice:(id)sender;
+- (IBAction)memberModeChangeDevoice:(id)sender;
+- (IBAction)memberKickFromChannel:(id)sender;
+- (IBAction)memberBanFromServer:(id)sender;
+- (IBAction)memberKickbanFromChannel:(id)sender;
+- (IBAction)memberKillFromServer:(id)sender;
+- (IBAction)memberGlineFromServer:(id)sender;
+- (IBAction)memberShunFromServer:(id)sender;
+
+- (IBAction)copyUrl:(id)sender;
+
 - (void)joinClickedChannel:(id)sender;
 
-- (void)toggleChannelModerationMode:(id)sender;
-- (void)toggleChannelInviteMode:(id)sender;
+- (IBAction)toggleChannelModerationMode:(id)sender;
+- (IBAction)toggleChannelInviteMode:(id)sender;
 
-- (void)sortChannelListNames:(id)sender;
-- (void)resetWindowSize:(id)sender;
-- (void)showMainWindow:(id)sender;
-- (void)showChannelIgnoreList:(id)sender;
-- (void)showAboutWindow:(id)sender;
-- (void)openLogLocation:(id)sender;
-- (void)openChannelLogs:(id)sender;
-- (void)connectToTextualHelpChannel:(id)sender;
-- (void)connectToTextualTestingChannel:(id)sender;
-- (void)showSetVhostPrompt:(id)sender;
-- (void)showFindPanel:(id)sender;
-- (void)showChannelBanList:(id)sender;
-- (void)showChannelBanExceptionList:(id)sender;
-- (void)showChannelInviteExceptionList:(id)sender;
+- (IBAction)sortChannelListNames:(id)sender;
+- (IBAction)resetWindowSize:(id)sender;
+- (IBAction)showMainWindow:(id)sender;
+- (IBAction)showChannelIgnoreList:(id)sender;
+- (IBAction)showAboutWindow:(id)sender;
+- (IBAction)openLogLocation:(id)sender;
+- (IBAction)openChannelLogs:(id)sender;
+- (IBAction)connectToTextualHelpChannel:(id)sender;
+- (IBAction)connectToTextualTestingChannel:(id)sender;
+- (IBAction)showSetVhostPrompt:(id)sender;
+- (IBAction)showFindPanel:(id)sender;
+- (IBAction)showChannelBanList:(id)sender;
+- (IBAction)showChannelBanExceptionList:(id)sender;
+- (IBAction)showChannelInviteExceptionList:(id)sender;
 
-- (void)commandWShortcutUsed:(id)sender;
-- (void)openHelpMenuLinkItem:(id)sender;
 - (void)openMacAppStoreDownloadPage:(id)sender;
-- (void)showAcknowledgments:(id)sender;
-- (void)showScriptingDocumentation:(id)sender;
-- (void)processNavigationItem:(id)sender;
-- (void)toggleFullscreenMode:(id)sender;
-- (void)centerMainWindow:(id)sender;
+
+- (IBAction)commandWShortcutUsed:(id)sender;
+- (IBAction)openHelpMenuLinkItem:(id)sender;
+- (IBAction)showAcknowledgments:(id)sender;
+- (IBAction)showScriptingDocumentation:(id)sender;
+- (IBAction)processNavigationItem:(id)sender;
+- (IBAction)toggleFullscreenMode:(id)sender;
+- (IBAction)centerMainWindow:(id)sender;
 
 - (void)forceReloadTheme:(id)sender;
 
-- (void)importPreferences:(id)sender;
-- (void)exportPreferences:(id)sender;
+- (IBAction)importPreferences:(id)sender;
+- (IBAction)exportPreferences:(id)sender;
 
-- (void)toggleServerListVisibility:(id)sender;
-- (void)toggleMemberListVisibility:(id)sender;
+- (IBAction)toggleServerListVisibility:(id)sender;
+- (IBAction)toggleMemberListVisibility:(id)sender;
 
-- (void)toggleMuteOnNotificationSounds:(id)sender;
-- (void)toggleMuteOnAllNotifcations:(id)sender;
+- (IBAction)toggleMuteOnNotificationSounds:(id)sender;
+- (IBAction)toggleMuteOnAllNotifcations:(id)sender;
 
 - (void)toggleMuteOnAllNotifcationsShortcut:(NSInteger)state;
 - (void)toggleMuteOnNotificationSoundsShortcut:(NSInteger)state;

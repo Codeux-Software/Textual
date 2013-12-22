@@ -38,7 +38,7 @@
 #import "TextualApplication.h"
 
 @interface TDCProgressInformationSheet : TDCSheetBase
-@property (nonatomic, nweak) NSProgressIndicator *progressIndicator;
+@property (nonatomic, nweak) IBOutlet NSProgressIndicator *progressIndicator;
 
 - (void)start;
 - (void)stop;

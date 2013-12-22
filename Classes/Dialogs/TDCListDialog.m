@@ -47,7 +47,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		[NSBundle loadNibNamed:@"TDCListDialog" owner:self];
+		[RZMainBundle() loadNibNamed:@"TDCListDialog" owner:self topLevelObjects:nil];
 
 		self.unfilteredList = [NSMutableArray new];
 

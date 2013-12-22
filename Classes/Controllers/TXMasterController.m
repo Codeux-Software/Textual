@@ -183,8 +183,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 	self.pluginManager = [THOPluginManager new];
 	[self.pluginManager loadPlugins];
-
-	[TPCResourceManager copyResourcesToCustomAddonsFolder];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)note
@@ -199,6 +197,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 		[self.worldController autoConnectAfterWakeup:NO];	
 	}
+	
+	[TPCResourceManager copyResourcesToCustomAddonsFolder];
 }
 
 - (void)systemTintChangedNotification:(NSNotification *)notification;
