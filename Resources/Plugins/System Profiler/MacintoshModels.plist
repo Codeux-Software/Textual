@@ -160,5 +160,7 @@
 	<string>MacBook Pro (13-inch Retina Late-2013)</string>
 	<key>MacBookPro11,2</key>
 	<string>MacBook Pro (15-inch Retina Late-2013)</string>
+	<key>MacPro6,1</key>
+	<string>Mac Pro (Late 2013)</string>	
 </dict>
 </plist>
