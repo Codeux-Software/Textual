@@ -45,7 +45,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		[NSBundle loadNibNamed:@"TDChannelSheet" owner:self];
+		[RZMainBundle() loadNibNamed:@"TDChannelSheet" owner:self topLevelObjects:nil];
 	}
 
 	return self;

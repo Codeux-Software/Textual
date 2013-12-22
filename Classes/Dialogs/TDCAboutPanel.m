@@ -42,7 +42,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		[NSBundle loadNibNamed:@"TDCAboutPanel" owner:self];
+		[RZMainBundle() loadNibNamed:@"TDCAboutPanel" owner:self topLevelObjects:nil];
 	}
 
 	return self;

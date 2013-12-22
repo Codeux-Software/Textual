@@ -41,96 +41,88 @@
 @interface TDCPreferencesController : NSWindowController
 @property (nonatomic, uweak) id delegate;
 @property (nonatomic, strong) NSMutableArray *alertSounds;
-@property (nonatomic, nweak) NSView *alertsView;
-@property (nonatomic, nweak) NSView *channelManagementView;
-@property (nonatomic, nweak) NSView *commandScopeSettingsView;
-@property (nonatomic, nweak) NSView *contentView;
-@property (nonatomic, nweak) NSView *experimentalSettingsView;
-@property (nonatomic, nweak) NSView *floodControlView;
-@property (nonatomic, nweak) NSView *generalView;
-@property (nonatomic, nweak) NSView *highlightView;
-@property (nonatomic, nweak) NSView *identityView;
-@property (nonatomic, nweak) NSView *installedAddonsView;
-@property (nonatomic, nweak) NSView *interfaceView;
-@property (nonatomic, nweak) NSView *logLocationView;
-@property (nonatomic, nweak) NSView *stylesView;
-@property (nonatomic, nweak) NSView *iCloudSyncView;
-@property (nonatomic, nweak) NSView *IRCopServicesView;
-@property (nonatomic, nweak) NSArrayController *excludeKeywordsArrayController;
-@property (nonatomic, nweak) NSArrayController *matchKeywordsArrayController;
-
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-@property (nonatomic, nweak) NSButton *syncPreferencesToTheCloudButton;
-#endif
-
-@property (nonatomic, nweak) NSButton *addExcludeKeywordButton;
-@property (nonatomic, nweak) NSButton *alertSpeakEventButton;
-@property (nonatomic, nweak) NSButton *alertDisableWhileAwayButton;
-@property (nonatomic, nweak) NSButton *alertBounceDockIconButton;
-@property (nonatomic, nweak) NSButton *alertPushNotificationButton;
-@property (nonatomic, nweak) NSButton *highlightNicknameButton;
-@property (nonatomic, nweak) NSButton *setAsDefaultIRCClientButton;
-@property (nonatomic, nweak) NSTextField *alertNotificationDestinationTextField;
-@property (nonatomic, nweak) NSMenu *installedScriptsMenu;
-@property (nonatomic, nweak) NSPopUpButton *alertSoundChoiceButton;
-@property (nonatomic, nweak) NSPopUpButton *alertTypeChoiceButton;
-@property (nonatomic, nweak) NSPopUpButton *themeSelectionButton;
-@property (nonatomic, nweak) NSPopUpButton *transcriptFolderButton;
-@property (nonatomic, nweak) NSTableView *excludeKeywordsTable;
-@property (nonatomic, nweak) NSTableView *installedScriptsTable;
-@property (nonatomic, nweak) NSTableView *keywordsTable;
-@property (nonatomic, nweak) NSToolbar *preferenceSelectToolbar;
-@property (nonatomic, nweak) NSToolbarItem *alertToolbarItem;
+@property (nonatomic, nweak) IBOutlet NSArrayController *excludeKeywordsArrayController;
+@property (nonatomic, nweak) IBOutlet NSArrayController *matchKeywordsArrayController;
+@property (nonatomic, nweak) IBOutlet NSButton *addExcludeKeywordButton;
+@property (nonatomic, nweak) IBOutlet NSButton *alertBounceDockIconButton;
+@property (nonatomic, nweak) IBOutlet NSButton *alertDisableWhileAwayButton;
+@property (nonatomic, nweak) IBOutlet NSButton *alertPushNotificationButton;
+@property (nonatomic, nweak) IBOutlet NSButton *alertSpeakEventButton;
+@property (nonatomic, nweak) IBOutlet NSButton *highlightNicknameButton;
+@property (nonatomic, nweak) IBOutlet NSButton *setAsDefaultIRCClientButton;
+@property (nonatomic, nweak) IBOutlet NSButton *syncPreferencesToTheCloudButton;
+@property (nonatomic, nweak) IBOutlet NSMenu *installedScriptsMenu;
+@property (nonatomic, nweak) IBOutlet NSPopUpButton *alertSoundChoiceButton;
+@property (nonatomic, nweak) IBOutlet NSPopUpButton *alertTypeChoiceButton;
+@property (nonatomic, nweak) IBOutlet NSPopUpButton *themeSelectionButton;
+@property (nonatomic, nweak) IBOutlet NSPopUpButton *transcriptFolderButton;
+@property (nonatomic, nweak) IBOutlet NSTableView *excludeKeywordsTable;
+@property (nonatomic, nweak) IBOutlet NSTableView *installedScriptsTable;
+@property (nonatomic, nweak) IBOutlet NSTableView *keywordsTable;
+@property (nonatomic, nweak) IBOutlet NSTextField *alertNotificationDestinationTextField;
+@property (nonatomic, nweak) IBOutlet NSToolbar *preferenceSelectToolbar;
+@property (nonatomic, nweak) IBOutlet NSToolbarItem *alertToolbarItem;
+@property (nonatomic, nweak) IBOutlet NSView *contentView;
+@property (nonatomic, strong) IBOutlet NSView *IRCopServicesView;
+@property (nonatomic, strong) IBOutlet NSView *alertsView;
+@property (nonatomic, strong) IBOutlet NSView *channelManagementView;
+@property (nonatomic, strong) IBOutlet NSView *commandScopeSettingsView;
+@property (nonatomic, strong) IBOutlet NSView *experimentalSettingsView;
+@property (nonatomic, strong) IBOutlet NSView *floodControlView;
+@property (nonatomic, strong) IBOutlet NSView *generalView;
+@property (nonatomic, strong) IBOutlet NSView *highlightView;
+@property (nonatomic, strong) IBOutlet NSView *iCloudSyncView;
+@property (nonatomic, strong) IBOutlet NSView *identityView;
+@property (nonatomic, strong) IBOutlet NSView *installedAddonsView;
+@property (nonatomic, strong) IBOutlet NSView *interfaceView;
+@property (nonatomic, strong) IBOutlet NSView *logLocationView;
+@property (nonatomic, strong) IBOutlet NSView *stylesView;
 @property (nonatomic, strong) TDCPreferencesScriptWrapper *scriptsController;
 
 - (void)show;
 
-- (void)onPrefPaneSelected:(id)sender;
+- (IBAction)onPrefPaneSelected:(id)sender;
 
-- (void)onAddKeyword:(id)sender;
-- (void)onAddExcludeKeyword:(id)sender;
+- (IBAction)onAddKeyword:(id)sender;
+- (IBAction)onAddExcludeKeyword:(id)sender;
 
-- (void)setTextualAsDefaultIRCClient:(id)sender;
+- (IBAction)setTextualAsDefaultIRCClient:(id)sender;
 
-- (void)onChangedAlertSpoken:(id)sender;
-- (void)onChangedAlertSound:(id)sender;
-- (void)onChangedAlertDisableWhileAway:(id)sender;
-- (void)onChangedAlertBounceDockIcon:(id)sender;
-- (void)onChangedAlertNotification:(id)sender;
-- (void)onChangedAlertType:(id)sender;
+- (IBAction)onChangedAlertSpoken:(id)sender;
+- (IBAction)onChangedAlertSound:(id)sender;
+- (IBAction)onChangedAlertDisableWhileAway:(id)sender;
+- (IBAction)onChangedAlertBounceDockIcon:(id)sender;
+- (IBAction)onChangedAlertNotification:(id)sender;
+- (IBAction)onChangedAlertType:(id)sender;
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-- (void)onChangedCloudSyncingServices:(id)sender;
-- (void)onChangedCloudSyncingServicesServersOnly:(id)sender;
+- (IBAction)onChangedCloudSyncingServices:(id)sender;
+- (IBAction)onChangedCloudSyncingServicesServersOnly:(id)sender;
 
-- (void)onOpenPathToCloudFolder:(id)sender;
-#endif
+- (IBAction)onOpenPathToCloudFolder:(id)sender;
 
-- (void)onChangedHighlightLogging:(id)sender;
-- (void)onChangedHighlightType:(id)sender;
-- (void)onChangedInputHistoryScheme:(id)sender;
-- (void)onChangedMainWindowSegmentedController:(id)sender;
-- (void)onChangedSidebarColorInversion:(id)sender;
-- (void)onChangedStyle:(id)sender;
-- (void)onChangedTheme:(id)sender;
-- (void)onChangedTranscriptFolder:(id)sender;
-- (void)onChangedTransparency:(id)sender;
-- (void)onChangedUserListModeColor:(id)sender;
-- (void)onChangedUserListModeSortOrder:(id)sender;
+- (IBAction)onChangedHighlightLogging:(id)sender;
+- (IBAction)onChangedHighlightType:(id)sender;
+- (IBAction)onChangedInputHistoryScheme:(id)sender;
+- (IBAction)onChangedMainWindowSegmentedController:(id)sender;
+- (IBAction)onChangedSidebarColorInversion:(id)sender;
+- (IBAction)onChangedStyle:(id)sender;
+- (IBAction)onChangedTheme:(id)sender;
+- (IBAction)onChangedTranscriptFolder:(id)sender;
+- (IBAction)onChangedTransparency:(id)sender;
+- (IBAction)onChangedUserListModeColor:(id)sender;
+- (IBAction)onChangedUserListModeSortOrder:(id)sender;
 
-- (void)onChangedMainInputTextFieldFontSize:(id)sender;
+- (IBAction)onChangedMainInputTextFieldFontSize:(id)sender;
 
-- (void)onResetUserListModeColorsToDefaults:(id)sender;
+- (IBAction)onResetUserListModeColorsToDefaults:(id)sender;
 
-- (void)onOpenPathToScripts:(id)sender;
-- (void)onOpenPathToThemes:(id)sender;
+- (IBAction)onOpenPathToScripts:(id)sender;
+- (IBAction)onOpenPathToThemes:(id)sender;
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-- (void)onPurgeOfCloudDataRequested:(id)sender;
-- (void)onPurgeOfCloudFilesRequested:(id)sender;
-#endif
+- (IBAction)onPurgeOfCloudDataRequested:(id)sender;
+- (IBAction)onPurgeOfCloudFilesRequested:(id)sender;
 
-- (void)onSelectNewFont:(id)sender;
+- (IBAction)onSelectNewFont:(id)sender;
 @end
 
 @interface NSObject (TDCPreferencesControllerDelegate)

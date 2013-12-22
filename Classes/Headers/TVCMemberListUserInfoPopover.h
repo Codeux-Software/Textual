@@ -38,9 +38,9 @@
 #import "TextualApplication.h"
 
 @interface TVCMemberListUserInfoPopover : NSPopover
-@property (nonatomic, nweak) NSTextField *nicknameField;
-@property (nonatomic, nweak) NSTextField *usernameField;
-@property (nonatomic, nweak) NSTextField *addressField;
-@property (nonatomic, nweak) NSTextField *privilegesField;
-@property (nonatomic, nweak) NSTextField *awayStatusField;
+@property (nonatomic, nweak) IBOutlet NSTextField *nicknameField;
+@property (nonatomic, nweak) IBOutlet NSTextField *usernameField;
+@property (nonatomic, nweak) IBOutlet NSTextField *addressField;
+@property (nonatomic, nweak) IBOutlet NSTextField *privilegesField;
+@property (nonatomic, nweak) IBOutlet NSTextField *awayStatusField;
 @end

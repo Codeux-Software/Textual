@@ -41,8 +41,8 @@
 @interface TDCInviteSheet : TDCSheetBase
 @property (nonatomic, strong) NSString *clientID;
 @property (nonatomic, strong) NSArray *nicknames;
-@property (nonatomic, nweak) NSTextField *headerTitleField;
-@property (nonatomic, nweak) NSPopUpButton *channelListPopup;
+@property (nonatomic, nweak) IBOutlet NSTextField *headerTitleField;
+@property (nonatomic, nweak) IBOutlet NSPopUpButton *channelListPopup;
 
 - (void)startWithChannels:(NSArray *)channels;
 @end

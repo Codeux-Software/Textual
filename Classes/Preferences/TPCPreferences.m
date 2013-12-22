@@ -490,9 +490,19 @@ NSString *IRCPublicCommandIndex(const char *key)
 + (NSString *)systemUnsupervisedScriptFolderPath
 {
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
-		NSURL *pathurl = [RZFileManager() URLForDirectory:NSApplicationScriptsDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:NULL];
+		static NSString *path = NSStringEmptyPlaceholder;
 		
-		return [pathurl path];
+		static dispatch_once_t onceToken;
+		
+		dispatch_once(&onceToken, ^{
+			@autoreleasepool {
+				NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationScriptsDirectory, NSUserDomainMask, YES);
+				
+				path = [searchArray[0] copy];
+			}
+		});
+		
+		return path;
 	}
 
 	/* We return an empty string instead of nil because

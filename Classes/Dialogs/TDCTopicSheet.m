@@ -43,7 +43,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		[NSBundle loadNibNamed:@"TDCTopicSheet" owner:self];
+		[RZMainBundle() loadNibNamed:@"TDCTopicSheet" owner:self topLevelObjects:nil];
 	}
 
 	return self;

@@ -43,7 +43,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		[NSBundle loadNibNamed:@"TDCInviteSheet" owner:self];
+		[RZMainBundle() loadNibNamed:@"TDCInviteSheet" owner:self topLevelObjects:nil];
 	}
 
 	return self;

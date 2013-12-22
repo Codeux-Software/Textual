@@ -42,7 +42,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		[NSBundle loadNibNamed:@"TDCAddressBookSheet" owner:self];
+		[RZMainBundle() loadNibNamed:@"TDCAddressBookSheet" owner:self topLevelObjects:nil];
 	}
 
 	return self;

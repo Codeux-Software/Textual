@@ -38,8 +38,8 @@
 #import "TextualApplication.h"
 
 @interface TDChanInviteExceptionSheet : TDCSheetBase
-@property (nonatomic, nweak) NSTextField *headerTitleField;
-@property (nonatomic, nweak) TVCListView *exceptionTable;
+@property (nonatomic, nweak) IBOutlet NSTextField *headerTitleField;
+@property (nonatomic, nweak) IBOutlet TVCListView *exceptionTable;
 @property (nonatomic, strong) NSMutableArray *changeModeList;
 @property (nonatomic, strong) NSMutableArray *exceptionList;
 
@@ -48,8 +48,8 @@
 
 - (void)addException:(NSString *)host tset:(NSString *)timeSet setby:(NSString *)owner;
 
-- (void)onUpdate:(id)sender;
-- (void)onRemoveExceptions:(id)sender;
+- (IBAction)onUpdate:(id)sender;
+- (IBAction)onRemoveExceptions:(id)sender;
 @end
 
 @interface NSObject (TXChanInviteExceptionSheetDelegate)

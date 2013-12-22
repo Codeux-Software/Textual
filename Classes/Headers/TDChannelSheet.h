@@ -43,27 +43,27 @@
 @property (nonatomic, strong) NSString *clientID;
 @property (nonatomic, strong) NSString *channelID;
 @property (nonatomic, strong) IRCChannelConfig *config;
-@property (nonatomic, nweak) NSTextField *channelNameField;
-@property (nonatomic, nweak) NSTextField *defaultModesField;
-@property (nonatomic, nweak) NSTextField *defaultTopicField;
-@property (nonatomic, nweak) NSTextField *encryptionKeyField;
-@property (nonatomic, nweak) NSTextField *secretKeyField;
-@property (nonatomic, nweak) NSButton *autoJoinCheck;
-@property (nonatomic, nweak) NSButton *ignoreHighlightsCheck;
-@property (nonatomic, nweak) NSButton *enableInlineImagesCheck;
-@property (nonatomic, nweak) NSButton *disableInlineImagesCheck;
-@property (nonatomic, nweak) NSButton *pushNotificationsCheck;
-@property (nonatomic, nweak) NSButton *showTreeBadgeCountCheck;
-@property (nonatomic, nweak) NSButton *JPQActivityCheck;
-@property (nonatomic, nweak) NSSegmentedControl *contentViewTabView;
-@property (nonatomic, nweak) NSView *contentView;
-@property (nonatomic, nweak) NSView *defaultsView;
-@property (nonatomic, nweak) NSView *encryptionView;
-@property (nonatomic, nweak) NSView *generalView;
+@property (nonatomic, nweak) IBOutlet NSButton *JPQActivityCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *autoJoinCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *disableInlineImagesCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *enableInlineImagesCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *ignoreHighlightsCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *pushNotificationsCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *showTreeBadgeCountCheck;
+@property (nonatomic, nweak) IBOutlet NSSegmentedControl *contentViewTabView;
+@property (nonatomic, nweak) IBOutlet NSTextField *channelNameField;
+@property (nonatomic, nweak) IBOutlet NSTextField *defaultModesField;
+@property (nonatomic, nweak) IBOutlet NSTextField *defaultTopicField;
+@property (nonatomic, nweak) IBOutlet NSTextField *encryptionKeyField;
+@property (nonatomic, nweak) IBOutlet NSTextField *secretKeyField;
+@property (nonatomic, nweak) IBOutlet NSView *contentView;
+@property (nonatomic, strong) IBOutlet NSView *defaultsView;
+@property (nonatomic, strong) IBOutlet NSView *encryptionView;
+@property (nonatomic, strong) IBOutlet NSView *generalView;
 
 - (void)start;
 
-- (void)onMenuBarItemChanged:(id)sender;
+- (IBAction)onMenuBarItemChanged:(id)sender;
 @end
 
 @interface NSObject (TDChannelSheetDelegate)

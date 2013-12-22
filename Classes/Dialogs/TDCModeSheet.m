@@ -43,7 +43,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		[NSBundle loadNibNamed:@"TDCModeSheet" owner:self];
+		[RZMainBundle() loadNibNamed:@"TDCModeSheet" owner:self topLevelObjects:nil];
 	}
 
 	return self;
