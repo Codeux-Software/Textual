@@ -457,6 +457,10 @@
 		4C68425916C5AF900005A59E /* AutoHyperlinks.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425516C5AF730005A59E /* AutoHyperlinks.framework */; };
 		4C68425A16C5AF900005A59E /* BlowfishEncryption.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425616C5AF730005A59E /* BlowfishEncryption.framework */; };
 		4C68425B16C5AF9B0005A59E /* Growl.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
+		4C69F49F18676C9400E6FCEC /* NSBundleHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C69F49E18676C9400E6FCEC /* NSBundleHelper.m */; };
+		4C69F4A018676C9400E6FCEC /* NSBundleHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C69F49E18676C9400E6FCEC /* NSBundleHelper.m */; };
+		4C69F4A618676CCE00E6FCEC /* NSBundleHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C69F4A518676CCE00E6FCEC /* NSBundleHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C69F4A718676CCE00E6FCEC /* NSBundleHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C69F4A518676CCE00E6FCEC /* NSBundleHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C6D4646180830D40098BA12 /* NSMenuHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6D4645180830D40098BA12 /* NSMenuHelper.m */; };
 		4C6D4647180830D40098BA12 /* NSMenuHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6D4645180830D40098BA12 /* NSMenuHelper.m */; };
 		4C6D464D180830E60098BA12 /* NSMenuHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6D464C180830E60098BA12 /* NSMenuHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1056,6 +1060,8 @@
 		4C63C6C31592FF4E009F1635 /* TPWTB_Interface@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "TPWTB_Interface@2x.tif"; sourceTree = "<group>"; };
 		4C68425516C5AF730005A59E /* AutoHyperlinks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AutoHyperlinks.framework; path = .tmp/SharedBuildProducts/AutoHyperlinks.framework; sourceTree = "<group>"; };
 		4C68425616C5AF730005A59E /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = .tmp/SharedBuildProducts/BlowfishEncryption.framework; sourceTree = "<group>"; };
+		4C69F49E18676C9400E6FCEC /* NSBundleHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBundleHelper.m; sourceTree = "<group>"; };
+		4C69F4A518676CCE00E6FCEC /* NSBundleHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBundleHelper.h; sourceTree = "<group>"; };
 		4C6D4645180830D40098BA12 /* NSMenuHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMenuHelper.m; sourceTree = "<group>"; };
 		4C6D464C180830E60098BA12 /* NSMenuHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMenuHelper.h; sourceTree = "<group>"; };
 		4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMainWindowSegmentedControl.m; sourceTree = "<group>"; };
@@ -1951,6 +1957,7 @@
 				4C8AF543158E99520026668C /* IRCUser.h */,
 				4C8AF544158E99520026668C /* IRCWorld.h */,
 				4C8AF546158E99520026668C /* NSArrayHelper.h */,
+				4C69F4A518676CCE00E6FCEC /* NSBundleHelper.h */,
 				4C0C720C1742C444000F82C4 /* NSByteCountFormatterHelper.h */,
 				4C8AF548158E99520026668C /* NSColorHelper.h */,
 				4C529E1D17AEFE44009BA0B3 /* NSDataHelper.h */,
@@ -2055,6 +2062,7 @@
 			isa = PBXGroup;
 			children = (
 				4C8AF59A158E99520026668C /* NSArrayHelper.m */,
+				4C69F49E18676C9400E6FCEC /* NSBundleHelper.m */,
 				4C0C72041742C431000F82C4 /* NSByteCountFormatterHelper.m */,
 				4C8AF59C158E99520026668C /* NSColorHelper.m */,
 				4C529E1617AEFE17009BA0B3 /* NSDataHelper.m */,
@@ -2632,6 +2640,7 @@
 				4C17385F18197F800099EEC2 /* TPCPreferencesCloudSync.h in Headers */,
 				4CABE85B1840615A002FE4B8 /* TDCProgressInformationSheet.h in Headers */,
 				4C6D464E180830E60098BA12 /* NSMenuHelper.h in Headers */,
+				4C69F4A718676CCE00E6FCEC /* NSBundleHelper.h in Headers */,
 				4C83D8F7184200A100BCC0E1 /* NSFileManagerHelper.h in Headers */,
 				4C0C720E1742C444000F82C4 /* NSByteCountFormatterHelper.h in Headers */,
 				4CC70204171E1CB400BDFAE0 /* BuildConfig.h in Headers */,
@@ -2783,6 +2792,7 @@
 				4C6D464D180830E60098BA12 /* NSMenuHelper.h in Headers */,
 				4CABE85A1840615A002FE4B8 /* TDCProgressInformationSheet.h in Headers */,
 				4C83D8F6184200A100BCC0E1 /* NSFileManagerHelper.h in Headers */,
+				4C69F4A618676CCE00E6FCEC /* NSBundleHelper.h in Headers */,
 				4C5E4D1818260131001F3E6B /* TVCLogControllerHistoricLogFile.h in Headers */,
 				4CC70203171E1CB400BDFAE0 /* BuildConfig.h in Headers */,
 			);
@@ -3219,6 +3229,7 @@
 				4C04450416F1603B00EBB665 /* TDCListDialog.m in Sources */,
 				4C04450516F1603B00EBB665 /* TDCModeSheet.m in Sources */,
 				4C04450616F1603B00EBB665 /* TDCNickSheet.m in Sources */,
+				4C69F4A018676C9400E6FCEC /* NSBundleHelper.m in Sources */,
 				4C04450716F1603B00EBB665 /* TDCServerSheet.m in Sources */,
 				4C04450816F1603B00EBB665 /* TDCSheetBase.m in Sources */,
 				4C04450916F1603B00EBB665 /* TDCTopicSheet.m in Sources */,
@@ -3350,6 +3361,7 @@
 				4C8AF616158E99520026668C /* TDCInviteSheet.m in Sources */,
 				4C8AF617158E99520026668C /* TDCListDialog.m in Sources */,
 				4C8AF618158E99520026668C /* TDCModeSheet.m in Sources */,
+				4C69F49F18676C9400E6FCEC /* NSBundleHelper.m in Sources */,
 				4C8AF619158E99520026668C /* TDCNickSheet.m in Sources */,
 				4C8AF61A158E99520026668C /* TDCServerSheet.m in Sources */,
 				4C8AF61B158E99520026668C /* TDCSheetBase.m in Sources */,

@@ -37,27 +37,6 @@
 
 #import "TextualApplication.h"
 
-@implementation TDCProgressInformationSheet
-
-- (id)init
-{
-	if ((self = [super init])) {
-		[RZMainBundle() loadCustomNibNamed:@"TDCProgressInformationSheet" owner:self topLevelObjects:nil];
-	}
-	
-	return self;
-}
-
-- (void)start
-{
-	[self startSheet];
-	
-	[self.progressIndicator startAnimation:nil];
-}
-
-- (void)stop
-{
-	[self endSheet];
-}
-
+@interface NSBundle (TXBundleHelper)
+- (BOOL)loadCustomNibNamed:(NSString *)nibName owner:(id)owner topLevelObjects:(NSArray *__autoreleasing *)topLevelObjects;
 @end

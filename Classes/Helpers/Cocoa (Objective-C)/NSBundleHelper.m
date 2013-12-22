@@ -37,27 +37,17 @@
 
 #import "TextualApplication.h"
 
-@implementation TDCProgressInformationSheet
+@implementation NSBundle (TXBundleHelper)
 
-- (id)init
+- (BOOL)loadCustomNibNamed:(NSString *)nibName owner:(id)owner topLevelObjects:(NSArray *__autoreleasing *)topLevelObjects;
 {
-	if ((self = [super init])) {
-		[RZMainBundle() loadCustomNibNamed:@"TDCProgressInformationSheet" owner:self topLevelObjects:nil];
+	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+		return [self loadNibNamed:nibName owner:owner topLevelObjects:topLevelObjects];
+	} else {
+		NSDictionary *objects = @{NSNibOwner : owner};
+		
+		return [self loadNibFile:nibName externalNameTable:objects withZone:nil];
 	}
-	
-	return self;
-}
-
-- (void)start
-{
-	[self startSheet];
-	
-	[self.progressIndicator startAnimation:nil];
-}
-
-- (void)stop
-{
-	[self endSheet];
 }
 
 @end

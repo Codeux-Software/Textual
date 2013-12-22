@@ -55,7 +55,7 @@
 			 defaultUserInput:(NSString *)userInputText
 			  completionBlock:(void (^)(BOOL defaultButtonClicked, NSString *resultString))callbackBlock;
 {
-	[RZMainBundle() loadNibNamed:@"TVCInputPromptDialog" owner:self topLevelObjects:nil];
+	[RZMainBundle() loadCustomNibNamed:@"TVCInputPromptDialog" owner:self topLevelObjects:nil];
 
 	if (NSObjectIsNotEmpty(userInputText)) {
 		[self.informationalInput setStringValue:userInputText];
