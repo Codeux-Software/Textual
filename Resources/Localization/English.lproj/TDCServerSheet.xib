@@ -277,7 +277,7 @@ Gw
                 <textField verticalHuggingPriority="750" id="1543" customClass="NSSecureTextField">
                     <rect key="frame" x="204" y="130" width="188" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Server Password (ZNC)" drawsBackground="YES" id="1554">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Server Password" drawsBackground="YES" id="1554">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -350,17 +350,17 @@ Gw
                     </buttonCell>
                     <connections>
                         <action selector="toggleCloudSyncExclusion:" target="-2" id="LNF-gc-rmb"/>
-                        <binding destination="2317" name="hidden2" keyPath="values.System —> Built with iCloud Support" previousBinding="lla-b6-G3l" id="Lcn-CW-XKA">
+                        <binding destination="2317" name="hidden" keyPath="values.SyncPreferencesToTheCloud" id="lla-b6-G3l">
                             <dictionary key="options">
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSNullPlaceholder" value="-1"/>
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
-                        <binding destination="2317" name="hidden" keyPath="values.SyncPreferencesToTheCloud" id="lla-b6-G3l">
+                        <binding destination="2317" name="hidden2" keyPath="values.System —> Built with iCloud Support" previousBinding="lla-b6-G3l" id="Lcn-CW-XKA">
                             <dictionary key="options">
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
