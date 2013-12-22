@@ -3343,6 +3343,7 @@
 {
     return @[
             @"now recognized",
+			@"automatically identified",
             @"already identified",
             @"successfully identified",
             @"you are already logged in",
