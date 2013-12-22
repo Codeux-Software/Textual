@@ -42,7 +42,7 @@
 - (id)init
 {
     if ((self = [super init])) {
-		[RZMainBundle() loadNibNamed:@"TDChanBanSheet" owner:self topLevelObjects:nil];
+		[RZMainBundle() loadCustomNibNamed:@"TDChanBanSheet" owner:self topLevelObjects:nil];
 		
 		self.banList = [NSMutableArray new];
         self.changeModeList = [NSMutableArray new];

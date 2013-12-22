@@ -50,7 +50,7 @@
 /* Allocation & Deallocation */
 - (void)pluginLoadedIntoMemory:(IRCWorld *)world
 {
-	[NSBundle loadNibNamed:@"TPISystemProfiler" owner:self];
+	[TPIBundleFromClass() loadCustomNibNamed:@"TPISystemProfiler" owner:self topLevelObjects:nil];
 }
 
 #pragma mark -
