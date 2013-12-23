@@ -47,27 +47,19 @@
 - (void)loadBundle:(NSBundle *)bundle
 {
 	/* Only load once. */
-	if (PointerIsNotEmpty(self.primaryClass)) {
-		return;
-	}
+	PointerIsNotEmptyAssert(self.primaryClass);
 
 	/* Initialize the principal class. */
 	Class principalClass = [bundle principalClass];
 
-	if (PointerIsEmpty(principalClass)) {
-		return;
-	}
+	PointerIsEmptyAssert(principalClass);
 
 	_primaryClass = [principalClass new];
 
 	/* Say hello! */
 	if ([self.primaryClass respondsToSelector:@selector(pluginLoadedIntoMemory:)])
 	{
-		TXMasterController *master = TPCPreferences.masterController;
-
-		if (master) {
-			[self.primaryClass pluginLoadedIntoMemory:master.world];
-		}
+		[self.primaryClass pluginLoadedIntoMemory:[self worldController]];
 	}
 	
 	/* Process server output suppression rules. */
