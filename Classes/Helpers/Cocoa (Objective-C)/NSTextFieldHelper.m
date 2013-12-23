@@ -48,7 +48,7 @@
 
 - (NSString *)firstTokenStringValue
 {
-	NSString *value = self.trimmedStringValue;
+	NSString *value = [self trimmedStringValue];
 
 	NSInteger spacePosition = [value stringPosition:NSStringWhitespacePlaceholder];
 

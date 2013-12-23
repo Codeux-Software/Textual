@@ -694,6 +694,26 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				if (r.location == NSNotFound) {
 					break;
 				}
+				
+				NSInteger prev = (r.location - 1);
+				
+				if (0 <= prev && prev < length) {
+					UniChar c = [body characterAtIndex:prev];
+					
+					if (TXStringIsWordLetter(c)) {
+						break;
+					}
+				}
+				
+				NSInteger next = NSMaxRange(r);
+				
+				if (next < length) {
+					UniChar c = [body characterAtIndex:next];
+					
+					if (TXStringIsWordLetter(c)) {
+						break;
+					}
+				}
 
 				if (isClear(attrBuf, _rendererURLAttribute, r.location, r.length)) {
 					setFlag(attrBuf, _rendererChannelNameAttribute, r.location, r.length);

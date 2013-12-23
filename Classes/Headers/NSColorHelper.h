@@ -76,10 +76,3 @@
 
 + (NSColor *)internalCalibratedRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
 @end
-
-/* Gradients are color related so just slap this in here… */
-@interface NSGradient (TXGradientHelper)
-+ (NSGradient *)sourceListBackgroundGradientColor;
-
-+ (NSGradient *)gradientWithStartingColor:(NSColor *)startingColor endingColor:(NSColor *)endingColor;
-@end

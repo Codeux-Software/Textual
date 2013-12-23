@@ -55,7 +55,7 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 
 - (BOOL)boolAtIndex:(NSInteger)n
 {
-	id obj = [self safeObjectAtIndex:n];
+	id obj = self[n];
 	
 	if ([obj respondsToSelector:@selector(boolValue)]) {
 		return [obj boolValue];
@@ -66,7 +66,7 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 
 - (NSArray *)arrayAtIndex:(NSInteger)n
 {
-	id obj = [self safeObjectAtIndex:n];
+	id obj = self[n];
 	
 	if ([obj isKindOfClass:[NSArray class]]) {
 		return obj;
@@ -77,7 +77,7 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 
 - (NSString *)stringAtIndex:(NSInteger)n
 {
-	id obj = [self safeObjectAtIndex:n];
+	id obj = self[n];
 	
 	if ([obj isKindOfClass:[NSString class]]) {
 		return obj;
@@ -88,7 +88,7 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 
 - (NSDictionary *)dictionaryAtIndex:(NSInteger)n
 {
-	id obj = [self safeObjectAtIndex:n];
+	id obj = self[n];
 	
 	if ([obj isKindOfClass:[NSDictionary class]]) {
 		return obj;
@@ -99,7 +99,7 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 
 - (NSInteger)integerAtIndex:(NSInteger)n
 {
-	id obj = [self safeObjectAtIndex:n];
+	id obj = self[n];
 	
 	if ([obj respondsToSelector:@selector(integerValue)]) {
 		return [obj integerValue];
@@ -110,7 +110,7 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 
 - (long long)longLongAtIndex:(NSInteger)n
 {
-	id obj = [self safeObjectAtIndex:n];
+	id obj = self[n];
 	
 	if ([obj respondsToSelector:@selector(longLongValue)]) {
 		return [obj longLongValue];
@@ -121,7 +121,7 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 
 - (double)doubleAtIndex:(NSInteger)n
 {
-	id obj = [self safeObjectAtIndex:n];
+	id obj = self[n];
 	
 	if ([obj respondsToSelector:@selector(doubleValue)]) {
 		return [obj doubleValue];
@@ -132,7 +132,7 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 
 - (void *)pointerAtIndex:(NSInteger)n
 {
-	id obj = [self safeObjectAtIndex:n];
+	id obj = self[n];
 	
 	if ([obj isKindOfClass:[NSValue class]]) {
 		return [obj pointerValue];
@@ -172,7 +172,7 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 {
 	NSMutableArray *arry = [self mutableCopy];
 
-	[arry safeRemoveObjectAtIndex:idx];
+	[arry removeObjectAtIndex:idx];
 
 	return [arry copy];
 }
@@ -188,6 +188,7 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 
 	[self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 		id objval = [obj valueForKeyPath:keyPath];
+		
 		if ([objval respondsToSelector:comparison] == NO) {
 			return;
 		}
@@ -226,8 +227,10 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 }
 - (void)safeAddObjectWithoutDuplication:(id)anObject
 {
-	if (PointerIsEmpty(anObject) == NO && [self containsObject:anObject] == NO) {
-		[self addObject:anObject];
+	if (PointerIsEmpty(anObject) == NO) {
+		if ([self containsObject:anObject] == NO) {
+			[self addObject:anObject];
+		}
 	}
 }
 
@@ -240,52 +243,52 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 
 - (void)insertBool:(BOOL)value atIndex:(NSUInteger)index
 {
-	[self safeInsertObject:@(value) atIndex:index];
+	[self insertObject:@(value) atIndex:index];
 }
 
 - (void)insertInteger:(NSInteger)value atIndex:(NSUInteger)index
 {
-	[self safeInsertObject:@(value) atIndex:index];
+	[self insertObject:@(value) atIndex:index];
 }
 
 - (void)insertLongLong:(long long)value atIndex:(NSUInteger)index
 {
-	[self safeInsertObject:@(value) atIndex:index];
+	[self insertObject:@(value) atIndex:index];
 }
 
 - (void)insertDouble:(double)value atIndex:(NSUInteger)index
 {
-	[self safeInsertObject:@(value) atIndex:index];
+	[self insertObject:@(value) atIndex:index];
 }
 
 - (void)insertPointer:(void *)value atIndex:(NSUInteger)index
 {
-	[self safeInsertObject:[NSValue valueWithPointer:value] atIndex:index];
+	[self insertObject:[NSValue valueWithPointer:value] atIndex:index];
 }
 
 - (void)addBool:(BOOL)value
 {
-	[self safeAddObject:@(value)];
+	[self addObject:@(value)];
 }
 
 - (void)addInteger:(NSInteger)value
 {
-	[self safeAddObject:@(value)];
+	[self addObject:@(value)];
 }
 
 - (void)addLongLong:(long long)value
 {
-	[self safeAddObject:@(value)];
+	[self addObject:@(value)];
 }
 	 
 - (void)addDouble:(double)value
 {
-	[self safeAddObject:@(value)];
+	[self addObject:@(value)];
 }
 
 - (void)addPointer:(void *)value
 {
-	[self safeAddObject:[NSValue valueWithPointer:value]];
+	[self addObject:[NSValue valueWithPointer:value]];
 }
 
 - (void)performSelectorOnObjectValueAndReplace:(SEL)performSelector
@@ -296,10 +299,12 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 
 	for (__strong id object in oldArray) {
 		if ([object respondsToSelector:performSelector]) {
-			object = objc_msgSend(object, performSelector);
+			id newObject = objc_msgSend(object, performSelector);
+			
+			if (newObject) {
+				[self addObject:newObject];
+			}
 		}
-
-		[self safeAddObject:object];
 	}
 }
 

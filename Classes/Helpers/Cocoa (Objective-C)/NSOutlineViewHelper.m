@@ -42,7 +42,7 @@
 
 - (NSInteger)countSelectedRows
 {
-	return self.selectedRowIndexes.count;
+	return [[self selectedRowIndexes] count];
 }
 
 - (void)selectItemAtIndex:(NSInteger)index
@@ -65,7 +65,7 @@
 		id curRow = [self itemAtRow:i];
 		
 		if ([self isGroupItem:curRow]) {
-			[groups safeAddObject:curRow];
+			[groups addObject:curRow];
 		}
 	}
 	
@@ -90,7 +90,7 @@
 		id parent = [self parentForItem:curent];
 
 		if ([parent isEqual:group]) {
-			[allRows safeAddObject:curent];
+			[allRows addObject:curent];
 		}
 	}
 	

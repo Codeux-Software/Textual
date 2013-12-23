@@ -146,7 +146,9 @@
 	
 - (BOOL)containsKeyIgnoringCase:(NSString *)baseKey
 {
-	return NSObjectIsNotEmpty([self keyIgnoringCase:baseKey]);
+	NSString *caslessKey = [self keyIgnoringCase:baseKey];
+	
+	return ([caslessKey length] > 0);
 }
 
 - (NSString *)firstKeyForObject:(id)object
@@ -193,10 +195,10 @@
 
 - (NSArray *)sortedDictionaryKeys:(BOOL)reversed
 {
-	NSArray *keys = [self.allKeys sortedArrayUsingSelector:@selector(compare:)];
+	NSArray *keys = [[self allKeys] sortedArrayUsingSelector:@selector(compare:)];
 	
 	if (reversed) {
-		return keys.reverseObjectEnumerator.allObjects;
+		return [[keys reverseObjectEnumerator] allObjects];
 	}
 
 	return keys;
@@ -228,39 +230,41 @@
 
 - (void)safeSetObjectWithoutOverride:(id)value forKey:(NSString *)key
 {
-	if (PointerIsNotEmpty(value) && [self containsKey:key] == NO) {
-		self[key] = value;
+	if (PointerIsNotEmpty(value)) {
+		if ([self containsKey:key] == NO) {
+			self[key] = value;
+		}
 	}
 }
 
 - (void)setBool:(BOOL)value forKey:(NSString *)key
 {
-	[self safeSetObject:@(value) forKey:key];
+	[self setObject:@(value) forKey:key];
 }
 
 - (void)setInteger:(NSInteger)value forKey:(NSString *)key
 {
-	[self safeSetObject:@(value) forKey:key];
+	[self setObject:@(value) forKey:key];
 }
 
 - (void)setLongLong:(long long)value forKey:(NSString *)key
 {
-	[self safeSetObject:@(value) forKey:key];
+	[self setObject:@(value) forKey:key];
 }
 
 - (void)setDouble:(double)value forKey:(NSString *)key
 {
-	[self safeSetObject:@(value) forKey:key];
+	[self setObject:@(value) forKey:key];
 }
 
 - (void)setFloat:(float)value forKey:(NSString *)key
 {
-	[self safeSetObject:@(value) forKey:key];
+	[self setObject:@(value) forKey:key];
 }
 
 - (void)setPointer:(void *)value forKey:(NSString *)key
 {
-	[self safeSetObject:[NSValue valueWithPointer:value] forKey:key];
+	[self setObject:[NSValue valueWithPointer:value] forKey:key];
 }
 
 @end

@@ -47,7 +47,7 @@ const CGFloat kRotationForItalicText = -14.0;
 	
 	if ([self fontTraitSet:NSItalicFontMask] == NO) {       
 		NSAffineTransform *fontTransform = [NSAffineTransform transform];    
-		NSAffineTransform *italicTransform	= [NSAffineTransform transform];  
+		NSAffineTransform *italicTransform = [NSAffineTransform transform];  
 		
 		[fontTransform scaleBy:self.pointSize];
 		

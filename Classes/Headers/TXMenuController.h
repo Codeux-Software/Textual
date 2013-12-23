@@ -234,7 +234,7 @@
 
 - (IBAction)copyUrl:(id)sender;
 
-- (void)joinClickedChannel:(id)sender;
+- (IBAction)joinClickedChannel:(id)sender;
 
 - (IBAction)toggleChannelModerationMode:(id)sender;
 - (IBAction)toggleChannelInviteMode:(id)sender;
