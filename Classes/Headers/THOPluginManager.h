@@ -65,7 +65,6 @@
 
 /* Talk to plugins. */
 /* Unless you are Textual, do not call these. We mean it. */
-
 - (NSString *)processInlineMediaContentURL:(NSString *)resource;
 
 - (id)processInterceptedUserInput:(id)input command:(NSString *)command;

@@ -2247,18 +2247,6 @@
 
 			break;
 		}
-		case 5074: // Command: UNLOAD_PLUGINS
-		{
-			[RZPluginManager() unloadPlugins];
-
-			break;
-		}
-		case 5038: // Command: LOAD_PLUGINS
-		{
-			[RZPluginManager() loadPlugins];
-
-			break;
-		}
 		case 5093: // Command: TAGE
 		{
 			/* Textual Age — Developr mode only. */

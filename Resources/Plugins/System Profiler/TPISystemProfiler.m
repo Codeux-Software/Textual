@@ -50,6 +50,14 @@
 /* Allocation & Deallocation */
 - (void)pluginLoadedIntoMemory:(IRCWorld *)world
 {
+	NSDictionary *defaults = @{
+	   @"System Profiler Extension -> Feature Disabled -> GPU Model" : @(YES),
+	   @"System Profiler Extension -> Feature Disabled -> Disk Information" : @(YES),
+	   @"System Profiler Extension -> Feature Disabled -> Screen Resolution" : @(YES)
+	};
+	
+	[RZUserDefaults() registerDefaults:defaults];
+	
 	[TPIBundleFromClass() loadCustomNibNamed:@"TPISystemProfiler" owner:self topLevelObjects:nil];
 }
 

@@ -771,37 +771,6 @@ CQ
                                                 </binding>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Load Extensions" id="2722">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="loadExtensionsIntoMemory:" target="267" id="2727"/>
-                                                <binding destination="3106" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="3129">
-                                                    <dictionary key="options">
-                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                    </dictionary>
-                                                </binding>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Unload Extensions" id="2723">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="unloadExtensionsFromMemory:" target="267" id="2728"/>
-                                                <binding destination="3106" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="3127">
-                                                    <dictionary key="options">
-                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                    </dictionary>
-                                                </binding>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="2724">
-                                            <connections>
-                                                <binding destination="3106" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="3125">
-                                                    <dictionary key="options">
-                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                    </dictionary>
-                                                </binding>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem title="Reset &quot;Don't Ask Me&quot; Warnings" id="2725">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>

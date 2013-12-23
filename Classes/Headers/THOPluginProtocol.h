@@ -78,11 +78,6 @@
 /* Process inline media to add custom support for various URLs. */
 /* Given a URL, the plugin is expected to return an NSString which represents
  an image to be shown inline. Nothing complex. */
-/* Unlike other methods defined below, this one does not hand the URL to every
- plugin. Once one plugin has a returned URL, then it stops and continues to the 
- next URL in the message being parsed. The return value is not checked if it is a
- valid URL. Only whether its length is greater or equal to at least 15 characters
- to allow a scheme, domain, and small filename to be defined. */
 - (NSString *)processInlineMediaContentURL:(NSString *)resource;
 
 /* Process server input before Textual does. Return nil to have it ignored. */

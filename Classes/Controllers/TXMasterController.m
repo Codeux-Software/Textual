@@ -416,6 +416,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		[self.menuController terminate];
 	}
 	
+	[RZPluginManager() unloadPlugins];
+	
 	[TPCPreferences saveTimeIntervalSinceApplicationInstall];
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
