@@ -5069,7 +5069,7 @@
 			NSAssertReturnLoopBreak(m.params.count >= 3);
 
 			NSString *channel = [m paramAt:1];
-			NSString * = [m paramAt:2];
+			NSString *topicva = [m paramAt:2];
 
 			IRCChannel *c = [self findChannel:channel];
 
