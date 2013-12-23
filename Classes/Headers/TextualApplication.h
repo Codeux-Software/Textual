@@ -69,6 +69,7 @@
 	@class IRCTreeItem;
 	@class IRCUser;
 	@class IRCWorld;
+	@class NSMenuExtendedHelperItem;
 	@class TDCAboutPanel;
 	@class TDCAddressBookSheet;
 	@class TDCHighlightEntryMatchCondition;
@@ -81,6 +82,7 @@
 	@class TDCPreferencesController;
 	@class TDCPreferencesScriptWrapper;
 	@class TDCPreferencesSoundWrapper;
+	@class TDCProgressInformationSheet;
 	@class TDCServerSheet;
 	@class TDCSheetBase;
 	@class TDCTopicSheet;
@@ -132,7 +134,6 @@
 	@class TVCMainWindowLoadingScreenView;
 	@class TVCMainWindowSegmentedCell;
 	@class TVCMainWindowSegmentedControl;
-	@class TDCProgressInformationSheet;
 	@class TVCMemberList;
 	@class TVCMemberListCell;
 	@class TVCMemberListCellBadge;
@@ -143,14 +144,13 @@
 	@class TVCServerListCellBadge;
 	@class TVCServerListCellChildItem;
 	@class TVCServerListCellGroupItem;
+	@class TVCServerListRowCell;
 	@class TVCTextField;
 	@class TVCTextFormatterMenu;
 	@class TVCThinSplitView;
 	@class TVCWebViewAutoScroll;
-	@class TVCServerListRowCell;
 	@class TXMasterController;
 	@class TXMenuController;
-	@class TXSpecialNSMenuItemHelper;
 
 	/* 3rd Party Extensions. */
 

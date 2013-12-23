@@ -210,9 +210,9 @@
 + (NSColor *)fromCSS:(NSString *)s
 {
 	if ([s hasPrefix:@"#"]) {
-		s = [s safeSubstringFromIndex:1];
+		s = [s substringFromIndex:1];
 
-		NSInteger len = s.length;
+		NSInteger len = [s length];
 
 		if (len == 6) {
 			long n = strtol([s UTF8String], NULL, 16);
@@ -257,21 +257,6 @@
 + (NSColor *)outlineViewHeaderDisabledTextColor
 {
 	return [NSColor internalCalibratedRed:158 green:162 blue:173 alpha:1.0];
-}
-
-@end
-
-@implementation NSGradient (TXGradientHelper)
-
-+ (NSGradient *)gradientWithStartingColor:(NSColor *)startingColor endingColor:(NSColor *)endingColor
-{
-	return [[self alloc] initWithStartingColor:startingColor endingColor:endingColor];
-}
-
-+ (NSGradient *)sourceListBackgroundGradientColor
-{
-	return [self gradientWithStartingColor:[NSColor internalCalibratedRed:234 green:237 blue:242 alpha:1.0]
-							   endingColor:[NSColor internalCalibratedRed:199 green:207 blue:216 alpha:1.0]];
 }
 
 @end

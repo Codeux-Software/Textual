@@ -1942,7 +1942,7 @@ CA
                 <menuItem title="Join Channel" tag="3301" id="964">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="joinChannel:" target="267" id="2646"/>
+                        <action selector="joinClickedChannel:" target="267" id="XhV-y1-abi"/>
                     </connections>
                 </menuItem>
             </items>

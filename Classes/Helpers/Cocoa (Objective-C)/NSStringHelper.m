@@ -77,7 +77,9 @@
 + (NSString *)stringWithUUID
 {
 	CFUUIDRef uuidObj = CFUUIDCreate(nil);
+	
 	NSString *uuidString = (__bridge_transfer NSString *)CFUUIDCreateString(nil, uuidObj);
+	
 	CFRelease(uuidObj);
 
 	return uuidString;
@@ -101,7 +103,9 @@
     for (id encoding in supportedEncodings) {
         NSString *encodingTitle = [NSString localizedNameOfStringEncoding:[encoding integerValue]];
 
-        [encodingList safeSetObject:encoding forKey:encodingTitle];
+		if (encodingTitle) {
+			encodingList[encodingTitle] = encoding;
+		}
     }
 
     return encodingList;
@@ -127,8 +131,8 @@
         if (favorUTF8 && encoding == NSUTF8StringEncoding) {
             continue;
         }
-
-        [encodingList safeAddObject:@(encoding)];
+		
+		[encodingList addObject:@(encoding)];
     }
 
     return encodingList;
@@ -136,7 +140,7 @@
 
 - (NSString *)safeSubstringWithRange:(NSRange)range
 {
-	if (NSRangeIsValidInBounds(range, self.length) == NO) {
+	if (NSRangeIsValidInBounds(range, [self length]) == NO) {
 		return nil;
 	}
 
@@ -147,18 +151,18 @@
 
 - (NSString *)safeSubstringFromIndex:(NSInteger)anIndex
 {
-	if (anIndex > self.length || anIndex < 0) {
+	if (anIndex > [self length] || anIndex < 0) {
 		return nil;
 	}
 
-	NSRange cutRange = NSMakeRange(anIndex, (self.length - anIndex));
+	NSRange cutRange = NSMakeRange(anIndex, ([self length] - anIndex));
 
 	return [self safeSubstringWithRange:cutRange];
 }
 
 - (NSString *)safeSubstringToIndex:(NSInteger)anIndex
 {
-	if (anIndex > self.length || anIndex < 0) {
+	if (anIndex > [self length] || anIndex < 0) {
 		return nil;
 	}
 
@@ -169,7 +173,7 @@
 
 - (UniChar)safeCharacterAtIndex:(NSInteger)anIndex
 {
-	if (anIndex > self.length || anIndex < 0) {
+	if (anIndex > [self length] || anIndex < 0) {
 		return 0;
 	}
 
@@ -178,11 +182,13 @@
 
 - (NSString *)stringCharacterAtIndex:(NSInteger)anIndex
 {
-	if (anIndex > self.length || anIndex < 0) {
+	if (anIndex > [self length] || anIndex < 0) {
 		return nil;
 	}
+	
+	UniChar strChar = [self characterAtIndex:anIndex];
 
-	return [NSString stringWithUniChar:[self characterAtIndex:anIndex]];
+	return [NSString stringWithUniChar:strChar];
 }
 
 - (NSString *)safeSubstringAfterIndex:(NSInteger)anIndex
@@ -216,7 +222,7 @@
 	
     uint8_t digest[CC_SHA1_DIGEST_LENGTH];
 	
-    CC_SHA1(data.bytes, (CC_LONG)data.length, digest);
+    CC_SHA1([data bytes], (CC_LONG)[data length], digest);
 	
     NSMutableString *output = [NSMutableString stringWithCapacity:(CC_SHA1_DIGEST_LENGTH * 2)];
 	
@@ -327,9 +333,9 @@
 
 - (NSString *)stringByDeletingPreifx:(NSString *)prefix
 {
-	if (prefix.length >= 1 && self.length > prefix.length) {
+	if ([prefix length] > 0 && [self length] > [prefix length]) {
 		if ([self hasPrefix:prefix]) {
-			return [self substringFromIndex:prefix.length];
+			return [self substringFromIndex:[prefix length]];
 		}
 	}
 	
@@ -356,6 +362,10 @@
 - (BOOL)isNickname:(IRCClient *)client
 {
 	NSObjectIsEmptyAssertReturn(self, NO);
+	
+	if (PointerIsEmpty(client)) {
+		return [self isNickname];
+	}
 
 	// If the case mapping is not ASCII, then we use lose checking with isNickname.
 	// This is more of a lazy-man fix for IRC servers that do custom things.
@@ -386,9 +396,9 @@
 		return [self isChannelName];
 	}
 
-	NSString *validChars = client.isupport.channelNamePrefixes;
+	NSString *validChars = [client.isupport channelNamePrefixes];
 
-	if (self.length == 1) {
+	if ([self length] == 1) {
 		NSString *c = [self stringCharacterAtIndex:0];
 		
 		return [validChars contains:c];
@@ -426,8 +436,8 @@
 	/* Remove any prefix from in front of channel (e.g. #) or return
 	 an untouched copy of the string if there is none. */
 
-	if ([self isChannelName] && self.length > 1) {
-		return [self safeSubstringFromIndex:1];
+	if ([self isChannelName] && [self length] > 1) {
+		return [self substringFromIndex:1];
 	}
 
 	return self;
@@ -441,7 +451,7 @@
 		return [self channelNameToken];
 	}
 	
-	NSCharacterSet *validChars = [NSCharacterSet characterSetWithCharactersInString:client.isupport.channelNamePrefixes];
+	NSCharacterSet *validChars = [NSCharacterSet characterSetWithCharactersInString:[client.isupport channelNamePrefixes]];
 	
 	return [self stringByTrimmingCharactersInSet:validChars];
 }
@@ -457,9 +467,7 @@
 
 - (NSString *)nicknameFromHostmask
 {
-    if ([self isHostmask] == NO) {
-        return self;
-    }
+	NSAssertReturnR([self isHostmask], self);
 
 	NSInteger bang1pos = [self stringPosition:@"!"];
 
@@ -473,7 +481,7 @@
 	NSInteger bang1pos = [self stringPosition:@"!"];
 	NSInteger bang2pos = [self stringPosition:@"@"];
 
-    NSString *bob = [self safeSubstringToIndex:bang2pos];
+    NSString *bob = [self substringToIndex:bang2pos];
 
 	return [bob safeSubstringAfterIndex:bang1pos];
 }
@@ -524,18 +532,18 @@
 
 - (NSString *)cleanedServerHostmask
 {
-    NSString *bob = self.trim;
+    NSString *bob = [self trim];
 
     if ([TLORegularExpression string:bob isMatchedByRegex:@"^([^:]+):([0-9]{2,7})$"] ||
         [TLORegularExpression string:bob isMatchedByRegex:@"^\\[([0-9a-f:]+)\\]:([0-9]{2,7})$"])
 	{
-		NSRange searchRange = [bob rangeOfString:@":" options:NSBackwardsSearch range:NSMakeRange(0, self.length)];
+		NSRange searchRange = [bob rangeOfString:@":" options:NSBackwardsSearch range:NSMakeRange(0, [self length])];
 
 		if (searchRange.location == NSNotFound) {
 			return bob;
 		}
 
-		return [bob safeSubstringToIndex:searchRange.location];
+		return [bob substringToIndex:searchRange.location];
     }
 
 	return bob;
@@ -562,7 +570,7 @@
     NSDictionary *input = @{@"attributedStringFont" : defaultFont};
 
 	return [TVCLogRenderer renderBody:self
-						   controller:self.worldController.selectedViewController
+						   controller:[self.worldController selectedViewController]
 						   renderType:TVCLogRendererAttributedStringType
 						   properties:input
 						   resultInfo:NULL];
@@ -587,7 +595,7 @@
 {
 	NSObjectIsEmptyAssertReturn(self, NO);
 	
-	for (NSInteger i = 0; i < self.length; ++i) {
+	for (NSInteger i = 0; i < [self length]; ++i) {
 		UniChar c = [self characterAtIndex:i];
 		
 		if (TXStringIsBase10Numeric(c) == NO) {
@@ -602,7 +610,7 @@
 {
 	NSObjectIsEmptyAssertReturn(self, NO);
 
-	for (NSInteger i = 0; i < self.length; ++i) {
+	for (NSInteger i = 0; i < [self length]; ++i) {
 		UniChar c = [self characterAtIndex:i];
 		
 		if (TXStringIsAlphabeticNumeric(c) == NO) {
@@ -673,7 +681,7 @@
 	NSObjectIsEmptyAssertReturn(self, nil);
 
 	NSInteger pos = 0;
-	NSInteger len = self.length;
+	NSInteger len = [self length];
 	
 	NSInteger buflen = (len * sizeof(UniChar));
 	
@@ -798,11 +806,11 @@
 
 - (NSRange)rangeOfNextSegmentMatchingRegularExpression:(NSString *)regex startingAt:(NSInteger)start
 {
-	NSInteger stringLength = self.length;
+	NSInteger stringLength = [self length];
 	
-	NSAssertReturnR((self.length > start), NSEmptyRange());
+	NSAssertReturnR((stringLength > start), NSEmptyRange());
 	
-	NSString *searchString = [self safeSubstringFromIndex:start];
+	NSString *searchString = [self substringFromIndex:start];
 	
 	NSRange searchRange = [TLORegularExpression string:searchString rangeOfRegex:regex];
 
@@ -810,27 +818,8 @@
 		return NSEmptyRange();
 	}
 
-	NSRange r = NSMakeRange((start + searchRange.location), searchRange.length);
-	
-	NSInteger prev = (r.location - 1);
-	
-	if (0 <= prev && prev < stringLength) {
-		UniChar c = [self characterAtIndex:prev];
-		
-		if (TXStringIsWordLetter(c)) {
-			return NSEmptyRange();
-		}
-	}
-	
-	NSInteger next = NSMaxRange(r);
-	
-	if (next < stringLength) {
-		UniChar c = [self characterAtIndex:next];
-		
-		if (TXStringIsWordLetter(c)) {
-			return NSEmptyRange();
-		}
-	}
+	NSRange r = NSMakeRange((start + searchRange.location),
+									 searchRange.length);
 	
 	return r;
 }
@@ -926,28 +915,26 @@
 	
 	NSString *encodedResult = [CSFWBase64Encoding encodeData:baseData];
 	
-	if (NSObjectIsNotEmpty(encodedResult)) {
-		NSMutableString *resultString = [NSMutableString string];
-		
-		if (encodedResult.length > lineLength) {
-			NSInteger rlc = ceil(encodedResult.length / lineLength);
+	NSObjectIsEmptyAssertReturn(encodedResult, nil);
+	
+	NSMutableString *resultString = [NSMutableString string];
+	
+	if ([encodedResult length] > lineLength) {
+		NSInteger rlc = ceil([encodedResult length] / lineLength);
 
-			for (NSInteger i = 1; i <= rlc; i++) {
-				NSString *append = [encodedResult safeSubstringToIndex:lineLength];
+		for (NSInteger i = 1; i <= rlc; i++) {
+			NSString *append = [encodedResult safeSubstringToIndex:lineLength];
 
-				[resultString appendString:append];
-				[resultString appendString:NSStringNewlinePlaceholder];
+			[resultString appendString:append];
+			[resultString appendString:NSStringNewlinePlaceholder];
 
-				encodedResult = [encodedResult safeSubstringFromIndex:lineLength];
-			}
+			encodedResult = [encodedResult safeSubstringFromIndex:lineLength];
 		}
-		
-		[resultString appendString:encodedResult];
-
-		return resultString;
 	}
+	
+	[resultString appendString:encodedResult];
 
-	return nil;
+	return resultString;
 }
 
 @end
@@ -974,7 +961,7 @@
 + (NSString *)stringWithUnsignedLongLong:(unsigned long long)value		{ return [NSString stringWithFormat:@"%qu", value]; }
 
 + (NSString *)stringWithFloat:(float)value								{ return [NSString stringWithFormat:@"%f", value]; }
-+ (NSString *)stringWithDouble:(double)value						{ return [NSString stringWithFormat:@"%f", value]; }
++ (NSString *)stringWithDouble:(double)value							{ return [NSString stringWithFormat:@"%f", value]; }
 
 @end
 
@@ -982,7 +969,7 @@
 
 - (void)safeDeleteCharactersInRange:(NSRange)range
 {
-	if (NSRangeIsValidInBounds(range, self.length)) {
+	if (NSRangeIsValidInBounds(range, [self length])) {
 		[self deleteCharactersInRange:range];
 	}
 }
@@ -990,12 +977,11 @@
 - (NSString *)getToken
 {
 	NSRange r = [self rangeOfString:NSStringWhitespacePlaceholder];
-	//NSRange r = [self rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
-	
+
 	if (NSDissimilarObjects(r.location, NSNotFound)) {
-		NSString *cutString = [self safeSubstringToIndex:r.location];
+		NSString *cutString = [self substringToIndex:r.location];
 		
-		NSInteger stringLength = self.length;
+		NSInteger stringLength = [self length];
 		NSInteger stringForward = (r.location + 1);
 		
 		while ((stringForward < stringLength) && [self characterAtIndex:stringForward] == ' ') {
@@ -1006,7 +992,7 @@
 		
 		return cutString;
 	} else {
-		NSString *result = self.copy;
+		NSString *result = [self copy];
 	
 		[self setString:NSStringEmptyPlaceholder];
 	
@@ -1035,21 +1021,21 @@
 
 - (NSDictionary *)attributes
 {
-    return [self safeAttributesAtIndex:0 longestEffectiveRange:NULL inRange:NSMakeRange(0, self.length)];
+    return [self safeAttributesAtIndex:0 longestEffectiveRange:NULL inRange:NSMakeRange(0, [self length])];
 }
 
 - (id)safeAttribute:(NSString *)attrName atIndex:(NSUInteger)location effectiveRange:(NSRangePointer)range
 {
-	NSAssertReturnR((location < self.length), nil);
+	NSAssertReturnR((location < [self length]), nil);
 	
 	return [self attribute:attrName atIndex:location effectiveRange:range];
 }
 
 - (NSDictionary *)safeAttributesAtIndex:(NSUInteger)location longestEffectiveRange:(NSRangePointer)range inRange:(NSRange)rangeLimit
 {
-	NSAssertReturnR((location < self.length), nil);
+	NSAssertReturnR((location < [self length]), nil);
 
-	if (NSRangeIsValidInBounds(rangeLimit, self.length)) {
+	if (NSRangeIsValidInBounds(rangeLimit, [self length])) {
 		return [self attributesAtIndex:location longestEffectiveRange:range inRange:rangeLimit];
 	}
 
@@ -1058,9 +1044,9 @@
 
 - (id)safeAttribute:(NSString *)attrName atIndex:(NSUInteger)location longestEffectiveRange:(NSRangePointer)range inRange:(NSRange)rangeLimit
 {
-	NSAssertReturnR((location < self.length), nil);
+	NSAssertReturnR((location < [self length]), nil);
 
-	if (NSRangeIsValidInBounds(rangeLimit, self.length)) {
+	if (NSRangeIsValidInBounds(rangeLimit, [self length])) {
 		return [self attribute:attrName atIndex:location longestEffectiveRange:range inRange:rangeLimit];
 	}
 
@@ -1074,7 +1060,7 @@
 
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set frontChop:(NSRangePointer)front
 {
-	NSString *baseString = self.string;
+	NSString *baseString = [self string];
 	
 	NSRange range;
 	
@@ -1100,7 +1086,7 @@
 	if (range.length >= 1) {
 		length = (NSMaxRange(range) - locati);
 	} else {
-		length = (baseString.length - locati);
+		length = ([baseString length] - locati);
 	}
 	
 	return [self attributedSubstringFromRange:NSMakeRange(locati, length)];
@@ -1110,14 +1096,15 @@
 {
     NSMutableArray *lines = [NSMutableArray array];
     
-    NSInteger stringLength = self.string.length;
+    NSInteger stringLength = [self.string length];
     NSInteger rangeStartIn = 0;
     
-    NSMutableAttributedString *copyd = self.mutableCopy;
+    NSMutableAttributedString *copyd = [self mutableCopy];
     
     while (rangeStartIn < stringLength) {
 		NSRange srb = NSMakeRange(rangeStartIn, (stringLength - rangeStartIn));
-        NSRange srr = [self.string rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:0 range:srb];
+     
+		NSRange srr = [self.string rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:0 range:srb];
         
         if (srr.location == NSNotFound) {
             break;
@@ -1128,7 +1115,9 @@
         
         NSAttributedString *line = [self attributedSubstringFromRange:cutRange];
         
-        [lines safeAddObject:line];
+		if (line) {
+			[lines addObject:line];
+		}
 		
         [copyd deleteCharactersInRange:delRange];
         
@@ -1136,10 +1125,10 @@
     }
     
     if (NSObjectIsEmpty(lines)) {
-        [lines safeAddObject:self];
+        [lines addObject:self];
     } else {
         if (NSObjectIsNotEmpty(copyd)) {
-            [lines safeAddObject:copyd];
+			[lines addObject:copyd];
         }
     }
     
@@ -1168,6 +1157,7 @@
 	NSMutableAttributedString *baseMutable = self.mutableCopy;
 	
 	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+	
 	[paragraphStyle setLineBreakMode:NSLineBreakByCharWrapping];
 	
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:paragraphStyle, NSParagraphStyleAttributeName, nil];
@@ -1196,14 +1186,13 @@
 - (NSAttributedString *)getToken
 {
 	NSRange r = [self.string rangeOfString:NSStringWhitespacePlaceholder];
-	//NSRange r = [self.string rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
-	
+
 	if (NSDissimilarObjects(r.location, NSNotFound)) {
         NSRange cutRange = NSMakeRange(0, r.location);
         
         NSAttributedString *cutString = [self attributedSubstringFromRange:cutRange];
 		
-		NSInteger stringLength = self.length;
+		NSInteger stringLength = [self length];
 		NSInteger stringForward = (r.location + 1);
 		
 		while ((stringForward < stringLength) && [self.string characterAtIndex:stringForward] == ' ') {
@@ -1214,7 +1203,7 @@
 		
 		return cutString;
 	} else {
-		NSAttributedString *result = self.copy;
+		NSAttributedString *result = [self copy];
 	
 		[self setAttributedString:[NSAttributedString emptyString]];
 	

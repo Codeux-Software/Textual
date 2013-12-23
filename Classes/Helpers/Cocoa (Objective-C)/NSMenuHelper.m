@@ -42,18 +42,12 @@
 
 @implementation NSMenuItem (TXMenuItemHelper)
 
-+ (id)menuItemWithTitle:(NSString *)aString
-						   target:(id)aTarget
-						   action:(SEL)aSelector
++ (id)menuItemWithTitle:(NSString *)aString target:(id)aTarget action:(SEL)aSelector
 {
 	return [self menuItemWithTitle:aString target:aTarget action:aSelector keyEquivalent:NSStringEmptyPlaceholder keyEquivalentMask:0];
 }
 
-+ (id)menuItemWithTitle:(NSString *)aString
-				 target:(id)aTarget
-				 action:(SEL)aSelector
-		  keyEquivalent:(NSString *)charCode
-	  keyEquivalentMask:(NSUInteger)mask
++ (id)menuItemWithTitle:(NSString *)aString target:(id)aTarget action:(SEL)aSelector keyEquivalent:(NSString *)charCode keyEquivalentMask:(NSUInteger)mask
 {
 	id menuItem = [[self alloc] initWithTitle:aString action:aSelector keyEquivalent:charCode];
 
@@ -65,5 +59,5 @@
 
 @end
 
-@implementation TXSpecialNSMenuItemHelper
+@implementation NSMenuExtendedHelperItem
 @end

@@ -54,6 +54,6 @@
 
 /* It is easier to track what a menu item represents by
  keeping in memory some bit of string telling about it. */
-@interface TXSpecialNSMenuItemHelper : NSMenuItem
+@interface NSMenuExtendedHelperItem : NSMenuItem
 @property (nonatomic, strong) NSString *userInfo;
 @end

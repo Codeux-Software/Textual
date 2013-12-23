@@ -521,7 +521,7 @@
 
 	for (IRCClient *u in self.worldController.clients) {
 		/* Create a menu item for the client title. */
-		TXSpecialNSMenuItemHelper *newItem = [TXSpecialNSMenuItemHelper menuItemWithTitle:TXTFLS(@"NavigationChannelListClientEntryTitle", u.name) target:nil action:nil];
+		NSMenuExtendedHelperItem *newItem = [NSMenuExtendedHelperItem menuItemWithTitle:TXTFLS(@"NavigationChannelListClientEntryTitle", u.name) target:nil action:nil];
 
 		[self.navigationChannelList addItem:newItem];
 
@@ -529,7 +529,7 @@
 		for (IRCChannel *c in u.channels) {
 			/* Create the menu item. Only first ten items get a key combo. */
 			if (channelCount >= 10) {
-				newItem = [TXSpecialNSMenuItemHelper menuItemWithTitle:TXTFLS(@"NavigationChannelListChannelEntryTitle", c.name)
+				newItem = [NSMenuExtendedHelperItem menuItemWithTitle:TXTFLS(@"NavigationChannelListChannelEntryTitle", c.name)
 																target:self
 																action:@selector(navigateToSpecificChannelInNavigationList:)];
 			} else {
@@ -539,7 +539,7 @@
 					keyboardIndex = 0; // Have 0 as the last item.
 				}
 				
-				newItem = [TXSpecialNSMenuItemHelper menuItemWithTitle:TXTFLS(@"NavigationChannelListChannelEntryTitle", c.name)
+				newItem = [NSMenuExtendedHelperItem menuItemWithTitle:TXTFLS(@"NavigationChannelListChannelEntryTitle", c.name)
 																target:self
 																action:@selector(navigateToSpecificChannelInNavigationList:)
 														 keyEquivalent:[NSString stringWithUniChar:('0' + keyboardIndex)]
@@ -559,7 +559,7 @@
 	}
 }
 
-- (void)navigateToSpecificChannelInNavigationList:(TXSpecialNSMenuItemHelper *)sender
+- (void)navigateToSpecificChannelInNavigationList:(NSMenuExtendedHelperItem *)sender
 {
 	[self.worldController select:[self.worldController findItemFromInfo:sender.userInfo]];
 }

@@ -49,10 +49,10 @@
 
 - (NSString *)integerWithLeadingZero:(NSInteger)forcedWidth
 {
-	NSInteger trlzp = (forcedWidth - self.stringValue.length);
+	NSInteger trlzp = (forcedWidth - [self.stringValue length]);
 
 	if (trlzp <= 0) {
-		return self.stringValue;
+		return [self stringValue];
 	} else {
 		NSMutableString *ints = [NSMutableString string];
 
@@ -60,7 +60,7 @@
 			[ints appendString:@"0"];
 		}
 
-		[ints appendString:self.stringValue];
+		[ints appendString:[self stringValue]];
 
 		return ints;
 	}
@@ -71,10 +71,10 @@
 	NSInteger intv = [self integerValue];
 
 	if (intv >= 0 && intv <= 9) {
-		return [@"0" stringByAppendingString:self.stringValue];
+		return [@"0" stringByAppendingString:[self stringValue]];
 	}
 
-	return self.stringValue;
+	return [self stringValue];
 }
 
 @end
