@@ -76,7 +76,7 @@
 	TXMasterController *master = [THOPluginManager masterController];
 
 	if (master) {
-		return master.pluginManager;
+		return [master pluginManager];
 	}
 
 	return nil;
@@ -87,79 +87,71 @@
 
 - (void)loadPlugins
 {
-	if (NSObjectIsNotEmpty(self.allLoadedBundles)) {
-		return;
-	}
+	dispatch_async(_dispatchQueue, ^{
+		NSObjectIsNotEmptyAssert(self.allLoadedBundles);
 
-	// ---- //
+		// ---- //
 
-    NSString *path_1 = [TPCPreferences customExtensionFolderPath];
-    NSString *path_2 = [TPCPreferences bundledExtensionFolderPath];
+		NSString *path_1 = [TPCPreferences customExtensionFolderPath];
+		NSString *path_2 = [TPCPreferences bundledExtensionFolderPath];
 
-    NSMutableArray *loadedBundles = [NSMutableArray array];
-    NSMutableArray *loadedPlugins = [NSMutableArray array];
-	
-    NSMutableArray *resourceBundles = [NSMutableArray array];
+		NSMutableArray *loadedBundles = [NSMutableArray array];
+		NSMutableArray *loadedPlugins = [NSMutableArray array];
+		
+		NSMutableArray *resourceBundles = [NSMutableArray array];
 
-    NSArray *resourceFiles_1 = [RZFileManager() contentsOfDirectoryAtPath:path_1 error:NULL];
-    NSArray *resourceFiles_2 = [RZFileManager() contentsOfDirectoryAtPath:path_2 error:NULL];
+		NSArray *resourceFiles_1 = [RZFileManager() contentsOfDirectoryAtPath:path_1 error:NULL];
+		NSArray *resourceFiles_2 = [RZFileManager() contentsOfDirectoryAtPath:path_2 error:NULL];
 
-    NSArray *resourceFiles = [resourceFiles_1 arrayByAddingObjectsFromArray:resourceFiles_2];
+		NSArray *resourceFiles = [resourceFiles_1 arrayByAddingObjectsFromArray:resourceFiles_2];
 
-    for (NSString *file in resourceFiles) {
-        [resourceBundles safeAddObjectWithoutDuplication:file];
-    }
+		for (NSString *file in resourceFiles) {
+			[resourceBundles safeAddObjectWithoutDuplication:file];
+		}
 
-	// ---- //
+		// ---- //
 
-    for (NSString *file in resourceBundles) {
-        if ([file hasSuffix:TPCResourceManagerBundleDocumentTypeExtension]) {
-            NSString *fullPath = [path_1 stringByAppendingPathComponent:file];
+		for (NSString *file in resourceBundles) {
+			if ([file hasSuffix:TPCResourceManagerBundleDocumentTypeExtension]) {
+				NSString *fullPath = [path_1 stringByAppendingPathComponent:file];
 
-            if ([RZFileManager() fileExistsAtPath:fullPath] == NO) {
-                fullPath = [path_2 stringByAppendingPathComponent:file];
-            }
+				if ([RZFileManager() fileExistsAtPath:fullPath] == NO) {
+					fullPath = [path_2 stringByAppendingPathComponent:file];
+				}
 
-			NSBundle *currBundle = [NSBundle bundleWithPath:fullPath];
+				NSBundle *currBundle = [NSBundle bundleWithPath:fullPath];
 
-			if (currBundle) {
-				THOPluginItem *currPlugin = [THOPluginItem new];
+				if (currBundle) {
+					THOPluginItem *currPlugin = [THOPluginItem new];
 
-				[currPlugin loadBundle:currBundle];
+					[currPlugin loadBundle:currBundle];
 
-				[loadedBundles safeAddObject:currBundle];
-				[loadedPlugins safeAddObject:currPlugin];
+					[loadedBundles safeAddObject:currBundle];
+					[loadedPlugins safeAddObject:currPlugin];
+				}
 			}
 		}
-	}
 
-	// ---- //
+		// ---- //
 
-	self.allLoadedBundles = loadedBundles;
-	self.allLoadedPlugins = loadedPlugins;
+		self.allLoadedBundles = loadedBundles;
+		self.allLoadedPlugins = loadedPlugins;
+	});
 }
 
 - (void)unloadPlugins
 {
-	id prefController = [self.masterController.menuController windowFromWindowList:@"TDCPreferencesController"];
+	dispatch_async(_dispatchQueue, ^{
+		self.allLoadedPlugins = nil;
 
-	if (prefController) {
-		if ([prefController isWindowLoaded]) {
-			[[prefController window] close];
+		for (NSBundle *bundle in self.allLoadedBundles) {
+			if ([bundle isLoaded]) {
+				[bundle unload];
+			}
 		}
-	}
-
-	// ---- //
-
-	self.allLoadedPlugins = nil;
-
-	for (NSBundle *bundle in self.allLoadedBundles) {
-		if ([bundle isLoaded]) {
-			[bundle unload];
-		}
-	}
-	
-	self.allLoadedBundles = nil;
+		
+		self.allLoadedBundles = nil;
+	});
 }
 
 #pragma mark -
@@ -188,40 +180,36 @@
 	}
 
 	for (NSString *path in scriptPaths) {
-		if (NSObjectIsNotEmpty(path)) {
-			NSArray *resourceFiles = [RZFileManager() contentsOfDirectoryAtPath:path error:NULL];
+		NSObjectIsEmptyAssertLoopContinue(path);
+		
+		NSArray *resourceFiles = [RZFileManager() contentsOfDirectoryAtPath:path error:NULL];
 
-			if (NSObjectIsNotEmpty(resourceFiles)) {
-				for (NSString *file in resourceFiles) {
-					NSString *fullpa = [path stringByAppendingPathComponent:file];
-					NSString *script = file;
+		NSObjectIsEmptyAssertLoopContinue(resourceFiles);
+		
+		for (NSString *file in resourceFiles) {
+			NSString *fullpa = [path stringByAppendingPathComponent:file];
+			NSString *script = file;
 
-					if ([file hasPrefix:@"."] || [file hasSuffix:@".rtf"]) {
-						continue;
-					}
+			NSString *extens = NSStringEmptyPlaceholder;
 
-					NSString *extens = NSStringEmptyPlaceholder;
+			if ([script contains:@"."]) {
+				NSArray *nameParts = [script componentsSeparatedByString:@"."];
 
-					if ([script contains:@"."]) {
-						NSArray *nameParts = [script componentsSeparatedByString:@"."];
+				script = nameParts[0];
+				extens = nameParts[1];
 
-						script = nameParts[0];
-						extens = nameParts[1];
+				if ([scriptExtensions containsObject:extens] == NO) {
+					continue;
+				}
+			}
 
-						if ([scriptExtensions containsObject:extens] == NO) {
-							continue;
-						}
-					}
-
-					if (returnPathInfo) {
-						if ([returnData containsKey:script] == NO) {
-							[returnData safeSetObjectWithoutOverride:fullpa forKey:script];
-						}
-					} else {
-						if ([returnData containsObject:script] == NO) {
-							[returnData safeAddObjectWithoutDuplication:script];
-						}
-					}
+			if (returnPathInfo) {
+				if ([returnData containsKey:script] == NO) {
+					[returnData safeSetObjectWithoutOverride:fullpa forKey:script];
+				}
+			} else {
+				if ([returnData containsObject:script] == NO) {
+					[returnData safeAddObjectWithoutDuplication:script];
 				}
 			}
 		}
@@ -301,9 +289,9 @@
 	NSMutableArray *allPlugins = [NSMutableArray array];
 
 	for (NSBundle *bundle in self.allLoadedBundles) {
-		NSString *path = bundle.bundlePath;
+		NSString *path = [bundle bundlePath];
 
-		[allPlugins safeAddObjectWithoutDuplication:path.lastPathComponent.stringByDeletingPathExtension];
+		[allPlugins safeAddObjectWithoutDuplication:[path.lastPathComponent stringByDeletingPathExtension]];
 	}
 
 	return allPlugins;
@@ -315,8 +303,8 @@
 - (void)sendUserInputDataToBundles:(IRCClient *)client message:(NSString *)message command:(NSString *)command
 {
 	dispatch_async(_dispatchQueue, ^{
-		NSString *cmdu = command.uppercaseString;
-		NSString *cmdl = command.lowercaseString;
+		NSString *cmdu = [command uppercaseString];
+		NSString *cmdl = [command lowercaseString];
 		
 		for (THOPluginItem *plugin in self.allLoadedPlugins) {
 			if ([plugin.supportedUserInputCommands containsObject:cmdl]) {
@@ -329,7 +317,7 @@
 - (void)sendServerInputDataToBundles:(IRCClient *)client message:(IRCMessage *)message
 {
 	dispatch_async(_dispatchQueue, ^{
-		NSString *cmdl = message.command.lowercaseString;
+		NSString *cmdl = [message.command lowercaseString];
 
 		NSDictionary *senderData = @{
 			@"senderHostmask"	: NSStringNilValueSubstitute(message.sender.hostmask),
@@ -362,12 +350,17 @@
 
 - (NSString *)processInlineMediaContentURL:(NSString *)resource
 {
-    for (THOPluginItem *plugin in self.allLoadedPlugins) {
+    for (THOPluginItem *plugin in self.allLoadedPlugins)
+	{
         if ([plugin.primaryClass respondsToSelector:@selector(processInlineMediaContentURL:)]) {
             NSString *input = [plugin.primaryClass processInlineMediaContentURL:resource];
 
-			if (input.length >= 15) {
-				return input;
+			if (input) {
+				NSURL *outputURL = [NSURL URLWithString:input];
+				
+				if (outputURL) { // Valid URL?
+					return input;
+				}
 			}
         }
     }
@@ -380,7 +373,8 @@
 
 - (id)processInterceptedUserInput:(id)input command:(NSString *)command
 {
-    for (THOPluginItem *plugin in self.allLoadedPlugins) {
+    for (THOPluginItem *plugin in self.allLoadedPlugins)
+	{
         if ([plugin.primaryClass respondsToSelector:@selector(interceptUserInput:command:)]) {
             input = [plugin.primaryClass interceptUserInput:input command:command];
 
@@ -394,7 +388,8 @@
 
 - (IRCMessage *)processInterceptedServerInput:(IRCMessage *)input for:(IRCClient *)client
 {
-    for (THOPluginItem *plugin in self.allLoadedPlugins) {
+    for (THOPluginItem *plugin in self.allLoadedPlugins)
+	{
         if ([plugin.primaryClass respondsToSelector:@selector(interceptServerInput:for:)]) {
 			input = [plugin.primaryClass interceptServerInput:input for:client];
 

@@ -2253,16 +2253,6 @@
     }
 }
 
-- (void)loadExtensionsIntoMemory:(id)sender
-{
-	[RZPluginManager() loadPlugins];
-}
-
-- (void)unloadExtensionsFromMemory:(id)sender
-{
-	[RZPluginManager() unloadPlugins];
-}
-
 - (void)resetDoNotAskMePopupWarnings:(id)sender
 {
 	NSDictionary *allSettings =	[RZUserDefaults() dictionaryRepresentation];

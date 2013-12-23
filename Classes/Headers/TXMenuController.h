@@ -173,8 +173,6 @@
 - (void)populateNavgiationChannelList;
 
 - (IBAction)toggleDeveloperMode:(id)sender;
-- (IBAction)loadExtensionsIntoMemory:(id)sender;
-- (IBAction)unloadExtensionsFromMemory:(id)sender;
 - (IBAction)resetDoNotAskMePopupWarnings:(id)sender;
 - (IBAction)openDefaultIRCClientDialog:(id)sender;
 

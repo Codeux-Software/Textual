@@ -184,8 +184,6 @@
 
 - (void)terminate
 {
-	[RZPluginManager() unloadPlugins];
-	
 	for (IRCClient *c in self.clients) {
 		[c terminate];
 	}
