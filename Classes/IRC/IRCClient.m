@@ -4311,22 +4311,9 @@
 		IRCChannel *c = [self findChannel:targetc];
 
 		PointerIsEmptyAssert(c);
-
-		NSString *oldSecretKeyActual;
-		NSString *newSecretKeyActual;
-
-		IRCModeInfo *oldSecretKey;
-		IRCModeInfo *newSecretKey;
-
+		
 		if (m.isPrintOnlyMessage == NO) {
-			oldSecretKey = [c.modeInfo modeInfoFor:@"k"];
-			
 			NSArray *info = [c.modeInfo update:modestr];
-
-			newSecretKey = [c.modeInfo modeInfoFor:@"k"];
-
-			oldSecretKeyActual = [oldSecretKey modeParamater];
-			newSecretKeyActual = [newSecretKey modeParamater];
 
 			BOOL performWho = NO;
 
@@ -4354,13 +4341,6 @@
 
 		if (m.isPrintOnlyMessage == NO) {
 			[self.worldController updateTitleFor:c];
-
-			/* Offer user to remember the key for them. */
-			if ([oldSecretKeyActual isEqualToString:newSecretKeyActual] == NO) {
-				[c.config setSecretKey:newSecretKeyActual];
-			} else if (oldSecretKey.modeIsSet == YES && newSecretKey.modeIsSet == NO && c.config.secretKeyIsSet) {
-				[c.config setSecretKey:nil];
-			}
 		}
 	} else {
 		[self print:nil
@@ -5081,14 +5061,6 @@
 					self.inUserInvokedModeRequest = NO;
 				}
 			}
-
-			NSString *secretKey = [c.modeInfo modeInfoFor:@"k"].modeParamater;
-
-			if (c.config.secretKeyIsSet == NO && NSObjectIsNotEmpty(secretKey)) {
-				[c.config setSecretKey:secretKey];
-			} else if (NSObjectIsEmpty(secretKey) && c.config.secretKeyIsSet) {
-				[c.config setSecretKey:nil];
-			}
 			
 			break;
 		}
@@ -5097,7 +5069,7 @@
 			NSAssertReturnLoopBreak(m.params.count >= 3);
 
 			NSString *channel = [m paramAt:1];
-			NSString *topicva = [m paramAt:2];
+			NSString * = [m paramAt:2];
 
 			IRCChannel *c = [self findChannel:channel];
 
