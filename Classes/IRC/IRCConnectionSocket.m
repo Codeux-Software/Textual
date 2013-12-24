@@ -272,7 +272,7 @@
 {
 	NSMutableData *readBuffer;
 
-	BOOL hasOverflowPrefix = NSObjectIsNotEmpty(self.bufferOverflowString);
+	BOOL hasOverflowPrefix = ([self.bufferOverflowString length] > 0);
 
 	if (hasOverflowPrefix) {
 		readBuffer = [self.bufferOverflowString mutableCopy];

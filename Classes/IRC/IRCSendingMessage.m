@@ -52,7 +52,7 @@
 	NSArray *searchPath = [TPCPreferences IRCCommandIndex:NO];
 
 	for (NSArray *indexInfo in searchPath) {
-		if (indexInfo.count == 5) {
+		if ([indexInfo count] == 5) {
 			NSString *matValue = indexInfo[1];
 
 			if ([matValue isEqualIgnoringCase:command] && [indexInfo boolAtIndex:3] == YES) {
@@ -68,7 +68,7 @@
 {
 	NSMutableString *builtString = [NSMutableString string];
 
-	[builtString appendString:command.uppercaseString];
+	[builtString appendString:[command uppercaseString]];
 
 	NSObjectIsEmptyAssertReturn(argList, builtString);
 

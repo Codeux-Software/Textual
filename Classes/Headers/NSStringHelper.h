@@ -67,8 +67,9 @@
 
 + (NSDictionary *)supportedStringEncodingsWithTitle:(BOOL)favorUTF8;
 
-- (NSString *)safeSubstringAfterIndex:(NSInteger)anIndex;
-- (NSString *)safeSubstringBeforeIndex:(NSInteger)anIndex;
+- (NSString *)substringAfterIndex:(NSInteger)anIndex;
+- (NSString *)substringBeforeIndex:(NSInteger)anIndex;
+
 - (NSString *)safeSubstringFromIndex:(NSInteger)anIndex;
 - (NSString *)safeSubstringToIndex:(NSInteger)anIndex;
 - (NSString *)safeSubstringWithRange:(NSRange)range;

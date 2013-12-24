@@ -43,7 +43,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		[self parseLine:NSStringEmptyPlaceholder];
+		//[self parseLine:NSStringEmptyPlaceholder];
 	}
 	
 	return self;
@@ -84,7 +84,7 @@
 
 	if (client && client.CAPServerTime) {
 		if ([s hasPrefix:@"@"]) {
-			NSString *t = [s.getToken substringFromIndex:1]; //Get token and remove @.
+			NSString *t = [[s getToken] substringFromIndex:1]; //Get token and remove @.
 			
 			NSArray *values = [t componentsSeparatedByString:@","];
 
@@ -130,7 +130,7 @@
      front of the message. */
 
 	if ([s hasPrefix:@":"]) {
-		NSString *t = [s.getToken safeSubstringFromIndex:1];
+		NSString *t = [[s getToken] substringFromIndex:1];
 		
 		self.sender.hostmask = t;
         self.sender.nickname = [t nicknameFromHostmask];
@@ -146,7 +146,7 @@
     /* Now that we have the sender information… continue to the
      actual command being used. */
     
-	self.command = [s.getToken uppercaseString];
+	self.command = [[s getToken] uppercaseString];
 	
 	self.numericReply = [self.command integerValue];
 
@@ -154,13 +154,13 @@
      there is not much left to the parse. Just searching for the beginning
      of a message segment or getting the next token. */
     
-	while (NSObjectIsNotEmpty(s)) {
+	while ([s length] > 0) {
 		if ([s hasPrefix:@":"]) {
-			[self.params safeAddObject:[s safeSubstringFromIndex:1]];
+			[self.params addObject:[s substringFromIndex:1]];
 			
 			break;
 		} else {
-			[self.params safeAddObject:s.getToken];
+			[self.params addObject:[s getToken]];
 		}
 	}
 	
@@ -168,8 +168,8 @@
 
 - (NSString *)paramAt:(NSInteger)index
 {
-	if (index < self.params.count) {
-		return [self.params safeObjectAtIndex:index];
+	if (index < [self.params count]) {
+		return self.params[index];
 	} else {
 		return NSStringEmptyPlaceholder;
 	}
@@ -188,8 +188,8 @@
 {
 	NSMutableString *s = [NSMutableString string];
 	
-	for (NSInteger i = index; i < self.params.count; i++) {
-		NSString *e = [self.params safeObjectAtIndex:i];
+	for (NSInteger i = index; i < [self.params count]; i++) {
+		NSString *e = self.params[i];
 		
 		if (NSDissimilarObjects(i, index)) {
 			[s appendString:NSStringWhitespacePlaceholder];

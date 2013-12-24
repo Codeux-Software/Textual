@@ -65,7 +65,7 @@
 {
 	NSObjectIsEmptyAssertReturn(self.nickname, nil);
 	
-	if (NSObjectIsEmpty(self.username) || NSObjectIsEmpty(self.address)) {
+	if (self.username || self.address) {
 		return [NSString stringWithFormat:@"%@!*@*", self.nickname];
 	} else {
 		switch ([TPCPreferences banFormat]) {
@@ -145,7 +145,7 @@
 
 - (NSUInteger)hash
 {
-	return [self.nickname.lowercaseString hash];
+	return [[self.nickname lowercaseString] hash];
 }
 
 - (CGFloat)totalWeight
@@ -197,8 +197,8 @@
 
 - (NSComparisonResult)compareUsingWeights:(IRCUser *)other
 {
-	CGFloat local = self.totalWeight;
-	CGFloat remte = other.totalWeight;
+	CGFloat local = [self totalWeight];
+	CGFloat remte = [other totalWeight];
 
 	if (local > remte) {
 		return NSOrderedAscending;
@@ -233,7 +233,10 @@
 
 	BOOL favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
 
-	NSComparisonResult rank = NSInvertedComparisonResult([@(self.channelRank) compare:@(other.channelRank)]);
+	id objc1 = @([self channelRank]);
+	id objc2 = @([other channelRank]);
+	
+	NSComparisonResult rank = NSInvertedComparisonResult([objc1 compare:objc2]);
 
 	if (favorIRCop && self.isCop && BOOLReverseValue(other.isCop)) {
 		return NSOrderedAscending;
@@ -271,7 +274,7 @@
 		IRCUser *s1 = obj1;
 		IRCUser *s2 = obj2;
 
-		return (s1.nickname.length <= s2.nickname.length);
+		return ([s1.nickname length] <= [s2.nickname length]);
 	} copy];
 }
 

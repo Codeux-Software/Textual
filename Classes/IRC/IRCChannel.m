@@ -78,19 +78,6 @@
 		return;
 	}
 
-	BOOL oldKeyEmpty = NSObjectIsEmpty(self.config.encryptionKey);
-	BOOL newKeyEmpty = NSObjectIsEmpty(seed.encryptionKey);
-
-	if (oldKeyEmpty && newKeyEmpty == NO) {
-		[self.client printDebugInformation:TXTLS(@"BlowfishEncryptionStarted") channel:self];
-	} else if (oldKeyEmpty == NO && newKeyEmpty) {
-		[self.client printDebugInformation:TXTLS(@"BlowfishEncryptionStopped") channel:self];
-	} else if (oldKeyEmpty == NO && newKeyEmpty == NO) {
-		if ([self.config.encryptionKey isEqualToString:seed.encryptionKey] == NO) {
-			[self.client printDebugInformation:TXTLS(@"BlowfishEncryptionKeyChanged") channel:self];
-		}
-	}
-
 	self.config = [seed mutableCopy];
 }
 
@@ -218,6 +205,7 @@
   
 	if (self.isChannel) {
 		[self.client postEventToViewController:@"channelParted" forChannel:self];
+		
 		[self.viewController setTopic:nil];
     }
 
@@ -270,7 +258,7 @@
 
 		NSString *logstr = [self.viewController renderedBodyForTranscriptLog:line];
 
-		if (NSObjectIsNotEmpty(logstr)) {
+		if (logstr) {
 			[self.logFile writePlainTextLine:logstr];
 		}
 	}
@@ -409,6 +397,7 @@
 		NSDissimilarObjects(user1.h, user2.h)										|| // <----/
 		NSDissimilarObjects(user1.v, user2.v)										|| // <---/
 		NSDissimilarObjects(user1.isAway, user2.isAway)								|| // <--/ Away state.
+		
 		[user1.hostmask isEqual:user2.hostmask] == NO)			 					   // <-/ User host.
 	{
 		return YES;
@@ -505,7 +494,7 @@
 
 - (NSInteger)numberOfMembers
 {
-	return self.memberList.count;
+	return [self.memberList count];
 }
 
 #pragma mark -
@@ -513,7 +502,7 @@
 
 - (IRCUser *)memberAtIndex:(NSInteger)index
 {
-	return [self.memberList safeObjectAtIndex:index];
+	return self.memberList[index];
 }
 
 - (NSInteger)indexOfMember:(NSString *)nick
@@ -569,7 +558,7 @@
 		NSInteger prevIndex = [self.memberListView rowForItem:prevItem];
 
 		if (prevIndex == NSNotFound) {
-			[self.memberListView addItemToList:self.memberListView.numberOfRows];
+			[self.memberListView addItemToList:([self.memberListView numberOfRows] - 1)];
 		} else {
 			[self.memberListView addItemToList:(prevIndex + 1)];
 		}

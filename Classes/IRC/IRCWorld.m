@@ -129,7 +129,7 @@
 	if (firstSelection) {
 		NSInteger n = [self.serverList rowForItem:firstSelection];
 
-		if (NSObjectIsNotEmpty(firstSelection.channels)) {
+		if ([firstSelection.channels count] > 0) {
 			++n;
 		}
 
@@ -162,13 +162,13 @@
 	NSMutableArray *ary = [NSMutableArray array];
 
 	for (IRCClient *u in self.clients) {
-		[ary safeAddObject:[u dictionaryValue]];
+		[ary addObject:[u dictionaryValue]];
 	}
 
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 	
-	[dict safeSetObject:ary						forKey:@"clients"];
-	[dict safeSetObject:@(self.isSoundMuted)	forKey:@"soundIsMuted"];
+	[dict setObject:ary						forKey:@"clients"];
+	[dict setObject:@(self.isSoundMuted)	forKey:@"soundIsMuted"];
 
 	return dict;
 }
@@ -529,7 +529,7 @@
 - (void)reloadLoadingScreen
 {
 	if (self.isPopulatingSeeds == NO) {
-		if (self.clients.count <= 0) {
+		if ([self.clients count] <= 0) {
 			[self.masterController.mainWindowLoadingScreen hideAll:NO];
 			[self.masterController.mainWindowLoadingScreen popWelcomeAddServerView];
 		} else {
@@ -698,7 +698,7 @@
 	}
 
 	[mainWindow setTitle:title];
-	[mainWindow setRepresentedURL:[NSBundle.mainBundle bundleURL]];
+	[mainWindow setRepresentedURL:[RZMainBundle() bundleURL]];
 
 	if (client.config.connectionUsesSSL) {
 		[[mainWindow standardWindowButton:NSWindowDocumentIconButton] setImage:[NSImage imageNamed:@"NSLockLockedTemplate"]];
@@ -828,10 +828,12 @@
 	 first view that exists in Textual what its multiplier is. If there
 	 is no first view, then we default to 1.0 which is 100%. */
 
-	IRCClient *c = [self.clients safeObjectAtIndex:0];
+	NSObjectIsEmptyAssertReturn(self.clients, 1);
+	
+	IRCClient *c = [self.clients objectAtIndex:0];
 
 	if (c) {
-		return c.viewController.view.textSizeMultiplier;
+		return [c.viewController.view textSizeMultiplier];
 	}
 
 	return 1;
@@ -909,7 +911,7 @@
 		[self createChannel:e client:c reload:NO adjust:NO];
 	}
 	
-	[self.clients safeAddObject:c];
+	[self.clients addObject:c];
 	
 	if (reload) {
 		NSInteger index = [self.clients indexOfObject:c];
@@ -917,7 +919,7 @@
 		[self.serverList addItemToList:index inParent:nil];
 	}
 
-	if (self.clients.count == 1) {
+	if ([self.clients count] == 1 && self.isPopulatingSeeds == NO) {
 		/* If our client count is 1, then it means we just added our
 		 first client ever. We want to force the selection to this 
 		 because if we had no client beforehand, then we did not have
@@ -937,9 +939,7 @@
 	
 	IRCChannel *c = [client findChannel:seed.channelName];
 
-	if (NSObjectIsNotEmpty(c.name)) {
-		return c;
-	}
+	NSObjectIsNotEmptyAssertReturn(c.name, c);
 
 	c = [IRCChannel new];
 	
@@ -959,12 +959,12 @@
 		NSInteger n = [client indexOfFirstPrivateMessage];
 
 		if (n >= 0) {
-			[client.channels safeInsertObject:c atIndex:n];
+			[client.channels insertObject:c atIndex:n];
 		} else {
-			[client.channels safeAddObject:c];
+			[client.channels addObject:c];
 		}
 	} else {
-		[client.channels safeAddObject:c];
+		[client.channels addObject:c];
 	}
 	
 	if (reload) {
@@ -1013,8 +1013,8 @@
 		
 		NSInteger n = (i + 1);
 		
-		if (0 <= n && n < self.clients.count) {
-			sel = [self.clients safeObjectAtIndex:n];
+		if (0 <= n && n < [self.clients count]) {
+			sel = [self.clients objectAtIndex:n];
 		}
 		
 		i = [self.serverList rowForItem:target];
@@ -1165,10 +1165,10 @@
 
 	NSObjectIsEmptyAssert(ary);
 
-	NSString *kind = [ary safeObjectAtIndex:0];
+	NSString *kind = [ary objectAtIndex:0];
 	
 	if ([kind isEqualToString:@"client"]) {
-		if (ary.count >= 2) {
+		if ([ary count] >= 2) {
 			NSString *uid = [ary objectAtIndex:1];
 			
 			IRCClient *u = [self findClientById:uid];
@@ -1178,7 +1178,7 @@
 			}
 		}
 	} else if ([kind isEqualToString:@"channel"]) {
-		if (ary.count >= 3) {
+		if ([ary count] >= 3) {
 			NSString *uid = [ary objectAtIndex:1];
 			NSString *cid = [ary objectAtIndex:2];
 			
@@ -1230,7 +1230,7 @@
 
 - (NSInteger)outlineView:(NSOutlineView *)sender numberOfChildrenOfItem:(id)item
 {
-	PointerIsEmptyAssertReturn(item, self.clients.count);
+	PointerIsEmptyAssertReturn(item, [self.clients count]);
 	
 	return [item numberOfChildren];
 }
@@ -1271,7 +1271,7 @@
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(IRCTreeItem *)item
 {
 	/* Ask our view controller what we are. */
-	if (PointerIsEmpty(item.viewController.channel)) {
+	if (item.isClient) {
 		/* We are a group item. A client. */
 
 		NSView *newView = [outlineView makeViewWithIdentifier:@"GroupView" owner:self];
@@ -1326,7 +1326,7 @@
 	 then move selection to the console of the collapsed server. */
 	id itemBeingCollapsed = [notification.userInfo objectForKey:@"NSObject"];
 
-	if (itemBeingCollapsed == self.selectedClient) {
+	if (itemBeingCollapsed == self.selectedClient && [itemBeingCollapsed isClient] == NO) {
 		[self select:self.selectedClient];
 	}
 }
@@ -1337,12 +1337,14 @@
 	[self storePreviousSelection];
 
 	/* Reset spelling for text field. */
-	TVCInputTextField *textField = self.masterController.inputTextField;
+	TVCInputTextField *textField = [self.masterController inputTextField];
 	
-	[RZSpellChecker() setIgnoredWords:@[] inSpellDocumentWithTag:textField.spellCheckerDocumentTag];
-
+	if ([textField hasModifiedSpellingDictionary]) {
+		[RZSpellChecker() setIgnoredWords:@[] inSpellDocumentWithTag:textField.spellCheckerDocumentTag];
+	}
+	
 	/* Prepare next item. */
-	id nextItem = [self.serverList itemAtRow:self.serverList.selectedRow];
+	id nextItem = [self.serverList itemAtRow:[self.serverList selectedRow]];
 
 	[self.selectedItem resetState]; // Reset state of old item.
 	self.selectedItem = nextItem;
@@ -1419,23 +1421,23 @@
 	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
 		NSAttributedString *inputValue = [textField attributedStringValue];
 		
-		self.masterController.inputHistory = self.selectedItem.inputHistory;
+		self.masterController.inputHistory = [self.selectedItem inputHistory];
 		
 		IRCTreeItem *previous = [self previouslySelectedItem];
 		
-		TLOInputHistory *oldHistory = previous.inputHistory;
-		TLOInputHistory *newHistory = self.selectedItem.inputHistory;
+		TLOInputHistory *oldHistory = [previous inputHistory];
+		TLOInputHistory *newHistory = [self.selectedItem inputHistory];
 		
 		[oldHistory setLastHistoryItem:inputValue];
 		
 		[textField setStringValue:NSStringEmptyPlaceholder];
 		
-		if (NSObjectIsNotEmpty(newHistory.lastHistoryItem)) {
+		if (newHistory.lastHistoryItem) {
 			[textField setAttributedStringValue:newHistory.lastHistoryItem];
 		}
 	}
 	
-	if (self.selectedItem.isClient || self.selectedItem.isPrivateMessage) {
+	if ([self.selectedItem isClient] || [self.selectedItem isPrivateMessage]) {
 		[self.masterController showMemberListSplitView:NO];
 	} else {
 		if (self.memberList.setHiddenByUser == NO) {
@@ -1457,7 +1459,7 @@
 {
 	NSObjectIsEmptyAssertReturn(items, NO);
 	
-	IRCTreeItem *i = [items safeObjectAtIndex:0];
+	IRCTreeItem *i = [items objectAtIndex:0];
 
 	NSString *s = i.treeUUID;
 	
@@ -1519,20 +1521,20 @@
 		NSArray *ary = toClient.channels;
 		
 		NSMutableArray *low = [[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy];
-		NSMutableArray *high = [[ary subarrayWithRange:NSMakeRange(index, (ary.count - index))] mutableCopy];
+		NSMutableArray *high = [[ary subarrayWithRange:NSMakeRange(index, ([ary count] - index))] mutableCopy];
 		
 		[low removeObjectIdenticalTo:c];
 		[high removeObjectIdenticalTo:c];
 		
 		if (c.isChannel) {
-			if (NSObjectIsNotEmpty(low)) {
+			if ([low count] > 0) {
 				IRCChannel *prev = [low lastObject];
 
                 NSAssertReturnR(prev.isChannel, NSDragOperationNone);
 			}
 		} else {
-			if (NSObjectIsNotEmpty(high)) {
-				IRCChannel *next = [high safeObjectAtIndex:0];
+			if ([high count] > 0) {
+				IRCChannel *next = [high objectAtIndex:0];
 
                 NSAssertReturnR((next.isChannel == NO), NSDragOperationNone);
 			}
@@ -1563,7 +1565,7 @@
 		NSMutableArray *ary = self.clients;
         
 		NSMutableArray *low = [[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy];
-		NSMutableArray *high = [[ary subarrayWithRange:NSMakeRange(index, (ary.count - index))] mutableCopy];
+		NSMutableArray *high = [[ary subarrayWithRange:NSMakeRange(index, ([ary count] - index))] mutableCopy];
 
 		NSInteger originalIndex = [ary indexOfObject:i];
 
@@ -1573,7 +1575,7 @@
 		[ary removeAllObjects];
 		
 		[ary addObjectsFromArray:low];
-		[ary safeAddObject:i];
+		[ary addObject:i];
 		[ary addObjectsFromArray:high];
 
 		NSArray *childItems = [self.serverList groupItems];
@@ -1583,12 +1585,12 @@
 		NSInteger oldIndex = [childItems indexOfObject:i];
 		NSInteger newIndex = 0;
 
-		id lastObject = low.lastObject;
+		id lastObject = [low lastObject];
 
 		if (lastObject) {
 			newIndex = [childItems indexOfObject:lastObject];
 
-			if (originalIndex <= oldIndex && newIndex < (childItems.count - 1)) {
+			if (originalIndex <= oldIndex && newIndex < ([childItems count] - 1)) {
 				newIndex += 1;
 			}
 		}
@@ -1608,7 +1610,7 @@
 		NSMutableArray *ary = u.channels;
         
 		NSMutableArray *low = [[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy];
-		NSMutableArray *high = [[ary subarrayWithRange:NSMakeRange(index, (ary.count - index))] mutableCopy];
+		NSMutableArray *high = [[ary subarrayWithRange:NSMakeRange(index, ([ary count] - index))] mutableCopy];
 
 		NSInteger originalIndex = [ary indexOfObject:i];
 		
@@ -1618,7 +1620,7 @@
 		[ary removeAllObjects];
 		
 		[ary addObjectsFromArray:low];
-		[ary safeAddObject:i];
+		[ary addObject:i];
 		[ary addObjectsFromArray:high];
 
 		NSArray *childItems = [self.serverList rowsFromParentGroup:u];
@@ -1628,7 +1630,7 @@
 		NSInteger oldIndex = [childItems indexOfObject:i];
 		NSInteger newIndex = 0;
 		
-		id lastObject = low.lastObject;
+		id lastObject = [low lastObject];
 
 		if (lastObject) {
 			newIndex  = [childItems indexOfObject:lastObject];

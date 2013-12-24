@@ -458,6 +458,8 @@
 	 of these ignores between channel changes. */
 	[RZSpellChecker() ignoreWord:ut inSpellDocumentWithTag:inputTextField.spellCheckerDocumentTag];
 
+	inputTextField.hasModifiedSpellingDictionary = YES;
+	
 	/* Create our final string. */
 	if (commandMode || channelMode || isAtStart == NO) {
 		BOOL addWhitespace = YES;

@@ -2324,7 +2324,7 @@
 							gltime = [reason safeSubstringToIndex:spacePos];
 						}
 
-						reason = [reason safeSubstringAfterIndex:spacePos];
+						reason = [reason substringAfterIndex:spacePos];
 					}
 				}
 
@@ -2353,7 +2353,7 @@
 						if ([reason contains:NSStringWhitespacePlaceholder]) {
 							NSInteger spacePos = [reason stringPosition:NSStringWhitespacePlaceholder];
 
-							reason = [reason safeSubstringAfterIndex:spacePos];
+							reason = [reason substringAfterIndex:spacePos];
 						}
 					}
 
@@ -2373,7 +2373,7 @@
 								shtime = [reason safeSubstringToIndex:spacePos];
 							}
 
-							reason = [reason safeSubstringAfterIndex:spacePos];
+							reason = [reason substringAfterIndex:spacePos];
 						}
 					}
 

@@ -191,12 +191,12 @@
 	return [NSString stringWithUniChar:strChar];
 }
 
-- (NSString *)safeSubstringAfterIndex:(NSInteger)anIndex
+- (NSString *)substringAfterIndex:(NSInteger)anIndex
 {
 	return [self safeSubstringFromIndex:(anIndex + 1)];
 }
 
-- (NSString *)safeSubstringBeforeIndex:(NSInteger)anIndex
+- (NSString *)substringBeforeIndex:(NSInteger)anIndex
 {
 	return [self safeSubstringFromIndex:(anIndex - 1)];
 }
@@ -462,7 +462,7 @@
 
 	NSInteger bang1pos = [self stringPosition:@"!"];
 
-	return [self safeSubstringAfterIndex:bang1pos];
+	return [self substringAfterIndex:bang1pos];
 }
 
 - (NSString *)nicknameFromHostmask
@@ -483,7 +483,7 @@
 
     NSString *bob = [self substringToIndex:bang2pos];
 
-	return [bob safeSubstringAfterIndex:bang1pos];
+	return [bob substringAfterIndex:bang1pos];
 }
 
 - (NSString *)addressFromHostmask
@@ -492,7 +492,7 @@
 
 	NSInteger bang2pos = [self stringPosition:@"@"];
 
-	return [self safeSubstringAfterIndex:bang2pos];
+	return [self substringAfterIndex:bang2pos];
 }
 
 - (NSString *)reservedCharactersToIRCFormatting

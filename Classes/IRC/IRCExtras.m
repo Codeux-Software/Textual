@@ -78,12 +78,12 @@
 	NSString *serverInfo = location;
 	NSString *channelInfo = nil;
 
-	if (slashMatches.count == 3) { // Only cut if we do have an extra slash.
+	if ([slashMatches count] == 3) { // Only cut if we do have an extra slash.
 		NSRange backwardRange = [location rangeOfString:@"/" options:NSBackwardsSearch];
 
 		if (NSDissimilarObjects(backwardRange.location, NSNotFound)) {
-			serverInfo = [location safeSubstringToIndex:backwardRange.location];
-			channelInfo = [location safeSubstringAfterIndex:backwardRange.location];
+			serverInfo = [location substringToIndex:backwardRange.location];
+			channelInfo = [location substringAfterIndex:backwardRange.location];
 		}
 	}
 
@@ -125,7 +125,7 @@
 
 	if ([addressScheme isEqualToString:@"textual"]) {
 		/* We will use the menu controller often so just make a local var. */
-		TXMenuController *menuc = self.masterController.menuController;
+		TXMenuController *menuc = [self.masterController menuController];
 		
 		if ([serverAddress isEqualToString:@"acknowledgements"])
 		{
@@ -212,10 +212,9 @@
 	 care with the channel information. Just a basic parse to establish if 
 	 the "needssl" token is present as well as the channel name having a 
 	 pound (#) sign in front of it. */
-
 	NSMutableString *channelList = [NSMutableString string];
 
-	if (NSObjectIsNotEmpty(channelInfo)) {
+	if (channelInfo) {
 		NSInteger channelCount = 0;
 
 		NSArray *dataSections = [channelInfo split:@","];
@@ -305,15 +304,14 @@
 
     if (hasOpeningBracket && hasClosingBracket) {
 		/* Get address from inside brackets. */
-
 		NSInteger startPos = ([tempStore stringPosition:@"["] + 1);
 		NSInteger srendPos =  [tempStore stringPosition:@"]"];
 
 		NSRange servRange = NSMakeRange(startPos, (srendPos - startPos));
 
-		serverAddress = [tempStore safeSubstringWithRange:servRange];
+		serverAddress = [tempStore substringWithRange:servRange];
 
-		tempStore = [tempStore safeSubstringAfterIndex:srendPos];
+		tempStore = [tempStore substringAfterIndex:srendPos];
     } else {
 		if (hasOpeningBracket == NO && hasClosingBracket == NO) {
 			/* Our server address did not contain brackets. Does it
@@ -322,11 +320,11 @@
 			if ([tempStore contains:@":"]) {
 				NSInteger cutPos = [tempStore stringPosition:@":"];
 
-				serverAddress = [tempStore safeSubstringToIndex:cutPos];
+				serverAddress = [tempStore substringToIndex:cutPos];
 
 				/* We cut the server address out of our temporary store,
 				 but left the colon and everything after it, in it. */
-				tempStore = [tempStore safeSubstringFromIndex:cutPos];
+				tempStore = [tempStore substringFromIndex:cutPos];
 			} else {
 				serverAddress = tempStore;
 			}
@@ -353,7 +351,7 @@
             connectionUsesSSL = YES;
         }
 
-        tempStore = [tempStore safeSubstringFromIndex:chopIndex];
+        tempStore = [tempStore substringFromIndex:chopIndex];
 
 		/* Make sure the port number matches a valid format. If it does,
 		 then we are all good, and done with the port. */
@@ -368,7 +366,7 @@
 
             if ([TLORegularExpression string:tempStore isMatchedByRegex:@"^(\\+?[0-9]{1,6})$"]) {
                 if ([tempStore hasPrefix:@"+"]) {
-                    tempStore = [tempStore safeSubstringFromIndex:1];
+                    tempStore = [tempStore substringFromIndex:1];
 
                     connectionUsesSSL = YES;
                 }
@@ -414,7 +412,7 @@
 	/* Feed the world our seed and finish up. */
 	IRCClient *uf = [self.worldController createClient:dic reload:YES];
 
-	if (NSObjectIsNotEmpty(serverPassword)) {
+	if (serverPassword) {
 		[uf.config setServerPassword:serverPassword];
 	}
 	

@@ -90,7 +90,7 @@
 - (void)update:(NSString *)configData client:(IRCClient *)client
 {
 	if ([configData hasSuffix:IRCISupportRawSuffix]) {
-		configData = [configData safeSubstringToIndex:(configData.length - IRCISupportRawSuffix.length)];
+		configData = [configData safeSubstringToIndex:([configData length] - [IRCISupportRawSuffix length])];
 	}
 
 	NSObjectIsEmptyAssert(configData);
@@ -106,12 +106,12 @@
 		NSRange r = [cvar rangeOfString:@"="];
 
 		if (NSDissimilarObjects(r.location, NSNotFound)) {
-			vakey = [cvar safeSubstringToIndex:r.location];
-			value = [cvar safeSubstringFromIndex:NSMaxRange(r)];
+			vakey = [cvar substringToIndex:r.location];
+			value = [cvar substringFromIndex:NSMaxRange(r)];
 
-            [cachedConfig safeSetObject:value forKey:vakey];
+			[cachedConfig setObject:value forKey:vakey];
 		} else {
-            [cachedConfig safeSetObject:@(YES) forKey:vakey];
+			[cachedConfig setBool:YES forKey:vakey];
         }
         
 		if (value) {
@@ -171,7 +171,7 @@
 
         NSMutableString *cacheString = [NSMutableString string];
 
-        NSArray *sortedKeys = cachedConfig.sortedDictionaryKeys;
+        NSArray *sortedKeys = [cachedConfig sortedDictionaryKeys];
 
         for (NSString *configToken in sortedKeys) {
             /* Does it have value or is it empty? */
@@ -203,7 +203,7 @@
 	
 	BOOL beingSet = NO;
 	
-	while (modeInfo.length >= 1) {
+	while ([modeInfo length] >= 1) {
 		NSString *token = [modeInfo getToken];
 
 		NSObjectIsEmptyAssertLoopBreak(token);
@@ -213,7 +213,7 @@
 		if ([c isEqualToString:@"+"] || [c isEqualToString:@"-"]) {
 			beingSet = [c isEqualToString:@"+"];
 			
-			token = [token safeSubstringFromIndex:1];
+			token = [token substringFromIndex:1];
 			
 			for (NSInteger i = 0; i < token.length; i++) {
 				c = [token stringCharacterAtIndex:i];
@@ -232,7 +232,7 @@
 						m.modeParamater = [modeInfo getToken];
 					}
 
-					[modeArray safeAddObject:m];
+					[modeArray addObject:m];
 				}
 			}
 		}
@@ -251,13 +251,13 @@
 		NSString *nodes;
 		NSString *chars;
 		
-		nodes = [value safeSubstringToIndex:endSignPos];
-		nodes = [nodes safeSubstringFromIndex:1];
+		nodes = [value substringToIndex:endSignPos];
+		nodes = [nodes substringFromIndex:1];
 		
-		chars = [value safeSubstringAfterIndex:endSignPos];
+		chars = [value substringAfterIndex:endSignPos];
 
-		NSInteger modeLength = nodes.length;
-		NSInteger charLength = chars.length;
+		NSInteger modeLength = [nodes length];
+		NSInteger charLength = [chars length];
 
 		NSMutableDictionary *channelModes = [self.channelModes mutableCopy];
 		NSMutableDictionary *modePrefixes = [self.userModePrefixes mutableCopy];
@@ -311,8 +311,8 @@
 
 	NSArray *allmodes = [str split:@","];
 
-	for (NSInteger i = 0; i < allmodes.count; i++) {
-		NSString *modeset = [allmodes safeObjectAtIndex:i];
+	for (NSInteger i = 0; i < [allmodes count]; i++) {
+		NSString *modeset = allmodes[i];
 		
 		for (NSInteger j = 0; j < modeset.length; j++) {
 			NSString *mode = [modeset stringCharacterAtIndex:j];
@@ -331,7 +331,9 @@
 
 - (BOOL)modeIsSupportedUserPrefix:(NSString *)mode
 {
-	return NSObjectIsNotEmpty([self userModePrefixSymbol:mode]);
+	NSString *prefix = [self userModePrefixSymbol:mode];
+	
+	return ([prefix length] > 0);
 }
 
 - (IRCModeInfo *)createMode:(NSString *)mode
