@@ -169,7 +169,7 @@
 
 	NSString *firstItem = [self.sendQueue[0] stringByAppendingString:@"\r\n"];
 
-	[self.sendQueue safeRemoveObjectAtIndex:0];
+	[self.sendQueue removeObjectAtIndex:0];
 
 	NSData *data = [self convertToCommonEncoding:firstItem];
 
@@ -178,9 +178,7 @@
 
 		[self write:data];
 
-		if ([self.client respondsToSelector:@selector(ircConnectionWillSend:)]) {
-			[self.client ircConnectionWillSend:firstItem];
-		}
+		[self.client ircConnectionWillSend:firstItem];
 	}
 }
 

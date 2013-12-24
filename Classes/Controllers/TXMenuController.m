@@ -1448,6 +1448,19 @@
 			return;
 		}
 		
+		BOOL oldKeyEmpty = NSObjectIsEmpty(c.config.encryptionKey);
+		BOOL newKeyEmpty = NSObjectIsEmpty(sender.config.encryptionKey);
+		
+		if (oldKeyEmpty && newKeyEmpty == NO) {
+			[c.client printDebugInformation:TXTLS(@"BlowfishEncryptionStarted") channel:c];
+		} else if (oldKeyEmpty == NO && newKeyEmpty) {
+			[c.client printDebugInformation:TXTLS(@"BlowfishEncryptionStopped") channel:c];
+		} else if (oldKeyEmpty == NO && newKeyEmpty == NO) {
+			if ([c.config.encryptionKey isEqualToString:sender.config.encryptionKey] == NO) {
+				[c.client printDebugInformation:TXTLS(@"BlowfishEncryptionKeyChanged") channel:c];
+			}
+		}
+		
 		[c updateConfig:sender.config];
 	}
 	

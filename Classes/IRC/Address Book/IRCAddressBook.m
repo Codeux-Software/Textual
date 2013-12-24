@@ -106,8 +106,8 @@
 		NSRange atsrange = [hostmask rangeOfString:@"@" options:NSBackwardsSearch];
 		
 		if (hostmask.length > 2) {
-			NSString *first = [hostmask safeSubstringToIndex:atsrange.location];
-			NSString *second = [hostmask safeSubstringAfterIndex:atsrange.location];
+			NSString *first = [hostmask substringToIndex:atsrange.location];
+			NSString *second = [hostmask substringAfterIndex:atsrange.location];
 			
 			if (NSObjectIsEmpty(first)) {
 				first = @"*";

@@ -286,28 +286,28 @@
 		for (NSDictionary *e in [dic arrayForKey:@"channelList"]) {
 			IRCChannelConfig *c = [[IRCChannelConfig alloc] initWithDictionary:e];
 			
-			[self.channelList safeAddObject:c];
+			[self.channelList addObject:c];
 		}
 
 		/* Ignore list. */
 		for (NSDictionary *e in [dic arrayForKey:@"ignoreList"]) {
 			IRCAddressBook *ignore = [[IRCAddressBook alloc] initWithDictionary:e];
 			
-			[self.ignoreList safeAddObject:ignore];
+			[self.ignoreList addObject:ignore];
 		}
 
 		/* Server specific highlight list. */
 		for (NSDictionary *e in [dic arrayForKey:@"highlightList"]) {
 			TDCHighlightEntryMatchCondition *c = [[TDCHighlightEntryMatchCondition alloc] initWithDictionary:e];
 
-			[self.highlightList safeAddObject:c];
+			[self.highlightList addObject:c];
 		}
 
 		/* Flood control. */
 		if ([dic containsKey:@"floodControl"]) {
 			NSDictionary *e = [dic dictionaryForKey:@"floodControl"];
 			
-			if (NSObjectIsNotEmpty(e)) {
+			if (e) {
 				self.outgoingFloodControl = NSDictionaryBOOLKeyValueCompare(e, @"serviceEnabled", self.outgoingFloodControl);
 
 				self.floodControlMaximumMessages = NSDictionaryIntegerKeyValueCompare(e, @"maximumMessageCount", TXFloodControlDefaultMessageCount);
@@ -318,7 +318,7 @@
 		/* Migrate to keychain. */
 		NSString *proxyPassword = [dic stringForKey:@"proxyServerPassword"];
 
-		if (NSObjectIsNotEmpty(proxyPassword)) {
+		if (proxyPassword) {
 			[self setProxyPassword:proxyPassword];
 		}
 

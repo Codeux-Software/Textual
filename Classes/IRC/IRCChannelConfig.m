@@ -177,18 +177,6 @@
 		self.defaultModes		= NSDictionaryObjectKeyValueCompare(dic, @"defaultMode", self.defaultModes);
 		self.defaultTopic		= NSDictionaryObjectKeyValueCompare(dic, @"defaultTopic", self.defaultTopic);
 
-		/* Migrate to keychain.*/
-		NSString *oldEncKey = [dic stringForKey:@"encryptionKey"];
-		NSString *oldJoinKey = [dic stringForKey:@"secretJoinKey"];
-
-		if (NSObjectIsNotEmpty(oldEncKey)) {
-			[self setEncryptionKey:oldEncKey];
-		}
-
-		if (NSObjectIsNotEmpty(oldJoinKey)) {
-			[self setSecretKey:oldJoinKey];
-		}
-
 		/* Establish state. */
 		self.secretKeyIsSet = NSObjectIsNotEmpty(self.secretKey);
 		self.encryptionKeyIsSet = NSObjectIsNotEmpty(self.encryptionKey);

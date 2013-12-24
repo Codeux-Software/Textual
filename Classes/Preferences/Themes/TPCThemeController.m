@@ -232,7 +232,7 @@
 		return nil;
     }
 	
-	return [source safeSubstringAfterIndex:[source stringPosition:@":"]];	
+	return [source substringAfterIndex:[source stringPosition:@":"]];	
 }
 
 @end

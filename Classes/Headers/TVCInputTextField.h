@@ -39,6 +39,7 @@
 
 @interface TVCInputTextField : TVCTextField
 @property (nonatomic, strong) NSAttributedString *placeholderString;
+@property (nonatomic, assign) BOOL hasModifiedSpellingDictionary;
 
 - (void)updateTextDirection;
 - (void)updateTextBoxBasedOnPreferredFontSize;
