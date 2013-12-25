@@ -404,10 +404,13 @@
 	
 	/* Only declare ourselves as equal when we do not have any
 	 temporary keychain items stored in memory. */
-	return ([s2 isEqual:s1] &&
-			[_nicknamePassword isEqual:[seed temporaryNicknamePassword]] &&
-			[_serverPassword isEqual:[seed temporaryServerPassword]] &&
-			[_proxyPassword isEqual:[seed temporaryProxyPassword]]);
+	return (NSObjectsAreEqual(s1, s2) &&
+			NSObjectsAreEqual(_nicknamePassword, [seed temporaryNicknamePassword]) &&
+			NSObjectsAreEqual(_serverAddress, [seed temporaryServerPassword]) &&
+			NSObjectsAreEqual(_proxyPassword, [seed temporaryProxyPassword]) &&
+			_nicknamePasswordIsSet == [seed nicknamePasswordIsSet] &&
+			_serverPasswordIsSet == [seed serverPasswordIsSet] &&
+			_proxyPasswordIsSet == [seed proxyPasswordIsSet]);
 }
 
 - (NSMutableDictionary *)dictionaryValue
