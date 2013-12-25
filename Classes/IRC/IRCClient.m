@@ -260,6 +260,8 @@
 
 	[self.worldController select:selectedItem];
 	[self.worldController adjustSelection];
+	
+	[self.config writeKeychainItemsToDisk];
 
 	[self populateISONTrackedUsersList:self.config.ignoreList];
 

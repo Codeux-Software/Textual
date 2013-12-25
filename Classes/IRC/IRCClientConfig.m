@@ -40,6 +40,10 @@
 
 @implementation IRCClientConfig
 
+@synthesize serverPassword = _serverPassword;
+@synthesize proxyPassword = _proxyPassword;
+@synthesize nicknamePassword = _nicknamePassword;
+
 - (id)init
 {
 	if ((self = [super init])) {
@@ -125,24 +129,6 @@
 	return kcPassword;
 }
 
-- (void)setNicknamePassword:(NSString *)pass
-{
-	self.nicknamePasswordIsSet = NSObjectIsNotEmpty(pass);
-
-	if (self.nicknamePasswordIsSet == NO) {
-		[AGKeychain deleteKeychainItem:@"Textual (NickServ)"
-						  withItemKind:@"application password"
-						   forUsername:nil
-						   serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.itemUUID]];
-	} else {
-		[AGKeychain modifyOrAddKeychainItem:@"Textual (NickServ)"
-							   withItemKind:@"application password"
-								forUsername:nil
-							withNewPassword:pass
-								serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.itemUUID]];
-	}
-}
-
 - (NSString *)serverPassword
 {
 	NSString *kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Server Password)"
@@ -160,24 +146,6 @@
 	return kcPassword;
 }
 
-- (void)setServerPassword:(NSString *)pass
-{
-	self.serverPasswordIsSet = NSObjectIsNotEmpty(pass);
-
-	if (self.serverPasswordIsSet == NO) {
-		[AGKeychain deleteKeychainItem:@"Textual (Server Password)"
-						  withItemKind:@"application password"
-						   forUsername:nil
-						   serviceName:[NSString stringWithFormat:@"textual.server.%@", self.itemUUID]];
-	} else {
-		[AGKeychain modifyOrAddKeychainItem:@"Textual (Server Password)"
-							   withItemKind:@"application password"
-								forUsername:nil
-							withNewPassword:pass
-								serviceName:[NSString stringWithFormat:@"textual.server.%@", self.itemUUID]];		
-	}
-}
-
 - (NSString *)proxyPassword
 {
 	NSString *kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Proxy Server Password)"
@@ -188,10 +156,54 @@
 	return kcPassword;
 }
 
+- (NSString *)temporaryNicknamePassword
+{
+	return _nicknamePassword;
+}
+
+- (NSString *)temporaryServerPassword
+{
+	return _serverPassword;
+}
+
+- (NSString *)temporaryProxyPassword
+{
+	return _proxyPassword;
+}
+
+- (void)setNicknamePassword:(NSString *)pass
+{
+	self.nicknamePasswordIsSet = NSObjectIsNotEmpty(pass);
+	
+	_nicknamePassword = pass;
+}
+
+- (void)setServerPassword:(NSString *)pass
+{
+	self.serverPasswordIsSet = NSObjectIsNotEmpty(pass);
+	
+	_serverPassword = pass;
+}
+
 - (void)setProxyPassword:(NSString *)pass
 {
 	self.proxyPasswordIsSet = NSObjectIsNotEmpty(pass);
 
+	_proxyPassword = pass;
+}
+
+- (void)writeKeychainItemsToDisk
+{
+	[self writeNicknamePasswordKeychainItemToDisk];
+	[self writeProxyPasswordKeychainItemToDisk];
+	[self writeServerPasswordKeychainItemToDisk];
+}
+
+- (void)writeProxyPasswordKeychainItemToDisk
+{
+	/* Write proxy password to keychain. */
+	NSObjectIsEmptyAssert(_proxyPassword);
+	
 	if (self.proxyPasswordIsSet == NO) {
 		[AGKeychain deleteKeychainItem:@"Textual (Proxy Server Password)"
 						  withItemKind:@"application password"
@@ -201,8 +213,52 @@
 		[AGKeychain modifyOrAddKeychainItem:@"Textual (Proxy Server Password)"
 							   withItemKind:@"application password"
 								forUsername:nil
-							withNewPassword:pass
+							withNewPassword:_proxyPassword
 								serviceName:[NSString stringWithFormat:@"textual.proxy-server.%@", self.itemUUID]];
+	
+		_proxyPassword = nil;
+	}
+}
+
+- (void)writeServerPasswordKeychainItemToDisk
+{
+	/* Write server password to keychain. */
+	NSObjectIsEmptyAssert(_serverPassword);
+	
+	if (self.serverPasswordIsSet == NO) {
+		[AGKeychain deleteKeychainItem:@"Textual (Server Password)"
+						  withItemKind:@"application password"
+						   forUsername:nil
+						   serviceName:[NSString stringWithFormat:@"textual.server.%@", self.itemUUID]];
+	} else {
+		[AGKeychain modifyOrAddKeychainItem:@"Textual (Server Password)"
+							   withItemKind:@"application password"
+								forUsername:nil
+							withNewPassword:_serverPassword
+								serviceName:[NSString stringWithFormat:@"textual.server.%@", self.itemUUID]];
+	
+		_serverPassword = nil;
+	}
+}
+
+- (void)writeNicknamePasswordKeychainItemToDisk
+{
+	/* Write nickname password to keychain. */
+	NSObjectIsEmptyAssert(_nicknamePassword);
+	
+	if (self.nicknamePasswordIsSet == NO) {
+		[AGKeychain deleteKeychainItem:@"Textual (NickServ)"
+						  withItemKind:@"application password"
+						   forUsername:nil
+						   serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.itemUUID]];
+	} else {
+		[AGKeychain modifyOrAddKeychainItem:@"Textual (NickServ)"
+							   withItemKind:@"application password"
+								forUsername:nil
+							withNewPassword:_nicknamePassword
+								serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.itemUUID]];
+		
+		_nicknamePassword = nil;
 	}
 }
 
@@ -226,6 +282,10 @@
 	self.serverPasswordIsSet = NO;
 	self.nicknamePasswordIsSet = NO;
 	self.proxyPasswordIsSet = NO;
+	
+	_serverPassword = nil;
+	_nicknamePassword = nil;
+	_proxyPassword = nil;
 }
 
 #pragma mark -
@@ -320,6 +380,7 @@
 
 		if (proxyPassword) {
 			[self setProxyPassword:proxyPassword];
+			[self writeProxyPasswordKeychainItemToDisk];
 		}
 
 		/* Get a base reading. */
@@ -341,7 +402,12 @@
 	NSDictionary *s1 = [seed dictionaryValue];
 	NSDictionary *s2 = [self dictionaryValue];
 	
-	return ([s2 isEqual:s1]);
+	/* Only declare ourselves as equal when we do not have any
+	 temporary keychain items stored in memory. */
+	return ([s2 isEqual:s1] &&
+			[_nicknamePassword isEqual:[seed temporaryNicknamePassword]] &&
+			[_serverPassword isEqual:[seed temporaryServerPassword]] &&
+			[_proxyPassword isEqual:[seed temporaryProxyPassword]]);
 }
 
 - (NSMutableDictionary *)dictionaryValue
@@ -421,7 +487,17 @@
 
 - (id)mutableCopyWithZone:(NSZone *)zone
 {
-	return [[IRCClientConfig allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
+	IRCClientConfig *mut = [[IRCClientConfig allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
+	
+	[mut setNicknamePassword:_nicknamePassword];
+	[mut setServerPassword:_serverPassword];
+	[mut setProxyPassword:_proxyPassword];
+	
+	[mut setNicknamePasswordIsSet:_nicknamePasswordIsSet];
+	[mut setServerPasswordIsSet:_serverPasswordIsSet];
+	[mut setProxyPasswordIsSet:_proxyPasswordIsSet];
+	
+	return mut;
 }
 
 @end

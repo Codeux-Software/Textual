@@ -414,6 +414,7 @@
 
 	if (serverPassword) {
 		[uf.config setServerPassword:serverPassword];
+		[uf.config writeServerPasswordKeychainItemToDisk];
 	}
 	
 	[self.worldController save];

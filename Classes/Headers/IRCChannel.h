@@ -97,6 +97,8 @@ typedef enum IRCChannelStatus : NSInteger {
 
 - (NSInteger)numberOfMembers;
 
+- (void)setEncryptionKey:(NSString *)encryptionKey; // Use this instead of config to inform view of change.
+
 /* For redrawing the member cells in table view. */
 - (BOOL)memberRequiresRedraw:(IRCUser *)user1 comparedTo:(IRCUser *)user2;
 

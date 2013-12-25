@@ -108,5 +108,16 @@ typedef enum TXConnectionProxyType : NSInteger {
 - (id)initWithDictionary:(NSDictionary *)dic;
 - (NSMutableDictionary *)dictionaryValue;
 
+/* Keychain. */
 - (void)destroyKeychains;
+
+- (NSString *)temporaryNicknamePassword;
+- (NSString *)temporaryServerPassword;
+- (NSString *)temporaryProxyPassword;
+
+- (void)writeKeychainItemsToDisk;
+
+- (void)writeProxyPasswordKeychainItemToDisk;
+- (void)writeServerPasswordKeychainItemToDisk;
+- (void)writeNicknamePasswordKeychainItemToDisk;
 @end
