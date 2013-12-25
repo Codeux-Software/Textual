@@ -1070,6 +1070,8 @@
 {
 	[u terminate];
 	
+	[u.viewController prepareForPermanentDestruction];
+	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if ([TPCPreferences syncPreferencesToTheCloud]) {
 		if (u.config.excludedFromCloudSyncing == NO) {
@@ -1110,6 +1112,8 @@
 	}
     
 	[c terminate];
+	
+	[c.viewController prepareForPermanentDestruction];
 	
 	if (u.lastSelectedChannel == c) {
 		u.lastSelectedChannel = nil;

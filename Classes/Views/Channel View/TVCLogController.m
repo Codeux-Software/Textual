@@ -79,6 +79,11 @@
 	[self closeHistoricLog];
 }
 
+- (void)prepareForPermanentDestruction
+{
+	[self closeHistoricLog:YES];
+}
+
 - (void)preferencesChanged
 {
 	self.maximumLineCount = [TPCPreferences maxLogLines];
@@ -194,6 +199,11 @@
 
 - (void)closeHistoricLog
 {
+	[self closeHistoricLog:NO];
+}
+
+- (void)closeHistoricLog:(BOOL)withForcedReset
+{
 	PointerIsEmptyAssert(self.historicLogFile);
 
 	/* The historic log file is always open regardless of whether the user asked
@@ -205,7 +215,7 @@
 	 then we call a save before terminating. Or, we just erase the file from the
 	 path that it is written to entirely. */
 
-	if ([self viewIsEncrypted]) {
+	if ([self viewIsEncrypted] || withForcedReset) {
 		[self.historicLogFile reset];
 	} else {
 		if ([TPCPreferences reloadScrollbackOnLaunch] && ((self.channel.isChannel || [TPCPreferences rememberServerListQueryStates]) && self.channel)) {
