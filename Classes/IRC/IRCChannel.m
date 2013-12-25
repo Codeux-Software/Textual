@@ -244,13 +244,22 @@
 	self.channelJoinTime = -1;
 }
 
-- (void)terminate
+- (void)prepareForPermanentDestruction
+{
+	[self resetStatus:IRCChannelTerminated];
+	
+	[self closeLogFile];
+	
+	[self.viewController prepareForPermanentDestruction];
+}
+
+- (void)prepareForApplicationTermination
 {
 	[self resetStatus:IRCChannelTerminated];
 	
 	[self closeLogFile];
 
-	[self.viewController terminate];
+	[self.viewController prepareForApplicationTermination];
 }
 
 #pragma mark -

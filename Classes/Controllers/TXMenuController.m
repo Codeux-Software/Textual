@@ -64,7 +64,7 @@
 	return self;
 }
 
-- (void)terminate
+- (void)prepareForApplicationTermination
 {
 	[self popWindowSheetIfExists];
 }

@@ -142,7 +142,7 @@
 @property (nonatomic, strong) NSDictionary *openWindowList;
 @property (nonatomic, nweak) IBOutlet NSMenu *navigationChannelList;
 
-- (void)terminate;
+- (void)prepareForApplicationTermination;
 
 - (NSArray *)selectedMembers:(NSMenuItem *)sender;
 - (BOOL)checkSelectedMembers:(NSMenuItem *)item;

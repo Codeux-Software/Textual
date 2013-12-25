@@ -309,7 +309,7 @@
 	return dic;
 }
 
-- (void)terminate
+- (void)prepareForApplicationTermination
 {
 	[self quit];
 	
@@ -317,10 +317,24 @@
 	[self closeLogFile];
 
 	for (IRCChannel *c in self.channels) {
-		[c terminate];
+		[c prepareForApplicationTermination];
 	}
 
-	[self.viewController terminate];
+	[self.viewController prepareForApplicationTermination];
+}
+
+- (void)prepareForPermanentDestruction
+{
+	[self quit];
+	
+	[self closeDialogs];
+	[self closeLogFile];
+	
+	for (IRCChannel *c in self.channels) {
+		[c prepareForPermanentDestruction];
+	}
+	
+	[self.viewController prepareForPermanentDestruction];
 }
 
 - (void)closeDialogs

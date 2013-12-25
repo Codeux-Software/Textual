@@ -63,8 +63,9 @@
 
 - (void)channelLevelEncryptionChanged;
 - (void)preferencesChanged;
+
+- (void)prepareForApplicationTermination;
 - (void)prepareForPermanentDestruction;
-- (void)terminate;
 
 - (void)nextHighlight;
 - (void)previousHighlight;

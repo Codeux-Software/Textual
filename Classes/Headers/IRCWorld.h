@@ -68,7 +68,7 @@
 - (NSMutableDictionary *)cloudDictionaryValue;
 #endif
 
-- (void)terminate;
+- (void)prepareForApplicationTermination;
 
 - (void)autoConnectAfterWakeup:(BOOL)afterWakeUp;
 - (void)prepareForSleep;
