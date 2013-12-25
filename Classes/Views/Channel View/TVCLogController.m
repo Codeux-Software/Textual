@@ -90,6 +90,23 @@
 }
 
 #pragma mark -
+#pragma mark Encryption Information
+
+- (void)channelLevelEncryptionChanged
+{
+	if ([self viewIsEncrypted]) {
+		[self closeHistoricLog];
+	} else {
+		[self openHistoricLog:NO];
+	}
+}
+
+- (BOOL)viewIsEncrypted
+{
+	return (self.channel && [self.channel.config encryptionKeyIsSet]);
+}
+
+#pragma mark -
 #pragma mark Create View
 
 - (void)setUp
@@ -146,9 +163,14 @@
 
 - (void)openHistoricLog
 {
-	if (PointerIsNotEmpty(self.historicLogFile)) {
-		return;
-	}
+	[self openHistoricLog:YES];
+}
+
+- (void)openHistoricLog:(BOOL)reloadHistory
+{
+	PointerIsNotEmptyAssert(self.historicLogFile);
+
+	NSAssertReturn([self viewIsEncrypted] == NO);
 
 	self.historicLogFile = [TVCLogControllerHistoricLogFile new];
 	
@@ -162,8 +184,10 @@
 
         [self.historicLogFile reset];
     } else {
-		if (self.historyLoaded == NO && (self.channel && (self.channel.isPrivateMessage == NO || [TPCPreferences rememberServerListQueryStates]))) {
-			[self reloadHistory];
+		if (reloadHistory) {
+			if (self.historyLoaded == NO && (self.channel && (self.channel.isPrivateMessage == NO || [TPCPreferences rememberServerListQueryStates]))) {
+				[self reloadHistory];
+			}
 		}
 	}
 }
@@ -181,10 +205,14 @@
 	 then we call a save before terminating. Or, we just erase the file from the
 	 path that it is written to entirely. */
 
-	if ([TPCPreferences reloadScrollbackOnLaunch] && ((self.channel.isChannel || [TPCPreferences rememberServerListQueryStates]) && self.channel)) {
-		[self.historicLogFile updateCache];
-	} else {
+	if ([self viewIsEncrypted]) {
 		[self.historicLogFile reset];
+	} else {
+		if ([TPCPreferences reloadScrollbackOnLaunch] && ((self.channel.isChannel || [TPCPreferences rememberServerListQueryStates]) && self.channel)) {
+			[self.historicLogFile updateCache];
+		} else {
+			[self.historicLogFile reset];
+		}
 	}
 
 	self.historicLogFile = nil;
@@ -500,7 +528,9 @@
 - (void)reloadOldLines:(BOOL)markHistoric
 {
 	/* What lines are we reloading? */
-	NSDictionary *oldLines = self.historicLogFile.data;
+	PointerIsEmptyAssert(self.historicLogFile);
+	
+	NSDictionary *oldLines = [self.historicLogFile data];
 
 	/* We have what we are going to load. Reset the old. */
 	[self.historicLogFile reset];
@@ -690,7 +720,7 @@
 	NSObjectIsEmptyAssertReturn(self.highlightedLineNumbers, NO);
 
 	if ([self.highlightedLineNumbers containsObject:self.lastVisitedHighlight] == NO) {
-		self.lastVisitedHighlight = [self.highlightedLineNumbers safeObjectAtIndex:0];
+		self.lastVisitedHighlight = [self.highlightedLineNumbers objectAtIndex:0];
 	}
 
 	if (previous && [self.lastVisitedHighlight isEqualToString:self.highlightedLineNumbers[0]]) {
@@ -828,7 +858,9 @@
 - (void)clearWithReset:(BOOL)resetQueue
 {
 	if (resetQueue) {
-		[self.historicLogFile reset];
+		if (self.historicLogFile) {
+			[self.historicLogFile reset];
+		}
 	}
 
 	dispatch_async(dispatch_get_main_queue(), ^{
@@ -898,8 +930,6 @@
 {
 	NSString *randomUUID = [NSString stringWithUUID]; // Example: 68753A44-4D6F-1226-9C60-0050E4C00067
 
-	NSAssert((randomUUID.length > 20), @"Bad identifier.");
-
 	return [randomUUID substringFromIndex:19]; // Example: 9C60-0050E4C00067
 }
 
@@ -943,9 +973,11 @@
 			}
 
 			/* Record the actual line printed. */
-			[self.historicLogFile writePropertyListEntry:[logLine dictionaryValue]
-												   toKey:renderTime];
-
+			if (self.historicLogFile) {
+				[self.historicLogFile writePropertyListEntry:[logLine dictionaryValue]
+													   toKey:renderTime];
+			}
+			
 			/* Do the actual append to WebKit. */
 			[self appendToDocumentBody:html];
 

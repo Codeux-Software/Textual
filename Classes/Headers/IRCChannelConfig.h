@@ -61,12 +61,20 @@ typedef enum IRCChannelType : NSInteger {
 @property (nonatomic, assign) BOOL encryptionKeyIsSet;
 @property (nonatomic, assign) BOOL secretKeyIsSet;
 
-- (void)destroyKeychains;
-
 - (id)initWithDictionary:(NSDictionary *)dic;
 - (NSMutableDictionary *)dictionaryValue;
 
 - (BOOL)isEqualToChannelConfiguration:(IRCChannelConfig *)seed;
 
 + (NSDictionary *)seedDictionary:(NSString *)channelName;
+
+/* Keychain. */
+- (void)destroyKeychains;
+- (void)writeKeychainItemsToDisk;
+
+- (void)writeSecretKeyKeychainItemToDisk;
+- (void)writeEncryptionKeyKeychainItemToDisk;
+
+- (NSString *)temporarySecretKey;
+- (NSString *)temporaryEncryptionKey;
 @end

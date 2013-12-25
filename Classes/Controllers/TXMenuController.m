@@ -1165,6 +1165,8 @@
 {
 	if (NSObjectIsEmpty(sender.clientID)) {
 		[self.worldController createClient:sender.config reload:YES];
+		
+		[sender.config writeKeychainItemsToDisk];
 	} else {
 		IRCClient *u = [self.worldController findClientById:sender.clientID];
 		
@@ -1441,6 +1443,8 @@
 		
 		[self.worldController createChannel:sender.config client:u reload:YES adjust:YES];
 		[self.worldController expandClient:u];
+		
+		[sender.config writeKeychainItemsToDisk];
 	} else {
 		IRCChannel *c = [self.worldController findChannelByClientId:sender.clientID channelId:sender.channelID];
 		
@@ -1448,8 +1452,8 @@
 			return;
 		}
 		
-		BOOL oldKeyEmpty = NSObjectIsEmpty(c.config.encryptionKey);
-		BOOL newKeyEmpty = NSObjectIsEmpty(sender.config.encryptionKey);
+		BOOL oldKeyEmpty = NSObjectIsEmpty([c.config encryptionKey]);
+		BOOL newKeyEmpty = NSObjectIsEmpty([sender.config temporaryEncryptionKey]);
 		
 		if (oldKeyEmpty && newKeyEmpty == NO) {
 			[c.client printDebugInformation:TXTLS(@"BlowfishEncryptionStarted") channel:c];

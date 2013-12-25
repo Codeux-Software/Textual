@@ -74,11 +74,26 @@
 {
 	PointerIsEmptyAssert(seed);
 	
+	/* We do not want to bother on equality. */
 	if ([self.config isEqualToChannelConfiguration:seed]) {
 		return;
 	}
+	
+	/* Is the current key equal to the temporary store. */
+	NSString *temporaryKey = [seed temporaryEncryptionKey];
+	
+	BOOL encryptionChanged = (temporaryKey && [self.config.encryptionKey isEqual:temporaryKey] == NO);
 
+	/* Update the actual local config. */
 	self.config = [seed mutableCopy];
+	
+	/* Save any temporary changes to disk. */
+	[self.config writeKeychainItemsToDisk];
+	
+	/* Inform view of changes. */
+	if (encryptionChanged) {
+		[self.viewController channelLevelEncryptionChanged];
+	}
 }
 
 - (NSMutableDictionary *)dictionaryValue
@@ -135,6 +150,23 @@
 	}
 
     [self.viewController setTopic:topic];
+}
+
+- (void)setEncryptionKey:(NSString *)encryptionKey
+{
+	/* This is a helper method so that Textual's view controller can
+	 be made aware of encryption changes. This method should be called.
+	 Do not call setEncryptionKey: direction on self.config or that
+	 will only be written to the temporary store. */
+	
+	NSString *oldKey = [self.config encryptionKey];
+	
+	if ([oldKey isEqual:encryptionKey] == NO) {
+		[self.config setEncryptionKey:encryptionKey];
+		[self.config writeEncryptionKeyKeychainItemToDisk];
+		
+		[self.viewController channelLevelEncryptionChanged];
+	}
 }
 
 #pragma mark -

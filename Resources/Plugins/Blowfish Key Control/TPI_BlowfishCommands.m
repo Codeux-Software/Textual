@@ -120,7 +120,7 @@
 	IRCChannel *c = [client.worldController selectedChannelOn:client];
 	
 	if (c.isChannel || c.isPrivateMessage) {
-		messageString = messageString.trim;
+		messageString = [messageString trim];
 		
 		if ([messageString contains:NSStringWhitespacePlaceholder]) {
 			messageString = [messageString substringToIndex:[messageString stringPosition:NSStringWhitespacePlaceholder]];
@@ -128,7 +128,7 @@
 		
 		if ([commandString isEqualToString:@"SETKEY"]) {
 			if (NSObjectIsEmpty(messageString)) {
-				c.config.encryptionKey = nil;
+				[c setEncryptionKey:nil];
 				
 				[client printDebugInformation:TXTLS(@"BlowfishEncryptionStopped") channel:c];
 			} else {
@@ -144,10 +144,10 @@
 					}
 				}
 				
-				c.config.encryptionKey = messageString;
+				[c setEncryptionKey:messageString];
 			}
 		} else if ([commandString isEqualToString:@"DELKEY"]) {
-			c.config.encryptionKey = nil;
+			[c setEncryptionKey:nil];
 			
 			[client printDebugInformation:TXTLS(@"BlowfishEncryptionStopped") channel:c];
 		} else if ([commandString isEqualToString:@"KEY"]) {
@@ -261,8 +261,8 @@
 		}
 
 		//DebugLogToConsole(@"	Shared Secret: %@", theSecret);
-
-		channel.config.encryptionKey = theSecret;
+		
+		[channel setEncryptionKey:theSecret];
 
 		/* Finish up. */
 		NSString *requestMsg = [TXExchangeResponsePrefix stringByAppendingString:publicKey];
@@ -314,8 +314,8 @@
 		}
 		
 		//DebugLogToConsole(@"	Shared Secret: %@", theSecret);
-
-		channel.config.encryptionKey = theSecret;
+		
+		[channel setEncryptionKey:theSecret];
 
 		/* Finish up. */
 		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_1", channel.name) channel:channel];
