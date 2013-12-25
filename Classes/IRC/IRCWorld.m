@@ -182,10 +182,10 @@
 #endif
 }
 
-- (void)terminate
+- (void)prepareForApplicationTermination
 {
 	for (IRCClient *c in self.clients) {
-		[c terminate];
+		[c prepareForApplicationTermination];
 	}
 }
 
@@ -1068,9 +1068,7 @@
 
 - (void)destroyClient:(IRCClient *)u bySkippingCloud:(BOOL)skipCloud
 {
-	[u terminate];
-	
-	[u.viewController prepareForPermanentDestruction];
+	[u prepareForPermanentDestruction];
 	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if ([TPCPreferences syncPreferencesToTheCloud]) {
@@ -1111,9 +1109,7 @@
 		}
 	}
     
-	[c terminate];
-	
-	[c.viewController prepareForPermanentDestruction];
+	[c prepareForPermanentDestruction];
 	
 	if (u.lastSelectedChannel == c) {
 		u.lastSelectedChannel = nil;

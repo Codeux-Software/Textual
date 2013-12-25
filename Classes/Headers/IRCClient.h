@@ -119,7 +119,9 @@ typedef enum IRCDisconnectMode : NSInteger {
 
 - (void)autoConnect:(NSInteger)delay afterWakeUp:(BOOL)afterWakeUp;
 
-- (void)terminate;
+- (void)prepareForApplicationTermination;
+- (void)prepareForPermanentDestruction;
+
 - (void)closeDialogs;
 - (void)preferencesChanged;
 

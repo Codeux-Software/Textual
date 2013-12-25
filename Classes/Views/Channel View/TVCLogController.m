@@ -70,18 +70,22 @@
 	return self;
 }
 
-- (void)terminate
+- (void)prepareForApplicationTermination
 {
 	self.isTerminating = YES;
 	
 	[self.printingQueue cancelOperationsForViewController:self];
 	
-	[self closeHistoricLog];
+	[self closeHistoricLog:NO];
 }
 
 - (void)prepareForPermanentDestruction
 {
-	[self closeHistoricLog:YES];
+	self.isTerminating = YES;
+	
+	[self.printingQueue cancelOperationsForViewController:self];
+	
+	[self closeHistoricLog:YES]; // YES forces a file deletion.
 }
 
 - (void)preferencesChanged

@@ -362,7 +362,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 															   title:TXTLS(@"ApplicationWantsToTerminatePromptTitle") 
 													   defaultButton:TXTLS(@"QuitButton") 
 													 alternateButton:TXTLS(@"CancelButton")
-													  suppressionKey:nil suppressionText:nil];
+													  suppressionKey:nil
+													 suppressionText:nil];
 		
 		return result;
 	}
@@ -398,6 +399,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		[self saveWindowState];
 	}
 	
+	[self.menuController prepareForApplicationTermination];
+	
 	self.mainWindow.delegate = nil;
 
 	[RZRunningApplication() hide];
@@ -407,13 +410,11 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 		self.terminatingClientCount = self.worldController.clients.count;
 
-		[self.worldController terminate];
+		[self.worldController prepareForApplicationTermination];
 		
 		while (self.terminatingClientCount > 0) {
 			[RZMainRunLoop() runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
 		}
-
-		[self.menuController terminate];
 	}
 	
 	[RZPluginManager() unloadPlugins];

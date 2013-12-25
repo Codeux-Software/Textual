@@ -70,7 +70,9 @@ typedef enum IRCChannelStatus : NSInteger {
 
 - (NSString *)channelTypeString;
 
-- (void)terminate;
+- (void)prepareForApplicationTermination;
+- (void)prepareForPermanentDestruction;
+
 - (void)preferencesChanged;
 
 - (void)activate;
