@@ -48,11 +48,11 @@
 BOOL NSObjectIsEmpty(id obj)
 {
 	if ([obj respondsToSelector:@selector(length)]) {
-		return (PointerIsEmpty(obj) || (NSInteger)[obj performSelector:@selector(length)] < 1);
+		return ((NSInteger)[obj performSelector:@selector(length)] < 1);
 	}
 
 	if ([obj respondsToSelector:@selector(count)]) {
-		return (PointerIsEmpty(obj) || (NSInteger)[obj performSelector:@selector(count)] < 1);
+		return ((NSInteger)[obj performSelector:@selector(count)] < 1);
 	}
 	
 	return PointerIsEmpty(obj);
@@ -61,6 +61,11 @@ BOOL NSObjectIsEmpty(id obj)
 BOOL NSObjectIsNotEmpty(id obj)
 {
 	return BOOLReverseValue(NSObjectIsEmpty(obj));
+}
+
+BOOL NSObjectsAreEqual(id obj1, id obj2)
+{
+    return ((obj1 == nil && obj2 == nil) || [obj1 isEqual:obj2]);
 }
 
 #pragma mark -

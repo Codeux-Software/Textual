@@ -238,9 +238,11 @@
 	
 	/* Only declare ourselves as equal when we do not have any 
 	 temporary keychain items stored in memory. */
-	return ([s2 isEqual:s1] &&
-			[_secretKey isEqual:[seed temporarySecretKey]] &&
-			[_encryptionKey isEqual:[seed temporaryEncryptionKey]]);
+	return (NSObjectsAreEqual(s1, s2) &&
+			NSObjectsAreEqual(_secretKey, [seed temporarySecretKey]) &&
+			NSObjectsAreEqual(_encryptionKey, [seed temporaryEncryptionKey]) &&
+			_encryptionKeyIsSet == [seed encryptionKeyIsSet] &&
+			_secretKeyIsSet == [seed secretKeyIsSet]);
 }
 
 - (NSMutableDictionary *)dictionaryValue

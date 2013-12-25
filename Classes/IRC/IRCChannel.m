@@ -82,7 +82,7 @@
 	/* Is the current key equal to the temporary store. */
 	NSString *temporaryKey = [seed temporaryEncryptionKey];
 	
-	BOOL encryptionChanged = (temporaryKey && [self.config.encryptionKey isEqual:temporaryKey] == NO);
+	BOOL encryptionChanged = (temporaryKey && NSObjectsAreEqual(temporaryKey, self.config.encryptionKey) == NO);
 
 	/* Update the actual local config. */
 	self.config = [seed mutableCopy];
@@ -161,7 +161,7 @@
 	
 	NSString *oldKey = [self.config encryptionKey];
 	
-	if ([oldKey isEqual:encryptionKey] == NO) {
+	if (NSObjectsAreEqual(oldKey, encryptionKey) == NO) {
 		[self.config setEncryptionKey:encryptionKey];
 		[self.config writeEncryptionKeyKeychainItemToDisk];
 		
@@ -429,8 +429,8 @@
 		NSDissimilarObjects(user1.h, user2.h)										|| // <----/
 		NSDissimilarObjects(user1.v, user2.v)										|| // <---/
 		NSDissimilarObjects(user1.isAway, user2.isAway)								|| // <--/ Away state.
-		
-		[user1.hostmask isEqual:user2.hostmask] == NO)			 					   // <-/ User host.
+
+		NSObjectsAreEqual([user1 hostmask], [user2 hostmask]))						   // <-/ User host.
 	{
 		return YES;
 	}

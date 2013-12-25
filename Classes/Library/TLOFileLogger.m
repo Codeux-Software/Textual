@@ -146,7 +146,7 @@
 	 the date as the filename. When the date changes, the log path
 	 will have to change as well. This handles that. */
 
-	if ([self.filename isEqual:self.buildFileName] == NO) {
+	if ([self.buildFileName isEqual:self.filename] == NO) {
 		[self open];
 	}
 }

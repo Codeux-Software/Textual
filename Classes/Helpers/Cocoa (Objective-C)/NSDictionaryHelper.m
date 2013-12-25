@@ -154,7 +154,7 @@
 - (NSString *)firstKeyForObject:(id)object
 {
 	for (NSString *key in [self allKeys]) {
-		if ([object isEqual:self[key]]) {
+		if ([self[key] isEqual:object]) {
 			return key;
 		}
 	}
