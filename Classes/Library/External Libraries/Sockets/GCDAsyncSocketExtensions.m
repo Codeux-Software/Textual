@@ -53,7 +53,10 @@
 	settings[(id)kCFStreamSSLPeerName] = (id)kCFNull;
 	settings[(id)kCFStreamSSLIsServer] = (id)kCFBooleanFalse;
 
-	if (client.connectType == IRCConnectBadSSLCertificateMode || client.config.validateServerSSLCertificate == NO) {
+	if (client.connectType == IRCConnectBadSSLCertificateMode ||
+		client.connectType == IRCConnectReconnectMode ||
+		client.config.validateServerSSLCertificate == NO)
+	{
 		settings[(id)kCFStreamSSLAllowsAnyRoot] = (id)kCFBooleanTrue;
 		settings[(id)kCFStreamSSLAllowsExpiredRoots] = (id)kCFBooleanTrue;
 		settings[(id)kCFStreamSSLAllowsExpiredCertificates] = (id)kCFBooleanTrue;
