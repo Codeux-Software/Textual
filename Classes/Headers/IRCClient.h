@@ -106,9 +106,14 @@ typedef enum IRCDisconnectMode : NSInteger {
 @property (nonatomic, assign) BOOL isHostReachable;
 
 - (void)setup:(id)seed;
+
 - (void)updateConfig:(IRCClientConfig *)seed;
+- (void)updateConfig:(IRCClientConfig *)seed fromTheCloud:(BOOL)isCloudUpdate;
+
 - (IRCClientConfig *)storedConfig;
+
 - (NSMutableDictionary *)dictionaryValue;
+- (NSMutableDictionary *)dictionaryValue:(BOOL)isCloudDictionary;
 
 - (NSString *)networkName; // Only returns the actual network name.
 - (NSString *)altNetworkName; // Will return the configured name if the actual name is not available.
