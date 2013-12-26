@@ -288,10 +288,10 @@
 - (void)makeFirstResponderForRow:(NSInteger)row
 {
 	switch (row) {
-		//case 2: { [self.window makeFirstResponder:self.loginCommandsField];				break; } /* self.commandsView */
-		case 4: { [self.window makeFirstResponder:self.serverNameField];				break; } /* self.generalView */
-		case 5: { [self.window makeFirstResponder:self.nicknameField];					break; } /* self.identityView */
-		case 6: { [self.window makeFirstResponder:self.normalLeavingCommentField];		break; } /* self.messagesView */
+		case 2: { [self.sheet makeFirstResponder:self.loginCommandsField];				break; } /* self.commandsView */
+		case 4: { [self.sheet makeFirstResponder:self.serverNameField];					break; } /* self.generalView */
+		case 5: { [self.sheet makeFirstResponder:self.nicknameField];					break; } /* self.identityView */
+		case 6: { [self.sheet makeFirstResponder:self.normalLeavingCommentField];		break; } /* self.messagesView */
 		default: { break; }
 	}
 }
@@ -631,7 +631,7 @@
 	}
 #endif
 
-	[self.window makeFirstResponder:nil];
+	[self.sheet makeFirstResponder:nil];
 
 	/* Tell super. */
 	[super ok:nil];
@@ -639,7 +639,7 @@
 
 - (void)cancel:(id)sender
 {
-	[self.window makeFirstResponder:nil];
+	[self.sheet makeFirstResponder:nil];
 
 	[super cancel:nil]; 
 }

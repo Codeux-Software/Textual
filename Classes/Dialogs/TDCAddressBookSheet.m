@@ -57,7 +57,7 @@
 			[self.hostmaskField setStringValue:self.ignore.hostmask];
 		}
 
-		[self.window makeFirstResponder:self.hostmaskField];
+		[self.sheet makeFirstResponder:self.hostmaskField];
 	} else {
 		self.sheet = self.notifyView;
 		
@@ -65,7 +65,7 @@
 			[self.nicknameField setStringValue:self.ignore.hostmask];
 		}
 
-		[self.window makeFirstResponder:self.nicknameField];
+		[self.sheet makeFirstResponder:self.nicknameField];
 	}
 
 	[self.notifyJoinsCheck					setState:self.ignore.notifyJoins];

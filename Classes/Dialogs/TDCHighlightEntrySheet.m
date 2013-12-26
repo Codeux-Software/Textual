@@ -91,7 +91,7 @@
 	/* Pop the sheet. */
 	[self startSheet];
 
-	[self.window makeFirstResponder:self.matchKeywordTextField];
+	[self.sheet makeFirstResponder:self.matchKeywordTextField];
 
 	[self updateSaveButton];
 }
