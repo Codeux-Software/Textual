@@ -357,10 +357,10 @@ Gw
                         </binding>
                         <binding destination="2317" name="hidden2" keyPath="values.System —> Built with iCloud Support" previousBinding="lla-b6-G3l" id="Lcn-CW-XKA">
                             <dictionary key="options">
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
@@ -1535,7 +1535,7 @@ Gw
                     </connections>
                 </button>
                 <button id="7Re-Oa-iNx">
-                    <rect key="frame" x="55" y="112" width="406" height="18"/>
+                    <rect key="frame" x="55" y="112" width="427" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Refuse connection to the server if it has a bad SSL certificate." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="dz6-nj-V0I">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
