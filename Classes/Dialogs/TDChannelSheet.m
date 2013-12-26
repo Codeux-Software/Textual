@@ -71,9 +71,9 @@
 - (void)makeFirstResponderForRow:(NSInteger)row
 {
 	switch (row) {
-		case 0:	{	[self.window makeFirstResponder:self.channelNameField]; break;		}
-		case 1: {	[self.window makeFirstResponder:self.encryptionKeyField]; break;	}
-        case 2: {	[self.window makeFirstResponder:self.defaultTopicField]; break;		}
+		case 0:	{	[self.sheet makeFirstResponder:self.channelNameField]; break;		}
+		case 1: {	[self.sheet makeFirstResponder:self.encryptionKeyField]; break;	}
+        case 2: {	[self.sheet makeFirstResponder:self.defaultTopicField]; break;		}
 		default: { break; }
 	}
 }
@@ -111,7 +111,7 @@
 	[self firstPane:self.generalView];
 
 	if (self.newItem) {
-		//[self.window makeFirstResponder:self.channelNameField];
+		[self.sheet makeFirstResponder:self.channelNameField];
 	}
 	
 	[self.contentViewTabView setSelectedSegment:0];
