@@ -439,7 +439,7 @@
 		NSDissimilarObjects(user1.v, user2.v)										|| // <---/
 		NSDissimilarObjects(user1.isAway, user2.isAway)								|| // <--/ Away state.
 
-		NSObjectsAreEqual([user1 hostmask], [user2 hostmask]))						   // <-/ User host.
+		NSObjectsAreEqual([user1 hostmask], [user2 hostmask]) == NO)				   // <-/ User host.
 	{
 		return YES;
 	}
