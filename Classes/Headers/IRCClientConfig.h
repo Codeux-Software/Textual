@@ -106,7 +106,9 @@ typedef enum TXConnectionProxyType : NSInteger {
 - (BOOL)isEqualToClientConfiguration:(IRCClientConfig *)seed;
 
 - (id)initWithDictionary:(NSDictionary *)dic;
+
 - (NSMutableDictionary *)dictionaryValue;
+- (NSMutableDictionary *)dictionaryValue:(BOOL)isCloudDictionary;
 
 /* Keychain. */
 - (void)destroyKeychains;

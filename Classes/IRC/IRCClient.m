@@ -206,19 +206,64 @@
 
 - (void)updateConfig:(IRCClientConfig *)seed
 {
+	[self updateConfig:seed fromTheCloud:NO];
+}
+
+- (void)updateConfig:(IRCClientConfig *)seed fromTheCloud:(BOOL)isCloudUpdate
+{
 	PointerIsEmptyAssert(seed);
 	
+	/* Ignore if we have equality. */
 	if ([self.config isEqualToClientConfiguration:seed]) {
 		return;
 	}
 	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	/* It is important to know this value changed before seed update. */
 	BOOL syncToCloudChanged = NSDissimilarObjects(self.config.excludedFromCloudSyncing, seed.excludedFromCloudSyncing);
+	
+	/* Temporary store. */
+	NSData *identitySSLCertificateInformation;
+	
+	if (isCloudUpdate) {
+		/* The identity certificate cannot be stored in the cloud since it requires to
+		 a reference to a local resource. Therefore, when updating from the cloud, we
+		 take the value stored locally, cache it into a local variable, allow the new
+		 seed to be applied, then apply that value back to the seed. This allows the 
+		 user to define certificates on each machine. */
+		
+		if (self.config.identitySSLCertificate) {
+			identitySSLCertificateInformation = self.config.identitySSLCertificate;
+		}
+	}
 #endif
 	
+	/* Populate new seed. */
 	self.config = nil;
 	self.config = [seed mutableCopy];
-
+	
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	if (isCloudUpdate) {
+		/* Update new, local seed with cache SSL certificate. */
+		
+		if (identitySSLCertificateInformation) {
+			[self.config setIdentitySSLCertificate:identitySSLCertificateInformation];
+			
+			identitySSLCertificateInformation = nil;
+		}
+	}
+	
+	/* Maybe remove this client from deleted list (maybe). */
+	if ([TPCPreferences syncPreferencesToTheCloud]) {
+		if (syncToCloudChanged) {
+			if (self.config.excludedFromCloudSyncing == NO) {
+				[self.worldController removeClientFromListOfDeletedClients:self.config.itemUUID];
+			}
+		}
+	}
+#endif
+	
+	/* Begin normal operations. */
 	NSArray *chans = self.config.channelList;
 
 	NSMutableArray *ary = [NSMutableArray array];
@@ -254,7 +299,7 @@
 
 	/* reloadItem will drop the views and reload them. We need to remember
 	 the selection because of this. */
-	id selectedItem = self.worldController.selectedItem;
+	id selectedItem = [self.worldController selectedItem];
 
 	[self.masterController.serverList reloadItem:self reloadChildren:YES];
 
@@ -262,19 +307,9 @@
 	[self.worldController adjustSelection];
 	
 	[self.config writeKeychainItemsToDisk];
-
-	[self populateISONTrackedUsersList:self.config.ignoreList];
-
-	[self setupReachability];
 	
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	/* Maybe remove this client from deleted list. */
-	if ([TPCPreferences syncPreferencesToTheCloud]) {
-		if (syncToCloudChanged && self.config.excludedFromCloudSyncing == NO) {
-			[self.worldController removeClientFromListOfDeletedClients:self.config.itemUUID];
-		}
-	}
-#endif
+	[self setupReachability];
+	[self populateISONTrackedUsersList:self.config.ignoreList];
 }
 
 - (IRCClientConfig *)storedConfig
@@ -294,13 +329,18 @@
 
 - (NSMutableDictionary *)dictionaryValue
 {
-	NSMutableDictionary *dic = [self.config dictionaryValue];
+	return [self dictionaryValue:NO];
+}
+
+- (NSMutableDictionary *)dictionaryValue:(BOOL)isCloudDictionary
+{
+	NSMutableDictionary *dic = [self.config dictionaryValue:isCloudDictionary];
 
 	NSMutableArray *ary = [NSMutableArray array];
 
 	for (IRCChannel *c in self.channels) {
 		if (c.isChannel || [TPCPreferences rememberServerListQueryStates]) {
-			[ary safeAddObject:[c dictionaryValue]];
+			[ary addObject:[c dictionaryValue]];
 		}
 	}
 

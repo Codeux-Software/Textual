@@ -199,7 +199,7 @@
 	
 	for (IRCClient *u in self.clients) {
 		if (u.config.excludedFromCloudSyncing == NO) {
-			NSDictionary *prefs = [u dictionaryValue];
+			NSDictionary *prefs = [u dictionaryValue:YES];
 			
 			NSString *prefKey = [IRCWorldControllerCloudClientEntryKeyPrefix stringByAppendingString:u.config.itemUUID];
 			

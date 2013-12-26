@@ -415,6 +415,11 @@
 
 - (NSMutableDictionary *)dictionaryValue
 {
+	return [self dictionaryValue:NO];
+}
+
+- (NSMutableDictionary *)dictionaryValue:(BOOL)isCloudDictionary
+{
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
 	[dic setInteger:self.fallbackEncoding	forKey:@"characterEncodingFallback"];
@@ -436,7 +441,13 @@
 	[dic setBool:self.invisibleMode					forKey:@"setInvisibleOnConnect"];
 	[dic setBool:self.connectionPrefersIPv6			forKey:@"DNSResolverPrefersIPv6"];
     [dic setBool:self.sidebarItemExpanded			forKey:@"serverListItemIsExpanded"];
-	[dic setBool:self.validateServerSSLCertificate	forKey:@"validateServerSideSSLCertificate"];
+
+	if (isCloudDictionary == NO) {
+		/* Identify certificate is stored as a referenced to the actual keychain. */
+		/* This cannot be transmitted over the cloud. */
+		
+		[dic setBool:self.validateServerSSLCertificate	forKey:@"validateServerSideSSLCertificate"];
+	}
 	
 	[dic setBool:self.zncIgnorePlaybackNotifications	forKey:@"ZNC —> Ignore Playback Buffer Highlights"];
 	

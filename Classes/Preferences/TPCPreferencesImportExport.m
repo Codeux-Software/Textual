@@ -189,7 +189,7 @@
 	}
 }
 
-+ (void)importWorldControllerClientConfiguratoin:(NSDictionary *)client isCloudBasedImport:(BOOL)isCloudImport;
++ (void)importWorldControllerClientConfiguratoin:(NSDictionary *)client isCloudBasedImport:(BOOL)isCloudImport
 {
 	/* Validate that shiznet. */
 	NSObjectIsEmptyAssert(client);
@@ -212,7 +212,7 @@
 #endif
 	
 	if (u) {
-		[u updateConfig:config];
+		[u updateConfig:config fromTheCloud:isCloudImport];
 	} else {
 		[self.worldController createClient:config reload:YES];
 	}
