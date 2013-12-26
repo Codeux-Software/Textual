@@ -1914,7 +1914,11 @@ static NSMutableArray *excludeKeywords = nil;
 #ifndef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[RZUserDefaults() setBool:NO forKey:@"System —> Built with iCloud Support"];
 #else
-	[RZUserDefaults() setBool:YES forKey:@"System —> Built with iCloud Support"];
+	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+		[RZUserDefaults() setBool:YES forKey:@"System —> Built with iCloud Support"];
+	} else {
+		[RZUserDefaults() setBool:NO forKey:@"System —> Built with iCloud Support"];
+	}
 #endif
 	
 	/* Validate some stuff. */
