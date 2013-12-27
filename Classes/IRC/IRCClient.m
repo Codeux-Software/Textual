@@ -206,10 +206,10 @@
 
 - (void)updateConfig:(IRCClientConfig *)seed
 {
-	[self updateConfig:seed fromTheCloud:NO];
+	[self updateConfig:seed fromTheCloud:NO withSelectionUpdate:YES];
 }
 
-- (void)updateConfig:(IRCClientConfig *)seed fromTheCloud:(BOOL)isCloudUpdate
+- (void)updateConfig:(IRCClientConfig *)seed fromTheCloud:(BOOL)isCloudUpdate withSelectionUpdate:(BOOL)reloadSelection
 {
 	PointerIsEmptyAssert(seed);
 	
@@ -299,13 +299,19 @@
 
 	/* reloadItem will drop the views and reload them. We need to remember
 	 the selection because of this. */
-	id selectedItem = [self.worldController selectedItem];
-
-	[self.masterController.serverList reloadItem:self reloadChildren:YES];
-
-	[self.worldController select:selectedItem];
-	[self.worldController adjustSelection];
+	if (reloadSelection) {
+		id selectedItem = [self.worldController selectedItem];
+		
+		[self.worldController setTemporarilyDisablePreviousSelectionUpdates:YES];
 	
+		[self.masterController.serverList reloadItem:self reloadChildren:YES];
+
+		[self.worldController select:selectedItem];
+		[self.worldController adjustSelection];
+		
+		[self.worldController setTemporarilyDisablePreviousSelectionUpdates:NO];
+	}
+		
 	[self.config writeKeychainItemsToDisk];
 	
 	[self setupReachability];

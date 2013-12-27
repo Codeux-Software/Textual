@@ -574,6 +574,8 @@
 
 - (void)storePreviousSelection
 {
+	NSAssertReturn(self.temporarilyDisablePreviousSelectionUpdates == NO);
+	
 	if (PointerIsEmpty(self.selectedItem)) {
 		self.previousSelectedClientId = nil;
 		self.previousSelectedChannelId = nil;
@@ -867,10 +869,6 @@
 
 	[c.viewController clear];
 	[c.viewController notifyDidBecomeVisible];
-
-	if ([c.treeUUID isEqualToString:self.selectedChannel.treeUUID]) {
-		[self outlineViewSelectionDidChange:nil];
-	}
 	
 	[c.viewController setTopic:c.topic];
 
@@ -883,10 +881,6 @@
 
 	[u.viewController clear];
 	[u.viewController notifyDidBecomeVisible];
-
-	if ([u.treeUUID isEqualToString:self.selectedClient.treeUUID]) {
-		[self outlineViewSelectionDidChange:nil];
-	}
 
 	[self reloadTreeItem:u];
 }

@@ -2174,20 +2174,13 @@
 
 - (void)sortChannelListNames:(id)sender
 {
-	TVCServerList *serverList = self.masterController.serverList;
+	TVCServerList *serverList = [self.masterController serverList];
 
-	id oldSelection = self.worldController.selectedItem;
+	id oldSelection = [self.worldController selectedItem];
 	
-	id prevSelectedClient = self.worldController.previousSelectedClientId;
-	id prevSelectedChannel = self.worldController.previousSelectedChannelId;
+	[self.worldController setTemporarilyDisablePreviousSelectionUpdates:YES];
 
-	for (IRCClient *u in self.worldController.clients) {
-		BOOL isExpanded = u.config.sidebarItemExpanded;
-		
-		if (isExpanded) {
-			[serverList.animator collapseItem:u];
-		}
-
+	for (IRCClient *u in [self.worldController clients]) {
 		NSArray *clientChannels = [u.channels sortedArrayUsingComparator:^NSComparisonResult(IRCChannel *obj1, IRCChannel *obj2)
 		{
 			NSString *name1 = [obj1.name lowercaseString];
@@ -2207,19 +2200,16 @@
 			[u.channels safeAddObject:c];
 		}
 		
-		[u updateConfig:u.storedConfig];
-
-		if (isExpanded) {
-			[serverList.animator expandItem:u];
-		}
+		[u updateConfig:u.storedConfig fromTheCloud:NO withSelectionUpdate:NO];
+		
+		// Reload actual views.
+		[serverList reloadItem:u reloadChildren:YES];
 	}
 
 	[self.worldController select:oldSelection];
-	
-	self.worldController.previousSelectedClientId = prevSelectedClient;
-	self.worldController.previousSelectedChannelId = prevSelectedChannel;
-	
 	[self.worldController save];
+	
+	[self.worldController setTemporarilyDisablePreviousSelectionUpdates:NO];
 	
 	[self populateNavgiationChannelList];
 }

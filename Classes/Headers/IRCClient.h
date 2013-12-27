@@ -108,7 +108,7 @@ typedef enum IRCDisconnectMode : NSInteger {
 - (void)setup:(id)seed;
 
 - (void)updateConfig:(IRCClientConfig *)seed;
-- (void)updateConfig:(IRCClientConfig *)seed fromTheCloud:(BOOL)isCloudUpdate;
+- (void)updateConfig:(IRCClientConfig *)seed fromTheCloud:(BOOL)isCloudUpdate withSelectionUpdate:(BOOL)reloadSelection;
 
 - (IRCClientConfig *)storedConfig;
 
