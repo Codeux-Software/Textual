@@ -2177,6 +2177,9 @@
 	TVCServerList *serverList = self.masterController.serverList;
 
 	id oldSelection = self.worldController.selectedItem;
+	
+	id prevSelectedClient = self.worldController.previousSelectedClientId;
+	id prevSelectedChannel = self.worldController.previousSelectedChannelId;
 
 	for (IRCClient *u in self.worldController.clients) {
 		BOOL isExpanded = u.config.sidebarItemExpanded;
@@ -2212,6 +2215,10 @@
 	}
 
 	[self.worldController select:oldSelection];
+	
+	self.worldController.previousSelectedClientId = prevSelectedClient;
+	self.worldController.previousSelectedChannelId = prevSelectedChannel;
+	
 	[self.worldController save];
 	
 	[self populateNavgiationChannelList];
