@@ -52,6 +52,7 @@
 @property (nonatomic, assign) BOOL isSoundMuted;
 @property (nonatomic, assign) BOOL isPopulatingSeeds;
 @property (nonatomic, assign) BOOL areNotificationsDisabled;
+@property (nonatomic, assign) BOOL temporarilyDisablePreviousSelectionUpdates;
 @property (nonatomic, strong) IRCTreeItem *selectedItem;
 @property (nonatomic, strong) NSString *previousSelectedClientId;
 @property (nonatomic, strong) NSString *previousSelectedChannelId;

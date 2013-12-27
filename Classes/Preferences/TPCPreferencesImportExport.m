@@ -212,7 +212,7 @@
 #endif
 	
 	if (u) {
-		[u updateConfig:config fromTheCloud:isCloudImport];
+		[u updateConfig:config fromTheCloud:isCloudImport withSelectionUpdate:YES];
 	} else {
 		[self.worldController createClient:config reload:YES];
 	}
