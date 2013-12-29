@@ -169,6 +169,8 @@
 "IRCUserWhoisUptime" = "%1$@ signed on at %2$@ and has been idle for %3$@";
 "IRCUserWhowasConnectedFrom" = "%1$@ was connected to %2$@ on %3$@";
 "IRCUserWhowasHostmask" = "%1$@ had userhost %2$@@%3$@ and real name \"%4$@\"";
+"IRCUserNotifiedOfBlockedMessageForUmodeG" = "%@ is not currently accepting private messages from unrecognized users. They have been notified that you have tried messaging them, but the last message you have sent to them has been lost. Any further messages will also be lost until they add you to their list of recognized users.";
+"IRCUserPrivateMessageBlockedByUmodeG" = "%1$@ (%2$@) has tried to send you a private message, but it was blocked due to \002umode +g\002 being enabled. The message they sent has been lost, but typing the command \"/accept %1$@\" will allow new messages to be received until they or you disconnect from IRC.";
 
 "InputRequiredToContinue" = "Input Required to Continue";
 
