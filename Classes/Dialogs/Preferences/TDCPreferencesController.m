@@ -45,6 +45,9 @@
 #define _inlineImageHeightMax		6000
 #define _inlineImageHeightMin		0
 
+#define _fileTransferPortRangeMin			1024
+#define _fileTransferPortRangeMax			65535
+
 #define _TXWindowToolbarHeight				82
 
 #define _addonsToolbarItemIndex				8
@@ -109,6 +112,7 @@
 
 	[self onChangedAlertType:nil];
 	[self onChangedHighlightType:nil];
+	[self onFileTransferIPAddressDetectionMethodChanged:nil];
 	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[RZNotificationCenter() addObserver:self
@@ -164,6 +168,7 @@
 
 	 11: Advanced — Menu.
 
+	 14: File Transfers
 	 7:	IRCop Services
 	 8:	Channel Management
 	 12: Command Scope
@@ -248,6 +253,7 @@
 		case 11:	{ [self firstPane:self.experimentalSettingsView		selectedItem:11]; break; }
 		case 12:	{ [self firstPane:self.commandScopeSettingsView		selectedItem:11]; break; }
 		case 13:	{ [self firstPane:self.iCloudSyncView				selectedItem:11]; break; }
+		case 14:	{ [self firstPane:self.fileTransferView				selectedItem:11]; break; }
 		default:
 		{
 			THOPluginItem *plugin = [RZPluginManager() pluginsWithPreferencePanes][pluginIndex];
@@ -346,6 +352,26 @@
 - (void)setThemeChannelViewFontName:(id)value { return; }
 - (void)setThemeChannelViewFontSize:(id)value { return; }
 
+- (NSInteger)fileTransferPortRangeStart
+{
+	return [TPCPreferences fileTransferPortRangeStart];
+}
+
+- (NSInteger)fileTransferPortRangeEnd
+{
+	return [TPCPreferences fileTransferPortRangeEnd];
+}
+
+- (void)setFileTransferPortRangeStart:(NSInteger)value
+{
+	[TPCPreferences setFileTransferPortRangeStart:value];
+}
+
+- (void)setFileTransferPortRangeEnd:(NSInteger)value
+{
+	[TPCPreferences setFileTransferPortRangeEnd:value];
+}
+
 - (BOOL)validateValue:(id *)value forKey:(NSString *)key error:(NSError **)error
 {
 	if ([key isEqualToString:@"maxLogLines"]) {
@@ -371,6 +397,38 @@
 			*value = NSNumberWithInteger(_inlineImageHeightMin);
 		} else if (_inlineImageHeightMax < n) {
 			*value = NSNumberWithInteger(_inlineImageHeightMax);
+		}
+	} else if ([key isEqualToString:@"fileTransferPortRangeStart"]) {
+		NSInteger n = [*value integerValue];
+		
+		NSInteger t = [TPCPreferences fileTransferPortRangeEnd];
+		
+		if (n < _fileTransferPortRangeMin) {
+			*value = [NSNumber numberWithInteger:_fileTransferPortRangeMin];
+		} else if (_fileTransferPortRangeMax < n) {
+			*value = [NSNumber numberWithInteger:_fileTransferPortRangeMax];
+		}
+		
+		n = [*value integerValue];
+		
+		if (n > t) {
+			*value = [NSNumber numberWithInteger:t];
+		}
+	} else if ([key isEqualToString:@"fileTransferPortRangeEnd"]) {
+		NSInteger n = [*value integerValue];
+		
+		NSInteger t = [TPCPreferences fileTransferPortRangeStart];
+		
+		if (n < _fileTransferPortRangeMin) {
+			*value = [NSNumber numberWithInteger:_fileTransferPortRangeMin];
+		} else if (_fileTransferPortRangeMax < n) {
+			*value = [NSNumber numberWithInteger:_fileTransferPortRangeMax];
+		}
+		
+		n = [*value integerValue];
+		
+		if (n < t) {
+			*value = [NSNumber numberWithInteger:t];
 		}
 	}
 
@@ -893,6 +951,13 @@
 - (void)onChangedMainInputTextFieldFontSize:(id)sender
 {
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadTextFieldFontSizeAction];
+}
+
+- (void)onFileTransferIPAddressDetectionMethodChanged:(id)sender
+{
+	TXFileTransferIPAddressDetectionMethod detectionMethod = [TPCPreferences fileTransferIPAddressDetectionMethod];
+	
+	[self.fileTransferManuallyEnteredIPAddressField setEnabled:(detectionMethod == TXFileTransferIPAddressManualDetectionMethod)];
 }
 
 - (void)onChangedHighlightLogging:(id)sender

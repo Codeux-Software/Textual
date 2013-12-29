@@ -45,6 +45,9 @@
 #define TPCPreferencesThemeNameDefaultsKey						@"Theme -> Name"
 #define TPCPreferencesThemeFontNameDefaultsKey					@"Theme -> Font Name"
 
+#define TXDefaultFileTransferPortRangeStart				1096
+#define TXDefaultFileTransferPortRangeEnd				1115
+
 typedef enum TXNicknameHighlightMatchType : NSInteger {
 	TXNicknameHighlightPartialMatchType = 0,
 	TXNicknameHighlightExactMatchType,
@@ -87,6 +90,17 @@ typedef enum TXMainTextBoxFontSize : NSInteger {
 	TXMainTextBoxFontLargeSize			= 2,
 	TXMainTextBoxFontExtraLargeSize		= 3,
 } TXMainTextBoxFontSize;
+
+typedef enum TXFileTransferRequestReplyAction : NSInteger {
+	TXFileTransferRequestReplyIgnoreAction						= 1,
+	TXFileTransferRequestReplyOpenDialogAction					= 2,
+	TXFileTransferRequestReplyAutomaticallyDownloadAction		= 3,
+} TXFileTransferRequestReplyAction;
+
+typedef enum TXFileTransferIPAddressDetectionMethod : NSInteger {
+	TXFileTransferIPAddressAutomaticDetectionMethod			= 1,
+	TXFileTransferIPAddressManualDetectionMethod			= 2,
+} TXFileTransferIPAddressDetectionMethod;
 
 /* These actions are used for import purposes. */
 typedef enum TPCPreferencesKeyReloadAction : NSInteger {
@@ -305,6 +319,17 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 + (void)setEventIsSpoken:(BOOL)value forEvent:(TXNotificationType)event;
 
 + (TXTabKeyAction)tabKeyAction;
+
++ (TXFileTransferRequestReplyAction)fileTransferRequestReplyAction;
++ (TXFileTransferIPAddressDetectionMethod)fileTransferIPAddressDetectionMethod;
+
++ (NSInteger)fileTransferPortRangeStart;
++ (NSInteger)fileTransferPortRangeEnd;
+
++ (void)setFileTransferPortRangeStart:(NSInteger)value;
++ (void)setFileTransferPortRangeEnd:(NSInteger)value;
+
++ (NSString *)fileTransferManuallyEnteredIPAddress;
 
 + (NSString *)tabCompletionSuffix;
 + (void)setTabCompletionSuffix:(NSString *)value;
