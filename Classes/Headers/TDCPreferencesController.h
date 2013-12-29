@@ -60,6 +60,7 @@
 @property (nonatomic, nweak) IBOutlet NSTableView *installedScriptsTable;
 @property (nonatomic, nweak) IBOutlet NSTableView *keywordsTable;
 @property (nonatomic, nweak) IBOutlet NSTextField *alertNotificationDestinationTextField;
+@property (nonatomic, nweak) IBOutlet NSTextField *fileTransferManuallyEnteredIPAddressField;
 @property (nonatomic, nweak) IBOutlet NSToolbar *preferenceSelectToolbar;
 @property (nonatomic, nweak) IBOutlet NSToolbarItem *alertToolbarItem;
 @property (nonatomic, nweak) IBOutlet NSView *contentView;
@@ -68,6 +69,7 @@
 @property (nonatomic, strong) IBOutlet NSView *channelManagementView;
 @property (nonatomic, strong) IBOutlet NSView *commandScopeSettingsView;
 @property (nonatomic, strong) IBOutlet NSView *experimentalSettingsView;
+@property (nonatomic, strong) IBOutlet NSView *fileTransferView;
 @property (nonatomic, strong) IBOutlet NSView *floodControlView;
 @property (nonatomic, strong) IBOutlet NSView *generalView;
 @property (nonatomic, strong) IBOutlet NSView *highlightView;
@@ -113,6 +115,8 @@
 - (IBAction)onChangedUserListModeSortOrder:(id)sender;
 
 - (IBAction)onChangedMainInputTextFieldFontSize:(id)sender;
+
+- (IBAction)onFileTransferIPAddressDetectionMethodChanged:(id)sender;
 
 - (IBAction)onResetUserListModeColorsToDefaults:(id)sender;
 

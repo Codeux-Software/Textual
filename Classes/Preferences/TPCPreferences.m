@@ -1356,6 +1356,44 @@ static NSURL *transcriptFolderResolvedBookmark;
 }
 
 #pragma mark -
+#pragma mark File Transfers
+
++ (TXFileTransferRequestReplyAction)fileTransferRequestReplyAction
+{
+	return [RZUserDefaults() integerForKey:@"File Transfers -> File Transfer Request Reply Action"];
+}
+
++ (TXFileTransferIPAddressDetectionMethod)fileTransferIPAddressDetectionMethod
+{
+	return [RZUserDefaults() integerForKey:@"File Transfers -> File Transfer IP Address Detection Method"];
+}
+
++ (NSInteger)fileTransferPortRangeStart
+{
+	return [RZUserDefaults() integerForKey:@"File Transfers -> File Transfer Port Range Start"];
+}
+
++ (void)setFileTransferPortRangeStart:(NSInteger)value
+{
+	[RZUserDefaults() setInteger:value forKey:@"File Transfers -> File Transfer Port Range Start"];
+}
+
++ (NSInteger)fileTransferPortRangeEnd
+{
+	return [RZUserDefaults() integerForKey:@"File Transfers -> File Transfer Port Range End"];
+}
+
++ (void)setFileTransferPortRangeEnd:(NSInteger)value
+{
+	[RZUserDefaults() setInteger:value forKey:@"File Transfers -> File Transfer Port Range End"];
+}
+
++ (NSString *)fileTransferManuallyEnteredIPAddress
+{
+	return [RZUserDefaults() objectForKey:@"File Transfers -> File Transfer Manually Entered IP Address"];
+}
+
+#pragma mark -
 #pragma mark Max Log Lines
 
 + (NSInteger)maxLogLines
@@ -1867,6 +1905,11 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"DefaultBanCommandHostmaskFormat"]		= @(TXHostmaskBanWHAINNFormat);
 	d[@"DestinationOfNonserverNotices"]			= @(TXNoticeSendServerConsoleType);
 	d[@"UserListDoubleClickAction"]				= @(TXUserDoubleClickPrivateMessageAction);
+	
+	d[@"File Transfers -> File Transfer Request Reply Action"] = @(TXFileTransferRequestReplyOpenDialogAction);
+	d[@"File Transfers -> File Transfer IP Address Detection Method"] = @(TXFileTransferIPAddressAutomaticDetectionMethod);
+	d[@"File Transfers -> File Transfer Port Range Start"] = @(TXDefaultFileTransferPortRangeStart);
+	d[@"File Transfers -> File Transfer Port Range End"] = @(TXDefaultFileTransferPortRangeEnd);
 	
 	d[@"MainWindowTransparencyLevel"]		= @(1.0);
 	d[@"Theme -> Font Size"]				= @(12.0);
