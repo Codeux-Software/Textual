@@ -5779,6 +5779,33 @@
 
 			break;
 		}
+		case 716: // RPL_TARGUMODEG
+		{
+			// Ignore, 717 will take care of notification.
+			
+			break;
+		}
+		case 717: // RPL_TARGNOTIFY
+		{
+			NSAssertReturnLoopBreak(m.params.count == 3);
+
+			NSString *sendern = [m paramAt:1];
+			
+			[self printDebugInformation:TXTFLS(@"IRCUserNotifiedOfBlockedMessageForUmodeG", sendern)];
+			
+			break;
+		}
+		case 718:
+		{
+			NSAssertReturnLoopBreak(m.params.count == 4);
+			
+			NSString *sendern = [m paramAt:1];
+			NSString *hostmask = [m paramAt:2];
+			
+			[self printDebugInformation:TXTFLS(@"IRCUserPrivateMessageBlockedByUmodeG", sendern, hostmask)];
+			
+			break;
+		}
 		case 900: // RPL_LOGGEDIN
 		{
 			NSAssertReturnLoopBreak(m.params.count >= 4);
