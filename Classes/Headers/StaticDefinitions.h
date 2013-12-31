@@ -81,6 +81,7 @@
 #define RZFontManager()							[NSFontManager sharedFontManager]
 #define RZGraphicsCurrentContext()				[NSGraphicsContext currentContext]
 #define RZMainBundle()							[NSBundle mainBundle]
+#define RZMainOperationQueue()					[NSOperationQueue mainQueue]
 #define RZMainRunLoop()							[NSRunLoop mainRunLoop]
 #define RZMainScreen()							[NSScreen mainScreen]
 #define RZNotificationCenter()					[NSNotificationCenter defaultCenter]
@@ -89,12 +90,12 @@
 #define RZRunningApplication()					[NSRunningApplication currentApplication]
 #define RZSharedApplication()					[NSApplication sharedApplication]
 #define RZSpellChecker()						[NSSpellChecker	sharedSpellChecker]
+#define RZUbiquitousKeyValueStore()				[NSUbiquitousKeyValueStore defaultStore]
 #define RZUserDefaults()						[NSUserDefaults	standardUserDefaults]
 #define RZUserDefaultsController()				[NSUserDefaultsController sharedUserDefaultsController]
 #define RZUserNotificationCenter()				[NSUserNotificationCenter defaultUserNotificationCenter]
 #define RZWorkspace()							[NSWorkspace sharedWorkspace]
 #define RZWorkspaceNotificationCenter()			[RZWorkspace() notificationCenter]
-#define RZUbiquitousKeyValueStore()				[NSUbiquitousKeyValueStore defaultStore]
 
 /* Lazy-man defines. */
 #define PointerIsEmpty(s)						((s) == NULL || (s) == nil)

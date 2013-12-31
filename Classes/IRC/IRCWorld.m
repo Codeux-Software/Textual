@@ -617,6 +617,8 @@
 
 - (void)preferencesChanged
 {
+	[self.menuController preferencesChanged];
+	
 	for (IRCClient *c in self.clients) {
 		[c preferencesChanged];
 	}

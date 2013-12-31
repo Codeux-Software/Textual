@@ -4,7 +4,7 @@
        | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
-
+ 
  Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 — 2014 Codeux Software & respective contributors.
      Please see Acknowledgements.pdf for additional information.
@@ -38,29 +38,15 @@
 
 #import "TextualApplication.h"
 
-@interface TDCAddressBookSheet : TDCSheetBase
-@property (nonatomic, assign) BOOL newItem;
-@property (nonatomic, strong) IRCAddressBook *ignore;
-@property (nonatomic, nweak) IBOutlet NSButton *hideInMemberListCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *hideMessagesContainingMatchCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignoreCTCPCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignoreJPQECheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignoreNoticesCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignorePrivateHighlightsCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignorePrivateMessagesCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignorePublicHighlightsCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignorePublicMessagesCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignoreFileTransferRequestsCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *notifyJoinsCheck;
-@property (nonatomic, nweak) IBOutlet NSTextField *hostmaskField;
-@property (nonatomic, nweak) IBOutlet NSTextField *nicknameField;
-@property (nonatomic, strong) IBOutlet NSWindow *ignoreView;
-@property (nonatomic, strong) IBOutlet NSWindow *notifyView;
+@interface TDCFileTransferDialogTransferSender : TDCFileTransferDialogTableCell <GCDAsyncSocketDelegate>
+@property (nonatomic, assign, readonly) NSInteger sendQueueSize;
+@property (nonatomic, assign, readonly) dispatch_queue_t serverDispatchQueue;
+@property (nonatomic, assign, readonly) dispatch_queue_t serverSocketQueue;
+@property (nonatomic, strong, readonly) GCDAsyncSocket *socketServer;
+@property (nonatomic, strong, readonly) GCDAsyncSocket *client;
 
-- (void)start;
-@end
+- (void)open;
+- (void)close;
 
-@interface NSObject (TDCAddressBookSheetDelegate)
-- (void)ignoreItemSheetOnOK:(TDCAddressBookSheet *)sender;
-- (void)ignoreItemSheetWillClose:(TDCAddressBookSheet *)sender;
+- (void)setDidErrorOnBadSenderAddress;
 @end

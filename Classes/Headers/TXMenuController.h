@@ -77,6 +77,7 @@
 	50011: "Previous Selection"
 	50012: "Move Forward"
 	50013: "Move Backward"
+	52694: "Send file…"
 	501: "Connect"
 	502: "Disconnect"
 	503: "Cancel Reconnect"
@@ -108,6 +109,7 @@
 	591: "Ignore List"
 	592: "Textual Logs"
 	593: "Highlight List"
+	594: "File Transfers"
 	601: "Join Channel"
 	602: "Leave Channel"
 	64611: "Channel List…"
@@ -141,8 +143,11 @@
 @property (nonatomic, strong) NSString *currentSearchPhrase;
 @property (nonatomic, strong) NSDictionary *openWindowList;
 @property (nonatomic, nweak) IBOutlet NSMenu *navigationChannelList;
+@property (nonatomic, strong) TDCFileTransferDialog *fileTransferController;
 
 - (void)prepareForApplicationTermination;
+
+- (void)preferencesChanged;
 
 - (NSArray *)selectedMembers:(NSMenuItem *)sender;
 - (BOOL)checkSelectedMembers:(NSMenuItem *)item;
@@ -177,6 +182,8 @@
 - (IBAction)openDefaultIRCClientDialog:(id)sender;
 
 - (IBAction)showHighlightSheet:(id)sender;
+
+- (IBAction)showFileTransfersDialog:(id)sender;
 
 - (void)showServerPropertyDialog:(IRCClient *)u withDefaultView:(NSString *)viewType andContext:(NSString *)context;
 
@@ -219,6 +226,7 @@
 - (IBAction)memberSendCTCPUserinfo:(id)sender;
 - (IBAction)memberSendCTCPClientInfo:(id)sender;
 - (IBAction)memberSendCTCPFinger:(id)sender;
+- (IBAction)memberSendFileRequest:(id)sender;
 - (IBAction)memberModeChangeOp:(id)sender;
 - (IBAction)memberModeChangeDeop:(id)sender;
 - (IBAction)memberModeChangeHalfop:(id)sender;

@@ -77,6 +77,7 @@
 	[self.ignorePrivateMessagesCheck		setState:self.ignore.ignorePrivateMessages];
 	[self.ignorePublicHighlightsCheck		setState:self.ignore.ignorePublicHighlights];
 	[self.ignorePublicMessagesCheck			setState:self.ignore.ignorePublicMessages];
+	[self.ignoreFileTransferRequestsCheck	setState:self.ignore.ignoreFileTransferRequests];
 
 	[self.hideInMemberListCheck				setState:self.ignore.hideInMemberList];
 	[self.hideMessagesContainingMatchCheck	setState:self.ignore.hideMessagesContainingMatch];
@@ -101,6 +102,7 @@
 	self.ignore.ignorePrivateMessages		= [self.ignorePrivateMessagesCheck state];
 	self.ignore.ignorePublicHighlights		= [self.ignorePublicHighlightsCheck state];
 	self.ignore.ignorePublicMessages		= [self.ignorePublicMessagesCheck state];
+	self.ignore.ignoreFileTransferRequests	= [self.ignoreFileTransferRequestsCheck state];
 
 	self.ignore.hideInMemberList			= [self.hideInMemberListCheck state];
 	self.ignore.hideMessagesContainingMatch = [self.hideMessagesContainingMatchCheck state];
