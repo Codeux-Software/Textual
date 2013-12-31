@@ -133,7 +133,10 @@
 
 - (BOOL)isHostmask;
 
+- (BOOL)isIPv4Address;
 - (BOOL)isIPv6Address;
+- (BOOL)isIPAddress;
+
 - (BOOL)isModeChannelName;
 
 - (BOOL)isNickname;

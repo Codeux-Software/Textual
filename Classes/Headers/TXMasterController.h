@@ -125,4 +125,7 @@
 
 - (TPCThemeController *)themeController;
 + (TPCThemeController *)themeController;
+
+- (TXMenuController *)menuController;
++ (TXMenuController *)menuController;
 @end

@@ -1475,4 +1475,14 @@ typedef enum TXMoveKind : NSInteger {
 	return [TXGlobalMasterControllerClassReference themeControllerPntr];
 }
 
+- (TXMenuController *)menuController
+{
+	return [TXGlobalMasterControllerClassReference menuController];
+}
+
++ (TXMenuController *)menuController
+{
+	return [TXGlobalMasterControllerClassReference menuController];
+}
+
 @end

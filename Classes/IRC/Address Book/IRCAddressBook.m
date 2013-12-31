@@ -46,14 +46,15 @@
 		
 		self.notifyJoins				= NSDictionaryBOOLKeyValueCompare(dic, @"notifyJoins", NO);
         
-		self.ignoreCTCP					= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreCTCP", NO);
-		self.ignoreJPQE					= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreJPQE", NO);
-		self.ignoreNotices				= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreNotices", NO);
-		self.ignorePrivateHighlights	= NSDictionaryBOOLKeyValueCompare(dic, @"ignorePMHighlights", NO);
-		self.ignorePrivateMessages		= NSDictionaryBOOLKeyValueCompare(dic, @"ignorePrivateMsg", NO);
-		self.ignorePublicHighlights		= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreHighlights", NO);
-		self.ignorePublicMessages		= NSDictionaryBOOLKeyValueCompare(dic, @"ignorePublicMsg", NO);
-
+		self.ignoreCTCP						= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreCTCP", NO);
+		self.ignoreJPQE						= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreJPQE", NO);
+		self.ignoreNotices					= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreNotices", NO);
+		self.ignorePrivateHighlights		= NSDictionaryBOOLKeyValueCompare(dic, @"ignorePMHighlights", NO);
+		self.ignorePrivateMessages			= NSDictionaryBOOLKeyValueCompare(dic, @"ignorePrivateMsg", NO);
+		self.ignorePublicHighlights			= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreHighlights", NO);
+		self.ignorePublicMessages			= NSDictionaryBOOLKeyValueCompare(dic, @"ignorePublicMsg", NO);
+		self.ignoreFileTransferRequests		= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreFileTransferRequests", NO);
+		
 		self.hideMessagesContainingMatch	= NSDictionaryBOOLKeyValueCompare(dic, @"hideMessagesContainingMatch", NO);
 		self.hideInMemberList				= NSDictionaryBOOLKeyValueCompare(dic, @"hideInMemberList", NO);
 
@@ -153,13 +154,14 @@
 	[dic setBool:self.hideInMemberList				forKey:@"hideInMemberList"];
 	[dic setBool:self.hideMessagesContainingMatch	forKey:@"hideMessagesContainingMatch"];
 
-	[dic setBool:self.ignorePublicMessages		forKey:@"ignorePublicMsg"];
-	[dic setBool:self.ignorePrivateMessages		forKey:@"ignorePrivateMsg"];
-	[dic setBool:self.ignorePublicHighlights	forKey:@"ignoreHighlights"];
-	[dic setBool:self.ignorePrivateHighlights	forKey:@"ignorePMHighlights"];
-	[dic setBool:self.ignoreNotices				forKey:@"ignoreNotices"];
-	[dic setBool:self.ignoreCTCP				forKey:@"ignoreCTCP"];
-	[dic setBool:self.ignoreJPQE				forKey:@"ignoreJPQE"];
+	[dic setBool:self.ignoreFileTransferRequests	forKey:@"ignoreFileTransferRequests"];
+	[dic setBool:self.ignorePublicMessages			forKey:@"ignorePublicMsg"];
+	[dic setBool:self.ignorePrivateMessages			forKey:@"ignorePrivateMsg"];
+	[dic setBool:self.ignorePublicHighlights		forKey:@"ignoreHighlights"];
+	[dic setBool:self.ignorePrivateHighlights		forKey:@"ignorePMHighlights"];
+	[dic setBool:self.ignoreNotices					forKey:@"ignoreNotices"];
+	[dic setBool:self.ignoreCTCP					forKey:@"ignoreCTCP"];
+	[dic setBool:self.ignoreJPQE					forKey:@"ignoreJPQE"];
     
 	[dic setBool:self.notifyJoins				forKey:@"notifyJoins"];
 	

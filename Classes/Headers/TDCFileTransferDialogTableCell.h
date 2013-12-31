@@ -4,7 +4,7 @@
        | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
-
+ 
  Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 — 2014 Codeux Software & respective contributors.
      Please see Acknowledgements.pdf for additional information.
@@ -38,29 +38,37 @@
 
 #import "TextualApplication.h"
 
-@interface TDCAddressBookSheet : TDCSheetBase
-@property (nonatomic, assign) BOOL newItem;
-@property (nonatomic, strong) IRCAddressBook *ignore;
-@property (nonatomic, nweak) IBOutlet NSButton *hideInMemberListCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *hideMessagesContainingMatchCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignoreCTCPCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignoreJPQECheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignoreNoticesCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignorePrivateHighlightsCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignorePrivateMessagesCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignorePublicHighlightsCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignorePublicMessagesCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignoreFileTransferRequestsCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *notifyJoinsCheck;
-@property (nonatomic, nweak) IBOutlet NSTextField *hostmaskField;
-@property (nonatomic, nweak) IBOutlet NSTextField *nicknameField;
-@property (nonatomic, strong) IBOutlet NSWindow *ignoreView;
-@property (nonatomic, strong) IBOutlet NSWindow *notifyView;
+@interface TDCFileTransferDialogTableCell : NSTableCellView
+@property (nonatomic, nweak) IBOutlet NSProgressIndicator *progressIndicator;
+@property (nonatomic, nweak) IBOutlet NSImageView *fileIconView;
+@property (nonatomic, nweak) IBOutlet NSTextField *filenameTextField;
+@property (nonatomic, nweak) IBOutlet NSTextField *filesizeTextField;
+@property (nonatomic, nweak) IBOutlet NSTextField *transferProgressField;
+@property (nonatomic, uweak) TDCFileTransferDialog *transferDialog;
+@property (nonatomic, nweak) IRCClient *associatedClient;
+@property (nonatomic, assign) BOOL isReceiving; // Type of transfer.
+@property (nonatomic, strong) NSString *path;
+@property (nonatomic, strong) NSString *filename;
+@property (nonatomic, strong) NSString *peerNickname;
+@property (nonatomic, strong) NSString *errorMessageToken;
+@property (nonatomic, strong) NSString *hostAddress;
+@property (nonatomic, assign) NSInteger transferPort;
+@property (nonatomic, strong) NSFileHandle *fileHandle;
+@property (nonatomic, assign) TXFSLongInt totalFilesize;
+@property (nonatomic, assign) TXFSLongInt processedFilesize;
+@property (nonatomic, assign) TXFSLongInt currentRecord;
+@property (nonatomic, strong) NSMutableArray *speedRecords;
+@property (nonatomic, strong) TLOTimer *maintenanceTimer;
+@property (nonatomic, assign) TDCFileTransferDialogTransferStatus transferStatus;
 
-- (void)start;
-@end
+- (NSString *)completePath;
 
-@interface NSObject (TDCAddressBookSheetDelegate)
-- (void)ignoreItemSheetOnOK:(TDCAddressBookSheet *)sender;
-- (void)ignoreItemSheetWillClose:(TDCAddressBookSheet *)sender;
+- (TXFSLongInt)currentSpeed;
+
+- (void)populateBasicInformation;
+
+- (void)resetProperties;
+- (void)prepareForDestruction;
+
+- (void)reloadStatusInformation;
 @end

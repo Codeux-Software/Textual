@@ -59,6 +59,11 @@
 		self.openWindowList = [NSDictionary dictionary];
 		
 		self.currentSearchPhrase = NSStringEmptyPlaceholder;
+		
+		if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+			 self.fileTransferController = [TDCFileTransferDialog new];
+			[self.fileTransferController requestIPAddressFromExternalSource];
+		}
 	}
 	
 	return self;
@@ -67,6 +72,15 @@
 - (void)prepareForApplicationTermination
 {
 	[self popWindowSheetIfExists];
+	
+	[self.fileTransferController prepareForApplicationTermination];
+}
+
+- (void)preferencesChanged
+{
+	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+		[self.fileTransferController requestIPAddressFromExternalSource];
+	}
 }
 
 - (void)validateChannelMenuSubmenus:(NSMenuItem *)item
@@ -156,6 +170,13 @@
 		{
 			return _disableInSheet(YES);
 
+			break;
+		}
+		case 594: // "File Transfers"
+		case 52694: // "Send file…"
+		{
+			return _disableInSheet([TPCPreferences featureAvailableToOSXMountainLion]);
+			
 			break;
 		}
 		case 51066: // "Toggle Visbility of Member List"
@@ -811,6 +832,14 @@
 	} else {
 		[currentWindow performClose:nil];
 	}
+}
+
+#pragma mark -
+#pragma mark File Transfers Dialog
+
+- (void)showFileTransfersDialog:(id)sender
+{
+	[self.fileTransferController show:YES];
 }
 
 #pragma mark -
@@ -1979,6 +2008,36 @@
 	}
 	
 	[self deselectMembers:sender];
+}
+
+- (void)memberSendFileRequest:(id)sender
+{
+	IRCClient *u = [self.worldController selectedClient];
+	IRCChannel *c = [self.worldController selectedChannel];
+	
+	if (_noClientOrChannel || _isClient || _notConnected) {
+		return;
+	}
+	
+	NSOpenPanel *d = [NSOpenPanel openPanel];
+	
+	[d setCanChooseFiles:YES];
+	[d setCanChooseDirectories:NO];
+	[d setResolvesAliases:YES];
+	[d setAllowsMultipleSelection:NO];
+	[d setCanCreateDirectories:NO];
+	
+	id modalWindow = self.masterController.mainWindow;
+	
+	[d beginSheetModalForWindow:modalWindow completionHandler:^(NSInteger returnCode) {
+		if (returnCode == NSOKButton) {
+			NSURL *pathURL = d.URLs[0];
+			
+			for (IRCUser *m in [self selectedMembers:sender]) {
+				[self.fileTransferController addSenderForClient:u nickname:m.nickname path:[pathURL path] autoOpen:YES];
+			}
+		}
+	}];
 }
 
 - (void)openLogLocation:(id)sender

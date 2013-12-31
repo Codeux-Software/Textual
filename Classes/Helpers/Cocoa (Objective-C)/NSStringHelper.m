@@ -61,6 +61,8 @@
 
 #import <CommonCrypto/CommonDigest.h>
 
+#include <arpa/inet.h>
+
 @implementation NSString (TXStringHelper)
 
 /* Helper Methods */
@@ -549,11 +551,27 @@
 	return bob;
 }
 
+- (BOOL)isIPAddress
+{
+	return ([self isIPv4Address] || [self isIPv6Address]);
+}
+
+- (BOOL)isIPv4Address
+{
+	struct sockaddr_in sa;
+	
+    int result = inet_pton(AF_INET, [self UTF8String], &(sa.sin_addr));
+    
+	return (result == 1);
+}
+
 - (BOOL)isIPv6Address
 {
-	NSArray *matches = [self componentsSeparatedByString:@":"];
-
-	return (matches.count >= 2 && matches.count <= 7);
+	struct in6_addr sa;
+	
+    int result = inet_pton(AF_INET6, [self UTF8String], &sa);
+    
+	return (result == 1);
 }
 
 - (NSString *)stringWithValidURIScheme

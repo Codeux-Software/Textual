@@ -447,6 +447,11 @@
 	return self.myHost;
 }
 
+- (TDCFileTransferDialog *)fileTransferController
+{
+	return self.menuController.fileTransferController;
+}
+
 - (BOOL)isReconnecting
 {
 	return (self.reconnectTimer && self.reconnectTimer.timerIsActive);
@@ -1979,6 +1984,7 @@
 				g.ignorePrivateMessages = YES;
 				g.ignorePublicHighlights = YES;
 				g.ignorePrivateHighlights = YES;
+				g.ignoreFileTransferRequests = YES;
 
 				g.hideMessagesContainingMatch = NO;
 				g.hideInMemberList = YES;
@@ -3803,6 +3809,49 @@
 	}
 
 	if ([command isEqualToString:IRCPrivateCommandIndex("dcc")]) {
+		return; // Do not accept external requests for right now…
+		
+		if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+			NSString *subcommand = s.getToken.uppercaseString;
+			
+			// Process file transfer requests.
+			if ([subcommand isEqualToString:@"SEND"]) {
+				NSString *filename = [s getToken];
+				
+				if ([filename hasPrefix:@"\""] && [filename hasSuffix:@"\""]) {
+					if ([filename length] > 2) {
+						NSRange spliceRange = NSMakeRange(1, ([filename length] - 2));
+						
+						filename = [filename substringWithRange:spliceRange]; // Remove surrounding quotes.
+					}
+				}
+				
+				NSString *hostAddress = [s getToken];
+				NSString *hostPort = [s getToken];
+				NSString *filesize = [s getToken];
+				
+				if (NSObjectIsNotEmpty(filename) &&
+					NSObjectIsNotEmpty(filesize) &&
+					NSObjectIsNotEmpty(hostAddress) &&
+					NSObjectIsNotEmpty(hostPort))
+				{
+					NSInteger portNumerical = [hostPort integerValue];
+					
+					TXFSLongInt filesizeNumerical = [filesize longLongValue];
+					
+					// Refuse to accept a file more than 20 GB in size.
+					if (NSNumberInRange(filesizeNumerical, 0, 20000000000)) {
+						if (portNumerical > 0) {
+							[self receivedDCCSend:m file:filename address:hostAddress port:portNumerical filesize:filesizeNumerical];
+						
+							return; // Break chain.
+						}
+					}
+				}
+			}
+		}
+		
+		// Report an error.
 		[self printDebugInformationToConsole:TXTLS(@"DCCRequestErrorMessage")];
 	} else {
 		IRCChannel *target = nil;
@@ -4358,6 +4407,10 @@
 	
 	if (myself) {
 		[self.worldController updateTitleFor:c];
+	} else {
+		if (m.isPrintOnlyMessage == NO) {
+			[self.fileTransferController nicknameChanged:oldNick toNickname:newNick client:self];
+		}
 	}
 }
 
@@ -6835,6 +6888,7 @@
 	}
 
 	NSString *newNick = nil;
+	
 	if (setAway) {
 		self.preAwayNickname = [self localNickname];
 
@@ -6846,6 +6900,103 @@
 	if (NSObjectIsNotEmpty(newNick)) {
 		[self changeNick:newNick];
 	}
+}
+
+#pragma mark -
+#pragma mark File Transfers
+
+- (void)receivedDCCSend:(IRCMessage *)m file:(NSString *)filename address:(NSString *)address port:(NSInteger)port filesize:(TXFSLongInt)totalFilesize
+{
+	/* Gather inital information. */
+	NSString *nickname = m.sender.nickname;
+	NSString *target = [m paramAt:0];
+	
+	if (NSObjectsAreEqual(target, [self localNickname]) == NO) {
+		return;
+	}
+	
+	/* Are we ignoring this user? */
+	IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
+														withMatches:@[@"ignoreFileTransferRequests"]];
+	
+	if ([ignoreChecks ignoreFileTransferRequests] == YES) {
+		return;
+	}
+	
+	/* Try our best to extract the sender's address. */
+	NSString *hostAddress;
+	
+	if ([address isNumericOnly]) {
+		long long a = [address longLongValue];
+		
+		NSInteger w = (a & 0xff); a >>= 8;
+		NSInteger x = (a & 0xff); a >>= 8;
+		NSInteger y = (a & 0xff); a >>= 8;
+		NSInteger z = (a & 0xff);
+		
+		hostAddress = [NSString stringWithFormat:@"%d.%d.%d.%d", z, y, x, w];
+	} else {
+		hostAddress = address;
+	}
+	
+	/* Inform of the DCC and possibly ignore it. */
+	NSString *message = TXTFLS(@"DCCFileTransferRequestReceived", nickname, filename, totalFilesize, hostAddress, port);
+
+	[self printDebugInformationToConsole:message];
+	
+	if ([TPCPreferences fileTransferRequestReplyAction] == TXFileTransferRequestReplyIgnoreAction) {
+		return;
+	}
+	
+	/* Add file. */
+	NSString *downloadFolder = [TPCPreferences userDownloadFolderPath];
+	
+	[self.fileTransferController addReceiverForClient:self
+											 nickname:nickname
+											  address:hostAddress
+												 port:port
+												 path:downloadFolder
+											 filename:filename
+												 size:totalFilesize];
+}
+
+- (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename size:(TXFSLongInt)totalFilesize
+{
+	NSAssertReturn([TPCPreferences featureAvailableToOSXMountainLion]);
+	
+	NSString *escapedFileName = filename;
+	
+	escapedFileName = [escapedFileName safeFilename];
+	escapedFileName = [escapedFileName stringByReplacingOccurrencesOfString:NSStringWhitespacePlaceholder withString:@"_"];
+	
+	NSString *address;
+	NSString *baseaddr = [self.fileTransferController cachedIPAddress];
+	
+	if ([baseaddr isIPv4Address] == NO) {
+		address = baseaddr;
+	} else {
+		NSArray *addrInfo = [baseaddr componentsSeparatedByString:@"."];
+		
+		NSInteger w = [addrInfo[0] integerValue];
+		NSInteger x = [addrInfo[1] integerValue];
+		NSInteger y = [addrInfo[2] integerValue];
+		NSInteger z = [addrInfo[3] integerValue];
+		
+		unsigned long long a = 0;
+		
+		a |= w; a <<= 8;
+		a |= x; a <<= 8;
+		a |= y; a <<= 8;
+		a |= z;
+		
+		address = [NSString stringWithFormat:@"%qu", a];
+	}
+	
+	NSString *trail = [NSString stringWithFormat:@"%@ %@ %d %qi", escapedFileName, address, port, totalFilesize];
+	
+	[self sendCTCPQuery:nickname command:@"DCC SEND" text:trail];
+
+	[self printDebugInformationToConsole:TXTFLS(@"DCCFileTransferInitiated", nickname, filename, totalFilesize, baseaddr, port)];
 }
 
 #pragma mark -

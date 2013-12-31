@@ -509,6 +509,13 @@ NSString *IRCPublicCommandIndex(const char *key)
 	return NSStringEmptyPlaceholder;
 }
 
++ (NSString *)userDownloadFolderPath
+{
+	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSDownloadsDirectory, NSUserDomainMask, YES);
+	
+	return searchArray[0];
+}
+
 + (NSString *)userHomeDirectoryPathOutsideSandbox
 {
 	struct passwd *pw = getpwuid(getuid());

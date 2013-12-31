@@ -72,6 +72,10 @@
 	@class NSMenuExtendedHelperItem;
 	@class TDCAboutPanel;
 	@class TDCAddressBookSheet;
+	@class TDCFileTransferDialog;
+	@class TDCFileTransferDialogTableCell;
+	@class TDCFileTransferDialogTransferReceiver;
+	@class TDCFileTransferDialogTransferSender;
 	@class TDCHighlightEntryMatchCondition;
 	@class TDCHighlightEntrySheet;
 	@class TDCHighlightListSheet;
@@ -231,6 +235,10 @@
 	#import "TDCSheetBase.h"
 	#import "TDCAboutPanel.h"
 	#import "TDCAddressBookSheet.h"
+	#import "TDCFileTransferDialog.h"
+	#import "TDCFileTransferDialogTableCell.h"
+	#import "TDCFileTransferDialogTransferReceiver.h"
+	#import "TDCFileTransferDialogTransferSender.h"
 	#import "TDCHighlightEntrySheet.h"
 	#import "TDCHighlightListSheet.h"
 	#import "TDCInviteSheet.h"

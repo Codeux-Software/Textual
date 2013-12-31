@@ -98,9 +98,23 @@
 
 "GlineReason" = "35d Your behavior is not conducive to the desired environment.";
 
+"DCCFileTransferInitiated" = "Trying file transfer to %1$@, %2$@ (%3$qi bytes) %4$@:%5$d";
+"DCCFileTransferRequestReceived" = "Received file transfer request from %1$@, %2$@ (%3$qi bytes) %4$@:%5$d";
+
 "ExcessFloodIRCDisconnectAlertTitle" = "Excess Flood";
 "ExcessFloodIRCDisconnectAlertMessage" = "A disconnection has occured due to excess flood. Reconnect?";
 "ExcessFloodIRCDisconnectAlertOpenFloodControlButton" = "Configure Flood Control";
+
+"FileTransferDialogTransferToUserStatusWithoutRemainingTime" = "%1$@ of %2$@ (%3$@/s) sent to %4$@";
+"FileTransferDialogTransferToUserStatusWithRemainingTime" = "%1$@ of %2$@ (%3$@/s) sent to %4$@ — %5$@ remaining";
+"FileTransferDialogTransferSocketIsListening" = "Transfer to %@ is ready. Waiting for them to accept.";
+"FileTransferDialogTransferToUserIsStopped" = "Transfer to %@ is stopped. Right click to start.";
+"FileTransferDialogTransferToUserIsInitializing" = "Transfer to %@ is initializing.";
+"FileTransferDialogTransferToUserIsComplete" = "Transfer to %@ is complete.";
+"FileTransferDialogTransferFailedWithUnavailablePort" = "Transfer to %@ failed. There is no open port.";
+"FileTransferDialogTransferFailedWithBadFileHandle" = "Transfer to %@ failed. Could not read source file.";
+"FileTransferDialogTransferFailedWithBadSourceAddress" = "Transfer to %@ failed. Unknown source IP address.";
+"FileTransferDialogTransferFailedWithUnknownDisconnect" = "Transfer to %@ failed. Connection was disconnected.";
 
 "HalfopCommandNotSupportedOnServer" = "The half-op (+h) mode is not supported on this server.";
 
@@ -113,7 +127,7 @@
 "IRCCTCPRequestIgnored" = "\002-CTCP-\002 %1$@ from %2$@ was ignored.";
 
 "IRCClientSupportedCapacities" = "away-notify multi-prefix userhost-in-names sasl server-time";
-"IRCCTCPSupportedReplies" = "CLIENTINFO FINGER PING TIME USERINFO VERSION";
+"IRCCTCPSupportedReplies" = "CLIENTINFO DCC FINGER PING TIME USERINFO VERSION";
 "IRCCTCPVersionTitle" = "\002Current Version:\002 %@";
 "IRCCTCPFingerCommandReply" = "Stop fingering me pervert!";
 "IRCCapCurrentlyEnabledNone" = "There are no capabilities in use.";
