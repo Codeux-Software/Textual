@@ -57,7 +57,7 @@
 	return self;
 }
 
-- (void)show:(BOOL)key
+- (void)show:(BOOL)key restorePosition:(BOOL)restoreFrame
 {
 	if (key) {
 		[self.window makeKeyAndOrderFront:nil];
@@ -65,7 +65,9 @@
 		[self.window orderFront:nil];
 	}
 	
-	[self.window restoreWindowStateForClass:self.class];
+	if (restoreFrame) {
+		[self.window restoreWindowStateForClass:self.class];
+	}
 }
 
 - (void)close
@@ -156,7 +158,7 @@
 			[groupItem reloadStatusInformation];
 		}
 		
-		[self show:NO];
+		[self show:NO restorePosition:NO];
 	}
 }
 
@@ -200,7 +202,7 @@
 		}
 		
 		/* Update dialog. */
-		[self show:YES];
+		[self show:NO restorePosition:NO];
 	}
 }
 
