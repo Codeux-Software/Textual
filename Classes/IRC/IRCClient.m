@@ -6906,10 +6906,13 @@
 				
 				if ([backSplice contains:@"\""]) {
 					NSInteger quotePos = [backSplice stringPosition:@"\""];
+					NSInteger cutLength = (quotePos + 3); // 1 = open quote, 2 = close quote, 3 = space after
 					
-					section1 = [backSplice substringToIndex:quotePos];
+					if ([rawMessage length] > cutLength) {
+						section1 = [backSplice substringToIndex:quotePos];
 					
-					[rawMessage deleteCharactersInRange:NSMakeRange(0, (quotePos + 1))];
+						[rawMessage deleteCharactersInRange:NSMakeRange(0, cutLength)];
+					}
 				}
 			} else {
 				section1 = [rawMessage getToken];
