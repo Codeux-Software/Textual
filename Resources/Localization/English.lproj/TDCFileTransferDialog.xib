@@ -18,6 +18,7 @@
                 <outlet property="filesSendingStopTransferMenuItem" destination="45" id="Tgc-0h-4yI"/>
                 <outlet property="receivingFilesTable" destination="idM-5g-wAt" id="W1l-4O-tCB"/>
                 <outlet property="sendingFilesTable" destination="6tS-ZX-8pt" id="ILJ-zC-JCr"/>
+                <outlet property="sourceIPAddressTextField" destination="iiU-og-zyu" id="EAd-3l-Df5"/>
                 <outlet property="window" destination="5" id="oY6-kl-EqU"/>
             </connections>
         </customObject>
@@ -33,7 +34,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="517" height="314"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <splitView id="32">
+                    <splitView dividerStyle="paneSplitter" id="32">
                         <rect key="frame" x="0.0" y="33" width="517" height="279"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -135,14 +136,14 @@
                                 </scroller>
                             </scrollView>
                             <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="67" horizontalPageScroll="10" verticalLineScroll="67" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="klb-TY-HGe">
-                                <rect key="frame" x="0.0" y="144" width="517" height="135"/>
+                                <rect key="frame" x="0.0" y="145" width="517" height="134"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <clipView key="contentView" copiesOnScroll="NO" id="Z2C-ew-zeM">
-                                    <rect key="frame" x="0.0" y="0.0" width="517" height="135"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="517" height="134"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="65" viewBased="YES" id="6tS-ZX-8pt" customClass="TVCListView">
-                                            <rect key="frame" x="0.0" y="0.0" width="517" height="135"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="517" height="134"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -248,6 +249,19 @@
                             <action selector="clear:" target="-2" id="T9p-oR-2hf"/>
                         </connections>
                     </button>
+                    <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="iiU-og-zyu">
+                        <rect key="frame" x="245" y="8" width="254" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <shadow key="shadow">
+                            <size key="offset" width="1" height="1"/>
+                            <color key="color" red="0.88775510204081631" green="0.88775510204081631" blue="0.88775510204081631" alpha="1" colorSpace="calibratedRGB"/>
+                        </shadow>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Address: 127.0.0.1" id="b4U-6o-ZAj">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
             <contentBorderThickness minY="33"/>

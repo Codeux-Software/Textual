@@ -93,6 +93,8 @@
 
 - (void)requestIPAddressFromExternalSource
 {
+	[self.sourceIPAddressTextField setStringValue:TXTLS(@"FileTransferDialogSourceIPAddressUnknown")];
+	
 	if ([TPCPreferences fileTransferIPAddressDetectionMethod] == TXFileTransferIPAddressAutomaticDetectionMethod) {
 		[RZMainOperationQueue() addOperationWithBlock:^{
 			@autoreleasepool {
@@ -104,12 +106,16 @@
 				if (resultData) {
 					if ([resultData isIPv4Address]) {
 						self.cachedIPAddress = resultData;
+						
+						[self.sourceIPAddressTextField setStringValue:TXTFLS(@"FileTransferDialogSourceIPAddressValue", self.cachedIPAddress)];
 					}
 				}
 			}
 		}];
 	} else {
 		self.cachedIPAddress = [TPCPreferences fileTransferManuallyEnteredIPAddress];
+		
+		[self.sourceIPAddressTextField setStringValue:TXTFLS(@"FileTransferDialogSourceIPAddressValue", self.cachedIPAddress)];
 	}
 }
 
