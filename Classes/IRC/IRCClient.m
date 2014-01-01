@@ -3797,7 +3797,8 @@
 	NSMutableString *s = text.mutableCopy;
 
 	IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
-														withMatches:@[@"ignoreCTCP"]];
+														withMatches:@[@"ignoreCTCP",
+																	  @"ignoreFileTransferRequests"]];
 
 	NSAssertReturn([ignoreChecks ignoreCTCP] == NO);
 
@@ -3811,7 +3812,7 @@
 	}
 
 	if ([command isEqualToString:IRCPrivateCommandIndex("dcc")]) {
-		[self receivedDCCQuery:m message:s];
+		[self receivedDCCQuery:m message:s ignoreInfo:ignoreChecks];
 		
 		return; // Above method does all the work.
 	} else {
@@ -6867,7 +6868,7 @@
 #pragma mark -
 #pragma mark File Transfers
 
-- (void)receivedDCCQuery:(IRCMessage *)m message:(NSMutableString *)rawMessage
+- (void)receivedDCCQuery:(IRCMessage *)m message:(NSMutableString *)rawMessage ignoreInfo:(IRCAddressBook *)ignoreChecks
 {
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
 		/* Gather inital information. */
@@ -6891,9 +6892,6 @@
 		// Process file transfer requests.
 		if (isSendRequest /* || isResumeRequest || isAcceptRequest */) {
 			/* Check ignore status. */
-			IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
-																withMatches:@[@"ignoreFileTransferRequests"]];
-			
 			if ([ignoreChecks ignoreFileTransferRequests] == YES) {
 				return;
 			}
