@@ -98,8 +98,8 @@
 
 "GlineReason" = "35d Your behavior is not conducive to the desired environment.";
 
-"DCCFileTransferInitiated" = "Trying file transfer to %1$@, %2$@ (%3$qi bytes) %4$@:%5$d";
-"DCCFileTransferRequestReceived" = "Received file transfer request from %1$@, %2$@ (%3$qi bytes) %4$@:%5$d";
+"DCCFileTransferInitiated" = "Trying file transfer to %1$@, %2$@ (%3$qi bytes)";
+"DCCFileTransferRequestReceived" = "Received file transfer request from %1$@, %2$@ (%3$qi bytes)";
 
 "ExcessFloodIRCDisconnectAlertTitle" = "Excess Flood";
 "ExcessFloodIRCDisconnectAlertMessage" = "A disconnection has occured due to excess flood. Reconnect?";
