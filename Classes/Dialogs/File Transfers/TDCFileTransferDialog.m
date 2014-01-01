@@ -115,7 +115,9 @@
 	} else {
 		self.cachedIPAddress = [TPCPreferences fileTransferManuallyEnteredIPAddress];
 		
-		[self.sourceIPAddressTextField setStringValue:TXTFLS(@"FileTransferDialogSourceIPAddressValue", self.cachedIPAddress)];
+		if ([self.cachedIPAddress isIPv4Address]) {
+			[self.sourceIPAddressTextField setStringValue:TXTFLS(@"FileTransferDialogSourceIPAddressValue", self.cachedIPAddress)];
+		}
 	}
 }
 
