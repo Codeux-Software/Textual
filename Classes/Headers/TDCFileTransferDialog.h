@@ -58,7 +58,7 @@ typedef enum TDCFileTransferDialogTransferStatus : NSInteger {
 @property (nonatomic, nweak) IBOutlet TVCListView *sendingFilesTable;
 @property (nonatomic, strong) TLOTimer *maintenanceTimer;
 
-- (void)show:(BOOL)key;
+- (void)show:(BOOL)key restorePosition:(BOOL)restoreFrame;
 
 - (void)close;
 - (void)prepareForApplicationTermination;

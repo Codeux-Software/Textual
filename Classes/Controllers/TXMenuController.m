@@ -839,7 +839,7 @@
 
 - (void)showFileTransfersDialog:(id)sender
 {
-	[self.fileTransferController show:YES];
+	[self.fileTransferController show:YES restorePosition:YES];
 }
 
 #pragma mark -
@@ -2038,6 +2038,8 @@
 			}
 		}
 	}];
+	
+	[self deselectMembers:sender];
 }
 
 - (void)openLogLocation:(id)sender
