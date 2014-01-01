@@ -122,8 +122,6 @@
     }
 	
 	/* Update status information. */
-	[self.transferDialog updateMaintenanceTimer];
-	
 	[self reloadStatusInformation];
 }
 
@@ -288,6 +286,8 @@
 	self.transferStatus = TDCFileTransferDialogTransferSendingStatus;
 	
 	[self reloadStatusInformation];
+	
+	[self.transferDialog updateMaintenanceTimer];
 	
 	/* Start pushing data. */
 	[self send];
