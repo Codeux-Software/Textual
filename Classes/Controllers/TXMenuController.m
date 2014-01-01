@@ -2037,9 +2037,9 @@
 				[self.fileTransferController addSenderForClient:u nickname:m.nickname path:[pathURL path] autoOpen:YES];
 			}
 		}
+		
+		[self deselectMembers:sender];
 	}];
-	
-	[self deselectMembers:sender];
 }
 
 - (void)openLogLocation:(id)sender
