@@ -121,10 +121,9 @@
 		}
     }
 	
-	/* Start timer. */
-	[self.maintenanceTimer start:1.0];
-	
 	/* Update status information. */
+	[self.transferDialog updateMaintenanceTimer];
+	
 	[self reloadStatusInformation];
 }
 
@@ -192,9 +191,6 @@
 	
 	[self destroyDispatchQueues];
 	
-	/* Stop timer. */
-	[self.maintenanceTimer stop];
-	
 	/* Close the file. */
     [self closeFileHandle];
 	
@@ -206,6 +202,8 @@
 	}
 	
 	/* Update status information. */
+	[self.transferDialog updateMaintenanceTimer];
+	
 	[self reloadStatusInformation];
 }
 

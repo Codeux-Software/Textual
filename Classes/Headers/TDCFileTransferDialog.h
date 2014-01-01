@@ -56,6 +56,7 @@ typedef enum TDCFileTransferDialogTransferStatus : NSInteger {
 @property (nonatomic, nweak) IBOutlet NSButton *clearButton;
 @property (nonatomic, nweak) IBOutlet TVCListView *receivingFilesTable;
 @property (nonatomic, nweak) IBOutlet TVCListView *sendingFilesTable;
+@property (nonatomic, strong) TLOTimer *maintenanceTimer;
 
 - (void)show:(BOOL)key;
 
@@ -82,6 +83,7 @@ typedef enum TDCFileTransferDialogTransferStatus : NSInteger {
 				  autoOpen:(BOOL)autoOpen;
 
 - (void)updateClearButton;
+- (void)updateMaintenanceTimer;
 
 - (IBAction)clear:(id)sender;
 

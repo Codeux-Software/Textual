@@ -38,7 +38,11 @@
 
 #import "TextualApplication.h"
 
-@interface TDCFileTransferDialogTransferReceiver : TDCFileTransferDialogTableCell
+@interface TDCFileTransferDialogTransferReceiver : TDCFileTransferDialogTableCell <GCDAsyncSocketDelegate>
+@property (nonatomic, assign, readonly) dispatch_queue_t clientDispatchQueue;
+@property (nonatomic, assign, readonly) dispatch_queue_t clientSocketQueue;
+@property (nonatomic, strong, readonly) GCDAsyncSocket *client;
+
 - (void)open;
 - (void)close;
 @end
