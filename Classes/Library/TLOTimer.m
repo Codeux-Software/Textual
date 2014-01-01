@@ -87,7 +87,7 @@
 - (void)stop
 {
 	[self.timer invalidate];
-	self.timer = nil;
+	 self.timer = nil;
 }
 
 - (void)onTimer:(id)sender

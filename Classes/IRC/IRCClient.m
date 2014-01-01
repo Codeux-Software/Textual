@@ -3809,8 +3809,6 @@
 	}
 
 	if ([command isEqualToString:IRCPrivateCommandIndex("dcc")]) {
-		return; // Do not accept external requests for right now…
-		
 		if ([TPCPreferences featureAvailableToOSXMountainLion]) {
 			NSString *subcommand = s.getToken.uppercaseString;
 			

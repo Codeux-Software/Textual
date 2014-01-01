@@ -107,9 +107,9 @@
                                                             </subviews>
                                                             <connections>
                                                                 <outlet property="fileIconView" destination="9pT-Bo-7Ok" id="UiJ-5s-VMb"/>
-                                                                <outlet property="fileProgressBar" destination="i7e-by-caO" id="ZSH-qp-f4v"/>
                                                                 <outlet property="filenameTextField" destination="vp0-ro-1r0" id="9DT-Gh-bv5"/>
                                                                 <outlet property="filesizeTextField" destination="CYH-Tq-yDj" id="HiV-ST-ZYk"/>
+                                                                <outlet property="progressIndicator" destination="i7e-by-caO" id="nEu-jr-jfw"/>
                                                                 <outlet property="transferProgressField" destination="ovq-49-hjT" id="C8g-ST-JWv"/>
                                                             </connections>
                                                         </customView>

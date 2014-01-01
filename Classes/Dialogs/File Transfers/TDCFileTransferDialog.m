@@ -48,6 +48,10 @@
 		
 		[RZMainBundle() loadCustomNibNamed:@"TDCFileTransferDialog" owner:self topLevelObjects:nil];
 		
+		self.maintenanceTimer = [TLOTimer new];
+		self.maintenanceTimer.delegate = self;
+		self.maintenanceTimer.selector = @selector(onMaintenanceTimer:);
+		self.maintenanceTimer.reqeatTimer = YES;
 	}
 	
 	return self;
@@ -152,7 +156,6 @@
 			[groupItem reloadStatusInformation];
 		}
 		
-		[self reloadFilesSendingTable];
 		[self show:NO];
 	}
 }
@@ -555,6 +558,60 @@
 		NSInteger actualIndx = [index integerValue];
 		
 		[self destroySenderAtIndex:actualIndx];
+	}
+}
+
+#pragma mark -
+#pragma mark Timer
+
+- (void)updateMaintenanceTimerOnMainThread
+{
+	BOOL foundActive = NO;
+	
+	for (TDCFileTransferDialogTransferReceiver *e in self.filesReceiving) {
+		if ([e transferStatus] == TDCFileTransferDialogTransferReceivingStatus) {
+			foundActive = YES;
+			
+			break;
+		}
+	}
+	
+	for (TDCFileTransferDialogTransferSender *e in self.filesSending) {
+		if ([e transferStatus] == TDCFileTransferDialogTransferSendingStatus) {
+			foundActive = YES;
+			
+			break;
+		}
+	}
+	
+    if ([self.maintenanceTimer timerIsActive]) {
+        if (foundActive == NO) {
+            [self.maintenanceTimer stop];
+        }
+    } else {
+        if (foundActive) {
+            [self.maintenanceTimer start:1];
+        }
+    }
+}
+
+- (void)updateMaintenanceTimer
+{
+	[self performSelectorOnMainThread:@selector(updateMaintenanceTimerOnMainThread) withObject:nil waitUntilDone:NO];
+}
+
+- (void)onMaintenanceTimer:(TLOTimer *)sender
+{
+	for (TDCFileTransferDialogTransferReceiver *e in self.filesReceiving) {
+		if ([e transferStatus] == TDCFileTransferDialogTransferReceivingStatus) {
+			[e onMaintenanceTimer];
+		}
+	}
+	
+	for (TDCFileTransferDialogTransferSender *e in self.filesSending) {
+		if ([e transferStatus] == TDCFileTransferDialogTransferSendingStatus) {
+			[e onMaintenanceTimer];
+		}
 	}
 }
 

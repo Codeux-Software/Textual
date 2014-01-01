@@ -58,12 +58,13 @@
 @property (nonatomic, assign) TXFSLongInt processedFilesize;
 @property (nonatomic, assign) TXFSLongInt currentRecord;
 @property (nonatomic, strong) NSMutableArray *speedRecords;
-@property (nonatomic, strong) TLOTimer *maintenanceTimer;
 @property (nonatomic, assign) TDCFileTransferDialogTransferStatus transferStatus;
 
 - (NSString *)completePath;
 
 - (TXFSLongInt)currentSpeed;
+
+- (void)onMaintenanceTimer;
 
 - (void)populateBasicInformation;
 

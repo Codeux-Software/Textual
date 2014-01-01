@@ -111,10 +111,19 @@
 "FileTransferDialogTransferToUserIsStopped" = "Transfer to %@ is stopped. Right click to start.";
 "FileTransferDialogTransferToUserIsInitializing" = "Transfer to %@ is initializing.";
 "FileTransferDialogTransferToUserIsComplete" = "Transfer to %@ is complete.";
-"FileTransferDialogTransferFailedWithUnavailablePort" = "Transfer to %@ failed. There is no open port.";
-"FileTransferDialogTransferFailedWithBadFileHandle" = "Transfer to %@ failed. Could not read source file.";
-"FileTransferDialogTransferFailedWithBadSourceAddress" = "Transfer to %@ failed. Unknown source IP address.";
-"FileTransferDialogTransferFailedWithUnknownDisconnect" = "Transfer to %@ failed. Connection was disconnected.";
+
+"FileTransferDialogTransferFromUserStatusWithoutRemainingTime" = "%1$@ of %2$@ (%3$@/s) received from %4$@";
+"FileTransferDialogTransferFromUserStatusWithRemainingTime" = "%1$@ of %2$@ (%3$@/s) received from %4$@ — %5$@ remaining";
+"FileTransferDialogTransferFromUserIsStopped" = "Transfer from %@ is stopped. Right click to start.";
+"FileTransferDialogTransferFromUserIsInitializing" = "Transfer from %@ is initializing.";
+"FileTransferDialogTransferFromUserIsComplete" = "Transfer from %@ is complete. Right click to open in Finder.";
+"FileTransferDialogTransferSocketIsConnecting" = "Connecting to %@.";
+
+"FileTransferDialogTransferFailedWithUnavailablePort" = "Transfer with %@ failed. There is no open port.";
+"FileTransferDialogTransferFailedWithBadFileHandle" = "Transfer with %@ failed. Could not read source file.";
+"FileTransferDialogTransferFailedWithBadSourceAddress" = "Transfer with %@ failed. Unknown source IP address.";
+"FileTransferDialogTransferFailedWithUnknownDisconnect" = "Transfer with %@ failed. Connection was disconnected.";
+"FileTransferDialogTransferFailedWithBadSenderConnect" = "Transfer with %@ failed. Could not establish connection.";
 
 "HalfopCommandNotSupportedOnServer" = "The half-op (+h) mode is not supported on this server.";
 
