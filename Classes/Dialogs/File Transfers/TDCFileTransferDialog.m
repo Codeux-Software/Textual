@@ -38,6 +38,9 @@
 
 #import "TextualApplication.h"
 
+/* Refuse to have more than X number of items incoming at any given time. */
+#define _addReceiverHardLimit			100
+
 @implementation TDCFileTransferDialog
 
 - (id)init
@@ -133,6 +136,8 @@
 
 - (void)addReceiverForClient:(IRCClient *)client nickname:(NSString *)nickname address:(NSString *)hostAddress port:(NSInteger)hostPort path:(NSString *)path filename:(NSString *)filename size:(TXFSLongInt)size
 {
+	NSAssertReturn([self.filesReceiving count] < _addReceiverHardLimit);
+	
 	NSView *newView = [self.receivingFilesTable makeViewWithIdentifier:@"GroupView" owner:self];
 	
 	if ([newView isKindOfClass:[TDCFileTransferDialogTransferReceiver class]]) {
