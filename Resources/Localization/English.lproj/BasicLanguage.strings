@@ -409,6 +409,8 @@
 
 "StyleTemplateLoadFailed" = "Template Load Failed: %@";
 
+"SelectButton" = "Select";
+
 "TXEmptySoundAlertLabel" = "None";
 
 "TXNotificationAddressBookMatchType"				= "Address Book Notification";
