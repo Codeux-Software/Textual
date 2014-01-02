@@ -479,7 +479,7 @@
 			[d setMessage:TXTLS(@"FileTransferDialogTransferSavePanelDialogMessage")];
 			
 			[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
-				if (result = NSOKButton) {
+				if (result == NSOKButton) {
 					e.path = [d.URL path]; // Define path.
 					
 					[e open]; // Begin transfer.
