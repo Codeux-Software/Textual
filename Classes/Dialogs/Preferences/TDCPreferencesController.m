@@ -624,6 +624,8 @@
 		[d setCanChooseDirectories:YES];
 		[d setCanCreateDirectories:YES];
 		[d setAllowsMultipleSelection:NO];
+		
+		[d setPrompt:TXTLS(@"SelectButton")];
 
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
 			[self.transcriptFolderButton selectItem:[self.transcriptFolderButton itemAtIndex:0]];

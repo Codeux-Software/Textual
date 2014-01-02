@@ -476,6 +476,7 @@
 			[d setCanCreateDirectories:YES];
 			[d setAllowsMultipleSelection:NO];
 			
+			[d setPrompt:TXTLS(@"SelectButton")];
 			[d setMessage:TXTLS(@"FileTransferDialogTransferSavePanelDialogMessage")];
 			
 			[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
