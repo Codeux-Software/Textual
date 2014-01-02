@@ -130,6 +130,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	
 	self.themeControllerPntr = [TPCThemeController new];
 	[self.themeControllerPntr load];
+	
+	[self.menuController setupOtherServices];
 
 	[self.inputTextField focus];
 	[self.inputTextField redrawOriginPoints];

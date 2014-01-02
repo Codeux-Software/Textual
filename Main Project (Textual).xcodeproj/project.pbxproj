@@ -832,6 +832,10 @@
 		4CDDF3481678C5DF00FE8684 /* encryptionLockIconDark@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3441678C5DF00FE8684 /* encryptionLockIconDark@2x.tif */; };
 		4CDDF3491678C5DF00FE8684 /* encryptionLockIconLight.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3451678C5DF00FE8684 /* encryptionLockIconLight.tif */; };
 		4CDDF34A1678C5DF00FE8684 /* encryptionLockIconLight@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3461678C5DF00FE8684 /* encryptionLockIconLight@2x.tif */; };
+		4CEA09BE1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CEA09C41875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */; };
+		4CEA09C51875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */; };
+		4CEA09C61875A734005D6184 /* TDCFileTransferDialogRemoteAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC11580469E00846B64 /* SystemConfiguration.framework */; };
 		4CF8B41016E631EF00F2A68F /* birthdayIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4CF8B40F16E631EF00F2A68F /* birthdayIcon.icns */; };
 		5D4846C3171F0AC00015F2B0 /* OELReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D4846C2171F0AC00015F2B0 /* OELReachability.m */; };
@@ -1431,6 +1435,8 @@
 		4CDDF3441678C5DF00FE8684 /* encryptionLockIconDark@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "encryptionLockIconDark@2x.tif"; sourceTree = "<group>"; };
 		4CDDF3451678C5DF00FE8684 /* encryptionLockIconLight.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = encryptionLockIconLight.tif; sourceTree = "<group>"; };
 		4CDDF3461678C5DF00FE8684 /* encryptionLockIconLight@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "encryptionLockIconLight@2x.tif"; sourceTree = "<group>"; };
+		4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogRemoteAddress.h; sourceTree = "<group>"; };
+		4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogRemoteAddress.m; path = "Dialogs/File Transfers/TDCFileTransferDialogRemoteAddress.m"; sourceTree = "<group>"; };
 		4CF8B40F16E631EF00F2A68F /* birthdayIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = birthdayIcon.icns; path = Resources/Images/Application/birthdayIcon.icns; sourceTree = SOURCE_ROOT; };
 		5D4846C2171F0AC00015F2B0 /* OELReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OELReachability.m; sourceTree = "<group>"; };
 		5D4846C9171F0ACD0015F2B0 /* OELReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OELReachability.h; sourceTree = "<group>"; };
@@ -1497,6 +1503,7 @@
 				4C0879C8187061BF0034F5EB /* TDCFileTransferDialogTableCell.m */,
 				4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferReceiver.m */,
 				4CD625261870B934002FEA17 /* TDCFileTransferDialogTransferSender.m */,
+				4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */,
 			);
 			name = "File Transfers";
 			sourceTree = "<group>";
@@ -2021,6 +2028,7 @@
 				4C8AF558158E99520026668C /* TDCAboutPanel.h */,
 				4C8AF559158E99520026668C /* TDCAddressBookSheet.h */,
 				4C49494818735BC400B7F00A /* TDCFileTransferDialog.h */,
+				4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */,
 				4C49494918735BC400B7F00A /* TDCFileTransferDialogTableCell.h */,
 				4C49494A18735BC400B7F00A /* TDCFileTransferDialogTransferReceiver.h */,
 				4C49494B18735BC400B7F00A /* TDCFileTransferDialogTransferSender.h */,
@@ -2691,6 +2699,7 @@
 				4C69F4A718676CCE00E6FCEC /* NSBundleHelper.h in Headers */,
 				4C83D8F7184200A100BCC0E1 /* NSFileManagerHelper.h in Headers */,
 				4C0C720E1742C444000F82C4 /* NSByteCountFormatterHelper.h in Headers */,
+				4CEA09C61875A734005D6184 /* TDCFileTransferDialogRemoteAddress.h in Headers */,
 				4CC70204171E1CB400BDFAE0 /* BuildConfig.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2845,6 +2854,7 @@
 				4CABE85A1840615A002FE4B8 /* TDCProgressInformationSheet.h in Headers */,
 				4C83D8F6184200A100BCC0E1 /* NSFileManagerHelper.h in Headers */,
 				4C69F4A618676CCE00E6FCEC /* NSBundleHelper.h in Headers */,
+				4CEA09BE1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h in Headers */,
 				4C5E4D1818260131001F3E6B /* TVCLogControllerHistoricLogFile.h in Headers */,
 				4CC70203171E1CB400BDFAE0 /* BuildConfig.h in Headers */,
 			);
@@ -3313,6 +3323,7 @@
 				4C04459A16F1603B00EBB665 /* DDExtensions.m in Sources */,
 				4C04459B16F1603B00EBB665 /* DDInvocation.m in Sources */,
 				4C04459C16F1603B00EBB665 /* IRCAddressBook.m in Sources */,
+				4CEA09C51875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m in Sources */,
 				4CB9980A17C39E83008F56D7 /* THOUnicodeHelper.m in Sources */,
 				4C04459D16F1603B00EBB665 /* IRCChannel.m in Sources */,
 				4C6D4647180830D40098BA12 /* NSMenuHelper.m in Sources */,
@@ -3449,6 +3460,7 @@
 				4C8AF6A3158E99520026668C /* IRCAddressBook.m in Sources */,
 				4C8AF6A4158E99520026668C /* IRCChannel.m in Sources */,
 				4C8AF6A5158E99520026668C /* IRCChannelConfig.m in Sources */,
+				4CEA09C41875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m in Sources */,
 				4CB9980917C39E83008F56D7 /* THOUnicodeHelper.m in Sources */,
 				4C8AF6A6158E99520026668C /* IRCChannelMode.m in Sources */,
 				4C6D4646180830D40098BA12 /* NSMenuHelper.m in Sources */,
