@@ -289,7 +289,11 @@
 - (void)socket:(GCDAsyncSocket *)sock didAcceptNewSocket:(GCDAsyncSocket *)newSocket
 {
 	/* Do not accept more than a single connection on this port. */
-	PointerIsNotEmptyAssert(self.client);
+	if (PointerIsNotEmpty(self.client)) {
+		/* If we already have a client, then force disconnect anyone else that tries to join. */
+		
+		[newSocket disconnect];
+	}
 	
 	/* Maintain reference to client. */
 	_client = newSocket;
