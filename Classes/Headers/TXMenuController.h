@@ -145,9 +145,11 @@
 @property (nonatomic, nweak) IBOutlet NSMenu *navigationChannelList;
 @property (nonatomic, strong) TDCFileTransferDialog *fileTransferController;
 
-- (void)prepareForApplicationTermination;
+- (void)setupOtherServices;
 
 - (void)preferencesChanged;
+
+- (void)prepareForApplicationTermination;
 
 - (NSArray *)selectedMembers:(NSMenuItem *)sender;
 - (BOOL)checkSelectedMembers:(NSMenuItem *)item;

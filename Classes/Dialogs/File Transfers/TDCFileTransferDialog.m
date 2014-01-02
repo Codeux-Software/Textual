@@ -96,36 +96,6 @@
 	}
 }
 
-- (void)requestIPAddressFromExternalSource
-{
-	[self.sourceIPAddressTextField setStringValue:TXTLS(@"FileTransferDialogSourceIPAddressUnknown")];
-	
-	if ([TPCPreferences fileTransferIPAddressDetectionMethod] == TXFileTransferIPAddressAutomaticDetectionMethod) {
-		[RZMainOperationQueue() addOperationWithBlock:^{
-			@autoreleasepool {
-				NSString *resultData;
-				
-				resultData = [NSString stringWithContentsOfURL:[NSURL URLWithString:@"http://wtfismyip.com/text"] encoding:NSASCIIStringEncoding error:NULL];
-				resultData = [resultData trim];
-				
-				if (resultData) {
-					if ([resultData isIPAddress]) {
-						self.cachedIPAddress = resultData;
-						
-						[self.sourceIPAddressTextField setStringValue:TXTFLS(@"FileTransferDialogSourceIPAddressValue", self.cachedIPAddress)];
-					}
-				}
-			}
-		}];
-	} else {
-		self.cachedIPAddress = [TPCPreferences fileTransferManuallyEnteredIPAddress];
-		
-		if ([self.cachedIPAddress isIPAddress]) {
-			[self.sourceIPAddressTextField setStringValue:TXTFLS(@"FileTransferDialogSourceIPAddressValue", self.cachedIPAddress)];
-		}
-	}
-}
-
 - (void)nicknameChanged:(NSString *)oldNickname toNickname:(NSString *)newNickname client:(IRCClient *)client
 {
 	for (TDCFileTransferDialogTransferReceiver *e in self.filesReceiving) {
@@ -663,6 +633,43 @@
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
 	return @"";
+}
+
+#pragma mark -
+#pragma mark Network Information
+
+- (void)requestIPAddressFromExternalSource
+{
+	[self.sourceIPAddressTextField setStringValue:TXTLS(@"FileTransferDialogSourceIPAddressUnknown")];
+	
+	if ([TPCPreferences fileTransferIPAddressDetectionMethod] == TXFileTransferIPAddressAutomaticDetectionMethod) {
+		TDCFileTransferDialogRemoteAddress *request = [TDCFileTransferDialogRemoteAddress new];
+		
+		[request requestRemoteIPAddressFromExternalSource:self];
+	} else {
+		[self fileTransferRemoteAddressRequestDidDetectAddress:[TPCPreferences fileTransferManuallyEnteredIPAddress]];
+	}
+}
+
+- (void)fileTransferRemoteAddressRequestDidCloseWithError:(NSError *)errPntr
+{
+	LogToConsole(@"Failed to complete connection request with error: %@", [errPntr localizedDescription]);
+}
+
+- (void)fileTransferRemoteAddressRequestDidDetectAddress:(NSString *)address
+{
+	/* Trim input. */
+	address = [address trim];
+	
+	/* Is it even IP? */
+	NSAssertReturn([address isIPAddress]);
+	
+	/* Okay, we are good… */
+	self.cachedIPAddress = address;
+
+	if ([self.cachedIPAddress isIPAddress]) {
+		[self.sourceIPAddressTextField setStringValue:TXTFLS(@"FileTransferDialogSourceIPAddressValue", self.cachedIPAddress)];
+	}
 }
 
 #pragma mark -

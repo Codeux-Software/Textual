@@ -59,13 +59,16 @@
 		self.openWindowList = [NSDictionary dictionary];
 		
 		self.currentSearchPhrase = NSStringEmptyPlaceholder;
-		
-		if ([TPCPreferences featureAvailableToOSXMountainLion]) {
-			self.fileTransferController = [TDCFileTransferDialog new];
-		}
 	}
 	
 	return self;
+}
+
+- (void)setupOtherServices
+{
+	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+		self.fileTransferController = [TDCFileTransferDialog new];
+	}
 }
 
 - (void)prepareForApplicationTermination
