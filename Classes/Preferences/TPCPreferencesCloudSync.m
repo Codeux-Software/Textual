@@ -538,7 +538,7 @@
 }
 
 #pragma mark -
-#pragma mark Misc. Notificatoins
+#pragma mark Misc. Notifications
 
 /* 
 	To quote Apple's own documentation:

@@ -498,7 +498,7 @@
 		
 		TDCFileTransferDialogTransferReceiver *e = self.filesReceiving[actualIndx];
 		
-		[e close];
+		[e close:NO];
 	}
 }
 
@@ -561,7 +561,7 @@
 		
 		TDCFileTransferDialogTransferSender *e = self.filesSending[actualIndx];
 		
-		[e close];
+		[e close:NO];
 	}
 }
 

@@ -142,6 +142,36 @@
 			
 			break;
 		}
+		case TXNotificationFileTransferSendSuccessfulType:
+		{
+			eventTitle = TXTFLS(@"NotificationFileTransferSendSuccessfulMessageTitle", eventTitle);
+			
+			break;
+		}
+		case TXNotificationFileTransferReceiveSuccessfulType:
+		{
+			eventTitle = TXTFLS(@"NotificationFileTransferReceiveSuccessfulMessageTitle", eventTitle);
+			
+			break;
+		}
+		case TXNotificationFileTransferSendFailedType:
+		{
+			eventTitle = TXTFLS(@"NotificationFileTransferSendFailedMessageTitle", eventTitle);
+			
+			break;
+		}
+		case TXNotificationFileTransferReceiveFailedType:
+		{
+			eventTitle = TXTFLS(@"NotificationFileTransferReceiveFailedMessageTitle", eventTitle);
+			
+			break;
+		}
+		case TXNotificationFileTransferReceiveRequestedType:
+		{
+			eventTitle = TXTFLS(@"NotificationFileTransferReceiveRequestedMessageTitle", eventTitle);
+			
+			break;
+		}
 	}
 
 	eventDescription = [eventDescription stripIRCEffects];
@@ -227,7 +257,12 @@
 		TXTLS(@"TXNotificationKickType"),
 		TXTLS(@"TXNotificationNewPrivateMessageType"),
 		TXTLS(@"TXNotificationPrivateMessageType"),
-		TXTLS(@"TXNotificationPrivateNoticeType")
+		TXTLS(@"TXNotificationPrivateNoticeType"),
+		TXTLS(@"TXNotificationFileTransferSendSuccessfulType"),
+		TXTLS(@"TXNotificationFileTransferReceiveSuccessfulType"),
+		TXTLS(@"TXNotificationFileTransferSendFailedType"),
+		TXTLS(@"TXNotificationFileTransferReceiveFailedType"),
+		TXTLS(@"TXNotificationFileTransferReceiveRequestedType")
 	];
 	
 	return @{
@@ -256,46 +291,53 @@
 
 	if (changeFocus) {
 		[self.masterController.mainWindow makeKeyAndOrderFront:nil];
+		
 		[NSApp activateIgnoringOtherApps:YES];
 	}
 
 	if ([context isKindOfClass:[NSDictionary class]]) {
-		NSString *uid = [context objectForKey:@"client"];
-		NSString *cid = [context objectForKey:@"channel"];
+		BOOL isFileTransferNotification = [context boolForKey:@"isFileTransferNotification"];
 		
-		IRCClient *u = nil;
-		IRCChannel *c = nil;
-
-		NSObjectIsEmptyAssert(uid);
-		
-		if (cid) {
-			c = [self.worldController findChannelByClientId:uid channelId:cid];
+		if (isFileTransferNotification) {
+			[self.menuController.fileTransferController show:YES restorePosition:NO];
 		} else {
-			u = [self.worldController findClientById:uid];
-		}
-
-		if (changeFocus) {
-			if (c) {
-				[self.worldController select:c];
-			} else if (u) {
-				[self.worldController select:u];
-			}
-		}
-
-		NSObjectIsEmptyAssert(message);
-
-		if (c) { // We want both a client and channel.
-			/* A user may want to do an action… #yolo */
-			if ([message hasPrefix:@"/"] && [message hasPrefix:@"//"] == NO && message.length > 1) {
-				message = [message safeSubstringFromIndex:1];
-
-				[c.client sendCommand:message
-					   completeTarget:YES
-							   target:c.name];
+			NSString *uid = [context objectForKey:@"client"];
+			NSString *cid = [context objectForKey:@"channel"];
+			
+			IRCClient *u = nil;
+			IRCChannel *c = nil;
+			
+			NSObjectIsEmptyAssert(uid);
+			
+			if (cid) {
+				c = [self.worldController findChannelByClientId:uid channelId:cid];
 			} else {
-				[c.client sendText:[NSAttributedString emptyStringWithBase:message]
-						   command:IRCPrivateCommandIndex("privmsg")
-						   channel:c];
+				u = [self.worldController findClientById:uid];
+			}
+			
+			if (changeFocus) {
+				if (c) {
+					[self.worldController select:c];
+				} else if (u) {
+					[self.worldController select:u];
+				}
+			}
+			
+			NSObjectIsEmptyAssert(message);
+			
+			if (c) { // We want both a client and channel.
+				/* A user may want to do an action… #yolo */
+				if ([message hasPrefix:@"/"] && [message hasPrefix:@"//"] == NO && message.length > 1) {
+					message = [message safeSubstringFromIndex:1];
+					
+					[c.client sendCommand:message
+						   completeTarget:YES
+								   target:c.name];
+				} else {
+					[c.client sendText:[NSAttributedString emptyStringWithBase:message]
+							   command:IRCPrivateCommandIndex("privmsg")
+							   channel:c];
+				}
 			}
 		}
 	}

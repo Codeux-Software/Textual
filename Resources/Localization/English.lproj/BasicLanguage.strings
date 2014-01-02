@@ -272,33 +272,51 @@
 /* If an event is not defined below for spoken events, then the odds are
  good that the text to be spoken is localized somewhere else. For example,
  the address book event type is defined near the end of this file. */
-"NotificationChannelMessageSpokenMessage"		= "Channel Message in %1$@ by %2$@, %3$@";
-"NotificationChannelNoticeSpokenMessage"		= "Channel Notice in %1$@ by %2$@, %3$@";
-"NotificationHighlightSpokenMessage"			= "Highlight in %1$@ by %2$@, %3$@";
-"NotificationInvitedSpokenMessage"				= "Invited to %1$@ by %2$@";
-"NotificationKickedSpokenMessage"				= "Kicked from %1$@ by %2$@";
-"NotificationNewPrivateMessageSpokenMessage"	= "New Private Message from %1$@, %2$@";
-"NotificationPrivateMessageSpokenMessage"		= "Private Message from %1$@, %2$@";
-"NotificationPrivateNoticeSpokenMessage"		= "Private Notice from %1$@, %2$@";
-"NotificationConnectedSpokenMessage"			= "Connected to %@";
-"NotificationDisconnectSpokenMessage"			= "Disconnected from %@";
+"NotificationChannelMessageSpokenMessage"					= "Channel Message in %1$@ by %2$@, %3$@";
+"NotificationChannelNoticeSpokenMessage"					= "Channel Notice in %1$@ by %2$@, %3$@";
+"NotificationHighlightSpokenMessage"						= "Highlight in %1$@ by %2$@, %3$@";
+"NotificationInvitedSpokenMessage"							= "Invited to %1$@ by %2$@";
+"NotificationKickedSpokenMessage"							= "Kicked from %1$@ by %2$@";
+"NotificationNewPrivateMessageSpokenMessage"				= "New Private Message from %1$@, %2$@";
+"NotificationPrivateMessageSpokenMessage"					= "Private Message from %1$@, %2$@";
+"NotificationPrivateNoticeSpokenMessage"					= "Private Notice from %1$@, %2$@";
+"NotificationConnectedSpokenMessage"						= "Connected to %@";
+"NotificationDisconnectSpokenMessage"						= "Disconnected from %@";
 
-"NotificationAddressBookMatchMessageTitle"	= "Address Book Notification";
-"NotificationChannelMessageMessageTitle"	= "Channel Message: %@";
-"NotificationChannelNoticeMessageTitle"		= "Channel Notice: %@";
-"NotificationConnectedMessageTitle"			= "Connected: %@";
-"NotificationDisconnectMessageTitle"		= "Disconnected: %@";
-"NotificationHighlightMessageTitle"			= "Highlight: %@";
-"NotificationInvitedMessageTitle"			= "Invited: %@";
-"NotificationKickedMessageTitle"			= "Kicked: %@";
-"NotificationNewPrivateMessageMessageTitle"	= "New Private Message";
-"NotificationPrivateMessageMessageTitle"	= "Private Message";
-"NotificationPrivateNoticeMessageTitle"		= "Private Notice";
+"NotificationFileTransferSendSuccessfulSpokenMessage"		= "File transfer to %@ has completed.";
+"NotificationFileTransferReceiveSuccessfulSpokenMessage"	= "File transfer from %@ has completed.";
+"NotificationFileTransferSendFailedSpokenMessage"			= "File transfer to %@ has failed.";
+"NotificationFileTransferReceiveFailedSpokenMessage"		= "File transfer from %@ has failed.";
+"NotificationFileTransferReceiveRequestedSpokenMessage"		= "Received file transfer request from %@";
 
-"NotificationConnectedMessageDescription"	= "Connection successful.";
-"NotificationDisconnectMessageDescription"	= "Disconnection successful.";
-"NotificationInvitedMessageDescription"		= "%1$@ has invited you to %2$@";
-"NotificationKickedMessageDescription"		= "%1$@ has kicked you out: %2$@";
+"NotificationAddressBookMatchMessageTitle"					= "Address Book Notification";
+"NotificationChannelMessageMessageTitle"					= "Channel Message: %@";
+"NotificationChannelNoticeMessageTitle"						= "Channel Notice: %@";
+"NotificationConnectedMessageTitle"							= "Connected: %@";
+"NotificationDisconnectMessageTitle"						= "Disconnected: %@";
+"NotificationHighlightMessageTitle"							= "Highlight: %@";
+"NotificationInvitedMessageTitle"							= "Invited: %@";
+"NotificationKickedMessageTitle"							= "Kicked: %@";
+"NotificationNewPrivateMessageMessageTitle"					= "New Private Message";
+"NotificationPrivateMessageMessageTitle"					= "Private Message";
+"NotificationPrivateNoticeMessageTitle"						= "Private Notice";
+
+"NotificationFileTransferSendSuccessfulMessageTitle"		= "Successful File Transfer: %@";
+"NotificationFileTransferReceiveSuccessfulMessageTitle"		= "Successful File Transfer: %@";
+"NotificationFileTransferSendFailedMessageTitle"			= "File Transfer Failed: %@";
+"NotificationFileTransferReceiveFailedMessageTitle"			= "File Transfer Failed: %@";
+"NotificationFileTransferReceiveRequestedMessageTitle"		= "File Transfer Request: %@";
+
+"NotificationConnectedMessageDescription"					= "Connection successful.";
+"NotificationDisconnectMessageDescription"					= "Disconnection successful.";
+"NotificationInvitedMessageDescription"						= "%1$@ has invited you to %2$@";
+"NotificationKickedMessageDescription"						= "%1$@ has kicked you out: %2$@";
+
+"NotificationFileTransferSendSuccessfulDescription"			= "%1$@ (%2$qi bytes)";
+"NotificationFileTransferReceiveSuccessfulDescription"		= "%1$@ (%2$qi bytes)";
+"NotificationFileTransferSendFailedDescription"				= "%1$@";
+"NotificationFileTransferReceiveFailedDescription"			= "%1$@";
+"NotificationFileTransferReceiveRequestedDescription"		= "%1$@ (%2$qi bytes)";
 
 "NotificationDialogPrivateMessageReplyPlaceholder"	= "Enter message to reply to this private message.";
 
@@ -391,17 +409,23 @@
 
 "TXEmptySoundAlertLabel" = "None";
 
-"TXNotificationAddressBookMatchType"	= "Address Book Notification";
-"TXNotificationChannelMessageType"		= "Channel Message";
-"TXNotificationChannelNoticeType"		= "Channel Notice";
-"TXNotificationConnectType"				= "Connected";
-"TXNotificationDisconnectType"			= "Disconnected";
-"TXNotificationHighlightType"			= "Highlight";
-"TXNotificationInviteType"				= "Channel Invitation";
-"TXNotificationKickType"				= "Kicked from Channel";
-"TXNotificationNewPrivateMessageType"	= "Private Message (new)";
-"TXNotificationPrivateMessageType"		= "Private Message";
-"TXNotificationPrivateNoticeType"		= "Private Notice";
+"TXNotificationAddressBookMatchType"				= "Address Book Notification";
+"TXNotificationChannelMessageType"					= "Channel Message";
+"TXNotificationChannelNoticeType"					= "Channel Notice";
+"TXNotificationConnectType"							= "Connected";
+"TXNotificationDisconnectType"						= "Disconnected";
+"TXNotificationHighlightType"						= "Highlight";
+"TXNotificationInviteType"							= "Channel Invitation";
+"TXNotificationKickType"							= "Kicked from Channel";
+"TXNotificationNewPrivateMessageType"				= "Private Message (new)";
+"TXNotificationPrivateMessageType"					= "Private Message";
+"TXNotificationPrivateNoticeType"					= "Private Notice";
+
+"TXNotificationFileTransferSendSuccessfulType"		= "Successful File Transfer (Sending)";
+"TXNotificationFileTransferReceiveSuccessfulType"	= "Successful File Transfer (Receiving)";
+"TXNotificationFileTransferSendFailedType"			= "Failed File Transfer (Sending)";
+"TXNotificationFileTransferReceiveFailedType"		= "Failed File Transfer (Receiving)";
+"TXNotificationFileTransferReceiveRequestedType"	= "File Transfer Request";
 
 "ThemeChangeOverridePromptChannelFont" = "• Channel View Font";
 "ThemeChangeOverridePromptMessage" = "The newly selected style \"%1$@\" has chosen to override the following preferences with ones that it prefers for the best viewing experience:\n\n%2$@";

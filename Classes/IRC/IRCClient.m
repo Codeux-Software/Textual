@@ -728,6 +728,13 @@
 		case TXNotificationPrivateMessageType:		{ return TXTLS(@"NotificationPrivateMessageSpokenMessage");			}
 		case TXNotificationPrivateNoticeType:		{ return TXTLS(@"NotificationPrivateNoticeSpokenMessage");			}
 		case TXNotificationHighlightType:			{ return TXTLS(@"NotificationHighlightSpokenMessage");				}
+			
+		case TXNotificationFileTransferSendSuccessfulType:			{ return TXTLS(@"NotificationFileTransferSendSuccessfulSpokenMessage");			}
+		case TXNotificationFileTransferReceiveSuccessfulType:		{ return TXTLS(@"NotificationFileTransferReceiveSuccessfulSpokenMessage");		}
+		case TXNotificationFileTransferSendFailedType:				{ return TXTLS(@"NotificationFileTransferSendFailedSpokenMessage");				}
+		case TXNotificationFileTransferReceiveFailedType:			{ return TXTLS(@"NotificationFileTransferReceiveFailedSpokenMessage");			}
+		case TXNotificationFileTransferReceiveRequestedType:		{ return TXTLS(@"NotificationFileTransferReceiveRequestedSpokenMessage");		}
+	
 		default: { return nil; }
 	}
 
@@ -795,6 +802,16 @@
 			formattedMessage = text;
 
 			break;
+		}
+		case TXNotificationFileTransferSendSuccessfulType:
+		case TXNotificationFileTransferReceiveSuccessfulType:
+		case TXNotificationFileTransferSendFailedType:
+		case TXNotificationFileTransferReceiveFailedType:
+		case TXNotificationFileTransferReceiveRequestedType:
+		{
+			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
+			
+			formattedMessage = TXTFLS(nformatString, nick);
 		}
 	}
 
@@ -887,6 +904,10 @@
 	
 	//NSObjectIsEmptyAssertReturn(text, NO);
 	//NSObjectIsEmptyAssertReturn(nick, NO);
+    
+    if ([TPCPreferences bounceDockIconForEvent:type]) {
+        [NSApp requestUserAttention:NSInformationalRequest];
+    }
 
 	if (self.worldController.areNotificationsDisabled) {
 		return YES;
@@ -922,8 +943,29 @@
 
 	NSString *title = NSStringEmptyPlaceholder;
 	NSString *desc = NSStringEmptyPlaceholder;
+	
+	NSDictionary *info = nil;
+	
+	if (target) {
+		info = @{@"client": self.treeUUID, @"channel": target.treeUUID};
+	} else {
+		info = @{@"client": self.treeUUID};
+	}
 
 	switch (type) {
+		case TXNotificationFileTransferSendSuccessfulType:
+		case TXNotificationFileTransferReceiveSuccessfulType:
+		case TXNotificationFileTransferSendFailedType:
+		case TXNotificationFileTransferReceiveFailedType:
+		case TXNotificationFileTransferReceiveRequestedType:
+		{
+			title = nick;
+			desc = text;
+			
+			info = @{@"isFileTransferNotification" : @(YES)};
+			
+			break;
+		}
 		case TXNotificationConnectType:
 		{
 			title = [self altNetworkName];
@@ -961,14 +1003,6 @@
 			break;
 		}
 		default: { return YES; }
-	}
-
-	NSDictionary *info = nil;
-
-	if (target) {
-		info = @{@"client": self.treeUUID, @"channel": target.treeUUID};
-	} else {
-		info = @{@"client": self.treeUUID};
 	}
 
 	[self.masterController.growlController notify:type title:title description:desc userInfo:info];
@@ -6868,6 +6902,47 @@
 #pragma mark -
 #pragma mark File Transfers
 
+- (void)notifyFileTransfer:(TXNotificationType)type nickname:(NSString *)nickname filename:(NSString *)filename filesize:(TXFSLongInt)totalFilesize
+{
+	NSString *description = nil;
+	
+	switch (type) {
+		case TXNotificationFileTransferSendSuccessfulType:
+		{
+			description = TXTFLS(@"NotificationFileTransferSendSuccessfulDescription", filename, totalFilesize);
+			
+			break;
+		}
+		case TXNotificationFileTransferReceiveSuccessfulType:
+		{
+			description = TXTFLS(@"NotificationFileTransferReceiveSuccessfulDescription", filename, totalFilesize);
+			
+			break;
+		}
+		case TXNotificationFileTransferSendFailedType:
+		{
+			description = TXTFLS(@"NotificationFileTransferSendFailedDescription", filename, totalFilesize);
+			
+			break;
+		}
+		case TXNotificationFileTransferReceiveFailedType:
+		{
+			description = TXTFLS(@"NotificationFileTransferReceiveFailedDescription", filename, totalFilesize);
+			
+			break;
+		}
+		case TXNotificationFileTransferReceiveRequestedType:
+		{
+			description = TXTFLS(@"NotificationFileTransferReceiveRequestedDescription", filename, totalFilesize);
+			
+			break;
+		}
+		default: { break; }
+	}
+	
+	[self notifyEvent:type lineType:0 target:nil nick:nickname text:description];
+}
+
 - (void)receivedDCCQuery:(IRCMessage *)m message:(NSMutableString *)rawMessage ignoreInfo:(IRCAddressBook *)ignoreChecks
 {
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
@@ -7016,6 +7091,9 @@
 	if ([TPCPreferences fileTransferRequestReplyAction] == TXFileTransferRequestReplyIgnoreAction) {
 		return;
 	}
+	
+	/* Post notification. */
+	[self notifyFileTransfer:TXNotificationFileTransferReceiveRequestedType nickname:nickname filename:filename filesize:totalFilesize];
 	
 	/* Add file. */
 	NSString *downloadFolder = [TPCPreferences userDownloadFolderPath];

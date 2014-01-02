@@ -46,7 +46,9 @@
 @property (nonatomic, strong, readonly) GCDAsyncSocket *client;
 
 - (void)open;
+
 - (void)close;
+- (void)close:(BOOL)postNotifications;
 
 - (void)setDidErrorOnBadSenderAddress;
 @end
