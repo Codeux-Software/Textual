@@ -117,7 +117,7 @@
 	}
 }
 
-- (void)addReceiverForClient:(IRCClient *)client nickname:(NSString *)nickname address:(NSString *)hostAddress port:(NSInteger)hostPort path:(NSString *)path filename:(NSString *)filename size:(TXFSLongInt)size
+- (void)addReceiverForClient:(IRCClient *)client nickname:(NSString *)nickname address:(NSString *)hostAddress port:(NSInteger)hostPort filename:(NSString *)filename size:(TXFSLongInt)size
 {
 	NSAssertReturn([self.filesReceiving count] < _addReceiverHardLimit);
 	
@@ -131,7 +131,6 @@
 		[groupItem setPeerNickname:nickname];
 		[groupItem setHostAddress:hostAddress];
 		[groupItem setTransferPort:hostPort];
-		[groupItem setPath:path];
 		[groupItem setFilename:filename];
 		[groupItem setTotalFilesize:size];
 		[groupItem setIsReceiving:YES];
@@ -141,6 +140,10 @@
 		[self addReceiver:groupItem];
 		
 		if ([TPCPreferences fileTransferRequestReplyAction] == TXFileTransferRequestReplyAutomaticallyDownloadAction) {
+			/* If the user is set to automatically download, then just save to the downloads folder. */
+			[groupItem setPath:[TPCPreferences userDownloadFolderPath]];
+			
+			/* Begin the transfer. */
 			[groupItem open];
 		} else {
 			[groupItem reloadStatusInformation];
@@ -460,7 +463,31 @@
 		
 		TDCFileTransferDialogTransferReceiver *e = self.filesReceiving[actualIndx];
 		
-		[e open];
+		if (e.path == nil) {
+			NSOpenPanel *d = [NSOpenPanel openPanel];
+			
+			NSURL *folderRep = [NSURL fileURLWithPath:[TPCPreferences userDownloadFolderPath]];
+			
+			[d setDirectoryURL:folderRep];
+			
+			[d setCanChooseFiles:NO];
+			[d setResolvesAliases:YES];
+			[d setCanChooseDirectories:YES];
+			[d setCanCreateDirectories:YES];
+			[d setAllowsMultipleSelection:NO];
+			
+			[d setMessage:TXTLS(@"FileTransferDialogTransferSavePanelDialogMessage")];
+			
+			[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
+				if (result = NSOKButton) {
+					e.path = [d.URL path]; // Define path.
+					
+					[e open]; // Begin transfer.
+				}
+			}];
+		} else {
+			[e open];
+		}
 	}
 }
 

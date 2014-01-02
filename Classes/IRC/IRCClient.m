@@ -7096,13 +7096,10 @@
 	[self notifyFileTransfer:TXNotificationFileTransferReceiveRequestedType nickname:nickname filename:filename filesize:totalFilesize];
 	
 	/* Add file. */
-	NSString *downloadFolder = [TPCPreferences userDownloadFolderPath];
-	
 	[self.fileTransferController addReceiverForClient:self
 											 nickname:nickname
 											  address:address
 												 port:port
-												 path:downloadFolder
 											 filename:filename
 												 size:totalFilesize];
 }
