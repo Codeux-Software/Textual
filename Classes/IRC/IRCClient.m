@@ -4403,11 +4403,9 @@
 	
 	if (myself) {
 		[self.worldController updateTitleFor:c];
-	} else {
-		if (m.isPrintOnlyMessage == NO) {
-			[self.fileTransferController nicknameChanged:oldNick toNickname:newNick client:self];
-		}
 	}
+	
+	[self.fileTransferController nicknameChanged:oldNick toNickname:newNick client:self];
 }
 
 - (void)receiveMode:(IRCMessage *)m
