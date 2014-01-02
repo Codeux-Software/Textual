@@ -60,6 +60,11 @@
 	return self;
 }
 
+- (void)awakeFromNib
+{
+	[self requestIPAddressFromExternalSource];
+}
+
 - (void)show:(BOOL)key restorePosition:(BOOL)restoreFrame
 {
 	if (key) {
@@ -104,7 +109,7 @@
 				resultData = [resultData trim];
 				
 				if (resultData) {
-					if ([resultData isIPv4Address]) {
+					if ([resultData isIPAddress]) {
 						self.cachedIPAddress = resultData;
 						
 						[self.sourceIPAddressTextField setStringValue:TXTFLS(@"FileTransferDialogSourceIPAddressValue", self.cachedIPAddress)];
@@ -115,7 +120,7 @@
 	} else {
 		self.cachedIPAddress = [TPCPreferences fileTransferManuallyEnteredIPAddress];
 		
-		if ([self.cachedIPAddress isIPv4Address]) {
+		if ([self.cachedIPAddress isIPAddress]) {
 			[self.sourceIPAddressTextField setStringValue:TXTFLS(@"FileTransferDialogSourceIPAddressValue", self.cachedIPAddress)];
 		}
 	}

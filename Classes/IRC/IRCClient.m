@@ -7118,6 +7118,8 @@
 	/* Build the address information. */
 	NSString *address = [self DCCTransferAddress];
 	
+	NSObjectIsEmptyAssert(address);
+	
 	/* Send file information. */
 	NSString *trail = [NSString stringWithFormat:@"%@ %@ %i %qi", escapedFileName, address, port, totalFilesize];
 	
@@ -7131,7 +7133,7 @@
 	NSString *address;
 	NSString *baseaddr = [self.fileTransferController cachedIPAddress];
 	
-	if ([baseaddr isIPv4Address] == NO) {
+	if ([baseaddr isIPv6Address]) {
 		address = baseaddr;
 	} else {
 		NSArray *addrInfo = [baseaddr componentsSeparatedByString:@"."];
