@@ -80,7 +80,7 @@
 	self.responseData = [NSMutableData data];
 	
 	/* Setup request. */
-	NSURL *requestURL = [NSURL URLWithString:@"http://wtfismyip.com/text"];
+	NSURL *requestURL = [NSURL URLWithString:[self addressSourceURL]];
 	
 	NSMutableURLRequest *baseRequest = [NSMutableURLRequest requestWithURL:requestURL
 															   cachePolicy:NSURLRequestReloadIgnoringCacheData
@@ -92,6 +92,20 @@
 	self.requestConnection = [[NSURLConnection alloc] initWithRequest:baseRequest delegate:self];
 	
 	[self.requestConnection start];
+}
+
+- (NSString *)addressSourceURL
+{
+	NSArray *services = @[
+	  @"http://wtfismyip.com/text",
+	  @"http://canhazip.com/",
+	  @"http://ifconfig.me/ip",
+	  @"http://v4.ipv6-test.com/api/myip.php",
+	];
+	
+	NSInteger rndIndx = (arc4random() % [services count]);
+
+	return services[rndIndx];
 }
 
 #pragma mark -
