@@ -128,6 +128,8 @@
 "FileTransferDialogTransferFailedWithUnknownDisconnect" = "Transfer with %@ failed. Connection was disconnected.";
 "FileTransferDialogTransferFailedWithBadSenderConnect" = "Transfer with %@ failed. Could not establish connection.";
 
+"FileTransferDialogTransferSavePanelDialogMessage" = "Select the folder in which this file will be saved.";
+
 "HalfopCommandNotSupportedOnServer" = "The half-op (+h) mode is not supported on this server.";
 
 "IRCCTCPVersionInfoBasic" = "%1$@ IRC Client: www.textualapp.com — v%2$@ (Flavor: %4$@)";

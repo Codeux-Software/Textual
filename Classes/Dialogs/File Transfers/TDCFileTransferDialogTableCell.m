@@ -51,6 +51,8 @@
 
 - (NSString *)completePath
 {
+	NSObjectIsEmptyAssertReturn(self.path, nil);
+
 	return [self.path stringByAppendingPathComponent:self.filename];
 }
 

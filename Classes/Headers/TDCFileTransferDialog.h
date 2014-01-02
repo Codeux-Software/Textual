@@ -74,7 +74,6 @@ typedef enum TDCFileTransferDialogTransferStatus : NSInteger {
 					nickname:(NSString *)nickname
 					 address:(NSString *)hostAddress
 						port:(NSInteger)hostPort
-						path:(NSString *)path
 					filename:(NSString *)filename
 						size:(TXFSLongInt)size;
 
