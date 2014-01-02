@@ -41,17 +41,22 @@
 #import <Growl/Growl.h>
 
 typedef enum TXNotificationType : NSInteger {
-	TXNotificationHighlightType				= 1000,
-	TXNotificationNewPrivateMessageType		= 1001,
-	TXNotificationChannelMessageType		= 1002,
-	TXNotificationChannelNoticeType			= 1003,
-	TXNotificationPrivateMessageType		= 1004,
-	TXNotificationPrivateNoticeType			= 1005,
-	TXNotificationKickType					= 1006,
-	TXNotificationInviteType				= 1007,
-	TXNotificationConnectType				= 1008,
-	TXNotificationDisconnectType			= 1009,
-	TXNotificationAddressBookMatchType		= 1010,
+	TXNotificationHighlightType							= 1000,
+	TXNotificationNewPrivateMessageType					= 1001,
+	TXNotificationChannelMessageType					= 1002,
+	TXNotificationChannelNoticeType						= 1003,
+	TXNotificationPrivateMessageType					= 1004,
+	TXNotificationPrivateNoticeType						= 1005,
+	TXNotificationKickType								= 1006,
+	TXNotificationInviteType							= 1007,
+	TXNotificationConnectType							= 1008,
+	TXNotificationDisconnectType						= 1009,
+	TXNotificationAddressBookMatchType					= 1010,
+	TXNotificationFileTransferSendSuccessfulType		= 1011,
+	TXNotificationFileTransferReceiveSuccessfulType		= 1012,
+	TXNotificationFileTransferSendFailedType			= 1013,
+	TXNotificationFileTransferReceiveFailedType			= 1014,
+	TXNotificationFileTransferReceiveRequestedType		= 1015,
 } TXNotificationType;
 
 #define TXNotificationDialogStandardNicknameFormat		@"%@ %@"

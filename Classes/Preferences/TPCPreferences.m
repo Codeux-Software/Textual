@@ -1430,6 +1430,13 @@ static NSURL *transcriptFolderResolvedBookmark;
 		case TXNotificationPrivateMessageType:		{ return TXTLS(@"TXNotificationPrivateMessageType");			}
 		case TXNotificationPrivateNoticeType:		{ return TXTLS(@"TXNotificationPrivateNoticeType");				}
 		case TXNotificationHighlightType:			{ return TXTLS(@"TXNotificationHighlightType");					}
+			
+		case TXNotificationFileTransferSendSuccessfulType:		{ return TXTLS(@"TXNotificationFileTransferSendSuccessfulType");		}
+		case TXNotificationFileTransferReceiveSuccessfulType:	{ return TXTLS(@"TXNotificationFileTransferReceiveSuccessfulType");		}
+		case TXNotificationFileTransferSendFailedType:			{ return TXTLS(@"TXNotificationFileTransferSendFailedType");			}
+		case TXNotificationFileTransferReceiveFailedType:		{ return TXTLS(@"TXNotificationFileTransferReceiveFailedType");			}
+		case TXNotificationFileTransferReceiveRequestedType:	{ return TXTLS(@"TXNotificationFileTransferReceiveRequestedType");		}
+
 		default: { return nil; }
 	}
 
@@ -1450,6 +1457,13 @@ static NSURL *transcriptFolderResolvedBookmark;
 		case TXNotificationNewPrivateMessageType:	{ return @"NotificationType -> Private Message (New)";			}
 		case TXNotificationPrivateMessageType:		{ return @"NotificationType -> Private Message";				}
 		case TXNotificationPrivateNoticeType:		{ return @"NotificationType -> Private Notice";					}
+			
+		case TXNotificationFileTransferSendSuccessfulType:		{ return @"NotificationType -> Successful File Transfer (Sending)";			}
+		case TXNotificationFileTransferReceiveSuccessfulType:	{ return @"NotificationType -> Successful File Transfer (Receiving)";		}
+		case TXNotificationFileTransferSendFailedType:			{ return @"NotificationType -> Failed File Transfer (Sending)";				}
+		case TXNotificationFileTransferReceiveFailedType:		{ return @"NotificationType -> Failed File Transfer (Receiving)";			}
+		case TXNotificationFileTransferReceiveRequestedType:	{ return @"NotificationType -> File Transfer Request";						}
+			
 		default: { return nil; }
 	}
 
@@ -1872,6 +1886,20 @@ static NSMutableArray *excludeKeywords = nil;
 	
 	d[@"NotificationType -> Address Book Match -> Enabled"]		= @(YES);
 	d[@"NotificationType -> Private Message (New) -> Enabled"]	= @(YES);
+	
+	d[@"NotificationType -> Successful File Transfer (Sending) -> Enabled"]		= @(YES);
+	d[@"NotificationType -> Successful File Transfer (Receiving) -> Enabled"]	= @(YES);
+	d[@"NotificationType -> Failed File Transfer (Sending) -> Enabled"]			= @(YES);
+	d[@"NotificationType -> Failed File Transfer (Receiving) -> Enabled"]		= @(YES);
+	d[@"NotificationType -> File Transfer Request -> Enabled"]					= @(YES);
+	
+	d[@"NotificationType -> Successful File Transfer (Sending) -> Bounce Dock Icon"]	= @(YES);
+	d[@"NotificationType -> Successful File Transfer (Receiving) -> Bounce Dock Icon"]	= @(YES);
+	d[@"NotificationType -> Failed File Transfer (Sending) -> Bounce Dock Icon"]		= @(YES);
+	d[@"NotificationType -> Failed File Transfer (Receiving) -> Bounce Dock Icon"]		= @(YES);
+	d[@"NotificationType -> File Transfer Request -> Bounce Dock Icon"]					= @(YES);
+	
+	d[@"NotificationType -> File Transfer Request -> Sound"] = @"Blow"; // u wut m8
 	
 	d[@"DefaultIdentity -> Nickname"] = @"Guest";
 	d[@"DefaultIdentity -> AwayNickname"] = NSStringEmptyPlaceholder;

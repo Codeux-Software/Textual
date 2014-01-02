@@ -73,7 +73,7 @@
 
 - (void)prepareForDestruction
 {
-	[self close];
+	[self close:NO];
 }
 
 - (void)updateTransferInformationWithNonexistentFilename
@@ -107,7 +107,7 @@
 - (void)open
 {
 	/* Reset information. */
-	[self close];
+	[self close:NO];
 	
 	[self resetProperties];
 	[self createDispatchQueues];
@@ -145,6 +145,11 @@
 
 - (void)close
 {
+	[self close:YES];
+}
+
+- (void)close:(BOOL)postNotifications
+{
 	/* Destroy sockets. */
 	if (self.client) {
 		[self.client disconnect];
@@ -161,6 +166,13 @@
 		NSDissimilarObjects(self.transferStatus, TDCFileTransferDialogTransferCompleteStatus))
 	{
 		self.transferStatus = TDCFileTransferDialogTransferStoppedStatus;
+	}
+	
+	/* Post notification. */
+	if (postNotifications) {
+		if (self.transferStatus == TDCFileTransferDialogTransferErrorStatus) {
+			[self.associatedClient notifyFileTransfer:TXNotificationFileTransferReceiveFailedType nickname:self.peerNickname filename:self.filename filesize:self.totalFilesize];
+		}
 	}
 	
 	/* Update status information. */
@@ -297,6 +309,8 @@
     if (self.processedFilesize >= self.totalFilesize) {
 		self.transferStatus = TDCFileTransferDialogTransferCompleteStatus;
 		
+		[self.associatedClient notifyFileTransfer:TXNotificationFileTransferReceiveSuccessfulType nickname:self.peerNickname filename:self.filename filesize:self.totalFilesize];
+			
 		[self close]; // Close Connection
     }
 }
