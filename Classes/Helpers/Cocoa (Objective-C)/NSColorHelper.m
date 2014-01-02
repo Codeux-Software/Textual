@@ -73,6 +73,23 @@
 	return [NSColor colorWithCalibratedRed:red green:green blue:blue alpha:alpha];
 }
 
++ (NSColor *)internalDeviceRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
+{
+	if (red   > 1.0) {
+		red /= 255.99999f;
+	}
+	
+	if (green > 1.0) {
+		green /= 255.99999f;
+	}
+	
+	if (blue  > 1.0) {
+		blue  /= 255.99999f;
+	}
+	
+	return [NSColor colorWithDeviceRed:red green:green blue:blue alpha:alpha];
+}
+
 - (NSColor *)invertColor
 {
 	NSColor *obj = [self colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
@@ -221,7 +238,7 @@
 			NSInteger g = ((n >> 8) & 0xff);
 			NSInteger b = (n & 0xff);
 
-			return TXCalibratedRGBColor(r, b, g);
+			return TXCalibratedDeviceColor(r, b, g);
 		} else if (len == 3) {
 			long n = strtol([s UTF8String], NULL, 16);
 
@@ -229,7 +246,7 @@
 			NSInteger g = ((n >> 4) & 0xf);
 			NSInteger b = (n & 0xf);
 
-			return TXCalibratedRGBColor((r / 15.0), (g / 15.0), (b / 15.0));
+			return TXCalibratedDeviceColor((r / 15.0), (g / 15.0), (b / 15.0));
 		}
 	}
 
