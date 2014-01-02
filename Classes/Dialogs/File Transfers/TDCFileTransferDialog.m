@@ -667,9 +667,7 @@
 	/* Okay, we are good… */
 	self.cachedIPAddress = address;
 
-	if ([self.cachedIPAddress isIPAddress]) {
-		[self.sourceIPAddressTextField setStringValue:TXTFLS(@"FileTransferDialogSourceIPAddressValue", self.cachedIPAddress)];
-	}
+	[self.sourceIPAddressTextField setStringValue:TXTFLS(@"FileTransferDialogSourceIPAddressValue", self.cachedIPAddress)];
 }
 
 #pragma mark -
