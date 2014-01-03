@@ -183,7 +183,7 @@ Click the </string>
                                     </tableColumn>
                                 </tableColumns>
                                 <connections>
-                                    <binding destination="73" name="enabled" keyPath="values.Wikipedia Link Parser Extension -> Service Enabled" id="301"/>
+                                    <binding destination="73" name="enabled" keyPath="values.Wiki-style Link Parser Extension -> Service Enabled" id="7tT-fr-DIc"/>
                                     <outlet property="dataSource" destination="-2" id="289"/>
                                     <outlet property="delegate" destination="-2" id="290"/>
                                 </connections>
