@@ -233,6 +233,8 @@
 							   selector:@selector(scrollViewBoundsDidChangeNotification:)
 								   name:NSViewBoundsDidChangeNotification
 								 object:[self.enclosingScrollView contentView]];
+	
+	[self registerForDraggedTypes:[NSArray arrayWithObject:NSFilenamesPboardType]];
 }
 
 - (void)scrollViewBoundsDidChangeNotification:(NSNotification *)aNote
@@ -258,6 +260,94 @@
 
 		[self.badgeRenderer invalidateBadgeImageCacheAndRebuild];
 	}
+}
+
+#pragma mark -
+#pragma mark Drag and Drop
+
+- (NSInteger)draggedRow:(id <NSDraggingInfo>)sender
+{
+    NSPoint p = [self convertPoint:[sender draggingLocation] fromView:nil];
+	
+    return [self rowAtPoint:p];
+}
+
+- (void)drawDraggingPoisition:(id <NSDraggingInfo>)sender on:(BOOL)on
+{
+    if (on) {
+        NSInteger row = [self draggedRow:sender];
+
+        if (row < 0) {
+            [self deselectAll:nil];
+        } else {
+            [self selectItemAtIndex:row];
+
+			[self reloadSelectionDrawingBySelectingItemsInIndexSet:[NSIndexSet indexSetWithIndex:row]];
+        }
+    } else {
+        [self deselectAll:nil];
+    }
+}
+
+- (NSArray *)draggedFiles:(id <NSDraggingInfo>)sender
+{
+    return [[sender draggingPasteboard] propertyListForType:NSFilenamesPboardType];
+}
+
+- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
+{
+    return [self draggingUpdated:sender];
+}
+
+- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
+{
+    NSArray *files = [self draggedFiles:sender];
+	
+    if ([files count] > 0 && [self draggedRow:sender] >= 0) {
+        [self drawDraggingPoisition:sender on:YES];
+		
+        return NSDragOperationCopy;
+    } else {
+        [self drawDraggingPoisition:sender on:NO];
+
+        return NSDragOperationNone;
+    }
+}
+
+- (void)draggingEnded:(id <NSDraggingInfo>)sender
+{
+    [self drawDraggingPoisition:sender on:NO];
+}
+
+- (void)draggingExited:(id <NSDraggingInfo>)sender
+{
+    [self drawDraggingPoisition:sender on:NO];
+}
+
+- (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender
+{
+    NSArray *files = [self draggedFiles:sender];
+	
+    return ([files count] > 0 && [self draggedRow:sender] >= 0);
+}
+
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
+{
+    NSArray *files = [self draggedFiles:sender];
+	
+    if ([files count] > 0) {
+        NSInteger row = [self draggedRow:sender];
+
+        if (row >= 0) {
+			[self.menuController memberSendDroppedFiles:files row:@(row)];
+
+            return YES;
+        } else {
+            return NO;
+        }
+    } else {
+        return NO;
+    }
 }
 
 #pragma mark -

@@ -242,6 +242,8 @@
 - (IBAction)memberGlineFromServer:(id)sender;
 - (IBAction)memberShunFromServer:(id)sender;
 
+- (void)memberSendDroppedFiles:(NSArray *)files row:(NSNumber *)row;
+
 - (IBAction)copyUrl:(id)sender;
 
 - (IBAction)joinClickedChannel:(id)sender;

@@ -2049,6 +2049,22 @@
 	}];
 }
 
+- (void)memberSendDroppedFiles:(NSArray *)files row:(NSNumber *)row
+{
+	IRCClient *u = [self.worldController selectedClient];
+	IRCChannel *c = [self.worldController selectedChannel];
+	
+	if (_noClientOrChannel || _isClient || _notConnected) {
+		return;
+	}
+	
+	IRCUser *member = [c memberAtIndex:[row integerValue]];
+	
+	for (NSString *pathURL in files) {
+		[self.fileTransferController addSenderForClient:u nickname:[member nickname] path:pathURL autoOpen:YES];
+	}
+}
+
 - (void)openLogLocation:(id)sender
 {	
 	NSURL *path = [TPCPreferences transcriptFolder];
