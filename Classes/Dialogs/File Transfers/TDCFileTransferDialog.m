@@ -431,7 +431,7 @@
 
 - (void)clear:(id)sender
 {
-	for (NSInteger i = 0; i < [self.filesReceiving count]; i++) {
+	for (NSInteger i = ([self.filesReceiving count] - 1); i >= 0; i--) {
 		TDCFileTransferDialogTransferReceiver *obj = self.filesReceiving[i];
 		
 		if ([obj transferStatus] == TDCFileTransferDialogTransferErrorStatus ||
@@ -442,8 +442,8 @@
 		}
 	}
 	
-	for (NSInteger i = 0; i < [self.filesSending count]; i++) {
-		TDCFileTransferDialogTransferReceiver *obj = self.filesSending[i];
+	for (NSInteger i = ([self.filesSending count] - 1); i >= 0; i--) {
+		TDCFileTransferDialogTransferSender *obj = self.filesSending[i];
 		
 		if ([obj transferStatus] == TDCFileTransferDialogTransferErrorStatus ||
 			[obj transferStatus] == TDCFileTransferDialogTransferCompleteStatus ||
@@ -452,6 +452,8 @@
 			[self destroySenderAtIndex:i];
 		}
 	}
+	
+	[self updateClearButton];
 }
 
 - (void)startDownloadingReceivedFile:(id)sender
