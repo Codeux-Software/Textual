@@ -124,6 +124,7 @@
 	if (transferIsStopped == NO) {
 		if (self.transferStatus == TDCFileTransferDialogTransferConnectingStatus) {
 			[self.progressIndicator setIndeterminate:YES];
+			[self.progressIndicator startAnimation:nil];
 		} else {
 			[self.progressIndicator setIndeterminate:NO];
 		}

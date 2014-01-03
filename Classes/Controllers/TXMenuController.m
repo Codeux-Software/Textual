@@ -67,7 +67,8 @@
 - (void)setupOtherServices
 {
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
-		self.fileTransferController = [TDCFileTransferDialog new];
+		 self.fileTransferController = [TDCFileTransferDialog new];
+		[self.fileTransferController requestIPAddressFromExternalSource];
 	}
 }
 
@@ -2033,11 +2034,15 @@
 	
 	[d beginSheetModalForWindow:modalWindow completionHandler:^(NSInteger returnCode) {
 		if (returnCode == NSOKButton) {
+			[self.fileTransferController.fileTransferTable beginUpdates];
+			
 			for (IRCUser *m in [self selectedMembers:sender]) {
 				for (NSURL *pathURL in [d URLs]) {
 					[self.fileTransferController addSenderForClient:u nickname:m.nickname path:[pathURL path] autoOpen:YES];
 				}
 			}
+			
+			[self.fileTransferController.fileTransferTable endUpdates];
 		}
 		
 		[self deselectMembers:sender];

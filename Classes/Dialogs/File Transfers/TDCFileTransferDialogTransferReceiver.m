@@ -257,19 +257,21 @@
 {
 	NSAssertReturn(self.transferStatus == TDCFileTransferDialogTransferReceivingStatus);
 	
-	/* Update record. */
-	[self.speedRecords addObject:@(self.currentRecord)];
-	
-	if ([self.speedRecords count] > RECORDS_LEN) {
-		[self.speedRecords removeObjectAtIndex:0];
-	}
-	
-	self.currentRecord = 0;
-	
-	/* Update progress. */
-	[self.progressIndicator setDoubleValue:self.processedFilesize];
-	
-	[self reloadStatusInformation];
+	dispatch_async(self.clientDispatchQueue, ^{
+		/* Update record. */
+		[self.speedRecords addObject:@(self.currentRecord)];
+		
+		if ([self.speedRecords count] > RECORDS_LEN) {
+			[self.speedRecords removeObjectAtIndex:0];
+		}
+		
+		self.currentRecord = 0;
+		
+		/* Update progress. */
+		[self.progressIndicator setDoubleValue:self.processedFilesize];
+		
+		[self reloadStatusInformation];
+	});
 }
 
 #pragma mark -
