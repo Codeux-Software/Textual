@@ -38,7 +38,7 @@
 #import "TPISmileyConverter.h"
 
 @interface TPISmileyConverter ()
-@property (nonatomic, weak) NSView *preferencePane;
+@property (nonatomic, strong) NSView *preferencePane;
 @property (nonatomic, strong) NSDictionary *conversionTable;
 @end
 
@@ -50,7 +50,7 @@
 - (void)pluginLoadedIntoMemory:(IRCWorld *)world
 {
 	/* Load Interface. */
-	[NSBundle loadNibNamed:@"TPISmileyConverter" owner:self];
+	[TPIBundleFromClass() loadCustomNibNamed:@"TPISmileyConverter" owner:self topLevelObjects:nil];
 
 	/* Find conversion table. */
 	NSBundle *currBundle = [NSBundle bundleForClass:[self class]];
