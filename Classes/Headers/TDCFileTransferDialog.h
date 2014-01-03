@@ -50,12 +50,10 @@ typedef enum TDCFileTransferDialogTransferStatus : NSInteger {
 }TDCFileTransferDialogTransferStatus;
 
 @interface TDCFileTransferDialog : NSWindowController <NSTableViewDataSource, NSTableViewDelegate>
-@property (nonatomic, strong) NSMutableArray *filesReceiving;
-@property (nonatomic, strong) NSMutableArray *filesSending;
+@property (nonatomic, strong) NSMutableArray *fileTransfers;
 @property (nonatomic, strong) NSString *cachedIPAddress;
 @property (nonatomic, nweak) IBOutlet NSButton *clearButton;
-@property (nonatomic, nweak) IBOutlet TVCListView *receivingFilesTable;
-@property (nonatomic, nweak) IBOutlet TVCListView *sendingFilesTable;
+@property (nonatomic, nweak) IBOutlet TVCListView *fileTransferTable;
 @property (nonatomic, nweak) IBOutlet NSTextField *sourceIPAddressTextField;
 @property (nonatomic, strong) TLOTimer *maintenanceTimer;
 
@@ -87,13 +85,9 @@ typedef enum TDCFileTransferDialogTransferStatus : NSInteger {
 
 - (IBAction)clear:(id)sender;
 
-- (IBAction)startDownloadingReceivedFile:(id)sender;
-- (IBAction)stopDownloadingReceivedFile:(id)sender;
-- (IBAction)removeReceivedFile:(id)sender;
+- (IBAction)startTransferOfFile:(id)sender;
+- (IBAction)stopTransferOfFile:(id)sender;
+- (IBAction)removeTransferFromList:(id)sender;
 - (IBAction)openReceivedFile:(id)sender;
 - (IBAction)revealReceivedFileInFinder:(id)sender;
-
-- (IBAction)startSendingFile:(id)sender;
-- (IBAction)stopSendingFile:(id)sender;
-- (IBAction)removeSentFile:(id)sender;
 @end

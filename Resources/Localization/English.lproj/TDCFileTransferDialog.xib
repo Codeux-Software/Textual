@@ -8,16 +8,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="TDCFileTransferDialog">
             <connections>
                 <outlet property="clearButton" destination="117" id="KoN-Uc-Nhi"/>
-                <outlet property="filesReceivingOpenFileMenuItem" destination="72" id="ajL-bk-BbL"/>
-                <outlet property="filesReceivingRemoveItemMenuItem" destination="42" id="Ih4-VW-xcf"/>
-                <outlet property="filesReceivingRevealFileInFinderMenuItem" destination="84" id="C85-rY-AvE"/>
-                <outlet property="filesReceivingStartTransferMenuItem" destination="35" id="v84-Ui-2Wj"/>
-                <outlet property="filesReceivingStopTransferMenuItem" destination="36" id="ldT-wW-uU7"/>
-                <outlet property="filesSendingRemoveItemMenuItem" destination="47" id="mce-58-qWk"/>
-                <outlet property="filesSendingStartTransferMenuItem" destination="44" id="mOB-yj-XOh"/>
-                <outlet property="filesSendingStopTransferMenuItem" destination="45" id="Tgc-0h-4yI"/>
-                <outlet property="receivingFilesTable" destination="idM-5g-wAt" id="W1l-4O-tCB"/>
-                <outlet property="sendingFilesTable" destination="6tS-ZX-8pt" id="ILJ-zC-JCr"/>
+                <outlet property="fileTransferTable" destination="xso-Ti-Pvf" id="qiD-QC-Rrt"/>
                 <outlet property="sourceIPAddressTextField" destination="iiU-og-zyu" id="EAd-3l-Df5"/>
                 <outlet property="window" destination="5" id="oY6-kl-EqU"/>
             </connections>
@@ -27,217 +18,159 @@
         <window title="File Transfers" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="560" y="234" width="517" height="314"/>
+            <rect key="contentRect" x="560" y="234" width="517" height="297"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
             <value key="minSize" type="size" width="517" height="314"/>
             <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="517" height="314"/>
+                <rect key="frame" x="0.0" y="0.0" width="517" height="297"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <splitView dividerStyle="paneSplitter" id="32">
-                        <rect key="frame" x="0.0" y="33" width="517" height="279"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="67" horizontalPageScroll="10" verticalLineScroll="67" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="tE3-OE-vcX">
-                                <rect key="frame" x="0.0" y="0.0" width="517" height="135"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <clipView key="contentView" copiesOnScroll="NO" id="4OH-Jh-GRM">
-                                    <rect key="frame" x="0.0" y="0.0" width="517" height="135"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="65" viewBased="YES" id="idM-5g-wAt" customClass="TVCListView">
-                                            <rect key="frame" x="0.0" y="0.0" width="517" height="135"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <size key="intercellSpacing" width="3" height="2"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
-                                            <tableColumns>
-                                                <tableColumn width="514" minWidth="40" maxWidth="1000" id="PkE-Nx-8IF">
-                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
-                                                        <font key="font" metaFont="smallSystem"/>
-                                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </tableHeaderCell>
-                                                    <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="AgD-qT-8Ir">
-                                                        <font key="font" metaFont="system"/>
-                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    </textFieldCell>
-                                                    <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                    <prototypeCellViews>
-                                                        <customView identifier="GroupView" id="0IS-qa-Ugs" customClass="TDCFileTransferDialogTransferReceiver">
-                                                            <rect key="frame" x="1" y="1" width="514" height="65"/>
+                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="66" horizontalPageScroll="10" verticalLineScroll="66" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="Jdf-Fe-O7N">
+                        <rect key="frame" x="-1" y="33" width="519" height="264"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <clipView key="contentView" id="LgH-Ka-LaD">
+                            <rect key="frame" x="0.0" y="0.0" width="519" height="264"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <tableView verticalHuggingPriority="750" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="64" viewBased="YES" id="xso-Ti-Pvf" customClass="TVCListView">
+                                    <rect key="frame" x="0.0" y="0.0" width="519" height="264"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <size key="intercellSpacing" width="3" height="2"/>
+                                    <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                    <tableColumns>
+                                        <tableColumn editable="NO" width="516" minWidth="40" maxWidth="1000" id="rMl-gp-lCO">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
+                                            </tableHeaderCell>
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="7Ku-ts-PpG">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <prototypeCellViews>
+                                                <customView identifier="ReceiverView" id="rFe-Pm-QDv" customClass="TDCFileTransferDialogTransferReceiver">
+                                                    <rect key="frame" x="1" y="1" width="516" height="65"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <subviews>
+                                                        <progressIndicator maxValue="100" indeterminate="YES" controlSize="small" style="bar" id="fkg-tB-oW2">
+                                                            <rect key="frame" x="69" y="26" width="425" height="12"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <subviews>
-                                                                <progressIndicator maxValue="100" indeterminate="YES" controlSize="small" style="bar" id="i7e-by-caO">
-                                                                    <rect key="frame" x="69" y="25" width="425" height="12"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                </progressIndicator>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="vp0-ro-1r0">
-                                                                    <rect key="frame" x="67" y="43" width="363" height="17"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="dummyfile.png" id="M6b-ku-iNT">
-                                                                        <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                    </textFieldCell>
-                                                                </textField>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ovq-49-hjT">
-                                                                    <rect key="frame" x="67" y="5" width="429" height="14"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="10 MB of 100 MB (100 KB/sec) — 2 seconds reamining" id="tDT-di-LiZ">
-                                                                        <font key="font" size="11" name="LucidaGrande"/>
-                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                    </textFieldCell>
-                                                                </textField>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="CYH-Tq-yDj">
-                                                                    <rect key="frame" x="434" y="43" width="62" height="14"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="10 MB" id="GhK-JF-6jT">
-                                                                        <font key="font" size="11" name="LucidaGrande"/>
-                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                    </textFieldCell>
-                                                                </textField>
-                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="9pT-Bo-7Ok">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="61" height="65"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="6BG-dV-cBx"/>
-                                                                </imageView>
-                                                            </subviews>
-                                                            <connections>
-                                                                <outlet property="fileIconView" destination="9pT-Bo-7Ok" id="UiJ-5s-VMb"/>
-                                                                <outlet property="filenameTextField" destination="vp0-ro-1r0" id="9DT-Gh-bv5"/>
-                                                                <outlet property="filesizeTextField" destination="CYH-Tq-yDj" id="HiV-ST-ZYk"/>
-                                                                <outlet property="progressIndicator" destination="i7e-by-caO" id="nEu-jr-jfw"/>
-                                                                <outlet property="transferProgressField" destination="ovq-49-hjT" id="C8g-ST-JWv"/>
-                                                            </connections>
-                                                        </customView>
-                                                    </prototypeCellViews>
-                                                </tableColumn>
-                                            </tableColumns>
-                                            <connections>
-                                                <outlet property="dataSource" destination="-2" id="adC-Ug-QKt"/>
-                                                <outlet property="delegate" destination="-2" id="OHY-pL-Pfa"/>
-                                                <outlet property="menu" destination="34" id="q9B-jH-RWU"/>
-                                            </connections>
-                                        </tableView>
-                                    </subviews>
-                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </clipView>
-                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="vMa-nN-YGa">
-                                    <rect key="frame" x="-100" y="-100" width="223" height="15"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="3mP-32-woi">
-                                    <rect key="frame" x="224" y="17" width="15" height="102"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                            </scrollView>
-                            <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="67" horizontalPageScroll="10" verticalLineScroll="67" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="klb-TY-HGe">
-                                <rect key="frame" x="0.0" y="145" width="517" height="134"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <clipView key="contentView" copiesOnScroll="NO" id="Z2C-ew-zeM">
-                                    <rect key="frame" x="0.0" y="0.0" width="517" height="134"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <tableView verticalHuggingPriority="750" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="65" viewBased="YES" id="6tS-ZX-8pt" customClass="TVCListView">
-                                            <rect key="frame" x="0.0" y="0.0" width="517" height="134"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <size key="intercellSpacing" width="3" height="2"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
-                                            <tableColumns>
-                                                <tableColumn width="514" minWidth="40" maxWidth="1000" id="eQd-HV-8cL">
-                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
-                                                        <font key="font" metaFont="smallSystem"/>
-                                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </tableHeaderCell>
-                                                    <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="g43-7X-OBH">
-                                                        <font key="font" metaFont="system"/>
-                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    </textFieldCell>
-                                                    <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                    <prototypeCellViews>
-                                                        <customView identifier="GroupView" id="SyB-Fl-R7Z" customClass="TDCFileTransferDialogTransferSender">
-                                                            <rect key="frame" x="1" y="1" width="514" height="65"/>
+                                                        </progressIndicator>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="tvE-ly-KOo">
+                                                            <rect key="frame" x="67" y="44" width="363" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <subviews>
-                                                                <progressIndicator maxValue="100" indeterminate="YES" controlSize="small" style="bar" id="L6Q-ld-hIz">
-                                                                    <rect key="frame" x="69" y="26" width="425" height="12"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                </progressIndicator>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="OYI-uH-6vG">
-                                                                    <rect key="frame" x="67" y="44" width="363" height="17"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="dummyfile.png" id="kz6-td-I4X">
-                                                                        <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                    </textFieldCell>
-                                                                </textField>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="jtv-O0-HBL">
-                                                                    <rect key="frame" x="67" y="6" width="429" height="14"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="10 MB of 100 MB (100 KB/sec) — 2 seconds reamining" id="NY7-Y0-btQ">
-                                                                        <font key="font" size="11" name="LucidaGrande"/>
-                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                    </textFieldCell>
-                                                                </textField>
-                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="GFT-q4-8XJ">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="61" height="65"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="jp1-Tx-BYJ"/>
-                                                                </imageView>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="fJ3-w0-D0F">
-                                                                    <rect key="frame" x="434" y="44" width="62" height="14"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="10 MB" id="g3r-D6-oG9">
-                                                                        <font key="font" size="11" name="LucidaGrande"/>
-                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                    </textFieldCell>
-                                                                </textField>
-                                                            </subviews>
-                                                            <connections>
-                                                                <outlet property="fileIconView" destination="GFT-q4-8XJ" id="H62-kA-WO1"/>
-                                                                <outlet property="filenameTextField" destination="OYI-uH-6vG" id="1DV-QJ-AvS"/>
-                                                                <outlet property="filesizeTextField" destination="fJ3-w0-D0F" id="DPO-Iq-kDS"/>
-                                                                <outlet property="progressIndicator" destination="L6Q-ld-hIz" id="vcN-mM-MAO"/>
-                                                                <outlet property="transferProgressField" destination="jtv-O0-HBL" id="wrw-TM-rvN"/>
-                                                            </connections>
-                                                        </customView>
-                                                    </prototypeCellViews>
-                                                </tableColumn>
-                                            </tableColumns>
-                                            <connections>
-                                                <outlet property="dataSource" destination="-2" id="Cya-gk-8gy"/>
-                                                <outlet property="delegate" destination="-2" id="XmJ-RS-xYK"/>
-                                                <outlet property="menu" destination="43" id="Szk-uA-poT"/>
-                                            </connections>
-                                        </tableView>
-                                    </subviews>
-                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </clipView>
-                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="o3y-w3-NzA">
-                                    <rect key="frame" x="-100" y="-100" width="223" height="15"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="wx5-5V-GpD">
-                                    <rect key="frame" x="224" y="17" width="15" height="102"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                            </scrollView>
-                        </subviews>
-                        <holdingPriorities>
-                            <real value="250"/>
-                            <real value="250"/>
-                        </holdingPriorities>
-                    </splitView>
+                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="dummyfile.png" id="5dv-pa-ldM">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="22V-bc-ITj">
+                                                            <rect key="frame" x="67" y="6" width="429" height="14"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="10 MB of 100 MB (100 KB/sec) — 2 seconds reamining" id="VVN-xJ-iKJ">
+                                                                <font key="font" size="11" name="LucidaGrande"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="NYx-LB-DAM">
+                                                            <rect key="frame" x="0.0" y="0.0" width="61" height="65"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="yRx-w7-oXd"/>
+                                                        </imageView>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="qsO-pI-cPd">
+                                                            <rect key="frame" x="434" y="44" width="62" height="14"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="10 MB" id="PAR-0R-j9A">
+                                                                <font key="font" size="11" name="LucidaGrande"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                    </subviews>
+                                                    <connections>
+                                                        <outlet property="fileIconView" destination="NYx-LB-DAM" id="W3W-Ij-4Qu"/>
+                                                        <outlet property="filenameTextField" destination="tvE-ly-KOo" id="meU-J7-XRE"/>
+                                                        <outlet property="filesizeTextField" destination="qsO-pI-cPd" id="h7e-jF-rUs"/>
+                                                        <outlet property="progressIndicator" destination="fkg-tB-oW2" id="UOm-Qj-a8Q"/>
+                                                        <outlet property="transferProgressField" destination="22V-bc-ITj" id="wkl-L8-UtP"/>
+                                                    </connections>
+                                                </customView>
+                                                <customView identifier="SenderView" id="1NO-G9-9bY" customClass="TDCFileTransferDialogTransferSender">
+                                                    <rect key="frame" x="1" y="68" width="516" height="65"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <subviews>
+                                                        <progressIndicator maxValue="100" indeterminate="YES" controlSize="small" style="bar" id="p7p-Ra-Koo">
+                                                            <rect key="frame" x="69" y="26" width="425" height="12"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        </progressIndicator>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="bD2-S4-V9l">
+                                                            <rect key="frame" x="67" y="44" width="363" height="17"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="dummyfile.png" id="o9f-Jt-e5p">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="7O0-40-ssc">
+                                                            <rect key="frame" x="67" y="6" width="429" height="14"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="10 MB of 100 MB (100 KB/sec) — 2 seconds reamining" id="vDJ-un-gCB">
+                                                                <font key="font" size="11" name="LucidaGrande"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="aaa-f6-j0h">
+                                                            <rect key="frame" x="0.0" y="0.0" width="61" height="65"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="qlH-UV-Yb2"/>
+                                                        </imageView>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="U7V-M0-M9V">
+                                                            <rect key="frame" x="434" y="44" width="62" height="14"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="10 MB" id="O2t-e8-Se5">
+                                                                <font key="font" size="11" name="LucidaGrande"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                    </subviews>
+                                                    <connections>
+                                                        <outlet property="fileIconView" destination="aaa-f6-j0h" id="MwQ-Rw-2oV"/>
+                                                        <outlet property="filenameTextField" destination="bD2-S4-V9l" id="IeO-bP-y7d"/>
+                                                        <outlet property="filesizeTextField" destination="U7V-M0-M9V" id="3Hn-s4-8wz"/>
+                                                        <outlet property="progressIndicator" destination="p7p-Ra-Koo" id="whR-M5-9PT"/>
+                                                        <outlet property="transferProgressField" destination="7O0-40-ssc" id="vhT-UO-rko"/>
+                                                    </connections>
+                                                </customView>
+                                            </prototypeCellViews>
+                                        </tableColumn>
+                                    </tableColumns>
+                                    <connections>
+                                        <outlet property="dataSource" destination="-2" id="l7d-fh-IVr"/>
+                                        <outlet property="delegate" destination="-2" id="Lbq-dF-k8b"/>
+                                        <outlet property="menu" destination="34" id="EY2-ub-icM"/>
+                                    </connections>
+                                </tableView>
+                            </subviews>
+                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </clipView>
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="jCb-ZR-rm0">
+                            <rect key="frame" x="-100" y="-100" width="223" height="15"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="e1W-F5-jSi">
+                            <rect key="frame" x="224" y="17" width="15" height="102"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
                     <button verticalHuggingPriority="750" id="117">
                         <rect key="frame" x="7" y="5" width="107" height="22"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
@@ -266,16 +199,16 @@
             </view>
             <contentBorderThickness minY="33"/>
         </window>
-        <menu title="Menu" id="34" userLabel="ReceiverMenu">
+        <menu title="Menu" id="34" userLabel="TableMenu">
             <items>
-                <menuItem title="Start Download" tag="3001" id="35">
+                <menuItem title="Start Transfer" tag="3001" id="35">
                     <connections>
-                        <action selector="startDownloadingReceivedFile:" target="-2" id="XCc-1N-p3C"/>
+                        <action selector="startTransferOfFile:" target="-2" id="Z4r-Um-xMm"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Cancel Transfer" tag="3003" id="36">
                     <connections>
-                        <action selector="stopDownloadingReceivedFile:" target="-2" id="M4d-1Y-cPS"/>
+                        <action selector="stopTransferOfFile:" target="-2" id="QQg-yO-uo8"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="41">
@@ -296,29 +229,7 @@
                 </menuItem>
                 <menuItem title="Remove From List" tag="3004" id="42">
                     <connections>
-                        <action selector="removeReceivedFile:" target="-2" id="YhS-vq-HKr"/>
-                    </connections>
-                </menuItem>
-            </items>
-        </menu>
-        <menu title="Menu" id="43" userLabel="SenderMenu">
-            <items>
-                <menuItem title="Start Sending" tag="3101" id="44">
-                    <connections>
-                        <action selector="startSendingFile:" target="-2" id="UBn-gO-vjG"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="Cancel Transfer" tag="3102" id="45">
-                    <connections>
-                        <action selector="stopSendingFile:" target="-2" id="bop-LA-gco"/>
-                    </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="46">
-                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                </menuItem>
-                <menuItem title="Remove From List" tag="3103" id="47">
-                    <connections>
-                        <action selector="removeSentFile:" target="-2" id="e08-vC-lr8"/>
+                        <action selector="removeTransferFromList:" target="-2" id="pPs-w3-h5f"/>
                     </connections>
                 </menuItem>
             </items>
