@@ -2026,17 +2026,17 @@
 	[d setCanChooseFiles:YES];
 	[d setCanChooseDirectories:NO];
 	[d setResolvesAliases:YES];
-	[d setAllowsMultipleSelection:NO];
+	[d setAllowsMultipleSelection:YES];
 	[d setCanCreateDirectories:NO];
 	
 	id modalWindow = self.masterController.mainWindow;
 	
 	[d beginSheetModalForWindow:modalWindow completionHandler:^(NSInteger returnCode) {
 		if (returnCode == NSOKButton) {
-			NSURL *pathURL = d.URLs[0];
-			
 			for (IRCUser *m in [self selectedMembers:sender]) {
-				[self.fileTransferController addSenderForClient:u nickname:m.nickname path:[pathURL path] autoOpen:YES];
+				for (NSURL *pathURL in [d URLs]) {
+					[self.fileTransferController addSenderForClient:u nickname:m.nickname path:[pathURL path] autoOpen:YES];
+				}
 			}
 		}
 		
