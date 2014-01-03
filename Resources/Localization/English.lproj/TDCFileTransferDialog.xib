@@ -182,17 +182,18 @@
                             <action selector="clear:" target="-2" id="T9p-oR-2hf"/>
                         </connections>
                     </button>
-                    <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="iiU-og-zyu">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="iiU-og-zyu">
                         <rect key="frame" x="245" y="8" width="254" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <shadow key="shadow">
-                            <size key="offset" width="1" height="1"/>
-                            <color key="color" red="0.88775510204081631" green="0.88775510204081631" blue="0.88775510204081631" alpha="1" colorSpace="calibratedRGB"/>
-                        </shadow>
                         <textFieldCell key="cell" lineBreakMode="truncatingMiddle" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Address: 127.0.0.1" id="b4U-6o-ZAj">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="backgroundStyle">
+                                    <integer key="value" value="2"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                         </textFieldCell>
                     </textField>
                 </subviews>
