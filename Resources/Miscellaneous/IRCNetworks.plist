@@ -54,6 +54,8 @@
 	<string>irc.twit.tv</string>
 	<key>Undernet</key>
 	<string>irc.undernet.org</string>
+	<key>StormBit</key>
+	<string>irc.stormbit.net</string>
 	<key>ValleyNode</key>
 	<string>irc.valleynode.net</string>
 </dict>
