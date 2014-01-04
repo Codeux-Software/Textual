@@ -79,6 +79,10 @@
 
 - (void)prepareForApplicationTermination
 {
+	if (_downloadDestination) {
+		[_downloadDestination stopAccessingSecurityScopedResource];
+	}
+
 	[self close];
 	
 	for (id e in self.fileTransfers) {
@@ -117,12 +121,18 @@
 	[groupItem setFilename:filename];
 	[groupItem setTotalFilesize:size];
 	
+	if (_downloadDestination) {
+		[groupItem setPath:[_downloadDestination path]];
+	}
+	
 	[self addReceiver:groupItem];
 	
 	if ([TPCPreferences fileTransferRequestReplyAction] == TXFileTransferRequestReplyAutomaticallyDownloadAction) {
 		/* If the user is set to automatically download, then just save to the downloads folder. */
-		[groupItem setPath:[TPCPreferences userDownloadFolderPath]];
-		
+		if ([groupItem path] == nil) {
+			[groupItem setPath:[TPCPreferences userDownloadFolderPath]];
+		}
+
 		/* Begin the transfer. */
 		[groupItem open];
 	}
@@ -651,6 +661,51 @@
 	}];
 	
 	[self.fileTransferTable reloadData];
+}
+
+#pragma mark -
+#pragma mark Destination Folder
+
+- (void)startUsingDownloadDestinationFolderSecurityScopedBookmark
+{
+	NSData *bookmark = [RZUserDefaults() dataForKey:@"File Transfers -> File Transfer Download Folder Bookmark"];
+	
+	NSObjectIsEmptyAssert(bookmark);
+	
+	NSError *resolveError;
+	
+	BOOL isStale = YES;
+	
+	NSURL *resolvedBookmark = [NSURL URLByResolvingBookmarkData:bookmark
+														options:NSURLBookmarkResolutionWithSecurityScope
+												  relativeToURL:nil
+											bookmarkDataIsStale:&isStale
+														  error:&resolveError];
+	
+	if (resolveError) {
+		DebugLogToConsole(@"Error creating bookmark for URL: %@", [resolveError localizedDescription]);
+	} else {
+		_downloadDestination = resolvedBookmark;
+		
+		if ([_downloadDestination startAccessingSecurityScopedResource] == NO) {
+			DebugLogToConsole(@"Failed to access bookmark.");
+		}
+	}
+}
+
+- (void)setDownloadDestinationFolder:(id)value
+{
+	/* Destroy old pointer if needed. */
+	if (PointerIsNotEmpty(_downloadDestination)) {
+		[_downloadDestination stopAccessingSecurityScopedResource];
+		 _downloadDestination = nil;
+	}
+	
+	/* Set new location. */
+	[RZUserDefaults() setObject:value forKey:@"File Transfers -> File Transfer Download Folder Bookmark"];
+	
+	/* Reset our folder. */
+	[self startUsingDownloadDestinationFolderSecurityScopedBookmark];
 }
 
 #pragma mark -

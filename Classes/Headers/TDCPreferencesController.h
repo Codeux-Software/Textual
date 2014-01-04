@@ -1,4 +1,4 @@
-/* ********************************************************************* 
+/* *********************************************************************
        _____        _               _    ___ ____   ____
       |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
        | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
@@ -56,6 +56,7 @@
 @property (nonatomic, nweak) IBOutlet NSPopUpButton *alertTypeChoiceButton;
 @property (nonatomic, nweak) IBOutlet NSPopUpButton *themeSelectionButton;
 @property (nonatomic, nweak) IBOutlet NSPopUpButton *transcriptFolderButton;
+@property (nonatomic, nweak) IBOutlet NSPopUpButton *fileTransferDownloadDestinationButton;
 @property (nonatomic, nweak) IBOutlet NSTableView *excludeKeywordsTable;
 @property (nonatomic, nweak) IBOutlet NSTableView *installedScriptsTable;
 @property (nonatomic, nweak) IBOutlet NSTableView *keywordsTable;
@@ -117,6 +118,7 @@
 - (IBAction)onChangedMainInputTextFieldFontSize:(id)sender;
 
 - (IBAction)onFileTransferIPAddressDetectionMethodChanged:(id)sender;
+- (IBAction)onFileTransferDownloadDestinationFolderChanged:(id)sender;
 
 - (IBAction)onResetUserListModeColorsToDefaults:(id)sender;
 

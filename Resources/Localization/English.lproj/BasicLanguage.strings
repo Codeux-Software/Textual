@@ -253,6 +253,8 @@
 
 "NoLogLocationDefinedMenuItem" = "No Log Location Selected";
 
+"NoFileTransferDownloadDestinationFolderDefinedMenuItem" = "No Location Selected";
+
 "LogFileBeginOfSessionHeader" = "————————————— Begin Session —————————————";
 "LogFileEndOfSessionHeader" = "————————————— End Session —————————————";
 

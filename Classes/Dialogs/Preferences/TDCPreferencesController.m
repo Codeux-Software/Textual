@@ -117,6 +117,7 @@
 	[self updateThemeSelection];
     [self updateAlertSelection];
 	[self updateTranscriptFolder];
+	[self updateFileTransferDownloadDestinationFolder];
 
 	[self onChangedAlertType:nil];
 	[self onChangedHighlightType:nil];
@@ -595,6 +596,79 @@
 }
 
 #pragma mark -
+#pragma mark File Transfer Destination Folder Popup
+
+- (void)updateFileTransferDownloadDestinationFolder
+{
+	TDCFileTransferDialog *transferController = [self.menuController fileTransferController];
+
+	NSURL *path = [transferController downloadDestination];
+	
+	NSMenuItem *item = [self.fileTransferDownloadDestinationButton itemAtIndex:0];
+	
+	if (NSObjectIsEmpty(path)) {
+		[item setTitle:TXTLS(@"NoFileTransferDownloadDestinationFolderDefinedMenuItem")];
+		
+		[item setImage:nil];
+	} else {
+		NSImage *icon = [RZWorkspace() iconForFile:[path path]];
+		
+		[icon setSize:NSMakeSize(16, 16)];
+		
+		[item setImage:icon];
+		[item setTitle:[path lastPathComponent]];
+	}
+}
+
+- (void)onFileTransferDownloadDestinationFolderChanged:(id)sender
+{
+	TDCFileTransferDialog *transferController = [self.menuController fileTransferController];
+
+	if ([self.fileTransferDownloadDestinationButton selectedTag] == 2) {
+		NSOpenPanel *d = [NSOpenPanel openPanel];
+		
+		[d setCanChooseFiles:NO];
+		[d setResolvesAliases:YES];
+		[d setCanChooseDirectories:YES];
+		[d setCanCreateDirectories:YES];
+		[d setAllowsMultipleSelection:NO];
+		
+		[d setPrompt:TXTLS(@"SelectButton")];
+		
+		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
+			[self.fileTransferDownloadDestinationButton selectItemAtIndex:0];
+			
+			if (returnCode == NSOKButton) {
+				NSURL *pathURL = [d.URLs safeObjectAtIndex:0];
+				
+				NSError *error = nil;
+				
+				NSData *bookmark = [pathURL bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
+									 includingResourceValuesForKeys:nil
+													  relativeToURL:nil
+															  error:&error];
+				
+				if (error) {
+					LogToConsole(@"Error creating bookmark for URL (%@): %@", pathURL, [error localizedDescription]);
+				} else {
+					[transferController setDownloadDestinationFolder:bookmark];
+				}
+				
+				[self updateFileTransferDownloadDestinationFolder];
+			}
+		}];
+	}
+	else if ([self.fileTransferDownloadDestinationButton selectedTag] == 3)
+	{
+		[self.fileTransferDownloadDestinationButton selectItemAtIndex:0];
+
+		[transferController setDownloadDestinationFolder:nil];
+
+		[self updateFileTransferDownloadDestinationFolder];
+	}
+}
+
+#pragma mark -
 #pragma mark Transcript Folder Popup
 
 - (void)updateTranscriptFolder
@@ -605,13 +679,15 @@
 
 	if (NSObjectIsEmpty(path)) {
 		[item setTitle:TXTLS(@"NoLogLocationDefinedMenuItem")];
+		
+		[item setImage:nil];
 	} else {
 		NSImage *icon = [RZWorkspace() iconForFile:[path path]];
 
 		[icon setSize:NSMakeSize(16, 16)];
 
 		[item setImage:icon];
-		[item setTitle:[path.lastPathComponent decodeURIFragement]];
+		[item setTitle:[path lastPathComponent]];
 	}
 }
 
@@ -629,7 +705,7 @@
 		[d setPrompt:TXTLS(@"SelectButton")];
 
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
-			[self.transcriptFolderButton selectItem:[self.transcriptFolderButton itemAtIndex:0]];
+			[self.transcriptFolderButton selectItemAtIndex:0];
 
 			if (returnCode == NSOKButton) {
 				NSURL *pathURL = [d.URLs safeObjectAtIndex:0];
