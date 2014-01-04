@@ -25,6 +25,7 @@
                 <outlet property="excludeKeywordsArrayController" destination="4313" id="7351"/>
                 <outlet property="excludeKeywordsTable" destination="4872" id="7350"/>
                 <outlet property="experimentalSettingsView" destination="6648" id="6689"/>
+                <outlet property="fileTransferDownloadDestinationButton" destination="or9-hE-3Gw" id="1f1-ZN-j3Z"/>
                 <outlet property="fileTransferManuallyEnteredIPAddressField" destination="fmg-Fb-LTz" id="ewG-sG-Pwf"/>
                 <outlet property="fileTransferView" destination="Xdo-2c-egD" id="lvk-pN-cad"/>
                 <outlet property="floodControlView" destination="5425" id="5524"/>
@@ -2321,12 +2322,12 @@
                 <popUpButton verticalHuggingPriority="750" id="6771">
                     <rect key="frame" x="236" y="148" width="230" height="26"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <popUpButtonCell key="cell" type="push" title=" " bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="6776" id="6772">
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="6772">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" showsStateColumn="NO" id="6773">
                             <items>
-                                <menuItem title=" " state="on" id="6776"/>
+                                <menuItem title=" " id="6776"/>
                                 <menuItem isSeparatorItem="YES" id="6774">
                                     <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                 </menuItem>
@@ -2358,7 +2359,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="7735">
-                    <rect key="frame" x="97" y="25" width="366" height="29"/>
+                    <rect key="frame" x="89" y="27" width="366" height="29"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Textual will write log entries every twenty seconds instead of each time a new entry is created to reduce disk usage. " id="7736">
                         <font key="font" metaFont="smallSystem"/>
@@ -4074,7 +4075,7 @@
             </subviews>
         </customView>
         <customView id="Xdo-2c-egD" userLabel="File Transfers">
-            <rect key="frame" x="0.0" y="0.0" width="534" height="169"/>
+            <rect key="frame" x="0.0" y="0.0" width="534" height="246"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <userGuides>
                 <userLayoutGuide location="31" affinity="minX"/>
@@ -4085,7 +4086,7 @@
             </userGuides>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="6uU-R8-NkF">
-                    <rect key="frame" x="58" y="133" width="223" height="17"/>
+                    <rect key="frame" x="58" y="210" width="223" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="When file transfer request is received:" id="mZb-yK-Q91">
                         <font key="font" metaFont="cellTitle"/>
@@ -4094,7 +4095,7 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" id="v1d-1E-ic2">
-                    <rect key="frame" x="284" y="130" width="193" height="22"/>
+                    <rect key="frame" x="284" y="207" width="193" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="Automatically Download" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="3" imageScaling="proportionallyDown" inset="2" selectedItem="wbE-ls-KmQ" id="BEF-Nj-9qU">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -4112,7 +4113,7 @@
                     </connections>
                 </popUpButton>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="55S-aE-bqT">
-                    <rect key="frame" x="44" y="92" width="175" height="17"/>
+                    <rect key="frame" x="44" y="169" width="175" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="IP Address detection method:" id="ium-MC-NEr">
                         <font key="font" metaFont="cellTitle"/>
@@ -4121,7 +4122,7 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" id="5ld-WJ-QWn">
-                    <rect key="frame" x="222" y="89" width="269" height="22"/>
+                    <rect key="frame" x="222" y="166" width="269" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="Request Address from External Source" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="Tkk-Gn-SI6" id="EAP-nS-2nx">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -4139,7 +4140,7 @@
                     </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" id="fmg-Fb-LTz">
-                    <rect key="frame" x="225" y="66" width="177" height="19"/>
+                    <rect key="frame" x="225" y="143" width="177" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="127.0.0.1" drawsBackground="YES" id="bnb-Q1-9oF">
                         <font key="font" metaFont="smallSystem"/>
@@ -4151,7 +4152,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="wk3-Gl-h5g">
-                    <rect key="frame" x="63" y="67" width="156" height="17"/>
+                    <rect key="frame" x="63" y="144" width="156" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Manually entered address:" id="Bcb-PT-bZv">
                         <font key="font" metaFont="cellTitle"/>
@@ -4160,7 +4161,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="XpY-sw-hoa">
-                    <rect key="frame" x="104" y="26" width="142" height="17"/>
+                    <rect key="frame" x="104" y="103" width="142" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="File transfer port range:" id="UFu-G3-zvT">
                         <font key="font" metaFont="cellTitle"/>
@@ -4169,7 +4170,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="lOX-56-gjb">
-                    <rect key="frame" x="252" y="25" width="74" height="19"/>
+                    <rect key="frame" x="252" y="102" width="74" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="1096" drawsBackground="YES" id="1ig-vJ-zZj">
                         <font key="font" metaFont="smallSystem"/>
@@ -4185,7 +4186,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" id="h7y-wz-21n">
-                    <rect key="frame" x="355" y="25" width="74" height="19"/>
+                    <rect key="frame" x="355" y="102" width="74" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="1115" drawsBackground="YES" id="qsv-zK-a5W">
                         <font key="font" metaFont="smallSystem"/>
@@ -4201,7 +4202,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="0fA-Eg-o1K">
-                    <rect key="frame" x="332" y="26" width="17" height="17"/>
+                    <rect key="frame" x="332" y="103" width="17" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="to" id="u89-FD-SA7">
                         <font key="font" metaFont="cellTitle"/>
@@ -4209,6 +4210,54 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="0gV-7V-wUp">
+                    <rect key="frame" x="64" y="62" width="203" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Downloaded files go to the folder:" id="LWN-bV-fu5">
+                        <font key="font" metaFont="titleBar" size="12"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="xz9-W8-HQj">
+                    <rect key="frame" x="84" y="25" width="366" height="29"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="fxj-kX-zUm">
+                        <font key="font" metaFont="smallSystem"/>
+                        <string key="title">Textual by default will ask where to save files when downloading them from a sender. This option allows you to skip that process.</string>
+                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" id="or9-hE-3Gw">
+                    <rect key="frame" x="270" y="59" width="201" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="tn1-8G-pxP" id="4nX-f5-hYW">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                        <menu key="menu" title="OtherViews" id="k80-s0-EZF">
+                            <items>
+                                <menuItem state="on" id="tn1-8G-pxP"/>
+                                <menuItem isSeparatorItem="YES" id="934-HD-1Gm">
+                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                </menuItem>
+                                <menuItem title="Select Destination…" tag="2" id="XJE-U8-Az3"/>
+                                <menuItem title="Clear Destination" tag="3" id="T6x-Hf-LKx">
+                                    <connections>
+                                        <binding destination="1247" name="enabled" keyPath="values.File Transfers -> File Transfer Download Folder Bookmark" id="GDe-YN-sU4">
+                                            <dictionary key="options">
+                                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                                            </dictionary>
+                                        </binding>
+                                    </connections>
+                                </menuItem>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="onFileTransferDownloadDestinationFolderChanged:" target="-2" id="z6B-Ap-Mxk"/>
+                    </connections>
+                </popUpButton>
             </subviews>
         </customView>
     </objects>

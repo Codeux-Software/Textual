@@ -68,7 +68,9 @@
 {
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
 		 self.fileTransferController = [TDCFileTransferDialog new];
+		
 		[self.fileTransferController requestIPAddressFromExternalSource];
+		[self.fileTransferController startUsingDownloadDestinationFolderSecurityScopedBookmark];
 	}
 }
 

@@ -56,13 +56,14 @@ typedef enum TDCFileTransferDialogNavigationControllerSelectedTab : NSInteger {
 } TDCFileTransferDialogNavigationControllerSelectedTab;
 
 @interface TDCFileTransferDialog : NSWindowController <NSTableViewDataSource, NSTableViewDelegate>
-@property (strong) NSMutableArray *fileTransfers;
-@property (strong) NSString *cachedIPAddress;
-@property (strong) TLOTimer *maintenanceTimer;
-@property (nweak) IBOutlet NSButton *clearButton;
-@property (nweak) IBOutlet TVCListView *fileTransferTable;
-@property (nweak) IBOutlet NSTextField *sourceIPAddressTextField;
-@property (nweak) IBOutlet NSSegmentedCell *navigationControllerCell;
+@property (nonatomic, strong) NSMutableArray *fileTransfers;
+@property (nonatomic, strong) NSString *cachedIPAddress;
+@property (nonatomic, strong) TLOTimer *maintenanceTimer;
+@property (nonatomic, strong, readonly) NSURL *downloadDestination;
+@property (nonatomic, nweak) IBOutlet NSButton *clearButton;
+@property (nonatomic, nweak) IBOutlet TVCListView *fileTransferTable;
+@property (nonatomic, nweak) IBOutlet NSTextField *sourceIPAddressTextField;
+@property (nonatomic, nweak) IBOutlet NSSegmentedCell *navigationControllerCell;
 
 - (void)show:(BOOL)key restorePosition:(BOOL)restoreFrame;
 
@@ -99,4 +100,10 @@ typedef enum TDCFileTransferDialogNavigationControllerSelectedTab : NSInteger {
 - (IBAction)revealReceivedFileInFinder:(id)sender;
 
 - (IBAction)navigationSelectionDidChange:(id)sender;
+
+/* Do not call these as a plugin please. */
+/* The startUsing* method does not check if the local variable is already set. */
+- (void)startUsingDownloadDestinationFolderSecurityScopedBookmark;
+
+- (void)setDownloadDestinationFolder:(id)value;
 @end
