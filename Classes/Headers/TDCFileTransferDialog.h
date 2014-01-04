@@ -47,15 +47,22 @@ typedef enum TDCFileTransferDialogTransferStatus : NSInteger {
 	TDCFileTransferDialogTransferReceivingStatus,
 	TDCFileTransferDialogTransferSendingStatus,
 	TDCFileTransferDialogTransferCompleteStatus
-}TDCFileTransferDialogTransferStatus;
+} TDCFileTransferDialogTransferStatus;
+
+typedef enum TDCFileTransferDialogNavigationControllerSelectedTab : NSInteger {
+	TDCFileTransferDialogNavigationControllerAllSelectedTab			= 0,
+	TDCFileTransferDialogNavigationControllerSendingSelectedTab		= 1,
+	TDCFileTransferDialogNavigationControllerReceivingSelectedTab	= 2
+} TDCFileTransferDialogNavigationControllerSelectedTab;
 
 @interface TDCFileTransferDialog : NSWindowController <NSTableViewDataSource, NSTableViewDelegate>
-@property (nonatomic, strong) NSMutableArray *fileTransfers;
-@property (nonatomic, strong) NSString *cachedIPAddress;
-@property (nonatomic, nweak) IBOutlet NSButton *clearButton;
-@property (nonatomic, nweak) IBOutlet TVCListView *fileTransferTable;
-@property (nonatomic, nweak) IBOutlet NSTextField *sourceIPAddressTextField;
-@property (nonatomic, strong) TLOTimer *maintenanceTimer;
+@property (strong) NSMutableArray *fileTransfers;
+@property (strong) NSString *cachedIPAddress;
+@property (strong) TLOTimer *maintenanceTimer;
+@property (nweak) IBOutlet NSButton *clearButton;
+@property (nweak) IBOutlet TVCListView *fileTransferTable;
+@property (nweak) IBOutlet NSTextField *sourceIPAddressTextField;
+@property (nweak) IBOutlet NSSegmentedCell *navigationControllerCell;
 
 - (void)show:(BOOL)key restorePosition:(BOOL)restoreFrame;
 
@@ -77,7 +84,7 @@ typedef enum TDCFileTransferDialogTransferStatus : NSInteger {
 
 - (void)addSenderForClient:(IRCClient *)client
 				  nickname:(NSString *)nickname
-				  path:(NSString *)completePath
+					  path:(NSString *)completePath
 				  autoOpen:(BOOL)autoOpen;
 
 - (void)updateClearButton;
@@ -90,4 +97,6 @@ typedef enum TDCFileTransferDialogTransferStatus : NSInteger {
 - (IBAction)removeTransferFromList:(id)sender;
 - (IBAction)openReceivedFile:(id)sender;
 - (IBAction)revealReceivedFileInFinder:(id)sender;
+
+- (IBAction)navigationSelectionDidChange:(id)sender;
 @end

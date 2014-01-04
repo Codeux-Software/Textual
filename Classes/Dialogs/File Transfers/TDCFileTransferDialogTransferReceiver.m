@@ -63,6 +63,17 @@
 #pragma mark -
 #pragma mark Initialization
 
+- (id)init
+{
+	if (self = [super init]) {
+		self.transferStatus = TDCFileTransferDialogTransferStoppedStatus;
+		
+		self.speedRecords = [NSMutableArray new];
+	}
+	
+	return self;
+}
+
 - (void)createDispatchQueues
 {
 	NSString *uniqueID = [NSString stringWithUUID];
@@ -91,6 +102,9 @@
 
 - (void)prepareForDestruction
 {
+	self.parentCell = nil;
+	self.transferDialog = nil;
+
 	[self close:NO];
 }
 
@@ -268,8 +282,6 @@
 		self.currentRecord = 0;
 		
 		/* Update progress. */
-		[self.progressIndicator setDoubleValue:self.processedFilesize];
-		
 		[self reloadStatusInformation];
 	});
 }
@@ -384,6 +396,43 @@
 			
 		[self close]; // Close Connection
     }
+}
+
+#pragma mark -
+#pragma mark Properties
+
+- (BOOL)isSender
+{
+	return NO;
+}
+
+- (void)updateClearButton
+{
+	[self.transferDialog updateClearButton];
+}
+
+- (void)reloadStatusInformation
+{
+	PointerIsEmptyAssert(self.parentCell);
+	
+	[self.parentCell reloadStatusInformation];
+}
+
+- (NSString *)completePath
+{
+	NSObjectIsEmptyAssertReturn(self.path, nil);
+	
+	return [self.path stringByAppendingPathComponent:self.filename];
+}
+
+- (void)resetProperties
+{
+	self.processedFilesize = 0;
+	self.currentRecord = 0;
+	
+	self.errorMessageToken = nil;
+	
+	[self.speedRecords removeAllObjects];
 }
 
 @end

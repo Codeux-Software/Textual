@@ -38,12 +38,34 @@
 
 #import "TextualApplication.h"
 
-@interface TDCFileTransferDialogTransferReceiver : TDCFileTransferDialogTableCell <GCDAsyncSocketDelegate>
+@interface TDCFileTransferDialogTransferReceiver : NSObject <GCDAsyncSocketDelegate>
+@property (nonatomic, nweak) IRCClient *associatedClient;
+@property (nonatomic, assign) BOOL isHidden; // Is visible on the dialog.
+@property (nonatomic, strong) NSString *path;
+@property (nonatomic, strong) NSString *filename;
+@property (nonatomic, strong) NSString *peerNickname;
+@property (nonatomic, strong) NSString *errorMessageToken;
+@property (nonatomic, strong) NSString *hostAddress;
+@property (nonatomic, assign) NSInteger transferPort;
+@property (nonatomic, strong) NSFileHandle *fileHandle;
+@property (nonatomic, assign) TXFSLongInt totalFilesize;
+@property (nonatomic, assign) TXFSLongInt processedFilesize;
+@property (nonatomic, assign) TXFSLongInt currentRecord;
+@property (nonatomic, strong) NSMutableArray *speedRecords;
+@property (nonatomic, uweak) TDCFileTransferDialog *transferDialog;
+@property (nonatomic, nweak) TDCFileTransferDialogTableCell *parentCell;
+@property (nonatomic, assign) TDCFileTransferDialogTransferStatus transferStatus;
 @property (nonatomic, assign, readonly) dispatch_queue_t clientDispatchQueue;
 @property (nonatomic, assign, readonly) dispatch_queue_t clientSocketQueue;
 @property (nonatomic, strong, readonly) GCDAsyncSocket *client;
 
 - (void)open;
+
+- (void)onMaintenanceTimer;
+- (void)prepareForDestruction;
+- (void)updateClearButton;
+
+- (BOOL)isSender;
 
 - (void)close;
 - (void)close:(BOOL)postNotifications;
