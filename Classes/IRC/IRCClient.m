@@ -1078,9 +1078,9 @@
 	}
 
 	if (isActiveWindow == NO || (NSDissimilarObjects(self.worldController.selectedItem, t) && isActiveWindow)) {
-		if (t.config.showTreeBadgeCount || (t.config.showTreeBadgeCount == NO && isHighlight)) {
-			t.treeUnreadCount += 1;
+		t.treeUnreadCount += 1;
 
+		if (t.config.showTreeBadgeCount || (t.config.showTreeBadgeCount == NO && isHighlight)) {
 			[self.worldController reloadTreeItem:t];
 		}
 	}
