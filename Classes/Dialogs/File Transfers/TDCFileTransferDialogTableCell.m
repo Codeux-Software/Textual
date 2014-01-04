@@ -49,20 +49,11 @@
 
 @implementation TDCFileTransferDialogTableCell
 
-- (NSString *)completePath
-{
-	NSObjectIsEmptyAssertReturn(self.path, nil);
-
-	return [self.path stringByAppendingPathComponent:self.filename];
-}
+#pragma mark -
+#pragma mark Status Information
 
 - (void)populateBasicInformation
 {
-	/* Basic data. */
-	self.transferStatus = TDCFileTransferDialogTransferStoppedStatus;
-	
-	self.speedRecords = [NSMutableArray new];
-	
 	/* Progress bar. */
 	[self.progressIndicator setDoubleValue:0];
 	[self.progressIndicator setMinValue:0];
@@ -82,6 +73,9 @@
 
 - (void)reloadStatusInformation
 {
+	/* Don't bother with updates if we are hidden. */
+	NSAssertReturn(self.isHidden == NO);
+	
 	/* Set info into some relevant vars. */
 	BOOL transferIsStopped = (self.transferStatus == TDCFileTransferDialogTransferCompleteStatus ||
 							  self.transferStatus == TDCFileTransferDialogTransferErrorStatus ||
@@ -127,6 +121,8 @@
 			[self.progressIndicator startAnimation:nil];
 		} else {
 			[self.progressIndicator setIndeterminate:NO];
+
+			[self.progressIndicator setDoubleValue:self.processedFilesize];
 		}
 	}
 	
@@ -225,7 +221,7 @@
 	}
 	
 	/* Update clear button. */
-	[self.transferDialog updateClearButton];
+	[self updateClearButton];
 }
 
 - (TXFSLongInt)currentSpeed
@@ -234,31 +230,102 @@
 	
 	TXFSLongInt total = 0;
 	
-    for (NSNumber *num in _speedRecords) {
+    for (NSNumber *num in self.speedRecords) {
         total += [num longLongValue];
     }
 	
     return (total / [self.speedRecords count]);
 }
 
-- (void)resetProperties
-{
-	self.processedFilesize = 0;
-	self.currentRecord = 0;
-	
-	self.errorMessageToken = nil;
-	
-	[self.speedRecords removeAllObjects];
-}
+#pragma mark -
+#pragma mark Proxy Methods
 
 - (void)prepareForDestruction
 {
-	// This method will be handled by the subclass.
+	[self.associatedController prepareForDestruction];
 }
 
 - (void)onMaintenanceTimer
 {
-	// This method will be handled by the subclass.
+	[self.associatedController onMaintenanceTimer];
+}
+
+- (void)updateClearButton
+{
+	[self.associatedController updateClearButton];
+}
+
+#pragma mark -
+#pragma mark Properties
+
+- (TDCFileTransferDialogTransferStatus)transferStatus
+{
+	return [self.associatedController transferStatus];
+}
+
+- (BOOL)isReceiving
+{
+	return ([self.associatedController isSender] == NO);
+}
+
+- (BOOL)isHidden
+{
+	return [self.associatedController isHidden];
+}
+
+- (NSString *)path
+{
+	return [self.associatedController path];
+}
+
+- (NSString *)filename
+{
+	return [self.associatedController filename];
+}
+
+- (NSString *)peerNickname
+{
+	return [self.associatedController peerNickname];
+}
+
+- (NSString *)errorMessageToken
+{
+	return [self.associatedController errorMessageToken];
+}
+
+- (NSString *)hostAddress
+{
+	return [self.associatedController hostAddress];
+}
+
+- (NSInteger)transferPort
+{
+	return [self.associatedController transferPort];
+}
+
+- (TXFSLongInt)totalFilesize
+{
+	return [self.associatedController totalFilesize];
+}
+
+- (TXFSLongInt)processedFilesize
+{
+	return [self.associatedController processedFilesize];
+}
+
+- (TXFSLongInt)currentRecord
+{
+	return [self.associatedController currentRecord];
+}
+
+- (NSArray *)speedRecords
+{
+	return [self.associatedController speedRecords];
+}
+
+- (NSString *)completePath
+{
+	return [self.associatedController completePath];
 }
 
 @end
