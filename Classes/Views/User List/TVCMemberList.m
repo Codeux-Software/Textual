@@ -272,23 +272,6 @@
     return [self rowAtPoint:p];
 }
 
-- (void)drawDraggingPoisition:(id <NSDraggingInfo>)sender on:(BOOL)on
-{
-    if (on) {
-        NSInteger row = [self draggedRow:sender];
-
-        if (row < 0) {
-            [self deselectAll:nil];
-        } else {
-            [self selectItemAtIndex:row];
-
-			[self reloadSelectionDrawingBySelectingItemsInIndexSet:[NSIndexSet indexSetWithIndex:row]];
-        }
-    } else {
-        [self deselectAll:nil];
-    }
-}
-
 - (NSArray *)draggedFiles:(id <NSDraggingInfo>)sender
 {
     return [[sender draggingPasteboard] propertyListForType:NSFilenamesPboardType];
@@ -304,24 +287,10 @@
     NSArray *files = [self draggedFiles:sender];
 	
     if ([files count] > 0 && [self draggedRow:sender] >= 0) {
-        [self drawDraggingPoisition:sender on:YES];
-		
         return NSDragOperationCopy;
     } else {
-        [self drawDraggingPoisition:sender on:NO];
-
         return NSDragOperationNone;
     }
-}
-
-- (void)draggingEnded:(id <NSDraggingInfo>)sender
-{
-    [self drawDraggingPoisition:sender on:NO];
-}
-
-- (void)draggingExited:(id <NSDraggingInfo>)sender
-{
-    [self drawDraggingPoisition:sender on:NO];
 }
 
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender

@@ -2061,6 +2061,14 @@
 	IRCUser *member = [c memberAtIndex:[row integerValue]];
 	
 	for (NSString *pathURL in files) {
+		BOOL isDirectory = NO;
+		
+		if ([RZFileManager() fileExistsAtPath:pathURL isDirectory:&isDirectory]) {
+			if (isDirectory) {
+				continue;
+			}
+		}
+		
 		[self.fileTransferController addSenderForClient:u nickname:[member nickname] path:pathURL autoOpen:YES];
 	}
 }
