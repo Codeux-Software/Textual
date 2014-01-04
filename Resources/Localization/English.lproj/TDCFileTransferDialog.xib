@@ -159,9 +159,9 @@
                         <size key="minSize" width="104" height="25"/>
                         <size key="maxSize" width="196" height="25"/>
                         <segmentedControl key="view" verticalHuggingPriority="750" id="fj7-Wr-P1f">
-                            <rect key="frame" x="0.0" y="14" width="196" height="25"/>
+                            <rect key="frame" x="0.0" y="14" width="192" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <segmentedCell key="cell" alignment="left" style="texturedRounded" trackingMode="selectOne" id="nY8-F3-7sa">
+                            <segmentedCell key="cell" alignment="left" style="texturedSquare" trackingMode="selectOne" id="nY8-F3-7sa">
                                 <font key="font" metaFont="system"/>
                                 <segments>
                                     <segment label="All" selected="YES" tag="100"/>

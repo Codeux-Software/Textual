@@ -618,6 +618,17 @@
 	/* Save changes. */
 	[self save];
 	
+	/* Break bonds. */
+	self.tabView.delegate = nil;
+	self.ignoreTable.delegate = nil;
+	self.channelTable.delegate = nil;
+	self.highlightsTable.delegate = nil;
+	
+	self.tabView.dataSource = nil;
+	self.ignoreTable.dataSource = nil;
+	self.channelTable.dataSource = nil;
+	self.highlightsTable.dataSource = nil;
+	
 	/* Inform delegate. */
 	if ([self.delegate respondsToSelector:@selector(serverSheetOnOK:)]) {
 		[self.delegate serverSheetOnOK:self];
@@ -639,6 +650,17 @@
 
 - (void)cancel:(id)sender
 {
+	/* Break bonds. */
+	self.tabView.delegate = nil;
+	self.ignoreTable.delegate = nil;
+	self.channelTable.delegate = nil;
+	self.highlightsTable.delegate = nil;
+	
+	self.tabView.dataSource = nil;
+	self.ignoreTable.dataSource = nil;
+	self.channelTable.dataSource = nil;
+	self.highlightsTable.dataSource = nil;
+
 	[self.sheet makeFirstResponder:nil];
 
 	[super cancel:nil]; 
