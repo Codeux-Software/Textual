@@ -82,8 +82,12 @@
 
 	NSInteger channelTreeUnreadCount = channel.treeUnreadCount;
 	NSInteger nicknameHighlightCount = channel.nicknameHighlightCount;
-
+	
 	BOOL isHighlight = (nicknameHighlightCount >= 1);
+	
+	if (channel.config.showTreeBadgeCount == NO && isHighlight == NO) {
+		return nil;
+	}
 
 	/* Begin draw if we want to. */
 	if (channelTreeUnreadCount >= 1 && drawMessageBadge) {
