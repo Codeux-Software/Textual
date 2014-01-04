@@ -201,7 +201,7 @@
 		[self navigationSelection] == TDCFileTransferDialogNavigationControllerReceivingSelectedTab)
 	{
 		[self.fileTransferTable insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
-									  withAnimation:NSTableViewAnimationEffectNone];
+									  withAnimation:NSTableViewAnimationSlideDown];
 	}
 }
 
@@ -213,7 +213,7 @@
 		[self navigationSelection] == TDCFileTransferDialogNavigationControllerSendingSelectedTab)
 	{
 		[self.fileTransferTable insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
-									  withAnimation:NSTableViewAnimationEffectNone];
+									  withAnimation:NSTableViewAnimationSlideDown];
 	}
 }
 
@@ -410,7 +410,7 @@
 	NSIndexSet *indexes = [self.fileTransferTable selectedRowIndexes];
 	
 	[self.fileTransferTable removeRowsAtIndexes:indexes
-								  withAnimation:NSTableViewAnimationSlideDown];
+								  withAnimation:NSTableViewAnimationSlideUp];
 	
 	for (NSNumber *index in [indexes arrayFromIndexSet]) {
 		NSInteger actualIndx = [index integerValue];
