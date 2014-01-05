@@ -166,7 +166,7 @@
                         <popUpButton key="view" tag="11" id="6311">
                             <rect key="frame" x="8" y="14" width="43" height="32"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" imagePosition="right" lineBreakMode="truncatingTail" borderStyle="bezel" inset="2" pullsDown="YES" preferredEdge="maxX" id="6312">
+                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" imagePosition="right" lineBreakMode="truncatingTail" borderStyle="bezel" inset="2" pullsDown="YES" preferredEdge="maxX" selectedItem="6pe-8W-xeB" id="6312">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" title="OtherViews" showsStateColumn="NO" id="6313">
@@ -212,15 +212,7 @@
                                                 <action selector="onPrefPaneSelected:" target="-2" id="rcG-6n-dTn"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="6pe-8W-xeB">
-                                            <connections>
-                                                <binding destination="1247" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="QNX-oM-vDe">
-                                                    <dictionary key="options">
-                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                    </dictionary>
-                                                </binding>
-                                            </connections>
-                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="6pe-8W-xeB"/>
                                         <menuItem title=" Log Location" tag="5" id="6326">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
