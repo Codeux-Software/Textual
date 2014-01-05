@@ -309,6 +309,8 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	BOOL exactWordMatching = ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightExactMatchType);
     BOOL regexWordMatching = ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightRegularExpressionMatchType);
 
+	TVCLogLineType lineType = [inputDictionary integerForKey:@"lineType"];
+	
 	IRCClientConfig *clientConfig = log.client.config;
 	
 	id highlightWords = [inputDictionary arrayForKey:@"highlightKeywords"];
@@ -483,12 +485,20 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	if (drawingType == TVCLogRendererHTMLType) {
 		/* Kill common Zalgo characters. */
 		if ([TPCPreferences automaticallyFilterUnicodeTextSpam]) {
-			NSInteger matches = [TLORegularExpression totalNumberOfMatchesInString:body withRegex:@"\\p{InCombining_Diacritical_Marks}"];
-			
-			if (matches > 20) {
-				NSString *replacementCharacter = [NSString stringWithFormat:@"%C", 0xfffd];
+			if (lineType == TVCLogLineActionType			||
+				lineType == TVCLogLineCTCPType				||
+				lineType == TVCLogLineDCCFileTransfer		||
+				lineType == TVCLogLineNoticeType			||
+				lineType == TVCLogLinePrivateMessageType	||
+				lineType == TVCLogLineTopicType)
+			{
+				NSInteger matches = [TLORegularExpression totalNumberOfMatchesInString:body withRegex:@"\\p{InCombining_Diacritical_Marks}"];
 				
-				body = [TLORegularExpression string:body replacedByRegex:@"\\p{InCombining_Diacritical_Marks}" withString:replacementCharacter];
+				if (matches > 20) {
+					NSString *replacementCharacter = [NSString stringWithFormat:@"%C", 0xfffd];
+					
+					body = [TLORegularExpression string:body replacedByRegex:@"\\p{InCombining_Diacritical_Marks}" withString:replacementCharacter];
+				}
 			}
 		}
 			

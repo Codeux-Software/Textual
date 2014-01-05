@@ -415,7 +415,10 @@
 				NSString *body = [TVCLogRenderer renderBody:topic
 												 controller:self
 												 renderType:TVCLogRendererHTMLType
-												 properties:@{@"renderLinks" : NSNumberWithBOOL(YES)}
+												 properties:@{
+															  @"renderLinks" : NSNumberWithBOOL(YES),
+															  @"lineType" : @(TVCLogLineTopicType)
+															}
 												 resultInfo:NULL];
 
 				[(id)topicBar setInnerHTML:body];
@@ -1069,6 +1072,8 @@
 	[inputDictionary setBool:drawLinks forKey:@"renderLinks"];
 	[inputDictionary setBool:isNormalMsg forKey:@"isNormalMessage"];
 	[inputDictionary setBool:isPlainText forKey:@"isPlainTextMessage"];
+
+	[inputDictionary setInteger:line.lineType forKey:@"lineType"];
 
 	renderedBody = [TVCLogRenderer renderBody:line.messageBody
 								   controller:self
