@@ -182,7 +182,7 @@
 				timeleft = ((self.totalFilesize - self.processedFilesize) / self.currentSpeed);
 				
 				if (timeleft > 0) {
-					remainingTime = TXSpecialReadableTime(timeleft, YES, @[@"hour", @"minute", @"second"]);
+					remainingTime = TXSpecialReadableTime(timeleft, YES, @[@"day", @"hour", @"minute", @"second"]);
 				}
 			}
 			
