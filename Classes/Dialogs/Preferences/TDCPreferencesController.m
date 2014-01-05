@@ -729,6 +729,14 @@
 			}
 		}];
 	}
+	else if ([self.transcriptFolderButton selectedTag] == 3)
+	{
+		[self.transcriptFolderButton selectItemAtIndex:0];
+		
+		[TPCPreferences setTranscriptFolder:nil];
+		
+		[self updateTranscriptFolder];
+	}
 }
 
 #pragma mark -
