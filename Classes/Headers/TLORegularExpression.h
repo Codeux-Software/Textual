@@ -42,6 +42,9 @@
 + (NSArray *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle;
 + (NSArray *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless;
 
++ (NSInteger)totalNumberOfMatchesInString:(NSString *)haystack withRegex:(NSString *)needle;
++ (NSInteger)totalNumberOfMatchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless;
+
 + (BOOL)string:(NSString *)haystack isMatchedByRegex:(NSString *)needle;
 + (BOOL)string:(NSString *)haystack isMatchedByRegex:(NSString *)needle withoutCase:(BOOL)caseless;
 

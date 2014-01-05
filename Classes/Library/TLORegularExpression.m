@@ -94,6 +94,28 @@
 	return newString;
 }
 
++ (NSInteger)totalNumberOfMatchesInString:(NSString *)haystack withRegex:(NSString *)needle
+{
+	return [self totalNumberOfMatchesInString:haystack withRegex:needle withoutCase:NO];
+}
+
++ (NSInteger)totalNumberOfMatchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless
+{
+    NSRange strRange = NSMakeRange(0, haystack.length);
+	
+	NSRegularExpression *regex;
+	
+	if (caseless) {
+		regex = [NSRegularExpression regularExpressionWithPattern:needle options:NSRegularExpressionCaseInsensitive error:NULL];
+	} else {
+		regex = [NSRegularExpression regularExpressionWithPattern:needle options:0 error:NULL];
+	}
+	
+	NSArray *matches = [regex matchesInString:haystack options:0 range:strRange];
+
+	return [matches count];
+}
+
 + (NSArray *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle
 {
 	return [self matchesInString:haystack withRegex:needle withoutCase:NO];

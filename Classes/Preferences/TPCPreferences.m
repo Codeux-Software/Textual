@@ -1088,6 +1088,11 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() boolForKey:@"PostNotificationsWhileInFocus"];
 }
 
++ (BOOL)automaticallyFilterUnicodeTextSpam
+{
+	return [RZUserDefaults() boolForKey:@"AutomaticallyFilterUnicodeTextSpam"];
+}
+
 + (BOOL)nickAllConnections
 {
 	return [RZUserDefaults() boolForKey:@"ApplyCommandToAllConnections -> nick"];
@@ -1141,11 +1146,6 @@ static NSURL *transcriptFolderResolvedBookmark;
 + (BOOL)logTranscript
 {
 	return [RZUserDefaults() boolForKey:@"LogTranscript"];
-}
-
-+ (BOOL)logTranscriptInBatches
-{
-	return [RZUserDefaults() boolForKey:@"LogTranscriptInBatches"];
 }
 
 + (BOOL)openBrowserInBackground
@@ -1853,7 +1853,6 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"DisplayUserListNoModeSymbol"]					= @(YES);
 	d[@"FocusSelectionOnMessageCommandExecution"]		= @(YES);
 	d[@"LogHighlights"]									= @(YES);
-	d[@"LogTranscriptInBatches"]						= @(YES);
 	d[@"PostNotificationsWhileInFocus"]					= @(YES);
 	d[@"ReloadScrollbackOnLaunch"]						= @(YES);
 	d[@"ReplyUnignoredExternalCTCPRequests"]			= @(YES);

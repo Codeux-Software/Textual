@@ -78,6 +78,7 @@
 @property (nonatomic, strong) IBOutlet NSView *identityView;
 @property (nonatomic, strong) IBOutlet NSView *installedAddonsView;
 @property (nonatomic, strong) IBOutlet NSView *interfaceView;
+@property (nonatomic, strong) IBOutlet NSView *incomingDataView;
 @property (nonatomic, strong) IBOutlet NSView *logLocationView;
 @property (nonatomic, strong) IBOutlet NSView *stylesView;
 @property (nonatomic, strong) TDCPreferencesScriptWrapper *scriptsController;

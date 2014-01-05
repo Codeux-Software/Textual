@@ -270,7 +270,6 @@
 	if ([TPCPreferences logTranscript]) {
 		PointerIsEmptyAssert(self.logFile);
 
-		[self.logFile updateWriteCacheTimer];
 		[self.logFile reopenIfNeeded];
 	} else {
 		[self closeLogFile];

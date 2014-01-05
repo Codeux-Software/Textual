@@ -185,9 +185,10 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 + (TXMainTextBoxFontSize)mainTextBoxFontSize;
 
 + (BOOL)logTranscript;
-+ (BOOL)logTranscriptInBatches;
 
 + (BOOL)postNotificationsWhileInFocus;
+
++ (BOOL)automaticallyFilterUnicodeTextSpam;
 
 + (BOOL)conversationTrackingIncludesUserModeSymbol;
 
