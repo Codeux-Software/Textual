@@ -261,7 +261,8 @@ body[dir=rtl] div[ltype*=action] .sender:after {
 
 body div.line[ltype*=invite],
 body div.line[ltype*=debug],
-body div.line[ltype*=rawhtml] {
+body div.line[ltype*=rawhtml],
+body div.line[ltype*=dccfiletransfer] {
 	color: #777;
   	z-index: 190;
 	background: #222;

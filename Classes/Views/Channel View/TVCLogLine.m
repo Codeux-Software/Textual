@@ -43,23 +43,25 @@
 + (NSString *)lineTypeString:(TVCLogLineType)type
 {
 	switch (type) {
-		case TVCLogLineActionType:							{ return @"action";		}
-		case TVCLogLineActionNoHighlightType:				{ return @"action";		}
-		case TVCLogLineCTCPType:							{ return @"ctcp";		}
-		case TVCLogLineDebugType:							{ return @"debug";		}
-		case TVCLogLineInviteType:							{ return @"invite";		}
-		case TVCLogLineJoinType:							{ return @"join";		}
-		case TVCLogLineKickType:							{ return @"kick";		}
-		case TVCLogLineKillType:							{ return @"kill";		}
-		case TVCLogLineModeType:							{ return @"mode";		}
-		case TVCLogLineNickType:							{ return @"nick";		}
-		case TVCLogLineNoticeType:							{ return @"notice";		}
-		case TVCLogLinePartType:							{ return @"part";		}
-		case TVCLogLinePrivateMessageType:					{ return @"privmsg";	}
-		case TVCLogLinePrivateMessageNoHighlightType:		{ return @"privmsg";	}
-		case TVCLogLineQuitType:							{ return @"quit";		}
-		case TVCLogLineTopicType:							{ return @"topic";		}
-		case TVCLogLineWebsiteType:							{ return @"website";	}
+		case TVCLogLineActionType:							{ return @"action";					}
+		case TVCLogLineActionNoHighlightType:				{ return @"action";					}
+		case TVCLogLineCTCPType:							{ return @"ctcp";					}
+		case TVCLogLineDCCFileTransfer:						{ return @"dccfiletransfer";		}
+		case TVCLogLineDebugType:							{ return @"debug";					}
+		case TVCLogLineInviteType:							{ return @"invite";					}
+		case TVCLogLineJoinType:							{ return @"join";					}
+		case TVCLogLineKickType:							{ return @"kick";					}
+		case TVCLogLineKillType:							{ return @"kill";					}
+		case TVCLogLineModeType:							{ return @"mode";					}
+		case TVCLogLineNickType:							{ return @"nick";					}
+		case TVCLogLineNoticeType:							{ return @"notice";					}
+		case TVCLogLinePartType:							{ return @"part";					}
+		case TVCLogLinePrivateMessageType:					{ return @"privmsg";				}
+		case TVCLogLinePrivateMessageNoHighlightType:		{ return @"privmsg";				}
+		case TVCLogLineQuitType:							{ return @"quit";					}
+		case TVCLogLineTopicType:							{ return @"topic";					}
+		case TVCLogLineWebsiteType:							{ return @"website";				}
+		default:											{ return NSStringEmptyPlaceholder;	}
 	}
 	
 	return NSStringEmptyPlaceholder;

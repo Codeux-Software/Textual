@@ -48,9 +48,11 @@
 #define TXLogLineDefaultRawCommandValue			@"-100"
 
 typedef enum TVCLogLineType : NSInteger {
+	TVCLogLineUndefinedLogType					= 0,
 	TVCLogLineActionType,
 	TVCLogLineActionNoHighlightType,
 	TVCLogLineCTCPType,
+	TVCLogLineDCCFileTransfer,
 	TVCLogLineDebugType,
 	TVCLogLineInviteType,
 	TVCLogLineJoinType,
