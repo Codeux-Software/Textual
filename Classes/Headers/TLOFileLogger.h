@@ -62,9 +62,6 @@
 - (void)reset;
 - (void)reopenIfNeeded;
 
-- (void)updateWriteCache;
-- (void)updateWriteCacheTimer;
-
 - (NSURL *)buildPath;
 
 - (void)writePlainTextLine:(NSString *)s;

@@ -182,6 +182,7 @@
 	 8:	Channel Management
 	 12: Command Scope
 	 6:	Flood Control
+	 15: Incoming Data
 	 5:	Log Location
 	 11: Experimental Settings
 
@@ -263,6 +264,7 @@
 		case 12:	{ [self firstPane:self.commandScopeSettingsView		selectedItem:11]; break; }
 		case 13:	{ [self firstPane:self.iCloudSyncView				selectedItem:11]; break; }
 		case 14:	{ [self firstPane:self.fileTransferView				selectedItem:11]; break; }
+		case 15:	{ [self firstPane:self.incomingDataView				selectedItem:11]; break; }
 		default:
 		{
 			THOPluginItem *plugin = [RZPluginManager() pluginsWithPreferencePanes][pluginIndex];
