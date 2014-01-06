@@ -262,7 +262,8 @@
 				if ([e transferStatus] == TDCFileTransferDialogTransferConnectingStatus ||
 					[e transferStatus] == TDCFileTransferDialogTransferReceivingStatus ||
 					[e transferStatus] == TDCFileTransferDialogTransferListeningStatus ||
-					[e transferStatus] == TDCFileTransferDialogTransferSendingStatus)
+					[e transferStatus] == TDCFileTransferDialogTransferSendingStatus ||
+					[e transferStatus] == TDCFileTransferDialogTransferWaitingForSourceIPAddressStatus)
 				{
 					return YES;
 				}
@@ -568,8 +569,19 @@
 #pragma mark -
 #pragma mark Network Information
 
+- (void)clearCachedIPAddress
+{
+	self.cachedIPAddress = nil;
+
+	self.sourceIPAddressRequestPending = NO;
+
+	[self.sourceIPAddressTextField setStringValue:NSStringEmptyPlaceholder];
+}
+
 - (void)requestIPAddressFromExternalSource
 {
+	self.sourceIPAddressRequestPending = YES;
+
 	[self.sourceIPAddressTextField setStringValue:TXTLS(@"FileTransferDialogSourceIPAddressUnknown")];
 	
 	if ([TPCPreferences fileTransferIPAddressDetectionMethod] == TXFileTransferIPAddressAutomaticDetectionMethod) {
@@ -584,6 +596,17 @@
 - (void)fileTransferRemoteAddressRequestDidCloseWithError:(NSError *)errPntr
 {
 	LogToConsole(@"Failed to complete connection request with error: %@", [errPntr localizedDescription]);
+	
+	self.sourceIPAddressRequestPending = NO;
+
+	/* Post source IP address error. */
+	for (id e in self.fileTransfers) {
+		NSAssertReturnLoopContinue([e isSender]);
+		
+		if ([e transferStatus] == TDCFileTransferDialogTransferWaitingForSourceIPAddressStatus) {
+			[e setDidErrorOnBadSenderAddress];
+		}
+	}
 }
 
 - (void)fileTransferRemoteAddressRequestDidDetectAddress:(NSString *)address
@@ -598,6 +621,17 @@
 	self.cachedIPAddress = address;
 
 	[self.sourceIPAddressTextField setStringValue:TXTFLS(@"FileTransferDialogSourceIPAddressValue", self.cachedIPAddress)];
+	
+	self.sourceIPAddressRequestPending = NO;
+
+	/* Open pending transfers. */
+	for (id e in self.fileTransfers) {
+		NSAssertReturnLoopContinue([e isSender]);
+		
+		if ([e transferStatus] == TDCFileTransferDialogTransferWaitingForSourceIPAddressStatus) {
+			[e open];
+		}
+	}
 }
 
 #pragma mark -

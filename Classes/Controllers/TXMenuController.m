@@ -68,8 +68,7 @@
 {
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
 		 self.fileTransferController = [TDCFileTransferDialog new];
-		
-		[self.fileTransferController requestIPAddressFromExternalSource];
+
 		[self.fileTransferController startUsingDownloadDestinationFolderSecurityScopedBookmark];
 	}
 }
@@ -78,13 +77,15 @@
 {
 	[self popWindowSheetIfExists];
 	
-	[self.fileTransferController prepareForApplicationTermination];
+	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+		[self.fileTransferController prepareForApplicationTermination];
+	}
 }
 
 - (void)preferencesChanged
 {
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
-		[self.fileTransferController requestIPAddressFromExternalSource];
+		[self.fileTransferController clearCachedIPAddress];
 	}
 }
 

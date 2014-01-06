@@ -39,6 +39,7 @@
 #import "TextualApplication.h"
 
 typedef enum TDCFileTransferDialogTransferStatus : NSInteger {
+	TDCFileTransferDialogTransferWaitingForSourceIPAddressStatus,
 	TDCFileTransferDialogTransferInitializingStatus,
 	TDCFileTransferDialogTransferErrorStatus,
 	TDCFileTransferDialogTransferStoppedStatus,
@@ -58,6 +59,7 @@ typedef enum TDCFileTransferDialogNavigationControllerSelectedTab : NSInteger {
 @interface TDCFileTransferDialog : NSWindowController <NSTableViewDataSource, NSTableViewDelegate>
 @property (nonatomic, strong) NSMutableArray *fileTransfers;
 @property (nonatomic, strong) NSString *cachedIPAddress;
+@property (nonatomic, assign) BOOL sourceIPAddressRequestPending;
 @property (nonatomic, strong) TLOTimer *maintenanceTimer;
 @property (nonatomic, strong, readonly) NSURL *downloadDestination;
 @property (nonatomic, nweak) IBOutlet NSButton *clearButton;
@@ -71,6 +73,7 @@ typedef enum TDCFileTransferDialogNavigationControllerSelectedTab : NSInteger {
 - (void)prepareForApplicationTermination;
 
 - (void)requestIPAddressFromExternalSource;
+- (void)clearCachedIPAddress;
 
 - (void)nicknameChanged:(NSString *)oldNickname
 			 toNickname:(NSString *)newNickname
