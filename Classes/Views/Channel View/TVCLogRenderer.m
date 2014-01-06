@@ -487,7 +487,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		if ([TPCPreferences automaticallyFilterUnicodeTextSpam]) {
 			if (lineType == TVCLogLineActionType			||
 				lineType == TVCLogLineCTCPType				||
-				lineType == TVCLogLineDCCFileTransfer		||
+				lineType == TVCLogLineDCCFileTransferType	||
 				lineType == TVCLogLineNoticeType			||
 				lineType == TVCLogLinePrivateMessageType	||
 				lineType == TVCLogLineTopicType)

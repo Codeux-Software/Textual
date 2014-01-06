@@ -1846,6 +1846,7 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"AutomaticallyDetectHighlightSpam"]				= @(YES);
 	d[@"ChannelNavigationIsServerSpecific"]				= @(YES);
 	d[@"CommandReturnSendsMessageAsAction"]				= @(YES);
+	d[@"ConversationTrackingIncludesUserModeSymbol"]	= @(YES);
 	d[@"ConfirmApplicationQuit"]						= @(YES);
 	d[@"DisplayDockBadges"]								= @(YES);
 	d[@"DisplayEventInLogView -> Join, Part, Quit"]		= @(YES);

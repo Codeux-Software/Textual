@@ -7074,7 +7074,7 @@
 	}
 	
 	// Report an error.
-	[self print:nil type:TVCLogLineDCCFileTransfer nick:nil text:TXTLS(@"DCCRequestErrorMessage") command:TXLogLineDefaultRawCommandValue];
+	[self print:nil type:TVCLogLineDCCFileTransferType nick:nil text:TXTLS(@"DCCRequestErrorMessage") command:TXLogLineDefaultRawCommandValue];
 }
 
 
@@ -7083,7 +7083,7 @@
 	/* Inform of the DCC and possibly ignore it. */
 	NSString *message = TXTFLS(@"DCCFileTransferRequestReceived", nickname, filename, totalFilesize);
 	
-	[self print:nil type:TVCLogLineDCCFileTransfer nick:nil text:message command:TXLogLineDefaultRawCommandValue];
+	[self print:nil type:TVCLogLineDCCFileTransferType nick:nil text:message command:TXLogLineDefaultRawCommandValue];
 	
 	if ([TPCPreferences fileTransferRequestReplyAction] == TXFileTransferRequestReplyIgnoreAction) {
 		return;
@@ -7121,7 +7121,7 @@
 	
 	NSString *message = TXTFLS(@"DCCFileTransferInitiated", nickname, filename, totalFilesize);
 	
-	[self print:nil type:TVCLogLineDCCFileTransfer nick:nil text:message command:TXLogLineDefaultRawCommandValue];
+	[self print:nil type:TVCLogLineDCCFileTransferType nick:nil text:message command:TXLogLineDefaultRawCommandValue];
 }
 
 - (NSString *)DCCTransferAddress
