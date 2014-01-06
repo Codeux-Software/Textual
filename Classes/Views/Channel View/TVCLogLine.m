@@ -46,7 +46,7 @@
 		case TVCLogLineActionType:							{ return @"action";					}
 		case TVCLogLineActionNoHighlightType:				{ return @"action";					}
 		case TVCLogLineCTCPType:							{ return @"ctcp";					}
-		case TVCLogLineDCCFileTransfer:						{ return @"dccfiletransfer";		}
+		case TVCLogLineDCCFileTransferType:					{ return @"dccfiletransfer";		}
 		case TVCLogLineDebugType:							{ return @"debug";					}
 		case TVCLogLineInviteType:							{ return @"invite";					}
 		case TVCLogLineJoinType:							{ return @"join";					}
