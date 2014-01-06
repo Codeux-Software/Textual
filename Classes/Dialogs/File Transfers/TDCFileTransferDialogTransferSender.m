@@ -102,8 +102,16 @@
 	NSString *senderAddress = [self.transferDialog cachedIPAddress];
 	
 	if (senderAddress == nil) {
-		[self setDidErrorOnBadSenderAddress];
+		if ([self.transferDialog sourceIPAddressRequestPending] == NO) {
+			[self.transferDialog requestIPAddressFromExternalSource];
+		}
+		
+		self.transferStatus = TDCFileTransferDialogTransferWaitingForSourceIPAddressStatus;
 
+		[self close:NO]; // Break anything open.
+		
+		[self reloadStatusInformation]; // Inform user of state.
+		
 		return; // Break chain.
 	}
 		
@@ -211,7 +219,8 @@
 	
 	/* Update status. */
 	if (NSDissimilarObjects(self.transferStatus, TDCFileTransferDialogTransferErrorStatus) &&
-		NSDissimilarObjects(self.transferStatus, TDCFileTransferDialogTransferCompleteStatus))
+		NSDissimilarObjects(self.transferStatus, TDCFileTransferDialogTransferCompleteStatus) &&
+		NSDissimilarObjects(self.transferStatus, TDCFileTransferDialogTransferWaitingForSourceIPAddressStatus))
 	{
 		self.transferStatus = TDCFileTransferDialogTransferStoppedStatus;
 	}

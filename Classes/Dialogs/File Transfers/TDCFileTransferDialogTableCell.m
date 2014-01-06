@@ -81,7 +81,8 @@
 							  self.transferStatus == TDCFileTransferDialogTransferErrorStatus ||
 							  self.transferStatus == TDCFileTransferDialogTransferStoppedStatus ||
 							  self.transferStatus == TDCFileTransferDialogTransferListeningStatus ||
-							  self.transferStatus == TDCFileTransferDialogTransferInitializingStatus);
+							  self.transferStatus == TDCFileTransferDialogTransferInitializingStatus ||
+							  self.transferStatus == TDCFileTransferDialogTransferWaitingForSourceIPAddressStatus);
 	
 	/* Update position of text fields. */
 	NSRect infoFieldRect = [self.transferProgressField frame];
@@ -215,6 +216,12 @@
 		{
 			[self.transferProgressField setStringValue:TXTFLS(@"FileTransferDialogTransferSocketIsConnecting", self.peerNickname)];
 			
+			break;
+		}
+		case TDCFileTransferDialogTransferWaitingForSourceIPAddressStatus:
+		{
+			[self.transferProgressField setStringValue:TXTFLS(@"FileTransferDialogTransferToUserIsWaitingForSourceIPAddress", self.peerNickname)];
+				
 			break;
 		}
 		default: { break; }
