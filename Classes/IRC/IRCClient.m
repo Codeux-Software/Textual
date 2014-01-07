@@ -218,6 +218,8 @@
 		return;
 	}
 	
+	BOOL ignoreListChanged = (NSObjectsAreEqual(self.config.ignoreList, seed.ignoreList) == NO);
+	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	/* It is important to know this value changed before seed update. */
 	BOOL syncToCloudChanged = NSDissimilarObjects(self.config.excludedFromCloudSyncing, seed.excludedFromCloudSyncing);
@@ -315,7 +317,10 @@
 	[self.config writeKeychainItemsToDisk];
 	
 	[self setupReachability];
-	[self populateISONTrackedUsersList:self.config.ignoreList];
+	
+	if (ignoreListChanged) {
+		[self updateIgnoreConfiguration:YES];
+	}
 }
 
 - (IRCClientConfig *)storedConfig
@@ -331,6 +336,21 @@
 	}
 
 	return u;
+}
+
+- (void)updateIgnoreConfiguration:(BOOL)reloadUserStatus
+{
+	if (self == [self.worldController selectedClient]) {
+		IRCChannel *selectedChannel = [self.worldController selectedChannel];
+		
+		if ([selectedChannel isChannel]) {
+			[selectedChannel updateTableViewByRemovingIgnoredUsers];
+		}
+	}
+	
+	if (reloadUserStatus) {
+		[self populateISONTrackedUsersList:self.config.ignoreList];
+	}
 }
 
 - (NSMutableDictionary *)dictionaryValue
@@ -2038,11 +2058,15 @@
 
 					if (found == NO) {
 						[self.config.ignoreList safeAddObject:g];
+						
+						[self updateIgnoreConfiguration:NO];
 					}
 				} else {
 					for (IRCAddressBook *e in self.config.ignoreList) {
 						if ([g.hostmask isEqualToString:e.hostmask]) {
 							[self.config.ignoreList removeObject:e];
+
+							[self updateIgnoreConfiguration:NO];
 
 							break;
 						}

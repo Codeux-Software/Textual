@@ -52,7 +52,8 @@
 	if ((self = [super init])) {
 		self.modeInfo = [IRCChannelMode new];
 		
-		self.memberList = [NSMutableArray new];
+		self.memberList = [NSArray new];
+		self.memberListWithoutIgnores = [NSArray new];
 	}
 	
 	return self;
@@ -328,6 +329,13 @@
 
 	/* Conversation tracking scans based on nickname length. */
 	self.memberListLengthSorted = [self.memberList arrayByInsertingSortedObject:item usingComparator:[IRCUser nicknameLengthComparator]];
+
+	/* Member list without ignores used by view. */
+	IRCAddressBook *ignoreChecks = [self.client checkIgnoreAgainstHostmask:[item hostmask] withMatches:@[@"hideInMemberList"]];
+	
+	if (PointerIsEmpty(ignoreChecks) || (ignoreChecks && [ignoreChecks hideInMemberList] == NO)) {
+		self.memberListWithoutIgnores = [self.memberListWithoutIgnores arrayByInsertingSortedObject:item usingComparator:NSDefaultComparator];
+	}
 }
 
 - (void)addMember:(IRCUser *)user
@@ -357,20 +365,27 @@
 - (void)removeMember:(NSString *)nick fromTable:(BOOL)fromTable
 {
 	NSObjectIsEmptyAssert(nick);
-
+	
+	/* Internal list. */
+	self.memberList = [self removeMember:nick fromList:self.memberList blockBeforeRemoval:NULL];
+	
+	/* Conversation tracking list. */
 	self.memberListLengthSorted	= [self removeMember:nick fromList:self.memberListLengthSorted blockBeforeRemoval:NULL];
-
-	self.memberList = [self removeMember:nick fromList:self.memberList blockBeforeRemoval:^(NSUInteger idx) {
+	
+	/* Table view list. */
+	self.memberListWithoutIgnores = [self removeMember:nick fromList:self.memberListWithoutIgnores blockBeforeRemoval:^(NSUInteger idx) {
 		/* Find user on member list table and remove if they exist there. */
-		if (fromTable && self.isChannel && self.isSelectedChannel) {
-			IRCUser *member = self.memberList[idx];
+		if (fromTable) {
+			if (self.isChannel && self.isSelectedChannel) {
+				IRCUser *member = self.memberListWithoutIgnores[idx];
 
-			NSInteger tableIndex = [self.memberListView rowForItem:member];
+				NSInteger tableIndex = [self.memberListView rowForItem:member];
 
-			if (tableIndex > -1) { // Did they exist on list?
-				[self.memberListView removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:tableIndex]
-												 inParent:nil
-											withAnimation:NSTableViewAnimationEffectNone]; // Do the actual removal.
+				if (tableIndex > -1) { // Did they exist on list?
+					[self.memberListView removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:tableIndex]
+													 inParent:nil
+												withAnimation:NSTableViewAnimationEffectNone]; // Do the actual removal.
+				}
 			}
 		}
 
@@ -588,12 +603,12 @@
 	_cancelOnNotSelectedChannel;
 
 	/* Do not ask me how this fucking works … I don't even know. */
-	NSInteger mlindx = [self.memberList indexOfObject:user];
+	NSInteger mlindx = [self.memberListWithoutIgnores indexOfObject:user];
 
 	NSAssertReturn(NSDissimilarObjects(mlindx, NSNotFound));
 
 	if (mlindx > 0) {
-		IRCUser *prevItem = [self.memberList objectAtIndex:(mlindx - 1)];
+		IRCUser *prevItem = [self.memberListWithoutIgnores objectAtIndex:(mlindx - 1)];
 
 		NSInteger prevIndex = [self.memberListView rowForItem:prevItem];
 
@@ -610,8 +625,10 @@
 - (void)reloadDataForTableViewBySortingMembers
 {
 	_cancelOnNotSelectedChannel;
-
+	
 	self.memberList = [self.memberList sortedArrayUsingComparator:NSDefaultComparator];
+
+	self.memberListWithoutIgnores = [self.memberListWithoutIgnores sortedArrayUsingComparator:NSDefaultComparator];
 
 	[self reloadDataForTableView];
 }
@@ -621,25 +638,6 @@
 	_cancelOnNotSelectedChannel;
 
 	[self.memberListView reloadData];
-}
-
-- (void)updateTableViewByRemovingIgnoredUsers
-{
-	NSMutableIndexSet *rowsToRemove = [NSMutableIndexSet indexSet];
-
-	for (NSInteger i = 0; i < [self.memberListView numberOfRows]; i++) {
-		IRCUser *uar = [self.memberListView itemAtRow:i];
-
-		IRCAddressBook *ignoreChecks = [self.client checkIgnoreAgainstHostmask:[uar hostmask] withMatches:@[@"hideInMemberList"]];
-
-		if (ignoreChecks && [ignoreChecks hideInMemberList]) {
-			[rowsToRemove addIndex:i];
-		}
-	}
-
-	NSObjectIsEmptyAssert(rowsToRemove);
-
-	[self.memberListView removeItemsAtIndexes:rowsToRemove inParent:nil withAnimation:NSTableViewAnimationEffectNone];
 }
 
 - (void)updateAllMembersOnTableView
@@ -656,12 +654,31 @@
 	[self.memberListView updateDrawingForMember:user];
 }
 
+- (void)updateTableViewByRemovingIgnoredUsers
+{
+	NSMutableArray *newlist = [self.memberList mutableCopy];
+	
+	for (IRCUser *u in self.memberList) {
+		IRCAddressBook *ignoreChecks = [self.client checkIgnoreAgainstHostmask:[u hostmask] withMatches:@[@"hideInMemberList"]];
+		
+		if (ignoreChecks && [ignoreChecks hideInMemberList]) {
+			[newlist removeObject:u];
+		}
+	}
+	
+	if (NSDissimilarObjects([self.memberListWithoutIgnores count], [newlist count])) {
+		self.memberListWithoutIgnores = [newlist copy];
+
+		[self reloadDataForTableView];
+	}
+}
+
 #pragma mark -
 #pragma mark Table View Delegate
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
-	return [self.memberList count];
+	return [self.memberListWithoutIgnores count];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
@@ -671,7 +688,7 @@
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
-	return self.memberList[index];
+	return self.memberListWithoutIgnores[index];
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(IRCUser *)item
