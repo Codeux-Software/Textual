@@ -1403,7 +1403,6 @@
 		[self.memberList scrollRowToVisible:0];
 		
 		[newChannel reloadDataForTableView];
-		[newChannel updateTableViewByRemovingIgnoredUsers];
 	}
 
 	/* Finish member list. */
