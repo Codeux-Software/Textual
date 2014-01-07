@@ -111,7 +111,6 @@ typedef enum IRCChannelStatus : NSInteger {
 
 - (void)reloadDataForTableView;
 - (void)reloadDataForTableViewBySortingMembers;
-- (void)reloadDataForTableViewBySortingMembersForUser:(IRCUser *)user;
 
 - (void)updateTableViewByRemovingIgnoredUsers;
 @end
