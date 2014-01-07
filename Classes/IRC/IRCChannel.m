@@ -462,8 +462,8 @@
 	/* Do sorted insert. */
 	[self sortedInsert:user1];
 
-	/* Reload the position of the user in table view. */
-	[self reloadDataForTableViewBySortingMembersForUser:user1];
+	/* Update the actual member list view. */
+	[self informMemberListViewOfAdditionalUser:user1];
 }
 
 - (void)changeMember:(NSString *)nick mode:(NSString *)mode value:(BOOL)value performOnChange:(void (^)(IRCUser *user))block
@@ -614,25 +614,6 @@
 	self.memberList = [self.memberList sortedArrayUsingComparator:NSDefaultComparator];
 
 	[self reloadDataForTableView];
-}
-
-- (void)reloadDataForTableViewBySortingMembersForUser:(IRCUser *)user
-{
-	_cancelOnNotSelectedChannel;
-
-	/* We are basically comparing the position of an user in the member list to that
-	 of the actual table. If one is different, then we move them. This is done so 
-	 mode changes can move positions in the list. */
-	NSInteger selfIndex = [self.memberList indexOfObject:user];
-
-	NSInteger tablIndex = [self.memberListView rowForItem:user];
-
-	if (NSDissimilarObjects(selfIndex, tablIndex) && tablIndex > -1) {
-		[self.memberListView moveItemAtIndex:tablIndex
-									inParent:nil
-									 toIndex:selfIndex
-									inParent:nil];
-	}
 }
 
 - (void)reloadDataForTableView
