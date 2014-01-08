@@ -343,7 +343,7 @@
 	PointerIsEmptyAssert(user);
 
 	/* Remove any existing copies of this nickname. */
-	[self removeMember:user.nickname fromTable:YES];
+	[self removeMember:user.nickname];
 
 	/* Do sorted insert. */
 	[self sortedInsert:user];
@@ -359,11 +359,6 @@
 
 - (void)removeMember:(NSString *)nick
 {
-	[self removeMember:nick fromTable:YES];
-}
-
-- (void)removeMember:(NSString *)nick fromTable:(BOOL)fromTable
-{
 	NSObjectIsEmptyAssert(nick);
 	
 	/* Internal list. */
@@ -375,20 +370,18 @@
 	/* Table view list. */
 	self.memberListWithoutIgnores = [self removeMember:nick fromList:self.memberListWithoutIgnores blockBeforeRemoval:^(NSUInteger idx) {
 		/* Find user on member list table and remove if they exist there. */
-		if (fromTable) {
-			if (self.isChannel && self.isSelectedChannel) {
-				IRCUser *member = self.memberListWithoutIgnores[idx];
+		if (self.isChannel && self.isSelectedChannel) {
+			IRCUser *member = self.memberListWithoutIgnores[idx];
 
-				NSInteger tableIndex = [self.memberListView rowForItem:member];
+			NSInteger tableIndex = [self.memberListView rowForItem:member];
 
-				if (tableIndex > -1) { // Did they exist on list?
-					[self.memberListView removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:tableIndex]
-													 inParent:nil
-												withAnimation:NSTableViewAnimationEffectNone]; // Do the actual removal.
-				}
+			if (tableIndex > -1) { // Did they exist on list?
+				[self.memberListView removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:tableIndex]
+												 inParent:nil
+											withAnimation:NSTableViewAnimationEffectNone]; // Do the actual removal.
 			}
 		}
-
+		
 		/* Post event to the style. */
 		if (self.isChannel) {
 			[self.client postEventToViewController:@"channelMemberRemoved" forChannel:self];
@@ -472,7 +465,7 @@
 
 	/* Remove any existing copies of this nickname. From self.memberList while
 	 retaining the actual pointer in the table view. */
-	[self removeMember:user1.nickname fromTable:NO];
+	[self removeMember:user1.nickname];
 
 	/* Do sorted insert. */
 	[self sortedInsert:user1];
