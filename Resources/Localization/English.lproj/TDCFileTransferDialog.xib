@@ -11,7 +11,6 @@
                 <outlet property="fileTransferTable" destination="xso-Ti-Pvf" id="qiD-QC-Rrt"/>
                 <outlet property="navigationController" destination="fj7-Wr-P1f" id="Bw9-7x-c3V"/>
                 <outlet property="navigationControllerCell" destination="nY8-F3-7sa" id="LNN-nZ-NGY"/>
-                <outlet property="sourceIPAddressTextField" destination="iiU-og-zyu" id="EAd-3l-Df5"/>
                 <outlet property="window" destination="5" id="oY6-kl-EqU"/>
             </connections>
         </customObject>
@@ -135,20 +134,6 @@
                             <action selector="clear:" target="-2" id="T9p-oR-2hf"/>
                         </connections>
                     </button>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="iiU-og-zyu">
-                        <rect key="frame" x="245" y="8" width="254" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingMiddle" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" id="b4U-6o-ZAj">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="backgroundStyle">
-                                    <integer key="value" value="2"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                        </textFieldCell>
-                    </textField>
                 </subviews>
             </view>
             <toolbar key="toolbar" implicitIdentifier="F9BA2FE0-3285-45B9-A261-616E8F0B841D" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconOnly" sizeMode="regular" id="U41-vi-dWL">

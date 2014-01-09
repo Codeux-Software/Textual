@@ -100,23 +100,6 @@
 
 - (void)open
 {
-	/* Important check. */
-	NSString *senderAddress = [self.transferDialog cachedIPAddress];
-	
-	if (senderAddress == nil) {
-		if ([self.transferDialog sourceIPAddressRequestPending] == NO) {
-			[self.transferDialog requestIPAddressFromExternalSource];
-		}
-		
-		self.transferStatus = TDCFileTransferDialogTransferWaitingForSourceIPAddressStatus;
-
-		[self close:NO]; // Break anything open.
-		
-		[self reloadStatusInformation]; // Inform user of state.
-		
-		return; // Break chain.
-	}
-		
 	/* Reset information. */
 	[self close:NO];
 	
@@ -189,6 +172,8 @@
 	TCMPortMapping *e = [self portMappingForSelf];
 	
 	PointerIsEmptyAssert(e);
+	
+	TCMPortMapper *pm = [TCMPortMapper sharedInstance];
 
 	if ([e desiredExternalPort] == self.transferPort) {
 		if ([e mappingStatus] == TCMPortMappingStatusTrying)
@@ -201,14 +186,33 @@
 			/* We tried and it was successful, then that is good, but if we
 			 did not, still start listening just incase other conditions allow
 			 the transfer to still take place. */
-
-			self.transferStatus = TDCFileTransferDialogTransferListeningStatus;
+			NSString *cachedIPAddress = [self.transferDialog cachedIPAddress];
 			
-			if ([self openFileHandle]) {
-				[self sendTransferRequestToClient];
+			/* Important check. */
+			if (cachedIPAddress == nil) {
+				if ([e mappingStatus] == TCMPortMappingStatusMapped) {
+					NSString *external = [pm externalIPAddress];
+					
+					if ([external isIPAddress]) {
+						[self.transferDialog setCachedIPAddress:external];
+						
+						cachedIPAddress = external;
+					}
+				}
 			}
-			
-			[self reloadStatusInformation];
+
+			/* Request address? */
+			if (cachedIPAddress == nil) {
+				if ([self.transferDialog sourceIPAddressRequestPending] == NO) {
+					[self.transferDialog requestIPAddressFromExternalSource];
+				}
+				
+				self.transferStatus = TDCFileTransferDialogTransferWaitingForSourceIPAddressStatus;
+				
+				[self reloadStatusInformation];
+			} else {
+				[self sourceIPAddressWasDetermined];
+			}
 		}
 	}
 }
@@ -243,6 +247,17 @@
 	}
 	
 	return nil;
+}
+
+- (void)sourceIPAddressWasDetermined
+{
+	self.transferStatus = TDCFileTransferDialogTransferListeningStatus;
+
+	if ([self openFileHandle]) {
+		[self sendTransferRequestToClient];
+	}
+	
+	[self reloadStatusInformation];
 }
 
 - (void)sendTransferRequestToClient

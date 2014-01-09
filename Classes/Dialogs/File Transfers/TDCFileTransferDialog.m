@@ -575,16 +575,12 @@
 	self.cachedIPAddress = nil;
 
 	self.sourceIPAddressRequestPending = NO;
-
-	[self.sourceIPAddressTextField setStringValue:NSStringEmptyPlaceholder];
 }
 
 - (void)requestIPAddressFromExternalSource
 {
 	self.sourceIPAddressRequestPending = YES;
 
-	[self.sourceIPAddressTextField setStringValue:TXTLS(@"FileTransferDialogSourceIPAddressUnknown")];
-	
 	if ([TPCPreferences fileTransferIPAddressDetectionMethod] == TXFileTransferIPAddressAutomaticDetectionMethod) {
 		TDCFileTransferDialogRemoteAddress *request = [TDCFileTransferDialogRemoteAddress new];
 		
@@ -621,8 +617,6 @@
 	/* Okay, we are good… */
 	self.cachedIPAddress = address;
 
-	[self.sourceIPAddressTextField setStringValue:TXTFLS(@"FileTransferDialogSourceIPAddressValue", self.cachedIPAddress)];
-	
 	self.sourceIPAddressRequestPending = NO;
 
 	/* Open pending transfers. */
@@ -630,7 +624,7 @@
 		NSAssertReturnLoopContinue([e isSender]);
 		
 		if ([e transferStatus] == TDCFileTransferDialogTransferWaitingForSourceIPAddressStatus) {
-			[e open];
+			[e sourceIPAddressWasDetermined];
 		}
 	}
 }
