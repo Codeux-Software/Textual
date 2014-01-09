@@ -222,6 +222,9 @@
 	TCMPortMapper *pm = [TCMPortMapper sharedInstance];
 	
 	[pm removePortMapping:e];
+	
+	[RZNotificationCenter() removeObserver:self name:TCMPortMapperDidStartWorkNotification object:pm];
+	[RZNotificationCenter() removeObserver:self name:TCMPortMapperDidFinishWorkNotification object:pm];
 }
 
 - (TCMPortMapping *)portMappingForSelf
@@ -287,6 +290,8 @@
 	}
 	
 	[self destroyDispatchQueues];
+
+	[self closePortMapping];
 	
 	/* Close the file. */
     [self closeFileHandle];
