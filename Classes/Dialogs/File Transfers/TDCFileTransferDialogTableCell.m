@@ -82,6 +82,7 @@
 							  self.transferStatus == TDCFileTransferDialogTransferStoppedStatus ||
 							  self.transferStatus == TDCFileTransferDialogTransferListeningStatus ||
 							  self.transferStatus == TDCFileTransferDialogTransferInitializingStatus ||
+							  self.transferStatus == TDCFileTransferDialogTransferMappingListeningPortStatus ||
 							  self.transferStatus == TDCFileTransferDialogTransferWaitingForSourceIPAddressStatus);
 	
 	/* Update position of text fields. */
@@ -222,6 +223,12 @@
 		{
 			[self.transferProgressField setStringValue:TXTFLS(@"FileTransferDialogTransferToUserIsWaitingForSourceIPAddress", self.peerNickname)];
 				
+			break;
+		}
+		case TDCFileTransferDialogTransferMappingListeningPortStatus:
+		{
+			[self.transferProgressField setStringValue:TXTFLS(@"FileTransferDialogTransferToUserIsMappingListeningPort", self.peerNickname)];
+			
 			break;
 		}
 		default: { break; }

@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+#import <TCMPortMapper/TCMPortMapper.h>
+
 #define KInternetEventClass		1196773964
 #define KAEGetURL				1196773964
 
@@ -422,6 +424,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[RZPluginManager() unloadPlugins];
 	
 	[TPCPreferences saveTimeIntervalSinceApplicationInstall];
+	
+	[[TCMPortMapper sharedInstance] stopBlocking];
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {

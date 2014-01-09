@@ -263,6 +263,7 @@
 					[e transferStatus] == TDCFileTransferDialogTransferReceivingStatus ||
 					[e transferStatus] == TDCFileTransferDialogTransferListeningStatus ||
 					[e transferStatus] == TDCFileTransferDialogTransferSendingStatus ||
+					[e transferStatus] == TDCFileTransferDialogTransferMappingListeningPortStatus ||
 					[e transferStatus] == TDCFileTransferDialogTransferWaitingForSourceIPAddressStatus)
 				{
 					return YES;

@@ -518,6 +518,10 @@
 		4C83D8F01842008D00BCC0E1 /* NSFileManagerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C83D8EE1842008D00BCC0E1 /* NSFileManagerHelper.m */; };
 		4C83D8F6184200A100BCC0E1 /* NSFileManagerHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C83D8F5184200A100BCC0E1 /* NSFileManagerHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C83D8F7184200A100BCC0E1 /* NSFileManagerHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C83D8F5184200A100BCC0E1 /* NSFileManagerHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C85D197187EC18900860129 /* TCMPortMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; };
+		4C85D198187EC18900860129 /* TCMPortMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; };
+		4C85D19D187EC19D00860129 /* TCMPortMapper.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; };
+		4C85D19E187EC1A200860129 /* TCMPortMapper.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; };
 		4C8AF609158E99520026668C /* TXGlobalModels.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF510158E99520026668C /* TXGlobalModels.m */; };
 		4C8AF60A158E99520026668C /* TXMasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF511158E99520026668C /* TXMasterController.m */; };
 		4C8AF60B158E99520026668C /* TXMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF512158E99520026668C /* TXMenuController.m */; };
@@ -947,6 +951,7 @@
 				4C5BA3D616F1302F00A96CA2 /* BlowfishEncryption.framework in Copy Additional Frameworks */,
 				4C5BA3D716F1302F00A96CA2 /* Growl.framework in Copy Additional Frameworks */,
 				4C5BA3D816F1302F00A96CA2 /* SystemInformation.framework in Copy Additional Frameworks */,
+				4C85D19E187EC1A200860129 /* TCMPortMapper.framework in Copy Additional Frameworks */,
 			);
 			name = "Copy Additional Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1016,6 +1021,7 @@
 				4C68425A16C5AF900005A59E /* BlowfishEncryption.framework in Copy Additional Frameworks */,
 				4C68425B16C5AF9B0005A59E /* Growl.framework in Copy Additional Frameworks */,
 				4C78926916C625C50081E859 /* SystemInformation.framework in Copy Additional Frameworks */,
+				4C85D19D187EC19D00860129 /* TCMPortMapper.framework in Copy Additional Frameworks */,
 			);
 			name = "Copy Additional Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1130,6 +1136,7 @@
 		4C78926716C6259D0081E859 /* SystemInformation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemInformation.framework; path = .tmp/SharedBuildProducts/SystemInformation.framework; sourceTree = "<group>"; };
 		4C83D8EE1842008D00BCC0E1 /* NSFileManagerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFileManagerHelper.m; sourceTree = "<group>"; };
 		4C83D8F5184200A100BCC0E1 /* NSFileManagerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFileManagerHelper.h; sourceTree = "<group>"; };
+		4C85D196187EC18900860129 /* TCMPortMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TCMPortMapper.framework; path = Frameworks/TCMPortMapper.framework; sourceTree = "<group>"; };
 		4C86B00D1748B7B60028C7AE /* Shared Framework Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Framework Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Framework Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C86B00E1748B7B60028C7AE /* Shared Extension Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Extension Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Extension Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C86B00F1748B7B60028C7AE /* Shared Developer ID Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Developer ID Release Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Developer ID Release Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
@@ -1459,6 +1466,7 @@
 				4C46CCC71580469E00846B64 /* Foundation.framework in Frameworks */,
 				4CCF2EE2158046F9006FFE21 /* Growl.framework in Frameworks */,
 				4C46CCC81580469E00846B64 /* IOKit.framework in Frameworks */,
+				4C85D197187EC18900860129 /* TCMPortMapper.framework in Frameworks */,
 				4C46CCB71580468900846B64 /* libcrypto.dylib in Frameworks */,
 				4C46CCB81580468900846B64 /* libicucore.dylib in Frameworks */,
 				4C211D5715BF21BA00E218DA /* libmustache.a in Frameworks */,
@@ -1482,6 +1490,7 @@
 				4C5BA45D16F1302F00A96CA2 /* Foundation.framework in Frameworks */,
 				4C5BA45E16F1302F00A96CA2 /* Growl.framework in Frameworks */,
 				4C5BA45F16F1302F00A96CA2 /* IOKit.framework in Frameworks */,
+				4C85D198187EC18900860129 /* TCMPortMapper.framework in Frameworks */,
 				4C5BA46016F1302F00A96CA2 /* libcrypto.dylib in Frameworks */,
 				4C5BA46116F1302F00A96CA2 /* libicucore.dylib in Frameworks */,
 				4C5BA46216F1302F00A96CA2 /* libmustache.a in Frameworks */,
@@ -1833,6 +1842,7 @@
 				4C68425616C5AF730005A59E /* BlowfishEncryption.framework */,
 				4CCF2EE1158046F9006FFE21 /* Growl.framework */,
 				4C78926716C6259D0081E859 /* SystemInformation.framework */,
+				4C85D196187EC18900860129 /* TCMPortMapper.framework */,
 			);
 			name = "External Frameworks";
 			sourceTree = "<group>";
@@ -3828,10 +3838,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Quartz.framework/Versions/A/Frameworks\"",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Debug;
@@ -3840,10 +3846,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Quartz.framework/Versions/A/Frameworks\"",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Release;
@@ -3852,10 +3854,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Quartz.framework/Versions/A/Frameworks\"",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Debug;
@@ -3864,10 +3862,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Quartz.framework/Versions/A/Frameworks\"",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Release;
@@ -3876,10 +3870,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Quartz.framework/Versions/A/Frameworks\"",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (App Store)";
@@ -3903,10 +3893,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Quartz.framework/Versions/A/Frameworks\"",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (Trial)";
@@ -3915,10 +3901,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Quartz.framework/Versions/A/Frameworks\"",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (Trial)";
@@ -3968,10 +3950,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/Quartz.framework/Versions/A/Frameworks\"",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (App Store)";

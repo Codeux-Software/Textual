@@ -40,6 +40,7 @@
 
 typedef enum TDCFileTransferDialogTransferStatus : NSInteger {
 	TDCFileTransferDialogTransferWaitingForSourceIPAddressStatus,
+	TDCFileTransferDialogTransferMappingListeningPortStatus,
 	TDCFileTransferDialogTransferInitializingStatus,
 	TDCFileTransferDialogTransferErrorStatus,
 	TDCFileTransferDialogTransferStoppedStatus,

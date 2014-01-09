@@ -43,6 +43,8 @@
 
 #import "TextualApplication.h"
 
+#import <TCMPortMapper/TCMPortMapper.h>
+
 @implementation TDCFileTransferDialogTransferSender
 
 #pragma mark -
@@ -156,16 +158,88 @@
 	
 	/* Are we listening on the port? */
 	if (isActive) {
-		self.transferStatus = TDCFileTransferDialogTransferListeningStatus;
+		/* Try to map the port. */
+		TCMPortMapper *pm = [TCMPortMapper sharedInstance];
 		
-		if ([self openFileHandle]) {
-			[self sendTransferRequestToClient];
-		}
+		[RZNotificationCenter() addObserver:self selector:@selector(portMapperDidStartWork:) name:TCMPortMapperDidStartWorkNotification object:pm];
+		[RZNotificationCenter() addObserver:self selector:@selector(portMapperDidFinishWork:) name:TCMPortMapperDidFinishWorkNotification object:pm];
+		
+		[pm addPortMapping:[TCMPortMapping portMappingWithLocalPort:(int)self.transferPort
+												desiredExternalPort:(int)self.transferPort
+												  transportProtocol:TCMPortMappingTransportProtocolTCP
+														   userInfo:nil]];
+		
+		[pm start];
 		
 		return YES;
 	}
 	
 	return NO; // Return bad port error.
+}
+
+- (void)portMapperDidStartWork:(NSNotification *)aNotification
+{
+	self.transferStatus = TDCFileTransferDialogTransferMappingListeningPortStatus;
+	
+	[self reloadStatusInformation];
+}
+
+- (void)portMapperDidFinishWork:(NSNotification *)aNotification
+{
+	TCMPortMapping *e = [self portMappingForSelf];
+	
+	PointerIsEmptyAssert(e);
+
+	if ([e desiredExternalPort] == self.transferPort) {
+		if ([e mappingStatus] == TCMPortMappingStatusTrying)
+		{
+			; // Other mappings may be doing work.
+		}
+		else
+		{
+			/* If mapping fails, we silently fail. */
+			/* We tried and it was successful, then that is good, but if we
+			 did not, still start listening just incase other conditions allow
+			 the transfer to still take place. */
+
+			self.transferStatus = TDCFileTransferDialogTransferListeningStatus;
+			
+			if ([self openFileHandle]) {
+				[self sendTransferRequestToClient];
+			}
+			
+			[self reloadStatusInformation];
+		}
+	}
+}
+
+- (void)closePortMapping
+{
+	TCMPortMapping *e = [self portMappingForSelf];
+	
+	PointerIsEmptyAssert(e);
+
+	TCMPortMapper *pm = [TCMPortMapper sharedInstance];
+	
+	[pm removePortMapping:e];
+}
+
+- (TCMPortMapping *)portMappingForSelf
+{
+	TCMPortMapper *pm = [TCMPortMapper sharedInstance];
+	
+	/* Enumrate all mappings to find our own. */
+	NSArray *allMappings = [[pm portMappings] allObjects];
+	
+	for (TCMPortMapping *e in allMappings) {
+		/* Return the mapping matching our transfer port. */
+
+		if ([e desiredExternalPort] == self.transferPort) {
+			return e;
+		}
+	}
+	
+	return nil;
 }
 
 - (void)sendTransferRequestToClient

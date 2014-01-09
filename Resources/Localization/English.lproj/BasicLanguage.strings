@@ -114,6 +114,7 @@
 "FileTransferDialogTransferSocketIsListening" = "Transfer to %@ is ready. Waiting for them to accept.";
 "FileTransferDialogTransferToUserIsStopped" = "Transfer to %@ is stopped. Right click to start.";
 "FileTransferDialogTransferToUserIsInitializing" = "Transfer to %@ is initializing.";
+"FileTransferDialogTransferToUserIsMappingListeningPort" = "Transfer to %@ is initializing.";
 "FileTransferDialogTransferToUserIsComplete" = "Transfer to %@ is complete.";
 
 "FileTransferDialogTransferFromUserStatusWithoutRemainingTime" = "%1$@ of %2$@ (%3$@/s) received from %4$@";
