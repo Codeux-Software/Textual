@@ -72,5 +72,7 @@
 - (void)prepareForDestruction;
 - (void)updateClearButton;
 
+- (void)sourceIPAddressWasDetermined;
+
 - (void)setDidErrorOnBadSenderAddress;
 @end

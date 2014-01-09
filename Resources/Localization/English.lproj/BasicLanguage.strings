@@ -105,9 +105,6 @@
 "ExcessFloodIRCDisconnectAlertMessage" = "A disconnection has occured due to excess flood. Reconnect?";
 "ExcessFloodIRCDisconnectAlertOpenFloodControlButton" = "Configure Flood Control";
 
-"FileTransferDialogSourceIPAddressUnknown" = "Address: Unknown";
-"FileTransferDialogSourceIPAddressValue" = "Address: %@";
-
 "FileTransferDialogTransferToUserIsWaitingForSourceIPAddress" = "Transfer to %@ is waiting for source IP address request to complete.";
 "FileTransferDialogTransferToUserStatusWithoutRemainingTime" = "%1$@ of %2$@ (%3$@/s) sent to %4$@";
 "FileTransferDialogTransferToUserStatusWithRemainingTime" = "%1$@ of %2$@ (%3$@/s) sent to %4$@ — %5$@ remaining";

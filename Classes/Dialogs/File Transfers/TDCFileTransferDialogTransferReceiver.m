@@ -36,25 +36,7 @@
 
  *********************************************************************** */
 
-/*
-	 The method -networkInterfaceMatchingAddress available below is
-	 borrowed from a Stack Overflow comment located at the URL:
-	 
-	 <http://stackoverflow.com/a/12883978>
-	 
-	 As no license is specified, it is believed to be released
-	 into the Public Domain. Thank you very much to the user that
-	 contributed the particular snippet of code.
- */
-
 #import "TextualApplication.h"
-
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <ifaddrs.h>
-#include <net/if.h>
-#include <netdb.h>
 
 #define RECORDS_LEN			10
 
@@ -154,17 +136,7 @@
 	
 	NSError *connError;
 	
-	BOOL isConnected = NO;
-	
-	/* Use the interface of the configured IP address instead of the default. */
-	/* Default interface is used if IP address is not found locally. */
-	NSString *networkInterface = [self networkInterfaceMatchingAddress];
-	
-	if (networkInterface) {
-		isConnected = [self.client connectToHost:self.hostAddress onPort:self.transferPort viaInterface:networkInterface withTimeout:30.0 error:&connError];
-	} else {
-		isConnected = [self.client connectToHost:self.hostAddress onPort:self.transferPort withTimeout:30.0 error:&connError];
-	}
+	BOOL isConnected = [self.client connectToHost:self.hostAddress onPort:self.transferPort withTimeout:30.0 error:&connError];
 	
 	if (isConnected == NO)
 	{
@@ -185,45 +157,6 @@
 	
 	/* Update status information. */
 	[self reloadStatusInformation];
-}
-
-- (NSString *)networkInterfaceMatchingAddress
-{
-	struct ifaddrs *allInterfaces;
-	
-	NSStringEncoding cstringEncoding = [NSString defaultCStringEncoding];
-	
-	NSString *cachedAddress = [self.transferDialog cachedIPAddress];
-	
-	if (getifaddrs(&allInterfaces) == 0) {
-		struct ifaddrs *interface;
-		
-		for (interface = allInterfaces; NSDissimilarObjects(interface, NULL); interface = interface->ifa_next)
-		{
-			unsigned int flags = interface->ifa_flags;
-			
-			struct sockaddr *addr = interface->ifa_addr;
-			
-			if ((flags & (IFF_UP | IFF_RUNNING | IFF_LOOPBACK)) == (IFF_UP | IFF_RUNNING)) {
-				if (addr->sa_family == AF_INET || addr->sa_family == AF_INET6) {
-					char host[NI_MAXHOST];
-					
-					getnameinfo(addr, addr->sa_len, host, sizeof(host), NULL, 0, NI_NUMERICHOST);
-					
-					NSString *networkName = [NSString stringWithCString:interface->ifa_name encoding:cstringEncoding];
-					NSString *networkAddr = [NSString stringWithCString:host encoding:cstringEncoding];
-					
-					if (NSObjectsAreEqual(networkAddr, cachedAddress)) {
-						return networkName;
-					}
-				}
-			}
-		}
-		
-		freeifaddrs(allInterfaces);
-	}
-	
-	return nil;
 }
 
 - (void)close
