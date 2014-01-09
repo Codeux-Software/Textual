@@ -169,6 +169,8 @@
 
 - (void)portMapperDidFinishWork:(NSNotification *)aNotification
 {
+	NSAssertReturn(self.transferStatus == TDCFileTransferDialogTransferMappingListeningPortStatus);
+
 	TCMPortMapping *e = [self portMappingForSelf];
 	
 	PointerIsEmptyAssert(e);
