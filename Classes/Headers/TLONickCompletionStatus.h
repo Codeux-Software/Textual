@@ -41,6 +41,7 @@
 @interface TLONickCompletionStatus : NSObject
 @property (nonatomic, strong) NSString *cachedTextFieldStringValue;
 @property (nonatomic, strong) NSString *cachedBackwardCutStringValue;
+@property (nonatomic, strong) NSString *cachedLastCompleteStringValue;
 @property (nonatomic, assign) NSRange lastTextFieldSelectionRange;
 @property (nonatomic, assign) NSRange lastCompletionCompletedRange;
 @property (nonatomic, assign) NSRange lastCompletionFragmentRange;
