@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+#import <TCMPortMapper/TCMPortMapper.h>
+
 /* Refuse to have more than X number of items incoming at any given time. */
 #define _addReceiverHardLimit			100
 
@@ -85,8 +87,12 @@
 
 	[self close];
 	
-	for (id e in self.fileTransfers) {
-		[e prepareForDestruction];
+	if ([self.fileTransfers count] > 0) {
+		[[TCMPortMapper sharedInstance] stopBlocking];
+		
+		for (id e in self.fileTransfers) {
+			[e prepareForDestruction];
+		}
 	}
 }
 

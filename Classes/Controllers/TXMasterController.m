@@ -38,8 +38,6 @@
 
 #import "TextualApplication.h"
 
-#import <TCMPortMapper/TCMPortMapper.h>
-
 #define KInternetEventClass		1196773964
 #define KAEGetURL				1196773964
 
@@ -396,7 +394,15 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[RZNotificationCenter() removeObserver:self];
 
 	[RZAppleEventManager() removeEventHandlerForEventClass:KInternetEventClass andEventID:KAEGetURL];
-
+	
+	BOOL onMountainLionOrLater = [TPCPreferences featureAvailableToOSXMountainLion];
+	
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	if (onMountainLionOrLater) {
+		[self.cloudSyncManager setApplicationIsTerminating:YES];
+	}
+#endif
+	
 	if (self.skipTerminateSave == NO) {
 		[self saveWindowState];
 	}
@@ -410,23 +416,31 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	if (self.skipTerminateSave == NO) {
 		[self.worldController save];
 
-		self.terminatingClientCount = self.worldController.clients.count;
+		self.terminatingClientCount = [self.worldController.clients count];
 
 		[self.worldController prepareForApplicationTermination];
 		
-		while (self.terminatingClientCount > 0) {
-			[RZMainRunLoop() runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+		if (onMountainLionOrLater) {
+
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+			while (self.terminatingClientCount > 0 || ([self.cloudSyncManager isSyncingLocalKeysDownstream] ||
+													   [self.cloudSyncManager isSyncingLocalKeysUpstream]))
+			{
+#else
+			while (self.terminatingClientCount > 0) {
+#endif
+				
+				[RZMainRunLoop() runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+			}
 		}
 	}
 	
 	[RZPluginManager() unloadPlugins];
 	
 	[TPCPreferences saveTimeIntervalSinceApplicationInstall];
-	
-	[[TCMPortMapper sharedInstance] stopBlocking];
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+	if (onMountainLionOrLater) {
 		[self.cloudSyncManager closeCloudSyncSession];
 	}
 #endif
