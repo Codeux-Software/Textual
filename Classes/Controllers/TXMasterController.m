@@ -212,7 +212,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[self.serverList reloadAllDrawings];
 }
 
-- (void)applicationDidChangeScreenParameters:(NSNotification *)aNotification
+- (void)reloadMainWindowFrameOnScreenChange
 {
 	/* Make sure the main window can fit in the new screen resolution. */
 	if (self.isInFullScreenMode) {
@@ -220,6 +220,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		NSRect oldFrame = self.mainWindow.frame;
 		NSRect newFrame = [RZMainScreen() frame];
 		
+		oldFrame.origin.x = 0;
+		oldFrame.origin.y = 0;
 		oldFrame.size = newFrame.size;
 		
 		[self.mainWindow setFrame:oldFrame display:YES animate:YES];
@@ -247,22 +249,27 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 			[self.mainWindow setFrame:windowRect display:YES animate:YES];
 		}
 	}
-
+	
 	/* Redraw dock icon on potential screen resolution changes. */
 	[TVCDockIcon resetCachedCount];
-
+	
 	[self.worldController updateIcon];
-
+	
 	/* Update wether we are in high-resolution mode and redraw some stuff if we move state. */
 	BOOL inHighResMode = [RZMainScreen() runningInHighResolutionMode];
-
+	
 	if (NSDissimilarObjects(self.applicationIsRunningInHighResMode, inHighResMode)) {
 		[self.memberList reloadAllUserInterfaceElements];
-
+		
 		[self.serverList reloadAllDrawings];
 	}
-
+	
 	self.applicationIsRunningInHighResMode = [RZMainScreen() runningInHighResolutionMode];
+}
+
+- (void)applicationDidChangeScreenParameters:(NSNotification *)aNotification
+{
+	[self reloadMainWindowFrameOnScreenChange];
 }
 
 - (void)reloadUserInterfaceItems
@@ -318,6 +325,11 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	}
 
 	[self reloadUserInterfaceItems];
+}
+
+- (void)windowDidChangeScreen:(NSNotification *)notification
+{
+	[self reloadMainWindowFrameOnScreenChange];
 }
 
 - (void)windowDidBecomeKey:(NSNotification *)notification
