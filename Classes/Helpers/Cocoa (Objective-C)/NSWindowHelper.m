@@ -95,36 +95,12 @@
 
 	NSDictionary *dic = [TPCPreferences loadWindowStateWithName:keyword];
 
-	BOOL invalidateSavedState = NSDissimilarObjects(dic.count, 4);
-
-	NSRect visibleRect = [self.screen frame];
-
-	NSRect currFrame = self.frame;
-	
 	NSInteger x = [dic integerForKey:@"x"];
 	NSInteger y = [dic integerForKey:@"y"];
+	NSInteger w = [dic integerForKey:@"w"];
+	NSInteger h = [dic integerForKey:@"h"];
 
-	NSInteger oldHeight = [dic integerForKey:@"h"];
-	NSInteger heightDff = (oldHeight - currFrame.size.height);
-
-	y += heightDff;
-	
-	if ((x + currFrame.size.width) > visibleRect.size.width) {
-		invalidateSavedState = YES;
-	}
-
-	if ((y + currFrame.size.height) > visibleRect.size.height) {
-		invalidateSavedState = YES;
-	}
-
-	if (invalidateSavedState) {
-		[self exactlyCenterWindow];
-
-		return;
-	}
-
-	currFrame.origin.x = x;
-	currFrame.origin.y = y;
+	NSRect currFrame = NSMakeRectThatFitsScreen(self.screen, x, y, w, h);
 
 	[self setFrame:currFrame display:YES animate:YES];
 }

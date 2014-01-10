@@ -226,30 +226,17 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		
 		[self.mainWindow setFrame:oldFrame display:YES animate:YES];
 	} else {
-		NSRect visibleRect = [RZMainWindowScreen() visibleFrame];
 		NSRect windowRect = [self.mainWindow frame];
-		
-		BOOL redrawFrame = NO;
-		
-		if (visibleRect.size.height < windowRect.size.height) {
-			windowRect.size.height = visibleRect.size.height;
-			windowRect.origin.x = visibleRect.origin.x;
-			
-			redrawFrame = YES;
-		}
-		
-		if (visibleRect.size.width < windowRect.size.width) {
-			windowRect.size.width = visibleRect.size.width;
-			windowRect.origin.y = visibleRect.origin.y;
-			
-			redrawFrame = YES;
-		}
-		
-		if (redrawFrame) {
-			[self.mainWindow setFrame:windowRect display:YES animate:YES];
-		}
-	}
 	
+		NSRect fixedRect = NSMakeRectThatFitsScreen(RZMainWindowScreen(),
+													windowRect.origin.x,
+													windowRect.origin.y,
+													windowRect.size.width,
+													windowRect.size.height);
+		
+		[self.mainWindow setFrame:fixedRect display:YES animate:YES];
+	}
+
 	/* Redraw dock icon on potential screen resolution changes. */
 	[TVCDockIcon resetCachedCount];
 	
@@ -264,12 +251,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		[self.serverList reloadAllDrawings];
 	}
 	
-	self.applicationIsRunningInHighResMode = [RZMainWindowScreen() runningInHighResolutionMode];
-}
-
-- (void)applicationDidChangeScreenParameters:(NSNotification *)aNotification
-{
-	[self reloadMainWindowFrameOnScreenChange];
+	self.applicationIsRunningInHighResMode = inHighResMode;
 }
 
 - (void)reloadUserInterfaceItems
@@ -329,7 +311,11 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 - (void)windowDidChangeScreen:(NSNotification *)notification
 {
-	[self reloadMainWindowFrameOnScreenChange];
+	/* The dock is not always visible at the exact moment this notification fires.
+	 Therefore, we delay it slightly so that it can appear and update the value of
+	 visibleFrame so that it includes itself. */
+
+	[self performSelector:@selector(reloadMainWindowFrameOnScreenChange) withObject:nil afterDelay:0.5];
 }
 
 - (void)windowDidBecomeKey:(NSNotification *)notification
@@ -718,8 +704,10 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		NSInteger h = [dic integerForKey:@"h"];
 
 		BOOL fullscreen = [dic boolForKey:@"fullscreen"];
+		
+		NSRect windowRect = NSMakeRectThatFitsScreen(RZMainWindowScreen(), x, y, w, h);
 
-		[self.mainWindow setFrame:NSMakeRect(x, y, w, h) display:YES animate:BOOLReverseValue(self.isInFullScreenMode)];
+		[self.mainWindow setFrame:windowRect display:YES animate:BOOLReverseValue(self.isInFullScreenMode)];
 		
 		self.serverSplitView.dividerPosition = [dic integerForKey:@"serverList"];
 		self.memberSplitView.dividerPosition = [dic integerForKey:@"memberList"];
