@@ -229,6 +229,7 @@
 
 						if ([css hasPrefix:ucs]) {
 							isAtEnd = NO;
+
 							ci = (i + css.length); // Index before this char.
 
 							break;
@@ -256,7 +257,18 @@
 				 anything after the backwardCut when we replace. */
 				NSRange fcr = self.lastCompletionFragmentRange;
 
-				fcr.length += selectedCut.length;
+				if (backwardCut && selectedCut) {
+					/* Only cut the selected cut off if the combined string value
+					 is a nickname within the channel. If it is not, then we ignore
+					 it and try to complete with the conditions we have. */
+					NSString *combinedCut = [backwardCut stringByAppendingString:selectedCut];
+					
+					IRCUser *m = [channel findMember:combinedCut options:NSCaseInsensitiveSearch];
+					
+					if (m) {
+						fcr.length += [selectedCut length];
+					}
+				}
 
 				/* Update state information. */
 				if ((fcr.location + fcr.length + 1) >= s.length) {
