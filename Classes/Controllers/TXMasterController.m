@@ -580,7 +580,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	}
 	
 	if (self.completionStatus) {
-		[self.completionStatus clear];
+		[self.completionStatus clear:YES];
 	}
 }
 
