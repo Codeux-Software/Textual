@@ -48,5 +48,5 @@
 @property (nonatomic, assign) NSInteger lastCompletionSelectionIndex;
 
 - (void)completeNick:(BOOL)forward;
-- (void)clear;
+- (void)clear:(BOOL)clearLastValue;
 @end

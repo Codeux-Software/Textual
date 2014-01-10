@@ -496,7 +496,23 @@
 		NSString *completeSuffix = [TPCPreferences tabCompletionSuffix];
 
 		if (NSObjectIsNotEmpty(completeSuffix)) {
-			ut = [ut stringByAppendingString:completeSuffix];
+			BOOL addWhitespace = YES;
+
+			if ([completeSuffix isEqualToString:NSStringWhitespacePlaceholder]) {
+				NSInteger nextIndx = (self.lastCompletionCompletedRange.length + self.lastCompletionCompletedRange.location);
+				
+				if ([s length] > nextIndx) {
+					NSString *nextChar = [s stringCharacterAtIndex:nextIndx];
+					
+					if ([nextChar isEqualToString:NSStringWhitespacePlaceholder]) {
+						addWhitespace = NO;
+					}
+				}
+			}
+
+			if (addWhitespace) {
+				ut = [ut stringByAppendingString:completeSuffix];
+			}
 		}
 	}
 
