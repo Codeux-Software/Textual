@@ -52,8 +52,6 @@
 @interface TPCPreferencesCloudSync ()
 @property (nonatomic, strong) id ubiquityIdentityToken;
 @property (nonatomic, assign) BOOL localKeysWereUpdated;
-@property (nonatomic, assign) BOOL isSyncingLocalKeysDownstream;
-@property (nonatomic, assign) BOOL isSyncingLocalKeysUpstream;
 @property (nonatomic, assign) BOOL isSafeToPerformPreferenceValidation;
 @property (nonatomic, assign) dispatch_queue_t workerQueue;
 @property (nonatomic, strong) NSTimer *cloudOneMinuteSyncTimer;
@@ -190,6 +188,9 @@
 
 - (void)performTenMinuteTimeBasedMaintenance
 {
+	/* Do not perform any actions during termination. */
+	NSAssertReturn(self.applicationIsTerminating == NO);
+
 	/* We don't even want to sync if user doesn't want to. */
 	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
 	
@@ -224,6 +225,9 @@
 
 - (void)performOneMinuteTimeBasedMaintenance
 {
+	/* Do not perform any actions during termination. */
+	NSAssertReturn(self.applicationIsTerminating == NO);
+
 	/* We don't even want to sync if user doesn't want to. */
 	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
 	
@@ -289,6 +293,9 @@
 
 - (void)syncPreferencesToCloud
 {
+	/* Do not perform any actions during termination. */
+	NSAssertReturn(self.applicationIsTerminating == NO);
+
 	/* We don't even want to sync if user doesn't want to. */
 	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
 	
@@ -321,7 +328,7 @@
 		DebugLogToConsole(@"iCloud: Beginning sync upstream.");
 		
 		/* Continue normal work. */
-		self.isSyncingLocalKeysUpstream = YES;
+		_isSyncingLocalKeysUpstream = YES;
 
 		/* Gather dictionary representation of all local preferences. */
 		NSDictionary *localdict = [TPCPreferencesImportExport exportedPreferencesDictionaryRepresentation];
@@ -402,7 +409,8 @@
 		}
 
 		/* Allow us to continue work. */
-		self.isSyncingLocalKeysUpstream = NO;
+		_isSyncingLocalKeysUpstream = NO;
+		
 		self.localKeysWereUpdated = NO;
 
 		DebugLogToConsole(@"iCloud: Completeing sync upstream.");
@@ -411,6 +419,9 @@
 
 - (void)syncPreferencesFromCloud:(NSArray *)changedKeys
 {
+	/* Do not perform any actions during termination. */
+	NSAssertReturn(self.applicationIsTerminating == NO);
+
 	/* We don't even want to sync if user doesn't want to. */
 	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
 	
@@ -419,7 +430,7 @@
 		DebugLogToConsole(@"iCloud: Beginning sync downstream.");
 
 		/* Announce our intents… */
-		self.isSyncingLocalKeysDownstream = YES;
+		_isSyncingLocalKeysDownstream = YES;
 
 		/* Get the list of changed keys. */
 		NSArray *changedKeyList = changedKeys;
@@ -499,7 +510,7 @@
 		});
 
 		/* Allow us to continue work. */
-		self.isSyncingLocalKeysDownstream = NO;
+		_isSyncingLocalKeysDownstream = NO;
 		
 		/* If we made it this far, reset this notificaiton. */
 		_hasUncommittedDataStoredInCloud = NO;
@@ -510,6 +521,9 @@
 
 - (void)syncPreferenceFromCloudNotification:(NSNotification *)aNote
 {
+	/* Do not perform any actions during termination. */
+	NSAssertReturn(self.applicationIsTerminating == NO);
+
 	/* Gather information about the sync request. */
 	NSInteger syncReason = [aNote.userInfo integerForKey:NSUbiquitousKeyValueStoreChangeReasonKey];
 	
@@ -532,6 +546,9 @@
 
 - (void)localKeysDidChangeNotification:(NSNotification *)aNote
 {
+	/* Do not perform any actions during termination. */
+	NSAssertReturn(self.applicationIsTerminating == NO);
+
 	if (self.localKeysWereUpdated == NO) {
 		self.localKeysWereUpdated = YES;
 	}
@@ -569,6 +586,9 @@
  timers which they were designed to do. */
 - (void)cloudMetadataQueryDidUpdate:(NSNotification *)notification
 {
+	/* Do not perform any actions during termination. */
+	NSAssertReturn(self.applicationIsTerminating == NO);
+
 	BOOL isGatheringNotification = [NSMetadataQueryDidFinishGatheringNotification isEqualToString:[notification name]];
 	
 	DebugLogToConsole(@"iCloud: Metadata Query Update: isGathering = %i", isGatheringNotification);
@@ -837,6 +857,9 @@
 
 - (void)iCloudAccountAvailabilityChanged:(NSNotification *)aNote
 {
+	/* Do not perform any actions during termination. */
+	NSAssertReturn(self.applicationIsTerminating == NO);
+
 	/* Get new token first. */
 	id newToken = [RZFileManager() cloudUbiquityIdentityToken];
 	
@@ -911,6 +934,9 @@
 
 - (void)purgeDataStoredWithCloud
 {
+	/* Do not perform any actions during termination. */
+	NSAssertReturn(self.applicationIsTerminating == NO);
+
 	dispatch_async(self.workerQueue, ^{
 		/* Sync latest changes from disc for the dictionary. */
 		[RZUbiquitousKeyValueStore() synchronize];
@@ -960,8 +986,9 @@
 	}
 	
 	self.localKeysWereUpdated = NO;
-	self.isSyncingLocalKeysDownstream = NO;
-	self.isSyncingLocalKeysUpstream = NO;
+	
+	_isSyncingLocalKeysDownstream = NO;
+	_isSyncingLocalKeysUpstream = NO;
 	
 	self.ubiquityIdentityToken = nil;
 	self.ubiquitousContainerURL = nil;
