@@ -65,7 +65,7 @@
 {
 	NSObjectIsEmptyAssertReturn(self.nickname, nil);
 	
-	if (self.username || self.address) {
+	if (NSObjectIsEmpty(self.username) || NSObjectIsEmpty(self.address)) {
 		return [NSString stringWithFormat:@"%@!*@*", self.nickname];
 	} else {
 		switch ([TPCPreferences banFormat]) {
