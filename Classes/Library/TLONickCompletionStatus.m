@@ -43,7 +43,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		[self clear];
+		[self clear:YES];
 	}
 
 	return self;
@@ -132,7 +132,11 @@
 
 	if (canContinuePreviousScan == NO) {
 		/* If this is a new scan, then reset all our ranges to begin with. */
-		[self clear];
+		if ([self.cachedTextFieldStringValue isEqualToString:s]) {
+			[self clear:NO];
+		} else {
+			[self clear:YES];
+		}
 
 		/* Before we do anything, we must establish where we are starting. 
 		 If the length of selectedRange is above zero, then it means the
@@ -257,16 +261,14 @@
 				 anything after the backwardCut when we replace. */
 				NSRange fcr = self.lastCompletionFragmentRange;
 
-				if (backwardCut && selectedCut) {
-					/* Only cut the selected cut off if the combined string value
-					 is a nickname within the channel. If it is not, then we ignore
-					 it and try to complete with the conditions we have. */
-					NSString *combinedCut = [backwardCut stringByAppendingString:selectedCut];
-					
-					IRCUser *m = [channel findMember:combinedCut options:NSCaseInsensitiveSearch];
-					
-					if (m) {
-						fcr.length += [selectedCut length];
+				if (self.cachedLastCompleteStringValue) {
+					if (backwardCut && selectedCut) {
+						/* Only cut forward if the combined cut is equal to the previous complete. */
+						NSString *combinedCut = [backwardCut stringByAppendingString:selectedCut];
+						
+						if (NSObjectsAreEqual(self.cachedLastCompleteStringValue, combinedCut)) {
+							fcr.length += [selectedCut length];
+						}
 					}
 				}
 
@@ -464,6 +466,9 @@
 
 		ut = [backwardCutStringAddition stringByAppendingString:ut];
 	}
+	
+	/* Cache value. */
+	self.cachedLastCompleteStringValue = ut;
 
 	/* Add the completed string to the spell checker so that a nickname
 	 wont show up as spelled incorrectly. The spell checker is cleared
@@ -531,10 +536,14 @@
 	self.cachedBackwardCutStringValue = backwardCut;
 }
 
-- (void)clear
+- (void)clear:(BOOL)clearLastValue
 {
 	self.cachedTextFieldStringValue = nil;
 	self.cachedBackwardCutStringValue = nil;
+	
+	if (clearLastValue) {
+		self.cachedLastCompleteStringValue = nil;
+	}
 
 	self.lastCompletionSelectionIndex = NSNotFound;
 
