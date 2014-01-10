@@ -97,7 +97,7 @@
 
 	BOOL invalidateSavedState = NSDissimilarObjects(dic.count, 4);
 
-	NSRect visibleRect = [RZMainScreen() frame];
+	NSRect visibleRect = [self.screen frame];
 
 	NSRect currFrame = self.frame;
 	

@@ -124,11 +124,11 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 	self.mainWindowIsActive = YES;
 
-	/* We keep high-res mode value cached since it is costly to ask for every draw. */
-	self.applicationIsRunningInHighResMode = [RZMainScreen() runningInHighResolutionMode];
-	
 	[self.mainWindow makeKeyAndOrderFront:nil];
 	[self.mainWindow setAlphaValue:[TPCPreferences themeTransparency]];
+	
+	/* We keep high-res mode value cached since it is costly to ask for every draw. */
+	self.applicationIsRunningInHighResMode = [RZMainWindowScreen() runningInHighResolutionMode];
 	
 	self.themeControllerPntr = [TPCThemeController new];
 	[self.themeControllerPntr load];
@@ -217,8 +217,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	/* Make sure the main window can fit in the new screen resolution. */
 	if (self.isInFullScreenMode) {
 		/* Reset window frame if screen resolution is changed. */
-		NSRect oldFrame = self.mainWindow.frame;
-		NSRect newFrame = [RZMainScreen() frame];
+		NSRect oldFrame = [self.mainWindow frame];
+		NSRect newFrame = [RZMainWindowScreen() frame];
 		
 		oldFrame.origin.x = 0;
 		oldFrame.origin.y = 0;
@@ -226,8 +226,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		
 		[self.mainWindow setFrame:oldFrame display:YES animate:YES];
 	} else {
-		NSRect visibleRect = [RZMainScreen() visibleFrame];
-		NSRect windowRect = self.mainWindow.frame;
+		NSRect visibleRect = [RZMainWindowScreen() visibleFrame];
+		NSRect windowRect = [self.mainWindow frame];
 		
 		BOOL redrawFrame = NO;
 		
@@ -256,7 +256,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[self.worldController updateIcon];
 	
 	/* Update wether we are in high-resolution mode and redraw some stuff if we move state. */
-	BOOL inHighResMode = [RZMainScreen() runningInHighResolutionMode];
+	BOOL inHighResMode = [RZMainWindowScreen() runningInHighResolutionMode];
 	
 	if (NSDissimilarObjects(self.applicationIsRunningInHighResMode, inHighResMode)) {
 		[self.memberList reloadAllUserInterfaceElements];
@@ -264,7 +264,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		[self.serverList reloadAllDrawings];
 	}
 	
-	self.applicationIsRunningInHighResMode = [RZMainScreen() runningInHighResolutionMode];
+	self.applicationIsRunningInHighResMode = [RZMainWindowScreen() runningInHighResolutionMode];
 }
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *)aNotification

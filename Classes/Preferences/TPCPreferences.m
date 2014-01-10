@@ -1746,7 +1746,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (NSRect)defaultWindowFrame
 {
-	NSRect usable = RZMainScreen().visibleFrame;
+	NSRect usable = [RZMainWindowScreen() visibleFrame];
 
 	CGFloat w = 800;
 	CGFloat h = 474;
