@@ -53,6 +53,7 @@ typedef enum IRCDisconnectMode : NSInteger {
 	IRCDisconnectTrialPeriodMode,
 	IRCDisconnectComputerSleepMode,
 	IRCDisconnectBadSSLCertificateMode,
+	IRCDisconnectReachabilityChangeMode,
 	IRCDisconnectServerRedirectMode,
 } IRCDisconnectMode;
 

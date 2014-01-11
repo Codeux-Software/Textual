@@ -65,7 +65,9 @@
 		self.autoReconnect					= NO;
 		self.autoSleepModeDisconnect		= YES;
 		self.performPongTimer				= YES;
-		self.performDisconnectOnPongTimer	= NO;
+
+		self.performDisconnectOnPongTimer				= NO;
+		self.performDisconnectOnReachabilityChange		= YES;
 		
 		self.validateServerSSLCertificate = YES;
 		
@@ -328,8 +330,10 @@
 		self.validateServerSSLCertificate = NSDictionaryBOOLKeyValueCompare(dic, @"validateServerSideSSLCertificate", self.validateServerSSLCertificate);
 		
 		self.performPongTimer				= NSDictionaryBOOLKeyValueCompare(dic, @"performPongTimer", self.performPongTimer);
-		self.performDisconnectOnPongTimer	= NSDictionaryBOOLKeyValueCompare(dic, @"performDisconnectOnPongTimer", self.performDisconnectOnPongTimer);
-
+		
+		self.performDisconnectOnPongTimer			= NSDictionaryBOOLKeyValueCompare(dic, @"performDisconnectOnPongTimer", self.performDisconnectOnPongTimer);
+		self.performDisconnectOnReachabilityChange	= NSDictionaryBOOLKeyValueCompare(dic, @"performDisconnectOnReachabilityChange", self.performDisconnectOnReachabilityChange);
+		
 		self.fallbackEncoding			= NSDictionaryIntegerKeyValueCompare(dic, @"characterEncodingFallback", self.fallbackEncoding);
 		self.normalLeavingComment		= NSDictionaryObjectKeyValueCompare(dic, @"connectionDisconnectDefaultMessage", self.normalLeavingComment);
 		self.primaryEncoding			= NSDictionaryIntegerKeyValueCompare(dic, @"characterEncodingDefault", self.primaryEncoding);
@@ -437,11 +441,13 @@
 	[dic setBool:self.autoSleepModeDisconnect		forKey:@"disconnectOnSleepMode"];
 	[dic setBool:self.connectionUsesSSL				forKey:@"connectUsingSSL"];
 	[dic setBool:self.performPongTimer				forKey:@"performPongTimer"];
-	[dic setBool:self.performDisconnectOnPongTimer	forKey:@"performDisconnectOnPongTimer"];	
 	[dic setBool:self.invisibleMode					forKey:@"setInvisibleOnConnect"];
 	[dic setBool:self.connectionPrefersIPv6			forKey:@"DNSResolverPrefersIPv6"];
     [dic setBool:self.sidebarItemExpanded			forKey:@"serverListItemIsExpanded"];
-
+	
+	[dic setBool:self.performDisconnectOnPongTimer				forKey:@"performDisconnectOnPongTimer"];
+	[dic setBool:self.performDisconnectOnReachabilityChange		forKey:@"performDisconnectOnReachabilityChange"];
+	
 	if (isCloudDictionary == NO) {
 		/* Identify certificate is stored as a referenced to the actual keychain. */
 		/* This cannot be transmitted over the cloud. */

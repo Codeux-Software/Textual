@@ -477,6 +477,9 @@
 	return (self.reconnectTimer && self.reconnectTimer.timerIsActive);
 }
 
+#pragma mark -
+#pragma mark Reachability
+
 - (void)setupReachability
 {
 	[self destroyReachability];
@@ -514,6 +517,17 @@
 	}
 
 	self.isHostReachable = self.hostReachability.isReachable;
+	
+	if (self.isLoggedIn) {
+		if (self.isHostReachable == NO) {
+			if (self.config.performDisconnectOnReachabilityChange) {
+				self.disconnectType = IRCDisconnectReachabilityChangeMode;
+				self.reconnectEnabled = YES;
+				
+				[self disconnect];
+			}
+		}
+	}
 }
 
 #pragma mark -
@@ -3168,6 +3182,7 @@
 		case IRCDisconnectTrialPeriodMode:			{ dcntmsg = @"IRCDisconnectedByTrialPeriodTimer"; break; }
 		case IRCDisconnectBadSSLCertificateMode:	{ dcntmsg = @"IRCDisconnectedByBadSSLCertificate"; break; }
 		case IRCDisconnectServerRedirectMode:		{ dcntmsg = @"IRCDisconnectedByServerRedirect"; break; }
+		case IRCDisconnectReachabilityChangeMode:	{ dcntmsg = @"IRCDisconnectedByReachabilityChange"; break; }
 		default: break;
 	}
 

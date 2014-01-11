@@ -25,6 +25,7 @@
                 <outlet property="deleteChannelButton" destination="1796" id="1948"/>
                 <outlet property="deleteHighlightButton" destination="2447" id="2477"/>
                 <outlet property="deleteIgnoreButton" destination="1845" id="1953"/>
+                <outlet property="disconnectOnReachabilityChangeCheck" destination="w5K-aH-URS" id="8N7-xY-lax"/>
                 <outlet property="editChannelButton" destination="1795" id="1949"/>
                 <outlet property="editHighlightButton" destination="2448" id="2476"/>
                 <outlet property="editIgnoreButton" destination="1844" id="1954"/>
@@ -357,10 +358,10 @@ Gw
                         </binding>
                         <binding destination="2317" name="hidden2" keyPath="values.System —> Built with iCloud Support" previousBinding="lla-b6-G3l" id="Lcn-CW-XKA">
                             <dictionary key="options">
-                                <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
@@ -1504,7 +1505,7 @@ Gw
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button id="2530">
-                    <rect key="frame" x="55" y="172" width="234" height="18"/>
+                    <rect key="frame" x="54" y="182" width="234" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Prefer IPv6 addresses over IPv4." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2533">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1512,7 +1513,7 @@ Gw
                     </buttonCell>
                 </button>
                 <button id="2531">
-                    <rect key="frame" x="55" y="152" width="362" height="18"/>
+                    <rect key="frame" x="54" y="162" width="362" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Periodically PING the server to verify the connection." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2532">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1520,7 +1521,7 @@ Gw
                     </buttonCell>
                 </button>
                 <button id="2536">
-                    <rect key="frame" x="55" y="132" width="368" height="18"/>
+                    <rect key="frame" x="54" y="142" width="368" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Force a disconnect when no PING response is received." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2537">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1535,7 +1536,7 @@ Gw
                     </connections>
                 </button>
                 <button id="7Re-Oa-iNx">
-                    <rect key="frame" x="55" y="112" width="427" height="18"/>
+                    <rect key="frame" x="54" y="102" width="427" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Refuse connection to the server if it has a bad SSL certificate." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="dz6-nj-V0I">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1543,6 +1544,21 @@ Gw
                     </buttonCell>
                     <connections>
                         <binding destination="2317" name="hidden" keyPath="values.Server Properties Window Sheet —> Show Advanced Settings" id="S4i-vQ-nQ9">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </button>
+                <button id="w5K-aH-URS">
+                    <rect key="frame" x="54" y="122" width="368" height="18"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <buttonCell key="cell" type="check" title="Force a disconnect when reachability changes." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="mLI-Vm-l2s">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="2317" name="hidden" keyPath="values.Server Properties Window Sheet —> Show Advanced Settings" id="H1q-hf-vQv">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>

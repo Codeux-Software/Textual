@@ -54,6 +54,7 @@
 @property (nonatomic, nweak) IBOutlet NSButton *deleteChannelButton;
 @property (nonatomic, nweak) IBOutlet NSButton *deleteHighlightButton;
 @property (nonatomic, nweak) IBOutlet NSButton *deleteIgnoreButton;
+@property (nonatomic, nweak) IBOutlet NSButton *disconnectOnReachabilityChangeCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *editChannelButton;
 @property (nonatomic, nweak) IBOutlet NSButton *editHighlightButton;
 @property (nonatomic, nweak) IBOutlet NSButton *editIgnoreButton;

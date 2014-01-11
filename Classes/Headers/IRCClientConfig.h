@@ -60,6 +60,7 @@ typedef enum TXConnectionProxyType : NSInteger {
 @property (nonatomic, assign) BOOL connectionPrefersIPv6;
 @property (nonatomic, assign) BOOL performPongTimer;
 @property (nonatomic, assign) BOOL performDisconnectOnPongTimer;
+@property (nonatomic, assign) BOOL performDisconnectOnReachabilityChange;
 @property (nonatomic, assign) BOOL connectionUsesSSL;
 @property (nonatomic, assign) BOOL invisibleMode;
 @property (nonatomic, assign) BOOL outgoingFloodControl;
