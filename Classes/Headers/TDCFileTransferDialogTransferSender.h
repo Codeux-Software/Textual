@@ -55,6 +55,7 @@
 @property (nonatomic, assign) TDCFileTransferDialogTransferStatus transferStatus;
 @property (nonatomic, uweak) TDCFileTransferDialog *transferDialog;
 @property (nonatomic, nweak) TDCFileTransferDialogTableCell *parentCell;
+@property (nonatomic, strong) id portMapping;
 @property (nonatomic, assign, readonly) NSInteger sendQueueSize;
 @property (nonatomic, assign, readonly) dispatch_queue_t serverDispatchQueue;
 @property (nonatomic, assign, readonly) dispatch_queue_t serverSocketQueue;
