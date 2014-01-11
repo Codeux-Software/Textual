@@ -420,8 +420,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 		[self.worldController prepareForApplicationTermination];
 		
-		if (onMountainLionOrLater) {
-
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 			if (self.cloudSyncManager) {
 				while (self.terminatingClientCount > 0 || ([self.cloudSyncManager isSyncingLocalKeysDownstream] ||
@@ -439,7 +437,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 				[RZMainRunLoop() runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
 			}
 #endif
-		}
+
 	}
 	
 	[RZPluginManager() unloadPlugins];
