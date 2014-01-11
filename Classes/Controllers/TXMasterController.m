@@ -423,15 +423,22 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		if (onMountainLionOrLater) {
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-			while (self.terminatingClientCount > 0 || ([self.cloudSyncManager isSyncingLocalKeysDownstream] ||
-													   [self.cloudSyncManager isSyncingLocalKeysUpstream]))
-			{
+			if (self.cloudSyncManager) {
+				while (self.terminatingClientCount > 0 || ([self.cloudSyncManager isSyncingLocalKeysDownstream] ||
+														   [self.cloudSyncManager isSyncingLocalKeysUpstream]))
+				{
+					[RZMainRunLoop() runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+				}
+			} else {
+				while (self.terminatingClientCount > 0) {
+					[RZMainRunLoop() runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+				}
+			}
 #else
 			while (self.terminatingClientCount > 0) {
-#endif
-				
 				[RZMainRunLoop() runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
 			}
+#endif
 		}
 	}
 	
