@@ -94,11 +94,23 @@
 	keyword = [NSString stringWithFormat:@"Saved Window State —> Internal —> %@", keyword];
 
 	NSDictionary *dic = [TPCPreferences loadWindowStateWithName:keyword];
+	
+	if (dic == nil) {
+		[self exactlyCenterWindow];
+		
+		return;
+	}
 
 	NSInteger x = [dic integerForKey:@"x"];
 	NSInteger y = [dic integerForKey:@"y"];
 	NSInteger w = [dic integerForKey:@"w"];
 	NSInteger h = [dic integerForKey:@"h"];
+	
+	if (h == 0 || w == 0) {
+		[self exactlyCenterWindow];
+		
+		return;
+	}
 
 	NSRect currFrame = NSMakeRectThatFitsScreen(self.screen, x, y, w, h);
 
