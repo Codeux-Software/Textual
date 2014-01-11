@@ -340,7 +340,9 @@
 	self.pongTimerCheck.state				= self.config.performPongTimer;
 	self.pongTimerDisconnectCheck.state		= self.config.performDisconnectOnPongTimer;
 	
-	self.validateServerSSLCertificateCheck.state	= self.config.validateServerSSLCertificate;
+	self.disconnectOnReachabilityChangeCheck.state = self.config.performDisconnectOnReachabilityChange;
+	
+	self.validateServerSSLCertificateCheck.state = self.config.validateServerSSLCertificate;
 	
 	/* Identity */
 	if (NSObjectIsEmpty(self.config.nickname)) {
@@ -428,12 +430,14 @@
 	self.config.excludedFromCloudSyncing = self.excludedFromCloudSyncingCheck.state;
 #endif
 
-	self.config.zncIgnorePlaybackNotifications	= self.zncIgnorePlaybackNotificationsCheck.state;
+	self.config.zncIgnorePlaybackNotifications = self.zncIgnorePlaybackNotificationsCheck.state;
 
 	self.config.performPongTimer				= self.pongTimerCheck.state;
 	self.config.performDisconnectOnPongTimer	= self.pongTimerDisconnectCheck.state;
 	
-	self.config.validateServerSSLCertificate	= self.validateServerSSLCertificateCheck.state;
+	self.config.validateServerSSLCertificate = self.validateServerSSLCertificateCheck.state;
+	
+	self.config.performDisconnectOnReachabilityChange = self.disconnectOnReachabilityChangeCheck.state;
 	
 	NSString *realhost = nil;
 	NSString *hostname = [self.serverAddressCombo.firstTokenStringValue cleanedServerHostmask];
