@@ -162,6 +162,14 @@
 
 - (void)portMapperDidStartWork:(NSNotification *)aNotification
 {
+	PointerIsNotEmptyAssert(self.portMapping);
+
+	TCMPortMapping *e = [self portMappingForSelf];
+	
+	PointerIsEmpty(e);
+	
+	self.portMapping = e;
+
 	self.transferStatus = TDCFileTransferDialogTransferMappingListeningPortStatus;
 	
 	[self reloadStatusInformation];
@@ -171,7 +179,7 @@
 {
 	NSAssertReturn(self.transferStatus == TDCFileTransferDialogTransferMappingListeningPortStatus);
 
-	TCMPortMapping *e = [self portMappingForSelf];
+	TCMPortMapping *e = self.portMapping;
 	
 	PointerIsEmptyAssert(e);
 	
@@ -221,13 +229,13 @@
 
 - (void)closePortMapping
 {
-	TCMPortMapping *e = [self portMappingForSelf];
-	
-	PointerIsEmptyAssert(e);
+	PointerIsEmptyAssert(self.portMapping);
 
 	TCMPortMapper *pm = [TCMPortMapper sharedInstance];
 	
-	[pm removePortMapping:e];
+	[pm removePortMapping:self.portMapping];
+	
+	self.portMapping = nil;
 	
 	[RZNotificationCenter() removeObserver:self name:TCMPortMapperDidStartWorkNotification object:pm];
 	[RZNotificationCenter() removeObserver:self name:TCMPortMapperDidFinishWorkNotification object:pm];
