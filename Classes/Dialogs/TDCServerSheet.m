@@ -1098,7 +1098,7 @@
 				} else {
 					/* Update existing. */
 
-					[self.config.channelList replaceObjectAtIndex:index withObject:c];
+					[self.config.channelList replaceObjectAtIndex:index withObject:config];
 				}
 
 				break;
@@ -1296,7 +1296,7 @@
 			return c.channelName;
 		} else if ([columnId isEqualToString:@"pass"]) {
 			if (c.secretKeyIsSet) {
-				return c.secretKey;
+				return [c secretKeyValue];
 			} else {
 				return NSStringEmptyPlaceholder;
 			}

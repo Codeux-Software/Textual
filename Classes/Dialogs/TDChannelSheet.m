@@ -124,11 +124,11 @@
 	self.defaultTopicField.stringValue		= self.config.defaultTopic;
 
 	if (self.config.encryptionKeyIsSet) {
-		self.encryptionKeyField.stringValue	= self.config.encryptionKey;
+		self.encryptionKeyField.stringValue	= [self.config encryptionKeyValue];
 	}
 
 	if (self.config.secretKeyIsSet) {
-		self.secretKeyField.stringValue	= self.config.secretKey;
+		self.secretKeyField.stringValue	= [self.config secretKeyValue];
 	}
 
 	self.autoJoinCheck.state			= self.config.autoJoin;
