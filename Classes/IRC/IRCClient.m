@@ -240,6 +240,11 @@
 	}
 #endif
 	
+	/* Write all channel keychains before copying over new configuration. */
+	for (IRCChannelConfig *i in [seed channelList]) {
+		[i writeKeychainItemsToDisk];
+	}
+	
 	/* Populate new seed. */
 	self.config = nil;
 	self.config = [seed mutableCopy];

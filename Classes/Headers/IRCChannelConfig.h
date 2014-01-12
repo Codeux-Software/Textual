@@ -77,4 +77,7 @@ typedef enum IRCChannelType : NSInteger {
 
 - (NSString *)temporarySecretKey;
 - (NSString *)temporaryEncryptionKey;
+
+- (NSString *)secretKeyValue;
+- (NSString *)encryptionKeyValue;
 @end

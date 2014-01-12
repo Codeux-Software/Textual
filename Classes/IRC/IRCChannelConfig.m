@@ -119,6 +119,24 @@
 	return _encryptionKey;
 }
 
+- (NSString *)secretKeyValue
+{
+	if (_secretKey) {
+		return _secretKey;
+	} else {
+		return [self secretKey];
+	}
+}
+
+- (NSString *)encryptionKeyValue
+{
+	if (_encryptionKey) {
+		return _encryptionKey;
+	} else {
+		return [self encryptionKey];
+	}
+}
+
 - (void)writeKeychainItemsToDisk
 {
 	[self writeEncryptionKeyKeychainItemToDisk];
