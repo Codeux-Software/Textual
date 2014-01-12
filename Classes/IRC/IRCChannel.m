@@ -538,6 +538,16 @@
 	return [self.memberList objectForKey:[nickname lowercaseString]];
 }
 
+- (IRCUser *)findMember:(NSString *)nickname
+{
+	return [self memberWithNickname:nickname];
+}
+
+- (IRCUser *)findMember:(NSString *)nickname options:(NSStringCompareOptions)mask;
+{
+	return [self memberWithNickname:nickname];
+}
+
 #pragma mark -
 #pragma mark Table View Internal Management
 

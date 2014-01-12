@@ -80,6 +80,9 @@ typedef enum IRCChannelStatus : NSInteger {
 - (void)print:(TVCLogLine *)logLine;
 - (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock;
 
+- (IRCUser *)findMember:(NSString *)nickname;
+- (IRCUser *)findMember:(NSString *)nickname options:(NSStringCompareOptions)mask;
+
 - (IRCUser *)memberWithNickname:(NSString *)nickname;
 - (IRCUser *)memberAtIndex:(NSInteger)idx; // idx must be on table view.
 
