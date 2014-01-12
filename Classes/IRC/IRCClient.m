@@ -4468,12 +4468,14 @@
 			}
 		}
 
-		[self print:c
-			   type:TVCLogLineModeType
-			   nick:nil
-			   text:TXTFLS(@"IRCModeSet", sendern, modestr)
-		 receivedAt:m.receivedAt
-			command:m.command];
+		if ([TPCPreferences showJoinLeave] && c.config.ignoreJPQActivity == NO) {
+			[self print:c
+				   type:TVCLogLineModeType
+				   nick:nil
+				   text:TXTFLS(@"IRCModeSet", sendern, modestr)
+			 receivedAt:m.receivedAt
+				command:m.command];
+		}
 
 		if (m.isPrintOnlyMessage == NO) {
 			[self.worldController updateTitleFor:c];
