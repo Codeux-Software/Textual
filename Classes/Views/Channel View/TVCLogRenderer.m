@@ -210,7 +210,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			if ([TPCPreferences disableNicknameColorHashing] == YES) {
 				templateTokens[@"inlineNicknameMatchFound"] = @(NO);
 			} else {
-				IRCUser *user = [logController.channel findMember:contentes options:NSCaseInsensitiveSearch];
+				IRCUser *user = [logController.channel memberWithNickname:contentes];
 
 				if (PointerIsEmpty(user) == NO) {
 					if ([user.nickname isEqualIgnoringCase:logController.client.localNickname] == NO) {
@@ -753,7 +753,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 				NSMutableSet *mentionedUsers = [NSMutableSet set];
 
-				NSArray *sortedMembers = logChannel.memberListLengthSorted;
+				NSArray *sortedMembers = [logChannel sortedByNicknameLengthMemberList];
 
 				for (IRCUser *user in sortedMembers) {
 					start = 0;

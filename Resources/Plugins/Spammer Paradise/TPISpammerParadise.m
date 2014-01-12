@@ -64,7 +64,7 @@
 
 - (void)buildListOfUsersOn:(IRCChannel *)channel on:(IRCClient *)client
 {
-	if (NSObjectIsEmpty(channel.memberList)) {
+	if ([channel numberOfMembers] <= 0) {
 		[client printDebugInformation:TPIFLS(@"SpammerParadiseNoUsersInChannel", channel.name) channel:channel];
 
 		return; // We cannot do anything with no users now can we?
@@ -73,7 +73,7 @@
 	/* Build list of users and print it. */
 	NSMutableArray *users = [NSMutableArray array];
 
-	for (IRCUser *u in channel.memberList) {
+	for (IRCUser *u in [channel unsortedMemberList]) {
 		[users safeAddObject:u.nickname];
 	}
 
@@ -89,7 +89,7 @@
     NSMutableDictionary *allUsers = [NSMutableDictionary dictionary];
 
     /* Populate our list by matching an array of users to that of the address. */
-    for (IRCUser *user in channel.memberList) {
+    for (IRCUser *user in [channel unsortedMemberList]) {
         NSObjectIsEmptyAssertLoopContinue(user.address);
 
         NSArray *clones = [allUsers arrayForKey:user.address];

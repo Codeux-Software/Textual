@@ -421,8 +421,8 @@
 		[c preferencesChanged];
 
         if (self.CAPawayNotify == NO) {
-            if (c.memberList.count > [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
-                for (IRCUser *u in c.memberList) {
+            if ([c numberOfMembers] > [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
+                for (IRCUser *u in [c unsortedMemberList]) {
                     u.isAway = NO;
                 }
             }
@@ -1858,7 +1858,7 @@
 			IRCChannel *channel = [self findChannel:targetChannelName];
 
 			if (channel) {
-				IRCUser *user = [channel findMember:banmask];
+				IRCUser *user = [channel memberWithNickname:banmask];
 
 				if (user) {
 					banmask = [user banMask];
@@ -2029,7 +2029,7 @@
 			} else {
 				NSString *nickname = s.getToken.string;
 				
-				IRCUser *user = [selChannel findMember:nickname];
+				IRCUser *user = [selChannel memberWithNickname:nickname];
 
 				if (PointerIsEmpty(user)) {
 					if (isIgnoreCommand) {
@@ -2271,7 +2271,7 @@
 			IRCChannel *channel = [self findChannel:targetChannelName];
 
 			if (channel) {
-				IRCUser *user = [channel findMember:banmask];
+				IRCUser *user = [channel memberWithNickname:banmask];
 
 				if (user) {
 					nickname = user.nickname;
@@ -2564,7 +2564,7 @@
 		case 5049: // Command: NNCOLORESET
 		{
 			if (selChannel && selChannel.isChannel) {
-				for (IRCUser *user in selChannel.memberList) {
+				for (IRCUser *user in [selChannel unsortedMemberList]) {
 					user.colorNumber = -1;
 				}
 			}
@@ -2840,7 +2840,7 @@
 	NSString *mark = NSStringEmptyPlaceholder;
 
 	if (channel && channel.isChannel) {
-		IRCUser *m = [channel findMember:nick];
+		IRCUser *m = [channel memberWithNickname:nick];
 
 		if (m && NSObjectIsNotEmpty(m.mark)) {
 			mark = m.mark;
@@ -2998,7 +2998,7 @@
 	if (nick && channel && (type == TVCLogLinePrivateMessageType ||
 							type == TVCLogLineActionType))
 	{
-		IRCUser *user = [channel findMember:nick];
+		IRCUser *user = [channel memberWithNickname:nick];
 
 		if (user) {
 			colorNumber = user.colorNumber;
@@ -3651,7 +3651,7 @@
 			}];
 
 			/* Weights. */
-			IRCUser *owner = [c findMember:sender];
+			IRCUser *owner = [c memberWithNickname:sender];
 
 			PointerIsEmptyAssert(owner);
 
@@ -4056,7 +4056,7 @@
 	}
 
 	if (m.isPrintOnlyMessage == NO) {
-		if (PointerIsEmpty([c findMember:sendern])) {
+		if (PointerIsEmpty([c memberWithNickname:sendern])) {
 			IRCUser *u = [IRCUser new];
 
 			u.nickname = sendern;
@@ -4282,7 +4282,7 @@
 
 	/* Continue with normal operations. */
 	for (IRCChannel *c in self.channels) {
-		if ([c findMember:sendern]) {
+		if ([c memberWithNickname:sendern]) {
 			if (([TPCPreferences showJoinLeave] && [ignoreChecks ignoreJPQE] == NO && c.config.ignoreJPQActivity == NO) || myself || c.isPrivateMessage) {
 				if (c.isPrivateMessage) {
 					text = TXTFLS(@"IRCUserDisconnectedFromPrivateMessage", sendern);
@@ -4326,7 +4326,7 @@
 	NSString *target = [m paramAt:0];
 
 	for (IRCChannel *c in self.channels) {
-		if ([c findMember:target]) {
+		if ([c memberWithNickname:target]) {
 			[c removeMember:target];
 		}
 	}
@@ -4407,7 +4407,7 @@
 
 	/* Continue with normal operations. */
 	for (IRCChannel *c in self.channels) {
-		if ([c findMember:oldNick]) {
+		if ([c memberWithNickname:oldNick]) {
             
 			if ((myself == NO && [ignoreChecks ignoreJPQE] == NO && [TPCPreferences showJoinLeave] && c.config.ignoreJPQActivity == NO) || myself == YES) {
 				NSString *text = TXTFLS(@"IRCUserChangedNickname", oldNick, newNick);
@@ -4420,9 +4420,7 @@
 					command:m.command];
 			}
 
-			[c renameMember:oldNick to:newNick performOnChange:^(IRCUser *user) {
-				[c updateMemberOnTableView:user];
-			}];
+			[c renameMember:oldNick to:newNick];
 		}
 	}
 
@@ -4465,9 +4463,7 @@
 			BOOL performWho = NO;
 
 			for (IRCModeInfo *h in info) {
-				[c changeMember:h.modeParamater mode:h.modeToken value:h.modeIsSet performOnChange:^(IRCUser *user) {
-					[c updateMemberOnTableView:user];
-				}];
+				[c changeMember:h.modeParamater mode:h.modeToken value:h.modeIsSet];
 
 				if (h.modeIsSet == NO && self.CAPmultiPrefix == NO) {
 					performWho = YES;
@@ -4753,7 +4749,7 @@
     NSString *nickname = m.sender.nickname;
 
     for (IRCChannel *channel in self.channels) {
-        IRCUser *user = [channel findMember:nickname];
+        IRCUser *user = [channel memberWithNickname:nickname];
 
         PointerIsEmptyAssertLoopContinue(user);
 
@@ -5012,7 +5008,7 @@
             NSAssertReturnLoopBreak(self.CAPawayNotify);
 
             for (IRCChannel *channel in self.channels) {
-                IRCUser *myself = [channel findMember:self.localNickname];
+                IRCUser *myself = [channel memberWithNickname:self.localNickname];
                 
                 PointerIsEmptyAssertLoopContinue(myself); // This *should* never be empty.
                 
@@ -5431,7 +5427,7 @@
 
 			BOOL checkForDiff = YES;
 
-			IRCUser *ou = [c findMember:nickname];
+			IRCUser *ou = [c memberWithNickname:nickname];
 			IRCUser *nu;
 
 			if (PointerIsEmpty(ou)) {
@@ -5493,10 +5489,10 @@
 
 			/* Continue normal WHO reply tracking. */
 			if (checkForDiff) {
-				if ([c memberRequiresRedraw:ou comparedTo:nu]) {
-					[c migrateUser:ou from:nu]; // Migrate nu to ou.
+				[ou migrate:nu];
 
-					[c updateMemberOnTableView:ou]; // Redraw the user in the user list.
+				if ([c memberRequiresRedraw:ou comparedTo:nu]) {
+					[c addMember:ou];
 				}
 			} else {
 				[c addMember:nu]; // User was never on channel. Add them…
@@ -7383,7 +7379,7 @@
 
 	for (IRCChannel *channel in self.channels) {
 		if (self.CAPawayNotify == NO) {
-            if (channel.isChannel && channel.isActive && channel.memberList.count <= [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
+            if (channel.isChannel && channel.isActive && [channel numberOfMembers] <= [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
                 [self send:IRCPrivateCommandIndex("who"), channel.name, nil];
             }
         }

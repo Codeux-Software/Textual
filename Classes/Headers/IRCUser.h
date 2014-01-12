@@ -67,6 +67,8 @@
 - (NSString *)banMask;
 - (NSString *)hostmask;
 
+- (NSString *)lowercaseNickname;
+
 - (void)outgoingConversation;
 - (void)incomingConversation;
 - (void)conversation;
