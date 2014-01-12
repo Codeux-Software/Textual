@@ -38,6 +38,7 @@
 #import "TextualApplication.h"
 
 @interface TVCMemberList ()
+@property (nonatomic, assign) BOOL beginUpdatesCallRunning;
 @property (nonatomic, strong) id userPopoverTrackingArea;
 @property (nonatomic, assign) BOOL userPopoverMouseIsInView;
 @property (nonatomic, assign) BOOL userPopoverTimerIsActive;
@@ -46,6 +47,27 @@
 @end
 
 @implementation TVCMemberList
+
+#pragma mark -
+#pragma mark Update Grouping
+
+- (void)beginGroupedUpdates
+{
+	NSAssertReturn(self.beginUpdatesCallRunning == NO);
+
+	self.beginUpdatesCallRunning = YES;
+	
+	[self beginUpdates];
+}
+
+- (void)endGroupedUpdates
+{
+	NSAssertReturn(self.beginUpdatesCallRunning);
+	
+	self.beginUpdatesCallRunning = NO;
+	
+	[self endUpdates];
+}
 
 #pragma mark -
 #pragma mark Additions/Removal

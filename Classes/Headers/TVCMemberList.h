@@ -48,6 +48,9 @@
 - (void)removeItemFromList:(id)oldObject;
 
 /* Drawing. */
+- (void)beginGroupedUpdates;
+- (void)endGroupedUpdates;
+
 - (void)reloadAllDrawings;
 - (void)reloadAllUserInterfaceElements;
 

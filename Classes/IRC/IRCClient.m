@@ -4056,32 +4056,20 @@
 	}
 
 	if (m.isPrintOnlyMessage == NO) {
-		if (PointerIsEmpty([c memberWithNickname:sendern])) {
-			IRCUser *u = [IRCUser new];
+		/* Add to existing query? */
+		IRCChannel *query = [self findChannel:sendern];
 
-			u.nickname = sendern;
-			u.username = m.sender.username;
-			u.address = m.sender.address;
-			
-			u.supportInfo = self.isupport;
+		if (query && query.isActive == NO) {
+			[query activate];
 
-			[c addMember:u];
+			[self print:query
+				   type:TVCLogLineJoinType
+				   nick:nil
+				   text:TXTFLS(@"IRCUserReconnectedToPrivateMessage", sendern)
+			 receivedAt:m.receivedAt
+				command:m.command];
 
-			/* Add to existing query? */
-			IRCChannel *query = [self findChannel:sendern];
-
-			if (query && query.isActive == NO) {
-				[query activate];
-
-				[self print:query
-					   type:TVCLogLineJoinType
-					   nick:nil
-					   text:TXTFLS(@"IRCUserReconnectedToPrivateMessage", sendern)
-				 receivedAt:m.receivedAt
-					command:m.command];
-
-				[self.worldController reloadTreeItem:query];
-			}
+			[self.worldController reloadTreeItem:query];
 		}
 	}
 
@@ -5377,6 +5365,12 @@
 
 			IRCChannel *c = [self findChannel:channel];
 			
+			if (c) {
+				if (c == self.worldController.selectedChannel) {
+					[self.masterController.memberList endGroupedUpdates];
+				}
+			}
+			
 			if (self.inUserInvokedWhoRequest) {
 				[self printUnknownReply:m];
 
@@ -5400,6 +5394,10 @@
 			IRCChannel *c = [self findChannel:channel];
 
 			PointerIsEmptyAssertLoopBreak(c);
+			
+			if (c == self.worldController.selectedChannel) {
+				[self.masterController.memberList beginGroupedUpdates];
+			}
 			
 			NSString *nickname = [m paramAt:5];
 			NSString *hostmask = [m paramAt:3];
@@ -5489,9 +5487,13 @@
 
 			/* Continue normal WHO reply tracking. */
 			if (checkForDiff) {
+				BOOL requiresRedraw = [c memberRequiresRedraw:ou comparedTo:nu];
+
 				[ou migrate:nu];
 
-				if ([c memberRequiresRedraw:ou comparedTo:nu]) {
+				if (requiresRedraw) {
+					[c removeMember:[nu nickname]];
+
 					[c addMember:ou];
 				}
 			} else {
@@ -5514,6 +5516,10 @@
 			IRCChannel *c = [self findChannel:channel];
 
 			PointerIsEmptyAssertLoopBreak(c);
+			
+			if (c == self.worldController.selectedChannel) {
+				[self.masterController.memberList beginGroupedUpdates];
+			}
 
 			NSArray *items = [nameblob componentsSeparatedByString:NSStringWhitespacePlaceholder];
 
@@ -5573,6 +5579,10 @@
 			IRCChannel *c = [self findChannel:channel];
 
 			PointerIsEmptyAssertLoopBreak(c);
+
+			if (c == self.worldController.selectedChannel) {
+				[self.masterController.memberList endGroupedUpdates];
+			}
 
 			if (c.numberOfMembers <= 1) {
 				NSString *mode = c.config.defaultModes;
