@@ -56,10 +56,6 @@ typedef enum IRCChannelStatus : NSInteger {
 @property (nonatomic, assign) BOOL inUserInvokedModeRequest;
 @property (nonatomic, assign) NSInteger channelJoinTime;
 
-@property (strong) NSArray *memberList;
-@property (strong) NSArray *memberListLengthSorted; // Sorted member list based on nickname length. Used by conversation tracking.
-@property (strong) NSArray *memberListWithoutIgnores;
-
 - (void)setup:(IRCChannelConfig *)seed;
 - (void)updateConfig:(IRCChannelConfig *)seed;
 - (NSMutableDictionary *)dictionaryValue;
@@ -84,28 +80,25 @@ typedef enum IRCChannelStatus : NSInteger {
 - (void)print:(TVCLogLine *)logLine;
 - (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock;
 
-- (void)addMember:(IRCUser *)user;
-- (void)removeMember:(NSString *)nick;
+- (IRCUser *)memberWithNickname:(NSString *)nickname;
+- (IRCUser *)memberAtIndex:(NSInteger)idx; // idx must be on table view.
 
-/* performOnChange blocks allow us to relaod interface elements for the user that the changes happened to without reloading the entire list. */
-- (void)changeMember:(NSString *)nick mode:(NSString *)mode value:(BOOL)value performOnChange:(void (^)(IRCUser *user))block; // -changeMember:value:performOnChange: is used for mode changs.
-- (void)renameMember:(NSString *)fromNick to:(NSString *)toNick performOnChange:(void (^)(IRCUser *user))block; // -renameMember:to:performOnChange: is used for nickname changes.
+- (void)addMember:(IRCUser *)user;
+- (void)removeMember:(NSString *)nickname;
+- (void)renameMember:(NSString *)fromNickname to:(NSString *)toNickname;
+- (void)changeMember:(NSString *)nickname mode:(NSString *)mode value:(BOOL)value;
 
 - (void)clearMembers;
 
-- (IRCUser *)memberAtIndex:(NSInteger)index;
-
-- (IRCUser *)findMember:(NSString *)nick;
-- (IRCUser *)findMember:(NSString *)nick options:(NSStringCompareOptions)mask;
-
 - (NSInteger)numberOfMembers;
+
+- (NSArray *)unsortedMemberList;
+- (NSArray *)sortedByNicknameLengthMemberList;
 
 - (void)setEncryptionKey:(NSString *)encryptionKey; // Use this instead of config to inform view of change.
 
 /* For redrawing the member cells in table view. */
 - (BOOL)memberRequiresRedraw:(IRCUser *)user1 comparedTo:(IRCUser *)user2;
-
-- (void)migrateUser:(IRCUser *)user1 from:(IRCUser *)user2;
 
 - (void)updateAllMembersOnTableView;
 - (void)updateMemberOnTableView:(IRCUser *)user;

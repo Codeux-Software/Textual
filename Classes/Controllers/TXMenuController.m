@@ -626,7 +626,7 @@
 			}
 		} else {
 			if (pontrEmpty == NO) {
-				IRCUser *m = [c findMember:self.pointedNickname];
+				IRCUser *m = [c memberWithNickname:self.pointedNickname];
 				
 				if (m) {
 					[ary safeAddObject:m];

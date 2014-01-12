@@ -148,6 +148,11 @@
 	return [[self.nickname lowercaseString] hash];
 }
 
+- (NSString *)lowercaseNickname
+{
+	return [self.nickname lowercaseString];
+}
+
 - (CGFloat)totalWeight
 {
 	[self decayConversation];

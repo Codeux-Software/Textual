@@ -198,12 +198,12 @@
 
 - (NSInteger)channelMemberCount
 {
-    return self.owner.channel.memberList.count;
+    return [self.owner.channel numberOfMembers];
 }
 
 - (NSInteger)serverChannelCount
 {
-    return self.owner.client.channels.count;
+    return [self.owner.client.channels count];
 }
 
 - (BOOL)serverIsConnected
