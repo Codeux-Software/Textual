@@ -349,9 +349,6 @@
 - (void)addMember:(IRCUser *)user
 {
 	PointerIsEmptyAssert(user);
-	
-	/* Remove old entries. */
-	[self removeMember:[user nickname]];
 
 	/* Do sorted insert. */
 	[self sortedInsert:user];
