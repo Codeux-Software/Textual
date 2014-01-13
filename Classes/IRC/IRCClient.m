@@ -5584,8 +5584,8 @@
                 member.username = [nickname usernameFromHostmask];
                 member.address = [nickname addressFromHostmask];
 
-				if ([c memberWithNickname:nickname]) {
-					[c removeMember:nickname];
+				if ([c memberWithNickname:member.nickname]) {
+					[c removeMember:member.nickname];
 				}
 				
 				[c addMember:member];
