@@ -4061,20 +4061,32 @@
 	}
 
 	if (m.isPrintOnlyMessage == NO) {
-		/* Add to existing query? */
-		IRCChannel *query = [self findChannel:sendern];
-
-		if (query && query.isActive == NO) {
-			[query activate];
-
-			[self print:query
-				   type:TVCLogLineJoinType
-				   nick:nil
-				   text:TXTFLS(@"IRCUserReconnectedToPrivateMessage", sendern)
-			 receivedAt:m.receivedAt
-				command:m.command];
-
-			[self.worldController reloadTreeItem:query];
+		if (PointerIsEmpty([c memberWithNickname:sendern])) {
+			IRCUser *u = [IRCUser new];
+			
+			u.nickname = sendern;
+			u.username = m.sender.username;
+			u.address = m.sender.address;
+			
+			u.supportInfo = self.isupport;
+			
+			[c addMember:u];
+			
+			/* Add to existing query? */
+			IRCChannel *query = [self findChannel:sendern];
+			
+			if (query && query.isActive == NO) {
+				[query activate];
+				
+				[self print:query
+					   type:TVCLogLineJoinType
+					   nick:nil
+					   text:TXTFLS(@"IRCUserReconnectedToPrivateMessage", sendern)
+				 receivedAt:m.receivedAt
+					command:m.command];
+				
+				[self.worldController reloadTreeItem:query];
+			}
 		}
 	}
 
@@ -5572,6 +5584,10 @@
                 member.username = [nickname usernameFromHostmask];
                 member.address = [nickname addressFromHostmask];
 
+				if ([c memberWithNickname:nickname]) {
+					[c removeMember:nickname];
+				}
+				
 				[c addMember:member];
 			}
 
