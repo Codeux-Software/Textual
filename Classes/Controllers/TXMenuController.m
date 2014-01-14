@@ -1122,7 +1122,12 @@
 	IRCClientConfig *config = u.storedConfig.mutableCopy;
 
 	config.itemUUID = [NSString stringWithUUID];
+	
 	config.clientName = [config.clientName stringByAppendingString:@"_"];
+	
+	config.serverPassword = NSStringEmptyPlaceholder;
+	config.nicknamePassword = NSStringEmptyPlaceholder;
+	config.proxyPassword = NSStringEmptyPlaceholder;
 	
 	IRCClient *n = [self.worldController createClient:config reload:YES];
 	
