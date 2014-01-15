@@ -54,6 +54,11 @@
 	
 	NSString *host = [u.host lowercaseString];
 	NSString *path = [u.path encodeURIFragment];
+	NSString *query = [u.query encodeURIFragment];
+    
+    if (query != nil){
+        path = [[path stringByAppendingString:@"?"] stringByAppendingString:query];
+    }
 
 	if ([scheme isEqualToString:@"file"]) {
 		// If the file is a local file (file:// scheme), then let us ignore it.
