@@ -78,11 +78,6 @@
 	return nil;
 }
 
-- (void)onDblClick:(id)e
-{
-	[self.owner logViewOnDoubleClick:e];
-}
-
 - (BOOL)shouldStopDoubleClick:(id)e
 {
 	NSInteger dr = _doubleClickRadius;

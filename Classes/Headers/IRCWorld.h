@@ -138,7 +138,6 @@
 - (void)executeScriptCommandOnAllViews:(NSString *)command arguments:(NSArray *)args onQueue:(BOOL)onQueue;
 
 - (void)logKeyDown:(NSEvent *)e;
-- (void)logDoubleClick:(NSString *)s;
 
 - (void)clearContentsOfClient:(IRCClient *)u;
 - (void)clearContentsOfChannel:(IRCChannel *)c inClient:(IRCClient *)u;

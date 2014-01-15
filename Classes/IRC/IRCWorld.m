@@ -1155,38 +1155,6 @@
 	[self.masterController.mainWindow sendEvent:e];
 }
 
-- (void)logDoubleClick:(NSString *)s
-{
-	NSArray *ary = [s componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-
-	NSObjectIsEmptyAssert(ary);
-
-	NSString *kind = [ary objectAtIndex:0];
-	
-	if ([kind isEqualToString:@"client"]) {
-		if ([ary count] >= 2) {
-			NSString *uid = [ary objectAtIndex:1];
-			
-			IRCClient *u = [self findClientById:uid];
-			
-			if (u) {
-				[self select:u];
-			}
-		}
-	} else if ([kind isEqualToString:@"channel"]) {
-		if ([ary count] >= 3) {
-			NSString *uid = [ary objectAtIndex:1];
-			NSString *cid = [ary objectAtIndex:2];
-			
-			IRCChannel *c = [self findChannelByClientId:uid channelId:cid];
-			
-			if (c) {
-				[self select:c];
-			}
-		}
-	}
-}
-
 #pragma mark -
 #pragma mark NSOutlineView Delegate
 

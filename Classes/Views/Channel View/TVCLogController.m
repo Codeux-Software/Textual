@@ -1467,9 +1467,4 @@
 	[self.worldController logKeyDown:e];
 }
 
-- (void)logViewOnDoubleClick:(NSString *)e
-{
-	[self.worldController logDoubleClick:e];
-}
-
 @end
