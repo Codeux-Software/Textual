@@ -104,7 +104,6 @@ typedef enum IRCDisconnectMode : NSInteger {
 @property (nonatomic, assign) NSTimeInterval lastMessageReceived;
 @property (nonatomic, strong) NSString *serverRedirectAddressTemporaryStore; // Temporary store for RPL_BOUNCE (010) redirects.
 @property (nonatomic, assign) NSInteger serverRedirectPortTemporaryStore; // Temporary store for RPL_BOUNCE (010) redirects.
-@property (nonatomic, assign) BOOL isHostReachable;
 
 - (void)setup:(id)seed;
 
