@@ -123,7 +123,7 @@
 	NSString *imageContentType = [headers stringForKey:@"Content-Type"];
 
 	/* Check size. */
-	if (sizeInBytes > [TPCPreferences inlineImagesMaxFilesize] || sizeInBytes < 0) {
+	if (sizeInBytes > [TPCPreferences inlineImagesMaxFilesize] || sizeInBytes == 0) {
 		return NO;
 	}
 
