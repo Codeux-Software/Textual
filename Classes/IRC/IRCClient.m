@@ -489,7 +489,8 @@
 {
 	[self destroyReachability];
 
-	self.hostReachability = [Reachability reachabilityWithHostname:self.config.serverAddress];
+	 self.hostReachability = [Reachability reachabilityWithHostname:self.config.serverAddress];
+	[self.hostReachability setReachableOnWWAN:NO];
 
 	[RZNotificationCenter() addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:self.hostReachability];
 
@@ -498,15 +499,13 @@
 
 - (void)destroyReachability
 {
-	self.isHostReachable = NO;
+	PointerIsNotEmptyAssert(self.hostReachability);
 
-	if (PointerIsNotEmpty(self.hostReachability)) {
-		[RZNotificationCenter() removeObserver:self name:kReachabilityChangedNotification object:self.hostReachability];
+	[RZNotificationCenter() removeObserver:self name:kReachabilityChangedNotification object:self.hostReachability];
 
-		[self.hostReachability stopNotifier];
+	[self.hostReachability stopNotifier];
 
-		self.hostReachability = nil;
-	}
+	self.hostReachability = nil;
 }
 
 - (void)reachabilityChanged:(NSNotification *)note
@@ -521,10 +520,8 @@
 						  self.hostReachability.currentReachabilityFlags);
 	}
 
-	self.isHostReachable = self.hostReachability.isReachable;
-	
 	if (self.isLoggedIn) {
-		if (self.isHostReachable == NO) {
+		if ([self.hostReachability isReachableViaWiFi] == NO) {
 			if (self.config.performDisconnectOnReachabilityChange) {
 				self.disconnectType = IRCDisconnectReachabilityChangeMode;
 				self.reconnectEnabled = YES;
@@ -6659,7 +6656,7 @@
 		return;
 	}
 	
-	if (self.isHostReachable) {
+	if ([self.hostReachability isReachableViaWiFi]) {
 		[self connect];
 	} else {
 		[self printDebugInformationToConsole:TXTFLS(@"AutoConnectAfterWakeUpHostNotReachable", self.config.serverAddress, @(self.connectDelay))];
