@@ -374,7 +374,7 @@
 	if (self.isChannel && self.isSelectedChannel) {
 		NSInteger idx = [self.memberListView rowForItem:user];
 		
-		if (NSDissimilarObjects(idx, NSNotFound)) {
+		if (idx >= 0) {
 			[self.memberListView removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:idx]
 											 inParent:nil
 										withAnimation:NSTableViewAnimationEffectNone]; // Do the actual removal.
