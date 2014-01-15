@@ -56,7 +56,7 @@
 	NSString *path = [u.path encodeURIFragment];
 	NSString *query = [u.query encodeURIFragment];
     
-    if (query != nil){
+    if (query) {
         path = [[path stringByAppendingString:@"?"] stringByAppendingString:query];
     }
 
