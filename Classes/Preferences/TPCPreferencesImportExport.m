@@ -247,6 +247,7 @@
 		[key hasPrefix:@"Security ->"] ||									/* Textual owned prefix. */
 		[key hasPrefix:@"Window -> Main Window"] ||							/* Textual owned prefix. */
 		[key hasPrefix:@"Saved Window State —> Internal —> "] ||			/* Textual owned prefix. */
+		[key hasPrefix:@"Saved Window State —> Internal (v2) —> "] ||		/* Textual owned prefix. */
 		[key hasPrefix:@"Text Input Prompt Suppression -> "] ||				/* Textual owned prefix. */
 
 		[key hasPrefix:@"LogTranscriptDestinationSecurityBookmark"] ||				/* Textual owned prefix. */

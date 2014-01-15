@@ -73,7 +73,7 @@
 {
 	NSObjectIsEmptyAssert(keyword);
 
-	keyword = [NSString stringWithFormat:@"Saved Window State —> Internal —> %@", keyword];
+	keyword = [NSString stringWithFormat:@"Saved Window State —> Internal (v2) —> %@", keyword];
 
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 
@@ -91,7 +91,7 @@
 {
 	NSObjectIsEmptyAssert(keyword);
 
-	keyword = [NSString stringWithFormat:@"Saved Window State —> Internal —> %@", keyword];
+	keyword = [NSString stringWithFormat:@"Saved Window State —> Internal (v2) —> %@", keyword];
 
 	NSDictionary *dic = [TPCPreferences loadWindowStateWithName:keyword];
 	
