@@ -97,8 +97,6 @@
 
 - (NSString *)renderedBodyForTranscriptLog:(TVCLogLine *)line;
 
-- (void)logViewOnDoubleClick:(NSString *)e;
-
 - (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args; // Defaults to onQueue YES
 - (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args onQueue:(BOOL)onQueue;
 @end
