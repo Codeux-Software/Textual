@@ -496,7 +496,9 @@ NSString *IRCPublicCommandIndex(const char *key)
 			@autoreleasepool {
 				NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationScriptsDirectory, NSUserDomainMask, YES);
 				
-				if ([searchArray count]) path = [searchArray[0] copy];
+				if ([searchArray count]) {
+					path = [searchArray[0] copy];
+				}
 			}
 		});
 		
