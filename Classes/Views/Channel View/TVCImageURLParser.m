@@ -69,7 +69,7 @@
 
 	NSString *plguinResult = [RZPluginManager() processInlineMediaContentURL:url];
 
-	if (NSObjectIsNotEmpty(plguinResult)) {
+	if (plguinResult) {
 		return plguinResult;
 	}
 
