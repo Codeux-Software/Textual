@@ -1152,7 +1152,7 @@
 		return;
 	}
 
-	[self.masterController.mainWindow sendEvent:e];
+	[self.masterController.inputTextField keyDown:e];
 }
 
 #pragma mark -
