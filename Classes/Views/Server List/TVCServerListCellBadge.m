@@ -85,8 +85,12 @@
 	
 	BOOL isHighlight = (nicknameHighlightCount >= 1);
 	
-	if (channel.config.showTreeBadgeCount == NO && isHighlight == NO) {
-		return nil;
+	if (channel.config.showTreeBadgeCount == NO) {
+		if (isHighlight) {
+			channelTreeUnreadCount = nicknameHighlightCount;
+		} else {
+			return nil;
+		}
 	}
 
 	/* Begin draw if we want to. */
