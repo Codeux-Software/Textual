@@ -2146,7 +2146,7 @@ CA
                                         <rect key="frame" x="120" y="0.0" width="532" height="513"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
-                                            <box canDrawConcurrently="YES" title="Title" boxType="custom" borderType="none" titlePosition="noTitle" id="2806" userLabel="Chat Box - Title">
+                                            <box title="Title" boxType="custom" borderType="none" titlePosition="noTitle" id="2806" userLabel="Chat Box - Title">
                                                 <rect key="frame" x="0.0" y="0.0" width="276" height="513"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <view key="contentView">

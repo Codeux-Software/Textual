@@ -122,6 +122,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 	self.mainWindowIsActive = YES;
 
+	[self.mainWindow setAllowsConcurrentViewDrawing:NO];
 	[self.mainWindow makeKeyAndOrderFront:nil];
 	[self.mainWindow setAlphaValue:[TPCPreferences themeTransparency]];
 	
