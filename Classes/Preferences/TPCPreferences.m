@@ -1338,9 +1338,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 		case 8: return			(TXFSLongInt)20971520;			// 20 MB
 		case 9: return			(TXFSLongInt)52428800;			// 50 MB
 		case 10: return			(TXFSLongInt)104857600;			// 100 MB
-		case 11: return			(TXFSLongInt)1073741824;		// 1 GB
-		case 12: return			(TXFSLongInt)1099511627776;		// 1 TB
-		default: return			(TXFSLongInt)5242880;			// 5 MB
+		default: return			(TXFSLongInt)104857600;			// 10 MB
 	}
 }
 
