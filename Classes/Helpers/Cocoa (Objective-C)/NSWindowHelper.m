@@ -81,8 +81,6 @@
 
 	[dic setInteger:rect.origin.x forKey:@"x"];
 	[dic setInteger:rect.origin.y forKey:@"y"];
-	[dic setInteger:rect.size.width forKey:@"w"];
-	[dic setInteger:rect.size.height forKey:@"h"];
 
 	[TPCPreferences saveWindowState:dic name:keyword];
 }
@@ -103,14 +101,9 @@
 
 	NSInteger x = [dic integerForKey:@"x"];
 	NSInteger y = [dic integerForKey:@"y"];
-	NSInteger w = [dic integerForKey:@"w"];
-	NSInteger h = [dic integerForKey:@"h"];
-	
-	if (h == 0 || w == 0) {
-		[self exactlyCenterWindow];
-		
-		return;
-	}
+
+	NSInteger w = self.frame.size.width;
+	NSInteger h = self.frame.size.height;
 
 	NSRect currFrame = NSMakeRectThatFitsScreen(self.screen, x, y, w, h);
 
