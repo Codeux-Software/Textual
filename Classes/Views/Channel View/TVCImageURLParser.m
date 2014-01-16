@@ -46,9 +46,21 @@
 	return @[@"image/gif", @"image/jpeg", @"image/png", @"image/svg+xml", @"image/tiff", @"image/x-ms-bmp"];
 }
 
+/* Takes URL, places it on a pasteboard, and hands off to a WebView instance.
+ Doing so is a dead simple hack to convert IDN domains to ASCII. */
++ (NSURL *)URLFromWebViewPasteboard:(NSString *)baseURL
+{
+	NSPasteboard *pasteboard = [NSPasteboard pasteboardWithUniqueName];
+	
+	[pasteboard setStringContent:baseURL];
+	
+	return [WebView URLFromPasteboard:pasteboard];
+}
+
 + (NSString *)imageURLFromBase:(NSString *)url
 {
-	NSURL *u = [NSURL URLWithString:[url encodeURIFragment]];
+	/* Convert URL. */
+	NSURL *u = [TVCImageURLParser URLFromWebViewPasteboard:url];
 
 	NSString *scheme = u.scheme;
 	
@@ -335,6 +347,10 @@
 		if ([s isAlphabeticNumericOnly] && s.length == 12) {
 			return [NSString stringWithFormat:@"http://cl.ly%@/content", path];
 		}
+	}
+
+	if ([TPCPreferences inlineImagesDownloadsAllIgnoringCommonPatterns]) {
+		return [u absoluteString];
 	}
 
 	return nil;

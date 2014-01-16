@@ -1537,7 +1537,7 @@
                                                     <menuItem title="10 Megabytes" tag="6" id="hll-5X-Q7D"/>
                                                     <menuItem title="15 Megabytes" tag="7" id="G56-DX-Q4a"/>
                                                     <menuItem title="20 Megabytes" tag="8" id="soc-re-9cr"/>
-                                                    <menuItem title="50 Megabytes" state="on" tag="9" id="QXf-Zr-EOZ"/>
+                                                    <menuItem title="50 Megabytes" tag="9" id="QXf-Zr-EOZ"/>
                                                     <menuItem title="100 Megabytes" state="on" tag="10" id="hf5-Yq-gsF"/>
                                                 </items>
                                             </menu>
@@ -2914,7 +2914,7 @@
             </subviews>
         </customView>
         <customView id="6648" userLabel="Hidden Settings">
-            <rect key="frame" x="0.0" y="0.0" width="534" height="229"/>
+            <rect key="frame" x="0.0" y="0.0" width="534" height="233"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <userGuides>
                 <userLayoutGuide location="32" affinity="minX"/>
@@ -2923,7 +2923,7 @@
             </userGuides>
             <subviews>
                 <textField verticalHuggingPriority="750" id="6649">
-                    <rect key="frame" x="31" y="185" width="473" height="28"/>
+                    <rect key="frame" x="31" y="189" width="473" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" id="6665">
                         <font key="font" metaFont="systemBold" size="10"/>
@@ -2932,19 +2932,8 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button id="6807">
-                    <rect key="frame" x="31" y="144" width="285" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Base nickname color hashing off a UUID." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6808">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="cellTitle"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="1247" name="value" keyPath="values.UUIDBasedNicknameColorHashing" id="6811"/>
-                    </connections>
-                </button>
                 <textField verticalHuggingPriority="750" id="7022">
-                    <rect key="frame" x="30" y="76" width="117" height="13"/>
+                    <rect key="frame" x="31" y="76" width="117" height="13"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Fake CTCP Version:" id="7023">
                         <font key="font" metaFont="cellTitle"/>
@@ -2953,7 +2942,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="7038">
-                    <rect key="frame" x="42" y="23" width="459" height="45"/>
+                    <rect key="frame" x="43" y="23" width="459" height="45"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="7039">
                         <font key="font" metaFont="cellTitle"/>
@@ -2965,21 +2954,21 @@
                     </connections>
                 </textField>
                 <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7345">
-                    <rect key="frame" x="46" y="173" width="442" height="5"/>
+                    <rect key="frame" x="46" y="177" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7346">
-                    <rect key="frame" x="44" y="100" width="442" height="5"/>
+                    <rect key="frame" x="45" y="100" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <button id="7496">
-                    <rect key="frame" x="31" y="116" width="251" height="18"/>
+                    <rect key="frame" x="31" y="147" width="251" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Do not force minimum window size." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="7497">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2990,7 +2979,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="7499">
-                    <rect key="frame" x="315" y="118" width="201" height="14"/>
+                    <rect key="frame" x="315" y="149" width="201" height="14"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="** Restart required to apply changes." id="7500">
                         <font key="font" metaFont="system" size="10"/>
@@ -2998,6 +2987,20 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button id="Uhu-59-efa">
+                    <rect key="frame" x="31" y="119" width="373" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Every single link posted is scanned to check if it is an image." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="QIo-xV-BjM">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                        <connections>
+                            <binding destination="1247" name="value" keyPath="values.InlineMediaDownloadsAllIgnoringCommonPatterns" id="UAo-dy-JqZ"/>
+                        </connections>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="1247" name="value" keyPath="values.InlineMediaDownloadsAllIgnoringCommonPatterns" id="nFO-kH-i7N"/>
+                    </connections>
+                </button>
             </subviews>
         </customView>
         <customView id="6832" userLabel="Interface Settings">

@@ -83,7 +83,7 @@
 
 	/* Create the request. */
 	/* We use a mutable request because we are going to set the HTTP method. */
-	NSURL *requestURL = [self URLFromControllerPasteboard:baseURL];
+	NSURL *requestURL = [NSURL URLWithString:baseURL];
 
 	NSMutableURLRequest *baseRequest = [NSMutableURLRequest requestWithURL:requestURL
 															   cachePolicy:NSURLRequestReloadIgnoringCacheData
@@ -106,15 +106,6 @@
 	self.requestConnection = [[NSURLConnection alloc] initWithRequest:baseRequest delegate:self];
 
 	[self.requestConnection start];
-}
-
-- (NSURL *)URLFromControllerPasteboard:(NSString *)baseURL
-{
-	NSPasteboard *pasteboard = [NSPasteboard pasteboardWithUniqueName];
-
-	[pasteboard setStringContent:baseURL];
-
-	return [WebView URLFromPasteboard:pasteboard];
 }
 
 #pragma mark -
