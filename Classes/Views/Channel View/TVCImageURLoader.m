@@ -110,19 +110,11 @@
 
 - (NSURL *)URLFromControllerPasteboard:(NSString *)baseURL
 {
-	NSURL *expandedURL = nil;
+	NSPasteboard *pasteboard = [NSPasteboard pasteboardWithUniqueName];
 
-	NSString *pasteboardName = [NSString stringWithFormat:@"AuxiliaryIDNConversionPasteboard-%@", [NSString stringWithUUID]];
+	[pasteboard setStringContent:baseURL];
 
-	NSPasteboard *pasteboard = [NSPasteboard pasteboardWithName:pasteboardName];
-
-	[pasteboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
-
-	if ([pasteboard setString:baseURL forType:NSStringPboardType]) {
-		expandedURL = [WebView URLFromPasteboard:pasteboard];
-	}
-
-	return expandedURL;
+	return [WebView URLFromPasteboard:pasteboard];
 }
 
 #pragma mark -
