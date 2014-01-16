@@ -201,6 +201,16 @@
 {
 	if (self.isInRequestWithCheckForMaximumHeight) {
 		[self.responseData appendData:data]; // We only care about the data if we are going to be checking its size.
+
+		/* If the Content-Length header was not available, then we
+		 still go ahead and check the downloaded data length here. */
+		if ([self.responseData length] > [TPCPreferences inlineImagesMaxFilesize]) {
+			LogToConsole(@"Inline image exceeds maximum file length.");
+			
+			[self destroyConnectionRequest];
+			
+			return;
+		}
 	}
 }
 
