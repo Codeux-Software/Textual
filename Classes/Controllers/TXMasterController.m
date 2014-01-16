@@ -216,14 +216,10 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	/* Make sure the main window can fit in the new screen resolution. */
 	if (self.isInFullScreenMode) {
 		/* Reset window frame if screen resolution is changed. */
-		NSRect oldFrame = [self.mainWindow frame];
-		NSRect newFrame = [RZMainWindowScreen() frame];
-		
-		oldFrame.origin.x = 0;
-		oldFrame.origin.y = 0;
-		oldFrame.size = newFrame.size;
-		
-		[self.mainWindow setFrame:oldFrame display:YES animate:YES];
+		NSRect rectToFitScreen = [self.mainWindow constrainFrameRect:[RZMainWindowScreen() frame]
+															toScreen:RZMainWindowScreen()];
+
+		[self.mainWindow setFrame:rectToFitScreen display:YES animate:YES];
 	} else {
 		NSRect windowRect = [self.mainWindow frame];
 	
