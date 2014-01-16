@@ -126,10 +126,6 @@
 	if (_colorNumber < 0) {
 		NSString *hashName = [self.nickname.lowercaseString sha1];
 
-		if ([RZUserDefaults() boolForKey:@"UUIDBasedNicknameColorHashing"]) {
-			hashName = [NSString stringWithUUID];
-		}
-		
 		self.colorNumber = ([hashName hash] % _colorNumberMax);
 	}
 	
