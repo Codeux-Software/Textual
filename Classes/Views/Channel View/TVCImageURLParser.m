@@ -79,7 +79,7 @@
 		return nil;
 	}
 
-	NSString *plguinResult = [RZPluginManager() processInlineMediaContentURL:url];
+	NSString *plguinResult = [RZPluginManager() processInlineMediaContentURL:[u absoluteString]];
 
 	if (plguinResult) {
 		return plguinResult;
@@ -101,7 +101,7 @@
         } else if ([host hasSuffix:@"dropbox.com"]) {
 			// Continue to processing…
 		} else {
-			return url;
+			return [u absoluteString];
 		}
 	}
 
