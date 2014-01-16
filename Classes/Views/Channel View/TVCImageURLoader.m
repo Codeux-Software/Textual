@@ -83,7 +83,7 @@
 
 	/* Create the request. */
 	/* We use a mutable request because we are going to set the HTTP method. */
-	NSURL *requestURL = [NSURL URLWithString:baseURL];
+	NSURL *requestURL = [self URLFromControllerPasteboard:baseURL];
 
 	NSMutableURLRequest *baseRequest = [NSMutableURLRequest requestWithURL:requestURL
 															   cachePolicy:NSURLRequestReloadIgnoringCacheData
@@ -106,6 +106,23 @@
 	self.requestConnection = [[NSURLConnection alloc] initWithRequest:baseRequest delegate:self];
 
 	[self.requestConnection start];
+}
+
+- (NSURL *)URLFromControllerPasteboard:(NSString *)baseURL
+{
+	NSURL *expandedURL = nil;
+
+	NSString *pasteboardName = [NSString stringWithFormat:@"AuxiliaryIDNConversionPasteboard-%@", [NSString stringWithUUID]];
+
+	NSPasteboard *pasteboard = [NSPasteboard pasteboardWithName:pasteboardName];
+
+	[pasteboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+
+	if ([pasteboard setString:baseURL forType:NSStringPboardType]) {
+		expandedURL = [WebView URLFromPasteboard:pasteboard];
+	}
+
+	return expandedURL;
 }
 
 #pragma mark -
