@@ -204,6 +204,11 @@
 	[self resetAllPropertyValues];
 }
 
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"<IRCClient [%@]: %@>", [self altNetworkName], [self networkAddress]];
+}
+
 - (void)updateConfig:(IRCClientConfig *)seed
 {
 	[self updateConfig:seed fromTheCloud:NO withSelectionUpdate:YES];

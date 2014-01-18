@@ -67,6 +67,11 @@
 	return self;
 }
 
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"<IRCChannel [%@]: %@>", [_client altNetworkName], [self name]];
+}
+
 #pragma mark -
 #pragma mark Configuration
 
@@ -307,7 +312,7 @@
 
 		NSString *logstr = [self.viewController renderedBodyForTranscriptLog:line];
 
-		if (logstr) {
+		if (NSObjectIsNotEmpty(logstr)) {
 			[self.logFile writePlainTextLine:logstr];
 		}
 	}
@@ -587,7 +592,7 @@
 {
 	_cancelOnNotSelectedChannel;
 
-	[self.memberListView reloadData];
+	[self.memberListView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
 }
 
 - (void)updateAllMembersOnTableView
