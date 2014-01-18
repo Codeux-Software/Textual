@@ -626,7 +626,7 @@
 	[newlist sortUsingComparator:NSDefaultComparator];
 	
 	if (NSDissimilarObjects([self.memberListNormalSorted count], [newlist count])) {
-		self.memberListNormalSorted = [newlist copy];
+		self.memberListNormalSorted = [newlist mutableCopy];
 
 		[self reloadDataForTableView];
 	}
