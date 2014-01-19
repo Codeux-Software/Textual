@@ -324,6 +324,8 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 
 + (TXTabKeyAction)tabKeyAction;
 
++ (BOOL)fileTransferRequestsAreReversed;
+
 + (TXFileTransferRequestReplyAction)fileTransferRequestReplyAction;
 + (TXFileTransferIPAddressDetectionMethod)fileTransferIPAddressDetectionMethod;
 

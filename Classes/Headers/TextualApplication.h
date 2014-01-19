@@ -74,8 +74,7 @@
 	@class TDCAddressBookSheet;
 	@class TDCFileTransferDialog;
 	@class TDCFileTransferDialogTableCell;
-	@class TDCFileTransferDialogTransferReceiver;
-	@class TDCFileTransferDialogTransferSender;
+	@class TDCFileTransferDialogTransferController;
 	@class TDCFileTransferDialogRemoteAddress;
 	@class TDCHighlightEntryMatchCondition;
 	@class TDCHighlightEntrySheet;
@@ -238,8 +237,7 @@
 	#import "TDCAddressBookSheet.h"
 	#import "TDCFileTransferDialog.h"
 	#import "TDCFileTransferDialogTableCell.h"
-	#import "TDCFileTransferDialogTransferReceiver.h"
-	#import "TDCFileTransferDialogTransferSender.h"
+	#import "TDCFileTransferDialogTransferController.h"
 	#import "TDCFileTransferDialogRemoteAddress.h"
 	#import "TDCHighlightEntrySheet.h"
 	#import "TDCHighlightListSheet.h"

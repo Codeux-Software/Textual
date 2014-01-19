@@ -105,20 +105,27 @@
 "ExcessFloodIRCDisconnectAlertMessage" = "A disconnection has occured due to excess flood. Reconnect?";
 "ExcessFloodIRCDisconnectAlertOpenFloodControlButton" = "Configure Flood Control";
 
-"FileTransferDialogTransferToUserIsWaitingForSourceIPAddress" = "Transfer to %@ is waiting for source IP address request to complete.";
 "FileTransferDialogTransferToUserStatusWithoutRemainingTime" = "%1$@ of %2$@ (%3$@/s) sent to %4$@";
 "FileTransferDialogTransferToUserStatusWithRemainingTime" = "%1$@ of %2$@ (%3$@/s) sent to %4$@ — %5$@ remaining";
-"FileTransferDialogTransferSocketIsListening" = "Transfer to %@ is ready. Waiting for them to accept.";
+
+"FileTransferDialogTransferToUserIsAttemptingPortMapping" = "Transfer to %@ is initializing. Attempting to map listening port.";
+"FileTransferDialogTransferToUserIsDeterminingIPAddress" = "Transfer to %@ is initializing. Determining local IP address.";
+"FileTransferDialogTransferToUserIsWaitingForAcceptance" = "Transfer to %@ is ready. Waiting for them to accept.";
+"FileTransferDialogTransferToUserSocketIsListening" = "Transfer to %@ is ready. Waiting for them to accept.";
 "FileTransferDialogTransferToUserIsStopped" = "Transfer to %@ is stopped. Right click to start.";
 "FileTransferDialogTransferToUserIsInitializing" = "Transfer to %@ is initializing.";
-"FileTransferDialogTransferToUserIsMappingListeningPort" = "Transfer to %@ is initializing.";
 "FileTransferDialogTransferToUserIsComplete" = "Transfer to %@ is complete.";
 
 "FileTransferDialogTransferFromUserStatusWithoutRemainingTime" = "%1$@ of %2$@ (%3$@/s) received from %4$@";
 "FileTransferDialogTransferFromUserStatusWithRemainingTime" = "%1$@ of %2$@ (%3$@/s) received from %4$@ — %5$@ remaining";
+
+"FileTransferDialogTransferFromUserIsAttemptingPortMapping" = "Transfer from %@ is initializing. Attempting to map listening port.";
+"FileTransferDialogTransferFromUserIsDeterminingIPAddress" = "Transfer from %@ is initializing. Determining local IP address.";
+"FileTransferDialogTransferFromUserSocketIsListening" = "Transfer from %@ is ready. Right click to start.";
 "FileTransferDialogTransferFromUserIsStopped" = "Transfer from %@ is stopped. Right click to start.";
 "FileTransferDialogTransferFromUserIsInitializing" = "Transfer from %@ is initializing.";
 "FileTransferDialogTransferFromUserIsComplete" = "Transfer from %@ is complete. Right click to open in Finder.";
+
 "FileTransferDialogTransferSocketIsConnecting" = "Connecting to %@.";
 
 "FileTransferDialogTransferFailedWithUnavailablePort" = "Transfer with %@ failed. There is no open port.";

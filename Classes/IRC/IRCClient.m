@@ -7014,7 +7014,7 @@
 {
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
 		/* Gather inital information. */
-		NSString *nickname = m.sender.nickname;
+		NSString *nickname = [m.sender nickname];
 		
 		/* Only target ourself. */
 		if (NSObjectsAreEqual([m paramAt:0], [self localNickname]) == NO) {
@@ -7022,7 +7022,7 @@
 		}
 		
 		/* Gather basic information. */
-		NSString *subcommand = [rawMessage.getToken uppercaseString];
+		NSString *subcommand = [[rawMessage getToken] uppercaseString];
 		
 		/* For now, we recognize ACCEPT and RESUME, but we do not act on it. Just adding
 		 code for future expansion in another update. Basically, I had time to write the
@@ -7061,14 +7061,14 @@
 			NSString *section2 = [rawMessage getToken];
 			NSString *section3 = [rawMessage getToken];
 			NSString *section4 = [rawMessage getToken];
-		//	NSString *section5 = [rawMessage getToken];
+			NSString *section5 = [rawMessage getToken];
 			
 			/* Remove T from in front of token if it is there. */
-			/* if (isSendRequest) {
+			if (isSendRequest) {
 				if ([section5 hasPrefix:@"T"]) {
 					section5 = [section5 substringFromIndex:1];
 				}
-			} else if (isAcceptRequest || isResumeRequest) {
+			} /* else if (isAcceptRequest || isResumeRequest) {
 			   if ([section4 hasPrefix:@"T"]) {
 					section4 = [section4 substringFromIndex:1];
 			   }
@@ -7077,31 +7077,26 @@
 			/* Valid values? */
 			NSObjectIsEmptyAssert(section1);
 			NSObjectIsEmptyAssert(section2);
-			NSObjectIsEmptyAssert(section3);
+		  //NSObjectIsEmptyAssert(section3);
 			NSObjectIsEmptyAssert(section4);
-			
-			/* if (isSendRequest) {
-				NSObjectIsEmptyAssert(section5); // Sends need the fifth token.
-			} */
-			
+
 			/* Start data association. */
 			NSString *hostAddress;
 			NSString *hostPort;
 			NSString *filename;
 			NSString *filesize;
-		//	NSString *transferToken;
+			NSString *transferToken;
 			
 			/* Match data variables. */
 			if (isSendRequest)
 			{
 				/* Get normal information. */
-				
 				filename = [section1 safeFilename];
 				filesize =  section4;
 				
 				hostPort = section3;
 				
-			//	transferToken = section5;
+				transferToken = section5;
 				
 				/* Translate host address. */
 				if ([section2 isNumericOnly]) {
@@ -7131,13 +7126,53 @@
 			
 			/* Process invidiual commands. */
 			if (isSendRequest) {
-				/* DCC SEND <filename> <peer-ip> <port> <filesize> <token> */
-				
+				/* DCC SEND <filename> <peer-ip> <port> <filesize> [token] */
+
+				/* Important check. */
+				NSAssertReturn([filesize longLongValue] > 0);
+
 				/* Add the actual file. */
-				if ([hostPort integerValue] > 0 && [filesize longLongValue] > 0) {
-					[self receivedDCCSend:nickname file:filename address:hostAddress port:[hostPort integerValue] filesize:[filesize longLongValue]];
-					
-					return; // Break chain.
+				if (transferToken && [transferToken length] > 0) {
+					/* Validate the transfer token is a number. */
+					if ([transferToken isNumericOnly]) {
+						/* Is part of reverse DCC request. Let's check if the token
+						 already exists somewhere. If it does, we ignore this request. */
+						BOOL transferExists = [self.fileTransferController fileTransferExistsWithToken:transferToken];
+
+						/* 0 port indicates a new request in reverse DCC */
+						if ([hostPort integerValue] == 0) {
+							if (transferExists == NO) {
+								[self receivedDCCSend:nickname
+											 filename:filename
+											  address:hostAddress
+												 port:[hostPort integerValue]
+											 filesize:[filesize longLongValue]
+												token:transferToken];
+							} else {
+								LogToConsole(@"Received reverse DCC request with token '%@' but the token already exists.", transferToken);
+							}
+						} else {
+							if (transferExists) {
+								TDCFileTransferDialogTransferController *e = [self.fileTransferController fileTransferSenderMatchingToken:transferToken];
+
+								if (e) {
+									/* Define transfer information. */
+									[e setHostAddress:hostAddress];
+									[e setTransferPort:[hostPort integerValue]];
+
+									[e didReceiveSendRequestFromClient];
+								}
+							}
+						}
+					}
+				} else {
+					/* Treat as normal DCC request. */
+					[self receivedDCCSend:nickname
+								 filename:filename
+								  address:hostAddress
+									 port:[hostPort integerValue]
+								 filesize:[filesize longLongValue]
+									token:nil];
 				}
 			}
 		}
@@ -7148,7 +7183,7 @@
 }
 
 
-- (void)receivedDCCSend:(NSString *)nickname file:(NSString *)filename address:(NSString *)address port:(NSInteger)port filesize:(TXFSLongInt)totalFilesize
+- (void)receivedDCCSend:(NSString *)nickname filename:(NSString *)filename address:(NSString *)address port:(NSInteger)port filesize:(TXFSLongInt)totalFilesize token:(NSString *)transferToken
 {
 	/* Inform of the DCC and possibly ignore it. */
 	NSString *message = TXTFLS(@"DCCFileTransferRequestReceived", nickname, filename, totalFilesize);
@@ -7168,10 +7203,11 @@
 											  address:address
 												 port:port
 											 filename:filename
-												 size:totalFilesize];
+											 filesize:totalFilesize
+												token:transferToken];
 }
 
-- (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename size:(TXFSLongInt)totalFilesize
+- (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXFSLongInt)totalFilesize token:(NSString *)transferToken
 {
 	/* DCC is mountain lion or later. */
 	NSAssertReturn([TPCPreferences featureAvailableToOSXMountainLion]);
@@ -7185,7 +7221,13 @@
 	NSObjectIsEmptyAssert(address);
 	
 	/* Send file information. */
-	NSString *trail = [NSString stringWithFormat:@"%@ %@ %i %qi", escapedFileName, address, port, totalFilesize];
+	NSString *trail;
+
+	if (transferToken && [transferToken length] > 0) {
+		trail = [NSString stringWithFormat:@"%@ %@ %i %qi %@", escapedFileName, address, port, totalFilesize, transferToken];
+	} else {
+		trail = [NSString stringWithFormat:@"%@ %@ %i %qi", escapedFileName, address, port, totalFilesize];
+	}
 	
 	[self sendCTCPQuery:nickname command:@"DCC SEND" text:trail];
 	
