@@ -39,13 +39,15 @@
 #import "TextualApplication.h"
 
 typedef enum TDCFileTransferDialogTransferStatus : NSInteger {
-	TDCFileTransferDialogTransferWaitingForSourceIPAddressStatus,
+	TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus,
+	TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus,
 	TDCFileTransferDialogTransferMappingListeningPortStatus,
 	TDCFileTransferDialogTransferInitializingStatus,
 	TDCFileTransferDialogTransferErrorStatus,
 	TDCFileTransferDialogTransferStoppedStatus,
 	TDCFileTransferDialogTransferConnectingStatus,
-	TDCFileTransferDialogTransferListeningStatus,
+	TDCFileTransferDialogTransferIsListeningAsSenderStatus,
+	TDCFileTransferDialogTransferIsListeningAsReceiverStatus,
 	TDCFileTransferDialogTransferReceivingStatus,
 	TDCFileTransferDialogTransferSendingStatus,
 	TDCFileTransferDialogTransferCompleteStatus
@@ -84,12 +86,19 @@ typedef enum TDCFileTransferDialogNavigationControllerSelectedTab : NSInteger {
 					 address:(NSString *)hostAddress
 						port:(NSInteger)hostPort
 					filename:(NSString *)filename
-						size:(TXFSLongInt)size;
+					filesize:(TXFSLongInt)totalFilesize
+					   token:(NSString *)transferToken;
 
 - (void)addSenderForClient:(IRCClient *)client
 				  nickname:(NSString *)nickname
 					  path:(NSString *)completePath
 				  autoOpen:(BOOL)autoOpen;
+
+
+- (BOOL)fileTransferExistsWithToken:(NSString *)transferToken;
+
+- (TDCFileTransferDialogTransferController *)fileTransferSenderMatchingToken:(NSString *)transferToken;
+- (TDCFileTransferDialogTransferController *)fileTransferReceiverMatchingToken:(NSString *)transferToken;
 
 - (void)updateClearButton;
 - (void)updateMaintenanceTimer;

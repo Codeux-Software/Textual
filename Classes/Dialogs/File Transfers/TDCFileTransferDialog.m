@@ -79,6 +79,43 @@
 	[self.window close];
 }
 
+- (BOOL)fileTransferExistsWithToken:(NSString *)transferToken
+{
+	for (id e in self.fileTransfers) {
+		if (NSObjectsAreEqual(transferToken, [e transferToken])) {
+			return YES;
+		}
+	}
+
+	return NO;
+}
+
+- (TDCFileTransferDialogTransferController *)fileTransferSenderMatchingToken:(NSString *)transferToken
+{
+	for (id e in self.fileTransfers) {
+		NSAssertReturnLoopContinue([e isSender]);
+
+		if (NSObjectsAreEqual(transferToken, [e transferToken])) {
+			return e;
+		}
+	}
+
+	return nil;
+}
+
+- (TDCFileTransferDialogTransferController *)fileTransferReceiverMatchingToken:(NSString *)transferToken
+{
+	for (id e in self.fileTransfers) {
+		NSAssertReturnLoopContinue([e isSender] == NO);
+
+		if (NSObjectsAreEqual(transferToken, [e transferToken])) {
+			return e;
+		}
+	}
+
+	return nil;
+}
+
 - (void)prepareForApplicationTermination
 {
 	if (_downloadDestination) {
@@ -109,7 +146,7 @@
 	}
 }
 
-- (void)addReceiverForClient:(IRCClient *)client nickname:(NSString *)nickname address:(NSString *)hostAddress port:(NSInteger)hostPort filename:(NSString *)filename size:(TXFSLongInt)size
+- (void)addReceiverForClient:(IRCClient *)client nickname:(NSString *)nickname address:(NSString *)hostAddress port:(NSInteger)hostPort filename:(NSString *)filename filesize:(TXFSLongInt)totalFilesize token:(NSString *)transferToken
 {
 	if ([self countNumberOfReceivers] > _addReceiverHardLimit) {
 		LogToConsole(@"Max receiver count of %i exceeded.", _addReceiverHardLimit);
@@ -117,15 +154,22 @@
 		return;
 	}
 	
-	TDCFileTransferDialogTransferReceiver *groupItem = [TDCFileTransferDialogTransferReceiver new];
-	
+	TDCFileTransferDialogTransferController *groupItem = [TDCFileTransferDialogTransferController new];
+
+	[groupItem setIsSender:NO];
 	[groupItem setTransferDialog:self];
 	[groupItem setAssociatedClient:client];
 	[groupItem setPeerNickname:nickname];
 	[groupItem setHostAddress:hostAddress];
 	[groupItem setTransferPort:hostPort];
 	[groupItem setFilename:filename];
-	[groupItem setTotalFilesize:size];
+	[groupItem setTotalFilesize:totalFilesize];
+
+	if (transferToken && [transferToken length] > 0) {
+		[groupItem setTransferToken:transferToken];
+
+		[groupItem setIsReversed:YES];
+	}
 	
 	if (_downloadDestination) {
 		[groupItem setPath:[_downloadDestination path]];
@@ -161,15 +205,20 @@
 	NSString *actualFilePath = [completePath stringByDeletingLastPathComponent];
 	
 	/* Build view. */
-	TDCFileTransferDialogTransferSender *groupItem = [TDCFileTransferDialogTransferSender new];
-	
+	TDCFileTransferDialogTransferController *groupItem = [TDCFileTransferDialogTransferController new];
+
+	[groupItem setIsSender:YES];
 	[groupItem setTransferDialog:self];
 	[groupItem setAssociatedClient:client];
 	[groupItem setPeerNickname:nickname];
 	[groupItem setFilename:actualFilename];
 	[groupItem setPath:actualFilePath];
 	[groupItem setTotalFilesize:filesize];
-	
+
+	if ([TPCPreferences fileTransferRequestsAreReversed]) {
+		[groupItem setIsReversed:YES];
+	}
+
 	[self addSender:groupItem];
 	
 	/* Check if our sender address exists. */
@@ -199,7 +248,7 @@
 	[self.clearButton setEnabled:enabled];
 }
 
-- (void)addReceiver:(TDCFileTransferDialogTransferReceiver *)groupItem
+- (void)addReceiver:(TDCFileTransferDialogTransferController *)groupItem
 {
 	[self.fileTransfers insertObject:groupItem atIndex:0];
 	
@@ -211,7 +260,7 @@
 	}
 }
 
-- (void)addSender:(TDCFileTransferDialogTransferSender *)groupItem
+- (void)addSender:(TDCFileTransferDialogTransferController *)groupItem
 {
 	[self.fileTransfers insertObject:groupItem atIndex:0];
 	
@@ -267,10 +316,12 @@
 			for (id e in sel) {
 				if ([e transferStatus] == TDCFileTransferDialogTransferConnectingStatus ||
 					[e transferStatus] == TDCFileTransferDialogTransferReceivingStatus ||
-					[e transferStatus] == TDCFileTransferDialogTransferListeningStatus ||
+					[e transferStatus] == TDCFileTransferDialogTransferIsListeningAsSenderStatus ||
+					[e transferStatus] == TDCFileTransferDialogTransferIsListeningAsReceiverStatus ||
 					[e transferStatus] == TDCFileTransferDialogTransferSendingStatus ||
 					[e transferStatus] == TDCFileTransferDialogTransferMappingListeningPortStatus ||
-					[e transferStatus] == TDCFileTransferDialogTransferWaitingForSourceIPAddressStatus)
+					[e transferStatus] == TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus ||
+					[e transferStatus] == TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus)
 				{
 					return YES;
 				}
@@ -385,7 +436,7 @@
 			if (result == NSOKButton) {
 				NSString *newPath = [d.URL path]; // Define path.
 				
-				for (TDCFileTransferDialogTransferReceiver *e in incomingTransfers) {
+				for (TDCFileTransferDialogTransferController *e in incomingTransfers) {
 					[e setPath:newPath];
 					[e open]; // Begin transfer.
 				}
@@ -405,11 +456,7 @@
 		
 		id e = self.fileTransfers[actualIndx];
 		
-		if ([e isSender]) {
-			[(TDCFileTransferDialogTransferSender *)e close:NO];
-		} else {
-			[(TDCFileTransferDialogTransferReceiver *)e close:NO];
-		}
+		[(TDCFileTransferDialogTransferController *)e close:NO];
 	}
 }
 
@@ -587,13 +634,9 @@
 {
 	self.sourceIPAddressRequestPending = YES;
 
-	if ([TPCPreferences fileTransferIPAddressDetectionMethod] == TXFileTransferIPAddressAutomaticDetectionMethod) {
-		TDCFileTransferDialogRemoteAddress *request = [TDCFileTransferDialogRemoteAddress new];
+	TDCFileTransferDialogRemoteAddress *request = [TDCFileTransferDialogRemoteAddress new];
 		
-		[request requestRemoteIPAddressFromExternalSource:self];
-	} else {
-		[self fileTransferRemoteAddressRequestDidDetectAddress:[TPCPreferences fileTransferManuallyEnteredIPAddress]];
-	}
+	[request requestRemoteIPAddressFromExternalSource:self];
 }
 
 - (void)fileTransferRemoteAddressRequestDidCloseWithError:(NSError *)errPntr
@@ -606,7 +649,7 @@
 	for (id e in self.fileTransfers) {
 		NSAssertReturnLoopContinue([e isSender]);
 		
-		if ([e transferStatus] == TDCFileTransferDialogTransferWaitingForSourceIPAddressStatus) {
+		if ([e transferStatus] == TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus) {
 			[e setDidErrorOnBadSenderAddress];
 		}
 	}
@@ -629,8 +672,8 @@
 	for (id e in self.fileTransfers) {
 		NSAssertReturnLoopContinue([e isSender]);
 		
-		if ([e transferStatus] == TDCFileTransferDialogTransferWaitingForSourceIPAddressStatus) {
-			[e sourceIPAddressWasDetermined];
+		if ([e transferStatus] == TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus) {
+			[e localIPAddressWasDetermined];
 		}
 	}
 }

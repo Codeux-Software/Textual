@@ -142,7 +142,7 @@ typedef enum IRCDisconnectMode : NSInteger {
 
 - (BOOL)outputRuleMatchedInMessage:(NSString *)raw inChannel:(IRCChannel *)chan withLineType:(TVCLogLineType)type;
 
-- (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename size:(TXFSLongInt)totalFilesize;
+- (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXFSLongInt)totalFilesize token:(NSString *)transferToken;
 
 - (void)connect;
 - (void)connect:(IRCConnectMode)mode;

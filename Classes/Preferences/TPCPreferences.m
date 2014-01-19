@@ -1380,6 +1380,11 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return [RZUserDefaults() integerForKey:@"File Transfers -> File Transfer IP Address Detection Method"];
 }
 
++ (BOOL)fileTransferRequestsAreReversed
+{
+	return YES;
+}
+
 + (NSInteger)fileTransferPortRangeStart
 {
 	return [RZUserDefaults() integerForKey:@"File Transfers -> File Transfer Port Range Start"];

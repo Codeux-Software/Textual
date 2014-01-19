@@ -203,10 +203,8 @@
 		4C49494D18735BC400B7F00A /* TDCFileTransferDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C49494818735BC400B7F00A /* TDCFileTransferDialog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C49494E18735BC400B7F00A /* TDCFileTransferDialogTableCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C49494918735BC400B7F00A /* TDCFileTransferDialogTableCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C49494F18735BC400B7F00A /* TDCFileTransferDialogTableCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C49494918735BC400B7F00A /* TDCFileTransferDialogTableCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C49495018735BC400B7F00A /* TDCFileTransferDialogTransferReceiver.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C49494A18735BC400B7F00A /* TDCFileTransferDialogTransferReceiver.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C49495118735BC400B7F00A /* TDCFileTransferDialogTransferReceiver.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C49494A18735BC400B7F00A /* TDCFileTransferDialogTransferReceiver.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C49495218735BC400B7F00A /* TDCFileTransferDialogTransferSender.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C49494B18735BC400B7F00A /* TDCFileTransferDialogTransferSender.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C49495318735BC400B7F00A /* TDCFileTransferDialogTransferSender.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C49494B18735BC400B7F00A /* TDCFileTransferDialogTransferSender.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C49495018735BC400B7F00A /* TDCFileTransferDialogTransferController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C49494A18735BC400B7F00A /* TDCFileTransferDialogTransferController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C49495118735BC400B7F00A /* TDCFileTransferDialogTransferController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C49494A18735BC400B7F00A /* TDCFileTransferDialogTransferController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C52379415C18F6700414852 /* Style Default Templates in Resources */ = {isa = PBXBuildFile; fileRef = 4C52379215C18F6700414852 /* Style Default Templates */; };
 		4C52379515C18F6700414852 /* Styles in Resources */ = {isa = PBXBuildFile; fileRef = 4C52379315C18F6700414852 /* Styles */; };
 		4C529E1717AEFE17009BA0B3 /* NSDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C529E1617AEFE17009BA0B3 /* NSDataHelper.m */; };
@@ -827,10 +825,8 @@
 		4CCF2F9915804BC9006FFE21 /* core.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CCF2F5315804888006FFE21 /* core.js */; };
 		4CD4165B184065E3005B134D /* TDCProgressInformationSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */; };
 		4CD4165C184065E3005B134D /* TDCProgressInformationSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */; };
-		4CD625281870B934002FEA17 /* TDCFileTransferDialogTransferSender.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD625261870B934002FEA17 /* TDCFileTransferDialogTransferSender.m */; };
-		4CD625291870B934002FEA17 /* TDCFileTransferDialogTransferSender.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD625261870B934002FEA17 /* TDCFileTransferDialogTransferSender.m */; };
-		4CD6252A1870B934002FEA17 /* TDCFileTransferDialogTransferReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferReceiver.m */; };
-		4CD6252B1870B934002FEA17 /* TDCFileTransferDialogTransferReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferReceiver.m */; };
+		4CD6252A1870B934002FEA17 /* TDCFileTransferDialogTransferController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */; };
+		4CD6252B1870B934002FEA17 /* TDCFileTransferDialogTransferController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */; };
 		4CD63F3015C59C5B00E8DE92 /* NSScreenHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5A6DC015C39BD600143574 /* NSScreenHelper.m */; };
 		4CDDF3471678C5DF00FE8684 /* encryptionLockIconDark.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3431678C5DF00FE8684 /* encryptionLockIconDark.tif */; };
 		4CDDF3481678C5DF00FE8684 /* encryptionLockIconDark@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3441678C5DF00FE8684 /* encryptionLockIconDark@2x.tif */; };
@@ -1069,8 +1065,7 @@
 		4C46CCC21580469E00846B64 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		4C49494818735BC400B7F00A /* TDCFileTransferDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialog.h; sourceTree = "<group>"; };
 		4C49494918735BC400B7F00A /* TDCFileTransferDialogTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogTableCell.h; sourceTree = "<group>"; };
-		4C49494A18735BC400B7F00A /* TDCFileTransferDialogTransferReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogTransferReceiver.h; sourceTree = "<group>"; };
-		4C49494B18735BC400B7F00A /* TDCFileTransferDialogTransferSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogTransferSender.h; sourceTree = "<group>"; };
+		4C49494A18735BC400B7F00A /* TDCFileTransferDialogTransferController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogTransferController.h; sourceTree = "<group>"; };
 		4C52379215C18F6700414852 /* Style Default Templates */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Style Default Templates"; path = "Resources/Styles/Style Default Templates"; sourceTree = SOURCE_ROOT; };
 		4C52379315C18F6700414852 /* Styles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Styles; path = Resources/Styles/Styles; sourceTree = SOURCE_ROOT; };
 		4C529E1617AEFE17009BA0B3 /* NSDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataHelper.m; sourceTree = "<group>"; };
@@ -1436,8 +1431,7 @@
 		4CCF2F181580481E006FFE21 /* FormattingColor_15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_15.png; path = "Resources/Images/IRC Formatting Colors/FormattingColor_15.png"; sourceTree = SOURCE_ROOT; };
 		4CCF2F5315804888006FFE21 /* core.js */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; name = core.js; path = Resources/Javascript/API/core.js; sourceTree = SOURCE_ROOT; };
 		4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCProgressInformationSheet.m; path = Dialogs/TDCProgressInformationSheet.m; sourceTree = "<group>"; };
-		4CD625261870B934002FEA17 /* TDCFileTransferDialogTransferSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogTransferSender.m; path = "Dialogs/File Transfers/TDCFileTransferDialogTransferSender.m"; sourceTree = "<group>"; };
-		4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferReceiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogTransferReceiver.m; path = "Dialogs/File Transfers/TDCFileTransferDialogTransferReceiver.m"; sourceTree = "<group>"; };
+		4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogTransferController.m; path = "Dialogs/File Transfers/TDCFileTransferDialogTransferController.m"; sourceTree = "<group>"; };
 		4CDDF3431678C5DF00FE8684 /* encryptionLockIconDark.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = encryptionLockIconDark.tif; sourceTree = "<group>"; };
 		4CDDF3441678C5DF00FE8684 /* encryptionLockIconDark@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "encryptionLockIconDark@2x.tif"; sourceTree = "<group>"; };
 		4CDDF3451678C5DF00FE8684 /* encryptionLockIconLight.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = encryptionLockIconLight.tif; sourceTree = "<group>"; };
@@ -1510,8 +1504,7 @@
 			children = (
 				4C0879C6187061BF0034F5EB /* TDCFileTransferDialog.m */,
 				4C0879C8187061BF0034F5EB /* TDCFileTransferDialogTableCell.m */,
-				4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferReceiver.m */,
-				4CD625261870B934002FEA17 /* TDCFileTransferDialogTransferSender.m */,
+				4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */,
 				4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */,
 			);
 			name = "File Transfers";
@@ -2040,8 +2033,7 @@
 				4C49494818735BC400B7F00A /* TDCFileTransferDialog.h */,
 				4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */,
 				4C49494918735BC400B7F00A /* TDCFileTransferDialogTableCell.h */,
-				4C49494A18735BC400B7F00A /* TDCFileTransferDialogTransferReceiver.h */,
-				4C49494B18735BC400B7F00A /* TDCFileTransferDialogTransferSender.h */,
+				4C49494A18735BC400B7F00A /* TDCFileTransferDialogTransferController.h */,
 				4C8AF55A158E99520026668C /* TDChanBanExceptionSheet.h */,
 				4C8AF55B158E99520026668C /* TDChanBanSheet.h */,
 				4C8AF55C158E99520026668C /* TDChanInviteExceptionSheet.h */,
@@ -2702,8 +2694,7 @@
 				4C17385F18197F800099EEC2 /* TPCPreferencesCloudSync.h in Headers */,
 				4C49494F18735BC400B7F00A /* TDCFileTransferDialogTableCell.h in Headers */,
 				4C49494D18735BC400B7F00A /* TDCFileTransferDialog.h in Headers */,
-				4C49495318735BC400B7F00A /* TDCFileTransferDialogTransferSender.h in Headers */,
-				4C49495118735BC400B7F00A /* TDCFileTransferDialogTransferReceiver.h in Headers */,
+				4C49495118735BC400B7F00A /* TDCFileTransferDialogTransferController.h in Headers */,
 				4CABE85B1840615A002FE4B8 /* TDCProgressInformationSheet.h in Headers */,
 				4C6D464E180830E60098BA12 /* NSMenuHelper.h in Headers */,
 				4C69F4A718676CCE00E6FCEC /* NSBundleHelper.h in Headers */,
@@ -2859,8 +2850,7 @@
 				4C6D464D180830E60098BA12 /* NSMenuHelper.h in Headers */,
 				4C49494E18735BC400B7F00A /* TDCFileTransferDialogTableCell.h in Headers */,
 				4C49494C18735BC400B7F00A /* TDCFileTransferDialog.h in Headers */,
-				4C49495218735BC400B7F00A /* TDCFileTransferDialogTransferSender.h in Headers */,
-				4C49495018735BC400B7F00A /* TDCFileTransferDialogTransferReceiver.h in Headers */,
+				4C49495018735BC400B7F00A /* TDCFileTransferDialogTransferController.h in Headers */,
 				4CABE85A1840615A002FE4B8 /* TDCProgressInformationSheet.h in Headers */,
 				4C83D8F6184200A100BCC0E1 /* NSFileManagerHelper.h in Headers */,
 				4C69F4A618676CCE00E6FCEC /* NSBundleHelper.h in Headers */,
@@ -3311,7 +3301,7 @@
 				4C04450A16F1603B00EBB665 /* TDCWelcomeSheet.m in Sources */,
 				4C04458716F1603B00EBB665 /* NSArrayHelper.m in Sources */,
 				4C04458816F1603B00EBB665 /* NSColorHelper.m in Sources */,
-				4CD6252B1870B934002FEA17 /* TDCFileTransferDialogTransferReceiver.m in Sources */,
+				4CD6252B1870B934002FEA17 /* TDCFileTransferDialogTransferController.m in Sources */,
 				4C04458916F1603B00EBB665 /* NSDateHelper.m in Sources */,
 				4C04458A16F1603B00EBB665 /* NSDictionaryHelper.m in Sources */,
 				4C04458B16F1603B00EBB665 /* NSFontHelper.m in Sources */,
@@ -3366,7 +3356,6 @@
 				4C0445B616F1603C00EBB665 /* TLOLanguagePreferences.m in Sources */,
 				4C0445B716F1603C00EBB665 /* TLOLinkParser.m in Sources */,
 				4C0445B816F1603C00EBB665 /* TLONickCompletionStatus.m in Sources */,
-				4CD625291870B934002FEA17 /* TDCFileTransferDialogTransferSender.m in Sources */,
 				4C0445B916F1603C00EBB665 /* TLOpenLink.m in Sources */,
 				4C0445BA16F1603C00EBB665 /* TLOPopupPrompts.m in Sources */,
 				4C0879D0187061BF0034F5EB /* TDCFileTransferDialog.m in Sources */,
@@ -3448,7 +3437,7 @@
 				4C8AF61C158E99520026668C /* TDCTopicSheet.m in Sources */,
 				4C8AF61D158E99520026668C /* TDCWelcomeSheet.m in Sources */,
 				4C8AF68D158E99520026668C /* NSArrayHelper.m in Sources */,
-				4CD6252A1870B934002FEA17 /* TDCFileTransferDialogTransferReceiver.m in Sources */,
+				4CD6252A1870B934002FEA17 /* TDCFileTransferDialogTransferController.m in Sources */,
 				4C8AF68F158E99520026668C /* NSColorHelper.m in Sources */,
 				4C8AF691158E99520026668C /* NSDateHelper.m in Sources */,
 				4C8AF692158E99520026668C /* NSDictionaryHelper.m in Sources */,
@@ -3503,7 +3492,6 @@
 				4C8AF6C7158E99520026668C /* TLOpenLink.m in Sources */,
 				4C8AF6C8158E99520026668C /* TLOPopupPrompts.m in Sources */,
 				4C8AF6C9158E99520026668C /* TLORegularExpression.m in Sources */,
-				4CD625281870B934002FEA17 /* TDCFileTransferDialogTransferSender.m in Sources */,
 				4C8AF6CB158E99520026668C /* TLOSoundPlayer.m in Sources */,
 				4C8AF6CC158E99520026668C /* TLOTimer.m in Sources */,
 				4C0879CF187061BF0034F5EB /* TDCFileTransferDialog.m in Sources */,

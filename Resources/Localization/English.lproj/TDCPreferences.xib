@@ -1038,7 +1038,7 @@
                     <tabViewItems>
                         <tabViewItem label="General" identifier="1" id="5773">
                             <view key="view" id="5776">
-                                <rect key="frame" x="10" y="25" width="495" height="308"/>
+                                <rect key="frame" x="10" y="29" width="495" height="304"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <userGuides>
                                     <userLayoutGuide location="69" affinity="minX"/>
@@ -1046,7 +1046,7 @@
                                 </userGuides>
                                 <subviews>
                                     <popUpButton verticalHuggingPriority="750" id="5777">
-                                        <rect key="frame" x="91" y="262" width="208" height="22"/>
+                                        <rect key="frame" x="91" y="258" width="208" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" id="5842">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1058,7 +1058,7 @@
                                         </connections>
                                     </popUpButton>
                                     <textField verticalHuggingPriority="750" id="5778">
-                                        <rect key="frame" x="43" y="266" width="45" height="17"/>
+                                        <rect key="frame" x="43" y="262" width="45" height="17"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Style:" id="5841">
                                             <font key="font" metaFont="cellTitle"/>
@@ -1067,7 +1067,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <button id="6037">
-                                        <rect key="frame" x="74" y="146" width="289" height="19"/>
+                                        <rect key="frame" x="74" y="142" width="289" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Remove formatting from incoming messages." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6040">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1078,7 +1078,7 @@
                                         </connections>
                                     </button>
                                     <button id="6038">
-                                        <rect key="frame" x="75" y="75" width="279" height="18"/>
+                                        <rect key="frame" x="75" y="71" width="279" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Automatically add scrollback markers." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6039">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1089,21 +1089,21 @@
                                         </connections>
                                     </button>
                                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="6052">
-                                        <rect key="frame" x="26" y="239" width="442" height="5"/>
+                                        <rect key="frame" x="26" y="235" width="442" height="5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="6366">
-                                        <rect key="frame" x="26" y="184" width="442" height="5"/>
+                                        <rect key="frame" x="26" y="180" width="442" height="5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <textField verticalHuggingPriority="750" id="6367">
-                                        <rect key="frame" x="165" y="205" width="180" height="18"/>
+                                        <rect key="frame" x="165" y="201" width="180" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="LOL" drawsBackground="YES" id="6380">
                                             <font key="font" metaFont="smallSystem"/>
@@ -1125,7 +1125,7 @@
                                         </connections>
                                     </textField>
                                     <textField verticalHuggingPriority="750" id="6373">
-                                        <rect key="frame" x="77" y="206" width="84" height="16"/>
+                                        <rect key="frame" x="77" y="202" width="84" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Channel font:" id="6374">
                                             <font key="font" metaFont="cellTitle"/>
@@ -1134,7 +1134,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <button verticalHuggingPriority="750" id="6388">
-                                        <rect key="frame" x="353" y="204" width="63" height="19"/>
+                                        <rect key="frame" x="353" y="200" width="63" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="roundRect" title="Select" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6389">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1147,7 +1147,7 @@
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" id="6395">
-                                        <rect key="frame" x="308" y="264" width="140" height="19"/>
+                                        <rect key="frame" x="308" y="260" width="140" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="roundRect" title="Browse Style Files" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6396">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1158,7 +1158,7 @@
                                         </connections>
                                     </button>
                                     <button id="7145">
-                                        <rect key="frame" x="75" y="47" width="198" height="18"/>
+                                        <rect key="frame" x="75" y="43" width="198" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Show general event messages." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="7146">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1169,7 +1169,7 @@
                                         </connections>
                                     </button>
                                     <button id="efy-Tp-Fqe">
-                                        <rect key="frame" x="74" y="103" width="325" height="18"/>
+                                        <rect key="frame" x="74" y="99" width="325" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Remember old messages when closing Textual." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="mIl-C9-fqw">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1180,7 +1180,7 @@
                                         </connections>
                                     </button>
                                     <scrollView borderType="none" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="jla-12-9TQ">
-                                        <rect key="frame" x="91" y="120" width="329" height="19"/>
+                                        <rect key="frame" x="91" y="118" width="329" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="N3v-41-k1h">
                                             <rect key="frame" x="0.0" y="0.0" width="329" height="19"/>
@@ -1477,7 +1477,7 @@
                                         </scroller>
                                     </scrollView>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="wJI-7E-rvx">
-                                        <rect key="frame" x="92" y="28" width="239" height="14"/>
+                                        <rect key="frame" x="92" y="24" width="239" height="14"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="These include join, part, and quit messages. " id="H8R-Xi-EE0">
                                             <font key="font" metaFont="smallSystem"/>
@@ -4053,7 +4053,7 @@
             </subviews>
         </customView>
         <customView id="Xdo-2c-egD" userLabel="File Transfers">
-            <rect key="frame" x="0.0" y="0.0" width="534" height="246"/>
+            <rect key="frame" x="0.0" y="0.0" width="534" height="260"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <userGuides>
                 <userLayoutGuide location="31" affinity="minX"/>
@@ -4064,7 +4064,7 @@
             </userGuides>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="6uU-R8-NkF">
-                    <rect key="frame" x="58" y="210" width="223" height="17"/>
+                    <rect key="frame" x="58" y="224" width="223" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="When file transfer request is received:" id="mZb-yK-Q91">
                         <font key="font" metaFont="cellTitle"/>
@@ -4073,7 +4073,7 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" id="v1d-1E-ic2">
-                    <rect key="frame" x="284" y="207" width="193" height="22"/>
+                    <rect key="frame" x="284" y="221" width="193" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="Automatically Download" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="3" imageScaling="proportionallyDown" inset="2" selectedItem="wbE-ls-KmQ" id="BEF-Nj-9qU">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -4091,7 +4091,7 @@
                     </connections>
                 </popUpButton>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="55S-aE-bqT">
-                    <rect key="frame" x="44" y="169" width="175" height="17"/>
+                    <rect key="frame" x="44" y="183" width="175" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="IP Address detection method:" id="ium-MC-NEr">
                         <font key="font" metaFont="cellTitle"/>
@@ -4100,7 +4100,7 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" id="5ld-WJ-QWn">
-                    <rect key="frame" x="222" y="166" width="269" height="22"/>
+                    <rect key="frame" x="222" y="180" width="269" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="Request Address from External Source" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="Tkk-Gn-SI6" id="EAP-nS-2nx">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -4118,7 +4118,7 @@
                     </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" id="fmg-Fb-LTz">
-                    <rect key="frame" x="225" y="143" width="177" height="19"/>
+                    <rect key="frame" x="225" y="157" width="177" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="127.0.0.1" drawsBackground="YES" id="bnb-Q1-9oF">
                         <font key="font" metaFont="smallSystem"/>
@@ -4130,7 +4130,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="wk3-Gl-h5g">
-                    <rect key="frame" x="63" y="144" width="156" height="17"/>
+                    <rect key="frame" x="63" y="158" width="156" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Manually entered address:" id="Bcb-PT-bZv">
                         <font key="font" metaFont="cellTitle"/>
@@ -4139,7 +4139,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="XpY-sw-hoa">
-                    <rect key="frame" x="104" y="103" width="142" height="17"/>
+                    <rect key="frame" x="104" y="117" width="142" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="File transfer port range:" id="UFu-G3-zvT">
                         <font key="font" metaFont="cellTitle"/>
@@ -4148,7 +4148,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="lOX-56-gjb">
-                    <rect key="frame" x="252" y="102" width="74" height="19"/>
+                    <rect key="frame" x="252" y="116" width="74" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="1096" drawsBackground="YES" id="1ig-vJ-zZj">
                         <font key="font" metaFont="smallSystem"/>
@@ -4164,7 +4164,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" id="h7y-wz-21n">
-                    <rect key="frame" x="355" y="102" width="74" height="19"/>
+                    <rect key="frame" x="355" y="116" width="74" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="1115" drawsBackground="YES" id="qsv-zK-a5W">
                         <font key="font" metaFont="smallSystem"/>
@@ -4180,7 +4180,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="0fA-Eg-o1K">
-                    <rect key="frame" x="332" y="103" width="17" height="17"/>
+                    <rect key="frame" x="332" y="117" width="17" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="to" id="u89-FD-SA7">
                         <font key="font" metaFont="cellTitle"/>
@@ -4189,7 +4189,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="0gV-7V-wUp">
-                    <rect key="frame" x="64" y="62" width="203" height="17"/>
+                    <rect key="frame" x="64" y="76" width="203" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Downloaded files go to the folder:" id="LWN-bV-fu5">
                         <font key="font" metaFont="cellTitle"/>
@@ -4198,17 +4198,17 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="xz9-W8-HQj">
-                    <rect key="frame" x="84" y="25" width="366" height="29"/>
+                    <rect key="frame" x="84" y="26" width="366" height="42"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="fxj-kX-zUm">
                         <font key="font" metaFont="smallSystem"/>
-                        <string key="title">Textual by default will ask where to save files when downloading them from a sender. This option allows you to skip that process.</string>
+                        <string key="title">Textual, by default, will ask where to save files when downloading them from a sender. This option allows you to skip that process. Please take note this preference cannot be shared using iCloud.</string>
                         <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" id="or9-hE-3Gw">
-                    <rect key="frame" x="270" y="59" width="201" height="22"/>
+                    <rect key="frame" x="270" y="73" width="201" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="tn1-8G-pxP" id="4nX-f5-hYW">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
