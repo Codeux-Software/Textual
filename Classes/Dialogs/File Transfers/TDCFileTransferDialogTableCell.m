@@ -158,7 +158,7 @@
 			if ([self isReceiving]) {
 				[self.transferProgressField setStringValue:TXTFLS(@"FileTransferDialogTransferFromUserIsDeterminingIPAddress", self.peerNickname)];
 			} else {
-				[self.transferProgressField setStringValue:TXTFLS(@"FileTransferDialogTransferToUserIsDeterminingIPAddressg", self.peerNickname)];
+				[self.transferProgressField setStringValue:TXTFLS(@"FileTransferDialogTransferToUserIsDeterminingIPAddress", self.peerNickname)];
 			}
 
 			break;

@@ -467,6 +467,7 @@
 {
 	/* This is an infinite loop. That's bad programming. */
 	NSInteger loopedCount = 0;
+
 	while (1 == 1) {
 		/* No matter what, this loop shall never reach more than 300 passes. */
 		NSAssertReturnLoopBreak(loopedCount < 300);
@@ -554,8 +555,7 @@
 
 	/* Update status. */
 	if (NSDissimilarObjects(self.transferStatus, TDCFileTransferDialogTransferErrorStatus) &&
-		NSDissimilarObjects(self.transferStatus, TDCFileTransferDialogTransferCompleteStatus) &&
-		NSDissimilarObjects(self.transferStatus, TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus))
+		NSDissimilarObjects(self.transferStatus, TDCFileTransferDialogTransferCompleteStatus))
 	{
 		self.transferStatus = TDCFileTransferDialogTransferStoppedStatus;
 	}
