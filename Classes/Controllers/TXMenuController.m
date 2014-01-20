@@ -2257,17 +2257,6 @@
 	[self.masterController.mainWindow makeKeyAndOrderFront:nil];
 }
 
-- (void)toggleFullscreenMode:(id)sender
-{
-	if (self.masterController.isInFullScreenMode) {
-		[self.masterController.mainWindow toggleFullScreen:sender];
-	} else {
-		[self.masterController.mainWindow toggleFullScreen:sender];
-	}
-
-	self.masterController.isInFullScreenMode = BOOLReverseValue(self.masterController.isInFullScreenMode);
-}
-
 - (void)sortChannelListNames:(id)sender
 {
 	TVCServerList *serverList = [self.masterController serverList];

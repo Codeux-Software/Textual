@@ -46,12 +46,6 @@
 
 - (BOOL)isInFullscreenMode;
 
-/* Our NSWindow state restore calls only handle the actual
- origin of the window being restored. Nothing more. These are
- very basic calls. Do not use these on the main window of 
- Textual. That window has its own custom calls in the master 
- controller class. */
-
 - (void)saveWindowStateUsingKeyword:(NSString *)keyword;
 - (void)restoreWindowStateUsingKeyword:(NSString *)keyword;
 
