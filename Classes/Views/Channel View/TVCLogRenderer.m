@@ -202,18 +202,17 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	}
 	else
 	{
-		templateTokens[@"messageFragment"] = contentes;
-
-		// --- //
-
 		if (attrArray & _rendererConversationTrackerAttribute) {
+			templateTokens[@"messageFragment"] = contentes;
+
 			if ([TPCPreferences disableNicknameColorHashing] == YES) {
 				templateTokens[@"inlineNicknameMatchFound"] = @(NO);
 			} else {
-				IRCUser *user = [logController.channel memberWithNickname:contentes];
+				IRCUser *user = [[logController channel] memberWithNickname:contentes];
 
 				if (PointerIsEmpty(user) == NO) {
-					if ([user.nickname isEqualIgnoringCase:logController.client.localNickname] == NO) {
+					if (NSObjectsAreEqual([user nickname], [[logController client] localNickname]) == NO)
+					{
 						NSString *modeSymbol = NSStringEmptyPlaceholder;
 						
 						if ([TPCPreferences conversationTrackingIncludesUserModeSymbol]) {
@@ -285,7 +284,21 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				templateTokens[@"fragmentBackgroundColorIsSet"] = @(YES);
 				templateTokens[@"fragmentBackgroundColor"] = @(colorCode);
 			}
+
+			/* Escape spaces that are prefix and suffix characters. */
+			if ([contentes hasPrefix:NSStringWhitespacePlaceholder]) {
+				contentes = [contentes stringByReplacingCharactersInRange:NSMakeRange(0, 1)
+															   withString:@"&nbsp;"];
+			}
+
+			if ([contentes hasSuffix:NSStringWhitespacePlaceholder]) {
+				contentes = [contentes stringByReplacingCharactersInRange:NSMakeRange(([contentes length] - 1), 1)
+															   withString:@"&nbsp;"];
+			}
 		}
+
+		/* Define content. */
+		templateTokens[@"messageFragment"] = contentes;
 
 		// --- //
 
@@ -311,7 +324,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 	TVCLogLineType lineType = [inputDictionary integerForKey:@"lineType"];
 	
-	IRCClientConfig *clientConfig = log.client.config;
+	IRCClientConfig *clientConfig = [log.client config];
 	
 	id highlightWords = [inputDictionary arrayForKey:@"highlightKeywords"];
 	id excludeWords = [inputDictionary arrayForKey:@"excludeKeywords"];
@@ -319,6 +332,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	/* Only bother spending time creating a copy if we actually need them. */
 	if (clientConfig.highlightList.count >= 1) {
 		highlightWords = [highlightWords mutableCopy];
+
 		excludeWords = [excludeWords mutableCopy];
 	}
 
@@ -542,11 +556,11 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 		if (isPlainText) {
 			/* Add server/channel specific matches. */
-			for (TDCHighlightEntryMatchCondition *e in clientConfig.highlightList) {
+			for (TDCHighlightEntryMatchCondition *e in [clientConfig highlightList]) {
 				BOOL addKeyword = NO;
 
-				if (NSObjectIsNotEmpty(e.matchChannelID)) {
-					NSString *channelID = log.channel.config.itemUUID;
+				if (e.matchChannelID && [e.matchChannelID length] > 0) {
+					NSString *channelID = [log.channel.config itemUUID];
 
 					if ([e.matchChannelID isEqualToString:channelID]) {
 						addKeyword = YES;
@@ -592,7 +606,6 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 			if (regexWordMatching) {
 				/* Regular expression keyword matching. */
-				
 				for (NSString *keyword in highlightWords) {
 					NSRange matchRange = [TLORegularExpression string:body rangeOfRegex:keyword withoutCase:YES];
 					
@@ -745,8 +758,8 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 			/* Conversation Tracking */
 			if (log && isNormalMsg) {
-				IRCClient *logClient = log.client;
-				IRCChannel *logChannel = log.channel;
+				IRCClient *logClient = [log client];
+				IRCChannel *logChannel = [log channel];
 
 				NSInteger totalNicknameLength = 0;
 				NSInteger totalNicknameCount = 0;
@@ -807,9 +820,9 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 							{
 								/* Check if the nickname conversation tracking found is matched to an ignore
 								 that is set to hide them. */
-								IRCAddressBook *ignoreCheck = [logClient checkIgnoreAgainstHostmask:user.hostmask withMatches:@[@"hideMessagesContainingMatch"]];
+								IRCAddressBook *ignoreCheck = [logClient checkIgnoreAgainstHostmask:[user hostmask] withMatches:@[@"hideMessagesContainingMatch"]];
 
-								if (PointerIsNotEmpty(ignoreCheck) && ignoreCheck.hideMessagesContainingMatch) {
+								if (PointerIsNotEmpty(ignoreCheck) && [ignoreCheck hideMessagesContainingMatch]) {
 									if (outputDictionary) {
 										*outputDictionary = @{@"containsIgnoredNickname" : @(YES)};
 									}
@@ -821,7 +834,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 								setFlag(attrBuf, _rendererConversationTrackerAttribute, r.location, r.length);
 
 								totalNicknameCount += 1;
-								totalNicknameLength += user.nickname.length;
+								totalNicknameLength += [user.nickname length];
 
 								[mentionedUsers addObject:user];
 							}
@@ -831,7 +844,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 					}
 				}
 
-				if (NSObjectIsNotEmpty(mentionedUsers)) {
+				if ([mentionedUsers count] > 0) {
 					/* Calculate how much of the body length is actually nicknames. 
 					 This is used when trying to stop highlight spam messages.
 					 By design, Textual counts anything above 75% spam. It
@@ -926,7 +939,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	s = [s gtm_stringByEscapingForHTML];
 
 	s = [s stringByReplacingOccurrencesOfString:@"\t" withString:@"&nbsp;&nbsp;&nbsp;&nbsp;"];
-	s = [s stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
+	s = [s stringByReplacingOccurrencesOfString:@"  " withString:@"&nbsp;&nbsp;"];
 
 	return s;
 }
