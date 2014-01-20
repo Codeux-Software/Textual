@@ -495,20 +495,21 @@
 
 - (void)sendTransferRequestToClient
 {
-	/* We will send actual request to the user from here. */
-	NSDictionary *fileAttrs = [RZFileManager() attributesOfItemAtPath:[self completePath] error:NULL];
-
-	/* If we had problem reading file, then we need to stop now… */
-	if (PointerIsEmpty(fileAttrs)) {
-		[self postErrorWithErrorMessage:@"FileTransferDialogTransferFailedWithBadFileHandle"];
-
-		return; // Break chain.
-	}
-
-	/* Send to user. */
-	TXFSLongInt filesize = [fileAttrs longLongForKey:NSFileSize];
-
 	if ([self isSender]) {
+		/* We will send actual request to the user from here. */
+		NSDictionary *fileAttrs = [RZFileManager() attributesOfItemAtPath:[self completePath] error:NULL];
+
+		/* If we had problem reading file, then we need to stop now… */
+		if (PointerIsEmpty(fileAttrs)) {
+			[self postErrorWithErrorMessage:@"FileTransferDialogTransferFailedWithBadFileHandle"];
+
+			return; // Break chain.
+		}
+
+		/* Send to user. */
+		TXFSLongInt filesize = [fileAttrs longLongForKey:NSFileSize];
+
+		/* Determine which type of message is sent… */
 		if ([self isReversed]) {
 			[self buildTransferToken];
 
@@ -518,7 +519,7 @@
 		}
 	} else {
 		if ([self isReversed]) {
-			[self.associatedClient sendFile:self.peerNickname port:self.transferPort filename:self.filename filesize:filesize token:self.transferToken];
+			[self.associatedClient sendFile:self.peerNickname port:self.transferPort filename:self.filename filesize:self.totalFilesize token:self.transferToken];
 		}
 	}
 }
