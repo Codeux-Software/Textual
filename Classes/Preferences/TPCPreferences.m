@@ -1382,7 +1382,7 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 + (BOOL)fileTransferRequestsAreReversed
 {
-	return YES;
+	return [RZUserDefaults() boolForKey:@"File Transfers -> File Transfer Requests Use Reverse DCC"];
 }
 
 + (NSInteger)fileTransferPortRangeStart
