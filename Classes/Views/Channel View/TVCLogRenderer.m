@@ -894,9 +894,6 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		if (PointerIsEmpty(outputDictionary) == NO) {
 			*outputDictionary = resultInfo;
 		}
-
-		/* Escape spaces. */
-		result = [self escapeSpacesInString:result];
 	}
 	
 	return result;
@@ -926,11 +923,8 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 + (NSString *)escapeString:(NSString *)s
 {
-	return [s gtm_stringByEscapingForHTML];
-}
+	s = [s gtm_stringByEscapingForHTML];
 
-+ (NSString *)escapeSpacesInString:(NSString *)s
-{
 	s = [s stringByReplacingOccurrencesOfString:@"\t" withString:@"&nbsp;&nbsp;&nbsp;&nbsp;"];
 	s = [s stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
 
