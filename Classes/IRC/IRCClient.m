@@ -7148,6 +7148,8 @@
 												 port:[hostPort integerValue]
 											 filesize:[filesize longLongValue]
 												token:transferToken];
+
+								return;
 							} else {
 								LogToConsole(@"Received reverse DCC request with token '%@' but the token already exists.", transferToken);
 							}
@@ -7161,6 +7163,8 @@
 									[e setTransferPort:[hostPort integerValue]];
 
 									[e didReceiveSendRequestFromClient];
+
+									return;
 								}
 							}
 						}
@@ -7173,6 +7177,8 @@
 									 port:[hostPort integerValue]
 								 filesize:[filesize longLongValue]
 									token:nil];
+
+					return;
 				}
 			}
 		}
