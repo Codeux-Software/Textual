@@ -75,14 +75,7 @@
 
 	keyword = [NSString stringWithFormat:@"Saved Window State —> Internal (v2) —> %@", keyword];
 
-	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-
-	NSRect rect = self.frame;
-
-	[dic setInteger:rect.origin.x forKey:@"x"];
-	[dic setInteger:rect.origin.y forKey:@"y"];
-
-	[TPCPreferences saveWindowState:dic name:keyword];
+	[self saveFrameUsingName:keyword];
 }
 
 - (void)restoreWindowStateUsingKeyword:(NSString *)keyword
@@ -91,23 +84,7 @@
 
 	keyword = [NSString stringWithFormat:@"Saved Window State —> Internal (v2) —> %@", keyword];
 
-	NSDictionary *dic = [TPCPreferences loadWindowStateWithName:keyword];
-	
-	if (dic == nil) {
-		[self exactlyCenterWindow];
-		
-		return;
-	}
-
-	NSInteger x = [dic integerForKey:@"x"];
-	NSInteger y = [dic integerForKey:@"y"];
-
-	NSInteger w = self.frame.size.width;
-	NSInteger h = self.frame.size.height;
-
-	NSRect currFrame = NSMakeRectThatFitsScreen(self.screen, x, y, w, h);
-
-	[self setFrame:currFrame display:YES animate:YES];
+	[self setFrameAutosaveName:keyword];
 }
 
 - (BOOL)isInFullscreenMode

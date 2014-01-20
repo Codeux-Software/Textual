@@ -2261,11 +2261,7 @@
 {
 	if (self.masterController.isInFullScreenMode) {
 		[self.masterController.mainWindow toggleFullScreen:sender];
-
-		[self.masterController loadWindowState:NO];
 	} else {
-		[self.masterController saveWindowState];
-		
 		[self.masterController.mainWindow toggleFullScreen:sender];
 	}
 
@@ -2316,15 +2312,13 @@
 
 - (void)resetWindowSize:(id)sender
 {
-	if (self.masterController.mainWindow.isInFullscreenMode) {
+	if ([self.masterController.mainWindow isInFullscreenMode]) {
 		[self toggleFullscreenMode:sender];
 	}
 
-	[self.masterController.mainWindow setFrame:TPCPreferences.defaultWindowFrame
+	[self.masterController.mainWindow setFrame:[TPCPreferences defaultWindowFrame]
 									   display:YES
 									   animate:YES];
-
-	[self.masterController saveWindowState];
 }
 
 - (void)forceReloadTheme:(id)sender
