@@ -51,6 +51,8 @@
 - (void)beginGroupedUpdates;
 - (void)endGroupedUpdates;
 
+- (BOOL)updatesArePaging;
+
 - (void)reloadAllDrawings;
 - (void)reloadAllUserInterfaceElements;
 
