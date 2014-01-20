@@ -88,9 +88,6 @@
 
 @property (assign) NSInteger terminatingClientCount;
 
-- (void)loadWindowState:(BOOL)honorFullscreen;
-- (void)saveWindowState;
-
 - (void)showMemberListSplitView:(BOOL)showList;
 - (void)showServerListSplitView:(BOOL)showList;
 

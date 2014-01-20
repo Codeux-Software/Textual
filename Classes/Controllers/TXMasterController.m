@@ -108,10 +108,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	}
 #endif
 
-	[self.mainWindow setMinSize:TPCPreferences.minimumWindowSize];
-
-	[self loadWindowState:YES];
-
+	[self.mainWindow setMinSize:[TPCPreferences minimumWindowSize]];
+	[self.mainWindow setAllowsConcurrentViewDrawing:NO];
 	[self.mainWindow makeMainWindow];
 
 	self.serverSplitView.fixedViewIndex = 0;
@@ -122,8 +120,10 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 	self.mainWindowIsActive = YES;
 
-	[self.mainWindow setAllowsConcurrentViewDrawing:NO];
 	[self.mainWindow makeKeyAndOrderFront:nil];
+
+	[self loadWindowState];
+
 	[self.mainWindow setAlphaValue:[TPCPreferences themeTransparency]];
 	
 	/* We keep high-res mode value cached since it is costly to ask for every draw. */
@@ -155,6 +155,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 	self.serverList.delegate = self.worldController;
 	self.serverList.dataSource = self.worldController;
+
     self.memberList.keyDelegate	= self.worldController;
 	self.serverList.keyDelegate	= self.worldController;
 
@@ -188,6 +189,15 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[self.pluginManager loadPlugins];
 }
 
+- (void)maybeToggleFullscreenAfterLaunch
+{
+	NSDictionary *dic = [RZUserDefaults() dictionaryForKey:@"Window -> Main Window Window State"];
+
+	if ([dic boolForKey:@"fullscreen"]) {
+		[self.mainWindow performSelector:@selector(toggleFullScreen:) withObject:nil afterDelay:1.0];
+	}
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)note
 {
 	[self.serverList updateBackgroundColor];
@@ -200,6 +210,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 		[self.worldController autoConnectAfterWakeup:NO];	
 	}
+
+	[self maybeToggleFullscreenAfterLaunch];
 	
 	[TPCResourceManager copyResourcesToCustomAddonsFolder];
 }
@@ -214,13 +226,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 - (void)reloadMainWindowFrameOnScreenChange
 {
 	/* Make sure the main window can fit in the new screen resolution. */
-	if (self.isInFullScreenMode) {
-		/* Reset window frame if screen resolution is changed. */
-		NSRect rectToFitScreen = [self.mainWindow constrainFrameRect:[RZMainWindowScreen() frame]
-															toScreen:RZMainWindowScreen()];
-
-		[self.mainWindow setFrame:rectToFitScreen display:YES animate:YES];
-	} else {
+	if (self.isInFullScreenMode == NO) {
 		NSRect windowRect = [self.mainWindow frame];
 	
 		NSRect fixedRect = NSMakeRectThatFitsScreen(RZMainWindowScreen(),
@@ -264,7 +270,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 {
 	NSAssertReturn(self.terminating == NO);
 
-	id sel = self.worldController.selectedItem;
+	id sel = [self.worldController selectedItem];
 
 	if (sel) {
 		[sel resetState];
@@ -516,11 +522,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[self.inputTextField resetTextFieldCellSize:YES];
 }
 
-- (void)windowWillEnterFullScreen:(NSNotification *)notification
-{
-	[self saveWindowState];
-}
-
 - (void)windowDidEnterFullScreen:(NSNotification *)notification
 {
 	self.isInFullScreenMode = YES;
@@ -528,22 +529,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 - (void)windowDidExitFullScreen:(NSNotification *)notification
 {
-	[self loadWindowState:NO];
-	
 	self.isInFullScreenMode = NO;
-}
-
-- (NSSize)windowWillResize:(NSWindow *)awindow toSize:(NSSize)newSize
-{
-	if (NSDissimilarObjects(awindow, self.mainWindow)) {
-		return newSize; 
-	} else {
-		if (self.isInFullScreenMode) {
-			return awindow.frame.size;
-		} else {
-			return newSize;
-		}
-	}
 }
 
 - (BOOL)windowShouldZoom:(NSWindow *)awindow toFrame:(NSRect)newFrame
@@ -555,16 +541,27 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	}
 }
 
+- (NSSize)window:(NSWindow *)window willUseFullScreenContentSize:(NSSize)proposedSize
+{
+	return proposedSize;
+}
+
+- (NSApplicationPresentationOptions)window:(NSWindow *)window willUseFullScreenPresentationOptions:(NSApplicationPresentationOptions)proposedOptions
+{
+    return (NSApplicationPresentationFullScreen | NSApplicationPresentationHideDock | NSApplicationPresentationAutoHideMenuBar);
+}
+
 - (id)windowWillReturnFieldEditor:(NSWindow *)sender toObject:(id)client
 {
 	static BOOL formattingMenuSet;
 
 	if (formattingMenuSet == NO) {
-		NSMenu	   *editorMenu = self.inputTextField.menu;
-		NSMenuItem *formatMenu = self.formattingMenu.formatterMenu;
+		NSMenu *editorMenu = [self.inputTextField menu];
+
+		NSMenuItem *formatMenu = [self.formattingMenu formatterMenu];
 		
 		if (formatMenu) {
-			NSInteger fmtrIndex = [editorMenu indexOfItemWithTitle:formatMenu.title];
+			NSInteger fmtrIndex = [editorMenu indexOfItemWithTitle:[formatMenu title]];
 			
 			if (fmtrIndex == -1) {
 				[editorMenu addItem:[NSMenuItem separatorItem]];
@@ -709,65 +706,41 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 #pragma mark -
 #pragma mark Preferences
 
-- (void)loadWindowState:(BOOL)honorFullscreen
+- (void)loadWindowState
 {
-	NSDictionary *dic = [TPCPreferences loadWindowStateWithName:@"Window -> Main Window"];
+	[self.mainWindow restoreWindowStateUsingKeyword:@"Main Window"];
+
+	NSDictionary *dic = [RZUserDefaults() dictionaryForKey:@"Window -> Main Window Window State"];
 
 	if (dic) {
-		NSInteger x = [dic integerForKey:@"x"];
-		NSInteger y = [dic integerForKey:@"y"];
-		NSInteger w = [dic integerForKey:@"w"];
-		NSInteger h = [dic integerForKey:@"h"];
+		if ([dic containsKey:@"serverList"] == NO) {
+			self.serverSplitView.dividerPosition = 165;
+		} else {
+			self.serverSplitView.dividerPosition = [dic integerForKey:@"serverList"];
 
-		BOOL fullscreen = [dic boolForKey:@"fullscreen"];
-		
-		NSRect windowRect = NSMakeRectThatFitsScreen(RZMainWindowScreen(), x, y, w, h);
-
-		[self.mainWindow setFrame:windowRect display:YES animate:BOOLReverseValue(self.isInFullScreenMode)];
-		
-		self.serverSplitView.dividerPosition = [dic integerForKey:@"serverList"];
-		self.memberSplitView.dividerPosition = [dic integerForKey:@"memberList"];
-		
-		if (self.serverSplitView.dividerPosition < _minimumSplitViewWidth) {
-			self.serverSplitView.dividerPosition = _defaultSplitViewWidth;
-		}
-		
-		if (self.memberSplitView.dividerPosition < _minimumSplitViewWidth) {
-			self.memberSplitView.dividerPosition = _defaultSplitViewWidth;
+			if (self.serverSplitView.dividerPosition < _minimumSplitViewWidth) {
+				self.serverSplitView.dividerPosition = _defaultSplitViewWidth;
+			}
 		}
 
-		if (fullscreen && honorFullscreen) {
-			[self.menuController performSelector:@selector(toggleFullscreenMode:) withObject:nil afterDelay:2.0];
+		if ([dic containsKey:@"memberList"] == NO) {
+			self.memberSplitView.dividerPosition = 120;
+		} else {
+			self.memberSplitView.dividerPosition = [dic integerForKey:@"memberList"];
+			
+			if (self.memberSplitView.dividerPosition < _minimumSplitViewWidth) {
+				self.memberSplitView.dividerPosition = _defaultSplitViewWidth;
+			}
 		}
-	} else {
-		[self.mainWindow setFrame:[TPCPreferences defaultWindowFrame]
-						  display:YES
-						  animate:BOOLReverseValue(self.isInFullScreenMode)];
-
-		self.serverSplitView.dividerPosition = 165;
-		self.memberSplitView.dividerPosition = 120;
 	}
 
-	self.serverListSplitViewOldPosition = self.serverSplitView.dividerPosition;
-	self.memberSplitViewOldPosition = self.memberSplitView.dividerPosition;
+	self.serverListSplitViewOldPosition = [self.serverSplitView dividerPosition];
+	self.memberSplitViewOldPosition = [self.memberSplitView dividerPosition];
 }
 
 - (void)saveWindowState
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-
-	BOOL fullscreen = self.isInFullScreenMode;
-
-	if (fullscreen) {
-		[self.menuController toggleFullscreenMode:nil];
-	}
-	
-	NSRect rect = self.mainWindow.frame;
-
-	[dic setInteger:rect.origin.x forKey:@"x"];
-	[dic setInteger:rect.origin.y forKey:@"y"];
-	[dic setInteger:rect.size.width	forKey:@"w"];
-	[dic setInteger:rect.size.height forKey:@"h"];
 	
 	if (self.serverSplitView.dividerPosition < _minimumSplitViewWidth) {
 		if (self.serverListSplitViewOldPosition < _minimumSplitViewWidth) {
@@ -784,13 +757,15 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 			self.memberSplitView.dividerPosition = self.memberSplitViewOldPosition;
 		}
 	}
+
+	[dic setBool:self.isInFullScreenMode forKey:@"fullscreen"];
+
+	[self.mainWindow saveWindowStateUsingKeyword:@"Main Window"];
 	
 	[dic setInteger:self.serverSplitView.dividerPosition forKey:@"serverList"];
 	[dic setInteger:self.memberSplitView.dividerPosition forKey:@"memberList"];
 
-	[dic setBool:fullscreen forKey:@"fullscreen"];
-
-	[TPCPreferences saveWindowState:dic name:@"Window -> Main Window"];
+	[RZUserDefaults() setObject:dic forKey:@"Window -> Main Window Window State"];
 }
 
 #pragma mark -

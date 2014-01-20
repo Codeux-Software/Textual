@@ -343,9 +343,6 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 + (NSDictionary *)loadWorld;
 + (void)saveWorld:(NSDictionary *)value;
 
-+ (NSDictionary *)loadWindowStateWithName:(NSString *)name;
-+ (void)saveWindowState:(NSDictionary *)value name:(NSString *)name;
-
 + (TXNicknameHighlightMatchType)highlightMatchingMethod;
 
 + (BOOL)logHighlights;

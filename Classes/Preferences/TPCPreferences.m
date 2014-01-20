@@ -1604,19 +1604,6 @@ static NSURL *transcriptFolderResolvedBookmark;
 }
 
 #pragma mark -
-#pragma mark Window
-
-+ (NSDictionary *)loadWindowStateWithName:(NSString *)name
-{
-	return [RZUserDefaults() objectForKey:name];
-}
-
-+ (void)saveWindowState:(NSDictionary *)value name:(NSString *)name
-{
-	[RZUserDefaults() setObject:value forKey:name];
-}
-
-#pragma mark -
 #pragma mark Keywords
 
 static NSMutableArray *matchKeywords = nil;
