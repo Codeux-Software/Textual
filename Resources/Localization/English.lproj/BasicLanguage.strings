@@ -427,7 +427,7 @@
 "TXNotificationChannelNoticeType"					= "Channel Notice";
 "TXNotificationConnectType"							= "Connected";
 "TXNotificationDisconnectType"						= "Disconnected";
-"TXNotificationHighlightType"						= "Highlight";
+"TXNotificationHighlightType"						= "Highlight (Mention)";
 "TXNotificationInviteType"							= "Channel Invitation";
 "TXNotificationKickType"							= "Kicked from Channel";
 "TXNotificationNewPrivateMessageType"				= "Private Message (new)";
