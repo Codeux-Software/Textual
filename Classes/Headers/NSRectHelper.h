@@ -40,4 +40,3 @@
 
 TEXTUAL_EXTERN NSPoint NSRectCenter(NSRect rect);
 TEXTUAL_EXTERN NSRect NSRectAdjustInRect(NSRect r, NSRect bounds);
-TEXTUAL_EXTERN NSRect NSMakeRectThatFitsScreen(NSScreen *screen, CGFloat x, CGFloat y, CGFloat w, CGFloat h);

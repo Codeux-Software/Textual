@@ -127,7 +127,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[self.mainWindow setAlphaValue:[TPCPreferences themeTransparency]];
 	
 	/* We keep high-res mode value cached since it is costly to ask for every draw. */
-	self.applicationIsRunningInHighResMode = [RZMainWindowScreen() runningInHighResolutionMode];
+	self.applicationIsRunningInHighResMode = [[self.mainWindow screen] runningInHighResolutionMode];
 	
 	self.themeControllerPntr = [TPCThemeController new];
 	[self.themeControllerPntr load];
@@ -232,26 +232,13 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 - (void)reloadMainWindowFrameOnScreenChange
 {
-	/* Make sure the main window can fit in the new screen resolution. */
-	if ([self.mainWindow isInFullscreenMode] == NO) {
-		NSRect windowRect = [self.mainWindow frame];
-	
-		NSRect fixedRect = NSMakeRectThatFitsScreen(RZMainWindowScreen(),
-													windowRect.origin.x,
-													windowRect.origin.y,
-													windowRect.size.width,
-													windowRect.size.height);
-		
-		[self.mainWindow setFrame:fixedRect display:YES animate:YES];
-	}
-
 	/* Redraw dock icon on potential screen resolution changes. */
 	[TVCDockIcon resetCachedCount];
 	
 	[self.worldController updateIcon];
 	
 	/* Update wether we are in high-resolution mode and redraw some stuff if we move state. */
-	BOOL inHighResMode = [RZMainWindowScreen() runningInHighResolutionMode];
+	BOOL inHighResMode = [[self.mainWindow screen] runningInHighResolutionMode];
 	
 	if (NSDissimilarObjects(self.applicationIsRunningInHighResMode, inHighResMode)) {
 		[self.memberList reloadAllUserInterfaceElements];
@@ -319,11 +306,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 - (void)windowDidChangeScreen:(NSNotification *)notification
 {
-	/* The dock is not always visible at the exact moment this notification fires.
-	 Therefore, we delay it slightly so that it can appear and update the value of
-	 visibleFrame so that it includes itself. */
-
-	[self performSelector:@selector(reloadMainWindowFrameOnScreenChange) withObject:nil afterDelay:0.5];
+	[self reloadMainWindowFrameOnScreenChange];
 }
 
 - (void)windowDidBecomeKey:(NSNotification *)notification

@@ -65,20 +65,3 @@ NSRect NSRectAdjustInRect(NSRect r, NSRect bounds)
 	return r;
 }
 
-NSRect NSMakeRectThatFitsScreen(NSScreen *screen, CGFloat x, CGFloat y, CGFloat w, CGFloat h)
-{
-	NSRect usable = [screen visibleFrame];
-	
-	if (w > usable.size.width) {
-		w = usable.size.width;
-		x = usable.origin.x;
-	}
-	
-	if (x < usable.origin.x) {
-		x = usable.origin.x;
-	}
-
-	NSRect newRect = NSMakeRect(x, y, w, h);
-	
-	return NSRectAdjustInRect(newRect, usable);
-}
