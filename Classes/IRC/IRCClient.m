@@ -5917,9 +5917,15 @@
 			
 			NSString *sendern = [m paramAt:1];
 			NSString *hostmask = [m paramAt:2];
-			
-			[self printDebugInformation:TXTFLS(@"IRCUserPrivateMessageBlockedByUmodeG", sendern, hostmask)];
-			
+
+			if ([TPCPreferences locationToSendNotices] == TXNoticeSendCurrentChannelType) {
+				IRCChannel *c = [self.worldController selectedChannelOn:self];
+
+				[self printDebugInformation:TXTFLS(@"IRCUserPrivateMessageBlockedByUmodeG", sendern, hostmask) channel:c];
+			} else {
+				[self printDebugInformation:TXTFLS(@"IRCUserPrivateMessageBlockedByUmodeG", sendern, hostmask)];
+			}
+
 			break;
 		}
 		case 900: // RPL_LOGGEDIN
