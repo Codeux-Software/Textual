@@ -1272,7 +1272,7 @@ typedef enum TXMoveKind : NSInteger {
 - (void)exitFullscreenMode:(NSEvent *)e
 {
     if ([self.mainWindow isInFullscreenMode] && [self.inputTextField isFocused] == NO) {
-        [self.menuController toggleFullscreenMode:nil];
+        [self.mainWindow toggleFullScreen:nil];
     } else {
         [self.inputTextField keyDown:e];
     }

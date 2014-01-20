@@ -230,7 +230,7 @@
                             <menuItem title="Toggle Fullscreen" keyEquivalent="f" id="1790">
                                 <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                 <connections>
-                                    <action selector="toggleFullscreenMode:" target="267" id="2555"/>
+                                    <action selector="toggleFullScreen:" target="21" id="tFd-hZ-LXm"/>
                                 </connections>
                             </menuItem>
                         </items>

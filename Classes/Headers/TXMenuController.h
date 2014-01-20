@@ -273,7 +273,6 @@
 - (IBAction)showAcknowledgments:(id)sender;
 - (IBAction)showScriptingDocumentation:(id)sender;
 - (IBAction)processNavigationItem:(id)sender;
-- (IBAction)toggleFullscreenMode:(id)sender;
 - (IBAction)centerMainWindow:(id)sender;
 
 - (void)forceReloadTheme:(id)sender;
