@@ -51,6 +51,11 @@
 #pragma mark -
 #pragma mark Update Grouping
 
+- (BOOL)updatesArePaging
+{
+	return self.beginUpdatesCallRunning;
+}
+
 - (void)beginGroupedUpdates
 {
 	NSAssertReturn(self.beginUpdatesCallRunning == NO);

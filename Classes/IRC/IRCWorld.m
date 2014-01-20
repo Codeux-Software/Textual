@@ -1311,9 +1311,14 @@
 	id nextItem = [self.serverList itemAtRow:[self.serverList selectedRow]];
 
 	[self.selectedItem resetState]; // Reset state of old item.
-	self.selectedItem = nextItem;
+	 self.selectedItem = nextItem;
 
 	[self.selectedItem resetState]; // Reset state of new item.
+
+	/* Stop udpates, if any. */
+	if ([self.memberList updatesArePaging]) {
+		[self.memberList endGroupedUpdates];
+	}
 
 	/* Destroy member list if we have no selection. */
 	if (PointerIsEmpty(self.selectedItem)) {
