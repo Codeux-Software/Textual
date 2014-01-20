@@ -925,8 +925,8 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 {
 	s = [s gtm_stringByEscapingForHTML];
 
-	s = [s stringByReplacingOccurrencesOfString:@"	" withString:@"&nbsp;&nbsp;&nbsp;&nbsp;"];
-	s = [s stringByReplacingOccurrencesOfString:@"  " withString:@"&nbsp;&nbsp;"];
+	s = [s stringByReplacingOccurrencesOfString:@"\t" withString:@"&nbsp;&nbsp;&nbsp;&nbsp;"];
+	s = [s stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
 
 	return s;
 }
