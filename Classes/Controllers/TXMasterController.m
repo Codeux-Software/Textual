@@ -194,8 +194,15 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	NSDictionary *dic = [RZUserDefaults() dictionaryForKey:@"Window -> Main Window Window State"];
 
 	if ([dic boolForKey:@"fullscreen"]) {
-		[self.mainWindow performSelector:@selector(toggleFullScreen:) withObject:nil afterDelay:1.0];
+		[self performSelector:@selector(toggleFullscreenAfterLaunch) withObject:nil afterDelay:1.0];
 	}
+}
+
+- (void)toggleFullscreenAfterLaunch
+{
+	NSAssertReturn([self.mainWindow isInFullscreenMode]);
+
+	[self.mainWindow toggleFullScreen:nil];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)note
@@ -226,7 +233,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 - (void)reloadMainWindowFrameOnScreenChange
 {
 	/* Make sure the main window can fit in the new screen resolution. */
-	if (self.isInFullScreenMode == NO) {
+	if ([self.mainWindow isInFullscreenMode] == NO) {
 		NSRect windowRect = [self.mainWindow frame];
 	
 		NSRect fixedRect = NSMakeRectThatFitsScreen(RZMainWindowScreen(),
@@ -522,22 +529,12 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[self.inputTextField resetTextFieldCellSize:YES];
 }
 
-- (void)windowDidEnterFullScreen:(NSNotification *)notification
-{
-	self.isInFullScreenMode = YES;
-}
-
-- (void)windowDidExitFullScreen:(NSNotification *)notification
-{
-	self.isInFullScreenMode = NO;
-}
-
 - (BOOL)windowShouldZoom:(NSWindow *)awindow toFrame:(NSRect)newFrame
 {
 	if (NSDissimilarObjects(self.mainWindow, awindow)) {
 		return YES;
 	} else {
-		return BOOLReverseValue(self.isInFullScreenMode);
+		return BOOLReverseValue([self.mainWindow isInFullscreenMode]);
 	}
 }
 
@@ -758,7 +755,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		}
 	}
 
-	[dic setBool:self.isInFullScreenMode forKey:@"fullscreen"];
+	[dic setBool:[self.mainWindow isInFullscreenMode] forKey:@"fullscreen"];
 
 	[self.mainWindow saveWindowStateUsingKeyword:@"Main Window"];
 	
@@ -1274,7 +1271,7 @@ typedef enum TXMoveKind : NSInteger {
 
 - (void)exitFullscreenMode:(NSEvent *)e
 {
-    if (self.isInFullScreenMode && [self.inputTextField isFocused] == NO) {
+    if ([self.mainWindow isInFullscreenMode] && [self.inputTextField isFocused] == NO) {
         [self.menuController toggleFullscreenMode:nil];
     } else {
         [self.inputTextField keyDown:e];

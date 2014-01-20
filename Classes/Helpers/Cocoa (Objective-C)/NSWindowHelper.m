@@ -73,7 +73,7 @@
 {
 	NSObjectIsEmptyAssert(keyword);
 
-	keyword = [NSString stringWithFormat:@"Saved Window State —> Internal (v2) —> %@", keyword];
+	keyword = [NSString stringWithFormat:@"—> Internal (v2) —> %@", keyword];
 
 	[self saveFrameUsingName:keyword];
 }
@@ -82,7 +82,7 @@
 {
 	NSObjectIsEmptyAssert(keyword);
 
-	keyword = [NSString stringWithFormat:@"Saved Window State —> Internal (v2) —> %@", keyword];
+	keyword = [NSString stringWithFormat:@"—> Internal (v2) —> %@", keyword];
 
 	[self setFrameAutosaveName:keyword];
 }
