@@ -46,7 +46,6 @@ typedef enum TVCLogRendererType : NSInteger {
 @interface TVCLogRenderer : NSObject
 + (NSString *)escapeString:(NSString *)s;
 + (NSString *)escapeStringWithoutNil:(NSString *)s;
-+ (NSString *)escapeSpacesInString:(NSString *)s;
 
 + (NSInteger)mapColorValue:(NSColor *)color;
 + (NSColor *)mapColorCode:(NSInteger)colorCode;
