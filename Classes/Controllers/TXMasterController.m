@@ -712,6 +712,9 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 				self.memberSplitView.dividerPosition = _defaultSplitViewWidth;
 			}
 		}
+	} else {
+		self.serverSplitView.dividerPosition = 165;
+		self.memberSplitView.dividerPosition = 120;
 	}
 
 	self.serverListSplitViewOldPosition = [self.serverSplitView dividerPosition];
