@@ -84,7 +84,6 @@
 #define RZMainOperationQueue()					[NSOperationQueue mainQueue]
 #define RZMainRunLoop()							[NSRunLoop mainRunLoop]
 #define RZMainScreen()							[NSScreen mainScreen]
-#define RZMainWindowScreen()					[self.masterController.mainWindow screen]
 #define RZNotificationCenter()					[NSNotificationCenter defaultCenter]
 #define RZPasteboard()							[NSPasteboard generalPasteboard]
 #define RZProcessInfo()							[NSProcessInfo processInfo]
