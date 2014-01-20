@@ -139,7 +139,7 @@
                         <popUpButton key="view" tag="13" id="6451">
                             <rect key="frame" x="3" y="14" width="43" height="32"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="TPWTB_Extensions" imagePosition="right" lineBreakMode="truncatingTail" borderStyle="bezel" inset="2" pullsDown="YES" selectedItem="6454" id="6452">
+                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" imagePosition="right" lineBreakMode="truncatingTail" borderStyle="bezel" inset="2" pullsDown="YES" selectedItem="6454" id="6452">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" title="OtherViews" showsStateColumn="NO" id="6453">
@@ -4053,18 +4053,18 @@
             </subviews>
         </customView>
         <customView id="Xdo-2c-egD" userLabel="File Transfers">
-            <rect key="frame" x="0.0" y="0.0" width="534" height="260"/>
+            <rect key="frame" x="0.0" y="0.0" width="534" height="354"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <userGuides>
                 <userLayoutGuide location="31" affinity="minX"/>
                 <userLayoutGuide location="502" affinity="minX"/>
                 <userLayoutGuide location="289" affinity="minY"/>
                 <userLayoutGuide location="28" affinity="minY"/>
-                <userLayoutGuide location="229" affinity="minY"/>
+                <userLayoutGuide location="178" affinity="minY"/>
             </userGuides>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="6uU-R8-NkF">
-                    <rect key="frame" x="58" y="224" width="223" height="17"/>
+                    <rect key="frame" x="29" y="316" width="223" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="When file transfer request is received:" id="mZb-yK-Q91">
                         <font key="font" metaFont="cellTitle"/>
@@ -4073,7 +4073,7 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" id="v1d-1E-ic2">
-                    <rect key="frame" x="284" y="221" width="193" height="22"/>
+                    <rect key="frame" x="255" y="313" width="193" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="Automatically Download" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="3" imageScaling="proportionallyDown" inset="2" selectedItem="wbE-ls-KmQ" id="BEF-Nj-9qU">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -4091,7 +4091,7 @@
                     </connections>
                 </popUpButton>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="55S-aE-bqT">
-                    <rect key="frame" x="44" y="183" width="175" height="17"/>
+                    <rect key="frame" x="29" y="277" width="175" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="IP Address detection method:" id="ium-MC-NEr">
                         <font key="font" metaFont="cellTitle"/>
@@ -4100,7 +4100,7 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" id="5ld-WJ-QWn">
-                    <rect key="frame" x="222" y="180" width="269" height="22"/>
+                    <rect key="frame" x="207" y="274" width="269" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="Request Address from External Source" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="Tkk-Gn-SI6" id="EAP-nS-2nx">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -4118,7 +4118,7 @@
                     </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" id="fmg-Fb-LTz">
-                    <rect key="frame" x="225" y="157" width="177" height="19"/>
+                    <rect key="frame" x="210" y="251" width="177" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="127.0.0.1" drawsBackground="YES" id="bnb-Q1-9oF">
                         <font key="font" metaFont="smallSystem"/>
@@ -4130,7 +4130,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="wk3-Gl-h5g">
-                    <rect key="frame" x="63" y="158" width="156" height="17"/>
+                    <rect key="frame" x="48" y="252" width="156" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Manually entered address:" id="Bcb-PT-bZv">
                         <font key="font" metaFont="cellTitle"/>
@@ -4139,7 +4139,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="XpY-sw-hoa">
-                    <rect key="frame" x="104" y="117" width="142" height="17"/>
+                    <rect key="frame" x="29" y="211" width="142" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="File transfer port range:" id="UFu-G3-zvT">
                         <font key="font" metaFont="cellTitle"/>
@@ -4148,7 +4148,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="lOX-56-gjb">
-                    <rect key="frame" x="252" y="116" width="74" height="19"/>
+                    <rect key="frame" x="177" y="210" width="74" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="1096" drawsBackground="YES" id="1ig-vJ-zZj">
                         <font key="font" metaFont="smallSystem"/>
@@ -4164,7 +4164,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" id="h7y-wz-21n">
-                    <rect key="frame" x="355" y="116" width="74" height="19"/>
+                    <rect key="frame" x="280" y="210" width="74" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="1115" drawsBackground="YES" id="qsv-zK-a5W">
                         <font key="font" metaFont="smallSystem"/>
@@ -4180,7 +4180,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="0fA-Eg-o1K">
-                    <rect key="frame" x="332" y="117" width="17" height="17"/>
+                    <rect key="frame" x="257" y="211" width="17" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="to" id="u89-FD-SA7">
                         <font key="font" metaFont="cellTitle"/>
@@ -4189,7 +4189,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="0gV-7V-wUp">
-                    <rect key="frame" x="64" y="76" width="203" height="17"/>
+                    <rect key="frame" x="29" y="170" width="203" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Downloaded files go to the folder:" id="LWN-bV-fu5">
                         <font key="font" metaFont="cellTitle"/>
@@ -4198,7 +4198,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="xz9-W8-HQj">
-                    <rect key="frame" x="84" y="26" width="366" height="42"/>
+                    <rect key="frame" x="49" y="120" width="366" height="42"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="fxj-kX-zUm">
                         <font key="font" metaFont="smallSystem"/>
@@ -4208,7 +4208,7 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" id="or9-hE-3Gw">
-                    <rect key="frame" x="270" y="73" width="201" height="22"/>
+                    <rect key="frame" x="235" y="167" width="201" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="tn1-8G-pxP" id="4nX-f5-hYW">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -4236,6 +4236,27 @@
                         <action selector="onFileTransferDownloadDestinationFolderChanged:" target="-2" id="z6B-Ap-Mxk"/>
                     </connections>
                 </popUpButton>
+                <button id="tCN-Zx-GML">
+                    <rect key="frame" x="29" y="88" width="307" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Send passive file transfer requests by default." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="yya-sT-WMg">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="1247" name="value" keyPath="values.File Transfers -> File Transfer Requests Use Reverse DCC" id="zqu-oU-2bR"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="Jzj-cm-m3i">
+                    <rect key="frame" x="49" y="26" width="391" height="56"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="RND-99-TaT">
+                        <font key="font" metaFont="smallSystem"/>
+                        <string key="title">A passive file transfer provides the ability to send files without the need to perform port forwarding or configuration of the firewall as it is made the responsiblity of the receiver. It is recommended to leave this option off by default for greatest compatibility with legacy IRC clients.</string>
+                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
         </customView>
         <customView id="hAa-k2-Ymh" userLabel="Incoming Data">
