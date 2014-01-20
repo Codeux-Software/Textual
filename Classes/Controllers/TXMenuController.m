@@ -2302,7 +2302,7 @@
 - (void)resetWindowSize:(id)sender
 {
 	if ([self.masterController.mainWindow isInFullscreenMode]) {
-		[self toggleFullscreenMode:sender];
+		[self.masterController.mainWindow toggleFullScreen:sender];
 	}
 
 	[self.masterController.mainWindow setFrame:[TPCPreferences defaultWindowFrame]
