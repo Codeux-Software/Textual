@@ -235,11 +235,11 @@
 	/* Reload preferences. */
 	[TPCPreferences performReloadActionForKeyValues:changedKeys];
 
-	/* Pop loading screen. */
-	[self.masterController.mainWindowLoadingScreen hideLoadingConfigurationView];
-
 	/* Finish seeding. */
 	self.worldController.isPopulatingSeeds = NO;
+
+	/* Pop loading screen. */
+	[self.worldController reloadLoadingScreen];
 }
 
 #pragma mark -
