@@ -117,6 +117,8 @@
 - (void)reloadTheme;
 - (void)reloadTheme:(BOOL)reloadUserInterface;
 
+- (void)reloadLoadingScreen;
+
 - (void)preferencesChanged;
 
 - (void)changeTextSize:(BOOL)bigger;
