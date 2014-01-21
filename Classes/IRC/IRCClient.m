@@ -6286,6 +6286,7 @@
 - (void)onRetryTimer:(id)sender
 {
 	[self disconnect];
+	
 	[self connect:IRCConnectRetryMode];
 }
 
