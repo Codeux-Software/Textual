@@ -48,6 +48,14 @@
 
 @implementation TVCMemberList
 
+- (void)dealloc
+{
+	/* Remove notifications for scroll view. */
+	[RZNotificationCenter() removeObserver:self
+									  name:NSViewBoundsDidChangeNotification
+									object:[self.enclosingScrollView contentView]];
+}
+
 #pragma mark -
 #pragma mark Update Grouping
 
