@@ -56,7 +56,14 @@
 
 - (void)endSheet
 {
+	[self releaseTableViewDataSourceBeforeSheetClosure];
+
 	[NSApp endSheet:self.sheet];
+}
+
+- (void)releaseTableViewDataSourceBeforeSheetClosure
+{
+
 }
 
 - (void)sheetDidEnd:(NSWindow *)sender returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo

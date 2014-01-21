@@ -79,6 +79,12 @@
 	[self.window close];
 }
 
+- (void)releaseTableViewDataSourceBeforeClosure
+{
+	self.channelListTable.delegate = nil;
+	self.channelListTable.dataSource = nil;
+}
+
 - (void)clear
 {
 	[self.unfilteredList removeAllObjects];
@@ -347,6 +353,8 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void *context)
 
 - (void)windowWillClose:(NSNotification *)note
 {
+	[self releaseTableViewDataSourceBeforeClosure];
+
 	[self.window saveWindowStateForClass:self.class];
 	
 	if ([self.delegate respondsToSelector:@selector(listDialogWillClose:)]) {

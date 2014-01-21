@@ -54,6 +54,12 @@
     return self;
 }
 
+- (void)releaseTableViewDataSourceBeforeSheetClosure
+{
+	self.highlightListTable.delegate = nil;
+	self.highlightListTable.dataSource = nil;
+}
+
 - (void)show
 {
 	IRCClient *currentNetwork = self.worldController.selectedClient;
