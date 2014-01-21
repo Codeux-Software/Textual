@@ -497,7 +497,19 @@
 	 self.hostReachability = [Reachability reachabilityWithHostname:self.config.serverAddress];
 	[self.hostReachability setReachableOnWWAN:NO];
 
-	[RZNotificationCenter() addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:self.hostReachability];
+	__unsafe_unretained typeof(self) weakSelf = self;
+
+	[self.hostReachability setReachableBlock:^(Reachability *reachability) {
+		if (weakSelf) {
+			[weakSelf reachabilityChanged:YES];
+		}
+	}];
+
+	[self.hostReachability setUnreachableBlock:^(Reachability *reachability) {
+		if (weakSelf) {
+			[weakSelf reachabilityChanged:NO];
+		}
+	}];
 
 	[self.hostReachability startNotifier];
 }
@@ -506,14 +518,14 @@
 {
 	PointerIsNotEmptyAssert(self.hostReachability);
 
-	[RZNotificationCenter() removeObserver:self name:kReachabilityChangedNotification object:self.hostReachability];
+	[self.hostReachability setReachableBlock:nil];
+	[self.hostReachability setUnreachableBlock:nil];
 
 	[self.hostReachability stopNotifier];
-
-	self.hostReachability = nil;
+	 self.hostReachability = nil;
 }
 
-- (void)reachabilityChanged:(NSNotification *)note
+- (void)reachabilityChanged:(BOOL)reachable
 {
 	if (self.rawModeEnabled) {
 		LogToConsole(@"%@ %@ %@", self.config.serverAddress,
@@ -526,12 +538,12 @@
 	}
 
 	if (self.isLoggedIn) {
-		if ([self.hostReachability isReachableViaWiFi] == NO) {
+		if (reachable == NO) {
 			if (self.config.performDisconnectOnReachabilityChange) {
 				self.disconnectType = IRCDisconnectReachabilityChangeMode;
 				self.reconnectEnabled = YES;
 				
-				[self disconnect];
+				[self performSelectorOnMainThread:@selector(disconnect) withObject:nil waitUntilDone:YES];
 			}
 		}
 	}
