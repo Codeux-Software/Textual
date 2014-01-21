@@ -62,11 +62,14 @@
 	/* Convert URL. */
 	NSURL *u = [TVCImageURLParser URLFromWebViewPasteboard:url];
 
-	NSString *scheme = u.scheme;
+	NSString *scheme = [u scheme];
 	
-	NSString *host = [u.host lowercaseString];
-	NSString *path = [u.path encodeURIFragment];
-	NSString *query = [u.query encodeURIFragment];
+	NSString *host = [[u host] lowercaseString];
+
+	NSString *path = [[u path] encodeURIFragment];
+	NSString *query = [[u query] encodeURIFragment];
+
+	NSString *lowercasePath = [path lowercaseString];
     
     if (query) {
         path = [[path stringByAppendingString:@"?"] stringByAppendingString:query];
@@ -87,10 +90,13 @@
 
 	BOOL hadExtension = NO;
 
-	if ([path hasSuffix:@".jpg"] || [path hasSuffix:@".jpeg"] ||
-		[path hasSuffix:@".png"] || [path hasSuffix:@".gif"] ||
-		[path hasSuffix:@".tif"] || [path hasSuffix:@".tiff"] ||
-		[path hasSuffix:@".bmp"])
+	if ([lowercasePath hasSuffix:@".jpg"]	||
+		[lowercasePath hasSuffix:@".jpeg"]	||
+		[lowercasePath hasSuffix:@".png"]	||
+		[lowercasePath hasSuffix:@".gif"]	||
+		[lowercasePath hasSuffix:@".tif"]	||
+		[lowercasePath hasSuffix:@".tiff"]	||
+		[lowercasePath hasSuffix:@".bmp"])
 	{
 		hadExtension = YES;
 
