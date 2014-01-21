@@ -1,12 +1,10 @@
-Textual is a highly modified version of the open source project known as [LimeChat](https://github.com/psychs/limechat) created by Satoshi Nakagawa. Much of the app uses the open standard of [WebKit](http://webkit.org/) which makes customization easy through the use of CSS 3 and HTML 5. Plugins written in [Objective-C](http://www.codeux.com/textual/wiki/Writing-Plugins.wiki) and [scripts](http://www.codeux.com/textual/wiki/Writing-Scripts.wiki) made with AppleScript (and other languages) are also supported.
+Textual is a highly modified version of the open source project known as [LimeChat](https://github.com/psychs/limechat) created by Satoshi Nakagawa. Much of the app uses the open standard of [WebKit](http://webkit.org/) which makes customization easy through the use of CSS 3 and HTML 5. [Plugins](http://www.codeux.com/textual/wiki/Writing-Plugins.wiki) written in Objective-C and [scripts](http://www.codeux.com/textual/wiki/Writing-Scripts.wiki) made with AppleScript (and other languages) are also supported.
 
 ## Building Textual
 
-Please be aware while it is within your right to compile Textual and redistribute it unlimited times; **we will not actively provide support for the actual building process as it has been known to introduce  some bugs (even while supervised) that do not exist in the Mac App Store version of Textual.** General support for easy to answer questions related to the actual use of the client is still available. 
+Please be aware while it is within your right to compile Textual and redistribute it unlimited times; **we will not provide support for the building process as it encourages use of potentially unstable code**. General support for easy to answer questions related to the actual use of the application is still available. 
 
-The repository is in a constant state of development so the code produced may not be stable at the time of a clone.
-
-**Anyways, to build it…**
+<hr />
 
 The latest version of Textual requires two things to be built. One is a valid (does not need to be trusted) code signing certificate. The second is an installation of Xcode 5 or later. 
 
@@ -16,7 +14,7 @@ If you are an Apple registered developer, then obtaining a signing certificate i
 
 These bugs are not intentionally built into Textual to discourage building. They are a result of Apple's own APIs being dependent on the fact that Textual is code signed. 
 
-As long as a self-signed certificate or an Apple Developer issued certificate is available with its name containing "Developer ID Application" then the only thing required to build Textual is to open it and built it within Textual using the "Standard Release" build scheme. There is no other special instructions. 
+As long as a self-signed certificate or an Apple Developer issued certificate is available with its name containing "Developer ID Application", then the only thing required to build Textual is to open it and build it using the "Standard Release" build scheme. There are no other special instructions. 
 
 99% of build errors are related to code signing so making sure there is some type of certificate available for signing will normally result in a successful build every time.
 
