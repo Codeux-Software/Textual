@@ -88,6 +88,7 @@
 + (void)importPostflight:(NSURL *)pathURL
 {
 	/* The loading screen is a generic way to show something during import. */
+	[self.masterController.mainWindowLoadingScreen hideAll:NO];
 	[self.masterController.mainWindowLoadingScreen popLoadingConfigurationView];
 
 	/* isPopulatingSeeds tells the world to not close the loading screen on state
@@ -119,11 +120,12 @@
 
 	/* Perform actual import if we have the dictionary. */
 	if (plist) {
-		[self importContentsOfDictionary:plist];
+		/* Import data. */
+		[self importContentsOfDictionary:plist withAutomaticReload:NO];
 
 		/* Do not push the loading screen right away. Add a little delay to give everything
 		 a chance to settle down before presenting the changes to the user. */
-		[self performSelector:@selector(importPostflightCleanup) withObject:nil afterDelay:1.0];
+		[self performSelector:@selector(importPostflightCleanup:) withObject:[plist allKeys] afterDelay:1.0];
 	} else {
 		LogToConsole(@"Import failed. Could not read property list.");
 	}
@@ -141,6 +143,11 @@
 
 + (void)importContentsOfDictionary:(NSDictionary *)aDict
 {
+	[self importContentsOfDictionary:aDict withAutomaticReload:YES];
+}
+
++ (void)importContentsOfDictionary:(NSDictionary *)aDict withAutomaticReload:(BOOL)reloadPreferences
+{
 	/* The expected format of this dictionary should NOT have hashed keys. */
 	 //LogToConsole(@"Dictionary to Import: %@", aDict);
 
@@ -150,7 +157,9 @@
 	}];
 
 	/* Perform reload for changed keys. */
-	[TPCPreferences performReloadActionForKeyValues:aDict.allKeys];
+	if (reloadPreferences) {
+		[TPCPreferences performReloadActionForKeyValues:[aDict allKeys]];
+	}
 }
 
 + (void)import:(id)obj withKey:(id)key
@@ -200,12 +209,12 @@
 	PointerIsEmptyAssert(config);
 	
 	/* Try to find any clients matching this value. */
-	IRCClient *u = [self.worldController findClientById:config.itemUUID];
+	IRCClient *u = [self.worldController findClientById:[config itemUUID]];
 	
 	/* Handle cloud sync logic. */
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if (isCloudImport) {
-		if (u && u.config.excludedFromCloudSyncing) {
+		if (u && [u.config excludedFromCloudSyncing]) {
 			return;
 		}
 	}
@@ -218,8 +227,14 @@
 	}
 }
 
-+ (void)importPostflightCleanup
++ (void)importPostflightCleanup:(NSArray *)changedKeys
 {
+	/* Update selection. */
+	[self.worldController setupTree];
+
+	/* Reload preferences. */
+	[TPCPreferences performReloadActionForKeyValues:changedKeys];
+
 	/* Pop loading screen. */
 	[self.masterController.mainWindowLoadingScreen hideLoadingConfigurationView];
 
@@ -249,6 +264,8 @@
 		[key hasPrefix:@"Saved Window State —> Internal —> "] ||			/* Textual owned prefix. */
 		[key hasPrefix:@"Saved Window State —> Internal (v2) —> "] ||		/* Textual owned prefix. */
 		[key hasPrefix:@"Text Input Prompt Suppression -> "] ||				/* Textual owned prefix. */
+
+		[key hasPrefix:@"File Transfers -> File Transfer Download Folder Bookmark"]		||		/* Textual owned prefix. */
 
 		[key hasPrefix:@"LogTranscriptDestinationSecurityBookmark"] ||				/* Textual owned prefix. */
 		
