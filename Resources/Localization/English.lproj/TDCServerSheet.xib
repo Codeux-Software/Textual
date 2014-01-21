@@ -358,10 +358,10 @@ Gw
                         </binding>
                         <binding destination="2317" name="hidden2" keyPath="values.System —> Built with iCloud Support" previousBinding="lla-b6-G3l" id="Lcn-CW-XKA">
                             <dictionary key="options">
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
@@ -657,6 +657,12 @@ Gw
                                 <size key="minSize" width="443" height="81"/>
                                 <size key="maxSize" width="481" height="10000000"/>
                                 <attributedString key="textStorage">
+                                    <fragment content="The following settings will automatically kick in if Textual detects that it is connecting to a ">
+                                        <attributes>
+                                            <font key="NSFont" size="13" name="LucidaGrande"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
                                     <fragment content="ZNC">
                                         <attributes>
                                             <font key="NSFont" size="13" name="LucidaGrande"/>
@@ -664,20 +670,7 @@ Gw
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content=" is the preferred ">
-                                        <attributes>
-                                            <font key="NSFont" size="13" name="LucidaGrande"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="IRC bouncer">
-                                        <attributes>
-                                            <font key="NSFont" size="13" name="LucidaGrande"/>
-                                            <url key="NSLink" string="http://en.wikipedia.org/wiki/BNC_(software)"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=" for Textual. The following settings will automatically kick in if Textual detects that ZNC is in use.">
+                                    <fragment content=" IRC bouncer.">
                                         <attributes>
                                             <font key="NSFont" size="13" name="LucidaGrande"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
