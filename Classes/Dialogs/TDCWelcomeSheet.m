@@ -106,6 +106,12 @@
 	[super cancel:nil];
 }
 
+- (void)releaseTableViewDataSourceBeforeSheetClosure
+{
+	self.channelTable.delegate = nil;
+	self.channelTable.dataSource = nil;
+}
+
 - (void)ok:(id)sender
 {
 	NSMutableArray *channels = [NSMutableArray array];

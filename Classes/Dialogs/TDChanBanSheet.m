@@ -51,6 +51,12 @@
     return self;
 }
 
+- (void)releaseTableViewDataSourceBeforeSheetClosure
+{
+	self.banTable.delegate = nil;
+	self.banTable.dataSource = nil;
+}
+
 - (void)show
 {
 	IRCChannel *c = self.worldController.selectedChannel;
