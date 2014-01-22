@@ -370,3 +370,14 @@ body div[ltype*=action] .sender[ltype*=myself] {
 }
 
 body .sender[ltype*=normal] { color: #FFFFFF; }
+
+/* Color used for lines selected for clicked user. */
+body div.line[ltype*=privmsg]:not(.selectedUser),
+body div.line[ltype*=action]:not(.selectedUser) {
+    -webkit-transition: background-color 1s; /* Safari */
+}
+
+.selectedUser {
+	background: rgba(123, 150, 194, 0.2);
+    -webkit-transition: all 1s ease-in;
+}
