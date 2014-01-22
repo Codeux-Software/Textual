@@ -523,12 +523,16 @@ body .inline_nickname[colornumber='30'] {
 }
 
 /* Color used for lines selected for clicked user. */
+.sender {
+	cursor: pointer;
+}
+
 body div.line[ltype*=privmsg]:not(.selectedUser),
 body div.line[ltype*=action]:not(.selectedUser) {
-    -webkit-transition: background-color 1s; /* Safari */
+    -webkit-transition: background-color 0.5s;
 }
 
 .selectedUser {
 	background: rgba(123, 150, 194, 0.2);
-    -webkit-transition: all 1s ease-in;
+    -webkit-transition: background-color 0.5s ease-in;
 }
