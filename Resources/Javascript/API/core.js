@@ -194,10 +194,21 @@ Textual = {
 	/* Contextual menu management and other resources.
 	 We do not recommend anyone try to override these. */
 	
-	openChannelNameContextualMenu: 			function() { app.setChannelName(event.target.innerHTML); },
-	openURLManagementContextualMenu:		function() { app.setURLAddress(event.target.innerHTML); },
-	openInlineNicknameContextualMenu:		function() { app.setNickname(event.target.innerHTML); }, // Conversation Tracking
-	openStandardNicknameContextualMenu: 	function() { app.setNickname(event.target.getAttribute("nick")); },
+	openChannelNameContextualMenu: function() { 
+		app.setChannelName(event.target.innerHTML); 
+	},
+
+	openURLManagementContextualMenu: function() { 
+		app.setURLAddress(event.target.innerHTML); 
+	},
+
+	openInlineNicknameContextualMenu: function() { 
+		app.setNickname(event.target.innerHTML); 
+	}, // Conversation Tracking
+	
+	openStandardNicknameContextualMenu: function() {
+		app.setNickname(event.target.getAttribute("nick"));
+	},
 	
 	nicknameDoubleClicked: function() { 
 		Textual.openStandardNicknameContextualMenu();
