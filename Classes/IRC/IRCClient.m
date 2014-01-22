@@ -276,27 +276,39 @@
 #endif
 	
 	/* Begin normal operations. */
-	NSArray *chans = self.config.channelList;
+	NSArray *chans = [self.config channelList];
+
+	NSMutableArray *ory = [self.channels mutableCopy];
 
 	NSMutableArray *ary = [NSMutableArray array];
 
 	for (IRCChannelConfig *i in chans) {
-		IRCChannel *c = [self findChannel:i.channelName];
+		IRCChannel *cinl = [self findChannel:i.channelName inList:ory];
 
-		if (c) {
-			[c updateConfig:i];
+		if (cinl) {
+			[cinl updateConfig:i];
 
-			[ary safeAddObject:c];
+			[ary safeAddObject:cinl];
 
-			[self.channels removeObjectIdenticalTo:c];
+			[ory removeObjectIdenticalTo:cinl];
 		} else {
-			c = [self.worldController createChannel:i client:self reload:NO adjust:NO];
+			IRCChannel *cina = [self findChannel:i.channelName inList:ary];
 
-			[ary safeAddObject:c];
+			if (cina) {
+				/* Channels are removed from self.channels here which means that
+				 another pass of findChannel: will not find duplicates. So, instead,
+				 we scan the new array. */
+
+				continue; // Do not allow duplicates.
+			} else {
+				cinl = [self.worldController createChannel:i client:self reload:NO adjust:NO];
+
+				[ary safeAddObject:cinl];
+			}
 		}
 	}
 
-	for (IRCChannel *c in self.channels) {
+	for (IRCChannel *c in ory) {
 		if (c.isChannel) {
 			[self partChannel:c];
 		} else {
@@ -1142,15 +1154,20 @@
 #pragma mark -
 #pragma mark Find Channel
 
-- (IRCChannel *)findChannel:(NSString *)name
+- (IRCChannel *)findChannel:(NSString *)name inList:(NSArray *)channelList
 {
-	for (IRCChannel *c in self.channels) {
+	for (IRCChannel *c in channelList) {
 		if ([c.name isEqualIgnoringCase:name]) {
 			return c;
 		}
 	}
 
 	return nil;
+}
+
+- (IRCChannel *)findChannel:(NSString *)name
+{
+	return [self findChannel:name inList:self.channels];
 }
 
 - (IRCChannel *)findChannelOrCreate:(NSString *)name
