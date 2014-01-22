@@ -382,6 +382,6 @@ body div.line[ltype*=action]:not(.selectedUser) {
 }
 
 .selectedUser {
-	background: rgba(123, 150, 194, 0.2);
+	background: rgba(20, 255, 18, 0.2);
     -webkit-transition: background-color 0.5s ease-in;
 }
