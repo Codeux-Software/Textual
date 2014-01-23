@@ -78,6 +78,7 @@
                 <outlet property="usernameField" destination="1597" id="2267"/>
                 <outlet property="validateServerSSLCertificateCheck" destination="7Re-Oa-iNx" id="Ep0-zf-9f2"/>
                 <outlet property="zncBouncerView" destination="2542" id="2575"/>
+                <outlet property="zncIgnoreConfiguredAutojoinCheck" destination="75N-79-v1S" id="thL-o4-SqJ"/>
                 <outlet property="zncIgnorePlaybackNotificationsCheck" destination="2580" id="2583"/>
             </connections>
         </customObject>
@@ -358,10 +359,10 @@ Gw
                         </binding>
                         <binding destination="2317" name="hidden2" keyPath="values.System —> Built with iCloud Support" previousBinding="lla-b6-G3l" id="Lcn-CW-XKA">
                             <dictionary key="options">
-                                <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
@@ -644,17 +645,17 @@ Gw
             </userGuides>
             <subviews>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="2561">
-                    <rect key="frame" x="37" y="199" width="443" height="81"/>
+                    <rect key="frame" x="37" y="232" width="443" height="48"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="fx7-Xc-KPz">
-                        <rect key="frame" x="0.0" y="0.0" width="443" height="81"/>
+                        <rect key="frame" x="0.0" y="0.0" width="443" height="48"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" continuousSpellChecking="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="2562">
-                                <rect key="frame" x="0.0" y="0.0" width="443" height="81"/>
+                                <rect key="frame" x="0.0" y="0.0" width="443" height="48"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="443" height="81"/>
+                                <size key="minSize" width="443" height="48"/>
                                 <size key="maxSize" width="481" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="The following settings will automatically kick in if Textual detects that it is connecting to a ">
@@ -678,7 +679,7 @@ Gw
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="443" height="81"/>
+                                <size key="minSize" width="443" height="48"/>
                                 <size key="maxSize" width="481" height="10000000"/>
                             </textView>
                         </subviews>
@@ -694,7 +695,7 @@ Gw
                     </scroller>
                 </scrollView>
                 <button id="2580">
-                    <rect key="frame" x="65" y="202" width="332" height="18"/>
+                    <rect key="frame" x="66" y="172" width="332" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Do not post notifications for the playback buffer." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="2581">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -702,7 +703,7 @@ Gw
                     </buttonCell>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="2590">
-                    <rect key="frame" x="83" y="167" width="366" height="29"/>
+                    <rect key="frame" x="84" y="137" width="366" height="29"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Do not show notification bubbles or play sounds for messages that are part of the ZNC playback buffer." id="2591">
                         <font key="font" metaFont="smallSystem"/>
@@ -719,6 +720,14 @@ Gw
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button id="75N-79-v1S">
+                    <rect key="frame" x="66" y="200" width="332" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Do not automatically join channels on connect." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="TH5-0C-MeB">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
             </subviews>
         </customView>
         <customView id="1738" userLabel="Autojoin View">

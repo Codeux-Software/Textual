@@ -6163,9 +6163,8 @@
 
 - (void)performAutoJoin
 {
-	if (NSObjectIsEmpty(self.channels)) {
+	if ([self.channels count] < 1 || (self.isZNCBouncerConnection && self.config.zncIgnoreConfiguredAutojoin)) {
 		/* What are we joining? */
-
 		self.isAutojoined = YES;
 
 		return;

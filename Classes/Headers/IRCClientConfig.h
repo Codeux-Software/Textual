@@ -71,6 +71,7 @@ typedef enum TXConnectionProxyType : NSInteger {
 @property (nonatomic, assign) BOOL excludedFromCloudSyncing;
 #endif
 
+@property (nonatomic, assign) BOOL zncIgnoreConfiguredAutojoin;
 @property (nonatomic, assign) BOOL zncIgnorePlaybackNotifications;		/* ZNC Related option. */
 @property (nonatomic, assign) NSInteger floodControlDelayTimerInterval;
 @property (nonatomic, assign) NSInteger floodControlMaximumMessages;

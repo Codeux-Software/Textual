@@ -333,7 +333,8 @@
 	self.excludedFromCloudSyncingCheck.state = self.config.excludedFromCloudSyncing;
 #endif
 
-	self.zncIgnorePlaybackNotificationsCheck.state	= self.config.zncIgnorePlaybackNotifications;
+	self.zncIgnoreConfiguredAutojoinCheck.state = self.config.zncIgnoreConfiguredAutojoin;
+	self.zncIgnorePlaybackNotificationsCheck.state = self.config.zncIgnorePlaybackNotifications;
 
     self.prefersIPv6Check.state				= self.config.connectionPrefersIPv6;
 
@@ -430,6 +431,7 @@
 	self.config.excludedFromCloudSyncing = self.excludedFromCloudSyncingCheck.state;
 #endif
 
+	self.config.zncIgnoreConfiguredAutojoin = self.zncIgnoreConfiguredAutojoinCheck.state;
 	self.config.zncIgnorePlaybackNotifications = self.zncIgnorePlaybackNotificationsCheck.state;
 
 	self.config.performPongTimer				= self.pongTimerCheck.state;
