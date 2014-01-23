@@ -190,10 +190,44 @@ body div[ltype*=notice] .sender {
 	font-weight: 700;
 }
 
+/* SELECTED USER MESSAGES */
+
+.sender {
+	cursor: pointer;
+}
+
+body div.line[ltype*=privmsg]:not(.selectedUser),
+body div.line[ltype*=action]:not(.selectedUser) {
+    transition-property: border-top, border-bottom, background-color;
+	transition-duration: 0.5s, 0.5s, 0.5s;
+}
+
+body div.line[ltype*=privmsg] .time:not(.selectedUser),
+body div.line[ltype*=action] .time:not(.selectedUser) {
+    transition: color 0.5s;
+}
+
+div.selectedUser .time {
+    transition: color 0.5s ease-in;
+	color: #aaa;
+}
+
+.selectedUser {
+    transition-property: border-top, border-bottom, background-color;
+	transition-duration: 0.5s, 0.5s, 0.5s;
+
+	border-top: 1px solid #704301 !important;
+	border-bottom: 1px solid #704301 !important;
+  	background-color: rgba(244, 151, 75, 0.25) !important;
+}
+
 /* PRIVMSG */
 
 body div.line[ltype*=privmsg][highlight=false] {
- 	padding: 3px 5px 3px 5px;
+ 	padding: 2px 5px 2px 5px;
+	border-top: 1px solid transparent;
+	border-bottom: 1px solid transparent;
+	background-color: none;
 }
 
 body div.line[ltype*=privmsg][highlight=true],
@@ -221,7 +255,10 @@ body div[ltype*=privmsg] .sender {
 /* ACTION */
 
 body div.line[ltype*=action] {
- 	padding: 3px 5px 3px 5px;
+ 	padding: 2px 5px 2px 5px;
+	border-top: 1px solid transparent;
+	border-bottom: 1px solid transparent;
+	background-color: none;
 }
 
 body div[ltype="action"] .message {
@@ -628,19 +665,4 @@ body .inline_nickname[colornumber='29'] {
 body .sender[ltype*=normal][colornumber='30'], 
 body .inline_nickname[colornumber='30'] { 
 	color: #08465f;
-}
-
-/* Color used for lines selected for clicked user. */
-.sender {
-	cursor: pointer;
-}
-
-body div.line[ltype*=privmsg]:not(.selectedUser),
-body div.line[ltype*=action]:not(.selectedUser) {
-    -webkit-transition: background-color 0.5s;
-}
-
-.selectedUser {
-	background: rgba(244, 151, 75, 0.25);
-    -webkit-transition: background-color 0.5s ease-in;
 }
