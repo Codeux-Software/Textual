@@ -79,6 +79,7 @@
 		
 		self.invisibleMode = NO;
 
+		self.zncIgnoreConfiguredAutojoin = NO;
 		self.zncIgnorePlaybackNotifications = YES;
 
 		self.proxyType		 = TXConnectionNoProxyType;
@@ -312,6 +313,7 @@
 		self.excludedFromCloudSyncing = NSDictionaryBOOLKeyValueCompare(dic, @"excludeFromCloudSyncing", self.excludedFromCloudSyncing);
 #endif
 
+		self.zncIgnoreConfiguredAutojoin = NSDictionaryBOOLKeyValueCompare(dic, @"ZNC —> Ignore Pre-configured Autojoin", self.zncIgnoreConfiguredAutojoin);
 		self.zncIgnorePlaybackNotifications	= NSDictionaryBOOLKeyValueCompare(dic, @"ZNC —> Ignore Playback Buffer Highlights", self.zncIgnorePlaybackNotifications);
 
 		[self.alternateNicknames addObjectsFromArray:[dic arrayForKey:@"identityAlternateNicknames"]];
@@ -456,6 +458,7 @@
 	}
 	
 	[dic setBool:self.zncIgnorePlaybackNotifications	forKey:@"ZNC —> Ignore Playback Buffer Highlights"];
+	[dic setBool:self.zncIgnoreConfiguredAutojoin		forKey:@"ZNC —> Ignore Pre-configured Autojoin"];
 	
 	[dic safeSetObject:self.identitySSLCertificate		forKey:@"IdentitySSLCertificate"];
 	
