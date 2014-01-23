@@ -204,15 +204,17 @@ body div.line[ltype*=action] .time:not(.selectedUser) {
     transition: color 0.5s;
 }
 
-div.selectedUser .time {
+div.selectedUser[highlight=false] .time {
     transition: color 0.5s ease-in;
 	color: #aaa;
 }
 
-.selectedUser {
+.selectedUser[highlight=false] {
     transition-property: border-top, border-bottom, background-color;
 	transition-duration: 0.5s, 0.5s, 0.5s;
 
+  	z-index: 190;
+  	position: relative;
 	border-top: 1px solid #704301 !important;
 	border-bottom: 1px solid #704301 !important;
   	background-color: rgba(244, 151, 75, 0.25) !important;
@@ -229,6 +231,8 @@ body div.line[ltype*=privmsg][highlight=false] {
 
 body div.line[ltype*=privmsg][highlight=true],
 body div.line[ltype*=action][highlight=true] {
+  	z-index: 191;
+  	position: relative;
 	font-weight: normal;
  	padding: 2px 5px 2px 5px;
 	border-top: 1px solid #988C00;
