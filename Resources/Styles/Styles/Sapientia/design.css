@@ -206,19 +206,19 @@ body div.line[ltype*=action] .time:not(.selectedUser) {
     transition: color 0.5s;
 }
 
-div.selectedUser[highlight=false] .time {
+body div.line.selectedUser[highlight=false] .time {
     transition: color 0.5s ease-in;
 	color: #aaa;
 }
 
-.selectedUser[highlight=false] {
+body div.line.selectedUser[highlight=false] {
     transition-property: border-top, border-bottom, background-color;
 	transition-duration: 0.5s, 0.5s, 0.5s;
 
   	z-index: 190;
   	position: relative;
-	border-top: 1px solid #4B4B4B !important;
-	border-bottom: 1px solid #4B4B4B !important;
+	border-top: 1px solid #5E5E5E !important;
+	border-bottom: 1px solid #5E5E5E !important;
   	background-color: rgba(105, 105, 105, 0.3) !important;
 }
 
