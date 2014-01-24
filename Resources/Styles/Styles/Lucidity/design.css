@@ -193,12 +193,12 @@ body div.line[ltype*=action] .time:not(.selectedUser) {
     transition: color 0.5s;
 }
 
-div.selectedUser[highlight=false] .time {
+body div.line.selectedUser[highlight=false] .time {
     transition: color 0.5s ease-in;
 	color: #555555;
 }
 
-.selectedUser[highlight=false] {
+body div.line.selectedUser[highlight=false] {
     transition-property: border-top, border-bottom, background-color;
 	transition-duration: 0.5s, 0.5s, 0.5s;
 

@@ -207,19 +207,23 @@ body div.line[ltype*=action] .time:not(.selectedUser) {
     transition: color 0.5s;
 }
 
-div.selectedUser[highlight=false] .time {
+body div.line.selectedUser[highlight=false] .time {
     transition: color 0.5s ease-in;
 	color: #aaa;
 }
 
-.selectedUser[highlight=false] {
+body div.line.selectedUser[ltype*=privmsg] p[ltype*=myself] .time {
+	color: #fff;
+}
+
+body div.line.selectedUser[highlight=false] {
     transition-property: border-top, border-bottom, background-color;
 	transition-duration: 0.5s, 0.5s, 0.5s;
 
   	z-index: 190;
   	position: relative;
-	border-top: 1px solid #704301 !important;
-	border-bottom: 1px solid #704301 !important;
+	border-top: 1px solid #CC7A03 !important;
+	border-bottom: 1px solid #CC7A03 !important;
   	background-color: rgba(244, 151, 75, 0.25) !important;
 }
 
@@ -240,7 +244,7 @@ body div.line[ltype*=action][highlight=true] {
  	padding: 2px 5px 2px 5px;
 	border-top: 1px solid #06c793;
 	border-bottom: 1px solid #06c793;
-  	background-color: #125d35 !important;
+  	background-color: rgba(18, 93, 53, 0.6) !important;
 }
 
 body div[ltype="privmsg"] .message {

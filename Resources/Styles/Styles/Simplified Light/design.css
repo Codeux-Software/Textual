@@ -203,20 +203,20 @@ body div.line[ltype*=action] .time:not(.selectedUser) {
     transition: color 0.5s;
 }
 
-div.selectedUser[highlight=false] .time {
+body div.line.selectedUser[highlight=false] .time {
     transition: color 0.5s ease-in;
 	color: #000;
 }
 
-.selectedUser[highlight=false] {
+body div.line.selectedUser[highlight=false] {
     transition-property: border-top, border-bottom, background-color;
 	transition-duration: 0.5s, 0.5s, 0.5s;
 
   	z-index: 190;
   	position: relative;
-	border-top: 1px solid #D2D2D2 !important;
-	border-bottom: 1px solid #D2D2D2 !important;
-  	background-color: rgba(220, 239, 252, 0.6) !important;
+	border-top: 1px solid #FC5AF8 !important;
+	border-bottom: 1px solid #FC5AF8 !important;
+  	background-color: rgba(246, 70, 255, 0.2) !important;
 }
 
 /* PRIVMSG */
