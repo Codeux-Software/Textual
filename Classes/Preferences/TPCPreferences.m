@@ -738,12 +738,14 @@ static NSURL *transcriptFolderResolvedBookmark;
 		memberListRequiresRedraw = YES; // Prepare member list for redraw.
 	}
 
-	if ([prefKeys containsObject:@"User List Mode Badge Colors —> +y"] ||	/* User mode badge color. */
-		[prefKeys containsObject:@"User List Mode Badge Colors —> +q"] ||	/* User mode badge color. */
-		[prefKeys containsObject:@"User List Mode Badge Colors —> +a"] ||	/* User mode badge color. */
-		[prefKeys containsObject:@"User List Mode Badge Colors —> +o"] ||	/* User mode badge color. */
-		[prefKeys containsObject:@"User List Mode Badge Colors —> +h"] ||	/* User mode badge color. */
-		[prefKeys containsObject:@"User List Mode Badge Colors —> +v"])		/* User mode badge color. */
+	if ([prefKeys containsObject:@"InvertSidebarColors"] ||										/* Dark or light mode UI. */
+		[prefKeys containsObject:@"Theme -> Invert Sidebar Colors Preference Enabled"] ||		/* Indicates whether a style overrides a specific preference. */
+		[prefKeys containsObject:@"User List Mode Badge Colors —> +y"] ||						/* User mode badge color. */
+		[prefKeys containsObject:@"User List Mode Badge Colors —> +q"] ||						/* User mode badge color. */
+		[prefKeys containsObject:@"User List Mode Badge Colors —> +a"] ||						/* User mode badge color. */
+		[prefKeys containsObject:@"User List Mode Badge Colors —> +o"] ||						/* User mode badge color. */
+		[prefKeys containsObject:@"User List Mode Badge Colors —> +h"] ||						/* User mode badge color. */
+		[prefKeys containsObject:@"User List Mode Badge Colors —> +v"])							/* User mode badge color. */
 	{
 		/* Prepare member list for redraw. */
 		memberListRequiresRedraw = YES;
