@@ -657,6 +657,11 @@ CQ
                                 <modifierMask key="keyEquivalentModifierMask" control="YES"/>
                                 <connections>
                                     <action selector="showFileTransfersDialog:" target="267" id="wVQ-9Q-HNj"/>
+                                    <binding destination="3106" name="hidden" keyPath="values.System —> Running Mac OS Mountain Lion Or Newer" id="Qoy-Hk-xUF">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="92">
@@ -1681,9 +1686,22 @@ CQ
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="memberSendFileRequest:" target="267" id="ILQ-5P-8gU"/>
+                                    <binding destination="3106" name="hidden" keyPath="values.System —> Running Mac OS Mountain Lion Or Newer" id="yXw-x0-JJl">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="tkc-j6-xvy"/>
+                            <menuItem isSeparatorItem="YES" id="tkc-j6-xvy">
+                                <connections>
+                                    <binding destination="3106" name="hidden" keyPath="values.System —> Running Mac OS Mountain Lion Or Newer" id="3L5-R3-nBd">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Lag (PING)" tag="2101" id="439">
                                 <connections>
                                     <action selector="memberSendCTCPPing:" target="267" id="2628"/>
