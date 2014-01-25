@@ -4814,7 +4814,7 @@
 	self.isConnected = YES;
 	self.inFirstISONRun = YES;
   
-  [self postEventToViewController:@"serverConnected"];
+	[self postEventToViewController:@"serverConnected"];
 
 	self.connectionReconnectCount = 0;
 	
@@ -4845,6 +4845,8 @@
 
 	[self.worldController reloadTreeGroup:self];
     [self.worldController updateTitle];
+
+	[self.masterController updateSegmentedController];
 
 	/* Everything else. */
 	if ([TPCPreferences autojoinWaitsForNickServ] == NO || self.CAPisIdentifiedWithSASL) {
