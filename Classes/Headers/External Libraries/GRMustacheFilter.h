@@ -31,13 +31,13 @@
 /**
  * The protocol for implementing GRMustache filters.
  *
+ * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/runtime/filters.md
+ *
  * The responsability of a GRMustacheFilter is to transform a value into
  * another.
  *
  * For example, the tag `{{ uppercase(name) }}` uses a filter object that
  * returns the uppercase version of its input.
- *
- * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/runtime/filters.md
  *
  * @since v4.3
  */

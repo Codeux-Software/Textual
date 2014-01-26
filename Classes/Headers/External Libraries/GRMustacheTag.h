@@ -86,14 +86,7 @@ typedef NS_ENUM(NSUInteger, GRMustacheTagType) {
 
 
 /**
- * The type of the tag:
- *
- *     typedef enum {
- *         GRMustacheTagTypeVariable = 1 << 1,           // The type for variable tags such as {{ name }}
- *         GRMustacheTagTypeSection = 1 << 2,            // The type for section tags such as {{# name }}...{{/}}
- *         GRMustacheTagTypeOverridableSection = 1 << 3, // The type for overridable section tags such as {{$ name }}...{{/}}
- *         GRMustacheTagTypeInvertedSection = 1 << 4,    // The type for inverted section tags such as {{^ name }}...{{/}}
- *     } GRMustacheTagType;
+ * The type of the tag
  */
 @property (nonatomic, readonly) GRMustacheTagType type AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 

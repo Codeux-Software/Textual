@@ -26,7 +26,6 @@
 @protocol GRMustacheRendering;
 @class GRMustacheTag;
 @class GRMustacheContext;
-@class GRMustacheTemplateRepository;
 
 /**
  * A C struct that hold GRMustache version information
