@@ -38,6 +38,7 @@
 #import "TextualApplication.h"
 
 @interface TVCLogControllerHistoricLogFile ()
+@property (nonatomic, assign) BOOL hasPendingAutosaveTimer;
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, strong) NSSortDescriptor *managedSortDescriptor;
@@ -176,11 +177,43 @@
 		/* Call variables to initalize objects. */
 		(void)self.persistentStoreCoordinator;
 
+		/* Listen for changes. */
+		self.hasPendingAutosaveTimer = NO;
+
+		[RZNotificationCenter() addObserver:self selector:@selector(handleManagedObjectContextChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
+
 		/* Return ourself. */
 		return self;
 	}
 
 	return nil;
+}
+
+- (void)dealloc
+{
+	[RZNotificationCenter() removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
+}
+
+- (void)handleManagedObjectContextChange:(NSNotification *)aNote
+{
+	NSAssertReturn(self.hasPendingAutosaveTimer == NO);
+
+	/* Auto save thirty seconds after last change. */
+	self.hasPendingAutosaveTimer = YES;
+
+	[self performSelectorOnMainThread:@selector(handleManagedObjectContextChangeTimerInitializer) withObject:nil waitUntilDone:YES];
+}
+
+- (void)handleManagedObjectContextChangeTimerInitializer
+{
+	[self performSelector:@selector(handleManagedObjectContextChangeTimer) withObject:nil afterDelay:30.0];
+}
+
+- (void)handleManagedObjectContextChangeTimer
+{
+	[self saveData];
+
+	self.hasPendingAutosaveTimer = NO;
 }
 
 - (NSString *)databaseSavePath
