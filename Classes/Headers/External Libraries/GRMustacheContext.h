@@ -306,7 +306,8 @@
  * Returns the value stored in the context stack for the given key.
  *
  * If you want the value for an full expression such as @"user.name" or
- * @"uppercase(user.name)", use the valueForMustacheExpression:error: method.
+ * @"uppercase(user.name)", use the hasValue:forMustacheExpression:error:
+ * method.
  *
  * ### Search Pattern for valueForMustacheKey:
  *
@@ -331,8 +332,12 @@
  *
  * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/view_model.md
  *
+ * @param key  a key such as @"name"
+ *
+ * @return The value found in the context stack for the given key.
+ *
  * @see valueForUndefinedMustacheKey:
- * @see valueForMustacheExpression:error:
+ * @see hasValue:forMustacheExpression:error:
  *
  * @since v6.6
  */
@@ -346,26 +351,56 @@
  *
  * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/view_model.md
  *
+ * @param key  a key such as @"name"
+ *
+ * @return The value for the given key.
+ *
  * @see valueForMustacheKey:
- * @see valueForMustacheExpression:error:
+ * @see hasValue:forMustacheExpression:error:
  *
  * @since v6.7
  */
 - (id)valueForUndefinedMustacheKey:(NSString *)key AVAILABLE_GRMUSTACHE_VERSION_6_7_AND_LATER;
 
 /**
- * Evaluate the expression in the receiver context.
+ * Evaluates an expression such as @"name", or @"uppercase(user.name)".
  *
- * This method can evaluate complex expressions such as @"user.name" or
- * @"uppercase(user.name)".
+ * This method is deprecated. You should use the
+ * hasValue:forMustacheExpression:error: method instead.
  *
  * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/view_model.md
  *
- * @see valueForUndefinedMustacheKey:
- * @see valueForMustacheExpression:error:
+ * @param expression  An expression such as @"name", @"user.name", or
+ *                    @"uppercase(user.name)".
+ * @param error       If there is an error computing the value, upon return
+ *                    contains an NSError object that describes the problem.
+ *
+ * @return The computed value
+ *
+ * @see hasValue:forMustacheExpression:error:
  *
  * @since v6.6
+ * @deprecated v6.8
  */
-- (id)valueForMustacheExpression:(NSString *)expression error:(NSError **)error AVAILABLE_GRMUSTACHE_VERSION_6_6_AND_LATER;
+- (id)valueForMustacheExpression:(NSString *)expression error:(NSError **)error AVAILABLE_GRMUSTACHE_VERSION_6_6_AND_LATER_BUT_DEPRECATED_IN_GRMUSTACHE_VERSION_6_8;
+
+/**
+ * Evaluates an expression such as @"name", or @"uppercase(user.name)".
+ *
+ * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/view_model.md
+ *
+ * @param value       Upon return contains the value of the expression.
+ * @param expression  An expression.
+ * @param error       If there is an error computing the value, upon return
+ *                    contains an NSError object that describes the problem.
+ *
+ * @return YES if the value could be computed.
+ *
+ * @see valueForMustacheKey:
+ * @see valueForUndefinedMustacheKey:
+ *
+ * @since v6.8
+ */
+- (BOOL)hasValue:(id *)value forMustacheExpression:(NSString *)expression error:(NSError **)error AVAILABLE_GRMUSTACHE_VERSION_6_8_AND_LATER;
 
 @end

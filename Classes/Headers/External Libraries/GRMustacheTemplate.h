@@ -25,6 +25,8 @@
 #import "GRMustacheConfiguration.h"
 
 @class GRMustacheContext;
+@class GRMustacheTagDelegate;
+@protocol GRMustacheTagDelegate;
 
 /**
  * The GRMustacheTemplate class provides with Mustache template rendering
@@ -137,10 +139,98 @@
  * @see GRMustacheConfiguration
  * @see GRMustacheTemplateRepository
  * @see [GRMustache standardLibrary]
+ * @see extendBaseContextWithObject:
+ * @see extendBaseContextWithProtectedObject:
+ * @see extendBaseContextWithTagDelegate:
  *
  * @since v6.0
  */
 @property (nonatomic, retain) GRMustacheContext *baseContext AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
+
+/**
+ * Extends the base context of the receiver with the provided object, making its
+ * keys available for all renderings.
+ *
+ * For example:
+ *
+ *     GRMustacheTemplate *template = [GRMustacheTemplate templateFromString:@"{{name}}" error:NULL];
+ *
+ *     // Have the `name` key defined for all renderings of the template:
+ *     id object = @{ @"name": @"Arthur" };
+ *     [template importObject:object];
+ *
+ *     // Renders "Arthur"
+ *     [template renderObject:nil error:NULL];
+ *
+ * Keys defined by _object_ can be overriden by other objects that will
+ * eventually enter the context stack:
+ *
+ *     // Renders "Billy", not "Arthur"
+ *     [template renderObject:@{ @"name": @"Billy" } error:NULL];
+ *
+ * This method is a shortcut. It is equivalent to the following line of code:
+ *
+ *     template.baseContext = [template.baseContext contextByAddingObject:object];
+ *
+ * @param object  An object
+ *
+ * @see baseContext
+ * @see extendBaseContextWithProtectedObject:
+ * @see extendBaseContextWithTagDelegate:
+ *
+ * @since v6.8
+ */
+- (void)extendBaseContextWithObject:(id)object AVAILABLE_GRMUSTACHE_VERSION_6_8_AND_LATER;
+
+/**
+ * Extends the base context of the receiver with the provided object, making its
+ * keys available for all renderings. 
+ *
+ * Keys defined by _object_ gets "protected", which means that they can not be
+ * overriden by other objects that will eventually enter the context stack.
+ *
+ * For example:
+ *
+ *     GRMustacheTemplate *template = [GRMustacheTemplate templateFromString:@"{{precious}}" error:NULL];
+ *
+ *     // Have the `precious` key defined, and protected, for all renderings of the template:
+ *     id object = @{ @"precious": @"gold" };
+ *     [template importProtectedObject:object];
+ *
+ *     // Renders "gold"
+ *     [template renderObject:@{ @"precious": @"lead" } error:NULL];
+ *
+ * This method is a shortcut. It is equivalent to the following line of code:
+ *
+ *     template.baseContext = [template.baseContext contextByAddingProtectedObject:object];
+ *
+ * @param object  An object
+ *
+ * @see baseContext
+ * @see extendBaseContextWithObject:
+ * @see extendBaseContextWithTagDelegate:
+ *
+ * @since v6.8
+ */
+- (void)extendBaseContextWithProtectedObject:(id)object AVAILABLE_GRMUSTACHE_VERSION_6_8_AND_LATER;
+
+/**
+ * Extends the base context of the receiver with a tag delegate, making it aware
+ * of the rendering of all tags in the template.
+ *
+ * This method is a shortcut. It is equivalent to the following line of code:
+ *
+ *     template.baseContext = [template.baseContext contextByAddingTagDelegate:tagDelegate];
+ *
+ * @param tagDelegate  A tag delegate
+ *
+ * @see baseContext
+ * @see extendBaseContextWithObject:
+ * @see extendBaseContextWithProtectedObject:
+ *
+ * @since v6.8
+ */
+- (void)extendBaseContextWithTagDelegate:(id<GRMustacheTagDelegate>)tagDelegate AVAILABLE_GRMUSTACHE_VERSION_6_8_AND_LATER;;
 
 
 ////////////////////////////////////////////////////////////////////////////////

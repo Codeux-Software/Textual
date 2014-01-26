@@ -38,11 +38,36 @@
 #import "TextualApplication.h"
 
 @interface TPCThemeSettings ()
-@property (nonatomic, strong) NSString *applicationTemplateRepostiryPath;
-@property (nonatomic, strong) NSString *styleResourcesTemplateRepositoryPath;
+@property (nonatomic, strong) GRMustacheTemplateRepository *styleTemplateRepository;
+@property (nonatomic, strong) GRMustacheTemplateRepository *appTemplateRepository;
 @end
 
 @implementation TPCThemeSettings
+
+#pragma mark -
+#pragma mark Initialization
+
+- (id)init
+{
+    self = [super init];
+
+    if (self) {
+		/* The path to and the contents of the default template repostiory is static.
+		 This loads the repository into a pointer during init and forgets it until
+		 it is needed. */
+		NSString *dictPath = [[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Style Default Templates"];
+
+		self.appTemplateRepository = [GRMustacheTemplateRepository templateRepositoryWithBaseURL:[NSURL fileURLWithPath:dictPath]];
+
+		if (PointerIsEmpty(self.appTemplateRepository)) {
+			/* Throw exception if we could not load repository. */
+
+			NSAssert(NO, @"Default template repository not found.");
+		}
+    }
+
+    return self;
+}
 
 #pragma mark -
 #pragma mark Setting Loaders
@@ -117,20 +142,6 @@
 	return [@"Line Types/" stringByAppendingString:typestr];
 }
 
-- (NSString *)applicationDefaultTemplateRepositoryPath
-{
-	NSString *baseURL = [TPCPreferences applicationResourcesFolderPath];
-	
-	return [baseURL stringByAppendingPathComponent:@"/Style Default Templates/"];
-}
-
-- (NSString *)customTemplateRepositoryPath
-{
-	NSString *path = self.themeController.baseURL.path;
-
-	return [path stringByAppendingPathComponent:@"/Data/Templates/"];
-}
-
 - (GRMustacheTemplate *)templateWithLineType:(TVCLogLineType)type
 {
 	return [self templateWithName:[self templateNameWithLineType:type]];
@@ -138,40 +149,28 @@
 
 - (GRMustacheTemplate *)templateWithName:(NSString *)name
 {
-	if ([name hasSuffix:@".mustache"] == NO) {
-		name = [name stringByAppendingString:@".mustache"];
-	}
-	
 	NSError *load_error = nil;
 
-	NSString *templatePath = [self.styleResourcesTemplateRepositoryPath stringByAppendingPathComponent:name];
-
 	/* First look for a custom template. */
-	GRMustacheTemplate *tmpl = [GRMustacheTemplate templateFromContentsOfFile:templatePath error:&load_error];
+	GRMustacheTemplate *tmpl = [self.styleTemplateRepository templateNamed:name error:&load_error];
 
 	if (PointerIsEmpty(tmpl) || load_error) {
 		/* If no custom template is found, then revert to application defaults. */
-		if (load_error.code == GRMustacheErrorCodeTemplateNotFound || load_error.code == 260) {
-			load_error = nil;
+		if ([load_error code] == GRMustacheErrorCodeTemplateNotFound || [load_error code] == 260) {
+			GRMustacheTemplate *tmpl = [self.appTemplateRepository templateNamed:name error:&load_error];
 
-			templatePath = [self.applicationTemplateRepostiryPath stringByAppendingPathComponent:name];
-
-			tmpl = [GRMustacheTemplate templateFromContentsOfFile:templatePath error:&load_error];
-
-			if (PointerIsNotEmpty(tmpl)) {
-				return tmpl; // Return default template. 
-			}
+			PointerIsNotEmptyAssertReturn(tmpl, tmpl); // Return default template.
 		}
 
 		/* If either template failed to load, then log a error. */
         if (load_error) {
-			LogToConsole(TXTLS(@"StyleTemplateLoadFailed"), load_error);
+            LogToConsole(TXTLS(@"StyleTemplateLoadFailed"), name, [load_error localizedDescription]);
         }
-        
+
 		return nil;
 	}
 
-	return tmpl; // Return custom template. 
+	return tmpl; // Return custom template.
 }
 
 #pragma mark -
@@ -179,14 +178,15 @@
 
 - (void)reloadWithPath:(NSString *)path
 {
-	/* Cache common paths. */
-	self.applicationTemplateRepostiryPath = [self applicationDefaultTemplateRepositoryPath];
-	self.styleResourcesTemplateRepositoryPath = [self customTemplateRepositoryPath];
+	/* Load any custom templates. */
+	NSString *dictPath = [path stringByAppendingPathComponent:@"/Data/Templates"];
+
+	self.styleTemplateRepository = [GRMustacheTemplateRepository templateRepositoryWithBaseURL:[NSURL fileURLWithPath:dictPath]];
 
 	/* Load style settings dictionary. */
 	NSDictionary *styleSettings = nil;
 	
-	NSString *dictPath = [path stringByAppendingPathComponent:@"/Data/Settings/styleSettings.plist"];
+	dictPath = [path stringByAppendingPathComponent:@"/Data/Settings/styleSettings.plist"];
 
 	if ([RZFileManager() fileExistsAtPath:dictPath]) {
 		styleSettings = [NSDictionary dictionaryWithContentsOfFile:dictPath];
@@ -197,7 +197,7 @@
 		self.nicknameFormat				= [self stringForKey:@"Nickname Format" fromDictionary:styleSettings];
 		self.timestampFormat			= [self stringForKey:@"Timestamp Format" fromDictionary:styleSettings];
 
-		self.forceInvertSidebarColors			= [self boolForKey:@"Force Invert Sidebars" fromDictionary:styleSettings];
+		self.forceInvertSidebarColors	= [self boolForKey:@"Force Invert Sidebars" fromDictionary:styleSettings];
 
 		self.underlyingWindowColor		= [self colorForKey:@"Underlying Window Color" fromDictionary:styleSettings];
 

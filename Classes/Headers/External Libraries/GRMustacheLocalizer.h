@@ -29,6 +29,8 @@
  * GRMustacheLocalizer can localize the content of a Mustache section.
  * It also has a filter facet that localizes your data.
  *
+ * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/standard_library.md#localize
+ *
  * The GRMustache standard library has a `localize` key which returns a
  * GRMustacheLocalizer that localizes just like the NSLocalizableString macro
  * does: with the Localizable.strings table of the main bundle.
@@ -61,8 +63,6 @@
  * You can build your own localizing helper with the initWithBundle:tableName:
  * method. The helper would then localize using the specified table from the
  * specified bundle.
- *
- * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/standard_library.md#localize
  *
  * @since v6.4
  */

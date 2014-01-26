@@ -32,30 +32,39 @@
  * alter, the rendering of Mustache tags.
  *
  * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/delegate.md
- * 
+ *
  * @since v6.0
  */
 @protocol GRMustacheTagDelegate<NSObject>
 @optional
 
 /**
- * Sent right before a Mustache tag renders.
+ * Sent before a Mustache tag renders.
+ *
+ * This method gives an opportunity to alter objects that are rendered.
+ *
+ * For example, it is implemented by the NSFormatter class, in templates like
+ * `{{# dateFormatter }}...{{ value }}...{{ value }}... {{/}}`.
  *
  * @param tag     The Mustache tag about to render.
  * @param object  The object about to be rendered.
  *
- * @return the object that should be rendered.
+ * @return The object that should be rendered.
+ *
+ * @see GRMustacheTag
  *
  * @since v6.0
  */
 - (id)mustacheTag:(GRMustacheTag *)tag willRenderObject:(id)object AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
 /**
- * Sent right after a Mustache tag has rendered.
+ * Sent after a Mustache tag has rendered.
  *
  * @param tag        The Mustache tag that has just rendered.
  * @param object     The rendered object.
  * @param rendering  The actual rendering
+ *
+ * @see GRMustacheTag
  *
  * @since v6.0
  */
@@ -67,6 +76,8 @@
  * @param tag     The Mustache tag that has just failed rendering.
  * @param object  The rendered object.
  * @param error   The error.
+ *
+ * @see GRMustacheTag
  *
  * @since v6.0
  */

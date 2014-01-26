@@ -33,7 +33,7 @@
  * 
  * @since v1.0
  */
-#define GRMUSTACHE_MINOR_VERSION 7
+#define GRMUSTACHE_MINOR_VERSION 8
 
 /**
  * The patch-level component of GRMustache version
