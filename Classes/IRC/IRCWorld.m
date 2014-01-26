@@ -1390,20 +1390,19 @@
 	 history setup to be channel specific. */
 	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
 		NSAttributedString *inputValue = [textField attributedStringValue];
-		
-		self.masterController.inputHistory = [self.selectedItem inputHistory];
-		
+
+		IRCTreeItem *selected = [self selectedItem];
 		IRCTreeItem *previous = [self previouslySelectedItem];
 		
 		TLOInputHistory *oldHistory = [previous inputHistory];
-		TLOInputHistory *newHistory = [self.selectedItem inputHistory];
+		TLOInputHistory *newHistory = [selected inputHistory];
 		
 		[oldHistory setLastHistoryItem:inputValue];
 		
 		[textField setStringValue:NSStringEmptyPlaceholder];
 		
-		if (newHistory.lastHistoryItem) {
-			[textField setAttributedStringValue:newHistory.lastHistoryItem];
+		if ([newHistory lastHistoryItem]) {
+			[textField setAttributedStringValue:[newHistory lastHistoryItem]];
 		}
 	}
 	

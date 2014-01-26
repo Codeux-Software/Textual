@@ -173,7 +173,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[self.memberList setDoubleAction:@selector(memberListDoubleClicked:)];
 
 	if ([TPCPreferences inputHistoryIsChannelSpecific] == NO) {
-		self.inputHistory = [TLOInputHistory new];
+		_globalInputHistory = [TLOInputHistory new];
 	}
 
 	self.growlController = [TLOGrowlController new];
@@ -304,46 +304,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	}
 
 	[self reloadUserInterfaceItems];
-}
-
-- (void)windowDidChangeScreen:(NSNotification *)notification
-{
-	[self reloadMainWindowFrameOnScreenChange];
-}
-
-- (void)windowDidBecomeKey:(NSNotification *)notification
-{
-	self.mainWindowIsActive = YES;
-	
-	if (self.applicationIsChangingActiveState == NO) {
-		[self reloadUserInterfaceItems];
-	}
-
-	[self resetSelectedItemState];
-}
-
-- (void)windowDidResignKey:(NSNotification *)notification
-{
-	self.mainWindowIsActive = NO;
-	
-	if (self.applicationIsChangingActiveState == NO) {
-		[self reloadUserInterfaceItems];
-	}
-
-	[self.memberList destroyUserInfoPopoverOnWindowKeyChange];
-}
-
-- (BOOL)window:(NSWindow *)window shouldPopUpDocumentPathMenu:(NSMenu *)menu
-{
-	/* Return NO so that we can use the document icon feature to show an icon
-	 for an SSL unlock and lock locked and not allow user to click it. */
-
-	return NO;
-}
-
-- (BOOL)window:(NSWindow *)window shouldDragDocumentWithEvent:(NSEvent *)event from:(NSPoint)dragImageLocation withPasteboard:(NSPasteboard *)pasteboard
-{
-	return NO;
 }
 
 - (BOOL)queryTerminate
@@ -515,6 +475,46 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 #pragma mark -
 #pragma mark NSWindow Delegate
 
+- (void)windowDidChangeScreen:(NSNotification *)notification
+{
+	[self reloadMainWindowFrameOnScreenChange];
+}
+
+- (void)windowDidBecomeKey:(NSNotification *)notification
+{
+	self.mainWindowIsActive = YES;
+
+	if (self.applicationIsChangingActiveState == NO) {
+		[self reloadUserInterfaceItems];
+	}
+
+	[self resetSelectedItemState];
+}
+
+- (void)windowDidResignKey:(NSNotification *)notification
+{
+	self.mainWindowIsActive = NO;
+
+	if (self.applicationIsChangingActiveState == NO) {
+		[self reloadUserInterfaceItems];
+	}
+
+	[self.memberList destroyUserInfoPopoverOnWindowKeyChange];
+}
+
+- (BOOL)window:(NSWindow *)window shouldPopUpDocumentPathMenu:(NSMenu *)menu
+{
+	/* Return NO so that we can use the document icon feature to show an icon
+	 for an SSL unlock and lock locked and not allow user to click it. */
+
+	return NO;
+}
+
+- (BOOL)window:(NSWindow *)window shouldDragDocumentWithEvent:(NSEvent *)event from:(NSPoint)dragImageLocation withPasteboard:(NSPasteboard *)pasteboard
+{
+	return NO;
+}
+
 - (void)windowDidResize:(NSNotification *)notification
 {
 	[self.inputTextField resetTextFieldCellSize:YES];
@@ -566,6 +566,18 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 }
 
 #pragma mark -
+#pragma mark Properties
+
+- (TLOInputHistory *)globalInputHistory
+{
+	if ([TPCPreferences inputHistoryIsChannelSpecific] == NO) {
+		return _globalInputHistory;
+	} else {
+		return [[self.worldController selectedItem] inputHistory];
+	}
+}
+
+#pragma mark -
 #pragma mark Utilities
 
 - (void)sendText:(NSString *)command
@@ -577,7 +589,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	if (NSObjectIsNotEmpty(as)) {
 		[self.worldController inputText:as command:command];
 		
-		[self.inputHistory add:as];
+		[self.globalInputHistory add:as];
 	}
 	
 	if (self.completionStatus) {
@@ -1164,9 +1176,9 @@ typedef enum TXMoveKind : NSInteger {
 	NSAttributedString *s;
 	
 	if (up) {
-		s = [self.inputHistory up:[self.inputTextField attributedStringValue]];
+		s = [self.globalInputHistory up:[self.inputTextField attributedStringValue]];
 	} else {
-		s = [self.inputHistory down:[self.inputTextField attributedStringValue]];
+		s = [self.globalInputHistory down:[self.inputTextField attributedStringValue]];
 	}
 	
 	if (s) {
@@ -1316,7 +1328,7 @@ typedef enum TXMoveKind : NSInteger {
 	
 	[self handler:@selector(selectPreviousSelection:) code:TXKeyTabCode mods:NSAlternateKeyMask];
 	
-	[self handler:@selector(textFormattingBold:)			char:'b' mods:NSCommandKeyMask];
+	[self handler:@selector(textFormattingBold:)			char:'b' mods: NSCommandKeyMask];
 	[self handler:@selector(textFormattingUnderline:)		char:'u' mods:(NSCommandKeyMask | NSAlternateKeyMask)];
 	[self handler:@selector(textFormattingItalic:)			char:'i' mods:(NSCommandKeyMask | NSAlternateKeyMask)];
     [self handler:@selector(textFormattingForegroundColor:) char:'c' mods:(NSCommandKeyMask | NSAlternateKeyMask)];
