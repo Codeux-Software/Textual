@@ -196,24 +196,17 @@
 
 - (void)handleManagedObjectContextChange:(NSNotification *)aNote
 {
-	NSAssertReturn(self.hasPendingAutosaveTimer == NO);
-
-	/* Auto save thirty seconds after last change. */
-	self.hasPendingAutosaveTimer = YES;
-
 	[self performSelectorOnMainThread:@selector(handleManagedObjectContextChangeTimerInitializer) withObject:nil waitUntilDone:YES];
 }
 
 - (void)handleManagedObjectContextChangeTimerInitializer
 {
-	[self performSelector:@selector(handleManagedObjectContextChangeTimer) withObject:nil afterDelay:30.0];
-}
+	NSAssertReturn(self.hasPendingAutosaveTimer == NO);
 
-- (void)handleManagedObjectContextChangeTimer
-{
-	[self saveData];
+	/* Auto save thirty seconds after last change. */
+	self.hasPendingAutosaveTimer = YES;
 
-	self.hasPendingAutosaveTimer = NO;
+	[self performSelector:@selector(saveData) withObject:nil afterDelay:30.0];
 }
 
 - (NSString *)databaseSavePath
@@ -223,6 +216,12 @@
 
 - (void)saveData
 {
+	/* Cancel any previous running timers incase this is manual save. */
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(saveData) object:nil];
+
+	self.hasPendingAutosaveTimer = NO;
+
+	/* Continue with save operation. */
 	[self.managedObjectContext performBlock:^{
 		/* Do changes even exist? */
 		if ([self.managedObjectContext commitEditing]) {
