@@ -808,15 +808,17 @@ static NSURL *transcriptFolderResolvedBookmark;
 
 	/* Input history scope. */
 	if (reloadAction == TPCPreferencesKeyReloadInputHistoryScopeAction) {
-		TXMasterController *master = self.masterController;
+		TXMasterController *master = [self masterController];
 
-		if (master.inputHistory) {
-			master.inputHistory = nil;
+		if ([TPCPreferences inputHistoryIsChannelSpecific]) {
+			[master setGlobalInputHistory:nil]; // nil out old global history.
+		} else {
+			[master setGlobalInputHistory:[TLOInputHistory new]];
 		}
 
-		for (IRCClient *c in self.worldController.clients) {
+		for (IRCClient *c in [self.worldController clients]) {
 			if (c.inputHistory) {
-				c.inputHistory = nil;
+				c.inputHistory = nil; // Destroy any old history.
 			}
 
 			if ([TPCPreferences inputHistoryIsChannelSpecific]) {
@@ -832,10 +834,6 @@ static NSURL *transcriptFolderResolvedBookmark;
 					u.inputHistory = [TLOInputHistory new];
 				}
 			}
-		}
-
-		if ([TPCPreferences inputHistoryIsChannelSpecific] == NO) {
-			master.inputHistory = [TLOInputHistory new];
 		}
 	}
 

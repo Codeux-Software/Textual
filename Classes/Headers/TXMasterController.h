@@ -73,12 +73,16 @@
 @property (nonatomic, nweak) IBOutlet TVCThinSplitView *serverSplitView;
 @property (nonatomic, nweak) TXMenuController *menuController;
 @property (nonatomic, strong) TLOGrowlController *growlController;
-@property (nonatomic, strong) TLOInputHistory *inputHistory;
 @property (nonatomic, strong) TLONickCompletionStatus *completionStatus;
 @property (nonatomic, strong) TLOSpeechSynthesizer *speechSynthesizer;
 @property (nonatomic, strong) TPCThemeController *themeControllerPntr;
 @property (nonatomic, uweak) IBOutlet TVCInputTextField *inputTextField;
 @property (nonatomic, uweak) IBOutlet TVCMainWindow *mainWindow;
+
+/* self.inputHistory may return the inputHistory controller of the selected view
+ instead of _globalInputHistory if Textual is configured to use channel specific
+ input history. In that case, _globalInputHistory does not exist. */
+@property (nonatomic, strong) TLOInputHistory *globalInputHistory;
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 @property (nonatomic, strong) TPCPreferencesCloudSync *cloudSyncManager;
