@@ -37,236 +37,254 @@
 
 #import "TextualApplication.h"
 
-#define _emptyDictionary			[NSDictionary dictionary]
-
 @interface TVCLogControllerHistoricLogFile ()
-@property (nonatomic, strong) NSMutableDictionary *temporaryPropertyList;
-@property (nonatomic, strong) NSString *filename;
+@property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
+@property (nonatomic, strong) NSSortDescriptor *managedSortDescriptor;
 @end
 
 @implementation TVCLogControllerHistoricLogFile
 
+@synthesize managedObjectContext = _managedObjectContext;
+
 #pragma mark -
-#pragma mark Read Data
+#pragma mark Public API
 
-- (NSDictionary *)data
++ (TVCLogControllerHistoricLogFile *)sharedInstance
 {
-	NSMutableDictionary *propertyList = [NSMutableDictionary dictionary];
+	static id sharedSelf = nil;
 
-	[propertyList addEntriesFromDictionary:self.propertyList];
-	[propertyList addEntriesFromDictionary:self.temporaryPropertyList];
+	static dispatch_once_t onceToken;
 
-	if (self.maxEntryCount && propertyList.count > self.maxEntryCount) {
-		NSArray *sortedKeys = propertyList.sortedDictionaryKeys;
+	dispatch_once(&onceToken, ^{
+		sharedSelf = [self new];
+	});
 
-		for (NSString *skey in sortedKeys) {
-			NSAssertReturnLoopBreak(propertyList.count > self.maxEntryCount);
+	return sharedSelf;
+}
 
-			/* We cut out each object in order until the dictionary
-			 count is below or equal to the max entry count. */
-			[propertyList removeObjectForKey:skey];
+- (void)resetData
+{
+	[RZFileManager() removeItemAtPath:[self databaseSavePath] error:NULL]; // Destroy archive file completely.
+}
+
+- (void)resetDataForEntriesMatchingClient:(IRCClient *)client inChannel:(IRCChannel *)channel
+{
+	[self entriesForClient:client
+				 inChannel:channel
+	   withCompletionBlock:^(NSArray *objects)
+	{
+		for (TVCLogLine *line in objects) {
+			[self.managedObjectContext deleteObject:line];
 		}
+
+		[self saveData];
+	}
+				fetchLimit:0
+				 afterDate:nil];
+}
+
+- (void)entriesForClient:(IRCClient *)client inChannel:(IRCChannel *)channel withCompletionBlock:(void (^)(NSArray *objects))completionBlock fetchLimit:(NSInteger)maxEntryCount afterDate:(NSDate *)referenceDate
+{
+	/* What are we fetching for? */
+	PointerIsEmptyAssert(client);
+
+	/* _privateContext will execute the fetch on whatever the current thread is. */
+	NSManagedObjectContext *_privateContext = [NSManagedObjectContext new];
+
+	[_privateContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
+
+	/* Build base model. */
+	NSFetchRequest *fetchRequest = [NSFetchRequest new];
+
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"TVCLogLine" inManagedObjectContext:_privateContext];
+
+	/* Gather relevant information. */
+	NSString *clientID = [client uniqueIdentifier];
+	NSString *channelID = nil;
+
+	if (channel) {
+		channelID = [channel uniqueIdentifier];
 	}
 
-	return [propertyList sortedDictionary];
-}
+	/* Build the match. */
+	NSPredicate *matchPredicate;
 
-#pragma mark -
-#pragma mark Property List API
-
-- (void)writePropertyListEntry:(NSDictionary *)s toKey:(NSString *)key
-{
-	[self reopenIfNeeded];
-
-	PointerIsEmptyAssert(self.temporaryPropertyList);
-
-	[self.temporaryPropertyList safeSetObject:s forKey:key];
-}
-
-- (void)updateCache
-{
-	[NSObject cancelPreviousPerformRequestsWithTarget:self];
-
-	[self updatePropertyListCache];
-}
-
-- (void)updatePropertyListCache /* @private */
-{
-	/* We loop updatePropertyListCache every one minute to write any unsaved property
-	 list items to disk. Creating a property list and writing it to disk every time a new
-	 entry is created is probably a bad idea so we save periodically. */
-	[self performSelector:@selector(updatePropertyListCache) withObject:nil afterDelay:60.0];
-
-	/* If our temporary store is empty, then there is nothing to write. */
-	NSObjectIsEmptyAssert(self.temporaryPropertyList);
-
-	/* [self data] combines disk reads and our temporary store to create
-	 our property list to make the call a seamless experience. */
-	NSDictionary *propertyList = [self data];
-
-	NSString *parseError;
-
-	/* When we are debugging, write the property list as plain text. In production
-	 version we save in binary because it is faster and smaller. */
-#ifdef DEBUG
-	NSPropertyListFormat format = NSPropertyListXMLFormat_v1_0;
-#else
-	NSPropertyListFormat format = NSPropertyListBinaryFormat_v1_0;
-#endif
-
-	/* Create the new property list. */
-	NSData *plist = [NSPropertyListSerialization dataFromPropertyList:propertyList
-															   format:format
-													 errorDescription:&parseError];
-
-	/* Report results. */
-	if (NSObjectIsEmpty(plist) || parseError) {
-		/* What happens if plist = nil, but parseError is too? What error
-		 are we reporting. This error reporting needs some work. */
-
-		LogToConsole(@"Error Creating Property List: %@", parseError);
-	} else {
-		/* Do the write. */
-		BOOL writeResult = [plist writeToFile:self.filename atomically:YES];
-
-		if (writeResult) {
-			/* Successful write. Clear our temporary store. */
-
-			[self.temporaryPropertyList removeAllObjects];
+	if (referenceDate) {
+		if (channel) {
+			matchPredicate = [NSPredicate predicateWithFormat:@"clientID == %@ AND channelID == %@ AND creationDate >= %@", clientID, channelID, referenceDate];
 		} else {
-			/*
-			 When I was in fourth grade I asked my English teacher
-			 how to spell "write" when referring to the process of
-			 putting pen/pencil to paper. I was sure it was W R I T E.
-			 I made the question very clear to her, but still she insisted
-			 that I was wrong. She said that it was spelled R I G H T.
-			 Wrong word! I tried explaining. Only got me in trouble.
-
-			 True story. 'MERICA!
-			 */
-
-			LogToConsole(@"Write failed.");
+			matchPredicate = [NSPredicate predicateWithFormat:@"clientID == %@ AND channelID == nil AND creationDate >= %@", clientID, referenceDate];
 		}
-	}
-}
-
-- (NSDictionary *)propertyList /* @private */
-{
-	NSData *rawData = [NSData dataWithContentsOfFile:self.filename];
-
-	NSObjectIsEmptyAssertReturn(rawData, _emptyDictionary);
-
-	NSDictionary *plist = [NSPropertyListSerialization propertyListFromData:rawData
-														   mutabilityOption:NSPropertyListImmutable
-																	 format:NULL
-														   errorDescription:NULL];
-
-	NSObjectIsEmptyAssertReturn(plist, _emptyDictionary);
-
-	return plist;
-}
-
-#pragma mark -
-#pragma mark File Handle Management
-
-- (void)reset
-{
-	/* Reset property list. */
-
-	[RZFileManager() removeItemAtPath:self.filename error:NULL];
-
-	[NSObject cancelPreviousPerformRequestsWithTarget:self];
-
-	[self.temporaryPropertyList removeAllObjects];
-
-	self.filename = nil; // Invalidate everything.
-}
-
-- (void)close
-{
-	/* Close property list. */
-
-	self.temporaryPropertyList = nil;
-
-	[NSObject cancelPreviousPerformRequestsWithTarget:self];
-
-	self.filename = nil; // Invalidate everything.
-}
-
-- (void)reopenIfNeeded
-{
-	if (NSObjectIsEmpty(self.filename)) {
-		[self open];
-	}
-}
-
-- (void)open
-{
-	NSAssert(PointerIsNotEmpty(self.owner), @"Unknown owner.");
-
-	/* Reset everything. */
-	[self close];
-
-	/* Where are we writing to? */
-	NSString *path = self.fileWritePath;
-
-	NSObjectIsEmptyAssert(path);
-
-	/* What will the filename be? The filename
-	 includes the folder being written to. */
-	self.filename = [self buildFileName];
-
-	/* Make sure the folder being written to exists. */
-	if ([RZFileManager() fileExistsAtPath:path isDirectory:NULL] == NO) {
-		NSError *fmerr;
-
-		[RZFileManager() createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&fmerr];
-
-		if (fmerr) {
-			LogToConsole(@"Error Creating Folder: %@", [fmerr localizedDescription]);
-		}
-	}
-
-	/* Does the file exist? */
-	if ([RZFileManager() fileExistsAtPath:self.filename] == NO) {
-		[RZFileManager() createFileAtPath:self.filename contents:[NSData data] attributes:nil];
-	}
-
-	/* Property list specific additions. */
-	self.temporaryPropertyList = [NSMutableDictionary dictionary];
-
-	[self updatePropertyListCache];
-}
-
-#pragma mark -
-#pragma mark File Handler Path
-
-- (NSString *)fileWritePath
-{
-	return [TPCPreferences applicationCachesFolderPath];
-}
-
-- (NSString *)buildFileName
-{
-	/* Get the UUID to use for filename. */
-	NSString *ownerUUID;
-
-	if (self.owner.channel) {
-		ownerUUID = self.owner.channel.config.itemUUID;
 	} else {
-		ownerUUID = self.owner.client.config.itemUUID;
+		if (channel) {
+			matchPredicate = [NSPredicate predicateWithFormat:@"clientID == %@ AND channelID == %@", clientID, channelID];
+		} else {
+			matchPredicate = [NSPredicate predicateWithFormat:@"clientID == %@ AND channelID == nil", clientID];
+		}
 	}
 
-	/* Return result. */
-	return [NSString stringWithFormat:@"%@historic-Log-%@.plist", self.fileWritePath, ownerUUID];
+	/* Perform actual fetch. */
+	[fetchRequest setEntity:entity];
+	[fetchRequest setPredicate:matchPredicate];
+	[fetchRequest setSortDescriptors:@[self.managedSortDescriptor]];
+
+	/* Define match limit. */
+	if (maxEntryCount > 0) {
+		[fetchRequest setFetchLimit:maxEntryCount];
+	}
+
+	NSArray *fetchResults = [_privateContext executeFetchRequest:fetchRequest error:NULL];
+
+	/* Now that we fetched the results, we push them to the main context. */
+	[self.managedObjectContext performBlock:^{
+		/* We have to use this hack because Core Data is not
+		 very thread safe so this is what you get… */
+		NSMutableArray *resultObjectIDs = [NSMutableArray array];
+
+		for (NSManagedObject *line in fetchResults) {
+			[resultObjectIDs addObject:[line objectID]];
+		}
+
+		/* Build list of objects from IDs. */
+		NSMutableArray *resultObjects = [NSMutableArray array];
+
+		for (NSManagedObjectID *objectID in resultObjectIDs) {
+			NSManagedObject *obj = [self.managedObjectContext objectWithID:objectID];
+
+			[resultObjects addObject:obj];
+		}
+
+		/* Our sort descriptor places newest lines at the top and oldest
+		 at the bottom. This is done so that when a fetch limit is supplied,
+		 the fetch limit only applies to the newest lines without us having
+		 to supply an offset. Obivously, we do not want newest lines first
+		 though, so before passing to the callback, we reverse. */
+		NSArray *finalData = [resultObjects.reverseObjectEnumerator allObjects];
+
+		completionBlock(finalData);
+	}];
 }
 
-#pragma mark -
-#pragma mark Memory Management
 
-- (void)dealloc
+#pragma mark -
+#pragma mark Core Data Model
+
+- (id)init
 {
-	[self close];
+	if (self = [super init]) {
+		/* Call variables to initalize objects. */
+		(void)self.persistentStoreCoordinator;
+
+		/* Return ourself. */
+		return self;
+	}
+
+	return nil;
+}
+
+- (NSString *)databaseSavePath
+{
+	return [[TPCPreferences applicationCachesFolderPath] stringByAppendingPathComponent:@"logControllerHistoricLog.sqlite"];
+}
+
+- (void)saveData
+{
+	[self.managedObjectContext performBlock:^{
+		/* Do changes even exist? */
+		if ([self.managedObjectContext commitEditing]) {
+			if ([self.managedObjectContext hasChanges]) {
+				/* Try to save. */
+				NSError *saveError;
+
+				if ([self.managedObjectContext save:&saveError] == NO) {
+					/* There was an error saving. As the information stored
+					 within our historic log model is not very important,
+					 we do not care much about errors here, but we will
+					 still report them for the sake of debugging. */
+
+					LogToConsole(@"%@", [saveError localizedDescription]);
+				}
+			}
+		}
+	}];
+}
+
+- (NSManagedObjectModel *)managedObjectModel
+{
+	/* We do not need to do work if this property exists already. */
+	PointerIsNotEmptyAssertReturn(_managedObjectModel, _managedObjectModel);
+
+	/* Find the location of the file. */
+	NSString *path = [RZMainBundle() pathForResource:@"LogControllerStorageModel" ofType:@"mom"];
+
+	/* Create the model. */
+	NSURL *url = [NSURL fileURLWithPath:path];
+
+	_managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:url];
+
+	/* Return the model. */
+	return _managedObjectModel;
+}
+
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator;
+{
+	/* We do not need to do work if this property exists already. */
+	PointerIsNotEmptyAssertReturn(_persistentStoreCoordinator, _persistentStoreCoordinator);
+
+	/* Define save path. */
+	NSString *savePath = [self databaseSavePath];
+
+	/* Add model to persistent store. */
+	NSURL *url = [NSURL fileURLWithPath:savePath];
+
+	NSManagedObjectModel *mom = [self managedObjectModel];
+
+	_persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom];
+
+	/* Try to create the actual persistent store. */
+	NSError *addErr = nil;
+
+	id result = [_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:nil error:&addErr];
+
+	/* Was there an error? */
+	if (result == nil) {
+		/* Log error. */
+		LogToConsole(@"Error Creating Persistent Store: %@", [addErr localizedDescription]);
+
+		/* Destroy state. */
+		_persistentStoreCoordinator = nil;
+	}
+
+	/* Return new store. */
+	return _persistentStoreCoordinator;
+}
+
+- (NSManagedObjectContext *)managedObjectContext
+{
+	/* We do not need to do work if this property exists already. */
+	PointerIsNotEmptyAssertReturn(_managedObjectContext, _managedObjectContext);
+
+	/* Create the context. */
+	NSPersistentStoreCoordinator *coord = [self persistentStoreCoordinator];
+
+	PointerIsEmptyAssertReturn(coord, nil);
+
+	 _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+	[_managedObjectContext setPersistentStoreCoordinator:coord];
+
+	return _managedObjectContext;
+}
+
+- (NSSortDescriptor *)managedSortDescriptor
+{
+	/* We do not need to do work if this property exists already. */
+	PointerIsNotEmptyAssertReturn(_managedSortDescriptor, _managedSortDescriptor);
+
+	/* Create new sort descriptor. */
+	_managedSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:NO];
+
+	return _managedSortDescriptor;
 }
 
 @end

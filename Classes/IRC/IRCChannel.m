@@ -118,6 +118,11 @@
 #pragma mark -
 #pragma mark Property Getter
 
+- (NSString *)uniqueIdentifier
+{
+	return [self.config itemUUID];
+}
+
 - (NSString *)name
 {
 	return [self.config channelName];

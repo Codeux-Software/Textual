@@ -73,13 +73,15 @@
 
 + (THOPluginManager *)defaultManager
 {
-	TXMasterController *master = [THOPluginManager masterController];
+	static id sharedSelf = nil;
 
-	if (master) {
-		return [master pluginManager];
-	}
+	static dispatch_once_t onceToken;
 
-	return nil;
+	dispatch_once(&onceToken, ^{
+		sharedSelf = [self new];
+	});
+
+	return sharedSelf;
 }
 
 #pragma mark -

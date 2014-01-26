@@ -350,8 +350,8 @@
 			[upperChoices safeAddObject:[command lowercaseString]];
 		}
 
-		[upperChoices addObjectsFromArray:[RZPluginManager() supportedUserInputCommands]];
-		[upperChoices addObjectsFromArray:[RZPluginManager() supportedAppleScriptCommands]];
+		[upperChoices addObjectsFromArray:[THOPluginManagerSharedInstance() supportedUserInputCommands]];
+		[upperChoices addObjectsFromArray:[THOPluginManagerSharedInstance() supportedAppleScriptCommands]];
 	} else if (channelMode) {
 		// Prioritize selected channel for channel completion
 		[upperChoices safeAddObject:channel.name];

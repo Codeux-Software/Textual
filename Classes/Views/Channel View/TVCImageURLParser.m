@@ -82,7 +82,7 @@
 		return nil;
 	}
 
-	NSString *plguinResult = [RZPluginManager() processInlineMediaContentURL:[u absoluteString]];
+	NSString *plguinResult = [THOPluginManagerSharedInstance() processInlineMediaContentURL:[u absoluteString]];
 
 	if (plguinResult) {
 		return plguinResult;

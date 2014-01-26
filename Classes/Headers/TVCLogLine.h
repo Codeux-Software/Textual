@@ -69,25 +69,40 @@ typedef enum TVCLogLineType : NSInteger {
 	TVCLogLineWebsiteType,
 } TVCLogLineType;
 
-typedef enum TVCLogMemberType : NSInteger {
-	TVCLogMemberNormalType,
-	TVCLogMemberLocalUserType,
-} TVCLogMemberType;
+typedef enum TVCLogLineMemberType : NSInteger {
+	TVCLogLineMemberNormalType,
+	TVCLogLineMemberLocalUserType,
+} TVCLogLineMemberType;
 
 #define IRCCommandFromLineType(t)		[TVCLogLine lineTypeString:t]
 
-@interface TVCLogLine : NSObject
+@interface TVCLogLine : NSManagedObject
 @property (nonatomic, assign) BOOL isEncrypted;
 @property (nonatomic, assign) BOOL isHistoric; /* Identifies a line restored from previous session. */
 @property (nonatomic, strong) NSDate *receivedAt;
 @property (nonatomic, strong) NSString *nickname;
 @property (nonatomic, strong) NSString *messageBody;
 @property (nonatomic, strong) NSString *rawCommand; // Can be the actual command (PRIVMSG, NOTICE, etc.) or the raw numeric (001, 002, etc.)
-@property (nonatomic, assign) TVCLogLineType lineType;
-@property (nonatomic, assign) TVCLogMemberType memberType;
-@property (nonatomic, strong) NSArray *highlightKeywords;
-@property (nonatomic, strong) NSArray *excludeKeywords;
-@property (nonatomic, assign) NSInteger nicknameColorNumber;
+@property (nonatomic, assign) NSNumber *lineTypeInteger;
+@property (nonatomic, assign) NSNumber *memberTypeInteger;
+@property (nonatomic, assign) NSNumber *nicknameColorNumber;
+@property (nonatomic, strong) id highlightKeywords;
+@property (nonatomic, strong) id excludeKeywords;
+
+/* These properties are proxies for their NSNumber values. */
+@property (nonatomic, uweak) TVCLogLineType lineType;
+@property (nonatomic, uweak) TVCLogLineMemberType memberType;
+
+/* Create an instance of the managed object without any assocation to
+ a object context nor any client/channel. It is used when a line is 
+ needed for writing purposes, but it is not wanted to be written on
+ the actual historic log. */
++ (TVCLogLine *)newManagedObjectWithoutContextAssociation;
+
+/* Creates an instance of the managed object with assocation to the
+ historic log context plus the passed client & channel. The line created
+ is inserted ino the historic log at the moment of creation. */
++ (TVCLogLine *)newManagedObjectForClient:(IRCClient *)client channel:(IRCChannel *)channel;
 
 - (NSString *)formattedTimestamp;
 - (NSString *)formattedTimestampWithForcedFormat:(NSString *)format;
@@ -95,9 +110,9 @@ typedef enum TVCLogMemberType : NSInteger {
 - (NSString *)formattedNickname:(IRCChannel *)owner;
 - (NSString *)formattedNickname:(IRCChannel *)owner withForcedFormat:(NSString *)format;
 
-+ (NSString *)lineTypeString:(TVCLogLineType)type;
-+ (NSString *)memberTypeString:(TVCLogMemberType)type;
+- (NSString *)lineTypeString;
+- (NSString *)memberTypeString;
 
-- (id)initWithDictionary:(NSDictionary *)dic;	// For internal use only. A plugin should not call.
-- (NSDictionary *)dictionaryValue;				// For internal use only. A plugin should not call.
++ (NSString *)lineTypeString:(TVCLogLineType)type;
++ (NSString *)memberTypeString:(TVCLogLineMemberType)type;
 @end

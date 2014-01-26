@@ -51,10 +51,10 @@
 
 - (void)populateData
 {
-	[self.scripts addObjectsFromArray:[RZPluginManager() supportedAppleScriptCommands]];
-	[self.scripts addObjectsFromArray:[RZPluginManager() supportedUserInputCommands]];
+	[self.scripts addObjectsFromArray:[THOPluginManagerSharedInstance() supportedAppleScriptCommands]];
+	[self.scripts addObjectsFromArray:[THOPluginManagerSharedInstance() supportedUserInputCommands]];
 
-    for (NSString *command in [RZPluginManager() dangerousCommandNames]) {
+    for (NSString *command in [THOPluginManagerSharedInstance() dangerousCommandNames]) {
         [self.scripts removeObject:command];
     }
 	

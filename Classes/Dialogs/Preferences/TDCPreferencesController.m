@@ -193,7 +193,7 @@
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
 {
-	NSArray *bundles = [RZPluginManager() pluginsWithPreferencePanes];
+	NSArray *bundles = [THOPluginManagerSharedInstance() pluginsWithPreferencePanes];
 
 	if (NSObjectIsEmpty(bundles)) {
 		return @[@"0", NSToolbarFlexibleSpaceItemIdentifier, @"3", @"1", @"4", @"2", @"9", NSToolbarFlexibleSpaceItemIdentifier, @"10", @"11"];
@@ -229,7 +229,7 @@
 	}
 
 	/* Extensions. */
-	NSArray *bundles = [RZPluginManager() pluginsWithPreferencePanes];
+	NSArray *bundles = [THOPluginManagerSharedInstance() pluginsWithPreferencePanes];
 
 	for (THOPluginItem *plugin in bundles) {
 		NSInteger tagIndex = ([bundles indexOfObject:plugin] + _addonsToolbarItemMultiplier);
@@ -267,7 +267,7 @@
 		case 15:	{ [self firstPane:self.incomingDataView				selectedItem:11]; break; }
 		default:
 		{
-			THOPluginItem *plugin = [RZPluginManager() pluginsWithPreferencePanes][pluginIndex];
+			THOPluginItem *plugin = [THOPluginManagerSharedInstance() pluginsWithPreferencePanes][pluginIndex];
 
 			if (plugin) {
 				NSView *prefsView = [plugin.primaryClass preferencesView];

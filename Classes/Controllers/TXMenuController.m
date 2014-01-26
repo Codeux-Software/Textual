@@ -1491,21 +1491,24 @@
 		if (_noChannel) {
 			return;
 		}
+
+		NSString *oldKey = [c.config encryptionKey];
+		NSString *newKey = [c.config temporaryEncryptionKey];
 		
-		BOOL oldKeyEmpty = NSObjectIsEmpty([c.config encryptionKey]);
-		BOOL newKeyEmpty = NSObjectIsEmpty([sender.config temporaryEncryptionKey]);
-		
+		BOOL oldKeyEmpty = NSObjectIsEmpty(oldKey);
+		BOOL newKeyEmpty = NSObjectIsEmpty(newKey);
+
+		[c updateConfig:sender.config];
+
 		if (oldKeyEmpty && newKeyEmpty == NO) {
 			[c.client printDebugInformation:TXTLS(@"BlowfishEncryptionStarted") channel:c];
 		} else if (oldKeyEmpty == NO && newKeyEmpty) {
 			[c.client printDebugInformation:TXTLS(@"BlowfishEncryptionStopped") channel:c];
 		} else if (oldKeyEmpty == NO && newKeyEmpty == NO) {
-			if ([c.config.encryptionKey isEqualToString:sender.config.encryptionKey] == NO) {
+			if (NSObjectsAreEqual(oldKey, newKey) == NO) {
 				[c.client printDebugInformation:TXTLS(@"BlowfishEncryptionKeyChanged") channel:c];
 			}
 		}
-		
-		[c updateConfig:sender.config];
 	}
 	
 	[self.worldController save];

@@ -321,11 +321,11 @@ DQ
             </subviews>
         </view>
         <view id="147">
-            <rect key="frame" x="0.0" y="0.0" width="325" height="287"/>
+            <rect key="frame" x="0.0" y="0.0" width="343" height="330"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <textField verticalHuggingPriority="750" id="155">
-                    <rect key="frame" x="17" y="239" width="80" height="17"/>
+                    <rect key="frame" x="23" y="275" width="80" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Passphrase:" id="174">
                         <font key="font" metaFont="system"/>
@@ -334,7 +334,7 @@ DQ
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" id="148">
-                    <rect key="frame" x="236" y="13" width="82" height="32"/>
+                    <rect key="frame" x="245" y="13" width="82" height="32"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="181">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -348,7 +348,7 @@ DQ
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="149">
-                    <rect key="frame" x="147" y="13" width="82" height="32"/>
+                    <rect key="frame" x="158" y="13" width="82" height="32"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="180">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -359,7 +359,7 @@ DQ
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="151" customClass="NSSecureTextField">
-                    <rect key="frame" x="102" y="236" width="203" height="22"/>
+                    <rect key="frame" x="108" y="272" width="210" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="178">
                         <font key="font" metaFont="system"/>
@@ -368,70 +368,115 @@ DQ
                     </textFieldCell>
                 </textField>
                 <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="154">
-                    <rect key="frame" x="12" y="59" width="301" height="5"/>
+                    <rect key="frame" x="21" y="59" width="301" height="5"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="oky-HV-Bq9">
-                    <rect key="frame" x="95" y="77" width="217" height="147"/>
+                    <rect key="frame" x="36" y="77" width="274" height="182"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="JFM-YA-v04">
-                        <rect key="frame" x="0.0" y="0.0" width="217" height="147"/>
+                        <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="5eM-Ks-gx0">
-                                <rect key="frame" x="0.0" y="0.0" width="217" height="147"/>
+                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" baseWritingDirection="leftToRight" findStyle="panel" continuousSpellChecking="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="5eM-Ks-gx0">
+                                <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="textColor" red="0.42352941176470588" green="0.42352941176470588" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="217" height="147"/>
+                                <size key="minSize" width="274" height="182"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment>
                                         <string key="content">This passphrase will be used to encrypt and decrypt messages so that only those with it may be able to read the transmitted conversations.
 
-</string>
+When enabled, Textual will refuse to write any </string>
                                         <attributes>
+                                            <real key="NSBaselineOffset" value="1"/>
                                             <color key="NSColor" red="0.42352941176470588" green="0.42352941176470588" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="11" name="LucidaGrande"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.0999999999999999"/>
+                                            <real key="NSKern" value="0.0"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36"/>
+                                            <color key="NSStrokeColor" red="0.42352941176470588" green="0.42352941176470588" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="cache files">
+                                        <attributes>
+                                            <real key="NSBaselineOffset" value="1"/>
+                                            <color key="NSColor" red="0.42352941176470588" green="0.42352941176470588" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="11" name="LucidaGrande"/>
+                                            <real key="NSKern" value="0.0"/>
+                                            <url key="NSLink" string="http://en.wikipedia.org/wiki/Cache_(computing)"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36"/>
+                                            <color key="NSStrokeColor" red="0.42352941176470588" green="0.42352941176470588" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
+                                            <integer key="NSUnderline" value="1"/>
+                                            <color key="NSUnderlineColor" red="0.42352941176470588" green="0.42352941176470588" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content"> to disk related to this channel. These files do not include log files written to the log location. Those are still produced.
+
+</string>
+                                        <attributes>
+                                            <real key="NSBaselineOffset" value="1"/>
+                                            <color key="NSColor" red="0.42352941176470588" green="0.42352941176470588" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="11" name="LucidaGrande"/>
+                                            <real key="NSKern" value="0.0"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36"/>
+                                            <color key="NSStrokeColor" red="0.42352941176470588" green="0.42352941176470588" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="Blowfish ECB">
                                         <attributes>
+                                            <real key="NSBaselineOffset" value="1"/>
                                             <color key="NSColor" red="0.42352941176470588" green="0.42352941176470588" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="11" name="LucidaGrande"/>
+                                            <real key="NSKern" value="0.0"/>
                                             <url key="NSLink" string="http://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Electronic_codebook_.28ECB.29"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.0999999999999999"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36"/>
+                                            <color key="NSStrokeColor" red="0.42352941176470588" green="0.42352941176470588" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
+                                            <integer key="NSUnderline" value="1"/>
+                                            <color key="NSUnderlineColor" red="0.42352941176470588" green="0.42352941176470588" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content=" is used by default for encryption. While safe, this algorithm may not be secure enough for all purposes. See the ">
                                         <attributes>
+                                            <real key="NSBaselineOffset" value="1"/>
                                             <color key="NSColor" red="0.42352941176470588" green="0.42352941176470588" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="11" name="LucidaGrande"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.0999999999999999"/>
+                                            <real key="NSKern" value="0.0"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36"/>
+                                            <color key="NSStrokeColor" red="0.42352941176470588" green="0.42352941176470588" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="Encrypted Chat">
                                         <attributes>
+                                            <real key="NSBaselineOffset" value="1"/>
                                             <color key="NSColor" red="0.42352941176470588" green="0.42352941176470588" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="11" name="LucidaGrande"/>
+                                            <real key="NSKern" value="0.0"/>
                                             <url key="NSLink" string="http://www.codeux.com/textual/wiki/Encrypted-Chat.wiki"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.0999999999999999"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36"/>
+                                            <color key="NSStrokeColor" red="0.42352941176470588" green="0.42352941176470588" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
+                                            <integer key="NSUnderline" value="1"/>
+                                            <color key="NSUnderlineColor" red="0.42352941176470588" green="0.42352941176470588" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content=" wiki page for more information.">
                                         <attributes>
+                                            <real key="NSBaselineOffset" value="1"/>
                                             <color key="NSColor" red="0.42352941176470588" green="0.42352941176470588" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="11" name="LucidaGrande"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.0999999999999999"/>
+                                            <real key="NSKern" value="0.0"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36"/>
+                                            <color key="NSStrokeColor" red="0.42352941176470588" green="0.42352941176470588" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="217" height="147"/>
+                                <size key="minSize" width="274" height="182"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                             </textView>
                         </subviews>

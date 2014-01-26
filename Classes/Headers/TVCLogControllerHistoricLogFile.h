@@ -37,18 +37,22 @@
 
 #import "TextualApplication.h"
 
+#define TVCLogControllerHistoricLogSharedInstance()				[TVCLogControllerHistoricLogFile sharedInstance]
+
 @interface TVCLogControllerHistoricLogFile : NSObject
-@property (nonatomic, nweak) TVCLogController *owner;
-@property (nonatomic, assign) NSInteger maxEntryCount;
+@property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
 
-- (void)open;
-- (void)close;
-- (void)reset;
-- (void)reopenIfNeeded;
++ (TVCLogControllerHistoricLogFile *)sharedInstance;
 
-- (void)updateCache; // Force update property list cache.
+- (void)saveData;
 
-- (NSDictionary *)data;;
+- (void)resetData;
+- (void)resetDataForEntriesMatchingClient:(IRCClient *)client inChannel:(IRCChannel *)channel;
 
-- (void)writePropertyListEntry:(NSDictionary *)s toKey:(NSString *)key;
+/* fetchLimit: and afterDate: are optional. Supply either 0 or nil to skip. */
+- (void)entriesForClient:(IRCClient *)client
+			   inChannel:(IRCChannel *)channel
+	 withCompletionBlock:(void (^)(NSArray *objects))completionBlock
+			  fetchLimit:(NSInteger)maxEntryCount
+			   afterDate:(NSDate *)referenceDate;
 @end

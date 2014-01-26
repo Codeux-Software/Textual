@@ -520,6 +520,8 @@
 		4C85D198187EC18900860129 /* TCMPortMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; };
 		4C85D19D187EC19D00860129 /* TCMPortMapper.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; };
 		4C85D19E187EC1A200860129 /* TCMPortMapper.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; };
+		4C8ACF9A189429EC002F6A3F /* LogControllerStorageModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 4C8ACF99189429EC002F6A3F /* LogControllerStorageModel.xcdatamodel */; };
+		4C8ACF9B189429EC002F6A3F /* LogControllerStorageModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 4C8ACF99189429EC002F6A3F /* LogControllerStorageModel.xcdatamodel */; };
 		4C8AF609158E99520026668C /* TXGlobalModels.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF510158E99520026668C /* TXGlobalModels.m */; };
 		4C8AF60A158E99520026668C /* TXMasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF511158E99520026668C /* TXMasterController.m */; };
 		4C8AF60B158E99520026668C /* TXMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF512158E99520026668C /* TXMenuController.m */; };
@@ -823,6 +825,8 @@
 		4CCF2F281580481E006FFE21 /* FormattingColor_14.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F171580481E006FFE21 /* FormattingColor_14.png */; };
 		4CCF2F291580481E006FFE21 /* FormattingColor_15.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2F181580481E006FFE21 /* FormattingColor_15.png */; };
 		4CCF2F9915804BC9006FFE21 /* core.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CCF2F5315804888006FFE21 /* core.js */; };
+		4CD3E5101893DD6B00010CA2 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD3E50F1893DD6B00010CA2 /* CoreData.framework */; };
+		4CD3E5151893DD7700010CA2 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD3E50F1893DD6B00010CA2 /* CoreData.framework */; };
 		4CD4165B184065E3005B134D /* TDCProgressInformationSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */; };
 		4CD4165C184065E3005B134D /* TDCProgressInformationSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */; };
 		4CD6252A1870B934002FEA17 /* TDCFileTransferDialogTransferController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */; };
@@ -1138,6 +1142,7 @@
 		4C86B0101748B7B60028C7AE /* Shared Debug Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Debug Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Debug Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C86B0111748B7B60028C7AE /* Shared App Store Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared App Store Release Configuration.xcconfig"; path = "Resources/Build Configurations/Shared App Store Release Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C86B0121748B7B60028C7AE /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Code Signing Identity.xcconfig"; path = "Resources/Build Configurations/Code Signing Identity.xcconfig"; sourceTree = SOURCE_ROOT; };
+		4C8ACF99189429EC002F6A3F /* LogControllerStorageModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; name = LogControllerStorageModel.xcdatamodel; path = "Resources/Data Models/LogControllerStorageModel.xcdatamodeld/LogControllerStorageModel.xcdatamodel"; sourceTree = SOURCE_ROOT; };
 		4C8AF510158E99520026668C /* TXGlobalModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXGlobalModels.m; sourceTree = "<group>"; };
 		4C8AF511158E99520026668C /* TXMasterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXMasterController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4C8AF512158E99520026668C /* TXMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXMenuController.m; sourceTree = "<group>"; };
@@ -1430,6 +1435,7 @@
 		4CCF2F171580481E006FFE21 /* FormattingColor_14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_14.png; path = "Resources/Images/IRC Formatting Colors/FormattingColor_14.png"; sourceTree = SOURCE_ROOT; };
 		4CCF2F181580481E006FFE21 /* FormattingColor_15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FormattingColor_15.png; path = "Resources/Images/IRC Formatting Colors/FormattingColor_15.png"; sourceTree = SOURCE_ROOT; };
 		4CCF2F5315804888006FFE21 /* core.js */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; name = core.js; path = Resources/Javascript/API/core.js; sourceTree = SOURCE_ROOT; };
+		4CD3E50F1893DD6B00010CA2 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCProgressInformationSheet.m; path = Dialogs/TDCProgressInformationSheet.m; sourceTree = "<group>"; };
 		4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogTransferController.m; path = "Dialogs/File Transfers/TDCFileTransferDialogTransferController.m"; sourceTree = "<group>"; };
 		4CDDF3431678C5DF00FE8684 /* encryptionLockIconDark.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = encryptionLockIconDark.tif; sourceTree = "<group>"; };
@@ -1456,6 +1462,7 @@
 				4C68425716C5AF730005A59E /* AutoHyperlinks.framework in Frameworks */,
 				4C68425816C5AF730005A59E /* BlowfishEncryption.framework in Frameworks */,
 				4C46CCC51580469E00846B64 /* Cocoa.framework in Frameworks */,
+				4CD3E5101893DD6B00010CA2 /* CoreData.framework in Frameworks */,
 				4C46CCC61580469E00846B64 /* CoreServices.framework in Frameworks */,
 				4C46CCC71580469E00846B64 /* Foundation.framework in Frameworks */,
 				4CCF2EE2158046F9006FFE21 /* Growl.framework in Frameworks */,
@@ -1480,6 +1487,7 @@
 				4C5BA45916F1302F00A96CA2 /* AutoHyperlinks.framework in Frameworks */,
 				4C5BA45A16F1302F00A96CA2 /* BlowfishEncryption.framework in Frameworks */,
 				4C5BA45B16F1302F00A96CA2 /* Cocoa.framework in Frameworks */,
+				4CD3E5151893DD7700010CA2 /* CoreData.framework in Frameworks */,
 				4C5BA45C16F1302F00A96CA2 /* CoreServices.framework in Frameworks */,
 				4C5BA45D16F1302F00A96CA2 /* Foundation.framework in Frameworks */,
 				4C5BA45E16F1302F00A96CA2 /* Growl.framework in Frameworks */,
@@ -1532,6 +1540,7 @@
 		4C1DC5551580420500A47BC9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4CD3E50F1893DD6B00010CA2 /* CoreData.framework */,
 				4C46CCCC158046BE00846B64 /* External Frameworks */,
 				4C211D3F15BF1F5E00E218DA /* External Libraries */,
 				4C46CCB91580469200846B64 /* System Frameworks */,
@@ -1652,6 +1661,7 @@
 			isa = PBXGroup;
 			children = (
 				5D9B8EB1170A0EA700919CB0 /* Build */,
+				4C7110921893DB2C00AC56CE /* Data Models */,
 				4C46CC8E158042C600846B64 /* Documents */,
 				4CA218B416D81F8F0012DAA8 /* Script Installers */,
 				4C52379115C0E0CA00414852 /* Styles */,
@@ -1866,6 +1876,14 @@
 			name = "Toolbar Icons";
 			path = "Resources/Images/Preferences/Toolbar Icons";
 			sourceTree = SOURCE_ROOT;
+		};
+		4C7110921893DB2C00AC56CE /* Data Models */ = {
+			isa = PBXGroup;
+			children = (
+				4C8ACF99189429EC002F6A3F /* LogControllerStorageModel.xcdatamodel */,
+			);
+			name = "Data Models";
+			sourceTree = "<group>";
 		};
 		4C73F901159DB9AF00C1BB5F /* Server List */ = {
 			isa = PBXGroup;
@@ -3289,6 +3307,7 @@
 				4C0444FF16F1603B00EBB665 /* TDChanBanSheet.m in Sources */,
 				4C04450016F1603B00EBB665 /* TDChanInviteExceptionSheet.m in Sources */,
 				4C04450116F1603B00EBB665 /* TDChannelSheet.m in Sources */,
+				4C8ACF9B189429EC002F6A3F /* LogControllerStorageModel.xcdatamodel in Sources */,
 				4C04450216F1603B00EBB665 /* TDCHighlightListSheet.m in Sources */,
 				4C04450316F1603B00EBB665 /* TDCInviteSheet.m in Sources */,
 				4C04450416F1603B00EBB665 /* TDCListDialog.m in Sources */,
@@ -3425,6 +3444,7 @@
 				4C8AF611158E99520026668C /* TDChanBanExceptionSheet.m in Sources */,
 				4C8AF612158E99520026668C /* TDChanBanSheet.m in Sources */,
 				4C8AF613158E99520026668C /* TDChanInviteExceptionSheet.m in Sources */,
+				4C8ACF9A189429EC002F6A3F /* LogControllerStorageModel.xcdatamodel in Sources */,
 				4C8AF614158E99520026668C /* TDChannelSheet.m in Sources */,
 				4C8AF615158E99520026668C /* TDCHighlightListSheet.m in Sources */,
 				4C8AF616158E99520026668C /* TDCInviteSheet.m in Sources */,
