@@ -45,7 +45,6 @@
 @property (nonatomic, strong) TVCLogPolicy *policy;
 @property (nonatomic, strong) TVCLogScriptEventSink *sink;
 @property (nonatomic, strong) TVCWebViewAutoScroll *autoScroller;
-@property (nonatomic, strong) TVCLogControllerHistoricLogFile *historicLogFile;
 @property (nonatomic, assign) BOOL isLoaded;
 @property (nonatomic, assign) BOOL isTerminating;
 @property (nonatomic, assign) BOOL needsLimitNumberOfLines;

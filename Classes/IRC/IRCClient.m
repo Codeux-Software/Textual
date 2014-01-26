@@ -455,6 +455,11 @@
 #pragma mark -
 #pragma mark Properties
 
+- (NSString *)uniqueIdentifier
+{
+	return [self.config itemUUID];
+}
+
 - (NSString *)name
 {
 	return self.config.clientName;
@@ -697,7 +702,7 @@
 		raw = [raw stripIRCEffects];
 	}
 
-	NSArray *rules = [RZPluginManager() outputRulesForCommand:IRCCommandFromLineType(type)];
+	NSArray *rules = [THOPluginManagerSharedInstance() outputRulesForCommand:IRCCommandFromLineType(type)];
 
 	for (NSArray *ruleData in rules) {
 		NSString *ruleRegex = ruleData[0];
@@ -2441,8 +2446,8 @@
 		}
 		case 5091: // Command: LOADED_PLUGINS
 		{
-			NSArray *loadedBundles = [RZPluginManager() allLoadedExtensions];
-			NSArray *loadedScripts = [RZPluginManager() supportedAppleScriptCommands];
+			NSArray *loadedBundles = [THOPluginManagerSharedInstance() allLoadedExtensions];
+			NSArray *loadedScripts = [THOPluginManagerSharedInstance() supportedAppleScriptCommands];
 
 			NSString *bundleResult = [loadedBundles componentsJoinedByString:@", "];
 			NSString *scriptResult = [loadedScripts componentsJoinedByString:@", "];
@@ -2713,7 +2718,7 @@
 		default:
 		{
 			/* Scan scripts first. */
-			NSDictionary *scriptPaths = [RZPluginManager() supportedAppleScriptCommands:YES];
+			NSDictionary *scriptPaths = [THOPluginManagerSharedInstance() supportedAppleScriptCommands:YES];
 
 			NSString *scriptPath;
 
@@ -2726,7 +2731,7 @@
 			BOOL scriptFound = NSObjectIsNotEmpty(scriptPath);
 
 			/* Scan plugins second. */
-			BOOL pluginFound = [[RZPluginManager() supportedUserInputCommands] containsObject:lowercaseCommand];
+			BOOL pluginFound = [[THOPluginManagerSharedInstance() supportedUserInputCommands] containsObject:lowercaseCommand];
 
 			/* Perform script or plugin. */
 			if (pluginFound && scriptFound) {
@@ -2808,9 +2813,13 @@
 		langkey = @"LogFileEndOfSessionHeader";
 	}
 
-	TVCLogLine *top = [[TVCLogLine alloc] initWithDictionary:@{@"messageBody" : @" "}];
-	TVCLogLine *mid = [[TVCLogLine alloc] initWithDictionary:@{@"messageBody" : TXTLS(langkey)}];
-	TVCLogLine *end = [[TVCLogLine alloc] initWithDictionary:@{@"messageBody" : @" "}];
+	TVCLogLine *top = [TVCLogLine newManagedObjectWithoutContextAssociation];
+	TVCLogLine *mid = [TVCLogLine newManagedObjectWithoutContextAssociation];
+	TVCLogLine *end = [TVCLogLine newManagedObjectWithoutContextAssociation];
+
+	[mid setMessageBody:TXTLS(langkey)];
+	[top setMessageBody:NSStringWhitespacePlaceholder];
+	[end setMessageBody:NSStringWhitespacePlaceholder];
 
 	[self writeToLogFile:top];
 	[self writeToLogFile:mid];
@@ -2976,17 +2985,15 @@
 
 	IRCChannel *channel = nil;
 
-	TVCLogMemberType memberType = TVCLogMemberNormalType;
+	TVCLogLineMemberType memberType = TVCLogLineMemberNormalType;
 
 	NSInteger colorNumber = 0;
 
 	NSArray *matchKeywords = nil;
 	NSArray *excludeKeywords = nil;
 
-	TVCLogLine *c = [TVCLogLine new];
-
 	if (nick && [nick isEqualToString:self.localNickname]) {
-		memberType = TVCLogMemberLocalUserType;
+		memberType = TVCLogLineMemberLocalUserType;
 	}
 
 	if ([chan isKindOfClass:[IRCChannel class]]) {
@@ -2995,20 +3002,18 @@
 		/* We only want chan to be an IRCChannel for an actual
 		 channel or nil for the console. Anything else should be
 		 ignored and stopped from printing. */
-		
-		if (NSObjectIsNotEmpty(chan)) {
-			return;
-		}
+
+		NSObjectIsNotEmptyAssert(chan);
 	}
 
-	if ((type == TVCLogLinePrivateMessageType || type == TVCLogLineActionType) && memberType == TVCLogMemberNormalType) {
-		if (channel && channel.config.ignoreHighlights == NO) {
+	if ((type == TVCLogLinePrivateMessageType || type == TVCLogLineActionType) && memberType == TVCLogLineMemberNormalType) {
+		if (channel && [channel.config ignoreHighlights] == NO) {
 			matchKeywords = [TPCPreferences highlightMatchKeywords];
 			excludeKeywords = [TPCPreferences highlightExcludeKeywords];
 
 			if (([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightRegularExpressionMatchType) == NO) {
 				if ([TPCPreferences highlightCurrentNickname]) {
-					matchKeywords = [matchKeywords arrayByAddingObject:self.localNickname];
+					matchKeywords = [matchKeywords arrayByAddingObject:[self localNickname]];
 				}
 			}
 		}
@@ -3025,9 +3030,9 @@
 			type == TVCLogLineActionType ||
 			type == TVCLogLineNoticeType)
 		{
-			nick = self.config.nickname;
+			nick = [self.config nickname];
 
-			memberType = TVCLogMemberLocalUserType;
+			memberType = TVCLogLineMemberLocalUserType;
 		}
 	}
 
@@ -3043,15 +3048,43 @@
 		colorNumber = -1;
 	}
 
-	c.isEncrypted           = isEncrypted;
-	c.excludeKeywords		= excludeKeywords;
-	c.highlightKeywords		= matchKeywords;
+	/* Create new log entry. */
+	TVCLogLine *c;
+
+	/* If the channel is encrypted, then we refuse to write to
+	 the actual historic log so there is no trace of the chatter
+	 on the disk in the form of an unencrypted cache file. */
+	/* Doing it this way does break the ability to reload chatter
+	 in the view as well as playback on restart, but the added
+	 security can be seen as a bonus. */
+	if (channel && [channel.config encryptionKeyIsSet]) {
+		c = [TVCLogLine newManagedObjectWithoutContextAssociation];
+	} else {
+		c = [TVCLogLine newManagedObjectForClient:self channel:channel];
+	}
+
+	/* Data types. */
 	c.lineType				= type;
 	c.memberType			= memberType;
+
+	/* Encrypted message? */
+	c.isEncrypted           = isEncrypted;
+
+	/* Highlight words. */
+	c.excludeKeywords		= excludeKeywords;
+	c.highlightKeywords		= matchKeywords;
+
+	/* Message body. */
 	c.messageBody			= text;
+
+	/* Sender. */
 	c.nickname				= nick;
-	c.nicknameColorNumber	= colorNumber;
+	c.nicknameColorNumber	= @(colorNumber);
+
+	/* Send date. */
 	c.receivedAt			= receivedAt;
+
+	/* Actual command. */
 	c.rawCommand			= [command lowercaseString];
 
 	if (channel) {
@@ -3352,7 +3385,7 @@
 	[m parseLine:s forClient:self];
 
     /* Intercept input. */
-    m = [RZPluginManager() processInterceptedServerInput:m for:self];
+    m = [THOPluginManagerSharedInstance() processInterceptedServerInput:m for:self];
 
     PointerIsEmptyAssert(m);
 
@@ -6003,7 +6036,7 @@
 		{
 			NSString *numericString = [NSString stringWithInteger:n];
 
-			if ([[RZPluginManager() supportedServerInputCommands] containsObject:numericString]) {
+			if ([[THOPluginManagerSharedInstance() supportedServerInputCommands] containsObject:numericString]) {
 				break;
 			}
 
@@ -6421,7 +6454,7 @@
 
 - (void)executeTextualCmdScript:(NSDictionary *)details
 {
-	dispatch_async([RZPluginManager() dispatchQueue], ^{
+	dispatch_async([THOPluginManagerSharedInstance() dispatchQueue], ^{
 		[self internalExecuteTextualCmdScript:details];
 	});
 }
@@ -6576,12 +6609,12 @@
 
 - (void)processBundlesUserMessage:(NSString *)message command:(NSString *)command
 {
-	[RZPluginManager() sendUserInputDataToBundles:self message:message command:command];
+	[THOPluginManagerSharedInstance() sendUserInputDataToBundles:self message:message command:command];
 }
 
 - (void)processBundlesServerMessage:(IRCMessage *)message
 {
-	[RZPluginManager() sendServerInputDataToBundles:self message:message];
+	[THOPluginManagerSharedInstance() sendServerInputDataToBundles:self message:message];
 }
 
 #pragma mark -

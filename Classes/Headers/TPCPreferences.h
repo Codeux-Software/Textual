@@ -126,6 +126,7 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 
 + (BOOL)sandboxEnabled;
 
++ (NSDate *)applicationLaunchDate;
 + (NSTimeInterval)timeIntervalSinceApplicationLaunch;
 + (NSTimeInterval)timeIntervalSinceApplicationInstall;
 + (void)saveTimeIntervalSinceApplicationInstall;

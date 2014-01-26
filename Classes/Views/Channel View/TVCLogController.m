@@ -101,18 +101,16 @@
 #pragma mark -
 #pragma mark Encryption Information
 
+- (BOOL)viewIsEncrypted
+{
+	return (self.channel && [self.channel.config encryptionKeyIsSet]);
+}
+
 - (void)channelLevelEncryptionChanged
 {
 	if ([self viewIsEncrypted]) {
 		[self closeHistoricLog];
-	} else {
-		[self openHistoricLog:NO];
 	}
-}
-
-- (BOOL)viewIsEncrypted
-{
-	return (self.channel && [self.channel.config encryptionKeyIsSet]);
 }
 
 #pragma mark -
@@ -123,8 +121,6 @@
 	if (self.view) {
 		NSAssert(NO, @"View is already initialized.");
 	}
-
-	[self openHistoricLog];
 
 	self.policy = [TVCLogPolicy new];
 
@@ -148,7 +144,7 @@
 	[self loadAlternateHTML:[self initialDocument:nil]];
 
 	/* Change the font size to the one of others for new views. */
-	NSInteger math = self.worldController.textSizeMultiplier;
+	NSInteger math = [self.worldController textSizeMultiplier];
 
 	[self.view setTextSizeMultiplier:math];
 }
@@ -170,35 +166,9 @@
 #pragma mark -
 #pragma mark Manage Historic Log
 
-- (void)openHistoricLog
+- (TVCLogControllerHistoricLogFile *)historicLogFile
 {
-	[self openHistoricLog:YES];
-}
-
-- (void)openHistoricLog:(BOOL)reloadHistory
-{
-	PointerIsNotEmptyAssert(self.historicLogFile);
-
-	NSAssertReturn([self viewIsEncrypted] == NO);
-
-	self.historicLogFile = [TVCLogControllerHistoricLogFile new];
-	
-	self.historicLogFile.owner = self;
-	self.historicLogFile.maxEntryCount = _internalPlaybackLineCountLimit;
-
-	[self.historicLogFile reopenIfNeeded];
-
-    if ([TPCPreferences reloadScrollbackOnLaunch] == NO) {
-        /* Reset our file if we do not want to load historic items. */
-
-        [self.historicLogFile reset];
-    } else {
-		if (reloadHistory) {
-			if (self.historyLoaded == NO && (self.channel && (self.channel.isPrivateMessage == NO || [TPCPreferences rememberServerListQueryStates]))) {
-				[self reloadHistory];
-			}
-		}
-	}
+	return TVCLogControllerHistoricLogSharedInstance();
 }
 
 - (void)closeHistoricLog
@@ -208,8 +178,6 @@
 
 - (void)closeHistoricLog:(BOOL)withForcedReset
 {
-	PointerIsEmptyAssert(self.historicLogFile);
-
 	/* The historic log file is always open regardless of whether the user asked
 	 Textual to remember the history between restarts. It is always open because
 	 the reloading of a theme uses it to fill in the backlog after a reload.
@@ -220,16 +188,12 @@
 	 path that it is written to entirely. */
 
 	if ([self viewIsEncrypted] || withForcedReset) {
-		[self.historicLogFile reset];
+		[self.historicLogFile resetDataForEntriesMatchingClient:self.client inChannel:self.channel];
 	} else {
-		if ([TPCPreferences reloadScrollbackOnLaunch] && ((self.channel.isChannel || [TPCPreferences rememberServerListQueryStates]) && self.channel)) {
-			[self.historicLogFile updateCache];
-		} else {
-			[self.historicLogFile reset];
+		if ([TPCPreferences reloadScrollbackOnLaunch] == NO || self.channel == nil || ([self.channel isChannel] == NO && [TPCPreferences rememberServerListQueryStates] == NO)) {
+			[self.historicLogFile resetDataForEntriesMatchingClient:self.client inChannel:self.channel];
 		}
 	}
-
-	self.historicLogFile = nil;
 }
 
 #pragma mark -
@@ -250,17 +214,17 @@
 
 - (TPCThemeSettings *)themeSettings
 {
-	return self.themeController.customSettings;
+	return [self.themeController customSettings];
 }
 
 - (NSURL *)baseURL
 {
-	return self.themeController.baseURL;
+	return [self.themeController baseURL];
 }
 
 - (TVCLogControllerOperationQueue *)printingQueue;
 {
-    return self.client.printingQueue;
+    return [self.client printingQueue];
 }
 
 - (BOOL)inlineImagesEnabledForView
@@ -542,16 +506,9 @@
 #pragma mark Reload Scrollback
 
 /* reloadOldLines: is supposed to be called from inside a queue. */
-- (void)reloadOldLines:(BOOL)markHistoric
+- (void)reloadOldLines:(BOOL)markHistoric withOldLines:(NSArray *)oldLines
 {
 	/* What lines are we reloading? */
-	PointerIsEmptyAssert(self.historicLogFile);
-	
-	NSDictionary *oldLines = [self.historicLogFile data];
-
-	/* We have what we are going to load. Reset the old. */
-	[self.historicLogFile reset];
-
 	NSObjectIsEmptyAssert(oldLines);
 
 	/* Misc. data. */
@@ -560,15 +517,9 @@
 	NSMutableString *patchedAppend = [NSMutableString string];
 
 	/* Begin processing. */
-	NSArray *lineKeys = oldLines.sortedDictionaryKeys;
-	
-	for (NSString *lineTime in lineKeys) {
-		TVCLogLine *line = [[TVCLogLine alloc] initWithDictionary:oldLines[lineTime]];
-
-		PointerIsEmptyAssertLoopContinue(line);
-
+	for (TVCLogLine *line in oldLines) {
 		if (markHistoric) {
-			line.isHistoric = YES;
+			[line setIsHistoric:YES];
 		}
 
 		/* Render everything. */
@@ -599,7 +550,7 @@
 			[self.highlightedLineNumbers safeAddObject:lineNumber];
 		}
 	}
-	
+
 	/* Update WebKit. */
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[self appendToDocumentBody:patchedAppend];
@@ -611,10 +562,7 @@
 			self.activeLineCount += 1;
 
 			/* Line info. */
-			TVCLogLine *line = lineInfo[0];
-
 			NSString *lineNumber = lineInfo[1];
-			NSString *renderTime = lineInfo[2];
 
 			NSDictionary *inlineImageMatches = lineInfo[3];
 
@@ -627,10 +575,6 @@
 
 			/* Inform the style of the addition. */
 			[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
-
-			/* Add to history. */
-			[self.historicLogFile writePropertyListEntry:[line dictionaryValue]
-												   toKey:renderTime];
 		}
 	});
 }
@@ -639,16 +583,26 @@
 {
 	self.reloadingHistory = YES;
 
-	[self.printingQueue enqueueMessageBlock:^(id operation, NSDictionary *context) {
-		NSAssertReturn(self.isTerminating == NO);
-		
-		[self reloadOldLines:YES];
+	[self.printingQueue enqueueMessageBlock:^(id operation, NSDictionary *context)
+	 {
+		 [self.historicLogFile entriesForClient:self.client
+									  inChannel:self.channel
+							withCompletionBlock:^(NSArray *objects)
+		  {
+			  NSAssertReturn(self.isTerminating == NO);
 
-		self.reloadingHistory = NO;
-		self.historyLoaded = YES;
-		
-		[self.printingQueue updateCompletionStatusForOperation:operation];
-	} for:self];
+			  if ([self viewIsEncrypted] == NO) {
+				  [self reloadOldLines:YES withOldLines:objects];
+			  }
+
+			  self.reloadingHistory = NO;
+			  self.historyLoaded = YES;
+
+			  [self.printingQueue updateCompletionStatusForOperation:operation];
+		  }
+									 fetchLimit:100
+									  afterDate:nil];
+	 } for:self];
 }
 
 - (void)reloadTheme
@@ -658,20 +612,30 @@
 	self.reloadingBacklog = YES;
 	
 	[self clearWithReset:NO];
-	
-	[self.printingQueue enqueueMessageBlock:^(id operation, NSDictionary *context) {
-		NSAssertReturn(self.isTerminating == NO);
-		
-		[self reloadOldLines:NO];
 
-		self.reloadingBacklog = NO;
+	[self.printingQueue enqueueMessageBlock:^(id operation, NSDictionary *context)
+	 {
+		 [self.historicLogFile entriesForClient:self.client
+									  inChannel:self.channel
+							withCompletionBlock:^(NSArray *objects)
+		  {
+			  NSAssertReturn(self.isTerminating == NO);
 
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[self executeQuickScriptCommand:@"viewFinishedReload" withArguments:@[]];
-		});
+			  if ([self viewIsEncrypted] == NO) {
+				  [self reloadOldLines:NO withOldLines:objects];
+			  }
 
-		[self.printingQueue updateCompletionStatusForOperation:operation];
-	} for:self];
+			  self.reloadingBacklog = NO;
+
+			  dispatch_async(dispatch_get_main_queue(), ^{
+				  [self executeQuickScriptCommand:@"viewFinishedReload" withArguments:@[]];
+			  });
+
+			  [self.printingQueue updateCompletionStatusForOperation:operation];
+		  }
+									 fetchLimit:1000
+									  afterDate:[TPCPreferences applicationLaunchDate]];
+	 } for:self];
 }
 
 #pragma mark -
@@ -875,9 +839,7 @@
 - (void)clearWithReset:(BOOL)resetQueue
 {
 	if (resetQueue) {
-		if (self.historicLogFile) {
-			[self.historicLogFile reset];
-		}
+		[self.historicLogFile resetDataForEntriesMatchingClient:self.client inChannel:self.channel];
 	}
 
 	dispatch_async(dispatch_get_main_queue(), ^{
@@ -921,9 +883,9 @@
 	/* Format nickname into a standard format ignoring user preference. */
 	NSString *nick;
 
-	if (line.lineType == TVCLogLineActionType) {
+	if ([line lineType] == TVCLogLineActionType) {
 		nick = [line formattedNickname:self.channel withForcedFormat:TLOFileLoggerActionNicknameFormat];
-	} else if (line.lineType == TVCLogLineNoticeType) {
+	} else if ([line lineType] == TVCLogLineNoticeType) {
 		nick = [line formattedNickname:self.channel withForcedFormat:TLOFileLoggerNoticeNicknameFormat];
 	} else {
 		nick = [line formattedNickname:self.channel withForcedFormat:TLOFileLoggerUndefinedNicknameFormat];
@@ -975,7 +937,7 @@
 		BOOL highlighted = [resultInfo boolForKey:@"wordMatchFound"];
 
 		NSString *lineNumber = [resultInfo objectForKey:@"lineNumber"];
-		NSString *renderTime = [resultInfo objectForKey:@"lineRenderTime"];
+	  //NSString *renderTime = [resultInfo objectForKey:@"lineRenderTime"];
 
 		NSArray *mentionedUsers = [resultInfo arrayForKey:@"mentionedUsers"];
 
@@ -989,12 +951,6 @@
 				[self.worldController addHighlightInChannel:self.channel withLogLine:logLine];
 			}
 
-			/* Record the actual line printed. */
-			if (self.historicLogFile) {
-				[self.historicLogFile writePropertyListEntry:[logLine dictionaryValue]
-													   toKey:renderTime];
-			}
-			
 			/* Do the actual append to WebKit. */
 			[self appendToDocumentBody:html];
 
@@ -1027,7 +983,7 @@
 		/* Using informationi provided by conversation tracking we can update our internal
 		 array of favored nicknames for nick completion. */
 		if (NSObjectIsNotEmpty(mentionedUsers)) {
-			if (logLine.memberType == TVCLogMemberLocalUserType) {
+			if ([logLine memberType] == TVCLogLineMemberLocalUserType) {
 				[mentionedUsers makeObjectsPerformSelector:@selector(outgoingConversation)];
 			} else {
 				[mentionedUsers makeObjectsPerformSelector:@selector(conversation)];
@@ -1046,10 +1002,10 @@
 	// Render our body.                                                           /
 	// ************************************************************************** /
 
-	TVCLogLineType type = line.lineType;
+	TVCLogLineType type = [line lineType];
 
 	NSString *renderedBody = nil;
-	NSString *lineTypeStng = [TVCLogLine lineTypeString:type];
+	NSString *lineTypeStng = [line lineTypeString];
 
 	BOOL highlighted = NO;
 	
@@ -1089,7 +1045,7 @@
 		}
 	}
 
-	if (line.memberType == TVCLogMemberNormalType) {
+	if ([line memberType] == TVCLogLineMemberNormalType) {
 		highlighted = [outputDictionary boolForKey:@"wordMatchFound"];
 	}
 
@@ -1155,13 +1111,13 @@
 	if (NSObjectIsNotEmpty(line.nickname)) {
 		attributes[@"isNicknameAvailable"] = @(YES);
 
-		attributes[@"nicknameColorNumber"]			= @(line.nicknameColorNumber);
+		attributes[@"nicknameColorNumber"]			= [line nicknameColorNumber];
 		attributes[@"nicknameColorHashingEnabled"]	= @([TPCPreferences disableNicknameColorHashing] == NO);
 
-		attributes[@"formattedNickname"]	= [line formattedNickname:self.channel].trim;
+		attributes[@"formattedNickname"]	= [[line formattedNickname:[self channel]] trim];
 
-		attributes[@"nickname"]				= line.nickname;
-		attributes[@"nicknameType"]			= [TVCLogLine memberTypeString:line.memberType];
+		attributes[@"nickname"]				=  [line nickname];
+		attributes[@"nicknameType"]			=  [line memberTypeString];
 	} else {
 		attributes[@"isNicknameAvailable"] = @(NO);
 	}
@@ -1201,7 +1157,7 @@
 	attributes[@"message"]				= line.messageBody;
 	attributes[@"formattedMessage"]		= renderedBody;
 
-	attributes[@"isRemoteMessage"]	= @(line.memberType == TVCLogMemberNormalType);
+	attributes[@"isRemoteMessage"]	= @([line memberType] == TVCLogLineMemberNormalType);
 	attributes[@"isHighlight"]		= @(highlighted);
 
 	// ---- //
@@ -1239,7 +1195,7 @@
 	// Render the actual HTML.												      /
 	// ************************************************************************** /
 
-	NSString *templateName = [self.themeSettings templateNameWithLineType:line.lineType];
+	NSString *templateName = [self.themeSettings templateNameWithLineType:[line lineType]];
 
 	NSString *html = [TVCLogRenderer renderTemplate:templateName attributes:attributes];
 
@@ -1435,10 +1391,14 @@
 		NSStringNilValueSubstitute(self.client.config.itemUUID),
 		NSStringNilValueSubstitute(self.channel.config.itemUUID),
 		NSStringNilValueSubstitute(self.channel.name)
-	 ]];
+	]];
 
 	if (self.reloadingBacklog == NO) {
 		[self executeQuickScriptCommand:@"viewFinishedLoading" withArguments:@[]];
+
+		if (self.historyLoaded == NO && (self.channel && (self.channel.isPrivateMessage == NO || [TPCPreferences rememberServerListQueryStates]))) {
+			[self reloadHistory];
+		}
 	}
 }
 

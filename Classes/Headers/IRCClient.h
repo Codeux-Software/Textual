@@ -115,6 +115,8 @@ typedef enum IRCDisconnectMode : NSInteger {
 - (NSMutableDictionary *)dictionaryValue;
 - (NSMutableDictionary *)dictionaryValue:(BOOL)isCloudDictionary;
 
+- (NSString *)uniqueIdentifier;
+
 - (NSString *)networkName; // Only returns the actual network name.
 - (NSString *)altNetworkName; // Will return the configured name if the actual name is not available.
 - (NSString *)networkAddress;

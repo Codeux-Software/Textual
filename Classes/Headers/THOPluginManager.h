@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-#define RZPluginManager()			[THOPluginManager defaultManager]
+#define THOPluginManagerSharedInstance()			[THOPluginManager defaultManager]
 
 @interface THOPluginManager : NSObject
 @property (nonatomic, assign, readonly) dispatch_queue_t dispatchQueue;

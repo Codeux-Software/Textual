@@ -128,8 +128,11 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	
 	/* We keep high-res mode value cached since it is costly to ask for every draw. */
 	self.applicationIsRunningInHighResMode = [[self.mainWindow screen] runningInHighResolutionMode];
-	
-	self.themeControllerPntr = [TPCThemeController new];
+
+	/* Call to initialize. */
+	(void)TVCLogControllerHistoricLogSharedInstance();
+
+	 self.themeControllerPntr = [TPCThemeController new];
 	[self.themeControllerPntr load];
 	
 	[self.menuController setupOtherServices];
@@ -185,8 +188,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 	[RZAppleEventManager() setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
 
-	self.pluginManager = [THOPluginManager new];
-	[self.pluginManager loadPlugins];
+	[THOPluginManagerSharedInstance() loadPlugins];
 }
 
 - (void)maybeToggleFullscreenAfterLaunch
@@ -387,7 +389,13 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[RZNotificationCenter() removeObserver:self];
 
 	[RZAppleEventManager() removeEventHandlerForEventClass:KInternetEventClass andEventID:KAEGetURL];
-	
+
+	if ([TPCPreferences reloadScrollbackOnLaunch] == NO) {
+		[TVCLogControllerHistoricLogSharedInstance() resetData]; // Delete database.
+	} else {
+		[TVCLogControllerHistoricLogSharedInstance() saveData]; // Save database.
+	}
+
 	BOOL onMountainLionOrLater = [TPCPreferences featureAvailableToOSXMountainLion];
 	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
@@ -433,7 +441,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 	}
 	
-	[RZPluginManager() unloadPlugins];
+	[THOPluginManagerSharedInstance() unloadPlugins];
 	
 	[TPCPreferences saveTimeIntervalSinceApplicationInstall];
 

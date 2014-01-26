@@ -353,7 +353,7 @@
 		NSString *messageBody;
 		NSString *nicknameBody = [logLine formattedNickname:channel].trim;
 
-		if (logLine.lineType == TVCLogLineActionType) {
+		if ([logLine lineType] == TVCLogLineActionType) {
 			if ([nicknameBody hasSuffix:@":"]) {
 				messageBody = [NSString stringWithFormat:TXNotificationHighlightLogAlternativeActionFormat, nicknameBody, logLine.messageBody];
 			} else {
@@ -434,7 +434,7 @@
 {
 	PointerIsEmptyAssert(self.selectedItem);
 
-    str = [RZPluginManager() processInterceptedUserInput:str command:command];
+    str = [THOPluginManagerSharedInstance() processInterceptedUserInput:str command:command];
 
 	[self.selectedItem.client inputText:str command:command];
 }
@@ -791,6 +791,8 @@
 - (void)reloadTheme:(BOOL)reloadUserInterface
 {
 	[self.themeController load];
+
+	[TVCLogControllerHistoricLogSharedInstance() saveData]; // Save pre-existing buffers before reload.
 
 	for (IRCClient *u in self.clients) {
 		[u.viewController reloadTheme];

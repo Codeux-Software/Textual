@@ -1694,16 +1694,21 @@ static NSMutableArray *excludeKeywords = nil;
 #pragma mark -
 #pragma mark Start/Run Time Monitoring
 
-+ (NSTimeInterval)timeIntervalSinceApplicationLaunch
++ (NSDate *)applicationLaunchDate
 {
 	NSRunningApplication *runningApp = [NSRunningApplication currentApplication];
 
 	/* This can be nil when launched from something not launchd. i.e. Xcode */
-	NSDate *launchDate = runningApp.launchDate;
+	return [runningApp launchDate];
+}
+
++ (NSTimeInterval)timeIntervalSinceApplicationLaunch
+{
+	NSDate *launchDate = [TPCPreferences applicationLaunchDate];
 
 	PointerIsEmptyAssertReturn(launchDate, 0);
 
-	return [NSDate secondsSinceUnixTimestamp:launchDate.timeIntervalSince1970];
+	return [NSDate secondsSinceUnixTimestamp:[launchDate timeIntervalSince1970]];
 }
 
 + (NSTimeInterval)timeIntervalSinceApplicationInstall

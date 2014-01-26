@@ -58,7 +58,10 @@ typedef enum IRCChannelStatus : NSInteger {
 
 - (void)setup:(IRCChannelConfig *)seed;
 - (void)updateConfig:(IRCChannelConfig *)seed;
+
 - (NSMutableDictionary *)dictionaryValue;
+
+- (NSString *)uniqueIdentifier;
 
 - (NSString *)secretKey;
 

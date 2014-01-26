@@ -72,7 +72,6 @@
 @property (nonatomic, nweak) IBOutlet TVCThinSplitView *memberSplitView;
 @property (nonatomic, nweak) IBOutlet TVCThinSplitView *serverSplitView;
 @property (nonatomic, nweak) TXMenuController *menuController;
-@property (nonatomic, strong) THOPluginManager *pluginManager;
 @property (nonatomic, strong) TLOGrowlController *growlController;
 @property (nonatomic, strong) TLOInputHistory *inputHistory;
 @property (nonatomic, strong) TLONickCompletionStatus *completionStatus;
