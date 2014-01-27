@@ -7109,29 +7109,15 @@
 			}
 			
 			/* Gather information about the actual transfer. */
-			NSString *section1;
-			
-			if ([rawMessage hasPrefix:@"\""]) {
-				NSString *backSplice = [rawMessage substringFromIndex:1];
-				
-				if ([backSplice contains:@"\""]) {
-					NSInteger quotePos = [backSplice stringPosition:@"\""];
-					NSInteger cutLength = (quotePos + 3); // 1 = open quote, 2 = close quote, 3 = space after
-					
-					if ([rawMessage length] > cutLength) {
-						section1 = [backSplice substringToIndex:quotePos];
-					
-						[rawMessage deleteCharactersInRange:NSMakeRange(0, cutLength)];
-					}
-				}
-			} else {
-				section1 = [rawMessage getToken];
-			}
-			
+			NSString *section1 = [rawMessage getTokenIncludingQuotes];
 			NSString *section2 = [rawMessage getToken];
 			NSString *section3 = [rawMessage getToken];
 			NSString *section4 = [rawMessage getToken];
 			NSString *section5 = [rawMessage getToken];
+
+			/* Trim whitespaces if someone tries to send blank spaces 
+			 in a quoted string for filename. */
+			section1 = [section1 trim];
 			
 			/* Remove T from in front of token if it is there. */
 			if (isSendRequest) {

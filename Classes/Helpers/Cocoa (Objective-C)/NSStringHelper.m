@@ -955,6 +955,297 @@
 	return resultString;
 }
 
+- (NSString *)string
+{
+	return self;
+}
+
++ (id)getTokenFromFirstWhitespaceGroup:(id)stringValue returnedDeletionRange:(NSRange *)whitespaceRange
+{
+	/* What type of string are we processing? */
+	BOOL isAttributedString = ([stringValue isKindOfClass:[NSAttributedString class]]);
+
+	/* Check the input. */
+	if (stringValue == nil || [stringValue length] < 1) {
+		if (isAttributedString) {
+			return [NSAttributedString emptyString];
+		} else {
+			return NSStringEmptyPlaceholder;
+		}
+	}
+
+	/* Define base variables. */
+	NSScanner *scanner = [NSScanner scannerWithString:[stringValue string]];
+
+	[scanner setCharactersToBeSkipped:nil]; // Do not skip anything.
+
+	/* Scan up to first space. */
+	[scanner scanUpToString:@" " intoString:NULL];
+
+	NSInteger scanLocation = [scanner scanLocation];
+
+	/* We now scan from the scan location to the end of whitespaces. */
+	if (whitespaceRange) {
+		BOOL foundAnyWhitespace = NO;
+
+		NSInteger stringLength = [stringValue length];
+		NSInteger stringForward = scanLocation;
+
+		while (1 == 1) { // Infinite loops are safe! :-)
+			NSAssertReturnLoopBreak(stringForward < stringLength);
+
+			UniChar c = [[stringValue string] characterAtIndex:stringForward];
+
+			if (c == ' ') {
+				foundAnyWhitespace = YES;
+
+				stringForward += 1;
+			} else {
+				break;
+			}
+		}
+
+		*whitespaceRange = NSMakeRange(0, stringForward);
+	}
+
+	/* Build and return final tokenized string from range. */
+	id resultString;
+
+	if (isAttributedString) {
+		resultString = [stringValue attributedSubstringFromRange:NSMakeRange(0, scanLocation)];
+	} else {
+		resultString = [stringValue substringToIndex:scanLocation];
+	}
+
+	return resultString;
+}
+
++ (id)getTokenFromFirstQuoteGroup:(id)stringValue returnedDeletionRange:(NSRange *)quoteRange
+{
+	/* What type of string are we processing? */
+	BOOL isAttributedString = ([stringValue isKindOfClass:[NSAttributedString class]]);
+
+	/* Check the input. */
+	if (stringValue == nil || [stringValue length] < 1) {
+		if (isAttributedString) {
+			return [NSAttributedString emptyString];
+		} else {
+			return NSStringEmptyPlaceholder;
+		}
+	}
+
+	/* String must have an opening quote before we even use it. */
+	id originalString = [stringValue mutableCopy];
+
+	if ([[originalString string] hasPrefix:@"\""] == NO) {
+		return nil;
+	}
+
+	/* Define base variables. */
+	NSScanner *scanner = [NSScanner scannerWithString:[originalString string]];
+
+	[scanner setCharactersToBeSkipped:nil]; // Do not skip anything.
+
+	/* We do have a starting quote so we will now set the scanner
+	 to that then have it set it it to destroy it from scanner. */
+	[scanner scanUpToString:@"\"" intoString:NULL];
+	[scanner scanString:@"\"" intoString:NULL];
+
+	/* Now we will scan the rest of the string to the end. */
+	while ([scanner isAtEnd] == NO) {
+		[scanner scanUpToString:@"\"" intoString:NULL];
+
+		/* End here. */
+		if ([scanner scanLocation] == [stringValue length]) {
+			return nil;
+		}
+
+		/* Scan location is now set at this quote. */
+		NSUInteger scanLocation = [scanner scanLocation];
+
+		/* Check the left side of the quote. */
+		NSInteger slashCount = 0;
+
+		/* Find all slashes left of this quote. */
+		for (NSInteger i = (scanLocation - 1); i > 0; i--) {
+			UniChar c = [[originalString string] characterAtIndex:i];
+
+			if (c == '\\') {
+				slashCount += 1;
+			} else {
+				break;
+			}
+		}
+
+		BOOL slashesAreEven = (slashCount > 0 && ((slashCount % 2) == 0));
+
+		/* If the quote is not escaped, then we either want
+		 to be at the end of the string or only have a space
+		 to our right side. Anything else invalidates group. */
+		if (slashesAreEven || slashCount == 0) {
+			NSInteger charIndex = (scanLocation + 1);
+
+			if ([originalString length] > charIndex) {
+				UniChar rightChar = [[originalString string] characterAtIndex:charIndex];
+
+				if (NSDissimilarObjects(rightChar, ' ')) {
+					return nil;
+				}
+			}
+		}
+
+		/* Start calculations on escapes. */
+		if (slashCount > 0) {
+			if (slashesAreEven) {
+				/* The slashes escape themselves left of this quote
+				 so we do not have to do anything except continue on. */
+			} else {
+				/* Scan current quote and move forward. */
+				if ([scanner isAtEnd]) {
+					return nil;
+				} else {
+					[scanner setScanLocation:([scanner scanLocation] + 1)];
+				}
+
+				continue;
+			}
+		} /* End escape calculations. */
+
+		/* Delete outside quotes. */
+		[originalString deleteCharactersInRange:NSMakeRange(scanLocation, ([originalString length] - scanLocation))];
+		[originalString deleteCharactersInRange:NSMakeRange(0, 1)];
+
+		/* Now that we calculated escapes, we will now replace slash 
+		 groups so that two slashes equal to one anywhere in the string. */
+		NSInteger loopPosition = ([originalString length] - 1);
+
+		BOOL isInSlashGroup = NO;
+		BOOL lastCharWasQuote = NO;
+
+		NSInteger slashGroupStart = -1;
+		NSInteger slashGroupCount = -1;
+
+		while (loopPosition > -1) {
+			UniChar c = [originalString characterAtIndex:loopPosition];
+
+			if (c == '\\' && loopPosition > 0) {
+				if (isInSlashGroup == NO) {
+					isInSlashGroup = YES;
+
+					slashGroupStart = loopPosition;
+					slashGroupCount = 1;
+				} else {
+					slashGroupCount += 1;
+				}
+			}
+			else if (NSDissimilarObjects(c, '\\') || (c == '\\' && loopPosition == 0))
+			{
+				/* Increase by one if we end at a \ */
+				if (loopPosition == 0 && c == '\\') {
+					if (isInSlashGroup == NO) {
+						isInSlashGroup = YES;
+
+						slashGroupStart = 0;
+						slashGroupCount = 1;
+					} else {
+						slashGroupCount += 1;
+					}
+				}
+
+				if (isInSlashGroup) {
+					if (lastCharWasQuote && slashGroupCount == 1) {
+						/* When a single slash escapes a quote, then we just delete that single
+						 slash entirely. Any other character with a single slash, does not have
+						 that slash erased as that character does not need escaping. */
+
+						[originalString deleteCharactersInRange:NSMakeRange(slashGroupStart, 1)];
+					} else {
+						/* We are scanning backwards so the start is position minus length. */
+						NSInteger actualStart = ((slashGroupStart - slashGroupCount) + 1);
+
+						NSRange deleteRange = NSMakeRange(actualStart, slashGroupCount);
+
+						/* Delete the existing slash group. */
+						[originalString deleteCharactersInRange:deleteRange];
+
+						/* Now, we build the replacement slashes. */
+						NSMutableString *newSlashGroup = [NSMutableString string];
+
+						/* How many slashes is the loop going to create? */
+						NSInteger newCount = slashGroupCount;
+
+						/* If previous char was a quote, then we have to minus one. */
+						if (lastCharWasQuote) {
+							newCount -= 1;
+						}
+
+						/* If the number of slashes is divisible by two, then it is a
+						 matter of dividing them and replacing them with the divided value. */
+						BOOL divisibleByTwo = ((slashGroupCount % 2) == 0);
+
+						if (divisibleByTwo == NO) {
+							/* We manually insert the extra when we can't divide. */
+							newCount -= 1;
+
+							[newSlashGroup appendString:@"\\"];
+						}
+
+						/* Updated math. */
+						newCount = (newCount / 2);
+
+						/* Create slash group. */
+						for (NSInteger i = 0; i < newCount; i++) {
+							[newSlashGroup appendString:@"\\"];
+						}
+
+						/* Insert the new group. */
+						[originalString insertString:newSlashGroup atIndex:actualStart];
+					}
+
+					isInSlashGroup = NO;
+
+					slashGroupCount = -1;
+					slashGroupStart = -1;
+				}
+
+				lastCharWasQuote = (c == '"');
+			}
+
+			/* Go down by one. */
+			loopPosition -= 1;
+		}
+
+		/* We are done here. First we have to calculate the deletion range.
+		 As the deletion range takes into account all whitespaces following
+		 it so the next token starts at an actual character, we still have 
+		 to scan forward from the starting location. For that, we will use
+		 a simple for loop and compare characters. */
+		if (quoteRange) {
+			NSInteger stringLength = [stringValue length];
+			NSInteger stringForward = ([scanner scanLocation] + 1);
+
+			while (1 == 1) { // Infinite loops are safe! :-)
+				NSAssertReturnLoopBreak(stringForward < stringLength);
+
+				UniChar c = [[stringValue string] characterAtIndex:stringForward];
+
+				if (c == ' ') {
+					stringForward += 1;
+				} else {
+					break;
+				}
+			}
+
+			*quoteRange = NSMakeRange(0, stringForward);
+		}
+
+		/* Build and return final tokenized string from range. */
+		return originalString;
+	} /* while loop. */
+	
+	return nil;
+}
+
 @end
 
 @implementation NSString (NSStringNumberHelper)
@@ -992,29 +1283,37 @@
 	}
 }
 
+- (NSString *)getTokenIncludingQuotes
+{
+	NSRange deletionRange = NSEmptyRange();
+
+	NSString *quotedGroup = [NSString getTokenFromFirstQuoteGroup:self returnedDeletionRange:&deletionRange];
+
+	if (quotedGroup == nil) {
+		return [self getToken];
+	} else {
+		if (NSDissimilarObjects(deletionRange.location, NSNotFound)) {
+			[self deleteCharactersInRange:deletionRange];
+		}
+
+		return quotedGroup;
+	}
+}
+
 - (NSString *)getToken
 {
-	NSRange r = [self rangeOfString:NSStringWhitespacePlaceholder];
+	NSRange deletionRange = NSEmptyRange();
 
-	if (NSDissimilarObjects(r.location, NSNotFound)) {
-		NSString *cutString = [self substringToIndex:r.location];
-		
-		NSInteger stringLength = [self length];
-		NSInteger stringForward = (r.location + 1);
-		
-		while ((stringForward < stringLength) && [self characterAtIndex:stringForward] == ' ') {
-			stringForward += 1;
-		}
-		
-		[self safeDeleteCharactersInRange:NSMakeRange(0, stringForward)];
-		
-		return cutString;
+	NSString *token = [NSString getTokenFromFirstWhitespaceGroup:self returnedDeletionRange:&deletionRange];
+
+	if (token == nil) {
+		return NSStringEmptyPlaceholder;
 	} else {
-		NSString *result = [self copy];
-	
-		[self setString:NSStringEmptyPlaceholder];
-	
-		return result;
+		if (NSDissimilarObjects(deletionRange.location, NSNotFound)) {
+			[self deleteCharactersInRange:deletionRange];
+		}
+
+		return token;
 	}
 }
 
@@ -1114,7 +1413,7 @@
 {
     NSMutableArray *lines = [NSMutableArray array];
     
-    NSInteger stringLength = [self.string length];
+    NSInteger stringLength = [[self string] length];
     NSInteger rangeStartIn = 0;
     
     NSMutableAttributedString *copyd = [self mutableCopy];
@@ -1184,7 +1483,7 @@
 		attributes[NSFontAttributeName] = font;
 	}
 
-	[baseMutable setAttributes:attributes range:NSMakeRange(0, baseMutable.length)];
+	[baseMutable setAttributes:attributes range:NSMakeRange(0, [baseMutable length])];
 
 	NSRect bounds = [baseMutable boundingRectWithSize:NSMakeSize(width, 0.0)
 											  options:NSStringDrawingUsesLineFragmentOrigin];
@@ -1203,29 +1502,35 @@
 
 - (NSAttributedString *)getToken
 {
-	NSRange r = [self.string rangeOfString:NSStringWhitespacePlaceholder];
+	NSRange deletionRange = NSEmptyRange();
 
-	if (NSDissimilarObjects(r.location, NSNotFound)) {
-        NSRange cutRange = NSMakeRange(0, r.location);
-        
-        NSAttributedString *cutString = [self attributedSubstringFromRange:cutRange];
-		
-		NSInteger stringLength = [self length];
-		NSInteger stringForward = (r.location + 1);
-		
-		while ((stringForward < stringLength) && [self.string characterAtIndex:stringForward] == ' ') {
-			stringForward += 1;
-		}
-		
-        [self deleteCharactersInRange:NSMakeRange(0, stringForward)];
-		
-		return cutString;
+	NSAttributedString *token = [NSString getTokenFromFirstWhitespaceGroup:self returnedDeletionRange:&deletionRange];
+
+	if (token == nil) {
+		return [NSAttributedString emptyString];
 	} else {
-		NSAttributedString *result = [self copy];
-	
-		[self setAttributedString:[NSAttributedString emptyString]];
-	
-		return result;
+		if (NSDissimilarObjects(deletionRange.location, NSNotFound)) {
+			[self deleteCharactersInRange:deletionRange];
+		}
+
+		return token;
+	}
+}
+
+- (NSAttributedString *)getTokenIncludingQuotes
+{
+	NSRange deletionRange = NSEmptyRange();
+
+	NSAttributedString *quotedGroup = [NSString getTokenFromFirstQuoteGroup:self returnedDeletionRange:&deletionRange];
+
+	if (quotedGroup == nil) {
+		return [self getToken];
+	} else {
+		if (NSDissimilarObjects(deletionRange.location, NSNotFound)) {
+			[self deleteCharactersInRange:deletionRange];
+		}
+
+		return quotedGroup;
 	}
 }
 
