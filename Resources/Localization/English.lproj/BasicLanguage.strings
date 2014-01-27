@@ -98,6 +98,22 @@
 
 "GlineReason" = "35d Your behavior is not conducive to the desired environment.";
 
+"ClientAuxiliaryConfigurationCommandInvalidSyntaxError" = "Invalid Syntax. Type \"/defaults help\" for more information.";
+"ClientAuxiliaryConfigurationCommandHelpInformation_01" = "The \002defaults\002 command provides the ability to enable or disable certain features of the selected server which are not";
+"ClientAuxiliaryConfigurationCommandHelpInformation_02" = "accessible through the user interface. These features are made available through this command as they are rarely used";
+"ClientAuxiliaryConfigurationCommandHelpInformation_03" = "and would otherwise waste unnecessary space being presented in an actual interactive list.";
+"ClientAuxiliaryConfigurationCommandHelpInformation_04" = " ";
+"ClientAuxiliaryConfigurationCommandHelpInformation_05" = "Usage:";
+"ClientAuxiliaryConfigurationCommandHelpInformation_06" = "\t\"/defaults enable <token>\" — Enables the feature associated with \002<token>\002.";
+"ClientAuxiliaryConfigurationCommandHelpInformation_07" = "\t\"/defaults disable <token>\" — Disables the feature associated with \002<token>\002.";
+"ClientAuxiliaryConfigurationCommandHelpInformation_08" = "\t\"/defaults features\" — Opens Webpage in the default browser which contains list of supported features.";
+"ClientAuxiliaryConfigurationCommandHelpInformation_09" = " ";
+"ClientAuxiliaryConfigurationCommandHelpInformation_10" = "The \002<token>\002 parameter supplied to this command can be encapsulated in double quotes (\") to allow for spaces.";
+"ClientAuxiliaryConfigurationCommandFeatureCannotEnable" = "Cannot enable the feature \"%@\" as it is not supported.";
+"ClientAuxiliaryConfigurationCommandFeatureCannotDisable" = "Cannot disable the feature \"%@\" as it is not supported.";
+"ClientAuxiliaryConfigurationCommandFeatureEnabled" = "Enabled Feature: %@";
+"ClientAuxiliaryConfigurationCommandFeatureDisabled" = "Disabled Feature: %@";
+
 "DCCFileTransferInitiated" = "Trying file transfer to %1$@, %2$@ (%3$qi bytes)";
 "DCCFileTransferRequestReceived" = "Received file transfer request from %1$@, %2$@ (%3$qi bytes)";
 

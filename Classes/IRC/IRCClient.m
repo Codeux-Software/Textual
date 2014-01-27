@@ -2669,56 +2669,104 @@
 		}
 		case 5092: // Command: DEFAULTS
 		{
-			/* Command to write setting to NSUserDefaults.  */
-			NSString *badSyntaxError = @"Invalid Syntax: \"/defaults write <key> <value>\" OR \"/defaults read <key>\" OR \"/defaults delete <key>\"";
-
+			/* Check base string. */
 			if (NSObjectIsEmpty(uncutInput)) {
-				[self printDebugInformation:badSyntaxError];
+				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandInvalidSyntaxError")];
 
 				return;
 			}
 
+			/* Begin processing input. */
 			NSString *section1 = [s.getToken string];
 			NSString *section2 = [s.getTokenIncludingQuotes string];
 			NSString *section3 = [s.getTokenIncludingQuotes string];
 
-			if (NSObjectsAreEqual(section1, @"write"))
+			NSArray *providedKeys = @[@"Send Authentication Requests to UserServ"];
+
+			if (NSObjectsAreEqual(section1, @"help"))
+			{
+				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandHelpInformation_01")];
+				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandHelpInformation_02")];
+				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandHelpInformation_03")];
+				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandHelpInformation_04")];
+				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandHelpInformation_05")];
+				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandHelpInformation_06")];
+				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandHelpInformation_07")];
+				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandHelpInformation_08")];
+				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandHelpInformation_09")];
+				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandHelpInformation_10")];
+			}
+			else if (NSObjectsAreEqual(section1, @"features"))
+			{
+				[TLOpenLink openWithString:@"http://www.codeux.com/textual/wiki/Command-Reference.wiki?command=defaults"];
+			}
+			else if (NSObjectsAreEqual(section1, @"enable"))
 			{
 				if (NSObjectIsEmpty(section2)) {
-					[self printDebugInformation:badSyntaxError];
+					[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandInvalidSyntaxError")];
 				} else {
-					[self.auxiliaryConfiguration setObject:section3 forKey:section2];
+					if ([providedKeys containsObject:section2] == NO) {
+						[self printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureCannotEnable", section2)];
+					} else {
+						[[self auxiliaryConfiguration] setBool:YES forKey:section2];
+
+						[self printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureEnabled", section2)];
+					}
+				}
+			}
+			else if (NSObjectsAreEqual(section1, @"disable"))
+			{
+				if (NSObjectIsEmpty(section2)) {
+					[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandInvalidSyntaxError")];
+				} else {
+					if ([providedKeys containsObject:section2] == NO) {
+						[self printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureCannotDisable", section2)];
+					} else {
+						[[self auxiliaryConfiguration] setBool:NO forKey:section2];
+
+						[self printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureDisabled", section2)];
+					}
+				}
+			}
+			else if (NSObjectsAreEqual(section1, @"write"))
+			{
+				if (NSObjectIsEmpty(section2)) {
+					[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandInvalidSyntaxError")];
+				} else {
+					[[self auxiliaryConfiguration] setObject:section3 forKey:section2];
 				}
 			}
 			else if (NSObjectsAreEqual(section1, @"read"))
 			{
+				id settingValue;
+
 				if (NSObjectIsEmpty(section2)) {
-					[self printDebugInformation:badSyntaxError];
+					settingValue =  [self auxiliaryConfiguration];
 				} else {
-					id settingValue = [self.auxiliaryConfiguration objectForKey:section2];
+					settingValue = [[self auxiliaryConfiguration] objectForKey:section2];
+				}
 
-					NSString *message = [NSString stringWithFormat:@"%@", settingValue];
+				NSString *message = [NSString stringWithFormat:@"%@", settingValue];
 
-					NSArray *messages = [message split:NSStringNewlinePlaceholder];
+				NSArray *messages = [message split:NSStringNewlinePlaceholder];
 
-					for (NSString *value in messages) {
-						[self printDebugInformation:[NSString stringWithFormat:@"%@ => %@", section2, value]];
-					}
+				for (NSString *value in messages) {
+					[self printDebugInformation:[NSString stringWithFormat:@"%@ => %@", section2, value]];
 				}
 			}
 			else if (NSObjectsAreEqual(section1, @"delete"))
 			{
 				if (NSObjectIsEmpty(section2)) {
-					[self printDebugInformation:badSyntaxError];
+					[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandInvalidSyntaxError")];
 				} else {
-					[self.auxiliaryConfiguration removeObjectForKey:section2];
+					[[self auxiliaryConfiguration] removeObjectForKey:section2];
 				}
 			}
 			else
 			{
-				[self printDebugInformation:badSyntaxError];
+				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandInvalidSyntaxError")];
 			}
-			
+
 			break;
 		}
 		default:
