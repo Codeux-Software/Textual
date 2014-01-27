@@ -131,7 +131,7 @@ static NSArray *IRCInternalUseCommandIndexMap;
 		@[@"dehalfop",					@"DEHALFOP",			@(5019),		@(NO)],
 		@[@"deop",						@"DEOP",				@(5020),		@(NO)],
 		@[@"devoice",					@"DEVOICE",				@(5021),		@(NO)],
-		@[@"defaults",					@"DEFAULTS",			@(5092),		@(YES)],
+		@[@"defaults",					@"DEFAULTS",			@(5092),		@(NO)],
 		@[@"echo",						@"ECHO",				@(5022),		@(NO)],
 		@[@"fakerawdata",				@"FAKERAWDATA",			@(5087),		@(YES)],
 		@[@"getscripts",				@"GETSCRIPTS",			@(5098),		@(NO)],
