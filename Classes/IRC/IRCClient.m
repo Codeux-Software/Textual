@@ -3832,8 +3832,17 @@
 								} else {
 									if (self.CAPisIdentifiedWithSASL == NO) {
 										self.isWaitingForNickServ = YES;
-										
-										[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ", IDMessage, nil];
+
+										/* Check auxiliary configuration. */
+										BOOL sendToUserServ = [self.auxiliaryConfiguration boolForKey:@"Send Authentication Requests to UserServ"];
+
+										if (sendToUserServ) {
+											IDMessage = [NSString stringWithFormat:@"login %@ %@", self.config.nickname, self.config.nicknamePassword];
+
+											[self send:IRCPrivateCommandIndex("privmsg"), @"userserv", IDMessage, nil];
+										} else {
+											[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ", IDMessage, nil];
+										}
 									}
 								}
 								
