@@ -105,6 +105,13 @@ typedef enum TXConnectionProxyType : NSInteger {
 @property (nonatomic, assign) BOOL nicknamePasswordIsSet;
 @property (nonatomic, assign) BOOL proxyPasswordIsSet;
 
+/* This dictionary contains configuration options that are not
+ accessible by the user interface. Instead, they are set bu the
+ /defaults command so that server specific features can be used 
+ by some users without the need to bloat the user interface with
+ a checkbox only a few users may use. */
+@property (nonatomic, strong) NSMutableDictionary *auxiliaryConfiguration;
+
 - (BOOL)isEqualToClientConfiguration:(IRCClientConfig *)seed;
 
 - (id)initWithDictionary:(NSDictionary *)dic;

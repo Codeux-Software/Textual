@@ -1126,7 +1126,7 @@
 		NSInteger slashGroupCount = -1;
 
 		while (loopPosition > -1) {
-			UniChar c = [originalString characterAtIndex:loopPosition];
+			UniChar c = [[originalString string] characterAtIndex:loopPosition];
 
 			if (c == '\\' && loopPosition > 0) {
 				if (isInSlashGroup == NO) {

@@ -54,6 +54,8 @@
 		self.highlightList			= [NSMutableArray new];
 		self.channelList			= [NSMutableArray new];
 		self.ignoreList				= [NSMutableArray new];
+
+		self.auxiliaryConfiguration = [NSMutableDictionary new];
 		
 		self.identitySSLCertificate = nil;
 
@@ -345,7 +347,9 @@
 		self.invisibleMode			= NSDictionaryBOOLKeyValueCompare(dic, @"setInvisibleOnConnect", self.invisibleMode);
 
 		self.identitySSLCertificate = [dic objectForKey:@"IdentitySSLCertificate"];
-		
+
+		[self.auxiliaryConfiguration addEntriesFromDictionary:[dic dictionaryForKey:@"auxiliaryConfiguration"]];
+
 		[self.loginCommands addObjectsFromArray:[dic arrayForKey:@"onConnectCommands"]];
 
 		/* Channel list. */
@@ -453,14 +457,16 @@
 	if (isCloudDictionary == NO) {
 		/* Identify certificate is stored as a referenced to the actual keychain. */
 		/* This cannot be transmitted over the cloud. */
-		
-		[dic setBool:self.validateServerSSLCertificate	forKey:@"validateServerSideSSLCertificate"];
+
+		[dic safeSetObject:self.identitySSLCertificate forKey:@"IdentitySSLCertificate"];
 	}
-	
+
+	[dic setBool:self.validateServerSSLCertificate		forKey:@"validateServerSideSSLCertificate"];
+
 	[dic setBool:self.zncIgnorePlaybackNotifications	forKey:@"ZNC —> Ignore Playback Buffer Highlights"];
 	[dic setBool:self.zncIgnoreConfiguredAutojoin		forKey:@"ZNC —> Ignore Pre-configured Autojoin"];
-	
-	[dic safeSetObject:self.identitySSLCertificate		forKey:@"IdentitySSLCertificate"];
+
+	[dic safeSetObject:self.auxiliaryConfiguration		forKey:@"auxiliaryConfiguration"];
 	
 	[dic safeSetObject:self.alternateNicknames			forKey:@"identityAlternateNicknames"];
 	[dic safeSetObject:self.clientName					forKey:@"connectionName"];

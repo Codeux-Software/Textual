@@ -504,6 +504,11 @@
 	return (self.reconnectTimer && self.reconnectTimer.timerIsActive);
 }
 
+- (NSMutableDictionary *)auxiliaryConfiguration
+{
+	return [self.config auxiliaryConfiguration];
+}
+
 #pragma mark -
 #pragma mark Reachability
 
@@ -2664,55 +2669,56 @@
 		}
 		case 5092: // Command: DEFAULTS
 		{
-			NSObjectIsEmptyAssertLoopBreak(uncutInput);
+			/* Command to write setting to NSUserDefaults.  */
+			NSString *badSyntaxError = @"Invalid Syntax: \"/defaults write <key> <value>\" OR \"/defaults read <key>\" OR \"/defaults delete <key>\"";
 
-			/* Command to write setting to NSUserDefaults. 
-			 Syntax: /defaults [-[b|i|s|f|del]] <key> <value> */
+			if (NSObjectIsEmpty(uncutInput)) {
+				[self printDebugInformation:badSyntaxError];
 
-			if ([uncutInput hasPrefix:@"-b "] || // Boolean: YES, NO
-				[uncutInput hasPrefix:@"-s "] || // String.
-				[uncutInput hasPrefix:@"-i "] || // Integer.
-				[uncutInput hasPrefix:@"-f "])   // Doublle.
-			{
-				NSString *dataType = s.getToken.string;
-
-				NSString *settingKey = s.getToken.string;
-				NSString *settingValue = s.getToken.string;
-
-				NSObjectIsEmptyAssertLoopBreak(settingKey);
-				NSObjectIsEmptyAssertLoopBreak(settingValue);
-
-				if ([dataType isEqualToString:@"-b"]) {
-					[RZUserDefaults() setBool:[settingValue boolValue] forKey:settingKey];
-				} else if ([dataType isEqualToString:@"-i"]) {
-					[RZUserDefaults() setInteger:[settingValue integerValue] forKey:settingKey];
-				} else if ([dataType isEqualToString:@"-f"]) {
-					[RZUserDefaults() setDouble:[settingValue doubleValue] forKey:settingKey];
-				} else {
-					[RZUserDefaults() setObject:settingValue forKey:settingKey];
-				}
-			} else if ([uncutInput hasPrefix:@"-del "]) { // Delete Item
-				NSString *dataType = s.getToken.string;
-
-#pragma unused(dataType)
-
-				NSString *settingKey = s.string;
-
-				NSObjectIsEmptyAssertLoopBreak(settingKey);
-
-				[RZUserDefaults() removeObjectForKey:settingKey];
-			} else {
-				id settingValue = [RZUserDefaults() objectForKey:uncutInput];
-
-				NSString *message = [NSString stringWithFormat:@"%@", settingValue];
-
-				NSArray *messages = [message split:NSStringNewlinePlaceholder];
-
-				for (NSString *value in messages) {
-					[self printDebugInformation:[NSString stringWithFormat:@"%@ => %@", uncutInput, value]];
-				}
+				return;
 			}
 
+			NSString *section1 = [s.getToken string];
+			NSString *section2 = [s.getTokenIncludingQuotes string];
+			NSString *section3 = [s.getTokenIncludingQuotes string];
+
+			if (NSObjectsAreEqual(section1, @"write"))
+			{
+				if (NSObjectIsEmpty(section2)) {
+					[self printDebugInformation:badSyntaxError];
+				} else {
+					[self.auxiliaryConfiguration setObject:section3 forKey:section2];
+				}
+			}
+			else if (NSObjectsAreEqual(section1, @"read"))
+			{
+				if (NSObjectIsEmpty(section2)) {
+					[self printDebugInformation:badSyntaxError];
+				} else {
+					id settingValue = [self.auxiliaryConfiguration objectForKey:section2];
+
+					NSString *message = [NSString stringWithFormat:@"%@", settingValue];
+
+					NSArray *messages = [message split:NSStringNewlinePlaceholder];
+
+					for (NSString *value in messages) {
+						[self printDebugInformation:[NSString stringWithFormat:@"%@ => %@", section2, value]];
+					}
+				}
+			}
+			else if (NSObjectsAreEqual(section1, @"delete"))
+			{
+				if (NSObjectIsEmpty(section2)) {
+					[self printDebugInformation:badSyntaxError];
+				} else {
+					[self.auxiliaryConfiguration removeObjectForKey:section2];
+				}
+			}
+			else
+			{
+				[self printDebugInformation:badSyntaxError];
+			}
+			
 			break;
 		}
 		default:
