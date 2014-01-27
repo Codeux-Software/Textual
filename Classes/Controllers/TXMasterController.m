@@ -583,10 +583,10 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 - (void)sendText:(NSString *)command
 {
 	NSAttributedString *as = [self.inputTextField attributedStringValue];
-	
+
 	[self.inputTextField setAttributedStringValue:[NSAttributedString emptyString]];
 
-	if (NSObjectIsNotEmpty(as)) {
+	if ([as length] > 0) {
 		[self.worldController inputText:as command:command];
 		
 		[self.globalInputHistory add:as];

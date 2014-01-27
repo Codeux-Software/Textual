@@ -154,6 +154,14 @@
 - (CGFloat)pixelHeightInWidth:(NSInteger)width forcedFont:(NSFont *)font;
 
 - (NSString *)base64EncodingWithLineLength:(NSInteger)lineLength;
+
+- (NSString *)string; // Returns self.
+
+/* This call is used internally by getToken and getTokenIncludingQuotes. 
+ Call that instead. It is declared in header so that it can be used for 
+ these calls internally between categories. */
++ (id)getTokenFromFirstQuoteGroup:(id)stringValue returnedDeletionRange:(NSRange *)quoteRange;
++ (id)getTokenFromFirstWhitespaceGroup:(id)stringValue returnedDeletionRange:(NSRange *)whitespaceRange;
 @end
 
 #pragma mark 
@@ -182,6 +190,7 @@
 
 @interface NSMutableString (TXMutableStringHelper)
 - (NSString *)getToken;
+- (NSString *)getTokenIncludingQuotes;
 
 - (void)safeDeleteCharactersInRange:(NSRange)range;
 @end
@@ -221,4 +230,5 @@
 + (NSMutableAttributedString *)mutableStringWithBase:(NSString *)base attributes:(NSDictionary *)baseAttributes;
 
 - (NSAttributedString *)getToken;
+- (NSAttributedString *)getTokenIncludingQuotes;
 @end
