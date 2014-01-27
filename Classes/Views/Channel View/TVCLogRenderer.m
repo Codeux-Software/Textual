@@ -506,13 +506,9 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				lineType == TVCLogLinePrivateMessageType	||
 				lineType == TVCLogLineTopicType)
 			{
-				NSInteger matches = [TLORegularExpression totalNumberOfMatchesInString:body withRegex:@"\\p{InCombining_Diacritical_Marks}"];
-				
-				if (matches > 20) {
-					NSString *replacementCharacter = [NSString stringWithFormat:@"%C", 0xfffd];
+				NSString *replacementCharacter = [NSString stringWithFormat:@"%C", 0xfffd];
 					
-					body = [TLORegularExpression string:body replacedByRegex:@"\\p{InCombining_Diacritical_Marks}" withString:replacementCharacter];
-				}
+				body = [TLORegularExpression string:body replacedByRegex:@"\\p{InCombining_Diacritical_Marks}" withString:replacementCharacter];
 			}
 		}
 			
