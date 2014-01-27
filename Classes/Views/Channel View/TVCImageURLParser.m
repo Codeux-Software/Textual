@@ -62,6 +62,13 @@
 	/* Convert URL. */
 	NSURL *u = [TVCImageURLParser URLFromWebViewPasteboard:url];
 
+	/* For some users, u returns nil for valid URLs. There is no 
+	 explanation for this so for now we fallback to classic NSURL
+	 if it does do this to hack around a fix. */
+	if (u == nil) {
+		u = [NSURL URLWithString:url];
+	}
+
 	NSString *scheme = [u scheme];
 	
 	NSString *host = [[u host] lowercaseString];
