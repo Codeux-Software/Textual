@@ -90,80 +90,57 @@
 	/* What are we fetching for? */
 	PointerIsEmptyAssert(client);
 
-	/* _privateContext will execute the fetch on whatever the current thread is. */
-	NSManagedObjectContext *_privateContext = [NSManagedObjectContext new];
-
-	[_privateContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
-	[_privateContext setStalenessInterval:0.0];
-	[_privateContext setUndoManager:nil];
-
-	/* Build base model. */
-	NSFetchRequest *fetchRequest = [NSFetchRequest new];
-
-	NSEntityDescription *entity = [NSEntityDescription entityForName:@"TVCLogLine" inManagedObjectContext:_privateContext];
-
-	/* Gather relevant information. */
-	NSString *clientID = [client uniqueIdentifier];
-	NSString *channelID = nil;
-
-	if (channel) {
-		channelID = [channel uniqueIdentifier];
-	}
-
-	/* Build the match. */
-	NSPredicate *matchPredicate;
-
-	if (referenceDate) {
-		if (channel) {
-			matchPredicate = [NSPredicate predicateWithFormat:@"clientID == %@ AND channelID == %@ AND creationDate >= %@", clientID, channelID, referenceDate];
-		} else {
-			matchPredicate = [NSPredicate predicateWithFormat:@"clientID == %@ AND channelID == nil AND creationDate >= %@", clientID, referenceDate];
-		}
-	} else {
-		if (channel) {
-			matchPredicate = [NSPredicate predicateWithFormat:@"clientID == %@ AND channelID == %@", clientID, channelID];
-		} else {
-			matchPredicate = [NSPredicate predicateWithFormat:@"clientID == %@ AND channelID == nil", clientID];
-		}
-	}
-
-	/* Perform actual fetch. */
-	[fetchRequest setEntity:entity];
-	[fetchRequest setPredicate:matchPredicate];
-	[fetchRequest setSortDescriptors:@[self.managedSortDescriptor]];
-
-	/* Define match limit. */
-	if (maxEntryCount > 0) {
-		[fetchRequest setFetchLimit:maxEntryCount];
-	}
-
-	NSArray *fetchResults = [_privateContext executeFetchRequest:fetchRequest error:NULL];
-
-	/* Now that we fetched the results, we push them to the main context. */
 	[self.managedObjectContext performBlock:^{
-		/* We have to use this hack because Core Data is not
-		 very thread safe so this is what you get… */
-		NSMutableArray *resultObjectIDs = [NSMutableArray array];
+		/* Build base model. */
+		NSFetchRequest *fetchRequest = [NSFetchRequest new];
 
-		for (NSManagedObject *line in fetchResults) {
-			[resultObjectIDs addObject:[line objectID]];
+		NSEntityDescription *entity = [NSEntityDescription entityForName:@"TVCLogLine" inManagedObjectContext:self.managedObjectContext];
+
+		/* Gather relevant information. */
+		NSString *clientID = [client uniqueIdentifier];
+		NSString *channelID = nil;
+
+		if (channel) {
+			channelID = [channel uniqueIdentifier];
 		}
 
-		/* Build list of objects from IDs. */
-		NSMutableArray *resultObjects = [NSMutableArray array];
+		/* Build the match. */
+		NSPredicate *matchPredicate;
 
-		for (NSManagedObjectID *objectID in resultObjectIDs) {
-			NSManagedObject *obj = [self.managedObjectContext objectWithID:objectID];
-
-			[resultObjects addObject:obj];
+		if (referenceDate) {
+			if (channel) {
+				matchPredicate = [NSPredicate predicateWithFormat:@"clientID == %@ AND channelID == %@ AND creationDate >= %@", clientID, channelID, referenceDate];
+			} else {
+				matchPredicate = [NSPredicate predicateWithFormat:@"clientID == %@ AND channelID == nil AND creationDate >= %@", clientID, referenceDate];
+			}
+		} else {
+			if (channel) {
+				matchPredicate = [NSPredicate predicateWithFormat:@"clientID == %@ AND channelID == %@", clientID, channelID];
+			} else {
+				matchPredicate = [NSPredicate predicateWithFormat:@"clientID == %@ AND channelID == nil", clientID];
+			}
 		}
+
+		/* Perform actual fetch. */
+		[fetchRequest setEntity:entity];
+		[fetchRequest setPredicate:matchPredicate];
+		[fetchRequest setSortDescriptors:@[self.managedSortDescriptor]];
+
+		[fetchRequest setReturnsObjectsAsFaults:NO];
+
+		/* Define match limit. */
+		if (maxEntryCount > 0) {
+			[fetchRequest setFetchLimit:maxEntryCount];
+		}
+
+		NSArray *fetchResults = [self.managedObjectContext executeFetchRequest:fetchRequest error:NULL];
 
 		/* Our sort descriptor places newest lines at the top and oldest
 		 at the bottom. This is done so that when a fetch limit is supplied,
 		 the fetch limit only applies to the newest lines without us having
 		 to supply an offset. Obivously, we do not want newest lines first
 		 though, so before passing to the callback, we reverse. */
-		NSArray *finalData = [resultObjects.reverseObjectEnumerator allObjects];
+		NSArray *finalData = [fetchResults.reverseObjectEnumerator allObjects];
 
 		completionBlock(finalData);
 	}];
@@ -177,7 +154,9 @@
 {
 	if (self = [super init]) {
 		/* Call variables to initalize objects. */
+		(void)self.managedObjectModel;
 		(void)self.persistentStoreCoordinator;
+		(void)self.managedObjectContext;
 
 		/* Listen for changes. */
 		self.hasPendingAutosaveTimer = NO;
