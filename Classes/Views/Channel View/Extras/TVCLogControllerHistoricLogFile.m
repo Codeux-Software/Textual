@@ -94,6 +94,8 @@
 	NSManagedObjectContext *_privateContext = [NSManagedObjectContext new];
 
 	[_privateContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
+	[_privateContext setStalenessInterval:0.0];
+	[_privateContext setUndoManager:nil];
 
 	/* Build base model. */
 	NSFetchRequest *fetchRequest = [NSFetchRequest new];
@@ -303,7 +305,10 @@
 	PointerIsEmptyAssertReturn(coord, nil);
 
 	 _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+
 	[_managedObjectContext setPersistentStoreCoordinator:coord];
+	[_managedObjectContext setStalenessInterval:0.0];
+	[_managedObjectContext setUndoManager:nil];
 
 	return _managedObjectContext;
 }
