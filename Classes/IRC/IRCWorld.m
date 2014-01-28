@@ -1317,11 +1317,6 @@
 
 	[self.selectedItem resetState]; // Reset state of new item.
 
-	/* Stop udpates, if any. */
-	if ([self.memberList updatesArePaging]) {
-		[self.memberList endGroupedUpdates];
-	}
-
 	/* Destroy member list if we have no selection. */
 	if (PointerIsEmpty(self.selectedItem)) {
 		[self.channelViewBox setContentView:nil];

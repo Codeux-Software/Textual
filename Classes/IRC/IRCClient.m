@@ -5513,12 +5513,6 @@
 
 			IRCChannel *c = [self findChannel:channel];
 			
-			if (c) {
-				if (c == self.worldController.selectedChannel) {
-					[self.masterController.memberList endGroupedUpdates];
-				}
-			}
-			
 			if (self.inUserInvokedWhoRequest) {
 				[self printUnknownReply:m];
 
@@ -5542,10 +5536,6 @@
 			IRCChannel *c = [self findChannel:channel];
 
 			PointerIsEmptyAssertLoopBreak(c);
-			
-			if (c == self.worldController.selectedChannel) {
-				[self.masterController.memberList beginGroupedUpdates];
-			}
 			
 			NSString *nickname = [m paramAt:5];
 			NSString *hostmask = [m paramAt:3];
@@ -5664,10 +5654,6 @@
 			IRCChannel *c = [self findChannel:channel];
 
 			PointerIsEmptyAssertLoopBreak(c);
-			
-			if (c == self.worldController.selectedChannel) {
-				[self.masterController.memberList beginGroupedUpdates];
-			}
 
 			NSArray *items = [nameblob componentsSeparatedByString:NSStringWhitespacePlaceholder];
 
@@ -5731,11 +5717,7 @@
 			IRCChannel *c = [self findChannel:channel];
 
 			PointerIsEmptyAssertLoopBreak(c);
-
-			if (c == self.worldController.selectedChannel) {
-				[self.masterController.memberList endGroupedUpdates];
-			}
-
+		
 			if (c.numberOfMembers <= 1) {
 				NSString *mode = c.config.defaultModes;
 
