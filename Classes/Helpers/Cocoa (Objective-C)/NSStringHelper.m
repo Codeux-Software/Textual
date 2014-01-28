@@ -1195,7 +1195,13 @@
 						}
 
 						/* Insert the new group. */
-						[originalString insertString:newSlashGroup atIndex:actualStart];
+						if (isAttributedString) {
+							NSAttributedString *newGroup = [NSAttributedString emptyStringWithBase:newSlashGroup];
+
+							[originalString insertAttributedString:newGroup atIndex:actualStart];
+						} else {
+							[originalString insertString:newSlashGroup atIndex:actualStart];
+						}
 					}
 
 					isInSlashGroup = NO;
