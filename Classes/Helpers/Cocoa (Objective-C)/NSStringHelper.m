@@ -986,8 +986,6 @@
 
 	/* We now scan from the scan location to the end of whitespaces. */
 	if (whitespaceRange) {
-		BOOL foundAnyWhitespace = NO;
-
 		NSInteger stringLength = [stringValue length];
 		NSInteger stringForward = scanLocation;
 
@@ -997,8 +995,6 @@
 			UniChar c = [[stringValue string] characterAtIndex:stringForward];
 
 			if (c == ' ') {
-				foundAnyWhitespace = YES;
-
 				stringForward += 1;
 			} else {
 				break;
