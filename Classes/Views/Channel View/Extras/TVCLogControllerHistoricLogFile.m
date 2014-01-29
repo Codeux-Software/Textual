@@ -161,7 +161,7 @@
 		/* Listen for changes. */
 		self.hasPendingAutosaveTimer = NO;
 
-		[RZNotificationCenter() addObserver:self selector:@selector(handleManagedObjectContextChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
+		[self handleManagedObjectContextChangeTimerInitializer];
 
 		/* Return ourself. */
 		return self;
@@ -170,19 +170,14 @@
 	return nil;
 }
 
-- (void)dealloc
-{
-	[RZNotificationCenter() removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
-}
-
-- (void)handleManagedObjectContextChange:(NSNotification *)aNote
-{
-	[self performSelectorOnMainThread:@selector(handleManagedObjectContextChangeTimerInitializer) withObject:nil waitUntilDone:YES];
-}
-
 - (void)handleManagedObjectContextChangeTimerInitializer
 {
-	NSAssertReturn(self.hasPendingAutosaveTimer == NO);
+	/* Cancel any previous running timers. */
+	if (self.hasPendingAutosaveTimer) {
+		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(saveData) object:nil];
+
+		self.hasPendingAutosaveTimer = NO;
+	}
 
 	/* Auto save thirty seconds after last change. */
 	self.hasPendingAutosaveTimer = YES;
@@ -198,9 +193,7 @@
 - (void)saveData
 {
 	/* Cancel any previous running timers incase this is manual save. */
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(saveData) object:nil];
-
-	self.hasPendingAutosaveTimer = NO;
+	[self handleManagedObjectContextChangeTimerInitializer];
 
 	/* Continue with save operation. */
 	[self.managedObjectContext performBlock:^{
@@ -218,23 +211,26 @@
 
 					LogToConsole(@"%@", [saveError localizedDescription]);
 				}
+
+				[self.managedObjectContext reset];
 			}
 		}
 	}];
 }
 
+- (void)processPendingChanges
+{
+	[self.managedObjectContext processPendingChanges];
+}
+
 - (void)resetContext
 {
-	[self.managedObjectContext performBlock:^{
-		[self.managedObjectContext reset];
-	}];
+	[self.managedObjectContext reset];
 }
 
 - (void)refreshObject:(id)object
 {
-	[self.managedObjectContext performBlock:^{
-		[self.managedObjectContext refreshObject:object mergeChanges:NO];
-	}];
+	[self.managedObjectContext refreshObject:object mergeChanges:NO];
 }
 
 - (NSManagedObjectModel *)managedObjectModel

@@ -53,6 +53,8 @@
 
 - (void)refreshObject:(id)object;
 
+- (void)processPendingChanges;
+
 /* fetchLimit: and afterDate: are optional. Supply either 0 or nil to skip. */
 /* The default fetchLimit is set to 1000 and reference date is 1/1/2001 */
 - (void)entriesForClient:(IRCClient *)client
