@@ -972,6 +972,11 @@
 				[loader assesURL:nurl withID:inlineImageMatches[nurl] forController:self];
 			}
 
+			/* After print concludes, we are done with this log line. As Core Data
+			 maintains a reference to it, we tell it to refresh the object so that
+			 it can be released as we are done with it. */
+			[TVCLogControllerHistoricLogSharedInstance() refreshObject:logLine];
+
 			/* Finish up. */
 			PointerIsEmptyAssert(completionBlock);
 
