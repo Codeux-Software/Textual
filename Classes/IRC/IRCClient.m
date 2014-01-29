@@ -427,9 +427,9 @@
 
 - (void)closeDialogs
 {
-    TXMenuController *menuController = self.masterController.menuController;
+    TXMenuController *menuController = [self menuController];
 
-    [menuController popWindowViewIfExists:@"TDCListDialog"];
+    [menuController popWindowViewIfExists:[self listDialogWindowKey]];
     [menuController popWindowSheetIfExists];
 }
 
