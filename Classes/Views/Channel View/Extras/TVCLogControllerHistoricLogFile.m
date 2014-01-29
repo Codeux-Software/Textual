@@ -38,7 +38,7 @@
 #import "TextualApplication.h"
 
 @interface TVCLogControllerHistoricLogFile ()
-@property (nonatomic, assign) BOOL hasPendingAutosave;
+@property (nonatomic, assign) BOOL hasPendingAutosaveTimer;
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, strong) NSSortDescriptor *managedSortDescriptor;
@@ -159,13 +159,35 @@
 		(void)self.managedObjectContext;
 
 		/* Listen for changes. */
-		self.hasPendingAutosave = NO;
+		self.hasPendingAutosaveTimer = NO;
+
+		[RZNotificationCenter() addObserver:self selector:@selector(handleManagedObjectContextChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
 
 		/* Return ourself. */
 		return self;
 	}
 
 	return nil;
+}
+
+- (void)dealloc
+{
+	[RZNotificationCenter() removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
+}
+
+- (void)handleManagedObjectContextChange:(NSNotification *)aNote
+{
+	[self performSelectorOnMainThread:@selector(handleManagedObjectContextChangeTimerInitializer) withObject:nil waitUntilDone:YES];
+}
+
+- (void)handleManagedObjectContextChangeTimerInitializer
+{
+	NSAssertReturn(self.hasPendingAutosaveTimer == NO);
+
+	/* Auto save thirty seconds after last change. */
+	self.hasPendingAutosaveTimer = YES;
+
+	[self performSelector:@selector(saveData) withObject:nil afterDelay:30.0];
 }
 
 - (NSString *)databaseSavePath
@@ -175,10 +197,10 @@
 
 - (void)saveData
 {
-	/* Do not save when we already have one waiting. */
-	NSAssertReturn(self.hasPendingAutosave == NO);
+	/* Cancel any previous running timers incase this is manual save. */
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(saveData) object:nil];
 
-	self.hasPendingAutosave = YES;
+	self.hasPendingAutosaveTimer = NO;
 
 	/* Continue with save operation. */
 	[self.managedObjectContext performBlock:^{
@@ -198,9 +220,6 @@
 				}
 			}
 		}
-
-		/* Reset bool. */
-		self.hasPendingAutosave = NO;
 	}];
 }
 

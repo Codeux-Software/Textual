@@ -122,9 +122,6 @@
 		[newEntry setValue:[channel uniqueIdentifier] forKey:@"channelID"];
 	}
 
-	/* Try to save new entry. */
-	[TVCLogControllerHistoricLogSharedInstance() saveData];
-
 	/* Return our managed object. */
 	return newEntry;
 }
