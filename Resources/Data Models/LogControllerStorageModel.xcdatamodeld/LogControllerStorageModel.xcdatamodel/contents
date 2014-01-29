@@ -16,6 +16,7 @@
         <attribute name="rawCommand" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="receivedAt" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
+    <fetchRequest name="LogLineFetchRequest" entity="TVCLogLine" predicateString="channelID == $channel_id AND clientID == $client_id AND creationDate >= $creation_date" fetchLimit="1000" includesPendingChanges="YES" returnObjectsAsFaults="YES"/>
     <elements>
         <element name="TVCLogLine" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
