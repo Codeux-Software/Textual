@@ -91,11 +91,6 @@
 	PointerIsEmptyAssert(client);
 
 	[self.managedObjectContext performBlock:^{
-		/* Build base model. */
-		NSFetchRequest *fetchRequest = [NSFetchRequest new];
-
-		NSEntityDescription *entity = [NSEntityDescription entityForName:@"TVCLogLine" inManagedObjectContext:self.managedObjectContext];
-
 		/* Gather relevant information. */
 		NSString *clientID = [client uniqueIdentifier];
 		NSString *channelID = nil;
@@ -104,29 +99,34 @@
 			channelID = [channel uniqueIdentifier];
 		}
 
-		/* Build the match. */
-		NSPredicate *matchPredicate;
+		/* Build base model. */
+		NSMutableDictionary *fetchVariables = [NSMutableDictionary dictionary];
 
+		/* Reference date. */
 		if (referenceDate) {
-			if (channel) {
-				matchPredicate = [NSPredicate predicateWithFormat:@"clientID == %@ AND channelID == %@ AND creationDate >= %@", clientID, channelID, referenceDate];
-			} else {
-				matchPredicate = [NSPredicate predicateWithFormat:@"clientID == %@ AND channelID == nil AND creationDate >= %@", clientID, referenceDate];
-			}
+			[fetchVariables setObject:referenceDate forKey:@"creation_date"];
 		} else {
-			if (channel) {
-				matchPredicate = [NSPredicate predicateWithFormat:@"clientID == %@ AND channelID == %@", clientID, channelID];
-			} else {
-				matchPredicate = [NSPredicate predicateWithFormat:@"clientID == %@ AND channelID == nil", clientID];
-			}
+			/* There should be no records younger than this… */
+
+			[fetchVariables setObject:[NSDate dateWithTimeIntervalSinceReferenceDate:0] forKey:@"creation_date"];
 		}
 
-		/* Perform actual fetch. */
-		[fetchRequest setEntity:entity];
-		[fetchRequest setPredicate:matchPredicate];
-		[fetchRequest setSortDescriptors:@[self.managedSortDescriptor]];
+		/* Channel ID. */
+		if (channelID) {
+			[fetchVariables setObject:channelID forKey:@"channel_id"];
+		} else {
+			[fetchVariables setObject:[NSNull null] forKey:@"channel_id"];
+		}
 
-		[fetchRequest setReturnsObjectsAsFaults:NO];
+		/* Client ID. */
+		[fetchVariables setObject:clientID forKey:@"client_id"];
+
+		/* Request actual predicate. */
+		NSFetchRequest *fetchRequest = [self.managedObjectModel fetchRequestFromTemplateWithName:@"LogLineFetchRequest"
+																		   substitutionVariables:fetchVariables];
+
+		/* Perform actual fetch. */
+		[fetchRequest setSortDescriptors:@[self.managedSortDescriptor]];
 
 		/* Define match limit. */
 		if (maxEntryCount > 0) {
@@ -192,7 +192,7 @@
 
 - (NSString *)databaseSavePath
 {
-	return [[TPCPreferences applicationCachesFolderPath] stringByAppendingPathComponent:@"logControllerHistoricLog.sqlite"];
+	return [[TPCPreferences applicationCachesFolderPath] stringByAppendingPathComponent:@"logControllerHistoricLog_v001.sqlite"];
 }
 
 - (void)saveData
@@ -220,6 +220,20 @@
 				}
 			}
 		}
+	}];
+}
+
+- (void)resetContext
+{
+	[self.managedObjectContext performBlock:^{
+		[self.managedObjectContext reset];
+	}];
+}
+
+- (void)refreshObject:(id)object
+{
+	[self.managedObjectContext performBlock:^{
+		[self.managedObjectContext refreshObject:object mergeChanges:NO];
 	}];
 }
 

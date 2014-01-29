@@ -531,7 +531,6 @@
 
 		/* Gather result information. */
 		NSString *lineNumber = [resultInfo objectForKey:@"lineNumber"];
-		NSString *renderTime = [resultInfo objectForKey:@"lineRenderTime"];
 
 		NSDictionary *inlineImageMatches = [resultInfo dictionaryForKey:@"InlineImagesToValidate"];
 
@@ -541,7 +540,7 @@
 
 		[patchedAppend appendString:html];
 
-		[lineNumbers addObject:@[line, lineNumber, renderTime, inlineImageMatches]];
+		[lineNumbers addObject:@[lineNumber, inlineImageMatches]];
 		
 		/* Was it a highlight? */
 		BOOL highlighted = [resultInfo boolForKey:@"wordMatchFound"];
@@ -549,6 +548,8 @@
 		if (highlighted) {
 			[self.highlightedLineNumbers safeAddObject:lineNumber];
 		}
+
+		[TVCLogControllerHistoricLogSharedInstance() refreshObject:line];
 	}
 
 	/* Update WebKit. */
@@ -562,9 +563,9 @@
 			self.activeLineCount += 1;
 
 			/* Line info. */
-			NSString *lineNumber = lineInfo[1];
+			NSString *lineNumber = lineInfo[0];
 
-			NSDictionary *inlineImageMatches = lineInfo[3];
+			NSDictionary *inlineImageMatches = lineInfo[1];
 
 			/* Begin processing inline images. */
 			for (NSString *nurl in inlineImageMatches) {
