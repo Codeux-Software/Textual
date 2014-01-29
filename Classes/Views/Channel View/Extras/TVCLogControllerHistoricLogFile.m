@@ -209,10 +209,10 @@
 					 we do not care much about errors here, but we will
 					 still report them for the sake of debugging. */
 
+					[self.managedObjectContext reset];
+
 					LogToConsole(@"%@", [saveError localizedDescription]);
 				}
-
-				[self.managedObjectContext reset];
 			}
 		}
 	}];
