@@ -3103,19 +3103,7 @@
 	}
 
 	/* Create new log entry. */
-	TVCLogLine *c;
-
-	/* If the channel is encrypted, then we refuse to write to
-	 the actual historic log so there is no trace of the chatter
-	 on the disk in the form of an unencrypted cache file. */
-	/* Doing it this way does break the ability to reload chatter
-	 in the view as well as playback on restart, but the added
-	 security can be seen as a bonus. */
-	if (channel && [channel.config encryptionKeyIsSet]) {
-		c = [TVCLogLine newManagedObjectWithoutContextAssociation];
-	} else {
-		c = [TVCLogLine newManagedObjectForClient:self channel:channel];
-	}
+	TVCLogLine *c = [TVCLogLine newManagedObjectForClient:self channel:channel];
 
 	/* Data types. */
 	c.lineType				= type;

@@ -93,16 +93,13 @@ typedef enum TVCLogLineMemberType : NSInteger {
 @property (nonatomic, uweak) TVCLogLineType lineType;
 @property (nonatomic, uweak) TVCLogLineMemberType memberType;
 
-/* Create an instance of the managed object without any assocation to
- a object context nor any client/channel. It is used when a line is 
- needed for writing purposes, but it is not wanted to be written on
- the actual historic log. */
 + (TVCLogLine *)newManagedObjectWithoutContextAssociation;
-
-/* Creates an instance of the managed object with assocation to the
- historic log context plus the passed client & channel. The line created
- is inserted ino the historic log at the moment of creation. */
 + (TVCLogLine *)newManagedObjectForClient:(IRCClient *)client channel:(IRCChannel *)channel;
+
+/* performContextInsertion is automatically called by the TVCLogController 
+ print method: the moment before it actaully prints. It is not advised to
+ call this as it may create duplicate lines. */
+- (void)performContextInsertion;
 
 - (NSString *)formattedTimestamp;
 - (NSString *)formattedTimestampWithForcedFormat:(NSString *)format;
