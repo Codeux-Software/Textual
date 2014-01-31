@@ -66,11 +66,14 @@
 
 - (void)resetData
 {
+#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	[RZFileManager() removeItemAtPath:[self databaseSavePath] error:NULL]; // Destroy archive file completely.
+#endif
 }
 
 - (void)resetDataForEntriesMatchingClient:(IRCClient *)client inChannel:(IRCChannel *)channel
 {
+#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	[self entriesForClient:client
 				 inChannel:channel
 	   withCompletionBlock:^(NSArray *objects)
@@ -83,10 +86,12 @@
 	}
 				fetchLimit:0
 				 afterDate:nil];
+#endif
 }
 
 - (void)entriesForClient:(IRCClient *)client inChannel:(IRCChannel *)channel withCompletionBlock:(void (^)(NSArray *objects))completionBlock fetchLimit:(NSInteger)maxEntryCount afterDate:(NSDate *)referenceDate
 {
+#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	/* What are we fetching for? */
 	PointerIsEmptyAssert(client);
 
@@ -144,6 +149,9 @@
 
 		completionBlock(finalData);
 	}];
+#else
+	completionBlock(nil);
+#endif
 }
 
 
@@ -153,6 +161,7 @@
 - (id)init
 {
 	if (self = [super init]) {
+#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 		/* Call variables to initalize objects. */
 		(void)self.managedObjectModel;
 		(void)self.persistentStoreCoordinator;
@@ -162,6 +171,7 @@
 		self.hasPendingAutosaveTimer = NO;
 
 		[self handleManagedObjectContextChangeTimerInitializer];
+#endif
 
 		/* Return ourself. */
 		return self;
@@ -172,6 +182,7 @@
 
 - (void)handleManagedObjectContextChangeTimerInitializer
 {
+#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	/* Cancel any previous running timers. */
 	if (self.hasPendingAutosaveTimer) {
 		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(saveData) object:nil];
@@ -183,6 +194,7 @@
 	self.hasPendingAutosaveTimer = YES;
 
 	[self performSelector:@selector(saveData) withObject:nil afterDelay:30.0];
+#endif
 }
 
 - (NSString *)databaseSavePath
@@ -192,6 +204,7 @@
 
 - (void)saveData
 {
+#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	/* Cancel any previous running timers incase this is manual save. */
 	[self handleManagedObjectContextChangeTimerInitializer];
 
@@ -209,28 +222,33 @@
 					 we do not care much about errors here, but we will
 					 still report them for the sake of debugging. */
 
-					[self.managedObjectContext reset];
-
-					LogToConsole(@"%@", [saveError localizedDescription]);
+					[self nukeAllManagedObjects];
 				}
 			}
 		}
 	}];
+#endif
 }
 
 - (void)processPendingChanges
 {
+#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	[self.managedObjectContext processPendingChanges];
+#endif
 }
 
 - (void)resetContext
 {
+#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	[self.managedObjectContext reset];
+#endif
 }
 
 - (void)refreshObject:(id)object
 {
+#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	[self.managedObjectContext refreshObject:object mergeChanges:NO];
+#endif
 }
 
 - (NSManagedObjectModel *)managedObjectModel
@@ -255,32 +273,44 @@
 	/* We do not need to do work if this property exists already. */
 	PointerIsNotEmptyAssertReturn(_persistentStoreCoordinator, _persistentStoreCoordinator);
 
-	/* Define save path. */
-	NSString *savePath = [self databaseSavePath];
-
 	/* Add model to persistent store. */
-	NSURL *url = [NSURL fileURLWithPath:savePath];
-
 	NSManagedObjectModel *mom = [self managedObjectModel];
 
 	_persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom];
 
-	/* Try to create the actual persistent store. */
-	NSError *addErr = nil;
+	/* Try to add new store. */
+	if ([self addPersistentStoreToCoordinator] == NO) {
+		/* There was an error adding. */
 
-	id result = [_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:nil error:&addErr];
-
-	/* Was there an error? */
-	if (result == nil) {
-		/* Log error. */
-		LogToConsole(@"Error Creating Persistent Store: %@", [addErr localizedDescription]);
-
-		/* Destroy state. */
 		_persistentStoreCoordinator = nil;
 	}
 
 	/* Return new store. */
 	return _persistentStoreCoordinator;
+}
+
+- (BOOL)addPersistentStoreToCoordinator
+{
+	/* Try to create the actual persistent store. */
+	NSError *addErr = nil;
+
+	/* Define save path. */
+	NSString *savePath = [self databaseSavePath];
+
+	NSURL *url = [NSURL fileURLWithPath:savePath];
+
+	/* Perform add. */
+	id result = [_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:nil error:&addErr];
+
+	/* Was there an error? */
+	if (result == nil) {
+		LogToConsole(@"Error Creating Persistent Store: %@", [addErr localizedDescription]);
+
+		return NO; /* Return error. */
+	}
+
+	/* Return success. */
+	return YES;
 }
 
 - (NSManagedObjectContext *)managedObjectContext
@@ -296,7 +326,6 @@
 	 _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
 
 	[_managedObjectContext setPersistentStoreCoordinator:coord];
-	[_managedObjectContext setStalenessInterval:0.0];
 	[_managedObjectContext setUndoManager:nil];
 
 	return _managedObjectContext;
@@ -304,6 +333,7 @@
 
 - (NSSortDescriptor *)managedSortDescriptor
 {
+#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	/* We do not need to do work if this property exists already. */
 	PointerIsNotEmptyAssertReturn(_managedSortDescriptor, _managedSortDescriptor);
 
@@ -311,6 +341,41 @@
 	_managedSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:NO];
 
 	return _managedSortDescriptor;
+#else
+	return nil;
+#endif
 }
+
+#pragma mark -
+#pragma mark Atomic Bomb
+
+#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
+- (void)nukeAllManagedObjects
+{
+	[self _nukeAllManagedObjects];
+}
+
+- (void)_nukeAllManagedObjects
+{
+	/* Lock the current context. */
+    [self.managedObjectContext lock];
+
+	/* Find list of current stores. */
+	NSArray *persistentStores = [self.persistentStoreCoordinator persistentStores];
+
+	/* Try to remove old store. */
+	NSError *removeError;
+
+	if ([self.persistentStoreCoordinator removePersistentStore:[persistentStores lastObject] error:&removeError] == NO) {
+		LogToConsole(@"There was a problem removing the previous store: %@", [removeError localizedDescription]);
+	} else {
+		(void)[self addPersistentStoreToCoordinator];
+	}
+
+	/* Reset the current context and reset it. */
+    [self.managedObjectContext reset];
+    [self.managedObjectContext unlock];
+}
+#endif
 
 @end

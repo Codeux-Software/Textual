@@ -351,7 +351,7 @@
 	if ([TPCPreferences logHighlights]) {
 		/* Render message. */
 		NSString *messageBody;
-		NSString *nicknameBody = [logLine formattedNickname:channel].trim;
+		NSString *nicknameBody = [[logLine formattedNickname:channel] trim];
 
 		if ([logLine lineType] == TVCLogLineActionType) {
 			if ([nicknameBody hasSuffix:@":"]) {
@@ -370,7 +370,7 @@
 		[channel.client.highlights insertObject:entry atIndex:0];
 
 		/* Reload table if the window is open. */
-		id highlightSheet = [self.masterController.menuController windowFromWindowList:@"TDCHighlightListSheet"];
+		id highlightSheet = [self.menuController windowFromWindowList:@"TDCHighlightListSheet"];
 
 		if (highlightSheet) {
             [highlightSheet performSelector:@selector(reloadTable) withObject:nil afterDelay:2.0];

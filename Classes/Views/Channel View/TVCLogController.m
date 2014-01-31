@@ -920,68 +920,86 @@
 {
 	/* Continue with a normal print job. */
 	TVCLogControllerOperationBlock printBlock = ^(id operation, NSDictionary *context) {
-		NSAssertReturn(self.isTerminating == NO);
-		
-		/* Increment by one. */
-		self.activeLineCount += 1;
+		@autoreleasepool {
+			NSAssertReturn(self.isTerminating == NO);
 
-		/* Render everything. */
-		NSDictionary *resultInfo = nil;
+			/* Increment by one. */
+			self.activeLineCount += 1;
 
-		NSString *html = [self renderLogLine:logLine resultInfo:&resultInfo];
+			/* Render everything. */
+			NSDictionary *resultInfo = nil;
 
-		NSObjectIsEmptyAssert(html);
+			NSString *html = [self renderLogLine:logLine resultInfo:&resultInfo];
 
-		/* Gather result information. */
-		BOOL highlighted = [resultInfo boolForKey:@"wordMatchFound"];
+			NSObjectIsEmptyAssert(html);
 
-		NSString *lineNumber = [resultInfo objectForKey:@"lineNumber"];
-	  //NSString *renderTime = [resultInfo objectForKey:@"lineRenderTime"];
+			/* Gather result information. */
+			BOOL highlighted = [resultInfo boolForKey:@"wordMatchFound"];
 
-		NSArray *mentionedUsers = [resultInfo arrayForKey:@"mentionedUsers"];
+			NSString *lineNumber = [resultInfo objectForKey:@"lineNumber"];
+		  //NSString *renderTime = [resultInfo objectForKey:@"lineRenderTime"];
 
-		NSDictionary *inlineImageMatches = [resultInfo dictionaryForKey:@"InlineImagesToValidate"];
+			NSArray *mentionedUsers = [resultInfo arrayForKey:@"mentionedUsers"];
 
-		dispatch_async(dispatch_get_main_queue(), ^{
-			/* Record highlights. */
-			if (highlighted) {
-				[self.highlightedLineNumbers safeAddObject:lineNumber];
+			NSDictionary *inlineImageMatches = [resultInfo dictionaryForKey:@"InlineImagesToValidate"];
 
-				[self.worldController addHighlightInChannel:self.channel withLogLine:logLine];
-			}
+			dispatch_async(dispatch_get_main_queue(), ^{
+				/* Record highlights. */
+				if (highlighted) {
+					[self.highlightedLineNumbers safeAddObject:lineNumber];
 
-			/* Do the actual append to WebKit. */
-			[self appendToDocumentBody:html];
+					[self.worldController addHighlightInChannel:self.channel withLogLine:logLine];
+				}
 
-			/* Inform the style of the new append. */
-			[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
+				/* Do the actual append to WebKit. */
+				[self appendToDocumentBody:html];
 
-			/* Limit lines. */
-			if (self.maximumLineCount > 0 && (self.activeLineCount - 10) > self.maximumLineCount) {
-				[self setNeedsLimitNumberOfLines];
-			}
+				/* Inform the style of the new append. */
+				[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
 
-			/* Begin processing inline images. */
-			/* We go through the inline image list here and pass to the loader now so that
-			 we know the links have hit the webview before we even try loading them. */
-			for (NSString *nurl in inlineImageMatches) {
-				TVCImageURLoader *loader = [TVCImageURLoader new];
+				/* Limit lines. */
+				if (self.maximumLineCount > 0 && (self.activeLineCount - 10) > self.maximumLineCount) {
+					[self setNeedsLimitNumberOfLines];
+				}
 
-				[loader assesURL:nurl withID:inlineImageMatches[nurl] forController:self];
-			}
+				/* Begin processing inline images. */
+				/* We go through the inline image list here and pass to the loader now so that
+				 we know the links have hit the webview before we even try loading them. */
+				for (NSString *nurl in inlineImageMatches) {
+					TVCImageURLoader *loader = [TVCImageURLoader new];
 
-			/* Finish up. */
-			PointerIsEmptyAssert(completionBlock);
+					[loader assesURL:nurl withID:inlineImageMatches[nurl] forController:self];
+				}
 
-			completionBlock(highlighted);
-		});
+				/* Log this log line. */
+				/* It is written to the context here instead of being inserted
+				 on creation because the save: call of the context destroys all
+				 objects to allow their memory to be freed. Therefore, we do
+				 not want an object to be sitting here in the queue waiting to
+				 be written, save: be called, destroyed, queue item ran, then
+				 the object no longer exists to be referenced. */
 
-		/* Finish our printing operations. */
-		[self.printingQueue updateCompletionStatusForOperation:operation];
+				/* If the channel is encrypted, then we refuse to write to
+				 the actual historic log so there is no trace of the chatter
+				 on the disk in the form of an unencrypted cache file. */
+				/* Doing it this way does break the ability to reload chatter
+				 in the view as well as playback on restart, but the added
+				 security can be seen as a bonus. */
+				if ([self viewIsEncrypted] == NO) {
+					[logLine performContextInsertion];
+				}
 
-		/* Using informationi provided by conversation tracking we can update our internal
-		 array of favored nicknames for nick completion. */
-		if (NSObjectIsNotEmpty(mentionedUsers)) {
+				/* Finish up. */
+				PointerIsEmptyAssert(completionBlock);
+
+				completionBlock(highlighted);
+			});
+
+			/* Finish our printing operations. */
+			[self.printingQueue updateCompletionStatusForOperation:operation];
+
+			/* Using informationi provided by conversation tracking we can update our internal
+			 array of favored nicknames for nick completion. */
 			if ([logLine memberType] == TVCLogLineMemberLocalUserType) {
 				[mentionedUsers makeObjectsPerformSelector:@selector(outgoingConversation)];
 			} else {
@@ -1056,7 +1074,7 @@
 
 	NSMutableDictionary *specialAttributes = [NSMutableDictionary new];
 
-	specialAttributes[@"activeStyleAbsolutePath"] = [self baseURL].absoluteString;
+	specialAttributes[@"activeStyleAbsolutePath"] = [[self baseURL] absoluteString];
 	specialAttributes[@"applicationResourcePath"] = [TPCPreferences applicationResourcesFolderPath];
 
 	NSMutableDictionary *attributes = specialAttributes;
@@ -1169,7 +1187,7 @@
 
 	// ---- //
 
-	attributes[@"configuredServerName"] = self.client.config.clientName;
+	attributes[@"configuredServerName"] = [self.client altNetworkName];
 
 	// ---- //
 

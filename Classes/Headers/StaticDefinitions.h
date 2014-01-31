@@ -169,6 +169,12 @@
 typedef unsigned long long						TXFSLongInt;
 
 /* Whether to force disable app nap using NSProcessInfo */
-#define TEXTUAL_BUILT_WITH_APP_NAP_DISABLED				
+#define TEXTUAL_BUILT_WITH_APP_NAP_DISABLED		
+
+/* Whether to build Textual with Core Data support. */
+/* Disabling it will still use Core Data model defined for 
+ TVCLogControllerHistoricLogFile, but it will not write 
+ or maintain any managed object in a file or in memory. */
+// #define TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 
 /* @end */

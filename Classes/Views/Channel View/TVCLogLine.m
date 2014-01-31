@@ -105,14 +105,7 @@
 	PointerIsEmptyAssertReturn(client, nil);
 
 	/* Create managed object representing a log line. */
-	NSManagedObjectContext *context = [TVCLogControllerHistoricLogSharedInstance() managedObjectContext];
-
-	TVCLogLine *newEntry = [NSEntityDescription insertNewObjectForEntityForName:@"TVCLogLine"
-														 inManagedObjectContext:context];
-
-	/* Save the creation time of this log line as that will be 
-	 used for the actual purposes of sorting results. */
-	[newEntry setValue:[NSDate date] forKey:@"creationDate"];
+	TVCLogLine *newEntry = [TVCLogLine newManagedObjectWithoutContextAssociation];
 
 	/* We now save associated client and channel information 
 	 for also reference purposes later on. */
@@ -124,6 +117,15 @@
 
 	/* Return our managed object. */
 	return newEntry;
+}
+
+- (void)performContextInsertion
+{
+#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
+	NSManagedObjectContext *context = [TVCLogControllerHistoricLogSharedInstance() managedObjectContext];
+
+	[context insertObject:self];
+#endif
 }
 
 + (NSString *)lineTypeString:(TVCLogLineType)type
