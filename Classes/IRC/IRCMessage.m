@@ -102,7 +102,7 @@
 
 				NSAssertReturnLoopBreak(hasTimeExt);
 
-				NSDate *date = [self.worldController.isoStandardDateFormatter dateFromString:extVal];
+				NSDate *date = [[self.worldController isoStandardDateFormatter] dateFromString:extVal];
 				
 				if (PointerIsEmpty(date)) {
 					date = [NSDate dateWithTimeIntervalSince1970:[extVal doubleValue]];

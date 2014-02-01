@@ -59,7 +59,6 @@
 @property (nonatomic, strong) NSDateFormatter *isoStandardDateFormatter; // ISO standard date formatter used for internal purposes. (yyyy-MM-dd'T'HH:mm:ss.SSS'Z')
 
 - (void)setupConfiguration;
-- (void)setupOtherServices;
 - (void)setupTree;
 - (void)save;
 

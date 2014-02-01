@@ -92,16 +92,6 @@
 	self.isPopulatingSeeds = NO;
 }
 
-- (void)setupOtherServices
-{
-	NSDateFormatter *dateFormatter = [NSDateFormatter new];
-
-	[dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-	[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"]; //2011-10-19T16:40:51.620Z
-
-	self.isoStandardDateFormatter = dateFormatter;
-}
-
 - (void)setupTree
 {
 	/* Set double click action. */
@@ -286,6 +276,20 @@
 
 #pragma mark -
 #pragma mark Properties
+
+- (NSDateFormatter *)isoStandardDateFormatter
+{
+	PointerIsNotEmptyAssertReturn(_isoStandardDateFormatter, _isoStandardDateFormatter);
+
+	NSDateFormatter *dateFormatter = [NSDateFormatter new];
+
+	[dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+	[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"]; //2011-10-19T16:40:51.620Z
+
+	_isoStandardDateFormatter = dateFormatter;
+
+	return _isoStandardDateFormatter;
+}
 
 - (IRCClient *)selectedClient
 {
