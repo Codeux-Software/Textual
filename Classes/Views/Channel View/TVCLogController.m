@@ -1236,22 +1236,22 @@
 
 	// ---- //
 
-	templateTokens[@"activeStyleAbsolutePath"]	= [self baseURL].absoluteString;
+	templateTokens[@"activeStyleAbsolutePath"]	= [[self baseURL] absoluteString];
 	templateTokens[@"applicationResourcePath"]	= [TPCPreferences applicationResourcesFolderPath];
 
-	templateTokens[@"cacheToken"]				= [NSString stringWithInteger:TXRandomNumber(5000)];
+	templateTokens[@"cacheToken"]				= [self.themeController sharedCacheID];
 
-    templateTokens[@"configuredServerName"]     = self.client.config.clientName;
+    templateTokens[@"configuredServerName"]     = [self.client altNetworkName];
 
-	templateTokens[@"userConfiguredTextEncoding"] = [NSString charsetRepFromStringEncoding:self.client.config.primaryEncoding];
+	templateTokens[@"userConfiguredTextEncoding"] = [NSString charsetRepFromStringEncoding:[[self.client config] primaryEncoding]];
 
     // ---- //
 
 	if (self.channel) {
-		templateTokens[@"isChannelView"]        = @(self.channel.isChannel);
-        templateTokens[@"isPrivateMessageView"] = @(self.channel.isPrivateMessage);
+		templateTokens[@"isChannelView"]        = @([self.channel isChannel]);
+        templateTokens[@"isPrivateMessageView"] = @([self.channel isPrivateMessage]);
 
-		templateTokens[@"channelName"]	  = [TVCLogRenderer escapeString:self.channel.name];
+		templateTokens[@"channelName"]	  = [TVCLogRenderer escapeString:[self.channel name]];
 		templateTokens[@"viewTypeToken"]  = [self.channel channelTypeString];
 
 		if (NSObjectIsEmpty(topic)) {

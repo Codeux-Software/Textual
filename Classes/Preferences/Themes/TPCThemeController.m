@@ -156,6 +156,9 @@
 	/* We have a path. */
 	self.baseURL = [NSURL fileURLWithPath:path];
 
+	/* Define a shared cache ID for files. */
+	self.sharedCacheID = [NSString stringWithInteger:TXRandomNumber(5000)];
+
 	/* Reload theme settings. */
 	[self.customSettings reloadWithPath:path];
 }

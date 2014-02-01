@@ -210,6 +210,10 @@ Textual = {
 		app.setNickname(event.target.getAttribute("nick"));
 	},
 	
+	nicknameSingleClicked: function() {
+		// API does not handle this action by default…
+	},
+	
 	nicknameDoubleClicked: function() { 
 		Textual.openStandardNicknameContextualMenu();
 

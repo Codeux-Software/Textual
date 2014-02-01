@@ -54,6 +54,7 @@ typedef enum TPCThemeControllerStorageLocation : NSInteger {
 @interface TPCThemeController : NSObject
 @property (nonatomic, strong) NSURL *baseURL;
 @property (nonatomic, strong) NSString *associatedThemeName;
+@property (nonatomic, strong) NSString *sharedCacheID;
 @property (nonatomic, strong) TPCThemeSettings *customSettings;
 
 /* Calls for the active theme. */
