@@ -7,8 +7,8 @@ Textual.viewFinishedLoading = function()
 	Textual.fadeInLoadingScreen(1.00, 0.95);
 
 	setTimeout(function() {
-			   Textual.scrollToBottomOfView()
-			   }, 500);
+		Textual.scrollToBottomOfView()
+	}, 500);
 }
 
 Textual.viewFinishedReload = function()
@@ -16,11 +16,16 @@ Textual.viewFinishedReload = function()
 	Textual.viewFinishedLoading();
 }
 
-Textual.newMessagePostedToView = function (line)
+Textual.newMessagePostedToView = function(line)
 {
     var element = document.getElementById("line-" + line);
 
     updateNicknameAssociatedWithNewMessage(element);
+}
+
+Textual.nicknameSingleClicked = function()
+{
+	userNicknameSingleClickEvent(event.target);
 }
 
 function updateNicknameAssociatedWithNewMessage(e)
@@ -33,9 +38,6 @@ function updateNicknameAssociatedWithNewMessage(e)
 		var senderSelector = e.querySelector(".sender");
 
 		if (senderSelector) {
-			/* Bind the listener for this element. */
-			senderSelector.addEventListener("click", userNicknameSingleClickEvent, false);
-
 			/* Is this a mapped user? */
 			var nickname = senderSelector.getAttribute("nick");
 
@@ -59,7 +61,7 @@ function toggleSelectionStatusForNicknameInsideElement(e)
 function userNicknameSingleClickEvent(e)
 {
 	/* This is called when the .sender is clicked. */
-	var nickname = this.getAttribute("nick");
+	var nickname = e.getAttribute("nick");
 
 	/* Toggle mapped status for nickname. */
 	var mappedIndex = mappedSelectedUsers.indexOf(nickname);

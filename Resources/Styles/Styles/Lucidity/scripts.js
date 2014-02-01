@@ -23,6 +23,11 @@ Textual.newMessagePostedToView = function (line)
     updateNicknameAssociatedWithNewMessage(element);
 }
 
+Textual.nicknameSingleClicked = function()
+{
+	userNicknameSingleClickEvent(event.target);
+}
+
 function updateNicknameAssociatedWithNewMessage(e)
 {
 	/* We only want to target plain text messages. */
@@ -33,9 +38,6 @@ function updateNicknameAssociatedWithNewMessage(e)
 		var senderSelector = e.querySelector(".sender");
 
 		if (senderSelector) {
-			/* Bind the listener for this element. */
-			senderSelector.addEventListener("click", userNicknameSingleClickEvent, false);
-
 			/* Is this a mapped user? */
 			var nickname = senderSelector.getAttribute("nick");
 
