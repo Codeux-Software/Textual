@@ -225,9 +225,11 @@
 #ifdef TXSystemIsMacOSMavericksOrNewer
 	if ([TPCPreferences featureAvailableToOSXMavericks]) {
 		if (notification.activationType == NSUserNotificationActivationTypeReplied) {
-			NSString *replyMessage = notification.response.string; // It is attributed string, we only want string.
+			NSString *replyMessage = [[notification response] string]; // It is attributed string, we only want string.
 
-			[self growlNotificationWasClicked:[notification userInfo] withReplyMessage:replyMessage changeFocus:NO];
+			[self growlNotificationWasClicked:[notification userInfo]
+							 withReplyMessage:replyMessage
+								  changeFocus:NO];
 
 			return; // Do not continue this method.
 		}
@@ -290,7 +292,7 @@
 	self.lastClickedContext = context;
 
 	if (changeFocus) {
-		[self.masterController.mainWindow makeKeyAndOrderFront:nil];
+		[[self.masterController mainWindow] makeKeyAndOrderFront:nil];
 		
 		[NSApp activateIgnoringOtherApps:YES];
 	}
@@ -299,7 +301,7 @@
 		BOOL isFileTransferNotification = [context boolForKey:@"isFileTransferNotification"];
 		
 		if (isFileTransferNotification) {
-			[self.menuController.fileTransferController show:YES restorePosition:NO];
+			[[self.menuController fileTransferController] show:YES restorePosition:NO];
 		} else {
 			NSString *uid = [context objectForKey:@"client"];
 			NSString *cid = [context objectForKey:@"channel"];
@@ -327,7 +329,7 @@
 			
 			if (c) { // We want both a client and channel.
 				/* A user may want to do an action… #yolo */
-				if ([message hasPrefix:@"/"] && [message hasPrefix:@"//"] == NO && message.length > 1) {
+				if ([message hasPrefix:@"/"] && [message hasPrefix:@"//"] == NO && [message length] > 1) {
 					message = [message safeSubstringFromIndex:1];
 					
 					[c.client sendCommand:message

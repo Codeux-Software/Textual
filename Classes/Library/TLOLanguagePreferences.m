@@ -46,10 +46,10 @@
 
 + (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle
 {
-	TPCThemeSettings *customSettings = self.themeController.customSettings;
+	TPCThemeSettings *customSettings = [self.themeController customSettings];
 
-	if (customSettings && [customSettings.languageLocalizations containsKey:key]) {
-		NSString *localString = [customSettings.languageLocalizations stringForKey:key];
+	if (customSettings && [[customSettings languageLocalizations] containsKey:key]) {
+		NSString *localString = [[customSettings languageLocalizations] stringForKey:key];
 
 		return [localString reservedCharactersToIRCFormatting];
 	}
