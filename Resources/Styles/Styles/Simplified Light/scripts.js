@@ -7,8 +7,8 @@ Textual.viewFinishedLoading = function()
 	Textual.fadeInLoadingScreen(1.00, 0.95);
 
 	setTimeout(function() {
-			   Textual.scrollToBottomOfView()
-			   }, 500);
+		Textual.scrollToBottomOfView()
+	}, 500);
 }
 
 Textual.viewFinishedReload = function()
@@ -61,7 +61,7 @@ function toggleSelectionStatusForNicknameInsideElement(e)
 function userNicknameSingleClickEvent(e)
 {
 	/* This is called when the .sender is clicked. */
-	var nickname = this.getAttribute("nick");
+	var nickname = e.getAttribute("nick");
 
 	/* Toggle mapped status for nickname. */
 	var mappedIndex = mappedSelectedUsers.indexOf(nickname);
