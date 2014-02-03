@@ -193,7 +193,7 @@
 	/* Auto save thirty seconds after last change. */
 	self.hasPendingAutosaveTimer = YES;
 
-	[self performSelector:@selector(saveData) withObject:nil afterDelay:30.0];
+	[self performSelector:@selector(saveData) withObject:nil afterDelay:300.0];
 #endif
 }
 
