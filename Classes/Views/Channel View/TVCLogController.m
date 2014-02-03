@@ -866,44 +866,6 @@
 #pragma mark -
 #pragma mark Print
 
-- (NSString *)renderedBodyForTranscriptLog:(TVCLogLine *)line
-{
-	NSObjectIsEmptyAssertReturn(line.messageBody, nil);
-
-	NSMutableString *s = [NSMutableString string];
-
-	/* Format time into a 24 hour universal time. */
-	NSString *time = [line formattedTimestampWithForcedFormat:TLOFileLoggerISOStandardClockFormat];
-
-	if (time) {
-		[s appendString:time];
-	}
-
-	/* Format nickname into a standard format ignoring user preference. */
-	NSString *nick;
-
-	if ([line lineType] == TVCLogLineActionType) {
-		nick = [line formattedNickname:self.channel withForcedFormat:TLOFileLoggerActionNicknameFormat];
-	} else if ([line lineType] == TVCLogLineNoticeType) {
-		nick = [line formattedNickname:self.channel withForcedFormat:TLOFileLoggerNoticeNicknameFormat];
-	} else {
-		nick = [line formattedNickname:self.channel withForcedFormat:TLOFileLoggerUndefinedNicknameFormat];
-	}
-	
-	if (nick) {
-		[s appendString:nick];
-		[s appendString:NSStringWhitespacePlaceholder];
-	}
-
-	/* Append actual body. */
-	[s appendString:line.messageBody];
-
-	/* Return result minus any formatting. */
-	return [s stripIRCEffects];
-}
-
-#pragma mark -
-
 - (NSString *)uniquePrintIdentifier
 {
 	NSString *randomUUID = [NSString stringWithUUID]; // Example: 68753A44-4D6F-1226-9C60-0050E4C00067

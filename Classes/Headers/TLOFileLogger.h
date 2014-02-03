@@ -64,5 +64,6 @@
 
 - (NSURL *)buildPath;
 
+- (void)writeLine:(TVCLogLine *)logLine;
 - (void)writePlainTextLine:(NSString *)s;
 @end
