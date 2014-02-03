@@ -43,6 +43,13 @@
 #pragma mark -
 #pragma mark Plain Text API
 
+- (void)writeLine:(TVCLogLine *)logLine
+{
+	NSString *lineString = [logLine renderedBodyForTranscriptLogInChannel:self.channel];
+
+	[self writePlainTextLine:logLine];
+}
+
 - (void)writePlainTextLine:(NSString *)s
 {
 	[self reopenIfNeeded];
@@ -89,7 +96,7 @@
 	 the date as the filename. When the date changes, the log path
 	 will have to change as well. This handles that. */
 
-	if ([self.buildFileName isEqual:self.filename] == NO) {
+	if ([[self buildFileName] isEqual:self.filename] == NO) {
 		[self open];
 	}
 }
@@ -214,7 +221,7 @@
 {
 	NSDate *filename = [[NSDate date] dateWithCalendarFormat:@"%Y-%m-%d" timeZone:nil];
 
-	NSURL *buildPath = self.buildPath;
+	NSURL *buildPath = [self buildPath];
 
 	NSObjectIsEmptyAssertReturn(buildPath, nil);
 

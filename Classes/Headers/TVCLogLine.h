@@ -110,6 +110,8 @@ typedef enum TVCLogLineMemberType : NSInteger {
 - (NSString *)lineTypeString;
 - (NSString *)memberTypeString;
 
+- (NSString *)renderedBodyForTranscriptLogInChannel:(IRCChannel *)channel;
+
 + (NSString *)lineTypeString:(TVCLogLineType)type;
 + (NSString *)memberTypeString:(TVCLogLineMemberType)type;
 @end

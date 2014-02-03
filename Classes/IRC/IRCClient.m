@@ -2851,11 +2851,7 @@
 			self.logFile.client = self;
 		}
 
-		NSString *logstr = [self.viewController renderedBodyForTranscriptLog:line];
-
-		if (NSObjectIsNotEmpty(logstr)) {
-			[self.logFile writePlainTextLine:logstr];
-		}
+		[self.logFile writeLine:line];
 	}
 }
 

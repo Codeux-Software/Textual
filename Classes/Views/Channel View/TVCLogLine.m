@@ -234,4 +234,40 @@
 	return [owner.client formatNick:self.nickname channel:owner formatOverride:format];
 }
 
+- (NSString *)renderedBodyForTranscriptLogInChannel:(IRCChannel *)channel
+{
+	NSObjectIsEmptyAssertReturn(self.messageBody, nil);
+
+	NSMutableString *s = [NSMutableString string];
+
+	/* Format time into a 24 hour universal time. */
+	NSString *time = [self formattedTimestampWithForcedFormat:TLOFileLoggerISOStandardClockFormat];
+
+	if (time) {
+		[s appendString:time];
+	}
+
+	/* Format nickname into a standard format ignoring user preference. */
+	NSString *nick;
+
+	if ([self lineType] == TVCLogLineActionType) {
+		nick = [self formattedNickname:channel withForcedFormat:TLOFileLoggerActionNicknameFormat];
+	} else if ([self lineType] == TVCLogLineNoticeType) {
+		nick = [self formattedNickname:channel withForcedFormat:TLOFileLoggerNoticeNicknameFormat];
+	} else {
+		nick = [self formattedNickname:channel withForcedFormat:TLOFileLoggerUndefinedNicknameFormat];
+	}
+
+	if (nick) {
+		[s appendString:nick];
+		[s appendString:NSStringWhitespacePlaceholder];
+	}
+
+	/* Append actual body. */
+	[s appendString:self.messageBody];
+
+	/* Return result minus any formatting. */
+	return [s stripIRCEffects];
+}
+
 @end
