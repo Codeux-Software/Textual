@@ -47,7 +47,7 @@
 {
 	NSString *lineString = [logLine renderedBodyForTranscriptLogInChannel:self.channel];
 
-	[self writePlainTextLine:logLine];
+	[self writePlainTextLine:lineString];
 }
 
 - (void)writePlainTextLine:(NSString *)s
