@@ -48,7 +48,11 @@
 @property (nonatomic, assign) BOOL applicationIsActive;
 @property (nonatomic, assign) BOOL applicationIsChangingActiveState;
 @property (nonatomic, assign) BOOL applicationIsRunningInHighResMode;
+
+#ifdef TEXTUAL_BUILT_WITH_APP_NAP_DISABLED
 @property (nonatomic, strong) id appNapProgressInformation;
+#endif
+
 @property (nonatomic, assign) NSInteger memberSplitViewOldPosition;
 @property (nonatomic, assign) NSInteger serverListSplitViewOldPosition;
 @property (nonatomic, nweak) IBOutlet NSBox *channelViewBox;
