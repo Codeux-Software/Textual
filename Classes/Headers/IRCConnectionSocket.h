@@ -42,6 +42,8 @@
 - (void)openSocket;
 - (void)closeSocket;
 
+- (NSString *)connectedAddress;
+
 - (void)write:(NSData *)data;
 
 - (void)openSSLCertificateTrustDialog;

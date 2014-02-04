@@ -3321,7 +3321,13 @@
 {
 	[self startRetryTimer];
 
-	[self printDebugInformationToConsole:TXTLS(@"IRCConnectedToServer")];
+	/* If the address we are connecting to is not an IP address,
+	 then we report back the actual IP address it was resolved to. */
+	if ([[self.config serverAddress] isIPAddress]) {
+		[self printDebugInformationToConsole:TXTLS(@"IRCConnectedToServer")];
+	} else {
+		[self printDebugInformationToConsole:TXTFLS(@"IRCConnectedToServerWithAddress", [self.socket connectedAddress])];
+	}
 
 	self.isLoggedIn	= NO;
 	self.isConnected = YES;

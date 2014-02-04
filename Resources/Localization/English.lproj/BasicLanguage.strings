@@ -175,7 +175,8 @@
 "IRCChannelHasWebsite" = "Website is \002%@\002";
 "IRCChannelPreparingRejoinAttempt" = "Attempting to rejoin channel in three seconds.";
 "IRCChannelTopicChanged" = "\002%1$@\002 changed the topic to \002%2$@\002";
-"IRCConnectedToServer" = "Connection to host completed.";
+"IRCConnectedToServer" = "Connection to host established.";
+"IRCConnectedToServerWithAddress" = "Connection to host at [%@] established.";
 "IRCDisconnectedBySleepMode" = "Disconnect for Sleep Mode";
 "IRCDisconnectedByServerRedirect" = "Disconnected for server redirect.";
 "IRCDisconnectedByBadSSLCertificate" = "Disconnected from server because of an untrusted SSL certificate.";
