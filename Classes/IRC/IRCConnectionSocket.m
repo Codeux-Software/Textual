@@ -189,6 +189,11 @@
 #pragma mark -
 #pragma mark Primary Socket Delegate
 
+- (NSString *)connectedAddress
+{
+	return [self.socketConnection connectedHost];
+}
+
 - (BOOL)onSocketWillConnect:(id)sock
 {
 	if (self.connectionUsesSystemSocks) {
@@ -220,16 +225,6 @@
 	self.isConnected = YES;
 
 	[self performSelector:@selector(tcpClientDidConnect)];
-
-	if (self.client.rawModeEnabled) {
-		LogToConsole(@"Debug Information:");
-		LogToConsole(@"	Connected Host: %@", [sock connectedHost]);
-		LogToConsole(@"	Connected Port: %hu", [sock connectedPort]);
-	} else {
-		DebugLogToConsole(@"Debug Information:");
-		DebugLogToConsole(@"	Connected Host: %@", [sock connectedHost]);
-		DebugLogToConsole(@"	Connected Port: %hu", [sock connectedPort]);
-	}
 }
 
 - (void)onSocketDidDisconnect:(id)sock withError:(NSError *)distcError;
