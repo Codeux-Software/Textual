@@ -54,7 +54,7 @@
 	
 	[pasteboard setStringContent:baseURL];
 
-	NSURL *u = [WebView URLFromPasteboard:baseURL];
+	NSURL *u = [WebView URLFromPasteboard:pasteboard];
 
 	/* For some users, u returns nil for valid URLs. There is no
 	 explanation for this so for now we fallback to classic NSURL
