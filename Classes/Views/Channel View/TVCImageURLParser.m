@@ -53,21 +53,23 @@
 	NSPasteboard *pasteboard = [NSPasteboard pasteboardWithUniqueName];
 	
 	[pasteboard setStringContent:baseURL];
-	
-	return [WebView URLFromPasteboard:pasteboard];
+
+	NSURL *u = [WebView URLFromPasteboard:baseURL];
+
+	/* For some users, u returns nil for valid URLs. There is no
+	 explanation for this so for now we fallback to classic NSURL
+	 if it does do this to hack around a fix. */
+	if (u == nil) {
+		u = [NSURL URLWithString:baseURL];
+	}
+
+	return u;
 }
 
 + (NSString *)imageURLFromBase:(NSString *)url
 {
 	/* Convert URL. */
 	NSURL *u = [TVCImageURLParser URLFromWebViewPasteboard:url];
-
-	/* For some users, u returns nil for valid URLs. There is no 
-	 explanation for this so for now we fallback to classic NSURL
-	 if it does do this to hack around a fix. */
-	if (u == nil) {
-		u = [NSURL URLWithString:url];
-	}
 
 	NSString *scheme = [u scheme];
 	
