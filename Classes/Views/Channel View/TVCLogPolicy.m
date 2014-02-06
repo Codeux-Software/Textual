@@ -43,10 +43,6 @@
 
 #define _WebMenuItemTagIRCopServices	42354
 
-@interface TVCLogPolicy ()
-@property (nonatomic, readonly, uweak) TXMenuController *menuController;
-@end
-
 @implementation TVCLogPolicy
 
 - (void)webView:(TVCLogView *)sender mouseDidMoveOverElement:(NSDictionary *)elementInformation modifierFlags:(NSUInteger)modifierFlags
@@ -212,11 +208,6 @@
 	} else {
 		[listener use];
 	}
-}
-
-- (TXMenuController *)menuController
-{
-	return self.masterController.menuController;
 }
 
 @end
