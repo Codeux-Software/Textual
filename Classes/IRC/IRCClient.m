@@ -2633,6 +2633,8 @@
 			NSString *section2 = [s.getTokenIncludingQuotes string];
 			NSString *section3 = [s.getTokenIncludingQuotes string];
 
+			BOOL applyToAll = NSObjectsAreEqual(section2, @"-a");
+
 			NSArray *providedKeys = @[
 				  @"Send Authentication Requests to UserServ",
 				  @"Hide Network Unavailability Notices on Reconnect"
@@ -2657,69 +2659,75 @@
 			}
 			else if (NSObjectsAreEqual(section1, @"enable"))
 			{
-				if (NSObjectIsEmpty(section2)) {
+				if ((applyToAll == NO && NSObjectIsEmpty(section2)) ||
+					(applyToAll		  && NSObjectIsEmpty(section3)))
+				{
 					[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandInvalidSyntaxError")];
 				} else {
-					if ([providedKeys containsObject:section2] == NO) {
-						[self printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureCannotEnable", section2)];
+					if ((applyToAll == NO && [providedKeys containsObject:section2] == NO) ||
+						(applyToAll		  && [providedKeys containsObject:section3] == NO))
+					{
+						if (applyToAll) {
+							[self printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureCannotEnable", section3)];
+						} else {
+							[self printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureCannotEnable", section2)];
+						}
 					} else {
-						[[self auxiliaryConfiguration] setBool:YES forKey:section2];
+						if (applyToAll) {
+							for (IRCClient *u in [self.worldController clients]) {
+								[[u.config auxiliaryConfiguration] setBool:YES forKey:section3];
 
-						[self printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureEnabled", section2)];
+								if (u == self) {
+									[u printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureEnabled", section3)];
+								} else {
+									[u printDebugInformationToConsole:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureEnabled", section3)];
+								}
+							}
+						} else {
+							[[self auxiliaryConfiguration] setBool:YES forKey:section2];
+
+							[self printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureEnabled", section2)];
+						}
+
+						[self.worldController save];
 					}
 				}
 			}
 			else if (NSObjectsAreEqual(section1, @"disable"))
 			{
-				if (NSObjectIsEmpty(section2)) {
+				if ((applyToAll == NO && NSObjectIsEmpty(section2)) ||
+					(applyToAll		  && NSObjectIsEmpty(section3)))
+				{
 					[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandInvalidSyntaxError")];
 				} else {
-					if ([providedKeys containsObject:section2] == NO) {
-						[self printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureCannotDisable", section2)];
+					if ((applyToAll == NO && [providedKeys containsObject:section2] == NO) ||
+						(applyToAll		  && [providedKeys containsObject:section3] == NO))
+					{
+						if (applyToAll) {
+							[self printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureCannotDisable", section3)];
+						} else {
+							[self printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureCannotDisable", section2)];
+						}
 					} else {
-						[[self auxiliaryConfiguration] setBool:NO forKey:section2];
+						if (applyToAll) {
+							for (IRCClient *u in [self.worldController clients]) {
+								[[u.config auxiliaryConfiguration] setBool:NO forKey:section3];
 
-						[self printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureDisabled", section2)];
+								if (u == self) {
+									[u printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureDisabled", section3)];
+								} else {
+									[u printDebugInformationToConsole:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureDisabled", section3)];
+								}
+							}
+						} else {
+							[[self auxiliaryConfiguration] setBool:NO forKey:section2];
+
+							[self printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureDisabled", section2)];
+						}
+
+						[self.worldController save];
 					}
 				}
-			}
-			else if (NSObjectsAreEqual(section1, @"write"))
-			{
-				if (NSObjectIsEmpty(section2)) {
-					[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandInvalidSyntaxError")];
-				} else {
-					[[self auxiliaryConfiguration] setObject:section3 forKey:section2];
-				}
-			}
-			else if (NSObjectsAreEqual(section1, @"read"))
-			{
-				id settingValue;
-
-				if (NSObjectIsEmpty(section2)) {
-					settingValue =  [self auxiliaryConfiguration];
-				} else {
-					settingValue = [[self auxiliaryConfiguration] objectForKey:section2];
-				}
-
-				NSString *message = [NSString stringWithFormat:@"%@", settingValue];
-
-				NSArray *messages = [message split:NSStringNewlinePlaceholder];
-
-				for (NSString *value in messages) {
-					[self printDebugInformation:[NSString stringWithFormat:@"%@ => %@", section2, value]];
-				}
-			}
-			else if (NSObjectsAreEqual(section1, @"delete"))
-			{
-				if (NSObjectIsEmpty(section2)) {
-					[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandInvalidSyntaxError")];
-				} else {
-					[[self auxiliaryConfiguration] removeObjectForKey:section2];
-				}
-			}
-			else
-			{
-				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandInvalidSyntaxError")];
 			}
 
 			break;
