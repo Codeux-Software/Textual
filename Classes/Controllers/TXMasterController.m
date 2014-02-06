@@ -167,6 +167,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[self.serverList reloadData];
 	
 	[self.worldController setupTree];
+	[self.worldController setupOtherServices];
 
 	[self.memberList setTarget:self.menuController];
 	[self.memberList setDoubleAction:@selector(memberListDoubleClicked:)];

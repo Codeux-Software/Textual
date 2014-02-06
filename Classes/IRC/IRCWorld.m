@@ -60,6 +60,8 @@
 
 @implementation IRCWorld;
 
+@synthesize isoStandardDateFormatter = _isoStandardDateFormatter;
+
 #pragma mark -
 #pragma mark Initialization
 
@@ -86,7 +88,7 @@
 	}
 
 	if ([config boolForKey:@"soundIsMuted"]) {
-		[self.masterController.menuController toggleMuteOnNotificationSoundsShortcut:NSOnState];
+		[self.menuController toggleMuteOnNotificationSoundsShortcut:NSOnState];
 	}
 
 	self.isPopulatingSeeds = NO;
@@ -141,10 +143,35 @@
 	[self updateNavigationChannelList];
 }
 
+- (void)setupOtherServices
+{
+	/* Setup reachability. */
+		 _networkReachability = [OELReachability reachabilityForInternetConnection];
+
+	[self.networkReachability setReachableBlock:^(OELReachability *reachability) {
+		[[IRCWorld worldController] reachabilityChanged:YES];
+	}];
+
+	[self.networkReachability setUnreachableBlock:^(OELReachability *reachability) {
+		[[IRCWorld worldController] reachabilityChanged:NO];
+	}];
+
+	[self.networkReachability startNotifier];
+}
+
+- (void)reachabilityChanged:(BOOL)reachable
+{
+	dispatch_async(dispatch_get_main_queue(), ^{
+		for (IRCClient *u in [self clients]) {
+			[u reachabilityChanged:reachable];
+		}
+	});
+}
+
 - (void)updateNavigationChannelList
 {
 	/* Populate navigation list. */
-	[self.masterController.menuController populateNavgiationChannelList];
+	[self.menuController populateNavgiationChannelList];
 }
 
 - (NSMutableDictionary *)dictionaryValue
@@ -174,6 +201,8 @@
 
 - (void)prepareForApplicationTermination
 {
+	[self.networkReachability stopNotifier];
+
 	for (IRCClient *c in self.clients) {
 		[c prepareForApplicationTermination];
 	}

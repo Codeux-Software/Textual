@@ -93,7 +93,6 @@
 @property (nonatomic, assign) BOOL sendLagcheckReplyToChannel;
 @property (nonatomic, assign) BOOL timeoutWarningShownToUser;
 @property (nonatomic, assign) NSInteger tryingNickNumber;
-@property (nonatomic, assign) NSInteger connectionReconnectCount;
 @property (nonatomic, assign) NSUInteger CAPpausedStatus;
 @property (nonatomic, assign) NSTimeInterval lastLagCheck;
 @property (nonatomic, strong) NSString *myHost;
@@ -108,7 +107,6 @@
 @property (nonatomic, strong) TLOTimer *commandQueueTimer;
 @property (nonatomic, strong) NSMutableArray *commandQueue;
 @property (nonatomic, strong) NSMutableDictionary *trackedUsers;
-@property (nonatomic, strong) Reachability *hostReachability;
 @end
 
 @implementation IRCClient
@@ -176,8 +174,6 @@
 
 	[self.socket close];
 
-	[self destroyReachability];
-
 #ifdef TEXTUAL_TRIAL_BINARY
 	[self.trialPeriodTimer stop];
 #endif
@@ -198,8 +194,6 @@
 	} else {
 		return;
 	}
-
-	[self setupReachability];
 
 	[self resetAllPropertyValues];
 }
@@ -337,8 +331,6 @@
 	}
 		
 	[self.config writeKeychainItemsToDisk];
-	
-	[self setupReachability];
 	
 	if (ignoreListChanged) {
 		[self updateIgnoreConfiguration:YES];
@@ -512,53 +504,13 @@
 #pragma mark -
 #pragma mark Reachability
 
-- (void)setupReachability
+- (BOOL)isHostReachable
 {
-	[self destroyReachability];
-
-	 self.hostReachability = [Reachability reachabilityWithHostname:self.config.serverAddress];
-	[self.hostReachability setReachableOnWWAN:NO];
-
-	__unsafe_unretained typeof(self) weakSelf = self;
-
-	[self.hostReachability setReachableBlock:^(Reachability *reachability) {
-		if (weakSelf) {
-			[weakSelf reachabilityChanged:YES];
-		}
-	}];
-
-	[self.hostReachability setUnreachableBlock:^(Reachability *reachability) {
-		if (weakSelf) {
-			[weakSelf reachabilityChanged:NO];
-		}
-	}];
-
-	[self.hostReachability startNotifier];
-}
-
-- (void)destroyReachability
-{
-	PointerIsNotEmptyAssert(self.hostReachability);
-
-	[self.hostReachability setReachableBlock:nil];
-	[self.hostReachability setUnreachableBlock:nil];
-
-	[self.hostReachability stopNotifier];
-	 self.hostReachability = nil;
+	return ([[[self worldController] networkReachability] isReachable]);
 }
 
 - (void)reachabilityChanged:(BOOL)reachable
 {
-	if (self.rawModeEnabled) {
-		LogToConsole(@"%@ %@ %@", self.config.serverAddress,
-								self.hostReachability.currentReachabilityString,
-								self.hostReachability.currentReachabilityFlags);
-	} else {
-		DebugLogToConsole(@"%@ %@ %@", self.config.serverAddress,
-						  self.hostReachability.currentReachabilityString,
-						  self.hostReachability.currentReachabilityFlags);
-	}
-
 	if (self.isLoggedIn) {
 		if (reachable == NO) {
 			if (self.config.performDisconnectOnReachabilityChange) {
@@ -2068,9 +2020,9 @@
 				
 			if (NSObjectIsEmpty(uncutInput) || PointerIsEmpty(selChannel)) {
 				if (isIgnoreCommand) {
-                    [self.masterController.menuController showServerPropertyDialog:self withDefaultView:@"addressBook" andContext:@"--"];
+                    [self.menuController showServerPropertyDialog:self withDefaultView:@"addressBook" andContext:@"--"];
 				} else {
-                    [self.masterController.menuController showServerPropertyDialog:self withDefaultView:@"addressBook" andContext:@"-"];
+                    [self.menuController showServerPropertyDialog:self withDefaultView:@"addressBook" andContext:@"-"];
 				}
 			} else {
 				NSString *nickname = s.getToken.string;
@@ -2079,9 +2031,9 @@
 
 				if (PointerIsEmpty(user)) {
 					if (isIgnoreCommand) {
-                        [self.masterController.menuController showServerPropertyDialog:self withDefaultView:@"addressBook" andContext:nickname];
+                        [self.menuController showServerPropertyDialog:self withDefaultView:@"addressBook" andContext:nickname];
 					} else {
-                        [self.masterController.menuController showServerPropertyDialog:self withDefaultView:@"addressBook" andContext:@"-"];
+                        [self.menuController showServerPropertyDialog:self withDefaultView:@"addressBook" andContext:@"-"];
 					}
 
 					return;
@@ -2416,7 +2368,7 @@
 			} else {
 				[self printDebugInformation:TXTLS(@"SoundIsNowMuted")];
 
-				[self.masterController.menuController toggleMuteOnNotificationSoundsShortcut:NSOffState];
+				[self.menuController toggleMuteOnNotificationSoundsShortcut:NSOffState];
 			}
 
 			break;
@@ -2426,7 +2378,7 @@
 			if (self.worldController.isSoundMuted) {
 				[self printDebugInformation:TXTLS(@"SoundIsNoLongerMuted")];
 
-				[self.masterController.menuController toggleMuteOnNotificationSoundsShortcut:NSOnState];
+				[self.menuController toggleMuteOnNotificationSoundsShortcut:NSOnState];
 			} else {
 				[self printDebugInformation:TXTLS(@"SoundIsNotMuted")];
 			}
@@ -4682,7 +4634,7 @@
          of our server properties so we are going to call that instead of creating a 
          new instance of TDCServerSheet here ourselves. */
 
-        [self.masterController.menuController showServerPropertyDialog:self withDefaultView:@"floodControl" andContext:nil];
+        [self.menuController showServerPropertyDialog:self withDefaultView:@"floodControl" andContext:nil];
     }
 }
 
@@ -4902,8 +4854,6 @@
   
 	[self postEventToViewController:@"serverConnected"];
 
-	self.connectionReconnectCount = 0;
-	
 	self.serverRedirectAddressTemporaryStore = nil;
 	self.serverRedirectPortTemporaryStore = 0;
 
@@ -5813,7 +5763,7 @@
 													 dateStyle:NSDateFormatterLongStyle
 													 timeStyle:NSDateFormatterLongStyle];
 
-            TXMenuController *menuController = self.masterController.menuController;
+            TXMenuController *menuController = self.menuController;
 
             TDChanBanSheet *chanBanListSheet = [menuController windowFromWindowList:@"TDChanBanSheet"];
 
@@ -5835,7 +5785,7 @@
 													 dateStyle:NSDateFormatterLongStyle
 													 timeStyle:NSDateFormatterLongStyle];
 
-            TXMenuController *menuController = self.masterController.menuController;
+            TXMenuController *menuController = self.menuController;
 
             TDChanInviteExceptionSheet *inviteExceptionSheet = [menuController windowFromWindowList:@"TDChanInviteExceptionSheet"];
 
@@ -5857,7 +5807,7 @@
 													 dateStyle:NSDateFormatterLongStyle
 													 timeStyle:NSDateFormatterLongStyle];
 
-            TXMenuController *menuController = self.masterController.menuController;
+            TXMenuController *menuController = self.menuController;
 
             TDChanBanExceptionSheet *banExceptionSheet = [menuController windowFromWindowList:@"TDChanBanExceptionSheet"];
 
@@ -6352,6 +6302,18 @@
 
 - (void)onReconnectTimer:(id)sender
 {
+	if ([self isHostReachable] == NO) {
+		/* If the host is not reachable at the time of connect,
+		 then inform the user. */
+		[self printDebugInformationToConsole:TXTFLS(@"ConnectReconnectCancelledDueToHostNotReachable", @(_reconnectInterval))];
+
+		/* Restart timer. */
+		[self startReconnectTimer];
+
+		return; // Break chain.
+	}
+
+	/* Perform actual reconnect attempt. */
 	[self connect:IRCConnectReconnectMode];
 }
 
@@ -6697,11 +6659,7 @@
 	[self logFileWriteSessionBegin];
 
 	if (mode == IRCConnectReconnectMode) {
-		self.connectionReconnectCount += 1;
-
-		NSString *reconnectCount = TXFormattedNumber(self.connectionReconnectCount);
-		
-		[self printDebugInformationToConsole:TXTFLS(@"IRCIsReconnectingWithAttemptCount", reconnectCount)];
+		[self printDebugInformationToConsole:TXTLS(@"IRCIsReconnecting")];
 	} else if (mode == IRCConnectBadSSLCertificateMode) {
 		[self printDebugInformationToConsole:TXTLS(@"IRCIsReconnecting")];
 	} else if (mode == IRCConnectRetryMode) {
@@ -6765,11 +6723,11 @@
 	if (self.isLoggedIn) {
 		return;
 	}
-	
-	if ([self.hostReachability isReachableViaWiFi]) {
-		[self connect];
+
+	if ([self isHostReachable]) {
+		[self connect:IRCConnectReconnectMode];
 	} else {
-		[self printDebugInformationToConsole:TXTFLS(@"AutoConnectAfterWakeUpHostNotReachable", self.config.serverAddress, @(self.connectDelay))];
+		[self printDebugInformationToConsole:TXTFLS(@"AutoConnectAfterWakeUpHostNotReachable", @(self.connectDelay))];
 
 		[self performSelector:@selector(autoConnectAfterWakeUp) withObject:nil afterDelay:self.connectDelay];
 	}
@@ -6830,8 +6788,7 @@
 - (void)cancelReconnect
 {
 	self.reconnectEnabled = NO;
-	self.connectionReconnectCount = 0;
-
+	
 	[self stopReconnectTimer];
 }
 
@@ -7632,7 +7589,7 @@
 
 - (void)createChanBanListDialog
 {
-    TXMenuController *menuController = self.masterController.menuController;
+    TXMenuController *menuController = self.menuController;
 
     [menuController popWindowSheetIfExists];
     
@@ -7667,7 +7624,7 @@
 		}
 	}
 
-    [self.masterController.menuController removeWindowFromWindowList:@"TDChanBanSheet"];
+    [self.menuController removeWindowFromWindowList:@"TDChanBanSheet"];
 }
 
 #pragma mark -
@@ -7675,7 +7632,7 @@
 
 - (void)createChanInviteExceptionListDialog
 {
-    TXMenuController *menuController = self.masterController.menuController;
+    TXMenuController *menuController = self.menuController;
 
     [menuController popWindowSheetIfExists];
 
@@ -7710,7 +7667,7 @@
 		}
 	}
 
-    [self.masterController.menuController removeWindowFromWindowList:@"TDChanInviteExceptionSheet"];
+    [self.menuController removeWindowFromWindowList:@"TDChanInviteExceptionSheet"];
 }
 
 #pragma mark -
@@ -7718,7 +7675,7 @@
 
 - (void)createChanBanExceptionListDialog
 {
-    TXMenuController *menuController = self.masterController.menuController;
+    TXMenuController *menuController = self.menuController;
 
     [menuController popWindowSheetIfExists];
 
@@ -7753,7 +7710,7 @@
 		}
 	}
 
-    [self.masterController.menuController removeWindowFromWindowList:@"TDChanBanExceptionSheet"];
+    [self.menuController removeWindowFromWindowList:@"TDChanBanExceptionSheet"];
 }
 
 #pragma mark -
@@ -7768,12 +7725,12 @@
 
 - (TDCListDialog *)listDialog
 {
-    return [self.masterController.menuController windowFromWindowList:self.listDialogWindowKey];
+    return [self.menuController windowFromWindowList:self.listDialogWindowKey];
 }
 
 - (void)createChannelListDialog
 {
-    TXMenuController *menuController = self.masterController.menuController;
+    TXMenuController *menuController = self.menuController;
 
     NSAssertReturn([menuController popWindowViewIfExists:self.listDialogWindowKey] == NO);
     
@@ -7801,7 +7758,7 @@
 
 - (void)listDialogWillClose:(TDCListDialog *)sender
 {
-    [self.masterController.menuController removeWindowFromWindowList:self.listDialogWindowKey];
+    [self.menuController removeWindowFromWindowList:self.listDialogWindowKey];
 }
 
 #pragma mark -

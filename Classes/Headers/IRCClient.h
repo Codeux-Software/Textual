@@ -124,6 +124,8 @@ typedef enum IRCDisconnectMode : NSInteger {
 - (NSString *)localNickname;
 - (NSString *)localHostmask;
 
+- (void)reachabilityChanged:(BOOL)reachable;
+
 - (void)autoConnect:(NSInteger)delay afterWakeUp:(BOOL)afterWakeUp;
 
 - (void)prepareForApplicationTermination;

@@ -53,7 +53,7 @@
 		[self displayView:self.welcomeAddServerTrialView];
 		
 		[self.welcomePurchaseTextualButton setAction:@selector(openMacAppStoreDownloadPage:)];
-		[self.welcomePurchaseTextualButton setTarget:self.masterController.menuController];
+		[self.welcomePurchaseTextualButton setTarget:self.menuController];
 #else
 		[self displayView:self.welcomeAddServerView];
 #endif

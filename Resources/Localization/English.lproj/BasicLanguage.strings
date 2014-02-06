@@ -43,8 +43,6 @@
 "ApplicationWantsToTerminatePromptMessage" = "Quitting will disconnect you from any IRC server that you are connected to until you restart Textual.";
 "ApplicationWantsToTerminatePromptTitle" = "Do you want to quit Textual?";
 
-"AutoConnectAfterWakeUpHostNotReachable" = "%1$@ is not reachable. Delaying auto connect after waking up for %2$@ seconds. To force connect, use command \002/conn\002 or right-click server and click Connect.";
-
 "BlowfishEncryptionFailed" = "Encryption of message failed; not sending to server.";
 "BlowfishEncryptionKeyChanged" = "Encryption key changed; adjusting accordingly.";
 "BlowfishEncryptionStarted" = "Encryption started.";
@@ -98,7 +96,12 @@
 
 "GlineReason" = "35d Your behavior is not conducive to the desired environment.";
 
+"AutoConnectAfterWakeUpHostNotReachable" = "Delaying auto connect after waking up for %1$@ seconds due to the unavailability of the local network. To force connect at any time, right-click the server and click \002Connect\002.";
+
+"ConnectReconnectCancelledDueToHostNotReachable" = "A reconnect attempt has been cancelled because the local network is currently unavailable. Another attempt will be performed in %@ seconds. To force connect at any time, right-click the server and select \002Connect\002. Alternatively, to cancel these reconnect attempts, right-click the server and select \002Cancel Reconnect\002.";
+
 "ClientAuxiliaryConfigurationCommandInvalidSyntaxError" = "Invalid Syntax. Type \"/defaults help\" for more information.";
+
 "ClientAuxiliaryConfigurationCommandHelpInformation_01" = "The \002defaults\002 command provides the ability to enable or disable certain features of the selected server which are not";
 "ClientAuxiliaryConfigurationCommandHelpInformation_02" = "accessible through the user interface. These features are made available through this command as they are rarely used";
 "ClientAuxiliaryConfigurationCommandHelpInformation_03" = "and would otherwise waste unnecessary space being presented in an actual interactive list.";
@@ -109,8 +112,10 @@
 "ClientAuxiliaryConfigurationCommandHelpInformation_08" = "\t\"/defaults features\" — Opens Webpage in the default browser which contains list of supported features.";
 "ClientAuxiliaryConfigurationCommandHelpInformation_09" = " ";
 "ClientAuxiliaryConfigurationCommandHelpInformation_10" = "The \002<token>\002 parameter supplied to this command can be encapsulated in double quotes (\") to allow for spaces.";
+
 "ClientAuxiliaryConfigurationCommandFeatureCannotEnable" = "Cannot enable the feature \"%@\" as it is not supported.";
 "ClientAuxiliaryConfigurationCommandFeatureCannotDisable" = "Cannot disable the feature \"%@\" as it is not supported.";
+
 "ClientAuxiliaryConfigurationCommandFeatureEnabled" = "Enabled Feature: %@";
 "ClientAuxiliaryConfigurationCommandFeatureDisabled" = "Disabled Feature: %@";
 
@@ -190,7 +195,6 @@
 "IRCIsConnectingWithNormalProxy" = "Connecting to [%1$@, port %2$ld] via [%3$@, port %4$ld]";
 "IRCIsConnectingWithSystemProxy" = "Connecting to [%1$@, port %2$ld] via System Socks";
 "IRCIsReconnecting" = "Reconnecting …";
-"IRCIsReconnectingWithAttemptCount" = "Reconnecting (attempt #%@) …";
 "IRCIsRetryingConnection" = "Retrying …";
 "IRCModeSet" = "\002%1$@\002 sets mode \002%2$@\002";
 "IRCRawModeIsDisabled" = "Raw mode has been disabled. Textual will no longer output raw data.";
