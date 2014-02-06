@@ -161,11 +161,9 @@
 
 - (void)reachabilityChanged:(BOOL)reachable
 {
-	dispatch_async(dispatch_get_main_queue(), ^{
-		for (IRCClient *u in [self clients]) {
-			[u reachabilityChanged:reachable];
-		}
-	});
+	for (IRCClient *u in [self clients]) {
+		[u reachabilityChanged:reachable];
+	}
 }
 
 - (void)updateNavigationChannelList
