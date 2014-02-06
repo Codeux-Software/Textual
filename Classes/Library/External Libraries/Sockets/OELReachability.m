@@ -28,9 +28,7 @@
 #import "OELReachability.h"
 
 @interface OELReachability ()
-@property (nonatomic, strong) id reachabilityObject;
 @property (nonatomic, assign) SCNetworkReachabilityRef reachabilityRef;
-@property (nonatomic, assign) dispatch_queue_t reachabilitySerialQueue;
 
 - (void)reachabilityChanged:(SCNetworkReachabilityFlags)flags;
 @end
@@ -95,58 +93,23 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 
 - (BOOL)startNotifier
 {
-    SCNetworkReachabilityContext context = { 0, NULL, NULL, NULL, NULL };
+    SCNetworkReachabilityContext context = {0, (__bridge void *)(self), NULL, NULL, NULL};
 
-    self.reachabilityObject = self;
-
-    self.reachabilitySerialQueue = dispatch_queue_create("com.tonymillion.reachability", NULL);
-
-	if (self.reachabilitySerialQueue == nil) {
-        return NO;
-    }
-
-    context.info = (__bridge void *)self;
-
-    if (SCNetworkReachabilitySetCallback(self.reachabilityRef, TMReachabilityCallback, &context) == FALSE) {
-        if (self.reachabilitySerialQueue) {
-            dispatch_release(self.reachabilitySerialQueue);
-						     self.reachabilitySerialQueue = nil;
+    if (SCNetworkReachabilitySetCallback(self.reachabilityRef, TMReachabilityCallback, &context)) {
+		if (SCNetworkReachabilityScheduleWithRunLoop(self.reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode))
+        {
+            return YES;
         }
+	}
 
-        self.reachabilityObject = nil;
-
-        return NO;
-    }
-
-    if (SCNetworkReachabilitySetDispatchQueue(self.reachabilityRef, self.reachabilitySerialQueue) == FALSE) {
-        SCNetworkReachabilitySetCallback(self.reachabilityRef, NULL, NULL);
-
-        if (self.reachabilitySerialQueue) {
-            dispatch_release(self.reachabilitySerialQueue);
-							 self.reachabilitySerialQueue = nil;
-        }
-
-        self.reachabilityObject = nil;
-
-        return NO;
-    }
-
-    return YES;
+	return NO;
 }
 
 - (void)stopNotifier
 {
     SCNetworkReachabilitySetCallback(self.reachabilityRef, NULL, NULL);
 
-    SCNetworkReachabilitySetDispatchQueue(self.reachabilityRef, NULL);
-
-    if (self.reachabilitySerialQueue)
-    {
-		dispatch_release(self.reachabilitySerialQueue);
-						 self.reachabilitySerialQueue = nil;
-    }
-
-    self.reachabilityObject = nil;
+	SCNetworkReachabilityUnscheduleFromRunLoop(self.reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
 }
 
 #define testcase (kSCNetworkReachabilityFlagsConnectionRequired | kSCNetworkReachabilityFlagsTransientConnection)
