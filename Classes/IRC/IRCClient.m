@@ -2633,7 +2633,10 @@
 			NSString *section2 = [s.getTokenIncludingQuotes string];
 			NSString *section3 = [s.getTokenIncludingQuotes string];
 
-			NSArray *providedKeys = @[@"Send Authentication Requests to UserServ"];
+			NSArray *providedKeys = @[
+				  @"Send Authentication Requests to UserServ",
+				  @"Hide Network Unavailability Notices on Reconnect"
+			];
 
 			if (NSObjectsAreEqual(section1, @"help"))
 			{
@@ -3824,7 +3827,7 @@
 										self.isWaitingForNickServ = YES;
 
 										/* Check auxiliary configuration. */
-										BOOL sendToUserServ = [self.auxiliaryConfiguration boolForKey:@"Send Authentication Requests to UserServ"];
+										BOOL sendToUserServ = [[self auxiliaryConfiguration] boolForKey:@"Send Authentication Requests to UserServ"];
 
 										if (sendToUserServ) {
 											IDMessage = [NSString stringWithFormat:@"login %@ %@", self.config.nickname, self.config.nicknamePassword];
@@ -6305,7 +6308,11 @@
 	if ([self isHostReachable] == NO) {
 		/* If the host is not reachable at the time of connect,
 		 then inform the user. */
-		[self printDebugInformationToConsole:TXTFLS(@"ConnectReconnectCancelledDueToHostNotReachable", @(_reconnectInterval))];
+		BOOL hideWarnings = [[self auxiliaryConfiguration] boolForKey:@"Hide Network Unavailability Notices on Reconnect"];
+
+		if (hideWarnings == NO) {
+			[self printDebugInformationToConsole:TXTFLS(@"ConnectReconnectCancelledDueToHostNotReachable", @(_reconnectInterval))];
+		}
 
 		/* Restart timer. */
 		[self startReconnectTimer];
