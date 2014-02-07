@@ -1877,8 +1877,8 @@
 		opString = [opString stringByAppendingFormat:@"%@ ", m.nickname];
 		
 		currentIndex += 1;
-		
-		if (currentIndex == TXMaximumNodesPerModeCommand) {
+
+		if (currentIndex == [u.isupport modesCount]) {
 			[u sendCommand:[NSString stringWithFormat:@"%@ %@", tmode, opString] completeTarget:YES target:c.name];
 			
 			opString = NSStringEmptyPlaceholder;
