@@ -78,8 +78,6 @@
 		};
 
 		/* Add the operations. */
-		[sender.pendingPrintOperations addObject:operation];
-
 		[self addOperation:operation];
 	});
 }
@@ -90,28 +88,22 @@
 /* cancelOperationsForViewController should be called from the main queue. */
 - (void)cancelOperationsForViewController:(TVCLogController *)controller
 {
-	/* Pending operations. */
-	NSArray *pendingOperations = controller.pendingPrintOperations;
-
-	NSObjectIsEmptyAssert(pendingOperations);
-
 	/* Cancel all. */
-	for (NSOperation *operation in pendingOperations) {
-		[operation cancel];
+	for (id operation in [self operations]) {
+		if ([operation controller] == controller) {
+			[operation cancel];
+		}
 	}
-
-	/* Remove them. */
-	[controller.pendingPrintOperations removeAllObjects];
 }
 
 - (void)destroyOperationsForChannel:(IRCChannel *)channel
 {
-	[self cancelOperationsForViewController:channel.viewController];
+	[self cancelOperationsForViewController:[channel viewController]];
 }
 
 - (void)destroyOperationsForClient:(IRCClient *)client
 {
-	[self cancelOperationsForViewController:client.viewController];
+	[self cancelOperationsForViewController:[client viewController]];
 }
 
 #pragma mark -
@@ -122,18 +114,14 @@
 	dispatch_async(dispatch_get_main_queue(), ^{
 		PointerIsEmptyAssert(controller);
 
-		/* Pending operations. */
-		NSArray *pendingOperations = controller.pendingPrintOperations;
+		for (id operation in [self operations]) {
+			if ([operation controller] == controller) {
+				[operation willChangeValueForKey:@"isReady"];
+				[operation didChangeValueForKey:@"isReady"];
 
-		NSObjectIsEmptyAssert(pendingOperations);
-
-		/* We only have to update the state of the top-most operation which will
-		 be the oldest because once that finishes printing… the dependencies will
-		 follow it. */
-		TVCLogControllerOperationItem *topOp = pendingOperations[0];
-
-		[topOp willChangeValueForKey:@"isReady"];
-		[topOp didChangeValueForKey:@"isReady"];
+				break; // Only update oldest operation matching controller.
+			}
+		}
 	});
 }
 
@@ -146,8 +134,6 @@
 
 		[operation willChangeValueForKey:@"isFinished"];
 		[operation didChangeValueForKey:@"isFinished"];
-
-		[operation.controller.pendingPrintOperations removeObject:operation];
 	});
 }
 
@@ -158,16 +144,13 @@
 {
 	/* This is called internally already from a method that is running on the
 	 main queue so we will not wrap this in it. */
-	
-	PointerIsEmptyAssertReturn(controller, nil);
+	for (id operation in [[self operations] reverseObjectEnumerator]) {
+		if ([operation controller] == controller) {
+			return operation;
+		}
+	}
 
-	/* Pending operations. */
-	NSArray *pendingOperations = controller.pendingPrintOperations;
-
-	NSObjectIsEmptyAssertReturn(pendingOperations, nil);
-
-	/* The last object is the newest object pending. */
-	return [pendingOperations lastObject];
+	return nil;
 }
 
 @end
@@ -192,10 +175,9 @@
 			[self addDependency:lastOp];
 		}
 
-		self.controller = controller;
+		[self setController:controller];
 
 		return self;
-
 	}
 
 	return nil;
@@ -213,7 +195,7 @@
 
 - (BOOL)isReady
 {
-	if (self.dependencies.count < 1) {
+	if ([self.dependencies count] < 1) {
 		return ([self.controller.view isLoading] == NO && self.controller.isLoaded);
 	} else {
 		return [self.dependencies[0] isFinished];

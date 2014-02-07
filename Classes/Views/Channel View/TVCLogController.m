@@ -54,14 +54,16 @@
 {
 	if ((self = [super init])) {
 		self.highlightedLineNumbers	= [NSMutableArray new];
-		self.pendingPrintOperations = [NSMutableArray new];
 
 		self.activeLineCount = 0;
+
 		self.lastVisitedHighlight = nil;
 
 		self.isLoaded = NO;
+
 		self.reloadingBacklog = NO;
 		self.reloadingHistory = NO;
+		
 		self.needsLimitNumberOfLines = NO;
 
 		self.maximumLineCount = 300;

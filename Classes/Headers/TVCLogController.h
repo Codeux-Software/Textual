@@ -55,7 +55,6 @@
 
 @property (assign) BOOL reloadingBacklog;
 @property (assign) BOOL reloadingHistory;
-@property (strong) NSMutableArray *pendingPrintOperations; // Plugins… do not try and modify this array. EVER!
 
 - (void)setUp;
 - (void)notifyDidBecomeVisible;
