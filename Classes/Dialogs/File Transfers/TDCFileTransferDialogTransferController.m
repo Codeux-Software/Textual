@@ -85,9 +85,9 @@
 	
 	NSString *clientDispatchQueueName = [NSString stringWithFormat:@"DCC-SocketDispatchQueue-%@", uniqueID];
 	NSString *clientSocketQueueName = [NSString stringWithFormat:@"DCC-SocketReadWriteQueue-%@", uniqueID];
-	
+
 	_serverDispatchQueue = dispatch_queue_create([clientDispatchQueueName UTF8String], NULL);
-	_serverDispatchQueue = dispatch_queue_create([clientSocketQueueName UTF8String], NULL);
+	_serverSocketQueue = dispatch_queue_create([clientSocketQueueName UTF8String], NULL);
 }
 
 - (void)destroyDispatchQueues
