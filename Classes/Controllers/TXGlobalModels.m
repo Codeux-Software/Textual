@@ -150,6 +150,10 @@ NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue, NSArray
 		
 		if ([finalResult length] >= 3) {
 			[finalResult safeDeleteCharactersInRange:NSMakeRange((finalResult.length - 2), 2)];
+		} else {
+			NSString *emptyTime = [NSString stringWithFormat:@"0 %@", TXTLS(@"TimeConvertPlural[SECOND]")];
+
+			[finalResult setString:emptyTime];
 		}
 		
 		return finalResult;
