@@ -884,92 +884,90 @@
 {
 	/* Continue with a normal print job. */
 	TVCLogControllerOperationBlock printBlock = ^(id operation, NSDictionary *context) {
-		@autoreleasepool {
-			NSAssertReturn(self.isTerminating == NO);
+		NSAssertReturn(self.isTerminating == NO);
 
-			/* Increment by one. */
-			self.activeLineCount += 1;
+		/* Increment by one. */
+		self.activeLineCount += 1;
 
-			/* Render everything. */
-			NSDictionary *resultInfo = nil;
+		/* Render everything. */
+		NSDictionary *resultInfo = nil;
 
-			NSString *html = [self renderLogLine:logLine resultInfo:&resultInfo];
+		NSString *html = [self renderLogLine:logLine resultInfo:&resultInfo];
 
-			if (html) {
-				/* Gather result information. */
-				BOOL highlighted = [resultInfo boolForKey:@"wordMatchFound"];
+		if (html) {
+			/* Gather result information. */
+			BOOL highlighted = [resultInfo boolForKey:@"wordMatchFound"];
 
-				NSString *lineNumber = [resultInfo objectForKey:@"lineNumber"];
-			  //NSString *renderTime = [resultInfo objectForKey:@"lineRenderTime"];
+			NSString *lineNumber = [resultInfo objectForKey:@"lineNumber"];
+		  //NSString *renderTime = [resultInfo objectForKey:@"lineRenderTime"];
 
-				NSArray *mentionedUsers = [resultInfo arrayForKey:@"mentionedUsers"];
+			NSArray *mentionedUsers = [resultInfo arrayForKey:@"mentionedUsers"];
 
-				NSDictionary *inlineImageMatches = [resultInfo dictionaryForKey:@"InlineImagesToValidate"];
+			NSDictionary *inlineImageMatches = [resultInfo dictionaryForKey:@"InlineImagesToValidate"];
 
-				dispatch_async(dispatch_get_main_queue(), ^{
-					/* Record highlights. */
-					if (highlighted) {
-						[self.highlightedLineNumbers safeAddObject:lineNumber];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				/* Record highlights. */
+				if (highlighted) {
+					[self.highlightedLineNumbers safeAddObject:lineNumber];
 
-						[self.worldController addHighlightInChannel:self.channel withLogLine:logLine];
-					}
+					[self.worldController addHighlightInChannel:self.channel withLogLine:logLine];
+				}
 
-					/* Do the actual append to WebKit. */
-					[self appendToDocumentBody:html];
+				/* Do the actual append to WebKit. */
+				[self appendToDocumentBody:html];
 
-					/* Inform the style of the new append. */
-					[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
+				/* Inform the style of the new append. */
+				[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
 
-					/* Limit lines. */
-					if (self.maximumLineCount > 0 && (self.activeLineCount - 10) > self.maximumLineCount) {
-						[self setNeedsLimitNumberOfLines];
-					}
+				/* Limit lines. */
+				if (self.maximumLineCount > 0 && (self.activeLineCount - 10) > self.maximumLineCount) {
+					[self setNeedsLimitNumberOfLines];
+				}
 
-					/* Begin processing inline images. */
-					/* We go through the inline image list here and pass to the loader now so that
-					 we know the links have hit the webview before we even try loading them. */
-					for (NSString *nurl in inlineImageMatches) {
-						TVCImageURLoader *loader = [TVCImageURLoader new];
+				/* Begin processing inline images. */
+				/* We go through the inline image list here and pass to the loader now so that
+				 we know the links have hit the webview before we even try loading them. */
+				for (NSString *nurl in inlineImageMatches) {
+					TVCImageURLoader *loader = [TVCImageURLoader new];
 
-						[loader assesURL:nurl withID:inlineImageMatches[nurl] forController:self];
-					}
+					[loader assesURL:nurl withID:inlineImageMatches[nurl] forController:self];
+				}
 
-					/* Log this log line. */
-					/* It is written to the context here instead of being inserted
-					 on creation because the save: call of the context destroys all
-					 objects to allow their memory to be freed. Therefore, we do
-					 not want an object to be sitting here in the queue waiting to
-					 be written, save: be called, destroyed, queue item ran, then
-					 the object no longer exists to be referenced. */
+				/* Log this log line. */
+				/* It is written to the context here instead of being inserted
+				 on creation because the save: call of the context destroys all
+				 objects to allow their memory to be freed. Therefore, we do
+				 not want an object to be sitting here in the queue waiting to
+				 be written, save: be called, destroyed, queue item ran, then
+				 the object no longer exists to be referenced. */
 
-					/* If the channel is encrypted, then we refuse to write to
-					 the actual historic log so there is no trace of the chatter
-					 on the disk in the form of an unencrypted cache file. */
-					/* Doing it this way does break the ability to reload chatter
-					 in the view as well as playback on restart, but the added
-					 security can be seen as a bonus. */
-					if ([self viewIsEncrypted] == NO) {
-						[logLine performContextInsertion];
-					}
+				/* If the channel is encrypted, then we refuse to write to
+				 the actual historic log so there is no trace of the chatter
+				 on the disk in the form of an unencrypted cache file. */
+				/* Doing it this way does break the ability to reload chatter
+				 in the view as well as playback on restart, but the added
+				 security can be seen as a bonus. */
+				if ([self viewIsEncrypted] == NO) {
+					[logLine performContextInsertion];
+				}
 
-					/* Using informationi provided by conversation tracking we can update our internal
-					 array of favored nicknames for nick completion. */
-					if ([logLine memberType] == TVCLogLineMemberLocalUserType) {
-						[mentionedUsers makeObjectsPerformSelector:@selector(outgoingConversation)];
-					} else {
-						[mentionedUsers makeObjectsPerformSelector:@selector(conversation)];
-					}
+				/* Using informationi provided by conversation tracking we can update our internal
+				 array of favored nicknames for nick completion. */
+				if ([logLine memberType] == TVCLogLineMemberLocalUserType) {
+					[mentionedUsers makeObjectsPerformSelector:@selector(outgoingConversation)];
+				} else {
+					[mentionedUsers makeObjectsPerformSelector:@selector(conversation)];
+				}
 
-					/* Finish up. */
-					PointerIsEmptyAssert(completionBlock);
+				/* Finish up. */
+				PointerIsEmptyAssert(completionBlock);
 
-					completionBlock(highlighted);
-				});
-			}
-
-			/* Finish our printing operations. */
-			[self.printingQueue updateCompletionStatusForOperation:operation];
+				completionBlock(highlighted);
+			});
 		}
+
+		/* Finish our printing operations. */
+		[self.printingQueue updateCompletionStatusForOperation:operation];
 	};
 
 	[self.printingQueue enqueueMessageBlock:printBlock for:self];

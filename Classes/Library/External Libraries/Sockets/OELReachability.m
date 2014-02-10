@@ -37,9 +37,7 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 {
     OELReachability *reachability = ((__bridge OELReachability *)info);
 
-    @autoreleasepool {
-        [reachability reachabilityChanged:flags];
-    }
+	[reachability reachabilityChanged:flags];
 }
 
 @implementation OELReachability
