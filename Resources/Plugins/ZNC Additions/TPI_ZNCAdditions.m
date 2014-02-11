@@ -135,7 +135,7 @@
 	NSString *usernameInt = nil;
 	NSString *addressInt = nil;
 
-	self.sender.hostmask = hostmask;
+	input.sender.hostmask = hostmask;
 
 	if ([hostmask hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt client:client]) {
 		input.sender.nickname = nicknameInt;
