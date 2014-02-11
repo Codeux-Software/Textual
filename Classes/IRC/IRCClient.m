@@ -5333,7 +5333,7 @@
 			NSString *topicow = [m paramAt:2];
 			NSString *settime = [m paramAt:3];
 
-			topicow = [topicow nicknameFromHostmask];
+			topicow = [topicow nicknameFromHostmask:self];
 
 			settime = [NSDateFormatter localizedStringFromDate:[NSDate dateWithTimeIntervalSince1970:settime.doubleValue]
 													 dateStyle:NSDateFormatterLongStyle
@@ -5646,15 +5646,21 @@
 
 				member.supportInfo = self.isupport;
 
-                member.nickname = [nickname nicknameFromHostmask];
-                member.username = [nickname usernameFromHostmask];
-                member.address = [nickname addressFromHostmask];
+				NSString *nicknameInt = nil;
+				NSString *usernameInt = nil;
+				NSString *addressInt = nil;
 
-				if ([c memberWithNickname:member.nickname]) {
-					[c removeMember:member.nickname];
+				if ([nickname hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt client:self]) {
+					member.nickname = nicknameInt;
+					member.username = usernameInt;
+					member.address = addressInt;
+
+					if ([c memberWithNickname:member.nickname]) {
+						[c removeMember:member.nickname];
+					}
+					
+					[c addMember:member];
 				}
-				
-				[c addMember:member];
 			}
 
 			break;

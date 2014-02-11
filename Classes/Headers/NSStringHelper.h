@@ -55,6 +55,9 @@
 #pragma mark 
 #pragma mark String Helpers
 
+/* Providing an IRCClient pointer to many of these methods can
+ help provide server specific configuration validation. */
+
 @interface NSString (TXStringHelper)
 + (id)stringWithBytes:(const void *)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding;
 + (id)stringWithData:(NSData *)data encoding:(NSStringEncoding)encoding;
@@ -89,7 +92,13 @@
 - (NSString *)nicknameFromHostmask;
 - (NSString *)usernameFromHostmask;
 - (NSString *)addressFromHostmask;
-- (NSString *)hostmaskFromRawString;
+
+- (NSString *)nicknameFromHostmask:(IRCClient *)client;
+- (NSString *)usernameFromHostmask:(IRCClient *)client;
+- (NSString *)addressFromHostmask:(IRCClient *)client;
+
+/* Returns NO on invalid host. */
+- (BOOL)hostmaskComponents:(NSString **)nickname username:(NSString **)username address:(NSString **)address client:(IRCClient *)client;
 
 - (NSString *)cleanedServerHostmask;
 
@@ -132,6 +141,7 @@
 - (NSString *)decodeURIFragement;
 
 - (BOOL)isHostmask;
+- (BOOL)isHostmask:(IRCClient *)client;
 
 - (BOOL)isIPv4Address;
 - (BOOL)isIPv6Address;

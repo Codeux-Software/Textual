@@ -131,14 +131,19 @@
 
 	if ([s hasPrefix:@":"]) {
 		NSString *t = [[s getToken] substringFromIndex:1];
-		
-		self.sender.hostmask = t;
-        self.sender.nickname = [t nicknameFromHostmask];
 
-        if ([t isHostmask]) {
-            self.sender.username = [t usernameFromHostmask];
-            self.sender.address = [t addressFromHostmask];
+		NSString *nicknameInt = nil;
+		NSString *usernameInt = nil;
+		NSString *addressInt = nil;
+
+		self.sender.hostmask = t;
+		
+		if ([t hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt client:client]) {
+			self.sender.nickname = nicknameInt;
+            self.sender.username = usernameInt;
+            self.sender.address = addressInt;
         } else {
+			self.sender.nickname = t;
 			self.sender.isServer = YES;
 		}
 	}
