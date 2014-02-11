@@ -129,24 +129,28 @@
 	NSMutableString *s = [input.params[1] mutableCopy];
 
 	/* Define user information. */
-	NSString *hostmask = s.getToken;
-	NSString *nickname = [hostmask nicknameFromHostmask];
+	NSString *hostmask = [s getToken];
 
-	if ([nickname isEqualToString:[client localNickname]]) {
-		return input; // Do not post these events for self.
+	NSString *nicknameInt = nil;
+	NSString *usernameInt = nil;
+	NSString *addressInt = nil;
+
+	self.sender.hostmask = hostmask;
+
+	if ([hostmask hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt client:client]) {
+		input.sender.nickname = nicknameInt;
+		input.sender.username = usernameInt;
+		input.sender.address = addressInt;
+
+		if ([input.sender.nickname isEqualToString:[client localNickname]]) {
+			return input; // Do not post these events for self.
+		}
+	} else {
+		input.sender.nickname = hostmask;
+		input.sender.isServer = YES;
 	}
 
 	input.isPrintOnlyMessage = YES;
-
-	input.sender.hostmask = hostmask;
-	input.sender.nickname = nickname;
-
-	if ([hostmask isHostmask]) {
-		input.sender.username = [hostmask usernameFromHostmask];
-		input.sender.address = [hostmask addressFromHostmask];
-	} else {
-		input.sender.isServer = YES;
-	}
 
 	/* Start actual work. */
 	if ([s hasPrefix:@"is now known as "]) {

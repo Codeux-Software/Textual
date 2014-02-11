@@ -344,8 +344,9 @@
 	return self;
 }
 
-- (BOOL)isHostmask
+- (BOOL)hostmaskComponents:(NSString **)nickname username:(NSString **)username address:(NSString **)address client:(IRCClient *)client
 {
+	/* Gather basic information. */
 	NSInteger bang1pos = [self stringPosition:@"!"];
 	NSInteger bang2pos = [self stringPosition:@"@"];
 
@@ -353,7 +354,67 @@
 	NSAssertReturnR((bang2pos >= 0), NO);
 	NSAssertReturnR((bang2pos > bang1pos), NO);
 
+	/* Bind sections of the host. */
+	NSString *nicknameInt = [self substringToIndex:bang1pos];
+
+	NSString *usernameInt = [self safeSubstringWithRange:NSMakeRange((bang1pos + 1),
+																	 (bang2pos - (bang1pos + 1)))];
+
+	NSString *addressInt = [self substringAfterIndex:bang2pos];
+
+	/* Perform basic validation. */
+	NSAssertReturnR(([nicknameInt length] > 0), NO);
+	NSAssertReturnR(([usernameInt length] > 0), NO);
+	NSAssertReturnR(([addressInt length] > 0), NO);
+
+	NSAssertReturnR(([usernameInt length] <= 10), NO);
+
+	/* Further compare values. */
+	if ([nicknameInt contains:@"@"] || /* Wont contain ! because we went to first one. */
+		[usernameInt contains:@"@"] || [usernameInt contains:@"!"] ||
+		[addressInt contains:@"@"] || [addressInt contains:@"!"])
+	{
+		/* Host sections contain redundant characters. */
+		/* The host is not valid. */
+
+		return NO;
+	}
+
+	/* Perform client specific validation. */
+	if (client) {
+		/* Check whether the nickname is a valid length. */
+		NSInteger maxNickLength = [[client isupport] nicknameLength];
+
+		NSAssertReturnR(([nicknameInt length] <= maxNickLength), NO);
+
+		/* Check whether the nickname is a valid nickname. */
+		NSAssertReturnR([nicknameInt isNickname:client], NO);
+	}
+
+	/* The host checks out so far, so define the output. */
+	if (NSDissimilarObjects(nickname, NULL)) {
+		*nickname = nicknameInt;
+	}
+
+	if (NSDissimilarObjects(username, NULL)) {
+		*username = usernameInt;
+	}
+
+	if (NSDissimilarObjects(address, NULL)) {
+		*address = addressInt;
+	}
+
 	return YES;
+}
+
+- (BOOL)isHostmask
+{
+	return [self isHostmask:nil];
+}
+
+- (BOOL)isHostmask:(IRCClient *)client
+{
+	return [self hostmaskComponents:nil username:nil address:nil client:client];
 }
 
 - (BOOL)isNickname
@@ -458,43 +519,53 @@
 	return [self stringByTrimmingCharactersInSet:validChars];
 }
 
-- (NSString *)hostmaskFromRawString
-{
-	NSAssertReturnR([self isHostmask], nil);
-
-	NSInteger bang1pos = [self stringPosition:@"!"];
-
-	return [self substringAfterIndex:bang1pos];
-}
-
 - (NSString *)nicknameFromHostmask
 {
-	NSAssertReturnR([self isHostmask], self);
-
-	NSInteger bang1pos = [self stringPosition:@"!"];
-
-	return [self safeSubstringToIndex:bang1pos];
+	return [self nicknameFromHostmask:nil];
 }
 
 - (NSString *)usernameFromHostmask
 {
-	NSAssertReturnR([self isHostmask], nil);
-
-	NSInteger bang1pos = [self stringPosition:@"!"];
-	NSInteger bang2pos = [self stringPosition:@"@"];
-
-    NSString *bob = [self substringToIndex:bang2pos];
-
-	return [bob substringAfterIndex:bang1pos];
+	return [self usernameFromHostmask:nil];
 }
 
 - (NSString *)addressFromHostmask
 {
-	NSAssertReturnR([self isHostmask], nil);
+	return [self addressFromHostmask:nil];
+}
 
-	NSInteger bang2pos = [self stringPosition:@"@"];
+- (NSString *)nicknameFromHostmask:(IRCClient *)client
+{
+	NSString *nickname = nil;
 
-	return [self substringAfterIndex:bang2pos];
+	if ([self hostmaskComponents:&nickname username:nil address:nil client:client]) {
+		return nickname;
+	}
+
+	return nil;
+}
+
+- (NSString *)usernameFromHostmask:(IRCClient *)client
+{
+	NSString *username = nil;
+
+	if ([self hostmaskComponents:nil username:&username address:nil client:client]) {
+		return username;
+	}
+
+	return nil;
+}
+
+- (NSString *)addressFromHostmask:(IRCClient *)client
+{
+	NSString *address = nil;
+
+	if ([self hostmaskComponents:nil username:nil address:&address client:client]) {
+		return address;
+	}
+
+	return nil;
+	
 }
 
 - (NSString *)reservedCharactersToIRCFormatting
