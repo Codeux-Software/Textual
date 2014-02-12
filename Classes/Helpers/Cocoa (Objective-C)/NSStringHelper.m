@@ -367,7 +367,11 @@
 	NSAssertReturnR(([usernameInt length] > 0), NO);
 	NSAssertReturnR(([addressInt length] > 0), NO);
 
-	NSAssertReturnR(([usernameInt length] <= 10), NO);
+	if ([usernameInt hasPrefix:@"~"]) {
+		NSAssertReturnR(([usernameInt length] <= 10), NO);
+	} else {
+		NSAssertReturnR(([usernameInt length] <= 12), NO);
+	}
 
 	/* Further compare values. */
 	if ([nicknameInt contains:@"@"] || /* Wont contain ! because we went to first one. */
