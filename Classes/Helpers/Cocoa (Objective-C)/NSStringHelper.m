@@ -367,13 +367,10 @@
 	NSAssertReturnR(([usernameInt length] > 0), NO);
 	NSAssertReturnR(([addressInt length] > 0), NO);
 
-	NSAssertReturnR(([usernameInt length] <= 20), NO);
+	NSAssertReturnR([usernameInt isUsername], NO);
 
 	/* Further compare values. */
-	if ([nicknameInt contains:@"@"] || /* Wont contain ! because we went to first one. */
-		[usernameInt contains:@"@"] || [usernameInt contains:@"!"] ||
-		[addressInt contains:@"@"] || [addressInt contains:@"!"])
-	{
+	if ([addressInt contains:@"@"] || [addressInt contains:@"!"]) {
 		/* Host sections contain redundant characters. */
 		/* The host is not valid. */
 
@@ -417,6 +414,21 @@
 	return [self hostmaskComponents:nil username:nil address:nil client:client];
 }
 
+- (BOOL)isUsername /* Ident — @private */
+{
+	NSString *bob = self;
+
+	if ([bob hasPrefix:@"~"]) {
+		bob = [bob substringFromIndex:1];
+	}
+
+	if ([bob onlyContainersCharacters:IRCUsernameValidCharacters] == NO) {
+		return NO;
+	}
+
+	return (bob.length <= TXMaximumIRCUsernameLength);
+}
+
 - (BOOL)isNickname
 {
 	return ([self isNotEqualTo:@"*"] && [self contains:@"."] == NO);
@@ -440,12 +452,8 @@
 	}
 	
 	// If the case mapping is ASCII which is a lot of IRC, then it is better to be strict.
-	for (NSInteger i = 0; i < self.length; ++i) {
-        NSString *c = [self stringCharacterAtIndex:i];
-
-		if ([IRCNicknameValidCharacters contains:c] == NO) {
-            return NO;
-        }
+	if ([self onlyContainersCharacters:IRCNicknameValidCharacters] == NO) {
+		return NO;
 	}
     
 	return ([self isNotEqualTo:@"*"] && self.length <= TXMaximumIRCNicknameLength);
@@ -463,8 +471,8 @@
 
 	if ([self length] == 1) {
 		NSString *c = [self stringCharacterAtIndex:0];
-		
-		return [validChars contains:c];
+
+		return [c onlyContainersCharacters:validChars];
 	} else {
 		NSString *c1 = [self stringCharacterAtIndex:0];
 		NSString *c2 = [self stringCharacterAtIndex:1];
@@ -472,7 +480,7 @@
 		/* The ~ prefix is considered special. It is used by the ZNC partyline plugin. */
 		BOOL isPartyline = ([c1 isEqualToString:@"~"] && [c2 isEqualToString:@"#"]);
 
-		return ([validChars contains:c1] || isPartyline);
+		return ([c1 onlyContainersCharacters:validChars] || isPartyline);
 	}
 }
 

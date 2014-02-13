@@ -40,10 +40,12 @@
 /* Hard limits. */
 #define TXMaximumIRCBodyLength				512
 #define TXMaximumIRCNicknameLength			50
+#define TXMaximumIRCUsernameLength			20
 #define TXMaximumNodesPerModeCommand		4
 
 /* "*" is not actually considered a valid character for a nickname. We include it for ZNC. */
 #define IRCNicknameValidCharacters          @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-\\[]{}^`|*"
+#define IRCUsernameValidCharacters			@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-." /* Ident. */
 
 /* Command index. */
 TEXTUAL_EXTERN NSString *IRCPrivateCommandIndex(const char *key); 
