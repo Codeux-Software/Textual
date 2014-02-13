@@ -109,7 +109,8 @@
 - (BOOL)contains:(NSString *)str;
 - (BOOL)containsIgnoringCase:(NSString *)str;
 
-- (BOOL)onlyContainersCharacters:(NSString *)validChars;
+- (BOOL)containsCharacters:(NSString *)validChars;
+- (BOOL)onlyContainsCharacters:(NSString *)validChars;
 
 - (NSInteger)stringPosition:(NSString *)needle;
 - (NSInteger)stringPositionIgnoringCase:(NSString *)needle;
