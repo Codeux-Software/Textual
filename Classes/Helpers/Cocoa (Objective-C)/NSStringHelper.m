@@ -450,13 +450,24 @@
 	if (isAscii == NO) {
 		return [self isNickname];
 	}
-	
-	// If the case mapping is ASCII which is a lot of IRC, then it is better to be strict.
-	if ([self onlyContainsCharacters:IRCNicknameValidCharacters] == NO) {
+
+	NSString *bob = self;
+
+	if ([bob isEqualToString:@"*"]) {
 		return NO;
+	} else {
+		// Only allow star character as nickname prefix. No other position.
+		if ([bob hasPrefix:@"*"]) {
+			bob = [bob substringFromIndex:1];
+		}
+		
+		// If the case mapping is ASCII which is a lot of IRC, then it is better to be strict.
+		if ([bob onlyContainsCharacters:IRCNicknameValidCharacters] == NO) {
+			return NO;
+		}
+		
+		return (bob.length > 0 && bob.length <= TXMaximumIRCNicknameLength);
 	}
-    
-	return ([self isNotEqualTo:@"*"] && self.length <= TXMaximumIRCNicknameLength);
 }
 
 - (BOOL)isChannelName:(IRCClient *)client
