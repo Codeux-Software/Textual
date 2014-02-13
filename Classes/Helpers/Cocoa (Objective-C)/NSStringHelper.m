@@ -370,7 +370,7 @@
 	NSAssertReturnR([usernameInt isUsername], NO);
 
 	/* Further compare values. */
-	if ([addressInt contains:@"@"] || [addressInt contains:@"!"]) {
+	if ([addressInt containsCharacters:@"!@"]) {
 		/* Host sections contain redundant characters. */
 		/* The host is not valid. */
 
@@ -422,7 +422,7 @@
 		bob = [bob substringFromIndex:1];
 	}
 
-	if ([bob onlyContainersCharacters:IRCUsernameValidCharacters] == NO) {
+	if ([bob onlyContainsCharacters:IRCUsernameValidCharacters] == NO) {
 		return NO;
 	}
 
@@ -452,7 +452,7 @@
 	}
 	
 	// If the case mapping is ASCII which is a lot of IRC, then it is better to be strict.
-	if ([self onlyContainersCharacters:IRCNicknameValidCharacters] == NO) {
+	if ([self onlyContainsCharacters:IRCNicknameValidCharacters] == NO) {
 		return NO;
 	}
     
@@ -472,7 +472,7 @@
 	if ([self length] == 1) {
 		NSString *c = [self stringCharacterAtIndex:0];
 
-		return [c onlyContainersCharacters:validChars];
+		return [c onlyContainsCharacters:validChars];
 	} else {
 		NSString *c1 = [self stringCharacterAtIndex:0];
 		NSString *c2 = [self stringCharacterAtIndex:1];
@@ -480,7 +480,7 @@
 		/* The ~ prefix is considered special. It is used by the ZNC partyline plugin. */
 		BOOL isPartyline = ([c1 isEqualToString:@"~"] && [c2 isEqualToString:@"#"]);
 
-		return ([c1 onlyContainersCharacters:validChars] || isPartyline);
+		return ([c1 onlyContainsCharacters:validChars] || isPartyline);
 	}
 }
 
@@ -718,17 +718,28 @@
 	return YES;
 }
 
-- (BOOL)onlyContainersCharacters:(NSString *)validChars
+- (BOOL)containsCharacters:(NSString *)validChars
 {
 	NSObjectIsEmptyAssertReturn(self, NO);
 	NSObjectIsEmptyAssertReturn(validChars, NO);
 
-	NSCharacterSet *chars;
+	NSCharacterSet *chars = [NSCharacterSet characterSetWithCharactersInString:validChars];
 
-	chars = [NSCharacterSet characterSetWithCharactersInString:validChars];
-	chars = [chars invertedSet];
+	NSRange searchRange = [self rangeOfCharacterFromSet:chars];
 
-	return ([self rangeOfCharacterFromSet:chars].location == NSNotFound);
+	return NSDissimilarObjects(searchRange.location, NSNotFound);
+}
+
+- (BOOL)onlyContainsCharacters:(NSString *)validChars
+{
+	NSObjectIsEmptyAssertReturn(self, NO);
+	NSObjectIsEmptyAssertReturn(validChars, NO);
+
+	NSCharacterSet *chars = [[NSCharacterSet characterSetWithCharactersInString:validChars] invertedSet];
+
+	NSRange searchRange = [self rangeOfCharacterFromSet:chars];
+
+	return (searchRange.location == NSNotFound);
 }
 
 - (NSString *)stringByDeletingAllCharactersInSet:(NSString *)validChars deleteThoseNotInSet:(BOOL)onlyDeleteThoseNotInSet
