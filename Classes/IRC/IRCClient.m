@@ -3616,6 +3616,15 @@
 	
 	NSString *sender = m.sender.nickname;
 	NSString *target = [m paramAt:0];
+    
+	BOOL isZNCprivmsg = NO;
+	
+	if (self.isZNCBouncerConnection == YES) {
+		/* Detect privmsg module messages */
+		if ([sender isEqualToString:self.myNick]) {
+			isZNCprivmsg = YES;
+		}
+	}
 	
 	BOOL isEncrypted = NO;
 
@@ -3759,7 +3768,12 @@
 			}
 
 			/* Does the query for the sender already exist?… */
-			IRCChannel *c = [self findChannel:sender];
+			IRCChannel *c;
+			if (isZNCprivmsg == YES) {
+				c = [self findChannel:target];
+			} else {
+				c = [self findChannel:sender];
+			}
 
 			BOOL newPrivateMessage = NO;
 
