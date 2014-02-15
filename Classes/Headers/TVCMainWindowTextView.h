@@ -37,44 +37,19 @@
 
 #import "TextualApplication.h"
 
-#define TXDefaultTextFieldFontColor         [NSColor colorWithCalibratedWhite:0.15 alpha:1.0]
-#define TXDefaultTextFieldFont              [NSFont fontWithName:@"Helvetica" size:12.0]
-#define TXDefaultTextFieldWidthPadding		1.0
-#define TXDefaultTextFieldHeightPadding		2.0
+@interface TVCMainWindowTextView : TVCTextViewWithIRCFormatter
+@property (nonatomic, strong) NSAttributedString *placeholderString;
+@property (nonatomic, assign) BOOL hasModifiedSpellingDictionary;
 
-@interface TVCTextField : NSTextView <NSTextViewDelegate>
-@property (nonatomic, strong) TLOKeyEventHandler *keyHandler;
-@property (nonatomic, assign) dispatch_queue_t formattingQueue;
-@property (nonatomic, strong) NSFont *defaultTextFieldFont;
+- (void)updateTextDirection;
+- (void)updateTextBoxBasedOnPreferredFontSize;
 
-- (BOOL)isAtTopOfView;
-- (BOOL)isAtBottomOfView;
+- (void)redrawOriginPoints;
+- (void)resetTextFieldCellSize:(BOOL)force;
 
-- (NSInteger)selectedLineNumber;
-- (NSInteger)numberOfLines;
+- (TVCMainWindowTextViewBackground *)backgroundView;
+@end
 
-- (void)keyDownToSuper:(NSEvent *)e;
-
-- (void)setKeyHandlerTarget:(id)target;
-
-- (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;
-- (void)registerKeyHandler:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods;
-
-- (NSAttributedString *)attributedStringValue;
-- (void)setAttributedStringValue:(NSAttributedString *)string;
-
-- (NSString *)stringValue;
-- (void)setStringValue:(NSString *)string;
-
-- (void)updateTypeSetterAttributes;
-- (void)defineDefaultTypeSetterAttributes;
-
-- (void)updateAllFontSizesToMatchTheDefaultFont;
-
-- (void)textDidChange:(NSNotification *)aNotification;
-
-- (void)removeAttribute:(id)attr inRange:(NSRange)local;
-- (void)setAttributes:(id)attrs inRange:(NSRange)local;
-
-- (void)addUndoActionForAttributes:(NSDictionary *)attributes inRange:(NSRange)local;
+@interface TVCMainWindowTextViewBackground : NSView
+@property (nonatomic, assign) BOOL windowIsActive;
 @end

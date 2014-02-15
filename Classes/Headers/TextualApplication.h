@@ -123,8 +123,8 @@
 	@class TVCImageURLParser;
 	@class TVCImageURLoader;
 	@class TVCInputPromptDialog;
-	@class TVCInputTextField;
-	@class TVCInputTextFieldBackground;
+	@class TVCMainWindowTextView;
+	@class TVCMainWindowTextViewBackground;
 	@class TVCListSeparatorCell;
 	@class TVCListView;
 	@class TVCLogController;
@@ -150,7 +150,7 @@
 	@class TVCServerListCellChildItem;
 	@class TVCServerListCellGroupItem;
 	@class TVCServerListRowCell;
-	@class TVCTextField;
+	@class TVCTextViewWithIRCFormatter;
 	@class TVCTextFormatterMenu;
 	@class TVCThinSplitView;
 	@class TVCWebViewAutoScroll;
@@ -296,7 +296,7 @@
 	#import "TVCImageURLParser.h"
 	#import "TVCImageURLoader.h"
 	#import "TVCInputPromptDialog.h"
-	#import "TVCInputTextField.h"
+	#import "TVCMainWindowTextView.h"
 	#import "TVCListSeparatorCell.h"
 	#import "TVCListView.h"
 	#import "TVCLogController.h"
@@ -318,7 +318,7 @@
 	#import "TVCServerList.h"
 	#import "TVCServerListCell.h"
 	#import "TVCServerListCellBadge.h"
-	#import "TVCTextField.h"
+	#import "TVCTextViewWithIRCFormatter.h"
 	#import "TVCTextFormatterMenu.h"
 	#import "TVCThinSplitView.h"
 	#import "TVCWebViewAutoScroll.h"

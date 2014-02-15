@@ -53,12 +53,12 @@
 								@"TextFieldDataDetectors", \
 								@"TextFieldTextReplacement"]
 
-@interface TVCInputTextField ()
+@interface TVCMainWindowTextView ()
 @property (nonatomic, assign) NSInteger lastDrawLineCount;
 @property (nonatomic, assign) TXMainTextBoxFontSize cachedFontSize;
 @end
 
-@implementation TVCInputTextField
+@implementation TVCMainWindowTextView
 
 #pragma mark -
 #pragma mark Drawing
@@ -262,7 +262,7 @@
     return [(self.superview.superview.superview.superview.subviews)[1] subviews][0]; /* Yeah, this is bad… I know! */
 }
 
-- (TVCInputTextFieldBackground *)backgroundView
+- (TVCMainWindowTextViewBackground *)backgroundView
 {
 	return (self.superview.superview.superview.subviews)[0]; /* This one is not so bad. */
 }
@@ -522,7 +522,7 @@
 #pragma mark -
 #pragma mark Background Drawing
 
-@implementation TVCInputTextFieldBackground
+@implementation TVCMainWindowTextViewBackground
 
 - (NSColor *)inputFieldBackgroundColor
 {

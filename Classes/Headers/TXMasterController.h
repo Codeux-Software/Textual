@@ -80,7 +80,7 @@
 @property (nonatomic, strong) TLONickCompletionStatus *completionStatus;
 @property (nonatomic, strong) TLOSpeechSynthesizer *speechSynthesizer;
 @property (nonatomic, strong) TPCThemeController *themeControllerPntr;
-@property (nonatomic, uweak) IBOutlet TVCInputTextField *inputTextField;
+@property (nonatomic, uweak) IBOutlet TVCMainWindowTextView *inputTextField;
 @property (nonatomic, uweak) IBOutlet TVCMainWindow *mainWindow;
 
 /* self.inputHistory may return the inputHistory controller of the selected view

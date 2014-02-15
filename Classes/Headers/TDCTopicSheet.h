@@ -42,7 +42,7 @@
 @property (nonatomic, strong) NSString *clientID;
 @property (nonatomic, strong) NSString *channelID;
 @property (nonatomic, nweak) IBOutlet NSTextField *headerTitleField;
-@property (nonatomic, uweak) IBOutlet TVCTextField *topicValueField;
+@property (nonatomic, uweak) IBOutlet TVCTextViewWithIRCFormatter *topicValueField;
 
 - (void)start:(NSString *)topic;
 @end
