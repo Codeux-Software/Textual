@@ -1718,7 +1718,7 @@ CQ
                                     <action selector="memberSendCTCPVersion:" target="267" id="2630"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Client Information (ClENTINFO)" tag="2105" id="443">
+                            <menuItem title="Client Information (CLIENTINFO)" tag="2105" id="443">
                                 <connections>
                                     <action selector="memberSendCTCPClientInfo:" target="267" id="2632"/>
                                 </connections>
