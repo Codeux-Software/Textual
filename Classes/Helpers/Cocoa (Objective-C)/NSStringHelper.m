@@ -559,6 +559,8 @@
 
 	if ([self hostmaskComponents:&nickname username:nil address:nil client:client]) {
 		return nickname;
+	} else {
+		return self;
 	}
 
 	return nil;
