@@ -1992,7 +1992,7 @@ CA
                         <rect key="frame" x="0.0" y="0.0" width="800" height="474"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <customView id="2851" customClass="TVCInputTextFieldBackground">
+                            <customView id="2851" customClass="TVCMainWindowTextViewBackground">
                                 <rect key="frame" x="166" y="6" width="624" height="23"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             </customView>
