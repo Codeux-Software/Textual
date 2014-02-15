@@ -3616,16 +3616,7 @@
 	
 	NSString *sender = m.sender.nickname;
 	NSString *target = [m paramAt:0];
-    
-	BOOL isZNCprivmsg = NO;
-	
-	if (self.isZNCBouncerConnection == YES) {
-		/* Detect privmsg module messages */
-		if ([sender isEqualToString:self.myNick]) {
-			isZNCprivmsg = YES;
-		}
-	}
-	
+
 	BOOL isEncrypted = NO;
 
 	/* Message type. */
@@ -3767,8 +3758,18 @@
 				return;
 			}
 
+			/* Detect privmsg module messages */
+			BOOL isZNCprivmsg = NO;
+
+			if (self.isZNCBouncerConnection == YES) {
+				if ([sender isEqualToString:self.myNick]) {
+					isZNCprivmsg = YES;
+				}
+			}
+
 			/* Does the query for the sender already exist?… */
 			IRCChannel *c;
+
 			if (isZNCprivmsg == YES) {
 				c = [self findChannel:target];
 			} else {
@@ -3778,7 +3779,11 @@
 			BOOL newPrivateMessage = NO;
 
 			if (PointerIsEmpty(c) && NSDissimilarObjects(type, TVCLogLineNoticeType)) {
-				c = [self.worldController createPrivateMessage:sender client:self];
+				if (isZNCprivmsg) {
+					c = [self.worldController createPrivateMessage:target client:self];
+				} else {
+					c = [self.worldController createPrivateMessage:sender client:self];
+				}
 
 				newPrivateMessage = YES;
 			}
@@ -3897,7 +3902,9 @@
 				[self setUnreadState:c];
 
 				if ([self isSafeToPostNotificationForMessage:m inChannel:c]) {
-					[self notifyText:TXNotificationPrivateNoticeType lineType:type target:c nick:sender text:text];
+					if (isZNCprivmsg == NO) {
+						[self notifyText:TXNotificationPrivateNoticeType lineType:type target:c nick:sender text:text];
+					}
 				}
 			} else {
 				/* Post regular message and inform Growl. */
@@ -3912,32 +3919,34 @@
 			completionBlock:^(BOOL highlight)
 				 {
 					 if ([self isSafeToPostNotificationForMessage:m inChannel:c]) {
-						 BOOL postevent = NO;
+						 if (isZNCprivmsg == NO) {
+							 BOOL postevent = NO;
 
-						 if (highlight) {
-							 postevent = [self notifyText:TXNotificationHighlightType lineType:type target:c nick:sender text:text];
+							 if (highlight) {
+								 postevent = [self notifyText:TXNotificationHighlightType lineType:type target:c nick:sender text:text];
 
+								 if (postevent) {
+									 [self setKeywordState:c];
+								 }
+							 } else {
+								 if (newPrivateMessage) {
+									 postevent = [self notifyText:TXNotificationNewPrivateMessageType lineType:type target:c nick:sender text:text];
+								 } else {
+									 postevent = [self notifyText:TXNotificationPrivateMessageType lineType:type target:c nick:sender text:text];
+								 }
+							 }
+
+							 /* Mark query as unread. */
 							 if (postevent) {
-								 [self setKeywordState:c];
+								 [self setUnreadState:c isHighlight:highlight];
 							 }
 						 } else {
-							 if (newPrivateMessage) {
-								 postevent = [self notifyText:TXNotificationNewPrivateMessageType lineType:type target:c nick:sender text:text];
-							 } else {
-								 postevent = [self notifyText:TXNotificationPrivateMessageType lineType:type target:c nick:sender text:text];
+							 if (highlight) {
+								 [self setKeywordState:c];
 							 }
-						 }
 
-						 /* Mark query as unread. */
-						 if (postevent) {
 							 [self setUnreadState:c isHighlight:highlight];
 						 }
-					 } else {
-						 if (highlight) {
-							 [self setKeywordState:c];
-						 }
-
-						 [self setUnreadState:c isHighlight:highlight];
 					 }
 				 }];
 
