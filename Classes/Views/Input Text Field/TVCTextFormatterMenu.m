@@ -49,14 +49,14 @@
 #pragma mark -
 #pragma mark Menu Management
 
-- (void)enableSheetField:(TVCTextField *)field
+- (void)enableSheetField:(TVCTextViewWithIRCFormatter *)field
 {
 	self.sheetOverrideEnabled = YES;
 
 	self.textField = field;
 }
 
-- (void)enableWindowField:(TVCTextField *)field
+- (void)enableWindowField:(TVCTextViewWithIRCFormatter *)field
 {
 	self.sheetOverrideEnabled = NO;
 

@@ -1334,7 +1334,7 @@
 	[self storePreviousSelection];
 
 	/* Reset spelling for text field. */
-	TVCInputTextField *textField = [self.masterController inputTextField];
+	TVCMainWindowTextView *textField = [self.masterController inputTextField];
 	
 	if ([textField hasModifiedSpellingDictionary]) {
 		[RZSpellChecker() setIgnoredWords:@[] inSpellDocumentWithTag:textField.spellCheckerDocumentTag];

@@ -70,7 +70,7 @@
 	IRCClient *client = self.worldController.selectedClient;
 	IRCChannel *channel = self.worldController.selectedChannel;
 	
-	TVCInputTextField *inputTextField = self.masterController.inputTextField;
+	TVCMainWindowTextView *inputTextField = self.masterController.inputTextField;
 
 	PointerIsEmptyAssert(client);
 

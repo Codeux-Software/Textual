@@ -134,8 +134,8 @@
 		4C0445CA16F1603C00EBB665 /* TVCLogScriptEventSink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F6158E99520026668C /* TVCLogScriptEventSink.m */; };
 		4C0445CB16F1603C00EBB665 /* TVCLogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F7158E99520026668C /* TVCLogView.m */; };
 		4C0445CC16F1603C00EBB665 /* TVCWebViewAutoScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F8158E99520026668C /* TVCWebViewAutoScroll.m */; };
-		4C0445CD16F1603C00EBB665 /* TVCInputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FA158E99520026668C /* TVCInputTextField.m */; };
-		4C0445CE16F1603C00EBB665 /* TVCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FB158E99520026668C /* TVCTextField.m */; };
+		4C0445CD16F1603C00EBB665 /* TVCMainWindowTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FA158E99520026668C /* TVCMainWindowTextView.m */; };
+		4C0445CE16F1603C00EBB665 /* TVCTextViewWithIRCFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FB158E99520026668C /* TVCTextViewWithIRCFormatter.m */; };
 		4C0445CF16F1603C00EBB665 /* TVCTextFormatterMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FC158E99520026668C /* TVCTextFormatterMenu.m */; };
 		4C0445D316F1603C00EBB665 /* TVCServerList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0444EA16F15F8200EBB665 /* TVCServerList.m */; };
 		4C0445D416F1603C00EBB665 /* TVCServerListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0444EB16F15F8200EBB665 /* TVCServerListCell.m */; };
@@ -404,7 +404,7 @@
 		4C5BA43F16F1302F00A96CA2 /* TVCDockIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF580158E99520026668C /* TVCDockIcon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA44016F1302F00A96CA2 /* TVCImageURLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF581158E99520026668C /* TVCImageURLParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA44116F1302F00A96CA2 /* TVCInputPromptDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF582158E99520026668C /* TVCInputPromptDialog.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C5BA44216F1302F00A96CA2 /* TVCInputTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF583158E99520026668C /* TVCInputTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C5BA44216F1302F00A96CA2 /* TVCMainWindowTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF583158E99520026668C /* TVCMainWindowTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA44316F1302F00A96CA2 /* TVCListSeparatorCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF584158E99520026668C /* TVCListSeparatorCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA44416F1302F00A96CA2 /* TVCListView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF585158E99520026668C /* TVCListView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA44516F1302F00A96CA2 /* TVCLogController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF586158E99520026668C /* TVCLogController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -418,7 +418,7 @@
 		4C5BA44D16F1302F00A96CA2 /* TVCMemberListCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF58E158E99520026668C /* TVCMemberListCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA44E16F1302F00A96CA2 /* TVCServerList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF58F158E99520026668C /* TVCServerList.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA44F16F1302F00A96CA2 /* TVCServerListCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF590158E99520026668C /* TVCServerListCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C5BA45016F1302F00A96CA2 /* TVCTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF591158E99520026668C /* TVCTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C5BA45016F1302F00A96CA2 /* TVCTextViewWithIRCFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF591158E99520026668C /* TVCTextViewWithIRCFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA45116F1302F00A96CA2 /* TVCTextFormatterMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF592158E99520026668C /* TVCTextFormatterMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA45216F1302F00A96CA2 /* TVCThinSplitView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF593158E99520026668C /* TVCThinSplitView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA45316F1302F00A96CA2 /* TVCWebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF594158E99520026668C /* TVCWebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -628,7 +628,7 @@
 		4C8AF675158E99520026668C /* TVCDockIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF580158E99520026668C /* TVCDockIcon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF676158E99520026668C /* TVCImageURLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF581158E99520026668C /* TVCImageURLParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF677158E99520026668C /* TVCInputPromptDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF582158E99520026668C /* TVCInputPromptDialog.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C8AF678158E99520026668C /* TVCInputTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF583158E99520026668C /* TVCInputTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C8AF678158E99520026668C /* TVCMainWindowTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF583158E99520026668C /* TVCMainWindowTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF679158E99520026668C /* TVCListSeparatorCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF584158E99520026668C /* TVCListSeparatorCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF67A158E99520026668C /* TVCListView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF585158E99520026668C /* TVCListView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF67B158E99520026668C /* TVCLogController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF586158E99520026668C /* TVCLogController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -642,7 +642,7 @@
 		4C8AF683158E99520026668C /* TVCMemberListCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF58E158E99520026668C /* TVCMemberListCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF684158E99520026668C /* TVCServerList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF58F158E99520026668C /* TVCServerList.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF685158E99520026668C /* TVCServerListCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF590158E99520026668C /* TVCServerListCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C8AF686158E99520026668C /* TVCTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF591158E99520026668C /* TVCTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C8AF686158E99520026668C /* TVCTextViewWithIRCFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF591158E99520026668C /* TVCTextViewWithIRCFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF687158E99520026668C /* TVCTextFormatterMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF592158E99520026668C /* TVCTextFormatterMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF688158E99520026668C /* TVCThinSplitView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF593158E99520026668C /* TVCThinSplitView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF689158E99520026668C /* TVCWebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF594158E99520026668C /* TVCWebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -713,8 +713,8 @@
 		4C8AF6D8158E99520026668C /* TVCLogScriptEventSink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F6158E99520026668C /* TVCLogScriptEventSink.m */; };
 		4C8AF6D9158E99520026668C /* TVCLogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F7158E99520026668C /* TVCLogView.m */; };
 		4C8AF6DA158E99520026668C /* TVCWebViewAutoScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5F8158E99520026668C /* TVCWebViewAutoScroll.m */; };
-		4C8AF6DB158E99520026668C /* TVCInputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FA158E99520026668C /* TVCInputTextField.m */; };
-		4C8AF6DC158E99520026668C /* TVCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FB158E99520026668C /* TVCTextField.m */; };
+		4C8AF6DB158E99520026668C /* TVCMainWindowTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FA158E99520026668C /* TVCMainWindowTextView.m */; };
+		4C8AF6DC158E99520026668C /* TVCTextViewWithIRCFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FB158E99520026668C /* TVCTextViewWithIRCFormatter.m */; };
 		4C8AF6DD158E99520026668C /* TVCTextFormatterMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5FC158E99520026668C /* TVCTextFormatterMenu.m */; };
 		4C8AF6E0158E99520026668C /* TVCDockIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF600158E99520026668C /* TVCDockIcon.m */; };
 		4C8AF6E1158E99520026668C /* TVCInputPromptDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF601158E99520026668C /* TVCInputPromptDialog.m */; };
@@ -1249,7 +1249,7 @@
 		4C8AF580158E99520026668C /* TVCDockIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCDockIcon.h; sourceTree = "<group>"; };
 		4C8AF581158E99520026668C /* TVCImageURLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCImageURLParser.h; sourceTree = "<group>"; };
 		4C8AF582158E99520026668C /* TVCInputPromptDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCInputPromptDialog.h; sourceTree = "<group>"; };
-		4C8AF583158E99520026668C /* TVCInputTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCInputTextField.h; sourceTree = "<group>"; };
+		4C8AF583158E99520026668C /* TVCMainWindowTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowTextView.h; sourceTree = "<group>"; };
 		4C8AF584158E99520026668C /* TVCListSeparatorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCListSeparatorCell.h; sourceTree = "<group>"; };
 		4C8AF585158E99520026668C /* TVCListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCListView.h; sourceTree = "<group>"; };
 		4C8AF586158E99520026668C /* TVCLogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCLogController.h; sourceTree = "<group>"; };
@@ -1263,7 +1263,7 @@
 		4C8AF58E158E99520026668C /* TVCMemberListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMemberListCell.h; sourceTree = "<group>"; };
 		4C8AF58F158E99520026668C /* TVCServerList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCServerList.h; sourceTree = "<group>"; };
 		4C8AF590158E99520026668C /* TVCServerListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCServerListCell.h; sourceTree = "<group>"; };
-		4C8AF591158E99520026668C /* TVCTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCTextField.h; sourceTree = "<group>"; };
+		4C8AF591158E99520026668C /* TVCTextViewWithIRCFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCTextViewWithIRCFormatter.h; sourceTree = "<group>"; };
 		4C8AF592158E99520026668C /* TVCTextFormatterMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCTextFormatterMenu.h; sourceTree = "<group>"; };
 		4C8AF593158E99520026668C /* TVCThinSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCThinSplitView.h; sourceTree = "<group>"; };
 		4C8AF594158E99520026668C /* TVCWebViewAutoScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCWebViewAutoScroll.h; sourceTree = "<group>"; };
@@ -1334,8 +1334,8 @@
 		4C8AF5F6158E99520026668C /* TVCLogScriptEventSink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogScriptEventSink.m; sourceTree = "<group>"; };
 		4C8AF5F7158E99520026668C /* TVCLogView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogView.m; sourceTree = "<group>"; };
 		4C8AF5F8158E99520026668C /* TVCWebViewAutoScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCWebViewAutoScroll.m; sourceTree = "<group>"; };
-		4C8AF5FA158E99520026668C /* TVCInputTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCInputTextField.m; sourceTree = "<group>"; };
-		4C8AF5FB158E99520026668C /* TVCTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCTextField.m; sourceTree = "<group>"; };
+		4C8AF5FA158E99520026668C /* TVCMainWindowTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMainWindowTextView.m; sourceTree = "<group>"; };
+		4C8AF5FB158E99520026668C /* TVCTextViewWithIRCFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCTextViewWithIRCFormatter.m; sourceTree = "<group>"; };
 		4C8AF5FC158E99520026668C /* TVCTextFormatterMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCTextFormatterMenu.m; sourceTree = "<group>"; };
 		4C8AF600158E99520026668C /* TVCDockIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCDockIcon.m; sourceTree = "<group>"; };
 		4C8AF601158E99520026668C /* TVCInputPromptDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCInputPromptDialog.m; sourceTree = "<group>"; };
@@ -2098,7 +2098,7 @@
 				4C1893F217980F460091D173 /* TVCImageURLoader.h */,
 				4C8AF581158E99520026668C /* TVCImageURLParser.h */,
 				4C8AF582158E99520026668C /* TVCInputPromptDialog.h */,
-				4C8AF583158E99520026668C /* TVCInputTextField.h */,
+				4C8AF583158E99520026668C /* TVCMainWindowTextView.h */,
 				4C8AF584158E99520026668C /* TVCListSeparatorCell.h */,
 				4C8AF585158E99520026668C /* TVCListView.h */,
 				4C8AF586158E99520026668C /* TVCLogController.h */,
@@ -2119,7 +2119,7 @@
 				4C8AF58F158E99520026668C /* TVCServerList.h */,
 				4C8AF590158E99520026668C /* TVCServerListCell.h */,
 				4C0444E616F1553C00EBB665 /* TVCServerListCellBadge.h */,
-				4C8AF591158E99520026668C /* TVCTextField.h */,
+				4C8AF591158E99520026668C /* TVCTextViewWithIRCFormatter.h */,
 				4C8AF592158E99520026668C /* TVCTextFormatterMenu.h */,
 				4C8AF593158E99520026668C /* TVCThinSplitView.h */,
 				4C8AF594158E99520026668C /* TVCWebViewAutoScroll.h */,
@@ -2272,8 +2272,8 @@
 		4C8AF5F9158E99520026668C /* Input Text Field */ = {
 			isa = PBXGroup;
 			children = (
-				4C8AF5FA158E99520026668C /* TVCInputTextField.m */,
-				4C8AF5FB158E99520026668C /* TVCTextField.m */,
+				4C8AF5FA158E99520026668C /* TVCMainWindowTextView.m */,
+				4C8AF5FB158E99520026668C /* TVCTextViewWithIRCFormatter.m */,
 				4C8AF5FC158E99520026668C /* TVCTextFormatterMenu.m */,
 			);
 			path = "Input Text Field";
@@ -2661,7 +2661,7 @@
 				4C5BA43F16F1302F00A96CA2 /* TVCDockIcon.h in Headers */,
 				4C5BA44016F1302F00A96CA2 /* TVCImageURLParser.h in Headers */,
 				4C5BA44116F1302F00A96CA2 /* TVCInputPromptDialog.h in Headers */,
-				4C5BA44216F1302F00A96CA2 /* TVCInputTextField.h in Headers */,
+				4C5BA44216F1302F00A96CA2 /* TVCMainWindowTextView.h in Headers */,
 				4C5BA44316F1302F00A96CA2 /* TVCListSeparatorCell.h in Headers */,
 				4C5BA44416F1302F00A96CA2 /* TVCListView.h in Headers */,
 				4C5BA44516F1302F00A96CA2 /* TVCLogController.h in Headers */,
@@ -2675,7 +2675,7 @@
 				4C5BA44D16F1302F00A96CA2 /* TVCMemberListCell.h in Headers */,
 				4C5BA44E16F1302F00A96CA2 /* TVCServerList.h in Headers */,
 				4C5BA44F16F1302F00A96CA2 /* TVCServerListCell.h in Headers */,
-				4C5BA45016F1302F00A96CA2 /* TVCTextField.h in Headers */,
+				4C5BA45016F1302F00A96CA2 /* TVCTextViewWithIRCFormatter.h in Headers */,
 				4C5BA45116F1302F00A96CA2 /* TVCTextFormatterMenu.h in Headers */,
 				4C5BA45216F1302F00A96CA2 /* TVCThinSplitView.h in Headers */,
 				4C5BA45316F1302F00A96CA2 /* TVCWebViewAutoScroll.h in Headers */,
@@ -2816,7 +2816,7 @@
 				4C8AF675158E99520026668C /* TVCDockIcon.h in Headers */,
 				4C8AF676158E99520026668C /* TVCImageURLParser.h in Headers */,
 				4C8AF677158E99520026668C /* TVCInputPromptDialog.h in Headers */,
-				4C8AF678158E99520026668C /* TVCInputTextField.h in Headers */,
+				4C8AF678158E99520026668C /* TVCMainWindowTextView.h in Headers */,
 				4C8AF679158E99520026668C /* TVCListSeparatorCell.h in Headers */,
 				4C8AF67A158E99520026668C /* TVCListView.h in Headers */,
 				4C8AF67B158E99520026668C /* TVCLogController.h in Headers */,
@@ -2830,7 +2830,7 @@
 				4C8AF683158E99520026668C /* TVCMemberListCell.h in Headers */,
 				4C8AF684158E99520026668C /* TVCServerList.h in Headers */,
 				4C8AF685158E99520026668C /* TVCServerListCell.h in Headers */,
-				4C8AF686158E99520026668C /* TVCTextField.h in Headers */,
+				4C8AF686158E99520026668C /* TVCTextViewWithIRCFormatter.h in Headers */,
 				4C8AF687158E99520026668C /* TVCTextFormatterMenu.h in Headers */,
 				4C8AF688158E99520026668C /* TVCThinSplitView.h in Headers */,
 				4CB331BD16F1BBE000D65CBE /* NSImageHelper.h in Headers */,
@@ -3395,8 +3395,8 @@
 				4C0445CA16F1603C00EBB665 /* TVCLogScriptEventSink.m in Sources */,
 				4C0445CB16F1603C00EBB665 /* TVCLogView.m in Sources */,
 				4C0445CC16F1603C00EBB665 /* TVCWebViewAutoScroll.m in Sources */,
-				4C0445CD16F1603C00EBB665 /* TVCInputTextField.m in Sources */,
-				4C0445CE16F1603C00EBB665 /* TVCTextField.m in Sources */,
+				4C0445CD16F1603C00EBB665 /* TVCMainWindowTextView.m in Sources */,
+				4C0445CE16F1603C00EBB665 /* TVCTextViewWithIRCFormatter.m in Sources */,
 				4C0445CF16F1603C00EBB665 /* TVCTextFormatterMenu.m in Sources */,
 				4C0445D316F1603C00EBB665 /* TVCServerList.m in Sources */,
 				4C0445D416F1603C00EBB665 /* TVCServerListCell.m in Sources */,
@@ -3529,8 +3529,8 @@
 				4C8AF6D8158E99520026668C /* TVCLogScriptEventSink.m in Sources */,
 				4C8AF6D9158E99520026668C /* TVCLogView.m in Sources */,
 				4C8AF6DA158E99520026668C /* TVCWebViewAutoScroll.m in Sources */,
-				4C8AF6DB158E99520026668C /* TVCInputTextField.m in Sources */,
-				4C8AF6DC158E99520026668C /* TVCTextField.m in Sources */,
+				4C8AF6DB158E99520026668C /* TVCMainWindowTextView.m in Sources */,
+				4C8AF6DC158E99520026668C /* TVCTextViewWithIRCFormatter.m in Sources */,
 				4C8AF6DD158E99520026668C /* TVCTextFormatterMenu.m in Sources */,
 				4C8AF6E0158E99520026668C /* TVCDockIcon.m in Sources */,
 				4C8AF6E1158E99520026668C /* TVCInputPromptDialog.m in Sources */,

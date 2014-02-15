@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-@implementation TVCTextField
+@implementation TVCTextViewWithIRCFormatter
 
 - (id)initWithCoder:(NSCoder *)coder
 {

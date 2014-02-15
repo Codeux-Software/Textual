@@ -1580,7 +1580,7 @@
 	}
     
 	/* The text field. */
-	TVCInputTextField *textField = self.masterController.inputTextField;
+	TVCMainWindowTextView *textField = self.masterController.inputTextField;
     
 	NSRange selectedRange = textField.selectedRange;
     

@@ -36,7 +36,7 @@
 
  *********************************************************************** */
 
-#import "TVCTextField.h" // superclass
+#import "TVCTextViewWithIRCFormatter.h" // superclass
 
 typedef enum IRCTextFormatterEffectType : NSInteger {
 	IRCTextFormatterBoldEffect,
@@ -56,7 +56,7 @@ typedef enum IRCTextFormatterEffectType : NSInteger {
                                        hostmask:(NSString *)hostmask; // Only Textual should be calling this.
 @end
 
-@interface TVCTextField (TVCTextFieldFormattingHelper) 
+@interface TVCTextViewWithIRCFormatter (TVCTextFieldFormattingHelper) 
 - (BOOL)IRCFormatterAttributeSetInRange:(IRCTextFormatterEffectType)effect 
                                   range:(NSRange)limitRange;
 

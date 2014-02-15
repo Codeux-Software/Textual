@@ -341,7 +341,7 @@
 #pragma mark -
 #pragma mark General Formatting Calls
 
-@implementation TVCTextField (TextFieldFormattingHelper)
+@implementation TVCTextViewWithIRCFormatter (TextFieldFormattingHelper)
 
 - (BOOL)IRCFormatterAttributeSetInRange:(IRCTextFormatterEffectType)effect 
                                   range:(NSRange)limitRange 

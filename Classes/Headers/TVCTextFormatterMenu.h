@@ -40,14 +40,14 @@
 #define IRCTextFormatterMenuTag			53037
 
 @interface TVCTextFormatterMenu : NSObject
-@property (nonatomic, uweak) TVCTextField *textField;
+@property (nonatomic, uweak) TVCTextViewWithIRCFormatter *textField;
 @property (nonatomic, nweak) IBOutlet NSMenuItem *formatterMenu;
 @property (nonatomic, nweak) IBOutlet NSMenu *foregroundColorMenu;
 @property (nonatomic, nweak) IBOutlet NSMenu *backgroundColorMenu;
 @property (nonatomic, assign) BOOL sheetOverrideEnabled;
 
-- (void)enableSheetField:(TVCTextField *)field;
-- (void)enableWindowField:(TVCTextField *)field;
+- (void)enableSheetField:(TVCTextViewWithIRCFormatter *)field;
+- (void)enableWindowField:(TVCTextViewWithIRCFormatter *)field;
 
 - (BOOL)boldSet;
 - (BOOL)italicSet;
