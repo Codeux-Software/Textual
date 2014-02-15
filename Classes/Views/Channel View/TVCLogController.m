@@ -149,6 +149,15 @@
 	NSInteger math = [self.worldController textSizeMultiplier];
 
 	[self.view setTextSizeMultiplier:math];
+
+	/* Playback history. */
+	if ([TPCPreferences reloadScrollbackOnLaunch] == NO) {
+		self.historyLoaded = YES;
+	} else {
+		if (self.historyLoaded == NO && (self.channel && (self.channel.isPrivateMessage == NO || [TPCPreferences rememberServerListQueryStates]))) {
+			[self reloadHistory];
+		}
+	}
 }
 
 - (void)loadAlternateHTML:(NSString *)newHTML
@@ -1374,14 +1383,6 @@
 
 	if (self.reloadingBacklog == NO) {
 		[self executeQuickScriptCommand:@"viewFinishedLoading" withArguments:@[]];
-
-		if ([TPCPreferences reloadScrollbackOnLaunch] == NO) {
-			self.historyLoaded = YES;
-		} else {
-			if (self.historyLoaded == NO && (self.channel && (self.channel.isPrivateMessage == NO || [TPCPreferences rememberServerListQueryStates]))) {
-				[self reloadHistory];
-			}
-		}
 	}
 }
 
