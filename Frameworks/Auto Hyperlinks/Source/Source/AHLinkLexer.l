@@ -67,7 +67,7 @@ gtalkSpec       gtalk:(chat|call|gtalk)\?jid={mailSpec}(&from_jid={mailSpec})?
 myimSpec        myim:(addContact|sendIM)\?(((uID|cID)=[0-9]*&?)|(auto=(true|false)&?))+
 msnSpec         msnim:(chat|add|voice|video)\?contact={mailSpec}
 dictSpec		dict:{urlPath}
-magnetSpec		magnet:\?xt\=urn:btih:([A-Fa-f0-9]{40})[^[:space:]]*
+magnetSpec		magnet:\?xt\=urn:(bitprint|btih|ed2k|md5|sha1|tree\:tiger):([A-Fa-f0-9]{20,80})[^[:space:]]*
 redditSpec		\/r\/[A-Za-z0-9][A-Za-z0-9_]{2,20}
 messageSpec		message:(\/\/)?(%3[Cc]).+(%3[Ee])
 
