@@ -177,7 +177,17 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	if (attrArray & _rendererURLAttribute)
 	{
 		templateTokens[@"anchorTitle"]		=  contentes;
-		templateTokens[@"anchorLocation"]	= [contentne stringWithValidURIScheme];
+	   //templateTokens[@"anchorLocation"]	= [contentne stringWithValidURIScheme];
+
+		/* Go over all ranges and associated URLs instead of asking 
+		 parser for same URL again and doing double the work. */
+		for (NSArray *rn in resultContext[@"allHyperlinksInBody"]) {
+			NSRange r = NSRangeFromString(rn[0]);
+
+			if (r.location == rangeStart) {
+				templateTokens[@"anchorLocation"] = rn[1];
+			}
+		}
 
 		/* Find unique ID (if any?). */
 		if (resultContext && [logController inlineImagesEnabledForView]) {
@@ -545,6 +555,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				}
 			}
 
+			resultInfo[@"allHyperlinksInBody"] = urlAryRanges;
 			resultInfo[@"InlineImageURLMatches"] = urlAry;
 		}
 
