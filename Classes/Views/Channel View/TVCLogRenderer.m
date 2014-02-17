@@ -519,8 +519,8 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			/* Do scan. */
 			NSArray *urlAryRanges = [TLOLinkParser locatedLinksForString:body];
 
-			for (NSString *rn in urlAryRanges) {
-				NSRange r = NSRangeFromString(rn);
+			for (NSArray *rn in urlAryRanges) {
+				NSRange r = NSRangeFromString(rn[0]);
 
 				if (r.length >= 1) {
 					setFlag(attrBuf, _rendererURLAttribute, r.location, r.length);
@@ -528,10 +528,8 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 					removeFlag(attrBuf, _effectMask, r.location, r.length);
 					
 					if (isNormalMsg && (log && [log inlineImagesEnabledForView])) {
-						NSString *matchedURL;
-
-						matchedURL = [body safeSubstringWithRange:r];
-						matchedURL = [matchedURL stringWithValidURIScheme];
+						/* Get URL from returned array. */
+						NSString *matchedURL = rn[1];
 
 						/* We search for a key matching this string. */
 						NSString *keyMatch = [urlAry objectForKey:matchedURL];

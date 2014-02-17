@@ -35,7 +35,7 @@
 	
 %}
 
-TLDs            (?:\.(?:xn--[a-z0-9\-]{1,59}|(?:[a-z]{2,63})))
+TLDs            ((xn--[a-z0-9\-]{1,59})|([a-z]{2,63}))
 
 userAndPass     [^:@]+(:[^:@]+)?
 singleDomain    [_[:alnum:]\x80-\xf4-]+
@@ -78,16 +78,16 @@ ignoreable      (b\.sc|m\.in)
 %x CANONICAL
 %%
 
-<CANONICAL>({userAndPass}@)?{urlCSpec}|{ipURL}|{ipv6URL} {yyleng += yyextra;
-                                                          BEGIN INITIAL;
-                                                          return AHValidURL;}
+<CANONICAL>({userAndPass}@)?{urlCSpec}|{ipURL}|{ipv6URL} { yyleng += yyextra;
+                                                           BEGIN INITIAL;
+                                                           return AHParserValidURLWithNormalSchemeStatus; }
 
-<CANONICAL>.*                                            {BEGIN INITIAL;
-                                                          return AHInvalidURL;}
+<CANONICAL>.*                                            { BEGIN INITIAL;
+                                                           return AHParserInvalidURLStatus; }
 
-{ignoreable}            {return AHInvalidURL;}
+{ignoreable}            { return AHParserInvalidURLStatus; }
 
-file:\/\/\/.*           {return AHValidFile;}
+file:\/\/\/.*           { return AHParserValidURLWithFileSchemeStatus; }
 
 https?:\/\/             |
 s?ftp:\/\/              |
@@ -109,9 +109,11 @@ webcal:\/\/             |
 svn(\+ssh)?:\/\/        |
 notes:\/\/              |
 gopher:\/\/             |
-x-man-page:\/\/         {yyextra = yyleng; BEGIN CANONICAL;}
+x-man-page:\/\/         { yyextra = yyleng; BEGIN CANONICAL; }
 
-{urlSpec}               {return AHDegenerateURL;}
+{urlSpec}               { return AHParserValidURLWithDegeneratedSchemeStatus; }
+
+{redditSpec}			{ return AHParserValidURLWithSpecialSchemeForRedditStatus; }
 
 {myimSpec}              |
 {jabberSpec}            |
@@ -123,9 +125,8 @@ x-man-page:\/\/         {yyextra = yyleng; BEGIN CANONICAL;}
 {msnSpec}               |
 {dictSpec}				|
 {magnetSpec}			|
-{redditSpec}			|
 {messageSpec}			|
-{spotifySpec}           {return AHValidURL;}
+{spotifySpec}           { return AHParserValidURLWithSlashlessSchemeStatus; }
 
-.                       {return AHInvalidURL;}
+.                       { return AHParserInvalidURLStatus; }
 %%
