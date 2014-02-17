@@ -38,8 +38,4 @@
 - (NSArray *)strictMatchesForString:(NSString *)inString;
 
 + (NSString *)URLWithProperScheme:(NSString *)url;
-
-/* Keep these two calls inline with AHLinkLexer.l */
-NSArray *ahURLPrefixesValidDuringSchemeRewrites(void);
-NSArray *ahURLPrefixesExcludedFromSchemeRewrites(void);
 @end

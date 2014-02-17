@@ -45,7 +45,8 @@ extern AH_BUFFER_STATE			AH_scan_string(const char *, yyscan_t scanner);
 @interface AHHyperlinkScanner (Private)
 - (NSArray *)_allMatches;
 - (NSRange)_longestBalancedEnclosureInRange:(NSRange)inRange;
-- (void)_logDebugData:(NSString *)matchString withRange:(NSRange)scannedRange;
++ (NSString *)_URLWithProperScheme:(NSString *)url parserStatus:(AHParserStatus)parserStatus;
+- (NSArray *)_returnedValueWithProperURLScheme:(NSString *)scannedString inRange:(NSRange)scannedRange parserStatus:(AHParserStatus)parserStatus;
 - (BOOL)_scanString:(NSString *)inString charactersFromSet:(NSCharacterSet *)inCharSet intoRange:(NSRange *)outRangeRef fromIndex:(unsigned long *)idx;
 - (BOOL)_scanString:(NSString *)inString upToCharactersFromSet:(NSCharacterSet *)inCharSet intoRange:(NSRange *)outRangeRef fromIndex:(unsigned long *)idx;
 @end
@@ -101,10 +102,13 @@ static NSArray					*encKeys						= nil;
 		startSet = [NSCharacterSet characterSetWithBitmapRepresentation:[mutableStartSet bitmapRepresentation]];
 		puncSet = [NSCharacterSet characterSetWithBitmapRepresentation:[mutablePuncSet bitmapRepresentation]];
 		endSet = [NSCharacterSet characterSetWithCharactersInString:@"\"',:;>)]}.?!@"];
+
 		hostnameComponentSeparatorSet = [NSCharacterSet characterSetWithCharactersInString:@"./"];
+
 		enclosureStartArray = @[@"(",@"[",@"{"];
 		enclosureSet = [NSCharacterSet characterSetWithCharactersInString:@"()[]{}"];
 		enclosureStopArray = @[@")",@"]",@"}"];
+
 		encKeys = @[ENC_INDEX_KEY, ENC_CHAR_KEY];
 	}
 }
@@ -114,102 +118,10 @@ static NSArray					*encKeys						= nil;
 	return [[self class] new];
 }
 
-NSArray *ahURLPrefixesValidDuringSchemeRewrites(void)
-{
-	return @[
-			 /* Place common ones at top so they would be quicker
-			  to catch when scanning the list. */
-			 @"http://",
-			 @"https://",
-			 @"file:///",
-			 @"ftp://",
-			 @"feed://",
-			 @"irc://",
-			 @"ircs://",
-			 @"sftp://",
-			 @"ssh://",
-			 @"svn+ssh://",
-			 @"svn://",
-			 @"telnet://",
-			 @"textual://",
-
-			 /* Less common. */
-			 @"adiumxtra://",
-			 @"afp://",
-			 @"cifs://",
-			 @"gopher://",
-			 @"hydra://",
-			 @"itms://",
-			 @"nntp://",
-			 @"notes://",
-			 @"rtp://",
-			 @"rtsp://",
-			 @"see://",
-			 @"smb://",
-			 @"webcal://",
-			 @"x-man-page://",
-			 ];
-}
-
-NSArray *ahURLPrefixesExcludedFromSchemeRewrites(void)
-{
-	return @[
-			 @"aim:",
-			 @"dict:",
-			 @"gtalk:",
-			 @"magnet:",
-			 @"message:",
-			 @"msnim:",
-			 @"myim:",
-			 @"radar:",
-			 @"radr:",
-			 @"rdar:",
-			 @"spotify:",
-			 @"x-radar:",
-			 @"xmpp:",
-			 @"yahoo:",
-			 @"ymsgr:",
-			 ];
-}
-
-+ (NSString *)URLWithProperScheme:(NSString *)url
-{
-	/* The logic behind this method is not very solid. It is very
-	 basic. It could use improving but it works for now… */
-
-	NSString *lcurl = [url lowercaseString];
-
-	/* Begin comparisons. */
-	NSArray *validSchemes = ahURLPrefixesValidDuringSchemeRewrites();
-
-	for (NSString *scm in validSchemes) {
-		if ([lcurl hasPrefix:scm]) {
-			return url;
-		}
-	}
-
-	/* Check for common exceptions. */
-	NSArray *exceptions = ahURLPrefixesExcludedFromSchemeRewrites();
-
-	for (NSString *exc in exceptions) {
-		if ([lcurl hasPrefix:exc]) {
-			return url;
-		}
-	}
-
-	/* Check for the very rare exceptions. These are hard coded
-	 matches that are very specific. */
-	if ([url hasPrefix:@"/r/"] && [url length] < 25) {
-		return [@"http://www.reddit.com" stringByAppendingString:url];
-	}
-
-	/* Nothing matched. Throw an http:// on it and call it a day. */
-	return [NSString stringWithFormat:@"http://%@", url];
-}
-
 - (NSArray *)matchesForString:(NSString *)inString
 {
 	m_strictChecking = NO;
+
 	m_scanString = inString;
 	m_scanStringLength = [m_scanString length];
 	
@@ -219,6 +131,7 @@ NSArray *ahURLPrefixesExcludedFromSchemeRewrites(void)
 - (NSArray *)strictMatchesForString:(NSString *)inString
 {
 	m_strictChecking = YES;
+
 	m_scanString = inString;
 	m_scanStringLength = [m_scanString length];
 	
@@ -230,22 +143,29 @@ NSArray *ahURLPrefixesExcludedFromSchemeRewrites(void)
 	m_scanLocation = 0;
 }
 
-- (BOOL)isStringValidURI:(NSString *)inString usingStrict:(BOOL)useStrictChecking fromIndex:(unsigned long *)sIndex 
++ (NSString *)URLWithProperScheme:(NSString *)url
 {
-    AH_BUFFER_STATE		buf;  
+	AHParserStatus parserStatus = [AHHyperlinkScanner isStringValidURI:url usingStrict:NO fromIndex:0];
+
+	if (parserStatus == AHParserInvalidURLStatus) {
+		return nil;
+	} else {
+		return [AHHyperlinkScanner _URLWithProperScheme:url parserStatus:parserStatus];
+	}
+}
+
++ (AHParserStatus)isStringValidURI:(NSString *)inString usingStrict:(BOOL)useStrictChecking fromIndex:(unsigned long *)sIndex
+{
+    AH_BUFFER_STATE		buf;
 	AHParserStatus		validStatus;
 	const char			*inStringEnc;
     unsigned long		encodedLength;
 	yyscan_t			scanner; 
-	
-	NSStringEncoding stringEnc = [inString fastestEncoding];
-	
-	if ([@" " lengthOfBytesUsingEncoding:stringEnc] > 1U) {
-		stringEnc = NSUTF8StringEncoding;
-	}
+
+	NSStringEncoding stringEnc = NSUTF8StringEncoding;
 	
 	if ((inStringEnc = [inString cStringUsingEncoding:stringEnc]) == NO) {
-		return NO;
+		return AHParserInvalidURLStatus;
 	}
 	
 	encodedLength = strlen(inStringEnc); 
@@ -255,14 +175,17 @@ NSArray *ahURLPrefixesExcludedFromSchemeRewrites(void)
     buf = AH_scan_string(inStringEnc, scanner);
 	
     validStatus = (AHParserStatus)AHlex(scanner);
-	
+
 	if (sIndex) {
 		*sIndex += AHget_leng(scanner);
 	}
-	
-    if ((validStatus == AHValidURL || validStatus == AHValidFile) ||
-		(validStatus == AHDegenerateURL && useStrictChecking == NO)) {
-		
+
+	if ((validStatus == AHParserValidURLWithNormalSchemeStatus ||
+	  	 validStatus == AHParserValidURLWithSlashlessSchemeStatus ||
+		 validStatus == AHParserValidURLWithFileSchemeStatus ||
+		 validStatus == AHParserValidURLWithSpecialSchemeForRedditStatus) ||
+		(validStatus == AHParserValidURLWithDegeneratedSchemeStatus && useStrictChecking == NO))
+	{
         AH_delete_buffer(buf, scanner); 
 		
         buf = NULL;
@@ -270,7 +193,7 @@ NSArray *ahURLPrefixesExcludedFromSchemeRewrites(void)
         if (AHget_leng(scanner) == encodedLength) {
 			AHlex_destroy(scanner);
 			
-            return YES;
+            return validStatus;
         }
     } else {
         AH_delete_buffer(buf, scanner);
@@ -278,16 +201,16 @@ NSArray *ahURLPrefixesExcludedFromSchemeRewrites(void)
         buf = NULL;
 		
 		AHlex_destroy(scanner);
-		
-        return NO;
+
+		return AHParserInvalidURLStatus;
     }
 	
 	AHlex_destroy(scanner);
-	
-    return NO;
+
+	return AHParserInvalidURLStatus;
 }	
 
-- (NSString *)nextURI
+- (NSArray *)nextURI
 {
 	NSRange	scannedRange;
 	
@@ -301,7 +224,9 @@ NSArray *ahURLPrefixesExcludedFromSchemeRewrites(void)
 		if ([enclosureSet characterIsMember:[m_scanString characterAtIndex:scannedRange.location]]) {
 			unsigned long encIdx = [enclosureStartArray indexOfObject:[m_scanString substringWithRange:NSMakeRange(scannedRange.location, 1)]];
 			
-			if (encIdx != NSNotFound) {
+			if (encIdx == NSNotFound) {
+				;
+			} else {
 				NSRange encRange = [m_scanString rangeOfString:enclosureStopArray[encIdx] options:NSBackwardsSearch range:scannedRange];
 				
 				scannedRange.location++; 
@@ -338,16 +263,18 @@ NSArray *ahURLPrefixesExcludedFromSchemeRewrites(void)
 		
 		if (scannedRange.length >= 4) {
 			NSString *_scanString = [m_scanString substringWithRange:scannedRange];
-			
-			if ([self isStringValidURI:_scanString usingStrict:m_strictChecking fromIndex:&m_scanLocation]) {
+
+			AHParserStatus _parserStatus = [AHHyperlinkScanner isStringValidURI:_scanString usingStrict:m_strictChecking fromIndex:&m_scanLocation];
+
+			if (_parserStatus != AHParserInvalidURLStatus) {
 				if (scannedRange.location >= 1) {
 					unichar leftmost = [m_scanString characterAtIndex:(scannedRange.location - 1)];
 					
 					if (leftmost != '@' && leftmost != '.') {
-						return NSStringFromRange(scannedRange);
+						return [self _returnedValueWithProperURLScheme:_scanString inRange:scannedRange parserStatus:_parserStatus];
 					}
 				} else {
-					return NSStringFromRange(scannedRange);
+					return [self _returnedValueWithProperURLScheme:_scanString inRange:scannedRange parserStatus:_parserStatus];
 				}
 			}
 		}
@@ -375,6 +302,26 @@ NSArray *ahURLPrefixesExcludedFromSchemeRewrites(void)
 #pragma mark -
 #pragma mark Private Methods
 
++ (NSString *)_URLWithProperScheme:(NSString *)url parserStatus:(AHParserStatus)parserStatus
+{
+	NSString *properURL = url;
+
+	if (parserStatus == AHParserValidURLWithDegeneratedSchemeStatus) {
+		properURL = [DEFAULT_URL_SCHEME stringByAppendingString:url];
+	} else if (parserStatus == AHParserValidURLWithSpecialSchemeForRedditStatus) {
+		properURL = [@"http://www.reddit.com" stringByAppendingString:url];
+	}
+
+	return properURL;
+}
+
+- (NSArray *)_returnedValueWithProperURLScheme:(NSString *)scannedString inRange:(NSRange)scannedRange parserStatus:(AHParserStatus)parserStatus
+{
+	NSString *properURL = [AHHyperlinkScanner _URLWithProperScheme:scannedString parserStatus:parserStatus];
+
+	return @[NSStringFromRange(scannedRange), properURL];
+}
+
 - (NSArray *)_allMatches;
 {
     NSMutableArray *rangeArray = [NSMutableArray array];
@@ -382,23 +329,14 @@ NSArray *ahURLPrefixesExcludedFromSchemeRewrites(void)
 	m_scanLocation = 0; 
     
 	while (m_scanLocation < [m_scanString length]) {
-		NSString *markedLink = [self nextURI];
+		NSArray *markedLinkData = [self nextURI];
 		
-		if (markedLink) {	
-			[rangeArray addObject:markedLink];
+		if (markedLinkData) {
+			[rangeArray addObject:markedLinkData];
 		}	
 	}
 	
 	return rangeArray;
-}
-
-- (void)_logDebugData:(NSString *)matchString withRange:(NSRange)scannedRange
-{
-	NSRange matchRange = [m_scanString rangeOfString:matchString];
-	
-	if (matchRange.location != NSNotFound) {
-		NSLog(@"%@ %@ %@", m_scanString, [m_scanString substringWithRange:scannedRange], NSStringFromRange(scannedRange));
-	}
 }
 
 - (NSRange)_longestBalancedEnclosureInRange:(NSRange)inRange
@@ -430,14 +368,18 @@ NSArray *ahURLPrefixesExcludedFromSchemeRewrites(void)
 			}
 			
 			[enclosureStack addObject:encDict];
-		} else if ([enclosureStopArray containsObject:matchChar]) {
+		}
+		else if ([enclosureStopArray containsObject:matchChar])
+		{
 			NSEnumerator *encEnumerator = [enclosureStack objectEnumerator];
 			
-			while ((encDict = [encEnumerator nextObject])) {
+			while ((encDict = [encEnumerator nextObject]))
+			{
 				unsigned long encTagIndex	 = [encDict[ENC_INDEX_KEY] unsignedLongValue];
 				unsigned long encStartIndex  = [enclosureStartArray indexOfObjectIdenticalTo:encDict[ENC_CHAR_KEY]];
 				
-				if ([enclosureStopArray indexOfObjectIdenticalTo:matchChar] == encStartIndex) {
+				if ([enclosureStopArray indexOfObjectIdenticalTo:matchChar] == encStartIndex)
+				{
 					NSRange encRange = NSMakeRange(encTagIndex, (encScanLocation - encTagIndex + 1));
 					
 					if (enclosureStack == nil) {
@@ -474,7 +416,9 @@ NSArray *ahURLPrefixesExcludedFromSchemeRewrites(void)
 - (BOOL)_scanString:(NSString *)inString upToCharactersFromSet:(NSCharacterSet *)inCharSet intoRange:(NSRange *)outRangeRef fromIndex:(unsigned long *)idx
 {
 	unichar			_curChar;
+
 	NSRange			_outRange;
+
 	unsigned long	_scanLength = [inString length];
 	unsigned long	_idx;
 	
@@ -518,7 +462,9 @@ NSArray *ahURLPrefixesExcludedFromSchemeRewrites(void)
 - (BOOL)_scanString:(NSString *)inString charactersFromSet:(NSCharacterSet *)inCharSet intoRange:(NSRange *)outRangeRef fromIndex:(unsigned long *)idx
 {
 	unichar			_curChar;
+
 	NSRange			_outRange;
+
 	unsigned long	_scanLength = [inString length];
 	unsigned long	_idx = *idx;
 	
