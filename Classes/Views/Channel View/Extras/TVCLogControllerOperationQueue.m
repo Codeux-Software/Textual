@@ -53,6 +53,17 @@
 
 @implementation TVCLogControllerOperationQueue
 
+- (id)init
+{
+	if (self = [super init]) {
+		[self setName:@"TVCLogControllerOperationQueue"];
+
+		return self;
+	}
+
+	return nil;
+}
+
 #pragma mark -
 #pragma mark Queue Additions
 
