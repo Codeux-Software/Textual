@@ -127,10 +127,12 @@
 
 		for (id operation in [self operations]) {
 			if ([operation controller] == controller) {
-				[operation willChangeValueForKey:@"isReady"];
-				[operation didChangeValueForKey:@"isReady"];
+				if ([operation isCancelled] == NO) {
+					[operation willChangeValueForKey:@"isReady"];
+					[operation didChangeValueForKey:@"isReady"];
 
-				break; // Only update oldest operation matching controller.
+					break; // Only update oldest operation matching controller.
+				}
 			}
 		}
 	});
@@ -157,7 +159,9 @@
 	 main queue so we will not wrap this in it. */
 	for (id operation in [[self operations] reverseObjectEnumerator]) {
 		if ([operation controller] == controller) {
-			return operation;
+			if ([operation isCancelled] == NO) {
+				return operation;
+			}
 		}
 	}
 
@@ -207,9 +211,12 @@
 - (BOOL)isReady
 {
 	if ([self.dependencies count] < 1) {
-		return ([self.controller.view isLoading] == NO && self.controller.isLoaded);
+		BOOL internalIsReady = ([[self.controller view] isLoading] == NO &&
+								 [self.controller isLoaded]);
+
+		return ([super isReady] && internalIsReady);
 	} else {
-		return [self.dependencies[0] isFinished];
+		return [super isReady];
 	}
 }
 

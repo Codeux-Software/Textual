@@ -335,7 +335,8 @@
 {
 	if (onQueue) {
 		TVCLogControllerOperationBlock scriptBlock = ^(id operation, NSDictionary *context) {
-			NSAssertReturn(self.isTerminating == NO);
+			NSAssertReturn([self isTerminating] == NO);
+			NSAssertReturn([operation isCancelled] == NO);
 			
 			dispatch_async(dispatch_get_main_queue(), ^{
 				[self executeQuickScriptCommand:command withArguments:args];
@@ -379,7 +380,8 @@
 
 	[self.printingQueue enqueueMessageBlock:^(id operation, NSDictionary *context) {
 		dispatch_async(dispatch_get_main_queue(), ^{
-			NSAssertReturn(self.isTerminating == NO);
+			NSAssertReturn([self isTerminating] == NO);
+			NSAssertReturn([operation isCancelled] == NO);
 			
 			if ([self.topicValue isEqualToString:topic] == NO)
 			{
@@ -595,12 +597,13 @@
 
 	[self.printingQueue enqueueMessageBlock:^(id operation, NSDictionary *context)
 	 {
+		NSAssertReturn([self isTerminating] == NO);
+		NSAssertReturn([operation isCancelled] == NO);
+
 		 [self.historicLogFile entriesForClient:self.client
 									  inChannel:self.channel
 							withCompletionBlock:^(NSArray *objects)
 		  {
-			  NSAssertReturn(self.isTerminating == NO);
-
 			  if ([self viewIsEncrypted] == NO) {
 				  [self reloadOldLines:YES withOldLines:objects];
 			  }
@@ -625,12 +628,13 @@
 
 	[self.printingQueue enqueueMessageBlock:^(id operation, NSDictionary *context)
 	 {
+		NSAssertReturn([self isTerminating] == NO);
+		NSAssertReturn([operation isCancelled] == NO);
+
 		 [self.historicLogFile entriesForClient:self.client
 									  inChannel:self.channel
 							withCompletionBlock:^(NSArray *objects)
 		  {
-			  NSAssertReturn(self.isTerminating == NO);
-
 			  if ([self viewIsEncrypted] == NO) {
 				  [self reloadOldLines:NO withOldLines:objects];
 			  }
@@ -893,7 +897,8 @@
 {
 	/* Continue with a normal print job. */
 	TVCLogControllerOperationBlock printBlock = ^(id operation, NSDictionary *context) {
-		NSAssertReturn(self.isTerminating == NO);
+		NSAssertReturn([self isTerminating] == NO);
+		NSAssertReturn([operation isCancelled] == NO);
 
 		/* Increment by one. */
 		self.activeLineCount += 1;
