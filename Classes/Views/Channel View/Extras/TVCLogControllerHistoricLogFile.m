@@ -130,7 +130,7 @@
 		NSFetchRequest *fetchRequest = [self.managedObjectModel fetchRequestFromTemplateWithName:@"LogLineFetchRequest"
 																		   substitutionVariables:fetchVariables];
 
-		/* Perform actual fetch. */
+		/* Define sort order. */
 		[fetchRequest setSortDescriptors:@[self.managedSortDescriptor]];
 
 		/* Define match limit. */
@@ -138,6 +138,10 @@
 			[fetchRequest setFetchLimit:maxEntryCount];
 		}
 
+		/* Lock the context before performing fetch. */
+		[self.managedObjectContext lock];
+
+		/* Perform fetch. */
 		NSArray *fetchResults = [self.managedObjectContext executeFetchRequest:fetchRequest error:NULL];
 
 		/* Our sort descriptor places newest lines at the top and oldest
@@ -145,8 +149,12 @@
 		 the fetch limit only applies to the newest lines without us having
 		 to supply an offset. Obivously, we do not want newest lines first
 		 though, so before passing to the callback, we reverse. */
-		NSArray *finalData = [fetchResults.reverseObjectEnumerator allObjects];
+		NSArray *finalData = [[fetchResults reverseObjectEnumerator] allObjects];
 
+		/* Unlock context. */
+		[self.managedObjectContext unlock];
+
+		/* Call completion block. */
 		completionBlock(finalData);
 	}];
 #else
