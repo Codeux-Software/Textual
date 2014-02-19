@@ -179,13 +179,17 @@
 			}
 
 			/* Post the image. */
-			[self.requestOwner imageLoaderFinishedLoadingForImageWithID:self.requestImageUniqeID orientation:[orientation integerValue]];
+			if (self.requestOwner) {
+				[self.requestOwner imageLoaderFinishedLoadingForImageWithID:self.requestImageUniqeID orientation:[orientation integerValue]];
+			}
 
 			return;
 		}
 
 		/* Send the information off. We will validate the information higher up. */
-		[self.requestOwner imageLoaderFinishedLoadingForImageWithID:self.requestImageUniqeID orientation:(-1)];
+		if (self.requestOwner) {
+			[self.requestOwner imageLoaderFinishedLoadingForImageWithID:self.requestImageUniqeID orientation:(-1)];
+		}
 	}
 
 	/* Cleaning. */
