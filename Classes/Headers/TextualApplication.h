@@ -74,9 +74,9 @@
 	@class TDCAboutPanel;
 	@class TDCAddressBookSheet;
 	@class TDCFileTransferDialog;
+	@class TDCFileTransferDialogRemoteAddress;
 	@class TDCFileTransferDialogTableCell;
 	@class TDCFileTransferDialogTransferController;
-	@class TDCFileTransferDialogRemoteAddress;
 	@class TDCHighlightEntryMatchCondition;
 	@class TDCHighlightEntrySheet;
 	@class TDCHighlightListSheet;
@@ -123,8 +123,6 @@
 	@class TVCImageURLParser;
 	@class TVCImageURLoader;
 	@class TVCInputPromptDialog;
-	@class TVCMainWindowTextView;
-	@class TVCMainWindowTextViewBackground;
 	@class TVCListSeparatorCell;
 	@class TVCListView;
 	@class TVCLogController;
@@ -139,6 +137,8 @@
 	@class TVCMainWindowLoadingScreenView;
 	@class TVCMainWindowSegmentedCell;
 	@class TVCMainWindowSegmentedControl;
+	@class TVCMainWindowTextView;
+	@class TVCMainWindowTextViewBackground;
 	@class TVCMemberList;
 	@class TVCMemberListCell;
 	@class TVCMemberListCellBadge;
@@ -150,8 +150,10 @@
 	@class TVCServerListCellChildItem;
 	@class TVCServerListCellGroupItem;
 	@class TVCServerListRowCell;
-	@class TVCTextViewWithIRCFormatter;
+	@class TVCTextFieldWithValueValidation;
+	@class TVCTextFieldWithValueValidationCell;
 	@class TVCTextFormatterMenu;
+	@class TVCTextViewWithIRCFormatter;
 	@class TVCThinSplitView;
 	@class TVCWebViewAutoScroll;
 	@class TXMasterController;
@@ -318,6 +320,7 @@
 	#import "TVCServerList.h"
 	#import "TVCServerListCell.h"
 	#import "TVCServerListCellBadge.h"
+	#import "TVCTextFieldWithValueValidation.h"
 	#import "TVCTextViewWithIRCFormatter.h"
 	#import "TVCTextFormatterMenu.h"
 	#import "TVCThinSplitView.h"

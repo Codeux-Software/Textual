@@ -346,6 +346,11 @@
 
 - (BOOL)hostmaskComponents:(NSString **)nickname username:(NSString **)username address:(NSString **)address client:(IRCClient *)client
 {
+	return [self hostmaskComponents:nickname username:username address:address client:client usingCharacterSetMatching:NO];
+}
+
+- (BOOL)hostmaskComponents:(NSString **)nickname username:(NSString **)username address:(NSString **)address client:(IRCClient *)client usingCharacterSetMatching:(BOOL)matchUsingCharacterSet
+{
 	/* Gather basic information. */
 	NSInteger bang1pos = [self stringPosition:@"!"];
 	NSInteger bang2pos = [self stringPosition:@"@"];
@@ -386,6 +391,11 @@
 
 		/* Check whether the nickname is a valid nickname. */
 		NSAssertReturnR([nicknameInt isNickname:client], NO);
+	} else {
+		/* Check whether the nickname is a valid nickname. */
+		if (matchUsingCharacterSet) {
+			NSAssertReturnR([nicknameInt isNicknameMatchingDefinedCharacterSet], NO);
+		}
 	}
 
 	/* The host checks out so far, so define the output. */
@@ -411,7 +421,12 @@
 
 - (BOOL)isHostmask:(IRCClient *)client
 {
-	return [self hostmaskComponents:nil username:nil address:nil client:client];
+	return [self hostmaskComponents:nil username:nil address:nil client:client usingCharacterSetMatching:NO];
+}
+
+- (BOOL)isHostmaskMatchingDefinedCharacterSet
+{
+	return [self hostmaskComponents:nil username:nil address:nil client:nil usingCharacterSetMatching:YES];
 }
 
 - (BOOL)isUsername /* Ident — @private */
@@ -434,6 +449,27 @@
 	return ([self isNotEqualTo:@"*"] && [self contains:@"."] == NO);
 }
 
+- (BOOL)isNicknameMatchingDefinedCharacterSet
+{
+	NSString *bob = self;
+
+	if ([bob isEqualToString:@"*"]) {
+		return NO;
+	} else {
+		// Only allow star character as nickname prefix. No other position.
+		if ([bob hasPrefix:@"*"]) {
+			bob = [bob substringFromIndex:1];
+		}
+
+		// If the case mapping is ASCII which is a lot of IRC, then it is better to be strict.
+		if ([bob onlyContainsCharacters:IRCNicknameValidCharacters] == NO) {
+			return NO;
+		}
+
+		return (bob.length > 0 && bob.length <= TXMaximumIRCNicknameLength);
+	}
+}
+
 - (BOOL)isNickname:(IRCClient *)client
 {
 	NSObjectIsEmptyAssertReturn(self, NO);
@@ -451,23 +487,7 @@
 		return [self isNickname];
 	}
 
-	NSString *bob = self;
-
-	if ([bob isEqualToString:@"*"]) {
-		return NO;
-	} else {
-		// Only allow star character as nickname prefix. No other position.
-		if ([bob hasPrefix:@"*"]) {
-			bob = [bob substringFromIndex:1];
-		}
-		
-		// If the case mapping is ASCII which is a lot of IRC, then it is better to be strict.
-		if ([bob onlyContainsCharacters:IRCNicknameValidCharacters] == NO) {
-			return NO;
-		}
-		
-		return (bob.length > 0 && bob.length <= TXMaximumIRCNicknameLength);
-	}
+	return [self isNicknameMatchingDefinedCharacterSet];
 }
 
 - (BOOL)isChannelName:(IRCClient *)client

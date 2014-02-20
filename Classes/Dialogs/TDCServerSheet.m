@@ -253,9 +253,9 @@
 			self.ignoreSheet.ignore = [IRCAddressBook new];
             
             if ([context isEqualToString:@"--"]) {
-				self.ignoreSheet.ignore.hostmask = @"<nickname>";
+				//self.ignoreSheet.ignore.hostmask = @"<nickname>";
             } else {
-				self.ignoreSheet.ignore.hostmask = context;
+				  self.ignoreSheet.ignore.hostmask = context;
 			}
 
 			[self.ignoreSheet start];

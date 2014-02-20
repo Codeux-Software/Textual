@@ -43,29 +43,65 @@
 {
 	if ((self = [super init])) {
 		[RZMainBundle() loadCustomNibNamed:@"TDCAddressBookSheet" owner:self topLevelObjects:nil];
+
+		[self buildTextFieldValidationBlocks];
 	}
 
 	return self;
+}
+
+- (void)buildTextFieldValidationBlocks
+{
+	/* Define host field for ignore entries. */
+	[self.ignoreEntryHostmaskField setStringValueIsInvalidOnEmpty:YES];
+	[self.ignoreEntryHostmaskField setStringValueUsesOnlyFirstToken:YES];
+	[self.ignoreEntryHostmaskField setTextDidChangeCallback:self];
+
+	[self.ignoreEntryHostmaskField setValidationBlock:^BOOL(NSString *currentValue) {
+		NSString *valueWithoutWildcard = [currentValue stringByReplacingOccurrencesOfString:@"*" withString:@"-"];
+
+		return ([valueWithoutWildcard isNicknameMatchingDefinedCharacterSet] ||
+				[valueWithoutWildcard isHostmaskMatchingDefinedCharacterSet]);
+	}];
+
+	/* Define nickname field for user tracking. */
+	[self.userTrackingEntryNicknameField setStringValueIsInvalidOnEmpty:YES];
+	[self.userTrackingEntryNicknameField setStringValueUsesOnlyFirstToken:YES];
+	[self.userTrackingEntryNicknameField setTextDidChangeCallback:self];
+
+	[self.userTrackingEntryNicknameField setValidationBlock:^BOOL(NSString *currentValue) {
+		return [currentValue isNicknameMatchingDefinedCharacterSet];
+	}];
+}
+
+- (void)validatedTextFieldTextDidChange:(id)sender
+{
+	/* Enable or disable OK button based on validation. */
+	if (self.ignore.entryType == IRCAddressBookIgnoreEntryType) {
+		[self.ignoreEntrySaveButton setEnabled:[self.ignoreEntryHostmaskField valueIsValid]];
+	} else {
+		[self.userTrackingEntrySaveButton setEnabled:[self.userTrackingEntryNicknameField valueIsValid]];
+	}
 }
 
 - (void)start
 {
 	if (self.ignore.entryType == IRCAddressBookIgnoreEntryType) {
 		self.sheet = self.ignoreView;
-		
-		if (NSObjectIsNotEmpty(self.ignore.hostmask)) {
-			[self.hostmaskField setStringValue:self.ignore.hostmask];
+
+		if (self.ignore.hostmask) {
+			[self.ignoreEntryHostmaskField setStringValue:self.ignore.hostmask];
 		}
 
-		[self.sheet makeFirstResponder:self.hostmaskField];
+		[self.sheet makeFirstResponder:self.ignoreEntryHostmaskField];
 	} else {
 		self.sheet = self.notifyView;
-		
-		if (NSObjectIsNotEmpty(self.ignore.hostmask)) {
-			[self.nicknameField setStringValue:self.ignore.hostmask];
+
+		if (self.ignore.hostmask) {
+			[self.userTrackingEntryNicknameField setStringValue:self.ignore.hostmask];
 		}
 
-		[self.sheet makeFirstResponder:self.nicknameField];
+		[self.sheet makeFirstResponder:self.userTrackingEntryNicknameField];
 	}
 
 	[self.notifyJoinsCheck					setState:self.ignore.notifyJoins];
@@ -88,9 +124,9 @@
 - (void)ok:(id)sender
 {
 	if (self.ignore.entryType == IRCAddressBookIgnoreEntryType) {
-		self.ignore.hostmask = self.hostmaskField.firstTokenStringValue;
+		self.ignore.hostmask = [self.ignoreEntryHostmaskField value];
 	} else {
-		self.ignore.hostmask = self.nicknameField.firstTokenStringValue;
+		self.ignore.hostmask = [self.userTrackingEntryNicknameField value];
 	}
 
 	self.ignore.notifyJoins					= [self.notifyJoinsCheck state];

@@ -182,6 +182,14 @@
 		4C28F441159200C900CD2CDE /* FormattingColor_Rainbow.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F43F159200C900CD2CDE /* FormattingColor_Rainbow.tif */; };
 		4C28F442159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C28F440159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif */; };
 		4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */; };
+		4C36091A18B4E89500243B3A /* TVCTextFieldWithValueValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C36091B18B4E89500243B3A /* TVCTextFieldWithValueValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C36091D18B4E8A800243B3A /* TVCTextFieldWithValueValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C36091C18B4E8A800243B3A /* TVCTextFieldWithValueValidation.m */; };
+		4C36091E18B4E8A800243B3A /* TVCTextFieldWithValueValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C36091C18B4E8A800243B3A /* TVCTextFieldWithValueValidation.m */; };
+		4C36092118B500F100243B3A /* ErroneousTextFieldValueIndicator.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C36092018B500F100243B3A /* ErroneousTextFieldValueIndicator.tif */; };
+		4C36092218B500F100243B3A /* ErroneousTextFieldValueIndicator.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C36092018B500F100243B3A /* ErroneousTextFieldValueIndicator.tif */; };
+		4C36092418B50F8D00243B3A /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C36092318B50F8D00243B3A /* ProperlyFormattedTextFieldValueIndicator.tif */; };
+		4C36092518B50F8D00243B3A /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C36092318B50F8D00243B3A /* ProperlyFormattedTextFieldValueIndicator.tif */; };
 		4C3E69881789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E69861789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m */; };
 		4C3E69891789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E69861789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m */; };
 		4C3E698A1789A31E00B1CB6B /* TVCLogControllerOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E69871789A31E00B1CB6B /* TVCLogControllerOperationQueue.m */; };
@@ -1052,6 +1060,10 @@
 		4C28F440159200C900CD2CDE /* FormattingColor_Rainbow@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "FormattingColor_Rainbow@2x.tif"; path = "Resources/Images/IRC Formatting Colors/FormattingColor_Rainbow@2x.tif"; sourceTree = SOURCE_ROOT; };
 		4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = ../../../../System/Library/Frameworks/SecurityInterface.framework; sourceTree = "<group>"; };
 		4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Spammer Paradise Extension.xcodeproj"; path = "Resources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj"; sourceTree = "<group>"; };
+		4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCTextFieldWithValueValidation.h; sourceTree = "<group>"; };
+		4C36091C18B4E8A800243B3A /* TVCTextFieldWithValueValidation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCTextFieldWithValueValidation.m; sourceTree = "<group>"; };
+		4C36092018B500F100243B3A /* ErroneousTextFieldValueIndicator.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ErroneousTextFieldValueIndicator.tif; sourceTree = "<group>"; };
+		4C36092318B50F8D00243B3A /* ProperlyFormattedTextFieldValueIndicator.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ProperlyFormattedTextFieldValueIndicator.tif; sourceTree = "<group>"; };
 		4C3E69861789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogControllerHistoricLogFile.m; sourceTree = "<group>"; };
 		4C3E69871789A31E00B1CB6B /* TVCLogControllerOperationQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogControllerOperationQueue.m; sourceTree = "<group>"; };
 		4C3E729617C39DD7008F2B08 /* THOUnicodeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THOUnicodeHelper.h; sourceTree = "<group>"; };
@@ -1569,6 +1581,16 @@
 			name = "External Libraries";
 			sourceTree = "<group>";
 		};
+		4C36091F18B500F100243B3A /* Miscellaneous */ = {
+			isa = PBXGroup;
+			children = (
+				4C36092018B500F100243B3A /* ErroneousTextFieldValueIndicator.tif */,
+				4C36092318B50F8D00243B3A /* ProperlyFormattedTextFieldValueIndicator.tif */,
+			);
+			name = Miscellaneous;
+			path = "Resources/Images/User Interface/Miscellaneous";
+			sourceTree = SOURCE_ROOT;
+		};
 		4C3D0B7A1594909500567623 /* Migration Assistant */ = {
 			isa = PBXGroup;
 			children = (
@@ -1733,6 +1755,7 @@
 		4C46CC9D1580432F00846B64 /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
+				4C36091F18B500F100243B3A /* Miscellaneous */,
 				4C73F901159DB9AF00C1BB5F /* Server List */,
 				4C73F91B159DB9AF00C1BB5F /* MainWindowSegmentedControlUserTemplate.pdf */,
 			);
@@ -2098,7 +2121,6 @@
 				4C1893F217980F460091D173 /* TVCImageURLoader.h */,
 				4C8AF581158E99520026668C /* TVCImageURLParser.h */,
 				4C8AF582158E99520026668C /* TVCInputPromptDialog.h */,
-				4C8AF583158E99520026668C /* TVCMainWindowTextView.h */,
 				4C8AF584158E99520026668C /* TVCListSeparatorCell.h */,
 				4C8AF585158E99520026668C /* TVCListView.h */,
 				4C8AF586158E99520026668C /* TVCLogController.h */,
@@ -2112,6 +2134,7 @@
 				4C8AF58C158E99520026668C /* TVCMainWindow.h */,
 				4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */,
 				4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */,
+				4C8AF583158E99520026668C /* TVCMainWindowTextView.h */,
 				4C8AF58D158E99520026668C /* TVCMemberList.h */,
 				4C8AF58E158E99520026668C /* TVCMemberListCell.h */,
 				4C5798B9179B451400968800 /* TVCMemberListCellBadge.h */,
@@ -2119,8 +2142,9 @@
 				4C8AF58F158E99520026668C /* TVCServerList.h */,
 				4C8AF590158E99520026668C /* TVCServerListCell.h */,
 				4C0444E616F1553C00EBB665 /* TVCServerListCellBadge.h */,
-				4C8AF591158E99520026668C /* TVCTextViewWithIRCFormatter.h */,
+				4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */,
 				4C8AF592158E99520026668C /* TVCTextFormatterMenu.h */,
+				4C8AF591158E99520026668C /* TVCTextViewWithIRCFormatter.h */,
 				4C8AF593158E99520026668C /* TVCThinSplitView.h */,
 				4C8AF594158E99520026668C /* TVCWebViewAutoScroll.h */,
 				4C8AF595158E99520026668C /* TXGlobalModels.h */,
@@ -2273,8 +2297,9 @@
 			isa = PBXGroup;
 			children = (
 				4C8AF5FA158E99520026668C /* TVCMainWindowTextView.m */,
-				4C8AF5FB158E99520026668C /* TVCTextViewWithIRCFormatter.m */,
+				4C36091C18B4E8A800243B3A /* TVCTextFieldWithValueValidation.m */,
 				4C8AF5FC158E99520026668C /* TVCTextFormatterMenu.m */,
+				4C8AF5FB158E99520026668C /* TVCTextViewWithIRCFormatter.m */,
 			);
 			path = "Input Text Field";
 			sourceTree = "<group>";
@@ -2717,6 +2742,7 @@
 				4C6D464E180830E60098BA12 /* NSMenuHelper.h in Headers */,
 				4C69F4A718676CCE00E6FCEC /* NSBundleHelper.h in Headers */,
 				4C83D8F7184200A100BCC0E1 /* NSFileManagerHelper.h in Headers */,
+				4C36091B18B4E89500243B3A /* TVCTextFieldWithValueValidation.h in Headers */,
 				4C0C720E1742C444000F82C4 /* NSByteCountFormatterHelper.h in Headers */,
 				4CEA09C61875A734005D6184 /* TDCFileTransferDialogRemoteAddress.h in Headers */,
 				4CC70204171E1CB400BDFAE0 /* BuildConfig.h in Headers */,
@@ -2872,6 +2898,7 @@
 				4CABE85A1840615A002FE4B8 /* TDCProgressInformationSheet.h in Headers */,
 				4C83D8F6184200A100BCC0E1 /* NSFileManagerHelper.h in Headers */,
 				4C69F4A618676CCE00E6FCEC /* NSBundleHelper.h in Headers */,
+				4C36091A18B4E89500243B3A /* TVCTextFieldWithValueValidation.h in Headers */,
 				4CEA09BE1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h in Headers */,
 				4C5E4D1818260131001F3E6B /* TVCLogControllerHistoricLogFile.h in Headers */,
 				4CC70203171E1CB400BDFAE0 /* BuildConfig.h in Headers */,
@@ -3106,6 +3133,7 @@
 				4C73F944159DD38E00C1BB5F /* DarkServerListViewDisclosureUp.tif in Resources */,
 				4C73F945159DD38E00C1BB5F /* DarkServerListViewDisclosureUpSelected.tif in Resources */,
 				4C73F946159DD38E00C1BB5F /* ServerCellSelection_Inverted.tif in Resources */,
+				4C36092418B50F8D00243B3A /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */,
 				4C73F947159DD38E00C1BB5F /* ServerCellSelection_Inverted@2x.tif in Resources */,
 				4C3ED27A15A0E0E40063880C /* DarkServerListViewSelectedPrivateMessageUser.tif in Resources */,
 				4C52379415C18F6700414852 /* Style Default Templates in Resources */,
@@ -3118,6 +3146,7 @@
 				4CA899A8174021FD001176C8 /* TPWTB_Alerts_NC.tif in Resources */,
 				4CA899AA174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif in Resources */,
 				4CBE64C4174371C700831D69 /* TDCHighlightEntrySheet.xib in Resources */,
+				4C36092118B500F100243B3A /* ErroneousTextFieldValueIndicator.tif in Resources */,
 				4CB1257C1783DC6600D0214E /* channelRoomStatusIcon_Aqua.tif in Resources */,
 				4CB1257E1783DC6600D0214E /* channelRoomStatusIcon_Aqua@2x.tif in Resources */,
 				4CB125801783DC6600D0214E /* channelRoomStatusIcon_Dark.tif in Resources */,
@@ -3208,6 +3237,7 @@
 				4C5BA3C616F1302F00A96CA2 /* DarkServerListViewDisclosureUp.tif in Resources */,
 				4C5BA3C716F1302F00A96CA2 /* DarkServerListViewDisclosureUpSelected.tif in Resources */,
 				4C5BA3C816F1302F00A96CA2 /* ServerCellSelection_Inverted.tif in Resources */,
+				4C36092518B50F8D00243B3A /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */,
 				4C5BA3C916F1302F00A96CA2 /* ServerCellSelection_Inverted@2x.tif in Resources */,
 				4C5BA3CA16F1302F00A96CA2 /* DarkServerListViewSelectedPrivateMessageUser.tif in Resources */,
 				4C5BA3CB16F1302F00A96CA2 /* Style Default Templates in Resources */,
@@ -3220,6 +3250,7 @@
 				4CA899A9174021FD001176C8 /* TPWTB_Alerts_NC.tif in Resources */,
 				4CA899AB174021FD001176C8 /* TPWTB_Alerts_NC@2x.tif in Resources */,
 				4CBE64C5174371C700831D69 /* TDCHighlightEntrySheet.xib in Resources */,
+				4C36092218B500F100243B3A /* ErroneousTextFieldValueIndicator.tif in Resources */,
 				4CB1257D1783DC6600D0214E /* channelRoomStatusIcon_Aqua.tif in Resources */,
 				4CB1257F1783DC6600D0214E /* channelRoomStatusIcon_Aqua@2x.tif in Resources */,
 				4CB125811783DC6600D0214E /* channelRoomStatusIcon_Dark.tif in Resources */,
@@ -3396,6 +3427,7 @@
 				4C0445CB16F1603C00EBB665 /* TVCLogView.m in Sources */,
 				4C0445CC16F1603C00EBB665 /* TVCWebViewAutoScroll.m in Sources */,
 				4C0445CD16F1603C00EBB665 /* TVCMainWindowTextView.m in Sources */,
+				4C36091E18B4E8A800243B3A /* TVCTextFieldWithValueValidation.m in Sources */,
 				4C0445CE16F1603C00EBB665 /* TVCTextViewWithIRCFormatter.m in Sources */,
 				4C0445CF16F1603C00EBB665 /* TVCTextFormatterMenu.m in Sources */,
 				4C0445D316F1603C00EBB665 /* TVCServerList.m in Sources */,
@@ -3533,6 +3565,7 @@
 				4C8AF6DC158E99520026668C /* TVCTextViewWithIRCFormatter.m in Sources */,
 				4C8AF6DD158E99520026668C /* TVCTextFormatterMenu.m in Sources */,
 				4C8AF6E0158E99520026668C /* TVCDockIcon.m in Sources */,
+				4C36091D18B4E8A800243B3A /* TVCTextFieldWithValueValidation.m in Sources */,
 				4C8AF6E1158E99520026668C /* TVCInputPromptDialog.m in Sources */,
 				4C8AF6E2158E99520026668C /* TVCListSeparatorCell.m in Sources */,
 				4C8AF6E3158E99520026668C /* TVCListView.m in Sources */,
