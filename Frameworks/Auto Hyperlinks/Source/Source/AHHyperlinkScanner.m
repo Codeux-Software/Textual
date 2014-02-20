@@ -184,7 +184,7 @@ static NSArray					*encKeys						= nil;
 	  	 validStatus == AHParserValidURLWithSlashlessSchemeStatus ||
 		 validStatus == AHParserValidURLWithFileSchemeStatus ||
 		(validStatus == AHParserValidURLWithSpecialSchemeForRedditStatus && useStrictChecking == NO) ||
-		(validStatus == AHParserValidURLWithDegeneratedSchemeStatus && useStrictChecking == NO))
+		(validStatus == AHParserValidURLWithDegeneratedSchemeStatus && useStrictChecking == NO)))
 	{
         AH_delete_buffer(buf, scanner); 
 		
