@@ -355,10 +355,10 @@
 - (void)updateIgnoreConfiguration:(BOOL)reloadUserStatus
 {
 	if (self == [self.worldController selectedClient]) {
-		IRCChannel *selectedChannel = [self.worldController selectedChannel];
-		
-		if ([selectedChannel isChannel]) {
-			[selectedChannel updateTableViewByRemovingIgnoredUsers];
+		for (IRCChannel *c in self.channels) {
+			NSAssertReturnLoopContinue([c isChannel]);
+
+			[c updateTableViewByRemovingIgnoredUsers];
 		}
 	}
 	
