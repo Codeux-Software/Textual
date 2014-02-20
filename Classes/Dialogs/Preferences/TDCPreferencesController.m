@@ -1245,12 +1245,10 @@
 		
 		/* Present progress sheet. */
 		TDCProgressInformationSheet *ps = [TDCProgressInformationSheet new];
-		
-		ps.window = self.window;
-		
+
 		[originalAlert.window orderOut:nil];
 		
-		[ps start];
+		[ps startWithWindow:self.window];
 		
 		/* Continue with a normal copy. */
 		NSError *copyError;
