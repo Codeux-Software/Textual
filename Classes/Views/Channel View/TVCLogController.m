@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-#define _internalPlaybackLineCountLimit			100
+#import <objc/objc-runtime.h>
 
 @interface TVCLogController ()
 @property (nonatomic, readonly, uweak) TPCThemeSettings *themeSettings;
@@ -140,9 +140,17 @@
 
 	self.view.shouldUpdateWhileOffscreen = NO;
 
+	/* Update a few preferences. */
 	[self.view.preferences setCacheModel:WebCacheModelDocumentViewer];
 	[self.view.preferences setUsesPageCache:NO];
 
+	if ([self.view.preferences respondsToSelector:@selector(setShouldRespectImageOrientation:)]) {
+		/* We're most likely not to get into too much trouble for this one. ;) */
+
+		(void)objc_msgSend(self.view.preferences, @selector(setShouldRespectImageOrientation:), YES);
+	}
+
+	/* Load initial document. */
 	[self loadAlternateHTML:[self initialDocument:nil]];
 
 	/* Change the font size to the one of others for new views. */
