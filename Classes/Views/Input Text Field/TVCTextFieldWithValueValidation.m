@@ -97,7 +97,7 @@
 {
 	if ([self valueIsEmpty] == NO) {
 		if (self.validationBlock) {
-			self.cachedValidValue = self.validationBlock([self value]);
+			self.cachedValidValue = self.validationBlock([self stringValue]);
 		} else {
 			self.cachedValidValue = YES;
 		}
