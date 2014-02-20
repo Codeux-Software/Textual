@@ -375,7 +375,7 @@
 	NSAssertReturnR([usernameInt isUsername], NO);
 
 	/* Further compare values. */
-	if ([addressInt containsCharacters:@"!@ "]) {
+	if ([addressInt onlyContainsCharacters:IRCUserAddressValidCharacters] == NO) {
 		/* Host sections contain redundant characters. */
 		/* The host is not valid. */
 
