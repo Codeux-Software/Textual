@@ -48,15 +48,36 @@
 	return self;
 }
 
-- (void)start
+- (void)performWork:(void (^)(void))workBlock attachedToWindow:(NSWindow *)window
 {
+	[self startWithWindow:window];
+
+	if (workBlock) {
+		workBlock();
+	}
+
+	[self stop];
+}
+
+- (void)startWithWindow:(NSWindow *)window
+{
+	/* Begin work sheet. */
+	if (window == nil) {
+		NSAssert(NO, @"No window specified.");
+	}
+
+	self.window = window;
+
 	[self startSheet];
-	
+
 	[self.progressIndicator startAnimation:nil];
 }
 
 - (void)stop
 {
+	/* End work sheet. */
+	[self.progressIndicator stopAnimation:nil];
+
 	[self endSheet];
 }
 

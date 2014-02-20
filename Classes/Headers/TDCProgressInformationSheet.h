@@ -40,6 +40,8 @@
 @interface TDCProgressInformationSheet : TDCSheetBase
 @property (nonatomic, nweak) IBOutlet NSProgressIndicator *progressIndicator;
 
-- (void)start;
+- (void)startWithWindow:(NSWindow *)window;
 - (void)stop;
+
+- (void)performWork:(void (^)(void))workBlock attachedToWindow:(NSWindow *)window;
 @end
