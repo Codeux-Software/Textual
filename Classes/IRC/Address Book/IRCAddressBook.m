@@ -44,7 +44,7 @@
 	if ((self = [super init])) {
 		self.itemUUID = NSDictionaryObjectKeyValueCompare(dic, @"uniqueIdentifier", [NSString stringWithUUID]);
 		
-		self.notifyJoins				= NSDictionaryBOOLKeyValueCompare(dic, @"notifyJoins", NO);
+		self.notifyJoins					= NSDictionaryBOOLKeyValueCompare(dic, @"notifyJoins", NO);
         
 		self.ignoreCTCP						= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreCTCP", NO);
 		self.ignoreJPQE						= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreJPQE", NO);
@@ -90,55 +90,38 @@
 	}
 
 	if (self.entryType == IRCAddressBookUserTrackingEntryType) {
-        hostmask = [hostmask nicknameFromHostmask];
-        
-		if ([hostmask isNickname]) {
-            _hostmask = hostmask;
+		_hostmask = hostmask;
+
+		self.hostmaskRegex = [NSString stringWithFormat:@"^%@!(.*?)@(.*?)$", hostmask];
+	} else {
+		/* setHostmask accepts a nickname in place of an actual hostmask… */
+		NSString *compareValue = [hostmask stringByReplacingOccurrencesOfString:@"*" withString:@"-"];
+
+		if ([compareValue isHostmaskMatchingDefinedCharacterSet] == NO) {
+			_hostmask = hostmask;
 
 			self.hostmaskRegex = [NSString stringWithFormat:@"^%@!(.*?)@(.*?)$", hostmask];
-		}
-	} else {
-		/* Make valid hostmask. */
-		
-		if ([hostmask contains:@"@"] == NO) {
-			hostmask = [hostmask stringByAppendingString:@"@*"];
-		} 
-		
-		NSRange atsrange = [hostmask rangeOfString:@"@" options:NSBackwardsSearch];
-		
-		if (hostmask.length > 2) {
-			NSString *first = [hostmask substringToIndex:atsrange.location];
-			NSString *second = [hostmask substringAfterIndex:atsrange.location];
-			
-			if (NSObjectIsEmpty(first)) {
-				first = @"*";
-			}
-			
-			if ([first contains:@"!"] == NO) {
-				hostmask = [NSString stringWithFormat:@"%@!*@%@", first, second];
-			}
-		}
-		
-		/* There probably is an easier way to escape characters before making
-		 our regular expression, but let us do it the hard way instead. More fun. */
-		
-		NSString *new_hostmask = hostmask;
-		
-		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
-		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"{" withString:@"\\{"];
-		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"}" withString:@"\\}"];
-		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@")" withString:@"\\)"];
-		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"(" withString:@"\\("];
-		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"]" withString:@"\\]"];
-		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"[" withString:@"\\["];
-		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"^" withString:@"\\^"];
-		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"|" withString:@"\\|"];
-		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"~" withString:@"\\~"];
-		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"*" withString:@"(.*?)"];
+		} else {
+			/* There probably is an easier way to escape characters before making
+			 our regular expression, but let us do it the hard way instead. More fun. */
+			NSString *new_hostmask = hostmask;
 
-		_hostmask = hostmask;
-		
-		self.hostmaskRegex = [NSString stringWithFormat:@"^%@$", new_hostmask];
+			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
+			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"{" withString:@"\\{"];
+			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"}" withString:@"\\}"];
+			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@")" withString:@"\\)"];
+			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"(" withString:@"\\("];
+			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"]" withString:@"\\]"];
+			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"[" withString:@"\\["];
+			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"^" withString:@"\\^"];
+			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"|" withString:@"\\|"];
+			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"~" withString:@"\\~"];
+			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"*" withString:@"(.*?)"];
+
+			_hostmask = hostmask;
+
+			self.hostmaskRegex = [NSString stringWithFormat:@"^%@$", new_hostmask];
+		}
 	}
 }
 
@@ -146,10 +129,10 @@
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 
-	[dic safeSetObject:self.itemUUID forKey:@"uniqueIdentifier"];
-	[dic safeSetObject:self.hostmask forKey:@"hostmask"];
+	[dic safeSetObject:self.itemUUID				forKey:@"uniqueIdentifier"];
+	[dic safeSetObject:self.hostmask				forKey:@"hostmask"];
 
-	[dic setInteger:self.entryType forKey:@"entryType"];
+	[dic setInteger:self.entryType					forKey:@"entryType"];
 
 	[dic setBool:self.hideInMemberList				forKey:@"hideInMemberList"];
 	[dic setBool:self.hideMessagesContainingMatch	forKey:@"hideMessagesContainingMatch"];

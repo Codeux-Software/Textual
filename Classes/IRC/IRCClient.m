@@ -2017,73 +2017,17 @@
 		case 5073: // Command: UNIGNORE
 		{
 			BOOL isIgnoreCommand = [uppercaseCommand isEqualToString:IRCPublicCommandIndex("ignore")];
-				
-			if (NSObjectIsEmpty(uncutInput) || PointerIsEmpty(selChannel)) {
-				if (isIgnoreCommand) {
-                    [self.menuController showServerPropertyDialog:self withDefaultView:@"addressBook" andContext:@"--"];
+
+			if (isIgnoreCommand) {
+				NSString *nickname = [[s getToken] string];
+
+				if (NSObjectIsNotEmpty(nickname) || PointerIsEmpty(selChannel)) {
+					[self.menuController showServerPropertyDialog:self withDefaultView:@"addressBook" andContext:nickname];
 				} else {
-                    [self.menuController showServerPropertyDialog:self withDefaultView:@"addressBook" andContext:@"-"];
+					[self.menuController showServerPropertyDialog:self withDefaultView:@"addressBook" andContext:@"--"];
 				}
 			} else {
-				NSString *nickname = s.getToken.string;
-				
-				IRCUser *user = [selChannel memberWithNickname:nickname];
-
-				if (PointerIsEmpty(user)) {
-					if (isIgnoreCommand) {
-                        [self.menuController showServerPropertyDialog:self withDefaultView:@"addressBook" andContext:nickname];
-					} else {
-                        [self.menuController showServerPropertyDialog:self withDefaultView:@"addressBook" andContext:@"-"];
-					}
-
-					return;
-				}
-
-				IRCAddressBook *g = [IRCAddressBook new];
-
-				g.hostmask = [user banMask];
-
-				g.ignoreCTCP = YES;
-				g.ignoreJPQE = YES;
-				g.ignoreNotices	= YES;
-				g.ignorePublicMessages = YES;
-				g.ignorePrivateMessages = YES;
-				g.ignorePublicHighlights = YES;
-				g.ignorePrivateHighlights = YES;
-				g.ignoreFileTransferRequests = YES;
-
-				g.hideMessagesContainingMatch = NO;
-				g.hideInMemberList = YES;
-
-				g.notifyJoins = NO;
-
-				if (isIgnoreCommand) {
-					BOOL found = NO;
-
-					for (IRCAddressBook *e in self.config.ignoreList) {
-						if ([g.hostmask isEqualToString:e.hostmask]) {
-							found = YES;
-
-							break;
-						}
-					}
-
-					if (found == NO) {
-						[self.config.ignoreList safeAddObject:g];
-						
-						[self updateIgnoreConfiguration:NO];
-					}
-				} else {
-					for (IRCAddressBook *e in self.config.ignoreList) {
-						if ([g.hostmask isEqualToString:e.hostmask]) {
-							[self.config.ignoreList removeObject:e];
-
-							[self updateIgnoreConfiguration:NO];
-
-							break;
-						}
-					}
-				}
+				[self.menuController showServerPropertyDialog:self withDefaultView:@"addressBook" andContext:@"-"];
 			}
 
 			break;
