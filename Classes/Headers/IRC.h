@@ -49,6 +49,9 @@
 /* InspIRCd threw everything out the window when they decided to support all these special characters after _-. … */
 #define IRCUsernameValidCharacters			@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-.[\\]^`{|}~" /* Ident. */
 
+/* Characters allowed for the address part of a hostmask. */
+#define IRCUserAddressValidCharacters		@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-./"
+
 /* Command index. */
 TEXTUAL_EXTERN NSString *IRCPrivateCommandIndex(const char *key); 
 TEXTUAL_EXTERN NSString *IRCPublicCommandIndex(const char *key); 
