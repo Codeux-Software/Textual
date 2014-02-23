@@ -159,6 +159,8 @@
 		self.trialPeriodTimer.reqeatTimer	= NO;
 		self.trialPeriodTimer.selector		= @selector(onTrialPeriodTimer:);
 #endif
+
+		self.lastMessageServerTime	= 0;
 	}
 	
 	return self;
@@ -3130,6 +3132,7 @@
 	self.CAPpausedStatus = 0;
 	self.CAPuserhostInNames = NO;
 	self.CAPServerTime = NO;
+	self.CAPPlayback = NO;
 	
 	self.autojoinInProgress = NO;
 	self.hasIRCopAccess = NO;
@@ -3343,6 +3346,14 @@
     m = [THOPluginManagerSharedInstance() processInterceptedServerInput:m for:self];
 
     PointerIsEmptyAssert(m);
+
+	/* Keep track of the server time of the last seen message. */
+	if (self.CAPServerTime && self.isConnected && self.isLoggedIn) {
+		NSTimeInterval serverTime = [m.receivedAt timeIntervalSince1970];
+		if (serverTime > self.lastMessageServerTime) {
+			self.lastMessageServerTime = serverTime;
+		}
+	}
 
 	if (m.numericReply > 0) {
 		[self receiveNumericReply:m];
@@ -4697,6 +4708,7 @@
 			[cap isEqualIgnoringCase:@"server-time"]			||
 			[cap isEqualIgnoringCase:@"znc.in/server-time"]     ||
             [cap isEqualIgnoringCase:@"znc.in/server-time-iso"] ||
+			[cap isEqualIgnoringCase:@"znc.in/playback"]	||
 		   ([cap isEqualIgnoringCase:@"sasl"] && self.config.nicknamePasswordIsSet));
 }
 
@@ -4723,6 +4735,8 @@
 				   [cap isEqualIgnoringCase:@"znc.in/server-time-iso"])
 		{
 			self.CAPServerTime = YES;
+		} else if ([cap isEqualIgnoringCase:@"znc.in/playback"]) {
+			self.CAPPlayback = YES;
 		}
 	}
 }
@@ -4852,6 +4866,11 @@
 		}
 
 		[self sendCommand:s completeTarget:NO target:nil];
+	}
+
+	/* Request playback since the last seen message when previously connected. */
+	if (self.CAPPlayback) {
+		[self send:IRCPrivateCommandIndex("privmsg"), @"*playback", @"play", @"*", [NSString stringWithFormat:@"%f", self.lastMessageServerTime], nil];
 	}
 
 	/* Activate existing queries. */

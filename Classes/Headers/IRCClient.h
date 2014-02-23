@@ -95,6 +95,7 @@ typedef enum IRCDisconnectMode : NSInteger {
 @property (nonatomic, assign) BOOL CAPawayNotify;               // YES if away-notify CAP supported.
 @property (nonatomic, assign) BOOL CAPWatchCommand;				// YES if the WATCH command is supported.
 @property (nonatomic, assign) BOOL CAPServerTime;				// YES if server-time CAP supported.
+@property (nonatomic, assign) BOOL CAPPlayback;					// YES if the playback CAP supported.
 @property (nonatomic, strong) NSMutableArray *CAPacceptedCaps;
 @property (nonatomic, strong) NSMutableArray *CAPpendingCaps;
 @property (nonatomic, strong) IRCChannel *lastSelectedChannel;
@@ -102,6 +103,7 @@ typedef enum IRCDisconnectMode : NSInteger {
 @property (nonatomic, strong) NSMutableArray *highlights;
 @property (nonatomic, strong) NSString *preAwayNickname; // Nickname before away was set.
 @property (nonatomic, assign) NSTimeInterval lastMessageReceived;
+@property (nonatomic, assign) NSTimeInterval lastMessageServerTime;
 @property (nonatomic, strong) NSString *serverRedirectAddressTemporaryStore; // Temporary store for RPL_BOUNCE (010) redirects.
 @property (nonatomic, assign) NSInteger serverRedirectPortTemporaryStore; // Temporary store for RPL_BOUNCE (010) redirects.
 
