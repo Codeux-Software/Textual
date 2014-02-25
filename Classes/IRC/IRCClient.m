@@ -2385,32 +2385,34 @@
 		case 5023: // Command: GLINE
 		case 5025: // Command: GZLINE
 		{
-			NSObjectIsEmptyAssert(uncutInput);
-			
 			NSString *nickname = s.getToken.string;
 
-			if ([nickname hasPrefix:@"-"]) {
-				[self send:uppercaseCommand, nickname, s.string, nil];
+			if (NSObjectIsEmpty(nickname)) {
+				[self send:uppercaseCommand, s.string, nil];
 			} else {
-				NSString *gltime = s.getToken.string;
-				NSString *reason = s.string.trim;
+				if ([nickname hasPrefix:@"-"]) {
+					[self send:uppercaseCommand, nickname, s.string, nil];
+				} else {
+					NSString *gltime = s.getToken.string;
+					NSString *reason = s.string.trim;
 
-				if (NSObjectIsEmpty(reason)) {
-					reason = [TPCPreferences IRCopDefaultGlineMessage];
+					if (NSObjectIsEmpty(reason)) {
+						reason = [TPCPreferences IRCopDefaultGlineMessage];
 
-					/* Remove the time from our default reason. */
-					if ([reason contains:NSStringWhitespacePlaceholder]) {
-						NSInteger spacePos = [reason stringPosition:NSStringWhitespacePlaceholder];
+						/* Remove the time from our default reason. */
+						if ([reason contains:NSStringWhitespacePlaceholder]) {
+							NSInteger spacePos = [reason stringPosition:NSStringWhitespacePlaceholder];
 
-						if (NSObjectIsEmpty(gltime)) {
-							gltime = [reason safeSubstringToIndex:spacePos];
+							if (NSObjectIsEmpty(gltime)) {
+								gltime = [reason safeSubstringToIndex:spacePos];
+							}
+
+							reason = [reason substringAfterIndex:spacePos];
 						}
-
-						reason = [reason substringAfterIndex:spacePos];
 					}
-				}
 
-				[self send:uppercaseCommand, nickname, gltime, reason, nil];
+					[self send:uppercaseCommand, nickname, gltime, reason, nil];
+				}
 			}
 
 			break;
@@ -2418,48 +2420,50 @@
 		case 5063:  // Command: SHUN
 		case 5068: // Command: TEMPSHUN
 		{
-			NSObjectIsEmptyAssert(uncutInput);
-
 			NSString *nickname = s.getToken.string;
 
-			if ([nickname hasPrefix:@"-"]) {
-				[self send:uppercaseCommand, nickname, s.string, nil];
+			if (NSObjectIsEmpty(nickname)) {
+				[self send:uppercaseCommand, s.string, nil];
 			} else {
-				if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("tempshun")]) {
-					NSString *reason = s.getToken.string;
-
-					if (NSObjectIsEmpty(reason)) {
-						reason = [TPCPreferences IRCopDefaultShunMessage];
-
-						/* Remove the time from our default reason. */
-						if ([reason contains:NSStringWhitespacePlaceholder]) {
-							NSInteger spacePos = [reason stringPosition:NSStringWhitespacePlaceholder];
-
-							reason = [reason substringAfterIndex:spacePos];
-						}
-					}
-
-					[self send:uppercaseCommand, nickname, reason, nil];
+				if ([nickname hasPrefix:@"-"]) {
+					[self send:uppercaseCommand, nickname, s.string, nil];
 				} else {
-					NSString *shtime = s.getToken.string;
-					NSString *reason = s.string.trim;
+					if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("tempshun")]) {
+						NSString *reason = s.getToken.string;
 
-					if (NSObjectIsEmpty(reason)) {
-						reason = [TPCPreferences IRCopDefaultShunMessage];
+						if (NSObjectIsEmpty(reason)) {
+							reason = [TPCPreferences IRCopDefaultShunMessage];
 
-						/* Remove the time from our default reason. */
-						if ([reason contains:NSStringWhitespacePlaceholder]) {
-							NSInteger spacePos = [reason stringPosition:NSStringWhitespacePlaceholder];
+							/* Remove the time from our default reason. */
+							if ([reason contains:NSStringWhitespacePlaceholder]) {
+								NSInteger spacePos = [reason stringPosition:NSStringWhitespacePlaceholder];
 
-							if (NSObjectIsEmpty(shtime)) {
-								shtime = [reason safeSubstringToIndex:spacePos];
+								reason = [reason substringAfterIndex:spacePos];
 							}
-
-							reason = [reason substringAfterIndex:spacePos];
 						}
-					}
 
-					[self send:uppercaseCommand, nickname, shtime, reason, nil];
+						[self send:uppercaseCommand, nickname, reason, nil];
+					} else {
+						NSString *shtime = s.getToken.string;
+						NSString *reason = s.string.trim;
+
+						if (NSObjectIsEmpty(reason)) {
+							reason = [TPCPreferences IRCopDefaultShunMessage];
+
+							/* Remove the time from our default reason. */
+							if ([reason contains:NSStringWhitespacePlaceholder]) {
+								NSInteger spacePos = [reason stringPosition:NSStringWhitespacePlaceholder];
+
+								if (NSObjectIsEmpty(shtime)) {
+									shtime = [reason safeSubstringToIndex:spacePos];
+								}
+
+								reason = [reason substringAfterIndex:spacePos];
+							}
+						}
+
+						[self send:uppercaseCommand, nickname, shtime, reason, nil];
+					}
 				}
 			}
 
