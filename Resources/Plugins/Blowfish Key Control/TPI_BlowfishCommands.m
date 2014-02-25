@@ -130,17 +130,17 @@
 			if (NSObjectIsEmpty(messageString)) {
 				[c setEncryptionKey:nil];
 				
-				[client printDebugInformation:TXTLS(@"BlowfishEncryptionStopped") channel:c];
+				[client printDebugInformation:TXTLS(@"BasicLanguage[1004]") channel:c];
 			} else {
 				if (c.config.encryptionKeyIsSet) {
 					if ([c.config.encryptionKey isEqualToString:messageString] == NO) {
-						[client printDebugInformation:TXTLS(@"BlowfishEncryptionKeyChanged") channel:c];
+						[client printDebugInformation:TXTLS(@"BasicLanguage[1002]") channel:c];
 					}
 				} else {
 					if (c.isPrivateMessage) {
 						[client printDebugInformation:TPILS(@"BlowfishEncryptionStartedInPrivateMessage") channel:c];
 					} else {
-						[client printDebugInformation:TXTLS(@"BlowfishEncryptionStarted") channel:c];
+						[client printDebugInformation:TXTLS(@"BasicLanguage[1003]") channel:c];
 					}
 				}
 				
@@ -149,7 +149,7 @@
 		} else if ([commandString isEqualToString:@"DELKEY"]) {
 			[c setEncryptionKey:nil];
 			
-			[client printDebugInformation:TXTLS(@"BlowfishEncryptionStopped") channel:c];
+			[client printDebugInformation:TXTLS(@"BasicLanguage[1004]") channel:c];
 		} else if ([commandString isEqualToString:@"KEY"]) {
 			if (c.config.encryptionKeyIsSet) {
 				[client printDebugInformation:TPIFLS(@"BlowfishCurrentEncryptionKey", c.config.encryptionKey) channel:c];

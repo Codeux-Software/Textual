@@ -56,7 +56,7 @@
 							   body:TXTLS(@"PreferencesImportPreflightDialogMessage")
 							  title:TXTLS(@"PreferencesImportPreflightDialogTitle")
 					  defaultButton:TXTLS(@"PreferencesImportPreflightDialogSelectFileButton")
-					alternateButton:TXTLS(@"CancelButton")
+					alternateButton:TXTLS(@"BasicLanguage[1009]")
 						otherButton:nil
 					 suppressionKey:nil
 					suppressionText:nil];

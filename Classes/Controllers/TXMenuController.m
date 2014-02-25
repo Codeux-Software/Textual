@@ -745,7 +745,7 @@
 
 	[dialog alertWithMessageTitle:TXTLS(@"FindSearchPanelPromptTitle")
 					defaultButton:TXTLS(@"FindSearchPanelPromptButton")
-				  alternateButton:TXTLS(@"CancelButton")
+				  alternateButton:TXTLS(@"BasicLanguage[1009]")
 				  informativeText:TXTLS(@"FindSearchPanelPromptMessage")
 				 defaultUserInput:self.currentSearchPhrase
 				  completionBlock:^(BOOL defaultButtonClicked, NSString *resultString) {
@@ -1159,7 +1159,7 @@
 	BOOL result = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(warningToken)
 													  title:TXTLS(@"ServerDeletePromptTitle")
 											  defaultButton:TXTLS(@"OkButton") 
-											alternateButton:TXTLS(@"CancelButton")
+											alternateButton:TXTLS(@"BasicLanguage[1009]")
 											 suppressionKey:nil
 											suppressionText:nil];
 	
@@ -1431,7 +1431,7 @@
 		BOOL result = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"ChannelDeletePromptMessage") 
 														  title:TXTLS(@"ChannelDeletePromptTitle") 
 												  defaultButton:TXTLS(@"OkButton") 
-												alternateButton:TXTLS(@"CancelButton")
+												alternateButton:TXTLS(@"BasicLanguage[1009]")
 												 suppressionKey:@"delete_channel"
 												suppressionText:nil];
 		
@@ -1501,12 +1501,12 @@
 		[c updateConfig:sender.config];
 
 		if (oldKeyEmpty && newKeyEmpty == NO) {
-			[c.client printDebugInformation:TXTLS(@"BlowfishEncryptionStarted") channel:c];
+			[c.client printDebugInformation:TXTLS(@"BasicLanguage[1003]") channel:c];
 		} else if (oldKeyEmpty == NO && newKeyEmpty) {
-			[c.client printDebugInformation:TXTLS(@"BlowfishEncryptionStopped") channel:c];
+			[c.client printDebugInformation:TXTLS(@"BasicLanguage[1004]") channel:c];
 		} else if (oldKeyEmpty == NO && newKeyEmpty == NO) {
 			if (NSObjectsAreEqual(oldKey, newKey) == NO) {
-				[c.client printDebugInformation:TXTLS(@"BlowfishEncryptionKeyChanged") channel:c];
+				[c.client printDebugInformation:TXTLS(@"BasicLanguage[1002]") channel:c];
 			}
 		}
 	}
@@ -2161,7 +2161,7 @@
 
 	[dialog alertWithMessageTitle:TXTLS(@"SetUserVhostPromptTitle")
 					defaultButton:TXTLS(@"OkButton")
-				  alternateButton:TXTLS(@"CancelButton")
+				  alternateButton:TXTLS(@"BasicLanguage[1009]")
 				  informativeText:TXTLS(@"SetUserVhostPromptMessage")
 				 defaultUserInput:nil
 				  completionBlock:^(BOOL defaultButtonClicked, NSString *resultString) {

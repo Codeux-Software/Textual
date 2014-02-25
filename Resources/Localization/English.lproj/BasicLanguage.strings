@@ -35,28 +35,38 @@
 
  *********************************************************************** */
 
-"AboutWindowBuildNumber" = "Version %@";
+/* About window version info. */
+"TDCAboutPanel[1000]" = "Version %@";
 
-"AddressBookIgnoreEntryType" = "User Ignore";
-"AddressBookUserTrackingEntryType" = "User Tracking";
+/* Server properties Address Book entry types. */
+"TDCServerSheet[1000]" = "User Ignore";
+"TDCServerSheet[1001]" = "User Tracking";
 
-"ApplicationWantsToTerminatePromptMessage" = "Quitting will disconnect you from any IRC server that you are connected to until you restart Textual.";
-"ApplicationWantsToTerminatePromptTitle" = "Do you want to quit Textual?";
+/* Welcome sheet help channel prompt for freenode servers. */
+"TDCWelcomeSheet[1000][1]" = "Connect to Support Channel";
+"TDCWelcomeSheet[1000][2]" = "The Textual IRC Client support channel is located on freenode. Would you like to add this channel?";
 
-"BlowfishEncryptionFailed" = "Encryption of message failed; not sending to server.";
-"BlowfishEncryptionKeyChanged" = "Encryption key changed; adjusting accordingly.";
-"BlowfishEncryptionStarted" = "Encryption started.";
-"BlowfishEncryptionStopped" = "Encryption stopped.";
+/* Application terminating confirmation dialog. */
+"BasicLanguage[1000][1]" = "Quitting will disconnect you from any IRC server that you are connected to until you restart Textual.";
+"BasicLanguage[1000][2]" = "Do you want to quit Textual?";
 
-"ConnectToSupportChannelQuestionDialogTitle" = "Connect to Support Channel";
-"ConnectToSupportChannelQuestionDialogMessage" = "The Textual IRC Client support channel is located on freenode. Would you like to add this channel?";
+/* Basic encryption related localizations. */
+"BasicLanguage[1001]" = "Encryption of message failed; not sending to server.";
+"BasicLanguage[1002]" = "Encryption key changed; adjusting accordingly.";
+"BasicLanguage[1003]" = "Encryption started.";
+"BasicLanguage[1004]" = "Encryption stopped.";
 
-"CancelButton" = "Cancel";
+/* Cancel button used by prompts. */
+"BasicLanguage[1009]" = "Cancel";
 
-"ChannelApplicationTitleLocalDivider" = " — ";
-"ChannelApplicationTitleModeValue" = " (%@)";
-"ChannelApplicationTitleUserCount" = " (%ld Users)";
-"ChannelApplicationTitleLocalNicknameAndNetwork" = "%1$@ on %2$@";
+/* Sections of channel information in main window title bar. */
+"BasicLanguage[1005]" = " — ";
+"BasicLanguage[1006]" = " (%@)";
+"BasicLanguage[1007]" = " (%ld Users)";
+"BasicLanguage[1008]" = "%1$@ on %2$@";
+
+
+
 
 "ChannelDeletePromptMessage" = "There is no undo and all data related to this channel, except for logs, will be erased.";
 "ChannelDeletePromptTitle" = "Do you want to delete the selection?";

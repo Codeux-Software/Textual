@@ -695,8 +695,8 @@
 	NSMutableString *title = [NSMutableString string];
 
 	if ([selectedItem isClient]) {
-		[title appendString:TXTFLS(@"ChannelApplicationTitleLocalNicknameAndNetwork", client.localNickname, client.altNetworkName)];
-		[title appendString:TXTLS(@"ChannelApplicationTitleLocalDivider")];
+		[title appendString:TXTFLS(@"BasicLanguage[1008]", client.localNickname, client.altNetworkName)];
+		[title appendString:TXTLS(@"BasicLanguage[1005]")];
         
 		NSString *networkAddress = [client networkAddress];
 
@@ -706,8 +706,8 @@
 			[title appendString:networkAddress];
 		}
 	} else {
-		[title appendString:TXTFLS(@"ChannelApplicationTitleLocalNicknameAndNetwork", client.localNickname, client.altNetworkName)];
-		[title appendString:TXTLS(@"ChannelApplicationTitleLocalDivider")];
+		[title appendString:TXTFLS(@"BasicLanguage[1008]", client.localNickname, client.altNetworkName)];
+		[title appendString:TXTLS(@"BasicLanguage[1005]")];
 
         if (channel.isPrivateMessage) {
             /* Textual defines the topic of a private message as the user host. */
@@ -722,12 +722,12 @@
 		
 		if (channel.isChannel) {
 			[title appendString:channel.name];
-			[title appendFormat:TXTLS(@"ChannelApplicationTitleUserCount"), channel.numberOfMembers];
+			[title appendFormat:TXTLS(@"BasicLanguage[1007]"), channel.numberOfMembers];
 			
 			NSString *modes = [channel.modeInfo titleString];
 			
 			if (modes.length >= 2) {
-				[title appendFormat:TXTLS(@"ChannelApplicationTitleModeValue"), modes];
+				[title appendFormat:TXTLS(@"BasicLanguage[1006]"), modes];
 			}
 		}
 	}

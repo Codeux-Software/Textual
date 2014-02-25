@@ -1191,7 +1191,7 @@
 							action:@selector(onPurgeOfCloudFilesRequestedCallback:withOriginalAlert:)
 							  body:TXTLS(@"iCloudSyncDeleteAllFilesDialogMessage")
 							 title:TXTLS(@"iCloudSyncDeleteAllFilesDialogTitle")
-					 defaultButton:TXTLS(@"CancelButton")
+					 defaultButton:TXTLS(@"BasicLanguage[1009]")
 				   alternateButton:TXTLS(@"ContinueButton")
 					   otherButton:nil
 					suppressionKey:nil
@@ -1209,7 +1209,7 @@
 							action:@selector(onPurgeOfCloudDataRequestedCallback:withOriginalAlert:)
 							  body:TXTLS(@"iCloudSyncDeleteAllDataDialogMessage")
 							 title:TXTLS(@"iCloudSyncDeleteAllDataDialogTitle")
-					 defaultButton:TXTLS(@"CancelButton")
+					 defaultButton:TXTLS(@"BasicLanguage[1009]")
 				   alternateButton:TXTLS(@"ContinueButton")
 					   otherButton:nil
 					suppressionKey:nil
@@ -1307,7 +1307,7 @@
 								   body:TXTLS(dialogMessage)
 								  title:TXTLS(@"OpeningLocalStyleResourcesTitle")
 						  defaultButton:TXTLS(@"ContinueButton")
-						alternateButton:TXTLS(@"CancelButton")
+						alternateButton:TXTLS(@"BasicLanguage[1009]")
 							otherButton:TXTLS(copyButton)
 						 suppressionKey:nil
 						suppressionText:nil];
@@ -1328,7 +1328,7 @@
 										   body:TXTLS(@"OpeningLocalCustomStyleResourcesCloudMessage")
 										  title:TXTLS(@"OpeningLocalStyleResourcesTitle")
 								  defaultButton:TXTLS(@"ContinueButton")
-								alternateButton:TXTLS(@"CancelButton")
+								alternateButton:TXTLS(@"BasicLanguage[1009]")
 									otherButton:TXTLS(@"OpeningLocalStyleResourcesCloudCopyButton")
 								 suppressionKey:nil
 								suppressionText:nil];
