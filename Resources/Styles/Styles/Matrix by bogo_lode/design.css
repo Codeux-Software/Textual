@@ -29,7 +29,7 @@ body div#body_home {
 	-webkit-transition: opacity 0.8s linear;
 }
 
-body[ltype=channel] div#body_home {
+body[viewtype=channel] div#body_home {
 	max-height: 96.5%;
 }
 
@@ -249,7 +249,7 @@ body div[ltype="privmsg"] .message {
 	color: #aaa;
 }
 
-body div[ltype*=privmsg] p[ltype*=myself] .message {
+body div[ltype*=privmsg][mtype*=myself] .message {
 	color: #fff;
 }
 
@@ -405,9 +405,9 @@ body[dir=rtl] div[ltype*=nick] .message:before {
 
 body .inline_nickname { color: #21DB00; }
 
-body div[ltype*=privmsg] .sender[ltype*=myself],
-body div[ltype*=action] .sender[ltype*=myself] { 
+body div[ltype*=privmsg] .sender[mtype*=myself],
+body div[ltype*=action] .sender[mtype*=myself] { 
 	color: #aaa; 
 }
 
-body .sender[ltype*=normal] { color: #FFFFFF; }
+body .sender[mtype*=normal] { color: #FFFFFF; }

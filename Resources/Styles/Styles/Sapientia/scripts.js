@@ -31,7 +31,7 @@ Textual.nicknameSingleClicked = function()
 function updateNicknameAssociatedWithNewMessage(e)
 {
 	/* We only want to target plain text messages. */
-	var elementType = e.getAttribute("type");
+	var elementType = e.getAttribute("ltype");
 
 	if (elementType == "privmsg" || elementType == "action") {
 		/* Get the nickname information. */
@@ -39,7 +39,7 @@ function updateNicknameAssociatedWithNewMessage(e)
 
 		if (senderSelector) {
 			/* Is this a mapped user? */
-			var nickname = senderSelector.getAttribute("nick");
+			var nickname = senderSelector.getAttribute("nickname");
 
 			/* If mapped, toggle status on for new message. */
 			if (mappedSelectedUsers.indexOf(nickname) > -1) {
@@ -61,7 +61,7 @@ function toggleSelectionStatusForNicknameInsideElement(e)
 function userNicknameSingleClickEvent(e)
 {
 	/* This is called when the .sender is clicked. */
-	var nickname = e.getAttribute("nick");
+	var nickname = e.getAttribute("nickname");
 
 	/* Toggle mapped status for nickname. */
 	var mappedIndex = mappedSelectedUsers.indexOf(nickname);
@@ -75,14 +75,14 @@ function userNicknameSingleClickEvent(e)
 	/* Gather basic information. */
     var documentBody = document.getElementById("body_home");
 
-    var allLines = documentBody.querySelectorAll('div[type="privmsg"], div[type="action"]');
+    var allLines = documentBody.querySelectorAll('div[ltype="privmsg"], div[ltype="action"]');
 
 	/* Update all elements of the DOM matching conditions. */
     for (var i = 0, len = allLines.length; i < len; i++) {
         var sender = allLines[i].querySelectorAll(".sender");
 
         if (sender.length > 0) {
-            if (sender[0].getAttribute("nick") === nickname) {
+            if (sender[0].getAttribute("nickname") === nickname) {
 				toggleSelectionStatusForNicknameInsideElement(sender[0]);
             }
         }
