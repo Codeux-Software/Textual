@@ -52,7 +52,7 @@
 {
 	NSString *bundleVersion = [TPCPreferences textualInfoPlist][@"CFBundleVersion"];
 	
-	[self.versionInfoField setStringValue:TXTFLS(@"AboutWindowBuildNumber", bundleVersion)];
+	[self.versionInfoField setStringValue:TXTFLS(@"TDCAboutPanel[1000]", bundleVersion)];
 
 	[self.window restoreWindowStateForClass:self.class];
 	

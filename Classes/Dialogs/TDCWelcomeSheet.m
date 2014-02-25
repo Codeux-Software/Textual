@@ -209,8 +209,8 @@
 		BOOL enableDialog = [RZUserDefaults() boolForKey:key];
 
 		if (enableDialog == NO) {
-			BOOL addSupportChannel = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"ConnectToSupportChannelQuestionDialogMessage")
-																		 title:TXTLS(@"ConnectToSupportChannelQuestionDialogTitle")
+			BOOL addSupportChannel = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"TDCWelcomeSheet[1000][2]")
+																		 title:TXTLS(@"TDCWelcomeSheet[1000][1]")
 																 defaultButton:TXTLS(@"YesButton")
 															   alternateButton:TXTLS(@"NoButton")
 																suppressionKey:@"welcomesheet_join_support_channel"

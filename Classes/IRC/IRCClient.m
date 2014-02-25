@@ -714,7 +714,7 @@
 		NSString *newstr = [CSFWBlowfish encodeData:(*message) key:channel.config.encryptionKey encoding:self.config.primaryEncoding];
 
 		if (newstr.length < 5) {
-			[self printDebugInformation:TXTLS(@"BlowfishEncryptionFailed") channel:channel];
+			[self printDebugInformation:TXTLS(@"BasicLanguage[1001]") channel:channel];
 
 			return NO;
 		} else {
@@ -3288,7 +3288,7 @@
 			if (trustRef) {
 				SFCertificateTrustPanel *panel = [SFCertificateTrustPanel sharedCertificateTrustPanel];
 				
-				[panel setAlternateButtonTitle:TXTLS(@"CancelButton")];
+				[panel setAlternateButtonTitle:TXTLS(@"BasicLanguage[1009]")];
 				[panel setInformativeText:TXTLS(@"SocketBadSSLCertificateErrorMessage")];
 				
 				NSInteger returnCode = [panel runModalForTrust:trustRef message:TXTLS(@"SocketBadSSLCertificateErrorTitle")];
@@ -4103,7 +4103,7 @@
 		}
 
 		if (c.config.encryptionKeyIsSet) {
-			[c.client printDebugInformation:TXTLS(@"BlowfishEncryptionStarted") channel:c];
+			[c.client printDebugInformation:TXTLS(@"BasicLanguage[1003]") channel:c];
 		}
 	}
 

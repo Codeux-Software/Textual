@@ -866,7 +866,7 @@
 		SFChooseIdentityPanel *panel = [SFChooseIdentityPanel sharedChooseIdentityPanel];
 		
 		[panel setInformativeText:TXTFLS(@"ServerSheetSSLCertificateViewSelectIdentityDialgMessage", [self.serverNameField stringValue])];
-		[panel setAlternateButtonTitle:TXTLS(@"CancelButton")];
+		[panel setAlternateButtonTitle:TXTLS(@"BasicLanguage[1009]")];
 		
 		NSInteger returnCode = [panel runModalForIdentities:(__bridge NSArray *)(identities) message:TXTLS(@"ServerSheetSSLCertificateViewSelectIdentityDialogTitle")];
 	
@@ -1342,9 +1342,9 @@
 		
 		if ([columnId isEqualToString:@"type"]) {
 			if (g.entryType == IRCAddressBookIgnoreEntryType) {
-				return TXTLS(@"AddressBookIgnoreEntryType");
+				return TXTLS(@"TDCServerSheet[1000]");
 			} else {
-				return TXTLS(@"AddressBookUserTrackingEntryType");
+				return TXTLS(@"TDCServerSheet[1001]");
 			}
 		} else {
 			return g.hostmask;
