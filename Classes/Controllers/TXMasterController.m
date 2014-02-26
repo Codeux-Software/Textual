@@ -450,12 +450,17 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 - (void)computerWillSleep:(NSNotification *)note
 {
-	[self.worldController prepareForSleep];
+	[self.worldController prepareForSleep]; // Tell world to prepare.
+
+	[self.speechSynthesizer setIsStopped:YES]; // Stop speaking during sleep.
+	[self.speechSynthesizer clearQueue]; // Destroy pending spoken items.
 }
 
 - (void)computerDidWakeUp:(NSNotification *)note
 {
-	[self.worldController autoConnectAfterWakeup:YES];
+	[self.speechSynthesizer setIsStopped:NO]; // We can speak again!
+
+	[self.worldController autoConnectAfterWakeup:YES]; // Wake clients up…
 }
 
 - (void)computerWillPowerOff:(NSNotification *)note
