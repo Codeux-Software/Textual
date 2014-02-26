@@ -196,10 +196,20 @@
 	CFDictionaryRef settings = SCDynamicStoreCopyProxies(NULL);
 
     // Check to see if there _is_ a system SOCKS proxy set.
-    if (CFDictionaryGetValueIfPresent(settings, (id)kCFStreamPropertySOCKSProxyHost, NULL)) {
-        CFReadStreamSetProperty(theReadStream, kCFStreamPropertySOCKSProxy, settings);
-        CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySOCKSProxy, settings);
-    }
+	CFNumberRef isEnabledRef = CFDictionaryGetValue(settings, (id)kSCPropNetProxiesSOCKSEnable);
+
+	if (isEnabledRef && CFGetTypeID(isEnabledRef) == CFNumberGetTypeID()) {
+		NSInteger isEnabledInt = 0;
+
+		CFNumberGetValue(isEnabledRef, kCFNumberIntType, &isEnabledInt);
+
+		if (isEnabledInt == 1) {
+			if (CFDictionaryGetValueIfPresent(settings, (id)kCFStreamPropertySOCKSProxyHost, NULL)) {
+				CFReadStreamSetProperty(theReadStream, kCFStreamPropertySOCKSProxy, settings);
+				CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySOCKSProxy, settings);
+			}
+		}
+	}
 
 	CFRelease(settings);
 }
