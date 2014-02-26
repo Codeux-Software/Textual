@@ -242,9 +242,17 @@
     /* Pop our popover. */
     userInfoPopover.nicknameField.stringValue = nickname;
     userInfoPopover.usernameField.stringValue = username;
-    userInfoPopover.addressField.stringValue = address;
     userInfoPopover.privilegesField.stringValue = permissions;
 
+	/* Interestingly enough, some IRC networks allow formatting characters.
+	 That makes absolutely no sense, but let's support it in the pop up
+	 just to say that we can. */
+	NSAttributedString *addressAttr = [address attributedStringWithIRCFormatting:TXDefaultListViewControllerFont
+													   honorFormattingPreference:NO];
+
+	userInfoPopover.addressField.attributedStringValue = addressAttr;
+
+	/* Update away status. */
 	if (self.memberPointer.isAway) {
 		userInfoPopover.awayStatusField.stringValue = TXTLS(@"UserHostmaskHoverTooltipUserIsAway");
 	} else {

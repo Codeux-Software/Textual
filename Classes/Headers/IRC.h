@@ -50,7 +50,8 @@
 #define IRCUsernameValidCharacters			@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-.[\\]^`{|}~" /* Ident. */
 
 /* Characters allowed for the address part of a hostmask. */
-#define IRCUserAddressValidCharacters		@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-./:"
+/* Rizon and QuakeNet allow formatting characters in the address part. … WHAT THE FUCK? */
+#define IRCUserAddressValidCharacters		@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-./:\002\003\00F\01d\016\01F"
 
 /* Command index. */
 TEXTUAL_EXTERN NSString *IRCPrivateCommandIndex(const char *key); 
