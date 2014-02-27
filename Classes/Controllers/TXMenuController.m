@@ -383,25 +383,25 @@
 				switch (keyAction) {
 					case TXCommandWKeyCloseWindowAction:
 					{
-						[item setTitle:TXTLS(@"CmdWShortcutCloseWindowType")];
+						[item setTitle:TXTLS(@"BasicLanguage[1013]")];
 
 						break;
 					}
 					case TXCommandWKeyPartChannelAction:
 					{
 						if (_isClient) {
-							[item setTitle:TXTLS(@"CmdWShortcutCloseWindowType")];
+							[item setTitle:TXTLS(@"BasicLanguage[1013]")];
 
 							return NO;
 						} else {
 							if (_isChannel) {
-								[item setTitle:TXTLS(@"CmdWShortcutLeaveChannelType")];
+								[item setTitle:TXTLS(@"BasicLanguage[1015]")];
 								
 								if (_notActive) {
 									return NO;
 								}
 							} else {
-								[item setTitle:TXTLS(@"CmdWShortcutClosePrivateMessageType")];
+								[item setTitle:TXTLS(@"BasicLanguage[1012]")];
 							}
 						}
 						
@@ -409,7 +409,7 @@
 					}
 					case TXCommandWKeyDisconnectAction:
 					{
-						[item setTitle:TXTFLS(@"CmdWShortcutDisconnectServerType", [u altNetworkName])];
+						[item setTitle:TXTFLS(@"BasicLanguage[1014]", [u altNetworkName])];
 						
 						if (_notConnected) {
 							return NO;
@@ -419,13 +419,13 @@
 					}
 					case TXCommandWKeyTerminateAction:
 					{
-						[item setTitle:TXTLS(@"CmdWShortcutQuitApplicationType")];
+						[item setTitle:TXTLS(@"BasicLanguage[1016]")];
 						
 						break;
 					}
 				}
 			} else {
-				[item setTitle:TXTLS(@"CmdWShortcutCloseWindowType")];
+				[item setTitle:TXTLS(@"BasicLanguage[1013]")];
 			}
 			
 			return YES;
@@ -1428,8 +1428,8 @@
 	}
 	
 	if (_isChannel) {
-		BOOL result = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"ChannelDeletePromptMessage") 
-														  title:TXTLS(@"ChannelDeletePromptTitle") 
+		BOOL result = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1010][1]")
+														  title:TXTLS(@"BasicLanguage[1010][2]") 
 												  defaultButton:TXTLS(@"OkButton") 
 												alternateButton:TXTLS(@"BasicLanguage[1009]")
 												 suppressionKey:@"delete_channel"

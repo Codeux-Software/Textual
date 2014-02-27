@@ -182,8 +182,8 @@
 				[ary safeAddObject:[inspectElementItem copy]];
 			}
 
-			NSMenuItem *newItem1 = [NSMenuItem menuItemWithTitle:TXTLS(@"CopyLogAsHTMLMenuItem") target:self.menuController action:@selector(copyLogAsHtml:)];
-			NSMenuItem *newItem2 = [NSMenuItem menuItemWithTitle:TXTLS(@"ForceReloadThemeMenuItem") target:self.menuController action:@selector(forceReloadTheme:)];
+			NSMenuItem *newItem1 = [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1018]") target:self.menuController action:@selector(copyLogAsHtml:)];
+			NSMenuItem *newItem2 = [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1019]") target:self.menuController action:@selector(forceReloadTheme:)];
 
 			[ary safeAddObject:newItem1];
 			[ary safeAddObject:newItem2];

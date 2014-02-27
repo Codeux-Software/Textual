@@ -7225,7 +7225,7 @@
 	}
 	
 	// Report an error.
-	[self print:nil type:TVCLogLineDCCFileTransferType nick:nil text:TXTLS(@"DCCRequestErrorMessage") command:TXLogLineDefaultRawCommandValue];
+	[self print:nil type:TVCLogLineDCCFileTransferType nick:nil text:TXTLS(@"BasicLanguage[1020]") command:TXLogLineDefaultRawCommandValue];
 }
 
 

@@ -460,7 +460,7 @@
 	
 	if (NSObjectIsEmpty(self.serverNameField.trimmedStringValue)) {
 		if (NSObjectIsEmpty(realhost)) {
-			self.config.clientName = TXTLS(@"DefaultNewConnectionName");
+			self.config.clientName = TXTLS(@"BasicLanguage[1022]");
 		} else {
 			self.config.clientName = realhost;
 		}

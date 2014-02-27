@@ -46,6 +46,12 @@
 "TDCWelcomeSheet[1000][1]" = "Connect to Support Channel";
 "TDCWelcomeSheet[1000][2]" = "The Textual IRC Client support channel is located on freenode. Would you like to add this channel?";
 
+/* Channel list dialog. */
+"TDCListDialog[1000]" = "Channel List for \"%@\"";
+"TDCListDialog[1001]" = "Channel List — %@"; // %@ = channel count.
+"TDCListDialog[1002]" = "%@ Public Channels";
+"TDCListDialog[1003]" = "%@ Public Channels - %@ Search Results";
+
 /* Application terminating confirmation dialog. */
 "BasicLanguage[1000][1]" = "Quitting will disconnect you from any IRC server that you are connected to until you restart Textual.";
 "BasicLanguage[1000][2]" = "Do you want to quit Textual?";
@@ -56,53 +62,53 @@
 "BasicLanguage[1003]" = "Encryption started.";
 "BasicLanguage[1004]" = "Encryption stopped.";
 
-/* Cancel button used by prompts. */
-"BasicLanguage[1009]" = "Cancel";
-
 /* Sections of channel information in main window title bar. */
 "BasicLanguage[1005]" = " — ";
 "BasicLanguage[1006]" = " (%@)";
 "BasicLanguage[1007]" = " (%ld Users)";
 "BasicLanguage[1008]" = "%1$@ on %2$@";
 
+/* Cancel button used by prompts. */
+"BasicLanguage[1009]" = "Cancel";
 
+/* Channel deletion prompt. */
+"BasicLanguage[1010][1]" = "There is no undo and all data related to this channel, except for logs, will be erased.";
+"BasicLanguage[1010][2]" = "Do you want to delete the selection?";
 
+/* Close button for dialogs. */
+"BasicLanguage[1011]" = "Close";
 
-"ChannelDeletePromptMessage" = "There is no undo and all data related to this channel, except for logs, will be erased.";
-"ChannelDeletePromptTitle" = "Do you want to delete the selection?";
+/* Menu item titles for Command W menu item. */
+"BasicLanguage[1012]" = "Close Query";
+"BasicLanguage[1013]" = "Close Window";
+"BasicLanguage[1014]" = "Disconnect from %@";
+"BasicLanguage[1015]" = "Leave Channel";
+"BasicLanguage[1016]" = "Quit Textual & IRC";
 
-"ChannelListDialogNetworkName" = "Channel List for \"%@\"";
-"ChannelListDialogTitle" = "Channel List — %@"; // %@ = channel count.
-"ChannelListDialogHasChannels" = "%@ Public Channels";
-"ChannelListDialogHasSearchResults" = "%@ Public Channels - %@ Search Results";
+/* Continue button for dialogs. */
+"BasicLanguage[1017]" = "Continue";
 
-"CloseButton" = "Close";
+/* Channel view right click menu, menu items. */
+"BasicLanguage[1018]" = "Copy Log as HTML";
+"BasicLanguage[1019]" = "Force Reload Style";
 
-"CmdWShortcutClosePrivateMessageType" = "Close Query";
-"CmdWShortcutCloseWindowType" = "Close Window";
-"CmdWShortcutDisconnectServerType" = "Disconnect from %@";
-"CmdWShortcutLeaveChannelType" = "Leave Channel";
-"CmdWShortcutQuitApplicationType" = "Quit Textual & IRC";
+/* DCC request console error. */
+"BasicLanguage[1020]" = "The Textual IRC Client has received a DCC request that could not be processed.";
 
-"ContinueButton" = "Continue";
+/* A few defaults. */
+"BasicLanguage[1021]" = "Textual IRC Client: www.textualapp.com";
+"BasicLanguage[1022]" = "Untitled Connection";
 
-"CopyLogAsHTMLMenuItem" = "Copy Log as HTML";
+/* Delete button for dialogs. */
+"BasicLanguage[1023]" = "Delete";
 
-"DCCRequestErrorMessage" = "The Textual IRC Client has received a DCC request that could not be processed.";
-
-"DefaultDisconnectQuitMessage" = "Textual IRC Client: www.textualapp.com";
-"DefaultNewConnectionName" = "Untitled Connection";
-
-"DeleteButton" = "Delete";
-
+/* Old items. */
 "DeleteChannelMenuItem" = "Delete Channel";
 "DeletePrivateMessageMenuItem" = "Close Query";
 
 "FindSearchPanelPromptButton" = "Search";
 "FindSearchPanelPromptMessage" = "Enter a phrase to search for. Once a search is created, the keyboard shortcut ⌘G can be used to continue to the next search result and the combination ⌘⇧G to return to the previous.";
 "FindSearchPanelPromptTitle" = "Search for Message";
-
-"ForceReloadThemeMenuItem" = "Force Reload Style";
 
 "GlineReason" = "35d Your behavior is not conducive to the desired environment.";
 
