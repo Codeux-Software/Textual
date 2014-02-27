@@ -50,8 +50,11 @@
 #define IRCUsernameValidCharacters			@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-.[\\]^`{|}~" /* Ident. */
 
 /* Characters allowed for the address part of a hostmask. */
-/* Rizon and QuakeNet allow formatting characters in the address part. … WHAT THE FUCK? */
-#define IRCUserAddressValidCharacters		@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-./:\002\003\00F\01d\016\01F"
+/* This set is actually incomplete as some IRC networks allow formatting characters. 
+ Therefore, do not use this list in a plugin for directly validations. Use the built
+ in NSStringHelper items for validating hosts when needed as the helper methods will
+ append the formatting characters to these. */
+#define IRCUserAddressValidCharacters		@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-./:"
 
 /* Command index. */
 TEXTUAL_EXTERN NSString *IRCPrivateCommandIndex(const char *key); 
