@@ -2147,7 +2147,7 @@
 	NSArray *nicknames = [self selectedMembers:sender];
 	
 	for (IRCUser *m in nicknames) {
-		[u sendCommand:[NSString stringWithFormat:@"hs setall %@ %@", m.nickname, vhost] completeTarget:NO target:nil];
+		[u sendCommand:[NSString stringWithFormat:@"hs vhost %@ %@", m.nickname, vhost] completeTarget:NO target:nil];
 	}
 
 	[self deselectMembers:sender];
