@@ -375,7 +375,10 @@
 	NSAssertReturnR([usernameInt isUsername], NO);
 
 	/* Further compare values. */
-	if ([addressInt onlyContainsCharacters:IRCUserAddressValidCharacters] == NO) {
+	/* Rizon and QuakeNet allow formatting characters in the address part. … WHAT THE FUCK? */
+	NSString *formattingCharsSet = [NSString stringWithFormat:@"%@%C%C%C%C%C%C", IRCUserAddressValidCharacters, 0x02, 0x03, 0x0F, 0x1d, 0x16, 0x1F];
+
+	if ([addressInt onlyContainsCharacters:formattingCharsSet] == NO) {
 		/* Host sections contain redundant characters. */
 		/* The host is not valid. */
 
