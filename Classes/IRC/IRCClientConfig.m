@@ -99,14 +99,14 @@
         self.floodControlMaximumMessages     = TXFloodControlDefaultMessageCount;
 		self.floodControlDelayTimerInterval  = TXFloodControlDefaultDelayTimer;
 		
-		self.clientName = TXTLS(@"DefaultNewConnectionName");
+		self.clientName = TXTLS(@"BasicLanguage[1022]");
 		
 		self.nickname = [TPCPreferences defaultNickname];
 		self.awayNickname = [TPCPreferences defaultAwayNickname];
 		self.username = [TPCPreferences defaultUsername];
 		self.realname = [TPCPreferences defaultRealname];
 		
-		self.normalLeavingComment		= TXTLS(@"DefaultDisconnectQuitMessage");
+		self.normalLeavingComment		= TXTLS(@"BasicLanguage[1021]");
 		self.sleepModeLeavingComment	= TXTFLS(@"OSXGoingToSleepQuitMessage", [CSFWSystemInformation systemModelName]);
 	}
 	
