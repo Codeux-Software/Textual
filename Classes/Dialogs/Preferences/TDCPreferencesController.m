@@ -286,6 +286,11 @@
 
 - (void)firstPane:(NSView *)view selectedItem:(NSInteger)key
 {
+	[self firstPane:view selectedItem:key animianteTransition:YES];
+}
+
+- (void)firstPane:(NSView *)view selectedItem:(NSInteger)key animianteTransition:(BOOL)isAnimated
+{
 	NSRect windowFrame = self.window.frame;
 
 	windowFrame.size.width = view.frame.size.width;
@@ -297,7 +302,7 @@
 		[self.contentView.subviews[0] removeFromSuperview];
 	}
 
-	[self.window setFrame:windowFrame display:YES animate:YES];
+	[self.window setFrame:windowFrame display:YES animate:isAnimated];
 
 	[self.contentView setFrame:view.frame];
 	[self.contentView addSubview:view];
@@ -1403,9 +1408,14 @@
 	[RZNotificationCenter() removeObserver:self name:TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification object:nil];
 	[RZNotificationCenter() removeObserver:self name:TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification object:nil];
 #endif
+
+	/* Before closing, move back to first pane so that the
+	 saved window state always has same frame. */
+	[self firstPane:self.generalView selectedItem:0 animianteTransition:NO];
 	
 	[self.window saveWindowStateForClass:self.class];
 
+	/* Clean up highlight keywords. */
 	[TPCPreferences cleanUpHighlightKeywords];
 
 	if ([self.delegate respondsToSelector:@selector(preferencesDialogWillClose:)]) {
