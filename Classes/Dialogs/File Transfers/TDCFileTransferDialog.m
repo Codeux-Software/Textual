@@ -174,6 +174,8 @@
 	if (_downloadDestination) {
 		[groupItem setPath:[_downloadDestination path]];
 	}
+
+	[self show:NO restorePosition:NO];
 	
 	[self addReceiver:groupItem];
 	
@@ -186,8 +188,6 @@
 		/* Begin the transfer. */
 		[groupItem open];
 	}
-	
-	[self show:NO restorePosition:NO];
 }
 
 - (void)addSenderForClient:(IRCClient *)client nickname:(NSString *)nickname path:(NSString *)completePath autoOpen:(BOOL)autoOpen
@@ -219,15 +219,15 @@
 		[groupItem setIsReversed:YES];
 	}
 
+	/* Update dialog. */
+	[self show:NO restorePosition:NO];
+
 	[self addSender:groupItem];
 	
 	/* Check if our sender address exists. */
 	if (autoOpen) {
 		[groupItem open];
 	}
-	
-	/* Update dialog. */
-	[self show:NO restorePosition:NO];
 }
 
 - (void)updateClearButton
