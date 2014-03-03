@@ -53,6 +53,9 @@
 #define _addonsToolbarItemIndex				8
 #define _addonsToolbarItemMultiplier		65
 
+#define _preferencesWindowDefaultFrameWidth			534
+#define _preferencesWindowDefaultFrameHeight		332
+
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 @interface TDCPreferencesController ()
 @property (nonatomic, strong) TDCProgressInformationSheet *tcopyStyleFilesProgressIndicator;
@@ -81,7 +84,6 @@
 
 	// self.alertSounds treats anything that is not a TDCPreferencesSoundWrapper as
 	// an indicator that a [NSMenuItem separatorItem] should be placed in our menu.
-
 	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationAddressBookMatchType]];
 	[self.alertSounds addObject:NSStringWhitespacePlaceholder];
 	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationConnectType]];
@@ -109,7 +111,7 @@
 
 	[self.scriptsController populateData];
 
-	self.installedScriptsTable.dataSource = self.scriptsController;
+	 self.installedScriptsTable.dataSource = self.scriptsController;
 	[self.installedScriptsTable reloadData];
 
 	[self setUpToolbarItemsAndMenus];
@@ -1385,7 +1387,7 @@
 	 current theme. */
 	if (self.tcopyStyleFilesProgressIndicator) {
 		[self.tcopyStyleFilesProgressIndicator stop];
-		self.tcopyStyleFilesProgressIndicator = nil;
+		 self.tcopyStyleFilesProgressIndicator = nil;
 		
 		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleWithTableViewsAction];
 		
@@ -1411,7 +1413,14 @@
 
 	/* Before closing, move back to first pane so that the
 	 saved window state always has same frame. */
-	[self firstPane:self.generalView selectedItem:0 animianteTransition:NO];
+	NSRect windowFrame = [self.window frame];
+
+	windowFrame.size.width = _preferencesWindowDefaultFrameWidth;
+	windowFrame.size.height = _preferencesWindowDefaultFrameHeight;
+
+	windowFrame.origin.y = ((NSMaxY(self.window.frame) - windowFrame.size.height) + 4);
+
+	[self.window setFrame:windowFrame display:YES animate:NO];
 	
 	[self.window saveWindowStateForClass:self.class];
 
