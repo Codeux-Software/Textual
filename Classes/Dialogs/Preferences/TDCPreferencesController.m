@@ -1420,7 +1420,7 @@
 
 	windowFrame.origin.y = ((NSMaxY(self.window.frame) - windowFrame.size.height) + 4);
 
-	[self.window setFrame:windowFrame display:YES animate:NO];
+	[self.window setFrame:windowFrame display:NO animate:NO];
 	
 	[self.window saveWindowStateForClass:self.class];
 
