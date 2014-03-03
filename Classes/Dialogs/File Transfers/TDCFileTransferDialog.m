@@ -175,7 +175,7 @@
 		[groupItem setPath:[_downloadDestination path]];
 	}
 
-	[self show:NO restorePosition:NO];
+	[self show:YES restorePosition:NO];
 	
 	[self addReceiver:groupItem];
 	
