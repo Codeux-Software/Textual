@@ -1907,9 +1907,9 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"DefaultIdentity -> Username"] = @"textual";
 	d[@"DefaultIdentity -> Realname"] = @"Textual User";
 	
-	d[@"IRCopDefaultLocalizaiton -> Shun Reason"]	= TXTLS(@"ShunReason");
-	d[@"IRCopDefaultLocalizaiton -> Kill Reason"]	= TXTLS(@"KillReason");
-	d[@"IRCopDefaultLocalizaiton -> G:Line Reason"] = TXTLS(@"GlineReason");
+	d[@"IRCopDefaultLocalizaiton -> Shun Reason"]	= TXTLS(@"BasicLanguage[1030]");
+	d[@"IRCopDefaultLocalizaiton -> Kill Reason"]	= TXTLS(@"BasicLanguage[1029]");
+	d[@"IRCopDefaultLocalizaiton -> G:Line Reason"] = TXTLS(@"BasicLanguage[1027]");
 	
 	TVCMemberList *memberList = self.masterController.memberList;
 	
@@ -1920,7 +1920,7 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"User List Mode Badge Colors —> +h"] = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_HDefault];
 	d[@"User List Mode Badge Colors —> +v"] = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_VDefault];
 	
-	d[@"ChannelOperatorDefaultLocalization -> Kick Reason"] = TXTLS(@"KickReason");
+	d[@"ChannelOperatorDefaultLocalization -> Kick Reason"] = TXTLS(@"BasicLanguage[1028]");
 	
 	d[TPCPreferencesThemeNameDefaultsKey]				= TXDefaultTextualLogStyle;
 	d[TPCPreferencesThemeFontNameDefaultsKey]			= TXDefaultTextualLogFont;

@@ -430,7 +430,7 @@
 		[d setAllowsMultipleSelection:NO];
 		
 		[d setPrompt:TXTLS(@"SelectButton")];
-		[d setMessage:TXTLS(@"FileTransferDialogTransferSavePanelDialogMessage")];
+		[d setMessage:TXTLS(@"TDCFileTransferDialog[1021]")];
 		
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
 			if (result == NSOKButton) {

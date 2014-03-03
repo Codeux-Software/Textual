@@ -52,6 +52,38 @@
 "TDCListDialog[1002]" = "%@ Public Channels";
 "TDCListDialog[1003]" = "%@ Public Channels - %@ Search Results";
 
+/* Final transfer dialog. */
+"TDCFileTransferDialog[1000][1]" = "%1$@ of %2$@ (%3$@/s) sent to %4$@";
+"TDCFileTransferDialog[1000][2]" = "%1$@ of %2$@ (%3$@/s) sent to %4$@ — %5$@ remaining";
+
+"TDCFileTransferDialog[1001]" = "Transfer to %@ is stopped. Right click to start.";
+"TDCFileTransferDialog[1002]" = "Transfer to %@ is initializing. Attempting to map listening port.";
+"TDCFileTransferDialog[1003]" = "Transfer to %@ is initializing. Determining local IP address.";
+"TDCFileTransferDialog[1004]" = "Transfer to %@ is initializing.";
+"TDCFileTransferDialog[1005]" = "Transfer to %@ is ready. Waiting for them to accept.";
+"TDCFileTransferDialog[1006]" = "Transfer to %@ is complete.";
+"TDCFileTransferDialog[1007]" = "Transfer to %@ is ready. Waiting for them to accept.";
+
+"TDCFileTransferDialog[1008][1]" = "%1$@ of %2$@ (%3$@/s) received from %4$@";
+"TDCFileTransferDialog[1008][2]" = "%1$@ of %2$@ (%3$@/s) received from %4$@ — %5$@ remaining";
+
+"TDCFileTransferDialog[1009]" = "Transfer from %@ is stopped. Right click to start.";
+"TDCFileTransferDialog[1010]" = "Transfer from %@ is initializing. Attempting to map listening port.";
+"TDCFileTransferDialog[1011]" = "Transfer from %@ is initializing. Determining local IP address.";
+"TDCFileTransferDialog[1012]" = "Transfer from %@ is initializing.";
+"TDCFileTransferDialog[1013]" = "Transfer from %@ is ready. Right click to start.";
+"TDCFileTransferDialog[1014]" = "Transfer from %@ is complete. Right click to open in Finder.";
+
+"TDCFileTransferDialog[1015]" = "Connecting to %@.";
+
+"TDCFileTransferDialog[1016]" = "Transfer with %@ failed. Could not establish connection.";
+"TDCFileTransferDialog[1017]" = "Transfer with %@ failed. There is no open port.";
+"TDCFileTransferDialog[1018]" = "Transfer with %@ failed. Could not read source file.";
+"TDCFileTransferDialog[1019]" = "Transfer with %@ failed. Unknown source IP address.";
+"TDCFileTransferDialog[1020]" = "Transfer with %@ failed. Connection was disconnected.";
+
+"TDCFileTransferDialog[1021]" = "Select the folder in which this file will be saved.";
+
 /* Application terminating confirmation dialog. */
 "BasicLanguage[1000][1]" = "Quitting will disconnect you from any IRC server that you are connected to until you restart Textual.";
 "BasicLanguage[1000][2]" = "Do you want to quit Textual?";
@@ -102,79 +134,58 @@
 /* Delete button for dialogs. */
 "BasicLanguage[1023]" = "Delete";
 
+/* Delete channel menu item titles. */
+"BasicLanguage[1024]" = "Delete Channel";
+"BasicLanguage[1025]" = "Close Query";
+
+/* Find panel. */
+"BasicLanguage[1026][1]" = "Search";
+"BasicLanguage[1026][2]" = "Enter a phrase to search for. Once a search is created, the keyboard shortcut ⌘G can be used to continue to the next search result and the combination ⌘⇧G to return to the previous.";
+"BasicLanguage[1026][3]" = "Search for Message";
+
+/* Default G:Line reason. */
+"BasicLanguage[1027]" = "35d Your behavior is not conducive to the desired environment.";
+"BasicLanguage[1028]" = "Your behavior is not conducive to the desired environment.";
+"BasicLanguage[1029]" = "Your behavior is not conducive to the desired environment.";
+"BasicLanguage[1030]" = "1d Shunned.";
+
+/* Network not available messages. */
+"BasicLanguage[1031]" = "Delaying auto connect after waking up for %1$@ seconds due to the unavailability of the local network. To force connect at any time, right-click the server and click \002Connect\002.";
+"BasicLanguage[1032]" = "A reconnect attempt has been cancelled because the local network is currently unavailable. Another attempt will be performed in %@ seconds. To force connect at any time, right-click the server and select \002Connect\002. Alternatively, to cancel these reconnect attempts, right-click the server and select \002Cancel Reconnect\002.";
+
+/* /defaults/ command. */
+"BasicLanguage[1033]" = "Invalid Syntax. Type \"/defaults help\" for more information.";
+
+"BasicLanguage[1034][01]" = "The \002defaults\002 command provides the ability to enable or disable certain features of the selected server which are not";
+"BasicLanguage[1034][02]" = "accessible through the user interface. These features are made available through this command as they are rarely used";
+"BasicLanguage[1034][03]" = "and would otherwise waste unnecessary space being presented in an actual interactive list.";
+"BasicLanguage[1034][04]" = " ";
+"BasicLanguage[1034][05]" = "Usage:";
+"BasicLanguage[1034][06]" = "\t\"/defaults enable <token>\" — Enables the feature associated with \002<token>\002.";
+"BasicLanguage[1034][07]" = "\t\"/defaults disable <token>\" — Disables the feature associated with \002<token>\002.";
+"BasicLanguage[1034][08]" = "\t\"/defaults features\" — Opens Webpage in the default browser which contains list of supported features.";
+"BasicLanguage[1034][09]" = " ";
+"BasicLanguage[1034][10]" = "The \002<token>\002 parameter supplied to this command can be encapsulated in double quotes (\") to allow for spaces.";
+
+"BasicLanguage[1035]" = "Cannot enable the feature \"%@\" as it is not supported.";
+"BasicLanguage[1036]" = "Cannot disable the feature \"%@\" as it is not supported.";
+
+"BasicLanguage[1037]" = "Enabled Feature: %@";
+"BasicLanguage[1038]" = "Disabled Feature: %@";
+
+/* DCC console messages. */
+"BasicLanguage[1039]" = "Trying file transfer to %1$@, %2$@ (%3$qi bytes)";
+"BasicLanguage[1040]" = "Received file transfer request from %1$@, %2$@ (%3$qi bytes)";
+
+/* Excess flood disconnect warning sheet. */
+"BasicLanguage[1041][1]" = "Excess Flood";
+"BasicLanguage[1041][2]" = "A disconnection has occured due to excess flood. Reconnect?";
+"BasicLanguage[1041][3]" = "Configure Flood Control";
+
+/* /mode/ command error. */
+"BasicLanguage[1042]" = "The half-op (+h) mode is not supported on this server.";
+
 /* Old items. */
-"DeleteChannelMenuItem" = "Delete Channel";
-"DeletePrivateMessageMenuItem" = "Close Query";
-
-"FindSearchPanelPromptButton" = "Search";
-"FindSearchPanelPromptMessage" = "Enter a phrase to search for. Once a search is created, the keyboard shortcut ⌘G can be used to continue to the next search result and the combination ⌘⇧G to return to the previous.";
-"FindSearchPanelPromptTitle" = "Search for Message";
-
-"GlineReason" = "35d Your behavior is not conducive to the desired environment.";
-
-"AutoConnectAfterWakeUpHostNotReachable" = "Delaying auto connect after waking up for %1$@ seconds due to the unavailability of the local network. To force connect at any time, right-click the server and click \002Connect\002.";
-
-"ConnectReconnectCancelledDueToHostNotReachable" = "A reconnect attempt has been cancelled because the local network is currently unavailable. Another attempt will be performed in %@ seconds. To force connect at any time, right-click the server and select \002Connect\002. Alternatively, to cancel these reconnect attempts, right-click the server and select \002Cancel Reconnect\002.";
-
-"ClientAuxiliaryConfigurationCommandInvalidSyntaxError" = "Invalid Syntax. Type \"/defaults help\" for more information.";
-
-"ClientAuxiliaryConfigurationCommandHelpInformation_01" = "The \002defaults\002 command provides the ability to enable or disable certain features of the selected server which are not";
-"ClientAuxiliaryConfigurationCommandHelpInformation_02" = "accessible through the user interface. These features are made available through this command as they are rarely used";
-"ClientAuxiliaryConfigurationCommandHelpInformation_03" = "and would otherwise waste unnecessary space being presented in an actual interactive list.";
-"ClientAuxiliaryConfigurationCommandHelpInformation_04" = " ";
-"ClientAuxiliaryConfigurationCommandHelpInformation_05" = "Usage:";
-"ClientAuxiliaryConfigurationCommandHelpInformation_06" = "\t\"/defaults enable <token>\" — Enables the feature associated with \002<token>\002.";
-"ClientAuxiliaryConfigurationCommandHelpInformation_07" = "\t\"/defaults disable <token>\" — Disables the feature associated with \002<token>\002.";
-"ClientAuxiliaryConfigurationCommandHelpInformation_08" = "\t\"/defaults features\" — Opens Webpage in the default browser which contains list of supported features.";
-"ClientAuxiliaryConfigurationCommandHelpInformation_09" = " ";
-"ClientAuxiliaryConfigurationCommandHelpInformation_10" = "The \002<token>\002 parameter supplied to this command can be encapsulated in double quotes (\") to allow for spaces.";
-
-"ClientAuxiliaryConfigurationCommandFeatureCannotEnable" = "Cannot enable the feature \"%@\" as it is not supported.";
-"ClientAuxiliaryConfigurationCommandFeatureCannotDisable" = "Cannot disable the feature \"%@\" as it is not supported.";
-
-"ClientAuxiliaryConfigurationCommandFeatureEnabled" = "Enabled Feature: %@";
-"ClientAuxiliaryConfigurationCommandFeatureDisabled" = "Disabled Feature: %@";
-
-"DCCFileTransferInitiated" = "Trying file transfer to %1$@, %2$@ (%3$qi bytes)";
-"DCCFileTransferRequestReceived" = "Received file transfer request from %1$@, %2$@ (%3$qi bytes)";
-
-"ExcessFloodIRCDisconnectAlertTitle" = "Excess Flood";
-"ExcessFloodIRCDisconnectAlertMessage" = "A disconnection has occured due to excess flood. Reconnect?";
-"ExcessFloodIRCDisconnectAlertOpenFloodControlButton" = "Configure Flood Control";
-
-"FileTransferDialogTransferToUserStatusWithoutRemainingTime" = "%1$@ of %2$@ (%3$@/s) sent to %4$@";
-"FileTransferDialogTransferToUserStatusWithRemainingTime" = "%1$@ of %2$@ (%3$@/s) sent to %4$@ — %5$@ remaining";
-
-"FileTransferDialogTransferToUserIsAttemptingPortMapping" = "Transfer to %@ is initializing. Attempting to map listening port.";
-"FileTransferDialogTransferToUserIsDeterminingIPAddress" = "Transfer to %@ is initializing. Determining local IP address.";
-"FileTransferDialogTransferToUserIsWaitingForAcceptance" = "Transfer to %@ is ready. Waiting for them to accept.";
-"FileTransferDialogTransferToUserSocketIsListening" = "Transfer to %@ is ready. Waiting for them to accept.";
-"FileTransferDialogTransferToUserIsStopped" = "Transfer to %@ is stopped. Right click to start.";
-"FileTransferDialogTransferToUserIsInitializing" = "Transfer to %@ is initializing.";
-"FileTransferDialogTransferToUserIsComplete" = "Transfer to %@ is complete.";
-
-"FileTransferDialogTransferFromUserStatusWithoutRemainingTime" = "%1$@ of %2$@ (%3$@/s) received from %4$@";
-"FileTransferDialogTransferFromUserStatusWithRemainingTime" = "%1$@ of %2$@ (%3$@/s) received from %4$@ — %5$@ remaining";
-
-"FileTransferDialogTransferFromUserIsAttemptingPortMapping" = "Transfer from %@ is initializing. Attempting to map listening port.";
-"FileTransferDialogTransferFromUserIsDeterminingIPAddress" = "Transfer from %@ is initializing. Determining local IP address.";
-"FileTransferDialogTransferFromUserSocketIsListening" = "Transfer from %@ is ready. Right click to start.";
-"FileTransferDialogTransferFromUserIsStopped" = "Transfer from %@ is stopped. Right click to start.";
-"FileTransferDialogTransferFromUserIsInitializing" = "Transfer from %@ is initializing.";
-"FileTransferDialogTransferFromUserIsComplete" = "Transfer from %@ is complete. Right click to open in Finder.";
-
-"FileTransferDialogTransferSocketIsConnecting" = "Connecting to %@.";
-
-"FileTransferDialogTransferFailedWithUnavailablePort" = "Transfer with %@ failed. There is no open port.";
-"FileTransferDialogTransferFailedWithBadFileHandle" = "Transfer with %@ failed. Could not read source file.";
-"FileTransferDialogTransferFailedWithBadSourceAddress" = "Transfer with %@ failed. Unknown source IP address.";
-"FileTransferDialogTransferFailedWithUnknownDisconnect" = "Transfer with %@ failed. Connection was disconnected.";
-"FileTransferDialogTransferFailedWithBadSenderConnect" = "Transfer with %@ failed. Could not establish connection.";
-
-"FileTransferDialogTransferSavePanelDialogMessage" = "Select the folder in which this file will be saved.";
-
-"HalfopCommandNotSupportedOnServer" = "The half-op (+h) mode is not supported on this server.";
-
 "IRCCTCPVersionInfoBasic" = "%1$@ IRC Client: www.textualapp.com — v%2$@ (Flavor: %4$@)";
 
 "IRCCTCPVersionInfoDetailed_1" = "%1$@ %2$@ (Build #%3$@)";
@@ -269,9 +280,6 @@
 "InviteSheetMultiplePeopleSelected" = "%d users";
 "InviteSheetTargetDescription" = "Invite %@ to:";
 "InviteSheetTwoPeopleSelected" = "%1$@ and %2$@";
-
-"KickReason" = "Your behavior is not conducive to the desired environment.";
-"KillReason" = "Your behavior is not conducive to the desired environment.";
 
 "LoadedPlguinsCommandLoadedBundles" = "Loaded Bundles: %@";
 "LoadedPlguinsCommandLoadedScripts" = "Loaded Scripts: %@";
@@ -442,8 +450,6 @@
 
 "SetUserVhostPromptMessage"	= "Please enter desired vHost. (e.g. apple.vhost)";
 "SetUserVhostPromptTitle" = "Set User vHost";
-
-"ShunReason" = "1d Shunned.";
 
 "SocketBadSSLCertificateErrorMessage" = "The server that you are connecting to has a SSL certificate that has either expired or is not trusted.\n\nSelect the \"Show Certificate\" button shown below for the option to disable the checking of this particular certificate.";
 "SocketBadSSLCertificateErrorTitle" = "Untrusted Connection";
