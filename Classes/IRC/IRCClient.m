@@ -1895,7 +1895,7 @@
 				BOOL modeHSupported = [self.isupport modeIsSupportedUserPrefix:@"h"];
 
 				if (modeHSupported == NO) {
-					[self printDebugInformation:TXTLS(@"HalfopCommandNotSupportedOnServer")];
+					[self printDebugInformation:TXTLS(@"BasicLanguage[1042]")];
 
 					return;
 				}
@@ -2571,7 +2571,7 @@
 		{
 			/* Check base string. */
 			if (NSObjectIsEmpty(uncutInput)) {
-				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandInvalidSyntaxError")];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1033]")];
 
 				return;
 			}
@@ -2590,16 +2590,16 @@
 
 			if (NSObjectsAreEqual(section1, @"help"))
 			{
-				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandHelpInformation_01")];
-				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandHelpInformation_02")];
-				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandHelpInformation_03")];
-				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandHelpInformation_04")];
-				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandHelpInformation_05")];
-				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandHelpInformation_06")];
-				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandHelpInformation_07")];
-				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandHelpInformation_08")];
-				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandHelpInformation_09")];
-				[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandHelpInformation_10")];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][01]")];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][02]")];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][03]")];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][04]")];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][05]")];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][06]")];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][07]")];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][08]")];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][09]")];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][10]")];
 			}
 			else if (NSObjectsAreEqual(section1, @"features"))
 			{
@@ -2610,15 +2610,15 @@
 				if ((applyToAll == NO && NSObjectIsEmpty(section2)) ||
 					(applyToAll		  && NSObjectIsEmpty(section3)))
 				{
-					[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandInvalidSyntaxError")];
+					[self printDebugInformation:TXTLS(@"BasicLanguage[1033]")];
 				} else {
 					if ((applyToAll == NO && [providedKeys containsObject:section2] == NO) ||
 						(applyToAll		  && [providedKeys containsObject:section3] == NO))
 					{
 						if (applyToAll) {
-							[self printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureCannotEnable", section3)];
+							[self printDebugInformation:TXTFLS(@"BasicLanguage[1035]", section3)];
 						} else {
-							[self printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureCannotEnable", section2)];
+							[self printDebugInformation:TXTFLS(@"BasicLanguage[1035]", section2)];
 						}
 					} else {
 						if (applyToAll) {
@@ -2626,15 +2626,15 @@
 								[[u.config auxiliaryConfiguration] setBool:YES forKey:section3];
 
 								if (u == self) {
-									[u printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureEnabled", section3)];
+									[u printDebugInformation:TXTFLS(@"BasicLanguage[1037]", section3)];
 								} else {
-									[u printDebugInformationToConsole:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureEnabled", section3)];
+									[u printDebugInformationToConsole:TXTFLS(@"BasicLanguage[1037]", section3)];
 								}
 							}
 						} else {
 							[[self auxiliaryConfiguration] setBool:YES forKey:section2];
 
-							[self printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureEnabled", section2)];
+							[self printDebugInformation:TXTFLS(@"BasicLanguage[1037]", section2)];
 						}
 
 						[self.worldController save];
@@ -2646,15 +2646,15 @@
 				if ((applyToAll == NO && NSObjectIsEmpty(section2)) ||
 					(applyToAll		  && NSObjectIsEmpty(section3)))
 				{
-					[self printDebugInformation:TXTLS(@"ClientAuxiliaryConfigurationCommandInvalidSyntaxError")];
+					[self printDebugInformation:TXTLS(@"BasicLanguage[1033]")];
 				} else {
 					if ((applyToAll == NO && [providedKeys containsObject:section2] == NO) ||
 						(applyToAll		  && [providedKeys containsObject:section3] == NO))
 					{
 						if (applyToAll) {
-							[self printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureCannotDisable", section3)];
+							[self printDebugInformation:TXTFLS(@"BasicLanguage[1036]", section3)];
 						} else {
-							[self printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureCannotDisable", section2)];
+							[self printDebugInformation:TXTFLS(@"BasicLanguage[1036]", section2)];
 						}
 					} else {
 						if (applyToAll) {
@@ -2662,15 +2662,15 @@
 								[[u.config auxiliaryConfiguration] setBool:NO forKey:section3];
 
 								if (u == self) {
-									[u printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureDisabled", section3)];
+									[u printDebugInformation:TXTFLS(@"BasicLanguage[1038]", section3)];
 								} else {
-									[u printDebugInformationToConsole:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureDisabled", section3)];
+									[u printDebugInformationToConsole:TXTFLS(@"BasicLanguage[1038]", section3)];
 								}
 							}
 						} else {
 							[[self auxiliaryConfiguration] setBool:NO forKey:section2];
 
-							[self printDebugInformation:TXTFLS(@"ClientAuxiliaryConfigurationCommandFeatureDisabled", section2)];
+							[self printDebugInformation:TXTFLS(@"BasicLanguage[1038]", section2)];
 						}
 
 						[self.worldController save];
@@ -4642,11 +4642,11 @@
         [prompt sheetWindowWithQuestion:self.masterController.mainWindow
                                  target:self
                                  action:@selector(receiveErrorExcessFloodWarningPopupCallback:withOriginalAlert:)
-                                   body:TXTLS(@"ExcessFloodIRCDisconnectAlertMessage")
-                                  title:TXTLS(@"ExcessFloodIRCDisconnectAlertTitle")
+                                   body:TXTLS(@"BasicLanguage[1041][2]")
+                                  title:TXTLS(@"BasicLanguage[1041][1]")
                           defaultButton:TXTLS(@"YesButton")
                         alternateButton:TXTLS(@"NoButton")
-                            otherButton:TXTLS(@"ExcessFloodIRCDisconnectAlertOpenFloodControlButton")
+                            otherButton:TXTLS(@"BasicLanguage[1041][3]")
                          suppressionKey:nil
                         suppressionText:nil];
     } else {
@@ -6296,7 +6296,7 @@
 		BOOL hideWarnings = [[self auxiliaryConfiguration] boolForKey:@"Hide Network Unavailability Notices on Reconnect"];
 
 		if (hideWarnings == NO) {
-			[self printDebugInformationToConsole:TXTFLS(@"ConnectReconnectCancelledDueToHostNotReachable", @(_reconnectInterval))];
+			[self printDebugInformationToConsole:TXTFLS(@"BasicLanguage[1032]", @(_reconnectInterval))];
 		}
 
 		/* Restart timer. */
@@ -6719,7 +6719,7 @@
 	if ([self isHostReachable]) {
 		[self connect:IRCConnectReconnectMode];
 	} else {
-		[self printDebugInformationToConsole:TXTFLS(@"AutoConnectAfterWakeUpHostNotReachable", @(self.connectDelay))];
+		[self printDebugInformationToConsole:TXTFLS(@"BasicLanguage[1031]", @(self.connectDelay))];
 
 		[self performSelector:@selector(autoConnectAfterWakeUp) withObject:nil afterDelay:self.connectDelay];
 	}
@@ -7232,7 +7232,7 @@
 - (void)receivedDCCSend:(NSString *)nickname filename:(NSString *)filename address:(NSString *)address port:(NSInteger)port filesize:(TXFSLongInt)totalFilesize token:(NSString *)transferToken
 {
 	/* Inform of the DCC and possibly ignore it. */
-	NSString *message = TXTFLS(@"DCCFileTransferRequestReceived", nickname, filename, totalFilesize);
+	NSString *message = TXTFLS(@"BasicLanguage[1040]", nickname, filename, totalFilesize);
 	
 	[self print:nil type:TVCLogLineDCCFileTransferType nick:nil text:message command:TXLogLineDefaultRawCommandValue];
 	
@@ -7277,7 +7277,7 @@
 	
 	[self sendCTCPQuery:nickname command:@"DCC SEND" text:trail];
 	
-	NSString *message = TXTFLS(@"DCCFileTransferInitiated", nickname, filename, totalFilesize);
+	NSString *message = TXTFLS(@"BasicLanguage[1039]", nickname, filename, totalFilesize);
 	
 	[self print:nil type:TVCLogLineDCCFileTransferType nick:nil text:message command:TXLogLineDefaultRawCommandValue];
 }

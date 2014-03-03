@@ -314,11 +314,11 @@
 		case 652: // "Delete Channel"
 		{
 			if (_isQuery) {
-				[item setTitle:TXTLS(@"DeletePrivateMessageMenuItem")];
+				[item setTitle:TXTLS(@"BasicLanguage[1025]")];
 				
 				return _disableInSheet(YES);
 			} else {
-				[item setTitle:TXTLS(@"DeleteChannelMenuItem")];
+				[item setTitle:TXTLS(@"BasicLanguage[1024]")];
 				
 				return _disableInSheet(_isChannel);
 			}
@@ -743,10 +743,10 @@
 
 	TVCInputPromptDialog *dialog = [TVCInputPromptDialog new];
 
-	[dialog alertWithMessageTitle:TXTLS(@"FindSearchPanelPromptTitle")
-					defaultButton:TXTLS(@"FindSearchPanelPromptButton")
+	[dialog alertWithMessageTitle:TXTLS(@"BasicLanguage[1026][3]")
+					defaultButton:TXTLS(@"BasicLanguage[1026][1]")
 				  alternateButton:TXTLS(@"BasicLanguage[1009]")
-				  informativeText:TXTLS(@"FindSearchPanelPromptMessage")
+				  informativeText:TXTLS(@"BasicLanguage[1026][2]")
 				 defaultUserInput:self.currentSearchPhrase
 				  completionBlock:^(BOOL defaultButtonClicked, NSString *resultString) {
 					  if (defaultButtonClicked) {

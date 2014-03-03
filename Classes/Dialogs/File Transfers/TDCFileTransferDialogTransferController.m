@@ -211,7 +211,7 @@
 		}
 
 		/* Could not establish base connection, error. */
-		[self postErrorWithErrorMessage:@"FileTransferDialogTransferFailedWithBadSenderConnect"];
+		[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1016]"];
 		
 		return; // Break chain.
 	}
@@ -238,7 +238,7 @@
         self.transferPort += 1;
 
 		if (self.transferPort > [TPCPreferences fileTransferPortRangeEnd]) {
-			[self postErrorWithErrorMessage:@"FileTransferDialogTransferFailedWithUnavailablePort"];
+			[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1017]"];
 
 			return; // Break the chain.
 		}
@@ -349,7 +349,7 @@
 		{
 			if ([self isReversed]) {
 				if ([e mappingStatus] == TCMPortMappingStatusUnmapped) {
-					[self postErrorWithErrorMessage:@"FileTransferDialogTransferFailedWithUnavailablePort"];
+					[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1017]"];
 				} else {
 					[self requestLocalIPAddress];
 				}
@@ -501,7 +501,7 @@
 
 		/* If we had problem reading file, then we need to stop now… */
 		if (PointerIsEmpty(fileAttrs)) {
-			[self postErrorWithErrorMessage:@"FileTransferDialogTransferFailedWithBadFileHandle"];
+			[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1018]"];
 
 			return; // Break chain.
 		}
@@ -580,7 +580,7 @@
 
 - (void)setDidErrorOnBadSenderAddress
 {
-	[self postErrorWithErrorMessage:@"FileTransferDialogTransferFailedWithBadSourceAddress"];
+	[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1019]"];
 }
 
 #pragma mark -
@@ -630,7 +630,7 @@
 	
 	if (self.fileHandle == nil) {
 		/* There was a problem opening the file handle. */
-		[self postErrorWithErrorMessage:@"FileTransferDialogTransferFailedWithBadFileHandle"];
+		[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1018]"];
 
 		return NO;
 	}
@@ -735,7 +735,7 @@
 	}
 	
 	/* Normal operations. */
-	[self postErrorWithErrorMessage:@"FileTransferDialogTransferFailedWithUnknownDisconnect"];
+	[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1020]"];
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
