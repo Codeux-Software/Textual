@@ -1374,7 +1374,7 @@
 		if (loopDepth <= 8) {
 			[self performSelector:@selector(postViwLoadedJavaScript:)
 					   withObject:@(loopDepth)
-					   afterDelay:0.4]; // Post event every 400ms, 1/5 second.
+					   afterDelay:1.0]; // Post event every 400ms, 1/5 second.
 		}
 
 		return;
