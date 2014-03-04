@@ -75,100 +75,100 @@
 		case TXNotificationHighlightType:
 		{
 			eventPriority = 1;
-			eventTitle = TXTFLS(@"NotificationHighlightMessageTitle", eventTitle);
+			eventTitle = TXTFLS(@"BasicLanguage[1063]", eventTitle);
 			
 			break;
 		}
 		case TXNotificationNewPrivateMessageType:
 		{
 			eventPriority = 1;
-			eventTitle = TXTLS(@"NotificationNewPrivateMessageMessageTitle");
+			eventTitle = TXTLS(@"BasicLanguage[1066]");
 			
 			break;
 		}
 		case TXNotificationChannelMessageType:
 		{
-			eventTitle = TXTFLS(@"NotificationChannelMessageMessageTitle", eventTitle);
+			eventTitle = TXTFLS(@"BasicLanguage[1059]", eventTitle);
 			
 			break;
 		}
 		case TXNotificationChannelNoticeType:
 		{
-			eventTitle = TXTFLS(@"NotificationChannelNoticeMessageTitle", eventTitle);
+			eventTitle = TXTFLS(@"BasicLanguage[1060]", eventTitle);
 			
 			break;
 		}
 		case TXNotificationPrivateMessageType:
 		{
-			eventTitle = TXTLS(@"NotificationPrivateMessageMessageTitle");
+			eventTitle = TXTLS(@"BasicLanguage[1067]");
 			
 			break;
 		}
 		case TXNotificationPrivateNoticeType:
 		{
-			eventTitle = TXTLS(@"NotificationPrivateNoticeMessageTitle");
+			eventTitle = TXTLS(@"BasicLanguage[1068]");
 			
 			break;
 		}
 		case TXNotificationKickType:
 		{
-			eventTitle = TXTFLS(@"NotificationKickedMessageTitle", eventTitle);
+			eventTitle = TXTFLS(@"BasicLanguage[1065]", eventTitle);
 			
 			break;
 		}
 		case TXNotificationInviteType:
 		{
-			eventTitle = TXTFLS(@"NotificationInvitedMessageTitle", eventTitle);
+			eventTitle = TXTFLS(@"BasicLanguage[1064]", eventTitle);
 			
 			break;
 		}
 		case TXNotificationConnectType:
 		{
-			eventTitle = TXTFLS(@"NotificationConnectedMessageTitle", eventTitle);
-			eventDescription = TXTLS(@"NotificationConnectedMessageDescription");
+			eventTitle = TXTFLS(@"BasicLanguage[1061]", eventTitle);
+			eventDescription = TXTLS(@"BasicLanguage[1074]");
 			
 			break;
 		}
 		case TXNotificationDisconnectType:
 		{
-			eventTitle = TXTFLS(@"NotificationDisconnectMessageTitle", eventTitle);
-			eventDescription = TXTLS(@"NotificationDisconnectMessageDescription");
+			eventTitle = TXTFLS(@"BasicLanguage[1062]", eventTitle);
+			eventDescription = TXTLS(@"BasicLanguage[1075]");
 			
 			break;
 		}
 		case TXNotificationAddressBookMatchType: 
 		{
-			eventTitle = TXTLS(@"NotificationAddressBookMatchMessageTitle");
+			eventTitle = TXTLS(@"BasicLanguage[1058]");
 			
 			break;
 		}
 		case TXNotificationFileTransferSendSuccessfulType:
 		{
-			eventTitle = TXTFLS(@"NotificationFileTransferSendSuccessfulMessageTitle", eventTitle);
+			eventTitle = TXTFLS(@"BasicLanguage[1069]", eventTitle);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveSuccessfulType:
 		{
-			eventTitle = TXTFLS(@"NotificationFileTransferReceiveSuccessfulMessageTitle", eventTitle);
+			eventTitle = TXTFLS(@"BasicLanguage[1070]", eventTitle);
 			
 			break;
 		}
 		case TXNotificationFileTransferSendFailedType:
 		{
-			eventTitle = TXTFLS(@"NotificationFileTransferSendFailedMessageTitle", eventTitle);
+			eventTitle = TXTFLS(@"BasicLanguage[1071]", eventTitle);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveFailedType:
 		{
-			eventTitle = TXTFLS(@"NotificationFileTransferReceiveFailedMessageTitle", eventTitle);
+			eventTitle = TXTFLS(@"BasicLanguage[1072]", eventTitle);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveRequestedType:
 		{
-			eventTitle = TXTFLS(@"NotificationFileTransferReceiveRequestedMessageTitle", eventTitle);
+			eventTitle = TXTFLS(@"BasicLanguage[1073]", eventTitle);
 			
 			break;
 		}
@@ -194,7 +194,7 @@
 					eventType == TXNotificationPrivateMessageType)
 				{
 					notification.hasReplyButton = YES;
-					notification.responsePlaceholder = TXTFLS(@"NotificationDialogPrivateMessageReplyPlaceholder");
+					notification.responsePlaceholder = TXTFLS(@"BasicLanguage[1085]");
 				}
 			}
 #endif 
@@ -249,22 +249,22 @@
 - (NSDictionary *)registrationDictionaryForGrowl
 {
 	NSArray *allNotifications = @[
-		TXTLS(@"TXNotificationAddressBookMatchType"),
-		TXTLS(@"TXNotificationChannelMessageType"),
-		TXTLS(@"TXNotificationChannelNoticeType"),
-		TXTLS(@"TXNotificationConnectType"),
-		TXTLS(@"TXNotificationDisconnectType"),
-		TXTLS(@"TXNotificationHighlightType"),
-		TXTLS(@"TXNotificationInviteType"),
-		TXTLS(@"TXNotificationKickType"),
-		TXTLS(@"TXNotificationNewPrivateMessageType"),
-		TXTLS(@"TXNotificationPrivateMessageType"),
-		TXTLS(@"TXNotificationPrivateNoticeType"),
-		TXTLS(@"TXNotificationFileTransferSendSuccessfulType"),
-		TXTLS(@"TXNotificationFileTransferReceiveSuccessfulType"),
-		TXTLS(@"TXNotificationFileTransferSendFailedType"),
-		TXTLS(@"TXNotificationFileTransferReceiveFailedType"),
-		TXTLS(@"TXNotificationFileTransferReceiveRequestedType")
+		TXTLS(@"BasicLanguage[1086]"),
+		TXTLS(@"BasicLanguage[1087]"),
+		TXTLS(@"BasicLanguage[1088]"),
+		TXTLS(@"BasicLanguage[1089]"),
+		TXTLS(@"BasicLanguage[1090]"),
+		TXTLS(@"BasicLanguage[1091]"),
+		TXTLS(@"BasicLanguage[1092]"),
+		TXTLS(@"BasicLanguage[1093]"),
+		TXTLS(@"BasicLanguage[1094]"),
+		TXTLS(@"BasicLanguage[1095]"),
+		TXTLS(@"BasicLanguage[1096]"),
+		TXTLS(@"BasicLanguage[1097]"),
+		TXTLS(@"BasicLanguage[1098]"),
+		TXTLS(@"BasicLanguage[1099]"),
+		TXTLS(@"BasicLanguage[1100]"),
+		TXTLS(@"BasicLanguage[1101]"),
 	];
 	
 	return @{

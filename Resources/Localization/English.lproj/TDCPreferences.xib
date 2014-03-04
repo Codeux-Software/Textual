@@ -138,7 +138,7 @@
                         <popUpButton key="view" tag="13" id="6451">
                             <rect key="frame" x="3" y="14" width="43" height="32"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" imagePosition="right" lineBreakMode="truncatingTail" borderStyle="bezel" inset="2" pullsDown="YES" selectedItem="6454" id="6452">
+                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="TPWTB_Extensions" imagePosition="right" lineBreakMode="truncatingTail" borderStyle="bezel" inset="2" pullsDown="YES" selectedItem="6454" id="6452">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" title="OtherViews" showsStateColumn="NO" id="6453">
@@ -1192,7 +1192,7 @@
                                         </connections>
                                     </button>
                                     <scrollView borderType="none" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="jla-12-9TQ">
-                                        <rect key="frame" x="91" y="117" width="329" height="19"/>
+                                        <rect key="frame" x="91" y="118" width="329" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="N3v-41-k1h">
                                             <rect key="frame" x="0.0" y="0.0" width="329" height="19"/>

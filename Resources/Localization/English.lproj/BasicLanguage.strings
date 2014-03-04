@@ -185,6 +185,80 @@
 /* /mode/ command error. */
 "BasicLanguage[1042]" = "The half-op (+h) mode is not supported on this server.";
 
+/* Notification spoken text. */
+/* Address Book spoken text uses the actual notification message for that
+ notification type. It is not defined here. */
+"BasicLanguage[1043]" = "Channel Message in %1$@ by %2$@, %3$@";
+"BasicLanguage[1044]" = "Channel Notice in %1$@ by %2$@, %3$@";
+"BasicLanguage[1045]" = "Highlight in %1$@ by %2$@, %3$@";
+"BasicLanguage[1046]" = "Invited to %1$@ by %2$@";
+"BasicLanguage[1047]" = "Kicked from %1$@ by %2$@";
+"BasicLanguage[1048]" = "New Private Message from %1$@, %2$@";
+"BasicLanguage[1049]" = "Private Message from %1$@, %2$@";
+"BasicLanguage[1050]" = "Private Notice from %1$@, %2$@";
+"BasicLanguage[1051]" = "Connected to %@";
+"BasicLanguage[1052]" = "Disconnected from %@";
+"BasicLanguage[1053]" = "File transfer to %@ has completed.";
+"BasicLanguage[1054]" = "File transfer from %@ has completed.";
+"BasicLanguage[1055]" = "File transfer to %@ has failed.";
+"BasicLanguage[1056]" = "File transfer from %@ has failed.";
+"BasicLanguage[1057]" = "Received file transfer request from %@";
+
+/* Notification bubble titles. */
+"BasicLanguage[1058]" = "Address Book Notification";
+"BasicLanguage[1059]" = "Channel Message: %@";
+"BasicLanguage[1060]" = "Channel Notice: %@";
+"BasicLanguage[1061]" = "Connected: %@";
+"BasicLanguage[1062]" = "Disconnected: %@";
+"BasicLanguage[1063]" = "Highlight: %@";
+"BasicLanguage[1064]" = "Invited: %@";
+"BasicLanguage[1065]" = "Kicked: %@";
+"BasicLanguage[1066]" = "New Private Message";
+"BasicLanguage[1067]" = "Private Message";
+"BasicLanguage[1068]" = "Private Notice";
+"BasicLanguage[1069]" = "Successful File Transfer: %@";
+"BasicLanguage[1070]" = "Successful File Transfer: %@";
+"BasicLanguage[1071]" = "File Transfer Failed: %@";
+"BasicLanguage[1072]" = "File Transfer Failed: %@";
+"BasicLanguage[1073]" = "File Transfer Request: %@";
+
+/* Notification bubble descriptions. 
+ These are only notifications that require localization. Many notifications
+ just send the raw message received so they are not localized here. */
+"BasicLanguage[1074]" = "Connection successful.";
+"BasicLanguage[1075]" = "Disconnection successful.";
+"BasicLanguage[1076]" = "%1$@ has invited you to %2$@";
+"BasicLanguage[1077]" = "%1$@ has kicked you out: %2$@";
+"BasicLanguage[1078]" = "%1$@ (%2$qi bytes)";
+"BasicLanguage[1079]" = "%1$@ (%2$qi bytes)";
+"BasicLanguage[1080]" = "%1$@";
+"BasicLanguage[1081]" = "%1$@";
+"BasicLanguage[1082]" = "%1$@ (%2$qi bytes)";
+"BasicLanguage[1083]" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is available.";
+"BasicLanguage[1084]" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is no longer available.";
+"BasicLanguage[1085]" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is now available.";
+
+/* Notification bubble replyb button placeholders. */
+"BasicLanguage[1085]" = "Enter message to reply to this private message.";
+
+/* Notification type titles. */
+"BasicLanguage[1086]" = "Address Book Notification";
+"BasicLanguage[1087]" = "Channel Message";
+"BasicLanguage[1088]" = "Channel Notice";
+"BasicLanguage[1089]" = "Connected";
+"BasicLanguage[1090]" = "Disconnected";
+"BasicLanguage[1091]" = "Highlight (Mention)";
+"BasicLanguage[1092]" = "Channel Invitation";
+"BasicLanguage[1093]" = "Kicked from Channel";
+"BasicLanguage[1094]" = "Private Message (new)";
+"BasicLanguage[1095]" = "Private Message";
+"BasicLanguage[1096]" = "Private Notice";
+"BasicLanguage[1097]" = "Successful File Transfer (Sending)";
+"BasicLanguage[1098]" = "Successful File Transfer (Receiving)";
+"BasicLanguage[1099]" = "Failed File Transfer (Sending)";
+"BasicLanguage[1100]" = "Failed File Transfer (Receiving)";
+"BasicLanguage[1101]" = "File Transfer Request";
+
 /* Old items. */
 "IRCCTCPVersionInfoBasic" = "%1$@ IRC Client: www.textualapp.com — v%2$@ (Flavor: %4$@)";
 
@@ -325,57 +399,6 @@
 "NavigationChannelListClientEntryTitle" = "%@";
 "NavigationChannelListChannelEntryTitle" = "   %@";
 
-/* If an event is not defined below for spoken events, then the odds are
- good that the text to be spoken is localized somewhere else. For example,
- the address book event type is defined near the end of this file. */
-"NotificationChannelMessageSpokenMessage"					= "Channel Message in %1$@ by %2$@, %3$@";
-"NotificationChannelNoticeSpokenMessage"					= "Channel Notice in %1$@ by %2$@, %3$@";
-"NotificationHighlightSpokenMessage"						= "Highlight in %1$@ by %2$@, %3$@";
-"NotificationInvitedSpokenMessage"							= "Invited to %1$@ by %2$@";
-"NotificationKickedSpokenMessage"							= "Kicked from %1$@ by %2$@";
-"NotificationNewPrivateMessageSpokenMessage"				= "New Private Message from %1$@, %2$@";
-"NotificationPrivateMessageSpokenMessage"					= "Private Message from %1$@, %2$@";
-"NotificationPrivateNoticeSpokenMessage"					= "Private Notice from %1$@, %2$@";
-"NotificationConnectedSpokenMessage"						= "Connected to %@";
-"NotificationDisconnectSpokenMessage"						= "Disconnected from %@";
-
-"NotificationFileTransferSendSuccessfulSpokenMessage"		= "File transfer to %@ has completed.";
-"NotificationFileTransferReceiveSuccessfulSpokenMessage"	= "File transfer from %@ has completed.";
-"NotificationFileTransferSendFailedSpokenMessage"			= "File transfer to %@ has failed.";
-"NotificationFileTransferReceiveFailedSpokenMessage"		= "File transfer from %@ has failed.";
-"NotificationFileTransferReceiveRequestedSpokenMessage"		= "Received file transfer request from %@";
-
-"NotificationAddressBookMatchMessageTitle"					= "Address Book Notification";
-"NotificationChannelMessageMessageTitle"					= "Channel Message: %@";
-"NotificationChannelNoticeMessageTitle"						= "Channel Notice: %@";
-"NotificationConnectedMessageTitle"							= "Connected: %@";
-"NotificationDisconnectMessageTitle"						= "Disconnected: %@";
-"NotificationHighlightMessageTitle"							= "Highlight: %@";
-"NotificationInvitedMessageTitle"							= "Invited: %@";
-"NotificationKickedMessageTitle"							= "Kicked: %@";
-"NotificationNewPrivateMessageMessageTitle"					= "New Private Message";
-"NotificationPrivateMessageMessageTitle"					= "Private Message";
-"NotificationPrivateNoticeMessageTitle"						= "Private Notice";
-
-"NotificationFileTransferSendSuccessfulMessageTitle"		= "Successful File Transfer: %@";
-"NotificationFileTransferReceiveSuccessfulMessageTitle"		= "Successful File Transfer: %@";
-"NotificationFileTransferSendFailedMessageTitle"			= "File Transfer Failed: %@";
-"NotificationFileTransferReceiveFailedMessageTitle"			= "File Transfer Failed: %@";
-"NotificationFileTransferReceiveRequestedMessageTitle"		= "File Transfer Request: %@";
-
-"NotificationConnectedMessageDescription"					= "Connection successful.";
-"NotificationDisconnectMessageDescription"					= "Disconnection successful.";
-"NotificationInvitedMessageDescription"						= "%1$@ has invited you to %2$@";
-"NotificationKickedMessageDescription"						= "%1$@ has kicked you out: %2$@";
-
-"NotificationFileTransferSendSuccessfulDescription"			= "%1$@ (%2$qi bytes)";
-"NotificationFileTransferReceiveSuccessfulDescription"		= "%1$@ (%2$qi bytes)";
-"NotificationFileTransferSendFailedDescription"				= "%1$@";
-"NotificationFileTransferReceiveFailedDescription"			= "%1$@";
-"NotificationFileTransferReceiveRequestedDescription"		= "%1$@ (%2$qi bytes)";
-
-"NotificationDialogPrivateMessageReplyPlaceholder"	= "Enter message to reply to this private message.";
-
 "OSXGoingToSleepQuitMessage" = "My %@ has gone to sleep. ZZZzzz…";
 
 "OkButton" = "OK";
@@ -465,24 +488,6 @@
 
 "TXEmptySoundAlertLabel" = "None";
 
-"TXNotificationAddressBookMatchType"				= "Address Book Notification";
-"TXNotificationChannelMessageType"					= "Channel Message";
-"TXNotificationChannelNoticeType"					= "Channel Notice";
-"TXNotificationConnectType"							= "Connected";
-"TXNotificationDisconnectType"						= "Disconnected";
-"TXNotificationHighlightType"						= "Highlight (Mention)";
-"TXNotificationInviteType"							= "Channel Invitation";
-"TXNotificationKickType"							= "Kicked from Channel";
-"TXNotificationNewPrivateMessageType"				= "Private Message (new)";
-"TXNotificationPrivateMessageType"					= "Private Message";
-"TXNotificationPrivateNoticeType"					= "Private Notice";
-
-"TXNotificationFileTransferSendSuccessfulType"		= "Successful File Transfer (Sending)";
-"TXNotificationFileTransferReceiveSuccessfulType"	= "Successful File Transfer (Receiving)";
-"TXNotificationFileTransferSendFailedType"			= "Failed File Transfer (Sending)";
-"TXNotificationFileTransferReceiveFailedType"		= "Failed File Transfer (Receiving)";
-"TXNotificationFileTransferReceiveRequestedType"	= "File Transfer Request";
-
 "ThemeChangeOverridePromptChannelFont" = "• Channel View Font";
 "ThemeChangeOverridePromptMessage" = "The newly selected style \"%1$@\" has chosen to override the following preferences with ones that it prefers for the best viewing experience:\n\n%2$@";
 "ThemeChangeOverridePromptNicknameFormat" = "• Nickname Format";
@@ -525,9 +530,5 @@
 "UserHostmaskHoverTooltipUserIsNotAway" = "User is not away.";
 
 "UserHostmaskHoverTooltipNoInformationAvailable" = "Information Not Available";
-
-"UserTrackingNicknameIsAvailable" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is available.";
-"UserTrackingNicknameNoLongerAvailable" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is no longer available.";
-"UserTrackingNicknameNowAvailable" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is now available.";
 
 "YesButton" = "Yes";
