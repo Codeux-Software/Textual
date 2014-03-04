@@ -745,22 +745,22 @@
 - (NSString *)localizedSpokenMessageForEvent:(TXNotificationType)event
 {
 	switch (event) {
-		case TXNotificationChannelMessageType:		{ return TXTLS(@"NotificationChannelMessageSpokenMessage");			}
-		case TXNotificationChannelNoticeType:		{ return TXTLS(@"NotificationChannelNoticeSpokenMessage");			}
-		case TXNotificationConnectType:				{ return TXTLS(@"NotificationConnectedSpokenMessage");				}
-		case TXNotificationDisconnectType:			{ return TXTLS(@"NotificationDisconnectSpokenMessage");				}
-		case TXNotificationInviteType:				{ return TXTLS(@"NotificationInvitedSpokenMessage");				}
-		case TXNotificationKickType:				{ return TXTLS(@"NotificationKickedSpokenMessage");					}
-		case TXNotificationNewPrivateMessageType:	{ return TXTLS(@"NotificationNewPrivateMessageSpokenMessage");		}
-		case TXNotificationPrivateMessageType:		{ return TXTLS(@"NotificationPrivateMessageSpokenMessage");			}
-		case TXNotificationPrivateNoticeType:		{ return TXTLS(@"NotificationPrivateNoticeSpokenMessage");			}
-		case TXNotificationHighlightType:			{ return TXTLS(@"NotificationHighlightSpokenMessage");				}
-			
-		case TXNotificationFileTransferSendSuccessfulType:			{ return TXTLS(@"NotificationFileTransferSendSuccessfulSpokenMessage");			}
-		case TXNotificationFileTransferReceiveSuccessfulType:		{ return TXTLS(@"NotificationFileTransferReceiveSuccessfulSpokenMessage");		}
-		case TXNotificationFileTransferSendFailedType:				{ return TXTLS(@"NotificationFileTransferSendFailedSpokenMessage");				}
-		case TXNotificationFileTransferReceiveFailedType:			{ return TXTLS(@"NotificationFileTransferReceiveFailedSpokenMessage");			}
-		case TXNotificationFileTransferReceiveRequestedType:		{ return TXTLS(@"NotificationFileTransferReceiveRequestedSpokenMessage");		}
+		case TXNotificationChannelMessageType:						{ return TXTLS(@"BasicLanguage[1043]");		}
+		case TXNotificationChannelNoticeType:						{ return TXTLS(@"BasicLanguage[1044]");		}
+		case TXNotificationConnectType:								{ return TXTLS(@"BasicLanguage[1051]");		}
+		case TXNotificationDisconnectType:							{ return TXTLS(@"BasicLanguage[1052]");		}
+		case TXNotificationInviteType:								{ return TXTLS(@"BasicLanguage[1046]");		}
+		case TXNotificationKickType:								{ return TXTLS(@"BasicLanguage[1047]");		}
+		case TXNotificationNewPrivateMessageType:					{ return TXTLS(@"BasicLanguage[1048]");		}
+		case TXNotificationPrivateMessageType:						{ return TXTLS(@"BasicLanguage[1049]");		}
+		case TXNotificationPrivateNoticeType:						{ return TXTLS(@"BasicLanguage[1050]");		}
+		case TXNotificationHighlightType:							{ return TXTLS(@"BasicLanguage[1045]");		}
+
+		case TXNotificationFileTransferSendSuccessfulType:			{ return TXTLS(@"BasicLanguage[1053]");		}
+		case TXNotificationFileTransferReceiveSuccessfulType:		{ return TXTLS(@"BasicLanguage[1054]");		}
+		case TXNotificationFileTransferSendFailedType:				{ return TXTLS(@"BasicLanguage[1055]");		}
+		case TXNotificationFileTransferReceiveFailedType:			{ return TXTLS(@"BasicLanguage[1056]");		}
+		case TXNotificationFileTransferReceiveRequestedType:		{ return TXTLS(@"BasicLanguage[1057]");		}
 	
 		default: { return nil; }
 	}
@@ -1017,7 +1017,7 @@
 			
 			title = target.name;
 			
-			desc = TXTFLS(@"NotificationKickedMessageDescription", nick, text);
+			desc = TXTFLS(@"BasicLanguage[1077]", nick, text);
 
 			break;
 		}
@@ -1025,7 +1025,7 @@
 		{
 			title = [self altNetworkName];
 			
-			desc = TXTFLS(@"NotificationInvitedMessageDescription", nick, text);
+			desc = TXTFLS(@"BasicLanguage[1076]", nick, text);
 
 			break;
 		}
@@ -5368,7 +5368,7 @@
 					 users in this reply, then they are considered gone. Log that. */
 					if ([users containsObjectIgnoringCase:name] == NO) {
 						if (self.inFirstISONRun == NO) {
-							langkey = @"UserTrackingNicknameNoLongerAvailable";
+							langkey = @"BasicLanguage[1084]";
 						}
 
 						[self.trackedUsers setBool:NO forKey:name];
@@ -5377,9 +5377,9 @@
 					/* If they were not on but now are, then log that too. */
 					if ([users containsObjectIgnoringCase:name]) {
 						if (self.inFirstISONRun) {
-							langkey = @"UserTrackingNicknameIsAvailable";
+							langkey = @"BasicLanguage[1082]";
 						} else {
-							langkey = @"UserTrackingNicknameNowAvailable";
+							langkey = @"BasicLanguage[1085]";
 						}
 						
 						[self.trackedUsers setBool:YES forKey:name];
@@ -5913,13 +5913,13 @@
 			{ // logged online
 				[self handleUserTrackingNotification:ignoreChecks
 											nickname:sendern
-											langitem:@"UserTrackingNicknameNowAvailable"];
+											langitem:@"BasicLanguage[1085]"];
 			}
 			else if (n == 601)
 			{ // logged offline
 				[self handleUserTrackingNotification:ignoreChecks
 											nickname:sendern
-											langitem:@"UserTrackingNicknameNoLongerAvailable"];
+											langitem:@"BasicLanguage[1084]"];
 			}
 			else if (n == 604)
 			{ // is online
@@ -7030,31 +7030,31 @@
 	switch (type) {
 		case TXNotificationFileTransferSendSuccessfulType:
 		{
-			description = TXTFLS(@"NotificationFileTransferSendSuccessfulDescription", filename, totalFilesize);
+			description = TXTFLS(@"BasicLanguage[1078]", filename, totalFilesize);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveSuccessfulType:
 		{
-			description = TXTFLS(@"NotificationFileTransferReceiveSuccessfulDescription", filename, totalFilesize);
+			description = TXTFLS(@"BasicLanguage[1079]", filename, totalFilesize);
 			
 			break;
 		}
 		case TXNotificationFileTransferSendFailedType:
 		{
-			description = TXTFLS(@"NotificationFileTransferSendFailedDescription", filename, totalFilesize);
+			description = TXTFLS(@"BasicLanguage[1080]", filename, totalFilesize);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveFailedType:
 		{
-			description = TXTFLS(@"NotificationFileTransferReceiveFailedDescription", filename, totalFilesize);
+			description = TXTFLS(@"BasicLanguage[1081]", filename, totalFilesize);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveRequestedType:
 		{
-			description = TXTFLS(@"NotificationFileTransferReceiveRequestedDescription", filename, totalFilesize);
+			description = TXTFLS(@"BasicLanguage[1082]", filename, totalFilesize);
 			
 			break;
 		}
@@ -7539,7 +7539,7 @@
         if (ison == NO) {
             [self handleUserTrackingNotification:abEntry
                                         nickname:message.sender.nickname
-                                        langitem:@"UserTrackingNicknameNowAvailable"];
+                                        langitem:@"BasicLanguage[1085]"];
             
             [self.trackedUsers setBool:YES forKey:tracker];
         }
@@ -7552,7 +7552,7 @@
         if (ison) {
             [self handleUserTrackingNotification:abEntry
                                         nickname:message.sender.nickname
-                                        langitem:@"UserTrackingNicknameNoLongerAvailable"];
+                                        langitem:@"BasicLanguage[1084]"];
 
             [self.trackedUsers setBool:NO forKey:tracker];
         }
@@ -7565,11 +7565,11 @@
         if (ison) {
             [self handleUserTrackingNotification:abEntry
                                         nickname:message.sender.nickname
-                                        langitem:@"UserTrackingNicknameNoLongerAvailable"];
+                                        langitem:@"BasicLanguage[1084]"];
         } else {
             [self handleUserTrackingNotification:abEntry
                                         nickname:message.sender.nickname
-                                        langitem:@"UserTrackingNicknameNowAvailable"];
+                                        langitem:@"BasicLanguage[1085]"];
         }
 
         [self.trackedUsers setBool:BOOLReverseValue(ison) forKey:tracker];

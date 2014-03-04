@@ -1429,23 +1429,23 @@ static NSURL *transcriptFolderResolvedBookmark;
 + (NSString *)titleForEvent:(TXNotificationType)event
 {
 	switch (event) {
-		case TXNotificationAddressBookMatchType:	{ return TXTLS(@"TXNotificationAddressBookMatchType");			}
-		case TXNotificationChannelMessageType:		{ return TXTLS(@"TXNotificationChannelMessageType");			}
-		case TXNotificationChannelNoticeType:		{ return TXTLS(@"TXNotificationChannelNoticeType");				}
-		case TXNotificationConnectType:				{ return TXTLS(@"TXNotificationConnectType");					}
-		case TXNotificationDisconnectType:			{ return TXTLS(@"TXNotificationDisconnectType");				}
-		case TXNotificationInviteType:				{ return TXTLS(@"TXNotificationInviteType");					}
-		case TXNotificationKickType:				{ return TXTLS(@"TXNotificationKickType");						}
-		case TXNotificationNewPrivateMessageType:	{ return TXTLS(@"TXNotificationNewPrivateMessageType");			}
-		case TXNotificationPrivateMessageType:		{ return TXTLS(@"TXNotificationPrivateMessageType");			}
-		case TXNotificationPrivateNoticeType:		{ return TXTLS(@"TXNotificationPrivateNoticeType");				}
-		case TXNotificationHighlightType:			{ return TXTLS(@"TXNotificationHighlightType");					}
+		case TXNotificationAddressBookMatchType:				{ return TXTLS(@"BasicLanguage[1086]");		}
+		case TXNotificationChannelMessageType:					{ return TXTLS(@"BasicLanguage[1087]");		}
+		case TXNotificationChannelNoticeType:					{ return TXTLS(@"BasicLanguage[1088]");		}
+		case TXNotificationConnectType:							{ return TXTLS(@"BasicLanguage[1089]");		}
+		case TXNotificationDisconnectType:						{ return TXTLS(@"BasicLanguage[1090]");		}
+		case TXNotificationInviteType:							{ return TXTLS(@"BasicLanguage[1092]");		}
+		case TXNotificationKickType:							{ return TXTLS(@"BasicLanguage[1093]");		}
+		case TXNotificationNewPrivateMessageType:				{ return TXTLS(@"BasicLanguage[1094]");		}
+		case TXNotificationPrivateMessageType:					{ return TXTLS(@"BasicLanguage[1095]");		}
+		case TXNotificationPrivateNoticeType:					{ return TXTLS(@"BasicLanguage[1096]");		}
+		case TXNotificationHighlightType:						{ return TXTLS(@"BasicLanguage[1091]");		}
 			
-		case TXNotificationFileTransferSendSuccessfulType:		{ return TXTLS(@"TXNotificationFileTransferSendSuccessfulType");		}
-		case TXNotificationFileTransferReceiveSuccessfulType:	{ return TXTLS(@"TXNotificationFileTransferReceiveSuccessfulType");		}
-		case TXNotificationFileTransferSendFailedType:			{ return TXTLS(@"TXNotificationFileTransferSendFailedType");			}
-		case TXNotificationFileTransferReceiveFailedType:		{ return TXTLS(@"TXNotificationFileTransferReceiveFailedType");			}
-		case TXNotificationFileTransferReceiveRequestedType:	{ return TXTLS(@"TXNotificationFileTransferReceiveRequestedType");		}
+		case TXNotificationFileTransferSendSuccessfulType:		{ return TXTLS(@"BasicLanguage[1097]");		}
+		case TXNotificationFileTransferReceiveSuccessfulType:	{ return TXTLS(@"BasicLanguage[1098]");		}
+		case TXNotificationFileTransferSendFailedType:			{ return TXTLS(@"BasicLanguage[1099]");		}
+		case TXNotificationFileTransferReceiveFailedType:		{ return TXTLS(@"BasicLanguage[1100]");		}
+		case TXNotificationFileTransferReceiveRequestedType:	{ return TXTLS(@"BasicLanguage[1101]");		}
 
 		default: { return nil; }
 	}
