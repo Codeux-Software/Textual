@@ -2091,8 +2091,8 @@
 	if ([RZFileManager() fileExistsAtPath:[path path]]) {
 		[RZWorkspace() openURL:path];
 	} else {
-		[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"LogPathDoesNotExistMessage")
-											title:TXTLS(@"LogPathDoesNotExistTitle")
+		[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1110][2]")
+											title:TXTLS(@"BasicLanguage[1110][1]")
 									defaultButton:TXTLS(@"OkButton") 
 								  alternateButton:nil
 								   suppressionKey:nil
@@ -2114,8 +2114,8 @@
 	if ([RZFileManager() fileExistsAtPath:[path path]]) {
 		[RZWorkspace() openURL:path];
 	} else {
-		[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"LogPathDoesNotExistMessage")
-											title:TXTLS(@"LogPathDoesNotExistTitle")
+		[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1110][2]")
+											title:TXTLS(@"BasicLanguage[1110][1]")
 									defaultButton:TXTLS(@"OkButton")
 								  alternateButton:nil
 								   suppressionKey:nil

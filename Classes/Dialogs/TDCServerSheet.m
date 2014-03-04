@@ -741,8 +741,8 @@
 		[popup sheetWindowWithQuestion:self.sheet
 								target:self
 								action:@selector(toggleCloudSyncExclusionRequestDeletionCallback:withOriginalAlert:)
-								  body:TXTLS(@"iCloudSyncServicesSupportDisabledForServerDialogMessage")
-								 title:TXTLS(@"iCloudSyncServicesSupportDisabledForServerDialogTitle")
+								  body:TXTLS(@"TDCServerSheet[1002][2]")
+								 title:TXTLS(@"TDCServerSheet[1002][1]")
 						 defaultButton:TXTLS(@"NoButton")
 					   alternateButton:TXTLS(@"YesButton")
 						   otherButton:nil
@@ -754,8 +754,8 @@
 		[popup sheetWindowWithQuestion:self.sheet
 								target:[TLOPopupPrompts class]
 								action:@selector(popupPromptNilSelector:withOriginalAlert:)
-								  body:TXTLS(@"iCloudSyncServicesSupportEnabledForServerDialogMessage")
-								 title:TXTLS(@"iCloudSyncServicesSupportEnabledForServerDialogTitle")
+								  body:TXTLS(@"TDCServerSheet[1003][2]")
+								 title:TXTLS(@"TDCServerSheet[1003][1]")
 						 defaultButton:TXTLS(@"OkButton")
 					   alternateButton:nil
 						   otherButton:nil

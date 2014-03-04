@@ -42,6 +42,13 @@
 "TDCServerSheet[1000]" = "User Ignore";
 "TDCServerSheet[1001]" = "User Tracking";
 
+/* Server properties iCloud options. */
+"TDCServerSheet[1002][1]" = "iCloud Sharing Disabled";
+"TDCServerSheet[1002][2]" = "iCloud sharing will be disabled for this server on save.\n\nWould you also like to remove it from devices it has been shared with?\n\nThis action can be undone by enabling sharing or by clicking Cancel.";
+
+"TDCServerSheet[1003][1]" = "iCloud Sharing Enabled";
+"TDCServerSheet[1003][2]" = "iCloud sharing will be enabled for this server on save.\n\nBy saving, Textual will override any copy of this server's configuration already stored on iCloud.";
+
 /* Welcome sheet help channel prompt for freenode servers. */
 "TDCWelcomeSheet[1000][1]" = "Connect to Support Channel";
 "TDCWelcomeSheet[1000][2]" = "The Textual IRC Client support channel is located on freenode. Would you like to add this channel?";
@@ -51,6 +58,16 @@
 "TDCListDialog[1001]" = "Channel List — %@"; // %@ = channel count.
 "TDCListDialog[1002]" = "%@ Public Channels";
 "TDCListDialog[1003]" = "%@ Public Channels - %@ Search Results";
+
+/* Preferences window iCloud options. */
+"TDCPreferencesController[1000][1]" = "iCloud Sharing Disabled";
+"TDCPreferencesController[1000][2]" = "iCloud sharing has been disabled.\n\nIf sharing is enabled on any other devices, then please take note that it must be disabled on those as well for it to apply to all.\n\nData stored with iCloud can be erased at any time by clicking the \"Manage iCloud\" button.";
+
+"TDCPreferencesController[1001][1]" = "Are you sure you wish to continue?";
+"TDCPreferencesController[1001][2]" = "Selecting \"Continue\" will erase all files stored by Textual on iCloud.\n\nThis erase will leave shared preferences intact. Only custom files such as shared styles will be erased.";
+
+"TDCPreferencesController[1002][1]" = "Are you sure you wish to continue?";
+"TDCPreferencesController[1002][2]" = "Selecting \"Continue\" will erase all data stored by Textual on iCloud related to shared preferences.\n\nPlease keep in mind that if any other copy of Textual is still configured for sharing, then the data you just erased may be placed back on iCloud by the device running that copy.";
 
 /* Final transfer dialog. */
 "TDCFileTransferDialog[1000][1]" = "%1$@ of %2$@ (%3$@/s) sent to %4$@";
@@ -83,6 +100,9 @@
 "TDCFileTransferDialog[1020]" = "Transfer with %@ failed. Connection was disconnected.";
 
 "TDCFileTransferDialog[1021]" = "Select the folder in which this file will be saved.";
+
+/* Main window text field placeholder. */
+"TDCMainWindow[1000]" = "Send Message …";
 
 /* Application terminating confirmation dialog. */
 "BasicLanguage[1000][1]" = "Quitting will disconnect you from any IRC server that you are connected to until you restart Textual.";
@@ -259,18 +279,50 @@
 "BasicLanguage[1100]" = "Failed File Transfer (Receiving)";
 "BasicLanguage[1101]" = "File Transfer Request";
 
+/* iCloud. */
+"BasicLanguage[1102][1]" = "iCloud is Not Available";
+"BasicLanguage[1102][2]" = "It appears iCloud may not be available right now. Please try again later.";
+
+/* /loaded_plugins/ command. */
+"BasicLanguage[1103]" = "Loaded Bundles: %@";
+"BasicLanguage[1104]" = "Loaded Scripts: %@";
+"BasicLanguage[1105]" = "Nothing loaded.";
+
+/* /lagcheck/ command. */
+"BasicLanguage[1106]" = "Received lag check reply from %1$@. Time elapsed: %2$1.5f seconds. (Rating: %3$@)";
+"BasicLanguage[1107]" = "Waiting for response from lag check …";
+"BasicLanguage[1108]" = "Received lag check reply even though we never sent a request for one. Exploit attempt?";
+
+"BasicLanguage[1109][00]" = "Yeah, okay…";
+"BasicLanguage[1109][01]" = "Are you plugged into the server?";
+"BasicLanguage[1109][02]" = "Almost No Lag.";
+"BasicLanguage[1109][03]" = "Very Fast.";
+"BasicLanguage[1109][04]" = "Fast.";
+"BasicLanguage[1109][05]" = "Average.";
+"BasicLanguage[1109][06]" = "Slow.";
+"BasicLanguage[1109][07]" = "Very Slow.";
+"BasicLanguage[1109][08]" = "Dang! Call your ISP.";
+"BasicLanguage[1109][09]" = "You Fail! (www.youfail.org)";
+
+/* Open log folder error dialog. */
+"BasicLanguage[1110][1]" = "No Logs Found";
+"BasicLanguage[1110][2]" = "No logs were found for this chat session.";
+
+/* Version info. */
+"BasicLanguage[1111]" = "%1$@ IRC Client: www.textualapp.com — v%2$@ (Flavor: %3$@)";
+
+/* /myversion/ command. */
+"BasicLanguage[1112]" = "%1$@ %2$@ (Build #%3$@)";
+"BasicLanguage[1113]" = "%1$@ %2$@ (Git Reference: %3$@) (Flavor: %4$@)";
+"BasicLanguage[1114]" = "\002Current Version:\002 %@";
+
 /* Old items. */
-"IRCCTCPVersionInfoBasic" = "%1$@ IRC Client: www.textualapp.com — v%2$@ (Flavor: %4$@)";
-
-"IRCCTCPVersionInfoDetailed_1" = "%1$@ %2$@ (Build #%3$@)";
-"IRCCTCPVersionInfoDetailed_2" = "%1$@ %2$@ (Git Reference: %3$@) (Flavor: %4$@)";
-
 "IRCAwayCommandDefaultReason" = "Be back later.";
 "IRCCTCPRequestIgnored" = "\002-CTCP-\002 %1$@ from %2$@ was ignored.";
 
 "IRCClientSupportedCapacities" = "away-notify multi-prefix userhost-in-names sasl server-time";
 "IRCCTCPSupportedReplies" = "CLIENTINFO DCC FINGER PING TIME USERINFO VERSION";
-"IRCCTCPVersionTitle" = "\002Current Version:\002 %@";
+
 "IRCCTCPFingerCommandReply" = "Stop fingering me pervert!";
 "IRCCapCurrentlyEnabledNone" = "There are no capabilities in use.";
 "IRCCapCurrentlyEnbaled" = "The following capabilities are currently enabled: %@";
@@ -328,54 +380,6 @@
 "IRCUserWhowasHostmask" = "%1$@ had userhost %2$@@%3$@ and real name \"%4$@\"";
 "IRCUserNotifiedOfBlockedMessageForUmodeG" = "%@ is not currently accepting private messages from unrecognized users. They have been notified that you have tried messaging them, but the last message you have sent to them has been lost. Any further messages will also be lost until they add you to their list of recognized users.";
 "IRCUserPrivateMessageBlockedByUmodeG" = "%1$@ (%2$@) has tried to send you a private message, but it was blocked due to \002umode +g\002 being enabled. The message they sent has been lost, but typing the command \"/accept %1$@\" will allow new messages to be received until they or you disconnect from IRC.";
-
-"InputRequiredToContinue" = "Input Required to Continue";
-
-"InputTextFieldPlaceholderValue" = "Send Message …";
-
-"iCloudSyncServicesNotAvailableDialogTitle" = "iCloud is Not Available";
-"iCloudSyncServicesNotAvailableDialogMessage" = "It appears iCloud may not be available right now. Please try again later.";
-
-"iCloudSyncServicesSupportDisabledDialogTitle" = "iCloud Sharing Disabled";
-"iCloudSyncServicesSupportDisabledDialogMessage" = "iCloud sharing has been disabled.\n\nIf sharing is enabled on any other devices, then please take note that it must be disabled on those as well for it to apply to all.\n\nData stored with iCloud can be erased at any time by clicking the \"Manage iCloud\" button.";
-
-"iCloudSyncServicesSupportDisabledForServerDialogTitle" = "iCloud Sharing Disabled";
-"iCloudSyncServicesSupportDisabledForServerDialogMessage" = "iCloud sharing has been disabled for this server.\n\nWould you like to remove it from devices it has been shared with?\n\nThis action can be undone by enabling sharing.";
-
-"iCloudSyncServicesSupportEnabledForServerDialogTitle" = "iCloud Sharing Enabled";
-"iCloudSyncServicesSupportEnabledForServerDialogMessage" = "iCloud sharing has been enabled for this server.\n\nBy saving, Textual will override any copy of this server's configuration already stored on iCloud.";
-
-"iCloudSyncDeleteAllDataDialogTitle" = "Are you sure you wish to continue?";
-"iCloudSyncDeleteAllDataDialogMessage" = "Selecting \"Continue\" will erase all data stored by Textual on iCloud related to shared preferences.\n\nPlease keep in mind that if any other copy of Textual is still configured for sharing, then the data you just erased may be placed back on iCloud by the device running that copy.";
-
-"iCloudSyncDeleteAllFilesDialogTitle" = "Are you sure you wish to continue?";
-"iCloudSyncDeleteAllFilesDialogMessage" = "Selecting \"Continue\" will erase all files stored by Textual on iCloud.\n\nThis erase will leave shared preferences intact. Only custom files such as shared styles will be erased.";
-
-"InviteSheetMultiplePeopleSelected" = "%d users";
-"InviteSheetTargetDescription" = "Invite %@ to:";
-"InviteSheetTwoPeopleSelected" = "%1$@ and %2$@";
-
-"LoadedPlguinsCommandLoadedBundles" = "Loaded Bundles: %@";
-"LoadedPlguinsCommandLoadedScripts" = "Loaded Scripts: %@";
-"LoadedPlguinsCommandNothingLoaded" = "Nothing loaded.";
-
-"LagCheckRequestReplyMessage" = "Received lag check reply from %1$@. Time elapsed: %2$1.5f seconds. (Rating: %3$@)";
-"LagCheckRequestSentMessage" = "Waiting for response from lag check …";
-"LagCheckRequestUnknownReply" = "Received lag check reply even though we never sent a request for one. Exploit attempt?";
-
-"LagCheckRequestReplyRating_00" = "Yeah, okay…";
-"LagCheckRequestReplyRating_01" = "Are you plugged into the server?";
-"LagCheckRequestReplyRating_02" = "Almost No Lag.";
-"LagCheckRequestReplyRating_03" = "Very Fast.";
-"LagCheckRequestReplyRating_04" = "Fast.";
-"LagCheckRequestReplyRating_05" = "Average.";
-"LagCheckRequestReplyRating_06" = "Slow.";
-"LagCheckRequestReplyRating_07" = "Very Slow.";
-"LagCheckRequestReplyRating_08" = "Dang! Call your ISP.";
-"LagCheckRequestReplyRating_09" = "You Fail! (www.youfail.org)";
-
-"LogPathDoesNotExistMessage" = "No logs were found for this chat session.";
-"LogPathDoesNotExistTitle" = "No Logs Found";
 
 "NoLogLocationDefinedMenuItem" = "No Log Location Selected";
 

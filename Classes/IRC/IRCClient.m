@@ -2290,15 +2290,15 @@
 			NSString *text;
 			
 			if ([uncutInput isEqualIgnoringCase:@"-d"]) {
-				text = [NSString stringWithFormat:TXTLS(@"IRCCTCPVersionInfoDetailed_2"), name, vers, gref, code];
+				text = [NSString stringWithFormat:TXTLS(@"BasicLanguage[1113]"), name, vers, gref, code];
 			} else {
-				text = [NSString stringWithFormat:TXTLS(@"IRCCTCPVersionInfoDetailed_1"), name, vers, ccnt];
+				text = [NSString stringWithFormat:TXTLS(@"BasicLanguage[1112]"), name, vers, ccnt];
 			}
 
 			if (PointerIsEmpty(selChannel)) {
 				[self printDebugInformationToConsole:text];
 			} else {
-				text = TXTFLS(@"IRCCTCPVersionTitle", text);
+				text = TXTFLS(@"BasicLanguage[1114]", text);
 
 				[self sendPrivmsgToSelectedChannel:text];
 			}
@@ -2354,15 +2354,15 @@
 			NSString *scriptResult = [loadedScripts componentsJoinedByString:@", "];
 
 			if (NSObjectIsEmpty(bundleResult)) {
-				bundleResult = TXTLS(@"LoadedPlguinsCommandNothingLoaded");
+				bundleResult = TXTLS(@"BasicLanguage[1105]");
 			}
 
 			if (NSObjectIsEmpty(scriptResult)) {
-				scriptResult = TXTLS(@"LoadedPlguinsCommandNothingLoaded");
+				scriptResult = TXTLS(@"BasicLanguage[1105]");
 			}
 
-			[self printDebugInformation:TXTFLS(@"LoadedPlguinsCommandLoadedBundles", bundleResult)];
-			[self printDebugInformation:TXTFLS(@"LoadedPlguinsCommandLoadedScripts", scriptResult)];
+			[self printDebugInformation:TXTFLS(@"BasicLanguage[1103]", bundleResult)];
+			[self printDebugInformation:TXTFLS(@"BasicLanguage[1104]", scriptResult)];
 
 			break;
 		}
@@ -2377,7 +2377,7 @@
 
 			[self sendCTCPQuery:self.localNickname command:IRCPrivateCommandIndex("ctcp_lagcheck") text:[NSString stringWithDouble:self.lastLagCheck]];
 
-			[self printDebugInformation:TXTLS(@"LagCheckRequestSentMessage")];
+			[self printDebugInformation:TXTLS(@"BasicLanguage[1107]")];
 
 			break;
 		}
@@ -3983,7 +3983,7 @@
 				NSString *vers = [TPCPreferences textualInfoPlist][@"CFBundleVersion"];
 				NSString *code = [TPCPreferences textualInfoPlist][@"TXBundleBuildCodeName"];
 
-				NSString *textoc = [NSString stringWithFormat:TXTLS(@"IRCCTCPVersionInfoBasic"), name, vers, code];
+				NSString *textoc = [NSString stringWithFormat:TXTLS(@"BasicLanguage[1111]"), name, vers, code];
 
 				[self sendCTCPReply:sendern command:command text:textoc];
 			}
@@ -3999,20 +3999,20 @@
 
 				NSString *rating;
 
-					   if (delta < 0.01) {						rating = TXTLS(@"LagCheckRequestReplyRating_00");
-				} else if (delta >= 0.01 && delta < 0.1) {		rating = TXTLS(@"LagCheckRequestReplyRating_01");
-				} else if (delta >= 0.1 && delta < 0.2) {		rating = TXTLS(@"LagCheckRequestReplyRating_02");
-				} else if (delta >= 0.2 && delta < 0.5) {		rating = TXTLS(@"LagCheckRequestReplyRating_03");
-				} else if (delta >= 0.5 && delta < 1.0) {		rating = TXTLS(@"LagCheckRequestReplyRating_04");
-				} else if (delta >= 1.0 && delta < 2.0) {		rating = TXTLS(@"LagCheckRequestReplyRating_05");
-				} else if (delta >= 2.0 && delta < 5.0) {		rating = TXTLS(@"LagCheckRequestReplyRating_06");
-				} else if (delta >= 5.0 && delta < 10.0) {		rating = TXTLS(@"LagCheckRequestReplyRating_07");
-				} else if (delta >= 10.0 && delta < 30.0) {		rating = TXTLS(@"LagCheckRequestReplyRating_08");
-				} else if (delta >= 30.0) {						rating = TXTLS(@"LagCheckRequestReplyRating_09"); }
+					   if (delta < 0.01) {						rating = TXTLS(@"BasicLanguage[1109][00]");
+				} else if (delta >= 0.01 && delta < 0.1) {		rating = TXTLS(@"BasicLanguage[1109][01]");
+				} else if (delta >= 0.1 && delta < 0.2) {		rating = TXTLS(@"BasicLanguage[1109][02]");
+				} else if (delta >= 0.2 && delta < 0.5) {		rating = TXTLS(@"BasicLanguage[1109][03]");
+				} else if (delta >= 0.5 && delta < 1.0) {		rating = TXTLS(@"BasicLanguage[1109][04]");
+				} else if (delta >= 1.0 && delta < 2.0) {		rating = TXTLS(@"BasicLanguage[1109][05]");
+				} else if (delta >= 2.0 && delta < 5.0) {		rating = TXTLS(@"BasicLanguage[1109][06]");
+				} else if (delta >= 5.0 && delta < 10.0) {		rating = TXTLS(@"BasicLanguage[1109][07]");
+				} else if (delta >= 10.0 && delta < 30.0) {		rating = TXTLS(@"BasicLanguage[1109][08]");
+				} else if (delta >= 30.0) {						rating = TXTLS(@"BasicLanguage[1109][09]"); }
 
-				textm = TXTFLS(@"LagCheckRequestReplyMessage", [self networkAddress], delta, rating);
+				textm = TXTFLS(@"BasicLanguage[1106]", [self networkAddress], delta, rating);
 			} else {
-				textm = TXTLS(@"LagCheckRequestUnknownReply");
+				textm = TXTLS(@"BasicLanguage[1108]");
 			}
 
 			if (self.sendLagcheckReplyToChannel) {
