@@ -83,7 +83,7 @@
 #define _reconnectInterval			20
 #define _retryInterval				240
 #define _timeoutInterval			360
-#define _trialPeriodInterval		7200
+#define _trialPeriodInterval		43200 // 12 HOURS
 
 @interface IRCClient ()
 /* These are all considered private. */
