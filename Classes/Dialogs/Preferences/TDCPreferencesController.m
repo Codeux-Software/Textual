@@ -1082,8 +1082,8 @@
 		[popup sheetWindowWithQuestion:self.window
 								target:[TLOPopupPrompts class]
 								action:@selector(popupPromptNilSelector:withOriginalAlert:)
-								  body:TXTLS(@"iCloudSyncServicesNotAvailableDialogMessage")
-								 title:TXTLS(@"iCloudSyncServicesNotAvailableDialogTitle")
+								  body:TXTLS(@"BasicLanguage[1102][2]")
+								 title:TXTLS(@"BasicLanguage[1102][1]")
 						 defaultButton:TXTLS(@"OkButton")
 					   alternateButton:nil
 						   otherButton:nil
@@ -1116,8 +1116,8 @@
 		[popup sheetWindowWithQuestion:self.window
 								target:[TLOPopupPrompts class]
 								action:@selector(popupPromptNilSelector:withOriginalAlert:)
-								  body:TXTLS(@"iCloudSyncServicesSupportDisabledDialogMessage")
-								 title:TXTLS(@"iCloudSyncServicesSupportDisabledDialogTitle")
+								  body:TXTLS(@"TDCPreferencesController[1000][2]")
+								 title:TXTLS(@"TDCPreferencesController[1000][1]")
 						 defaultButton:TXTLS(@"OkButton")
 					   alternateButton:nil
 						   otherButton:nil
@@ -1196,8 +1196,8 @@
 	[popup sheetWindowWithQuestion:self.window
 							target:self
 							action:@selector(onPurgeOfCloudFilesRequestedCallback:withOriginalAlert:)
-							  body:TXTLS(@"iCloudSyncDeleteAllFilesDialogMessage")
-							 title:TXTLS(@"iCloudSyncDeleteAllFilesDialogTitle")
+							  body:TXTLS(@"TDCPreferencesController[1001][2]")
+							 title:TXTLS(@"TDCPreferencesController[1001][1]")
 					 defaultButton:TXTLS(@"BasicLanguage[1009]")
 				   alternateButton:TXTLS(@"BasicLanguage[1017]")
 					   otherButton:nil
@@ -1214,8 +1214,8 @@
 	[popup sheetWindowWithQuestion:self.window
 							target:self
 							action:@selector(onPurgeOfCloudDataRequestedCallback:withOriginalAlert:)
-							  body:TXTLS(@"iCloudSyncDeleteAllDataDialogMessage")
-							 title:TXTLS(@"iCloudSyncDeleteAllDataDialogTitle")
+							  body:TXTLS(@"TDCPreferencesController[1002][2]")
+							 title:TXTLS(@"TDCPreferencesController[1002][1]")
 					 defaultButton:TXTLS(@"BasicLanguage[1009]")
 				   alternateButton:TXTLS(@"BasicLanguage[1017]")
 					   otherButton:nil
@@ -1352,8 +1352,8 @@
 				[prompt sheetWindowWithQuestion:self.window
 										 target:[TLOPopupPrompts class]
 										 action:@selector(popupPromptNilSelector:withOriginalAlert:)
-										   body:TXTLS(@"iCloudSyncServicesNotAvailableDialogMessage")
-										  title:TXTLS(@"iCloudSyncServicesNotAvailableDialogTitle")
+										   body:TXTLS(@"BasicLanguage[1102][2]")
+										  title:TXTLS(@"BasicLanguage[1102][1]")
 								  defaultButton:TXTLS(@"OkButton")
 								alternateButton:nil
 									otherButton:nil

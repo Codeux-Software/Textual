@@ -234,7 +234,7 @@
 	attrs[NSForegroundColorAttributeName] = [NSColor grayColor];
 
 	self.placeholderString = nil;
-	self.placeholderString = [NSAttributedString stringWithBase:TXTLS(@"InputTextFieldPlaceholderValue") attributes:attrs];
+	self.placeholderString = [NSAttributedString stringWithBase:TXTLS(@"TDCMainWindow[1000]") attributes:attrs];
 
 	/* Prepare draw. */
 	[self setNeedsDisplay:YES];
