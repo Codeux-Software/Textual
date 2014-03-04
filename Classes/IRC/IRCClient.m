@@ -1416,7 +1416,7 @@
 		case 5004: // Command: AWAY
 		{
 			if (NSObjectIsEmpty(uncutInput)) {
-                uncutInput = TXTLS(@"IRCAwayCommandDefaultReason");
+                uncutInput = TXTLS(@"BasicLanguage[1115]");
 			}
             
             if (self.isAway) {
@@ -2096,7 +2096,7 @@
 
 				[self addCommandToCommandQueue:cmd];
 			} else {
-				[self printDebugInformation:TXTLS(@"IRCTimerCommandRequiresInteger")];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1173]")];
 			}
 
 			break;
@@ -2109,15 +2109,15 @@
 			if ([uncutInput isEqualIgnoringCase:@"raw on"]) {
 				self.rawModeEnabled = YES;
 
-				[self printDebugInformation:TXTLS(@"IRCRawModeIsEnabled")];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1175]")];
 
-				LogToConsole(@"%@", TXTLS(@"IRCRawModeIsEnabledSessionStart"));
+				LogToConsole(@"%@", TXTLS(@"BasicLanguage[1177]"));
 			} else if ([uncutInput isEqualIgnoringCase:@"raw off"]) {
 				self.rawModeEnabled = NO;
 
-				[self printDebugInformation:TXTLS(@"IRCRawModeIsDisabled")];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1174]")];
 
-				LogToConsole(@"%@", TXTLS(@"IRCRawModeIsDisabledSessionStart"));
+				LogToConsole(@"%@", TXTLS(@"BasicLanguage[1176]"));
 			} else if ([uncutInput isEqualIgnoringCase:@"devmode on"]) {
 				[RZUserDefaults() setBool:YES forKey:TXDeveloperEnvironmentToken];
 			} else if ([uncutInput isEqualIgnoringCase:@"devmode off"]) {
@@ -2475,9 +2475,9 @@
 			if (NSObjectIsNotEmpty(self.CAPacceptedCaps)) {
 				NSString *caps = [self.CAPacceptedCaps componentsJoinedByString:@", "];
 
-				[self printDebugInformation:TXTFLS(@"IRCCapCurrentlyEnbaled", caps)];
+				[self printDebugInformation:TXTFLS(@"BasicLanguage[1121]", caps)];
 			} else {
-				[self printDebugInformation:TXTLS(@"IRCCapCurrentlyEnabledNone")];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1120]")];
 			}
 
 			break;
@@ -3103,7 +3103,7 @@
 
 - (void)printErrorReply:(IRCMessage *)m channel:(IRCChannel *)channel
 {
-	NSString *text = TXTFLS(@"IRCHadRawError", m.numericReply, [m sequence]);
+	NSString *text = TXTFLS(@"BasicLanguage[1139]", m.numericReply, [m sequence]);
 
 	[self print:channel type:TVCLogLineDebugType nick:nil text:text encrypted:NO receivedAt:m.receivedAt command:m.command message:nil completionBlock:NULL];
 }
@@ -3195,12 +3195,12 @@
 	NSString *dcntmsg = nil;
 
 	switch (self.disconnectType) {
-		case IRCDisconnectNormalMode:				{ dcntmsg = @"IRCDisconnectedFromServer"; break; }
-		case IRCDisconnectComputerSleepMode:		{ dcntmsg = @"IRCDisconnectedBySleepMode"; break; }
-		case IRCDisconnectTrialPeriodMode:			{ dcntmsg = @"IRCDisconnectedByTrialPeriodTimer"; break; }
-		case IRCDisconnectBadSSLCertificateMode:	{ dcntmsg = @"IRCDisconnectedByBadSSLCertificate"; break; }
-		case IRCDisconnectServerRedirectMode:		{ dcntmsg = @"IRCDisconnectedByServerRedirect"; break; }
-		case IRCDisconnectReachabilityChangeMode:	{ dcntmsg = @"IRCDisconnectedByReachabilityChange"; break; }
+		case IRCDisconnectNormalMode:				{ dcntmsg = @"BasicLanguage[1136]"; break; }
+		case IRCDisconnectComputerSleepMode:		{ dcntmsg = @"BasicLanguage[1131]"; break; }
+		case IRCDisconnectTrialPeriodMode:			{ dcntmsg = @"BasicLanguage[1134]"; break; }
+		case IRCDisconnectBadSSLCertificateMode:	{ dcntmsg = @"BasicLanguage[1133]"; break; }
+		case IRCDisconnectServerRedirectMode:		{ dcntmsg = @"BasicLanguage[1132]"; break; }
+		case IRCDisconnectReachabilityChangeMode:	{ dcntmsg = @"BasicLanguage[1135]"; break; }
 		default: break;
 	}
 
@@ -3235,9 +3235,9 @@
 	/* If the address we are connecting to is not an IP address,
 	 then we report back the actual IP address it was resolved to. */
 	if ([[self.config serverAddress] isIPAddress]) {
-		[self printDebugInformationToConsole:TXTLS(@"IRCConnectedToServer")];
+		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1129]")];
 	} else {
-		[self printDebugInformationToConsole:TXTFLS(@"IRCConnectedToServerWithAddress", [self.socket connectedAddress])];
+		[self printDebugInformationToConsole:TXTFLS(@"BasicLanguage[1130]", [self.socket connectedAddress])];
 	}
 
 	self.isLoggedIn	= NO;
@@ -3936,7 +3936,7 @@
 	NSObjectIsEmptyAssert(command);
 
 	if ([TPCPreferences replyToCTCPRequests] == NO) {
-		return [self printDebugInformationToConsole:TXTFLS(@"IRCCTCPRequestIgnored", command, sendern)];
+		return [self printDebugInformationToConsole:TXTFLS(@"BasicLanguage[1116]", command, sendern)];
 	}
 
 	if ([command isEqualToString:IRCPrivateCommandIndex("dcc")]) {
@@ -3950,7 +3950,7 @@
 			target = [self.worldController selectedChannelOn:self];
 		}
 
-		NSString *textm = TXTFLS(@"IRCRecievedCTCPRequest", command, sendern);
+		NSString *textm = TXTFLS(@"BasicLanguage[1148]", command, sendern);
 
 		if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_lagcheck")] == NO) {
 			[self print:target
@@ -3969,7 +3969,7 @@
 			[self sendCTCPReply:sendern command:command text:[[NSDate date] descriptionWithLocale:[NSLocale currentLocale]]];
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_cap")]) {
 			if ([s isEqualIgnoringCase:@"LS"]) {
-				[self sendCTCPReply:sendern command:command text:TXTFLS(@"IRCClientSupportedCapacities")];
+				[self sendCTCPReply:sendern command:command text:TXTFLS(@"BasicLanguage[1117]")];
 			}
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_userinfo")] ||
 				   [command isEqualToString:IRCPrivateCommandIndex("ctcp_version")])
@@ -3988,9 +3988,9 @@
 				[self sendCTCPReply:sendern command:command text:textoc];
 			}
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_finger")]) {
-			[self sendCTCPReply:sendern command:command text:TXTFLS(@"IRCCTCPFingerCommandReply")];
+			[self sendCTCPReply:sendern command:command text:TXTLS(@"BasicLanguage[1119]")];
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_clientinfo")]) {
-			[self sendCTCPReply:sendern command:command text:TXTLS(@"IRCCTCPSupportedReplies")];
+			[self sendCTCPReply:sendern command:command text:TXTLS(@"BasicLanguage[1118]")];
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_lagcheck")]) {
 			double time = [NSDate epochTime];
 
@@ -4051,9 +4051,9 @@
 	if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_ping")]) {
 		double delta = ([NSDate epochTime] - [s doubleValue]);
 		
-		text = TXTFLS(@"IRCRecievedCTCPPingReply", sendern, command, delta);
+		text = TXTFLS(@"BasicLanguage[1146]", sendern, command, delta);
 	} else {
-		text = TXTFLS(@"IRCRecievedCTCPReply", sendern, command, s);
+		text = TXTFLS(@"BasicLanguage[1147]", sendern, command, s);
 	}
 
 	[self print:c
@@ -4132,7 +4132,7 @@
 				[self print:query
 					   type:TVCLogLineJoinType
 					   nick:nil
-					   text:TXTFLS(@"IRCUserReconnectedToPrivateMessage", sendern)
+					   text:TXTFLS(@"BasicLanguage[1155]", sendern)
 				 receivedAt:m.receivedAt
 					command:m.command];
 				
@@ -4153,7 +4153,7 @@
 	}
 
 	if ([TPCPreferences showJoinLeave] || myself) {
-		NSString *text = TXTFLS(@"IRCUserJoinedChannel", sendern, m.sender.username, m.sender.address);
+		NSString *text = TXTFLS(@"BasicLanguage[1116]", sendern, m.sender.username, m.sender.address);
 
 		[self print:c
 			   type:TVCLogLineJoinType
@@ -4206,10 +4206,10 @@
 			return;
 		}
 
-		NSString *message = TXTFLS(@"IRCUserPartedChannel", sendern, m.sender.username, m.sender.address);
+		NSString *message = TXTFLS(@"BasicLanguage[1163]", sendern, m.sender.username, m.sender.address);
 
 		if (NSObjectIsNotEmpty(comment)) {
-			message = [message stringByAppendingFormat:@" (%@)", comment];
+			message = TXTFLS(@"BasicLanguage[1164]", message, comment);
 		}
 
 		[self print:c
@@ -4247,7 +4247,7 @@
 			[self notifyEvent:TXNotificationKickType lineType:TVCLogLineKickType target:c nick:sendern text:comment];
 
 			if ([TPCPreferences rejoinOnKick] && c.errorOnLastJoinAttempt == NO) {
-				[self printDebugInformation:TXTLS(@"IRCChannelPreparingRejoinAttempt") channel:c];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1127]") channel:c];
 
 				[self performSelector:@selector(joinKickedChannel:) withObject:c afterDelay:3.0];
 			}
@@ -4266,7 +4266,7 @@
 			return;
 		}
 
-		NSString *message = TXTFLS(@"IRCUserKickedFromChannel", sendern, targetu, comment);
+		NSString *message = TXTFLS(@"BasicLanguage[1162]", sendern, targetu, comment);
 
 		[self print:c
 			   type:TVCLogLineKickType
@@ -4304,16 +4304,16 @@
 	}
 
 	/* Continue. */
-	NSString *text = TXTFLS(@"IRCUserDisconnected", sendern, m.sender.username, m.sender.address);
+	NSString *text = TXTFLS(@"BasicLanguage[1153]", sendern, m.sender.username, m.sender.address);
 
 	if (NSObjectIsNotEmpty(comment)) {
 		NSString *nsrgx = @"^((([a-zA-Z0-9-_\\.\\*]+)\\.([a-zA-Z0-9-_]+)) (([a-zA-Z0-9-_\\.\\*]+)\\.([a-zA-Z0-9-_]+)))$";
 		
 		if ([TLORegularExpression string:comment isMatchedByRegex:nsrgx]) {
-			comment = TXTFLS(@"IRCServerHadNetsplitQuitMessage", comment);
+			comment = TXTFLS(@"BasicLanguage[1149]", comment);
 		}
 
-		text = [text stringByAppendingFormat:@" (%@)", comment];
+		text = TXTFLS(@"BasicLanguage[1150]", text, comment);
 	}
 
 	/* Is this a targetted print message? */
@@ -4341,7 +4341,7 @@
 		if ([c memberWithNickname:sendern]) {
 			if (([TPCPreferences showJoinLeave] && [ignoreChecks ignoreJPQE] == NO && c.config.ignoreJPQActivity == NO) || myself || c.isPrivateMessage) {
 				if (c.isPrivateMessage) {
-					text = TXTFLS(@"IRCUserDisconnectedFromPrivateMessage", sendern);
+					text = TXTFLS(@"BasicLanguage[1154]", sendern);
 				}
 
 				[self print:c
@@ -4445,7 +4445,7 @@
 
 		if (c) {
 			if ((myself == NO && [ignoreChecks ignoreJPQE] == NO && [TPCPreferences showJoinLeave] && c.config.ignoreJPQActivity == NO) || myself == YES) {
-				NSString *text = TXTFLS(@"IRCUserChangedNickname", oldNick, newNick);
+				NSString *text = TXTFLS(@"BasicLanguage[1152]", oldNick, newNick);
 
 				[self print:c
 					   type:TVCLogLineNickType
@@ -4466,7 +4466,7 @@
 		if ([c memberWithNickname:oldNick]) {
             
 			if ((myself == NO && [ignoreChecks ignoreJPQE] == NO && [TPCPreferences showJoinLeave] && c.config.ignoreJPQActivity == NO) || myself == YES) {
-				NSString *text = TXTFLS(@"IRCUserChangedNickname", oldNick, newNick);
+				NSString *text = TXTFLS(@"BasicLanguage[1152]", oldNick, newNick);
 
 				[self print:c
 					   type:TVCLogLineNickType
@@ -4535,7 +4535,7 @@
 			[self print:c
 				   type:TVCLogLineModeType
 				   nick:nil
-				   text:TXTFLS(@"IRCModeSet", sendern, modestr)
+				   text:TXTFLS(@"BasicLanguage[1145]", sendern, modestr)
 			 receivedAt:m.receivedAt
 				command:m.command];
 		}
@@ -4547,7 +4547,7 @@
 		[self print:nil
 			   type:TVCLogLineModeType
 			   nick:nil
-			   text:TXTFLS(@"IRCModeSet", sendern, modestr)
+			   text:TXTFLS(@"BasicLanguage[1145]", sendern, modestr)
 		 receivedAt:m.receivedAt
 			command:m.command];
 	}
@@ -4576,7 +4576,7 @@
 	[self print:c
 		   type:TVCLogLineTopicType
 		   nick:nil
-		   text:TXTFLS(@"IRCChannelTopicChanged", sendern, topicav)
+		   text:TXTFLS(@"BasicLanguage[1128]", sendern, topicav)
 	  encrypted:isEncrypted
 	 receivedAt:m.receivedAt
 		command:m.command];
@@ -4589,7 +4589,7 @@
 	NSString *sendern = m.sender.nickname;
 	NSString *channel = [m paramAt:1];
 	
-	NSString *text = TXTFLS(@"IRCUserInvitedYouToJoinChannel", sendern, m.sender.username, m.sender.address, channel);
+	NSString *text = TXTFLS(@"BasicLanguage[1158]", sendern, m.sender.username, m.sender.address, channel);
 	
 	[self print:[self.worldController selectedChannelOn:self]
 		   type:TVCLogLineInviteType
@@ -5001,7 +5001,7 @@
 			[self print:nil
 				   type:TVCLogLineDebugType
 				   nick:nil
-				   text:TXTFLS(@"IRCUserHasModes", self.localNickname, modestr)
+				   text:TXTFLS(@"BasicLanguage[1156]", self.localNickname, modestr)
 			 receivedAt:m.receivedAt
 				command:m.command];
 
@@ -5031,9 +5031,8 @@
 			NSString *comment = [m paramAt:2];
 
 			IRCChannel *ac = [self findChannel:awaynick];
-			IRCChannel *sc = [self.worldController selectedChannelOn:self];
 
-			NSString *text = TXTFLS(@"IRCUserIsAway", awaynick, comment);
+			NSString *text = TXTFLS(@"BasicLanguage[1159]", awaynick, comment);
 
             if (ac) {
                 [self print:ac
@@ -5043,6 +5042,8 @@
 				 receivedAt:m.receivedAt
 					command:m.command];
             } else {
+				IRCChannel *sc = [self.worldController selectedChannelOn:self];
+				
                 [self print:sc
 					   type:TVCLogLineDebugType
 					   nick:nil
@@ -5132,7 +5133,7 @@
 			}
 
 			if (self.inUserInvokedWhowasRequest) {
-				text = TXTFLS(@"IRCUserWhowasHostmask", nickname, username, hostmask, realname);
+				text = TXTFLS(@"BasicLanguage[1170]", nickname, username, hostmask, realname);
 			} else {
 				/* Update local cache of our hostmask. */
 				if ([self.myNick isEqualIgnoringCase:nickname]) {
@@ -5142,7 +5143,7 @@
 				}
 
 				/* Continue normal WHOIS event. */
-				text = TXTFLS(@"IRCUserWhoisHostmask", nickname, username, hostmask, realname);
+				text = TXTFLS(@"BasicLanguage[1167]", nickname, username, hostmask, realname);
 			}
 
 			[self print:[self.worldController selectedChannelOn:self]
@@ -5169,9 +5170,9 @@
 																	dateStyle:NSDateFormatterLongStyle
 																	timeStyle:NSDateFormatterLongStyle];
 				
-				text = TXTFLS(@"IRCUserWhowasConnectedFrom", nickname, serverHost, timeInfo);
+				text = TXTFLS(@"BasicLanguage[1169]", nickname, serverHost, timeInfo);
 			} else {
-				text = TXTFLS(@"IRCUserWhoisConnectedFrom", nickname, serverHost, serverInfo);
+				text = TXTFLS(@"BasicLanguage[1166]", nickname, serverHost, serverInfo);
 			}
 
 			[self print:[self.worldController selectedChannelOn:self]
@@ -5197,7 +5198,7 @@
 													  dateStyle:NSDateFormatterLongStyle
 													  timeStyle:NSDateFormatterLongStyle];
 
-			NSString *text = TXTFLS(@"IRCUserWhoisUptime", nickname, connTime, idleTime);
+			NSString *text = TXTFLS(@"BasicLanguage[1168]", nickname, connTime, idleTime);
 
 			[self print:[self.worldController selectedChannelOn:self]
 				   type:TVCLogLineDebugType
@@ -5215,7 +5216,7 @@
 			NSString *nickname = [m paramAt:1];
 			NSString *channels = [m paramAt:2];
 
-			NSString *text = TXTFLS(@"IRCUserWhoisChannels", nickname, channels);
+			NSString *text = TXTFLS(@"BasicLanguage[1165]", nickname, channels);
 
 			[self print:[self.worldController selectedChannelOn:self]
 				   type:TVCLogLineDebugType
@@ -5252,7 +5253,7 @@
 				[self print:c
 					   type:TVCLogLineModeType
 					   nick:nil
-					   text:TXTFLS(@"IRCChannelHasModes", fmodestr)
+					   text:TXTFLS(@"BasicLanguage[1123]", fmodestr)
 				 receivedAt:m.receivedAt
 					command:m.command];
 
@@ -5288,7 +5289,7 @@
 				[self print:c
 					   type:TVCLogLineTopicType
 					   nick:nil
-					   text:TXTFLS(@"IRCChannelHasTopic", topicva)
+					   text:TXTFLS(@"BasicLanguage[1123]", topicva)
 				  encrypted:isEncrypted
 				 receivedAt:m.receivedAt
 					command:m.command];
@@ -5315,7 +5316,7 @@
 			PointerIsEmptyAssertLoopBreak(c);
 
 			if (c.isActive) {
-				NSString *text = [NSString stringWithFormat:TXTLS(@"IRCChannelHasTopicAuthor"), topicow, settime];
+				NSString *text = [NSString stringWithFormat:TXTLS(@"BasicLanguage[1125]"), topicow, settime];
 
 				[self print:c
 					   type:TVCLogLineTopicType
@@ -5342,7 +5343,7 @@
 				[self print:c
 					   type:TVCLogLineDebugType
 					   nick:nil
-					   text:TXTFLS(@"IRCUserInvitedToJoinChannel", nickname, channel)
+					   text:TXTFLS(@"BasicLanguage[1157]", nickname, channel)
 				 receivedAt:m.receivedAt
 					command:m.command];
 			}
@@ -5815,7 +5816,7 @@
 				[self print:nil
 					   type:TVCLogLineDebugType
 					   nick:nil
-					   text:TXTFLS(@"IRCUserIsNowIRCOperator", m.sender.nickname)
+					   text:TXTFLS(@"BasicLanguage[1160]", m.sender.nickname)
 				 receivedAt:m.receivedAt
 					command:m.command];
 
@@ -5837,7 +5838,7 @@
 				[self print:c
 					   type:TVCLogLineWebsiteType
 					   nick:nil
-					   text:TXTFLS(@"IRCChannelHasWebsite", website)
+					   text:TXTFLS(@"BasicLanguage[1126]", website)
 				 receivedAt:m.receivedAt
 					command:m.command];
 			}
@@ -5944,7 +5945,7 @@
 
 			NSString *sendern = [m paramAt:1];
 			
-			[self printDebugInformation:TXTFLS(@"IRCUserNotifiedOfBlockedMessageForUmodeG", sendern)];
+			[self printDebugInformation:TXTFLS(@"BasicLanguage[1171]", sendern)];
 			
 			break;
 		}
@@ -5958,9 +5959,9 @@
 			if ([TPCPreferences locationToSendNotices] == TXNoticeSendCurrentChannelType) {
 				IRCChannel *c = [self.worldController selectedChannelOn:self];
 
-				[self printDebugInformation:TXTFLS(@"IRCUserPrivateMessageBlockedByUmodeG", sendern, hostmask) channel:c];
+				[self printDebugInformation:TXTFLS(@"BasicLanguage[1172]", sendern, hostmask) channel:c];
 			} else {
-				[self printDebugInformation:TXTFLS(@"IRCUserPrivateMessageBlockedByUmodeG", sendern, hostmask)];
+				[self printDebugInformation:TXTFLS(@"BasicLanguage[1172]", sendern, hostmask)];
 			}
 
 			break;
@@ -6039,7 +6040,7 @@
 		}
 		case 402: // ERR_NOSUCHSERVER
 		{
-			NSString *text = TXTFLS(@"IRCHadRawError", m.numericReply, [m sequence:1]);
+			NSString *text = TXTFLS(@"BasicLanguage[1139]", m.numericReply, [m sequence:1]);
 
 			[self print:nil
 				   type:TVCLogLineDebugType
@@ -6063,7 +6064,7 @@
 		}
 		case 404: // ERR_CANNOTSENDTOCHAN
 		{
-			NSString *text = TXTFLS(@"IRCHadRawError", m.numericReply, [m sequence:2]);
+			NSString *text = TXTFLS(@"BasicLanguage[1139]", m.numericReply, [m sequence:2]);
 
 			IRCChannel *c = [self findChannel:[m paramAt:1]];
 			
@@ -6257,12 +6258,12 @@
 	if (timeSpent >= _timeoutInterval) {
 
 		if (self.config.performDisconnectOnPongTimer) {
-			[self printDebugInformation:TXTFLS(@"IRCDisconnectedByTimeout", (timeSpent / 60)) channel:nil];
+			[self printDebugInformation:TXTFLS(@"BasicLanguage[1137]", (timeSpent / 60)) channel:nil];
 
 			[self disconnect];
 		} else {
 			if (self.timeoutWarningShownToUser == NO) {
-				[self printDebugInformation:TXTFLS(@"IRCMightDisconnectWithTimeout", (timeSpent / 60)) channel:nil];
+				[self printDebugInformation:TXTFLS(@"BasicLanguage[1138]", (timeSpent / 60)) channel:nil];
 
 				self.timeoutWarningShownToUser = YES;
 			}
@@ -6651,11 +6652,11 @@
 	[self logFileWriteSessionBegin];
 
 	if (mode == IRCConnectReconnectMode) {
-		[self printDebugInformationToConsole:TXTLS(@"IRCIsReconnecting")];
+		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1143]")];
 	} else if (mode == IRCConnectBadSSLCertificateMode) {
-		[self printDebugInformationToConsole:TXTLS(@"IRCIsReconnecting")];
+		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1143]")];
 	} else if (mode == IRCConnectRetryMode) {
-		[self printDebugInformationToConsole:TXTLS(@"IRCIsRetryingConnection")];
+		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1144]")];
 	}
 
 	if (PointerIsEmpty(self.socket)) {
@@ -6672,7 +6673,7 @@
 	if (self.config.proxyType == TXConnectionSystemSocksProxyType) {
 		self.socket.connectionUsesSystemSocks = YES;
 
-		[self printDebugInformationToConsole:TXTFLS(@"IRCIsConnectingWithSystemProxy", host, port)];
+		[self printDebugInformationToConsole:TXTFLS(@"BasicLanguage[1142]", host, port)];
 	} else if (self.config.proxyType == TXConnectionSocks4ProxyType ||
 			   self.config.proxyType == TXConnectionSocks5ProxyType)
 	{
@@ -6684,9 +6685,9 @@
 		self.socket.proxyUsername = self.config.proxyUsername;
 		self.socket.proxySocksVersion = self.config.proxyType;
 
-		[self printDebugInformationToConsole:TXTFLS(@"IRCIsConnectingWithNormalProxy", host, port, self.config.proxyAddress, self.config.proxyPort)];
+		[self printDebugInformationToConsole:TXTFLS(@"BasicLanguage[1141]", host, port, self.config.proxyAddress, self.config.proxyPort)];
 	} else {
-		[self printDebugInformationToConsole:TXTFLS(@"IRCIsConnecting", host, port)];
+		[self printDebugInformationToConsole:TXTFLS(@"BasicLanguage[1140]", host, port)];
 	}
 
 	self.socket.connectionUsesFloodControl = self.config.outgoingFloodControl;
@@ -6988,7 +6989,7 @@
 
 - (void)toggleAwayStatus:(BOOL)setAway
 {
-    [self toggleAwayStatus:setAway withReason:TXTLS(@"IRCAwayCommandDefaultReason")];
+    [self toggleAwayStatus:setAway withReason:TXTLS(@"BasicLanguage[1115]")];
 }
 
 - (void)toggleAwayStatus:(BOOL)setAway withReason:(NSString *)reason
