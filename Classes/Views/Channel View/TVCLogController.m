@@ -383,7 +383,7 @@
 - (void)setTopic:(NSString *)topic
 {
 	if (NSObjectIsEmpty(topic)) {
-		topic = TXTLS(@"IRCChannelEmptyTopic");
+		topic = TXTLS(@"BasicLanguage[1122]");
 	}
 
 	[self.printingQueue enqueueMessageBlock:^(id operation, NSDictionary *context) {
@@ -1239,7 +1239,7 @@
 		templateTokens[@"viewTypeToken"]  = [self.channel channelTypeString];
 
 		if (NSObjectIsEmpty(topic)) {
-			templateTokens[@"formattedTopicValue"] = TXTLS(@"IRCChannelEmptyTopic");
+			templateTokens[@"formattedTopicValue"] = TXTLS(@"BasicLanguage[1122]");
 		} else {
 			templateTokens[@"formattedTopicValue"] = topic;
 		}

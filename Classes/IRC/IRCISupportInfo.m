@@ -125,7 +125,7 @@
 				self.modesCount = [value integerValue];
 			} else if ([vakey isEqualIgnoringCase:@"NETWORK"]) {
 				self.networkNameActual = value;
-				self.networkName = TXTFLS(@"IRCServerNetworkName", value);
+				self.networkName = TXTFLS(@"BasicLanguage[1151]", value);
 			} else if ([vakey isEqualIgnoringCase:@"CHANTYPES"]) {
 				self.channelNamePrefixes = value;
 			} else if ([vakey isEqualIgnoringCase:@"CHARSET"] ||
