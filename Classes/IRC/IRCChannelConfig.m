@@ -146,10 +146,11 @@
 - (void)writeSecretKeyKeychainItemToDisk
 {
 	if (self.secretKeyIsSet == NO) {
-		[AGKeychain deleteKeychainItem:@"Textual (Channel JOIN Key)"
-						  withItemKind:@"application password"
-						   forUsername:nil
-						   serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
+		[AGKeychain modifyOrAddKeychainItem:@"Textual (Channel JOIN Key)"
+							   withItemKind:@"application password"
+								forUsername:nil
+							withNewPassword:NSStringEmptyPlaceholder
+								serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
 	} else {
 		/* Write secret key. */
 		NSObjectIsEmptyAssert(_secretKey);
@@ -167,10 +168,11 @@
 - (void)writeEncryptionKeyKeychainItemToDisk
 {
 	if (self.encryptionKeyIsSet == NO) {
-		[AGKeychain deleteKeychainItem:@"Textual (Blowfish Encryption)"
-						  withItemKind:@"application password"
-						   forUsername:nil
-						   serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
+		[AGKeychain modifyOrAddKeychainItem:@"Textual (Blowfish Encryption)"
+							   withItemKind:@"application password"
+								forUsername:nil
+							withNewPassword:NSStringEmptyPlaceholder
+								serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
 	} else {
 		/* Write encryption key. */
 		NSObjectIsEmptyAssert(_encryptionKey);

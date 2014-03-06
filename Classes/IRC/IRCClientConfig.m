@@ -207,10 +207,11 @@
 - (void)writeProxyPasswordKeychainItemToDisk
 {
 	if (self.proxyPasswordIsSet == NO) {
-		[AGKeychain deleteKeychainItem:@"Textual (Proxy Server Password)"
-						  withItemKind:@"application password"
-						   forUsername:nil
-						   serviceName:[NSString stringWithFormat:@"textual.proxy-server.%@", self.itemUUID]];
+		[AGKeychain modifyOrAddKeychainItem:@"Textual (Proxy Server Password)"
+							   withItemKind:@"application password"
+								forUsername:nil
+							withNewPassword:NSStringEmptyPlaceholder
+								serviceName:[NSString stringWithFormat:@"textual.proxy-server.%@", self.itemUUID]];
 	} else {
 		/* Write proxy password to keychain. */
 		NSObjectIsEmptyAssert(_proxyPassword);
@@ -228,10 +229,11 @@
 - (void)writeServerPasswordKeychainItemToDisk
 {
 	if (self.serverPasswordIsSet == NO) {
-		[AGKeychain deleteKeychainItem:@"Textual (Server Password)"
-						  withItemKind:@"application password"
-						   forUsername:nil
-						   serviceName:[NSString stringWithFormat:@"textual.server.%@", self.itemUUID]];
+		[AGKeychain modifyOrAddKeychainItem:@"Textual (Server Password)"
+							   withItemKind:@"application password"
+								forUsername:nil
+							withNewPassword:NSStringEmptyPlaceholder
+								serviceName:[NSString stringWithFormat:@"textual.server.%@", self.itemUUID]];
 	} else {
 		/* Write server password to keychain. */
 		NSObjectIsEmptyAssert(_serverPassword);
@@ -249,10 +251,11 @@
 - (void)writeNicknamePasswordKeychainItemToDisk
 {
 	if (self.nicknamePasswordIsSet == NO) {
-		[AGKeychain deleteKeychainItem:@"Textual (NickServ)"
-						  withItemKind:@"application password"
-						   forUsername:nil
-						   serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.itemUUID]];
+		[AGKeychain modifyOrAddKeychainItem:@"Textual (NickServ)"
+							   withItemKind:@"application password"
+								forUsername:nil
+							withNewPassword:NSStringEmptyPlaceholder
+								serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.itemUUID]];
 	} else {
 		/* Write nickname password to keychain. */
 		NSObjectIsEmptyAssert(_nicknamePassword);
