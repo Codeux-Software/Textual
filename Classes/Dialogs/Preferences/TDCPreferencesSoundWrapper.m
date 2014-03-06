@@ -77,7 +77,7 @@
 	}
 	
 	if (NSObjectIsNotEmpty(value)) {
-		[TLOSoundPlayer play:value];
+		[TLOSoundPlayer playAlertSound:value];
 	}
 	
 	[TPCPreferences setSound:value forEvent:self.eventType];

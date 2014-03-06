@@ -39,5 +39,5 @@
 #import "TextualApplication.h"
 
 @interface TLOSoundPlayer : NSObject
-+ (void)play:(NSString *)name;
++ (void)playAlertSound:(NSString *)name;
 @end

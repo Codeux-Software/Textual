@@ -813,6 +813,8 @@
 		4CC70203171E1CB400BDFAE0 /* BuildConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC70202171E1CB400BDFAE0 /* BuildConfig.h */; };
 		4CC70204171E1CB400BDFAE0 /* BuildConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC70202171E1CB400BDFAE0 /* BuildConfig.h */; };
 		4CCC6B61158E8C48003A102B /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4CCC6B60158E8C48003A102B /* Scripts */; };
+		4CCE521B18C7BE0600D49601 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */; };
+		4CCE521C18C7BE1500D49601 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */; };
 		4CCF2EE2158046F9006FFE21 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
 		4CCF2EEB15804790006FFE21 /* IRCNetworks.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2EEA15804790006FFE21 /* IRCNetworks.plist */; };
 		4CCF2EF8158047E9006FFE21 /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2EF7158047E9006FFE21 /* application.icns */; };
@@ -1427,6 +1429,7 @@
 		4CCC6B62158E8CCC003A102B /* Blowfish Key Control Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Blowfish Key Control Extension.xcodeproj"; path = "Resources/Plugins/Blowfish Key Control/Blowfish Key Control Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4CCC6B6E158E8CDA003A102B /* Brag Spam Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Brag Spam Extension.xcodeproj"; path = "Resources/Plugins/Brag Spam/Brag Spam Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "System Profiler Extension.xcodeproj"; path = "Resources/Plugins/System Profiler/System Profiler Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4CCF2EE1158046F9006FFE21 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
 		4CCF2EEA15804790006FFE21 /* IRCNetworks.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = IRCNetworks.plist; path = Resources/Miscellaneous/IRCNetworks.plist; sourceTree = SOURCE_ROOT; };
 		4CCF2EF7158047E9006FFE21 /* application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = application.icns; path = Resources/Images/Application/application.icns; sourceTree = SOURCE_ROOT; };
@@ -1471,6 +1474,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C46CCC41580469E00846B64 /* AppKit.framework in Frameworks */,
+				4CCE521C18C7BE1500D49601 /* AudioToolbox.framework in Frameworks */,
 				4C68425716C5AF730005A59E /* AutoHyperlinks.framework in Frameworks */,
 				4C68425816C5AF730005A59E /* BlowfishEncryption.framework in Frameworks */,
 				4C46CCC51580469E00846B64 /* Cocoa.framework in Frameworks */,
@@ -1496,6 +1500,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C5BA45816F1302F00A96CA2 /* AppKit.framework in Frameworks */,
+				4CCE521B18C7BE0600D49601 /* AudioToolbox.framework in Frameworks */,
 				4C5BA45916F1302F00A96CA2 /* AutoHyperlinks.framework in Frameworks */,
 				4C5BA45A16F1302F00A96CA2 /* BlowfishEncryption.framework in Frameworks */,
 				4C5BA45B16F1302F00A96CA2 /* Cocoa.framework in Frameworks */,
@@ -1552,7 +1557,6 @@
 		4C1DC5551580420500A47BC9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4CD3E50F1893DD6B00010CA2 /* CoreData.framework */,
 				4C46CCCC158046BE00846B64 /* External Frameworks */,
 				4C211D3F15BF1F5E00E218DA /* External Libraries */,
 				4C46CCB91580469200846B64 /* System Frameworks */,
@@ -1849,7 +1853,9 @@
 			isa = PBXGroup;
 			children = (
 				4C46CCBB1580469E00846B64 /* AppKit.framework */,
+				4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */,
 				4C46CCBC1580469E00846B64 /* Cocoa.framework */,
+				4CD3E50F1893DD6B00010CA2 /* CoreData.framework */,
 				4C46CCBD1580469E00846B64 /* CoreServices.framework */,
 				4C46CCBE1580469E00846B64 /* Foundation.framework */,
 				4C46CCBF1580469E00846B64 /* IOKit.framework */,

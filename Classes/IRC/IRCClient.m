@@ -881,7 +881,7 @@
 	}
     
 	if (self.worldController.isSoundMuted == NO) {
-		[TLOSoundPlayer play:[TPCPreferences soundForEvent:type]];
+		[TLOSoundPlayer playAlertSound:[TPCPreferences soundForEvent:type]];
 
 		if ([TPCPreferences speakEvent:type]) {
 			[self speakEvent:type lineType:ltype target:target nick:nick text:text];
@@ -941,7 +941,7 @@
 	}
 
 	if (self.worldController.isSoundMuted == NO) {
-		[TLOSoundPlayer play:[TPCPreferences soundForEvent:type]];
+		[TLOSoundPlayer playAlertSound:[TPCPreferences soundForEvent:type]];
 		
 		if ([TPCPreferences speakEvent:type]) {
 			[self speakEvent:type lineType:ltype target:target nick:nick text:text];
