@@ -212,9 +212,13 @@
 
 - (BOOL)hasPersistentStore
 {
+#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	NSArray *persistentStores = [self.persistentStoreCoordinator persistentStores];
 
 	return ([persistentStores count] > 0);
+#else
+	return NO;
+#endif
 }
 
 - (void)saveData
