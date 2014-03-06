@@ -210,6 +210,13 @@
 	return [[TPCPreferences applicationCachesFolderPath] stringByAppendingPathComponent:@"logControllerHistoricLog_v001.sqlite"];
 }
 
+- (BOOL)hasPersistentStore
+{
+	NSArray *persistentStores = [self.persistentStoreCoordinator persistentStores];
+
+	return ([persistentStores count] > 0);
+}
+
 - (void)saveData
 {
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
@@ -219,6 +226,8 @@
 	/* Continue with save operation. */
 	[self.managedObjectContext performBlock:^{
 		/* Do changes even exist? */
+		NSAssertReturn([self hasPersistentStore]);
+
 		if ([self.managedObjectContext commitEditing]) {
 			if ([self.managedObjectContext hasChanges]) {
 				/* Try to save. */
