@@ -4153,7 +4153,7 @@
 	}
 
 	if ([TPCPreferences showJoinLeave] || myself) {
-		NSString *text = TXTFLS(@"BasicLanguage[1116]", sendern, m.sender.username, m.sender.address);
+		NSString *text = TXTFLS(@"BasicLanguage[1161]", sendern, m.sender.username, m.sender.address);
 
 		[self print:c
 			   type:TVCLogLineJoinType
