@@ -49,8 +49,6 @@
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 
 	settings[(id)kCFStreamSSLLevel] = (id)kCFStreamSocketSecurityLevelNegotiatedSSL;
-	
-	settings[(id)kCFStreamSSLPeerName] = (id)kCFNull;
 	settings[(id)kCFStreamSSLIsServer] = (id)kCFBooleanFalse;
 
 	if (client.connectType == IRCConnectBadSSLCertificateMode ||
