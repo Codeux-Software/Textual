@@ -54,7 +54,7 @@
  Therefore, do not use this list in a plugin for directly validations. Use the built
  in NSStringHelper items for validating hosts when needed as the helper methods will
  append the formatting characters to these. */
-#define IRCUserAddressValidCharacters		@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-.,/:"
+#define IRCUserAddressValidCharacters		@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-.,/:_"
 
 /* Command index. */
 TEXTUAL_EXTERN NSString *IRCPrivateCommandIndex(const char *key); 
