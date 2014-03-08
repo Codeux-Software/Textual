@@ -49,6 +49,7 @@
 	#import <BlowfishEncryption/BlowfishEncryption.h>
 	#import <SystemInformation/SystemInformation.h>
 	#import <AutoHyperlinks/AutoHyperlinks.h>
+	#import <HockeySDK/HockeySDK.h>
 
 	#import "StaticDefinitions.h"
 

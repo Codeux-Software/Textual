@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-@interface TXMasterController : NSObject <NSSplitViewDelegate, NSApplicationDelegate, NSWindowDelegate>
+@interface TXMasterController : NSObject <NSSplitViewDelegate, NSApplicationDelegate, NSWindowDelegate, BITHockeyManagerDelegate>
 @property (nonatomic, strong) IRCWorld *world;
 @property (nonatomic, assign) BOOL ghostMode;
 @property (nonatomic, assign) BOOL terminating;
