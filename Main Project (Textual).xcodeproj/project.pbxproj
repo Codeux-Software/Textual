@@ -762,6 +762,8 @@
 		4C8AF756158EB6CA0026668C /* RLMAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF74A158EB6CA0026668C /* RLMAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8D624F16D02688007D6C60 /* NSRangeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8D624E16D02688007D6C60 /* NSRangeHelper.m */; };
 		4C8D625116D026D9007D6C60 /* NSRangeHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8D625016D026D8007D6C60 /* NSRangeHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C8DFABC18CAEAB40040432F /* HockeySDK.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
+		4C8DFAC218CAEAC10040432F /* HockeySDK.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
 		4C8EE97A16C64A8200D5B1F4 /* TVCMainWindowLoadingScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8EE97916C64A8200D5B1F4 /* TVCMainWindowLoadingScreen.m */; };
 		4C8EE97C16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C92FECB17A8C8F2003888F4 /* TPCResourceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C92FECA17A8C8F2003888F4 /* TPCResourceManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -842,6 +844,8 @@
 		4CD6252A1870B934002FEA17 /* TDCFileTransferDialogTransferController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */; };
 		4CD6252B1870B934002FEA17 /* TDCFileTransferDialogTransferController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */; };
 		4CD63F3015C59C5B00E8DE92 /* NSScreenHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5A6DC015C39BD600143574 /* NSScreenHelper.m */; };
+		4CDB24A118CAB914007EF6DE /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
+		4CDB24A218CAB914007EF6DE /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
 		4CDDF3471678C5DF00FE8684 /* encryptionLockIconDark.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3431678C5DF00FE8684 /* encryptionLockIconDark.tif */; };
 		4CDDF3481678C5DF00FE8684 /* encryptionLockIconDark@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3441678C5DF00FE8684 /* encryptionLockIconDark@2x.tif */; };
 		4CDDF3491678C5DF00FE8684 /* encryptionLockIconLight.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3451678C5DF00FE8684 /* encryptionLockIconLight.tif */; };
@@ -960,6 +964,7 @@
 				4C5BA3D516F1302F00A96CA2 /* AutoHyperlinks.framework in Copy Additional Frameworks */,
 				4C5BA3D616F1302F00A96CA2 /* BlowfishEncryption.framework in Copy Additional Frameworks */,
 				4C5BA3D716F1302F00A96CA2 /* Growl.framework in Copy Additional Frameworks */,
+				4C8DFABC18CAEAB40040432F /* HockeySDK.framework in Copy Additional Frameworks */,
 				4C5BA3D816F1302F00A96CA2 /* SystemInformation.framework in Copy Additional Frameworks */,
 				4C85D19E187EC1A200860129 /* TCMPortMapper.framework in Copy Additional Frameworks */,
 			);
@@ -1030,6 +1035,7 @@
 				4C68425916C5AF900005A59E /* AutoHyperlinks.framework in Copy Additional Frameworks */,
 				4C68425A16C5AF900005A59E /* BlowfishEncryption.framework in Copy Additional Frameworks */,
 				4C68425B16C5AF9B0005A59E /* Growl.framework in Copy Additional Frameworks */,
+				4C8DFAC218CAEAC10040432F /* HockeySDK.framework in Copy Additional Frameworks */,
 				4C78926916C625C50081E859 /* SystemInformation.framework in Copy Additional Frameworks */,
 				4C85D19D187EC19D00860129 /* TCMPortMapper.framework in Copy Additional Frameworks */,
 			);
@@ -1453,6 +1459,7 @@
 		4CD3E50F1893DD6B00010CA2 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCProgressInformationSheet.m; path = Dialogs/TDCProgressInformationSheet.m; sourceTree = "<group>"; };
 		4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogTransferController.m; path = "Dialogs/File Transfers/TDCFileTransferDialogTransferController.m"; sourceTree = "<group>"; };
+		4CDB24A018CAB914007EF6DE /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HockeySDK.framework; path = Frameworks/HockeySDK.framework; sourceTree = "<group>"; };
 		4CDDF3431678C5DF00FE8684 /* encryptionLockIconDark.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = encryptionLockIconDark.tif; sourceTree = "<group>"; };
 		4CDDF3441678C5DF00FE8684 /* encryptionLockIconDark@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "encryptionLockIconDark@2x.tif"; sourceTree = "<group>"; };
 		4CDDF3451678C5DF00FE8684 /* encryptionLockIconLight.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = encryptionLockIconLight.tif; sourceTree = "<group>"; };
@@ -1481,6 +1488,7 @@
 				4CD3E5101893DD6B00010CA2 /* CoreData.framework in Frameworks */,
 				4C46CCC61580469E00846B64 /* CoreServices.framework in Frameworks */,
 				4C46CCC71580469E00846B64 /* Foundation.framework in Frameworks */,
+				4CDB24A118CAB914007EF6DE /* HockeySDK.framework in Frameworks */,
 				4CCF2EE2158046F9006FFE21 /* Growl.framework in Frameworks */,
 				4C46CCC81580469E00846B64 /* IOKit.framework in Frameworks */,
 				4C85D197187EC18900860129 /* TCMPortMapper.framework in Frameworks */,
@@ -1507,6 +1515,7 @@
 				4CD3E5151893DD7700010CA2 /* CoreData.framework in Frameworks */,
 				4C5BA45C16F1302F00A96CA2 /* CoreServices.framework in Frameworks */,
 				4C5BA45D16F1302F00A96CA2 /* Foundation.framework in Frameworks */,
+				4CDB24A218CAB914007EF6DE /* HockeySDK.framework in Frameworks */,
 				4C5BA45E16F1302F00A96CA2 /* Growl.framework in Frameworks */,
 				4C5BA45F16F1302F00A96CA2 /* IOKit.framework in Frameworks */,
 				4C85D198187EC18900860129 /* TCMPortMapper.framework in Frameworks */,
@@ -1873,6 +1882,7 @@
 				4C68425516C5AF730005A59E /* AutoHyperlinks.framework */,
 				4C68425616C5AF730005A59E /* BlowfishEncryption.framework */,
 				4CCF2EE1158046F9006FFE21 /* Growl.framework */,
+				4CDB24A018CAB914007EF6DE /* HockeySDK.framework */,
 				4C78926716C6259D0081E859 /* SystemInformation.framework */,
 				4C85D196187EC18900860129 /* TCMPortMapper.framework */,
 			);
@@ -3885,6 +3895,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/Michael/Projects/Textual/Frameworks,
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Debug;
@@ -3893,6 +3907,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/Michael/Projects/Textual/Frameworks,
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Release;
@@ -3901,6 +3919,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/Michael/Projects/Textual/Frameworks,
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Debug;
@@ -3909,6 +3931,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/Michael/Projects/Textual/Frameworks,
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Release;
@@ -3917,6 +3943,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/Michael/Projects/Textual/Frameworks,
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (App Store)";
@@ -3940,6 +3970,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/Michael/Projects/Textual/Frameworks,
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (Trial)";
@@ -3948,6 +3982,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/Michael/Projects/Textual/Frameworks,
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (Trial)";
@@ -3997,6 +4035,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/Michael/Projects/Textual/Frameworks,
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (App Store)";

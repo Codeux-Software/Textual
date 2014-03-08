@@ -209,6 +209,14 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)note
 {
+	/* Register for HockeyApp. */
+	[[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"b0b1c84f339487c2e184f7d1ebfe5997"
+														companyName:@"Codeux Software"
+														   delegate:self];
+
+	[[BITHockeyManager sharedHockeyManager] startManager];
+
+	/* Update application status. */
 	[self.serverList updateBackgroundColor];
 	
 	if (self.worldController.clients.count < 1) {
@@ -221,7 +229,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	}
 
 	[self maybeToggleFullscreenAfterLaunch];
-	
+
+	/* Copy other resources. */
 	[TPCResourceManager copyResourcesToCustomAddonsFolder];
 }
 
