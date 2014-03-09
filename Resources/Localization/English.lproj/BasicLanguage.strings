@@ -69,6 +69,22 @@
 "TDCPreferencesController[1002][1]" = "Are you sure you wish to continue?";
 "TDCPreferencesController[1002][2]" = "Selecting \"Continue\" will erase all data stored by Textual on iCloud related to shared preferences.\n\nPlease keep in mind that if any other copy of Textual is still configured for sharing, then the data you just erased may be placed back on iCloud by the device running that copy.";
 
+"TDCPreferencesController[1003]" = "No Log Location Selected";
+"TDCPreferencesController[1004]" = "No Location Selected";
+
+"TDCPreferencesController[1005]" = "Growl is running. Notifications will be forwarded to it.";
+"TDCPreferencesController[1006]" = "Notifications will be posted using Notification Center.";
+"TDCPreferencesController[1007]" = "Growl is not running. Notifications will not be posted."; /* For Lion. It does not have NC. */
+
+"TDCPreferencesController[1008]" = "Make Local Copy";
+"TDCPreferencesController[1009]" = "Copy to iCloud";
+
+"TDCPreferencesController[1010]" = "The style being opened is a read-only version bundled with Textual.\n\nWould you like to create a local copy of it?\n\nIt will become the selected style and can then be modified.";
+"TDCPreferencesController[1011]" = "The style being opened is a read-only version bundled with Textual.\n\nWould you like to create a copy of it in your iCloud folder?\n\nIt will become the selected style and can then be modified across all shared devices.";
+"TDCPreferencesController[1012]" = "The style being opened is only available on this device.\n\nWould you like to create a copy of it in your iCloud folder?\n\nIt will become the selected style and will then be available across all shared devices.";
+
+"TDCPreferencesController[1013]" = "Resource Files";
+
 /* Final transfer dialog. */
 "TDCFileTransferDialog[1000][1]" = "%1$@ of %2$@ (%3$@/s) sent to %4$@";
 "TDCFileTransferDialog[1000][2]" = "%1$@ of %2$@ (%3$@/s) sent to %4$@ — %5$@ remaining";
@@ -107,6 +123,7 @@
 /* Application terminating confirmation dialog. */
 "BasicLanguage[1000][1]" = "Quitting will disconnect you from any IRC server that you are connected to until you restart Textual.";
 "BasicLanguage[1000][2]" = "Do you want to quit Textual?";
+"BasicLanguage[1000][3]" = "Quit";
 
 /* Basic encryption related localizations. */
 "BasicLanguage[1001]" = "Encryption of message failed; not sending to server.";
@@ -385,91 +402,92 @@
 "BasicLanguage[1176]" = "————————————— End Raw Mode Session —————————————";
 "BasicLanguage[1177]" = "————————————— Begin Raw Mode Session —————————————";
 
+/* Log file session headers. */
+"BasicLanguage[1178]" = "————————————— Begin Session —————————————";
+"BasicLanguage[1179]" = "————————————— End Session —————————————";
+
+/* Preferences file import/export. */
+"BasicLanguage[1180]" = "Please select the location in which to save the file.\n\nIMPORTANT: The file that will be saved does not contain passwords\nas those are considered sensitive information. It also does not include\nany custom addons such as scripts and styles.";
+
+"BasicLanguage[1181][1]" = "Import Preferences";
+"BasicLanguage[1181][2]" = "Please take note that the following preferences cannot be imported:\n\n    • Passwords\n    • Log location\n    • File transfer download location\n    • Any custom addons. Styles or scripts.\n\nAll other preferences will apply immediately.";
+"BasicLanguage[1181][3]" = "Select File";
+
+/* No button for dialogs. */
+"BasicLanguage[1182]" = "No";
+
+/* Channel list navigation menu entries.*/
+"BasicLanguage[1183]" = "%@";
+"BasicLanguage[1184]" = "   %@";
+
+/* Default sleep message. */
+"BasicLanguage[1185]" = "My %@ has gone to sleep. ZZZzzz…";
+
+/* Ok button for dialogs. */
+"BasicLanguage[1186]" = "OK";
+
+/* Custom addon installer messages. */
+"BasicLanguage[1187][1]" = "Install Custom Script";
+"BasicLanguage[1187][2]" = "Select the folder named \"%@\" to install this script within.\nIf this folder does not exist, then create it. No other folder name can be used.";
+
+"BasicLanguage[1188][1]" = "New Script Installed";
+"BasicLanguage[1188][2]" = "The script \"%@\" has been successfully installed and is now available for usage.";
+
+"BasicLanguage[1189][1]" = "New Extension Installed";
+"BasicLanguage[1189][2]" = "The extension \"%@\" has been successfully installed. The services defined by this extension will be available the next time Textual launches.";
+
+"BasicLanguage[1190][1]" = "Incompatiable System Version";
+"BasicLanguage[1190][2]" = "A file that you are trying to install cannot be used on this version of Mac OS X.";
+
+"BasicLanguage[1191][1]" = "Install Script?";
+"BasicLanguage[1191][2]" = "Would you like to install the script named \"%@\" so that it can be used by Textual?";
+
+"BasicLanguage[1192][1]" = "Install Extension?";
+"BasicLanguage[1192][2]" = "Would you like to install the extension named \"%@\" so that it can be used by Textual?";
+
+/* Misc. error. */
+"BasicLanguage[1193]" = "Error: The command %@ is shared by both a script and plugin. Sending to server because of inability to determine priority.";
+
+/* Default suppression message for prompts. */
+"BasicLanguage[1194]" = "Do not show this message again";
+
+/* Script execution error message. */
+"BasicLanguage[1195]" = "Script Execution Failure: %@";
+"BasicLanguage[1196]" = "Script Execution Failure (%1$@: %2$@): %3$@";
+
+/* Good thing to catch… */
+"BasicLanguage[1197]" = "Textual has prevented you from banning yourself on %@.";
+
+/* Server delete dialog. */
+"BasicLanguage[1198][1]" = "Do you want to delete the selection?";
+"BasicLanguage[1198][2]" = "There is no undo and all data related to this server, except for logs, will be erased.";
+"BasicLanguage[1198][3]" = "There is no undo and all data related to this server held on this device and shared with iCloud, except for logs, will be erased.\n\nOpen Server Properties and select \"Do not share with other devices using iCloud\" to stop this server from being erased on all shared devices.";
+
+/* Misc. error. */
+"BasicLanguage[1199]" = "Failed to send data to server. Not connected.";
+
+/* Server specific highlight entry things. */
+"BasicLanguage[1200]" = "All Channels";
+"BasicLanguage[1201]" = "Exclude";
+"BasicLanguage[1202]" = "Match";
+
+/* Server properties navigation menu. */
+"BasicLanguage[1203][01]" = "Channel List";
+"BasicLanguage[1203][02]" = "Connect Commands";
+"BasicLanguage[1203][03]" = "Encoding";
+"BasicLanguage[1203][04]" = "Flood Control";
+"BasicLanguage[1203][05]" = "General";
+"BasicLanguage[1203][06]" = "Identity";
+"BasicLanguage[1203][07]" = "Address Book";
+"BasicLanguage[1203][08]" = "Messages";
+"BasicLanguage[1203][09]" = "Miscellaneous";
+"BasicLanguage[1203][10]" = "Proxy Server";
+"BasicLanguage[1203][11]" = "SSL Certificate";
+"BasicLanguage[1203][12]" = "Mentions";
+"BasicLanguage[1203][13]" = "Network Socket";
+"BasicLanguage[1203][14]" = "ZNC Bouncer";
+
 /* Old items. */
-"NoLogLocationDefinedMenuItem" = "No Log Location Selected";
-
-"NoFileTransferDownloadDestinationFolderDefinedMenuItem" = "No Location Selected";
-
-"LogFileBeginOfSessionHeader" = "————————————— Begin Session —————————————";
-"LogFileEndOfSessionHeader" = "————————————— End Session —————————————";
-
-"PreferencesExportSaveLocationDialogMessage" = "Please select the location in which to save the file.\n\nIMPORTANT: The file that will be saved does not contain passwords\nas those are considered sensitive information. It also does not include\nany custom addons such as scripts and styles.";
-
-"PreferencesImportPreflightDialogTitle" = "Import Preferences";
-"PreferencesImportPreflightDialogMessage" = "Please take note that the following preferences cannot be imported:\n\n    • Passwords.\n    • Log location.\n    • Any custom addons. Styles or scripts.\n\nAll other preferences will apply immediately.";
-"PreferencesImportPreflightDialogSelectFileButton" = "Select File";
-
-"PreferencesAlertSettingsGrowlIsDestination" = "Growl is running. Notifications will be forwarded to it.";
-"PreferencesAlertSettingsNotificationCenterIsDestination" = "Notifications will be posted using Notification Center.";
-"PreferencesAlertSettingsNoDestinationForNotifications" = "Growl is not running. Notifications will not be posted."; /* For Lion. It does not have NC. */
-
-"NoButton" = "No";
-
-"NavigationChannelListClientEntryTitle" = "%@";
-"NavigationChannelListChannelEntryTitle" = "   %@";
-
-"OSXGoingToSleepQuitMessage" = "My %@ has gone to sleep. ZZZzzz…";
-
-"OkButton" = "OK";
-
-"ResourcesFileImportScriptSaveDialogTitle" = "Install Custom Script";
-"ResourcesFileImportScriptSaveDialogMessage" = "Select the folder named \"%@\" to install this script within.\nIf this folder does not exist, then create it. No other folder name can be used.";
-
-"ResourcesFileImportScriptInstallSuccessDialogTitle" = "New Script Installed";
-"ResourcesFileImportScriptInstallSuccessDialogMessage" = "The script \"%@\" has been successfully installed and is now available for usage.";
-
-"ResourcesFileImportBundleInstallSuccessDialogTitle" = "New Extension Installed";
-"ResourcesFileImportBundleInstallSuccessDialogMessage" = "The extension \"%@\" has been successfully installed. The services defined by this extension will be available the next time Textual launches.";
-
-"ResourcesFileImportSystemVersionErrorDialogTitle" = "Incompatiable System Version";
-"ResourcesFileImportSystemVersionErrorDialogMessage" = "A file that you are trying to install cannot be used on this version of Mac OS X.";
-
-"OpeningLocalStyleResourcesNormalCopyButton" = "Make Local Copy";
-"OpeningLocalStyleResourcesCloudCopyButton" = "Copy to iCloud";
-"OpeningLocalStyleResourcesNormalMessage" = "The style being opened is a read-only version bundled with Textual.\n\nWould you like to create a local copy of it?\n\nIt will become the selected style and can then be modified.";
-"OpeningLocalStyleResourcesCloudMessage" = "The style being opened is a read-only version bundled with Textual.\n\nWould you like to create a copy of it in your iCloud folder?\n\nIt will become the selected style and can then be modified across all shared devices.";
-
-"OpeningLocalCustomStyleResourcesCloudMessage" = "The style being opened is only available on this device.\n\nWould you like to create a copy of it in your iCloud folder?\n\nIt will become the selected style and will then be available across all shared devices.";
-
-"OpeningLocalStyleResourcesTitle" = "Resource Files";
-
-"PluginCommandClashErrorMessage" = "Error: The command %@ is shared by both a script and plugin. Sending to server because of inability to determine priority.";
-
-"PromptSuppressionButtonDefaultTitle" = "Do not show this message again";
-
-"QuitButton" = "Quit";
-
-"ScriptExecutionFailureBasic" = "Script Execution Failure: %@";
-"ScriptExecutionFailureDetailed" = "Script Execution Failure (%1$@: %2$@): %3$@";
-
-"SelfBanDetectedMessage" = "Textual has prevented you from banning yourself on %@.";
-
-"ServerDeletePromptNormalMessage" = "There is no undo and all data related to this server, except for logs, will be erased.";
-"ServerDeletePromptCloudMessage" = "There is no undo and all data related to this server held on this device and shared with iCloud, except for logs, will be erased.\n\nOpen Server Properties and select \"Do not share with other devices using iCloud\" to stop this server from being erased on all shared devices.";
-
-"ServerDeletePromptTitle" = "Do you want to delete the selection?";
-
-"ServerNotConnectedLineSendError" = "Failed to send data to server. Not connected.";
-
-"ServerSheetHighlightListTableAllChannels" = "All Channels";
-"ServerSheetHighlightListTableExcludeEntry" = "Exclude";
-"ServerSheetHighlightListTableIncludeEntry" = "Match";
-
-"ServerSheetAutojoinNavigationTreeItem"	= "Channel List";
-"ServerSheetCommandsNavigationTreeItem"	= "Connect Commands";
-"ServerSheetEncodingNavigationTreeItem"	= "Encoding";
-"ServerSheetFloodControlNavigationTreeItem"	= "Flood Control";
-"ServerSheetGeneralNavigationTreeItem" = "General";
-"ServerSheetIdentityNavigationTreeItem"	= "Identity";
-"ServerSheetIgnoresNavigationTreeItem" = "Address Book";
-"ServerSheetMessageNavigationTreeItem" = "Messages";
-"ServerSheetMiscNavigationTreeItem" = "Miscellaneous";
-"ServerSheetProxyNavigationTreeItem" = "Proxy Server";
-"ServerSheetSSLCertificateNavigationTreeItem" = "SSL Certificate";
-"ServerSheetMentionsNavigationTreeItem" = "Mentions";
-"ServerSheetNetworkNavigationTreeItem" = "Network Socket";
-"ServerSheetZNCBouncerNavigationTreeItem" = "ZNC Bouncer";
-
 "ServerSheetAddressBookAdditionMenuAddIgnore" = "Add User Ignore Entry";
 "ServerSheetAddressBookAdditionMenuAddTracker" = "Add User Tracking Entry";
 

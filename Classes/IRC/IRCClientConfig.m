@@ -107,7 +107,7 @@
 		self.realname = [TPCPreferences defaultRealname];
 		
 		self.normalLeavingComment		= TXTLS(@"BasicLanguage[1021]");
-		self.sleepModeLeavingComment	= TXTFLS(@"OSXGoingToSleepQuitMessage", [CSFWSystemInformation systemModelName]);
+		self.sleepModeLeavingComment	= TXTFLS(@"BasicLanguage[1185]", [CSFWSystemInformation systemModelName]);
 	}
 	
 	return self;

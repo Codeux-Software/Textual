@@ -548,7 +548,7 @@
 
 	for (IRCClient *u in self.worldController.clients) {
 		/* Create a menu item for the client title. */
-		NSMenuExtendedHelperItem *newItem = [NSMenuExtendedHelperItem menuItemWithTitle:TXTFLS(@"NavigationChannelListClientEntryTitle", u.name) target:nil action:nil];
+		NSMenuExtendedHelperItem *newItem = [NSMenuExtendedHelperItem menuItemWithTitle:TXTFLS(@"BasicLanguage[1183]", u.name) target:nil action:nil];
 
 		[self.navigationChannelList addItem:newItem];
 
@@ -556,7 +556,7 @@
 		for (IRCChannel *c in u.channels) {
 			/* Create the menu item. Only first ten items get a key combo. */
 			if (channelCount >= 10) {
-				newItem = [NSMenuExtendedHelperItem menuItemWithTitle:TXTFLS(@"NavigationChannelListChannelEntryTitle", c.name)
+				newItem = [NSMenuExtendedHelperItem menuItemWithTitle:TXTFLS(@"BasicLanguage[1184]", c.name)
 																target:self
 																action:@selector(navigateToSpecificChannelInNavigationList:)];
 			} else {
@@ -566,7 +566,7 @@
 					keyboardIndex = 0; // Have 0 as the last item.
 				}
 				
-				newItem = [NSMenuExtendedHelperItem menuItemWithTitle:TXTFLS(@"NavigationChannelListChannelEntryTitle", c.name)
+				newItem = [NSMenuExtendedHelperItem menuItemWithTitle:TXTFLS(@"BasicLanguage[1184]", c.name)
 																target:self
 																action:@selector(navigateToSpecificChannelInNavigationList:)
 														 keyEquivalent:[NSString stringWithUniChar:('0' + keyboardIndex)]
@@ -1146,19 +1146,19 @@
 		return;
 	}
 	
-	NSString *warningToken = @"ServerDeletePromptNormalMessage";
+	NSString *warningToken = @"BasicLanguage[1198][2]";
 	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if ([TPCPreferences syncPreferencesToTheCloud]) {
 		if (u.config.excludedFromCloudSyncing == NO) {
-			warningToken = @"ServerDeletePromptCloudMessage";
+			warningToken = @"BasicLanguage[1198][3]";
 		}
 	}
 #endif
 	
 	BOOL result = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(warningToken)
-													  title:TXTLS(@"ServerDeletePromptTitle")
-											  defaultButton:TXTLS(@"OkButton") 
+													  title:TXTLS(@"BasicLanguage[1198][1]")
+											  defaultButton:TXTLS(@"BasicLanguage[1186]")
 											alternateButton:TXTLS(@"BasicLanguage[1009]")
 											 suppressionKey:nil
 											suppressionText:nil];
@@ -1430,7 +1430,7 @@
 	if (_isChannel) {
 		BOOL result = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1010][1]")
 														  title:TXTLS(@"BasicLanguage[1010][2]") 
-												  defaultButton:TXTLS(@"OkButton") 
+												  defaultButton:TXTLS(@"BasicLanguage[1186]")
 												alternateButton:TXTLS(@"BasicLanguage[1009]")
 												 suppressionKey:@"delete_channel"
 												suppressionText:nil];
@@ -1999,7 +1999,7 @@
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
         if ([m.nickname isEqualIgnoringCase:u.localNickname]) {
-            [u printDebugInformation:TXTFLS(@"SelfBanDetectedMessage", [u networkAddress]) channel:c];
+            [u printDebugInformation:TXTFLS(@"BasicLanguage[1197]", [u networkAddress]) channel:c];
         } else {
             [u sendCommand:[NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("gline"), m.nickname, [TPCPreferences IRCopDefaultGlineMessage]]];
         }
@@ -2093,7 +2093,7 @@
 	} else {
 		[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1110][2]")
 											title:TXTLS(@"BasicLanguage[1110][1]")
-									defaultButton:TXTLS(@"OkButton") 
+									defaultButton:TXTLS(@"BasicLanguage[1186]")
 								  alternateButton:nil
 								   suppressionKey:nil
 								  suppressionText:nil];
@@ -2116,7 +2116,7 @@
 	} else {
 		[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1110][2]")
 											title:TXTLS(@"BasicLanguage[1110][1]")
-									defaultButton:TXTLS(@"OkButton")
+									defaultButton:TXTLS(@"BasicLanguage[1186]")
 								  alternateButton:nil
 								   suppressionKey:nil
 								  suppressionText:nil];
@@ -2160,7 +2160,7 @@
 	TVCInputPromptDialog *dialog = [TVCInputPromptDialog new];
 
 	[dialog alertWithMessageTitle:TXTLS(@"SetUserVhostPromptTitle")
-					defaultButton:TXTLS(@"OkButton")
+					defaultButton:TXTLS(@"BasicLanguage[1186]")
 				  alternateButton:TXTLS(@"BasicLanguage[1009]")
 				  informativeText:TXTLS(@"SetUserVhostPromptMessage")
 				 defaultUserInput:nil

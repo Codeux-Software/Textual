@@ -119,7 +119,7 @@
 	}
 
 	if (NSObjectIsEmpty(suppressText)) {
-		suppressText = TXTLS(@"PromptSuppressionButtonDefaultTitle");
+		suppressText = TXTLS(@"BasicLanguage[1194]");
 	}
 
 	BOOL isForcedSuppression = [suppressText isEqualToString:TXPopupPromptSpecialSuppressionTextValue];
@@ -185,7 +185,7 @@
 	}
 
 	if (NSObjectIsEmpty(suppressText)) {
-		suppressText = TXTLS(@"PromptSuppressionButtonDefaultTitle");
+		suppressText = TXTLS(@"BasicLanguage[1194]");
 	}
 
 	BOOL isForcedSuppression = [suppressText isEqualToString:TXPopupPromptSpecialSuppressionTextValue];
