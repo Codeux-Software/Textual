@@ -110,20 +110,32 @@
 - (void)performImportOfPluginFile:(NSURL *)url
 {
 	PointerIsEmptyAssert(url);
-	
+
 	/* Establish install path. */
-	NSString *filename = [url lastPathComponent];
-	
-	NSString *newPath = [[TPCPreferences customExtensionFolderPath] stringByAppendingPathComponent:filename];
-	
+	NSString *filenamewiext = [url lastPathComponent];
+	NSString *filenamewoext = [filenamewiext stringByDeletingPathExtension];
+
+	/* Ask user before installing. */
+	BOOL performInstall = [TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"BasicLanguage[1192][2]", filenamewoext)
+															  title:TXTLS(@"BasicLanguage[1192][1]")
+													  defaultButton:TXTLS(@"BasicLanguage[1182]")
+													alternateButton:TXTLS(@"YesButton")
+													 suppressionKey:nil
+													suppressionText:nil];
+
+	/* YES == No in dialog. */
+	if (performInstall) {
+		return; // Do not install.
+	}
+
 	/* Try to import. */
+	NSString *newPath = [[TPCPreferences customExtensionFolderPath] stringByAppendingPathComponent:filenamewiext];
+
 	BOOL didImport = [self import:url into:[NSURL fileURLWithPath:newPath]];
 	
 	/* Was it successful? */
 	if (didImport) {
-		filename = [filename stringByDeletingPathExtension];
-		
-		[TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"BasicLanguage[1189][2]", filename)
+		[TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"BasicLanguage[1189][2]", filenamewoext)
 											title:TXTLS(@"BasicLanguage[1189][1]")
 									defaultButton:TXTLS(@"BasicLanguage[1186]")
 								  alternateButton:nil
@@ -137,6 +149,23 @@
 
 - (void)performImportOfScriptFile:(NSURL *)url
 {
+	/* Establish install path. */
+	NSString *filenamewiext = [url lastPathComponent];
+	NSString *filenamewoext = [filenamewiext stringByDeletingPathExtension];
+
+	/* Ask user before installing. */
+	BOOL performInstall = [TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"BasicLanguage[1191][2]", filenamewoext)
+															  title:TXTLS(@"BasicLanguage[1191][1]")
+													  defaultButton:TXTLS(@"BasicLanguage[1182]")
+													alternateButton:TXTLS(@"YesButton")
+													 suppressionKey:nil
+													suppressionText:nil];
+
+	/* YES == No in dialog. */
+	if (performInstall) {
+		return; // Do not install.
+	}
+
 	/* Scripts can only be Mountain Lion or later. */
 	if ([TPCPreferences featureAvailableToOSXMountainLion] == NO) {
 		[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1190][2]")
@@ -168,8 +197,10 @@
 	/* Show save panel to user. */
 	[d setCanCreateDirectories:YES];
 	[d setDirectoryURL:folderRep];
+
 	[d setTitle:TXTLS(@"BasicLanguage[1187][1]")];
 	[d setMessage:TXTFLS(@"BasicLanguage[1187][2]", [TPCPreferences applicationBundleIdentifier])];
+
 	[d setNameFieldStringValue:[url lastPathComponent]];
 	
 #ifdef TXSystemIsMacOSMavericksOrNewer
@@ -181,9 +212,9 @@
 	/* Complete the import. */
 	[d beginWithCompletionHandler:^(NSInteger returnCode) {
 		if (returnCode == NSOKButton) {
-			if ([self import:url into:d.URL]) {
+			if ([self import:url into:[d URL]]) {
 				/* Script was successfully installed. */
-				NSString *filename = [d.URL.lastPathComponent stringByDeletingPathExtension];
+				NSString *filename = [[[d URL] lastPathComponent] stringByDeletingPathExtension];
 	
 				/* Perform after a delay to allow sheet to close. */
 				[self performSelector:@selector(performImportOfScriptFilePostflight:) withObject:filename afterDelay:0.5];
