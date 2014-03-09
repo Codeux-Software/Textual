@@ -1177,7 +1177,7 @@
 - (void)sendLine:(NSString *)str
 {
 	if (self.isConnected == NO) {
-		return [self printDebugInformationToConsole:TXTLS(@"ServerNotConnectedLineSendError")];
+		return [self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1199]")];
 	}
 
 	[self.socket sendLine:str];
@@ -2700,7 +2700,7 @@
 
 			/* Perform script or plugin. */
 			if (pluginFound && scriptFound) {
-				LogToConsole(TXTLS(@"PluginCommandClashErrorMessage"), uppercaseCommand);
+				LogToConsole(TXTLS(@"BasicLanguage[1193]"), uppercaseCommand);
 			} else {
 				if (pluginFound) {
 					[self processBundlesUserMessage:uncutInput command:lowercaseCommand];
@@ -2768,10 +2768,10 @@
 
 - (void)logFileRecordSessionChanges:(BOOL)newSession /* @private */
 {
-	NSString *langkey = @"LogFileBeginOfSessionHeader";
+	NSString *langkey = @"BasicLanguage[1178]";
 
 	if (newSession == NO) {
-		langkey = @"LogFileEndOfSessionHeader";
+		langkey = @"BasicLanguage[1179]";
 	}
 
 	TVCLogLine *top = [TVCLogLine newManagedObjectWithoutContextAssociation];
@@ -4645,7 +4645,7 @@
                                    body:TXTLS(@"BasicLanguage[1041][2]")
                                   title:TXTLS(@"BasicLanguage[1041][1]")
                           defaultButton:TXTLS(@"YesButton")
-                        alternateButton:TXTLS(@"NoButton")
+                        alternateButton:TXTLS(@"BasicLanguage[1182]")
                             otherButton:TXTLS(@"BasicLanguage[1041][3]")
                          suppressionKey:nil
                         suppressionText:nil];
@@ -6397,10 +6397,10 @@
 	}
 
 	if (devmode) {
-		[self printDebugInformation:TXTFLS(@"ScriptExecutionFailureDetailed", script, scriptInput, errord)];
+		[self printDebugInformation:TXTFLS(@"BasicLanguage[1196]", script, scriptInput, errord)];
 	}
 
-	LogToConsole(TXTLS(@"ScriptExecutionFailureBasic"), errorb);
+	LogToConsole(TXTLS(@"BasicLanguage[1195]"), errorb);
 }
 
 - (void)postTextualCmdScriptResult:(NSString *)resultString to:(NSString *)destination

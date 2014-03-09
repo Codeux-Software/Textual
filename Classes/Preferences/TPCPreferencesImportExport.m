@@ -53,9 +53,9 @@
 	[prompt sheetWindowWithQuestion:self.masterController.mainWindow
 							 target:self
 							 action:@selector(importPreflight:withOriginalAlert:)
-							   body:TXTLS(@"PreferencesImportPreflightDialogMessage")
-							  title:TXTLS(@"PreferencesImportPreflightDialogTitle")
-					  defaultButton:TXTLS(@"PreferencesImportPreflightDialogSelectFileButton")
+							   body:TXTLS(@"BasicLanguage[1181][2]")
+							  title:TXTLS(@"BasicLanguage[1181][1]")
+					  defaultButton:TXTLS(@"BasicLanguage[1181][3]")
 					alternateButton:TXTLS(@"BasicLanguage[1009]")
 						otherButton:nil
 					 suppressionKey:nil
@@ -348,7 +348,7 @@
 	[d setCanCreateDirectories:YES];
 	[d setNameFieldStringValue:@"TextualPrefrences.plist"];
 
-	[d setMessage:TXTLS(@"PreferencesExportSaveLocationDialogMessage")];
+	[d setMessage:TXTLS(@"BasicLanguage[1180]")];
 
 	[d beginWithCompletionHandler:^(NSInteger returnCode) {
 		if (returnCode == NSOKButton) {

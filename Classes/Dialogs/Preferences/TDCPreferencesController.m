@@ -217,9 +217,9 @@
 		[self.alertToolbarItem setImage:[NSImage imageNamed:@"TPWTB_Alerts"]];
 
 		if (growlRunning) {
-			self.alertNotificationDestinationTextField.stringValue = TXTFLS(@"PreferencesAlertSettingsGrowlIsDestination");
+			self.alertNotificationDestinationTextField.stringValue = TXTFLS(@"TDCPreferencesController[1005]");
 		} else {
-			self.alertNotificationDestinationTextField.stringValue = TXTFLS(@"PreferencesAlertSettingsNoDestinationForNotifications");
+			self.alertNotificationDestinationTextField.stringValue = TXTFLS(@"TDCPreferencesController[1007]");
 
 		}
 	} else {
@@ -227,7 +227,7 @@
 
 		[self.alertToolbarItem setImage:[NSImage imageNamed:@"TPWTB_Alerts_NC"]];
 		
-		self.alertNotificationDestinationTextField.stringValue = TXTFLS(@"PreferencesAlertSettingsNotificationCenterIsDestination");
+		self.alertNotificationDestinationTextField.stringValue = TXTFLS(@"TDCPreferencesController[1006]");
 	}
 
 	/* Extensions. */
@@ -616,7 +616,7 @@
 	NSMenuItem *item = [self.fileTransferDownloadDestinationButton itemAtIndex:0];
 	
 	if (NSObjectIsEmpty(path)) {
-		[item setTitle:TXTLS(@"NoFileTransferDownloadDestinationFolderDefinedMenuItem")];
+		[item setTitle:TXTLS(@"TDCPreferencesController[1004]")];
 		
 		[item setImage:nil];
 	} else {
@@ -687,7 +687,7 @@
 	NSMenuItem *item = [self.transcriptFolderButton itemAtIndex:0];
 
 	if (NSObjectIsEmpty(path)) {
-		[item setTitle:TXTLS(@"NoLogLocationDefinedMenuItem")];
+		[item setTitle:TXTLS(@"TDCPreferencesController[1003]")];
 		
 		[item setImage:nil];
 	} else {
@@ -920,7 +920,7 @@
 							 action:@selector(popupPromptNilSelector:withOriginalAlert:)
 							   body:TXTFLS(@"ThemeChangeOverridePromptMessage", item.title, tsf)
 							  title:TXTLS(@"ThemeChangeOverridePromptTitle")
-					  defaultButton:TXTLS(@"OkButton")
+					  defaultButton:TXTLS(@"BasicLanguage[1186]")
 					alternateButton:nil
 						otherButton:nil
 					 suppressionKey:@"theme_override_info"
@@ -1084,7 +1084,7 @@
 								action:@selector(popupPromptNilSelector:withOriginalAlert:)
 								  body:TXTLS(@"BasicLanguage[1102][2]")
 								 title:TXTLS(@"BasicLanguage[1102][1]")
-						 defaultButton:TXTLS(@"OkButton")
+						 defaultButton:TXTLS(@"BasicLanguage[1186]")
 					   alternateButton:nil
 						   otherButton:nil
 						suppressionKey:nil
@@ -1118,7 +1118,7 @@
 								action:@selector(popupPromptNilSelector:withOriginalAlert:)
 								  body:TXTLS(@"TDCPreferencesController[1000][2]")
 								 title:TXTLS(@"TDCPreferencesController[1000][1]")
-						 defaultButton:TXTLS(@"OkButton")
+						 defaultButton:TXTLS(@"BasicLanguage[1186]")
 					   alternateButton:nil
 						   otherButton:nil
 						suppressionKey:nil
@@ -1298,13 +1298,13 @@
     if ([self.themeController isBundledTheme]) {
 		TLOPopupPrompts *prompt = [TLOPopupPrompts new];
 
-		NSString *dialogMessage = @"OpeningLocalStyleResourcesNormalMessage";
-		NSString *copyButton = @"OpeningLocalStyleResourcesNormalCopyButton";
+		NSString *dialogMessage = @"TDCPreferencesController[1010]";
+		NSString *copyButton = @"TDCPreferencesController[1008]";
 		
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 		if ([self.masterController.cloudSyncManager ubiquitousContainerIsAvailable]) {
-			dialogMessage = @"OpeningLocalStyleResourcesCloudMessage";
-			copyButton = @"OpeningLocalStyleResourcesCloudCopyButton";
+			dialogMessage = @"TDCPreferencesController[1011]";
+			copyButton = @"TDCPreferencesController[1009]";
 		}
 #endif
 		
@@ -1312,7 +1312,7 @@
 								 target:self
 								 action:@selector(openPathToThemesCallback:withOriginalAlert:)
 								   body:TXTLS(dialogMessage)
-								  title:TXTLS(@"OpeningLocalStyleResourcesTitle")
+								  title:TXTLS(@"TDCPreferencesController[1013]")
 						  defaultButton:TXTLS(@"BasicLanguage[1017]")
 						alternateButton:TXTLS(@"BasicLanguage[1009]")
 							otherButton:TXTLS(copyButton)
@@ -1332,11 +1332,11 @@
 				[prompt sheetWindowWithQuestion:[NSApp keyWindow]
 										 target:self
 										 action:@selector(openPathToThemesCallback:withOriginalAlert:)
-										   body:TXTLS(@"OpeningLocalCustomStyleResourcesCloudMessage")
-										  title:TXTLS(@"OpeningLocalStyleResourcesTitle")
+										   body:TXTLS(@"TDCPreferencesController[1012]")
+										  title:TXTLS(@"TDCPreferencesController[1013]")
 								  defaultButton:TXTLS(@"BasicLanguage[1017]")
 								alternateButton:TXTLS(@"BasicLanguage[1009]")
-									otherButton:TXTLS(@"OpeningLocalStyleResourcesCloudCopyButton")
+									otherButton:TXTLS(@"TDCPreferencesController[1009]")
 								 suppressionKey:nil
 								suppressionText:nil];
 				
@@ -1354,7 +1354,7 @@
 										 action:@selector(popupPromptNilSelector:withOriginalAlert:)
 										   body:TXTLS(@"BasicLanguage[1102][2]")
 										  title:TXTLS(@"BasicLanguage[1102][1]")
-								  defaultButton:TXTLS(@"OkButton")
+								  defaultButton:TXTLS(@"BasicLanguage[1186]")
 								alternateButton:nil
 									otherButton:nil
 								 suppressionKey:nil

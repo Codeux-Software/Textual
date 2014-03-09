@@ -1828,7 +1828,7 @@ static NSMutableArray *excludeKeywords = nil;
 								   body:TXTLS(@"SetAsDefaultIRCClientPromptMessage")
 								  title:TXTLS(@"SetAsDefaultIRCClientPromptTitle")
 						  defaultButton:TXTLS(@"YesButton")
-						alternateButton:TXTLS(@"NoButton")
+						alternateButton:TXTLS(@"BasicLanguage[1182]")
 							otherButton:nil
 						 suppressionKey:supkey
 						suppressionText:nil];

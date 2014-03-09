@@ -92,23 +92,23 @@
 
 	NSMutableArray *tabViewList = [NSMutableArray new];
 
-	[tabViewList addObject:@[@"Ignores",						@"1"]];
-	[tabViewList addObject:@[@"Autojoin",						@"2"]];
-	[tabViewList addObject:@[@"Commands",						@"3"]];
-	[tabViewList addObject:@[@"Encoding",						@"4"]];
-	[tabViewList addObject:@[@"General",						@"5"]];
-	[tabViewList addObject:@[@"Identity",						@"6"]];
-	[tabViewList addObject:@[@"Message",						@"7"]];
-	[tabViewList addObject:@[@"Mentions",						@"8"]];
+	[tabViewList addObject:@[@"07",	@"1"]];
+	[tabViewList addObject:@[@"01",	@"2"]];
+	[tabViewList addObject:@[@"02",	@"3"]];
+	[tabViewList addObject:@[@"03",	@"4"]];
+	[tabViewList addObject:@[@"05",	@"5"]];
+	[tabViewList addObject:@[@"06",	@"6"]];
+	[tabViewList addObject:@[@"08",	@"7"]];
+	[tabViewList addObject:@[@"12",	@"8"]];
 
 	if (includeAdvanced) {
 		[tabViewList addObject:@[TXDefaultListSeperatorCellIndex,	@"-"]];
-		[tabViewList addObject:@[@"ZNCBouncer",						@"9"]];
+		[tabViewList addObject:@[@"14",								@"9"]];
 		[tabViewList addObject:@[TXDefaultListSeperatorCellIndex,	@"-"]];
-		[tabViewList addObject:@[@"FloodControl",					@"10"]];
-		[tabViewList addObject:@[@"Network",						@"11"]];
-		[tabViewList addObject:@[@"Proxy",							@"12"]];
-		[tabViewList addObject:@[@"SSLCertificate",					@"13"]];
+		[tabViewList addObject:@[@"04",								@"10"]];
+		[tabViewList addObject:@[@"13",								@"11"]];
+		[tabViewList addObject:@[@"10",								@"12"]];
+		[tabViewList addObject:@[@"11",								@"13"]];
 	}
 
 	self.tabViewList = tabViewList;
@@ -743,7 +743,7 @@
 								action:@selector(toggleCloudSyncExclusionRequestDeletionCallback:withOriginalAlert:)
 								  body:TXTLS(@"TDCServerSheet[1002][2]")
 								 title:TXTLS(@"TDCServerSheet[1002][1]")
-						 defaultButton:TXTLS(@"NoButton")
+						 defaultButton:TXTLS(@"BasicLanguage[1182]")
 					   alternateButton:TXTLS(@"YesButton")
 						   otherButton:nil
 						suppressionKey:nil
@@ -756,7 +756,7 @@
 								action:@selector(popupPromptNilSelector:withOriginalAlert:)
 								  body:TXTLS(@"TDCServerSheet[1003][2]")
 								 title:TXTLS(@"TDCServerSheet[1003][1]")
-						 defaultButton:TXTLS(@"OkButton")
+						 defaultButton:TXTLS(@"BasicLanguage[1186]")
 					   alternateButton:nil
 						   otherButton:nil
 						suppressionKey:nil
@@ -1304,7 +1304,7 @@
         NSString *keyhead = [tabInfo safeObjectAtIndex:0];
         
         if ([keyhead isEqualToString:TXDefaultListSeperatorCellIndex] == NO) {
-            NSString *langkey = [NSString stringWithFormat:@"ServerSheet%@NavigationTreeItem", keyhead];
+            NSString *langkey = [NSString stringWithFormat:@"BasicLanguage[1203][%@]", keyhead];
             
             return TXTLS(langkey);
         } else {
@@ -1318,21 +1318,21 @@
 			return c.matchKeyword;
 		} else if ([columnId isEqualToString:@"channel"]) {
 			if (NSObjectIsEmpty(c.matchChannelID)) {
-				return TXTLS(@"ServerSheetHighlightListTableAllChannels");
+				return TXTLS(@"BasicLanguage[1200]");
 			} else {
 				IRCChannel *channel = [self.worldController findChannelByClientId:self.clientID channelId:c.matchChannelID];
 
 				if (channel) {
 					return channel.name;
 				} else {
-					return TXTLS(@"ServerSheetHighlightListTableAllChannels");
+					return TXTLS(@"BasicLanguage[1200]");
 				}
 			}
 		} else if ([columnId isEqualToString:@"type"]) {
 			if (c.matchIsExcluded) {
-				return TXTLS(@"ServerSheetHighlightListTableExcludeEntry");
+				return TXTLS(@"BasicLanguage[1201]");
 			} else {
-				return TXTLS(@"ServerSheetHighlightListTableIncludeEntry");
+				return TXTLS(@"BasicLanguage[1202]");
 			}
 		}
 	} else {

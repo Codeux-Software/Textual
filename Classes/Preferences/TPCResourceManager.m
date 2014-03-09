@@ -123,9 +123,9 @@
 	if (didImport) {
 		filename = [filename stringByDeletingPathExtension];
 		
-		[TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"ResourcesFileImportBundleInstallSuccessDialogMessage", filename)
-											title:TXTLS(@"ResourcesFileImportBundleInstallSuccessDialogTitle")
-									defaultButton:TXTLS(@"OkButton")
+		[TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"BasicLanguage[1189][2]", filename)
+											title:TXTLS(@"BasicLanguage[1189][1]")
+									defaultButton:TXTLS(@"BasicLanguage[1186]")
 								  alternateButton:nil
 								   suppressionKey:nil
 								  suppressionText:nil];
@@ -139,9 +139,9 @@
 {
 	/* Scripts can only be Mountain Lion or later. */
 	if ([TPCPreferences featureAvailableToOSXMountainLion] == NO) {
-		[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"ResourcesFileImportSystemVersionErrorDialogMessage")
-											title:TXTLS(@"ResourcesFileImportSystemVersionErrorDialogTitle")
-									defaultButton:TXTLS(@"OkButton")
+		[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1190][2]")
+											title:TXTLS(@"BasicLanguage[1190][1]")
+									defaultButton:TXTLS(@"BasicLanguage[1186]")
 								  alternateButton:nil
 								   suppressionKey:nil
 								  suppressionText:nil];
@@ -168,8 +168,8 @@
 	/* Show save panel to user. */
 	[d setCanCreateDirectories:YES];
 	[d setDirectoryURL:folderRep];
-	[d setTitle:TXTLS(@"ResourcesFileImportScriptSaveDialogTitle")];
-	[d setMessage:TXTFLS(@"ResourcesFileImportScriptSaveDialogMessage", [TPCPreferences applicationBundleIdentifier])];
+	[d setTitle:TXTLS(@"BasicLanguage[1187][1]")];
+	[d setMessage:TXTFLS(@"BasicLanguage[1187][2]", [TPCPreferences applicationBundleIdentifier])];
 	[d setNameFieldStringValue:[url lastPathComponent]];
 	
 #ifdef TXSystemIsMacOSMavericksOrNewer
@@ -194,9 +194,9 @@
 
 - (void)performImportOfScriptFilePostflight:(NSString *)filename
 {
-	[TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"ResourcesFileImportScriptInstallSuccessDialogMessage", filename)
-										title:TXTLS(@"ResourcesFileImportScriptInstallSuccessDialogTitle")
-								defaultButton:TXTLS(@"OkButton")
+	[TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"BasicLanguage[1188][2]", filename)
+										title:TXTLS(@"BasicLanguage[1188][1]")
+								defaultButton:TXTLS(@"BasicLanguage[1186]")
 							  alternateButton:nil
 							   suppressionKey:nil
 							  suppressionText:nil];
