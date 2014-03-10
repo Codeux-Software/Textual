@@ -770,7 +770,8 @@
 
 - (void)speakEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nick:(NSString *)nick text:(NSString *)text
 {
-	text = text.trim; // Do not leave spaces in text to be spoken.
+	text = [text trim]; // Do not leave spaces in text to be spoken.
+	text = [text stripIRCEffects]; // Do not leave formatting in text to be spoken.
 
 	NSString *formattedMessage;
 	
