@@ -30,8 +30,8 @@
 		[RZNotificationCenter() addObserver:self selector:@selector(webViewDidChangeFrame:) name:NSViewFrameDidChangeNotification object:nil];
 		[RZNotificationCenter() addObserver:self selector:@selector(webViewDidChangeBounds:) name:NSViewBoundsDidChangeNotification object:nil];
 		
-		self.lastFrame		 = [self.webFrame.documentView frame];
-		self.lastVisibleRect = [self.webFrame.documentView visibleRect];
+		self.lastFrame		 = [[self.webFrame documentView] frame];
+		self.lastVisibleRect = [[self.webFrame documentView] visibleRect];
 	} else {
 		[RZNotificationCenter() removeObserver:self name:NSViewFrameDidChangeNotification object:nil];
 		[RZNotificationCenter() removeObserver:self name:NSViewBoundsDidChangeNotification object:nil];

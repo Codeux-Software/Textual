@@ -40,12 +40,11 @@
 /* No plugins should be accessing this. */
 @class TVCLogControllerOperationItem;
 
-typedef void (^TVCLogControllerOperationBlock)(NSOperation *sender, NSDictionary *context);
+typedef void (^TVCLogControllerOperationBlock)(NSOperation *sender);
 
 @interface TVCLogControllerOperationQueue : NSOperationQueue
 /* Add new operations. */
 - (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender;
-- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender context:(NSDictionary *)context;
 
 /* Limit scope of cancelAllOperations. */
 - (void)destroyOperationsForChannel:(IRCChannel *)channel;
@@ -55,14 +54,4 @@ typedef void (^TVCLogControllerOperationBlock)(NSOperation *sender, NSDictionary
 
 /* Update state. */
 - (void)updateReadinessState:(TVCLogController *)controller;
-
-/* The block being executed is not declared finished until it actually tells the queue
- that it is done. The design behind this idea is deep. WebKit requires us to append on 
- the main thread but the blocks draw in the background. Once drawing is complete, we 
- execute the rest of the work on the main thread, but that work is not always instant.
- 
- By calilng this on the main thread after the work has completed instead of relying on
- the default implementation of isFinish we are making sure our queue can be concurrent
- but also keep stuff in sync. */
-- (void)updateCompletionStatusForOperation:(TVCLogControllerOperationItem *)operation;
 @end

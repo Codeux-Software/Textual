@@ -92,7 +92,7 @@
 
 - (BOOL)hasSelection
 {
-	return NSObjectIsNotEmpty(self.selection);
+	return NSObjectIsNotEmpty([self selection]);
 }
 
 - (NSString *)selection

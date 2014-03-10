@@ -351,6 +351,29 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	return self.dockMenu;
 }
 
+- (BOOL)isNotSafeToPerformApplicationTermination
+{
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	if (self.cloudSyncManager) {
+		return (
+				/* Clients are still disconnecting. */
+				self.terminatingClientCount > 0 ||
+
+				/* Historic log is still saving. */
+				[TVCLogControllerHistoricLogSharedInstance() isPerformingSave] ||
+
+				/* iCloud is syncing. */
+				([self.cloudSyncManager isSyncingLocalKeysDownstream] ||
+				 [self.cloudSyncManager isSyncingLocalKeysUpstream])
+		);
+	} else {
+		return (self.terminatingClientCount > 0 || [TVCLogControllerHistoricLogSharedInstance() isPerformingSave]);
+	}
+#else
+	return (self.terminatingClientCount > 0 || [TVCLogControllerHistoricLogSharedInstance() isPerformingSave]);
+#endif
+}
+
 - (void)applicationWillTerminate:(NSNotification *)note
 {
 	[RZWorkspaceNotificationCenter() removeObserver:self];
@@ -365,9 +388,9 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		[TVCLogControllerHistoricLogSharedInstance() saveData]; // Save database.
 	}
 
-	BOOL onMountainLionOrLater = [TPCPreferences featureAvailableToOSXMountainLion];
-	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	BOOL onMountainLionOrLater = [TPCPreferences featureAvailableToOSXMountainLion];
+
 	if (onMountainLionOrLater) {
 		[self.cloudSyncManager setApplicationIsTerminating:YES];
 	}
@@ -377,37 +400,22 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		[self saveWindowState];
 	}
 	
-	[self.menuController prepareForApplicationTermination];
+	[[self menuController] prepareForApplicationTermination];
 	
-	self.mainWindow.delegate = nil;
+	[self.mainWindow setDelegate:nil];
 
 	[RZRunningApplication() hide];
 
 	if (self.skipTerminateSave == NO) {
-		[self.worldController save];
+		[[self worldController] save];
 
-		self.terminatingClientCount = [self.worldController.clients count];
+		self.terminatingClientCount = [[[self worldController] clients] count];
 
-		[self.worldController prepareForApplicationTermination];
-		
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-			if (self.cloudSyncManager) {
-				while (self.terminatingClientCount > 0 || ([self.cloudSyncManager isSyncingLocalKeysDownstream] ||
-														   [self.cloudSyncManager isSyncingLocalKeysUpstream]))
-				{
-					[RZMainRunLoop() runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
-				}
-			} else {
-				while (self.terminatingClientCount > 0) {
-					[RZMainRunLoop() runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
-				}
-			}
-#else
-			while (self.terminatingClientCount > 0) {
-				[RZMainRunLoop() runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
-			}
-#endif
+		[[self worldController] prepareForApplicationTermination];
 
+		while ([self isNotSafeToPerformApplicationTermination]) {
+			[RZMainRunLoop() runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+		}
 	}
 	
 	[THOPluginManagerSharedInstance() unloadPlugins];

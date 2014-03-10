@@ -245,7 +245,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 						 becasue someone with nick "m" becoming "+m" might be confused
 						 for a mode symbol. Same could apply to - too, but I do not know
 						 of any network that uses that for status symbol. */
-						if ([user.nickname length] == 1) {
+						if ([[user nickname] length] == 1) {
 							if ([modeSymbol isEqualToString:@"+"]) {
 								modeSymbol = NSStringEmptyPlaceholder;
 							}
@@ -334,13 +334,13 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 	TVCLogLineType lineType = [inputDictionary integerForKey:@"lineType"];
 	
-	IRCClientConfig *clientConfig = [log.client config];
+	IRCClientConfig *clientConfig = [[log client] config];
 	
 	id highlightWords = [inputDictionary arrayForKey:@"highlightKeywords"];
 	id excludeWords = [inputDictionary arrayForKey:@"excludeKeywords"];
 
 	/* Only bother spending time creating a copy if we actually need them. */
-	if (clientConfig.highlightList.count >= 1) {
+	if ([[clientConfig highlightList] count] >= 1) {
 		highlightWords = [highlightWords mutableCopy];
 
 		excludeWords = [excludeWords mutableCopy];
@@ -353,7 +353,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	 each character based on what surrounds it in order to find formatting related to 
 	 bold, color, italics, and underline. */
 	
-	NSInteger length = body.length;
+	NSInteger length = [body length];
 	NSInteger start  = 0;
 	NSInteger n		 = 0;
 	
@@ -564,10 +564,10 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			for (TDCHighlightEntryMatchCondition *e in [clientConfig highlightList]) {
 				BOOL addKeyword = NO;
 
-				if (e.matchChannelID && [e.matchChannelID length] > 0) {
-					NSString *channelID = [log.channel.config itemUUID];
+				if ([e matchChannelID] && [[e matchChannelID] length] > 0) {
+					NSString *channelID = [[log channel] uniqueIdentifier];
 
-					if ([e.matchChannelID isEqualToString:channelID]) {
+					if ([[e matchChannelID] isEqualToString:channelID]) {
 						addKeyword = YES;
 					}
 				} else {
@@ -575,10 +575,10 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				}
 
 				if (addKeyword) {
-					if (e.matchIsExcluded) {
-						[excludeWords safeAddObjectWithoutDuplication:e.matchKeyword];
+					if ([e matchIsExcluded]) {
+						[excludeWords safeAddObjectWithoutDuplication:[e matchKeyword]];
 					} else {
-						[highlightWords safeAddObjectWithoutDuplication:e.matchKeyword];
+						[highlightWords safeAddObjectWithoutDuplication:[e matchKeyword]];
 					}
 				}
 			}
@@ -776,10 +776,10 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				for (IRCUser *user in sortedMembers) {
 					start = 0;
 
-					PointerIsEmptyAssertLoopContinue(user.nickname);
+					PointerIsEmptyAssertLoopContinue([user nickname]);
 
 					while (start < length) {
-						NSRange r = [body rangeOfString:user.nickname
+						NSRange r = [body rangeOfString:[user nickname]
 												options:NSCaseInsensitiveSearch
 												  range:NSMakeRange(start, (length - start))];
 
@@ -839,7 +839,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 								setFlag(attrBuf, _rendererConversationTrackerAttribute, r.location, r.length);
 
 								totalNicknameCount += 1;
-								totalNicknameLength += [user.nickname length];
+								totalNicknameLength += [[user nickname] length];
 
 								[mentionedUsers addObject:user];
 							}
@@ -893,11 +893,20 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		attr_t t = attrBuf[start];
 		
 		if (drawingType == TVCLogRendererAttributedStringType) {
-			result = [TVCLogRenderer renderAttributedRange:result attributes:t start:start length:n baseFont:attributedStringFont];
+			result = [TVCLogRenderer renderAttributedRange:result
+												attributes:t
+													 start:start
+													length:n
+												  baseFont:attributedStringFont];
 		} else {
-			NSString *renderedRange = [TVCLogRenderer renderRange:body attributes:t start:start length:n for:log context:resultInfo];
+			NSString *renderedRange = [TVCLogRenderer renderRange:body
+													   attributes:t
+															start:start
+														   length:n
+															  for:log
+														  context:resultInfo];
 
-			if (renderedRange.length > 0) {
+			if ([renderedRange length] > 0) {
 				[result appendString:renderedRange];
 			}
 		}
@@ -953,7 +962,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 {
     NSString *escaped = [TVCLogRenderer escapeString:s];
 
-    if (NSObjectIsEmpty(escaped)) {
+    if (escaped == nil) {
         return NSStringEmptyPlaceholder;
     }
 

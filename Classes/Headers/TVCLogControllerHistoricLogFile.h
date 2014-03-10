@@ -45,21 +45,16 @@
 + (TVCLogControllerHistoricLogFile *)sharedInstance;
 
 - (void)saveData;
-
-- (void)resetContext;
+- (BOOL)isPerformingSave;
 
 - (void)resetData;
 - (void)resetDataForEntriesMatchingClient:(IRCClient *)client inChannel:(IRCChannel *)channel;
 
-- (void)refreshObject:(id)object;
-
-- (void)processPendingChanges;
-
 /* fetchLimit: and afterDate: are optional. Supply either 0 or nil to skip. */
-/* The default fetchLimit is set to 1000 and reference date is 1/1/2001 */
+/* The default fetchLimit is set to 0 and reference date is 1/1/2001 */
 - (void)entriesForClient:(IRCClient *)client
 			   inChannel:(IRCChannel *)channel
-	 withCompletionBlock:(void (^)(NSArray *objects))completionBlock
 			  fetchLimit:(NSInteger)maxEntryCount
-			   afterDate:(NSDate *)referenceDate;
+			   afterDate:(NSDate *)referenceDate
+	 withCompletionBlock:(void (^)(NSArray *objects))completionBlock;
 @end

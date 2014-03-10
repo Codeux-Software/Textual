@@ -51,7 +51,7 @@
 	
 	NSEvent *currentEvent = [NSApp currentEvent];
 	
-	if ((currentEvent.modifierFlags & NSCommandKeyMask) == NSCommandKeyMask) {
+	if (([currentEvent modifierFlags] & NSCommandKeyMask) == NSCommandKeyMask) {
 		return;
 	}
 	
@@ -71,25 +71,25 @@
 
 - (void)channelDoubleClicked
 {
-	self.menuController.pointedChannelName = self.channelName;
+	[[self menuController] setPointedChannelName:self.channelName];
 
 	self.channelName = nil;
 	
-	[self.menuController joinClickedChannel:nil];
+	[[self menuController] joinClickedChannel:nil];
 }
 
 - (void)nicknameDoubleClicked
 {
-	self.menuController.pointedNickname = self.nickname;
+	[[self menuController] setPointedNickname:self.nickname];
 
 	self.nickname = nil;
 	
-	[self.menuController memberListDoubleClicked:nil];
+	[[self menuController] memberListDoubleClicked:nil];
 }
 
 - (void)topicDoubleClicked
 {
-    [self.menuController showChannelTopicDialog:nil];
+    [[self menuController] showChannelTopicDialog:nil];
 }
 
 - (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
@@ -99,32 +99,35 @@
 	NSMutableArray *ary = [NSMutableArray array];
 
 	/* Invalidate passed information if we are in console. */
-	TVCLogController *controller = self.worldController.selectedViewController;
+	TVCLogController *controller = [[self worldController] selectedViewController];
 	
-	if (PointerIsEmpty(controller.channel)) {
+	if (PointerIsEmpty([controller channel])) {
 		self.nickname = nil;
 	}
 	
-	if (self.anchorURL) {
-		self.menuController.pointedUrl = self.anchorURL;
+	if (self.anchorURL)
+	{
+		[[self menuController] setPointedUrl:self.anchorURL];
 		
 		self.anchorURL = nil;
 
-		NSMenu *urlMenu = self.masterController.tcopyURLMenu;
+		NSMenu *urlMenu = [[self masterController] tcopyURLMenu];
 		
 		for (NSMenuItem *item in [urlMenu itemArray]) {
 			[ary safeAddObject:[item copy]];
 		}
 		
 		return ary;
-	} else if (self.nickname) {
-		self.menuController.pointedNickname = self.nickname;
+	}
+	else if (self.nickname)
+	{
+		[[self menuController] setPointedNickname:self.nickname];
 
 		self.nickname = nil;
 
-		BOOL isIRCop = self.worldController.selectedClient.hasIRCopAccess;
+		BOOL isIRCop = [[[self worldController] selectedClient] hasIRCopAccess];
 
-		NSMenu *memberMenu = self.masterController.userControlMenu;
+		NSMenu *memberMenu = [[self masterController] userControlMenu];
 		
 		for (NSMenuItem *item in [memberMenu itemArray]) {
 			if ([item tag] == _WebMenuItemTagIRCopServices && isIRCop == NO) {
@@ -135,20 +138,24 @@
 		}
 		
 		return ary;
-	} else if (self.channelName) {
-		self.menuController.pointedChannelName = self.channelName;
+	}
+	else if (self.channelName)
+	{
+		[[self menuController] setPointedChannelName:self.channelName];
 		
 		self.channelName = nil;
 
-		NSMenu *chanMenu = self.masterController.joinChannelMenu;
+		NSMenu *chanMenu = [[self masterController] joinChannelMenu];
 		
 		for (NSMenuItem *item in [chanMenu itemArray]) {
 			[ary safeAddObject:[item copy]];
 		}
 		
 		return ary;
-	} else {
-		NSMenu *menu = self.masterController.channelViewMenu;;
+	}
+	else
+	{
+		NSMenu *menu = [[self masterController] channelViewMenu];
 		
 		NSMenuItem *inspectElementItem		= nil;
 		NSMenuItem *lookupInDictionaryItem	= nil;
