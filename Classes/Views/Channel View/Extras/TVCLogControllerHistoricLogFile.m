@@ -38,6 +38,7 @@
 #import "TextualApplication.h"
 
 @interface TVCLogControllerHistoricLogFile ()
+@property (nonatomic, assign) BOOL isPerformingSave;
 @property (nonatomic, assign) BOOL hasPendingAutosaveTimer;
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
@@ -71,97 +72,153 @@
 #endif
 }
 
-- (void)resetDataForEntriesMatchingClient:(IRCClient *)client inChannel:(IRCChannel *)channel
+- (NSFetchRequest *)fetchRequestForClient:(IRCClient *)client
+								inChannel:(IRCChannel *)channel
+							   fetchLimit:(NSInteger)maxEntryCount
+								afterDate:(NSDate *)referenceDate
+						   returnIsObject:(BOOL)returnObjects
 {
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	[self entriesForClient:client
-				 inChannel:channel
-	   withCompletionBlock:^(NSArray *objects)
-	{
-		for (TVCLogLine *line in objects) {
-			[self.managedObjectContext deleteObject:line];
-		}
+	/* What are we fetching for? */
+	PointerIsEmptyAssertReturn(client, nil);
 
-		[self saveData];
+	/* Gather relevant information. */
+	NSString *clientID = [client uniqueIdentifier];
+	NSString *channelID = nil;
+
+	if (channel) {
+		channelID = [channel uniqueIdentifier];
 	}
-				fetchLimit:0
-				 afterDate:nil];
+
+	/* Build base model. */
+	NSMutableDictionary *fetchVariables = [NSMutableDictionary dictionary];
+
+	/* Reference date. */
+	if (referenceDate) {
+		[fetchVariables setObject:referenceDate forKey:@"creation_date"];
+	} else {
+		/* There should be no records younger than this… */
+
+		[fetchVariables setObject:[NSDate dateWithTimeIntervalSinceReferenceDate:0] forKey:@"creation_date"];
+	}
+
+	/* Channel ID. */
+	if (channelID) {
+		[fetchVariables setObject:channelID forKey:@"channel_id"];
+	} else {
+		[fetchVariables setObject:[NSNull null] forKey:@"channel_id"];
+	}
+
+	/* Client ID. */
+	[fetchVariables setObject:clientID forKey:@"client_id"];
+
+	/* Request actual predicate. */
+	NSFetchRequest *fetchRequest = [self.managedObjectModel fetchRequestFromTemplateWithName:@"LogLineFetchRequest"
+																	   substitutionVariables:fetchVariables];
+
+	/* Define sort order. */
+	[fetchRequest setSortDescriptors:@[self.managedSortDescriptor]];
+
+	/* Return types. */
+	[fetchRequest setIncludesPendingChanges:NO];
+	[fetchRequest setReturnsObjectsAsFaults:YES];
+
+	/* When returning ID, Core Data will need property values
+	 to properly perform sort or it will just do a best guess. */
+	if (returnObjects == NO) {
+		[fetchRequest setResultType:NSManagedObjectIDResultType];
+		[fetchRequest setIncludesPropertyValues:YES];
+	} else {
+		[fetchRequest setResultType:NSManagedObjectResultType];
+		[fetchRequest setIncludesPropertyValues:NO];
+	}
+
+	/* Define match limit. */
+	if (maxEntryCount > 0) {
+		[fetchRequest setFetchLimit:maxEntryCount];
+	}
+
+	/* We're done. */
+	return fetchRequest;
+#else
+	return nil;
 #endif
 }
 
-- (void)entriesForClient:(IRCClient *)client inChannel:(IRCChannel *)channel withCompletionBlock:(void (^)(NSArray *objects))completionBlock fetchLimit:(NSInteger)maxEntryCount afterDate:(NSDate *)referenceDate
+- (void)resetDataForEntriesMatchingClient:(IRCClient *)client inChannel:(IRCChannel *)channel
+{
+#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
+	[_managedObjectContext performBlock:^{
+		/* Build fetch request. */
+		NSFetchRequest *fetchRequest = [self fetchRequestForClient:client
+														 inChannel:channel
+														fetchLimit:0
+														 afterDate:nil
+													returnIsObject:YES];
+
+		/* Gather results. */
+		NSArray *objects = [_managedObjectContext executeFetchRequest:fetchRequest error:NULL];
+
+		/* Delete objects. */
+		for (TVCLogLine *line in objects) {
+			[_managedObjectContext deleteObject:line];
+		}
+	}];
+#endif
+}
+
+- (void)entriesForClient:(IRCClient *)client
+			   inChannel:(IRCChannel *)channel
+			  fetchLimit:(NSInteger)maxEntryCount
+			   afterDate:(NSDate *)referenceDate
+	 withCompletionBlock:(void (^)(NSArray *objects))completionBlock
 {
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	/* What are we fetching for? */
 	PointerIsEmptyAssert(client);
 
-	[self.managedObjectContext performBlock:^{
-		/* Gather relevant information. */
-		NSString *clientID = [client uniqueIdentifier];
-		NSString *channelID = nil;
+	/* Lock context befor fetch. */
+	[_managedObjectContext lock];
 
-		if (channel) {
-			channelID = [channel uniqueIdentifier];
-		}
-
-		/* Build base model. */
-		NSMutableDictionary *fetchVariables = [NSMutableDictionary dictionary];
-
-		/* Reference date. */
-		if (referenceDate) {
-			[fetchVariables setObject:referenceDate forKey:@"creation_date"];
-		} else {
-			/* There should be no records younger than this… */
-
-			[fetchVariables setObject:[NSDate dateWithTimeIntervalSinceReferenceDate:0] forKey:@"creation_date"];
-		}
-
-		/* Channel ID. */
-		if (channelID) {
-			[fetchVariables setObject:channelID forKey:@"channel_id"];
-		} else {
-			[fetchVariables setObject:[NSNull null] forKey:@"channel_id"];
-		}
-
-		/* Client ID. */
-		[fetchVariables setObject:clientID forKey:@"client_id"];
-
-		/* Request actual predicate. */
-		NSFetchRequest *fetchRequest = [self.managedObjectModel fetchRequestFromTemplateWithName:@"LogLineFetchRequest"
-																		   substitutionVariables:fetchVariables];
-
-		/* Define sort order. */
-		[fetchRequest setSortDescriptors:@[self.managedSortDescriptor]];
-
-		/* Define match limit. */
-		if (maxEntryCount > 0) {
-			[fetchRequest setFetchLimit:maxEntryCount];
-		}
-
-		/* Lock the context before performing fetch. */
-		[self.managedObjectContext lock];
-
+	/* Perform block. */
+	[_managedObjectContext performBlockAndWait:^{
 		/* Perform fetch. */
-		NSArray *fetchResults = [self.managedObjectContext executeFetchRequest:fetchRequest error:NULL];
+		NSFetchRequest *fetchRequest = [self fetchRequestForClient:client
+														 inChannel:channel
+														fetchLimit:maxEntryCount
+														 afterDate:referenceDate
+													returnIsObject:YES];
 
-		/* Our sort descriptor places newest lines at the top and oldest
-		 at the bottom. This is done so that when a fetch limit is supplied,
-		 the fetch limit only applies to the newest lines without us having
-		 to supply an offset. Obivously, we do not want newest lines first
-		 though, so before passing to the callback, we reverse. */
-		NSArray *finalData = [[fetchResults reverseObjectEnumerator] allObjects];
+		NSError *fetchError;
 
-		/* Unlock context. */
-		[self.managedObjectContext unlock];
+		NSArray *fetchResults = [_managedObjectContext executeFetchRequest:fetchRequest error:&fetchError];
 
-		/* Call completion block. */
-		completionBlock(finalData);
+		/* nil if we had error… */
+		if (fetchResults) {
+			/* Our sort descriptor places newest lines at the top and oldest
+			 at the bottom. This is done so that when a fetch limit is supplied,
+			 the fetch limit only applies to the newest lines without us having
+			 to supply an offset. Obivously, we do not want newest lines first
+			 though, so before passing to the callback, we reverse. */
+			NSEnumerator *reverseEnum = [fetchResults reverseObjectEnumerator];
+
+			NSArray *finalData = [reverseEnum allObjects];
+
+			/* Call completion block. */
+			completionBlock(finalData);
+		} else {
+			LogToConsole(@"Fetch request failed for channel %@ on client %@ with error: %@", channel, client, [fetchError localizedDescription]);
+
+			completionBlock(nil);
+		}
 	}];
+
+	/* Unlock context. */
+	[_managedObjectContext unlock];
 #else
 	completionBlock(nil);
 #endif
 }
-
 
 #pragma mark -
 #pragma mark Core Data Model
@@ -177,6 +234,7 @@
 
 		/* Listen for changes. */
 		self.hasPendingAutosaveTimer = NO;
+		self.isPerformingSave = NO;
 
 		[self handleManagedObjectContextChangeTimerInitializer];
 #endif
@@ -207,7 +265,11 @@
 
 - (NSString *)databaseSavePath
 {
+#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	return [[TPCPreferences applicationCachesFolderPath] stringByAppendingPathComponent:@"logControllerHistoricLog_v001.sqlite"];
+#else
+	return nil;
+#endif
 }
 
 - (BOOL)hasPersistentStore
@@ -221,54 +283,45 @@
 #endif
 }
 
+- (BOOL)isPerformingSave
+{
+	return _isPerformingSave;
+}
+
 - (void)saveData
 {
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	/* Cancel any previous running timers incase this is manual save. */
 	[self handleManagedObjectContextChangeTimerInitializer];
 
-	/* Continue with save operation. */
-	[self.managedObjectContext performBlock:^{
+	[_managedObjectContext performBlock:^{
+		/* Do we have a save running? */
+		if (self.isPerformingSave) {
+			return; // Cancel save.
+		}
+
+		/* Continue with save operation. */
+		self.isPerformingSave = YES;
+
+		/* What are we saving to? */
+		if ([self hasPersistentStore] == NO) {
+			self.isPerformingSave = NO;
+
+			return; // Cancel save.
+		}
+
 		/* Do changes even exist? */
-		NSAssertReturn([self hasPersistentStore]);
-
-		if ([self.managedObjectContext commitEditing]) {
-			if ([self.managedObjectContext hasChanges]) {
-				/* Try to save. */
-				NSError *saveError;
-
-				if ([self.managedObjectContext save:&saveError] == NO) {
-					/* There was an error saving. As the information stored
-					 within our historic log model is not very important,
-					 we do not care much about errors here, but we will
-					 still report them for the sake of debugging. */
-
-					[self nukeAllManagedObjects];
+		if ([_managedObjectContext commitEditing]) {
+			if ([_managedObjectContext hasChanges]) {
+				if ([_managedObjectContext save:NULL] == NO) {
+					[_managedObjectContext reset];
 				}
 			}
 		}
+
+		/* Reset state. */
+		self.isPerformingSave = NO;
 	}];
-#endif
-}
-
-- (void)processPendingChanges
-{
-#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	[self.managedObjectContext processPendingChanges];
-#endif
-}
-
-- (void)resetContext
-{
-#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	[self.managedObjectContext reset];
-#endif
-}
-
-- (void)refreshObject:(id)object
-{
-#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	[self.managedObjectContext refreshObject:object mergeChanges:NO];
 #endif
 }
 
@@ -348,6 +401,7 @@
 
 	[_managedObjectContext setPersistentStoreCoordinator:coord];
 	[_managedObjectContext setUndoManager:nil];
+	[_managedObjectContext setRetainsRegisteredObjects:NO];
 
 	return _managedObjectContext;
 }
@@ -366,37 +420,5 @@
 	return nil;
 #endif
 }
-
-#pragma mark -
-#pragma mark Atomic Bomb
-
-#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-- (void)nukeAllManagedObjects
-{
-	[self _nukeAllManagedObjects];
-}
-
-- (void)_nukeAllManagedObjects
-{
-	/* Lock the current context. */
-    [self.managedObjectContext lock];
-
-	/* Find list of current stores. */
-	NSArray *persistentStores = [self.persistentStoreCoordinator persistentStores];
-
-	/* Try to remove old store. */
-	NSError *removeError;
-
-	if ([self.persistentStoreCoordinator removePersistentStore:[persistentStores lastObject] error:&removeError] == NO) {
-		LogToConsole(@"There was a problem removing the previous store: %@", [removeError localizedDescription]);
-	} else {
-		(void)[self addPersistentStoreToCoordinator];
-	}
-
-	/* Reset the current context and reset it. */
-    [self.managedObjectContext reset];
-    [self.managedObjectContext unlock];
-}
-#endif
 
 @end

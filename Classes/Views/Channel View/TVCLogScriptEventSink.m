@@ -142,7 +142,7 @@
 	}
 
 	/* Find the element. */
-	DOMElement *imageNode = [[self.owner mainFrameDocument] getElementById:object];
+	DOMElement *imageNode = [[[self owner] mainFrameDocument] getElementById:object];
 
 	PointerIsEmptyAssertReturn(imageNode, @"true");
 
@@ -163,82 +163,82 @@
 
 - (void)setURLAddress:(NSString *)s
 {
-    [[self.owner policy] setAnchorURL:[s gtm_stringByUnescapingFromHTML]];
+    [[[self owner] policy] setAnchorURL:[s gtm_stringByUnescapingFromHTML]];
 }
 
 - (void)setNickname:(NSString *)s
 {
-    [[self.owner policy] setNickname:[s gtm_stringByUnescapingFromHTML]];
+    [[[self owner] policy] setNickname:[s gtm_stringByUnescapingFromHTML]];
 }
 
 - (void)setChannelName:(NSString *)s
 {
-    [[self.owner policy] setChannelName:[s gtm_stringByUnescapingFromHTML]];
+    [[[self owner] policy] setChannelName:[s gtm_stringByUnescapingFromHTML]];
 }
 
 - (void)channelNameDoubleClicked
 {
-    [[self.owner policy]channelDoubleClicked];
+    [[[self owner] policy]channelDoubleClicked];
 }
 
 - (void)nicknameDoubleClicked
 {
-    [[self.owner policy] nicknameDoubleClicked];
+    [[[self owner] policy] nicknameDoubleClicked];
 }
 
 - (void)topicDoubleClicked
 {
-    [[self.owner policy] topicDoubleClicked];
+    [[[self owner] policy] topicDoubleClicked];
 }
 
 - (NSInteger)channelMemberCount
 {
-    return [[self.owner channel] numberOfMembers];
+    return [[[self owner] channel] numberOfMembers];
 }
 
 - (NSInteger)serverChannelCount
 {
-	return [[[self.owner client] channels] count];
+	return [[[[self owner] client] channels] count];
 }
 
 - (BOOL)serverIsConnected
 {
-	return [[self.owner client] isLoggedIn];
+	return [[[self owner] client] isLoggedIn];
 }
 
 - (BOOL)channelIsJoined
 {
-	return [[self.owner channel] isActive];
+	return [[[self owner] channel] isActive];
 }
 
 - (NSString *)channelName
 {
-	return [[self.owner channel] name];
+	return [[[self owner] channel] name];
 }
 
 - (NSString *)serverAddress
 {
-	return [[self.owner client] networkAddress];
+	return [[[self owner] client] networkAddress];
 }
 
 - (NSString *)localUserNickname
 {
-	return [[self.owner client] localNickname];
+	return [[[self owner] client] localNickname];
 }
 
 - (NSString *)localUserHostmask
 {
-	return [[self.owner client] localHostmask];
+	return [[[self owner] client] localHostmask];
 }
 
 - (void)printDebugInformationToConsole:(NSString *)m
 {
-	[self.owner.client printDebugInformationToConsole:m];
+	[[[self owner] client] printDebugInformationToConsole:m];
 }
 
 - (void)printDebugInformation:(NSString *)m
 {
-	[[self.owner client] printDebugInformation:m channel:[self.owner channel]];
+	[[[self owner] client] printDebugInformation:m channel:[[self owner] channel]];
 }
 
 - (BOOL)sidebarInversionIsEnabled

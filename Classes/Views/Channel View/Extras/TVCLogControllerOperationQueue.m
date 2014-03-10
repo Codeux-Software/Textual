@@ -42,8 +42,7 @@
 
 @interface TVCLogControllerOperationItem : NSOperation
 @property (nonatomic, nweak) TVCLogController *controller;
-@property (nonatomic, strong) void (^executionBlock)(void);
-@property (nonatomic, assign) BOOL isCompleted;
+@property (nonatomic, strong) TVCLogControllerOperationBlock executionBlock;
 
 - (id)initWithQueue:(TVCLogControllerOperationQueue *)queue controller:(TVCLogController *)controller;
 @end
@@ -69,24 +68,13 @@
 
 - (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender
 {
-	[self enqueueMessageBlock:callbackBlock for:sender context:nil];
-}
-
-- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender context:(NSDictionary *)context
-{
 	dispatch_async(dispatch_get_main_queue(), ^{
 		PointerIsEmptyAssert(callbackBlock);
 		PointerIsEmptyAssert(sender);
 
 		TVCLogControllerOperationItem *operation = [[TVCLogControllerOperationItem alloc] initWithQueue:self controller:sender];
 
-		/* We keep a week reference to our operation to remove it from our controller's 
-		 operations array after isCompleted has flown. */
-		__weak TVCLogControllerOperationItem *operationRef = operation;
-
-		operation.executionBlock = ^{
-			callbackBlock(operationRef, context);
-		};
+		[operation setExecutionBlock:callbackBlock];
 
 		/* Add the operations. */
 		[self addOperation:operation];
@@ -135,18 +123,6 @@
 				}
 			}
 		}
-	});
-}
-
-- (void)updateCompletionStatusForOperation:(TVCLogControllerOperationItem *)operation
-{
-	dispatch_async(dispatch_get_main_queue(), ^{
-		PointerIsEmptyAssert(operation);
-		
-		operation.isCompleted = YES;
-
-		[operation willChangeValueForKey:@"isFinished"];
-		[operation didChangeValueForKey:@"isFinished"];
 	});
 }
 
@@ -200,24 +176,25 @@
 
 - (void)main
 {
-	self.executionBlock();
-}
-
-- (BOOL)isFinished
-{
-	return self.isCompleted;
+	self.executionBlock(self);
 }
 
 - (BOOL)isReady
 {
-	if ([self.dependencies count] < 1) {
-		BOOL internalIsReady = ([[self.controller view] isLoading] == NO &&
-								 [self.controller isLoaded]);
-
-		return ([super isReady] && internalIsReady);
+	if ([[self dependencies] count] < 1) {
+		return ([super isReady] && [[self controller] isLoaded]);
 	} else {
 		return [super isReady];
 	}
+}
+
++ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
+{
+    if ([key isEqualToString:@"isReady"]) {
+        return YES;
+	}
+
+    return [super automaticallyNotifiesObserversForKey:key];
 }
 
 @end

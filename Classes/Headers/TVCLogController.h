@@ -46,7 +46,6 @@
 @property (nonatomic, strong) TVCLogScriptEventSink *sink;
 @property (nonatomic, strong) TVCWebViewAutoScroll *autoScroller;
 @property (nonatomic, assign) BOOL isLoaded;
-@property (nonatomic, assign) BOOL isTerminating;
 @property (nonatomic, assign) BOOL needsLimitNumberOfLines;
 @property (nonatomic, assign) NSInteger activeLineCount;
 @property (nonatomic, assign) NSInteger maximumLineCount;

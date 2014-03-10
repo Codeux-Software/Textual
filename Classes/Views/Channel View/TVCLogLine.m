@@ -77,7 +77,7 @@
 		/* Return new copy. */
 		return self;
 	}
-	
+
 	return nil;
 }
 

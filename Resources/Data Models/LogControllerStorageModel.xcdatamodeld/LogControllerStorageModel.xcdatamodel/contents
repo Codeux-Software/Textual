@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13B42" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="TVCLogLine" representedClassName="TVCLogLine" syncable="YES">
         <attribute name="channelID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="clientID" optional="YES" attributeType="String" syncable="YES"/>
@@ -16,7 +16,7 @@
         <attribute name="rawCommand" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="receivedAt" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
-    <fetchRequest name="LogLineFetchRequest" entity="TVCLogLine" predicateString="channelID == $channel_id AND clientID == $client_id AND creationDate >= $creation_date" fetchLimit="1000" includesPendingChanges="YES" returnObjectsAsFaults="YES"/>
+    <fetchRequest name="LogLineFetchRequest" entity="TVCLogLine" predicateString="channelID == $channel_id AND clientID == $client_id AND creationDate >= $creation_date" fetchLimit="1000" includePropertyValues="YES" includesPendingChanges="YES" returnObjectsAsFaults="YES" resultType="1"/>
     <elements>
         <element name="TVCLogLine" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
