@@ -185,7 +185,6 @@
 														  object:backgroundContext
 														   queue:nil
 													  usingBlock:^(NSNotification *note) {
-														  LogToConsole(@"Saving");
 														  [_managedObjectContext mergeChangesFromContextDidSaveNotification:note];
 													  }];
 
