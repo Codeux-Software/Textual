@@ -38,6 +38,7 @@
 #import "TextualApplication.h"
 
 @interface TVCLogControllerHistoricLogFile ()
+@property (assign) NSInteger activeFetchRequests;
 @property (nonatomic, assign) BOOL isPerformingSave;
 @property (nonatomic, assign) BOOL hasPendingAutosaveTimer;
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -177,11 +178,19 @@
 	/* What are we fetching for? */
 	PointerIsEmptyAssert(client);
 
-	/* Lock context befor fetch. */
-	[_managedObjectContext lock];
+	/* This method is supposed to be called from inside TVCLogControllerOperationQueue.
+	 Calling from anywhere else may create a deadlock with the internal locking mechanism. */
+	while ([self isSafeToPerformFetchRequest] == NO) {
+		; // Do nothing until it is safe to perform next operation…
+	}
 
 	/* Perform block. */
-	[_managedObjectContext performBlockAndWait:^{
+	[_managedObjectContext performBlock:^{
+		/* Lock context befor fetch. */
+		[self lockInternalFetchLock];
+
+		[_managedObjectContext lock];
+
 		/* Perform fetch. */
 		NSFetchRequest *fetchRequest = [self fetchRequestForClient:client
 														 inChannel:channel
@@ -211,10 +220,12 @@
 
 			completionBlock(nil);
 		}
-	}];
 
-	/* Unlock context. */
-	[_managedObjectContext unlock];
+		/* Unlock context. */
+		[self unlockInternalFetchLock];
+
+		[_managedObjectContext unlock];
+	}];
 #else
 	completionBlock(nil);
 #endif
@@ -235,6 +246,8 @@
 		/* Listen for changes. */
 		self.hasPendingAutosaveTimer = NO;
 		self.isPerformingSave = NO;
+
+		self.activeFetchRequests = 0;
 
 		[self handleManagedObjectContextChangeTimerInitializer];
 #endif
@@ -419,6 +432,42 @@
 #else
 	return nil;
 #endif
+}
+
+#pragma mark -
+#pragma mark Lock Logic
+
+/* So… this. entriesForClient: is called from an operation queue which means that
+ it can have multiple fetches occuring at the same time depending on the current
+ model of Mac and what its CPU can handle. Too many fetches creates a deadlock in
+ Core Data. This internal locking system is a simple count which goes up and down
+ when a fetch is completed. It is designed to prevent no more than 2 operations 
+ running at the same time.
+ 
+ Since entriesForClient: is ever only called from Textual's internal operation 
+ queue and not the main thread, it is okay for us to hold fetches using a while
+ loop until others have completed.
+ 
+ The actual internal self.activeFetchRequest propery is marked as atomic to allow
+ some safety between threads. When it comes down to it, it is first come, first 
+ serve for the fetch request that takes it once the count is lowered. 
+ 
+ I haven't actually tested this logic yet in regards to the actual bug it is 
+ targetting, but hopefully, it will just work… */
+
+- (BOOL)isSafeToPerformFetchRequest
+{
+	return (self.activeFetchRequests < 2);
+}
+
+- (void)unlockInternalFetchLock
+{
+	self.activeFetchRequests -= 1;
+}
+
+- (void)lockInternalFetchLock
+{
+	self.activeFetchRequests += 1;
 }
 
 @end
