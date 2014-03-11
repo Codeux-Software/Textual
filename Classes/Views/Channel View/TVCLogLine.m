@@ -124,9 +124,7 @@
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	NSManagedObjectContext *context = [TVCLogControllerHistoricLogSharedInstance() managedObjectContext];
 
-	[context performBlock:^{
-		[context insertObject:self];
-	}];
+	[context insertObject:self];
 #endif
 }
 
