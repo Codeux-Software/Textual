@@ -180,6 +180,15 @@
 	/* Create private dispatch queue. */
 	NSManagedObjectContext *backgroundContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
 
+	/* Add observer. */
+	id saveObserver = [RZNotificationCenter() addObserverForName:NSManagedObjectContextDidSaveNotification
+														  object:backgroundContext
+														   queue:nil
+													  usingBlock:^(NSNotification *note) {
+														  LogToConsole(@"Saving");
+														  [_managedObjectContext mergeChangesFromContextDidSaveNotification:note];
+													  }];
+
 	/* Lock context. */
 	[_persistentStoreCoordinator lock];
 	[_managedObjectContext lock];
@@ -222,11 +231,17 @@
 		}
 	}];
 
+	/* Unlock context. */
 	[_persistentStoreCoordinator unlock];
 	[_managedObjectContext unlock];
 
 	[backgroundContext unlock];
-	 backgroundContext = nil;
+
+	/* Remove observer. */
+	[RZNotificationCenter() removeObserver:saveObserver];
+
+	/* Cleanup. */
+	backgroundContext = nil;
 #else
 	completionBlock(nil, nil);
 #endif
@@ -386,10 +401,14 @@
 	NSURL *url = [NSURL fileURLWithPath:savePath];
 
 	/* Perform add. */
+
+	NSDictionary *pragmaOptions = @{@"synchronous" : @"OFF", @"journal_mode" : @"WAL"};
+	NSDictionary *storeOptions = @{NSSQLitePragmasOption : pragmaOptions};
+
 	id result = [_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
 														  configuration:nil
 																	URL:url
-																options:nil
+																options:storeOptions
 																  error:&addErr];
 
 	/* Was there an error? */
