@@ -148,7 +148,10 @@
 - (void)resetDataForEntriesMatchingClient:(IRCClient *)client inChannel:(IRCChannel *)channel
 {
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	[_managedObjectContext performBlock:^{
+	[_managedObjectContext performBlockAndWait:^{
+		/* Ask for lock. */
+		[_managedObjectContext lock];
+
 		/* Build fetch request. */
 		NSFetchRequest *fetchRequest = [self fetchRequestForClient:client
 														 inChannel:channel
@@ -158,6 +161,9 @@
 
 		/* Gather results. */
 		NSArray *objects = [_managedObjectContext executeFetchRequest:fetchRequest error:NULL];
+
+		/* Release lock. */
+		[_managedObjectContext unlock];
 
 		/* Delete objects. */
 		for (TVCLogLine *line in objects) {
@@ -177,17 +183,17 @@
 	/* What are we fetching for? */
 	PointerIsEmptyAssert(client);
 
-	/* Lock context befor fetch. */
-	[_managedObjectContext lock];
-
-	/* Perform block. */
+	/* Perform fetch. */
 	[_managedObjectContext performBlockAndWait:^{
+		/* Ask for lock. */
+		[_managedObjectContext lock];
+
 		/* Perform fetch. */
 		NSFetchRequest *fetchRequest = [self fetchRequestForClient:client
 														 inChannel:channel
 														fetchLimit:maxEntryCount
 														 afterDate:referenceDate
-													returnIsObject:YES];
+													returnIsObject:NO];
 
 		NSError *fetchError;
 
@@ -195,12 +201,23 @@
 
 		/* nil if we had error… */
 		if (fetchResults) {
+			/* Build array of objects from IDs. */
+			NSMutableArray *objectGraph = [[NSMutableArray alloc] initWithCapacity:[fetchResults count]];
+
+			for (NSManagedObjectID *objectID in fetchResults) {
+				NSManagedObject *managedObject = [_managedObjectContext objectWithID:objectID];
+
+				PointerIsEmptyAssertLoopContinue(managedObject);
+
+				[objectGraph addObject:managedObject];
+			}
+
 			/* Our sort descriptor places newest lines at the top and oldest
 			 at the bottom. This is done so that when a fetch limit is supplied,
 			 the fetch limit only applies to the newest lines without us having
 			 to supply an offset. Obivously, we do not want newest lines first
 			 though, so before passing to the callback, we reverse. */
-			NSEnumerator *reverseEnum = [fetchResults reverseObjectEnumerator];
+			NSEnumerator *reverseEnum = [objectGraph reverseObjectEnumerator];
 
 			NSArray *finalData = [reverseEnum allObjects];
 
@@ -208,13 +225,13 @@
 			completionBlock(finalData);
 		} else {
 			LogToConsole(@"Fetch request failed for channel %@ on client %@ with error: %@", channel, client, [fetchError localizedDescription]);
-
+			
 			completionBlock(nil);
 		}
-	}];
 
-	/* Unlock context. */
-	[_managedObjectContext unlock];
+		/* Release lock. */
+		[_managedObjectContext unlock];
+	}];
 #else
 	completionBlock(nil);
 #endif
@@ -294,7 +311,7 @@
 	/* Cancel any previous running timers incase this is manual save. */
 	[self handleManagedObjectContextChangeTimerInitializer];
 
-	[_managedObjectContext performBlock:^{
+	[_managedObjectContext performBlockAndWait:^{
 		/* Do we have a save running? */
 		if (self.isPerformingSave) {
 			return; // Cancel save.
