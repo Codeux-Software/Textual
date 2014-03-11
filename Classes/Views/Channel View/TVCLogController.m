@@ -641,6 +641,8 @@
 		[self reloadOldLines:YES withOldLines:objects context:context];
 	}
 
+	[context save:NULL]; /* Save context to keep isHistoric changes. */
+
 	self.reloadingHistory = NO;
 }
 
