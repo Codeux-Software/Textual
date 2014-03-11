@@ -537,10 +537,12 @@
 #pragma mark Reload Scrollback
 
 /* reloadOldLines: is supposed to be called from inside a queue. */
-- (void)reloadOldLines:(BOOL)markHistoric withOldLines:(NSArray *)oldLines
+- (void)reloadOldLines:(BOOL)markHistoric withOldLines:(NSArray *)oldLines context:(NSManagedObjectContext *)context
 {
 	/* What lines are we reloading? */
 	NSObjectIsEmptyAssert(oldLines);
+
+	PointerIsEmptyAssert(context);
 
 	/* Misc. data. */
 	NSMutableArray *lineNumbers = [NSMutableArray array];
@@ -548,7 +550,11 @@
 	NSMutableString *patchedAppend = [NSMutableString string];
 
 	/* Begin processing. */
-	for (TVCLogLine *line in oldLines) {
+	for (NSManagedObjectID *objectID in oldLines) {
+		TVCLogLine *line = (id)[context existingObjectWithID:objectID error:NULL];
+
+		PointerIsEmptyAssertLoopContinue(line);
+
 		if (markHistoric) {
 			[line setIsHistoric:YES];
 		}
@@ -620,19 +626,19 @@
 										   inChannel:[self channel]
 										  fetchLimit:100
 										   afterDate:nil
-								 withCompletionBlock:^(NSArray *objects) {
-									 [self reloadHistoryCompletionBlock:objects];
+								 withCompletionBlock:^(NSManagedObjectContext *context, NSArray *objects) {
+									 [self reloadHistoryCompletionBlock:objects withContext:context];
 								 }];
 		} else {
-			[self reloadHistoryCompletionBlock:nil];
+			[self reloadHistoryCompletionBlock:nil withContext:nil];
 		}
 	 } for:self];
 }
 
-- (void)reloadHistoryCompletionBlock:(NSArray *)objects
+- (void)reloadHistoryCompletionBlock:(NSArray *)objects withContext:(NSManagedObjectContext *)context
 {
 	if ([self viewIsEncrypted] == NO) {
-		[self reloadOldLines:YES withOldLines:objects];
+		[self reloadOldLines:YES withOldLines:objects context:context];
 	}
 
 	self.reloadingHistory = NO;
@@ -652,19 +658,19 @@
 										   inChannel:[self channel]
 										  fetchLimit:1000
 										   afterDate:nil
-								 withCompletionBlock:^(NSArray *objects) {
-									 [self reloadThemeCompletionBlock:objects];
+								 withCompletionBlock:^(NSManagedObjectContext *context, NSArray *objects) {
+									 [self reloadThemeCompletionBlock:objects withContext:context];
 								 }];
 		} else {
-			[self reloadThemeCompletionBlock:nil];
+			[self reloadThemeCompletionBlock:nil withContext:nil];
 		}
 	} for:self];
 }
 
-- (void)reloadThemeCompletionBlock:(NSArray *)objects
+- (void)reloadThemeCompletionBlock:(NSArray *)objects withContext:(NSManagedObjectContext *)context
 {
 	if ([self viewIsEncrypted] == NO) {
-		[self reloadOldLines:NO withOldLines:objects];
+		[self reloadOldLines:NO withOldLines:objects context:context];
 	}
 
 	self.reloadingBacklog = NO;

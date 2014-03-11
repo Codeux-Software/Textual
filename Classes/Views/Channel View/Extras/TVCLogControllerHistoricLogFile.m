@@ -38,7 +38,6 @@
 #import "TextualApplication.h"
 
 @interface TVCLogControllerHistoricLogFile ()
-@property (assign) NSInteger activeFetchRequests;
 @property (nonatomic, assign) BOOL isPerformingSave;
 @property (nonatomic, assign) BOOL hasPendingAutosaveTimer;
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -172,35 +171,36 @@
 			   inChannel:(IRCChannel *)channel
 			  fetchLimit:(NSInteger)maxEntryCount
 			   afterDate:(NSDate *)referenceDate
-	 withCompletionBlock:(void (^)(NSArray *objects))completionBlock
+	 withCompletionBlock:(void (^)(NSManagedObjectContext *context, NSArray *objects))completionBlock
 {
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	/* What are we fetching for? */
 	PointerIsEmptyAssert(client);
 
-	/* This method is supposed to be called from inside TVCLogControllerOperationQueue.
-	 Calling from anywhere else may create a deadlock with the internal locking mechanism. */
-	while ([self isSafeToPerformFetchRequest] == NO) {
-		; // Do nothing until it is safe to perform next operation…
-	}
+	/* Create private dispatch queue. */
+	NSManagedObjectContext *backgroundContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+
+	/* Lock context. */
+	[_persistentStoreCoordinator lock];
+	[_managedObjectContext lock];
+
+	[backgroundContext lock];
 
 	/* Perform block. */
-	[_managedObjectContext performBlock:^{
-		/* Lock context befor fetch. */
-		[self lockInternalFetchLock];
-
-		[_managedObjectContext lock];
+	[backgroundContext performBlockAndWait:^{
+		/* Pass information. */
+		[backgroundContext setPersistentStoreCoordinator:_persistentStoreCoordinator];
 
 		/* Perform fetch. */
 		NSFetchRequest *fetchRequest = [self fetchRequestForClient:client
 														 inChannel:channel
 														fetchLimit:maxEntryCount
 														 afterDate:referenceDate
-													returnIsObject:YES];
+													returnIsObject:NO];
 
 		NSError *fetchError;
 
-		NSArray *fetchResults = [_managedObjectContext executeFetchRequest:fetchRequest error:&fetchError];
+		NSArray *fetchResults = [backgroundContext executeFetchRequest:fetchRequest error:&fetchError];
 
 		/* nil if we had error… */
 		if (fetchResults) {
@@ -214,20 +214,21 @@
 			NSArray *finalData = [reverseEnum allObjects];
 
 			/* Call completion block. */
-			completionBlock(finalData);
+			completionBlock(backgroundContext, finalData);
 		} else {
 			LogToConsole(@"Fetch request failed for channel %@ on client %@ with error: %@", channel, client, [fetchError localizedDescription]);
 
-			completionBlock(nil);
+			completionBlock(nil, nil);
 		}
-
-		/* Unlock context. */
-		[self unlockInternalFetchLock];
-
-		[_managedObjectContext unlock];
 	}];
+
+	[_persistentStoreCoordinator unlock];
+	[_managedObjectContext unlock];
+
+	[backgroundContext unlock];
+	 backgroundContext = nil;
 #else
-	completionBlock(nil);
+	completionBlock(nil, nil);
 #endif
 }
 
@@ -246,8 +247,6 @@
 		/* Listen for changes. */
 		self.hasPendingAutosaveTimer = NO;
 		self.isPerformingSave = NO;
-
-		self.activeFetchRequests = 0;
 
 		[self handleManagedObjectContextChangeTimerInitializer];
 #endif
@@ -387,7 +386,11 @@
 	NSURL *url = [NSURL fileURLWithPath:savePath];
 
 	/* Perform add. */
-	id result = [_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:nil error:&addErr];
+	id result = [_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
+														  configuration:nil
+																	URL:url
+																options:nil
+																  error:&addErr];
 
 	/* Was there an error? */
 	if (result == nil) {
@@ -432,42 +435,6 @@
 #else
 	return nil;
 #endif
-}
-
-#pragma mark -
-#pragma mark Lock Logic
-
-/* So… this. entriesForClient: is called from an operation queue which means that
- it can have multiple fetches occuring at the same time depending on the current
- model of Mac and what its CPU can handle. Too many fetches creates a deadlock in
- Core Data. This internal locking system is a simple count which goes up and down
- when a fetch is completed. It is designed to prevent no more than 2 operations 
- running at the same time.
- 
- Since entriesForClient: is ever only called from Textual's internal operation 
- queue and not the main thread, it is okay for us to hold fetches using a while
- loop until others have completed.
- 
- The actual internal self.activeFetchRequest propery is marked as atomic to allow
- some safety between threads. When it comes down to it, it is first come, first 
- serve for the fetch request that takes it once the count is lowered. 
- 
- I haven't actually tested this logic yet in regards to the actual bug it is 
- targetting, but hopefully, it will just work… */
-
-- (BOOL)isSafeToPerformFetchRequest
-{
-	return (self.activeFetchRequests < 2);
-}
-
-- (void)unlockInternalFetchLock
-{
-	self.activeFetchRequests -= 1;
-}
-
-- (void)lockInternalFetchLock
-{
-	self.activeFetchRequests += 1;
 }
 
 @end

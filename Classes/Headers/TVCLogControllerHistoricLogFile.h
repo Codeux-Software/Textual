@@ -56,5 +56,5 @@
 			   inChannel:(IRCChannel *)channel
 			  fetchLimit:(NSInteger)maxEntryCount
 			   afterDate:(NSDate *)referenceDate
-	 withCompletionBlock:(void (^)(NSArray *objects))completionBlock;
+	 withCompletionBlock:(void (^)(NSManagedObjectContext *context, NSArray *objects))completionBlock;
 @end
