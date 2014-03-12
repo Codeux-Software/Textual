@@ -49,6 +49,16 @@
 "TDCServerSheet[1003][1]" = "iCloud Sharing Enabled";
 "TDCServerSheet[1003][2]" = "iCloud sharing will be enabled for this server on save.\n\nBy saving, Textual will override any copy of this server's configuration already stored on iCloud.";
 
+/* Address Book add item menu items. */
+"TDCServerSheet[1004]" = "Add User Ignore Entry";
+"TDCServerSheet[1005]" = "Add User Tracking Entry";
+
+/* Custom client-side certificate selection. */
+"TDCServerSheet[1006]" = "No Certificate Selected";
+
+"TDCServerSheet[1007][1]" = "Select Identity";
+"TDCServerSheet[1007][2]" = "Below is a list of certificates (also known as \"identities\" or an \"identity\") which Textual has found within the Mac OS keychain. Please select the certificate which you would like sent to the configured IRC server \"%@\" upon connection. ";
+
 /* Welcome sheet help channel prompt for freenode servers. */
 "TDCWelcomeSheet[1000][1]" = "Connect to Support Channel";
 "TDCWelcomeSheet[1000][2]" = "The Textual IRC Client support channel is located on freenode. Would you like to add this channel?";
@@ -58,6 +68,11 @@
 "TDCListDialog[1001]" = "Channel List — %@"; // %@ = channel count.
 "TDCListDialog[1002]" = "%@ Public Channels";
 "TDCListDialog[1003]" = "%@ Public Channels - %@ Search Results";
+
+/* Invite dialog. */
+"TDCInviteSheet[1000]" = "%d users";
+"TDCInviteSheet[1001]" = "Invite %@ to:";
+"TDCInviteSheet[1002]" = "%1$@ and %2$@";
 
 /* Preferences window iCloud options. */
 "TDCPreferencesController[1000][1]" = "iCloud Sharing Disabled";
@@ -84,6 +99,14 @@
 "TDCPreferencesController[1012]" = "The style being opened is only available on this device.\n\nWould you like to create a copy of it in your iCloud folder?\n\nIt will become the selected style and will then be available across all shared devices.";
 
 "TDCPreferencesController[1013]" = "Resource Files";
+
+"TDCPreferencesController[1014][1]" = "Preferred Selection";
+"TDCPreferencesController[1014][2]" = "The newly selected style \"%1$@\" has chosen to override the following preferences with ones that it prefers for the best viewing experience:\n\n%2$@";
+
+"TDCPreferencesController[1015][1]" = "• Nickname Format";
+"TDCPreferencesController[1015][2]" = "• Timestamp Format";
+"TDCPreferencesController[1015][3]" = "• Window Colors";
+"TDCPreferencesController[1015][4]" = "• Channel View Font";
 
 /* Final transfer dialog. */
 "TDCFileTransferDialog[1000][1]" = "%1$@ of %2$@ (%3$@/s) sent to %4$@";
@@ -487,75 +510,74 @@
 "BasicLanguage[1203][13]" = "Network Socket";
 "BasicLanguage[1203][14]" = "ZNC Bouncer";
 
-/* Old items. */
-"ServerSheetAddressBookAdditionMenuAddIgnore" = "Add User Ignore Entry";
-"ServerSheetAddressBookAdditionMenuAddTracker" = "Add User Tracking Entry";
+/* Formatted time. */
+"BasicLanguage[1204][DAY]" = "days";
+"BasicLanguage[1204][HOUR]" = "hours";
+"BasicLanguage[1204][MINUTE]" = "minutes";
+"BasicLanguage[1204][MONTH]" = "months";
+"BasicLanguage[1204][SECOND]" = "seconds";
+"BasicLanguage[1204][WEEK]" = "weeks";
+"BasicLanguage[1204][YEAR]" = "years";
 
-"ServerSheetSSLCertificateViewNoCertificateSelected" = "No Certificate Selected";
-"ServerSheetSSLCertificateViewSelectIdentityDialogTitle" = "Select Identity";
-"ServerSheetSSLCertificateViewSelectIdentityDialgMessage" = "Below is a list of certificates (also known as \"identities\" or an \"identity\") which Textual has found within the Mac OS keychain. Please select the certificate which you would like sent to the configured IRC server \"%@\" upon connection. ";
+"BasicLanguage[1205][DAY]" = "day";
+"BasicLanguage[1205][HOUR]" = "hour";
+"BasicLanguage[1205][MINUTE]" = "minute";
+"BasicLanguage[1205][MONTH]" = "month";
+"BasicLanguage[1205][SECOND]" = "second";
+"BasicLanguage[1205][WEEK]" = "week";
+"BasicLanguage[1205][YEAR]" = "year";
 
-"SetAsDefaultIRCClientPromptMessage" = "Textual is not set as the default IRC client for this copy of Mac OS X. Set it?";
-"SetAsDefaultIRCClientPromptTitle" = "Default IRC Client";
+/* User info popover. */
+"BasicLanguage[1206]" = "No Privileges";
+"BasicLanguage[1207]" = "Voice";
+"BasicLanguage[1208]" = "Half-op";
+"BasicLanguage[1209]" = "Operator";
+"BasicLanguage[1210]" = "Super Admin";
+"BasicLanguage[1211]" = "Channel Owner";
+"BasicLanguage[1212]" = " — Server Staff Member";
+"BasicLanguage[1213]" = "User is away.";
+"BasicLanguage[1214]" = "User is not away.";
 
-"SetUserVhostPromptMessage"	= "Please enter desired vHost. (e.g. apple.vhost)";
-"SetUserVhostPromptTitle" = "Set User vHost";
+"BasicLanguage[1215]" = "Information Not Available";
 
-"SocketBadSSLCertificateErrorMessage" = "The server that you are connecting to has a SSL certificate that has either expired or is not trusted.\n\nSelect the \"Show Certificate\" button shown below for the option to disable the checking of this particular certificate.";
-"SocketBadSSLCertificateErrorTitle" = "Untrusted Connection";
+/* Formatted time. */
+"BasicLanguage[1216]" = "%@ ago";
 
-"SoundIsAlreadyMuted" = "Sound is already muted.";
-"SoundIsNoLongerMuted" = "Sound is no longer muted. ";
-"SoundIsNotMuted" = "Sound is not muted.";
-"SoundIsNowMuted" = "Sound has been muted.";
+/* Trust button for dialogs. */
+"BasicLanguage[1217]" = "Trust";
 
-"StyleTemplateLoadFailed" = "Template Load Failed: %@";
+/* Unknown. */
+"BasicLanguage[1218]" = "Unknown";
 
-"SelectButton" = "Select";
+/* Yes button for dialogs. */
+"BasicLanguage[1219]" = "Yes";
 
-"TXEmptySoundAlertLabel" = "None";
+/* /mute/ command. */
+"BasicLanguage[1220]" = "Sound is already muted.";
+"BasicLanguage[1221]" = "Sound is no longer muted. ";
+"BasicLanguage[1222]" = "Sound is not muted.";
+"BasicLanguage[1223]" = "Sound has been muted.";
 
-"ThemeChangeOverridePromptChannelFont" = "• Channel View Font";
-"ThemeChangeOverridePromptMessage" = "The newly selected style \"%1$@\" has chosen to override the following preferences with ones that it prefers for the best viewing experience:\n\n%2$@";
-"ThemeChangeOverridePromptNicknameFormat" = "• Nickname Format";
-"ThemeChangeOverridePromptTimestampFormat" = "• Timestamp Format";
-"ThemeChangeOverridePromptWindowColors" = "• Window Colors";
-"ThemeChangeOverridePromptTitle" = "Preferred Selection";
+/* Style template load fail. */
+"BasicLanguage[1224]" = "Template Load Failed: %@";
 
-"TimeIntervalSinceFirstCommit" = "\002Time Since First Commit:\002 %@";
+/* Selet button for dialogs. */
+"BasicLanguage[1225]" = "Select";
 
-"TimeAgo" = "%@ Ago";
+/* Empty alert sound label. */
+"BasicLanguage[1225]" = "None";
 
-"TimeConvertPlural[DAY]" = "Days";
-"TimeConvertPlural[HOUR]" = "Hours";
-"TimeConvertPlural[MINUTE]" = "Minutes";
-"TimeConvertPlural[MONTH]" = "Months";
-"TimeConvertPlural[SECOND]" = "Seconds";
-"TimeConvertPlural[WEEK]" = "Weeks";
-"TimeConvertPlural[YEAR]" = "Years";
+/* /tage/ command. */
+"BasicLanguage[1226]" = "\002Time Since First Commit:\002 %@";
 
-"TimeConvert[DAY]" = "Day";
-"TimeConvert[HOUR]" = "Hour";
-"TimeConvert[MINUTE]" = "Minute";
-"TimeConvert[MONTH]" = "Month";
-"TimeConvert[SECOND]" = "Second";
-"TimeConvert[WEEK]" = "Week";
-"TimeConvert[YEAR]" = "Year";
+/* Default IRC client prompt. */
+"BasicLanguage[1227][1]" = "Default IRC Client";
+"BasicLanguage[1227][2]" = "Textual is not set as the default IRC client for this copy of Mac OS X. Set it?";
 
-"TrustButton" = "Trust";
+/* Set user cloak prompt. */
+"BasicLanguage[1228][1]" = "Set User vHost";
+"BasicLanguage[1228][2]" = "Please enter desired vHost. (e.g. apple.vhost)";
 
-"Unknown" = "Unknown";
-
-"UserHostmaskHoverTooltipMode_NA" = "No Privileges";
-"UserHostmaskHoverTooltipMode_V" = "Voice";
-"UserHostmaskHoverTooltipMode_H" = "Half-op";
-"UserHostmaskHoverTooltipMode_O" = "Operator";
-"UserHostmaskHoverTooltipMode_A" = "Super Admin";
-"UserHostmaskHoverTooltipMode_Q" = "Channel Owner";
-"UserHostmaskHoverTooltipMode_IRCop" = " — Server Staff Member";
-"UserHostmaskHoverTooltipUserIsAway" = "User is away.";
-"UserHostmaskHoverTooltipUserIsNotAway" = "User is not away.";
-
-"UserHostmaskHoverTooltipNoInformationAvailable" = "Information Not Available";
-
-"YesButton" = "Yes";
+/* Bad certificate prompt. */
+"BasicLanguage[1229][1]" = "Untrusted Connection";
+"BasicLanguage[1229][2]" = "The server that you are connecting to has a SSL certificate that has either expired or is not trusted.\n\nSelect the \"Show Certificate\" button shown below for the option to disable the checking of this particular certificate.";

@@ -744,7 +744,7 @@
 								  body:TXTLS(@"TDCServerSheet[1002][2]")
 								 title:TXTLS(@"TDCServerSheet[1002][1]")
 						 defaultButton:TXTLS(@"BasicLanguage[1182]")
-					   alternateButton:TXTLS(@"YesButton")
+					   alternateButton:TXTLS(@"BasicLanguage[1219]")
 						   otherButton:nil
 						suppressionKey:nil
 					   suppressionText:nil];
@@ -829,8 +829,8 @@
 	BOOL hasNoCert = NSObjectIsEmpty(commonName);
 	
 	if (hasNoCert) {
-		self.sslCertificateCommonNameField.stringValue = TXTLS(@"ServerSheetSSLCertificateViewNoCertificateSelected");
-		self.sslCertificateFingerprintField.stringValue = TXTLS(@"ServerSheetSSLCertificateViewNoCertificateSelected");
+		self.sslCertificateCommonNameField.stringValue = TXTLS(@"TDCServerSheet[1006]");
+		self.sslCertificateFingerprintField.stringValue = TXTLS(@"TDCServerSheet[1006]");
 	} else {
 		self.sslCertificateCommonNameField.stringValue = commonName;
 		self.sslCertificateFingerprintField.stringValue = [fingerprint uppercaseString];
@@ -865,10 +865,11 @@
 	if (querystatus == noErr) {
 		SFChooseIdentityPanel *panel = [SFChooseIdentityPanel sharedChooseIdentityPanel];
 		
-		[panel setInformativeText:TXTFLS(@"ServerSheetSSLCertificateViewSelectIdentityDialgMessage", [self.serverNameField stringValue])];
+		[panel setInformativeText:TXTFLS(@"TDCServerSheet[1007][2]", [self.serverNameField stringValue])];
 		[panel setAlternateButtonTitle:TXTLS(@"BasicLanguage[1009]")];
 		
-		NSInteger returnCode = [panel runModalForIdentities:(__bridge NSArray *)(identities) message:TXTLS(@"ServerSheetSSLCertificateViewSelectIdentityDialogTitle")];
+		NSInteger returnCode = [panel runModalForIdentities:(__bridge NSArray *)(identities)
+													message:TXTLS(@"TDCServerSheet[1007][1]")];
 	
 		/* After the user has chose the identity, we have to update our config value
 		 here and not -save since -save has nothing to reference. */
@@ -1133,14 +1134,13 @@
 
 - (void)showAddIgnoreMenu:(id)sender
 {
-
 	NSMenu *addIgnoreMenu = [NSMenu new];
 
-	NSMenuItem *item1 = [NSMenuItem menuItemWithTitle:TXTLS(@"ServerSheetAddressBookAdditionMenuAddIgnore")
+	NSMenuItem *item1 = [NSMenuItem menuItemWithTitle:TXTLS(@"TDCServerSheet[1004]")
 											   target:self
 											   action:@selector(addIgnore:)];
 
-	NSMenuItem *item2 = [NSMenuItem menuItemWithTitle:TXTLS(@"ServerSheetAddressBookAdditionMenuAddTracker")
+	NSMenuItem *item2 = [NSMenuItem menuItemWithTitle:TXTLS(@"TDCServerSheet[1005]")
 											   target:self
 											   action:@selector(addIgnore:)];
 

@@ -135,9 +135,9 @@ NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue, NSArray
 				NSString *languageKey;
 
 				if (total > 1 || total < 1) {
-					languageKey = [NSString stringWithFormat:@"TimeConvertPlural[%@]", unit.uppercaseString];
+					languageKey = [NSString stringWithFormat:@"BasicLanguage[1204][%@]", unit.uppercaseString];
 				} else {
-					languageKey = [NSString stringWithFormat:@"TimeConvert[%@]", unit.uppercaseString];
+					languageKey = [NSString stringWithFormat:@"BasicLanguage[1205][%@]", unit.uppercaseString];
 				}
 				
 				if (shortValue) {
@@ -151,7 +151,7 @@ NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue, NSArray
 		if ([finalResult length] >= 3) {
 			[finalResult safeDeleteCharactersInRange:NSMakeRange((finalResult.length - 2), 2)];
 		} else {
-			NSString *emptyTime = [NSString stringWithFormat:@"0 %@", TXTLS(@"TimeConvertPlural[SECOND]")];
+			NSString *emptyTime = [NSString stringWithFormat:@"0 %@", TXTLS(@"BasicLanguage[1204][SECOND]")];
 
 			[finalResult setString:emptyTime];
 		}

@@ -1825,9 +1825,9 @@ static NSMutableArray *excludeKeywords = nil;
 		[prompt sheetWindowWithQuestion:[NSApp keyWindow]
 								 target:self
 								 action:@selector(defaultIRCClientSheetCallback:withOriginalAlert:)
-								   body:TXTLS(@"SetAsDefaultIRCClientPromptMessage")
-								  title:TXTLS(@"SetAsDefaultIRCClientPromptTitle")
-						  defaultButton:TXTLS(@"YesButton")
+								   body:TXTLS(@"BasicLanguage[1227][2]")
+								  title:TXTLS(@"BasicLanguage[1227][1]")
+						  defaultButton:TXTLS(@"BasicLanguage[1219]")
 						alternateButton:TXTLS(@"BasicLanguage[1182]")
 							otherButton:nil
 						 suppressionKey:supkey

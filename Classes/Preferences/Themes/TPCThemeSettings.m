@@ -164,7 +164,7 @@
 
 		/* If either template failed to load, then log a error. */
         if (load_error) {
-            LogToConsole(TXTLS(@"StyleTemplateLoadFailed"), name, [load_error localizedDescription]);
+            LogToConsole(TXTLS(@"BasicLanguage[1224]"), name, [load_error localizedDescription]);
         }
 
 		return nil;

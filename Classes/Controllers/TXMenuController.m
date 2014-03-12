@@ -2159,10 +2159,10 @@
 
 	TVCInputPromptDialog *dialog = [TVCInputPromptDialog new];
 
-	[dialog alertWithMessageTitle:TXTLS(@"SetUserVhostPromptTitle")
+	[dialog alertWithMessageTitle:TXTLS(@"BasicLanguage[1228][1]")
 					defaultButton:TXTLS(@"BasicLanguage[1186]")
 				  alternateButton:TXTLS(@"BasicLanguage[1009]")
-				  informativeText:TXTLS(@"SetUserVhostPromptMessage")
+				  informativeText:TXTLS(@"BasicLanguage[1228][2]")
 				 defaultUserInput:nil
 				  completionBlock:^(BOOL defaultButtonClicked, NSString *resultString) {
 					  if (defaultButtonClicked) {

@@ -119,7 +119,7 @@
 	BOOL performInstall = [TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"BasicLanguage[1192][2]", filenamewoext)
 															  title:TXTLS(@"BasicLanguage[1192][1]")
 													  defaultButton:TXTLS(@"BasicLanguage[1182]")
-													alternateButton:TXTLS(@"YesButton")
+													alternateButton:TXTLS(@"BasicLanguage[1219]")
 													 suppressionKey:nil
 													suppressionText:nil];
 
@@ -157,7 +157,7 @@
 	BOOL performInstall = [TLOPopupPrompts dialogWindowWithQuestion:TXTFLS(@"BasicLanguage[1191][2]", filenamewoext)
 															  title:TXTLS(@"BasicLanguage[1191][1]")
 													  defaultButton:TXTLS(@"BasicLanguage[1182]")
-													alternateButton:TXTLS(@"YesButton")
+													alternateButton:TXTLS(@"BasicLanguage[1219]")
 													 suppressionKey:nil
 													suppressionText:nil];
 
