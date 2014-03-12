@@ -46,6 +46,10 @@ typedef void (^TVCLogControllerOperationBlock)(NSOperation *sender);
 /* Add new operations. */
 - (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender;
 
+/* Standalone queue entries act indpendent of all other. They are not allowed to act as a
+ dependent of other operations and are ready when view is. */
+- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender isStandalone:(BOOL)isStandalone;
+
 /* Limit scope of cancelAllOperations. */
 - (void)destroyOperationsForChannel:(IRCChannel *)channel;
 - (void)destroyOperationsForClient:(IRCClient *)client;

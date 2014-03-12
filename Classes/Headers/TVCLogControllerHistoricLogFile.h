@@ -44,6 +44,8 @@
 
 + (TVCLogControllerHistoricLogFile *)sharedInstance;
 
+- (void)createBaseModel; // Do not call.
+
 - (void)saveData;
 - (BOOL)isPerformingSave;
 
@@ -55,6 +57,5 @@
 - (void)entriesForClient:(IRCClient *)client
 			   inChannel:(IRCChannel *)channel
 			  fetchLimit:(NSInteger)maxEntryCount
-			   afterDate:(NSDate *)referenceDate
 	 withCompletionBlock:(void (^)(NSManagedObjectContext *context, NSArray *objects))completionBlock;
 @end
