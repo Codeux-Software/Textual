@@ -211,7 +211,7 @@
 		if (enableDialog == NO) {
 			BOOL addSupportChannel = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"TDCWelcomeSheet[1000][2]")
 																		 title:TXTLS(@"TDCWelcomeSheet[1000][1]")
-																 defaultButton:TXTLS(@"YesButton")
+																 defaultButton:TXTLS(@"BasicLanguage[1219]")
 															   alternateButton:TXTLS(@"BasicLanguage[1182]")
 																suppressionKey:@"welcomesheet_join_support_channel"
 															   suppressionText:TXPopupPromptSpecialSuppressionTextValue];

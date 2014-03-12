@@ -213,7 +213,6 @@
 				
 				if (timeleft > 0) {
 					remainingTime = TXSpecialReadableTime(timeleft, YES, @[@"day", @"hour", @"minute", @"second"]);
-					remainingTime = [remainingTime lowercaseString];
 				}
 			}
 			

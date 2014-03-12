@@ -59,12 +59,12 @@
 		NSString *firstn = [self.nicknames safeObjectAtIndex:0];
 		NSString *second = [self.nicknames safeObjectAtIndex:1];
 		
-		target = TXTFLS(@"InviteSheetTwoPeopleSelected", firstn, second);
+		target = TXTFLS(@"TDCInviteSheet[1002]", firstn, second);
 	} else {
-		target = TXTFLS(@"InviteSheetMultiplePeopleSelected", self.nicknames.count);
+		target = TXTFLS(@"TDCInviteSheet[1000]", self.nicknames.count);
 	}
 	
-	self.headerTitleField.stringValue = TXTFLS(@"InviteSheetTargetDescription", target);
+	self.headerTitleField.stringValue = TXTFLS(@"TDCInviteSheet[1001]", target);
 	
 	for (NSString *s in channels) {
 		[self.channelListPopup addItemWithTitle:s];

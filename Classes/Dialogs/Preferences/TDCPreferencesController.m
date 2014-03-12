@@ -642,7 +642,7 @@
 		[d setCanCreateDirectories:YES];
 		[d setAllowsMultipleSelection:NO];
 		
-		[d setPrompt:TXTLS(@"SelectButton")];
+		[d setPrompt:TXTLS(@"BasicLanguage[1225]")];
 		
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
 			[self.fileTransferDownloadDestinationButton selectItemAtIndex:0];
@@ -711,7 +711,7 @@
 		[d setCanCreateDirectories:YES];
 		[d setAllowsMultipleSelection:NO];
 		
-		[d setPrompt:TXTLS(@"SelectButton")];
+		[d setPrompt:TXTLS(@"BasicLanguage[1225]")];
 
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
 			[self.transcriptFolderButton selectItemAtIndex:0];
@@ -890,22 +890,22 @@
 	NSMutableString *sf = [NSMutableString string];
 
 	if (NSObjectIsNotEmpty(self.themeController.customSettings.nicknameFormat)) {
-		[sf appendString:TXTLS(@"ThemeChangeOverridePromptNicknameFormat")];
+		[sf appendString:TXTLS(@"TDCPreferencesController[1015][1]")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 
 	if (NSObjectIsNotEmpty(self.themeController.customSettings.timestampFormat)) {
-		[sf appendString:TXTLS(@"ThemeChangeOverridePromptTimestampFormat")];
+		[sf appendString:TXTLS(@"TDCPreferencesController[1015][2]")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 
 	if (self.themeController.customSettings.channelViewFont) {
-		[sf appendString:TXTLS(@"ThemeChangeOverridePromptChannelFont")];
+		[sf appendString:TXTLS(@"TDCPreferencesController[1015][4]")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 
 	if (self.themeController.customSettings.forceInvertSidebarColors) {
-		[sf appendString:TXTLS(@"ThemeChangeOverridePromptWindowColors")];
+		[sf appendString:TXTLS(@"TDCPreferencesController[1015][3]")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 
@@ -918,8 +918,8 @@
 	[prompt sheetWindowWithQuestion:[NSApp keyWindow]
 							 target:[TLOPopupPrompts class]
 							 action:@selector(popupPromptNilSelector:withOriginalAlert:)
-							   body:TXTFLS(@"ThemeChangeOverridePromptMessage", item.title, tsf)
-							  title:TXTLS(@"ThemeChangeOverridePromptTitle")
+							   body:TXTFLS(@"TDCPreferencesController[1014][2]", item.title, tsf)
+							  title:TXTLS(@"TDCPreferencesController[1014][1]")
 					  defaultButton:TXTLS(@"BasicLanguage[1186]")
 					alternateButton:nil
 						otherButton:nil

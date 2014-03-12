@@ -2285,7 +2285,7 @@
 			NSString *ccnt = [TPCPreferences gitCommitCount];
 
 			if (NSObjectIsEmpty(gref)) {
-				gref = TXTLS(@"Unknown");
+				gref = TXTLS(@"BasicLanguage[1218]");
 			}
 
 			NSString *text;
@@ -2309,9 +2309,9 @@
 		case 5044: // Command: MUTE
 		{
 			if (self.worldController.isSoundMuted) {
-				[self printDebugInformation:TXTLS(@"SoundIsAlreadyMuted")];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1220]")];
 			} else {
-				[self printDebugInformation:TXTLS(@"SoundIsNowMuted")];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1223]")];
 
 				[self.menuController toggleMuteOnNotificationSoundsShortcut:NSOffState];
 			}
@@ -2321,11 +2321,11 @@
 		case 5075: // Command: UNMUTE
 		{
 			if (self.worldController.isSoundMuted) {
-				[self printDebugInformation:TXTLS(@"SoundIsNoLongerMuted")];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1221]")];
 
 				[self.menuController toggleMuteOnNotificationSoundsShortcut:NSOnState];
 			} else {
-				[self printDebugInformation:TXTLS(@"SoundIsNotMuted")];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1222]")];
 			}
 
 			break;
@@ -2336,7 +2336,7 @@
 
 			NSTimeInterval timeDiff = [NSDate secondsSinceUnixTimestamp:TXBirthdayReferenceDate];
 
-			NSString *message = TXTFLS(@"TimeIntervalSinceFirstCommit", TXReadableTime(timeDiff));
+			NSString *message = TXTFLS(@"BasicLanguage[1226]", TXReadableTime(timeDiff));
 
 			if (PointerIsEmpty(selChannel)) {
 				[self printDebugInformationToConsole:message];
@@ -3294,9 +3294,10 @@
 				SFCertificateTrustPanel *panel = [SFCertificateTrustPanel sharedCertificateTrustPanel];
 				
 				[panel setAlternateButtonTitle:TXTLS(@"BasicLanguage[1009]")];
-				[panel setInformativeText:TXTLS(@"SocketBadSSLCertificateErrorMessage")];
+				[panel setInformativeText:TXTLS(@"BasicLanguage[1229][2]")];
 				
-				NSInteger returnCode = [panel runModalForTrust:trustRef message:TXTLS(@"SocketBadSSLCertificateErrorTitle")];
+				NSInteger returnCode = [panel runModalForTrust:trustRef
+													   message:TXTLS(@"BasicLanguage[1229][1]")];
 				
 				if (returnCode == NSAlertDefaultReturn) {
 					[self connect:IRCConnectBadSSLCertificateMode];
@@ -4645,7 +4646,7 @@
                                  action:@selector(receiveErrorExcessFloodWarningPopupCallback:withOriginalAlert:)
                                    body:TXTLS(@"BasicLanguage[1041][2]")
                                   title:TXTLS(@"BasicLanguage[1041][1]")
-                          defaultButton:TXTLS(@"YesButton")
+                          defaultButton:TXTLS(@"BasicLanguage[1219]")
                         alternateButton:TXTLS(@"BasicLanguage[1182]")
                             otherButton:TXTLS(@"BasicLanguage[1041][3]")
                          suppressionKey:nil

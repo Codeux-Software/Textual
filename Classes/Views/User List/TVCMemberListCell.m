@@ -201,24 +201,24 @@
     TVCMemberListUserInfoPopover *userInfoPopover = self.masterController.memberListUserInfoPopover;
 
     /* What permissions does the user have? */
-    NSString *permissions = @"UserHostmaskHoverTooltipMode_NA";
+    NSString *permissions = @"BasicLanguage[1206]";
 
     if (self.memberPointer.q) {
-        permissions = @"UserHostmaskHoverTooltipMode_Q";
+        permissions = @"BasicLanguage[1211]";
     } else if (self.memberPointer.a) {
-        permissions = @"UserHostmaskHoverTooltipMode_A";
+        permissions = @"BasicLanguage[1210]";
     } else if (self.memberPointer.o) {
-        permissions = @"UserHostmaskHoverTooltipMode_O";
+        permissions = @"BasicLanguage[1209]";
     } else if (self.memberPointer.h) {
-        permissions = @"UserHostmaskHoverTooltipMode_H";
+        permissions = @"BasicLanguage[1208]";
     } else if (self.memberPointer.v) {
-        permissions = @"UserHostmaskHoverTooltipMode_V";
+        permissions = @"BasicLanguage[1207]";
     }
 
     permissions = TXTLS(permissions);
 
     if (self.memberPointer.isCop) {
-        permissions = [permissions stringByAppendingString:TXTLS(@"UserHostmaskHoverTooltipMode_IRCop")];
+        permissions = [permissions stringByAppendingString:TXTLS(@"BasicLanguage[1212]")];
     }
 
     /* User info. */
@@ -227,11 +227,11 @@
     NSString *address = self.memberPointer.address;
 
     if (NSObjectIsEmpty(username)) {
-        username = TXTLS(@"UserHostmaskHoverTooltipNoInformationAvailable");
+        username = TXTLS(@"BasicLanguage[1215]");
     }
 
     if (NSObjectIsEmpty(address)) {
-        address = TXTLS(@"UserHostmaskHoverTooltipNoInformationAvailable");
+        address = TXTLS(@"BasicLanguage[1215]");
     }
 
     /* Where is our cell? */
@@ -254,9 +254,9 @@
 
 	/* Update away status. */
 	if (self.memberPointer.isAway) {
-		userInfoPopover.awayStatusField.stringValue = TXTLS(@"UserHostmaskHoverTooltipUserIsAway");
+		userInfoPopover.awayStatusField.stringValue = TXTLS(@"BasicLanguage[1213]");
 	} else {
-		userInfoPopover.awayStatusField.stringValue = TXTLS(@"UserHostmaskHoverTooltipUserIsNotAway");
+		userInfoPopover.awayStatusField.stringValue = TXTLS(@"BasicLanguage[1214]");
 	}
 
     [userInfoPopover showRelativeToRect:cellFrame

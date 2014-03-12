@@ -429,7 +429,7 @@
 		[d setCanCreateDirectories:YES];
 		[d setAllowsMultipleSelection:NO];
 		
-		[d setPrompt:TXTLS(@"SelectButton")];
+		[d setPrompt:TXTLS(@"BasicLanguage[1225]")];
 		[d setMessage:TXTLS(@"TDCFileTransferDialog[1021]")];
 		
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
