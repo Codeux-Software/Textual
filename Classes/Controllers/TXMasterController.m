@@ -130,7 +130,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	self.applicationIsRunningInHighResMode = [[self.mainWindow screen] runningInHighResolutionMode];
 
 	/* Call to initialize. */
-	(void)TVCLogControllerHistoricLogSharedInstance();
+	[TVCLogControllerHistoricLogSharedInstance() createBaseModel];
 
 	 self.themeControllerPntr = [TPCThemeController new];
 	[self.themeControllerPntr load];

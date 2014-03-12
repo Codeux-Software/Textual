@@ -589,7 +589,7 @@
 
 	/* Update WebKit. */
 	dispatch_async(dispatch_get_main_queue(), ^{
-		[self appendToDocumentBody:patchedAppend];
+		[self prependToDocumentBody:patchedAppend];
 
 		[self mark];
 
@@ -625,14 +625,13 @@
 			[[self historicLogFile] entriesForClient:[self client]
 										   inChannel:[self channel]
 										  fetchLimit:100
-										   afterDate:nil
 								 withCompletionBlock:^(NSManagedObjectContext *context, NSArray *objects) {
 									 [self reloadHistoryCompletionBlock:objects withContext:context];
 								 }];
 		} else {
 			[self reloadHistoryCompletionBlock:nil withContext:nil];
 		}
-	 } for:self];
+	 } for:self isStandalone:YES];
 }
 
 - (void)reloadHistoryCompletionBlock:(NSArray *)objects withContext:(NSManagedObjectContext *)context
@@ -659,14 +658,13 @@
 			[[self historicLogFile] entriesForClient:[self client]
 										   inChannel:[self channel]
 										  fetchLimit:1000
-										   afterDate:nil
 								 withCompletionBlock:^(NSManagedObjectContext *context, NSArray *objects) {
 									 [self reloadThemeCompletionBlock:objects withContext:context];
 								 }];
 		} else {
 			[self reloadThemeCompletionBlock:nil withContext:nil];
 		}
-	} for:self];
+	} for:self isStandalone:YES];
 }
 
 - (void)reloadThemeCompletionBlock:(NSArray *)objects withContext:(NSManagedObjectContext *)context

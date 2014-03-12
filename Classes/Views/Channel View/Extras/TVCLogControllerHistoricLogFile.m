@@ -40,9 +40,8 @@
 @interface TVCLogControllerHistoricLogFile ()
 @property (nonatomic, assign) BOOL isPerformingSave;
 @property (nonatomic, assign) BOOL hasPendingAutosaveTimer;
-@property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
-@property (nonatomic, strong) NSSortDescriptor *managedSortDescriptor;
+@property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @end
 
 @implementation TVCLogControllerHistoricLogFile
@@ -54,6 +53,7 @@
 
 + (TVCLogControllerHistoricLogFile *)sharedInstance
 {
+	/* Create a copy of self and maintain as static reference. */
 	static id sharedSelf = nil;
 
 	static dispatch_once_t onceToken;
@@ -75,63 +75,37 @@
 - (NSFetchRequest *)fetchRequestForClient:(IRCClient *)client
 								inChannel:(IRCChannel *)channel
 							   fetchLimit:(NSInteger)maxEntryCount
-								afterDate:(NSDate *)referenceDate
-						   returnIsObject:(BOOL)returnObjects
 {
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	/* What are we fetching for? */
 	PointerIsEmptyAssertReturn(client, nil);
 
-	/* Gather relevant information. */
-	NSString *clientID = [client uniqueIdentifier];
-	NSString *channelID = nil;
-
-	if (channel) {
-		channelID = [channel uniqueIdentifier];
-	}
-
 	/* Build base model. */
 	NSMutableDictionary *fetchVariables = [NSMutableDictionary dictionary];
 
-	/* Reference date. */
-	if (referenceDate) {
-		[fetchVariables setObject:referenceDate forKey:@"creation_date"];
-	} else {
-		/* There should be no records younger than this… */
-
-		[fetchVariables setObject:[NSDate dateWithTimeIntervalSinceReferenceDate:0] forKey:@"creation_date"];
-	}
-
 	/* Channel ID. */
-	if (channelID) {
-		[fetchVariables setObject:channelID forKey:@"channel_id"];
+	if (channel) {
+		[fetchVariables setObject:[channel uniqueIdentifier] forKey:@"channel_id"];
 	} else {
 		[fetchVariables setObject:[NSNull null] forKey:@"channel_id"];
 	}
 
 	/* Client ID. */
-	[fetchVariables setObject:clientID forKey:@"client_id"];
+	[fetchVariables setObject:[client uniqueIdentifier] forKey:@"client_id"];
 
 	/* Request actual predicate. */
-	NSFetchRequest *fetchRequest = [self.managedObjectModel fetchRequestFromTemplateWithName:@"LogLineFetchRequest"
-																	   substitutionVariables:fetchVariables];
+	NSFetchRequest *fetchRequest = [_managedObjectModel fetchRequestFromTemplateWithName:@"LogLineFetchRequest"
+																   substitutionVariables:fetchVariables];
 
 	/* Define sort order. */
-	[fetchRequest setSortDescriptors:@[self.managedSortDescriptor]];
+	[fetchRequest setSortDescriptors:@[[self managedSortDescriptor]]];
 
 	/* Return types. */
 	[fetchRequest setIncludesPendingChanges:NO];
 	[fetchRequest setReturnsObjectsAsFaults:YES];
+	[fetchRequest setIncludesPropertyValues:YES];
 
-	/* When returning ID, Core Data will need property values
-	 to properly perform sort or it will just do a best guess. */
-	if (returnObjects == NO) {
-		[fetchRequest setResultType:NSManagedObjectIDResultType];
-		[fetchRequest setIncludesPropertyValues:YES];
-	} else {
-		[fetchRequest setResultType:NSManagedObjectResultType];
-		[fetchRequest setIncludesPropertyValues:NO];
-	}
+	[fetchRequest setResultType:NSManagedObjectIDResultType];
 
 	/* Define match limit. */
 	if (maxEntryCount > 0) {
@@ -152,16 +126,16 @@
 		/* Build fetch request. */
 		NSFetchRequest *fetchRequest = [self fetchRequestForClient:client
 														 inChannel:channel
-														fetchLimit:0
-														 afterDate:nil
-													returnIsObject:YES];
+														fetchLimit:0];
 
 		/* Gather results. */
 		NSArray *objects = [_managedObjectContext executeFetchRequest:fetchRequest error:NULL];
 
 		/* Delete objects. */
-		for (TVCLogLine *line in objects) {
-			[_managedObjectContext deleteObject:line];
+		for (NSManagedObjectID *objectID in objects) {
+			NSManagedObject *managedObject = [_managedObjectContext objectWithID:objectID];
+
+			[_managedObjectContext deleteObject:managedObject];
 		}
 	}];
 #endif
@@ -170,7 +144,6 @@
 - (void)entriesForClient:(IRCClient *)client
 			   inChannel:(IRCChannel *)channel
 			  fetchLimit:(NSInteger)maxEntryCount
-			   afterDate:(NSDate *)referenceDate
 	 withCompletionBlock:(void (^)(NSManagedObjectContext *context, NSArray *objects))completionBlock
 {
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
@@ -190,9 +163,6 @@
 
 	/* Lock context. */
 	[_persistentStoreCoordinator lock];
-	[_managedObjectContext lock];
-
-	[backgroundContext lock];
 
 	/* Perform block. */
 	[backgroundContext performBlockAndWait:^{
@@ -202,9 +172,7 @@
 		/* Perform fetch. */
 		NSFetchRequest *fetchRequest = [self fetchRequestForClient:client
 														 inChannel:channel
-														fetchLimit:maxEntryCount
-														 afterDate:referenceDate
-													returnIsObject:NO];
+														fetchLimit:maxEntryCount];
 
 		NSError *fetchError;
 
@@ -232,9 +200,6 @@
 
 	/* Unlock context. */
 	[_persistentStoreCoordinator unlock];
-	[_managedObjectContext unlock];
-
-	[backgroundContext unlock];
 
 	/* Remove observer. */
 	[RZNotificationCenter() removeObserver:saveObserver];
@@ -249,41 +214,78 @@
 #pragma mark -
 #pragma mark Core Data Model
 
-- (id)init
+- (void)createBaseModel
 {
-	if (self = [super init]) {
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-		/* Call variables to initalize objects. */
-		(void)self.managedObjectModel;
-		(void)self.persistentStoreCoordinator;
-		(void)self.managedObjectContext;
+	/* Find the location of the file. */
+	NSString *path = [RZMainBundle() pathForResource:@"LogControllerStorageModel" ofType:@"mom"];
 
-		/* Listen for changes. */
-		self.hasPendingAutosaveTimer = NO;
-		self.isPerformingSave = NO;
+	NSURL *url = [NSURL fileURLWithPath:path];
 
-		[self handleManagedObjectContextChangeTimerInitializer];
-#endif
+	/* Create the model. */
+	_managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:url];
 
-		/* Return ourself. */
-		return self;
+	/* Create persistent store. */
+	_persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_managedObjectModel];
+
+	/* Add persistent store. */
+	NSError *addErr = nil;
+
+	/* Define save path. */
+	NSString *savePath = [self databaseSavePath];
+
+	NSURL *saveurl = [NSURL fileURLWithPath:savePath];
+
+	/* Perform add. */
+	NSDictionary *pragmaOptions = @{@"synchronous" : @"OFF", @"journal_mode" : @"WAL"};
+	NSDictionary *storeOptions = @{NSSQLitePragmasOption : pragmaOptions};
+
+	id result = [_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
+														  configuration:nil
+																	URL:saveurl
+																options:storeOptions
+																  error:&addErr];
+
+	/* Was there an error? */
+	if (result == nil) {
+		LogToConsole(@"Error Creating Persistent Store: %@", [addErr localizedDescription]);
+
+		_persistentStoreCoordinator = nil; // Destroy.
+	} else {
+		/* Create primary managed object. */
+		_managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+
+		[_managedObjectContext setPersistentStoreCoordinator:_persistentStoreCoordinator];
+		[_managedObjectContext setUndoManager:nil];
+		[_managedObjectContext setRetainsRegisteredObjects:NO];
 	}
 
-	return nil;
+	/* Continue work. */
+	if (_managedObjectContext == nil) {
+		NSAssert(NO, @"Missing managed object context.");
+	} else {
+		/* Define default values. */
+		_hasPendingAutosaveTimer = NO;
+		_isPerformingSave = NO;
+
+		/* Start save timer. */
+		[self handleManagedObjectContextChangeTimerInitializer];
+	}
+#endif
 }
 
 - (void)handleManagedObjectContextChangeTimerInitializer
 {
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	/* Cancel any previous running timers. */
-	if (self.hasPendingAutosaveTimer) {
+	if (_hasPendingAutosaveTimer) {
 		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(saveData) object:nil];
 
-		self.hasPendingAutosaveTimer = NO;
+		_hasPendingAutosaveTimer = NO;
 	}
 
 	/* Auto save thirty seconds after last change. */
-	self.hasPendingAutosaveTimer = YES;
+	_hasPendingAutosaveTimer = YES;
 
 	[self performSelector:@selector(saveData) withObject:nil afterDelay:300.0];
 #endif
@@ -292,26 +294,21 @@
 - (NSString *)databaseSavePath
 {
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	return [[TPCPreferences applicationCachesFolderPath] stringByAppendingPathComponent:@"logControllerHistoricLog_v001.sqlite"];
+	NSString *filename = @"logControllerHistoricLog_v001.sqlite";
+
+	return [[TPCPreferences applicationCachesFolderPath] stringByAppendingPathComponent:filename];
 #else
 	return nil;
 #endif
 }
 
-- (BOOL)hasPersistentStore
-{
-#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	NSArray *persistentStores = [self.persistentStoreCoordinator persistentStores];
-
-	return ([persistentStores count] > 0);
-#else
-	return NO;
-#endif
-}
-
 - (BOOL)isPerformingSave
 {
+#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	return _isPerformingSave;
+#else
+	return nil;
+#endif
 }
 
 - (void)saveData
@@ -322,19 +319,10 @@
 
 	[_managedObjectContext performBlock:^{
 		/* Do we have a save running? */
-		if (self.isPerformingSave) {
-			return; // Cancel save.
-		}
+		NSAssertReturn(_isPerformingSave == NO)
 
 		/* Continue with save operation. */
-		self.isPerformingSave = YES;
-
-		/* What are we saving to? */
-		if ([self hasPersistentStore] == NO) {
-			self.isPerformingSave = NO;
-
-			return; // Cancel save.
-		}
+		_isPerformingSave = YES;
 
 		/* Do changes even exist? */
 		if ([_managedObjectContext commitEditing]) {
@@ -346,110 +334,15 @@
 		}
 
 		/* Reset state. */
-		self.isPerformingSave = NO;
+		_isPerformingSave = NO;
 	}];
 #endif
-}
-
-- (NSManagedObjectModel *)managedObjectModel
-{
-	/* We do not need to do work if this property exists already. */
-	PointerIsNotEmptyAssertReturn(_managedObjectModel, _managedObjectModel);
-
-	/* Find the location of the file. */
-	NSString *path = [RZMainBundle() pathForResource:@"LogControllerStorageModel" ofType:@"mom"];
-
-	/* Create the model. */
-	NSURL *url = [NSURL fileURLWithPath:path];
-
-	_managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:url];
-
-	/* Return the model. */
-	return _managedObjectModel;
-}
-
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator;
-{
-	/* We do not need to do work if this property exists already. */
-	PointerIsNotEmptyAssertReturn(_persistentStoreCoordinator, _persistentStoreCoordinator);
-
-	/* Add model to persistent store. */
-	NSManagedObjectModel *mom = [self managedObjectModel];
-
-	_persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom];
-
-	/* Try to add new store. */
-	if ([self addPersistentStoreToCoordinator] == NO) {
-		/* There was an error adding. */
-
-		_persistentStoreCoordinator = nil;
-	}
-
-	/* Return new store. */
-	return _persistentStoreCoordinator;
-}
-
-- (BOOL)addPersistentStoreToCoordinator
-{
-	/* Try to create the actual persistent store. */
-	NSError *addErr = nil;
-
-	/* Define save path. */
-	NSString *savePath = [self databaseSavePath];
-
-	NSURL *url = [NSURL fileURLWithPath:savePath];
-
-	/* Perform add. */
-
-	NSDictionary *pragmaOptions = @{@"synchronous" : @"OFF", @"journal_mode" : @"WAL"};
-	NSDictionary *storeOptions = @{NSSQLitePragmasOption : pragmaOptions};
-
-	id result = [_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
-														  configuration:nil
-																	URL:url
-																options:storeOptions
-																  error:&addErr];
-
-	/* Was there an error? */
-	if (result == nil) {
-		LogToConsole(@"Error Creating Persistent Store: %@", [addErr localizedDescription]);
-
-		return NO; /* Return error. */
-	}
-
-	/* Return success. */
-	return YES;
-}
-
-- (NSManagedObjectContext *)managedObjectContext
-{
-	/* We do not need to do work if this property exists already. */
-	PointerIsNotEmptyAssertReturn(_managedObjectContext, _managedObjectContext);
-
-	/* Create the context. */
-	NSPersistentStoreCoordinator *coord = [self persistentStoreCoordinator];
-
-	PointerIsEmptyAssertReturn(coord, nil);
-
-	 _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-
-	[_managedObjectContext setPersistentStoreCoordinator:coord];
-	[_managedObjectContext setUndoManager:nil];
-	[_managedObjectContext setRetainsRegisteredObjects:NO];
-
-	return _managedObjectContext;
 }
 
 - (NSSortDescriptor *)managedSortDescriptor
 {
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	/* We do not need to do work if this property exists already. */
-	PointerIsNotEmptyAssertReturn(_managedSortDescriptor, _managedSortDescriptor);
-
-	/* Create new sort descriptor. */
-	_managedSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:NO];
-
-	return _managedSortDescriptor;
+	return [[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:NO];
 #else
 	return nil;
 #endif

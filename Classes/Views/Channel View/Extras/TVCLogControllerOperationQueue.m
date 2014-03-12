@@ -43,6 +43,7 @@
 @interface TVCLogControllerOperationItem : NSOperation
 @property (nonatomic, nweak) TVCLogController *controller;
 @property (nonatomic, strong) TVCLogControllerOperationBlock executionBlock;
+@property (nonatomic, assign) BOOL isStandalone;
 
 - (id)initWithQueue:(TVCLogControllerOperationQueue *)queue controller:(TVCLogController *)controller;
 @end
@@ -68,12 +69,18 @@
 
 - (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender
 {
+	[self enqueueMessageBlock:callbackBlock for:sender isStandalone:NO];
+}
+
+- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender isStandalone:(BOOL)isStandalone
+{
 	dispatch_async(dispatch_get_main_queue(), ^{
 		PointerIsEmptyAssert(callbackBlock);
 		PointerIsEmptyAssert(sender);
 
 		TVCLogControllerOperationItem *operation = [[TVCLogControllerOperationItem alloc] initWithQueue:self controller:sender];
 
+		[operation setIsStandalone:isStandalone];
 		[operation setExecutionBlock:callbackBlock];
 
 		/* Add the operations. */
@@ -113,13 +120,16 @@
 	dispatch_async(dispatch_get_main_queue(), ^{
 		PointerIsEmptyAssert(controller);
 
+		/* Mark all objects part of this controller
+		 that are not cancelled and have no dependencies
+		 as ready or maybe is ready. */
 		for (id operation in [self operations]) {
 			if ([operation controller] == controller) {
-				if ([operation isCancelled] == NO) {
+				NSInteger depCount = [[operation dependencies] count];
+
+				if ([operation isCancelled] == NO && depCount <= 0) {
 					[operation willChangeValueForKey:@"isReady"];
 					[operation didChangeValueForKey:@"isReady"];
-
-					break; // Only update oldest operation matching controller.
 				}
 			}
 		}
@@ -135,7 +145,7 @@
 	 main queue so we will not wrap this in it. */
 	for (id operation in [[self operations] reverseObjectEnumerator]) {
 		if ([operation controller] == controller) {
-			if ([operation isCancelled] == NO) {
+			if ([operation isCancelled] == NO && [operation isStandalone] == NO) {
 				return operation;
 			}
 		}
@@ -181,7 +191,9 @@
 
 - (BOOL)isReady
 {
-	if ([[self dependencies] count] < 1) {
+	NSInteger depCount = [[self dependencies] count];
+
+	if (depCount < 1 || [self isStandalone]) {
 		return ([super isReady] && [[self controller] isLoaded]);
 	} else {
 		return [super isReady];
