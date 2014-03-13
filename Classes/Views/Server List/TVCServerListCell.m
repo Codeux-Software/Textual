@@ -85,7 +85,7 @@
 		@"rowIndex"		: @(rowIndex),
 		@"isInverted"	: @([TPCPreferences invertSidebarColors]),
 		@"isRetina"		: @([TPCPreferences runningInHighResolutionMode]),
-		@"isSelected"	: @([self.cellItem isEqual:self.worldController.selectedItem]),
+		@"isSelected"	: @([self.serverList isRowSelected:rowIndex]),
 		@"isKeyWindow"	: @(self.masterController.mainWindowIsActive),
 		@"isGraphite"	: @([NSColor currentControlTint] == NSGraphiteControlTint)
 	};
@@ -144,7 +144,7 @@
 	/* Button, yay! */
 	NSInteger rowIndex = [self rowIndex];
 
-	BOOL isSelected = (rowIndex == self.serverList.selectedRow);
+	BOOL isSelected = [self.serverList isRowSelected:rowIndex];
 
 	/* We keep a reference to the default button. */
 	if (PointerIsEmpty(self.serverList.defaultDisclosureTriangle)) {
