@@ -46,9 +46,9 @@
 				  message:(NSString *)messageString
 				  command:(NSString *)commandString
 {
-	IRCChannel *channel = client.worldController.selectedChannel;
+	IRCChannel *channel = [[self worldController] selectedChannel];
 
-	if (channel.isChannel) {
+	if ([channel isChannel]) {
 		if ([commandString isEqualToString:@"CLONES"]) {
 			[self findAllClonesIn:channel on:client];
 		} else if ([commandString isEqualToString:@"NAMEL"]) {
@@ -65,7 +65,7 @@
 - (void)buildListOfUsersOn:(IRCChannel *)channel on:(IRCClient *)client
 {
 	if ([channel numberOfMembers] <= 0) {
-		[client printDebugInformation:TPIFLS(@"SpammerParadiseNoUsersInChannel", channel.name) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BasicLanguage[1000]", [channel name]) channel:channel];
 
 		return; // We cannot do anything with no users now can we?
 	}
@@ -74,7 +74,7 @@
 	NSMutableArray *users = [NSMutableArray array];
 
 	for (IRCUser *u in [channel unsortedMemberList]) {
-		[users safeAddObject:u.nickname];
+		[users safeAddObject:[u nickname]];
 	}
 
 	[users sortUsingSelector:@selector(compare:)];
@@ -90,16 +90,16 @@
 
     /* Populate our list by matching an array of users to that of the address. */
     for (IRCUser *user in [channel unsortedMemberList]) {
-        NSObjectIsEmptyAssertLoopContinue(user.address);
+        NSObjectIsEmptyAssertLoopContinue([user address]);
 
-        NSArray *clones = [allUsers arrayForKey:user.address];
+        NSArray *clones = [allUsers arrayForKey:[user address]];
 
         if (NSObjectIsEmpty(clones)) {
-            [allUsers setObject:@[user.nickname] forKey:user.address];
+            [allUsers setObject:@[[user nickname]] forKey:[user address]];
         } else {
-            clones = [clones arrayByAddingObject:user.nickname];
+            clones = [clones arrayByAddingObject:[user nickname]];
 
-            [allUsers setObject:clones forKey:user.address];
+            [allUsers setObject:clones forKey:[user address]];
         }
     }
 
@@ -109,7 +109,7 @@
     for (NSString *dictKey in listKeys) {
         NSArray *userArray = [allUsers arrayForKey:dictKey];
 
-        if (userArray.count <= 1) {
+        if ([userArray count] <= 1) {
             [allUsers removeObjectForKey:dictKey];
         }
     }
@@ -118,13 +118,13 @@
 
     /* No cloes found. */
     if (NSObjectIsEmpty(allUsers)) {
-        [client printDebugInformation:TPILS(@"SpammerParadiseNoClonesFound") channel:channel];
+        [client printDebugInformation:TPILS(@"BasicLanguage[1001]") channel:channel];
 
         return;
     }
 
     /* Build clone list. */
-    [client printDebugInformation:TPIFLS(@"SpammerParadiseNumberOfClonesFound", allUsers.count, channel.name, client.networkName) channel:channel];
+    [client printDebugInformation:TPIFLS(@"BasicLanguage[1002]", [allUsers count], [channel name], [client networkName]) channel:channel];
     
     for (NSString *dictKey in allUsers) {
         NSArray *userArray = [allUsers arrayForKey:dictKey];
