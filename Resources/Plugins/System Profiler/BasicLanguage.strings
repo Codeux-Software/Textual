@@ -36,64 +36,72 @@
 
  *********************************************************************** */
 
-"SystemInformationPreferencePaneMenuItemTitle" = "System Information";
+/* Preferences pane name. */
+"BasicLanguage[1000]" = "System Information";
 
-"SystemInformationCompiledOutputPrefix" = "System Information:";
-"SystemInformationCompiledOutputModel" = " \002Model:\002 %@ \002•\002";
-"SystemInformationCompiledOutputCPUCore" = " \002CPU:\002 %1$@ (%2$lu Threads, %3$lu Cores) @ %4$@ \002•\002";
-"SystemInformationCompiledOutputMemory" = " \002Memory:\002 %@ \002•\002";
-"SystemInformationCompiledOutputUptime" = " \002Uptime:\002 %@ \002•\002";
-"SystemInformationCompiledOutputDiskspace" = " \002Disk Space:\002 %@ \002•\002";
-"SystemInformationCompiledOutputDiskspaceExtended" = "Total: %@; Free: %@";
-"SystemInformationCompiledOutputGraphics" = " \002Graphics:\002 %@ \002•\002";
-"SystemInformationCompiledOutputScreenResolution" = " \002Screen Resolution:\002 %.0f x %.0f \002•\002";
-"SystemInformationCompiledOutputScreenResolutionHighResoMode" = " \002Screen Resolution:\002 %.0f x %.0f (HiDPI Mode) \002•\002";
-"SystemInformationCompiledOutputLoad" = " \002Load:\002 %@%% \002•\002";
-"SystemInformationCompiledOutputOSVersion" = " \002OS:\002 %1$@ %2$@ (%3$@) (Build %4$@)";
+/* /sysinfo/ command. */
+"BasicLanguage[1001]" = "System Information:";
+"BasicLanguage[1002]" = " \002Model:\002 %@ \002•\002";
+"BasicLanguage[1003]" = " \002CPU:\002 %1$@ (%2$lu Threads, %3$lu Cores) @ %4$@ \002•\002";
+"BasicLanguage[1004]" = " \002Memory:\002 %@ \002•\002";
+"BasicLanguage[1005]" = " \002Uptime:\002 %@ \002•\002";
+"BasicLanguage[1006]" = " \002Disk Space:\002 %@ \002•\002";
+"BasicLanguage[1007]" = "Total: %@; Free: %@";
+"BasicLanguage[1008]" = " \002Graphics:\002 %@ \002•\002";
+"BasicLanguage[1009]" = " \002Screen Resolution:\002 %.0f x %.0f \002•\002";
+"BasicLanguage[1010]" = " \002Screen Resolution:\002 %.0f x %.0f (HiDPI Mode) \002•\002";
+"BasicLanguage[1011]" = " \002Load:\002 %@%% \002•\002";
+"BasicLanguage[1012]" = " \002OS:\002 %1$@ %2$@ (%3$@) (Build %4$@)";
 
-"SystemInformationGraphicsInformationResultBase" = "%@";
-"SystemInformationGraphicsInformationResultMiddle" = ", %@";
+"BasicLanguage[1013]" = "%@";
+"BasicLanguage[1014]" = ", %@";
 
-"SystemInformationOSVersionLion" = "Lion";
-"SystemInformationOSVersionMountainLion" = "Mountain Lion";
-"SystemInformationOSVersionMavericks" = "Mavericks";
+"BasicLanguage[1015]" = "Lion";
+"BasicLanguage[1016]" = "Mountain Lion";
+"BasicLanguage[1017]" = "Mavericks";
 
-"SystemInformationApplicationMemoryUse" = "Textual is privately using %1$@ of memory. It is also sharing %2$@ with other processes. ";
+"BasicLanguage[1018]" = "%.2f GHz";
+"BasicLanguage[1019]" = "%.2f MHz"; // really?
 
-"SystemInformationCPUClockSpeedGHz" = "%.2f GHz";
-"SystemInformationCPUClockSpeedMHz" = "%.2f MHz"; // really?
+"BasicLanguage[1029]" = "%.2f TB";
+"BasicLanguage[1030]" = "%.2f GB";
+"BasicLanguage[1031]" = "%.2f MB";
+"BasicLanguage[1032]" = "%.2f KB";
 
-"SystemInformationDiskspaceCommandResultPrefix" = "\002Mounted Drives:\002 %@";
-"SystemInformationDiskspaceCommandResultBase" = "%1$@: Total: %2$@; Free: %3$@";
-"SystemInformationDiskspaceCommandResultMiddle" = " — %1$@: Total: %2$@; Free: %3$@";
-"SystemInformationDiskspaceCommandResultError" = "Error: Unable to find any mounted drives."; // what are we running on?
+/* /memory/ command. */
+"BasicLanguage[1020]" = "Textual is privately using %1$@ of memory. It is also sharing %2$@ with other processes. ";
 
-"SystemInformationNetstatsCommandResultPrefix" = "\002Network Traffic:\002%@";
-"SystemInformationNetstatsCommandResultBase" = " [%1$@]: %2$@ in, %3$@ out";
-"SystemInformationNetstatsCommandResultMiddle" = " — [%1$@]: %2$@ in, %3$@ out";
-"SystemInformationNetstatsCommandResultError" = "Error: Unable to locate any network statistics. ";
+/* /diskspace/ command. */
+"BasicLanguage[1021]" = "\002Mounted Drives:\002 %@";
+"BasicLanguage[1022]" = "%1$@: Total: %2$@; Free: %3$@";
+"BasicLanguage[1023]" = " — %1$@: Total: %2$@; Free: %3$@";
+"BasicLanguage[1024]" = "Error: Unable to find any mounted drives."; // what are we running on?
 
-"SystemInformationFilesizeTB" = "%.2f TB";
-"SystemInformationFilesizeGB" = "%.2f GB";
-"SystemInformationFilesizeMB" = "%.2f MB";
-"SystemInformationFilesizeKB" = "%.2f KB";
+/* /netstats/ command. */
+"BasicLanguage[1025]" = "\002Network Traffic:\002%@";
+"BasicLanguage[1026]" = " [%1$@]: %2$@ in, %3$@ out";
+"BasicLanguage[1027]" = " — [%1$@]: %2$@ in, %3$@ out";
+"BasicLanguage[1028]" = "Error: Unable to locate any network statistics. ";
 
-"SystemInformationStyleCommandResultBundle" = "\002Current Style:\002 %@";
-"SystemInformationStyleCommandResultNormalCustom" = "\002Current Style:\002 %@ (Custom)";
-"SystemInformationStyleCommandResultCloudCustom" = "\002Current Style:\002 %@ (iCloud)";
-"SystemInformationStyleCommandResultDarkMode" = ", with dark mode and system wide ";
-"SystemInformationStyleCommandResultLightMode" = ", with system wide ";
-"SystemInformationStyleCommandResultAquaMode" = "aqua enabled.";
-"SystemInformationStyleCommandResultGraphiteMode" = "graphite enabled.";
+/* /style/ command. */
+"BasicLanguage[1033]" = "\002Current Style:\002 %@";
+"BasicLanguage[1034]" = "\002Current Style:\002 %@ (Custom)";
+"BasicLanguage[1035]" = "\002Current Style:\002 %@ (iCloud)";
+"BasicLanguage[1036]" = ", with dark mode and system wide ";
+"BasicLanguage[1037]" = ", with system wide ";
+"BasicLanguage[1038]" = "aqua enabled.";
+"BasicLanguage[1039]" = "graphite enabled.";
 
-"SystemInformationScreensCommandResultSingle" = "\002Screen Resolution:\002 %1$.0f x %2$.0f";
-"SystemInformationScreensCommandResultMultiBase" = "\002Screen Resolutions:\002 Monitor %1$ld: %2$.0f x %3$.0f";
-"SystemInformationScreensCommandResultMultiMiddle" = "; Monitor %1$ld: %2$.0f x %2$.0f";
-"SystemInformationScreensCommandResultHighResoMode" = " (HiDPI Mode)";
+/* /screens/ command. */
+"BasicLanguage[1040]" = "\002Screen Resolution:\002 %1$.0f x %2$.0f";
+"BasicLanguage[1041]" = "\002Screen Resolutions:\002 Monitor %1$ld: %2$.0f x %3$.0f";
+"BasicLanguage[1042]" = "; Monitor %1$ld: %2$.0f x %2$.0f";
+"BasicLanguage[1043]" = " (HiDPI Mode)";
 
-"SystemInformationSFontCommandResult" = "\002Configured Font:\002 %1$@ — \002Size:\002 %2$f";
-"SystemInformationUptimeCommandResult" = "System Uptime: %1$@ - Textual Uptime: %2$@";
-"SystemInformationSysmemCommandResult" = "\002System Memory:\002 Free: %1$@; Used: %2$@; Total: %3$@; — [%4$@]";
-"SystemInformationRuncountCommandResult" = "Textual has been opened \002%1$@\002 times with a total runtime of %2$@";
-"SystemInformationLoadavgCommandResult" = "\002Current Load:\002 %@%%";
-"SystemInformationMsgcountCommandResult" = "Textual has sent \002%1$@\002 messages since startup with a total of \002%2$@\002 messages received. The last message received on this connection occured %3$@ ago. This all equals roughly \002%4$@ in\002 and \002%5$@ out\002 worth of bandwidth.";
+/* Misc., one line commands. */
+"BasicLanguage[1044]" = "\002Configured Font:\002 %1$@ — \002Size:\002 %2$f";
+"BasicLanguage[1045]" = "System Uptime: %1$@ - Textual Uptime: %2$@";
+"BasicLanguage[1046]" = "\002System Memory:\002 Free: %1$@; Used: %2$@; Total: %3$@; — [%4$@]";
+"BasicLanguage[1047]" = "Textual has been opened \002%1$@\002 times with a total runtime of %2$@";
+"BasicLanguage[1048]" = "\002Current Load:\002 %@%%";
+"BasicLanguage[1049]" = "Textual has sent \002%1$@\002 messages since startup with a total of \002%2$@\002 messages received. The last message received on this connection occured %3$@ ago. This all equals roughly \002%4$@ in\002 and \002%5$@ out\002 worth of bandwidth.";
