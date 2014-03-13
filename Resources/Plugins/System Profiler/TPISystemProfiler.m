@@ -72,7 +72,7 @@
 
 - (NSString *)preferencesMenuItemName
 {
-	return TPILS(@"SystemInformationPreferencePaneMenuItemTitle");
+	return TPILS(@"BasicLanguage[1000]");
 }
 
 #pragma mark -
@@ -89,7 +89,7 @@
 				  message:(NSString *)messageString
 				  command:(NSString *)commandString
 {
-	NSString *channelName = client.worldController.selectedChannel.name;
+	NSString *channelName = [[[self worldController] selectedChannel] name];
 	
 	if ([channelName length] >= 1) {
 		if ([commandString isEqualToString:@"SYSINFO"]) {
