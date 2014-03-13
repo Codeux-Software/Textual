@@ -11,7 +11,7 @@
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleVersion</key>
-	<string>0.8</string>
+	<string>0.9</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2005 - 2011 The Adium Team</string>
 </dict>
