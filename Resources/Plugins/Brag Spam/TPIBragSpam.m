@@ -39,21 +39,27 @@
 
 @implementation TPIBragSpam
 
-- (void)appendPluralOrSingular:(NSString **)resultString valueToken:(NSString *)valueToken value:(NSInteger)valueActual
+- (void)appendPluralOrSingular:(NSString **)resultString valueToken:(NSInteger)valueToken value:(NSInteger)valueActual
 {
+	NSString *valueKey;
+
 	if (NSDissimilarObjects(valueActual, 1)) {
-		valueToken = [valueToken stringByAppendingString:@"[PLURAL]"];
+		valueKey = [NSString stringWithFormat:@"BasicLanguage[%ld][1]", valueToken];
+	} else {
+		valueKey = [NSString stringWithFormat:@"BasicLanguage[%ld][0]", valueToken];
 	}
 
-	*resultString = [*resultString stringByAppendingString:TPIFLS(valueToken, valueActual)];
+	*resultString = [*resultString stringByAppendingString:TPIFLS(valueKey, valueActual)];
 }
 
-- (void)messageSentByUser:(IRCClient*)client
+- (void)messageSentByUser:(IRCClient *)client
 				  message:(NSString *)messageString
 				  command:(NSString *)commandString
 {
 	if ([commandString isEqualToString:@"BRAG"]) {
-		NSAssertReturn(client.worldController.selectedChannel.isChannel);
+		IRCChannel *selectedChannel = [[self worldController] selectedChannel];
+
+		NSAssertReturn([selectedChannel isChannel]);
 		
 		NSInteger operCount      = 0;
 		NSInteger chanOpCount    = 0;
@@ -63,33 +69,33 @@
 		NSInteger networkCount   = 0;
 		NSInteger powerOverCount = 0;
 		
-		for (IRCClient *c in client.worldController.clients) {
-			if (c.isConnected == NO) {
+		for (IRCClient *c in [[self worldController] clients]) {
+			if ([c isConnected] == NO) {
 				continue;
 			}
 			
 			networkCount++;
 			
-			if (c.hasIRCopAccess == YES) {
+			if ([c hasIRCopAccess] == YES) {
 				operCount++;
 			}
 			
 			NSMutableArray *trackedUsers = [NSMutableArray new];
 			
-			for (IRCChannel *ch in c.channels) {
+			for (IRCChannel *ch in [c channels]) {
 				if ([ch isActive] == NO || [ch isChannel] == NO) {
 					continue;
 				}
 
 				channelCount += 1;
 				
-				IRCUser *myself = [ch memberWithNickname:c.localNickname];
+				IRCUser *myself = [ch memberWithNickname:[c localNickname]];
 				
-				if (myself.q || myself.a || myself.o) {
+				if ([myself q] || [myself a] || [myself o]) {
 					chanOpCount++;
-				} else if (myself.h) {
+				} else if ([myself h]) {
 					chanHopCount++;
-				} else if (myself.v) {
+				} else if ([myself v]) {
 					chanVopCount++;
 				}
 				
@@ -100,23 +106,23 @@
 				
 					BOOL addUser = NO;
 
-					if (client.hasIRCopAccess && m.isCop == NO) {
+					if ([client hasIRCopAccess] && [m isCop] == NO) {
 						addUser = YES;
-					} else if (myself.q && m.q == NO) {
+					} else if ([myself q] && [m q] == NO) {
 						addUser = YES;
-					} else if (myself.a && m.q == NO && m.a == NO) {
+					} else if ([myself a] && [m q] == NO && [m a] == NO) {
 						addUser = YES;
-					} else if (myself.o && m.q == NO && m.a == NO && m.o == NO) {
+					} else if ([myself o] && [m q] == NO && [m a] == NO && [m o] == NO) {
 						addUser = YES;
-					} else if (myself.h && m.q == NO && m.a == NO && m.o == NO && m.h == NO) {
+					} else if ([myself h] && [m q] == NO && [m a] == NO && [m o] == NO && [m h] == NO) {
 						addUser = YES;	
 					}
 					
 					if (addUser == YES) {
-						if ([trackedUsers containsObject:m.nickname] == NO) {
+						if ([trackedUsers containsObject:[m nickname]] == NO) {
 							powerOverCount++;
 							
-							[trackedUsers addObject:m.nickname];
+							[trackedUsers addObject:[m nickname]];
 						}
 					}
 				}
@@ -126,19 +132,24 @@
 
 		NSString *resultString = NSStringEmptyPlaceholder;
 
-		[self appendPluralOrSingular:&resultString valueToken:@"BragspamPluginNormalResultChannel" value:channelCount];
-		[self appendPluralOrSingular:&resultString valueToken:@"BragspamPluginNormalResultNetwork" value:networkCount];
-		[self appendPluralOrSingular:&resultString valueToken:@"BragspamPluginNormalResultIRCopStatus" value:operCount];
-		[self appendPluralOrSingular:&resultString valueToken:@"BragspamPluginNormalResultOpMode" value:chanOpCount];
-		[self appendPluralOrSingular:&resultString valueToken:@"BragspamPluginNormalResultHalfopMode" value:chanHopCount];
-		[self appendPluralOrSingular:&resultString valueToken:@"BragspamPluginNormalResultVoiceMode" value:chanVopCount];
-		[self appendPluralOrSingular:&resultString valueToken:@"BragspamPluginNormalResultUserPower" value:powerOverCount];
+		[self appendPluralOrSingular:&resultString valueToken:1000 value:channelCount];
+		[self appendPluralOrSingular:&resultString valueToken:1001 value:networkCount];
+
+		if (powerOverCount == 0) {
+			resultString = [resultString stringByAppendingString:TPILS(@"BasicLanguage[1007]")];
+		} else {
+			[self appendPluralOrSingular:&resultString valueToken:1002 value:operCount];
+			[self appendPluralOrSingular:&resultString valueToken:1003 value:chanOpCount];
+			[self appendPluralOrSingular:&resultString valueToken:1004 value:chanHopCount];
+			[self appendPluralOrSingular:&resultString valueToken:1005 value:chanVopCount];
+			[self appendPluralOrSingular:&resultString valueToken:1006 value:powerOverCount];
+		}
 
 		[client sendPrivmsgToSelectedChannel:resultString];
 	}
 }
 
-- (NSArray*)pluginSupportsUserInputCommands
+- (NSArray *)pluginSupportsUserInputCommands
 {
 	return @[@"brag"];
 }	

@@ -38,11 +38,9 @@
 #import "TextualApplication.h"
 
 @interface TPIBragSpam : NSObject <THOPluginProtocol>
-
-- (void)messageSentByUser:(IRCClient*)client
+- (void)messageSentByUser:(IRCClient *)client
 				  message:(NSString *)messageString
 				  command:(NSString *)commandString;
 
-- (NSArray*)pluginSupportsUserInputCommands;
-
+- (NSArray *)pluginSupportsUserInputCommands;
 @end
