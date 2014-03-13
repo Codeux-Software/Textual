@@ -39,7 +39,6 @@
 #import "TextualApplication.h"
 
 @interface TPI_ZNCAdditions : NSObject <THOPluginProtocol>
-
 - (void)messageReceivedByServer:(IRCClient *)client
 						 sender:(NSDictionary *)senderDict
 						message:(NSDictionary *)messageDict;
@@ -50,5 +49,4 @@
 
 - (NSArray *)pluginSupportsUserInputCommands;
 - (NSArray *)pluginSupportsServerInputCommands;
-
 @end
