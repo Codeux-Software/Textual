@@ -144,7 +144,7 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 
 	BN_dec2bn(&self.DHStatus->g, "2");
 
-	DHAssertNO(primeData.length >= 1);
+	DHAssertNO([primeData length] >= 1);
 	
 	BIGNUM *ret = BN_bin2bn((unsigned char *)[primeData bytes], (int)[primeData length], self.DHStatus->p);
 
@@ -186,7 +186,7 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 	
 	NSData *secretValue = [[NSData alloc] initWithBytes:key length:sizeof(key)];
 
-	DHAssertNO(secretValue.length >= 1);
+	DHAssertNO([secretValue length] >= 1);
 
 	self.secretValue = secretValue;
 }
@@ -209,7 +209,7 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 
 - (NSString *)secretStringValue
 {
-	NSData *secretValue = self.secretValue;
+	NSData *secretValue = [self secretValue];
 
 	DHAssertNO(secretValue.length >= 1);
 	
@@ -219,14 +219,14 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 
 	NSData *secretHash = [[NSData alloc] initWithBytes:sha_md length:sizeof(sha_md)];
 
-	DHAssertNO(secretHash.length >= 1);
+	DHAssertNO([secretHash length] >= 1);
 
     return [self base64Encode:secretHash];
 }
 
 - (NSString *)publicKeyValue:(NSData *)publicInput
 {
-	DHAssertNO(publicInput.length >= 1);
+	DHAssertNO([publicInput length] >= 1);
 
 	return [self base64Encode:publicInput];
 }
@@ -247,7 +247,7 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 
 	NSData *publicInput = [[NSData alloc] initWithBytes:key length:sizeof(key)];
 
-	DHAssertNO(publicInput.length >= 1);
+	DHAssertNO([publicInput length] >= 1);
 
 	return publicInput;
 }
@@ -258,7 +258,7 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 {
 	NSString *output = [CSFWBase64Encoding encodeData:input];
 
-	DHAssertNO(output.length >= 1);
+	DHAssertNO([output length] >= 1);
 
 	BOOL equalFound = NO;
 
@@ -274,7 +274,7 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 		} else {
 			equalFound = YES;
 
-			output = [output substringWithRange:NSMakeRange(0, (output.length - 1))];
+			output = [output substringWithRange:NSMakeRange(0, ([output length] - 1))];
 		}
 	}
 
@@ -283,7 +283,7 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 
 - (NSData *)base64Decode:(NSString *)input
 {
-	NSInteger inputLength = input.length;
+	NSInteger inputLength = [input length];
 
 	DHAssertNO(input.length >= 1);
 
@@ -293,7 +293,7 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 		input = [input substringToIndex:(inputLength - 1)];
 	}
 
-	while (((input.length % 4) == 0) == NO) {
+	while ((([input length] % 4) == 0) == NO) {
 		input = [input stringByAppendingString:@"="];
 	}
 	

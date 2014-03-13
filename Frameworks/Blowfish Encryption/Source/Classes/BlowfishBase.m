@@ -60,7 +60,7 @@ static const signed char fish_unbase64[256] = {
 
 + (NSString *)encrypt:(NSString *)rawInput key:(NSString *)secretKey encoding:(NSStringEncoding)dataEncoding
 {
-	if (secretKey.length <= 0 || rawInput.length <= 0) {
+	if ([secretKey length] <= 0 || [rawInput length] <= 0) {
 		return nil;
 	}
 	
@@ -140,7 +140,7 @@ static const signed char fish_unbase64[256] = {
 
 	/* =============================================== */
 
-	if (cypher.length <= 0) {
+	if ([cypher length] <= 0) {
 		return nil;
 	}
 	
@@ -152,7 +152,7 @@ static const signed char fish_unbase64[256] = {
 
 + (NSString *)decrypt:(NSString *)rawInput key:(NSString *)secretKey encoding:(NSStringEncoding)dataEncoding;
 {
-	if (secretKey.length <= 0 || rawInput.length <= 0) {
+	if ([secretKey length] <= 0 || [rawInput length] <= 0) {
 		return nil;
 	}
 

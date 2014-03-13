@@ -44,7 +44,7 @@
 {
 	NSString *result = [BlowfishBase encrypt:input key:phrase encoding:local];
 
-	if (result.length <= 0) {
+	if ([result length] <= 0) {
 		return nil;
 	}
 
@@ -55,12 +55,20 @@
 {
 	BOOL hasOKPrefix = [input hasPrefix:@"+OK "];
 	BOOL hasMCPSPrefix = [input hasPrefix:@"mcps "];
-	
-	if ((hasOKPrefix || hasMCPSPrefix) && [input length] >= 5) {
+
+	if ((hasOKPrefix || hasMCPSPrefix)) {
 		if (hasOKPrefix) {
-			input = [input substringFromIndex:4];
+			if ([input length] == 4) {
+				return @""; /* Allow for empty strings. */
+			} else {
+				input = [input substringFromIndex:4];
+			}
 		} else if (hasMCPSPrefix) {
-			input = [input substringFromIndex:5];
+			if ([input length] == 5) {
+				return @""; /* Allow for empty strings. */
+			} else {
+				input = [input substringFromIndex:5];
+			}
 		}
 	} else {
 		return nil;
@@ -68,7 +76,7 @@
 
 	NSString *result = [BlowfishBase decrypt:input key:phrase encoding:local];
 
-	if (result.length <= 0) {
+	if ([result length] <= 0) {
 		return nil;
 	}
 
