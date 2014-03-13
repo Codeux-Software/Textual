@@ -35,18 +35,25 @@
 
  *********************************************************************** */
 
-"BragspamPluginNormalResultChannel"					= "I am in %ld channel while connected to ";
-"BragspamPluginNormalResultNetwork"					= "%ld network. ";
-"BragspamPluginNormalResultIRCopStatus"				= "I have %ld o:line, ";
-"BragspamPluginNormalResultOpMode"					= "%ld op, ";
-"BragspamPluginNormalResultHalfopMode"				= "%ld halfop, ";
-"BragspamPluginNormalResultVoiceMode"				= "and %ld voice ";
-"BragspamPluginNormalResultUserPower"				= "with power over %ld user.";
+"BasicLanguage[1000][0]" = "I am in %ld channel while connected to ";
+"BasicLanguage[1000][1]" = "I am in %ld channels while connected to ";
 
-"BragspamPluginNormalResultChannel[PLURAL]"			= "I am in %ld channels while connected to ";
-"BragspamPluginNormalResultNetwork[PLURAL]"			= "%ld networks. ";
-"BragspamPluginNormalResultIRCopStatus[PLURAL]"		= "I have %ld o:lines, ";
-"BragspamPluginNormalResultOpMode[PLURAL]"			= "%ld ops, ";
-"BragspamPluginNormalResultHalfopMode[PLURAL]"		= "%ld halfops, ";
-"BragspamPluginNormalResultVoiceMode[PLURAL]"		= "and %ld voices ";
-"BragspamPluginNormalResultUserPower[PLURAL]"		= "with power over %ld individual users.";
+"BasicLanguage[1001][0]" = "%ld network. ";
+"BasicLanguage[1001][1]" = "%ld networks. ";
+
+"BasicLanguage[1002][0]" = "I have %ld o:line, ";
+"BasicLanguage[1002][1]" = "I have %ld o:lines, ";
+
+"BasicLanguage[1003][0]" = "%ld op, ";
+"BasicLanguage[1003][1]" = "%ld ops, ";
+
+"BasicLanguage[1004][0]" = "%ld halfop, ";
+"BasicLanguage[1004][1]" = "%ld halfops, ";
+
+"BasicLanguage[1005][0]" = "and %ld voice ";
+"BasicLanguage[1005][1]" = "and %ld voices ";
+
+"BasicLanguage[1006][0]" = "with power over %ld user.";
+"BasicLanguage[1006][1]" = "with power over %ld individual users.";
+
+"BasicLanguage[1007]" = "I have no power whatsoever.";
