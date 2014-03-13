@@ -96,11 +96,11 @@
 
 	NSString *modelToken = [self systemModelToken];
 
-	if (modelToken.length <= 0) {
+	if ([modelToken length] <= 0) {
 		return nil;
 	}
 
-	modelToken = modelToken.lowercaseString;
+	modelToken = [modelToken lowercaseString];
 
 	for (NSString *modelPrefix in modelPrefixes) {
 		if ([modelToken hasPrefix:modelPrefix]) {
@@ -117,40 +117,33 @@
 
 	NSString *infos = [sysinfo objectForKey:key];
 
-	if (infos.length <= 0) {
+	if ([infos length] <= 0) {
 		return nil;
 	}
 
 	return infos;
 }
 
-+ (NSDictionary *)systemInformationDictionary
++ (NSDictionary *)createDictionaryFromFileAtPath:(NSString *)path
 {
-	NSString *normalPath = @"/System/Library/CoreServices/SystemVersion.plist";
-	NSString *serverPath = @"/System/Library/CoreServices/ServerVersion.plist";
-
 	NSFileManager *fileManger = [NSFileManager defaultManager];
 
-	BOOL normalPathExists = [fileManger fileExistsAtPath:normalPath];
-	BOOL serverPathExists = [fileManger fileExistsAtPath:serverPath];
-	
-	if (normalPathExists == NO && serverPathExists == NO) {
-		return nil;
-	}
-
-	NSDictionary *systemVersionPlist;
-
-	if (normalPathExists) {
-		systemVersionPlist = [NSDictionary dictionaryWithContentsOfFile:normalPath];
+	if ([fileManger fileExistsAtPath:path]) {
+		return [NSDictionary dictionaryWithContentsOfFile:path];
 	} else {
-		systemVersionPlist = [NSDictionary dictionaryWithContentsOfFile:serverPath];
-	}
-
-	if (systemVersionPlist.count <= 0) {
 		return nil;
 	}
+}
 
-	return systemVersionPlist;
++ (NSDictionary *)systemInformationDictionary
+{
+	NSDictionary *systemInfo = [CSFWSystemInformation createDictionaryFromFileAtPath:@"/System/Library/CoreServices/SystemVersion.plist"];
+
+	if (systemInfo == nil) {
+		systemInfo = [CSFWSystemInformation createDictionaryFromFileAtPath:@"/System/Library/CoreServices/ServerVersion.plist"];
+	}
+
+	return systemInfo;
 }
 
 @end
