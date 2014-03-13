@@ -25,8 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-@interface AHHyperlinkScanner : NSObject 
-@property (weak, nonatomic, readonly) NSDictionary *urlSchemes;
+@interface AHHyperlinkScanner : NSObject
 @property (weak, nonatomic, readonly) NSString *scanString;
 @property (nonatomic, readonly) BOOL strictChecking;
 @property (nonatomic, readonly) unsigned long scanLocation;

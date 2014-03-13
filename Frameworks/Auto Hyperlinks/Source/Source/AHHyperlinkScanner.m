@@ -56,7 +56,6 @@ extern AH_BUFFER_STATE			AH_scan_string(const char *, yyscan_t scanner);
 	NSString			*__weak m_scanString;
 	
 	BOOL				m_strictChecking;
-	BOOL				m_firstCharMismactch;
 	
 	unsigned long		m_scanLocation;
 	unsigned long		m_scanStringLength;
@@ -218,10 +217,12 @@ static NSArray					*encKeys						= nil;
 	
 	[self _scanString:m_scanString charactersFromSet:startSet intoRange:nil fromIndex:&scannedLocation];
 	
-	while ([self _scanString:m_scanString upToCharactersFromSet:skipSet intoRange:&scannedRange fromIndex:&scannedLocation]) {
+	while ([self _scanString:m_scanString upToCharactersFromSet:skipSet intoRange:&scannedRange fromIndex:&scannedLocation])
+	{
 		BOOL foundUnpairedEnclosureCharacter = NO;
 		
-		if ([enclosureSet characterIsMember:[m_scanString characterAtIndex:scannedRange.location]]) {
+		if ([enclosureSet characterIsMember:[m_scanString characterAtIndex:scannedRange.location]])
+		{
 			unsigned long encIdx = [enclosureStartArray indexOfObject:[m_scanString substringWithRange:NSMakeRange(scannedRange.location, 1)]];
 			
 			if (encIdx == NSNotFound) {
@@ -249,7 +250,8 @@ static NSArray					*encKeys						= nil;
 		
 		NSRange longestEnclosure = [self _longestBalancedEnclosureInRange:scannedRange];
 		
-		while (scannedRange.length >= 3 && [endSet characterIsMember:[m_scanString characterAtIndex:(scannedRange.location + scannedRange.length - 1)]]) {
+		while (scannedRange.length >= 3 && [endSet characterIsMember:[m_scanString characterAtIndex:(scannedRange.location + scannedRange.length - 1)]])
+		{
 			NSInteger longestEnclosureIndex = (longestEnclosure.location + longestEnclosure.length);
 			
 			if (longestEnclosureIndex < scannedRange.length) {
@@ -261,7 +263,8 @@ static NSArray					*encKeys						= nil;
 			}
 		}
 		
-		if (scannedRange.length >= 4) {
+		if (scannedRange.length >= 4)
+		{
 			NSString *_scanString = [m_scanString substringWithRange:scannedRange];
 
 			AHParserStatus _parserStatus = [AHHyperlinkScanner isStringValidURI:_scanString usingStrict:m_strictChecking fromIndex:&m_scanLocation];
@@ -281,13 +284,16 @@ static NSArray					*encKeys						= nil;
 		
 		NSRange startRange = [m_scanString rangeOfCharacterFromSet:puncSet options:NSLiteralSearch range:scannedRange];
 		
-		if (startRange.location == NSNotFound) {
+		if (startRange.location == NSNotFound)
+		{
 			if (foundUnpairedEnclosureCharacter) {
 				m_scanLocation++;
 			} else {
 				m_scanLocation += scannedRange.length;
 			}
-		} else {
+		}
+		else
+		{
 			m_scanLocation = (startRange.location + startRange.length);
 		}
 		
@@ -322,7 +328,7 @@ static NSArray					*encKeys						= nil;
 	return @[NSStringFromRange(scannedRange), properURL];
 }
 
-- (NSArray *)_allMatches;
+- (NSArray *)_allMatches
 {
     NSMutableArray *rangeArray = [NSMutableArray array];
 	
@@ -350,7 +356,8 @@ static NSArray					*encKeys						= nil;
 	
 	unsigned long encScanLocation = inRange.location;
 	
-	while (encScanLocation < (inRange.length + inRange.location)) {
+	while (encScanLocation < (inRange.length + inRange.location))
+	{
 		[self _scanString:m_scanString upToCharactersFromSet:enclosureSet intoRange:nil fromIndex:&encScanLocation];
 		
 		if (encScanLocation >= (inRange.location + inRange.length)) {
@@ -359,7 +366,8 @@ static NSArray					*encKeys						= nil;
 		
 		matchChar = [m_scanString substringWithRange:NSMakeRange(encScanLocation, 1)];
 		
-		if ([enclosureStartArray containsObject:matchChar]) {
+		if ([enclosureStartArray containsObject:matchChar])
+		{
 			encDict = [NSDictionary	dictionaryWithObjects:@[@(encScanLocation), matchChar]
 												  forKeys:encKeys];
 			
