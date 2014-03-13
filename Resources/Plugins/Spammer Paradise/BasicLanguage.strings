@@ -36,7 +36,6 @@
 
  *********************************************************************** */
 
-"SpammerParadiseNoClonesFound" = "No clones found.";
-"SpammerParadiseNumberOfClonesFound" = "%1$ld clones found in %2$@ on %3$@.";
-"SpammerParadiseInvalidInput" = "Invalid input.";
-"SpammerParadiseNoUsersInChannel" = "No users found in %@.";
+"BasicLanguage[1000]" = "No users found in %@.";
+"BasicLanguage[1001]" = "No clones found.";
+"BasicLanguage[1002]" = "%1$ld clones found in %2$@ on %3$@.";

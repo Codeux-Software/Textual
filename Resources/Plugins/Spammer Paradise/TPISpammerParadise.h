@@ -37,12 +37,10 @@
 
 #import "TextualApplication.h"
 
-@interface TPISpammerParadise : NSObject
-
+@interface TPISpammerParadise : NSObject <THOPluginProtocol>
 - (void)messageSentByUser:(IRCClient *)client
 				  message:(NSString *)messageString
 				  command:(NSString *)commandString;
 
 - (NSArray *)pluginSupportsUserInputCommands;
-
 @end
