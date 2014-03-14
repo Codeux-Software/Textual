@@ -4446,8 +4446,19 @@
 		IRCChannel *c = [self findChannel:target];
 
 		if (c) {
-			if ((myself == NO && [ignoreChecks ignoreJPQE] == NO && [TPCPreferences showJoinLeave] && c.config.ignoreJPQActivity == NO) || myself == YES) {
-				NSString *text = TXTFLS(@"BasicLanguage[1152]", oldNick, newNick);
+			if ((myself == NO && [ignoreChecks ignoreJPQE] == NO && [TPCPreferences showJoinLeave] && c.config.ignoreJPQActivity == NO)) {
+				NSString *text = TXTFLS(@"BasicLanguage[1152][0]", oldNick, newNick);
+
+				[self print:c
+					   type:TVCLogLineNickType
+					   nick:nil
+					   text:text
+				 receivedAt:m.receivedAt
+					command:m.command];
+			}
+            
+			if (myself == YES) {
+				NSString *text = TXTFLS(@"BasicLanguage[1152][1]", newNick);
 
 				[self print:c
 					   type:TVCLogLineNickType
@@ -4467,8 +4478,19 @@
 	for (IRCChannel *c in self.channels) {
 		if ([c memberWithNickname:oldNick]) {
             
-			if ((myself == NO && [ignoreChecks ignoreJPQE] == NO && [TPCPreferences showJoinLeave] && c.config.ignoreJPQActivity == NO) || myself == YES) {
-				NSString *text = TXTFLS(@"BasicLanguage[1152]", oldNick, newNick);
+			if ((myself == NO && [ignoreChecks ignoreJPQE] == NO && [TPCPreferences showJoinLeave] && c.config.ignoreJPQActivity == NO)) {
+				NSString *text = TXTFLS(@"BasicLanguage[1152][0]", oldNick, newNick);
+
+				[self print:c
+					   type:TVCLogLineNickType
+					   nick:nil
+					   text:text
+				 receivedAt:m.receivedAt
+					command:m.command];
+			}
+            
+			if (myself == YES) {
+				NSString *text = TXTFLS(@"BasicLanguage[1152][1]", newNick);
 
 				[self print:c
 					   type:TVCLogLineNickType
