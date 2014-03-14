@@ -172,6 +172,8 @@
 
 - (NSString *)string; // Returns self.
 
+- (NSString *)trimAndGetFirstToken;
+
 /* This call is used internally by getToken and getTokenIncludingQuotes. 
  Call that instead. It is declared in header so that it can be used for 
  these calls internally between categories. */

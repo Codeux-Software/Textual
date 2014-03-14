@@ -38,7 +38,6 @@
 #import "TextualApplication.h"
 
 @interface TPI_BlowfishCommands : NSObject <THOPluginProtocol>
-
 - (NSDictionary *)pluginOutputDisplayRules;
 
 - (void)messageSentByUser:(IRCClient *)client
@@ -51,5 +50,4 @@
 
 - (NSArray *)pluginSupportsServerInputCommands;
 - (NSArray *)pluginSupportsUserInputCommands;
-
 @end
