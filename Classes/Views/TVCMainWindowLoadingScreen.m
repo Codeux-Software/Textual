@@ -53,7 +53,7 @@
 		[self displayView:self.welcomeAddServerTrialView];
 		
 		[self.welcomePurchaseTextualButton setAction:@selector(openMacAppStoreDownloadPage:)];
-		[self.welcomePurchaseTextualButton setTarget:self.menuController];
+		[self.welcomePurchaseTextualButton setTarget:[self menuController]];
 #else
 		[self displayView:self.welcomeAddServerView];
 #endif
@@ -115,7 +115,7 @@
 {
 	if (self.stackLocked == NO) {
 		for (NSView *alv in [self allViews]) {
-			if (alv.isHidden == NO) {
+			if ([alv isHidden] == NO) {
 				[self hideView:alv animate:animate];
 			}
 		}
@@ -177,21 +177,25 @@
 {
 	/* For future expansion. */
 
-	return @[self.loadingConfigurationView, self.welcomeAddServerView, self.welcomeAddServerTrialView];
+	return @[
+		self.loadingConfigurationView,
+		self.welcomeAddServerView,
+		self.welcomeAddServerTrialView
+	];
 }
 
 - (void)disableBackgroundControls
 {
-	[self.masterController.inputTextField setEditable:NO];
-	[self.masterController.inputTextField setSelectable:NO];
+	[[[self masterController] inputTextField] setEditable:NO];
+	[[[self masterController] inputTextField] setSelectable:NO];
 
 	[self.backgroundContentView setHidden:YES];
 }
 
 - (void)enableBackgroundControls
 {
-	[self.masterController.inputTextField setEditable:YES];
-	[self.masterController.inputTextField setSelectable:YES];
+	[[[self masterController] inputTextField] setEditable:YES];
+	[[[self masterController] inputTextField] setSelectable:YES];
 
 	[self.backgroundContentView setHidden:NO];
 }
@@ -205,16 +209,17 @@
 		NSView *activeView;
 
 		for (NSView *alv in [self allViews]) {
-			if (alv.isHidden == NO) {
+			if ([alv isHidden] == NO) {
 				activeView = alv;
 			} 
 		}
 
 		if (activeView) {
-			NSRect newtRect = activeView.frame;
+			NSRect newtRect = [activeView frame];
+			NSRect windRect = [[self window] frame];
 
-			newtRect.origin.x  = ((self.window.frame.size.width  / 2) - (newtRect.size.width / 2));
-			newtRect.origin.y  = ((self.window.frame.size.height / 2) - (newtRect.size.height / 2));
+			newtRect.origin.x  = ((windRect.size.width  / 2) - (newtRect.size.width / 2));
+			newtRect.origin.y  = ((windRect.size.height / 2) - (newtRect.size.height / 2));
 
 			[activeView setFrame:newtRect];
 		}

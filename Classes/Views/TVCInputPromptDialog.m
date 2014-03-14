@@ -47,32 +47,31 @@
 
 @implementation TVCInputPromptDialog
 
-
 - (void)alertWithMessageTitle:(NSString *)messageTitle
 				defaultButton:(NSString *)defaultButtonTitle
 			  alternateButton:(NSString *)alternateButtonTitle
 			  informativeText:(NSString *)informativeText
 			 defaultUserInput:(NSString *)userInputText
-			  completionBlock:(void (^)(BOOL defaultButtonClicked, NSString *resultString))callbackBlock;
+			  completionBlock:(void (^)(BOOL defaultButtonClicked, NSString *resultString))callbackBlock
 {
 	[RZMainBundle() loadCustomNibNamed:@"TVCInputPromptDialog" owner:self topLevelObjects:nil];
 
 	if (NSObjectIsNotEmpty(userInputText)) {
-		[self.informationalInput setStringValue:userInputText];
+		[_informationalInput setStringValue:userInputText];
 	}
 	
-	[self.defaultButton	setTitle:defaultButtonTitle];
-	[self.defaultButton setAction:@selector(modalDidCloseWithDefaultButton:)];
-	[self.defaultButton setTarget:self];
+	[_defaultButton	setTitle:defaultButtonTitle];
+	[_defaultButton setAction:@selector(modalDidCloseWithDefaultButton:)];
+	[_defaultButton setTarget:self];
 
-	[self.alternateButton setTitle:alternateButtonTitle];
-	[self.alternateButton setAction:@selector(modalDidCloseWithAlternateButton:)];
-	[self.alternateButton setTarget:self];
+	[_alternateButton setTitle:alternateButtonTitle];
+	[_alternateButton setAction:@selector(modalDidCloseWithAlternateButton:)];
+	[_alternateButton setTarget:self];
 	
-	[self.informationalText	setStringValue:informativeText];
-	[self.informationalTitle setStringValue:messageTitle];
+	[_informationalText	setStringValue:informativeText];
+	[_informationalTitle setStringValue:messageTitle];
 
-	self.completionBlock = callbackBlock;
+	_completionBlock = callbackBlock;
 
 	[self runModal];
 }
@@ -82,11 +81,10 @@
 	/* The following math dynamically resizes the dialog window and informational
 	 text view based on any value provided to the modal. It is actually very complex,
 	 but Textual has some strong APIs to assist. */
-	
-	NSString *informativeText = [self.informationalText stringValue];
+	NSString *informativeText = [_informationalText stringValue];
 
-	NSRect windowFrame = self.window.frame;
-	NSRect infoTextFrame = self.informationalText.frame;
+	NSRect windowFrame = [[self window] frame];
+	NSRect infoTextFrame = [_informationalText frame];
 
 	CGFloat newHeight = [informativeText pixelHeightInWidth:infoTextFrame.size.width forcedFont:_informativeTextFont];
 
@@ -95,30 +93,30 @@
 	windowFrame.size.height = ((windowFrame.size.height - heightDiff) + _textContainerPadding);
 	infoTextFrame.size.height = (newHeight + _textContainerPadding);
 	
-	[self.window setFrame:windowFrame display:NO animate:NO];
-	[self.window makeKeyAndOrderFront:nil];
+	[[self window] setFrame:windowFrame display:NO animate:NO];
+	[[self window] makeKeyAndOrderFront:nil];
 	
-	[self.informationalText setFrame:infoTextFrame];
+	[_informationalText setFrame:infoTextFrame];
 }
 
 - (void)modalDidCloseWithDefaultButton:(id)sender
 {
-	self.defaultButtonClicked = YES;
+	_defaultButtonClicked = YES;
 
-	[self.window close];
+	[[self window] close];
 }
 
 - (void)modalDidCloseWithAlternateButton:(id)sender
 {
-	self.defaultButtonClicked = NO;
+	_defaultButtonClicked = NO;
 
-	[self.window close];
+	[[self window] close];
 }
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if (self.completionBlock) {
-		self.completionBlock(self.defaultButtonClicked, self.informationalInput.stringValue);
+	if (_completionBlock) {
+		_completionBlock(_defaultButtonClicked, [_informationalInput stringValue]);
 	}
 }
 

@@ -40,6 +40,7 @@
 
 @interface TVCMainWindow : NSWindow
 @property (nonatomic, strong) TLOKeyEventHandler *keyHandler;
+@property (nonatomic, strong) NSValue *cachedSwipeOriginPoint;
 
 - (void)setKeyHandlerTarget:(id)target;
 
