@@ -38,7 +38,6 @@
 #import "TextualApplication.h"
 
 @interface TPIWikiStyleLinkParser : NSObject <THOPluginProtocol, NSTextDelegate, NSTableViewDataSource, NSTableViewDelegate>
-
 - (void)pluginLoadedIntoMemory:(IRCWorld *)world;
 
 - (void)messageReceivedByServer:(IRCClient *)client
@@ -51,5 +50,4 @@
 
 - (NSString *)preferencesMenuItemName;
 - (NSView *)preferencesView;
-
 @end
