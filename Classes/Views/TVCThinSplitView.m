@@ -47,7 +47,7 @@
 
 - (void)setFixedViewIndex:(NSInteger)value
 {
-	if (NSDissimilarObjects(self.fixedViewIndex, value)) {
+	if (NSDissimilarObjects(_fixedViewIndex, value)) {
 		_fixedViewIndex = value;
 
 		if (self.viewIsInverted) {
@@ -64,7 +64,7 @@
 
 - (void)setDividerPosition:(NSInteger)value
 {
-	if (NSDissimilarObjects(self.dividerPosition, value)) {
+	if (NSDissimilarObjects(_dividerPosition, value)) {
 		_dividerPosition = value;
 
 		[self adjustSubviews];
@@ -73,7 +73,7 @@
 
 - (void)setViewIsHidden:(BOOL)value
 {
-	if (NSDissimilarObjects(self.viewIsHidden, value)) {
+	if (NSDissimilarObjects(_viewIsHidden, value)) {
 		_viewIsHidden = value;
 
 		[self adjustSubviews];
@@ -82,7 +82,7 @@
 
 - (void)setViewIsInverted:(BOOL)value
 {
-	if (NSDissimilarObjects(self.viewIsInverted, value)) {
+	if (NSDissimilarObjects(_viewIsInverted, value)) {
 		_viewIsInverted = value;
 		
 		NSView *a = [self.subviews safeObjectAtIndex:0];
@@ -133,30 +133,30 @@
 {
 	NSInteger fixedIndex = self.fixedViewIndex;
 	
-	if (NSDissimilarObjects(self.subviews.count, 2)) {
+	if (NSDissimilarObjects([[self subviews] count], 2)) {
 		[super adjustSubviews];
 
 		return;
 	}
 
-    if ([self isSubviewCollapsed:self.subviews[fixedIndex]]) {
+    if ([self isSubviewCollapsed:[self subviews][fixedIndex]]) {
         [super adjustSubviews];
 
         return;
     }
 
-	NSSize frameSize = self.frame.size;
+	NSSize frameSize = [self frame].size;
 
 	NSInteger frameWidth = frameSize.width;
 	NSInteger frameHeight = frameSize.height;
 
 	NSView *flyingView = nil;
-	NSView *fixedView = [self.subviews safeObjectAtIndex:fixedIndex];
+	NSView *fixedView = [self subviews][fixedIndex];
 
 	if (fixedIndex == 1) {
-		flyingView = [self.subviews safeObjectAtIndex:0];
+		flyingView = [self subviews][0];
 	} else {
-		flyingView = [self.subviews safeObjectAtIndex:1];
+		flyingView = [self subviews][1];
 	}
 	
 	NSRect fixedFrame = fixedView.frame;
@@ -199,14 +199,14 @@
 
 	[self setNeedsDisplay:YES];
 
-	[self.window invalidateCursorRectsForView:self];
+	[[self window] invalidateCursorRectsForView:self];
 }
 
 - (void)updatePosition
 {
-	NSView *view = [self.subviews safeObjectAtIndex:self.fixedViewIndex];
+	NSView *view = [self subviews][_fixedViewIndex];
 
-	self.dividerPosition = view.frame.size.width;
+	self.dividerPosition = [view frame].size.width;
 }
 
 @end

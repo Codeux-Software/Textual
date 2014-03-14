@@ -45,7 +45,7 @@
 
 - (NSInteger)countSelectedRows
 {
-	return self.selectedRowIndexes.count;
+	return [[self selectedRowIndexes] count];
 }
 
 - (NSArray *)selectedRows
@@ -91,7 +91,7 @@
 	NSInteger i = [self rowAtPoint:p];
 	
 	if (i >= 0) {
-		if ([self.selectedRowIndexes containsIndex:i] == NO) {
+		if ([[self selectedRowIndexes] containsIndex:i] == NO) {
 			[self selectItemAtIndex:i];
 		}
 	}
@@ -101,8 +101,8 @@
 
 - (void)textDidEndEditing:(NSNotification *)note
 {
-	if ([self.textEditingDelegate respondsToSelector:@selector(textDidEndEditing:)]) {
-		[self.textEditingDelegate textDidEndEditing:note];
+	if ([_textEditingDelegate respondsToSelector:@selector(textDidEndEditing:)]) {
+		[_textEditingDelegate textDidEndEditing:note];
 	} else {
 		[super textDidEndEditing:note];
 	}

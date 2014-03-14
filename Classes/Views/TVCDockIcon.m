@@ -242,7 +242,7 @@ static NSInteger _cachedHighlightCount = -1;
 		
 		/* Green Badge Text. */
 		if (showRedBadge) {
-			[badgeText replaceCharactersInRange:NSMakeRange(0, badgeText.length) withString:[NSString stringWithInteger:messageCount]];
+			[badgeText replaceCharactersInRange:NSMakeRange(0, [badgeText length]) withString:[NSString stringWithInteger:messageCount]];
 		} else {
 			badgeText = [badgeText initWithString:[NSString stringWithInteger:messageCount] attributes:badgeTextAttrs];
 		}

@@ -38,16 +38,15 @@
 
 #import "TextualApplication.h"
 
-static NSValue * _originPoint = nil;
-
-static NSValue *touchesToPoint(NSTouch *fingerA, NSTouch *fingerB) {
+static NSValue *touchesToPoint(NSTouch *fingerA, NSTouch *fingerB)
+{
 	PointerIsEmptyAssertReturn(fingerA, nil);
 	PointerIsEmptyAssertReturn(fingerB, nil);
 
-	NSSize deviceSize = fingerA.deviceSize;
+	NSSize deviceSize = [fingerA deviceSize];
 
-	CGFloat x = (fingerA.normalizedPosition.x + fingerB.normalizedPosition.x) / 2 * deviceSize.width;
-	CGFloat y = (fingerA.normalizedPosition.y + fingerB.normalizedPosition.y) / 2 * deviceSize.height;
+	CGFloat x = (([fingerA normalizedPosition].x + [fingerB normalizedPosition].x) / 2 * deviceSize.width);
+	CGFloat y = (([fingerA normalizedPosition].y + [fingerB normalizedPosition].y) / 2 * deviceSize.height);
 
 	return [NSValue valueWithPoint:NSMakePoint(x, y)];
 }
@@ -57,7 +56,7 @@ static NSValue *touchesToPoint(NSTouch *fingerA, NSTouch *fingerB) {
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation
 {
 	if ((self = [super initWithContentRect:contentRect styleMask:windowStyle backing:bufferingType defer:deferCreation])) {
-		self.keyHandler = [TLOKeyEventHandler new];
+		_keyHandler = [TLOKeyEventHandler new];
 	}
 	
 	return self;
@@ -65,17 +64,17 @@ static NSValue *touchesToPoint(NSTouch *fingerA, NSTouch *fingerB) {
 
 - (void)setKeyHandlerTarget:(id)target
 {
-	[self.keyHandler setTarget:target];
+	[_keyHandler setTarget:target];
 }
 
 - (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods
 {
-	[self.keyHandler registerSelector:selector key:code modifiers:mods];
+	[_keyHandler registerSelector:selector key:code modifiers:mods];
 }
 
 - (void)registerKeyHandler:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods
 {
-	[self.keyHandler registerSelector:selector character:c modifiers:mods];
+	[_keyHandler registerSelector:selector character:c modifiers:mods];
 }
 
 /* Three Finger Swipe Event
@@ -88,9 +87,9 @@ static NSValue *touchesToPoint(NSTouch *fingerA, NSTouch *fingerB) {
     CGFloat x = [event deltaX];
 	
     if (x > 0) {
-        [self.masterController selectNextWindow:nil];
+        [[self masterController] selectNextWindow:nil];
     } else if (x < 0) {
-        [self.masterController selectPreviousWindow:nil];
+        [[self masterController] selectPreviousWindow:nil];
     }
 }
 
@@ -100,11 +99,11 @@ static NSValue *touchesToPoint(NSTouch *fingerA, NSTouch *fingerB) {
 	NSAssertReturn(TVCSwipeMinimumLength > 0);
 
 	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseTouching inView:nil];
-	NSAssertReturn(touches.count == 2);
+	NSAssertReturn([touches count] == 2);
 
-	NSArray *touchArray = touches.allObjects;
+	NSArray *touchArray = [touches allObjects];
 
-	_originPoint = touchesToPoint(touchArray[0], touchArray[1]);
+	_cachedSwipeOriginPoint = touchesToPoint(touchArray[0], touchArray[1]);
 }
 
 - (void)endGestureWithEvent:(NSEvent *)event
@@ -114,19 +113,20 @@ static NSValue *touchesToPoint(NSTouch *fingerA, NSTouch *fingerB) {
 
 	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseAny inView:nil];
 
-	if (PointerIsEmpty(_originPoint) || NSDissimilarObjects(touches.count, 2)) {
-		_originPoint = nil;
+	if (PointerIsEmpty(_cachedSwipeOriginPoint) || NSDissimilarObjects([touches count], 2)) {
+		_cachedSwipeOriginPoint = nil;
+
 		return;
 	}
 
-	NSArray *touchArray = touches.allObjects;
+	NSArray *touchArray = [touches allObjects];
 
-	NSPoint origin = _originPoint.pointValue;
-	NSPoint dest = touchesToPoint(touchArray[0], touchArray[1]).pointValue;
+	NSPoint origin = [_cachedSwipeOriginPoint pointValue];
+	NSPoint dest = [touchesToPoint(touchArray[0], touchArray[1]) pointValue];
 
-	_originPoint = nil;
+	_cachedSwipeOriginPoint = nil;
 
-    NSPoint delta = NSMakePoint(origin.x - dest.x, origin.y - dest.y);
+    NSPoint delta = NSMakePoint((origin.x - dest.x), (origin.y - dest.y));
 
 	if (fabs(delta.y) > fabs(delta.x)) {
 		return;
@@ -137,16 +137,16 @@ static NSValue *touchesToPoint(NSTouch *fingerA, NSTouch *fingerB) {
 	}
 
 	if (delta.x > 0) {
-		[self.masterController selectPreviousWindow:nil];
+		[[self masterController] selectPreviousWindow:nil];
 	} else {
-		[self.masterController selectNextWindow:nil];
+		[[self masterController] selectNextWindow:nil];
 	}
 }
 
 - (void)sendEvent:(NSEvent *)e
 {
 	if ([e type] == NSKeyDown) {
-		if ([self.keyHandler processKeyEvent:e]) {
+		if ([_keyHandler processKeyEvent:e]) {
 			return;
 		}
 	}

@@ -41,7 +41,7 @@
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	NSString *value = self.stringValue;
+	NSString *value = [self stringValue];
 	
 	if ([value isEqualToString:TXDefaultListSeperatorCellIndex]) {
 		NSColor *fillColor = [NSColor darkGrayColor];
