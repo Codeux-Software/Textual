@@ -714,6 +714,15 @@
 	return [self attributedStringWithIRCFormatting:defaultFont honorFormattingPreference:NO];
 }
 
+- (NSString *)trimAndGetFirstToken
+{
+	NSObjectIsEmptyAssertReturn(self, self);
+
+	NSString *firstToken = [NSString getTokenFromFirstWhitespaceGroup:[self trim] returnedDeletionRange:NULL];
+
+	return firstToken;
+}
+
 - (NSString *)safeFilename
 {
 	NSString *bob = self.trim;

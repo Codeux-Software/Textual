@@ -35,24 +35,24 @@
 
  *********************************************************************** */
 
-"BlowfishNoEncryptionKeySet" = "No encryption key is set.";
-"BlowfishCurrentEncryptionKey" = "Current Encryption Key: %@";
+"BasicLanguage[1000]" = "No encryption key is set.";
+"BasicLanguage[1001]" = "Current Encryption Key: %@";
 
-"BlowfishEncryptionStartedInPrivateMessage" = "Encryption started in query. If this query is closed, then the key must be set again.";
+"BasicLanguage[1002]" = "Encryption started in query. If this query is closed, then the key must be set again.";
 
-"BlowfishKeyExchangeErrorOccurred_1" = "Key exchange failed: failure to generate public key.";
-"BlowfishKeyExchangeErrorOccurred_2" = "Key exchange failed: failure to compute secret from public key.";
+"BasicLanguage[1003]" = "Key exchange failed: failure to generate public key.";
+"BasicLanguage[1004]" = "Key exchange failed: failure to compute secret from public key.";
 
-"BlowfishKeyExchangeSuccessful_1" = "Successful key exchange. Messages sent to \002%@\002 will now be encrypted.";
-"BlowfishKeyExchangeSuccessful_2" = "To view the actual key used to encrypt these messages, use the \002key\002 command.";
-"BlowfishKeyExchangeSuccessful_3" = "\0034\002Warning:\002\003 If this query is closed, then a new key exchange is required to continue encrypted chat.";
-"BlowfishKeyExchangeForQueriesOnly" = "Key exchange is for queries only.";
-"BlowfishKeyExchangeRequestAlreadyExists" = "A key exchange request already exists for \002%@\002. Please wait for the current one to expire before requesting a new one.";
-"BlowfishKeyExchangeRequestReceived" = "Received key exchange request from \002%@\002. Processing …";
-"BlowfishKeyExchangeRequestSent" = "Key exchange request has been sent to \002%@\002.";
-"BlowfishKeyExchangeRequestTimedOut" = "Key exchange request for \002%@\002 has expired.";
-"BlowfishKeyExchangeResponseSent" = "Key exchange response has been sent to \002%@\002.";
-"BlowfishKeyExchangeResponseReceived" = "Received key exchange response from \002%@\002. Processing …";
+"BasicLanguage[1005]" = "Successful key exchange. Messages sent to \002%@\002 will now be encrypted.";
+"BasicLanguage[1006]" = "To view the actual key used to encrypt these messages, use the \002key\002 command.";
+"BasicLanguage[1007]" = "\0034\002Warning:\002\003 If this query is closed, then a new key exchange is required to continue encrypted chat.";
+"BasicLanguage[1008]" = "Key exchange is for queries only.";
+"BasicLanguage[1009]" = "A key exchange request already exists for \002%@\002. Please wait for the current one to expire before requesting a new one.";
+"BasicLanguage[1010]" = "Received key exchange request from \002%@\002. Processing …";
+"BasicLanguage[1011]" = "Key exchange request has been sent to \002%@\002.";
+"BasicLanguage[1012]" = "Key exchange request for \002%@\002 has expired.";
+"BasicLanguage[1013]" = "Key exchange response has been sent to \002%@\002.";
+"BasicLanguage[1014]" = "Received key exchange response from \002%@\002. Processing …";
 
-"BlowfishKeyExchangeCannotHandleEncryptedRequest_1" = "Cannot process key exchange request from \002%@\002 until the active encryption keys are reset. This task can be accomplished by using the \002delkey\002 command.";
-"BlowfishKeyExchangeCannotHandleEncryptedRequest_2" = "Cannot process key exchange request for \002%@\002 until the active encryption keys are reset. This task can be accomplished by using the \002delkey\002 command.";
+"BasicLanguage[1015]" = "Cannot process key exchange request from \002%@\002 until the active encryption keys are reset. This task can be accomplished by using the \002delkey\002 command.";
+"BasicLanguage[1016]" = "Cannot process key exchange request for \002%@\002 until the active encryption keys are reset. This task can be accomplished by using the \002delkey\002 command.";

@@ -117,28 +117,24 @@
 				  message:(NSString *)messageString
 				  command:(NSString *)commandString
 {
-	IRCChannel *c = [client.worldController selectedChannelOn:client];
+	IRCChannel *c = [[self worldController] selectedChannelOn:client];
 	
-	if (c.isChannel || c.isPrivateMessage) {
-		messageString = [messageString trim];
-		
-		if ([messageString contains:NSStringWhitespacePlaceholder]) {
-			messageString = [messageString substringToIndex:[messageString stringPosition:NSStringWhitespacePlaceholder]];
-		}
-		
+	if ([c isChannel] || [c isPrivateMessage]) {
+		messageString = [messageString trimAndGetFirstToken];
+
 		if ([commandString isEqualToString:@"SETKEY"]) {
 			if (NSObjectIsEmpty(messageString)) {
 				[c setEncryptionKey:nil];
 				
 				[client printDebugInformation:TXTLS(@"BasicLanguage[1004]") channel:c];
 			} else {
-				if (c.config.encryptionKeyIsSet) {
-					if ([c.config.encryptionKey isEqualToString:messageString] == NO) {
+				if ([[c config] encryptionKeyIsSet]) {
+					if ([[[c config] encryptionKey] isEqualToString:messageString] == NO) {
 						[client printDebugInformation:TXTLS(@"BasicLanguage[1002]") channel:c];
 					}
 				} else {
-					if (c.isPrivateMessage) {
-						[client printDebugInformation:TPILS(@"BlowfishEncryptionStartedInPrivateMessage") channel:c];
+					if ([c isPrivateMessage]) {
+						[client printDebugInformation:TPILS(@"BasicLanguage[1002]") channel:c];
 					} else {
 						[client printDebugInformation:TXTLS(@"BasicLanguage[1003]") channel:c];
 					}
@@ -151,31 +147,31 @@
 			
 			[client printDebugInformation:TXTLS(@"BasicLanguage[1004]") channel:c];
 		} else if ([commandString isEqualToString:@"KEY"]) {
-			if (c.config.encryptionKeyIsSet) {
-				[client printDebugInformation:TPIFLS(@"BlowfishCurrentEncryptionKey", c.config.encryptionKey) channel:c];
+			if ([[c config] encryptionKeyIsSet]) {
+				[client printDebugInformation:TPIFLS(@"BasicLanguage[1001]", [[c config] encryptionKey]) channel:c];
 			} else {	
-				[client printDebugInformation:TPILS(@"BlowfishNoEncryptionKeySet") channel:c];
+				[client printDebugInformation:TPILS(@"BasicLanguage[1000]") channel:c];
 			}
 		} else if ([commandString isEqualToString:@"KEYX"]) {
-			if (c.isPrivateMessage == NO) {
-				[client printDebugInformation:TPILS(@"BlowfishKeyExchangeForQueriesOnly") channel:c];
+			if ([c isPrivateMessage] == NO) {
+				[client printDebugInformation:TPILS(@"BasicLanguage[1008]") channel:c];
 			} else {
 				if ([self keyExchangeRequestExists:c]) {
-					[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestAlreadyExists", c.name) channel:c];
-				} else if (c.config.encryptionKeyIsSet) {
-                    [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeCannotHandleEncryptedRequest_2", c.name) channel:c];
+					[client printDebugInformation:TPIFLS(@"BasicLanguage[1009]", [c name]) channel:c];
+				} else if ([[c config] encryptionKeyIsSet]) {
+                    [client printDebugInformation:TPIFLS(@"BasicLanguage[1016]", [c name]) channel:c];
                 } else {
 					CFDH1080 *keyRequest = [CFDH1080 new];
 
 					NSString *publicKey = [keyRequest generatePublicKey];
 
 					if (NSObjectIsEmpty(publicKey)) {
-						[client printDebugInformation:TPILS(@"BlowfishKeyExchangeErrorOccurred_1") channel:c];
+						[client printDebugInformation:TPILS(@"BasicLanguage[1003]") channel:c];
 					} else {
 						NSString *requestKey = [self keyExchangeDictionaryKey:c];
 						NSString *requestMsg = [TXExchangeRequestPrefix stringByAppendingString:publicKey];
 
-						[self.keyExchangeRequests safeSetObject:@[keyRequest, c] forKey:requestKey];
+						[[self keyExchangeRequests] setObject:@[keyRequest, c] forKey:requestKey];
 
 						[client sendText:[NSAttributedString emptyStringWithBase:requestMsg]
 								 command:IRCPrivateCommandIndex("notice")
@@ -183,7 +179,7 @@
 
 						[self performSelectorOnMainThread:@selector(keyExchangeSetupTimeoutTimer:) withObject:requestKey waitUntilDone:NO];
 						
-						[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestSent", c.name) channel:c];
+						[client printDebugInformation:TPIFLS(@"BasicLanguage[1011]", [c name]) channel:c];
 					}
 				}
 			}
@@ -221,8 +217,8 @@
 {
 	IRCChannel *channel = [client findChannelOrCreate:requestSender isPrivateMessage:YES];
 
-    if (channel.config.encryptionKeyIsSet) {
-        [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeCannotHandleEncryptedRequest_1", channel.name) channel:channel];
+    if ([[channel config] encryptionKeyIsSet]) {
+        [client printDebugInformation:TPIFLS(@"BasicLanguage[1015]", [channel name]) channel:channel];
 
         return;
     }
@@ -235,8 +231,8 @@
 	//DebugLogToConsole(@"	Message: %@", requestData);
 	
 	if ([self keyExchangeRequestExists:channel]) {
-        [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestReceived", channel.name) channel:channel];
-		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestAlreadyExists", channel.name) channel:channel];
+        [client printDebugInformation:TPIFLS(@"BasicLanguage[1010]", [channel name]) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BasicLanguage[1009]", [channel name]) channel:channel];
 	} else {
 		CFDH1080 *keyRequest = [CFDH1080 new];
 
@@ -244,7 +240,7 @@
 		NSString *theSecret = [keyRequest secretKeyFromPublicKey:requestData];
 
 		if (NSObjectIsEmpty(theSecret)) {
-			[client printDebugInformation:TPILS(@"BlowfishKeyExchangeErrorOccurred_2") channel:channel];
+			[client printDebugInformation:TPILS(@"BasicLanguage[1004]") channel:channel];
 
             return;
 		}
@@ -255,7 +251,7 @@
 		NSString *publicKey = [keyRequest generatePublicKey];
 
 		if (NSObjectIsEmpty(publicKey)) {
-			[client printDebugInformation:TPILS(@"BlowfishKeyExchangeErrorOccurred_1") channel:channel];
+			[client printDebugInformation:TPILS(@"BasicLanguage[1003]") channel:channel];
 
             return;
 		}
@@ -272,12 +268,12 @@
 				 channel:channel
           withEncryption:NO];
 
-        [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestReceived", channel.name) channel:channel];
-		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeResponseSent", channel.name) channel:channel];
+        [client printDebugInformation:TPIFLS(@"BasicLanguage[1010]", [channel name]) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BasicLanguage[1013]", [channel name]) channel:channel];
 		
-		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_1", channel.name) channel:channel];
-		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_2", channel.name) channel:channel];
-		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_3", channel.name) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BasicLanguage[1005]", [channel name]) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BasicLanguage[1006]", [channel name]) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BasicLanguage[1007]", [channel name]) channel:channel];
 	}
 }
 
@@ -295,14 +291,14 @@
 
 		CFDH1080 *request = exchangeData[0];
 		IRCChannel *channel = exchangeData[1];
-        
-        if (channel.config.encryptionKeyIsSet) {
-            [client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeCannotHandleEncryptedRequest_1", channel.name) channel:channel];
+
+		if ([[channel config] encryptionKeyIsSet]) {
+            [client printDebugInformation:TPIFLS(@"BasicLanguage[1015]", [channel name]) channel:channel];
 
             return;
         }
 		
-		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeResponseReceived", channel.name) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BasicLanguage[1014]", [channel name]) channel:channel];
 		
 		/* Compute the public key received against our own. Our original public key
 		 was sent to the user which has responded by computing their own against 
@@ -310,7 +306,7 @@
 		NSString *theSecret = [request secretKeyFromPublicKey:responseData];
 
 		if (NSObjectIsEmpty(theSecret)) {
-			return [client printDebugInformation:TPILS(@"BlowfishKeyExchangeErrorOccurred_2") channel:channel];
+			return [client printDebugInformation:TPILS(@"BasicLanguage[1004]") channel:channel];
 		}
 		
 		//DebugLogToConsole(@"	Shared Secret: %@", theSecret);
@@ -318,11 +314,11 @@
 		[channel setEncryptionKey:theSecret];
 
 		/* Finish up. */
-		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_1", channel.name) channel:channel];
-		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_2", channel.name) channel:channel];
-		[client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeSuccessful_3", channel.name) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BasicLanguage[1005]", [channel name]) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BasicLanguage[1006]", [channel name]) channel:channel];
+		[client printDebugInformation:TPIFLS(@"BasicLanguage[1007]", [channel name]) channel:channel];
 		
-		[self.keyExchangeRequests removeObjectForKey:responseKey];
+		[[self keyExchangeRequests] removeObjectForKey:responseKey];
 	}
 }
 
@@ -341,9 +337,9 @@
 	if (NSObjectIsNotEmpty(requestKey)) {
 		IRCChannel *channel = requestData[1];
 		
-		[channel.client printDebugInformation:TPIFLS(@"BlowfishKeyExchangeRequestTimedOut", channel.name) channel:channel];
+		[[channel client] printDebugInformation:TPIFLS(@"BasicLanguage[1012]", [channel name]) channel:channel];
 
-		[self.keyExchangeRequests removeObjectForKey:requestKey];
+		[[self keyExchangeRequests] removeObjectForKey:requestKey];
 	}
 }
 
@@ -359,13 +355,13 @@
 
 - (NSArray *)keyExchangeInformation:(NSString *)requestKey
 {
-	NSArray *requestData = [self.keyExchangeRequests arrayForKey:requestKey];
+	NSArray *requestData = [[self keyExchangeRequests] arrayForKey:requestKey];
 
 	if (NSObjectIsNotEmpty(requestData)) {
 		id request = requestData[0];
 		id channel = requestData[1];
 
-		if (requestData.count == 2								&& // Array count is equal to 2.
+		if ([requestData count] == 2							&& // Array count is equal to 2.
 			PointerIsNotEmpty( request )						&& // Pointer are not empty.
 			PointerIsNotEmpty( channel )						&& // Pointer are not empty.
 			PointerIsNotEmpty([channel client])					&& // Pointer are not empty.
@@ -381,11 +377,11 @@
 
 - (NSString *)keyExchangeDictionaryKey:(IRCChannel *)channel
 {
-	if (PointerIsEmpty(channel) || channel.isPrivateMessage == NO) {
+	if (PointerIsEmpty(channel) || [channel isPrivateMessage] == NO) {
 		return nil;
 	}
 	
-	return [NSString stringWithFormat:@"%@ –> %@", channel.client.config.itemUUID, channel.name];
+	return [NSString stringWithFormat:@"%@ –> %@", [channel uniqueIdentifier], [channel name]];
 }
 
 @end
