@@ -71,7 +71,7 @@
 
 - (NSString *)preferencesMenuItemName
 {
-	return TPILS(@"SmileyConverterPreferencePaneMenuItemTitle");
+	return TPILS(@"BasicLanguage[1000]");
 }
 
 - (NSView *)preferencesView
@@ -85,14 +85,14 @@
 	NSAssertReturnR([self convertIncoming], input);
 
 	/* Only handle regular messages. */
-	if ([input.command isEqualToString:IRCPrivateCommandIndex("privmsg")] == NO) {
+	if ([[input command] isEqualToString:IRCPrivateCommandIndex("privmsg")] == NO) {
 		return input;
 	}
 
 	/* How IRCMessage is designed, the actual message of PRIVMSG should be the
 	 second index of our input params. Let's hope a future version of Textual
 	 does not break that. If it does, then we are screwed here. */
-	NSString *message = [input.params safeObjectAtIndex:1];
+	NSString *message = [input paramAt:1];
 
 	/* Convert to attributed string. */
 	NSAttributedString *finalResult = [NSAttributedString emptyStringWithBase:message];
@@ -101,14 +101,14 @@
 	finalResult = [self convertStringToEmoji:finalResult];
 
 	/* Replace old message. */
-	NSMutableArray *newParams = [input.params mutableCopy];
+	NSMutableArray *newParams = [[input params] mutableCopy];
 
 	[newParams removeObjectAtIndex:1];
 
 	/* Insert new message. */
 	[newParams insertObject:[finalResult string] atIndex:1];
 
-	input.params = newParams;
+	[input setParams:newParams];
 
 	/* Return new message. */
 	return input;
@@ -152,7 +152,7 @@
 {
 	NSMutableAttributedString *finalString = [string mutableCopy];
 
-	for (NSString *smiley in self.conversionTable) {
+	for (NSString *smiley in [self conversionTable]) {
 		finalString = [self stringWithReplacedSmiley:smiley inString:finalString];
 	}
 
@@ -168,14 +168,14 @@
 		/* The body length is dynamic based on replaces so we have to check 
 		 it every time compared to start. */
 
-		if (start >= body.length) {
+		if (start >= [body length]) {
 			break;
 		}
 
 		/* Find smiley. */
 		NSRange r = [body.string rangeOfString:smiley
 									   options:NSCaseInsensitiveSearch // Search is not case sensitive.
-										 range:NSMakeRange(start, (body.length - start))];
+										 range:NSMakeRange(start, ([body length] - start))];
 
 		/* Anything found? */
 		if (r.location == NSNotFound) {
@@ -189,8 +189,8 @@
 			if (enabled) {
 				NSInteger prev = (r.location - 1);
 
-				if (0 <= prev && prev < body.length) {
-					UniChar c = [body.string characterAtIndex:prev];
+				if (0 <= prev && prev < [body length]) {
+					UniChar c = [[body string] characterAtIndex:prev];
 
 					/* Only accept a space. */
 					if (NSDissimilarObjects(c, ' ')) {
@@ -202,8 +202,8 @@
 			if (enabled) {
 				NSInteger next = NSMaxRange(r);
 
-				if (next < body.length) {
-					UniChar c = [body.string characterAtIndex:next];
+				if (next < [body length]) {
+					UniChar c = [[body string] characterAtIndex:next];
 
 					/* Only accept a space. */
 					if (NSDissimilarObjects(c, ' ')) {
@@ -216,7 +216,7 @@
 		/* Replace the actual smiley. */
 		if (enabled) {
 			/* Build the emoji. */
-			NSString *theEmoji = [self.conversionTable objectForKey:smiley];
+			NSString *theEmoji = [[self conversionTable] objectForKey:smiley];
 
 			NSAttributedString *replacement = [NSAttributedString emptyStringWithBase:theEmoji];
 
@@ -227,7 +227,7 @@
 			 newly added addition. By asking for the actual emoji length, instead of assuming
 			 a length of one, we support future expansion if we make the conversion table more
 			 complex. */
-			start = (r.location + theEmoji.length + 1);
+			start = (r.location + [theEmoji length] + 1);
 		} else {
 			start = (NSMaxRange(r) + 1);
 		}
