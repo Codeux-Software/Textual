@@ -40,6 +40,11 @@
 
 #import <objc/objc-runtime.h>
 
+@interface WebPreferences (WebPreferencesPrivate)
+- (void)_setLocalStorageDatabasePath:(NSString *)path;
+- (void) setLocalStorageEnabled: (BOOL) localStorageEnabled;
+@end
+
 @interface TVCLogController ()
 @property (nonatomic, readonly, uweak) TPCThemeSettings *themeSettings;
 @property (nonatomic, assign) BOOL historyLoaded;
@@ -143,8 +148,12 @@
 	[self.view setShouldUpdateWhileOffscreen:NO];
 
 	/* Update a few preferences. */
+
+	[[self.view preferences] setAutosaves:YES];
 	[[self.view preferences] setCacheModel:WebCacheModelDocumentViewer];
 	[[self.view preferences] setUsesPageCache:NO];
+	[[self.view preferences] _setLocalStorageDatabasePath:@"~/Library/Textual/LocalStorage"];
+	[[self.view preferences] setLocalStorageEnabled:YES];
 
 	if ([[self.view preferences] respondsToSelector:@selector(setShouldRespectImageOrientation:)]) {
 		/* We're most likely not to get into too much trouble for this one. ;) */

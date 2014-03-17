@@ -394,7 +394,8 @@
 "BasicLanguage[1149]" = "Netsplit: %@";
 "BasicLanguage[1150]" = "%1$@ (%2$@)";
 "BasicLanguage[1151]" = "%@ IRC Network";
-"BasicLanguage[1152]" = "%1$@ is now known as \002%2$@\002";
+"BasicLanguage[1152][0]" = "%1$@ is now known as \002%2$@\002";
+"BasicLanguage[1152][1]" = "You're now known as \002%2$@\002";
 "BasicLanguage[1153]" = "\002%1$@\002 (%2$@@%3$@) left IRC.";
 "BasicLanguage[1154]" = "\002%1$@\002 left the query by disconnecting from IRC.";
 "BasicLanguage[1155]" = "\002%1$@\002 joined the query by connecting to IRC.";
