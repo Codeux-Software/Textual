@@ -7,18 +7,35 @@ Textual is a highly modified version of the open source project known as [LimeCh
 
 ### **Keychain Access**
 - Open the Certificate Assistant
+
+![asd](doc/kc1.png)
+
 - Create a new code signing certificate
+
+![asd](doc/kc2.png)
+
 - Install and trust the certificate
+
+![asd](doc/kc3.png)
 
 ##2. Specify your certificate
  - Pazifist -> Resources -> Build Configurations -> Code Signing Identity.xcconfig
 - Specify your certificate
 
+![asd](doc/kc4.png)
+
+
 ##3. Build
  - Open Pazifist in Xcode
  - Product -> Scheme -> Textual (Standard Release)
+
+![asd](doc/kc5.png)
+
  - cmd + b
  - Grab your Textual.app in **Textual/Build Results/Release**.
+
+![asd](doc/kc6.png)
+
 
 ### License
 
