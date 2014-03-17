@@ -1,5 +1,8 @@
 Textual is a highly modified version of the open source project known as [LimeChat](https://github.com/psychs/limechat) created by Satoshi Nakagawa. Much of the app uses the open standard of [WebKit](http://webkit.org/) which makes customization easy through the use of CSS 3 and HTML 5. [Plugins](http://www.codeux.com/textual/wiki/Writing-Plugins.wiki) written in Objective-C and [scripts](http://www.codeux.com/textual/wiki/Writing-Scripts.wiki) made with AppleScript (and other languages) are also supported.
 
+## Obtaining Pazifist
+- Simply download the most recent release, if you fancy not to compile yourself.
+
 ## Building Pazifist
 
 ##1. Create a certificate
