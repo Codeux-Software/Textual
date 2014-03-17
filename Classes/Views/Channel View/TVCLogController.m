@@ -147,17 +147,13 @@
 
 	[self.view setShouldUpdateWhileOffscreen:NO];
 
-<<<<<<< HEAD
 	/* Update a few preferences. */
+
+	[[self.view preferences] setAutosaves:YES];
 	[[self.view preferences] setCacheModel:WebCacheModelDocumentViewer];
 	[[self.view preferences] setUsesPageCache:NO];
-=======
-  [self.view.preferences setAutosaves:YES];
-	[self.view.preferences setCacheModel:WebCacheModelDocumentViewer];
-	[self.view.preferences setUsesPageCache:NO];
-  [self.view.preferences _setLocalStorageDatabasePath:@"~/Library/Textual/LocalStorage"];
-  [self.view.preferences setLocalStorageEnabled:YES];
->>>>>>> 1f6df1ff30208819f4c3f8aee6365b2d2ecb6972
+	[[self.view preferences] _setLocalStorageDatabasePath:@"~/Library/Textual/LocalStorage"];
+	[[self.view preferences] setLocalStorageEnabled:YES];
 
 	if ([[self.view preferences] respondsToSelector:@selector(setShouldRespectImageOrientation:)]) {
 		/* We're most likely not to get into too much trouble for this one. ;) */
