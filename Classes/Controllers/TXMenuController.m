@@ -1522,25 +1522,7 @@
 #pragma mark -
 #pragma mark Menu Item Actions
 
-- (void)whoisSelectedMembers:(id)sender deselect:(BOOL)deselect
-{
-	IRCClient *u = [self.worldController selectedClient];
-	IRCChannel *c = [self.worldController selectedChannel];
-	
-	if (_noClient || _isClient) {
-		return;
-	}
-	
-	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendWhois:m.nickname];
-	}
-	
-	if (deselect) {
-		[self deselectMembers:sender];
-	}
-}
-
-- (void)memberListDoubleClicked:(id)sender
+- (void)memberInMemberListDoubleClicked:(id)sender
 {
     TVCMemberList *view = sender;
     
@@ -1550,20 +1532,45 @@
     NSInteger n = [view rowAtPoint:pt];
     
     if (n >= 0) {
-        
 		TXUserDoubleClickAction action = [TPCPreferences userDoubleClickOption];
         
 		if (action == TXUserDoubleClickWhoisAction) {
-			[self whoisSelectedMembers:nil deselect:NO];
+			[self whoisSelectedMembers:nil deselectPointedNickname:NO];
 		} else if (action == TXUserDoubleClickPrivateMessageAction) {
-			[self memberStartPrivateMessage:nil];
+			[self memberStartPrivateMessage:nil deselectPointedNickname:NO];
 		} else if (action == TXUserDoubleClickInsertTextFieldAction) {
-			[self memberInsertNameIntoTextField:nil];
+			[self memberInsertNameIntoTextField:nil deselectPointedNickname:NO];
+		}
+    }
+}
+
+- (void)memberInChannelViewDoubleClicked:(id)sender
+{
+    if (self.pointedNickname) {
+		TXUserDoubleClickAction action = [TPCPreferences userDoubleClickOption];
+
+		if (action == TXUserDoubleClickWhoisAction) {
+			[self whoisSelectedMembers:nil deselectPointedNickname:YES];
+		} else if (action == TXUserDoubleClickPrivateMessageAction) {
+			[self memberStartPrivateMessage:nil deselectPointedNickname:YES];
+		} else if (action == TXUserDoubleClickInsertTextFieldAction) {
+			[self memberInsertNameIntoTextField:nil deselectPointedNickname:YES];
 		}
     }
 }
 
 - (void)memberInsertNameIntoTextField:(id)sender
+{
+	/* Each double click method gets a deselectPointedNickname: sent to it
+	 depending on whether it was double clicked within the channel view or
+	 the member list. The purposes of this is to only deselect pointedNickname
+	 if it was from within the channel view to allow the selection in the
+	 user list to remain unchanged. */
+
+	[self memberInsertNameIntoTextField:sender deselectPointedNickname:NO];
+}
+
+- (void)memberInsertNameIntoTextField:(id)sender deselectPointedNickname:(BOOL)deselectPointedNickname
 {
 	IRCClient *u = [self.worldController selectedClient];
 	IRCChannel *c = [self.worldController selectedChannel];
@@ -1615,7 +1622,11 @@
     [textField replaceCharactersInRange:selectedRange withRTF:stringData];
 
 	/* Close users. */
-	[self deselectMembers:sender];
+	if (deselectPointedNickname) {
+		self.pointedNickname = nil;
+	} else {
+		[self deselectMembers:sender];
+	}
 	
 	/* Set focus to the input textfield. */
 	[textField focus];
@@ -1623,10 +1634,35 @@
 
 - (void)memberSendWhois:(id)sender
 {
-	[self whoisSelectedMembers:sender deselect:YES];
+	[self whoisSelectedMembers:sender deselectPointedNickname:NO];
+}
+
+- (void)whoisSelectedMembers:(id)sender deselectPointedNickname:(BOOL)deselectPointedNickname
+{
+	IRCClient *u = [self.worldController selectedClient];
+	IRCChannel *c = [self.worldController selectedChannel];
+
+	if (_noClient || _isClient) {
+		return;
+	}
+
+	for (IRCUser *m in [self selectedMembers:sender]) {
+		[u sendWhois:m.nickname];
+	}
+
+	if (deselectPointedNickname) {
+		self.pointedNickname = nil;
+	} else {
+		[self deselectMembers:sender];
+	}
 }
 
 - (void)memberStartPrivateMessage:(id)sender
+{
+	[self memberStartPrivateMessage:sender deselectPointedNickname:NO];
+}
+
+- (void)memberStartPrivateMessage:(id)sender deselectPointedNickname:(BOOL)deselectPointedNickname
 {
 	IRCClient *u = [self.worldController selectedClient];
 	IRCChannel *c = [self.worldController selectedChannel];
@@ -1644,8 +1680,12 @@
 		
 		[self.worldController select:c];
 	}
-	
-	[self deselectMembers:sender];
+
+	if (deselectPointedNickname) {
+		self.pointedNickname = nil;
+	} else {
+		[self deselectMembers:sender];
+	}
 }
 
 #pragma mark -

@@ -23,9 +23,9 @@ Textual.newMessagePostedToView = function(line)
     updateNicknameAssociatedWithNewMessage(element);
 }
 
-Textual.nicknameSingleClicked = function()
+Textual.nicknameSingleClicked = function(e)
 {
-	userNicknameSingleClickEvent(event.target);
+	userNicknameSingleClickEvent(e);
 }
 
 function updateNicknameAssociatedWithNewMessage(e)

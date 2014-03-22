@@ -170,7 +170,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[self.worldController setupOtherServices];
 
 	[self.memberList setTarget:self.menuController];
-	[self.memberList setDoubleAction:@selector(memberListDoubleClicked:)];
+	[self.memberList setDoubleAction:@selector(memberInMemberListDoubleClicked:)];
 
 	if ([TPCPreferences inputHistoryIsChannelSpecific] == NO) {
 		_globalInputHistory = [TLOInputHistory new];

@@ -16,16 +16,16 @@ Textual.viewFinishedReload = function()
 	Textual.viewFinishedLoading();
 }
 
-Textual.newMessagePostedToView = function (line)
+Textual.newMessagePostedToView = function(line)
 {
     var element = document.getElementById("line-" + line);
 
     updateNicknameAssociatedWithNewMessage(element);
 }
 
-Textual.nicknameSingleClicked = function()
+Textual.nicknameSingleClicked = function(e)
 {
-	userNicknameSingleClickEvent(event.target);
+	userNicknameSingleClickEvent(e);
 }
 
 function updateNicknameAssociatedWithNewMessage(e)
