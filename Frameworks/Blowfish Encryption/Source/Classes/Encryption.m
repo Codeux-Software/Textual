@@ -59,13 +59,13 @@
 	if ((hasOKPrefix || hasMCPSPrefix)) {
 		if (hasOKPrefix) {
 			if ([input length] == 4) {
-				return @""; /* Allow for empty strings. */
+				return @" "; /* Allow for empty strings. */
 			} else {
 				input = [input substringFromIndex:4];
 			}
 		} else if (hasMCPSPrefix) {
 			if ([input length] == 5) {
-				return @""; /* Allow for empty strings. */
+				return @" "; /* Allow for empty strings. */
 			} else {
 				input = [input substringFromIndex:5];
 			}
