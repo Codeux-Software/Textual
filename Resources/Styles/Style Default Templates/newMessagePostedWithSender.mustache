@@ -21,8 +21,7 @@
 
 		<span class="message" ltype="{{lineType}}">
 			<span class="sender"
-				onclick="Textual.nicknameSingleClicked()"
-				ondblclick="Textual.nicknameDoubleClicked()"
+				onclick="Textual.nicknameMaybeWasDoubleClicked(this)"
 				oncontextmenu="Textual.openStandardNicknameContextualMenu()" 
 				mtype="{{nicknameType}}"
 				nickname="{{nickname}}" 

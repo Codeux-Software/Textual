@@ -84,7 +84,7 @@
 
 	self.nickname = nil;
 	
-	[[self menuController] memberListDoubleClicked:nil];
+	[[self menuController] memberInChannelViewDoubleClicked:nil];
 }
 
 - (void)topicDoubleClicked

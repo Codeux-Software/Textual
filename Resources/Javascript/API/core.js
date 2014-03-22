@@ -35,6 +35,9 @@
 
  *********************************************************************** */
 
+/* Internal state. */
+var nicknameDoubleClickTimer;
+
 Textual = {
 	/* Callbacks for each WebView in Textual. — Self explanatory. */
 	
@@ -194,49 +197,76 @@ Textual = {
 	/* Contextual menu management and other resources.
 	 We do not recommend anyone try to override these. */
 	
-	openChannelNameContextualMenu: function() { 
+	openChannelNameContextualMenu: function() 
+	{ 
 		app.setChannelName(event.target.innerHTML); 
 	},
 
-	openURLManagementContextualMenu: function() { 
+	openURLManagementContextualMenu: function() 
+	{
 		app.setURLAddress(event.target.innerHTML); 
 	},
 
-	openInlineNicknameContextualMenu: function() { 
+	openInlineNicknameContextualMenu: function() 
+	{
 		app.setNickname(event.target.innerHTML); 
 	}, // Conversation Tracking
 	
-	openStandardNicknameContextualMenu: function() {
-		app.setNickname(event.target.getAttribute("nick"));
+	openStandardNicknameContextualMenu: function() 
+	{
+		app.setNickname(event.target.getAttribute("nickname"));
 	},
-	
-	nicknameSingleClicked: function() {
+
+	nicknameMaybeWasDoubleClicked: function(e)
+	{
+		if (nicknameDoubleClickTimer) {
+			clearTimeout(nicknameDoubleClickTimer);
+			
+			nicknameDoubleClickTimer = null;
+				
+			Textual.nicknameDoubleClicked(e);
+		} else {
+			nicknameDoubleClickTimer = setTimeout(function() {
+				nicknameDoubleClickTimer = null;
+
+				Textual.nicknameSingleClicked(e);
+			}, 250);
+		}
+	},
+
+	nicknameSingleClicked: function(e)
+	{
 		// API does not handle this action by default…
 	},
 	
-	nicknameDoubleClicked: function() { 
+	nicknameDoubleClicked: function(e) 
+	{
 		Textual.openStandardNicknameContextualMenu();
 
 		app.nicknameDoubleClicked();
 	},
 	
-	channelNameDoubleClicked: function() {
+	channelNameDoubleClicked: function() 
+	{
 		Textual.openChannelNameContextualMenu();
 
 		app.channelNameDoubleClicked();
 	},
 	
-	inlineNicknameDoubleClicked: function() {
+	inlineNicknameDoubleClicked: function() 
+	{
 		Textual.openInlineNicknameContextualMenu();
 
 		app.nicknameDoubleClicked();
 	},
 
-    topicDoubleClicked: function() {
+    topicDoubleClicked: function() 
+	{
         app.topicDoubleClicked();
     },
 	
-	toggleInlineImage: function(object) {
+	toggleInlineImage: function(object) 
+	{
 		if (app.toggleInlineImage(object) == "false") {
 			return false;
 		}

@@ -217,7 +217,8 @@
 - (IBAction)deleteChannel:(id)sender;
 - (IBAction)showChannelPropertiesDialog:(id)sender;
 
-- (void)memberListDoubleClicked:(id)sender;
+- (void)memberInMemberListDoubleClicked:(id)sender;
+- (void)memberInChannelViewDoubleClicked:(id)sender;
 
 - (IBAction)memberSendWhois:(id)sender;
 - (IBAction)memberStartPrivateMessage:(id)sender;
