@@ -6079,6 +6079,8 @@
 		case 437: // ERR_NICKCHANGETOOFAST
 		{
 			if (self.isLoggedIn) {
+				[self printUnknownReply:m];
+
 				break;
 			}
 			
