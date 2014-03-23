@@ -112,11 +112,13 @@
 
 - (NSMenu *)menuForEvent:(NSEvent *)e
 {
+	NSIndexSet *selectedRows = [self selectedRowIndexes];
+
 	NSPoint p = [self convertPoint:e.locationInWindow fromView:nil];
 
 	NSInteger i = [self rowAtPoint:p];
 
-	if (i >= 0 && NSDissimilarObjects(i, self.selectedRow)) {
+	if (i >= 0 && [selectedRows containsIndex:i] == NO) {
 		[self selectItemAtIndex:i];
 	}
 
