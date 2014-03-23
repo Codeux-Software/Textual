@@ -3695,10 +3695,6 @@
 	{
 		/* Is the sender a server? */
 		if ([sender isNickname:self] == NO) {
-			if ([text hasPrefix:@"*** Your codepage is '"] && [text hasSuffix:@"'"]) {
-				self.isupport.networkUsesCodepageModule = YES;
-			}
-			
 			[self print:nil type:type nick:nil text:text receivedAt:m.receivedAt command:m.command];
 		} else {
 			/* Ignore message? */
@@ -4973,6 +4969,13 @@
 		case 250 ... 255: // RPL_STATSCONN, RPL_LUSERCLIENT, RPL_LUSERHOP, RPL_LUSERUNKNOWN, RPL_LUSERCHANNELS, RPL_LUSERME
 		{
 			[self printReply:m];
+
+			break;
+		}
+		case 222:
+		{
+			NSAssertReturnLoopBreak(m.params.count == 3);
+
 
 			break;
 		}
