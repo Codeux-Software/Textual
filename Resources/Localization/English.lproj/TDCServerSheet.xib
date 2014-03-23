@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5053"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCServerSheet">
@@ -76,6 +76,7 @@
                 <outlet property="sslCertificateView" destination="Ti4-Q4-cYX" id="QPI-Iw-CIb"/>
                 <outlet property="tabView" destination="1444" id="1460"/>
                 <outlet property="usernameField" destination="1597" id="2267"/>
+                <outlet property="usesStrictCharacterMatchingCheck" destination="ABH-DM-OO3" id="F0v-gk-8UW"/>
                 <outlet property="validateServerSSLCertificateCheck" destination="7Re-Oa-iNx" id="Ep0-zf-9f2"/>
                 <outlet property="zncBouncerView" destination="2542" id="2575"/>
                 <outlet property="zncIgnoreConfiguredAutojoinCheck" destination="75N-79-v1S" id="thL-o4-SqJ"/>
@@ -85,7 +86,7 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application"/>
         <userDefaultsController id="2317"/>
-        <window title="Server Properties" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Window">
+        <window title="Server Properties" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="382" y="280" width="679" height="389"/>
@@ -360,8 +361,8 @@ Gw
                         <binding destination="2317" name="hidden2" keyPath="values.System —> Built with iCloud Support" previousBinding="lla-b6-G3l" id="Lcn-CW-XKA">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
@@ -577,7 +578,7 @@ Gw
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <popUpButton verticalHuggingPriority="750" id="1684">
-                    <rect key="frame" x="171" y="174" width="243" height="26"/>
+                    <rect key="frame" x="171" y="230" width="243" height="26"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="1714">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -586,7 +587,7 @@ Gw
                     </popUpButtonCell>
                 </popUpButton>
                 <popUpButton verticalHuggingPriority="750" id="1685">
-                    <rect key="frame" x="171" y="143" width="243" height="26"/>
+                    <rect key="frame" x="171" y="199" width="243" height="26"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="1692">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -595,7 +596,7 @@ Gw
                     </popUpButtonCell>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" id="1686">
-                    <rect key="frame" x="103" y="148" width="66" height="17"/>
+                    <rect key="frame" x="103" y="204" width="66" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Fallback:" id="1691">
                         <font key="font" metaFont="system"/>
@@ -604,7 +605,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1687">
-                    <rect key="frame" x="103" y="180" width="66" height="17"/>
+                    <rect key="frame" x="103" y="236" width="66" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Encoding:" id="1690">
                         <font key="font" metaFont="system"/>
@@ -613,17 +614,17 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="2307">
-                    <rect key="frame" x="36" y="20" width="444" height="34"/>
+                    <rect key="frame" x="49" y="34" width="409" height="56"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="2308">
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="2308">
                         <font key="font" metaFont="smallSystem"/>
-                        <string key="title">If the primary &amp; fallback encoding both fail during use, then all other encodings will be used until a successful conversion is found. </string>
+                        <string key="title">When enabled, Textual will not recognize a nickname as valid unless it contains a very strict set of "non-lossy" ASCII characters. However, as certain IRC networks permit international characters within nicknames, disabling this option will disable the described behavior. </string>
                         <color key="textColor" red="0.39130434780000001" green="0.39130434780000001" blue="0.39130434780000001" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <button id="2315">
-                    <rect key="frame" x="124" y="102" width="268" height="18"/>
+                    <rect key="frame" x="124" y="158" width="268" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Include all supported encodings in list." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="2316">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -634,6 +635,21 @@ Gw
                         <binding destination="2317" name="value" keyPath="values.Server Properties Window Sheet —> Include Advanced Encodings" id="2318"/>
                     </connections>
                 </button>
+                <button id="ABH-DM-OO3">
+                    <rect key="frame" x="124" y="101" width="268" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Use strict matching for nicknames." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Xve-Oh-EZX">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="Uh1-ee-DAr">
+                    <rect key="frame" x="37" y="136" width="442" height="5"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
             </subviews>
         </customView>
         <customView id="2542" userLabel="ZNC View">

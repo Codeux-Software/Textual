@@ -336,6 +336,8 @@
 	self.zncIgnoreConfiguredAutojoinCheck.state = self.config.zncIgnoreConfiguredAutojoin;
 	self.zncIgnorePlaybackNotificationsCheck.state = self.config.zncIgnorePlaybackNotifications;
 
+	self.usesStrictCharacterMatchingCheck.state = self.config.usesStrictCharacterMatching;
+
     self.prefersIPv6Check.state				= self.config.connectionPrefersIPv6;
 
 	self.pongTimerCheck.state				= self.config.performPongTimer;
@@ -438,7 +440,9 @@
 	self.config.performDisconnectOnPongTimer	= self.pongTimerDisconnectCheck.state;
 	
 	self.config.validateServerSSLCertificate = self.validateServerSSLCertificateCheck.state;
-	
+
+	self.config.usesStrictCharacterMatching = self.usesStrictCharacterMatchingCheck.state;
+
 	self.config.performDisconnectOnReachabilityChange = self.disconnectOnReachabilityChangeCheck.state;
 	
 	NSString *realhost = nil;

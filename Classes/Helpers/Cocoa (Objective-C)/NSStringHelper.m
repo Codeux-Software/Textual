@@ -481,12 +481,7 @@
 		return [self isNickname];
 	}
 
-	// If the case mapping is not ASCII, then we use lose checking with isNickname.
-	// This is more of a lazy-man fix for IRC servers that do custom things.
-	BOOL isAscii = ([client.isupport.networkCharset isEqualIgnoringCase:@"ascii"] &&
-					 client.isupport.networkUsesCodepageModule == NO);
-	
-	if (isAscii == NO) {
+	if ([[client config] usesStrictCharacterMatching] == NO) {
 		return [self isNickname];
 	}
 
