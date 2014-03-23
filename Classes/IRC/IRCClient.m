@@ -559,68 +559,42 @@
 #pragma mark -
 #pragma mark Encoding
 
-- (NSArray *)encodingDictionary
-{
-    return @[@(self.config.primaryEncoding), @(self.config.fallbackEncoding)];
-}
-
-- (NSArray *)fallbackEncodingDictionary
-{
-    return [NSString supportedStringEncodings:YES];
-}
-
 - (NSData *)convertToCommonEncoding:(NSString *)data
 {
-	NSArray *encodings = [self encodingDictionary];
+	NSData *s = [data dataUsingEncoding:self.config.primaryEncoding allowLossyConversion:NO];
 
-	for (id base in encodings) {
-		NSData *s = [data dataUsingEncoding:[base integerValue] allowLossyConversion:YES];
+	if (s == nil) {
+		s = [data dataUsingEncoding:self.config.fallbackEncoding allowLossyConversion:NO];
 
-		NSObjectIsEmptyAssertLoopContinue(s);
-
-		return s;
+		if (s == nil) {
+			s = [data dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+		}
 	}
 
-    encodings = [self fallbackEncodingDictionary];
-
-	for (id base in encodings) {
-		NSData *s = [data dataUsingEncoding:[base integerValue] allowLossyConversion:YES];
-
-		NSObjectIsEmptyAssertLoopContinue(s);
-
-		return s;
+	if (s == nil) {
+		DebugLogToConsole(@"NSData encode failure. (%@)", data);
 	}
 
-	DebugLogToConsole(@"NSData encode failure. (%@)", data);
-
-	return nil;
+	return s;
 }
 
 - (NSString *)convertFromCommonEncoding:(NSData *)data
 {
-	NSArray *encodings = [self encodingDictionary];
+	NSString *s = [NSString stringWithBytes:[data bytes] length:[data length] encoding:self.config.primaryEncoding];
 
-	for (id base in encodings) {
-		NSString *s = [NSString stringWithBytes:[data bytes] length:[data length] encoding:[base integerValue]];
+	if (s == nil) {
+		s = [NSString stringWithBytes:[data bytes] length:[data length] encoding:self.config.fallbackEncoding];
 
-		NSObjectIsEmptyAssertLoopContinue(s);
-
-		return s;
+		if (s == nil) {
+			s = [NSString stringWithBytes:[data bytes] length:[data length] encoding:NSASCIIStringEncoding];
+		}
 	}
 
-    encodings = [self fallbackEncodingDictionary];
-
-	for (id base in encodings) {
-		NSString *s = [NSString stringWithBytes:[data bytes] length:[data length] encoding:[base integerValue]];
-
-		NSObjectIsEmptyAssertLoopContinue(s);
-
-		return s;
+	if (s == nil) {
+		DebugLogToConsole(@"NSData decode failure. (%@)", data);
 	}
 
-	DebugLogToConsole(@"NSData decode failure. (%@)", data);
-
-	return nil;
+	return s;
 }
 
 #pragma mark -
