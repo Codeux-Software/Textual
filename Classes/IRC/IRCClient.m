@@ -5290,7 +5290,7 @@
 				[self print:c
 					   type:TVCLogLineTopicType
 					   nick:nil
-					   text:TXTFLS(@"BasicLanguage[1123]", topicva)
+					   text:TXTFLS(@"BasicLanguage[1124]", topicva)
 				  encrypted:isEncrypted
 				 receivedAt:m.receivedAt
 					command:m.command];
