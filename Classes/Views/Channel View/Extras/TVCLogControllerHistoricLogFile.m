@@ -122,6 +122,8 @@
 - (void)resetDataForEntriesMatchingClient:(IRCClient *)client inChannel:(IRCChannel *)channel
 {
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
+	PointerIsEmptyAssert(_managedObjectContext);
+
 	[_managedObjectContext performBlock:^{
 		/* Build fetch request. */
 		NSFetchRequest *fetchRequest = [self fetchRequestForClient:client
@@ -148,7 +150,13 @@
 {
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	/* What are we fetching for? */
-	PointerIsEmptyAssert(client);
+	if (PointerIsEmpty(client) ||
+		PointerIsEmpty(_managedObjectContext))
+	{
+		completionBlock(nil, nil);
+
+		return;
+	}
 
 	/* Create private dispatch queue. */
 	NSManagedObjectContext *backgroundContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
@@ -262,7 +270,7 @@
 
 	/* Continue work. */
 	if (_managedObjectContext == nil) {
-		NSAssert(NO, @"Missing managed object context.");
+		LogToConsole(@"Missing managed object context. No historic logging will occur during this session.");
 	} else {
 		/* Define default values. */
 		_hasPendingAutosaveTimer = NO;
@@ -314,6 +322,9 @@
 - (void)saveData
 {
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
+	/* What are we saving to? */
+	PointerIsEmptyAssert(_managedObjectContext);
+
 	/* Cancel any previous running timers incase this is manual save. */
 	[self handleManagedObjectContextChangeTimerInitializer];
 
