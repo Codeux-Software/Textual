@@ -5742,6 +5742,7 @@
 		{
 			NSAssertReturnLoopBreak(m.params.count >= 3);
 
+			NSString *channel = [m paramAt:1];
 			NSString *hostmask = [m paramAt:2];
 			NSString *banowner = @"";
 			NSString *settime = @"";
@@ -5762,6 +5763,15 @@
 
             if (chanBanListSheet) {
 				[chanBanListSheet addBan:hostmask tset:settime	setby:banowner];
+			} else {
+				NSString *nick = [banowner nicknameFromHostmask:self];
+				[self print:nil
+					   type:TVCLogLineDebugType
+					   nick:nil
+					   text:extendedLine ? TXTFLS(@"BasicLanguage[1230][1]", channel, hostmask, nick, settime) :
+										   TXTFLS(@"BasicLanguage[1230][2]", channel, hostmask)
+				 receivedAt:m.receivedAt
+					command:m.command];
 			}
 
 			break;
@@ -5774,6 +5784,8 @@
 
 			if (chanBanListSheet) {
 				chanBanListSheet.contentAlreadyReceived = true;
+			} else {
+				[self printReply:m];
 			}
 
 			break;
@@ -5782,6 +5794,7 @@
 		{
 			NSAssertReturnLoopBreak(m.params.count >= 3);
 
+			NSString *channel = [m paramAt:1];
 			NSString *hostmask = [m paramAt:2];
 			NSString *banowner = @"";
 			NSString *settime = @"";
@@ -5802,6 +5815,15 @@
 
 			if (inviteExceptionSheet) {
 				[inviteExceptionSheet addException:hostmask tset:settime setby:banowner];
+			} else {
+				NSString *nick = [banowner nicknameFromHostmask:self];
+				[self print:nil
+					   type:TVCLogLineDebugType
+					   nick:nil
+					   text:extendedLine ? TXTFLS(@"BasicLanguage[1231][1]", channel, hostmask, nick, settime) :
+										   TXTFLS(@"BasicLanguage[1231][2]", channel, hostmask)
+				 receivedAt:m.receivedAt
+					command:m.command];
 			}
 
 			break;
@@ -5814,6 +5836,8 @@
 
 			if (inviteExceptionSheet) {
 				inviteExceptionSheet.contentAlreadyReceived = true;
+			} else {
+				[self printReply:m];
 			}
 
 			break;
@@ -5822,6 +5846,7 @@
 		{
 			NSAssertReturnLoopBreak(m.params.count >= 3);
 
+			NSString *channel = [m paramAt:1];
 			NSString *hostmask = [m paramAt:2];
 			NSString *banowner = @"";
 			NSString *settime = @"";
@@ -5842,6 +5867,15 @@
 
 			if (banExceptionSheet) {
 				[banExceptionSheet addException:hostmask tset:settime setby:banowner];
+			} else {
+				NSString *nick = [banowner nicknameFromHostmask:self];
+				[self print:nil
+					   type:TVCLogLineDebugType
+					   nick:nil
+					   text:extendedLine ? TXTFLS(@"BasicLanguage[1232][1]", channel, hostmask, nick, settime) :
+										   TXTFLS(@"BasicLanguage[1232][2]", channel, hostmask)
+				 receivedAt:m.receivedAt
+					command:m.command];
 			}
 
 			break;
@@ -5854,6 +5888,8 @@
 
 			if (banExceptionSheet) {
 				banExceptionSheet.contentAlreadyReceived = true;
+			} else {
+				[self printReply:m];
 			}
 
 			break;
