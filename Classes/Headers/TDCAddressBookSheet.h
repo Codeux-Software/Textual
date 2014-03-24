@@ -40,6 +40,7 @@
 
 @interface TDCAddressBookSheet : TDCSheetBase
 @property (nonatomic, assign) BOOL newItem;
+@property (nonatomic, assign) BOOL usesStrictCharacterMatchingForValidation;
 @property (nonatomic, strong) IRCAddressBook *ignore;
 @property (nonatomic, nweak) IBOutlet NSButton *hideInMemberListCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *hideMessagesContainingMatchCheck;
