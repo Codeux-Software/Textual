@@ -674,10 +674,6 @@
 	}
 
 	self.reloadingBacklog = NO;
-
-	dispatch_async(dispatch_get_main_queue(), ^{
-		[self executeQuickScriptCommand:@"viewFinishedReload" withArguments:@[]];
-	});
 }
 
 #pragma mark -
@@ -1399,6 +1395,8 @@
 
 	if (self.reloadingBacklog == NO) {
 		[self executeQuickScriptCommand:@"viewFinishedLoading" withArguments:@[]];
+	} else {
+		[self executeQuickScriptCommand:@"viewFinishedReload" withArguments:@[]];
 	}
 
 	self.isLoaded = YES;
