@@ -1,0 +1,10 @@
+{{! The 'line types' folder needs to be copied to a custom style to modify this file. }}
+
+<div ltype="{{lineType}}" type="{{lineType}}" command="{{rawCommand}}" class="line {{lineClassAttributeRepresentation}}" id="line-{{lineNumber}}" time="{{lineRenderTime}}">
+	<p>
+		<span class="time">{{formattedTimestamp}} </span>
+		<span class="message" ltype="{{lineType}}" type="{{lineType}}">
+			{{{formattedMessage}}}
+		</span>
+	</p>
+</div>

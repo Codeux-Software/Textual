@@ -45,31 +45,6 @@
 @implementation TPCThemeSettings
 
 #pragma mark -
-#pragma mark Initialization
-
-- (id)init
-{
-    self = [super init];
-
-    if (self) {
-		/* The path to and the contents of the default template repostiory is static.
-		 This loads the repository into a pointer during init and forgets it until
-		 it is needed. */
-		NSString *dictPath = [[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Style Default Templates"];
-
-		self.appTemplateRepository = [GRMustacheTemplateRepository templateRepositoryWithBaseURL:[NSURL fileURLWithPath:dictPath]];
-
-		if (PointerIsEmpty(self.appTemplateRepository)) {
-			/* Throw exception if we could not load repository. */
-
-			NSAssert(NO, @"Default template repository not found.");
-		}
-    }
-
-    return self;
-}
-
-#pragma mark -
 #pragma mark Setting Loaders
 
 /* The following methods read the dictionary of a theme and validates
@@ -113,7 +88,7 @@
 {
 	NSDictionary *fontDict = [dict dictionaryForKey:key];
 
-	NSAssertReturnR((fontDict.count == 2), nil);
+	NSAssertReturnR(([fontDict count] == 2), nil);
 	
 	NSString *fontName = [fontDict stringForKey:@"Font Name"];
 
@@ -152,12 +127,12 @@
 	NSError *load_error = nil;
 
 	/* First look for a custom template. */
-	GRMustacheTemplate *tmpl = [self.styleTemplateRepository templateNamed:name error:&load_error];
+	GRMustacheTemplate *tmpl = [_styleTemplateRepository templateNamed:name error:&load_error];
 
 	if (PointerIsEmpty(tmpl) || load_error) {
 		/* If no custom template is found, then revert to application defaults. */
 		if ([load_error code] == GRMustacheErrorCodeTemplateNotFound || [load_error code] == 260) {
-			GRMustacheTemplate *tmpl = [self.appTemplateRepository templateNamed:name error:&load_error];
+			GRMustacheTemplate *tmpl = [_appTemplateRepository templateNamed:name error:&load_error];
 
 			PointerIsNotEmptyAssertReturn(tmpl, tmpl); // Return default template.
 		}
@@ -176,14 +151,43 @@
 #pragma mark -
 #pragma mark Load Settings
 
+- (void)loadApplicationStyleRespository:(NSInteger)version
+{
+	NSString *filename = [NSString stringWithFormat:@"/Style Default Templates/Version %i/", version];
+
+	NSString *dictPath = [[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:filename];
+
+	_appTemplateRepository = [GRMustacheTemplateRepository templateRepositoryWithBaseURL:[NSURL fileURLWithPath:dictPath]];
+
+	if (_appTemplateRepository == nil) {
+		/* Throw exception if we could not load repository. */
+
+		NSAssert(NO, @"Default template repository not found.");
+	}
+}
+
 - (void)reloadWithPath:(NSString *)path
 {
 	/* Load any custom templates. */
 	NSString *dictPath = [path stringByAppendingPathComponent:@"/Data/Templates"];
 
-	self.styleTemplateRepository = [GRMustacheTemplateRepository templateRepositoryWithBaseURL:[NSURL fileURLWithPath:dictPath]];
+	_styleTemplateRepository = [GRMustacheTemplateRepository templateRepositoryWithBaseURL:[NSURL fileURLWithPath:dictPath]];
+
+	/* Reset old properties. */
+	_channelViewFont = nil;
+
+	_nicknameFormat = nil;
+	_timestampFormat = nil;
+
+	_forceInvertSidebarColors = NO;
+
+	_underlyingWindowColor = nil;
+
+	_indentationOffset = TXThemeDisabledIndentationOffset;
 
 	/* Load style settings dictionary. */
+	BOOL didLoadDefaultTemplateRepository = NO;
+
 	NSDictionary *styleSettings = nil;
 	
 	dictPath = [path stringByAppendingPathComponent:@"/Data/Settings/styleSettings.plist"];
@@ -192,41 +196,61 @@
 		styleSettings = [NSDictionary dictionaryWithContentsOfFile:dictPath];
 
 		/* Parse the dictionary values. */
-		self.channelViewFont			= [self fontForKey:@"Override Channel Font" fromDictionary:styleSettings];
+		_channelViewFont			= [self fontForKey:@"Override Channel Font" fromDictionary:styleSettings];
 
-		self.nicknameFormat				= [self stringForKey:@"Nickname Format" fromDictionary:styleSettings];
-		self.timestampFormat			= [self stringForKey:@"Timestamp Format" fromDictionary:styleSettings];
+		_nicknameFormat				= [self stringForKey:@"Nickname Format" fromDictionary:styleSettings];
+		_timestampFormat			= [self stringForKey:@"Timestamp Format" fromDictionary:styleSettings];
 
-		self.forceInvertSidebarColors	= [self boolForKey:@"Force Invert Sidebars" fromDictionary:styleSettings];
+		_forceInvertSidebarColors	= [self boolForKey:@"Force Invert Sidebars" fromDictionary:styleSettings];
 
-		self.underlyingWindowColor		= [self colorForKey:@"Underlying Window Color" fromDictionary:styleSettings];
+		_underlyingWindowColor		= [self colorForKey:@"Underlying Window Color" fromDictionary:styleSettings];
 
-		self.indentationOffset			= [self doubleForKey:@"Indentation Offset" fromDictionary:styleSettings];
+		_indentationOffset			= [self doubleForKey:@"Indentation Offset" fromDictionary:styleSettings];
 
 		/* Disable indentation? */
-		if (self.indentationOffset <= 0.0) {
-			self.indentationOffset = TXThemeDisabledIndentationOffset;
+		if (_indentationOffset <= 0.0) {
+			_indentationOffset = TXThemeDisabledIndentationOffset;
+		}
+
+		/* Get style template version. */
+		NSInteger templateVersion = [self integerForKey:@"Template Engine Version" fromDictionary:styleSettings];
+
+		if (templateVersion == 2) {
+			[self loadApplicationStyleRespository:2];
+
+			didLoadDefaultTemplateRepository = YES;
 		}
 	}
 
+	/* Fall back to the default repository. */
+	if (didLoadDefaultTemplateRepository == NO) {
+		[self loadApplicationStyleRespository:1];
+	}
+
 	/* Load localizations. */
-	self.languageLocalizations = nil;
+	_languageLocalizations = nil;
 
 	dictPath = [path stringByAppendingPathComponent:@"/Data/Settings/styleLocalizations.plist"];
 
 	if ([RZFileManager() fileExistsAtPath:dictPath]) {
-		self.languageLocalizations = [NSDictionary dictionaryWithContentsOfFile:dictPath];
+		_languageLocalizations = [NSDictionary dictionaryWithContentsOfFile:dictPath];
 	}
 
 	/* Inform our defaults controller about a few overrides. */
 	/* These setValue calls basically tell the NSUserDefaultsController for the "Preferences" 
 	 window that the active theme has overrode a few user configurable options. The window then 
 	 blanks out the options specified to prevent the user from modifying. */
-	
-	[[RZUserDefaultsController() values] setValue:@(NSObjectIsEmpty(self.nicknameFormat))		forKey:@"Theme -> Nickname Format Preference Enabled"];
-	[[RZUserDefaultsController() values] setValue:@(NSObjectIsEmpty(self.timestampFormat))		forKey:@"Theme -> Timestamp Format Preference Enabled"];
-    [[RZUserDefaultsController() values] setValue:@(PointerIsEmpty(self.channelViewFont))		forKey:@"Theme -> Channel Font Preference Enabled"];
-	[[RZUserDefaultsController() values] setValue:@(self.forceInvertSidebarColors == NO)		forKey:@"Theme -> Invert Sidebar Colors Preference Enabled"];
+	[[RZUserDefaultsController() values] setValue:@(NSObjectIsEmpty(_nicknameFormat))
+										   forKey:@"Theme -> Nickname Format Preference Enabled"];
+
+	[[RZUserDefaultsController() values] setValue:@(NSObjectIsEmpty(_timestampFormat))
+										   forKey:@"Theme -> Timestamp Format Preference Enabled"];
+
+    [[RZUserDefaultsController() values] setValue:@(_channelViewFont == nil)
+										   forKey:@"Theme -> Channel Font Preference Enabled"];
+
+	[[RZUserDefaultsController() values] setValue:@(_forceInvertSidebarColors == NO)
+										   forKey:@"Theme -> Invert Sidebar Colors Preference Enabled"];
 }
 
 @end
