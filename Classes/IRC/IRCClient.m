@@ -5743,15 +5743,21 @@
 		}
 		case 367: // RPL_BANLIST
 		{
-			NSAssertReturnLoopBreak(m.params.count >= 5);
+			NSAssertReturnLoopBreak(m.params.count >= 3);
 
 			NSString *hostmask = [m paramAt:2];
-			NSString *banowner = [m paramAt:3];
-			NSString *settime = [m paramAt:4];
+			NSString *banowner = @"";
+			NSString *settime = @"";
+			BOOL extendedLine = m.params.count >= 5;
 
-			settime = [NSDateFormatter localizedStringFromDate:[NSDate dateWithTimeIntervalSince1970:settime.doubleValue]
-													 dateStyle:NSDateFormatterLongStyle
-													 timeStyle:NSDateFormatterLongStyle];
+			if (extendedLine) {
+				banowner = [m paramAt:3];
+				settime = [m paramAt:4];
+
+				settime = [NSDateFormatter localizedStringFromDate:[NSDate dateWithTimeIntervalSince1970:settime.doubleValue]
+														 dateStyle:NSDateFormatterLongStyle
+														 timeStyle:NSDateFormatterLongStyle];
+			}
 
             TXMenuController *menuController = self.menuController;
 
@@ -5765,15 +5771,21 @@
 		}
 		case 346: // RPL_INVITELIST
 		{
-			NSAssertReturnLoopBreak(m.params.count >= 5);
+			NSAssertReturnLoopBreak(m.params.count >= 3);
 
 			NSString *hostmask = [m paramAt:2];
-			NSString *banowner = [m paramAt:3];
-			NSString *settime = [m paramAt:4];
+			NSString *banowner = @"";
+			NSString *settime = @"";
+			BOOL extendedLine = m.params.count >= 5;
 
-			settime = [NSDateFormatter localizedStringFromDate:[NSDate dateWithTimeIntervalSince1970:settime.doubleValue]
-													 dateStyle:NSDateFormatterLongStyle
-													 timeStyle:NSDateFormatterLongStyle];
+			if (extendedLine) {
+				banowner = [m paramAt:3];
+				settime = [m paramAt:4];
+
+				settime = [NSDateFormatter localizedStringFromDate:[NSDate dateWithTimeIntervalSince1970:settime.doubleValue]
+														 dateStyle:NSDateFormatterLongStyle
+														 timeStyle:NSDateFormatterLongStyle];
+			}
 
             TXMenuController *menuController = self.menuController;
 
@@ -5787,15 +5799,21 @@
 		}
 		case 348: // RPL_EXCEPTLIST
 		{
-			NSAssertReturnLoopBreak(m.params.count >= 5);
+			NSAssertReturnLoopBreak(m.params.count >= 3);
 
 			NSString *hostmask = [m paramAt:2];
-			NSString *banowner = [m paramAt:3];
-			NSString *settime = [m paramAt:4];
+			NSString *banowner = @"";
+			NSString *settime = @"";
+			BOOL extendedLine = m.params.count >= 5;
 
-			settime = [NSDateFormatter localizedStringFromDate:[NSDate dateWithTimeIntervalSince1970:settime.doubleValue]
-													 dateStyle:NSDateFormatterLongStyle
-													 timeStyle:NSDateFormatterLongStyle];
+			if (extendedLine) {
+				banowner = [m paramAt:3];
+				settime = [m paramAt:4];
+
+				settime = [NSDateFormatter localizedStringFromDate:[NSDate dateWithTimeIntervalSince1970:settime.doubleValue]
+														 dateStyle:NSDateFormatterLongStyle
+														 timeStyle:NSDateFormatterLongStyle];
+			}
 
             TXMenuController *menuController = self.menuController;
 
