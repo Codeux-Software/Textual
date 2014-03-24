@@ -97,11 +97,6 @@
 - (NSString *)usernameFromHostmask:(IRCClient *)client;
 - (NSString *)addressFromHostmask:(IRCClient *)client;
 
-/* Returns NO on invalid host. */
-- (BOOL)hostmaskComponents:(NSString **)nickname username:(NSString **)username address:(NSString **)address client:(IRCClient *)client;
-/* Character set matching will call isNicknameMatchingDefinedCharacterSet instead of isNickname when client is not specified. It is defauled to NO in above method. */
-- (BOOL)hostmaskComponents:(NSString **)nickname username:(NSString **)username address:(NSString **)address client:(IRCClient *)client usingCharacterSetMatching:(BOOL)matchUsingCharacterSet;
-
 - (NSString *)cleanedServerHostmask;
 
 - (NSInteger)compareWithWord:(NSString *)stringB matchGain:(NSInteger)gain missingCost:(NSInteger)cost;
@@ -145,7 +140,6 @@
 
 - (BOOL)isHostmask;
 - (BOOL)isHostmask:(IRCClient *)client;
-- (BOOL)isHostmaskMatchingDefinedCharacterSet; // Validates against IRCNicknameValidCharacters.
 
 - (BOOL)isIPv4Address;
 - (BOOL)isIPv6Address;
@@ -153,9 +147,10 @@
 
 - (BOOL)isModeChannelName;
 
+- (BOOL)hostmaskComponents:(NSString **)nickname username:(NSString **)username address:(NSString **)address client:(IRCClient *)client;
+
 - (BOOL)isNickname;
-- (BOOL)isNickname:(IRCClient *)client; // Client to parse CHARSET or CASEMAPPING from.
-- (BOOL)isNicknameMatchingDefinedCharacterSet; // Validates against IRCNicknameValidCharacters.
+- (BOOL)isNickname:(IRCClient *)client;
 
 - (BOOL)isChannelName;
 - (BOOL)isChannelName:(IRCClient *)client; // Client to parse CHANTYPES from.

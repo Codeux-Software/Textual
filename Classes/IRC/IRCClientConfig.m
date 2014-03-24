@@ -68,8 +68,6 @@
 		self.autoSleepModeDisconnect		= YES;
 		self.performPongTimer				= YES;
 
-		self.usesStrictCharacterMatching	= YES;
-
 		self.performDisconnectOnPongTimer				= NO;
 		self.performDisconnectOnReachabilityChange		= YES;
 		
@@ -338,8 +336,6 @@
 
 		self.validateServerSSLCertificate = NSDictionaryBOOLKeyValueCompare(dic, @"validateServerSideSSLCertificate", self.validateServerSSLCertificate);
 
-		self.usesStrictCharacterMatching = NSDictionaryBOOLKeyValueCompare(dic, @"usesStrictCharacterMatching", self.usesStrictCharacterMatching);
-
 		self.performPongTimer				= NSDictionaryBOOLKeyValueCompare(dic, @"performPongTimer", self.performPongTimer);
 		
 		self.performDisconnectOnPongTimer			= NSDictionaryBOOLKeyValueCompare(dic, @"performDisconnectOnPongTimer", self.performDisconnectOnPongTimer);
@@ -448,8 +444,6 @@
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[dic setBool:self.excludedFromCloudSyncing forKey:@"excludeFromCloudSyncing"];
 #endif
-
-	[dic setBool:self.usesStrictCharacterMatching	forKey:@"usesStrictCharacterMatching"];
 
 	[dic setBool:self.autoConnect					forKey:@"connectOnLaunch"];
 	[dic setBool:self.autoReconnect					forKey:@"connectOnDisconnect"];
