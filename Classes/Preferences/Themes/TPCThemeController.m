@@ -43,7 +43,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		self.customSettings = [TPCThemeSettings new];
+		_customSettings = [TPCThemeSettings new];
 	}
 	
 	return self;
@@ -51,28 +51,30 @@
 
 - (NSString *)path
 {
-	return [self.baseURL path];
+	return [_baseURL path];
 }
 
 - (NSString *)actualPath
 {
-	return [TPCThemeController pathOfThemeWithName:self.associatedThemeName skipCloudCache:YES];
+	return [TPCThemeController pathOfThemeWithName:_associatedThemeName skipCloudCache:YES];
 }
 
 - (NSString *)name
 {
-	return [TPCThemeController extractThemeName:self.associatedThemeName];
+	return [TPCThemeController extractThemeName:_associatedThemeName];
 }
 
 - (BOOL)actualPathForCurrentThemeIsEqualToCachedPath
 {
-	NSString *updatedPath = [TPCThemeController pathOfThemeWithName:self.associatedThemeName];
-	
-	if (NSObjectIsEmpty(updatedPath) && NSObjectIsNotEmpty(self.path)) {
+	NSString *updatedPath = [TPCThemeController pathOfThemeWithName:_associatedThemeName];
+
+	NSString *otherPath = [self path];
+
+	if (NSObjectIsEmpty(updatedPath) && NSObjectIsNotEmpty(otherPath)) {
 		return NO;
 	}
 	
-	return ([updatedPath isEqualToString:self.path]);
+	return ([updatedPath isEqualToString:otherPath]);
 }
 
 + (BOOL)themeExists:(NSString *)themeName
@@ -145,22 +147,22 @@
 - (void)validateFilePathExistanceAndReload
 {
 	/* Try to find a theme by the stored name. */
-	self.associatedThemeName = [TPCPreferences themeName];
+	_associatedThemeName = [TPCPreferences themeName];
 	
-	NSString *path = [TPCThemeController pathOfThemeWithName:self.associatedThemeName];
+	NSString *path = [TPCThemeController pathOfThemeWithName:_associatedThemeName];
 	
 	if (NSObjectIsEmpty(path)) {
 		NSAssert(NO, @"Missing style resource files.");
 	}
 
 	/* We have a path. */
-	self.baseURL = [NSURL fileURLWithPath:path];
+	_baseURL = [NSURL fileURLWithPath:path];
 
 	/* Define a shared cache ID for files. */
-	self.sharedCacheID = [NSString stringWithInteger:TXRandomNumber(5000)];
+	_sharedCacheID = [NSString stringWithInteger:TXRandomNumber(5000)];
 
 	/* Reload theme settings. */
-	[self.customSettings reloadWithPath:path];
+	[_customSettings reloadWithPath:path];
 }
 
 - (void)load

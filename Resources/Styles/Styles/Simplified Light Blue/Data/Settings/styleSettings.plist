@@ -19,5 +19,7 @@
 	<string>#dee4ea</string>
 	<key>Force Invert Sidebars</key>
 	<false/>
+	<key>Template Engine Version</key>
+	<integer>2</integer>
 </dict>
 </plist>
