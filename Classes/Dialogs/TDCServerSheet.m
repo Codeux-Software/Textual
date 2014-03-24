@@ -336,8 +336,6 @@
 	self.zncIgnoreConfiguredAutojoinCheck.state = self.config.zncIgnoreConfiguredAutojoin;
 	self.zncIgnorePlaybackNotificationsCheck.state = self.config.zncIgnorePlaybackNotifications;
 
-	self.usesStrictCharacterMatchingCheck.state = self.config.usesStrictCharacterMatching;
-
     self.prefersIPv6Check.state				= self.config.connectionPrefersIPv6;
 
 	self.pongTimerCheck.state				= self.config.performPongTimer;
@@ -440,8 +438,6 @@
 	self.config.performDisconnectOnPongTimer	= self.pongTimerDisconnectCheck.state;
 	
 	self.config.validateServerSSLCertificate = self.validateServerSSLCertificateCheck.state;
-
-	self.config.usesStrictCharacterMatching = self.usesStrictCharacterMatchingCheck.state;
 
 	self.config.performDisconnectOnReachabilityChange = self.disconnectOnReachabilityChangeCheck.state;
 	
@@ -1166,7 +1162,6 @@
 	self.ignoreSheet.delegate = self;
 	self.ignoreSheet.window = self.sheet;
 	self.ignoreSheet.ignore = [IRCAddressBook new];
-	self.ignoreSheet.usesStrictCharacterMatchingForValidation = self.usesStrictCharacterMatchingCheck.state;
 	
 	if ([sender tag] == 4) {
 		self.ignoreSheet.ignore.entryType = IRCAddressBookUserTrackingEntryType;
@@ -1192,7 +1187,6 @@
 	self.ignoreSheet.delegate = self;
 	self.ignoreSheet.window = self.sheet;
 	self.ignoreSheet.ignore = c.mutableCopy;
-	self.ignoreSheet.usesStrictCharacterMatchingForValidation = self.usesStrictCharacterMatchingCheck.state;
 	
 	[self.ignoreSheet start];
 }

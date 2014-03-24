@@ -346,11 +346,6 @@
 
 - (BOOL)hostmaskComponents:(NSString **)nickname username:(NSString **)username address:(NSString **)address client:(IRCClient *)client
 {
-	return [self hostmaskComponents:nickname username:username address:address client:client usingCharacterSetMatching:NO];
-}
-
-- (BOOL)hostmaskComponents:(NSString **)nickname username:(NSString **)username address:(NSString **)address client:(IRCClient *)client usingCharacterSetMatching:(BOOL)matchUsingCharacterSet
-{
 	/* Gather basic information. */
 	NSInteger bang1pos = [self stringPosition:@"!"];
 	NSInteger bang2pos = [self stringPosition:@"@"];
@@ -362,8 +357,8 @@
 	/* Bind sections of the host. */
 	NSString *nicknameInt = [self substringToIndex:bang1pos];
 
-	NSString *usernameInt = [self safeSubstringWithRange:NSMakeRange((bang1pos + 1),
-																	 (bang2pos - (bang1pos + 1)))];
+	NSString *usernameInt = [self substringWithRange:NSMakeRange((bang1pos + 1),
+																 (bang2pos - (bang1pos + 1)))];
 
 	NSString *addressInt = [self substringAfterIndex:bang2pos];
 
@@ -387,18 +382,8 @@
 
 	/* Perform client specific validation. */
 	if (client) {
-		/* Check whether the nickname is a valid length. */
-		NSInteger maxNickLength = [[client isupport] nicknameLength];
-
-		NSAssertReturnR(([nicknameInt length] <= maxNickLength), NO);
-
 		/* Check whether the nickname is a valid nickname. */
 		NSAssertReturnR([nicknameInt isNickname:client], NO);
-	} else {
-		/* Check whether the nickname is a valid nickname. */
-		if (matchUsingCharacterSet) {
-			NSAssertReturnR([nicknameInt isNicknameMatchingDefinedCharacterSet], NO);
-		}
 	}
 
 	/* The host checks out so far, so define the output. */
@@ -424,12 +409,7 @@
 
 - (BOOL)isHostmask:(IRCClient *)client
 {
-	return [self hostmaskComponents:nil username:nil address:nil client:client usingCharacterSetMatching:NO];
-}
-
-- (BOOL)isHostmaskMatchingDefinedCharacterSet
-{
-	return [self hostmaskComponents:nil username:nil address:nil client:nil usingCharacterSetMatching:YES];
+	return [self hostmaskComponents:nil username:nil address:nil client:client];
 }
 
 - (BOOL)isUsername /* Ident — @private */
@@ -452,51 +432,28 @@
 	return ([self isNotEqualTo:@"*"] && [self contains:@"."] == NO);
 }
 
-- (BOOL)isNicknameMatchingDefinedCharacterSet
-{
-	NSString *bob = self;
-
-	if ([bob isEqualToString:@"*"]) {
-		return NO;
-	} else {
-		// Only allow star character as nickname prefix. No other position.
-		if ([bob hasPrefix:@"*"]) {
-			bob = [bob substringFromIndex:1];
-		}
-
-		// If the case mapping is ASCII which is a lot of IRC, then it is better to be strict.
-		if ([bob onlyContainsCharacters:IRCNicknameValidCharacters] == NO) {
-			return NO;
-		}
-
-		return (bob.length > 0 && bob.length <= TXMaximumIRCNicknameLength);
-	}
-}
-
 - (BOOL)isNickname:(IRCClient *)client
 {
 	NSObjectIsEmptyAssertReturn(self, NO);
-	
-	if (PointerIsEmpty(client)) {
+
+	if (client) {
+		NSInteger maxNickLength = [[client isupport] nicknameLength];
+
+		return ([self isNickname] && [self length] <= maxNickLength);
+	} else {
 		return [self isNickname];
 	}
-
-	if ([[client config] usesStrictCharacterMatching] == NO) {
-		return [self isNickname];
-	}
-
-	return [self isNicknameMatchingDefinedCharacterSet];
 }
 
 - (BOOL)isChannelName:(IRCClient *)client
 {
 	NSObjectIsEmptyAssertReturn(self, NO);
 	
-	if (PointerIsEmpty(client)) {
+	if (client == nil) {
 		return [self isChannelName];
 	}
 
-	NSString *validChars = [client.isupport channelNamePrefixes];
+	NSString *validChars = [[client isupport] channelNamePrefixes];
 
 	if ([self length] == 1) {
 		NSString *c = [self stringCharacterAtIndex:0];

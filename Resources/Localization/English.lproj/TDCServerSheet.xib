@@ -76,7 +76,6 @@
                 <outlet property="sslCertificateView" destination="Ti4-Q4-cYX" id="QPI-Iw-CIb"/>
                 <outlet property="tabView" destination="1444" id="1460"/>
                 <outlet property="usernameField" destination="1597" id="2267"/>
-                <outlet property="usesStrictCharacterMatchingCheck" destination="ABH-DM-OO3" id="F0v-gk-8UW"/>
                 <outlet property="validateServerSSLCertificateCheck" destination="7Re-Oa-iNx" id="Ep0-zf-9f2"/>
                 <outlet property="zncBouncerView" destination="2542" id="2575"/>
                 <outlet property="zncIgnoreConfiguredAutojoinCheck" destination="75N-79-v1S" id="thL-o4-SqJ"/>
@@ -578,7 +577,7 @@ Gw
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <popUpButton verticalHuggingPriority="750" id="1684">
-                    <rect key="frame" x="171" y="230" width="243" height="26"/>
+                    <rect key="frame" x="171" y="174" width="243" height="26"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="1714">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -587,7 +586,7 @@ Gw
                     </popUpButtonCell>
                 </popUpButton>
                 <popUpButton verticalHuggingPriority="750" id="1685">
-                    <rect key="frame" x="171" y="199" width="243" height="26"/>
+                    <rect key="frame" x="171" y="143" width="243" height="26"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="1692">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -596,7 +595,7 @@ Gw
                     </popUpButtonCell>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" id="1686">
-                    <rect key="frame" x="103" y="204" width="66" height="17"/>
+                    <rect key="frame" x="103" y="148" width="66" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Fallback:" id="1691">
                         <font key="font" metaFont="system"/>
@@ -605,7 +604,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1687">
-                    <rect key="frame" x="103" y="236" width="66" height="17"/>
+                    <rect key="frame" x="103" y="180" width="66" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Encoding:" id="1690">
                         <font key="font" metaFont="system"/>
@@ -613,18 +612,8 @@ Gw
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="2307">
-                    <rect key="frame" x="49" y="34" width="409" height="56"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="2308">
-                        <font key="font" metaFont="smallSystem"/>
-                        <string key="title">When enabled, Textual will not recognize a nickname as valid unless it contains a very strict set of "non-lossy" ASCII characters. However, as certain IRC networks permit international characters within nicknames, disabling this option will disable the described behavior. </string>
-                        <color key="textColor" red="0.39130434780000001" green="0.39130434780000001" blue="0.39130434780000001" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <button id="2315">
-                    <rect key="frame" x="124" y="158" width="268" height="18"/>
+                    <rect key="frame" x="124" y="102" width="268" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Include all supported encodings in list." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="2316">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -635,21 +624,6 @@ Gw
                         <binding destination="2317" name="value" keyPath="values.Server Properties Window Sheet —> Include Advanced Encodings" id="2318"/>
                     </connections>
                 </button>
-                <button id="ABH-DM-OO3">
-                    <rect key="frame" x="124" y="101" width="268" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Use strict matching for nicknames." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Xve-Oh-EZX">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                </button>
-                <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="Uh1-ee-DAr">
-                    <rect key="frame" x="37" y="136" width="442" height="5"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
             </subviews>
         </customView>
         <customView id="2542" userLabel="ZNC View">

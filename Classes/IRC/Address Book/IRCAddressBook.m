@@ -94,34 +94,25 @@
 
 		self.hostmaskRegex = [NSString stringWithFormat:@"^%@!(.*?)@(.*?)$", hostmask];
 	} else {
-		/* setHostmask accepts a nickname in place of an actual hostmask… */
-		NSString *compareValue = [hostmask stringByReplacingOccurrencesOfString:@"*" withString:@"-"];
+		/* There probably is an easier way to escape characters before making
+		 our regular expression, but let us do it the hard way instead. More fun. */
+		NSString *new_hostmask = hostmask;
 
-		if ([compareValue isHostmaskMatchingDefinedCharacterSet] == NO) {
-			_hostmask = hostmask;
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"{" withString:@"\\{"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"}" withString:@"\\}"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@")" withString:@"\\)"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"(" withString:@"\\("];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"]" withString:@"\\]"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"[" withString:@"\\["];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"^" withString:@"\\^"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"|" withString:@"\\|"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"~" withString:@"\\~"];
+		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"*" withString:@"(.*?)"];
 
-			self.hostmaskRegex = [NSString stringWithFormat:@"^%@!(.*?)@(.*?)$", hostmask];
-		} else {
-			/* There probably is an easier way to escape characters before making
-			 our regular expression, but let us do it the hard way instead. More fun. */
-			NSString *new_hostmask = hostmask;
+		_hostmask = hostmask;
 
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"{" withString:@"\\{"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"}" withString:@"\\}"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@")" withString:@"\\)"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"(" withString:@"\\("];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"]" withString:@"\\]"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"[" withString:@"\\["];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"^" withString:@"\\^"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"|" withString:@"\\|"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"~" withString:@"\\~"];
-			new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"*" withString:@"(.*?)"];
-
-			_hostmask = hostmask;
-
-			self.hostmaskRegex = [NSString stringWithFormat:@"^%@$", new_hostmask];
-		}
+		self.hostmaskRegex = [NSString stringWithFormat:@"^%@$", new_hostmask];
 	}
 }
 

@@ -44,7 +44,7 @@
 #define TXMaximumNodesPerModeCommand		4
 
 /* "*" is not actually considered a valid character for a nickname. We include it for ZNC. */
-#define IRCNicknameValidCharacters          @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-\\[]{}^`|"
+// #define IRCNicknameValidCharacters          @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-\\[]{}^`|"
 
 /* InspIRCd threw everything out the window when they decided to support all these special characters after _-. … */
 #define IRCUsernameValidCharacters			@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-.[\\]^`{|}~" /* Ident. */

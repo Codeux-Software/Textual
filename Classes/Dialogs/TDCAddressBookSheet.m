@@ -60,13 +60,7 @@
 	[self.ignoreEntryHostmaskField setValidationBlock:^BOOL(NSString *currentValue) {
 		NSString *valueWithoutWildcard = [currentValue stringByReplacingOccurrencesOfString:@"*" withString:@"-"];
 
-		if (self.usesStrictCharacterMatchingForValidation == NO) {
-			return ([valueWithoutWildcard isNickname] ||
-					[valueWithoutWildcard isHostmask]);
-		} else {
-			return ([valueWithoutWildcard isNicknameMatchingDefinedCharacterSet] ||
-					[valueWithoutWildcard isHostmaskMatchingDefinedCharacterSet]);
-		}
+		return [valueWithoutWildcard isHostmask];
 	}];
 
 	/* Define nickname field for user tracking. */
@@ -75,7 +69,7 @@
 	[self.userTrackingEntryNicknameField setTextDidChangeCallback:self];
 
 	[self.userTrackingEntryNicknameField setValidationBlock:^BOOL(NSString *currentValue) {
-		return [currentValue isNicknameMatchingDefinedCharacterSet];
+		return [currentValue isNickname];
 	}];
 }
 

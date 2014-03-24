@@ -68,7 +68,6 @@
 @property (nonatomic, nweak) IBOutlet NSButton *sslCertificateFingerprintCopyButton;
 @property (nonatomic, nweak) IBOutlet NSButton *sslCertificateResetButton;
 @property (nonatomic, nweak) IBOutlet NSButton *validateServerSSLCertificateCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *usesStrictCharacterMatchingCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *zncIgnoreConfiguredAutojoinCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *zncIgnorePlaybackNotificationsCheck;
 @property (nonatomic, nweak) IBOutlet NSComboBox *serverAddressCombo;
