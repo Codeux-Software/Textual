@@ -75,6 +75,11 @@
 
 - (void)addException:(NSString *)host tset:(NSString *)timeSet setby:(NSString *)owner
 {
+    if (self.contentAlreadyReceived) {
+        self.contentAlreadyReceived = false;
+        [self.exceptionList removeAllObjects];
+    }
+
     [self.exceptionList safeAddObject:@[host, [owner nicknameFromHostmask], timeSet]];
     
     [self reloadTable];

@@ -44,6 +44,7 @@
 @property (nonatomic, strong) IBOutlet NSWindow *sheet; // Window being attached.
 @property (nonatomic, nweak) IBOutlet NSButton *okButton;
 @property (nonatomic, nweak) IBOutlet NSButton *cancelButton;
+@property (nonatomic, uweak) BOOL contentAlreadyReceived;
 
 - (void)startSheet;
 - (void)startSheetWithWindow:(NSWindow *)awindow;

@@ -75,6 +75,11 @@
 
 - (void)addBan:(NSString *)host tset:(NSString *)timeSet setby:(NSString *)owner
 {
+    if (self.contentAlreadyReceived) {
+        self.contentAlreadyReceived = false;
+        [self.banList removeAllObjects];
+    }
+
     [self.banList safeAddObject:@[host, [owner nicknameFromHostmask], timeSet]];
     
     [self reloadTable];
