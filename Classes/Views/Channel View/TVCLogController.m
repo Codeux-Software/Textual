@@ -736,21 +736,31 @@
 
 - (BOOL)highlightAvailable:(BOOL)previous
 {
+	NSAssertReturnR([self isLoaded], NO);
+
 	NSObjectIsEmptyAssertReturn(self.highlightedLineNumbers, NO);
 
-	if ([self.highlightedLineNumbers containsObject:self.lastVisitedHighlight] == NO) {
-		self.lastVisitedHighlight = [self.highlightedLineNumbers objectAtIndex:0];
+	NSInteger lastHighlightIndex = 0;
+
+	if ([self.highlightedLineNumbers containsObject:self.lastVisitedHighlight]) {
+		lastHighlightIndex = [self.highlightedLineNumbers indexOfObject:self.lastVisitedHighlight];
 	}
 
-	if (previous && [self.lastVisitedHighlight isEqualToString:self.highlightedLineNumbers[0]]) {
-		return NO;
+	if (previous == NO) {
+		if (lastHighlightIndex == ([self.highlightedLineNumbers count] - 1)) {
+			return NO;
+		} else {
+			return YES;
+		}
+	} else {
+		if (lastHighlightIndex == 0) {
+			return NO;
+		} else {
+			return YES;
+		}
 	}
 
-	if ((previous == NO) && [self.lastVisitedHighlight isEqualToString:[self.highlightedLineNumbers lastObject]]) {
-		return NO;
-	}
-
-	return YES;
+	return NO;
 }
 
 - (void)nextHighlight
@@ -762,20 +772,19 @@
 
 	NSObjectIsEmptyAssert(self.highlightedLineNumbers);
 
-	NSString *bhli = self.lastVisitedHighlight;
+	if ([self.highlightedLineNumbers containsObject:self.lastVisitedHighlight]) {
+		NSInteger hli_ci = [self.highlightedLineNumbers indexOfObject:self.lastVisitedHighlight];
 
-	if ([self.highlightedLineNumbers containsObject:bhli]) {
-		NSInteger hli_ci = [self.highlightedLineNumbers indexOfObject:bhli];
-		NSInteger hli_ei = [self.highlightedLineNumbers indexOfObject:[self.highlightedLineNumbers lastObject]];
-
-		if (hli_ci == hli_ei) {
+		if (hli_ci == ([self.highlightedLineNumbers count] - 1)) {
 			// Return method since the last highlight we
 			// visited was the end of array. Nothing ahead.
+
+			return;
 		} else {
-			self.lastVisitedHighlight = [self.highlightedLineNumbers safeObjectAtIndex:(hli_ci + 1)];
+			self.lastVisitedHighlight = self.highlightedLineNumbers[(hli_ci + 1)];
 		}
 	} else {
-		self.lastVisitedHighlight = [self.highlightedLineNumbers safeObjectAtIndex:0];
+		self.lastVisitedHighlight = self.highlightedLineNumbers[0];
 	}
 
 	[self jumpToLine:self.lastVisitedHighlight];
@@ -790,19 +799,19 @@
 
 	NSObjectIsEmptyAssert(self.highlightedLineNumbers);
 
-	NSString *bhli = self.lastVisitedHighlight;
-
-	if ([self.highlightedLineNumbers containsObject:bhli]) {
-		NSInteger hli_ci = [self.highlightedLineNumbers indexOfObject:bhli];
+	if ([self.highlightedLineNumbers containsObject:self.lastVisitedHighlight]) {
+		NSInteger hli_ci = [self.highlightedLineNumbers indexOfObject:self.lastVisitedHighlight];
 
 		if (hli_ci == 0) {
 			// Return method since the last highlight we
 			// visited was the start of array. Nothing ahead.
+
+			return;
 		} else {
-			self.lastVisitedHighlight = [self.highlightedLineNumbers safeObjectAtIndex:(hli_ci + 1)];
+			self.lastVisitedHighlight = self.highlightedLineNumbers[(hli_ci - 1)];
 		}
 	} else {
-		self.lastVisitedHighlight = [self.highlightedLineNumbers safeObjectAtIndex:0];
+		self.lastVisitedHighlight = self.highlightedLineNumbers[0];
 	}
 
 	[self jumpToLine:self.lastVisitedHighlight];
