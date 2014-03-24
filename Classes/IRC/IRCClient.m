@@ -5719,9 +5719,6 @@
 		}
 		case 323: // RPL_LISTEND
 		case 329: // RPL_CREATIONTIME
-		case 368: // RPL_ENDOFBANLIST
-		case 347: // RPL_ENDOFINVITELIST
-		case 349: // RPL_ENDOFEXCEPTLIST
 		case 318: // RPL_ENDOFWHOIS
 		{
 			break; // Ignored numerics.
@@ -5769,6 +5766,18 @@
 
 			break;
 		}
+		case 368: // RPL_ENDOFBANLIST
+		{
+			TXMenuController *menuController = self.menuController;
+
+			TDChanBanSheet *chanBanListSheet = [menuController windowFromWindowList:@"TDChanBanSheet"];
+
+			if (chanBanListSheet) {
+				chanBanListSheet.contentAlreadyReceived = true;
+			}
+
+			break;
+		}
 		case 346: // RPL_INVITELIST
 		{
 			NSAssertReturnLoopBreak(m.params.count >= 3);
@@ -5797,6 +5806,18 @@
 
 			break;
 		}
+		case 347: // RPL_ENDOFINVITELIST
+		{
+			TXMenuController *menuController = self.menuController;
+
+			TDChanInviteExceptionSheet *inviteExceptionSheet = [menuController windowFromWindowList:@"TDChanInviteExceptionSheet"];
+
+			if (inviteExceptionSheet) {
+				inviteExceptionSheet.contentAlreadyReceived = true;
+			}
+
+			break;
+		}
 		case 348: // RPL_EXCEPTLIST
 		{
 			NSAssertReturnLoopBreak(m.params.count >= 3);
@@ -5821,6 +5842,18 @@
 
 			if (banExceptionSheet) {
 				[banExceptionSheet addException:hostmask tset:settime setby:banowner];
+			}
+
+			break;
+		}
+		case 349: // RPL_ENDOFEXCEPTLIST
+		{
+			TXMenuController *menuController = self.menuController;
+
+			TDChanBanExceptionSheet *banExceptionSheet = [menuController windowFromWindowList:@"TDChanBanExceptionSheet"];
+
+			if (banExceptionSheet) {
+				banExceptionSheet.contentAlreadyReceived = true;
 			}
 
 			break;
