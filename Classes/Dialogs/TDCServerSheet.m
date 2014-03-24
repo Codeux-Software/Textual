@@ -1166,6 +1166,7 @@
 	self.ignoreSheet.delegate = self;
 	self.ignoreSheet.window = self.sheet;
 	self.ignoreSheet.ignore = [IRCAddressBook new];
+	self.ignoreSheet.usesStrictCharacterMatchingForValidation = self.usesStrictCharacterMatchingCheck.state;
 	
 	if ([sender tag] == 4) {
 		self.ignoreSheet.ignore.entryType = IRCAddressBookUserTrackingEntryType;
@@ -1191,6 +1192,7 @@
 	self.ignoreSheet.delegate = self;
 	self.ignoreSheet.window = self.sheet;
 	self.ignoreSheet.ignore = c.mutableCopy;
+	self.ignoreSheet.usesStrictCharacterMatchingForValidation = self.usesStrictCharacterMatchingCheck.state;
 	
 	[self.ignoreSheet start];
 }
