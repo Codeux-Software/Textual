@@ -42,6 +42,7 @@
 @property (nonatomic, nweak) IBOutlet TVCListView *exceptionTable;
 @property (nonatomic, strong) NSMutableArray *changeModeList;
 @property (nonatomic, strong) NSMutableArray *exceptionList;
+@property (nonatomic, uweak) BOOL contentAlreadyReceived;
 
 - (void)show;
 - (void)clear;

@@ -5719,9 +5719,6 @@
 		}
 		case 323: // RPL_LISTEND
 		case 329: // RPL_CREATIONTIME
-		case 368: // RPL_ENDOFBANLIST
-		case 347: // RPL_ENDOFINVITELIST
-		case 349: // RPL_ENDOFEXCEPTLIST
 		case 318: // RPL_ENDOFWHOIS
 		{
 			break; // Ignored numerics.
@@ -5743,66 +5740,204 @@
 		}
 		case 367: // RPL_BANLIST
 		{
-			NSAssertReturnLoopBreak(m.params.count >= 5);
+			NSAssertReturnLoopBreak(m.params.count >= 3);
 
+			NSString *channel = [m paramAt:1];
 			NSString *hostmask = [m paramAt:2];
-			NSString *banowner = [m paramAt:3];
-			NSString *settime = [m paramAt:4];
 
-			settime = [NSDateFormatter localizedStringFromDate:[NSDate dateWithTimeIntervalSince1970:settime.doubleValue]
-													 dateStyle:NSDateFormatterLongStyle
-													 timeStyle:NSDateFormatterLongStyle];
+			NSString *banowner = TXTLS(@"BasicLanguage[1218]");
+			NSString *settime = TXTLS(@"BasicLanguage[1218]");
+
+			BOOL extendedLine = (m.params.count >= 5);
+
+			if (extendedLine) {
+				banowner = [m paramAt:3];
+				settime = [m paramAt:4];
+
+				settime = [NSDateFormatter localizedStringFromDate:[NSDate dateWithTimeIntervalSince1970:settime.doubleValue]
+														 dateStyle:NSDateFormatterLongStyle
+														 timeStyle:NSDateFormatterLongStyle];
+			}
 
             TXMenuController *menuController = self.menuController;
 
             TDChanBanSheet *chanBanListSheet = [menuController windowFromWindowList:@"TDChanBanSheet"];
 
             if (chanBanListSheet) {
+				if ([chanBanListSheet contentAlreadyReceived]) {
+					[chanBanListSheet clear];
+
+					[chanBanListSheet setContentAlreadyReceived:NO];
+				}
+
 				[chanBanListSheet addBan:hostmask tset:settime	setby:banowner];
+			} else {
+				NSString *nick = [banowner nicknameFromHostmask:self];
+
+				NSString *text;
+
+				if (extendedLine) {
+					text = TXTFLS(@"BasicLanguage[1230][1]", channel, hostmask, nick, settime);
+				} else {
+					text = TXTFLS(@"BasicLanguage[1230][2]", channel, hostmask);
+				}
+
+				[self print:nil
+					   type:TVCLogLineDebugType
+					   nick:nil
+					   text:text
+				 receivedAt:m.receivedAt
+					command:m.command];
+			}
+
+			break;
+		}
+		case 368: // RPL_ENDOFBANLIST
+		{
+			TXMenuController *menuController = self.menuController;
+
+			TDChanBanSheet *chanBanListSheet = [menuController windowFromWindowList:@"TDChanBanSheet"];
+
+			if (chanBanListSheet) {
+				[chanBanListSheet setContentAlreadyReceived:YES];
+			} else {
+				[self printReply:m];
 			}
 
 			break;
 		}
 		case 346: // RPL_INVITELIST
 		{
-			NSAssertReturnLoopBreak(m.params.count >= 5);
+			NSAssertReturnLoopBreak(m.params.count >= 3);
 
+			NSString *channel = [m paramAt:1];
 			NSString *hostmask = [m paramAt:2];
-			NSString *banowner = [m paramAt:3];
-			NSString *settime = [m paramAt:4];
 
-			settime = [NSDateFormatter localizedStringFromDate:[NSDate dateWithTimeIntervalSince1970:settime.doubleValue]
-													 dateStyle:NSDateFormatterLongStyle
-													 timeStyle:NSDateFormatterLongStyle];
+			NSString *banowner = TXTLS(@"BasicLanguage[1218]");
+			NSString *settime = TXTLS(@"BasicLanguage[1218]");
+
+			BOOL extendedLine = (m.params.count >= 5);
+
+			if (extendedLine) {
+				banowner = [m paramAt:3];
+				settime = [m paramAt:4];
+
+				settime = [NSDateFormatter localizedStringFromDate:[NSDate dateWithTimeIntervalSince1970:settime.doubleValue]
+														 dateStyle:NSDateFormatterLongStyle
+														 timeStyle:NSDateFormatterLongStyle];
+			}
 
             TXMenuController *menuController = self.menuController;
 
             TDChanInviteExceptionSheet *inviteExceptionSheet = [menuController windowFromWindowList:@"TDChanInviteExceptionSheet"];
 
 			if (inviteExceptionSheet) {
+				if ([inviteExceptionSheet contentAlreadyReceived]) {
+					[inviteExceptionSheet clear];
+
+					[inviteExceptionSheet setContentAlreadyReceived:NO];
+				}
+
 				[inviteExceptionSheet addException:hostmask tset:settime setby:banowner];
+			} else {
+				NSString *nick = [banowner nicknameFromHostmask:self];
+
+				NSString *text;
+
+				if (extendedLine) {
+					text = TXTFLS(@"BasicLanguage[1231][1]", channel, hostmask, nick, settime);
+				} else {
+					text = TXTFLS(@"BasicLanguage[1231][2]", channel, hostmask);
+				}
+
+				[self print:nil
+					   type:TVCLogLineDebugType
+					   nick:nil
+					   text:text
+				 receivedAt:m.receivedAt
+					command:m.command];
+			}
+
+			break;
+		}
+		case 347: // RPL_ENDOFINVITELIST
+		{
+			TXMenuController *menuController = self.menuController;
+
+			TDChanInviteExceptionSheet *inviteExceptionSheet = [menuController windowFromWindowList:@"TDChanInviteExceptionSheet"];
+
+			if (inviteExceptionSheet) {
+				[inviteExceptionSheet setContentAlreadyReceived:YES];
+			} else {
+				[self printReply:m];
 			}
 
 			break;
 		}
 		case 348: // RPL_EXCEPTLIST
 		{
-			NSAssertReturnLoopBreak(m.params.count >= 5);
+			NSAssertReturnLoopBreak(m.params.count >= 3);
 
+			NSString *channel = [m paramAt:1];
 			NSString *hostmask = [m paramAt:2];
-			NSString *banowner = [m paramAt:3];
-			NSString *settime = [m paramAt:4];
 
-			settime = [NSDateFormatter localizedStringFromDate:[NSDate dateWithTimeIntervalSince1970:settime.doubleValue]
-													 dateStyle:NSDateFormatterLongStyle
-													 timeStyle:NSDateFormatterLongStyle];
+			NSString *banowner = TXTLS(@"BasicLanguage[1218]");
+			NSString *settime = TXTLS(@"BasicLanguage[1218]");
+
+			BOOL extendedLine = (m.params.count >= 5);
+
+			if (extendedLine) {
+				banowner = [m paramAt:3];
+				settime = [m paramAt:4];
+
+				settime = [NSDateFormatter localizedStringFromDate:[NSDate dateWithTimeIntervalSince1970:settime.doubleValue]
+														 dateStyle:NSDateFormatterLongStyle
+														 timeStyle:NSDateFormatterLongStyle];
+			}
 
             TXMenuController *menuController = self.menuController;
 
             TDChanBanExceptionSheet *banExceptionSheet = [menuController windowFromWindowList:@"TDChanBanExceptionSheet"];
 
 			if (banExceptionSheet) {
+				if ([banExceptionSheet contentAlreadyReceived]) {
+					[banExceptionSheet clear];
+
+					[banExceptionSheet setContentAlreadyReceived:NO];
+				}
+
 				[banExceptionSheet addException:hostmask tset:settime setby:banowner];
+			} else {
+				NSString *nick = [banowner nicknameFromHostmask:self];
+
+				NSString *text;
+
+				if (extendedLine) {
+					text = TXTFLS(@"BasicLanguage[1232][1]", channel, hostmask, nick, settime);
+				} else {
+					text = TXTFLS(@"BasicLanguage[1232][2]", channel, hostmask);
+				}
+
+				[self print:nil
+					   type:TVCLogLineDebugType
+					   nick:nil
+					   text:text
+				 receivedAt:m.receivedAt
+					command:m.command];
+			}
+
+			break;
+		}
+		case 349: // RPL_ENDOFEXCEPTLIST
+		{
+			TXMenuController *menuController = self.menuController;
+
+			TDChanBanExceptionSheet *banExceptionSheet = [menuController windowFromWindowList:@"TDChanBanExceptionSheet"];
+
+			if (banExceptionSheet) {
+				[banExceptionSheet setContentAlreadyReceived:YES];
+			} else {
+				[self printReply:m];
 			}
 
 			break;
