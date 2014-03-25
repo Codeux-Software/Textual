@@ -42,6 +42,7 @@
 @property (nonatomic, nweak) IBOutlet TVCListView *banTable;
 @property (nonatomic, strong) NSMutableArray *banList;
 @property (nonatomic, strong) NSMutableArray *changeModeList;
+@property (nonatomic, uweak) BOOL contentAlreadyReceived;
 
 - (void)show;
 - (void)clear;

@@ -582,3 +582,15 @@
 /* Bad certificate prompt. */
 "BasicLanguage[1229][1]" = "Untrusted Connection";
 "BasicLanguage[1229][2]" = "The server that you are connecting to has a SSL certificate that has either expired or is not trusted.\n\nSelect the \"Show Certificate\" button shown below for the option to disable the checking of this particular certificate.";
+
+/* Ban list */
+"BasicLanguage[1230][1]" = "Ban in %1$@: %2$@ set by %3$@ on %4$@";
+"BasicLanguage[1230][2]" = "Ban in %1$@: %2$@";
+
+/* Invite exception list */
+"BasicLanguage[1231][1]" = "Invite Exception in %1$@: %2$@ set by %3$@ on %4$@";
+"BasicLanguage[1231][2]" = "Invite Exception in %1$@: %2$@";
+
+/* Ban exception list */
+"BasicLanguage[1232][1]" = "Ban exception in %1$@: %2$@ set by %3$@ on %4$@";
+"BasicLanguage[1232][2]" = "Ban exception in %1$@: %2$@";
