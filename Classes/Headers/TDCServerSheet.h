@@ -127,7 +127,9 @@
 - (IBAction)toggleAdvancedEncodings:(id)sender;
 - (IBAction)toggleAdvancedSettings:(id)sender;
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 - (IBAction)toggleCloudSyncExclusion:(id)sender;
+#endif
 
 - (IBAction)addChannel:(id)sender;
 - (IBAction)editChannel:(id)sender;
