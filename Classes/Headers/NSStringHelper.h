@@ -93,10 +93,6 @@
 - (NSString *)usernameFromHostmask;
 - (NSString *)addressFromHostmask;
 
-- (NSString *)nicknameFromHostmask:(IRCClient *)client;
-- (NSString *)usernameFromHostmask:(IRCClient *)client;
-- (NSString *)addressFromHostmask:(IRCClient *)client;
-
 - (NSString *)cleanedServerHostmask;
 
 - (NSInteger)compareWithWord:(NSString *)stringB matchGain:(NSInteger)gain missingCost:(NSInteger)cost;
@@ -139,7 +135,6 @@
 - (NSString *)decodeURIFragement;
 
 - (BOOL)isHostmask;
-- (BOOL)isHostmask:(IRCClient *)client;
 
 - (BOOL)isIPv4Address;
 - (BOOL)isIPv6Address;
@@ -147,10 +142,9 @@
 
 - (BOOL)isModeChannelName;
 
-- (BOOL)hostmaskComponents:(NSString **)nickname username:(NSString **)username address:(NSString **)address client:(IRCClient *)client;
+- (BOOL)hostmaskComponents:(NSString **)nickname username:(NSString **)username address:(NSString **)address;
 
 - (BOOL)isNickname;
-- (BOOL)isNickname:(IRCClient *)client;
 
 - (BOOL)isChannelName;
 - (BOOL)isChannelName:(IRCClient *)client; // Client to parse CHANTYPES from.

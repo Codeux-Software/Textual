@@ -138,7 +138,7 @@
 
 		self.sender.hostmask = t;
 		
-		if ([t hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt client:client]) {
+		if ([t hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt]) {
 			self.sender.nickname = nicknameInt;
             self.sender.username = usernameInt;
             self.sender.address = addressInt;

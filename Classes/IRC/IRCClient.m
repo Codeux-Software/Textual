@@ -1425,7 +1425,7 @@
 			}
 
 			for (NSString *nick in nicks) {
-				if ([nick isNickname:self] && [nick isChannelName:self] == NO) {
+				if ([nick isNickname] && [nick isChannelName:self] == NO) {
 					[self send:uppercaseCommand, nick, targetChannelName, nil];
 				}
 			}
@@ -2036,7 +2036,7 @@
 					[self.worldController destroyChannel:selChannel];
 				}
 			} else {
-				if ([nickname isChannelName:self] == NO && [nickname isNickname:self]) {
+				if ([nickname isChannelName:self] == NO && [nickname isNickname]) {
 					IRCChannel *channel = [self findChannelOrCreate:nickname isPrivateMessage:YES];
 
 					[self.worldController select:channel];
@@ -3668,7 +3668,7 @@
 	else // The target is not a channel.
 	{
 		/* Is the sender a server? */
-		if ([sender isNickname:self] == NO) {
+		if ([sender isNickname] == NO) {
 			[self print:nil type:type nick:nil text:text receivedAt:m.receivedAt command:m.command];
 		} else {
 			/* Ignore message? */
@@ -5306,7 +5306,7 @@
 			NSString *topicow = [m paramAt:2];
 			NSString *settime = [m paramAt:3];
 
-			topicow = [topicow nicknameFromHostmask:self];
+			topicow = [topicow nicknameFromHostmask];
 
 			settime = [NSDateFormatter localizedStringFromDate:[NSDate dateWithTimeIntervalSince1970:settime.doubleValue]
 													 dateStyle:NSDateFormatterLongStyle
@@ -5623,7 +5623,7 @@
 				NSString *usernameInt = nil;
 				NSString *addressInt = nil;
 
-				if ([nickname hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt client:self]) {
+				if ([nickname hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt]) {
 					member.nickname = nicknameInt;
 					member.username = usernameInt;
 					member.address = addressInt;
@@ -5772,7 +5772,7 @@
 
 				[chanBanListSheet addBan:hostmask tset:settime	setby:banowner];
 			} else {
-				NSString *nick = [banowner nicknameFromHostmask:self];
+				NSString *nick = [banowner nicknameFromHostmask];
 
 				NSString *text;
 
@@ -5840,7 +5840,7 @@
 
 				[inviteExceptionSheet addException:hostmask tset:settime setby:banowner];
 			} else {
-				NSString *nick = [banowner nicknameFromHostmask:self];
+				NSString *nick = [banowner nicknameFromHostmask];
 
 				NSString *text;
 
@@ -5908,7 +5908,7 @@
 
 				[banExceptionSheet addException:hostmask tset:settime setby:banowner];
 			} else {
-				NSString *nick = [banowner nicknameFromHostmask:self];
+				NSString *nick = [banowner nicknameFromHostmask];
 
 				NSString *text;
 
@@ -7572,7 +7572,7 @@
 		if (g.notifyJoins) {
 			NSString *lname = [g trackingNickname];
 
-			if ([lname isNickname:self]) {
+			if ([lname isNickname]) {
 				if ([oldEntriesNicknames containsKeyIgnoringCase:lname]) {
 					newEntries[lname] = oldEntriesNicknames[lname];
 				} else {
