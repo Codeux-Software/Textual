@@ -139,7 +139,7 @@
 
 	[[input sender] setHostmask:hostmask];
 
-	if ([hostmask hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt client:client]) {
+	if ([hostmask hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt]) {
 		[[input sender] setNickname:nicknameInt];
 		[[input sender] setUsername:usernameInt];
 		[[input sender] setAddress:addressInt];
