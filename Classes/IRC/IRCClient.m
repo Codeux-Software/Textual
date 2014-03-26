@@ -2660,7 +2660,7 @@
 			/* Scan scripts first. */
 			NSDictionary *scriptPaths = [THOPluginManagerSharedInstance() supportedAppleScriptCommands:YES];
 
-			NSString *scriptPath;
+			NSString *scriptPath = @"";
 
 			for (NSString *scriptCommand in scriptPaths) {
 				if ([scriptCommand isEqualToString:lowercaseCommand]) {
