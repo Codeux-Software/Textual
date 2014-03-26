@@ -3895,10 +3895,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/Michael/Projects/Textual/Frameworks,
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Debug;
@@ -3907,10 +3903,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/Michael/Projects/Textual/Frameworks,
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Release;
@@ -3919,10 +3911,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/Michael/Projects/Textual/Frameworks,
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Debug;
@@ -3931,10 +3919,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/Michael/Projects/Textual/Frameworks,
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Release;
@@ -3943,10 +3927,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/Michael/Projects/Textual/Frameworks,
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (App Store)";
@@ -3970,10 +3950,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/Michael/Projects/Textual/Frameworks,
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (Trial)";
@@ -3982,10 +3958,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/Michael/Projects/Textual/Frameworks,
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (Trial)";
@@ -4035,10 +4007,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/Michael/Projects/Textual/Frameworks,
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (App Store)";
