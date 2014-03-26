@@ -344,7 +344,7 @@
 	return self;
 }
 
-- (BOOL)hostmaskComponents:(NSString **)nickname username:(NSString **)username address:(NSString **)address client:(IRCClient *)client
+- (BOOL)hostmaskComponents:(NSString **)nickname username:(NSString **)username address:(NSString **)address
 {
 	/* Gather basic information. */
 	NSInteger bang1pos = [self stringPosition:@"!"];
@@ -363,28 +363,9 @@
 	NSString *addressInt = [self substringAfterIndex:bang2pos];
 
 	/* Perform basic validation. */
-	NSAssertReturnR(([nicknameInt length] > 0), NO);
-	NSAssertReturnR(([usernameInt length] > 0), NO);
-	NSAssertReturnR(([addressInt length] > 0), NO);
-
-	NSAssertReturnR([usernameInt isUsername], NO);
-
-	/* Further compare values. */
-	/* Rizon and QuakeNet allow formatting characters in the address part. … WHAT THE FUCK? */
-	NSString *formattingCharsSet = [NSString stringWithFormat:@"%@%C%C%C%C%C%C", IRCUserAddressValidCharacters, 0x02, 0x03, 0x0F, 0x1d, 0x16, 0x1F];
-
-	if ([addressInt onlyContainsCharacters:formattingCharsSet] == NO) {
-		/* Host sections contain redundant characters. */
-		/* The host is not valid. */
-
-		return NO;
-	}
-
-	/* Perform client specific validation. */
-	if (client) {
-		/* Check whether the nickname is a valid nickname. */
-		NSAssertReturnR([nicknameInt isNickname:client], NO);
-	}
+	NSAssertReturnR([nicknameInt isNickname], NO);
+	NSAssertReturnR([usernameInt isHostmaskUsername], NO);
+	NSAssertReturnR([nicknameInt isHostmaskAddress], NO);
 
 	/* The host checks out so far, so define the output. */
 	if (NSDissimilarObjects(nickname, NULL)) {
@@ -404,15 +385,17 @@
 
 - (BOOL)isHostmask
 {
-	return [self isHostmask:nil];
+	return [self hostmaskComponents:nil username:nil address:nil];
 }
 
-- (BOOL)isHostmask:(IRCClient *)client
+- (BOOL)isHostmaskAddress
 {
-	return [self hostmaskComponents:nil username:nil address:nil client:client];
+	return ([self length] > 0 &&
+			[self containsCharacters:@"!@"] == NO &&
+			[self containsCharactersFromCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] == NO);
 }
 
-- (BOOL)isUsername /* Ident — @private */
+- (BOOL)isHostmaskUsername /* Ident — @private */
 {
 	NSString *bob = self;
 
@@ -420,29 +403,24 @@
 		bob = [bob substringFromIndex:1];
 	}
 
-	if ([bob onlyContainsCharacters:IRCUsernameValidCharacters] == NO) {
+	if ([bob containsCharacters:@"!@"]) {
 		return NO;
 	}
 
-	return (bob.length <= TXMaximumIRCUsernameLength);
+	if ([bob containsCharactersFromCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]) {
+		return NO;
+	}
+
+	return ([bob length] <= TXMaximumIRCUsernameLength);
 }
 
 - (BOOL)isNickname
 {
-	return ([self isNotEqualTo:@"*"] && [self contains:@"."] == NO);
-}
-
-- (BOOL)isNickname:(IRCClient *)client
-{
-	NSObjectIsEmptyAssertReturn(self, NO);
-
-	if (client) {
-		NSInteger maxNickLength = [[client isupport] nicknameLength];
-
-		return ([self isNickname] && [self length] <= maxNickLength);
-	} else {
-		return [self isNickname];
-	}
+	return ([self isNotEqualTo:@"*"] &&
+			[self length] > 0 &&
+			[self length] <= TXMaximumIRCNicknameLength &&
+			[self containsCharacters:@".!@"] == NO &&
+			[self containsCharactersFromCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] == NO);
 }
 
 - (BOOL)isChannelName:(IRCClient *)client
@@ -515,24 +493,9 @@
 
 - (NSString *)nicknameFromHostmask
 {
-	return [self nicknameFromHostmask:nil];
-}
-
-- (NSString *)usernameFromHostmask
-{
-	return [self usernameFromHostmask:nil];
-}
-
-- (NSString *)addressFromHostmask
-{
-	return [self addressFromHostmask:nil];
-}
-
-- (NSString *)nicknameFromHostmask:(IRCClient *)client
-{
 	NSString *nickname = nil;
 
-	if ([self hostmaskComponents:&nickname username:nil address:nil client:client]) {
+	if ([self hostmaskComponents:&nickname username:nil address:nil]) {
 		return nickname;
 	} else {
 		return self;
@@ -541,27 +504,26 @@
 	return nil;
 }
 
-- (NSString *)usernameFromHostmask:(IRCClient *)client
+- (NSString *)usernameFromHostmask
 {
 	NSString *username = nil;
 
-	if ([self hostmaskComponents:nil username:&username address:nil client:client]) {
+	if ([self hostmaskComponents:nil username:&username address:nil]) {
 		return username;
 	}
 
 	return nil;
 }
 
-- (NSString *)addressFromHostmask:(IRCClient *)client
+- (NSString *)addressFromHostmask
 {
 	NSString *address = nil;
 
-	if ([self hostmaskComponents:nil username:nil address:&address client:client]) {
+	if ([self hostmaskComponents:nil username:nil address:&address]) {
 		return address;
 	}
 
 	return nil;
-	
 }
 
 - (NSString *)reservedCharactersToIRCFormatting
@@ -715,28 +677,40 @@
 	return YES;
 }
 
-- (BOOL)containsCharacters:(NSString *)validChars
+- (BOOL)containsCharactersFromCharacterSet:(NSCharacterSet *)validChars
 {
+	PointerIsEmptyAssertReturn(validChars, NO);
+
 	NSObjectIsEmptyAssertReturn(self, NO);
-	NSObjectIsEmptyAssertReturn(validChars, NO);
 
-	NSCharacterSet *chars = [NSCharacterSet characterSetWithCharactersInString:validChars];
-
-	NSRange searchRange = [self rangeOfCharacterFromSet:chars];
+	NSRange searchRange = [self rangeOfCharacterFromSet:validChars];
 
 	return NSDissimilarObjects(searchRange.location, NSNotFound);
 }
 
-- (BOOL)onlyContainsCharacters:(NSString *)validChars
+- (BOOL)onlyContainsCharactersFromCharacterSet:(NSCharacterSet *)validChars
 {
+	PointerIsEmptyAssertReturn(validChars, NO);
+
 	NSObjectIsEmptyAssertReturn(self, NO);
-	NSObjectIsEmptyAssertReturn(validChars, NO);
 
-	NSCharacterSet *chars = [[NSCharacterSet characterSetWithCharactersInString:validChars] invertedSet];
-
-	NSRange searchRange = [self rangeOfCharacterFromSet:chars];
+	NSRange searchRange = [self rangeOfCharacterFromSet:validChars];
 
 	return (searchRange.location == NSNotFound);
+}
+
+- (BOOL)containsCharacters:(NSString *)validChars
+{
+	NSCharacterSet *chars = [NSCharacterSet characterSetWithCharactersInString:validChars];
+
+	return [self containsCharactersFromCharacterSet:chars];
+}
+
+- (BOOL)onlyContainsCharacters:(NSString *)validChars
+{
+	NSCharacterSet *chars = [[NSCharacterSet characterSetWithCharactersInString:validChars] invertedSet];
+
+	return [self onlyContainsCharactersFromCharacterSet:chars];
 }
 
 - (NSString *)stringByDeletingAllCharactersInSet:(NSString *)validChars deleteThoseNotInSet:(BOOL)onlyDeleteThoseNotInSet

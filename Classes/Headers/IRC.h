@@ -43,19 +43,6 @@
 #define TXMaximumIRCUsernameLength			20
 #define TXMaximumNodesPerModeCommand		4
 
-/* "*" is not actually considered a valid character for a nickname. We include it for ZNC. */
-// #define IRCNicknameValidCharacters          @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-\\[]{}^`|"
-
-/* InspIRCd threw everything out the window when they decided to support all these special characters after _-. … */
-#define IRCUsernameValidCharacters			@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-.[\\]^`{|}~" /* Ident. */
-
-/* Characters allowed for the address part of a hostmask. */
-/* This set is actually incomplete as some IRC networks allow formatting characters. 
- Therefore, do not use this list in a plugin for directly validations. Use the built
- in NSStringHelper items for validating hosts when needed as the helper methods will
- append the formatting characters to these. */
-#define IRCUserAddressValidCharacters		@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-.,/:_"
-
 /* Command index. */
 TEXTUAL_EXTERN NSString *IRCPrivateCommandIndex(const char *key); 
 TEXTUAL_EXTERN NSString *IRCPublicCommandIndex(const char *key); 
