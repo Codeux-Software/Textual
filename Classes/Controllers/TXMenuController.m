@@ -208,7 +208,29 @@
 			BOOL condition = (_connected || u.isConnecting);
 			
 			[item setHidden:condition];
-			
+
+			BOOL prefersIPv6 = u.config.connectionPrefersIPv6;
+
+			if ([NSEvent modifierFlags] & NSShiftKeyMask) {
+				if (prefersIPv6) {
+					prefersIPv6 = NO;
+
+					[item setTitle:TXTLS(@"BasicLanguage[1233][2]")];
+				} else {
+					prefersIPv6 = YES;
+
+					[item setTitle:TXTLS(@"BasicLanguage[1233][3]")];
+				}
+			} else {
+				[item setTitle:TXTLS(@"BasicLanguage[1233][1]")];
+			}
+
+			if (prefersIPv6) {
+				[item setAction:@selector(connectPreferringIPv6:)];
+			} else {
+				[item setAction:@selector(connectPreferringIPv4:)];
+			}
+
 			return _disableInSheet((condition == NO && u.isQuitting == NO));
 			
 			break;
@@ -1005,13 +1027,32 @@
 
 - (void)connect:(id)sender
 {
+	// This does nothing. Validation overrides this with one
+	// of the actions from below.
+}
+
+- (void)connectPreferringIPv6:(id)sender
+{
 	IRCClient *u = [self.worldController selectedClient];
 	
 	if (_noClient || _connected) {
 		return;
 	}
 	
-	[u connect];
+	[u connect:IRCConnectNormalMode preferringIPv6:YES];
+
+	[self.worldController expandClient:u]; // Expand client on user opreated connect.
+}
+
+- (void)connectPreferringIPv4:(id)sender
+{
+	IRCClient *u = [self.worldController selectedClient];
+
+	if (_noClient || _connected) {
+		return;
+	}
+
+	[u connect:IRCConnectNormalMode preferringIPv6:NO];
 
 	[self.worldController expandClient:u]; // Expand client on user opreated connect.
 }

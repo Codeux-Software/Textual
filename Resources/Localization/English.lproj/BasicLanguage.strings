@@ -594,3 +594,8 @@
 /* Ban exception list */
 "BasicLanguage[1232][1]" = "Ban exception in %1$@: %2$@ set by %3$@ on %4$@";
 "BasicLanguage[1232][2]" = "Ban exception in %1$@: %2$@";
+
+/* Connect menu item. */
+"BasicLanguage[1233][1]" = "Connect";
+"BasicLanguage[1233][2]" = "Connect using IPv4";
+"BasicLanguage[1233][3]" = "Connect using IPv6";

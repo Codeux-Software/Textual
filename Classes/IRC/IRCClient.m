@@ -6750,10 +6750,15 @@
 
 - (void)connect
 {
-	[self connect:IRCConnectNormalMode];
+	[self connect:IRCConnectNormalMode preferringIPv6:self.config.connectionPrefersIPv6];
 }
 
 - (void)connect:(IRCConnectMode)mode
+{
+	[self connect:mode preferringIPv6:self.config.connectionPrefersIPv6];
+}
+
+- (void)connect:(IRCConnectMode)mode preferringIPv6:(BOOL)preferIPv6
 {
 	if (self.isQuitting) {
 		return;
@@ -6805,7 +6810,7 @@
 	self.socket.serverAddress = host;
 	self.socket.serverPort = port;
 
-	self.socket.connectionPrefersIPv6 = self.config.connectionPrefersIPv6;
+	self.socket.connectionPrefersIPv6 = preferIPv6;
 	self.socket.connectionUsesSSL = self.config.connectionUsesSSL;
 
 	if (self.config.proxyType == TXConnectionSystemSocksProxyType) {
