@@ -2660,7 +2660,7 @@
 			/* Scan scripts first. */
 			NSDictionary *scriptPaths = [THOPluginManagerSharedInstance() supportedAppleScriptCommands:YES];
 
-			NSString *scriptPath = @"";
+			NSString *scriptPath = NSStringEmptyPlaceholder;
 
 			for (NSString *scriptCommand in scriptPaths) {
 				if ([scriptCommand isEqualToString:lowercaseCommand]) {
@@ -2869,13 +2869,13 @@
 		if (PointerIsNotEmpty(oValue)) {
 			/* Check math and perform final append. */
 			if (width < 0 && ABS(width) > oValue.length) {
-				[buffer appendString:[@"" stringByPaddingToLength:(ABS(width) - oValue.length) withString:@" " startingAtIndex:0]];
+				[buffer appendString:[NSStringEmptyPlaceholder stringByPaddingToLength:(ABS(width) - oValue.length) withString:@" " startingAtIndex:0]];
 			}
 
 			[buffer appendString:oValue];
 
 			if (width > 0 && width > oValue.length) {
-				[buffer appendString:[@"" stringByPaddingToLength:(width - oValue.length) withString:@" " startingAtIndex:0]];
+				[buffer appendString:[NSStringEmptyPlaceholder stringByPaddingToLength:(width - oValue.length) withString:@" " startingAtIndex:0]];
 			}
 		}
 	}
