@@ -1267,8 +1267,8 @@
 		templateTokens[@"channelName"]	  = [TVCLogRenderer escapeString:[[self channel] name]];
 		templateTokens[@"viewTypeToken"]  = [[self channel] channelTypeString];
 
-		if (NSObjectIsEmpty(topic)) {
-			templateTokens[@"formattedTopicValue"] = TXTLS(@"BasicLanguage[1122]");
+		if (topic == nil || NSObjectIsEmpty(topic)) {
+			templateTokens[@"formattedTopicValue"] = TXTLS(@"BasicLanguage[1122]")	;
 		} else {
 			templateTokens[@"formattedTopicValue"] = topic;
 		}
