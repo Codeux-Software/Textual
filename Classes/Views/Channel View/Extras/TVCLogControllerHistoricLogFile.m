@@ -68,7 +68,14 @@
 - (void)resetData
 {
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	[RZFileManager() removeItemAtPath:[self databaseSavePath] error:NULL]; // Destroy archive file completely.
+	NSString *oldPath = [self databaseSavePath];
+
+	NSString *auxfile1 = [oldPath stringByAppendingString:@"-wal"];
+	NSString *auxfile2 = [oldPath stringByAppendingString:@"-shm"];
+
+	[RZFileManager() removeItemAtPath:oldPath error:NULL]; // Destroy archive file completely.
+	[RZFileManager() removeItemAtPath:auxfile1 error:NULL]; // Destroy archive file completely.
+	[RZFileManager() removeItemAtPath:auxfile2 error:NULL]; // Destroy archive file completely.
 #endif
 }
 
@@ -122,8 +129,6 @@
 - (void)resetDataForEntriesMatchingClient:(IRCClient *)client inChannel:(IRCChannel *)channel
 {
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	PointerIsEmptyAssert(_managedObjectContext);
-
 	[_managedObjectContext performBlock:^{
 		/* Build fetch request. */
 		NSFetchRequest *fetchRequest = [self fetchRequestForClient:client
@@ -150,9 +155,7 @@
 {
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	/* What are we fetching for? */
-	if (PointerIsEmpty(client) ||
-		PointerIsEmpty(_managedObjectContext))
-	{
+	if (PointerIsEmpty(client)) {
 		completionBlock(nil, nil);
 
 		return;
@@ -200,7 +203,7 @@
 			/* Call completion block. */
 			completionBlock(backgroundContext, finalData);
 		} else {
-			LogToConsole(@"Fetch request failed for channel %@ on client %@ with error: %@", channel, client, [fetchError localizedDescription]);
+			DebugLogToConsole(@"Fetch request failed for channel %@ on client %@ with error: %@", channel, client, [fetchError localizedDescription]);
 
 			completionBlock(nil, nil);
 		}
@@ -223,6 +226,11 @@
 #pragma mark Core Data Model
 
 - (void)createBaseModel
+{
+	[self createBaseModel:NO];
+}
+
+- (void)createBaseModel:(BOOL)isSecondRun
 {
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	/* Find the location of the file. */
@@ -257,6 +265,18 @@
 	/* Was there an error? */
 	if (result == nil) {
 		LogToConsole(@"Error Creating Persistent Store: %@", [addErr localizedDescription]);
+		LogToConsole(@"Attempting to create a new persistent store in a new path…");
+
+		if (isSecondRun == NO) {
+			/* If we failed to load our store, we create a brand new one at a new path
+			 incase the old one is corrupted. We also erase the old database to not allow
+			 the file to just hang on the OS. */
+			[self resetData]; // Destroy old.
+
+			[self createNewDatabaseSavePath]; // Create new path.
+
+			[self createBaseModel:YES]; // Run creation process again.
+		}
 
 		_persistentStoreCoordinator = nil; // Destroy.
 	} else {
@@ -270,7 +290,7 @@
 
 	/* Continue work. */
 	if (_managedObjectContext == nil) {
-		LogToConsole(@"Missing managed object context. No historic logging will occur during this session.");
+		NSAssert(NO, @"Missing managed object context.");
 	} else {
 		/* Define default values. */
 		_hasPendingAutosaveTimer = NO;
@@ -299,12 +319,31 @@
 #endif
 }
 
+- (void)createNewDatabaseSavePath
+{
+#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
+	/* Filename is just a UUID. Does not need anything more than that… */
+
+	[RZUserDefaults() setObject:[NSString stringWithUUID] forKey:@"TVCLogControllerHistoricLogFileSavePath"];
+#else
+	return nil;
+#endif
+}
+
 - (NSString *)databaseSavePath
 {
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	NSString *filename = @"logControllerHistoricLog_v001.sqlite";
+	NSString *filename = [RZUserDefaults() objectForKey:@"TVCLogControllerHistoricLogFileSavePath"];
 
-	return [[TPCPreferences applicationCachesFolderPath] stringByAppendingPathComponent:filename];
+	if (filename == nil) {
+		[self createNewDatabaseSavePath];
+
+		return [self databaseSavePath];
+	}
+
+	NSString *savepath = [[TPCPreferences applicationCachesFolderPath] stringByAppendingPathComponent:filename];
+
+	return savepath;
 #else
 	return nil;
 #endif
