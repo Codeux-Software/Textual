@@ -150,6 +150,8 @@ typedef enum IRCDisconnectMode : NSInteger {
 
 - (void)connect;
 - (void)connect:(IRCConnectMode)mode;
+- (void)connect:(IRCConnectMode)mode preferringIPv6:(BOOL)preferIPv6;
+
 - (void)disconnect;
 - (void)quit;
 - (void)quit:(NSString *)comment;
