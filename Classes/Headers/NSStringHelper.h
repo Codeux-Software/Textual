@@ -88,6 +88,8 @@
 - (NSString *)channelNameTokenByTrimmingAllPrefixes:(IRCClient *)client;
 
 - (NSString *)sha1;
+- (NSString *)sha256;
+- (NSString *)md5;
 
 - (NSString *)nicknameFromHostmask;
 - (NSString *)usernameFromHostmask;

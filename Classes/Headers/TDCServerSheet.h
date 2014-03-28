@@ -65,7 +65,8 @@
 @property (nonatomic, nweak) IBOutlet NSButton *pongTimerDisconnectCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *prefersIPv6Check;
 @property (nonatomic, nweak) IBOutlet NSButton *sslCertificateChangeCertButton;
-@property (nonatomic, nweak) IBOutlet NSButton *sslCertificateFingerprintCopyButton;
+@property (nonatomic, nweak) IBOutlet NSButton *sslCertificateSHA1FingerprintCopyButton;
+@property (nonatomic, nweak) IBOutlet NSButton *sslCertificateMD5FingerprintCopyButton;
 @property (nonatomic, nweak) IBOutlet NSButton *sslCertificateResetButton;
 @property (nonatomic, nweak) IBOutlet NSButton *validateServerSSLCertificateCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *zncIgnoreConfiguredAutojoinCheck;
@@ -91,7 +92,8 @@
 @property (nonatomic, nweak) IBOutlet NSTextField *serverPortField;
 @property (nonatomic, nweak) IBOutlet NSTextField *sleepModeQuitMessageField;
 @property (nonatomic, nweak) IBOutlet NSTextField *sslCertificateCommonNameField;
-@property (nonatomic, nweak) IBOutlet NSTextField *sslCertificateFingerprintField;
+@property (nonatomic, nweak) IBOutlet NSTextField *sslCertificateSHA1FingerprintField;
+@property (nonatomic, nweak) IBOutlet NSTextField *sslCertificateMD5FingerprintField;
 @property (nonatomic, nweak) IBOutlet NSTextField *usernameField;
 @property (nonatomic, nweak) IBOutlet NSView *contentView;
 @property (nonatomic, nweak) IBOutlet TVCListView *channelTable;
@@ -149,7 +151,8 @@
 
 - (IBAction)onSSLCertificateResetRequested:(id)sender;
 - (IBAction)onSSLCertificateChangeRequested:(id)sender;
-- (IBAction)onSSLCertificateFingerprintCopyRequested:(id)sender;
+- (IBAction)onSSLCertificateFingerprintSHA1CopyRequested:(id)sender;
+- (IBAction)onSSLCertificateFingerprintMD5CopyRequested:(id)sender;
 @end
 
 @interface NSObject (TDCServerSheetDelegate)

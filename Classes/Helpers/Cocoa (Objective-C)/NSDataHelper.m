@@ -105,4 +105,34 @@
 	return output;
 }
 
+- (NSString *)sha256
+{
+    uint8_t digest[CC_SHA256_DIGEST_LENGTH];
+
+    CC_SHA256([self bytes], (CC_LONG)[self length], digest);
+
+    NSMutableString *output = [NSMutableString stringWithCapacity:(CC_SHA256_DIGEST_LENGTH * 2)];
+
+    for (int i = 0; i < CC_SHA256_DIGEST_LENGTH; i++) {
+        [output appendFormat:@"%02x", digest[i]];
+    }
+
+    return output;
+}
+
+- (NSString *)md5
+{
+    uint8_t digest[CC_MD5_DIGEST_LENGTH ];
+
+    CC_MD5([self bytes], (CC_LONG)[self length], digest);
+
+    NSMutableString *output = [NSMutableString stringWithCapacity:(CC_MD5_DIGEST_LENGTH * 2)];
+
+    for (int i = 0; i < CC_MD5_DIGEST_LENGTH ; i++) {
+        [output appendFormat:@"%02x", digest[i]];
+    }
+
+    return output;
+}
+
 @end
