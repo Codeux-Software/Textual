@@ -135,6 +135,8 @@
 	
     [self destroyDispatchQueue];
 
+	self.isConnectedWithClientSideCertificate = NO;
+
 	self.isConnected = NO;
 	self.isConnecting = NO;
 }
@@ -208,7 +210,7 @@
 
 	if (self.connectionUsesSSL) {
 		if ([self useNewSocketEngine]) {
-			[self.socketConnection useSSLWithClient:self.client];
+			[self.socketConnection useSSLWithClient:self.client withConnectionController:self];
 		} else {
 			[self.socketConnection useSSL];
 		}

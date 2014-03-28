@@ -2560,7 +2560,8 @@
 
 			NSArray *providedKeys = @[
 				  @"Send Authentication Requests to UserServ",
-				  @"Hide Network Unavailability Notices on Reconnect"
+				  @"Hide Network Unavailability Notices on Reconnect",
+				  @"SASL Authentication Uses Certificate Fingerprint",
 			];
 
 			if (NSObjectsAreEqual(section1, @"help"))
@@ -4678,20 +4679,113 @@
 	[self sendNextCap];
 }
 
+- (IRCIdentificationWithSASLMechanism)identificationMechanismForSASL
+{
+	/* If we have certificate, we will use the fingerprint from that 
+	 for identification if the user configured that. */
+	if (self.socket.isConnectedWithClientSideCertificate) {
+		BOOL usesExternalSASL = [[self auxiliaryConfiguration] boolForKey:@"SASL Authentication Uses Certificate Fingerprint"];
+
+		if (usesExternalSASL) {
+			return IRCIdentificationWithSASLExternalMechanism;
+		}
+	}
+
+	/* If the user has a configured nickname password, then we will
+	 use that instead for plain text authentication. */
+	if (self.config.nicknamePasswordIsSet) {
+		return IRCIdentificationWithSASLPlainTextMechanism;
+	}
+
+	/* Cannot use SASL for identification. */
+	return IRCIdentificationWithSASLNoMechanism;
+}
+
+- (BOOL)isSASLInformationAvailable
+{
+	IRCIdentificationWithSASLMechanism idtype = [self identificationMechanismForSASL];
+
+	return NSDissimilarObjects(idtype, IRCIdentificationWithSASLNoMechanism);
+}
+
 - (BOOL)isCapAvailable:(NSString *)cap
 {
 	// Information about several of these supported CAP
 	// extensions can be found at: http://ircv3.atheme.org
 
-	return ([cap isEqualIgnoringCase:@"identify-msg"]			||
-			[cap isEqualIgnoringCase:@"identify-ctcp"]          ||
-            [cap isEqualIgnoringCase:@"away-notify"]            ||
-			[cap isEqualIgnoringCase:@"multi-prefix"]			||
-			[cap isEqualIgnoringCase:@"userhost-in-names"]      ||
-			[cap isEqualIgnoringCase:@"server-time"]			||
-			[cap isEqualIgnoringCase:@"znc.in/server-time"]     ||
-            [cap isEqualIgnoringCase:@"znc.in/server-time-iso"] ||
-		   ([cap isEqualIgnoringCase:@"sasl"] && self.config.nicknamePasswordIsSet));
+	BOOL condition1 = ([cap isEqualIgnoringCase:@"identify-msg"]			||
+					   [cap isEqualIgnoringCase:@"identify-ctcp"]			||
+					   [cap isEqualIgnoringCase:@"away-notify"]				||
+					   [cap isEqualIgnoringCase:@"multi-prefix"]			||
+					   [cap isEqualIgnoringCase:@"userhost-in-names"]		||
+					   [cap isEqualIgnoringCase:@"server-time"]				||
+					   [cap isEqualIgnoringCase:@"znc.in/server-time"]		||
+					   [cap isEqualIgnoringCase:@"znc.in/server-time-iso"]);
+
+	if (condition1 == NO) {
+		if ([cap isEqualIgnoringCase:@"sasl"]) {
+			return [self isSASLInformationAvailable];
+		} else {
+			return NO;
+		}
+	} else {
+		return YES;
+	}
+}
+
+- (void)sendSASLIdentificationInformation
+{
+	switch ([self identificationMechanismForSASL]) {
+		case IRCIdentificationWithSASLPlainTextMechanism:
+		{
+			NSString *authStringD = [NSString stringWithFormat:@"%@%C%@%C%@",
+									 self.config.nickname, 0x00,
+									 self.config.nickname, 0x00,
+									 self.config.nicknamePassword];
+
+			NSString *authStringE = [authStringD base64EncodingWithLineLength:400];
+
+			NSArray *authStrings = [authStringE componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+
+			for (NSString *string in authStrings) {
+				[self send:IRCPrivateCommandIndex("cap_authenticate"), string, nil];
+			}
+
+			/* I don't really know when the condition below would be true. It's a
+			 copy over from Colloquy. Is it even needed? */
+			if (NSObjectIsEmpty(authStrings) || [(NSString *)[authStrings lastObject] length] == 400) {
+				[self send:IRCPrivateCommandIndex("cap_authenticate"), @"+", nil];
+			}
+
+			break;
+		}
+		case IRCIdentificationWithSASLExternalMechanism:
+		{
+			[self send:IRCPrivateCommandIndex("cap_authenticate"), @"+", nil];
+
+			break;
+		}
+		default: { break; }
+	}
+}
+
+- (void)sendSASLIdentificationRequest
+{
+	switch ([self identificationMechanismForSASL]) {
+		case IRCIdentificationWithSASLPlainTextMechanism:
+		{
+			[self send:IRCPrivateCommandIndex("cap_authenticate"), @"PLAIN", nil];
+
+			break;
+		}
+		case IRCIdentificationWithSASLExternalMechanism:
+		{
+			[self send:IRCPrivateCommandIndex("cap_authenticate"), @"EXTERNAL", nil];
+
+			break;
+		}
+		default: { break; }
+	}
 }
 
 - (void)cap:(NSString *)cap result:(BOOL)supported
@@ -4701,7 +4795,8 @@
 			self.CAPinSASLRequest = YES;
 
 			[self pauseCap];
-			[self send:IRCPrivateCommandIndex("cap_authenticate"), @"PLAIN", nil];
+
+			[self sendSASLIdentificationRequest];
 		} else if ([cap isEqualIgnoringCase:@"userhost-in-names"]) {
 			self.CAPuserhostInNames = YES;
 		} else if ([cap isEqualIgnoringCase:@"multi-prefix"]) {
@@ -4738,8 +4833,6 @@
 
 			for (NSString *cap in caps) {
 				if ([self isCapAvailable:cap]) {
-                    NSObjectIsEmptyAssertLoopContinue(cap);
-
 					[self.CAPpendingCaps addObject:cap];
 				}
 			}
@@ -4747,8 +4840,6 @@
 			NSArray *caps = [actions componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
 			for (NSString *cap in caps) {
-                NSObjectIsEmptyAssertLoopContinue(cap);
-                
 				[self.CAPacceptedCaps addObject:cap];
 
 				[self cap:cap result:YES];
@@ -4764,21 +4855,7 @@
 		[self sendNextCap];
 	} else {
 		if ([starprt isEqualToString:@"+"]) {
-			NSString *authStringD = [NSString stringWithFormat:@"%@%C%@%C%@",   self.config.nickname, 0x00,
-                                                                                self.config.nickname, 0x00,
-                                                                                self.config.nicknamePassword];
-            
-			NSString *authStringE = [authStringD base64EncodingWithLineLength:400];
-
-			NSArray *authStrings = [authStringE componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-
-			for (NSString *string in authStrings) {
-				[self send:IRCPrivateCommandIndex("cap_authenticate"), string, nil];
-			}
-
-			if (NSObjectIsEmpty(authStrings) || [(NSString *)[authStrings lastObject] length] == 400) {
-				[self send:IRCPrivateCommandIndex("cap_authenticate"), @"+", nil];
-			}
+			[self sendSASLIdentificationInformation];
 		}
 	}
 }
