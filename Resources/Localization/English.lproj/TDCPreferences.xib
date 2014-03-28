@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5053"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCPreferencesController">
@@ -276,18 +276,18 @@
             </connections>
         </window>
         <customView id="4778" userLabel="General Settings">
-            <rect key="frame" x="0.0" y="0.0" width="534" height="250"/>
+            <rect key="frame" x="0.0" y="0.0" width="534" height="288"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <userGuides>
                 <userLayoutGuide location="32" affinity="minX"/>
                 <userLayoutGuide location="504" affinity="minX"/>
-                <userLayoutGuide location="29" affinity="minY"/>
+                <userLayoutGuide location="50" affinity="minY"/>
                 <userLayoutGuide location="432" affinity="minY"/>
                 <userLayoutGuide location="219" affinity="minY"/>
             </userGuides>
             <subviews>
                 <button id="46">
-                    <rect key="frame" x="31" y="214" width="312" height="18"/>
+                    <rect key="frame" x="31" y="252" width="312" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Request confirmation before quitting Textual." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="4230">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -298,7 +298,7 @@
                     </connections>
                 </button>
                 <button id="4802">
-                    <rect key="frame" x="31" y="135" width="332" height="18"/>
+                    <rect key="frame" x="31" y="173" width="332" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Rejoin a channel after being kicked." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="4803">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -309,7 +309,7 @@
                     </connections>
                 </button>
                 <button id="4804">
-                    <rect key="frame" x="31" y="107" width="302" height="18"/>
+                    <rect key="frame" x="31" y="145" width="302" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Automatically join a channel when invited." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="4805">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -320,7 +320,7 @@
                     </connections>
                 </button>
                 <button id="5415">
-                    <rect key="frame" x="31" y="79" width="452" height="18"/>
+                    <rect key="frame" x="31" y="117" width="452" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Display the Message of the Day (MOTD) of a server upon connection." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="5416">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -331,7 +331,7 @@
                     </connections>
                 </button>
                 <button id="6560">
-                    <rect key="frame" x="31" y="51" width="452" height="18"/>
+                    <rect key="frame" x="31" y="89" width="452" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Wait for NickServ identification before joining channels." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="6561">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -342,7 +342,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="7327">
-                    <rect key="frame" x="346" y="209" width="157" height="28"/>
+                    <rect key="frame" x="346" y="247" width="157" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="Set as Default IRC Client" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7328">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -353,14 +353,14 @@
                     </connections>
                 </button>
                 <box autoresizesSubviews="NO" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7339">
-                    <rect key="frame" x="46" y="167" width="442" height="5"/>
+                    <rect key="frame" x="46" y="205" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <button id="7414">
-                    <rect key="frame" x="31" y="23" width="260" height="18"/>
+                    <rect key="frame" x="31" y="61" width="260" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Toggle away status on display sleep." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="7415">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -370,8 +370,19 @@
                         <binding destination="1247" name="value" keyPath="values.SetAwayOnScreenSleep" id="7417"/>
                     </connections>
                 </button>
+                <button id="PBj-zp-0z0">
+                    <rect key="frame" x="31" y="34" width="261" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Display away status next to server name." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="3eH-n6-hAE">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" size="12" name="LucidaGrande"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="1247" name="value" keyPath="values.DisplayAwayNextToServerName" id="Jyq-QK-KVP"/>
+                    </connections>
+                </button>
                 <button id="oyC-QD-WhE">
-                    <rect key="frame" x="30" y="186" width="312" height="18"/>
+                    <rect key="frame" x="30" y="224" width="312" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Share data between devices using iCloud." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="kct-j7-eYW">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -389,7 +400,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" tag="13" id="C9P-6C-k4O">
-                    <rect key="frame" x="346" y="181" width="157" height="28"/>
+                    <rect key="frame" x="346" y="219" width="157" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="Manage iCloud" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="q9g-rj-k11">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -406,7 +417,7 @@
                     </connections>
                 </button>
                 <customView wantsLayer="YES" id="UzI-UY-gq9">
-                    <rect key="frame" x="20" y="185" width="488" height="21"/>
+                    <rect key="frame" x="20" y="223" width="488" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
                         <button id="VRm-jI-leM">
@@ -802,9 +813,9 @@
                         <action selector="remove:" target="4313" id="4893"/>
                         <binding destination="4313" name="enabled2" keyPath="canRemove" previousBinding="7619" id="7620">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>

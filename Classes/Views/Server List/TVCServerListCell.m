@@ -321,7 +321,15 @@
 
 	/* The new string inherits the attributes of the text field so that stuff that we do not
 	 define like the paragraph style is passed along and not lost when we define a new value. */
-	NSMutableAttributedString *newStrValue = [NSMutableAttributedString mutableStringWithBase:self.cellItem.label
+    
+    NSString *text;
+    if ([TPCPreferences displayAwayNextToServerName] && client.isAway == YES) {
+        text = TXTFLS(@"BasicLanguage[1234][2]", self.cellItem.label);
+    } else {
+        text = TXTFLS(@"BasicLanguage[1234][1]", self.cellItem.label);
+    }
+
+    NSMutableAttributedString *newStrValue = [NSMutableAttributedString mutableStringWithBase:text
 																				   attributes:self.customTextField.attributedStringValue.attributes];
 	
 	/* Text font and color. */

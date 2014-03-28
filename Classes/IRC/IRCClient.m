@@ -4884,7 +4884,8 @@
 
         user.isAway = isAway;
 
-		[channel updateMemberOnTableView:user]; // Redraw the user in the user list.
+	// I would really like to cause an update to the list view so that the (AWAY) would be show immediately.
+	[channel updateMemberOnTableView:user];
     }
 }
 
@@ -7238,8 +7239,9 @@
 	if (NSObjectIsNotEmpty(newNick)) {
 		[self changeNick:newNick];
 	}
+    // same?
+    [self.worldController reloadTreeGroup: [self.worldController selectedClient]];
 }
-
 
 #pragma mark -
 #pragma mark File Transfers

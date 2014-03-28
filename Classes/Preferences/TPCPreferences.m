@@ -1235,6 +1235,11 @@ static NSURL *transcriptFolderResolvedBookmark;
 	return (TXMainTextBoxFontSize)[RZUserDefaults() integerForKey:@"Main Input Text Field -> Font Size"];
 }
 
++ (BOOL)displayAwayNextToServerName
+{
+    return [RZUserDefaults() boolForKey:@"DisplayAwayNextToServerName"];
+}
+
 #pragma mark -
 #pragma mark Theme
 

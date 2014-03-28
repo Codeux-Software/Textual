@@ -599,3 +599,9 @@
 "BasicLanguage[1233][1]" = "Connect";
 "BasicLanguage[1233][2]" = "Connect using IPv4";
 "BasicLanguage[1233][3]" = "Connect using IPv6";
+
+/* Server cell name */
+
+"BasicLanguage[1234][1]" = "%1$@";
+"BasicLanguage[1234][2]" = "%1$@ (away)";
+
