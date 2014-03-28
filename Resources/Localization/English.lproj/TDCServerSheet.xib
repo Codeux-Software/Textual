@@ -71,8 +71,11 @@
                 <outlet property="sslCertificateChangeCertButton" destination="l36-PJ-JBU" id="j5d-8O-oZz"/>
                 <outlet property="sslCertificateCommonNameField" destination="nly-3d-FIq" id="lsx-0q-4fo"/>
                 <outlet property="sslCertificateFingerprintCopyButton" destination="758-2B-Ka3" id="Q1d-yx-R9D"/>
-                <outlet property="sslCertificateFingerprintField" destination="2ie-9H-xb2" id="R0d-n9-vwU"/>
+                <outlet property="sslCertificateMD5FingerprintCopyButton" destination="f9F-WF-ubf" id="nCJ-L3-KFF"/>
+                <outlet property="sslCertificateMD5FingerprintField" destination="nFm-83-7HQ" id="Nat-Xw-cUs"/>
                 <outlet property="sslCertificateResetButton" destination="sab-tw-7nn" id="Sui-ok-96a"/>
+                <outlet property="sslCertificateSHA1FingerprintCopyButton" destination="758-2B-Ka3" id="fFQ-nq-PNn"/>
+                <outlet property="sslCertificateSHA1FingerprintField" destination="2ie-9H-xb2" id="m5h-8u-7Me"/>
                 <outlet property="sslCertificateView" destination="Ti4-Q4-cYX" id="QPI-Iw-CIb"/>
                 <outlet property="tabView" destination="1444" id="1460"/>
                 <outlet property="usernameField" destination="1597" id="2267"/>
@@ -1629,80 +1632,6 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
-                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="6Fq-GY-KbJ">
-                    <rect key="frame" x="98" y="61" width="343" height="54"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="4AG-g6-kIF">
-                        <rect key="frame" x="0.0" y="0.0" width="343" height="54"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" continuousSpellChecking="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" smartInsertDelete="YES" id="W2t-2n-I0q">
-                                <rect key="frame" x="0.0" y="0.0" width="343" height="54"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="343" height="54"/>
-                                <size key="maxSize" width="491" height="10000000"/>
-                                <attributedString key="textStorage">
-                                    <fragment content="When registering your ">
-                                        <attributes>
-                                            <font key="NSFont" size="11" name="LucidaGrande"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="Certificate Fingerprint ">
-                                        <attributes>
-                                            <font key="NSFont" size="11" name="LucidaGrande-Bold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="with NickServ services it is important to use the uppercase version shown above.">
-                                        <attributes>
-                                            <font key="NSFont" size="11" name="LucidaGrande"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=" ">
-                                        <attributes>
-                                            <font key="NSFont" size="11" name="LucidaGrande-Bold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="Use the ">
-                                        <attributes>
-                                            <font key="NSFont" size="11" name="LucidaGrande"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="Copy">
-                                        <attributes>
-                                            <font key="NSFont" size="11" name="LucidaGrande-Bold"/>
-                                            <font key="NSOriginalFont" size="11" name="LucidaGrande-Bold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=" button to copy the exact command to send to NickServ services to avoid mistakes.">
-                                        <attributes>
-                                            <font key="NSFont" size="11" name="LucidaGrande"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="343" height="54"/>
-                                <size key="maxSize" width="491" height="10000000"/>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="qFR-xV-a5p">
-                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="snG-wi-wFa">
-                        <rect key="frame" x="-100" y="-100" width="16" height="34"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                </scrollView>
                 <button verticalHuggingPriority="750" id="l36-PJ-JBU">
                     <rect key="frame" x="258" y="13" width="155" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -1735,7 +1664,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="nly-3d-FIq">
-                    <rect key="frame" x="159" y="159" width="340" height="25"/>
+                    <rect key="frame" x="177" y="159" width="328" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Label" id="bvj-Qr-Ebk">
                         <font key="font" metaFont="system"/>
@@ -1744,18 +1673,18 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="fdC-a6-iNA">
-                    <rect key="frame" x="37" y="123" width="155" height="24"/>
+                    <rect key="frame" x="37" y="123" width="131" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Certificate Fingerprint:" id="jhF-Ix-th5">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="SHA-1 Fingerprint:" id="jhF-Ix-th5">
                         <font key="font" size="13" name="LucidaGrande-Bold"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="2ie-9H-xb2">
-                    <rect key="frame" x="196" y="125" width="230" height="22"/>
+                    <rect key="frame" x="177" y="125" width="249" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" alignment="left" title="Label" id="Gbb-jh-4mY">
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Label" id="Gbb-jh-4mY">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1769,7 +1698,36 @@ Gw
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="onSSLCertificateFingerprintCopyRequested:" target="-2" id="JmU-wh-zQD"/>
+                        <action selector="onSSLCertificateFingerprintSHA1CopyRequested:" target="-2" id="jKj-Dk-fyt"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="h8M-bR-Uth">
+                    <rect key="frame" x="37" y="86" width="131" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="MD5 Fingerprint:" id="O13-rx-ewF">
+                        <font key="font" size="13" name="LucidaGrande-Bold"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="nFm-83-7HQ">
+                    <rect key="frame" x="177" y="88" width="249" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Label" id="Sia-Zk-rSR">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" id="f9F-WF-ubf">
+                    <rect key="frame" x="426" y="84" width="72" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Copy" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rDo-70-T0D">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onSSLCertificateFingerprintMD5CopyRequested:" target="-2" id="b35-i7-gIJ"/>
                     </connections>
                 </button>
             </subviews>

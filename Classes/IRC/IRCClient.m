@@ -2561,7 +2561,7 @@
 			NSArray *providedKeys = @[
 				  @"Send Authentication Requests to UserServ",
 				  @"Hide Network Unavailability Notices on Reconnect",
-				  @"SASL Authentication Uses Certificate Fingerprint",
+				  @"SASL Authentication Uses External Mechanism",
 			];
 
 			if (NSObjectsAreEqual(section1, @"help"))
@@ -4684,7 +4684,7 @@
 	/* If we have certificate, we will use the fingerprint from that 
 	 for identification if the user configured that. */
 	if (self.socket.isConnectedWithClientSideCertificate) {
-		BOOL usesExternalSASL = [[self auxiliaryConfiguration] boolForKey:@"SASL Authentication Uses Certificate Fingerprint"];
+		BOOL usesExternalSASL = [[self auxiliaryConfiguration] boolForKey:@"SASL Authentication Uses External Mechanism"];
 
 		if (usesExternalSASL) {
 			return IRCIdentificationWithSASLExternalMechanism;

@@ -770,9 +770,16 @@
 #pragma mark -
 #pragma mark SSL Certificate
 
-- (void)onSSLCertificateFingerprintCopyRequested:(id)sender
+- (IBAction)onSSLCertificateFingerprintSHA1CopyRequested:(id)sender
 {
-	NSString *command = [NSString stringWithFormat:@"/msg NickServ cert add %@", [self.sslCertificateFingerprintField stringValue]];
+	NSString *command = [NSString stringWithFormat:@"/msg NickServ cert add %@", [self.sslCertificateSHA1FingerprintField stringValue]];
+
+	[RZPasteboard() setStringContent:command];
+}
+
+- (IBAction)onSSLCertificateFingerprintMD5CopyRequested:(id)sender
+{
+	NSString *command = [NSString stringWithFormat:@"/msg NickServ cert add %@", [self.sslCertificateMD5FingerprintField stringValue]];
 	
 	[RZPasteboard() setStringContent:command];
 }
@@ -780,8 +787,10 @@
 - (void)updateSSLCertificatePage
 {
 	NSString *commonName = nil;
-	NSString *fingerprint = nil;
-	
+
+	NSString *sha1fingerprint = nil;
+	NSString *md5fingerprint = nil;
+
 	/* Proxies are ran through an older socket engine which means SSL certificate
 	 validatin is not available when it is enabled. This is the check for that. */
 	NSInteger proxyTag = self.proxyTypeButton.selectedTag;
@@ -816,8 +825,9 @@
 			if (data) {
 				NSData *certNormData = [NSData dataWithBytes:CFDataGetBytePtr(data) length:CFDataGetLength(data)];
 				
-				fingerprint = [certNormData sha1];
-				
+				sha1fingerprint = [certNormData sha1];
+				md5fingerprint = [certNormData md5];
+
 				CFRelease(data);
 			}
 			
@@ -830,14 +840,20 @@
 	
 	if (hasNoCert) {
 		self.sslCertificateCommonNameField.stringValue = TXTLS(@"TDCServerSheet[1006]");
-		self.sslCertificateFingerprintField.stringValue = TXTLS(@"TDCServerSheet[1006]");
+
+		self.sslCertificateSHA1FingerprintField.stringValue = TXTLS(@"TDCServerSheet[1006]");
+		self.sslCertificateMD5FingerprintField.stringValue = TXTLS(@"TDCServerSheet[1006]");
 	} else {
 		self.sslCertificateCommonNameField.stringValue = commonName;
-		self.sslCertificateFingerprintField.stringValue = [fingerprint uppercaseString];
+
+		self.sslCertificateSHA1FingerprintField.stringValue = [sha1fingerprint uppercaseString];
+		self.sslCertificateMD5FingerprintField.stringValue = [md5fingerprint uppercaseString];
 	}
 	
 	[self.sslCertificateResetButton setEnabled:BOOLReverseValue(hasNoCert)];
-	[self.sslCertificateFingerprintCopyButton setEnabled:BOOLReverseValue(hasNoCert)];
+
+	[self.sslCertificateSHA1FingerprintCopyButton setEnabled:BOOLReverseValue(hasNoCert)];
+	[self.sslCertificateMD5FingerprintCopyButton setEnabled:BOOLReverseValue(hasNoCert)];
 }
 
 - (void)onSSLCertificateResetRequested:(id)sender
