@@ -57,6 +57,12 @@ typedef enum IRCDisconnectMode : NSInteger {
 	IRCDisconnectServerRedirectMode,
 } IRCDisconnectMode;
 
+typedef enum IRCIdentificationWithSASLMechanism : NSInteger {
+	IRCIdentificationWithSASLNoMechanism,
+	IRCIdentificationWithSASLPlainTextMechanism,
+	IRCIdentificationWithSASLExternalMechanism,
+} IRCIdentificationWithSASLMechanism;
+
 @interface IRCClient : IRCTreeItem
 /* Public information. They are considered read-only outside of
  IRCClient. Just not enforced. Play nice plugins. */

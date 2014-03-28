@@ -63,7 +63,9 @@
 @property (nonatomic, strong) NSMutableArray *sendQueue;
 
 /* IRCConnectionSocket.m properties. */
+/* Do not touch these from plugin. Only read them if needed. */
 
+@property (nonatomic, assign) BOOL isConnectedWithClientSideCertificate;
 @property (nonatomic, assign) dispatch_queue_t dispatchQueue;
 @property (nonatomic, assign) dispatch_queue_t socketQueue;
 @property (nonatomic, strong) NSData *bufferOverflowString;

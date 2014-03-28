@@ -44,7 +44,7 @@
     return [[self alloc] initWithDelegate:aDelegate delegateQueue:dq socketQueue:sq];
 }
 
-- (void)useSSLWithClient:(IRCClient *)client
+- (void)useSSLWithClient:(IRCClient *)client withConnectionController:(IRCConnection *)controller
 {
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 
@@ -75,7 +75,9 @@
 			
 			if (status == noErr) {
 				settings[(id)kCFStreamSSLCertificates] = @[(__bridge id)identity, (__bridge id)cert];
-				
+
+				controller.isConnectedWithClientSideCertificate = YES;
+
 				CFRelease(identity);
 			}
 			
