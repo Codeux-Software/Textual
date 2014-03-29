@@ -2415,7 +2415,7 @@ CA
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="3014">
                                             <rect key="frame" x="84" y="84" width="399" height="36"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="However, as this is a trial version, it will disconnect you from any IRC server that you are connected to every two hours. " id="3015">
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="However, as this is a trial version, it will disconnect you from any IRC server that you are connected to every twelve hours. " id="3015">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" red="0.59842751949999995" green="0.59842751949999995" blue="0.59842751949999995" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
