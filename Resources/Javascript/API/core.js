@@ -122,11 +122,19 @@ Textual = {
 	// app.localUserNickname()			— Nickname of the local user.
 	// app.localUserHostmask()			— Hostmask of the local user obtained during join.
 	
+	/* The app.printDebugInformation* calls documented below also call newMessagePostedToView() which means calling
+	them from within newMessagePostedToView() will create an infinite loop. If needed inside newMessagePostedToView(),
+	then check the line type of the new message and do not respond to line types with the value "debug" */
+	
 	// app.printDebugInformationToConsole(message)		— Show a debug message to the user in the server console. 
 	//													  This is the equivalent of a script using the /debug command.
 
 	// app.printDebugInformation(message)				— Show a debug message to the user in the associated channel.
 
+	/* *********************************************************************** */
+	/*																		   */
+	/* DO NOT EDIT ANYTHING BELOW THIS LINE FROM WITHIN A STYLE. 			   */
+	/*																		   */
 	/* *********************************************************************** */
 	
 	scrollToBottomOfView: function()
