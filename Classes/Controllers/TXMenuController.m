@@ -2300,15 +2300,20 @@
 - (void)openHelpMenuLinkItem:(id)sender
 {
 	switch ([sender tag]) {
-		case 101: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/"]]; break;											}
-		case 103: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Text-Formatting.wiki"]]; break;						}
-		case 104: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Command-Reference.wiki"]]; break;						}
-		case 105: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Memory-Management.wiki"]]; break;						}
-		case 106: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Styles.wiki"]]; break;									}
-		case 108: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Support.wiki"]]; break;								}
-		case 208: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/DCC-File-Transfer-Information.wiki"]];	break;			}
-		case 209: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Keyboard-Shortcuts.wiki"]]; break;						}
-		case 210: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/IRC-URL-Scheme.wiki"]]; break;							}
+		case 101: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/3rd-Party-Addons.wiki"]]; break;				}
+		case 102: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Frequently-Asked-Questions.wiki"]]; break;		}
+		case 103: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/home.wiki"]]; break;							}
+		case 104: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/iCloud-Syncing.wiki"]]; break;					}
+		case 105: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Encrypted-Chat.wiki"]]; break;					}
+		case 106: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Command-Reference.wiki"]]; break;				}
+		case 107: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Support.wiki"]]; break;						}
+		case 108: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Keyboard-Shortcuts.wiki"]];	break;			}
+		case 109: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Memory-Management.wiki"]]; break;				}
+		case 110: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Text-Formatting.wiki"]]; break;				}
+		case 111: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Styles.wiki"]]; break;							}
+		case 112: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Using-CertFP.wiki"]]; break;					}
+		case 113: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Connecting-to-ZNC-Bouncer.wiki"]]; break;		}
+		case 114: { [RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/DCC-File-Transfer-Information.wiki"]]; break;	}
 	}
 }
 
