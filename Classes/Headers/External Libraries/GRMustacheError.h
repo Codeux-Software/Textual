@@ -1,6 +1,6 @@
 // The MIT License
 //
-// Copyright (c) 2013 Gwendal Roué
+// Copyright (c) 2014 Gwendal Roué
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,6 +21,7 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
+
 #import "GRMustacheAvailabilityMacros.h"
 
 
@@ -35,23 +36,23 @@ typedef NS_ENUM(NSInteger, GRMustacheErrorCode) {
      *
      * @since v1.0
      */
-    GRMustacheErrorCodeParseError AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER,
+    GRMustacheErrorCodeParseError AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER,
     
     /**
      * The error code for not found templates and partials.
      *
      * @since v1.0
      */
-    GRMustacheErrorCodeTemplateNotFound AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER,
+    GRMustacheErrorCodeTemplateNotFound AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER,
     
     /**
      * The error code for not rendering errors.
      *
      * @since v6.3
      */
-    GRMustacheErrorCodeRenderingError AVAILABLE_GRMUSTACHE_VERSION_6_3_AND_LATER,
+    GRMustacheErrorCodeRenderingError AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER,
 
-} AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
+} AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
 
 
 /**
@@ -59,7 +60,7 @@ typedef NS_ENUM(NSInteger, GRMustacheErrorCode) {
  *
  * @since v1.0
  */
-extern NSString *const GRMustacheErrorDomain AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
+extern NSString *const GRMustacheErrorDomain AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
 
 
 /**
@@ -67,5 +68,5 @@ extern NSString *const GRMustacheErrorDomain AVAILABLE_GRMUSTACHE_VERSION_6_0_AN
  *
  * @since v5.1
  */
-extern NSString *const GRMustacheRenderingException AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
+extern NSString *const GRMustacheRenderingException AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
 
