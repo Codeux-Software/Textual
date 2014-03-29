@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5053"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -679,6 +679,116 @@ CQ
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Help" systemMenu="help" id="1385">
                         <items>
+                            <menuItem title="Acknowledgments" id="1796">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showAcknowledgments:" target="267" id="2556"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1661"/>
+                            <menuItem title="3rd Party Addons" tag="101" id="1710">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="openHelpMenuLinkItem:" target="267" id="1711"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Frequently Asked Questions" tag="102" id="gkX-Of-Y5Q">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="openHelpMenuLinkItem:" target="267" id="XYP-Lp-hia"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Introduction to Writing Scripts" tag="103" id="3130">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showScriptingDocumentation:" target="267" id="3133"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="fIj-9Q-u6p"/>
+                            <menuItem title="Other Helpful Resources" id="1686">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Other Helpful Resources" id="1687">
+                                    <items>
+                                        <menuItem title="Wiki Home" tag="103" id="01c-Ny-YrB">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openHelpMenuLinkItem:" target="267" id="6Hh-LR-6nu"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="VTu-dA-PTE"/>
+                                        <menuItem title="Using iCloud with Textual" tag="104" id="aO8-3y-WHh">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openHelpMenuLinkItem:" target="267" id="6rc-we-71u"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="Lpo-5n-kp3"/>
+                                        <menuItem title="Chat Encryption" tag="105" id="w1H-u0-OYW">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openHelpMenuLinkItem:" target="267" id="jFg-a1-LO2"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Command Reference" tag="106" id="1667">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openHelpMenuLinkItem:" target="267" id="1668"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Feature Requests" tag="107" id="1689">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openHelpMenuLinkItem:" target="267" id="1690"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Keyboard Shortcuts" tag="108" id="3080">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openHelpMenuLinkItem:" target="267" id="3081"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Memory Management" tag="109" id="1691">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openHelpMenuLinkItem:" target="267" id="1692"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Text Formatting" tag="110" id="1693">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openHelpMenuLinkItem:" target="267" id="1694"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Styling Information" tag="111" id="1695">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openHelpMenuLinkItem:" target="267" id="1696"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="3079"/>
+                                        <menuItem title="Connecting with Certificate" tag="112" id="o9J-hu-dKA">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openHelpMenuLinkItem:" target="267" id="FGe-g9-SpJ"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Connecting to a ZNC Bouncer" tag="113" id="VQN-Rg-JZ0">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openHelpMenuLinkItem:" target="267" id="E4R-Tn-mnH"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="e0i-mT-GT6"/>
+                                        <menuItem title="DCC File Transfer Information" tag="114" id="3064">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openHelpMenuLinkItem:" target="267" id="3065"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="Ws1-vl-bOl"/>
                             <menuItem title="Connect to Help Channel" tag="5675" id="1392">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
@@ -690,77 +800,6 @@ CQ
                                 <connections>
                                     <action selector="connectToTextualTestingChannel:" target="267" id="2708"/>
                                 </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="1661"/>
-                            <menuItem title="Helpful Links" id="1686">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Helpful Links" id="1687">
-                                    <items>
-                                        <menuItem title="Acknowledgments" id="1796">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="showAcknowledgments:" target="267" id="2556"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="2279"/>
-                                        <menuItem title="Wiki Home" tag="101" id="1710">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="openHelpMenuLinkItem:" target="267" id="1711"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="1709"/>
-                                        <menuItem title="Command Reference" tag="104" id="1667">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="openHelpMenuLinkItem:" target="267" id="1668"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Keyboard Shortcuts" tag="209" id="3080">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="openHelpMenuLinkItem:" target="267" id="3081"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Feature Requests" tag="108" id="1689">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="openHelpMenuLinkItem:" target="267" id="1690"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="IRC URL Scheme Explained" tag="210" id="3082">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="openHelpMenuLinkItem:" target="267" id="3083"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Memory Management" tag="105" id="1691">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="openHelpMenuLinkItem:" target="267" id="1692"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Text Formatting" tag="103" id="1693">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="openHelpMenuLinkItem:" target="267" id="1694"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Styling Information" tag="106" id="1695">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="openHelpMenuLinkItem:" target="267" id="1696"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="3079"/>
-                                        <menuItem title="DCC Deprecation Information" tag="208" id="3064">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="openHelpMenuLinkItem:" target="267" id="3065"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1795"/>
                             <menuItem title="Developer Resources" id="2718">
@@ -848,13 +887,6 @@ CQ
                                         </menuItem>
                                     </items>
                                 </menu>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="3132"/>
-                            <menuItem title="Introduction to Writing Scripts" id="3130">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="showScriptingDocumentation:" target="267" id="3133"/>
-                                </connections>
                             </menuItem>
                         </items>
                     </menu>
@@ -1978,7 +2010,7 @@ CA
                 </menuItem>
             </items>
         </menu>
-        <window title="Textual" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="default" id="21" userLabel="Window" customClass="TVCMainWindow">
+        <window title="Textual" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="21" userLabel="Window" customClass="TVCMainWindow">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="957" y="539" width="800" height="474"/>
@@ -2056,14 +2088,14 @@ CA
                                 <rect key="frame" x="0.0" y="37" width="800" height="437"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="0.0" verticalLineScroll="17" verticalPageScroll="0.0" hasHorizontalScroller="NO" maxMagnification="8" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" id="2800">
+                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="21" horizontalPageScroll="0.0" verticalLineScroll="21" verticalPageScroll="0.0" hasHorizontalScroller="NO" maxMagnification="8" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" id="2800">
                                         <rect key="frame" x="0.0" y="0.0" width="267" height="437"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <clipView key="contentView" copiesOnScroll="NO" id="J8g-Az-QMA">
                                             <rect key="frame" x="0.0" y="0.0" width="267" height="437"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="14" indentationMarkerFollowsCell="NO" outlineTableColumn="2804" id="2801" customClass="TVCServerList">
+                                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="21" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="14" indentationMarkerFollowsCell="NO" outlineTableColumn="2804" id="2801" customClass="TVCServerList">
                                                     <rect key="frame" x="0.0" y="0.0" width="267" height="437"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="0.0"/>
@@ -2179,14 +2211,14 @@ CA
                                                 <rect key="frame" x="277" y="0.0" width="255" height="437"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
-                                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="0.0" verticalLineScroll="17" verticalPageScroll="0.0" hasHorizontalScroller="NO" maxMagnification="8" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" id="VfW-Q0-igm" userLabel="Member List Scroll View">
+                                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="18" horizontalPageScroll="0.0" verticalLineScroll="18" verticalPageScroll="0.0" hasHorizontalScroller="NO" maxMagnification="8" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" id="VfW-Q0-igm" userLabel="Member List Scroll View">
                                                         <rect key="frame" x="0.0" y="0.0" width="256" height="437"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <clipView key="contentView" copiesOnScroll="NO" id="3cN-gg-HxB">
                                                             <rect key="frame" x="0.0" y="0.0" width="256" height="437"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="14" indentationMarkerFollowsCell="NO" outlineTableColumn="npr-ez-jah" id="BfG-Qj-vW8" userLabel="Member List" customClass="TVCMemberList">
+                                                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" autosaveColumns="NO" rowHeight="18" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="14" indentationMarkerFollowsCell="NO" outlineTableColumn="npr-ez-jah" id="BfG-Qj-vW8" userLabel="Member List" customClass="TVCMemberList">
                                                                     <rect key="frame" x="0.0" y="0.0" width="256" height="437"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                     <size key="intercellSpacing" width="3" height="0.0"/>
