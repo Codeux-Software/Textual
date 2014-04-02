@@ -372,13 +372,19 @@ NSString *IRCPublicCommandIndex(const char *key)
 {
 	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
 
-	NSString *basePath = [searchArray safeObjectAtIndex:0];
+	if ([searchArray count]) {
+		NSString *endPath = [NSString stringWithFormat:@"/%@/", [TPCPreferences applicationBundleIdentifier]];
 
-	NSObjectIsEmptyAssertReturn(basePath, nil);
+		NSString *basePath = [searchArray[0] stringByAppendingString:endPath];
 
-	NSString *endPath = [NSString stringWithFormat:@"/%@/", [TPCPreferences applicationBundleIdentifier]];
+		if ([RZFileManager() fileExistsAtPath:basePath] == NO) {
+			[RZFileManager() createDirectoryAtPath:basePath withIntermediateDirectories:YES attributes:nil error:NULL];
+		}
 
-	return [basePath stringByAppendingString:endPath];
+		return basePath;
+	} else {
+		return NSStringEmptyPlaceholder;
+	}
 }
 
 + (NSString *)applicationSupportFolderPath
@@ -488,21 +494,11 @@ NSString *IRCPublicCommandIndex(const char *key)
 + (NSString *)systemUnsupervisedScriptFolderPath
 {
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
-		static NSString *path = NSStringEmptyPlaceholder;
-		
-		static dispatch_once_t onceToken;
-		
-		dispatch_once(&onceToken, ^{
-			@autoreleasepool {
-				NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationScriptsDirectory, NSUserDomainMask, YES);
-				
-				if ([searchArray count]) {
-					path = [searchArray[0] copy];
-				}
-			}
-		});
-		
-		return path;
+		NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationScriptsDirectory, NSUserDomainMask, YES);
+
+		if ([searchArray count]) {
+			return searchArray[0];
+		}
 	}
 
 	/* We return an empty string instead of nil because
