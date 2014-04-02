@@ -265,9 +265,10 @@
 	/* Was there an error? */
 	if (result == nil) {
 		LogToConsole(@"Error Creating Persistent Store: %@", [addErr localizedDescription]);
-		LogToConsole(@"Attempting to create a new persistent store in a new path…");
 
 		if (isSecondRun == NO) {
+			LogToConsole(@"Attempting to create a new persistent store in a new path…");
+
 			/* If we failed to load our store, we create a brand new one at a new path
 			 incase the old one is corrupted. We also erase the old database to not allow
 			 the file to just hang on the OS. */
