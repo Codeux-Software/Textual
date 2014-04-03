@@ -82,6 +82,7 @@
 - (NSFetchRequest *)fetchRequestForClient:(IRCClient *)client
 								inChannel:(IRCChannel *)channel
 							   fetchLimit:(NSInteger)maxEntryCount
+				   includesPendingChanges:(BOOL)includesPendingChanges
 {
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	/* What are we fetching for? */
@@ -108,7 +109,7 @@
 	[fetchRequest setSortDescriptors:@[[self managedSortDescriptor]]];
 
 	/* Return types. */
-	[fetchRequest setIncludesPendingChanges:NO];
+	[fetchRequest setIncludesPendingChanges:includesPendingChanges];
 	[fetchRequest setReturnsObjectsAsFaults:YES];
 	[fetchRequest setIncludesPropertyValues:YES];
 
@@ -133,7 +134,8 @@
 		/* Build fetch request. */
 		NSFetchRequest *fetchRequest = [self fetchRequestForClient:client
 														 inChannel:channel
-														fetchLimit:0];
+														fetchLimit:0
+											includesPendingChanges:YES];
 
 		/* Gather results. */
 		NSArray *objects = [_managedObjectContext executeFetchRequest:fetchRequest error:NULL];
@@ -183,7 +185,8 @@
 		/* Perform fetch. */
 		NSFetchRequest *fetchRequest = [self fetchRequestForClient:client
 														 inChannel:channel
-														fetchLimit:maxEntryCount];
+														fetchLimit:maxEntryCount
+											includesPendingChanges:NO];
 
 		NSError *fetchError;
 
