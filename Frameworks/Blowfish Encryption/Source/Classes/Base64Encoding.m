@@ -41,7 +41,7 @@
 
 + (NSString *)encodeData:(NSData *)input
 {
-	if ([input respondsToSelector:@selector(base64EncodedStringWithOptions:)]) {
+	if ([NSData instancesRespondToSelector:@selector(base64EncodedStringWithOptions:)]) {
 		return [input base64EncodedStringWithOptions:0];
 	} else {
 		return [input base64Encoding];
@@ -50,7 +50,7 @@
 
 + (NSData *)decodeData:(NSString *)input
 {
-	if ([NSData respondsToSelector:@selector(initWithBase64EncodedString:options:)]) {
+	if ([NSData instancesRespondToSelector:@selector(initWithBase64EncodedString:options:)]) {
 		return [[NSData alloc] initWithBase64EncodedString:input options:0];
 	} else {
 		return [[NSData alloc] initWithBase64Encoding:input];
