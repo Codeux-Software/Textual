@@ -382,22 +382,26 @@ NSString *IRCPublicCommandIndex(const char *key)
 		}
 
 		return basePath;
-	} else {
-		return NSStringEmptyPlaceholder;
 	}
+
+	return nil;
 }
 
 + (NSString *)applicationSupportFolderPath
 {
 	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
 
-	NSString *dest = [searchArray[0] stringByAppendingPathComponent:@"/Textual IRC/"];
+	if ([searchArray count]) {
+		NSString *dest = [searchArray[0] stringByAppendingPathComponent:@"/Textual IRC/"];
 
-	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
-		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+		if ([RZFileManager() fileExistsAtPath:dest] == NO) {
+			[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+		}
+
+		return dest;
 	}
 
-	return dest;
+	return nil;
 }
 
 + (NSString *)customThemeFolderPath
@@ -425,7 +429,7 @@ NSString *IRCPublicCommandIndex(const char *key)
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 + (NSString *)applicationUbiquitousContainerPath
 {
-	return [self.masterController.cloudSyncManager ubiquitousContainerURLPath];
+	return [[[self masterController] cloudSyncManager] ubiquitousContainerURLPath];
 }
 
 + (NSString *)cloudCustomThemeFolderPath
@@ -510,8 +514,12 @@ NSString *IRCPublicCommandIndex(const char *key)
 + (NSString *)userDownloadFolderPath
 {
 	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSDownloadsDirectory, NSUserDomainMask, YES);
-	
-	return searchArray[0];
+
+	if ([searchArray count]) {
+		return searchArray[0];
+	}
+
+	return nil;
 }
 
 + (NSString *)userHomeDirectoryPathOutsideSandbox
