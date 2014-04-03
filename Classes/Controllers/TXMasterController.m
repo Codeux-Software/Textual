@@ -376,6 +376,10 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 - (void)applicationWillTerminate:(NSNotification *)note
 {
+	[self.mainWindow setDelegate:nil];
+
+	[RZRunningApplication() hide];
+
 	[RZWorkspaceNotificationCenter() removeObserver:self];
 
 	[RZNotificationCenter() removeObserver:self];
@@ -401,10 +405,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	}
 	
 	[[self menuController] prepareForApplicationTermination];
-	
-	[self.mainWindow setDelegate:nil];
-
-	[RZRunningApplication() hide];
 
 	if (self.skipTerminateSave == NO) {
 		[[self worldController] save];
