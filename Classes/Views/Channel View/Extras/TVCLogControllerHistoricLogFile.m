@@ -337,7 +337,8 @@
 	NSString *filename = [RZUserDefaults() objectForKey:@"TVCLogControllerHistoricLogFileSavePath"];
 
 	if (filename == nil) {
-		[self createNewDatabaseSavePath];
+		/* Use old filename for Textaul v4.1.3. */
+		[RZUserDefaults() setObject:@"logControllerHistoricLog_v001.sqlite" forKey:@"TVCLogControllerHistoricLogFileSavePath"];
 
 		return [self databaseSavePath];
 	}
