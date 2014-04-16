@@ -51,10 +51,7 @@
 	settings[(id)kCFStreamSSLLevel] = (id)kCFStreamSocketSecurityLevelNegotiatedSSL;
 	settings[(id)kCFStreamSSLIsServer] = (id)kCFBooleanFalse;
 
-	if (client.connectType == IRCConnectBadSSLCertificateMode ||
-		client.connectType == IRCConnectReconnectMode ||
-		client.config.validateServerSSLCertificate == NO)
-	{
+	if (client.connectType == IRCConnectBadSSLCertificateMode) {
 		settings[(id)kCFStreamSSLAllowsAnyRoot] = (id)kCFBooleanTrue;
 		settings[(id)kCFStreamSSLAllowsExpiredRoots] = (id)kCFBooleanTrue;
 		settings[(id)kCFStreamSSLAllowsExpiredCertificates] = (id)kCFBooleanTrue;
