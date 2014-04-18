@@ -565,9 +565,6 @@
 /* Selet button for dialogs. */
 "BasicLanguage[1225]" = "Select";
 
-/* Empty alert sound label. */
-"BasicLanguage[1225]" = "None";
-
 /* /tage/ command. */
 "BasicLanguage[1226]" = "\002Time Since First Commit:\002 %@";
 
@@ -599,3 +596,6 @@
 "BasicLanguage[1233][1]" = "Connect";
 "BasicLanguage[1233][2]" = "Connect using IPv4";
 "BasicLanguage[1233][3]" = "Connect using IPv6";
+
+/* Empty alert sound label. */
+"BasicLanguage[1234]" = "None";
