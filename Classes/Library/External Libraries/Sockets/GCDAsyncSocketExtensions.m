@@ -49,12 +49,16 @@
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 
 	settings[(id)kCFStreamSSLLevel] = (id)kCFStreamSocketSecurityLevelNegotiatedSSL;
+
 	settings[(id)kCFStreamSSLIsServer] = (id)kCFBooleanFalse;
+
+	settings[(id)kCFStreamSSLPeerName] = (id)client.config.serverAddress;
 
 	if (client.connectType == IRCConnectBadSSLCertificateMode) {
 		settings[(id)kCFStreamSSLAllowsAnyRoot] = (id)kCFBooleanTrue;
 		settings[(id)kCFStreamSSLAllowsExpiredRoots] = (id)kCFBooleanTrue;
 		settings[(id)kCFStreamSSLAllowsExpiredCertificates] = (id)kCFBooleanTrue;
+
 		settings[(id)kCFStreamSSLValidatesCertificateChain] = (id)kCFBooleanFalse;
 	}
 	
@@ -178,10 +182,13 @@
 	settings[(id)kCFStreamSSLLevel] = (id)kCFStreamSocketSecurityLevelNegotiatedSSL;
 
 	settings[(id)kCFStreamSSLPeerName] = (id)kCFNull;
+
 	settings[(id)kCFStreamSSLIsServer] = (id)kCFBooleanFalse;
+
 	settings[(id)kCFStreamSSLAllowsAnyRoot] = (id)kCFBooleanTrue;
 	settings[(id)kCFStreamSSLAllowsExpiredRoots] = (id)kCFBooleanTrue;
 	settings[(id)kCFStreamSSLAllowsExpiredCertificates] = (id)kCFBooleanTrue;
+
 	settings[(id)kCFStreamSSLValidatesCertificateChain] = (id)kCFBooleanFalse;
 
     CFReadStreamSetProperty(theReadStream, kCFStreamPropertySSLSettings, (__bridge CFTypeRef)(settings));
