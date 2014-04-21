@@ -777,6 +777,10 @@
 		4C9A1D9C1836E6D300C14835 /* SpammerParadise.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */; };
 		4C9A1D9D1836E6D500C14835 /* SystemProfiler.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D931836E6A100C14835 /* SystemProfiler.bundle */; };
 		4C9A1D9E1836E6D700C14835 /* ZNCAdditions.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */; };
+		4C9FFB9919059BF1008C600C /* TVCQueuedCertificateTrustPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9FFB9819059BF1008C600C /* TVCQueuedCertificateTrustPanel.m */; };
+		4C9FFB9F19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9FFB9E19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C9FFBA019059C3A008C600C /* TVCQueuedCertificateTrustPanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9FFB9E19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C9FFBA119059C4F008C600C /* TVCQueuedCertificateTrustPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9FFB9819059BF1008C600C /* TVCQueuedCertificateTrustPanel.m */; };
 		4CA5228318E6FB02005C61CB /* GRMustacheContentType.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA5228118E6FB02005C61CB /* GRMustacheContentType.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CA5228418E6FB02005C61CB /* GRMustacheContentType.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA5228118E6FB02005C61CB /* GRMustacheContentType.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CA5228518E6FB02005C61CB /* GRMustacheSafeKeyAccess.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA5228218E6FB02005C61CB /* GRMustacheSafeKeyAccess.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1412,6 +1416,8 @@
 		4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SpammerParadise.bundle; path = .tmp/SharedBuildProducts/SpammerParadise.bundle; sourceTree = SOURCE_ROOT; };
 		4C9A1D931836E6A100C14835 /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = .tmp/SharedBuildProducts/SystemProfiler.bundle; sourceTree = SOURCE_ROOT; };
 		4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ZNCAdditions.bundle; path = .tmp/SharedBuildProducts/ZNCAdditions.bundle; sourceTree = SOURCE_ROOT; };
+		4C9FFB9819059BF1008C600C /* TVCQueuedCertificateTrustPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCQueuedCertificateTrustPanel.m; sourceTree = "<group>"; };
+		4C9FFB9E19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCQueuedCertificateTrustPanel.h; sourceTree = "<group>"; };
 		4CA5228118E6FB02005C61CB /* GRMustacheContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheContentType.h; sourceTree = "<group>"; };
 		4CA5228218E6FB02005C61CB /* GRMustacheSafeKeyAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheSafeKeyAccess.h; sourceTree = "<group>"; };
 		4CA899A6174021FD001176C8 /* TPWTB_Alerts_NC.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TPWTB_Alerts_NC.tif; sourceTree = "<group>"; };
@@ -2161,6 +2167,7 @@
 				4C8AF58E158E99520026668C /* TVCMemberListCell.h */,
 				4C5798B9179B451400968800 /* TVCMemberListCellBadge.h */,
 				4CBBD1A416E3570800D2FEFE /* TVCMemberListUserInfoPopover.h */,
+				4C9FFB9E19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h */,
 				4C8AF58F158E99520026668C /* TVCServerList.h */,
 				4C8AF590158E99520026668C /* TVCServerListCell.h */,
 				4C0444E616F1553C00EBB665 /* TVCServerListCellBadge.h */,
@@ -2295,6 +2302,7 @@
 				4C8AF604158E99520026668C /* TVCMainWindow.m */,
 				4C8EE97916C64A8200D5B1F4 /* TVCMainWindowLoadingScreen.m */,
 				4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */,
+				4C9FFB9819059BF1008C600C /* TVCQueuedCertificateTrustPanel.m */,
 				4C8AF605158E99520026668C /* TVCThinSplitView.m */,
 			);
 			path = Views;
@@ -2769,6 +2777,7 @@
 				4C36091B18B4E89500243B3A /* TVCTextFieldWithValueValidation.h in Headers */,
 				4CA5228618E6FB02005C61CB /* GRMustacheSafeKeyAccess.h in Headers */,
 				4CA5228418E6FB02005C61CB /* GRMustacheContentType.h in Headers */,
+				4C9FFBA019059C3A008C600C /* TVCQueuedCertificateTrustPanel.h in Headers */,
 				4C0C720E1742C444000F82C4 /* NSByteCountFormatterHelper.h in Headers */,
 				4CEA09C61875A734005D6184 /* TDCFileTransferDialogRemoteAddress.h in Headers */,
 				4CC70204171E1CB400BDFAE0 /* BuildConfig.h in Headers */,
@@ -2928,6 +2937,7 @@
 				4CA5228518E6FB02005C61CB /* GRMustacheSafeKeyAccess.h in Headers */,
 				4CA5228318E6FB02005C61CB /* GRMustacheContentType.h in Headers */,
 				4CEA09BE1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h in Headers */,
+				4C9FFB9F19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h in Headers */,
 				4C5E4D1818260131001F3E6B /* TVCLogControllerHistoricLogFile.h in Headers */,
 				4CC70203171E1CB400BDFAE0 /* BuildConfig.h in Headers */,
 			);
@@ -3480,6 +3490,7 @@
 				4C0C72061742C431000F82C4 /* NSByteCountFormatterHelper.m in Sources */,
 				4CBE64C81743720600831D69 /* TDCHighlightEntrySheet.m in Sources */,
 				4C3E69891789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m in Sources */,
+				4C9FFBA119059C4F008C600C /* TVCQueuedCertificateTrustPanel.m in Sources */,
 				4C3E698B1789A31E00B1CB6B /* TVCLogControllerOperationQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3568,6 +3579,7 @@
 				4C8AF6C3158E99520026668C /* TLOKeyEventHandler.m in Sources */,
 				4C8AF6C4158E99520026668C /* TLOLanguagePreferences.m in Sources */,
 				4C8AF6C5158E99520026668C /* TLOLinkParser.m in Sources */,
+				4C9FFB9919059BF1008C600C /* TVCQueuedCertificateTrustPanel.m in Sources */,
 				4C8AF6C6158E99520026668C /* TLONickCompletionStatus.m in Sources */,
 				4C8AF6C7158E99520026668C /* TLOpenLink.m in Sources */,
 				4C8AF6C8158E99520026668C /* TLOPopupPrompts.m in Sources */,

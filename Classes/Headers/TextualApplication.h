@@ -145,6 +145,7 @@
 	@class TVCMemberListCellBadge;
 	@class TVCMemberListRowCell;
 	@class TVCMemberListUserInfoPopover;
+	@class TVCQueuedCertificateTrustPanel;
 	@class TVCServerList; // This has a lot of classes.
 	@class TVCServerListCell;
 	@class TVCServerListCellBadge;
@@ -320,6 +321,7 @@
 	#import "TVCMemberListCell.h"
 	#import "TVCMemberListCellBadge.h"
 	#import "TVCMemberListUserInfoPopover.h"
+	#import "TVCQueuedCertificateTrustPanel.h"
 	#import "TVCServerList.h"
 	#import "TVCServerListCell.h"
 	#import "TVCServerListCellBadge.h"
