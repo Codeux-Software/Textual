@@ -132,7 +132,7 @@
 
 		self.socketConnection = nil;
 	}
-	
+
     [self destroyDispatchQueue];
 
 	self.isConnectedWithClientSideCertificate = NO;
@@ -229,7 +229,7 @@
 	[self performSelector:@selector(tcpClientDidConnect)];
 }
 
-- (void)onSocketDidDisconnect:(id)sock withError:(NSError *)distcError;
+- (void)onSocketDidDisconnect:(id)sock withError:(NSError *)distcError
 {
 	[self closeSocket];
 
