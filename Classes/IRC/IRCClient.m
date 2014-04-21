@@ -5701,17 +5701,22 @@
 				NSString *usernameInt = nil;
 				NSString *addressInt = nil;
 
-				if ([nickname hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt]) {
-					member.nickname = nicknameInt;
-					member.username = usernameInt;
-					member.address = addressInt;
+				if ([nickname hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt] == NO) {
+					/* When NAMES reply is not a host, then set the nicknameInt
+					 to the value of nickname and leave the rest as nil. */
 
-					if ([c memberWithNickname:member.nickname]) {
-						[c removeMember:member.nickname];
-					}
-					
-					[c addMember:member];
+					nicknameInt = nickname;
 				}
+
+				member.nickname = nicknameInt;
+				member.username = usernameInt;
+				member.address = addressInt;
+
+				if ([c memberWithNickname:member.nickname]) {
+					[c removeMember:member.nickname];
+				}
+
+				[c addMember:member];
 			}
 
 			break;
