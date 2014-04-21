@@ -1200,7 +1200,7 @@
 
 	// ---- //
 
-	attributes[@"configuredServerName"] = [[self client] altNetworkName];
+	attributes[@"configuredServerName"] = NSStringNilValueSubstitute([[self client] altNetworkName]);
 
 	// ---- //
 
