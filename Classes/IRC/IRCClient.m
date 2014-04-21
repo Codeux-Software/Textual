@@ -3260,25 +3260,45 @@
 	[self disconnect];
 	
 	if (self.disconnectType == IRCDisconnectBadSSLCertificateMode) {
-		[self cancelReconnect];
-		
-		if (distcError) {
-			SecTrustRef trustRef = (__bridge SecTrustRef)([distcError.userInfo objectForKey:@"peerCertificateTrustRef"]);
+		[self presentSSLCertificateTrustPanelWithError:distcError];
+	}
+}
 
-			if (trustRef) {
-				SFCertificateTrustPanel *panel = [SFCertificateTrustPanel sharedCertificateTrustPanel];
-				
-				[panel setAlternateButtonTitle:TXTLS(@"BasicLanguage[1009]")];
-				[panel setInformativeText:TXTLS(@"BasicLanguage[1229][2]")];
-				
-				NSInteger returnCode = [panel runModalForTrust:trustRef
-													   message:TXTLS(@"BasicLanguage[1229][1]")];
-				
-				if (returnCode == NSAlertDefaultReturn) {
-					[self connect:IRCConnectBadSSLCertificateMode];
-				}
+- (void)presentSSLCertificateTrustPanelWithError:(NSError *)distcError
+{
+	[self cancelReconnect];
+
+	if (distcError) {
+		SecTrustRef trustRef = (__bridge SecTrustRef)([[distcError userInfo] objectForKey:@"peerCertificateTrustRef"]);
+
+		if (trustRef) {
+			SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
+
+			[panel setAlternateButtonTitle:TXTLS(@"BasicLanguage[1009]")];
+
+			[panel setInformativeText:TXTLS(@"BasicLanguage[1229][2]")];
+
+			NSWindow *tempWindow = self.masterController.mainWindow;
+
+			/* Find deepest attached window. This is some ugly code… */
+			while ([tempWindow attachedSheet]) {
+				tempWindow = [tempWindow attachedSheet];
 			}
+
+			[panel beginSheetForWindow:tempWindow
+						 modalDelegate:self
+						didEndSelector:@selector(sslCertificateTrustPanelDidEnd:returnCode:contextInfo:)
+						   contextInfo:NULL
+								 trust:trustRef
+							   message:TXTLS(@"BasicLanguage[1229][1]")];
 		}
+	}
+}
+
+-(void)sslCertificateTrustPanelDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+	if (returnCode == NSOKButton) {
+		[self connect:IRCConnectBadSSLCertificateMode];
 	}
 }
 
