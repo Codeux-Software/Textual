@@ -47,6 +47,8 @@
 - (void)createBaseModel; // Do not call.
 
 - (void)saveData;
+- (void)saveData:(BOOL)duringTermination;
+
 - (BOOL)isPerformingSave;
 
 - (void)resetData;

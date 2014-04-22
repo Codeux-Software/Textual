@@ -389,7 +389,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	if ([TPCPreferences reloadScrollbackOnLaunch] == NO) {
 		[TVCLogControllerHistoricLogSharedInstance() resetData]; // Delete database.
 	} else {
-		[TVCLogControllerHistoricLogSharedInstance() saveData]; // Save database.
+		[TVCLogControllerHistoricLogSharedInstance() saveData:YES]; // Save database.
 	}
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
