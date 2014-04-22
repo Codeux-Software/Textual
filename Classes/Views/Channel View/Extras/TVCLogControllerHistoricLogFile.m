@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+#define _maximumRowCountPerClient			1000
+
 @interface TVCLogControllerHistoricLogFile ()
 @property (nonatomic, assign) BOOL isPerformingSave;
 @property (nonatomic, assign) BOOL hasPendingAutosaveTimer;
@@ -109,9 +111,12 @@
 	[fetchRequest setSortDescriptors:@[[self managedSortDescriptor]]];
 
 	/* Return types. */
-	[fetchRequest setIncludesPendingChanges:includesPendingChanges];
-	[fetchRequest setReturnsObjectsAsFaults:YES];
+	[fetchRequest setFetchBatchSize:50];
+
 	[fetchRequest setIncludesPropertyValues:YES];
+	[fetchRequest setIncludesPendingChanges:includesPendingChanges];
+
+	[fetchRequest setReturnsObjectsAsFaults:YES];
 
 	[fetchRequest setResultType:NSManagedObjectIDResultType];
 
@@ -365,6 +370,11 @@
 
 - (void)saveData
 {
+	[self saveData:NO];
+}
+
+- (void)saveData:(BOOL)duringTermination
+{
 #ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
 	/* What are we saving to? */
 	PointerIsEmptyAssert(_managedObjectContext);
@@ -382,6 +392,10 @@
 		/* Do changes even exist? */
 		if ([_managedObjectContext commitEditing]) {
 			if ([_managedObjectContext hasChanges]) {
+				//if (duringTermination == NO) {
+					[self performRegularMaintenanceOfCoreDataStack];
+				//}
+
 				if ([_managedObjectContext save:NULL] == NO) {
 					[_managedObjectContext reset];
 				}
@@ -391,6 +405,112 @@
 		/* Reset state. */
 		_isPerformingSave = NO;
 	}];
+#endif
+}
+
+- (void)performRegularMaintenanceOfCoreDataStack
+{
+	/* We do not want Textual to grow our core data stack to an infinite size so 
+	 there has to be some way for us to limit the maximum number of entries in the
+	 database file. Therefore, before saves occur, we fetch the stack, go client
+	 by client, and limit that client's row count by the maximum defined at the
+	 top of this file. We limit it by deleting the extra objects before save. */
+	/* I'll tell you one thing: this is some ugly code. Wouldn't be surprised
+	 to see it on http://www.reddit.com/r/badcode one of these days. */
+
+#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
+	/* Request fetch request. */
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"TVCLogLine"];
+
+	/* Define sort order. */
+	NSSortDescriptor *ortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:YES];
+
+	[fetchRequest setSortDescriptors:@[ortDescriptor]];
+
+	/* Define object ID expression. */
+	NSExpressionDescription *objectIdDesc = [NSExpressionDescription new];
+
+	[objectIdDesc setName:@"objectID"];
+
+	[objectIdDesc setExpression:[NSExpression expressionForEvaluatedObject]];
+	[objectIdDesc setExpressionResultType:NSObjectIDAttributeType];
+
+	/* Return types. */
+	[fetchRequest setIncludesPendingChanges:YES];
+	[fetchRequest setIncludesPropertyValues:YES];
+
+	[fetchRequest setFetchBatchSize:50];
+
+	[fetchRequest setPropertiesToFetch:@[objectIdDesc, @"clientID", @"channelID"]];
+
+	[fetchRequest setResultType:NSDictionaryResultType];
+
+	/* Gather results. */
+	NSArray *objects = [_managedObjectContext executeFetchRequest:fetchRequest error:NULL];
+
+	/* Create dictionary of clients. */
+	NSMutableDictionary *clientMatrix = [NSMutableDictionary dictionary];
+
+	for (NSDictionary *object in objects) {
+		@autoreleasepool {
+			NSManagedObjectID *objectID = [object objectForKey:@"objectID"];
+
+			NSString *clientID = [object objectForKey:@"clientID"];
+			NSString *channelID = [object objectForKey:@"channelID"];
+
+			NSString *groupID;
+
+			if (channelID) {
+				groupID = channelID;
+			} else {
+				groupID = clientID;
+			}
+
+			NSMutableArray *oldArray;
+			
+			if ([clientMatrix containsKey:groupID]) {
+				oldArray = clientMatrix[groupID];
+			} else {
+				oldArray = [NSMutableArray array];
+			}
+
+			[oldArray addObject:objectID];
+
+			[clientMatrix setObject:oldArray forKey:groupID];
+		}
+	}
+
+	DebugLogToConsole(@"Preparing to manage %i object groups.", [clientMatrix count]);
+
+	/* We are going to save right after this, so set to NO to increase speed. */
+	[_managedObjectContext setPropagatesDeletesAtEndOfEvent:NO];
+
+	/* Go through each client. */
+	for (NSString *clientID in [clientMatrix allKeys]) {
+		@autoreleasepool {
+			NSArray *clientObjects = clientMatrix[clientID];
+
+			if ([clientObjects count] > _maximumRowCountPerClient) {
+				NSInteger chopCount = ((_maximumRowCountPerClient - [clientObjects count]) * -(1));
+
+				DebugLogToConsole(@"Preparing to delete %i objects for group ID %@.", chopCount, clientID);
+
+				for (NSInteger i = 0; i < chopCount; i++) {
+					NSManagedObjectID *objectID = clientObjects[i];
+
+					NSManagedObject *object = [_managedObjectContext objectWithID:objectID];
+
+					[_managedObjectContext deleteObject:object];
+				}
+			}
+		}
+	}
+
+	/* Set back to YES. */
+	[_managedObjectContext setPropagatesDeletesAtEndOfEvent:YES];
+
+	/* Destroy the existing matrix. */
+	clientMatrix = nil;
 #endif
 }
 
