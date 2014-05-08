@@ -44,8 +44,8 @@
 
 @interface IRCChannel ()
 @property (nonatomic, strong) NSMutableDictionary *memberList; // Unsorted dictionary of all users.
-@property (nonatomic, strong) NSMutableArray *memberListNormalSorted; // Sorted by IRCuser compare: — excludes ignores.
-@property (nonatomic, strong) NSMutableArray *memberListLengthSorted; // Sorted by nickname length. — includes ignores.
+@property (nonatomic, strong) NSArray *memberListNormalSorted; // Sorted by IRCuser compare: — excludes ignores.
+@property (nonatomic, strong) NSArray *memberListLengthSorted; // Sorted by nickname length. — includes ignores.
 @end
 
 @implementation IRCChannel
@@ -60,8 +60,8 @@
 		
 		self.memberList = [NSMutableDictionary new];
 
-		self.memberListNormalSorted = [NSMutableArray new];
-		self.memberListLengthSorted = [NSMutableArray new];
+		self.memberListNormalSorted = @[];
+		self.memberListLengthSorted = @[];
 	}
 	
 	return self;
@@ -342,13 +342,13 @@
 	[self.memberList setObject:item forKey:[item lowercaseNickname]];
 	
 	/* Conversation tracking scans based on nickname length. */
-	[self.memberListLengthSorted insertSortedObject:item usingComparator:[IRCUser nicknameLengthComparator]];
+	self.memberListLengthSorted = [self.memberListLengthSorted arrayByInsertingSortedObject:item usingComparator:[IRCUser nicknameLengthComparator]];
 
 	/* Member list without ignores used by view. */
 	IRCAddressBook *ignoreChecks = [self.client checkIgnoreAgainstHostmask:[item hostmask] withMatches:@[@"hideInMemberList"]];
 	
 	if (PointerIsEmpty(ignoreChecks) || (ignoreChecks && [ignoreChecks hideInMemberList] == NO)) {
-		[self.memberListNormalSorted insertSortedObject:item usingComparator:NSDefaultComparator];
+		self.memberListNormalSorted = [self.memberListNormalSorted arrayByInsertingSortedObject:item usingComparator:NSDefaultComparator];
 	}
 }
 
@@ -389,10 +389,13 @@
 	
 	/* Internal list. */
 	[self.memberList removeObjectForKey:[user lowercaseNickname]];
-	
-	[self.memberListNormalSorted removeObject:user];
-	[self.memberListLengthSorted removeObject:user];
-		 
+
+	NSInteger mllsi = [self.memberListLengthSorted indexOfObjectMatchingValue:nickname withKeyPath:@"nickname"];
+	NSInteger mlnsi = [self.memberListNormalSorted indexOfObjectMatchingValue:nickname withKeyPath:@"nickname"];
+
+	self.memberListLengthSorted = [self.memberListLengthSorted arrayByRemovingObjectAtIndex:mllsi];
+	self.memberListNormalSorted = [self.memberListNormalSorted arrayByRemovingObjectAtIndex:mlnsi];
+
 	 /* Post event to the style. */
 	 if (self.isChannel) {
 		 [self.client postEventToViewController:@"channelMemberRemoved" forChannel:self];
@@ -508,9 +511,9 @@
 - (void)clearMembers
 {
 	[self.memberList removeAllObjects];
-	
-	[self.memberListLengthSorted removeAllObjects];
-	[self.memberListNormalSorted removeAllObjects];
+
+	self.memberListNormalSorted = @[];
+	self.memberListLengthSorted = @[];
 }
 
 - (NSInteger)numberOfMembers
@@ -584,7 +587,11 @@
 {
 	_cancelOnNotSelectedChannel;
 
-	[self.memberListNormalSorted sortUsingComparator:NSDefaultComparator];
+	NSMutableArray *mut = [self.memberListNormalSorted mutableCopy];
+
+	[mut sortUsingComparator:NSDefaultComparator];
+
+	self.memberListNormalSorted = [mut copy];
 
 	[self reloadDataForTableView];
 }
@@ -627,7 +634,7 @@
 	[newlist sortUsingComparator:NSDefaultComparator];
 	
 	if (NSDissimilarObjects([self.memberListNormalSorted count], [newlist count])) {
-		self.memberListNormalSorted = [newlist mutableCopy];
+		self.memberListNormalSorted = [newlist copy];
 
 		[self reloadDataForTableView];
 	}
