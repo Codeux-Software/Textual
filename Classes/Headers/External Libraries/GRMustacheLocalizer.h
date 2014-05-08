@@ -1,6 +1,6 @@
 // The MIT License
 //
-// Copyright (c) 2014 Gwendal Roué
+// Copyright (c) 2013 Gwendal Roué
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,6 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
-
 #import "GRMustacheAvailabilityMacros.h"
 #import "GRMustacheRendering.h"
 #import "GRMustacheFilter.h"
@@ -39,7 +38,7 @@
  * ### Localizing data:
  *
  * `{{ localize(greeting) }}` renders `NSLocalizedString(@"Hello", nil)`,
- * assuming the `greeting` key resolves to the `Hello` string.
+ * assuming the `greeting` key resolves to the @"Hello" string.
  *
  * ### Localizing sections:
  *
@@ -48,13 +47,13 @@
  * ### Localizing sections with arguments:
  *
  * `{{#localize}}Hello {{name}}{{/localize}}` builds the format string
- * `Hello %@`, localizes it with NSLocalizedString, and finally
+ * @"Hello %@", localizes it with NSLocalizedString, and finally
  * injects the name with `[NSString stringWithFormat:]`.
  *
  * ### Localize sections with arguments and conditions:
  *
  * `{{#localize}}Good morning {{#title}}{{title}}{{/title}} {{name}}{{/localize}}`
- * build the format string `Good morning %@" or @"Good morning %@ %@`,
+ * build the format string @"Good morning %@" or @"Good morning %@ %@",
  * depending on the presence of the `title` key. It then injects the name, or
  * both title and name, with `[NSString stringWithFormat:]`, to build the final
  * rendering.
@@ -86,14 +85,14 @@
  *
  * @since v6.4
  */
-- (id)initWithBundle:(NSBundle *)bundle tableName:(NSString *)tableName AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
+- (id)initWithBundle:(NSBundle *)bundle tableName:(NSString *)tableName AVAILABLE_GRMUSTACHE_VERSION_6_4_AND_LATER;
 
 /**
  * The bundle where to look for localized strings.
  *
  * @since v6.4
  */
-@property (nonatomic, retain, readonly) NSBundle *bundle AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
+@property (nonatomic, retain, readonly) NSBundle *bundle AVAILABLE_GRMUSTACHE_VERSION_6_4_AND_LATER;
 
 /**
  * The table where to look for localized strings.
@@ -102,7 +101,7 @@
  *
  * @since v6.4
  */
-@property (nonatomic, retain, readonly) NSString *tableName AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
+@property (nonatomic, retain, readonly) NSString *tableName AVAILABLE_GRMUSTACHE_VERSION_6_4_AND_LATER;
 
 @end
 

@@ -1,6 +1,6 @@
 // The MIT License
 //
-// Copyright (c) 2014 Gwendal Roué
+// Copyright (c) 2013 Gwendal Roué
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,20 +20,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef GRMUSTACHE_RENDERING
-#define GRMUSTACHE_RENDERING
-
 #import <Foundation/Foundation.h>
-
 #import "GRMustacheAvailabilityMacros.h"
 
 @class GRMustacheContext;
 @class GRMustacheTag;
-
-
-// =============================================================================
-#pragma mark - <GRMustacheRendering>
-
 
 /**
  * The protocol for your own objects that perform custom rendering.
@@ -71,60 +62,6 @@
 - (NSString *)renderForMustacheTag:(GRMustacheTag *)tag
                            context:(GRMustacheContext *)context
                           HTMLSafe:(BOOL *)HTMLSafe
-                             error:(NSError **)error AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
+                             error:(NSError **)error AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
 @end
-
-
-// =============================================================================
-#pragma mark - GRMustacheRendering
-
-/**
- * The GRMustacheRendering class helps building rendering objects without
- * writing a custom class that conforms to the GRMustacheRendering protocol.
- *
- * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/rendering_objects.md
- *
- * @see GRMustacheRendering protocol
- *
- * @since v7.0
- */
-@interface GRMustacheRendering : NSObject<GRMustacheRendering>
-
-////////////////////////////////////////////////////////////////////////////////
-/// @name Creating Rendering Objects
-////////////////////////////////////////////////////////////////////////////////
-
-/**
- * Returns a rendering object that is able to render the argument _object_ for
- * the various Mustache tags.
- *
- * @param object  An object.
- *
- * @return A rendering object able to render the argument.
- *
- * @see GRMustacheRendering protocol
- *
- * @since v7.0
- */
-+ (id<GRMustacheRendering>)renderingObjectForObject:(id)object AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
-
-/**
- * Returns a rendering object that renders with the provided block.
- *
- * @param block  A block that follows the semantics of the
- *               renderForMustacheTag:context:HTMLSafe:error: method defined by
- *               the GRMustacheRendering protocol. See the documentation of this
- *               method.
- *
- * @return A rendering object
- *
- * @see GRMustacheRendering protocol
- *
- * @since v7.0
- */
-+ (id<GRMustacheRendering>)renderingObjectWithBlock:(NSString *(^)(GRMustacheTag *tag, GRMustacheContext *context, BOOL *HTMLSafe, NSError **error))block AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
-
-@end
-
-#endif
