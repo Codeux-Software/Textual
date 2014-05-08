@@ -1,6 +1,6 @@
 // The MIT License
 // 
-// Copyright (c) 2014 Gwendal Roué
+// Copyright (c) 2013 Gwendal Roué
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,6 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
-
 #import "GRMustacheAvailabilityMacros.h"
 
 @protocol GRMustacheRendering;
@@ -55,9 +54,9 @@ typedef struct {
 /**
  * @return The version of GRMustache as a GRMustacheVersion struct.
  *
- * @since v7.0
+ * @since v1.0
  */
-+ (GRMustacheVersion)libraryVersion AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
++ (GRMustacheVersion)version AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -68,52 +67,31 @@ typedef struct {
  * Have GRMustache avoid most `NSUndefinedKeyExceptions` when rendering
  * templates.
  * 
- * The rendering of a GRMustache template can lead to `NSUndefinedKeyExceptions`
- * to be raised, because of the usage of the `valueForKey:` method. Those
- * exceptions are nicely handled by GRMustache, and are part of the regular
- * rendering of a template.
- *
- * Unfortunately, Objective-C exceptions have several drawbacks, particularly:
+ * The rendering of a GRMustache template can lead to many
+ * `NSUndefinedKeyExceptions` to be raised, because of the heavy usage of
+ * Key-Value Coding. Those exceptions are nicely handled by GRMustache, and are
+ * part of the regular rendering of a template.
  * 
- * 1. they play badly with autorelease pools, and are reputed to leak memory.
- * 2. they usually stop your debugger when you are developping your application.
+ * Unfortunately, when debugging a project, developers usually set their
+ * debugger to stop on every Objective-C exceptions. GRMustache rendering can
+ * thus become a huge annoyance. This method prevents it.
  * 
- * The first point is indeed a matter of worry: Apple does not guarantee that
- * exceptions raised by `valueForKey:` do not leak memory. However, I never had
- * any evidence of such a leak from NSObject's implementation.
+ * You'll get a slight performance hit, so you'd probably make sure this call
+ * does not enter your Release configuration.
  * 
- * Should you still worry, we recommend that you avoid the `valueForKey:` method
- * altogether. Instead, implement the [keyed subscripting](http://clang.llvm.org/docs/ObjectiveCLiterals.html#dictionary-style-subscripting)
- * `objectForKeyedSubscript:` method on objects that you provide to GRMustache.
+ * One way to achieve this is to add `-DDEBUG` to the "Other C Flags" setting of
+ * your development configuration, and to wrap the
+ * `preventNSUndefinedKeyExceptionAttack` method call in a #if block, like:
  * 
- * The second point is valid also: NSUndefinedKeyException raised by template
- * rendering may become a real annoyance when you are debugging your project,
- * because it's likely you've told your debugger to stop on every Objective-C
- * exceptions.
+ *     #ifdef DEBUG
+ *     [GRMustache preventNSUndefinedKeyExceptionAttack];
+ *     #endif
  * 
- * You can avoid them as well: make sure you invoke once, early in your
- * application, the `preventNSUndefinedKeyExceptionAttack` method.
- * 
- * Depending on the number of NSUndefinedKeyException that get prevented, you
- * will experience a slight performance hit, or a performance improvement.
- * 
- * Since the main use case for this method is to avoid Xcode breaks on rendering
- * exceptions, the best practice is to conditionally invoke this method, using
- * the [NS_BLOCK_ASSERTIONS](http://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Miscellaneous/Foundation_Functions/Reference/reference.html)
- * that helps identifying the Debug configuration of your targets:
- * 
- * ```
- * #if !defined(NS_BLOCK_ASSERTIONS)
- * // Debug configuration: keep GRMustache quiet
- * [GRMustache preventNSUndefinedKeyExceptionAttack];
- * #endif
- * ```
- *
  * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/runtime.md
  * 
  * @since v1.7
  */
-+ (void)preventNSUndefinedKeyExceptionAttack AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
++ (void)preventNSUndefinedKeyExceptionAttack AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -127,7 +105,7 @@ typedef struct {
  *
  * @since v6.4
  */
-+ (NSObject *)standardLibrary AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
++ (NSObject *)standardLibrary AVAILABLE_GRMUSTACHE_VERSION_6_4_AND_LATER;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -135,26 +113,40 @@ typedef struct {
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * This method is deprecated. Use
- * `+[GRMustacheRendering renderingObjectForObject:]` instead.
+ * Returns a rendering object that is able to render the argument _object_ for
+ * the various Mustache tags.
  *
- * @see GRMustacheRendering class
+ * If _object_ already conforms to the GRMustacheRendering protocol, this method
+ * returns _object_ itself: it is already able to render.
+ *
+ * For other values, including `nil`, this method returns a rendering object
+ * that provides the default GRMustache rendering.
+ *
+ * @param object  An object.
+ *
+ * @return A rendering object able to render the argument.
+ *
+ * @see GRMustacheRendering protocol
  *
  * @since v6.0
- * @deprecated v7.0
  */
-+ (id<GRMustacheRendering>)renderingObjectForObject:(id)object AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER_BUT_DEPRECATED;
++ (id<GRMustacheRendering>)renderingObjectForObject:(id)object AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
 /**
- * This method is deprecated. Use
- * `+[GRMustacheRendering renderingObjectWithBlock:]` instead.
+ * Returns a rendering object that renders with the provided block.
  *
- * @see GRMustacheRendering class
+ * @param block  A block that follows the semantics of the
+ *               renderForMustacheTag:context:HTMLSafe:error: method defined by
+ *               the GRMustacheRendering protocol. See the documentation of this
+ *               method.
+ *
+ * @return A rendering object
+ *
+ * @see GRMustacheRendering protocol
  *
  * @since v6.0
- * @deprecated v7.0
  */
-+ (id<GRMustacheRendering>)renderingObjectWithBlock:(NSString *(^)(GRMustacheTag *tag, GRMustacheContext *context, BOOL *HTMLSafe, NSError **error))block AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER_BUT_DEPRECATED;
++ (id<GRMustacheRendering>)renderingObjectWithBlock:(NSString *(^)(GRMustacheTag *tag, GRMustacheContext *context, BOOL *HTMLSafe, NSError **error))block AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
 @end
 
@@ -164,10 +156,8 @@ typedef struct {
 #import "GRMustacheFilter.h"
 #import "GRMustacheError.h"
 #import "GRMustacheVersion.h"
-#import "GRMustacheContentType.h"
 #import "GRMustacheContext.h"
 #import "GRMustacheRendering.h"
 #import "GRMustacheTag.h"
 #import "GRMustacheConfiguration.h"
 #import "GRMustacheLocalizer.h"
-#import "GRMustacheSafeKeyAccess.h"

@@ -1,6 +1,6 @@
 // The MIT License
 //
-// Copyright (c) 2014 Gwendal Roué
+// Copyright (c) 2013 Gwendal Roué
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,6 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
-
 #import "GRMustacheAvailabilityMacros.h"
 #import "GRMustacheConfiguration.h"
 
@@ -38,22 +37,29 @@ typedef NS_ENUM(NSUInteger, GRMustacheTagType) {
      *
      * @since v6.0
      */
-    GRMustacheTagTypeVariable = 1 << 1 AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER,
+    GRMustacheTagTypeVariable = 1 << 1 AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER,
     
     /**
      * The type for section tags such as {{# name }}...{{/}}
      *
      * @since v6.0
      */
-    GRMustacheTagTypeSection = 1 << 2 AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER,
+    GRMustacheTagTypeSection = 1 << 2 AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER,
+    
+    /**
+     * The type for overridable section tags such as {{$ name }}...{{/}}
+     *
+     * @since v6.0
+     */
+    GRMustacheTagTypeOverridableSection = 1 << 3 AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER,
     
     /**
      * The type for inverted section tags such as {{^ name }}...{{/}}
      *
      * @since v6.0
      */
-    GRMustacheTagTypeInvertedSection = 1 << 3 AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER,
-} AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
+    GRMustacheTagTypeInvertedSection = 1 << 4 AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER,
+} AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
 
 /**
@@ -69,6 +75,7 @@ typedef NS_ENUM(NSUInteger, GRMustacheTagType) {
 @private
     GRMustacheTagType _type;
     id _expression;
+    GRMustacheTemplateRepository *_templateRepository;
     GRMustacheContentType _contentType;
 }
 
@@ -81,26 +88,24 @@ typedef NS_ENUM(NSUInteger, GRMustacheTagType) {
 /**
  * The type of the tag
  */
-@property (nonatomic, readonly) GRMustacheTagType type AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
+@property (nonatomic, readonly) GRMustacheTagType type AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
 /**
  * Returns the literal and unprocessed inner content of the tag.
  *
- * A section tag such as `{{# name }}inner content{{/}}` returns `inner content`.
+ * A section tag such as `{{# name }}...{{/}}` returns @"...".
  *
  * Variable tags such as `{{ name }}` have no inner content: their inner
  * template string is the empty string.
  */
-@property (nonatomic, readonly) NSString *innerTemplateString AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
+@property (nonatomic, readonly) NSString *innerTemplateString AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
 /**
  * Returns the description of the tag.
  *
  * For example:
  *
- * ```
- * <GRMustacheVariableTag `{{ name }}` at line 18 of template /path/to/Document.mustache>
- * ```
+ *     <GRMustacheVariableTag `{{ name }}` at line 18 of template /path/to/Document.mustache>
  */
 - (NSString *)description;
 
@@ -109,18 +114,22 @@ typedef NS_ENUM(NSUInteger, GRMustacheTagType) {
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * This method is deprecated.
+ * The template repository that did provide the template string from which the
+ * receiver tag has been extracted.
  *
- * Replace `[tag.templateRepository templateFromString:... error:...]` with
- * `[GRMustacheTemplate templateFromString:... error:...]`.
+ * This method is intended for objects conforming to the GRMustacheRendering
+ * protocol who deal with templates including partial templates that come from
+ * various template repositories.
  *
- * Replace `[tag.templateRepository templateNamed:... error:...]` with explicit
- * invocation of the targeted template repository.
+ * Caveat: Make sure you own (retain) template repositories. Don't use templates
+ * returned by methods like `[GRMustacheTemplate templateFrom...]`: they return
+ * autoreleased templates with an implicit autoreleased repository that will
+ * eventually be deallocated when your rendering object tries to access it.
  *
- * @since v6.0
- * @deprecated v7.0
+ * @see GRMustacheRendering
+ * @see GRMustacheTemplateRepository
  */
-@property (nonatomic, readonly) GRMustacheTemplateRepository *templateRepository AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER_BUT_DEPRECATED;
+@property (nonatomic, readonly) GRMustacheTemplateRepository *templateRepository AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
 /**
  * Returns the rendering of the tag's inner content, rendering all inner
@@ -149,6 +158,6 @@ typedef NS_ENUM(NSUInteger, GRMustacheTagType) {
  *
  * @return The rendering of the tag's inner content.
  */
-- (NSString *)renderContentWithContext:(GRMustacheContext *)context HTMLSafe:(BOOL *)HTMLSafe error:(NSError **)error AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
+- (NSString *)renderContentWithContext:(GRMustacheContext *)context HTMLSafe:(BOOL *)HTMLSafe error:(NSError **)error AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
 @end

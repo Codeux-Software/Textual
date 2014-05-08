@@ -1,6 +1,6 @@
 // The MIT License
 // 
-// Copyright (c) 2014 Gwendal Roué
+// Copyright (c) 2013 Gwendal Roué
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,9 +21,10 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
-
 #import "GRMustacheAvailabilityMacros.h"
 
+@class GRMustacheTemplate;
+@class GRMustacheInvocation;
 @class GRMustacheTag;
 
 /**
@@ -54,7 +55,7 @@
  *
  * @since v6.0
  */
-- (id)mustacheTag:(GRMustacheTag *)tag willRenderObject:(id)object AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
+- (id)mustacheTag:(GRMustacheTag *)tag willRenderObject:(id)object AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
 /**
  * Sent after a Mustache tag has rendered.
@@ -67,7 +68,7 @@
  *
  * @since v6.0
  */
-- (void)mustacheTag:(GRMustacheTag *)tag didRenderObject:(id)object as:(NSString *)rendering AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
+- (void)mustacheTag:(GRMustacheTag *)tag didRenderObject:(id)object as:(NSString *)rendering AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
 /**
  * Sent right after a Mustache tag has failed rendering.
@@ -80,6 +81,6 @@
  *
  * @since v6.0
  */
-- (void)mustacheTag:(GRMustacheTag *)tag didFailRenderingObject:(id)object withError:(NSError *)error AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
+- (void)mustacheTag:(GRMustacheTag *)tag didFailRenderingObject:(id)object withError:(NSError *)error AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
 
 @end
