@@ -124,6 +124,8 @@
 			if (data) {
 				[self write:data];
 
+				[self.client ircConnectionWillSend:firstItem];
+
 				return;
 			}
 		}
