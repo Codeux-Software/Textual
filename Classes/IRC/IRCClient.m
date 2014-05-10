@@ -3158,6 +3158,8 @@
 	[self stopRetryTimer];
 	[self stopISONTimer];
 
+	[self.printingQueue cancelAllOperations];
+
 #ifdef TEXTUAL_TRIAL_BINARY
 	[self stopTrialPeriodTimer];
 #endif

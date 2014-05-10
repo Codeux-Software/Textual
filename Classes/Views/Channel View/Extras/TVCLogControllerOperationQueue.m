@@ -45,7 +45,7 @@
 @property (nonatomic, strong) TVCLogControllerOperationBlock executionBlock;
 @property (nonatomic, assign) BOOL isStandalone;
 
-- (id)initWithQueue:(TVCLogControllerOperationQueue *)queue controller:(TVCLogController *)controller;
+- (NSInteger)dependencyCount;
 @end
 
 #pragma mark -
@@ -78,8 +78,16 @@
 		PointerIsEmptyAssert(callbackBlock);
 		PointerIsEmptyAssert(sender);
 
-		TVCLogControllerOperationItem *operation = [[TVCLogControllerOperationItem alloc] initWithQueue:self controller:sender];
+		/* Create operation. */
+		TVCLogControllerOperationItem *operation = [TVCLogControllerOperationItem new];
 
+		TVCLogControllerOperationItem *lastOp = (id)[self dependencyOfLastQueueItem:sender];
+
+		if (lastOp) {
+			[operation addDependency:lastOp];
+		}
+
+		[operation setController:sender];
 		[operation setIsStandalone:isStandalone];
 		[operation setExecutionBlock:callbackBlock];
 
@@ -125,11 +133,13 @@
 		 as ready or maybe is ready. */
 		for (id operation in [self operations]) {
 			if ([operation controller] == controller) {
-				NSInteger depCount = [[operation dependencies] count];
+				NSInteger depCount = [operation dependencyCount];
 
-				if ([operation isCancelled] == NO && depCount <= 0) {
-					[operation willChangeValueForKey:@"isReady"];
-					[operation didChangeValueForKey:@"isReady"];
+				if ([operation isCancelled] == NO) {
+					if (depCount <= 0) {
+						[operation willChangeValueForKey:@"isReady"];
+						[operation didChangeValueForKey:@"isReady"];
+					}
 				}
 			}
 		}
@@ -145,8 +155,10 @@
 	 main queue so we will not wrap this in it. */
 	for (id operation in [[self operations] reverseObjectEnumerator]) {
 		if ([operation controller] == controller) {
-			if ([operation isCancelled] == NO && [operation isStandalone] == NO) {
-				return operation;
+			if ([operation isCancelled] == NO) {
+				if ([operation isStandalone] == NO) {
+					return operation;
+				}
 			}
 		}
 	}
@@ -161,52 +173,33 @@
 
 @implementation TVCLogControllerOperationItem
 
-- (id)initWithQueue:(TVCLogControllerOperationQueue *)queue controller:(TVCLogController *)controller
+- (NSInteger)dependencyCount
 {
-	if ((self = [super init])) {
-		PointerIsEmptyAssertReturn(queue, nil);
-		PointerIsEmptyAssertReturn(controller, nil);
-		
-		NSOperation *lastOp = [queue dependencyOfLastQueueItem:controller];
-
-		if (lastOp) {
-			/* Make this queue item dependent on the execution on the item above it to
-			 make sure they are executed in the order they are received. */
-
-			[self addDependency:lastOp];
-		}
-
-		[self setController:controller];
-
-		return self;
-	}
-
-	return nil;
+	return [[self dependencies] count];
 }
 
 - (void)main
 {
+	/* Perform block. */
 	self.executionBlock(self);
+
+	/* Kill existing dependency. */
+	NSArray *operations = [self dependencies];
+
+	if ([operations count] > 0) {
+		[self removeDependency:operations[0]];
+	}
 }
 
 - (BOOL)isReady
 {
-	NSInteger depCount = [[self dependencies] count];
+	NSInteger depCount = [self dependencyCount];
 
 	if (depCount < 1 || [self isStandalone]) {
 		return ([super isReady] && [[self controller] isLoaded]);
 	} else {
-		return [super isReady];
+		return  [super isReady];
 	}
-}
-
-+ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
-{
-    if ([key isEqualToString:@"isReady"]) {
-        return YES;
-	}
-
-    return [super automaticallyNotifiesObserversForKey:key];
 }
 
 @end
