@@ -1674,7 +1674,6 @@ static NSMutableArray *excludeKeywords = nil;
 	}
 
 	[RZUserDefaults() setObject:saveAry forKey:key];
-	[RZUserDefaults() synchronize];
 }
 
 + (void)cleanUpHighlightKeywords

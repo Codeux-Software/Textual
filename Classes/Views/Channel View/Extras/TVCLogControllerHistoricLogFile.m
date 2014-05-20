@@ -335,7 +335,7 @@
 
 	[RZUserDefaults() setObject:[NSString stringWithUUID] forKey:@"TVCLogControllerHistoricLogFileSavePath"];
 #else
-	return nil;
+	return;
 #endif
 }
 
