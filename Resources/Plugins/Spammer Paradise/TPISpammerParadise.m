@@ -53,13 +53,15 @@
 			[self findAllClonesIn:channel on:client];
 		} else if ([commandString isEqualToString:@"NAMEL"]) {
 			[self buildListOfUsersOn:channel on:client];
+		} else if ([commandString isEqualToString:@"FINDUSER"]) {
+			[self findAllUsersMatchingHost:[messageString trim] in:channel on:client];
 		}
 	}
 }
 
 - (NSArray *)pluginSupportsUserInputCommands
 {
-	return @[@"clones", @"namel"];
+	return @[@"clones", @"namel", @"finduser"];
 }
 
 - (void)buildListOfUsersOn:(IRCChannel *)channel on:(IRCClient *)client
@@ -74,7 +76,7 @@
 	NSMutableArray *users = [NSMutableArray array];
 
 	for (IRCUser *u in [channel unsortedMemberList]) {
-		[users safeAddObject:[u nickname]];
+		[users addObject:[u nickname]];
 	}
 
 	[users sortUsingSelector:@selector(compare:)];
@@ -82,6 +84,68 @@
 	NSString *printedList = [users componentsJoinedByString:NSStringWhitespacePlaceholder];
 
 	[client printDebugInformation:printedList channel:channel];
+}
+
+- (void)findAllUsersMatchingHost:(NSString *)matchString in:(IRCChannel *)channel on:(IRCClient *)client
+{
+	/* Validate input. */
+	BOOL hasSearchCondition = NSObjectIsNotEmpty(matchString);
+
+	/* Check number of users. */
+	if ([channel numberOfMembers] <= 0) {
+		if (hasSearchCondition) {
+			[client printDebugInformation:TPIFLS(@"BasicLanguage[1007]", [channel name], matchString) channel:channel];
+		} else {
+			[client printDebugInformation:TPIFLS(@"BasicLanguage[1006]", [channel name]) channel:channel];
+		}
+
+		return; // We cannot do anything with no users now can we?
+	}
+
+	/* Build list of users. */
+	NSMutableArray *userlist = [NSMutableArray array];
+
+	for (IRCUser *user in [channel unsortedMemberList]) {
+		NSString *userAddress = [user hostmask];
+
+        NSObjectIsEmptyAssertLoopContinue(userAddress);
+
+		if (hasSearchCondition) {
+			if ([userAddress containsIgnoringCase:matchString]) {
+				[userlist addObject:user];
+			}
+		} else {
+			[userlist addObject:user];
+		}
+	}
+
+	/* Do we even have any matches? */
+	if ([userlist count] <= 0) {
+		if (hasSearchCondition) {
+			[client printDebugInformation:TPIFLS(@"BasicLanguage[1007]", [channel name], matchString) channel:channel];
+		} else {
+			[client printDebugInformation:TPIFLS(@"BasicLanguage[1006]", [channel name]) channel:channel];
+		}
+
+		return;
+	}
+
+	/* We have results, so let's skim them. */
+	if (hasSearchCondition) {
+		[client printDebugInformation:TPIFLS(@"BasicLanguage[1005]", [userlist count], [channel name], matchString) channel:channel];
+	} else {
+		[client printDebugInformation:TPIFLS(@"BasicLanguage[1004]", [userlist count], [channel name]) channel:channel];
+	}
+
+	[userlist sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+		return [[obj1 nickname] compare:[obj2 nickname]];
+	}];
+
+	for (IRCUser *user in userlist) {
+        NSString *resultString = [NSString stringWithFormat:@"%@ -> %@", [user nickname], [user hostmask]];
+
+        [client printDebugInformation:resultString channel:channel];
+	}
 }
 
 - (void)findAllClonesIn:(IRCChannel *)channel on:(IRCClient *)client
@@ -124,7 +188,7 @@
     }
 
     /* Build clone list. */
-    [client printDebugInformation:TPIFLS(@"BasicLanguage[1002]", [allUsers count], [channel name], [client networkName]) channel:channel];
+    [client printDebugInformation:TPIFLS(@"BasicLanguage[1002]", [allUsers count], [channel name]) channel:channel];
     
     for (NSString *dictKey in allUsers) {
         NSArray *userArray = [allUsers arrayForKey:dictKey];
