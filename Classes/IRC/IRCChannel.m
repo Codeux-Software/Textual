@@ -393,9 +393,14 @@
 	NSInteger mllsi = [self.memberListLengthSorted indexOfObjectMatchingValue:nickname withKeyPath:@"nickname"];
 	NSInteger mlnsi = [self.memberListNormalSorted indexOfObjectMatchingValue:nickname withKeyPath:@"nickname"];
 
-	self.memberListLengthSorted = [self.memberListLengthSorted arrayByRemovingObjectAtIndex:mllsi];
-	self.memberListNormalSorted = [self.memberListNormalSorted arrayByRemovingObjectAtIndex:mlnsi];
+	if (NSDissimilarObjects(mllsi, NSNotFound)) {
+		self.memberListLengthSorted = [self.memberListLengthSorted arrayByRemovingObjectAtIndex:mllsi];
+	}
 
+	if (NSDissimilarObjects(mlnsi, NSNotFound)) {
+		self.memberListNormalSorted = [self.memberListNormalSorted arrayByRemovingObjectAtIndex:mlnsi];
+	}
+	
 	 /* Post event to the style. */
 	 if (self.isChannel) {
 		 [self.client postEventToViewController:@"channelMemberRemoved" forChannel:self];
