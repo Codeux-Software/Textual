@@ -312,6 +312,11 @@ NSString *IRCPublicCommandIndex(const char *key)
 	return (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_8);
 }
 
++ (BOOL)featureAvailableToOSXYosemite
+{
+	return (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9);
+}
+
 #pragma mark -
 #pragma mark Application Information
 
@@ -1992,6 +1997,7 @@ static NSMutableArray *excludeKeywords = nil;
 	[RZUserDefaults() setBool:[TPCPreferences featureAvailableToOSXLion]			forKey:@"System —> Running Mac OS Lion Or Newer"];
 	[RZUserDefaults() setBool:[TPCPreferences featureAvailableToOSXMountainLion]	forKey:@"System —> Running Mac OS Mountain Lion Or Newer"];
 	[RZUserDefaults() setBool:[TPCPreferences featureAvailableToOSXMavericks]		forKey:@"System —> Running Mac OS Mavericks Or Newer"];
+	[RZUserDefaults() setBool:[TPCPreferences featureAvailableToOSXYosemite]		forKey:@"System —> Running Mac OS Yosemite Or Newer"];
 	
 #ifndef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[RZUserDefaults() setBool:NO forKey:@"System —> Built with iCloud Support"];

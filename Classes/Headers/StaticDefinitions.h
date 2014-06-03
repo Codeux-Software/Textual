@@ -52,15 +52,20 @@
 #if TXLoadMacOSVersionSpecificFeatures
  	#if defined(AVAILABLE_MAC_OS_X_VERSION_10_9_AND_LATER)
  		#define TXSystemIsMacOSMavericksOrNewer
- 	#endif
+	#endif
+
+	#if defined(AVAILABLE_MAC_OS_X_VERSION_10_10_AND_LATER)
+		#define TXSystemIsMacOSYosemiteOrNewer
+	#endif
 #endif
 
-#define NSAppKitVersionNumber10_6	1038
-#define NSAppKitVersionNumber10_7	1138
-#define NSAppKitVersionNumber10_7_2 1138.23
-#define NSAppKitVersionNumber10_7_3 1138.32
-#define NSAppKitVersionNumber10_7_4 1138.47
-#define NSAppKitVersionNumber10_8	1187
+#define NSAppKitVersionNumber10_6		1038
+#define NSAppKitVersionNumber10_7		1138
+#define NSAppKitVersionNumber10_7_2		1138.23
+#define NSAppKitVersionNumber10_7_3		1138.32
+#define NSAppKitVersionNumber10_7_4		1138.47
+#define NSAppKitVersionNumber10_8		1187
+#define NSAppKitVersionNumber10_9		1265
 
 #define LogToConsole(fmt, ...) NSLog([@"%s [Line %d]: " stringByAppendingString:fmt], __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
 

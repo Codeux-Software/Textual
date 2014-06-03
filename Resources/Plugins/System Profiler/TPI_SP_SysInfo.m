@@ -727,6 +727,10 @@
 	if ([productVersion hasPrefix:@"10.9"]) {
 		return TPIFLS(@"BasicLanguage[1017]");
 	}
+
+	if ([productVersion hasPrefix:@"10.10"]) {
+		return TPIFLS(@"BasicLanguage[1050]");
+	}
 	
 	return nil;
 }
