@@ -140,6 +140,7 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 + (BOOL)featureAvailableToOSXLion;
 + (BOOL)featureAvailableToOSXMountainLion;
 + (BOOL)featureAvailableToOSXMavericks;
++ (BOOL)featureAvailableToOSXYosemite;
 
 + (BOOL)runningInHighResolutionMode;
 
