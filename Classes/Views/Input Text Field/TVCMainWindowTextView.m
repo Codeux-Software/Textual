@@ -524,62 +524,255 @@
 
 @implementation TVCMainWindowTextViewBackground
 
-- (NSColor *)inputFieldBackgroundColor
+#pragma mark -
+#pragma mark Mavericks UI Drawing
+
+- (NSColor *)inputTextFieldBlackOutlineColorMavericks
+{
+	if ([[self masterController] mainWindowIsActive]) {
+		return [NSColor colorWithCalibratedWhite:0.0 alpha:0.4];
+	} else {
+		return [NSColor colorWithCalibratedWhite:0.0 alpha:0.23];
+	}
+}
+
+- (NSColor *)inputTextFieldBackgroundColorMavericks
 {
 	return [NSColor whiteColor];
 }
 
-- (NSColor *)inputFieldInsideShadowColor
+- (NSColor *)inputTextFieldInsideShadowColorMavericks
 {
 	return [NSColor colorWithCalibratedWhite:0.88 alpha:1.0];
 }
 
+- (NSColor *)inputTextFieldOutsideWhiteShadowColorMavericks
+{
+	return [NSColor colorWithCalibratedWhite:1.0 alpha:0.394];
+}
+
+- (void)drawControllerForMavericks
+{
+	/* General Declarations. */
+	NSRect cellBounds = [self frame];
+	NSRect controlFrame;
+
+	NSColor *controlColor;
+
+	NSBezierPath *controlPath;
+
+	/* Control Outside White Shadow. */
+	controlColor = [self inputTextFieldOutsideWhiteShadowColorMavericks];
+	controlFrame = NSMakeRect(0.0, 0.0, cellBounds.size.width, 1.0);
+	controlPath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:3.6 yRadius:3.6];
+
+	[controlColor set];
+	[controlPath fill];
+
+	/* Black Outline. */
+	controlColor = [self inputTextFieldBlackOutlineColorMavericks];
+	controlFrame = NSMakeRect(0.0, 1.0, cellBounds.size.width, (cellBounds.size.height - 1.0));
+	controlPath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:3.6 yRadius:3.6];
+
+	[controlColor set];
+	[controlPath fill];
+
+	/* White Background. */
+	controlColor = [self inputTextFieldBackgroundColorMavericks];
+	controlFrame = NSMakeRect(1, 2, (cellBounds.size.width - 2.0), (cellBounds.size.height - 4.0));
+	controlPath	= [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:2.6 yRadius:2.6];
+
+	[controlColor set];
+	[controlPath fill];
+
+	/* Inside White Shadow. */
+	controlColor = [self inputTextFieldInsideShadowColorMavericks];
+	controlFrame = NSMakeRect(2, (cellBounds.size.height - 2.0), (cellBounds.size.width - 4.0), 1.0);
+	controlPath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:2.9 yRadius:2.9];
+
+	[controlColor set];
+	[controlPath fill];
+}
+
+#pragma mark -
+#pragma mark Yosemite UI Drawing
+
+- (NSColor *)inputTextFieldOutsideTopsideWhiteBorderYosemite
+{
+	return [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
+}
+
+- (NSColor *)inputTextFieldInsideWhiteGradientStartColorYosemite
+{
+	return [NSColor colorWithCalibratedRed:0.992 green:0.992 blue:0.992 alpha:1.0];
+}
+
+- (NSColor *)inputTextFieldInsideWhiteGradientEndColorYosemite
+{
+	return [NSColor colorWithCalibratedRed:0.988 green:0.988 blue:0.988 alpha:1.0];
+}
+
+- (NSGradient *)inputTextFieldInsideWhiteGradientYosemite
+{
+	return [NSGradient gradientWithStartingColor:[self inputTextFieldInsideWhiteGradientStartColorYosemite]
+									 endingColor:[self inputTextFieldInsideWhiteGradientEndColorYosemite]];
+}
+
+- (NSColor *)inputTextFieldOutsideBottomPrimaryGrayShadowOnRetinaYosemite
+{
+	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.15];
+}
+
+- (NSColor *)inputTextFieldOutsideBottomSecondaryGrayShadowOnRetinaYosemite
+{
+	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.06];
+}
+
+- (NSColor *)inputTextFieldOutsideBottomGrayShadowWithoutRetinaColorYosemite
+{
+	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.10];
+}
+
+- (NSColor *)inputTextFieldUnfocusedWindowStrokeColorYosemite
+{
+	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.10];
+}
+
+- (NSColor *)inputTextFieldUnfocusedWindowBackgroundColorYosemite
+{
+	return [NSColor whiteColor];
+}
+
+- (void)drawControllerForYosemite
+{
+	if ([[self masterController] mainWindowIsActive]) {
+		[self drawControllerForYosemiteInFocusedWindow];
+	} else {
+		[self drawControllerForYosemiteInUnfocusedWindow];
+	}
+}
+
+- (void)drawControllerForYosemiteInUnfocusedWindow
+{
+	/* General Declarations. */
+	NSRect cellBounds = [self frame];
+	NSRect controlFrame;
+
+	NSColor *controlColor;
+
+	NSBezierPath *controlPath;
+
+	/* Black Outline. */
+	controlColor = [self inputTextFieldUnfocusedWindowStrokeColorYosemite];
+	controlFrame = NSMakeRect(0.0, 1.0, cellBounds.size.width, (cellBounds.size.height - 1.0));
+	controlPath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:3.6 yRadius:3.6];
+
+	[controlColor set];
+	[controlPath fill];
+
+	/* White Background. */
+	controlColor = [self inputTextFieldUnfocusedWindowBackgroundColorYosemite];
+	controlFrame = NSMakeRect(1, 2, (cellBounds.size.width - 2.0), (cellBounds.size.height - 3.0));
+	controlPath	= [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:2.6 yRadius:2.6];
+
+	[controlColor set];
+	[controlPath fill];
+}
+
+- (void)drawControllerForYosemiteInFocusedWindow
+{
+	/* General Declarations. */
+	NSRect cellBounds = [self frame];
+
+	CGContextRef context = [RZGraphicsCurrentContext() graphicsPort];
+
+	BOOL inHighresMode = [TPCPreferences runningInHighResolutionMode];
+
+	NSRect controlFrame = NSMakeRect(1, 1,  (cellBounds.size.width - 2.0),
+											(cellBounds.size.height - 1.0));
+
+	/* Inner gradient color. */
+	NSGradient *gradient = [self inputTextFieldInsideWhiteGradientYosemite];
+
+	/* Shadow colors. */
+	NSShadow *shadow3 = [NSShadow new];
+	NSShadow *shadow4 = [NSShadow new];
+
+	[shadow3 setShadowColor:[self inputTextFieldOutsideTopsideWhiteBorderYosemite]];
+	[shadow3 setShadowOffset:NSMakeSize(0.1, -1.1)];
+	[shadow3 setShadowBlurRadius:0.0];
+
+	if (inHighresMode) {
+		[shadow4 setShadowColor:[self inputTextFieldOutsideBottomPrimaryGrayShadowOnRetinaYosemite]];
+		[shadow4 setShadowOffset:NSMakeSize(0.1, -0.5)];
+		[shadow4 setShadowBlurRadius:0.0];
+	} else {
+		[shadow4 setShadowColor:[self inputTextFieldOutsideBottomGrayShadowWithoutRetinaColorYosemite]];
+		[shadow4 setShadowOffset:NSMakeSize(0.1, -1.1)];
+		[shadow4 setShadowBlurRadius:0.0];
+	}
+
+	/* Rectangle drawing. */
+	NSBezierPath *rectanglePath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:3.0 yRadius:3.0];
+
+	[shadow4 set];
+
+	CGContextBeginTransparencyLayer(context, NULL);
+
+	[gradient drawInBezierPath:rectanglePath angle:-(90)];
+
+	CGContextEndTransparencyLayer(context);
+
+	CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
+
+	CGContextSetAlpha(context, [[shadow3 shadowColor] alphaComponent]);
+
+	CGContextBeginTransparencyLayer(context, NULL);
+	{
+		NSShadow *opaqueShadow = [NSShadow new];
+
+		[opaqueShadow setShadowColor:[[shadow3 shadowColor] colorWithAlphaComponent:1.0]];
+		[opaqueShadow setShadowOffset:[shadow3 shadowOffset]];
+		[opaqueShadow setShadowBlurRadius:[shadow3 shadowBlurRadius]];
+
+		[opaqueShadow set];
+
+		CGContextSetBlendMode(context, kCGBlendModeSourceOut);
+
+		CGContextBeginTransparencyLayer(context, NULL);
+
+		[[opaqueShadow shadowColor] setFill];
+
+		[rectanglePath fill];
+
+		CGContextEndTransparencyLayer(context);
+	}
+
+	CGContextEndTransparencyLayer(context);
+
+	if (inHighresMode) {
+		NSPoint linePoint1 = NSMakePoint(4.0, 0.0);
+		NSPoint linePoint2 = NSMakePoint((cellBounds.size.width - 4.0), 0.0);
+
+		NSColor *controlColor = [self inputTextFieldOutsideBottomSecondaryGrayShadowOnRetinaYosemite];
+
+		[controlColor setStroke];
+
+		[NSBezierPath strokeLineFromPoint:linePoint1 toPoint:linePoint2];
+	}
+}
+
+#pragma mark -
+#pragma mark Drawing Factory
+
 - (void)drawRect:(NSRect)dirtyRect
 {
 	if ([self needsToDrawRect:dirtyRect]) {
-		NSRect cellBounds = self.frame;
-		NSRect controlFrame;
-		
-		NSColor *controlColor;
-		
-		NSBezierPath *controlPath;
-		
-		/* Control Outside White Shadow. */
-		controlColor = [NSColor colorWithCalibratedWhite:1.0 alpha:0.394];
-		controlFrame = NSMakeRect(0.0, 0.0, cellBounds.size.width, 1.0);
-		controlPath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:3.6 yRadius:3.6];
-		
-		[controlColor set];
-		[controlPath fill];
-		
-		/* Black Outline. */
-		if (self.masterController.mainWindowIsActive) {
-			controlColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.4];
+		if ([TPCPreferences featureAvailableToOSXYosemite]) {
+			[self drawControllerForYosemite];
 		} else {
-			controlColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.23];
+			[self drawControllerForMavericks];
 		}
-		
-		controlFrame = NSMakeRect(0.0, 1.0, cellBounds.size.width, (cellBounds.size.height - 1.0));
-		controlPath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:3.6 yRadius:3.6];
-		
-		[controlColor set];
-		[controlPath fill];
-		
-		/* White Background. */
-		controlColor = [self inputFieldBackgroundColor];
-		controlFrame = NSMakeRect(1, 2, (cellBounds.size.width - 2.0), (cellBounds.size.height - 4.0));
-		controlPath	= [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:2.6 yRadius:2.6];
-		
-		[controlColor set];
-		[controlPath fill];
-		
-		/* Inside White Shadow. */
-		controlColor = [self inputFieldInsideShadowColor];
-		controlFrame = NSMakeRect(2, (cellBounds.size.height - 2.0), (cellBounds.size.width - 4.0), 1.0);
-		controlPath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:2.9 yRadius:2.9];
-		
-		[controlColor set];
-		[controlPath fill];
 	}
 }
 

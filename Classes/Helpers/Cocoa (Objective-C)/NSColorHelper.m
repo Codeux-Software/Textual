@@ -264,3 +264,12 @@
 }
 
 @end
+
+@implementation NSGradient (TXGradientHelper)
+
++ (NSGradient *)gradientWithStartingColor:(NSColor *)startingColor endingColor:(NSColor *)endingColor
+{
+	return [[self alloc] initWithStartingColor:startingColor endingColor:endingColor];
+}
+
+@end
