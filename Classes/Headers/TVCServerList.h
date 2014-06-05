@@ -73,6 +73,8 @@
 
 - (void)updateBackgroundColor;
 
+- (BOOL)windowIsActive;
+
 /* User interface elements. */
 - (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected;
 

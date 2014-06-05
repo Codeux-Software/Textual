@@ -456,9 +456,14 @@
 	return NO;
 }
 
+- (BOOL)windowIsActive
+{
+	return [[[self masterController] mainWindow] isMainWindow];
+}
+
 - (void)updateBackgroundColor
 {
-	if ([TPCPreferences invertSidebarColors] || self.masterController.mainWindowIsActive == NO) {
+	if ([TPCPreferences invertSidebarColors] || [self windowIsActive] == NO) {
 		[self setBackgroundColor:[NSColor clearColor]];
 
 		[self.scrollView setBackgroundColor:self.properBackgroundColor];
@@ -510,7 +515,7 @@
 
 - (NSColor *)properBackgroundColor
 {
-	if (self.masterController.mainWindowIsActive) {
+	if ([self windowIsActive]) {
 		return [self activeWindowListBackgroundColor];
 	} else {
 		return [self inactiveWindowListBackgroundColor];

@@ -51,5 +51,4 @@
 @end
 
 @interface TVCMainWindowTextViewBackground : NSView
-@property (nonatomic, assign) BOOL windowIsActive;
 @end

@@ -64,6 +64,8 @@
 
 - (void)updateBackgroundColor;
 
+- (BOOL)windowIsActive;
+
 /* Badge renderer. */
 - (void)createBadgeRenderer;
 
