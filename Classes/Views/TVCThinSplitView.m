@@ -40,6 +40,11 @@
 
 @implementation TVCThinSplitView
 
+- (BOOL)allowsVibrancy
+{
+	return NO;
+}
+
 - (void)awakeFromNib
 {
 	[self updatePosition];
