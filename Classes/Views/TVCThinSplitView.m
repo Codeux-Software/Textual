@@ -40,11 +40,6 @@
 
 @implementation TVCThinSplitView
 
-- (BOOL)allowsVibrancy
-{
-	return NO;
-}
-
 - (void)awakeFromNib
 {
 	[self updatePosition];
@@ -212,6 +207,11 @@
 	NSView *view = [self subviews][_fixedViewIndex];
 
 	self.dividerPosition = [view frame].size.width;
+}
+
+- (BOOL)allowsVibrancy
+{
+	return NO;
 }
 
 @end

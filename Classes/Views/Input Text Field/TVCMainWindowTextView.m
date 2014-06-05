@@ -529,7 +529,7 @@
 
 - (NSColor *)inputTextFieldBlackOutlineColorMavericks
 {
-	if ([[self masterController] mainWindowIsActive]) {
+	if ([self windowIsActive]) {
 		return [NSColor colorWithCalibratedWhite:0.0 alpha:0.4];
 	} else {
 		return [NSColor colorWithCalibratedWhite:0.0 alpha:0.23];
@@ -645,7 +645,7 @@
 
 - (void)drawControllerForYosemite
 {
-	if ([[self masterController] mainWindowIsActive]) {
+	if ([self windowIsActive]) {
 		[self drawControllerForYosemiteInFocusedWindow];
 	} else {
 		[self drawControllerForYosemiteInUnfocusedWindow];
@@ -764,6 +764,11 @@
 
 #pragma mark -
 #pragma mark Drawing Factory
+
+- (BOOL)windowIsActive
+{
+	return [[[self masterController] mainWindow] isMainWindow];
+}
 
 - (void)drawRect:(NSRect)dirtyRect
 {

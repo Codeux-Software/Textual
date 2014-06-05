@@ -365,7 +365,7 @@
 		@"isInverted"	: @([TPCPreferences invertSidebarColors]),
 		@"isRetina"		: @([TPCPreferences runningInHighResolutionMode]),
 		@"isGraphite"	: @([NSColor currentControlTint] == NSGraphiteControlTint),
-		@"isKeyWindow"	: @(self.masterController.mainWindowIsActive)
+		@"isKeyWindow"	: @([[self memberList] windowIsActive])
 	};
 }
 
