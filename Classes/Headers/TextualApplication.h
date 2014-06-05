@@ -39,7 +39,6 @@
 	#import <Cocoa/Cocoa.h>
 	#import <WebKit/WebKit.h>
 	#import <Security/Security.h>
-	#import <CoreData/CoreData.h>
 	#import <SystemConfiguration/SystemConfiguration.h>
 
 	#import <SecurityInterface/SFCertificatePanel.h>

@@ -57,8 +57,6 @@
 	PointerIsEmptyAssert(self.file);
 
 	NSString *writeString = [NSString stringWithFormat:@"%@%@", s, NSStringNewlinePlaceholder];
-
-	NSObjectIsEmptyAssert(writeString);
 	
 	/* Write straight to file. */
 	NSData *writeData = [writeString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];

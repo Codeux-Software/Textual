@@ -75,30 +75,23 @@ typedef enum TVCLogLineMemberType : NSInteger {
 
 #define IRCCommandFromLineType(t)		[TVCLogLine lineTypeString:t]
 
-@interface TVCLogLine : NSManagedObject
+@interface TVCLogLine : NSObject
 @property (nonatomic, assign) BOOL isEncrypted;
 @property (nonatomic, assign) BOOL isHistoric; /* Identifies a line restored from previous session. */
 @property (nonatomic, strong) NSDate *receivedAt;
 @property (nonatomic, strong) NSString *nickname;
 @property (nonatomic, strong) NSString *messageBody;
 @property (nonatomic, strong) NSString *rawCommand; // Can be the actual command (PRIVMSG, NOTICE, etc.) or the raw numeric (001, 002, etc.)
-@property (nonatomic, assign) NSNumber *lineTypeInteger;
-@property (nonatomic, assign) NSNumber *memberTypeInteger;
-@property (nonatomic, assign) NSNumber *nicknameColorNumber;
-@property (nonatomic, strong) id highlightKeywords;
-@property (nonatomic, strong) id excludeKeywords;
+@property (nonatomic, assign) TVCLogLineType lineType;
+@property (nonatomic, assign) TVCLogLineMemberType memberType;
+@property (nonatomic, assign) NSInteger nicknameColorNumber;
+@property (nonatomic, strong) NSArray *highlightKeywords;
+@property (nonatomic, strong) NSArray *excludeKeywords;
 
-/* These properties are proxies for their NSNumber values. */
-@property (nonatomic, uweak) TVCLogLineType lineType;
-@property (nonatomic, uweak) TVCLogLineMemberType memberType;
+- (TVCLogLine *)initWithRawJSONData:(NSData *)input; // This automatically calls the appropriate initWithJSON… call.
+- (TVCLogLine *)initWithJSONRepresentation:(NSDictionary *)input;
 
-+ (TVCLogLine *)newManagedObjectWithoutContextAssociation;
-+ (TVCLogLine *)newManagedObjectForClient:(IRCClient *)client channel:(IRCChannel *)channel;
-
-/* performContextInsertion is automatically called by the TVCLogController 
- print method: the moment before it actaully prints. It is not advised to
- call this as it may create duplicate lines. */
-- (void)performContextInsertion;
+- (NSData *)jsonDictionaryRepresentation;
 
 - (NSString *)formattedTimestamp;
 - (NSString *)formattedTimestampWithForcedFormat:(NSString *)format;

@@ -129,9 +129,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	/* We keep high-res mode value cached since it is costly to ask for every draw. */
 	self.applicationIsRunningInHighResMode = [[self.mainWindow screen] runningInHighResolutionMode];
 
-	/* Call to initialize. */
-	[TVCLogControllerHistoricLogSharedInstance() createBaseModel];
-
 	 self.themeControllerPntr = [TPCThemeController new];
 	[self.themeControllerPntr load];
 	
@@ -359,18 +356,15 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 				/* Clients are still disconnecting. */
 				self.terminatingClientCount > 0 ||
 
-				/* Historic log is still saving. */
-				[TVCLogControllerHistoricLogSharedInstance() isPerformingSave] ||
-
 				/* iCloud is syncing. */
 				([self.cloudSyncManager isSyncingLocalKeysDownstream] ||
 				 [self.cloudSyncManager isSyncingLocalKeysUpstream])
 		);
 	} else {
-		return (self.terminatingClientCount > 0 || [TVCLogControllerHistoricLogSharedInstance() isPerformingSave]);
+		return (self.terminatingClientCount > 0);
 	}
 #else
-	return (self.terminatingClientCount > 0 || [TVCLogControllerHistoricLogSharedInstance() isPerformingSave]);
+	return (self.terminatingClientCount > 0);
 #endif
 }
 
@@ -385,12 +379,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[RZNotificationCenter() removeObserver:self];
 
 	[RZAppleEventManager() removeEventHandlerForEventClass:KInternetEventClass andEventID:KAEGetURL];
-
-	if ([TPCPreferences reloadScrollbackOnLaunch] == NO) {
-		[TVCLogControllerHistoricLogSharedInstance() resetData]; // Delete database.
-	} else {
-		[TVCLogControllerHistoricLogSharedInstance() saveData:YES]; // Save database.
-	}
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	BOOL onMountainLionOrLater = [TPCPreferences featureAvailableToOSXMountainLion];

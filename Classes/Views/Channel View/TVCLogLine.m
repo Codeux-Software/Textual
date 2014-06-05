@@ -40,94 +40,33 @@
 
 @implementation TVCLogLine
 
-@dynamic excludeKeywords;
-@dynamic highlightKeywords;
-@dynamic isEncrypted;
-@dynamic isHistoric;
-@dynamic lineTypeInteger;
-@dynamic memberTypeInteger;
-@dynamic messageBody;
-@dynamic nickname;
-@dynamic nicknameColorNumber;
-@dynamic rawCommand;
-@dynamic receivedAt;
-
 - (id)init
 {
 	if (self = [super init]) {
 		/* Define defaults. */
-		self.receivedAt = [NSDate date];
+		_receivedAt = [NSDate date];
 
-		self.nickname = NSStringEmptyPlaceholder;
-		self.nicknameColorNumber = 0;
+		_nickname = NSStringEmptyPlaceholder;
+		_nicknameColorNumber = 0;
 
-		self.messageBody = NSStringEmptyPlaceholder;
+		_messageBody = NSStringEmptyPlaceholder;
 
-		self.rawCommand = TXLogLineDefaultRawCommandValue;
+		_rawCommand = TXLogLineDefaultRawCommandValue;
 
-		self.highlightKeywords = @[];
-		self.excludeKeywords = @[];
+		_highlightKeywords = @[];
+		_excludeKeywords = @[];
 
-		self.lineType = TVCLogLinePrivateMessageType;
-		self.memberType = TVCLogLineMemberNormalType;
+		_lineType = TVCLogLineUndefinedType;
+		_memberType = TVCLogLineMemberNormalType;
 
-		self.isHistoric = NO;
-		self.isEncrypted = NO;
+		_isHistoric = NO;
+		_isEncrypted = NO;
 
 		/* Return new copy. */
 		return self;
 	}
 
 	return nil;
-}
-
-+ (TVCLogLine *)newManagedObjectWithoutContextAssociation
-{
-	/* Gather the entity structure. */
-	NSManagedObjectContext *context = [TVCLogControllerHistoricLogSharedInstance() managedObjectContext];
-
-	NSEntityDescription *entity = [NSEntityDescription entityForName:@"TVCLogLine" inManagedObjectContext:context];
-
-	/* Create a new instance. */
-	TVCLogLine *newEntry = (id)[[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
-
-	/* Save the creation time of this log line as that will be
-	 used for the actual purposes of sorting results. */
-	[newEntry setValue:[NSDate date] forKey:@"creationDate"];
-
-	/* Return our managed object. */
-	return newEntry;
-}
-
-+ (TVCLogLine *)newManagedObjectForClient:(IRCClient *)client channel:(IRCChannel *)channel
-{
-	/* A client must always be provided. */
-	PointerIsEmptyAssertReturn(client, nil);
-
-	/* Create managed object representing a log line. */
-	TVCLogLine *newEntry = [TVCLogLine newManagedObjectWithoutContextAssociation];
-
-	/* We now save associated client and channel information 
-	 for also reference purposes later on. */
-	[newEntry setValue:[client uniqueIdentifier] forKey:@"clientID"];
-
-	if (channel) {
-		[newEntry setValue:[channel uniqueIdentifier] forKey:@"channelID"];
-	}
-
-	/* Return our managed object. */
-	return newEntry;
-}
-
-- (void)performContextInsertion
-{
-#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	NSManagedObjectContext *context = [TVCLogControllerHistoricLogSharedInstance() managedObjectContext];
-
-	[context performBlock:^{
-		[context insertObject:self];
-	}];
-#endif
 }
 
 + (NSString *)lineTypeString:(TVCLogLineType)type
@@ -166,26 +105,6 @@
 	return @"normal";
 }
 
-- (TVCLogLineType)lineType;
-{
-	return [self.lineTypeInteger integerValue];
-}
-
-- (void)setLineType:(TVCLogLineType)lineType
-{
-	[self setLineTypeInteger:@(lineType)];
-}
-
-- (TVCLogLineMemberType)memberType
-{
-	return [self.memberTypeInteger integerValue];
-}
-
-- (void)setMemberType:(TVCLogLineMemberType)memberType
-{
-	[self setMemberTypeInteger:@(memberType)];
-}
-
 - (NSString *)lineTypeString
 {
 	return [TVCLogLine lineTypeString:[self lineType]];
@@ -198,16 +117,16 @@
 
 - (NSString *)formattedTimestamp
 {
-	TPCThemeSettings *customSettings = [self.themeController customSettings];
+	TPCThemeSettings *customSettings = [[self themeController] customSettings];
 
 	return [self formattedTimestampWithForcedFormat:[customSettings timestampFormat]];
 }
 
 - (NSString *)formattedTimestampWithForcedFormat:(NSString *)format;
 {
-	NSObjectIsEmptyAssertReturn(self.receivedAt, nil);
+	NSObjectIsEmptyAssertReturn(_receivedAt, nil);
 
-	NSString *time = TXFormattedTimestampWithOverride(self.receivedAt, [TPCPreferences themeTimestampFormat], format);
+	NSString *time = TXFormattedTimestampWithOverride(_receivedAt, [TPCPreferences themeTimestampFormat], format);
 
 	NSObjectIsEmptyAssertReturn(time, nil);
 
@@ -221,24 +140,24 @@
 
 - (NSString *)formattedNickname:(IRCChannel *)owner withForcedFormat:(NSString *)format
 {
-	NSObjectIsEmptyAssertReturn(self.nickname, nil);
+	NSObjectIsEmptyAssertReturn(_nickname, nil);
 
 	if (format == nil) {
 		if ([self lineType] == TVCLogLineActionType) {
-			return [NSString stringWithFormat:TXLogLineActionNicknameFormat, self.nickname];
+			return [NSString stringWithFormat:TXLogLineActionNicknameFormat, _nickname];
 		} else if ([self lineType] == TVCLogLineNoticeType) {
-			return [NSString stringWithFormat:TXLogLineNoticeNicknameFormat, self.nickname];
+			return [NSString stringWithFormat:TXLogLineNoticeNicknameFormat, _nickname];
 		}
 	}
 
 	PointerIsEmptyAssertReturn(owner, nil);
 
-	return [owner.client formatNick:self.nickname channel:owner formatOverride:format];
+	return [[owner client] formatNick:_nickname channel:owner formatOverride:format];
 }
 
 - (NSString *)renderedBodyForTranscriptLogInChannel:(IRCChannel *)channel
 {
-	NSObjectIsEmptyAssertReturn(self.messageBody, nil);
+	NSObjectIsEmptyAssertReturn(_messageBody, nil);
 
 	NSMutableString *s = [NSMutableString string];
 
@@ -266,10 +185,105 @@
 	}
 
 	/* Append actual body. */
-	[s appendString:self.messageBody];
+	[s appendString:_messageBody];
 
 	/* Return result minus any formatting. */
 	return [s stripIRCEffects];
+}
+
+- (NSData *)jsonDictionaryRepresentation
+{
+	/* Create dictionary with associated data. */
+	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+
+	NSString *dateValue = [NSString stringWithDouble:[_receivedAt timeIntervalSince1970]];
+
+	[dict safeSetObject:dateValue					forKey:@"receivedAt"];
+
+	[dict safeSetObject:_excludeKeywords		forKey:@"excludeKeywords"];
+	[dict safeSetObject:_highlightKeywords		forKey:@"highlightKeywords"];
+
+	[dict safeSetObject:_nickname				forKey:@"nickname"];
+
+	[dict safeSetObject:@(_nicknameColorNumber)		forKey:@"nicknameColorNumber"];
+
+	[dict safeSetObject:_rawCommand				forKey:@"rawCommand"];
+	[dict safeSetObject:_messageBody			forKey:@"messageBody"];
+
+	[dict safeSetObject:@(_lineType)				forKey:@"lineType"];
+	[dict safeSetObject:@(_memberType)				forKey:@"memberType"];
+
+	[dict setBool:_isEncrypted		forKey:@"isEncrypted"];
+	[dict setBool:_isHistoric		forKey:@"isHistoric"];
+
+	/* Convert dictionary to JSON. */
+	/* Why JSON? Because a binary property list would have to be loaded into memory
+	 each time a new entry wanted to be created. The property list would have to be
+	 loaded as a dictionary, mutated, then resaved to disk. Instead, with JSON, we
+	 simply append a new line for each entry and truncate it based off that logic
+	 to make maximum number of lines apply. */
+	/* We used to have Core Data but that had too many instablities and performance
+	 overhead to justify keeping it around. */
+	NSError *jsonerror;
+
+	NSData *jsondata = [NSJSONSerialization dataWithJSONObject:dict options:0 error:&jsonerror];
+
+	if (jsonerror) {
+		LogToConsole(@"JSON Serialization Error: %@", [jsonerror localizedDescription]);
+
+		NSAssert(NO, @"JSON serialization error in TVCLogLine. See Console for more information.");
+	}
+
+	return jsondata;
+}
+
+- (TVCLogLine *)initWithRawJSONData:(NSData *)input
+{
+	NSError *jsonconverr;
+
+	NSDictionary *jsondata = [NSJSONSerialization JSONObjectWithData:input options:0 error:&jsonconverr];
+
+	if (jsonconverr) {
+		LogToConsole(@"An error occured converting raw data into an JSON object: %@", [jsonconverr localizedDescription]);
+
+		return nil; // Failed to init.
+	} else {
+		return [self initWithJSONRepresentation:jsondata];
+	}
+}
+
+
+- (TVCLogLine *)initWithJSONRepresentation:(NSDictionary *)input
+{
+	/* Start feeding it information from dictionary. */
+	/* NSDictionary…KeyValueCompare will take the supplied key in the 
+	 "input" dictionary and see if it actually exists. If it does not,
+	 then it applies the default value specified as third paramater. */
+	if ((self = [self init])) {;
+		double receivedAt = NSDictionaryDoubleKeyValueCompare(input, @"receivedAt", [NSDate epochTime]);
+
+		_nickname				= NSDictionaryObjectKeyValueCompare(input, @"nickname", NSStringEmptyPlaceholder);
+		_nicknameColorNumber	= NSDictionaryIntegerKeyValueCompare(input, @"nicknameColorNumber", 0);
+
+		_messageBody		= NSDictionaryObjectKeyValueCompare(input, @"messageBody", NSStringEmptyPlaceholder);
+
+		_rawCommand			= NSDictionaryObjectKeyValueCompare(input, @"rawCommand", TXLogLineDefaultRawCommandValue);
+
+		_highlightKeywords	= NSDictionaryObjectKeyValueCompare(input, @"highlightKeywords", @[]);
+		_excludeKeywords	= NSDictionaryObjectKeyValueCompare(input, @"excludeKeywords", @[]);
+
+		_lineType			= NSDictionaryIntegerKeyValueCompare(input, @"lineType", TVCLogLineUndefinedType);
+		_memberType			= NSDictionaryIntegerKeyValueCompare(input, @"memberType", TVCLogLineMemberNormalType);
+
+		_isHistoric		= NSDictionaryBOOLKeyValueCompare(input, @"isHistoric", NO);
+		_isEncrypted	= NSDictionaryBOOLKeyValueCompare(input, @"isEncrypted", NO);
+
+		_receivedAt		= [NSDate dateWithTimeIntervalSince1970:receivedAt];
+
+		return self;
+	}
+		
+	return nil;
 }
 
 @end

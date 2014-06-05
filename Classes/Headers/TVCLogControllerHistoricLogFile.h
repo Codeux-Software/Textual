@@ -37,27 +37,16 @@
 
 #import "TextualApplication.h"
 
-#define TVCLogControllerHistoricLogSharedInstance()				[TVCLogControllerHistoricLogFile sharedInstance]
-
 @interface TVCLogControllerHistoricLogFile : NSObject
-@property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, nweak) TVCLogController *associatedController;
 
-+ (TVCLogControllerHistoricLogFile *)sharedInstance;
+- (void)writeNewEntryForLogLine:(TVCLogLine *)logLine;
+- (void)writeNewEntryWithRawData:(NSData *)jsondata; // Does not automatically append newline.
 
-- (void)createBaseModel; // Do not call.
-
-- (void)saveData;
-- (void)saveData:(BOOL)duringTermination;
-
-- (BOOL)isPerformingSave;
+- (void)open;
+- (void)close;
 
 - (void)resetData;
-- (void)resetDataForEntriesMatchingClient:(IRCClient *)client inChannel:(IRCChannel *)channel;
 
-/* fetchLimit: and afterDate: are optional. Supply either 0 or nil to skip. */
-/* The default fetchLimit is set to 0 and reference date is 1/1/2001 */
-- (void)entriesForClient:(IRCClient *)client
-			   inChannel:(IRCChannel *)channel
-			  fetchLimit:(NSInteger)maxEntryCount
-	 withCompletionBlock:(void (^)(NSManagedObjectContext *context, NSArray *objects))completionBlock;
+- (NSArray *)listEntriesWithfetchLimit:(NSInteger)maxEntryCount;
 @end

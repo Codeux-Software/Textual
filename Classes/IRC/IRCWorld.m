@@ -823,8 +823,6 @@
 {
 	[self.themeController load];
 
-	[TVCLogControllerHistoricLogSharedInstance() saveData]; // Save pre-existing buffers before reload.
-
 	for (IRCClient *u in self.clients) {
 		[u.viewController reloadTheme];
 
