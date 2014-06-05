@@ -582,15 +582,9 @@
 		/* Gather result information. */
 		NSString *lineNumber = [resultInfo objectForKey:@"lineNumber"];
 
-		NSDictionary *inlineImageMatches = [resultInfo dictionaryForKey:@"InlineImagesToValidate"];
-
-		if (inlineImageMatches == nil) {
-			inlineImageMatches = @{}; // So the array below does not throw exception.
-		}
-
 		[patchedAppend appendString:html];
 
-		[lineNumbers addObject:@[lineNumber, inlineImageMatches]];
+		[lineNumbers addObject:@[lineNumber]];
 
 		/* Write to JSON data. */
 		NSData *jsondata = [line jsonDictionaryRepresentation];
@@ -621,15 +615,6 @@
 
 			/* Line info. */
 			NSString *lineNumber = lineInfo[0];
-
-			NSDictionary *inlineImageMatches = lineInfo[1];
-
-			/* Begin processing inline images. */
-			for (NSString *nurl in inlineImageMatches) {
-				TVCImageURLoader *loader = [TVCImageURLoader new];
-
-				[loader assesURL:nurl withID:inlineImageMatches[nurl] forController:self];
-			}
 
 			/* Inform the style of the addition. */
 			[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
