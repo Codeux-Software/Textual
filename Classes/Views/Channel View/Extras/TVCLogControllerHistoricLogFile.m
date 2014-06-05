@@ -156,6 +156,8 @@
 		[NSObject cancelPreviousPerformRequestsWithTarget:self
 												 selector:@selector(truncateFileToMatchDefinedMaximumLineCount)
 												   object:nil];
+
+		_truncationTimerScheduled = NO;
 	}
 }
 
