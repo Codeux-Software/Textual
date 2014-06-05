@@ -2750,9 +2750,9 @@
 		langkey = @"BasicLanguage[1179]";
 	}
 
-	TVCLogLine *top = [TVCLogLine newManagedObjectWithoutContextAssociation];
-	TVCLogLine *mid = [TVCLogLine newManagedObjectWithoutContextAssociation];
-	TVCLogLine *end = [TVCLogLine newManagedObjectWithoutContextAssociation];
+	TVCLogLine *top = [TVCLogLine new];
+	TVCLogLine *mid = [TVCLogLine new];
+	TVCLogLine *end = [TVCLogLine new];
 
 	[mid setMessageBody:TXTLS(langkey)];
 	[top setMessageBody:NSStringWhitespacePlaceholder];
@@ -2986,7 +2986,7 @@
 	}
 
 	/* Create new log entry. */
-	TVCLogLine *c = [TVCLogLine newManagedObjectForClient:self channel:channel];
+	TVCLogLine *c = [TVCLogLine new];
 
 	/* Data types. */
 	c.lineType				= type;
@@ -3004,7 +3004,7 @@
 
 	/* Sender. */
 	c.nickname				= nick;
-	c.nicknameColorNumber	= @(colorNumber);
+	c.nicknameColorNumber	= colorNumber;
 
 	/* Send date. */
 	c.receivedAt			= receivedAt;

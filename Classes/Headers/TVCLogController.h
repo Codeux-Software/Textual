@@ -44,6 +44,7 @@
 @property (nonatomic, strong) TVCLogView *view;
 @property (nonatomic, strong) TVCLogPolicy *policy;
 @property (nonatomic, strong) TVCLogScriptEventSink *sink;
+@property (nonatomic, strong) TVCLogControllerHistoricLogFile *historicLogFile;
 @property (nonatomic, strong) TVCWebViewAutoScroll *autoScroller;
 @property (nonatomic, assign) BOOL isLoaded;
 @property (nonatomic, assign) BOOL needsLimitNumberOfLines;
@@ -68,6 +69,8 @@
 - (void)previousHighlight;
 
 - (BOOL)highlightAvailable:(BOOL)previous;
+
+- (NSString *)uniqueIdentifier;
 
 - (DOMDocument *)mainFrameDocument;
 

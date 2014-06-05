@@ -161,6 +161,13 @@
 	[self.view setTextSizeMultiplier:math];
 
 	/* Playback history. */
+	self.historicLogFile = [TVCLogControllerHistoricLogFile new];
+
+	/* Even if we aren't playing back history, we still open it
+	 because theme reloads use it to playback messages. */
+	[self.historicLogFile setAssociatedController:self];
+	[self.historicLogFile open];
+
 	if ([TPCPreferences reloadScrollbackOnLaunch] == NO) {
 		self.historyLoaded = YES;
 	} else {
@@ -187,11 +194,6 @@
 #pragma mark -
 #pragma mark Manage Historic Log
 
-- (TVCLogControllerHistoricLogFile *)historicLogFile
-{
-	return TVCLogControllerHistoricLogSharedInstance();
-}
-
 - (void)closeHistoricLog
 {
 	[self closeHistoricLog:NO];
@@ -209,10 +211,12 @@
 	 path that it is written to entirely. */
 
 	if ([self viewIsEncrypted] || withForcedReset) {
-		[[self historicLogFile] resetDataForEntriesMatchingClient:[self client] inChannel:[self channel]];
+		[self.historicLogFile resetData]; // -resetData calls -close on your behalf
 	} else {
 		if ([TPCPreferences reloadScrollbackOnLaunch] == NO || [self channel] == nil || ([[self channel] isChannel] == NO && [TPCPreferences rememberServerListQueryStates] == NO)) {
-			[[self historicLogFile] resetDataForEntriesMatchingClient:[self client] inChannel:[self channel]];
+			[self.historicLogFile resetData];
+		} else {
+			[self.historicLogFile close];
 		}
 	}
 }
@@ -236,6 +240,15 @@
 - (TPCThemeSettings *)themeSettings
 {
 	return [[self themeController] customSettings];
+}
+
+- (NSString *)uniqueIdentifier
+{
+	if (_channel) {
+		return [_channel uniqueIdentifier];
+	} else {
+		return [_client uniqueIdentifier];
+	}
 }
 
 - (NSURL *)baseURL
@@ -537,21 +550,21 @@
 #pragma mark Reload Scrollback
 
 /* reloadOldLines: is supposed to be called from inside a queue. */
-- (void)reloadOldLines:(BOOL)markHistoric withOldLines:(NSArray *)oldLines context:(NSManagedObjectContext *)context
+- (void)reloadOldLines:(BOOL)markHistoric withOldLines:(NSArray *)oldLines
 {
 	/* What lines are we reloading? */
 	NSObjectIsEmptyAssert(oldLines);
-
-	PointerIsEmptyAssert(context);
 
 	/* Misc. data. */
 	NSMutableArray *lineNumbers = [NSMutableArray array];
 
 	NSMutableString *patchedAppend = [NSMutableString string];
 
+	NSMutableData *newHistoricArchive = [NSMutableData data];
+
 	/* Begin processing. */
-	for (NSManagedObjectID *objectID in oldLines) {
-		TVCLogLine *line = (id)[context existingObjectWithID:objectID error:NULL];
+	for (NSData *chunkedData in oldLines) {
+		TVCLogLine *line = (id)[[TVCLogLine alloc] initWithRawJSONData:chunkedData];
 
 		PointerIsEmptyAssertLoopContinue(line);
 
@@ -578,7 +591,13 @@
 		[patchedAppend appendString:html];
 
 		[lineNumbers addObject:@[lineNumber, inlineImageMatches]];
-		
+
+		/* Write to JSON data. */
+		NSData *jsondata = [line jsonDictionaryRepresentation];
+
+		[newHistoricArchive appendData:jsondata];
+		[newHistoricArchive appendData:[NSStringNewlinePlaceholder dataUsingEncoding:NSUTF8StringEncoding]];
+
 		/* Was it a highlight? */
 		BOOL highlighted = [resultInfo boolForKey:@"wordMatchFound"];
 
@@ -586,6 +605,9 @@
 			[self.highlightedLineNumbers safeAddObject:lineNumber];
 		}
 	}
+
+	/* Update historic archive. */
+	[self.historicLogFile writeNewEntryWithRawData:newHistoricArchive];
 
 	/* Update WebKit. */
 	dispatch_async(dispatch_get_main_queue(), ^{
@@ -622,25 +644,23 @@
 
 	[[self printingQueue] enqueueMessageBlock:^(id operation) {
 		if ([operation isCancelled] == NO) {
-			[[self historicLogFile] entriesForClient:[self client]
-										   inChannel:[self channel]
-										  fetchLimit:100
-								 withCompletionBlock:^(NSManagedObjectContext *context, NSArray *objects) {
-									 [self reloadHistoryCompletionBlock:objects withContext:context];
-								 }];
+			NSArray *objects = [self.historicLogFile listEntriesWithfetchLimit:100];
+
+			[self.historicLogFile resetData];
+			[self.historicLogFile open];
+
+			[self reloadHistoryCompletionBlock:objects];
 		} else {
-			[self reloadHistoryCompletionBlock:nil withContext:nil];
+			[self reloadHistoryCompletionBlock:nil];
 		}
 	 } for:self isStandalone:YES];
 }
 
-- (void)reloadHistoryCompletionBlock:(NSArray *)objects withContext:(NSManagedObjectContext *)context
+- (void)reloadHistoryCompletionBlock:(NSArray *)objects
 {
 	if ([self viewIsEncrypted] == NO) {
-		[self reloadOldLines:YES withOldLines:objects context:context];
+		[self reloadOldLines:YES withOldLines:objects];
 	}
-
-	[context save:NULL]; /* Save context to keep isHistoric changes. */
 
 	self.reloadingHistory = NO;
 }
@@ -655,22 +675,19 @@
 
 	[[self printingQueue] enqueueMessageBlock:^(id operation) {
 		if ([operation isCancelled] == NO) {
-			[[self historicLogFile] entriesForClient:[self client]
-										   inChannel:[self channel]
-										  fetchLimit:1000
-								 withCompletionBlock:^(NSManagedObjectContext *context, NSArray *objects) {
-									 [self reloadThemeCompletionBlock:objects withContext:context];
-								 }];
+			NSArray *objects = [self.historicLogFile listEntriesWithfetchLimit:1000];
+
+			[self reloadThemeCompletionBlock:objects];
 		} else {
-			[self reloadThemeCompletionBlock:nil withContext:nil];
+			[self reloadThemeCompletionBlock:nil];
 		}
 	} for:self isStandalone:YES];
 }
 
-- (void)reloadThemeCompletionBlock:(NSArray *)objects withContext:(NSManagedObjectContext *)context
+- (void)reloadThemeCompletionBlock:(NSArray *)objects
 {
 	if ([self viewIsEncrypted] == NO) {
-		[self reloadOldLines:NO withOldLines:objects context:context];
+		[self reloadOldLines:NO withOldLines:objects];
 	}
 
 	self.reloadingBacklog = NO;
@@ -889,7 +906,8 @@
 		[[self printingQueue] cancelOperationsForViewController:self];
 
 		if (resetQueue) {
-			[[self historicLogFile] resetDataForEntriesMatchingClient:[self client] inChannel:[self channel]];
+			[self.historicLogFile resetData];
+			[self.historicLogFile open];
 		}
 
 		[self.highlightedLineNumbers removeAllObjects];
@@ -1002,7 +1020,7 @@
 				 in the view as well as playback on restart, but the added
 				 security can be seen as a bonus. */
 				if ([self viewIsEncrypted] == NO) {
-					[logLine performContextInsertion];
+					[self.historicLogFile writeNewEntryForLogLine:logLine];
 				}
 
 				/* Using informationi provided by conversation tracking we can update our internal
@@ -1141,7 +1159,7 @@
 	if (NSObjectIsNotEmpty([line nickname])) {
 		attributes[@"isNicknameAvailable"] = @(YES);
 
-		attributes[@"nicknameColorNumber"]			= [line nicknameColorNumber];
+		attributes[@"nicknameColorNumber"]			= @([line nicknameColorNumber]);
 		attributes[@"nicknameColorHashingEnabled"]	= @([TPCPreferences disableNicknameColorHashing] == NO);
 
 		attributes[@"formattedNickname"]	= [[line formattedNickname:[self channel]] trim];

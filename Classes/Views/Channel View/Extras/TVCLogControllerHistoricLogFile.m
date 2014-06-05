@@ -40,487 +40,302 @@
 #define _maximumRowCountPerClient			1000
 
 @interface TVCLogControllerHistoricLogFile ()
-@property (nonatomic, assign) BOOL isPerformingSave;
-@property (nonatomic, assign) BOOL hasPendingAutosaveTimer;
-@property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
-@property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, strong) NSFileHandle *fileHandle;
+@property (nonatomic, assign) BOOL truncationTimerScheduled;
 @end
 
 @implementation TVCLogControllerHistoricLogFile
 
-@synthesize managedObjectContext = _managedObjectContext;
-
 #pragma mark -
 #pragma mark Public API
 
-+ (TVCLogControllerHistoricLogFile *)sharedInstance
+- (void)writeNewEntryWithRawData:(NSData *)jsondata
 {
-	/* Create a copy of self and maintain as static reference. */
-	static id sharedSelf = nil;
+	if (_fileHandle) {
+		/* Write to file. */
+		[_fileHandle writeData:jsondata];
 
-	static dispatch_once_t onceToken;
+		[self scheduleNextRandomFileTruncationEvent];
+	} else {
+		LogToConsole(@"Unable to perform write operation because of missing file handle.");
+	}
+}
 
-	dispatch_once(&onceToken, ^{
-		sharedSelf = [self new];
-	});
+- (void)writeNewEntryForLogLine:(TVCLogLine *)logLine
+{
+	if (_fileHandle) {
+		/* Get a dictionary representation and append a new line to it. */
+		NSData *jsondata = [logLine jsonDictionaryRepresentation];
 
-	return sharedSelf;
+		/* Write to file. */
+		[_fileHandle writeData:jsondata];
+		[_fileHandle writeData:[NSStringNewlinePlaceholder dataUsingEncoding:NSUTF8StringEncoding]];
+
+		[self scheduleNextRandomFileTruncationEvent];
+	} else {
+		LogToConsole(@"Unable to perform write operation because of missing file handle.");
+	}
+}
+
+- (void)open
+{
+	/* Reset everything. */
+	[self close];
+
+	/* Where are we writing to? */
+	NSString *rawpath = [self writePath];
+
+	NSURL *path = [NSURL fileURLWithPath:rawpath];
+
+	/* Make sure the folder being written to exists. */
+	NSURL *folder = [path URLByDeletingLastPathComponent];
+
+	if ([RZFileManager() fileExistsAtPath:[folder path] isDirectory:NULL] == NO) {
+		NSError *fmerr;
+
+		[RZFileManager() createDirectoryAtURL:folder withIntermediateDirectories:YES attributes:nil error:&fmerr];
+
+		if (fmerr) {
+			LogToConsole(@"Error Creating Folder: %@", [fmerr localizedDescription]);
+
+			[self close]; // We couldn't create the folder. Destroy everything.
+
+			return;
+		}
+	}
+
+	/* Does the file exist? */
+	if ([RZFileManager() fileExistsAtPath:rawpath] == NO) {
+		NSError *fcerr;
+
+		[NSStringEmptyPlaceholder writeToURL:path atomically:NO encoding:NSUTF8StringEncoding error:&fcerr];
+
+		if (fcerr) {
+			LogToConsole(@"Error Creating File: %@", [fcerr localizedDescription]);
+
+			[self close]; // We couldn't create the file. Destroy everything.
+
+			return;
+		}
+	}
+
+	/* Open our file handle. */
+	_fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:rawpath];
+
+	if ( _fileHandle) {
+		[_fileHandle seekToEndOfFile];
+	} else {
+		LogToConsole(@"Failed to open file handle at path \"%@\". Unkown reason.", rawpath);
+	}
+}
+
+- (void)close
+{
+	if ( _fileHandle) {
+		[_fileHandle closeFile];
+		 _fileHandle = nil;
+	}
+
+	[self cancelAnyPreviouslyScheduledFileTruncationEvents];
 }
 
 - (void)resetData
 {
-#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	NSString *oldPath = [self databaseSavePath];
+	/* Close anything already open. */
+	[self close];
 
-	NSString *auxfile1 = [oldPath stringByAppendingString:@"-wal"];
-	NSString *auxfile2 = [oldPath stringByAppendingString:@"-shm"];
-
-	[RZFileManager() removeItemAtPath:oldPath error:NULL]; // Destroy archive file completely.
-	[RZFileManager() removeItemAtPath:auxfile1 error:NULL]; // Destroy archive file completely.
-	[RZFileManager() removeItemAtPath:auxfile2 error:NULL]; // Destroy archive file completely.
-#endif
+	/* Destroy file at write path. */
+	/* error: is ignored because file may not exist at all so 
+	 no reason to report that when we already know it. */
+	[RZFileManager() removeItemAtPath:[self writePath] error:NULL];
 }
 
-- (NSFetchRequest *)fetchRequestForClient:(IRCClient *)client
-								inChannel:(IRCChannel *)channel
-							   fetchLimit:(NSInteger)maxEntryCount
-				   includesPendingChanges:(BOOL)includesPendingChanges
+- (void)cancelAnyPreviouslyScheduledFileTruncationEvents
 {
-#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	/* What are we fetching for? */
-	PointerIsEmptyAssertReturn(client, nil);
+	if (_truncationTimerScheduled) {
+		[NSObject cancelPreviousPerformRequestsWithTarget:self
+												 selector:@selector(truncateFileToMatchDefinedMaximumLineCount)
+												   object:nil];
+	}
+}
 
-	/* Build base model. */
-	NSMutableDictionary *fetchVariables = [NSMutableDictionary dictionary];
+- (void)scheduleNextRandomFileTruncationEvent
+{
+	/* File truncation events are scheduled to happen at random 
+	 intervals so they are all not running at one time. */
+	if (_truncationTimerScheduled == NO) {
+		NSInteger timeInterval = ((arc4random() % 601) + 600); // ~12 minutes
 
-	/* Channel ID. */
-	if (channel) {
-		[fetchVariables setObject:[channel uniqueIdentifier] forKey:@"channel_id"];
+		[self performSelector:@selector(truncateFileToMatchDefinedMaximumLineCount)
+				   withObject:nil
+				   afterDelay:timeInterval];
+
+		_truncationTimerScheduled = YES;
+	}
+}
+
+- (void)truncateFileToMatchDefinedMaximumLineCount
+{
+	DebugLogToConsole(@"Performing truncation on file to meet maximum line count of %i.", _maximumRowCountPerClient);
+
+	if (_fileHandle) {
+		/* Force file to write to disk. */
+		[_fileHandle synchronizeFile];
+
+		/* Read contents of file. */
+		NSData *rawdata = [NSData dataWithContentsOfFile:[self writePath] options:0 error:NULL];
+
+		NSObjectIsEmptyAssert(rawdata);
+
+		/* Discussion: Yes, I could simply convert this NSData chunk to 
+		 an NSString, split it, and be done with it… BUT, NSJSONSerialization
+		 which the data will ultimately be fed to only accepts NSData so
+		 the workload of converting this to NSString then converting the
+		 individual chunks back to NSData is a lot of overhead. That is
+		 why I implement such a messy while loop that gets the range of
+		 every newline and breaks it apart into smaller data. */
+		/* The same idea applies to the code for reading entries which
+		 is inherited from this codebase. */
+		/* Seek each newline, truncate to that, insert into array, then
+		 find the next one and repeat process until there are no more. */
+		NSMutableArray *alllines = [NSMutableArray array];
+
+		NSMutableData *mutdata = [rawdata mutableCopy];
+
+		NSData *newlinedata = [NSStringNewlinePlaceholder dataUsingEncoding:NSUTF8StringEncoding];
+
+		NSInteger startIndex = 0;
+
+		while (1 == 1) {
+			/* Our scan range is the range from last newline. */
+			NSRange scanrange = NSMakeRange(startIndex, ([mutdata length] - startIndex));
+
+			NSRange nlrang = [mutdata rangeOfData:newlinedata options:0 range:scanrange];
+
+			NSUInteger spaceLocation = nlrang.location;
+
+			/* If no more newlines are found, then there is nothing to do. */
+			if (spaceLocation == NSNotFound) {
+				break; // No newline was found.
+			} else {
+				[alllines addObject:@(spaceLocation)];
+
+				startIndex = (spaceLocation + 1);
+			}
+		}
+
+		/* Now that we have all lines, limit them based on fetch count. */
+		if ([alllines count] > _maximumRowCountPerClient) {
+			/* The last possible index is the line which will be truncated to. This line
+			 is calculated by taking the maximum number of clients and subtracting the
+			 file number of lines from it. That will give us a negative number, so we
+			 times it by -1. After that, we minus one so the only rows remaining are the
+			 number that we have defined as maximum. */
+			NSInteger lastPosIndex = (((_maximumRowCountPerClient - [alllines count]) * -(1)) - 1);
+
+			/* Add 1 to not have first line a newline. */
+			NSInteger lastBytePos = ([alllines integerAtIndex:lastPosIndex] + 1);
+
+			NSRange cutRange = NSMakeRange(lastBytePos, ([rawdata length] - lastBytePos));
+
+			NSData *finalData = [rawdata subdataWithRange:cutRange];
+
+			/* We completely clear out file, write the new data, then save it. */
+			[_fileHandle truncateFileAtOffset:0];
+			[_fileHandle writeData:finalData];
+			[_fileHandle synchronizeFile];
+		}
 	} else {
-		[fetchVariables setObject:[NSNull null] forKey:@"channel_id"];
+		LogToConsole(@"Unable to perform fetch because of missing file handle.");
 	}
 
-	/* Client ID. */
-	[fetchVariables setObject:[client uniqueIdentifier] forKey:@"client_id"];
-
-	/* Request actual predicate. */
-	NSFetchRequest *fetchRequest = [_managedObjectModel fetchRequestFromTemplateWithName:@"LogLineFetchRequest"
-																   substitutionVariables:fetchVariables];
-
-	/* Define sort order. */
-	[fetchRequest setSortDescriptors:@[[self managedSortDescriptor]]];
-
-	/* Return types. */
-	[fetchRequest setFetchBatchSize:50];
-
-	[fetchRequest setIncludesPropertyValues:YES];
-	[fetchRequest setIncludesPendingChanges:includesPendingChanges];
-
-	[fetchRequest setReturnsObjectsAsFaults:YES];
-
-	[fetchRequest setResultType:NSManagedObjectIDResultType];
-
-	/* Define match limit. */
-	if (maxEntryCount > 0) {
-		[fetchRequest setFetchLimit:maxEntryCount];
-	}
-
-	/* We're done. */
-	return fetchRequest;
-#else
-	return nil;
-#endif
+	/* Reset timer. */
+	_truncationTimerScheduled = NO;
 }
 
-- (void)resetDataForEntriesMatchingClient:(IRCClient *)client inChannel:(IRCChannel *)channel
+- (NSArray *)listEntriesWithfetchLimit:(NSInteger)maxEntryCount
 {
-#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	[_managedObjectContext performBlock:^{
-		/* Build fetch request. */
-		NSFetchRequest *fetchRequest = [self fetchRequestForClient:client
-														 inChannel:channel
-														fetchLimit:0
-											includesPendingChanges:YES];
+	if (_fileHandle) {
+		/* Force file to write to disk. */
+		[_fileHandle synchronizeFile];
 
-		/* Gather results. */
-		NSArray *objects = [_managedObjectContext executeFetchRequest:fetchRequest error:NULL];
+		/* Read contents of file. */
+		NSData *rawdata = [NSData dataWithContentsOfFile:[self writePath] options:0 error:NULL];
 
-		/* Delete objects. */
-		for (NSManagedObjectID *objectID in objects) {
-			NSManagedObject *managedObject = [_managedObjectContext objectWithID:objectID];
+		NSObjectIsEmptyAssertReturn(rawdata, nil);
 
-			[_managedObjectContext deleteObject:managedObject];
+		/* Seek each newline, truncate to that, insert into array, then 
+		 find the next one and repeat process until there are no more. */
+		NSMutableArray *alllines = [NSMutableArray array];
+
+		NSMutableData *mutdata = [rawdata mutableCopy];
+
+		NSData *newlinedata = [NSStringNewlinePlaceholder dataUsingEncoding:NSUTF8StringEncoding];
+
+		while (1 == 1) {
+			NSRange scanrange = NSMakeRange(0, [mutdata length]);
+
+			NSRange nlrang = [mutdata rangeOfData:newlinedata options:0 range:scanrange];
+
+			NSUInteger spaceLocation = nlrang.location;
+
+			if (spaceLocation == NSNotFound) {
+				break; // No newline was found.
+			} else {
+				NSRange cutRange = NSMakeRange(0, (spaceLocation + 1));
+
+				NSData *chunkedData = [mutdata subdataWithRange:cutRange];
+
+				[alllines addObject:chunkedData];
+
+				[mutdata replaceBytesInRange:cutRange withBytes:NULL length:0];
+			}
 		}
-	}];
-#endif
-}
 
-- (void)entriesForClient:(IRCClient *)client
-			   inChannel:(IRCChannel *)channel
-			  fetchLimit:(NSInteger)maxEntryCount
-	 withCompletionBlock:(void (^)(NSManagedObjectContext *context, NSArray *objects))completionBlock
-{
-#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	/* What are we fetching for? */
-	if (PointerIsEmpty(client)) {
-		completionBlock(nil, nil);
+		/* Now that we have all lines, limit them based on fetch count. */
+		if ([alllines count] > maxEntryCount) {
+			NSInteger finalCount = [alllines count];
 
-		return;
+			NSInteger startingIndex = ((maxEntryCount - finalCount) * -(1));
+
+			NSMutableArray *countedEntries = [NSMutableArray array];
+
+			for (NSInteger i = startingIndex; i < finalCount; i++)
+			{
+				[countedEntries addObject:alllines[i]];
+			}
+
+			return countedEntries;
+		}
+
+		/* Return found data. */
+		return alllines;
+	} else {
+		LogToConsole(@"Unable to perform fetch because of missing file handle.");
+
+		return nil;
 	}
-
-	/* Create private dispatch queue. */
-	NSManagedObjectContext *backgroundContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-
-	/* Add observer. */
-	id saveObserver = [RZNotificationCenter() addObserverForName:NSManagedObjectContextDidSaveNotification
-														  object:backgroundContext
-														   queue:nil
-													  usingBlock:^(NSNotification *note) {
-														  [_managedObjectContext mergeChangesFromContextDidSaveNotification:note];
-													  }];
-
-	/* Lock context. */
-	[_persistentStoreCoordinator lock];
-
-	/* Perform block. */
-	[backgroundContext performBlockAndWait:^{
-		/* Pass information. */
-		[backgroundContext setPersistentStoreCoordinator:_persistentStoreCoordinator];
-
-		/* Perform fetch. */
-		NSFetchRequest *fetchRequest = [self fetchRequestForClient:client
-														 inChannel:channel
-														fetchLimit:maxEntryCount
-											includesPendingChanges:NO];
-
-		NSError *fetchError;
-
-		NSArray *fetchResults = [backgroundContext executeFetchRequest:fetchRequest error:&fetchError];
-
-		/* nil if we had error… */
-		if (fetchResults) {
-			/* Our sort descriptor places newest lines at the top and oldest
-			 at the bottom. This is done so that when a fetch limit is supplied,
-			 the fetch limit only applies to the newest lines without us having
-			 to supply an offset. Obivously, we do not want newest lines first
-			 though, so before passing to the callback, we reverse. */
-			NSEnumerator *reverseEnum = [fetchResults reverseObjectEnumerator];
-
-			NSArray *finalData = [reverseEnum allObjects];
-
-			/* Call completion block. */
-			completionBlock(backgroundContext, finalData);
-		} else {
-			DebugLogToConsole(@"Fetch request failed for channel %@ on client %@ with error: %@", channel, client, [fetchError localizedDescription]);
-
-			completionBlock(nil, nil);
-		}
-	}];
-
-	/* Unlock context. */
-	[_persistentStoreCoordinator unlock];
-
-	/* Remove observer. */
-	[RZNotificationCenter() removeObserver:saveObserver];
-
-	/* Cleanup. */
-	backgroundContext = nil;
-#else
-	completionBlock(nil, nil);
-#endif
 }
 
 #pragma mark -
-#pragma mark Core Data Model
+#pragma mark Private API
 
-- (void)createBaseModel
+- (NSString *)writePath
 {
-	[self createBaseModel:NO];
-}
+	NSString *cachesFolder = [TPCPreferences applicationCachesFolderPath];
 
-- (void)createBaseModel:(BOOL)isSecondRun
-{
-#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	/* Find the location of the file. */
-	NSString *path = [RZMainBundle() pathForResource:@"LogControllerStorageModel" ofType:@"mom"];
+	id client = [_associatedController client];
+	id channel = [_associatedController channel];
 
-	NSURL *url = [NSURL fileURLWithPath:path];
+	NSString *combinedName;
 
-	/* Create the model. */
-	_managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:url];
-
-	/* Create persistent store. */
-	_persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_managedObjectModel];
-
-	/* Add persistent store. */
-	NSError *addErr = nil;
-
-	/* Define save path. */
-	NSString *savePath = [self databaseSavePath];
-
-	NSURL *saveurl = [NSURL fileURLWithPath:savePath];
-
-	/* Perform add. */
-	NSDictionary *pragmaOptions = @{@"synchronous" : @"OFF", @"journal_mode" : @"WAL"};
-	NSDictionary *storeOptions = @{NSSQLitePragmasOption : pragmaOptions};
-
-	id result = [_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
-														  configuration:nil
-																	URL:saveurl
-																options:storeOptions
-																  error:&addErr];
-
-	/* Was there an error? */
-	if (result == nil) {
-		LogToConsole(@"Error Creating Persistent Store: %@", [addErr localizedDescription]);
-
-		if (isSecondRun == NO) {
-			LogToConsole(@"Attempting to create a new persistent store in a new path…");
-
-			/* If we failed to load our store, we create a brand new one at a new path
-			 incase the old one is corrupted. We also erase the old database to not allow
-			 the file to just hang on the OS. */
-			[self resetData]; // Destroy old.
-
-			[self createNewDatabaseSavePath]; // Create new path.
-
-			[self createBaseModel:YES]; // Run creation process again.
-		}
-
-		_persistentStoreCoordinator = nil; // Destroy.
+	if (channel) {
+		combinedName = [NSString stringWithFormat:@"/MessageArchive/%@/historicLogFile-%@.json", [client uniqueIdentifier], [channel uniqueIdentifier]];
 	} else {
-		/* Create primary managed object. */
-		_managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-
-		[_managedObjectContext setPersistentStoreCoordinator:_persistentStoreCoordinator];
-		[_managedObjectContext setUndoManager:nil];
-		[_managedObjectContext setRetainsRegisteredObjects:NO];
+		combinedName = [NSString stringWithFormat:@"/MessageArchive/%@/historicLogFile-console.json", [client uniqueIdentifier]];
 	}
 
-	/* Continue work. */
-	if (_managedObjectContext == nil) {
-		NSAssert(NO, @"Missing managed object context.");
-	} else {
-		/* Define default values. */
-		_hasPendingAutosaveTimer = NO;
-		_isPerformingSave = NO;
-
-		/* Start save timer. */
-		[self handleManagedObjectContextChangeTimerInitializer];
-	}
-#endif
-}
-
-- (void)handleManagedObjectContextChangeTimerInitializer
-{
-#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	/* Cancel any previous running timers. */
-	if (_hasPendingAutosaveTimer) {
-		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(saveData) object:nil];
-
-		_hasPendingAutosaveTimer = NO;
-	}
-
-	/* Auto save thirty seconds after last change. */
-	_hasPendingAutosaveTimer = YES;
-
-	[self performSelector:@selector(saveData) withObject:nil afterDelay:300.0];
-#endif
-}
-
-- (void)createNewDatabaseSavePath
-{
-#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	/* Filename is just a UUID. Does not need anything more than that… */
-
-	[RZUserDefaults() setObject:[NSString stringWithUUID] forKey:@"TVCLogControllerHistoricLogFileSavePath"];
-#else
-	return;
-#endif
-}
-
-- (NSString *)databaseSavePath
-{
-#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	NSString *filename = [RZUserDefaults() objectForKey:@"TVCLogControllerHistoricLogFileSavePath"];
-
-	if (filename == nil) {
-		/* Use old filename for Textaul v4.1.3. */
-		[RZUserDefaults() setObject:@"logControllerHistoricLog_v001.sqlite" forKey:@"TVCLogControllerHistoricLogFileSavePath"];
-
-		return [self databaseSavePath];
-	}
-
-	NSString *savepath = [[TPCPreferences applicationCachesFolderPath] stringByAppendingPathComponent:filename];
-
-	return savepath;
-#else
-	return nil;
-#endif
-}
-
-- (BOOL)isPerformingSave
-{
-#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	return _isPerformingSave;
-#else
-	return nil;
-#endif
-}
-
-- (void)saveData
-{
-	[self saveData:NO];
-}
-
-- (void)saveData:(BOOL)duringTermination
-{
-#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	/* What are we saving to? */
-	PointerIsEmptyAssert(_managedObjectContext);
-
-	/* Cancel any previous running timers incase this is manual save. */
-	[self handleManagedObjectContextChangeTimerInitializer];
-
-	[_managedObjectContext performBlock:^{
-		/* Do we have a save running? */
-		NSAssertReturn(_isPerformingSave == NO)
-
-		/* Continue with save operation. */
-		_isPerformingSave = YES;
-
-		/* Do changes even exist? */
-		if ([_managedObjectContext commitEditing]) {
-			if ([_managedObjectContext hasChanges]) {
-				//if (duringTermination == NO) {
-					[self performRegularMaintenanceOfCoreDataStack];
-				//}
-
-				if ([_managedObjectContext save:NULL] == NO) {
-					[_managedObjectContext reset];
-				}
-			}
-		}
-
-		/* Reset state. */
-		_isPerformingSave = NO;
-	}];
-#endif
-}
-
-- (void)performRegularMaintenanceOfCoreDataStack
-{
-	/* We do not want Textual to grow our core data stack to an infinite size so 
-	 there has to be some way for us to limit the maximum number of entries in the
-	 database file. Therefore, before saves occur, we fetch the stack, go client
-	 by client, and limit that client's row count by the maximum defined at the
-	 top of this file. We limit it by deleting the extra objects before save. */
-	/* I'll tell you one thing: this is some ugly code. Wouldn't be surprised
-	 to see it on http://www.reddit.com/r/badcode one of these days. */
-
-#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	/* Request fetch request. */
-	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"TVCLogLine"];
-
-	/* Define sort order. */
-	NSSortDescriptor *ortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:YES];
-
-	[fetchRequest setSortDescriptors:@[ortDescriptor]];
-
-	/* Define object ID expression. */
-	NSExpressionDescription *objectIdDesc = [NSExpressionDescription new];
-
-	[objectIdDesc setName:@"objectID"];
-
-	[objectIdDesc setExpression:[NSExpression expressionForEvaluatedObject]];
-	[objectIdDesc setExpressionResultType:NSObjectIDAttributeType];
-
-	/* Return types. */
-	[fetchRequest setIncludesPendingChanges:YES];
-	[fetchRequest setIncludesPropertyValues:YES];
-
-	[fetchRequest setFetchBatchSize:50];
-
-	[fetchRequest setPropertiesToFetch:@[objectIdDesc, @"clientID", @"channelID"]];
-
-	[fetchRequest setResultType:NSDictionaryResultType];
-
-	/* Gather results. */
-	NSArray *objects = [_managedObjectContext executeFetchRequest:fetchRequest error:NULL];
-
-	/* Create dictionary of clients. */
-	NSMutableDictionary *clientMatrix = [NSMutableDictionary dictionary];
-
-	for (NSDictionary *object in objects) {
-		@autoreleasepool {
-			NSManagedObjectID *objectID = [object objectForKey:@"objectID"];
-
-			NSString *clientID = [object objectForKey:@"clientID"];
-			NSString *channelID = [object objectForKey:@"channelID"];
-
-			NSString *groupID;
-
-			if (channelID) {
-				groupID = channelID;
-			} else {
-				groupID = clientID;
-			}
-
-			NSMutableArray *oldArray;
-			
-			if ([clientMatrix containsKey:groupID]) {
-				oldArray = clientMatrix[groupID];
-			} else {
-				oldArray = [NSMutableArray array];
-			}
-
-			[oldArray addObject:objectID];
-
-			[clientMatrix setObject:oldArray forKey:groupID];
-		}
-	}
-
-	DebugLogToConsole(@"Preparing to manage %i object groups.", [clientMatrix count]);
-
-	/* We are going to save right after this, so set to NO to increase speed. */
-	[_managedObjectContext setPropagatesDeletesAtEndOfEvent:NO];
-
-	/* Go through each client. */
-	for (NSString *clientID in [clientMatrix allKeys]) {
-		@autoreleasepool {
-			NSArray *clientObjects = clientMatrix[clientID];
-
-			if ([clientObjects count] > _maximumRowCountPerClient) {
-				NSInteger chopCount = ((_maximumRowCountPerClient - [clientObjects count]) * -(1));
-
-				DebugLogToConsole(@"Preparing to delete %i objects for group ID %@.", chopCount, clientID);
-
-				for (NSInteger i = 0; i < chopCount; i++) {
-					NSManagedObjectID *objectID = clientObjects[i];
-
-					NSManagedObject *object = [_managedObjectContext objectWithID:objectID];
-
-					[_managedObjectContext deleteObject:object];
-				}
-			}
-		}
-	}
-
-	/* Set back to YES. */
-	[_managedObjectContext setPropagatesDeletesAtEndOfEvent:YES];
-
-	/* Destroy the existing matrix. */
-	clientMatrix = nil;
-#endif
-}
-
-- (NSSortDescriptor *)managedSortDescriptor
-{
-#ifndef TEXTUAL_BUILT_WITH_CORE_DATA_DISABLED
-	return [[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:NO];
-#else
-	return nil;
-#endif
+	return [cachesFolder stringByAppendingPathComponent:combinedName];
 }
 
 @end
