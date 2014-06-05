@@ -153,6 +153,11 @@
 	}
 }
 
+- (BOOL)allowsVibrancy
+{
+	return NO;
+}
+
 - (void)updateBackgroundColor
 {
 	if ([TPCPreferences invertSidebarColors] || self.masterController.mainWindowIsActive == NO) {
