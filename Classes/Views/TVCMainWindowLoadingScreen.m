@@ -175,7 +175,7 @@
 
 - (BOOL)viewIsVisible
 {
-	return ([self isHidden] == NO);
+	return ([self isHidden] == NO || self.stackLocked);
 }
 
 - (NSArray *)allViews
