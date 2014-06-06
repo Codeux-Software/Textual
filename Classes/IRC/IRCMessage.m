@@ -113,7 +113,7 @@
 
 					NSTimeInterval serverTime = [date timeIntervalSince1970];
 
-					if (serverTime < (client.lastMessageServerTime - 1)) {
+					if (serverTime < ([client lastMessageServerTimeWithCachedValue] - 1)) {
 						self.isHistoric = YES;
 					}
 				}
