@@ -178,11 +178,15 @@
 		NSString *value = [self stringValue];
 		
 		if (NSObjectIsEmpty(value)) {
-			if (NSDissimilarObjects([self baseWritingDirection], NSWritingDirectionRightToLeft)) {
-				if (self.cachedFontSize == TXMainTextBoxFontLargeSize) {
-					[self.placeholderString drawAtPoint:NSMakePoint(6, 2)];
-				} else {
-					[self.placeholderString drawAtPoint:NSMakePoint(6, 1)];
+			BOOL loadingScreenVisible = [[[self masterController] mainWindowLoadingScreen] viewIsVisible];
+
+			if (loadingScreenVisible == NO) {
+				if (NSDissimilarObjects([self baseWritingDirection], NSWritingDirectionRightToLeft)) {
+					if (self.cachedFontSize == TXMainTextBoxFontLargeSize) {
+						[self.placeholderString drawAtPoint:NSMakePoint(6, 2)];
+					} else {
+						[self.placeholderString drawAtPoint:NSMakePoint(6, 1)];
+					}
 				}
 			}
 		} else {

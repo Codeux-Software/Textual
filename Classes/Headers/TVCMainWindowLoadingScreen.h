@@ -53,6 +53,8 @@
 - (void)hideAll;
 - (void)hideAll:(BOOL)animate;
 
+- (BOOL)viewIsVisible;
+
 - (void)hideWelcomeAddServerView;
 - (void)hideWelcomeAddServerView:(BOOL)animate;
 
