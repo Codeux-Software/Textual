@@ -3378,8 +3378,8 @@
     PointerIsEmptyAssert(m);
 
 	/* Keep track of the server time of the last seen message. */
-	if (self.capacities.zncPlaybackCapInUse) {
-		if (self.isLoggedIn) {
+	if (self.capacities.serverTimeCapInUse) {
+		if (m.isHistoric) {
 			NSTimeInterval serverTime = [m.receivedAt timeIntervalSince1970];
 
 			if (serverTime > [self lastMessageServerTimeWithCachedValue]) {

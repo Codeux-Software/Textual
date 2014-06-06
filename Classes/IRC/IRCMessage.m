@@ -111,11 +111,7 @@
 				if (date) {
 					self.receivedAt = date;
 
-					NSTimeInterval serverTime = [date timeIntervalSince1970];
-
-					if (serverTime < ([client lastMessageServerTimeWithCachedValue] - 1)) {
-						self.isHistoric = YES;
-					}
+					self.isHistoric = YES;
 				}
 
 				/* End inline procesing of the @time= and @t= extensions. */
