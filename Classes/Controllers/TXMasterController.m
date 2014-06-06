@@ -395,11 +395,10 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[[self menuController] prepareForApplicationTermination];
 
 	if (self.skipTerminateSave == NO) {
-		[[self worldController] save];
-
 		self.terminatingClientCount = [[[self worldController] clients] count];
 
 		[[self worldController] prepareForApplicationTermination];
+		[[self worldController] save];
 
 		while ([self isNotSafeToPerformApplicationTermination]) {
 			[RZMainRunLoop() runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
