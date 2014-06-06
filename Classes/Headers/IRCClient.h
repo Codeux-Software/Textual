@@ -136,6 +136,13 @@ typedef struct IRCv3SupportedClientCapacities {
 - (NSString *)localNickname;
 - (NSString *)localHostmask;
 
+/* Returns the value of _lastMessageServerTime which is the value of the last message
+ received server-time capacity value. If logging is enabled in Textual, then it is 
+ possible that the value returned is cached from previous session. If you want the 
+ value without any cache, then access -lastMessageServerTime itself. */
+/* The cached value is only asked for one time by this method so it is fast as possible. */
+- (NSTimeInterval)lastMessageServerTimeWithCachedValue;
+
 - (void)reachabilityChanged:(BOOL)reachable;
 
 - (void)autoConnect:(NSInteger)delay afterWakeUp:(BOOL)afterWakeUp;

@@ -394,6 +394,19 @@
 
 - (void)prepareForApplicationTermination
 {
+	/* Archive server-time timestamp if certain conditions are met. */
+	if (self.capacities.serverTimeCapInUse) {
+		if (self.lastMessageServerTime > 0) {
+			if ([TPCPreferences logTranscript]) {
+				if ([TPCPreferences transcriptFolder]) {
+					[[self auxiliaryConfiguration] setDouble:self.lastMessageServerTime
+													  forKey:@"IRCv3 server-time Capacity Cached Timestamp"];
+				}
+			}
+		}
+	}
+
+	/* Perform normal operations. */
 	[self quit];
 	
 	[self closeDialogs];
@@ -502,6 +515,32 @@
 - (NSMutableDictionary *)auxiliaryConfiguration
 {
 	return [self.config auxiliaryConfiguration];
+}
+
+- (NSTimeInterval)lastMessageServerTimeWithCachedValue
+{
+	/* If the server time being fetched is currently has no value
+	 and logging is enabled, then check whether we stored a timestamp
+	 from a previous session of Textual and restore that. */
+	static BOOL _checkedForPreviousSessionTime = NO;
+
+	if (_checkedForPreviousSessionTime == NO) {
+		if (self.lastMessageServerTime == 0) {
+			if ([TPCPreferences logTranscript]) {
+				if ([TPCPreferences transcriptFolder]) {
+					double storedTime = [[self auxiliaryConfiguration] doubleForKey:@"IRCv3 server-time Capacity Cached Timestamp"];
+
+					if (storedTime) {
+						self.lastMessageServerTime = storedTime;
+					}
+				}
+			}
+
+			_checkedForPreviousSessionTime = YES;
+		}
+	}
+
+	return self.lastMessageServerTime;
 }
 
 #pragma mark -
@@ -3343,7 +3382,7 @@
 		if (self.isLoggedIn) {
 			NSTimeInterval serverTime = [m.receivedAt timeIntervalSince1970];
 
-			if (serverTime > self.lastMessageServerTime) {
+			if (serverTime > [self lastMessageServerTimeWithCachedValue]) {
 				self.lastMessageServerTime = serverTime;
 			}
 		}
@@ -4958,7 +4997,7 @@
 
 	/* Request playback since the last seen message when previously connected. */
 	if (self.capacities.zncPlaybackCapInUse) {
-		[self send:IRCPrivateCommandIndex("privmsg"), @"*playback", @"play", @"*", [NSString stringWithFloat:self.lastMessageServerTime], nil];
+		[self send:IRCPrivateCommandIndex("privmsg"), @"*playback", @"play", @"*", [NSString stringWithFloat:[self lastMessageServerTimeWithCachedValue]], nil];
 	}
 
 	/* Activate existing queries. */
