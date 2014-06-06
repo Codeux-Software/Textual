@@ -82,7 +82,7 @@
 	/* We only bother searching for extensions if we already have a CAP that
 	 is in relation to one. */
 
-	if (client && client.CAPServerTime) {
+	if (client && client.capacities.serverTimeCapInUse) {
 		if ([s hasPrefix:@"@"]) {
 			NSString *t = [[s getToken] substringFromIndex:1]; //Get token and remove @.
 			
@@ -109,9 +109,13 @@
 				}
 
 				if (date) {
-					self.isHistoric = YES;
-
 					self.receivedAt = date;
+
+					NSTimeInterval serverTime = [date timeIntervalSince1970];
+
+					if (serverTime < (client.lastMessageServerTime - 1)) {
+						self.isHistoric = YES;
+					}
 				}
 
 				/* End inline procesing of the @time= and @t= extensions. */
