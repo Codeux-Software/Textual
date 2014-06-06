@@ -173,6 +173,11 @@
 #pragma mark -
 #pragma mark Private Utilities.
 
+- (BOOL)viewIsVisible
+{
+	return ([self isHidden] == NO);
+}
+
 - (NSArray *)allViews
 {
 	/* For future expansion. */
