@@ -63,6 +63,19 @@ typedef enum IRCIdentificationWithSASLMechanism : NSInteger {
 	IRCIdentificationWithSASLExternalMechanism,
 } IRCIdentificationWithSASLMechanism;
 
+typedef struct IRCv3SupportedClientCapacities {
+	BOOL awayNotifyCapInUse;		// YES if away-notify CAP supported.
+	BOOL identifyCTCPCapInUse;		// YES if identify-ctcp CAP supported.
+	BOOL identifyMsgCapInUse;		// YES if identify-msg CAP supported.
+	BOOL multiPrefixCapInUse;		// YES if multi-prefix CAP supported.
+	BOOL serverTimeCapInUse;		// YES if server-time CAP supported.
+	BOOL userhostInNamesCapInUse;	// YES if userhost-in-names CAP supported.
+	BOOL watchCommandCapInUse;		// YES if the WATCH command is supported.
+	BOOL zncPlaybackCapInUse;		// YES if the ZNC vendor specific playback CAP supported.
+	BOOL isInActiveSASLNegotation;	// YES if in SASL CAP authentication request, else NO.
+	BOOL isIdentifiedWithSASL;		// YES if SASL authentication was successful, else NO.
+} IRCv3SupportedClientCapacities;
+
 @interface IRCClient : IRCTreeItem
 /* Public information. They are considered read-only outside of
  IRCClient. Just not enforced. Play nice plugins. */
@@ -72,6 +85,7 @@ typedef enum IRCIdentificationWithSASLMechanism : NSInteger {
 @property (nonatomic, assign) IRCConnectMode connectType;
 @property (nonatomic, assign) IRCDisconnectMode disconnectType;
 @property (nonatomic, assign) NSInteger connectDelay;
+@property (nonatomic, assign) IRCv3SupportedClientCapacities capacities;
 @property (nonatomic, assign) BOOL inUserInvokedNamesRequest;
 @property (nonatomic, assign) BOOL inUserInvokedWhoRequest;
 @property (nonatomic, assign) BOOL inUserInvokedWhowasRequest;
@@ -92,22 +106,14 @@ typedef enum IRCIdentificationWithSASLMechanism : NSInteger {
 @property (nonatomic, assign) BOOL rawModeEnabled;				// YES if sent & received data should be logged to console, else NO.
 @property (nonatomic, assign) BOOL reconnectEnabled;			// YES if reconnection is allowed, else NO.
 @property (nonatomic, assign) BOOL serverHasNickServ;			// YES if NickServ service was found on server, else NO.
-@property (nonatomic, assign) BOOL CAPidentifyCTCP;				// YES if identify-ctcp CAP supported.
-@property (nonatomic, assign) BOOL CAPidentifyMsg;				// YES if identify-msg CAP supported.
-@property (nonatomic, assign) BOOL CAPinSASLRequest;			// YES if in SASL CAP authentication request, else NO.
-@property (nonatomic, assign) BOOL CAPisIdentifiedWithSASL;		// YES if SASL authentication was successful, else NO.
-@property (nonatomic, assign) BOOL CAPmultiPrefix;				// YES if multi-prefix CAP supported.
-@property (nonatomic, assign) BOOL CAPuserhostInNames;			// YES if userhost-in-names CAP supported.
-@property (nonatomic, assign) BOOL CAPawayNotify;               // YES if away-notify CAP supported.
-@property (nonatomic, assign) BOOL CAPWatchCommand;				// YES if the WATCH command is supported.
-@property (nonatomic, assign) BOOL CAPServerTime;				// YES if server-time CAP supported.
-@property (nonatomic, strong) NSMutableArray *CAPacceptedCaps;
-@property (nonatomic, strong) NSMutableArray *CAPpendingCaps;
+@property (nonatomic, strong) NSMutableArray *CAPAcceptedCaps;
+@property (nonatomic, strong) NSMutableArray *CAPPendingCaps;
 @property (nonatomic, strong) IRCChannel *lastSelectedChannel;
 @property (nonatomic, strong) NSMutableArray *channels;
 @property (nonatomic, strong) NSMutableArray *highlights;
 @property (nonatomic, strong) NSString *preAwayNickname; // Nickname before away was set.
-@property (nonatomic, assign) NSTimeInterval lastMessageReceived;
+@property (nonatomic, assign) NSTimeInterval lastMessageReceived;			// The time at which the last of any incoming data was received.
+@property (nonatomic, assign) NSTimeInterval lastMessageServerTime;			// The time of the last message received that contained a server-time CAP.
 @property (nonatomic, strong) NSString *serverRedirectAddressTemporaryStore; // Temporary store for RPL_BOUNCE (010) redirects.
 @property (nonatomic, assign) NSInteger serverRedirectPortTemporaryStore; // Temporary store for RPL_BOUNCE (010) redirects.
 

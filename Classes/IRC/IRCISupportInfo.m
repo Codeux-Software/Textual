@@ -127,21 +127,25 @@
 			}
 		}
 
+		IRCv3SupportedClientCapacities capacities = [client capacities];
+
 		if ([vakey isEqualIgnoringCase:@"WATCH"]) {
-			client.CAPWatchCommand = YES;
-		} else if ([vakey isEqualIgnoringCase:@"NAMESX"] && client.CAPmultiPrefix == NO) {
+			capacities.watchCommandCapInUse = YES;
+		} else if ([vakey isEqualIgnoringCase:@"NAMESX"] && capacities.multiPrefixCapInUse == NO) {
 			[client sendLine:@"PROTOCTL NAMESX"];
+
+			capacities.multiPrefixCapInUse = YES;
 			
-			client.CAPmultiPrefix = YES;
-			
-			[client.CAPacceptedCaps addObject:@"multi-prefix"];
-		} else if ([vakey isEqualIgnoringCase:@"UHNAMES"] && client.CAPuserhostInNames == NO) {
+			[[client CAPAcceptedCaps] addObject:@"multi-prefix"];
+		} else if ([vakey isEqualIgnoringCase:@"UHNAMES"] && capacities.userhostInNamesCapInUse == NO) {
 			[client sendLine:@"PROTOCTL UHNAMES"];
+
+			capacities.userhostInNamesCapInUse = YES;
 			
-			client.CAPuserhostInNames = YES;
-			
-			[client.CAPacceptedCaps addObject:@"userhost-in-names"];
+			[[client CAPAcceptedCaps] addObject:@"userhost-in-names"];
 		}
+
+		client.capacities = capacities;
 	}
 
     _cachedConfiguration = [_cachedConfiguration arrayByAddingObject:cachedConfig];

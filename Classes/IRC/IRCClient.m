@@ -93,7 +93,7 @@
 @property (nonatomic, assign) BOOL sendLagcheckReplyToChannel;
 @property (nonatomic, assign) BOOL timeoutWarningShownToUser;
 @property (nonatomic, assign) NSInteger tryingNickNumber;
-@property (nonatomic, assign) NSUInteger CAPpausedStatus;
+@property (nonatomic, assign) NSUInteger CAPPausedStatus;
 @property (nonatomic, assign) NSTimeInterval lastLagCheck;
 @property (nonatomic, strong) NSString *myHost;
 @property (nonatomic, strong) NSString *myNick;
@@ -123,8 +123,8 @@
 		self.channels			= [NSMutableArray new];
 		self.highlights			= [NSMutableArray new];
 		self.commandQueue		= [NSMutableArray new];
-		self.CAPacceptedCaps	= [NSMutableArray new];
-		self.CAPpendingCaps		= [NSMutableArray new];
+		self.CAPAcceptedCaps	= [NSMutableArray new];
+		self.CAPPendingCaps		= [NSMutableArray new];
 
 		self.trackedUsers = [NSMutableDictionary new];
 
@@ -159,6 +159,9 @@
 		self.trialPeriodTimer.reqeatTimer	= NO;
 		self.trialPeriodTimer.selector		= @selector(onTrialPeriodTimer:);
 #endif
+
+		self.lastMessageServerTime = 0;
+		self.lastMessageReceived = 0;
 	}
 	
 	return self;
@@ -434,7 +437,7 @@
 	for (IRCChannel *c in self.channels) {
 		[c preferencesChanged];
 
-        if (self.CAPawayNotify == NO) {
+        if (self.capacities.awayNotifyCapInUse == NO) {
             if ([c numberOfMembers] > [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
                 for (IRCUser *u in [c unsortedMemberList]) {
                     u.isAway = NO;
@@ -1031,7 +1034,7 @@
 	PointerIsEmptyAssertReturn(m, NO);
 	PointerIsEmptyAssertReturn(channel, NO);
 
-	NSAssertReturnR(self.CAPServerTime, NO);
+	NSAssertReturnR(self.capacities.serverTimeCapInUse, NO);
 	NSAssertReturnR(self.isZNCBouncerConnection, NO);
 
 	/* When Textual is using the server-time CAP with ZNC it does not tell us when
@@ -2447,8 +2450,8 @@
 		case 5006: // Command: CAP
 		case 5007: // Command: CAPS
 		{
-			if (NSObjectIsNotEmpty(self.CAPacceptedCaps)) {
-				NSString *caps = [self.CAPacceptedCaps componentsJoinedByString:@", "];
+			if (NSObjectIsNotEmpty(self.CAPAcceptedCaps)) {
+				NSString *caps = [self.CAPAcceptedCaps componentsJoinedByString:@", "];
 
 				[self printDebugInformation:TXTFLS(@"BasicLanguage[1121]", caps)];
 			} else {
@@ -3096,19 +3099,19 @@
 {
 	self.tryingNickNumber = -1;
 
-	self.CAPawayNotify = NO;
-	self.CAPidentifyCTCP = NO;
-	self.CAPidentifyMsg = NO;
-	self.CAPinSASLRequest = NO;
-	self.CAPisIdentifiedWithSASL = NO;
-	self.CAPmultiPrefix = NO;
-	self.CAPWatchCommand = NO;
-	self.CAPpausedStatus = 0;
-	self.CAPuserhostInNames = NO;
-	self.CAPServerTime = NO;
-	
-	self.autojoinInProgress = NO;
-	self.hasIRCopAccess = NO;
+	_capacities.awayNotifyCapInUse = NO;
+	_capacities.identifyCTCPCapInUse = NO;
+	_capacities.identifyMsgCapInUse = NO;
+	_capacities.isIdentifiedWithSASL = NO;
+	_capacities.isInActiveSASLNegotation = NO;
+	_capacities.multiPrefixCapInUse = NO;
+	_capacities.watchCommandCapInUse = NO;
+	_capacities.userhostInNamesCapInUse = NO;
+	_capacities.serverTimeCapInUse = NO;
+	_capacities.zncPlaybackCapInUse = NO;
+
+	self.CAPPausedStatus = 0;
+
 	self.inFirstISONRun = NO;
 	self.inUserInvokedNamesRequest = NO;
 	self.inUserInvokedWatchRequest = NO;
@@ -3117,7 +3120,9 @@
 	self.inUserInvokedModeRequest = NO;
 	self.inUserInvokedJoinRequest = NO;
 	self.inUserInvokedWatchRequest = NO;
-	self.isZNCBouncerConnection = NO;
+
+	self.autojoinInProgress = NO;
+	self.hasIRCopAccess = NO;
 	self.isAutojoined = NO;
 	self.isAway = NO;
 	self.isConnected = NO;
@@ -3126,6 +3131,7 @@
 	self.isLoggedIn = NO;
 	self.isQuitting = NO;
 	self.isWaitingForNickServ = NO;
+	self.isZNCBouncerConnection = NO;
 	self.reconnectEnabled = NO;
 	self.sendLagcheckReplyToChannel = NO;
 	self.serverHasNickServ = NO;
@@ -3141,8 +3147,16 @@
 	self.lastLagCheck = 0;
 	self.lastMessageReceived = 0;
 
-	[self.CAPacceptedCaps removeAllObjects];
-	[self.CAPpendingCaps removeAllObjects];
+	//
+	// This value is not reset to allow it to be tracked between
+	// connection attempts. See ZNC playback module for more info.
+	//
+	// self.lastMessageServerTime = 0;
+	//
+
+	[self.CAPAcceptedCaps removeAllObjects];
+	[self.CAPPendingCaps removeAllObjects];
+
 	[self.commandQueue removeAllObjects];
 }
 
@@ -3324,6 +3338,17 @@
 
     PointerIsEmptyAssert(m);
 
+	/* Keep track of the server time of the last seen message. */
+	if (self.capacities.zncPlaybackCapInUse) {
+		if (self.isLoggedIn) {
+			NSTimeInterval serverTime = [m.receivedAt timeIntervalSince1970];
+
+			if (serverTime > self.lastMessageServerTime) {
+				self.lastMessageServerTime = serverTime;
+			}
+		}
+	}
+
 	if (m.numericReply > 0) {
 		[self receiveNumericReply:m];
 	} else {
@@ -3493,9 +3518,9 @@
 	
 	NSString *text = [m paramAt:1];
 
-	if (self.CAPidentifyCTCP && ([text hasPrefix:@"+\x01"] || [text hasPrefix:@"-\x01"])) {
+	if (self.capacities.identifyCTCPCapInUse && ([text hasPrefix:@"+\x01"] || [text hasPrefix:@"-\x01"])) {
 		text = [text safeSubstringFromIndex:1];
-	} else if (self.CAPidentifyMsg && ([text hasPrefix:@"+"] || [text hasPrefix:@"-"])) {
+	} else if (self.capacities.identifyMsgCapInUse && ([text hasPrefix:@"+"] || [text hasPrefix:@"-"])) {
 		text = [text safeSubstringFromIndex:1];
 	}
 
@@ -3774,7 +3799,7 @@
 									
 									[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ@services.dal.net", IDMessage, nil];
 								} else {
-									if (self.CAPisIdentifiedWithSASL == NO) {
+									if (self.capacities.isIdentifiedWithSASL == NO) {
 										self.isWaitingForNickServ = YES;
 
 										/* Check auxiliary configuration. */
@@ -4519,7 +4544,7 @@
 			for (IRCModeInfo *h in info) {
 				[c changeMember:h.modeParamater mode:h.modeToken value:h.modeIsSet];
 
-				if (h.modeIsSet == NO && self.CAPmultiPrefix == NO) {
+				if (h.modeIsSet == NO && self.capacities.multiPrefixCapInUse == NO) {
 					performWho = YES;
 				}
 			}
@@ -4657,13 +4682,13 @@
 
 - (void)sendNextCap
 {
-	if (self.CAPpausedStatus == NO) {
-		if (NSObjectIsNotEmpty(self.CAPpendingCaps)) {
-			NSString *cap = [self.CAPpendingCaps lastObject];
+	if (self.CAPPausedStatus == NO) {
+		if (NSObjectIsNotEmpty(self.CAPPendingCaps)) {
+			NSString *cap = [self.CAPPendingCaps lastObject];
 
 			[self send:IRCPrivateCommandIndex("cap"), @"REQ", cap, nil];
 
-			[self.CAPpendingCaps removeLastObject];
+			[self.CAPPendingCaps removeLastObject];
 		} else {
 			[self send:IRCPrivateCommandIndex("cap"), @"END", nil];
 		}
@@ -4672,12 +4697,12 @@
 
 - (void)pauseCap
 {
-	self.CAPpausedStatus++;
+	self.CAPPausedStatus++;
 }
 
 - (void)resumeCap
 {
-	self.CAPpausedStatus--;
+	self.CAPPausedStatus--;
 
 	[self sendNextCap];
 }
@@ -4722,6 +4747,7 @@
 					   [cap isEqualIgnoringCase:@"multi-prefix"]			||
 					   [cap isEqualIgnoringCase:@"userhost-in-names"]		||
 					   [cap isEqualIgnoringCase:@"server-time"]				||
+					   [cap isEqualIgnoringCase:@"znc.in/playback"]			||
 					   [cap isEqualIgnoringCase:@"znc.in/server-time"]		||
 					   [cap isEqualIgnoringCase:@"znc.in/server-time-iso"]);
 
@@ -4795,26 +4821,28 @@
 {
 	if (supported) {
 		if ([cap isEqualIgnoringCase:@"sasl"]) {
-			self.CAPinSASLRequest = YES;
+			_capacities.isInActiveSASLNegotation = YES;
 
 			[self pauseCap];
 
 			[self sendSASLIdentificationRequest];
 		} else if ([cap isEqualIgnoringCase:@"userhost-in-names"]) {
-			self.CAPuserhostInNames = YES;
+			_capacities.userhostInNamesCapInUse = YES;
 		} else if ([cap isEqualIgnoringCase:@"multi-prefix"]) {
-			self.CAPmultiPrefix = YES;
+			_capacities.multiPrefixCapInUse = YES;
 		} else if ([cap isEqualIgnoringCase:@"identify-msg"]) {
-			self.CAPidentifyMsg = YES;
+			_capacities.identifyMsgCapInUse = YES;
 		} else if ([cap isEqualIgnoringCase:@"identify-ctcp"]) {
-			self.CAPidentifyCTCP = YES;
+			_capacities.identifyCTCPCapInUse = YES;
 		} else if ([cap isEqualIgnoringCase:@"away-notify"]) {
-            self.CAPawayNotify = YES;
+			_capacities.awayNotifyCapInUse = YES;
         } else if ([cap isEqualIgnoringCase:@"server-time"] ||
 				   [cap isEqualIgnoringCase:@"znc.in/server-time"] ||
 				   [cap isEqualIgnoringCase:@"znc.in/server-time-iso"])
 		{
-			self.CAPServerTime = YES;
+			_capacities.serverTimeCapInUse = YES;
+		} else if ([cap isEqualIgnoringCase:@"znc.in/playback"]) {
+			_capacities.zncPlaybackCapInUse = YES;
 		}
 	}
 }
@@ -4836,14 +4864,14 @@
 
 			for (NSString *cap in caps) {
 				if ([self isCapAvailable:cap]) {
-					[self.CAPpendingCaps addObject:cap];
+					[self.CAPPendingCaps addObject:cap];
 				}
 			}
 		} else if ([baseprt isEqualIgnoringCase:@"ACK"]) {
 			NSArray *caps = [actions componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
 			for (NSString *cap in caps) {
-				[self.CAPacceptedCaps addObject:cap];
+				[self.CAPAcceptedCaps addObject:cap];
 
 				[self cap:cap result:YES];
 			}
@@ -4872,7 +4900,7 @@
 
 - (void)receiveAwayNotifyCapacity:(IRCMessage *)m
 {
-    NSAssertReturn(self.CAPawayNotify);
+    NSAssertReturn(self.capacities.awayNotifyCapInUse);
 
     /* What are we changing to? */
     BOOL isAway = NSObjectIsNotEmpty([m sequence]);
@@ -4928,6 +4956,11 @@
 		[self sendCommand:s completeTarget:NO target:nil];
 	}
 
+	/* Request playback since the last seen message when previously connected. */
+	if (self.capacities.zncPlaybackCapInUse) {
+		[self send:IRCPrivateCommandIndex("privmsg"), @"*playback", @"play", @"*", [NSString stringWithFloat:self.lastMessageServerTime], nil];
+	}
+
 	/* Activate existing queries. */
 	for (IRCChannel *c in self.channels) {
 		if (c.isPrivateMessage) {
@@ -4941,7 +4974,7 @@
 	[self.masterController updateSegmentedController];
 
 	/* Everything else. */
-	if ([TPCPreferences autojoinWaitsForNickServ] == NO || self.CAPisIdentifiedWithSASL) {
+	if ([TPCPreferences autojoinWaitsForNickServ] == NO || self.capacities.isIdentifiedWithSASL) {
 		[self performAutoJoin];
 	} else {
         /* If we wait for NickServ we set a timer of 3.0 seconds before performing auto join.
@@ -5095,9 +5128,9 @@
 			NSString *kind = [m paramAt:1];
 
 			if ([kind isEqualIgnoringCase:@"identify-msg"]) {
-				self.CAPidentifyMsg = YES;
+				_capacities.identifyMsgCapInUse = YES;
 			} else if ([kind isEqualIgnoringCase:@"identify-ctcp"]) {
-				self.CAPidentifyCTCP = YES;
+				_capacities.identifyCTCPCapInUse = YES;
 			}
 
 			[self printReply:m];
@@ -5145,7 +5178,7 @@
             /* Update our own status. This has to only be done with away-notify CAP enabled.
              Old, WHO based information requests will still show our own status. */
 
-            NSAssertReturnLoopBreak(self.CAPawayNotify);
+            NSAssertReturnLoopBreak(self.capacities.awayNotifyCapInUse);
 
             for (IRCChannel *channel in self.channels) {
                 IRCUser *myself = [channel memberWithNickname:self.localNickname];
@@ -5552,7 +5585,7 @@
 			// Field Syntax: <H|G>[*][@|+]
 			// Strip G or H (away status).
             if ([flfields hasPrefix:@"G"] && self.inUserInvokedWhoRequest == NO) {
-				if ([TPCPreferences trackUserAwayStatusMaximumChannelSize] > 0 || self.CAPawayNotify) {
+				if ([TPCPreferences trackUserAwayStatusMaximumChannelSize] > 0 || self.capacities.awayNotifyCapInUse) {
 					isAway = YES;
 				}
 			}
@@ -6191,7 +6224,7 @@
 		{
 			NSAssertReturnLoopBreak(m.params.count >= 4);
 
-			self.CAPisIdentifiedWithSASL = YES;
+			_capacities.isIdentifiedWithSASL = YES;
 
 			[self print:self
 				   type:TVCLogLineDebugType
@@ -6219,8 +6252,8 @@
 				[self printReply:m];
 			}
 
-			if (self.CAPinSASLRequest) {
-				self.CAPinSASLRequest = NO;
+			if (self.capacities.isInActiveSASLNegotation) {
+					_capacities.isInActiveSASLNegotation = NO;
 
 				[self resumeCap];
 			}
@@ -7668,7 +7701,7 @@
 				} else {
 					[newEntries setBool:NO forKey:lname];
 
-					if (self.CAPWatchCommand) {
+					if (self.capacities.watchCommandCapInUse) {
 						/* We only add to the watch list if existing entry is not found. */
 
 						[watchAdditions safeAddObject:lname];
@@ -7681,7 +7714,7 @@
 	/* Now that we have an established list of entries that either already
 	 existed or are newly added; we now have to go through the old entries
 	 and find ones that are not in the new. Those are removals. */
-	if (self.CAPWatchCommand) {
+	if (self.capacities.watchCommandCapInUse) {
 		for (NSString *lname in oldEntriesNicknames) {
 			if ([newEntries containsKeyIgnoringCase:lname] == NO) {
 				[watchRemovals safeAddObject:lname];
@@ -7730,7 +7763,7 @@
     NSMutableString *userstr = [NSMutableString string];
 
 	for (IRCChannel *channel in self.channels) {
-		if (self.CAPawayNotify == NO) {
+		if (self.capacities.awayNotifyCapInUse == NO) {
             if (channel.isChannel && channel.isActive && [channel numberOfMembers] <= [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
                 [self send:IRCPrivateCommandIndex("who"), channel.name, nil];
             }
@@ -7741,7 +7774,7 @@
 		}
     }
 
-	if (self.CAPWatchCommand) {
+	if (self.capacities.watchCommandCapInUse) {
 		for (NSString *name in self.trackedUsers) {
 			[userstr appendFormat:@" %@", name]; 
 		}
@@ -7757,7 +7790,7 @@
 {
     PointerIsEmptyAssert(abEntry);
 
-	NSAssertReturn(self.CAPWatchCommand == NO);
+	NSAssertReturn(self.capacities.watchCommandCapInUse == NO);
     
     NSString *tracker = [abEntry trackingNickname];
 
