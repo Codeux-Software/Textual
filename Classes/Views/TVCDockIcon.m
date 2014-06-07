@@ -122,13 +122,31 @@ static NSInteger _cachedHighlightCount = -1;
 	
 	NSImage *appIcon = [[self applicationIcon] copy];
 	
-	NSImage *redBadgeLeft   = [NSImage imageNamed:@"DIRedBadgeLeft.png"];
-	NSImage *redBadgeCenter = [NSImage imageNamed:@"DIRedBadgeCenter.png"];
-	NSImage *redBadgeRight  = [NSImage imageNamed:@"DIRedBadgeRight.png"];
-	
-	NSImage *greenBadgeLeft		= [NSImage imageNamed:@"DIGreenBadgeLeft.png"];
-	NSImage *greenBadgeCenter	= [NSImage imageNamed:@"DIGreenBadgeCenter.png"];
-	NSImage *greenBadgeRight	= [NSImage imageNamed:@"DIGreenBadgeRight.png"];
+	NSImage *redBadgeLeft;
+	NSImage *redBadgeCenter;
+	NSImage *redBadgeRight;
+
+	NSImage *greenBadgeLeft;
+	NSImage *greenBadgeCenter;
+	NSImage *greenBadgeRight;
+
+	if ([TPCPreferences featureAvailableToOSXYosemite]) {
+		redBadgeLeft   = [NSImage imageNamed:@"DIRedBadgeLeftYosemite.png"];
+		redBadgeCenter = [NSImage imageNamed:@"DIRedBadgeCenterYosemite.png"];
+		redBadgeRight  = [NSImage imageNamed:@"DIRedBadgeRightYosemite.png"];
+
+		greenBadgeLeft		= [NSImage imageNamed:@"DIGreenBadgeLeftYosemite.png"];
+		greenBadgeCenter	= [NSImage imageNamed:@"DIGreenBadgeCenterYosemite.png"];
+		greenBadgeRight		= [NSImage imageNamed:@"DIGreenBadgeRightYosemite.png"];
+	} else {
+		redBadgeLeft   = [NSImage imageNamed:@"DIRedBadgeLeftMavericks.png"];
+		redBadgeCenter = [NSImage imageNamed:@"DIRedBadgeCenterMavericks.png"];
+		redBadgeRight  = [NSImage imageNamed:@"DIRedBadgeRightMavericks.png"];
+
+		greenBadgeLeft		= [NSImage imageNamed:@"DIGreenBadgeLeftMavericks.png"];
+		greenBadgeCenter	= [NSImage imageNamed:@"DIGreenBadgeCenterMavericks.png"];
+		greenBadgeRight		= [NSImage imageNamed:@"DIGreenBadgeRightMavericks.png"];
+	}
 	
 	/* ////////////////////////////////////////////////////////// */
 	/* Build Scaling Frames. */
