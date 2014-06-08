@@ -323,6 +323,9 @@
 	/* Set content view frame. */
 	NSRect contentViewFrame = [self.contentView frame];
 
+	contentViewFrame.origin.x = 175;
+	contentViewFrame.origin.y = 8;
+	
 	contentViewFrame.size.height = viewFrame.size.height;
 
 	[self.contentView setFrame:contentViewFrame];
