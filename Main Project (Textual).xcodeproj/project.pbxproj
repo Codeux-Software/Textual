@@ -812,26 +812,6 @@
 		4CBE64C81743720600831D69 /* TDCHighlightEntrySheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBE64C61743720600831D69 /* TDCHighlightEntrySheet.m */; };
 		4CBE64CA1743722100831D69 /* TDCHighlightEntrySheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBE64C91743722100831D69 /* TDCHighlightEntrySheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CBE64CB1743722100831D69 /* TDCHighlightEntrySheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBE64C91743722100831D69 /* TDCHighlightEntrySheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CC164881943AFE200B0D4B6 /* TPWTB_Alerts.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CC1647E1943AFE200B0D4B6 /* TPWTB_Alerts.tif */; };
-		4CC164891943AFE200B0D4B6 /* TPWTB_Alerts.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CC1647E1943AFE200B0D4B6 /* TPWTB_Alerts.tif */; };
-		4CC1648A1943AFE200B0D4B6 /* TPWTB_Alerts@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CC1647F1943AFE200B0D4B6 /* TPWTB_Alerts@2x.tif */; };
-		4CC1648B1943AFE200B0D4B6 /* TPWTB_Alerts@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CC1647F1943AFE200B0D4B6 /* TPWTB_Alerts@2x.tif */; };
-		4CC1648C1943AFE200B0D4B6 /* TPWTB_Alerts_NC.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164801943AFE200B0D4B6 /* TPWTB_Alerts_NC.tif */; };
-		4CC1648D1943AFE200B0D4B6 /* TPWTB_Alerts_NC.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164801943AFE200B0D4B6 /* TPWTB_Alerts_NC.tif */; };
-		4CC1648E1943AFE200B0D4B6 /* TPWTB_Alerts_NC@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164811943AFE200B0D4B6 /* TPWTB_Alerts_NC@2x.tif */; };
-		4CC1648F1943AFE200B0D4B6 /* TPWTB_Alerts_NC@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164811943AFE200B0D4B6 /* TPWTB_Alerts_NC@2x.tif */; };
-		4CC164901943AFE200B0D4B6 /* TPWTB_Extensions.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164821943AFE200B0D4B6 /* TPWTB_Extensions.tif */; };
-		4CC164911943AFE200B0D4B6 /* TPWTB_Extensions.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164821943AFE200B0D4B6 /* TPWTB_Extensions.tif */; };
-		4CC164921943AFE200B0D4B6 /* TPWTB_Extensions@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164831943AFE200B0D4B6 /* TPWTB_Extensions@2x.tif */; };
-		4CC164931943AFE200B0D4B6 /* TPWTB_Extensions@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164831943AFE200B0D4B6 /* TPWTB_Extensions@2x.tif */; };
-		4CC164941943AFE200B0D4B6 /* TPWTB_Interface.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164841943AFE200B0D4B6 /* TPWTB_Interface.tif */; };
-		4CC164951943AFE200B0D4B6 /* TPWTB_Interface.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164841943AFE200B0D4B6 /* TPWTB_Interface.tif */; };
-		4CC164961943AFE200B0D4B6 /* TPWTB_Interface@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164851943AFE200B0D4B6 /* TPWTB_Interface@2x.tif */; };
-		4CC164971943AFE200B0D4B6 /* TPWTB_Interface@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164851943AFE200B0D4B6 /* TPWTB_Interface@2x.tif */; };
-		4CC164981943AFE200B0D4B6 /* TPWTB_Mentions.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164861943AFE200B0D4B6 /* TPWTB_Mentions.tif */; };
-		4CC164991943AFE200B0D4B6 /* TPWTB_Mentions.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164861943AFE200B0D4B6 /* TPWTB_Mentions.tif */; };
-		4CC1649A1943AFE200B0D4B6 /* TPWTB_Mentions@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164871943AFE200B0D4B6 /* TPWTB_Mentions@2x.tif */; };
-		4CC1649B1943AFE200B0D4B6 /* TPWTB_Mentions@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164871943AFE200B0D4B6 /* TPWTB_Mentions@2x.tif */; };
 		4CC164AE1943B17100B0D4B6 /* DIGreenBadgeCenterMavericks.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC1649E1943B17100B0D4B6 /* DIGreenBadgeCenterMavericks.png */; };
 		4CC164AF1943B17100B0D4B6 /* DIGreenBadgeCenterMavericks.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC1649E1943B17100B0D4B6 /* DIGreenBadgeCenterMavericks.png */; };
 		4CC164B01943B17100B0D4B6 /* DIGreenBadgeLeftMavericks.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC1649F1943B17100B0D4B6 /* DIGreenBadgeLeftMavericks.png */; };
@@ -1461,16 +1441,6 @@
 		4CBE64C3174371C700831D69 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/Localization/English.lproj/TDCHighlightEntrySheet.xib; sourceTree = SOURCE_ROOT; };
 		4CBE64C61743720600831D69 /* TDCHighlightEntrySheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCHighlightEntrySheet.m; path = Dialogs/TDCHighlightEntrySheet.m; sourceTree = "<group>"; };
 		4CBE64C91743722100831D69 /* TDCHighlightEntrySheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCHighlightEntrySheet.h; sourceTree = "<group>"; };
-		4CC1647E1943AFE200B0D4B6 /* TPWTB_Alerts.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TPWTB_Alerts.tif; sourceTree = "<group>"; };
-		4CC1647F1943AFE200B0D4B6 /* TPWTB_Alerts@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "TPWTB_Alerts@2x.tif"; sourceTree = "<group>"; };
-		4CC164801943AFE200B0D4B6 /* TPWTB_Alerts_NC.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TPWTB_Alerts_NC.tif; sourceTree = "<group>"; };
-		4CC164811943AFE200B0D4B6 /* TPWTB_Alerts_NC@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "TPWTB_Alerts_NC@2x.tif"; sourceTree = "<group>"; };
-		4CC164821943AFE200B0D4B6 /* TPWTB_Extensions.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TPWTB_Extensions.tif; sourceTree = "<group>"; };
-		4CC164831943AFE200B0D4B6 /* TPWTB_Extensions@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "TPWTB_Extensions@2x.tif"; sourceTree = "<group>"; };
-		4CC164841943AFE200B0D4B6 /* TPWTB_Interface.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TPWTB_Interface.tif; sourceTree = "<group>"; };
-		4CC164851943AFE200B0D4B6 /* TPWTB_Interface@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "TPWTB_Interface@2x.tif"; sourceTree = "<group>"; };
-		4CC164861943AFE200B0D4B6 /* TPWTB_Mentions.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TPWTB_Mentions.tif; sourceTree = "<group>"; };
-		4CC164871943AFE200B0D4B6 /* TPWTB_Mentions@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "TPWTB_Mentions@2x.tif"; sourceTree = "<group>"; };
 		4CC1649E1943B17100B0D4B6 /* DIGreenBadgeCenterMavericks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DIGreenBadgeCenterMavericks.png; sourceTree = "<group>"; };
 		4CC1649F1943B17100B0D4B6 /* DIGreenBadgeLeftMavericks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DIGreenBadgeLeftMavericks.png; sourceTree = "<group>"; };
 		4CC164A01943B17100B0D4B6 /* DIGreenBadgeRightMavericks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DIGreenBadgeRightMavericks.png; sourceTree = "<group>"; };
@@ -1833,7 +1803,6 @@
 				4CC164431943AFCC00B0D4B6 /* Dock Icon Badges */,
 				4C46F3DB1943A654004CA8BA /* Encryption Badges */,
 				4C46F3E01943A654004CA8BA /* IRC Formatting Colors */,
-				4CC1647C1943AFE200B0D4B6 /* Preferences */,
 				4C46F3FF1943A654004CA8BA /* Status Badges */,
 				4C46F40A1943A654004CA8BA /* User Interface */,
 			);
@@ -2488,31 +2457,6 @@
 				4CC164A51943B17100B0D4B6 /* Red */,
 			);
 			path = "Dock Icon Badges";
-			sourceTree = "<group>";
-		};
-		4CC1647C1943AFE200B0D4B6 /* Preferences */ = {
-			isa = PBXGroup;
-			children = (
-				4CC1647D1943AFE200B0D4B6 /* Toolbar Icons */,
-			);
-			path = Preferences;
-			sourceTree = "<group>";
-		};
-		4CC1647D1943AFE200B0D4B6 /* Toolbar Icons */ = {
-			isa = PBXGroup;
-			children = (
-				4CC1647E1943AFE200B0D4B6 /* TPWTB_Alerts.tif */,
-				4CC1647F1943AFE200B0D4B6 /* TPWTB_Alerts@2x.tif */,
-				4CC164801943AFE200B0D4B6 /* TPWTB_Alerts_NC.tif */,
-				4CC164811943AFE200B0D4B6 /* TPWTB_Alerts_NC@2x.tif */,
-				4CC164821943AFE200B0D4B6 /* TPWTB_Extensions.tif */,
-				4CC164831943AFE200B0D4B6 /* TPWTB_Extensions@2x.tif */,
-				4CC164841943AFE200B0D4B6 /* TPWTB_Interface.tif */,
-				4CC164851943AFE200B0D4B6 /* TPWTB_Interface@2x.tif */,
-				4CC164861943AFE200B0D4B6 /* TPWTB_Mentions.tif */,
-				4CC164871943AFE200B0D4B6 /* TPWTB_Mentions@2x.tif */,
-			);
-			path = "Toolbar Icons";
 			sourceTree = "<group>";
 		};
 		4CC1649C1943B17100B0D4B6 /* Green */ = {
@@ -3176,15 +3120,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C46F4731943A654004CA8BA /* FormattingColor_8.png in Resources */,
-				4CC1648A1943AFE200B0D4B6 /* TPWTB_Alerts@2x.tif in Resources */,
 				4C46F45B1943A654004CA8BA /* FormattingColor_10.png in Resources */,
 				4C46F4BF1943A654004CA8BA /* DarkServerListViewDisclosureDown.tif in Resources */,
 				4C46F4971943A654004CA8BA /* channelRoomStatusIcon_Dark.tif in Resources */,
 				4C46F42D1943A654004CA8BA /* birthdayIcon.icns in Resources */,
 				4C46F4791943A654004CA8BA /* FormattingColor_Rainbow@2x.tif in Resources */,
 				4CC164B01943B17100B0D4B6 /* DIGreenBadgeLeftMavericks.png in Resources */,
-				4CC164921943AFE200B0D4B6 /* TPWTB_Extensions@2x.tif in Resources */,
-				4CC1648E1943AFE200B0D4B6 /* TPWTB_Alerts_NC@2x.tif in Resources */,
 				4CC164B61943B17100B0D4B6 /* DIGreenBadgeLeftYosemite.png in Resources */,
 				4C46F4AB1943A654004CA8BA /* ChannelCellSelection_Focused_Aqua@2x.tif in Resources */,
 				4CCF2EEB15804790006FFE21 /* IRCNetworks.plist in Resources */,
@@ -3195,7 +3136,6 @@
 				4CC164B81943B17100B0D4B6 /* DIGreenBadgeRightYosemite.png in Resources */,
 				4CC164C21943B17100B0D4B6 /* DIRedBadgeLeftYosemite.png in Resources */,
 				4C46F4D31943A654004CA8BA /* ChannelCellSelection_Unfocused_Graphite@2x.tif in Resources */,
-				4CC164901943AFE200B0D4B6 /* TPWTB_Extensions.tif in Resources */,
 				4C46F4A11943A654004CA8BA /* ChannelRoomStatusIcon_Glass_Selected@2x.tif in Resources */,
 				4C46F4571943A654004CA8BA /* FormattingColor_0.png in Resources */,
 				4CCC6B61158E8C48003A102B /* Scripts in Resources */,
@@ -3206,13 +3146,11 @@
 				4C46F4611943A654004CA8BA /* FormattingColor_13.png in Resources */,
 				4C46F4D51943A654004CA8BA /* ServerCellSelection_Focused_Graphite.tif in Resources */,
 				4CC164C41943B17100B0D4B6 /* DIRedBadgeRightYosemite.png in Resources */,
-				4CC164881943AFE200B0D4B6 /* TPWTB_Alerts.tif in Resources */,
 				4C46F4A31943A654004CA8BA /* MainWindowSegmentedControlUserTemplate.pdf in Resources */,
 				4CC164AE1943B17100B0D4B6 /* DIGreenBadgeCenterMavericks.png in Resources */,
 				4C46F4B71943A654004CA8BA /* ServerCellSelection_Unfocused_Aqua@2x.tif in Resources */,
 				4CC164B41943B17100B0D4B6 /* DIGreenBadgeCenterYosemite.png in Resources */,
 				4C46F4C51943A654004CA8BA /* DarkServerListViewDisclosureUpSelected.tif in Resources */,
-				4CC164961943AFE200B0D4B6 /* TPWTB_Interface@2x.tif in Resources */,
 				4C46F4771943A654004CA8BA /* FormattingColor_Rainbow.tif in Resources */,
 				4C46F4CD1943A654004CA8BA /* ChannelCellSelection_Focused_Graphite.tif in Resources */,
 				4C8AF72B158E9B330026668C /* TDChanBanSheet.xib in Resources */,
@@ -3251,12 +3189,10 @@
 				4C46F46D1943A654004CA8BA /* FormattingColor_5.png in Resources */,
 				4C46F4751943A654004CA8BA /* FormattingColor_9.png in Resources */,
 				4C46F4511943A654004CA8BA /* encryptionLockIconDark@2x.tif in Resources */,
-				4CC1649A1943AFE200B0D4B6 /* TPWTB_Mentions@2x.tif in Resources */,
 				4C8AF737158E9B330026668C /* TVCInputPromptDialog.xib in Resources */,
 				4C46F49B1943A654004CA8BA /* ChannelRoomStatusIcon_Glass.tif in Resources */,
 				4C46F4551943A654004CA8BA /* encryptionLockIconLight@2x.tif in Resources */,
 				4C8AF738158E9B330026668C /* TXCMainMenu.xib in Resources */,
-				4CC164981943AFE200B0D4B6 /* TPWTB_Mentions.tif in Resources */,
 				4CC164B21943B17100B0D4B6 /* DIGreenBadgeRightMavericks.png in Resources */,
 				4C46F49F1943A654004CA8BA /* ChannelRoomStatusIcon_Glass_Selected.tif in Resources */,
 				4C0879BE187061760034F5EB /* TDCFileTransferDialog.xib in Resources */,
@@ -3264,7 +3200,6 @@
 				4C46F4D71943A654004CA8BA /* ServerCellSelection_Focused_Graphite@2x.tif in Resources */,
 				4C46F4C71943A654004CA8BA /* DarkServerListViewSelectedPrivateMessageUser.tif in Resources */,
 				4CC164BA1943B17100B0D4B6 /* DIRedBadgeCenterMavericks.png in Resources */,
-				4CC164941943AFE200B0D4B6 /* TPWTB_Interface.tif in Resources */,
 				4C46F4991943A654004CA8BA /* channelRoomStatusIcon_Dark@2x.tif in Resources */,
 				4C46F45F1943A654004CA8BA /* FormattingColor_12.png in Resources */,
 				4C8AF73B158E9B530026668C /* BasicLanguage.strings in Resources */,
@@ -3280,7 +3215,6 @@
 				4C46F4A91943A654004CA8BA /* ChannelCellSelection_Focused_Aqua.tif in Resources */,
 				4C46F44F1943A654004CA8BA /* encryptionLockIconDark.tif in Resources */,
 				4C52379515C18F6700414852 /* Styles in Resources */,
-				4CC1648C1943AFE200B0D4B6 /* TPWTB_Alerts_NC.tif in Resources */,
 				4C46F4B51943A654004CA8BA /* ServerCellSelection_Unfocused_Aqua.tif in Resources */,
 				4CBE64C4174371C700831D69 /* TDCHighlightEntrySheet.xib in Resources */,
 			);
@@ -3291,15 +3225,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C46F4741943A654004CA8BA /* FormattingColor_8.png in Resources */,
-				4CC1648B1943AFE200B0D4B6 /* TPWTB_Alerts@2x.tif in Resources */,
 				4C46F45C1943A654004CA8BA /* FormattingColor_10.png in Resources */,
 				4C46F4C01943A654004CA8BA /* DarkServerListViewDisclosureDown.tif in Resources */,
 				4C46F4981943A654004CA8BA /* channelRoomStatusIcon_Dark.tif in Resources */,
 				4C46F42E1943A654004CA8BA /* birthdayIcon.icns in Resources */,
 				4C46F47A1943A654004CA8BA /* FormattingColor_Rainbow@2x.tif in Resources */,
 				4CC164B11943B17100B0D4B6 /* DIGreenBadgeLeftMavericks.png in Resources */,
-				4CC164931943AFE200B0D4B6 /* TPWTB_Extensions@2x.tif in Resources */,
-				4CC1648F1943AFE200B0D4B6 /* TPWTB_Alerts_NC@2x.tif in Resources */,
 				4CC164B71943B17100B0D4B6 /* DIGreenBadgeLeftYosemite.png in Resources */,
 				4C46F4AC1943A654004CA8BA /* ChannelCellSelection_Focused_Aqua@2x.tif in Resources */,
 				4C5BA37A16F1302F00A96CA2 /* IRCNetworks.plist in Resources */,
@@ -3310,7 +3241,6 @@
 				4CC164B91943B17100B0D4B6 /* DIGreenBadgeRightYosemite.png in Resources */,
 				4CC164C31943B17100B0D4B6 /* DIRedBadgeLeftYosemite.png in Resources */,
 				4C46F4D41943A654004CA8BA /* ChannelCellSelection_Unfocused_Graphite@2x.tif in Resources */,
-				4CC164911943AFE200B0D4B6 /* TPWTB_Extensions.tif in Resources */,
 				4C46F4A21943A654004CA8BA /* ChannelRoomStatusIcon_Glass_Selected@2x.tif in Resources */,
 				4C46F4581943A654004CA8BA /* FormattingColor_0.png in Resources */,
 				4C5BA38D16F1302F00A96CA2 /* Scripts in Resources */,
@@ -3321,13 +3251,11 @@
 				4C46F4621943A654004CA8BA /* FormattingColor_13.png in Resources */,
 				4C46F4D61943A654004CA8BA /* ServerCellSelection_Focused_Graphite.tif in Resources */,
 				4CC164C51943B17100B0D4B6 /* DIRedBadgeRightYosemite.png in Resources */,
-				4CC164891943AFE200B0D4B6 /* TPWTB_Alerts.tif in Resources */,
 				4C46F4A41943A654004CA8BA /* MainWindowSegmentedControlUserTemplate.pdf in Resources */,
 				4CC164AF1943B17100B0D4B6 /* DIGreenBadgeCenterMavericks.png in Resources */,
 				4C46F4B81943A654004CA8BA /* ServerCellSelection_Unfocused_Aqua@2x.tif in Resources */,
 				4CC164B51943B17100B0D4B6 /* DIGreenBadgeCenterYosemite.png in Resources */,
 				4C46F4C61943A654004CA8BA /* DarkServerListViewDisclosureUpSelected.tif in Resources */,
-				4CC164971943AFE200B0D4B6 /* TPWTB_Interface@2x.tif in Resources */,
 				4C46F4781943A654004CA8BA /* FormattingColor_Rainbow.tif in Resources */,
 				4C46F4CE1943A654004CA8BA /* ChannelCellSelection_Focused_Graphite.tif in Resources */,
 				4C5BA39116F1302F00A96CA2 /* TDChanBanSheet.xib in Resources */,
@@ -3366,12 +3294,10 @@
 				4C46F46E1943A654004CA8BA /* FormattingColor_5.png in Resources */,
 				4C46F4761943A654004CA8BA /* FormattingColor_9.png in Resources */,
 				4C46F4521943A654004CA8BA /* encryptionLockIconDark@2x.tif in Resources */,
-				4CC1649B1943AFE200B0D4B6 /* TPWTB_Mentions@2x.tif in Resources */,
 				4C5BA39D16F1302F00A96CA2 /* TVCInputPromptDialog.xib in Resources */,
 				4C46F49C1943A654004CA8BA /* ChannelRoomStatusIcon_Glass.tif in Resources */,
 				4C46F4561943A654004CA8BA /* encryptionLockIconLight@2x.tif in Resources */,
 				4C5BA39E16F1302F00A96CA2 /* TXCMainMenu.xib in Resources */,
-				4CC164991943AFE200B0D4B6 /* TPWTB_Mentions.tif in Resources */,
 				4CC164B31943B17100B0D4B6 /* DIGreenBadgeRightMavericks.png in Resources */,
 				4C46F4A01943A654004CA8BA /* ChannelRoomStatusIcon_Glass_Selected.tif in Resources */,
 				4C0879BF187061760034F5EB /* TDCFileTransferDialog.xib in Resources */,
@@ -3379,7 +3305,6 @@
 				4C46F4D81943A654004CA8BA /* ServerCellSelection_Focused_Graphite@2x.tif in Resources */,
 				4C46F4C81943A654004CA8BA /* DarkServerListViewSelectedPrivateMessageUser.tif in Resources */,
 				4CC164BB1943B17100B0D4B6 /* DIRedBadgeCenterMavericks.png in Resources */,
-				4CC164951943AFE200B0D4B6 /* TPWTB_Interface.tif in Resources */,
 				4C46F49A1943A654004CA8BA /* channelRoomStatusIcon_Dark@2x.tif in Resources */,
 				4C46F4601943A654004CA8BA /* FormattingColor_12.png in Resources */,
 				4C5BA39F16F1302F00A96CA2 /* BasicLanguage.strings in Resources */,
@@ -3395,7 +3320,6 @@
 				4C46F4AA1943A654004CA8BA /* ChannelCellSelection_Focused_Aqua.tif in Resources */,
 				4C46F4501943A654004CA8BA /* encryptionLockIconDark.tif in Resources */,
 				4C5BA3CC16F1302F00A96CA2 /* Styles in Resources */,
-				4CC1648D1943AFE200B0D4B6 /* TPWTB_Alerts_NC.tif in Resources */,
 				4C46F4B61943A654004CA8BA /* ServerCellSelection_Unfocused_Aqua.tif in Resources */,
 				4CBE64C5174371C700831D69 /* TDCHighlightEntrySheet.xib in Resources */,
 			);
