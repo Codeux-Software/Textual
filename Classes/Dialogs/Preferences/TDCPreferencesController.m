@@ -57,6 +57,8 @@
 
 @interface TDCPreferencesController ()
 @property (nonatomic, strong) NSMutableArray *navigationTreeMatrix;
+@property (nonatomic, assign) NSInteger lastSelectedNavigationItem;
+@property (nonatomic, assign) NSInteger currentSelectedNavigationItem;
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 @property (nonatomic, strong) TDCProgressInformationSheet *tcopyStyleFilesProgressIndicator;
@@ -201,6 +203,9 @@
 	[self.navigationOutlineview expandItem:self.navigationTreeMatrix[1]];
 	[self.navigationOutlineview expandItem:self.navigationTreeMatrix[3]];
 
+	self.lastSelectedNavigationItem = 6;
+	self.currentSelectedNavigationItem = 6;
+
 	[self.navigationOutlineview selectItemAtIndex:6];
 
 	// Complete startup of preferences.
@@ -294,57 +299,109 @@
 
 	NSDictionary *navItem = [self.navigationOutlineview itemAtRow:selectedRow];
 
+	self.lastSelectedNavigationItem = self.currentSelectedNavigationItem;
+	self.currentSelectedNavigationItem = selectedRow;
+
 	[self presentPreferencesPane:navItem[@"view"]];
 }
 
 - (void)presentPreferencesPane:(NSView *)newView
 {
-	/* Add view. */
-	if (NSObjectIsNotEmpty(self.contentView.subviews)) {
-		[self.contentView.subviews[0] removeFromSuperview];
-	}
+	BOOL isGoingDown = NO;
 
-	[self.contentView addSubview:newView];
+	if (self.currentSelectedNavigationItem > self.lastSelectedNavigationItem) {
+		isGoingDown = YES;
+	}
 
 	/* Set view frame. */
-	NSRect viewFrame = [newView frame];
+	NSRect newViewFinalFrame = [newView frame];
 
-	viewFrame.origin.x = 0;
-	viewFrame.origin.y = 0;
+	newViewFinalFrame.origin.x = 0;
+	newViewFinalFrame.origin.y = 0;
 
-	viewFrame.size.width = _forcedPreferencePaneViewFrameWidth;
+	newViewFinalFrame.size.width = _forcedPreferencePaneViewFrameWidth;
 
-	if (viewFrame.size.height < _forcedPreferencePaneViewFrameHeight) {
-		viewFrame.size.height = _forcedPreferencePaneViewFrameHeight;
+	if (newViewFinalFrame.size.height < _forcedPreferencePaneViewFrameHeight) {
+		newViewFinalFrame.size.height = _forcedPreferencePaneViewFrameHeight;
 	}
+
+	/* Set frame animation will start at. */
+	NSRect newViewAnimationFrame = newViewFinalFrame;
+
+	if (isGoingDown) {
+		newViewAnimationFrame.origin.y += newViewAnimationFrame.size.height;
+	} else {
+		newViewAnimationFrame.origin.y -= newViewAnimationFrame.size.height;
+	}
+
+	[newView setFrame:newViewAnimationFrame];
 
 	/* Set window frame. */
 	NSRect windowFrame = [self.window frame];
 
-	windowFrame.size.height = (_preferencePaneViewFramePadding + viewFrame.size.height);
+	windowFrame.size.height = (_preferencePaneViewFramePadding + newViewFinalFrame.size.height);
 
 	windowFrame.origin.y = (NSMaxY(self.window.frame) - windowFrame.size.height);
 
-	/* Set content view frame. */
-	NSScrollView *navTreeScrlv = [self.navigationOutlineview enclosingScrollView];
-
-	NSRect outlineViewFrame = [navTreeScrlv frame];
+	/* Update window size. */
+	[self.window setFrame:windowFrame display:YES animate:YES];
 
 	NSRect contentViewFrame = [self.contentView frame];
 
-	contentViewFrame.size.height = viewFrame.size.height;
-	outlineViewFrame.size.height = viewFrame.size.height;
+	contentViewFrame.origin.y = 8;
 
-	[self.window setFrame:windowFrame display:YES animate:NO];
+	contentViewFrame.size.height = newViewFinalFrame.size.height;
+
+	[self.contentView addSubview:newView];
 
 	[self.contentView setFrame:contentViewFrame];
 
-	[navTreeScrlv setFrame:outlineViewFrame];
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(timedRemoveFrame:) object:newView];
 
-	[newView setFrame:viewFrame];
+	/* Begin animation. */
+	[RZAnimationCurrentContext() setDuration:0.7];
 
-	/* Fix tab key navigation. */
+	NSArray *subviews = self.contentView.subviews;
+
+	NSInteger subviewCount = [subviews count];
+
+	if (subviewCount > 1) {
+		NSView *oldView = self.contentView.subviews[0];
+
+		/* If the number of visible views is more than 2 (the one we added and the old),
+		 then we erase the old views because the user could be clicking the navigation
+		 list fast which means the old views would stick until animations complete. */
+		if (subviewCount > 2) {
+			for (NSInteger i = 2; i < subviewCount; i++) {
+				[subviews[i] removeFromSuperview];
+			}
+		}
+
+		NSRect oldViewAnimationFrame = [oldView frame]; // Set frame animation will end at.
+
+		if (isGoingDown) {
+			oldViewAnimationFrame.origin.y = -(windowFrame.size.height); // No way anything will be there…
+		} else {
+			oldViewAnimationFrame.origin.y = windowFrame.size.height; // No way anything will be there…
+		}
+
+		[oldView.animator setAlphaValue:0.0];
+		[oldView.animator setFrame:oldViewAnimationFrame];
+
+		[newView.animator setAlphaValue:1.0];
+		[newView.animator setFrame:newViewFinalFrame];
+
+		[self performSelector:@selector(timedRemoveFrame:) withObject:oldView afterDelay:0.2];
+	} else {
+		[newView setFrame:newViewFinalFrame];
+	}
+
 	[self.window recalculateKeyViewLoop];
+}
+
+- (void)timedRemoveFrame:(NSView *)oldView
+{
+	[oldView removeFromSuperview];
 }
 
 #pragma mark -
