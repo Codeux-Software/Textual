@@ -553,8 +553,6 @@
 		4C85D198187EC18900860129 /* TCMPortMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; };
 		4C85D19D187EC19D00860129 /* TCMPortMapper.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; };
 		4C85D19E187EC1A200860129 /* TCMPortMapper.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; };
-		4C8ACF9A189429EC002F6A3F /* LogControllerStorageModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 4C8ACF99189429EC002F6A3F /* LogControllerStorageModel.xcdatamodel */; };
-		4C8ACF9B189429EC002F6A3F /* LogControllerStorageModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 4C8ACF99189429EC002F6A3F /* LogControllerStorageModel.xcdatamodel */; };
 		4C8AF609158E99520026668C /* TXGlobalModels.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF510158E99520026668C /* TXGlobalModels.m */; };
 		4C8AF60A158E99520026668C /* TXMasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF511158E99520026668C /* TXMasterController.m */; };
 		4C8AF60B158E99520026668C /* TXMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF512158E99520026668C /* TXMenuController.m */; };
@@ -1216,7 +1214,6 @@
 		4C86B0101748B7B60028C7AE /* Shared Debug Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Debug Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Debug Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C86B0111748B7B60028C7AE /* Shared App Store Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared App Store Release Configuration.xcconfig"; path = "Resources/Build Configurations/Shared App Store Release Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C86B0121748B7B60028C7AE /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Code Signing Identity.xcconfig"; path = "Resources/Build Configurations/Code Signing Identity.xcconfig"; sourceTree = SOURCE_ROOT; };
-		4C8ACF99189429EC002F6A3F /* LogControllerStorageModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; name = LogControllerStorageModel.xcdatamodel; path = "Resources/Data Models/LogControllerStorageModel.xcdatamodeld/LogControllerStorageModel.xcdatamodel"; sourceTree = SOURCE_ROOT; };
 		4C8AF510158E99520026668C /* TXGlobalModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXGlobalModels.m; sourceTree = "<group>"; };
 		4C8AF511158E99520026668C /* TXMasterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXMasterController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4C8AF512158E99520026668C /* TXMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXMenuController.m; sourceTree = "<group>"; };
@@ -1706,7 +1703,6 @@
 			isa = PBXGroup;
 			children = (
 				5D9B8EB1170A0EA700919CB0 /* Build */,
-				4C7110921893DB2C00AC56CE /* Data Models */,
 				4C46CC8E158042C600846B64 /* Documents */,
 				4CA218B416D81F8F0012DAA8 /* Script Installers */,
 				4C52379115C0E0CA00414852 /* Styles */,
@@ -2004,14 +2000,6 @@
 				4C52379315C18F6700414852 /* Styles */,
 			);
 			name = Styles;
-			sourceTree = "<group>";
-		};
-		4C7110921893DB2C00AC56CE /* Data Models */ = {
-			isa = PBXGroup;
-			children = (
-				4C8ACF99189429EC002F6A3F /* LogControllerStorageModel.xcdatamodel */,
-			);
-			name = "Data Models";
 			sourceTree = "<group>";
 		};
 		4C7A309D16DAC1F500B231DE /* Dialogs */ = {
@@ -3493,7 +3481,6 @@
 				4C0444FF16F1603B00EBB665 /* TDChanBanSheet.m in Sources */,
 				4C04450016F1603B00EBB665 /* TDChanInviteExceptionSheet.m in Sources */,
 				4C04450116F1603B00EBB665 /* TDChannelSheet.m in Sources */,
-				4C8ACF9B189429EC002F6A3F /* LogControllerStorageModel.xcdatamodel in Sources */,
 				4C04450216F1603B00EBB665 /* TDCHighlightListSheet.m in Sources */,
 				4C04450316F1603B00EBB665 /* TDCInviteSheet.m in Sources */,
 				4C04450416F1603B00EBB665 /* TDCListDialog.m in Sources */,
@@ -3632,7 +3619,6 @@
 				4C8AF611158E99520026668C /* TDChanBanExceptionSheet.m in Sources */,
 				4C8AF612158E99520026668C /* TDChanBanSheet.m in Sources */,
 				4C8AF613158E99520026668C /* TDChanInviteExceptionSheet.m in Sources */,
-				4C8ACF9A189429EC002F6A3F /* LogControllerStorageModel.xcdatamodel in Sources */,
 				4C8AF614158E99520026668C /* TDChannelSheet.m in Sources */,
 				4C8AF615158E99520026668C /* TDCHighlightListSheet.m in Sources */,
 				4C8AF616158E99520026668C /* TDCInviteSheet.m in Sources */,
