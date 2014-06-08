@@ -48,19 +48,17 @@
 #define _fileTransferPortRangeMin			1024
 #define _fileTransferPortRangeMax			65535
 
-#define _TXWindowToolbarHeight				82
+#define _forcedPreferencePaneViewFrame		567, 406
 
-#define _addonsToolbarItemIndex				8
 #define _addonsToolbarItemMultiplier		65
 
-#define _preferencesWindowDefaultFrameWidth			534
-#define _preferencesWindowDefaultFrameHeight		332
+@interface TDCPreferencesController ()
+@property (nonatomic, strong) NSMutableArray *navigationTreeMatrix;
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-@interface TDCPreferencesController ()
 @property (nonatomic, strong) TDCProgressInformationSheet *tcopyStyleFilesProgressIndicator;
-@end
 #endif
+@end
 
 @implementation TDCPreferencesController
 
@@ -109,12 +107,93 @@
 	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationFileTransferSendFailedType]];
 	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationFileTransferReceiveFailedType]];
 
+	// Build navigation tree.
+	self.navigationTreeMatrix = [NSMutableArray array];
+
+	[self.navigationTreeMatrix addObject:@{
+										   @"name" : @"Appearance",
+										   @"children" : @[
+												@{@"name" : @"Channel View",				@"view" : self.contentViewStyle},
+												@{@"name" : @"Embeddable Media",			@"view" : self.contentViewInlineMedia},
+												@{@"name" : @"User Interface",				@"view" : self.contentViewInterface},
+												@{@"name" : @"User List Colors",			@"view" : self.contentViewUserListColors}
+											]
+										   }];
+
+	[self.navigationTreeMatrix addObject:@{
+										   @"blockCollapse" : @(YES),
+										   @"name" : @"Basic Settings",
+										   @"children" : @[
+												  @{@"name" : @"General",					@"view" : self.contentViewGeneral},
+												  @{@"name" : @"Channel Management",		@"view" : self.contentViewChannelManagement},
+												  @{@"name" : @"Command Scope",				@"view" : self.contentViewCommandScope},
+												  @{@"name" : @"Highlights",				@"view" : self.contentViewHighlights},
+												  @{@"name" : @"Incoming Data",				@"view" : self.contentViewIncomingData},
+												  @{@"name" : @"Notifications",				@"view" : self.contentViewAlerts}
+											]
+										   }];
+
+	[self.navigationTreeMatrix addObject:@{
+										   @"name" : @"Defaults",
+										   @"children" : @[
+												   @{@"name" : @"Identity",				@"view" : self.contentViewDefaultIdentity},
+												   @{@"name" : @"IRCop Messages",		@"view" : self.contentViewIRCopMessages}
+											]
+										   }];
+
+	[self.navigationTreeMatrix addObject:@{
+										   @"name" : @"Input Controls",
+										   @"children" : @[
+												   @{@"name" : @"Keyboard & Mouse",				@"view" : self.contentViewKeyboardAndMouse},
+												   @{@"name" : @"Keyboard Navigation",			@"view" : self.contentViewKeyboardNavigation},
+												   @{@"name" : @"Main Text Field",				@"view" : self.contentViewMainTextField}
+											]
+										   }];
+
+	// ----------------- //
+	NSMutableArray *pluginNavigationItems = [NSMutableArray array];
+
+	[pluginNavigationItems addObject:@{@"name" : @"Installed Addons", @"view" : self.contentViewInstalledAddons}];
+
+	NSArray *bundles = [THOPluginManagerSharedInstance() pluginsWithPreferencePanes];
+
+	for (THOPluginItem *plugin in bundles) {
+		NSString *name = [[plugin primaryClass] preferencesMenuItemName];
+
+		NSView *view = [[plugin primaryClass] preferencesView];
+
+		[pluginNavigationItems addObject:@{@"name" : name, @"view" : view}];
+	}
+
+	[self.navigationTreeMatrix addObject:@{@"name" : @"Addons", @"children" : pluginNavigationItems}];
+	// ----------------- //
+
+	[self.navigationTreeMatrix addObject:@{
+										   @"name" : @"Advanced",
+										   @"children" : @[
+												   @{@"name" : @"Experimental Settings",		@"view" : self.contentViewExperimentalSettings},
+												   @{@"name" : @"File Transfers",				@"view" : self.contentViewFileTransfers},
+												   @{@"name" : @"Flood Control",				@"view" : self.contentViewFloodControl},
+												   @{@"name" : @"Log Location",					@"view" : self.contentViewLogLocation}
+											]
+										   }];
+
+	 self.navigationOutlineview.dataSource = self;
+	 self.navigationOutlineview.delegate = self;
+
+	[self.navigationOutlineview reloadData];
+
+	[self.navigationOutlineview expandItem:self.navigationTreeMatrix[0]];
+	[self.navigationOutlineview expandItem:self.navigationTreeMatrix[1]];
+	[self.navigationOutlineview expandItem:self.navigationTreeMatrix[3]];
+
+	[self.navigationOutlineview selectItemAtIndex:6];
+
+	// Complete startup of preferences.
 	[self.scriptsController populateData];
 
 	 self.installedScriptsTable.dataSource = self.scriptsController;
 	[self.installedScriptsTable reloadData];
-
-	[self setUpToolbarItemsAndMenus];
 
 	[self updateThemeSelection];
     [self updateAlertSelection];
@@ -142,176 +221,78 @@
 	[self.setAsDefaultIRCClientButton setHidden:[TPCPreferences isDefaultIRCClient]];
 
 	[self.window restoreWindowStateForClass:self.class];
-
 	[self.window makeKeyAndOrderFront:nil];
-
-	[self firstPane:self.generalView selectedItem:0];
 }
 
 #pragma mark -
-#pragma mark NSToolbar Delegates
+#pragma mark NSOutlineViewDelegate Delegates
 
-/*
-	 Toolbar Design:
-	 [tag]: [label]
-
-	 0: General
-
-	 — Blank Space —
-
-	 3: Alerts
-	 1: Highlights
-	 4: Style
-	 2: Interface
-	 9: Identity
-
-	 — Blank Space —
-
-	 13: Addons — Menu that includes list of preference
-	 panes created by loaded extensions. Top item of
-	 list is "Installed Addons" with tag 10. The tag
-	 of each other item is dynamically determined based
-	 on the _addonsToolbarItemMultiplier.
-
-	 10: Addons — Button, "Installed Addons" — no menu. Used
-	 if there are no extensions loaded that create
-	 custom preference panes.
-
-	 11: Advanced — Menu.
-
-	 14: File Transfers
-	 7:	IRCop Services
-	 8:	Channel Management
-	 12: Command Scope
-	 6:	Flood Control
-	 15: Incoming Data
-	 5:	Log Location
-	 11: Experimental Settings
-
-	 The tag of each toolbar item (and menu item) should not
-	 conflict with any other in order to function with
-	 onPrefPaneSelected: properly which each item calls.
- */
-
-- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
+- (NSInteger)outlineView:(NSOutlineView *)sender numberOfChildrenOfItem:(NSDictionary *)item
 {
-	NSArray *bundles = [THOPluginManagerSharedInstance() pluginsWithPreferencePanes];
-
-	if (NSObjectIsEmpty(bundles)) {
-		return @[@"0", NSToolbarFlexibleSpaceItemIdentifier, @"3", @"1", @"4", @"2", @"9", NSToolbarFlexibleSpaceItemIdentifier, @"10", @"11"];
+	if (item) {
+		return [item[@"children"] count];
 	} else {
-		return @[@"0", NSToolbarFlexibleSpaceItemIdentifier, @"3", @"1", @"4", @"2", @"9", NSToolbarFlexibleSpaceItemIdentifier, @"13", @"11"];
+		return [self.navigationTreeMatrix count];
 	}
 }
 
-- (void)setUpToolbarItemsAndMenus
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(NSDictionary *)item
 {
-	/* Growl check. */
-	BOOL growlRunning = [GrowlApplicationBridge isGrowlRunning];
-
-	/* We only have notification center on mountain lion or newer so we have to
-	 check what OS we are running on before we even doing anything. */
-	if ([TPCPreferences featureAvailableToOSXMountainLion] == NO || growlRunning) {
-		/* Show growl icon if it is running or we are not on mountain lion. */
-		
-		[self.alertToolbarItem setImage:[NSImage imageNamed:@"TPWTB_Alerts"]];
-
-		if (growlRunning) {
-			self.alertNotificationDestinationTextField.stringValue = TXTFLS(@"TDCPreferencesController[1005]");
-		} else {
-			self.alertNotificationDestinationTextField.stringValue = TXTFLS(@"TDCPreferencesController[1007]");
-
-		}
+	if (item) {
+		return item[@"children"][index];
 	} else {
-		/* Show notification center icon if we are on ML and growl is not running. */
-
-		[self.alertToolbarItem setImage:[NSImage imageNamed:@"TPWTB_Alerts_NC"]];
-		
-		self.alertNotificationDestinationTextField.stringValue = TXTFLS(@"TDCPreferencesController[1006]");
-	}
-
-	/* Extensions. */
-	NSArray *bundles = [THOPluginManagerSharedInstance() pluginsWithPreferencePanes];
-
-	for (THOPluginItem *plugin in bundles) {
-		NSInteger tagIndex = ([bundles indexOfObject:plugin] + _addonsToolbarItemMultiplier);
-
-		NSMenuItem *pluginMenu = [NSMenuItem menuItemWithTitle:[plugin.primaryClass preferencesMenuItemName]
-														target:self
-														action:@selector(onPrefPaneSelected:)];
-
-		[pluginMenu setTag:tagIndex];
-
-		[self.installedScriptsMenu addItem:pluginMenu];
+		return self.navigationTreeMatrix[index];
 	}
 }
 
-- (void)onPrefPaneSelected:(id)sender
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(NSDictionary *)item
 {
-	NSInteger pluginIndex = ([sender tag] - _addonsToolbarItemMultiplier);
-
-	switch ([sender tag]) {
-		case 0:		{ [self firstPane:self.generalView					selectedItem:0]; break; }
-		case 1:		{ [self firstPane:self.highlightView				selectedItem:1]; break; }
-		case 2:		{ [self firstPane:self.interfaceView				selectedItem:2]; break; }
-		case 3:		{ [self firstPane:self.alertsView					selectedItem:3]; break; }
-		case 4:		{ [self firstPane:self.stylesView					selectedItem:4]; break; }
-		case 5:		{ [self firstPane:self.logLocationView				selectedItem:11]; break; }
-		case 6:		{ [self firstPane:self.floodControlView				selectedItem:11]; break; }
-		case 7:		{ [self firstPane:self.IRCopServicesView			selectedItem:11]; break; }
-		case 8:		{ [self firstPane:self.channelManagementView		selectedItem:11]; break; }
-		case 9:		{ [self firstPane:self.identityView					selectedItem:9]; break; }
-		case 10:	{ [self firstPane:self.installedAddonsView			selectedItem:10]; break; }
-		case 11:	{ [self firstPane:self.experimentalSettingsView		selectedItem:11]; break; }
-		case 12:	{ [self firstPane:self.commandScopeSettingsView		selectedItem:11]; break; }
-		case 13:	{ [self firstPane:self.iCloudSyncView				selectedItem:11]; break; }
-		case 14:	{ [self firstPane:self.fileTransferView				selectedItem:11]; break; }
-		case 15:	{ [self firstPane:self.incomingDataView				selectedItem:11]; break; }
-		default:
-		{
-			THOPluginItem *plugin = [THOPluginManagerSharedInstance() pluginsWithPreferencePanes][pluginIndex];
-
-			if (plugin) {
-				NSView *prefsView = [plugin.primaryClass preferencesView];
-
-				if (prefsView) {
-					[self firstPane:prefsView selectedItem:13];
-				}
-			} else {
-				[self firstPane:self.generalView selectedItem:0];
-			}
-
-			break;
-		}
-	}
+	return ([item boolForKey:@"blockCollapse"] == NO);
 }
 
-- (void)firstPane:(NSView *)view selectedItem:(NSInteger)key
+- (BOOL)outlineView:(NSOutlineView *)sender isItemExpandable:(NSDictionary *)item
 {
-	[self firstPane:view selectedItem:key animianteTransition:YES];
+	return [item containsKey:@"children"];
 }
 
-- (void)firstPane:(NSView *)view selectedItem:(NSInteger)key animianteTransition:(BOOL)isAnimated
+- (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(NSDictionary *)item
 {
-	NSRect windowFrame = self.window.frame;
+	return item[@"name"];
+}
 
-	windowFrame.size.width = view.frame.size.width;
-	windowFrame.size.height = (view.frame.size.height + _TXWindowToolbarHeight);
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
+{
+	return ([item containsKey:@"children"] == NO);
+}
 
-	windowFrame.origin.y = (NSMaxY(self.window.frame) - windowFrame.size.height);
+- (id)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(NSDictionary *)item
+{
+	NSTableCellView *newView = [outlineView makeViewWithIdentifier:@"navEntry" owner:self];
 
+	[[newView textField] setStringValue:item[@"name"]];
+
+	return newView;
+}
+
+- (void)outlineViewSelectionDidChange:(NSNotification *)notification
+{
 	if (NSObjectIsNotEmpty(self.contentView.subviews)) {
 		[self.contentView.subviews[0] removeFromSuperview];
 	}
 
-	[self.window setFrame:windowFrame display:YES animate:isAnimated];
+	NSInteger selectedRow = [self.navigationOutlineview selectedRow];
 
-	[self.contentView setFrame:view.frame];
-	[self.contentView addSubview:view];
+	NSDictionary *navItem = [self.navigationOutlineview itemAtRow:selectedRow];
+
+	NSView *newView = navItem[@"view"];
+
+	[self.contentView addSubview:newView];
+
+	NSRect viewFrame = NSMakeRect(0, 0, _forcedPreferencePaneViewFrame);
+
+	[newView setFrame:viewFrame];
 
 	[self.window recalculateKeyViewLoop];
-
-	[self.preferenceSelectToolbar setSelectedItemIdentifier:[NSString stringWithInteger:key]];
 }
 
 #pragma mark -
@@ -1411,17 +1392,6 @@
 	[RZNotificationCenter() removeObserver:self name:TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification object:nil];
 #endif
 
-	/* Before closing, move back to first pane so that the
-	 saved window state always has same frame. */
-	NSRect windowFrame = [self.window frame];
-
-	windowFrame.size.width = _preferencesWindowDefaultFrameWidth;
-	windowFrame.size.height = _preferencesWindowDefaultFrameHeight;
-
-	windowFrame.origin.y = ((NSMaxY(self.window.frame) - windowFrame.size.height) + 4);
-
-	[self.window setFrame:windowFrame display:NO animate:NO];
-	
 	[self.window saveWindowStateForClass:self.class];
 
 	/* Clean up highlight keywords. */

@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-@interface TDCPreferencesController : NSWindowController
+@interface TDCPreferencesController : NSWindowController <NSOutlineViewDataSource, NSOutlineViewDelegate>
 @property (nonatomic, uweak) id delegate;
 @property (nonatomic, strong) NSMutableArray *alertSounds;
 @property (nonatomic, nweak) IBOutlet NSArrayController *excludeKeywordsArrayController;
@@ -51,7 +51,6 @@
 @property (nonatomic, nweak) IBOutlet NSButton *highlightNicknameButton;
 @property (nonatomic, nweak) IBOutlet NSButton *setAsDefaultIRCClientButton;
 @property (nonatomic, nweak) IBOutlet NSButton *syncPreferencesToTheCloudButton;
-@property (nonatomic, nweak) IBOutlet NSMenu *installedScriptsMenu;
 @property (nonatomic, nweak) IBOutlet NSPopUpButton *alertSoundChoiceButton;
 @property (nonatomic, nweak) IBOutlet NSPopUpButton *alertTypeChoiceButton;
 @property (nonatomic, nweak) IBOutlet NSPopUpButton *themeSelectionButton;
@@ -62,30 +61,32 @@
 @property (nonatomic, nweak) IBOutlet NSTableView *keywordsTable;
 @property (nonatomic, nweak) IBOutlet NSTextField *alertNotificationDestinationTextField;
 @property (nonatomic, nweak) IBOutlet NSTextField *fileTransferManuallyEnteredIPAddressField;
-@property (nonatomic, nweak) IBOutlet NSToolbar *preferenceSelectToolbar;
-@property (nonatomic, nweak) IBOutlet NSToolbarItem *alertToolbarItem;
 @property (nonatomic, nweak) IBOutlet NSView *contentView;
-@property (nonatomic, strong) IBOutlet NSView *IRCopServicesView;
-@property (nonatomic, strong) IBOutlet NSView *alertsView;
-@property (nonatomic, strong) IBOutlet NSView *channelManagementView;
-@property (nonatomic, strong) IBOutlet NSView *commandScopeSettingsView;
-@property (nonatomic, strong) IBOutlet NSView *experimentalSettingsView;
-@property (nonatomic, strong) IBOutlet NSView *fileTransferView;
-@property (nonatomic, strong) IBOutlet NSView *floodControlView;
-@property (nonatomic, strong) IBOutlet NSView *generalView;
-@property (nonatomic, strong) IBOutlet NSView *highlightView;
-@property (nonatomic, strong) IBOutlet NSView *iCloudSyncView;
-@property (nonatomic, strong) IBOutlet NSView *identityView;
-@property (nonatomic, strong) IBOutlet NSView *installedAddonsView;
-@property (nonatomic, strong) IBOutlet NSView *interfaceView;
-@property (nonatomic, strong) IBOutlet NSView *incomingDataView;
-@property (nonatomic, strong) IBOutlet NSView *logLocationView;
-@property (nonatomic, strong) IBOutlet NSView *stylesView;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewAlerts;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewChannelManagement;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewCommandScope;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewDefaultIdentity;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewExperimentalSettings;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewFileTransfers;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewFloodControl;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewGeneral;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewHighlights;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewICloud;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewIRCopMessages;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewIncomingData;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewInlineMedia;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewInstalledAddons;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewInterface;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewKeyboardAndMouse;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewKeyboardNavigation;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewLogLocation;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewMainTextField;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewStyle;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewUserListColors;
+@property (nonatomic, nweak) IBOutlet NSOutlineView *navigationOutlineview;
 @property (nonatomic, strong) TDCPreferencesScriptWrapper *scriptsController;
 
 - (void)show;
-
-- (IBAction)onPrefPaneSelected:(id)sender;
 
 - (IBAction)onAddKeyword:(id)sender;
 - (IBAction)onAddExcludeKeyword:(id)sender;
