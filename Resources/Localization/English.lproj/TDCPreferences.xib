@@ -83,14 +83,14 @@
         </arrayController>
         <window title="Textual Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" visibleAtLaunch="NO" animationBehavior="default" id="4929" userLabel="Toolbar Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
-            <rect key="contentRect" x="367" y="318" width="745" height="422"/>
+            <rect key="contentRect" x="367" y="318" width="750" height="422"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <view key="contentView" id="4930">
-                <rect key="frame" x="0.0" y="-5" width="745" height="422"/>
+                <rect key="frame" x="0.0" y="0.0" width="750" height="422"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <scrollView appearanceType="aqua" borderType="groove" horizontalLineScroll="21" horizontalPageScroll="10" verticalLineScroll="21" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="pJW-4J-xuL">
-                        <rect key="frame" x="8" y="8" width="154" height="406"/>
+                        <rect key="frame" x="8" y="8" width="159" height="406"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="CUZ-c4-TVa">
                             <rect key="frame" x="1" y="17" width="238" height="117"/>
@@ -102,7 +102,7 @@
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="navEntry" width="148" minWidth="40" maxWidth="1000" id="8aT-T0-2u1">
+                                        <tableColumn identifier="navEntry" width="153" minWidth="40" maxWidth="1000" id="8aT-T0-2u1">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -116,11 +116,11 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="ZVg-ow-KgL">
-                                                    <rect key="frame" x="1" y="1" width="148" height="17"/>
+                                                    <rect key="frame" x="1" y="1" width="153" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="k2G-02-tKa">
-                                                            <rect key="frame" x="0.0" y="-2" width="148" height="17"/>
+                                                            <rect key="frame" x="0.0" y="-2" width="153" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="3I9-Dx-gSC">
                                                                 <font key="font" metaFont="smallSystem"/>
@@ -150,7 +150,7 @@
                         </scroller>
                     </scrollView>
                     <customView autoresizesSubviews="NO" id="4931">
-                        <rect key="frame" x="170" y="8" width="567" height="406"/>
+                        <rect key="frame" x="175" y="8" width="567" height="406"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </customView>
                 </subviews>
@@ -158,7 +158,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="6064"/>
             </connections>
-            <point key="canvasLocation" x="570.5" y="246"/>
+            <point key="canvasLocation" x="570" y="246"/>
         </window>
         <customView id="Eyz-5p-IkU" userLabel="General">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -344,7 +344,7 @@
                     </connections>
                 </customView>
             </subviews>
-            <point key="canvasLocation" x="387.5" y="476"/>
+            <point key="canvasLocation" x="480.5" y="471"/>
         </customView>
         <customView id="d6J-SH-Xgl" userLabel="Default Identity">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -489,7 +489,7 @@
                     </textFieldCell>
                 </textField>
                 <button appearanceType="aqua" id="IVv-zw-dDv">
-                    <rect key="frame" x="280" y="321" width="195" height="18"/>
+                    <rect key="frame" x="280" y="322" width="195" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Highlight current nickname." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="9of-Kp-Asv">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -681,7 +681,7 @@
                     </connections>
                 </button>
                 <button appearanceType="aqua" id="xJN-JU-VGr">
-                    <rect key="frame" x="280" y="302" width="240" height="18"/>
+                    <rect key="frame" x="280" y="303" width="240" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Log highlights to separate window." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="z4k-RQ-V0s">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1024,272 +1024,6 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="RA6-ed-EHp">
-                    <rect key="frame" x="79" y="99" width="405" height="54"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="PX8-R2-8QD">
-                        <rect key="frame" x="0.0" y="0.0" width="405" height="54"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" spellingCorrection="YES" id="hWe-fF-Oc3">
-                                <rect key="frame" x="0.0" y="0.0" width="405" height="54"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="405" height="54"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                                <attributedString key="textStorage">
-                                    <fragment content="A value of ">
-                                        <attributes>
-                                            <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="11" name="LucidaGrande"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                <tabStops>
-                                                    <textTab alignment="left" location="36"/>
-                                                    <textTab alignment="left" location="72"/>
-                                                    <textTab alignment="left" location="108"/>
-                                                    <textTab alignment="left" location="144"/>
-                                                    <textTab alignment="left" location="180"/>
-                                                    <textTab alignment="left" location="216"/>
-                                                    <textTab alignment="left" location="252"/>
-                                                    <textTab alignment="left" location="288"/>
-                                                    <textTab alignment="left" location="324"/>
-                                                    <textTab alignment="left" location="360"/>
-                                                    <textTab alignment="left" location="396"/>
-                                                    <textTab alignment="left" location="432"/>
-                                                </tabStops>
-                                            </paragraphStyle>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="zero (0)">
-                                        <attributes>
-                                            <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="11" name="LucidaGrande-Bold"/>
-                                            <font key="NSOriginalFont" size="11" name="LucidaGrande-Bold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                <tabStops>
-                                                    <textTab alignment="left" location="36"/>
-                                                    <textTab alignment="left" location="72"/>
-                                                    <textTab alignment="left" location="108"/>
-                                                    <textTab alignment="left" location="144"/>
-                                                    <textTab alignment="left" location="180"/>
-                                                    <textTab alignment="left" location="216"/>
-                                                    <textTab alignment="left" location="252"/>
-                                                    <textTab alignment="left" location="288"/>
-                                                    <textTab alignment="left" location="324"/>
-                                                    <textTab alignment="left" location="360"/>
-                                                    <textTab alignment="left" location="396"/>
-                                                    <textTab alignment="left" location="432"/>
-                                                </tabStops>
-                                            </paragraphStyle>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=" disables the checking of image height. ">
-                                        <attributes>
-                                            <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="11" name="LucidaGrande"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                <tabStops>
-                                                    <textTab alignment="left" location="36"/>
-                                                    <textTab alignment="left" location="72"/>
-                                                    <textTab alignment="left" location="108"/>
-                                                    <textTab alignment="left" location="144"/>
-                                                    <textTab alignment="left" location="180"/>
-                                                    <textTab alignment="left" location="216"/>
-                                                    <textTab alignment="left" location="252"/>
-                                                    <textTab alignment="left" location="288"/>
-                                                    <textTab alignment="left" location="324"/>
-                                                    <textTab alignment="left" location="360"/>
-                                                    <textTab alignment="left" location="396"/>
-                                                    <textTab alignment="left" location="432"/>
-                                                </tabStops>
-                                            </paragraphStyle>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="Enabling this feature will require Textual to download each image posted">
-                                        <attributes>
-                                            <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="11" name="LucidaGrande-Bold"/>
-                                            <font key="NSOriginalFont" size="11" name="LucidaGrande-Bold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                <tabStops>
-                                                    <textTab alignment="left" location="36"/>
-                                                    <textTab alignment="left" location="72"/>
-                                                    <textTab alignment="left" location="108"/>
-                                                    <textTab alignment="left" location="144"/>
-                                                    <textTab alignment="left" location="180"/>
-                                                    <textTab alignment="left" location="216"/>
-                                                    <textTab alignment="left" location="252"/>
-                                                    <textTab alignment="left" location="288"/>
-                                                    <textTab alignment="left" location="324"/>
-                                                    <textTab alignment="left" location="360"/>
-                                                    <textTab alignment="left" location="396"/>
-                                                    <textTab alignment="left" location="432"/>
-                                                </tabStops>
-                                            </paragraphStyle>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=" which may take a long time on connections with slow internet connections. ">
-                                        <attributes>
-                                            <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="11" name="LucidaGrande"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                <tabStops>
-                                                    <textTab alignment="left" location="36"/>
-                                                    <textTab alignment="left" location="72"/>
-                                                    <textTab alignment="left" location="108"/>
-                                                    <textTab alignment="left" location="144"/>
-                                                    <textTab alignment="left" location="180"/>
-                                                    <textTab alignment="left" location="216"/>
-                                                    <textTab alignment="left" location="252"/>
-                                                    <textTab alignment="left" location="288"/>
-                                                    <textTab alignment="left" location="324"/>
-                                                    <textTab alignment="left" location="360"/>
-                                                    <textTab alignment="left" location="396"/>
-                                                    <textTab alignment="left" location="432"/>
-                                                </tabStops>
-                                            </paragraphStyle>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="1440 is a recommended value.">
-                                        <attributes>
-                                            <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="11" name="LucidaGrande-Bold"/>
-                                            <font key="NSOriginalFont" size="11" name="LucidaGrande-Bold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                <tabStops>
-                                                    <textTab alignment="left" location="36"/>
-                                                    <textTab alignment="left" location="72"/>
-                                                    <textTab alignment="left" location="108"/>
-                                                    <textTab alignment="left" location="144"/>
-                                                    <textTab alignment="left" location="180"/>
-                                                    <textTab alignment="left" location="216"/>
-                                                    <textTab alignment="left" location="252"/>
-                                                    <textTab alignment="left" location="288"/>
-                                                    <textTab alignment="left" location="324"/>
-                                                    <textTab alignment="left" location="360"/>
-                                                    <textTab alignment="left" location="396"/>
-                                                    <textTab alignment="left" location="432"/>
-                                                </tabStops>
-                                            </paragraphStyle>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="405" height="54"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="o1j-U7-8WM">
-                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="dbW-UU-IMR">
-                        <rect key="frame" x="-100" y="-100" width="15" height="17"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                </scrollView>
-                <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="ywY-PG-OxE">
-                    <rect key="frame" x="83" y="283" width="381" height="33"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="v16-pq-oYt">
-                        <rect key="frame" x="0.0" y="0.0" width="381" height="33"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" spellingCorrection="YES" id="56L-cj-DOn">
-                                <rect key="frame" x="0.0" y="0.0" width="381" height="33"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="381" height="33"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                                <attributedString key="textStorage">
-                                    <fragment content="If inline images are disabled here, then Textual provides the option to enable them on a per-channel basis through ">
-                                        <attributes>
-                                            <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="11" name="LucidaGrande"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                <tabStops>
-                                                    <textTab alignment="left" location="36"/>
-                                                    <textTab alignment="left" location="72"/>
-                                                    <textTab alignment="left" location="108"/>
-                                                    <textTab alignment="left" location="144"/>
-                                                    <textTab alignment="left" location="180"/>
-                                                    <textTab alignment="left" location="216"/>
-                                                    <textTab alignment="left" location="252"/>
-                                                    <textTab alignment="left" location="288"/>
-                                                    <textTab alignment="left" location="324"/>
-                                                    <textTab alignment="left" location="360"/>
-                                                    <textTab alignment="left" location="396"/>
-                                                    <textTab alignment="left" location="432"/>
-                                                </tabStops>
-                                            </paragraphStyle>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="Channel Properties">
-                                        <attributes>
-                                            <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="11" name="LucidaGrande-Bold"/>
-                                            <font key="NSOriginalFont" size="11" name="LucidaGrande-Bold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                <tabStops>
-                                                    <textTab alignment="left" location="36"/>
-                                                    <textTab alignment="left" location="72"/>
-                                                    <textTab alignment="left" location="108"/>
-                                                    <textTab alignment="left" location="144"/>
-                                                    <textTab alignment="left" location="180"/>
-                                                    <textTab alignment="left" location="216"/>
-                                                    <textTab alignment="left" location="252"/>
-                                                    <textTab alignment="left" location="288"/>
-                                                    <textTab alignment="left" location="324"/>
-                                                    <textTab alignment="left" location="360"/>
-                                                    <textTab alignment="left" location="396"/>
-                                                    <textTab alignment="left" location="432"/>
-                                                </tabStops>
-                                            </paragraphStyle>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=".">
-                                        <attributes>
-                                            <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="11" name="LucidaGrande"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                <tabStops>
-                                                    <textTab alignment="left" location="36"/>
-                                                    <textTab alignment="left" location="72"/>
-                                                    <textTab alignment="left" location="108"/>
-                                                    <textTab alignment="left" location="144"/>
-                                                    <textTab alignment="left" location="180"/>
-                                                    <textTab alignment="left" location="216"/>
-                                                    <textTab alignment="left" location="252"/>
-                                                    <textTab alignment="left" location="288"/>
-                                                    <textTab alignment="left" location="324"/>
-                                                    <textTab alignment="left" location="360"/>
-                                                    <textTab alignment="left" location="396"/>
-                                                    <textTab alignment="left" location="432"/>
-                                                </tabStops>
-                                            </paragraphStyle>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="381" height="33"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="om2-F5-bS6">
-                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="lDx-vm-sB1">
-                        <rect key="frame" x="-100" y="-100" width="15" height="17"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                </scrollView>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="hc1-WI-d7K">
                     <rect key="frame" x="77" y="271" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -1297,7 +1031,139 @@
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
+                <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="V5y-SZ-iBD">
+                    <rect key="frame" x="77" y="100" width="407" height="53"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="4Bh-xF-mMk">
+                        <rect key="frame" x="1" y="1" width="223" height="133"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" id="pcR-4g-Mjb">
+                                <rect key="frame" x="0.0" y="0.0" width="223" height="133"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="minSize" width="407" height="53"/>
+                                <size key="maxSize" width="463" height="10000000"/>
+                                <attributedString key="textStorage">
+                                    <fragment content="A value of ">
+                                        <attributes>
+                                            <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" metaFont="smallSystem"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="zero (0)">
+                                        <attributes>
+                                            <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <font key="NSOriginalFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=" disables the checking of image height. ">
+                                        <attributes>
+                                            <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" metaFont="smallSystem"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Enabling this feature will require Textual to asynchronously download each image posted">
+                                        <attributes>
+                                            <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <font key="NSOriginalFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=" which may take a long time on connections with slow internet connections. ">
+                                        <attributes>
+                                            <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" metaFont="smallSystem"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="1440 is a recommended value.">
+                                        <attributes>
+                                            <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <font key="NSOriginalFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <size key="minSize" width="407" height="53"/>
+                                <size key="maxSize" width="463" height="10000000"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="0HO-bG-Zde">
+                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="mSc-Qg-WFx">
+                        <rect key="frame" x="224" y="1" width="15" height="133"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
+                <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="K6A-JD-hY1">
+                    <rect key="frame" x="83" y="289" width="394" height="27"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Sy0-wV-E0N">
+                        <rect key="frame" x="1" y="1" width="223" height="133"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="QHS-kD-Vge">
+                                <rect key="frame" x="0.0" y="0.0" width="223" height="133"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="minSize" width="394" height="27"/>
+                                <size key="maxSize" width="463" height="10000000"/>
+                                <attributedString key="textStorage">
+                                    <fragment content="If inline images are disabled here, then Textual provides the option to enable them on a per-channel basis using ">
+                                        <attributes>
+                                            <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" metaFont="smallSystem"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Channel Properties">
+                                        <attributes>
+                                            <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <font key="NSOriginalFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=".">
+                                        <attributes>
+                                            <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" metaFont="smallSystem"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <size key="minSize" width="394" height="27"/>
+                                <size key="maxSize" width="463" height="10000000"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="fgd-em-XzM">
+                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="BhC-8q-euL">
+                        <rect key="frame" x="224" y="1" width="15" height="133"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
             </subviews>
+            <point key="canvasLocation" x="168.5" y="-854"/>
         </customView>
         <customView id="oeR-nv-slx" userLabel="Style">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -1314,6 +1180,7 @@
                                 <userGuides>
                                     <userLayoutGuide location="69" affinity="minX"/>
                                     <userLayoutGuide location="35" affinity="maxY"/>
+                                    <userLayoutGuide location="94" affinity="minX"/>
                                 </userGuides>
                                 <subviews>
                                     <popUpButton verticalHuggingPriority="750" id="A1z-X7-AQ9">
@@ -1450,305 +1317,8 @@
                                             <binding destination="1247" name="value" keyPath="values.ReloadScrollbackOnLaunch" id="tLV-m3-DXE"/>
                                         </connections>
                                     </button>
-                                    <scrollView borderType="none" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="PQM-tt-PZ9">
-                                        <rect key="frame" x="91" y="119" width="329" height="19"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="pBW-MX-Mb6">
-                                            <rect key="frame" x="0.0" y="0.0" width="329" height="19"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <subviews>
-                                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" spellingCorrection="YES" id="f8Y-V1-VWh">
-                                                    <rect key="frame" x="0.0" y="0.0" width="329" height="19"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="329" height="19"/>
-                                                    <size key="maxSize" width="463" height="10000000"/>
-                                                    <attributedString key="textStorage">
-                                                        <fragment content="Strips away formatting such as ">
-                                                            <attributes>
-                                                                <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                                    <tabStops>
-                                                                        <textTab alignment="left" location="36"/>
-                                                                        <textTab alignment="left" location="72"/>
-                                                                        <textTab alignment="left" location="108"/>
-                                                                        <textTab alignment="left" location="144"/>
-                                                                        <textTab alignment="left" location="180"/>
-                                                                        <textTab alignment="left" location="216"/>
-                                                                        <textTab alignment="left" location="252"/>
-                                                                        <textTab alignment="left" location="288"/>
-                                                                        <textTab alignment="left" location="324"/>
-                                                                        <textTab alignment="left" location="360"/>
-                                                                        <textTab alignment="left" location="396"/>
-                                                                        <textTab alignment="left" location="432"/>
-                                                                    </tabStops>
-                                                                </paragraphStyle>
-                                                            </attributes>
-                                                        </fragment>
-                                                        <fragment content="c">
-                                                            <attributes>
-                                                                <color key="NSColor" red="0.80784313730000001" green="0.23137254900000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                                    <tabStops>
-                                                                        <textTab alignment="left" location="36"/>
-                                                                        <textTab alignment="left" location="72"/>
-                                                                        <textTab alignment="left" location="108"/>
-                                                                        <textTab alignment="left" location="144"/>
-                                                                        <textTab alignment="left" location="180"/>
-                                                                        <textTab alignment="left" location="216"/>
-                                                                        <textTab alignment="left" location="252"/>
-                                                                        <textTab alignment="left" location="288"/>
-                                                                        <textTab alignment="left" location="324"/>
-                                                                        <textTab alignment="left" location="360"/>
-                                                                        <textTab alignment="left" location="396"/>
-                                                                        <textTab alignment="left" location="432"/>
-                                                                    </tabStops>
-                                                                </paragraphStyle>
-                                                            </attributes>
-                                                        </fragment>
-                                                        <fragment content="o">
-                                                            <attributes>
-                                                                <color key="NSColor" red="1" green="0.1529411765" blue="0.070588235289999995" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                                    <tabStops>
-                                                                        <textTab alignment="left" location="36"/>
-                                                                        <textTab alignment="left" location="72"/>
-                                                                        <textTab alignment="left" location="108"/>
-                                                                        <textTab alignment="left" location="144"/>
-                                                                        <textTab alignment="left" location="180"/>
-                                                                        <textTab alignment="left" location="216"/>
-                                                                        <textTab alignment="left" location="252"/>
-                                                                        <textTab alignment="left" location="288"/>
-                                                                        <textTab alignment="left" location="324"/>
-                                                                        <textTab alignment="left" location="360"/>
-                                                                        <textTab alignment="left" location="396"/>
-                                                                        <textTab alignment="left" location="432"/>
-                                                                    </tabStops>
-                                                                </paragraphStyle>
-                                                            </attributes>
-                                                        </fragment>
-                                                        <fragment content="l">
-                                                            <attributes>
-                                                                <color key="NSColor" red="0.6588235294" green="0.094117647060000004" blue="0.29411764709999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                                    <tabStops>
-                                                                        <textTab alignment="left" location="36"/>
-                                                                        <textTab alignment="left" location="72"/>
-                                                                        <textTab alignment="left" location="108"/>
-                                                                        <textTab alignment="left" location="144"/>
-                                                                        <textTab alignment="left" location="180"/>
-                                                                        <textTab alignment="left" location="216"/>
-                                                                        <textTab alignment="left" location="252"/>
-                                                                        <textTab alignment="left" location="288"/>
-                                                                        <textTab alignment="left" location="324"/>
-                                                                        <textTab alignment="left" location="360"/>
-                                                                        <textTab alignment="left" location="396"/>
-                                                                        <textTab alignment="left" location="432"/>
-                                                                    </tabStops>
-                                                                </paragraphStyle>
-                                                            </attributes>
-                                                        </fragment>
-                                                        <fragment content="o">
-                                                            <attributes>
-                                                                <color key="NSColor" red="0.52156862749999999" green="0.0" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                                    <tabStops>
-                                                                        <textTab alignment="left" location="36"/>
-                                                                        <textTab alignment="left" location="72"/>
-                                                                        <textTab alignment="left" location="108"/>
-                                                                        <textTab alignment="left" location="144"/>
-                                                                        <textTab alignment="left" location="180"/>
-                                                                        <textTab alignment="left" location="216"/>
-                                                                        <textTab alignment="left" location="252"/>
-                                                                        <textTab alignment="left" location="288"/>
-                                                                        <textTab alignment="left" location="324"/>
-                                                                        <textTab alignment="left" location="360"/>
-                                                                        <textTab alignment="left" location="396"/>
-                                                                        <textTab alignment="left" location="432"/>
-                                                                    </tabStops>
-                                                                </paragraphStyle>
-                                                            </attributes>
-                                                        </fragment>
-                                                        <fragment content="r">
-                                                            <attributes>
-                                                                <color key="NSColor" red="0.23137254900000001" green="0.0" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                                    <tabStops>
-                                                                        <textTab alignment="left" location="36"/>
-                                                                        <textTab alignment="left" location="72"/>
-                                                                        <textTab alignment="left" location="108"/>
-                                                                        <textTab alignment="left" location="144"/>
-                                                                        <textTab alignment="left" location="180"/>
-                                                                        <textTab alignment="left" location="216"/>
-                                                                        <textTab alignment="left" location="252"/>
-                                                                        <textTab alignment="left" location="288"/>
-                                                                        <textTab alignment="left" location="324"/>
-                                                                        <textTab alignment="left" location="360"/>
-                                                                        <textTab alignment="left" location="396"/>
-                                                                        <textTab alignment="left" location="432"/>
-                                                                    </tabStops>
-                                                                </paragraphStyle>
-                                                            </attributes>
-                                                        </fragment>
-                                                        <fragment content="s">
-                                                            <attributes>
-                                                                <color key="NSColor" red="0.0" green="0.2666666667" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                                    <tabStops>
-                                                                        <textTab alignment="left" location="36"/>
-                                                                        <textTab alignment="left" location="72"/>
-                                                                        <textTab alignment="left" location="108"/>
-                                                                        <textTab alignment="left" location="144"/>
-                                                                        <textTab alignment="left" location="180"/>
-                                                                        <textTab alignment="left" location="216"/>
-                                                                        <textTab alignment="left" location="252"/>
-                                                                        <textTab alignment="left" location="288"/>
-                                                                        <textTab alignment="left" location="324"/>
-                                                                        <textTab alignment="left" location="360"/>
-                                                                        <textTab alignment="left" location="396"/>
-                                                                        <textTab alignment="left" location="432"/>
-                                                                    </tabStops>
-                                                                </paragraphStyle>
-                                                            </attributes>
-                                                        </fragment>
-                                                        <fragment content=", ">
-                                                            <attributes>
-                                                                <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                                    <tabStops>
-                                                                        <textTab alignment="left" location="36"/>
-                                                                        <textTab alignment="left" location="72"/>
-                                                                        <textTab alignment="left" location="108"/>
-                                                                        <textTab alignment="left" location="144"/>
-                                                                        <textTab alignment="left" location="180"/>
-                                                                        <textTab alignment="left" location="216"/>
-                                                                        <textTab alignment="left" location="252"/>
-                                                                        <textTab alignment="left" location="288"/>
-                                                                        <textTab alignment="left" location="324"/>
-                                                                        <textTab alignment="left" location="360"/>
-                                                                        <textTab alignment="left" location="396"/>
-                                                                        <textTab alignment="left" location="432"/>
-                                                                    </tabStops>
-                                                                </paragraphStyle>
-                                                            </attributes>
-                                                        </fragment>
-                                                        <fragment content="bold">
-                                                            <attributes>
-                                                                <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name="LucidaGrande-Bold"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                                    <tabStops>
-                                                                        <textTab alignment="left" location="36"/>
-                                                                        <textTab alignment="left" location="72"/>
-                                                                        <textTab alignment="left" location="108"/>
-                                                                        <textTab alignment="left" location="144"/>
-                                                                        <textTab alignment="left" location="180"/>
-                                                                        <textTab alignment="left" location="216"/>
-                                                                        <textTab alignment="left" location="252"/>
-                                                                        <textTab alignment="left" location="288"/>
-                                                                        <textTab alignment="left" location="324"/>
-                                                                        <textTab alignment="left" location="360"/>
-                                                                        <textTab alignment="left" location="396"/>
-                                                                        <textTab alignment="left" location="432"/>
-                                                                    </tabStops>
-                                                                </paragraphStyle>
-                                                            </attributes>
-                                                        </fragment>
-                                                        <fragment content=", ">
-                                                            <attributes>
-                                                                <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                                    <tabStops>
-                                                                        <textTab alignment="left" location="36"/>
-                                                                        <textTab alignment="left" location="72"/>
-                                                                        <textTab alignment="left" location="108"/>
-                                                                        <textTab alignment="left" location="144"/>
-                                                                        <textTab alignment="left" location="180"/>
-                                                                        <textTab alignment="left" location="216"/>
-                                                                        <textTab alignment="left" location="252"/>
-                                                                        <textTab alignment="left" location="288"/>
-                                                                        <textTab alignment="left" location="324"/>
-                                                                        <textTab alignment="left" location="360"/>
-                                                                        <textTab alignment="left" location="396"/>
-                                                                        <textTab alignment="left" location="432"/>
-                                                                    </tabStops>
-                                                                </paragraphStyle>
-                                                            </attributes>
-                                                        </fragment>
-                                                        <fragment content="underline">
-                                                            <attributes>
-                                                                <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                                    <tabStops>
-                                                                        <textTab alignment="left" location="36"/>
-                                                                        <textTab alignment="left" location="72"/>
-                                                                        <textTab alignment="left" location="108"/>
-                                                                        <textTab alignment="left" location="144"/>
-                                                                        <textTab alignment="left" location="180"/>
-                                                                        <textTab alignment="left" location="216"/>
-                                                                        <textTab alignment="left" location="252"/>
-                                                                        <textTab alignment="left" location="288"/>
-                                                                        <textTab alignment="left" location="324"/>
-                                                                        <textTab alignment="left" location="360"/>
-                                                                        <textTab alignment="left" location="396"/>
-                                                                        <textTab alignment="left" location="432"/>
-                                                                    </tabStops>
-                                                                </paragraphStyle>
-                                                                <integer key="NSUnderline" value="1"/>
-                                                            </attributes>
-                                                        </fragment>
-                                                        <fragment content=", etc.">
-                                                            <attributes>
-                                                                <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                                    <tabStops>
-                                                                        <textTab alignment="left" location="36"/>
-                                                                        <textTab alignment="left" location="72"/>
-                                                                        <textTab alignment="left" location="108"/>
-                                                                        <textTab alignment="left" location="144"/>
-                                                                        <textTab alignment="left" location="180"/>
-                                                                        <textTab alignment="left" location="216"/>
-                                                                        <textTab alignment="left" location="252"/>
-                                                                        <textTab alignment="left" location="288"/>
-                                                                        <textTab alignment="left" location="324"/>
-                                                                        <textTab alignment="left" location="360"/>
-                                                                        <textTab alignment="left" location="396"/>
-                                                                        <textTab alignment="left" location="432"/>
-                                                                    </tabStops>
-                                                                </paragraphStyle>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
-                                                    <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="329" height="19"/>
-                                                    <size key="maxSize" width="463" height="10000000"/>
-                                                </textView>
-                                            </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </clipView>
-                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="qpS-7k-ubd">
-                                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </scroller>
-                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="fch-Al-fM4">
-                                            <rect key="frame" x="-100" y="-100" width="15" height="17"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </scroller>
-                                    </scrollView>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="ohg-AA-uhq">
-                                        <rect key="frame" x="92" y="28" width="239" height="14"/>
+                                        <rect key="frame" x="92" y="29" width="239" height="14"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="These include join, part, and quit messages. " id="oK8-zB-HCo">
                                             <font key="font" metaFont="smallSystem"/>
@@ -1756,6 +1326,124 @@
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
+                                    <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="mPZ-Hq-fGD">
+                                        <rect key="frame" x="91" y="122" width="352" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="aE5-zh-wjR">
+                                            <rect key="frame" x="1" y="1" width="223" height="133"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="1AW-f9-jIu">
+                                                    <rect key="frame" x="0.0" y="0.0" width="223" height="133"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <size key="minSize" width="352" height="20"/>
+                                                    <size key="maxSize" width="463" height="10000000"/>
+                                                    <attributedString key="textStorage">
+                                                        <fragment content="Strips away formatting such as ">
+                                                            <attributes>
+                                                                <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="NSFont" metaFont="smallSystem"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="c">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.73101308394451525" green="0.36709635667571683" blue="0.0015119211303273297" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" metaFont="smallSystem"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="o">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.85287942691725127" green="0.0" blue="0.0092546000663108422" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" metaFont="smallSystem"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="l">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.50196078430000002" green="0.015914345537286701" blue="0.20213959439817769" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" metaFont="smallSystem"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="o">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.47498555090742761" green="0.0019352334105730484" blue="0.4985787527901786" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" metaFont="smallSystem"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="r">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.13619781433103559" green="0.02695975669968317" blue="0.58447514748086737" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" metaFont="smallSystem"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="s">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.0" green="0.0046771747482532581" blue="0.9271501813616071" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" metaFont="smallSystem"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content=", ">
+                                                            <attributes>
+                                                                <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="NSFont" metaFont="smallSystem"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="bold">
+                                                            <attributes>
+                                                                <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="NSFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                                                <font key="NSOriginalFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content=", ">
+                                                            <attributes>
+                                                                <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="NSFont" metaFont="smallSystem"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="underline">
+                                                            <attributes>
+                                                                <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="NSFont" metaFont="smallSystem"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                                <integer key="NSUnderline" value="1"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content=", etc.">
+                                                            <attributes>
+                                                                <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="NSFont" metaFont="smallSystem"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <size key="minSize" width="352" height="20"/>
+                                                    <size key="maxSize" width="463" height="10000000"/>
+                                                </textView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </clipView>
+                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="YaS-7i-S8h">
+                                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="3H8-XY-4ox">
+                                            <rect key="frame" x="224" y="1" width="15" height="133"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                    </scrollView>
                                 </subviews>
                             </view>
                         </tabViewItem>
@@ -1903,159 +1591,6 @@
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <scrollView borderType="none" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="QPg-LY-Eph">
-                                        <rect key="frame" x="78" y="198" width="376" height="13"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="vDn-eB-Edc">
-                                            <rect key="frame" x="0.0" y="0.0" width="376" height="13"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <subviews>
-                                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" spellingCorrection="YES" id="TEF-dN-pYN">
-                                                    <rect key="frame" x="0.0" y="0.0" width="376" height="14"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="376" height="13"/>
-                                                    <size key="maxSize" width="463" height="10000000"/>
-                                                    <attributedString key="textStorage">
-                                                        <fragment content="A list of formatting symbols can be found at ">
-                                                            <attributes>
-                                                                <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                                    <tabStops>
-                                                                        <textTab alignment="left" location="36"/>
-                                                                        <textTab alignment="left" location="72"/>
-                                                                        <textTab alignment="left" location="108"/>
-                                                                        <textTab alignment="left" location="144"/>
-                                                                        <textTab alignment="left" location="180"/>
-                                                                        <textTab alignment="left" location="216"/>
-                                                                        <textTab alignment="left" location="252"/>
-                                                                        <textTab alignment="left" location="288"/>
-                                                                        <textTab alignment="left" location="324"/>
-                                                                        <textTab alignment="left" location="360"/>
-                                                                        <textTab alignment="left" location="396"/>
-                                                                        <textTab alignment="left" location="432"/>
-                                                                    </tabStops>
-                                                                </paragraphStyle>
-                                                            </attributes>
-                                                        </fragment>
-                                                        <fragment content="OpenGroup.org">
-                                                            <attributes>
-                                                                <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
-                                                                <url key="NSLink" string="http://opengroup.org/onlinepubs/007908799/xsh/strftime.html"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                                    <tabStops>
-                                                                        <textTab alignment="left" location="36"/>
-                                                                        <textTab alignment="left" location="72"/>
-                                                                        <textTab alignment="left" location="108"/>
-                                                                        <textTab alignment="left" location="144"/>
-                                                                        <textTab alignment="left" location="180"/>
-                                                                        <textTab alignment="left" location="216"/>
-                                                                        <textTab alignment="left" location="252"/>
-                                                                        <textTab alignment="left" location="288"/>
-                                                                        <textTab alignment="left" location="324"/>
-                                                                        <textTab alignment="left" location="360"/>
-                                                                        <textTab alignment="left" location="396"/>
-                                                                        <textTab alignment="left" location="432"/>
-                                                                    </tabStops>
-                                                                </paragraphStyle>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
-                                                    <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="376" height="13"/>
-                                                    <size key="maxSize" width="463" height="10000000"/>
-                                                </textView>
-                                            </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </clipView>
-                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="F8a-ZQ-UZy">
-                                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </scroller>
-                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="2lz-Mh-qbl">
-                                            <rect key="frame" x="-100" y="-100" width="15" height="17"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </scroller>
-                                    </scrollView>
-                                    <scrollView borderType="none" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="ttc-Ib-bIY">
-                                        <rect key="frame" x="159" y="242" width="252" height="20"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="0Ba-Z3-Vbe">
-                                            <rect key="frame" x="0.0" y="0.0" width="252" height="20"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <subviews>
-                                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" spellingCorrection="YES" id="5ed-9x-VxO">
-                                                    <rect key="frame" x="0.0" y="0.0" width="252" height="20"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="252" height="20"/>
-                                                    <size key="maxSize" width="463" height="10000000"/>
-                                                    <attributedString key="textStorage">
-                                                        <fragment content="Symbols:">
-                                                            <attributes>
-                                                                <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="10" name="LucidaGrande-Bold"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                                    <tabStops>
-                                                                        <textTab alignment="left" location="36"/>
-                                                                        <textTab alignment="left" location="72"/>
-                                                                        <textTab alignment="left" location="108"/>
-                                                                        <textTab alignment="left" location="144"/>
-                                                                        <textTab alignment="left" location="180"/>
-                                                                        <textTab alignment="left" location="216"/>
-                                                                        <textTab alignment="left" location="252"/>
-                                                                        <textTab alignment="left" location="288"/>
-                                                                        <textTab alignment="left" location="324"/>
-                                                                        <textTab alignment="left" location="360"/>
-                                                                        <textTab alignment="left" location="396"/>
-                                                                        <textTab alignment="left" location="432"/>
-                                                                    </tabStops>
-                                                                </paragraphStyle>
-                                                            </attributes>
-                                                        </fragment>
-                                                        <fragment content="   %@ = User mode; %n = User nickname">
-                                                            <attributes>
-                                                                <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="10" name="LucidaGrande"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                                    <tabStops>
-                                                                        <textTab alignment="left" location="36"/>
-                                                                        <textTab alignment="left" location="72"/>
-                                                                        <textTab alignment="left" location="108"/>
-                                                                        <textTab alignment="left" location="144"/>
-                                                                        <textTab alignment="left" location="180"/>
-                                                                        <textTab alignment="left" location="216"/>
-                                                                        <textTab alignment="left" location="252"/>
-                                                                        <textTab alignment="left" location="288"/>
-                                                                        <textTab alignment="left" location="324"/>
-                                                                        <textTab alignment="left" location="360"/>
-                                                                        <textTab alignment="left" location="396"/>
-                                                                        <textTab alignment="left" location="432"/>
-                                                                    </tabStops>
-                                                                </paragraphStyle>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
-                                                    <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="252" height="20"/>
-                                                    <size key="maxSize" width="463" height="10000000"/>
-                                                </textView>
-                                            </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </clipView>
-                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="gcF-p3-krk">
-                                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </scroller>
-                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="ooI-9i-FeS">
-                                            <rect key="frame" x="-100" y="-100" width="15" height="17"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </scroller>
-                                    </scrollView>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="uPJ-DQ-os2">
                                         <rect key="frame" x="26" y="70" width="442" height="5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -2070,105 +1605,6 @@
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
-                                    <scrollView borderType="none" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="nX1-Ma-YfJ">
-                                        <rect key="frame" x="87" y="18" width="314" height="13"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="hVL-Me-kqc">
-                                            <rect key="frame" x="0.0" y="0.0" width="314" height="13"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <subviews>
-                                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" spellingCorrection="YES" id="30G-ja-tKb">
-                                                    <rect key="frame" x="0.0" y="0.0" width="314" height="14"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="314" height="13"/>
-                                                    <size key="maxSize" width="463" height="10000000"/>
-                                                    <attributedString key="textStorage">
-                                                        <fragment content="A lower value can help reduce ">
-                                                            <attributes>
-                                                                <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                                    <tabStops>
-                                                                        <textTab alignment="left" location="36"/>
-                                                                        <textTab alignment="left" location="72"/>
-                                                                        <textTab alignment="left" location="108"/>
-                                                                        <textTab alignment="left" location="144"/>
-                                                                        <textTab alignment="left" location="180"/>
-                                                                        <textTab alignment="left" location="216"/>
-                                                                        <textTab alignment="left" location="252"/>
-                                                                        <textTab alignment="left" location="288"/>
-                                                                        <textTab alignment="left" location="324"/>
-                                                                        <textTab alignment="left" location="360"/>
-                                                                        <textTab alignment="left" location="396"/>
-                                                                        <textTab alignment="left" location="432"/>
-                                                                    </tabStops>
-                                                                </paragraphStyle>
-                                                            </attributes>
-                                                        </fragment>
-                                                        <fragment content="memory usage">
-                                                            <attributes>
-                                                                <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
-                                                                <url key="NSLink" string="http://www.codeux.com/textual/wiki/Memory-Management.wiki"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                                    <tabStops>
-                                                                        <textTab alignment="left" location="36"/>
-                                                                        <textTab alignment="left" location="72"/>
-                                                                        <textTab alignment="left" location="108"/>
-                                                                        <textTab alignment="left" location="144"/>
-                                                                        <textTab alignment="left" location="180"/>
-                                                                        <textTab alignment="left" location="216"/>
-                                                                        <textTab alignment="left" location="252"/>
-                                                                        <textTab alignment="left" location="288"/>
-                                                                        <textTab alignment="left" location="324"/>
-                                                                        <textTab alignment="left" location="360"/>
-                                                                        <textTab alignment="left" location="396"/>
-                                                                        <textTab alignment="left" location="432"/>
-                                                                    </tabStops>
-                                                                </paragraphStyle>
-                                                            </attributes>
-                                                        </fragment>
-                                                        <fragment content=" of Textual.">
-                                                            <attributes>
-                                                                <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                                    <tabStops>
-                                                                        <textTab alignment="left" location="36"/>
-                                                                        <textTab alignment="left" location="72"/>
-                                                                        <textTab alignment="left" location="108"/>
-                                                                        <textTab alignment="left" location="144"/>
-                                                                        <textTab alignment="left" location="180"/>
-                                                                        <textTab alignment="left" location="216"/>
-                                                                        <textTab alignment="left" location="252"/>
-                                                                        <textTab alignment="left" location="288"/>
-                                                                        <textTab alignment="left" location="324"/>
-                                                                        <textTab alignment="left" location="360"/>
-                                                                        <textTab alignment="left" location="396"/>
-                                                                        <textTab alignment="left" location="432"/>
-                                                                    </tabStops>
-                                                                </paragraphStyle>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
-                                                    <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="314" height="13"/>
-                                                    <size key="maxSize" width="463" height="10000000"/>
-                                                </textView>
-                                            </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </clipView>
-                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="HoW-kQ-ptS">
-                                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </scroller>
-                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="nWf-vm-Zam">
-                                            <rect key="frame" x="-100" y="-100" width="15" height="17"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </scroller>
-                                    </scrollView>
                                     <button id="QeT-xq-jb0">
                                         <rect key="frame" x="100" y="89" width="332" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -2180,6 +1616,168 @@
                                             <binding destination="1247" name="value" keyPath="values.ConversationTrackingIncludesUserModeSymbol" id="aBa-gS-mRB"/>
                                         </connections>
                                     </button>
+                                    <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="pQ3-6x-EMl">
+                                        <rect key="frame" x="78" y="198" width="352" height="13"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="fDH-Hz-XNP">
+                                            <rect key="frame" x="1" y="1" width="223" height="133"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="LsK-nq-gHj">
+                                                    <rect key="frame" x="0.0" y="0.0" width="223" height="133"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <size key="minSize" width="352" height="13"/>
+                                                    <size key="maxSize" width="463" height="10000000"/>
+                                                    <attributedString key="textStorage">
+                                                        <fragment content="A list of formatting symbols can be found at ">
+                                                            <attributes>
+                                                                <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="NSFont" metaFont="smallSystem"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="OpenGroup.org">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="11" name="LucidaGrande"/>
+                                                                <url key="NSLink" string="http://opengroup.org/onlinepubs/007908799/xsh/strftime.html"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <size key="minSize" width="352" height="13"/>
+                                                    <size key="maxSize" width="463" height="10000000"/>
+                                                </textView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </clipView>
+                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="3eJ-ZM-29d">
+                                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="YE1-hc-HUs">
+                                            <rect key="frame" x="224" y="1" width="15" height="133"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                    </scrollView>
+                                    <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="QgW-lF-4yW">
+                                        <rect key="frame" x="89" y="18" width="330" height="13"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="gDh-rU-3et">
+                                            <rect key="frame" x="1" y="1" width="223" height="133"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="I4g-PP-IyL">
+                                                    <rect key="frame" x="0.0" y="0.0" width="223" height="133"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <size key="minSize" width="330" height="13"/>
+                                                    <size key="maxSize" width="463" height="10000000"/>
+                                                    <attributedString key="textStorage">
+                                                        <fragment content="A lower value can help reduce the">
+                                                            <attributes>
+                                                                <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="NSFont" metaFont="smallSystem"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content=" ">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" metaFont="smallSystem"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="memory usage">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" metaFont="smallSystem"/>
+                                                                <url key="NSLink" string="http://www.codeux.com/textual/wiki/Memory-Management.wiki"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content=" ">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" metaFont="smallSystem"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="of Textual.">
+                                                            <attributes>
+                                                                <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="NSFont" metaFont="smallSystem"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <size key="minSize" width="330" height="13"/>
+                                                    <size key="maxSize" width="463" height="10000000"/>
+                                                </textView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </clipView>
+                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="bxR-se-qtT">
+                                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="CII-jy-hbq">
+                                            <rect key="frame" x="224" y="1" width="15" height="133"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                    </scrollView>
+                                    <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="YeF-fH-co7">
+                                        <rect key="frame" x="159" y="251" width="279" height="13"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="yJi-wG-FL6">
+                                            <rect key="frame" x="1" y="1" width="223" height="133"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="JJf-Sj-V68">
+                                                    <rect key="frame" x="0.0" y="0.0" width="223" height="133"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <size key="minSize" width="279" height="13"/>
+                                                    <size key="maxSize" width="463" height="10000000"/>
+                                                    <attributedString key="textStorage">
+                                                        <fragment content="Symbols:">
+                                                            <attributes>
+                                                                <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="NSFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                                                <font key="NSOriginalFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="  %@ = User mode; %n = User nickname">
+                                                            <attributes>
+                                                                <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="NSFont" metaFont="smallSystem"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <size key="minSize" width="279" height="13"/>
+                                                    <size key="maxSize" width="463" height="10000000"/>
+                                                </textView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </clipView>
+                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="bR8-j8-e5Y">
+                                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="ezx-sh-GTw">
+                                            <rect key="frame" x="224" y="1" width="15" height="133"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                    </scrollView>
                                 </subviews>
                             </view>
                         </tabViewItem>
@@ -2341,7 +1939,7 @@
                     </connections>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="346.5" y="-892"/>
+            <point key="canvasLocation" x="428.5" y="-896"/>
         </customView>
         <customView id="Pkr-Na-yb0" userLabel="IRCop Messages">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -2432,6 +2030,7 @@
                     </textFieldCell>
                 </textField>
             </subviews>
+            <point key="canvasLocation" x="403.5" y="-794"/>
         </customView>
         <customView id="n4A-Pk-quE" userLabel="Flood Control">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -2688,6 +2287,7 @@
                     </textFieldCell>
                 </textField>
             </subviews>
+            <point key="canvasLocation" x="596.5" y="-252"/>
         </customView>
         <customView id="kTM-XW-Yb5" userLabel="Channel Management">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -2762,7 +2362,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="m6k-uS-I0e">
-                    <rect key="frame" x="41" y="272" width="473" height="28"/>
+                    <rect key="frame" x="41" y="280" width="473" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" id="m0T-jg-XXP">
                         <font key="font" metaFont="systemBold" size="10"/>
@@ -2772,7 +2372,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="cwh-JV-tWi">
-                    <rect key="frame" x="41" y="159" width="117" height="13"/>
+                    <rect key="frame" x="41" y="167" width="117" height="13"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Fake CTCP Version:" id="Jfe-QS-I1T">
                         <font key="font" metaFont="cellTitle"/>
@@ -2781,7 +2381,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="Qoz-jq-Y9W">
-                    <rect key="frame" x="53" y="106" width="459" height="45"/>
+                    <rect key="frame" x="53" y="98" width="459" height="61"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="mLE-94-QqL">
                         <font key="font" metaFont="cellTitle"/>
@@ -2793,21 +2393,21 @@
                     </connections>
                 </textField>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="wOj-dv-jiz">
-                    <rect key="frame" x="56" y="260" width="442" height="5"/>
+                    <rect key="frame" x="56" y="268" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="OhO-2g-Ujx">
-                    <rect key="frame" x="55" y="183" width="442" height="5"/>
+                    <rect key="frame" x="55" y="191" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <button appearanceType="aqua" id="adg-kr-slw">
-                    <rect key="frame" x="41" y="230" width="251" height="18"/>
+                    <rect key="frame" x="41" y="238" width="251" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Do not force minimum window size." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="HVb-qy-6T1">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2818,7 +2418,7 @@
                     </connections>
                 </button>
                 <button appearanceType="aqua" id="acC-0E-rB8">
-                    <rect key="frame" x="41" y="202" width="373" height="18"/>
+                    <rect key="frame" x="41" y="210" width="373" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Every single link posted is scanned to check if it is an image." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="mFc-qe-Ga3">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2832,7 +2432,7 @@
                     </connections>
                 </button>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="SPN-dD-Qhj">
-                    <rect key="frame" x="325" y="231" width="201" height="14"/>
+                    <rect key="frame" x="325" y="239" width="201" height="14"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="** Restart required to apply changes." id="4mD-0b-eUd">
                         <font key="font" metaFont="system" size="10"/>
@@ -3086,7 +2686,7 @@
                     <font key="titleFont" metaFont="system"/>
                 </box>
             </subviews>
-            <point key="canvasLocation" x="50.5" y="-2557"/>
+            <point key="canvasLocation" x="221.5" y="-2516"/>
         </customView>
         <customView id="egI-fh-Ox8" userLabel="Main Text Field">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -3229,6 +2829,7 @@
                     <font key="titleFont" metaFont="system"/>
                 </box>
             </subviews>
+            <point key="canvasLocation" x="356.5" y="-2954"/>
         </customView>
         <customView id="9Rp-qO-bTZ" userLabel="User List Colors">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -3546,6 +3147,7 @@
                     </connections>
                 </button>
             </subviews>
+            <point key="canvasLocation" x="603.5" y="278"/>
         </customView>
         <customView id="1YF-k7-FrW" userLabel="Command Scope">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -3735,7 +3337,7 @@
                     <font key="titleFont" metaFont="system"/>
                 </box>
             </subviews>
-            <point key="canvasLocation" x="-486.5" y="-3596"/>
+            <point key="canvasLocation" x="283.5" y="-3978"/>
         </customView>
         <customView id="UpX-LQ-mM5" userLabel="iCloud">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -3839,7 +3441,7 @@
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="-350.5" y="-4134"/>
+            <point key="canvasLocation" x="293.5" y="-4115"/>
         </customView>
         <customView id="4pD-W0-ghZ" userLabel="File Transfers">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -4040,7 +3642,7 @@
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="-326.5" y="-4640"/>
+            <point key="canvasLocation" x="88.5" y="-4612"/>
         </customView>
         <customView id="KpN-mD-prv" userLabel="Incoming Data">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -4080,6 +3682,7 @@
                     </connections>
                 </button>
             </subviews>
+            <point key="canvasLocation" x="433.5" y="-4468"/>
         </customView>
     </objects>
     <resources>
