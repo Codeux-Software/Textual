@@ -326,13 +326,20 @@
 	windowFrame.origin.y = (NSMaxY(self.window.frame) - windowFrame.size.height);
 
 	/* Set content view frame. */
+	NSScrollView *navTreeScrlv = [self.navigationOutlineview enclosingScrollView];
+
+	NSRect outlineViewFrame = [navTreeScrlv frame];
+
 	NSRect contentViewFrame = [self.contentView frame];
 
 	contentViewFrame.size.height = viewFrame.size.height;
+	outlineViewFrame.size.height = viewFrame.size.height;
 
 	[self.window setFrame:windowFrame display:YES animate:NO];
 
 	[self.contentView setFrame:contentViewFrame];
+
+	[navTreeScrlv setFrame:outlineViewFrame];
 
 	[newView setFrame:viewFrame];
 
