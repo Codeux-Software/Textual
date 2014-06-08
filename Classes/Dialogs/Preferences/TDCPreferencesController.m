@@ -48,7 +48,10 @@
 #define _fileTransferPortRangeMin			1024
 #define _fileTransferPortRangeMax			65535
 
-#define _forcedPreferencePaneViewFrame		567, 406
+#define _preferencePaneViewFramePadding				38
+
+#define _forcedPreferencePaneViewFrameHeight		406
+#define _forcedPreferencePaneViewFrameWidth			567
 
 #define _addonsToolbarItemMultiplier		65
 
@@ -276,22 +279,51 @@
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification
 {
-	if (NSObjectIsNotEmpty(self.contentView.subviews)) {
-		[self.contentView.subviews[0] removeFromSuperview];
-	}
-
 	NSInteger selectedRow = [self.navigationOutlineview selectedRow];
 
 	NSDictionary *navItem = [self.navigationOutlineview itemAtRow:selectedRow];
 
-	NSView *newView = navItem[@"view"];
+	[self presentPreferencesPane:navItem[@"view"]];
+}
+
+- (void)presentPreferencesPane:(NSView *)newView
+{
+	/* Add view. */
+	if (NSObjectIsNotEmpty(self.contentView.subviews)) {
+		[self.contentView.subviews[0] removeFromSuperview];
+	}
 
 	[self.contentView addSubview:newView];
 
-	NSRect viewFrame = NSMakeRect(0, 0, _forcedPreferencePaneViewFrame);
+	/* Set view frame. */
+	NSRect viewFrame = [newView frame];
+
+	viewFrame.origin.x = 0;
+	viewFrame.origin.y = 0;
+
+	viewFrame.size.width = _forcedPreferencePaneViewFrameWidth;
+
+	if (viewFrame.size.height < _forcedPreferencePaneViewFrameHeight) {
+		viewFrame.size.height = _forcedPreferencePaneViewFrameHeight;
+	}
 
 	[newView setFrame:viewFrame];
 
+	/* Set content view frame. */
+	NSRect contentViewFrame = [self.contentView frame];
+
+	contentViewFrame.size.height = viewFrame.size.height;
+
+	[self.contentView setFrame:contentViewFrame];
+
+	/* Set window frame. */
+	NSRect windowFrame = [self.window frame];
+
+	windowFrame.size.height = (_preferencePaneViewFramePadding + viewFrame.size.height);
+
+	[self.window setFrame:windowFrame display:YES animate:YES];
+
+	/* Fix tab key navigation. */
 	[self.window recalculateKeyViewLoop];
 }
 
@@ -1392,6 +1424,12 @@
 	[RZNotificationCenter() removeObserver:self name:TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification object:nil];
 #endif
 
+	/* Forced save frame to use default size. */
+	NSRect windowFrame = [self.window frame];
+
+	windowFrame.size.height = _forcedPreferencePaneViewFrameHeight;
+
+	[self.window setFrame:windowFrame display:NO animate:NO];
 	[self.window saveWindowStateForClass:self.class];
 
 	/* Clean up highlight keywords. */
