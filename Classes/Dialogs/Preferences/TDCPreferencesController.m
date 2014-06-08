@@ -183,8 +183,12 @@
 			   @{@"name" : TXTLS(@"TDCPreferencesController[1021][2]"),	@"view" : self.contentViewExperimentalSettings},
 			   @{@"name" : TXTLS(@"TDCPreferencesController[1021][3]"),	@"view" : self.contentViewFileTransfers},
 			   @{@"name" : TXTLS(@"TDCPreferencesController[1021][4]"),	@"view" : self.contentViewFloodControl},
-			   @{@"name" : TXTLS(@"TDCPreferencesController[1021][5]"),	@"view" : self.contentViewICloud, @"iCloudSyncingNavigationItem" : @(YES)},
-			   @{@"name" : TXTLS(@"TDCPreferencesController[1021][6]"),	@"view" : self.contentViewLogLocation}
+
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+				@{@"name" : TXTLS(@"TDCPreferencesController[1021][5]"),	@"view" : self.contentViewICloud, @"iCloudSyncingNavigationItem" : @(YES)},
+#endif
+
+				@{@"name" : TXTLS(@"TDCPreferencesController[1021][6]"),	@"view" : self.contentViewLogLocation}
 		]
 	   }];
 
