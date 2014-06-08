@@ -320,22 +320,22 @@
 
 	[newView setFrame:viewFrame];
 
-	/* Set content view frame. */
-	NSRect contentViewFrame = [self.contentView frame];
-
-	contentViewFrame.origin.x = 175;
-	contentViewFrame.origin.y = 8;
-	
-	contentViewFrame.size.height = viewFrame.size.height;
-
-	[self.contentView setFrame:contentViewFrame];
-
 	/* Set window frame. */
 	NSRect windowFrame = [self.window frame];
 
 	windowFrame.size.height = (_preferencePaneViewFramePadding + viewFrame.size.height);
 
 	[self.window setFrame:windowFrame display:YES animate:YES];
+
+	/* Set content view frame. */
+	NSRect contentViewFrame = [self.contentView frame];
+
+	contentViewFrame.origin.x = 175;
+	contentViewFrame.origin.y = 8;
+
+	contentViewFrame.size.height = viewFrame.size.height;
+
+	[self.contentView setFrame:contentViewFrame];
 
 	/* Fix tab key navigation. */
 	[self.window recalculateKeyViewLoop];
