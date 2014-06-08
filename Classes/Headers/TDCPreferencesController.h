@@ -127,6 +127,7 @@
 - (IBAction)onOpenPathToScripts:(id)sender;
 - (IBAction)onOpenPathToThemes:(id)sender;
 
+- (IBAction)onManageiCloudButtonClicked:(id)sender;
 - (IBAction)onPurgeOfCloudDataRequested:(id)sender;
 - (IBAction)onPurgeOfCloudFilesRequested:(id)sender;
 
