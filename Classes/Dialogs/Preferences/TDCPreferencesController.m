@@ -114,49 +114,52 @@
 	self.navigationTreeMatrix = [NSMutableArray array];
 
 	[self.navigationTreeMatrix addObject:@{
-										   @"name" : @"Appearance",
-										   @"children" : @[
-												@{@"name" : @"Channel View",				@"view" : self.contentViewStyle},
-												@{@"name" : @"Embeddable Media",			@"view" : self.contentViewInlineMedia},
-												@{@"name" : @"User Interface",				@"view" : self.contentViewInterface},
-												@{@"name" : @"User List Colors",			@"view" : self.contentViewUserListColors}
-											]
-										   }];
+	   @"name" : TXTLS(@"TDCPreferencesController[1016][1]"),
+	   @"children" : @[
+			@{@"name" : TXTLS(@"TDCPreferencesController[1016][2]"),	@"view" : self.contentViewStyle},
+			@{@"name" : TXTLS(@"TDCPreferencesController[1016][3]"),	@"view" : self.contentViewInlineMedia},
+			@{@"name" : TXTLS(@"TDCPreferencesController[1016][4]"),	@"view" : self.contentViewInterface},
+			@{@"name" : TXTLS(@"TDCPreferencesController[1016][5]"),	@"view" : self.contentViewUserListColors}
+		]
+	   }];
 
 	[self.navigationTreeMatrix addObject:@{
-										   @"blockCollapse" : @(YES),
-										   @"name" : @"Basic Settings",
-										   @"children" : @[
-												  @{@"name" : @"General",					@"view" : self.contentViewGeneral},
-												  @{@"name" : @"Channel Management",		@"view" : self.contentViewChannelManagement},
-												  @{@"name" : @"Command Scope",				@"view" : self.contentViewCommandScope},
-												  @{@"name" : @"Highlights",				@"view" : self.contentViewHighlights},
-												  @{@"name" : @"Incoming Data",				@"view" : self.contentViewIncomingData},
-												  @{@"name" : @"Notifications",				@"view" : self.contentViewAlerts}
-											]
-										   }];
+	   @"blockCollapse" : @(YES),
+	   @"name" : TXTLS(@"TDCPreferencesController[1017][1]"),
+	   @"children" : @[
+			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][2]"),	@"view" : self.contentViewGeneral},
+			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][3]"),	@"view" : self.contentViewChannelManagement},
+			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][4]"),	@"view" : self.contentViewCommandScope},
+			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][5]"),	@"view" : self.contentViewHighlights},
+			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][6]"),	@"view" : self.contentViewIncomingData},
+			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][7]"),	@"view" : self.contentViewAlerts}
+		]
+	   }];
 
 	[self.navigationTreeMatrix addObject:@{
-										   @"name" : @"Defaults",
-										   @"children" : @[
-												   @{@"name" : @"Identity",				@"view" : self.contentViewDefaultIdentity},
-												   @{@"name" : @"IRCop Messages",		@"view" : self.contentViewIRCopMessages}
-											]
-										   }];
+	   @"name" : TXTLS(@"TDCPreferencesController[1018][1]"),
+	   @"children" : @[
+			   @{@"name" : TXTLS(@"TDCPreferencesController[1018][2]"),	@"view" : self.contentViewDefaultIdentity},
+			   @{@"name" : TXTLS(@"TDCPreferencesController[1018][3]"),	@"view" : self.contentViewIRCopMessages}
+		]
+	   }];
 
 	[self.navigationTreeMatrix addObject:@{
-										   @"name" : @"Input Controls",
-										   @"children" : @[
-												   @{@"name" : @"Keyboard & Mouse",				@"view" : self.contentViewKeyboardAndMouse},
-												   @{@"name" : @"Keyboard Navigation",			@"view" : self.contentViewKeyboardNavigation},
-												   @{@"name" : @"Main Text Field",				@"view" : self.contentViewMainTextField}
-											]
-										   }];
+	   @"name" : TXTLS(@"TDCPreferencesController[1019][1]"),
+	   @"children" : @[
+			   @{@"name" : TXTLS(@"TDCPreferencesController[1019][2]"),	@"view" : self.contentViewKeyboardAndMouse},
+			   @{@"name" : TXTLS(@"TDCPreferencesController[1019][3]"),	@"view" : self.contentViewKeyboardNavigation},
+			   @{@"name" : TXTLS(@"TDCPreferencesController[1019][4]"),	@"view" : self.contentViewMainTextField}
+		]
+	   }];
 
 	// ----------------- //
+
 	NSMutableArray *pluginNavigationItems = [NSMutableArray array];
 
-	[pluginNavigationItems addObject:@{@"name" : @"Installed Addons", @"view" : self.contentViewInstalledAddons}];
+	[pluginNavigationItems addObject:
+		@{@"name" : TXTLS(@"TDCPreferencesController[1020][2]"), @"view" : self.contentViewInstalledAddons}
+	];
 
 	NSArray *bundles = [THOPluginManagerSharedInstance() pluginsWithPreferencePanes];
 
@@ -168,18 +171,22 @@
 		[pluginNavigationItems addObject:@{@"name" : name, @"view" : view}];
 	}
 
-	[self.navigationTreeMatrix addObject:@{@"name" : @"Addons", @"children" : pluginNavigationItems}];
+	[self.navigationTreeMatrix addObject:
+		@{@"name" : TXTLS(@"TDCPreferencesController[1020][1]"), @"children" : pluginNavigationItems}
+	 ];
+
 	// ----------------- //
 
 	[self.navigationTreeMatrix addObject:@{
-										   @"name" : @"Advanced",
-										   @"children" : @[
-												   @{@"name" : @"Experimental Settings",		@"view" : self.contentViewExperimentalSettings},
-												   @{@"name" : @"File Transfers",				@"view" : self.contentViewFileTransfers},
-												   @{@"name" : @"Flood Control",				@"view" : self.contentViewFloodControl},
-												   @{@"name" : @"Log Location",					@"view" : self.contentViewLogLocation}
-											]
-										   }];
+	   @"name" : TXTLS(@"TDCPreferencesController[1021][1]"),
+	   @"children" : @[
+			   @{@"name" : TXTLS(@"TDCPreferencesController[1021][2]"),	@"view" : self.contentViewExperimentalSettings},
+			   @{@"name" : TXTLS(@"TDCPreferencesController[1021][3]"),	@"view" : self.contentViewFileTransfers},
+			   @{@"name" : TXTLS(@"TDCPreferencesController[1021][4]"),	@"view" : self.contentViewFloodControl},
+			   @{@"name" : TXTLS(@"TDCPreferencesController[1021][5]"),	@"view" : self.contentViewICloud, @"iCloudSyncingNavigationItem" : @(YES)},
+			   @{@"name" : TXTLS(@"TDCPreferencesController[1021][6]"),	@"view" : self.contentViewLogLocation}
+		]
+	   }];
 
 	 self.navigationOutlineview.dataSource = self;
 	 self.navigationOutlineview.delegate = self;
@@ -1118,6 +1125,27 @@
 - (void)setTextualAsDefaultIRCClient:(id)sender
 {
 	[TPCPreferences defaultIRCClientPrompt:YES];
+}
+
+- (void)onManageiCloudButtonClicked:(id)sender
+{
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	for (NSDictionary *subdic in self.navigationTreeMatrix) {
+		for (NSDictionary *chldic in subdic[@"children"]) {
+			if ([chldic boolForKey:@"iCloudSyncingNavigationItem"]) {
+				if ([self.navigationOutlineview isItemExpanded:subdic] == NO) {
+					[self.navigationOutlineview expandItem:subdic];
+
+					[self onManageiCloudButtonClicked:sender];
+				} else {
+					NSInteger icrow = [self.navigationOutlineview rowForItem:chldic];
+
+					[self.navigationOutlineview selectItemAtIndex:icrow];
+				}
+			}
+		}
+	}
+#endif
 }
 
 - (void)onChangedCloudSyncingServices:(id)sender

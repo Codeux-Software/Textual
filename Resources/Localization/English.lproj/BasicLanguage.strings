@@ -108,6 +108,39 @@
 "TDCPreferencesController[1015][3]" = "• Window Colors";
 "TDCPreferencesController[1015][4]" = "• Channel View Font";
 
+"TDCPreferencesController[1016][1]" = "Appearance";
+"TDCPreferencesController[1016][2]" = "Channel View";
+"TDCPreferencesController[1016][3]" = "Embeddable Media";
+"TDCPreferencesController[1016][4]" = "User Interface";
+"TDCPreferencesController[1016][5]" = "User List Colors";
+
+"TDCPreferencesController[1017][1]" = "Basic Settings";
+"TDCPreferencesController[1017][2]" = "General";
+"TDCPreferencesController[1017][3]" = "Channel Management";
+"TDCPreferencesController[1017][4]" = "Command Scope";
+"TDCPreferencesController[1017][5]" = "Highlights";
+"TDCPreferencesController[1017][6]" = "Incoming Data";
+"TDCPreferencesController[1017][7]" = "Notifications";
+
+"TDCPreferencesController[1018][1]" = "Defaults";
+"TDCPreferencesController[1018][2]" = "Identity";
+"TDCPreferencesController[1018][3]" = "IRCop Messages";
+
+"TDCPreferencesController[1019][1]" = "Input Controls";
+"TDCPreferencesController[1019][2]" = "Keyboard & Mouse";
+"TDCPreferencesController[1019][3]" = "Keyboard Navigation";
+"TDCPreferencesController[1019][4]" = "Main Text Field";
+
+"TDCPreferencesController[1020][1]" = "Addons";
+"TDCPreferencesController[1020][2]" = "Installed Addons";
+
+"TDCPreferencesController[1021][1]" = "Advanced";
+"TDCPreferencesController[1021][2]" = "Experimental Settings";
+"TDCPreferencesController[1021][3]" = "File Transfers";
+"TDCPreferencesController[1021][4]" = "Flood Control";
+"TDCPreferencesController[1021][5]" = "iCloud Syncing";
+"TDCPreferencesController[1021][6]" = "Log Location";
+
 /* Final transfer dialog. */
 "TDCFileTransferDialog[1000][1]" = "%1$@ of %2$@ (%3$@/s) sent to %4$@";
 "TDCFileTransferDialog[1000][2]" = "%1$@ of %2$@ (%3$@/s) sent to %4$@ — %5$@ remaining";

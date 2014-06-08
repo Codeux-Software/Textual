@@ -274,7 +274,7 @@
                         <font key="font" metaFont="smallSystem"/>
                     </buttonCell>
                     <connections>
-                        <action selector="onPrefPaneSelected:" target="-2" id="oYo-dh-jGB"/>
+                        <action selector="onManageiCloudButtonClicked:" target="-2" id="1fB-rJ-kxy"/>
                         <binding destination="1247" name="enabled" keyPath="values.System —&gt; Built with iCloud Support" id="qsq-82-ZbN"/>
                         <binding destination="1247" name="hidden" keyPath="values.System —&gt; Running Mac OS Mountain Lion Or Newer" previousBinding="qsq-82-ZbN" id="KWf-fQ-aTz">
                             <dictionary key="options">
@@ -3002,6 +3002,7 @@
                     </connections>
                 </button>
             </subviews>
+            <point key="canvasLocation" x="704.5" y="415"/>
         </customView>
         <customView id="fMR-Dn-TEd" userLabel="Keyboard Navigation">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
