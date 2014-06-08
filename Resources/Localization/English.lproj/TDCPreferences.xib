@@ -347,11 +347,11 @@
             <point key="canvasLocation" x="1104.5" y="352"/>
         </customView>
         <customView id="d6J-SH-Xgl" userLabel="Default Identity">
-            <rect key="frame" x="0.0" y="6" width="567" height="566"/>
+            <rect key="frame" x="0.0" y="0.0" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="6H1-Tg-Tt8">
-                    <rect key="frame" x="231" y="361" width="207" height="19"/>
+                    <rect key="frame" x="231" y="201" width="207" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="OMU-g9-Wob">
                         <font key="font" metaFont="smallSystem"/>
@@ -368,7 +368,7 @@
                     </connections>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="cC6-1A-pvW">
-                    <rect key="frame" x="155" y="363" width="71" height="16"/>
+                    <rect key="frame" x="155" y="203" width="71" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Nickname:" id="0bY-1G-9fo">
                         <font key="font" metaFont="cellTitle"/>
@@ -377,7 +377,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="AEb-I8-O30">
-                    <rect key="frame" x="231" y="307" width="207" height="19"/>
+                    <rect key="frame" x="231" y="147" width="207" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="d1d-pG-lez">
                         <font key="font" metaFont="smallSystem"/>
@@ -394,7 +394,7 @@
                     </connections>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="uNQ-s8-bAv">
-                    <rect key="frame" x="155" y="309" width="71" height="16"/>
+                    <rect key="frame" x="155" y="149" width="71" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Username:" id="crB-fG-ufp">
                         <font key="font" metaFont="cellTitle"/>
@@ -403,7 +403,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="Odd-uF-wUV">
-                    <rect key="frame" x="231" y="280" width="207" height="19"/>
+                    <rect key="frame" x="231" y="120" width="207" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="kc8-cg-xFg">
                         <font key="font" metaFont="smallSystem"/>
@@ -420,7 +420,7 @@
                     </connections>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="11g-Me-msX">
-                    <rect key="frame" x="155" y="282" width="71" height="16"/>
+                    <rect key="frame" x="155" y="122" width="71" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Real name:" id="jRf-a0-3jI">
                         <font key="font" metaFont="cellTitle"/>
@@ -429,7 +429,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="Sne-aI-1Oj">
-                    <rect key="frame" x="81" y="399" width="404" height="48"/>
+                    <rect key="frame" x="81" y="239" width="404" height="48"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="Kn7-a5-s6a">
                         <font key="font" metaFont="cellTitle"/>
@@ -439,7 +439,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="iNX-QK-nm1">
-                    <rect key="frame" x="231" y="334" width="207" height="19"/>
+                    <rect key="frame" x="231" y="174" width="207" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="9WX-iW-Isu">
                         <font key="font" metaFont="smallSystem"/>
@@ -456,7 +456,7 @@
                     </connections>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="xt6-0d-74R">
-                    <rect key="frame" x="126" y="336" width="100" height="16"/>
+                    <rect key="frame" x="126" y="176" width="100" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Away Nickname:" id="Fie-vu-Czl">
                         <font key="font" metaFont="cellTitle"/>
@@ -465,7 +465,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="YhK-iA-Uk0">
-                    <rect key="frame" x="178" y="327" width="48" height="11"/>
+                    <rect key="frame" x="178" y="167" width="48" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="iYy-yb-Bx8">
                         <font key="font" metaFont="miniSystem"/>
