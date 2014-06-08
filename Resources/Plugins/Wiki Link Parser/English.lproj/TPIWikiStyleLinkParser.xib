@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A238x" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5053"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.17"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TPIWikipediaLinkParser">
@@ -22,14 +22,14 @@
         <customObject id="-3" userLabel="Application"/>
         <userDefaultsController id="73"/>
         <customView id="1">
-            <rect key="frame" x="0.0" y="0.0" width="540" height="404"/>
+            <rect key="frame" x="0.0" y="0.0" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <userGuides>
                 <userLayoutGuide location="26" affinity="minX"/>
             </userGuides>
             <subviews>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="60">
-                    <rect key="frame" x="21" y="249" width="468" height="136"/>
+                    <rect key="frame" x="34" y="249" width="468" height="136"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="pdQ-DS-ILK">
                         <rect key="frame" x="0.0" y="0.0" width="468" height="136"/>
@@ -44,26 +44,26 @@
                                 <attributedString key="textStorage">
                                     <fragment content="The ">
                                         <attributes>
-                                            <font key="NSFont" size="12" name="LucidaGrande"/>
+                                            <font key="NSFont" size="13" name="HelveticaNeue"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="Wiki-style Link Parser">
                                         <attributes>
-                                            <font key="NSFont" size="12" name="LucidaGrande-Bold"/>
+                                            <font key="NSFont" size="13" name="HelveticaNeue"/>
                                             <font key="NSOriginalFont" size="12" name="LucidaGrande-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content=" automatically scans text that has been entered into the input text field and replaces Wiki-style link syntax blocks: ">
                                         <attributes>
-                                            <font key="NSFont" size="12" name="LucidaGrande"/>
+                                            <font key="NSFont" size="13" name="HelveticaNeue"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content="[[&lt;title>]]">
+                                    <fragment content="[[&lt;title&gt;]]">
                                         <attributes>
-                                            <font key="NSFont" size="12" name="LucidaGrande-Bold"/>
+                                            <font key="NSFont" size="13" name="HelveticaNeue"/>
                                             <font key="NSOriginalFont" size="12" name="LucidaGrande-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
@@ -74,33 +74,33 @@ It also looks for the same syntax within messages posted in a channel and shows 
 
 Click the </string>
                                         <attributes>
-                                            <font key="NSFont" size="12" name="LucidaGrande"/>
+                                            <font key="NSFont" size="13" name="HelveticaNeue"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="+">
                                         <attributes>
-                                            <font key="NSFont" size="12" name="LucidaGrande-Bold"/>
+                                            <font key="NSFont" size="13" name="HelveticaNeue"/>
                                             <font key="NSOriginalFont" size="12" name="LucidaGrande-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content=" button below to add a new entry. Entries are channel specific. The ">
                                         <attributes>
-                                            <font key="NSFont" size="12" name="LucidaGrande"/>
+                                            <font key="NSFont" size="13" name="HelveticaNeue"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="link prefix">
                                         <attributes>
-                                            <font key="NSFont" size="12" name="LucidaGrande-Bold"/>
+                                            <font key="NSFont" size="13" name="HelveticaNeue"/>
                                             <font key="NSOriginalFont" size="12" name="LucidaGrande-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content=" can technically be anything, but in general it is what will be prepended to the completed title to make an absolute link.">
                                         <attributes>
-                                            <font key="NSFont" size="12" name="LucidaGrande"/>
+                                            <font key="NSFont" size="13" name="HelveticaNeue"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
@@ -122,18 +122,18 @@ Click the </string>
                     </scroller>
                 </scrollView>
                 <button id="64">
-                    <rect key="frame" x="39" y="218" width="137" height="18"/>
+                    <rect key="frame" x="52" y="219" width="137" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Enable parser." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="65">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="73" name="value" keyPath="values.Wiki-style Link Parser Extension -> Service Enabled" id="311"/>
+                        <binding destination="73" name="value" keyPath="values.Wiki-style Link Parser Extension -&gt; Service Enabled" id="311"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="68">
-                    <rect key="frame" x="23" y="189" width="89" height="17"/>
+                    <rect key="frame" x="36" y="190" width="89" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Link Prefixes:" id="69">
                         <font key="font" metaFont="system"/>
@@ -142,14 +142,14 @@ Click the </string>
                     </textFieldCell>
                 </textField>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="273">
-                    <rect key="frame" x="23" y="49" width="494" height="132"/>
+                    <rect key="frame" x="36" y="50" width="494" height="132"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" id="K0X-dB-5Eh">
                         <rect key="frame" x="1" y="17" width="492" height="114"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="276" id="274">
-                                <rect key="frame" x="0.0" y="0.0" width="492" height="114"/>
+                                <rect key="frame" x="0.0" y="0.0" width="492" height="19"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -183,7 +183,7 @@ Click the </string>
                                     </tableColumn>
                                 </tableColumns>
                                 <connections>
-                                    <binding destination="73" name="enabled" keyPath="values.Wiki-style Link Parser Extension -> Service Enabled" id="7tT-fr-DIc"/>
+                                    <binding destination="73" name="enabled" keyPath="values.Wiki-style Link Parser Extension -&gt; Service Enabled" id="7tT-fr-DIc"/>
                                     <outlet property="dataSource" destination="-2" id="289"/>
                                     <outlet property="delegate" destination="-2" id="290"/>
                                 </connections>
@@ -205,7 +205,7 @@ Click the </string>
                     </tableHeaderView>
                 </scrollView>
                 <button verticalHuggingPriority="750" id="284">
-                    <rect key="frame" x="458" y="19" width="30" height="23"/>
+                    <rect key="frame" x="471" y="20" width="30" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="285">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -213,11 +213,11 @@ Click the </string>
                     </buttonCell>
                     <connections>
                         <action selector="addCondition:" target="-2" id="291"/>
-                        <binding destination="73" name="enabled" keyPath="values.Wiki-style Link Parser Extension -> Service Enabled" id="jvj-ha-Xkx"/>
+                        <binding destination="73" name="enabled" keyPath="values.Wiki-style Link Parser Extension -&gt; Service Enabled" id="jvj-ha-Xkx"/>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="286">
-                    <rect key="frame" x="490" y="19" width="30" height="23"/>
+                    <rect key="frame" x="503" y="20" width="30" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="287">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -225,10 +225,11 @@ Click the </string>
                     </buttonCell>
                     <connections>
                         <action selector="removeCondition:" target="-2" id="292"/>
-                        <binding destination="73" name="enabled" keyPath="values.Wiki-style Link Parser Extension -> Service Enabled" id="0eg-8r-HSs"/>
+                        <binding destination="73" name="enabled" keyPath="values.Wiki-style Link Parser Extension -&gt; Service Enabled" id="0eg-8r-HSs"/>
                     </connections>
                 </button>
             </subviews>
+            <point key="canvasLocation" x="413" y="444.5"/>
         </customView>
         <window title="New Condition" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="224">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
@@ -315,7 +316,7 @@ Gw
         </window>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="8" height="8"/>
-        <image name="NSRemoveTemplate" width="8" height="8"/>
+        <image name="NSAddTemplate" width="11" height="11"/>
+        <image name="NSRemoveTemplate" width="11" height="11"/>
     </resources>
 </document>
