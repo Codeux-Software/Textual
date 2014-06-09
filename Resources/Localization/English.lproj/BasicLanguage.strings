@@ -477,7 +477,7 @@
 "BasicLanguage[1184]" = "   %@";
 
 /* Default sleep message. */
-"BasicLanguage[1185]" = "My %@ has gone to sleep. ZZZzzz…";
+"BasicLanguage[1185]" = "My %@ has gone to sleep. 💤";
 
 /* Ok button for dialogs. */
 "BasicLanguage[1186]" = "OK";
