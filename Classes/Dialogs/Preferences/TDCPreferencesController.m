@@ -56,6 +56,7 @@
 #define _addonsToolbarItemMultiplier		65
 
 @interface TDCPreferencesController ()
+@property (nonatomic, assign) BOOL navgiationTreeIsAnimating;
 @property (nonatomic, strong) NSMutableArray *navigationTreeMatrix;
 @property (nonatomic, assign) NSInteger lastSelectedNavigationItem;
 @property (nonatomic, assign) NSInteger currentSelectedNavigationItem;
@@ -281,7 +282,11 @@
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
 {
-	return ([item containsKey:@"children"] == NO);
+	if (self.navgiationTreeIsAnimating) {
+		return NO;
+	} else {
+		return ([item containsKey:@"children"] == NO);
+	}
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(NSDictionary *)item
@@ -312,6 +317,8 @@
 	if (self.currentSelectedNavigationItem > self.lastSelectedNavigationItem) {
 		isGoingDown = YES;
 	}
+
+	self.navgiationTreeIsAnimating = YES;
 
 	/* Set view frame. */
 	NSRect newViewFinalFrame = [newView frame];
@@ -391,9 +398,11 @@
 		[newView.animator setAlphaValue:1.0];
 		[newView.animator setFrame:newViewFinalFrame];
 
-		[self performSelector:@selector(timedRemoveFrame:) withObject:oldView afterDelay:0.2];
+		[self performSelector:@selector(timedRemoveFrame:) withObject:oldView afterDelay:0.3];
 	} else {
 		[newView setFrame:newViewFinalFrame];
+
+		self.navgiationTreeIsAnimating = NO;
 	}
 
 	[self.window recalculateKeyViewLoop];
@@ -401,6 +410,8 @@
 
 - (void)timedRemoveFrame:(NSView *)oldView
 {
+	self.navgiationTreeIsAnimating = NO;
+
 	[oldView removeFromSuperview];
 }
 
