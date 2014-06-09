@@ -328,6 +328,7 @@
 
 - (void)presentPreferencesPane:(NSView *)newView
 {
+	/* Determine direction. */
 	BOOL isGoingDown = NO;
 
 	if (self.currentSelectedNavigationItem > self.lastSelectedNavigationItem) {
@@ -369,31 +370,46 @@
 
 	[newView setFrame:newViewAnimationFrame];
 
+	/* Update window size. */
+	NSRect contentViewFrame = [self.contentView frame];
+
+	BOOL contentSizeDidntChange =  (contentViewFrame.size.height == newViewFinalFrame.size.height);
+	BOOL windowWillBecomeSmaller = (contentViewFrame.size.height >  newViewFinalFrame.size.height);
+
+	/* Special condition to allow for smoother animations when going up
+	 with a window which is resizing to a smaller size. */
+	if (isGoingDown && windowWillBecomeSmaller) {
+		isGoingDown = NO;
+	}
+
 	/* Set window frame. */
 	NSRect windowFrame = [self.window frame];
 
-	windowFrame.size.height = (_preferencePaneViewFramePadding + newViewFinalFrame.size.height);
+	if (contentSizeDidntChange == NO) {
+		windowFrame.size.height = (_preferencePaneViewFramePadding + newViewFinalFrame.size.height);
 
-	windowFrame.origin.y = (NSMaxY(self.window.frame) - windowFrame.size.height);
+		windowFrame.origin.y = (NSMaxY(self.window.frame) - windowFrame.size.height);
 
-	/* Update window size. */
-	[self.window setFrame:windowFrame display:YES animate:YES];
+		[self.window setFrame:windowFrame display:YES animate:YES];
+	}
 
-	NSRect contentViewFrame = [self.contentView frame];
-
-	contentViewFrame.origin.y = 8;
-
-	contentViewFrame.size.height = newViewFinalFrame.size.height;
-
+	/* Add new frame. */
 	[self.contentView addSubview:newView];
 
-	[self.contentView setFrame:contentViewFrame];
+	/* Update content frame. */
+	if (contentSizeDidntChange == NO) {
+		contentViewFrame.size.height = newViewFinalFrame.size.height;
+	}
 
+	/* Cancel any previous animation resets. */
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(timedRemoveFrame:) object:newView];
 
 	/* Begin animation. */
 	[RZAnimationCurrentContext() setDuration:0.7];
 
+	/* Find existing views. */
+	/* If count is 0, then that means preferences just launched
+	 and we have not added anything to our window yet. */
 	NSArray *subviews = self.contentView.subviews;
 
 	NSInteger subviewCount = [subviews count];
@@ -1560,7 +1576,7 @@
 #endif
 
 	/* Forced save frame to use default size. */
-	/* We set alpha to hide window but also change from underneath user. */
+	/* We set alpha to hide window but also change frame underneath user. */
 	[self.window setAlphaValue:0.0];
 
 	NSRect windowFrame = [self.window frame];

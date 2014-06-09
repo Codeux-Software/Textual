@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A238x" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
+        <deployment version="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.17"/>
     </dependencies>
@@ -149,9 +149,9 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
-                    <customView autoresizesSubviews="NO" id="4931">
+                    <customView focusRingType="none" id="4931">
                         <rect key="frame" x="175" y="8" width="567" height="406"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </customView>
                 </subviews>
             </view>
@@ -344,7 +344,7 @@
                     </connections>
                 </customView>
             </subviews>
-            <point key="canvasLocation" x="1104.5" y="352"/>
+            <point key="canvasLocation" x="1279.5" y="396"/>
         </customView>
         <customView id="d6J-SH-Xgl" userLabel="Default Identity">
             <rect key="frame" x="0.0" y="0.0" width="567" height="406"/>
@@ -901,11 +901,11 @@
             </subviews>
         </customView>
         <customView id="qvS-li-dv0" userLabel="Inline Media">
-            <rect key="frame" x="170" y="8" width="567" height="406"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <rect key="frame" x="0.0" y="1" width="567" height="660"/>
+            <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <button appearanceType="aqua" id="aBI-aO-f4v">
-                    <rect key="frame" x="66" y="324" width="186" height="18"/>
+                    <rect key="frame" x="66" y="578" width="186" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Show linked images inline." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="hAr-eA-GcX">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -917,7 +917,7 @@
                     </connections>
                 </button>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="uLI-Lc-c9B">
-                    <rect key="frame" x="251" y="215" width="60" height="19"/>
+                    <rect key="frame" x="251" y="469" width="60" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="300" drawsBackground="YES" id="0qj-wG-TbN">
                         <font key="font" metaFont="smallSystem"/>
@@ -933,7 +933,7 @@
                     </connections>
                 </textField>
                 <popUpButton appearanceType="aqua" verticalHuggingPriority="750" id="eSS-GH-uW9">
-                    <rect key="frame" x="361" y="237" width="114" height="22"/>
+                    <rect key="frame" x="361" y="491" width="114" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="100 Megabytes" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="10" imageScaling="proportionallyDown" inset="2" selectedItem="VIr-I6-sXp" id="i5F-1N-o1j">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -958,7 +958,7 @@
                     </connections>
                 </popUpButton>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="kyL-8P-YHU">
-                    <rect key="frame" x="65" y="241" width="299" height="16"/>
+                    <rect key="frame" x="65" y="495" width="299" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Limit images shown inline to a maxium file size of " id="Ve9-42-YiN">
                         <font key="font" metaFont="cellTitle"/>
@@ -967,7 +967,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="Xh7-XO-VK8">
-                    <rect key="frame" x="65" y="217" width="182" height="16"/>
+                    <rect key="frame" x="65" y="471" width="182" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Scale images to a maximum of" id="OcL-Uv-3hN">
                         <font key="font" metaFont="cellTitle"/>
@@ -976,7 +976,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="DNO-2u-LgP">
-                    <rect key="frame" x="316" y="217" width="73" height="16"/>
+                    <rect key="frame" x="316" y="471" width="73" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="pixels wide." id="Zhd-Mj-FHH">
                         <font key="font" metaFont="cellTitle"/>
@@ -985,14 +985,14 @@
                     </textFieldCell>
                 </textField>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="4XL-ZK-HUn">
-                    <rect key="frame" x="77" y="196" width="442" height="5"/>
+                    <rect key="frame" x="77" y="450" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="2oi-Ub-WNz">
-                    <rect key="frame" x="67" y="163" width="288" height="16"/>
+                    <rect key="frame" x="67" y="417" width="288" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Do not display images with a height greater than" id="2fY-qH-Pmo">
                         <font key="font" metaFont="cellTitle"/>
@@ -1001,7 +1001,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="CCd-bA-zYe">
-                    <rect key="frame" x="358" y="161" width="60" height="19"/>
+                    <rect key="frame" x="358" y="415" width="60" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="300" drawsBackground="YES" id="sUT-nu-psj">
                         <font key="font" metaFont="smallSystem"/>
@@ -1017,7 +1017,7 @@
                     </connections>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="nrx-Je-gLc">
-                    <rect key="frame" x="424" y="163" width="42" height="16"/>
+                    <rect key="frame" x="424" y="417" width="42" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="pixels." id="V2a-C5-MII">
                         <font key="font" metaFont="cellTitle"/>
@@ -1026,14 +1026,14 @@
                     </textFieldCell>
                 </textField>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="hc1-WI-d7K">
-                    <rect key="frame" x="77" y="271" width="442" height="5"/>
+                    <rect key="frame" x="77" y="525" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="V5y-SZ-iBD">
-                    <rect key="frame" x="77" y="100" width="407" height="53"/>
+                    <rect key="frame" x="77" y="354" width="407" height="53"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="4Bh-xF-mMk">
                         <rect key="frame" x="1" y="1" width="223" height="133"/>
@@ -1110,7 +1110,7 @@
                     </scroller>
                 </scrollView>
                 <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="K6A-JD-hY1">
-                    <rect key="frame" x="83" y="289" width="394" height="27"/>
+                    <rect key="frame" x="83" y="543" width="394" height="27"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Sy0-wV-E0N">
                         <rect key="frame" x="1" y="1" width="223" height="133"/>
@@ -1164,11 +1164,11 @@
                     </scroller>
                 </scrollView>
             </subviews>
-            <point key="canvasLocation" x="168.5" y="-854"/>
+            <point key="canvasLocation" x="168.5" y="-727"/>
         </customView>
         <customView id="oeR-nv-slx" userLabel="Style">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <tabView controlSize="small" id="3iZ-BR-arK">
                     <rect key="frame" x="26" y="27" width="515" height="346"/>
@@ -1339,7 +1339,7 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="352" height="20"/>
+                                                    <size key="minSize" width="352" height="16"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="Strips away formatting such as ">
@@ -1430,7 +1430,7 @@
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="352" height="20"/>
+                                                    <size key="minSize" width="352" height="16"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
@@ -3024,7 +3024,7 @@
         </customView>
         <customView id="u96-CK-dYE" userLabel="Interface">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <button appearanceType="aqua" id="ZwK-yE-OaM">
                     <rect key="frame" x="54" y="302" width="250" height="18"/>
@@ -3149,7 +3149,7 @@
                     </connections>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="603.5" y="278"/>
+            <point key="canvasLocation" x="1240.5" y="433"/>
         </customView>
         <customView id="1YF-k7-FrW" userLabel="Command Scope">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
