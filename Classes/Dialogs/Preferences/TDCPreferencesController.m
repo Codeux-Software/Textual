@@ -209,6 +209,22 @@
 
 	[self.navigationOutlineview selectItemAtIndex:6];
 
+	/* Growl check. */
+	BOOL growlRunning = [GrowlApplicationBridge isGrowlRunning];
+
+	/* We only have notification center on mountain lion or newer so we have to
+	 check what OS we are running on before we even doing anything. */
+	if ([TPCPreferences featureAvailableToOSXMountainLion] == NO || growlRunning) {
+		if (growlRunning) {
+			self.alertNotificationDestinationTextField.stringValue = TXTFLS(@"TDCPreferencesController[1005]");
+		} else {
+			self.alertNotificationDestinationTextField.stringValue = TXTFLS(@"TDCPreferencesController[1007]");
+
+		}
+	} else {
+		self.alertNotificationDestinationTextField.stringValue = TXTFLS(@"TDCPreferencesController[1006]");
+	}
+
 	// Complete startup of preferences.
 	[self.scriptsController populateData];
 
