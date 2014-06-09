@@ -6240,7 +6240,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	}
 
 	// 2. kCFStreamSSLAllowsAnyRoot
-
+/*
 	value = [tlsSettings objectForKey:(NSString *)kCFStreamSSLAllowsAnyRoot];
 	if (value)
 	{
@@ -6280,7 +6280,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 
 #endif
 	}
-
+*/
 	// 4. kCFStreamSSLValidatesCertificateChain
 
 	value = [tlsSettings objectForKey:(NSString *)kCFStreamSSLValidatesCertificateChain];
@@ -6303,7 +6303,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	}
 
 	// 5. kCFStreamSSLAllowsExpiredCertificates
-
+/*
 	value = [tlsSettings objectForKey:(NSString *)kCFStreamSSLAllowsExpiredCertificates];
 	if (value)
 	{
@@ -6322,7 +6322,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 
 #endif
 	}
-
+*/
 	// 6. kCFStreamSSLCertificates
 
 	value = [tlsSettings objectForKey:(NSString *)kCFStreamSSLCertificates];
