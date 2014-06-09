@@ -151,8 +151,7 @@
 	   @"name" : TXTLS(@"TDCPreferencesController[1019][1]"),
 	   @"children" : @[
 			   @{@"name" : TXTLS(@"TDCPreferencesController[1019][2]"),	@"view" : self.contentViewKeyboardAndMouse},
-			   @{@"name" : TXTLS(@"TDCPreferencesController[1019][3]"),	@"view" : self.contentViewKeyboardNavigation},
-			   @{@"name" : TXTLS(@"TDCPreferencesController[1019][4]"),	@"view" : self.contentViewMainTextField}
+			   @{@"name" : TXTLS(@"TDCPreferencesController[1019][3]"),	@"view" : self.contentViewMainTextField}
 		]
 	   }];
 
