@@ -7695,7 +7695,7 @@
 							  langitem:(NSString *)localKey
 {
 	if ([ignoreItem notifyJoins]) {
-		NSString *text = TXTFLS(localKey, nick, ignoreItem.hostmask);
+		NSString *text = TXTFLS(localKey, nick);
 
 		[self notifyEvent:TXNotificationAddressBookMatchType
 				 lineType:TVCLogLineNoticeType

@@ -194,7 +194,7 @@
 					eventType == TXNotificationPrivateMessageType)
 				{
 					notification.hasReplyButton = YES;
-					notification.responsePlaceholder = TXTFLS(@"BasicLanguage[1085]");
+					notification.responsePlaceholder = TXTFLS(@"BasicLanguage[1235]");
 				}
 			}
 #endif 
