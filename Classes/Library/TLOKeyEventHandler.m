@@ -106,9 +106,9 @@
 
 - (BOOL)processKeyEvent:(NSEvent *)e
 {
-	NSInputManager *im = [NSInputManager currentInputManager];
+	NSTextInputContext *im = [NSTextInputContext currentInputContext];
 
-	if (im && im.markedRange.length > 0) {
+	if (im && im.client.markedRange.length > 0) {
 		return NO;
 	}
 	
