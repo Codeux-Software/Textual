@@ -229,9 +229,18 @@
 	[self performSelector:@selector(tcpClientDidConnect)];
 }
 
+- (void)onSocketDidDisconnect:(id)sock
+{
+	if ([self useNewSocketEngine] == NO) {
+		[self closeSocket];
+	}
+}
+
 - (void)onSocketDidDisconnect:(id)sock withError:(NSError *)distcError
 {
-	[self closeSocket];
+	if ([self useNewSocketEngine]) {
+		[self closeSocket];
+	}
 
 	[self performSelector:@selector(tcpClientDidDisconnect:) withObject:distcError];
 }
@@ -259,9 +268,7 @@
 			[self performSelector:@selector(tcpClientDidError:) withObject:errorMessage];
 		}
 
-		if ([self useNewSocketEngine]) {
-			[self onSocketDidDisconnect:sender withError:error];
-		}
+		[self onSocketDidDisconnect:sender withError:error];
 	}
 }
 
