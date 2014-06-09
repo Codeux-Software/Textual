@@ -326,12 +326,12 @@
 "BasicLanguage[1080]" = "%1$@";
 "BasicLanguage[1081]" = "%1$@";
 "BasicLanguage[1082]" = "%1$@ (%2$qi bytes)";
-"BasicLanguage[1083]" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is available.";
-"BasicLanguage[1084]" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is no longer available.";
-"BasicLanguage[1085]" = "User with nickname \"%1$@\" matching Address Book entry \"%2$@\" is now available.";
+"BasicLanguage[1083]" = "User with nickname \"%1$@\" is available.";
+"BasicLanguage[1084]" = "User with nickname \"%1$@\" is no longer available.";
+"BasicLanguage[1085]" = "User with nickname \"%1$@\" is now available.";
 
 /* Notification bubble replyb button placeholders. */
-"BasicLanguage[1085]" = "Enter message to reply to this private message.";
+"BasicLanguage[1235]" = "Enter message to reply to this private message.";
 
 /* Notification type titles. */
 "BasicLanguage[1086]" = "Address Book Notification";
