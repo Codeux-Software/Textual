@@ -1560,11 +1560,15 @@
 #endif
 
 	/* Forced save frame to use default size. */
+	/* We set alpha to hide window but also change from underneath user. */
+	[self.window setAlphaValue:0.0];
+
 	NSRect windowFrame = [self.window frame];
 
 	windowFrame.size.height = _forcedPreferencePaneViewFrameHeight;
 
 	[self.window setFrame:windowFrame display:NO animate:NO];
+
 	[self.window saveWindowStateForClass:self.class];
 
 	/* Clean up highlight keywords. */
