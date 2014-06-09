@@ -318,6 +318,16 @@
 		isGoingDown = YES;
 	}
 
+	BOOL invertedScrollingDirection = [RZUserDefaults() boolForKey:@"com.apple.swipescrolldirection"];
+
+	if (invertedScrollingDirection) {
+		if (isGoingDown) {
+			isGoingDown = NO;
+		} else {
+			isGoingDown = YES;
+		}
+	}
+
 	self.navgiationTreeIsAnimating = YES;
 
 	/* Set view frame. */
