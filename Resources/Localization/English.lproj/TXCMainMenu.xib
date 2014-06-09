@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A238x" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
+        <deployment version="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.17"/>
     </dependencies>
@@ -2091,14 +2091,14 @@ CA
                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="21" horizontalPageScroll="0.0" verticalLineScroll="21" verticalPageScroll="0.0" hasHorizontalScroller="NO" maxMagnification="8" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" id="2800">
                                         <rect key="frame" x="0.0" y="0.0" width="267" height="437"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="J8g-Az-QMA">
+                                        <clipView key="contentView" copiesOnScroll="NO" id="J8g-Az-QMA">
                                             <rect key="frame" x="0.0" y="0.0" width="267" height="437"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <outlineView focusRingType="none" appearanceType="vibrantLight" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="21" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="14" indentationMarkerFollowsCell="NO" outlineTableColumn="2804" id="2801" customClass="TVCServerList">
+                                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="21" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="14" indentationMarkerFollowsCell="NO" outlineTableColumn="2804" id="2801" customClass="TVCServerList">
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="0.0"/>
-                                                    <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                                     <color key="gridColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                                     <tableColumns>
                                                         <tableColumn identifier="name" editable="NO" width="264" minWidth="16" maxWidth="1000" id="2804">
@@ -2179,7 +2179,7 @@ CA
                                                     </tableColumns>
                                                 </outlineView>
                                             </subviews>
-                                            <nil key="backgroundColor"/>
+                                            <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                         </clipView>
                                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="2802">
                                             <rect key="frame" x="-100" y="-100" width="223" height="15"/>
@@ -2213,14 +2213,14 @@ CA
                                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="18" horizontalPageScroll="0.0" verticalLineScroll="18" verticalPageScroll="0.0" hasHorizontalScroller="NO" maxMagnification="8" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" id="VfW-Q0-igm" userLabel="Member List Scroll View">
                                                         <rect key="frame" x="0.0" y="0.0" width="256" height="437"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="3cN-gg-HxB">
+                                                        <clipView key="contentView" copiesOnScroll="NO" id="3cN-gg-HxB">
                                                             <rect key="frame" x="0.0" y="0.0" width="256" height="437"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <outlineView focusRingType="none" appearanceType="vibrantLight" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" autosaveColumns="NO" rowHeight="18" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="14" indentationMarkerFollowsCell="NO" outlineTableColumn="npr-ez-jah" id="BfG-Qj-vW8" userLabel="Member List" customClass="TVCMemberList">
+                                                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" autosaveColumns="NO" rowHeight="18" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="14" indentationMarkerFollowsCell="NO" outlineTableColumn="npr-ez-jah" id="BfG-Qj-vW8" userLabel="Member List" customClass="TVCMemberList">
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                     <size key="intercellSpacing" width="3" height="0.0"/>
-                                                                    <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                                                     <color key="gridColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                                                     <tableColumns>
                                                                         <tableColumn identifier="name" editable="NO" width="253" minWidth="16" maxWidth="1000" id="npr-ez-jah">
@@ -2280,7 +2280,7 @@ CA
                                                                     </tableColumns>
                                                                 </outlineView>
                                                             </subviews>
-                                                            <nil key="backgroundColor"/>
+                                                            <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                                         </clipView>
                                                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="2Z1-D1-fZq">
                                                             <rect key="frame" x="-100" y="-100" width="223" height="15"/>

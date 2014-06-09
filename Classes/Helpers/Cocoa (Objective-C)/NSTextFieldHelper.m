@@ -87,7 +87,7 @@
 
 - (NSScrollView *)scrollView
 {
-    return (id)self.superview.superview;
+	return [self enclosingScrollView];
 }
 
 @end

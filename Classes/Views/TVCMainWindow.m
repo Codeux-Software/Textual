@@ -169,6 +169,11 @@ static NSValue *touchesToPoint(NSTouch *fingerA, NSTouch *fingerB)
 	}
 }
 
+- (BOOL)isInactive
+{
+	return ([self isKeyWindow] == NO && [self isMainWindow] == NO);
+}
+
 - (BOOL)canBecomeMainWindow
 {
 	return YES;

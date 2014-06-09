@@ -909,7 +909,7 @@
 		return YES;
 	}
 
-	if ([TPCPreferences postNotificationsWhileInFocus] == NO && self.masterController.mainWindowIsActive) {
+	if ([TPCPreferences postNotificationsWhileInFocus] == NO && [[[self masterController] mainWindow] isInactive] == NO) {
 		if (NSDissimilarObjects(type, TXNotificationAddressBookMatchType)) {
 			return YES;
 		}
@@ -969,7 +969,7 @@
 		return YES;
 	}
 
-	if ([TPCPreferences postNotificationsWhileInFocus] == NO && self.masterController.mainWindowIsActive) {
+	if ([TPCPreferences postNotificationsWhileInFocus] == NO && [[[self masterController] mainWindow] isInactive] == NO) {
 		if (NSDissimilarObjects(type, TXNotificationAddressBookMatchType)) {
 			return YES;
 		}
@@ -1090,7 +1090,7 @@
 
 - (void)setKeywordState:(IRCChannel *)t
 {
-	BOOL isActiveWindow = self.masterController.mainWindowIsActive;
+	BOOL isActiveWindow = ([[[self masterController] mainWindow] isInactive] == NO);
 
 	if (NSDissimilarObjects(self.worldController.selectedItem, t) || isActiveWindow == NO) {
 		t.nicknameHighlightCount += 1;
@@ -1111,7 +1111,7 @@
 
 - (void)setUnreadState:(IRCChannel *)t isHighlight:(BOOL)isHighlight
 {
-	BOOL isActiveWindow = self.masterController.mainWindowIsActive;
+	BOOL isActiveWindow = ([[[self masterController] mainWindow] isInactive] == NO);
 
 	if (t.isPrivateMessage || ([TPCPreferences displayPublicMessageCountOnDockBadge] && t.isChannel)) {
 		if (NSDissimilarObjects(self.worldController.selectedItem, t) || isActiveWindow == NO) {
@@ -3056,7 +3056,7 @@
 
 	if (channel) {
 		if ([TPCPreferences autoAddScrollbackMark]) {
-			if (NSDissimilarObjects(channel, self.worldController.selectedChannel) || self.masterController.mainWindowIsActive == NO) {
+			if (NSDissimilarObjects(channel, self.worldController.selectedChannel) || [[[self masterController] mainWindow] isMainWindow]) {
 				if (channel.isUnread == NO) {
 					if (type == TVCLogLinePrivateMessageType ||
 						type == TVCLogLineActionType ||

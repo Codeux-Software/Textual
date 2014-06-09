@@ -463,7 +463,7 @@
 
 - (BOOL)windowIsActive
 {
-	return [[[self masterController] mainWindow] isMainWindow];
+	return ([[[self masterController] mainWindow] isInactive] == NO);
 }
 
 - (void)updateBackgroundColor
@@ -483,7 +483,7 @@
 
 - (NSScrollView *)scrollView
 {
-	return (id)self.superview.superview;
+	return [self enclosingScrollView];
 }
 
 - (void)drawContextMenuHighlightForRow:(int)row
