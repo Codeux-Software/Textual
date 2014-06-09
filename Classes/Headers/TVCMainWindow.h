@@ -42,6 +42,8 @@
 @property (nonatomic, strong) TLOKeyEventHandler *keyHandler;
 @property (nonatomic, strong) NSValue *cachedSwipeOriginPoint;
 
+- (BOOL)isInactive;
+
 - (void)setKeyHandlerTarget:(id)target;
 
 - (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;

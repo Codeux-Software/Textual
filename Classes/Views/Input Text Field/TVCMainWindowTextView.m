@@ -771,7 +771,7 @@
 
 - (BOOL)windowIsActive
 {
-	return [[[self masterController] mainWindow] isMainWindow];
+	return ([[[self masterController] mainWindow] isInactive] == NO);
 }
 
 - (void)drawRect:(NSRect)dirtyRect

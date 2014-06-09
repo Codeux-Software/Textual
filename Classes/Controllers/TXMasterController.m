@@ -61,14 +61,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 			LogToConsole(@"Launching in debug mode.");
 		}
-		
-#ifdef TEXTUAL_BUILT_WITH_APP_NAP_DISABLED
-		// Force disable app nap as it creates a lot of problems.
-		
-		if ([RZProcessInfo() respondsToSelector:@selector(beginActivityWithOptions:reason:)]) {
-			self.appNapProgressInformation = [RZProcessInfo() beginActivityWithOptions:NSActivityUserInitiatedAllowingIdleSystemSleep reason:@"Managing IRC"];
-		}
-#endif
 
 		// ---- //
 
@@ -117,8 +109,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 	[self.mainWindowLoadingScreen hideAll:NO];
 	[self.mainWindowLoadingScreen popLoadingConfigurationView];
-
-	self.mainWindowIsActive = YES;
 
 	[self.mainWindow makeKeyAndOrderFront:nil];
 
@@ -295,7 +285,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 - (void)applicationDidResignActive:(NSNotification *)notification
 {
 	self.applicationIsChangingActiveState = NO;
-	self.mainWindowIsActive = NO;
 
 	[self reloadUserInterfaceItems];
 }
@@ -303,10 +292,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 - (void)applicationDidBecomeActive:(NSNotification *)notification
 {
 	self.applicationIsChangingActiveState = NO;
-
-	if ([self.mainWindow isEqual:[NSApp keyWindow]]) {
-		self.mainWindowIsActive = YES;
-	}
 
 	[self reloadUserInterfaceItems];
 }
@@ -413,12 +398,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		[self.cloudSyncManager closeCloudSyncSession];
 	}
 #endif
-	
-#ifdef TEXTUAL_BUILT_WITH_APP_NAP_DISABLED
-	if ([RZProcessInfo() respondsToSelector:@selector(endActivity:)]) {
-		[RZProcessInfo() endActivity:self.appNapProgressInformation];
-	}
-#endif
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
@@ -488,10 +467,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[self reloadMainWindowFrameOnScreenChange];
 }
 
-- (void)windowDidBecomeKey:(NSNotification *)notification
+- (void)windowDidBecomeMain:(NSNotification *)notification
 {
-	self.mainWindowIsActive = YES;
-
 	if (self.applicationIsChangingActiveState == NO) {
 		[self reloadUserInterfaceItems];
 	}
@@ -499,10 +476,8 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[self resetSelectedItemState];
 }
 
-- (void)windowDidResignKey:(NSNotification *)notification
+- (void)windowDidResignMain:(NSNotification *)notification
 {
-	self.mainWindowIsActive = NO;
-
 	if (self.applicationIsChangingActiveState == NO) {
 		[self reloadUserInterfaceItems];
 	}
