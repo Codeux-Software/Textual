@@ -78,7 +78,6 @@
 @property (nonatomic, nweak) IBOutlet NSView *contentViewInstalledAddons;
 @property (nonatomic, nweak) IBOutlet NSView *contentViewInterface;
 @property (nonatomic, nweak) IBOutlet NSView *contentViewKeyboardAndMouse;
-@property (nonatomic, nweak) IBOutlet NSView *contentViewKeyboardNavigation;
 @property (nonatomic, nweak) IBOutlet NSView *contentViewLogLocation;
 @property (nonatomic, nweak) IBOutlet NSView *contentViewMainTextField;
 @property (nonatomic, nweak) IBOutlet NSView *contentViewStyle;

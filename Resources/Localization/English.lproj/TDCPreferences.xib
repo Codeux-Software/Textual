@@ -33,7 +33,6 @@
                 <outlet property="contentViewInstalledAddons" destination="4zD-VW-F1h" id="U25-Vi-LNZ"/>
                 <outlet property="contentViewInterface" destination="u96-CK-dYE" id="g1D-eY-KXT"/>
                 <outlet property="contentViewKeyboardAndMouse" destination="Fnm-DD-Hbc" id="aBa-1i-20J"/>
-                <outlet property="contentViewKeyboardNavigation" destination="fMR-Dn-TEd" id="Zv9-y3-kMK"/>
                 <outlet property="contentViewLogLocation" destination="DPg-Nu-HcZ" id="PDq-j6-Ndz"/>
                 <outlet property="contentViewMainTextField" destination="egI-fh-Ox8" id="Xya-WS-iAq"/>
                 <outlet property="contentViewStyle" destination="oeR-nv-slx" id="lWc-qc-sGt"/>
@@ -1164,7 +1163,7 @@
                     </scroller>
                 </scrollView>
             </subviews>
-            <point key="canvasLocation" x="168.5" y="-727"/>
+            <point key="canvasLocation" x="795.5" y="-419"/>
         </customView>
         <customView id="oeR-nv-slx" userLabel="Style">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -2448,7 +2447,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button appearanceType="aqua" id="6hg-qY-80F">
-                    <rect key="frame" x="53" y="189" width="234" height="18"/>
+                    <rect key="frame" x="53" y="205" width="234" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Connect to server on double click." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="3oy-Xl-xyI">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2459,7 +2458,7 @@
                     </connections>
                 </button>
                 <button appearanceType="aqua" id="fFh-vJ-6zs">
-                    <rect key="frame" x="53" y="133" width="200" height="18"/>
+                    <rect key="frame" x="53" y="149" width="200" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Join channel on double click." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="0LE-Pz-Aym">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2470,7 +2469,7 @@
                     </connections>
                 </button>
                 <button appearanceType="aqua" id="qYA-Ao-CJT">
-                    <rect key="frame" x="53" y="105" width="211" height="18"/>
+                    <rect key="frame" x="53" y="121" width="211" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Leave channel on double click." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Cjf-6V-hOw">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2481,7 +2480,7 @@
                     </connections>
                 </button>
                 <button appearanceType="aqua" id="oEq-yQ-bhN">
-                    <rect key="frame" x="53" y="161" width="269" height="18"/>
+                    <rect key="frame" x="53" y="177" width="269" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Disconnect from server on double click." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="O3A-4K-i4v">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2491,60 +2490,8 @@
                         <binding destination="1247" name="value" keyPath="values.ServerListDoubleClickDisconnectServer" id="xuf-6n-ahB"/>
                     </connections>
                 </button>
-                <popUpButton appearanceType="aqua" verticalHuggingPriority="750" id="aHd-3P-Sb8">
-                    <rect key="frame" x="200" y="351" width="309" height="22"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <popUpButtonCell key="cell" type="push" title="Complete nicknames, channels, and commands" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="EDY-rV-gik" id="2zz-eb-6Oe">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="smallSystem"/>
-                        <menu key="menu" title="OtherViews" id="EgD-LB-Iuo">
-                            <items>
-                                <menuItem title="Perform no action" tag="100" id="avt-cl-HwN"/>
-                                <menuItem title="Move to next unread channel" tag="1" id="o1s-vh-l28"/>
-                                <menuItem title="Complete nicknames, channels, and commands" state="on" id="EDY-rV-gik"/>
-                            </items>
-                        </menu>
-                        <connections>
-                            <accessibilityConnection property="title" destination="uq6-r6-RGd" id="j79-wX-DJu"/>
-                        </connections>
-                    </popUpButtonCell>
-                    <connections>
-                        <accessibilityConnection property="title" destination="uq6-r6-RGd" id="dEN-5J-qT9"/>
-                        <binding destination="1247" name="selectedTag" keyPath="values.Keyboard -&gt; Tab Key Action" id="6kg-cA-hml"/>
-                    </connections>
-                </popUpButton>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="Zos-pv-UQf">
-                    <rect key="frame" x="72" y="325" width="126" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Autocomplete Suffix:" id="m1z-Ag-GBx">
-                        <font key="font" metaFont="cellTitle"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="Q4G-sW-NkK">
-                    <rect key="frame" x="203" y="323" width="62" height="19"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="XOt-l6-RM8">
-                        <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                    <accessibility help="Suffix to place after result when using the tab key to autocomplete a value."/>
-                    <connections>
-                        <accessibilityConnection property="title" destination="Zos-pv-UQf" id="49D-TK-MBN"/>
-                        <accessibilityConnection property="title" destination="Zos-pv-UQf" id="Jf5-eR-ltz"/>
-                        <accessibilityConnection property="title" destination="Zos-pv-UQf" id="kyY-D8-RRm"/>
-                        <accessibilityConnection property="title" destination="Zos-pv-UQf" id="n9r-7F-OCi"/>
-                        <binding destination="1247" name="value" keyPath="values.Keyboard -&gt; Tab Key Completion Suffix" id="aPw-nF-M9b">
-                            <dictionary key="options">
-                                <bool key="NSContinuouslyUpdatesValue" value="YES"/>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="pym-29-wtE">
-                    <rect key="frame" x="107" y="273" width="138" height="16"/>
+                    <rect key="frame" x="107" y="289" width="138" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Double clicking a user:" id="XxY-Ns-ahg">
                         <font key="font" metaFont="cellTitle"/>
@@ -2553,7 +2500,7 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton appearanceType="aqua" verticalHuggingPriority="750" id="zTA-WJ-SjA">
-                    <rect key="frame" x="247" y="269" width="244" height="22"/>
+                    <rect key="frame" x="247" y="285" width="244" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="PTD-y5-C4m">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -2573,7 +2520,7 @@
                     </connections>
                 </popUpButton>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="dfk-Ny-wKr">
-                    <rect key="frame" x="87" y="243" width="158" height="16"/>
+                    <rect key="frame" x="87" y="259" width="158" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Command + W key action:" id="8Bc-Xn-6b4">
                         <font key="font" metaFont="cellTitle"/>
@@ -2582,7 +2529,7 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton appearanceType="aqua" verticalHuggingPriority="750" id="2qK-iK-wM4">
-                    <rect key="frame" x="247" y="239" width="244" height="22"/>
+                    <rect key="frame" x="247" y="255" width="244" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="Close Main Window" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="lcs-Gp-Sfx" id="Ix3-Mw-KMk">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -2604,49 +2551,8 @@
                         <binding destination="1247" name="selectedIndex" keyPath="values.Keyboard -&gt; Command+W Action" id="gds-dd-wBK"/>
                     </connections>
                 </popUpButton>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="Fr3-06-ouC">
-                    <rect key="frame" x="350" y="326" width="159" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="nt0-2m-g8m">
-                        <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                    <connections>
-                        <binding destination="1247" name="displayPatternValue1" keyPath="values.Keyboard -&gt; Tab Key Completion Suffix" id="kYJ-58-P0V">
-                            <dictionary key="options">
-                                <string key="NSDisplayPattern">"JohnDoe%{value1}@…"</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="Ups-NA-I5X">
-                    <rect key="frame" x="297" y="326" width="64" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Preview:" id="LMb-tr-4jg">
-                        <font key="font" metaFont="smallSystemBold"/>
-                        <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <box appearanceType="aqua" horizontalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="IiR-8P-f25">
-                    <rect key="frame" x="278" y="323" width="5" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="uq6-r6-RGd">
-                    <rect key="frame" x="103" y="355" width="95" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Tab key Action:" id="3iK-aY-pUk">
-                        <font key="font" metaFont="cellTitle"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <button appearanceType="aqua" id="uO3-nq-aL8">
-                    <rect key="frame" x="54" y="54" width="333" height="18"/>
+                    <rect key="frame" x="54" y="70" width="333" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Copy selected text when mouse button is released" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="7gY-Ef-oOF">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2657,7 +2563,7 @@
                     </connections>
                 </button>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="lQy-BU-bub">
-                    <rect key="frame" x="81" y="35" width="423" height="13"/>
+                    <rect key="frame" x="81" y="51" width="423" height="13"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Holding the command key (⌘) during selection disables option temporarily." id="RLT-k4-fiT">
                         <font key="font" metaFont="system" size="10"/>
@@ -2666,35 +2572,46 @@
                     </textFieldCell>
                 </textField>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="3EU-o7-2oQ">
-                    <rect key="frame" x="69" y="86" width="442" height="5"/>
+                    <rect key="frame" x="69" y="102" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="NcA-Yg-PKe">
-                    <rect key="frame" x="69" y="221" width="442" height="5"/>
+                    <rect key="frame" x="69" y="237" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="0Ft-6d-GNV">
-                    <rect key="frame" x="69" y="304" width="442" height="5"/>
+                    <rect key="frame" x="69" y="320" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
+                <button appearanceType="aqua" id="SPK-GE-J9a">
+                    <rect key="frame" x="54" y="339" width="325" height="18"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <buttonCell key="cell" type="check" title="Channel navigation is limited to the selected server." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="vW7-Mu-zJg">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="1247" name="value" keyPath="values.ChannelNavigationIsServerSpecific" id="iJ0-aJ-JHl"/>
+                    </connections>
+                </button>
             </subviews>
-            <point key="canvasLocation" x="221.5" y="-2516"/>
+            <point key="canvasLocation" x="761.5" y="-2550"/>
         </customView>
         <customView id="egI-fh-Ox8" userLabel="Main Text Field">
-            <rect key="frame" x="170" y="8" width="567" height="406"/>
+            <rect key="frame" x="0.0" y="1" width="567" height="476"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button appearanceType="aqua" id="eEF-gB-Apx">
-                    <rect key="frame" x="52" y="277" width="186" height="18"/>
+                    <rect key="frame" x="52" y="354" width="186" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Check spelling while typing." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="A1e-Kf-LWk">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2705,7 +2622,7 @@
                     </connections>
                 </button>
                 <button appearanceType="aqua" id="UUF-Y9-L5m">
-                    <rect key="frame" x="52" y="249" width="196" height="18"/>
+                    <rect key="frame" x="52" y="326" width="196" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Check grammar with spelling." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="0E3-3e-LWm">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2716,7 +2633,7 @@
                     </connections>
                 </button>
                 <button appearanceType="aqua" id="Max-AW-9Fo">
-                    <rect key="frame" x="52" y="221" width="200" height="18"/>
+                    <rect key="frame" x="52" y="298" width="200" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Correct spelling automatically." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="kZx-LY-bsq">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2727,7 +2644,7 @@
                     </connections>
                 </button>
                 <button appearanceType="aqua" id="WRe-tM-8Xc">
-                    <rect key="frame" x="53" y="170" width="349" height="18"/>
+                    <rect key="frame" x="53" y="247" width="349" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Save input history for each channel rather than globally." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="61Q-8P-zCa">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2739,21 +2656,21 @@
                     </connections>
                 </button>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="e5F-EX-B4Z">
-                    <rect key="frame" x="70" y="202" width="442" height="5"/>
+                    <rect key="frame" x="70" y="279" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="w0R-OT-qu8">
-                    <rect key="frame" x="68" y="95" width="442" height="5"/>
+                    <rect key="frame" x="68" y="172" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <button appearanceType="aqua" id="Y06-Na-oV8">
-                    <rect key="frame" x="53" y="142" width="330" height="18"/>
+                    <rect key="frame" x="53" y="219" width="330" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Command Return (⌘⏎) sends message as an action." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="G0y-us-DSL">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2765,7 +2682,7 @@
                     </connections>
                 </button>
                 <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="nw2-BH-7zb">
-                    <rect key="frame" x="66" y="63" width="186" height="16"/>
+                    <rect key="frame" x="66" y="140" width="186" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Text size of the input text field:" id="4hD-Zg-dGj">
                         <font key="font" metaFont="cellTitle"/>
@@ -2774,7 +2691,7 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton appearanceType="aqua" verticalHuggingPriority="750" id="EhE-q3-eNi">
-                    <rect key="frame" x="255" y="59" width="159" height="22"/>
+                    <rect key="frame" x="255" y="136" width="159" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="Extra Large" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="3" imageScaling="proportionallyDown" inset="2" selectedItem="cuo-Kl-8df" id="eMi-yb-O9S">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -2799,7 +2716,7 @@
                     </connections>
                 </popUpButton>
                 <button appearanceType="aqua" id="aSq-7e-M6q">
-                    <rect key="frame" x="53" y="114" width="393" height="18"/>
+                    <rect key="frame" x="53" y="191" width="393" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Control Enter (⌃⎆) sends message instead of inserting new line." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="8lJ-qF-2sA">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2811,7 +2728,7 @@
                     </connections>
                 </button>
                 <button appearanceType="aqua" id="GxI-If-1nB">
-                    <rect key="frame" x="52" y="328" width="275" height="18"/>
+                    <rect key="frame" x="52" y="405" width="275" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Hide the buttons left of the input text field." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7mF-lD-N3s">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2823,14 +2740,114 @@
                     </connections>
                 </button>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="yVv-LX-TOX">
-                    <rect key="frame" x="68" y="309" width="442" height="5"/>
+                    <rect key="frame" x="68" y="386" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
+                <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="Tzv-Zj-Oef">
+                    <rect key="frame" x="68" y="119" width="442" height="5"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <popUpButton appearanceType="aqua" verticalHuggingPriority="750" id="aHd-3P-Sb8">
+                    <rect key="frame" x="194" y="83" width="309" height="22"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <popUpButtonCell key="cell" type="push" title="Complete nicknames, channels, and commands" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="EDY-rV-gik" id="2zz-eb-6Oe">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                        <menu key="menu" title="OtherViews" id="EgD-LB-Iuo">
+                            <items>
+                                <menuItem title="Perform no action" tag="100" id="avt-cl-HwN"/>
+                                <menuItem title="Move to next unread channel" tag="1" id="o1s-vh-l28"/>
+                                <menuItem title="Complete nicknames, channels, and commands" state="on" id="EDY-rV-gik"/>
+                            </items>
+                        </menu>
+                        <connections>
+                            <accessibilityConnection property="title" destination="uq6-r6-RGd" id="j79-wX-DJu"/>
+                        </connections>
+                    </popUpButtonCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="uq6-r6-RGd" id="dEN-5J-qT9"/>
+                        <binding destination="1247" name="selectedTag" keyPath="values.Keyboard -&gt; Tab Key Action" id="6kg-cA-hml"/>
+                    </connections>
+                </popUpButton>
+                <textField appearanceType="aqua" verticalHuggingPriority="750" id="Zos-pv-UQf">
+                    <rect key="frame" x="66" y="57" width="126" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Autocomplete Suffix:" id="m1z-Ag-GBx">
+                        <font key="font" metaFont="cellTitle"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField appearanceType="aqua" verticalHuggingPriority="750" id="Q4G-sW-NkK">
+                    <rect key="frame" x="197" y="55" width="62" height="19"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="XOt-l6-RM8">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <accessibility help="Suffix to place after result when using the tab key to autocomplete a value."/>
+                    <connections>
+                        <accessibilityConnection property="title" destination="Zos-pv-UQf" id="49D-TK-MBN"/>
+                        <accessibilityConnection property="title" destination="Zos-pv-UQf" id="Jf5-eR-ltz"/>
+                        <accessibilityConnection property="title" destination="Zos-pv-UQf" id="kyY-D8-RRm"/>
+                        <accessibilityConnection property="title" destination="Zos-pv-UQf" id="n9r-7F-OCi"/>
+                        <binding destination="1247" name="value" keyPath="values.Keyboard -&gt; Tab Key Completion Suffix" id="aPw-nF-M9b">
+                            <dictionary key="options">
+                                <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </textField>
+                <textField appearanceType="aqua" verticalHuggingPriority="750" id="Fr3-06-ouC">
+                    <rect key="frame" x="344" y="58" width="159" height="14"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="nt0-2m-g8m">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="1247" name="displayPatternValue1" keyPath="values.Keyboard -&gt; Tab Key Completion Suffix" id="kYJ-58-P0V">
+                            <dictionary key="options">
+                                <string key="NSDisplayPattern">"JohnDoe%{value1}@…"</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </textField>
+                <textField appearanceType="aqua" verticalHuggingPriority="750" id="Ups-NA-I5X">
+                    <rect key="frame" x="291" y="58" width="64" height="14"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Preview:" id="LMb-tr-4jg">
+                        <font key="font" metaFont="smallSystemBold"/>
+                        <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <box appearanceType="aqua" horizontalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="IiR-8P-f25">
+                    <rect key="frame" x="272" y="55" width="5" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <textField appearanceType="aqua" verticalHuggingPriority="750" id="uq6-r6-RGd">
+                    <rect key="frame" x="97" y="87" width="95" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Tab key Action:" id="3iK-aY-pUk">
+                        <font key="font" metaFont="cellTitle"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
-            <point key="canvasLocation" x="356.5" y="-2954"/>
+            <point key="canvasLocation" x="356.5" y="-2919"/>
         </customView>
         <customView id="9Rp-qO-bTZ" userLabel="User List Colors">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -3004,23 +3021,6 @@
                 </button>
             </subviews>
             <point key="canvasLocation" x="704.5" y="415"/>
-        </customView>
-        <customView id="fMR-Dn-TEd" userLabel="Keyboard Navigation">
-            <rect key="frame" x="170" y="8" width="567" height="406"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <subviews>
-                <button appearanceType="aqua" id="lzP-2b-Xsa">
-                    <rect key="frame" x="121" y="194" width="325" height="18"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <buttonCell key="cell" type="check" title="Channel navigation is limited to the selected server." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="l45-cT-U3u">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="1247" name="value" keyPath="values.ChannelNavigationIsServerSpecific" id="NQW-Qj-flF"/>
-                    </connections>
-                </button>
-            </subviews>
         </customView>
         <customView id="u96-CK-dYE" userLabel="Interface">
             <rect key="frame" x="170" y="8" width="567" height="406"/>

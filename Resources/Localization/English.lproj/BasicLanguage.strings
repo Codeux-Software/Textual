@@ -128,8 +128,7 @@
 
 "TDCPreferencesController[1019][1]" = "Input Controls";
 "TDCPreferencesController[1019][2]" = "Keyboard & Mouse";
-"TDCPreferencesController[1019][3]" = "Keyboard Navigation";
-"TDCPreferencesController[1019][4]" = "Main Text Field";
+"TDCPreferencesController[1019][3]" = "Main Text Field";
 
 "TDCPreferencesController[1020][1]" = "Addons";
 "TDCPreferencesController[1020][2]" = "Installed Addons";
