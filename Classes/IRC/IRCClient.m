@@ -1090,7 +1090,7 @@
 
 - (void)setKeywordState:(IRCChannel *)t
 {
-	BOOL isActiveWindow = ([[[self masterController] mainWindow] isInactive] == NO);
+	BOOL isActiveWindow = [[[self masterController] mainWindow] isKeyWindow];
 
 	if (NSDissimilarObjects(self.worldController.selectedItem, t) || isActiveWindow == NO) {
 		t.nicknameHighlightCount += 1;
@@ -1111,7 +1111,7 @@
 
 - (void)setUnreadState:(IRCChannel *)t isHighlight:(BOOL)isHighlight
 {
-	BOOL isActiveWindow = ([[[self masterController] mainWindow] isInactive] == NO);
+	BOOL isActiveWindow = [[[self masterController] mainWindow] isKeyWindow];
 
 	if (t.isPrivateMessage || ([TPCPreferences displayPublicMessageCountOnDockBadge] && t.isChannel)) {
 		if (NSDissimilarObjects(self.worldController.selectedItem, t) || isActiveWindow == NO) {
