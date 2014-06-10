@@ -3383,6 +3383,14 @@
 			NSTimeInterval serverTime = [m.receivedAt timeIntervalSince1970];
 
 			if (serverTime > [self lastMessageServerTimeWithCachedValue]) {
+				/* If znc playback module is in use, then all messages are
+				 set as historic so we set any lines above our current reference
+				 date as not historic to avoid collisions. */
+				if (self.capacities.zncPlaybackCapInUse) {
+					m.isHistoric = NO;
+				}
+
+				/* Update last server time flag. */
 				self.lastMessageServerTime = serverTime;
 			}
 		}
