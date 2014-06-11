@@ -663,7 +663,10 @@
 	[[self printingQueue] enqueueMessageBlock:^(id operation) {
 		if ([operation isCancelled] == NO) {
 			NSArray *objects = [self.historicLogFile listEntriesWithfetchLimit:1000];
-
+			
+			[self.historicLogFile resetData];
+			[self.historicLogFile open];
+			
 			[self reloadThemeCompletionBlock:objects];
 		} else {
 			[self reloadThemeCompletionBlock:nil];
