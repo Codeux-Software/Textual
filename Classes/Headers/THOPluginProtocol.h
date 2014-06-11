@@ -72,7 +72,7 @@
 
 /* Array of commands for a plugin to subscribe to for notifications. */
 - (NSArray *)subscribedUserInputCommands;
-- (NSArray *)subscribedServerInputCommand;
+- (NSArray *)subscribedServerInputCommands;
 
 /* Method called when a user input command subscribed to was invoked. */
 - (void)userInputCommandInvokedOnClient:(IRCClient *)client
