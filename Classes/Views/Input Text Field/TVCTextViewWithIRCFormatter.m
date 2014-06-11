@@ -135,8 +135,10 @@
 
 - (void)setAttributedStringValue:(NSAttributedString *)string
 {
+	[[self undoManager] removeAllActions];
+	
 	NSData *stringData = [string RTFFromRange:NSMakeRange(0, [string length]) documentAttributes:nil];
-    
+
     [self replaceCharactersInRange:[self fullSelectionRange] withRTF:stringData];
 
 	[self didChangeText];
