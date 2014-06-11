@@ -157,7 +157,7 @@
 		id spdcmds;
 		
 		if (supportsNewFeature) {
-			spdcmds = [self.primaryClass subscribedServerInputCommand];
+			spdcmds = [self.primaryClass subscribedServerInputCommands];
 		} else {
 			spdcmds = [self.primaryClass pluginSupportsServerInputCommands];
 		}

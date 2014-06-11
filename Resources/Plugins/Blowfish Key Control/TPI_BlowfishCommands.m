@@ -58,19 +58,21 @@
 #pragma mark -
 #pragma mark Plugin Structure.
 
-- (void)pluginLoadedIntoMemory:(IRCWorld *)world
+- (void)pluginLoadedIntoMemory
 {
 	self.keyExchangeRequests = [NSMutableDictionary dictionary];
 }
 
-- (void)pluginUnloadedFromMemory
+- (void)pluginWillBeUnloadedFromMemory
 {
 	self.keyExchangeRequests = nil;
+	
+	[NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
-- (void)messageReceivedByServer:(IRCClient *)client
-						 sender:(NSDictionary *)senderDict
-						message:(NSDictionary *)messageDict
+- (void)didReceiveServerInputOnClient:(IRCClient *)client
+					senderInformation:(NSDictionary *)senderDict
+				   messageInformation:(NSDictionary *)messageDict
 {
 	NSString *person  = senderDict[@"senderNickname"];
 	NSString *message = messageDict[@"messageSequence"];
@@ -113,9 +115,9 @@
 	}
 }
 
-- (void)messageSentByUser:(IRCClient *)client
-				  message:(NSString *)messageString
-				  command:(NSString *)commandString
+- (void)userInputCommandInvokedOnClient:(IRCClient *)client
+						  commandString:(NSString *)commandString
+						  messageString:(NSString *)messageString
 {
 	IRCChannel *c = [[self worldController] selectedChannelOn:client];
 	
@@ -187,12 +189,12 @@
 	}
 }
 
-- (NSArray *)pluginSupportsUserInputCommands
+- (NSArray *)subscribedUserInputCommands
 {
 	return @[@"setkey", @"delkey", @"key", @"keyx"];
 }
 
-- (NSArray *)pluginSupportsServerInputCommands
+- (NSArray *)subscribedServerInputCommands
 {
 	return @[@"notice"];
 }

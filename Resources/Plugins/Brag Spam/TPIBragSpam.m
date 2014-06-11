@@ -52,9 +52,9 @@
 	*resultString = [*resultString stringByAppendingString:TPIFLS(valueKey, valueActual)];
 }
 
-- (void)messageSentByUser:(IRCClient *)client
-				  message:(NSString *)messageString
-				  command:(NSString *)commandString
+- (void)userInputCommandInvokedOnClient:(IRCClient *)client
+						  commandString:(NSString *)commandString
+						  messageString:(NSString *)messageString
 {
 	if ([commandString isEqualToString:@"BRAG"]) {
 		IRCChannel *selectedChannel = [[self worldController] selectedChannel];
@@ -149,7 +149,7 @@
 	}
 }
 
-- (NSArray *)pluginSupportsUserInputCommands
+- (NSArray *)subscribedUserInputCommands
 {
 	return @[@"brag"];
 }	

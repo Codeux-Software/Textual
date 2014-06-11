@@ -48,7 +48,7 @@
 #pragma mark Memory Allocation & Deallocation
 
 /* Allocation & Deallocation */
-- (void)pluginLoadedIntoMemory:(IRCWorld *)world
+- (void)pluginLoadedIntoMemory
 {
 	NSDictionary *defaults = @{
 	   @"System Profiler Extension -> Feature Disabled -> GPU Model" : @(YES),
@@ -65,12 +65,12 @@
 #pragma mark Preference Pane
 
 /* Preference Pane */
-- (NSView *)preferencesView
+- (NSView *)pluginPreferencesPaneView
 {
 	return self.preferencePaneView;
 }
 
-- (NSString *)preferencesMenuItemName
+- (NSString *)pluginPreferencesPaneMenuItemName
 {
 	return TPILS(@"BasicLanguage[1000]");
 }
@@ -78,16 +78,16 @@
 #pragma mark -
 #pragma mark User Input
 
-- (NSArray *)pluginSupportsUserInputCommands
+- (NSArray *)subscribedUserInputCommands
 {
 	return @[@"sysinfo", @"memory", @"uptime", @"netstats", 
 	@"msgcount", @"diskspace", @"style", @"screens",
 	@"runcount", @"loadavg", @"sysmem", @"sfont"];
 }
 
-- (void)messageSentByUser:(IRCClient *)client
-				  message:(NSString *)messageString
-				  command:(NSString *)commandString
+- (void)userInputCommandInvokedOnClient:(IRCClient *)client
+						  commandString:(NSString *)commandString
+						  messageString:(NSString *)messageString
 {
 	NSString *channelName = [[[self worldController] selectedChannel] name];
 	
