@@ -1235,6 +1235,7 @@
 	attributes[@"lineRenderTime"] = lineRenderTime;
 
 	[outputDictionary setObject:line.receivedAt forKey:@"lineReceivedAtTime"];
+	[outputDictionary setObject:line.messageBody forKey:@"messageBody"];
 	
 	[outputDictionary setObject:newLinenNumber forKey:@"lineNumber"];
 	[outputDictionary setObject:lineRenderTime forKey:@"lineRenderTime"];
