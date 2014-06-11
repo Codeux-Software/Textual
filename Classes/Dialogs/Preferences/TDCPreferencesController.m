@@ -166,9 +166,9 @@
 	NSArray *bundles = [THOPluginManagerSharedInstance() pluginsWithPreferencePanes];
 
 	for (THOPluginItem *plugin in bundles) {
-		NSString *name = [[plugin primaryClass] preferencesMenuItemName];
+		NSString *name = [plugin pluginPreferencesPaneMenuItemName];
 
-		NSView *view = [[plugin primaryClass] preferencesView];
+		NSView *view = [plugin plguinPreferenesPaneView];
 
 		[pluginNavigationItems addObject:@{@"name" : name, @"view" : view}];
 	}
