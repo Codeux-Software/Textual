@@ -416,13 +416,13 @@
     return input;
 }
 
-- (void)postNewMessageEventForViewController:(TVCLogController *)logController lineNumber:(NSString *)lineNumber isThemeReload:(BOOL)isThemeReload isHistoryReload:(BOOL)isHistoryReload
+- (void)postNewMessageEventForViewController:(TVCLogController *)logController messageInfo:(NSDictionary *)messageInfo isThemeReload:(BOOL)isThemeReload isHistoryReload:(BOOL)isHistoryReload
 {
 	dispatch_async(_dispatchQueue, ^{
 		for (THOPluginItem *plugin in self.allLoadedPlugins)
 		{
 			if (plugin.supportsRendererEventPosting) {
-				[plugin.primaryClass didPostNewMessageForViewController:logController lineNumber:lineNumber isThemeReload:isThemeReload isHistoryReload:isHistoryReload];
+				[plugin.primaryClass didPostNewMessageForViewController:logController messageInfo:messageInfo isThemeReload:isThemeReload isHistoryReload:isHistoryReload];
 			}
 		}
 	});

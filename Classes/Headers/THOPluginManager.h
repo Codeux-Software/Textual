@@ -75,7 +75,7 @@
 - (void)sendUserInputDataToBundles:(IRCClient *)client message:(NSString *)message command:(NSString *)command;
 
 - (void)postNewMessageEventForViewController:(TVCLogController *)logController
-								  lineNumber:(NSString *)lineNumber
+								 messageInfo:(NSDictionary *)messageInfo
 							   isThemeReload:(BOOL)isThemeReload
 							 isHistoryReload:(BOOL)isHistoryReload;
 @end
