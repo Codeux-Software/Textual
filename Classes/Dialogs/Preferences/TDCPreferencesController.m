@@ -168,7 +168,7 @@
 	for (THOPluginItem *plugin in bundles) {
 		NSString *name = [plugin pluginPreferencesPaneMenuItemName];
 
-		NSView *view = [plugin plguinPreferenesPaneView];
+		NSView *view = [plugin pluginPreferenesPaneView];
 
 		[pluginNavigationItems addObject:@{@"name" : name, @"view" : view}];
 	}
