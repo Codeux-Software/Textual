@@ -618,6 +618,12 @@
 
 			/* Inform the style of the addition. */
 			[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
+			
+			/* Inform plugins. */
+			[THOPluginManagerSharedInstance() postNewMessageEventForViewController:self
+																		lineNumber:lineNumber
+																	 isThemeReload:(markHistoric == NO)
+																   isHistoryReload: markHistoric];
 		}
 	});
 }
@@ -977,7 +983,13 @@
 
 				/* Inform the style of the new append. */
 				[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
-
+				
+				/* Inform plugins. */
+				[THOPluginManagerSharedInstance() postNewMessageEventForViewController:self
+																			lineNumber:lineNumber
+																		 isThemeReload:NO
+																	   isHistoryReload:NO];
+				
 				/* Limit lines. */
 				if (self.maximumLineCount > 0 && (self.activeLineCount - 10) > self.maximumLineCount) {
 					/* Only cut lines if our number is divisible by 5. This makes it so every

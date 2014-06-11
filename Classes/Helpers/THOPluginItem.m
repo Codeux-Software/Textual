@@ -57,9 +57,16 @@
 	_primaryClass = [principalClass new];
 
 	/* Say hello! */
-	if ([self.primaryClass respondsToSelector:@selector(pluginLoadedIntoMemory:)])
+	BOOL supportsOldFeature = [self.primaryClass respondsToSelector:@selector(pluginLoadedIntoMemory:)];
+	BOOL supportsNewFeature = [self.primaryClass respondsToSelector:@selector(pluginLoadedIntoMemory)];
+	
+	if (supportsOldFeature || supportsNewFeature)
 	{
-		[self.primaryClass pluginLoadedIntoMemory:[self worldController]];
+		if (supportsNewFeature) {
+			[self.primaryClass pluginLoadedIntoMemory];
+		} else {
+			[self.primaryClass pluginLoadedIntoMemory:[self worldController]];
+		}
 	}
 	
 	/* Process server output suppression rules. */
@@ -84,11 +91,24 @@
 	}
 
 	/* Does the bundle have a preference pane?… */
-	if ([self.primaryClass respondsToSelector:@selector(preferencesMenuItemName)] &&
-		[self.primaryClass respondsToSelector:@selector(preferencesView)])
+	supportsOldFeature = ([self.primaryClass respondsToSelector:@selector(preferencesMenuItemName)] &&
+						  [self.primaryClass respondsToSelector:@selector(preferencesView)]);
+	
+	supportsNewFeature = ([self.primaryClass respondsToSelector:@selector(pluginPreferencesPaneMenuItemName)] &&
+						  [self.primaryClass respondsToSelector:@selector(pluginPreferencesPaneView)]);
+	
+	if (supportsOldFeature || supportsNewFeature)
 	{
-		id itemView = [self.primaryClass preferencesView];
-		id itemName = [self.primaryClass preferencesMenuItemName];
+		id itemView;
+		id itemName;
+		
+		if (supportsNewFeature) {
+			itemView = [self.primaryClass pluginPreferencesPaneView];
+			itemName = [self.primaryClass pluginPreferencesPaneMenuItemName];
+		} else {
+			itemView = [self.primaryClass preferencesView];
+			itemName = [self.primaryClass preferencesMenuItemName];
+		}
 
 		if (VTAE(itemName, NSString) && VOCT(itemView, NSView)) {
 			_hasPreferencePaneView = YES;
@@ -96,11 +116,22 @@
 	}
 
 	/* Process user input commands. */
-	if ([self.primaryClass respondsToSelector:@selector(messageSentByUser:message:command:)] &&
-		[self.primaryClass respondsToSelector:@selector(pluginSupportsUserInputCommands)])
+	supportsOldFeature = ([self.primaryClass respondsToSelector:@selector(messageSentByUser:message:command:)] &&
+						  [self.primaryClass respondsToSelector:@selector(pluginSupportsUserInputCommands)]);
+	
+	supportsNewFeature = ([self.primaryClass respondsToSelector:@selector(userInputCommandInvokedOnClient:commandString:messageString:)] &&
+						  [self.primaryClass respondsToSelector:@selector(subscribedUserInputCommands)]);
+	
+	if (supportsOldFeature || supportsNewFeature)
 	{
-		id spdcmds = [self.primaryClass pluginSupportsUserInputCommands];
-
+		id spdcmds;
+		
+		if (supportsNewFeature) {
+			spdcmds = [self.primaryClass subscribedUserInputCommands];
+		} else {
+			spdcmds = [self.primaryClass pluginSupportsUserInputCommands];
+		}
+		
 		if (VTAE(spdcmds, NSArray)) {
 			NSMutableArray *supportedCommands = [NSMutableArray array];
 
@@ -115,10 +146,21 @@
 	}
 
 	/* Process server input commands. */
-	if ([self.primaryClass respondsToSelector:@selector(messageReceivedByServer:sender:message:)] &&
-		[self.primaryClass respondsToSelector:@selector(pluginSupportsServerInputCommands)])
+	supportsOldFeature = ([self.primaryClass respondsToSelector:@selector(messageReceivedByServer:sender:message:)] &&
+						  [self.primaryClass respondsToSelector:@selector(pluginSupportsServerInputCommands)]);
+	
+	supportsNewFeature = ([self.primaryClass respondsToSelector:@selector(didReceiveServerInputOnClient:senderInformation:messageInformation:)] &&
+						  [self.primaryClass respondsToSelector:@selector(subscribedServerInputCommands)]);
+	
+	if (supportsOldFeature || supportsNewFeature)
 	{
-		id spdcmds = [self.primaryClass pluginSupportsServerInputCommands];
+		id spdcmds;
+		
+		if (supportsNewFeature) {
+			spdcmds = [self.primaryClass subscribedServerInputCommand];
+		} else {
+			spdcmds = [self.primaryClass pluginSupportsServerInputCommands];
+		}
 
 		if (VTAE(spdcmds, NSArray)) {
 			NSMutableArray *supportedCommands = [NSMutableArray array];
@@ -132,12 +174,46 @@
 			_supportedServerInputCommands = supportedCommands;
 		}
 	}
+	
+	/* Check whether plugin supports certain evnets so we do not have
+	 to ask if it responds to the responder everytime we call it. */
+	
+	/* Renderer events. */
+	if ([self.primaryClass respondsToSelector:@selector(didPostNewMessageForViewController:lineNumber:isThemeReload:isHistoryReload:)])
+	{
+		_supportsRendererEventPosting = YES;
+	}
+	
+	/* Inline media. */
+	if ([self.primaryClass respondsToSelector:@selector(processInlineMediaContentURL:)])
+	{
+		_supportsInlineMediaManipulation = YES;
+	}
+	
+	/* Data interception. */
+	if ([self.primaryClass respondsToSelector:@selector(interceptServerInput:for:)])
+	{
+		_supportsRawInputDataManipulation = YES;
+	}
+	
+	if ([self.primaryClass respondsToSelector:@selector(interceptUserInput:command:)])
+	{
+		_supportsRawInputDataManipulation = YES;
+	}
 }
 
 - (void)dealloc
 {
-	if ([self.primaryClass respondsToSelector:@selector(pluginUnloadedFromMemory)]) {
-		[self.primaryClass pluginUnloadedFromMemory];
+	BOOL supportsOldFeature = [self.primaryClass respondsToSelector:@selector(pluginUnloadedFromMemory)];
+	BOOL supportsNewFeature = [self.primaryClass respondsToSelector:@selector(pluginWillBeUnloadedFromMemory)];
+	
+	if (supportsOldFeature || supportsNewFeature)
+	{
+		if (supportsNewFeature) {
+			[self.primaryClass pluginWillBeUnloadedFromMemory];
+		} else {
+			[self.primaryClass pluginUnloadedFromMemory];
+		}
 	}
 }
 
@@ -169,6 +245,40 @@
 		return newBosses;
 	}
 
+	return nil;
+}
+
+- (NSView *)plguinPreferenesPaneView
+{
+	BOOL supportsOldFeature = [self.primaryClass respondsToSelector:@selector(preferencesView)];
+	BOOL supportsNewFeature = [self.primaryClass respondsToSelector:@selector(pluginPreferencesPaneView)];
+	
+	if (supportsOldFeature || supportsNewFeature)
+	{
+		if (supportsNewFeature) {
+			return [self.primaryClass pluginPreferencesPaneView];
+		} else {
+			return [self.primaryClass preferencesView];
+		}
+	}
+	
+	return nil;
+}
+
+- (NSString *)pluginPreferencesPaneMenuItemName
+{
+	BOOL supportsOldFeature = [self.primaryClass respondsToSelector:@selector(preferencesMenuItemName)];
+	BOOL supportsNewFeature = [self.primaryClass respondsToSelector:@selector(pluginPreferencesPaneMenuItemName)];
+	
+	if (supportsOldFeature || supportsNewFeature)
+	{
+		if (supportsNewFeature) {
+			return [self.primaryClass pluginPreferencesPaneMenuItemName];
+		} else {
+			return [self.primaryClass preferencesMenuItemName];
+		}
+	}
+	
 	return nil;
 }
 

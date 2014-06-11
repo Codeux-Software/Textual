@@ -40,9 +40,15 @@
 @interface THOPluginItem : NSObject
 @property (nonatomic, readonly, strong) id primaryClass;
 @property (nonatomic, readonly, assign) BOOL hasPreferencePaneView;
+@property (nonatomic, readonly, assign) BOOL supportsRawInputDataManipulation;
+@property (nonatomic, readonly, assign) BOOL supportsInlineMediaManipulation;
+@property (nonatomic, readonly, assign) BOOL supportsRendererEventPosting;
 @property (nonatomic, readonly, strong) NSArray *supportedUserInputCommands;
 @property (nonatomic, readonly, strong) NSArray *supportedServerInputCommands;
 @property (nonatomic, readonly, strong) NSDictionary *outputSuppressionRules;
 
 - (void)loadBundle:(NSBundle *)bundle;
+
+- (NSView *)plguinPreferenesPaneView;
+- (NSString *)pluginPreferencesPaneMenuItemName;
 @end

@@ -73,4 +73,9 @@
 
 - (void)sendServerInputDataToBundles:(IRCClient *)client message:(IRCMessage *)message;
 - (void)sendUserInputDataToBundles:(IRCClient *)client message:(NSString *)message command:(NSString *)command;
+
+- (void)postNewMessageEventForViewController:(TVCLogController *)logController
+								  lineNumber:(NSString *)lineNumber
+							   isThemeReload:(BOOL)isThemeReload
+							 isHistoryReload:(BOOL)isHistoryReload;
 @end
