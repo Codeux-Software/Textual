@@ -111,8 +111,33 @@
  
  logController has access to the DOM of that view and all associated data.
  
- lineNumber is the actual line number that was assigned to the message when
- it was inserted into the DOM.
+ messageInfo is a dictionary passed down by the renderer to the internals of
+ TVCLogController which is ultimately passed down to this method call. The
+ actual values within this dictionary can vary but the most common values are
+ as follows:
+ 
+	mentionedUsers (Array) — List of users mentioned in the message.
+	wordMatchFound (BOOL) — Whether or not a highlight word was found.
+	lineNumber (String) — The line number associated with actual object in the DOM.
+	lineReceivedAtTime (Date) — Exact date and time shown on the left side of the
+								message in the main channel view. This value is 
+								returned as an NSDate object.
+	allHyperlinksInBody (Array) — Array of ranges (NSRange) of text in the message
+								  body considered to be a URL. There are some special
+								  cases when the actual text in this range is not a
+								  real URL and may need work done. For example, Textual
+								  supports URL detection for the Reddit website. Therefore,
+								  a match like "/r/pics" must be translated into its 
+								  absolute URL of http://www.reddit.com/r/pics — in most
+								  cases a plugin interested in URLs can ignore these. 
+								  Another use case is when a URL is matched without a
+								  scheme. For example, "example.com" would be a result
+								  which of course would end up translating to its full
+								  URL of http://example.com/
+ 
+ The messageInfo dictionary is not strictly defined. Only the above mentioned
+ values are prompised to be in the dictionary. Any other values retreived from
+ this dictionary are considered non-supported and will have undefined behavior.
 
  isThemeReload informs the call whether the insertion occured during a style
  reload. Style reloads occur when a style is changed and the entire view has
@@ -131,7 +156,7 @@
  MAIN THREAD. So yeah, if you are are doing anything in inside this method that
  involves accessing this message, then do so on main thread. */
 - (void)didPostNewMessageForViewController:(TVCLogController *)logController
-								lineNumber:(NSString *)lineNumber
+							   messageInfo:(NSDictionary *)messageInfo
 							 isThemeReload:(BOOL)isThemeReload
 						   isHistoryReload:(BOOL)isHistoryReload;
 

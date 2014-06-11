@@ -584,7 +584,7 @@
 
 		[patchedAppend appendString:html];
 
-		[lineNumbers addObject:@[lineNumber]];
+		[lineNumbers addObject:@[lineNumber, resultInfo]];
 
 		/* Write to JSON data. */
 		NSData *jsondata = [line jsonDictionaryRepresentation];
@@ -620,8 +620,10 @@
 			[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
 			
 			/* Inform plugins. */
+			NSDictionary *resultInfo = lineInfo[1];
+
 			[THOPluginManagerSharedInstance() postNewMessageEventForViewController:self
-																		lineNumber:lineNumber
+																	   messageInfo:resultInfo
 																	 isThemeReload:(markHistoric == NO)
 																   isHistoryReload: markHistoric];
 		}
@@ -986,7 +988,7 @@
 				
 				/* Inform plugins. */
 				[THOPluginManagerSharedInstance() postNewMessageEventForViewController:self
-																			lineNumber:lineNumber
+																		   messageInfo:resultInfo
 																		 isThemeReload:NO
 																	   isHistoryReload:NO];
 				
@@ -1232,6 +1234,8 @@
 	attributes[@"lineNumber"] = newLinenNumber;
 	attributes[@"lineRenderTime"] = lineRenderTime;
 
+	[outputDictionary setObject:line.receivedAt forKey:@"lineReceivedAtTime"];
+	
 	[outputDictionary setObject:newLinenNumber forKey:@"lineNumber"];
 	[outputDictionary setObject:lineRenderTime forKey:@"lineRenderTime"];
 
