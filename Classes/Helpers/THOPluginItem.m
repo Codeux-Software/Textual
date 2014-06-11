@@ -190,7 +190,7 @@
 	 to ask if it responds to the responder everytime we call it. */
 	
 	/* Renderer events. */
-	if ([self.primaryClass respondsToSelector:@selector(didPostNewMessageForViewController:lineNumber:isThemeReload:isHistoryReload:)])
+	if ([self.primaryClass respondsToSelector:@selector(didPostNewMessageForViewController:messageInfo:isThemeReload:isHistoryReload:)])
 	{
 		_supportsRendererEventPosting = YES;
 	}
