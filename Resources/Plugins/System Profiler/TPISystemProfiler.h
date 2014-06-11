@@ -38,14 +38,4 @@
 #include "SystemProfiler.h"
 
 @interface TPISystemProfiler : NSObject <THOPluginProtocol>
-- (void)messageSentByUser:(IRCClient *)client
-				  message:(NSString *)messageString
-				  command:(NSString *)commandString;
-
-- (NSArray *)pluginSupportsUserInputCommands;
-
-- (void)pluginLoadedIntoMemory:(IRCWorld *)world;
-
-- (NSView *)preferencesView;
-- (NSString *)preferencesMenuItemName;
 @end

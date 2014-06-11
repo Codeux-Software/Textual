@@ -42,9 +42,9 @@
 #pragma mark -
 #pragma mark Plugin API
 
-- (void)messageReceivedByServer:(IRCClient *)client
-						 sender:(NSDictionary *)senderDict
-						message:(NSDictionary *)messageDict
+- (void)didReceiveServerInputOnClient:(IRCClient *)client
+					senderInformation:(NSDictionary *)senderDict
+				   messageInformation:(NSDictionary *)messageDict
 {
 	if ([client isZNCBouncerConnection]) {
 		NSString *sender = [senderDict objectForKey:@"senderNickname"];
@@ -63,9 +63,9 @@
 	}
 }
 
-- (void)messageSentByUser:(IRCClient *)client
-				  message:(NSString *)messageString
-				  command:(NSString *)commandString
+- (void)userInputCommandInvokedOnClient:(IRCClient *)client
+						  commandString:(NSString *)commandString
+						  messageString:(NSString *)messageString
 {
 	BOOL isDetach = [commandString isEqualIgnoringCase:@"DETACH"];
 	BOOL isAttach = [commandString isEqualIgnoringCase:@"ATTACH"];
@@ -101,12 +101,12 @@
 	}
 }
 
-- (NSArray *)pluginSupportsUserInputCommands
+- (NSArray *)subscribedUserInputCommands
 {
 	return @[@"detach", @"attach"];
 }
 
-- (NSArray *)pluginSupportsServerInputCommands
+- (NSArray *)subscribedServerInputCommands
 {
 	return @[@"privmsg"];
 }

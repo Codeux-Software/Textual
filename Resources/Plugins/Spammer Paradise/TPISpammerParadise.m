@@ -42,9 +42,9 @@
 #pragma mark -
 #pragma mark User Input
 
-- (void)messageSentByUser:(IRCClient *)client
-				  message:(NSString *)messageString
-				  command:(NSString *)commandString
+- (void)userInputCommandInvokedOnClient:(IRCClient *)client
+						  commandString:(NSString *)commandString
+						  messageString:(NSString *)messageString
 {
 	IRCChannel *channel = [[self worldController] selectedChannel];
 
@@ -59,7 +59,7 @@
 	}
 }
 
-- (NSArray *)pluginSupportsUserInputCommands
+- (NSArray *)subscribedUserInputCommands
 {
 	return @[@"clones", @"namel", @"finduser"];
 }
