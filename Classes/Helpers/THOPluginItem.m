@@ -259,7 +259,7 @@
 	return nil;
 }
 
-- (NSView *)plguinPreferenesPaneView
+- (NSView *)pluginPreferenesPaneView
 {
 	BOOL supportsOldFeature = [self.primaryClass respondsToSelector:@selector(preferencesView)];
 	BOOL supportsNewFeature = [self.primaryClass respondsToSelector:@selector(pluginPreferencesPaneView)];

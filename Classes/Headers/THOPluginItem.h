@@ -49,6 +49,6 @@
 
 - (void)loadBundle:(NSBundle *)bundle;
 
-- (NSView *)plguinPreferenesPaneView;
+- (NSView *)pluginPreferenesPaneView;
 - (NSString *)pluginPreferencesPaneMenuItemName;
 @end
