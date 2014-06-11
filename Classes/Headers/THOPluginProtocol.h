@@ -124,17 +124,12 @@
 								message in the main channel view. This value is
 								returned as an NSDate object.
 	allHyperlinksInBody (Array) — Array of ranges (NSRange) of text in the message
-								body considered to be a URL. There are some special
-								cases when the actual text in this range is not a
-								real URL and may need work done. For example, Textual
-								supports URL detection for the Reddit website. Therefore,
-								a match like "/r/pics" must be translated into its 
-								absolute URL of http://www.reddit.com/r/pics — in most
-								cases a plugin interested in URLs can ignore these. 
-								Another use case is when a URL is matched without a
-								scheme. For example, "example.com" would be a result
-								which of course would end up translating to its full
-								URL of http://example.com/
+								body considered to be a URL. Each entry in this array
+								is another array containing two indexes. First index (0)
+								is the range in messageBody that the URL was at. The 
+								second index (1) is the actual URL that was found. 
+								The actual URL may differe from the value in the 
+								range as URL schemes may have been appended.
  
  The messageInfo dictionary is not strictly defined. Only the above mentioned
  values are prompised to be in the dictionary. Any other values retreived from

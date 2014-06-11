@@ -558,7 +558,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			resultInfo[@"allHyperlinksInBody"] = urlAryRanges;
 			resultInfo[@"InlineImageURLMatches"] = urlAry;
 		} else {
-			resultInfo[@"allHyperlinksInBody"] = [NSNull null];
+			resultInfo[@"allHyperlinksInBody"] = [NSArray array];
 		}
 
 		if (isPlainText) {
@@ -868,10 +868,10 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 					/* Return list of mentioned users. This list is used to update weights. */
 					resultInfo[@"mentionedUsers"] = [mentionedUsers allObjects];
 				} else {
-					resultInfo[@"mentionedUsers"] = [NSNull null];
+					resultInfo[@"mentionedUsers"] = [NSSet set];
 				}
 			} else {
-				resultInfo[@"mentionedUsers"] = [NSNull null];
+				resultInfo[@"mentionedUsers"] = [NSSet set];
 			}
 			
 			/* End HTML drawing. */
