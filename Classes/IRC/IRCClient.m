@@ -1343,9 +1343,13 @@
 
 - (void)sendPrivmsgToSelectedChannel:(NSString *)message
 {
-	[self sendText:[NSAttributedString emptyStringWithBase:message]
-		   command:IRCPrivateCommandIndex("privmsg")
-		   channel:[self.worldController selectedChannelOn:self]];
+	if (NSIsCurrentThreadMain() == NO) {
+		[[self invokeOnMainThread] sendPrivmsgToSelectedChannel:message];
+	} else {
+		[self sendText:[NSAttributedString emptyStringWithBase:message]
+			   command:IRCPrivateCommandIndex("privmsg")
+			   channel:[self.worldController selectedChannelOn:self]];
+	}
 }
 
 - (void)sendCTCPQuery:(NSString *)target command:(NSString *)command text:(NSString *)text
