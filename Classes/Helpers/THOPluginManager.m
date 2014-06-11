@@ -310,7 +310,11 @@
 		
 		for (THOPluginItem *plugin in self.allLoadedPlugins) {
 			if ([plugin.supportedUserInputCommands containsObject:cmdl]) {
-				[plugin.primaryClass messageSentByUser:client message:message command:cmdu];
+				if ([plugin.primaryClass respondsToSelector:@selector(userInputCommandInvokedOnClient:commandString:messageString:)]) {
+					[plugin.primaryClass userInputCommandInvokedOnClient:client commandString:cmdu messageString:message];
+				} else {
+					[plugin.primaryClass messageSentByUser:client message:message command:cmdu];
+				}
 			}
 		}
 	});
@@ -341,7 +345,12 @@
 		
 		for (THOPluginItem *plugin in self.allLoadedPlugins) {
 			if ([plugin.supportedServerInputCommands containsObject:cmdl]) {
-				[plugin.primaryClass messageReceivedByServer:client sender:senderData message:messageData];
+				
+				if ([plugin.primaryClass respondsToSelector:@selector(didReceiveServerInputOnClient:senderInformation:messageInformation:)]) {
+					[plugin.primaryClass didReceiveServerInputOnClient:client senderInformation:senderData messageInformation:messageData];
+				} else {
+					[plugin.primaryClass messageReceivedByServer:client sender:senderData message:messageData];
+				}
 			}
 		}
 	});
@@ -354,7 +363,7 @@
 {
     for (THOPluginItem *plugin in self.allLoadedPlugins)
 	{
-        if ([plugin.primaryClass respondsToSelector:@selector(processInlineMediaContentURL:)]) {
+        if (plugin.supportsInlineMediaManipulation) {
             NSString *input = [plugin.primaryClass processInlineMediaContentURL:resource];
 
 			if (input) {
@@ -377,12 +386,14 @@
 {
     for (THOPluginItem *plugin in self.allLoadedPlugins)
 	{
-        if ([plugin.primaryClass respondsToSelector:@selector(interceptUserInput:command:)]) {
-            input = [plugin.primaryClass interceptUserInput:input command:command];
+		if (plugin.supportsRawInputDataManipulation) {
+			if ([plugin.primaryClass respondsToSelector:@selector(interceptUserInput:command:)]) {
+				input = [plugin.primaryClass interceptUserInput:input command:command];
 
-			/* If this plugin returned nil, then stop here. Do not pass it on to others. */
-			PointerIsEmptyAssertReturn(input, nil);
-        }
+				/* If this plugin returned nil, then stop here. Do not pass it on to others. */
+				PointerIsEmptyAssertReturn(input, nil);
+			}
+		}
     }
 
     return input;
@@ -392,15 +403,29 @@
 {
     for (THOPluginItem *plugin in self.allLoadedPlugins)
 	{
-        if ([plugin.primaryClass respondsToSelector:@selector(interceptServerInput:for:)]) {
-			input = [plugin.primaryClass interceptServerInput:input for:client];
+		if (plugin.supportsRawInputDataManipulation) {
+			if ([plugin.primaryClass respondsToSelector:@selector(interceptServerInput:for:)]) {
+				input = [plugin.primaryClass interceptServerInput:input for:client];
 
-			/* If this plugin returned nil, then stop here. Do not pass it on to others. */
-			PointerIsEmptyAssertReturn(input, nil);
-        }
+				/* If this plugin returned nil, then stop here. Do not pass it on to others. */
+				PointerIsEmptyAssertReturn(input, nil);
+			}
+		}
     }
 
     return input;
+}
+
+- (void)postNewMessageEventForViewController:(TVCLogController *)logController lineNumber:(NSString *)lineNumber isThemeReload:(BOOL)isThemeReload isHistoryReload:(BOOL)isHistoryReload
+{
+	dispatch_async(_dispatchQueue, ^{
+		for (THOPluginItem *plugin in self.allLoadedPlugins)
+		{
+			if (plugin.supportsRendererEventPosting) {
+				[plugin.primaryClass didPostNewMessageForViewController:logController lineNumber:lineNumber isThemeReload:isThemeReload isHistoryReload:isHistoryReload];
+			}
+		}
+	});
 }
 
 @end

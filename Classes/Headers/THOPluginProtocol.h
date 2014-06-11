@@ -37,6 +37,18 @@
 
 #import "TextualApplication.h"
 
+/* All THOPluginProtocol messages are called within the primary class of a plugin and
+ no where else. The primary class can be defined in the Info.plist of your bundle. The
+ primary class acts similiar to an application delegate whereas it is responsible for 
+ the lifetime management of your plugin. */
+/* Each plugin has access to the global variables [self worldController] and 
+ [self masterController] which both have unrestricted access to every single API inside
+ itself. There is no need to store pointers in your plugin to these. They are always
+ available just by calling the above mentioned method names. */
+
+#pragma mark -
+#pragma mark Localization
+
 /* TPILS and TPIFLS allow a plugin to use localized text within the plugin itself using
  Textual's own API. TPILS takes a single paramater and that is the key to look inside 
  the .strings file for. TPIFLS takes a key then as many paramaters as needed after. 
@@ -46,7 +58,6 @@
  These calls expect the localized strings to be inside the filename "BasicLanguage.strings"
  Any other name will not work unless the actual cocoa APIs for accessing localized strings
  is used in place of these. */
-
 #define TPIBundleFromClass()		[NSBundle bundleForClass:[self class]]
 
 #define TPILS(k)			 TSBLS(k, [NSBundle bundleForClass:[self class]])
@@ -56,29 +67,83 @@
 
 @optional
 
-- (NSArray *)pluginSupportsUserInputCommands;
-- (NSArray *)pluginSupportsServerInputCommands;
+#pragma mark -
+#pragma mark Subscribed Events 
 
-- (void)messageSentByUser:(IRCClient *)client
-				  message:(NSString *)messageString
-				  command:(NSString *)commandString;
+/* Array of commands for a plugin to subscribe to for notifications. */
+- (NSArray *)subscribedUserInputCommands;
+- (NSArray *)subscribedServerInputCommand;
 
-- (void)messageReceivedByServer:(IRCClient *)client 
-						 sender:(NSDictionary *)senderDict 
-						message:(NSDictionary *)messageDict;
+/* Method called when a user input command subscribed to was invoked. */
+- (void)userInputCommandInvokedOnClient:(IRCClient *)client
+						  commandString:(NSString *)commandString
+						  messageString:(NSString *)messageString;
 
-- (NSDictionary *)pluginOutputDisplayRules;
+/* Method called when a server input command subscribed to was received. */
+- (void)didReceiveServerInputOnClient:(IRCClient *)client
+					senderInformation:(NSDictionary *)senderDict
+				   messageInformation:(NSDictionary *)messageDict;
 
-- (void)pluginLoadedIntoMemory:(IRCWorld *)world;
-- (void)pluginUnloadedFromMemory;
+#pragma mark -
+#pragma mark Initialization
 
-- (NSView *)preferencesView;
-- (NSString *)preferencesMenuItemName;
+/* Method called when the primary class of a plugin is initialized. This
+ method is called before any setup has been staged. It is called the second
+ -new is called on the primary class. This method is a substitute for 
+ subclassing the -init method of your primary class. */
+- (void)pluginLoadedIntoMemory;
+
+/* Method called during -dealloc of the overall wrapper for the plugin
+ stored internally by Textual so prepare for termination at this point. 
+ Save any unsaved data and make sure any open dialogs have been closed. */
+- (void)pluginWillBeUnloadedFromMemory;
+
+#pragma mark -
+#pragma mark Preferences Pane
+
+- (NSView *)pluginPreferencesPaneView;
+- (NSString *)pluginPreferencesPaneMenuItemName;
+
+#pragma mark -
+#pragma mark Renderer Events
+
+/* Called the moment a new line has been posted to any view in Textual. 
+ 
+ logController has access to the DOM of that view and all associated data.
+ 
+ lineNumber is the actual line number that was assigned to the message when
+ it was inserted into the DOM.
+
+ isThemeReload informs the call whether the insertion occured during a style
+ reload. Style reloads occur when a style is changed and the entire view has
+ to have each message repopulated.
+ 
+ isHistoryReload informs the call whether the insertion occured when the view
+ was first initalized and it was part of the data from previous session being
+ reloaded into the view. 
+ 
+ It is NOT recommended to do any heavy work when isThemeReload and isHistoryReload
+ is YES as these events have thousands of messages being processed.
+ 
+ These events are posted on the dispatch queue associated with the internal plugin
+ manager. They are never received on the main thread. IT IS EXTREMELY IMPORTANT
+ TO REMEMBER THIS BECAUSE WEBKIT REQUIRES MODIFICATIONS TO THE DOM TO OCCUR ON THE
+ MAIN THREAD. So yeah, if you are are doing anything in inside this method that
+ involves accessing this message, then do so on main thread. */
+- (void)didPostNewMessageForViewController:(TVCLogController *)logController
+								lineNumber:(NSString *)lineNumber
+							 isThemeReload:(BOOL)isThemeReload
+						   isHistoryReload:(BOOL)isHistoryReload;
 
 /* Process inline media to add custom support for various URLs. */
 /* Given a URL, the plugin is expected to return an NSString which represents
  an image to be shown inline. Nothing complex. */
+/* If the return result is unable to be created into an NSURL, then the
+ result is discareded. */
 - (NSString *)processInlineMediaContentURL:(NSString *)resource;
+
+#pragma mark -
+#pragma mark Input Manipulation
 
 /* Process server input before Textual does. Return nil to have it ignored. */
 /* This method is passed a copy of the IRCMessage class which is an internal
@@ -96,7 +161,6 @@
 /* This command may be fed an NSAttributedString or NSString. If it is an
  NSAttributedString, it most likely contains user defined text formatting.
  Honor that formatting. Do not turn an NSAttributedString into an NSString.
-
  Return the type you are given and make sure you check the type you get to
  make sure it is handled appropriately. Do not give us a clean NSString if
  we handed you an NSAttributedString that contains formatting. */
@@ -105,4 +169,34 @@
  loaded may have altered the input already. This is unlikely unless the user has
  loaded a lot of custom plugins, but it is a possibility. */
 - (id)interceptUserInput:(id)input command:(NSString *)command;
+
+#pragma mark -
+#pragma mark Reserved Calls
+
+/* The behavior of this method call is undefined. It exists for internal
+ purposes for the plugins packaged with Textual by default. It is not
+ recommended to use it. */
+- (NSDictionary *)pluginOutputDisplayRules;
+
+#pragma mark -
+#pragma mark Deprecated
+
+/* Even though these methods are deprecated, they will still function 
+ as they always have. They will however be removed in a future release. */
+- (void)pluginLoadedIntoMemory:(IRCWorld *)world TEXTUAL_DEPRECATED;
+- (void)pluginUnloadedFromMemory TEXTUAL_DEPRECATED;
+
+- (NSArray *)pluginSupportsUserInputCommands TEXTUAL_DEPRECATED;
+- (NSArray *)pluginSupportsServerInputCommands TEXTUAL_DEPRECATED;
+
+- (NSView *)preferencesView TEXTUAL_DEPRECATED;
+- (NSString *)preferencesMenuItemName TEXTUAL_DEPRECATED;
+
+- (void)messageSentByUser:(IRCClient *)client
+				  message:(NSString *)messageString
+				  command:(NSString *)commandString TEXTUAL_DEPRECATED;
+
+- (void)messageReceivedByServer:(IRCClient *)client
+						 sender:(NSDictionary *)senderDict
+						message:(NSDictionary *)messageDict TEXTUAL_DEPRECATED;
 @end
