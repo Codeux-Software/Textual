@@ -66,6 +66,8 @@
 			[self.primaryClass pluginLoadedIntoMemory];
 		} else {
 			[self.primaryClass pluginLoadedIntoMemory:[self worldController]];
+			
+			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -pluginLoadedIntoMemory:", self.primaryClass);
 		}
 	}
 	
@@ -108,6 +110,9 @@
 		} else {
 			itemView = [self.primaryClass preferencesView];
 			itemName = [self.primaryClass preferencesMenuItemName];
+			
+			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -preferencesMenuItemName", self.primaryClass);
+			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -preferencesView", self.primaryClass);
 		}
 
 		if (VTAE(itemName, NSString) && VOCT(itemView, NSView)) {
@@ -130,6 +135,9 @@
 			spdcmds = [self.primaryClass subscribedUserInputCommands];
 		} else {
 			spdcmds = [self.primaryClass pluginSupportsUserInputCommands];
+			
+			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -messageSentByUser:message:command:", self.primaryClass);
+			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -pluginSupportsUserInputCommands", self.primaryClass);
 		}
 		
 		if (VTAE(spdcmds, NSArray)) {
@@ -160,6 +168,9 @@
 			spdcmds = [self.primaryClass subscribedServerInputCommands];
 		} else {
 			spdcmds = [self.primaryClass pluginSupportsServerInputCommands];
+			
+			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -messageReceivedByServer:sender:message:", self.primaryClass);
+			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -pluginSupportsServerInputCommands", self.primaryClass);
 		}
 
 		if (VTAE(spdcmds, NSArray)) {
