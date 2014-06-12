@@ -429,7 +429,7 @@
 	});
 }
 
-- (NSString *)postWillRenderMessageEvent:(NSString *)newMessage lineType:(TVCLogLine *)lineType memberType:(TVCLogLineMemberType)memberType
+- (NSString *)postWillRenderMessageEvent:(NSString *)newMessage lineType:(TVCLogLineType)lineType memberType:(TVCLogLineMemberType)memberType
 {
 	for (THOPluginItem *plugin in self.allLoadedPlugins)
 	{
