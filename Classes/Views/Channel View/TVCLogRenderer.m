@@ -333,6 +333,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
     BOOL regexWordMatching = ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightRegularExpressionMatchType);
 
 	TVCLogLineType lineType = [inputDictionary integerForKey:@"lineType"];
+	TVCLogLineMemberType memberType = [inputDictionary integerForKey:@"memberType"];
 	
 	IRCClientConfig *clientConfig = [[log client] config];
 	
@@ -500,7 +501,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	body = [NSString stringWithCharacters:dest length:n];
 	
 	/* Let plugins have first shot. */
-	body = [THOPluginManagerSharedInstance() postWillRenderMessageEvent:body];
+	body = [THOPluginManagerSharedInstance() postWillRenderMessageEvent:body lineType:lineType memberType:memberType];
 
 	/* When rendering a message as HTML output, TVCLogRenderer takes pride 
 	 in finding as much information about the message as possible. Information

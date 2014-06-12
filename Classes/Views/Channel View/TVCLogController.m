@@ -1084,6 +1084,7 @@
 	[inputDictionary setBool:isPlainText forKey:@"isPlainTextMessage"];
 
 	[inputDictionary setInteger:[line lineType] forKey:@"lineType"];
+	[inputDictionary setInteger:[line memberType] forKey:@"memberType"];
 
 	renderedBody = [TVCLogRenderer renderBody:[line messageBody]
 								   controller:self
