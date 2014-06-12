@@ -429,13 +429,13 @@
 	});
 }
 
-- (NSString *)postWillRenderMessageEvent:(NSString *)newMessage
+- (NSString *)postWillRenderMessageEvent:(NSString *)newMessage lineType:(TVCLogLine *)lineType memberType:(TVCLogLineMemberType)memberType
 {
 	for (THOPluginItem *plugin in self.allLoadedPlugins)
 	{
 		if (plugin.supportsWillRenderMessageEventNotifications) {
 			/* Inform plugin of data. */
-			NSString *pluginResult = [plugin.primaryClass willRenderMessage:newMessage];
+			NSString *pluginResult = [plugin.primaryClass willRenderMessage:newMessage lineType:lineType memberType:memberType];
 			
 			/* If the plugin returns nil, then we don't care. */
 			if (NSObjectIsEmpty(pluginResult)) {

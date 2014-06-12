@@ -195,7 +195,7 @@
 		_supportsNewMessagePostedEventNotifications = YES;
 	}
 	
-	if ([self.primaryClass respondsToSelector:@selector(willRenderMessage:)])
+	if ([self.primaryClass respondsToSelector:@selector(willRenderMessage:lineType:memberType:)])
 	{
 		_supportsWillRenderMessageEventNotifications = YES;
 	}
