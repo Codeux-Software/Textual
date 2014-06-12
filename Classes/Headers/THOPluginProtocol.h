@@ -156,6 +156,24 @@
 							 isThemeReload:(BOOL)isThemeReload
 						   isHistoryReload:(BOOL)isHistoryReload;
 
+/* Passes the raw message body of a new message before it is rendered into HTML.
+ A plugin can opt to add their own rendering at this point. THIS METHOD SHOULD
+ NOT BE USED TO INSERT HTML INTO A MESSAGE. Use the didPostNewMessage… call to
+ make any modifications HTML related. Inserting HTML this early before the actual
+ renderer had a pass at the message will result in undefined behavior. */
+/* Returning nil or a string with zero length from this method will indicate that
+ the message does not want to be modified and the original newMessage value will
+ remain in place. There is no way to specify to the renderer that you want to ignore
+ this event. Use the intercept* methods for this purpose.  */
+/* This method call will not occur on the plugin manager dispatch queue. Instead,
+ it is performed on whatever thread has been assigned to the current renderer as
+ the renderer itself is concurrent. */
+/* The input of this call is passed to every plugin that Textual has loaded in
+ sequential order based on when it was loaded. Keep this in mind as another plugin
+ loaded may have altered the input already. This is unlikely unless the user has
+ loaded a lot of custom plugins, but it is a possibility. */
+- (NSString *)willRenderMessage:(NSString *)newMessage;
+
 /* Process inline media to add custom support for various URLs. */
 /* Given a URL, the plugin is expected to return an NSString which represents
  an image to be shown inline. Nothing complex. */

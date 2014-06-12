@@ -345,7 +345,6 @@
 		
 		for (THOPluginItem *plugin in self.allLoadedPlugins) {
 			if ([plugin.supportedServerInputCommands containsObject:cmdl]) {
-				
 				if ([plugin.primaryClass respondsToSelector:@selector(didReceiveServerInputOnClient:senderInformation:messageInformation:)]) {
 					[plugin.primaryClass didReceiveServerInputOnClient:client senderInformation:senderData messageInformation:messageData];
 				} else {
@@ -386,12 +385,13 @@
 {
     for (THOPluginItem *plugin in self.allLoadedPlugins)
 	{
-		if (plugin.supportsRawInputDataManipulation) {
-			if ([plugin.primaryClass respondsToSelector:@selector(interceptUserInput:command:)]) {
-				input = [plugin.primaryClass interceptUserInput:input command:command];
+		if (plugin.supportsUserInputDataInterception) {
+			/* Inform plugin of data. */
+			input = [plugin.primaryClass interceptUserInput:input command:command];
 
-				/* If this plugin returned nil, then stop here. Do not pass it on to others. */
-				PointerIsEmptyAssertReturn(input, nil);
+			/* If this plugin returned nil, then stop here. Do not pass it on to others. */
+			if (input == nil) {
+				return nil; // Refuse to continue.
 			}
 		}
     }
@@ -403,12 +403,13 @@
 {
     for (THOPluginItem *plugin in self.allLoadedPlugins)
 	{
-		if (plugin.supportsRawInputDataManipulation) {
-			if ([plugin.primaryClass respondsToSelector:@selector(interceptServerInput:for:)]) {
-				input = [plugin.primaryClass interceptServerInput:input for:client];
+		if (plugin.supportsServerInputDataInterception) {
+			/* Inform plugin of data. */
+			input = [plugin.primaryClass interceptServerInput:input for:client];
 
-				/* If this plugin returned nil, then stop here. Do not pass it on to others. */
-				PointerIsEmptyAssertReturn(input, nil);
+			/* If this plugin returned nil, then stop here. Do not pass it on to others. */
+			if (input == nil) {
+				return nil; // Refuse to continue.
 			}
 		}
     }
@@ -421,11 +422,31 @@
 	dispatch_async(_dispatchQueue, ^{
 		for (THOPluginItem *plugin in self.allLoadedPlugins)
 		{
-			if (plugin.supportsRendererEventPosting) {
+			if (plugin.supportsNewMessagePostedEventNotifications) {
 				[plugin.primaryClass didPostNewMessageForViewController:logController messageInfo:messageInfo isThemeReload:isThemeReload isHistoryReload:isHistoryReload];
 			}
 		}
 	});
+}
+
+- (NSString *)postWillRenderMessageEvent:(NSString *)newMessage
+{
+	for (THOPluginItem *plugin in self.allLoadedPlugins)
+	{
+		if (plugin.supportsWillRenderMessageEventNotifications) {
+			/* Inform plugin of data. */
+			NSString *pluginResult = [plugin.primaryClass willRenderMessage:newMessage];
+			
+			/* If the plugin returns nil, then we don't care. */
+			if (NSObjectIsEmpty(pluginResult)) {
+				;
+			} else {
+				newMessage = pluginResult;
+			}
+		}
+	}
+	
+	return newMessage;
 }
 
 @end

@@ -498,6 +498,9 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	/* Now that we have scanned the input body for all fomatting characters,
 	 we will now build upon the string minus those. */
 	body = [NSString stringWithCharacters:dest length:n];
+	
+	/* Let plugins have first shot. */
+	body = [THOPluginManagerSharedInstance() postWillRenderMessageEvent:body];
 
 	/* When rendering a message as HTML output, TVCLogRenderer takes pride 
 	 in finding as much information about the message as possible. Information

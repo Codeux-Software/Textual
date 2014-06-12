@@ -192,7 +192,12 @@
 	/* Renderer events. */
 	if ([self.primaryClass respondsToSelector:@selector(didPostNewMessageForViewController:messageInfo:isThemeReload:isHistoryReload:)])
 	{
-		_supportsRendererEventPosting = YES;
+		_supportsNewMessagePostedEventNotifications = YES;
+	}
+	
+	if ([self.primaryClass respondsToSelector:@selector(willRenderMessage:)])
+	{
+		_supportsWillRenderMessageEventNotifications = YES;
 	}
 	
 	/* Inline media. */
@@ -204,12 +209,12 @@
 	/* Data interception. */
 	if ([self.primaryClass respondsToSelector:@selector(interceptServerInput:for:)])
 	{
-		_supportsRawInputDataManipulation = YES;
+		_supportsServerInputDataInterception = YES;
 	}
 	
 	if ([self.primaryClass respondsToSelector:@selector(interceptUserInput:command:)])
 	{
-		_supportsRawInputDataManipulation = YES;
+		_supportsUserInputDataInterception = YES;
 	}
 }
 

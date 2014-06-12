@@ -40,9 +40,11 @@
 @interface THOPluginItem : NSObject
 @property (nonatomic, readonly, strong) id primaryClass;
 @property (nonatomic, readonly, assign) BOOL hasPreferencePaneView;
-@property (nonatomic, readonly, assign) BOOL supportsRawInputDataManipulation;
+@property (nonatomic, readonly, assign) BOOL supportsUserInputDataInterception;
+@property (nonatomic, readonly, assign) BOOL supportsServerInputDataInterception;
 @property (nonatomic, readonly, assign) BOOL supportsInlineMediaManipulation;
-@property (nonatomic, readonly, assign) BOOL supportsRendererEventPosting;
+@property (nonatomic, readonly, assign) BOOL supportsNewMessagePostedEventNotifications;
+@property (nonatomic, readonly, assign) BOOL supportsWillRenderMessageEventNotifications;
 @property (nonatomic, readonly, strong) NSArray *supportedUserInputCommands;
 @property (nonatomic, readonly, strong) NSArray *supportedServerInputCommands;
 @property (nonatomic, readonly, strong) NSDictionary *outputSuppressionRules;
