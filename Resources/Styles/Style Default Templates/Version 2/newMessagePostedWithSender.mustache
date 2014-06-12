@@ -28,6 +28,7 @@
 				{{#nicknameColorHashingEnabled}} 
 					colornumber="{{nicknameColorNumber}}"
 				{{/nicknameColorHashingEnabled}}>{{formattedNickname}}</span>
+			<span class="innerMessage">
 					{{{formattedMessage}}}
 					
 					{{#inlineMediaAvailable}}
@@ -35,6 +36,7 @@
 							<a href="{{{anchorLink}}}" onclick="return Textual.toggleInlineImage('{{anchorInlineImageUniqueID}}')"><img src="{{{imageURL}}}" class="inlineimage" id="inlineImage-{{anchorInlineImageUniqueID}}" style="display: none; max-width: {{preferredMaximumWidth}}px;" title="Hide image by shift clicking." /></a>
 						{{/inlineMediaArray}}
 					{{/inlineMediaAvailable}}
+			</span>
 		</span>
 	</p>
 </div>
