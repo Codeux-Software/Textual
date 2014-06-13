@@ -782,6 +782,7 @@
 		4C937BDB170618A80050CEF3 /* TLOSpeechSynthesizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C937BDA170618A80050CEF3 /* TLOSpeechSynthesizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C937BDC17061A3F0050CEF3 /* TLOSpeechSynthesizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C937BDA170618A80050CEF3 /* TLOSpeechSynthesizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C937BDD17061A4D0050CEF3 /* TLOSpeechSynthesizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C937BD4170618940050CEF3 /* TLOSpeechSynthesizer.m */; };
+		4C95689F194A894D003D97FD /* SmileyConverter.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C956893194A8862003D97FD /* SmileyConverter.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C9A1D9A1836E6D000C14835 /* BlowfishCommandLine.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D901836E6A100C14835 /* BlowfishCommandLine.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C9A1D9B1836E6D200C14835 /* BragSpam.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D911836E6A100C14835 /* BragSpam.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C9A1D9C1836E6D300C14835 /* SpammerParadise.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -872,6 +873,13 @@
 			remoteGlobalIDString = 4C01BA0415810DD8007E2DAF;
 			remoteInfo = "Update Version Info";
 		};
+		4C95689D194A887D003D97FD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4C956899194A887D003D97FD /* Smiley Converter Extension.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D576316048677EA00EA77CD;
+			remoteInfo = SmileyConverter;
+		};
 		4CBB842C16F0DA1D004E3ED6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4C1DC5491580420500A47BC9 /* Project object */;
@@ -941,6 +949,7 @@
 				4C9A1D9B1836E6D200C14835 /* BragSpam.bundle in Copy Extensions */,
 				4C9A1D9C1836E6D300C14835 /* SpammerParadise.bundle in Copy Extensions */,
 				4C9A1D9D1836E6D500C14835 /* SystemProfiler.bundle in Copy Extensions */,
+				4C95689F194A894D003D97FD /* SmileyConverter.bundle in Copy Extensions */,
 				4C9A1D9E1836E6D700C14835 /* ZNCAdditions.bundle in Copy Extensions */,
 			);
 			name = "Copy Extensions";
@@ -1418,6 +1427,8 @@
 		4C92FECA17A8C8F2003888F4 /* TPCResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCResourceManager.h; sourceTree = "<group>"; };
 		4C937BD4170618940050CEF3 /* TLOSpeechSynthesizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOSpeechSynthesizer.m; path = Library/TLOSpeechSynthesizer.m; sourceTree = "<group>"; };
 		4C937BDA170618A80050CEF3 /* TLOSpeechSynthesizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLOSpeechSynthesizer.h; sourceTree = "<group>"; };
+		4C956893194A8862003D97FD /* SmileyConverter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SmileyConverter.bundle; path = .tmp/SharedBuildProducts/SmileyConverter.bundle; sourceTree = SOURCE_ROOT; };
+		4C956899194A887D003D97FD /* Smiley Converter Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Smiley Converter Extension.xcodeproj"; path = "Resources/Plugins/Smiley Converter/Smiley Converter Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4C994BAB181FB3E0002FECA6 /* Auxiliary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Auxiliary.entitlements; path = Resources/Sandbox/Exceptions/Auxiliary.entitlements; sourceTree = SOURCE_ROOT; };
 		4C994BAC181FB3E0002FECA6 /* Textual.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Textual.entitlements; path = Resources/Sandbox/Exceptions/Textual.entitlements; sourceTree = SOURCE_ROOT; };
 		4C994BAD181FB3E0002FECA6 /* TextualWithoutCloud.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualWithoutCloud.entitlements; path = Resources/Sandbox/Exceptions/TextualWithoutCloud.entitlements; sourceTree = SOURCE_ROOT; };
@@ -1738,6 +1749,7 @@
 			children = (
 				4C9A1D901836E6A100C14835 /* BlowfishCommandLine.bundle */,
 				4C9A1D911836E6A100C14835 /* BragSpam.bundle */,
+				4C956893194A8862003D97FD /* SmileyConverter.bundle */,
 				4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */,
 				4C9A1D931836E6A100C14835 /* SystemProfiler.bundle */,
 				4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */,
@@ -1750,6 +1762,7 @@
 			children = (
 				4CCC6B62158E8CCC003A102B /* Blowfish Key Control Extension.xcodeproj */,
 				4CCC6B6E158E8CDA003A102B /* Brag Spam Extension.xcodeproj */,
+				4C956899194A887D003D97FD /* Smiley Converter Extension.xcodeproj */,
 				4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */,
 				4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */,
 				4CC9D8A11745BE1700461F05 /* ZNC Additions Extension.xcodeproj */,
@@ -2432,6 +2445,14 @@
 			name = "External Libraries";
 			sourceTree = "<group>";
 		};
+		4C95689A194A887D003D97FD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4C95689E194A887D003D97FD /* SmileyConverter.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		4CA218B416D81F8F0012DAA8 /* Script Installers */ = {
 			isa = PBXGroup;
 			children = (
@@ -3053,6 +3074,10 @@
 					ProjectRef = 4CCC6B6E158E8CDA003A102B /* Brag Spam Extension.xcodeproj */;
 				},
 				{
+					ProductGroup = 4C95689A194A887D003D97FD /* Products */;
+					ProjectRef = 4C956899194A887D003D97FD /* Smiley Converter Extension.xcodeproj */;
+				},
+				{
 					ProductGroup = 4CF4D48316BC54C2000C5AC8 /* Products */;
 					ProjectRef = 4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */;
 				},
@@ -3077,6 +3102,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		4C95689E194A887D003D97FD /* SmileyConverter.bundle */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SmileyConverter.bundle;
+			remoteRef = 4C95689D194A887D003D97FD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		4CC9D8A61745BE1700461F05 /* ZNCAdditions.bundle */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
