@@ -112,6 +112,8 @@
 		}
 
 		// ---- //
+		
+		NSArray *bannedBundleNames = [self bannedExtensionBundleNames];
 
 		for (NSString *file in resourceBundles) {
 			if ([file hasSuffix:TPCResourceManagerBundleDocumentTypeExtension]) {
@@ -119,6 +121,14 @@
 
 				if ([RZFileManager() fileExistsAtPath:fullPath] == NO) {
 					fullPath = [path_2 stringByAppendingPathComponent:file];
+				} else {
+					if ([bannedBundleNames containsObject:file]) {
+						fullPath = [path_2 stringByAppendingPathComponent:file];
+						
+						if ([RZFileManager() fileExistsAtPath:fullPath] == NO) {
+							continue;
+						}
+					}
 				}
 
 				NSBundle *currBundle = [NSBundle bundleWithPath:fullPath];
@@ -223,16 +233,24 @@
 #pragma mark -
 #pragma mark Extension Information.
 
-/* List of commands that may be part of Textual that we hide due to them
- being known to the general populous may result in unexpected harm such as 
- spamming by not understanding what they do. 
- 
- These commands are only excluded from the list of installed addons. We 
- cannot actually prevent the user from executing them. */
-
 - (NSArray *)dangerousCommandNames
 {
+	/* List of commands that may be part of Textual that we hide due to them
+	 being known to the general populous may result in unexpected harm such as
+	 spamming by not understanding what they do.
+	 
+	 These commands are only excluded from the list of installed addons. We
+	 cannot actually prevent the user from executing them. */
     return @[@"clone", @"cloned", @"unclone", @"hspam", @"spam", @"namel"];
+}
+
+- (NSArray *)bannedExtensionBundleNames
+{
+	/* We do not want to allow bundles with this name to be loaded
+	 unless they are inside Textual itself. This allows us to package
+	 a bundle which was previously installed from an installer to
+	 instead by packaged with Textual by default. */
+	return @[@"SmileyConverter.bundle"];
 }
 
 /* Everything else. */
