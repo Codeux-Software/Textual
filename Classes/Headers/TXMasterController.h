@@ -67,8 +67,8 @@
 @property (nonatomic, nweak) IBOutlet TVCMemberListUserInfoPopover *memberListUserInfoPopover;
 @property (nonatomic, nweak) IBOutlet TVCServerList *serverList;
 @property (nonatomic, nweak) IBOutlet TVCTextFormatterMenu *formattingMenu;
-@property (nonatomic, nweak) IBOutlet TVCThinSplitView *memberSplitView;
-@property (nonatomic, nweak) IBOutlet TVCThinSplitView *serverSplitView;
+@property (nonatomic, nweak) IBOutlet TVCMainWindowSplitView *memberSplitView;
+@property (nonatomic, nweak) IBOutlet TVCMainWindowSplitView *serverSplitView;
 @property (nonatomic, nweak) TXMenuController *menuController;
 @property (nonatomic, strong) TLOGrowlController *growlController;
 @property (nonatomic, strong) TLONickCompletionStatus *completionStatus;
