@@ -1,4 +1,4 @@
-/* ********************************************************************* 
+/* *********************************************************************
        _____        _               _    ___ ____   ____
       |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
        | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
@@ -38,8 +38,9 @@
 #import "TPISmileyConverter.h"
 
 @interface TPISmileyConverter ()
-@property (nonatomic, strong) NSView *preferencePane;
 @property (nonatomic, strong) NSDictionary *conversionTable;
+@property (nonatomic, strong) NSArray *sortedSmileyList;
+@property (nonatomic, strong) IBOutlet NSView *preferencesPane;
 @end
 
 @implementation TPISmileyConverter
@@ -47,7 +48,7 @@
 #pragma mark -
 #pragma mark Plugin API
 
-- (void)pluginLoadedIntoMemory:(IRCWorld *)world
+- (void)pluginLoadedIntoMemory
 {
 	/* Load Interface. */
 	[TPIBundleFromClass() loadCustomNibNamed:@"TPISmileyConverter" owner:self topLevelObjects:nil];
@@ -60,99 +61,51 @@
 
 	/* Load dictionary. */
 	NSDictionary *tableData = [NSDictionary dictionaryWithContentsOfURL:tablePath];
-
+	
 	if (NSObjectIsEmpty(tableData)) {
 		NSAssert(NO, @"Failed to find conversion table.");
 	}
 
 	/* Save dictionary contents. */
-	self.conversionTable = tableData;
+	self.conversionTable	=  tableData;
+	self.sortedSmileyList	= [tableData sortedDictionaryReversedKeys];
 }
 
-- (NSString *)preferencesMenuItemName
+- (NSView *)pluginPreferencesPaneView
+{
+	return self.preferencesPane;
+}
+
+- (NSString *)pluginPreferencesPaneMenuItemName
 {
 	return TPILS(@"BasicLanguage[1000]");
 }
 
-- (NSView *)preferencesView
+- (NSString *)willRenderMessage:(NSString *)newMessage lineType:(TVCLogLineType)lineType memberType:(TVCLogLineMemberType)memberType
 {
-	return self.preferencePane;
-}
-
-- (IRCMessage *)interceptServerInput:(IRCMessage *)input for:(IRCClient *)client
-{
-	/* Return input if we are doing nothing with it. */
-	NSAssertReturnR([self convertIncoming], input);
-
-	/* Only handle regular messages. */
-	if ([[input command] isEqualToString:IRCPrivateCommandIndex("privmsg")] == NO) {
-		return input;
-	}
-
-	/* How IRCMessage is designed, the actual message of PRIVMSG should be the
-	 second index of our input params. Let's hope a future version of Textual
-	 does not break that. If it does, then we are screwed here. */
-	NSString *message = [input paramAt:1];
-
-	/* Convert to attributed string. */
-	NSAttributedString *finalResult = [NSAttributedString emptyStringWithBase:message];
-
-	/* Do the actual convert. */
-	finalResult = [self convertStringToEmoji:finalResult];
-
-	/* Replace old message. */
-	NSMutableArray *newParams = [[input params] mutableCopy];
-
-	[newParams removeObjectAtIndex:1];
-
-	/* Insert new message. */
-	[newParams insertObject:[finalResult string] atIndex:1];
-
-	[input setParams:newParams];
-
-	/* Return new message. */
-	return input;
-}
-
-- (id)interceptUserInput:(id)input command:(NSString *)command
-{
-	/* Return input if we are doing nothing with it. */
-	NSAssertReturnR([self convertOutgoing], input);
-
-	/* Input can only be an NSString or NSAttributedString. If it is an 
-	 NSString, then we convert it into an NSAttributedString for the 
-	 actual convert from smiley to emoji. */
-	NSAttributedString *finalResult;
-
-	BOOL returnAsString = NO;
+	BOOL serviceEnabled = [RZUserDefaults() boolForKey:@"Smiley Converter Extension -> Enable Service"];
 	
-	if ([input isKindOfClass:[NSString class]]) {
-		returnAsString = YES;
-
-		finalResult = [NSAttributedString emptyStringWithBase:input];
-	} else {
-		finalResult = input;
+	if (serviceEnabled == NO) {
+		return newMessage;
 	}
-
-	/* Do the actual convert. */
-	finalResult = [self convertStringToEmoji:finalResult];
-
-	/* What return type? */
-	if (returnAsString) {
-		return [finalResult string];
+	
+	if (lineType == TVCLogLineActionType ||
+		lineType == TVCLogLinePrivateMessageType)
+	{
+		return [self convertStringToEmoji:newMessage];
 	} else {
-		return finalResult;
+		return newMessage;
 	}
 }
 
 #pragma mark -
 #pragma mark Convert API
 
-- (NSAttributedString *)convertStringToEmoji:(NSAttributedString *)string
+- (NSString *)convertStringToEmoji:(NSString *)string
 {
-	NSMutableAttributedString *finalString = [string mutableCopy];
+	NSMutableString *finalString = [string mutableCopy];
 
-	for (NSString *smiley in [self conversionTable]) {
+	for (NSString *smiley in self.sortedSmileyList) {
 		finalString = [self stringWithReplacedSmiley:smiley inString:finalString];
 	}
 
@@ -160,7 +113,7 @@
 }
 
 /* The replacement call uses a lot of work done by the actual Textual renderring engine. */
-- (NSMutableAttributedString *)stringWithReplacedSmiley:(NSString *)smiley inString:(NSMutableAttributedString *)body
+- (NSMutableString *)stringWithReplacedSmiley:(NSString *)smiley inString:(NSMutableString *)body
 {
 	NSInteger start = 0;
 
@@ -173,9 +126,9 @@
 		}
 
 		/* Find smiley. */
-		NSRange r = [body.string rangeOfString:smiley
-									   options:NSCaseInsensitiveSearch // Search is not case sensitive.
-										 range:NSMakeRange(start, ([body length] - start))];
+		NSRange r = [body rangeOfString:smiley
+								options:NSCaseInsensitiveSearch // Search is not case sensitive.
+								  range:NSMakeRange(start, ([body length] - start))];
 
 		/* Anything found? */
 		if (r.location == NSNotFound) {
@@ -185,30 +138,28 @@
 		BOOL enabled = YES;
 
 		/* Validate the surroundings if it is strict matching. */
-		if ([self strictMatching]) {
-			if (enabled) {
-				NSInteger prev = (r.location - 1);
+		if (enabled) {
+			NSInteger prev = (r.location - 1);
 
-				if (0 <= prev && prev < [body length]) {
-					UniChar c = [[body string] characterAtIndex:prev];
+			if (0 <= prev && prev < [body length]) {
+				UniChar c = [body characterAtIndex:prev];
 
-					/* Only accept a space. */
-					if (NSDissimilarObjects(c, ' ')) {
-						enabled = NO;
-					}
+				/* Only allow certain characters. */
+				if (NSDissimilarObjects(c, ' ')) {
+					enabled = NO;
 				}
 			}
+		}
 
-			if (enabled) {
-				NSInteger next = NSMaxRange(r);
+		if (enabled) {
+			NSInteger next = NSMaxRange(r);
 
-				if (next < [body length]) {
-					UniChar c = [[body string] characterAtIndex:next];
+			if (next < [body length]) {
+				UniChar c = [body characterAtIndex:next];
 
-					/* Only accept a space. */
-					if (NSDissimilarObjects(c, ' ')) {
-						enabled = NO;
-					}
+				/* Only accept a space. */
+				if (NSDissimilarObjects(c, ' ')) {
+					enabled = NO;
 				}
 			}
 		}
@@ -216,12 +167,10 @@
 		/* Replace the actual smiley. */
 		if (enabled) {
 			/* Build the emoji. */
-			NSString *theEmoji = [[self conversionTable] objectForKey:smiley];
-
-			NSAttributedString *replacement = [NSAttributedString emptyStringWithBase:theEmoji];
-
+			NSString *theEmoji = [self.conversionTable objectForKey:smiley];
+			
 			/* Replace the smiley. */
-			[body replaceCharactersInRange:r withAttributedString:replacement];
+			[body replaceCharactersInRange:r withString:theEmoji];
 
 			/* The new start is the location where the smiley began plus the length of the
 			 newly added addition. By asking for the actual emoji length, instead of assuming
@@ -234,24 +183,6 @@
 	}
 
 	return body;
-}
-
-#pragma mark -
-#pragma mark Preferences
-
-- (BOOL)strictMatching
-{
-	return [RZUserDefaults() boolForKey:@"Smiley Converter Extension -> Use Strict Matching"];
-}
-
-- (BOOL)convertIncoming
-{
-	return [RZUserDefaults() boolForKey:@"Smiley Converter Extension -> Convert Incoming"];
-}
-
-- (BOOL)convertOutgoing
-{
-	return [RZUserDefaults() boolForKey:@"Smiley Converter Extension -> Convert Outgoing"];
 }
 
 @end

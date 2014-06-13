@@ -38,11 +38,4 @@
 #import "TextualApplication.h"
 
 @interface TPISmileyConverter : NSObject <THOPluginProtocol>
-- (void)pluginLoadedIntoMemory:(IRCWorld *)world;
-
-- (NSString *)preferencesMenuItemName;
-- (NSView *)preferencesView;
-
-- (IRCMessage *)interceptServerInput:(IRCMessage *)input for:(IRCClient *)client;
-- (id)interceptUserInput:(id)input command:(NSString *)command;
 @end
