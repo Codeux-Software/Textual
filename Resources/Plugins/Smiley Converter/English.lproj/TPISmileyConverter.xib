@@ -21,7 +21,7 @@
             </userGuides>
             <subviews>
                 <button id="64">
-                    <rect key="frame" x="189" y="150" width="189" height="18"/>
+                    <rect key="frame" x="189" y="162" width="189" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Enable smiley converter." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="65">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -32,7 +32,7 @@
                     </connections>
                 </button>
                 <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="f0J-Xd-jFm">
-                    <rect key="frame" x="58" y="190" width="451" height="64"/>
+                    <rect key="frame" x="58" y="202" width="451" height="64"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="pF0-CI-txU">
                         <rect key="frame" x="1" y="1" width="223" height="133"/>
@@ -45,8 +45,21 @@
                                 <size key="minSize" width="451" height="64"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                                 <attributedString key="textStorage">
+                                    <fragment content="The Smiley Converter extension can be used to automatically convert smileys to ">
+                                        <attributes>
+                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="emoji icons">
+                                        <attributes>
+                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <url key="NSLink" string="http://en.wikipedia.org/wiki/Emoji"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
                                     <fragment>
-                                        <string key="content">The Smiley Converter extension can be used to automatically convert smileys to emoji icons. For example, the smiley for a smile ":-)" becomes the emoji "    " or "^_^" becomes "    " — these replacements only apply to you. The normal text based emoticons are still sent to IRC.</string>
+                                        <string key="content">. For example, the smiley for a smile ":-)" becomes the emoji "    " or "^_^" becomes "    " — these replacements only apply to you. The normal text based emoticons are still sent to IRC.</string>
                                         <attributes>
                                             <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
@@ -70,7 +83,7 @@
                     </scroller>
                 </scrollView>
                 <textField verticalHuggingPriority="750" id="104">
-                    <rect key="frame" x="237" y="205" width="23" height="26"/>
+                    <rect key="frame" x="237" y="217" width="23" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="😄" id="105">
                         <font key="font" size="13" name="AppleColorEmoji"/>
@@ -79,7 +92,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="102">
-                    <rect key="frame" x="100" y="207" width="23" height="24"/>
+                    <rect key="frame" x="100" y="219" width="23" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="😊" id="103">
                         <font key="font" size="13" name="AppleColorEmoji"/>
