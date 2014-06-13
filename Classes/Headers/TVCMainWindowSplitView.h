@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-@interface TVCThinSplitView : NSSplitView
+@interface TVCMainWindowSplitView : NSSplitView
 @property (nonatomic, assign) NSInteger fixedViewIndex;
 @property (nonatomic, assign) NSInteger dividerPosition;
 @property (nonatomic, assign) BOOL viewIsInverted;

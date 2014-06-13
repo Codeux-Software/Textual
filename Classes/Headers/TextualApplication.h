@@ -137,6 +137,7 @@
 	@class TVCMainWindowLoadingScreenView;
 	@class TVCMainWindowSegmentedCell;
 	@class TVCMainWindowSegmentedControl;
+	@class TVCMainWindowSplitView;
 	@class TVCMainWindowTextView;
 	@class TVCMainWindowTextViewBackground;
 	@class TVCMemberList;
@@ -155,7 +156,6 @@
 	@class TVCTextFieldWithValueValidationCell;
 	@class TVCTextFormatterMenu;
 	@class TVCTextViewWithIRCFormatter;
-	@class TVCThinSplitView;
 	@class TVCWebViewAutoScroll;
 	@class TXMasterController;
 	@class TXMenuController;
@@ -313,6 +313,7 @@
 	#import "TVCMainWindow.h"
 	#import "TVCMainWindowLoadingScreen.h"
 	#import "TVCMainWindowSegmentedControl.h"
+	#import "TVCMainWindowSplitView.h"
 	#import "TDCProgressInformationSheet.h"
 	#import "TVCMemberList.h"
 	#import "TVCMemberListCell.h"
@@ -325,7 +326,6 @@
 	#import "TVCTextFieldWithValueValidation.h"
 	#import "TVCTextViewWithIRCFormatter.h"
 	#import "TVCTextFormatterMenu.h"
-	#import "TVCThinSplitView.h"
 	#import "TVCWebViewAutoScroll.h"
 
 	/* Master Controllers — Root. */

@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-@implementation TVCThinSplitView
+@implementation TVCMainWindowSplitView
 
 - (void)awakeFromNib
 {

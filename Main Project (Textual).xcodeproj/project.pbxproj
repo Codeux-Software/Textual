@@ -150,7 +150,7 @@
 		4C0445DD16F1603C00EBB665 /* TVCMainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF604158E99520026668C /* TVCMainWindow.m */; };
 		4C0445DE16F1603C00EBB665 /* TVCMainWindowLoadingScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8EE97916C64A8200D5B1F4 /* TVCMainWindowLoadingScreen.m */; };
 		4C0445DF16F1603C00EBB665 /* TVCMainWindowSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */; };
-		4C0445E016F1603C00EBB665 /* TVCThinSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF605158E99520026668C /* TVCThinSplitView.m */; };
+		4C0445E016F1603C00EBB665 /* TVCMainWindowSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF605158E99520026668C /* TVCMainWindowSplitView.m */; };
 		4C0879BE187061760034F5EB /* TDCFileTransferDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C0879BC187061760034F5EB /* TDCFileTransferDialog.xib */; };
 		4C0879BF187061760034F5EB /* TDCFileTransferDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C0879BC187061760034F5EB /* TDCFileTransferDialog.xib */; };
 		4C0879CF187061BF0034F5EB /* TDCFileTransferDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0879C6187061BF0034F5EB /* TDCFileTransferDialog.m */; };
@@ -479,7 +479,7 @@
 		4C5BA44F16F1302F00A96CA2 /* TVCServerListCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF590158E99520026668C /* TVCServerListCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA45016F1302F00A96CA2 /* TVCTextViewWithIRCFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF591158E99520026668C /* TVCTextViewWithIRCFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA45116F1302F00A96CA2 /* TVCTextFormatterMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF592158E99520026668C /* TVCTextFormatterMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C5BA45216F1302F00A96CA2 /* TVCThinSplitView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF593158E99520026668C /* TVCThinSplitView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C5BA45216F1302F00A96CA2 /* TVCMainWindowSplitView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF593158E99520026668C /* TVCMainWindowSplitView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA45316F1302F00A96CA2 /* TVCWebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF594158E99520026668C /* TVCWebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA45416F1302F00A96CA2 /* TXGlobalModels.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF595158E99520026668C /* TXGlobalModels.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA45516F1302F00A96CA2 /* TXMasterController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF596158E99520026668C /* TXMasterController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -662,7 +662,7 @@
 		4C8AF685158E99520026668C /* TVCServerListCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF590158E99520026668C /* TVCServerListCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF686158E99520026668C /* TVCTextViewWithIRCFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF591158E99520026668C /* TVCTextViewWithIRCFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF687158E99520026668C /* TVCTextFormatterMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF592158E99520026668C /* TVCTextFormatterMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C8AF688158E99520026668C /* TVCThinSplitView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF593158E99520026668C /* TVCThinSplitView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C8AF688158E99520026668C /* TVCMainWindowSplitView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF593158E99520026668C /* TVCMainWindowSplitView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF689158E99520026668C /* TVCWebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF594158E99520026668C /* TVCWebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF68A158E99520026668C /* TXGlobalModels.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF595158E99520026668C /* TXGlobalModels.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF68B158E99520026668C /* TXMasterController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF596158E99520026668C /* TXMasterController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -739,7 +739,7 @@
 		4C8AF6E2158E99520026668C /* TVCListSeparatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF602158E99520026668C /* TVCListSeparatorCell.m */; };
 		4C8AF6E3158E99520026668C /* TVCListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF603158E99520026668C /* TVCListView.m */; };
 		4C8AF6E4158E99520026668C /* TVCMainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF604158E99520026668C /* TVCMainWindow.m */; };
-		4C8AF6E5158E99520026668C /* TVCThinSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF605158E99520026668C /* TVCThinSplitView.m */; };
+		4C8AF6E5158E99520026668C /* TVCMainWindowSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF605158E99520026668C /* TVCMainWindowSplitView.m */; };
 		4C8AF6E6158E99520026668C /* TVCMemberList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF607158E99520026668C /* TVCMemberList.m */; };
 		4C8AF6E7158E99520026668C /* TVCMemberListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF608158E99520026668C /* TVCMemberListCell.m */; };
 		4C8AF728158E9B330026668C /* TDCAboutPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C8AF706158E9B330026668C /* TDCAboutPanel.xib */; };
@@ -1312,7 +1312,7 @@
 		4C8AF590158E99520026668C /* TVCServerListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCServerListCell.h; sourceTree = "<group>"; };
 		4C8AF591158E99520026668C /* TVCTextViewWithIRCFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCTextViewWithIRCFormatter.h; sourceTree = "<group>"; };
 		4C8AF592158E99520026668C /* TVCTextFormatterMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCTextFormatterMenu.h; sourceTree = "<group>"; };
-		4C8AF593158E99520026668C /* TVCThinSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCThinSplitView.h; sourceTree = "<group>"; };
+		4C8AF593158E99520026668C /* TVCMainWindowSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowSplitView.h; sourceTree = "<group>"; };
 		4C8AF594158E99520026668C /* TVCWebViewAutoScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCWebViewAutoScroll.h; sourceTree = "<group>"; };
 		4C8AF595158E99520026668C /* TXGlobalModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TXGlobalModels.h; sourceTree = "<group>"; };
 		4C8AF596158E99520026668C /* TXMasterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TXMasterController.h; sourceTree = "<group>"; };
@@ -1381,7 +1381,7 @@
 		4C8AF5F6158E99520026668C /* TVCLogScriptEventSink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogScriptEventSink.m; sourceTree = "<group>"; };
 		4C8AF5F7158E99520026668C /* TVCLogView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogView.m; sourceTree = "<group>"; };
 		4C8AF5F8158E99520026668C /* TVCWebViewAutoScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCWebViewAutoScroll.m; sourceTree = "<group>"; };
-		4C8AF5FA158E99520026668C /* TVCMainWindowTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMainWindowTextView.m; sourceTree = "<group>"; };
+		4C8AF5FA158E99520026668C /* TVCMainWindowTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCMainWindowTextView.m; path = "Input Text Field/TVCMainWindowTextView.m"; sourceTree = "<group>"; };
 		4C8AF5FB158E99520026668C /* TVCTextViewWithIRCFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCTextViewWithIRCFormatter.m; sourceTree = "<group>"; };
 		4C8AF5FC158E99520026668C /* TVCTextFormatterMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCTextFormatterMenu.m; sourceTree = "<group>"; };
 		4C8AF600158E99520026668C /* TVCDockIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCDockIcon.m; sourceTree = "<group>"; };
@@ -1389,7 +1389,7 @@
 		4C8AF602158E99520026668C /* TVCListSeparatorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCListSeparatorCell.m; sourceTree = "<group>"; };
 		4C8AF603158E99520026668C /* TVCListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCListView.m; sourceTree = "<group>"; };
 		4C8AF604158E99520026668C /* TVCMainWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMainWindow.m; sourceTree = "<group>"; };
-		4C8AF605158E99520026668C /* TVCThinSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCThinSplitView.m; sourceTree = "<group>"; };
+		4C8AF605158E99520026668C /* TVCMainWindowSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMainWindowSplitView.m; sourceTree = "<group>"; };
 		4C8AF607158E99520026668C /* TVCMemberList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberList.m; sourceTree = "<group>"; };
 		4C8AF608158E99520026668C /* TVCMemberListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberListCell.m; sourceTree = "<group>"; };
 		4C8AF707158E9B330026668C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/Localization/English.lproj/TDCAboutPanel.xib; sourceTree = SOURCE_ROOT; };
@@ -2153,6 +2153,7 @@
 				4C8AF58C158E99520026668C /* TVCMainWindow.h */,
 				4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */,
 				4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */,
+				4C8AF593158E99520026668C /* TVCMainWindowSplitView.h */,
 				4C8AF583158E99520026668C /* TVCMainWindowTextView.h */,
 				4C8AF58D158E99520026668C /* TVCMemberList.h */,
 				4C8AF58E158E99520026668C /* TVCMemberListCell.h */,
@@ -2165,7 +2166,6 @@
 				4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */,
 				4C8AF592158E99520026668C /* TVCTextFormatterMenu.h */,
 				4C8AF591158E99520026668C /* TVCTextViewWithIRCFormatter.h */,
-				4C8AF593158E99520026668C /* TVCThinSplitView.h */,
 				4C8AF594158E99520026668C /* TVCWebViewAutoScroll.h */,
 				4C8AF595158E99520026668C /* TXGlobalModels.h */,
 				4C8AF596158E99520026668C /* TXMasterController.h */,
@@ -2282,6 +2282,7 @@
 		4C8AF5EF158E99520026668C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4C8AF6AE194B84050039E7E2 /* Main Window */,
 				4C8AF5F0158E99520026668C /* Channel View */,
 				4C8AF5F9158E99520026668C /* Input Text Field */,
 				4C8AF5FD158E99520026668C /* Server List */,
@@ -2290,11 +2291,7 @@
 				4C8AF601158E99520026668C /* TVCInputPromptDialog.m */,
 				4C8AF602158E99520026668C /* TVCListSeparatorCell.m */,
 				4C8AF603158E99520026668C /* TVCListView.m */,
-				4C8AF604158E99520026668C /* TVCMainWindow.m */,
-				4C8EE97916C64A8200D5B1F4 /* TVCMainWindowLoadingScreen.m */,
-				4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */,
 				4C9FFB9819059BF1008C600C /* TVCQueuedCertificateTrustPanel.m */,
-				4C8AF605158E99520026668C /* TVCThinSplitView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2317,7 +2314,6 @@
 		4C8AF5F9158E99520026668C /* Input Text Field */ = {
 			isa = PBXGroup;
 			children = (
-				4C8AF5FA158E99520026668C /* TVCMainWindowTextView.m */,
 				4C36091C18B4E8A800243B3A /* TVCTextFieldWithValueValidation.m */,
 				4C8AF5FC158E99520026668C /* TVCTextFormatterMenu.m */,
 				4C8AF5FB158E99520026668C /* TVCTextViewWithIRCFormatter.m */,
@@ -2344,6 +2340,18 @@
 				4CBBD19D16E356F400D2FEFE /* TVCMemberListUserInfoPopover.m */,
 			);
 			path = "User List";
+			sourceTree = "<group>";
+		};
+		4C8AF6AE194B84050039E7E2 /* Main Window */ = {
+			isa = PBXGroup;
+			children = (
+				4C8AF604158E99520026668C /* TVCMainWindow.m */,
+				4C8EE97916C64A8200D5B1F4 /* TVCMainWindowLoadingScreen.m */,
+				4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */,
+				4C8AF605158E99520026668C /* TVCMainWindowSplitView.m */,
+				4C8AF5FA158E99520026668C /* TVCMainWindowTextView.m */,
+			);
+			name = "Main Window";
 			sourceTree = "<group>";
 		};
 		4C8AF73E158EB6CA0026668C /* External Libraries */ = {
@@ -2786,7 +2794,7 @@
 				4C5BA44F16F1302F00A96CA2 /* TVCServerListCell.h in Headers */,
 				4C5BA45016F1302F00A96CA2 /* TVCTextViewWithIRCFormatter.h in Headers */,
 				4C5BA45116F1302F00A96CA2 /* TVCTextFormatterMenu.h in Headers */,
-				4C5BA45216F1302F00A96CA2 /* TVCThinSplitView.h in Headers */,
+				4C5BA45216F1302F00A96CA2 /* TVCMainWindowSplitView.h in Headers */,
 				4C5BA45316F1302F00A96CA2 /* TVCWebViewAutoScroll.h in Headers */,
 				4C5BA45416F1302F00A96CA2 /* TXGlobalModels.h in Headers */,
 				4C5BA45516F1302F00A96CA2 /* TXMasterController.h in Headers */,
@@ -2943,7 +2951,7 @@
 				4C8AF685158E99520026668C /* TVCServerListCell.h in Headers */,
 				4C8AF686158E99520026668C /* TVCTextViewWithIRCFormatter.h in Headers */,
 				4C8AF687158E99520026668C /* TVCTextFormatterMenu.h in Headers */,
-				4C8AF688158E99520026668C /* TVCThinSplitView.h in Headers */,
+				4C8AF688158E99520026668C /* TVCMainWindowSplitView.h in Headers */,
 				4CB331BD16F1BBE000D65CBE /* NSImageHelper.h in Headers */,
 				4C8AF689158E99520026668C /* TVCWebViewAutoScroll.h in Headers */,
 				4C8AF68A158E99520026668C /* TXGlobalModels.h in Headers */,
@@ -3542,7 +3550,7 @@
 				4C17385818197F540099EEC2 /* TPCPreferencesCloudSync.m in Sources */,
 				4C0445DE16F1603C00EBB665 /* TVCMainWindowLoadingScreen.m in Sources */,
 				4C0445DF16F1603C00EBB665 /* TVCMainWindowSegmentedControl.m in Sources */,
-				4C0445E016F1603C00EBB665 /* TVCThinSplitView.m in Sources */,
+				4C0445E016F1603C00EBB665 /* TVCMainWindowSplitView.m in Sources */,
 				4C83D8F01842008D00BCC0E1 /* NSFileManagerHelper.m in Sources */,
 				4CB331B616F1BBC700D65CBE /* NSImageHelper.m in Sources */,
 				4C529E1817AEFE17009BA0B3 /* NSDataHelper.m in Sources */,
@@ -3669,7 +3677,7 @@
 				4C8AF6E2158E99520026668C /* TVCListSeparatorCell.m in Sources */,
 				4C8AF6E3158E99520026668C /* TVCListView.m in Sources */,
 				4C8AF6E4158E99520026668C /* TVCMainWindow.m in Sources */,
-				4C8AF6E5158E99520026668C /* TVCThinSplitView.m in Sources */,
+				4C8AF6E5158E99520026668C /* TVCMainWindowSplitView.m in Sources */,
 				4C8AF6E6158E99520026668C /* TVCMemberList.m in Sources */,
 				4C8AF6E7158E99520026668C /* TVCMemberListCell.m in Sources */,
 				4C6ED7F115901562001AD200 /* TVCMainWindowSegmentedControl.m in Sources */,

@@ -2084,7 +2084,7 @@ CA
                         <rect key="frame" x="0.0" y="0.0" width="800" height="474"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <splitView dividerStyle="thin" vertical="YES" id="2798" userLabel="Thin Split View" customClass="TVCThinSplitView">
+                            <splitView dividerStyle="thin" vertical="YES" id="2798" userLabel="Thin Split View" customClass="TVCMainWindowSplitView">
                                 <rect key="frame" x="0.0" y="37" width="800" height="437"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
@@ -2190,7 +2190,7 @@ CA
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                     </scrollView>
-                                    <splitView dividerStyle="thin" vertical="YES" id="2799" customClass="TVCThinSplitView">
+                                    <splitView dividerStyle="thin" vertical="YES" id="2799" customClass="TVCMainWindowSplitView">
                                         <rect key="frame" x="268" y="0.0" width="532" height="437"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
