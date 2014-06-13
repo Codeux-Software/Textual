@@ -493,8 +493,6 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		
 		dest[n++] = c;
 	}
-	
-	length = n;
 
 	/* Now that we have scanned the input body for all fomatting characters,
 	 we will now build upon the string minus those. */
@@ -502,6 +500,8 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	
 	/* Let plugins have first shot. */
 	body = [THOPluginManagerSharedInstance() postWillRenderMessageEvent:body lineType:lineType memberType:memberType];
+	
+	length = [body length];
 
 	/* When rendering a message as HTML output, TVCLogRenderer takes pride 
 	 in finding as much information about the message as possible. Information
