@@ -233,10 +233,10 @@
 	/* When our image view is visible for the selected item, right clicking on
 	 it will not do anything unless we define a menu to use with our view. Below,
 	 we define the menu that matches the selection. */
-	NSMenu *menu = self.masterController.serverMenuItem.submenu;
+	NSMenu *menu = self.menuController.serverMenuItem.submenu;
 
 	if (channel) {
-		menu = self.masterController.channelMenuItem.submenu;
+		menu = self.menuController.channelMenuItem.submenu;
 	}
 
 	/* Setting the menu on our imageView, not only backgroundImageCell, makes it

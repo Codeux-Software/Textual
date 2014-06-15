@@ -142,8 +142,18 @@
 @property (nonatomic, strong) NSString *pointedChannelName;
 @property (nonatomic, strong) NSString *currentSearchPhrase;
 @property (nonatomic, strong) NSDictionary *openWindowList;
-@property (nonatomic, nweak) IBOutlet NSMenu *navigationChannelList;
 @property (nonatomic, strong) TDCFileTransferDialog *fileTransferController;
+@property (nonatomic, nweak) IBOutlet NSMenu *navigationChannelList;
+@property (nonatomic, nweak) IBOutlet NSMenu *addServerMenu;
+@property (nonatomic, nweak) IBOutlet NSMenu *channelViewMenu;
+@property (nonatomic, nweak) IBOutlet NSMenu *dockMenu;
+@property (nonatomic, nweak) IBOutlet NSMenu *joinChannelMenu;
+@property (nonatomic, nweak) IBOutlet NSMenu *segmentedControllerMenu;
+@property (nonatomic, nweak) IBOutlet NSMenu *tcopyURLMenu;
+@property (nonatomic, nweak) IBOutlet NSMenu *userControlMenu;
+@property (nonatomic, nweak) IBOutlet NSMenuItem *channelMenuItem;
+@property (nonatomic, nweak) IBOutlet NSMenuItem *closeWindowMenuItem;
+@property (nonatomic, nweak) IBOutlet NSMenuItem *serverMenuItem;
 
 - (void)setupOtherServices;
 

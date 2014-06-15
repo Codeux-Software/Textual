@@ -41,8 +41,13 @@
 #define TVCMainWindowSplitViewDividerColor		[NSColor colorWithCalibratedWhite:0.65 alpha:1.0]
 
 @interface TVCMainWindowSplitView : NSSplitView
-@property (nonatomic, assign) NSInteger fixedViewIndex;
-@property (nonatomic, assign) NSInteger dividerPosition;
-@property (nonatomic, assign) BOOL viewIsInverted;
-@property (nonatomic, assign) BOOL viewIsHidden;
+- (void)expandServerList;
+- (void)collapseServerList;
+- (void)toggleServerListVisbility;
+- (BOOL)isServerListCollapsed;
+
+- (void)expandMemberList;
+- (void)collapseMemberList;
+- (void)toggleMemberListVisbility;
+- (BOOL)isMemberListCollapsed;
 @end

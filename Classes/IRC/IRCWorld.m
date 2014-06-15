@@ -837,8 +837,7 @@
 
 		[self.memberList reloadAllUserInterfaceElements];
 
-		[self.masterController.serverSplitView setNeedsDisplay:YES];
-		[self.masterController.memberSplitView setNeedsDisplay:YES];
+		[self.masterController.contentSplitView setNeedsDisplay:YES];
 
 		[self.masterController.inputTextField redrawOriginPoints];
 	}
@@ -1355,7 +1354,7 @@
         
 		[self.memberList reloadData];
 		
-		self.serverList.menu = self.masterController.addServerMenu;
+		self.serverList.menu = self.menuController.addServerMenu;
 		
 		return;
 	}
@@ -1381,9 +1380,9 @@
 		[self.selectedItem isPrivateMessage])
 	{
 		if ([self.selectedItem isClient]) {
-			self.serverList.menu = self.masterController.serverMenuItem.submenu;
+			self.serverList.menu = self.menuController.serverMenuItem.submenu;
 		} else {
-			self.serverList.menu = self.masterController.channelMenuItem.submenu;
+			self.serverList.menu = self.menuController.channelMenuItem.submenu;
 		}
 
 		/* Private messages and the client console
@@ -1393,7 +1392,7 @@
 		
 		[self.memberList reloadData];
 	} else {		
-		self.serverList.menu = self.masterController.channelMenuItem.submenu;
+		self.serverList.menu = self.menuController.channelMenuItem.submenu;
 		
 		self.memberList.dataSource = (id)self.selectedItem;
 		self.memberList.delegate = (id)self.selectedItem;
@@ -1428,10 +1427,10 @@
 	}
 	
 	if ([self.selectedItem isClient] || [self.selectedItem isPrivateMessage]) {
-		[self.masterController showMemberListSplitView:NO];
+		[self.masterController.contentSplitView collapseMemberList];
 	} else {
 		if (self.memberList.setHiddenByUser == NO) {
-			[self.masterController showMemberListSplitView:YES];
+			[self.masterController.contentSplitView expandMemberList];
 		}
 	}
 
