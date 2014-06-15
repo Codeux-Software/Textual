@@ -1748,7 +1748,7 @@ static NSMutableArray *excludeKeywords = nil;
 	 just be considered a lazy man fix. */
 
 	if ([RZUserDefaults() boolForKey:@"MinimumWindowSizeIsNotForced"]) {
-		return NSMakeSize(200, 50);
+		return NSMakeSize(200, 250);
 	} else {
 		return NSMakeSize(600, 250);
 	}
