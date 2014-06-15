@@ -104,13 +104,12 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	[self.mainWindow setAllowsConcurrentViewDrawing:NO];
 	[self.mainWindow makeMainWindow];
 
-	self.serverSplitView.fixedViewIndex = 0;
-	self.memberSplitView.fixedViewIndex = 1;
-
 	[self.mainWindowLoadingScreen hideAll:NO];
 	[self.mainWindowLoadingScreen popLoadingConfigurationView];
 
 	[self.mainWindow makeKeyAndOrderFront:nil];
+	
+	self.contentSplitView.delegate = self;
 
 	[self loadWindowState];
 
@@ -136,9 +135,6 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 	self.speechSynthesizer = [TLOSpeechSynthesizer new];
 
 	self.world = [IRCWorld new];
-
-	self.serverSplitView.delegate = self;
-	self.memberSplitView.delegate = self;
 
 	[self.worldController setupConfiguration];
 
@@ -329,7 +325,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 - (NSMenu *)applicationDockMenu:(NSApplication *)sender
 {
-	return self.dockMenu;
+	return self.menuController.dockMenu;
 }
 
 - (BOOL)isNotSafeToPerformApplicationTermination
@@ -549,6 +545,22 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 }
 
 #pragma mark -
+#pragma mark Split View
+
+- (BOOL)splitView:(NSSplitView *)splitView shouldHideDividerAtIndex:(NSInteger)dividerIndex
+{
+	if (dividerIndex == 0) {
+		return [self.contentSplitView isServerListCollapsed];
+	} else {
+		if (dividerIndex == 1) {
+			return [self.contentSplitView isMemberListCollapsed];
+		} else {
+			return NO;
+		}
+	}
+}
+
+#pragma mark -
 #pragma mark Properties
 
 - (TLOInputHistory *)globalInputHistory
@@ -586,171 +598,21 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 }
 
 #pragma mark -
-#pragma mark Split Views
-
-- (void)showMemberListSplitView:(BOOL)showList
-{
-	self.memberSplitViewOldPosition = self.memberSplitView.dividerPosition;
-	
-	if (showList) {
-		NSView *rightView = [self.memberSplitView.subviews safeObjectAtIndex:1];
-		
-		self.memberSplitView.viewIsHidden = NO;
-		self.memberSplitView.viewIsInverted = NO;
-		
-		if ([self.memberSplitView isSubviewCollapsed:rightView] == NO) {
-			if (self.memberSplitViewOldPosition < _minimumSplitViewWidth) {
-				self.memberSplitViewOldPosition = _minimumSplitViewWidth;
-			}
-			
-			self.memberSplitView.dividerPosition = self.memberSplitViewOldPosition;
-		}
-	} else {
-		if (self.memberSplitView.viewIsHidden == NO) {
-			self.memberSplitView.viewIsHidden = YES;
-			self.memberSplitView.viewIsInverted = YES;
-		}
-	}
-}
-
-- (void)showServerListSplitView:(BOOL)showList
-{
-	self.serverListSplitViewOldPosition = self.serverSplitView.dividerPosition;
-
-	if (showList) {
-		NSView *leftView = [self.serverSplitView.subviews safeObjectAtIndex:0];
-
-		self.serverSplitView.viewIsHidden = NO;
-
-		if ([self.serverSplitView isSubviewCollapsed:leftView] == NO) {
-			if (self.serverListSplitViewOldPosition < _minimumSplitViewWidth) {
-				self.serverListSplitViewOldPosition = _minimumSplitViewWidth;
-			}
-
-			self.serverSplitView.dividerPosition = self.serverListSplitViewOldPosition;
-		}
-	} else {
-		if (self.serverSplitView.viewIsHidden == NO) {
-			self.serverSplitView.viewIsHidden = YES;
-		}
-	}
-}
-
-- (NSRect)splitView:(NSSplitView *)splitView effectiveRect:(NSRect)proposedEffectiveRect forDrawnRect:(NSRect)drawnRect ofDividerAtIndex:(NSInteger)dividerIndex
-{
-	if ([splitView isEqual:self.memberSplitView]) {
-		if (self.memberSplitView.viewIsHidden) {
-			return NSZeroRect;
-		}
-	} else if ([splitView isEqual:self.serverSplitView]) {
-		if (self.serverSplitView.viewIsHidden) {
-			return NSZeroRect;
-		}
-	}
-
-	return proposedEffectiveRect;
-}
-
-- (CGFloat)splitView:(NSSplitView *)splitView constrainMaxCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)dividerIndex
-{
-	if ([splitView isEqual:self.memberSplitView]) {
-		NSView *leftSide = splitView.subviews[0];
-		NSView *rightSide = splitView.subviews[1];
-		
-		NSInteger leftWidth  = leftSide.bounds.size.width;
-		NSInteger rightWidth = rightSide.bounds.size.width;
-		
-		return ((leftWidth + rightWidth) - _minimumSplitViewWidth);
-	}
-	
-	return _maximumSplitViewWidth;
-}
-
-- (CGFloat)splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)dividerIndex
-{
-	if ([splitView isEqual:self.memberSplitView]) {
-		NSView *leftSide = splitView.subviews[0];
-		NSView *rightSide = splitView.subviews[1];
-
-		NSInteger leftWidth  = leftSide.bounds.size.width;
-		NSInteger rightWidth = rightSide.bounds.size.width;
-		
-		return ((leftWidth + rightWidth) - _maximumSplitViewWidth);
-	}
-	
-	return _minimumSplitViewWidth;
-}
-
-- (BOOL)splitView:(NSSplitView *)splitView canCollapseSubview:(NSView *)subview
-{
-	return NO;
-}
-
-#pragma mark -
 #pragma mark Preferences
 
 - (void)loadWindowState
 {
 	[self.mainWindow restoreWindowStateUsingKeyword:@"Main Window"];
-
-	NSDictionary *dic = [RZUserDefaults() dictionaryForKey:@"Window -> Main Window Window State"];
-
-	if (dic) {
-		if ([dic containsKey:@"serverList"] == NO) {
-			self.serverSplitView.dividerPosition = 165;
-		} else {
-			self.serverSplitView.dividerPosition = [dic integerForKey:@"serverList"];
-
-			if (self.serverSplitView.dividerPosition < _minimumSplitViewWidth) {
-				self.serverSplitView.dividerPosition = _defaultSplitViewWidth;
-			}
-		}
-
-		if ([dic containsKey:@"memberList"] == NO) {
-			self.memberSplitView.dividerPosition = 120;
-		} else {
-			self.memberSplitView.dividerPosition = [dic integerForKey:@"memberList"];
-			
-			if (self.memberSplitView.dividerPosition < _minimumSplitViewWidth) {
-				self.memberSplitView.dividerPosition = _defaultSplitViewWidth;
-			}
-		}
-	} else {
-		self.serverSplitView.dividerPosition = 165;
-		self.memberSplitView.dividerPosition = 120;
-	}
-
-	self.serverListSplitViewOldPosition = [self.serverSplitView dividerPosition];
-	self.memberSplitViewOldPosition = [self.memberSplitView dividerPosition];
 }
 
 - (void)saveWindowState
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	if (self.serverSplitView.dividerPosition < _minimumSplitViewWidth) {
-		if (self.serverListSplitViewOldPosition < _minimumSplitViewWidth) {
-			self.serverSplitView.dividerPosition = _defaultSplitViewWidth;
-		} else {
-			self.serverSplitView.dividerPosition = self.serverListSplitViewOldPosition;
-		}
-	}
-	
-	if (self.memberSplitView.dividerPosition < _minimumSplitViewWidth) {
-		if (self.memberSplitViewOldPosition < _minimumSplitViewWidth) {
-			self.memberSplitView.dividerPosition = _defaultSplitViewWidth;
-		} else {
-			self.memberSplitView.dividerPosition = self.memberSplitViewOldPosition;
-		}
-	}
-
 	[dic setBool:[self.mainWindow isInFullscreenMode] forKey:@"fullscreen"];
 
 	[self.mainWindow saveWindowStateUsingKeyword:@"Main Window"];
 	
-	[dic setInteger:self.serverSplitView.dividerPosition forKey:@"serverList"];
-	[dic setInteger:self.memberSplitView.dividerPosition forKey:@"memberList"];
-
 	[RZUserDefaults() setObject:dic forKey:@"Window -> Main Window Window State"];
 }
 
@@ -1354,12 +1216,12 @@ typedef enum TXMoveKind : NSInteger {
 		IRCChannel *c = self.worldController.selectedChannel;
 		
 		if (PointerIsEmpty(c)) {
-			[self.mainWindowButtonController setMenu:self.serverMenuItem.submenu forSegment:1];
+			[self.mainWindowButtonController setMenu:self.menuController.serverMenuItem.submenu forSegment:1];
 		} else {
-			[self.mainWindowButtonController setMenu:self.channelMenuItem.submenu forSegment:1];
+			[self.mainWindowButtonController setMenu:self.menuController.channelMenuItem.submenu forSegment:1];
 		}
 
-		[self.mainWindowButtonController setMenu:self.segmentedControllerMenu forSegment:0];
+		[self.mainWindowButtonController setMenu:self.menuController.segmentedControllerMenu forSegment:0];
 		
 		/* Open Address Book. */
 		[self.mainWindowButtonController setEnabled:(PointerIsNotEmpty(u) && u.isConnected) forSegment:2];

@@ -122,7 +122,7 @@
 		[self selectItemAtIndex:i];
 	}
 
-	return self.masterController.userControlMenu;
+	return self.menuController.userControlMenu;
 }
 
 - (void)keyDown:(NSEvent *)e

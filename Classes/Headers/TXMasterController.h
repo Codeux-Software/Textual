@@ -47,19 +47,8 @@
 @property (nonatomic, assign) BOOL applicationIsActive;
 @property (nonatomic, assign) BOOL applicationIsChangingActiveState;
 @property (nonatomic, assign) BOOL applicationIsRunningInHighResMode;
-@property (nonatomic, assign) NSInteger memberSplitViewOldPosition;
-@property (nonatomic, assign) NSInteger serverListSplitViewOldPosition;
 @property (nonatomic, nweak) IBOutlet NSBox *channelViewBox;
-@property (nonatomic, nweak) IBOutlet NSMenu *addServerMenu;
-@property (nonatomic, nweak) IBOutlet NSMenu *channelViewMenu;
-@property (nonatomic, nweak) IBOutlet NSMenu *dockMenu;
-@property (nonatomic, nweak) IBOutlet NSMenu *joinChannelMenu;
-@property (nonatomic, nweak) IBOutlet NSMenu *segmentedControllerMenu;
-@property (nonatomic, nweak) IBOutlet NSMenu *tcopyURLMenu;
-@property (nonatomic, nweak) IBOutlet NSMenu *userControlMenu;
-@property (nonatomic, nweak) IBOutlet NSMenuItem *channelMenuItem;
-@property (nonatomic, nweak) IBOutlet NSMenuItem *closeWindowMenuItem;
-@property (nonatomic, nweak) IBOutlet NSMenuItem *serverMenuItem;
+@property (nonatomic, nweak) IBOutlet TVCMainWindowSplitView *contentSplitView;
 @property (nonatomic, nweak) IBOutlet TVCMainWindowLoadingScreenView *mainWindowLoadingScreen;
 @property (nonatomic, nweak) IBOutlet TVCMainWindowSegmentedCell *mainWindowButtonControllerCell;
 @property (nonatomic, nweak) IBOutlet TVCMainWindowSegmentedControl *mainWindowButtonController;
@@ -67,9 +56,7 @@
 @property (nonatomic, nweak) IBOutlet TVCMemberListUserInfoPopover *memberListUserInfoPopover;
 @property (nonatomic, nweak) IBOutlet TVCServerList *serverList;
 @property (nonatomic, nweak) IBOutlet TVCTextFormatterMenu *formattingMenu;
-@property (nonatomic, nweak) IBOutlet TVCMainWindowSplitView *memberSplitView;
-@property (nonatomic, nweak) IBOutlet TVCMainWindowSplitView *serverSplitView;
-@property (nonatomic, nweak) TXMenuController *menuController;
+@property (nonatomic, nweak) IBOutlet TXMenuController *menuController;
 @property (nonatomic, strong) TLOGrowlController *growlController;
 @property (nonatomic, strong) TLONickCompletionStatus *completionStatus;
 @property (nonatomic, strong) TLOSpeechSynthesizer *speechSynthesizer;
@@ -87,9 +74,6 @@
 #endif
 
 @property (assign) NSInteger terminatingClientCount;
-
-- (void)showMemberListSplitView:(BOOL)showList;
-- (void)showServerListSplitView:(BOOL)showList;
 
 - (IBAction)openWelcomeSheet:(id)sender;
 

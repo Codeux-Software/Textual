@@ -58,4 +58,70 @@
 	return NO;
 }
 
+- (void)expandServerList
+{
+	[self expandViewAtIndex:0];
+}
+
+- (void)expandMemberList
+{
+	[self expandViewAtIndex:2];
+}
+
+- (void)collapseServerList
+{
+	[self collapseViewAtIndex:0];
+}
+
+- (void)collapseMemberList
+{
+	[self collapseViewAtIndex:2];
+}
+
+- (void)toggleServerListVisbility
+{
+	if ([self isServerListCollapsed]) {
+		[self expandServerList];
+	} else {
+		[self collapseServerList];
+	}
+}
+
+- (void)toggleMemberListVisbility
+{
+	if ([self isMemberListCollapsed]) {
+		[self expandMemberList];
+	} else {
+		[self collapseMemberList];
+	}
+}
+
+- (BOOL)isServerListCollapsed
+{
+	return [self isSubviewCollapsed:self.subviews[0]];
+}
+
+- (BOOL)isMemberListCollapsed
+{
+	return [self isSubviewCollapsed:self.subviews[2]];
+}
+
+- (void)collapseViewAtIndex:(NSInteger)dividerIndex
+{
+	NSView *theView = self.subviews[dividerIndex];
+	
+	[theView setHidden:YES];
+	
+	[self adjustSubviews];
+}
+
+- (void)expandViewAtIndex:(NSInteger)dividerIndex
+{
+	NSView *theView = self.subviews[dividerIndex];
+	
+	[theView setHidden:NO];
+	
+	[self adjustSubviews];
+}
+
 @end

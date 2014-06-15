@@ -111,7 +111,7 @@
 		
 		self.anchorURL = nil;
 
-		NSMenu *urlMenu = [[self masterController] tcopyURLMenu];
+		NSMenu *urlMenu = [self.menuController tcopyURLMenu];
 		
 		for (NSMenuItem *item in [urlMenu itemArray]) {
 			[ary safeAddObject:[item copy]];
@@ -127,7 +127,7 @@
 
 		BOOL isIRCop = [[[self worldController] selectedClient] hasIRCopAccess];
 
-		NSMenu *memberMenu = [[self masterController] userControlMenu];
+		NSMenu *memberMenu = [self.menuController userControlMenu];
 		
 		for (NSMenuItem *item in [memberMenu itemArray]) {
 			if ([item tag] == _WebMenuItemTagIRCopServices && isIRCop == NO) {
@@ -145,7 +145,7 @@
 		
 		self.channelName = nil;
 
-		NSMenu *chanMenu = [[self masterController] joinChannelMenu];
+		NSMenu *chanMenu = [self.menuController joinChannelMenu];
 		
 		for (NSMenuItem *item in [chanMenu itemArray]) {
 			[ary safeAddObject:[item copy]];
@@ -155,7 +155,7 @@
 	}
 	else
 	{
-		NSMenu *menu = [[self masterController] channelViewMenu];
+		NSMenu *menu = [self.menuController channelViewMenu];
 		
 		NSMenuItem *inspectElementItem		= nil;
 		NSMenuItem *lookupInDictionaryItem	= nil;

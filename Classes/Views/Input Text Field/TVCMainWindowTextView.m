@@ -295,7 +295,6 @@
 	NSRect windowFrame = mainWindow.frame;
 
 	NSInteger backgroundHeight;
-	NSInteger contentBorder;
 	
 	NSInteger backgroundDefaultHeight = [self backgroundViewDefaultHeight];
 	NSInteger backgroundHeightMultiplier = [self backgroundViewHeightMultiplier];

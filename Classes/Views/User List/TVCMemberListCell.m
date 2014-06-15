@@ -319,7 +319,7 @@
 	/* When our image view is visible for the selected item, right clicking on
 	 it will not do anything unless we define a menu to use with our view. Below,
 	 we define the menu that matches the selection. */
-	NSMenu *menu = self.masterController.userControlMenu;
+	NSMenu *menu = self.menuController.userControlMenu;
 
 	/* Setting the menu on our imageView, not only backgroundImageCell, makes it
 	 so right clicking on the channel status produces the same menu that is given

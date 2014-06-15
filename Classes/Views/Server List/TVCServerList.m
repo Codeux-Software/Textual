@@ -195,7 +195,7 @@
 	if (i >= 0 && NSDissimilarObjects(i, self.selectedRow)) {
 		[self selectItemAtIndex:i];
 	} else if (i == -1) {
-		return self.masterController.addServerMenu;
+		return self.menuController.addServerMenu;
 	}
 
 	return self.menu;

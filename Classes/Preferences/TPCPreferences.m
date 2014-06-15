@@ -867,8 +867,8 @@ static NSURL *transcriptFolderResolvedBookmark;
 	{
 		[self.masterController.serverList updateBackgroundColor];
 		[self.masterController.serverList reloadAllDrawingsIgnoringOtherReloads];
-
-		[self.masterController.serverSplitView setNeedsDisplay:YES];
+		
+		[self.masterController.contentSplitView setNeedsDisplay:YES];
 	}
 
 	/* Member list user mode badges. */
@@ -891,8 +891,8 @@ static NSURL *transcriptFolderResolvedBookmark;
 		reloadAction == TPCPreferencesKeyReloadStyleWithTableViewsAction)
 	{
 		[self.masterController.memberList reloadAllUserInterfaceElements];
-
-		[self.masterController.memberSplitView setNeedsDisplay:YES];
+		
+		[self.masterController.contentSplitView setNeedsDisplay:YES];
 	}
 
 	/* World controller preferences changed. */

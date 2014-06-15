@@ -2534,14 +2534,14 @@
 
 - (void)toggleServerListVisibility:(id)sender
 {
-	[self.masterController showServerListSplitView:self.masterController.serverSplitView.viewIsHidden];
+	[self.masterController.contentSplitView toggleServerListVisbility];
 }
 
 - (void)toggleMemberListVisibility:(id)sender
 {
 	self.masterController.memberList.setHiddenByUser = BOOLReverseValue(self.masterController.memberList.setHiddenByUser);
 
-	[self.masterController showMemberListSplitView:self.masterController.memberSplitView.viewIsHidden];
+	[self.masterController.contentSplitView toggleMemberListVisbility];
 }
 
 @end
