@@ -1341,7 +1341,7 @@ typedef enum TXMoveKind : NSInteger {
 
 - (void)reloadSegmentedControllerOrigin
 {
-	[self.inputTextField redrawOriginPoints];
+	[self.inputTextField redrawOriginPoints:YES];
 }
 
 - (void)updateSegmentedController

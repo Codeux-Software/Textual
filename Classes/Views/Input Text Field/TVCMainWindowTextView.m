@@ -38,9 +38,12 @@
 #import "TextualApplication.h"
 
 /* Much of the following drawing has been created by Dan Messing for the class "SSTextField" */
-#define _WindowContentBorderDefaultHeight		38.0
+#define _WindowContentBorderDefaultHeight		37.0
+#define _WindowContentBorderTotalPadding		14.0
 
-#define _WindowSegmentedControllerDefaultX		10.0
+#define _WindowSegmentedControllerDefaultWidth	146.0
+#define _WindowSegmentedControllerLeadingEdge	10.0
+
 #define _InputTextFieldOriginDefaultX			166.0
 
 #define _KeyObservingArray 	@[	@"TextFieldAutomaticSpellCheck", \
@@ -71,7 +74,7 @@
 		[self updateTextBoxCachedPreferredFontSize]; // Set preferred font.
 		[self defineDefaultTypeSetterAttributes]; // Have parent text field inherit that.
 		[self updateTypeSetterAttributes]; // --------------/
-
+		
 		for (NSString *key in _KeyObservingArray) {
 			[RZUserDefaults() addObserver:self
 							   forKeyPath:key
@@ -121,37 +124,35 @@
 
 - (void)redrawOriginPoints
 {
-	NSInteger defaultSegmentX = _WindowSegmentedControllerDefaultX;
-	NSInteger defaultInputbxX = _InputTextFieldOriginDefaultX;
+	[self redrawOriginPoints:NO];
+}
 
-	NSInteger resultOriginX = 0;
-	NSInteger resultSizeWth = (defaultInputbxX - defaultSegmentX);
+- (void)redrawOriginPoints:(BOOL)resetSize
+{
+	TVCMainWindowSegmentedControl *controller = self.masterController.mainWindowButtonController;
+	
+	if (self.segmentedControllerWidthConstraint == nil) {
+		self.segmentedControllerWidthConstraint = [NSLayoutConstraint constraintWithItem:controller
+																			attribute:NSLayoutAttributeWidth
+																			relatedBy:NSLayoutRelationEqual
+																			   toItem:nil
+																			attribute:NSLayoutAttributeNotAnAttribute
+																		   multiplier:1.0f
+																			 constant:0];
+		
+		[controller addConstraint:self.segmentedControllerWidthConstraint];
+	}
 	
 	if ([TPCPreferences hideMainWindowSegmentedController]) {
-		[self.masterController.mainWindowButtonController setHidden:YES];
-
-		resultOriginX = defaultSegmentX;
+		[self.segmentedControllerWidthConstraint setConstant:0];
+		[self.segmentedControllerLeadingConstraint setConstant:0];
 	} else {
-		[self.masterController.mainWindowButtonController setHidden:NO];
-		
-		resultOriginX  = defaultInputbxX;
-		resultSizeWth *= -1;
+		[self.segmentedControllerWidthConstraint setConstant:_WindowSegmentedControllerDefaultWidth];
+		[self.segmentedControllerLeadingConstraint setConstant:_WindowSegmentedControllerLeadingEdge];
 	}
-
-	NSRect fronFrame = self.scrollView.frame;
-	NSRect backFrame = self.backgroundView.frame;
 	
-	if (NSDissimilarObjects(resultOriginX, fronFrame.origin.x) &&
-		NSDissimilarObjects(resultOriginX, backFrame.origin.x))
-	{
-		fronFrame.size.width += resultSizeWth;
-		backFrame.size.width += resultSizeWth;
-		
-		fronFrame.origin.x = resultOriginX;
-		backFrame.origin.x = resultOriginX;
-		
-		[self.scrollView setFrame:fronFrame];
-		[self.backgroundView setFrame:backFrame];
+	if (resetSize) {
+		[self performSelector:@selector(resetTextFieldCellSize:) withObject:@(YES) afterDelay:0.1];
 	}
 }
 
@@ -177,16 +178,12 @@
 	if ([self needsToDrawRect:dirtyRect]) {
 		NSString *value = [self stringValue];
 		
-		if (NSObjectIsEmpty(value)) {
-			BOOL loadingScreenVisible = [[[self masterController] mainWindowLoadingScreen] viewIsVisible];
-
-			if (loadingScreenVisible == NO) {
-				if (NSDissimilarObjects([self baseWritingDirection], NSWritingDirectionRightToLeft)) {
-					if (self.cachedFontSize == TXMainTextBoxFontLargeSize) {
-						[self.placeholderString drawAtPoint:NSMakePoint(6, 2)];
-					} else {
-						[self.placeholderString drawAtPoint:NSMakePoint(6, 1)];
-					}
+		if ([value length] == 0) {
+			if (NSDissimilarObjects([self baseWritingDirection], NSWritingDirectionRightToLeft)) {
+				if (self.cachedFontSize == TXMainTextBoxFontLargeSize) {
+					[self.placeholderString drawAtPoint:NSMakePoint(6, 2)];
+				} else {
+					[self.placeholderString drawAtPoint:NSMakePoint(6, 1)];
 				}
 			}
 		} else {
@@ -261,24 +258,6 @@
 	[self resetTextFieldCellSize:YES];
 }
 
-- (NSView *)splitterView
-{
-    return [(self.superview.superview.superview.superview.subviews)[1] subviews][0]; /* Yeah, this is bad… I know! */
-}
-
-- (TVCMainWindowTextViewBackground *)backgroundView
-{
-	return (self.superview.superview.superview.subviews)[0]; /* This one is not so bad. */
-}
-
-/* It is easier for us to define predetermined values for these paramaters instead
- of trying to overcomplicate our math by calculating the point height of our font
- and other variables. We only support three text sizes so why not hard code? */
-- (NSInteger)backgroundViewMaximumHeight
-{
-	return (self.window.frame.size.height - 50);
-}
-
 - (NSInteger)backgroundViewDefaultHeight
 {
 	if (self.cachedFontSize == TXMainTextBoxFontNormalSize) {
@@ -305,59 +284,26 @@
 	return 14.0;
 }
 
-- (NSInteger)textBoxDefaultHeight
-{
-	if (self.cachedFontSize == TXMainTextBoxFontNormalSize) {
-		return 18.0;
-	} else if (self.cachedFontSize == TXMainTextBoxFontLargeSize) {
-		return 22.0;
-	} else if (self.cachedFontSize == TXMainTextBoxFontExtraLargeSize) {
-		return 24.0;
-	}
-
-	return 18.0;
-}
-
-- (NSInteger)textBoxHeightMultiplier
-{
-	if (self.cachedFontSize == TXMainTextBoxFontNormalSize) {
-		return 14.0;
-	} else if (self.cachedFontSize == TXMainTextBoxFontLargeSize) {
-		return 17.0;
-	} else if (self.cachedFontSize == TXMainTextBoxFontExtraLargeSize) {
-		return 19.0;
-	}
-
-	return 14.0;
-}
-
 /* Do actual size math. */
 - (void)resetTextFieldCellSize:(BOOL)force
 {
 	BOOL drawBezel = YES;
+	BOOL hasScroller = NO;
 
 	NSWindow *mainWindow = self.window;
+	
+	NSRect windowFrame = mainWindow.frame;
 
-	NSView *superView = [self splitterView];
-	NSView *background = [self backgroundView];
-
-    NSScrollView *scroller = [self scrollView];
-
-	NSRect textBoxFrame = scroller.frame;
-	NSRect superViewFrame = superView.frame;
-	NSRect mainWindowFrame = mainWindow.frame;
-	NSRect backgroundFrame = background.frame;
-
+	NSInteger backgroundHeight;
 	NSInteger contentBorder;
-
-	NSInteger inputBoxDefaultHeight = [self textBoxDefaultHeight];
-	NSInteger inputBoxBackgroundDefaultHeight = [self backgroundViewDefaultHeight];
+	
+	NSInteger backgroundDefaultHeight = [self backgroundViewDefaultHeight];
+	NSInteger backgroundHeightMultiplier = [self backgroundViewHeightMultiplier];
 
 	NSString *stringv = self.stringValue;
 
 	if (stringv.length < 1) {
-		textBoxFrame.size.height    = inputBoxDefaultHeight;
-		backgroundFrame.size.height = inputBoxBackgroundDefaultHeight;
+		backgroundHeight = (backgroundDefaultHeight + _WindowContentBorderTotalPadding);
 
 		if (self.lastDrawLineCount >= 2) {
 			drawBezel = YES;
@@ -375,58 +321,51 @@
 
 		if (drawBezel) {
 			NSInteger totalLinesMath = (totalLinesBase - 1);
-
-			NSInteger inputBoxHeightMultiplier = [self textBoxHeightMultiplier];
-			NSInteger inputBoxBackgroundHeightMultiplier = [self backgroundViewHeightMultiplier];
-
+	
 			/* Calculate unfiltered height. */
-			textBoxFrame.size.height    = inputBoxDefaultHeight;
-			backgroundFrame.size.height	= inputBoxBackgroundDefaultHeight;
+			backgroundHeight  = _WindowContentBorderTotalPadding;
+			
+			backgroundHeight +=  backgroundDefaultHeight;
+			backgroundHeight += (backgroundHeightMultiplier * totalLinesMath);
 
-			textBoxFrame.size.height    += (totalLinesMath * inputBoxHeightMultiplier);
-			backgroundFrame.size.height += (totalLinesMath * inputBoxBackgroundHeightMultiplier);
-
-			NSInteger backgroundViewMaxHeight = [self backgroundViewMaximumHeight];
+			/* Minimum size constraint for centered view is 35 so we just add a few more
+			 to give us more space to work with. */
+			NSInteger backgroundViewMaxHeight = (windowFrame.size.height - (35 + _WindowContentBorderTotalPadding));
 
 			/* Fix height if it exceeds are maximum. */
-			if (backgroundFrame.size.height > backgroundViewMaxHeight) {
+			if (backgroundHeight > backgroundViewMaxHeight) {
 				for (NSInteger i = totalLinesMath; i >= 0; i--) {
 					NSInteger newSize = 0;
-
-					newSize  =      inputBoxBackgroundDefaultHeight;
-					newSize += (i * inputBoxBackgroundHeightMultiplier);
+					
+					newSize  = _WindowContentBorderTotalPadding;
+					
+					newSize +=      backgroundDefaultHeight;
+					newSize += (i * backgroundHeightMultiplier);
 
 					if (newSize > backgroundViewMaxHeight) {
 						continue;
 					} else {
-						backgroundFrame.size.height = newSize;
-
-						textBoxFrame.size.height  =      inputBoxDefaultHeight;
-						textBoxFrame.size.height += (i * inputBoxHeightMultiplier);
+						backgroundHeight = newSize;
 
 						break;
 					}
 				}
+				
+				hasScroller = YES;
 			}
 		}
 	}
 
 	if (drawBezel) {
-		contentBorder = (backgroundFrame.size.height + 14);
+		[mainWindow setContentBorderThickness:backgroundHeight forEdge:NSMinYEdge];
 
-		superViewFrame.origin.y = contentBorder;
-
-		if ([mainWindow isInFullscreenMode]) {
-			superViewFrame.size.height = (mainWindowFrame.size.height - contentBorder);
+		[self.textFieldHeightConstraint setConstant:backgroundHeight];
+		
+		if (hasScroller) {
+			[self.textFieldLeadingConstraint setConstant:5.0];
 		} else {
-			superViewFrame.size.height = (mainWindowFrame.size.height - contentBorder - 22);
+			[self.textFieldLeadingConstraint setConstant:0.0];
 		}
-
-		[mainWindow setContentBorderThickness:contentBorder forEdge:NSMinYEdge];
-
-		[scroller setFrame:textBoxFrame];
-		[superView setFrame:superViewFrame];
-		[background setFrame:backgroundFrame];
 	}
 }
 
