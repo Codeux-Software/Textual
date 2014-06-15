@@ -1404,9 +1404,6 @@
 		[newChannel reloadDataForTableView];
 	}
 
-	/* Finish member list. */
-	[self.memberList updateBackgroundColor];
-
 	/* Begin work on text field. */
     [textField focus];
 

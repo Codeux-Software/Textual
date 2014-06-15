@@ -127,6 +127,11 @@
 
 - (void)displayView:(NSView *)view
 {
+	NSRect viewFrame = [view frame];
+	
+	[self.loadingScreenMinimumWidthConstraint setConstant:viewFrame.size.width];
+	[self.loadingScreenMinimumHeightConstraint setConstant:viewFrame.size.height];
+	
 	[self disableBackgroundControls];
 
 	[view setHidden:NO];
@@ -148,6 +153,9 @@
 	 top of the WebView itself. */
 	
 	[self enableBackgroundControls];
+	
+	[self.loadingScreenMinimumWidthConstraint setConstant:0];
+	[self.loadingScreenMinimumHeightConstraint setConstant:0];
 	
 	if (animate == NO) {
 		[view setHidden:YES];
@@ -193,6 +201,8 @@
 {
 	[[[self masterController] inputTextField] setEditable:NO];
 	[[[self masterController] inputTextField] setSelectable:NO];
+	
+	[[[self masterController] mainWindowButtonController] setEnabled:NO];
 
 	[self.backgroundContentView setHidden:YES];
 }
@@ -201,36 +211,10 @@
 {
 	[[[self masterController] inputTextField] setEditable:YES];
 	[[[self masterController] inputTextField] setSelectable:YES];
+	
+	[[self masterController] updateSegmentedController];
 
 	[self.backgroundContentView setHidden:NO];
-}
-
-#pragma mark -
-#pragma mark Private Utilities.
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-	if ([self needsToDrawRect:dirtyRect]) {
-		NSView *activeView;
-
-		for (NSView *alv in [self allViews]) {
-			if ([alv isHidden] == NO) {
-				activeView = alv;
-			} 
-		}
-
-		if (activeView) {
-			NSRect newtRect = [activeView frame];
-			NSRect windRect = [[self window] frame];
-
-			newtRect.origin.x  = ((windRect.size.width  / 2) - (newtRect.size.width / 2));
-			newtRect.origin.y  = ((windRect.size.height / 2) - (newtRect.size.height / 2));
-
-			[activeView setFrame:newtRect];
-		}
-	}
-
-	[super drawRect:dirtyRect];
 }
 
 @end

@@ -39,21 +39,23 @@
 #import "TextualApplication.h"
 
 @interface TVCMainWindowLoadingScreenView : NSBox
-@property (nonatomic, nweak) NSView *backgroundContentView;
-@property (nonatomic, nweak) NSView *welcomeAddServerView;
-@property (nonatomic, nweak) NSView *welcomeAddServerTrialView;
-@property (nonatomic, nweak) NSView *loadingConfigurationView;
-@property (nonatomic, uweak) id welcomeAddServerViewButton;
-@property (nonatomic, uweak) id welcomePurchaseTextualButton;
-@property (nonatomic, uweak) id loadingConfigurationViewPI;
+@property (nonatomic, nweak) IBOutlet NSView *backgroundContentView;
+@property (nonatomic, nweak) IBOutlet NSView *welcomeAddServerView;
+@property (nonatomic, nweak) IBOutlet NSView *welcomeAddServerTrialView;
+@property (nonatomic, nweak) IBOutlet NSView *loadingConfigurationView;
+@property (nonatomic, uweak) IBOutlet NSButton *welcomeAddServerViewButton;
+@property (nonatomic, uweak) IBOutlet NSButton *welcomePurchaseTextualButton;
+@property (nonatomic, uweak) IBOutlet NSProgressIndicator *loadingConfigurationViewPI;
+@property (nonatomic, uweak) IBOutlet NSLayoutConstraint *loadingScreenMinimumWidthConstraint;
+@property (nonatomic, uweak) IBOutlet NSLayoutConstraint *loadingScreenMinimumHeightConstraint;
 
 - (void)popWelcomeAddServerView;
 - (void)popLoadingConfigurationView;
 
+- (BOOL)viewIsVisible;
+
 - (void)hideAll;
 - (void)hideAll:(BOOL)animate;
-
-- (BOOL)viewIsVisible;
 
 - (void)hideWelcomeAddServerView;
 - (void)hideWelcomeAddServerView:(BOOL)animate;

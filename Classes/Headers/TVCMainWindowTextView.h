@@ -40,14 +40,16 @@
 @interface TVCMainWindowTextView : TVCTextViewWithIRCFormatter
 @property (nonatomic, strong) NSAttributedString *placeholderString;
 @property (nonatomic, assign) BOOL hasModifiedSpellingDictionary;
+@property (nonatomic, nweak) IBOutlet id backgroundView;
+@property (nonatomic, nweak) IBOutlet id splitterView;
+@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *segmentedControllerWidthConstraint;
+@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *segmentedControllerLeadingConstraint;
 
 - (void)updateTextDirection;
 - (void)updateTextBoxBasedOnPreferredFontSize;
 
 - (void)redrawOriginPoints;
 - (void)resetTextFieldCellSize:(BOOL)force;
-
-- (TVCMainWindowTextViewBackground *)backgroundView;
 @end
 
 @interface TVCMainWindowTextViewBackground : NSView

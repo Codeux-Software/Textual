@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+#define TVCMainWindowSplitViewDividerColor		[NSColor colorWithCalibratedWhite:0.65 alpha:1.0]
+
 @interface TVCMainWindowSplitView : NSSplitView
 @property (nonatomic, assign) NSInteger fixedViewIndex;
 @property (nonatomic, assign) NSInteger dividerPosition;
