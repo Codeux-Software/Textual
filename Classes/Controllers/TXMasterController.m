@@ -1347,7 +1347,7 @@ typedef enum TXMoveKind : NSInteger {
 - (void)updateSegmentedController
 {
 	if ([TPCPreferences hideMainWindowSegmentedController] == NO) {
-		[self.mainWindowButtonController setEnabled:(self.worldController.clients.count >= 1)];
+		[self.mainWindowButtonController setEnabled:(self.worldController.clients.count >= 1 && self.mainWindowLoadingScreen.viewIsVisible == NO)];
 		
 		/* Selection Settings. */
 		IRCClient *u = self.worldController.selectedClient;
