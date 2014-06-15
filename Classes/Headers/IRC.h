@@ -40,7 +40,7 @@
 /* Hard limits. */
 #define TXMaximumIRCBodyLength				512
 #define TXMaximumIRCNicknameLength			50
-#define TXMaximumIRCUsernameLength			20
+#define TXMaximumIRCUsernameLength			40
 #define TXMaximumNodesPerModeCommand		4
 
 /* Command index. */
