@@ -108,6 +108,7 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 	TPCPreferencesKeyReloadHighlightKeywordsAction,
 	TPCPreferencesKeyReloadHighlightLoggingAction,
 	TPCPreferencesKeyReloadInputHistoryScopeAction,
+	TPCPreferencesKeyReloadMainWindowAppearanceAction,
 	TPCPreferencesKeyReloadMainWindowTransparencyLevelAction,
 	TPCPreferencesKeyReloadMemberListAction,
 	TPCPreferencesKeyReloadMemberListSortOrderAction,

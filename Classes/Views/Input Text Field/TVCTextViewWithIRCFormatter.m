@@ -53,6 +53,7 @@
 		}
 
 		[self setDefaultTextFieldFont:TXDefaultTextFieldFont];
+		[self setDefaultTextFieldFontColor:TXDefaultTextFieldFontColor];
 
 		[self defineDefaultTypeSetterAttributes];
 		[self updateTypeSetterAttributes];
@@ -246,15 +247,15 @@
 
 - (void)updateTypeSetterAttributes
 {
-	[self setTypingAttributes:@{NSFontAttributeName : self.defaultTextFieldFont, NSForegroundColorAttributeName : TXDefaultTextFieldFontColor}];
+	[self setTypingAttributes:@{NSFontAttributeName : self.defaultTextFieldFont, NSForegroundColorAttributeName : self.defaultTextFieldFontColor}];
 }
 
 - (void)defineDefaultTypeSetterAttributes
 {
 	[self setFont:self.defaultTextFieldFont];
 
-	[self setTextColor:TXDefaultTextFieldFontColor];
-	[self setInsertionPointColor:TXDefaultTextFieldFontColor];
+	[self setTextColor:self.defaultTextFieldFontColor];
+	[self setInsertionPointColor:self.defaultTextFieldFontColor];
 }
 
 #pragma mark -
@@ -325,11 +326,11 @@
 	 the end of our field. Therefore, we must manually check if the 
 	 last line of our input is a blank newline. If it is, then 
 	 increase our count by one. */
-	NSString *lastChar = [self.stringValue stringCharacterAtIndex:(self.stringLength - 1)];
+	NSInteger lastIndex = ([self stringLength] - 1);
 	
-	NSRange nlr = [lastChar rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]];
+	UniChar lastChar = [[self stringValue] characterAtIndex:lastIndex];
 	
-	if (NSDissimilarObjects(nlr.location, NSNotFound)) {
+	if ([[NSCharacterSet newlineCharacterSet] characterIsMember:lastChar]) {
 		numberOfLines += 1;
 	}
 	

@@ -39,6 +39,7 @@
 
 #define TXDefaultTextFieldFontColor         [NSColor colorWithCalibratedWhite:0.15 alpha:1.0]
 #define TXDefaultTextFieldFont              [NSFont fontWithName:@"Helvetica" size:12.0]
+
 #define TXDefaultTextFieldWidthPadding		1.0
 #define TXDefaultTextFieldHeightPadding		2.0
 
@@ -46,6 +47,7 @@
 @property (nonatomic, strong) TLOKeyEventHandler *keyHandler;
 @property (nonatomic, assign) dispatch_queue_t formattingQueue;
 @property (nonatomic, strong) NSFont *defaultTextFieldFont;
+@property (nonatomic, strong) NSColor *defaultTextFieldFontColor;
 
 - (BOOL)isAtTopOfView;
 - (BOOL)isAtBottomOfView;

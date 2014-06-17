@@ -79,6 +79,7 @@
 
 /* Shortcut defines. */
 #define RZAnimationCurrentContext()				[NSAnimationContext	currentContext]
+#define RZAppearaneCurrentController()			[NSAppearance currentAppearance]
 #define RZAppleEventManager()					[NSAppleEventManager sharedAppleEventManager]
 #define RZCurrentRunLoop()						[NSRunLoop currentRunLoop]
 #define RZDistributedNotificationCenter()		[NSDistributedNotificationCenter defaultCenter]
