@@ -341,7 +341,7 @@
 
         [self.textField removeIRCFormatterAttribute:IRCTextFormatterBoldEffect
 											  range:selectedTextRange
-											  color:TXDefaultTextFieldFontColor];
+											  color:self.textField.defaultTextFieldFontColor];
 
         if ([self.textField respondsToSelector:@selector(focus)]) {
             [self.textField performSelector:@selector(focus)];
@@ -357,7 +357,7 @@
 
         [self.textField removeIRCFormatterAttribute:IRCTextFormatterItalicEffect
 											  range:selectedTextRange
-											  color:TXDefaultTextFieldFontColor];
+											  color:self.textField.defaultTextFieldFontColor];
 
         if ([self.textField respondsToSelector:@selector(focus)]) {
             [self.textField performSelector:@selector(focus)];
@@ -373,7 +373,7 @@
 
         [self.textField removeIRCFormatterAttribute:IRCTextFormatterUnderlineEffect
 											  range:selectedTextRange
-											  color:TXDefaultTextFieldFontColor];
+											  color:self.textField.defaultTextFieldFontColor];
 
         if ([self.textField respondsToSelector:@selector(focus)]) {
             [self.textField performSelector:@selector(focus)];
@@ -389,7 +389,7 @@
 
         [self.textField removeIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
 											  range:selectedTextRange
-											  color:TXDefaultTextFieldFontColor];
+											  color:self.textField.defaultTextFieldFontColor];
 
         if ([self.textField respondsToSelector:@selector(focus)]) {
             [self.textField performSelector:@selector(focus)];
@@ -405,7 +405,7 @@
 
         [self.textField removeIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
 											  range:selectedTextRange
-											  color:TXDefaultTextFieldFontColor];
+											  color:self.textField.defaultTextFieldFontColor];
 
         if ([self.textField respondsToSelector:@selector(focus)]) {
             [self.textField performSelector:@selector(focus)];

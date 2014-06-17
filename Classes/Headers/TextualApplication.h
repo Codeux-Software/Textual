@@ -140,6 +140,7 @@
 	@class TVCMainWindowSplitView;
 	@class TVCMainWindowTextView;
 	@class TVCMainWindowTextViewBackground;
+	@class TVCMainWindowTextViewBackgroundVibrantView;
 	@class TVCMemberList;
 	@class TVCMemberListCell;
 	@class TVCMemberListCellBadge;

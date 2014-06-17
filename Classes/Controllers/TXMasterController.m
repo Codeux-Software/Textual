@@ -53,7 +53,15 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 {
     if ((self = [super init])) {
 		TXGlobalMasterControllerClassReference = self;
-
+		
+		// ---- //
+		
+		if ([TPCPreferences featureAvailableToOSXYosemite]) {
+			[RZMainBundle() loadCustomNibNamed:@"TVCMainWindowYosemite" owner:self topLevelObjects:nil];
+		} else {
+			[RZMainBundle() loadCustomNibNamed:@"TVCMainWindowMavericks" owner:self topLevelObjects:nil];
+		}
+		
 		// ---- //
 
 		if ([NSEvent modifierFlags] & NSControlKeyMask) {
@@ -75,102 +83,112 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 - (void)awakeFromNib
 {
-	DebugLogToConsole(@"Temporary Folder: %@", [TPCPreferences applicationTemporaryFolderPath]);
-	DebugLogToConsole(@"Caches Folder: %@", [TPCPreferences applicationCachesFolderPath]);
+	/* awakeFromNib is called first when TXCMainMenu creates TXMasterController object
+	 and also creates the main menu. It is called a second time once TXMasterController
+	 is created and the -init method opens the main window view. We do work the second 
+	 call after the main window has been loaded. */
+	static NSInteger awakeFromNibCallCount = 0;
+	
+	if (awakeFromNibCallCount == 1) {
+		DebugLogToConsole(@"Temporary Folder: %@", [TPCPreferences applicationTemporaryFolderPath]);
+		DebugLogToConsole(@"Caches Folder: %@", [TPCPreferences applicationCachesFolderPath]);
 
-	// ---- //
+		// ---- //
 
-	if ([NSEvent modifierFlags] & NSShiftKeyMask) {
-		self.ghostMode = YES;
-	}
+		if ([NSEvent modifierFlags] & NSShiftKeyMask) {
+			self.ghostMode = YES;
+		}
 
 #if defined(DEBUG)
-    self.ghostMode = YES; // Do not use autoconnect during debug.
+		self.ghostMode = YES; // Do not use autoconnect during debug.
 #endif
 
-	[TPCPreferences initPreferences];
-	
+		[TPCPreferences initPreferences];
+		
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	self.cloudSyncManager = [TPCPreferencesCloudSync new];
-	
-	/* Cloud files are synced regardless of user preference
-	 so we still have to initalize it at some point. */
-	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
-		[self.cloudSyncManager initializeCloudSyncSession];
-	}
+		self.cloudSyncManager = [TPCPreferencesCloudSync new];
+		
+		/* Cloud files are synced regardless of user preference
+		 so we still have to initalize it at some point. */
+		if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+			[self.cloudSyncManager initializeCloudSyncSession];
+		}
 #endif
 
-	[self.mainWindow setMinSize:[TPCPreferences minimumWindowSize]];
-	[self.mainWindow setAllowsConcurrentViewDrawing:NO];
-	[self.mainWindow makeMainWindow];
+		[self.mainWindow setMinSize:[TPCPreferences minimumWindowSize]];
+		[self.mainWindow setAllowsConcurrentViewDrawing:NO];
+		[self.mainWindow makeMainWindow];
+		
+		[self.mainWindowLoadingScreen hideAll:NO];
+		[self.mainWindowLoadingScreen popLoadingConfigurationView];
 
-	[self.mainWindowLoadingScreen hideAll:NO];
-	[self.mainWindowLoadingScreen popLoadingConfigurationView];
+		[self.mainWindow makeKeyAndOrderFront:nil];
+		
+		self.contentSplitView.delegate = self;
 
-	[self.mainWindow makeKeyAndOrderFront:nil];
-	
-	self.contentSplitView.delegate = self;
+		[self loadWindowState];
 
-	[self loadWindowState];
+		[self.mainWindow setAlphaValue:[TPCPreferences themeTransparency]];
+		
+		/* We keep high-res mode value cached since it is costly to ask for every draw. */
+		self.applicationIsRunningInHighResMode = [[self.mainWindow screen] runningInHighResolutionMode];
 
-	[self.mainWindow setAlphaValue:[TPCPreferences themeTransparency]];
-	
-	/* We keep high-res mode value cached since it is costly to ask for every draw. */
-	self.applicationIsRunningInHighResMode = [[self.mainWindow screen] runningInHighResolutionMode];
+		 self.themeControllerPntr = [TPCThemeController new];
+		[self.themeControllerPntr load];
+		
+		[self.menuController setupOtherServices];
 
-	 self.themeControllerPntr = [TPCThemeController new];
-	[self.themeControllerPntr load];
-	
-	[self.menuController setupOtherServices];
+		[self.inputTextField redrawOriginPoints];
+		[self.inputTextField updateTextDirection];
 
-	[self.inputTextField redrawOriginPoints];
-	[self.inputTextField updateTextDirection];
+		[self.inputTextField setBackgroundColor:[NSColor clearColor]];
 
-	[self.inputTextField setBackgroundColor:[NSColor clearColor]];
+		[self registerKeyHandlers];
 
-	[self registerKeyHandlers];
+		[self.formattingMenu enableWindowField:self.inputTextField];
 
-	[self.formattingMenu enableWindowField:self.inputTextField];
+		self.speechSynthesizer = [TLOSpeechSynthesizer new];
 
-	self.speechSynthesizer = [TLOSpeechSynthesizer new];
+		self.world = [IRCWorld new];
 
-	self.world = [IRCWorld new];
+		[self.worldController setupConfiguration];
 
-	[self.worldController setupConfiguration];
+		self.serverList.delegate = self.worldController;
+		self.serverList.dataSource = self.worldController;
 
-	self.serverList.delegate = self.worldController;
-	self.serverList.dataSource = self.worldController;
+		self.memberList.keyDelegate	= self.worldController;
+		self.serverList.keyDelegate	= self.worldController;
 
-    self.memberList.keyDelegate	= self.worldController;
-	self.serverList.keyDelegate	= self.worldController;
+		[self.memberList createBadgeRenderer];
 
-	[self.memberList createBadgeRenderer];
+		[self.serverList reloadData];
+		
+		[self.worldController setupTree];
+		[self.worldController setupOtherServices];
 
-	[self.serverList reloadData];
-	
-	[self.worldController setupTree];
-	[self.worldController setupOtherServices];
+		[self.memberList setTarget:self.menuController];
+		[self.memberList setDoubleAction:@selector(memberInMemberListDoubleClicked:)];
 
-	[self.memberList setTarget:self.menuController];
-	[self.memberList setDoubleAction:@selector(memberInMemberListDoubleClicked:)];
+		if ([TPCPreferences inputHistoryIsChannelSpecific] == NO) {
+			_globalInputHistory = [TLOInputHistory new];
+		}
 
-	if ([TPCPreferences inputHistoryIsChannelSpecific] == NO) {
-		_globalInputHistory = [TLOInputHistory new];
+		self.growlController = [TLOGrowlController new];
+
+		[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
+		[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
+		[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillPowerOff:) name:NSWorkspaceWillPowerOffNotification object:nil];
+		[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerScreenDidWake:) name:NSWorkspaceScreensDidWakeNotification object:nil];
+		[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerScreenWillSleep:) name:NSWorkspaceScreensDidSleepNotification object:nil];
+
+		[RZNotificationCenter() addObserver:self selector:@selector(systemTintChangedNotification:) name:NSControlTintDidChangeNotification object:nil];
+
+		[RZAppleEventManager() setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
+
+		[THOPluginManagerSharedInstance() loadPlugins];
 	}
-
-	self.growlController = [TLOGrowlController new];
-
-	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
-	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
-	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillPowerOff:) name:NSWorkspaceWillPowerOffNotification object:nil];
-	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerScreenDidWake:) name:NSWorkspaceScreensDidWakeNotification object:nil];
-	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerScreenWillSleep:) name:NSWorkspaceScreensDidSleepNotification object:nil];
-
-	[RZNotificationCenter() addObserver:self selector:@selector(systemTintChangedNotification:) name:NSControlTintDidChangeNotification object:nil];
-
-	[RZAppleEventManager() setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
-
-	[THOPluginManagerSharedInstance() loadPlugins];
+	
+	awakeFromNibCallCount += 1;
 }
 
 - (void)maybeToggleFullscreenAfterLaunch

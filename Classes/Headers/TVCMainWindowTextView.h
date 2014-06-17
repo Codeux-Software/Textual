@@ -40,10 +40,10 @@
 @interface TVCMainWindowTextView : TVCTextViewWithIRCFormatter
 @property (nonatomic, strong) NSAttributedString *placeholderString;
 @property (nonatomic, assign) BOOL hasModifiedSpellingDictionary;
-@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *segmentedControllerWidthConstraint;
 @property (nonatomic, nweak) IBOutlet NSLayoutConstraint *segmentedControllerLeadingConstraint;
 @property (nonatomic, nweak) IBOutlet NSLayoutConstraint *textFieldHeightConstraint;
-@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *textFieldLeadingConstraint;
+@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *textFieldInsideTrailingConstraint;
+@property (nonatomic, nweak) IBOutlet TVCMainWindowTextViewBackground *backgroundView;
 
 - (void)updateTextDirection;
 - (void)updateTextBoxBasedOnPreferredFontSize;
@@ -55,4 +55,13 @@
 @end
 
 @interface TVCMainWindowTextViewBackground : NSView
+@property (nonatomic, nweak) IBOutlet NSVisualEffectView *backgroundVisualEffectView;
+
+- (BOOL)yosemiteIsUsingVibrantDarkMode;
+
+- (NSColor *)systemSpecificTextFieldTextFontColor;
+- (NSColor *)systemSpecificPlaceholderTextFontColor;
+@end
+
+@interface TVCMainWindowTextViewBackgroundVibrantView : NSVisualEffectView
 @end
