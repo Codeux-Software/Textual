@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A238x" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment version="101000" identifier="macosx"/>
+        <deployment version="101000" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.17"/>
     </dependencies>
@@ -241,10 +241,10 @@
                                         </scroller>
                                     </scrollView>
                                     <box title="Title" boxType="custom" borderType="none" titlePosition="noTitle" id="6tX-VC-UtT" userLabel="Chat Box - Title">
-                                        <rect key="frame" x="171" y="0.0" width="532" height="437"/>
+                                        <rect key="frame" x="171" y="0.0" width="508" height="437"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <view key="contentView">
-                                            <rect key="frame" x="0.0" y="0.0" width="532" height="437"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="508" height="437"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </view>
                                         <constraints>
@@ -254,9 +254,13 @@
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <accessibility description="Channel view"/>
                                     </box>
-                                    <visualEffectView appearanceType="vibrantDark" fixedFrame="YES" blendingMode="behindWindow" material="dark" state="followsWindowActiveState" id="8WZ-kP-sec">
-                                        <rect key="frame" x="704" y="0.0" width="96" height="437"/>
+                                    <visualEffectView appearanceType="vibrantDark" blendingMode="behindWindow" material="dark" state="followsWindowActiveState" id="8WZ-kP-sec">
+                                        <rect key="frame" x="680" y="0.0" width="120" height="437"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="Eq7-en-gI5"/>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="z4Y-kg-XSQ"/>
+                                        </constraints>
                                     </visualEffectView>
                                 </subviews>
                                 <constraints>
