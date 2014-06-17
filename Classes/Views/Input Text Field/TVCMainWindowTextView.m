@@ -339,6 +339,12 @@
 	NSWindow *mainWindow = self.window;
 	
 	NSRect windowFrame = mainWindow.frame;
+	
+	NSScrollView *scrollView = [self enclosingScrollView];
+	
+	id scrollViewDocumentView = [scrollView contentView];
+	
+	NSRect documentViewBounds = [scrollViewDocumentView bounds];
 
 	NSInteger backgroundHeight;
 	
@@ -407,9 +413,15 @@
 		[self.textFieldHeightConstraint setConstant:backgroundHeight];
 		
 		if (hasScroller) {
-			[self.textFieldInsideTrailingConstraint setConstant:5.0];
+			[self.textFieldInsideTrailingConstraint setConstant:8.0];
 		} else {
 			[self.textFieldInsideTrailingConstraint setConstant:0.0];
+		}
+		
+		if (documentViewBounds.origin.x > 0) {
+			documentViewBounds.origin.x = 0;
+			
+			[scrollViewDocumentView scrollToPoint:documentViewBounds.origin];
 		}
 	}
 }
