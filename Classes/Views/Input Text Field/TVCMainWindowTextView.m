@@ -835,11 +835,6 @@
 
 @end
 
-
-
-
-
-
 #pragma mark -
 #pragma mark Text Field Background Vibrant View
 
@@ -889,27 +884,29 @@
 		 a darker controller in Textual, we set the background of ours to black. To
 		 achive this, we create a bezier path that replicate the frame of segmented
 		 controller. This is a very ugly hack and can break easily in an OS update. */
-		if ([self yosemiteIsUsingVibrantDarkMode]) {
-			/* Get controller and controller frame. */
-			TVCMainWindowSegmentedControl *controller = self.masterController.mainWindowButtonController;
-			
-			NSRect controllerFrame = [controller frame];
-			
-			/* Update frame with some magic numbers. */
-			controllerFrame.size.width -= 4;
-			controllerFrame.size.height -= 3;
-			
-			controllerFrame.origin.y += 2;
-			
-			/* Define new path and color. */
-			dividerPath  = [NSBezierPath bezierPathWithRoundedRect:controllerFrame xRadius:4.0 yRadius:4.0];
-			
-			drawColor = [NSColor blackColor];
-			
-			/* Complete draw. */
-			[drawColor set];
-			
-			[dividerPath fill];
+		if ([TPCPreferences hideMainWindowSegmentedController] == NO) {
+			if ([self yosemiteIsUsingVibrantDarkMode]) {
+				/* Get controller and controller frame. */
+				TVCMainWindowSegmentedControl *controller = self.masterController.mainWindowButtonController;
+				
+				NSRect controllerFrame = [controller frame];
+				
+				/* Update frame with some magic numbers. */
+				controllerFrame.size.width -= 4;
+				controllerFrame.size.height -= 3;
+				
+				controllerFrame.origin.y += 2;
+				
+				/* Define new path and color. */
+				dividerPath  = [NSBezierPath bezierPathWithRoundedRect:controllerFrame xRadius:4.0 yRadius:4.0];
+				
+				drawColor = [NSColor blackColor];
+				
+				/* Complete draw. */
+				[drawColor set];
+				
+				[dividerPath fill];
+			}
 		}
 	}
 }
