@@ -138,7 +138,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 		
 		[self.menuController setupOtherServices];
 
-		[self.inputTextField redrawOriginPoints];
+		[self.inputTextField redrawOriginPoints:YES];
 		[self.inputTextField updateTextDirection];
 
 		[self.inputTextField setBackgroundColor:[NSColor clearColor]];

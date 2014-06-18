@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A238x" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.21" systemVersion="14A261i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment version="101000" defaultVersion="1070" identifier="macosx"/>
+        <deployment version="101000" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.17"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.21"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TXMasterController">
@@ -24,17 +24,26 @@
         <window title="Textual" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="21" userLabel="Window" customClass="TVCMainWindow">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
-            <rect key="contentRect" x="957" y="539" width="800" height="474"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
+            <rect key="contentRect" x="957" y="539" width="800" height="476"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <value key="minSize" type="size" width="600" height="250"/>
             <view key="contentView" id="2">
-                <rect key="frame" x="0.0" y="0.0" width="800" height="474"/>
+                <rect key="frame" x="0.0" y="0.0" width="800" height="476"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view translatesAutoresizingMaskIntoConstraints="NO" id="2849" userLabel="Input Text Field">
                         <rect key="frame" x="0.0" y="0.0" width="800" height="37"/>
                         <subviews>
-                            <visualEffectView blendingMode="behindWindow" material="appearanceBased" state="inactive" translatesAutoresizingMaskIntoConstraints="NO" id="r6n-pb-pYD" customClass="TVCMainWindowTextViewBackgroundVibrantView">
+                            <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Kn7-6g-K2D" customClass="TVCMainWindowTextViewBackgroundViewDivider">
+                                <rect key="frame" x="0.0" y="34" width="800" height="5"/>
+                                <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                                <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <font key="titleFont" metaFont="system"/>
+                                <connections>
+                                    <outlet property="backgroundVisualEffectView" destination="r6n-pb-pYD" id="Tcq-Wq-JVq"/>
+                                </connections>
+                            </box>
+                            <visualEffectView blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="r6n-pb-pYD" customClass="TVCMainWindowTextViewBackgroundVibrantView">
                                 <rect key="frame" x="0.0" y="0.0" width="800" height="36"/>
                                 <subviews>
                                     <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2853" customClass="TVCMainWindowSegmentedControl">
@@ -58,7 +67,7 @@
                                         <rect key="frame" x="166" y="6" width="624" height="23"/>
                                         <subviews>
                                             <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2852">
-                                                <rect key="frame" x="0.0" y="3" width="624" height="18"/>
+                                                <rect key="frame" x="0.0" y="3" width="616" height="18"/>
                                                 <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="qmu-eN-SPq">
                                                     <rect key="frame" x="0.0" y="0.0" width="624" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -67,15 +76,15 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="624" height="18"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <size key="minSize" width="624" height="18"/>
+                                                            <size key="minSize" width="616" height="18"/>
                                                             <size key="maxSize" width="624" height="10000000"/>
                                                             <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <size key="minSize" width="624" height="18"/>
+                                                            <size key="minSize" width="616" height="18"/>
                                                             <size key="maxSize" width="624" height="10000000"/>
                                                             <connections>
                                                                 <outlet property="backgroundView" destination="2851" id="Izu-dD-CPe"/>
                                                                 <outlet property="segmentedControllerLeadingConstraint" destination="kcx-kq-mUj" id="8mj-Fa-7GO"/>
-                                                                <outlet property="textFieldHeightConstraint" destination="f6O-bS-Ia1" id="aMn-NS-Nbz"/>
+                                                                <outlet property="textFieldHeightConstraint" destination="dHV-RC-ItY" id="8bX-WF-71i"/>
                                                                 <outlet property="textFieldInsideTrailingConstraint" destination="ULl-iy-2pE" id="w4r-k9-XqG"/>
                                                             </connections>
                                                         </textView>
@@ -97,7 +106,7 @@
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="2852" firstAttribute="leading" secondItem="2851" secondAttribute="leading" id="Hzd-wY-HT3"/>
-                                            <constraint firstAttribute="trailing" secondItem="2852" secondAttribute="trailing" id="ULl-iy-2pE"/>
+                                            <constraint firstAttribute="trailing" secondItem="2852" secondAttribute="trailing" constant="8" id="ULl-iy-2pE"/>
                                             <constraint firstAttribute="bottom" secondItem="2852" secondAttribute="bottom" constant="3" id="p2A-vn-l58"/>
                                             <constraint firstItem="2852" firstAttribute="top" secondItem="2851" secondAttribute="top" constant="2" id="xSF-3A-HgQ"/>
                                         </constraints>
@@ -111,6 +120,7 @@
                                     <constraint firstItem="2851" firstAttribute="top" secondItem="r6n-pb-pYD" secondAttribute="top" constant="7" id="V4n-VK-QbJ"/>
                                     <constraint firstItem="2851" firstAttribute="leading" secondItem="2853" secondAttribute="trailing" constant="10" id="XSW-c5-yjX"/>
                                     <constraint firstAttribute="bottom" secondItem="2851" secondAttribute="bottom" constant="6" id="YWg-Tq-Gpw"/>
+                                    <constraint firstAttribute="height" constant="36" id="dHV-RC-ItY"/>
                                     <constraint firstItem="2853" firstAttribute="leading" secondItem="r6n-pb-pYD" secondAttribute="leading" constant="10" id="kcx-kq-mUj"/>
                                     <constraint firstAttribute="trailing" secondItem="2851" secondAttribute="trailing" constant="10" id="x7G-Ra-GSd"/>
                                 </constraints>
@@ -119,19 +129,21 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="r6n-pb-pYD" secondAttribute="trailing" id="7Bj-HD-0aw"/>
                             <constraint firstAttribute="bottom" secondItem="r6n-pb-pYD" secondAttribute="bottom" id="Mne-3L-PrE"/>
+                            <constraint firstAttribute="trailing" secondItem="Kn7-6g-K2D" secondAttribute="trailing" id="QEl-QC-J9r"/>
                             <constraint firstItem="r6n-pb-pYD" firstAttribute="top" secondItem="2849" secondAttribute="top" constant="1" id="YqS-6I-KVx"/>
-                            <constraint firstAttribute="height" constant="37" id="f6O-bS-Ia1"/>
+                            <constraint firstItem="Kn7-6g-K2D" firstAttribute="top" secondItem="2849" secondAttribute="top" id="c7v-ju-33P"/>
+                            <constraint firstItem="Kn7-6g-K2D" firstAttribute="leading" secondItem="2849" secondAttribute="leading" id="jX5-je-OXl"/>
                             <constraint firstItem="r6n-pb-pYD" firstAttribute="leading" secondItem="2849" secondAttribute="leading" id="qVs-g1-whw"/>
                         </constraints>
                     </view>
                     <view hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2793" userLabel="Main View">
-                        <rect key="frame" x="0.0" y="37" width="800" height="437"/>
+                        <rect key="frame" x="0.0" y="37" width="800" height="439"/>
                         <subviews>
                             <splitView autosaveName="TVCMainWindowSplitView" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EoU-ff-awt" userLabel="Thin Split View" customClass="TVCMainWindowSplitView">
-                                <rect key="frame" x="0.0" y="0.0" width="800" height="437"/>
+                                <rect key="frame" x="0.0" y="0.0" width="800" height="439"/>
                                 <subviews>
                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="21" horizontalPageScroll="0.0" verticalLineScroll="21" verticalPageScroll="0.0" hasHorizontalScroller="NO" maxMagnification="8" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" id="RNU-Tn-cHU" userLabel=" Server List Scroll View">
-                                        <rect key="frame" x="0.0" y="0.0" width="170" height="437"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="170" height="439"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <clipView key="contentView" copiesOnScroll="NO" id="rT3-Qr-6EY">
                                             <rect key="frame" x="0.0" y="0.0" width="267" height="437"/>
@@ -241,10 +253,10 @@
                                         </scroller>
                                     </scrollView>
                                     <box title="Title" boxType="custom" borderType="none" titlePosition="noTitle" id="6tX-VC-UtT" userLabel="Chat Box - Title">
-                                        <rect key="frame" x="171" y="0.0" width="508" height="437"/>
+                                        <rect key="frame" x="171" y="0.0" width="508" height="439"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <view key="contentView">
-                                            <rect key="frame" x="0.0" y="0.0" width="508" height="437"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="508" height="439"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </view>
                                         <constraints>
@@ -255,7 +267,7 @@
                                         <accessibility description="Channel view"/>
                                     </box>
                                     <visualEffectView blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" id="8WZ-kP-sec">
-                                        <rect key="frame" x="680" y="0.0" width="120" height="437"/>
+                                        <rect key="frame" x="680" y="0.0" width="120" height="439"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="Eq7-en-gI5"/>
@@ -281,13 +293,13 @@
                         </constraints>
                     </view>
                     <box autoresizesSubviews="NO" title="Box" boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="2850" userLabel="Loading Screen" customClass="TVCMainWindowLoadingScreenView">
-                        <rect key="frame" x="0.0" y="37" width="800" height="437"/>
+                        <rect key="frame" x="0.0" y="37" width="800" height="439"/>
                         <view key="contentView">
-                            <rect key="frame" x="0.0" y="0.0" width="800" height="437"/>
+                            <rect key="frame" x="0.0" y="0.0" width="800" height="439"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2875" userLabel="Loading View Content.">
-                                    <rect key="frame" x="237" y="96" width="325" height="244"/>
+                                    <rect key="frame" x="237" y="97" width="325" height="244"/>
                                     <subviews>
                                         <imageView translatesAutoresizingMaskIntoConstraints="NO" id="2877">
                                             <rect key="frame" x="87" y="81" width="150" height="151"/>
@@ -337,7 +349,7 @@
                                     </constraints>
                                 </customView>
                                 <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2900" userLabel="Welcome, Add Server.">
-                                    <rect key="frame" x="159" y="70" width="482" height="296"/>
+                                    <rect key="frame" x="159" y="71" width="482" height="296"/>
                                     <userGuides>
                                         <userLayoutGuide location="43" affinity="minY"/>
                                         <userLayoutGuide location="27" affinity="minY"/>
@@ -403,7 +415,7 @@
                                     </constraints>
                                 </customView>
                                 <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2999" userLabel="Welcome, Add Server. (Trial)">
-                                    <rect key="frame" x="116" y="15" width="567" height="407"/>
+                                    <rect key="frame" x="116" y="16" width="567" height="407"/>
                                     <userGuides>
                                         <userLayoutGuide location="43" affinity="minY"/>
                                         <userLayoutGuide location="27" affinity="minY"/>
@@ -552,7 +564,6 @@ There are no other limits. What you see, is what you get.</string>
                     <constraint firstItem="2849" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="tZM-QW-Hgh"/>
                 </constraints>
             </view>
-            <contentBorderThickness minY="37"/>
         </window>
         <customView id="2965" userLabel="User Info Popover View">
             <rect key="frame" x="0.0" y="0.0" width="352" height="114"/>
