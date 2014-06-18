@@ -39,7 +39,7 @@
 
 #define _WindowContentBorderTotalPadding		13.0
 
-#define _WindowSegmentedControllerDefaultWidth	146.0
+#define _WindowSegmentedControllerDefaultWidth	150.0
 #define _WindowSegmentedControllerLeadingEdge	10.0
 
 #define _InputTextFieldOriginDefaultX			166.0
@@ -57,7 +57,6 @@
 @interface TVCMainWindowTextView ()
 @property (nonatomic, assign) NSInteger lastDrawLineCount;
 @property (nonatomic, assign) TXMainTextBoxFontSize cachedFontSize;
-@property (nonatomic, strong) NSLayoutConstraint *segmentedControllerWidthConstraint;
 @end
 
 @implementation TVCMainWindowTextView
@@ -79,14 +78,17 @@
 	if ([TPCPreferences featureAvailableToOSXYosemite]) {
 		/* Comment out a specific variation for debugging purposes. */
 		/* The uncommented sections are the defaults. */
-		self.backgroundView.backgroundVisualEffectView.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
+		self.backgroundView.backgroundVisualEffectView.appearance	= [NSAppearance appearanceNamed:NSAppearanceNameAqua];
+		self.segmentedControllerVisualEffectView.appearance			= [NSAppearance appearanceNamed:NSAppearanceNameAqua];
 		
 		/* Uncomment one of the following. */
 		/* 1. */
-		// self.backgroundView.backgroundVisualEffectView.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+		 self.backgroundView.backgroundVisualEffectView.appearance		= [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+		 self.segmentedControllerVisualEffectView.appearance			= [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
 		
 		/* 2. */
-		// self.backgroundView.backgroundVisualEffectView.ppearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
+		// self.backgroundView.backgroundVisualEffectView.appearance	= [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
+		// self.segmentedControllerVisualEffectView.appearance			= [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
 		
 		/* Use font color depending on appearance. */
 		self.defaultTextFieldFontColor = [self.backgroundView systemSpecificTextFieldTextFontColor];
@@ -157,20 +159,6 @@
 	 and update it using a pre-defined width or set it to zero when disabled. A constraint
 	 is also maintained for the leading of the segmented controller to allow that spacing to 
 	 be removed when it is hidden from view. */
-	TVCMainWindowSegmentedControl *controller = self.masterController.mainWindowButtonController;
-	
-	if (self.segmentedControllerWidthConstraint == nil) {
-		self.segmentedControllerWidthConstraint = [NSLayoutConstraint constraintWithItem:controller
-																			attribute:NSLayoutAttributeWidth
-																			relatedBy:NSLayoutRelationEqual
-																			   toItem:nil
-																			attribute:NSLayoutAttributeNotAnAttribute
-																		   multiplier:1.0f
-																			 constant:0];
-		
-		[controller addConstraint:self.segmentedControllerWidthConstraint];
-	}
-	
 	if ([TPCPreferences hideMainWindowSegmentedController]) {
 		[self.segmentedControllerWidthConstraint setConstant:0];
 		[self.segmentedControllerLeadingConstraint setConstant:0];
@@ -699,7 +687,7 @@
 	BOOL inHighresMode = [TPCPreferences runningInHighResolutionMode];
 	
 	NSRect controlFrame = NSMakeRect(1, 1,  (cellBounds.size.width - 2.0),
-											(cellBounds.size.height - 1.0));
+											(cellBounds.size.height - 2.0));
 
 	/* Inner background color. */
 	NSColor *background = [self blackInputTextFieldInsideBlackBackgroundColorYosemite];
@@ -709,13 +697,12 @@
 	
 	if (inHighresMode) {
 		[shadow4 setShadowColor:[self blackInputTextFieldOutsideBottomGrayShadowColorWithRetinaYosemite]];
-		[shadow4 setShadowOffset:NSMakeSize(0.1, -0.25)];
-		[shadow4 setShadowBlurRadius:0.0];
 	} else {
 		[shadow4 setShadowColor:[self blackInputTextFieldOutsideBottomGrayShadowColorWithoutRetinaYosemite]];
-		[shadow4 setShadowOffset:NSMakeSize(0.1, -1.1)];
-		[shadow4 setShadowBlurRadius:0.0];
 	}
+	
+	[shadow4 setShadowOffset:NSMakeSize(0.1, -1.1)];
+	[shadow4 setShadowBlurRadius:0.0];
 	
 	/* Rectangle drawing. */
 	NSBezierPath *rectanglePath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:3.0 yRadius:3.0];
@@ -772,8 +759,8 @@
 	BOOL inHighresMode = [TPCPreferences runningInHighResolutionMode];
 
 	NSRect controlFrame = NSMakeRect(1, 1,  (cellBounds.size.width - 2.0),
-											(cellBounds.size.height - 1.0));
-
+											(cellBounds.size.height - 2.0));
+	
 	/* Inner gradient color. */
 	NSGradient *gradient = [self whiteInputTextFieldInsideWhiteGradientYosemite];
 
@@ -787,7 +774,7 @@
 
 	if (inHighresMode) {
 		[shadow4 setShadowColor:[self whiteInputTextFieldOutsideBottomPrimaryGrayShadowColorWithRetinaYosemite]];
-		[shadow4 setShadowOffset:NSMakeSize(0.1, -0.25)];
+		[shadow4 setShadowOffset:NSMakeSize(0.1, -0.5)];
 		[shadow4 setShadowBlurRadius:0.0];
 	} else {
 		[shadow4 setShadowColor:[self whiteInputTextFieldOutsideBottomGrayShadowColorWithoutRetinaYosemite]];

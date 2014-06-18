@@ -25,7 +25,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="957" y="539" width="800" height="476"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="720"/>
             <value key="minSize" type="size" width="600" height="250"/>
             <view key="contentView" id="2">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="476"/>
@@ -46,28 +46,40 @@
                             <visualEffectView blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="r6n-pb-pYD" customClass="TVCMainWindowTextViewBackgroundVibrantView">
                                 <rect key="frame" x="0.0" y="0.0" width="800" height="36"/>
                                 <subviews>
-                                    <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2853" customClass="TVCMainWindowSegmentedControl">
-                                        <rect key="frame" x="10" y="5" width="146" height="25"/>
-                                        <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="2870" customClass="TVCMainWindowSegmentedCell">
-                                            <font key="font" metaFont="system"/>
-                                            <segments>
-                                                <segment toolTip="Add Server or Channel" image="NSAddTemplate" width="48">
-                                                    <nil key="label"/>
-                                                </segment>
-                                                <segment toolTip="Manage Selection" image="NSActionTemplate" width="48" tag="1">
-                                                    <nil key="label"/>
-                                                </segment>
-                                                <segment toolTip="Open Address Book" image="MainWindowSegmentedControlUserTemplate" width="46" tag="2">
-                                                    <nil key="label"/>
-                                                </segment>
-                                            </segments>
-                                        </segmentedCell>
-                                    </segmentedControl>
+                                    <visualEffectView blendingMode="behindWindow" material="appearanceBased" state="inactive" translatesAutoresizingMaskIntoConstraints="NO" id="QAh-pr-EpX" customClass="TVCMainWindowTextViewBackgroundVibrantView">
+                                        <rect key="frame" x="8" y="4" width="150" height="28"/>
+                                        <subviews>
+                                            <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2853" customClass="TVCMainWindowSegmentedControl">
+                                                <rect key="frame" x="2" y="1" width="146" height="25"/>
+                                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="2870" customClass="TVCMainWindowSegmentedCell">
+                                                    <font key="font" metaFont="system"/>
+                                                    <segments>
+                                                        <segment toolTip="Add Server or Channel" image="NSAddTemplate" width="48">
+                                                            <nil key="label"/>
+                                                        </segment>
+                                                        <segment toolTip="Manage Selection" image="NSActionTemplate" width="48" tag="1">
+                                                            <nil key="label"/>
+                                                        </segment>
+                                                        <segment toolTip="Open Address Book" image="MainWindowSegmentedControlUserTemplate" width="46" tag="2">
+                                                            <nil key="label"/>
+                                                        </segment>
+                                                    </segments>
+                                                </segmentedCell>
+                                            </segmentedControl>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="2853" firstAttribute="leading" secondItem="QAh-pr-EpX" secondAttribute="leading" constant="2" id="ArI-Fr-AJt"/>
+                                            <constraint firstItem="2853" firstAttribute="top" secondItem="QAh-pr-EpX" secondAttribute="top" constant="3" id="S7z-ya-IuF"/>
+                                            <constraint firstAttribute="width" constant="150" id="cjg-Kh-4AP"/>
+                                            <constraint firstAttribute="bottom" secondItem="2853" secondAttribute="bottom" constant="3" id="ueF-E8-3g4"/>
+                                            <constraint firstAttribute="trailing" secondItem="2853" secondAttribute="trailing" constant="2" id="vs1-Kn-EEH"/>
+                                        </constraints>
+                                    </visualEffectView>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="2851" customClass="TVCMainWindowTextViewBackground">
-                                        <rect key="frame" x="166" y="6" width="624" height="23"/>
+                                        <rect key="frame" x="166" y="6" width="624" height="24"/>
                                         <subviews>
                                             <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2852">
-                                                <rect key="frame" x="0.0" y="3" width="616" height="18"/>
+                                                <rect key="frame" x="0.0" y="3" width="614" height="18"/>
                                                 <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="qmu-eN-SPq">
                                                     <rect key="frame" x="0.0" y="0.0" width="624" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -76,16 +88,17 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="624" height="18"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <size key="minSize" width="616" height="18"/>
+                                                            <size key="minSize" width="614" height="18"/>
                                                             <size key="maxSize" width="624" height="10000000"/>
                                                             <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <size key="minSize" width="616" height="18"/>
+                                                            <size key="minSize" width="614" height="18"/>
                                                             <size key="maxSize" width="624" height="10000000"/>
                                                             <connections>
                                                                 <outlet property="backgroundView" destination="2851" id="Izu-dD-CPe"/>
-                                                                <outlet property="segmentedControllerLeadingConstraint" destination="kcx-kq-mUj" id="8mj-Fa-7GO"/>
-                                                                <outlet property="textFieldHeightConstraint" destination="dHV-RC-ItY" id="8bX-WF-71i"/>
-                                                                <outlet property="textFieldInsideTrailingConstraint" destination="ULl-iy-2pE" id="w4r-k9-XqG"/>
+                                                                <outlet property="segmentedControllerLeadingConstraint" destination="aFb-33-d7c" id="zfE-1R-rm7"/>
+                                                                <outlet property="segmentedControllerVisualEffectView" destination="QAh-pr-EpX" id="Ode-Fh-N9Z"/>
+                                                                <outlet property="segmentedControllerWidthConstraint" destination="cjg-Kh-4AP" id="erg-56-8M1"/>
+                                                                <outlet property="textFieldHeightConstraint" destination="dHV-RC-ItY" id="jeO-lK-56x"/>
                                                             </connections>
                                                         </textView>
                                                     </subviews>
@@ -106,9 +119,9 @@
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="2852" firstAttribute="leading" secondItem="2851" secondAttribute="leading" id="Hzd-wY-HT3"/>
-                                            <constraint firstAttribute="trailing" secondItem="2852" secondAttribute="trailing" constant="8" id="ULl-iy-2pE"/>
+                                            <constraint firstAttribute="trailing" secondItem="2852" secondAttribute="trailing" constant="10" id="ULl-iy-2pE"/>
                                             <constraint firstAttribute="bottom" secondItem="2852" secondAttribute="bottom" constant="3" id="p2A-vn-l58"/>
-                                            <constraint firstItem="2852" firstAttribute="top" secondItem="2851" secondAttribute="top" constant="2" id="xSF-3A-HgQ"/>
+                                            <constraint firstItem="2852" firstAttribute="top" secondItem="2851" secondAttribute="top" constant="3" id="xSF-3A-HgQ"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="backgroundVisualEffectView" destination="r6n-pb-pYD" id="tYo-A1-8VI"/>
@@ -116,12 +129,13 @@
                                     </customView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="2853" secondAttribute="bottom" constant="7" id="U6e-l5-Kf1"/>
-                                    <constraint firstItem="2851" firstAttribute="top" secondItem="r6n-pb-pYD" secondAttribute="top" constant="7" id="V4n-VK-QbJ"/>
-                                    <constraint firstItem="2851" firstAttribute="leading" secondItem="2853" secondAttribute="trailing" constant="10" id="XSW-c5-yjX"/>
+                                    <constraint firstItem="2851" firstAttribute="top" secondItem="r6n-pb-pYD" secondAttribute="top" constant="6" id="V4n-VK-QbJ"/>
                                     <constraint firstAttribute="bottom" secondItem="2851" secondAttribute="bottom" constant="6" id="YWg-Tq-Gpw"/>
+                                    <constraint firstItem="QAh-pr-EpX" firstAttribute="leading" secondItem="r6n-pb-pYD" secondAttribute="leading" constant="8" id="aFb-33-d7c"/>
                                     <constraint firstAttribute="height" constant="36" id="dHV-RC-ItY"/>
-                                    <constraint firstItem="2853" firstAttribute="leading" secondItem="r6n-pb-pYD" secondAttribute="leading" constant="10" id="kcx-kq-mUj"/>
+                                    <constraint firstItem="2851" firstAttribute="leading" secondItem="QAh-pr-EpX" secondAttribute="trailing" constant="8" id="fBd-wy-hiw"/>
+                                    <constraint firstItem="QAh-pr-EpX" firstAttribute="top" secondItem="r6n-pb-pYD" secondAttribute="top" constant="4" id="mrB-8C-eZE"/>
+                                    <constraint firstAttribute="bottom" secondItem="QAh-pr-EpX" secondAttribute="bottom" constant="4" id="uYD-f5-Kh9"/>
                                     <constraint firstAttribute="trailing" secondItem="2851" secondAttribute="trailing" constant="10" id="x7G-Ra-GSd"/>
                                 </constraints>
                             </visualEffectView>
