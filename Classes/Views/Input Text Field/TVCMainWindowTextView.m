@@ -83,8 +83,8 @@
 		
 		/* Uncomment one of the following. */
 		/* 1. */
-		 self.backgroundView.backgroundVisualEffectView.appearance		= [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
-		 self.segmentedControllerVisualEffectView.appearance			= [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+		// self.backgroundView.backgroundVisualEffectView.appearance	= [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+		// self.segmentedControllerVisualEffectView.appearance			= [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
 		
 		/* 2. */
 		// self.backgroundView.backgroundVisualEffectView.appearance	= [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
