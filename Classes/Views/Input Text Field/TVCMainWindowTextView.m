@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-#define _WindowContentBorderTotalPadding		13.0
+#define _WindowContentBorderTotalPadding		14.0
 
 #define _WindowSegmentedControllerDefaultWidth	150.0
 #define _WindowSegmentedControllerLeadingEdge	10.0
@@ -78,17 +78,15 @@
 	if ([TPCPreferences featureAvailableToOSXYosemite]) {
 		/* Comment out a specific variation for debugging purposes. */
 		/* The uncommented sections are the defaults. */
-		self.backgroundView.backgroundVisualEffectView.appearance	= [NSAppearance appearanceNamed:NSAppearanceNameAqua];
-		self.segmentedControllerVisualEffectView.appearance			= [NSAppearance appearanceNamed:NSAppearanceNameAqua];
+		/* nil value indicates that the value is inherited. */
+		self.contentView.appearance	= nil;
 		
 		/* Uncomment one of the following. */
 		/* 1. */
-		// self.backgroundView.backgroundVisualEffectView.appearance	= [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
-		// self.segmentedControllerVisualEffectView.appearance			= [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+		// self.contentView.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
 		
 		/* 2. */
-		// self.backgroundView.backgroundVisualEffectView.appearance	= [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
-		// self.segmentedControllerVisualEffectView.appearance			= [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
+		// self.contentView.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
 		
 		/* Use font color depending on appearance. */
 		self.defaultTextFieldFontColor = [self.backgroundView systemSpecificTextFieldTextFontColor];
@@ -656,26 +654,12 @@
 	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.10];
 }
 
-- (NSColor *)whiteInputTextFieldUnfocusedWindowStrokeColorYosemite
-{
-	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.10];
-}
-
-- (NSColor *)whiteInputTextFieldUnfocusedWindowBackgroundColorYosemite
-{
-	return [NSColor whiteColor];
-}
-
 - (void)drawControllerForYosemite
 {
-	if ([self.backgroundVisualEffectView yosemiteIsUsingVibrantDarkMode]) {
+	if (self.contentView.yosemiteIsUsingVibrantDarkMode) {
 		[self drawBlackControllerForYosemiteInFocusedWindow];
 	} else {
-		if ([self windowIsActive]) {
-			[self drawWhiteControllerForYosemiteInFocusedWindow];
-		} else {
-			[self drawWhiteControllerForYosemiteInUnfocusedWindow];
-		}
+		[self drawWhiteControllerForYosemiteInFocusedWindow];
 	}
 }
 
@@ -720,33 +704,6 @@
 	
 	/* Finish up. */
 	[NSGraphicsContext restoreGraphicsState];
-}
-
-- (void)drawWhiteControllerForYosemiteInUnfocusedWindow
-{
-	/* General Declarations. */
-	NSRect cellBounds = [self frame];
-	NSRect controlFrame;
-
-	NSColor *controlColor;
-
-	NSBezierPath *controlPath;
-
-	/* Black Outline. */
-	controlColor = [self whiteInputTextFieldUnfocusedWindowStrokeColorYosemite];
-	controlFrame = NSMakeRect(0.0, 1.0, cellBounds.size.width, (cellBounds.size.height - 1.0));
-	controlPath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:3.6 yRadius:3.6];
-
-	[controlColor set];
-	[controlPath fill];
-
-	/* White Background. */
-	controlColor = [self whiteInputTextFieldUnfocusedWindowBackgroundColorYosemite];
-	controlFrame = NSMakeRect(1, 2, (cellBounds.size.width - 2.0), (cellBounds.size.height - 3.0));
-	controlPath	= [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:2.6 yRadius:2.6];
-
-	[controlColor set];
-	[controlPath fill];
 }
 
 - (void)drawWhiteControllerForYosemiteInFocusedWindow
@@ -837,7 +794,7 @@
 - (NSColor *)systemSpecificTextFieldTextFontColor
 {
 	if ([TPCPreferences featureAvailableToOSXYosemite]) {
-		if ([self.backgroundVisualEffectView yosemiteIsUsingVibrantDarkMode]) {
+		if (self.contentView.yosemiteIsUsingVibrantDarkMode) {
 			return [self blackInputTextFieldPlaceholderTextColorYosemite];
 		} else {
 			return [self whiteInputTextFieldPlaceholderTextColorYosemite];
@@ -850,7 +807,7 @@
 - (NSColor *)systemSpecificPlaceholderTextFontColor
 {
 	if ([TPCPreferences featureAvailableToOSXYosemite]) {
-		if ([self.backgroundVisualEffectView yosemiteIsUsingVibrantDarkMode]) {
+		if (self.contentView.yosemiteIsUsingVibrantDarkMode) {
 			return [self blackInputTextFieldPrimaryTextColorYosemite];
 		} else {
 			return [self whiteInputTextFieldPrimaryTextColorYosemite];
@@ -878,7 +835,15 @@
 
 @end
 
-@implementation TVCMainWindowTextViewBackgroundVibrantView
+
+
+
+
+
+#pragma mark -
+#pragma mark Text Field Background Vibrant View
+
+@implementation TVCMainWindowTextViewContentView
 
 - (BOOL)yosemiteIsUsingVibrantDarkMode
 {
@@ -896,30 +861,80 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
 	if ([self needsToDrawRect:dirtyRect]) {
-		NSColor *drawColor = [self drawColor];
-	
+		/* Draw background color. */
+		NSColor *drawColor = [self backgroundColor];
+		
 		[drawColor set];
-	
+		
 		NSRectFill(dirtyRect);
+		
+		/* Draw divider. */
+		NSRect contentViewFrame = [self frame];
+		
+		contentViewFrame.origin.x = 0;
+		contentViewFrame.origin.y = (NSMaxY(contentViewFrame) - 1);
+		
+		contentViewFrame.size.height = 1;
+		
+		NSBezierPath *dividerPath = [NSBezierPath bezierPathWithRect:contentViewFrame];
+		
+		drawColor = [self dividerColor];
+		
+		[drawColor set];
+		
+		[dividerPath fill];
+		
+		/* Discussion: On Yosemite, when a segmented controller is set as vibrant dark,
+		 it inherits whatever color is behind it in a translucent manor. To allow for
+		 a darker controller in Textual, we set the background of ours to black. To
+		 achive this, we create a bezier path that replicate the frame of segmented
+		 controller. This is a very ugly hack and can break easily in an OS update. */
+		if ([self yosemiteIsUsingVibrantDarkMode]) {
+			/* Get controller and controller frame. */
+			TVCMainWindowSegmentedControl *controller = self.masterController.mainWindowButtonController;
+			
+			NSRect controllerFrame = [controller frame];
+			
+			/* Update frame with some magic numbers. */
+			controllerFrame.size.width -= 4;
+			controllerFrame.size.height -= 3;
+			
+			controllerFrame.origin.y += 2;
+			
+			/* Define new path and color. */
+			dividerPath  = [NSBezierPath bezierPathWithRoundedRect:controllerFrame xRadius:4.0 yRadius:4.0];
+			
+			drawColor = [NSColor blackColor];
+			
+			/* Complete draw. */
+			[drawColor set];
+			
+			[dividerPath fill];
+		}
 	}
 }
 
-- (NSColor *)drawColor
+- (NSColor *)backgroundColor
 {
-	if ([TPCPreferences featureAvailableToOSXYosemite]) {
-		if ([self yosemiteIsUsingVibrantDarkMode]) {
-			return [self vibrantDarkBackgroundColor];
-		} else {
-			return [self vibrantLightBackgroundColor];
-		}
+	if ([self yosemiteIsUsingVibrantDarkMode]) {
+		return [self vibrantDarkBackgroundColor];
 	} else {
-		return [NSColor clearColor];
+		return [self vibrantLightBackgroundColor];
+	}
+}
+
+- (NSColor *)dividerColor
+{
+	if ([self yosemiteIsUsingVibrantDarkMode]) {
+		return [self vibrantDarkDividerColor];
+	} else {
+		return [self vibrantLightDividerColor];
 	}
 }
 
 - (NSColor *)vibrantDarkBackgroundColor
 {
-	return [NSColor colorWithCalibratedRed:0.300 green:0.300 blue:0.300 alpha:1.0];
+	return [NSColor colorWithCalibratedRed:0.248 green:0.248 blue:0.248 alpha:1.0];
 }
 
 - (NSColor *)vibrantLightBackgroundColor
@@ -927,47 +942,19 @@
 	return [NSColor colorWithCalibratedRed:0.957 green:0.957 blue:0.957 alpha:1.0];
 }
 
+- (NSColor *)vibrantDarkDividerColor
+{
+	return [NSColor colorWithCalibratedRed:0.150 green:0.150 blue:0.150 alpha:1.0];
+}
+
+- (NSColor *)vibrantLightDividerColor
+{
+	return [NSColor lightGrayColor];
+}
+
 - (BOOL)allowsVibrancy
 {
 	return NO;
-}
-
-@end
-
-@implementation TVCMainWindowTextViewBackgroundViewDivider
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-	if ([self needsToDrawRect:dirtyRect]) {
-		NSColor *drawColor = [self drawColor];
-		
-		[drawColor set];
-		
-		NSRectFill(dirtyRect);
-	}
-}
-
-- (NSColor *)drawColor
-{
-	if ([TPCPreferences featureAvailableToOSXYosemite]) {
-		if ([self.backgroundVisualEffectView yosemiteIsUsingVibrantDarkMode]) {
-			return [self vibrantDarkBackgroundColor];
-		} else {
-			return [self vibrantLightBackgroundColor];
-		}
-	} else {
-		return [NSColor clearColor];
-	}
-}
-
-- (NSColor *)vibrantDarkBackgroundColor
-{
-	return [NSColor darkGrayColor];
-}
-
-- (NSColor *)vibrantLightBackgroundColor
-{
-	return [NSColor colorWithCalibratedWhite:1.0 alpha:0.8];
 }
 
 @end

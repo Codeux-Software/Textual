@@ -37,6 +37,7 @@
 
 #import "TextualApplication.h"
 
+/* TVCMainWindowTextView is the scroll view and text view. */
 @interface TVCMainWindowTextView : TVCTextViewWithIRCFormatter
 @property (nonatomic, strong) NSAttributedString *placeholderString;
 @property (nonatomic, assign) BOOL hasModifiedSpellingDictionary;
@@ -44,7 +45,7 @@
 @property (nonatomic, nweak) IBOutlet NSLayoutConstraint *segmentedControllerLeadingConstraint;
 @property (nonatomic, nweak) IBOutlet NSLayoutConstraint *textFieldHeightConstraint;
 @property (nonatomic, nweak) IBOutlet TVCMainWindowTextViewBackground *backgroundView;
-@property (nonatomic, nweak) IBOutlet TVCMainWindowTextViewBackgroundVibrantView *segmentedControllerVisualEffectView;
+@property (nonatomic, nweak) IBOutlet TVCMainWindowTextViewContentView *contentView;
 
 - (void)updateTextDirection;
 - (void)updateTextBoxBasedOnPreferredFontSize;
@@ -55,17 +56,15 @@
 - (void)resetTextFieldCellSize:(BOOL)force;
 @end
 
-@interface TVCMainWindowTextViewBackgroundVibrantView : NSVisualEffectView
-- (BOOL)yosemiteIsUsingVibrantDarkMode;
-@end
-
+/* TVCMainWindowTextViewBackground is the actual background drawing of the text
+ view and its scroll view. It does not handle any other tasks. */
 @interface TVCMainWindowTextViewBackground : NSView
-@property (nonatomic, nweak) IBOutlet TVCMainWindowTextViewBackgroundVibrantView *backgroundVisualEffectView;
+@property (nonatomic, nweak) IBOutlet TVCMainWindowTextViewContentView *contentView;
 
 - (NSColor *)systemSpecificTextFieldTextFontColor;
 - (NSColor *)systemSpecificPlaceholderTextFontColor;
 @end
 
-@interface TVCMainWindowTextViewBackgroundViewDivider : NSBox
-@property (nonatomic, nweak) IBOutlet TVCMainWindowTextViewBackgroundVibrantView *backgroundVisualEffectView;
+@interface TVCMainWindowTextViewContentView : NSVisualEffectView
+@property (nonatomic, assign) BOOL yosemiteIsUsingVibrantDarkMode;
 @end
