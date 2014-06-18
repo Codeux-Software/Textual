@@ -54,14 +54,17 @@
 - (void)resetTextFieldCellSize:(BOOL)force;
 @end
 
-@interface TVCMainWindowTextViewBackground : NSView
-@property (nonatomic, nweak) IBOutlet NSVisualEffectView *backgroundVisualEffectView;
-
+@interface TVCMainWindowTextViewBackgroundVibrantView : NSVisualEffectView
 - (BOOL)yosemiteIsUsingVibrantDarkMode;
+@end
+
+@interface TVCMainWindowTextViewBackground : NSView
+@property (nonatomic, nweak) IBOutlet TVCMainWindowTextViewBackgroundVibrantView *backgroundVisualEffectView;
 
 - (NSColor *)systemSpecificTextFieldTextFontColor;
 - (NSColor *)systemSpecificPlaceholderTextFontColor;
 @end
 
-@interface TVCMainWindowTextViewBackgroundVibrantView : NSVisualEffectView
+@interface TVCMainWindowTextViewBackgroundViewDivider : NSBox
+@property (nonatomic, nweak) IBOutlet TVCMainWindowTextViewBackgroundVibrantView *backgroundVisualEffectView;
 @end

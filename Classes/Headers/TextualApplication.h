@@ -141,6 +141,7 @@
 	@class TVCMainWindowTextView;
 	@class TVCMainWindowTextViewBackground;
 	@class TVCMainWindowTextViewBackgroundVibrantView;
+	@class TVCMainWindowTextViewBackgroundViewDivider;
 	@class TVCMemberList;
 	@class TVCMemberListCell;
 	@class TVCMemberListCellBadge;

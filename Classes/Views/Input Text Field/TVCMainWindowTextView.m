@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-#define _WindowContentBorderTotalPadding		14.0
+#define _WindowContentBorderTotalPadding		13.0
 
 #define _WindowSegmentedControllerDefaultWidth	146.0
 #define _WindowSegmentedControllerLeadingEdge	10.0
@@ -81,17 +81,11 @@
 		/* The uncommented sections are the defaults. */
 		self.backgroundView.backgroundVisualEffectView.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
 		
-		self.backgroundView.backgroundVisualEffectView.material = NSVisualEffectMaterialAppearanceBased;
-		self.backgroundView.backgroundVisualEffectView.blendingMode = NSVisualEffectBlendingModeBehindWindow;
-		
 		/* Uncomment one of the following. */
-		
 		/* 1. */
-		// self.backgroundView.backgroundVisualEffectView.material = NSVisualEffectMaterialDark;
 		// self.backgroundView.backgroundVisualEffectView.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
 		
 		/* 2. */
-		// self.backgroundView.backgroundVisualEffectView.material = NSVisualEffectMaterialLight;
 		// self.backgroundView.backgroundVisualEffectView.ppearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
 		
 		/* Use font color depending on appearance. */
@@ -112,6 +106,7 @@
 
 - (void)updateTypeSetterAttributesBasedOnAppearanceSettings
 {
+	/* Set all type attributes. */
 	[self updateTextBoxCachedPreferredFontSize];
 	[self defineDefaultTypeSetterAttributes];
 	[self updateTypeSetterAttributes];
@@ -309,9 +304,9 @@
 	if (self.cachedFontSize == TXMainTextBoxFontNormalSize) {
 		return 23.0;
 	} else if (self.cachedFontSize == TXMainTextBoxFontLargeSize) {
-		return 28.0;
+		return 27.0;
 	} else if (self.cachedFontSize == TXMainTextBoxFontExtraLargeSize) {
-		return 30.0;
+		return 28.0;
 	}
 	
 	return 23.0;
@@ -334,7 +329,6 @@
 - (void)resetTextFieldCellSize:(BOOL)force
 {
 	BOOL drawBezel = YES;
-	BOOL hasScroller = NO;
 
 	NSWindow *mainWindow = self.window;
 	
@@ -356,7 +350,7 @@
 	if (stringv.length < 1) {
 		backgroundHeight = (backgroundDefaultHeight + _WindowContentBorderTotalPadding);
 
-		if (self.lastDrawLineCount >= 2) {
+		if (self.lastDrawLineCount >= 2 || force) {
 			drawBezel = YES;
 		}
 
@@ -401,22 +395,16 @@
 						break;
 					}
 				}
-				
-				hasScroller = YES;
 			}
 		}
 	}
 
 	if (drawBezel) {
-		[mainWindow setContentBorderThickness:backgroundHeight forEdge:NSMinYEdge];
+		if ([TPCPreferences featureAvailableToOSXYosemite] == NO) {
+			[mainWindow setContentBorderThickness:backgroundHeight forEdge:NSMinYEdge];
+		}
 
 		[self.textFieldHeightConstraint setConstant:backgroundHeight];
-		
-		if (hasScroller) {
-			[self.textFieldInsideTrailingConstraint setConstant:8.0];
-		} else {
-			[self.textFieldInsideTrailingConstraint setConstant:0.0];
-		}
 		
 		if (documentViewBounds.origin.x > 0) {
 			documentViewBounds.origin.x = 0;
@@ -692,7 +680,7 @@
 
 - (void)drawControllerForYosemite
 {
-	if ([self yosemiteIsUsingVibrantDarkMode]) {
+	if ([self.backgroundVisualEffectView yosemiteIsUsingVibrantDarkMode]) {
 		[self drawBlackControllerForYosemiteInFocusedWindow];
 	} else {
 		if ([self windowIsActive]) {
@@ -700,17 +688,6 @@
 		} else {
 			[self drawWhiteControllerForYosemiteInUnfocusedWindow];
 		}
-	}
-}
-
-- (BOOL)yosemiteIsUsingVibrantDarkMode
-{
-	NSString *currentName = self.backgroundVisualEffectView.appearance.name;
-	
-	if ([currentName hasPrefix:NSAppearanceNameVibrantDark]) {
-		return YES;
-	} else {
-		return NO;
 	}
 }
 
@@ -873,7 +850,7 @@
 - (NSColor *)systemSpecificTextFieldTextFontColor
 {
 	if ([TPCPreferences featureAvailableToOSXYosemite]) {
-		if ([self yosemiteIsUsingVibrantDarkMode]) {
+		if ([self.backgroundVisualEffectView yosemiteIsUsingVibrantDarkMode]) {
 			return [self blackInputTextFieldPlaceholderTextColorYosemite];
 		} else {
 			return [self whiteInputTextFieldPlaceholderTextColorYosemite];
@@ -886,7 +863,7 @@
 - (NSColor *)systemSpecificPlaceholderTextFontColor
 {
 	if ([TPCPreferences featureAvailableToOSXYosemite]) {
-		if ([self yosemiteIsUsingVibrantDarkMode]) {
+		if ([self.backgroundVisualEffectView yosemiteIsUsingVibrantDarkMode]) {
 			return [self blackInputTextFieldPrimaryTextColorYosemite];
 		} else {
 			return [self whiteInputTextFieldPrimaryTextColorYosemite];
@@ -916,9 +893,94 @@
 
 @implementation TVCMainWindowTextViewBackgroundVibrantView
 
+- (BOOL)yosemiteIsUsingVibrantDarkMode
+{
+	NSAppearance *currentDesign = [self appearance];
+	
+	NSString *name = [currentDesign name];
+	
+	if ([name hasPrefix:NSAppearanceNameVibrantDark]) {
+		return YES;
+	} else {
+		return NO;
+	}
+}
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+	if ([self needsToDrawRect:dirtyRect]) {
+		NSColor *drawColor = [self drawColor];
+	
+		[drawColor set];
+	
+		NSRectFill(dirtyRect);
+	}
+}
+
+- (NSColor *)drawColor
+{
+	if ([TPCPreferences featureAvailableToOSXYosemite]) {
+		if ([self yosemiteIsUsingVibrantDarkMode]) {
+			return [self vibrantDarkBackgroundColor];
+		} else {
+			return [self vibrantLightBackgroundColor];
+		}
+	} else {
+		return [NSColor clearColor];
+	}
+}
+
+- (NSColor *)vibrantDarkBackgroundColor
+{
+	return [NSColor colorWithCalibratedRed:0.300 green:0.300 blue:0.300 alpha:1.0];
+}
+
+- (NSColor *)vibrantLightBackgroundColor
+{
+	return [NSColor colorWithCalibratedRed:0.957 green:0.957 blue:0.957 alpha:1.0];
+}
+
 - (BOOL)allowsVibrancy
 {
 	return NO;
+}
+
+@end
+
+@implementation TVCMainWindowTextViewBackgroundViewDivider
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+	if ([self needsToDrawRect:dirtyRect]) {
+		NSColor *drawColor = [self drawColor];
+		
+		[drawColor set];
+		
+		NSRectFill(dirtyRect);
+	}
+}
+
+- (NSColor *)drawColor
+{
+	if ([TPCPreferences featureAvailableToOSXYosemite]) {
+		if ([self.backgroundVisualEffectView yosemiteIsUsingVibrantDarkMode]) {
+			return [self vibrantDarkBackgroundColor];
+		} else {
+			return [self vibrantLightBackgroundColor];
+		}
+	} else {
+		return [NSColor clearColor];
+	}
+}
+
+- (NSColor *)vibrantDarkBackgroundColor
+{
+	return [NSColor darkGrayColor];
+}
+
+- (NSColor *)vibrantLightBackgroundColor
+{
+	return [NSColor colorWithCalibratedWhite:1.0 alpha:0.8];
 }
 
 @end
