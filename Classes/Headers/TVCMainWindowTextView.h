@@ -40,10 +40,11 @@
 @interface TVCMainWindowTextView : TVCTextViewWithIRCFormatter
 @property (nonatomic, strong) NSAttributedString *placeholderString;
 @property (nonatomic, assign) BOOL hasModifiedSpellingDictionary;
+@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *segmentedControllerWidthConstraint;
 @property (nonatomic, nweak) IBOutlet NSLayoutConstraint *segmentedControllerLeadingConstraint;
 @property (nonatomic, nweak) IBOutlet NSLayoutConstraint *textFieldHeightConstraint;
-@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *textFieldInsideTrailingConstraint;
 @property (nonatomic, nweak) IBOutlet TVCMainWindowTextViewBackground *backgroundView;
+@property (nonatomic, nweak) IBOutlet TVCMainWindowTextViewBackgroundVibrantView *segmentedControllerVisualEffectView;
 
 - (void)updateTextDirection;
 - (void)updateTextBoxBasedOnPreferredFontSize;
