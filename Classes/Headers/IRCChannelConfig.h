@@ -57,7 +57,6 @@ typedef enum IRCChannelType : NSInteger {
 @property (nonatomic, assign) BOOL ignoreInlineImages;
 @property (nonatomic, assign) BOOL ignoreHighlights;
 @property (nonatomic, assign) BOOL ignoreJPQActivity;
-
 @property (nonatomic, assign) BOOL encryptionKeyIsSet;
 @property (nonatomic, assign) BOOL secretKeyIsSet;
 
@@ -68,7 +67,6 @@ typedef enum IRCChannelType : NSInteger {
 
 + (NSDictionary *)seedDictionary:(NSString *)channelName;
 
-/* Keychain. */
 - (void)destroyKeychains;
 - (void)writeKeychainItemsToDisk;
 

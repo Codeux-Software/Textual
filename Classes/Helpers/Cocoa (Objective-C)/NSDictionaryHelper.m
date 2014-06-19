@@ -141,7 +141,7 @@
 
 - (BOOL)containsKey:(NSString *)baseKey
 {	
-	return [self.allKeys containsObject:baseKey];
+	return [[self allKeys] containsObject:baseKey];
 }
 	
 - (BOOL)containsKeyIgnoringCase:(NSString *)baseKey
@@ -197,6 +197,7 @@
 {
 	NSArray *keys = [[self allKeys] sortedArrayUsingSelector:@selector(compare:)];
 	
+	
 	if (reversed) {
 		return [[keys reverseObjectEnumerator] allObjects];
 	}
@@ -221,20 +222,23 @@
 
 @implementation NSMutableDictionary (TXMutableDictionaryHelper)
 
-- (void)safeSetObject:(id)value forKey:(NSString *)key
-{
-	if (PointerIsNotEmpty(value)) {
-		self[key] = value;
-	}
-}
-
-- (void)safeSetObjectWithoutOverride:(id)value forKey:(NSString *)key
+- (void)setObjectWithoutOverride:(id)value forKey:(NSString *)key
 {
 	if (PointerIsNotEmpty(value)) {
 		if ([self containsKey:key] == NO) {
 			self[key] = value;
 		}
 	}
+}
+
+- (void)safeSetObject:(id)value forKey:(NSString *)key
+{
+	TEXTUAL_DEPRECATED_ASSERT;
+}
+
+- (void)safeSetObjectWithoutOverride:(id)value forKey:(NSString *)key
+{
+	TEXTUAL_DEPRECATED_ASSERT;
 }
 
 - (void)setBool:(BOOL)value forKey:(NSString *)key

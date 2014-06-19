@@ -135,9 +135,9 @@
 		case TDCFileTransferDialogTransferStoppedStatus:
 		{
 			if ([self isReceiving]) {
-				[self.transferProgressField setStringValue:TXTFLS(@"TDCFileTransferDialog[1009]", self.peerNickname)];
+				[self.transferProgressField setStringValue:TXTLS(@"TDCFileTransferDialog[1009]", self.peerNickname)];
 			} else {
-				[self.transferProgressField setStringValue:TXTFLS(@"TDCFileTransferDialog[10001]", self.peerNickname)];
+				[self.transferProgressField setStringValue:TXTLS(@"TDCFileTransferDialog[10001]", self.peerNickname)];
 			}
 			
 			break;
@@ -145,9 +145,9 @@
 		case TDCFileTransferDialogTransferMappingListeningPortStatus:
 		{
 			if ([self isReceiving]) {
-				[self.transferProgressField setStringValue:TXTFLS(@"TDCFileTransferDialog[1010]", self.peerNickname)];
+				[self.transferProgressField setStringValue:TXTLS(@"TDCFileTransferDialog[1010]", self.peerNickname)];
 			} else {
-				[self.transferProgressField setStringValue:TXTFLS(@"TDCFileTransferDialog[1002]", self.peerNickname)];
+				[self.transferProgressField setStringValue:TXTLS(@"TDCFileTransferDialog[1002]", self.peerNickname)];
 			}
 
 			break;
@@ -155,9 +155,9 @@
 		case TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus:
 		{
 			if ([self isReceiving]) {
-				[self.transferProgressField setStringValue:TXTFLS(@"TDCFileTransferDialog[1011]", self.peerNickname)];
+				[self.transferProgressField setStringValue:TXTLS(@"TDCFileTransferDialog[1011]", self.peerNickname)];
 			} else {
-				[self.transferProgressField setStringValue:TXTFLS(@"TDCFileTransferDialog[1003]", self.peerNickname)];
+				[self.transferProgressField setStringValue:TXTLS(@"TDCFileTransferDialog[1003]", self.peerNickname)];
 			}
 
 			break;
@@ -165,37 +165,37 @@
 		case TDCFileTransferDialogTransferInitializingStatus:
 		{
 			if ([self isReceiving]) {
-				[self.transferProgressField setStringValue:TXTFLS(@"TDCFileTransferDialog[1012]", self.peerNickname)];
+				[self.transferProgressField setStringValue:TXTLS(@"TDCFileTransferDialog[1012]", self.peerNickname)];
 			} else {
-				[self.transferProgressField setStringValue:TXTFLS(@"TDCFileTransferDialog[1004]", self.peerNickname)];
+				[self.transferProgressField setStringValue:TXTLS(@"TDCFileTransferDialog[1004]", self.peerNickname)];
 			}
 
 			break;
 		}
 		case TDCFileTransferDialogTransferIsListeningAsSenderStatus:
 		{
-			[self.transferProgressField setStringValue:TXTFLS(@"TDCFileTransferDialog[1005]", self.peerNickname)];
+			[self.transferProgressField setStringValue:TXTLS(@"TDCFileTransferDialog[1005]", self.peerNickname)];
 
 			break;
 		}
 		case TDCFileTransferDialogTransferIsListeningAsReceiverStatus:
 		{
-			[self.transferProgressField setStringValue:TXTFLS(@"TDCFileTransferDialog[1013]", self.peerNickname)];
+			[self.transferProgressField setStringValue:TXTLS(@"TDCFileTransferDialog[1013]", self.peerNickname)];
 			
 			break;
 		}
 		case TDCFileTransferDialogTransferErrorStatus:
 		{
-			[self.transferProgressField setStringValue:TXTFLS(self.errorMessageToken, self.peerNickname)];
+			[self.transferProgressField setStringValue:TXTLS(self.errorMessageToken, self.peerNickname)];
 			
 			break;
 		}
 		case TDCFileTransferDialogTransferCompleteStatus:
 		{
 			if ([self isReceiving]) {
-				[self.transferProgressField setStringValue:TXTFLS(@"TDCFileTransferDialog[1014]", self.peerNickname)];
+				[self.transferProgressField setStringValue:TXTLS(@"TDCFileTransferDialog[1014]", self.peerNickname)];
 			} else {
-				[self.transferProgressField setStringValue:TXTFLS(@"TDCFileTransferDialog[1006]", self.peerNickname)];
+				[self.transferProgressField setStringValue:TXTLS(@"TDCFileTransferDialog[1006]", self.peerNickname)];
 			}
 
 			break;
@@ -225,15 +225,15 @@
 			
 			if (self.isReceiving) {
 				if (remainingTime) {
-					status = TXTFLS(@"TDCFileTransferDialog[1008][2]", processedSize, totalFilesize, transferSpeed, self.peerNickname, remainingTime);
+					status = TXTLS(@"TDCFileTransferDialog[1008][2]", processedSize, totalFilesize, transferSpeed, self.peerNickname, remainingTime);
 				} else {
-					status = TXTFLS(@"TDCFileTransferDialog[1008][1]", processedSize, totalFilesize, transferSpeed, self.peerNickname);
+					status = TXTLS(@"TDCFileTransferDialog[1008][1]", processedSize, totalFilesize, transferSpeed, self.peerNickname);
 				}
 			} else {
 				if (remainingTime) {
-					status = TXTFLS(@"TDCFileTransferDialog[1000][2]", processedSize, totalFilesize, transferSpeed, self.peerNickname, remainingTime);
+					status = TXTLS(@"TDCFileTransferDialog[1000][2]", processedSize, totalFilesize, transferSpeed, self.peerNickname, remainingTime);
 				} else {
-					status = TXTFLS(@"TDCFileTransferDialog[1000][1]", processedSize, totalFilesize, transferSpeed, self.peerNickname);
+					status = TXTLS(@"TDCFileTransferDialog[1000][1]", processedSize, totalFilesize, transferSpeed, self.peerNickname);
 				}
 			}
 			
@@ -243,13 +243,13 @@
 		}
 		case TDCFileTransferDialogTransferConnectingStatus:
 		{
-			[self.transferProgressField setStringValue:TXTFLS(@"TDCFileTransferDialog[1015]", self.peerNickname)];
+			[self.transferProgressField setStringValue:TXTLS(@"TDCFileTransferDialog[1015]", self.peerNickname)];
 			
 			break;
 		}
 		case TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus:
 		{
-			[self.transferProgressField setStringValue:TXTFLS(@"TDCFileTransferDialog[1007]", self.peerNickname)];
+			[self.transferProgressField setStringValue:TXTLS(@"TDCFileTransferDialog[1007]", self.peerNickname)];
 
 			break;
 		}
@@ -260,11 +260,11 @@
 	[self updateClearButton];
 }
 
-- (TXFSLongInt)currentSpeed
+- (TXUnsignedLongLong)currentSpeed
 {
 	NSObjectIsEmptyAssertReturn(self.speedRecords, 0);
 	
-	TXFSLongInt total = 0;
+	TXUnsignedLongLong total = 0;
 	
     for (NSNumber *num in self.speedRecords) {
         total += [num longLongValue];
@@ -339,17 +339,17 @@
 	return [self.associatedController transferPort];
 }
 
-- (TXFSLongInt)totalFilesize
+- (TXUnsignedLongLong)totalFilesize
 {
 	return [self.associatedController totalFilesize];
 }
 
-- (TXFSLongInt)processedFilesize
+- (TXUnsignedLongLong)processedFilesize
 {
 	return [self.associatedController processedFilesize];
 }
 
-- (TXFSLongInt)currentRecord
+- (TXUnsignedLongLong)currentRecord
 {
 	return [self.associatedController currentRecord];
 }

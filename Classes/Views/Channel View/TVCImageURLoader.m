@@ -122,7 +122,7 @@
 	/* Get data from headers. */
 	NSDictionary *headers = self.requestResponse.allHeaderFields;
 
-	TXFSLongInt sizeInBytes = [headers longLongForKey:@"Content-Length"];
+	TXUnsignedLongLong sizeInBytes = [headers longLongForKey:@"Content-Length"];
 
 	NSString *imageContentType = [headers stringForKey:@"Content-Type"];
 

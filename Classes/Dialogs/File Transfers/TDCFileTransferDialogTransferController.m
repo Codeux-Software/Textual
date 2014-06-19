@@ -507,7 +507,7 @@
 		}
 
 		/* Send to user. */
-		TXFSLongInt filesize = [fileAttrs longLongForKey:NSFileSize];
+		TXUnsignedLongLong filesize = [fileAttrs longLongForKey:NSFileSize];
 
 		/* Determine which type of message is sent… */
 		if ([self isReversed]) {

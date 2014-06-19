@@ -86,7 +86,7 @@ typedef enum TDCFileTransferDialogNavigationControllerSelectedTab : NSInteger {
 					 address:(NSString *)hostAddress
 						port:(NSInteger)hostPort
 					filename:(NSString *)filename
-					filesize:(TXFSLongInt)totalFilesize
+					filesize:(TXUnsignedLongLong)totalFilesize
 					   token:(NSString *)transferToken;
 
 - (void)addSenderForClient:(IRCClient *)client

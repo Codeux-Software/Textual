@@ -58,6 +58,3 @@
 }
 
 @end
-
-@implementation NSMenuExtendedHelperItem
-@end

@@ -40,18 +40,15 @@
 
 #define IRCConnectionDefaultServerPort		6667
 
-#define TXFloodControlDefaultDelayTimer       2
-#define TXFloodControlDefaultMessageCount     6
-
-#define TXDefaultPrimaryTextEncoding		NSUTF8StringEncoding
-#define TXDefaultFallbackTextEncoding		NSISOLatin1StringEncoding
+#define IRCClientConfigFloodControlDefaultDelayTimer       2
+#define IRCClientConfigFloodControlDefaultMessageCount     6
 
 typedef enum TXConnectionProxyType : NSInteger {
-	TXConnectionNoProxyType = 0,
-	TXConnectionSystemSocksProxyType = 1,
-	TXConnectionSocks4ProxyType = 4,
-	TXConnectionSocks5ProxyType = 5,
-} TXConnectionProxyType;
+	IRCConnectionSocketNoProxyType = 0,
+	IRCConnectionSocketSystemSocksProxyType = 1,
+	IRCConnectionSocketSocks4ProxyType = 4,
+	IRCConnectionSocketSocks5ProxyType = 5,
+} IRCConnectionSocketProxyType;
 
 @interface IRCClientConfig : NSObject <NSMutableCopying>
 @property (nonatomic, assign) BOOL autoConnect;
@@ -77,7 +74,7 @@ typedef enum TXConnectionProxyType : NSInteger {
 @property (nonatomic, assign) NSInteger floodControlMaximumMessages;
 @property (nonatomic, assign) NSInteger fallbackEncoding;
 @property (nonatomic, assign) NSInteger primaryEncoding;
-@property (nonatomic, assign) TXConnectionProxyType proxyType;
+@property (nonatomic, assign) IRCConnectionSocketProxyType proxyType;
 @property (nonatomic, strong) NSMutableArray *alternateNicknames;
 @property (nonatomic, strong) NSMutableArray *channelList;
 @property (nonatomic, strong) NSMutableArray *ignoreList;
@@ -100,16 +97,9 @@ typedef enum TXConnectionProxyType : NSInteger {
 @property (nonatomic, strong) NSString *normalLeavingComment;
 @property (nonatomic, strong) NSString *sleepModeLeavingComment;
 @property (nonatomic, strong) NSData *identitySSLCertificate;
-
 @property (nonatomic, assign) BOOL serverPasswordIsSet;
 @property (nonatomic, assign) BOOL nicknamePasswordIsSet;
 @property (nonatomic, assign) BOOL proxyPasswordIsSet;
-
-/* This dictionary contains configuration options that are not
- accessible by the user interface. Instead, they are set bu the
- /defaults command so that server specific features can be used 
- by some users without the need to bloat the user interface with
- a checkbox only a few users may use. */
 @property (nonatomic, strong) NSMutableDictionary *auxiliaryConfiguration;
 
 - (BOOL)isEqualToClientConfiguration:(IRCClientConfig *)seed;
@@ -119,7 +109,6 @@ typedef enum TXConnectionProxyType : NSInteger {
 - (NSMutableDictionary *)dictionaryValue;
 - (NSMutableDictionary *)dictionaryValue:(BOOL)isCloudDictionary;
 
-/* Keychain. */
 - (void)destroyKeychains;
 
 - (NSString *)temporaryNicknamePassword;

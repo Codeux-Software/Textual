@@ -5,7 +5,6 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 — 2014 Codeux Software & respective contributors.
      Please see Acknowledgements.pdf for additional information.
 
@@ -38,15 +37,33 @@
 
 #import "TextualApplication.h"
 
-@interface TLONickCompletionStatus : NSObject
-@property (nonatomic, strong) NSString *cachedTextFieldStringValue;
-@property (nonatomic, strong) NSString *cachedBackwardCutStringValue;
-@property (nonatomic, strong) NSString *cachedLastCompleteStringValue;
-@property (nonatomic, assign) NSRange lastTextFieldSelectionRange;
-@property (nonatomic, assign) NSRange lastCompletionCompletedRange;
-@property (nonatomic, assign) NSRange lastCompletionFragmentRange;
-@property (nonatomic, assign) NSInteger lastCompletionSelectionIndex;
+typedef enum TPCPreferencesKeyReloadAction : NSInteger {
+	TPCPreferencesKeyReloadDockIconBadgesAction,
+	TPCPreferencesKeyReloadHighlightKeywordsAction,
+	TPCPreferencesKeyReloadHighlightLoggingAction,
+	TPCPreferencesKeyReloadInputHistoryScopeAction,
+	TPCPreferencesKeyReloadMainWindowAppearanceAction,
+	TPCPreferencesKeyReloadMainWindowTransparencyLevelAction,
+	TPCPreferencesKeyReloadMemberListAction,
+	TPCPreferencesKeyReloadMemberListSortOrderAction,
+	TPCPreferencesKeyReloadMemberListUserBadgesAction,
+	TPCPreferencesKeyReloadPreferencesChangedAction,
+	TPCPreferencesKeyReloadServerListAction,
+	TPCPreferencesKeyReloadStyleAction,
+	TPCPreferencesKeyReloadStyleWithTableViewsAction,
+	TPCPreferencesKeyReloadTextDirectionAction,
+	TPCPreferencesKeyReloadTextFieldFontSizeAction,
+	TPCPreferencesKeyReloadTextFieldSegmentedControllerOriginAction
+} TPCPreferencesKeyReloadAction;
 
-- (void)completeNick:(BOOL)forward;
-- (void)clear:(BOOL)clearLastValue;
+@interface TPCPreferences (TPCPreferencesCloudSyncExtension)
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
++ (BOOL)syncPreferencesToTheCloud; /* ZE CLOUD! */
++ (BOOL)syncPreferencesToTheCloudLimitedToServers;
+#endif
+
++ (BOOL)performValidationForKeyValues:(BOOL)duringInitialization;
+
++ (void)performReloadActionForKeyValues:(NSArray *)prefKeys;
++ (void)performReloadActionForActionType:(TPCPreferencesKeyReloadAction)reloadAction;
 @end

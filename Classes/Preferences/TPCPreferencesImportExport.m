@@ -50,7 +50,7 @@
 {
 	TLOPopupPrompts *prompt = [TLOPopupPrompts new];
 
-	[prompt sheetWindowWithQuestion:self.masterController.mainWindow
+	[prompt sheetWindowWithQuestion:mainWindow()
 							 target:self
 							 action:@selector(importPreflight:withOriginalAlert:)
 							   body:TXTLS(@"BasicLanguage[1181][2]")
@@ -77,7 +77,7 @@
 
 		[d beginWithCompletionHandler:^(NSInteger returnCode) {
 			if (returnCode == NSOKButton) {
-				NSURL *pathURL = [d.URLs safeObjectAtIndex:0];
+				NSURL *pathURL = [d URLs][0];
 
 				[self importPostflight:pathURL];
 			}
@@ -88,12 +88,12 @@
 + (void)importPostflight:(NSURL *)pathURL
 {
 	/* The loading screen is a generic way to show something during import. */
-	[self.masterController.mainWindowLoadingScreen hideAll:NO];
-	[self.masterController.mainWindowLoadingScreen popLoadingConfigurationView];
+	[[mainWindow() loadingScreen] hideAll:NO];
+	[[mainWindow() loadingScreen] popLoadingConfigurationView];
 
 	/* isPopulatingSeeds tells the world to not close the loading screen on state
 	 changes when creating new connections. */
-	self.worldController.isPopulatingSeeds = YES;
+	[worldController() setIsPopulatingSeeds:YES];
 
 	/* Before we do anything at all, we create a backup of the old configuration. */
 	/* We refuse to continue unless that wrote successfully. */
@@ -206,40 +206,41 @@
 	/* Create a configuration rep. */
 	IRCClientConfig *config = [[IRCClientConfig alloc] initWithDictionary:client];
 	
-	PointerIsEmptyAssert(config);
-	
-	/* Try to find any clients matching this value. */
-	IRCClient *u = [self.worldController findClientById:[config itemUUID]];
-	
-	/* Handle cloud sync logic. */
+	/* Were we able to create new configuration? */
+	if (config) {
+		/* Try to find any clients matching this value. */
+		IRCClient *u = [worldController() findClientById:[config itemUUID]];
+		
+		/* Handle cloud sync logic. */
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	if (isCloudImport) {
-		if (u && [u.config excludedFromCloudSyncing]) {
-			return;
+		if (isCloudImport) {
+			if (u && [[u config] excludedFromCloudSyncing]) {
+				return;
+			}
 		}
-	}
 #endif
-	
-	if (u) {
-		[u updateConfig:config fromTheCloud:isCloudImport withSelectionUpdate:YES];
-	} else {
-		[self.worldController createClient:config reload:YES];
+		
+		if (u) {
+			[u updateConfig:config fromTheCloud:isCloudImport withSelectionUpdate:YES];
+		} else {
+			[worldController() createClient:config reload:YES];
+		}
 	}
 }
 
 + (void)importPostflightCleanup:(NSArray *)changedKeys
 {
 	/* Update selection. */
-	[self.worldController setupTree];
+	[worldController() setupTree];
 
 	/* Reload preferences. */
 	[TPCPreferences performReloadActionForKeyValues:changedKeys];
 
 	/* Finish seeding. */
-	self.worldController.isPopulatingSeeds = NO;
+	[worldController() setIsPopulatingSeeds:NO];
 
 	/* Pop loading screen. */
-	[self.worldController reloadLoadingScreen];
+	[worldController() reloadLoadingScreen];
 }
 
 #pragma mark -
@@ -352,7 +353,7 @@
 
 	[d beginWithCompletionHandler:^(NSInteger returnCode) {
 		if (returnCode == NSOKButton) {
-			(void)[self exportPostflightForURL:d.URL filterJunk:YES];
+			(void)[self exportPostflightForURL:[d URL] filterJunk:YES];
 		}
 	}];
 }

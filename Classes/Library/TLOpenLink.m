@@ -42,13 +42,16 @@
 
 + (void)open:(NSURL *)url
 {
-	if ([TPCPreferences openBrowserInBackground]) {
+	if ([TPCPreferences openBrowserInBackground])
+	{
 		[RZWorkspace() openURLs:@[url]
 		withAppBundleIdentifier:nil
 						options:NSWorkspaceLaunchWithoutActivation
  additionalEventParamDescriptor:nil
 			  launchIdentifiers:nil];
-	} else {
+	}
+	else
+	{
 		[RZWorkspace() openURL:url];
 	}
 }

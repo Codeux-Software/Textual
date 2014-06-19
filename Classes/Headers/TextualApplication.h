@@ -48,9 +48,6 @@
 	#import <BlowfishEncryption/BlowfishEncryption.h>
 	#import <SystemInformation/SystemInformation.h>
 	#import <AutoHyperlinks/AutoHyperlinks.h>
-	#import <HockeySDK/HockeySDK.h>
-
-	#import "StaticDefinitions.h"
 
 	/* Class Forwarders. */
 
@@ -60,6 +57,7 @@
 	@class IRCChannelMode;
 	@class IRCClient;
 	@class IRCClientConfig;
+	@class IRCCommandIndex;
 	@class IRCConnection;
 	@class IRCExtras;
 	@class IRCISupportInfo;
@@ -70,7 +68,6 @@
 	@class IRCTreeItem;
 	@class IRCUser;
 	@class IRCWorld;
-	@class NSMenuExtendedHelperItem;
 	@class TDCAboutPanel;
 	@class TDCAddressBookSheet;
 	@class TDCFileTransferDialog;
@@ -105,7 +102,7 @@
 	@class TLOKeyEventHandler;
 	@class TLOLanguagePreferences;
 	@class TLOLinkParser;
-	@class TLONickCompletionStatus;
+	@class TLONicknameCompletionStatus;
 	@class TLOPopupPrompts;
 	@class TLORegularExpression;
 	@class TLOSoundPlayer;
@@ -114,6 +111,8 @@
 	@class TLOTimerCommand;
 	@class TLOpenLink;
 	@class TPCPreferences;
+	@class TPCApplicationInfo;
+	@class TPCPathInfo;
 	@class TPCPreferencesCloudSync;
 	@class TPCPreferencesImportExport;
 	@class TPCResourceManager;
@@ -160,6 +159,17 @@
 	@class TVCWebViewAutoScroll;
 	@class TXMasterController;
 	@class TXMenuController;
+	@class TXSharedApplication;
+	@class TXUserInterface;
+
+	/* Static Defeinitions. */
+
+	#import "StaticDefinitions.h"
+
+	/* Import frameworks based on defines. */
+	#ifndef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_DISABLED
+		#import <HockeySDK/HockeySDK.h>
+	#endif
 
 	/* 3rd Party Extensions. */
 
@@ -198,6 +208,7 @@
 	#import "IRCClient.h"
 	#import "IRCClientConfig.h"
 	#import "IRCColorFormat.h"
+	#import "IRCCommandIndex.h"
 	#import "IRCConnection.h"
 	#import "IRCConnectionSocket.h"
 	#import "IRCExtras.h"
@@ -276,7 +287,7 @@
 	#import "TLOKeyEventHandler.h"
 	#import "TLOLanguagePreferences.h"
 	#import "TLOLinkParser.h"
-	#import "TLONickCompletionStatus.h"
+	#import "TLONicknameCompletionStatus.h"
 	#import "TLOPopupPrompts.h"
 	#import "TLORegularExpression.h"
 	#import "TLOSoundPlayer.h"
@@ -287,8 +298,11 @@
 
 	/* Preferences. */
 
+	#import "TPCApplicationInfo.h"
+	#import "TPCPathInfo.h"
 	#import "TPCPreferences.h"
 	#import "TPCPreferencesCloudSync.h"
+	#import "TPCPreferencesCloudSyncExtension.h"
 	#import "TPCPreferencesImportExport.h"
 	#import "TPCResourceManager.h"
 	#import "TPCThemeController.h"
@@ -334,6 +348,8 @@
 	#import "TXGlobalModels.h"
 	#import "TXMasterController.h"
 	#import "TXMenuController.h"
+	#import "TXSharedApplication.h"
+	#import "TXUserInterface.h"
 #endif
 
 /* @end */

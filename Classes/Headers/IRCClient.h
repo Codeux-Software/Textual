@@ -41,29 +41,29 @@
 #import "TVCLogLine.h"			// typedef enum
 #import "TLOGrowlController.h"	// typedef enum
 
-typedef enum IRCConnectMode : NSInteger {
-	IRCConnectNormalMode,
-	IRCConnectRetryMode,
-	IRCConnectReconnectMode,
-	IRCConnectBadSSLCertificateMode,
-} IRCConnectMode;
+typedef enum IRCClientConnectMode : NSInteger {
+	IRCClientConnectNormalMode,
+	IRCClientConnectRetryMode,
+	IRCClientConnectReconnectMode,
+	IRCClientConnectBadSSLCertificateMode,
+} IRCClientConnectMode;
 
-typedef enum IRCDisconnectMode : NSInteger {
-	IRCDisconnectNormalMode,
-	IRCDisconnectTrialPeriodMode,
-	IRCDisconnectComputerSleepMode,
-	IRCDisconnectBadSSLCertificateMode,
-	IRCDisconnectReachabilityChangeMode,
-	IRCDisconnectServerRedirectMode,
-} IRCDisconnectMode;
+typedef enum IRCClientDisconnectMode : NSInteger {
+	IRCClientDisconnectNormalMode,
+	IRCClientDisconnectTrialPeriodMode,
+	IRCClientDisconnectComputerSleepMode,
+	IRCClientDisconnectBadSSLCertificateMode,
+	IRCClientDisconnectReachabilityChangeMode,
+	IRCClientDisconnectServerRedirectMode,
+} IRCClientDisconnectMode;
 
-typedef enum IRCIdentificationWithSASLMechanism : NSInteger {
-	IRCIdentificationWithSASLNoMechanism,
-	IRCIdentificationWithSASLPlainTextMechanism,
-	IRCIdentificationWithSASLExternalMechanism,
-} IRCIdentificationWithSASLMechanism;
+typedef enum IRCClientIdentificationWithSASLMechanism : NSInteger {
+	IRCClientIdentificationWithSASLNoMechanism,
+	IRCClientIdentificationWithSASLPlainTextMechanism,
+	IRCClientIdentificationWithSASLExternalMechanism,
+} IRCClientIdentificationWithSASLMechanism;
 
-typedef struct IRCv3SupportedClientCapacities {
+typedef struct ClientIRCv3SupportedCapacities {
 	BOOL awayNotifyCapInUse;		// YES if away-notify CAP supported.
 	BOOL identifyCTCPCapInUse;		// YES if identify-ctcp CAP supported.
 	BOOL identifyMsgCapInUse;		// YES if identify-msg CAP supported.
@@ -74,18 +74,15 @@ typedef struct IRCv3SupportedClientCapacities {
 	BOOL zncPlaybackCapInUse;		// YES if the ZNC vendor specific playback CAP supported.
 	BOOL isInActiveSASLNegotation;	// YES if in SASL CAP authentication request, else NO.
 	BOOL isIdentifiedWithSASL;		// YES if SASL authentication was successful, else NO.
-} IRCv3SupportedClientCapacities;
+} ClientIRCv3SupportedCapacities;
 
 @interface IRCClient : IRCTreeItem
-/* Public information. They are considered read-only outside of
- IRCClient. Just not enforced. Play nice plugins. */
-
 @property (nonatomic, strong) IRCClientConfig *config;
 @property (nonatomic, strong) IRCISupportInfo *isupport;
-@property (nonatomic, assign) IRCConnectMode connectType;
-@property (nonatomic, assign) IRCDisconnectMode disconnectType;
+@property (nonatomic, assign) IRCClientConnectMode connectType;
+@property (nonatomic, assign) IRCClientDisconnectMode disconnectType;
+@property (nonatomic, assign) ClientIRCv3SupportedCapacities capacities;
 @property (nonatomic, assign) NSInteger connectDelay;
-@property (nonatomic, assign) IRCv3SupportedClientCapacities capacities;
 @property (nonatomic, assign) BOOL inUserInvokedNamesRequest;
 @property (nonatomic, assign) BOOL inUserInvokedWhoRequest;
 @property (nonatomic, assign) BOOL inUserInvokedWhowasRequest;
@@ -108,9 +105,9 @@ typedef struct IRCv3SupportedClientCapacities {
 @property (nonatomic, assign) BOOL serverHasNickServ;			// YES if NickServ service was found on server, else NO.
 @property (nonatomic, strong) NSMutableArray *CAPAcceptedCaps;
 @property (nonatomic, strong) NSMutableArray *CAPPendingCaps;
-@property (nonatomic, strong) IRCChannel *lastSelectedChannel;
 @property (nonatomic, strong) NSMutableArray *channels;
 @property (nonatomic, strong) NSMutableArray *highlights;
+@property (nonatomic, strong) IRCChannel *lastSelectedChannel;
 @property (nonatomic, strong) NSString *preAwayNickname; // Nickname before away was set.
 @property (nonatomic, assign) NSTimeInterval lastMessageReceived;			// The time at which the last of any incoming data was received.
 @property (nonatomic, assign) NSTimeInterval lastMessageServerTime;			// The time of the last message received that contained a server-time CAP.
@@ -158,18 +155,18 @@ typedef struct IRCv3SupportedClientCapacities {
 - (void)postEventToViewController:(NSString *)eventToken;
 - (void)postEventToViewController:(NSString *)eventToken forChannel:(IRCChannel *)channel;
 
-- (IRCAddressBook *)checkIgnoreAgainstHostmask:(NSString *)host withMatches:(NSArray *)matches;
+- (IRCAddressBookEntry *)checkIgnoreAgainstHostmask:(NSString *)host withMatches:(NSArray *)matches;
 
 - (BOOL)encryptOutgoingMessage:(NSString **)message channel:(IRCChannel *)channel;
 - (void)decryptIncomingMessage:(NSString **)message channel:(IRCChannel *)channel;
 
 - (BOOL)outputRuleMatchedInMessage:(NSString *)raw inChannel:(IRCChannel *)chan withLineType:(TVCLogLineType)type;
 
-- (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXFSLongInt)totalFilesize token:(NSString *)transferToken;
+- (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken;
 
 - (void)connect;
-- (void)connect:(IRCConnectMode)mode;
-- (void)connect:(IRCConnectMode)mode preferringIPv6:(BOOL)preferIPv6;
+- (void)connect:(IRCClientConnectMode)mode;
+- (void)connect:(IRCClientConnectMode)mode preferringIPv6:(BOOL)preferIPv6;
 
 - (void)disconnect;
 - (void)quit;
@@ -234,7 +231,7 @@ typedef struct IRCv3SupportedClientCapacities {
 - (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nick:(NSString *)nick text:(NSString *)text;
 - (BOOL)notifyText:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nick:(NSString *)nick text:(NSString *)text;
 
-- (void)notifyFileTransfer:(TXNotificationType)type nickname:(NSString *)nickname filename:(NSString *)filename filesize:(TXFSLongInt)totalFilesize;
+- (void)notifyFileTransfer:(TXNotificationType)type nickname:(NSString *)nickname filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize;
 
 - (void)populateISONTrackedUsersList:(NSMutableArray *)ignores;
 
@@ -274,14 +271,4 @@ completionBlock:(void(^)(BOOL highlighted))completionBlock;		// A block to call 
 
 - (void)printErrorReply:(IRCMessage *)m;
 - (void)printErrorReply:(IRCMessage *)m channel:(IRCChannel *)channel;
-
-/* ******************************** Deprecated ********************************  */
-/* Use of these methods will throw an exception.								 */
-/* ****************************************************************************  */
-
-- (void)printError:(NSString *)error TEXTUAL_DEPRECATED;
-
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text TEXTUAL_DEPRECATED;
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt TEXTUAL_DEPRECATED;
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt TEXTUAL_DEPRECATED;
 @end

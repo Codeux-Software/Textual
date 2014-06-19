@@ -48,7 +48,7 @@
 
 - (NSString *)completePath;
 
-- (TXFSLongInt)currentSpeed;
+- (TXUnsignedLongLong)currentSpeed;
 
 - (void)populateBasicInformation;
 

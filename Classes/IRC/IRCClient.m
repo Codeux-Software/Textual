@@ -642,14 +642,14 @@
 #pragma mark -
 #pragma mark Ignore Matching
 
-- (IRCAddressBook *)checkIgnoreAgainstHostmask:(NSString *)host withMatches:(NSArray *)matches
+- (IRCAddressBookEntry *)checkIgnoreAgainstHostmask:(NSString *)host withMatches:(NSArray *)matches
 {
 	NSObjectIsEmptyAssertReturn(host, nil);
 	NSObjectIsEmptyAssertReturn(matches, nil);
 	
 	NSString *hostmask = [host lowercaseString];
 
-	for (IRCAddressBook *g in self.config.ignoreList) {
+	for (IRCAddressBookEntry *g in self.config.ignoreList) {
 		if ([g checkIgnore:hostmask]) {
 			NSDictionary *ignoreDict = [g dictionaryValue];
 
@@ -800,7 +800,7 @@
 
 			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
 			
-			formattedMessage = TXTFLS(nformatString, target.name.channelNameToken, nick, text);
+			formattedMessage = TXTLS(nformatString, target.name.channelNameToken, nick, text);
 
 			break;
 		}
@@ -812,7 +812,7 @@
 
 			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
 
-			formattedMessage = TXTFLS(nformatString, nick, text);
+			formattedMessage = TXTLS(nformatString, nick, text);
 			
 			break;
 		}
@@ -820,7 +820,7 @@
 		{
 			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
 
-			formattedMessage = TXTFLS(nformatString, target.name.channelNameToken, nick);
+			formattedMessage = TXTLS(nformatString, target.name.channelNameToken, nick);
 
 			break;
 		}
@@ -828,7 +828,7 @@
 		{
 			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
 
-			formattedMessage = TXTFLS(nformatString, text.channelNameToken, nick);
+			formattedMessage = TXTLS(nformatString, text.channelNameToken, nick);
 
 			break;
 		}
@@ -837,7 +837,7 @@
 		{
 			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
 
-			formattedMessage = TXTFLS(nformatString, self.altNetworkName);
+			formattedMessage = TXTLS(nformatString, self.altNetworkName);
 			
 			break;
 		}
@@ -855,7 +855,7 @@
 		{
 			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
 			
-			formattedMessage = TXTFLS(nformatString, nick);
+			formattedMessage = TXTLS(nformatString, nick);
 		}
 	}
 
@@ -1034,7 +1034,7 @@
 			
 			title = target.name;
 			
-			desc = TXTFLS(@"BasicLanguage[1077]", nick, text);
+			desc = TXTLS(@"BasicLanguage[1077]", nick, text);
 
 			break;
 		}
@@ -1042,7 +1042,7 @@
 		{
 			title = [self altNetworkName];
 			
-			desc = TXTFLS(@"BasicLanguage[1076]", nick, text);
+			desc = TXTLS(@"BasicLanguage[1076]", nick, text);
 
 			break;
 		}
@@ -2319,7 +2319,7 @@
 			if (PointerIsEmpty(selChannel)) {
 				[self printDebugInformationToConsole:text];
 			} else {
-				text = TXTFLS(@"BasicLanguage[1114]", text);
+				text = TXTLS(@"BasicLanguage[1114]", text);
 
 				[self sendPrivmsgToSelectedChannel:text];
 			}
@@ -2356,7 +2356,7 @@
 
 			NSTimeInterval timeDiff = [NSDate secondsSinceUnixTimestamp:TXBirthdayReferenceDate];
 
-			NSString *message = TXTFLS(@"BasicLanguage[1226]", TXReadableTime(timeDiff));
+			NSString *message = TXTLS(@"BasicLanguage[1226]", TXReadableTime(timeDiff));
 
 			if (PointerIsEmpty(selChannel)) {
 				[self printDebugInformationToConsole:message];
@@ -2382,8 +2382,8 @@
 				scriptResult = TXTLS(@"BasicLanguage[1105]");
 			}
 
-			[self printDebugInformation:TXTFLS(@"BasicLanguage[1103]", bundleResult)];
-			[self printDebugInformation:TXTFLS(@"BasicLanguage[1104]", scriptResult)];
+			[self printDebugInformation:TXTLS(@"BasicLanguage[1103]", bundleResult)];
+			[self printDebugInformation:TXTLS(@"BasicLanguage[1104]", scriptResult)];
 
 			break;
 		}
@@ -2496,7 +2496,7 @@
 			if (NSObjectIsNotEmpty(self.CAPAcceptedCaps)) {
 				NSString *caps = [self.CAPAcceptedCaps componentsJoinedByString:@", "];
 
-				[self printDebugInformation:TXTFLS(@"BasicLanguage[1121]", caps)];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1121]", caps)];
 			} else {
 				[self printDebugInformation:TXTLS(@"BasicLanguage[1120]")];
 			}
@@ -2638,9 +2638,9 @@
 						(applyToAll		  && [providedKeys containsObject:section3] == NO))
 					{
 						if (applyToAll) {
-							[self printDebugInformation:TXTFLS(@"BasicLanguage[1035]", section3)];
+							[self printDebugInformation:TXTLS(@"BasicLanguage[1035]", section3)];
 						} else {
-							[self printDebugInformation:TXTFLS(@"BasicLanguage[1035]", section2)];
+							[self printDebugInformation:TXTLS(@"BasicLanguage[1035]", section2)];
 						}
 					} else {
 						if (applyToAll) {
@@ -2648,15 +2648,15 @@
 								[[u.config auxiliaryConfiguration] setBool:YES forKey:section3];
 
 								if (u == self) {
-									[u printDebugInformation:TXTFLS(@"BasicLanguage[1037]", section3)];
+									[u printDebugInformation:TXTLS(@"BasicLanguage[1037]", section3)];
 								} else {
-									[u printDebugInformationToConsole:TXTFLS(@"BasicLanguage[1037]", section3)];
+									[u printDebugInformationToConsole:TXTLS(@"BasicLanguage[1037]", section3)];
 								}
 							}
 						} else {
 							[[self auxiliaryConfiguration] setBool:YES forKey:section2];
 
-							[self printDebugInformation:TXTFLS(@"BasicLanguage[1037]", section2)];
+							[self printDebugInformation:TXTLS(@"BasicLanguage[1037]", section2)];
 						}
 
 						[self.worldController save];
@@ -2674,9 +2674,9 @@
 						(applyToAll		  && [providedKeys containsObject:section3] == NO))
 					{
 						if (applyToAll) {
-							[self printDebugInformation:TXTFLS(@"BasicLanguage[1036]", section3)];
+							[self printDebugInformation:TXTLS(@"BasicLanguage[1036]", section3)];
 						} else {
-							[self printDebugInformation:TXTFLS(@"BasicLanguage[1036]", section2)];
+							[self printDebugInformation:TXTLS(@"BasicLanguage[1036]", section2)];
 						}
 					} else {
 						if (applyToAll) {
@@ -2684,15 +2684,15 @@
 								[[u.config auxiliaryConfiguration] setBool:NO forKey:section3];
 
 								if (u == self) {
-									[u printDebugInformation:TXTFLS(@"BasicLanguage[1038]", section3)];
+									[u printDebugInformation:TXTLS(@"BasicLanguage[1038]", section3)];
 								} else {
-									[u printDebugInformationToConsole:TXTFLS(@"BasicLanguage[1038]", section3)];
+									[u printDebugInformationToConsole:TXTLS(@"BasicLanguage[1038]", section3)];
 								}
 							}
 						} else {
 							[[self auxiliaryConfiguration] setBool:NO forKey:section2];
 
-							[self printDebugInformation:TXTFLS(@"BasicLanguage[1038]", section2)];
+							[self printDebugInformation:TXTLS(@"BasicLanguage[1038]", section2)];
 						}
 
 						[self.worldController save];
@@ -3125,7 +3125,7 @@
 
 - (void)printErrorReply:(IRCMessage *)m channel:(IRCChannel *)channel
 {
-	NSString *text = TXTFLS(@"BasicLanguage[1139]", m.numericReply, [m sequence]);
+	NSString *text = TXTLS(@"BasicLanguage[1139]", m.numericReply, [m sequence]);
 
 	[self print:channel type:TVCLogLineDebugType nick:nil text:text encrypted:NO receivedAt:m.receivedAt command:m.command message:nil completionBlock:NULL];
 }
@@ -3272,7 +3272,7 @@
 	if ([[self.config serverAddress] isIPAddress]) {
 		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1129]")];
 	} else {
-		[self printDebugInformationToConsole:TXTFLS(@"BasicLanguage[1130]", [self.socket connectedAddress])];
+		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1130]", [self.socket connectedAddress])];
 	}
 
 	self.isLoggedIn	= NO;
@@ -3638,7 +3638,7 @@
 	}
 
 	/* Ignore dictionary. */
-	IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
+	IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
 														withMatches:@[	@"ignoreHighlights",
 																		@"ignorePMHighlights",
 																		@"ignoreNotices",
@@ -3976,7 +3976,7 @@
 
 	NSMutableString *s = text.mutableCopy;
 
-	IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
+	IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
 														withMatches:@[@"ignoreCTCP",
 																	  @"ignoreFileTransferRequests"]];
 
@@ -3988,7 +3988,7 @@
 	NSObjectIsEmptyAssert(command);
 
 	if ([TPCPreferences replyToCTCPRequests] == NO) {
-		return [self printDebugInformationToConsole:TXTFLS(@"BasicLanguage[1116]", command, sendern)];
+		return [self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1116]", command, sendern)];
 	}
 
 	if ([command isEqualToString:IRCPrivateCommandIndex("dcc")]) {
@@ -4002,7 +4002,7 @@
 			target = [self.worldController selectedChannelOn:self];
 		}
 
-		NSString *textm = TXTFLS(@"BasicLanguage[1148]", command, sendern);
+		NSString *textm = TXTLS(@"BasicLanguage[1148]", command, sendern);
 
 		if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_lagcheck")] == NO) {
 			[self print:target
@@ -4021,7 +4021,7 @@
 			[self sendCTCPReply:sendern command:command text:[[NSDate date] descriptionWithLocale:[NSLocale currentLocale]]];
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_cap")]) {
 			if ([s isEqualIgnoringCase:@"LS"]) {
-				[self sendCTCPReply:sendern command:command text:TXTFLS(@"BasicLanguage[1117]")];
+				[self sendCTCPReply:sendern command:command text:TXTLS(@"BasicLanguage[1117]")];
 			}
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_userinfo")] ||
 				   [command isEqualToString:IRCPrivateCommandIndex("ctcp_version")])
@@ -4062,7 +4062,7 @@
 				} else if (delta >= 10.0 && delta < 30.0) {		rating = TXTLS(@"BasicLanguage[1109][08]");
 				} else if (delta >= 30.0) {						rating = TXTLS(@"BasicLanguage[1109][09]"); }
 
-				textm = TXTFLS(@"BasicLanguage[1106]", [self networkAddress], delta, rating);
+				textm = TXTLS(@"BasicLanguage[1106]", [self networkAddress], delta, rating);
 			} else {
 				textm = TXTLS(@"BasicLanguage[1108]");
 			}
@@ -4086,7 +4086,7 @@
 
 	NSMutableString *s = text.mutableCopy;
 
-	IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.address
+	IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.address
 														withMatches:@[@"ignoreCTCP"]];
 
 	NSAssertReturn([ignoreChecks ignoreCTCP] == NO);
@@ -4103,9 +4103,9 @@
 	if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_ping")]) {
 		double delta = ([NSDate epochTime] - [s doubleValue]);
 		
-		text = TXTFLS(@"BasicLanguage[1146]", sendern, command, delta);
+		text = TXTLS(@"BasicLanguage[1146]", sendern, command, delta);
 	} else {
-		text = TXTFLS(@"BasicLanguage[1147]", sendern, command, s);
+		text = TXTLS(@"BasicLanguage[1147]", sendern, command, s);
 	}
 
 	[self print:c
@@ -4184,7 +4184,7 @@
 				[self print:query
 					   type:TVCLogLineJoinType
 					   nick:nil
-					   text:TXTFLS(@"BasicLanguage[1155]", sendern)
+					   text:TXTLS(@"BasicLanguage[1155]", sendern)
 				 receivedAt:m.receivedAt
 					command:m.command];
 				
@@ -4193,7 +4193,7 @@
 		}
 	}
 
-	IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
+	IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
 														withMatches:@[@"ignoreJPQE", @"notifyJoins"]];
 
 	if (m.isPrintOnlyMessage == NO) {
@@ -4205,7 +4205,7 @@
 	}
 
 	if ([TPCPreferences showJoinLeave] || myself) {
-		NSString *text = TXTFLS(@"BasicLanguage[1161]", sendern, m.sender.username, m.sender.address);
+		NSString *text = TXTLS(@"BasicLanguage[1161]", sendern, m.sender.username, m.sender.address);
 
 		[self print:c
 			   type:TVCLogLineJoinType
@@ -4251,17 +4251,17 @@
 	BOOL myself = [sendern isEqualIgnoringCase:self.localNickname];
 
 	if ([TPCPreferences showJoinLeave] || myself) {
-		IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
+		IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
 															withMatches:@[@"ignoreJPQE"]];
 
 		if (([ignoreChecks ignoreJPQE] || c.config.ignoreJPQActivity) && myself == NO) {
 			return;
 		}
 
-		NSString *message = TXTFLS(@"BasicLanguage[1163]", sendern, m.sender.username, m.sender.address);
+		NSString *message = TXTLS(@"BasicLanguage[1163]", sendern, m.sender.username, m.sender.address);
 
 		if (NSObjectIsNotEmpty(comment)) {
-			message = TXTFLS(@"BasicLanguage[1164]", message, comment);
+			message = TXTLS(@"BasicLanguage[1164]", message, comment);
 		}
 
 		[self print:c
@@ -4311,14 +4311,14 @@
 	BOOL myself = [sendern isEqualIgnoringCase:self.localNickname];
 
 	if ([TPCPreferences showJoinLeave] || myself) {
-		IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
+		IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
 															withMatches:@[@"ignoreJPQE"]];
 
 		if (([ignoreChecks ignoreJPQE] || c.config.ignoreJPQActivity) && myself == NO) {
 			return;
 		}
 
-		NSString *message = TXTFLS(@"BasicLanguage[1162]", sendern, targetu, comment);
+		NSString *message = TXTLS(@"BasicLanguage[1162]", sendern, targetu, comment);
 
 		[self print:c
 			   type:TVCLogLineKickType
@@ -4341,7 +4341,7 @@
 
 	BOOL myself = [sendern isEqualIgnoringCase:self.localNickname];
 
-	IRCAddressBook *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
+	IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
 														withMatches:@[@"ignoreJPQE", @"notifyJoins"]];
 
 	/* When m.isPrintOnlyMessage is set for quit messages the order in which
@@ -4356,16 +4356,16 @@
 	}
 
 	/* Continue. */
-	NSString *text = TXTFLS(@"BasicLanguage[1153]", sendern, m.sender.username, m.sender.address);
+	NSString *text = TXTLS(@"BasicLanguage[1153]", sendern, m.sender.username, m.sender.address);
 
 	if (NSObjectIsNotEmpty(comment)) {
 		NSString *nsrgx = @"^((([a-zA-Z0-9-_\\.\\*]+)\\.([a-zA-Z0-9-_]+)) (([a-zA-Z0-9-_\\.\\*]+)\\.([a-zA-Z0-9-_]+)))$";
 		
 		if ([TLORegularExpression string:comment isMatchedByRegex:nsrgx]) {
-			comment = TXTFLS(@"BasicLanguage[1149]", comment);
+			comment = TXTLS(@"BasicLanguage[1149]", comment);
 		}
 
-		text = TXTFLS(@"BasicLanguage[1150]", text, comment);
+		text = TXTLS(@"BasicLanguage[1150]", text, comment);
 	}
 
 	/* Is this a targetted print message? */
@@ -4393,7 +4393,7 @@
 		if ([c memberWithNickname:sendern]) {
 			if (([TPCPreferences showJoinLeave] && [ignoreChecks ignoreJPQE] == NO && c.config.ignoreJPQActivity == NO) || myself || c.isPrivateMessage) {
 				if (c.isPrivateMessage) {
-					text = TXTFLS(@"BasicLanguage[1154]", sendern);
+					text = TXTLS(@"BasicLanguage[1154]", sendern);
 				}
 
 				[self print:c
@@ -4442,7 +4442,7 @@
 
 - (void)receiveNick:(IRCMessage *)m
 {
-	IRCAddressBook *ignoreChecks;
+	IRCAddressBookEntry *ignoreChecks;
 
 	NSString *oldNick = m.sender.nickname;
 	NSString *newNick;
@@ -4497,7 +4497,7 @@
 
 		if (c) {
 			if ((myself == NO && [ignoreChecks ignoreJPQE] == NO && [TPCPreferences showJoinLeave] && c.config.ignoreJPQActivity == NO)) {
-				NSString *text = TXTFLS(@"BasicLanguage[1152][0]", oldNick, newNick);
+				NSString *text = TXTLS(@"BasicLanguage[1152][0]", oldNick, newNick);
 
 				[self print:c
 					   type:TVCLogLineNickType
@@ -4508,7 +4508,7 @@
 			}
             
 			if (myself == YES) {
-				NSString *text = TXTFLS(@"BasicLanguage[1152][1]", newNick);
+				NSString *text = TXTLS(@"BasicLanguage[1152][1]", newNick);
 
 				[self print:c
 					   type:TVCLogLineNickType
@@ -4529,7 +4529,7 @@
 		if ([c memberWithNickname:oldNick]) {
             
 			if ((myself == NO && [ignoreChecks ignoreJPQE] == NO && [TPCPreferences showJoinLeave] && c.config.ignoreJPQActivity == NO)) {
-				NSString *text = TXTFLS(@"BasicLanguage[1152][0]", oldNick, newNick);
+				NSString *text = TXTLS(@"BasicLanguage[1152][0]", oldNick, newNick);
 
 				[self print:c
 					   type:TVCLogLineNickType
@@ -4540,7 +4540,7 @@
 			}
             
 			if (myself == YES) {
-				NSString *text = TXTFLS(@"BasicLanguage[1152][1]", newNick);
+				NSString *text = TXTLS(@"BasicLanguage[1152][1]", newNick);
 
 				[self print:c
 					   type:TVCLogLineNickType
@@ -4609,7 +4609,7 @@
 			[self print:c
 				   type:TVCLogLineModeType
 				   nick:nil
-				   text:TXTFLS(@"BasicLanguage[1145]", sendern, modestr)
+				   text:TXTLS(@"BasicLanguage[1145]", sendern, modestr)
 			 receivedAt:m.receivedAt
 				command:m.command];
 		}
@@ -4621,7 +4621,7 @@
 		[self print:nil
 			   type:TVCLogLineModeType
 			   nick:nil
-			   text:TXTFLS(@"BasicLanguage[1145]", sendern, modestr)
+			   text:TXTLS(@"BasicLanguage[1145]", sendern, modestr)
 		 receivedAt:m.receivedAt
 			command:m.command];
 	}
@@ -4650,7 +4650,7 @@
 	[self print:c
 		   type:TVCLogLineTopicType
 		   nick:nil
-		   text:TXTFLS(@"BasicLanguage[1128]", sendern, topicav)
+		   text:TXTLS(@"BasicLanguage[1128]", sendern, topicav)
 	  encrypted:isEncrypted
 	 receivedAt:m.receivedAt
 		command:m.command];
@@ -4663,7 +4663,7 @@
 	NSString *sendern = m.sender.nickname;
 	NSString *channel = [m paramAt:1];
 	
-	NSString *text = TXTFLS(@"BasicLanguage[1158]", sendern, m.sender.username, m.sender.address, channel);
+	NSString *text = TXTLS(@"BasicLanguage[1158]", sendern, m.sender.username, m.sender.address, channel);
 	
 	[self print:[self.worldController selectedChannelOn:self]
 		   type:TVCLogLineInviteType
@@ -5166,7 +5166,7 @@
 			[self print:nil
 				   type:TVCLogLineDebugType
 				   nick:nil
-				   text:TXTFLS(@"BasicLanguage[1156]", self.localNickname, modestr)
+				   text:TXTLS(@"BasicLanguage[1156]", self.localNickname, modestr)
 			 receivedAt:m.receivedAt
 				command:m.command];
 
@@ -5197,7 +5197,7 @@
 
 			IRCChannel *ac = [self findChannel:awaynick];
 
-			NSString *text = TXTFLS(@"BasicLanguage[1159]", awaynick, comment);
+			NSString *text = TXTLS(@"BasicLanguage[1159]", awaynick, comment);
 
             if (ac) {
                 [self print:ac
@@ -5298,7 +5298,7 @@
 			}
 
 			if (self.inUserInvokedWhowasRequest) {
-				text = TXTFLS(@"BasicLanguage[1170]", nickname, username, hostmask, realname);
+				text = TXTLS(@"BasicLanguage[1170]", nickname, username, hostmask, realname);
 			} else {
 				/* Update local cache of our hostmask. */
 				if ([self.myNick isEqualIgnoringCase:nickname]) {
@@ -5308,7 +5308,7 @@
 				}
 
 				/* Continue normal WHOIS event. */
-				text = TXTFLS(@"BasicLanguage[1167]", nickname, username, hostmask, realname);
+				text = TXTLS(@"BasicLanguage[1167]", nickname, username, hostmask, realname);
 			}
 
 			[self print:[self.worldController selectedChannelOn:self]
@@ -5335,9 +5335,9 @@
 																	dateStyle:NSDateFormatterLongStyle
 																	timeStyle:NSDateFormatterLongStyle];
 				
-				text = TXTFLS(@"BasicLanguage[1169]", nickname, serverHost, timeInfo);
+				text = TXTLS(@"BasicLanguage[1169]", nickname, serverHost, timeInfo);
 			} else {
-				text = TXTFLS(@"BasicLanguage[1166]", nickname, serverHost, serverInfo);
+				text = TXTLS(@"BasicLanguage[1166]", nickname, serverHost, serverInfo);
 			}
 
 			[self print:[self.worldController selectedChannelOn:self]
@@ -5363,7 +5363,7 @@
 													  dateStyle:NSDateFormatterLongStyle
 													  timeStyle:NSDateFormatterLongStyle];
 
-			NSString *text = TXTFLS(@"BasicLanguage[1168]", nickname, connTime, idleTime);
+			NSString *text = TXTLS(@"BasicLanguage[1168]", nickname, connTime, idleTime);
 
 			[self print:[self.worldController selectedChannelOn:self]
 				   type:TVCLogLineDebugType
@@ -5381,7 +5381,7 @@
 			NSString *nickname = [m paramAt:1];
 			NSString *channels = [m paramAt:2];
 
-			NSString *text = TXTFLS(@"BasicLanguage[1165]", nickname, channels);
+			NSString *text = TXTLS(@"BasicLanguage[1165]", nickname, channels);
 
 			[self print:[self.worldController selectedChannelOn:self]
 				   type:TVCLogLineDebugType
@@ -5418,7 +5418,7 @@
 				[self print:c
 					   type:TVCLogLineModeType
 					   nick:nil
-					   text:TXTFLS(@"BasicLanguage[1123]", fmodestr)
+					   text:TXTLS(@"BasicLanguage[1123]", fmodestr)
 				 receivedAt:m.receivedAt
 					command:m.command];
 
@@ -5454,7 +5454,7 @@
 				[self print:c
 					   type:TVCLogLineTopicType
 					   nick:nil
-					   text:TXTFLS(@"BasicLanguage[1124]", topicva)
+					   text:TXTLS(@"BasicLanguage[1124]", topicva)
 				  encrypted:isEncrypted
 				 receivedAt:m.receivedAt
 					command:m.command];
@@ -5508,7 +5508,7 @@
 				[self print:c
 					   type:TVCLogLineDebugType
 					   nick:nil
-					   text:TXTFLS(@"BasicLanguage[1157]", nickname, channel)
+					   text:TXTLS(@"BasicLanguage[1157]", nickname, channel)
 				 receivedAt:m.receivedAt
 					command:m.command];
 			}
@@ -5557,7 +5557,7 @@
 				 end user to see the user status. */
 				NSObjectIsEmptyAssertLoopContinue(langkey);
 				
-				for (IRCAddressBook *g in self.config.ignoreList) {
+				for (IRCAddressBookEntry *g in self.config.ignoreList) {
 					NSString *trname = [g trackingNickname];
 
 					if ([trname isEqualIgnoringCase:name]) {
@@ -5946,9 +5946,9 @@
 				NSString *text;
 
 				if (extendedLine) {
-					text = TXTFLS(@"BasicLanguage[1230][1]", channel, hostmask, nick, settime);
+					text = TXTLS(@"BasicLanguage[1230][1]", channel, hostmask, nick, settime);
 				} else {
-					text = TXTFLS(@"BasicLanguage[1230][2]", channel, hostmask);
+					text = TXTLS(@"BasicLanguage[1230][2]", channel, hostmask);
 				}
 
 				[self print:nil
@@ -6014,9 +6014,9 @@
 				NSString *text;
 
 				if (extendedLine) {
-					text = TXTFLS(@"BasicLanguage[1231][1]", channel, hostmask, nick, settime);
+					text = TXTLS(@"BasicLanguage[1231][1]", channel, hostmask, nick, settime);
 				} else {
-					text = TXTFLS(@"BasicLanguage[1231][2]", channel, hostmask);
+					text = TXTLS(@"BasicLanguage[1231][2]", channel, hostmask);
 				}
 
 				[self print:nil
@@ -6082,9 +6082,9 @@
 				NSString *text;
 
 				if (extendedLine) {
-					text = TXTFLS(@"BasicLanguage[1232][1]", channel, hostmask, nick, settime);
+					text = TXTLS(@"BasicLanguage[1232][1]", channel, hostmask, nick, settime);
 				} else {
-					text = TXTFLS(@"BasicLanguage[1232][2]", channel, hostmask);
+					text = TXTLS(@"BasicLanguage[1232][2]", channel, hostmask);
 				}
 
 				[self print:nil
@@ -6121,7 +6121,7 @@
 				[self print:nil
 					   type:TVCLogLineDebugType
 					   nick:nil
-					   text:TXTFLS(@"BasicLanguage[1160]", m.sender.nickname)
+					   text:TXTLS(@"BasicLanguage[1160]", m.sender.nickname)
 				 receivedAt:m.receivedAt
 					command:m.command];
 
@@ -6143,7 +6143,7 @@
 				[self print:c
 					   type:TVCLogLineWebsiteType
 					   nick:nil
-					   text:TXTFLS(@"BasicLanguage[1126]", website)
+					   text:TXTLS(@"BasicLanguage[1126]", website)
 				 receivedAt:m.receivedAt
 					command:m.command];
 			}
@@ -6198,7 +6198,7 @@
 			NSString *hostmaskwon = nil; // Hostmask without nickname
 			NSString *hostmaskwnn = nil; // Hostmask with nickname
 
-			IRCAddressBook *ignoreChecks = nil;
+			IRCAddressBookEntry *ignoreChecks = nil;
 
 			if (NSDissimilarObjects(n, 605)) {
 				/* 605 does not have the host, but the rest do. */
@@ -6250,7 +6250,7 @@
 
 			NSString *sendern = [m paramAt:1];
 			
-			[self printDebugInformation:TXTFLS(@"BasicLanguage[1171]", sendern)];
+			[self printDebugInformation:TXTLS(@"BasicLanguage[1171]", sendern)];
 			
 			break;
 		}
@@ -6264,9 +6264,9 @@
 			if ([TPCPreferences locationToSendNotices] == TXNoticeSendCurrentChannelType) {
 				IRCChannel *c = [self.worldController selectedChannelOn:self];
 
-				[self printDebugInformation:TXTFLS(@"BasicLanguage[1172]", sendern, hostmask) channel:c];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1172]", sendern, hostmask) channel:c];
 			} else {
-				[self printDebugInformation:TXTFLS(@"BasicLanguage[1172]", sendern, hostmask)];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1172]", sendern, hostmask)];
 			}
 
 			break;
@@ -6345,7 +6345,7 @@
 		}
 		case 402: // ERR_NOSUCHSERVER
 		{
-			NSString *text = TXTFLS(@"BasicLanguage[1139]", m.numericReply, [m sequence:1]);
+			NSString *text = TXTLS(@"BasicLanguage[1139]", m.numericReply, [m sequence:1]);
 
 			[self print:nil
 				   type:TVCLogLineDebugType
@@ -6371,7 +6371,7 @@
 		}
 		case 404: // ERR_CANNOTSENDTOCHAN
 		{
-			NSString *text = TXTFLS(@"BasicLanguage[1139]", m.numericReply, [m sequence:2]);
+			NSString *text = TXTLS(@"BasicLanguage[1139]", m.numericReply, [m sequence:2]);
 
 			IRCChannel *c = [self findChannel:[m paramAt:1]];
 			
@@ -6565,12 +6565,12 @@
 	if (timeSpent >= _timeoutInterval) {
 
 		if (self.config.performDisconnectOnPongTimer) {
-			[self printDebugInformation:TXTFLS(@"BasicLanguage[1137]", (timeSpent / 60)) channel:nil];
+			[self printDebugInformation:TXTLS(@"BasicLanguage[1137]", (timeSpent / 60)) channel:nil];
 
 			[self disconnect];
 		} else {
 			if (self.timeoutWarningShownToUser == NO) {
-				[self printDebugInformation:TXTFLS(@"BasicLanguage[1138]", (timeSpent / 60)) channel:nil];
+				[self printDebugInformation:TXTLS(@"BasicLanguage[1138]", (timeSpent / 60)) channel:nil];
 
 				self.timeoutWarningShownToUser = YES;
 			}
@@ -6604,7 +6604,7 @@
 		BOOL hideWarnings = [[self auxiliaryConfiguration] boolForKey:@"Hide Network Unavailability Notices on Reconnect"];
 
 		if (hideWarnings == NO) {
-			[self printDebugInformationToConsole:TXTFLS(@"BasicLanguage[1032]", @(_reconnectInterval))];
+			[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1032]", @(_reconnectInterval))];
 		}
 
 		/* Restart timer. */
@@ -6704,7 +6704,7 @@
 	}
 
 	if (devmode) {
-		[self printDebugInformation:TXTFLS(@"BasicLanguage[1196]", script, scriptInput, errord)];
+		[self printDebugInformation:TXTLS(@"BasicLanguage[1196]", script, scriptInput, errord)];
 	}
 
 	LogToConsole(TXTLS(@"BasicLanguage[1195]"), errorb);
@@ -6985,7 +6985,7 @@
 	if (self.config.proxyType == TXConnectionSystemSocksProxyType) {
 		self.socket.connectionUsesSystemSocks = YES;
 
-		[self printDebugInformationToConsole:TXTFLS(@"BasicLanguage[1142]", host, port)];
+		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1142]", host, port)];
 	} else if (self.config.proxyType == TXConnectionSocks4ProxyType ||
 			   self.config.proxyType == TXConnectionSocks5ProxyType)
 	{
@@ -6997,9 +6997,9 @@
 		self.socket.proxyUsername = self.config.proxyUsername;
 		self.socket.proxySocksVersion = self.config.proxyType;
 
-		[self printDebugInformationToConsole:TXTFLS(@"BasicLanguage[1141]", host, port, self.config.proxyAddress, self.config.proxyPort)];
+		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1141]", host, port, self.config.proxyAddress, self.config.proxyPort)];
 	} else {
-		[self printDebugInformationToConsole:TXTFLS(@"BasicLanguage[1140]", host, port)];
+		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1140]", host, port)];
 	}
 
 	self.socket.connectionUsesFloodControl = self.config.outgoingFloodControl;
@@ -7032,7 +7032,7 @@
 	if ([self isHostReachable]) {
 		[self connect:IRCConnectReconnectMode];
 	} else {
-		[self printDebugInformationToConsole:TXTFLS(@"BasicLanguage[1031]", @(self.connectDelay))];
+		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1031]", @(self.connectDelay))];
 
 		[self performSelector:@selector(autoConnectAfterWakeUp) withObject:nil afterDelay:self.connectDelay];
 	}
@@ -7336,38 +7336,38 @@
 #pragma mark -
 #pragma mark File Transfers
 
-- (void)notifyFileTransfer:(TXNotificationType)type nickname:(NSString *)nickname filename:(NSString *)filename filesize:(TXFSLongInt)totalFilesize
+- (void)notifyFileTransfer:(TXNotificationType)type nickname:(NSString *)nickname filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize
 {
 	NSString *description = nil;
 	
 	switch (type) {
 		case TXNotificationFileTransferSendSuccessfulType:
 		{
-			description = TXTFLS(@"BasicLanguage[1078]", filename, totalFilesize);
+			description = TXTLS(@"BasicLanguage[1078]", filename, totalFilesize);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveSuccessfulType:
 		{
-			description = TXTFLS(@"BasicLanguage[1079]", filename, totalFilesize);
+			description = TXTLS(@"BasicLanguage[1079]", filename, totalFilesize);
 			
 			break;
 		}
 		case TXNotificationFileTransferSendFailedType:
 		{
-			description = TXTFLS(@"BasicLanguage[1080]", filename, totalFilesize);
+			description = TXTLS(@"BasicLanguage[1080]", filename, totalFilesize);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveFailedType:
 		{
-			description = TXTFLS(@"BasicLanguage[1081]", filename, totalFilesize);
+			description = TXTLS(@"BasicLanguage[1081]", filename, totalFilesize);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveRequestedType:
 		{
-			description = TXTFLS(@"BasicLanguage[1082]", filename, totalFilesize);
+			description = TXTLS(@"BasicLanguage[1082]", filename, totalFilesize);
 			
 			break;
 		}
@@ -7377,7 +7377,7 @@
 	[self notifyEvent:type lineType:0 target:nil nick:nickname text:description];
 }
 
-- (void)receivedDCCQuery:(IRCMessage *)m message:(NSMutableString *)rawMessage ignoreInfo:(IRCAddressBook *)ignoreChecks
+- (void)receivedDCCQuery:(IRCMessage *)m message:(NSMutableString *)rawMessage ignoreInfo:(IRCAddressBookEntry *)ignoreChecks
 {
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
 		/* Gather inital information. */
@@ -7542,10 +7542,10 @@
 }
 
 
-- (void)receivedDCCSend:(NSString *)nickname filename:(NSString *)filename address:(NSString *)address port:(NSInteger)port filesize:(TXFSLongInt)totalFilesize token:(NSString *)transferToken
+- (void)receivedDCCSend:(NSString *)nickname filename:(NSString *)filename address:(NSString *)address port:(NSInteger)port filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken
 {
 	/* Inform of the DCC and possibly ignore it. */
-	NSString *message = TXTFLS(@"BasicLanguage[1040]", nickname, filename, totalFilesize);
+	NSString *message = TXTLS(@"BasicLanguage[1040]", nickname, filename, totalFilesize);
 	
 	[self print:nil type:TVCLogLineDCCFileTransferType nick:nil text:message command:TXLogLineDefaultRawCommandValue];
 	
@@ -7566,7 +7566,7 @@
 												token:transferToken];
 }
 
-- (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXFSLongInt)totalFilesize token:(NSString *)transferToken
+- (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken
 {
 	/* DCC is mountain lion or later. */
 	NSAssertReturn([TPCPreferences featureAvailableToOSXMountainLion]);
@@ -7590,7 +7590,7 @@
 	
 	[self sendCTCPQuery:nickname command:@"DCC SEND" text:trail];
 	
-	NSString *message = TXTFLS(@"BasicLanguage[1039]", nickname, filename, totalFilesize);
+	NSString *message = TXTLS(@"BasicLanguage[1039]", nickname, filename, totalFilesize);
 	
 	[self print:nil type:TVCLogLineDCCFileTransferType nick:nil text:message command:TXLogLineDefaultRawCommandValue];
 }
@@ -7702,12 +7702,12 @@
 #pragma mark -
 #pragma mark User Tracking
 
-- (void)handleUserTrackingNotification:(IRCAddressBook *)ignoreItem
+- (void)handleUserTrackingNotification:(IRCAddressBookEntry *)ignoreItem
 							  nickname:(NSString *)nick
 							  langitem:(NSString *)localKey
 {
 	if ([ignoreItem notifyJoins]) {
-		NSString *text = TXTFLS(localKey, nick);
+		NSString *text = TXTLS(localKey, nick);
 
 		[self notifyEvent:TXNotificationAddressBookMatchType
 				 lineType:TVCLogLineNoticeType
@@ -7742,7 +7742,7 @@
 	NSMutableArray *watchRemovals = [NSMutableArray array];
 
 	/* First we go through all the new entries fed to this method and add them. */
-	for (IRCAddressBook *g in ignores) {
+	for (IRCAddressBookEntry *g in ignores) {
 		if (g.notifyJoins) {
 			NSString *lname = [g trackingNickname];
 
@@ -7837,7 +7837,7 @@
     [self send:IRCPrivateCommandIndex("ison"), userstr, nil];
 }
 
-- (void)checkAddressBookForTrackedUser:(IRCAddressBook *)abEntry inMessage:(IRCMessage *)message
+- (void)checkAddressBookForTrackedUser:(IRCAddressBookEntry *)abEntry inMessage:(IRCMessage *)message
 {
     PointerIsEmptyAssert(abEntry);
 

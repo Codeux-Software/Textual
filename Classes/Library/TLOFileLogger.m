@@ -45,7 +45,7 @@
 
 - (void)writeLine:(TVCLogLine *)logLine
 {
-	NSString *lineString = [logLine renderedBodyForTranscriptLogInChannel:self.channel];
+	NSString *lineString = [logLine renderedBodyForTranscriptLogInChannel:_channel];
 
 	[self writePlainTextLine:lineString];
 }
@@ -54,7 +54,7 @@
 {
 	[self reopenIfNeeded];
 
-	PointerIsEmptyAssert(self.file);
+	PointerIsEmptyAssert(_file);
 
 	NSString *writeString = [NSString stringWithFormat:@"%@%@", s, NSStringNewlinePlaceholder];
 	
@@ -63,7 +63,7 @@
 	
 	NSObjectIsEmptyAssert(writeData);
 
-	[self.file writeData:writeData];
+	[_file writeData:writeData];
 }
 
 #pragma mark -
@@ -72,20 +72,20 @@
 - (void)reset
 {
 	/* Reset plain text file. */
-	PointerIsEmptyAssert(self.file);
+	PointerIsEmptyAssert(_file);
 
-	[self.file truncateFileAtOffset:0];
+	[_file truncateFileAtOffset:0];
 }
 
 - (void)close
 {
 	/* Close plain text file. */
-	PointerIsEmptyAssert(self.file);
+	PointerIsEmptyAssert(_file);
 
-	[self.file closeFile];
-	self.file = nil;
+	[_file closeFile];
+	 _file = nil;
 
-	self.filename = nil; // Invalidate everything. 
+	_filename = nil; // Invalidate everything.
 }
 
 - (void)reopenIfNeeded
@@ -94,7 +94,7 @@
 	 the date as the filename. When the date changes, the log path
 	 will have to change as well. This handles that. */
 
-	if ([[self buildFileName] isEqual:self.filename] == NO) {
+	if ([[self buildFileName] isEqual:_filename] == NO) {
 		[self open];
 	}
 }
@@ -105,20 +105,20 @@
 	[self close];
 
 	/* Where are we writing to? */
-	NSURL *path = self.fileWritePath;
+	NSURL *path = [self fileWritePath];
 
 	NSObjectIsEmptyAssert(path);
 
 	/* What will the filename be? The filename
 	 includes the folder being written to. */
-	self.filename = [self buildFileName];
+	_filename = [self buildFileName];
 
 	/* Make sure the folder being written to exists. */
 	/* We extract the folder from self.filename for this
 	 check instead of using "path" because the generation
 	 of self.filename may have added extra directories to 
 	 the structure of the path beyond what "path" provided. */
-	NSURL *folder = [self.filename URLByDeletingLastPathComponent];
+	NSURL *folder = [_filename URLByDeletingLastPathComponent];
 
 	if ([RZFileManager() fileExistsAtPath:[folder path] isDirectory:NULL] == NO) {
 		NSError *fmerr;
@@ -135,10 +135,10 @@
 	}
 
 	/* Does the file exist? */
-	if ([RZFileManager() fileExistsAtPath:[self.filename path]] == NO) {
+	if ([RZFileManager() fileExistsAtPath:[_filename path]] == NO) {
 		NSError *fcerr;
 
-		[NSStringEmptyPlaceholder writeToURL:self.filename atomically:NO encoding:NSUTF8StringEncoding error:&fcerr];
+		[NSStringEmptyPlaceholder writeToURL:_filename atomically:NO encoding:NSUTF8StringEncoding error:&fcerr];
 
 		if (fcerr) {
 			LogToConsole(@"Error Creating File: %@", [fcerr localizedDescription]);
@@ -150,10 +150,10 @@
 	}
 
 	/* Open our file handle. */
-	self.file = [NSFileHandle fileHandleForUpdatingAtPath:[self.filename path]];
+	_file = [NSFileHandle fileHandleForUpdatingAtPath:[_filename path]];
 
-	if (self.file) {
-		[self.file seekToEndOfFile];
+	if ( _file) {
+		[_file seekToEndOfFile];
 	}
 }
 
@@ -162,7 +162,7 @@
 
 - (NSURL *)fileWritePath
 {
-	return [TPCPreferences transcriptFolder];
+	return [TPCPathInfo logFileFolderLocation];
 }
 
 - (NSURL *)buildPath
@@ -172,12 +172,12 @@
 
 - (NSURL *)buildPath:(BOOL)forceUUID
 {
-	NSURL *base = self.fileWritePath;
+	NSURL *base = [self fileWritePath];
 
 	NSObjectIsEmptyAssertReturn(base, nil);
 
-	NSString *serv = [self.client.name safeFilename];
-	NSString *chan = [self.channel.name safeFilename];
+	NSString *serverName = [[_client name] safeFilename];
+	NSString *channelName = [[_channel name] safeFilename];
 
 	/* When our folder structure is not flat, then we have to make sure the folders
 	 that we create our unique. The check of whether our folders are unique was not
@@ -189,7 +189,6 @@
 	/* To make the folder unique, we take the first five characters of the client's
 	 UUID which does not change between restarts. Not 100% accurate, but still works
 	 99.9999% of the time. */
-
 	if (forceUUID) {
 		NSURL *oldPath = [self buildPath:NO];
 
@@ -199,31 +198,35 @@
 		}
 
 		/* It did not exist… use new naming scheme. */
-		NSString *servHead = [self.client.config.itemUUID safeSubstringToIndex:5];
+		NSString *servHead = [[_client uniqueIdentifier] substringToIndex:5];
 
-		serv = [serv stringByAppendingFormat:@" (%@)", servHead];
+		serverName = [NSString stringWithFormat:@"%@ (%@)", serverName, servHead];
 	}
 	
-	if (PointerIsEmpty(self.channel)) {
-		return [base URLByAppendingPathComponent:[NSString stringWithFormat:@"/%@/%@/", serv, TLOFileLoggerConsoleDirectoryName] isDirectory:YES];
-	} else if (self.channel.isPrivateMessage) {
-		return [base URLByAppendingPathComponent:[NSString stringWithFormat:@"/%@/%@/%@/", serv, TLOFileLoggerPrivateMessageDirectoryName, chan] isDirectory:YES];
-	} else {
-		return [base URLByAppendingPathComponent:[NSString stringWithFormat:@"/%@/%@/%@/", serv, TLOFileLoggerChannelDirectoryName, chan] isDirectory:YES];
+	if (_channel == nil) {
+		return [base URLByAppendingPathComponent:[NSString stringWithFormat:@"/%@/%@/", serverName, TLOFileLoggerConsoleDirectoryName] isDirectory:YES];
+	} else if ([_channel isChannel]) {
+		return [base URLByAppendingPathComponent:[NSString stringWithFormat:@"/%@/%@/%@/", serverName, TLOFileLoggerChannelDirectoryName, channelName] isDirectory:YES];
+	} else if ([_channel isPrivateMessage]) {
+		return [base URLByAppendingPathComponent:[NSString stringWithFormat:@"/%@/%@/%@/", serverName, TLOFileLoggerPrivateMessageDirectoryName, channelName] isDirectory:YES];
 	}
 
-	return base;
+	return nil;
 }
 
 - (NSURL *)buildFileName
 {
-	NSDate *filename = [[NSDate date] dateWithCalendarFormat:@"%Y-%m-%d" timeZone:nil];
-
 	NSURL *buildPath = [self buildPath];
+	
+	if (buildPath) {
+		NSDate *datetime = [[NSDate date] dateWithCalendarFormat:@"%Y-%m-%d" timeZone:nil];
 
-	NSObjectIsEmptyAssertReturn(buildPath, nil);
-
-	return [buildPath URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt", filename] isDirectory:NO];
+		NSString *filename = [NSString stringWithFormat:@"%@.txt", datetime];
+		
+		return [buildPath URLByAppendingPathComponent:filename isDirectory:NO];
+	}
+	
+	return nil;
 }
 
 #pragma mark -

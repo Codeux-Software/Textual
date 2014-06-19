@@ -250,7 +250,7 @@
 			self.ignoreSheet.delegate = self;
 			self.ignoreSheet.window = self.sheet;
 			self.ignoreSheet.newItem = YES;
-			self.ignoreSheet.ignore = [IRCAddressBook new];
+			self.ignoreSheet.ignore = [IRCAddressBookEntry new];
             
             if ([context isEqualToString:@"--"]) {
 				//self.ignoreSheet.ignore.hostmask = @"<nickname>";
@@ -881,7 +881,7 @@
 	if (querystatus == noErr) {
 		SFChooseIdentityPanel *panel = [SFChooseIdentityPanel sharedChooseIdentityPanel];
 		
-		[panel setInformativeText:TXTFLS(@"TDCServerSheet[1007][2]", [self.serverNameField stringValue])];
+		[panel setInformativeText:TXTLS(@"TDCServerSheet[1007][2]", [self.serverNameField stringValue])];
 		[panel setAlternateButtonTitle:TXTLS(@"BasicLanguage[1009]")];
 		
 		NSInteger returnCode = [panel runModalForIdentities:(__bridge NSArray *)(identities)
@@ -1177,7 +1177,7 @@
 	self.ignoreSheet.newItem = YES;
 	self.ignoreSheet.delegate = self;
 	self.ignoreSheet.window = self.sheet;
-	self.ignoreSheet.ignore = [IRCAddressBook new];
+	self.ignoreSheet.ignore = [IRCAddressBookEntry new];
 	
 	if ([sender tag] == 4) {
 		self.ignoreSheet.ignore.entryType = IRCAddressBookUserTrackingEntryType;
@@ -1194,7 +1194,7 @@
 
 	NSAssertReturn(sel >= 0);
 
-	IRCAddressBook *c = [self.config.ignoreList safeObjectAtIndex:sel];
+	IRCAddressBookEntry *c = [self.config.ignoreList safeObjectAtIndex:sel];
 	
 	self.ignoreSheet = nil;
 	self.ignoreSheet = [TDCAddressBookSheet new];
@@ -1230,7 +1230,7 @@
 
 - (void)ignoreItemSheetOnOK:(TDCAddressBookSheet *)sender
 {
-	IRCAddressBook *ignore = sender.ignore;
+	IRCAddressBookEntry *ignore = sender.ignore;
 	
 	BOOL emptyHost = NSObjectIsEmpty(ignore.hostmask);
 
@@ -1241,7 +1241,7 @@
 	} else {
 		NSArray *ignoreList = self.config.ignoreList.copy;
 
-		for (IRCAddressBook *g in ignoreList) {
+		for (IRCAddressBookEntry *g in ignoreList) {
 			NSInteger index = [ignoreList indexOfObject:g];
 
 			if ([g.itemUUID isEqualToString:ignore.itemUUID]) {
@@ -1354,7 +1354,7 @@
 	} else {
 		/* Address Book Table. */
 
-		IRCAddressBook *g = [self.config.ignoreList safeObjectAtIndex:row];
+		IRCAddressBookEntry *g = [self.config.ignoreList safeObjectAtIndex:row];
 		
 		if ([columnId isEqualToString:@"type"]) {
 			if (g.entryType == IRCAddressBookIgnoreEntryType) {

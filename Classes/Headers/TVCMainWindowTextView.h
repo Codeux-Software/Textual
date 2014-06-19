@@ -46,6 +46,11 @@
 @property (nonatomic, nweak) IBOutlet NSLayoutConstraint *textFieldHeightConstraint;
 @property (nonatomic, nweak) IBOutlet TVCMainWindowTextViewBackground *backgroundView;
 @property (nonatomic, nweak) IBOutlet TVCMainWindowTextViewContentView *contentView;
+@property (nonatomic, nweak) IBOutlet TVCMainWindowSegmentedController *segmentedController;
+@property (nonatomic, nweak) IBOutlet TVCMainWindowSegmentedControllerCell *segmentedControllerCell;
+
+- (void)updateSegmentedController;
+- (void)reloadSegmentedControllerOrigin;
 
 - (void)updateTextDirection;
 - (void)updateTextBoxBasedOnPreferredFontSize;
@@ -56,8 +61,6 @@
 - (void)resetTextFieldCellSize:(BOOL)force;
 @end
 
-/* TVCMainWindowTextViewBackground is the actual background drawing of the text
- view and its scroll view. It does not handle any other tasks. */
 @interface TVCMainWindowTextViewBackground : NSView
 @property (nonatomic, nweak) IBOutlet TVCMainWindowTextViewContentView *contentView;
 

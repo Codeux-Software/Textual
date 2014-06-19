@@ -69,33 +69,17 @@
 }
 
 #pragma mark -
-#pragma mark Easy Pointer.
-
-+ (THOPluginManager *)defaultManager
-{
-	static id sharedSelf = nil;
-
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		sharedSelf = [self new];
-	});
-
-	return sharedSelf;
-}
-
-#pragma mark -
 #pragma mark Retain & Release.
 
 - (void)loadPlugins
 {
 	dispatch_async(_dispatchQueue, ^{
-		NSObjectIsNotEmptyAssert(self.allLoadedBundles);
+		NSObjectIsNotEmptyAssert(_allLoadedBundles);
 
 		// ---- //
 
-		NSString *path_1 = [TPCPreferences customExtensionFolderPath];
-		NSString *path_2 = [TPCPreferences bundledExtensionFolderPath];
+		NSString *path_1 = [TPCPathInfo customExtensionFolderPath];
+		NSString *path_2 = [TPCPathInfo bundledExtensionFolderPath];
 
 		NSMutableArray *loadedBundles = [NSMutableArray array];
 		NSMutableArray *loadedPlugins = [NSMutableArray array];
@@ -108,7 +92,7 @@
 		NSArray *resourceFiles = [resourceFiles_1 arrayByAddingObjectsFromArray:resourceFiles_2];
 
 		for (NSString *file in resourceFiles) {
-			[resourceBundles safeAddObjectWithoutDuplication:file];
+			[resourceBundles addObjectWithoutDuplication:file];
 		}
 
 		// ---- //
@@ -138,31 +122,31 @@
 
 					[currPlugin loadBundle:currBundle];
 
-					[loadedBundles safeAddObject:currBundle];
-					[loadedPlugins safeAddObject:currPlugin];
+					[loadedBundles addObject:currBundle];
+					[loadedPlugins addObject:currPlugin];
 				}
 			}
 		}
 
 		// ---- //
 
-		self.allLoadedBundles = loadedBundles;
-		self.allLoadedPlugins = loadedPlugins;
+		_allLoadedBundles = loadedBundles;
+		_allLoadedPlugins = loadedPlugins;
 	});
 }
 
 - (void)unloadPlugins
 {
 	dispatch_async(_dispatchQueue, ^{
-		self.allLoadedPlugins = nil;
+		_allLoadedPlugins = nil;
 
-		for (NSBundle *bundle in self.allLoadedBundles) {
+		for (NSBundle *bundle in _allLoadedBundles) {
 			if ([bundle isLoaded]) {
 				[bundle unload];
 			}
 		}
 		
-		self.allLoadedBundles = nil;
+		_allLoadedBundles = nil;
 	});
 }
 
@@ -176,13 +160,29 @@
 
 - (id)supportedAppleScriptCommands:(BOOL)returnPathInfo
 {
+	/* List of accepted extensions. */
 	NSArray *scriptExtensions = @[@"scpt", @"py", @"pyc", @"rb", @"pl", @"sh", @"php", @"bash"];
 
-	NSArray *scriptPaths = @[
-        NSStringNilValueSubstitute([TPCPreferences systemUnsupervisedScriptFolderPath]),
-		NSStringNilValueSubstitute([TPCPreferences bundledScriptFolderPath]),
-	];
-
+	/* Begin building list. Topmost take priority. */
+	NSMutableArray *scriptPaths = [NSMutableArray array];
+	
+	NSString *firstPath;
+	
+	/* Unsupervised nonsandboxed path. */
+	firstPath = [TPCPathInfo systemUnsupervisedScriptFolderPath];
+	
+	if (NSObjectIsNotEmpty(firstPath)) {
+		[scriptPaths addObject:firstPath];
+	}
+	
+	/* Bundled path. */
+	firstPath = [TPCPathInfo bundledScriptFolderPath];
+	
+	if (NSObjectIsNotEmpty(firstPath)) {
+		[scriptPaths addObject:firstPath];
+	}
+	
+	/* Begin scanning folders. */
 	id returnData;
 
 	if (returnPathInfo) {
@@ -192,12 +192,8 @@
 	}
 
 	for (NSString *path in scriptPaths) {
-		NSObjectIsEmptyAssertLoopContinue(path);
-		
 		NSArray *resourceFiles = [RZFileManager() contentsOfDirectoryAtPath:path error:NULL];
 
-		NSObjectIsEmptyAssertLoopContinue(resourceFiles);
-		
 		for (NSString *file in resourceFiles) {
 			NSString *fullpa = [path stringByAppendingPathComponent:file];
 			NSString *script = file;
@@ -217,11 +213,11 @@
 
 			if (returnPathInfo) {
 				if ([returnData containsKey:script] == NO) {
-					[returnData safeSetObjectWithoutOverride:fullpa forKey:script];
+					[returnData setObjectWithoutOverride:fullpa forKey:script];
 				}
 			} else {
 				if ([returnData containsObject:script] == NO) {
-					[returnData safeAddObjectWithoutDuplication:script];
+					[returnData addObjectWithoutDuplication:script];
 				}
 			}
 		}
@@ -258,8 +254,8 @@
 {
 	NSMutableArray *allRules = [NSMutableArray array];
 
-	for (THOPluginItem *plugin in self.allLoadedPlugins) {
-		NSArray *srules = [plugin.outputSuppressionRules arrayForKey:command];
+	for (THOPluginItem *plugin in _allLoadedPlugins) {
+		NSArray *srules = [[plugin outputSuppressionRules] arrayForKey:command];
 
 		if (NSObjectIsNotEmpty(srules)) {
 			[allRules addObjectsFromArray:srules];
@@ -272,9 +268,9 @@
 - (NSArray *)supportedUserInputCommands
 {
 	NSMutableArray *allCommands = [NSMutableArray array];
-
-	for (THOPluginItem *plugin in self.allLoadedPlugins) {
-		[allCommands addObjectsFromArray:plugin.supportedUserInputCommands];
+	
+	for (THOPluginItem *plugin in _allLoadedPlugins) {
+		[allCommands addObjectsFromArray:[plugin supportedUserInputCommands]];
 	}
 
 	return allCommands;
@@ -283,9 +279,9 @@
 - (NSArray *)supportedServerInputCommands
 {
 	NSMutableArray *allCommands = [NSMutableArray array];
-
-	for (THOPluginItem *plugin in self.allLoadedPlugins) {
-		[allCommands addObjectsFromArray:plugin.supportedServerInputCommands];
+	
+	for (THOPluginItem *plugin in _allLoadedPlugins) {
+		[allCommands addObjectsFromArray:[plugin supportedServerInputCommands]];
 	}
 
 	return allCommands;
@@ -294,10 +290,10 @@
 - (NSArray *)pluginsWithPreferencePanes
 {
 	NSMutableArray *allExtensions = [NSMutableArray array];
-
-	for (THOPluginItem *plugin in self.allLoadedPlugins) {
-		if (plugin.hasPreferencePaneView) {
-			[allExtensions safeAddObject:plugin];
+	
+	for (THOPluginItem *plugin in _allLoadedPlugins) {
+		if ([plugin hasPreferencePaneView]) {
+			[allExtensions addObject:plugin];
 		}
 	}
 
@@ -307,11 +303,13 @@
 - (NSArray *)allLoadedExtensions
 {
 	NSMutableArray *allPlugins = [NSMutableArray array];
-
-	for (NSBundle *bundle in self.allLoadedBundles) {
+	
+	for (NSBundle *bundle in _allLoadedBundles) {
 		NSString *path = [bundle bundlePath];
 
-		[allPlugins safeAddObjectWithoutDuplication:[path.lastPathComponent stringByDeletingPathExtension]];
+		NSString *bundleName = [path lastPathComponent];
+		
+		[allPlugins addObjectWithoutDuplication:[bundleName stringByDeletingPathExtension]];
 	}
 
 	return allPlugins;
@@ -326,12 +324,17 @@
 		NSString *cmdu = [command uppercaseString];
 		NSString *cmdl = [command lowercaseString];
 		
-		for (THOPluginItem *plugin in self.allLoadedPlugins) {
-			if ([plugin.supportedUserInputCommands containsObject:cmdl]) {
-				if ([plugin.primaryClass respondsToSelector:@selector(userInputCommandInvokedOnClient:commandString:messageString:)]) {
-					[plugin.primaryClass userInputCommandInvokedOnClient:client commandString:cmdu messageString:message];
-				} else {
-					[plugin.primaryClass messageSentByUser:client message:message command:cmdu];
+		for (THOPluginItem *plugin in _allLoadedPlugins)
+		{
+			if ([[plugin supportedUserInputCommands] containsObject:cmdl])
+			{
+				if ([[plugin primaryClass] respondsToSelector:@selector(userInputCommandInvokedOnClient:commandString:messageString:)])
+				{
+					[[plugin primaryClass] userInputCommandInvokedOnClient:client commandString:cmdu messageString:message];
+				}
+				else
+				{
+					[[plugin primaryClass] messageSentByUser:client message:message command:cmdu];
 				}
 			}
 		}
@@ -341,32 +344,37 @@
 - (void)sendServerInputDataToBundles:(IRCClient *)client message:(IRCMessage *)message
 {
 	dispatch_async(_dispatchQueue, ^{
-		NSString *cmdl = [message.command lowercaseString];
+		NSString *cmdl = [[message command] lowercaseString];
 
 		NSDictionary *senderData = @{
-			@"senderHostmask"	: NSStringNilValueSubstitute(message.sender.hostmask),
-			@"senderNickname"	: NSStringNilValueSubstitute(message.sender.nickname),
-			@"senderUsername"	: NSStringNilValueSubstitute(message.sender.username),
-			@"senderDNSMask"	: NSStringNilValueSubstitute(message.sender.address),
-			@"senderIsServer"	: @(message.sender.isServer)
+			@"senderIsServer"	: @([[message sender] isServer]),
+			@"senderHostmask"	: NSStringNilValueSubstitute([[message sender] hostmask]),
+			@"senderNickname"	: NSStringNilValueSubstitute([[message sender] nickname]),
+			@"senderUsername"	: NSStringNilValueSubstitute([[message sender] username]),
+			@"senderDNSMask"	: NSStringNilValueSubstitute([[message sender] address])
 		};
 
 		NSDictionary *messageData = @{
-			@"messageReceived"      : message.receivedAt,
-			@"messageParamaters"	: message.params,
-			@"messageCommand"		: NSStringNilValueSubstitute(message.command),
-			@"messageSequence"		: NSStringNilValueSubstitute(message.sequence),
+			@"messageReceived"      : [message receivedAt],
+			@"messageParamaters"	: [message params],
+			@"messageNumericReply"	: @([message numericReply]),
+			@"messageCommand"		: NSStringNilValueSubstitute([message command]),
+			@"messageSequence"		: NSStringNilValueSubstitute([message sequence]),
 			@"messageServer"		: NSStringNilValueSubstitute([client networkAddress]),
-			@"messageNetwork"		: NSStringNilValueSubstitute([client networkName]),
-			@"messageNumericReply"	: @(message.numericReply)
+			@"messageNetwork"		: NSStringNilValueSubstitute([client networkName])
 		};
 		
-		for (THOPluginItem *plugin in self.allLoadedPlugins) {
-			if ([plugin.supportedServerInputCommands containsObject:cmdl]) {
-				if ([plugin.primaryClass respondsToSelector:@selector(didReceiveServerInputOnClient:senderInformation:messageInformation:)]) {
-					[plugin.primaryClass didReceiveServerInputOnClient:client senderInformation:senderData messageInformation:messageData];
-				} else {
-					[plugin.primaryClass messageReceivedByServer:client sender:senderData message:messageData];
+		for (THOPluginItem *plugin in _allLoadedPlugins)
+		{
+			if ([[plugin supportedServerInputCommands] containsObject:cmdl])
+			{
+				if ([[plugin primaryClass] respondsToSelector:@selector(didReceiveServerInputOnClient:senderInformation:messageInformation:)])
+				{
+					[[plugin primaryClass] didReceiveServerInputOnClient:client senderInformation:senderData messageInformation:messageData];
+				}
+				else
+				{
+					[[plugin primaryClass] messageReceivedByServer:client sender:senderData message:messageData];
 				}
 			}
 		}
@@ -378,10 +386,10 @@
 
 - (NSString *)processInlineMediaContentURL:(NSString *)resource
 {
-    for (THOPluginItem *plugin in self.allLoadedPlugins)
+    for (THOPluginItem *plugin in _allLoadedPlugins)
 	{
-        if (plugin.supportsInlineMediaManipulation) {
-            NSString *input = [plugin.primaryClass processInlineMediaContentURL:resource];
+        if ([plugin supportsInlineMediaManipulation]) {
+            NSString *input = [[plugin primaryClass] processInlineMediaContentURL:resource];
 
 			if (input) {
 				NSURL *outputURL = [NSURL URLWithString:input];
@@ -401,11 +409,11 @@
 
 - (id)processInterceptedUserInput:(id)input command:(NSString *)command
 {
-    for (THOPluginItem *plugin in self.allLoadedPlugins)
+    for (THOPluginItem *plugin in _allLoadedPlugins)
 	{
-		if (plugin.supportsUserInputDataInterception) {
+		if ([plugin supportsUserInputDataInterception]) {
 			/* Inform plugin of data. */
-			input = [plugin.primaryClass interceptUserInput:input command:command];
+			input = [[plugin primaryClass] interceptUserInput:input command:command];
 
 			/* If this plugin returned nil, then stop here. Do not pass it on to others. */
 			if (input == nil) {
@@ -419,11 +427,11 @@
 
 - (IRCMessage *)processInterceptedServerInput:(IRCMessage *)input for:(IRCClient *)client
 {
-    for (THOPluginItem *plugin in self.allLoadedPlugins)
+    for (THOPluginItem *plugin in _allLoadedPlugins)
 	{
-		if (plugin.supportsServerInputDataInterception) {
+		if ([plugin supportsServerInputDataInterception]) {
 			/* Inform plugin of data. */
-			input = [plugin.primaryClass interceptServerInput:input for:client];
+			input = [[plugin primaryClass] interceptServerInput:input for:client];
 
 			/* If this plugin returned nil, then stop here. Do not pass it on to others. */
 			if (input == nil) {
@@ -438,10 +446,10 @@
 - (void)postNewMessageEventForViewController:(TVCLogController *)logController messageInfo:(NSDictionary *)messageInfo isThemeReload:(BOOL)isThemeReload isHistoryReload:(BOOL)isHistoryReload
 {
 	dispatch_async(_dispatchQueue, ^{
-		for (THOPluginItem *plugin in self.allLoadedPlugins)
+		for (THOPluginItem *plugin in _allLoadedPlugins)
 		{
-			if (plugin.supportsNewMessagePostedEventNotifications) {
-				[plugin.primaryClass didPostNewMessageForViewController:logController messageInfo:messageInfo isThemeReload:isThemeReload isHistoryReload:isHistoryReload];
+			if ( [plugin supportsNewMessagePostedEventNotifications]) {
+				[[plugin primaryClass] didPostNewMessageForViewController:logController messageInfo:messageInfo isThemeReload:isThemeReload isHistoryReload:isHistoryReload];
 			}
 		}
 	});
@@ -449,11 +457,11 @@
 
 - (NSString *)postWillRenderMessageEvent:(NSString *)newMessage lineType:(TVCLogLineType)lineType memberType:(TVCLogLineMemberType)memberType
 {
-	for (THOPluginItem *plugin in self.allLoadedPlugins)
+	for (THOPluginItem *plugin in _allLoadedPlugins)
 	{
-		if (plugin.supportsWillRenderMessageEventNotifications) {
+		if ([plugin supportsWillRenderMessageEventNotifications]) {
 			/* Inform plugin of data. */
-			NSString *pluginResult = [plugin.primaryClass willRenderMessage:newMessage lineType:lineType memberType:memberType];
+			NSString *pluginResult = [[plugin primaryClass] willRenderMessage:newMessage lineType:lineType memberType:memberType];
 			
 			/* If the plugin returns nil, then we don't care. */
 			if (NSObjectIsEmpty(pluginResult)) {

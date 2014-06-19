@@ -41,7 +41,6 @@
 @interface TLOTimer : NSObject
 @property (nonatomic, uweak) id delegate;
 @property (nonatomic, uweak) SEL selector;
-
 @property (nonatomic, assign) BOOL reqeatTimer;
 
 - (void)start:(NSTimeInterval)interval;

@@ -38,11 +38,21 @@
 
 #import "TextualApplication.h"
 
-@interface TVCMainWindow : NSWindow
-@property (nonatomic, strong) TLOKeyEventHandler *keyHandler;
+@interface TVCMainWindow : NSWindow <NSSplitViewDelegate>
+@property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
 @property (nonatomic, strong) NSValue *cachedSwipeOriginPoint;
+@property (nonatomic, nweak) IBOutlet NSBox *channelViewBox;
+@property (nonatomic, nweak) IBOutlet TVCTextFormatterMenu *formattingMenu;
+@property (nonatomic, uweak) IBOutlet TVCMainWindowTextView *inputTextField;
+@property (nonatomic, nweak) IBOutlet TVCMainWindowSplitView *contentSplitView;
+@property (nonatomic, nweak) IBOutlet TVCMainWindowLoadingScreenView *loadingScreen;
+@property (nonatomic, nweak) IBOutlet TVCMemberList *memberList;
+@property (nonatomic, nweak) IBOutlet TVCServerList *serverList;
 
 - (BOOL)isInactive;
+
++ (NSSize)minimumWindowSize;
++ (NSRect)defaultWindowFrame;
 
 - (void)setKeyHandlerTarget:(id)target;
 

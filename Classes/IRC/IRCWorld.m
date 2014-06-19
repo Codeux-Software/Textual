@@ -695,7 +695,7 @@
 	NSMutableString *title = [NSMutableString string];
 
 	if ([selectedItem isClient]) {
-		[title appendString:TXTFLS(@"BasicLanguage[1008]", client.localNickname, client.altNetworkName)];
+		[title appendString:TXTLS(@"BasicLanguage[1008]", client.localNickname, client.altNetworkName)];
 		[title appendString:TXTLS(@"BasicLanguage[1005]")];
         
 		NSString *networkAddress = [client networkAddress];
@@ -706,7 +706,7 @@
 			[title appendString:networkAddress];
 		}
 	} else {
-		[title appendString:TXTFLS(@"BasicLanguage[1008]", client.localNickname, client.altNetworkName)];
+		[title appendString:TXTLS(@"BasicLanguage[1008]", client.localNickname, client.altNetworkName)];
 		[title appendString:TXTLS(@"BasicLanguage[1005]")];
 
         if (channel.isPrivateMessage) {

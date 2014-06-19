@@ -39,7 +39,7 @@
 #import "TextualApplication.h"
 
 @interface IRCConnection : NSObject
-@property (nonatomic, nweak) IRCClient *client;
+@property (nonatomic, nweak) IRCClient *associatedClient;
 @property (nonatomic, strong) TLOTimer *floodTimer;
 @property (nonatomic, assign) BOOL isConnected;
 @property (nonatomic, assign) BOOL isConnecting;
@@ -50,6 +50,7 @@
 @property (nonatomic, assign) BOOL connectionUsesNormalSocks;
 @property (nonatomic, assign) BOOL connectionUsesSystemSocks;
 @property (nonatomic, assign) BOOL connectionUsesFloodControl;
+@property (nonatomic, assign) BOOL isConnectedWithClientSideCertificate;
 @property (nonatomic, assign) NSInteger floodControlDelayInterval;
 @property (nonatomic, assign) NSInteger floodControlMaximumMessageCount;
 @property (nonatomic, assign) NSInteger floodControlCurrentMessageCount;
@@ -61,27 +62,9 @@
 @property (nonatomic, assign) NSInteger proxyPort;
 @property (nonatomic, assign) NSInteger proxySocksVersion;
 @property (nonatomic, strong) NSMutableArray *sendQueue;
-
-/* IRCConnectionSocket.m properties. */
-/* Do not touch these from plugin. Only read them if needed. */
-
-@property (nonatomic, assign) BOOL isConnectedWithClientSideCertificate;
 @property (nonatomic, assign) dispatch_queue_t dispatchQueue;
 @property (nonatomic, assign) dispatch_queue_t socketQueue;
 @property (nonatomic, strong) NSData *bufferOverflowString;
-
-/* Textual cannot pass proxy information to the GCD version of the
- AsyncSocket library because it does not give us access to the
- CFWrite and CFRead streams of the underlying socket. If the
- server has a proxy configured, then we have to use the old
- run loop version of AsyncSocket. That is why socketConnection
- is type "id" because depending on the settings of the owning
- client; it can be two different classes.
-
- IRCConnectionSocket is smart enough to automatically handle
- the connection between either class. It is not recommended
- for any extension developer to reference this property as
- talking to it directly may result in unexpected behavior. */
 @property (nonatomic, strong) id socketConnection;
 
 - (void)open;

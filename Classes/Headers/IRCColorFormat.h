@@ -46,7 +46,7 @@ typedef enum IRCTextFormatterEffectType : NSInteger {
 	IRCTextFormatterBackgroundColorEffect,
 } IRCTextFormatterEffectType; 
 
-#define TXMaximumRainbowTextFormattingLength   300
+#define IRCTextFormatterMaximumRainbowTextFormattingLength   300
 
 @interface NSAttributedString (IRCTextFormatter)
 - (NSString *)attributedStringToASCIIFormatting;

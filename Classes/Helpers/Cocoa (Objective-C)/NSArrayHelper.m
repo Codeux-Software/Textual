@@ -156,7 +156,7 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 
 - (NSRange)range
 {
-	return NSMakeRange(0, self.count);
+	return NSMakeRange(0, [self count]);
 }
 
 - (NSArray *)arrayByInsertingSortedObject:(id)obj usingComparator:(NSComparator)comparator
@@ -193,13 +193,12 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 			return;
 		}
 
-		// Shutup clang, can't you see that I'm testing to make sure that it
-		// actually accepts this selector?
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 		if ((BOOL)[objval performSelector:comparison withObject:value]) {
 #pragma clang diagnostic pop
 			retval = idx;
+			
 			*stop = YES;
 		}
 	}];
@@ -211,21 +210,7 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 
 @implementation NSMutableArray (TXMutableArrayHelper)
 
-- (void)safeRemoveObjectAtIndex:(NSInteger)n
-{
-	if (n >= 0 && n < self.count) {
-		[self removeObjectAtIndex:n];
-	}
-}
-
-- (void)safeAddObject:(id)anObject
-{
-	if (PointerIsEmpty(anObject) == NO) {
-		[self addObject:anObject];
-	}
-	
-}
-- (void)safeAddObjectWithoutDuplication:(id)anObject
+- (void)addObjectWithoutDuplication:(id)anObject
 {
 	if (PointerIsEmpty(anObject) == NO) {
 		if ([self containsObject:anObject] == NO) {
@@ -234,11 +219,24 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 	}
 }
 
+- (void)safeRemoveObjectAtIndex:(NSInteger)n
+{
+	TEXTUAL_DEPRECATED_ASSERT;
+}
+
+- (void)safeAddObject:(id)anObject
+{
+	TEXTUAL_DEPRECATED_ASSERT;
+}
+
+- (void)safeAddObjectWithoutDuplication:(id)anObject
+{
+	TEXTUAL_DEPRECATED_ASSERT;
+}
+
 - (void)safeInsertObject:(id)anObject atIndex:(NSUInteger)index
 {
-	if (PointerIsEmpty(anObject) == NO) {
-		[self insertObject:anObject atIndex:index];
-	}
+	TEXTUAL_DEPRECATED_ASSERT;
 }
 
 - (void)insertBool:(BOOL)value atIndex:(NSUInteger)index
@@ -293,7 +291,7 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 
 - (void)performSelectorOnObjectValueAndReplace:(SEL)performSelector
 {
-	NSMutableArray *oldArray = [self mutableCopy];
+	NSArray *oldArray = [self copy];
 
 	[self removeAllObjects];
 
@@ -313,7 +311,7 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 	PointerIsEmptyAssert(obj);
 
 	NSUInteger idx = [self indexOfObject:obj
-						   inSortedRange:self.range
+						   inSortedRange:[self range]
 								 options:NSBinarySearchingInsertionIndex
 						 usingComparator:comparator];
 

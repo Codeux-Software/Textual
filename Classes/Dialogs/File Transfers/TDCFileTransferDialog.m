@@ -146,7 +146,7 @@
 	}
 }
 
-- (void)addReceiverForClient:(IRCClient *)client nickname:(NSString *)nickname address:(NSString *)hostAddress port:(NSInteger)hostPort filename:(NSString *)filename filesize:(TXFSLongInt)totalFilesize token:(NSString *)transferToken
+- (void)addReceiverForClient:(IRCClient *)client nickname:(NSString *)nickname address:(NSString *)hostAddress port:(NSInteger)hostPort filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken
 {
 	if ([self countNumberOfReceivers] > _addReceiverHardLimit) {
 		LogToConsole(@"Max receiver count of %i exceeded.", _addReceiverHardLimit);
@@ -197,7 +197,7 @@
 	
 	NSObjectIsEmptyAssert(fileAttrs);
 	
-	TXFSLongInt filesize = [fileAttrs longLongForKey:NSFileSize];
+	TXUnsignedLongLong filesize = [fileAttrs longLongForKey:NSFileSize];
 	
 	NSAssertReturn(filesize > 0);
 	

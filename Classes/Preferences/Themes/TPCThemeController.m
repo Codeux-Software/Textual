@@ -104,9 +104,9 @@
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 		if (ignoreCloudCache) {
-			path = [[TPCPreferences cloudCustomThemeFolderPath] stringByAppendingPathComponent:filename];
+			path = [[TPCPathInfo cloudCustomThemeFolderPath] stringByAppendingPathComponent:filename];
 		} else {
-			path = [[TPCPreferences cloudCustomThemeCachedFolderPath] stringByAppendingPathComponent:filename];
+			path = [[TPCPathInfo cloudCustomThemeCachedFolderPath] stringByAppendingPathComponent:filename];
 		}
 		
 		if ([RZFileManager() fileExistsAtPath:path]) {
@@ -119,7 +119,7 @@
 #endif
 		
 		/* Does it exist locally? */
-		path = [[TPCPreferences customThemeFolderPath] stringByAppendingPathComponent:filename];
+		path = [[TPCPathInfo customThemeFolderPath] stringByAppendingPathComponent:filename];
 		
 		if ([RZFileManager() fileExistsAtPath:path]) {
 			NSString *cssFile = [path stringByAppendingPathComponent:@"design.css"];
@@ -130,7 +130,7 @@
 		}
 	} else {
 		/* Does the theme exist in app? */
-		path = [[TPCPreferences bundledThemeFolderPath] stringByAppendingPathComponent:filename];
+		path = [[TPCPathInfo bundledThemeFolderPath] stringByAppendingPathComponent:filename];
 		
 		if ([RZFileManager() fileExistsAtPath:path]) {
 			NSString *cssFile = [path stringByAppendingPathComponent:@"design.css"];
@@ -199,18 +199,16 @@
 
 + (TPCThemeControllerStorageLocation)storageLocationOfThemeAtPath:(NSString *)path
 {
-	NSObjectIsEmptyAssertReturn(path, TPCThemeControllerStorageUnknownLocation);
-	
-	if ([path hasPrefix:[TPCPreferences bundledThemeFolderPath]]) {
+	if ([path hasPrefix:[TPCPathInfo bundledThemeFolderPath]]) {
 		return TPCThemeControllerStorageBundleLocation;
 	}
 	
-	if ([path hasPrefix:[TPCPreferences customThemeFolderPath]]) {
+	if ([path hasPrefix:[TPCPathInfo customThemeFolderPath]]) {
 		return TPCThemeControllerStorageCustomLocation;
 	}
 	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	if ([path hasPrefix:[TPCPreferences cloudCustomThemeCachedFolderPath]]) {
+	if ([path hasPrefix:[TPCPathInfo cloudCustomThemeCachedFolderPath]]) {
 		return TPCThemeControllerStorageCloudLocation;
 	}
 #endif
@@ -226,7 +224,7 @@
 		return nil;
     }
 
-	return [source safeSubstringToIndex:[source stringPosition:@":"]];
+	return [source substringToIndex:[source stringPosition:@":"]];
 }
 
 + (NSString *)extractThemeName:(NSString *)source
