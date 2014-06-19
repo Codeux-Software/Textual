@@ -39,25 +39,28 @@
 
 /* Highest level objects implemented by Textual. */
 
+/* Object state. */
 TEXTUAL_EXTERN BOOL NSObjectIsEmpty(id obj);
 TEXTUAL_EXTERN BOOL NSObjectIsNotEmpty(id obj);
 
 TEXTUAL_EXTERN BOOL NSObjectsAreEqual(id obj1, id obj2);
 
-TEXTUAL_EXTERN NSString *TXTLS(NSString *key); // Textual Language String
-TEXTUAL_EXTERN NSString *TXTFLS(NSString *key, ...); // Textual Formatted Language String
+/* Localization. */
+TEXTUAL_EXTERN NSString *TXTLS(NSString *key, ...);
+TEXTUAL_EXTERN NSString *BLS(NSInteger key, ...);
 
-TEXTUAL_EXTERN NSString *TSBLS(NSString *key, NSBundle *bundle); // Textual Secondary Bundle (aka plugin) Language String
-TEXTUAL_EXTERN NSString *TSBFLS(NSString *key, NSBundle *bundle, ...); // Textual Secondary Bundle (aka plugin) Formatted Language String
+TEXTUAL_EXTERN NSString *TXLocalizedString(NSBundle *bundle, NSString *key, va_list args);
+
+/* Time. */
+TEXTUAL_EXTERN NSString *TXFormattedTimestamp(NSDate *date, NSString *format); // Acts as a forward for strftime(). TXDefaultTextualTimestampFormat is used when format is empty.
+
+TEXTUAL_EXTERN NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, NSUInteger orderMatrix);
+
+TEXTUAL_EXTERN NSDateFormatter *TXSharedISOStandardDateFormatter(void);
+
+/* Everything else. */
+TEXTUAL_EXTERN NSString *TXFormattedNumber(NSInteger number);
 
 TEXTUAL_EXTERN NSInteger TXRandomNumber(NSInteger maxset);
-
-TEXTUAL_EXTERN NSString *TXFormattedTimestamp(NSDate *date, NSString *format);
-TEXTUAL_EXTERN NSString *TXFormattedTimestampWithOverride(NSDate *date, NSString *format, NSString *override);
-
-TEXTUAL_EXTERN NSString *TXReadableTime(NSInteger dateInterval);
-TEXTUAL_EXTERN NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue, NSArray *orderMatrix);
-
-TEXTUAL_EXTERN NSString *TXFormattedNumber(NSInteger number);
 
 TEXTUAL_EXTERN NSComparator NSDefaultComparator;

@@ -456,8 +456,8 @@ static NSUInteger OTHERS_TABLE[] = {
 	
 	while (left < right) {
 		NSInteger center = ((left + right) / 2);
-		NSInteger start = T[center * 2];
-		NSInteger end = T[center * 2 + 1];
+		NSInteger start = T[(center * 2)];
+		NSInteger end = T[(center * 2 + 1)];
 		
 		if (start <= c && c <= end) {
 			return YES;

@@ -53,7 +53,7 @@
 	NSInteger spacePosition = [value stringPosition:NSStringWhitespacePlaceholder];
 
 	if (spacePosition >= 1) {
-		return [value safeSubstringToIndex:spacePosition];
+		return [value substringToIndex:spacePosition];
 	}
 
 	return value;
@@ -65,13 +65,13 @@
 
 - (BOOL)isFocused
 {
-	return (self.window.firstResponder == self);
+	return ([[self window] firstResponder] == self);
 }
 
 - (void)focus
 {
     if ([self isFocused] == NO) {
-		[self.window makeFirstResponder:self];
+		[[self window] makeFirstResponder:self];
 	}
 }
 
@@ -82,7 +82,7 @@
 
 - (NSInteger)stringLength
 {
-    return [self.string length];
+    return [[self string] length];
 }
 
 - (NSScrollView *)scrollView

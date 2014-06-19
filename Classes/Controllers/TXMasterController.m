@@ -640,7 +640,7 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 - (void)completeNick:(BOOL)forward
 {
 	if (PointerIsEmpty(self.completionStatus)) {
-		self.completionStatus = [TLONickCompletionStatus new];
+		self.completionStatus = [TLONicknameCompletionStatus new];
 	}
 
 	[self.completionStatus completeNick:forward];

@@ -42,7 +42,6 @@
 #define TPCPreferencesCloudSyncKeyValueStoreServicesDefaultsKey						@"SyncPreferencesToTheCloud"
 #define TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDefaultsKey		@"SyncPreferencesToTheCloudLimitedToServers"
 
-/* I can make this notification name longer if I wanted to. */
 #define TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification		@"TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification"
 
 #define TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification		@"TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification"

@@ -345,7 +345,7 @@
 	self.memberListLengthSorted = [self.memberListLengthSorted arrayByInsertingSortedObject:item usingComparator:[IRCUser nicknameLengthComparator]];
 
 	/* Member list without ignores used by view. */
-	IRCAddressBook *ignoreChecks = [self.client checkIgnoreAgainstHostmask:[item hostmask] withMatches:@[@"hideInMemberList"]];
+	IRCAddressBookEntry *ignoreChecks = [self.client checkIgnoreAgainstHostmask:[item hostmask] withMatches:@[@"hideInMemberList"]];
 	
 	if (PointerIsEmpty(ignoreChecks) || (ignoreChecks && [ignoreChecks hideInMemberList] == NO)) {
 		self.memberListNormalSorted = [self.memberListNormalSorted arrayByInsertingSortedObject:item usingComparator:NSDefaultComparator];
@@ -629,7 +629,7 @@
 	for (NSString *nickname in self.memberList) {
 		IRCUser *u = self.memberList[nickname];
 
-		IRCAddressBook *ignoreChecks = [self.client checkIgnoreAgainstHostmask:[u hostmask] withMatches:@[@"hideInMemberList"]];
+		IRCAddressBookEntry *ignoreChecks = [self.client checkIgnoreAgainstHostmask:[u hostmask] withMatches:@[@"hideInMemberList"]];
 		
 		if (ignoreChecks == nil || (ignoreChecks && [ignoreChecks hideInMemberList] == NO)) {
 			[newlist addObject:u];

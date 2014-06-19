@@ -71,8 +71,10 @@
 @end
 
 @interface NSMutableDictionary (TXMutableDictionaryHelper)
-- (void)safeSetObject:(id)value forKey:(NSString *)key;
-- (void)safeSetObjectWithoutOverride:(id)value forKey:(NSString *)key;
+- (void)safeSetObject:(id)value forKey:(NSString *)key TEXTUAL_DEPRECATED;
+- (void)safeSetObjectWithoutOverride:(id)value forKey:(NSString *)key TEXTUAL_DEPRECATED;
+
+- (void)setObjectWithoutOverride:(id)value forKey:(NSString *)key;
 
 - (void)setBool:(BOOL)value forKey:(NSString *)key;
 - (void)setInteger:(NSInteger)value forKey:(NSString *)key;

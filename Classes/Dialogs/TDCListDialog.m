@@ -67,7 +67,7 @@
 
 - (void)show
 {
-    [self.networkNameField setStringValue:TXTFLS(@"TDCListDialog[1000]", self.client.altNetworkName)];
+    [self.networkNameField setStringValue:TXTLS(@"TDCListDialog[1000]", self.client.altNetworkName)];
 
 	[self.window restoreWindowStateForClass:self.class];
 	
@@ -143,12 +143,12 @@
 	NSString *count2 = TXFormattedNumber(self.filteredList.count);
 
 	if (NSObjectIsNotEmpty(self.searchField.stringValue) && NSDissimilarObjects(self.unfilteredList.count, self.filteredList.count)) {
-		titleCount = TXTFLS(@"TDCListDialog[1003]", count1, count2);
+		titleCount = TXTLS(@"TDCListDialog[1003]", count1, count2);
 	} else {
-		titleCount = TXTFLS(@"TDCListDialog[1002]", count1);
+		titleCount = TXTLS(@"TDCListDialog[1002]", count1);
 	}
 
-	[self.window setTitle:TXTFLS(@"TDCListDialog[1001]", titleCount)];
+	[self.window setTitle:TXTLS(@"TDCListDialog[1001]", titleCount)];
 
 	[self.channelListTable reloadData];
 }

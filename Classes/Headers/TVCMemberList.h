@@ -42,6 +42,8 @@
 @property (nonatomic, strong) id badgeRenderer;
 @property (nonatomic, assign) BOOL setHiddenByUser;
 
+@property (nonatomic, nweak) IBOutlet TVCMemberListUserInfoPopover *memberListUserInfoPopover;
+
 /* Additions & Removals. */
 - (void)addItemToList:(NSInteger)index;
 

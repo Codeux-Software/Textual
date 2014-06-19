@@ -60,13 +60,18 @@ typedef enum TXNotificationType : NSInteger {
 } TXNotificationType;
 
 #define TXNotificationDialogStandardNicknameFormat		@"%@ %@"
-#define TXNotificationDialogActionNicknameFormat			@"• %@: %@"
+#define TXNotificationDialogActionNicknameFormat		@"• %@: %@"
 
 #define TXNotificationHighlightLogStandardActionFormat			@"• %@: %@"
 #define TXNotificationHighlightLogStandardMessageFormat			@"%@ %@"
 #define TXNotificationHighlightLogAlternativeActionFormat		@"• %@ %@"
 
 @interface TLOGrowlController : NSObject <GrowlApplicationBridgeDelegate, NSUserNotificationCenterDelegate>
+@property (nonatomic, assign) BOOL areNotificationsDisabled;
+@property (nonatomic, assign) BOOL areNotificationSoundsDisabled;
+
+- (NSString *)titleForEvent:(TXNotificationType)event;
+
 - (void)notify:(TXNotificationType)eventType
 		 title:(NSString *)eventTitle
    description:(NSString *)eventDescription

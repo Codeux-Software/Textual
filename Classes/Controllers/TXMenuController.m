@@ -431,7 +431,7 @@
 					}
 					case TXCommandWKeyDisconnectAction:
 					{
-						[item setTitle:TXTFLS(@"BasicLanguage[1014]", [u altNetworkName])];
+						[item setTitle:TXTLS(@"BasicLanguage[1014]", [u altNetworkName])];
 						
 						if (_notConnected) {
 							return NO;
@@ -570,7 +570,7 @@
 
 	for (IRCClient *u in self.worldController.clients) {
 		/* Create a menu item for the client title. */
-		NSMenuExtendedHelperItem *newItem = [NSMenuExtendedHelperItem menuItemWithTitle:TXTFLS(@"BasicLanguage[1183]", u.name) target:nil action:nil];
+		NSMenuExtendedHelperItem *newItem = [NSMenuExtendedHelperItem menuItemWithTitle:TXTLS(@"BasicLanguage[1183]", u.name) target:nil action:nil];
 
 		[self.navigationChannelList addItem:newItem];
 
@@ -578,7 +578,7 @@
 		for (IRCChannel *c in u.channels) {
 			/* Create the menu item. Only first ten items get a key combo. */
 			if (channelCount >= 10) {
-				newItem = [NSMenuExtendedHelperItem menuItemWithTitle:TXTFLS(@"BasicLanguage[1184]", c.name)
+				newItem = [NSMenuExtendedHelperItem menuItemWithTitle:TXTLS(@"BasicLanguage[1184]", c.name)
 																target:self
 																action:@selector(navigateToSpecificChannelInNavigationList:)];
 			} else {
@@ -588,7 +588,7 @@
 					keyboardIndex = 0; // Have 0 as the last item.
 				}
 				
-				newItem = [NSMenuExtendedHelperItem menuItemWithTitle:TXTFLS(@"BasicLanguage[1184]", c.name)
+				newItem = [NSMenuExtendedHelperItem menuItemWithTitle:TXTLS(@"BasicLanguage[1184]", c.name)
 																target:self
 																action:@selector(navigateToSpecificChannelInNavigationList:)
 														 keyEquivalent:[NSString stringWithUniChar:('0' + keyboardIndex)]
@@ -2080,7 +2080,7 @@
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
         if ([m.nickname isEqualIgnoringCase:u.localNickname]) {
-            [u printDebugInformation:TXTFLS(@"BasicLanguage[1197]", [u networkAddress]) channel:c];
+            [u printDebugInformation:TXTLS(@"BasicLanguage[1197]", [u networkAddress]) channel:c];
         } else {
             [u sendCommand:[NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("gline"), m.nickname, [TPCPreferences IRCopDefaultGlineMessage]]];
         }

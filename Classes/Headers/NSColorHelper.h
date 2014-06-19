@@ -42,8 +42,8 @@
 #define TXCalibratedDeviceColor(r, g, b)	([NSColor internalDeviceRed:r green:g blue:b alpha:1.0])
 
 @interface NSColor (TXColorHelper)
-+ (id)defineUserInterfaceItem:(id)normalItem invertedItem:(id)invertedItem;
-+ (id)defineUserInterfaceItem:(id)normalItem invertedItem:(id)invertedItem withOperator:(BOOL)specialCondition;
++ (id)defineUserInterfaceItem:(id)normalItem invertedItem:(id)invertedItem TEXTUAL_DEPRECATED;
++ (id)defineUserInterfaceItem:(id)normalItem invertedItem:(id)invertedItem withOperator:(BOOL)specialCondition TEXTUAL_DEPRECATED;
 
 - (NSColor *)invertColor;
 
@@ -70,6 +70,7 @@
 
 + (NSColor *)sourceListBackgroundColor;
 + (NSColor *)sourceListBackgroundColorTop;
+
 + (NSColor *)outlineViewHeaderTextColor;
 + (NSColor *)outlineViewHeaderDisabledTextColor;
 

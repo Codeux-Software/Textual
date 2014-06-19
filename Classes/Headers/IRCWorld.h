@@ -46,18 +46,14 @@
 @interface IRCWorld : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate>
 @property (nonatomic, assign) NSInteger messagesSent;
 @property (nonatomic, assign) NSInteger messagesReceived;
-@property (nonatomic, assign) TXFSLongInt bandwidthIn;
-@property (nonatomic, assign) TXFSLongInt bandwidthOut;
+@property (nonatomic, assign) TXUnsignedLongLong bandwidthIn;
+@property (nonatomic, assign) TXUnsignedLongLong bandwidthOut;
 @property (nonatomic, strong) NSMutableArray *clients;
-@property (nonatomic, assign) BOOL isSoundMuted;
 @property (nonatomic, assign) BOOL isPopulatingSeeds;
-@property (nonatomic, assign) BOOL areNotificationsDisabled;
 @property (nonatomic, assign) BOOL temporarilyDisablePreviousSelectionUpdates;
 @property (nonatomic, strong) IRCTreeItem *selectedItem;
 @property (nonatomic, strong) NSString *previousSelectedClientId;
 @property (nonatomic, strong) NSString *previousSelectedChannelId;
-@property (nonatomic, strong, readonly) OELReachability *networkReachability;
-@property (nonatomic, strong, readonly) NSDateFormatter *isoStandardDateFormatter; // ISO standard date formatter used for internal purposes. (yyyy-MM-dd'T'HH:mm:ss.SSS'Z')
 
 - (void)setupConfiguration;
 - (void)setupOtherServices;
@@ -88,8 +84,10 @@
 - (void)selectPreviousItem;
 
 - (IRCClient *)selectedClient;
+
 - (IRCChannel *)selectedChannel;
 - (IRCChannel *)selectedChannelOn:(IRCClient *)c;
+
 - (TVCLogController *)selectedViewController;
 
 - (IRCTreeItem *)previouslySelectedItem;

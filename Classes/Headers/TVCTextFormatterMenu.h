@@ -37,8 +37,11 @@
 
 #import "TextualApplication.h"
 
-#define IRCTextFormatterMenuTag			53037
+#define TVCTextFormatterMenuFormatterMenuTag			53037
 
+/* There is only one instance of TVCTextFormatterMenu per-window. 
+ When enabled inside a sheet, the right click menu is available
+ but the keyboard shortcuts are reserved for main window access. */
 @interface TVCTextFormatterMenu : NSObject
 @property (nonatomic, uweak) TVCTextViewWithIRCFormatter *textField;
 @property (nonatomic, nweak) IBOutlet NSMenuItem *formatterMenu;

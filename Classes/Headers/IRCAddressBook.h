@@ -42,7 +42,7 @@ typedef enum IRCAddressBookEntryType : NSInteger {
 	IRCAddressBookUserTrackingEntryType
 } IRCAddressBookEntryType;
 
-@interface IRCAddressBook : NSObject <NSMutableCopying>
+@interface IRCAddressBookEntry : NSObject <NSMutableCopying>
 @property (nonatomic, assign) IRCAddressBookEntryType entryType;
 @property (nonatomic, strong) NSString *itemUUID; // Unique Identifier (UUID)
 @property (nonatomic, strong) NSString *hostmask;

@@ -107,7 +107,7 @@
 		self.realname = [TPCPreferences defaultRealname];
 		
 		self.normalLeavingComment		= TXTLS(@"BasicLanguage[1021]");
-		self.sleepModeLeavingComment	= TXTFLS(@"BasicLanguage[1185]", [CSFWSystemInformation systemModelName]);
+		self.sleepModeLeavingComment	= TXTLS(@"BasicLanguage[1185]", [CSFWSystemInformation systemModelName]);
 	}
 	
 	return self;
@@ -364,7 +364,7 @@
 
 		/* Ignore list. */
 		for (NSDictionary *e in [dic arrayForKey:@"ignoreList"]) {
-			IRCAddressBook *ignore = [[IRCAddressBook alloc] initWithDictionary:e];
+			IRCAddressBookEntry *ignore = [[IRCAddressBookEntry alloc] initWithDictionary:e];
 			
 			[self.ignoreList addObject:ignore];
 		}
@@ -503,7 +503,7 @@
 		[channelAry safeAddObject:[e dictionaryValue]];
 	}
 	
-	for (IRCAddressBook *e in self.ignoreList) {
+	for (IRCAddressBookEntry *e in self.ignoreList) {
 		[ignoreAry safeAddObject:[e dictionaryValue]];
 	}
 

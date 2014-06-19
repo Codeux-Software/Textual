@@ -38,13 +38,13 @@
 
 #import "TextualApplication.h"
 
-#define TXLogLineUndefinedNicknameFormat	@"<%@%n>"
-#define TXLogLineActionNicknameFormat		@"%@ "
-#define TXLogLineNoticeNicknameFormat		@"-%@-"
+#define TVCLogLineUndefinedNicknameFormat	@"<%@%n>"
+#define TVCLogLineActionNicknameFormat		@"%@ "
+#define TVCLogLineNoticeNicknameFormat		@"-%@-"
 
-#define TXLogLineSpecialNoticeMessageFormat		@"[%@]: %@"
+#define TVCLogLineSpecialNoticeMessageFormat		@"[%@]: %@"
 
-#define TXLogLineDefaultRawCommandValue			@"-100"
+#define TVCLogLineDefaultRawCommandValue			@"-100"
 
 typedef enum TVCLogLineType : NSInteger {
 	TVCLogLineUndefinedType					= 0,

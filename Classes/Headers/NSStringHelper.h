@@ -38,6 +38,9 @@
 
 #import "TextualApplication.h"
 
+#define TXDefaultPrimaryStringEncoding		NSUTF8StringEncoding
+#define TXDefaultFallbackStringEncoding		NSISOLatin1StringEncoding
+
 #define TXStringIsAlphabetic(c)						('a' <= (c) && (c) <= 'z' || 'A' <= (c) && (c) <= 'Z')
 #define TXStringIsBase10Numeric(c)					('0' <= (c) && (c) <= '9')
 #define TXStringIsAlphabeticNumeric(c)				(TXStringIsAlphabetic(c) || TXStringIsBase10Numeric(c))
@@ -73,9 +76,9 @@
 - (NSString *)substringAfterIndex:(NSInteger)anIndex;
 - (NSString *)substringBeforeIndex:(NSInteger)anIndex;
 
-- (NSString *)safeSubstringFromIndex:(NSInteger)anIndex;
-- (NSString *)safeSubstringToIndex:(NSInteger)anIndex;
-- (NSString *)safeSubstringWithRange:(NSRange)range;
+- (NSString *)safeSubstringFromIndex:(NSInteger)anIndex TEXTUAL_DEPRECATED;
+- (NSString *)safeSubstringToIndex:(NSInteger)anIndex TEXTUAL_DEPRECATED;
+- (NSString *)safeSubstringWithRange:(NSRange)range TEXTUAL_DEPRECATED;
 
 - (NSString *)stringCharacterAtIndex:(NSInteger)anIndex;
 
@@ -153,7 +156,7 @@
 
 - (NSString *)stringWithValidURIScheme;
 
-- (NSString *)reservedCharactersToIRCFormatting;
+- (NSString *)reservedCharactersToIRCFormatting TEXTUAL_DEPRECATED;
 
 - (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight forcedFont:(NSFont *)textFont;
 
@@ -217,10 +220,10 @@
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set;
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set frontChop:(NSRangePointer)front;
 
-- (id)safeAttribute:(NSString *)attrName atIndex:(NSUInteger)location effectiveRange:(NSRangePointer)range;
-- (id)safeAttribute:(NSString *)attrName atIndex:(NSUInteger)location longestEffectiveRange:(NSRangePointer)range inRange:(NSRange)rangeLimit;
+- (id)safeAttribute:(NSString *)attrName atIndex:(NSUInteger)location effectiveRange:(NSRangePointer)range TEXTUAL_DEPRECATED;
+- (id)safeAttribute:(NSString *)attrName atIndex:(NSUInteger)location longestEffectiveRange:(NSRangePointer)range inRange:(NSRange)rangeLimit TEXTUAL_DEPRECATED;
 
-- (NSDictionary *)safeAttributesAtIndex:(NSUInteger)location longestEffectiveRange:(NSRangePointer)range inRange:(NSRange)rangeLimit;
+- (NSDictionary *)safeAttributesAtIndex:(NSUInteger)location longestEffectiveRange:(NSRangePointer)range inRange:(NSRange)rangeLimit TEXTUAL_DEPRECATED;
 
 - (NSArray *)splitIntoLines;
 

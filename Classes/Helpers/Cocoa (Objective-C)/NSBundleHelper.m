@@ -41,7 +41,7 @@
 
 - (BOOL)loadCustomNibNamed:(NSString *)nibName owner:(id)owner topLevelObjects:(NSArray *__autoreleasing *)topLevelObjects;
 {
-	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
 		return [self loadNibNamed:nibName owner:owner topLevelObjects:topLevelObjects];
 	} else {
 		NSDictionary *objects = @{NSNibOwner : owner};

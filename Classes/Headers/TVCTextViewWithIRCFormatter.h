@@ -37,17 +37,17 @@
 
 #import "TextualApplication.h"
 
-#define TXDefaultTextFieldFontColor         [NSColor colorWithCalibratedWhite:0.15 alpha:1.0]
-#define TXDefaultTextFieldFont              [NSFont fontWithName:@"Helvetica" size:12.0]
+#define TXPreferredGlobalTextFieldFontColor		[NSColor colorWithCalibratedWhite:0.15 alpha:1.0]
+#define TXPreferredGlobalTextFieldFont          [NSFont fontWithName:@"Helvetica" size:12.0]
 
-#define TXDefaultTextFieldWidthPadding		1.0
-#define TXDefaultTextFieldHeightPadding		2.0
+#define TVCTextViewWithIRCFormatterWidthPadding		1.0
+#define TVCTextViewWithIRCFormatterHeightPadding	2.0
 
 @interface TVCTextViewWithIRCFormatter : NSTextView <NSTextViewDelegate>
-@property (nonatomic, strong) TLOKeyEventHandler *keyHandler;
+@property (nonatomic, strong) NSFont *preferredFont;
+@property (nonatomic, strong) NSColor *preferredFontSize;
 @property (nonatomic, assign) dispatch_queue_t formattingQueue;
-@property (nonatomic, strong) NSFont *defaultTextFieldFont;
-@property (nonatomic, strong) NSColor *defaultTextFieldFontColor;
+@property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
 
 - (BOOL)isAtTopOfView;
 - (BOOL)isAtBottomOfView;

@@ -39,7 +39,7 @@
 #import "TextualApplication.h"
 
 @interface TVCLogScriptEventSink : NSObject
-@property (nonatomic, nweak) TVCLogController *owner;
+@property (nonatomic, nweak) TVCLogController *logController;
 @property (nonatomic, assign) NSInteger x;
 @property (nonatomic, assign) NSInteger y;
 @property (nonatomic, assign) NSTimeInterval lastClickTime;

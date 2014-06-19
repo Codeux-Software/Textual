@@ -130,7 +130,7 @@ static NSInteger _cachedHighlightCount = -1;
 	NSImage *greenBadgeCenter;
 	NSImage *greenBadgeRight;
 
-	if ([TPCPreferences featureAvailableToOSXYosemite]) {
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 		redBadgeLeft   = [NSImage imageNamed:@"DIRedBadgeLeftYosemite.png"];
 		redBadgeCenter = [NSImage imageNamed:@"DIRedBadgeCenterYosemite.png"];
 		redBadgeRight  = [NSImage imageNamed:@"DIRedBadgeRightYosemite.png"];

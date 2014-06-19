@@ -151,8 +151,8 @@
 @property (nonatomic, nweak) IBOutlet NSMenu *segmentedControllerMenu;
 @property (nonatomic, nweak) IBOutlet NSMenu *tcopyURLMenu;
 @property (nonatomic, nweak) IBOutlet NSMenu *userControlMenu;
-@property (nonatomic, nweak) IBOutlet NSMenuItem *channelMenuItem;
 @property (nonatomic, nweak) IBOutlet NSMenuItem *closeWindowMenuItem;
+@property (nonatomic, nweak) IBOutlet NSMenuItem *channelMenuItem;
 @property (nonatomic, nweak) IBOutlet NSMenuItem *serverMenuItem;
 
 - (void)setupOtherServices;

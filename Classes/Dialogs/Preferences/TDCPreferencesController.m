@@ -215,13 +215,13 @@
 	 check what OS we are running on before we even doing anything. */
 	if ([TPCPreferences featureAvailableToOSXMountainLion] == NO || growlRunning) {
 		if (growlRunning) {
-			self.alertNotificationDestinationTextField.stringValue = TXTFLS(@"TDCPreferencesController[1005]");
+			self.alertNotificationDestinationTextField.stringValue = TXTLS(@"TDCPreferencesController[1005]");
 		} else {
-			self.alertNotificationDestinationTextField.stringValue = TXTFLS(@"TDCPreferencesController[1007]");
+			self.alertNotificationDestinationTextField.stringValue = TXTLS(@"TDCPreferencesController[1007]");
 
 		}
 	} else {
-		self.alertNotificationDestinationTextField.stringValue = TXTFLS(@"TDCPreferencesController[1006]");
+		self.alertNotificationDestinationTextField.stringValue = TXTLS(@"TDCPreferencesController[1006]");
 	}
 
 	// Complete startup of preferences.
@@ -1060,7 +1060,7 @@
 	[prompt sheetWindowWithQuestion:[NSApp keyWindow]
 							 target:[TLOPopupPrompts class]
 							 action:@selector(popupPromptNilSelector:withOriginalAlert:)
-							   body:TXTFLS(@"TDCPreferencesController[1014][2]", item.title, tsf)
+							   body:TXTLS(@"TDCPreferencesController[1014][2]", item.title, tsf)
 							  title:TXTLS(@"TDCPreferencesController[1014][1]")
 					  defaultButton:TXTLS(@"BasicLanguage[1186]")
 					alternateButton:nil

@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-@implementation IRCAddressBook
+@implementation IRCAddressBookEntry
 
 - (id)initWithDictionary:(NSDictionary *)dic
 {
@@ -144,7 +144,7 @@
 
 - (id)mutableCopyWithZone:(NSZone *)zone
 {
-	return [[IRCAddressBook allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
+	return [[IRCAddressBookEntry allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
 }
 
 @end

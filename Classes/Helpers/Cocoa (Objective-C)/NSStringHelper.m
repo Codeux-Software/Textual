@@ -142,44 +142,22 @@
 
 - (NSString *)safeSubstringWithRange:(NSRange)range
 {
-	if (NSRangeIsValidInBounds(range, [self length]) == NO) {
-		return nil;
-	}
-
-	NSRange safeRange = [self rangeOfComposedCharacterSequencesForRange:range];
-	
-	return [self substringWithRange:safeRange];
+	TEXTUAL_DEPRECATED_ASSERT;
 }
 
 - (NSString *)safeSubstringFromIndex:(NSInteger)anIndex
 {
-	if (anIndex > [self length] || anIndex < 0) {
-		return nil;
-	}
-
-	NSRange cutRange = NSMakeRange(anIndex, ([self length] - anIndex));
-
-	return [self safeSubstringWithRange:cutRange];
+	TEXTUAL_DEPRECATED_ASSERT;
 }
 
 - (NSString *)safeSubstringToIndex:(NSInteger)anIndex
 {
-	if (anIndex > [self length] || anIndex < 0) {
-		return nil;
-	}
-
-	NSRange cutRange = NSMakeRange(0, anIndex);
-
-	return [self safeSubstringWithRange:cutRange];
+	TEXTUAL_DEPRECATED_ASSERT;
 }
 
 - (UniChar)safeCharacterAtIndex:(NSInteger)anIndex
 {
-	if (anIndex > [self length] || anIndex < 0) {
-		return 0;
-	}
-
-	return [self characterAtIndex:anIndex];
+	TEXTUAL_DEPRECATED_ASSERT;
 }
 
 - (NSString *)stringCharacterAtIndex:(NSInteger)anIndex
@@ -195,12 +173,12 @@
 
 - (NSString *)substringAfterIndex:(NSInteger)anIndex
 {
-	return [self safeSubstringFromIndex:(anIndex + 1)];
+	return [self substringFromIndex:(anIndex + 1)];
 }
 
 - (NSString *)substringBeforeIndex:(NSInteger)anIndex
 {
-	return [self safeSubstringFromIndex:(anIndex - 1)];
+	return [self substringFromIndex:(anIndex - 1)];
 }
 
 - (BOOL)isEqualIgnoringCase:(NSString *)other
@@ -299,8 +277,8 @@
 	// normalize strings
 	NSString *stringA = [NSString stringWithString:self];
 	
-	stringA = [stringA.trim lowercaseString];
-	stringB = [stringB.trim lowercaseString];
+	stringA = [[stringA trim] lowercaseString];
+	stringB = [[stringB trim] lowercaseString];
 	
 	// Step 1
 	NSInteger k, i, j, change, *d, distance;
@@ -308,7 +286,8 @@
 	NSUInteger n = [stringA length];
 	NSUInteger m = [stringB length];
 	
-	if (NSDissimilarObjects(n++, 0) && NSDissimilarObjects(m++, 0))
+	if (NSDissimilarObjects(n++, 0) &&
+		NSDissimilarObjects(m++, 0))
 	{
 		d = malloc(sizeof(NSInteger) * m * n );
 		
@@ -488,7 +467,12 @@
 
 	UniChar c = [self characterAtIndex:0];
 
-	return (self.length >= 1 && (c == '#' || c == '&' || c == '+' || c == '!' || c == '~' || c == '?'));
+	return ([self length] >= 1 && (c == '#' ||
+								   c == '&' ||
+								   c == '+' ||
+								   c == '!' ||
+								   c == '~' ||
+								   c == '?'));
 }
 
 - (BOOL)isModeChannelName
@@ -497,7 +481,11 @@
 
 	UniChar c = [self characterAtIndex:0];
 
-	return (self.length >= 1 && (c == '#' || c == '&' || c == '!' || c == '~' || c == '?'));
+	return ([self length] >= 1 && (c == '#' ||
+								   c == '&' ||
+								   c == '!' ||
+								   c == '~' ||
+								   c == '?'));
 }
 
 - (NSString *)channelNameToken
@@ -520,7 +508,9 @@
 		return [self channelNameToken];
 	}
 	
-	NSCharacterSet *validChars = [NSCharacterSet characterSetWithCharactersInString:[client.isupport channelNamePrefixes]];
+	NSString *prefixes = [[client isupport] channelNamePrefixes];
+	
+	NSCharacterSet *validChars = [NSCharacterSet characterSetWithCharactersInString:prefixes];
 	
 	return [self stringByTrimmingCharactersInSet:validChars];
 }
@@ -562,37 +552,9 @@
 
 - (NSString *)reservedCharactersToIRCFormatting
 {
-	/* 
-	 
-	 This is an interesting method. Long, long ago when Textual was still a young
-	 fork of Limechat we were working on formatting support for the input text field.
-	 The feature was sorta, kinda rushed so "reserved characters" were settled on.
-	 It was just a rip off of mIRC boxy things they use for formatting.
-
-	 User would select a portion of text they wanted formatted, right click, select
-	 the formatting, then Textual would insert the boxes around the text. Of couse
-	 Textual now has a more modern system for formatting. This method still exists
-	 though so a theme can customize localizations with IRC formatting since the
-	 localizations do not support HTML.
-
-	 Maybe a new system is needed? Nah, no rush. No themes even change localizations.
-
-	 Format:
-		 ▤<foreground 1-15>,[background 1-15]<text>▤ — color
-		 ▥<text>▥ — bold
-		 ▧<text>▧ — italics
-		 ▨<text>▨ — underline
-	 
-	 */
-
-	NSString *s = self;
-
-	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithUniChar:0x03] withString:@"▤"]; // color
-	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithUniChar:0x02] withString:@"▥"]; // bold
-	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithUniChar:0x1d] withString:@"▧"]; // italics
-	s = [s stringByReplacingOccurrencesOfString:[NSString stringWithUniChar:0x1F] withString:@"▨"]; // underline
-
-	return s;
+	TEXTUAL_DEPRECATED_ASSERT;
+	
+	return nil;
 }
 
 - (NSString *)cleanedServerHostmask
@@ -651,7 +613,7 @@
     NSDictionary *input = @{@"attributedStringFont" : defaultFont};
 
 	return [TVCLogRenderer renderBody:self
-						   controller:[self.worldController selectedViewController]
+						   controller:[worldController selectedViewController]
 						   renderType:TVCLogRendererAttributedStringType
 						   properties:input
 						   resultInfo:NULL];
@@ -673,7 +635,7 @@
 
 - (NSString *)safeFilename
 {
-	NSString *bob = self.trim;
+	NSString *bob = [self trim];
 
 	bob = [bob stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
 	bob = [bob stringByReplacingOccurrencesOfString:@":" withString:@"_"];
@@ -1036,12 +998,12 @@
 		NSInteger rlc = ceil([encodedResult length] / lineLength);
 
 		for (NSInteger i = 1; i <= rlc; i++) {
-			NSString *append = [encodedResult safeSubstringToIndex:lineLength];
+			NSString *append = [encodedResult substringToIndex:lineLength];
 
 			[resultString appendString:append];
 			[resultString appendString:NSStringNewlinePlaceholder];
 
-			encodedResult = [encodedResult safeSubstringFromIndex:lineLength];
+			encodedResult = [encodedResult substringFromIndex:lineLength];
 		}
 	}
 	
@@ -1375,9 +1337,7 @@
 
 - (void)safeDeleteCharactersInRange:(NSRange)range
 {
-	if (NSRangeIsValidInBounds(range, [self length])) {
-		[self deleteCharactersInRange:range];
-	}
+	TEXTUAL_DEPRECATED_ASSERT;
 }
 
 - (NSString *)getTokenIncludingQuotes
@@ -1435,36 +1395,22 @@
 
 - (NSDictionary *)attributes
 {
-    return [self safeAttributesAtIndex:0 longestEffectiveRange:NULL inRange:NSMakeRange(0, [self length])];
+	return [self attributesAtIndex:0 longestEffectiveRange:NULL inRange:NSMakeRange(0, [self length])];
 }
 
 - (id)safeAttribute:(NSString *)attrName atIndex:(NSUInteger)location effectiveRange:(NSRangePointer)range
 {
-	NSAssertReturnR((location < [self length]), nil);
-	
-	return [self attribute:attrName atIndex:location effectiveRange:range];
+	TEXTUAL_DEPRECATED_ASSERT;
 }
 
 - (NSDictionary *)safeAttributesAtIndex:(NSUInteger)location longestEffectiveRange:(NSRangePointer)range inRange:(NSRange)rangeLimit
 {
-	NSAssertReturnR((location < [self length]), nil);
-
-	if (NSRangeIsValidInBounds(rangeLimit, [self length])) {
-		return [self attributesAtIndex:location longestEffectiveRange:range inRange:rangeLimit];
-	}
-
-	return nil;
+	TEXTUAL_DEPRECATED_ASSERT;
 }
 
 - (id)safeAttribute:(NSString *)attrName atIndex:(NSUInteger)location longestEffectiveRange:(NSRangePointer)range inRange:(NSRange)rangeLimit
 {
-	NSAssertReturnR((location < [self length]), nil);
-
-	if (NSRangeIsValidInBounds(rangeLimit, [self length])) {
-		return [self attribute:attrName atIndex:location longestEffectiveRange:range inRange:rangeLimit];
-	}
-
-	return nil;
+	TEXTUAL_DEPRECATED_ASSERT;
 }
 
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set
@@ -1510,7 +1456,7 @@
 {
     NSMutableArray *lines = [NSMutableArray array];
     
-    NSInteger stringLength = [[self string] length];
+    NSInteger stringLength = [self length];
     NSInteger rangeStartIn = 0;
     
     NSMutableAttributedString *copyd = [self mutableCopy];
@@ -1518,7 +1464,7 @@
     while (rangeStartIn < stringLength) {
 		NSRange srb = NSMakeRange(rangeStartIn, (stringLength - rangeStartIn));
      
-		NSRange srr = [self.string rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:0 range:srb];
+		NSRange srr = [[self string] rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:0 range:srb];
         
         if (srr.location == NSNotFound) {
             break;
@@ -1568,7 +1514,7 @@
 
 - (CGFloat)pixelHeightInWidth:(NSInteger)width forcedFont:(NSFont *)font
 {
-	NSMutableAttributedString *baseMutable = self.mutableCopy;
+	NSMutableAttributedString *baseMutable = [self mutableCopy];
 	
 	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
 	

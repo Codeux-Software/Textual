@@ -172,8 +172,8 @@
 					NSDictionary *diskInfo = [RZFileManager() attributesOfFileSystemForPath:fullpath error:NULL];
 
 					if (diskInfo) {
-						TXFSLongInt totalSpace = [diskInfo longLongForKey:NSFileSystemSize];
-						TXFSLongInt freeSpace  = [diskInfo longLongForKey:NSFileSystemFreeSize];
+						TXUnsignedLongLong totalSpace = [diskInfo longLongForKey:NSFileSystemSize];
+						TXUnsignedLongLong freeSpace  = [diskInfo longLongForKey:NSFileSystemFreeSize];
 
 						if (objectIndex == 0) {
 							[result appendString:TPIFLS(@"BasicLanguage[1022]", name,
@@ -386,9 +386,9 @@
 
 + (NSString *)systemMemoryInformation
 {
-	TXFSLongInt totalMemory = [TPI_SP_SysInfo totalMemorySize];
-	TXFSLongInt freeMemory  = [TPI_SP_SysInfo freeMemorySize];
-	TXFSLongInt usedMemory  = (totalMemory - freeMemory);
+	TXUnsignedLongLong totalMemory = [TPI_SP_SysInfo totalMemorySize];
+	TXUnsignedLongLong freeMemory  = [TPI_SP_SysInfo freeMemorySize];
+	TXUnsignedLongLong usedMemory  = (totalMemory - freeMemory);
 
 	CGFloat rawPercent = (usedMemory / (CGFloat)totalMemory);
 	CGFloat memPercent = roundf((rawPercent * 100.0f) / 10.0f);
@@ -492,7 +492,7 @@
 #pragma mark -
 #pragma mark Formatting/Processing 
 
-+ (NSString *)formattedDiskSize:(TXFSLongInt)size
++ (NSString *)formattedDiskSize:(TXUnsignedLongLong)size
 {
 	/* Use cocoa API if available. */
 	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
@@ -534,8 +534,8 @@
 	NSDictionary *diskInfo = [RZFileManager() attributesOfFileSystemForPath:@"/" error:nil];
 
 	if (diskInfo) {
-		TXFSLongInt totalSpace = [diskInfo longLongForKey:NSFileSystemSize];
-		TXFSLongInt freeSpace  = [diskInfo longLongForKey:NSFileSystemFreeSize];
+		TXUnsignedLongLong totalSpace = [diskInfo longLongForKey:NSFileSystemSize];
+		TXUnsignedLongLong freeSpace  = [diskInfo longLongForKey:NSFileSystemFreeSize];
 
 		return TPIFLS(@"BasicLanguage[1007]",
 					  [self formattedDiskSize:totalSpace],
@@ -735,7 +735,7 @@
 	return nil;
 }
 
-+ (TXFSLongInt)freeMemorySize
++ (TXUnsignedLongLong)freeMemorySize
 {
 	mach_msg_type_number_t infoCount = (sizeof(vm_statistics_data_t) / sizeof(natural_t));
 	
@@ -751,7 +751,7 @@
 	return -1;
 }
 
-+ (TXFSLongInt)totalMemorySize
++ (TXUnsignedLongLong)totalMemorySize
 {
 	uint64_t linesize = 0L;
 	

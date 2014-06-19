@@ -99,8 +99,6 @@
 	if ([NSFont fontIsAvailable:fontName] && fontSize >= 5.0) {
 		NSFont *theFont = [NSFont fontWithName:fontName size:fontSize];
 
-		PointerIsEmptyAssertReturn(theFont, nil);
-
 		return theFont;
 	}
 
@@ -155,7 +153,7 @@
 {
 	NSString *filename = [NSString stringWithFormat:@"/Style Default Templates/Version %i/", version];
 
-	NSString *dictPath = [[TPCPreferences applicationResourcesFolderPath] stringByAppendingPathComponent:filename];
+	NSString *dictPath = [[TPCPathInfo applicationResourcesFolderPath] stringByAppendingPathComponent:filename];
 
 	_appTemplateRepository = [GRMustacheTemplateRepository templateRepositoryWithBaseURL:[NSURL fileURLWithPath:dictPath]];
 
@@ -183,7 +181,7 @@
 
 	_underlyingWindowColor = nil;
 
-	_indentationOffset = TXThemeDisabledIndentationOffset;
+	_indentationOffset = TPCThemeSettingsDisabledIndentationOffset;
 
 	/* Load style settings dictionary. */
 	BOOL didLoadDefaultTemplateRepository = NO;
@@ -209,7 +207,7 @@
 
 		/* Disable indentation? */
 		if (_indentationOffset <= 0.0) {
-			_indentationOffset = TXThemeDisabledIndentationOffset;
+			_indentationOffset = TPCThemeSettingsDisabledIndentationOffset;
 		}
 
 		/* Get style template version. */
@@ -225,15 +223,6 @@
 	/* Fall back to the default repository. */
 	if (didLoadDefaultTemplateRepository == NO) {
 		[self loadApplicationStyleRespository:1];
-	}
-
-	/* Load localizations. */
-	_languageLocalizations = nil;
-
-	dictPath = [path stringByAppendingPathComponent:@"/Data/Settings/styleLocalizations.plist"];
-
-	if ([RZFileManager() fileExistsAtPath:dictPath]) {
-		_languageLocalizations = [NSDictionary dictionaryWithContentsOfFile:dictPath];
 	}
 
 	/* Inform our defaults controller about a few overrides. */

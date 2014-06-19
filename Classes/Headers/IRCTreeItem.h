@@ -43,15 +43,15 @@
 @property (nonatomic, nweak) NSString *name;
 @property (nonatomic, strong) NSString *treeUUID; // Unique Identifier (UUID)
 @property (nonatomic, assign) BOOL isActive;
+@property (nonatomic, assign) BOOL isUnread;
 @property (nonatomic, assign) BOOL isClient;
 @property (nonatomic, assign) BOOL isChannel;
 @property (nonatomic, assign) BOOL isPrivateMessage;
-@property (nonatomic, assign) BOOL isUnread;
-@property (nonatomic, nweak) IRCClient *client;
+@property (nonatomic, nweak) IRCClient *associatedClient;
+@property (nonatomic, nweak) IRCChannel *associatedChannel;
 @property (nonatomic, assign) NSInteger dockUnreadCount;
 @property (nonatomic, assign) NSInteger treeUnreadCount;
 @property (nonatomic, assign) NSInteger nicknameHighlightCount;
-@property (nonatomic, strong) TLOInputHistory *inputHistory;
 @property (nonatomic, strong) TVCLogController *viewController;
 @property (nonatomic, strong) TVCLogControllerOperationQueue *printingQueue;
 

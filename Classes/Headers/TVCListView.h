@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-#define TXDefaultListViewControllerFont			[NSFont fontWithName:@"Lucida Grande" size:12.0]
+#define TXPreferredGlobalTableViewFont			[NSFont fontWithName:@"Lucida Grande" size:12.0]
 
 @interface TVCListView : NSTableView
 @property (nonatomic, uweak) id keyDelegate;

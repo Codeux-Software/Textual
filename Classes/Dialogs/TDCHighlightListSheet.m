@@ -124,7 +124,7 @@
 	} else if ([column.identifier isEqualToString:@"time"]) {
 		NSInteger timeInterval = [item integerAtIndex:1];
 		
-		return TXTFLS(@"BasicLanguage[1216]", TXSpecialReadableTime([NSDate secondsSinceUnixTimestamp:timeInterval], YES, nil));
+		return TXTLS(@"BasicLanguage[1216]", TXSpecialReadableTime([NSDate secondsSinceUnixTimestamp:timeInterval], YES, nil));
     } else {
         return [item safeObjectAtIndex:2];
     }

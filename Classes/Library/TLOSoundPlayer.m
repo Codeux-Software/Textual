@@ -50,6 +50,7 @@
 
 	for (NSString *filename in files) {
 		NSString *namewoext = [filename stringByDeletingPathExtension];
+		
 		NSString *namewpath = [path stringByAppendingPathComponent:filename];
 
 		[resultData setObject:namewpath forKey:namewoext];
@@ -130,6 +131,7 @@
 	NSString *soundPath = nil;
 
 	NSDictionary *soundFiles;
+	
 	/* I know the condition will always be NO, but there are three
 	 blocks of copy and pasted code. I wanted them to look the same. */
 	if (hasSoundPath == NO) {

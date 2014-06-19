@@ -51,9 +51,9 @@
 @property (nonatomic, strong) NSString *transferToken;
 @property (nonatomic, assign) NSInteger transferPort;
 @property (nonatomic, strong) NSFileHandle *fileHandle;
-@property (nonatomic, assign) TXFSLongInt totalFilesize;
-@property (nonatomic, assign) TXFSLongInt processedFilesize;
-@property (nonatomic, assign) TXFSLongInt currentRecord;
+@property (nonatomic, assign) TXUnsignedLongLong totalFilesize;
+@property (nonatomic, assign) TXUnsignedLongLong processedFilesize;
+@property (nonatomic, assign) TXUnsignedLongLong currentRecord;
 @property (nonatomic, strong) NSMutableArray *speedRecords;
 @property (nonatomic, assign) TDCFileTransferDialogTransferStatus transferStatus;
 @property (nonatomic, uweak) TDCFileTransferDialog *transferDialog;
