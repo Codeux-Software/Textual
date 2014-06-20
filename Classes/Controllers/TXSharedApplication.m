@@ -39,7 +39,7 @@
 
 @implementation TXSharedApplication
 
-- (THOPluginManager *)applicationPluginManager
++ (THOPluginManager *)applicationPluginManager
 {
 	static id sharedSelf = nil;
 	
@@ -52,7 +52,7 @@
 	return sharedSelf;
 }
 
-- (TLOInputHistory *)sharedInputHistoryManager
++ (TLOInputHistory *)sharedInputHistoryManager
 {
 	static id sharedSelf = nil;
 	
@@ -65,7 +65,7 @@
 	return sharedSelf;
 }
 
-- (TLOGrowlController *)sharedGrowlController
++ (TLOGrowlController *)sharedGrowlController
 {
 	static id sharedSelf = nil;
 	
@@ -78,7 +78,7 @@
 	return sharedSelf;
 }
 
-- (TPCThemeController *)sharedThemeController
++ (TPCThemeController *)sharedThemeController
 {
 	static id sharedSelf = nil;
 	
@@ -91,7 +91,7 @@
 	return sharedSelf;
 }
 
-- (TLOSpeechSynthesizer *)sharedSpeechSynthesizer
++ (TLOSpeechSynthesizer *)sharedSpeechSynthesizer
 {
 	static id sharedSelf = nil;
 	
@@ -104,7 +104,7 @@
 	return sharedSelf;
 }
 
-- (TLONicknameCompletionStatus *)sharedNicknameCompletionStatus
++ (TLONicknameCompletionStatus *)sharedNicknameCompletionStatus
 {
 	static id sharedSelf = nil;
 	
@@ -117,7 +117,7 @@
 	return sharedSelf;
 }
 
-- (TVCQueuedCertificateTrustPanel *)sharedQueuedCertificateTrustPanel
++ (TVCQueuedCertificateTrustPanel *)sharedQueuedCertificateTrustPanel
 {
 	static id sharedSelf = nil;
 	
@@ -131,7 +131,7 @@
 }
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-- (TPCPreferencesCloudSync *)sharedCloudSyncManager
++ (TPCPreferencesCloudSync *)sharedCloudSyncManager
 {
 	static id sharedSelf = nil;
 	

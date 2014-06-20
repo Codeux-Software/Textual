@@ -49,20 +49,22 @@
 
 #define themeSettings()				[themeController() customSettings]
 
+#define sharedGrowlController()			[TXSharedApplication sharedGrowlController]
+
 #define sharedPluginManager()			[TXSharedApplication applicationPluginManager]
 #define sharedCloudManager()			[TXSharedApplication sharedCloudSyncManager]
 
 @interface TXSharedApplication : NSObject
-- (THOPluginManager *)applicationPluginManager;
-- (TLOInputHistory *)sharedInputHistoryManager;
-- (TLOGrowlController *)sharedGrowlController;
-- (TPCThemeController *)sharedThemeController;
-- (TLOSpeechSynthesizer *)sharedSpeechSynthesizer;
-- (TLONicknameCompletionStatus *)sharedNicknameCompletionStatus;
-- (TVCQueuedCertificateTrustPanel *)sharedQueuedCertificateTrustPanel;
++ (THOPluginManager *)applicationPluginManager;
++ (TLOInputHistory *)sharedInputHistoryManager;
++ (TLOGrowlController *)sharedGrowlController;
++ (TPCThemeController *)sharedThemeController;
++ (TLOSpeechSynthesizer *)sharedSpeechSynthesizer;
++ (TLONicknameCompletionStatus *)sharedNicknameCompletionStatus;
++ (TVCQueuedCertificateTrustPanel *)sharedQueuedCertificateTrustPanel;
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-- (TPCPreferencesCloudSync *)sharedCloudSyncManager;
++ (TPCPreferencesCloudSync *)sharedCloudSyncManager;
 #endif
 @end
 

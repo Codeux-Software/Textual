@@ -38,6 +38,12 @@
 
 #import "TextualApplication.h"
 
+typedef enum TDCServerSheetNavigationSelection : NSInteger {
+	TDCServerSheetDefaultNavigationSelection	= 0,
+	TDCServerSheetAddressBookNavigationSelection,
+	TDCServerSheetFloodControlNavigationSelection
+} TDCServerSheetNavigationSelection;
+
 @interface TDCServerSheet : TDCSheetBase
 @property (nonatomic, strong) NSString *clientID;
 @property (nonatomic, strong) NSArray *tabViewList;
@@ -119,7 +125,7 @@
 @property (nonatomic, strong) TDCAddressBookSheet *ignoreSheet;
 @property (nonatomic, strong) TDCHighlightEntrySheet *highlightSheet;
 
-- (void)start:(NSString *)viewToken withContext:(NSString *)context;
+- (void)start:(TDCServerSheetNavigationSelection)viewToken withContext:(NSString *)context;
 
 - (void)close;
 

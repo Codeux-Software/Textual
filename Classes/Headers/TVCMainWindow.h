@@ -51,8 +51,8 @@
 
 - (BOOL)isInactive;
 
-+ (NSSize)minimumWindowSize;
-+ (NSRect)defaultWindowFrame;
+- (NSSize)minimumWindowSize;
+- (NSRect)defaultWindowFrame;
 
 - (void)setKeyHandlerTarget:(id)target;
 
