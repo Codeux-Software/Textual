@@ -154,6 +154,10 @@
 @property (nonatomic, nweak) IBOutlet NSMenuItem *closeWindowMenuItem;
 @property (nonatomic, nweak) IBOutlet NSMenuItem *channelMenuItem;
 @property (nonatomic, nweak) IBOutlet NSMenuItem *serverMenuItem;
+@property (nonatomic, nweak) IBOutlet NSMenuItem *muteNotificationsFileMenuItem;
+@property (nonatomic, nweak) IBOutlet NSMenuItem *muteNotificationsDockMenuItem;
+@property (nonatomic, nweak) IBOutlet NSMenuItem *muteNotificationsSoundsFileMenuItem;
+@property (nonatomic, nweak) IBOutlet NSMenuItem *muteNotificationsSoundsDockMenuItem;
 
 - (void)setupOtherServices;
 
@@ -176,7 +180,7 @@
 - (id)windowFromWindowList:(NSString *)windowClass;
 
 - (BOOL)popWindowViewIfExists:(NSString *)windowClass;
-- (void)popWindowSheetIfExists;
+- (void)popWindowSheetIfExists; // Only applies to main window.
 
 - (IBAction)showPreferencesDialog:(id)sender;
 
@@ -197,7 +201,7 @@
 
 - (IBAction)showFileTransfersDialog:(id)sender;
 
-- (void)showServerPropertyDialog:(IRCClient *)u withDefaultView:(NSString *)viewType andContext:(NSString *)context;
+- (void)showServerPropertyDialog:(IRCClient *)u withDefaultView:(TDCServerSheetNavigationSelection)viewType andContext:(NSString *)context;
 
 - (IBAction)markScrollback:(id)sender;
 - (IBAction)clearScrollback:(id)sender;

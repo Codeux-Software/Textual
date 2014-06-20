@@ -1976,6 +1976,7 @@ CA
                     </connections>
                 </menuItem>
             </items>
+            <point key="canvasLocation" x="754.5" y="325.5"/>
         </menu>
         <menu title="Menu" showsStateColumn="NO" id="426" userLabel="Open URL Menu">
             <items>
