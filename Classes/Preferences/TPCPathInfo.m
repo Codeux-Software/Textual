@@ -209,6 +209,46 @@
 	return [NSString stringWithUTF8String:pw->pw_dir];
 }
 
+
+#pragma mark -
+#pragma mark Factory
+
++ (NSArray *)buildPathArray:(NSString *)path, ...
+{
+	NSMutableArray *pathData = [NSMutableArray array];
+	
+	/* What considers are path valid? */
+	void (^checkPath)(NSString *) = ^(NSString *pathObj) {
+		if (pathObj) {
+			if ([pathObj length] > 0) {
+				BOOL pathExists = [RZFileManager() fileExistsAtPath:pathObj];
+				
+				if (pathExists) {
+					[pathData addObject:pathObj];
+				}
+			}
+		}
+	};
+	
+	/* Add first path in arguments. */
+	checkPath(path);
+
+	/* Add any paths that follow. */
+	NSString *pathObj;
+	
+	va_list args;
+	va_start(args, path);
+	
+	while ((pathObj = va_arg(args, NSString *))) {
+		checkPath(pathObj);
+	}
+	
+	va_end(args);
+	
+	/* Return results. */
+	return [pathData copy];
+}
+
 #pragma mark -
 #pragma mark Logging
 
@@ -256,7 +296,7 @@ static NSURL *logToDiskLocationResolvedBookmark;
 + (void)setLogFileFolderLocation:(id)value
 {
 	/* Destroy old pointer if needed. */
-	if (PointerIsNotEmpty(logToDiskLocationResolvedBookmark)) {
+	if ( logToDiskLocationResolvedBookmark) {
 		[logToDiskLocationResolvedBookmark stopAccessingSecurityScopedResource];
 		 logToDiskLocationResolvedBookmark = nil;
 	}

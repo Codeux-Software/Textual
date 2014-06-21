@@ -43,7 +43,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-        self.scripts = [NSMutableArray new];
+		_scripts = [NSMutableArray new];
 	}
     
 	return self;
@@ -51,24 +51,24 @@
 
 - (void)populateData
 {
-	[self.scripts addObjectsFromArray:[THOPluginManagerSharedInstance() supportedAppleScriptCommands]];
-	[self.scripts addObjectsFromArray:[THOPluginManagerSharedInstance() supportedUserInputCommands]];
+	[_scripts addObjectsFromArray:[sharedPluginManager() supportedAppleScriptCommands]];
+	[_scripts addObjectsFromArray:[sharedPluginManager() supportedUserInputCommands]];
 
-    for (NSString *command in [THOPluginManagerSharedInstance() dangerousCommandNames]) {
-        [self.scripts removeObject:command];
+    for (NSString *command in [sharedPluginManager() dangerousCommandNames]) {
+        [_scripts removeObject:command];
     }
 	
-	[self.scripts sortUsingSelector:@selector(compare:)];
+	[_scripts sortUsingSelector:@selector(compare:)];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-    return [self.scripts count];
+    return [_scripts count];
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-	return [self.scripts safeObjectAtIndex:rowIndex];
+	return _scripts[rowIndex];
 }
 
 @end

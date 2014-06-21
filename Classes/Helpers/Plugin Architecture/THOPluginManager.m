@@ -164,23 +164,9 @@
 	NSArray *scriptExtensions = @[@"scpt", @"py", @"pyc", @"rb", @"pl", @"sh", @"php", @"bash"];
 
 	/* Begin building list. Topmost take priority. */
-	NSMutableArray *scriptPaths = [NSMutableArray array];
-	
-	NSString *firstPath;
-	
-	/* Unsupervised nonsandboxed path. */
-	firstPath = [TPCPathInfo systemUnsupervisedScriptFolderPath];
-	
-	if (NSObjectIsNotEmpty(firstPath)) {
-		[scriptPaths addObject:firstPath];
-	}
-	
-	/* Bundled path. */
-	firstPath = [TPCPathInfo bundledScriptFolderPath];
-	
-	if (NSObjectIsNotEmpty(firstPath)) {
-		[scriptPaths addObject:firstPath];
-	}
+	NSArray *scriptPaths = [TPCPathInfo buildPathArray:
+							[TPCPathInfo systemUnsupervisedScriptFolderPath],
+							[TPCPathInfo bundledScriptFolderPath]];
 	
 	/* Begin scanning folders. */
 	id returnData;
