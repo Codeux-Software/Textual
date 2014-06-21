@@ -181,7 +181,7 @@
 - (void)main
 {
 	/* Perform block. */
-	self.executionBlock(self);
+	_executionBlock(self);
 
 	/* Kill existing dependency. */
 	NSArray *operations = [self dependencies];
