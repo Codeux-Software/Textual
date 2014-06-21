@@ -188,7 +188,7 @@ NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, N
 			[finalResult deleteCharactersInRange:cutRange];
 		} else {
 			/* Return "0 seconds" when there are no results. */
-			NSString *emptyTime = [NSString stringWithFormat:@"0 %@", ULS(@"BasicLanguage[1204][SECOND]")];
+			NSString *emptyTime = [NSString stringWithFormat:@"0 %@", TXTLS(@"BasicLanguage[1204][SECOND]")];
 			
 			[finalResult setString:emptyTime];
 		}

@@ -730,7 +730,7 @@
 		NSString *newstr = [CSFWBlowfish encodeData:(*message) key:channel.config.encryptionKey encoding:self.config.primaryEncoding];
 
 		if (newstr.length < 5) {
-			[self printDebugInformation:TXTLS(@"BasicLanguage[1001]") channel:channel];
+			[self printDebugInformation:BLS(1001) channel:channel];
 
 			return NO;
 		} else {
@@ -761,22 +761,22 @@
 - (NSString *)localizedSpokenMessageForEvent:(TXNotificationType)event
 {
 	switch (event) {
-		case TXNotificationChannelMessageType:						{ return TXTLS(@"BasicLanguage[1043]");		}
-		case TXNotificationChannelNoticeType:						{ return TXTLS(@"BasicLanguage[1044]");		}
-		case TXNotificationConnectType:								{ return TXTLS(@"BasicLanguage[1051]");		}
-		case TXNotificationDisconnectType:							{ return TXTLS(@"BasicLanguage[1052]");		}
-		case TXNotificationInviteType:								{ return TXTLS(@"BasicLanguage[1046]");		}
-		case TXNotificationKickType:								{ return TXTLS(@"BasicLanguage[1047]");		}
-		case TXNotificationNewPrivateMessageType:					{ return TXTLS(@"BasicLanguage[1048]");		}
-		case TXNotificationPrivateMessageType:						{ return TXTLS(@"BasicLanguage[1049]");		}
-		case TXNotificationPrivateNoticeType:						{ return TXTLS(@"BasicLanguage[1050]");		}
-		case TXNotificationHighlightType:							{ return TXTLS(@"BasicLanguage[1045]");		}
+		case TXNotificationChannelMessageType:						{ return BLS(1043);		}
+		case TXNotificationChannelNoticeType:						{ return BLS(1044);		}
+		case TXNotificationConnectType:								{ return BLS(1051);		}
+		case TXNotificationDisconnectType:							{ return BLS(1052);		}
+		case TXNotificationInviteType:								{ return BLS(1046);		}
+		case TXNotificationKickType:								{ return BLS(1047);		}
+		case TXNotificationNewPrivateMessageType:					{ return BLS(1048);		}
+		case TXNotificationPrivateMessageType:						{ return BLS(1049);		}
+		case TXNotificationPrivateNoticeType:						{ return BLS(1050);		}
+		case TXNotificationHighlightType:							{ return BLS(1045);		}
 
-		case TXNotificationFileTransferSendSuccessfulType:			{ return TXTLS(@"BasicLanguage[1053]");		}
-		case TXNotificationFileTransferReceiveSuccessfulType:		{ return TXTLS(@"BasicLanguage[1054]");		}
-		case TXNotificationFileTransferSendFailedType:				{ return TXTLS(@"BasicLanguage[1055]");		}
-		case TXNotificationFileTransferReceiveFailedType:			{ return TXTLS(@"BasicLanguage[1056]");		}
-		case TXNotificationFileTransferReceiveRequestedType:		{ return TXTLS(@"BasicLanguage[1057]");		}
+		case TXNotificationFileTransferSendSuccessfulType:			{ return BLS(1053);		}
+		case TXNotificationFileTransferReceiveSuccessfulType:		{ return BLS(1054);		}
+		case TXNotificationFileTransferSendFailedType:				{ return BLS(1055);		}
+		case TXNotificationFileTransferReceiveFailedType:			{ return BLS(1056);		}
+		case TXNotificationFileTransferReceiveRequestedType:		{ return BLS(1057);		}
 	
 		default: { return nil; }
 	}
@@ -1194,7 +1194,7 @@
 - (void)sendLine:(NSString *)str
 {
 	if (self.isConnected == NO) {
-		return [self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1199]")];
+		return [self printDebugInformationToConsole:BLS(1199)];
 	}
 
 	[self.socket sendLine:str];
@@ -1437,7 +1437,7 @@
 		case 5004: // Command: AWAY
 		{
 			if (NSObjectIsEmpty(uncutInput)) {
-                uncutInput = TXTLS(@"BasicLanguage[1115]");
+                uncutInput = BLS(1115);
 			}
             
             if (self.isAway) {
@@ -1916,7 +1916,7 @@
 				BOOL modeHSupported = [self.isupport modeIsSupportedUserPrefix:@"h"];
 
 				if (modeHSupported == NO) {
-					[self printDebugInformation:TXTLS(@"BasicLanguage[1042]")];
+					[self printDebugInformation:BLS(1042)];
 
 					return;
 				}
@@ -2117,7 +2117,7 @@
 
 				[self addCommandToCommandQueue:cmd];
 			} else {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1173]")];
+				[self printDebugInformation:BLS(1173)];
 			}
 
 			break;
@@ -2130,15 +2130,15 @@
 			if ([uncutInput isEqualIgnoringCase:@"raw on"]) {
 				self.rawModeEnabled = YES;
 
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1175]")];
+				[self printDebugInformation:BLS(1175)];
 
-				LogToConsole(@"%@", TXTLS(@"BasicLanguage[1177]"));
+				LogToConsole(@"%@", BLS(1177));
 			} else if ([uncutInput isEqualIgnoringCase:@"raw off"]) {
 				self.rawModeEnabled = NO;
 
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1174]")];
+				[self printDebugInformation:BLS(1174)];
 
-				LogToConsole(@"%@", TXTLS(@"BasicLanguage[1176]"));
+				LogToConsole(@"%@", BLS(1176));
 			} else if ([uncutInput isEqualIgnoringCase:@"devmode on"]) {
 				[RZUserDefaults() setBool:YES forKey:TXDeveloperEnvironmentToken];
 			} else if ([uncutInput isEqualIgnoringCase:@"devmode off"]) {
@@ -2305,15 +2305,15 @@
 			NSString *ccnt = [TPCPreferences gitCommitCount];
 
 			if (NSObjectIsEmpty(gref)) {
-				gref = TXTLS(@"BasicLanguage[1218]");
+				gref = BLS(1218);
 			}
 
 			NSString *text;
 			
 			if ([uncutInput isEqualIgnoringCase:@"-d"]) {
-				text = [NSString stringWithFormat:TXTLS(@"BasicLanguage[1113]"), name, vers, gref, code];
+				text = [NSString stringWithFormat:BLS(1113), name, vers, gref, code];
 			} else {
-				text = [NSString stringWithFormat:TXTLS(@"BasicLanguage[1112]"), name, vers, ccnt];
+				text = [NSString stringWithFormat:BLS(1112), name, vers, ccnt];
 			}
 
 			if (PointerIsEmpty(selChannel)) {
@@ -2329,9 +2329,9 @@
 		case 5044: // Command: MUTE
 		{
 			if (self.worldController.isSoundMuted) {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1220]")];
+				[self printDebugInformation:BLS(1220)];
 			} else {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1223]")];
+				[self printDebugInformation:BLS(1223)];
 
 				[self.menuController toggleMuteOnNotificationSoundsShortcut:NSOffState];
 			}
@@ -2341,11 +2341,11 @@
 		case 5075: // Command: UNMUTE
 		{
 			if (self.worldController.isSoundMuted) {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1221]")];
+				[self printDebugInformation:BLS(1221)];
 
 				[self.menuController toggleMuteOnNotificationSoundsShortcut:NSOnState];
 			} else {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1222]")];
+				[self printDebugInformation:BLS(1222)];
 			}
 
 			break;
@@ -2375,11 +2375,11 @@
 			NSString *scriptResult = [loadedScripts componentsJoinedByString:@", "];
 
 			if (NSObjectIsEmpty(bundleResult)) {
-				bundleResult = TXTLS(@"BasicLanguage[1105]");
+				bundleResult = BLS(1105);
 			}
 
 			if (NSObjectIsEmpty(scriptResult)) {
-				scriptResult = TXTLS(@"BasicLanguage[1105]");
+				scriptResult = BLS(1105);
 			}
 
 			[self printDebugInformation:TXTLS(@"BasicLanguage[1103]", bundleResult)];
@@ -2398,7 +2398,7 @@
 
 			[self sendCTCPQuery:self.localNickname command:IRCPrivateCommandIndex("ctcp_lagcheck") text:[NSString stringWithDouble:self.lastLagCheck]];
 
-			[self printDebugInformation:TXTLS(@"BasicLanguage[1107]")];
+			[self printDebugInformation:BLS(1107)];
 
 			break;
 		}
@@ -2498,7 +2498,7 @@
 
 				[self printDebugInformation:TXTLS(@"BasicLanguage[1121]", caps)];
 			} else {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1120]")];
+				[self printDebugInformation:BLS(1120)];
 			}
 
 			break;
@@ -2592,7 +2592,7 @@
 		{
 			/* Check base string. */
 			if (NSObjectIsEmpty(uncutInput)) {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1033]")];
+				[self printDebugInformation:BLS(1033)];
 
 				return;
 			}
@@ -2632,7 +2632,7 @@
 				if ((applyToAll == NO && NSObjectIsEmpty(section2)) ||
 					(applyToAll		  && NSObjectIsEmpty(section3)))
 				{
-					[self printDebugInformation:TXTLS(@"BasicLanguage[1033]")];
+					[self printDebugInformation:BLS(1033)];
 				} else {
 					if ((applyToAll == NO && [providedKeys containsObject:section2] == NO) ||
 						(applyToAll		  && [providedKeys containsObject:section3] == NO))
@@ -2668,7 +2668,7 @@
 				if ((applyToAll == NO && NSObjectIsEmpty(section2)) ||
 					(applyToAll		  && NSObjectIsEmpty(section3)))
 				{
-					[self printDebugInformation:TXTLS(@"BasicLanguage[1033]")];
+					[self printDebugInformation:BLS(1033)];
 				} else {
 					if ((applyToAll == NO && [providedKeys containsObject:section2] == NO) ||
 						(applyToAll		  && [providedKeys containsObject:section3] == NO))
@@ -2722,7 +2722,7 @@
 
 			/* Perform script or plugin. */
 			if (pluginFound && scriptFound) {
-				LogToConsole(TXTLS(@"BasicLanguage[1193]"), uppercaseCommand);
+				LogToConsole(BLS(1193), uppercaseCommand);
 			} else {
 				if (pluginFound) {
 					[self processBundlesUserMessage:uncutInput command:lowercaseCommand];
@@ -3270,7 +3270,7 @@
 	/* If the address we are connecting to is not an IP address,
 	 then we report back the actual IP address it was resolved to. */
 	if ([[self.config serverAddress] isIPAddress]) {
-		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1129]")];
+		[self printDebugInformationToConsole:BLS(1129)];
 	} else {
 		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1130]", [self.socket connectedAddress])];
 	}
@@ -4021,7 +4021,7 @@
 			[self sendCTCPReply:sendern command:command text:[[NSDate date] descriptionWithLocale:[NSLocale currentLocale]]];
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_cap")]) {
 			if ([s isEqualIgnoringCase:@"LS"]) {
-				[self sendCTCPReply:sendern command:command text:TXTLS(@"BasicLanguage[1117]")];
+				[self sendCTCPReply:sendern command:command text:BLS(1117)];
 			}
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_userinfo")] ||
 				   [command isEqualToString:IRCPrivateCommandIndex("ctcp_version")])
@@ -4035,14 +4035,14 @@
 				NSString *vers = [TPCPreferences textualInfoPlist][@"CFBundleVersion"];
 				NSString *code = [TPCPreferences textualInfoPlist][@"TXBundleBuildCodeName"];
 
-				NSString *textoc = [NSString stringWithFormat:TXTLS(@"BasicLanguage[1111]"), name, vers, code];
+				NSString *textoc = [NSString stringWithFormat:BLS(1111), name, vers, code];
 
 				[self sendCTCPReply:sendern command:command text:textoc];
 			}
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_finger")]) {
-			[self sendCTCPReply:sendern command:command text:TXTLS(@"BasicLanguage[1119]")];
+			[self sendCTCPReply:sendern command:command text:BLS(1119)];
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_clientinfo")]) {
-			[self sendCTCPReply:sendern command:command text:TXTLS(@"BasicLanguage[1118]")];
+			[self sendCTCPReply:sendern command:command text:BLS(1118)];
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_lagcheck")]) {
 			double time = [NSDate epochTime];
 
@@ -4064,7 +4064,7 @@
 
 				textm = TXTLS(@"BasicLanguage[1106]", [self networkAddress], delta, rating);
 			} else {
-				textm = TXTLS(@"BasicLanguage[1108]");
+				textm = BLS(1108);
 			}
 
 			if (self.sendLagcheckReplyToChannel) {
@@ -4159,7 +4159,7 @@
 		}
 
 		if (c.config.encryptionKeyIsSet) {
-			[c.client printDebugInformation:TXTLS(@"BasicLanguage[1003]") channel:c];
+			[c.client printDebugInformation:BLS(1003) channel:c];
 		}
 	}
 
@@ -4299,7 +4299,7 @@
 			[self notifyEvent:TXNotificationKickType lineType:TVCLogLineKickType target:c nick:sendern text:comment];
 
 			if ([TPCPreferences rejoinOnKick] && c.errorOnLastJoinAttempt == NO) {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1127]") channel:c];
+				[self printDebugInformation:BLS(1127) channel:c];
 
 				[self performSelector:@selector(joinKickedChannel:) withObject:c afterDelay:3.0];
 			}
@@ -4718,8 +4718,8 @@
                                  action:@selector(receiveErrorExcessFloodWarningPopupCallback:withOriginalAlert:)
                                    body:TXTLS(@"BasicLanguage[1041][2]")
                                   title:TXTLS(@"BasicLanguage[1041][1]")
-                          defaultButton:TXTLS(@"BasicLanguage[1219]")
-                        alternateButton:TXTLS(@"BasicLanguage[1182]")
+                          defaultButton:BLS(1219)
+                        alternateButton:BLS(1182)
                             otherButton:TXTLS(@"BasicLanguage[1041][3]")
                          suppressionKey:nil
                         suppressionText:nil];
@@ -5481,7 +5481,7 @@
 			PointerIsEmptyAssertLoopBreak(c);
 
 			if (c.isActive) {
-				NSString *text = [NSString stringWithFormat:TXTLS(@"BasicLanguage[1125]"), topicow, settime];
+				NSString *text = [NSString stringWithFormat:BLS(1125), topicow, settime];
 
 				[self print:c
 					   type:TVCLogLineTopicType
@@ -5914,8 +5914,8 @@
 			NSString *channel = [m paramAt:1];
 			NSString *hostmask = [m paramAt:2];
 
-			NSString *banowner = TXTLS(@"BasicLanguage[1218]");
-			NSString *settime = TXTLS(@"BasicLanguage[1218]");
+			NSString *banowner = BLS(1218);
+			NSString *settime = BLS(1218);
 
 			BOOL extendedLine = (m.params.count >= 5);
 
@@ -5982,8 +5982,8 @@
 			NSString *channel = [m paramAt:1];
 			NSString *hostmask = [m paramAt:2];
 
-			NSString *banowner = TXTLS(@"BasicLanguage[1218]");
-			NSString *settime = TXTLS(@"BasicLanguage[1218]");
+			NSString *banowner = BLS(1218);
+			NSString *settime = BLS(1218);
 
 			BOOL extendedLine = (m.params.count >= 5);
 
@@ -6050,8 +6050,8 @@
 			NSString *channel = [m paramAt:1];
 			NSString *hostmask = [m paramAt:2];
 
-			NSString *banowner = TXTLS(@"BasicLanguage[1218]");
-			NSString *settime = TXTLS(@"BasicLanguage[1218]");
+			NSString *banowner = BLS(1218);
+			NSString *settime = BLS(1218);
 
 			BOOL extendedLine = (m.params.count >= 5);
 
@@ -6707,7 +6707,7 @@
 		[self printDebugInformation:TXTLS(@"BasicLanguage[1196]", script, scriptInput, errord)];
 	}
 
-	LogToConsole(TXTLS(@"BasicLanguage[1195]"), errorb);
+	LogToConsole(BLS(1195), errorb);
 }
 
 - (void)postTextualCmdScriptResult:(NSString *)resultString to:(NSString *)destination
@@ -6964,11 +6964,11 @@
 	[self logFileWriteSessionBegin];
 
 	if (mode == IRCConnectReconnectMode) {
-		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1143]")];
+		[self printDebugInformationToConsole:BLS(1143)];
 	} else if (mode == IRCConnectBadSSLCertificateMode) {
-		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1143]")];
+		[self printDebugInformationToConsole:BLS(1143)];
 	} else if (mode == IRCConnectRetryMode) {
-		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1144]")];
+		[self printDebugInformationToConsole:BLS(1144)];
 	}
 
 	if (PointerIsEmpty(self.socket)) {
@@ -7301,7 +7301,7 @@
 
 - (void)toggleAwayStatus:(BOOL)setAway
 {
-    [self toggleAwayStatus:setAway withReason:TXTLS(@"BasicLanguage[1115]")];
+    [self toggleAwayStatus:setAway withReason:BLS(1115)];
 }
 
 - (void)toggleAwayStatus:(BOOL)setAway withReason:(NSString *)reason
@@ -7538,7 +7538,7 @@
 	}
 	
 	// Report an error.
-	[self print:nil type:TVCLogLineDCCFileTransferType nick:nil text:TXTLS(@"BasicLanguage[1020]") command:TXLogLineDefaultRawCommandValue];
+	[self print:nil type:TVCLogLineDCCFileTransferType nick:nil text:BLS(1020) command:TXLogLineDefaultRawCommandValue];
 }
 
 

@@ -42,7 +42,7 @@
 
 - (void)keyDown:(NSEvent *)e
 {
-	if (self.keyDelegate) {
+	if (_keyDelegate) {
 		NSUInteger m = [e modifierFlags];
 		
 		BOOL cmd = (m & NSCommandKeyMask);
@@ -50,8 +50,8 @@
 		BOOL ctrl = (m & NSControlKeyMask);
 		
 		if (ctrl == NO && alt == NO && cmd == NO) {
-			if ([self.keyDelegate respondsToSelector:@selector(logViewKeyDown:)]) {
-				[self.keyDelegate logViewKeyDown:e];
+			if ([_keyDelegate respondsToSelector:@selector(logViewKeyDown:)]) {
+				[_keyDelegate logViewKeyDown:e];
 			}
 			
 			return;
@@ -69,13 +69,13 @@
 - (NSString *)contentString
 {
 	DOMDocument *doc = [self.mainFrame DOMDocument];
-	PointerIsEmptyAssertReturn(doc, NSStringEmptyPlaceholder);
+	PointerIsEmptyAssertReturn(doc, nil);
 	
 	DOMElement *body = [doc body];
-	PointerIsEmptyAssertReturn(body, NSStringEmptyPlaceholder);
+	PointerIsEmptyAssertReturn(body, nil);
 	
 	DOMHTMLElement *root = (DOMHTMLElement *)[body parentNode];
-	PointerIsEmptyAssertReturn(root, NSStringEmptyPlaceholder);
+	PointerIsEmptyAssertReturn(root, nil);
 	
 	return [root outerHTML];
 }

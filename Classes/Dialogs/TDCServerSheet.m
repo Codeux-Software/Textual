@@ -460,7 +460,7 @@
 	
 	if (NSObjectIsEmpty(self.serverNameField.trimmedStringValue)) {
 		if (NSObjectIsEmpty(realhost)) {
-			self.config.clientName = TXTLS(@"BasicLanguage[1022]");
+			self.config.clientName = BLS(1022);
 		} else {
 			self.config.clientName = realhost;
 		}
@@ -743,8 +743,8 @@
 								action:@selector(toggleCloudSyncExclusionRequestDeletionCallback:withOriginalAlert:)
 								  body:TXTLS(@"TDCServerSheet[1002][2]")
 								 title:TXTLS(@"TDCServerSheet[1002][1]")
-						 defaultButton:TXTLS(@"BasicLanguage[1182]")
-					   alternateButton:TXTLS(@"BasicLanguage[1219]")
+						 defaultButton:BLS(1182)
+					   alternateButton:BLS(1219)
 						   otherButton:nil
 						suppressionKey:nil
 					   suppressionText:nil];
@@ -756,7 +756,7 @@
 								action:@selector(popupPromptNilSelector:withOriginalAlert:)
 								  body:TXTLS(@"TDCServerSheet[1003][2]")
 								 title:TXTLS(@"TDCServerSheet[1003][1]")
-						 defaultButton:TXTLS(@"BasicLanguage[1186]")
+						 defaultButton:BLS(1186)
 					   alternateButton:nil
 						   otherButton:nil
 						suppressionKey:nil
@@ -882,7 +882,7 @@
 		SFChooseIdentityPanel *panel = [SFChooseIdentityPanel sharedChooseIdentityPanel];
 		
 		[panel setInformativeText:TXTLS(@"TDCServerSheet[1007][2]", [self.serverNameField stringValue])];
-		[panel setAlternateButtonTitle:TXTLS(@"BasicLanguage[1009]")];
+		[panel setAlternateButtonTitle:BLS(1009)];
 		
 		NSInteger returnCode = [panel runModalForIdentities:(__bridge NSArray *)(identities)
 													message:TXTLS(@"TDCServerSheet[1007][1]")];
@@ -1334,21 +1334,21 @@
 			return c.matchKeyword;
 		} else if ([columnId isEqualToString:@"channel"]) {
 			if (NSObjectIsEmpty(c.matchChannelID)) {
-				return TXTLS(@"BasicLanguage[1200]");
+				return BLS(1200);
 			} else {
 				IRCChannel *channel = [self.worldController findChannelByClientId:self.clientID channelId:c.matchChannelID];
 
 				if (channel) {
 					return channel.name;
 				} else {
-					return TXTLS(@"BasicLanguage[1200]");
+					return BLS(1200);
 				}
 			}
 		} else if ([columnId isEqualToString:@"type"]) {
 			if (c.matchIsExcluded) {
-				return TXTLS(@"BasicLanguage[1201]");
+				return BLS(1201);
 			} else {
-				return TXTLS(@"BasicLanguage[1202]");
+				return BLS(1202);
 			}
 		}
 	} else {

@@ -56,7 +56,7 @@
 							   body:TXTLS(@"BasicLanguage[1181][2]")
 							  title:TXTLS(@"BasicLanguage[1181][1]")
 					  defaultButton:TXTLS(@"BasicLanguage[1181][3]")
-					alternateButton:TXTLS(@"BasicLanguage[1009]")
+					alternateButton:BLS(1009)
 						otherButton:nil
 					 suppressionKey:nil
 					suppressionText:nil];
@@ -349,7 +349,7 @@
 	[d setCanCreateDirectories:YES];
 	[d setNameFieldStringValue:@"TextualPrefrences.plist"];
 
-	[d setMessage:TXTLS(@"BasicLanguage[1180]")];
+	[d setMessage:BLS(1180)];
 
 	[d beginWithCompletionHandler:^(NSInteger returnCode) {
 		if (returnCode == NSOKButton) {

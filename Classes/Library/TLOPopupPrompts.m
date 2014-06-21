@@ -120,7 +120,7 @@
 	}
 
 	if (NSObjectIsEmpty(suppressText)) {
-		suppressText = TXTLS(@"BasicLanguage[1194]");
+		suppressText = BLS(1194);
 	}
 
 	BOOL isForcedSuppression = [suppressText isEqualToString:TLOPopupPromptSpecialSuppressionTextValue];
@@ -186,7 +186,7 @@
 	}
 
 	if (NSObjectIsEmpty(suppressText)) {
-		suppressText = TXTLS(@"BasicLanguage[1194]");
+		suppressText = BLS(1194);
 	}
 
 	BOOL isForcedSuppression = [suppressText isEqualToString:TLOPopupPromptSpecialSuppressionTextValue];

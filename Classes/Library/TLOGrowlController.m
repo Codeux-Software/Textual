@@ -65,23 +65,23 @@
 - (NSString *)titleForEvent:(TXNotificationType)event
 {
 	switch (event) {
-		case TXNotificationAddressBookMatchType:				{ return TXTLS(@"BasicLanguage[1086]");		}
-		case TXNotificationChannelMessageType:					{ return TXTLS(@"BasicLanguage[1087]");		}
-		case TXNotificationChannelNoticeType:					{ return TXTLS(@"BasicLanguage[1088]");		}
-		case TXNotificationConnectType:							{ return TXTLS(@"BasicLanguage[1089]");		}
-		case TXNotificationDisconnectType:						{ return TXTLS(@"BasicLanguage[1090]");		}
-		case TXNotificationInviteType:							{ return TXTLS(@"BasicLanguage[1092]");		}
-		case TXNotificationKickType:							{ return TXTLS(@"BasicLanguage[1093]");		}
-		case TXNotificationNewPrivateMessageType:				{ return TXTLS(@"BasicLanguage[1094]");		}
-		case TXNotificationPrivateMessageType:					{ return TXTLS(@"BasicLanguage[1095]");		}
-		case TXNotificationPrivateNoticeType:					{ return TXTLS(@"BasicLanguage[1096]");		}
-		case TXNotificationHighlightType:						{ return TXTLS(@"BasicLanguage[1091]");		}
+		case TXNotificationAddressBookMatchType:				{ return BLS(1086);		}
+		case TXNotificationChannelMessageType:					{ return BLS(1087);		}
+		case TXNotificationChannelNoticeType:					{ return BLS(1088);		}
+		case TXNotificationConnectType:							{ return BLS(1089);		}
+		case TXNotificationDisconnectType:						{ return BLS(1090);		}
+		case TXNotificationInviteType:							{ return BLS(1092);		}
+		case TXNotificationKickType:							{ return BLS(1093);		}
+		case TXNotificationNewPrivateMessageType:				{ return BLS(1094);		}
+		case TXNotificationPrivateMessageType:					{ return BLS(1095);		}
+		case TXNotificationPrivateNoticeType:					{ return BLS(1096);		}
+		case TXNotificationHighlightType:						{ return BLS(1091);		}
 			
-		case TXNotificationFileTransferSendSuccessfulType:		{ return TXTLS(@"BasicLanguage[1097]");		}
-		case TXNotificationFileTransferReceiveSuccessfulType:	{ return TXTLS(@"BasicLanguage[1098]");		}
-		case TXNotificationFileTransferSendFailedType:			{ return TXTLS(@"BasicLanguage[1099]");		}
-		case TXNotificationFileTransferReceiveFailedType:		{ return TXTLS(@"BasicLanguage[1100]");		}
-		case TXNotificationFileTransferReceiveRequestedType:	{ return TXTLS(@"BasicLanguage[1101]");		}
+		case TXNotificationFileTransferSendSuccessfulType:		{ return BLS(1097);		}
+		case TXNotificationFileTransferReceiveSuccessfulType:	{ return BLS(1098);		}
+		case TXNotificationFileTransferSendFailedType:			{ return BLS(1099);		}
+		case TXNotificationFileTransferReceiveFailedType:		{ return BLS(1100);		}
+		case TXNotificationFileTransferReceiveRequestedType:	{ return BLS(1101);		}
 			
 		default: { return nil; }
 	}
@@ -109,7 +109,7 @@
 		case TXNotificationNewPrivateMessageType:
 		{
 			eventPriority = 1;
-			eventTitle = TXTLS(@"BasicLanguage[1066]");
+			eventTitle = BLS(1066);
 			
 			break;
 		}
@@ -127,13 +127,13 @@
 		}
 		case TXNotificationPrivateMessageType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1067]");
+			eventTitle = BLS(1067);
 			
 			break;
 		}
 		case TXNotificationPrivateNoticeType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1068]");
+			eventTitle = BLS(1068);
 			
 			break;
 		}
@@ -152,20 +152,20 @@
 		case TXNotificationConnectType:
 		{
 			eventTitle = TXTLS(@"BasicLanguage[1061]", eventTitle);
-			eventDescription = TXTLS(@"BasicLanguage[1074]");
+			eventDescription = BLS(1074);
 			
 			break;
 		}
 		case TXNotificationDisconnectType:
 		{
 			eventTitle = TXTLS(@"BasicLanguage[1062]", eventTitle);
-			eventDescription = TXTLS(@"BasicLanguage[1075]");
+			eventDescription = BLS(1075);
 			
 			break;
 		}
 		case TXNotificationAddressBookMatchType: 
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1058]");
+			eventTitle = BLS(1058);
 			
 			break;
 		}
@@ -221,7 +221,7 @@
 					eventType == TXNotificationPrivateMessageType)
 				{
 					[notification setHasReplyButton:YES];
-					[notification setResponsePlaceholder:TXTLS(@"BasicLanguage[1235]")];
+					[notification setResponsePlaceholder:BLS(1235)];
 				}
 			}
 #endif 
@@ -276,22 +276,22 @@
 - (NSDictionary *)registrationDictionaryForGrowl
 {
 	NSArray *allNotifications = @[
-		TXTLS(@"BasicLanguage[1086]"),
-		TXTLS(@"BasicLanguage[1087]"),
-		TXTLS(@"BasicLanguage[1088]"),
-		TXTLS(@"BasicLanguage[1089]"),
-		TXTLS(@"BasicLanguage[1090]"),
-		TXTLS(@"BasicLanguage[1091]"),
-		TXTLS(@"BasicLanguage[1092]"),
-		TXTLS(@"BasicLanguage[1093]"),
-		TXTLS(@"BasicLanguage[1094]"),
-		TXTLS(@"BasicLanguage[1095]"),
-		TXTLS(@"BasicLanguage[1096]"),
-		TXTLS(@"BasicLanguage[1097]"),
-		TXTLS(@"BasicLanguage[1098]"),
-		TXTLS(@"BasicLanguage[1099]"),
-		TXTLS(@"BasicLanguage[1100]"),
-		TXTLS(@"BasicLanguage[1101]"),
+		BLS(1086),
+		BLS(1087),
+		BLS(1088),
+		BLS(1089),
+		BLS(1090),
+		BLS(1091),
+		BLS(1092),
+		BLS(1093),
+		BLS(1094),
+		BLS(1095),
+		BLS(1096),
+		BLS(1097),
+		BLS(1098),
+		BLS(1099),
+		BLS(1100),
+		BLS(1101),
 	];
 	
 	return @{

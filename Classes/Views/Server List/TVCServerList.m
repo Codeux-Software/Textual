@@ -92,65 +92,32 @@
 #pragma mark -
 #pragma mark Drawing Updates
 
-/* These drawing things are pretty sophisticaked so i do not even know how they work… */
 - (void)reloadAllDrawings:(BOOL)doNotLimit
 {
-	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
-		[self updateDrawingForRow:i skipDrawingCheck:doNotLimit];
-	}
-
-	[self setNeedsDisplay:YES];
 }
 
 - (void)reloadAllDrawings
 {
-	[self reloadAllDrawings:NO];
 }
 
 - (void)reloadAllDrawingsIgnoringOtherReloads
 {
-	[self reloadAllDrawings:YES];
 }
 
 - (void)updateDrawingForItem:(IRCTreeItem *)cellItem
 {
-	[self updateDrawingForItem:cellItem skipDrawingCheck:NO];
 }
 
 - (void)updateDrawingForItem:(IRCTreeItem *)cellItem skipDrawingCheck:(BOOL)doNotLimit
 {
-	PointerIsEmptyAssert(cellItem);
-
-	NSInteger rowIndex = [self rowForItem:cellItem];
-
-	NSAssertReturn(rowIndex >= 0);
-
-	[self updateDrawingForRow:rowIndex skipDrawingCheck:doNotLimit];
 }
 
 - (void)updateDrawingForRow:(NSInteger)rowIndex
 {
-	[self updateDrawingForRow:rowIndex skipDrawingCheck:NO];
 }
 
 - (void)updateDrawingForRow:(NSInteger)rowIndex skipDrawingCheck:(BOOL)doNotLimit
 {
-	NSAssertReturn(rowIndex >= 0);
-
-	id rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
-
-	BOOL isGroupItem = [rowView isKindOfClass:[TVCServerListCellGroupItem class]];
-	BOOL isChildItem = [rowView isKindOfClass:[TVCServerListCellChildItem class]];
-
-	if (isGroupItem || isChildItem) {
-		NSRect cellFrame = [self frameOfCellAtColumn:0 row:rowIndex];
-		
-		[rowView updateDrawing:cellFrame skipDrawingCheck:doNotLimit];
-
-		if (isGroupItem) {
-			[rowView updateGroupDisclosureTriangle];
-		}
-	}
 }
 
 - (BOOL)allowsVibrancy
@@ -158,24 +125,8 @@
 	return NO;
 }
 
-- (BOOL)windowIsActive
-{
-	return ([[[self masterController] mainWindow] isInactive] == NO);
-}
-
 - (void)updateBackgroundColor
 {
-	if ([TPCPreferences invertSidebarColors] || [self windowIsActive] == NO) {
-		[self setBackgroundColor:[NSColor clearColor]];
-		
-		[self.scrollView setBackgroundColor:self.properBackgroundColor];
-	} else {
-		[self setBackgroundColor:self.properBackgroundColor];
-
-		[self.scrollView setBackgroundColor:[NSColor clearColor]];
-	}
-	
-	[self setNeedsDisplay:YES];
 }
 
 - (NSScrollView *)scrollView
@@ -188,79 +139,54 @@
 
 - (NSMenu *)menuForEvent:(NSEvent *)e
 {
-	NSPoint p = [self convertPoint:e.locationInWindow fromView:nil];
+	NSPoint p = [self convertPoint:[e locationInWindow] fromView:nil];
 
 	NSInteger i = [self rowAtPoint:p];
 
-	if (i >= 0 && NSDissimilarObjects(i, self.selectedRow)) {
+	if (i >= 0 && NSDissimilarObjects(i, [self selectedRow])) {
 		[self selectItemAtIndex:i];
 	} else if (i == -1) {
-		return self.menuController.addServerMenu;
+		return [menuController() addServerMenu];
 	}
 
-	return self.menu;
+	return [self menu];
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
-	NSWindowNegateActionWithAttachedSheet();
-
+	TVCMainWindowNegateActionWithAttachedSheet();
+	
 	[super rightMouseDown:theEvent];
 }
 
 - (void)keyDown:(NSEvent *)e
 {
-	if (self.keyDelegate) {
+	if (_keyDelegate) {
 		switch ([e keyCode]) {
 			case 123 ... 126:
 			case 116:
 			case 121:
+			{
 				break;
+			}
 			default:
-				if ([self.keyDelegate respondsToSelector:@selector(serverListKeyDown:)]) {
-					[self.keyDelegate serverListKeyDown:e];
+			{
+				if ([_keyDelegate respondsToSelector:@selector(serverListKeyDown:)]) {
+					[_keyDelegate serverListKeyDown:e];
 				}
 				
 				break;
+			}
 		}
 	}
 }
 
 #pragma mark -
-#pragma mark Frame
-
-/* We handle frameOfCellAtColumn:row: to make it so our selected cell background
- draw stretches all the way from one end to the other of our list. */
-- (NSRect)frameOfCellAtColumn:(NSInteger)column row:(NSInteger)row
-{
-	NSRect nrect = [super frameOfCellAtColumn:column row:row];
-
-	id childItem = [self itemAtRow:row];
-
-	nrect.origin.x = 0;
-	
-	if ([self isGroupItem:childItem]) {
-		nrect.size.width += 25;
-	} else {
-		nrect.size.width += 39;
-	}
-
-	/* Mavericks changed this math a little… */
-	if ([TPCPreferences featureAvailableToOSXMavericks]) {
-		nrect.size.width += 3;
-	}
-	
-	return nrect;
-}
-
-#pragma mark -
 #pragma mark User Interface Design Elements
-
-/* @_@ gawd, wut haf i gutten miself intu. */
 
 - (NSColor *)properBackgroundColor
 {
-	if ([self windowIsActive]) {
+	if ([mainWindow() isInactive] == NO) {
 		return [self activeWindowListBackgroundColor];
 	} else {
 		return [self inactiveWindowListBackgroundColor];
@@ -269,14 +195,14 @@
 
 - (NSColor *)activeWindowListBackgroundColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor sourceListBackgroundColor]
-							   invertedItem:[NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1.0]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor sourceListBackgroundColor]
+									   invertedItem:[NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1.0]];
 }
 
 - (NSColor *)inactiveWindowListBackgroundColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:237.0 green:237.0 blue:237.0 alpha:1.0]
-							   invertedItem:[NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1.0]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor internalCalibratedRed:237.0 green:237.0 blue:237.0 alpha:1.0]
+									   invertedItem:[NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1.0]];
 }
 
 - (NSFont *)messageCountBadgeFont
@@ -310,14 +236,14 @@
 - (NSInteger)channelCellTextFieldLeftMargin
 {
 	/* Keep this in sync with the interface builder file. */
-
+	
 	return 38.0;
 }
 
 - (NSInteger)serverCellTextFieldLeftMargin
 {
 	/* Keep this in sync with the interface builder file. */
-
+	
 	return 16.0;
 }
 
@@ -348,32 +274,32 @@
 
 - (NSColor *)messageCountBadgeHighlightBackgroundColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:210 green:15 blue:15 alpha:1.0]
-							   invertedItem:[NSColor internalCalibratedRed:141.0 green:0.0 blue:0.0  alpha:1.0]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor internalCalibratedRed:210 green:15 blue:15 alpha:1.0]
+									   invertedItem:[NSColor internalCalibratedRed:141.0 green:0.0 blue:0.0  alpha:1.0]];
 }
 
 - (NSColor *)messageCountBadgeAquaBackgroundColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:152 green:168 blue:202 alpha:1.0]
-							   invertedItem:[NSColor internalCalibratedRed:48.0 green:48.0 blue:48.0 alpha:1.0]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor internalCalibratedRed:152 green:168 blue:202 alpha:1.0]
+									   invertedItem:[NSColor internalCalibratedRed:48.0 green:48.0 blue:48.0 alpha:1.0]];
 }
 
 - (NSColor *)messageCountBadgeGraphtieBackgroundColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:132 green:147 blue:163 alpha:1.0]
-							   invertedItem:[NSColor internalCalibratedRed:48.0 green:48.0 blue:48.0 alpha:1.0]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor internalCalibratedRed:132 green:147 blue:163 alpha:1.0]
+									   invertedItem:[NSColor internalCalibratedRed:48.0 green:48.0 blue:48.0 alpha:1.0]];
 }
 
 - (NSColor *)messageCountBadgeSelectedBackgroundColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor whiteColor]
-							   invertedItem:[NSColor darkGrayColor]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor whiteColor]
+									   invertedItem:[NSColor darkGrayColor]];
 }
 
 - (NSColor *)messageCountBadgeShadowColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor colorWithCalibratedWhite:1.00 alpha:0.60]
-							   invertedItem:[NSColor internalCalibratedRed:60.0 green:60.0 blue:60.0 alpha:1.0]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor colorWithCalibratedWhite:1.00 alpha:0.60]
+									   invertedItem:[NSColor internalCalibratedRed:60.0 green:60.0 blue:60.0 alpha:1.0]];
 }
 
 - (NSColor *)messageCountBadgeNormalTextColor
@@ -383,98 +309,98 @@
 
 - (NSColor *)messageCountBadgeSelectedTextColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:158 green:169 blue:197 alpha:1.0]
-							   invertedItem:[NSColor whiteColor]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor internalCalibratedRed:158 green:169 blue:197 alpha:1.0]
+									   invertedItem:[NSColor whiteColor]];
 }
 
 - (NSColor *)serverCellNormalTextColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor outlineViewHeaderTextColor]
-							   invertedItem:[NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:1.0]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor outlineViewHeaderTextColor]
+									   invertedItem:[NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:1.0]];
 }
 
 - (NSColor *)serverCellDisabledTextColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor outlineViewHeaderDisabledTextColor]
-							   invertedItem:[NSColor internalCalibratedRed:169.0 green:169.0 blue:169.0 alpha:1.0]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor outlineViewHeaderDisabledTextColor]
+									   invertedItem:[NSColor internalCalibratedRed:169.0 green:169.0 blue:169.0 alpha:1.0]];
 }
 
 - (NSColor *)serverCellSelectedTextColorForActiveWindow
 {
-	return [NSColor defineUserInterfaceItem:[NSColor whiteColor]
-							   invertedItem:[NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1.0]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor whiteColor]
+									   invertedItem:[NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1.0]];
 }
 
 - (NSColor *)serverCellSelectedTextColorForInactiveWindow
 {
-	return [NSColor defineUserInterfaceItem:[NSColor whiteColor]
-							   invertedItem:[NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1.0]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor whiteColor]
+									   invertedItem:[NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1.0]];
 }
 
 - (NSColor *)serverCellNormalTextShadowColorForActiveWindow
 {
-	return [NSColor defineUserInterfaceItem:[NSColor colorWithCalibratedWhite:1.00 alpha:1.00]
-							   invertedItem:[NSColor colorWithCalibratedWhite:0.00 alpha:0.90]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor colorWithCalibratedWhite:1.00 alpha:1.00]
+									   invertedItem:[NSColor colorWithCalibratedWhite:0.00 alpha:0.90]];
 }
 
 - (NSColor *)serverCellNormalTextShadowColorForInactiveWindow
 {
-	return [NSColor defineUserInterfaceItem:[NSColor colorWithCalibratedWhite:1.00 alpha:1.00]
-							   invertedItem:[NSColor colorWithCalibratedWhite:0.00 alpha:0.90]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor colorWithCalibratedWhite:1.00 alpha:1.00]
+									   invertedItem:[NSColor colorWithCalibratedWhite:0.00 alpha:0.90]];
 }
 
 - (NSColor *)serverCellSelectedTextShadowColorForActiveWindow
 {
-	return [NSColor defineUserInterfaceItem:[NSColor colorWithCalibratedWhite:0.00 alpha:0.30]
-							   invertedItem:[NSColor colorWithCalibratedWhite:1.00 alpha:0.30]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor colorWithCalibratedWhite:0.00 alpha:0.30]
+									   invertedItem:[NSColor colorWithCalibratedWhite:1.00 alpha:0.30]];
 }
 
 - (NSColor *)serverCellSelectedTextShadowColorForInactiveWindow
 {
-	return [NSColor defineUserInterfaceItem:[NSColor colorWithCalibratedWhite:0.00 alpha:0.20]
-							   invertedItem:[NSColor colorWithCalibratedWhite:1.00 alpha:0.30]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor colorWithCalibratedWhite:0.00 alpha:0.20]
+									   invertedItem:[NSColor colorWithCalibratedWhite:1.00 alpha:0.30]];
 }
 
 - (NSColor *)channelCellNormalTextColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor blackColor]
-							   invertedItem:[NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:1.0]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor blackColor]
+									   invertedItem:[NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:1.0]];
 }
 
 - (NSColor *)channelCellDisabledItemTextColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor internalCalibratedRed:0.0 green:0.0 blue:0.0 alpha:0.6]
-							   invertedItem:[NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:0.6]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor internalCalibratedRed:0.0 green:0.0 blue:0.0 alpha:0.6]
+									   invertedItem:[NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:0.6]];
 }
 
 - (NSColor *)channelCellSelectedTextColorForActiveWindow
 {
-	return [NSColor defineUserInterfaceItem:[NSColor whiteColor]
-							   invertedItem:[NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1.0]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor whiteColor]
+									   invertedItem:[NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1.0]];
 }
 
 - (NSColor *)channelCellSelectedTextColorForInactiveWindow
 {
-	return [NSColor defineUserInterfaceItem:[NSColor whiteColor]
-							   invertedItem:[NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1.0]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor whiteColor]
+									   invertedItem:[NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1.0]];
 }
 
 - (NSColor *)channelCellNormalTextShadowColor
 {
-	return [NSColor defineUserInterfaceItem:[NSColor colorWithSRGBRed:1.0 green:1.0 blue:1.0 alpha:0.6]
-							   invertedItem:[NSColor colorWithCalibratedWhite:0.00 alpha:0.90]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor colorWithSRGBRed:1.0 green:1.0 blue:1.0 alpha:0.6]
+									   invertedItem:[NSColor colorWithCalibratedWhite:0.00 alpha:0.90]];
 }
 
 - (NSColor *)channelCellSelectedTextShadowColorForActiveWindow
 {
-	return [NSColor defineUserInterfaceItem:[NSColor colorWithCalibratedWhite:0.00 alpha:0.48]
-							   invertedItem:[NSColor colorWithCalibratedWhite:1.00 alpha:0.30]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor colorWithCalibratedWhite:0.00 alpha:0.48]
+									   invertedItem:[NSColor colorWithCalibratedWhite:1.00 alpha:0.30]];
 }
 
 - (NSColor *)channelCellSelectedTextShadowColorForInactiveWindow
 {
-	return [NSColor defineUserInterfaceItem:[NSColor colorWithCalibratedWhite:0.00 alpha:0.30]
-							   invertedItem:[NSColor colorWithCalibratedWhite:1.00 alpha:0.30]];
+	return [TXUserInterface defineUserInterfaceItem:[NSColor colorWithCalibratedWhite:0.00 alpha:0.30]
+									   invertedItem:[NSColor colorWithCalibratedWhite:1.00 alpha:0.30]];
 }
 
 - (NSColor *)graphiteTextSelectionShadowColor
@@ -488,7 +414,7 @@
 - (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected
 {
 	BOOL invertedColors = [TPCPreferences invertSidebarColors];
-
+	
 	if (invertedColors) {
 		if (up) {
 			if (selected) {
@@ -505,16 +431,16 @@
 		}
 	} else {
 		if (up) {
-			return self.defaultDisclosureTriangle;
+			return _defaultDisclosureTriangle;
 		} else {
-			return self.alternateDisclosureTriangle;
+			return _alternateDisclosureTriangle;
 		}
 	}
 }
 
 - (NSString *)privateMessageStatusIconFilename:(BOOL)selected
 {
-	return [NSColor defineUserInterfaceItem:@"NSUser" invertedItem:@"DarkServerListViewSelectedPrivateMessageUser" withOperator:(selected == NO)];
+	return [TXUserInterface defineUserInterfaceItem:@"NSUser" invertedItem:@"DarkServerListViewSelectedPrivateMessageUser" withOperator:(selected == NO)];
 }
 
 @end

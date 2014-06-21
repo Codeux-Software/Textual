@@ -122,8 +122,8 @@
 	/* Ask user before installing. */
 	BOOL performInstall = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1192][2]", filenamewoext)
 															  title:TXTLS(@"BasicLanguage[1192][1]")
-													  defaultButton:TXTLS(@"BasicLanguage[1182]")
-													alternateButton:TXTLS(@"BasicLanguage[1219]")
+													  defaultButton:BLS(1182)
+													alternateButton:BLS(1219)
 													 suppressionKey:nil
 													suppressionText:nil];
 
@@ -141,7 +141,7 @@
 	if (didImport) {
 		[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1189][2]", filenamewoext)
 											title:TXTLS(@"BasicLanguage[1189][1]")
-									defaultButton:TXTLS(@"BasicLanguage[1186]")
+									defaultButton:BLS(1186)
 								  alternateButton:nil
 								   suppressionKey:nil
 								  suppressionText:nil];
@@ -161,8 +161,8 @@
 	/* Ask user before installing. */
 	BOOL performInstall = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1191][2]", filenamewoext)
 															  title:TXTLS(@"BasicLanguage[1191][1]")
-													  defaultButton:TXTLS(@"BasicLanguage[1182]")
-													alternateButton:TXTLS(@"BasicLanguage[1219]")
+													  defaultButton:BLS(1182)
+													alternateButton:BLS(1219)
 													 suppressionKey:nil
 													suppressionText:nil];
 
@@ -175,7 +175,7 @@
 	if ([CSFWSystemInformation featureAvailableToOSXMountainLion] == NO) {
 		[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1190][2]")
 											title:TXTLS(@"BasicLanguage[1190][1]")
-									defaultButton:TXTLS(@"BasicLanguage[1186]")
+									defaultButton:BLS(1186)
 								  alternateButton:nil
 								   suppressionKey:nil
 								  suppressionText:nil];
@@ -234,7 +234,7 @@
 {
 	[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1188][2]", filename)
 										title:TXTLS(@"BasicLanguage[1188][1]")
-								defaultButton:TXTLS(@"BasicLanguage[1186]")
+								defaultButton:BLS(1186)
 							  alternateButton:nil
 							   suppressionKey:nil
 							  suppressionText:nil];

@@ -224,20 +224,20 @@
 {
 	if ((self = [self init])) {
 		/* General preferences. */
-		self.type			= (IRCChannelType)NSDictionaryIntegerKeyValueCompare(dic, @"channelType", self.type);
+		self.type			= (IRCChannelType)[dic integerForKey:@"channelType" orUseDefault:self.type];
 
-		self.itemUUID			= NSDictionaryObjectKeyValueCompare(dic, @"uniqueIdentifier", self.itemUUID);
-		self.channelName		= NSDictionaryObjectKeyValueCompare(dic, @"channelName", self.channelName);
+		self.itemUUID			= [dic objectForKey:@"uniqueIdentifier" orUseDefault:self.itemUUID];
+		self.channelName		= [dic objectForKey:@"channelName" orUseDefault:self.channelName];
 
-		self.autoJoin			= NSDictionaryBOOLKeyValueCompare(dic, @"joinOnConnect", self.autoJoin);
-		self.ignoreHighlights	= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreHighlights", self.ignoreHighlights);
-		self.ignoreInlineImages	= NSDictionaryBOOLKeyValueCompare(dic, @"disableInlineMedia", self.ignoreInlineImages);
-		self.ignoreJPQActivity	= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreJPQActivity", self.ignoreJPQActivity);
-		self.pushNotifications	= NSDictionaryBOOLKeyValueCompare(dic, @"enableNotifications", self.pushNotifications);
-		self.showTreeBadgeCount = NSDictionaryBOOLKeyValueCompare(dic, @"enableTreeBadgeCountDrawing", self.showTreeBadgeCount);
+		self.autoJoin			= [dic integerForKey:@"joinOnConnect" orUseDefault:self.autoJoin];
+		self.ignoreHighlights	= [dic integerForKey:@"ignoreHighlights" orUseDefault:self.ignoreHighlights];
+		self.ignoreInlineImages	= [dic integerForKey:@"disableInlineMedia" orUseDefault:self.ignoreInlineImages];
+		self.ignoreJPQActivity	= [dic integerForKey:@"ignoreJPQActivity" orUseDefault:self.ignoreJPQActivity];
+		self.pushNotifications	= [dic integerForKey:@"enableNotifications" orUseDefault:self.pushNotifications];
+		self.showTreeBadgeCount = [dic integerForKey:@"enableTreeBadgeCountDrawing" orUseDefault:self.showTreeBadgeCount];
 
-		self.defaultModes		= NSDictionaryObjectKeyValueCompare(dic, @"defaultMode", self.defaultModes);
-		self.defaultTopic		= NSDictionaryObjectKeyValueCompare(dic, @"defaultTopic", self.defaultTopic);
+		self.defaultModes		= [dic objectForKey:@"defaultMode" orUseDefault:self.defaultModes];
+		self.defaultTopic		= [dic objectForKey:@"defaultTopic" orUseDefault:self.defaultTopic];
 
 		/* Establish state. */
 		self.secretKeyIsSet = NSObjectIsNotEmpty(self.secretKey);

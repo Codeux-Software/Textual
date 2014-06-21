@@ -38,12 +38,6 @@
 
 #import "TextualApplication.h"
 
-#define NSDictionaryObjectKeyValueCompare(o,n,s)			   (id)(([o containsKey:n]) ? [o objectForKey:n]  : s) 
-#define NSDictionaryIntegerKeyValueCompare(o,n,s)		(NSInteger)(([o containsKey:n]) ? [o integerForKey:n] : s)
-#define NSDictionaryBOOLKeyValueCompare(o,n,s)               (BOOL)(([o containsKey:n]) ? [o boolForKey:n]    : s)
-#define NSDictionaryFloatKeyValueCompare(o,n,s)				(float)(([o containsKey:n]) ? [o floatForKey:n]   : s)
-#define NSDictionaryDoubleKeyValueCompare(o,n,s)		   (double)(([o containsKey:n]) ? [o doubleForKey:n]  : s)
-
 @interface NSDictionary (TXDictionaryHelper)
 - (NSString *)stringForKey:(NSString *)key;
 
@@ -55,6 +49,16 @@
 - (double)doubleForKey:(NSString *)key;
 - (float)floatForKey:(NSString *)key;
 - (void *)pointerForKey:(NSString *)key;
+
+- (id)objectForKey:(id)key orUseDefault:(id)defaultValue;
+
+- (BOOL)boolForKey:(NSString *)key orUseDefault:(BOOL)defaultValue;
+- (NSArray *)arrayForKey:(NSString *)key orUseDefault:(NSArray *)defaultValue;
+- (NSDictionary *)dictionaryForKey:(NSString *)key orUseDefault:(NSDictionary *)defaultValue;
+- (NSInteger)integerForKey:(NSString *)key orUseDefault:(NSInteger)defaultValue;
+- (long long)longLongForKey:(NSString *)key orUseDefault:(long long)defaultValue;
+- (double)doubleForKey:(NSString *)key orUseDefault:(double)defaultValue;
+- (float)floatForKey:(NSString *)key orUseDefault:(float)defaultValue;
 
 - (NSString *)firstKeyForObject:(id)object;
 
@@ -73,6 +77,8 @@
 @interface NSMutableDictionary (TXMutableDictionaryHelper)
 - (void)safeSetObject:(id)value forKey:(NSString *)key TEXTUAL_DEPRECATED;
 - (void)safeSetObjectWithoutOverride:(id)value forKey:(NSString *)key TEXTUAL_DEPRECATED;
+
+- (void)maybeSetObject:(id)value forKey:(NSString *)key;
 
 - (void)setObjectWithoutOverride:(id)value forKey:(NSString *)key;
 

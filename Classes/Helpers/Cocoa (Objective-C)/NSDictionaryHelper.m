@@ -139,6 +139,78 @@
 	return nil;
 }
 
+- (id)objectForKey:(id)key orUseDefault:(id)defaultValue
+{
+	if ([self containsKey:key]) {
+		return [self objectForKey:key];
+	} else {
+		return defaultValue;
+	}
+}
+
+- (BOOL)boolForKey:(NSString *)key orUseDefault:(BOOL)defaultValue
+{
+	if ([self containsKey:key]) {
+		return [self boolForKey:key];
+	} else {
+		return defaultValue;
+	}
+}
+
+- (NSArray *)arrayForKey:(NSString *)key orUseDefault:(NSArray *)defaultValue
+{
+	if ([self containsKey:key]) {
+		return [self arrayForKey:key];
+	} else {
+		return defaultValue;
+	}
+}
+
+- (NSDictionary *)dictionaryForKey:(NSString *)key orUseDefault:(NSDictionary *)defaultValue
+{
+	if ([self containsKey:key]) {
+		return [self dictionaryForKey:key];
+	} else {
+		return defaultValue;
+	}
+}
+
+- (NSInteger)integerForKey:(NSString *)key orUseDefault:(NSInteger)defaultValue
+{
+	if ([self containsKey:key]) {
+		return [self integerForKey:key];
+	} else {
+		return defaultValue;
+	}
+}
+
+- (long long)longLongForKey:(NSString *)key orUseDefault:(long long)defaultValue
+{
+	if ([self containsKey:key]) {
+		return [self longLongForKey:key];
+	} else {
+		return defaultValue;
+	}
+}
+
+- (double)doubleForKey:(NSString *)key orUseDefault:(double)defaultValue
+{
+	if ([self containsKey:key]) {
+		return [self doubleForKey:key];
+	} else {
+		return defaultValue;
+	}
+}
+
+- (float)floatForKey:(NSString *)key orUseDefault:(float)defaultValue
+{
+	if ([self containsKey:key]) {
+		return [self floatForKey:key];
+	} else {
+		return defaultValue;
+	}
+}
+
 - (BOOL)containsKey:(NSString *)baseKey
 {	
 	return [[self allKeys] containsObject:baseKey];
@@ -197,7 +269,6 @@
 {
 	NSArray *keys = [[self allKeys] sortedArrayUsingSelector:@selector(compare:)];
 	
-	
 	if (reversed) {
 		return [[keys reverseObjectEnumerator] allObjects];
 	}
@@ -228,6 +299,13 @@
 		if ([self containsKey:key] == NO) {
 			self[key] = value;
 		}
+	}
+}
+
+- (void)maybeSetObject:(id)value forKey:(NSString *)key
+{
+	if (PointerIsNotEmpty(value)) {
+		[self setObject:value forKey:key];
 	}
 }
 

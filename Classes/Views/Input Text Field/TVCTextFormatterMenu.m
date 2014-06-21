@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-@implementation TVCTextFormatterMenu
+@implementation TVCTextViewIRCFormattingMenu
 
 #define _formattingMenuForegroundColorEnabledTag		95005
 #define _formattingMenuBackgroundColorEnabledTag		95007

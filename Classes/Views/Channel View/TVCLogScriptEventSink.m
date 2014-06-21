@@ -45,8 +45,8 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		self.x = -10000;
-		self.y = -10000;
+		_x = -10000;
+		_y = -10000;
 	}
 	
 	return self;
@@ -62,7 +62,7 @@
 	NSString *s = NSStringFromSelector(sel);
 	
 	if ([s hasSuffix:@":"]) {
-		return [s safeSubstringToIndex:(s.length - 1)];
+		return [s substringToIndex:([s length] - 1)];
 	}
 	
 	return nil;
@@ -81,6 +81,7 @@
 - (BOOL)shouldStopDoubleClick:(id)e
 {
 	NSInteger dr = _doubleClickRadius;
+	
 	NSInteger cx = [[e valueForKey:@"clientX"] integerValue];
 	NSInteger cy = [[e valueForKey:@"clientY"] integerValue];
 	
@@ -88,18 +89,18 @@
 	
 	NSTimeInterval now = [NSDate epochTime];
 	
-	if ((self.x - dr) <= cx && cx <= (self.x + dr) &&
-		(self.y - dr) <= cy && cy <= (self.y + dr))
+	if ((_x - dr) <= cx && cx <= (_x + dr) &&
+		(_y - dr) <= cy && cy <= (_y + dr))
 	{
-		if (now < (self.lastClickTime + [NSEvent doubleClickInterval])) {
+		if (now < (_lastClickTime + [NSEvent doubleClickInterval])) {
 			res = YES;
 		}
 	}
 	
-	self.lastClickTime = now;
+	_lastClickTime = now;
 	
-	self.x = cx;
-	self.y = cy;
+	_x = cx;
+	_y = cy;
 	
 	return res;
 }
@@ -142,7 +143,7 @@
 	}
 
 	/* Find the element. */
-	DOMElement *imageNode = [[[self owner] mainFrameDocument] getElementById:object];
+	DOMElement *imageNode = [[_logController mainFrameDocument] getElementById:object];
 
 	PointerIsEmptyAssertReturn(imageNode, @"true");
 
@@ -163,82 +164,82 @@
 
 - (void)setURLAddress:(NSString *)s
 {
-    [[[self owner] policy] setAnchorURL:[s gtm_stringByUnescapingFromHTML]];
+    [[_logController webViewPolicy] setAnchorURL:[s gtm_stringByUnescapingFromHTML]];
 }
 
 - (void)setNickname:(NSString *)s
 {
-    [[[self owner] policy] setNickname:[s gtm_stringByUnescapingFromHTML]];
+    [[_logController webViewPolicy] setNickname:[s gtm_stringByUnescapingFromHTML]];
 }
 
 - (void)setChannelName:(NSString *)s
 {
-    [[[self owner] policy] setChannelName:[s gtm_stringByUnescapingFromHTML]];
+    [[_logController webViewPolicy] setChannelName:[s gtm_stringByUnescapingFromHTML]];
 }
 
 - (void)channelNameDoubleClicked
 {
-    [[[self owner] policy]channelDoubleClicked];
+    [[_logController webViewPolicy] channelDoubleClicked];
 }
 
 - (void)nicknameDoubleClicked
 {
-    [[[self owner] policy] nicknameDoubleClicked];
+    [[_logController webViewPolicy] nicknameDoubleClicked];
 }
 
 - (void)topicDoubleClicked
 {
-    [[[self owner] policy] topicDoubleClicked];
+    [[_logController webViewPolicy] topicDoubleClicked];
 }
 
 - (NSInteger)channelMemberCount
 {
-    return [[[self owner] channel] numberOfMembers];
+    return [[_logController associatedChannel] numberOfMembers];
 }
 
 - (NSInteger)serverChannelCount
 {
-	return [[[[self owner] client] channels] count];
+	return [[[_logController associatedClient] channels] count];
 }
 
 - (BOOL)serverIsConnected
 {
-	return [[[self owner] client] isLoggedIn];
+	return [[_logController associatedClient] isLoggedIn];
 }
 
 - (BOOL)channelIsJoined
 {
-	return [[[self owner] channel] isActive];
+	return [[_logController associatedChannel] isActive];
 }
 
 - (NSString *)channelName
 {
-	return [[[self owner] channel] name];
+	return [[_logController associatedChannel] name];
 }
 
 - (NSString *)serverAddress
 {
-	return [[[self owner] client] networkAddress];
+	return [[_logController associatedClient] networkAddress];
 }
 
 - (NSString *)localUserNickname
 {
-	return [[[self owner] client] localNickname];
+	return [[_logController associatedClient] localNickname];
 }
 
 - (NSString *)localUserHostmask
 {
-	return [[[self owner] client] localHostmask];
+	return [[_logController associatedClient] localHostmask];
 }
 
 - (void)printDebugInformationToConsole:(NSString *)m
 {
-	[[[self owner] client] printDebugInformationToConsole:m];
+	[[_logController associatedClient] printDebugInformationToConsole:m];
 }
 
 - (void)printDebugInformation:(NSString *)m
 {
-	[[[self owner] client] printDebugInformation:m channel:[[self owner] channel]];
+	[[_logController associatedClient] printDebugInformation:m channel:[_logController associatedChannel]];
 }
 
 - (BOOL)sidebarInversionIsEnabled

@@ -355,11 +355,11 @@
 		case 652: // "Delete Channel"
 		{
 			if (_isQuery) {
-				[item setTitle:TXTLS(@"BasicLanguage[1025]")];
+				[item setTitle:BLS(1025)];
 				
 				return _disableInSheet(YES);
 			} else {
-				[item setTitle:TXTLS(@"BasicLanguage[1024]")];
+				[item setTitle:BLS(1024)];
 				
 				return _disableInSheet(_isChannel);
 			}
@@ -429,25 +429,25 @@
 				switch (keyAction) {
 					case TXCommandWKeyCloseWindowAction:
 					{
-						[item setTitle:TXTLS(@"BasicLanguage[1013]")];
+						[item setTitle:BLS(1013)];
 
 						break;
 					}
 					case TXCommandWKeyPartChannelAction:
 					{
 						if (_isClient) {
-							[item setTitle:TXTLS(@"BasicLanguage[1013]")];
+							[item setTitle:BLS(1013)];
 
 							return NO;
 						} else {
 							if (_isChannel) {
-								[item setTitle:TXTLS(@"BasicLanguage[1015]")];
+								[item setTitle:BLS(1015)];
 								
 								if (_notActive) {
 									return NO;
 								}
 							} else {
-								[item setTitle:TXTLS(@"BasicLanguage[1012]")];
+								[item setTitle:BLS(1012)];
 							}
 						}
 						
@@ -465,13 +465,13 @@
 					}
 					case TXCommandWKeyTerminateAction:
 					{
-						[item setTitle:TXTLS(@"BasicLanguage[1016]")];
+						[item setTitle:BLS(1016)];
 						
 						break;
 					}
 				}
 			} else {
-				[item setTitle:TXTLS(@"BasicLanguage[1013]")];
+				[item setTitle:BLS(1013)];
 			}
 			
 			return YES;
@@ -848,7 +848,7 @@
 
 	[dialog alertWithMessageTitle:TXTLS(@"BasicLanguage[1026][3]")
 					defaultButton:TXTLS(@"BasicLanguage[1026][1]")
-				  alternateButton:TXTLS(@"BasicLanguage[1009]")
+				  alternateButton:BLS(1009)
 				  informativeText:TXTLS(@"BasicLanguage[1026][2]")
 				 defaultUserInput:_currentSearchPhrase
 				  completionBlock:^(BOOL defaultButtonClicked, NSString *resultString) {
@@ -1283,8 +1283,8 @@
 	
 	BOOL result = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(warningToken)
 													  title:TXTLS(@"BasicLanguage[1198][1]")
-											  defaultButton:TXTLS(@"BasicLanguage[1186]")
-											alternateButton:TXTLS(@"BasicLanguage[1009]")
+											  defaultButton:BLS(1186)
+											alternateButton:BLS(1009)
 											 suppressionKey:nil
 											suppressionText:nil];
 	
@@ -1569,8 +1569,8 @@
 	if (_isChannel) {
 		BOOL result = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1010][1]")
 														  title:TXTLS(@"BasicLanguage[1010][2]") 
-												  defaultButton:TXTLS(@"BasicLanguage[1186]")
-												alternateButton:TXTLS(@"BasicLanguage[1009]")
+												  defaultButton:BLS(1186)
+												alternateButton:BLS(1009)
 												 suppressionKey:@"delete_channel"
 												suppressionText:nil];
 		
@@ -1644,12 +1644,12 @@
 		[c updateConfig:[sender config]];
 
 		if (oldKeyEmpty && newKeyEmpty == NO) {
-			[[c associatedClient] printDebugInformation:TXTLS(@"BasicLanguage[1003]") channel:c];
+			[[c associatedClient] printDebugInformation:BLS(1003) channel:c];
 		} else if (oldKeyEmpty == NO && newKeyEmpty) {
-			[[c associatedClient] printDebugInformation:TXTLS(@"BasicLanguage[1004]") channel:c];
+			[[c associatedClient] printDebugInformation:BLS(1004) channel:c];
 		} else if (oldKeyEmpty == NO && newKeyEmpty == NO) {
 			if (NSObjectsAreEqual(oldKey, newKey) == NO) {
-				[[c associatedClient] printDebugInformation:TXTLS(@"BasicLanguage[1002]") channel:c];
+				[[c associatedClient] printDebugInformation:BLS(1002) channel:c];
 			}
 		}
 	}
@@ -2332,7 +2332,7 @@
 	} else {
 		[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1110][2]")
 											title:TXTLS(@"BasicLanguage[1110][1]")
-									defaultButton:TXTLS(@"BasicLanguage[1186]")
+									defaultButton:BLS(1186)
 								  alternateButton:nil
 								   suppressionKey:nil
 								  suppressionText:nil];
@@ -2355,7 +2355,7 @@
 	} else {
 		[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1110][2]")
 											title:TXTLS(@"BasicLanguage[1110][1]")
-									defaultButton:TXTLS(@"BasicLanguage[1186]")
+									defaultButton:BLS(1186)
 								  alternateButton:nil
 								   suppressionKey:nil
 								  suppressionText:nil];
@@ -2392,8 +2392,8 @@
 	TVCInputPromptDialog *dialog = [TVCInputPromptDialog new];
 
 	[dialog alertWithMessageTitle:TXTLS(@"BasicLanguage[1228][1]")
-					defaultButton:TXTLS(@"BasicLanguage[1186]")
-				  alternateButton:TXTLS(@"BasicLanguage[1009]")
+					defaultButton:BLS(1186)
+				  alternateButton:BLS(1009)
 				  informativeText:TXTLS(@"BasicLanguage[1228][2]")
 				 defaultUserInput:nil
 				  completionBlock:^(BOOL defaultButtonClicked, NSString *resultString) {

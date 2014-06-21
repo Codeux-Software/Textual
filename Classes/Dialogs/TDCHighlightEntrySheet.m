@@ -165,12 +165,12 @@
 - (id)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [super init])) {
-		self.itemUUID = NSDictionaryObjectKeyValueCompare(dic, @"uniqueIdentifier", [NSString stringWithUUID]);
+		self.itemUUID = [dic objectForKey:@"uniqueIdentifier" orUseDefault:[NSString stringWithUUID]];
 
-		self.matchKeyword = NSDictionaryObjectKeyValueCompare(dic, @"matchKeyword", NSStringEmptyPlaceholder);
-		self.matchChannelID = NSDictionaryObjectKeyValueCompare(dic, @"matchChannelID", NSStringEmptyPlaceholder);
+		self.matchKeyword = [dic objectForKey:@"matchKeyword" orUseDefault:NSStringEmptyPlaceholder];
+		self.matchChannelID = [dic objectForKey:@"matchChannelID" orUseDefault:NSStringEmptyPlaceholder];
 
-		self.matchIsExcluded = NSDictionaryBOOLKeyValueCompare(dic, @"matchIsExcluded", NO);
+		self.matchIsExcluded = [dic integerForKey:@"matchIsExcluded" orUseDefault:NO];
 
 		return self;
 	}

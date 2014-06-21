@@ -185,8 +185,8 @@
 								 action:@selector(defaultIRCClientSheetCallback:withOriginalAlert:)
 								   body:TXTLS(@"BasicLanguage[1227][2]")
 								  title:TXTLS(@"BasicLanguage[1227][1]")
-						  defaultButton:TXTLS(@"BasicLanguage[1219]")
-						alternateButton:TXTLS(@"BasicLanguage[1182]")
+						  defaultButton:BLS(1219)
+						alternateButton:BLS(1182)
 							otherButton:nil
 						 suppressionKey:supkey
 						suppressionText:nil];

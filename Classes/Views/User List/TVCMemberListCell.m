@@ -40,156 +40,11 @@
 @implementation TVCMemberListCell
 
 #pragma mark -
-#pragma mark Cell Drawing
+#pragma mark Drawing
 
 - (void)updateDrawing
 {
-	/**************************************************************/
-	/* Create our new string from scratch. */
-	/**************************************************************/
-
-	/* Declare variables. */
-	NSDictionary *drawContext = [self drawingContext];
-
-	BOOL invertedColors = [drawContext boolForKey:@"isInverted"];
-	BOOL isKeyWindow = [drawContext boolForKey:@"isKeyWindow"];
-	BOOL isGraphite = [drawContext boolForKey:@"isGraphite"];
-
-	NSMutableAttributedString *newStrValue = [NSMutableAttributedString mutableStringWithBase:self.memberPointer.nickname attributes:self.customTextField.attributedStringValue.attributes];
-
-	/* Prepare the drop shadow for text. */
-	NSShadow *itemShadow = [NSShadow new];
-
-	[itemShadow setShadowOffset:NSMakeSize(0, -1)];
-
-	if (self.rowIsSelected == NO) {
-		[itemShadow setShadowColor:[self.memberList normalCellTextShadowColor]];
-	} else {
-		if (invertedColors) {
-			[itemShadow setShadowBlurRadius:1.0];
-		} else {
-			[itemShadow setShadowBlurRadius:2.0];
-		}
-
-		if (isKeyWindow) {
-			if (isGraphite && invertedColors == NO) {
-				[itemShadow setShadowColor:self.memberList.graphiteSelectedCellTextShadowColorForActiveWindow];
-			} else {
-				[itemShadow setShadowColor:self.memberList.normalSelectedCellTextShadowColorForActiveWindow];
-			}
-		} else {
-			[itemShadow setShadowColor:self.memberList.normalSelectedCellTextShadowColorForInactiveWindow];
-		}
-	}
-
-	/* Prepare other attributes. */
-	NSRange textRange = NSMakeRange(0, newStrValue.length);
-
-	if (self.rowIsSelected) {
-		[newStrValue addAttribute:NSFontAttributeName value:self.memberList.selectedCellFont range:textRange];
-
-		[newStrValue addAttribute:NSForegroundColorAttributeName value:self.memberList.selectedCellTextColor range:textRange];
-	} else {
-		[newStrValue addAttribute:NSFontAttributeName value:self.memberList.normalCellFont range:textRange];
-
-        if (self.memberPointer.isAway) {
-            [newStrValue addAttribute:NSForegroundColorAttributeName value:self.memberList.awayUserCellTextColor range:textRange];
-        } else {
-            [newStrValue addAttribute:NSForegroundColorAttributeName value:self.memberList.normalCellTextColor range:textRange];
-        }
-	}
-
-	[newStrValue addAttribute:NSShadowAttributeName value:itemShadow range:textRange];
-
-	/* Set the new attributed string. */
-	if ([self.customTextField.attributedStringValue isEqual:newStrValue] == NO) {
-		[self.customTextField setAttributedStringValue:newStrValue];
-	}
-
-	/**************************************************************/
-	/* Prepare the badge image and text. */
-	/**************************************************************/
-
-	/* Setup badge image. */
-	NSImage *badgeImage;
-
-	/* See IRCUser.m for an explantion of what favorIRCop does. */
-	BOOL favorIRCop = (self.memberPointer.InspIRCd_y_lower || self.memberPointer.InspIRCd_y_upper);
-
-	if (favorIRCop == NO) {
-		favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
-	}
-
-	if (self.rowIsSelected) {
-		badgeImage = [self.badgeRenderer userModeBadgeImage_Selected];
-	} else if (self.memberPointer.isCop && favorIRCop) {
-		badgeImage = [self.badgeRenderer userModeBadgeImage_Y];
-	} else if (self.memberPointer.q) {
-		badgeImage = [self.badgeRenderer userModeBadgeImage_Q];
-	} else if (self.memberPointer.a) {
-		badgeImage = [self.badgeRenderer userModeBadgeImage_A];
-	} else if (self.memberPointer.o) {
-		badgeImage = [self.badgeRenderer userModeBadgeImage_O];
-	} else if (self.memberPointer.h) {
-		badgeImage = [self.badgeRenderer userModeBadgeImage_H];
-	} else if (self.memberPointer.v) {
-		badgeImage = [self.badgeRenderer userModeBadgeImage_V];
-	} else {
-		badgeImage = [self.badgeRenderer userModeBadgeImage_X];
-	}
-
-	if ([badgeImage isEqual:[self.imageView image]] == NO) {
-		[self.imageView setImage:badgeImage];
-	}
-
-	/* Setup badge text. */
-	NSString *mcnstring = self.memberPointer.mark;
-
-	if (NSObjectIsEmpty(mcnstring)) {
-		if ([RZUserDefaults() boolForKey:@"DisplayUserListNoModeSymbol"]) {
-			mcnstring = @"x";
-		} else {
-			mcnstring = NSStringEmptyPlaceholder;
-		}
-	}
-
-	/* Pick which font size best aligns with the badge. */
-	NSColor *textColor = self.memberList.userMarkBadgeNormalTextColor;
-
-	if (self.rowIsSelected) {
-		textColor = self.memberList.userMarkBadgeSelectedTextColor;
-	}
-
-	NSAttributedString *mcstring = [NSAttributedString stringWithBase:mcnstring attributes:@{
-		 NSForegroundColorAttributeName		: textColor,
-		 NSFontAttributeName				: self.memberList.userMarkBadgeFont
-	}];
-
-	if ([self.modeSymbolTextField.attributedStringValue isEqual:mcstring] == NO) {
-		/* Set the actual mode badge text. */
-		[self.modeSymbolTextField setAttributedStringValue:mcstring];
-
-		/* Change frame. */
-
-		NSRect symbolTextFieldRectOld = [self.modeSymbolTextField frame];
-		NSRect symbolTextFieldRectNew = symbolTextFieldRectOld;
-
-		if ([mcnstring isEqualToString:@"@"]) {
-			symbolTextFieldRectNew.origin = [self.memberList userMarkBadgeTextOrigin_AtSign];
-		} else if ([mcnstring isEqualToString:@"&"]) {
-			symbolTextFieldRectNew.origin = [self.memberList userMarkBadgeTextOrigin_AndSign];
-		} else if ([mcnstring isEqualToString:@"%"]) {
-			symbolTextFieldRectNew.origin = [self.memberList userMarkBadgeTextOrigin_PercentSign];
-		} else if ([mcnstring isEqualToString:@"!"]) {
-			symbolTextFieldRectNew.origin = [self.memberList userMarkBadgeTextOrigin_ExclamationMark];
-		} else {
-			symbolTextFieldRectNew.origin = [self.memberList userMarkBadgeTextOrigin_Normal];
-		}
-
-		if (NSEqualRects(symbolTextFieldRectOld, symbolTextFieldRectNew) == NO) {
-			[self.modeSymbolTextField setFrame:symbolTextFieldRectNew];
-		}
-	}
+	
 }
 
 #pragma mark -
@@ -198,162 +53,78 @@
 - (void)drawWithExpansionFrame
 {
     /* Begin popover. */
-    TVCMemberListUserInfoPopover *userInfoPopover = self.masterController.memberListUserInfoPopover;
+	TVCMemberListUserInfoPopover *userInfoPopover = [mainWindowMemberList() memberListUserInfoPopover];
 
     /* What permissions does the user have? */
     NSString *permissions = @"BasicLanguage[1206]";
 
-    if (self.memberPointer.q) {
+	if ([_memberPointer q]) {
         permissions = @"BasicLanguage[1211]";
-    } else if (self.memberPointer.a) {
+    } else if ([_memberPointer a]) {
         permissions = @"BasicLanguage[1210]";
-    } else if (self.memberPointer.o) {
+    } else if ([_memberPointer o]) {
         permissions = @"BasicLanguage[1209]";
-    } else if (self.memberPointer.h) {
+    } else if ([_memberPointer h]) {
         permissions = @"BasicLanguage[1208]";
-    } else if (self.memberPointer.v) {
+    } else if ([_memberPointer v]) {
         permissions = @"BasicLanguage[1207]";
     }
 
     permissions = TXTLS(permissions);
 
-    if (self.memberPointer.isCop) {
-        permissions = [permissions stringByAppendingString:TXTLS(@"BasicLanguage[1212]")];
+    if ([_memberPointer isCop]) {
+        permissions = [permissions stringByAppendingString:BLS(1212)];
     }
 
     /* User info. */
-    NSString *nickname = self.memberPointer.nickname;
-    NSString *username = self.memberPointer.username;
-    NSString *address = self.memberPointer.address;
+	NSString *nickname = [_memberPointer nickname];
+	NSString *username = [_memberPointer username];
+	NSString *address = [_memberPointer address];
 
     if (NSObjectIsEmpty(username)) {
-        username = TXTLS(@"BasicLanguage[1215]");
+        username = BLS(1215);
     }
 
     if (NSObjectIsEmpty(address)) {
-        address = TXTLS(@"BasicLanguage[1215]");
+        address = BLS(1215);
     }
 
     /* Where is our cell? */
 	NSInteger rowIndex = [self rowIndex];
 
-    NSRect cellFrame = [self.memberList frameOfCellAtColumn:0 row:rowIndex];
+    NSRect cellFrame = [mainWindowMemberList() frameOfCellAtColumn:0 row:rowIndex];
 
     /* Pop our popover. */
-    userInfoPopover.nicknameField.stringValue = nickname;
-    userInfoPopover.usernameField.stringValue = username;
-    userInfoPopover.privilegesField.stringValue = permissions;
+	[[userInfoPopover nicknameField] setStringValue:nickname];
+	[[userInfoPopover usernameField] setStringValue:username];
+	
+	[[userInfoPopover privilegesField] setStringValue:permissions];
 
 	/* Interestingly enough, some IRC networks allow formatting characters.
 	 That makes absolutely no sense, but let's support it in the pop up
 	 just to say that we can. */
-	NSAttributedString *addressAttr = [address attributedStringWithIRCFormatting:TXDefaultListViewControllerFont
+	NSAttributedString *addressAttr = [address attributedStringWithIRCFormatting:TXPreferredGlobalTableViewFont
 													   honorFormattingPreference:NO];
 
-	userInfoPopover.addressField.attributedStringValue = addressAttr;
-
+	[[userInfoPopover addressField] setAttributedStringValue:addressAttr];
+	
 	/* Update away status. */
-	if (self.memberPointer.isAway) {
-		userInfoPopover.awayStatusField.stringValue = TXTLS(@"BasicLanguage[1213]");
+	if ([_memberPointer isAway]) {
+		[[userInfoPopover awayStatusField] setStringValue:BLS(1213)];
 	} else {
-		userInfoPopover.awayStatusField.stringValue = TXTLS(@"BasicLanguage[1214]");
+		[[userInfoPopover awayStatusField] setStringValue:BLS(1214)];
 	}
 
     [userInfoPopover showRelativeToRect:cellFrame
-                                 ofView:self.memberList
+                                 ofView:mainWindowMemberList()
                           preferredEdge:NSMaxXEdge];
 	
-	[self.masterController.inputTextField focus]; // Add focus back to text field.
+	[mainWindowTextField() focus]; // Add focus back to text field.
 }
-
-#pragma mark -
-#pragma mark Selection Drawing
-
-- (void)disableSelectionBackgroundImage
-{
-	[self.backgroundImageCell setHidden:YES];
-}
-
-- (void)enableSelectionBackgroundImage
-{
-	/****************************************************************/
-	/* Define context variables. */
-	/****************************************************************/
-
-	NSDictionary *drawContext = [self drawingContext];
-
-	BOOL invertedColors = [drawContext boolForKey:@"isInverted"];
-	BOOL isKeyWindow = [drawContext boolForKey:@"isKeyWindow"];
-	BOOL isGraphite = [drawContext boolForKey:@"isGraphite"];
-
-	/****************************************************************/
-	/* Find the name of the image to be drawn. */
-	/****************************************************************/
-
-	NSString *backgroundImage = @"ChannelCellSelection";
-
-	if (invertedColors == NO) {
-		if (isKeyWindow) {
-			backgroundImage = [backgroundImage stringByAppendingString:@"_Focused"];
-		} else {
-			backgroundImage = [backgroundImage stringByAppendingString:@"_Unfocused"];
-		}
-
-		if (isGraphite) {
-			backgroundImage = [backgroundImage stringByAppendingString:@"_Graphite"];
-		} else {
-			backgroundImage = [backgroundImage stringByAppendingString:@"_Aqua"];
-		}
-	}
-
-	if (invertedColors) {
-		backgroundImage = [backgroundImage stringByAppendingString:@"_Inverted"];
-	}
-
-	NSImage *origBackgroundImage = [NSImage imageNamed:backgroundImage];
-
-	/****************************************************************/
-	/* Put the background to screen. */
-	/****************************************************************/
-
-	/* When our image view is visible for the selected item, right clicking on
-	 it will not do anything unless we define a menu to use with our view. Below,
-	 we define the menu that matches the selection. */
-	NSMenu *menu = self.menuController.userControlMenu;
-
-	/* Setting the menu on our imageView, not only backgroundImageCell, makes it
-	 so right clicking on the channel status produces the same menu that is given
-	 clicking anywhere else in the server list. */
-	[self.imageView setMenu:menu];
-
-	/* Populate the background image cell. */
-	[self.backgroundImageCell setImage:origBackgroundImage];
-	[self.backgroundImageCell setMenu:menu];
-	[self.backgroundImageCell setHidden:NO];
-
-	/* Force redraw. */
-	[self updateDrawing];
-}
-
-#pragma mark -
-#pragma mark Common Pointers
-
-- (TVCMemberList *)memberList
-{
-	return self.masterController.memberList;
-}
-
-- (TVCMemberListCellBadge *)badgeRenderer
-{
-	return self.masterController.memberList.badgeRenderer;
-}
-
-#pragma mark -
-#pragma mark Drawing Context Information
 
 - (NSInteger)rowIndex
 {
-	return [self.memberList rowForItem:self.memberPointer];
+	return [mainWindowMemberList() rowForItem:_memberPointer];
 }
 
 - (NSDictionary *)drawingContext
@@ -361,11 +132,11 @@
 	NSInteger rowIndex = [self rowIndex];
 
 	return @{
-		@"rowIndex"		: @(rowIndex),
 		@"isInverted"	: @([TPCPreferences invertSidebarColors]),
-		@"isRetina"		: @([TPCPreferences runningInHighResolutionMode]),
-		@"isGraphite"	: @([NSColor currentControlTint] == NSGraphiteControlTint),
-		@"isKeyWindow"	: @([[self memberList] windowIsActive])
+		@"isRetina"		: @([mainWindow() runningInHighResolutionMode]),
+		@"isKeyWindow"	: @([mainWindow() isInactive] == NO),
+		@"isSelected"	: @([mainWindowServerList() isRowSelected:rowIndex]),
+		@"isGraphite"	: @([NSColor currentControlTint] == NSGraphiteControlTint)
 	};
 }
 
@@ -375,20 +146,4 @@
 #pragma mark Row View Cell
 
 @implementation TVCMemberListRowCell
-
-- (void)drawDraggingDestinationFeedbackInRect:(NSRect)dirtyRect
-{
-	/* Ignore this. */
-}
-
-- (void)drawSelectionInRect:(NSRect)dirtyRect
-{
-	/* Ignore this. */
-}
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-	/* Ignore this. */
-}
-
 @end

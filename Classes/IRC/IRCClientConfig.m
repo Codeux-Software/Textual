@@ -99,14 +99,14 @@
         self.floodControlMaximumMessages     = TXFloodControlDefaultMessageCount;
 		self.floodControlDelayTimerInterval  = TXFloodControlDefaultDelayTimer;
 		
-		self.clientName = TXTLS(@"BasicLanguage[1022]");
+		self.clientName = BLS(1022);
 		
 		self.nickname = [TPCPreferences defaultNickname];
 		self.awayNickname = [TPCPreferences defaultAwayNickname];
 		self.username = [TPCPreferences defaultUsername];
 		self.realname = [TPCPreferences defaultRealname];
 		
-		self.normalLeavingComment		= TXTLS(@"BasicLanguage[1021]");
+		self.normalLeavingComment		= BLS(1021);
 		self.sleepModeLeavingComment	= TXTLS(@"BasicLanguage[1185]", [CSFWSystemInformation systemModelName]);
 	}
 	
@@ -303,19 +303,19 @@
 {
 	if ((self = [self init])) {
 		/* General preferences. */
-        self.sidebarItemExpanded = NSDictionaryBOOLKeyValueCompare(dic, @"serverListItemIsExpanded", YES);
+        self.sidebarItemExpanded = [dic integerForKey:@"serverListItemIsExpanded" orUseDefault:YES];
 
-		self.itemUUID		= NSDictionaryObjectKeyValueCompare(dic, @"uniqueIdentifier", self.itemUUID);
-		self.clientName		= NSDictionaryObjectKeyValueCompare(dic, @"connectionName", self.clientName);
-		self.nickname		= NSDictionaryObjectKeyValueCompare(dic, @"identityNickname", self.nickname);
-		self.awayNickname	= NSDictionaryObjectKeyValueCompare(dic, @"identityAwayNickname", self.awayNickname);
-		self.realname		= NSDictionaryObjectKeyValueCompare(dic, @"identityRealname", self.realname);
-		self.serverAddress	= NSDictionaryObjectKeyValueCompare(dic, @"serverAddress", self.serverAddress);
-		self.serverPort		= NSDictionaryIntegerKeyValueCompare(dic, @"serverPort", self.serverPort);
-		self.username		= NSDictionaryObjectKeyValueCompare(dic, @"identityUsername", self.username);
+		self.itemUUID		= [dic objectForKey:@"uniqueIdentifier" orUseDefault:self.itemUUID];
+		self.clientName		= [dic objectForKey:@"connectionName" orUseDefault:self.clientName];
+		self.nickname		= [dic objectForKey:@"identityNickname" orUseDefault:self.nickname];
+		self.awayNickname	= [dic objectForKey:@"identityAwayNickname" orUseDefault:self.awayNickname];
+		self.realname		= [dic objectForKey:@"identityRealname" orUseDefault:self.realname];
+		self.serverAddress	= [dic objectForKey:@"serverAddress" orUseDefault:self.serverAddress];
+		self.serverPort		= [dic integerForKey:@"serverPort" orUseDefault:self.serverPort];
+		self.username		= [dic objectForKey:@"identityUsername" orUseDefault:self.username];
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-		self.excludedFromCloudSyncing = NSDictionaryBOOLKeyValueCompare(dic, @"excludeFromCloudSyncing", self.excludedFromCloudSyncing);
+		self.excludedFromCloudSyncing = [dic integerForKey:@"excludeFromCloudSyncing" orUseDefault:self.excludedFromCloudSyncing];
 #endif
 
 		self.zncIgnoreConfiguredAutojoin = NSDictionaryBOOLKeyValueCompare(dic, @"ZNC —> Ignore Pre-configured Autojoin", self.zncIgnoreConfiguredAutojoin);
@@ -323,31 +323,31 @@
 
 		[self.alternateNicknames addObjectsFromArray:[dic arrayForKey:@"identityAlternateNicknames"]];
 		
-		self.proxyType       = (TXConnectionProxyType)NSDictionaryIntegerKeyValueCompare(dic, @"proxyServerType", self.proxyType);
+		self.proxyType       = (TXConnectionProxyType)[dic integerForKey:@"proxyServerType" orUseDefault:self.proxyType];
 		
-		self.proxyAddress	= NSDictionaryObjectKeyValueCompare(dic, @"proxyServerAddress", self.proxyAddress);
-		self.proxyPort      = NSDictionaryIntegerKeyValueCompare(dic, @"proxyServerPort", self.proxyPort);
-		self.proxyUsername	= NSDictionaryObjectKeyValueCompare(dic, @"proxyServerUsername", self.proxyUsername);
+		self.proxyAddress	= [dic objectForKey:@"proxyServerAddress" orUseDefault:self.proxyAddress];
+		self.proxyPort      = [dic integerForKey:@"proxyServerPort" orUseDefault:self.proxyPort];
+		self.proxyUsername	= [dic objectForKey:@"proxyServerUsername" orUseDefault:self.proxyUsername];
 		
-		self.autoConnect				= NSDictionaryBOOLKeyValueCompare(dic, @"connectOnLaunch", self.autoConnect);
-		self.autoReconnect				= NSDictionaryBOOLKeyValueCompare(dic, @"connectOnDisconnect", self.autoReconnect);
-		self.autoSleepModeDisconnect	= NSDictionaryBOOLKeyValueCompare(dic, @"disconnectOnSleepMode", self.autoSleepModeDisconnect);
-		self.connectionUsesSSL			= NSDictionaryBOOLKeyValueCompare(dic, @"connectUsingSSL", self.connectionUsesSSL);
+		self.autoConnect				= [dic integerForKey:@"connectOnLaunch" orUseDefault:self.autoConnect];
+		self.autoReconnect				= [dic integerForKey:@"connectOnDisconnect" orUseDefault:self.autoReconnect];
+		self.autoSleepModeDisconnect	= [dic integerForKey:@"disconnectOnSleepMode" orUseDefault:self.autoSleepModeDisconnect];
+		self.connectionUsesSSL			= [dic integerForKey:@"connectUsingSSL" orUseDefault:self.connectionUsesSSL];
 
-		self.validateServerSSLCertificate = NSDictionaryBOOLKeyValueCompare(dic, @"validateServerSideSSLCertificate", self.validateServerSSLCertificate);
+		self.validateServerSSLCertificate = [dic integerForKey:@"validateServerSideSSLCertificate" orUseDefault:self.validateServerSSLCertificate];
 
-		self.performPongTimer				= NSDictionaryBOOLKeyValueCompare(dic, @"performPongTimer", self.performPongTimer);
+		self.performPongTimer				= [dic integerForKey:@"performPongTimer" orUseDefault:self.performPongTimer];
 		
-		self.performDisconnectOnPongTimer			= NSDictionaryBOOLKeyValueCompare(dic, @"performDisconnectOnPongTimer", self.performDisconnectOnPongTimer);
-		self.performDisconnectOnReachabilityChange	= NSDictionaryBOOLKeyValueCompare(dic, @"performDisconnectOnReachabilityChange", self.performDisconnectOnReachabilityChange);
+		self.performDisconnectOnPongTimer			= [dic integerForKey:@"performDisconnectOnPongTimer" orUseDefault:self.performDisconnectOnPongTimer];
+		self.performDisconnectOnReachabilityChange	= [dic integerForKey:@"performDisconnectOnReachabilityChange" orUseDefault:self.performDisconnectOnReachabilityChange];
 		
-		self.fallbackEncoding			= NSDictionaryIntegerKeyValueCompare(dic, @"characterEncodingFallback", self.fallbackEncoding);
-		self.normalLeavingComment		= NSDictionaryObjectKeyValueCompare(dic, @"connectionDisconnectDefaultMessage", self.normalLeavingComment);
-		self.primaryEncoding			= NSDictionaryIntegerKeyValueCompare(dic, @"characterEncodingDefault", self.primaryEncoding);
-		self.sleepModeLeavingComment	= NSDictionaryObjectKeyValueCompare(dic, @"connectionDisconnectSleepModeMessage", self.sleepModeLeavingComment);
+		self.fallbackEncoding			= [dic integerForKey:@"characterEncodingFallback" orUseDefault:self.fallbackEncoding];
+		self.normalLeavingComment		= [dic objectForKey:@"connectionDisconnectDefaultMessage" orUseDefault:self.normalLeavingComment];
+		self.primaryEncoding			= [dic integerForKey:@"characterEncodingDefault" orUseDefault:self.primaryEncoding];
+		self.sleepModeLeavingComment	= [dic objectForKey:@"connectionDisconnectSleepModeMessage" orUseDefault:self.sleepModeLeavingComment];
 		
-		self.connectionPrefersIPv6  = NSDictionaryBOOLKeyValueCompare(dic, @"DNSResolverPrefersIPv6", self.connectionPrefersIPv6);
-		self.invisibleMode			= NSDictionaryBOOLKeyValueCompare(dic, @"setInvisibleOnConnect", self.invisibleMode);
+		self.connectionPrefersIPv6  = [dic integerForKey:@"DNSResolverPrefersIPv6" orUseDefault:self.connectionPrefersIPv6];
+		self.invisibleMode			= [dic integerForKey:@"setInvisibleOnConnect" orUseDefault:self.invisibleMode];
 
 		self.identitySSLCertificate = [dic objectForKey:@"IdentitySSLCertificate"];
 
@@ -381,10 +381,10 @@
 			NSDictionary *e = [dic dictionaryForKey:@"floodControl"];
 			
 			if (e) {
-				self.outgoingFloodControl = NSDictionaryBOOLKeyValueCompare(e, @"serviceEnabled", self.outgoingFloodControl);
+				self.outgoingFloodControl = [e integerForKey:@"serviceEnabled" orUseDefault:self.outgoingFloodControl];
 
-				self.floodControlMaximumMessages = NSDictionaryIntegerKeyValueCompare(e, @"maximumMessageCount", TXFloodControlDefaultMessageCount);
-				self.floodControlDelayTimerInterval	= NSDictionaryIntegerKeyValueCompare(e, @"delayTimerInterval", TXFloodControlDefaultDelayTimer);
+				self.floodControlMaximumMessages = [e integerForKey:@"maximumMessageCount" orUseDefault:TXFloodControlDefaultMessageCount];
+				self.floodControlDelayTimerInterval	= [e integerForKey:@"delayTimerInterval" orUseDefault:TXFloodControlDefaultDelayTimer];
 			}
 		}
 

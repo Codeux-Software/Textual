@@ -154,7 +154,7 @@
 	@class TVCServerListRowCell;
 	@class TVCTextFieldWithValueValidation;
 	@class TVCTextFieldWithValueValidationCell;
-	@class TVCTextFormatterMenu;
+	@class TVCTextViewIRCFormattingMenu;
 	@class TVCTextViewWithIRCFormatter;
 	@class TVCWebViewAutoScroll;
 	@class TXMasterController;

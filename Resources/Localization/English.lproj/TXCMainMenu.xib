@@ -912,7 +912,7 @@ CQ
                 <outlet property="userControlMenu" destination="327" id="Qyi-GH-9oZ"/>
             </connections>
         </customObject>
-        <customObject id="1930" userLabel="FormatTextController" customClass="TVCTextFormatterMenu">
+        <customObject id="1930" userLabel="FormatTextController" customClass="TVCTextViewIRCFormattingMenu">
             <connections>
                 <outlet property="backgroundColorMenu" destination="2463" id="2951"/>
                 <outlet property="foregroundColorMenu" destination="2484" id="2952"/>

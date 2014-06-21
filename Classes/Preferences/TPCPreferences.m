@@ -879,9 +879,9 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"DefaultIdentity -> Username"] = @"textual";
 	d[@"DefaultIdentity -> Realname"] = @"Textual User";
 	
-	d[@"IRCopDefaultLocalizaiton -> Shun Reason"]	= TXTLS(@"BasicLanguage[1030]");
-	d[@"IRCopDefaultLocalizaiton -> Kill Reason"]	= TXTLS(@"BasicLanguage[1029]");
-	d[@"IRCopDefaultLocalizaiton -> G:Line Reason"] = TXTLS(@"BasicLanguage[1027]");
+	d[@"IRCopDefaultLocalizaiton -> Shun Reason"]	= BLS(1030);
+	d[@"IRCopDefaultLocalizaiton -> Kill Reason"]	= BLS(1029);
+	d[@"IRCopDefaultLocalizaiton -> G:Line Reason"] = BLS(1027);
 	
 	TVCMemberList *memberList = [mainWindow() memberList];
 	
@@ -892,7 +892,7 @@ static NSMutableArray *excludeKeywords = nil;
 	d[@"User List Mode Badge Colors —> +h"] = [NSArchiver archivedDataWithRootObject:[memberList userMarkBadgeBackgroundColor_HDefault]];
 	d[@"User List Mode Badge Colors —> +v"] = [NSArchiver archivedDataWithRootObject:[memberList userMarkBadgeBackgroundColor_VDefault]];
 	
-	d[@"ChannelOperatorDefaultLocalization -> Kick Reason"] = TXTLS(@"BasicLanguage[1028]");
+	d[@"ChannelOperatorDefaultLocalization -> Kick Reason"] = BLS(1028);
 	
 	d[TPCPreferencesThemeNameDefaultsKey]				= TXDefaultTextualChannelViewStyle;
 	d[TPCPreferencesThemeFontNameDefaultsKey]			= TXDefaultTextualChannelViewFont;
