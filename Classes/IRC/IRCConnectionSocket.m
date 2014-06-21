@@ -366,7 +366,7 @@
 									modalDelegate:nil
 								   didEndSelector:nil
 									  contextInfo:nil
-									defaultButton:TXTLS(@"BasicLanguage[1011]")
+									defaultButton:BLS(1011)
 								  alternateButton:nil];
 	}
 }

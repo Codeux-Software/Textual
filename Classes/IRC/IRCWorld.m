@@ -696,7 +696,7 @@
 
 	if ([selectedItem isClient]) {
 		[title appendString:TXTLS(@"BasicLanguage[1008]", client.localNickname, client.altNetworkName)];
-		[title appendString:TXTLS(@"BasicLanguage[1005]")];
+		[title appendString:BLS(1005)];
         
 		NSString *networkAddress = [client networkAddress];
 
@@ -707,7 +707,7 @@
 		}
 	} else {
 		[title appendString:TXTLS(@"BasicLanguage[1008]", client.localNickname, client.altNetworkName)];
-		[title appendString:TXTLS(@"BasicLanguage[1005]")];
+		[title appendString:BLS(1005)];
 
         if (channel.isPrivateMessage) {
             /* Textual defines the topic of a private message as the user host. */
@@ -722,12 +722,12 @@
 		
 		if (channel.isChannel) {
 			[title appendString:channel.name];
-			[title appendFormat:TXTLS(@"BasicLanguage[1007]"), channel.numberOfMembers];
+			[title appendFormat:BLS(1007), channel.numberOfMembers];
 			
 			NSString *modes = [channel.modeInfo titleString];
 			
 			if (modes.length >= 2) {
-				[title appendFormat:TXTLS(@"BasicLanguage[1006]"), modes];
+				[title appendFormat:BLS(1006), modes];
 			}
 		}
 	}

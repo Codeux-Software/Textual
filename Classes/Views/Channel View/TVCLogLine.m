@@ -51,7 +51,7 @@
 
 		_messageBody = NSStringEmptyPlaceholder;
 
-		_rawCommand = TXLogLineDefaultRawCommandValue;
+		_rawCommand = TVCLogLineDefaultRawCommandValue;
 
 		_highlightKeywords = @[];
 		_excludeKeywords = @[];
@@ -72,25 +72,25 @@
 + (NSString *)lineTypeString:(TVCLogLineType)type
 {
 	switch (type) {
-		case TVCLogLineActionType:							{ return @"action";					}
-		case TVCLogLineActionNoHighlightType:				{ return @"action";					}
-		case TVCLogLineCTCPType:							{ return @"ctcp";					}
-		case TVCLogLineDCCFileTransferType:					{ return @"dccfiletransfer";		}
-		case TVCLogLineDebugType:							{ return @"debug";					}
-		case TVCLogLineInviteType:							{ return @"invite";					}
-		case TVCLogLineJoinType:							{ return @"join";					}
-		case TVCLogLineKickType:							{ return @"kick";					}
-		case TVCLogLineKillType:							{ return @"kill";					}
-		case TVCLogLineModeType:							{ return @"mode";					}
-		case TVCLogLineNickType:							{ return @"nick";					}
-		case TVCLogLineNoticeType:							{ return @"notice";					}
-		case TVCLogLinePartType:							{ return @"part";					}
-		case TVCLogLinePrivateMessageType:					{ return @"privmsg";				}
-		case TVCLogLinePrivateMessageNoHighlightType:		{ return @"privmsg";				}
-		case TVCLogLineQuitType:							{ return @"quit";					}
-		case TVCLogLineTopicType:							{ return @"topic";					}
-		case TVCLogLineWebsiteType:							{ return @"website";				}
-		default:											{ return NSStringEmptyPlaceholder;	}
+		case TVCLogLineActionType:							{ return @"action";						}
+		case TVCLogLineActionNoHighlightType:				{ return @"action";						}
+		case TVCLogLineCTCPType:							{ return @"ctcp";						}
+		case TVCLogLineDCCFileTransferType:					{ return @"dccfiletransfer";			}
+		case TVCLogLineDebugType:							{ return @"debug";						}
+		case TVCLogLineInviteType:							{ return @"invite";						}
+		case TVCLogLineJoinType:							{ return @"join";						}
+		case TVCLogLineKickType:							{ return @"kick";						}
+		case TVCLogLineKillType:							{ return @"kill";						}
+		case TVCLogLineModeType:							{ return @"mode";						}
+		case TVCLogLineNickType:							{ return @"nick";						}
+		case TVCLogLineNoticeType:							{ return @"notice";						}
+		case TVCLogLinePartType:							{ return @"part";						}
+		case TVCLogLinePrivateMessageType:					{ return @"privmsg";					}
+		case TVCLogLinePrivateMessageNoHighlightType:		{ return @"privmsg";					}
+		case TVCLogLineQuitType:							{ return @"quit";						}
+		case TVCLogLineTopicType:							{ return @"topic";						}
+		case TVCLogLineWebsiteType:							{ return @"website";					}
+		default:											{ return NSStringEmptyPlaceholder;		}
 	}
 	
 	return NSStringEmptyPlaceholder;
@@ -117,18 +117,18 @@
 
 - (NSString *)formattedTimestamp
 {
-	TPCThemeSettings *customSettings = [[self themeController] customSettings];
-
-	return [self formattedTimestampWithForcedFormat:[customSettings timestampFormat]];
+	return [self formattedTimestampWithForcedFormat:[themeSettings() timestampFormat]];
 }
 
-- (NSString *)formattedTimestampWithForcedFormat:(NSString *)format;
+- (NSString *)formattedTimestampWithForcedFormat:(NSString *)format
 {
 	NSObjectIsEmptyAssertReturn(_receivedAt, nil);
 
-	NSString *time = TXFormattedTimestampWithOverride(_receivedAt, [TPCPreferences themeTimestampFormat], format);
-
-	NSObjectIsEmptyAssertReturn(time, nil);
+	if (format == nil) {
+		format = [TPCPreferences themeTimestampFormat];
+	}
+	
+	NSString *time = TXFormattedTimestamp(_receivedAt, format);
 
 	return [time stringByAppendingString:NSStringWhitespacePlaceholder];
 }
@@ -144,15 +144,13 @@
 
 	if (format == nil) {
 		if ([self lineType] == TVCLogLineActionType) {
-			return [NSString stringWithFormat:TXLogLineActionNicknameFormat, _nickname];
+			return [NSString stringWithFormat:TVCLogLineActionNicknameFormat, _nickname];
 		} else if ([self lineType] == TVCLogLineNoticeType) {
-			return [NSString stringWithFormat:TXLogLineNoticeNicknameFormat, _nickname];
+			return [NSString stringWithFormat:TVCLogLineNoticeNicknameFormat, _nickname];
 		}
 	}
 
-	PointerIsEmptyAssertReturn(owner, nil);
-
-	return [[owner client] formatNick:_nickname channel:owner formatOverride:format];
+	return [[owner associatedClient] formatNick:_nickname channel:owner formatOverride:format];
 }
 
 - (NSString *)renderedBodyForTranscriptLogInChannel:(IRCChannel *)channel
@@ -198,23 +196,23 @@
 
 	NSString *dateValue = [NSString stringWithDouble:[_receivedAt timeIntervalSince1970]];
 
-	[dict safeSetObject:dateValue					forKey:@"receivedAt"];
+	[dict maybeSetObject:dateValue					forKey:@"receivedAt"];
 
-	[dict safeSetObject:_excludeKeywords		forKey:@"excludeKeywords"];
-	[dict safeSetObject:_highlightKeywords		forKey:@"highlightKeywords"];
+	[dict maybeSetObject:_excludeKeywords			forKey:@"excludeKeywords"];
+	[dict maybeSetObject:_highlightKeywords			forKey:@"highlightKeywords"];
 
-	[dict safeSetObject:_nickname				forKey:@"nickname"];
+	[dict maybeSetObject:_nickname					forKey:@"nickname"];
 
-	[dict safeSetObject:@(_nicknameColorNumber)		forKey:@"nicknameColorNumber"];
+	[dict maybeSetObject:@(_nicknameColorNumber)	forKey:@"nicknameColorNumber"];
 
-	[dict safeSetObject:_rawCommand				forKey:@"rawCommand"];
-	[dict safeSetObject:_messageBody			forKey:@"messageBody"];
+	[dict maybeSetObject:_rawCommand				forKey:@"rawCommand"];
+	[dict maybeSetObject:_messageBody				forKey:@"messageBody"];
 
-	[dict safeSetObject:@(_lineType)				forKey:@"lineType"];
-	[dict safeSetObject:@(_memberType)				forKey:@"memberType"];
+	[dict maybeSetObject:@(_lineType)				forKey:@"lineType"];
+	[dict maybeSetObject:@(_memberType)				forKey:@"memberType"];
 
-	[dict setBool:_isEncrypted		forKey:@"isEncrypted"];
-	[dict setBool:_isHistoric		forKey:@"isHistoric"];
+	[dict setBool:_isEncrypted						forKey:@"isEncrypted"];
+	[dict setBool:_isHistoric						forKey:@"isHistoric"];
 
 	/* Convert dictionary to JSON. */
 	/* Why JSON? Because a binary property list would have to be loaded into memory
@@ -255,28 +253,24 @@
 
 - (TVCLogLine *)initWithJSONRepresentation:(NSDictionary *)input
 {
-	/* Start feeding it information from dictionary. */
-	/* NSDictionary…KeyValueCompare will take the supplied key in the 
-	 "input" dictionary and see if it actually exists. If it does not,
-	 then it applies the default value specified as third paramater. */
 	if ((self = [self init])) {;
-		double receivedAt = NSDictionaryDoubleKeyValueCompare(input, @"receivedAt", [NSDate epochTime]);
+		double receivedAt = [input doubleForKey:@"receivedAt" orUseDefault:[NSDate epochTime]];
 
-		_nickname				= NSDictionaryObjectKeyValueCompare(input, @"nickname", NSStringEmptyPlaceholder);
-		_nicknameColorNumber	= NSDictionaryIntegerKeyValueCompare(input, @"nicknameColorNumber", 0);
+		_nickname				= [input objectForKey:@"nickname" orUseDefault:NSStringEmptyPlaceholder];
+		_nicknameColorNumber	= [input integerForKey:@"nicknameColorNumber" orUseDefault:0];
 
-		_messageBody		= NSDictionaryObjectKeyValueCompare(input, @"messageBody", NSStringEmptyPlaceholder);
+		_messageBody		= [input objectForKey:@"messageBody" orUseDefault:NSStringEmptyPlaceholder];
 
-		_rawCommand			= NSDictionaryObjectKeyValueCompare(input, @"rawCommand", TXLogLineDefaultRawCommandValue);
+		_rawCommand			= [input objectForKey:@"rawCommand" orUseDefault:TVCLogLineDefaultRawCommandValue];
 
-		_highlightKeywords	= NSDictionaryObjectKeyValueCompare(input, @"highlightKeywords", @[]);
-		_excludeKeywords	= NSDictionaryObjectKeyValueCompare(input, @"excludeKeywords", @[]);
+		_highlightKeywords	= [input objectForKey:@"highlightKeywords" orUseDefault:@[]];
+		_excludeKeywords	= [input objectForKey:@"excludeKeywords" orUseDefault:@[]];
 
-		_lineType			= NSDictionaryIntegerKeyValueCompare(input, @"lineType", TVCLogLineUndefinedType);
-		_memberType			= NSDictionaryIntegerKeyValueCompare(input, @"memberType", TVCLogLineMemberNormalType);
+		_lineType			= [input integerForKey:@"lineType" orUseDefault:TVCLogLineUndefinedType];
+		_memberType			= [input integerForKey:@"memberType" orUseDefault:TVCLogLineMemberNormalType];
 
-		_isHistoric		= NSDictionaryBOOLKeyValueCompare(input, @"isHistoric", NO);
-		_isEncrypted	= NSDictionaryBOOLKeyValueCompare(input, @"isEncrypted", NO);
+		_isHistoric		= [input integerForKey:@"isHistoric" orUseDefault:NO];
+		_isEncrypted	= [input integerForKey:@"isEncrypted" orUseDefault:NO];
 
 		_receivedAt		= [NSDate dateWithTimeIntervalSince1970:receivedAt];
 

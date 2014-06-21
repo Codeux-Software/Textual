@@ -784,7 +784,7 @@
 		[d setCanCreateDirectories:YES];
 		[d setAllowsMultipleSelection:NO];
 		
-		[d setPrompt:TXTLS(@"BasicLanguage[1225]")];
+		[d setPrompt:BLS(1225)];
 		
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
 			[self.fileTransferDownloadDestinationButton selectItemAtIndex:0];
@@ -853,7 +853,7 @@
 		[d setCanCreateDirectories:YES];
 		[d setAllowsMultipleSelection:NO];
 		
-		[d setPrompt:TXTLS(@"BasicLanguage[1225]")];
+		[d setPrompt:BLS(1225)];
 
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
 			[self.transcriptFolderButton selectItemAtIndex:0];
@@ -1062,7 +1062,7 @@
 							 action:@selector(popupPromptNilSelector:withOriginalAlert:)
 							   body:TXTLS(@"TDCPreferencesController[1014][2]", item.title, tsf)
 							  title:TXTLS(@"TDCPreferencesController[1014][1]")
-					  defaultButton:TXTLS(@"BasicLanguage[1186]")
+					  defaultButton:BLS(1186)
 					alternateButton:nil
 						otherButton:nil
 					 suppressionKey:@"theme_override_info"
@@ -1226,7 +1226,7 @@
 								action:@selector(popupPromptNilSelector:withOriginalAlert:)
 								  body:TXTLS(@"BasicLanguage[1102][2]")
 								 title:TXTLS(@"BasicLanguage[1102][1]")
-						 defaultButton:TXTLS(@"BasicLanguage[1186]")
+						 defaultButton:BLS(1186)
 					   alternateButton:nil
 						   otherButton:nil
 						suppressionKey:nil
@@ -1281,7 +1281,7 @@
 								action:@selector(popupPromptNilSelector:withOriginalAlert:)
 								  body:TXTLS(@"TDCPreferencesController[1000][2]")
 								 title:TXTLS(@"TDCPreferencesController[1000][1]")
-						 defaultButton:TXTLS(@"BasicLanguage[1186]")
+						 defaultButton:BLS(1186)
 					   alternateButton:nil
 						   otherButton:nil
 						suppressionKey:nil
@@ -1361,8 +1361,8 @@
 							action:@selector(onPurgeOfCloudFilesRequestedCallback:withOriginalAlert:)
 							  body:TXTLS(@"TDCPreferencesController[1001][2]")
 							 title:TXTLS(@"TDCPreferencesController[1001][1]")
-					 defaultButton:TXTLS(@"BasicLanguage[1009]")
-				   alternateButton:TXTLS(@"BasicLanguage[1017]")
+					 defaultButton:BLS(1009)
+				   alternateButton:BLS(1017)
 					   otherButton:nil
 					suppressionKey:nil
 				   suppressionText:nil];
@@ -1379,8 +1379,8 @@
 							action:@selector(onPurgeOfCloudDataRequestedCallback:withOriginalAlert:)
 							  body:TXTLS(@"TDCPreferencesController[1002][2]")
 							 title:TXTLS(@"TDCPreferencesController[1002][1]")
-					 defaultButton:TXTLS(@"BasicLanguage[1009]")
-				   alternateButton:TXTLS(@"BasicLanguage[1017]")
+					 defaultButton:BLS(1009)
+				   alternateButton:BLS(1017)
 					   otherButton:nil
 					suppressionKey:nil
 				   suppressionText:nil];
@@ -1476,8 +1476,8 @@
 								 action:@selector(openPathToThemesCallback:withOriginalAlert:)
 								   body:TXTLS(dialogMessage)
 								  title:TXTLS(@"TDCPreferencesController[1013]")
-						  defaultButton:TXTLS(@"BasicLanguage[1017]")
-						alternateButton:TXTLS(@"BasicLanguage[1009]")
+						  defaultButton:BLS(1017)
+						alternateButton:BLS(1009)
 							otherButton:TXTLS(copyButton)
 						 suppressionKey:nil
 						suppressionText:nil];
@@ -1497,8 +1497,8 @@
 										 action:@selector(openPathToThemesCallback:withOriginalAlert:)
 										   body:TXTLS(@"TDCPreferencesController[1012]")
 										  title:TXTLS(@"TDCPreferencesController[1013]")
-								  defaultButton:TXTLS(@"BasicLanguage[1017]")
-								alternateButton:TXTLS(@"BasicLanguage[1009]")
+								  defaultButton:BLS(1017)
+								alternateButton:BLS(1009)
 									otherButton:TXTLS(@"TDCPreferencesController[1009]")
 								 suppressionKey:nil
 								suppressionText:nil];
@@ -1517,7 +1517,7 @@
 										 action:@selector(popupPromptNilSelector:withOriginalAlert:)
 										   body:TXTLS(@"BasicLanguage[1102][2]")
 										  title:TXTLS(@"BasicLanguage[1102][1]")
-								  defaultButton:TXTLS(@"BasicLanguage[1186]")
+								  defaultButton:BLS(1186)
 								alternateButton:nil
 									otherButton:nil
 								 suppressionKey:nil

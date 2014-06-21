@@ -67,7 +67,7 @@
 	/* Build panel. */
 	SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
 
-	[panel setAlternateButtonTitle:TXTLS(@"BasicLanguage[1009]")];
+	[panel setAlternateButtonTitle:BLS(1009)];
 
 	[panel setInformativeText:TXTLS(@"BasicLanguage[1229][2]")];
 

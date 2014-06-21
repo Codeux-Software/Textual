@@ -38,8 +38,6 @@
 #import "TextualApplication.h"
 
 @interface TVCServerList : NSOutlineView
-@property (nonatomic, assign, readonly) BOOL isDrawing;
-
 @property (nonatomic, uweak) id keyDelegate;
 
 @property (nonatomic, strong) NSImage *defaultDisclosureTriangle;
@@ -57,11 +55,6 @@
 - (void)removeItemFromList:(id)oldObject;
 
 /* Drawing. */
-/* All these drawing calls are pretty much reserved for internal use by Textual.
- Just because these are defined in a header does not mean they should ever, EVER,
- EEEEEEVVVVVVEEEEERRRRRRRR be called from a plugin. Ever. Use IRCWorld for any
- updates you may need to make to a item. */
-
 - (void)reloadAllDrawings;
 - (void)reloadAllDrawingsIgnoringOtherReloads;
 
@@ -72,8 +65,6 @@
 - (void)updateDrawingForRow:(NSInteger)rowIndex skipDrawingCheck:(BOOL)doNotLimit;
 
 - (void)updateBackgroundColor;
-
-- (BOOL)windowIsActive;
 
 /* User interface elements. */
 - (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected;
@@ -124,12 +115,6 @@
 - (NSColor *)channelCellSelectedTextShadowColorForInactiveWindow;
 
 - (NSColor *)graphiteTextSelectionShadowColor;
-@end
-
-@interface TVCServerListScrollClipView : NSClipView
-@end
-
-@interface TVCServerListScrollView : NSScrollView
 @end
 
 @interface NSObject (TVCServerListDelegate)

@@ -42,26 +42,26 @@
 - (id)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [super init])) {
-		self.itemUUID = NSDictionaryObjectKeyValueCompare(dic, @"uniqueIdentifier", [NSString stringWithUUID]);
+		self.itemUUID = [dic objectForKey:@"uniqueIdentifier" orUseDefault:[NSString stringWithUUID]];
 		
-		self.notifyJoins					= NSDictionaryBOOLKeyValueCompare(dic, @"notifyJoins", NO);
+		self.notifyJoins					= [dic integerForKey:@"notifyJoins" orUseDefault:NO];
         
-		self.ignoreCTCP						= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreCTCP", NO);
-		self.ignoreJPQE						= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreJPQE", NO);
-		self.ignoreNotices					= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreNotices", NO);
-		self.ignorePrivateHighlights		= NSDictionaryBOOLKeyValueCompare(dic, @"ignorePMHighlights", NO);
-		self.ignorePrivateMessages			= NSDictionaryBOOLKeyValueCompare(dic, @"ignorePrivateMsg", NO);
-		self.ignorePublicHighlights			= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreHighlights", NO);
-		self.ignorePublicMessages			= NSDictionaryBOOLKeyValueCompare(dic, @"ignorePublicMsg", NO);
-		self.ignoreFileTransferRequests		= NSDictionaryBOOLKeyValueCompare(dic, @"ignoreFileTransferRequests", NO);
+		self.ignoreCTCP						= [dic integerForKey:@"ignoreCTCP" orUseDefault:NO];
+		self.ignoreJPQE						= [dic integerForKey:@"ignoreJPQE" orUseDefault:NO];
+		self.ignoreNotices					= [dic integerForKey:@"ignoreNotices" orUseDefault:NO];
+		self.ignorePrivateHighlights		= [dic integerForKey:@"ignorePMHighlights" orUseDefault:NO];
+		self.ignorePrivateMessages			= [dic integerForKey:@"ignorePrivateMsg" orUseDefault:NO];
+		self.ignorePublicHighlights			= [dic integerForKey:@"ignoreHighlights" orUseDefault:NO];
+		self.ignorePublicMessages			= [dic integerForKey:@"ignorePublicMsg" orUseDefault:NO];
+		self.ignoreFileTransferRequests		= [dic integerForKey:@"ignoreFileTransferRequests" orUseDefault:NO];
 		
-		self.hideMessagesContainingMatch	= NSDictionaryBOOLKeyValueCompare(dic, @"hideMessagesContainingMatch", NO);
-		self.hideInMemberList				= NSDictionaryBOOLKeyValueCompare(dic, @"hideInMemberList", NO);
+		self.hideMessagesContainingMatch	= [dic integerForKey:@"hideMessagesContainingMatch" orUseDefault:NO];
+		self.hideInMemberList				= [dic integerForKey:@"hideInMemberList" orUseDefault:NO];
 
 		/* entryType must be set above hostmask since setHostmask: reads entryType. */
-		self.entryType = NSDictionaryIntegerKeyValueCompare(dic, @"entryType", IRCAddressBookIgnoreEntryType);
+		self.entryType = [dic integerForKey:@"entryType" orUseDefault:IRCAddressBookIgnoreEntryType];
 
-		self.hostmask = NSDictionaryObjectKeyValueCompare(dic, @"hostmask", nil);
+		self.hostmask = [dic objectForKey:@"hostmask" orUseDefault:nil];
 
 		return self;
 	}
