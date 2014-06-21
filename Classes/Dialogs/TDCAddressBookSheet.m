@@ -53,22 +53,22 @@
 - (void)buildTextFieldValidationBlocks
 {
 	/* Define host field for ignore entries. */
-	[self.ignoreEntryHostmaskField setStringValueIsInvalidOnEmpty:YES];
-	[self.ignoreEntryHostmaskField setStringValueUsesOnlyFirstToken:YES];
-	[self.ignoreEntryHostmaskField setTextDidChangeCallback:self];
+	[_ignoreEntryHostmaskField setStringValueIsInvalidOnEmpty:YES];
+	[_ignoreEntryHostmaskField setStringValueUsesOnlyFirstToken:YES];
+	[_ignoreEntryHostmaskField setTextDidChangeCallback:self];
 
-	[self.ignoreEntryHostmaskField setValidationBlock:^BOOL(NSString *currentValue) {
+	[_ignoreEntryHostmaskField setValidationBlock:^BOOL(NSString *currentValue) {
 		NSString *valueWithoutWildcard = [currentValue stringByReplacingOccurrencesOfString:@"*" withString:@"-"];
 
 		return [valueWithoutWildcard isHostmask];
 	}];
 
 	/* Define nickname field for user tracking. */
-	[self.userTrackingEntryNicknameField setStringValueIsInvalidOnEmpty:YES];
-	[self.userTrackingEntryNicknameField setStringValueUsesOnlyFirstToken:YES];
-	[self.userTrackingEntryNicknameField setTextDidChangeCallback:self];
+	[_userTrackingEntryNicknameField setStringValueIsInvalidOnEmpty:YES];
+	[_userTrackingEntryNicknameField setStringValueUsesOnlyFirstToken:YES];
+	[_userTrackingEntryNicknameField setTextDidChangeCallback:self];
 
-	[self.userTrackingEntryNicknameField setValidationBlock:^BOOL(NSString *currentValue) {
+	[_userTrackingEntryNicknameField setValidationBlock:^BOOL(NSString *currentValue) {
 		return [currentValue isNickname];
 	}];
 }
@@ -76,74 +76,74 @@
 - (void)validatedTextFieldTextDidChange:(id)sender
 {
 	/* Enable or disable OK button based on validation. */
-	if (self.ignore.entryType == IRCAddressBookIgnoreEntryType) {
-		[self.ignoreEntrySaveButton setEnabled:[self.ignoreEntryHostmaskField valueIsValid]];
+	if ([_ignore entryType] == IRCAddressBookIgnoreEntryType) {
+		[_ignoreEntrySaveButton setEnabled:[_ignoreEntryHostmaskField valueIsValid]];
 	} else {
-		[self.userTrackingEntrySaveButton setEnabled:[self.userTrackingEntryNicknameField valueIsValid]];
+		[_userTrackingEntrySaveButton setEnabled:[_userTrackingEntryNicknameField valueIsValid]];
 	}
 }
 
 - (void)start
 {
-	if (self.ignore.entryType == IRCAddressBookIgnoreEntryType) {
-		self.sheet = self.ignoreView;
+	if ([_ignore entryType] == IRCAddressBookIgnoreEntryType) {
+		[self setSheet:_ignoreView];
 
-		if (self.ignore.hostmask) {
-			[self.ignoreEntryHostmaskField setStringValue:self.ignore.hostmask];
+		if ([_ignore hostmask]) {
+			[_ignoreEntryHostmaskField setStringValue:[_ignore hostmask]];
 		}
 
-		[self.sheet makeFirstResponder:self.ignoreEntryHostmaskField];
+		[[self sheet] makeFirstResponder:_ignoreEntryHostmaskField];
 	} else {
-		self.sheet = self.notifyView;
+		[self setSheet:_notifyView];
 
-		if (self.ignore.hostmask) {
-			[self.userTrackingEntryNicknameField setStringValue:self.ignore.hostmask];
+		if ([_ignore hostmask]) {
+			[_userTrackingEntryNicknameField setStringValue:[_ignore hostmask]];
 		}
 
-		[self.sheet makeFirstResponder:self.userTrackingEntryNicknameField];
+		[[self sheet] makeFirstResponder:_userTrackingEntryNicknameField];
 	}
 
-	[self.notifyJoinsCheck					setState:self.ignore.notifyJoins];
+	[_notifyJoinsCheck					setState:[_ignore notifyJoins]];
 	
-	[self.ignoreCTCPCheck					setState:self.ignore.ignoreCTCP];
-	[self.ignoreJPQECheck					setState:self.ignore.ignoreJPQE];
-	[self.ignoreNoticesCheck				setState:self.ignore.ignoreNotices];
-	[self.ignorePrivateHighlightsCheck		setState:self.ignore.ignorePrivateHighlights];
-	[self.ignorePrivateMessagesCheck		setState:self.ignore.ignorePrivateMessages];
-	[self.ignorePublicHighlightsCheck		setState:self.ignore.ignorePublicHighlights];
-	[self.ignorePublicMessagesCheck			setState:self.ignore.ignorePublicMessages];
-	[self.ignoreFileTransferRequestsCheck	setState:self.ignore.ignoreFileTransferRequests];
+	[_ignoreCTCPCheck					setState:[_ignore ignoreCTCP]];
+	[_ignoreJPQECheck					setState:[_ignore ignoreJPQE]];
+	[_ignoreNoticesCheck				setState:[_ignore ignoreNotices]];
+	[_ignorePrivateHighlightsCheck		setState:[_ignore ignorePrivateHighlights]];
+	[_ignorePrivateMessagesCheck		setState:[_ignore ignorePrivateMessages]];
+	[_ignorePublicHighlightsCheck		setState:[_ignore ignorePublicHighlights]];
+	[_ignorePublicMessagesCheck			setState:[_ignore ignorePublicMessages]];
+	[_ignoreFileTransferRequestsCheck	setState:[_ignore ignoreFileTransferRequests]];
 
-	[self.hideInMemberListCheck				setState:self.ignore.hideInMemberList];
-	[self.hideMessagesContainingMatchCheck	setState:self.ignore.hideMessagesContainingMatch];
+	[_hideInMemberListCheck				setState:[_ignore hideInMemberList]];
+	[_hideMessagesContainingMatchCheck	setState:[_ignore hideMessagesContainingMatch]];
 	
 	[self startSheet];
 }
 
 - (void)ok:(id)sender
 {
-	if (self.ignore.entryType == IRCAddressBookIgnoreEntryType) {
-		self.ignore.hostmask = [self.ignoreEntryHostmaskField value];
+	if ([_ignore entryType] == IRCAddressBookIgnoreEntryType) {
+		[_ignore setHostmask:[_ignoreEntryHostmaskField value]];
 	} else {
-		self.ignore.hostmask = [self.userTrackingEntryNicknameField value];
+		[_ignore setHostmask:[_userTrackingEntryNicknameField value]];
 	}
-
-	self.ignore.notifyJoins					= [self.notifyJoinsCheck state];
 	
-	self.ignore.ignoreCTCP					= [self.ignoreCTCPCheck state];
-	self.ignore.ignoreJPQE					= [self.ignoreJPQECheck state];
-	self.ignore.ignoreNotices				= [self.ignoreNoticesCheck state];
-	self.ignore.ignorePrivateHighlights		= [self.ignorePrivateHighlightsCheck state];
-	self.ignore.ignorePrivateMessages		= [self.ignorePrivateMessagesCheck state];
-	self.ignore.ignorePublicHighlights		= [self.ignorePublicHighlightsCheck state];
-	self.ignore.ignorePublicMessages		= [self.ignorePublicMessagesCheck state];
-	self.ignore.ignoreFileTransferRequests	= [self.ignoreFileTransferRequestsCheck state];
-
-	self.ignore.hideInMemberList			= [self.hideInMemberListCheck state];
-	self.ignore.hideMessagesContainingMatch = [self.hideMessagesContainingMatchCheck state];
+	[_ignore setNotifyJoins:				[_notifyJoinsCheck state]];
 	
-	if ([self.delegate respondsToSelector:@selector(ignoreItemSheetOnOK:)]) {
-		[self.delegate ignoreItemSheetOnOK:self];
+	[_ignore setIgnoreCTCP:					[_ignoreCTCPCheck state]];
+	[_ignore setIgnoreJPQE:					[_ignoreJPQECheck state]];
+	[_ignore setIgnoreNotices:				[_ignoreNoticesCheck state]];
+	[_ignore setIgnorePrivateHighlights:	[_ignorePrivateHighlightsCheck state]];
+	[_ignore setIgnorePrivateMessages:		[_ignorePrivateMessagesCheck state]];
+	[_ignore setIgnorePublicHighlights:		[_ignorePublicHighlightsCheck state]];
+	[_ignore setIgnorePublicMessages:		[_ignorePublicMessagesCheck state]];
+	[_ignore setIgnoreFileTransferRequests:	[_ignoreFileTransferRequestsCheck state]];
+
+	[_ignore setHideInMemberList:				[_hideInMemberListCheck state]];
+	[_ignore setHideMessagesContainingMatch:	[_hideMessagesContainingMatchCheck state]];
+	
+	if ([[self delegate] respondsToSelector:@selector(ignoreItemSheetOnOK:)]) {
+		[[self delegate] ignoreItemSheetOnOK:self];
 	}
 	
 	[super ok:nil];
@@ -154,8 +154,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([self.delegate respondsToSelector:@selector(ignoreItemSheetWillClose:)]) {
-		[self.delegate ignoreItemSheetWillClose:self];
+	if ([[self delegate] respondsToSelector:@selector(ignoreItemSheetWillClose:)]) {
+		[[self delegate] ignoreItemSheetWillClose:self];
 	}
 }
 

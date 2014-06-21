@@ -66,17 +66,17 @@
 		NSAssert(NO, @"No window specified.");
 	}
 
-	self.window = window;
+	[self setWindow:window];
 
 	[self startSheet];
 
-	[self.progressIndicator startAnimation:nil];
+	[_progressIndicator startAnimation:nil];
 }
 
 - (void)stop
 {
 	/* End work sheet. */
-	[self.progressIndicator stopAnimation:nil];
+	[_progressIndicator stopAnimation:nil];
 
 	[self endSheet];
 }

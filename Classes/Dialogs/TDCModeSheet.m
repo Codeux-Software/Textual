@@ -51,35 +51,36 @@
 
 - (void)start
 {
-	[self.sCheck setState:[self.mode modeInfoFor:@"s"].modeIsSet];
-	[self.pCheck setState:[self.mode modeInfoFor:@"p"].modeIsSet];
-	[self.nCheck setState:[self.mode modeInfoFor:@"n"].modeIsSet];
-	[self.tCheck setState:[self.mode modeInfoFor:@"t"].modeIsSet];
-	[self.iCheck setState:[self.mode modeInfoFor:@"i"].modeIsSet];
-	[self.mCheck setState:[self.mode modeInfoFor:@"m"].modeIsSet];
+	[_sCheck setState:[[_mode modeInfoFor:@"s"] modeIsSet]];
+	[_pCheck setState:[[_mode modeInfoFor:@"p"] modeIsSet]];
+	[_nCheck setState:[[_mode modeInfoFor:@"n"] modeIsSet]];
+	[_tCheck setState:[[_mode modeInfoFor:@"t"] modeIsSet]];
+	[_iCheck setState:[[_mode modeInfoFor:@"i"] modeIsSet]];
+	[_mCheck setState:[[_mode modeInfoFor:@"m"] modeIsSet]];
 
-	IRCModeInfo *kCheckInfo = [self.mode modeInfoFor:@"k"];
-	IRCModeInfo *lCheckInfo = [self.mode modeInfoFor:@"l"];
+	IRCModeInfo *kCheckInfo = [_mode modeInfoFor:@"k"];
+	IRCModeInfo *lCheckInfo = [_mode modeInfoFor:@"l"];
 	
-	BOOL kCheckOn = NSObjectIsNotEmpty(kCheckInfo.modeParamater);
-	BOOL lCheckOn = (lCheckInfo.modeParamater.integerValue > 0);
+	NSInteger lcheckInfoActl = [[lCheckInfo modeParamater] integerValue];
+	
+	BOOL kCheckOn = NSObjectIsNotEmpty([kCheckInfo modeParamater]);
+	
+	BOOL lCheckOn = (lcheckInfoActl > 0);
 
-	[self.kCheck setState:kCheckOn];
-	[self.lCheck setState:lCheckOn];
+	[_kCheck setState:kCheckOn];
+	[_lCheck setState:lCheckOn];
 	
-	if (kCheckInfo.modeIsSet) {
-		[self.kText setStringValue:kCheckInfo.modeParamater];
+	if ([kCheckInfo modeIsSet]) {
+		[_kText setStringValue:[kCheckInfo modeParamater]];
 	} else {
-		[self.kText setStringValue:NSStringEmptyPlaceholder];
+		[_kText setStringValue:NSStringEmptyPlaceholder];
 	}
 	
-	NSInteger lCheckCount = lCheckInfo.modeParamater.integerValue;
-								
-	if (lCheckCount < 0) {
-		lCheckCount = 0;
+	if (lcheckInfoActl < 0) {
+		lcheckInfoActl = 0;
 	}
 	
-	[self.lText setStringValue:[NSString stringWithInteger:lCheckCount]];
+	[_lText setStringValue:[NSString stringWithInteger:lcheckInfoActl]];
 	
 	[self updateTextFields];
 	[self startSheet];
@@ -87,51 +88,51 @@
 
 - (void)updateTextFields
 {
-	[self.kText setEnabled:(self.kCheck.state == NSOnState)];
-	[self.lText setEnabled:(self.lCheck.state == NSOnState)];
+	[_kText setEnabled:([_kCheck state] == NSOnState)];
+	[_lText setEnabled:([_lCheck state] == NSOnState)];
 }
 
 - (void)onChangeCheck:(id)sender
 {
 	[self updateTextFields];
 	
-	if ([self.sCheck state] == NSOnState &&
-		[self.pCheck state] == NSOnState)
+	if ([_sCheck state] == NSOnState &&
+		[_pCheck state] == NSOnState)
 	{
-		if (sender == self.sCheck) {
-			[self.pCheck setState:NSOffState];
+		if (sender == _sCheck) {
+			[_pCheck setState:NSOffState];
 		} else {
-			[self.sCheck setState:NSOffState];
+			[_sCheck setState:NSOffState];
 		}
 	}
 }
 
 - (void)ok:(id)sender
 {
-	[self.mode modeInfoFor:@"s"].modeIsSet = [self.sCheck state];
-	[self.mode modeInfoFor:@"p"].modeIsSet = [self.pCheck state];
-	[self.mode modeInfoFor:@"n"].modeIsSet = [self.nCheck state];
-	[self.mode modeInfoFor:@"t"].modeIsSet = [self.tCheck state];
-	[self.mode modeInfoFor:@"i"].modeIsSet = [self.iCheck state];
-	[self.mode modeInfoFor:@"m"].modeIsSet = [self.mCheck state];
+	[[_mode modeInfoFor:@"s"] setModeIsSet:[_sCheck state]];
+	[[_mode modeInfoFor:@"p"] setModeIsSet:[_pCheck state]];
+	[[_mode modeInfoFor:@"n"] setModeIsSet:[_nCheck state]];
+	[[_mode modeInfoFor:@"t"] setModeIsSet:[_tCheck state]];
+	[[_mode modeInfoFor:@"i"] setModeIsSet:[_iCheck state]];
+	[[_mode modeInfoFor:@"m"] setModeIsSet:[_mCheck state]];
 	
-	if ([self.kCheck state] == NSOnState) {
-		[self.mode modeInfoFor:@"k"].modeIsSet = YES;
-		[self.mode modeInfoFor:@"k"].modeParamater = self.kText.firstTokenStringValue;
+	if ([_kCheck state] == NSOnState) {
+		[[_mode modeInfoFor:@"k"] setModeIsSet:YES];
+		[[_mode modeInfoFor:@"k"] setModeParamater:[_kText firstTokenStringValue]];
 	} else {
-		[self.mode modeInfoFor:@"k"].modeIsSet = NO;
+		[[_mode modeInfoFor:@"k"] setModeIsSet:NO];
 	}
 	
-	if ([self.lCheck state] == NSOnState) {
-		[self.mode modeInfoFor:@"l"].modeIsSet = YES;
-		[self.mode modeInfoFor:@"l"].modeParamater = self.lText.firstTokenStringValue;
+	if ([_lCheck state] == NSOnState) {
+		[[_mode modeInfoFor:@"l"] setModeIsSet:YES];
+		[[_mode modeInfoFor:@"l"] setModeParamater:[_lText firstTokenStringValue]];
 	} else {
-		[self.mode modeInfoFor:@"l"].modeIsSet = NO;
-		[self.mode modeInfoFor:@"l"].modeParamater = @"0";
+		[[_mode modeInfoFor:@"l"] setModeIsSet:NO];
+		[[_mode modeInfoFor:@"l"] setModeParamater:@"0"];
 	}
 	
-	if ([self.delegate respondsToSelector:@selector(modeSheetOnOK:)]) {
-		[self.delegate modeSheetOnOK:self];
+	if ([[self delegate] respondsToSelector:@selector(modeSheetOnOK:)]) {
+		[[self delegate] modeSheetOnOK:self];
 	}
 	
 	[super ok:nil];
@@ -142,8 +143,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([self.delegate respondsToSelector:@selector(modeSheetWillClose:)]) {
-		[self.delegate modeSheetWillClose:self];
+	if ([[self delegate] respondsToSelector:@selector(modeSheetWillClose:)]) {
+		[[self delegate] modeSheetWillClose:self];
 	}
 }
 

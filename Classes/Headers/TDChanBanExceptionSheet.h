@@ -43,6 +43,8 @@
 @property (nonatomic, strong) NSMutableArray *changeModeList;
 @property (nonatomic, strong) NSMutableArray *exceptionList;
 @property (nonatomic, uweak) BOOL contentAlreadyReceived;
+@property (nonatomic, strong) NSString *clientID;
+@property (nonatomic, strong) NSString *channelID;
 
 - (void)show;
 - (void)clear;

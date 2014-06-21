@@ -51,29 +51,31 @@
 
 - (void)start:(NSString *)topic
 {
-	IRCChannel *c = [self.worldController findChannelByClientId:self.clientID channelId:self.channelID];
+	IRCChannel *c = [worldController() findChannelByClientId:_clientID channelId:_channelID];
 	
-	[self.headerTitleField setStringValue:[NSString stringWithFormat:self.headerTitleField.stringValue, c.name]];
+	[_headerTitleField setStringValue:[NSString stringWithFormat:[_headerTitleField stringValue], [c name]]];
 	
-	[self.topicValueField setAttributedStringValue:[topic attributedStringWithIRCFormatting:[self.topicValueField defaultTextFieldFont]
-																  honorFormattingPreference:NO]];
+	NSAttributedString *topicas = [topic attributedStringWithIRCFormatting:[_topicValueField preferredFont]
+												honorFormattingPreference:NO];
+	
+	[_topicValueField setAttributedStringValue:topicas];
 
-	[self.masterController.formattingMenu enableSheetField:self.topicValueField];
+	[[mainWindow() formattingMenu] enableSheetField:_topicValueField];
 
 	[self startSheet];
 }
 
 - (void)ok:(id)sender
 {
-	if ([self.delegate respondsToSelector:@selector(topicSheet:onOK:)]) {  
+	if ([[self delegate] respondsToSelector:@selector(topicSheet:onOK:)]) {
 		NSString *topicv;
 
-		topicv = [self.topicValueField.attributedStringValue attributedStringToASCIIFormatting];
+		topicv = [[_topicValueField attributedStringValue] attributedStringToASCIIFormatting];
 
 		topicv = [topicv stringByReplacingOccurrencesOfString:NSStringNewlinePlaceholder
 												   withString:NSStringWhitespacePlaceholder];
 
-		[self.delegate topicSheet:self onOK:topicv];
+		[[self delegate] topicSheet:self onOK:topicv];
 	}
 	
 	[super ok:nil];
@@ -84,10 +86,10 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	[self.masterController.formattingMenu enableWindowField:self.masterController.inputTextField];
+	[[mainWindow() formattingMenu] enableWindowField:mainWindowTextField()];
 	
-	if ([self.delegate respondsToSelector:@selector(topicSheetWillClose:)]) {
-		[self.delegate topicSheetWillClose:self];
+	if ([[self delegate] respondsToSelector:@selector(topicSheetWillClose:)]) {
+		[[self delegate] topicSheetWillClose:self];
 	}
 }
 
