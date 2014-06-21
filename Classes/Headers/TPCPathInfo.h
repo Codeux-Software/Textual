@@ -62,6 +62,8 @@
 + (NSString *)userHomeDirectoryPathOutsideSandbox;
 + (NSString *)userDownloadFolderPath;
 
++ (NSArray *)buildPathArray:(NSString *)path, ...;
+
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 + (NSString *)applicationUbiquitousContainerPath;
 

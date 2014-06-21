@@ -82,76 +82,76 @@
 
 - (void)show
 {
-	self.scriptsController = [TDCPreferencesScriptWrapper new];
+	_scriptsController = [TDCPreferencesScriptWrapper new];
 
-	self.alertSounds = [NSMutableArray new];
+	_alertSounds = [NSMutableArray new];
 
-	// self.alertSounds treats anything that is not a TDCPreferencesSoundWrapper as
+	// _alertSounds treats anything that is not a TDCPreferencesSoundWrapper as
 	// an indicator that a [NSMenuItem separatorItem] should be placed in our menu.
-	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationAddressBookMatchType]];
-	[self.alertSounds addObject:NSStringWhitespacePlaceholder];
-	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationConnectType]];
-	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationDisconnectType]];
-	[self.alertSounds addObject:NSStringWhitespacePlaceholder];
-	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationHighlightType]];
-	[self.alertSounds addObject:NSStringWhitespacePlaceholder];
-	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationInviteType]];
-	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationKickType]];
-	[self.alertSounds addObject:NSStringWhitespacePlaceholder];
-	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationChannelMessageType]];
-	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationChannelNoticeType]];
-	[self.alertSounds addObject:NSStringWhitespacePlaceholder];
-	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationNewPrivateMessageType]];
-	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationPrivateMessageType]];
-	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationPrivateNoticeType]];
-	[self.alertSounds addObject:NSStringWhitespacePlaceholder];
-	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationFileTransferReceiveRequestedType]];
-	[self.alertSounds addObject:NSStringWhitespacePlaceholder];
-	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationFileTransferSendSuccessfulType]];
-	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationFileTransferReceiveSuccessfulType]];
-	[self.alertSounds addObject:NSStringWhitespacePlaceholder];
-	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationFileTransferSendFailedType]];
-	[self.alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationFileTransferReceiveFailedType]];
+	[_alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationAddressBookMatchType]];
+	[_alertSounds addObject:NSStringWhitespacePlaceholder];
+	[_alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationConnectType]];
+	[_alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationDisconnectType]];
+	[_alertSounds addObject:NSStringWhitespacePlaceholder];
+	[_alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationHighlightType]];
+	[_alertSounds addObject:NSStringWhitespacePlaceholder];
+	[_alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationInviteType]];
+	[_alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationKickType]];
+	[_alertSounds addObject:NSStringWhitespacePlaceholder];
+	[_alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationChannelMessageType]];
+	[_alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationChannelNoticeType]];
+	[_alertSounds addObject:NSStringWhitespacePlaceholder];
+	[_alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationNewPrivateMessageType]];
+	[_alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationPrivateMessageType]];
+	[_alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationPrivateNoticeType]];
+	[_alertSounds addObject:NSStringWhitespacePlaceholder];
+	[_alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationFileTransferReceiveRequestedType]];
+	[_alertSounds addObject:NSStringWhitespacePlaceholder];
+	[_alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationFileTransferSendSuccessfulType]];
+	[_alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationFileTransferReceiveSuccessfulType]];
+	[_alertSounds addObject:NSStringWhitespacePlaceholder];
+	[_alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationFileTransferSendFailedType]];
+	[_alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationFileTransferReceiveFailedType]];
 
 	// Build navigation tree.
-	self.navigationTreeMatrix = [NSMutableArray array];
+	_navigationTreeMatrix = [NSMutableArray array];
 
-	[self.navigationTreeMatrix addObject:@{
+	[_navigationTreeMatrix addObject:@{
 	   @"name" : TXTLS(@"TDCPreferencesController[1016][1]"),
 	   @"children" : @[
-			@{@"name" : TXTLS(@"TDCPreferencesController[1016][2]"),	@"view" : self.contentViewStyle},
-			@{@"name" : TXTLS(@"TDCPreferencesController[1016][3]"),	@"view" : self.contentViewInlineMedia},
-			@{@"name" : TXTLS(@"TDCPreferencesController[1016][4]"),	@"view" : self.contentViewInterface},
-			@{@"name" : TXTLS(@"TDCPreferencesController[1016][5]"),	@"view" : self.contentViewUserListColors}
+			@{@"name" : TXTLS(@"TDCPreferencesController[1016][2]"),	@"view" : _contentViewStyle},
+			@{@"name" : TXTLS(@"TDCPreferencesController[1016][3]"),	@"view" : _contentViewInlineMedia},
+			@{@"name" : TXTLS(@"TDCPreferencesController[1016][4]"),	@"view" : _contentViewInterface},
+			@{@"name" : TXTLS(@"TDCPreferencesController[1016][5]"),	@"view" : _contentViewUserListColors}
 		]
 	   }];
 
-	[self.navigationTreeMatrix addObject:@{
+	[_navigationTreeMatrix addObject:@{
 	   @"blockCollapse" : @(YES),
 	   @"name" : TXTLS(@"TDCPreferencesController[1017][1]"),
 	   @"children" : @[
-			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][2]"),	@"view" : self.contentViewGeneral},
-			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][3]"),	@"view" : self.contentViewChannelManagement},
-			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][4]"),	@"view" : self.contentViewCommandScope},
-			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][5]"),	@"view" : self.contentViewHighlights},
-			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][6]"),	@"view" : self.contentViewIncomingData},
-			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][7]"),	@"view" : self.contentViewAlerts}
+			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][2]"),	@"view" : _contentViewGeneral},
+			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][3]"),	@"view" : _contentViewChannelManagement},
+			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][4]"),	@"view" : _contentViewCommandScope},
+			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][5]"),	@"view" : _contentViewHighlights},
+			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][6]"),	@"view" : _contentViewIncomingData},
+			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][7]"),	@"view" : _contentViewAlerts}
 		]
 	   }];
 
-	[self.navigationTreeMatrix addObject:@{
+	[_navigationTreeMatrix addObject:@{
 	   @"name" : TXTLS(@"TDCPreferencesController[1018][1]"),
 	   @"children" : @[
-			   @{@"name" : TXTLS(@"TDCPreferencesController[1018][2]"),	@"view" : self.contentViewDefaultIdentity},
-			   @{@"name" : TXTLS(@"TDCPreferencesController[1018][3]"),	@"view" : self.contentViewIRCopMessages}
+			   @{@"name" : TXTLS(@"TDCPreferencesController[1018][2]"),	@"view" : _contentViewDefaultIdentity},
+			   @{@"name" : TXTLS(@"TDCPreferencesController[1018][3]"),	@"view" : _contentViewIRCopMessages}
 		]
 	   }];
 
-	[self.navigationTreeMatrix addObject:@{
+	[_navigationTreeMatrix addObject:@{
 	   @"name" : TXTLS(@"TDCPreferencesController[1019][1]"),
 	   @"children" : @[
-			   @{@"name" : TXTLS(@"TDCPreferencesController[1019][2]"),	@"view" : self.contentViewKeyboardAndMouse},
-			   @{@"name" : TXTLS(@"TDCPreferencesController[1019][3]"),	@"view" : self.contentViewMainTextField}
+			   @{@"name" : TXTLS(@"TDCPreferencesController[1019][2]"),	@"view" : _contentViewKeyboardAndMouse},
+			   @{@"name" : TXTLS(@"TDCPreferencesController[1019][3]"),	@"view" : _contentViewMainTextField}
 		]
 	   }];
 
@@ -160,10 +160,10 @@
 	NSMutableArray *pluginNavigationItems = [NSMutableArray array];
 
 	[pluginNavigationItems addObject:
-		@{@"name" : TXTLS(@"TDCPreferencesController[1020][2]"), @"view" : self.contentViewInstalledAddons}
+		@{@"name" : TXTLS(@"TDCPreferencesController[1020][2]"), @"view" : _contentViewInstalledAddons}
 	];
 
-	NSArray *bundles = [THOPluginManagerSharedInstance() pluginsWithPreferencePanes];
+	NSArray *bundles = [sharedPluginManager() pluginsWithPreferencePanes];
 
 	for (THOPluginItem *plugin in bundles) {
 		NSString *name = [plugin pluginPreferencesPaneMenuItemName];
@@ -173,62 +173,62 @@
 		[pluginNavigationItems addObject:@{@"name" : name, @"view" : view}];
 	}
 
-	[self.navigationTreeMatrix addObject:
+	[_navigationTreeMatrix addObject:
 		@{@"name" : TXTLS(@"TDCPreferencesController[1020][1]"), @"children" : pluginNavigationItems}
 	 ];
 
 	// ----------------- //
 
-	[self.navigationTreeMatrix addObject:@{
+	[_navigationTreeMatrix addObject:@{
 	   @"name" : TXTLS(@"TDCPreferencesController[1021][1]"),
 	   @"children" : @[
-			   @{@"name" : TXTLS(@"TDCPreferencesController[1021][2]"),	@"view" : self.contentViewExperimentalSettings},
-			   @{@"name" : TXTLS(@"TDCPreferencesController[1021][3]"),	@"view" : self.contentViewFileTransfers},
-			   @{@"name" : TXTLS(@"TDCPreferencesController[1021][4]"),	@"view" : self.contentViewFloodControl},
+			   @{@"name" : TXTLS(@"TDCPreferencesController[1021][2]"),	@"view" : _contentViewExperimentalSettings},
+			   @{@"name" : TXTLS(@"TDCPreferencesController[1021][3]"),	@"view" : _contentViewFileTransfers},
+			   @{@"name" : TXTLS(@"TDCPreferencesController[1021][4]"),	@"view" : _contentViewFloodControl},
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-				@{@"name" : TXTLS(@"TDCPreferencesController[1021][5]"),	@"view" : self.contentViewICloud, @"iCloudSyncingNavigationItem" : @(YES)},
+				@{@"name" : TXTLS(@"TDCPreferencesController[1021][5]"),	@"view" : _contentViewICloud, @"iCloudSyncingNavigationItem" : @(YES)},
 #endif
 
-				@{@"name" : TXTLS(@"TDCPreferencesController[1021][6]"),	@"view" : self.contentViewLogLocation}
+				@{@"name" : TXTLS(@"TDCPreferencesController[1021][6]"),	@"view" : _contentViewLogLocation}
 		]
 	   }];
 
-	 self.navigationOutlineview.dataSource = self;
-	 self.navigationOutlineview.delegate = self;
+	[_navigationOutlineview setDataSource:self];
+	[_navigationOutlineview setDelegate:self];
 
-	[self.navigationOutlineview reloadData];
+	[_navigationOutlineview reloadData];
 
-	[self.navigationOutlineview expandItem:self.navigationTreeMatrix[0]];
-	[self.navigationOutlineview expandItem:self.navigationTreeMatrix[1]];
-	[self.navigationOutlineview expandItem:self.navigationTreeMatrix[3]];
+	[_navigationOutlineview expandItem:_navigationTreeMatrix[0]];
+	[_navigationOutlineview expandItem:_navigationTreeMatrix[1]];
+	[_navigationOutlineview expandItem:_navigationTreeMatrix[3]];
 
-	self.lastSelectedNavigationItem = 6;
-	self.currentSelectedNavigationItem = 6;
+	_lastSelectedNavigationItem = 6;
+	_currentSelectedNavigationItem = 6;
 
-	[self.navigationOutlineview selectItemAtIndex:6];
+	[_navigationOutlineview selectItemAtIndex:6];
 
 	/* Growl check. */
 	BOOL growlRunning = [GrowlApplicationBridge isGrowlRunning];
 
 	/* We only have notification center on mountain lion or newer so we have to
 	 check what OS we are running on before we even doing anything. */
-	if ([TPCPreferences featureAvailableToOSXMountainLion] == NO || growlRunning) {
+	if ([CSFWSystemInformation featureAvailableToOSXMountainLion] == NO || growlRunning) {
 		if (growlRunning) {
-			self.alertNotificationDestinationTextField.stringValue = TXTLS(@"TDCPreferencesController[1005]");
+			[_alertNotificationDestinationTextField setStringValue:TXTLS(@"TDCPreferencesController[1005]")];
 		} else {
-			self.alertNotificationDestinationTextField.stringValue = TXTLS(@"TDCPreferencesController[1007]");
-
+			[_alertNotificationDestinationTextField setStringValue:TXTLS(@"TDCPreferencesController[1007]")];
 		}
 	} else {
-		self.alertNotificationDestinationTextField.stringValue = TXTLS(@"TDCPreferencesController[1006]");
+		[_alertNotificationDestinationTextField setStringValue:TXTLS(@"TDCPreferencesController[1006]")];
 	}
 
 	// Complete startup of preferences.
-	[self.scriptsController populateData];
+	[_scriptsController populateData];
 
-	 self.installedScriptsTable.dataSource = self.scriptsController;
-	[self.installedScriptsTable reloadData];
+	[_installedScriptsTable setDataSource:_scriptsController];
+	
+	[_installedScriptsTable reloadData];
 
 	[self updateThemeSelection];
     [self updateAlertSelection];
@@ -237,6 +237,7 @@
 
 	[self onChangedAlertType:nil];
 	[self onChangedHighlightType:nil];
+	
 	[self onFileTransferIPAddressDetectionMethodChanged:nil];
 	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
@@ -250,13 +251,14 @@
 								   name:TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification
 								 object:nil];
 	
-	[self.syncPreferencesToTheCloudButton setState:[TPCPreferences syncPreferencesToTheCloud]];
+	[_syncPreferencesToTheCloudButton setState:[TPCPreferences syncPreferencesToTheCloud]];
 #endif
 	
-	[self.setAsDefaultIRCClientButton setHidden:[TPCPreferences isDefaultIRCClient]];
+	[_setAsDefaultIRCClientButton setHidden:[TPCApplicationInfo isDefaultIRCClient]];
 
-	[self.window restoreWindowStateForClass:self.class];
-	[self.window makeKeyAndOrderFront:nil];
+	[[self window] restoreWindowStateForClass:[self class]];
+	
+	[[self window] makeKeyAndOrderFront:nil];
 }
 
 #pragma mark -
@@ -267,7 +269,7 @@
 	if (item) {
 		return [item[@"children"] count];
 	} else {
-		return [self.navigationTreeMatrix count];
+		return [_navigationTreeMatrix count];
 	}
 }
 
@@ -276,7 +278,7 @@
 	if (item) {
 		return item[@"children"][index];
 	} else {
-		return self.navigationTreeMatrix[index];
+		return _navigationTreeMatrix[index];
 	}
 }
 
@@ -297,7 +299,7 @@
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
 {
-	if (self.navgiationTreeIsAnimating) {
+	if (_navgiationTreeIsAnimating) {
 		return NO;
 	} else {
 		return ([item containsKey:@"children"] == NO);
@@ -315,14 +317,20 @@
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification
 {
-	NSInteger selectedRow = [self.navigationOutlineview selectedRow];
+	NSInteger selectedRow = [_navigationOutlineview selectedRow];
 
-	NSDictionary *navItem = [self.navigationOutlineview itemAtRow:selectedRow];
+	NSDictionary *navItem = [_navigationOutlineview itemAtRow:selectedRow];
 
-	self.lastSelectedNavigationItem = self.currentSelectedNavigationItem;
-	self.currentSelectedNavigationItem = selectedRow;
+	_lastSelectedNavigationItem = _currentSelectedNavigationItem;
+	
+	_currentSelectedNavigationItem = selectedRow;
 
 	[self presentPreferencesPane:navItem[@"view"]];
+}
+
+- (NSRect)currentWindowFrame
+{
+	return [[self window] frame];
 }
 
 - (void)presentPreferencesPane:(NSView *)newView
@@ -330,7 +338,7 @@
 	/* Determine direction. */
 	BOOL isGoingDown = NO;
 
-	if (self.currentSelectedNavigationItem > self.lastSelectedNavigationItem) {
+	if (_currentSelectedNavigationItem > _lastSelectedNavigationItem) {
 		isGoingDown = YES;
 	}
 
@@ -344,7 +352,7 @@
 		}
 	}
 
-	self.navgiationTreeIsAnimating = YES;
+	_navgiationTreeIsAnimating = YES;
 
 	/* Set view frame. */
 	NSRect newViewFinalFrame = [newView frame];
@@ -370,7 +378,7 @@
 	[newView setFrame:newViewAnimationFrame];
 
 	/* Update window size. */
-	NSRect contentViewFrame = [self.contentView frame];
+	NSRect contentViewFrame = [_contentView frame];
 
 	BOOL contentSizeDidntChange =  (contentViewFrame.size.height == newViewFinalFrame.size.height);
 	BOOL windowWillBecomeSmaller = (contentViewFrame.size.height >  newViewFinalFrame.size.height);
@@ -382,18 +390,18 @@
 	}
 
 	/* Set window frame. */
-	NSRect windowFrame = [self.window frame];
+	NSRect windowFrame = [self currentWindowFrame];
 
 	if (contentSizeDidntChange == NO) {
 		windowFrame.size.height = (_preferencePaneViewFramePadding + newViewFinalFrame.size.height);
 
-		windowFrame.origin.y = (NSMaxY(self.window.frame) - windowFrame.size.height);
+		windowFrame.origin.y = (NSMaxY([self currentWindowFrame]) - windowFrame.size.height);
 
-		[self.window setFrame:windowFrame display:YES animate:YES];
+		[[self window] setFrame:windowFrame display:YES animate:YES];
 	}
 
 	/* Add new frame. */
-	[self.contentView addSubview:newView];
+	[_contentView addSubview:newView];
 
 	/* Update content frame. */
 	if (contentSizeDidntChange == NO) {
@@ -409,12 +417,12 @@
 	/* Find existing views. */
 	/* If count is 0, then that means preferences just launched
 	 and we have not added anything to our window yet. */
-	NSArray *subviews = self.contentView.subviews;
+	NSArray *subviews = [_contentView subviews];
 
 	NSInteger subviewCount = [subviews count];
 
 	if (subviewCount > 1) {
-		NSView *oldView = self.contentView.subviews[0];
+		NSView *oldView = [_contentView subviews][0];
 
 		/* If the number of visible views is more than 2 (the one we added and the old),
 		 then we erase the old views because the user could be clicking the navigation
@@ -430,7 +438,7 @@
 		if (isGoingDown) {
 			oldViewAnimationFrame.origin.y = -(windowFrame.size.height); // No way anything will be there…
 		} else {
-			oldViewAnimationFrame.origin.y = windowFrame.size.height; // No way anything will be there…
+			oldViewAnimationFrame.origin.y =   windowFrame.size.height; // No way anything will be there…
 		}
 
 		[oldView.animator setAlphaValue:0.0];
@@ -443,15 +451,15 @@
 	} else {
 		[newView setFrame:newViewFinalFrame];
 
-		self.navgiationTreeIsAnimating = NO;
+		_navgiationTreeIsAnimating = NO;
 	}
 
-	[self.window recalculateKeyViewLoop];
+	[[self window] recalculateKeyViewLoop];
 }
 
 - (void)timedRemoveFrame:(NSView *)oldView
 {
-	self.navgiationTreeIsAnimating = NO;
+	_navgiationTreeIsAnimating = NO;
 
 	[oldView removeFromSuperview];
 }
@@ -461,12 +469,12 @@
 
 - (NSInteger)maxLogLines
 {
-	return [TPCPreferences maxLogLines];
+	return [TPCPreferences scrollbackLimit];
 }
 
 - (void)setMaxLogLines:(NSInteger)value
 {
-	[TPCPreferences setMaxLogLines:value];
+	[TPCPreferences setScrollbackLimit:value];
 }
 
 - (NSString *)completionSuffix
@@ -509,8 +517,15 @@
 	return [TPCPreferences themeChannelViewFontSize];
 }
 
-- (void)setThemeChannelViewFontName:(id)value { return; }
-- (void)setThemeChannelViewFontSize:(id)value { return; }
+- (void)setThemeChannelViewFontName:(id)value
+{
+	return;
+}
+
+- (void)setThemeChannelViewFontSize:(id)value
+{
+	return;
+}
 
 - (NSInteger)fileTransferPortRangeStart
 {
@@ -600,7 +615,7 @@
 
 - (void)updateAlertSelection
 {
-	[self.alertSoundChoiceButton removeAllItems];
+	[_alertSoundChoiceButton removeAllItems];
 
 	NSArray *alertSounds = [self availableSounds];
 
@@ -609,16 +624,16 @@
 
         [item setTitle:alertSound];
 
-        [self.alertSoundChoiceButton.menu addItem:item];
+        [[_alertSoundChoiceButton menu] addItem:item];
     }
 
-    [self.alertSoundChoiceButton selectItemAtIndex:0];
+    [_alertSoundChoiceButton selectItemAtIndex:0];
 
 	// ---- //
 
-    [self.alertTypeChoiceButton removeAllItems];
+    [_alertTypeChoiceButton removeAllItems];
 
-    NSMutableArray *alerts = self.alertSounds;
+    NSMutableArray *alerts = _alertSounds;
 
     for (id alert in alerts) {
 		if ([alert isKindOfClass:[TDCPreferencesSoundWrapper class]]) {
@@ -627,78 +642,88 @@
 			[item setTitle:[alert displayName]];
 			[item setTag:[alert eventType]];
 
-			[self.alertTypeChoiceButton.menu addItem:item];
+			[[_alertTypeChoiceButton menu] addItem:item];
 		} else {
-			[self.alertTypeChoiceButton.menu addItem:[NSMenuItem separatorItem]];
+			[[_alertTypeChoiceButton menu] addItem:[NSMenuItem separatorItem]];
 		}
     }
 
-    [self.alertTypeChoiceButton selectItemAtIndex:0];
+    [_alertTypeChoiceButton selectItemAtIndex:0];
 }
 
 - (void)onChangedAlertType:(id)sender
 {
-	TXNotificationType alertType = (TXNotificationType)self.alertTypeChoiceButton.selectedItem.tag;
+	TXNotificationType alertType = (TXNotificationType)[_alertTypeChoiceButton selectedTag];
 
     TDCPreferencesSoundWrapper *alert = [TDCPreferencesSoundWrapper soundWrapperWithEventType:alertType];
 
-	[self.alertSpeakEventButton setState:alert.speakEvent];
-    [self.alertPushNotificationButton setState:alert.pushNotification];
-    [self.alertDisableWhileAwayButton setState:alert.disabledWhileAway];
-    [self.alertBounceDockIconButton setState:alert.bounceDockIcon];
+	[_alertSpeakEventButton setState:[alert speakEvent]];
+    [_alertPushNotificationButton setState:[alert pushNotification]];
+    [_alertDisableWhileAwayButton setState:[alert disabledWhileAway]];
+    [_alertBounceDockIconButton setState:[alert bounceDockIcon]];
 
-	NSInteger soundObject = [self.availableSounds indexOfObject:alert.alertSound];
+	NSInteger soundObject = [[self availableSounds] indexOfObject:[alert alertSound]];
 	
 	if (soundObject == NSNotFound) {
-		[self.alertSoundChoiceButton selectItemAtIndex:0];
+		[_alertSoundChoiceButton selectItemAtIndex:0];
 	} else {
-		[self.alertSoundChoiceButton selectItemAtIndex:soundObject];
+		[_alertSoundChoiceButton selectItemAtIndex:soundObject];
 	}
 }
 
 - (void)onChangedAlertNotification:(id)sender
 {
-	TXNotificationType alertType = (TXNotificationType)self.alertTypeChoiceButton.selectedItem.tag;
+	TXNotificationType alertType = (TXNotificationType)[_alertTypeChoiceButton selectedTag];
 
     TDCPreferencesSoundWrapper *alert = [TDCPreferencesSoundWrapper soundWrapperWithEventType:alertType];
 
-    [alert setPushNotification:self.alertPushNotificationButton.state];
+    [alert setPushNotification:[_alertPushNotificationButton state]];
+	
+	alert = nil;
 }
 
 - (void)onChangedAlertSpoken:(id)sender
 {
-	TXNotificationType alertType = (TXNotificationType)self.alertTypeChoiceButton.selectedItem.tag;
+	TXNotificationType alertType = (TXNotificationType)[_alertTypeChoiceButton selectedTag];
 
     TDCPreferencesSoundWrapper *alert = [TDCPreferencesSoundWrapper soundWrapperWithEventType:alertType];
 
-	[alert setSpeakEvent:self.alertSpeakEventButton.state];
+	[alert setSpeakEvent:[_alertSpeakEventButton state]];
+	
+	alert = nil;
 }
 
 - (void)onChangedAlertDisableWhileAway:(id)sender
 {
-	TXNotificationType alertType = (TXNotificationType)self.alertTypeChoiceButton.selectedItem.tag;
+	TXNotificationType alertType = (TXNotificationType)[_alertTypeChoiceButton selectedTag];
 
     TDCPreferencesSoundWrapper *alert = [TDCPreferencesSoundWrapper soundWrapperWithEventType:alertType];
 
-    [alert setDisabledWhileAway:self.alertDisableWhileAwayButton.state];
+	[alert setDisabledWhileAway:[_alertDisableWhileAwayButton state]];
+	
+	alert = nil;
 }
 
 - (void)onChangedAlertBounceDockIcon:(id)sender
 {
-    TXNotificationType alertType = (TXNotificationType)self.alertTypeChoiceButton.selectedItem.tag;
+	TXNotificationType alertType = (TXNotificationType)[_alertTypeChoiceButton selectedTag];
     
     TDCPreferencesSoundWrapper *alert = [TDCPreferencesSoundWrapper soundWrapperWithEventType:alertType];
     
-    [alert setBounceDockIcon:self.alertBounceDockIconButton.state];
+	[alert setBounceDockIcon:[_alertBounceDockIconButton state]];
+	
+	alert = nil;
 }
 
 - (void)onChangedAlertSound:(id)sender
 {
-	TXNotificationType alertType = (TXNotificationType)self.alertTypeChoiceButton.selectedItem.tag;
+	TXNotificationType alertType = (TXNotificationType)[_alertTypeChoiceButton selectedTag];
 
     TDCPreferencesSoundWrapper *alert = [TDCPreferencesSoundWrapper soundWrapperWithEventType:alertType];
 
-	[alert setAlertSound:self.alertSoundChoiceButton.titleOfSelectedItem];
+	[alert setAlertSound:[_alertSoundChoiceButton titleOfSelectedItem]];
+	
+	alert = nil;
 }
 
 - (NSArray *)availableSounds
@@ -713,33 +738,33 @@
 														  create:YES
 														   error:NULL];
 
-	NSString *userSoundFolder = [userSoundFolderURL.relativePath stringByAppendingPathComponent:@"/Sounds"];
+	NSString *userSoundFolder = [[userSoundFolderURL relativePath] stringByAppendingPathComponent:@"/Sounds"];
 
 	NSArray *homeDirectoryContents = [RZFileManager() contentsOfDirectoryAtPath:userSoundFolder error:NULL];
 	NSArray *systemDirectoryContents = [RZFileManager() contentsOfDirectoryAtPath:systemSoundFolder error:NULL];
 
-	[soundList safeAddObject:TXEmptySoundAlertLabel];
-	[soundList safeAddObject:@"Beep"];
+	[soundList addObject:TXEmptySoundAlertLabel];
+	[soundList addObject:@"Beep"];
 
-	if (NSObjectIsNotEmpty(systemDirectoryContents)) {
+	if ([systemDirectoryContents count] > 0) {
 		for (__strong NSString *s in systemDirectoryContents) {
 			if ([s contains:@"."]) {
-				s = [s safeSubstringToIndex:[s stringPosition:@"."]];
+				s = [s stringByDeletingPathExtension];
 			}
 
-			[soundList safeAddObject:s];
+			[soundList addObject:s];
 		}
 	}
 
-	if (NSObjectIsNotEmpty(homeDirectoryContents)) {
-		[soundList safeAddObject:TXEmptySoundAlertLabel];
+	if ([homeDirectoryContents count] > 0) {
+		[soundList addObject:TXEmptySoundAlertLabel];
 
 		for (__strong NSString *s in homeDirectoryContents) {
 			if ([s contains:@"."]) {
-				s = [s safeSubstringToIndex:[s stringPosition:@"."]];
+				s = [s stringByDeletingPathExtension];
 			}
-
-			[soundList safeAddObject:s];
+			
+			[soundList addObject:s];
 		}
 	}
 
@@ -751,13 +776,13 @@
 
 - (void)updateFileTransferDownloadDestinationFolder
 {
-	TDCFileTransferDialog *transferController = [self.menuController fileTransferController];
+	TDCFileTransferDialog *transferController = [menuController() fileTransferController];
 
 	NSURL *path = [transferController downloadDestination];
 	
-	NSMenuItem *item = [self.fileTransferDownloadDestinationButton itemAtIndex:0];
+	NSMenuItem *item = [_fileTransferDownloadDestinationButton itemAtIndex:0];
 	
-	if (NSObjectIsEmpty(path)) {
+	if (path == nil) {
 		[item setTitle:TXTLS(@"TDCPreferencesController[1004]")];
 		
 		[item setImage:nil];
@@ -773,9 +798,9 @@
 
 - (void)onFileTransferDownloadDestinationFolderChanged:(id)sender
 {
-	TDCFileTransferDialog *transferController = [self.menuController fileTransferController];
+	TDCFileTransferDialog *transferController = [menuController() fileTransferController];
 
-	if ([self.fileTransferDownloadDestinationButton selectedTag] == 2) {
+	if ([_fileTransferDownloadDestinationButton selectedTag] == 2) {
 		NSOpenPanel *d = [NSOpenPanel openPanel];
 		
 		[d setCanChooseFiles:NO];
@@ -786,11 +811,11 @@
 		
 		[d setPrompt:BLS(1225)];
 		
-		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
-			[self.fileTransferDownloadDestinationButton selectItemAtIndex:0];
+		[d beginSheetModalForWindow:[self window] completionHandler:^(NSInteger returnCode) {
+			[_fileTransferDownloadDestinationButton selectItemAtIndex:0];
 			
 			if (returnCode == NSOKButton) {
-				NSURL *pathURL = [d.URLs safeObjectAtIndex:0];
+				NSURL *pathURL = [d URLs][0];
 				
 				NSError *error = nil;
 				
@@ -809,9 +834,9 @@
 			}
 		}];
 	}
-	else if ([self.fileTransferDownloadDestinationButton selectedTag] == 3)
+	else if ([_fileTransferDownloadDestinationButton selectedTag] == 3)
 	{
-		[self.fileTransferDownloadDestinationButton selectItemAtIndex:0];
+		[_fileTransferDownloadDestinationButton selectItemAtIndex:0];
 
 		[transferController setDownloadDestinationFolder:nil];
 
@@ -824,11 +849,11 @@
 
 - (void)updateTranscriptFolder
 {
-	NSURL *path = [TPCPreferences transcriptFolder];
+	NSURL *path = [TPCPathInfo logFileFolderLocation];
 
-	NSMenuItem *item = [self.transcriptFolderButton itemAtIndex:0];
+	NSMenuItem *item = [_transcriptFolderButton itemAtIndex:0];
 
-	if (NSObjectIsEmpty(path)) {
+	if (path == nil) {
 		[item setTitle:TXTLS(@"TDCPreferencesController[1003]")];
 		
 		[item setImage:nil];
@@ -844,7 +869,7 @@
 
 - (void)onChangedTranscriptFolder:(id)sender
 {
-	if ([self.transcriptFolderButton selectedTag] == 2) {
+	if ([_transcriptFolderButton selectedTag] == 2) {
 		NSOpenPanel *d = [NSOpenPanel openPanel];
 
 		[d setCanChooseFiles:NO];
@@ -855,11 +880,11 @@
 		
 		[d setPrompt:BLS(1225)];
 
-		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
-			[self.transcriptFolderButton selectItemAtIndex:0];
+		[d beginSheetModalForWindow:[self window] completionHandler:^(NSInteger returnCode) {
+			[_transcriptFolderButton selectItemAtIndex:0];
 
 			if (returnCode == NSOKButton) {
-				NSURL *pathURL = [d.URLs safeObjectAtIndex:0];
+				NSURL *pathURL = [d URLs][0];
 
 				NSError *error = nil;
 
@@ -871,18 +896,18 @@
 				if (error) {
 					LogToConsole(@"Error creating bookmark for URL (%@): %@", pathURL, [error localizedDescription]);
 				} else {
-					[TPCPreferences setTranscriptFolder:bookmark];
+					[TPCPathInfo setLogFileFolderLocation:bookmark];
 				}
 
 				[self updateTranscriptFolder];
 			}
 		}];
 	}
-	else if ([self.transcriptFolderButton selectedTag] == 3)
+	else if ([_transcriptFolderButton selectedTag] == 3)
 	{
-		[self.transcriptFolderButton selectItemAtIndex:0];
+		[_transcriptFolderButton selectItemAtIndex:0];
 		
-		[TPCPreferences setTranscriptFolder:nil];
+		[TPCPathInfo setLogFileFolderLocation:nil];
 		
 		[self updateTranscriptFolder];
 	}
@@ -893,129 +918,81 @@
 
 - (void)updateThemeSelection
 {
-	[self.themeSelectionButton removeAllItems];
+	[_themeSelectionButton removeAllItems];
+	
+	/* The order of the path array defines which theme will take priority
+	 over one that already exists. Those at the top are highest priority. */
+	NSString *bundledThemePath = [TPCPathInfo bundledThemeFolderPath];
 
-	NSInteger tag = 0;
-
-	NSArray *paths = @[[TPCPreferences bundledThemeFolderPath],
-					   [TPCPreferences customThemeFolderPath],
-					   
+	NSArray *paths = [TPCPathInfo buildPathArray:
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-					   [TPCPreferences cloudCustomThemeCachedFolderPath],
+					  [TPCPathInfo cloudCustomThemeCachedFolderPath],
 #endif
-					   
-					   ];
-
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	/* This path does not always exist right away. */
-	BOOL cloudPathExists = ([paths[2] length] > 0);
-#endif
-
+					  
+					  [TPCPathInfo customThemeFolderPath],
+					  bundledThemePath
+	];
+	
+	/* Build list of all theme names and the theme type (custom or bundled). */
+	NSMutableDictionary *themeChoices = [NSMutableDictionary dictionary];
+	
 	for (NSString *path in paths) {
-		NSMutableSet *set = [NSMutableSet set];
-		
-		NSAssertReturnLoopContinue(path.length > 0);
-
 		NSArray *files = [RZFileManager() contentsOfDirectoryAtPath:path error:NULL];
 
 		for (NSString *file in files) {
-			NSString *filename = file.lastPathComponent;
-
-			if ([path isEqualToString:paths[0]]) {
-				/* If a custom theme with the same name of this bundled theme exists,
-				 then ignore the bundled them. Custom themes always take priority. */
-				NSString *cfip = [paths[1] stringByAppendingPathComponent:filename];
-
-				if ([RZFileManager() fileExistsAtPath:cfip]) {
-					continue;
-				}
+			if ([themeChoices containsKey:file]) {
+				; // Theme already exists somewhere else.
+			} else {
+				NSString *cssfilelocal = [path stringByAppendingPathComponent:[file stringByAppendingString:@"/design.css"]];
 				
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-				if (cloudPathExists) {
-					/* Perform same check for cloud based themes too. */
-					cfip = [paths[2] stringByAppendingPathComponent:filename];
-
-					if ([RZFileManager() fileExistsAtPath:cfip]) {
-						continue;
+				/* Only add the theme if a design.css file exists. */
+				if ([RZFileManager() fileExistsAtPath:cssfilelocal]) {
+					
+					
+					
+					
+					
+					
+					
+					if ([path isEqualToString:bundledThemePath]) {
+						[themeChoices setObject:TPCThemeControllerBundledStyleNameBasicPrefix forKey:file];
+					} else {
+						[themeChoices setObject:TPCThemeControllerCustomStyleNameBasicPrefix forKey:file];
 					}
 				}
 			}
-			
-			/* Also select cloud styles over local ones. */
-			if (cloudPathExists && [path isEqualToString:paths[1]]) {
-				/* If a custom theme with the same name of this bundled theme exists,
-				 then ignore the bundled them. Custom themes always take priority. */
-				NSString *cfip = [paths[2] stringByAppendingPathComponent:filename];
-				
-				if ([RZFileManager() fileExistsAtPath:cfip]) {
-					continue;
-				}
-#endif
-				
-			}
-
-			NSString *cssfilelocal = [path stringByAppendingPathComponent:[file stringByAppendingString:@"/design.css"]];
-
-			/* Only add the theme if a design.css file exists. */
-			if ([RZFileManager() fileExistsAtPath:cssfilelocal]) {
-				[set addObject:[file stringByDeletingPathExtension]];
-			}
-		}
-
-		// ---- //
-
-		files = [set.allObjects sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-
-		for (NSString *f in files) {
-			NSMenuItem *cell = [NSMenuItem menuItemWithTitle:f target:nil action:nil];
-
-			[cell setTag:tag];
-
-			[self.themeSelectionButton.menu addItem:cell];
-		}
-
-		/* Tag can only be 1 or 0. 0 for bundled. 1 for custom. */
-		if (tag == 0) {
-			tag = 1;
 		}
 	}
-
-	// ---- //
-
-	NSString *name = [self.themeController name];
-
-	NSInteger targetTag = 0;
-
-	if ([self.themeController isBundledTheme] == NO) {
-		targetTag = 1;
+	
+	/* Sort theme choices and create menu item for each. */
+	for (NSString *themeName in [themeChoices sortedDictionaryKeys]) {
+		NSString *themeType = themeChoices[themeName];
+		
+		NSMenuItem *cell = [NSMenuItem menuItemWithTitle:themeName target:nil action:nil];
+		
+		[cell setUserInfo:themeType];
+		
+		[[_themeSelectionButton menu] addItem:cell];
 	}
-
-	NSInteger count = [self.themeSelectionButton numberOfItems];
-
-	for (NSInteger i = 0; i < count; i++) {
-		NSMenuItem *item = [self.themeSelectionButton itemAtIndex:i];
-
-		if ([item tag] == targetTag && [item.title isEqualToString:name]) {
-			[self.themeSelectionButton selectItemAtIndex:i];
-
-			break;
-		}
-	}
+	
+	/* Select whatever theme matches current name. */
+	[_themeSelectionButton selectItemWithTitle:[themeController() name]];
 }
 
 - (void)onChangedTheme:(id)sender
 {
-	NSMenuItem *item = [self.themeSelectionButton selectedItem];
+	NSMenuItem *item = [_themeSelectionButton selectedItem];
 
 	NSString *newThemeName = nil;
-	NSString *oldThemeName = [TPCPreferences themeName];
 
-	if (item.tag == 0) {
-		newThemeName = [TPCThemeController buildResourceFilename:item.title];
+	if ([[item userInfo] isEqualToString:TPCThemeControllerBundledStyleNameBasicPrefix]) {
+		newThemeName = [TPCThemeController buildResourceFilename:[item title]];
 	} else {
-		newThemeName = [TPCThemeController buildUserFilename:item.title];
+		newThemeName = [TPCThemeController buildUserFilename:[item title]];
 	}
-
+	
+	NSString *oldThemeName = [TPCPreferences themeName];
+	
 	if ([oldThemeName isEqual:newThemeName]) {
 		return;
 	}
@@ -1031,27 +1008,27 @@
 
 	NSMutableString *sf = [NSMutableString string];
 
-	if (NSObjectIsNotEmpty(self.themeController.customSettings.nicknameFormat)) {
+	if (NSObjectIsNotEmpty([themeSettings() nicknameFormat])) {
 		[sf appendString:TXTLS(@"TDCPreferencesController[1015][1]")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 
-	if (NSObjectIsNotEmpty(self.themeController.customSettings.timestampFormat)) {
+	if (NSObjectIsNotEmpty([themeSettings() timestampFormat])) {
 		[sf appendString:TXTLS(@"TDCPreferencesController[1015][2]")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 
-	if (self.themeController.customSettings.channelViewFont) {
+	if ([themeSettings() channelViewFont]) {
 		[sf appendString:TXTLS(@"TDCPreferencesController[1015][4]")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 
-	if (self.themeController.customSettings.forceInvertSidebarColors) {
+	if ([themeSettings() forceInvertSidebarColors]) {
 		[sf appendString:TXTLS(@"TDCPreferencesController[1015][3]")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 
-	NSString *tsf = sf.trim;
+	NSString *tsf = [sf trim];
 
 	NSObjectIsEmptyAssert(tsf);
 
@@ -1060,7 +1037,7 @@
 	[prompt sheetWindowWithQuestion:[NSApp keyWindow]
 							 target:[TLOPopupPrompts class]
 							 action:@selector(popupPromptNilSelector:withOriginalAlert:)
-							   body:TXTLS(@"TDCPreferencesController[1014][2]", item.title, tsf)
+							   body:TXTLS(@"TDCPreferencesController[1014][2]", [item title], tsf)
 							  title:TXTLS(@"TDCPreferencesController[1014][1]")
 					  defaultButton:BLS(1186)
 					alternateButton:nil
@@ -1074,7 +1051,9 @@
 	NSFont *logfont = [TPCPreferences themeChannelViewFont];
 
 	[RZFontManager() setSelectedFont:logfont isMultiple:NO];
+	
 	[RZFontManager() orderFrontFontPanel:self];
+	
 	[RZFontManager() setAction:@selector(changeItemFont:)];
 }
 
@@ -1095,7 +1074,7 @@
 
 - (void)onChangedTransparency:(id)sender
 {
-	[self.masterController.mainWindow setAlphaValue:[TPCPreferences themeTransparency]];
+	[mainWindow() setAlphaValue:[TPCPreferences themeTransparency]];
 }
 
 #pragma mark -
@@ -1104,13 +1083,13 @@
 - (void)onChangedHighlightType:(id)sender
 {
     if ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightRegularExpressionMatchType) {
-        [self.highlightNicknameButton setEnabled:NO];
+        [_highlightNicknameButton setEnabled:NO];
     } else {
-        [self.highlightNicknameButton setEnabled:YES];
+        [_highlightNicknameButton setEnabled:YES];
     }
 	
-	[self.addExcludeKeywordButton setEnabled:YES];
-	[self.excludeKeywordsTable setEnabled:YES];
+	[_addExcludeKeywordButton setEnabled:YES];
+	[_excludeKeywordsTable setEnabled:YES];
 }
 
 - (void)editTable:(NSTableView *)table
@@ -1123,28 +1102,28 @@
 
 - (void)onAddKeyword:(id)sender
 {
-	[self.matchKeywordsArrayController add:nil];
+	[_matchKeywordsArrayController add:nil];
 
-	[self performSelector:@selector(editTable:) withObject:self.keywordsTable afterDelay:0.3];
+	[self performSelector:@selector(editTable:) withObject:_keywordsTable afterDelay:0.3];
 }
 
 - (void)onAddExcludeKeyword:(id)sender
 {
-	[self.excludeKeywordsArrayController add:nil];
+	[_excludeKeywordsArrayController add:nil];
 
-	[self performSelector:@selector(editTable:) withObject:self.excludeKeywordsTable afterDelay:0.3];
+	[self performSelector:@selector(editTable:) withObject:_excludeKeywordsTable afterDelay:0.3];
 }
 
 - (void)onResetUserListModeColorsToDefaults:(id)sender
 {
-	TVCMemberList *memberList = self.masterController.memberList;
+	TVCMemberList *memberList = mainWindowMemberList();
 
-	NSData *modeycolor = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_YDefault];
-	NSData *modeqcolor = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_QDefault];
-	NSData *modeacolor = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_ADefault];
-	NSData *modeocolor = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_ODefault];
-	NSData *modehcolor = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_HDefault];
-	NSData *modevcolor = [NSArchiver archivedDataWithRootObject:memberList.userMarkBadgeBackgroundColor_VDefault];
+	NSData *modeycolor = [NSArchiver archivedDataWithRootObject:[memberList userMarkBadgeBackgroundColor_YDefault]];
+	NSData *modeqcolor = [NSArchiver archivedDataWithRootObject:[memberList userMarkBadgeBackgroundColor_QDefault]];
+	NSData *modeacolor = [NSArchiver archivedDataWithRootObject:[memberList userMarkBadgeBackgroundColor_ADefault]];
+	NSData *modeocolor = [NSArchiver archivedDataWithRootObject:[memberList userMarkBadgeBackgroundColor_ODefault]];
+	NSData *modehcolor = [NSArchiver archivedDataWithRootObject:[memberList userMarkBadgeBackgroundColor_HDefault]];
+	NSData *modevcolor = [NSArchiver archivedDataWithRootObject:[memberList userMarkBadgeBackgroundColor_VDefault]];
 
 	[RZUserDefaults() setObject:modeycolor forKey:@"User List Mode Badge Colors —> +y"];
 	[RZUserDefaults() setObject:modeqcolor forKey:@"User List Mode Badge Colors —> +q"];
@@ -1173,12 +1152,12 @@
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListAction];
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
 
-	[self.worldController executeScriptCommandOnAllViews:@"sidebarInversionPreferenceChanged" arguments:@[] onQueue:NO];
+	[worldController() executeScriptCommandOnAllViews:@"sidebarInversionPreferenceChanged" arguments:@[] onQueue:NO];
 }
 
 - (void)onChangedStyle:(id)sender
 {
-	//[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction]; // Text direction will reload it too.
+  //[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction]; // Text direction will reload it too.
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadTextDirectionAction];
 }
 
@@ -1202,7 +1181,7 @@
 {
 	TXFileTransferIPAddressDetectionMethod detectionMethod = [TPCPreferences fileTransferIPAddressDetectionMethod];
 	
-	[self.fileTransferManuallyEnteredIPAddressField setEnabled:(detectionMethod == TXFileTransferIPAddressManualDetectionMethod)];
+	[_fileTransferManuallyEnteredIPAddressField setEnabled:(detectionMethod == TXFileTransferIPAddressManualDetectionMethod)];
 }
 
 - (void)onChangedHighlightLogging:(id)sender
@@ -1218,10 +1197,10 @@
 - (void)onOpenPathToCloudFolder:(id)sender
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	if ([self.masterController.cloudSyncManager ubiquitousContainerIsAvailable] == NO) {
+	if ([sharedCloudManager() ubiquitousContainerIsAvailable] == NO) {
 		TLOPopupPrompts *popup = [TLOPopupPrompts new];
 		
-		[popup sheetWindowWithQuestion:self.window
+		[popup sheetWindowWithQuestion:[self window]
 								target:[TLOPopupPrompts class]
 								action:@selector(popupPromptNilSelector:withOriginalAlert:)
 								  body:TXTLS(@"BasicLanguage[1102][2]")
@@ -1232,7 +1211,7 @@
 						suppressionKey:nil
 					   suppressionText:nil];
 	} else {
-		NSString *path = [TPCPreferences applicationUbiquitousContainerPath];
+		NSString *path = [TPCPathInfo applicationUbiquitousContainerPath];
 		
 		[RZWorkspace() openFile:path];
 	}
@@ -1241,28 +1220,28 @@
 
 - (void)onOpenPathToScripts:(id)sender
 {
-	[RZWorkspace() openFile:[TPCPreferences applicationSupportFolderPath]];
+	[RZWorkspace() openFile:[TPCPathInfo applicationSupportFolderPath]];
 }
 
 - (void)setTextualAsDefaultIRCClient:(id)sender
 {
-	[TPCPreferences defaultIRCClientPrompt:YES];
+	[TPCApplicationInfo defaultIRCClientPrompt:YES];
 }
 
 - (void)onManageiCloudButtonClicked:(id)sender
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	for (NSDictionary *subdic in self.navigationTreeMatrix) {
+	for (NSDictionary *subdic in _navigationTreeMatrix) {
 		for (NSDictionary *chldic in subdic[@"children"]) {
 			if ([chldic boolForKey:@"iCloudSyncingNavigationItem"]) {
-				if ([self.navigationOutlineview isItemExpanded:subdic] == NO) {
-					[self.navigationOutlineview expandItem:subdic];
+				if ([_navigationOutlineview isItemExpanded:subdic] == NO) {
+					[_navigationOutlineview expandItem:subdic];
 
 					[self onManageiCloudButtonClicked:sender];
 				} else {
-					NSInteger icrow = [self.navigationOutlineview rowForItem:chldic];
+					NSInteger icrow = [_navigationOutlineview rowForItem:chldic];
 
-					[self.navigationOutlineview selectItemAtIndex:icrow];
+					[_navigationOutlineview selectItemAtIndex:icrow];
 				}
 			}
 		}
@@ -1276,7 +1255,7 @@
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
 		TLOPopupPrompts *popup = [TLOPopupPrompts new];
 
-		[popup sheetWindowWithQuestion:self.window
+		[popup sheetWindowWithQuestion:[self window]
 								target:[TLOPopupPrompts class]
 								action:@selector(popupPromptNilSelector:withOriginalAlert:)
 								  body:TXTLS(@"TDCPreferencesController[1000][2]")
@@ -1290,7 +1269,7 @@
 		/* Poll server for latest. */
 		[RZUbiquitousKeyValueStore() synchronize];
 		
-		[self.masterController.cloudSyncManager synchronizeFromCloud];
+		[sharedCloudManager() synchronizeFromCloud];
 	}
 #endif
 }
@@ -1302,7 +1281,7 @@
 		/* Poll server for latest. */
 		[RZUbiquitousKeyValueStore() synchronize];
 		
-		[self.masterController.cloudSyncManager synchronizeFromCloud];
+		[sharedCloudManager() synchronizeFromCloud];
 	}
 #endif
 }
@@ -1311,7 +1290,7 @@
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if (returnCode == TLOPopupPromptReturnSecondaryType) {
-		[self.masterController.cloudSyncManager purgeDataStoredWithCloud];
+		[sharedCloudManager() purgeDataStoredWithCloud];
 	}
 #endif
 }
@@ -1320,10 +1299,10 @@
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if (returnCode == TLOPopupPromptReturnSecondaryType) {
-		NSString *path = [self.masterController.cloudSyncManager ubiquitousContainerURLPath];
+		NSString *path = [sharedCloudManager() ubiquitousContainerURLPath];
 		
 		/* Try to see if we even have a path… */
-		if (NSObjectIsEmpty(path)) {
+		if (path == nil) {
 			LogToConsole(@"Cannot empty iCloud files at this time because iCloud is not available.");
 			
 			return;
@@ -1332,14 +1311,14 @@
 		/* Delete styles folder. */
 		NSError *delError;
 		
-		[RZFileManager() removeItemAtPath:[TPCPreferences cloudCustomThemeFolderPath] error:&delError];
+		[RZFileManager() removeItemAtPath:[TPCPathInfo cloudCustomThemeFolderPath] error:&delError];
 		
 		if (delError) {
 			LogToConsole(@"Delete Error: %@", [delError localizedDescription]);
 		}
 		
 		/* Delete local caches. */
-		[RZFileManager() removeItemAtPath:[TPCPreferences cloudCustomThemeCachedFolderPath] error:&delError];
+		[RZFileManager() removeItemAtPath:[TPCPathInfo cloudCustomThemeCachedFolderPath] error:&delError];
 		
 		if (delError) {
 			LogToConsole(@"Delete Error: %@", [delError localizedDescription]);
@@ -1356,7 +1335,7 @@
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	TLOPopupPrompts *popup = [TLOPopupPrompts new];
 	
-	[popup sheetWindowWithQuestion:self.window
+	[popup sheetWindowWithQuestion:[self window]
 							target:self
 							action:@selector(onPurgeOfCloudFilesRequestedCallback:withOriginalAlert:)
 							  body:TXTLS(@"TDCPreferencesController[1001][2]")
@@ -1374,7 +1353,7 @@
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	TLOPopupPrompts *popup = [TLOPopupPrompts new];
 
-	[popup sheetWindowWithQuestion:self.window
+	[popup sheetWindowWithQuestion:[self window]
 							target:self
 							action:@selector(onPurgeOfCloudDataRequestedCallback:withOriginalAlert:)
 							  body:TXTLS(@"TDCPreferencesController[1002][2]")
@@ -1389,25 +1368,25 @@
 
 - (void)openPathToThemesCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
 {
-	NSString *name = [self.themeController name];
+	NSString *name = [themeController() name];
 
 	if (returnCode == TLOPopupPromptReturnSecondaryType) {
 		return;
 	}
 	
-	NSString *oldpath = [self.themeController actualPath];
+	NSString *oldpath = [themeController() actualPath];
 	
 	if (returnCode == TLOPopupPromptReturnPrimaryType) {
 		[RZWorkspace() openFile:oldpath];
 	} else {
 		BOOL copyingToCloud = NO;
 		
-		NSString *newpath = [[TPCPreferences customThemeFolderPath]	stringByAppendingPathComponent:name];
+		NSString *newpath = [[TPCPathInfo customThemeFolderPath] stringByAppendingPathComponent:name];
 		
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 		/* Check to see if the cloud path exists first… */
-		if ([self.masterController.cloudSyncManager ubiquitousContainerIsAvailable]) {
-			newpath = [[TPCPreferences cloudCustomThemeFolderPath] stringByAppendingPathComponent:name];
+		if ([sharedCloudManager() ubiquitousContainerIsAvailable]) {
+			newpath = [[TPCPathInfo cloudCustomThemeFolderPath] stringByAppendingPathComponent:name];
 			
 			copyingToCloud = YES;
 		}
@@ -1416,9 +1395,9 @@
 		/* Present progress sheet. */
 		TDCProgressInformationSheet *ps = [TDCProgressInformationSheet new];
 
-		[originalAlert.window orderOut:nil];
+		[[originalAlert window] orderOut:nil];
 		
-		[ps startWithWindow:self.window];
+		[ps startWithWindow:[self window]];
 		
 		/* Continue with a normal copy. */
 		NSError *copyError;
@@ -1449,7 +1428,7 @@
 				[ps stop];
 			} else {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-				self.tcopyStyleFilesProgressIndicator = ps;
+				_tcopyStyleFilesProgressIndicator = ps;
 #endif
 			}
 		}
@@ -1458,14 +1437,14 @@
 
 - (void)onOpenPathToThemes:(id)sender
 {
-    if ([self.themeController isBundledTheme]) {
+    if ([themeController() isBundledTheme]) {
 		TLOPopupPrompts *prompt = [TLOPopupPrompts new];
 
 		NSString *dialogMessage = @"TDCPreferencesController[1010]";
 		NSString *copyButton = @"TDCPreferencesController[1008]";
 		
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-		if ([self.masterController.cloudSyncManager ubiquitousContainerIsAvailable]) {
+		if ([sharedCloudManager() ubiquitousContainerIsAvailable]) {
 			dialogMessage = @"TDCPreferencesController[1011]";
 			copyButton = @"TDCPreferencesController[1009]";
 		}
@@ -1483,10 +1462,10 @@
 						suppressionText:nil];
     } else {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-		BOOL containerAvlb = [self.masterController.cloudSyncManager ubiquitousContainerIsAvailable];
+		BOOL containerAvlb = [sharedCloudManager() ubiquitousContainerIsAvailable];
 		
 		if (containerAvlb) {
-			if ([self.themeController storageLocation] == TPCThemeControllerStorageCustomLocation) {
+			if ([themeController() storageLocation] == TPCThemeControllerStorageCustomLocation) {
 				/* If the theme exists in app support folder, but cloud syncing is available,
 				 then offer to sync it to the cloud. */
 				
@@ -1506,13 +1485,13 @@
 				return;
 			}
 		} else {
-			if ([self.themeController storageLocation] == TPCThemeControllerStorageCloudLocation) {
+			if ([themeController() storageLocation] == TPCThemeControllerStorageCloudLocation) {
 				/* If the current theme is stored in the cloud, but our container is not available, then
 				 we have to tell the user we can't open the files right now. */
 				
 				TLOPopupPrompts *prompt = [TLOPopupPrompts new];
 				
-				[prompt sheetWindowWithQuestion:self.window
+				[prompt sheetWindowWithQuestion:[self window]
 										 target:[TLOPopupPrompts class]
 										 action:@selector(popupPromptNilSelector:withOriginalAlert:)
 										   body:TXTLS(@"BasicLanguage[1102][2]")
@@ -1529,7 +1508,7 @@
 #endif
 		
 		/* pathOfTheme… is called to ignore the cloud cache location. */
-		NSString *filepath = [self.themeController actualPath];
+		NSString *filepath = [themeController() actualPath];
 		
 		[RZWorkspace() openFile:filepath];
     }
@@ -1548,14 +1527,14 @@
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	/* This progress indicator existing means we have to open the path to the
 	 current theme. */
-	if (self.tcopyStyleFilesProgressIndicator) {
-		[self.tcopyStyleFilesProgressIndicator stop];
-		 self.tcopyStyleFilesProgressIndicator = nil;
+	if ( _tcopyStyleFilesProgressIndicator) {
+		[_tcopyStyleFilesProgressIndicator stop];
+		 _tcopyStyleFilesProgressIndicator = nil;
 		
 		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleWithTableViewsAction];
 		
 		/* pathOfTheme… is called to ignore the cloud cache location. */
-		NSString *filepath = [self.themeController actualPath];
+		NSString *filepath = [themeController() actualPath];
 		
 		[RZWorkspace() openFile:filepath];
 	}
@@ -1576,21 +1555,21 @@
 
 	/* Forced save frame to use default size. */
 	/* We set alpha to hide window but also change frame underneath user. */
-	[self.window setAlphaValue:0.0];
+	[[self window] setAlphaValue:0.0];
 
-	NSRect windowFrame = [self.window frame];
+	NSRect windowFrame = [self currentWindowFrame];
 
 	windowFrame.size.height = _forcedPreferencePaneViewFrameHeight;
 
-	[self.window setFrame:windowFrame display:NO animate:NO];
+	[[self window] setFrame:windowFrame display:NO animate:NO];
 
-	[self.window saveWindowStateForClass:self.class];
+	[[self window] saveWindowStateForClass:[self class]];
 
 	/* Clean up highlight keywords. */
 	[TPCPreferences cleanUpHighlightKeywords];
 
-	if ([self.delegate respondsToSelector:@selector(preferencesDialogWillClose:)]) {
-		[self.delegate preferencesDialogWillClose:self];
+	if ([[self delegate] respondsToSelector:@selector(preferencesDialogWillClose:)]) {
+		[[self delegate] preferencesDialogWillClose:self];
 	}
 }
 
