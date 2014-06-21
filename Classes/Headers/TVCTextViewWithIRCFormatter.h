@@ -45,8 +45,7 @@
 
 @interface TVCTextViewWithIRCFormatter : NSTextView <NSTextViewDelegate>
 @property (nonatomic, strong) NSFont *preferredFont;
-@property (nonatomic, strong) NSColor *preferredFontSize;
-@property (nonatomic, assign) dispatch_queue_t formattingQueue;
+@property (nonatomic, strong) NSColor *preferredFontColor;
 @property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
 
 - (BOOL)isAtTopOfView;

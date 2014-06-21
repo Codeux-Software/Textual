@@ -134,8 +134,8 @@
 	@class TVCLogView;
 	@class TVCMainWindow;
 	@class TVCMainWindowLoadingScreenView;
-	@class TVCMainWindowSegmentedCell;
-	@class TVCMainWindowSegmentedControl;
+	@class TVCMainWindowSegmentedControllerCell;
+	@class TVCMainWindowSegmentedController;
 	@class TVCMainWindowSplitView;
 	@class TVCMainWindowTextView;
 	@class TVCMainWindowTextViewBackground;

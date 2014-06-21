@@ -146,3 +146,37 @@
 #endif
 
 @end
+
+@implementation NSObject (TXSharedApplicationObjectExtension)
+
+- (TXMasterController *)masterController
+{
+	return TXGlobalMasterControllerClassReference;
+}
+
++ (TXMasterController *)masterController
+{
+	return TXGlobalMasterControllerClassReference;
+}
+
+- (IRCWorld *)worldController
+{
+	return [TXGlobalMasterControllerClassReference world];
+}
+
++ (IRCWorld *)worldController
+{
+	return [TXGlobalMasterControllerClassReference world];
+}
+
+- (TXMenuController *)menuController
+{
+	return [TXGlobalMasterControllerClassReference menuController];
+}
+
++ (TXMenuController *)menuController
+{
+	return [TXGlobalMasterControllerClassReference menuController];
+}
+
+@end

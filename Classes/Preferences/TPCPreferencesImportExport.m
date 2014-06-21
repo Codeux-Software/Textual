@@ -88,8 +88,8 @@
 + (void)importPostflight:(NSURL *)pathURL
 {
 	/* The loading screen is a generic way to show something during import. */
-	[[mainWindow() loadingScreen] hideAll:NO];
-	[[mainWindow() loadingScreen] popLoadingConfigurationView];
+	[mainWindowLoadingScreen() hideAll:NO];
+	[mainWindowLoadingScreen() popLoadingConfigurationView];
 
 	/* isPopulatingSeeds tells the world to not close the loading screen on state
 	 changes when creating new connections. */

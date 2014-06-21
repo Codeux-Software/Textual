@@ -75,6 +75,8 @@
 - (void)prepareForScreenSleep;
 - (void)awakeFomScreenSleep;
 
+- (NSInteger)clientCount;
+
 - (IRCClient *)findClientById:(NSString *)uid;
 - (IRCChannel *)findChannelByClientId:(NSString *)uid channelId:(NSString *)cid;
 

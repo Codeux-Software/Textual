@@ -39,13 +39,16 @@
 
 #define masterController()			[self masterController]
 #define menuController()			[self menuController]
-#define themeController()			[self themeController]
 #define worldController()			[self worldController]
 
 #define mainWindow()				[masterController() mainWindow]
+
+#define mainWindowLoadingScreen()	[mainWindow() loadingScreen]
 #define mainWindowServerList()		[mainWindow() serverList]
 #define mainWindowMemberList()		[mainWindow() memberList]
 #define mainWindowTextField()		[mainWindow() inputTextField]
+
+#define themeController()			[TXSharedApplication sharedThemeController]
 
 #define themeSettings()				[themeController() customSettings]
 
@@ -74,9 +77,6 @@
 
 - (IRCWorld *)worldController;
 + (IRCWorld *)worldController;
-
-- (TPCThemeController *)themeController;
-+ (TPCThemeController *)themeController;
 
 - (TXMenuController *)menuController;
 + (TXMenuController *)menuController;

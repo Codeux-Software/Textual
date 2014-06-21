@@ -55,7 +55,7 @@
     NSIndexSet *indexes = [self selectedRowIndexes];
 	
 	for (NSNumber *index in [indexes arrayFromIndexSet]) {
-		[allRows safeAddObject:index];
+		[allRows addObject:index];
 	}
     
     return allRows;

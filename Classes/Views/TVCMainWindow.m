@@ -38,44 +38,590 @@
 
 #import "TextualApplication.h"
 
-static NSValue *touchesToPoint(NSTouch *fingerA, NSTouch *fingerB)
-{
-	PointerIsEmptyAssertReturn(fingerA, nil);
-	PointerIsEmptyAssertReturn(fingerB, nil);
-
-	NSSize deviceSize = [fingerA deviceSize];
-
-	CGFloat x = (([fingerA normalizedPosition].x + [fingerB normalizedPosition].x) / 2 * deviceSize.width);
-	CGFloat y = (([fingerA normalizedPosition].y + [fingerB normalizedPosition].y) / 2 * deviceSize.height);
-
-	return [NSValue valueWithPoint:NSMakePoint(x, y)];
-}
-
 @implementation TVCMainWindow
+
+#pragma mark -
+#pragma mark Awakening
 
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation
 {
 	if ((self = [super initWithContentRect:contentRect styleMask:windowStyle backing:bufferingType defer:deferCreation])) {
-		_keyHandler = [TLOKeyEventHandler new];
+		_keyEventHandler = [TLOKeyEventHandler new];
 	}
 	
 	return self;
 }
 
+- (void)awakeFromNib
+{
+	[masterController() performAwakeningBeforeMainWindowDidLoad];
+
+	[self setDelegate:self];
+	
+	[self setAllowsConcurrentViewDrawing:NO];
+	
+	[self setAlphaValue:[TPCPreferences themeTransparency]];
+	
+	[_loadingScreen hideAll:NO];
+	[_loadingScreen popLoadingConfigurationView];
+	
+	[self makeMainWindow];
+	[self makeKeyAndOrderFront:nil];
+	
+	[self loadWindowState];
+	
+	[themeController() load];
+	
+	[menuController() setupOtherServices];
+	
+	[_inputTextField redrawOriginPoints:YES];
+	[_inputTextField updateTextDirection];
+	
+	[_inputTextField setBackgroundColor:[NSColor clearColor]];
+	
+	[self registerKeyHandlers];
+	
+	[_contentSplitView setDelegate:self];
+	
+	[_formattingMenu enableWindowField:_inputTextField];
+	
+	[masterController() setWorld:[IRCWorld new]];
+	
+	[worldController() setupConfiguration];
+	
+	[_serverList setDelegate:worldController()];
+	[_serverList setDataSource:worldController()];
+	[_memberList setKeyDelegate:worldController()];
+	
+	[_memberList setKeyDelegate:worldController()];
+	
+	[_memberList createBadgeRenderer];
+	
+	[_serverList reloadData];
+	
+	[worldController() setupTree];
+	[worldController() setupOtherServices];
+	
+	[_memberList setTarget:menuController()];
+	[_memberList setDoubleAction:@selector(memberInMemberListDoubleClicked:)];
+
+	[masterController() performAwakeningAfterMainWindowDidLoad];
+}
+
+- (void)maybeToggleFullscreenAfterLaunch
+{
+	NSDictionary *dic = [RZUserDefaults() dictionaryForKey:@"Window -> Main Window Window State"];
+	
+	if ([dic boolForKey:@"fullscreen"]) {
+		[self performSelector:@selector(toggleFullscreenAfterLaunch) withObject:nil afterDelay:1.0];
+	}
+}
+
+- (void)toggleFullscreenAfterLaunch
+{
+	if ([self isInFullscreenMode] == NO) {
+		[self toggleFullScreen:nil];
+	}
+}
+
+- (void)loadWindowState
+{
+	[self restoreWindowStateUsingKeyword:@"Main Window"];
+}
+
+- (void)saveWindowState
+{
+	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+	
+	[dic setBool:[self isInFullscreenMode] forKey:@"fullscreen"];
+	
+	[self saveWindowStateUsingKeyword:@"Main Window"];
+	
+	[RZUserDefaults() setObject:dic forKey:@"Window -> Main Window Window State"];
+}
+
+- (void)prepareForApplicationTermination
+{
+	[self setDelegate:nil];
+}
+
+#pragma mark -
+#pragma mark NSWindow Delegate
+
+- (void)windowDidChangeScreen:(NSNotification *)notification
+{
+	[masterController() windowDidChangeScreen:notification];
+}
+
+- (void)windowDidBecomeKey:(NSNotification *)notification
+{
+	[self windowDidBecomeKey:notification];
+}
+
+- (void)windowDidResignKey:(NSNotification *)notification
+{
+	[self windowDidResignKey:notification];
+	
+	[_memberList destroyUserInfoPopoverOnWindowKeyChange];
+}
+
+- (BOOL)window:(NSWindow *)window shouldPopUpDocumentPathMenu:(NSMenu *)menu
+{
+	return NO;
+}
+
+- (BOOL)window:(NSWindow *)window shouldDragDocumentWithEvent:(NSEvent *)event from:(NSPoint)dragImageLocation withPasteboard:(NSPasteboard *)pasteboard
+{
+	return NO;
+}
+
+- (void)windowDidResize:(NSNotification *)notification
+{
+	[mainWindowTextField() resetTextFieldCellSize:YES];
+}
+
+- (BOOL)windowShouldZoom:(NSWindow *)awindow toFrame:(NSRect)newFrame
+{
+	return ([mainWindow() isInFullscreenMode] == NO);
+}
+
+- (NSSize)window:(NSWindow *)window willUseFullScreenContentSize:(NSSize)proposedSize
+{
+	return proposedSize;
+}
+
+- (NSApplicationPresentationOptions)window:(NSWindow *)window willUseFullScreenPresentationOptions:(NSApplicationPresentationOptions)proposedOptions
+{
+	return (NSApplicationPresentationFullScreen | NSApplicationPresentationHideDock | NSApplicationPresentationAutoHideMenuBar);
+}
+
+- (id)windowWillReturnFieldEditor:(NSWindow *)sender toObject:(id)client
+{
+	static BOOL formattingMenuSet;
+	
+	if (formattingMenuSet == NO) {
+		NSMenu *editorMenu = [mainWindowTextField() menu];
+		
+		NSMenuItem *formatMenu = [_formattingMenu formatterMenu];
+		
+		if (formatMenu) {
+			NSInteger fmtrIndex = [editorMenu indexOfItemWithTitle:[formatMenu title]];
+			
+			if (fmtrIndex == -1) {
+				[editorMenu addItem:[NSMenuItem separatorItem]];
+				[editorMenu addItem:formatMenu];
+			}
+			
+			[_inputTextField setMenu:editorMenu];
+		}
+		
+		formattingMenuSet = YES;
+	}
+	
+	return _inputTextField;
+}
+
+#pragma mark -
+#pragma mark Keyboard Shortcuts
+
 - (void)setKeyHandlerTarget:(id)target
 {
-	[_keyHandler setTarget:target];
+	[_keyEventHandler setTarget:target];
 }
 
 - (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods
 {
-	[_keyHandler registerSelector:selector key:code modifiers:mods];
+	[_keyEventHandler registerSelector:selector key:code modifiers:mods];
 }
 
 - (void)registerKeyHandler:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods
 {
-	[_keyHandler registerSelector:selector character:c modifiers:mods];
+	[_keyEventHandler registerSelector:selector character:c modifiers:mods];
 }
+
+- (void)sendEvent:(NSEvent *)e
+{
+	if ([e type] == NSKeyDown) {
+		if ([_keyEventHandler processKeyEvent:e]) {
+			return;
+		}
+	}
+	
+	[super sendEvent:e];
+}
+
+#pragma mark -
+#pragma mark Nick Completion
+
+- (void)completeNickname:(BOOL)forward
+{
+	[[TXSharedApplication sharedNicknameCompletionStatus] completeNickname:forward];
+}
+
+#pragma mark -
+#pragma mark Navigation
+
+- (void)navigateChannelEntries:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType
+{
+#warning Need to implement.
+}
+
+- (void)navigateServerEntries:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType
+{
+#warning Need to implement.
+}
+
+- (void)navigateToNextEntry:(BOOL)isMovingDown
+{
+#warning Need to implement.
+}
+
+- (void)selectPreviousChannel:(NSEvent *)e
+{
+	[self navigateChannelEntries:NO withNavigationType:TVCServerListNavigationMovementAllType];
+}
+
+- (void)selectNextChannel:(NSEvent *)e
+{
+	[self navigateChannelEntries:YES withNavigationType:TVCServerListNavigationMovementAllType];
+}
+
+- (void)selectPreviousUnreadChannel:(NSEvent *)e
+{
+	[self navigateChannelEntries:NO withNavigationType:TVCServerListNavigationMovementUnreadType];
+}
+
+- (void)selectNextUnreadChannel:(NSEvent *)e
+{
+	[self navigateChannelEntries:YES withNavigationType:TVCServerListNavigationMovementUnreadType];
+}
+
+- (void)selectPreviousActiveChannel:(NSEvent *)e
+{
+	[self navigateChannelEntries:NO withNavigationType:TVCServerListNavigationMovementActiveType];
+}
+
+- (void)selectNextActiveChannel:(NSEvent *)e
+{
+	[self navigateChannelEntries:YES withNavigationType:TVCServerListNavigationMovementActiveType];
+}
+
+- (void)selectPreviousServer:(NSEvent *)e
+{
+	[self navigateServerEntries:NO withNavigationType:TVCServerListNavigationMovementAllType];
+}
+
+- (void)selectNextServer:(NSEvent *)e
+{
+	[self navigateServerEntries:YES withNavigationType:TVCServerListNavigationMovementAllType];
+}
+
+- (void)selectPreviousActiveServer:(NSEvent *)e
+{
+	[self navigateServerEntries:NO withNavigationType:TVCServerListNavigationMovementActiveType];
+}
+
+- (void)selectNextActiveServer:(NSEvent *)e
+{
+	[self navigateServerEntries:YES withNavigationType:TVCServerListNavigationMovementActiveType];
+}
+
+- (void)selectPreviousSelection:(NSEvent *)e
+{
+	[worldController() selectPreviousItem];
+}
+
+- (void)selectNextWindow:(NSEvent *)e
+{
+	[self navigateToNextEntry:YES];
+}
+
+- (void)selectPreviousWindow:(NSEvent *)e
+{
+	[self navigateToNextEntry:NO];
+}
+
+#pragma mark -
+#pragma mark Actions
+
+- (void)tab:(NSEvent *)e
+{
+	TVCMainWindowNegateActionWithAttachedSheet();
+	
+	TXTabKeyAction tabKeyAction = [TPCPreferences tabKeyAction];
+	
+	if (tabKeyAction == TXTabKeyNickCompleteAction) {
+		[self completeNickname:YES];
+	} else if (tabKeyAction == TXTabKeyUnreadChannelAction) {
+		[self navigateChannelEntries:YES withNavigationType:TVCServerListNavigationMovementUnreadType];
+	}
+}
+
+- (void)shiftTab:(NSEvent *)e
+{
+	TVCMainWindowNegateActionWithAttachedSheet();
+	
+	TXTabKeyAction tabKeyAction = [TPCPreferences tabKeyAction];
+	
+	if (tabKeyAction == TXTabKeyNickCompleteAction) {
+		[self completeNickname:NO];
+	} else if (tabKeyAction == TXTabKeyUnreadChannelAction) {
+		[self navigateChannelEntries:NO withNavigationType:TVCServerListNavigationMovementUnreadType];
+	}
+}
+
+- (void)sendControlEnterMessageMaybe:(NSEvent *)e
+{
+	if ([TPCPreferences controlEnterSnedsMessage]) {
+		[self textEntered];
+	} else {
+		[_inputTextField keyDownToSuper:e];
+	}
+}
+
+- (void)sendMsgAction:(NSEvent *)e
+{
+	TVCMainWindowNegateActionWithAttachedSheet();
+	
+	if ([TPCPreferences commandReturnSendsMessageAsAction]) {
+		[self sendText:IRCPrivateCommandIndex("action")];
+	} else {
+		[self textEntered];
+	}
+}
+
+- (void)moveInputHistory:(BOOL)up checkScroller:(BOOL)scroll event:(NSEvent *)event
+{
+	TVCMainWindowNegateActionWithAttachedSheet();
+	
+	if (scroll) {
+		NSInteger nol = [_inputTextField numberOfLines];
+		
+		if (nol >= 2) {
+			BOOL atTop = [_inputTextField isAtTopOfView];
+			BOOL atBottom = [_inputTextField isAtBottomOfView];
+			
+			if ((atTop			&& [event keyCode] == TXKeyDownArrowCode) ||
+				(atBottom		&& [event keyCode] == TXKeyUpArrowCode) ||
+				(atTop == NO	&& atBottom == NO))
+			{
+				[_inputTextField keyDownToSuper:event];
+				
+				return;
+			}
+		}
+	}
+	
+	NSAttributedString *s = [_inputTextField attributedStringValue];
+	
+	if (up) {
+		s = [[TXSharedApplication sharedInputHistoryManager] up:s];
+	} else {
+		s = [[TXSharedApplication sharedInputHistoryManager] down:s];
+	}
+	
+	if (s) {
+		[_inputTextField setAttributedStringValue:s];
+		[_inputTextField resetTextFieldCellSize:NO];
+		[_inputTextField focus];
+	}
+}
+
+- (void)inputHistoryUp:(NSEvent *)e
+{
+	[self moveInputHistory:YES checkScroller:NO event:e];
+}
+
+- (void)inputHistoryDown:(NSEvent *)e
+{
+	[self moveInputHistory:NO checkScroller:NO event:e];
+}
+
+- (void)inputHistoryUpWithScrollCheck:(NSEvent *)e
+{
+	[self moveInputHistory:YES checkScroller:YES event:e];
+}
+
+- (void)inputHistoryDownWithScrollCheck:(NSEvent *)e
+{
+	[self moveInputHistory:NO checkScroller:YES event:e];
+}
+
+- (void)textFormattingBold:(NSEvent *)e
+{
+	TVCMainWindowNegateActionWithAttachedSheet();
+	
+	if ([_formattingMenu boldSet]) {
+		[_formattingMenu removeBoldCharFromTextBox:nil];
+	} else {
+		[_formattingMenu insertBoldCharIntoTextBox:nil];
+	}
+}
+
+- (void)textFormattingItalic:(NSEvent *)e
+{
+	TVCMainWindowNegateActionWithAttachedSheet();
+	
+	if ([_formattingMenu italicSet]) {
+		[_formattingMenu removeItalicCharFromTextBox:nil];
+	} else {
+		[_formattingMenu insertItalicCharIntoTextBox:nil];
+	}
+}
+
+- (void)textFormattingUnderline:(NSEvent *)e
+{
+	TVCMainWindowNegateActionWithAttachedSheet();
+	
+	if ([_formattingMenu underlineSet]) {
+		[_formattingMenu removeUnderlineCharFromTextBox:nil];
+	} else {
+		[_formattingMenu insertUnderlineCharIntoTextBox:nil];
+	}
+}
+
+- (void)textFormattingForegroundColor:(NSEvent *)e
+{
+	TVCMainWindowNegateActionWithAttachedSheet();
+	
+	if ([_formattingMenu foregroundColorSet]) {
+		[_formattingMenu removeForegroundColorCharFromTextBox:nil];
+	} else {
+		NSRect fieldRect = [_inputTextField frame];
+		
+		fieldRect.origin.y -= 200;
+		fieldRect.origin.x += 100;
+		
+		[[_formattingMenu foregroundColorMenu] popUpMenuPositioningItem:nil atLocation:fieldRect.origin inView:_inputTextField];
+	}
+}
+
+- (void)textFormattingBackgroundColor:(NSEvent *)e
+{
+	TVCMainWindowNegateActionWithAttachedSheet();
+	
+	if ([_formattingMenu foregroundColorSet]) {
+		if ([_formattingMenu backgroundColorSet]) {
+			[_formattingMenu removeForegroundColorCharFromTextBox:nil];
+		} else {
+			NSRect fieldRect = [_inputTextField frame];
+			
+			fieldRect.origin.y -= 200;
+			fieldRect.origin.x += 100;
+			
+			[[_formattingMenu backgroundColorMenu] popUpMenuPositioningItem:nil atLocation:fieldRect.origin inView:_inputTextField];
+		}
+	}
+}
+
+- (void)exitFullscreenMode:(NSEvent *)e
+{
+	if ([self isInFullscreenMode] && [_inputTextField isFocused] == NO) {
+		[self toggleFullScreen:nil];
+	} else {
+		[_inputTextField keyDown:e];
+	}
+}
+
+- (void)speakPendingNotifications:(NSEvent *)e
+{
+	[[TXSharedApplication sharedSpeechSynthesizer] stopSpeakingAndMoveForward];
+}
+
+- (void)focusWebview
+{
+	TVCMainWindowNegateActionWithAttachedSheet();
+	
+	TVCLogController *currentCtrl = [worldController() selectedViewController];
+	
+	[self makeFirstResponder:[currentCtrl webView]];
+}
+
+- (void)handler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
+{
+	[self registerKeyHandler:sel key:keyCode modifiers:mods];
+}
+
+- (void)handler:(SEL)sel char:(UniChar)c mods:(NSUInteger)mods
+{
+	[self registerKeyHandler:sel character:c modifiers:mods];
+}
+
+- (void)inputHandler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
+{
+	[_inputTextField registerKeyHandler:sel key:keyCode modifiers:mods];
+}
+
+- (void)inputHandler:(SEL)sel char:(UniChar)c mods:(NSUInteger)mods
+{
+	[_inputTextField registerKeyHandler:sel character:c modifiers:mods];
+}
+
+- (void)registerKeyHandlers
+{
+	[self setKeyHandlerTarget:self];
+	
+	[_inputTextField setKeyHandlerTarget:self];
+	
+	/* Window keyboard shortcuts. */
+	[self handler:@selector(exitFullscreenMode:)				code:TXKeyEscapeCode mods:0];
+	
+	[self handler:@selector(tab:)								code:TXKeyTabCode mods:0];
+	[self handler:@selector(shiftTab:)							code:TXKeyTabCode mods:NSShiftKeyMask];
+	
+	[self handler:@selector(selectPreviousSelection:)			code:TXKeyTabCode mods:NSAlternateKeyMask];
+	
+	[self handler:@selector(textFormattingBold:)				char:'b' mods: NSCommandKeyMask];
+	[self handler:@selector(textFormattingUnderline:)			char:'u' mods:(NSCommandKeyMask | NSAlternateKeyMask)];
+	[self handler:@selector(textFormattingItalic:)				char:'i' mods:(NSCommandKeyMask | NSAlternateKeyMask)];
+	[self handler:@selector(textFormattingForegroundColor:)		char:'c' mods:(NSCommandKeyMask | NSAlternateKeyMask)];
+	[self handler:@selector(textFormattingBackgroundColor:)		char:'h' mods:(NSCommandKeyMask | NSAlternateKeyMask)];
+	
+	[self handler:@selector(speakPendingNotifications:)			char:'.' mods:NSCommandKeyMask];
+	
+	[self handler:@selector(inputHistoryUp:)					char:'p' mods:NSControlKeyMask];
+	[self handler:@selector(inputHistoryDown:)					char:'n' mods:NSControlKeyMask];
+	
+	/* Text field keyboard shortcuts. */
+	[self inputHandler:@selector(sendControlEnterMessageMaybe:) code:TXKeyEnterCode mods:NSControlKeyMask];
+	
+	[self inputHandler:@selector(sendMsgAction:) code:TXKeyReturnCode mods:NSCommandKeyMask];
+	[self inputHandler:@selector(sendMsgAction:) code:TXKeyEnterCode mods:NSCommandKeyMask];
+	
+	[self inputHandler:@selector(focusWebview) char:'l' mods:(NSAlternateKeyMask | NSCommandKeyMask)];
+	
+	[self inputHandler:@selector(inputHistoryUpWithScrollCheck:) code:TXKeyUpArrowCode mods:0];
+	[self inputHandler:@selector(inputHistoryUpWithScrollCheck:) code:TXKeyUpArrowCode mods:NSAlternateKeyMask];
+	
+	[self inputHandler:@selector(inputHistoryDownWithScrollCheck:) code:TXKeyDownArrowCode mods:0];
+	[self inputHandler:@selector(inputHistoryDownWithScrollCheck:) code:TXKeyDownArrowCode mods:NSAlternateKeyMask];
+}
+
+#pragma mark -
+#pragma mark Utilities
+
+- (void)sendText:(NSString *)command
+{
+	NSAttributedString *as = [_inputTextField attributedStringValue];
+	
+	[_inputTextField setAttributedStringValue:[NSAttributedString emptyString]];
+	
+	if ([as length] > 0) {
+		[worldController() inputText:as command:command];
+		
+		[[TXSharedApplication sharedInputHistoryManager] add:as];
+	}
+	
+	[[TXSharedApplication sharedNicknameCompletionStatus] clear:YES];
+}
+
+- (void)textEntered
+{
+	[self sendText:IRCPrivateCommandIndex("privmsg")];
+}
+
+#pragma mark -
+#pragma mark Swipe Events
 
 /* Three Finger Swipe Event
 	This event will only work if 
@@ -87,33 +633,49 @@ static NSValue *touchesToPoint(NSTouch *fingerA, NSTouch *fingerB)
     CGFloat x = [event deltaX];
 	
     if (x > 0) {
-        [[self masterController] selectNextWindow:nil];
+        [self selectNextWindow:nil];
     } else if (x < 0) {
-        [[self masterController] selectPreviousWindow:nil];
+        [self selectPreviousWindow:nil];
     }
 }
 
 - (void)beginGestureWithEvent:(NSEvent *)event
 {
 	CGFloat TVCSwipeMinimumLength = [TPCPreferences swipeMinimumLength];
+	
 	NSAssertReturn(TVCSwipeMinimumLength > 0);
 
 	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseTouching inView:nil];
+	
 	NSAssertReturn([touches count] == 2);
 
 	NSArray *touchArray = [touches allObjects];
 
-	_cachedSwipeOriginPoint = touchesToPoint(touchArray[0], touchArray[1]);
+	_cachedSwipeOriginPoint = [self touchesToPoint:touchArray[0] fingerB:touchArray[1]];
+}
+
+- (NSValue *)touchesToPoint:(NSTouch *)fingerA fingerB:(NSTouch *)fingerB
+{
+	PointerIsEmptyAssertReturn(fingerA, nil);
+	PointerIsEmptyAssertReturn(fingerB, nil);
+	
+	NSSize deviceSize = [fingerA deviceSize];
+	
+	CGFloat x = (([fingerA normalizedPosition].x + [fingerB normalizedPosition].x) / 2 * deviceSize.width);
+	CGFloat y = (([fingerA normalizedPosition].y + [fingerB normalizedPosition].y) / 2 * deviceSize.height);
+	
+	return [NSValue valueWithPoint:NSMakePoint(x, y)];
 }
 
 - (void)endGestureWithEvent:(NSEvent *)event
 {
 	CGFloat TVCSwipeMinimumLength = [TPCPreferences swipeMinimumLength];
+	
 	NSAssertReturn(TVCSwipeMinimumLength > 0);
 
 	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseAny inView:nil];
 
-	if (PointerIsEmpty(_cachedSwipeOriginPoint) || NSDissimilarObjects([touches count], 2)) {
+	if (_cachedSwipeOriginPoint == nil || NSDissimilarObjects([touches count], 2)) {
 		_cachedSwipeOriginPoint = nil;
 
 		return;
@@ -122,11 +684,13 @@ static NSValue *touchesToPoint(NSTouch *fingerA, NSTouch *fingerB)
 	NSArray *touchArray = [touches allObjects];
 
 	NSPoint origin = [_cachedSwipeOriginPoint pointValue];
-	NSPoint dest = [touchesToPoint(touchArray[0], touchArray[1]) pointValue];
+	
+	NSPoint dest = [[self touchesToPoint:touchArray[0] fingerB:touchArray[1]] pointValue];
 
 	_cachedSwipeOriginPoint = nil;
 
-    NSPoint delta = NSMakePoint((origin.x - dest.x), (origin.y - dest.y));
+    NSPoint delta = NSMakePoint((origin.x - dest.x),
+								(origin.y - dest.y));
 
 	if (fabs(delta.y) > fabs(delta.x)) {
 		return;
@@ -137,22 +701,14 @@ static NSValue *touchesToPoint(NSTouch *fingerA, NSTouch *fingerB)
 	}
 
 	if (delta.x > 0) {
-		[[self masterController] selectPreviousWindow:nil];
+		[self selectPreviousWindow:nil];
 	} else {
-		[[self masterController] selectNextWindow:nil];
+		[self selectNextWindow:nil];
 	}
 }
 
-- (void)sendEvent:(NSEvent *)e
-{
-	if ([e type] == NSKeyDown) {
-		if ([_keyHandler processKeyEvent:e]) {
-			return;
-		}
-	}
-	
-	[super sendEvent:e];
-}
+#pragma mark -
+#pragma mark Misc.
 
 - (void)endEditingFor:(id)object
 {
@@ -179,33 +735,30 @@ static NSValue *touchesToPoint(NSTouch *fingerA, NSTouch *fingerB)
 	return YES;
 }
 
-
-+ (NSSize)minimumWindowSize
+- (NSRect)defaultWindowFrame
 {
-	/* Fine, it is not an actual zero requirement for window size, but who would
-	 possibly go below this size? You cannot even see the chat view or anything
-	 in that area at this size. It is being forced at this size to fix a bug
-	 with the input field breaking when it hits a negative draw rect. This can
-	 just be considered a lazy man fix. */
+	NSRect windowFrame = [self frame];
 	
-	if ([RZUserDefaults() boolForKey:@"MinimumWindowSizeIsNotForced"]) {
-		return NSMakeSize(200, 250);
-	} else {
-		return NSMakeSize(600, 250);
-	}
+	windowFrame.size.width = TVCMainWindowDefaultFrameWidth;
+	windowFrame.size.height = TVCMainWindowDefaultFrameHeight;
+	
+	return windowFrame;
 }
 
-+ (NSRect)defaultWindowFrame
+#pragma mark -
+#pragma mark Split View
+
+- (BOOL)splitView:(NSSplitView *)splitView shouldHideDividerAtIndex:(NSInteger)dividerIndex
 {
-	NSRect usable = [[self.masterController.mainWindow screen] visibleFrame];
-	
-	CGFloat w = 800;
-	CGFloat h = 474;
-	
-	CGFloat x = (usable.origin.x + (usable.size.width / 2)) - (w / 2);
-	CGFloat y = (usable.origin.y + (usable.size.height / 2)) - (h / 2);
-	
-	return NSMakeRect(x, y, w, h);
+	if (dividerIndex == 0) {
+		return [_contentSplitView isServerListCollapsed];
+	} else {
+		if (dividerIndex == 1) {
+			return [_contentSplitView isMemberListCollapsed];
+		} else {
+			return NO;
+		}
+	}
 }
 
 @end

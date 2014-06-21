@@ -50,21 +50,13 @@
 @property (nonatomic, uweak) IBOutlet TVCMainWindow *mainWindow;
 @property (nonatomic, nweak) IBOutlet TXMenuController *menuController;
 
-- (IBAction)openWelcomeSheet:(id)sender;
+/* Both wake cycle methods are invoked by TVCMainWindow -awakeFromNib */
+- (void)performAwakeningBeforeMainWindowDidLoad;
+- (void)performAwakeningAfterMainWindowDidLoad;
 
-- (void)textEntered;
-
-- (void)selectNextServer:(NSEvent *)e;
-- (void)selectNextChannel:(NSEvent *)e;
-- (void)selectNextWindow:(NSEvent *)e;
-- (void)selectPreviousServer:(NSEvent *)e;
-- (void)selectPreviousChannel:(NSEvent *)e;
-- (void)selectPreviousWindow:(NSEvent *)e;
-- (void)selectNextActiveServer:(NSEvent *)e;
-- (void)selectNextUnreadChannel:(NSEvent *)e;
-- (void)selectNextActiveChannel:(NSEvent *)e;
-- (void)selectPreviousSelection:(NSEvent *)e;
-- (void)selectPreviousActiveServer:(NSEvent *)e;
-- (void)selectPreviousUnreadChannel:(NSEvent *)e;
-- (void)selectPreviousActiveChannel:(NSEvent *)e;
+/* Notifications are delegated to TVCMainWindow and TVCMainWindow 
+ hands important notifications back to this class. */
+- (void)windowDidChangeScreen:(NSNotification *)notification;
+- (void)windowDidBecomeKey:(NSNotification *)notification;
+- (void)windowDidResignKey:(NSNotification *)notification;
 @end

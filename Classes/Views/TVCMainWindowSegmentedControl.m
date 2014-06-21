@@ -38,15 +38,15 @@
 
 #import "TextualApplication.h"
 
-@implementation TVCMainWindowSegmentedControl
+@implementation TVCMainWindowSegmentedController
 @end
 
-@implementation TVCMainWindowSegmentedCell
+@implementation TVCMainWindowSegmentedControllerCell
 
 - (SEL)action
 {
     if ([self menuForSegment:[self selectedSegment]] == nil) {
-		[[self menuController] showChannelIgnoreList:self];
+		[menuController() showChannelIgnoreList:self];
 
 		return nil;
     } else {
