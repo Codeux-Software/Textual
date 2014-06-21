@@ -324,10 +324,10 @@
 
 - (NSString *)writePath
 {
-	NSString *cachesFolder = [TPCPreferences applicationCachesFolderPath];
+	NSString *cachesFolder = [TPCPathInfo applicationCachesFolderPath];
 
-	id client = [_associatedController client];
-	id channel = [_associatedController channel];
+	id client = [_associatedController associatedClient];
+	id channel = [_associatedController associatedChannel];
 
 	NSString *combinedName;
 

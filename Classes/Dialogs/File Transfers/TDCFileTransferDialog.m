@@ -48,14 +48,15 @@
 - (id)init
 {
 	if (self = [super init]) {
-		self.fileTransfers = [NSMutableArray array];
+		_fileTransfers = [NSMutableArray array];
 		
 		[RZMainBundle() loadCustomNibNamed:@"TDCFileTransferDialog" owner:self topLevelObjects:nil];
 		
-		self.maintenanceTimer = [TLOTimer new];
-		self.maintenanceTimer.delegate = self;
-		self.maintenanceTimer.selector = @selector(onMaintenanceTimer:);
-		self.maintenanceTimer.reqeatTimer = YES;
+		 _maintenanceTimer = [TLOTimer new];
+		
+		[_maintenanceTimer setDelegate:self];
+		[_maintenanceTimer setSelector:@selector(onMaintenanceTimer:)];
+		[_maintenanceTimer setReqeatTimer:YES];
 	}
 	
 	return self;
@@ -64,24 +65,24 @@
 - (void)show:(BOOL)key restorePosition:(BOOL)restoreFrame
 {
 	if (key) {
-		[self.window makeKeyAndOrderFront:nil];
+		[[self window] makeKeyAndOrderFront:nil];
 	} else {
-		[self.window orderFront:nil];
+		[[self window] orderFront:nil];
 	}
 	
 	if (restoreFrame) {
-		[self.window restoreWindowStateForClass:self.class];
+		[[self window] restoreWindowStateForClass:[self class]];
 	}
 }
 
 - (void)close
 {
-	[self.window close];
+	[[self window] close];
 }
 
 - (BOOL)fileTransferExistsWithToken:(NSString *)transferToken
 {
-	for (id e in self.fileTransfers) {
+	for (id e in _fileTransfers) {
 		if (NSObjectsAreEqual(transferToken, [e transferToken])) {
 			return YES;
 		}
@@ -92,7 +93,7 @@
 
 - (TDCFileTransferDialogTransferController *)fileTransferSenderMatchingToken:(NSString *)transferToken
 {
-	for (id e in self.fileTransfers) {
+	for (id e in _fileTransfers) {
 		NSAssertReturnLoopContinue([e isSender]);
 
 		if (NSObjectsAreEqual(transferToken, [e transferToken])) {
@@ -105,7 +106,7 @@
 
 - (TDCFileTransferDialogTransferController *)fileTransferReceiverMatchingToken:(NSString *)transferToken
 {
-	for (id e in self.fileTransfers) {
+	for (id e in _fileTransfers) {
 		NSAssertReturnLoopContinue([e isSender] == NO);
 
 		if (NSObjectsAreEqual(transferToken, [e transferToken])) {
@@ -118,16 +119,16 @@
 
 - (void)prepareForApplicationTermination
 {
-	if (_downloadDestination) {
+	if ( _downloadDestination) {
 		[_downloadDestination stopAccessingSecurityScopedResource];
 	}
 
 	[self close];
 	
-	if ([self.fileTransfers count] > 0) {
+	if ([_fileTransfers count] > 0) {
 		[[TCMPortMapper sharedInstance] stopBlocking];
 		
-		for (id e in self.fileTransfers) {
+		for (id e in _fileTransfers) {
 			[e prepareForDestruction];
 		}
 	}
@@ -135,7 +136,7 @@
 
 - (void)nicknameChanged:(NSString *)oldNickname toNickname:(NSString *)newNickname client:(IRCClient *)client
 {
-	for (id e in self.fileTransfers) {
+	for (id e in _fileTransfers) {
 		if ([e associatedClient] == client) {
 			if (NSObjectsAreEqual([e peerNickname], oldNickname)) {
 				[e setPeerNickname:newNickname];
@@ -182,7 +183,7 @@
 	if ([TPCPreferences fileTransferRequestReplyAction] == TXFileTransferRequestReplyAutomaticallyDownloadAction) {
 		/* If the user is set to automatically download, then just save to the downloads folder. */
 		if ([groupItem path] == nil) {
-			[groupItem setPath:[TPCPreferences userDownloadFolderPath]];
+			[groupItem setPath:[TPCPathInfo userDownloadFolderPath]];
 		}
 
 		/* Begin the transfer. */
@@ -234,7 +235,7 @@
 {
 	BOOL enabled = NO;
 	
-	for (id e in self.fileTransfers) {
+	for (id e in _fileTransfers) {
 		if ([e transferStatus] == TDCFileTransferDialogTransferErrorStatus ||
 			[e transferStatus] == TDCFileTransferDialogTransferCompleteStatus ||
 			[e transferStatus] == TDCFileTransferDialogTransferStoppedStatus)
@@ -245,29 +246,29 @@
 		}
 	}
 	
-	[self.clearButton setEnabled:enabled];
+	[_clearButton setEnabled:enabled];
 }
 
 - (void)addReceiver:(TDCFileTransferDialogTransferController *)groupItem
 {
-	[self.fileTransfers insertObject:groupItem atIndex:0];
+	[_fileTransfers insertObject:groupItem atIndex:0];
 	
 	if ([self navigationSelection] == TDCFileTransferDialogNavigationControllerAllSelectedTab ||
 		[self navigationSelection] == TDCFileTransferDialogNavigationControllerReceivingSelectedTab)
 	{
-		[self.fileTransferTable insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+		[_fileTransferTable insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
 									  withAnimation:NSTableViewAnimationSlideDown];
 	}
 }
 
 - (void)addSender:(TDCFileTransferDialogTransferController *)groupItem
 {
-	[self.fileTransfers insertObject:groupItem atIndex:0];
+	[_fileTransfers insertObject:groupItem atIndex:0];
 	
 	if ([self navigationSelection] == TDCFileTransferDialogNavigationControllerAllSelectedTab ||
 		[self navigationSelection] == TDCFileTransferDialogNavigationControllerSendingSelectedTab)
 	{
-		[self.fileTransferTable insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+		[_fileTransferTable insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
 									  withAnimation:NSTableViewAnimationSlideDown];
 	}
 }
@@ -280,19 +281,19 @@
 	NSInteger tag = [item tag];
 	
 	/* What are we going to do with nothing selected? */
-	if ([self.fileTransferTable countSelectedRows] <= 0) {
+	if ([_fileTransferTable countSelectedRows] <= 0) {
 		return NO;
 	}
 	
 	/* Build array of all selected rows. */
 	NSMutableArray *sel = [NSMutableArray array];
 	
-	NSIndexSet *indexes = [self.fileTransferTable selectedRowIndexes];
+	NSIndexSet *indexes = [_fileTransferTable selectedRowIndexes];
 	
 	for (NSNumber *index in [indexes arrayFromIndexSet]) {
 		NSInteger actlIndex = [index integerValue];
 		
-		[sel addObject:self.fileTransfers[actlIndex]];
+		[sel addObject:_fileTransfers[actlIndex]];
 	}
 	
 	/* Begin actual validation. */
@@ -372,8 +373,8 @@
 
 - (void)clear:(id)sender
 {
-	for (NSInteger i = ([self.fileTransfers count] - 1); i >= 0; i--) {
-		id obj = self.fileTransfers[i];
+	for (NSInteger i = ([_fileTransfers count] - 1); i >= 0; i--) {
+		id obj = _fileTransfers[i];
 		
 		if ([obj transferStatus] == TDCFileTransferDialogTransferErrorStatus ||
 			[obj transferStatus] == TDCFileTransferDialogTransferCompleteStatus ||
@@ -381,25 +382,25 @@
 		{
 			[obj prepareForDestruction];
 			
-			[self.fileTransfers removeObjectAtIndex:i];
+			[_fileTransfers removeObjectAtIndex:i];
 		}
 	}
 	
-	[self.fileTransferTable reloadData];
+	[_fileTransferTable reloadData];
 	
 	[self updateClearButton];
 }
 
 - (void)startTransferOfFile:(id)sender
 {
-	NSIndexSet *indexes = [self.fileTransferTable selectedRowIndexes];
+	NSIndexSet *indexes = [_fileTransferTable selectedRowIndexes];
 	
 	__block NSMutableArray *incomingTransfers = [NSMutableArray array];
 	
 	for (NSNumber *index in [indexes arrayFromIndexSet]) {
 		NSInteger actualIndx = [index integerValue];
 		
-		id e = self.fileTransfers[actualIndx];
+		id e = _fileTransfers[actualIndx];
 		
 		if ([e transferStatus] == TDCFileTransferDialogTransferErrorStatus ||
 			[e transferStatus] == TDCFileTransferDialogTransferStoppedStatus)
@@ -419,7 +420,7 @@
 	if ([incomingTransfers count] > 0) {
 		NSOpenPanel *d = [NSOpenPanel openPanel];
 		
-		NSURL *folderRep = [NSURL fileURLWithPath:[TPCPreferences userDownloadFolderPath]];
+		NSURL *folderRep = [NSURL fileURLWithPath:[TPCPathInfo userDownloadFolderPath]];
 		
 		[d setDirectoryURL:folderRep];
 		
@@ -432,7 +433,7 @@
 		[d setPrompt:BLS(1225)];
 		[d setMessage:TXTLS(@"TDCFileTransferDialog[1021]")];
 		
-		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
+		[d beginSheetModalForWindow:[self window] completionHandler:^(NSInteger result) {
 			if (result == NSOKButton) {
 				NSString *newPath = [d.URL path]; // Define path.
 				
@@ -449,12 +450,12 @@
 
 - (void)stopTransferOfFile:(id)sender
 {
-	NSIndexSet *indexes = [self.fileTransferTable selectedRowIndexes];
+	NSIndexSet *indexes = [_fileTransferTable selectedRowIndexes];
 	
 	for (NSNumber *index in [indexes arrayFromIndexSet]) {
 		NSInteger actualIndx = [index integerValue];
 		
-		id e = self.fileTransfers[actualIndx];
+		id e = _fileTransfers[actualIndx];
 		
 		[(TDCFileTransferDialogTransferController *)e close:NO];
 	}
@@ -462,30 +463,30 @@
 
 - (void)removeTransferFromList:(id)sender
 {
-	NSIndexSet *indexes = [self.fileTransferTable selectedRowIndexes];
+	NSIndexSet *indexes = [_fileTransferTable selectedRowIndexes];
 	
-	[self.fileTransferTable removeRowsAtIndexes:indexes
+	[_fileTransferTable removeRowsAtIndexes:indexes
 								  withAnimation:NSTableViewAnimationSlideUp];
 	
 	for (NSNumber *index in [indexes arrayFromIndexSet]) {
 		NSInteger actualIndx = [index integerValue];
 		
-		id e = self.fileTransfers[actualIndx];
+		id e = _fileTransfers[actualIndx];
 		
 		[e prepareForDestruction];
 		
-		[self.fileTransfers removeObjectAtIndex:actualIndx];
+		[_fileTransfers removeObjectAtIndex:actualIndx];
 	}
 }
 
 - (void)openReceivedFile:(id)sender
 {
-	NSIndexSet *indexes = [self.fileTransferTable selectedRowIndexes];
+	NSIndexSet *indexes = [_fileTransferTable selectedRowIndexes];
 	
 	for (NSNumber *index in [indexes arrayFromIndexSet]) {
 		NSInteger actualIndx = [index integerValue];
 		
-		id e = self.fileTransfers[actualIndx];
+		id e = _fileTransfers[actualIndx];
 		
 		NSAssertReturnLoopContinue([e isSender] == NO);
 		
@@ -495,12 +496,12 @@
 
 - (void)revealReceivedFileInFinder:(id)sender
 {
-	NSIndexSet *indexes = [self.fileTransferTable selectedRowIndexes];
+	NSIndexSet *indexes = [_fileTransferTable selectedRowIndexes];
 	
 	for (NSNumber *index in [indexes arrayFromIndexSet]) {
 		NSInteger actualIndx = [index integerValue];
 		
-		id e = self.fileTransfers[actualIndx];
+		id e = _fileTransfers[actualIndx];
 		
 		NSAssertReturnLoopContinue([e isSender] == NO);
 		
@@ -515,7 +516,7 @@
 {
 	BOOL foundActive = NO;
 	
-	for (id e in self.fileTransfers) {
+	for (id e in _fileTransfers) {
 		if ([e transferStatus] == TDCFileTransferDialogTransferReceivingStatus ||
 			[e transferStatus] == TDCFileTransferDialogTransferSendingStatus)
 		{
@@ -525,13 +526,13 @@
 		}
 	}
 	
-    if ([self.maintenanceTimer timerIsActive]) {
+    if ([_maintenanceTimer timerIsActive]) {
         if (foundActive == NO) {
-            [self.maintenanceTimer stop];
+            [_maintenanceTimer stop];
         }
     } else {
         if (foundActive) {
-            [self.maintenanceTimer start:1];
+            [_maintenanceTimer start:1];
         }
     }
 }
@@ -543,7 +544,7 @@
 
 - (void)onMaintenanceTimer:(TLOTimer *)sender
 {
-	for (id e in self.fileTransfers) {
+	for (id e in _fileTransfers) {
 		if ([e transferStatus] == TDCFileTransferDialogTransferReceivingStatus ||
 			[e transferStatus] == TDCFileTransferDialogTransferSendingStatus)
 		{
@@ -558,7 +559,7 @@
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
 	if ([self navigationSelection] == TDCFileTransferDialogNavigationControllerAllSelectedTab) {
-		return [self.fileTransfers count];
+		return [_fileTransfers count];
 	} else if ([self navigationSelection] == TDCFileTransferDialogNavigationControllerReceivingSelectedTab) {
 		return [self countNumberOfReceivers];
 	} else if ([self navigationSelection] == TDCFileTransferDialogNavigationControllerSendingSelectedTab) {
@@ -573,11 +574,11 @@
 	id rowObj;
 
 	if ([self navigationSelection] == TDCFileTransferDialogNavigationControllerAllSelectedTab) {
-		rowObj = self.fileTransfers[row];
+		rowObj = _fileTransfers[row];
 	} else {
 		NSInteger count = 0;
 		
-		for (id e in self.fileTransfers) {
+		for (id e in _fileTransfers) {
 			if ([self navigationSelection] == TDCFileTransferDialogNavigationControllerReceivingSelectedTab) {
 				NSAssertReturnLoopContinue([e isSender] == NO);
 				
@@ -601,7 +602,7 @@
 	}
 	
 	if (rowObj) {
-		NSView *newView = [self.fileTransferTable makeViewWithIdentifier:@"GroupView" owner:self];
+		NSView *newView = [_fileTransferTable makeViewWithIdentifier:@"GroupView" owner:self];
 		
 		if ([newView isKindOfClass:[TDCFileTransferDialogTableCell class]]) {
 			TDCFileTransferDialogTableCell *cell = (TDCFileTransferDialogTableCell *)newView;
@@ -625,14 +626,14 @@
 
 - (void)clearCachedIPAddress
 {
-	self.cachedIPAddress = nil;
+	_cachedIPAddress = nil;
 
-	self.sourceIPAddressRequestPending = NO;
+	_sourceIPAddressRequestPending = NO;
 }
 
 - (void)requestIPAddressFromExternalSource
 {
-	self.sourceIPAddressRequestPending = YES;
+	_sourceIPAddressRequestPending = YES;
 
 	TDCFileTransferDialogRemoteAddress *request = [TDCFileTransferDialogRemoteAddress new];
 		
@@ -643,10 +644,10 @@
 {
 	LogToConsole(@"Failed to complete connection request with error: %@", [errPntr localizedDescription]);
 	
-	self.sourceIPAddressRequestPending = NO;
+	_sourceIPAddressRequestPending = NO;
 
 	/* Post source IP address error. */
-	for (id e in self.fileTransfers) {
+	for (id e in _fileTransfers) {
 		NSAssertReturnLoopContinue([e isSender]);
 		
 		if ([e transferStatus] == TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus) {
@@ -664,12 +665,12 @@
 	NSAssertReturn([address isIPAddress]);
 	
 	/* Okay, we are good… */
-	self.cachedIPAddress = address;
+	_cachedIPAddress = address;
 
-	self.sourceIPAddressRequestPending = NO;
+	_sourceIPAddressRequestPending = NO;
 
 	/* Open pending transfers. */
-	for (id e in self.fileTransfers) {
+	for (id e in _fileTransfers) {
 		NSAssertReturnLoopContinue([e isSender]);
 		
 		if ([e transferStatus] == TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus) {
@@ -683,14 +684,14 @@
 
 - (TDCFileTransferDialogNavigationControllerSelectedTab)navigationSelection
 {
-	return [self.navigationControllerCell selectedSegment];
+	return [_navigationControllerCell selectedSegment];
 }
 
 - (NSInteger)countNumberOfReceivers
 {
 	NSInteger count = 0;
 	
-	for (id e in self.fileTransfers) {
+	for (id e in _fileTransfers) {
 		NSAssertReturnLoopContinue([e isSender] == NO);
 		
 		count += 1;
@@ -703,7 +704,7 @@
 {
 	NSInteger count = 0;
 	
-	for (id e in self.fileTransfers) {
+	for (id e in _fileTransfers) {
 		NSAssertReturnLoopContinue([e isSender]);
 		
 		count += 1;
@@ -714,7 +715,7 @@
 
 - (IBAction)navigationSelectionDidChange:(id)sender
 {
-	[self.fileTransfers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
+	[_fileTransfers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
 	{
 		BOOL selectedAll = ([self navigationSelection] == TDCFileTransferDialogNavigationControllerAllSelectedTab);
 		
@@ -738,7 +739,7 @@
 		}
 	}];
 	
-	[self.fileTransferTable reloadData];
+	[_fileTransferTable reloadData];
 }
 
 #pragma mark -
@@ -763,7 +764,7 @@
 	if (resolveError) {
 		DebugLogToConsole(@"Error creating bookmark for URL: %@", [resolveError localizedDescription]);
 	} else {
-		_downloadDestination = resolvedBookmark;
+			 _downloadDestination = resolvedBookmark;
 		
 		if ([_downloadDestination startAccessingSecurityScopedResource] == NO) {
 			DebugLogToConsole(@"Failed to access bookmark.");
@@ -774,7 +775,7 @@
 - (void)setDownloadDestinationFolder:(id)value
 {
 	/* Destroy old pointer if needed. */
-	if (PointerIsNotEmpty(_downloadDestination)) {
+	if ( _downloadDestination) {
 		[_downloadDestination stopAccessingSecurityScopedResource];
 		 _downloadDestination = nil;
 	}
@@ -791,7 +792,7 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	[self.window saveWindowStateForClass:self.class];
+	[[self window] saveWindowStateForClass:[self class]];
 }
 
 @end
