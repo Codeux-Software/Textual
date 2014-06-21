@@ -38,6 +38,7 @@
 #import "TextualApplication.h"
 
 @interface TDCHighlightListSheet : TDCSheetBase
+@property (nonatomic, strong) NSString *clientID;
 @property (nonatomic, nweak) IBOutlet NSTextField *headerTitleField;
 @property (nonatomic, nweak) IBOutlet TVCListView *highlightListTable;
 

@@ -57,41 +57,45 @@
 - (void)start
 {
 	/* Start populating. */
-	if (NSObjectIsNotEmpty(self.config.matchKeyword)) {
-		self.matchKeywordTextField.stringValue = self.config.matchKeyword;
+	if ([_config matchKeyword]) {
+		[_matchKeywordTextField setStringValue:[_config matchKeyword]];
 	}
 
-	if (self.config.matchIsExcluded) {
-		[self.matchTypePopupButton selectItemWithTag:2];
+	if ([_config matchIsExcluded]) {
+		[_matchTypePopupButton selectItemWithTag:2];
 	} else {
-		[self.matchTypePopupButton selectItemWithTag:1];
+		[_matchTypePopupButton selectItemWithTag:1];
 	}
 
 	/* Channel list. */
-	IRCClient *client = [self.worldController findClientById:self.clientID];
+	IRCClient *client = [worldController() findClientById:_clientID];
 
-	if (PointerIsEmpty(client) || client.channels.count <= 0) {
-		/* If we have nothing, hide the menu divider under "All Channels" */
+	NSInteger channelCount = 0;
+	
+	for (IRCChannel *channel in [client channels]) {
+		NSAssertReturnLoopContinue([channel isChannel]);
 		
-		[self.matchChannelPopupButton removeItemAtIndex:1];
-	} else {
-		/* Start populating channels. */
-		for (IRCChannel *channel in client.channels) {
-			NSAssertReturnLoopContinue(channel.isChannel);
-			
-			[self.matchChannelPopupButton addItemWithTitle:channel.name];
-
-			/* Select the channel with matching IDs. */
-			if ([channel.config.itemUUID isEqualToString:self.config.matchChannelID]) {
-				[self.matchChannelPopupButton selectItemWithTitle:channel.name];
-			}
+		/* Add channels that are actual channels. */
+		[_matchChannelPopupButton addItemWithTitle:[channel name]];
+		
+		channelCount += 1;
+		
+		/* Select the channel with matching IDs. */
+		if ([[channel uniqueIdentifier] isEqualToString:[_config matchChannelID]]) {
+			[_matchChannelPopupButton selectItemWithTitle:[channel name]];
 		}
 	}
-
+	
+	if (client == nil || channelCount == 0) {
+		/* If we have nothing, hide the menu divider under "All Channels" */
+		
+		[_matchChannelPopupButton removeItemAtIndex:1];
+	}
+	
 	/* Pop the sheet. */
 	[self startSheet];
 
-	[self.sheet makeFirstResponder:self.matchKeywordTextField];
+	[[self sheet] makeFirstResponder:_matchKeywordTextField];
 
 	[self updateSaveButton];
 }
@@ -99,17 +103,17 @@
 - (void)ok:(id)sender
 {
 	/* Save keyword. */
-	self.config.matchKeyword = self.matchKeywordTextField.stringValue;
+	[_config setMatchKeyword:[_matchKeywordTextField stringValue]];
 
 	/* Channel. */
-	NSInteger selectedItem = self.matchChannelPopupButton.indexOfSelectedItem;
+	NSInteger selectedItem = [_matchChannelPopupButton indexOfSelectedItem];
 
-	NSString *selectedTitle = self.matchChannelPopupButton.titleOfSelectedItem;
+	NSString *selectedTitle = [_matchChannelPopupButton titleOfSelectedItem];
 
 	BOOL zeroOutChannel = YES;
 
 	if (selectedItem > 0) { // 0 = ALL CHANNELS
-		IRCClient *client = [self.worldController findClientById:self.clientID];
+		IRCClient *client = [worldController() findClientById:_clientID];
 
 		if (client) {
 			IRCChannel *channel = [client findChannel:selectedTitle];
@@ -117,22 +121,22 @@
 			if (channel) {
 				zeroOutChannel = NO;
 				
-				self.config.matchChannelID = channel.config.itemUUID;
+				[_config setMatchChannelID:[channel uniqueIdentifier]];
 			}
 		}
 	}
 
 	if (zeroOutChannel) {
-		self.config.matchChannelID = NSStringEmptyPlaceholder;
+		[_config setMatchChannelID:NSStringEmptyPlaceholder];
 	}
 
 	/* Entry type. */
-	self.config.matchIsExcluded = (self.matchTypePopupButton.selectedTag == 2);
+	_config.matchIsExcluded = ([_matchTypePopupButton selectedTag] == 2);
 
 	/* Finish. */
 
-	if ([self.delegate respondsToSelector:@selector(highlightEntrySheetOnOK:)]) {
-		[self.delegate highlightEntrySheetOnOK:self];
+	if ([[self delegate] respondsToSelector:@selector(highlightEntrySheetOnOK:)]) {
+		[[self delegate] highlightEntrySheetOnOK:self];
 	}
 	
 	[super ok:nil];
@@ -140,9 +144,9 @@
 
 - (void)updateSaveButton
 {
-	NSString *keyword = self.matchKeywordTextField.trimmedStringValue;
+	NSString *keyword = [_matchKeywordTextField trimmedStringValue];
 
-	[self.okButton setEnabled:(keyword.length > 0)];
+	[[self okButton] setEnabled:([keyword length] > 0)];
 }
 
 #pragma mark -
@@ -150,8 +154,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([self.delegate respondsToSelector:@selector(highlightEntrySheetWillClose:)]) {
-		[self.delegate highlightEntrySheetWillClose:self];
+	if ([[self delegate] respondsToSelector:@selector(highlightEntrySheetWillClose:)]) {
+		[[self delegate] highlightEntrySheetWillClose:self];
 	}
 }
 
@@ -165,12 +169,12 @@
 - (id)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [super init])) {
-		self.itemUUID = [dic objectForKey:@"uniqueIdentifier" orUseDefault:[NSString stringWithUUID]];
+		_itemUUID = [dic objectForKey:@"uniqueIdentifier" orUseDefault:[NSString stringWithUUID]];
 
-		self.matchKeyword = [dic objectForKey:@"matchKeyword" orUseDefault:NSStringEmptyPlaceholder];
-		self.matchChannelID = [dic objectForKey:@"matchChannelID" orUseDefault:NSStringEmptyPlaceholder];
+		_matchKeyword = [dic objectForKey:@"matchKeyword" orUseDefault:NSStringEmptyPlaceholder];
+		_matchChannelID = [dic objectForKey:@"matchChannelID" orUseDefault:NSStringEmptyPlaceholder];
 
-		self.matchIsExcluded = [dic integerForKey:@"matchIsExcluded" orUseDefault:NO];
+		_matchIsExcluded = [dic integerForKey:@"matchIsExcluded" orUseDefault:NO];
 
 		return self;
 	}
@@ -182,12 +186,12 @@
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 
-	[dic safeSetObject:self.itemUUID forKey:@"uniqueIdentifier"];
+	[dic maybeSetObject:_itemUUID forKey:@"uniqueIdentifier"];
 
-	[dic safeSetObject:self.matchKeyword	forKey:@"matchKeyword"];
-	[dic safeSetObject:self.matchChannelID	forKey:@"matchChannelID"];
+	[dic maybeSetObject:_matchKeyword	forKey:@"matchKeyword"];
+	[dic maybeSetObject:_matchChannelID	forKey:@"matchChannelID"];
 
-	[dic setBool:self.matchIsExcluded forKey:@"matchIsExcluded"];
+	[dic setBool:_matchIsExcluded forKey:@"matchIsExcluded"];
 
 	return dic;
 }

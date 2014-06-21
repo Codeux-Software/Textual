@@ -44,8 +44,8 @@
     if ((self = [super init])) {
 		[RZMainBundle() loadCustomNibNamed:@"TDChanBanExceptionSheet" owner:self topLevelObjects:nil];
 		
-		self.exceptionList = [NSMutableArray new];
-        self.changeModeList = [NSMutableArray new];
+		_exceptionList = [NSMutableArray new];
+        _changeModeList = [NSMutableArray new];
     }
     
     return self;
@@ -53,36 +53,36 @@
 
 - (void)releaseTableViewDataSourceBeforeSheetClosure
 {
-	self.exceptionTable.delegate = nil;
-	self.exceptionTable.dataSource = nil;
+	[_exceptionTable setDelegate:nil];
+	[_exceptionTable setDataSource:nil];
 }
 
 - (void)show
 {
-	IRCChannel *c = self.worldController.selectedChannel;
+	IRCChannel *c = [worldController() findChannelByClientId:_clientID channelId:_channelID];
 
-	self.headerTitleField.stringValue = [NSString stringWithFormat:self.headerTitleField.stringValue, c.name];
+	[_headerTitleField setStringValue:[NSString stringWithFormat:[_headerTitleField stringValue], [c name]]];
 	
     [self startSheet];
 }
 
 - (void)clear
 {
-    [self.exceptionList removeAllObjects];
+    [_exceptionList removeAllObjects];
 	
     [self reloadTable];
 }
 
 - (void)addException:(NSString *)host tset:(NSString *)timeSet setby:(NSString *)owner
 {
-    [self.exceptionList safeAddObject:@[host, [owner nicknameFromHostmask], timeSet]];
+    [_exceptionList addObject:@[host, [owner nicknameFromHostmask], timeSet]];
     
     [self reloadTable];
 }
 
 - (void)reloadTable
 {
-    [self.exceptionTable reloadData];
+    [_exceptionTable reloadData];
 }
 
 #pragma mark -
@@ -90,8 +90,8 @@
 
 - (void)onUpdate:(id)sender
 {
-    if ([self.delegate respondsToSelector:@selector(chanBanExceptionDialogOnUpdate:)]) {
-		[self.delegate chanBanExceptionDialogOnUpdate:self];
+    if ([[self delegate] respondsToSelector:@selector(chanBanExceptionDialogOnUpdate:)]) {
+		[[self delegate] chanBanExceptionDialogOnUpdate:self];
     }
 }
 
@@ -102,24 +102,22 @@
 	NSMutableString *mdstr = [NSMutableString stringWithString:@"-"];
 	NSMutableString *trail = [NSMutableString string];
 	
-	NSIndexSet *indexes = [self.exceptionTable selectedRowIndexes];
+	NSIndexSet *indexes = [_exceptionTable selectedRowIndexes];
 	
     NSInteger indexTotal = 0;
     
 	for (NSNumber *index in [indexes arrayFromIndexSet]) {
         indexTotal++;
         
-		NSArray *iteml = [self.exceptionList safeObjectAtIndex:index.unsignedIntegerValue];
+		NSArray *iteml = [_exceptionList objectAtIndex:[index unsignedIntegerValue]];
 		
-		if (NSObjectIsNotEmpty(iteml)) {
-			[mdstr appendString:@"e"];
-			[trail appendFormat:@" %@", [iteml safeObjectAtIndex:0]];
-		}
+		[mdstr appendString:@"e"];
+		[trail appendFormat:@" %@", iteml[0]];
     
 		if (indexTotal == TXMaximumNodesPerModeCommand) {
             modeString = (id)[mdstr stringByAppendingString:trail];
             
-            [self.changeModeList safeAddObject:modeString];
+            [_changeModeList addObject:modeString];
             
             [mdstr setString:@"-"];
             [trail setString:NSStringEmptyPlaceholder];
@@ -131,7 +129,7 @@
     if (NSObjectIsNotEmpty(mdstr)) {
         modeString = (id)[mdstr stringByAppendingString:trail];
         
-        [self.changeModeList safeAddObject:modeString];
+        [_changeModeList addObject:modeString];
     }
 
 	[super cancel:nil];
@@ -142,19 +140,19 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-    return self.exceptionList.count;
+	return [_exceptionList count];
 }
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    NSArray *item = [self.exceptionList safeObjectAtIndex:row];
+    NSArray *item = [_exceptionList objectAtIndex:row];
     
-    if ([column.identifier isEqualToString:@"mask"]) {
-		return [item safeObjectAtIndex:0];
-    } else if ([column.identifier isEqualToString:@"setby"]) {
-		return [item safeObjectAtIndex:1];
+    if ([[column identifier] isEqualToString:@"mask"]) {
+		return item[0];
+    } else if ([[column identifier] isEqualToString:@"setby"]) {
+		return item[1];
     } else {
-		return [item safeObjectAtIndex:2];
+		return item[2];
     }
 }
 
@@ -163,8 +161,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([self.delegate respondsToSelector:@selector(chanBanExceptionDialogWillClose:)]) {
-		[self.delegate chanBanExceptionDialogWillClose:self];
+	if ([[self delegate] respondsToSelector:@selector(chanBanExceptionDialogWillClose:)]) {
+		[[self delegate] chanBanExceptionDialogWillClose:self];
 	}
 }
 

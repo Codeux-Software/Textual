@@ -42,12 +42,12 @@
 
 - (void)startSheet
 {
-	[self startSheetWithWindow:self.window];
+	[self startSheetWithWindow:_sheet];
 }
 
 - (void)startSheetWithWindow:(NSWindow *)awindow
 {
-	[NSApp beginSheet:self.sheet
+	[NSApp beginSheet:_sheet
 	   modalForWindow:awindow
 		modalDelegate:self
 	   didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:)
@@ -58,7 +58,7 @@
 {
 	[self releaseTableViewDataSourceBeforeSheetClosure];
 
-	[NSApp endSheet:self.sheet];
+	[NSApp endSheet:_sheet];
 }
 
 - (void)releaseTableViewDataSourceBeforeSheetClosure
@@ -68,7 +68,7 @@
 
 - (void)sheetDidEnd:(NSWindow *)sender returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
-	[self.sheet close];
+	[_sheet close];
 }
 
 - (void)ok:(id)sender
