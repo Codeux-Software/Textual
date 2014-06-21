@@ -48,25 +48,25 @@
 
 - (void)popWelcomeAddServerView
 {
-	if (self.stackLocked == NO) {
+	if (_stackLocked == NO) {
 #ifdef TEXTUAL_TRIAL_BINARY
-		[self displayView:self.welcomeAddServerTrialView];
+		[self displayView:_welcomeAddServerTrialView];
 		
-		[self.welcomePurchaseTextualButton setAction:@selector(openMacAppStoreDownloadPage:)];
-		[self.welcomePurchaseTextualButton setTarget:[self menuController]];
+		[_welcomePurchaseTextualButton setAction:@selector(openMacAppStoreDownloadPage:)];
+		[_welcomePurchaseTextualButton setTarget:menuController()];
 #else
-		[self displayView:self.welcomeAddServerView];
+		[self displayView:_welcomeAddServerNormalView];
 #endif
 	}
 }
 
 - (void)popLoadingConfigurationView
 {
-	if (self.stackLocked == NO) {
-		[self displayView:self.loadingConfigurationView];
+	if (_stackLocked == NO) {
+		[self displayView:_loadingConfigurationView];
 
-		[self.loadingConfigurationViewPI startAnimation:nil];
-		[self.loadingConfigurationViewPI setDisplayedWhenStopped:YES];
+		[_loadingConfigurationViewPI startAnimation:nil];
+		[_loadingConfigurationViewPI setDisplayedWhenStopped:YES];
 	}	
 }
 
@@ -75,9 +75,9 @@
 
 - (void)hideLoadingConfigurationView
 {
-	if (self.stackLocked == NO) {
-		[self.loadingConfigurationViewPI stopAnimation:nil];
-		[self.loadingConfigurationViewPI setDisplayedWhenStopped:NO];
+	if (_stackLocked == NO) {
+		[_loadingConfigurationViewPI stopAnimation:nil];
+		[_loadingConfigurationViewPI setDisplayedWhenStopped:NO];
 	}
 	
 	[self hideAll:YES];
@@ -85,8 +85,8 @@
 
 - (void)hideLoadingConfigurationView:(BOOL)animate
 {
-	if (self.stackLocked == NO) {
-		[self.loadingConfigurationViewPI stopAnimation:nil];
+	if (_stackLocked == NO) {
+		[_loadingConfigurationViewPI stopAnimation:nil];
 	}
 
 	[self hideAll:animate];
@@ -113,7 +113,7 @@
 
 - (void)hideAll:(BOOL)animate
 {
-	if (self.stackLocked == NO) {
+	if (_stackLocked == NO) {
 		for (NSView *alv in [self allViews]) {
 			if ([alv isHidden] == NO) {
 				[self hideView:alv animate:animate];
@@ -129,8 +129,8 @@
 {
 	NSRect viewFrame = [view frame];
 	
-	[self.loadingScreenMinimumWidthConstraint setConstant:viewFrame.size.width];
-	[self.loadingScreenMinimumHeightConstraint setConstant:viewFrame.size.height];
+	[_loadingScreenMinimumWidthConstraint setConstant:viewFrame.size.width];
+	[_loadingScreenMinimumHeightConstraint setConstant:viewFrame.size.height];
 	
 	[self disableBackgroundControls];
 
@@ -139,6 +139,7 @@
 	
 	[self setHidden:NO];
 	[self setAlphaValue:1.0];
+	
 	[self displayIfNeeded];
 }
 
@@ -150,30 +151,30 @@
 	/* The primary view and background view must be set to hidden instead of simply setting
 	 it to 0.0 alpha. If only the alpha is changed, then the underlying WebView will not be
 	 able to register mouse movements over elements because the views are invisible and on
-	 top of the WebView itself. */
+	 top of the WebView it_ */
 	
 	[self enableBackgroundControls];
 	
-	[self.loadingScreenMinimumWidthConstraint setConstant:0];
-	[self.loadingScreenMinimumHeightConstraint setConstant:0];
+	[_loadingScreenMinimumWidthConstraint setConstant:0];
+	[_loadingScreenMinimumHeightConstraint setConstant:0];
 	
 	if (animate == NO) {
 		[view setHidden:YES];
-		
+	
 		[self setHidden:YES];
 		[self setAlphaValue:0.0];
 	} else {
 		[RZAnimationCurrentContext() setDuration:0.8];
 
 		[NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-			self.stackLocked = animate;
+			_stackLocked = animate;
 
-			[self.animator setAlphaValue:0.0];
+			[[self animator] setAlphaValue:0.0];
 		} completionHandler:^{
 			[view setHidden:YES];
 			[self setHidden:YES];
 
-			self.stackLocked = NO;
+			_stackLocked = NO;
 		}];
 	}
 }
@@ -183,7 +184,7 @@
 
 - (BOOL)viewIsVisible
 {
-	return ([self isHidden] == NO || self.stackLocked);
+	return ([self isHidden] == NO || _stackLocked);
 }
 
 - (NSArray *)allViews
@@ -191,30 +192,30 @@
 	/* For future expansion. */
 
 	return @[
-		self.loadingConfigurationView,
-		self.welcomeAddServerView,
-		self.welcomeAddServerTrialView
+		_loadingConfigurationView,
+		_welcomeAddServerNormalView,
+		_welcomeAddServerTrialView
 	];
 }
 
 - (void)disableBackgroundControls
 {
-	[[[self masterController] inputTextField] setEditable:NO];
-	[[[self masterController] inputTextField] setSelectable:NO];
+	[mainWindowTextField() setEditable:NO];
+	[mainWindowTextField() setSelectable:NO];
 	
-	[[[self masterController] mainWindowButtonController] setEnabled:NO];
+	[mainWindowTextField() updateSegmentedController];
 
-	[self.backgroundContentView setHidden:YES];
+	[_backgroundContentView setHidden:YES];
 }
 
 - (void)enableBackgroundControls
 {
-	[[[self masterController] inputTextField] setEditable:YES];
-	[[[self masterController] inputTextField] setSelectable:YES];
+	[mainWindowTextField() setEditable:YES];
+	[mainWindowTextField() setSelectable:YES];
 	
-	[[self masterController] updateSegmentedController];
+	[mainWindowTextField() updateSegmentedController];
 
-	[self.backgroundContentView setHidden:NO];
+	[_backgroundContentView setHidden:NO];
 }
 
 @end

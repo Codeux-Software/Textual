@@ -98,17 +98,17 @@
 
 - (BOOL)isServerListCollapsed
 {
-	return [self isSubviewCollapsed:self.subviews[0]];
+	return [self isSubviewCollapsed:[self subviews][0]];
 }
 
 - (BOOL)isMemberListCollapsed
 {
-	return [self isSubviewCollapsed:self.subviews[2]];
+	return [self isSubviewCollapsed:[self subviews][2]];
 }
 
 - (void)collapseViewAtIndex:(NSInteger)dividerIndex
 {
-	NSView *theView = self.subviews[dividerIndex];
+	NSView *theView = [self subviews][dividerIndex];
 	
 	[theView setHidden:YES];
 	
@@ -117,7 +117,7 @@
 
 - (void)expandViewAtIndex:(NSInteger)dividerIndex
 {
-	NSView *theView = self.subviews[dividerIndex];
+	NSView *theView = [self subviews][dividerIndex];
 	
 	[theView setHidden:NO];
 	

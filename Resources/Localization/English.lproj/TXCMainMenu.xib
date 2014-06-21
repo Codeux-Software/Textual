@@ -843,7 +843,7 @@ CQ
                                         <menuItem title="Open &quot;Welcome to Textual&quot; Dialog" id="3103">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="openWelcomeSheet:" target="196" id="3105"/>
+                                                <action selector="openWelcomeSheet:" target="267" id="h8B-I6-6M2"/>
                                                 <binding destination="3106" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="3118">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>

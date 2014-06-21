@@ -162,6 +162,10 @@
  The defined type is used for filesize storage in Textual. */
 typedef unsigned long long						TXUnsignedLongLong;
 
+/* DO NOT access this directly. Be a good boy and use the helper methods
+ provided by the implementation in TXSharedApplication.h */
+__weak static TXMasterController *TXGlobalMasterControllerClassReference;
+
 /* Standard out logging. */
 /* It is recommended to always use these calls above plain-ol' NSLog. */
 #define LogToConsole(fmt, ...)					NSLog([@"%s [Line %d]: " stringByAppendingString:fmt], __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);

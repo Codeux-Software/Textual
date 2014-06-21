@@ -42,6 +42,8 @@
 #define _WindowSegmentedControllerDefaultWidth	150.0
 #define _WindowSegmentedControllerLeadingEdge	10.0
 
+#define _WindowContentViewMinimumHeightConstraint		35.0
+
 #define _InputTextFieldOriginDefaultX			166.0
 
 #define _KeyObservingArray 	@[	@"TextFieldAutomaticSpellCheck", \
@@ -56,7 +58,7 @@
 
 @interface TVCMainWindowTextView ()
 @property (nonatomic, assign) NSInteger lastDrawLineCount;
-@property (nonatomic, assign) TXMainTextBoxFontSize cachedFontSize;
+@property (nonatomic, assign) TVCMainWindowTextViewFontSize cachedFontSize;
 @end
 
 @implementation TVCMainWindowTextView
@@ -75,21 +77,21 @@
 	}
 	
 	/* Blending background. */
-	if ([TPCPreferences featureAvailableToOSXYosemite]) {
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 		/* Comment out a specific variation for debugging purposes. */
 		/* The uncommented sections are the defaults. */
 		/* nil value indicates that the value is inherited. */
-		self.contentView.appearance	= nil;
+		[_contentView setAppearance:nil];
 		
 		/* Uncomment one of the following. */
 		/* 1. */
-		// self.contentView.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+		// [_contentView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
 		
 		/* 2. */
-		// self.contentView.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
+		// [_contentView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
 		
 		/* Use font color depending on appearance. */
-		self.defaultTextFieldFontColor = [self.backgroundView systemSpecificTextFieldTextFontColor];
+		[self setPreferredFontColor:[_backgroundView systemSpecificPlaceholderTextFontColor]];
 	}
 	
 	/* We changed the font color so we must inform our parent. */
@@ -118,7 +120,7 @@
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
 	/* Do not pass mouse events with sheet open. */
-	NSWindowNegateActionWithAttachedSheet();
+	TVCMainWindowNegateActionWithAttachedSheet();
 
 	/* Pass event. */
 	[super rightMouseDown:theEvent];
@@ -127,7 +129,7 @@
 - (void)mouseDown:(NSEvent *)theEvent
 {
 	/* Do not pass mouse events with sheet open. */
-	NSWindowNegateActionWithAttachedSheet();
+	TVCMainWindowNegateActionWithAttachedSheet();
 
 	/* Don't know why control click is broken in the text field. 
 	 Possibly because of how hacked together it is… anyways, this
@@ -158,17 +160,55 @@
 	 is also maintained for the leading of the segmented controller to allow that spacing to 
 	 be removed when it is hidden from view. */
 	if ([TPCPreferences hideMainWindowSegmentedController]) {
-		[self.segmentedControllerWidthConstraint setConstant:0];
-		[self.segmentedControllerLeadingConstraint setConstant:0];
+		[_segmentedControllerWidthConstraint setConstant:0];
+		[_segmentedControllerLeadingConstraint setConstant:0];
 	} else {
-		[self.segmentedControllerWidthConstraint setConstant:_WindowSegmentedControllerDefaultWidth];
-		[self.segmentedControllerLeadingConstraint setConstant:_WindowSegmentedControllerLeadingEdge];
+		[_segmentedControllerWidthConstraint setConstant:_WindowSegmentedControllerDefaultWidth];
+		[_segmentedControllerLeadingConstraint setConstant:_WindowSegmentedControllerLeadingEdge];
 	}
 	
 	/* There seems to be a slight delay while the constraints are updated
 	 so we set a very small timer to resize the text field. */
 	if (resetSize) {
 		[self performSelector:@selector(resetTextFieldCellSize:) withObject:@(YES) afterDelay:0.1];
+	}
+}
+
+- (void)reloadSegmentedControllerOrigin
+{
+	[self redrawOriginPoints:YES];
+}
+
+- (void)updateSegmentedController
+{
+	if ([TPCPreferences hideMainWindowSegmentedController] == NO) {
+		/* Enable controller? */
+		BOOL condition1 = ([worldController() clientCount] > 0);
+		
+		BOOL condition2 = ([mainWindowLoadingScreen() viewIsVisible] == NO);
+		
+		[_segmentedController setEnabled:(condition1 && condition2)];
+		
+		/* Selection Settings. */
+		IRCClient *u = [worldController() selectedClient];
+		IRCChannel *c = [worldController() selectedChannel];
+
+		/* Segment 0 menu. */
+		[_segmentedController setMenu:[menuController() segmentedControllerMenu] forSegment:0];
+		
+		/* Set menu for segment 1. */
+		NSMenuItem *segmentOneMenuItem;
+		
+		if (c == nil) {
+			segmentOneMenuItem = [menuController() serverMenuItem];
+		} else {
+			segmentOneMenuItem = [menuController() channelMenuItem];
+		}
+		
+		[_segmentedController setMenu:[segmentOneMenuItem submenu] forSegment:1];
+		
+		/* Open Address Book. */
+		[_segmentedController setEnabled:(u && [u isConnected]) forSegment:2];
 	}
 }
 
@@ -196,10 +236,10 @@
 		
 		if ([value length] == 0) {
 			if ([self baseWritingDirection] == NSWritingDirectionLeftToRight) {
-				if (self.cachedFontSize == TXMainTextBoxFontLargeSize) {
-					[self.placeholderString drawAtPoint:NSMakePoint(6, 2)];
+				if (_cachedFontSize == TVCMainWindowTextViewFontLargeSize) {
+					[_placeholderString drawAtPoint:NSMakePoint(6, 2)];
 				} else {
-					[self.placeholderString drawAtPoint:NSMakePoint(6, 1)];
+					[_placeholderString drawAtPoint:NSMakePoint(6, 1)];
 				}
 			}
 		} else {
@@ -221,7 +261,7 @@
 		/* -textEntered takes the current value of the text field,
 		 copies it into a variable, sends that value off to IRCWorld,
 		 then nullifies the text field itsef. */
-		[self.masterController textEntered];
+		[mainWindow() textEntered];
 		
 		/* -textEntered sets the length of text fied to 0 so we must
 		 update the text field size to reflect this fact. */
@@ -239,30 +279,30 @@
 
 - (NSColor *)placeholderTextFontColor
 {
-	return [self.backgroundView systemSpecificPlaceholderTextFontColor];
+	return [_backgroundView systemSpecificPlaceholderTextFontColor];
 }
 
 - (void)updateTextBoxCachedPreferredFontSize
 {
 	/* Update the font. */
-	self.cachedFontSize = [TPCPreferences mainTextBoxFontSize];
+	_cachedFontSize = [TPCPreferences mainTextViewFontSize];
 
-	if (self.cachedFontSize == TXMainTextBoxFontNormalSize) {
-		[self setDefaultTextFieldFont:[NSFont fontWithName:@"Helvetica" size:12.0]];
-	} else if (self.cachedFontSize == TXMainTextBoxFontLargeSize) {
-		[self setDefaultTextFieldFont:[NSFont fontWithName:@"Helvetica" size:14.0]];
-	} else if (self.cachedFontSize == TXMainTextBoxFontExtraLargeSize) {
-		[self setDefaultTextFieldFont:[NSFont fontWithName:@"Helvetica" size:16.0]];
+	if (_cachedFontSize == TVCMainWindowTextViewFontNormalSize) {
+		[self setPreferredFont:[NSFont fontWithName:@"Helvetica" size:12.0]];
+	} else if (_cachedFontSize == TVCMainWindowTextViewFontLargeSize) {
+		[self setPreferredFont:[NSFont fontWithName:@"Helvetica" size:14.0]];
+	} else if (_cachedFontSize == TVCMainWindowTextViewFontExtraLargeSize) {
+		[self setPreferredFont:[NSFont fontWithName:@"Helvetica" size:16.0]];
 	}
 
 	/* Update the placeholder string. */
-	NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
-
-	attrs[NSFontAttributeName] = [self defaultTextFieldFont];
-	attrs[NSForegroundColorAttributeName] = [self placeholderTextFontColor];
-
-	self.placeholderString = nil;
-	self.placeholderString = [NSAttributedString stringWithBase:TXTLS(@"TDCMainWindow[1000]") attributes:attrs];
+	NSDictionary *attrs = @{
+		NSFontAttributeName				: [self preferredFont],
+		NSForegroundColorAttributeName	: [self placeholderTextFontColor]
+	};
+	
+	_placeholderString = nil;
+	_placeholderString = [NSAttributedString stringWithBase:TXTLS(@"TDCMainWindow[1000]") attributes:attrs];
 
 	/* Prepare draw. */
 	[self setNeedsDisplay:YES];
@@ -270,13 +310,13 @@
 
 - (void)updateTextBoxBasedOnPreferredFontSize
 {
-	TXMainTextBoxFontSize cachedFontSize = self.cachedFontSize;
+	TVCMainWindowTextViewFontSize cachedFontSize = _cachedFontSize;
 
 	/* Update actual cache. */
 	[self updateTextBoxCachedPreferredFontSize];
 
 	/* We only update the font sizes if there was a chagne. */
-	if (NSDissimilarObjects(cachedFontSize, self.cachedFontSize)) {
+	if (NSDissimilarObjects(cachedFontSize, _cachedFontSize)) {
 		[self updateAllFontSizesToMatchTheDefaultFont];
 		[self updateTypeSetterAttributes];
 	}
@@ -287,11 +327,11 @@
 
 - (NSInteger)backgroundViewDefaultHeight
 {
-	if (self.cachedFontSize == TXMainTextBoxFontNormalSize) {
+	if (_cachedFontSize == TVCMainWindowTextViewFontNormalSize) {
 		return 23.0;
-	} else if (self.cachedFontSize == TXMainTextBoxFontLargeSize) {
+	} else if (_cachedFontSize == TVCMainWindowTextViewFontLargeSize) {
 		return 27.0;
-	} else if (self.cachedFontSize == TXMainTextBoxFontExtraLargeSize) {
+	} else if (_cachedFontSize == TVCMainWindowTextViewFontExtraLargeSize) {
 		return 28.0;
 	}
 	
@@ -300,11 +340,11 @@
 
 - (NSInteger)backgroundViewHeightMultiplier
 {
-	if (self.cachedFontSize == TXMainTextBoxFontNormalSize) {
+	if (_cachedFontSize == TVCMainWindowTextViewFontNormalSize) {
 		return 14.0;
-	} else if (self.cachedFontSize == TXMainTextBoxFontLargeSize) {
+	} else if (_cachedFontSize == TVCMainWindowTextViewFontLargeSize) {
 		return 17.0;
-	} else if (self.cachedFontSize == TXMainTextBoxFontExtraLargeSize) {
+	} else if (_cachedFontSize == TVCMainWindowTextViewFontExtraLargeSize) {
 		return 19.0;
 	}
 
@@ -316,39 +356,43 @@
 {
 	BOOL drawBezel = YES;
 
-	NSWindow *mainWindow = self.window;
+	/* Get window data. */
+	NSWindow *mainWindow = mainWindow();
 	
-	NSRect windowFrame = mainWindow.frame;
+	NSRect windowFrame = [mainWindow frame];
 	
+	/* Get scroller data. */
 	NSScrollView *scrollView = [self enclosingScrollView];
 	
 	id scrollViewDocumentView = [scrollView contentView];
 	
 	NSRect documentViewBounds = [scrollViewDocumentView bounds];
 
+	/* Set defaults. */
 	NSInteger backgroundHeight;
 	
 	NSInteger backgroundDefaultHeight = [self backgroundViewDefaultHeight];
 	NSInteger backgroundHeightMultiplier = [self backgroundViewHeightMultiplier];
 
-	NSString *stringv = self.stringValue;
+	NSString *stringv = [self stringValue];
 
-	if (stringv.length < 1) {
+	/* Begin works… */
+	if ([stringv length] < 1) {
 		backgroundHeight = (backgroundDefaultHeight + _WindowContentBorderTotalPadding);
 
-		if (self.lastDrawLineCount >= 2 || force) {
+		if (_lastDrawLineCount > 1 || force) {
 			drawBezel = YES;
 		}
 
-		self.lastDrawLineCount = 1;
+		_lastDrawLineCount = 1;
 	} else {
 		NSInteger totalLinesBase = [self numberOfLines];
 
-		if (self.lastDrawLineCount == totalLinesBase && force == NO) {
+		if (_lastDrawLineCount == totalLinesBase && force == NO) {
 			drawBezel = NO;
 		}
 
-		self.lastDrawLineCount = totalLinesBase;
+		_lastDrawLineCount = totalLinesBase;
 
 		if (drawBezel) {
 			NSInteger totalLinesMath = (totalLinesBase - 1);
@@ -359,9 +403,7 @@
 			backgroundHeight +=  backgroundDefaultHeight;
 			backgroundHeight += (backgroundHeightMultiplier * totalLinesMath);
 
-			/* Minimum size constraint for centered view is 35 so we just add a few more
-			 to give us more space to work with. */
-			NSInteger backgroundViewMaxHeight = (windowFrame.size.height - (35 + _WindowContentBorderTotalPadding));
+			NSInteger backgroundViewMaxHeight = (windowFrame.size.height - (_WindowContentViewMinimumHeightConstraint + _WindowContentBorderTotalPadding));
 
 			/* Fix height if it exceeds are maximum. */
 			if (backgroundHeight > backgroundViewMaxHeight) {
@@ -386,11 +428,11 @@
 	}
 
 	if (drawBezel) {
-		if ([TPCPreferences featureAvailableToOSXYosemite] == NO) {
+		if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
 			[mainWindow setContentBorderThickness:backgroundHeight forEdge:NSMinYEdge];
 		}
 
-		[self.textFieldHeightConstraint setConstant:backgroundHeight];
+		[_textFieldHeightConstraint setConstant:backgroundHeight];
 		
 		if (documentViewBounds.origin.x > 0) {
 			documentViewBounds.origin.x = 0;
@@ -532,7 +574,7 @@
 
 - (NSColor *)inputTextFieldPrimaryTextColorMavericks
 {
-	return TXDefaultTextFieldFontColor;
+	return TXPreferredGlobalTextFieldFontColor;
 }
 
 - (void)drawControllerForMavericks
@@ -590,7 +632,7 @@
 
 - (NSColor *)whiteInputTextFieldPlaceholderTextColorYosemite
 {
-	return TXDefaultTextFieldFontColor;
+	return TXPreferredGlobalTextFieldFontColor;
 }
 
 - (NSColor *)blackInputTextFieldPrimaryTextColorYosemite
@@ -656,7 +698,7 @@
 
 - (void)drawControllerForYosemite
 {
-	if (self.contentView.yosemiteIsUsingVibrantDarkMode) {
+	if ([_contentView yosemiteIsUsingVibrantDarkMode]) {
 		[self drawBlackControllerForYosemiteInFocusedWindow];
 	} else {
 		[self drawWhiteControllerForYosemiteInFocusedWindow];
@@ -668,7 +710,7 @@
 	/* General Declarations. */
 	NSRect cellBounds = [self frame];
 	
-	BOOL inHighresMode = [TPCPreferences runningInHighResolutionMode];
+	BOOL inHighresMode = [mainWindow() runningInHighResolutionMode];
 	
 	NSRect controlFrame = NSMakeRect(1, 1,  (cellBounds.size.width - 2.0),
 											(cellBounds.size.height - 2.0));
@@ -713,7 +755,7 @@
 
 	CGContextRef context = [RZGraphicsCurrentContext() graphicsPort];
 
-	BOOL inHighresMode = [TPCPreferences runningInHighResolutionMode];
+	BOOL inHighresMode = [mainWindow() runningInHighResolutionMode];
 
 	NSRect controlFrame = NSMakeRect(1, 1,  (cellBounds.size.width - 2.0),
 											(cellBounds.size.height - 2.0));
@@ -793,8 +835,8 @@
 
 - (NSColor *)systemSpecificTextFieldTextFontColor
 {
-	if ([TPCPreferences featureAvailableToOSXYosemite]) {
-		if (self.contentView.yosemiteIsUsingVibrantDarkMode) {
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		if ([_contentView yosemiteIsUsingVibrantDarkMode]) {
 			return [self blackInputTextFieldPlaceholderTextColorYosemite];
 		} else {
 			return [self whiteInputTextFieldPlaceholderTextColorYosemite];
@@ -806,8 +848,8 @@
 
 - (NSColor *)systemSpecificPlaceholderTextFontColor
 {
-	if ([TPCPreferences featureAvailableToOSXYosemite]) {
-		if (self.contentView.yosemiteIsUsingVibrantDarkMode) {
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		if ([_contentView yosemiteIsUsingVibrantDarkMode]) {
 			return [self blackInputTextFieldPrimaryTextColorYosemite];
 		} else {
 			return [self whiteInputTextFieldPrimaryTextColorYosemite];
@@ -819,13 +861,13 @@
 
 - (BOOL)windowIsActive
 {
-	return ([[[self masterController] mainWindow] isInactive] == NO);
+	return ([mainWindow() isInactive] == NO);
 }
 
 - (void)drawRect:(NSRect)dirtyRect
 {
 	if ([self needsToDrawRect:dirtyRect]) {
-		if ([TPCPreferences featureAvailableToOSXYosemite]) {
+		if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 			[self drawControllerForYosemite];
 		} else {
 			[self drawControllerForMavericks];
@@ -887,7 +929,7 @@
 		if ([TPCPreferences hideMainWindowSegmentedController] == NO) {
 			if ([self yosemiteIsUsingVibrantDarkMode]) {
 				/* Get controller and controller frame. */
-				TVCMainWindowSegmentedControl *controller = self.masterController.mainWindowButtonController;
+				TVCMainWindowSegmentedController *controller = [mainWindowTextField() segmentedController];
 				
 				NSRect controllerFrame = [controller frame];
 				

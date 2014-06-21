@@ -40,6 +40,11 @@
 
 @implementation NSWindow (TXWindowHelper)
 
+- (BOOL)runningInHighResolutionMode
+{
+	return [[self screen] runningInHighResolutionMode];
+}
+
 - (void)exactlyCenterWindow
 {
 	NSScreen *screen = [NSScreen mainScreen];

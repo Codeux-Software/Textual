@@ -135,7 +135,7 @@
 
 - (BOOL)changeConditionInSheet:(BOOL)condition
 {
-	TXCurrentMainWindowNegateActionWithAttachedSheetR(NO);
+	TVCMainWindowNegateActionWithAttachedSheetR(NO);
 
 	return condition;
 }
@@ -228,7 +228,7 @@
 			
 			[item setHidden:condition];
 
-			BOOL prefersIPv6 = [_serverConfig connectionPrefersIPv6];
+			BOOL prefersIPv6 = [_serverCurrentConfig connectionPrefersIPv6];
 
 			if ([NSEvent modifierFlags] & NSShiftKeyMask) {
 				if (prefersIPv6) {
@@ -2020,6 +2020,64 @@
 }
 
 #pragma mark -
+#pragma mark Welcome Sheet
+
+- (void)openWelcomeSheet:(id)sender
+{
+	[self popWindowSheetIfExists];
+	
+	TDCWelcomeSheet *welcomeSheet = [TDCWelcomeSheet new];
+	
+	[welcomeSheet setDelegate:self];
+	[welcomeSheet setWindow:mainWindow()];
+	
+	[welcomeSheet show];
+	
+	[self addWindowToWindowList:welcomeSheet];
+}
+
+- (void)welcomeSheet:(TDCWelcomeSheet *)sender onOK:(NSDictionary *)config
+{
+	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+	
+	NSString *serverad = config[@"serverAddress"];
+	NSString *nickname = config[@"identityNickname"];
+	
+	NSMutableArray *channels = [NSMutableArray array];
+	
+	for (NSString *s in config[@"channelList"]) {
+		[channels addObject:[IRCChannelConfig seedDictionary:s]];
+	}
+	
+	dic[@"serverAddress"]				= serverad;
+	dic[@"connectionName"]				= serverad;
+	dic[@"identityNickname"]			= nickname;
+	dic[@"channelList"]					= channels;
+	
+	dic[@"connectOnLaunch"]				= config[@"connectOnLaunch"];
+	
+	dic[@"characterEncodingDefault"]	= @(TXDefaultPrimaryStringEncoding);
+	
+	IRCClient *u = [worldController() createClient:dic reload:YES];
+	
+	[worldController() expandClient:u];
+	[worldController() save];
+	
+	if ([[u config] autoConnect]) {
+		[u connect];
+	}
+	
+	if (NSObjectIsNotEmpty([u channels])) {
+		[worldController() select:[u channels][0]];
+	}
+}
+
+- (void)welcomeSheetWillClose:(TDCWelcomeSheet *)sender
+{
+	[self removeWindowFromWindowList:@"TDCWelcomeSheet"];
+}
+
+#pragma mark -
 #pragma mark About Window
 
 - (void)showAboutWindow:(id)sender
@@ -2267,7 +2325,7 @@
 
 - (void)openLogLocation:(id)sender
 {	
-	NSURL *path = [TPCPreferences transcriptFolder];
+	NSURL *path = [TPCPathInfo logFileFolderLocation];
 	
 	if ([RZFileManager() fileExistsAtPath:[path path]]) {
 		[RZWorkspace() openURL:path];
@@ -2398,7 +2456,7 @@
 
 - (void)openHelpMenuLinkItem:(id)sender
 {
-	static NSDictionary _helpMenuLinks = nil;
+	static NSDictionary *_helpMenuLinks = nil;
 	
 	if (_helpMenuLinks == nil) {
 		_helpMenuLinks = @{
@@ -2432,19 +2490,19 @@
 - (void)processNavigationItem:(NSMenuItem *)sender
 {
 	switch ([sender tag]) {
-		case 50001: { [masterController() selectNextServer:nil];				break;		}
-		case 50002: { [masterController() selectPreviousServer:nil];			break;		}
-		case 50003: { [masterController() selectNextActiveServer:nil];			break;		}
-		case 50004: { [masterController() selectPreviousActiveServer:nil];		break;		}
-		case 50005: { [masterController() selectNextChannel:nil];				break;		}
-		case 50006: { [masterController() selectPreviousChannel:nil];			break;		}
-		case 50007: { [masterController() selectNextActiveChannel:nil];			break;		}
-		case 50008: { [masterController() selectPreviousActiveChannel:nil];		break;		}
-		case 50009: { [masterController() selectNextUnreadChannel:nil];			break;		}
-		case 50010: { [masterController() selectPreviousUnreadChannel:nil];		break;		}
-		case 50011: { [masterController() selectPreviousSelection:nil];			break;		}
-		case 50012: { [masterController() selectNextWindow:nil];				break;		}
-		case 50013: { [masterController() selectPreviousWindow:nil];			break;		}
+		case 50001: { [mainWindow() selectNextServer:nil];					break;		}
+		case 50002: { [mainWindow() selectPreviousServer:nil];				break;		}
+		case 50003: { [mainWindow() selectNextActiveServer:nil];			break;		}
+		case 50004: { [mainWindow() selectPreviousActiveServer:nil];		break;		}
+		case 50005: { [mainWindow() selectNextChannel:nil];					break;		}
+		case 50006: { [mainWindow() selectPreviousChannel:nil];				break;		}
+		case 50007: { [mainWindow() selectNextActiveChannel:nil];			break;		}
+		case 50008: { [mainWindow() selectPreviousActiveChannel:nil];		break;		}
+		case 50009: { [mainWindow() selectNextUnreadChannel:nil];			break;		}
+		case 50010: { [mainWindow() selectPreviousUnreadChannel:nil];		break;		}
+		case 50011: { [mainWindow() selectPreviousSelection:nil];			break;		}
+		case 50012: { [mainWindow() selectNextWindow:nil];					break;		}
+		case 50013: { [mainWindow() selectPreviousWindow:nil];				break;		}
 	}
 }
 
@@ -2497,6 +2555,7 @@
 	}
 
 	[mainWindow() setFrame:[mainWindow() defaultWindowFrame] display:YES animate:YES];
+	[mainWindow() exactlyCenterWindow];
 }
 
 - (void)forceReloadTheme:(id)sender

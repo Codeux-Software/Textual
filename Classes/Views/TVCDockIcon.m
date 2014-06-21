@@ -39,8 +39,6 @@
 
 #define _badgeSeperationSpace		1
 
-#define _badgeTextFont				[NSFont fontWithName:@"Helvetica" size:22.0]
-
 @implementation TVCDockIcon
 
 static NSInteger _cachedMessageCount = -1;
@@ -111,10 +109,10 @@ static NSInteger _cachedHighlightCount = -1;
 	
 	NSMutableAttributedString *badgeText = [NSMutableAttributedString alloc];
 	
-	NSMutableDictionary *badgeTextAttrs = [NSMutableDictionary dictionary];
-
-	badgeTextAttrs[NSFontAttributeName] = _badgeTextFont;
-	badgeTextAttrs[NSForegroundColorAttributeName] = [NSColor whiteColor];
+	NSDictionary *badgeTextAttrs = @{
+		NSFontAttributeName				: [NSFont fontWithName:@"Helvetica" size:22.0],
+		NSForegroundColorAttributeName	: [NSColor whiteColor]
+	};
 	
 	/* ////////////////////////////////////////////////////////// */
 	/* Load Drawing Images. */
@@ -298,10 +296,30 @@ static NSInteger _cachedHighlightCount = -1;
 + (NSInteger)badgeCenterTileWidth:(NSInteger)count
 {
 	switch (count) {
-		case 1 ... 9: { return 5; break; }
-		case 10 ... 99: { return 16; break; }
-		case 100 ... 999: { return 28; break; }
-		case 1000 ... 9999: { return 38; break; }
+		case 1 ... 9:
+		{
+			return 5;
+			
+			break;
+		}
+		case 10 ... 99:
+		{
+			return 16;
+			
+			break;
+		}
+		case 100 ... 999:
+		{
+			return 28;
+			
+			break;
+		}
+		case 1000 ... 9999:
+		{
+			return 38;
+			
+			break;
+		}
 	}
 	
 	return 1;

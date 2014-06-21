@@ -38,11 +38,10 @@
 
 #import "TextualApplication.h"
 
-#define TXCurrentMainWindowNegateActionWithAttachedSheet()			if ([[NSApp mainWindow] attachedSheet]) { return; }
-#define TXCurrentMainWindowNegateActionWithAttachedSheetR(r)		if ([[NSApp mainWindow] attachedSheet]) { return r; }
-
 @interface NSWindow (TXWindowHelper)
 - (void)exactlyCenterWindow;
+
+- (BOOL)runningInHighResolutionMode;
 
 - (BOOL)isInFullscreenMode;
 

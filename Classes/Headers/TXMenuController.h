@@ -201,6 +201,8 @@
 
 - (IBAction)showFileTransfersDialog:(id)sender;
 
+- (IBAction)openWelcomeSheet:(id)sender;
+
 - (void)showServerPropertyDialog:(IRCClient *)u withDefaultView:(TDCServerSheetNavigationSelection)viewType andContext:(NSString *)context;
 
 - (IBAction)markScrollback:(id)sender;

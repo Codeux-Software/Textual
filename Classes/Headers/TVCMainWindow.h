@@ -38,7 +38,25 @@
 
 #import "TextualApplication.h"
 
-@interface TVCMainWindow : NSWindow <NSSplitViewDelegate>
+#define TVCMainWindowDefaultFrameWidth		800
+#define TVCMainWindowDefaultFrameHeight		474
+
+#define TVCMainWindowNegateActionWithAttachedSheet()		if ([mainWindow() attachedSheet]) { return; }
+#define TVCMainWindowNegateActionWithAttachedSheetR(r)		if ([mainWindow() attachedSheet]) { return r; }
+
+typedef enum TVCServerListNavigationMovementType : NSInteger {
+	TVCServerListNavigationMovementAllType,     // Move to next item.
+	TVCServerListNavigationMovementActiveType,  // Move to next active item.
+	TVCServerListNavigationMovementUnreadType,  // Move to next unread item.
+} TVCServerListNavigationMovementType;
+
+typedef enum TVCServerListNavigationSelectionType : NSInteger {
+	TVCServerListNavigationSelectionAnyType,		// Move to next item.
+	TVCServerListNavigationSelectionChannelType,	// Move to next channel item.
+	TVCServerListNavigationSelectionServerType,		// Move to next server item.
+} TVCServerListNavigationSelectionType;
+
+@interface TVCMainWindow : NSWindow <NSSplitViewDelegate, NSWindowDelegate>
 @property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
 @property (nonatomic, strong) NSValue *cachedSwipeOriginPoint;
 @property (nonatomic, nweak) IBOutlet NSBox *channelViewBox;
@@ -49,9 +67,32 @@
 @property (nonatomic, nweak) IBOutlet TVCMemberList *memberList;
 @property (nonatomic, nweak) IBOutlet TVCServerList *serverList;
 
+- (void)prepareForApplicationTermination;
+
+- (void)maybeToggleFullscreenAfterLaunch;
+
 - (BOOL)isInactive;
 
-- (NSSize)minimumWindowSize;
+- (void)navigateChannelEntries:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType;
+- (void)navigateServerEntries:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType;
+- (void)navigateToNextEntry:(BOOL)isMovingDown;
+
+- (void)textEntered;
+
+- (void)selectNextServer:(NSEvent *)e;
+- (void)selectNextChannel:(NSEvent *)e;
+- (void)selectNextWindow:(NSEvent *)e;
+- (void)selectPreviousServer:(NSEvent *)e;
+- (void)selectPreviousChannel:(NSEvent *)e;
+- (void)selectPreviousWindow:(NSEvent *)e;
+- (void)selectNextActiveServer:(NSEvent *)e;
+- (void)selectNextUnreadChannel:(NSEvent *)e;
+- (void)selectNextActiveChannel:(NSEvent *)e;
+- (void)selectPreviousSelection:(NSEvent *)e;
+- (void)selectPreviousActiveServer:(NSEvent *)e;
+- (void)selectPreviousUnreadChannel:(NSEvent *)e;
+- (void)selectPreviousActiveChannel:(NSEvent *)e;
+
 - (NSRect)defaultWindowFrame;
 
 - (void)setKeyHandlerTarget:(id)target;

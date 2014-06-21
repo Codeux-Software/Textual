@@ -45,22 +45,6 @@
 
 @implementation TVCQueuedCertificateTrustPanel
 
-+ (TVCQueuedCertificateTrustPanel *)sharedInstance
-{
-	/* Create a copy of self and maintain as static reference. */
-	static id sharedSelf = nil;
-
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		 sharedSelf = [self new];
-
-		[sharedSelf setQueuedEntries:[NSMutableArray new]];
-	});
-
-	return sharedSelf;
-}
-
 - (void)enqueue:(SecTrustRef)trustRef withCompletionBlock:(TVCQueuedCertificateTrustPanelCompletionBlock)completionBlock
 {
 	/* Add new entry. */
