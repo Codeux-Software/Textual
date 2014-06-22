@@ -39,7 +39,7 @@
 
 /* TVCMainWindowTextView is the scroll view and text view. */
 @interface TVCMainWindowTextView : TVCTextViewWithIRCFormatter
-@property (nonatomic, strong) NSAttributedString *placeholderString;
+@property (nonatomic, copy, readonly) NSAttributedString *placeholderString;
 @property (nonatomic, assign) BOOL hasModifiedSpellingDictionary;
 @property (nonatomic, nweak) IBOutlet NSLayoutConstraint *segmentedControllerWidthConstraint;
 @property (nonatomic, nweak) IBOutlet NSLayoutConstraint *segmentedControllerLeadingConstraint;

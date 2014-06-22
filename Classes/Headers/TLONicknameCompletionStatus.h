@@ -39,13 +39,13 @@
 #import "TextualApplication.h"
 
 @interface TLONicknameCompletionStatus : NSObject
-@property (nonatomic, strong) NSString *cachedTextFieldStringValue;
-@property (nonatomic, strong) NSString *cachedBackwardCutStringValue;
-@property (nonatomic, strong) NSString *cachedLastCompleteStringValue;
-@property (nonatomic, assign) NSRange lastTextFieldSelectionRange;
-@property (nonatomic, assign) NSRange lastCompletionCompletedRange;
-@property (nonatomic, assign) NSRange lastCompletionFragmentRange;
-@property (nonatomic, assign) NSInteger lastCompletionSelectionIndex;
+@property (nonatomic, copy, readonly) NSString *cachedTextFieldStringValue;
+@property (nonatomic, copy, readonly) NSString *cachedBackwardCutStringValue;
+@property (nonatomic, copy, readonly) NSString *cachedLastCompleteStringValue;
+@property (nonatomic, assign, readonly) NSRange lastTextFieldSelectionRange;
+@property (nonatomic, assign, readonly) NSRange lastCompletionCompletedRange;
+@property (nonatomic, assign, readonly) NSRange lastCompletionFragmentRange;
+@property (nonatomic, assign, readonly) NSInteger lastCompletionSelectionIndex;
 
 - (void)completeNickname:(BOOL)forward;
 

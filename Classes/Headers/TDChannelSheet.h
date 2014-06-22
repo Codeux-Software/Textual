@@ -42,7 +42,7 @@
 @property (nonatomic, assign) BOOL newItem;
 @property (nonatomic, strong) NSString *clientID;
 @property (nonatomic, strong) NSString *channelID;
-@property (nonatomic, strong) IRCChannelConfig *config;
+@property (nonatomic, copy) IRCChannelConfig *config;
 @property (nonatomic, nweak) IBOutlet NSButton *JPQActivityCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *autoJoinCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *disableInlineImagesCheck;

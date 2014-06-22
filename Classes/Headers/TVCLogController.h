@@ -41,20 +41,20 @@
 @interface TVCLogController : NSObject
 @property (nonatomic, nweak) IRCClient *associatedClient;
 @property (nonatomic, nweak) IRCChannel *associatedChannel;
-@property (nonatomic, strong) TVCLogView *webView;
-@property (nonatomic, strong) TVCLogPolicy *webViewPolicy;
-@property (nonatomic, strong) TVCLogScriptEventSink *webViewScriptSink;
-@property (nonatomic, strong) TVCWebViewAutoScroll *webViewAutoScroller;
-@property (nonatomic, strong) TVCLogControllerHistoricLogFile *historicLogFile;
-@property (nonatomic, assign) BOOL isLoaded;
-@property (nonatomic, assign) BOOL needsLimitNumberOfLines;
-@property (nonatomic, assign) NSInteger activeLineCount;
+@property (nonatomic, strong, readonly) TVCLogView *webView;
+@property (nonatomic, strong, readonly) TVCLogPolicy *webViewPolicy;
+@property (nonatomic, strong, readonly) TVCLogScriptEventSink *webViewScriptSink;
+@property (nonatomic, strong, readonly) TVCWebViewAutoScroll *webViewAutoScroller;
+@property (nonatomic, strong, readonly) TVCLogControllerHistoricLogFile *historicLogFile;
+@property (nonatomic, assign, readonly) BOOL isLoaded;
+@property (nonatomic, assign, readonly) BOOL needsLimitNumberOfLines;
+@property (nonatomic, assign, readonly) NSInteger activeLineCount;
 @property (nonatomic, assign) NSInteger maximumLineCount;
-@property (nonatomic, strong) NSString *lastVisitedHighlight;
-@property (nonatomic, strong) NSMutableArray *highlightedLineNumbers;
+@property (nonatomic, copy, readonly) NSString *lastVisitedHighlight;
+@property (nonatomic, strong, readonly) NSMutableArray *highlightedLineNumbers;
 
-@property (assign) BOOL reloadingBacklog;
-@property (assign) BOOL reloadingHistory;
+@property (assign, readonly) BOOL reloadingBacklog;
+@property (assign, readonly) BOOL reloadingHistory;
 
 - (void)setUp;
 - (void)notifyDidBecomeVisible;

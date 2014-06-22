@@ -46,15 +46,15 @@ typedef enum IRCChannelStatus : NSInteger {
 } IRCChannelStatus;
 
 @interface IRCChannel : IRCTreeItem <NSOutlineViewDataSource, NSOutlineViewDelegate>
-@property (nonatomic, nweak) NSString *name;
-@property (nonatomic, strong) NSString *topic;
-@property (nonatomic, strong) TLOFileLogger *logFile;
-@property (nonatomic, strong) IRCChannelMode *modeInfo;
-@property (nonatomic, strong) IRCChannelConfig *config;
-@property (nonatomic, assign) IRCChannelStatus status;
+@property (nonatomic, nweak, readonly) NSString *name;
+@property (nonatomic, copy) NSString *topic;
+@property (nonatomic, strong, readonly) TLOFileLogger *logFile;
+@property (nonatomic, strong, readonly) IRCChannelMode *modeInfo;
+@property (nonatomic, strong, readonly) IRCChannelConfig *config;
+@property (nonatomic, assign, readonly) IRCChannelStatus status;
 @property (nonatomic, assign) BOOL errorOnLastJoinAttempt;
 @property (nonatomic, assign) BOOL inUserInvokedModeRequest;
-@property (nonatomic, assign) NSInteger channelJoinTime;
+@property (nonatomic, assign, readonly) NSInteger channelJoinTime;
 
 - (void)setup:(IRCChannelConfig *)seed;
 - (void)updateConfig:(IRCChannelConfig *)seed;

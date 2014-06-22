@@ -43,19 +43,19 @@ highlights for a server by using Command+5 or the actual Windows menu bar item. 
 
 @interface TDCHighlightEntrySheet : TDCSheetBase
 @property (nonatomic, assign) BOOL newItem;
-@property (nonatomic, strong) NSString *clientID; // To reference a channel list.
+@property (nonatomic, copy) NSString *clientID; // To reference a channel list.
 @property (nonatomic, nweak) IBOutlet NSTextField *matchKeywordTextField;
 @property (nonatomic, nweak) IBOutlet NSPopUpButton *matchTypePopupButton;
 @property (nonatomic, nweak) IBOutlet NSPopUpButton *matchChannelPopupButton;
-@property (nonatomic, strong) TDCHighlightEntryMatchCondition *config;
+@property (nonatomic, copy) TDCHighlightEntryMatchCondition *config;
 
 - (void)start;
 @end
 
-@interface TDCHighlightEntryMatchCondition : NSObject <NSMutableCopying>
-@property (nonatomic, strong) NSString *itemUUID; // Unique Identifier (UUID)
-@property (nonatomic, strong) NSString *matchKeyword;
-@property (nonatomic, strong) NSString *matchChannelID; // The itemUUID of the IRCChannelConfig
+@interface TDCHighlightEntryMatchCondition : NSObject <NSCopying>
+@property (nonatomic, copy) NSString *itemUUID; // Unique Identifier (UUID)
+@property (nonatomic, copy) NSString *matchKeyword;
+@property (nonatomic, copy) NSString *matchChannelID; // The itemUUID of the IRCChannelConfig
 @property (nonatomic, assign) BOOL matchIsExcluded;
 
 - (id)initWithDictionary:(NSDictionary *)dic;

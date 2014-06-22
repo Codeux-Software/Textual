@@ -38,7 +38,7 @@
 #import "TextualApplication.h"
 
 @interface TDCPreferencesScriptWrapper : NSObject <NSTableViewDelegate, NSTableViewDataSource>
-@property (nonatomic, strong) NSMutableArray *scripts;
+@property (nonatomic, strong, readonly) NSMutableArray *scripts;
 
 - (void)populateData;
 @end

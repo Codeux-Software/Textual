@@ -39,8 +39,8 @@
 #import "TextualApplication.h"
 
 @interface TDCInviteSheet : TDCSheetBase
-@property (nonatomic, strong) NSString *clientID;
-@property (nonatomic, strong) NSArray *nicknames;
+@property (nonatomic, copy, readonly) NSString *clientID;
+@property (nonatomic, copy, readonly) NSArray *nicknames;
 @property (nonatomic, nweak) IBOutlet NSTextField *headerTitleField;
 @property (nonatomic, nweak) IBOutlet NSPopUpButton *channelListPopup;
 

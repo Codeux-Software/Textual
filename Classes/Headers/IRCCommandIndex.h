@@ -51,4 +51,6 @@ TEXTUAL_EXTERN NSString *IRCPublicCommandIndex(const char *key);
 + (NSInteger)indexOfIRCommand:(NSString *)command publicSearch:(BOOL)isPublic;
 
 + (NSDictionary *)IRCCommandIndex:(BOOL)isPublic;
+
++ (NSInteger)colonIndexForCommand:(NSString *)command;
 @end
