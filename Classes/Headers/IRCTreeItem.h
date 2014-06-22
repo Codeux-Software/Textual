@@ -39,14 +39,14 @@
 #import "TextualApplication.h"
 
 @interface IRCTreeItem : NSObject <NSTableViewDataSource, NSTableViewDelegate>
-@property (nonatomic, nweak) NSString *label;
-@property (nonatomic, nweak) NSString *name;
-@property (nonatomic, strong) NSString *treeUUID; // Unique Identifier (UUID)
-@property (nonatomic, assign) BOOL isActive;
-@property (nonatomic, assign) BOOL isUnread;
-@property (nonatomic, assign) BOOL isClient;
-@property (nonatomic, assign) BOOL isChannel;
-@property (nonatomic, assign) BOOL isPrivateMessage;
+@property (nonatomic, nweak, readonly) NSString *label;
+@property (nonatomic, nweak, readonly) NSString *name;
+@property (nonatomic, copy, readonly) NSString *treeUUID; // Unique Identifier (UUID)
+@property (nonatomic, assign, readonly) BOOL isActive;
+@property (nonatomic, assign, readonly) BOOL isUnread;
+@property (nonatomic, assign, readonly) BOOL isClient;
+@property (nonatomic, assign, readonly) BOOL isChannel;
+@property (nonatomic, assign, readonly) BOOL isPrivateMessage;
 @property (nonatomic, nweak) IRCClient *associatedClient;
 @property (nonatomic, nweak) IRCChannel *associatedChannel;
 @property (nonatomic, assign) NSInteger dockUnreadCount;

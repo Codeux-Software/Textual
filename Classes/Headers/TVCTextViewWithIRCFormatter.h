@@ -44,9 +44,9 @@
 #define TVCTextViewWithIRCFormatterHeightPadding	2.0
 
 @interface TVCTextViewWithIRCFormatter : NSTextView <NSTextViewDelegate>
-@property (nonatomic, strong) NSFont *preferredFont;
-@property (nonatomic, strong) NSColor *preferredFontColor;
-@property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
+@property (nonatomic, copy) NSFont *preferredFont;
+@property (nonatomic, copy) NSColor *preferredFontColor;
+@property (nonatomic, strong, readonly) TLOKeyEventHandler *keyEventHandler;
 
 - (BOOL)isAtTopOfView;
 - (BOOL)isAtBottomOfView;

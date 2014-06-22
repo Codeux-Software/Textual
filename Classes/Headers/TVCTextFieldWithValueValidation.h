@@ -42,7 +42,7 @@
 typedef BOOL (^TVCTextFieldWithValueValidationBlock)(NSString *currentValue);
 
 @interface TVCTextFieldWithValueValidation : NSTextField
-@property (nonatomic, strong) TVCTextFieldWithValueValidationBlock validationBlock;
+@property (nonatomic, copy) TVCTextFieldWithValueValidationBlock validationBlock;
 @property (nonatomic, assign) BOOL stringValueUsesOnlyFirstToken; // Only use everything before first space (" ") as value.
 @property (nonatomic, assign) BOOL stringValueIsInvalidOnEmpty; // Is an empty string considered invalid?
 @property (nonatomic, uweak) id textDidChangeCallback; // Calls method "-(void)validatedTextFieldTextDidChange:(id)sender" whereas "sender" is the text field.

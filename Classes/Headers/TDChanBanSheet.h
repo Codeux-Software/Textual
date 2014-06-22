@@ -40,11 +40,11 @@
 @interface TDChanBanSheet : TDCSheetBase
 @property (nonatomic, nweak) IBOutlet NSTextField *headerTitleField;
 @property (nonatomic, nweak) IBOutlet TVCListView *banTable;
-@property (nonatomic, strong) NSMutableArray *banList;
-@property (nonatomic, strong) NSMutableArray *changeModeList;
-@property (nonatomic, uweak) BOOL contentAlreadyReceived;
-@property (nonatomic, strong) NSString *clientID;
-@property (nonatomic, strong) NSString *channelID;
+@property (nonatomic, strong, readonly) NSMutableArray *banList;
+@property (nonatomic, strong, readonly) NSMutableArray *changeModeList;
+@property (nonatomic, strong) BOOL contentAlreadyReceived;
+@property (nonatomic, copy) NSString *clientID;
+@property (nonatomic, copy) NSString *channelID;
 
 - (void)show;
 - (void)clear;

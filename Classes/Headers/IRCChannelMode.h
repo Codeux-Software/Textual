@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-@interface IRCChannelMode : NSObject <NSMutableCopying>
+@interface IRCChannelMode : NSObject <NSCopying>
 @property (nonatomic, nweak) IRCISupportInfo *isupport;
 
 - (void)clear;

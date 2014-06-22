@@ -137,12 +137,12 @@
  */
 
 @interface TXMenuController : NSObject
-@property (nonatomic, strong) NSString *pointedUrl;
-@property (nonatomic, strong) NSString *pointedNickname;
-@property (nonatomic, strong) NSString *pointedChannelName;
-@property (nonatomic, strong) NSString *currentSearchPhrase;
-@property (nonatomic, strong) NSDictionary *openWindowList;
-@property (nonatomic, strong) TDCFileTransferDialog *fileTransferController;
+@property (nonatomic, copy) NSString *pointedUrl;
+@property (nonatomic, copy) NSString *pointedNickname;
+@property (nonatomic, copy) NSString *pointedChannelName;
+@property (nonatomic, copy) NSString *currentSearchPhrase;
+@property (nonatomic, copy) NSDictionary *openWindowList;
+@property (nonatomic, strong, readonly) TDCFileTransferDialog *fileTransferController;
 @property (nonatomic, nweak) IBOutlet NSMenu *navigationChannelList;
 @property (nonatomic, nweak) IBOutlet NSMenu *addServerMenu;
 @property (nonatomic, nweak) IBOutlet NSMenu *channelViewMenu;

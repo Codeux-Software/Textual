@@ -43,14 +43,14 @@ typedef enum IRCChannelType : NSInteger {
 	IRCChannelPrivateMessageType,
 } IRCChannelType;
 
-@interface IRCChannelConfig : NSObject <NSMutableCopying>
+@interface IRCChannelConfig : NSObject <NSCopying>
 @property (nonatomic, assign) IRCChannelType type;
-@property (nonatomic, strong) NSString *itemUUID; // Unique Identifier (UUID)
-@property (nonatomic, strong) NSString *channelName;
-@property (nonatomic, strong) NSString *defaultTopic;
-@property (nonatomic, strong) NSString *defaultModes;
-@property (nonatomic, strong) NSString *encryptionKey;
-@property (nonatomic, strong) NSString *secretKey;
+@property (nonatomic, copy) NSString *itemUUID; // Unique Identifier (UUID)
+@property (nonatomic, copy) NSString *channelName;
+@property (nonatomic, copy) NSString *defaultTopic;
+@property (nonatomic, copy) NSString *defaultModes;
+@property (nonatomic, nweak) NSString *encryptionKey;
+@property (nonatomic, nweak) NSString *secretKey;
 @property (nonatomic, assign) BOOL autoJoin;
 @property (nonatomic, assign) BOOL pushNotifications;
 @property (nonatomic, assign) BOOL showTreeBadgeCount;

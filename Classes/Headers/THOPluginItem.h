@@ -45,9 +45,9 @@
 @property (nonatomic, readonly, assign) BOOL supportsInlineMediaManipulation;
 @property (nonatomic, readonly, assign) BOOL supportsNewMessagePostedEventNotifications;
 @property (nonatomic, readonly, assign) BOOL supportsWillRenderMessageEventNotifications;
-@property (nonatomic, readonly, strong) NSArray *supportedUserInputCommands;
-@property (nonatomic, readonly, strong) NSArray *supportedServerInputCommands;
-@property (nonatomic, readonly, strong) NSDictionary *outputSuppressionRules;
+@property (nonatomic, readonly, copy) NSArray *supportedUserInputCommands;
+@property (nonatomic, readonly, copy) NSArray *supportedServerInputCommands;
+@property (nonatomic, readonly, copy) NSDictionary *outputSuppressionRules;
 
 - (void)loadBundle:(NSBundle *)bundle;
 

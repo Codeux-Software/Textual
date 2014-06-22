@@ -60,10 +60,10 @@ typedef enum TDCFileTransferDialogNavigationControllerSelectedTab : NSInteger {
 } TDCFileTransferDialogNavigationControllerSelectedTab;
 
 @interface TDCFileTransferDialog : NSWindowController <NSTableViewDataSource, NSTableViewDelegate>
-@property (nonatomic, strong) NSMutableArray *fileTransfers;
-@property (nonatomic, strong) NSString *cachedIPAddress;
-@property (nonatomic, assign) BOOL sourceIPAddressRequestPending;
-@property (nonatomic, strong) TLOTimer *maintenanceTimer;
+@property (nonatomic, strong, readonly) NSMutableArray *fileTransfers;
+@property (nonatomic, strong, readonly) NSString *cachedIPAddress;
+@property (nonatomic, assign, readonly) BOOL sourceIPAddressRequestPending;
+@property (nonatomic, strong, readonly) TLOTimer *maintenanceTimer;
 @property (nonatomic, strong, readonly) NSURL *downloadDestination;
 @property (nonatomic, nweak) IBOutlet NSButton *clearButton;
 @property (nonatomic, nweak) IBOutlet TVCListView *fileTransferTable;

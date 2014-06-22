@@ -41,7 +41,7 @@
 @end
 
 @interface NSMenuItem (TXMenuItemHelper)
-@property (nonatomic, strong) NSString *userInfo;
+@property (nonatomic, copy) NSString *userInfo;
 
 + (id)menuItemWithTitle:(NSString *)aString
 				 target:(id)aTarget

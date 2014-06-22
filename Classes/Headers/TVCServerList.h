@@ -40,8 +40,8 @@
 @interface TVCServerList : NSOutlineView
 @property (nonatomic, uweak) id keyDelegate;
 
-@property (nonatomic, strong) NSImage *defaultDisclosureTriangle;
-@property (nonatomic, strong) NSImage *alternateDisclosureTriangle;
+@property (nonatomic, copy) NSImage *defaultDisclosureTriangle;
+@property (nonatomic, copy) NSImage *alternateDisclosureTriangle;
 
 /* addItemToList and removeItemFromList work two completely different ways. 
  addItemToList expects that you have already added the item to the data source

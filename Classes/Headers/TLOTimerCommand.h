@@ -39,7 +39,7 @@
 #import "TextualApplication.h"
 
 @interface TLOTimerCommand : NSObject
-@property (nonatomic, strong) NSString *channelID;
-@property (nonatomic, strong) NSString *rawInput;
+@property (nonatomic, copy) NSString *channelID;
+@property (nonatomic, copy) NSString *rawInput;
 @property (nonatomic, assign) NSTimeInterval timerInterval;
 @end

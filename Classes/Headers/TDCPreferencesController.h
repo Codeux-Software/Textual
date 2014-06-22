@@ -40,7 +40,7 @@
 
 @interface TDCPreferencesController : NSWindowController <NSOutlineViewDataSource, NSOutlineViewDelegate>
 @property (nonatomic, uweak) id delegate;
-@property (nonatomic, strong) NSMutableArray *alertSounds;
+@property (nonatomic, strong, readonly) NSMutableArray *alertSounds;
 @property (nonatomic, nweak) IBOutlet NSArrayController *excludeKeywordsArrayController;
 @property (nonatomic, nweak) IBOutlet NSArrayController *matchKeywordsArrayController;
 @property (nonatomic, nweak) IBOutlet NSButton *addExcludeKeywordButton;
@@ -83,7 +83,7 @@
 @property (nonatomic, nweak) IBOutlet NSView *contentViewStyle;
 @property (nonatomic, nweak) IBOutlet NSView *contentViewUserListColors;
 @property (nonatomic, nweak) IBOutlet NSOutlineView *navigationOutlineview;
-@property (nonatomic, strong) TDCPreferencesScriptWrapper *scriptsController;
+@property (nonatomic, strong, readonly) TDCPreferencesScriptWrapper *scriptsController;
 
 - (void)show;
 

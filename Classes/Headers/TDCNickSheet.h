@@ -39,7 +39,7 @@
 #import "TextualApplication.h"
 
 @interface TDCNickSheet : TDCSheetBase
-@property (nonatomic, strong) NSString *clientID;
+@property (nonatomic, copy) NSString *clientID;
 @property (nonatomic, nweak) IBOutlet NSTextField *tnewNicknameField;
 @property (nonatomic, nweak) IBOutlet NSTextField *toldNicknameField;
 

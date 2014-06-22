@@ -46,7 +46,7 @@
 @property (nonatomic, nweak) IBOutlet NSTextField *informationalText;
 @property (nonatomic, nweak) IBOutlet NSTextField *informationalTitle;
 @property (nonatomic, nweak) IBOutlet NSTextField *informationalInput;
-@property (nonatomic, strong) void (^completionBlock)(BOOL defaultButtonClicked, NSString *resultString);
+@property (nonatomic, copy) void (^completionBlock)(BOOL defaultButtonClicked, NSString *resultString);
 
 - (void)alertWithMessageTitle:(NSString *)messageTitle
 				defaultButton:(NSString *)defaultButtonTitle

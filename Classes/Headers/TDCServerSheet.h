@@ -45,11 +45,11 @@ typedef enum TDCServerSheetNavigationSelection : NSInteger {
 } TDCServerSheetNavigationSelection;
 
 @interface TDCServerSheet : TDCSheetBase
-@property (nonatomic, strong) NSString *clientID;
-@property (nonatomic, strong) NSArray *tabViewList;
-@property (nonatomic, strong) NSDictionary *serverList;
-@property (nonatomic, strong) NSDictionary *encodingList;
-@property (nonatomic, strong) IRCClientConfig *config;
+@property (nonatomic, copy) NSString *clientID;
+@property (nonatomic, copy, readonly) NSArray *tabViewList;
+@property (nonatomic, strong, readonly) NSDictionary *serverList;
+@property (nonatomic, strong, readonly) NSDictionary *encodingList;
+@property (nonatomic, copy) IRCClientConfig *config;
 @property (nonatomic, nweak) IBOutlet NSButton *addChannelButton;
 @property (nonatomic, nweak) IBOutlet NSButton *addHighlightButton;
 @property (nonatomic, nweak) IBOutlet NSButton *addIgnoreButton;
@@ -121,9 +121,9 @@ typedef enum TDCServerSheetNavigationSelection : NSInteger {
 @property (nonatomic, strong) IBOutlet NSView *sslCertificateView;
 @property (nonatomic, strong) IBOutlet NSView *zncBouncerView;
 @property (nonatomic, uweak) IBOutlet NSTextView *loginCommandsField;
-@property (nonatomic, strong) TDChannelSheet *channelSheet;
-@property (nonatomic, strong) TDCAddressBookSheet *ignoreSheet;
-@property (nonatomic, strong) TDCHighlightEntrySheet *highlightSheet;
+@property (nonatomic, strong, readonly) TDChannelSheet *channelSheet;
+@property (nonatomic, strong, readonly) TDCAddressBookSheet *ignoreSheet;
+@property (nonatomic, strong, readonly) TDCHighlightEntrySheet *highlightSheet;
 
 - (void)start:(TDCServerSheetNavigationSelection)viewToken withContext:(NSString *)context;
 

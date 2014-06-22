@@ -40,13 +40,13 @@
 
 @interface TDCListDialog : NSWindowController
 @property (nonatomic, uweak) id delegate;
-@property (nonatomic, nweak) IRCClient *client;
+@property (nonatomic, copy) NSString *clientID;
 @property (nonatomic, nweak) IBOutlet NSButton *updateButton;
 @property (nonatomic, nweak) IBOutlet NSSearchField *searchField;
 @property (nonatomic, nweak) IBOutlet NSTextField *networkNameField;
 @property (nonatomic, nweak) IBOutlet TVCListView *channelListTable;
-@property (nonatomic, strong) NSMutableArray *unfilteredList;
-@property (nonatomic, strong) NSMutableArray *filteredList;
+@property (nonatomic, strong, readonly) NSMutableArray *unfilteredList;
+@property (nonatomic, strong, readonly) NSMutableArray *filteredList;
 @property (nonatomic, assign) NSComparisonResult sortOrder;
 @property (nonatomic, assign) NSInteger sortKey;
 

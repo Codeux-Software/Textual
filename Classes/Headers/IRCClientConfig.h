@@ -50,7 +50,7 @@ typedef enum TXConnectionProxyType : NSInteger {
 	IRCConnectionSocketSocks5ProxyType = 5,
 } IRCConnectionSocketProxyType;
 
-@interface IRCClientConfig : NSObject <NSMutableCopying>
+@interface IRCClientConfig : NSObject <NSCopying>
 @property (nonatomic, assign) BOOL autoConnect;
 @property (nonatomic, assign) BOOL autoReconnect;
 @property (nonatomic, assign) BOOL autoSleepModeDisconnect;
@@ -80,23 +80,23 @@ typedef enum TXConnectionProxyType : NSInteger {
 @property (nonatomic, strong) NSMutableArray *ignoreList;
 @property (nonatomic, strong) NSMutableArray *highlightList;
 @property (nonatomic, strong) NSMutableArray *loginCommands;
-@property (nonatomic, strong) NSString *itemUUID; // Unique Identifier (UUID)
-@property (nonatomic, strong) NSString *clientName;
-@property (nonatomic, strong) NSString *nickname;
-@property (nonatomic, strong) NSString *awayNickname;
-@property (nonatomic, strong) NSString *nicknamePassword;
-@property (nonatomic, strong) NSString *proxyAddress;
+@property (nonatomic, copy) NSString *itemUUID; // Unique Identifier (UUID)
+@property (nonatomic, copy) NSString *clientName;
+@property (nonatomic, copy) NSString *nickname;
+@property (nonatomic, copy) NSString *awayNickname;
+@property (nonatomic, nweak) NSString *nicknamePassword;
+@property (nonatomic, copy) NSString *proxyAddress;
 @property (nonatomic, assign) NSInteger proxyPort;
-@property (nonatomic, strong) NSString *proxyPassword;
-@property (nonatomic, strong) NSString *proxyUsername;
-@property (nonatomic, strong) NSString *realname;
-@property (nonatomic, strong) NSString *serverAddress;
+@property (nonatomic, nweak) NSString *proxyPassword;
+@property (nonatomic, copy) NSString *proxyUsername;
+@property (nonatomic, copy) NSString *realname;
+@property (nonatomic, copy) NSString *serverAddress;
 @property (nonatomic, assign) NSInteger serverPort;
-@property (nonatomic, strong) NSString *serverPassword;
-@property (nonatomic, strong) NSString *username;
-@property (nonatomic, strong) NSString *normalLeavingComment;
-@property (nonatomic, strong) NSString *sleepModeLeavingComment;
-@property (nonatomic, strong) NSData *identitySSLCertificate;
+@property (nonatomic, nweak) NSString *serverPassword;
+@property (nonatomic, copy) NSString *username;
+@property (nonatomic, copy) NSString *normalLeavingComment;
+@property (nonatomic, copy) NSString *sleepModeLeavingComment;
+@property (nonatomic, copy) NSData *identitySSLCertificate;
 @property (nonatomic, assign) BOOL serverPasswordIsSet;
 @property (nonatomic, assign) BOOL nicknamePasswordIsSet;
 @property (nonatomic, assign) BOOL proxyPasswordIsSet;

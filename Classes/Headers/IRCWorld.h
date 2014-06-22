@@ -48,12 +48,12 @@
 @property (nonatomic, assign) NSInteger messagesReceived;
 @property (nonatomic, assign) TXUnsignedLongLong bandwidthIn;
 @property (nonatomic, assign) TXUnsignedLongLong bandwidthOut;
-@property (nonatomic, strong) NSMutableArray *clients;
+@property (nonatomic, strong, readonly) NSMutableArray *clients;
 @property (nonatomic, assign) BOOL isPopulatingSeeds;
 @property (nonatomic, assign) BOOL temporarilyDisablePreviousSelectionUpdates;
-@property (nonatomic, strong) IRCTreeItem *selectedItem;
-@property (nonatomic, strong) NSString *previousSelectedClientId;
-@property (nonatomic, strong) NSString *previousSelectedChannelId;
+@property (nonatomic, strong, readonly) IRCTreeItem *selectedItem;
+@property (nonatomic, copy, readonly) NSString *previousSelectedClientId;
+@property (nonatomic, copy, readonly) NSString *previousSelectedChannelId;
 
 - (void)setupConfiguration;
 - (void)setupOtherServices;
