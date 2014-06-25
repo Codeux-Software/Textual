@@ -52,6 +52,8 @@
 - (void)parseLine:(NSString *)line;
 - (void)parseLine:(NSString *)line forClient:(IRCClient *)client;
 
+- (NSInteger)paramsCount;
+
 - (NSString *)paramAt:(NSInteger)index;
 
 - (NSString *)sequence;

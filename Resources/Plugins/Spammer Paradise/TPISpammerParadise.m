@@ -67,7 +67,7 @@
 - (void)buildListOfUsersOn:(IRCChannel *)channel on:(IRCClient *)client
 {
 	if ([channel numberOfMembers] <= 0) {
-		[client printDebugInformation:TPIFLS(@"BasicLanguage[1000]", [channel name]) channel:channel];
+		[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1000]", [channel name]) channel:channel];
 
 		return; // We cannot do anything with no users now can we?
 	}
@@ -94,9 +94,9 @@
 	/* Check number of users. */
 	if ([channel numberOfMembers] <= 0) {
 		if (hasSearchCondition) {
-			[client printDebugInformation:TPIFLS(@"BasicLanguage[1007]", [channel name], matchString) channel:channel];
+			[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1007]", [channel name], matchString) channel:channel];
 		} else {
-			[client printDebugInformation:TPIFLS(@"BasicLanguage[1006]", [channel name]) channel:channel];
+			[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1006]", [channel name]) channel:channel];
 		}
 
 		return; // We cannot do anything with no users now can we?
@@ -122,9 +122,9 @@
 	/* Do we even have any matches? */
 	if ([userlist count] <= 0) {
 		if (hasSearchCondition) {
-			[client printDebugInformation:TPIFLS(@"BasicLanguage[1007]", [channel name], matchString) channel:channel];
+			[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1007]", [channel name], matchString) channel:channel];
 		} else {
-			[client printDebugInformation:TPIFLS(@"BasicLanguage[1006]", [channel name]) channel:channel];
+			[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1006]", [channel name]) channel:channel];
 		}
 
 		return;
@@ -132,9 +132,9 @@
 
 	/* We have results, so let's skim them. */
 	if (hasSearchCondition) {
-		[client printDebugInformation:TPIFLS(@"BasicLanguage[1005]", [userlist count], [channel name], matchString) channel:channel];
+		[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1005]", [userlist count], [channel name], matchString) channel:channel];
 	} else {
-		[client printDebugInformation:TPIFLS(@"BasicLanguage[1004]", [userlist count], [channel name]) channel:channel];
+		[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1004]", [userlist count], [channel name]) channel:channel];
 	}
 
 	[userlist sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
@@ -182,13 +182,13 @@
 
     /* No cloes found. */
     if (NSObjectIsEmpty(allUsers)) {
-        [client printDebugInformation:TPILS(@"BasicLanguage[1001]") channel:channel];
+        [client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1001]") channel:channel];
 
         return;
     }
 
     /* Build clone list. */
-    [client printDebugInformation:TPIFLS(@"BasicLanguage[1002]", [allUsers count], [channel name]) channel:channel];
+    [client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1002]", [allUsers count], [channel name]) channel:channel];
     
     for (NSString *dictKey in allUsers) {
         NSArray *userArray = [allUsers arrayForKey:dictKey];

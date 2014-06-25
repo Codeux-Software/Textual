@@ -72,7 +72,7 @@
 	
 	if (isAttach || isDetach) {
 		if ([client isZNCBouncerConnection] == NO) {
-			[client printDebugInformation:TPILS(@"BasicLanguage[1000]")];
+			[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1000]")];
 
 			return;
 		}
@@ -84,7 +84,7 @@
 		if ([messageString isChannelName:client]) {
 			matchedChannel = [client findChannel:messageString];
 		} else {
-			matchedChannel = [[self worldController] selectedChannel];
+			matchedChannel = [worldController() selectedChannel];
 		}
 		
 		if (matchedChannel) {
@@ -93,7 +93,7 @@
 			if (isDetach) {
 				[client sendLine:[NSString stringWithFormat:@"%@ %@", commandString, [matchedChannel name]]];
 			
-				[client printDebugInformation:TPIFLS(@"BasicLanguage[1001]", [matchedChannel name]) channel:matchedChannel];
+				[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1001]", [matchedChannel name]) channel:matchedChannel];
 			} else {
 				[client joinUnlistedChannel:[matchedChannel name]];
 			}
@@ -113,10 +113,15 @@
 
 - (IRCMessage *)interceptServerInput:(IRCMessage *)input for:(IRCClient *)client
 {
-	NSAssertReturnR([client isZNCBouncerConnection], input);
+	/* Only do work if client is even detected as ZNC. */
+	if ([client isZNCBouncerConnection] == NO) {
+		return input;
+	}
 
 	/* Who is sending this message? */
-	if (NSObjectsAreEqual([[input sender] nickname], @"*buffextras") == NO) {
+	IRCPrefix *senderInfo = [input sender];
+	
+	if (NSObjectsAreEqual([senderInfo nickname], @"*buffextras") == NO) {
 		return input;
 	}
 
@@ -125,33 +130,46 @@
 		return input;
 	}
 
-	/* Begin processing input… */
-	NSAssertReturnR(([[input params] count] == 2), input);
+	/* Check our count. */
+	if (([input paramsCount] == 2) == NO) {
+		return input;
+	}
 
-	NSMutableString *s = [[input params][1] mutableCopy];
+	/* Begin processing data. */
+	NSMutableArray *mutparams = [[input params] mutableCopy];
+	
+	NSMutableString *s = [mutparams[1] mutableCopy];
 
 	/* Define user information. */
 	NSString *hostmask = [s getToken];
 
+	if ([hostmask length] <= 0) {
+		return input;
+	}
+	
 	NSString *nicknameInt = nil;
 	NSString *usernameInt = nil;
 	NSString *addressInt = nil;
-
-	[[input sender] setHostmask:hostmask];
+	
+	[senderInfo setHostmask:hostmask];
+	
+	[senderInfo setIsServer:NO];
 
 	if ([hostmask hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt]) {
-		[[input sender] setNickname:nicknameInt];
-		[[input sender] setUsername:usernameInt];
-		[[input sender] setAddress:addressInt];
+		[senderInfo setNickname:nicknameInt];
+		[senderInfo setUsername:usernameInt];
+		[senderInfo setAddress:addressInt];
 
-		if (NSObjectsAreEqual([[input sender] nickname], [client localNickname])) {
+		if (NSObjectsAreEqual([senderInfo nickname], [client localNickname])) {
 			return input; // Do not post these events for self.
 		}
 	} else {
-		[[input sender] setNickname:hostmask];
-		[[input sender] setIsServer:NO];
+		[senderInfo setNickname:hostmask];
+		
+		[senderInfo setIsServer:YES];
 	}
 
+	/* Let Textual know to treat this message as a special event. */
 	[input setIsPrintOnlyMessage:YES];
 
 	/* Start actual work. */
@@ -165,8 +183,9 @@
 
 		[input setCommand:IRCPrivateCommandIndex("nick")];
 
-		[[input params] removeObjectAtIndex:1];
-		[[input params] addObject:newNickname];
+		[mutparams removeObjectAtIndex:1];
+		
+		[mutparams addObject:newNickname];
 		/* End nickname change. */
 	}
 	else if ([s isEqualToString:@"joined"])
@@ -174,7 +193,7 @@
 		/* Begin channel join. */
 		[input setCommand:IRCPrivateCommandIndex("join")];
 
-		[[input params] removeObjectAtIndex:1];
+		[mutparams removeObjectAtIndex:1];
 		/* End channel join. */
 	}
 	else if ([s hasPrefix:@"set mode: "])
@@ -188,41 +207,43 @@
 
 		NSObjectIsEmptyAssertReturn(modesSet, input);
 
-		[[input params] removeObjectAtIndex:1];
+		[mutparams removeObjectAtIndex:1];
 
-		[[input params] safeAddObject:modesSet];
-		[[input params] safeAddObject:s];
+		[mutparams addObject:modesSet];
+		[mutparams addObject:s];
 		/* End mode processing. */
 	}
 	else if ([s hasPrefix:@"quit with message: ["] && [s hasSuffix:@"]"])
 	{
 		/* Begin quit message. */
-		[s deleteCharactersInRange:NSMakeRange(0, [@"quit with message: [" length])];
-		[s deleteCharactersInRange:NSMakeRange(([s length] - 1), 1)];
+		[s deleteCharactersInRange:NSMakeRange(0, [@"quit with message: [" length])];	// Remove front.
+		[s deleteCharactersInRange:NSMakeRange(([s length] - 1), 1)];					// Remove trailing character.
 
 		[input setCommand:IRCPrivateCommandIndex("quit")];
 
-		[[input params] removeObjectAtIndex:1];
-		[[input params] safeAddObject:s];
+		[mutparams removeObjectAtIndex:1];
+		
+		[mutparams addObject:s];
 		/* End quit message. */
 	}
 	else if ([s hasPrefix:@"parted with message: ["] && [s hasSuffix:@"]"])
 	{
 		/* Begin part message. */
-		[s deleteCharactersInRange:NSMakeRange(0, [@"parted with message: [" length])];
-		[s deleteCharactersInRange:NSMakeRange((s.length - 1), 1)];
+		[s deleteCharactersInRange:NSMakeRange(0, [@"parted with message: [" length])];		// Remove front.
+		[s deleteCharactersInRange:NSMakeRange(([s length] - 1), 1)];						// Remove trailing character.
 
 		[input setCommand:IRCPrivateCommandIndex("part")];
 
-		[[input params] removeObjectAtIndex:1];
-		[[input params] safeAddObject:s];
+		[mutparams removeObjectAtIndex:1];
+		
+		[mutparams addObject:s];
 		/* End part message. */
 	}
 	else if ([s hasPrefix:@"kicked "] && [s hasSuffix:@"]"])
 	{
 		/* Begin kick message. */
-		[s deleteCharactersInRange:NSMakeRange(0, [@"kicked " length])];
-		[s deleteCharactersInRange:NSMakeRange(([s length] - 1), 1)];
+		[s deleteCharactersInRange:NSMakeRange(0, [@"kicked " length])];	// Remove front.
+		[s deleteCharactersInRange:NSMakeRange(([s length] - 1), 1)];		// Remove trailing character.
 
 		NSString *whoKicked = [s getToken];
 
@@ -234,10 +255,10 @@
 
 		[input setCommand:IRCPrivateCommandIndex("kick")];
 
-		[[input params] removeObjectAtIndex:1];
+		[mutparams removeObjectAtIndex:1];
 
-		[[input params] safeAddObject:whoKicked];
-		[[input params] safeAddObject:s];
+		[mutparams addObject:whoKicked];
+		[mutparams addObject:s];
 		/* End kick message. */
 	}
 	else if ([s hasPrefix:@"changed the topic to: "])
@@ -248,6 +269,8 @@
 		return nil;
 		/* End topic change. */
 	}
+	
+	[input setParams:mutparams];
 
 	return input;
 }
@@ -264,7 +287,7 @@
         [c deactivate];
 	}
 
-	[[self worldController] reloadTreeGroup:client];
+	[worldController() reloadTreeGroup:client];
 }
 
 @end

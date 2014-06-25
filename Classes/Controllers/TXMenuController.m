@@ -1250,9 +1250,9 @@
 	
 	[config setClientName:newName];
 	
-	[config setProxyPassword:NSStringEmptyPlaceholder];
-	[config setServerPassword:NSStringEmptyPlaceholder];
-	[config setNicknamePassword:NSStringEmptyPlaceholder];
+	[config setProxyPassword:nil];
+	[config setServerPassword:nil];
+	[config setNicknamePassword:nil];
 	
 	IRCClient *n = [worldController() createClient:config reload:YES];
 	

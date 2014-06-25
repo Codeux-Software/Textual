@@ -260,6 +260,20 @@ NSString *TXLocalizedString(NSBundle *bundle, NSString *key, va_list args)
 	return formattedString;
 }
 
+NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...)
+{
+	/* Build result using newer API. */
+	va_list args;
+	va_start(args, key);
+	
+	NSString *result = TXLocalizedString(bundle, key, args);
+	
+	va_end(args);
+	
+	/* Return result. */
+	return result;
+}
+
 #pragma mark -
 #pragma mark Misc.
 

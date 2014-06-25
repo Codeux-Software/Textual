@@ -57,7 +57,7 @@
 - (void)parseLine:(NSString *)line forClient:(IRCClient *)client
 {
 	/* Establish base pair. */
-	self.command = NSStringEmptyPlaceholder;
+	self.command = nil;
 
 	self.isHistoric = NO;
 
@@ -218,9 +218,14 @@
 	params = nil;
 }
 
+- (NSInteger)paramsCount
+{
+	return [self.params count];
+}
+
 - (NSString *)paramAt:(NSInteger)index
 {
-	if (index < [self.params count]) {
+	if (index < [self paramsCount]) {
 		return self.params[index];
 	} else {
 		return NSStringEmptyPlaceholder;
@@ -229,7 +234,7 @@
 
 - (NSString *)sequence
 {
-	if ([self.params count] < 2) {
+	if ([self paramsCount] < 2) {
 		return [self sequence:0];
 	} else {
 		return [self sequence:1];
@@ -240,7 +245,7 @@
 {
 	NSMutableString *s = [NSMutableString string];
 	
-	for (NSInteger i = index; i < [self.params count]; i++) {
+	for (NSInteger i = index; i < [self paramsCount]; i++) {
 		NSString *e = self.params[i];
 		
 		if (NSDissimilarObjects(i, index)) {

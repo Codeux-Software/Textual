@@ -1682,15 +1682,8 @@
 		4C46CB001580429D00846B64 /* Source Code */ = {
 			isa = PBXGroup;
 			children = (
-				4C8AF50F158E99520026668C /* Controllers */,
-				4C7A309D16DAC1F500B231DE /* Dialogs */,
-				4C8AF527158E99520026668C /* Headers */,
-				4C950C0216D6C61D00A93D8D /* Helpers */,
-				4CFF8DBD16DC4CBA00E4204D /* IRC */,
-				4C950BFD16D68DD700A93D8D /* Library */,
-				4C8AF5E7158E99520026668C /* Others */,
-				4CD1FB0E16D7D4500085BC82 /* Preferences */,
-				4C8AF5EF158E99520026668C /* Views */,
+				4CA8AD2E195B489000B99BFB /* Textual 4 */,
+				4CA8AD25195B475600B99BFB /* Textual 5 */,
 			);
 			name = "Source Code";
 			path = Classes;
@@ -2044,24 +2037,8 @@
 		4C7A309D16DAC1F500B231DE /* Dialogs */ = {
 			isa = PBXGroup;
 			children = (
-				4C0879C4187061920034F5EB /* File Transfers */,
-				4C8AF514158E99520026668C /* Preferences */,
-				4C8AF518158E99520026668C /* TDCAboutPanel.m */,
-				4C8AF519158E99520026668C /* TDCAddressBookSheet.m */,
-				4C8AF51A158E99520026668C /* TDChanBanExceptionSheet.m */,
-				4C8AF51B158E99520026668C /* TDChanBanSheet.m */,
-				4C8AF51C158E99520026668C /* TDChanInviteExceptionSheet.m */,
-				4C8AF51D158E99520026668C /* TDChannelSheet.m */,
-				4CBE64C61743720600831D69 /* TDCHighlightEntrySheet.m */,
-				4C8AF51E158E99520026668C /* TDCHighlightListSheet.m */,
-				4C8AF51F158E99520026668C /* TDCInviteSheet.m */,
 				4C8AF520158E99520026668C /* TDCListDialog.m */,
-				4C8AF521158E99520026668C /* TDCModeSheet.m */,
-				4C8AF522158E99520026668C /* TDCNickSheet.m */,
-				4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */,
 				4C8AF523158E99520026668C /* TDCServerSheet.m */,
-				4C8AF524158E99520026668C /* TDCSheetBase.m */,
-				4C8AF525158E99520026668C /* TDCTopicSheet.m */,
 				4C8AF526158E99520026668C /* TDCWelcomeSheet.m */,
 			);
 			name = Dialogs;
@@ -2534,6 +2511,72 @@
 			name = "Script Installers";
 			sourceTree = "<group>";
 		};
+		4CA8AD25195B475600B99BFB /* Textual 5 */ = {
+			isa = PBXGroup;
+			children = (
+				4C8AF50F158E99520026668C /* Controllers */,
+				4CA8AD2C195B476700B99BFB /* Dialogs */,
+				4C8AF527158E99520026668C /* Headers */,
+				4C950C0216D6C61D00A93D8D /* Helpers */,
+				4CA8AD2D195B47D400B99BFB /* IRC */,
+				4C950BFD16D68DD700A93D8D /* Library */,
+				4C8AF5E7158E99520026668C /* Others */,
+				4CD1FB0E16D7D4500085BC82 /* Preferences */,
+				4C8AF5EF158E99520026668C /* Views */,
+			);
+			name = "Textual 5";
+			sourceTree = "<group>";
+		};
+		4CA8AD2C195B476700B99BFB /* Dialogs */ = {
+			isa = PBXGroup;
+			children = (
+				4C0879C4187061920034F5EB /* File Transfers */,
+				4C8AF514158E99520026668C /* Preferences */,
+				4C8AF518158E99520026668C /* TDCAboutPanel.m */,
+				4C8AF519158E99520026668C /* TDCAddressBookSheet.m */,
+				4C8AF51A158E99520026668C /* TDChanBanExceptionSheet.m */,
+				4C8AF51B158E99520026668C /* TDChanBanSheet.m */,
+				4C8AF51C158E99520026668C /* TDChanInviteExceptionSheet.m */,
+				4C8AF51D158E99520026668C /* TDChannelSheet.m */,
+				4CBE64C61743720600831D69 /* TDCHighlightEntrySheet.m */,
+				4C8AF51E158E99520026668C /* TDCHighlightListSheet.m */,
+				4C8AF51F158E99520026668C /* TDCInviteSheet.m */,
+				4C8AF521158E99520026668C /* TDCModeSheet.m */,
+				4C8AF522158E99520026668C /* TDCNickSheet.m */,
+				4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */,
+				4C8AF524158E99520026668C /* TDCSheetBase.m */,
+				4C8AF525158E99520026668C /* TDCTopicSheet.m */,
+			);
+			name = Dialogs;
+			sourceTree = "<group>";
+		};
+		4CA8AD2D195B47D400B99BFB /* IRC */ = {
+			isa = PBXGroup;
+			children = (
+				4CA110D01955AA5A0062EC4E /* IRCAddressBook.m */,
+				4CB26C6F19529003005F927C /* IRCCommandIndex.m */,
+				4C8AF5B7158E99520026668C /* IRCChannelConfig.m */,
+				4C8AF5BA158E99520026668C /* IRCClientConfig.m */,
+				4C8AF5BD158E99520026668C /* IRCISupportInfo.m */,
+				4C8AF5BE158E99520026668C /* IRCMessage.m */,
+				4C8AF5BF158E99520026668C /* IRCModeInfo.m */,
+				4C8AF5C0158E99520026668C /* IRCPrefix.m */,
+				4C8AF5C1158E99520026668C /* IRCSendingMessage.m */,
+				4C8AF5C2158E99520026668C /* IRCTreeItem.m */,
+				4C8AF5C3158E99520026668C /* IRCUser.m */,
+			);
+			name = IRC;
+			sourceTree = "<group>";
+		};
+		4CA8AD2E195B489000B99BFB /* Textual 4 */ = {
+			isa = PBXGroup;
+			children = (
+				4C7A309D16DAC1F500B231DE /* Dialogs */,
+				4CFF8DBD16DC4CBA00E4204D /* IRC */,
+			);
+			name = "Textual 4";
+			sourceTree = "<group>";
+		};
 		4CBCF89F16C7D0B300DC3521 /* Plugin Architecture */ = {
 			isa = PBXGroup;
 			children = (
@@ -2720,23 +2763,12 @@
 		4CFF8DBD16DC4CBA00E4204D /* IRC */ = {
 			isa = PBXGroup;
 			children = (
-				4CA110D01955AA5A0062EC4E /* IRCAddressBook.m */,
-				4CB26C6F19529003005F927C /* IRCCommandIndex.m */,
 				4C8AF5B6158E99520026668C /* IRCChannel.m */,
-				4C8AF5B7158E99520026668C /* IRCChannelConfig.m */,
 				4C8AF5B8158E99520026668C /* IRCChannelMode.m */,
 				4C8AF5B9158E99520026668C /* IRCClient.m */,
-				4C8AF5BA158E99520026668C /* IRCClientConfig.m */,
 				4C8AF5BB158E99520026668C /* IRCConnection.m */,
 				4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */,
 				4C8AF5BC158E99520026668C /* IRCExtras.m */,
-				4C8AF5BD158E99520026668C /* IRCISupportInfo.m */,
-				4C8AF5BE158E99520026668C /* IRCMessage.m */,
-				4C8AF5BF158E99520026668C /* IRCModeInfo.m */,
-				4C8AF5C0158E99520026668C /* IRCPrefix.m */,
-				4C8AF5C1158E99520026668C /* IRCSendingMessage.m */,
-				4C8AF5C2158E99520026668C /* IRCTreeItem.m */,
-				4C8AF5C3158E99520026668C /* IRCUser.m */,
 				4C8AF5C4158E99520026668C /* IRCWorld.m */,
 			);
 			name = IRC;

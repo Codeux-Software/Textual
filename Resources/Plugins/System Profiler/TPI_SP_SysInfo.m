@@ -44,35 +44,35 @@
 
 + (NSString *)applicationConfiguredFontInformation
 {
-	return TPIFLS(@"BasicLanguage[1044]", [TPCPreferences themeChannelViewFontName], [TPCPreferences themeChannelViewFontSize]);
+	return TPILocalizatedString(@"BasicLanguage[1044]", [TPCPreferences themeChannelViewFontName], [TPCPreferences themeChannelViewFontSize]);
 }
 
 + (NSString *)applicationActiveStyle
 {
 	NSMutableString *resultString = [NSMutableString string];
 
-	NSString *fname = [[self themeController] name];
+	NSString *fname = [themeController() name];
 	
-	TPCThemeControllerStorageLocation storageLocation = [[self themeController] storageLocation];
+	TPCThemeControllerStorageLocation storageLocation = [themeController() storageLocation];
 	
     if (storageLocation == TPCThemeControllerStorageBundleLocation) {
-		[resultString appendString:TPIFLS(@"BasicLanguage[1033]", fname)];
+		[resultString appendString:TPILocalizatedString(@"BasicLanguage[1033]", fname)];
     } else if (storageLocation == TPCThemeControllerStorageCustomLocation) {
-		[resultString appendString:TPIFLS(@"BasicLanguage[1034]", fname)];
+		[resultString appendString:TPILocalizatedString(@"BasicLanguage[1034]", fname)];
     } else if (storageLocation == TPCThemeControllerStorageCloudLocation) {
-		[resultString appendString:TPIFLS(@"BasicLanguage[1035]", fname)];
+		[resultString appendString:TPILocalizatedString(@"BasicLanguage[1035]", fname)];
 	}
 
 	if ([TPCPreferences invertSidebarColors]) {
-		[resultString appendString:TPILS(@"BasicLanguage[1036]")];
+		[resultString appendString:TPILocalizatedString(@"BasicLanguage[1036]")];
 	} else {
-		[resultString appendString:TPILS(@"BasicLanguage[1037]")];
+		[resultString appendString:TPILocalizatedString(@"BasicLanguage[1037]")];
 	}
 
 	if ([NSColor currentControlTint] == NSGraphiteControlTint) {
-		[resultString appendString:TPILS(@"BasicLanguage[1039]")];
+		[resultString appendString:TPILocalizatedString(@"BasicLanguage[1039]")];
 	} else {
-		[resultString appendString:TPILS(@"BasicLanguage[1038]")];
+		[resultString appendString:TPILocalizatedString(@"BasicLanguage[1038]")];
 	}
 
 	return resultString;
@@ -80,28 +80,26 @@
 
 + (NSString *)applicationAndSystemUptime
 {
-	NSArray *dateFormat = @[@"day", @"hour", @"minute", @"second"];
+	NSInteger dateFormat = (NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit);
 	
-	NSString *systemUptime = TXSpecialReadableTime([TPI_SP_SysInfo systemUptime], NO, dateFormat);
-	NSString *textualUptime = TXSpecialReadableTime([TPI_SP_SysInfo applicationUptime], NO, dateFormat);
+	NSString *systemUptime = TXHumanReadableTimeInterval([TPI_SP_SysInfo systemUptime], NO, dateFormat);
+	NSString *textualUptime = TXHumanReadableTimeInterval([TPI_SP_SysInfo applicationUptime], NO, dateFormat);
 
-	return TPIFLS(@"BasicLanguage[1045]", systemUptime, textualUptime);
+	return TPILocalizatedString(@"BasicLanguage[1045]", systemUptime, textualUptime);
 }
 
 + (NSString *)applicationBandwidthStatistics
 {
-    IRCWorld *world = [self worldController];
-
-	IRCClient *client = [world selectedClient];
+	IRCClient *client = [worldController() selectedClient];
 
 	NSTimeInterval lastMsg = [NSDate secondsSinceUnixTimestamp:[client lastMessageReceived]];
 	
-	return TPIFLS(@"BasicLanguage[1049]",
-				  TXFormattedNumber([world messagesSent]),
-				  TXFormattedNumber([world messagesReceived]),
-				  TXSpecialReadableTime(lastMsg, YES, @[@"second"]),
-				  [TPI_SP_SysInfo formattedDiskSize:[world bandwidthIn]],
-				  [TPI_SP_SysInfo formattedDiskSize:[world bandwidthOut]]);
+	return TPILocalizatedString(@"BasicLanguage[1049]",
+				  TXFormattedNumber([worldController() messagesSent]),
+				  TXFormattedNumber([worldController() messagesReceived]),
+				  TXHumanReadableTimeInterval(lastMsg, YES, NSSecondCalendarUnit),
+				  [TPI_SP_SysInfo formattedDiskSize:[worldController() bandwidthIn]],
+				  [TPI_SP_SysInfo formattedDiskSize:[worldController() bandwidthOut]]);
 }
 
 + (NSString *)applicationMemoryUsage
@@ -111,12 +109,12 @@
 	NSString *shared  = [TPI_SP_SysInfo formattedDiskSize:[mem integerForKey:@"shared"]];
 	NSString *private = [TPI_SP_SysInfo formattedDiskSize:[mem integerForKey:@"private"]];
 
-	return TPIFLS(@"BasicLanguage[1020]", private, shared);
+	return TPILocalizatedString(@"BasicLanguage[1020]", private, shared);
 }
 
 + (NSString *)applicationRuntimeStatistics
 {
-	NSTimeInterval runtime = [TPCPreferences timeIntervalSinceApplicationInstall];
+	NSTimeInterval runtime = [TPCApplicationInfo timeIntervalSinceApplicationInstall];
 
 	NSTimeInterval birthday = [NSDate secondsSinceUnixTimestamp:TXBirthdayReferenceDate];
 
@@ -124,16 +122,16 @@
 		runtime = birthday;
 	}
 
-	return TPIFLS(@"BasicLanguage[1047]",
-				  TXFormattedNumber([TPCPreferences applicationRunCount]),
-				  TXReadableTime(runtime));
+	return TPILocalizatedString(@"BasicLanguage[1047]",
+				  TXFormattedNumber([TPCApplicationInfo applicationRunCount]),
+				  TXHumanReadableTimeInterval(runtime, NO, 0));
 }
 
 + (NSString *)systemCPULoadInformation
 {
 	NSUInteger _cpu_count_v	= [TPI_SP_SysInfo processorVirtualCoreCount];
 	
-	return TPIFLS(@"BasicLanguage[1048]", [TPI_SP_SysInfo loadAverageWithCores:_cpu_count_v]);
+	return TPILocalizatedString(@"BasicLanguage[1048]", [TPI_SP_SysInfo loadAverageWithCores:_cpu_count_v]);
 }
 
 + (NSString *)systemDiskspaceInformation
@@ -176,11 +174,11 @@
 						TXUnsignedLongLong freeSpace  = [diskInfo longLongForKey:NSFileSystemFreeSize];
 
 						if (objectIndex == 0) {
-							[result appendString:TPIFLS(@"BasicLanguage[1022]", name,
+							[result appendString:TPILocalizatedString(@"BasicLanguage[1022]", name,
 														[TPI_SP_SysInfo formattedDiskSize:totalSpace],
 														[TPI_SP_SysInfo formattedDiskSize:freeSpace])];
 						} else {
-							[result appendString:TPIFLS(@"BasicLanguage[1023]", name,
+							[result appendString:TPILocalizatedString(@"BasicLanguage[1023]", name,
 														[TPI_SP_SysInfo formattedDiskSize:totalSpace],
 														[TPI_SP_SysInfo formattedDiskSize:freeSpace])];
 						}
@@ -193,9 +191,9 @@
 	}
 
 	if (NSObjectIsEmpty(result)) {
-		return TPILS(@"BasicLanguage[1024]");
+		return TPILocalizatedString(@"BasicLanguage[1024]");
 	} else {
-		return TPIFLS(@"BasicLanguage[1021]", result);
+		return TPILocalizatedString(@"BasicLanguage[1021]", result);
 	}
 }
 
@@ -203,15 +201,15 @@
 {
 	NSArray *screens = [NSScreen screens];
 
-	if (screens.count == 1) {
+	if ([screens count] == 1) {
 		NSScreen *maiScreen = RZMainScreen();
 
-		NSString *result = TPIFLS(@"BasicLanguage[1040]",
+		NSString *result = TPILocalizatedString(@"BasicLanguage[1040]",
 								  [maiScreen frame].size.width,
 								  [maiScreen frame].size.height);
 
-		if ([TPCPreferences runningInHighResolutionMode]) {
-			result = [result stringByAppendingString:TPILS(@"BasicLanguage[1043]")];
+		if ([maiScreen runningInHighResolutionMode]) {
+			result = [result stringByAppendingString:TPILocalizatedString(@"BasicLanguage[1043]")];
 		}
 
 		return result;
@@ -222,19 +220,19 @@
 			NSInteger screenNumber = ([screens indexOfObject:screen] + 1);
 
 			if (screenNumber == 1) {
-				[result appendString:TPIFLS(@"BasicLanguage[1041]",
+				[result appendString:TPILocalizatedString(@"BasicLanguage[1041]",
 											screenNumber,
 											[screen frame].size.width,
 											[screen frame].size.height)];
 			} else {
-				[result appendString:TPIFLS(@"BasicLanguage[1042]",
+				[result appendString:TPILocalizatedString(@"BasicLanguage[1042]",
 											screenNumber,
 											[screen frame].size.width,
 											[screen frame].size.height)];
 			}
 
 			if ([screen runningInHighResolutionMode]) {
-				[result appendString:TPILS(@"BasicLanguage[1043]")];
+				[result appendString:TPILocalizatedString(@"BasicLanguage[1043]")];
 			}
 		}
 
@@ -244,7 +242,7 @@
 
 + (NSString *)systemInformation
 {
-	NSString *sysinfo = TPILS(@"BasicLanguage[1001]");
+	NSString *sysinfo = TPILocalizatedString(@"BasicLanguage[1001]");
 
 	NSString *_new;
 
@@ -295,7 +293,7 @@
 			}
 		}
 
-		_new = TPIFLS(@"BasicLanguage[1002]", _exact_model);
+		_new = TPILocalizatedString(@"BasicLanguage[1002]", _exact_model);
 
 		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
@@ -303,28 +301,28 @@
 	if (_show_cpu_model) {
 		/* CPU Information. */
 		if (_cpu_count_p >= 1 && NSObjectIsNotEmpty(_cpu_speed)) {
-			_new = TPIFLS(@"BasicLanguage[1003]", _cpu_model, _cpu_count_v, _cpu_count_p, _cpu_speed);
+			_new = TPILocalizatedString(@"BasicLanguage[1003]", _cpu_model, _cpu_count_v, _cpu_count_p, _cpu_speed);
 
 			sysinfo = [sysinfo stringByAppendingString:_new];
 		}
 	}
 
 	if (_show_sys_memory && _memory) {
-		_new = TPIFLS(@"BasicLanguage[1004]", _memory);
+		_new = TPILocalizatedString(@"BasicLanguage[1004]", _memory);
 
 		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
 
 	if (_show_sys_uptime) {
 		/* System Uptime. */
-		_new = TPIFLS(@"BasicLanguage[1005]", TXSpecialReadableTime([TPI_SP_SysInfo systemUptime], YES, nil));
+		_new = TPILocalizatedString(@"BasicLanguage[1005]", TXHumanReadableTimeInterval([TPI_SP_SysInfo systemUptime], YES, 0));
 
 		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
 
 	if (_show_diskinfo) {
 		/* Disk Space Information. */
-		_new = TPIFLS(@"BasicLanguage[1006]", [TPI_SP_SysInfo formattedLocalVolumeDiskUsage]);
+		_new = TPILocalizatedString(@"BasicLanguage[1006]", [TPI_SP_SysInfo formattedLocalVolumeDiskUsage]);
 
 		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
@@ -332,7 +330,7 @@
 	if (_show_gpu_model) {
 		/* GPU Information. */
 		if (NSObjectIsNotEmpty(_gpu_model)) {
-			_new = TPIFLS(@"BasicLanguage[1008]", _gpu_model);
+			_new = TPILocalizatedString(@"BasicLanguage[1008]", _gpu_model);
 
 			sysinfo = [sysinfo stringByAppendingString:_new];
 		}
@@ -342,12 +340,12 @@
 		/* Screen Resolution. */
 		NSScreen *maiScreen = RZMainScreen();
 
-		if ([TPCPreferences runningInHighResolutionMode]) {
-			_new = TPIFLS(@"BasicLanguage[1010]",
+		if ([maiScreen runningInHighResolutionMode]) {
+			_new = TPILocalizatedString(@"BasicLanguage[1010]",
 						  [maiScreen frame].size.width,
 						  [maiScreen frame].size.height);
 		} else {
-			_new = TPIFLS(@"BasicLanguage[1009]",
+			_new = TPILocalizatedString(@"BasicLanguage[1009]",
 						  [maiScreen frame].size.width,
 						  [maiScreen frame].size.height);
 		}
@@ -358,7 +356,7 @@
 	if (_show_load_avg) {
 		/* Load Average. */
 		if (NSObjectIsNotEmpty(_loadavg)) {
-			_new = TPIFLS(@"BasicLanguage[1011]", _loadavg);
+			_new = TPILocalizatedString(@"BasicLanguage[1011]", _loadavg);
 
 			sysinfo = [sysinfo stringByAppendingString:_new];
 		}
@@ -368,7 +366,7 @@
 		/* Operating System. */
 		NSString *osname = [TPI_SP_SysInfo operatingSystemName];
 
-		_new = TPIFLS(@"BasicLanguage[1012]",
+		_new = TPILocalizatedString(@"BasicLanguage[1012]",
 					  [CSFWSystemInformation systemOperatingSystemName],
 					  [CSFWSystemInformation systemStandardVersion], osname,
 					  [CSFWSystemInformation systemBuildVersion]);
@@ -410,7 +408,7 @@
 
 	[result appendFormat:@"%c", 0x03];
 
-	return TPIFLS(@"BasicLanguage[1046]",
+	return TPILocalizatedString(@"BasicLanguage[1046]",
 				  [TPI_SP_SysInfo formattedDiskSize:freeMemory],
 				  [TPI_SP_SysInfo formattedDiskSize:usedMemory],
 				  [TPI_SP_SysInfo formattedDiskSize:totalMemory], result);
@@ -457,12 +455,12 @@
 			net_ibytes += if_data->ifi_ibytes;
 
 			if (objectIndex == 0) {
-				[netstat appendString:TPIFLS(@"BasicLanguage[1026]",
+				[netstat appendString:TPILocalizatedString(@"BasicLanguage[1026]",
 											 @(ifa->ifa_name),
 											 [TPI_SP_SysInfo formattedDiskSize:if_data->ifi_ibytes],
 											 [TPI_SP_SysInfo formattedDiskSize:if_data->ifi_obytes])];
 			} else {
-				[netstat appendString:TPIFLS(@"BasicLanguage[1027]",
+				[netstat appendString:TPILocalizatedString(@"BasicLanguage[1027]",
 											 @(ifa->ifa_name),
 											 [TPI_SP_SysInfo formattedDiskSize:if_data->ifi_ibytes],
 											 [TPI_SP_SysInfo formattedDiskSize:if_data->ifi_obytes])];
@@ -477,9 +475,9 @@
 	}
 
 	if (NSObjectIsEmpty(netstat)) {
-		return TPILS(@"BasicLanguage[1028]");
+		return TPILocalizatedString(@"BasicLanguage[1028]");
 	} else {
-		return TPIFLS(@"BasicLanguage[1025]", netstat);
+		return TPILocalizatedString(@"BasicLanguage[1025]", netstat);
 	}
 
 	return netstat;
@@ -495,22 +493,22 @@
 + (NSString *)formattedDiskSize:(TXUnsignedLongLong)size
 {
 	/* Use cocoa API if available. */
-	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
 		return [NSByteCountFormatter stringFromByteCountWithPaddedDigits:size];
 	}
 
 	/* Use our own math. */
 	if (size >= 1000000000000.0) {
-		return TPIFLS(@"BasicLanguage[1029]", (size / 1000000000000.0));
+		return TPILocalizatedString(@"BasicLanguage[1029]", (size / 1000000000000.0));
 	} else {
 		if (size < 1000000000.0) {
 			if (size < 1000000.0) {
-				return TPIFLS(@"BasicLanguage[1032]", (size / 1000.0));
+				return TPILocalizatedString(@"BasicLanguage[1032]", (size / 1000.0));
 			} else {
-				return TPIFLS(@"BasicLanguage[1031]", (size / 1000000.0));
+				return TPILocalizatedString(@"BasicLanguage[1031]", (size / 1000000.0));
 			}
 		} else {
-			return TPIFLS(@"BasicLanguage[1030]", (size / 1000000000.0));
+			return TPILocalizatedString(@"BasicLanguage[1030]", (size / 1000000000.0));
 		}
 	}
 }
@@ -518,9 +516,9 @@
 + (NSString *)formattedCPUFrequency:(double)rate
 {
 	if ((rate / 1000000) >= 990) {
-		return TPIFLS(@"BasicLanguage[1018]", ((rate / 100000000.0) / 10.0));
+		return TPILocalizatedString(@"BasicLanguage[1018]", ((rate / 100000000.0) / 10.0));
 	} else {
-		return TPIFLS(@"BasicLanguage[1019]", rate);
+		return TPILocalizatedString(@"BasicLanguage[1019]", rate);
 	}
 }
 
@@ -537,7 +535,7 @@
 		TXUnsignedLongLong totalSpace = [diskInfo longLongForKey:NSFileSystemSize];
 		TXUnsignedLongLong freeSpace  = [diskInfo longLongForKey:NSFileSystemFreeSize];
 
-		return TPIFLS(@"BasicLanguage[1007]",
+		return TPILocalizatedString(@"BasicLanguage[1007]",
 					  [self formattedDiskSize:totalSpace],
 					  [self formattedDiskSize:freeSpace]);
 	} else {
@@ -597,9 +595,9 @@
 
 		for (NSString *model in gpuList) {
 			if (objectIndex == 0) {
-				[result appendString:TPIFLS(@"BasicLanguage[1013]", model)];
+				[result appendString:TPILocalizatedString(@"BasicLanguage[1013]", model)];
 			} else {
-				[result appendString:TPIFLS(@"BasicLanguage[1014]", model)];
+				[result appendString:TPILocalizatedString(@"BasicLanguage[1014]", model)];
 			}
 
 			objectIndex++;
@@ -629,7 +627,7 @@
 
 + (NSInteger)applicationUptime
 {
-	return [TPCPreferences timeIntervalSinceApplicationLaunch];
+	return [TPCApplicationInfo timeIntervalSinceApplicationLaunch];
 }
 
 + (NSString *)loadAverageWithCores:(NSInteger)cores
@@ -717,19 +715,19 @@
 	NSString *productVersion = [CSFWSystemInformation systemStandardVersion];
 	
 	if ([productVersion hasPrefix:@"10.7"]) {
-		return TPILS(@"BasicLanguage[1015]");
+		return TPILocalizatedString(@"BasicLanguage[1015]");
 	}
 	
 	if ([productVersion hasPrefix:@"10.8"]) {
-		return TPILS(@"BasicLanguage[1016]");
+		return TPILocalizatedString(@"BasicLanguage[1016]");
 	}
 
 	if ([productVersion hasPrefix:@"10.9"]) {
-		return TPIFLS(@"BasicLanguage[1017]");
+		return TPILocalizatedString(@"BasicLanguage[1017]");
 	}
 
 	if ([productVersion hasPrefix:@"10.10"]) {
-		return TPIFLS(@"BasicLanguage[1050]");
+		return TPILocalizatedString(@"BasicLanguage[1050]");
 	}
 	
 	return nil;
