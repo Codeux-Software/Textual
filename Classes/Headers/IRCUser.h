@@ -43,7 +43,7 @@
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *username;
 @property (nonatomic, copy) NSString *address;
-@property (nonatomic, assign, readonly) NSInteger colorNumber;
+@property (nonatomic, assign) NSInteger colorNumber;
 @property (nonatomic, assign) BOOL q;
 @property (nonatomic, assign) BOOL a;
 @property (nonatomic, assign) BOOL o;
@@ -54,10 +54,10 @@
 @property (nonatomic, assign) BOOL InspIRCd_y_lower; // Channel mode (+y) for IRCop on InspIRCd-2.0
 @property (nonatomic, assign) BOOL isCop;
 @property (nonatomic, assign) BOOL isAway;
-@property (nonatomic, assign, readonly) CGFloat totalWeight;
-@property (nonatomic, assign, readonly) CGFloat incomingWeight;
-@property (nonatomic, assign, readonly) CGFloat outgoingWeight;
-@property (nonatomic, assign, readonly) CFAbsoluteTime lastWeightFade;
+@property (nonatomic, assign) CGFloat totalWeight;
+@property (nonatomic, assign) CGFloat incomingWeight;
+@property (nonatomic, assign) CGFloat outgoingWeight;
+@property (nonatomic, assign) CFAbsoluteTime lastWeightFade;
 
 - (NSString *)mark;
 

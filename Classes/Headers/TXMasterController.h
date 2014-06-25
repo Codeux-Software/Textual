@@ -39,14 +39,14 @@
 #import "TextualApplication.h"
 
 @interface TXMasterController : NSObject <NSApplicationDelegate, NSWindowDelegate, BITHockeyManagerDelegate>
-@property (nonatomic, strong, readonly) IRCWorld *world;
-@property (nonatomic, assign, readonly) BOOL ghostModeIsOn;
-@property (nonatomic, assign, readonly) BOOL debugModeIsOn;
-@property (nonatomic, assign, readonly) BOOL skipTerminateSave;
-@property (nonatomic, assign, readonly) BOOL applicationIsActive;
-@property (nonatomic, assign, readonly) BOOL applicationIsTerminating;
-@property (nonatomic, assign, readonly) BOOL applicationIsChangingActiveState;
-@property (nonatomic, assign, readonly) NSInteger terminatingClientCount;
+@property (nonatomic, strong) IRCWorld *world;
+@property (nonatomic, assign) BOOL ghostModeIsOn;
+@property (nonatomic, assign) BOOL debugModeIsOn;
+@property (nonatomic, assign) BOOL skipTerminateSave;
+@property (nonatomic, assign) BOOL applicationIsActive;
+@property (nonatomic, assign) BOOL applicationIsTerminating;
+@property (nonatomic, assign) BOOL applicationIsChangingActiveState;
+@property (nonatomic, assign) NSInteger terminatingClientCount;
 @property (nonatomic, uweak) IBOutlet TVCMainWindow *mainWindow;
 @property (nonatomic, nweak) IBOutlet TXMenuController *menuController;
 

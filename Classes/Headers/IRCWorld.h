@@ -48,12 +48,11 @@
 @property (nonatomic, assign) NSInteger messagesReceived;
 @property (nonatomic, assign) TXUnsignedLongLong bandwidthIn;
 @property (nonatomic, assign) TXUnsignedLongLong bandwidthOut;
-@property (nonatomic, strong, readonly) NSMutableArray *clients;
 @property (nonatomic, assign) BOOL isPopulatingSeeds;
 @property (nonatomic, assign) BOOL temporarilyDisablePreviousSelectionUpdates;
-@property (nonatomic, strong, readonly) IRCTreeItem *selectedItem;
-@property (nonatomic, copy, readonly) NSString *previousSelectedClientId;
-@property (nonatomic, copy, readonly) NSString *previousSelectedChannelId;
+@property (nonatomic, strong) IRCTreeItem *selectedItem;
+@property (nonatomic, copy) NSString *previousSelectedClientId;
+@property (nonatomic, copy) NSString *previousSelectedChannelId;
 
 - (void)setupConfiguration;
 - (void)setupOtherServices;
@@ -75,7 +74,11 @@
 - (void)prepareForScreenSleep;
 - (void)awakeFomScreenSleep;
 
+- (void)reachabilityChanged:(BOOL)reachable;
+
 - (NSInteger)clientCount;
+
+- (NSArray *)clientList;
 
 - (IRCClient *)findClientById:(NSString *)uid;
 - (IRCChannel *)findChannelByClientId:(NSString *)uid channelId:(NSString *)cid;
@@ -113,8 +116,6 @@
 - (void)adjustSelection;
 
 - (void)expandClient:(IRCClient *)client;
-
-- (void)addHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine;
 
 - (void)reloadTheme;
 - (void)reloadTheme:(BOOL)reloadUserInterface;

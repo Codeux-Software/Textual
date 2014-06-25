@@ -61,10 +61,10 @@
 		/* Load the list of available IRC networks. */
 		NSString *slp = [RZMainBundle() pathForResource:@"IRCNetworks" ofType:@"plist"];
 		
-		self.serverList = [NSDictionary dictionaryWithContentsOfFile:slp];
+		_serverList = [NSDictionary dictionaryWithContentsOfFile:slp];
 
 		/* Populate the server address field with the IRC network list. */
-		NSArray *sortedKeys = [self.serverList allKeys];
+		NSArray *sortedKeys = [_serverList allKeys];
 
 		sortedKeys = [sortedKeys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
 			/* We are sorting keys. They are NSString values. */
@@ -73,14 +73,14 @@
 		}];
 
 		for (NSString *key in sortedKeys) {
-			[self.serverAddressCombo addItemWithObjectValue:key];
+			[_serverAddressCombo addItemWithObjectValue:key];
 		}
 
 		/* Connect commands text box better font. */
 		NSFont *goodFont = [NSFont fontWithName:@"Lucida Grande" size:13.0];
 
-		[self.loginCommandsField setTextContainerInset:NSMakeSize(1, 3)];
-		[self.loginCommandsField setFont:goodFont];
+		[_loginCommandsField setTextContainerInset:NSMakeSize(1, 3)];
+		[_loginCommandsField setFont:goodFont];
 	}
     
 	return self;

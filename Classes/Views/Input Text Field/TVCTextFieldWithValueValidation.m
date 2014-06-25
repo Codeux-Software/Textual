@@ -50,7 +50,7 @@
 
 - (NSString *)value
 {
-	if (_stringValueUsesOnlyFirstToken) {
+	if (self.stringValueUsesOnlyFirstToken) {
 		return [self firstTokenStringValue];
 	} else {
 		return [self stringValue];
@@ -64,7 +64,7 @@
 
 - (BOOL)valueIsValid
 {
-	return _cachedValidValue;
+	return self.cachedValidValue;
 }
 
 #pragma mark -
@@ -91,9 +91,9 @@
 
 - (void)informCallbackTextDidChange
 {
-	if (_textDidChangeCallback) {
-		if ([_textDidChangeCallback respondsToSelector:@selector(validatedTextFieldTextDidChange:)]) {
-			[_textDidChangeCallback performSelector:@selector(validatedTextFieldTextDidChange:) withObject:self];
+	if (self.textDidChangeCallback) {
+		if ([self.textDidChangeCallback respondsToSelector:@selector(validatedTextFieldTextDidChange:)]) {
+			[self.textDidChangeCallback performSelector:@selector(validatedTextFieldTextDidChange:) withObject:self];
 		}
 	}
 }
@@ -101,13 +101,13 @@
 - (void)performValidation
 {
 	if ([self valueIsEmpty] == NO) {
-		if (_validationBlock) {
-			_cachedValidValue = _validationBlock([self stringValue]);
+		if (self.validationBlock) {
+			self.cachedValidValue = self.validationBlock([self stringValue]);
 		} else {
-			_cachedValidValue = YES;
+			self.cachedValidValue = YES;
 		}
 	} else {
-		_cachedValidValue = (_stringValueIsInvalidOnEmpty == NO);
+		self.cachedValidValue = (self.stringValueIsInvalidOnEmpty == NO);
 	}
 	
 	[self setNeedsDisplay:YES];

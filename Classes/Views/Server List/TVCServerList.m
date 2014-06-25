@@ -120,13 +120,13 @@
 {
 }
 
+- (void)updateBackgroundColor
+{
+}
+
 - (BOOL)allowsVibrancy
 {
 	return NO;
-}
-
-- (void)updateBackgroundColor
-{
 }
 
 - (NSScrollView *)scrollView
@@ -161,7 +161,7 @@
 
 - (void)keyDown:(NSEvent *)e
 {
-	if (_keyDelegate) {
+	if (self.keyDelegate) {
 		switch ([e keyCode]) {
 			case 123 ... 126:
 			case 116:
@@ -171,8 +171,8 @@
 			}
 			default:
 			{
-				if ([_keyDelegate respondsToSelector:@selector(serverListKeyDown:)]) {
-					[_keyDelegate serverListKeyDown:e];
+				if ([self.keyDelegate respondsToSelector:@selector(serverListKeyDown:)]) {
+					[self.keyDelegate serverListKeyDown:e];
 				}
 				
 				break;
@@ -431,9 +431,9 @@
 		}
 	} else {
 		if (up) {
-			return _defaultDisclosureTriangle;
+			return self.defaultDisclosureTriangle;
 		} else {
-			return _alternateDisclosureTriangle;
+			return self.alternateDisclosureTriangle;
 		}
 	}
 }

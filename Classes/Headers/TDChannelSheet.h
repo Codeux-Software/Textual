@@ -40,8 +40,8 @@
 
 @interface TDChannelSheet : TDCSheetBase
 @property (nonatomic, assign) BOOL newItem;
-@property (nonatomic, strong) NSString *clientID;
-@property (nonatomic, strong) NSString *channelID;
+@property (nonatomic, copy) NSString *clientID;
+@property (nonatomic, copy) NSString *channelID;
 @property (nonatomic, copy) IRCChannelConfig *config;
 @property (nonatomic, nweak) IBOutlet NSButton *JPQActivityCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *autoJoinCheck;

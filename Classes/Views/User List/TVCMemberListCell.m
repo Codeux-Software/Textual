@@ -58,28 +58,28 @@
     /* What permissions does the user have? */
     NSString *permissions = @"BasicLanguage[1206]";
 
-	if ([_memberPointer q]) {
+	if ([self.memberPointer q]) {
         permissions = @"BasicLanguage[1211]";
-    } else if ([_memberPointer a]) {
+    } else if ([self.memberPointer a]) {
         permissions = @"BasicLanguage[1210]";
-    } else if ([_memberPointer o]) {
+    } else if ([self.memberPointer o]) {
         permissions = @"BasicLanguage[1209]";
-    } else if ([_memberPointer h]) {
+    } else if ([self.memberPointer h]) {
         permissions = @"BasicLanguage[1208]";
-    } else if ([_memberPointer v]) {
+    } else if ([self.memberPointer v]) {
         permissions = @"BasicLanguage[1207]";
     }
 
     permissions = TXTLS(permissions);
 
-    if ([_memberPointer isCop]) {
+    if ([self.memberPointer isCop]) {
         permissions = [permissions stringByAppendingString:BLS(1212)];
     }
 
     /* User info. */
-	NSString *nickname = [_memberPointer nickname];
-	NSString *username = [_memberPointer username];
-	NSString *address = [_memberPointer address];
+	NSString *nickname = [self.memberPointer nickname];
+	NSString *username = [self.memberPointer username];
+	NSString *address = [self.memberPointer address];
 
     if (NSObjectIsEmpty(username)) {
         username = BLS(1215);
@@ -109,7 +109,7 @@
 	[[userInfoPopover addressField] setAttributedStringValue:addressAttr];
 	
 	/* Update away status. */
-	if ([_memberPointer isAway]) {
+	if ([self.memberPointer isAway]) {
 		[[userInfoPopover awayStatusField] setStringValue:BLS(1213)];
 	} else {
 		[[userInfoPopover awayStatusField] setStringValue:BLS(1214)];
@@ -124,7 +124,7 @@
 
 - (NSInteger)rowIndex
 {
-	return [mainWindowMemberList() rowForItem:_memberPointer];
+	return [mainWindowMemberList() rowForItem:self.memberPointer];
 }
 
 - (NSDictionary *)drawingContext

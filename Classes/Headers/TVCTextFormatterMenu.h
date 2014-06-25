@@ -46,9 +46,9 @@
 @property (nonatomic, nweak) IBOutlet NSMenuItem *formatterMenu;
 @property (nonatomic, nweak) IBOutlet NSMenu *foregroundColorMenu;
 @property (nonatomic, nweak) IBOutlet NSMenu *backgroundColorMenu;
-@property (nonatomic, assign, readonly) BOOL sheetOverrideEnabled;
-@property (nonatomic, assign, readonly) dispatch_queue_t formattingQueue;
-@property (nonatomic, uweak, readonly) TVCTextViewWithIRCFormatter *textField;
+@property (nonatomic, assign) BOOL sheetOverrideEnabled;
+@property (nonatomic, assign) dispatch_queue_t formattingQueue;
+@property (nonatomic, uweak) TVCTextViewWithIRCFormatter *textField;
 
 - (void)enableSheetField:(TVCTextViewWithIRCFormatter *)field;
 - (void)enableWindowField:(TVCTextViewWithIRCFormatter *)field;

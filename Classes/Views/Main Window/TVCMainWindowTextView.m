@@ -81,17 +81,17 @@
 		/* Comment out a specific variation for debugging purposes. */
 		/* The uncommented sections are the defaults. */
 		/* nil value indicates that the value is inherited. */
-		[_contentView setAppearance:nil];
+		[self.contentView setAppearance:nil];
 		
 		/* Uncomment one of the following. */
 		/* 1. */
-		// [_contentView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
+		// [self.contentView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
 		
 		/* 2. */
-		// [_contentView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
+		// [self.contentView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
 		
 		/* Use font color depending on appearance. */
-		[self setPreferredFontColor:[_backgroundView systemSpecificPlaceholderTextFontColor]];
+		[self setPreferredFontColor:[self.backgroundView systemSpecificPlaceholderTextFontColor]];
 	}
 	
 	/* We changed the font color so we must inform our parent. */
@@ -160,11 +160,11 @@
 	 is also maintained for the leading of the segmented controller to allow that spacing to 
 	 be removed when it is hidden from view. */
 	if ([TPCPreferences hideMainWindowSegmentedController]) {
-		[_segmentedControllerWidthConstraint setConstant:0];
-		[_segmentedControllerLeadingConstraint setConstant:0];
+		[self.segmentedControllerWidthConstraint setConstant:0];
+		[self.segmentedControllerLeadingConstraint setConstant:0];
 	} else {
-		[_segmentedControllerWidthConstraint setConstant:_WindowSegmentedControllerDefaultWidth];
-		[_segmentedControllerLeadingConstraint setConstant:_WindowSegmentedControllerLeadingEdge];
+		[self.segmentedControllerWidthConstraint setConstant:_WindowSegmentedControllerDefaultWidth];
+		[self.segmentedControllerLeadingConstraint setConstant:_WindowSegmentedControllerLeadingEdge];
 	}
 	
 	/* There seems to be a slight delay while the constraints are updated
@@ -187,14 +187,14 @@
 		
 		BOOL condition2 = ([mainWindowLoadingScreen() viewIsVisible] == NO);
 		
-		[_segmentedController setEnabled:(condition1 && condition2)];
+		[self.segmentedController setEnabled:(condition1 && condition2)];
 		
 		/* Selection Settings. */
 		IRCClient *u = [worldController() selectedClient];
 		IRCChannel *c = [worldController() selectedChannel];
 
 		/* Segment 0 menu. */
-		[_segmentedController setMenu:[menuController() segmentedControllerMenu] forSegment:0];
+		[self.segmentedController setMenu:[menuController() segmentedControllerMenu] forSegment:0];
 		
 		/* Set menu for segment 1. */
 		NSMenuItem *segmentOneMenuItem;
@@ -205,10 +205,10 @@
 			segmentOneMenuItem = [menuController() channelMenuItem];
 		}
 		
-		[_segmentedController setMenu:[segmentOneMenuItem submenu] forSegment:1];
+		[self.segmentedController setMenu:[segmentOneMenuItem submenu] forSegment:1];
 		
 		/* Open Address Book. */
-		[_segmentedController setEnabled:(u && [u isConnected]) forSegment:2];
+		[self.segmentedController setEnabled:(u && [u isConnected]) forSegment:2];
 	}
 }
 
@@ -236,10 +236,10 @@
 		
 		if ([value length] == 0) {
 			if ([self baseWritingDirection] == NSWritingDirectionLeftToRight) {
-				if (_cachedFontSize == TVCMainWindowTextViewFontLargeSize) {
-					[_placeholderString drawAtPoint:NSMakePoint(6, 2)];
+				if (self.cachedFontSize == TVCMainWindowTextViewFontLargeSize) {
+					[self.placeholderString drawAtPoint:NSMakePoint(6, 2)];
 				} else {
-					[_placeholderString drawAtPoint:NSMakePoint(6, 1)];
+					[self.placeholderString drawAtPoint:NSMakePoint(6, 1)];
 				}
 			}
 		} else {
@@ -279,19 +279,19 @@
 
 - (NSColor *)placeholderTextFontColor
 {
-	return [_backgroundView systemSpecificPlaceholderTextFontColor];
+	return [self.backgroundView systemSpecificPlaceholderTextFontColor];
 }
 
 - (void)updateTextBoxCachedPreferredFontSize
 {
 	/* Update the font. */
-	_cachedFontSize = [TPCPreferences mainTextViewFontSize];
+	self.cachedFontSize = [TPCPreferences mainTextViewFontSize];
 
-	if (_cachedFontSize == TVCMainWindowTextViewFontNormalSize) {
+	if (self.cachedFontSize == TVCMainWindowTextViewFontNormalSize) {
 		[self setPreferredFont:[NSFont fontWithName:@"Helvetica" size:12.0]];
-	} else if (_cachedFontSize == TVCMainWindowTextViewFontLargeSize) {
+	} else if (self.cachedFontSize == TVCMainWindowTextViewFontLargeSize) {
 		[self setPreferredFont:[NSFont fontWithName:@"Helvetica" size:14.0]];
-	} else if (_cachedFontSize == TVCMainWindowTextViewFontExtraLargeSize) {
+	} else if (self.cachedFontSize == TVCMainWindowTextViewFontExtraLargeSize) {
 		[self setPreferredFont:[NSFont fontWithName:@"Helvetica" size:16.0]];
 	}
 
@@ -301,8 +301,8 @@
 		NSForegroundColorAttributeName	: [self placeholderTextFontColor]
 	};
 	
-	_placeholderString = nil;
-	_placeholderString = [NSAttributedString stringWithBase:TXTLS(@"TDCMainWindow[1000]") attributes:attrs];
+	self.placeholderString = nil;
+	self.placeholderString = [NSAttributedString stringWithBase:TXTLS(@"TDCMainWindow[1000]") attributes:attrs];
 
 	/* Prepare draw. */
 	[self setNeedsDisplay:YES];
@@ -310,13 +310,13 @@
 
 - (void)updateTextBoxBasedOnPreferredFontSize
 {
-	TVCMainWindowTextViewFontSize cachedFontSize = _cachedFontSize;
+	TVCMainWindowTextViewFontSize cachedFontSize = self.cachedFontSize;
 
 	/* Update actual cache. */
 	[self updateTextBoxCachedPreferredFontSize];
 
 	/* We only update the font sizes if there was a chagne. */
-	if (NSDissimilarObjects(cachedFontSize, _cachedFontSize)) {
+	if (NSDissimilarObjects(cachedFontSize, self.cachedFontSize)) {
 		[self updateAllFontSizesToMatchTheDefaultFont];
 		[self updateTypeSetterAttributes];
 	}
@@ -327,11 +327,11 @@
 
 - (NSInteger)backgroundViewDefaultHeight
 {
-	if (_cachedFontSize == TVCMainWindowTextViewFontNormalSize) {
+	if (self.cachedFontSize == TVCMainWindowTextViewFontNormalSize) {
 		return 23.0;
-	} else if (_cachedFontSize == TVCMainWindowTextViewFontLargeSize) {
+	} else if (self.cachedFontSize == TVCMainWindowTextViewFontLargeSize) {
 		return 27.0;
-	} else if (_cachedFontSize == TVCMainWindowTextViewFontExtraLargeSize) {
+	} else if (self.cachedFontSize == TVCMainWindowTextViewFontExtraLargeSize) {
 		return 28.0;
 	}
 	
@@ -340,11 +340,11 @@
 
 - (NSInteger)backgroundViewHeightMultiplier
 {
-	if (_cachedFontSize == TVCMainWindowTextViewFontNormalSize) {
+	if (self.cachedFontSize == TVCMainWindowTextViewFontNormalSize) {
 		return 14.0;
-	} else if (_cachedFontSize == TVCMainWindowTextViewFontLargeSize) {
+	} else if (self.cachedFontSize == TVCMainWindowTextViewFontLargeSize) {
 		return 17.0;
-	} else if (_cachedFontSize == TVCMainWindowTextViewFontExtraLargeSize) {
+	} else if (self.cachedFontSize == TVCMainWindowTextViewFontExtraLargeSize) {
 		return 19.0;
 	}
 
@@ -380,19 +380,19 @@
 	if ([stringv length] < 1) {
 		backgroundHeight = (backgroundDefaultHeight + _WindowContentBorderTotalPadding);
 
-		if (_lastDrawLineCount > 1 || force) {
+		if (self.lastDrawLineCount > 1 || force) {
 			drawBezel = YES;
 		}
 
-		_lastDrawLineCount = 1;
+		self.lastDrawLineCount = 1;
 	} else {
 		NSInteger totalLinesBase = [self numberOfLines];
 
-		if (_lastDrawLineCount == totalLinesBase && force == NO) {
+		if (self.lastDrawLineCount == totalLinesBase && force == NO) {
 			drawBezel = NO;
 		}
 
-		_lastDrawLineCount = totalLinesBase;
+		self.lastDrawLineCount = totalLinesBase;
 
 		if (drawBezel) {
 			NSInteger totalLinesMath = (totalLinesBase - 1);
@@ -432,7 +432,7 @@
 			[mainWindow setContentBorderThickness:backgroundHeight forEdge:NSMinYEdge];
 		}
 
-		[_textFieldHeightConstraint setConstant:backgroundHeight];
+		[self.textFieldHeightConstraint setConstant:backgroundHeight];
 		
 		if (documentViewBounds.origin.x > 0) {
 			documentViewBounds.origin.x = 0;
@@ -698,7 +698,7 @@
 
 - (void)drawControllerForYosemite
 {
-	if ([_contentView yosemiteIsUsingVibrantDarkMode]) {
+	if ([self.contentView yosemiteIsUsingVibrantDarkMode]) {
 		[self drawBlackControllerForYosemiteInFocusedWindow];
 	} else {
 		[self drawWhiteControllerForYosemiteInFocusedWindow];
@@ -836,7 +836,7 @@
 - (NSColor *)systemSpecificTextFieldTextFontColor
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		if ([_contentView yosemiteIsUsingVibrantDarkMode]) {
+		if ([self.contentView yosemiteIsUsingVibrantDarkMode]) {
 			return [self blackInputTextFieldPlaceholderTextColorYosemite];
 		} else {
 			return [self whiteInputTextFieldPlaceholderTextColorYosemite];
@@ -849,7 +849,7 @@
 - (NSColor *)systemSpecificPlaceholderTextFontColor
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		if ([_contentView yosemiteIsUsingVibrantDarkMode]) {
+		if ([self.contentView yosemiteIsUsingVibrantDarkMode]) {
 			return [self blackInputTextFieldPrimaryTextColorYosemite];
 		} else {
 			return [self whiteInputTextFieldPrimaryTextColorYosemite];

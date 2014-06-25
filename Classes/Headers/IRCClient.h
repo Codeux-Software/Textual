@@ -77,42 +77,42 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 } ClientIRCv3SupportedCapacities;
 
 @interface IRCClient : IRCTreeItem
-@property (nonatomic, copy, readonly) IRCClientConfig *config;
-@property (nonatomic, copy, readonly) IRCISupportInfo *isupport;
+@property (nonatomic, copy) IRCClientConfig *config;
+@property (nonatomic, copy) IRCISupportInfo *isupport;
 @property (nonatomic, assign) IRCClientConnectMode connectType;
 @property (nonatomic, assign) IRCClientDisconnectMode disconnectType;
 @property (nonatomic, assign) NSInteger connectDelay;
 @property (nonatomic, assign) BOOL inUserInvokedJoinRequest;
-@property (nonatomic, assign, readonly) BOOL inUserInvokedNamesRequest;
-@property (nonatomic, assign, readonly) BOOL inUserInvokedWhoRequest;
-@property (nonatomic, assign, readonly) BOOL inUserInvokedWhowasRequest;
-@property (nonatomic, assign, readonly) BOOL inUserInvokedWatchRequest;
-@property (nonatomic, assign, readonly) BOOL inUserInvokedModeRequest;
-@property (nonatomic, assign, readonly) BOOL autojoinInProgress;			// YES if autojoin is running, else NO.
-@property (nonatomic, assign, readonly) BOOL hasIRCopAccess;				// YES if local user is IRCOp, else NO.
-@property (nonatomic, assign, readonly) BOOL isAutojoined;				// YES if autojoin has been completed, else NO.
-@property (nonatomic, assign, readonly) BOOL isAway;						// YES if Textual has knowledge of local user being away, else NO.
-@property (nonatomic, assign, readonly) BOOL isConnected;					// YES if socket is connected, else NO.
-@property (nonatomic, assign, readonly) BOOL isConnecting;				// YES if socket is connecting, else, NO. Set to NO on raw numeric 001.
-@property (nonatomic, assign, readonly) BOOL isIdentifiedWithNickServ;	// YES if NickServ identification was successful, else NO.
-@property (nonatomic, assign, readonly) BOOL isLoggedIn;					// YES if connected to server, else NO. Set to YES on raw numeric 001.
-@property (nonatomic, assign, readonly) BOOL isQuitting;					// YES if connection to IRC server is being quit, else NO.
-@property (nonatomic, assign, readonly) BOOL isWaitingForNickServ;		// YES if NickServ identification is pending, else NO.
-@property (nonatomic, assign, readonly) BOOL isZNCBouncerConnection;		// YES if Textual detected that this connection is ZNC based.
-@property (nonatomic, assign, readonly) BOOL rawModeEnabled;				// YES if sent & received data should be logged to console, else NO.
+@property (nonatomic, assign) BOOL inUserInvokedNamesRequest;
+@property (nonatomic, assign) BOOL inUserInvokedWhoRequest;
+@property (nonatomic, assign) BOOL inUserInvokedWhowasRequest;
+@property (nonatomic, assign) BOOL inUserInvokedWatchRequest;
+@property (nonatomic, assign) BOOL inUserInvokedModeRequest;
+@property (nonatomic, assign) BOOL autojoinInProgress;			// YES if autojoin is running, else NO.
+@property (nonatomic, assign) BOOL hasIRCopAccess;				// YES if local user is IRCOp, else NO.
+@property (nonatomic, assign) BOOL isAutojoined;				// YES if autojoin has been completed, else NO.
+@property (nonatomic, assign) BOOL isAway;						// YES if Textual has knowledge of local user being away, else NO.
+@property (nonatomic, assign) BOOL isConnected;					// YES if socket is connected, else NO.
+@property (nonatomic, assign) BOOL isConnecting;				// YES if socket is connecting, else, NO. Set to NO on raw numeric 001.
+@property (nonatomic, assign) BOOL isIdentifiedWithNickServ;	// YES if NickServ identification was successful, else NO.
+@property (nonatomic, assign) BOOL isLoggedIn;					// YES if connected to server, else NO. Set to YES on raw numeric 001.
+@property (nonatomic, assign) BOOL isQuitting;					// YES if connection to IRC server is being quit, else NO.
+@property (nonatomic, assign) BOOL isWaitingForNickServ;		// YES if NickServ identification is pending, else NO.
+@property (nonatomic, assign) BOOL isZNCBouncerConnection;		// YES if Textual detected that this connection is ZNC based.
+@property (nonatomic, assign) BOOL rawModeEnabled;				// YES if sent & received data should be logged to console, else NO.
 @property (nonatomic, assign) BOOL reconnectEnabled;			// YES if reconnection is allowed, else NO.
-@property (nonatomic, assign, readonly) BOOL serverHasNickServ;			// YES if NickServ service was found on server, else NO.
+@property (nonatomic, assign) BOOL serverHasNickServ;			// YES if NickServ service was found on server, else NO.
 @property (nonatomic, assign) ClientIRCv3SupportedCapacities CAPAcceptedCaps;
 @property (nonatomic, assign) ClientIRCv3SupportedCapacities CAPPendingCaps;
 @property (nonatomic, assign) ClientIRCv3SupportedCapacities capacities;
-@property (nonatomic, strong, readonly) NSMutableArray *channels;
-@property (nonatomic, strong, readonly) NSMutableArray *highlights;
+@property (nonatomic, copy) NSArray *channels;
+@property (nonatomic, copy) NSArray *highlights;
 @property (nonatomic, strong) IRCChannel *lastSelectedChannel;
-@property (nonatomic, copy, readonly) NSString *preAwayNickname; // Nickname before away was set.
-@property (nonatomic, assign, readonly) NSTimeInterval lastMessageReceived;			// The time at which the last of any incoming data was received.
-@property (nonatomic, assign, readonly) NSTimeInterval lastMessageServerTime;			// The time of the last message received that contained a server-time CAP.
-@property (nonatomic, copy, readonly) NSString *serverRedirectAddressTemporaryStore; // Temporary store for RPL_BOUNCE (010) redirects.
-@property (nonatomic, assign, readonly) NSInteger serverRedirectPortTemporaryStore; // Temporary store for RPL_BOUNCE (010) redirects.
+@property (nonatomic, copy) NSString *preAwayNickname; // Nickname before away was set.
+@property (nonatomic, assign) NSTimeInterval lastMessageReceived;			// The time at which the last of any incoming data was received.
+@property (nonatomic, assign) NSTimeInterval lastMessageServerTime;			// The time of the last message received that contained a server-time CAP.
+@property (nonatomic, copy) NSString *serverRedirectAddressTemporaryStore; // Temporary store for RPL_BOUNCE (010) redirects.
+@property (nonatomic, assign) NSInteger serverRedirectPortTemporaryStore; // Temporary store for RPL_BOUNCE (010) redirects.
 
 - (void)setup:(id)seed;
 
@@ -137,6 +137,13 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 - (void)disableCapacity:(ClientIRCv3SupportedCapacities)capacity;
 
 - (BOOL)isCapacityEnabled:(ClientIRCv3SupportedCapacities)capacity;
+
+- (NSInteger)channelCount;
+
+- (void)addChannel:(IRCChannel *)channel;
+- (void)removeChannel:(IRCChannel *)channel;
+
+- (void)addHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine;
 
 /* Returns the value of _lastMessageServerTime which is the value of the last message
  received server-time capacity value. If logging is enabled in Textual, then it is 

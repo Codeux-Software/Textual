@@ -24,7 +24,7 @@
 	[searchDictionary setObject:keychainItemName forKey:(id)kSecAttrLabel];
 	[searchDictionary setObject:keychainItemKind forKey:(id)kSecAttrDescription];
 
-	if (NSObjectIsNotEmpty(username)) {
+	if ([username length] > 0) {
 		[searchDictionary setObject:username forKey:(id)kSecAttrAccount];
 	}
 

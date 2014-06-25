@@ -42,7 +42,7 @@
 
 - (void)keyDown:(NSEvent *)e
 {
-	if (_keyDelegate) {
+	if (self.keyDelegate) {
 		NSUInteger m = [e modifierFlags];
 		
 		BOOL cmd = (m & NSCommandKeyMask);
@@ -50,8 +50,8 @@
 		BOOL ctrl = (m & NSControlKeyMask);
 		
 		if (ctrl == NO && alt == NO && cmd == NO) {
-			if ([_keyDelegate respondsToSelector:@selector(logViewKeyDown:)]) {
-				[_keyDelegate logViewKeyDown:e];
+			if ([self.keyDelegate respondsToSelector:@selector(logViewKeyDown:)]) {
+				[self.keyDelegate logViewKeyDown:e];
 			}
 			
 			return;

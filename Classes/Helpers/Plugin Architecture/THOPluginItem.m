@@ -47,35 +47,35 @@
 - (void)loadBundle:(NSBundle *)bundle
 {
 	/* Only load once. */
-	PointerIsNotEmptyAssert(_primaryClass);
+	PointerIsNotEmptyAssert(self.primaryClass);
 
 	/* Initialize the principal class. */
 	Class principalClass = [bundle principalClass];
 
 	PointerIsEmptyAssert(principalClass);
 
-	_primaryClass = [principalClass new];
+	self.primaryClass = [principalClass new];
 
 	/* Say hello! */
-	BOOL supportsOldFeature = [_primaryClass respondsToSelector:@selector(pluginLoadedIntoMemory:)];
-	BOOL supportsNewFeature = [_primaryClass respondsToSelector:@selector(pluginLoadedIntoMemory)];
+	BOOL supportsOldFeature = [self.primaryClass respondsToSelector:@selector(pluginLoadedIntoMemory:)];
+	BOOL supportsNewFeature = [self.primaryClass respondsToSelector:@selector(pluginLoadedIntoMemory)];
 	
 	if (supportsOldFeature || supportsNewFeature)
 	{
 		if (supportsNewFeature) {
-			[_primaryClass pluginLoadedIntoMemory];
+			[self.primaryClass pluginLoadedIntoMemory];
 		} else {
-			[_primaryClass pluginLoadedIntoMemory:worldController];
+			[self.primaryClass pluginLoadedIntoMemory:worldController()];
 			
-			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -pluginLoadedIntoMemory:", _primaryClass);
+			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -pluginLoadedIntoMemory:", self.primaryClass);
 		}
 	}
 	
 	/* Process server output suppression rules. */
-	if ([_primaryClass respondsToSelector:@selector(pluginOutputDisplayRules)])
+	if ([self.primaryClass respondsToSelector:@selector(pluginOutputDisplayRules)])
 	{
 		// Use id, never assume what a 3rd party might give.
-		id outputRulesO = [_primaryClass pluginOutputDisplayRules];
+		id outputRulesO = [self.primaryClass pluginOutputDisplayRules];
 
 		if (VTAE(outputRulesO, NSDictionary)) {
 			NSMutableDictionary *sharedRules = [NSMutableDictionary dictionary];
@@ -88,16 +88,16 @@
 				}
 			}
 
-			_outputSuppressionRules = sharedRules;
+			self.outputSuppressionRules = sharedRules;
 		}
 	}
 
 	/* Does the bundle have a preference pane?… */
-	supportsOldFeature = ([_primaryClass respondsToSelector:@selector(preferencesMenuItemName)] &&
-						  [_primaryClass respondsToSelector:@selector(preferencesView)]);
+	supportsOldFeature = ([self.primaryClass respondsToSelector:@selector(preferencesMenuItemName)] &&
+						  [self.primaryClass respondsToSelector:@selector(preferencesView)]);
 	
-	supportsNewFeature = ([_primaryClass respondsToSelector:@selector(pluginPreferencesPaneMenuItemName)] &&
-						  [_primaryClass respondsToSelector:@selector(pluginPreferencesPaneView)]);
+	supportsNewFeature = ([self.primaryClass respondsToSelector:@selector(pluginPreferencesPaneMenuItemName)] &&
+						  [self.primaryClass respondsToSelector:@selector(pluginPreferencesPaneView)]);
 	
 	if (supportsOldFeature || supportsNewFeature)
 	{
@@ -105,39 +105,39 @@
 		id itemName;
 		
 		if (supportsNewFeature) {
-			itemView = [_primaryClass pluginPreferencesPaneView];
-			itemName = [_primaryClass pluginPreferencesPaneMenuItemName];
+			itemView = [self.primaryClass pluginPreferencesPaneView];
+			itemName = [self.primaryClass pluginPreferencesPaneMenuItemName];
 		} else {
-			itemView = [_primaryClass preferencesView];
-			itemName = [_primaryClass preferencesMenuItemName];
+			itemView = [self.primaryClass preferencesView];
+			itemName = [self.primaryClass preferencesMenuItemName];
 			
-			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -preferencesMenuItemName", _primaryClass);
-			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -preferencesView", _primaryClass);
+			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -preferencesMenuItemName", self.primaryClass);
+			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -preferencesView", self.primaryClass);
 		}
 
 		if (VTAE(itemName, NSString) && VOCT(itemView, NSView)) {
-			_hasPreferencePaneView = YES;
+			self.hasPreferencePaneView = YES;
 		}
 	}
 
 	/* Process user input commands. */
-	supportsOldFeature = ([_primaryClass respondsToSelector:@selector(messageSentByUser:message:command:)] &&
-						  [_primaryClass respondsToSelector:@selector(pluginSupportsUserInputCommands)]);
+	supportsOldFeature = ([self.primaryClass respondsToSelector:@selector(messageSentByUser:message:command:)] &&
+						  [self.primaryClass respondsToSelector:@selector(pluginSupportsUserInputCommands)]);
 	
-	supportsNewFeature = ([_primaryClass respondsToSelector:@selector(userInputCommandInvokedOnClient:commandString:messageString:)] &&
-						  [_primaryClass respondsToSelector:@selector(subscribedUserInputCommands)]);
+	supportsNewFeature = ([self.primaryClass respondsToSelector:@selector(userInputCommandInvokedOnClient:commandString:messageString:)] &&
+						  [self.primaryClass respondsToSelector:@selector(subscribedUserInputCommands)]);
 	
 	if (supportsOldFeature || supportsNewFeature)
 	{
 		id spdcmds;
 		
 		if (supportsNewFeature) {
-			spdcmds = [_primaryClass subscribedUserInputCommands];
+			spdcmds = [self.primaryClass subscribedUserInputCommands];
 		} else {
-			spdcmds = [_primaryClass pluginSupportsUserInputCommands];
+			spdcmds = [self.primaryClass pluginSupportsUserInputCommands];
 			
-			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -messageSentByUser:message:command:", _primaryClass);
-			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -pluginSupportsUserInputCommands", _primaryClass);
+			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -messageSentByUser:message:command:", self.primaryClass);
+			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -pluginSupportsUserInputCommands", self.primaryClass);
 		}
 		
 		if (VTAE(spdcmds, NSArray)) {
@@ -151,28 +151,28 @@
 				}
 			}
 
-			_supportedUserInputCommands = supportedCommands;
+			self.supportedUserInputCommands = supportedCommands;
 		}
 	}
 
 	/* Process server input commands. */
-	supportsOldFeature = ([_primaryClass respondsToSelector:@selector(messageReceivedByServer:sender:message:)] &&
-						  [_primaryClass respondsToSelector:@selector(pluginSupportsServerInputCommands)]);
+	supportsOldFeature = ([self.primaryClass respondsToSelector:@selector(messageReceivedByServer:sender:message:)] &&
+						  [self.primaryClass respondsToSelector:@selector(pluginSupportsServerInputCommands)]);
 	
-	supportsNewFeature = ([_primaryClass respondsToSelector:@selector(didReceiveServerInputOnClient:senderInformation:messageInformation:)] &&
-						  [_primaryClass respondsToSelector:@selector(subscribedServerInputCommands)]);
+	supportsNewFeature = ([self.primaryClass respondsToSelector:@selector(didReceiveServerInputOnClient:senderInformation:messageInformation:)] &&
+						  [self.primaryClass respondsToSelector:@selector(subscribedServerInputCommands)]);
 	
 	if (supportsOldFeature || supportsNewFeature)
 	{
 		id spdcmds;
 		
 		if (supportsNewFeature) {
-			spdcmds = [_primaryClass subscribedServerInputCommands];
+			spdcmds = [self.primaryClass subscribedServerInputCommands];
 		} else {
-			spdcmds = [_primaryClass pluginSupportsServerInputCommands];
+			spdcmds = [self.primaryClass pluginSupportsServerInputCommands];
 			
-			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -messageReceivedByServer:sender:message:", _primaryClass);
-			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -pluginSupportsServerInputCommands", _primaryClass);
+			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -messageReceivedByServer:sender:message:", self.primaryClass);
+			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -pluginSupportsServerInputCommands", self.primaryClass);
 		}
 
 		if (VTAE(spdcmds, NSArray)) {
@@ -184,7 +184,7 @@
 				}
 			}
 
-			_supportedServerInputCommands = supportedCommands;
+			self.supportedServerInputCommands = supportedCommands;
 		}
 	}
 	
@@ -192,45 +192,45 @@
 	 to ask if it responds to the responder everytime we call it. */
 	
 	/* Renderer events. */
-	if ([_primaryClass respondsToSelector:@selector(didPostNewMessageForViewController:messageInfo:isThemeReload:isHistoryReload:)])
+	if ([self.primaryClass respondsToSelector:@selector(didPostNewMessageForViewController:messageInfo:isThemeReload:isHistoryReload:)])
 	{
-		_supportsNewMessagePostedEventNotifications = YES;
+		self.supportsNewMessagePostedEventNotifications = YES;
 	}
 	
-	if ([_primaryClass respondsToSelector:@selector(willRenderMessage:lineType:memberType:)])
+	if ([self.primaryClass respondsToSelector:@selector(willRenderMessage:lineType:memberType:)])
 	{
-		_supportsWillRenderMessageEventNotifications = YES;
+		self.supportsWillRenderMessageEventNotifications = YES;
 	}
 	
 	/* Inline media. */
-	if ([_primaryClass respondsToSelector:@selector(processInlineMediaContentURL:)])
+	if ([self.primaryClass respondsToSelector:@selector(processInlineMediaContentURL:)])
 	{
-		_supportsInlineMediaManipulation = YES;
+		self.supportsInlineMediaManipulation = YES;
 	}
 	
 	/* Data interception. */
-	if ([_primaryClass respondsToSelector:@selector(interceptServerInput:for:)])
+	if ([self.primaryClass respondsToSelector:@selector(interceptServerInput:for:)])
 	{
-		_supportsServerInputDataInterception = YES;
+		self.supportsServerInputDataInterception = YES;
 	}
 	
-	if ([_primaryClass respondsToSelector:@selector(interceptUserInput:command:)])
+	if ([self.primaryClass respondsToSelector:@selector(interceptUserInput:command:)])
 	{
-		_supportsUserInputDataInterception = YES;
+		self.supportsUserInputDataInterception = YES;
 	}
 }
 
 - (void)dealloc
 {
-	BOOL supportsOldFeature = [_primaryClass respondsToSelector:@selector(pluginUnloadedFromMemory)];
-	BOOL supportsNewFeature = [_primaryClass respondsToSelector:@selector(pluginWillBeUnloadedFromMemory)];
+	BOOL supportsOldFeature = [self.primaryClass respondsToSelector:@selector(pluginUnloadedFromMemory)];
+	BOOL supportsNewFeature = [self.primaryClass respondsToSelector:@selector(pluginWillBeUnloadedFromMemory)];
 	
 	if (supportsOldFeature || supportsNewFeature)
 	{
 		if (supportsNewFeature) {
-			[_primaryClass pluginWillBeUnloadedFromMemory];
+			[self.primaryClass pluginWillBeUnloadedFromMemory];
 		} else {
-			[_primaryClass pluginUnloadedFromMemory];
+			[self.primaryClass pluginUnloadedFromMemory];
 		}
 	}
 }
@@ -268,15 +268,15 @@
 
 - (NSView *)pluginPreferenesPaneView
 {
-	BOOL supportsOldFeature = [_primaryClass respondsToSelector:@selector(preferencesView)];
-	BOOL supportsNewFeature = [_primaryClass respondsToSelector:@selector(pluginPreferencesPaneView)];
+	BOOL supportsOldFeature = [self.primaryClass respondsToSelector:@selector(preferencesView)];
+	BOOL supportsNewFeature = [self.primaryClass respondsToSelector:@selector(pluginPreferencesPaneView)];
 	
 	if (supportsOldFeature || supportsNewFeature)
 	{
 		if (supportsNewFeature) {
-			return [_primaryClass pluginPreferencesPaneView];
+			return [self.primaryClass pluginPreferencesPaneView];
 		} else {
-			return [_primaryClass preferencesView];
+			return [self.primaryClass preferencesView];
 		}
 	}
 	
@@ -285,15 +285,15 @@
 
 - (NSString *)pluginPreferencesPaneMenuItemName
 {
-	BOOL supportsOldFeature = [_primaryClass respondsToSelector:@selector(preferencesMenuItemName)];
-	BOOL supportsNewFeature = [_primaryClass respondsToSelector:@selector(pluginPreferencesPaneMenuItemName)];
+	BOOL supportsOldFeature = [self.primaryClass respondsToSelector:@selector(preferencesMenuItemName)];
+	BOOL supportsNewFeature = [self.primaryClass respondsToSelector:@selector(pluginPreferencesPaneMenuItemName)];
 	
 	if (supportsOldFeature || supportsNewFeature)
 	{
 		if (supportsNewFeature) {
-			return [_primaryClass pluginPreferencesPaneMenuItemName];
+			return [self.primaryClass pluginPreferencesPaneMenuItemName];
 		} else {
-			return [_primaryClass preferencesMenuItemName];
+			return [self.primaryClass preferencesMenuItemName];
 		}
 	}
 	

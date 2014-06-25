@@ -56,7 +56,7 @@
 @property (nonatomic, assign) dispatch_queue_t workerQueue;
 @property (nonatomic, strong) NSTimer *cloudOneMinuteSyncTimer;
 @property (nonatomic, strong) NSTimer *cloudTenMinuteSyncTimer;
-@property (nonatomic, strong) NSURL *ubiquitousContainerURL;
+@property (nonatomic, copy) NSURL *ubiquitousContainerURL;
 @property (nonatomic, strong) NSMetadataQuery *cloudContainerNotificationQuery;
 @end
 
@@ -130,31 +130,31 @@
 
 - (void)setupUbiquitousContainerURLPath:(BOOL)isCalledFromInit
 {
-	dispatch_async(_workerQueue, ^{
+	dispatch_async(self.workerQueue, ^{
 		/* Apple very clearly states not to do call this on the main thread
 		 since it does a lot of work, so we wont… */
 		NSURL *ucurl = [RZFileManager() URLForUbiquityContainerIdentifier:nil];
 		
 		if (ucurl) {
-			_ubiquitousContainerURL = ucurl;
+			self.ubiquitousContainerURL = [ucurl copy];
 		} else {
-			_ubiquitousContainerURL = nil;
+			self.ubiquitousContainerURL = nil;
 			
 			LogToConsole(@"iCloud access is not available.");
 		}
 		
 		/* Update monitor based on state of container path. */
 		dispatch_async(dispatch_get_main_queue(), ^{
-			_isSafeToPerformPreferenceValidation = NO;
+			self.isSafeToPerformPreferenceValidation = NO;
 			
-			if (_cloudContainerNotificationQuery == nil) {
-				if (_ubiquitousContainerURL) {
-					_isSafeToPerformPreferenceValidation = (isCalledFromInit == NO);
+			if (self.cloudContainerNotificationQuery == nil) {
+				if (self.ubiquitousContainerURL) {
+					self.isSafeToPerformPreferenceValidation = (isCalledFromInit == NO);
 				
 					[self startMonitoringUbiquitousContainer];
 				}
 			} else {
-				if (_ubiquitousContainerURL == nil) {
+				if (self.ubiquitousContainerURL == nil) {
 					[self stopMonitoringUbiquitousContainer];
 				}
 			}
@@ -165,8 +165,8 @@
 - (NSString *)ubiquitousContainerURLPath
 {
 	/* Return a path if we have it… */
-	if (_ubiquitousContainerURL) {
-		return [_ubiquitousContainerURL path];
+	if (self.ubiquitousContainerURL) {
+		return [self.ubiquitousContainerURL path];
 	}
 	
 	return nil;
@@ -193,7 +193,7 @@
 - (void)performTenMinuteTimeBasedMaintenance
 {
 	/* Do not perform any actions during termination. */
-	NSAssertReturn(_applicationIsTerminating == NO);
+	NSAssertReturn(self.applicationIsTerminating == NO);
 
 	/* We don't even want to sync if user doesn't want to. */
 	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
@@ -201,7 +201,7 @@
 	DebugLogToConsole(@"iCloud: Performing ten-minute based maintenance.");
 	
 	/* Perform actual maintenance tasks. */
-	dispatch_async(_workerQueue, ^{
+	dispatch_async(self.workerQueue, ^{
 		/* Compare fonts. */
 		BOOL fontMissing = [RZUserDefaults() boolForKey:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey];
 		
@@ -230,7 +230,7 @@
 - (void)performOneMinuteTimeBasedMaintenance
 {
 	/* Do not perform any actions during termination. */
-	NSAssertReturn(_applicationIsTerminating == NO);
+	NSAssertReturn(self.applicationIsTerminating == NO);
 
 	/* We don't even want to sync if user doesn't want to. */
 	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
@@ -239,7 +239,7 @@
 	[self synchronizeToCloud];
 	
 	/* Perform actual maintenance tasks. */
-	dispatch_async(_workerQueue, ^{
+	dispatch_async(self.workerQueue, ^{
 		/* Have a theme in the temporary store? */
 		BOOL missingTheme = [RZUserDefaults() boolForKey:TPCPreferencesThemeNameMissingLocallyDefaultsKey];
 		
@@ -298,31 +298,31 @@
 - (void)syncPreferencesToCloud
 {
 	/* Do not perform any actions during termination. */
-	NSAssertReturn(_applicationIsTerminating == NO);
+	NSAssertReturn(self.applicationIsTerminating == NO);
 
 	/* We don't even want to sync if user doesn't want to. */
 	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
 	
-	dispatch_async(_workerQueue, ^{
-		if (_localKeysWereUpdated == NO) {
+	dispatch_async(self.workerQueue, ^{
+		if (self.localKeysWereUpdated == NO) {
 			DebugLogToConsole(@"iCloud: Upstream sync cancelled because nothing has changed.");
 			
 			return; // Cancel this operation;
 		}
 		
-		if (_isSyncingLocalKeysDownstream) {
+		if (self.isSyncingLocalKeysDownstream) {
 			DebugLogToConsole(@"iCloud: Upstream sync cancelled because a downstream sync was already running.");
 			
 			return; // Cancel this operation;
 		}
 		
-		if (_isSyncingLocalKeysUpstream) {
+		if (self.isSyncingLocalKeysUpstream) {
 			DebugLogToConsole(@"iCloud: Upstream sync cancelled because an upstream sync was already running.");
 			
 			return; // Cancel this operation;
 		}
 		
-		if (_hasUncommittedDataStoredInCloud) {
+		if (self.hasUncommittedDataStoredInCloud) {
 			DebugLogToConsole(@"iCloud: Upstream sync cancelled because there is uncommitted data remaining in the cloud.");
 			
 			return; // Cancel this operation;
@@ -332,7 +332,7 @@
 		DebugLogToConsole(@"iCloud: Beginning sync upstream.");
 		
 		/* Continue normal work. */
-		_isSyncingLocalKeysUpstream = YES;
+		self.isSyncingLocalKeysUpstream = YES;
 
 		/* Gather dictionary representation of all local preferences. */
 		NSDictionary *localdict = [TPCPreferencesImportExport exportedPreferencesDictionaryRepresentation];
@@ -413,9 +413,9 @@
 		}
 
 		/* Allow us to continue work. */
-		_isSyncingLocalKeysUpstream = NO;
+		self.isSyncingLocalKeysUpstream = NO;
 		
-		_localKeysWereUpdated = NO;
+		self.localKeysWereUpdated = NO;
 
 		DebugLogToConsole(@"iCloud: Completeing sync upstream.");
 	});
@@ -424,17 +424,17 @@
 - (void)syncPreferencesFromCloud:(NSArray *)changedKeys
 {
 	/* Do not perform any actions during termination. */
-	NSAssertReturn(_applicationIsTerminating == NO);
+	NSAssertReturn(self.applicationIsTerminating == NO);
 
 	/* We don't even want to sync if user doesn't want to. */
 	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
 	
-	dispatch_async(_workerQueue, ^{
+	dispatch_async(self.workerQueue, ^{
 		/* Debug data. */
 		DebugLogToConsole(@"iCloud: Beginning sync downstream.");
 
 		/* Announce our intents… */
-		_isSyncingLocalKeysDownstream = YES;
+		self.isSyncingLocalKeysDownstream = YES;
 
 		/* Get the list of changed keys. */
 		NSArray *changedKeyList = changedKeys;
@@ -514,10 +514,10 @@
 		});
 
 		/* Allow us to continue work. */
-		_isSyncingLocalKeysDownstream = NO;
+		self.isSyncingLocalKeysDownstream = NO;
 		
 		/* If we made it this far, reset this notificaiton. */
-		_hasUncommittedDataStoredInCloud = NO;
+		self.hasUncommittedDataStoredInCloud = NO;
 		
 		DebugLogToConsole(@"iCloud: Completeing sync downstream.");
 	});
@@ -526,7 +526,7 @@
 - (void)syncPreferenceFromCloudNotification:(NSNotification *)aNote
 {
 	/* Do not perform any actions during termination. */
-	NSAssertReturn(_applicationIsTerminating == NO);
+	NSAssertReturn(self.applicationIsTerminating == NO);
 
 	/* Gather information about the sync request. */
 	NSInteger syncReason = [[aNote userInfo] integerForKey:NSUbiquitousKeyValueStoreChangeReasonKey];
@@ -538,7 +538,7 @@
 		/* It is kind of important to know this. */
 		/* Even if we do not handle it, we still want to know
 		 if iCloud tried to sync something to this client. */
-		_hasUncommittedDataStoredInCloud = YES;
+		self.hasUncommittedDataStoredInCloud = YES;
 		
 		/* Get the list of changed keys. */
 		NSArray *changedKeys = [[aNote userInfo] arrayForKey:NSUbiquitousKeyValueStoreChangedKeysKey];
@@ -551,10 +551,10 @@
 - (void)localKeysDidChangeNotification:(NSNotification *)aNote
 {
 	/* Do not perform any actions during termination. */
-	NSAssertReturn(_applicationIsTerminating == NO);
+	NSAssertReturn(self.applicationIsTerminating == NO);
 
-	if (_localKeysWereUpdated == NO) {
-		_localKeysWereUpdated = YES;
+	if (self.localKeysWereUpdated == NO) {
+		self.localKeysWereUpdated = YES;
 	}
 }
 
@@ -591,15 +591,15 @@
 - (void)cloudMetadataQueryDidUpdate:(NSNotification *)notification
 {
 	/* Do not perform any actions during termination. */
-	NSAssertReturn(_applicationIsTerminating == NO);
+	NSAssertReturn(self.applicationIsTerminating == NO);
 
 	BOOL isGatheringNotification = [NSMetadataQueryDidFinishGatheringNotification isEqualToString:[notification name]];
 	
 	DebugLogToConsole(@"iCloud: Metadata Query Update: isGathering = %i", isGatheringNotification);
 	
-	dispatch_async(_workerQueue, ^{
+	dispatch_async(self.workerQueue, ^{
 		/* Do not accept updates during work. */
-		[_cloudContainerNotificationQuery disableUpdates];
+		[self.cloudContainerNotificationQuery disableUpdates];
 		
 		/* Get the existing cache path. */
 		NSString *cachePath = [TPCPathInfo cloudCustomThemeCachedFolderPath];
@@ -660,10 +660,10 @@
 		 go through our actual iCloud data and update files. */
 		
 		/* Go through each result item and do work. */
-		NSUInteger resultCount = [_cloudContainerNotificationQuery resultCount];
+		NSUInteger resultCount = [self.cloudContainerNotificationQuery resultCount];
 		
 		for (int i = 0; i < resultCount; i++) {
-			NSMetadataItem *item = [_cloudContainerNotificationQuery resultAtIndex:i];
+			NSMetadataItem *item = [self.cloudContainerNotificationQuery resultAtIndex:i];
 			
 			/* First thing first is to get the URL. */
 			NSURL *fileURL = [item valueForAttribute:NSMetadataItemURLKey];
@@ -800,7 +800,7 @@
 		
 		/* After everything is updated, run a validation on the 
 		 theme to make sure the active still exists. */
-		if (_isSafeToPerformPreferenceValidation) {
+		if (self.isSafeToPerformPreferenceValidation) {
 			/* Only perform update if the current theme location is in the cloud. */
 			if ([themeController() storageLocation] == TPCThemeControllerStorageCloudLocation) {
 				if ([TPCPreferences performValidationForKeyValues:NO]) {
@@ -809,12 +809,12 @@
 			}
 		} else {
 			if (isGatheringNotification) {
-				_isSafeToPerformPreferenceValidation = YES;
+				self.isSafeToPerformPreferenceValidation = YES;
 			}
 		}
 		
 		/* Accept updates again. */
-		[_cloudContainerNotificationQuery enableUpdates];
+		[self.cloudContainerNotificationQuery enableUpdates];
 		
 		/* Post notification. */
 		[RZNotificationCenter() postNotificationName:TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification object:nil];
@@ -824,10 +824,10 @@
 - (void)startMonitoringUbiquitousContainer
 {
 	/* Setup query for container changes. */
-	_cloudContainerNotificationQuery = [NSMetadataQuery new];
+	self.cloudContainerNotificationQuery = [NSMetadataQuery new];
 	
-	[_cloudContainerNotificationQuery setSearchScopes:@[NSMetadataQueryUbiquitousDataScope]];
-	[_cloudContainerNotificationQuery setPredicate:[NSPredicate predicateWithFormat:@"%K LIKE %@", NSMetadataItemFSNameKey, @"*"]];
+	[self.cloudContainerNotificationQuery setSearchScopes:@[NSMetadataQueryUbiquitousDataScope]];
+	[self.cloudContainerNotificationQuery setPredicate:[NSPredicate predicateWithFormat:@"%K LIKE %@", NSMetadataItemFSNameKey, @"*"]];
 	
 	[RZNotificationCenter() addObserver:self
 							   selector:@selector(cloudMetadataQueryDidUpdate:)
@@ -839,21 +839,21 @@
 								   name:NSMetadataQueryDidUpdateNotification
 								 object:nil];
 	
-	[_cloudContainerNotificationQuery startQuery];
+	[self.cloudContainerNotificationQuery startQuery];
 }
 
 - (void)stopMonitoringUbiquitousContainer
 {
-	if ( _cloudContainerNotificationQuery) {
-		[_cloudContainerNotificationQuery stopQuery];
+	if ( self.cloudContainerNotificationQuery) {
+		[self.cloudContainerNotificationQuery stopQuery];
 	}
 	
     [RZNotificationCenter() removeObserver:self name:NSMetadataQueryDidUpdateNotification object:nil];
     [RZNotificationCenter() removeObserver:self name:NSMetadataQueryDidFinishGatheringNotification object:nil];
 
-	_isSafeToPerformPreferenceValidation = NO;
+	self.isSafeToPerformPreferenceValidation = NO;
 	
-	_cloudContainerNotificationQuery = nil;
+	self.cloudContainerNotificationQuery = nil;
 }
 
 #pragma mark -
@@ -862,21 +862,21 @@
 - (void)iCloudAccountAvailabilityChanged:(NSNotification *)aNote
 {
 	/* Do not perform any actions during termination. */
-	NSAssertReturn(_applicationIsTerminating == NO);
+	NSAssertReturn(self.applicationIsTerminating == NO);
 
 	/* Get new token first. */
 	id newToken = [RZFileManager() cloudUbiquityIdentityToken];
 	
 	if (PointerIsNotEmpty(newToken)) {
-		if (NSDissimilarObjects(newToken, _ubiquityIdentityToken)) {
+		if (NSDissimilarObjects(newToken, self.ubiquityIdentityToken)) {
 			/* If the new token is logged in and is different from the old,
 			 then mark local keys as changed to force an upstream sync. */
 			
-			_localKeysWereUpdated = YES;
+			self.localKeysWereUpdated = YES;
 		}
 	}
 	
-	_ubiquityIdentityToken = newToken;
+	self.ubiquityIdentityToken = newToken;
 	
 	[self setupUbiquitousContainerURLPath:NO];
 }
@@ -889,9 +889,9 @@
 	/* Begin actual session. */
 	if (RZUbiquitousKeyValueStore()) {
 		/* Create worker queue. */
-		_workerQueue = dispatch_queue_create("iCloudSyncWorkerQueue", NULL);
+		self.workerQueue = dispatch_queue_create("iCloudSyncWorkerQueue", NULL);
 		
-		_ubiquityIdentityToken = [RZFileManager() cloudUbiquityIdentityToken];
+		self.ubiquityIdentityToken = [RZFileManager() cloudUbiquityIdentityToken];
 		
 		[self setupUbiquitousContainerURLPath:YES];
 		
@@ -918,8 +918,8 @@
 															 userInfo:nil
 															  repeats:YES];
 		
-		_cloudOneMinuteSyncTimer = syncTimer1;
-		_cloudTenMinuteSyncTimer = syncTimer2;
+		self.cloudOneMinuteSyncTimer = syncTimer1;
+		self.cloudTenMinuteSyncTimer = syncTimer2;
 
 		/* Notification for when a remote value through the key-value store is changed. */
 		[RZNotificationCenter() addObserver:self
@@ -939,9 +939,9 @@
 - (void)purgeDataStoredWithCloud
 {
 	/* Do not perform any actions during termination. */
-	NSAssertReturn(_applicationIsTerminating == NO);
+	NSAssertReturn(self.applicationIsTerminating == NO);
 
-	dispatch_async(_workerQueue, ^{
+	dispatch_async(self.workerQueue, ^{
 		/* Sync latest changes from disc for the dictionary. */
 		[RZUbiquitousKeyValueStore() synchronize];
 
@@ -958,7 +958,7 @@
 		[RZUserDefaults() removeObjectForKey:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey];
 	});
 	
-	_localKeysWereUpdated = YES;
+	self.localKeysWereUpdated = YES;
 }
 
 - (void)closeCloudSyncSession
@@ -967,12 +967,12 @@
 	DebugLogToConsole(@"iCloud: Closing session.");
 
 	/* Stop listening for notification related to local changes. */
-	if ( _cloudOneMinuteSyncTimer) {
-		[_cloudOneMinuteSyncTimer invalidate];
+	if ( self.cloudOneMinuteSyncTimer) {
+		[self.cloudOneMinuteSyncTimer invalidate];
 	}
 	
-	if ( _cloudTenMinuteSyncTimer) {
-		[_cloudTenMinuteSyncTimer invalidate];
+	if ( self.cloudTenMinuteSyncTimer) {
+		[self.cloudTenMinuteSyncTimer invalidate];
 	}
 	
     [RZNotificationCenter() removeObserver:self name:NSUserDefaultsDidChangeNotification object:nil];
@@ -983,21 +983,21 @@
 	[self stopMonitoringUbiquitousContainer];
 	
 	/* Dispatch clean-up. */
-	if (_workerQueue) {
-		dispatch_release(_workerQueue);
+	if (self.workerQueue) {
+		dispatch_release(self.workerQueue);
 		
-		_workerQueue = NULL;
+		self.workerQueue = NULL;
 	}
 	
-	_localKeysWereUpdated = NO;
+	self.localKeysWereUpdated = NO;
 	
-	_isSyncingLocalKeysDownstream = NO;
-	_isSyncingLocalKeysUpstream = NO;
+	self.isSyncingLocalKeysDownstream = NO;
+	self.isSyncingLocalKeysUpstream = NO;
 	
-	_ubiquityIdentityToken = nil;
-	_ubiquitousContainerURL = nil;
-	_cloudOneMinuteSyncTimer = nil;
-	_cloudTenMinuteSyncTimer = nil;
+	self.ubiquityIdentityToken = nil;
+	self.ubiquitousContainerURL = nil;
+	self.cloudOneMinuteSyncTimer = nil;
+	self.cloudTenMinuteSyncTimer = nil;
 }
 
 @end

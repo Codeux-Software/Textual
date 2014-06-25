@@ -37,6 +37,12 @@
 
 #import "TextualApplication.h"
 
+@interface TDChanBanSheet ()
+@property (nonatomic, nweak) IBOutlet NSTextField *headerTitleField;
+@property (nonatomic, nweak) IBOutlet TVCListView *banTable;
+@property (nonatomic, strong) NSMutableArray *banList;
+@end
+
 @implementation TDChanBanSheet
 
 - (id)init
@@ -44,8 +50,7 @@
     if ((self = [super init])) {
 		[RZMainBundle() loadCustomNibNamed:@"TDChanBanSheet" owner:self topLevelObjects:nil];
 		
-		_banList = [NSMutableArray new];
-        _changeModeList = [NSMutableArray new];
+		self.banList = [NSMutableArray new];
     }
     
     return self;
@@ -53,36 +58,36 @@
 
 - (void)releaseTableViewDataSourceBeforeSheetClosure
 {
-	[_banTable setDelegate:nil];
-	[_banTable setDataSource:nil];
+	[self.banTable setDelegate:nil];
+	[self.banTable setDataSource:nil];
 }
 
 - (void)show
 {
-	IRCChannel *c = [worldController() findChannelByClientId:_clientID channelId:_channelID];
+	IRCChannel *c = [worldController() findChannelByClientId:self.clientID channelId:self.channelID];
 	
-	[_headerTitleField setStringValue:[NSString stringWithFormat:[_headerTitleField stringValue], [c name]]];
+	[self.headerTitleField setStringValue:[NSString stringWithFormat:[self.headerTitleField stringValue], [c name]]];
 	
 	[self startSheet];
 }
 
 - (void)clear
 {
-	[_banList removeAllObjects];
+	[self.banList removeAllObjects];
 	
 	[self reloadTable];
 }
 
 - (void)addBan:(NSString *)host tset:(NSString *)timeSet setby:(NSString *)owner
 {
-	[_banList addObject:@[host, [owner nicknameFromHostmask], timeSet]];
+	[self.banList addObject:@[host, [owner nicknameFromHostmask], timeSet]];
 	
 	[self reloadTable];
 }
 
 - (void)reloadTable
 {
-	[_banTable reloadData];
+	[self.banTable reloadData];
 }
 
 #pragma mark -
@@ -90,26 +95,28 @@
 
 - (void)onUpdate:(id)sender
 {
-	if ([[self delegate] respondsToSelector:@selector(chanBanDialogOnUpdate:)]) {
-		[[self delegate] chanBanDialogOnUpdate:self];
+	if ([self.delegate respondsToSelector:@selector(chanBanDialogOnUpdate:)]) {
+		[self.delegate chanBanDialogOnUpdate:self];
 	}
 }
 
 - (void)onRemoveBans:(id)sender
 {
+	NSMutableArray *changeArray = [NSMutableArray array];
+
 	NSString *modeString;
 	
 	NSMutableString *mdstr = [NSMutableString stringWithString:@"-"];
 	NSMutableString *trail = [NSMutableString string];
 	
-	NSIndexSet *indexes = [_banTable selectedRowIndexes];
+	NSIndexSet *indexes = [self.banTable selectedRowIndexes];
 	
 	NSInteger indexTotal = 0;
 	
 	for (NSNumber *index in [indexes arrayFromIndexSet]) {
 		indexTotal++;
 		
-		NSArray *iteml = [_banList objectAtIndex:[index unsignedIntegerValue]];
+		NSArray *iteml = [self.banList objectAtIndex:[index unsignedIntegerValue]];
 		
 		[mdstr appendString:@"b"];
 		[trail appendFormat:@" %@", iteml[0]];
@@ -117,7 +124,7 @@
 		if (indexTotal == TXMaximumNodesPerModeCommand) {
 			modeString = (id)[mdstr stringByAppendingString:trail];
 			
-			[_changeModeList addObject:modeString];
+			[changeArray addObject:modeString];
 			
 			[mdstr setString:@"-"];
 			[trail setString:NSStringEmptyPlaceholder];
@@ -129,8 +136,10 @@
 	if (NSObjectIsNotEmpty(mdstr)) {
 		modeString = (id)[mdstr stringByAppendingString:trail];
 		
-		[_changeModeList addObject:modeString];
+		[changeArray addObject:modeString];
 	}
+	
+	self.changeModeList = changeArray;
 	
 	[super cancel:nil];
 }
@@ -140,12 +149,12 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-	return [_banList count];
+	return [self.banList count];
 }
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	NSArray *item = [_banList objectAtIndex:row];
+	NSArray *item = [self.banList objectAtIndex:row];
 	
 	if ([[column identifier] isEqualToString:@"mask"]) {
 		return item[0];
@@ -161,8 +170,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([[self delegate] respondsToSelector:@selector(chanBanDialogWillClose:)]) {
-		[[self delegate] chanBanDialogWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(chanBanDialogWillClose:)]) {
+		[self.delegate chanBanDialogWillClose:self];
 	}
 }
 

@@ -49,12 +49,14 @@
 {
 	/* Add new entry. */
 	NSArray *newEntry = @[(__bridge id)(trustRef), completionBlock];
+	
+	@synchronized(self.queuedEntries) {
+		[self.queuedEntries addObject:newEntry];
 
-	[_queuedEntries addObject:newEntry];
-
-	/* Maybe present window. */
-	if ([_queuedEntries count] == 1) {
-		[self presentNextQueuedEntry];
+		/* Maybe present window. */
+		if ([self.queuedEntries count] == 1) {
+			[self presentNextQueuedEntry];
+		}
 	}
 }
 
@@ -62,7 +64,7 @@
 {
 	/* Gather information. */
 	/* The oldest entry will be at index 0. */
-	NSArray *contextInfo = _queuedEntries[0];
+	NSArray *contextInfo = self.queuedEntries[0];
 
 	/* Build panel. */
 	SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
@@ -91,13 +93,15 @@
 	TVCQueuedCertificateTrustPanelCompletionBlock completionBlock = contextArray[1];
 
 	completionBlock(isTrusted);
+	
+	@synchronized(self.queuedEntries) {
+		/* Remove entry. */
+		[self.queuedEntries removeObjectAtIndex:0];
 
-	/* Remove entry. */
-	[_queuedEntries removeObjectAtIndex:0];
-
-	/* Maybe show next window. */
-	if ([_queuedEntries count] > 0) {
-		[self presentNextQueuedEntry];
+		/* Maybe show next window. */
+		if ([self.queuedEntries count] > 0) {
+			[self presentNextQueuedEntry];
+		}
 	}
 }
 

@@ -49,8 +49,8 @@ typedef enum IRCChannelType : NSInteger {
 @property (nonatomic, copy) NSString *channelName;
 @property (nonatomic, copy) NSString *defaultTopic;
 @property (nonatomic, copy) NSString *defaultModes;
-@property (nonatomic, nweak) NSString *encryptionKey;
-@property (nonatomic, nweak) NSString *secretKey;
+@property (nonatomic, copy) NSString *encryptionKey;
+@property (nonatomic, copy) NSString *secretKey;
 @property (nonatomic, assign) BOOL autoJoin;
 @property (nonatomic, assign) BOOL pushNotifications;
 @property (nonatomic, assign) BOOL showTreeBadgeCount;

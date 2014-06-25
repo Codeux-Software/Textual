@@ -45,8 +45,8 @@
 @property (nonatomic, nweak) IBOutlet NSSearchField *searchField;
 @property (nonatomic, nweak) IBOutlet NSTextField *networkNameField;
 @property (nonatomic, nweak) IBOutlet TVCListView *channelListTable;
-@property (nonatomic, strong, readonly) NSMutableArray *unfilteredList;
-@property (nonatomic, strong, readonly) NSMutableArray *filteredList;
+@property (nonatomic, strong) NSMutableArray *unfilteredList;
+@property (nonatomic, strong) NSMutableArray *filteredList;
 @property (nonatomic, assign) NSComparisonResult sortOrder;
 @property (nonatomic, assign) NSInteger sortKey;
 

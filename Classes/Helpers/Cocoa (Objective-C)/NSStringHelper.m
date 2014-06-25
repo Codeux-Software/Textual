@@ -120,7 +120,7 @@
     const NSStringEncoding *encodings = [NSString availableStringEncodings];
 
     if (favorUTF8) {
-        [encodingList safeAddObject:@(NSUTF8StringEncoding)];
+        [encodingList addObject:@(NSUTF8StringEncoding)];
     }
 
     while (1 == 1) {
@@ -613,7 +613,7 @@
     NSDictionary *input = @{@"attributedStringFont" : defaultFont};
 
 	return [TVCLogRenderer renderBody:self
-						   controller:[worldController selectedViewController]
+						   controller:[worldController() selectedViewController]
 						   renderType:TVCLogRendererAttributedStringType
 						   properties:input
 						   resultInfo:NULL];

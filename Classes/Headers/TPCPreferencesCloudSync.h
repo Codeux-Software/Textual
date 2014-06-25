@@ -49,9 +49,9 @@
 
 @interface TPCPreferencesCloudSync : NSObject
 @property (nonatomic, assign) BOOL applicationIsTerminating;
-@property (nonatomic, assign, readonly) BOOL isSyncingLocalKeysDownstream;
-@property (nonatomic, assign, readonly) BOOL isSyncingLocalKeysUpstream;
-@property (nonatomic, assign, readonly) BOOL hasUncommittedDataStoredInCloud;
+@property (nonatomic, assign) BOOL isSyncingLocalKeysDownstream;
+@property (nonatomic, assign) BOOL isSyncingLocalKeysUpstream;
+@property (nonatomic, assign) BOOL hasUncommittedDataStoredInCloud;
 
 // Next three methods use hashed keys.
 - (id)valueForKey:(NSString *)key;

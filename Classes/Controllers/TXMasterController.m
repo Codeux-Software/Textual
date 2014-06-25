@@ -64,10 +64,10 @@
 		// ---- //
 		
 #if defined(DEBUG)
-		_ghostModeIsOn = YES; // Do not use autoconnect during debug.
+		self.ghostModeIsOn = YES; // Do not use autoconnect during debug.
 #else
 		if ([NSEvent modifierFlags] & NSShiftKeyMask) {
-			_ghostModeIsOn = YES;
+			self.ghostModeIsOn = YES;
 			
 			LogToConsole(@"Launching without autoconnecting to the configured servers.");
 		}
@@ -76,7 +76,7 @@
 		// ---- //
 
 		if ([NSEvent modifierFlags] & NSControlKeyMask) {
-			_debugModeIsOn = YES;
+			self.debugModeIsOn = YES;
 
 			LogToConsole(@"Launching in debug mode.");
 		}
@@ -99,11 +99,15 @@
 	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
 		[sharedCloudManager() initializeCloudSyncSession];
 	}
+	
+	self.world = [IRCWorld new];
 #endif
 }
 
 - (void)performAwakeningAfterMainWindowDidLoad
 {
+	[[TXSharedApplication sharedNetworkReachabilityObject] startNotifier];
+	
 	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
 	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
 	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillPowerOff:) name:NSWorkspaceWillPowerOffNotification object:nil];
@@ -152,7 +156,7 @@
 
 - (void)systemTintChangedNotification:(NSNotification *)notification;
 {
-	NSAssertReturn(_applicationIsTerminating == NO);
+	NSAssertReturn(self.applicationIsTerminating == NO);
 	
 	[mainWindowMemberList() reloadAllUserInterfaceElements];
 	
@@ -161,7 +165,7 @@
 
 - (void)reloadMainWindowFrameOnScreenChange
 {
-	NSAssertReturn(_applicationIsTerminating == NO);
+	NSAssertReturn(self.applicationIsTerminating == NO);
 	
 	[TVCDockIcon resetCachedCount];
 	
@@ -174,7 +178,7 @@
 
 - (void)reloadUserInterfaceItems
 {
-	NSAssertReturn(_applicationIsTerminating == NO);
+	NSAssertReturn(self.applicationIsTerminating == NO);
 	
 	[mainWindowServerList() updateBackgroundColor];
 	[mainWindowServerList() reloadAllDrawingsIgnoringOtherReloads];
@@ -185,7 +189,7 @@
 
 - (void)resetSelectedItemState
 {
-	NSAssertReturn(_applicationIsTerminating == NO);
+	NSAssertReturn(self.applicationIsTerminating == NO);
 
 	id sel = [worldController() selectedItem];
 
@@ -198,33 +202,33 @@
 
 - (void)applicationWillResignActive:(NSNotification *)notification
 {
-	_applicationIsChangingActiveState = YES;
+	self.applicationIsChangingActiveState = YES;
 }
 
 - (void)applicationWillBecomeActive:(NSNotification *)notification
 {
-	_applicationIsChangingActiveState = YES;
+	self.applicationIsChangingActiveState = YES;
 }
 
 - (void)applicationDidResignActive:(NSNotification *)notification
 {
-	_applicationIsActive = NO;
-	_applicationIsChangingActiveState = NO;
+	self.applicationIsActive = NO;
+	self.applicationIsChangingActiveState = NO;
 
 	[self reloadUserInterfaceItems];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification
 {
-	_applicationIsActive = YES;
-	_applicationIsChangingActiveState = NO;
+	self.applicationIsActive = YES;
+	self.applicationIsChangingActiveState = NO;
 
 	[self reloadUserInterfaceItems];
 }
 
 - (BOOL)queryTerminate
 {
-	if (_applicationIsTerminating) {
+	if (self.applicationIsTerminating) {
 		return YES;
 	}
 	
@@ -245,7 +249,7 @@
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
 {
 	if ([self queryTerminate]) {
-		_applicationIsTerminating = YES;
+		self.applicationIsTerminating = YES;
 
 		return NSTerminateNow;
 	} else {
@@ -264,17 +268,17 @@
 	if (sharedCloudManager()) {
 		return (
 				/* Clients are still disconnecting. */
-				_terminatingClientCount > 0 ||
+				self.terminatingClientCount > 0 ||
 
 				/* iCloud is syncing. */
 				([sharedCloudManager() isSyncingLocalKeysDownstream] ||
 				 [sharedCloudManager() isSyncingLocalKeysUpstream])
 		);
 	} else {
-		return (_terminatingClientCount > 0);
+		return (self.terminatingClientCount > 0);
 	}
 #else
-	return (_terminatingClientCount > 0);
+	return (self.terminatingClientCount > 0);
 #endif
 }
 
@@ -290,6 +294,8 @@
 
 	[RZAppleEventManager() removeEventHandlerForEventClass:KInternetEventClass andEventID:KAEGetURL];
 	
+	[[TXSharedApplication sharedNetworkReachabilityObject] stopNotifier];
+	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	BOOL onMountainLionOrLater = [CSFWSystemInformation featureAvailableToOSXMountainLion];
 	
@@ -300,8 +306,8 @@
 	
 	[menuController() prepareForApplicationTermination];
 
-	if (_skipTerminateSave == NO) {
-		_terminatingClientCount = [worldController() clientCount];
+	if (self.skipTerminateSave == NO) {
+		self.terminatingClientCount = [worldController() clientCount];
 
 		[worldController() prepareForApplicationTermination];
 		[worldController() save];
@@ -325,7 +331,7 @@
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
 {
-	[_mainWindow makeKeyAndOrderFront:nil];
+	[self.mainWindow makeKeyAndOrderFront:nil];
 
 	return YES;
 }
@@ -370,14 +376,14 @@
 
 - (void)computerWillPowerOff:(NSNotification *)note
 {
-	_applicationIsTerminating = YES;
+	self.applicationIsTerminating = YES;
 	
 	[NSApp terminate:nil];
 }
 
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
 {
-	[_mainWindow makeKeyAndOrderFront:nil];
+	[self.mainWindow makeKeyAndOrderFront:nil];
 	
 	return YES;
 }
@@ -392,7 +398,7 @@
 
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
-	if (_applicationIsChangingActiveState == NO) {
+	if (self.applicationIsChangingActiveState == NO) {
 		[self reloadUserInterfaceItems];
 	}
 
@@ -401,7 +407,7 @@
 
 - (void)windowDidResignKey:(NSNotification *)notification
 {
-	if (_applicationIsChangingActiveState == NO) {
+	if (self.applicationIsChangingActiveState == NO) {
 		[self reloadUserInterfaceItems];
 	}
 }

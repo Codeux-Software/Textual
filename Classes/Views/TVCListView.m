@@ -101,8 +101,8 @@
 
 - (void)textDidEndEditing:(NSNotification *)note
 {
-	if ([_textEditingDelegate respondsToSelector:@selector(textDidEndEditing:)]) {
-		[_textEditingDelegate textDidEndEditing:note];
+	if ([self.textEditingDelegate respondsToSelector:@selector(textDidEndEditing:)]) {
+		[self.textEditingDelegate textDidEndEditing:note];
 	} else {
 		[super textDidEndEditing:note];
 	}

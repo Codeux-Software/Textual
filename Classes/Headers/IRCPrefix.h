@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-@interface IRCPrefix : NSObject
+@interface IRCPrefix : NSObject <NSCopying>
 @property (nonatomic, copy) NSString *hostmask;
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *username;

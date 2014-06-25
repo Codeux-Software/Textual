@@ -142,7 +142,7 @@
 @property (nonatomic, copy) NSString *pointedChannelName;
 @property (nonatomic, copy) NSString *currentSearchPhrase;
 @property (nonatomic, copy) NSDictionary *openWindowList;
-@property (nonatomic, strong, readonly) TDCFileTransferDialog *fileTransferController;
+@property (nonatomic, strong) TDCFileTransferDialog *fileTransferController;
 @property (nonatomic, nweak) IBOutlet NSMenu *navigationChannelList;
 @property (nonatomic, nweak) IBOutlet NSMenu *addServerMenu;
 @property (nonatomic, nweak) IBOutlet NSMenu *channelViewMenu;

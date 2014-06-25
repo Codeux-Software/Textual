@@ -41,15 +41,15 @@
 #define IRCISupportRawSuffix				@"are supported by this server"
 
 @interface IRCISupportInfo : NSObject
-@property (nonatomic, copy, readonly) NSDictionary *channelModes;
-@property (nonatomic, assign, readonly) NSInteger nicknameLength;
-@property (nonatomic, assign, readonly) NSInteger modesCount;
-@property (nonatomic, copy, readonly) NSString *channelNamePrefixes;
-@property (nonatomic, copy, readonly) NSString *networkAddress;
-@property (nonatomic, copy, readonly) NSString *networkName;
-@property (nonatomic, copy, readonly) NSString *networkNameActual;
-@property (nonatomic, copy, readonly) NSDictionary *userModePrefixes;
-@property (nonatomic, copy, readonly) NSArray *cachedConfiguration;
+@property (nonatomic, copy) NSDictionary *channelModes;
+@property (nonatomic, assign) NSInteger nicknameLength;
+@property (nonatomic, assign) NSInteger modesCount;
+@property (nonatomic, copy) NSString *channelNamePrefixes;
+@property (nonatomic, copy) NSString *networkAddress;
+@property (nonatomic, copy) NSString *networkName;
+@property (nonatomic, copy) NSString *networkNameActual;
+@property (nonatomic, copy) NSDictionary *userModePrefixes;
+@property (nonatomic, copy) NSArray *cachedConfiguration;
 
 - (void)reset;
 

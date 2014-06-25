@@ -45,8 +45,8 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		_x = -10000;
-		_y = -10000;
+		self.x = -10000;
+		self.y = -10000;
 	}
 	
 	return self;
@@ -89,18 +89,18 @@
 	
 	NSTimeInterval now = [NSDate epochTime];
 	
-	if ((_x - dr) <= cx && cx <= (_x + dr) &&
-		(_y - dr) <= cy && cy <= (_y + dr))
+	if ((self.x - dr) <= cx && cx <= (self.x + dr) &&
+		(self.y - dr) <= cy && cy <= (self.y + dr))
 	{
-		if (now < (_lastClickTime + [NSEvent doubleClickInterval])) {
+		if (now < (self.lastClickTime + [NSEvent doubleClickInterval])) {
 			res = YES;
 		}
 	}
 	
-	_lastClickTime = now;
+	self.lastClickTime = now;
 	
-	_x = cx;
-	_y = cy;
+	self.x = cx;
+	self.y = cy;
 	
 	return res;
 }
@@ -143,7 +143,7 @@
 	}
 
 	/* Find the element. */
-	DOMElement *imageNode = [[_logController mainFrameDocument] getElementById:object];
+	DOMElement *imageNode = [[self.logController mainFrameDocument] getElementById:object];
 
 	PointerIsEmptyAssertReturn(imageNode, @"true");
 
@@ -164,82 +164,82 @@
 
 - (void)setURLAddress:(NSString *)s
 {
-    [[_logController webViewPolicy] setAnchorURL:[s gtm_stringByUnescapingFromHTML]];
+    [[self.logController webViewPolicy] setAnchorURL:[s gtm_stringByUnescapingFromHTML]];
 }
 
 - (void)setNickname:(NSString *)s
 {
-    [[_logController webViewPolicy] setNickname:[s gtm_stringByUnescapingFromHTML]];
+    [[self.logController webViewPolicy] setNickname:[s gtm_stringByUnescapingFromHTML]];
 }
 
 - (void)setChannelName:(NSString *)s
 {
-    [[_logController webViewPolicy] setChannelName:[s gtm_stringByUnescapingFromHTML]];
+    [[self.logController webViewPolicy] setChannelName:[s gtm_stringByUnescapingFromHTML]];
 }
 
 - (void)channelNameDoubleClicked
 {
-    [[_logController webViewPolicy] channelDoubleClicked];
+    [[self.logController webViewPolicy] channelDoubleClicked];
 }
 
 - (void)nicknameDoubleClicked
 {
-    [[_logController webViewPolicy] nicknameDoubleClicked];
+    [[self.logController webViewPolicy] nicknameDoubleClicked];
 }
 
 - (void)topicDoubleClicked
 {
-    [[_logController webViewPolicy] topicDoubleClicked];
+    [[self.logController webViewPolicy] topicDoubleClicked];
 }
 
 - (NSInteger)channelMemberCount
 {
-    return [[_logController associatedChannel] numberOfMembers];
+    return [[self.logController associatedChannel] numberOfMembers];
 }
 
 - (NSInteger)serverChannelCount
 {
-	return [[[_logController associatedClient] channels] count];
+	return [[self.logController associatedClient] channelCount];
 }
 
 - (BOOL)serverIsConnected
 {
-	return [[_logController associatedClient] isLoggedIn];
+	return [[self.logController associatedClient] isLoggedIn];
 }
 
 - (BOOL)channelIsJoined
 {
-	return [[_logController associatedChannel] isActive];
+	return [[self.logController associatedChannel] isActive];
 }
 
 - (NSString *)channelName
 {
-	return [[_logController associatedChannel] name];
+	return [[self.logController associatedChannel] name];
 }
 
 - (NSString *)serverAddress
 {
-	return [[_logController associatedClient] networkAddress];
+	return [[self.logController associatedClient] networkAddress];
 }
 
 - (NSString *)localUserNickname
 {
-	return [[_logController associatedClient] localNickname];
+	return [[self.logController associatedClient] localNickname];
 }
 
 - (NSString *)localUserHostmask
 {
-	return [[_logController associatedClient] localHostmask];
+	return [[self.logController associatedClient] localHostmask];
 }
 
 - (void)printDebugInformationToConsole:(NSString *)m
 {
-	[[_logController associatedClient] printDebugInformationToConsole:m];
+	[[self.logController associatedClient] printDebugInformationToConsole:m];
 }
 
 - (void)printDebugInformation:(NSString *)m
 {
-	[[_logController associatedClient] printDebugInformation:m channel:[_logController associatedChannel]];
+	[[self.logController associatedClient] printDebugInformation:m channel:[self.logController associatedChannel]];
 }
 
 - (BOOL)sidebarInversionIsEnabled

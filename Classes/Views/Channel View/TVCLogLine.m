@@ -44,23 +44,23 @@
 {
 	if (self = [super init]) {
 		/* Define defaults. */
-		_receivedAt = [NSDate date];
+		self.receivedAt = [NSDate date];
 
-		_nickname = NSStringEmptyPlaceholder;
-		_nicknameColorNumber = 0;
+		self.nickname = NSStringEmptyPlaceholder;
+		self.nicknameColorNumber = (-1);
 
-		_messageBody = NSStringEmptyPlaceholder;
+		self.messageBody = NSStringEmptyPlaceholder;
 
-		_rawCommand = TVCLogLineDefaultRawCommandValue;
+		self.rawCommand = TVCLogLineDefaultRawCommandValue;
 
-		_highlightKeywords = @[];
-		_excludeKeywords = @[];
+		self.highlightKeywords = @[];
+		self.excludeKeywords = @[];
 
-		_lineType = TVCLogLineUndefinedType;
-		_memberType = TVCLogLineMemberNormalType;
+		self.lineType = TVCLogLineUndefinedType;
+		self.memberType = TVCLogLineMemberNormalType;
 
-		_isHistoric = NO;
-		_isEncrypted = NO;
+		self.isHistoric = NO;
+		self.isEncrypted = NO;
 
 		/* Return new copy. */
 		return self;
@@ -122,13 +122,13 @@
 
 - (NSString *)formattedTimestampWithForcedFormat:(NSString *)format
 {
-	NSObjectIsEmptyAssertReturn(_receivedAt, nil);
+	NSObjectIsEmptyAssertReturn(self.receivedAt, nil);
 
 	if (format == nil) {
 		format = [TPCPreferences themeTimestampFormat];
 	}
 	
-	NSString *time = TXFormattedTimestamp(_receivedAt, format);
+	NSString *time = TXFormattedTimestamp(self.receivedAt, format);
 
 	return [time stringByAppendingString:NSStringWhitespacePlaceholder];
 }
@@ -140,22 +140,22 @@
 
 - (NSString *)formattedNickname:(IRCChannel *)owner withForcedFormat:(NSString *)format
 {
-	NSObjectIsEmptyAssertReturn(_nickname, nil);
+	NSObjectIsEmptyAssertReturn(self.nickname, nil);
 
 	if (format == nil) {
 		if ([self lineType] == TVCLogLineActionType) {
-			return [NSString stringWithFormat:TVCLogLineActionNicknameFormat, _nickname];
+			return [NSString stringWithFormat:TVCLogLineActionNicknameFormat, self.nickname];
 		} else if ([self lineType] == TVCLogLineNoticeType) {
-			return [NSString stringWithFormat:TVCLogLineNoticeNicknameFormat, _nickname];
+			return [NSString stringWithFormat:TVCLogLineNoticeNicknameFormat, self.nickname];
 		}
 	}
 
-	return [[owner associatedClient] formatNick:_nickname channel:owner formatOverride:format];
+	return [[owner associatedClient] formatNick:self.nickname channel:owner formatOverride:format];
 }
 
 - (NSString *)renderedBodyForTranscriptLogInChannel:(IRCChannel *)channel
 {
-	NSObjectIsEmptyAssertReturn(_messageBody, nil);
+	NSObjectIsEmptyAssertReturn(self.messageBody, nil);
 
 	NSMutableString *s = [NSMutableString string];
 
@@ -183,7 +183,7 @@
 	}
 
 	/* Append actual body. */
-	[s appendString:_messageBody];
+	[s appendString:self.messageBody];
 
 	/* Return result minus any formatting. */
 	return [s stripIRCEffects];
@@ -194,25 +194,25 @@
 	/* Create dictionary with associated data. */
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 
-	NSString *dateValue = [NSString stringWithDouble:[_receivedAt timeIntervalSince1970]];
+	NSString *dateValue = [NSString stringWithDouble:[self.receivedAt timeIntervalSince1970]];
 
 	[dict maybeSetObject:dateValue					forKey:@"receivedAt"];
 
-	[dict maybeSetObject:_excludeKeywords			forKey:@"excludeKeywords"];
-	[dict maybeSetObject:_highlightKeywords			forKey:@"highlightKeywords"];
+	[dict maybeSetObject:self.excludeKeywords			forKey:@"excludeKeywords"];
+	[dict maybeSetObject:self.highlightKeywords			forKey:@"highlightKeywords"];
 
-	[dict maybeSetObject:_nickname					forKey:@"nickname"];
+	[dict maybeSetObject:self.nickname					forKey:@"nickname"];
 
-	[dict maybeSetObject:@(_nicknameColorNumber)	forKey:@"nicknameColorNumber"];
+	[dict maybeSetObject:@(self.nicknameColorNumber)	forKey:@"nicknameColorNumber"];
 
-	[dict maybeSetObject:_rawCommand				forKey:@"rawCommand"];
-	[dict maybeSetObject:_messageBody				forKey:@"messageBody"];
+	[dict maybeSetObject:self.rawCommand				forKey:@"rawCommand"];
+	[dict maybeSetObject:self.messageBody				forKey:@"messageBody"];
 
-	[dict maybeSetObject:@(_lineType)				forKey:@"lineType"];
-	[dict maybeSetObject:@(_memberType)				forKey:@"memberType"];
+	[dict maybeSetObject:@(self.lineType)				forKey:@"lineType"];
+	[dict maybeSetObject:@(self.memberType)				forKey:@"memberType"];
 
-	[dict setBool:_isEncrypted						forKey:@"isEncrypted"];
-	[dict setBool:_isHistoric						forKey:@"isHistoric"];
+	[dict setBool:self.isEncrypted						forKey:@"isEncrypted"];
+	[dict setBool:self.isHistoric						forKey:@"isHistoric"];
 
 	/* Convert dictionary to JSON. */
 	/* Why JSON? Because a binary property list would have to be loaded into memory
@@ -254,25 +254,25 @@
 - (TVCLogLine *)initWithJSONRepresentation:(NSDictionary *)input
 {
 	if ((self = [self init])) {;
+		/* self -init will register defaults for these methods. */
 		double receivedAt = [input doubleForKey:@"receivedAt" orUseDefault:[NSDate epochTime]];
+		
+		self.receivedAt	= [NSDate dateWithTimeIntervalSince1970:receivedAt];
+		
+		[input maybeSetStringForKey:@"nickname" to:&_nickname];
+		[input maybeSetStringForKey:@"messageBody" to:&_messageBody];
+		[input maybeSetStringForKey:@"rawCommand" to:&_rawCommand];
+		
+		[input maybeSetIntegerForKey:@"nicknameColorNumber" to:&_nicknameColorNumber];
+		
+		[input maybeSetArrayForKey:@"highlightKeywords" to:&_highlightKeywords];
+		[input maybeSetArrayForKey:@"excludeKeywords" to:&_excludeKeywords];
 
-		_nickname				= [input objectForKey:@"nickname" orUseDefault:NSStringEmptyPlaceholder];
-		_nicknameColorNumber	= [input integerForKey:@"nicknameColorNumber" orUseDefault:0];
-
-		_messageBody		= [input objectForKey:@"messageBody" orUseDefault:NSStringEmptyPlaceholder];
-
-		_rawCommand			= [input objectForKey:@"rawCommand" orUseDefault:TVCLogLineDefaultRawCommandValue];
-
-		_highlightKeywords	= [input objectForKey:@"highlightKeywords" orUseDefault:@[]];
-		_excludeKeywords	= [input objectForKey:@"excludeKeywords" orUseDefault:@[]];
-
-		_lineType			= [input integerForKey:@"lineType" orUseDefault:TVCLogLineUndefinedType];
-		_memberType			= [input integerForKey:@"memberType" orUseDefault:TVCLogLineMemberNormalType];
-
-		_isHistoric		= [input integerForKey:@"isHistoric" orUseDefault:NO];
-		_isEncrypted	= [input integerForKey:@"isEncrypted" orUseDefault:NO];
-
-		_receivedAt		= [NSDate dateWithTimeIntervalSince1970:receivedAt];
+		[input maybeSetIntegerForKey:@"lineType" to:&_lineType];
+		[input maybeSetIntegerForKey:@"memberType" to:&_memberType];
+		
+		[input maybeSetBoolForKey:@"isHistoric" to:&_isHistoric];
+		[input maybeSetBoolForKey:@"isEncrypted" to:&_isEncrypted];
 
 		return self;
 	}

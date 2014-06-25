@@ -38,11 +38,8 @@
 #import "TextualApplication.h"
 
 @interface TDChanBanExceptionSheet : TDCSheetBase
-@property (nonatomic, nweak) IBOutlet NSTextField *headerTitleField;
-@property (nonatomic, nweak) IBOutlet TVCListView *exceptionTable;
-@property (nonatomic, strong, readonly) NSMutableArray *changeModeList;
-@property (nonatomic, strong, readonly) NSMutableArray *exceptionList;
 @property (nonatomic, assign) BOOL contentAlreadyReceived;
+@property (nonatomic, copy) NSArray *changeModeList;
 @property (nonatomic, copy) NSString *clientID;
 @property (nonatomic, copy) NSString *channelID;
 

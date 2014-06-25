@@ -40,7 +40,7 @@
 
 @interface IRCConnection : NSObject
 @property (nonatomic, nweak) IRCClient *associatedClient;
-@property (nonatomic, strong, readonly) TLOTimer *floodTimer;
+@property (nonatomic, strong) TLOTimer *floodTimer;
 @property (nonatomic, assign) BOOL isConnected;
 @property (nonatomic, assign) BOOL isConnecting;
 @property (nonatomic, assign) BOOL isReadyToSend;
@@ -50,7 +50,7 @@
 @property (nonatomic, assign) BOOL connectionUsesNormalSocks;
 @property (nonatomic, assign) BOOL connectionUsesSystemSocks;
 @property (nonatomic, assign) BOOL connectionUsesFloodControl;
-@property (nonatomic, assign, readonly) BOOL isConnectedWithClientSideCertificate;
+@property (nonatomic, assign) BOOL isConnectedWithClientSideCertificate; // This flag should be considered readonly.
 @property (nonatomic, assign) NSInteger floodControlDelayInterval;
 @property (nonatomic, assign) NSInteger floodControlMaximumMessageCount;
 @property (nonatomic, assign) NSInteger floodControlCurrentMessageCount;
@@ -61,11 +61,6 @@
 @property (nonatomic, copy) NSString *proxyUsername;
 @property (nonatomic, assign) NSInteger proxyPort;
 @property (nonatomic, assign) NSInteger proxySocksVersion;
-@property (nonatomic, strong, readonly) NSMutableArray *sendQueue;
-@property (nonatomic, assign, readonly) dispatch_queue_t dispatchQueue;
-@property (nonatomic, assign, readonly) dispatch_queue_t socketQueue;
-@property (nonatomic, copy, readonly) NSData *bufferOverflowString;
-@property (nonatomic, strong, readonly) id socketConnection;
 
 - (void)open;
 - (void)close;

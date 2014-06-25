@@ -214,7 +214,7 @@
 		/* Handle cloud sync logic. */
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 		if (isCloudImport) {
-			if (u && [[u config] excludedFromCloudSyncing]) {
+			if (u && u.config.excludedFromCloudSyncing) {
 				return;
 			}
 		}

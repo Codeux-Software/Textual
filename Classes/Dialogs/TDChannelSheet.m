@@ -40,12 +40,25 @@
 
 #define _TXWindowToolbarHeight			25
 
+@interface TDChannelSheet ()
+/* Each entry of the array is an array with index 0 equal to the
+ view and index 1 equal to the first responder wanted in that view. */
+@property (nonatomic, strong) NSArray *navigationTree;
+@end
+
 @implementation TDChannelSheet
 
 - (id)init
 {
 	if ((self = [super init])) {
 		[RZMainBundle() loadCustomNibNamed:@"TDChannelSheet" owner:self topLevelObjects:nil];
+		
+		_navigationTree = @[
+			//    view				  first responder
+			@[_generalView,			_channelNameField],
+			@[_encryptionView,		_encryptionKeyField],
+			@[_defaultsView,		_defaultTopicField],
+		];
 	}
 
 	return self;
@@ -56,46 +69,47 @@
 
 - (void)onMenuBarItemChanged:(id)sender
 {
+	/* Get selected tab. */
 	NSInteger row = [sender indexOfSelectedItem];
-
-	switch (row) {
-		case 0:	{	[self firstPane:self.generalView]; break;		}
-		case 1: {	[self firstPane:self.encryptionView]; break;	}
-        case 2: {	[self firstPane:self.defaultsView]; break;		}
-		default: {	[self firstPane:self.generalView]; break;		}
-	}
-
-	[self makeFirstResponderForRow:row];
+	
+	/* Switch to that view. */
+	[self firstPane:(_navigationTree[row][0])];
+	
+	/* Move to appropriate first responder. */
+	[self.sheet makeFirstResponder:(_navigationTree[row][1])];
 }
 
-- (void)makeFirstResponderForRow:(NSInteger)row
+- (NSRect)currentSheetFrame
 {
-	switch (row) {
-		case 0:	{	[self.sheet makeFirstResponder:self.channelNameField]; break;		}
-		case 1: {	[self.sheet makeFirstResponder:self.encryptionKeyField]; break;	}
-        case 2: {	[self.sheet makeFirstResponder:self.defaultTopicField]; break;		}
-		default: { break; }
-	}
+	return [self.sheet frame];
 }
 
 - (void)firstPane:(NSView *)view 
 {
-	NSRect windowFrame = self.sheet.frame;
+	/* Modify frame to match new view. */
+	NSRect windowFrame = [self currentSheetFrame];
 	
-	windowFrame.size.width = view.frame.size.width;
+	windowFrame.size.width  =  view.frame.size.width;
 	windowFrame.size.height = (view.frame.size.height + _TXWindowToolbarHeight);
 
-	windowFrame.origin.y = (NSMaxY(self.sheet.frame) - windowFrame.size.height);
+	windowFrame.origin.y = (NSMaxY([self currentSheetFrame]) - windowFrame.size.height);
 	
-	if (NSObjectIsNotEmpty(self.contentView.subviews)) {
-		[self.contentView.subviews[0] removeFromSuperview];
+	/* Remove any old subviews. */
+	NSArray *subviews = [_contentView subviews];
+	
+	if ([subviews count] > 0) {
+		[subviews[0] removeFromSuperview];
 	}
 	
+	/* Set new frame. */
 	[self.sheet setFrame:windowFrame display:YES animate:YES];
 	
-	[self.contentView setFrame:view.frame];
-	[self.contentView addSubview:view];	
+	[_contentView setFrame:[view frame]];
 	
+	/* Add new view. */
+	[_contentView addSubview:view];
+	
+	/* Reclaulate loop for tab key. */
 	[self.sheet recalculateKeyViewLoop];
 }
 
@@ -108,74 +122,74 @@
 	[self update];
 	
 	[self startSheet];
-	[self firstPane:self.generalView];
-
-	if (self.newItem) {
-		[self.sheet makeFirstResponder:self.channelNameField];
-	}
 	
-	[self.contentViewTabView setSelectedSegment:0];
+	[_contentViewTabView setSelectedSegment:0];
+	
+	[self onMenuBarItemChanged:_contentViewTabView];
 }
 
 - (void)load
 {
-	self.channelNameField.stringValue		= self.config.channelName;
-	self.defaultModesField.stringValue		= self.config.defaultModes;
-	self.defaultTopicField.stringValue		= self.config.defaultTopic;
-
-	if (self.config.encryptionKeyIsSet) {
-		self.encryptionKeyField.stringValue	= [self.config encryptionKeyValue];
+	[_channelNameField setStringValue:[_config channelName]];
+	
+	[_defaultModesField setStringValue:[_config defaultModes]];
+	[_defaultTopicField setStringValue:[_config defaultTopic]];
+	
+	if ([_config encryptionKeyIsSet]) {
+		[_encryptionKeyField setStringValue:[_config encryptionKeyValue]];
 	}
 
-	if (self.config.secretKeyIsSet) {
-		self.secretKeyField.stringValue	= [self.config secretKeyValue];
+	if ([_config secretKeyIsSet]) {
+		[_secretKeyField setStringValue:[_config secretKeyValue]];
 	}
 
-	self.autoJoinCheck.state			= self.config.autoJoin;
-	self.ignoreHighlightsCheck.state	= self.config.ignoreHighlights;
-	self.pushNotificationsCheck.state	= self.config.pushNotifications;
-    self.JPQActivityCheck.state			= self.config.ignoreJPQActivity;
-	self.showTreeBadgeCountCheck.state  = self.config.showTreeBadgeCount;
+	[_autoJoinCheck				setState:[_config autoJoin]];
+	[_JPQActivityCheck			setState:[_config ignoreJPQActivity]];
+	[_ignoreHighlightsCheck		setState:[_config ignoreHighlights]];
+	[_pushNotificationsCheck	setState:[_config pushNotifications]];
+	[_showTreeBadgeCountCheck	setState:[_config showTreeBadgeCount]];
 
 	if ([TPCPreferences showInlineImages]) {
-		self.disableInlineImagesCheck.state = self.config.ignoreInlineImages;
+		[_disableInlineImagesCheck setState:[_config ignoreInlineImages]];
 	} else {
-		self.enableInlineImagesCheck.state = self.config.ignoreInlineImages;
+		[_disableInlineImagesCheck setState:[_config ignoreInlineImages]];
 	}
 }
 
 - (void)save
 {
-	self.config.channelName		= self.channelNameField.firstTokenStringValue;
-	self.config.defaultModes	= self.defaultModesField.trimmedStringValue;
-	self.config.defaultTopic	= self.defaultTopicField.trimmedStringValue;
-	self.config.secretKey		= self.secretKeyField.firstTokenStringValue;
-	self.config.encryptionKey	= self.encryptionKeyField.trimmedStringValue;
-    
-	self.config.autoJoin			= self.autoJoinCheck.state;
-	self.config.showTreeBadgeCount  = self.showTreeBadgeCountCheck.state;
-	self.config.pushNotifications	= self.pushNotificationsCheck.state;
-    self.config.ignoreHighlights	= self.ignoreHighlightsCheck.state;
-    self.config.ignoreJPQActivity	= self.JPQActivityCheck.state;
+	[_config setChannelName:[_channelNameField firstTokenStringValue]];
+	
+	[_config setDefaultModes:[_defaultModesField trimmedStringValue]];
+	[_config setDefaultTopic:[_defaultTopicField trimmedStringValue]];
+	
+	[_config setSecretKey:		[_secretKeyField firstTokenStringValue]];
+	[_config setEncryptionKey:	[_encryptionKeyField trimmedStringValue]];
+	
+	[_config setAutoJoin:			[_autoJoinCheck state]];
+	[_config setIgnoreJPQActivity:	[_JPQActivityCheck state]];
+	[_config setIgnoreHighlights:	[_ignoreHighlightsCheck state]];
+	[_config setPushNotifications:	[_pushNotificationsCheck state]];
+	[_config setShowTreeBadgeCount:	[_showTreeBadgeCountCheck state]];
 
 	if ([TPCPreferences showInlineImages]) {
-		self.config.ignoreInlineImages = self.disableInlineImagesCheck.state;
+		[_config setIgnoreInlineImages:[_disableInlineImagesCheck state]];
 	} else {
-		self.config.ignoreInlineImages = self.enableInlineImagesCheck.state;
+		[_config setIgnoreInlineImages:[_enableInlineImagesCheck state]];
 	}
 	
-	if ([self.config.channelName isChannelName] == NO) {
-		self.config.channelName = [@"#" stringByAppendingString:self.config.channelName];
+	if ([[_config channelName] isChannelName] == NO) {
+		 [_config setChannelName:[@"#" stringByAppendingString:[_config channelName]]];
 	}
 }
 
 - (void)update
 {
-	NSString *s = self.channelNameField.trimmedStringValue;
+	NSString *s = [_channelNameField trimmedStringValue];
 	
 	[self.okButton setEnabled:[s isChannelName]];
 	
-	[self.channelNameField setEditable:self.newItem];
+	[_channelNameField setEditable:_newItem];
 }
 
 - (void)controlTextDidChange:(NSNotification *)note

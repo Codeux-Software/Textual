@@ -50,7 +50,7 @@
 
 - (NSString *)attributedStringToASCIIFormatting
 {
-	NSString *realBody = self.string;
+	NSString *realBody = [self string];
 	
 	NSMutableString *result = [NSMutableString string];
 	
@@ -58,7 +58,9 @@
 	NSRange limitRange = NSMakeRange(0, [self length]);
 	
 	while (limitRange.length > 0) {
-		NSDictionary *dict = [self safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
+		NSDictionary *dict = [self attributesAtIndex:limitRange.location
+							   longestEffectiveRange:&effectiveRange
+											 inRange:limitRange];
 
 		NSInteger foregroundColor = [TVCLogRenderer mapColorValue:dict[NSForegroundColorAttributeName]];
 		NSInteger backgroundColor = [TVCLogRenderer mapColorValue:dict[NSBackgroundColorAttributeName]];
@@ -86,14 +88,15 @@
 			}
 		}
 		
-		[result appendString:[realBody safeSubstringWithRange:effectiveRange]];
+		[result appendString:[realBody substringWithRange:effectiveRange]];
 		
 		if (color)          { [result appendFormat:@"%c", 0x03]; }
 		if (boldText)       { [result appendFormat:@"%c", 0x02]; }
 		if (italicText)     { [result appendFormat:@"%c", 0x1d]; }
 		if (underlineText)  { [result appendFormat:@"%c", 0x1F]; }
 		
-		limitRange = NSMakeRange(NSMaxRange(effectiveRange), (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
+		limitRange = NSMakeRange (NSMaxRange(effectiveRange),
+								 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
 	}		
 	
 	return result;
@@ -167,9 +170,9 @@
 		 any formatting attached. */
 		/* ///////////////////////////////////////////////////// */
 		
-		NSDictionary *dict = [base safeAttributesAtIndex:limitRange.location
-								   longestEffectiveRange:&effectiveRange
-												 inRange:limitRange];
+		NSDictionary *dict = [base attributesAtIndex:limitRange.location
+							   longestEffectiveRange:&effectiveRange
+											 inRange:limitRange];
 
 		NSInteger foregroundColor = [TVCLogRenderer mapColorValue:dict[NSForegroundColorAttributeName]];
 		NSInteger backgroundColor = [TVCLogRenderer mapColorValue:dict[NSBackgroundColorAttributeName]];
@@ -346,12 +349,14 @@
 - (BOOL)IRCFormatterAttributeSetInRange:(IRCTextFormatterEffectType)effect 
                                   range:(NSRange)limitRange 
 {
-    NSAttributedString *valued = self.attributedString;
-    
+	NSAttributedString *valued = [self attributedString];
+	
 	NSRange effectiveRange;
 	
 	while (limitRange.length >= 1) {
-		NSDictionary *dict = [valued safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
+		NSDictionary *dict = [valued attributesAtIndex:limitRange.location
+								 longestEffectiveRange:&effectiveRange
+											   inRange:limitRange];
 		
 		switch (effect) {
 			case IRCTextFormatterBoldEffect: 
@@ -386,8 +391,9 @@
 				 our text field so that we do not say we have a color when it is
 				 only the color of the text field itself. */
 				
-                if (PointerIsNotEmpty(foregroundColor)) {
-					NSColor *defaultColor = self.defaultTextFieldFontColor;
+                if (foregroundColor) {
+					NSColor *defaultColor = self.preferredFontColor;
+					
 					NSColor *compareColor = [foregroundColor colorUsingColorSpace:[NSColorSpace genericGrayColorSpace]];
 					
 					CGFloat defaultWhite = [defaultColor whiteComponent];
@@ -406,7 +412,7 @@
 			{
 				NSColor *backgroundColor = dict[NSBackgroundColorAttributeName];
 				
-				if (PointerIsNotEmpty(backgroundColor)) {
+				if (backgroundColor) {
 					return YES;
 				}
 				
@@ -415,7 +421,8 @@
             default: { return NO; break; }
 		}
 		
-		limitRange = NSMakeRange(NSMaxRange(effectiveRange), (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
+		limitRange = NSMakeRange (NSMaxRange(effectiveRange),
+								 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
 	}
 	
 	return NO;
@@ -428,12 +435,14 @@
                            value:(id)value 
                            range:(NSRange)limitRange
 {	
-    NSAttributedString *valued = self.attributedString;
-    
+	NSAttributedString *valued = [self attributedString];
+	
 	NSRange effectiveRange;
 	
 	while (limitRange.length >= 1) {
-		NSDictionary *dict = [valued safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
+		NSDictionary *dict = [valued attributesAtIndex:limitRange.location
+								 longestEffectiveRange:&effectiveRange
+											   inRange:limitRange];
 		
 		NSFont *baseFont = dict[NSFontAttributeName];
         
@@ -497,7 +506,8 @@
 		
         [self setAttributes:newDict inRange:effectiveRange];
 		
-		limitRange = NSMakeRange(NSMaxRange(effectiveRange), (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
+		limitRange = NSMakeRange (NSMaxRange(effectiveRange),
+								 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
     }
 }
 
@@ -505,12 +515,14 @@
                               range:(NSRange)limitRange 
                               color:(NSColor *)defaultColor
 {	
-    NSAttributedString *valued = self.attributedString;
-    
+	NSAttributedString *valued = [self attributedString];
+	
 	NSRange effectiveRange;
 	
 	while (limitRange.length >= 1) {
-		NSDictionary *dict = [valued safeAttributesAtIndex:limitRange.location longestEffectiveRange:&effectiveRange inRange:limitRange];
+		NSDictionary *dict = [valued attributesAtIndex:limitRange.location
+								 longestEffectiveRange:&effectiveRange
+											   inRange:limitRange];
 		
 		NSFont *baseFont = dict[NSFontAttributeName];
         
@@ -574,7 +586,8 @@
 
 		[self addUndoActionForAttributes:dict inRange:effectiveRange];
 		
-		limitRange = NSMakeRange(NSMaxRange(effectiveRange), (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
+		limitRange = NSMakeRange (NSMaxRange(effectiveRange),
+								 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
 	}
 }
 

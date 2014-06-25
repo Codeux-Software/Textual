@@ -40,15 +40,6 @@
 
 @implementation IRCMessage
 
-- (id)init
-{
-	if ((self = [super init])) {
-		//[self parseLine:NSStringEmptyPlaceholder];
-	}
-	
-	return self;
-}
-
 - (id)initWithLine:(NSString *)line
 {
 	if ((self = [super init])) {
@@ -65,61 +56,90 @@
 
 - (void)parseLine:(NSString *)line forClient:(IRCClient *)client
 {
+	/* Establish base pair. */
 	self.command = NSStringEmptyPlaceholder;
 
 	self.isHistoric = NO;
 
-	self.sender = [IRCPrefix new];
-	self.params = [NSMutableArray new];
+	IRCPrefix *sender = [IRCPrefix new];
 	
+	NSMutableArray *params = [NSMutableArray new];
+	
+	/* Begin parsing. */
 	NSMutableString *s = [line mutableCopy];
 
 	// ---- //
 
     /* Get extensions from in front of input string. See IRCv3.atheme.org for
      more information regarding extensions in the IRC protocol. */
+	if ([s hasPrefix:@"@"]) {
+		/* Get leading string up to first space. */
+		NSString *extensionInfo = [s getToken];
+		
+		/* Check for malformed message. */
+		if ([extensionInfo length] <= 1) {
+			return; // Do not continue as message is malformed.
+		}
+		
+		/* Remove the leading at sign from the string. */
+		extensionInfo = [extensionInfo substringFromIndex:1];
+		
+		/* Chop the tags up using ; as a divider as defined by the syntax
+		 located at: <http://ircv3.org/specification/message-tags-3.2> */
+		/* An example grouping would look like the following:
+				@aaa=bbb;ccc;example.com/ddd=eee */
+		/* The specification does not speicfy what is to happen if the value
+		 of an extension will contain a semicolon so at this point we will
+		 assume that they will not exist and only be there as a divider. */
+		NSArray *values = [extensionInfo componentsSeparatedByString:@";"];
 
-	/* We only bother searching for extensions if we already have a CAP that
-	 is in relation to one. */
+		NSMutableDictionary *valueMatrix = [NSMutableDictionary dictionary];
+		
+		/* We now go through each tag using an equal sign as a divider and
+		 placing each into a dictionary. */
+		for (NSString *comp in values) {
+			NSArray *info = [comp componentsSeparatedByString:@"="];
 
-	if (client && client.capacities.serverTimeCapInUse) {
-		if ([s hasPrefix:@"@"]) {
-			NSString *t = [[s getToken] substringFromIndex:1]; //Get token and remove @.
+			NSAssertReturnLoopContinue([info count] == 2);
+
+			NSString *extKey = info[0];
+			NSString *extVal = info[1];
 			
-			NSArray *values = [t componentsSeparatedByString:@","];
-
-			for (NSString *comp in values) {
-				NSArray *info = [comp componentsSeparatedByString:@"="];
-
-				NSAssertReturnLoopContinue(info.count == 2);
-
-				NSString *extKey = info[0];
-				NSString *extVal = info[1];
-
-				/* Process @time= value inline for server-time. */
-
-				BOOL hasTimeExt = [extKey isEqualToString:@"time"];
-
-				NSAssertReturnLoopBreak(hasTimeExt);
-
-				NSDate *date = [[self.worldController isoStandardDateFormatter] dateFromString:extVal];
+			[valueMatrix setObject:extVal forKey:extKey];
+		}
+		
+		/* Now that we have values, we can check against our capacities. */
+		if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityServerTime]) {
+			/* We support two time extensions. The time= value is the date and
+			 time in the format as defined by ISO 8601:2004(E) 4.3.2. */
+			/* The t= value is a legacy value in a epoch time. We always favor
+			 the new time= format over the old. */
+			NSString *timeObject = [valueMatrix objectForKey:@"time"];
+			
+			NSDate *date;
+			
+			if (timeObject == nil) {
+				/* time= does not exist so now we try t= */
+				timeObject = [valueMatrix objectForKey:@"t"];
 				
-				if (PointerIsEmpty(date)) {
-					date = [NSDate dateWithTimeIntervalSince1970:[extVal doubleValue]];
+				if (timeObject) {
+					date = [NSDate dateWithTimeIntervalSince1970:[timeObject doubleValue]];
 				}
-
-				if (date) {
-					self.receivedAt = date;
-
-					self.isHistoric = YES;
-				}
-
-				/* End inline procesing of the @time= and @t= extensions. */
+			} else {
+				date = [TXSharedISOStandardDateFormatter() dateFromString:timeObject];
+			}
+			
+			/* If we have a time, we are done. */
+			if (date) {
+				self.receivedAt = date;
+				
+				self.isHistoric = YES;
 			}
 		}
 	}
-
-	if (PointerIsEmpty(self.receivedAt)) {
+			
+	/* Set a date if there is none already set. */
+	if (self.receivedAt == nil) {
 		self.receivedAt = [NSDate date];
 	}
 
@@ -128,47 +148,74 @@
     /* Begin the parsing of the actual input string. */
     /* First thing to do is get the sender information from in 
      front of the message. */
-
+	/* Under certain cirumstances, the user may not exist 
+	 at all. For example, some IRCds may send a complete input
+	 string that looks like "PING :daRYdkOuVL" — as seen, the
+	 input string begins with the command and that is it. */
 	if ([s hasPrefix:@":"]) {
-		NSString *t = [[s getToken] substringFromIndex:1];
+		/* Get user info section. */
+		NSString *userInfo = [s getToken];
+		
+		/* Check that the input is valid. */
+		if ([userInfo length] <= 1) {
+			return; // Current input is malformed, do nothing with it.
+		}
+		
+		NSString *t = [userInfo substringFromIndex:1];
 
 		NSString *nicknameInt = nil;
 		NSString *usernameInt = nil;
 		NSString *addressInt = nil;
 
-		self.sender.hostmask = t;
+		[sender setHostmask:t]; // Declare entire section as host.
 		
+		[sender setIsServer:NO]; // Do not set as server until host is parsed…
+		
+		/* Parse the user info into their appropriate sections or return NO if we can't. */
 		if ([t hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt]) {
-			self.sender.nickname = nicknameInt;
-            self.sender.username = usernameInt;
-            self.sender.address = addressInt;
+			[sender setNickname:nicknameInt];
+			[sender setUsername:usernameInt];
+			[sender setAddress:addressInt];
         } else {
-			self.sender.nickname = t;
-			self.sender.isServer = YES;
+			[sender setNickname:t];
+			
+			[sender setIsServer:YES];
 		}
 	}
+	
+	self.sender = sender;
 
     /* Now that we have the sender information… continue to the
      actual command being used. */
-    
-	self.command = [[s getToken] uppercaseString];
+	NSString *foundCommand = [s getToken];
 	
-	self.numericReply = [self.command integerValue];
+	/* Check that the input is valid. */
+	if ([foundCommand length] <= 1) {
+		return; // Current input is malformed, do nothing with it.
+	}
+	
+	/* Set command and numeric value. */
+	self.command = [foundCommand uppercaseString];
+	
+	self.numericReply = [foundCommand integerValue];
 
     /* After the sender information and command information is extracted,
      there is not much left to the parse. Just searching for the beginning
      of a message segment or getting the next token. */
-    
 	while ([s length] > 0) {
 		if ([s hasPrefix:@":"]) {
-			[self.params addObject:[s substringFromIndex:1]];
+			[params addObject:[s substringFromIndex:1]];
 			
 			break;
 		} else {
-			[self.params addObject:[s getToken]];
+			[params addObject:[s getToken]];
 		}
 	}
 	
+	/* Finish up. */
+	self.params = params;
+	
+	params = nil;
 }
 
 - (NSString *)paramAt:(NSInteger)index

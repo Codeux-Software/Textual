@@ -51,31 +51,31 @@
 
 - (void)start:(NSString *)topic
 {
-	IRCChannel *c = [worldController() findChannelByClientId:_clientID channelId:_channelID];
+	IRCChannel *c = [worldController() findChannelByClientId:self.clientID channelId:self.channelID];
 	
-	[_headerTitleField setStringValue:[NSString stringWithFormat:[_headerTitleField stringValue], [c name]]];
+	[self.headerTitleField setStringValue:[NSString stringWithFormat:[self.headerTitleField stringValue], [c name]]];
 	
-	NSAttributedString *topicas = [topic attributedStringWithIRCFormatting:[_topicValueField preferredFont]
+	NSAttributedString *topicas = [topic attributedStringWithIRCFormatting:[self.topicValueField preferredFont]
 												honorFormattingPreference:NO];
 	
-	[_topicValueField setAttributedStringValue:topicas];
+	[self.topicValueField setAttributedStringValue:topicas];
 
-	[[mainWindow() formattingMenu] enableSheetField:_topicValueField];
+	[[mainWindow() formattingMenu] enableSheetField:self.topicValueField];
 
 	[self startSheet];
 }
 
 - (void)ok:(id)sender
 {
-	if ([[self delegate] respondsToSelector:@selector(topicSheet:onOK:)]) {
+	if ([self.delegate respondsToSelector:@selector(topicSheet:onOK:)]) {
 		NSString *topicv;
 
-		topicv = [[_topicValueField attributedStringValue] attributedStringToASCIIFormatting];
+		topicv = [[self.topicValueField attributedStringValue] attributedStringToASCIIFormatting];
 
 		topicv = [topicv stringByReplacingOccurrencesOfString:NSStringNewlinePlaceholder
 												   withString:NSStringWhitespacePlaceholder];
 
-		[[self delegate] topicSheet:self onOK:topicv];
+		[self.delegate topicSheet:self onOK:topicv];
 	}
 	
 	[super ok:nil];
@@ -88,8 +88,8 @@
 {
 	[[mainWindow() formattingMenu] enableWindowField:mainWindowTextField()];
 	
-	if ([[self delegate] respondsToSelector:@selector(topicSheetWillClose:)]) {
-		[[self delegate] topicSheetWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(topicSheetWillClose:)]) {
+		[self.delegate topicSheetWillClose:self];
 	}
 }
 

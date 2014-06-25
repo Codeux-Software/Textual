@@ -37,6 +37,12 @@
 
 #import "TextualApplication.h"
 
+@interface TDChanBanExceptionSheet ()
+@property (nonatomic, nweak) IBOutlet NSTextField *headerTitleField;
+@property (nonatomic, nweak) IBOutlet TVCListView *exceptionTable;
+@property (nonatomic, strong) NSMutableArray *exceptionList;
+@end
+
 @implementation TDChanBanExceptionSheet
 
 - (id)init
@@ -44,8 +50,7 @@
     if ((self = [super init])) {
 		[RZMainBundle() loadCustomNibNamed:@"TDChanBanExceptionSheet" owner:self topLevelObjects:nil];
 		
-		_exceptionList = [NSMutableArray new];
-        _changeModeList = [NSMutableArray new];
+		self.exceptionList = [NSMutableArray new];
     }
     
     return self;
@@ -53,36 +58,36 @@
 
 - (void)releaseTableViewDataSourceBeforeSheetClosure
 {
-	[_exceptionTable setDelegate:nil];
-	[_exceptionTable setDataSource:nil];
+	[self.exceptionTable setDelegate:nil];
+	[self.exceptionTable setDataSource:nil];
 }
 
 - (void)show
 {
-	IRCChannel *c = [worldController() findChannelByClientId:_clientID channelId:_channelID];
+	IRCChannel *c = [worldController() findChannelByClientId:self.clientID channelId:self.channelID];
 
-	[_headerTitleField setStringValue:[NSString stringWithFormat:[_headerTitleField stringValue], [c name]]];
+	[self.headerTitleField setStringValue:[NSString stringWithFormat:[self.headerTitleField stringValue], [c name]]];
 	
     [self startSheet];
 }
 
 - (void)clear
 {
-    [_exceptionList removeAllObjects];
+    [self.exceptionList removeAllObjects];
 	
     [self reloadTable];
 }
 
 - (void)addException:(NSString *)host tset:(NSString *)timeSet setby:(NSString *)owner
 {
-    [_exceptionList addObject:@[host, [owner nicknameFromHostmask], timeSet]];
+    [self.exceptionList addObject:@[host, [owner nicknameFromHostmask], timeSet]];
     
     [self reloadTable];
 }
 
 - (void)reloadTable
 {
-    [_exceptionTable reloadData];
+    [self.exceptionTable reloadData];
 }
 
 #pragma mark -
@@ -90,26 +95,28 @@
 
 - (void)onUpdate:(id)sender
 {
-    if ([[self delegate] respondsToSelector:@selector(chanBanExceptionDialogOnUpdate:)]) {
-		[[self delegate] chanBanExceptionDialogOnUpdate:self];
+    if ([self.delegate respondsToSelector:@selector(chanBanExceptionDialogOnUpdate:)]) {
+		[self.delegate chanBanExceptionDialogOnUpdate:self];
     }
 }
 
 - (void)onRemoveExceptions:(id)sender
 {
+	NSMutableArray *changeArray = [NSMutableArray array];
+
     NSString *modeString;
     
 	NSMutableString *mdstr = [NSMutableString stringWithString:@"-"];
 	NSMutableString *trail = [NSMutableString string];
 	
-	NSIndexSet *indexes = [_exceptionTable selectedRowIndexes];
+	NSIndexSet *indexes = [self.exceptionTable selectedRowIndexes];
 	
     NSInteger indexTotal = 0;
     
 	for (NSNumber *index in [indexes arrayFromIndexSet]) {
         indexTotal++;
         
-		NSArray *iteml = [_exceptionList objectAtIndex:[index unsignedIntegerValue]];
+		NSArray *iteml = [self.exceptionList objectAtIndex:[index unsignedIntegerValue]];
 		
 		[mdstr appendString:@"e"];
 		[trail appendFormat:@" %@", iteml[0]];
@@ -117,7 +124,7 @@
 		if (indexTotal == TXMaximumNodesPerModeCommand) {
             modeString = (id)[mdstr stringByAppendingString:trail];
             
-            [_changeModeList addObject:modeString];
+            [changeArray addObject:modeString];
             
             [mdstr setString:@"-"];
             [trail setString:NSStringEmptyPlaceholder];
@@ -129,8 +136,10 @@
     if (NSObjectIsNotEmpty(mdstr)) {
         modeString = (id)[mdstr stringByAppendingString:trail];
         
-        [_changeModeList addObject:modeString];
+        [changeArray addObject:modeString];
     }
+	
+	self.changeModeList = changeArray;
 
 	[super cancel:nil];
 }
@@ -140,12 +149,12 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-	return [_exceptionList count];
+	return [self.exceptionList count];
 }
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    NSArray *item = [_exceptionList objectAtIndex:row];
+    NSArray *item = [self.exceptionList objectAtIndex:row];
     
     if ([[column identifier] isEqualToString:@"mask"]) {
 		return item[0];
@@ -161,8 +170,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([[self delegate] respondsToSelector:@selector(chanBanExceptionDialogWillClose:)]) {
-		[[self delegate] chanBanExceptionDialogWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(chanBanExceptionDialogWillClose:)]) {
+		[self.delegate chanBanExceptionDialogWillClose:self];
 	}
 }
 

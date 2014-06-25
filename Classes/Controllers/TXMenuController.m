@@ -65,9 +65,9 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		_openWindowList = [NSDictionary dictionary];
+		self.openWindowList = [NSDictionary dictionary];
 		
-		_currentSearchPhrase = NSStringEmptyPlaceholder;
+		self.currentSearchPhrase = NSStringEmptyPlaceholder;
 	}
 	
 	return self;
@@ -76,9 +76,9 @@
 - (void)setupOtherServices
 {
 	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
-		 _fileTransferController = [TDCFileTransferDialog new];
+		 self.fileTransferController = [TDCFileTransferDialog new];
 
-		[_fileTransferController startUsingDownloadDestinationFolderSecurityScopedBookmark];
+		[self.fileTransferController startUsingDownloadDestinationFolderSecurityScopedBookmark];
 	}
 }
 
@@ -87,14 +87,14 @@
 	[self popWindowSheetIfExists];
 	
 	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
-		[_fileTransferController prepareForApplicationTermination];
+		[self.fileTransferController prepareForApplicationTermination];
 	}
 }
 
 - (void)preferencesChanged
 {
 	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
-		[_fileTransferController clearCachedIPAddress];
+		[self.fileTransferController clearCachedIPAddress];
 	}
 }
 
@@ -652,16 +652,16 @@
 #define _channelNavigationMenuEntryMenuTag		64611
 	
 	/* Remove all previous entries. */
-	[_navigationChannelList removeAllItems];
+	[self.navigationChannelList removeAllItems];
 
 	/* Begin populating… */
 	NSInteger channelCount = 0;
 
-	for (IRCClient *u in [worldController() clients]) {
+	for (IRCClient *u in [worldController() clientList]) {
 		/* Create a menu item for the client title. */
 		NSMenuItem *newItem = [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1183]", [u name]) target:nil action:nil];
 
-		[_navigationChannelList addItem:newItem];
+		[self.navigationChannelList addItem:newItem];
 
 		/* Begin populating channels. */
 		for (IRCChannel *c in [u channels]) {
@@ -690,7 +690,7 @@
 			[newItem setTag:_channelNavigationMenuEntryMenuTag]; // Use same tag for each to disable during sheets.
 
 			/* Add to the actaul navigation list. */
-			[_navigationChannelList addItem:newItem];
+			[self.navigationChannelList addItem:newItem];
 
 			/* Bump the count… */
 			channelCount += 1;
@@ -730,7 +730,7 @@
 		NSIndexSet *indexes = [mainWindowMemberList() selectedRowIndexes];
 
 		BOOL indexEmpty = NSObjectIsEmpty(indexes);
-		BOOL pontrEmpty = NSObjectIsEmpty(_pointedNickname);
+		BOOL pontrEmpty = NSObjectIsEmpty(self.pointedNickname);
 
 		if (indexEmpty == NO && pontrEmpty) {
 			for (NSNumber *index in [indexes arrayFromIndexSet]) {
@@ -744,7 +744,7 @@
 			}
 		} else {
 			if (pontrEmpty == NO) {
-				IRCUser *m = [c memberWithNickname:_pointedNickname];
+				IRCUser *m = [c memberWithNickname:self.pointedNickname];
 				
 				if (m) {
 					[ary addObject:m];
@@ -758,7 +758,7 @@
 
 - (void)deselectMembers:(NSMenuItem *)sender
 {
-	_pointedNickname = nil;
+	self.pointedNickname = nil;
 	
 	[mainWindowMemberList() deselectAll:nil];
 }
@@ -776,25 +776,25 @@
 
 - (void)addWindowToWindowList:(id)window withKeyValue:(NSString *)key
 {
-	NSMutableDictionary *newList = [_openWindowList mutableCopy];
+	NSMutableDictionary *newList = [self.openWindowList mutableCopy];
 
 	[newList setObjectWithoutOverride:window forKey:key];
 
-	_openWindowList = newList;
+	self.openWindowList = newList;
 }
 
 - (id)windowFromWindowList:(NSString *)windowClass
 {
-	return [_openWindowList objectForKey:windowClass];
+	return [self.openWindowList objectForKey:windowClass];
 }
 
 - (void)removeWindowFromWindowList:(NSString *)windowClass
 {
-	NSMutableDictionary *newList = [_openWindowList mutableCopy];
+	NSMutableDictionary *newList = [self.openWindowList mutableCopy];
 
 	[newList removeObjectForKey:windowClass];
 
-	_openWindowList = newList;
+	self.openWindowList = newList;
 }
 
 - (BOOL)popWindowViewIfExists:(NSString *)windowClass
@@ -819,8 +819,8 @@
 	NSWindow *attachedSheet = [mainWindow() attachedSheet];
 	
 	if (attachedSheet) {
-		for (NSString *windowKey in _openWindowList) {
-			id windowObject = [_openWindowList objectForKey:windowKey];
+		for (NSString *windowKey in self.openWindowList) {
+			id windowObject = [self.openWindowList objectForKey:windowKey];
 
 			if ([[windowObject class] isSubclassOfClass:[TDCSheetBase class]]) {
 				NSWindow *ownedWindow = (id)[windowObject sheet];
@@ -850,14 +850,14 @@
 					defaultButton:TXTLS(@"BasicLanguage[1026][1]")
 				  alternateButton:BLS(1009)
 				  informativeText:TXTLS(@"BasicLanguage[1026][2]")
-				 defaultUserInput:_currentSearchPhrase
+				 defaultUserInput:self.currentSearchPhrase
 				  completionBlock:^(BOOL defaultButtonClicked, NSString *resultString) {
 					  if (defaultButtonClicked) {
 						  if (NSObjectIsEmpty(resultString)) {
-							  _currentSearchPhrase = NSStringEmptyPlaceholder;
+							  self.currentSearchPhrase = NSStringEmptyPlaceholder;
 						  } else {
-							  if ([resultString isNotEqualTo:_currentSearchPhrase]) {
-								  _currentSearchPhrase = resultString;
+							  if ([resultString isNotEqualTo:self.currentSearchPhrase]) {
+								  self.currentSearchPhrase = resultString;
 							  }
 
 							  dispatch_async(dispatch_get_main_queue(), ^{
@@ -877,13 +877,13 @@
 #define _findPanelOpenPanelMenuTag		4564
 #define _findPanelMoveForwardMenuTag	4565
 
-	if ([sender tag] == _findPanelOpenPanelMenuTag || NSObjectIsEmpty(_currentSearchPhrase)) {
+	if ([sender tag] == _findPanelOpenPanelMenuTag || NSObjectIsEmpty(self.currentSearchPhrase)) {
 		[self internalOpenFindPanel:sender];
 	} else {
 		if ([sender tag] == _findPanelMoveForwardMenuTag) {
-			[[self currentWebView] searchFor:_currentSearchPhrase direction:YES caseSensitive:NO wrap:YES];
+			[[self currentWebView] searchFor:self.currentSearchPhrase direction:YES caseSensitive:NO wrap:YES];
 		} else {
-			[[self currentWebView] searchFor:_currentSearchPhrase direction:NO caseSensitive:NO wrap:YES];
+			[[self currentWebView] searchFor:self.currentSearchPhrase direction:NO caseSensitive:NO wrap:YES];
 		}
 	}
 	
@@ -954,7 +954,7 @@
 
 - (void)showFileTransfersDialog:(id)sender
 {
-	[_fileTransferController show:YES restorePosition:YES];
+	[self.fileTransferController show:YES restorePosition:YES];
 }
 
 #pragma mark -
@@ -1242,7 +1242,7 @@
 		return;
 	}
 	
-	IRCClientConfig *config = [[u storedConfig] mutableCopy];
+	IRCClientConfig *config = [u storedConfig];
 	
 	NSString *newName = [[config clientName] stringByAppendingString:@"_"];
 
@@ -1315,7 +1315,7 @@
 	[d setWindow:mainWindow()];
 	
 	[d setClientID:[u treeUUID]];
-	[d setConfig:[_serverStoredConfig mutableCopy]];
+	[d setConfig:_serverStoredConfig];
 	
 	[d start:viewType withContext:context];
 
@@ -1334,7 +1334,7 @@
 	if ([sender clientID] == nil) {
 		[worldController() createClient:[sender config] reload:YES];
 		
-		[[sender config] writeKeychainItemsToDisk];
+		[sender.config writeKeychainItemsToDisk];
 	} else {
 		IRCClient *u = [worldController() findClientById:[sender clientID]];
 		
@@ -1342,8 +1342,8 @@
 			return;
 		}
 
-		BOOL samencoding = ([[sender config] primaryEncoding] ==
-							     [[u config] primaryEncoding]);
+		BOOL samencoding = (sender.config.primaryEncoding ==
+							     u.config.primaryEncoding);
 
 		[u updateConfig:[sender config]];
 
@@ -1498,7 +1498,7 @@
 	[m setClientID:[u treeUUID]];
 	[m setChannelID:[c treeUUID]];
 	
-	[m setMode:[[c modeInfo] mutableCopy]];
+	[m setMode:[c modeInfo]];
 
 	[m start];
 
@@ -1607,7 +1607,7 @@
 	[d setClientID:[u treeUUID]];
 	[d setChannelID:[c treeUUID]];
 	
-	[d setConfig:[_channelConfig mutableCopy]];
+	[d setConfig:_channelConfig];
 
 	[d start];
 
@@ -1626,7 +1626,7 @@
 		[worldController() expandClient:u];
 		[worldController() createChannel:[sender config] client:u reload:YES adjust:YES];
 		
-		[[sender config] writeKeychainItemsToDisk];
+		[sender.config writeKeychainItemsToDisk];
 	} else {
 		IRCChannel *c = [worldController() findChannelByClientId:[sender clientID] channelId:[sender channelID]];
 		
@@ -1636,7 +1636,7 @@
 
 		NSString *oldKey = [_channelConfig encryptionKey];
 		
-		NSString *newKey = [[sender config] temporaryEncryptionKey];
+		NSString *newKey = [sender.config temporaryEncryptionKey];
 		
 		BOOL oldKeyEmpty = NSObjectIsEmpty(oldKey);
 		BOOL newKeyEmpty = NSObjectIsEmpty(newKey);
@@ -1690,7 +1690,7 @@
 
 - (void)memberInChannelViewDoubleClicked:(id)sender
 {
-    if (_pointedNickname) {
+    if (self.pointedNickname) {
 		TXUserDoubleClickAction action = [TPCPreferences userDoubleClickOption];
 
 		if (action == TXUserDoubleClickWhoisAction) {
@@ -1707,7 +1707,7 @@
 {
 	/* Each double click method gets a deselectPointedNickname: sent to it
 	 depending on whether it was double clicked within the channel view or
-	 the member list. The purposes of this is to only deselect pointedNickname
+	 the member list. The purposes of this is to only deselect self.pointedNickname
 	 if it was from within the channel view to allow the selection in the
 	 user list to remain unchanged. */
 
@@ -1767,7 +1767,7 @@
 
 	/* Close users. */
 	if (deselectPointedNickname) {
-		_pointedNickname = nil;
+		self.pointedNickname = nil;
 	} else {
 		[self deselectMembers:sender];
 	}
@@ -1795,7 +1795,7 @@
 	}
 
 	if (deselectPointedNickname) {
-		_pointedNickname = nil;
+		self.pointedNickname = nil;
 	} else {
 		[self deselectMembers:sender];
 	}
@@ -1822,7 +1822,7 @@
 	}
 
 	if (deselectPointedNickname) {
-		_pointedNickname = nil;
+		self.pointedNickname = nil;
 	} else {
 		[self deselectMembers:sender];
 	}
@@ -1997,7 +1997,7 @@
 
 - (void)joinClickedChannel:(id)sender
 {
-	NSObjectIsEmptyAssert(_pointedChannelName);
+	NSObjectIsEmptyAssert(self.pointedChannelName);
 	
 	IRCClient *u = [worldController() selectedClient];
 	
@@ -2007,9 +2007,9 @@
 
 	[u setInUserInvokedJoinRequest:YES];
 	
-	[u joinUnlistedChannel:_pointedChannelName];
+	[u joinUnlistedChannel:self.pointedChannelName];
 		
-	_pointedChannelName = nil;
+	self.pointedChannelName = nil;
 }
 
 - (void)showChannelIgnoreList:(id)sender
@@ -2063,7 +2063,7 @@
 	[worldController() expandClient:u];
 	[worldController() save];
 	
-	if ([[u config] autoConnect]) {
+	if (u.config.autoConnect) {
 		[u connect];
 	}
 	
@@ -2284,15 +2284,15 @@
 	
 	[d beginSheetModalForWindow:mainWindow() completionHandler:^(NSInteger returnCode) {
 		if (returnCode == NSOKButton) {
-			[[_fileTransferController fileTransferTable] beginUpdates];
+			[[self.fileTransferController fileTransferTable] beginUpdates];
 			
 			for (IRCUser *m in [self selectedMembers:sender]) {
 				for (NSURL *pathURL in [d URLs]) {
-					[_fileTransferController addSenderForClient:u nickname:[m nickname] path:[pathURL path] autoOpen:YES];
+					[self.fileTransferController addSenderForClient:u nickname:[m nickname] path:[pathURL path] autoOpen:YES];
 				}
 			}
 			
-			[[_fileTransferController fileTransferTable] endUpdates];
+			[[self.fileTransferController fileTransferTable] endUpdates];
 		}
 		
 		[self deselectMembers:sender];
@@ -2319,7 +2319,7 @@
 			}
 		}
 		
-		[_fileTransferController addSenderForClient:u nickname:[member nickname] path:pathURL autoOpen:YES];
+		[self.fileTransferController addSenderForClient:u nickname:[member nickname] path:pathURL autoOpen:YES];
 	}
 }
 
@@ -2519,20 +2519,17 @@
 	
 	[worldController() setTemporarilyDisablePreviousSelectionUpdates:YES];
 
-	for (IRCClient *u in [worldController() clients]) {
-		NSArray *clientChannels = [[u channels] sortedArrayUsingComparator:^NSComparisonResult(IRCChannel *obj1, IRCChannel *obj2)
-		{
+	for (IRCClient *u in [worldController() clientList]) {
+		NSMutableArray *channels = [[u channels] mutableCopy];
+		
+		[channels sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
 			NSString *name1 = [[obj1 name] lowercaseString];
 			NSString *name2 = [[obj2 name] lowercaseString];
 			
 			return [name1 compare:name2];
 		}];
 		
-		[[u channels] removeAllObjects];
-		
-		for (IRCChannel *c in clientChannels) {
-			[[u channels] addObject:c];
-		}
+		[u setChannels:channels];
 		
 		[u updateConfig:_serverStoredConfig fromTheCloud:NO withSelectionUpdate:NO];
 		
@@ -2680,8 +2677,8 @@
 		[sharedGrowlController() setAreNotificationsDisabled:NO];
 	}
 
-	[_muteNotificationsFileMenuItem setState:state];
-	[_muteNotificationsDockMenuItem setState:state];
+	[self.muteNotificationsFileMenuItem setState:state];
+	[self.muteNotificationsDockMenuItem setState:state];
 }
 
 - (void)toggleMuteOnNotificationSoundsShortcut:(NSInteger)state
@@ -2692,8 +2689,8 @@
 		[sharedGrowlController() setAreNotificationSoundsDisabled:NO];
 	}
 	
-	[_muteNotificationsFileMenuItem setState:state];
-	[_muteNotificationsDockMenuItem setState:state];
+	[self.muteNotificationsFileMenuItem setState:state];
+	[self.muteNotificationsDockMenuItem setState:state];
 }
 
 - (void)toggleMuteOnNotificationSounds:(id)sender
@@ -2727,7 +2724,7 @@
 	/* Textual automatically hides and show the member list when switching between 
 	 server console, channels, and queries therefore we have to tell it through a
 	 property that we don't want it shown at all. */
-	[mainWindowMemberList() setSetHiddenByUser:([mainWindowMemberList() setHiddenByUser] == NO)];
+	[mainWindowMemberList() setIsHiddenByUser:([mainWindowMemberList() isHiddenByUser] == NO)];
 
 	/* Toggle visibility. */
 	[[mainWindow() contentSplitView] toggleMemberListVisbility];

@@ -39,8 +39,8 @@
 #import "TextualApplication.h"
 
 @interface THOPluginManager ()
-@property (nonatomic, strong) NSArray *allLoadedBundles;
-@property (nonatomic, strong) NSArray *allLoadedPlugins;
+@property (nonatomic, copy) NSArray *allLoadedBundles;
+@property (nonatomic, copy) NSArray *allLoadedPlugins;
 @end
 
 @implementation THOPluginManager
@@ -51,7 +51,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		_dispatchQueue = dispatch_queue_create("PluginManagerDispatchQueue", NULL);
+		self.dispatchQueue = dispatch_queue_create("PluginManagerDispatchQueue", NULL);
 
 		return self;
 	}
@@ -61,10 +61,10 @@
 
 - (void)dealloc
 {
-	if (_dispatchQueue) {
-		dispatch_release(_dispatchQueue);
+	if (self.dispatchQueue) {
+		dispatch_release(self.dispatchQueue);
 
-		_dispatchQueue = NULL;
+		self.dispatchQueue = NULL;
 	}
 }
 
@@ -73,8 +73,8 @@
 
 - (void)loadPlugins
 {
-	dispatch_async(_dispatchQueue, ^{
-		NSObjectIsNotEmptyAssert(_allLoadedBundles);
+	dispatch_async(self.dispatchQueue, ^{
+		NSObjectIsNotEmptyAssert(self.allLoadedBundles);
 
 		// ---- //
 
@@ -130,23 +130,23 @@
 
 		// ---- //
 
-		_allLoadedBundles = loadedBundles;
-		_allLoadedPlugins = loadedPlugins;
+		self.allLoadedBundles = loadedBundles;
+		self.allLoadedPlugins = loadedPlugins;
 	});
 }
 
 - (void)unloadPlugins
 {
-	dispatch_async(_dispatchQueue, ^{
-		_allLoadedPlugins = nil;
+	dispatch_async(self.dispatchQueue, ^{
+		self.allLoadedPlugins = nil;
 
-		for (NSBundle *bundle in _allLoadedBundles) {
+		for (NSBundle *bundle in self.allLoadedBundles) {
 			if ([bundle isLoaded]) {
 				[bundle unload];
 			}
 		}
 		
-		_allLoadedBundles = nil;
+		self.allLoadedBundles = nil;
 	});
 }
 
@@ -240,7 +240,7 @@
 {
 	NSMutableArray *allRules = [NSMutableArray array];
 
-	for (THOPluginItem *plugin in _allLoadedPlugins) {
+	for (THOPluginItem *plugin in self.allLoadedPlugins) {
 		NSArray *srules = [[plugin outputSuppressionRules] arrayForKey:command];
 
 		if (NSObjectIsNotEmpty(srules)) {
@@ -255,7 +255,7 @@
 {
 	NSMutableArray *allCommands = [NSMutableArray array];
 	
-	for (THOPluginItem *plugin in _allLoadedPlugins) {
+	for (THOPluginItem *plugin in self.allLoadedPlugins) {
 		[allCommands addObjectsFromArray:[plugin supportedUserInputCommands]];
 	}
 
@@ -266,7 +266,7 @@
 {
 	NSMutableArray *allCommands = [NSMutableArray array];
 	
-	for (THOPluginItem *plugin in _allLoadedPlugins) {
+	for (THOPluginItem *plugin in self.allLoadedPlugins) {
 		[allCommands addObjectsFromArray:[plugin supportedServerInputCommands]];
 	}
 
@@ -277,7 +277,7 @@
 {
 	NSMutableArray *allExtensions = [NSMutableArray array];
 	
-	for (THOPluginItem *plugin in _allLoadedPlugins) {
+	for (THOPluginItem *plugin in self.allLoadedPlugins) {
 		if ([plugin hasPreferencePaneView]) {
 			[allExtensions addObject:plugin];
 		}
@@ -290,7 +290,7 @@
 {
 	NSMutableArray *allPlugins = [NSMutableArray array];
 	
-	for (NSBundle *bundle in _allLoadedBundles) {
+	for (NSBundle *bundle in self.allLoadedBundles) {
 		NSString *path = [bundle bundlePath];
 
 		NSString *bundleName = [path lastPathComponent];
@@ -306,11 +306,11 @@
 
 - (void)sendUserInputDataToBundles:(IRCClient *)client message:(NSString *)message command:(NSString *)command
 {
-	dispatch_async(_dispatchQueue, ^{
+	dispatch_async(self.dispatchQueue, ^{
 		NSString *cmdu = [command uppercaseString];
 		NSString *cmdl = [command lowercaseString];
 		
-		for (THOPluginItem *plugin in _allLoadedPlugins)
+		for (THOPluginItem *plugin in self.allLoadedPlugins)
 		{
 			if ([[plugin supportedUserInputCommands] containsObject:cmdl])
 			{
@@ -329,7 +329,7 @@
 
 - (void)sendServerInputDataToBundles:(IRCClient *)client message:(IRCMessage *)message
 {
-	dispatch_async(_dispatchQueue, ^{
+	dispatch_async(self.dispatchQueue, ^{
 		NSString *cmdl = [[message command] lowercaseString];
 
 		NSDictionary *senderData = @{
@@ -350,7 +350,7 @@
 			@"messageNetwork"		: NSStringNilValueSubstitute([client networkName])
 		};
 		
-		for (THOPluginItem *plugin in _allLoadedPlugins)
+		for (THOPluginItem *plugin in self.allLoadedPlugins)
 		{
 			if ([[plugin supportedServerInputCommands] containsObject:cmdl])
 			{
@@ -372,7 +372,7 @@
 
 - (NSString *)processInlineMediaContentURL:(NSString *)resource
 {
-    for (THOPluginItem *plugin in _allLoadedPlugins)
+    for (THOPluginItem *plugin in self.allLoadedPlugins)
 	{
         if ([plugin supportsInlineMediaManipulation]) {
             NSString *input = [[plugin primaryClass] processInlineMediaContentURL:resource];
@@ -395,7 +395,7 @@
 
 - (id)processInterceptedUserInput:(id)input command:(NSString *)command
 {
-    for (THOPluginItem *plugin in _allLoadedPlugins)
+    for (THOPluginItem *plugin in self.allLoadedPlugins)
 	{
 		if ([plugin supportsUserInputDataInterception]) {
 			/* Inform plugin of data. */
@@ -413,7 +413,7 @@
 
 - (IRCMessage *)processInterceptedServerInput:(IRCMessage *)input for:(IRCClient *)client
 {
-    for (THOPluginItem *plugin in _allLoadedPlugins)
+    for (THOPluginItem *plugin in self.allLoadedPlugins)
 	{
 		if ([plugin supportsServerInputDataInterception]) {
 			/* Inform plugin of data. */
@@ -431,8 +431,8 @@
 
 - (void)postNewMessageEventForViewController:(TVCLogController *)logController messageInfo:(NSDictionary *)messageInfo isThemeReload:(BOOL)isThemeReload isHistoryReload:(BOOL)isHistoryReload
 {
-	dispatch_async(_dispatchQueue, ^{
-		for (THOPluginItem *plugin in _allLoadedPlugins)
+	dispatch_async(self.dispatchQueue, ^{
+		for (THOPluginItem *plugin in self.allLoadedPlugins)
 		{
 			if ( [plugin supportsNewMessagePostedEventNotifications]) {
 				[[plugin primaryClass] didPostNewMessageForViewController:logController messageInfo:messageInfo isThemeReload:isThemeReload isHistoryReload:isHistoryReload];
@@ -443,7 +443,7 @@
 
 - (NSString *)postWillRenderMessageEvent:(NSString *)newMessage lineType:(TVCLogLineType)lineType memberType:(TVCLogLineMemberType)memberType
 {
-	for (THOPluginItem *plugin in _allLoadedPlugins)
+	for (THOPluginItem *plugin in self.allLoadedPlugins)
 	{
 		if ([plugin supportsWillRenderMessageEventNotifications]) {
 			/* Inform plugin of data. */

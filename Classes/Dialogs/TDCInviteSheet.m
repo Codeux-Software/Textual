@@ -53,23 +53,23 @@
 {
 	NSString *target = nil;
 	
-	NSInteger nicknameCount = [_nicknames count];
+	NSInteger nicknameCount = [self.nicknames count];
 	
 	if (nicknameCount == 1) {
-		target = _nicknames[0];
+		target = self.nicknames[0];
 	} else if (nicknameCount == 2) {
-		NSString *firstn = _nicknames[0];
-		NSString *second = _nicknames[1];
+		NSString *firstn = self.nicknames[0];
+		NSString *second = self.nicknames[1];
 		
 		target = TXTLS(@"TDCInviteSheet[1002]", firstn, second);
 	} else {
 		target = TXTLS(@"TDCInviteSheet[1000]", nicknameCount);
 	}
 	
-	[_headerTitleField setStringValue:TXTLS(@"TDCInviteSheet[1001]", target)];
+	[self.headerTitleField setStringValue:TXTLS(@"TDCInviteSheet[1001]", target)];
 	
 	for (NSString *s in channels) {
-		[_channelListPopup addItemWithTitle:s];
+		[self.channelListPopup addItemWithTitle:s];
 	}
 	
 	[self startSheet];
@@ -77,10 +77,10 @@
 
 - (void)ok:(id)sender
 {
-	NSString *channelName = [_channelListPopup titleOfSelectedItem];
+	NSString *channelName = [self.channelListPopup titleOfSelectedItem];
 	
-	if ([[self delegate] respondsToSelector:@selector(inviteSheet:onSelectChannel:)]) {
-		[[self delegate] inviteSheet:self onSelectChannel:channelName];
+	if ([self.delegate respondsToSelector:@selector(inviteSheet:onSelectChannel:)]) {
+		[self.delegate inviteSheet:self onSelectChannel:channelName];
 	}
 
 	[super ok:nil];
@@ -91,8 +91,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([[self delegate] respondsToSelector:@selector(inviteSheetWillClose:)]) {
-		[[self delegate] inviteSheetWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(inviteSheetWillClose:)]) {
+		[self.delegate inviteSheetWillClose:self];
 	}
 }
 

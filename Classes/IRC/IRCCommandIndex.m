@@ -184,4 +184,32 @@ NSString *IRCPublicCommandIndex(const char *key)
 	return -1;
 }
 
++ (NSInteger)colonIndexForCommand:(NSString *)command
+{
+	/* The command index that Textual uses is complex for anyone who
+	 has never seen it before, but on the other hand, it is also very
+	 convenient for storing static information about any IRC command
+	 that Textual may handle. For example, the internal command list
+	 keeps track of where the colon (:) should be placed for specific
+	 outgoing commands. Better than guessing. */
+	
+	NSDictionary *searchPath = [IRCCommandIndex IRCCommandIndex:NO];
+	
+	for (NSString *indexKey in searchPath) {
+		NSDictionary *indexInfo = searchPath[indexKey];
+		
+		BOOL isStandalone = [indexInfo boolForKey:@"isStandalone"];
+		
+		if (isStandalone) {
+			NSString *matValue = indexInfo[@"command"];
+			
+			if ([matValue isEqualIgnoringCase:command]) {
+				return [indexInfo integerForKey:@"outgoingColonIndex"];
+			}
+		}
+	}
+	
+	return -1;
+}
+
 @end

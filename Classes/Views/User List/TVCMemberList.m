@@ -44,6 +44,7 @@
 @property (nonatomic, assign) BOOL userPopoverTimerIsActive;
 @property (nonatomic, assign) NSPoint userPopoverLastKnonwnLocalPoint;
 @property (nonatomic, assign) NSInteger lastRowShownUserInfoPopover;
+@property (nonatomic, nweak) IBOutlet TVCMemberListUserInfoPopover *memberListUserInfoPopover;
 @end
 
 @implementation TVCMemberList
@@ -61,23 +62,23 @@
 
 - (BOOL)updatesArePaging
 {
-	return _beginUpdatesCallRunning;
+	return self.beginUpdatesCallRunning;
 }
 
 - (void)beginGroupedUpdates
 {
-	NSAssertReturn(_beginUpdatesCallRunning == NO);
+	NSAssertReturn(self.beginUpdatesCallRunning == NO);
 
-	_beginUpdatesCallRunning = YES;
+	self.beginUpdatesCallRunning = YES;
 	
 	[self beginUpdates];
 }
 
 - (void)endGroupedUpdates
 {
-	NSAssertReturn(_beginUpdatesCallRunning);
+	NSAssertReturn(self.beginUpdatesCallRunning);
 	
-	_beginUpdatesCallRunning = NO;
+	self.beginUpdatesCallRunning = NO;
 	
 	[self endUpdates];
 }
@@ -127,7 +128,7 @@
 
 - (void)keyDown:(NSEvent *)e
 {
-	if (_keyDelegate) {
+	if (self.keyDelegate) {
 		switch ([e keyCode]) {
 			case 123 ... 126:
 			case 116:
@@ -137,8 +138,8 @@
 			}
 			default:
 			{
-				if ([_keyDelegate respondsToSelector:@selector(memberListViewKeyDown:)]) {
-					[_keyDelegate memberListViewKeyDown:e];
+				if ([self.keyDelegate respondsToSelector:@selector(memberListViewKeyDown:)]) {
+					[self.keyDelegate memberListViewKeyDown:e];
 				}
 				
 				break;
@@ -160,14 +161,14 @@
 - (id)initWithFrame:(NSRect)frame
 {
 	if ((self = [super initWithFrame:frame])) {
-		_badgeRenderer = [TVCMemberListCellBadge new];
+		self.badgeRenderer = [TVCMemberListCellBadge new];
 		
-		_userPopoverTrackingArea = [[NSTrackingArea alloc] initWithRect:frame
+		self.userPopoverTrackingArea = [[NSTrackingArea alloc] initWithRect:frame
 																options:(NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveInKeyWindow)
 																  owner:self
 															   userInfo:nil];
 
-		[self addTrackingArea:_userPopoverTrackingArea];
+		[self addTrackingArea:self.userPopoverTrackingArea];
 
 		return self;
 	}
@@ -177,14 +178,14 @@
 
 - (void)updateTrackingAreas
 {
-    [self removeTrackingArea:_userPopoverTrackingArea];
+    [self removeTrackingArea:self.userPopoverTrackingArea];
 
-	_userPopoverTrackingArea = [[NSTrackingArea alloc] initWithRect:[self frame]
+	self.userPopoverTrackingArea = [[NSTrackingArea alloc] initWithRect:[self frame]
 															options:(NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveInKeyWindow)
 															  owner:self
 														   userInfo:nil];
 
-	[self addTrackingArea:_userPopoverTrackingArea];
+	[self addTrackingArea:self.userPopoverTrackingArea];
 }
 
 - (void)destroyUserInfoPopoverOnWindowKeyChange
@@ -196,24 +197,24 @@
 {
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(popDelayedUserInfoExpansionFrame) object:nil];
 
-	_lastRowShownUserInfoPopover = -1;
+	self.lastRowShownUserInfoPopover = -1;
 
-	_userPopoverMouseIsInView = NO;
-	_userPopoverTimerIsActive = NO;
+	self.userPopoverMouseIsInView = NO;
+	self.userPopoverTimerIsActive = NO;
 
-	_userPopoverLastKnonwnLocalPoint = NSZeroPoint;
+	self.userPopoverLastKnonwnLocalPoint = NSZeroPoint;
 
-	if ([_memberListUserInfoPopover isShown]) {
-		[_memberListUserInfoPopover close];
+	if ([self.memberListUserInfoPopover isShown]) {
+		[self.memberListUserInfoPopover close];
 	}
 }
 
 - (void)mouseEntered:(NSEvent *)theEvent
 {
-	_userPopoverMouseIsInView = YES;
+	self.userPopoverMouseIsInView = YES;
 
-	if (_userPopoverTimerIsActive == NO) {
-		_userPopoverTimerIsActive = YES;
+	if (self.userPopoverTimerIsActive == NO) {
+		self.userPopoverTimerIsActive = YES;
 
 		[self performSelector:@selector(popDelayedUserInfoExpansionFrame) withObject:nil afterDelay:1.0];
 	}
@@ -233,17 +234,17 @@
 
 - (void)popUserInfoExpansionFrameAtPoint:(NSPoint)localPoint ignoreTimerCheck:(BOOL)ignoreTimer
 {
-	_userPopoverLastKnonwnLocalPoint = localPoint;
+	self.userPopoverLastKnonwnLocalPoint = localPoint;
 
-	if (ignoreTimer == NO && _userPopoverTimerIsActive) {
+	if (ignoreTimer == NO && self.userPopoverTimerIsActive) {
 		return; // Only allow the timer to pop it.
 	}
 
 	NSInteger row = [self rowAtPoint:localPoint];
 
 	if (row > -1) {
-		if (NSDissimilarObjects(_lastRowShownUserInfoPopover, row)) {
-			_lastRowShownUserInfoPopover = row;
+		if (NSDissimilarObjects(self.lastRowShownUserInfoPopover, row)) {
+			self.lastRowShownUserInfoPopover = row;
 
 			id rowView = [self viewAtColumn:0 row:row makeIfNecessary:NO];
 
@@ -260,11 +261,11 @@
 	 we do not try to show a popover. We only want to show a popover if the
 	 user has some intention of being in the list. */
 
-	if (_userPopoverMouseIsInView) {
-		[self popUserInfoExpansionFrameAtPoint:_userPopoverLastKnonwnLocalPoint ignoreTimerCheck:YES];
+	if (self.userPopoverMouseIsInView) {
+		[self popUserInfoExpansionFrameAtPoint:self.userPopoverLastKnonwnLocalPoint ignoreTimerCheck:YES];
 	}
 
-	_userPopoverTimerIsActive = NO;
+	self.userPopoverTimerIsActive = NO;
 }
 
 #pragma mark -
@@ -289,7 +290,7 @@
 
 		NSRect fakeMouseLocation = NSMakeRect(mouseLocation.x, mouseLocation.y, 1, 1);
 
-		NSRect rawPoint = [_window convertRectFromScreen:fakeMouseLocation];
+		NSRect rawPoint = [self.window convertRectFromScreen:fakeMouseLocation];
 
 		NSPoint localPoint = [self convertPoint:rawPoint.origin fromView:nil];
 		

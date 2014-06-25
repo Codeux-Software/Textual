@@ -61,7 +61,7 @@
         [super setTextContainerInset:NSMakeSize(TVCTextViewWithIRCFormatterWidthPadding,
 												TVCTextViewWithIRCFormatterHeightPadding)];
 
-		_keyEventHandler = [TLOKeyEventHandler new];
+		self.keyEventHandler = [TLOKeyEventHandler new];
     }
 	
     return self;
@@ -81,22 +81,22 @@
 
 - (void)setKeyHandlerTarget:(id)target
 {
-	[_keyEventHandler setTarget:target];
+	[self.keyEventHandler setTarget:target];
 }
 
 - (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods
 {
-	[_keyEventHandler registerSelector:selector key:code modifiers:mods];
+	[self.keyEventHandler registerSelector:selector key:code modifiers:mods];
 }
 
 - (void)registerKeyHandler:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods
 {
-	[_keyEventHandler registerSelector:selector character:c modifiers:mods];
+	[self.keyEventHandler registerSelector:selector character:c modifiers:mods];
 }
 
 - (void)keyDown:(NSEvent *)e
 {
-	if ([_keyEventHandler processKeyEvent:e]) {
+	if ([self.keyEventHandler processKeyEvent:e]) {
 		return;
 	}
 
@@ -216,7 +216,7 @@
 
 - (void)updateAllFontSizesToMatchTheDefaultFont
 {
-	CGFloat newPointSize = [_preferredFont pointSize];
+	CGFloat newPointSize = [self.preferredFont pointSize];
 
     [[self textStorage] beginEditing];
     [[self textStorage] enumerateAttribute:NSFontAttributeName
@@ -242,15 +242,15 @@
 
 - (void)updateTypeSetterAttributes
 {
-	[self setTypingAttributes:@{NSFontAttributeName : _preferredFont, NSForegroundColorAttributeName : _preferredFontColor}];
+	[self setTypingAttributes:@{NSFontAttributeName : self.preferredFont, NSForegroundColorAttributeName : self.preferredFontColor}];
 }
 
 - (void)defineDefaultTypeSetterAttributes
 {
-	[self setFont:_preferredFont];
+	[self setFont:self.preferredFont];
 
-	[self setTextColor:_preferredFontColor];
-	[self setInsertionPointColor:_preferredFontColor];
+	[self setTextColor:self.preferredFontColor];
+	[self setInsertionPointColor:self.preferredFontColor];
 }
 
 #pragma mark -

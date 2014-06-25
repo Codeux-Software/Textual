@@ -46,7 +46,7 @@
 @interface TVCTextViewWithIRCFormatter : NSTextView <NSTextViewDelegate>
 @property (nonatomic, copy) NSFont *preferredFont;
 @property (nonatomic, copy) NSColor *preferredFontColor;
-@property (nonatomic, strong, readonly) TLOKeyEventHandler *keyEventHandler;
+@property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
 
 - (BOOL)isAtTopOfView;
 - (BOOL)isAtBottomOfView;

@@ -45,8 +45,8 @@
 @property (nonatomic, nweak) IBOutlet NSTextField *nicknameField;
 @property (nonatomic, nweak) IBOutlet NSComboBox *serverAddressField;
 @property (nonatomic, nweak) IBOutlet TVCListView *channelTable;
-@property (nonatomic, copy, readonly) NSMutableArray *channelList;
-@property (nonatomic, copy, readonly) NSDictionary *serverList;
+@property (nonatomic, strong) NSMutableArray *channelList;
+@property (nonatomic, copy) NSDictionary *serverList;
 
 - (void)show;
 - (void)close;

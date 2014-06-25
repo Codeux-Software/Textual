@@ -39,7 +39,7 @@
 #import "TextualApplication.h"
 
 @interface NSArray (TXArrayHelper)
-@property (nonatomic, readonly, assign) NSRange range;
+@property (nonatomic, assign) NSRange range;
 
 - (id)safeObjectAtIndex:(NSInteger)n TEXTUAL_DEPRECATED;
 
