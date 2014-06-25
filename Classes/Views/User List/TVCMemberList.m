@@ -44,7 +44,6 @@
 @property (nonatomic, assign) BOOL userPopoverTimerIsActive;
 @property (nonatomic, assign) NSPoint userPopoverLastKnonwnLocalPoint;
 @property (nonatomic, assign) NSInteger lastRowShownUserInfoPopover;
-@property (nonatomic, nweak) IBOutlet TVCMemberListUserInfoPopover *memberListUserInfoPopover;
 @end
 
 @implementation TVCMemberList

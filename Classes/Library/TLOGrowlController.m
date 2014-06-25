@@ -102,7 +102,7 @@
 		case TXNotificationHighlightType:
 		{
 			eventPriority = 1;
-			eventTitle = TXTLS(@"BasicLanguage[1063]", eventTitle);
+			eventTitle = BLS(1063, eventTitle);
 			
 			break;
 		}
@@ -115,13 +115,13 @@
 		}
 		case TXNotificationChannelMessageType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1059]", eventTitle);
+			eventTitle = BLS(1059, eventTitle);
 			
 			break;
 		}
 		case TXNotificationChannelNoticeType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1060]", eventTitle);
+			eventTitle = BLS(1060, eventTitle);
 			
 			break;
 		}
@@ -139,26 +139,26 @@
 		}
 		case TXNotificationKickType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1065]", eventTitle);
+			eventTitle = BLS(1065, eventTitle);
 			
 			break;
 		}
 		case TXNotificationInviteType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1064]", eventTitle);
+			eventTitle = BLS(1064, eventTitle);
 			
 			break;
 		}
 		case TXNotificationConnectType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1061]", eventTitle);
+			eventTitle = BLS(1061, eventTitle);
 			eventDescription = BLS(1074);
 			
 			break;
 		}
 		case TXNotificationDisconnectType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1062]", eventTitle);
+			eventTitle = BLS(1062, eventTitle);
 			eventDescription = BLS(1075);
 			
 			break;
@@ -171,31 +171,31 @@
 		}
 		case TXNotificationFileTransferSendSuccessfulType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1069]", eventTitle);
+			eventTitle = BLS(1069, eventTitle);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveSuccessfulType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1070]", eventTitle);
+			eventTitle = BLS(1070, eventTitle);
 			
 			break;
 		}
 		case TXNotificationFileTransferSendFailedType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1071]", eventTitle);
+			eventTitle = BLS(1071, eventTitle);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveFailedType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1072]", eventTitle);
+			eventTitle = BLS(1072, eventTitle);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveRequestedType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1073]", eventTitle);
+			eventTitle = BLS(1073, eventTitle);
 			
 			break;
 		}

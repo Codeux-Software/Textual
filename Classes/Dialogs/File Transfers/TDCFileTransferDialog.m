@@ -47,7 +47,6 @@
 @property (nonatomic, strong) TLOTimer *maintenanceTimer;
 @property (nonatomic, strong) NSMutableArray *fileTransfers;
 @property (nonatomic, nweak) IBOutlet NSButton *clearButton;
-@property (nonatomic, nweak) IBOutlet TVCListView *fileTransferTable;
 @property (nonatomic, nweak) IBOutlet NSSegmentedCell *navigationControllerCell;
 @end
 
@@ -814,7 +813,7 @@
 	if (resolveError) {
 		DebugLogToConsole(@"Error creating bookmark for URL: %@", [resolveError localizedDescription]);
 	} else {
-		self.downloadDestination = [resolvedBookmark copy];
+		self.downloadDestination = resolvedBookmark;
 		
 		if ([self.downloadDestination startAccessingSecurityScopedResource] == NO) {
 			DebugLogToConsole(@"Failed to access bookmark.");
@@ -827,7 +826,7 @@
 	/* Destroy old pointer if needed. */
 	if ( self.downloadDestination) {
 		[self.downloadDestination stopAccessingSecurityScopedResource];
-		self.downloadDestination = nil;
+		 self.downloadDestination = nil;
 	}
 	
 	/* Set new location. */

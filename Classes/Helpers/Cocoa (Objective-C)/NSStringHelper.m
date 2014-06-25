@@ -143,21 +143,29 @@
 - (NSString *)safeSubstringWithRange:(NSRange)range
 {
 	TEXTUAL_DEPRECATED_ASSERT;
+	
+	return nil;
 }
 
 - (NSString *)safeSubstringFromIndex:(NSInteger)anIndex
 {
 	TEXTUAL_DEPRECATED_ASSERT;
+	
+	return nil;
 }
 
 - (NSString *)safeSubstringToIndex:(NSInteger)anIndex
 {
 	TEXTUAL_DEPRECATED_ASSERT;
+	
+	return nil;
 }
 
 - (UniChar)safeCharacterAtIndex:(NSInteger)anIndex
 {
 	TEXTUAL_DEPRECATED_ASSERT;
+	
+	return 0;
 }
 
 - (NSString *)stringCharacterAtIndex:(NSInteger)anIndex
@@ -1401,16 +1409,22 @@
 - (id)safeAttribute:(NSString *)attrName atIndex:(NSUInteger)location effectiveRange:(NSRangePointer)range
 {
 	TEXTUAL_DEPRECATED_ASSERT;
+	
+	return nil;
 }
 
 - (NSDictionary *)safeAttributesAtIndex:(NSUInteger)location longestEffectiveRange:(NSRangePointer)range inRange:(NSRange)rangeLimit
 {
 	TEXTUAL_DEPRECATED_ASSERT;
+	
+	return nil;
 }
 
 - (id)safeAttribute:(NSString *)attrName atIndex:(NSUInteger)location longestEffectiveRange:(NSRangePointer)range inRange:(NSRange)rangeLimit
 {
 	TEXTUAL_DEPRECATED_ASSERT;
+	
+	return nil;
 }
 
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set

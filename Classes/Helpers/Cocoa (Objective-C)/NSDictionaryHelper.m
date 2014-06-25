@@ -220,14 +220,14 @@
 	}
 }
 
-- (void)maybeSetObjectForKey:(id)key to:(__strong id *)pointer
+- (void)assignObjectTo:(__strong id *)pointer forKey:(NSString *)key
 {
 	if ([self containsKey:key]) {
 		*pointer = [self objectForKey:key];
 	}
 }
 
-- (void)maybeSetObjectForKey:(id)key to:(__strong id *)pointer performCopy:(BOOL)copyValue
+- (void)assignObjectTo:(__strong id *)pointer forKey:(NSString *)key performCopy:(BOOL)copyValue
 {
 	if ([self containsKey:key]) {
 		if (copyValue) {
@@ -238,56 +238,56 @@
 	}
 }
 
-- (void)maybeSetStringForKey:(id)key to:(__strong NSString **)pointer
+- (void)assignStringTo:(__strong NSString **)pointer forKey:(NSString *)key
 {
 	if ([self containsKey:key]) {
 		*pointer = [[self stringForKey:key] copy];
 	}
 }
 
-- (void)maybeSetBoolForKey:(NSString *)key to:(BOOL *)pointer
+- (void)assignBoolTo:(BOOL *)pointer forKey:(NSString *)key
 {
 	if ([self containsKey:key]) {
 		*pointer = [self boolForKey:key];
 	}
 }
 
-- (void)maybeSetArrayForKey:(NSString *)key to:__strong (NSArray **)pointer
+- (void)assignArrayTo:(__strong NSArray **)pointer forKey:(NSString *)key
 {
 	if ([self containsKey:key]) {
 		*pointer = [[self arrayForKey:key] copy];
 	}
 }
 
-- (void)maybeSetDictionaryForKey:(NSString *)key to:(__strong NSDictionary **)pointer
+- (void)assignDictionaryTo:(__strong NSDictionary **)pointer forKey:(NSString *)key
 {
 	if ([self containsKey:key]) {
 		*pointer = [[self dictionaryForKey:key] copy];
 	}
 }
 
-- (void)maybeSetIntegerForKey:(NSString *)key to:(NSInteger *)pointer
+- (void)assignIntegerTo:(NSInteger *)pointer forKey:(NSString *)key
 {
 	if ([self containsKey:key]) {
 		*pointer = [self integerForKey:key];
 	}
 }
 
-- (void)maybeSetLongLongForKey:(NSString *)key to:(long long *)pointer
+- (void)assignLongLongTo:(long long *)pointer forKey:(NSString *)key
 {
 	if ([self containsKey:key]) {
 		*pointer = [self longLongForKey:key];
 	}
 }
 
-- (void)maybeSetDoubleForKey:(NSString *)key to:(double *)pointer
+- (void)assignDoubleTo:(double *)pointer forKey:(NSString *)key
 {
 	if ([self containsKey:key]) {
 		*pointer = [self doubleForKey:key];
 	}
 }
 
-- (void)maybeSetFloatForKey:(NSString *)key to:(float *)pointer
+- (void)assignFloatTo:(float *)pointer forKey:(NSString *)key
 {
 	if ([self containsKey:key]) {
 		*pointer = [self floatForKey:key];
@@ -296,7 +296,7 @@
 
 - (BOOL)containsKey:(NSString *)baseKey
 {	
-	return [[self allKeys] containsObject:baseKey];
+	return NSDissimilarObjects(nil, [self objectForKey:baseKey]);
 }
 	
 - (BOOL)containsKeyIgnoringCase:(NSString *)baseKey

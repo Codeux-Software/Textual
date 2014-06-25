@@ -478,6 +478,7 @@
 
 /* Default sleep message. */
 "BasicLanguage[1185]" = "My %@ has gone to sleep. 💤";
+"BasicLanguage[1235]" = "My Mac has gone to sleep. 💤";
 
 /* Ok button for dialogs. */
 "BasicLanguage[1186]" = "OK";
@@ -631,3 +632,8 @@
 
 /* Empty alert sound label. */
 "BasicLanguage[1234]" = "None";
+
+
+/* Next unusued key: 1236 */
+
+

@@ -254,25 +254,25 @@
 - (TVCLogLine *)initWithJSONRepresentation:(NSDictionary *)input
 {
 	if ((self = [self init])) {;
-		/* self -init will register defaults for these methods. */
+		/* If any key does not exist, then its value is inherited from the -init method. */
 		double receivedAt = [input doubleForKey:@"receivedAt" orUseDefault:[NSDate epochTime]];
 		
 		self.receivedAt	= [NSDate dateWithTimeIntervalSince1970:receivedAt];
 		
-		[input maybeSetStringForKey:@"nickname" to:&_nickname];
-		[input maybeSetStringForKey:@"messageBody" to:&_messageBody];
-		[input maybeSetStringForKey:@"rawCommand" to:&_rawCommand];
+		[input assignStringTo:&_nickname forKey:@"nickname"];
+		[input assignStringTo:&_messageBody forKey:@"messageBody"];
+		[input assignStringTo:&_rawCommand forKey:@"rawCommand"];
 		
-		[input maybeSetIntegerForKey:@"nicknameColorNumber" to:&_nicknameColorNumber];
+		[input assignIntegerTo:&_nicknameColorNumber forKey:@"nicknameColorNumber"];
 		
-		[input maybeSetArrayForKey:@"highlightKeywords" to:&_highlightKeywords];
-		[input maybeSetArrayForKey:@"excludeKeywords" to:&_excludeKeywords];
+		[input assignArrayTo:&_highlightKeywords forKey:@"highlightKeywords"];
+		[input assignArrayTo:&_excludeKeywords forKey:@"excludeKeywords"];
 
-		[input maybeSetIntegerForKey:@"lineType" to:&_lineType];
-		[input maybeSetIntegerForKey:@"memberType" to:&_memberType];
+		[input assignIntegerTo:&_lineType forKey:@"lineType"];
+		[input assignIntegerTo:&_memberType forKey:@"memberType"];
 		
-		[input maybeSetBoolForKey:@"isHistoric" to:&_isHistoric];
-		[input maybeSetBoolForKey:@"isEncrypted" to:&_isEncrypted];
+		[input assignBoolTo:&_isHistoric forKey:@"isHistoric"];
+		[input assignBoolTo:&_isEncrypted forKey:@"isEncrypted"];
 
 		return self;
 	}

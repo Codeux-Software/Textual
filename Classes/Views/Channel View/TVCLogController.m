@@ -993,7 +993,7 @@
 						[self.highlightedLineNumbers addObject:lineNumber];
 					}
 					
-					[worldController() addHighlightInChannel:self.associatedChannel withLogLine:logLine];
+					[self.associatedClient addHighlightInChannel:self.associatedChannel withLogLine:logLine];
 				}
 
 				/* Do the actual append to WebKit. */
