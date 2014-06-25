@@ -455,7 +455,7 @@
 					}
 					case TXCommandWKeyDisconnectAction:
 					{
-						[item setTitle:TXTLS(@"BasicLanguage[1014]", [u altNetworkName])];
+						[item setTitle:BLS(1014, [u altNetworkName])];
 						
 						if (_notConnected) {
 							return NO;
@@ -659,7 +659,7 @@
 
 	for (IRCClient *u in [worldController() clientList]) {
 		/* Create a menu item for the client title. */
-		NSMenuItem *newItem = [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1183]", [u name]) target:nil action:nil];
+		NSMenuItem *newItem = [NSMenuItem menuItemWithTitle:BLS(1183, [u name]) target:nil action:nil];
 
 		[self.navigationChannelList addItem:newItem];
 
@@ -667,7 +667,7 @@
 		for (IRCChannel *c in [u channels]) {
 			/* Create the menu item. Only first ten items get a key combo. */
 			if (channelCount >= 10) {
-				newItem = [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1184]", [c name])
+				newItem = [NSMenuItem menuItemWithTitle:BLS(1184, [c name])
 												 target:self
 												 action:@selector(navigateToSpecificChannelInNavigationList:)];
 			} else {
@@ -677,7 +677,7 @@
 					keyboardIndex = 0; // Have 0 as the last item.
 				}
 				
-				newItem = [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1184]", [c name])
+				newItem = [NSMenuItem menuItemWithTitle:BLS(1184, [c name])
 												 target:self
 												 action:@selector(navigateToSpecificChannelInNavigationList:)
 										  keyEquivalent:[NSString stringWithUniChar:('0' + keyboardIndex)]
@@ -2240,7 +2240,7 @@
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
         if ([[m nickname] isEqualIgnoringCase:[u localNickname]]) {
-            [u printDebugInformation:TXTLS(@"BasicLanguage[1197]", [u networkAddress]) channel:c];
+            [u printDebugInformation:BLS(1197, [u networkAddress]) channel:c];
         } else {
             [u sendCommand:[NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("gline"), [m nickname], [TPCPreferences IRCopDefaultGlineMessage]]];
         }

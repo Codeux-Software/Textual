@@ -130,7 +130,7 @@
 		
 		NSString *timestring = TXHumanReadableTimeInterval([NSDate secondsSinceUnixTimestamp:timeInterval], YES, 0);
 		
-		return TXTLS(@"BasicLanguage[1216]", timestring);
+		return BLS(1216, timestring);
     } else {
 		return item[2];
     }

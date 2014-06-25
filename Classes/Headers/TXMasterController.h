@@ -38,7 +38,12 @@
 
 #import "TextualApplication.h"
 
-@interface TXMasterController : NSObject <NSApplicationDelegate, NSWindowDelegate, BITHockeyManagerDelegate>
+#ifndef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_DISABLED
+@interface TXMasterController : NSObject <NSApplicationDelegate, BITHockeyManagerDelegate>
+#else
+@interface TXMasterController : NSObject <NSApplicationDelegate>
+#endif
+
 @property (nonatomic, strong) IRCWorld *world;
 @property (nonatomic, assign) BOOL ghostModeIsOn;
 @property (nonatomic, assign) BOOL debugModeIsOn;

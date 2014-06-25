@@ -90,11 +90,15 @@
 + (id)defineUserInterfaceItem:(id)normalItem invertedItem:(id)invertedItem
 {
 	TEXTUAL_DEPRECATED_ASSERT;
+	
+	return nil;
 }
 
 + (id)defineUserInterfaceItem:(id)normalItem invertedItem:(id)invertedItem withOperator:(BOOL)specialCondition
 {
 	TEXTUAL_DEPRECATED_ASSERT;
+	
+	return nil;
 }
 
 #pragma mark -

@@ -59,19 +59,19 @@
 - (double)doubleForKey:(NSString *)key orUseDefault:(double)defaultValue;
 - (float)floatForKey:(NSString *)key orUseDefault:(float)defaultValue;
 
-/* The maybeSet… helpers ask the dictionary whether the key exists and if 
+/* The assign… helpers ask the dictionary whether the key exists and if 
  it does, it sets the value to pointer. Otherwise, it does absolutely nothing. */
 /* When returning a string, dictionary, or array; the value is copied to pointer. */
-- (void)maybeSetObjectForKey:(id)key to:(__strong id *)pointer;
-- (void)maybeSetObjectForKey:(id)key to:(__strong id *)pointer performCopy:(BOOL)copyValue;
-- (void)maybeSetStringForKey:(id)key to:(__strong NSString **)pointer;
-- (void)maybeSetBoolForKey:(NSString *)key to:(BOOL *)pointer;
-- (void)maybeSetArrayForKey:(NSString *)key to:(__strong NSArray **)pointer;
-- (void)maybeSetDictionaryForKey:(NSString *)key to:(__strong NSDictionary **)pointer;
-- (void)maybeSetIntegerForKey:(NSString *)key to:(NSInteger *)pointer;
-- (void)maybeSetLongLongForKey:(NSString *)key to:(long long *)pointer;
-- (void)maybeSetDoubleForKey:(NSString *)key to:(double *)pointer;
-- (void)maybeSetFloatForKey:(NSString *)key to:(float *)pointer;
+- (void)assignObjectTo:(__strong id *)pointer forKey:(NSString *)key;
+- (void)assignObjectTo:(__strong id *)pointer forKey:(NSString *)key performCopy:(BOOL)copyValue;
+- (void)assignStringTo:(__strong NSString **)pointer forKey:(NSString *)key;
+- (void)assignBoolTo:(BOOL *)pointer forKey:(NSString *)key;
+- (void)assignArrayTo:(__strong NSArray **)pointer forKey:(NSString *)key;
+- (void)assignDictionaryTo:(__strong NSDictionary **)pointer forKey:(NSString *)key;
+- (void)assignIntegerTo:(NSInteger *)pointer forKey:(NSString *)key;
+- (void)assignLongLongTo:(long long *)pointer forKey:(NSString *)key;
+- (void)assignDoubleTo:(double *)pointer forKey:(NSString *)key;
+- (void)assignFloatTo:(float *)pointer forKey:(NSString *)key;
 
 - (NSString *)firstKeyForObject:(id)object;
 

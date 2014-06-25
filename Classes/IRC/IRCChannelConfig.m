@@ -223,21 +223,23 @@
 - (id)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [self init])) {
-		/* General preferences. */
-		[dic maybeSetIntegerForKey:@"channelType" to:&_type];
+		/* If any key does not exist, then its value is inherited from the -init method. */
 		
-		[dic maybeSetStringForKey:@"uniqueIdentifier" to:&_itemUUID];
-		[dic maybeSetStringForKey:@"channelName" to:&_channelName];
+		/* General preferences. */
+		[dic assignIntegerTo:&_type forKey:@"channelType"];
+		
+		[dic assignStringTo:&_itemUUID forKey:@"uniqueIdentifier"];
+		[dic assignStringTo:&_channelName forKey:@"channelName"];
 
-		[dic maybeSetBoolForKey:@"joinOnConnect" to:&_autoJoin];
-		[dic maybeSetBoolForKey:@"ignoreHighlights" to:&_ignoreHighlights];
-		[dic maybeSetBoolForKey:@"disableInlineMedia" to:&_ignoreInlineImages];
-		[dic maybeSetBoolForKey:@"ignoreJPQActivity" to:&_ignoreJPQActivity];
-		[dic maybeSetBoolForKey:@"enableNotifications" to:&_pushNotifications];
-		[dic maybeSetBoolForKey:@"enableTreeBadgeCountDrawing" to:&_showTreeBadgeCount];
+		[dic assignBoolTo:&_autoJoin forKey:@"joinOnConnect"];
+		[dic assignBoolTo:&_ignoreHighlights forKey:@"ignoreHighlights"];
+		[dic assignBoolTo:&_ignoreInlineImages forKey:@"disableInlineMedia"];
+		[dic assignBoolTo:&_ignoreJPQActivity forKey:@"ignoreJPQActivity"];
+		[dic assignBoolTo:&_pushNotifications forKey:@"enableNotifications"];
+		[dic assignBoolTo:&_showTreeBadgeCount forKey:@"enableTreeBadgeCountDrawing"];
 
-		[dic maybeSetStringForKey:@"defaultMode" to:&_defaultModes];
-		[dic maybeSetStringForKey:@"defaultTopic" to:&_defaultTopic];
+		[dic assignStringTo:&_defaultModes forKey:@"defaultMode"];
+		[dic assignStringTo:&_defaultTopic forKey:@"defaultTopic"];
 
 		/* Establish state. */
 		self.secretKeyIsSet			= NSObjectIsNotEmpty(self.secretKey);
