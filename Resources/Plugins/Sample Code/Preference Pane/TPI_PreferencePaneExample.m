@@ -39,7 +39,7 @@
 
 @implementation TPI_PreferencePaneExample
 
-- (NSView *)preferencesView
+- (NSView *)pluginPreferencesPaneView
 {
 	if (self.ourView == nil) {
 		if ([NSBundle loadNibNamed:@"PreferencePane" owner:self] == NO) {
@@ -50,7 +50,7 @@
 	return self.ourView;
 }
 
-- (NSString *)preferencesMenuItemName
+- (NSString *)pluginPreferencesPaneMenuItemName
 {
 	return @"My Test Plugin";
 }

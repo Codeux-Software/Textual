@@ -49,15 +49,15 @@
 #pragma mark -
 #pragma mark Localization
 
-/* TPILocalizatedString allows a plugin to use localized text within the plugin itself
- using Textual's own API. TPILocalizatedString takes a two paramaters and that is the
+/* TPILocalizedString allows a plugin to use localized text within the plugin itself
+ using Textual's own API. TPILocalizedString takes a two paramaters and that is the
  key to look inside the .strings file for and the formatting values.  */
 /* This call expects the localized strings to be inside the filename "BasicLanguage.strings"
  Any other name will not work unless the actual cocoa APIs for accessing localized strings
  is used in place of these. */
 #define TPIBundleFromClass()				[NSBundle bundleForClass:[self class]]
 
-#define TPILocalizatedString(k, ...)		TXLocalizedStringAlternative(TPIBundleFromClass(), k, ##__VA_ARGS__)
+#define TPILocalizedString(k, ...)		TXLocalizedStringAlternative(TPIBundleFromClass(), k, ##__VA_ARGS__)
 
 @protocol THOPluginProtocol <NSObject>
 

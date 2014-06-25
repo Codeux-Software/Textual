@@ -49,7 +49,7 @@
 		valueKey = [NSString stringWithFormat:@"BasicLanguage[%ld][0]", valueToken];
 	}
 
-	*resultString = [*resultString stringByAppendingString:TPILocalizatedString(valueKey, valueActual)];
+	*resultString = [*resultString stringByAppendingString:TPILocalizedString(valueKey, valueActual)];
 }
 
 - (void)userInputCommandInvokedOnClient:(IRCClient *)client
@@ -136,7 +136,7 @@
 		[self appendPluralOrSingular:&resultString valueToken:1001 value:networkCount];
 
 		if (powerOverCount == 0) {
-			resultString = [resultString stringByAppendingString:TPILocalizatedString(@"BasicLanguage[1007]")];
+			resultString = [resultString stringByAppendingString:TPILocalizedString(@"BasicLanguage[1007]")];
 		} else {
 			[self appendPluralOrSingular:&resultString valueToken:1002 value:operCount];
 			[self appendPluralOrSingular:&resultString valueToken:1003 value:chanOpCount];

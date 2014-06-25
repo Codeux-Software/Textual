@@ -41,11 +41,15 @@
 
 - (void)postLinkToTextualHomepage:(id)sender
 {
-	IRCClient *u = [self.worldController selectedClient];
-	if (PointerIsEmpty(u)) return;
+	IRCClient *u = [worldController() selectedClient];
+	
+	/* See StaticDefentitions.h for what PointerIsEmptyAsert
+	 is actually designed to do. It's not an actual assert
+	 that would crash the app. */
+	PointerIsEmptyAssert(u);
 
 	for (IRCUser *m in [self selectedMembers:sender]) {
-		[[u invokeOnMainThread] sendPrivmsgToSelectedChannel:[NSString stringWithFormat:@"%@, the Textual IRC Client can be downloaded from: http://www.textualapp.com/", m.nickname]];
+		[[u invokeOnMainThread] sendPrivmsgToSelectedChannel:[NSString stringWithFormat:@"%@, the Textual IRC Client can be downloaded from: http://www.textualapp.com/", [m nickname]]];
 	}
 	
 	[self deselectMembers:sender];

@@ -72,7 +72,7 @@
 	
 	if (isAttach || isDetach) {
 		if ([client isZNCBouncerConnection] == NO) {
-			[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1000]")];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1000]")];
 
 			return;
 		}
@@ -93,7 +93,7 @@
 			if (isDetach) {
 				[client sendLine:[NSString stringWithFormat:@"%@ %@", commandString, [matchedChannel name]]];
 			
-				[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1001]", [matchedChannel name]) channel:matchedChannel];
+				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1001]", [matchedChannel name]) channel:matchedChannel];
 			} else {
 				[client joinUnlistedChannel:[matchedChannel name]];
 			}

@@ -72,7 +72,7 @@
 
 - (NSString *)pluginPreferencesPaneMenuItemName
 {
-	return TPILocalizatedString(@"BasicLanguage[1000]");
+	return TPILocalizedString(@"BasicLanguage[1000]");
 }
 
 #pragma mark -
