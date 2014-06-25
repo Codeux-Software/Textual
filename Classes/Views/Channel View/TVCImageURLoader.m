@@ -48,7 +48,7 @@
 @interface TVCImageURLoader ()
 @property (nonatomic, nweak) TVCLogController *requestOwner;
 @property (nonatomic, strong) NSMutableData *responseData;
-@property (nonatomic, strong) NSString *requestImageUniqeID;
+@property (nonatomic, copy) NSString *requestImageUniqeID;
 @property (nonatomic, strong) NSURLConnection *requestConnection;
 @property (nonatomic, strong) NSHTTPURLResponse *requestResponse;
 @property (nonatomic, assign) BOOL isInRequestWithCheckForMaximumHeight;
@@ -61,15 +61,15 @@
 
 - (void)destroyConnectionRequest
 {
-	if ( _requestConnection) {
-		[_requestConnection cancel];
+	if ( self.requestConnection) {
+		[self.requestConnection cancel];
 	}
 
-	_requestImageUniqeID = nil;
-	_requestConnection = nil;
-	_requestResponse = nil;
-	_requestOwner = nil;
-	_responseData = nil;
+	self.requestImageUniqeID = nil;
+	self.requestConnection = nil;
+	self.requestResponse = nil;
+	self.requestOwner = nil;
+	self.responseData = nil;
 }
 
 - (void)assesURL:(NSString *)baseURL withID:(NSString *)uniqueID forController:(TVCLogController *)controller
@@ -95,21 +95,21 @@
 
 	/* This is stored in a local variable so that a user changing something during a load in
 	 progess, it does not fuck up any of the already existing requests. */
-		_isInRequestWithCheckForMaximumHeight = ([TPCPreferences inlineImagesMaxHeight] > 0);
+		self.isInRequestWithCheckForMaximumHeight = ([TPCPreferences inlineImagesMaxHeight] > 0);
 
-	if (_isInRequestWithCheckForMaximumHeight) {
-		_responseData = [NSMutableData data];
+	if (self.isInRequestWithCheckForMaximumHeight) {
+		self.responseData = [NSMutableData data];
 	}
 
 	[baseRequest setHTTPMethod:@"GET"];
 
 	/* Send the actual request off. */
-	_requestImageUniqeID = uniqueID;
-	_requestOwner = controller;
+	self.requestImageUniqeID = uniqueID;
+	self.requestOwner = controller;
 
-	 _requestConnection = [[NSURLConnection alloc] initWithRequest:baseRequest delegate:self];
+	 self.requestConnection = [[NSURLConnection alloc] initWithRequest:baseRequest delegate:self];
 
-	[_requestConnection start];
+	[self.requestConnection start];
 }
 
 #pragma mark -
@@ -117,10 +117,10 @@
 
 - (BOOL)continueWithImageProcessing
 {
-	PointerIsEmptyAssertReturn(_requestResponse, NO);
+	PointerIsEmptyAssertReturn(self.requestResponse, NO);
 
 	/* Get data from headers. */
-	NSDictionary *headers = [_requestResponse allHeaderFields];
+	NSDictionary *headers = [self.requestResponse allHeaderFields];
 
 	TXUnsignedLongLong sizeInBytes = [headers longLongForKey:@"Content-Length"];
 
@@ -144,11 +144,11 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
 	/* Yay! It finished loading. Time to check the data out. :-D */
-	BOOL isValidResponse = ([_requestResponse statusCode] == 200); // Setting as a var incase I end up adding more conditions down the line.
+	BOOL isValidResponse = ([self.requestResponse statusCode] == 200); // Setting as a var incase I end up adding more conditions down the line.
 
     if (isValidResponse) {
-		if (_isInRequestWithCheckForMaximumHeight) { // Are we checking the actual image size?
-			if (_responseData == nil) {
+		if (self.isInRequestWithCheckForMaximumHeight) { // Are we checking the actual image size?
+			if (self.responseData == nil) {
 				return [self destroyConnectionRequest]; // Destroy and return for bad input.
 			}
 			
@@ -179,16 +179,16 @@
 			}
 
 			/* Post the image. */
-			if ( _requestOwner) {
-				[_requestOwner imageLoaderFinishedLoadingForImageWithID:_requestImageUniqeID orientation:[orientation integerValue]];
+			if ( self.requestOwner) {
+				[self.requestOwner imageLoaderFinishedLoadingForImageWithID:self.requestImageUniqeID orientation:[orientation integerValue]];
 			}
 
 			return;
 		}
 
 		/* Send the information off. We will validate the information higher up. */
-		if (_requestOwner) {
-			[_requestOwner imageLoaderFinishedLoadingForImageWithID:_requestImageUniqeID orientation:(-1)];
+		if (self.requestOwner) {
+			[self.requestOwner imageLoaderFinishedLoadingForImageWithID:self.requestImageUniqeID orientation:(-1)];
 		}
 	}
 
@@ -207,12 +207,12 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-	if (_isInRequestWithCheckForMaximumHeight) {
-		[_responseData appendData:data]; // We only care about the data if we are going to be checking its size.
+	if (self.isInRequestWithCheckForMaximumHeight) {
+		[self.responseData appendData:data]; // We only care about the data if we are going to be checking its size.
 
 		/* If the Content-Length header was not available, then we
 		 still go ahead and check the downloaded data length here. */
-		if ([_responseData length] > [TPCPreferences inlineImagesMaxFilesize]) {
+		if ([self.responseData length] > [TPCPreferences inlineImagesMaxFilesize]) {
 			LogToConsole(@"Inline image exceeds maximum file length.");
 			
 			[self destroyConnectionRequest];
@@ -224,12 +224,12 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-	_requestResponse = (id)response; // Save a reference to our response.
+	self.requestResponse = (id)response; // Save a reference to our response.
 
 	if ([self continueWithImageProcessing] == NO) { // Check the headers.
 		[self destroyConnectionRequest]; // Destroy the connection if we do not want to continue.
 	} else {
-		if (_isInRequestWithCheckForMaximumHeight == NO) {
+		if (self.isInRequestWithCheckForMaximumHeight == NO) {
 			/* If we do not care about the height, then we are going
 			 to fake a successful download at this point so that we
 			 can post the image without waiting for the entire thing

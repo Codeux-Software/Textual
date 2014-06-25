@@ -40,7 +40,6 @@
 
 @interface NSDictionary (TXDictionaryHelper)
 - (NSString *)stringForKey:(NSString *)key;
-
 - (BOOL)boolForKey:(NSString *)key;
 - (NSArray *)arrayForKey:(NSString *)key;
 - (NSDictionary *)dictionaryForKey:(NSString *)key;
@@ -51,7 +50,7 @@
 - (void *)pointerForKey:(NSString *)key;
 
 - (id)objectForKey:(id)key orUseDefault:(id)defaultValue;
-
+- (NSString *)stringForKey:(id)key orUseDefault:(NSString *)defaultValue;
 - (BOOL)boolForKey:(NSString *)key orUseDefault:(BOOL)defaultValue;
 - (NSArray *)arrayForKey:(NSString *)key orUseDefault:(NSArray *)defaultValue;
 - (NSDictionary *)dictionaryForKey:(NSString *)key orUseDefault:(NSDictionary *)defaultValue;
@@ -59,6 +58,20 @@
 - (long long)longLongForKey:(NSString *)key orUseDefault:(long long)defaultValue;
 - (double)doubleForKey:(NSString *)key orUseDefault:(double)defaultValue;
 - (float)floatForKey:(NSString *)key orUseDefault:(float)defaultValue;
+
+/* The maybeSet… helpers ask the dictionary whether the key exists and if 
+ it does, it sets the value to pointer. Otherwise, it does absolutely nothing. */
+/* When returning a string, dictionary, or array; the value is copied to pointer. */
+- (void)maybeSetObjectForKey:(id)key to:(__strong id *)pointer;
+- (void)maybeSetObjectForKey:(id)key to:(__strong id *)pointer performCopy:(BOOL)copyValue;
+- (void)maybeSetStringForKey:(id)key to:(__strong NSString **)pointer;
+- (void)maybeSetBoolForKey:(NSString *)key to:(BOOL *)pointer;
+- (void)maybeSetArrayForKey:(NSString *)key to:(__strong NSArray **)pointer;
+- (void)maybeSetDictionaryForKey:(NSString *)key to:(__strong NSDictionary **)pointer;
+- (void)maybeSetIntegerForKey:(NSString *)key to:(NSInteger *)pointer;
+- (void)maybeSetLongLongForKey:(NSString *)key to:(long long *)pointer;
+- (void)maybeSetDoubleForKey:(NSString *)key to:(double *)pointer;
+- (void)maybeSetFloatForKey:(NSString *)key to:(float *)pointer;
 
 - (NSString *)firstKeyForObject:(id)object;
 
@@ -78,6 +91,7 @@
 - (void)safeSetObject:(id)value forKey:(NSString *)key TEXTUAL_DEPRECATED;
 - (void)safeSetObjectWithoutOverride:(id)value forKey:(NSString *)key TEXTUAL_DEPRECATED;
 
+/* maybeSetObject provides nil checks for inserted objects. */
 - (void)maybeSetObject:(id)value forKey:(NSString *)key;
 
 - (void)setObjectWithoutOverride:(id)value forKey:(NSString *)key;

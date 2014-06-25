@@ -75,11 +75,11 @@ typedef enum TXConnectionProxyType : NSInteger {
 @property (nonatomic, assign) NSInteger fallbackEncoding;
 @property (nonatomic, assign) NSInteger primaryEncoding;
 @property (nonatomic, assign) IRCConnectionSocketProxyType proxyType;
-@property (nonatomic, strong) NSMutableArray *alternateNicknames;
-@property (nonatomic, strong) NSMutableArray *channelList;
-@property (nonatomic, strong) NSMutableArray *ignoreList;
-@property (nonatomic, strong) NSMutableArray *highlightList;
-@property (nonatomic, strong) NSMutableArray *loginCommands;
+@property (nonatomic, strong) NSArray *alternateNicknames;
+@property (nonatomic, strong) NSArray *channelList;
+@property (nonatomic, strong) NSArray *ignoreList;
+@property (nonatomic, strong) NSArray *highlightList;
+@property (nonatomic, strong) NSArray *loginCommands;
 @property (nonatomic, copy) NSString *itemUUID; // Unique Identifier (UUID)
 @property (nonatomic, copy) NSString *clientName;
 @property (nonatomic, copy) NSString *nickname;
@@ -100,11 +100,13 @@ typedef enum TXConnectionProxyType : NSInteger {
 @property (nonatomic, assign) BOOL serverPasswordIsSet;
 @property (nonatomic, assign) BOOL nicknamePasswordIsSet;
 @property (nonatomic, assign) BOOL proxyPasswordIsSet;
-@property (nonatomic, strong) NSMutableDictionary *auxiliaryConfiguration;
+@property (nonatomic, strong) NSDictionary *auxiliaryConfiguration;
 
 - (BOOL)isEqualToClientConfiguration:(IRCClientConfig *)seed;
 
 - (id)initWithDictionary:(NSDictionary *)dic;
+
+- (void)setValueToAuxiliaryConfiguration:(id)value forKey:(NSString *)key;
 
 - (NSMutableDictionary *)dictionaryValue;
 - (NSMutableDictionary *)dictionaryValue:(BOOL)isCloudDictionary;

@@ -41,12 +41,12 @@
 #define TPCThemeSettingsDisabledIndentationOffset     -99
 
 @interface TPCThemeSettings : NSObject
-@property (nonatomic, assign, readonly) BOOL forceInvertSidebarColors;
-@property (nonatomic, copy, readonly) NSFont *channelViewFont;
-@property (nonatomic, copy, readonly) NSString *nicknameFormat;
-@property (nonatomic, copy, readonly) NSString *timestampFormat;
-@property (nonatomic, copy, readonly) NSColor *underlyingWindowColor;
-@property (nonatomic, assign, readonly) double indentationOffset;
+@property (nonatomic, assign) BOOL forceInvertSidebarColors;
+@property (nonatomic, copy) NSFont *channelViewFont;
+@property (nonatomic, copy) NSString *nicknameFormat;
+@property (nonatomic, copy) NSString *timestampFormat;
+@property (nonatomic, copy) NSColor *underlyingWindowColor;
+@property (nonatomic, assign) double indentationOffset;
 
 - (void)reloadWithPath:(NSString *)path;
 

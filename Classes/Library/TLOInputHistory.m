@@ -46,13 +46,13 @@
 
 @interface TLOInputHistory ()
 @property (nonatomic, strong) NSMutableDictionary *historyObjects;
-@property (nonatomic, strong) NSString *currentTreeItem;
+@property (nonatomic, copy) NSString *currentTreeItem;
 @end
 
 @interface TLOInputHistoryObject : NSObject <NSCopying>
 @property (nonatomic, assign) NSInteger historyBufferPosition;
 @property (nonatomic, strong) NSMutableArray *historyBuffer;
-@property (nonatomic, strong) NSAttributedString *lastHistoryItem;
+@property (nonatomic, copy) NSAttributedString *lastHistoryItem;
 
 - (void)add:(NSAttributedString *)s;
 
@@ -70,7 +70,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		_historyObjects = [NSMutableDictionary dictionary];
+		self.historyObjects = [NSMutableDictionary dictionary];
 	}
 	
 	return self;
@@ -89,7 +89,7 @@
 		[mainWindowTextField() setStringValue:NSStringEmptyPlaceholder];
 		
 		/* Change to new view. */
-		_currentTreeItem = [treeItem uniqueIdentifier];
+		self.currentTreeItem = [treeItem uniqueIdentifier];
 		
 		/* Does new seleciton have a history item? */
 		TLOInputHistoryObject *newObject = [self currentObjectForFocusedTreeView];
@@ -100,62 +100,66 @@
 			[mainWindowTextField() setAttributedStringValue:lastHistoryItem];
 		}
 	} else {
-		_currentTreeItem = nil;
+		self.currentTreeItem = nil;
 	}
 }
 
 - (void)inputHistoryObjectScopeDidChange
 {
-	/* If the input history was made channel specific, then we copy the current
-	 value of the global input history to all tree items. */
-	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
-		for (IRCClient *u in [worldController() clients]) {
-			[self inputHistoryObjectScopeDidChangeApplyToItem:[u uniqueIdentifier]];
+	@synchronized(self.historyObjects) {
+		/* If the input history was made channel specific, then we copy the current
+		 value of the global input history to all tree items. */
+		if ([TPCPreferences inputHistoryIsChannelSpecific]) {
+			for (IRCClient *u in [worldController() clientList]) {
+				[self inputHistoryObjectScopeDidChangeApplyToItem:[u uniqueIdentifier]];
 
-			for (IRCChannel *c in [u channels]) {
-				[self inputHistoryObjectScopeDidChangeApplyToItem:[c uniqueIdentifier]];
+				for (IRCChannel *c in [u channels]) {
+					[self inputHistoryObjectScopeDidChangeApplyToItem:[c uniqueIdentifier]];
+				}
 			}
+			
+			[self.historyObjects removeObjectForKey:_inputHistoryGlobalObjectKey];
+		} else {
+			/* Else, we destroy all. */
+			[self.historyObjects removeAllObjects];
 		}
-		
-		[_historyObjects removeObjectForKey:_inputHistoryGlobalObjectKey];
-	} else {
-		/* Else, we destroy all. */
-		[_historyObjects removeAllObjects];
 	}
 }
 
 - (void)inputHistoryObjectScopeDidChangeApplyToItem:(NSString *)treeItem
 {
-	TLOInputHistoryObject *globalObject = [_historyObjects objectForKey:_inputHistoryGlobalObjectKey];
+	TLOInputHistoryObject *globalObject = [self.historyObjects objectForKey:_inputHistoryGlobalObjectKey];
 	
 	if (globalObject) {
 		TLOInputHistoryObject *newObject = [globalObject copy];
 		
 		[newObject setLastHistoryItem:nil]; // Reset value.
 		
-		[_historyObjects setValue:newObject forKey:treeItem];
+		[self.historyObjects setValue:newObject forKey:treeItem];
 	}
 }
 
 - (TLOInputHistoryObject *)currentObjectForFocusedTreeView
 {
-	NSString *currentObjectKey;
-	
-	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
-		currentObjectKey = _currentTreeItem;
-	} else {
-		currentObjectKey = _inputHistoryGlobalObjectKey;
-	}
-	
-	TLOInputHistoryObject *currentObject = [_historyObjects objectForKey:currentObjectKey];
-	
-	if (currentObject == nil) {
-		currentObject = [TLOInputHistoryObject new];
+	@synchronized(self.historyObjects) {
+		NSString *currentObjectKey;
 		
-		[_historyObjects setObject:currentObject forKey:_currentTreeItem];
+		if ([TPCPreferences inputHistoryIsChannelSpecific]) {
+			currentObjectKey = self.currentTreeItem;
+		} else {
+			currentObjectKey = _inputHistoryGlobalObjectKey;
+		}
+		
+		TLOInputHistoryObject *currentObject = [self.historyObjects objectForKey:currentObjectKey];
+		
+		if (currentObject == nil) {
+			currentObject = [TLOInputHistoryObject new];
+			
+			[self.historyObjects setObject:currentObject forKey:self.currentTreeItem];
+		}
+		
+		return currentObject;
 	}
-	
-	return currentObject;
 }
 
 - (void)add:(NSAttributedString *)s
@@ -189,7 +193,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		_historyBuffer = [NSMutableArray new];
+		self.historyBuffer = [NSMutableArray new];
 	}
 	
 	return self;
@@ -197,82 +201,88 @@
 
 - (void)add:(NSAttributedString *)s
 {
-	NSAttributedString *lo = [_historyBuffer lastObject];
-	
-	_historyBufferPosition = [_historyBuffer count];
-
-	NSObjectIsEmptyAssert(s);
-	
-	if ([[lo string] isEqualToString:[s string]] == NO) {
-		[_historyBuffer addObject:s];
-	
-		if ([_historyBuffer count] > _inputHistoryMax) {
-			[_historyBuffer removeObjectAtIndex:0];
+	@synchronized(self.historyBuffer) {
+		NSAttributedString *lo = [self.historyBuffer lastObject];
+		
+		self.historyBufferPosition = [self.historyBuffer count];
+		
+		NSObjectIsEmptyAssert(s);
+		
+		if ([[lo string] isEqualToString:[s string]] == NO) {
+			[self.historyBuffer addObject:s];
+			
+			if ([self.historyBuffer count] > _inputHistoryMax) {
+				[self.historyBuffer removeObjectAtIndex:0];
+			}
+			
+			self.historyBufferPosition = [self.historyBuffer count];
 		}
-	
-		_historyBufferPosition = [_historyBuffer count];
 	}
 }
 
 - (NSAttributedString *)up:(NSAttributedString *)s
 {
-	if (NSObjectIsNotEmpty(s)) {
-		NSAttributedString *cur = nil;
-		
-		if (0 <= _historyBufferPosition && _historyBufferPosition < [_historyBuffer count]) {
-			cur = [_historyBuffer objectAtIndex:_historyBufferPosition];
-		}
-		
-		if (NSObjectIsEmpty(cur) || [[cur string] isEqualToString:[s string]] == NO) {
-			[_historyBuffer addObject:s];
+	@synchronized(self.historyBuffer) {
+		if (NSObjectIsNotEmpty(s)) {
+			NSAttributedString *cur = nil;
 			
-			if ([_historyBuffer count] > _inputHistoryMax) {
-				[_historyBuffer removeObjectAtIndex:0];
+			if (0 <= self.historyBufferPosition && self.historyBufferPosition < [self.historyBuffer count]) {
+				cur = [self.historyBuffer objectAtIndex:self.historyBufferPosition];
+			}
+			
+			if (NSObjectIsEmpty(cur) || [[cur string] isEqualToString:[s string]] == NO) {
+				[self.historyBuffer addObject:s];
 				
-				_historyBufferPosition += 1;
+				if ([self.historyBuffer count] > _inputHistoryMax) {
+					[self.historyBuffer removeObjectAtIndex:0];
+					
+					self.historyBufferPosition += 1;
+				}
 			}
 		}
-	}	
-
-	_historyBufferPosition -= 1;
-	
-	if (_historyBufferPosition < 0) {
-		_historyBufferPosition = 0;
 		
-		return nil;
-	} else if (0 <= _historyBufferPosition && _historyBufferPosition < [_historyBuffer count]) {
-		return [_historyBuffer objectAtIndex: _historyBufferPosition];
-	} else {
-		return [NSAttributedString emptyString];
+		self.historyBufferPosition -= 1;
+		
+		if (self.historyBufferPosition < 0) {
+			self.historyBufferPosition = 0;
+			
+			return nil;
+		} else if (0 <= self.historyBufferPosition && self.historyBufferPosition < [self.historyBuffer count]) {
+			return [self.historyBuffer objectAtIndex: self.historyBufferPosition];
+		} else {
+			return [NSAttributedString emptyString];
+		}
 	}
 }
 
 - (NSAttributedString *)down:(NSAttributedString *)s
 {
-	if (NSObjectIsEmpty(s)) {
-		_historyBufferPosition = [_historyBuffer count];
-		
-		return nil;
-	}
-	
-	NSAttributedString *cur = nil;
-	
-	if (0 <= _historyBufferPosition && _historyBufferPosition < [_historyBuffer count]) {
-		cur = [_historyBuffer objectAtIndex:_historyBufferPosition];
-	}
-
-	if (NSObjectIsEmpty(cur) || [[cur string] isEqualToString:[s string]] == NO) {
-		[self add:s];
-		
-		return [NSAttributedString emptyString];
-	} else {
-		_historyBufferPosition += 1;
-		
-		if (0 <= _historyBufferPosition &&		 _historyBufferPosition < [_historyBuffer count]) {
-			return [_historyBuffer objectAtIndex:_historyBufferPosition];
+	@synchronized(self.historyBuffer) {
+		if (NSObjectIsEmpty(s)) {
+			self.historyBufferPosition = [self.historyBuffer count];
+			
+			return nil;
 		}
-
-		return [NSAttributedString emptyString];
+		
+		NSAttributedString *cur = nil;
+		
+		if (0 <= self.historyBufferPosition && self.historyBufferPosition < [self.historyBuffer count]) {
+			cur = [self.historyBuffer objectAtIndex:self.historyBufferPosition];
+		}
+		
+		if (NSObjectIsEmpty(cur) || [[cur string] isEqualToString:[s string]] == NO) {
+			[self add:s];
+			
+			return [NSAttributedString emptyString];
+		} else {
+			self.historyBufferPosition += 1;
+			
+			if (0 <= self.historyBufferPosition &&	self.historyBufferPosition < [self.historyBuffer count]) {
+				return [self.historyBuffer objectAtIndex:self.historyBufferPosition];
+			}
+			
+			return [NSAttributedString emptyString];
+		}
 	}
 }
 
@@ -280,10 +290,10 @@
 {
 	TLOInputHistoryObject *newObject = [TLOInputHistoryObject new];
 	
-	[newObject setHistoryBuffer:[_historyBuffer mutableCopy]];
-	[newObject setHistoryBufferPosition:_historyBufferPosition];
+	[newObject setHistoryBuffer:[self.historyBuffer mutableCopy]];
+	[newObject setHistoryBufferPosition:self.historyBufferPosition];
 	
-	[newObject setLastHistoryItem:_lastHistoryItem];
+	[newObject setLastHistoryItem:self.lastHistoryItem];
 	
 	return newObject;
 }

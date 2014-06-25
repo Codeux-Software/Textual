@@ -48,12 +48,12 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		_isStopped = NO;
+		self.isStopped = NO;
 		
-		_itemsToBeSpoken = [NSMutableArray array];
+		self.itemsToBeSpoken = [NSMutableArray array];
 
-		_speechSynthesizer = [NSSpeechSynthesizer new];
-		_speechSynthesizer.delegate = self;
+		self.speechSynthesizer = [NSSpeechSynthesizer new];
+		self.speechSynthesizer.delegate = self;
 
 		return self;
 	}
@@ -67,13 +67,15 @@
 - (void)speak:(NSString *)message
 {
 	/* Validate input. */
-	NSAssertReturn(_isStopped == NO);
+	NSAssertReturn(self.isStopped == NO);
 
 	NSObjectIsEmptyAssert(message);
 
 	/* Add item and speak. */
-	[_itemsToBeSpoken addObject:message];
-
+	@synchronized(self.itemsToBeSpoken) {
+		[self.itemsToBeSpoken addObject:message];
+	}
+	
 	if ([self isSpeaking] == NO) {
 		[self speakNextQueueEntry];
 	}
@@ -87,7 +89,7 @@
 	}
 
 	/* Destroy flag. */
-	_isWaitingForSystemToStopSpeaking = NO;
+	self.isWaitingForSystemToStopSpeaking = NO;
 
 	/* Speak. */
 	[self speakNextQueueEntry];
@@ -96,61 +98,65 @@
 - (void)stopSpeakingAndMoveForward
 {
 	if ([self isSpeaking]) {
-		[_speechSynthesizer stopSpeaking]; // Will call delegate to do next item.
+		[self.speechSynthesizer stopSpeaking]; // Will call delegate to do next item.
 	}
 }
 
 - (void)speakNextQueueEntry
 {
 	/* Do not do anything if stopped. */
-	NSAssertReturn(_isStopped == NO);
+	NSAssertReturn(self.isStopped == NO);
 
 	/* Speak next item. */
-	if ([_itemsToBeSpoken count] > 0) {
-		if ([NSSpeechSynthesizer isAnyApplicationSpeaking]) {
-			/* If the system is speaking, then special actions must be performed. */
+	@synchronized(self.itemsToBeSpoken) {
+		if ([self.itemsToBeSpoken count] > 0) {
+			if ([NSSpeechSynthesizer isAnyApplicationSpeaking]) {
+				/* If the system is speaking, then special actions must be performed. */
 
-			/* Loop in background. */
-			if (_isWaitingForSystemToStopSpeaking == NO) {
-				/* Set flag. */
-				_isWaitingForSystemToStopSpeaking = YES;
+				/* Loop in background. */
+				if (self.isWaitingForSystemToStopSpeaking == NO) {
+					/* Set flag. */
+					self.isWaitingForSystemToStopSpeaking = YES;
 
-				/* Start waiting for system to finish. */
-				[[self invokeInBackgroundThread] speakNextItemWhenSystemFinishes];
+					/* Start waiting for system to finish. */
+					[[self invokeInBackgroundThread] speakNextItemWhenSystemFinishes];
+				}
+
+				/* Do not continue. */
+				return;
 			}
 
-			/* Do not continue. */
-			return;
+			/* Continue with normal speaking operation. */
+			NSString *nextMessage = self.itemsToBeSpoken[0]; // Get item.
+
+			[self.itemsToBeSpoken removeObjectAtIndex:0]; // Remove from queue.
+
+			[self.speechSynthesizer startSpeakingString:nextMessage]; // Speak.
 		}
-
-		/* Continue with normal speaking operation. */
-		NSString *nextMessage = _itemsToBeSpoken[0]; // Get item.
-
-		[_itemsToBeSpoken removeObjectAtIndex:0]; // Remove from queue.
-
-		[_speechSynthesizer startSpeakingString:nextMessage]; // Speak.
 	}
 }
 
 - (void)setIsStopped:(BOOL)isStopped
 {
 	/* Update internal flag. */
-	_isStopped = isStopped;
+	self.isStopped = isStopped;
 
 	/* Stop speaking. */
 	if ([self isSpeaking]) {
-		[_speechSynthesizer stopSpeaking];
+		[self.speechSynthesizer stopSpeaking];
 	}
 }
 
 - (void)clearQueue
 {
-	[_itemsToBeSpoken removeAllObjects];
+	@synchronized(self.itemsToBeSpoken) {
+		[self.itemsToBeSpoken removeAllObjects];
+	}
 }
 
 - (BOOL)isSpeaking
 {
-	return [_speechSynthesizer isSpeaking];
+	return [self.speechSynthesizer isSpeaking];
 }
 
 #pragma mark -

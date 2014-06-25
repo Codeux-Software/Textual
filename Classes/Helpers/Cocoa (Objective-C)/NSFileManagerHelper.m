@@ -41,7 +41,7 @@
 
 - (id <NSObject, NSCopying, NSCoding>)cloudUbiquityIdentityToken
 {
-	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
 		return [RZFileManager() ubiquityIdentityToken];
 	} else {
 		return nil;

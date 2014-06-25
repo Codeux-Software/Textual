@@ -57,7 +57,7 @@
 	PointerIsEmptyAssert(delegate);
 	
 	/* Remember it. */
-	_requestDelegate = delegate;
+	self.requestDelegate = delegate;
 	
 	/* Do work… */
 	[self setupConnectionRequest];
@@ -65,19 +65,19 @@
 
 - (void)destroyConnectionRequest
 {
-	if ( _requestConnection) {
-		[_requestConnection cancel];
+	if ( self.requestConnection) {
+		[self.requestConnection cancel];
 	}
 	
-	_requestConnection = nil;
-	_requestResponse = nil;
-	_responseData = nil;
+	self.requestConnection = nil;
+	self.requestResponse = nil;
+	self.responseData = nil;
 }
 
 - (void)setupConnectionRequest
 {
 	/* Pointer to write to. */
-	_responseData = [NSMutableData data];
+	self.responseData = [NSMutableData data];
 	
 	/* Setup request. */
 	NSURL *requestURL = [NSURL URLWithString:[self addressSourceURL]];
@@ -89,9 +89,9 @@
 	[baseRequest setHTTPMethod:@"GET"];
 	
 	/* Create the connection and request it. */
-	 _requestConnection = [[NSURLConnection alloc] initWithRequest:baseRequest delegate:self];
+	 self.requestConnection = [[NSURLConnection alloc] initWithRequest:baseRequest delegate:self];
 	
-	[_requestConnection start];
+	[self.requestConnection start];
 }
 
 - (NSString *)addressSourceURL
@@ -114,14 +114,14 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
 	/* Yay! It finished loading. Time to check the data out. :-D */
-	BOOL isValidResponse = ([_requestResponse statusCode] == 200);
+	BOOL isValidResponse = ([self.requestResponse statusCode] == 200);
 	
     if (isValidResponse) {
-		NSString *address = [NSString stringWithData:_responseData encoding:NSUTF8StringEncoding];
+		NSString *address = [NSString stringWithData:self.responseData encoding:NSUTF8StringEncoding];
 		
-		if (_requestDelegate) {
-			if ([_requestDelegate respondsToSelector:@selector(fileTransferRemoteAddressRequestDidDetectAddress:)]) {
-				[_requestDelegate fileTransferRemoteAddressRequestDidDetectAddress:address];
+		if (self.requestDelegate) {
+			if ([self.requestDelegate respondsToSelector:@selector(fileTransferRemoteAddressRequestDidDetectAddress:)]) {
+				[self.requestDelegate fileTransferRemoteAddressRequestDidDetectAddress:address];
 			}
 		}
 	}
@@ -136,21 +136,21 @@
 	[self destroyConnectionRequest]; // Destroy the existing request.
 	
 	/* Log something… */
-	if (_requestDelegate) {
-		if ([_requestDelegate respondsToSelector:@selector(fileTransferRemoteAddressRequestDidCloseWithError:)]) {
-			[_requestDelegate fileTransferRemoteAddressRequestDidCloseWithError:error];
+	if (self.requestDelegate) {
+		if ([self.requestDelegate respondsToSelector:@selector(fileTransferRemoteAddressRequestDidCloseWithError:)]) {
+			[self.requestDelegate fileTransferRemoteAddressRequestDidCloseWithError:error];
 		}
 	}
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-	[_responseData appendData:data]; // Just writing comments at this point to write them. dealwithit.gif
+	[self.responseData appendData:data]; // Just writing comments at this point to write them. dealwithit.gif
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-	_requestResponse = (id)response; // Save a reference to our response.
+	self.requestResponse = (id)response; // Save a reference to our response.
 }
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse

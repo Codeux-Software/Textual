@@ -50,21 +50,21 @@
 @property (nonatomic, copy) NSString *hostAddress;
 @property (nonatomic, copy) NSString *transferToken;
 @property (nonatomic, assign) NSInteger transferPort;
-@property (nonatomic, strong, readonly) NSFileHandle *fileHandle;
+@property (nonatomic, strong) NSFileHandle *fileHandle;
 @property (nonatomic, uweak) TDCFileTransferDialog *transferDialog;
 @property (nonatomic, nweak) TDCFileTransferDialogTableCell *parentCell;
 @property (nonatomic, assign) TXUnsignedLongLong totalFilesize;
-@property (nonatomic, assign, readonly) TXUnsignedLongLong processedFilesize;
-@property (nonatomic, assign, readonly) TXUnsignedLongLong currentRecord;
-@property (nonatomic, strong, readonly) NSMutableArray *speedRecords;
-@property (nonatomic, assign, readonly) TDCFileTransferDialogTransferStatus transferStatus;
-@property (nonatomic, strong, readonly) id portMapping;
-@property (nonatomic, assign, readonly) NSInteger sendQueueSize;
-@property (nonatomic, assign, readonly) dispatch_queue_t serverDispatchQueue;
-@property (nonatomic, assign, readonly) dispatch_queue_t serverSocketQueue;
-@property (nonatomic, strong, readonly) GCDAsyncSocket *listeningServer;
-@property (nonatomic, strong, readonly) GCDAsyncSocket *listeningServerConnectedClient;
-@property (nonatomic, strong, readonly) GCDAsyncSocket *connectionToRemoteServer;
+@property (nonatomic, assign) TXUnsignedLongLong processedFilesize;
+@property (nonatomic, assign) TXUnsignedLongLong currentRecord;
+@property (nonatomic, strong) NSMutableArray *speedRecords;
+@property (nonatomic, assign) TDCFileTransferDialogTransferStatus transferStatus;
+@property (nonatomic, strong) id portMapping;
+@property (nonatomic, assign) NSInteger sendQueueSize;
+@property (nonatomic, assign) dispatch_queue_t serverDispatchQueue;
+@property (nonatomic, assign) dispatch_queue_t serverSocketQueue;
+@property (nonatomic, strong) GCDAsyncSocket *listeningServer;
+@property (nonatomic, strong) GCDAsyncSocket *listeningServerConnectedClient;
+@property (nonatomic, strong) GCDAsyncSocket *connectionToRemoteServer;
 
 - (void)open;
 

@@ -64,7 +64,7 @@
 	return nil;
 }
 
-- (void)completeNick:(BOOL)forward
+- (void)completeNickname:(BOOL)forward
 {
 	/* Global variables. */
 	IRCClient *client = [worldController() selectedClient];
@@ -89,22 +89,22 @@
 	/* Time to start comparing values. */
 	BOOL canContinuePreviousScan = YES;
 
-	if (_lastTextFieldSelectionRange.location == NSNotFound ||
-		_lastCompletionFragmentRange.location == NSNotFound ||
-		_lastCompletionCompletedRange.location == NSNotFound)
+	if (self.lastTextFieldSelectionRange.location == NSNotFound ||
+		self.lastCompletionFragmentRange.location == NSNotFound ||
+		self.lastCompletionCompletedRange.location == NSNotFound)
 	{
 		canContinuePreviousScan = NO;
 	}
 
-	if (NSObjectIsEmpty(_cachedTextFieldStringValue)) {
+	if (NSObjectIsEmpty(self.cachedTextFieldStringValue)) {
 		canContinuePreviousScan = NO;
 	} else {
-		if ([_cachedTextFieldStringValue isEqualToString:s] == NO) {
+		if ([self.cachedTextFieldStringValue isEqualToString:s] == NO) {
 			canContinuePreviousScan = NO;
 		}
 	}
 
-	if (NSEqualRanges(selectedRange, _lastTextFieldSelectionRange) == NO) {
+	if (NSEqualRanges(selectedRange, self.lastTextFieldSelectionRange) == NO) {
 		canContinuePreviousScan = NO;
 	}
 
@@ -132,7 +132,7 @@
 
 	if (canContinuePreviousScan == NO) {
 		/* If this is a new scan, then reset all our ranges to begin with. */
-		if ([_cachedTextFieldStringValue isEqualToString:s]) {
+		if ([self.cachedTextFieldStringValue isEqualToString:s]) {
 			[self clear:NO];
 		} else {
 			[self clear:YES];
@@ -183,9 +183,9 @@
 			return; // Do not cut empty strings.
 		}
 
-		_lastCompletionFragmentRange = NSMakeRange(ci, (selectedRange.location - ci));
+		self.lastCompletionFragmentRange = NSMakeRange(ci, (selectedRange.location - ci));
 
-		backwardCut = [s safeSubstringWithRange:_lastCompletionFragmentRange];
+		backwardCut = [s substringWithRange:self.lastCompletionFragmentRange];
 
 		NSObjectIsEmptyAssert(backwardCut);
 
@@ -194,7 +194,7 @@
 		 at one point combined with backwardCut to search our search array 
 		 for any possible values to know whether we should move to the next
 		 result of a comparison. */
-		NSInteger nextIndex = (_lastCompletionFragmentRange.length + _lastCompletionFragmentRange.location);
+		NSInteger nextIndex = (self.lastCompletionFragmentRange.length + self.lastCompletionFragmentRange.location);
 
 		if (([s length] - nextIndex) > 0) {
 			/* Only do work if we have work to do. */
@@ -260,14 +260,14 @@
 
 				/* Set the completed range so that we replace
 				 anything after the backwardCut when we replace. */
-				NSRange fcr = _lastCompletionFragmentRange;
+				NSRange fcr = self.lastCompletionFragmentRange;
 
-				if (_cachedLastCompleteStringValue) {
+				if (self.cachedLastCompleteStringValue) {
 					if (backwardCut && selectedCut) {
 						/* Only cut forward if the combined cut is equal to the previous complete. */
 						NSString *combinedCut = [backwardCut stringByAppendingString:selectedCut];
 						
-						if (NSObjectsAreEqual(_cachedLastCompleteStringValue, combinedCut)) {
+						if (NSObjectsAreEqual(self.cachedLastCompleteStringValue, combinedCut)) {
 							fcr.length += [selectedCut length];
 						}
 					}
@@ -278,21 +278,21 @@
 					isAtEnd = YES;
 				}
 
-				_lastCompletionCompletedRange = fcr;
+				self.lastCompletionCompletedRange = fcr;
 			}
 		}
 	} else {
-		backwardCut = _cachedBackwardCutStringValue;
+		backwardCut = self.cachedBackwardCutStringValue;
 
-		if (_lastCompletionFragmentRange.location > 0) {
+		if (self.lastCompletionFragmentRange.location > 0) {
 			isAtStart = NO;
 		}
 
-		if ((_lastCompletionCompletedRange.location + _lastCompletionCompletedRange.length + 1) < [s length]) {
+		if ((self.lastCompletionCompletedRange.location + self.lastCompletionCompletedRange.length + 1) < [s length]) {
 			isAtEnd = NO;
 		}
 
-		NSRange fr = _lastCompletionCompletedRange;
+		NSRange fr = self.lastCompletionCompletedRange;
 
 		fr.location += backwardCut.length;
 		fr.length -= backwardCut.length;
@@ -347,26 +347,26 @@
 	NSMutableArray *lowerChoices = [NSMutableArray array];
 
 	if (commandMode) {
-		for (NSString *command in [TPCPreferences publicIRCCommandList]) {
-			[upperChoices safeAddObject:[command lowercaseString]];
+		for (NSString *command in [IRCCommandIndex publicIRCCommandList]) {
+			[upperChoices addObject:[command lowercaseString]];
 		}
 
-		[upperChoices addObjectsFromArray:[THOPluginManagerSharedInstance() supportedUserInputCommands]];
-		[upperChoices addObjectsFromArray:[THOPluginManagerSharedInstance() supportedAppleScriptCommands]];
+		[upperChoices addObjectsFromArray:[sharedPluginManager() supportedUserInputCommands]];
+		[upperChoices addObjectsFromArray:[sharedPluginManager() supportedAppleScriptCommands]];
 	} else if (channelMode) {
 		// Prioritize selected channel for channel completion
-		[upperChoices safeAddObject:channel.name];
+		[upperChoices addObject:[channel name]];
 
-		for (IRCChannel *c in client.channels) {
+		for (IRCChannel *c in [client channels]) {
 			if ([c isEqual:channel] == NO) {
-				[upperChoices safeAddObject:c.name];
+				[upperChoices addObject:[c name]];
 			}
 		}
 	} else {
 		NSArray *memberList = [[channel unsortedMemberList] sortedArrayUsingSelector:@selector(compareUsingWeights:)];
 
 		for (IRCUser *m in memberList) {
-			[upperChoices safeAddObject:m.nickname];
+			[upperChoices addObject:[m nickname]];
 		}
 
 		[upperChoices addObject:@"NickServ"];
@@ -435,12 +435,12 @@
 	   or forward depending on the call to this method. */
 	NSString *ut = nil;
 
-	NSUInteger index = _lastCompletionSelectionIndex;
+	NSUInteger index = self.lastCompletionSelectionIndex;
 
 	if (index == NSNotFound || index >= [currentLowerChoices count]) {
 		ut = [currentUpperChoices objectAtIndex:0];
 
-		_lastCompletionSelectionIndex = 0;
+		self.lastCompletionSelectionIndex = 0;
 	} else {
 		if (forward) {
 			index += 1;
@@ -458,7 +458,7 @@
 
 		ut = [currentUpperChoices objectAtIndex:index];
 
-		_lastCompletionSelectionIndex = index;
+		self.lastCompletionSelectionIndex = index;
 	}
 
 	/* Add prefix back to the string? */
@@ -469,7 +469,7 @@
 	}
 	
 	/* Cache value. */
-	_cachedLastCompleteStringValue = ut;
+	self.cachedLastCompleteStringValue = ut;
 
 	/* Add the completed string to the spell checker so that a nickname
 	 wont show up as spelled incorrectly. The spell checker is cleared
@@ -500,7 +500,7 @@
 			BOOL addWhitespace = YES;
 
 			if ([completeSuffix isEqualToString:NSStringWhitespacePlaceholder]) {
-				NSInteger nextIndx = (_lastCompletionCompletedRange.length + _lastCompletionCompletedRange.location);
+				NSInteger nextIndx = (self.lastCompletionCompletedRange.length + self.lastCompletionCompletedRange.location);
 				
 				if ([s length] > nextIndx) {
 					NSString *nextChar = [s stringCharacterAtIndex:nextIndx];
@@ -520,13 +520,13 @@
 	/* Update the text field. */
 	NSRange fr = NSEmptyRange();
 
-	if (_lastCompletionCompletedRange.location == NSNotFound) {
+	if (self.lastCompletionCompletedRange.location == NSNotFound) {
 		fr.length = [backwardCut length];
 	} else {
-		fr.length = _lastCompletionCompletedRange.length;
+		fr.length = self.lastCompletionCompletedRange.length;
 	}
 
-	fr.location = _lastCompletionFragmentRange.location;
+	fr.location = self.lastCompletionFragmentRange.location;
 
 	if ([inputTextField shouldChangeTextInRange:fr replacementString:ut])
 	{
@@ -541,7 +541,7 @@
 
 	fr.length = [ut length];
 
-	_lastCompletionCompletedRange = fr;
+	self.lastCompletionCompletedRange = fr;
 
 	/* Update the selected range. */
 	fr.location = (fr.location + fr.length);
@@ -549,27 +549,27 @@
 
 	[inputTextField setSelectedRange:fr];
 
-	_lastTextFieldSelectionRange = fr;
+	self.lastTextFieldSelectionRange = fr;
 
 	/* Update cached string values. */
-	_cachedTextFieldStringValue = [inputTextField string];
-	_cachedBackwardCutStringValue = backwardCut;
+	self.cachedTextFieldStringValue = [inputTextField string];
+	self.cachedBackwardCutStringValue = backwardCut;
 }
 
 - (void)clear:(BOOL)clearLastValue
 {
-	_cachedTextFieldStringValue = nil;
-	_cachedBackwardCutStringValue = nil;
+	self.cachedTextFieldStringValue = nil;
+	self.cachedBackwardCutStringValue = nil;
 	
 	if (clearLastValue) {
-		_cachedLastCompleteStringValue = nil;
+		self.cachedLastCompleteStringValue = nil;
 	}
 
-	_lastCompletionSelectionIndex = NSNotFound;
+	self.lastCompletionSelectionIndex = NSNotFound;
 
-	_lastTextFieldSelectionRange = NSEmptyRange();
-	_lastCompletionCompletedRange = NSEmptyRange();
-	_lastCompletionFragmentRange = NSEmptyRange();
+	self.lastTextFieldSelectionRange = NSEmptyRange();
+	self.lastCompletionCompletedRange = NSEmptyRange();
+	self.lastCompletionFragmentRange = NSEmptyRange();
 }
 
 @end

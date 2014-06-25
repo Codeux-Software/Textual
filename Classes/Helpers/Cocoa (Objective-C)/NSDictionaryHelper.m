@@ -148,6 +148,15 @@
 	}
 }
 
+- (NSString *)stringForKey:(id)key orUseDefault:(NSString *)defaultValue
+{
+	if ([self containsKey:key]) {
+		return [self stringForKey:key];
+	} else {
+		return defaultValue;
+	}
+}
+
 - (BOOL)boolForKey:(NSString *)key orUseDefault:(BOOL)defaultValue
 {
 	if ([self containsKey:key]) {
@@ -208,6 +217,80 @@
 		return [self floatForKey:key];
 	} else {
 		return defaultValue;
+	}
+}
+
+- (void)maybeSetObjectForKey:(id)key to:(__strong id *)pointer
+{
+	if ([self containsKey:key]) {
+		*pointer = [self objectForKey:key];
+	}
+}
+
+- (void)maybeSetObjectForKey:(id)key to:(__strong id *)pointer performCopy:(BOOL)copyValue
+{
+	if ([self containsKey:key]) {
+		if (copyValue) {
+			*pointer = [[self objectForKey:key] copy];
+		} else {
+			*pointer =  [self objectForKey:key];
+		}
+	}
+}
+
+- (void)maybeSetStringForKey:(id)key to:(__strong NSString **)pointer
+{
+	if ([self containsKey:key]) {
+		*pointer = [[self stringForKey:key] copy];
+	}
+}
+
+- (void)maybeSetBoolForKey:(NSString *)key to:(BOOL *)pointer
+{
+	if ([self containsKey:key]) {
+		*pointer = [self boolForKey:key];
+	}
+}
+
+- (void)maybeSetArrayForKey:(NSString *)key to:__strong (NSArray **)pointer
+{
+	if ([self containsKey:key]) {
+		*pointer = [[self arrayForKey:key] copy];
+	}
+}
+
+- (void)maybeSetDictionaryForKey:(NSString *)key to:(__strong NSDictionary **)pointer
+{
+	if ([self containsKey:key]) {
+		*pointer = [[self dictionaryForKey:key] copy];
+	}
+}
+
+- (void)maybeSetIntegerForKey:(NSString *)key to:(NSInteger *)pointer
+{
+	if ([self containsKey:key]) {
+		*pointer = [self integerForKey:key];
+	}
+}
+
+- (void)maybeSetLongLongForKey:(NSString *)key to:(long long *)pointer
+{
+	if ([self containsKey:key]) {
+		*pointer = [self longLongForKey:key];
+	}
+}
+
+- (void)maybeSetDoubleForKey:(NSString *)key to:(double *)pointer
+{
+	if ([self containsKey:key]) {
+		*pointer = [self doubleForKey:key];
+	}
+}
+
+- (void)maybeSetFloatForKey:(NSString *)key to:(float *)pointer
+{
+	if ([self containsKey:key]) {
+		*pointer = [self floatForKey:key];
 	}
 }
 

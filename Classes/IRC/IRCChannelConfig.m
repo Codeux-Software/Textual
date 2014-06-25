@@ -99,14 +99,14 @@
 {
 	self.encryptionKeyIsSet = NSObjectIsNotEmpty(pass);
 
-	_encryptionKey = pass;
+	_encryptionKey = [pass copy];
 }
 
 - (void)setSecretKey:(NSString *)pass
 {
 	self.secretKeyIsSet = NSObjectIsNotEmpty(pass);
 
-	_secretKey = pass;
+	_secretKey = [pass copy];
 }
 
 - (NSString *)temporarySecretKey
@@ -224,24 +224,24 @@
 {
 	if ((self = [self init])) {
 		/* General preferences. */
-		self.type			= (IRCChannelType)[dic integerForKey:@"channelType" orUseDefault:self.type];
+		[dic maybeSetIntegerForKey:@"channelType" to:&_type];
+		
+		[dic maybeSetStringForKey:@"uniqueIdentifier" to:&_itemUUID];
+		[dic maybeSetStringForKey:@"channelName" to:&_channelName];
 
-		self.itemUUID			= [dic objectForKey:@"uniqueIdentifier" orUseDefault:self.itemUUID];
-		self.channelName		= [dic objectForKey:@"channelName" orUseDefault:self.channelName];
+		[dic maybeSetBoolForKey:@"joinOnConnect" to:&_autoJoin];
+		[dic maybeSetBoolForKey:@"ignoreHighlights" to:&_ignoreHighlights];
+		[dic maybeSetBoolForKey:@"disableInlineMedia" to:&_ignoreInlineImages];
+		[dic maybeSetBoolForKey:@"ignoreJPQActivity" to:&_ignoreJPQActivity];
+		[dic maybeSetBoolForKey:@"enableNotifications" to:&_pushNotifications];
+		[dic maybeSetBoolForKey:@"enableTreeBadgeCountDrawing" to:&_showTreeBadgeCount];
 
-		self.autoJoin			= [dic integerForKey:@"joinOnConnect" orUseDefault:self.autoJoin];
-		self.ignoreHighlights	= [dic integerForKey:@"ignoreHighlights" orUseDefault:self.ignoreHighlights];
-		self.ignoreInlineImages	= [dic integerForKey:@"disableInlineMedia" orUseDefault:self.ignoreInlineImages];
-		self.ignoreJPQActivity	= [dic integerForKey:@"ignoreJPQActivity" orUseDefault:self.ignoreJPQActivity];
-		self.pushNotifications	= [dic integerForKey:@"enableNotifications" orUseDefault:self.pushNotifications];
-		self.showTreeBadgeCount = [dic integerForKey:@"enableTreeBadgeCountDrawing" orUseDefault:self.showTreeBadgeCount];
-
-		self.defaultModes		= [dic objectForKey:@"defaultMode" orUseDefault:self.defaultModes];
-		self.defaultTopic		= [dic objectForKey:@"defaultTopic" orUseDefault:self.defaultTopic];
+		[dic maybeSetStringForKey:@"defaultMode" to:&_defaultModes];
+		[dic maybeSetStringForKey:@"defaultTopic" to:&_defaultTopic];
 
 		/* Establish state. */
-		self.secretKeyIsSet = NSObjectIsNotEmpty(self.secretKey);
-		self.encryptionKeyIsSet = NSObjectIsNotEmpty(self.encryptionKey);
+		self.secretKeyIsSet			= NSObjectIsNotEmpty(self.secretKey);
+		self.encryptionKeyIsSet		= NSObjectIsNotEmpty(self.encryptionKey);
 
 		return self;
 	}
@@ -254,6 +254,7 @@
 	PointerIsEmptyAssertReturn(seed, NO);
 	
 	NSDictionary *s1 = [seed dictionaryValue];
+	
 	NSDictionary *s2 = [self dictionaryValue];
 	
 	/* Only declare ourselves as equal when we do not have any 
@@ -280,18 +281,18 @@
 		[dic setBool:self.showTreeBadgeCount	forKey:@"enableTreeBadgeCountDrawing"];
 	}
 
-	[dic safeSetObject:self.itemUUID			forKey:@"uniqueIdentifier"];
-	[dic safeSetObject:self.channelName			forKey:@"channelName"];
+	[dic maybeSetObject:self.itemUUID			forKey:@"uniqueIdentifier"];
+	[dic maybeSetObject:self.channelName		forKey:@"channelName"];
 
 	if (self.type == IRCChannelNormalType) {
-		[dic safeSetObject:self.defaultModes		forKey:@"defaultMode"];
-		[dic safeSetObject:self.defaultTopic		forKey:@"defaultTopic"];
+		[dic maybeSetObject:self.defaultModes		forKey:@"defaultMode"];
+		[dic maybeSetObject:self.defaultTopic		forKey:@"defaultTopic"];
 	}
 	
 	return dic;
 }
 
-- (id)mutableCopyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone *)zone
 {
 	IRCChannelConfig *mut = [[IRCChannelConfig allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
 	

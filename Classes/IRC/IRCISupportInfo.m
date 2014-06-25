@@ -59,7 +59,7 @@
      each configuration that was feeded for the line that was parsed then inserted. If a 
      configuration key does not have an actual value, then it is defined as a BOOL, YES. */
 
-    _cachedConfiguration = @[];
+    self.cachedConfiguration = @[];
     
 	self.networkAddress = nil;
 	
@@ -86,7 +86,7 @@
 - (void)update:(NSString *)configData client:(IRCClient *)client
 {
 	if ([configData hasSuffix:IRCISupportRawSuffix]) {
-		configData = [configData safeSubstringToIndex:([configData length] - [IRCISupportRawSuffix length])];
+		configData = [configData substringToIndex:([configData length] - [IRCISupportRawSuffix length])];
 	}
 
 	NSObjectIsEmptyAssert(configData);
@@ -127,28 +127,26 @@
 			}
 		}
 
-		IRCv3SupportedClientCapacities capacities = [client capacities];
-
 		if ([vakey isEqualIgnoringCase:@"WATCH"]) {
-			capacities.watchCommandCapInUse = YES;
-		} else if ([vakey isEqualIgnoringCase:@"NAMESX"] && capacities.multiPrefixCapInUse == NO) {
-			[client sendLine:@"PROTOCTL NAMESX"];
+			if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityWatchCommand] == NO) {
+				[client enableCapacity:ClientIRCv3SupportedCapacityWatchCommand];
+			}
+		} else if ([vakey isEqualIgnoringCase:@"NAMESX"]) {
+			if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityMultiPreifx] == NO) {
+				[client sendLine:@"PROTOCTL NAMESX"];
 
-			capacities.multiPrefixCapInUse = YES;
-			
-			[[client CAPAcceptedCaps] addObject:@"multi-prefix"];
-		} else if ([vakey isEqualIgnoringCase:@"UHNAMES"] && capacities.userhostInNamesCapInUse == NO) {
-			[client sendLine:@"PROTOCTL UHNAMES"];
-
-			capacities.userhostInNamesCapInUse = YES;
-			
-			[[client CAPAcceptedCaps] addObject:@"userhost-in-names"];
+				[client enableCapacity:ClientIRCv3SupportedCapacityMultiPreifx];
+			}
+		} else if ([vakey isEqualIgnoringCase:@"UHNAMES"]) {
+			if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityUserhostInNames] == NO) {
+				[client sendLine:@"PROTOCTL UHNAMES"];
+				
+				[client enableCapacity:ClientIRCv3SupportedCapacityUserhostInNames];
+			}
 		}
-
-		client.capacities = capacities;
 	}
 
-    _cachedConfiguration = [_cachedConfiguration arrayByAddingObject:cachedConfig];
+    self.cachedConfiguration = [self.cachedConfiguration arrayByAddingObject:cachedConfig];
 }
 
 - (NSArray *)buildConfigurationRepresentation
@@ -158,13 +156,9 @@
       is in our configuration cache to make them easier to see. We use bold for the tokens. This
       is pretty much only used in developer mode, but it could have other uses? */
 
-    NSObjectIsEmptyAssertReturn(self.cachedConfiguration, nil);
-
     NSArray *resultArray = @[];
 
     for (NSDictionary *cachedConfig in self.cachedConfiguration) {
-        NSObjectIsEmptyAssertLoopContinue(cachedConfig);
-
         NSMutableString *cacheString = [NSMutableString string];
 
         NSArray *sortedKeys = [cachedConfig sortedDictionaryKeys];

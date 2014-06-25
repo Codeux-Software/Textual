@@ -40,7 +40,7 @@
 
 @interface IRCMessage : NSObject
 @property (nonatomic, assign) NSInteger numericReply;
-@property (nonatomic, strong) IRCPrefix *sender;
+@property (nonatomic, copy) IRCPrefix *sender;
 @property (nonatomic, copy) NSString *command;
 @property (nonatomic, copy) NSArray *params;
 @property (nonatomic, copy) NSDate *receivedAt;

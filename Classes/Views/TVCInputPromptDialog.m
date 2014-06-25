@@ -55,21 +55,21 @@
 	[RZMainBundle() loadCustomNibNamed:@"TVCInputPromptDialog" owner:self topLevelObjects:nil];
 
 	if (NSObjectIsNotEmpty(userInputText)) {
-		[_informationalInput setStringValue:userInputText];
+		[self.informationalInput setStringValue:userInputText];
 	}
 	
-	[_defaultButton	setTitle:defaultButtonTitle];
-	[_defaultButton setAction:@selector(modalDidCloseWithDefaultButton:)];
-	[_defaultButton setTarget:self];
+	[self.defaultButton	setTitle:defaultButtonTitle];
+	[self.defaultButton setAction:@selector(modalDidCloseWithDefaultButton:)];
+	[self.defaultButton setTarget:self];
 
-	[_alternateButton setTitle:alternateButtonTitle];
-	[_alternateButton setAction:@selector(modalDidCloseWithAlternateButton:)];
-	[_alternateButton setTarget:self];
+	[self.alternateButton setTitle:alternateButtonTitle];
+	[self.alternateButton setAction:@selector(modalDidCloseWithAlternateButton:)];
+	[self.alternateButton setTarget:self];
 	
-	[_informationalText	setStringValue:informativeText];
-	[_informationalTitle setStringValue:messageTitle];
+	[self.informationalText	setStringValue:informativeText];
+	[self.informationalTitle setStringValue:messageTitle];
 
-	_completionBlock = callbackBlock;
+	self.completionBlock = callbackBlock;
 
 	[self runModal];
 }
@@ -94,9 +94,9 @@
 	 but Textual has some strong APIs to assist. */
 	
 	/* Get base measurements. */
-	NSString *informativeText = [_informationalText stringValue];
+	NSString *informativeText = [self.informationalText stringValue];
 
-	NSRect infoTextFrame = [_informationalText frame];
+	NSRect infoTextFrame = [self.informationalText frame];
 
 	CGFloat newHeight = [informativeText pixelHeightInWidth:infoTextFrame.size.width forcedFont:[self informativeTextFont]];
 
@@ -113,27 +113,27 @@
 	[[self window] setFrame:windowFrame display:NO animate:NO];
 	[[self window] makeKeyAndOrderFront:nil];
 	
-	[_informationalText setFrame:infoTextFrame];
+	[self.informationalText setFrame:infoTextFrame];
 }
 
 - (void)modalDidCloseWithDefaultButton:(id)sender
 {
-	_defaultButtonClicked = YES;
+	self.defaultButtonClicked = YES;
 
 	[[self window] close];
 }
 
 - (void)modalDidCloseWithAlternateButton:(id)sender
 {
-	_defaultButtonClicked = NO;
+	self.defaultButtonClicked = NO;
 
 	[[self window] close];
 }
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if (_completionBlock) {
-		_completionBlock(_defaultButtonClicked, [_informationalInput stringValue]);
+	if (self.completionBlock) {
+		self.completionBlock(self.defaultButtonClicked, [self.informationalInput stringValue]);
 	}
 }
 

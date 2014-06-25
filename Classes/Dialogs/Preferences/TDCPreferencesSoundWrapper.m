@@ -43,7 +43,7 @@
 - (id)initWithEventType:(TXNotificationType)aEventType
 {
 	if ((self = [super init])) {
-		_eventType = aEventType;
+		self.eventType = aEventType;
 		
 		return self;
 	}
@@ -58,12 +58,12 @@
 
 - (NSString *)displayName
 {
-	return [sharedGrowlController() titleForEvent:_eventType];
+	return [sharedGrowlController() titleForEvent:self.eventType];
 }
 
 - (NSString *)alertSound
 {
-	NSString *soundd = [TPCPreferences soundForEvent:_eventType];
+	NSString *soundd = [TPCPreferences soundForEvent:self.eventType];
 
 	NSObjectIsEmptyAssertReturn(soundd, TXEmptySoundAlertLabel);
 
@@ -80,48 +80,48 @@
 		[TLOSoundPlayer playAlertSound:value];
 	}
 	
-	[TPCPreferences setSound:value forEvent:_eventType];
+	[TPCPreferences setSound:value forEvent:self.eventType];
 }
 
 - (BOOL)pushNotification
 {
-	return [TPCPreferences growlEnabledForEvent:_eventType];
+	return [TPCPreferences growlEnabledForEvent:self.eventType];
 }
 
 - (void)setPushNotification:(BOOL)value
 {
-	[TPCPreferences setGrowlEnabled:value forEvent:_eventType];
+	[TPCPreferences setGrowlEnabled:value forEvent:self.eventType];
 }
 
 - (BOOL)speakEvent
 {
-	return [TPCPreferences speakEvent:_eventType];
+	return [TPCPreferences speakEvent:self.eventType];
 }
 
 - (void)setSpeakEvent:(BOOL)value
 {
-	[TPCPreferences setEventIsSpoken:value forEvent:_eventType];
+	[TPCPreferences setEventIsSpoken:value forEvent:self.eventType];
 }
 
 - (BOOL)disabledWhileAway
 {
-	return [TPCPreferences disabledWhileAwayForEvent:_eventType];
+	return [TPCPreferences disabledWhileAwayForEvent:self.eventType];
 }
 
 - (void)setDisabledWhileAway:(BOOL)value
 {
-	[TPCPreferences setDisabledWhileAway:value forEvent:_eventType];
+	[TPCPreferences setDisabledWhileAway:value forEvent:self.eventType];
 }
 
 - (BOOL)bounceDockIcon
 {
-    return [TPCPreferences bounceDockIconForEvent:_eventType];
+    return [TPCPreferences bounceDockIconForEvent:self.eventType];
 }
 
 
 - (void)setBounceDockIcon:(BOOL)value
 {
-    [TPCPreferences setBounceDockIcon:value forEvent:_eventType];
+    [TPCPreferences setBounceDockIcon:value forEvent:self.eventType];
 }
 
 @end

@@ -3,7 +3,7 @@
 #import "TextualApplication.h"
 
 @interface TVCWebViewAutoScroll : NSObject
-@property (nonatomic, assign, readonly) NSRect lastFrame;
-@property (nonatomic, assign, readonly) NSRect lastVisibleRect;
+@property (nonatomic, assign) NSRect lastFrame;
+@property (nonatomic, assign) NSRect lastVisibleRect;
 @property (nonatomic, nweak) WebFrameView *webFrame;
 @end

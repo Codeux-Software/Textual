@@ -40,9 +40,11 @@
 @interface NSMenu (TXMenuHelper)
 @end
 
-@interface NSMenuItem (TXMenuItemHelper)
+@interface NSMenuItem ()
 @property (nonatomic, copy) NSString *userInfo;
+@end
 
+@interface NSMenuItem (TXMenuItemHelper)
 + (id)menuItemWithTitle:(NSString *)aString
 				 target:(id)aTarget
 				 action:(SEL)aSelector;

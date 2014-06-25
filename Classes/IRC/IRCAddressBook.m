@@ -44,24 +44,23 @@
 	if ((self = [super init])) {
 		self.itemUUID = [dic objectForKey:@"uniqueIdentifier" orUseDefault:[NSString stringWithUUID]];
 		
-		self.notifyJoins					= [dic integerForKey:@"notifyJoins" orUseDefault:NO];
-        
-		self.ignoreCTCP						= [dic integerForKey:@"ignoreCTCP" orUseDefault:NO];
-		self.ignoreJPQE						= [dic integerForKey:@"ignoreJPQE" orUseDefault:NO];
-		self.ignoreNotices					= [dic integerForKey:@"ignoreNotices" orUseDefault:NO];
-		self.ignorePrivateHighlights		= [dic integerForKey:@"ignorePMHighlights" orUseDefault:NO];
-		self.ignorePrivateMessages			= [dic integerForKey:@"ignorePrivateMsg" orUseDefault:NO];
-		self.ignorePublicHighlights			= [dic integerForKey:@"ignoreHighlights" orUseDefault:NO];
-		self.ignorePublicMessages			= [dic integerForKey:@"ignorePublicMsg" orUseDefault:NO];
-		self.ignoreFileTransferRequests		= [dic integerForKey:@"ignoreFileTransferRequests" orUseDefault:NO];
-		
-		self.hideMessagesContainingMatch	= [dic integerForKey:@"hideMessagesContainingMatch" orUseDefault:NO];
-		self.hideInMemberList				= [dic integerForKey:@"hideInMemberList" orUseDefault:NO];
-
-		/* entryType must be set above hostmask since setHostmask: reads entryType. */
 		self.entryType = [dic integerForKey:@"entryType" orUseDefault:IRCAddressBookIgnoreEntryType];
-
-		self.hostmask = [dic objectForKey:@"hostmask" orUseDefault:nil];
+		
+		self.hostmask						= [dic objectForKey:@"hostmask" orUseDefault:nil];
+		
+		self.notifyJoins					= [dic boolForKey:@"notifyJoins" orUseDefault:NO];
+        
+		self.ignoreCTCP						= [dic boolForKey:@"ignoreCTCP" orUseDefault:NO];
+		self.ignoreJPQE						= [dic boolForKey:@"ignoreJPQE" orUseDefault:NO];
+		self.ignoreNotices					= [dic boolForKey:@"ignoreNotices" orUseDefault:NO];
+		self.ignorePrivateHighlights		= [dic boolForKey:@"ignorePMHighlights" orUseDefault:NO];
+		self.ignorePrivateMessages			= [dic boolForKey:@"ignorePrivateMsg" orUseDefault:NO];
+		self.ignorePublicHighlights			= [dic boolForKey:@"ignoreHighlights" orUseDefault:NO];
+		self.ignorePublicMessages			= [dic boolForKey:@"ignorePublicMsg" orUseDefault:NO];
+		self.ignoreFileTransferRequests		= [dic boolForKey:@"ignoreFileTransferRequests" orUseDefault:NO];
+		
+		self.hideMessagesContainingMatch	= [dic boolForKey:@"hideMessagesContainingMatch" orUseDefault:NO];
+		self.hideInMemberList				= [dic boolForKey:@"hideInMemberList" orUseDefault:NO];
 
 		return self;
 	}
@@ -85,12 +84,12 @@
 
 - (void)setHostmask:(NSString *)hostmask
 {
-	if ([hostmask isEqualToString:self.hostmask]) {
+	if ([hostmask isEqualToString:_hostmask]) {
 		return;
 	}
 
 	if (self.entryType == IRCAddressBookUserTrackingEntryType) {
-		_hostmask = hostmask;
+		_hostmask = [hostmask copy];
 
 		self.hostmaskRegex = [NSString stringWithFormat:@"^%@!(.*?)@(.*?)$", hostmask];
 	} else {
@@ -110,7 +109,7 @@
 		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"~" withString:@"\\~"];
 		new_hostmask = [new_hostmask stringByReplacingOccurrencesOfString:@"*" withString:@"(.*?)"];
 
-		_hostmask = hostmask;
+		_hostmask = [hostmask copy];
 
 		self.hostmaskRegex = [NSString stringWithFormat:@"^%@$", new_hostmask];
 	}
@@ -120,8 +119,8 @@
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 
-	[dic safeSetObject:self.itemUUID				forKey:@"uniqueIdentifier"];
-	[dic safeSetObject:self.hostmask				forKey:@"hostmask"];
+	[dic maybeSetObject:self.itemUUID				forKey:@"uniqueIdentifier"];
+	[dic maybeSetObject:self.hostmask				forKey:@"hostmask"];
 
 	[dic setInteger:self.entryType					forKey:@"entryType"];
 
@@ -142,7 +141,7 @@
 	return dic;
 }
 
-- (id)mutableCopyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone *)zone
 {
 	return [[IRCAddressBookEntry allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
 }

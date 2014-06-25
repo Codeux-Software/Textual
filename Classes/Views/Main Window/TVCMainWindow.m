@@ -46,7 +46,7 @@
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation
 {
 	if ((self = [super initWithContentRect:contentRect styleMask:windowStyle backing:bufferingType defer:deferCreation])) {
-		_keyEventHandler = [TLOKeyEventHandler new];
+		self.keyEventHandler = [TLOKeyEventHandler new];
 	}
 	
 	return self;
@@ -62,8 +62,8 @@
 	
 	[self setAlphaValue:[TPCPreferences themeTransparency]];
 	
-	[_loadingScreen hideAll:NO];
-	[_loadingScreen popLoadingConfigurationView];
+	[self.loadingScreen hideAll:NO];
+	[self.loadingScreen popLoadingConfigurationView];
 	
 	[self makeMainWindow];
 	[self makeKeyAndOrderFront:nil];
@@ -74,36 +74,32 @@
 	
 	[menuController() setupOtherServices];
 	
-	[_inputTextField redrawOriginPoints:YES];
-	[_inputTextField updateTextDirection];
+	[self.inputTextField redrawOriginPoints:YES];
+	[self.inputTextField updateTextDirection];
 	
-	[_inputTextField setBackgroundColor:[NSColor clearColor]];
+	[self.inputTextField setBackgroundColor:[NSColor clearColor]];
 	
 	[self registerKeyHandlers];
 	
-	[_contentSplitView setDelegate:self];
+	[self.contentSplitView setDelegate:self];
 	
-	[_formattingMenu enableWindowField:_inputTextField];
-	
-	[masterController() setWorld:[IRCWorld new]];
+	[self.formattingMenu enableWindowField:self.inputTextField];
 	
 	[worldController() setupConfiguration];
 	
-	[_serverList setDelegate:worldController()];
-	[_serverList setDataSource:worldController()];
-	[_memberList setKeyDelegate:worldController()];
+	[self.serverList setDelegate:worldController()];
+	[self.serverList setDataSource:worldController()];
+	[self.memberList setKeyDelegate:worldController()];
 	
-	[_memberList setKeyDelegate:worldController()];
+	[self.memberList setKeyDelegate:worldController()];
 	
-	[_memberList createBadgeRenderer];
-	
-	[_serverList reloadData];
+	[self.serverList reloadData];
 	
 	[worldController() setupTree];
 	[worldController() setupOtherServices];
 	
-	[_memberList setTarget:menuController()];
-	[_memberList setDoubleAction:@selector(memberInMemberListDoubleClicked:)];
+	[self.memberList setTarget:menuController()];
+	[self.memberList setDoubleAction:@selector(memberInMemberListDoubleClicked:)];
 
 	[masterController() performAwakeningAfterMainWindowDidLoad];
 }
@@ -162,7 +158,7 @@
 {
 	[self windowDidResignKey:notification];
 	
-	[_memberList destroyUserInfoPopoverOnWindowKeyChange];
+	[self.memberList destroyUserInfoPopoverOnWindowKeyChange];
 }
 
 - (BOOL)window:(NSWindow *)window shouldPopUpDocumentPathMenu:(NSMenu *)menu
@@ -202,7 +198,7 @@
 	if (formattingMenuSet == NO) {
 		NSMenu *editorMenu = [mainWindowTextField() menu];
 		
-		NSMenuItem *formatMenu = [_formattingMenu formatterMenu];
+		NSMenuItem *formatMenu = [self.formattingMenu formatterMenu];
 		
 		if (formatMenu) {
 			NSInteger fmtrIndex = [editorMenu indexOfItemWithTitle:[formatMenu title]];
@@ -212,13 +208,13 @@
 				[editorMenu addItem:formatMenu];
 			}
 			
-			[_inputTextField setMenu:editorMenu];
+			[self.inputTextField setMenu:editorMenu];
 		}
 		
 		formattingMenuSet = YES;
 	}
 	
-	return _inputTextField;
+	return self.inputTextField;
 }
 
 #pragma mark -
@@ -226,23 +222,23 @@
 
 - (void)setKeyHandlerTarget:(id)target
 {
-	[_keyEventHandler setTarget:target];
+	[self.keyEventHandler setTarget:target];
 }
 
 - (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods
 {
-	[_keyEventHandler registerSelector:selector key:code modifiers:mods];
+	[self.keyEventHandler registerSelector:selector key:code modifiers:mods];
 }
 
 - (void)registerKeyHandler:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods
 {
-	[_keyEventHandler registerSelector:selector character:c modifiers:mods];
+	[self.keyEventHandler registerSelector:selector character:c modifiers:mods];
 }
 
 - (void)sendEvent:(NSEvent *)e
 {
 	if ([e type] == NSKeyDown) {
-		if ([_keyEventHandler processKeyEvent:e]) {
+		if ([self.keyEventHandler processKeyEvent:e]) {
 			return;
 		}
 	}
@@ -375,7 +371,7 @@
 	if ([TPCPreferences controlEnterSnedsMessage]) {
 		[self textEntered];
 	} else {
-		[_inputTextField keyDownToSuper:e];
+		[self.inputTextField keyDownToSuper:e];
 	}
 }
 
@@ -395,24 +391,24 @@
 	TVCMainWindowNegateActionWithAttachedSheet();
 	
 	if (scroll) {
-		NSInteger nol = [_inputTextField numberOfLines];
+		NSInteger nol = [self.inputTextField numberOfLines];
 		
 		if (nol >= 2) {
-			BOOL atTop = [_inputTextField isAtTopOfView];
-			BOOL atBottom = [_inputTextField isAtBottomOfView];
+			BOOL atTop = [self.inputTextField isAtTopOfView];
+			BOOL atBottom = [self.inputTextField isAtBottomOfView];
 			
 			if ((atTop			&& [event keyCode] == TXKeyDownArrowCode) ||
 				(atBottom		&& [event keyCode] == TXKeyUpArrowCode) ||
 				(atTop == NO	&& atBottom == NO))
 			{
-				[_inputTextField keyDownToSuper:event];
+				[self.inputTextField keyDownToSuper:event];
 				
 				return;
 			}
 		}
 	}
 	
-	NSAttributedString *s = [_inputTextField attributedStringValue];
+	NSAttributedString *s = [self.inputTextField attributedStringValue];
 	
 	if (up) {
 		s = [[TXSharedApplication sharedInputHistoryManager] up:s];
@@ -421,9 +417,9 @@
 	}
 	
 	if (s) {
-		[_inputTextField setAttributedStringValue:s];
-		[_inputTextField resetTextFieldCellSize:NO];
-		[_inputTextField focus];
+		[self.inputTextField setAttributedStringValue:s];
+		[self.inputTextField resetTextFieldCellSize:NO];
+		[self.inputTextField focus];
 	}
 }
 
@@ -451,10 +447,10 @@
 {
 	TVCMainWindowNegateActionWithAttachedSheet();
 	
-	if ([_formattingMenu boldSet]) {
-		[_formattingMenu removeBoldCharFromTextBox:nil];
+	if ([self.formattingMenu boldSet]) {
+		[self.formattingMenu removeBoldCharFromTextBox:nil];
 	} else {
-		[_formattingMenu insertBoldCharIntoTextBox:nil];
+		[self.formattingMenu insertBoldCharIntoTextBox:nil];
 	}
 }
 
@@ -462,10 +458,10 @@
 {
 	TVCMainWindowNegateActionWithAttachedSheet();
 	
-	if ([_formattingMenu italicSet]) {
-		[_formattingMenu removeItalicCharFromTextBox:nil];
+	if ([self.formattingMenu italicSet]) {
+		[self.formattingMenu removeItalicCharFromTextBox:nil];
 	} else {
-		[_formattingMenu insertItalicCharIntoTextBox:nil];
+		[self.formattingMenu insertItalicCharIntoTextBox:nil];
 	}
 }
 
@@ -473,10 +469,10 @@
 {
 	TVCMainWindowNegateActionWithAttachedSheet();
 	
-	if ([_formattingMenu underlineSet]) {
-		[_formattingMenu removeUnderlineCharFromTextBox:nil];
+	if ([self.formattingMenu underlineSet]) {
+		[self.formattingMenu removeUnderlineCharFromTextBox:nil];
 	} else {
-		[_formattingMenu insertUnderlineCharIntoTextBox:nil];
+		[self.formattingMenu insertUnderlineCharIntoTextBox:nil];
 	}
 }
 
@@ -484,15 +480,15 @@
 {
 	TVCMainWindowNegateActionWithAttachedSheet();
 	
-	if ([_formattingMenu foregroundColorSet]) {
-		[_formattingMenu removeForegroundColorCharFromTextBox:nil];
+	if ([self.formattingMenu foregroundColorSet]) {
+		[self.formattingMenu removeForegroundColorCharFromTextBox:nil];
 	} else {
-		NSRect fieldRect = [_inputTextField frame];
+		NSRect fieldRect = [self.inputTextField frame];
 		
 		fieldRect.origin.y -= 200;
 		fieldRect.origin.x += 100;
 		
-		[[_formattingMenu foregroundColorMenu] popUpMenuPositioningItem:nil atLocation:fieldRect.origin inView:_inputTextField];
+		[[self.formattingMenu foregroundColorMenu] popUpMenuPositioningItem:nil atLocation:fieldRect.origin inView:self.inputTextField];
 	}
 }
 
@@ -500,26 +496,26 @@
 {
 	TVCMainWindowNegateActionWithAttachedSheet();
 	
-	if ([_formattingMenu foregroundColorSet]) {
-		if ([_formattingMenu backgroundColorSet]) {
-			[_formattingMenu removeForegroundColorCharFromTextBox:nil];
+	if ([self.formattingMenu foregroundColorSet]) {
+		if ([self.formattingMenu backgroundColorSet]) {
+			[self.formattingMenu removeForegroundColorCharFromTextBox:nil];
 		} else {
-			NSRect fieldRect = [_inputTextField frame];
+			NSRect fieldRect = [self.inputTextField frame];
 			
 			fieldRect.origin.y -= 200;
 			fieldRect.origin.x += 100;
 			
-			[[_formattingMenu backgroundColorMenu] popUpMenuPositioningItem:nil atLocation:fieldRect.origin inView:_inputTextField];
+			[[self.formattingMenu backgroundColorMenu] popUpMenuPositioningItem:nil atLocation:fieldRect.origin inView:self.inputTextField];
 		}
 	}
 }
 
 - (void)exitFullscreenMode:(NSEvent *)e
 {
-	if ([self isInFullscreenMode] && [_inputTextField isFocused] == NO) {
+	if ([self isInFullscreenMode] && [self.inputTextField isFocused] == NO) {
 		[self toggleFullScreen:nil];
 	} else {
-		[_inputTextField keyDown:e];
+		[self.inputTextField keyDown:e];
 	}
 }
 
@@ -549,19 +545,19 @@
 
 - (void)inputHandler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
 {
-	[_inputTextField registerKeyHandler:sel key:keyCode modifiers:mods];
+	[self.inputTextField registerKeyHandler:sel key:keyCode modifiers:mods];
 }
 
 - (void)inputHandler:(SEL)sel char:(UniChar)c mods:(NSUInteger)mods
 {
-	[_inputTextField registerKeyHandler:sel character:c modifiers:mods];
+	[self.inputTextField registerKeyHandler:sel character:c modifiers:mods];
 }
 
 - (void)registerKeyHandlers
 {
 	[self setKeyHandlerTarget:self];
 	
-	[_inputTextField setKeyHandlerTarget:self];
+	[self.inputTextField setKeyHandlerTarget:self];
 	
 	/* Window keyboard shortcuts. */
 	[self handler:@selector(exitFullscreenMode:)				code:TXKeyEscapeCode mods:0];
@@ -602,9 +598,9 @@
 
 - (void)sendText:(NSString *)command
 {
-	NSAttributedString *as = [_inputTextField attributedStringValue];
+	NSAttributedString *as = [self.inputTextField attributedStringValue];
 	
-	[_inputTextField setAttributedStringValue:[NSAttributedString emptyString]];
+	[self.inputTextField setAttributedStringValue:[NSAttributedString emptyString]];
 	
 	if ([as length] > 0) {
 		[worldController() inputText:as command:command];
@@ -651,7 +647,7 @@
 
 	NSArray *touchArray = [touches allObjects];
 
-	_cachedSwipeOriginPoint = [self touchesToPoint:touchArray[0] fingerB:touchArray[1]];
+	self.cachedSwipeOriginPoint = [self touchesToPoint:touchArray[0] fingerB:touchArray[1]];
 }
 
 - (NSValue *)touchesToPoint:(NSTouch *)fingerA fingerB:(NSTouch *)fingerB
@@ -675,19 +671,19 @@
 
 	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseAny inView:nil];
 
-	if (_cachedSwipeOriginPoint == nil || NSDissimilarObjects([touches count], 2)) {
-		_cachedSwipeOriginPoint = nil;
+	if (self.cachedSwipeOriginPoint == nil || NSDissimilarObjects([touches count], 2)) {
+		self.cachedSwipeOriginPoint = nil;
 
 		return;
 	}
 
 	NSArray *touchArray = [touches allObjects];
 
-	NSPoint origin = [_cachedSwipeOriginPoint pointValue];
+	NSPoint origin = [self.cachedSwipeOriginPoint pointValue];
 	
 	NSPoint dest = [[self touchesToPoint:touchArray[0] fingerB:touchArray[1]] pointValue];
 
-	_cachedSwipeOriginPoint = nil;
+	self.cachedSwipeOriginPoint = nil;
 
     NSPoint delta = NSMakePoint((origin.x - dest.x),
 								(origin.y - dest.y));
@@ -751,10 +747,10 @@
 - (BOOL)splitView:(NSSplitView *)splitView shouldHideDividerAtIndex:(NSInteger)dividerIndex
 {
 	if (dividerIndex == 0) {
-		return [_contentSplitView isServerListCollapsed];
+		return [self.contentSplitView isServerListCollapsed];
 	} else {
 		if (dividerIndex == 1) {
-			return [_contentSplitView isMemberListCollapsed];
+			return [self.contentSplitView isMemberListCollapsed];
 		} else {
 			return NO;
 		}

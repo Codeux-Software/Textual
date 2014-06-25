@@ -280,7 +280,7 @@ static NSURL *logToDiskLocationResolvedBookmark;
 	if (resolveError) {
 		DebugLogToConsole(@"Error creating bookmark for URL: %@", [resolveError localizedDescription]);
 	} else {
-			 logToDiskLocationResolvedBookmark = resolvedBookmark;
+			 logToDiskLocationResolvedBookmark = [resolvedBookmark copy];
 		
 		if ([logToDiskLocationResolvedBookmark startAccessingSecurityScopedResource] == NO) {
 			DebugLogToConsole(@"Failed to access bookmark.");

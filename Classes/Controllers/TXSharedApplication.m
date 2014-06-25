@@ -130,6 +130,27 @@
 	return sharedSelf;
 }
 
++ (OELReachability *)sharedNetworkReachabilityObject
+{
+	static id sharedSelf = nil;
+	
+	static dispatch_once_t onceToken;
+	
+	dispatch_once(&onceToken, ^{
+		sharedSelf = [OELReachability reachabilityForInternetConnection];
+		
+		[sharedSelf setReachableBlock:^(OELReachability *reachability) {
+			[[NSObject worldController] reachabilityChanged:YES];
+		}];
+		
+		[sharedSelf setUnreachableBlock:^(OELReachability *reachability) {
+			[[NSObject worldController] reachabilityChanged:NO];
+		}];
+	});
+	
+	return sharedSelf;
+}
+
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 + (TPCPreferencesCloudSync *)sharedCloudSyncManager
 {

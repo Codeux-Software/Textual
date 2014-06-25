@@ -52,20 +52,20 @@
 
 - (void)start:(NSString *)nickname
 {
-	[_tnewNicknameField setStringValue:nickname];
-	[_toldNicknameField setStringValue:nickname];
+	[self.tnewNicknameField setStringValue:nickname];
+	[self.toldNicknameField setStringValue:nickname];
 	
-	[[self sheet] makeFirstResponder:_tnewNicknameField];
+	[self.sheet makeFirstResponder:self.tnewNicknameField];
 	
 	[self startSheet];
 }
 
 - (void)ok:(id)sender
 {
-	if ([[self delegate] respondsToSelector:@selector(nickSheet:didInputNickname:)]) {
-		NSString *newNickname = [_tnewNicknameField firstTokenStringValue];
+	if ([self.delegate respondsToSelector:@selector(nickSheet:didInputNickname:)]) {
+		NSString *newNickname = [self.tnewNicknameField firstTokenStringValue];
 		
-		[[self delegate] nickSheet:self didInputNickname:newNickname];
+		[self.delegate nickSheet:self didInputNickname:newNickname];
 	}
 	
 	[super ok:sender];
@@ -76,8 +76,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([[self delegate] respondsToSelector:@selector(nickSheetWillClose:)]) {
-		[[self delegate] nickSheetWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(nickSheetWillClose:)]) {
+		[self.delegate nickSheetWillClose:self];
 	}
 }
 

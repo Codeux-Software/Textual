@@ -42,7 +42,7 @@
 
 @interface TVCLogControllerOperationItem : NSOperation
 @property (nonatomic, nweak) TVCLogController *controller;
-@property (nonatomic, strong) TVCLogControllerOperationBlock executionBlock;
+@property (nonatomic, copy) TVCLogControllerOperationBlock executionBlock;
 @property (nonatomic, assign) BOOL isStandalone;
 
 - (NSInteger)dependencyCount;
@@ -181,7 +181,7 @@
 - (void)main
 {
 	/* Perform block. */
-	_executionBlock(self);
+	self.executionBlock(self);
 
 	/* Kill existing dependency. */
 	NSArray *operations = [self dependencies];

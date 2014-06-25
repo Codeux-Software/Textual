@@ -65,6 +65,7 @@
 + (TLOSpeechSynthesizer *)sharedSpeechSynthesizer;
 + (TLONicknameCompletionStatus *)sharedNicknameCompletionStatus;
 + (TVCQueuedCertificateTrustPanel *)sharedQueuedCertificateTrustPanel;
++ (OELReachability *)sharedNetworkReachabilityObject;
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 + (TPCPreferencesCloudSync *)sharedCloudSyncManager;

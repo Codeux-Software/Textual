@@ -78,7 +78,7 @@
 {
 	IRCClient *currentNetwork = [worldController() findClientById:_clientID];
 	
-	[[currentNetwork highlights] removeAllObjects];
+	[currentNetwork setHighlights:@[]];
 
     [self reloadTable];
 }
@@ -102,6 +102,8 @@
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
 {
+	/* See the addHighlight… in IRCClieht.m for a description of the format
+	 of highlight entries for a client. */
 	NSObjectIsEmptyAssertReturn(_highlightList, _rowHeightMultiplier);
 	
 	NSRect columnRect = [tableView rectOfColumn:1];
@@ -126,7 +128,9 @@
 	} else if ([[column identifier] isEqualToString:@"time"]) {
 		NSInteger timeInterval = [item integerAtIndex:1];
 		
-		return TXTLS(@"BasicLanguage[1216]", TXHumanReadableTimeInterval([NSDate secondsSinceUnixTimestamp:timeInterval], YES, 0));
+		NSString *timestring = TXHumanReadableTimeInterval([NSDate secondsSinceUnixTimestamp:timeInterval], YES, 0);
+		
+		return TXTLS(@"BasicLanguage[1216]", timestring);
     } else {
 		return item[2];
     }
@@ -137,8 +141,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([[self delegate] respondsToSelector:@selector(highlightListSheetWillClose:)]) {
-		[[self delegate] highlightListSheetWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(highlightListSheetWillClose:)]) {
+		[self.delegate highlightListSheetWillClose:self];
 	}
 }
 

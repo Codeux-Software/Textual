@@ -70,13 +70,13 @@
 
 	[self startSheet];
 
-	[_progressIndicator startAnimation:nil];
+	[self.progressIndicator startAnimation:nil];
 }
 
 - (void)stop
 {
 	/* End work sheet. */
-	[_progressIndicator stopAnimation:nil];
+	[self.progressIndicator stopAnimation:nil];
 
 	[self endSheet];
 }

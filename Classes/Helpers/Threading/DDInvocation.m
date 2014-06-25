@@ -33,50 +33,50 @@
 
 - (id)init
 {
-	_target = nil;
-	_invocation = nil;
-	_parentThread = nil;
-	_waitUntilDone = NO;
-	_threadType = DDInvocationBackgroundThread;
+	self.target = nil;
+	self.invocation = nil;
+	self.parentThread = nil;
+	self.waitUntilDone = NO;
+	self.threadType = DDInvocationBackgroundThread;
 	
 	return self;
 }
 
 - (id)prepareWithInvocationTarget:(id)inTarget
 {
-	_target = inTarget;
+	self.target = inTarget;
 	
 	return self;
 }
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)selector
 {
-	return [_target methodSignatureForSelector:selector];
+	return [self.target methodSignatureForSelector:selector];
 }
 
 - (void)forwardInvocation:(NSInvocation *)ioInvocation
 {
-	[ioInvocation setTarget:_target];
+	[ioInvocation setTarget:self.target];
 	
-	_invocation = ioInvocation;
+	self.invocation = ioInvocation;
 	
-	if (_waitUntilDone == NO) {
-		[_invocation retainArguments];
+	if (self.waitUntilDone == NO) {
+		[self.invocation retainArguments];
 	}
 	
-	if (_parentThread && _threadType == DDInvocationParentThread) {
-		[_invocation performSelector:@selector(performInvocation:)
-							onThread:_parentThread
-						  withObject:_invocation
-					   waitUntilDone:NO];
+	if (self.parentThread && self.threadType == DDInvocationParentThread) {
+		[self.invocation performSelector:@selector(performInvocation:)
+								onThread:self.parentThread
+							  withObject:self.invocation
+						   waitUntilDone:NO];
 	} else {
-		if (_threadType == DDInvocationBackgroundThread) {
-			[_invocation performSelectorInBackground:@selector(performInvocation:)
-										  withObject:_invocation];
+		if (self.threadType == DDInvocationBackgroundThread) {
+			[self.invocation performSelectorInBackground:@selector(performInvocation:)
+											  withObject:self.invocation];
 		} else {
-			[_invocation performSelectorOnMainThread:@selector(performInvocation:)
-										  withObject:_invocation
-									   waitUntilDone:_waitUntilDone];
+			[self.invocation performSelectorOnMainThread:@selector(performInvocation:)
+											  withObject:self.invocation
+										   waitUntilDone:self.waitUntilDone];
 		}
 	}
 }

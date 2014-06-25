@@ -48,25 +48,25 @@
 
 - (void)popWelcomeAddServerView
 {
-	if (_stackLocked == NO) {
+	if (self.stackLocked == NO) {
 #ifdef TEXTUAL_TRIAL_BINARY
-		[self displayView:_welcomeAddServerTrialView];
+		[self displayView:self.welcomeAddServerTrialView];
 		
-		[_welcomePurchaseTextualButton setAction:@selector(openMacAppStoreDownloadPage:)];
-		[_welcomePurchaseTextualButton setTarget:menuController()];
+		[self.welcomePurchaseTextualButton setAction:@selector(openMacAppStoreDownloadPage:)];
+		[self.welcomePurchaseTextualButton setTarget:menuController()];
 #else
-		[self displayView:_welcomeAddServerNormalView];
+		[self displayView:self.welcomeAddServerNormalView];
 #endif
 	}
 }
 
 - (void)popLoadingConfigurationView
 {
-	if (_stackLocked == NO) {
-		[self displayView:_loadingConfigurationView];
+	if (self.stackLocked == NO) {
+		[self displayView:self.loadingConfigurationView];
 
-		[_loadingConfigurationViewPI startAnimation:nil];
-		[_loadingConfigurationViewPI setDisplayedWhenStopped:YES];
+		[self.loadingConfigurationViewPI startAnimation:nil];
+		[self.loadingConfigurationViewPI setDisplayedWhenStopped:YES];
 	}	
 }
 
@@ -75,9 +75,9 @@
 
 - (void)hideLoadingConfigurationView
 {
-	if (_stackLocked == NO) {
-		[_loadingConfigurationViewPI stopAnimation:nil];
-		[_loadingConfigurationViewPI setDisplayedWhenStopped:NO];
+	if (self.stackLocked == NO) {
+		[self.loadingConfigurationViewPI stopAnimation:nil];
+		[self.loadingConfigurationViewPI setDisplayedWhenStopped:NO];
 	}
 	
 	[self hideAll:YES];
@@ -85,8 +85,8 @@
 
 - (void)hideLoadingConfigurationView:(BOOL)animate
 {
-	if (_stackLocked == NO) {
-		[_loadingConfigurationViewPI stopAnimation:nil];
+	if (self.stackLocked == NO) {
+		[self.loadingConfigurationViewPI stopAnimation:nil];
 	}
 
 	[self hideAll:animate];
@@ -113,7 +113,7 @@
 
 - (void)hideAll:(BOOL)animate
 {
-	if (_stackLocked == NO) {
+	if (self.stackLocked == NO) {
 		for (NSView *alv in [self allViews]) {
 			if ([alv isHidden] == NO) {
 				[self hideView:alv animate:animate];
@@ -129,8 +129,8 @@
 {
 	NSRect viewFrame = [view frame];
 	
-	[_loadingScreenMinimumWidthConstraint setConstant:viewFrame.size.width];
-	[_loadingScreenMinimumHeightConstraint setConstant:viewFrame.size.height];
+	[self.loadingScreenMinimumWidthConstraint setConstant:viewFrame.size.width];
+	[self.loadingScreenMinimumHeightConstraint setConstant:viewFrame.size.height];
 	
 	[self disableBackgroundControls];
 
@@ -155,8 +155,8 @@
 	
 	[self enableBackgroundControls];
 	
-	[_loadingScreenMinimumWidthConstraint setConstant:0];
-	[_loadingScreenMinimumHeightConstraint setConstant:0];
+	[self.loadingScreenMinimumWidthConstraint setConstant:0];
+	[self.loadingScreenMinimumHeightConstraint setConstant:0];
 	
 	if (animate == NO) {
 		[view setHidden:YES];
@@ -167,14 +167,14 @@
 		[RZAnimationCurrentContext() setDuration:0.8];
 
 		[NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-			_stackLocked = animate;
+			self.stackLocked = animate;
 
 			[[self animator] setAlphaValue:0.0];
 		} completionHandler:^{
 			[view setHidden:YES];
 			[self setHidden:YES];
 
-			_stackLocked = NO;
+			self.stackLocked = NO;
 		}];
 	}
 }
@@ -184,7 +184,7 @@
 
 - (BOOL)viewIsVisible
 {
-	return ([self isHidden] == NO || _stackLocked);
+	return ([self isHidden] == NO || self.stackLocked);
 }
 
 - (NSArray *)allViews
@@ -192,9 +192,9 @@
 	/* For future expansion. */
 
 	return @[
-		_loadingConfigurationView,
-		_welcomeAddServerNormalView,
-		_welcomeAddServerTrialView
+		self.loadingConfigurationView,
+		self.welcomeAddServerNormalView,
+		self.welcomeAddServerTrialView
 	];
 }
 
@@ -205,7 +205,7 @@
 	
 	[mainWindowTextField() updateSegmentedController];
 
-	[_backgroundContentView setHidden:YES];
+	[self.backgroundContentView setHidden:YES];
 }
 
 - (void)enableBackgroundControls
@@ -215,7 +215,7 @@
 	
 	[mainWindowTextField() updateSegmentedController];
 
-	[_backgroundContentView setHidden:NO];
+	[self.backgroundContentView setHidden:NO];
 }
 
 @end

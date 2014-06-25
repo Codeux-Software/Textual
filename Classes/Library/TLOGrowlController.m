@@ -41,7 +41,7 @@
 #define _clickInterval			2
 
 @interface TLOGrowlController ()
-@property (nonatomic, strong) NSDictionary *lastClickedContext;
+@property (nonatomic, copy) NSDictionary *lastClickedContext;
 @property (nonatomic, assign) NSTimeInterval lastClickedTime;
 @end
 
@@ -309,14 +309,14 @@
 {
 	NSTimeInterval now = [NSDate epochTime];
 	
-	if ((now - _lastClickedTime) < _clickInterval) {
-		if (   _lastClickedContext && [_lastClickedContext isEqual:context]) {
+	if ((now - self.lastClickedTime) < _clickInterval) {
+		if (   self.lastClickedContext && [self.lastClickedContext isEqual:context]) {
 			return;
 		}
 	}
 	
-	_lastClickedTime = now;
-	_lastClickedContext = context;
+	self.lastClickedTime = now;
+	self.lastClickedContext = context;
 
 	if (changeFocus) {
 		[mainWindow() makeKeyAndOrderFront:nil];
@@ -359,13 +359,13 @@
 				if ([message hasPrefix:@"/"] && [message hasPrefix:@"//"] == NO && [message length] > 1) {
 					message = [message substringFromIndex:1];
 					
-					[c.client sendCommand:message
-						   completeTarget:YES
-								   target:[c name]];
+					[[c associatedClient] sendCommand:message
+									   completeTarget:YES
+											   target:[c name]];
 				} else {
-					[c.client sendText:[NSAttributedString emptyStringWithBase:message]
-							   command:IRCPrivateCommandIndex("privmsg")
-							   channel:c];
+					[[c associatedClient] sendText:[NSAttributedString emptyStringWithBase:message]
+										   command:IRCPrivateCommandIndex("privmsg")
+										   channel:c];
 				}
 			}
 		}

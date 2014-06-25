@@ -74,18 +74,18 @@
 
 - (void)channelDoubleClicked
 {
-	[menuController() setPointedChannelName:_channelName];
+	[menuController() setPointedChannelName:self.channelName];
 
-	_channelName = nil;
+	self.channelName = nil;
 	
 	[menuController() joinClickedChannel:nil];
 }
 
 - (void)nicknameDoubleClicked
 {
-	[menuController() setPointedNickname:_nickname];
+	[menuController() setPointedNickname:self.nickname];
 
-	_nickname = nil;
+	self.nickname = nil;
 	
 	[menuController() memberInChannelViewDoubleClicked:nil];
 }
@@ -105,14 +105,14 @@
 	TVCLogController *controller = [worldController() selectedViewController];
 	
 	if ([controller associatedChannel] == nil) {
-		_nickname = nil;
+		self.nickname = nil;
 	}
 	
-	if (_anchorURL)
+	if (self.anchorURL)
 	{
-		[menuController() setPointedUrl:_anchorURL];
+		[menuController() setPointedUrl:self.anchorURL];
 		
-		_anchorURL = nil;
+		self.anchorURL = nil;
 
 		NSMenu *urlMenu = [menuController() tcopyURLMenu];
 		
@@ -122,11 +122,11 @@
 		
 		return ary;
 	}
-	else if (_nickname)
+	else if (self.nickname)
 	{
-		[menuController() setPointedNickname:_nickname];
+		[menuController() setPointedNickname:self.nickname];
 
-		_nickname = nil;
+		self.nickname = nil;
 
 		BOOL isIRCop = [[worldController() selectedClient] hasIRCopAccess];
 
@@ -142,11 +142,11 @@
 		
 		return ary;
 	}
-	else if (_channelName)
+	else if (self.channelName)
 	{
-		[menuController() setPointedChannelName:_channelName];
+		[menuController() setPointedChannelName:self.channelName];
 		
-		_channelName = nil;
+		self.channelName = nil;
 
 		NSMenu *chanMenu = [menuController() joinChannelMenu];
 		

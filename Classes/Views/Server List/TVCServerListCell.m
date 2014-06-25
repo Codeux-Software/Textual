@@ -73,7 +73,7 @@
 
 - (NSInteger)rowIndex
 {
-	return [mainWindowServerList() rowForItem:_cellItem];
+	return [mainWindowServerList() rowForItem:self.cellItem];
 }
 
 - (NSDictionary *)drawingContext
