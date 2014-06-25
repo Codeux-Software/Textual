@@ -57,7 +57,7 @@
  is used in place of these. */
 #define TPIBundleFromClass()				[NSBundle bundleForClass:[self class]]
 
-#define TPILocalizatedString(k, ...)		TXLocalizedString(k, TPIBundleFromClass(), ##__VA_ARGS__)
+#define TPILocalizatedString(k, ...)		TXLocalizedStringAlternative(TPIBundleFromClass(), k, ##__VA_ARGS__)
 
 @protocol THOPluginProtocol <NSObject>
 

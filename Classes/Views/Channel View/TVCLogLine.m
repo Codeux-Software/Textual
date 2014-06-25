@@ -90,10 +90,10 @@
 		case TVCLogLineQuitType:							{ return @"quit";						}
 		case TVCLogLineTopicType:							{ return @"topic";						}
 		case TVCLogLineWebsiteType:							{ return @"website";					}
-		default:											{ return NSStringEmptyPlaceholder;		}
+		default:											{ return nil;							}
 	}
 	
-	return NSStringEmptyPlaceholder;
+	return nil;
 }
 
 + (NSString *)memberTypeString:(TVCLogLineMemberType)type

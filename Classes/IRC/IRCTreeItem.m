@@ -106,12 +106,12 @@
 
 - (NSString *)label
 {
-	return NSStringEmptyPlaceholder;
+	return nil;
 }
 
 - (NSString *)name
 {
-	return NSStringEmptyPlaceholder;
+	return nil;
 }
 
 @end
