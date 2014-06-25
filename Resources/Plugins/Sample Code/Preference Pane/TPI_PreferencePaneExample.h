@@ -40,6 +40,6 @@
 @interface TPI_PreferencePaneExample : NSObject <THOPluginProtocol>
 @property (nonatomic, strong) IBOutlet NSView *ourView;
 
-- (NSView *)preferencesView;
-- (NSString *)preferencesMenuItemName;
+- (NSView *)pluginPreferencesPaneView;
+- (NSString *)pluginPreferencesPaneMenuItemName;
 @end

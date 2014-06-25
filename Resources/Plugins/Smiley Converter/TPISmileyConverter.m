@@ -78,7 +78,7 @@
 
 - (NSString *)pluginPreferencesPaneMenuItemName
 {
-	return TPILocalizatedString(@"BasicLanguage[1000]");
+	return TPILocalizedString(@"BasicLanguage[1000]");
 }
 
 - (NSString *)willRenderMessage:(NSString *)newMessage lineType:(TVCLogLineType)lineType memberType:(TVCLogLineMemberType)memberType

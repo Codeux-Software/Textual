@@ -143,7 +143,7 @@
 						}
 					} else {
 						if ([c isPrivateMessage]) {
-							[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1002]") channel:c];
+							[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1002]") channel:c];
 						} else {
 							[client printDebugInformation:BLS(1003) channel:c];
 						}
@@ -157,25 +157,25 @@
 				[client printDebugInformation:BLS(1004) channel:c];
 			} else if ([commandString isEqualToString:@"KEY"]) {
 				if ([[c config] encryptionKeyIsSet]) {
-					[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1001]", [[c config] encryptionKey]) channel:c];
+					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1001]", [[c config] encryptionKey]) channel:c];
 				} else {	
-					[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1000]") channel:c];
+					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1000]") channel:c];
 				}
 			} else if ([commandString isEqualToString:@"KEYX"]) {
 				if ([c isPrivateMessage] == NO) {
-					[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1008]") channel:c];
+					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1008]") channel:c];
 				} else {
 					if ([self keyExchangeRequestExists:c]) {
-						[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1009]", [c name]) channel:c];
+						[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1009]", [c name]) channel:c];
 					} else if ([[c config] encryptionKeyIsSet]) {
-						[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1016]", [c name]) channel:c];
+						[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1016]", [c name]) channel:c];
 					} else {
 						CFDH1080 *keyRequest = [CFDH1080 new];
 
 						NSString *publicKey = [keyRequest generatePublicKey];
 
 						if (NSObjectIsEmpty(publicKey)) {
-							[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1003]") channel:c];
+							[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1003]") channel:c];
 						} else {
 							NSString *requestKey = [self keyExchangeDictionaryKey:c];
 							
@@ -189,7 +189,7 @@
 
 							[self keyExchangeSetupTimeoutTimer:requestKey];
 							
-							[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1011]", [c name]) channel:c];
+							[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1011]", [c name]) channel:c];
 						}
 					}
 				}
@@ -229,7 +229,7 @@
 	IRCChannel *channel = [client findChannelOrCreate:requestSender isPrivateMessage:YES];
 
     if ([[channel config] encryptionKeyIsSet]) {
-        [client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1015]", [channel name]) channel:channel];
+        [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1015]", [channel name]) channel:channel];
 
         return;
     }
@@ -242,8 +242,8 @@
 	//DebugLogToConsole(@"	Message: %@", requestData);
 	
 	if ([self keyExchangeRequestExists:channel]) {
-        [client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1010]", [channel name]) channel:channel];
-		[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1009]", [channel name]) channel:channel];
+        [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1010]", [channel name]) channel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1009]", [channel name]) channel:channel];
 	} else {
 		CFDH1080 *keyRequest = [CFDH1080 new];
 
@@ -251,7 +251,7 @@
 		NSString *theSecret = [keyRequest secretKeyFromPublicKey:requestData];
 
 		if (NSObjectIsEmpty(theSecret)) {
-			[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1004]") channel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1004]") channel:channel];
 
             return;
 		}
@@ -262,7 +262,7 @@
 		NSString *publicKey = [keyRequest generatePublicKey];
 
 		if (NSObjectIsEmpty(publicKey)) {
-			[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1003]") channel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1003]") channel:channel];
 
             return;
 		}
@@ -279,12 +279,12 @@
 				 channel:channel
           withEncryption:NO];
 
-        [client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1010]", [channel name]) channel:channel];
-		[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1013]", [channel name]) channel:channel];
+        [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1010]", [channel name]) channel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1013]", [channel name]) channel:channel];
 		
-		[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1005]", [channel name]) channel:channel];
-		[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1006]", [channel name]) channel:channel];
-		[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1007]", [channel name]) channel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1005]", [channel name]) channel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1006]", [channel name]) channel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1007]", [channel name]) channel:channel];
 	}
 }
 
@@ -305,12 +305,12 @@
 		IRCChannel *channel = exchangeData[1];
 
 		if ([[channel config] encryptionKeyIsSet]) {
-            [client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1015]", [channel name]) channel:channel];
+            [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1015]", [channel name]) channel:channel];
 
             return;
         }
 		
-		[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1014]", [channel name]) channel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1014]", [channel name]) channel:channel];
 		
 		/* Compute the public key received against our own. Our original public key
 		 was sent to the user which has responded by computing their own against 
@@ -318,7 +318,7 @@
 		NSString *theSecret = [request secretKeyFromPublicKey:responseData];
 
 		if (NSObjectIsEmpty(theSecret)) {
-			return [client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1004]") channel:channel];
+			return [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1004]") channel:channel];
 		}
 		
 		//DebugLogToConsole(@"	Shared Secret: %@", theSecret);
@@ -326,9 +326,9 @@
 		[channel setEncryptionKey:theSecret];
 
 		/* Finish up. */
-		[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1005]", [channel name]) channel:channel];
-		[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1006]", [channel name]) channel:channel];
-		[client printDebugInformation:TPILocalizatedString(@"BasicLanguage[1007]", [channel name]) channel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1005]", [channel name]) channel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1006]", [channel name]) channel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1007]", [channel name]) channel:channel];
 		
 		[[self keyExchangeRequests] removeObjectForKey:responseKey];
 	}
@@ -349,7 +349,7 @@
 	if (NSObjectIsNotEmpty(requestKey)) {
 		IRCChannel *channel = requestData[1];
 		
-		[[channel associatedClient] printDebugInformation:TPILocalizatedString(@"BasicLanguage[1012]", [channel name]) channel:channel];
+		[[channel associatedClient] printDebugInformation:TPILocalizedString(@"BasicLanguage[1012]", [channel name]) channel:channel];
 
 		[[self keyExchangeRequests] removeObjectForKey:requestKey];
 	}
