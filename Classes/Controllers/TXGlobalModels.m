@@ -275,6 +275,42 @@ NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...)
 }
 
 #pragma mark -
+#pragma mark Grand Central Dispatch
+
+void TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block)
+{
+	dispatch_queue_t workerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+	
+	TXPerformBlockOnDispatchQueue(workerQueue, block, operationType);
+}
+
+void TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block)
+{
+	dispatch_queue_t workerQueue = dispatch_get_main_queue();
+	
+	TXPerformBlockOnDispatchQueue(workerQueue, block, operationType);
+}
+
+void TXPerformBlockOnDispatchQueue(dispatch_queue_t queue, dispatch_block_t block, TXPerformBlockOnDispatchQueueOperationType operationType)
+{
+	if (operationType == TXPerformBlockOnDispatchQueueSyncOperationType) {
+		dispatch_sync(queue, block);
+	}
+	
+	if (operationType == TXPerformBlockOnDispatchQueueAsyncOperationType) {
+		dispatch_async(queue, block);
+	}
+	
+	if (operationType == TXPerformBlockOnDispatchQueueBarrierSyncOperationType) {
+		dispatch_barrier_sync(queue, block);
+	}
+	
+	if (operationType == TXPerformBlockOnDispatchQueueBarrierAsyncOperationType) {
+		dispatch_barrier_async(queue, block);
+	}
+}
+
+#pragma mark -
 #pragma mark Misc.
 
 NSInteger TXRandomNumber(NSInteger maxset)
