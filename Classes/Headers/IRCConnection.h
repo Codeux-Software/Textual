@@ -53,7 +53,6 @@
 @property (nonatomic, assign) BOOL isConnectedWithClientSideCertificate; // This flag should be considered readonly.
 @property (nonatomic, assign) NSInteger floodControlDelayInterval;
 @property (nonatomic, assign) NSInteger floodControlMaximumMessageCount;
-@property (nonatomic, assign) NSInteger floodControlCurrentMessageCount;
 @property (nonatomic, copy) NSString *serverAddress;
 @property (nonatomic, assign) NSInteger serverPort;
 @property (nonatomic, copy) NSString *proxyAddress;

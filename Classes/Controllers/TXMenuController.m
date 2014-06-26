@@ -2036,29 +2036,9 @@
 	[self addWindowToWindowList:welcomeSheet];
 }
 
-- (void)welcomeSheet:(TDCWelcomeSheet *)sender onOK:(NSDictionary *)config
+- (void)welcomeSheet:(TDCWelcomeSheet *)sender onOK:(IRCClientConfig *)config
 {
-	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-	
-	NSString *serverad = config[@"serverAddress"];
-	NSString *nickname = config[@"identityNickname"];
-	
-	NSMutableArray *channels = [NSMutableArray array];
-	
-	for (NSString *s in config[@"channelList"]) {
-		[channels addObject:[IRCChannelConfig seedDictionary:s]];
-	}
-	
-	dic[@"serverAddress"]				= serverad;
-	dic[@"connectionName"]				= serverad;
-	dic[@"identityNickname"]			= nickname;
-	dic[@"channelList"]					= channels;
-	
-	dic[@"connectOnLaunch"]				= config[@"connectOnLaunch"];
-	
-	dic[@"characterEncodingDefault"]	= @(TXDefaultPrimaryStringEncoding);
-	
-	IRCClient *u = [worldController() createClient:dic reload:YES];
+	IRCClient *u = [worldController() createClient:config reload:YES];
 	
 	[worldController() expandClient:u];
 	[worldController() save];
@@ -2067,9 +2047,7 @@
 		[u connect];
 	}
 	
-	if (NSObjectIsNotEmpty([u channels])) {
-		[worldController() select:[u channels][0]];
-	}
+	[u selectFirstChannelInChannelList];
 }
 
 - (void)welcomeSheetWillClose:(TDCWelcomeSheet *)sender

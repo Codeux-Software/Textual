@@ -143,6 +143,8 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 - (void)addChannel:(IRCChannel *)channel;
 - (void)removeChannel:(IRCChannel *)channel;
 
+- (void)selectFirstChannelInChannelList;
+
 - (void)addHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine;
 
 /* Returns the value of _lastMessageServerTime which is the value of the last message

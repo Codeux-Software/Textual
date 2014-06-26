@@ -87,6 +87,18 @@
 	return nil;
 }
 
++ (NSString *)systemDiagnosticReportsFolderPath
+{
+	return @"/Library/Logs/DiagnosticReports";
+}
+
++ (NSString *)localUserDiagnosticReportsFolderPath
+{
+	NSString *homefolder = [TPCPathInfo userHomeDirectoryPathOutsideSandbox];
+
+	return [homefolder stringByAppendingPathComponent:@"/Library/Logs/DiagnosticReports"];
+}
+
 + (NSString *)customThemeFolderPath
 {
 	NSString *dest = [[TPCPathInfo applicationSupportFolderPath] stringByAppendingPathComponent:@"/Styles/"];

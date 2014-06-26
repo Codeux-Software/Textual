@@ -49,6 +49,9 @@
 + (NSString *)applicationCachesFolderPath;
 + (NSString *)applicationResourcesFolderPath;
 
++ (NSString *)localUserDiagnosticReportsFolderPath;
++ (NSString *)systemDiagnosticReportsFolderPath;
+
 + (NSString *)customExtensionFolderPath;
 + (NSString *)customThemeFolderPath;
 
