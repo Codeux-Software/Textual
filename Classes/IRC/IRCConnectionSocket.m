@@ -38,19 +38,15 @@
 
 #import "TextualApplication.h"
 
-/* IRCConnectionSocket.m is merely a class extension of IRCConnection.m.
- It used to be a separate class entirely, but it was made an extension
- to make it more easily maintainable and be more tightly integrated
- into the connection handling scheme. The old class, TLOSocketClient
- had to be communicated changes in the connection it was handling
- such as server address changes, enabling/disabling of proxy, etc.
-
- Now that it is just a subset of IRCConnection, the socket can access
- the connection information as well as owning client for quicker decisions
- regarding the nature of the socket. */
-
 #define _LF	0xa
 #define _CR	0xd
+
+@interface IRCConnection ()
+@property (nonatomic, assign) dispatch_queue_t dispatchQueue;
+@property (nonatomic, assign) dispatch_queue_t socketQueue;
+@property (nonatomic, copy) NSData *bufferOverflowString;
+@property (nonatomic, strong) id socketConnection;
+@end
 
 @implementation IRCConnection (IRCConnectionSocket)
 
@@ -82,12 +78,12 @@
 
 - (void)createDispatchQueue
 {
-	NSString *dqname = [@"socketDispatchQueue." stringByAppendingString:self.client.config.itemUUID];
+	NSString *dqname = [@"socketDispatchQueue." stringByAppendingString:[self.associatedClient uniqueIdentifier]];
 
 	self.dispatchQueue = dispatch_queue_create([dqname UTF8String], NULL);
 
 	if ([self useNewSocketEngine]) {
-		NSString *sqname = [@"socketReadWriteQueue." stringByAppendingString:self.client.config.itemUUID];
+		NSString *sqname = [@"socketReadWriteQueue." stringByAppendingString:[self.associatedClient uniqueIdentifier]];
 
 		self.socketQueue = dispatch_queue_create([sqname UTF8String], NULL);
 	}
@@ -126,7 +122,7 @@
 
 - (void)closeSocket
 {
-	if (PointerIsNotEmpty(self.socketConnection)) {
+	if ( self.socketConnection) {
 		[self.socketConnection setDelegate:nil];
 		[self.socketConnection disconnect];
 
@@ -210,7 +206,7 @@
 
 	if (self.connectionUsesSSL) {
 		if ([self useNewSocketEngine]) {
-			[self.socketConnection useSSLWithClient:self.client withConnectionController:self];
+			[self.socketConnection useSSLWithClient:self.associatedClient withConnectionController:self];
 		} else {
 			[self.socketConnection useSSL];
 		}
@@ -255,10 +251,10 @@
 		NSString *errorMessage = nil;
 
 		if ([GCDAsyncSocket badSSLCertificateErrorFound:error]) {
-			self.client.disconnectType = IRCDisconnectBadSSLCertificateMode;
+			[self.associatedClient setDisconnectType:IRCClientDisconnectBadSSLCertificateMode];
 		} else {
 			if ([error.domain isEqualToString:NSPOSIXErrorDomain]) {
-				errorMessage = [GCDAsyncSocket posixErrorStringFromError:error.code];
+				errorMessage = [GCDAsyncSocket posixErrorStringFromError:[error code]];
 			}
 
 			if (NSObjectIsEmpty(errorMessage)) {
