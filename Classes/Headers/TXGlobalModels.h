@@ -59,6 +59,19 @@ TEXTUAL_EXTERN NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOO
 
 TEXTUAL_EXTERN NSDateFormatter *TXSharedISOStandardDateFormatter(void);
 
+/* Grand Central Dispatch. */
+typedef enum TXPerformBlockOnDispatchQueueOperationType	: NSInteger {
+	TXPerformBlockOnDispatchQueueBarrierAsyncOperationType,
+	TXPerformBlockOnDispatchQueueBarrierSyncOperationType,
+	TXPerformBlockOnDispatchQueueAsyncOperationType,
+	TXPerformBlockOnDispatchQueueSyncOperationType,
+} TXPerformBlockOnDispatchQueueOperationType;
+
+TEXTUAL_EXTERN void TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block); // Uses default priority on queue.
+TEXTUAL_EXTERN void TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block);
+
+TEXTUAL_EXTERN void TXPerformBlockOnDispatchQueue(dispatch_queue_t queue, dispatch_block_t block, TXPerformBlockOnDispatchQueueOperationType operationType);
+
 /* Everything else. */
 TEXTUAL_EXTERN NSString *TXFormattedNumber(NSInteger number);
 
