@@ -127,9 +127,7 @@
 
 - (void)setUp
 {
-	if (self.webView) {
-		NSAssert(NO, @"View is already initialized.");
-	}
+	TXLockMethodForOneTimeFire()
 
 	 self.webViewScriptSink = [TVCLogScriptEventSink new];
 	[self.webViewScriptSink setLogController:self];
@@ -361,9 +359,9 @@
 		TVCLogControllerOperationBlock scriptBlock = ^(id operation) {
 			NSAssertReturn([operation isCancelled] == NO);
 			
-			dispatch_async(dispatch_get_main_queue(), ^{
+			[self performBlockOnMainThread:^{
 				[self executeQuickScriptCommand:command withArguments:args];
-			});
+			}];
 		};
 		
 		[[self printingQueue] enqueueMessageBlock:scriptBlock for:self];
@@ -423,8 +421,8 @@
 											@"lineType" : @(TVCLogLineTopicType)
 										 }
 										 resultInfo:NULL];
-
-		dispatch_async(dispatch_get_main_queue(), ^{
+		
+		[self performBlockOnMainThread:^{
 			DOMElement *topicBar = [self documentChannelTopicBar];
 
 			if (topicBar) {
@@ -436,7 +434,7 @@
 					[self executeScriptCommand:@"topicBarValueChanged" withArguments:@[topic]];
 				}
 			}
-		});
+		}];
 	} for:self];
 }
 
@@ -607,7 +605,7 @@
 	[self.historicLogFile writeNewEntryWithRawData:newHistoricArchive];
 
 	/* Update WebKit. */
-	dispatch_async(dispatch_get_main_queue(), ^{
+	[self performBlockOnMainThread:^{
 		[self prependToDocumentBody:patchedAppend];
 
 		[self mark];
@@ -630,7 +628,7 @@
 														  isThemeReload:(markHistoric == NO)
 														isHistoryReload: markHistoric];
 		}
-	});
+	}];
 }
 
 - (void)reloadHistory
@@ -914,7 +912,7 @@
 
 - (void)clearWithReset:(BOOL)resetQueue
 {
-	dispatch_async(dispatch_get_main_queue(), ^{
+	[self performBlockOnMainThread:^{
 		[[self printingQueue] cancelOperationsForViewController:self];
 
 		if (resetQueue) {
@@ -938,7 +936,7 @@
 		self.needsLimitNumberOfLines = NO;
 
 		[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
-	});
+	}];
 }
 
 - (void)clear
@@ -985,8 +983,8 @@
 			NSArray *mentionedUsers = [resultInfo arrayForKey:@"mentionedUsers"];
 
 			NSDictionary *inlineImageMatches = [resultInfo dictionaryForKey:@"InlineImagesToValidate"];
-
-			dispatch_async(dispatch_get_main_queue(), ^{
+			
+			[self performBlockOnMainThread:^{
 				/* Record highlights. */
 				if (highlighted) {
 					@synchronized(self.highlightedLineNumbers) {
@@ -1050,7 +1048,7 @@
 				PointerIsEmptyAssert(completionBlock);
 
 				completionBlock(highlighted);
-			});
+			}];
 		}
 	};
 

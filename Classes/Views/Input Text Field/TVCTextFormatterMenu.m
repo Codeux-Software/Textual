@@ -57,7 +57,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		self.formattingQueue = dispatch_queue_create("formattingQueue", NULL);
+		self.formattingQueue = dispatch_queue_create("formattingQueue", DISPATCH_QUEUE_SERIAL);
 		
 		return self;
 	}
@@ -197,7 +197,7 @@
 
 - (void)insertBoldCharIntoTextBox:(id)sender
 {
-	dispatch_sync(self.formattingQueue, ^{
+	TXPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
 		NSRange selectedTextRange = [self.textField selectedRange];
 		
 		_returnMethodOnBadRange
@@ -212,7 +212,7 @@
 
 - (void)insertItalicCharIntoTextBox:(id)sender
 {
-	dispatch_sync(self.formattingQueue, ^{
+	TXPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
 		NSRange selectedTextRange = [self.textField selectedRange];
 		
 		_returnMethodOnBadRange
@@ -227,7 +227,7 @@
 
 - (void)insertUnderlineCharIntoTextBox:(id)sender
 {
-	dispatch_sync(self.formattingQueue, ^{
+	TXPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
 		NSRange selectedTextRange = [self.textField selectedRange];
 		
 		_returnMethodOnBadRange
@@ -242,7 +242,7 @@
 
 - (void)insertForegroundColorCharIntoTextBox:(id)sender
 {
-	dispatch_sync(self.formattingQueue, ^{
+	TXPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
 		NSRange selectedTextRange = [self.textField selectedRange];
 		
 		_returnMethodOnBadRange
@@ -309,7 +309,7 @@
 
 - (void)insertBackgroundColorCharIntoTextBox:(id)sender
 {
-	dispatch_sync(self.formattingQueue, ^{
+	TXPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
 		NSRange selectedTextRange = [self.textField selectedRange];
 		
 		_returnMethodOnBadRange
@@ -368,7 +368,7 @@
 
 - (void)removeBoldCharFromTextBox:(id)sender
 {
-	dispatch_sync(self.formattingQueue, ^{
+	TXPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
 		NSRange selectedTextRange = [self.textField selectedRange];
 		
 		_returnMethodOnBadRange
@@ -383,7 +383,7 @@
 
 - (void)removeItalicCharFromTextBox:(id)sender
 {
-	dispatch_sync(self.formattingQueue, ^{
+	TXPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
 		NSRange selectedTextRange = [self.textField selectedRange];
 		
 		_returnMethodOnBadRange
@@ -398,7 +398,7 @@
 
 - (void)removeUnderlineCharFromTextBox:(id)sender
 {
-	dispatch_sync(self.formattingQueue, ^{
+	TXPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
 		NSRange selectedTextRange = [self.textField selectedRange];
 		
 		_returnMethodOnBadRange
@@ -413,7 +413,7 @@
 
 - (void)removeForegroundColorCharFromTextBox:(id)sender
 {
-	dispatch_sync(self.formattingQueue, ^{
+	TXPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
 		NSRange selectedTextRange = [self.textField selectedRange];
 		
 		_returnMethodOnBadRange
@@ -428,7 +428,7 @@
 
 - (void)removeBackgroundColorCharFromTextBox:(id)sender
 {
-	dispatch_sync(self.formattingQueue, ^{
+	TXPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
 		NSRange selectedTextRange = [self.textField selectedRange];
 		
 		_returnMethodOnBadRange	

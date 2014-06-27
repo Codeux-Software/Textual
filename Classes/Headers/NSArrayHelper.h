@@ -58,8 +58,9 @@
 
 - (NSArray *)arrayByRemovingObjectAtIndex:(NSUInteger)idx;
 
-- (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath;
+- (NSUInteger)indexOfSortedObject:(id)obj usingComparator:(NSComparator)cmp; // Performs sorted search using NSBinarySearchingFirstEqual
 
+- (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath;
 - (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath usingSelector:(SEL)comparison;
 @end
 
@@ -87,7 +88,7 @@
 
 - (void)performSelectorOnObjectValueAndReplace:(SEL)performSelector;
 
-- (void)insertSortedObject:(id)obj usingComparator:(NSComparator)comparator;
+- (NSUInteger)insertSortedObject:(id)obj usingComparator:(NSComparator)comparator;
 @end
 
 @interface NSIndexSet (TXIndexSetHelper)

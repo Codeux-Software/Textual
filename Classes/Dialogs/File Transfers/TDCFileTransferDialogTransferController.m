@@ -86,8 +86,8 @@
 	NSString *clientDispatchQueueName = [NSString stringWithFormat:@"DCC-SocketDispatchQueue-%@", uniqueID];
 	NSString *clientSocketQueueName = [NSString stringWithFormat:@"DCC-SocketReadWriteQueue-%@", uniqueID];
 
-	self.serverDispatchQueue = dispatch_queue_create([clientDispatchQueueName UTF8String], NULL);
-	self.serverSocketQueue = dispatch_queue_create([clientSocketQueueName UTF8String], NULL);
+	self.serverDispatchQueue = dispatch_queue_create([clientDispatchQueueName UTF8String], DISPATCH_QUEUE_SERIAL);
+	self.serverSocketQueue = dispatch_queue_create([clientSocketQueueName UTF8String], DISPATCH_QUEUE_SERIAL);
 }
 
 - (void)destroyDispatchQueues
@@ -591,7 +591,8 @@
 	NSAssertReturn((self.transferStatus == TDCFileTransferDialogTransferReceivingStatus) ||
 				   (self.transferStatus == TDCFileTransferDialogTransferSendingStatus));
 	
-	dispatch_async(self.serverDispatchQueue, ^{
+#warning Test different from going to async -> sync queue call.
+	TXPerformBlockSynchronouslyOnQueue(self.serverDispatchQueue, ^{
 		/* Update record. */
 		@synchronized(self.speedRecords) {
 			[self.speedRecords addObject:@(self.currentRecord)];

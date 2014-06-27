@@ -363,7 +363,7 @@
 			}
 		}
 	} else {
-		NSArray *memberList = [[channel unsortedMemberList] sortedArrayUsingSelector:@selector(compareUsingWeights:)];
+		NSArray *memberList = [[channel sortedByChannelRankMemberList] sortedArrayUsingSelector:@selector(compareUsingWeights:)];
 
 		for (IRCUser *m in memberList) {
 			[upperChoices addObject:[m nickname]];

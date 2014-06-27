@@ -60,7 +60,6 @@
 		self.ignoreFileTransferRequests		= [dic boolForKey:@"ignoreFileTransferRequests" orUseDefault:NO];
 		
 		self.hideMessagesContainingMatch	= [dic boolForKey:@"hideMessagesContainingMatch" orUseDefault:NO];
-		self.hideInMemberList				= [dic boolForKey:@"hideInMemberList" orUseDefault:NO];
 
 		return self;
 	}
@@ -124,7 +123,6 @@
 
 	[dic setInteger:self.entryType					forKey:@"entryType"];
 
-	[dic setBool:self.hideInMemberList				forKey:@"hideInMemberList"];
 	[dic setBool:self.hideMessagesContainingMatch	forKey:@"hideMessagesContainingMatch"];
 
 	[dic setBool:self.ignoreFileTransferRequests	forKey:@"ignoreFileTransferRequests"];

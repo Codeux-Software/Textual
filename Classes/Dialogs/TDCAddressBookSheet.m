@@ -114,7 +114,6 @@
 	[self.ignorePublicMessagesCheck			setState:[self.ignore ignorePublicMessages]];
 	[self.ignoreFileTransferRequestsCheck	setState:[self.ignore ignoreFileTransferRequests]];
 
-	[self.hideInMemberListCheck				setState:[self.ignore hideInMemberList]];
 	[self.hideMessagesContainingMatchCheck	setState:[self.ignore hideMessagesContainingMatch]];
 	
 	[self startSheet];
@@ -138,8 +137,7 @@
 	[self.ignore setIgnorePublicHighlights:		[self.ignorePublicHighlightsCheck state]];
 	[self.ignore setIgnorePublicMessages:		[self.ignorePublicMessagesCheck state]];
 	[self.ignore setIgnoreFileTransferRequests:	[self.ignoreFileTransferRequestsCheck state]];
-
-	[self.ignore setHideInMemberList:				[self.hideInMemberListCheck state]];
+	
 	[self.ignore setHideMessagesContainingMatch:	[self.hideMessagesContainingMatchCheck state]];
 	
 	if ([self.delegate respondsToSelector:@selector(ignoreItemSheetOnOK:)]) {

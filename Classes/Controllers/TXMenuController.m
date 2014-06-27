@@ -75,6 +75,8 @@
 
 - (void)setupOtherServices
 {
+	TXLockMethodForOneTimeFire();
+	
 	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
 		 self.fileTransferController = [TDCFileTransferDialog new];
 
@@ -736,7 +738,7 @@
 			for (NSNumber *index in [indexes arrayFromIndexSet]) {
 				NSUInteger nindex = [index unsignedIntegerValue];
 				
-				IRCUser *m = [c memberAtIndex:nindex];
+				IRCUser *m = [mainWindowMemberList() itemAtRow:nindex];
 				
 				if (m) {
 					[ary addObject:m];
@@ -744,7 +746,7 @@
 			}
 		} else {
 			if (pontrEmpty == NO) {
-				IRCUser *m = [c memberWithNickname:self.pointedNickname];
+				IRCUser *m = [c findMember:self.pointedNickname];
 				
 				if (m) {
 					[ary addObject:m];
@@ -859,10 +861,10 @@
 							  if ([resultString isNotEqualTo:self.currentSearchPhrase]) {
 								  self.currentSearchPhrase = resultString;
 							  }
-
-							  dispatch_async(dispatch_get_main_queue(), ^{
+							  
+							  [self performBlockOnMainThread:^{
 								  [[self currentWebView] searchFor:resultString direction:YES caseSensitive:NO wrap:YES];
-							  });
+							  }];
 						  }
 					  }
 
@@ -2286,7 +2288,7 @@
 		return;
 	}
 	
-	IRCUser *member = [c memberAtIndex:[row integerValue]];
+	IRCUser *member = [mainWindowMemberList() itemAtRow:[row integerValue]];
 	
 	for (NSString *pathURL in files) {
 		BOOL isDirectory = NO;
@@ -2326,7 +2328,7 @@
 		return;
 	}
 	
-	NSURL *path = [[c logFile] buildPath];
+	NSURL *path = [c logFilePath];
 	
 	if ([RZFileManager() fileExistsAtPath:[path path]]) {
 		[RZWorkspace() openURL:path];

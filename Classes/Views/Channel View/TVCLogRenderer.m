@@ -222,7 +222,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				IRCClient *u = [logController associatedClient];
 				IRCChannel *c = [logController associatedChannel];
 				
-				IRCUser *user = [c memberWithNickname:contentes];
+				IRCUser *user = [c findMember:contentes];
 
 				if (user) {
 					if (NSObjectsAreEqual([user nickname], [u localNickname]) == NO)

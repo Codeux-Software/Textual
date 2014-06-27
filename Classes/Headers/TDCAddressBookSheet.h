@@ -41,7 +41,6 @@
 @interface TDCAddressBookSheet : TDCSheetBase
 @property (nonatomic, assign) BOOL newItem;
 @property (nonatomic, copy) IRCAddressBookEntry *ignore;
-@property (nonatomic, nweak) IBOutlet NSButton *hideInMemberListCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *hideMessagesContainingMatchCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *ignoreCTCPCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *ignoreJPQECheck;

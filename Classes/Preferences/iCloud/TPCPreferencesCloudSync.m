@@ -130,7 +130,7 @@
 
 - (void)setupUbiquitousContainerURLPath:(BOOL)isCalledFromInit
 {
-	dispatch_async(self.workerQueue, ^{
+	TXPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
 		/* Apple very clearly states not to do call this on the main thread
 		 since it does a lot of work, so we wont… */
 		NSURL *ucurl = [RZFileManager() URLForUbiquityContainerIdentifier:nil];
@@ -144,7 +144,8 @@
 		}
 		
 		/* Update monitor based on state of container path. */
-		dispatch_async(dispatch_get_main_queue(), ^{
+		
+		[self performBlockOnMainThread:^{
 			self.isSafeToPerformPreferenceValidation = NO;
 			
 			if (self.cloudContainerNotificationQuery == nil) {
@@ -158,7 +159,7 @@
 					[self stopMonitoringUbiquitousContainer];
 				}
 			}
-		});
+		}];
 	});
 }
 
@@ -201,7 +202,7 @@
 	DebugLogToConsole(@"iCloud: Performing ten-minute based maintenance.");
 	
 	/* Perform actual maintenance tasks. */
-	dispatch_async(self.workerQueue, ^{
+	TXPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
 		/* Compare fonts. */
 		BOOL fontMissing = [RZUserDefaults() boolForKey:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey];
 		
@@ -239,7 +240,7 @@
 	[self synchronizeToCloud];
 	
 	/* Perform actual maintenance tasks. */
-	dispatch_async(self.workerQueue, ^{
+	TXPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
 		/* Have a theme in the temporary store? */
 		BOOL missingTheme = [RZUserDefaults() boolForKey:TPCPreferencesThemeNameMissingLocallyDefaultsKey];
 		
@@ -303,7 +304,7 @@
 	/* We don't even want to sync if user doesn't want to. */
 	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
 	
-	dispatch_async(self.workerQueue, ^{
+	TXPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
 		if (self.localKeysWereUpdated == NO) {
 			DebugLogToConsole(@"iCloud: Upstream sync cancelled because nothing has changed.");
 			
@@ -429,7 +430,7 @@
 	/* We don't even want to sync if user doesn't want to. */
 	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]);
 	
-	dispatch_async(self.workerQueue, ^{
+	TXPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
 		/* Debug data. */
 		DebugLogToConsole(@"iCloud: Beginning sync downstream.");
 
@@ -471,9 +472,9 @@
 				{
 					NSObjectIsKindOfClassAssert(objectValue, NSArray);
 					
-					dispatch_async(dispatch_get_main_queue(), ^{
+					[self performBlockOnMainThread:^{
 						[worldController() processCloudCientDeletionList:objectValue];
-					});
+					}];
 				}
 				else if ([keyname hasPrefix:IRCWorldControllerCloudClientEntryKeyPrefix])
 				{
@@ -501,7 +502,7 @@
 		}
 
 		/* Perform reload. */
-		dispatch_async(dispatch_get_main_queue(), ^{
+		[self performBlockOnMainThread:^{
 			if ([actualChangedKeys count] > 0) {
 				[TPCPreferences performReloadActionForKeyValues:actualChangedKeys];
 			}
@@ -511,7 +512,7 @@
 					[TPCPreferencesImportExport importWorldControllerClientConfiguratoin:seed isCloudBasedImport:YES];
 				}
 			}
-		});
+		}];
 
 		/* Allow us to continue work. */
 		self.isSyncingLocalKeysDownstream = NO;
@@ -597,7 +598,7 @@
 	
 	DebugLogToConsole(@"iCloud: Metadata Query Update: isGathering = %i", isGatheringNotification);
 	
-	dispatch_async(self.workerQueue, ^{
+	TXPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
 		/* Do not accept updates during work. */
 		[self.cloudContainerNotificationQuery disableUpdates];
 		
@@ -883,13 +884,15 @@
 
 - (void)initializeCloudSyncSession
 {
+	TXLockMethodForOneTimeFire()
+	
 	/* Debug data. */
 	DebugLogToConsole(@"iCloud: Beginning session.");
 
 	/* Begin actual session. */
 	if (RZUbiquitousKeyValueStore()) {
 		/* Create worker queue. */
-		self.workerQueue = dispatch_queue_create("iCloudSyncWorkerQueue", NULL);
+		self.workerQueue = dispatch_queue_create("iCloudSyncWorkerQueue", DISPATCH_QUEUE_SERIAL);
 		
 		self.ubiquityIdentityToken = [RZFileManager() cloudUbiquityIdentityToken];
 		
@@ -941,7 +944,7 @@
 	/* Do not perform any actions during termination. */
 	NSAssertReturn(self.applicationIsTerminating == NO);
 
-	dispatch_async(self.workerQueue, ^{
+	TXPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
 		/* Sync latest changes from disc for the dictionary. */
 		[RZUbiquitousKeyValueStore() synchronize];
 
