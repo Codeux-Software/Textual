@@ -57,6 +57,8 @@
 {
 	if (self = [super init]) {
 		[self setName:@"TVCLogControllerOperationQueue"];
+		
+		[self setMaxConcurrentOperationCount:2];
 
 		return self;
 	}
@@ -184,6 +186,11 @@
 	self.executionBlock(self);
 
 	/* Kill existing dependency. */
+	/* Discussion: Normally NSOperationQueue removes all strong references to 
+	 dependencies once all operations have completed. As this operation queue 
+	 can have thousands of operations chained together, this is not a desired
+	 behavior as a pseudo infinite loop can be created. Therefore, once we 
+	 have executed the block we wanted, we release any dependency assigned. */
 	NSArray *operations = [self dependencies];
 
 	if ([operations count] > 0) {

@@ -687,7 +687,7 @@
 			}
 
 			/* The tag identifies each item. */
-			[newItem setUserInfo:[NSString stringWithFormat:@"%@ %@", [u uniqueIdentifier], [c uniqueIdentifier]]];
+			[newItem setUserInfo:[worldController() findItemFromInfoGeneratedValue:c]];
 			
 			[newItem setTag:_channelNavigationMenuEntryMenuTag]; // Use same tag for each to disable during sheets.
 

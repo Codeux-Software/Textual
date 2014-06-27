@@ -175,12 +175,11 @@
 	return [arry copy];
 }
 
-- (NSUInteger)indexOfSortedObject:(id)obj usingComparator:(NSComparator)cmp
+- (NSMutableArray *)mutableSubarrayWithRange:(NSRange)range
 {
-	return [self indexOfObject:obj
-				 inSortedRange:[self range]
-					   options:NSBinarySearchingFirstEqual
-			   usingComparator:cmp];
+	NSArray *subray = [self subarrayWithRange:range];
+	
+	return [subray mutableCopy];
 }
 
 - (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath

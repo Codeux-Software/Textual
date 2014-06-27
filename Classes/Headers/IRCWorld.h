@@ -40,31 +40,19 @@
 
 #define IRCWorldControllerDefaultsStorageKey				@"World Controller"
 
-#define IRCWorldControllerCloudDeletedClientsStorageKey		@"World Controller -> Cloud Deleted Clients"
-#define IRCWorldControllerCloudClientEntryKeyPrefix			@"World Controller -> Cloud Synced Client -> "
-
-@interface IRCWorld : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate>
+@interface IRCWorld : NSObject
 @property (nonatomic, assign) NSInteger messagesSent;
 @property (nonatomic, assign) NSInteger messagesReceived;
 @property (nonatomic, assign) TXUnsignedLongLong bandwidthIn;
 @property (nonatomic, assign) TXUnsignedLongLong bandwidthOut;
 @property (nonatomic, assign) BOOL isPopulatingSeeds;
-@property (nonatomic, assign) BOOL temporarilyDisablePreviousSelectionUpdates;
-@property (nonatomic, strong) IRCTreeItem *selectedItem;
-@property (nonatomic, copy) NSString *previousSelectedClientId;
-@property (nonatomic, copy) NSString *previousSelectedChannelId;
+@property (nonatomic, nweak) NSArray *clientList;
 
 - (void)setupConfiguration;
-- (void)setupOtherServices;
-- (void)setupTree;
 
 - (void)save;
 
 - (NSMutableDictionary *)dictionaryValue;
-
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-- (NSMutableDictionary *)cloudDictionaryValue;
-#endif
 
 - (void)prepareForApplicationTermination;
 
@@ -74,58 +62,28 @@
 - (void)prepareForScreenSleep;
 - (void)awakeFomScreenSleep;
 
+- (void)preferencesChanged;
+
 - (void)reachabilityChanged:(BOOL)reachable;
 
-- (NSInteger)clientCount;
-
-- (NSArray *)clientList;
-
-- (IRCClient *)findClientById:(NSString *)uid;
-- (IRCChannel *)findChannelByClientId:(NSString *)uid channelId:(NSString *)cid;
-
-- (IRCTreeItem *)findItemFromInfo:(NSString *)s;
-
-- (void)select:(id)item;
-- (void)selectPreviousItem;
-
-- (IRCClient *)selectedClient;
-
-- (IRCChannel *)selectedChannel;
-- (IRCChannel *)selectedChannelOn:(IRCClient *)c;
-
-- (TVCLogController *)selectedViewController;
-
-- (IRCTreeItem *)previouslySelectedItem;
-
-- (void)inputText:(id)str command:(NSString *)command;
+- (void)changeTextSize:(BOOL)bigger;
+- (NSInteger)textSizeMultiplier;
 
 - (void)markAllAsRead;
 - (void)markAllAsRead:(IRCClient *)limitedClient;
 
 - (void)markAllScrollbacks;
 
-- (void)updateIcon;
-
-- (void)updateTitle;
-- (void)updateTitleFor:(IRCTreeItem *)item;
-
-- (void)reloadTree;
-- (void)reloadTreeItem:(IRCTreeItem *)item;
-- (void)reloadTreeGroup:(IRCTreeItem *)item;
-
-- (void)adjustSelection;
-
-- (void)expandClient:(IRCClient *)client;
-
 - (void)reloadTheme;
 - (void)reloadTheme:(BOOL)reloadUserInterface;
 
-- (void)reloadLoadingScreen;
+- (NSInteger)clientCount;
 
-- (void)preferencesChanged;
+- (IRCClient *)findClientById:(NSString *)uid;
+- (IRCChannel *)findChannelByClientId:(NSString *)uid channelId:(NSString *)cid;
 
-- (void)changeTextSize:(BOOL)bigger;
-- (NSInteger)textSizeMultiplier;
+- (IRCTreeItem *)findItemFromInfo:(NSString *)s;
+- (NSString *)findItemFromInfoGeneratedValue:(IRCTreeItem *)item; // I honestly could not think of a better name for it. Don't dog me over it. 
 
 - (IRCClient *)createClient:(id)seed reload:(BOOL)reload;
 - (IRCChannel *)createChannel:(IRCChannelConfig *)seed client:(IRCClient *)client reload:(BOOL)reload adjust:(BOOL)adjust;
@@ -148,14 +106,4 @@
 - (void)clearContentsOfChannel:(IRCChannel *)c inClient:(IRCClient *)u;
 
 - (void)destroyAllEvidence; // Clears all views everywhere.
-
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-- (void)addClientToListOfDeletedClients:(NSString *)itemUUID;
-- (void)removeClientFromListOfDeletedClients:(NSString *)itemUUID;
-
-- (void)removeClientConfigurationCloudEntry:(NSString *)itemUUID;
-
-- (void)processCloudCientDeletionList:(NSArray *)deletedClients;
-#endif
-
 @end
