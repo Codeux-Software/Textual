@@ -58,7 +58,7 @@
 
 - (NSArray *)arrayByRemovingObjectAtIndex:(NSUInteger)idx;
 
-- (NSUInteger)indexOfSortedObject:(id)obj usingComparator:(NSComparator)cmp; // Performs sorted search using NSBinarySearchingFirstEqual
+- (NSMutableArray *)mutableSubarrayWithRange:(NSRange)range;
 
 - (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath;
 - (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath usingSelector:(SEL)comparison;

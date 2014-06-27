@@ -737,6 +737,8 @@
 - (void)notifyDidBecomeVisible
 {
 	[self moveToBottom];
+	
+	[self.webView clearSelection];
 }
 
 - (void)changeTextSize:(BOOL)bigger

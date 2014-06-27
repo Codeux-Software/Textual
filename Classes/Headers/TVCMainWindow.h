@@ -56,7 +56,7 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 	TVCServerListNavigationSelectionServerType,		// Move to next server item.
 } TVCServerListNavigationSelectionType;
 
-@interface TVCMainWindow : NSWindow <NSSplitViewDelegate, NSWindowDelegate>
+@interface TVCMainWindow : NSWindow <NSSplitViewDelegate, NSWindowDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate>
 @property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
 @property (nonatomic, copy) NSValue *cachedSwipeOriginPoint;
 @property (nonatomic, nweak) IBOutlet NSBox *channelViewBox;
@@ -66,8 +66,37 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 @property (nonatomic, nweak) IBOutlet TVCMainWindowLoadingScreenView *loadingScreen;
 @property (nonatomic, nweak) IBOutlet TVCMemberList *memberList;
 @property (nonatomic, nweak) IBOutlet TVCServerList *serverList;
+@property (nonatomic, strong) IRCTreeItem *selectedItem; // Please don't directy modify this without calling -adjustSelection
+@property (nonatomic, copy) NSString *previousSelectedClientId; // There are no reasons to modify this.
+@property (nonatomic, copy) NSString *previousSelectedChannelId; // There are no reasons to modify this.
+@property (nonatomic, assign) BOOL temporarilyDisablePreviousSelectionUpdates;
+
+@property (readonly) IRCClient *selectedClient;
+@property (readonly) IRCChannel *selectedChannel;
+@property (readonly) TVCLogController *selectedViewController;
+@property (readonly) IRCTreeItem *previouslySelectedItem;
 
 - (void)prepareForApplicationTermination;
+
+- (void)setupTree;
+
+- (void)reloadLoadingScreen;
+
+- (void)updateTitle;
+- (void)updateTitleFor:(id)item;
+
+- (void)reloadTree;
+- (void)reloadTreeItem:(id)item; // Can be either IRCClient or IRCChannel
+- (void)reloadTreeGroup:(id)item; // Will do not unless item is a IRCClient
+
+- (void)adjustSelection;
+
+- (void)select:(id)item;
+- (void)selectPreviousItem;
+
+- (void)expandClient:(IRCClient *)client;
+
+- (IRCChannel *)selectedChannelOn:(IRCClient *)c;
 
 - (void)maybeToggleFullscreenAfterLaunch;
 
@@ -78,6 +107,8 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 - (void)navigateToNextEntry:(BOOL)isMovingDown;
 
 - (void)textEntered;
+
+- (void)inputText:(id)str command:(NSString *)command; // Do not call this directly unless you must.
 
 - (void)selectNextServer:(NSEvent *)e;
 - (void)selectNextChannel:(NSEvent *)e;

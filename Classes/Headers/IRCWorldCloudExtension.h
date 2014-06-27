@@ -1,4 +1,4 @@
-/* ********************************************************************* 
+/* *********************************************************************
        _____        _               _    ___ ____   ____
       |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
        | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
@@ -37,11 +37,18 @@
 
 #import "TextualApplication.h"
 
-@interface TVCDockIcon : NSObject
-+ (void)updateDockIcon;
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#define IRCWorldControllerCloudDeletedClientsStorageKey		@"World Controller -> Cloud Deleted Clients"
+#define IRCWorldControllerCloudClientEntryKeyPrefix			@"World Controller -> Cloud Synced Client -> "
 
-+ (void)resetCachedCount;
+@interface IRCWorld (IRCWorldCloudExtension)
+- (NSMutableDictionary *)cloudDictionaryValue;
 
-+ (void)drawWithoutCount;
-+ (void)drawWithHilightCount:(NSInteger)highlightCount messageCount:(NSInteger)messageCount;
+- (void)addClientToListOfDeletedClients:(NSString *)itemUUID;
+- (void)removeClientFromListOfDeletedClients:(NSString *)itemUUID;
+
+- (void)removeClientConfigurationCloudEntry:(NSString *)itemUUID;
+
+- (void)processCloudCientDeletionList:(NSArray *)deletedClients;
 @end
+#endif

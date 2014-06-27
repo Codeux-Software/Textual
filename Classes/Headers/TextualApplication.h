@@ -220,6 +220,7 @@
 	#import "IRCTreeItem.h"
 	#import "IRCUser.h"
 	#import "IRCWorld.h"
+	#import "IRCWorldCloudExtension.h"
 
 	/* Framework Extensions (Helpers). */
 

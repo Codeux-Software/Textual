@@ -38,6 +38,12 @@
 
 #import "TextualApplication.h"
 
+#define _treeDragItemType		@"tree"
+#define _treeDragItemTypes		[NSArray arrayWithObject:_treeDragItemType]
+
+#define _treeClientHeight		21.0
+#define _treeChannelHeight		18.0
+
 @implementation TVCMainWindow
 
 #pragma mark -
@@ -87,16 +93,15 @@
 	
 	[worldController() setupConfiguration];
 	
-	[self.serverList setDelegate:worldController()];
-	[self.serverList setDataSource:worldController()];
-	[self.memberList setKeyDelegate:worldController()];
+	[self.serverList setDelegate:self];
+	[self.serverList setDataSource:self];
 	
-	[self.memberList setKeyDelegate:worldController()];
+	[self.memberList setKeyDelegate:self];
+	[self.serverList setKeyDelegate:self];
 	
 	[self.serverList reloadData];
 	
-	[worldController() setupTree];
-	[worldController() setupOtherServices];
+	[self setupTree];
 	
 	[self.memberList setTarget:menuController()];
 	[self.memberList setDoubleAction:@selector(memberInMemberListDoubleClicked:)];
@@ -173,12 +178,12 @@
 
 - (void)windowDidResize:(NSNotification *)notification
 {
-	[mainWindowTextField() resetTextFieldCellSize:YES];
+	[self.inputTextField resetTextFieldCellSize:YES];
 }
 
 - (BOOL)windowShouldZoom:(NSWindow *)awindow toFrame:(NSRect)newFrame
 {
-	return ([mainWindow() isInFullscreenMode] == NO);
+	return ([self isInFullscreenMode] == NO);
 }
 
 - (NSSize)window:(NSWindow *)window willUseFullScreenContentSize:(NSSize)proposedSize
@@ -196,7 +201,7 @@
 	static BOOL formattingMenuSet;
 	
 	if (formattingMenuSet == NO) {
-		NSMenu *editorMenu = [mainWindowTextField() menu];
+		NSMenu *editorMenu = [self.inputTextField menu];
 		
 		NSMenuItem *formatMenu = [self.formattingMenu formatterMenu];
 		
@@ -324,7 +329,7 @@
 
 - (void)selectPreviousSelection:(NSEvent *)e
 {
-	[worldController() selectPreviousItem];
+	[self selectPreviousItem];
 }
 
 - (void)selectNextWindow:(NSEvent *)e
@@ -603,12 +608,21 @@
 	[self.inputTextField setAttributedStringValue:[NSAttributedString emptyString]];
 	
 	if ([as length] > 0) {
-		[worldController() inputText:as command:command];
+		[self inputText:as command:command];
 		
 		[[TXSharedApplication sharedInputHistoryManager] add:as];
 	}
 	
 	[[TXSharedApplication sharedNicknameCompletionStatus] clear:YES];
+}
+
+- (void)inputText:(id)str command:(NSString *)command
+{
+	if (self.selectedItem) {
+		str = [sharedPluginManager() processInterceptedUserInput:str command:command];
+	
+		[self.selectedClient inputText:str command:command];
+	}
 }
 
 - (void)textEntered
@@ -755,6 +769,846 @@
 			return NO;
 		}
 	}
+}
+
+#pragma mark -
+#pragma mark Loading Screen
+
+- (void)reloadLoadingScreen
+{
+	if ([worldController() isPopulatingSeeds] == NO) {
+		if ([worldController() clientCount] <= 0) {
+			[self.loadingScreen hideAll:NO];
+			[self.loadingScreen popWelcomeAddServerView];
+		} else {
+			[self.loadingScreen hideAll:YES];
+		}
+	}
+}
+
+#pragma mark -
+#pragma mark Window Extras
+
+- (void)updateTitleFor:(IRCTreeItem *)item
+{
+	if (self.selectedItem == item) {
+		[self updateTitle];
+	}
+}
+
+- (void)updateTitle
+{
+	/* Establish base pair. */
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+	
+	/* Set default window title if there is none. */
+	if (u == nil && c == nil) {
+		[self setTitle:[TPCApplicationInfo applicationName]];
+		
+		[self setRepresentedURL:nil]; // Hide lock.
+		
+		return;
+	}
+	
+	/* Begin building title. */
+	NSMutableString *title = [NSMutableString string];
+	
+	if (u && c == nil) { // = Client
+		/* Append basic info. */
+		[title appendString:BLS(1008, [u localNickname], [u altNetworkName])];
+		
+		/* If we have the actual server that the client is connected
+		 to, then we we append that. Otherwise, we just leave it blank. */
+		NSString *networkAddress = [u networkAddress];
+		
+		if (NSObjectIsNotEmpty(networkAddress)) {
+			[title appendString:BLS(1005)];
+			[title appendString:networkAddress];
+		}
+	} else {
+		/* Append basic info. */
+		[title appendString:BLS(1008, [u localNickname], [u altNetworkName])];
+		[title appendString:BLS(1005)];
+		
+		if ([c isPrivateMessage]) {
+			/* Textual defines the topic of a private message as the user host. */
+			/* If it is not defined yet, then we just use the channel name 
+			 which is equal to the nickname of the private message owner. */
+			NSString *hostmask = [c topic];
+			
+			if ([hostmask isHostmask] == NO) {
+				[title appendString:[c name]];
+			} else {
+				[title appendString:hostmask];
+			}
+		}
+		
+		if ([c isChannel]) {
+			/* We always want the channel name and user count. */
+			[title appendString:[c name]];
+			[title appendFormat:BLS(1007), [c numberOfMembers]];
+			
+			/* If we are aware of the channel modes, then we append that. */
+			NSString *modes = [[c modeInfo] titleString];
+			
+			if ([modes length] > 1) {
+				[title appendFormat:BLS(1006), modes];
+			}
+		}
+	}
+	
+	/* Set final title. */
+	[self setTitle:title];
+	
+	[self setRepresentedURL:[RZMainBundle() bundleURL]];
+	
+	/* We also show a lock icon in title depending on whether SSL is in use or not. */
+	if ([[u config] connectionUsesSSL]) {
+		[[self standardWindowButton:NSWindowDocumentIconButton] setImage:[NSImage imageNamed:@"NSLockLockedTemplate"]];
+	} else {
+		[[self standardWindowButton:NSWindowDocumentIconButton] setImage:[NSImage imageNamed:@"NSLockUnlockedTemplate"]];
+	}
+}
+
+#pragma mark -
+#pragma mark Server List
+
+- (void)setupTree
+{
+	/* Set double click action. */
+	[self.serverList setTarget:self];
+	[self.serverList setDoubleAction:@selector(outlineViewDoubleClicked:)];
+	
+	/* Inform the table we want drag events. */
+	[self.serverList registerForDraggedTypes:_treeDragItemTypes];
+	
+	/* Prepare our first selection. */
+	IRCClient *firstSelection = nil;
+	
+	for (IRCClient *e in [worldController() clientList]) {
+		if (e.config.sidebarItemExpanded) {
+			[self expandClient:e];
+			
+			if (e.config.autoConnect) {
+				if (firstSelection == nil) {
+					firstSelection = e;
+				}
+			}
+		}
+	}
+	
+	/* Find firt selection and select it. */
+	if (firstSelection) {
+		NSInteger n = [self.serverList rowForItem:firstSelection];
+		
+		if ([firstSelection channelCount] > 0) {
+			++n;
+		}
+		
+		[self.serverList selectItemAtIndex:n];
+	} else {
+		[self.serverList selectItemAtIndex:0];
+	}
+	
+	/* Fake the delegate call. */
+	[self outlineViewSelectionDidChange:nil];
+	
+	/* Update views. */
+	[self.serverList updateBackgroundColor];
+	[self.memberList updateBackgroundColor];
+	
+	/* Draw default icon as soon as we setup… */
+	/* This is done to apply birthday icon as soon as we start. */
+	[TVCDockIcon drawWithoutCount];
+	
+	/* Populate navigation list. */
+	[menuController() populateNavgiationChannelList];
+}
+
+- (IRCClient *)selectedClient
+{
+	if (	   self.selectedItem) {
+		return self.selectedItem.associatedClient;
+	} else {
+		return nil;
+	}
+}
+
+- (IRCChannel *)selectedChannel
+{
+	if (	 self.selectedItem) {
+		if ([self.selectedItem isClient]) {
+			return nil;
+		} else {
+			return (id)self.selectedItem;
+		}
+	}
+}
+
+- (IRCChannel *)selectedChannelOn:(IRCClient *)c
+{
+	if (self.selectedClient == c) {
+		return self.selectedChannel;
+	} else {
+		return nil;
+	}
+}
+
+- (TVCLogController *)selectedViewController
+{
+	if (	   self.selectedChannel) {
+		return self.selectedChannel.viewController;
+	} else {
+		return nil;
+	}
+}
+
+- (void)reloadTreeItem:(id)item
+{
+	[self.serverList updateDrawingForItem:item];
+}
+
+- (void)reloadTreeGroup:(id)item
+{
+	if ([item isClient]) {
+		[self reloadTreeItem:item];
+		
+		for (IRCChannel *channel in [item channels]) {
+			[self reloadTreeItem:channel];
+		}
+	}
+}
+
+- (void)reloadTree
+{
+	[self.serverList reloadAllDrawings];
+}
+
+- (void)expandClient:(IRCClient *)client
+{
+	[[self.serverList animator] expandItem:client];
+}
+
+- (void)adjustSelection
+{
+	NSInteger selectedRow = [self.serverList selectedRow];
+	NSInteger selectionRow = [self.serverList rowForItem:self.selectedItem];
+	
+	if (0 <= selectedRow && NSDissimilarObjects(selectedRow, selectionRow)) {
+		[self.serverList selectItemAtIndex:selectionRow];
+	}
+}
+
+- (void)storePreviousSelection
+{
+	if (self.temporarilyDisablePreviousSelectionUpdates == NO) {
+		self.previousSelectedClientId = self.selectedClient.treeUUID;
+		self.previousSelectedChannelId = self.selectedChannel.treeUUID;
+	}
+}
+
+- (IRCTreeItem *)previouslySelectedItem
+{
+	NSObjectIsEmptyAssertReturn(self.previousSelectedClientId, nil);
+	
+	NSString *uid = self.previousSelectedClientId;
+	NSString *cid = self.previousSelectedChannelId;
+	
+	IRCTreeItem *item = nil;
+	
+	if (NSObjectIsEmpty(cid)) {
+		item = [worldController() findClientById:uid];
+	} else {
+		item = [worldController() findChannelByClientId:uid channelId:cid];
+	}
+	
+	return item;
+}
+
+- (void)selectPreviousItem
+{
+	IRCTreeItem *item = [self previouslySelectedItem];
+	
+	if (item) {
+		[self select:item];
+	}
+}
+
+- (void)select:(id)item
+{
+	/* There is nothing to do if we are already selected. */
+	if (self.selectedItem == item) {
+		return;
+	}
+	
+	/* Store this item so we can move on. */
+	[self storePreviousSelection];
+	
+	/* We do support selecting nothing. */
+	if (item == nil) {
+		self.selectedItem = nil;
+		
+		[self.channelViewBox setContentView:nil];
+		
+		[self.memberList setDataSource:nil];
+		[self.memberList reloadData];
+		
+		return;
+	}
+	
+	/* Begin selection process. */
+	BOOL isClient = [item isClient];
+	
+	IRCClient *u = [item associatedClient];
+	
+	/* If we are selecting a channel, then we expand the 
+	 client list if it was not already expanded. */
+	if (isClient == NO) {
+		[[self.serverList animator] expandItem:u];
+	}
+	
+	/* We now move the actual selection. */
+	NSInteger i = [self.serverList rowForItem:item];
+	
+	if (i >= 0) {
+		[self.serverList selectItemAtIndex:i];
+		
+		/* Some internal state tracking. */
+		if (isClient) {
+			[u setLastSelectedChannel:nil];
+		} else {
+			[u setLastSelectedChannel:item];
+		}
+	}
+}
+
+#pragma mark -
+#pragma mark Server List Delegate
+
+- (void)outlineViewDoubleClicked:(id)sender
+{
+	PointerIsEmptyAssert(self.selectedItem);
+	
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+	
+	if (c == nil) {
+		if (u.isConnecting) {
+			if ([TPCPreferences disconnectOnDoubleclick]) {
+				[u disconnect]; // Forcefully breaks connection.
+			}
+		} else if (u.isConnected || u.isLoggedIn) {
+			if ([TPCPreferences disconnectOnDoubleclick]) {
+				[u quit]; // Breaks connection with some grace.
+			}
+		} else if (u.isQuitting) {
+			; // Don't do anything under this condition
+		} else {
+			if ([TPCPreferences connectOnDoubleclick]) {
+				[u connect];
+			}
+		}
+		
+		[self expandClient:u];
+	} else {
+		if (u.isLoggedIn) {
+			if (c.isActive) {
+				if ([TPCPreferences leaveOnDoubleclick]) {
+					[u partChannel:c];
+				}
+			} else {
+				if ([TPCPreferences joinOnDoubleclick]) {
+					[u joinChannel:c];
+				}
+			}
+		}
+	}
+}
+
+- (NSInteger)outlineView:(NSOutlineView *)sender numberOfChildrenOfItem:(id)item
+{
+	if (item) {
+		return [item numberOfChildren];
+	} else {
+		return [worldController() clientCount];
+	}
+}
+
+- (BOOL)outlineView:(NSOutlineView *)sender isItemExpandable:(id)item
+{
+	return ([item numberOfChildren] > 0);
+}
+
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(IRCTreeItem *)item
+{
+	if (item) {
+		return [item childAtIndex:index];
+	} else {
+		return [worldController() clientList][index];
+	}
+}
+
+- (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
+{
+	return [item label];
+}
+
+- (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(IRCTreeItem *)item
+{
+	if (item == nil || [item isClient]) {
+		return _treeClientHeight;
+	} else {
+		return _treeChannelHeight;
+	}
+}
+
+- (NSTableRowView *)outlineView:(NSOutlineView *)outlineView rowViewForItem:(id)item
+{
+	TVCServerListRowCell *rowView = [[TVCServerListRowCell alloc] initWithFrame:NSZeroRect];
+	
+	return rowView;
+}
+
+- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(IRCTreeItem *)item
+{
+	/* Ask our view controller what we are. */
+	if ([item isClient]) {
+		/* We are a group item. A client. */
+		NSView *newView = [outlineView makeViewWithIdentifier:@"GroupView" owner:self];
+		
+		if ([newView isKindOfClass:[TVCServerListCellGroupItem class]]) {
+			TVCServerListCellGroupItem *groupItem = (TVCServerListCellGroupItem *)newView;
+			
+			[groupItem setCellItem:item];
+		}
+		
+		return newView;
+	} else {
+		/* We are a child item. A channel. */
+		NSView *newView = [outlineView makeViewWithIdentifier:@"ChildView" owner:self];
+		
+		if ([newView isKindOfClass:[TVCServerListCellChildItem class]]) {
+			TVCServerListCellChildItem *childItem = (TVCServerListCellChildItem *)newView;
+			
+			[childItem setCellItem:item];
+		}
+		
+		return newView;
+	}
+	
+	return nil;
+}
+
+- (void)outlineView:(NSOutlineView *)outlineView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
+{
+	[self.serverList updateDrawingForRow:row skipDrawingCheck:YES];
+}
+
+- (void)outlineViewItemDidCollapse:(NSNotification *)notification
+{
+	id itemBeingCollapsed = [[notification userInfo] objectForKey:@"NSObject"];
+	
+	IRCClient *u = [itemBeingCollapsed associatedClient];
+	
+	[[u config] setSidebarItemExpanded:NO];
+}
+
+- (void)outlineViewItemDidExpand:(NSNotification *)notification
+{
+	id itemBeingCollapsed = [[notification userInfo] objectForKey:@"NSObject"];
+	
+	IRCClient *u = [itemBeingCollapsed associatedClient];
+	
+	[[u config] setSidebarItemExpanded:YES];
+}
+
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldExpandItem:(IRCTreeItem *)item
+{
+	return YES;
+}
+
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(IRCTreeItem *)item
+{
+	return YES;
+}
+
+- (void)outlineViewItemWillCollapse:(NSNotification *)notification
+{
+	/* If the item being collapsed is the one our selected channel is on,
+	 then move selection to the console of the collapsed server. */
+	id itemBeingCollapsed = [[notification userInfo] objectForKey:@"NSObject"];
+	
+	if ([itemBeingCollapsed isClient] == NO) {
+		if (itemBeingCollapsed == self.selectedClient) {
+			[self select:self.selectedClient];
+		}
+	}
+}
+
+- (void)outlineViewSelectionDidChange:(NSNotification *)note
+{
+	/* Store previous selection. */
+	[self storePreviousSelection];
+	
+	/* Reset spelling for text field. */
+	if ([self.inputTextField hasModifiedSpellingDictionary]) {
+		[RZSpellChecker() setIgnoredWords:@[] inSpellDocumentWithTag:[self.inputTextField spellCheckerDocumentTag]];
+	}
+	
+	/* Prepare next item. */
+	NSUInteger selectedRow = [self.serverList selectedRow];
+
+	id nextItem = [self.serverList itemAtRow:selectedRow];
+	
+	[self.selectedItem resetState]; // Reset state of old item.
+	 self.selectedItem = nextItem;
+	
+	[self.selectedItem resetState]; // Reset state of new item.
+	
+	/* Destroy member list if we have no selection. */
+	if (self.selectedItem == nil) {
+		[self.channelViewBox setContentView:nil];
+		
+		 self.memberList.delegate = nil;
+		 self.memberList.dataSource = nil;
+		
+		[self.memberList reloadData];
+		
+		self.serverList.menu = [menuController() addServerMenu];
+		
+		return; // Nothing more to do for empty selections.
+	}
+	
+	/* Setup WebKit. */
+	TVCLogController *log = self.selectedViewController;
+	
+	/* Set content view to WebView. */
+	[self.channelViewBox setContentView:[log webView]];
+	
+	/* Allow selected WebView time to update. */
+	[log notifyDidBecomeVisible];
+	
+	/* Prepare the member list for the selection. */
+	BOOL isClient = ([self.selectedItem isClient]);
+	BOOL isQuery = ([self.selectedItem isPrivateMessage]);
+	
+	/* The right click menu follows selection so let's update
+	 the menu we will show depending on the selection. */
+	if (isClient) {
+		self.serverList.menu = [[menuController() serverMenuItem] submenu];
+	} else {
+		self.serverList.menu = [[menuController() channelMenuItem] submenu];
+	}
+	
+	/* Update table view data sources. */
+	if (isClient || isQuery) {
+		/* Private messages and the client console
+		 do not have a member list. */
+		 self.memberList.delegate = nil;
+		 self.memberList.dataSource = nil;
+		
+		[self.memberList reloadData];
+	} else {
+		 self.memberList.delegate = (id)self.selectedItem;
+		 self.memberList.dataSource = (id)self.selectedItem;
+		
+		[self.memberList deselectAll:nil];
+		[self.memberList scrollRowToVisible:0];
+		
+		[(id)self.selectedItem reloadDataForTableView];
+	}
+	
+	/* Begin work on text field. */
+	[self.inputTextField focus];
+	[self.inputTextField updateSegmentedController];
+	
+	/* Setup text field value with history item when we have
+	 history setup to be channel specific. */
+	[[TXSharedApplication sharedInputHistoryManager] moveFocusTo:self.selectedItem];
+	
+	/* Update splitter view depending on selection. */
+	if (isClient || isQuery) {
+		[self.contentSplitView collapseMemberList];
+	} else {
+		if (self.memberList.isHiddenByUser == NO) {
+			[self.contentSplitView expandMemberList];
+		}
+	}
+	
+	/* Finish up. */
+	[TVCDockIcon updateDockIcon];
+	
+	[self updateTitle];
+	
+	[self.serverList updateDrawingForItem:self.selectedItem				skipDrawingCheck:YES];
+	[self.serverList updateDrawingForItem:self.previouslySelectedItem	skipDrawingCheck:YES];
+}
+
+- (BOOL)outlineView:(NSOutlineView *)sender writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
+{
+	NSObjectIsEmptyAssertReturn(items, NO);
+	
+	IRCTreeItem *i = [items objectAtIndex:0];
+	
+	NSString *s = [worldController() findItemFromInfoGeneratedValue:i];
+	
+	[pboard declareTypes:_treeDragItemTypes owner:self];
+	
+	[pboard setPropertyList:s forType:_treeDragItemType];
+	
+	return YES;
+}
+
+- (NSDragOperation)outlineView:(NSOutlineView *)sender validateDrop:(id <NSDraggingInfo>)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
+{
+	/* Validate dragging index. */
+	if (index < 0) {
+		return NSDragOperationNone;
+	}
+	
+	/* Validate pasteboard types. */
+	NSPasteboard *pboard = [info draggingPasteboard];
+	
+	if ([pboard availableTypeFromArray:_treeDragItemTypes] == nil) {
+		return NSDragOperationNone;
+	}
+	
+	/* Validate pasteboard contents. */
+	NSString *infoStr = [pboard propertyListForType:_treeDragItemType];
+	
+	if (infoStr == nil) {
+		return NSDragOperationNone;
+	}
+	
+	/* Validate selection. */
+	IRCTreeItem *i = [worldController() findItemFromInfo:infoStr];
+	
+	if (i == nil) {
+		return NSDragOperationNone;
+	}
+	
+	if ([i isClient]) {
+		if (item) {
+			return NSDragOperationNone;
+		}
+	} else {
+		/* Validate input. */
+		if (item == nil) {
+			return NSDragOperationNone;
+		}
+		
+		IRCChannel *c = (IRCChannel *)i;
+		
+		/* Do not allow dragging between clients. */
+		if (NSDissimilarObjects(item, [c associatedClient])) {
+			return NSDragOperationNone;
+		}
+		
+		IRCClient *toClient = (IRCClient *)item;
+		
+		NSArray *ary = [toClient channels];
+		
+		/* Get list of items below and above insertion point. */
+		NSMutableArray *low = [ary mutableSubarrayWithRange:NSMakeRange(0, index)];
+		NSMutableArray *high = [ary mutableSubarrayWithRange:NSMakeRange(index, ([ary count] - index))];
+		
+		/* Remove item from copies. */
+		[low removeObjectIdenticalTo:c];
+		[high removeObjectIdenticalTo:c];
+		
+		/* Validate drop positions based on simple logic. */
+		if ([c isChannel]) {
+			if ([low count] > 0) {
+				IRCChannel *prev = [low lastObject];
+				
+				if ([prev isChannel] == NO) {
+					return NSDragOperationNone;
+				}
+			}
+		} else {
+			if ([high count] > 0) {
+				IRCChannel *next = [high objectAtIndex:0];
+				
+				if ([next isChannel]) {
+					return NSDragOperationNone;
+				}
+			}
+		}
+	}
+	
+	return NSDragOperationGeneric;
+}
+
+- (BOOL)outlineView:(NSOutlineView *)sender acceptDrop:(id <NSDraggingInfo>)info item:(id)item childIndex:(NSInteger)index
+{
+	/* Validate dragging index. */
+	if (index < 0) {
+		return NSDragOperationNone;
+	}
+	
+	/* Validate pasteboard types. */
+	NSPasteboard *pboard = [info draggingPasteboard];
+	
+	if ([pboard availableTypeFromArray:_treeDragItemTypes] == nil) {
+		return NSDragOperationNone;
+	}
+	
+	/* Validate pasteboard contents. */
+	NSString *infoStr = [pboard propertyListForType:_treeDragItemType];
+	
+	if (infoStr == nil) {
+		return NSDragOperationNone;
+	}
+	
+	/* Validate selection. */
+	IRCTreeItem *i = [worldController() findItemFromInfo:infoStr];
+	
+	if (i == nil) {
+		return NSDragOperationNone;
+	}
+	
+	if ([i isClient]) {
+		if (item) {
+			return NO;
+		}
+		
+		/* Get client list as we are rearranging servers. */
+		NSArray *ary = [worldController() clientList];
+		
+		/* Split array up. */
+		NSMutableArray *mutary = [ary mutableCopy];
+		
+		NSMutableArray *low = [ary mutableSubarrayWithRange:NSMakeRange(0, index)];
+		NSMutableArray *high = [ary mutableSubarrayWithRange:NSMakeRange(index, ([ary count] - index))];
+		
+		/* Log important info. */
+		NSInteger originalIndex = [ary indexOfObject:i];
+		
+		/* Remove any mentions of object. */
+		[low removeObjectIdenticalTo:i];
+		[high removeObjectIdenticalTo:i];
+		
+		/* Clear the butter. */
+		[mutary removeAllObjects];
+		
+		/* Build new array. */
+		[mutary addObjectsFromArray:low];
+		[mutary addObject:i];
+		[mutary addObjectsFromArray:high];
+		
+		[worldController() setClientList:mutary];
+		
+		/* Now, the hard part… */
+		NSArray *childItems = [self.serverList groupItems];
+		
+		NSObjectIsEmptyAssertReturn(childItems, NO);
+		
+		NSInteger oldIndex = [childItems indexOfObject:i];
+		NSInteger newIndex = 0;
+		
+		id lastObject = [low lastObject];
+		
+		if (lastObject) {
+			newIndex = [childItems indexOfObject:lastObject];
+			
+			if (originalIndex <= oldIndex && newIndex < ([childItems count] - 1)) {
+				newIndex += 1;
+			}
+		}
+		
+		if (oldIndex == newIndex) {
+			return NO;
+		}
+		
+		/* Move the actual placement to reflect internal storage. */
+		[self.serverList moveItemAtIndex:oldIndex inParent:nil toIndex:newIndex inParent:nil];
+	}
+	else
+	{
+		/* Perform some basic validation. */
+		if (item == nil || NSDissimilarObjects(item, [i associatedClient])) {
+			return NO;
+		}
+		
+		/* We are client. */
+		IRCClient *u = (IRCClient *)item;
+		
+		/* Some comment that is supposed to tell you whats happening. */
+		NSArray *ary = [u channels];
+		
+		NSMutableArray *mutary = [ary mutableCopy];
+		
+		/* Another comment talking about stuff nobody cares about. */
+		NSMutableArray *low = [ary mutableSubarrayWithRange:NSMakeRange(0, index)];
+		NSMutableArray *high = [ary mutableSubarrayWithRange:NSMakeRange(index, ([ary count] - index))];
+		
+		/* :) */
+		NSInteger originalIndex = [ary indexOfObject:i];
+		
+		/* Something, something… */
+		[low removeObjectIdenticalTo:i];
+		[high removeObjectIdenticalTo:i];
+		
+		/* Clinteger if you are reading this, then I hope France
+		 flops hard in the World Cup. Go Germany? */
+		[mutary removeAllObjects];
+		
+		[mutary addObjectsFromArray:low];
+		[mutary addObject:i];
+		[mutary addObjectsFromArray:high];
+		
+		[u setChannels:mutary];
+		
+		/* I am pretty tired. */
+		NSArray *childItems = [self.serverList rowsFromParentGroup:u];
+		
+		NSObjectIsEmptyAssertReturn(childItems, NO);
+		
+		NSInteger oldIndex = [childItems indexOfObject:i];
+		NSInteger newIndex = 0;
+		
+		id lastObject = [low lastObject];
+		
+		if (lastObject) {
+			newIndex  = [childItems indexOfObject:lastObject];
+			newIndex += 1;
+			
+			if (newIndex > originalIndex) {
+				newIndex -= 1;
+			}
+		}
+		
+		if (oldIndex == newIndex) {
+			return NO;
+		}
+		
+		/* And I just want this refacotring to be over with. */
+		[self.serverList moveItemAtIndex:oldIndex inParent:u toIndex:newIndex inParent:u];
+	}
+	
+	/* Update selection. */
+	NSInteger n = [self.serverList rowForItem:self.selectedItem];
+	
+	if (n > -1) {
+		[self.serverList selectItemAtIndex:n];
+	}
+	
+	/* Order changed so should our keyboard shortcuts. */
+	[menuController() populateNavgiationChannelList];
+	
+	/* Conclude drag operation. */
+	return YES;
+}
+
+- (void)memberListViewKeyDown:(NSEvent *)e
+{
+	[worldController() logKeyDown:e];
+}
+
+- (void)serverListKeyDown:(NSEvent *)e
+{
+	[worldController() logKeyDown:e];
 }
 
 @end
