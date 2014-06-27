@@ -2318,8 +2318,6 @@
 				4C8AF5F0158E99520026668C /* Channel View */,
 				4C8AF5F9158E99520026668C /* Input Text Field */,
 				4C8AF6AE194B84050039E7E2 /* Main Window */,
-				4C8AF5FD158E99520026668C /* Server List */,
-				4C8AF606158E99520026668C /* User List */,
 				4C8AF600158E99520026668C /* TVCDockIcon.m */,
 				4C8AF601158E99520026668C /* TVCInputPromptDialog.m */,
 				4C8AF602158E99520026668C /* TVCListSeparatorCell.m */,
@@ -2378,6 +2376,8 @@
 		4C8AF6AE194B84050039E7E2 /* Main Window */ = {
 			isa = PBXGroup;
 			children = (
+				4C8AF5FD158E99520026668C /* Server List */,
+				4C8AF606158E99520026668C /* User List */,
 				4CA110E61955AAA10062EC4E /* TVCMainWindow.m */,
 				4CA110E71955AAA10062EC4E /* TVCMainWindowLoadingScreen.m */,
 				4CA110E81955AAA10062EC4E /* TVCMainWindowSegmentedControl.m */,
@@ -2554,6 +2554,7 @@
 			isa = PBXGroup;
 			children = (
 				4CA110D01955AA5A0062EC4E /* IRCAddressBook.m */,
+				4C8AF5B6158E99520026668C /* IRCChannel.m */,
 				4C8AF5B7158E99520026668C /* IRCChannelConfig.m */,
 				4C8AF5BA158E99520026668C /* IRCClientConfig.m */,
 				4CB26C6F19529003005F927C /* IRCCommandIndex.m */,
@@ -2766,7 +2767,6 @@
 		4CFF8DBD16DC4CBA00E4204D /* IRC */ = {
 			isa = PBXGroup;
 			children = (
-				4C8AF5B6158E99520026668C /* IRCChannel.m */,
 				4C8AF5B8158E99520026668C /* IRCChannelMode.m */,
 				4C8AF5B9158E99520026668C /* IRCClient.m */,
 				4C8AF5C4158E99520026668C /* IRCWorld.m */,

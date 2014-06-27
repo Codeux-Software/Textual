@@ -74,7 +74,7 @@
 
 - (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender isStandalone:(BOOL)isStandalone
 {
-	dispatch_async(dispatch_get_main_queue(), ^{
+	[self performBlockOnMainThread:^{
 		PointerIsEmptyAssert(callbackBlock);
 		PointerIsEmptyAssert(sender);
 
@@ -93,7 +93,7 @@
 
 		/* Add the operations. */
 		[self addOperation:operation];
-	});
+	}];
 }
 
 #pragma mark -
@@ -125,7 +125,7 @@
 
 - (void)updateReadinessState:(TVCLogController *)controller
 {
-	dispatch_async(dispatch_get_main_queue(), ^{
+	[self performBlockOnMainThread:^{
 		PointerIsEmptyAssert(controller);
 
 		/* Mark all objects part of this controller
@@ -143,7 +143,7 @@
 				}
 			}
 		}
-	});
+	}];
 }
 
 #pragma mark -

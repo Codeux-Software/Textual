@@ -40,6 +40,10 @@
 
 #define _colorNumberMax				 30
 
+@interface IRCUser ()
+@property (nonatomic, nweak) IRCClient *associatedClient;
+@end
+
 @implementation IRCUser
 
 - (id)init
@@ -62,6 +66,16 @@
 	return self;
 }
 
++ (id)newUserOnClient:(IRCClient *)client withNickname:(NSString *)nickname
+{
+	IRCUser *newUser = [IRCUser new];
+	
+	newUser.associatedClient = client;
+	
+	newUser.nickname = nickname;
+	
+	return newUser;
+}
 
 - (NSString *)hostmask
 {
@@ -104,25 +118,27 @@
 
 - (NSString *)mark
 {
+	IRCISupportInfo *supportInfo = self.associatedClient.isupport;
+	
 	if (self.q) {
 		if (self.binircd_O) {
-			return [self.supportInfo userModePrefixSymbol:@"O"]; // binircd-1.0.0
+			return [supportInfo userModePrefixSymbol:@"O"]; // binircd-1.0.0
 		} else {
-			return [self.supportInfo userModePrefixSymbol:@"q"];
+			return [supportInfo userModePrefixSymbol:@"q"];
 		}
 	} else if (self.a) {
-		return [self.supportInfo userModePrefixSymbol:@"a"];
+		return [supportInfo userModePrefixSymbol:@"a"];
 	} else if (self.o) {
-		return [self.supportInfo userModePrefixSymbol:@"o"];
+		return [supportInfo userModePrefixSymbol:@"o"];
 	} else if (self.h) {
-		return [self.supportInfo userModePrefixSymbol:@"h"];
+		return [supportInfo userModePrefixSymbol:@"h"];
 	} else if (self.v) {
-		return [self.supportInfo userModePrefixSymbol:@"v"];
+		return [supportInfo userModePrefixSymbol:@"v"];
 	} else if (self.isCop) {
 		if (self.InspIRCd_y_lower) {
-			return [self.supportInfo userModePrefixSymbol:@"y"]; // InspIRCd-2.0
+			return [supportInfo userModePrefixSymbol:@"y"]; // InspIRCd-2.0
 		} else if (self.InspIRCd_y_upper) {
-			return [self.supportInfo userModePrefixSymbol:@"Y"]; // InspIRCd-2.0
+			return [supportInfo userModePrefixSymbol:@"Y"]; // InspIRCd-2.0
 		}
 	}
 
@@ -142,7 +158,7 @@
 - (NSInteger)colorNumber
 {
 	if (self.colorNumber < 0) {
-		NSString *hashName = [[self lowercaseNickname] sha1];
+		NSString *hashName = [self.lowercaseNickname sha1];
 
 		self.colorNumber = ([hashName hash] % _colorNumberMax);
 	}
@@ -159,7 +175,7 @@
 
 - (NSUInteger)hash
 {
-	return [[self lowercaseNickname] hash];
+	return [self.lowercaseNickname hash];
 }
 
 - (NSString *)lowercaseNickname
@@ -216,8 +232,8 @@
 
 - (NSComparisonResult)compareUsingWeights:(IRCUser *)other
 {
-	CGFloat local = [self totalWeight];
-	CGFloat remte = [other totalWeight];
+	CGFloat local = self.totalWeight;
+	CGFloat remte = other.totalWeight;
 
 	if (local > remte) {
 		return NSOrderedAscending;
@@ -256,12 +272,12 @@
 	
 	BOOL favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
 	
-	if (favorIRCop && self.isCop && ([other isCop] == NO)) {
+	if (favorIRCop && self.isCop && other.isCop == NO) {
 		return NSOrderedAscending;
-	} else if (favorIRCop && (self.isCop == NO) && [other isCop]) {
+	} else if (favorIRCop && self.isCop == NO && other.isCop) {
 		return NSOrderedDescending;
 	} else if (invertedRank == NSOrderedSame) {
-		return [self.nickname caseInsensitiveCompare:[other nickname]];
+		return [self.nickname caseInsensitiveCompare:other.nickname];
 	} else {
 		return invertedRank;
 	}
@@ -297,12 +313,13 @@
 - (void)migrate:(IRCUser *)from
 {
 	/* Lazy-man copy. */
+	self.associatedClient = [from associatedClient];
+	
 	self.nickname = [from nickname];
 	self.username = [from username];
 	self.address = [from address];
 
 	self.colorNumber = [from colorNumber];
-	self.supportInfo = [from supportInfo];
 
 	self.q = [from q];
 	self.a = [from a];
@@ -321,7 +338,7 @@
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<IRCUser %@%@>", [self mark], self.nickname];
+	return [NSString stringWithFormat:@"<IRCUser %@%@>", self.mark, self.nickname];
 }
 
 - (id)copyWithZone:(NSZone *)zone

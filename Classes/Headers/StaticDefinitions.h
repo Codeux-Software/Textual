@@ -126,6 +126,14 @@
 
 #define NSIsCurrentThreadMain()					[[NSThread currentThread] isEqual:[NSThread mainThread]]
 
+#define TXLockMethodForOneTimeFire()			static BOOL __methodFired = NO;											\
+																														\
+												if (__methodFired == NO) {												\
+													__methodFired = YES;												\
+												} else {																\
+													NSAssert(NO, @"Method cannot be invoked more than one time.");		\
+												}
+
 /* Developer extras. */
 /* The developer environment token is saved to the user defaults
  dictionary and is used to tell Textual whether or not developer

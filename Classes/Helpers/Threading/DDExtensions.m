@@ -24,6 +24,29 @@
 
 #import "TextualApplication.h"
 
+#pragma mark -
+#pragma mark Private Interface
+
+@interface DDExtensionsPrivateInterface : NSObject
+/* _performBlockOnMainThread: does not actually do anything other than 
+ perform the block. Invoke this method using the DDExtensions helper. */
++ (void)_performBlockOnMainThread:(DDExtensionsWorkerBlock)block;
+@end
+
+@implementation DDExtensionsPrivateInterface
+
++ (void)_performBlockOnMainThread:(DDExtensionsWorkerBlock)block
+{
+	if (block) {
+		block();
+	}
+}
+
+@end
+
+#pragma mark -
+#pragma mark Public Helper Methods
+
 @implementation NSObject (DDExtensions)
 
 - (id)invokeOnThread:(NSThread *)thread
@@ -118,6 +141,16 @@
     [grabber setThreadType:DDInvocationMainThread];
 	
     return [grabber prepareWithInvocationTarget:self];
+}
+
++ (void)performBlockOnMainThread:(DDExtensionsWorkerBlock)block
+{
+	[[DDExtensionsPrivateInterface invokeOnMainThread] _performBlockOnMainThread:block];
+}
+
+- (void)performBlockOnMainThread:(DDExtensionsWorkerBlock)block
+{
+	[[DDExtensionsPrivateInterface invokeOnMainThread] _performBlockOnMainThread:block];
 }
 
 @end

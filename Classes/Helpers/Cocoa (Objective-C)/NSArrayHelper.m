@@ -40,8 +40,6 @@
 
 #include <objc/message.h>
 
-typedef BOOL (*EqualityMethodType)(id, SEL, id);
-
 @implementation NSArray (TXArrayHelper)
 
 - (id)safeObjectAtIndex:(NSInteger)n
@@ -177,6 +175,14 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 	return [arry copy];
 }
 
+- (NSUInteger)indexOfSortedObject:(id)obj usingComparator:(NSComparator)cmp
+{
+	return [self indexOfObject:obj
+				 inSortedRange:[self range]
+					   options:NSBinarySearchingFirstEqual
+			   usingComparator:cmp];
+}
+
 - (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath
 {
 	return [self indexOfObjectMatchingValue:value withKeyPath:keyPath usingSelector:@selector(isEqual:)];
@@ -306,9 +312,9 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 	}
 }
 
-- (void)insertSortedObject:(id)obj usingComparator:(NSComparator)comparator
+- (NSUInteger)insertSortedObject:(id)obj usingComparator:(NSComparator)comparator
 {
-	PointerIsEmptyAssert(obj);
+	PointerIsEmptyAssertReturn(obj, NSNotFound);
 
 	NSUInteger idx = [self indexOfObject:obj
 						   inSortedRange:[self range]
@@ -316,6 +322,8 @@ typedef BOOL (*EqualityMethodType)(id, SEL, id);
 						 usingComparator:comparator];
 
 	[self insertObject:obj atIndex:idx];
+	
+	return idx;
 }
 
 @end

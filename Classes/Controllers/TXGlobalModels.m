@@ -284,29 +284,72 @@ void TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueOperationT
 	TXPerformBlockOnDispatchQueue(workerQueue, block, operationType);
 }
 
+void TXPerformBlockSynchronouslyOnGlobalQueue(dispatch_block_t block)
+{
+	dispatch_queue_t workerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+	
+	TXPerformBlockOnDispatchQueue(workerQueue, block, TXPerformBlockOnDispatchQueueSyncOperationType);
+}
+
+void TXPerformBlockAsynchronouslyOnGlobalQueue(dispatch_block_t block)
+{
+	dispatch_queue_t workerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+	
+	TXPerformBlockOnDispatchQueue(workerQueue, block, TXPerformBlockOnDispatchQueueAsyncOperationType);
+}
+
 void TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block)
 {
-	dispatch_queue_t workerQueue = dispatch_get_main_queue();
-	
-	TXPerformBlockOnDispatchQueue(workerQueue, block, operationType);
+	TXPerformBlockOnDispatchQueue(dispatch_get_main_queue(), block, operationType);
+}
+
+void TXPerformBlockSynchronouslyOnMainQueue(dispatch_block_t block)
+{
+	TXPerformBlockOnDispatchQueue(dispatch_get_main_queue(), block, TXPerformBlockOnDispatchQueueSyncOperationType);
+}
+
+void TXPerformBlockAsynchronouslyOnMainQueue(dispatch_block_t block)
+{
+	TXPerformBlockOnDispatchQueue(dispatch_get_main_queue(), block, TXPerformBlockOnDispatchQueueAsyncOperationType);
+}
+
+void TXPerformBlockSynchronouslyOnQueue(dispatch_queue_t queue, dispatch_block_t block)
+{
+	TXPerformBlockOnDispatchQueue(queue, block, TXPerformBlockOnDispatchQueueSyncOperationType);
+}
+
+void TXPerformBlockAsynchronouslyOnQueue(dispatch_queue_t queue, dispatch_block_t block)
+{
+	TXPerformBlockOnDispatchQueue(queue, block, TXPerformBlockOnDispatchQueueAsyncOperationType);
 }
 
 void TXPerformBlockOnDispatchQueue(dispatch_queue_t queue, dispatch_block_t block, TXPerformBlockOnDispatchQueueOperationType operationType)
 {
-	if (operationType == TXPerformBlockOnDispatchQueueSyncOperationType) {
-		dispatch_sync(queue, block);
-	}
-	
-	if (operationType == TXPerformBlockOnDispatchQueueAsyncOperationType) {
-		dispatch_async(queue, block);
-	}
-	
-	if (operationType == TXPerformBlockOnDispatchQueueBarrierSyncOperationType) {
-		dispatch_barrier_sync(queue, block);
-	}
-	
-	if (operationType == TXPerformBlockOnDispatchQueueBarrierAsyncOperationType) {
-		dispatch_barrier_async(queue, block);
+	switch (operationType) {
+		case TXPerformBlockOnDispatchQueueAsyncOperationType:
+		{
+			dispatch_async(queue, block);
+			
+			break;
+		}
+		case TXPerformBlockOnDispatchQueueSyncOperationType:
+		{
+			dispatch_sync(queue, block);
+			
+			break;
+		}
+		case TXPerformBlockOnDispatchQueueBarrierAsyncOperationType:
+		{
+			dispatch_barrier_async(queue, block);
+			
+			break;
+		}
+		case TXPerformBlockOnDispatchQueueBarrierSyncOperationType:
+		{
+			dispatch_barrier_sync(queue, block);
+			
+			break;
+		}
 	}
 }
 

@@ -39,7 +39,6 @@
 #import "TextualApplication.h"
 
 @interface IRCUser : NSObject <NSCopying>
-@property (nonatomic, nweak) IRCISupportInfo *supportInfo;
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *username;
 @property (nonatomic, copy) NSString *address;
@@ -58,6 +57,8 @@
 @property (nonatomic, assign) CGFloat incomingWeight;
 @property (nonatomic, assign) CGFloat outgoingWeight;
 @property (nonatomic, assign) CFAbsoluteTime lastWeightFade;
+
++ (id)newUserOnClient:(IRCClient *)client withNickname:(NSString *)nickname;
 
 - (NSString *)mark;
 

@@ -38,30 +38,48 @@
 
 #import "TextualApplication.h"
 
+#include <objc/message.h>
+
 #define _treeUserlistHeight					18.0
 
-#define _cancelOnNotSelectedChannel			NSAssertReturn(self.isSelectedChannel && self.isChannel);
+#define _cancelOnNotSelectedChannel			if (self.isChannel == NO || self.isSelectedChannel == NO) {			\
+												return;															\
+											}
 
 @interface IRCChannel ()
-@property (nonatomic, strong) NSMutableDictionary *memberList; // Unsorted dictionary of all users.
-@property (nonatomic, strong) NSArray *memberListNormalSorted; // Sorted by IRCuser compare: — excludes ignores.
-@property (nonatomic, strong) NSArray *memberListLengthSorted; // Sorted by nickname length. — includes ignores.
+/* memberListStandardSortedContainer is a copy of the member list sorted by the channel
+ rank of each member. As it is a mutable array, it is not thread safe. It is not recommended 
+ to access this property directly. Use the APIs defined in IRCChannel.h as they have been
+ designed to synchronize changes on a proper queue. */
+@property (nonatomic, strong) NSMutableArray *memberListStandardSortedContainer;
+
+/* memberListLengthSortedContainer is a copy of the member list sorted by the length of
+ nicknames. TVCLogRenderer is requires the member list to be in a specific order each time
+ it renders a message and it is too costly to sort our container thousands of times 
+ every minute. That is why we maintain a local cache. Again, do not access directly as
+ NSMutableArray by itself is not thread safe. */
+@property (nonatomic, strong) NSMutableArray *memberListLengthSortedContainer;
+
+/* Misc. private properties. */
+@property (nonatomic, strong) TLOFileLogger *logFile;
 @end
 
 @implementation IRCChannel
 
-@synthesize client = _client;
+@synthesize associatedClient = _associatedClient;
 @synthesize printingQueue = _printingQueue;
 
 - (id)init
 {
 	if ((self = [super init])) {
+		/* Channel mode info. */
 		self.modeInfo = [IRCChannelMode new];
 		
-		self.memberList = [NSMutableDictionary new];
-
-		self.memberListNormalSorted = @[];
-		self.memberListLengthSorted = @[];
+		/* Channel ranked member list used internally. */
+		self.memberListStandardSortedContainer = [NSMutableArray array];
+		
+		/* Length sorted member list used by renderer. */
+		self.memberListLengthSortedContainer = [NSMutableArray array];
 	}
 	
 	return self;
@@ -69,7 +87,7 @@
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<IRCChannel [%@]: %@>", [_client altNetworkName], [self name]];
+	return [NSString stringWithFormat:@"<IRCChannel [%@]: %@>", self.associatedClient, self.name];
 }
 
 #pragma mark -
@@ -77,36 +95,37 @@
 
 - (void)setup:(IRCChannelConfig *)seed
 {
-	PointerIsEmptyAssert(seed);
-
-	if (PointerIsEmpty(self.config)) {
-		self.config = [seed mutableCopy];
+	TXLockMethodForOneTimeFire();
+	
+	if (seed) {
+		if (self.config == nil) {
+			self.config = seed; // Value is copied on assign.
+		}
 	}
 }
 
 - (void)updateConfig:(IRCChannelConfig *)seed
 {
-	PointerIsEmptyAssert(seed);
-	
-	/* We do not want to bother on equality. */
-	if ([self.config isEqualToChannelConfiguration:seed]) {
-		return;
-	}
-	
-	/* Is the current key equal to the temporary store. */
-	NSString *temporaryKey = [seed temporaryEncryptionKey];
-	
-	BOOL encryptionChanged = (temporaryKey && NSObjectsAreEqual(temporaryKey, self.config.encryptionKey) == NO);
+	if (seed) {
+		/* We do not want to bother on equality. */
+		NSAssertReturn([seed isEqualToChannelConfiguration:_config] == NO);
+		
+		/* Is the current key equal to the temporary store. */
+		NSString *temporaryKey = [seed temporaryEncryptionKey];
+		
+		/* Both values are either going to be nil or one will be different than the other. */
+		BOOL encryptionUnchanged = NSObjectsAreEqual(temporaryKey, self.config.encryptionKey);
 
-	/* Update the actual local config. */
-	self.config = [seed mutableCopy];
-	
-	/* Save any temporary changes to disk. */
-	[self.config writeKeychainItemsToDisk];
-	
-	/* Inform view of changes. */
-	if (encryptionChanged) {
-		[self.viewController channelLevelEncryptionChanged];
+		/* Update the actual local config. */
+		self.config = seed; // Value is copied on assign.
+		
+		/* Save any temporary changes to disk. */
+		[self.config writeKeychainItemsToDisk];
+		
+		/* Inform view of changes. */
+		if (encryptionUnchanged == NO) {
+			[self.viewController channelLevelEncryptionChanged];
+		}
 	}
 }
 
@@ -147,9 +166,18 @@
 {
 	if (self.config.type == IRCChannelPrivateMessageType) {
 		return @"query";
+	} else {
+		return @"channel";
 	}
+}
 
-	return @"channel";
+- (NSURL *)logFilePath
+{
+	if (self.logFile) {
+		return [self.logFile buildPath];
+	} else {
+		return nil;
+	}
 }
 
 #pragma mark -
@@ -157,15 +185,16 @@
 
 - (void)setName:(NSString *)value
 {
-	if ([self.name isEqualToString:value] == NO) {
-		self.config.channelName = value;
-	}
+	/* The channelName property which is automatically created 
+	 will handle isEqual comparison for the new value. */
+	
+	self.config.channelName = value;
 }
 
 - (void)setTopic:(NSString *)topic
 {
 	if ([_topic isEqualToString:topic] == NO) {
-		_topic = topic;
+		 _topic = [topic copy];
 	}
 
     [self.viewController setTopic:topic];
@@ -178,9 +207,9 @@
 	 Do not call setEncryptionKey: direction on self.config or that
 	 will only be written to the temporary store. */
 	
-	NSString *oldKey = [self.config encryptionKey];
+	BOOL encryptionUnchanged = NSObjectsAreEqual(encryptionKey, self.config.encryptionKey);
 	
-	if (NSObjectsAreEqual(oldKey, encryptionKey) == NO) {
+	if (encryptionUnchanged == NO) {
 		[self.config setEncryptionKey:encryptionKey];
 		[self.config writeEncryptionKeyKeychainItemToDisk];
 		
@@ -216,7 +245,7 @@
 	
 	self.status = newStatus;
 
-    _topic = nil;
+    self.topic = nil;
 	
 	[self.modeInfo clear];
 
@@ -226,25 +255,20 @@
 
 - (void)activate
 {
-	[self resetStatus:IRCChannelJoined];
+	[self resetStatus:IRCChannelStatusJoined];
   
 	if (self.isChannel) {
-		[self.client postEventToViewController:@"channelJoined" forChannel:self];
+		/* Fireoff join event. */
+		[self.associatedClient postEventToViewController:@"channelJoined" forChannel:self];
     }
 
 	if (self.isPrivateMessage) {
-		IRCUser *m = nil;
-
 		/* Populate private message users. */
-		m = [IRCUser new];
-		m.nickname = [self.client localNickname];
-		m.supportInfo = [self.client isupport];
-		[self addMember:m];
+		IRCUser *m1 = [IRCUser newUserOnClient:self.associatedClient withNickname:self.associatedClient.localNickname];
+		IRCUser *m2 = [IRCUser newUserOnClient:self.associatedClient withNickname:self.name];
 
-		m = [IRCUser new];
-		m.nickname = self.name;
-		m.supportInfo = [self.client isupport];
-		[self addMember:m];
+		[self addMember:m1];
+		[self addMember:m2];
 	}
 
 	self.channelJoinTime = [NSDate epochTime];
@@ -252,10 +276,10 @@
 
 - (void)deactivate
 {
-	[self resetStatus:IRCChannelParted];
+	[self resetStatus:IRCChannelStatusParted];
   
 	if (self.isChannel) {
-		[self.client postEventToViewController:@"channelParted" forChannel:self];
+		[self.associatedClient postEventToViewController:@"channelParted" forChannel:self];
 		
 		[self.viewController setTopic:nil];
     }
@@ -265,7 +289,7 @@
 
 - (void)prepareForPermanentDestruction
 {
-	[self resetStatus:IRCChannelTerminated];
+	[self resetStatus:IRCChannelStatusTerminated];
 	
 	[self closeLogFile];
 	
@@ -274,7 +298,7 @@
 
 - (void)prepareForApplicationTermination
 {
-	[self resetStatus:IRCChannelTerminated];
+	[self resetStatus:IRCChannelStatusTerminated];
 	
 	[self closeLogFile];
 
@@ -286,10 +310,10 @@
 
 - (void)reopenLogFileIfNeeded
 {
-	if ([TPCPreferences logTranscript]) {
-		PointerIsEmptyAssert(self.logFile);
-
-		[self.logFile reopenIfNeeded];
+	if ([TPCPreferences logToDisk]) {
+		if ( self.logFile) {
+			[self.logFile reopenIfNeeded];
+		}
 	} else {
 		[self closeLogFile];
 	}
@@ -297,9 +321,9 @@
 
 - (void)closeLogFile
 {
-	PointerIsEmptyAssert(self.logFile);
-
-	[self.logFile close];
+	if ( self.logFile) {
+		[self.logFile close];
+	}
 }
 
 #pragma mark -
@@ -307,11 +331,11 @@
 
 - (void)writeToLogFile:(TVCLogLine *)line
 {
-	if ([TPCPreferences logTranscript]) {
-		if (PointerIsEmpty(self.logFile)) {
+	if ([TPCPreferences logToDisk]) {
+		if (self.logFile == nil) {
 			self.logFile = [TLOFileLogger new];
 
-			self.logFile.client = self.client;
+			self.logFile.client = self.associatedClient;
 			self.logFile.channel = self;
 		}
 
@@ -334,77 +358,104 @@
 #pragma mark -
 #pragma mark Member List
 
-- (void)sortedInsert:(IRCUser *)item
+- (NSInteger)_sortedInsert:(IRCUser *)item
 {
-	PointerIsEmptyAssert(item);
-
-	/* Normal member list used internally by Textual. */
-	[self.memberList setObject:item forKey:[item lowercaseNickname]];
+	NSInteger insertedIndex = 0;
+	
+	/* Insert into normal list and maybe tree view. */
+	@synchronized(self.memberListStandardSortedContainer) {
+		insertedIndex = [self.memberListStandardSortedContainer insertSortedObject:item usingComparator:NSDefaultComparator];
+	}
 	
 	/* Conversation tracking scans based on nickname length. */
-	self.memberListLengthSorted = [self.memberListLengthSorted arrayByInsertingSortedObject:item usingComparator:[IRCUser nicknameLengthComparator]];
-
-	/* Member list without ignores used by view. */
-	IRCAddressBookEntry *ignoreChecks = [self.client checkIgnoreAgainstHostmask:[item hostmask] withMatches:@[@"hideInMemberList"]];
-	
-	if (PointerIsEmpty(ignoreChecks) || (ignoreChecks && [ignoreChecks hideInMemberList] == NO)) {
-		self.memberListNormalSorted = [self.memberListNormalSorted arrayByInsertingSortedObject:item usingComparator:NSDefaultComparator];
+	@synchronized(self.memberListLengthSortedContainer) {
+		(void)[self.memberListLengthSortedContainer insertSortedObject:item usingComparator:[IRCUser nicknameLengthComparator]];
 	}
+	
+	return insertedIndex;
+}
+
+- (void)_removeMemberFromTreeView:(IRCUser *)user
+{
+	/* It is possible for a member to exist in our local cache and but 
+	 not exist in the actual tree view. This tries its best to catch 
+	 all cases where it exists in member list. */
+	_cancelOnNotSelectedChannel
+	
+	NSInteger idx = [mainWindowMemberList() rowForItem:user];
+	
+	if (idx > -1) {
+		[mainWindowMemberList() removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:idx]
+											inParent:nil
+									   withAnimation:NSTableViewAnimationEffectNone]; // Do the actual removal.
+	}
+}
+
+- (void)_removeMemberWithNickname:(NSString *)nickname
+{
+	/* Find in normal member list. */
+	/* This also removes matched user from tree view. */
+	@synchronized(self.memberListStandardSortedContainer) {
+		NSInteger crmi = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:self.memberListStandardSortedContainer];
+		
+		if (NSDissimilarObjects(crmi, NSNotFound)) {
+			/* Get matched user. */
+			IRCUser *matchedUser = self.memberListStandardSortedContainer[crmi];
+			
+			/* Remove from array archive. */
+			[self.memberListStandardSortedContainer removeObjectAtIndex:crmi];
+			
+			/* Maybe remove from tree view. */
+			[self _removeMemberFromTreeView:matchedUser];
+		}
+	}
+	
+	/* Find in alternate list. */
+	@synchronized(self.memberListLengthSortedContainer) {
+		NSInteger crmi = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:self.memberListLengthSortedContainer];
+		
+		if (NSDissimilarObjects(crmi, NSNotFound)) {
+			[self.memberListLengthSortedContainer removeObjectAtIndex:crmi];
+		}
+	}
+}
+
+- (void)_removeMember:(IRCUser *)user
+{
+	[self _removeMemberWithNickname:[user nickname]];
 }
 
 - (void)addMember:(IRCUser *)user
 {
 	PointerIsEmptyAssert(user);
-
-	/* Do sorted insert. */
-	[self sortedInsert:user];
-
-	/* Post event to the style. */
-	if (self.isChannel) {
-		[self.client postEventToViewController:@"channelMemberAdded" forChannel:self];
-	}
-
-	/* Update the actual member list view. */
-	[self informMemberListViewOfAdditionalUser:user];
+	
+	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueBarrierAsyncOperationType, ^{
+		/* Do sorted insert. */
+		NSInteger insertedIndex = [self _sortedInsert:user];
+		
+		/* Post event to the style. */
+		if (self.isChannel) {
+			[self.associatedClient postEventToViewController:@"channelMemberAdded" forChannel:self];
+		}
+		
+		/* Update the actual member list view. */
+		[self informMemberListViewOfAdditionalUserAtIndex:insertedIndex];
+	});
 }
 
 - (void)removeMember:(NSString *)nickname
 {
 	NSObjectIsEmptyAssert(nickname);
 	
-	/* Table view list. */
-	IRCUser *user = [self memberWithNickname:nickname];
-	
-	PointerIsEmptyAssert(user); // What are we removing?
-	
-	if (self.isChannel && self.isSelectedChannel) {
-		NSInteger idx = [self.memberListView rowForItem:user];
+	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueBarrierAsyncOperationType, ^{
+		/* Internal list. */
+		[self _removeMemberWithNickname:nickname];
 		
-		if (idx >= 0) {
-			[self.memberListView removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:idx]
-											 inParent:nil
-										withAnimation:NSTableViewAnimationEffectNone]; // Do the actual removal.
+		/* Post event to the style. */
+		if (self.isChannel) {
+			[self.associatedClient postEventToViewController:@"channelMemberRemoved" forChannel:self];
 		}
-	}
-	
-	/* Internal list. */
-	[self.memberList removeObjectForKey:[user lowercaseNickname]];
-
-	NSInteger mllsi = [self.memberListLengthSorted indexOfObjectMatchingValue:nickname withKeyPath:@"nickname"];
-	NSInteger mlnsi = [self.memberListNormalSorted indexOfObjectMatchingValue:nickname withKeyPath:@"nickname"];
-
-	if (NSDissimilarObjects(mllsi, NSNotFound)) {
-		self.memberListLengthSorted = [self.memberListLengthSorted arrayByRemovingObjectAtIndex:mllsi];
-	}
-
-	if (NSDissimilarObjects(mlnsi, NSNotFound)) {
-		self.memberListNormalSorted = [self.memberListNormalSorted arrayByRemovingObjectAtIndex:mlnsi];
-	}
-	
-	 /* Post event to the style. */
-	 if (self.isChannel) {
-		 [self.client postEventToViewController:@"channelMemberRemoved" forChannel:self];
-	 }
+	});
 }
 
 - (void)renameMember:(NSString *)fromNickname to:(NSString *)toNickname
@@ -413,21 +464,23 @@
 	NSObjectIsEmptyAssert(toNickname);
 
 	/* Find user. */
-	IRCUser *user = [self memberWithNickname:fromNickname];
+	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueBarrierAsyncOperationType, ^{
+		IRCUser *user = [self findMember:fromNickname options:NSCaseInsensitiveSearch];
 	
-	PointerIsEmptyAssert(user); // What are we removing?
-	
-	/* Remove existing user from user list. */
-	[self removeMember:[user nickname]];
-	
-	/* Update nickname. */
-	[user setNickname:toNickname];
-	
-	/* Insert new copy of user. */
-	[self sortedInsert:user];
+		if (user) {
+			/* Remove existing user from user list. */
+			[self _removeMember:user];
+			
+			/* Update nickname. */
+			[user setNickname:toNickname];
+			
+			/* Insert new copy of user. */
+			NSInteger insertedIndex = [self _sortedInsert:user];
 
-	/* Update the actual member list view. */
-	[self informMemberListViewOfAdditionalUser:user];
+			/* Update the actual member list view. */
+			[self informMemberListViewOfAdditionalUserAtIndex:insertedIndex];
+		}
+	});
 }
 
 #pragma mark -
@@ -437,21 +490,22 @@
 	PointerIsEmptyAssertReturn(user1, NO);
 	PointerIsEmptyAssertReturn(user2, NO);
 
-	if (NSDissimilarObjects(user1.binircd_O, user2.binircd_O)						|| // <-----------/
-		NSDissimilarObjects(user1.InspIRCd_y_upper, user2.InspIRCd_y_upper)			|| // <----------/
-		NSDissimilarObjects(user1.InspIRCd_y_lower, user2.InspIRCd_y_lower)			|| // <---------/
-		NSDissimilarObjects(user1.isCop, user2.isCop)								|| // <--------/
-		NSDissimilarObjects(user1.q, user2.q)										|| // <-------/ Different mode information.
-		NSDissimilarObjects(user1.a, user2.a)										|| // <------/
-		NSDissimilarObjects(user1.o, user2.o)										|| // <-----/
-		NSDissimilarObjects(user1.h, user2.h)										|| // <----/
-		NSDissimilarObjects(user1.v, user2.v)										|| // <---/
-		NSDissimilarObjects(user1.isAway, user2.isAway))							   // <--/ Away state.
-	{
-		return YES;
-	}
-
-	return NO;
+	/* When changing certain conditions of a user in the visible member list tree, we create
+	 a copy of the user, change what we want changed, then compare the copy with original. If
+	 any of these conditions fault, then that means the appearnce of the user in member list 
+	 tree will need to be updated. */
+	BOOL hasEqualStatus = ([user1 binircd_O]			== [user2 binircd_O]			&&
+						   [user1 InspIRCd_y_lower]		== [user1 InspIRCd_y_lower]		&&
+						   [user1 InspIRCd_y_upper]		== [user2 InspIRCd_y_upper]		&&
+						   [user1 isCop]				== [user2 isCop]				&&
+						   [user1 isAway]				== [user2 isAway]				&&
+						   [user1 q]					== [user2 q]					&&
+						   [user1 a]					== [user2 a]					&&
+						   [user1 o]					== [user2 o]					&&
+						   [user1 h]					== [user2 h]					&&
+						   [user1 v]					== [user2 v]);
+	
+	return (hasEqualStatus == NO);
 }
 
 - (void)changeMember:(NSString *)nickname mode:(NSString *)mode value:(BOOL)value
@@ -460,54 +514,74 @@
 	NSObjectIsEmptyAssert(mode);
 	
 	/* Find user. */
-	IRCUser *user = [self memberWithNickname:nickname];
+	IRCUser *user = [self findMember:nickname options:NSCaseInsensitiveSearch];
 	
 	PointerIsEmptyAssert(user); // What are we removing?
 
 	/* We create new copy of this user in order to compare them and deterine
-	 if there are changes when we are done. */
+	 if there are changes when we are done. Modifying /user/ directly would
+	 change all instances inside our member lists and we don't want to do 
+	 that right away. */
 	IRCUser *newUser = [user copy];
-
-	switch ([mode characterAtIndex:0]) {
-		case 'O': { newUser.q = value; newUser.binircd_O = value; break; } // binircd-1.0.0
-		case 'q': { newUser.q = value; break; }
-		case 'a': { newUser.a = value; break; }
-		case 'o': { newUser.o = value; break; }
-		case 'h': { newUser.h = value; break; }
-		case 'v': { newUser.v = value; break; }
-		case 'Y': { newUser.InspIRCd_y_upper = value; break; } // Lower cannot change…
-	}
-
-	IRCISupportInfo *isupport = self.client.isupport;
-
-	newUser.q = (newUser.q && ([isupport modeIsSupportedUserPrefix:@"q"] || [isupport modeIsSupportedUserPrefix:@"O"] /* binircd-1.0.0 */));
-	newUser.a = (newUser.a &&  [isupport modeIsSupportedUserPrefix:@"a"]);
-	newUser.o = (newUser.o &&  [isupport modeIsSupportedUserPrefix:@"o"]);
-	newUser.h = (newUser.h &&  [isupport modeIsSupportedUserPrefix:@"h"]);
-	newUser.v = (newUser.v &&  [isupport modeIsSupportedUserPrefix:@"v"]);
-
-	/* Handle custom modes. */
-	newUser.binircd_O = (newUser.q && [isupport modeIsSupportedUserPrefix:@"O"]); /* binircd-1.0.0 */
-
-	newUser.InspIRCd_y_upper = (newUser.InspIRCd_y_upper && [isupport modeIsSupportedUserPrefix:@"Y"]);
-
-	if (newUser.InspIRCd_y_upper && newUser.isCop == NO) {
-		newUser.isCop = YES; // +Y marks a user as an IRCop in the channel.
+	
+	UniChar modeChar = [mode characterAtIndex:0];
+	
+	switch (modeChar) {
+		case 'O':
+		{
+			/* Why would an IRCd define a differnet mode for this? */
+			newUser.binircd_O = value;
+			
+			/* We will still treat it as q (owner). ,,|,, */
+			newUser.q = value;
+			
+			break;
+		}
+		case 'Y': // Lower Y cannot change…
+		{
+			/* Mode Y is treated as an IRCop. */
+			newUser.InspIRCd_y_upper = value;
+			
+			/* If the user wasn't already marked as an IRCop, then we 
+			 mark them at this point. However, if they were already 
+			 marked and it was -Y, then we do not remove it. We still 
+			 want to know they are an IRCop even if mode isn't set in
+			 this particular channel. */
+			if (newUser.isCop == NO && value) {
+				newUser.isCop = YES;
+			}
+			
+			break;
+		}
+		case 'q':
+		case 'a':
+		case 'o':
+		case 'h':
+		case 'v':
+		{
+			SEL changeSelector = NSSelectorFromString([NSString stringWithFormat:@"set%C:", modeChar]);
+			
+			objc_msgSend(newUser, changeSelector, value);
+			
+			break;
+		}
 	}
 
 	/* Did something change. */
 	if ([self memberRequiresRedraw:user comparedTo:newUser]) {
-		/* Merge the settings of the new user with those of the old. */
-		[user migrate:newUser];
-
-		/* Remove existing user from user list. */
-		[self removeMember:[user nickname]];
-		
-		/* Insert new copy of user. */
-		[self sortedInsert:user];
-		
-		/* Update the actual member list view. */
-		[self informMemberListViewOfAdditionalUser:user];
+		TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueBarrierAsyncOperationType, ^{
+			/* Remove existing user from user list. */
+			[self _removeMember:user];
+			
+			/* Merge the settings of the new user with those of the old. */
+			[user migrate:newUser];
+			
+			/* Insert new copy of user. */
+			NSInteger insertedIndex = [self _sortedInsert:user];
+			
+			/* Update the actual member list view. */
+			[self informMemberListViewOfAdditionalUserAtIndex:insertedIndex];
+		});
 	}
 }
 
@@ -515,134 +589,163 @@
 
 - (void)clearMembers
 {
-	[self.memberList removeAllObjects];
-
-	self.memberListNormalSorted = @[];
-	self.memberListLengthSorted = @[];
+	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueBarrierAsyncOperationType, ^{
+		@synchronized(self.memberListStandardSortedContainer) {
+			[self.memberListStandardSortedContainer removeAllObjects];
+		}
+		
+		@synchronized(self.memberListLengthSortedContainer) {
+			[self.memberListLengthSortedContainer removeAllObjects];
+		}
+	});
 }
 
 - (NSInteger)numberOfMembers
 {
-	return [self.memberList count];
+	__block NSUInteger memberCount = 0;
+	
+	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueSyncOperationType, ^{
+		@synchronized(self.memberListStandardSortedContainer) {
+			memberCount = [self.memberListStandardSortedContainer count];
+		}
+	});
+	
+	return memberCount;
 }
 
 - (NSArray *)sortedByNicknameLengthMemberList
 {
-	return [self.memberListLengthSorted copy];
+	__block NSMutableArray *mutlist = [NSMutableArray array];
+	
+	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueSyncOperationType, ^{
+		@synchronized(self.memberListLengthSortedContainer) {
+			for (IRCUser *user in self.memberListLengthSortedContainer) {
+				[mutlist addObject:[user copy]];
+			}
+		}
+	});
+	
+	return mutlist;
+}
+
+- (NSArray *)sortedByChannelRankMemberList
+{
+	__block NSMutableArray *mutlist = [NSMutableArray array];
+	
+	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueSyncOperationType, ^{
+		@synchronized(self.memberListStandardSortedContainer) {
+			for (IRCUser *user in self.memberListStandardSortedContainer) {
+				[mutlist addObject:[user copy]];
+			}
+		}
+	});
+	
+	return mutlist;
 }
 
 - (NSArray *)unsortedMemberList
 {
-	return [self.memberList allValues];
+	return [self sortedByChannelRankMemberList];
 }
 
 #pragma mark -
 #pragma mark User Search
 
-- (IRCUser *)memberAtIndex:(NSInteger)idx
-{
-	return self.memberListNormalSorted[idx];
-}
-
 - (IRCUser *)memberWithNickname:(NSString *)nickname
 {
-	return [self.memberList objectForKey:[nickname lowercaseString]];
+	return [self findMember:nickname options:0];
 }
 
 - (IRCUser *)findMember:(NSString *)nickname
 {
-	return [self memberWithNickname:nickname];
+	return [self findMember:nickname options:0];
 }
 
 - (IRCUser *)findMember:(NSString *)nickname options:(NSStringCompareOptions)mask;
 {
-	return [self memberWithNickname:nickname];
+	__block IRCUser *foundUser;
+	
+	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueSyncOperationType, ^{
+		@synchronized(self.memberListStandardSortedContainer) {
+			NSInteger somi = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:self.memberListStandardSortedContainer];
+			
+			if (somi == NSNotFound) {
+				foundUser = nil;
+			} else {
+				foundUser = self.memberListStandardSortedContainer[somi];
+			}
+		}
+	});
+	
+	return foundUser;
+}
+
+- (IRCUser *)memberAtIndex:(NSInteger)index
+{
+	__block IRCUser *foundUser;
+	
+	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueSyncOperationType, ^{
+		@synchronized(self.memberListStandardSortedContainer) {
+			foundUser = [self.memberListStandardSortedContainer objectAtIndex:index];
+		}
+	});
+	
+	return foundUser;
+}
+
+- (NSInteger)indexOfMember:(NSString *)nick options:(NSStringCompareOptions)mask inList:(NSArray *)memberList
+{
+	NSObjectIsEmptyAssertReturn(nick, NSNotFound);
+	
+	if (mask & NSCaseInsensitiveSearch) {
+		return [memberList indexOfObjectMatchingValue:nick withKeyPath:@"nickname" usingSelector:@selector(isEqualIgnoringCase:)];
+	} else {
+		return [memberList indexOfObjectMatchingValue:nick withKeyPath:@"nickname" usingSelector:@selector(isEqualToString:)];
+	}
 }
 
 #pragma mark -
 #pragma mark Table View Internal Management
 
-- (void)informMemberListViewOfAdditionalUser:(IRCUser *)user
+- (void)informMemberListViewOfAdditionalUserAtIndex:(NSUInteger)insertedIndex
 {
 	_cancelOnNotSelectedChannel;
 
-	/* Do not ask me how this fucking works … I don't even know. */
-	NSInteger mlindx = [self.memberListNormalSorted indexOfObject:user];
-
-	if (mlindx == NSNotFound) {
-		return; // What are we informing on?
-	}
-
-	if (mlindx > 0) {
-		IRCUser *prevItem = self.memberListNormalSorted[(mlindx - 1)];
-
-		NSInteger prevIndex = [self.memberListView rowForItem:prevItem];
-
-		if (prevIndex == NSNotFound) {
-			[self.memberListView addItemToList:([self.memberListView numberOfRows] - 1)];
-		} else {
-			[self.memberListView addItemToList:(prevIndex + 1)];
-		}
-	} else {
-		[self.memberListView addItemToList:0];
-	}
+	[mainWindowMemberList() addItemToList:insertedIndex];
 }
 
 - (void)reloadDataForTableViewBySortingMembers
 {
 	_cancelOnNotSelectedChannel;
 
-	NSMutableArray *mut = [self.memberListNormalSorted mutableCopy];
-
-	[mut sortUsingComparator:NSDefaultComparator];
-
-	self.memberListNormalSorted = [mut copy];
-
-	[self reloadDataForTableView];
+	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueBarrierAsyncOperationType, ^{
+		@synchronized(self.memberListStandardSortedContainer) {
+			[self.memberListStandardSortedContainer sortUsingComparator:NSDefaultComparator];
+			
+			[self reloadDataForTableView];
+		}
+	});
 }
 
 - (void)reloadDataForTableView
 {
 	_cancelOnNotSelectedChannel;
 
-	[self.memberListView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
+	[mainWindowMemberList() performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
 }
 
 - (void)updateAllMembersOnTableView
 {
 	_cancelOnNotSelectedChannel;
 
-	[self.memberListView reloadAllDrawings];
+	[mainWindowMemberList() reloadAllDrawings];
 }
 
 - (void)updateMemberOnTableView:(IRCUser *)user
 {
 	_cancelOnNotSelectedChannel;
 
-	[self.memberListView updateDrawingForMember:user];
-}
-
-- (void)updateTableViewByRemovingIgnoredUsers
-{
-	NSMutableArray *newlist = [NSMutableArray new];
-	
-	for (NSString *nickname in self.memberList) {
-		IRCUser *u = self.memberList[nickname];
-
-		IRCAddressBookEntry *ignoreChecks = [self.client checkIgnoreAgainstHostmask:[u hostmask] withMatches:@[@"hideInMemberList"]];
-		
-		if (ignoreChecks == nil || (ignoreChecks && [ignoreChecks hideInMemberList] == NO)) {
-			[newlist addObject:u];
-		}
-	}
-	
-	[newlist sortUsingComparator:NSDefaultComparator];
-	
-	if (NSDissimilarObjects([self.memberListNormalSorted count], [newlist count])) {
-		self.memberListNormalSorted = [newlist copy];
-
-		[self reloadDataForTableView];
-	}
+	[mainWindowMemberList() updateDrawingForMember:user];
 }
 
 #pragma mark -
@@ -650,7 +753,7 @@
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
-	return [self.memberListNormalSorted count];
+	return [self numberOfMembers];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
@@ -660,12 +763,7 @@
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
-	return self.memberListNormalSorted[index];
-}
-
-- (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(IRCUser *)item
-{
-	return [item nickname];
+	return [self memberAtIndex:index];
 }
 
 - (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
@@ -695,15 +793,7 @@
 
 - (void)outlineView:(NSOutlineView *)outlineView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
 {
-	[self.memberListView reloadSelectionDrawingForRow:row];
-}
-
-- (NSIndexSet *)outlineView:(NSOutlineView *)outlineView selectionIndexesForProposedSelection:(NSIndexSet *)proposedSelectionIndexes
-{
-	/* I could make that method name longer if you would like? */
-	[self.memberListView reloadSelectionDrawingBySelectingItemsInIndexSet:proposedSelectionIndexes];
-
-	return proposedSelectionIndexes;
+	[mainWindowMemberList() reloadSelectionDrawingForRow:row];
 }
 
 #pragma mark -
@@ -711,12 +801,12 @@
 
 - (BOOL)isSelectedChannel
 {
-	return [self isEqual:self.worldController.selectedChannel];
+	return [self isEqual:[worldController() selectedChannel]];
 }
 
 - (BOOL)isActive
 {
-	return (self.status == IRCChannelJoined);
+	return (self.status == IRCChannelStatusJoined);
 }
 
 - (BOOL)isClient
@@ -736,22 +826,22 @@
 
 - (NSString *)label
 {
-	return [self.config channelName];
+	return [self name];
 }
 
-- (IRCClient *)client
+- (IRCClient *)associatedClient
 {
-	return _client;
+	return _associatedClient;
+}
+
+- (IRCChannel *)associatedChannel
+{
+	return self;
 }
 
 - (TVCLogControllerOperationQueue *)printingQueue
 {
-    return [_client printingQueue];
-}
-
-- (TVCMemberList *)memberListView
-{
-	return [self.masterController memberList];
+    return [_associatedClient printingQueue];
 }
 
 @end

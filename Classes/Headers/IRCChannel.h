@@ -50,7 +50,6 @@ typedef enum IRCChannelStatus : NSInteger {
 @property (nonatomic, copy) NSString *topic;
 @property (nonatomic, copy) IRCChannelConfig *config;
 @property (nonatomic, strong) IRCChannelMode *modeInfo;
-@property (nonatomic, strong) TLOFileLogger *logFile;
 @property (nonatomic, assign) IRCChannelStatus status;
 @property (nonatomic, assign) BOOL errorOnLastJoinAttempt;
 @property (nonatomic, assign) BOOL inUserInvokedModeRequest;
@@ -78,30 +77,41 @@ typedef enum IRCChannelStatus : NSInteger {
 - (void)activate;
 - (void)deactivate;
 
+- (NSURL *)logFilePath;
+
 - (void)writeToLogFile:(TVCLogLine *)line;
 
 - (void)print:(TVCLogLine *)logLine;
 - (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock;
 
+- (void)setEncryptionKey:(NSString *)encryptionKey; // Use this instead of config to inform view of change.
+
 - (IRCUser *)findMember:(NSString *)nickname;
 - (IRCUser *)findMember:(NSString *)nickname options:(NSStringCompareOptions)mask;
 
-- (IRCUser *)memberWithNickname:(NSString *)nickname;
-- (IRCUser *)memberAtIndex:(NSInteger)idx; // idx must be on table view.
+- (IRCUser *)memberWithNickname:(NSString *)nickname TEXTUAL_DEPRECATED; // Use findMember:
 
 - (void)addMember:(IRCUser *)user;
 - (void)removeMember:(NSString *)nickname;
 - (void)renameMember:(NSString *)fromNickname to:(NSString *)toNickname;
 - (void)changeMember:(NSString *)nickname mode:(NSString *)mode value:(BOOL)value;
 
-- (void)clearMembers;
+- (void)clearMembers; // This will not reload table view. 
 
 - (NSInteger)numberOfMembers;
 
-- (NSArray *)unsortedMemberList;
-- (NSArray *)sortedByNicknameLengthMemberList;
+/* -unsortedMemberList actually invokes -sortedByChannelRankMemberList. 
+ It is marked as deprecated instead of being completely removed for now. */
+- (NSArray *)unsortedMemberList TEXTUAL_DEPRECATED;
 
-- (void)setEncryptionKey:(NSString *)encryptionKey; // Use this instead of config to inform view of change.
+/* To prevent a plugin from modifying a user that is maintained on the user
+ list without then redrawing them, the values returned from these list arrays
+ are COPIES of the IRCUser instances that are maintained internally. Modifying
+ them once received will only modify the returned result and have absolutely 
+ no change at all on those shown in member list. To change the behavior of the
+ users shown in the member list, use the above mentioned methods. */
+- (NSArray *)sortedByChannelRankMemberList;
+- (NSArray *)sortedByNicknameLengthMemberList;
 
 - (BOOL)memberRequiresRedraw:(IRCUser *)user1 comparedTo:(IRCUser *)user2;
 
@@ -110,6 +120,4 @@ typedef enum IRCChannelStatus : NSInteger {
 
 - (void)reloadDataForTableView;
 - (void)reloadDataForTableViewBySortingMembers;
-
-- (void)updateTableViewByRemovingIgnoredUsers;
 @end

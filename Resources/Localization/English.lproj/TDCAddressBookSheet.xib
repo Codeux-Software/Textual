@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A238x" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.21" systemVersion="14A261i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.17"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.21"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCAddressBookSheet">
             <connections>
-                <outlet property="hideInMemberListCheck" destination="633" id="637"/>
                 <outlet property="hideMessagesContainingMatchCheck" destination="617" id="631"/>
                 <outlet property="ignoreCTCPCheck" destination="479" id="602"/>
                 <outlet property="ignoreEntryHostmaskField" destination="298" id="0gM-Jl-GBo"/>
@@ -151,11 +150,11 @@ DQ
         <window title="Ignore" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Ignore User Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="407" y="164" width="526" height="421"/>
+            <rect key="contentRect" x="407" y="164" width="526" height="396"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <value key="minSize" type="size" width="213" height="107"/>
             <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="526" height="421"/>
+                <rect key="frame" x="0.0" y="6" width="526" height="396"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <userGuides>
                     <userLayoutGuide location="105" affinity="minY"/>
@@ -163,7 +162,7 @@ DQ
                 </userGuides>
                 <subviews>
                     <textField verticalHuggingPriority="750" id="296">
-                        <rect key="frame" x="17" y="381" width="71" height="17"/>
+                        <rect key="frame" x="17" y="356" width="71" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Hostmask:" id="297">
                             <font key="font" metaFont="system"/>
@@ -172,7 +171,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="298" customClass="TVCTextFieldWithValueValidation">
-                        <rect key="frame" x="93" y="379" width="413" height="22"/>
+                        <rect key="frame" x="93" y="354" width="413" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Enter a hostmask to ignore." drawsBackground="YES" id="299" customClass="TVCTextFieldWithValueValidationCell">
                             <font key="font" metaFont="system"/>
@@ -184,7 +183,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="300">
-                        <rect key="frame" x="162" y="350" width="254" height="14"/>
+                        <rect key="frame" x="162" y="325" width="254" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="&lt;nickname&gt;!&lt;username&gt;@&lt;address&gt;" id="301">
                             <font key="font" metaFont="smallSystem"/>
@@ -193,7 +192,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="594">
-                        <rect key="frame" x="117" y="350" width="43" height="14"/>
+                        <rect key="frame" x="117" y="325" width="43" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Syntax:" id="595">
                             <font key="font" metaFont="smallSystemBold"/>
@@ -202,7 +201,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="302">
-                        <rect key="frame" x="101" y="332" width="66" height="16"/>
+                        <rect key="frame" x="101" y="307" width="66" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Examples:" id="303">
                             <font key="font" metaFont="smallSystemBold"/>
@@ -211,7 +210,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="304">
-                        <rect key="frame" x="165" y="334" width="309" height="14"/>
+                        <rect key="frame" x="165" y="309" width="309" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="*!*@* (matches every possible user — not recommended)" id="305">
                             <font key="font" metaFont="smallSystem"/>
@@ -220,7 +219,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="306">
-                        <rect key="frame" x="165" y="321" width="316" height="14"/>
+                        <rect key="frame" x="165" y="296" width="316" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="frank*!*@* (matches any nickname that starts with &quot;frank&quot;)" id="307">
                             <font key="font" metaFont="smallSystem"/>
@@ -229,7 +228,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="308">
-                        <rect key="frame" x="165" y="308" width="305" height="14"/>
+                        <rect key="frame" x="165" y="283" width="305" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="*!matt@* (matches any username that is equal to &quot;matt&quot;)" id="311">
                             <font key="font" metaFont="smallSystem"/>
@@ -238,7 +237,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="309">
-                        <rect key="frame" x="165" y="295" width="269" height="14"/>
+                        <rect key="frame" x="165" y="270" width="269" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="*!*@*.info (matches any address ending in &quot;.info&quot;)" id="310">
                             <font key="font" metaFont="smallSystem"/>
@@ -247,14 +246,14 @@ DQ
                         </textFieldCell>
                     </textField>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="314">
-                        <rect key="frame" x="37" y="274" width="451" height="5"/>
+                        <rect key="frame" x="37" y="249" width="451" height="5"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <button id="476">
-                        <rect key="frame" x="258" y="185" width="95" height="18"/>
+                        <rect key="frame" x="258" y="160" width="95" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Notices." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="494">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -262,7 +261,7 @@ DQ
                         </buttonCell>
                     </button>
                     <button id="477">
-                        <rect key="frame" x="258" y="157" width="124" height="18"/>
+                        <rect key="frame" x="258" y="132" width="124" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="General Events." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="493">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -270,7 +269,7 @@ DQ
                         </buttonCell>
                     </button>
                     <button id="478">
-                        <rect key="frame" x="258" y="213" width="214" height="18"/>
+                        <rect key="frame" x="258" y="188" width="214" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Highlights in Queries (PM)." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="492">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -278,7 +277,7 @@ DQ
                         </buttonCell>
                     </button>
                     <button id="479">
-                        <rect key="frame" x="52" y="185" width="215" height="18"/>
+                        <rect key="frame" x="52" y="160" width="215" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="CTCP Requests &amp; Replies." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="491">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -286,7 +285,7 @@ DQ
                         </buttonCell>
                     </button>
                     <button id="480">
-                        <rect key="frame" x="52" y="213" width="223" height="18"/>
+                        <rect key="frame" x="52" y="188" width="223" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Highlights in Channels." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="490">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -294,7 +293,7 @@ DQ
                         </buttonCell>
                     </button>
                     <button id="481">
-                        <rect key="frame" x="258" y="241" width="190" height="18"/>
+                        <rect key="frame" x="258" y="216" width="190" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Private Messages." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="489">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -302,9 +301,39 @@ DQ
                         </buttonCell>
                     </button>
                     <button id="482">
-                        <rect key="frame" x="52" y="241" width="129" height="18"/>
+                        <rect key="frame" x="52" y="216" width="129" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Public Messages." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="488">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                    <button id="617">
+                        <rect key="frame" x="52" y="79" width="267" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Hide messages that mention this user." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="618">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                    <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="632">
+                        <rect key="frame" x="37" y="112" width="451" height="5"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <font key="titleFont" metaFont="system"/>
+                    </box>
+                    <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="636">
+                        <rect key="frame" x="37" y="59" width="451" height="5"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <font key="titleFont" metaFont="system"/>
+                    </box>
+                    <button id="rur-OE-BUc">
+                        <rect key="frame" x="51" y="132" width="164" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="File Transfer Requests." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Cq8-TN-59m">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -334,49 +363,12 @@ DQ
                             <action selector="ok:" target="-2" id="587"/>
                         </connections>
                     </button>
-                    <button id="617">
-                        <rect key="frame" x="52" y="106" width="267" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Hide messages that mention this user." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="618">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                    </button>
-                    <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="632">
-                        <rect key="frame" x="37" y="138" width="451" height="5"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <font key="titleFont" metaFont="system"/>
-                    </box>
-                    <button id="633">
-                        <rect key="frame" x="51" y="78" width="267" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Hide from appearing on user list." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="634">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                    </button>
-                    <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="636">
-                        <rect key="frame" x="37" y="59" width="451" height="5"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <font key="titleFont" metaFont="system"/>
-                    </box>
-                    <button id="rur-OE-BUc">
-                        <rect key="frame" x="51" y="157" width="164" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="File Transfer Requests." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Cq8-TN-59m">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                    </button>
                 </subviews>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="228"/>
             </connections>
+            <point key="canvasLocation" x="375" y="299"/>
         </window>
         <userDefaultsController id="628"/>
     </objects>

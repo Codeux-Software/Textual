@@ -231,11 +231,8 @@
 		}
 	};
 
-	if (NSIsCurrentThreadMain()) {
-		runblock();
-	} else {
-		dispatch_sync(dispatch_get_main_queue(), runblock);
-	}
+#warning Need to test whether performBlockOnMainThread: allows __block value to be inherited.
+	[self performBlockOnMainThread:runblock];
 
 	return result;
 }

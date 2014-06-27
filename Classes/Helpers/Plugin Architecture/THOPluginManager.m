@@ -51,7 +51,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		self.dispatchQueue = dispatch_queue_create("PluginManagerDispatchQueue", NULL);
+		self.dispatchQueue = dispatch_queue_create("PluginManagerDispatchQueue", DISPATCH_QUEUE_SERIAL);
 
 		return self;
 	}
@@ -73,7 +73,7 @@
 
 - (void)loadPlugins
 {
-	dispatch_async(self.dispatchQueue, ^{
+	TXPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
 		NSObjectIsNotEmptyAssert(self.allLoadedBundles);
 
 		// ---- //
@@ -137,7 +137,7 @@
 
 - (void)unloadPlugins
 {
-	dispatch_async(self.dispatchQueue, ^{
+	TXPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
 		self.allLoadedPlugins = nil;
 
 		for (NSBundle *bundle in self.allLoadedBundles) {
@@ -306,7 +306,7 @@
 
 - (void)sendUserInputDataToBundles:(IRCClient *)client message:(NSString *)message command:(NSString *)command
 {
-	dispatch_async(self.dispatchQueue, ^{
+	TXPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
 		NSString *cmdu = [command uppercaseString];
 		NSString *cmdl = [command lowercaseString];
 		
@@ -329,7 +329,7 @@
 
 - (void)sendServerInputDataToBundles:(IRCClient *)client message:(IRCMessage *)message
 {
-	dispatch_async(self.dispatchQueue, ^{
+	TXPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
 		NSString *cmdl = [[message command] lowercaseString];
 
 		NSDictionary *senderData = @{
@@ -431,7 +431,7 @@
 
 - (void)postNewMessageEventForViewController:(TVCLogController *)logController messageInfo:(NSDictionary *)messageInfo isThemeReload:(BOOL)isThemeReload isHistoryReload:(BOOL)isHistoryReload
 {
-	dispatch_async(self.dispatchQueue, ^{
+	TXPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
 		for (THOPluginItem *plugin in self.allLoadedPlugins)
 		{
 			if ( [plugin supportsNewMessagePostedEventNotifications]) {
