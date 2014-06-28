@@ -346,9 +346,9 @@
 			
 			if (changeFocus) {
 				if (c) {
-					[worldController() select:c];
+					[mainWindow() select:c];
 				} else if (u) {
-					[worldController() select:u];
+					[mainWindow() select:u];
 				}
 			}
 			

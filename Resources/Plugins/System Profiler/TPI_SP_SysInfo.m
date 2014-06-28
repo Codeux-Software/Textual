@@ -90,7 +90,7 @@
 
 + (NSString *)applicationBandwidthStatistics
 {
-	IRCClient *client = [worldController() selectedClient];
+	IRCClient *client = [mainWindow() selectedClient];
 
 	NSTimeInterval lastMsg = [NSDate secondsSinceUnixTimestamp:[client lastMessageReceived]];
 	

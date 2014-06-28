@@ -57,7 +57,7 @@
 						  messageString:(NSString *)messageString
 {
 	if ([commandString isEqualToString:@"BRAG"]) {
-		IRCChannel *selectedChannel = [worldController() selectedChannel];
+		IRCChannel *selectedChannel = [mainWindow() selectedChannel];
 
 		NSAssertReturn([selectedChannel isChannel]);
 		
@@ -82,7 +82,7 @@
 			
 			NSMutableArray *trackedUsers = [NSMutableArray new];
 			
-			for (IRCChannel *ch in [c channels]) {
+			for (IRCChannel *ch in [c channelList]) {
 				if ([ch isActive] == NO || [ch isChannel] == NO) {
 					continue;
 				}

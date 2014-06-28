@@ -38,29 +38,12 @@
 
 #import "TextualApplication.h"
 
+#import "IRCWorldPrivate.h"
+
 #define _autoConnectDelay				1
 #define _reconnectAfterWakeupDelay		8
 
-#define _treeDragItemType		@"tree"
-#define _treeDragItemTypes		[NSArray arrayWithObject:_treeDragItemType]
-
-#define _treeClientHeight		21.0
-#define _treeChannelHeight		18.0
-
-@interface IRCWorld ()
-/* No value is stored in any of these properties. They are declared
- as properties so that they can be accessed using dot (.) syntax in
- Objective-C. The actual value of each property is actually delcared
- below in the getter of the property name. */
-
-@property (nonatomic, nweak, readonly) NSBox *channelViewBox;
-@property (nonatomic, nweak, readonly) TVCServerList *serverList;
-@property (nonatomic, nweak, readonly) TVCMemberList *memberList;
-@end
-
-@implementation IRCWorld;
-
-@synthesize isoStandardDateFormatter = _isoStandardDateFormatter;
+@implementation IRCWorld
 
 #pragma mark -
 #pragma mark Initialization
@@ -69,6 +52,8 @@
 {
 	if ((self = [super init])) {
 		self.clients = [NSMutableArray new];
+		
+		self.textSizeMultiplier = 1;
 	}
 	
 	return self;
@@ -79,6 +64,8 @@
 
 - (void)setupConfiguration
 {
+	TXLockMethodForOneTimeFire()
+
 	self.isPopulatingSeeds = YES;
 	
 	NSDictionary *config = [TPCPreferences loadWorld];
@@ -88,102 +75,25 @@
 	}
 
 	if ([config boolForKey:@"soundIsMuted"]) {
-		[self.menuController toggleMuteOnNotificationSoundsShortcut:NSOnState];
+		[menuController() toggleMuteOnNotificationSoundsShortcut:NSOnState];
 	}
 
 	self.isPopulatingSeeds = NO;
-}
-
-- (void)setupTree
-{
-	/* Set double click action. */
-	[self.serverList setTarget:self];
-	[self.serverList setDoubleAction:@selector(outlineViewDoubleClicked:)];
-
-	/* Inform the table we want drag events. */
-	[self.serverList registerForDraggedTypes:_treeDragItemTypes];
-
-	/* Prepare our first selection. */
-	IRCClient *firstSelection = nil;
-	
-	for (IRCClient *e in self.clients) {
-        if (e.config.sidebarItemExpanded) {
-            [self expandClient:e];
-            
-            if (e.config.autoConnect) {
-                if (PointerIsEmpty(firstSelection)) {
-                    firstSelection = e;
-                }
-            }
-        }
-	}
-	
-	if (firstSelection) {
-		NSInteger n = [self.serverList rowForItem:firstSelection];
-
-		if ([firstSelection.channels count] > 0) {
-			++n;
-		}
-
-		[self.serverList selectItemAtIndex:n];
-	} else {
-		[self.serverList selectItemAtIndex:0];
-	}
-
-	[self outlineViewSelectionDidChange:nil];
-
-	[self.serverList updateBackgroundColor];
-	[self.memberList updateBackgroundColor];
-
-	/* Draw default icon as soon as we setup… */
-	/* This is done to apply birthday icon as soon as we start. */
-	[TVCDockIcon drawWithoutCount];
-
-	/* Populate navigation list. */
-	[self updateNavigationChannelList];
-}
-
-- (void)setupOtherServices
-{
-	/* Setup reachability. */
-		 _networkReachability = [OELReachability reachabilityForInternetConnection];
-
-	[self.networkReachability setReachableBlock:^(OELReachability *reachability) {
-		[[IRCWorld worldController] reachabilityChanged:YES];
-	}];
-
-	[self.networkReachability setUnreachableBlock:^(OELReachability *reachability) {
-		[[IRCWorld worldController] reachabilityChanged:NO];
-	}];
-
-	[self.networkReachability startNotifier];
-}
-
-- (void)reachabilityChanged:(BOOL)reachable
-{
-	for (IRCClient *u in [self clients]) {
-		[u reachabilityChanged:reachable];
-	}
-}
-
-- (void)updateNavigationChannelList
-{
-	/* Populate navigation list. */
-	[self.menuController populateNavgiationChannelList];
 }
 
 - (NSMutableDictionary *)dictionaryValue
 {
 	NSMutableArray *ary = [NSMutableArray array];
 
-	for (IRCClient *u in self.clients) {
+	for (IRCClient *u in [self clientList]) {
 		[ary addObject:[u dictionaryValue]];
 	}
 
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 	
-	[dict setObject:ary						forKey:@"clients"];
-	[dict setObject:@(self.isSoundMuted)	forKey:@"soundIsMuted"];
+	[dict setObject:ary	forKey:@"clients"];
+	
+	[dict setObject:@([sharedGrowlController() areNotificationSoundsDisabled]) forKey:@"soundIsMuted"];
 
 	return dict;
 }
@@ -193,225 +103,51 @@
 	[TPCPreferences saveWorld:[self dictionaryValue]];
 	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	[self.cloudSyncManager synchronizeToCloud];
+	[sharedCloudManager() synchronizeToCloud];
 #endif
 }
 
 - (void)prepareForApplicationTermination
 {
-	[self.networkReachability stopNotifier];
-
-	for (IRCClient *c in self.clients) {
-		[c prepareForApplicationTermination];
-	}
-}
-
-#pragma mark -
-#pragma mark Cloud Management 
-
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-- (NSMutableDictionary *)cloudDictionaryValue
-{
-	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-	
-	for (IRCClient *u in self.clients) {
-		if (u.config.excludedFromCloudSyncing == NO) {
-			NSDictionary *prefs = [u dictionaryValue:YES];
-			
-			NSString *prefKey = [IRCWorldControllerCloudClientEntryKeyPrefix stringByAppendingString:u.config.itemUUID];
-			
-			[dict setObject:prefs forKey:prefKey];
-		}
-	}
-	
-	return dict;
-}
-
-- (void)addClientToListOfDeletedClients:(NSString *)itemUUID
-{
-	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]); // Are we even syncing?
-	
-	/* Begin work. */
-	NSArray *deletedClients = [self.cloudSyncManager valueForKey:IRCWorldControllerCloudDeletedClientsStorageKey];
-	
-	/* Duplicate? */
-	if ([deletedClients containsObject:itemUUID]) {
-		return;
-	}
-	
-	/* Does the array even exist? */
-	if (PointerIsEmpty(deletedClients)) {
-		deletedClients = @[itemUUID];
-	} else {
-		deletedClients = [deletedClients arrayByAddingObject:itemUUID];
-	}
-	
-	/* Set new array. */
-	[self.cloudSyncManager setValue:deletedClients forKey:IRCWorldControllerCloudDeletedClientsStorageKey];
-}
-
-/* If a client set locally was set to not be synced from the cloud, but its UUID appears as a
- deleted item from another client, then remove that UUID from the deleted clients list if that
- client is again set to sync to the cloud. */
-- (void)removeClientFromListOfDeletedClients:(NSString *)itemUUID
-{
-	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]); // Are we even syncing?
-	
-	/* Begin work. */
-	NSArray *deletedClients = [self.cloudSyncManager valueForKey:IRCWorldControllerCloudDeletedClientsStorageKey];
-	
-	if (PointerIsNotEmpty(deletedClients)) {
-		NSInteger clientIndex = [deletedClients indexOfObject:itemUUID];
-		
-		if (NSDissimilarObjects(clientIndex, NSNotFound)) {
-			deletedClients = [deletedClients arrayByRemovingObjectAtIndex:clientIndex];
-			
-			[self.cloudSyncManager setValue:deletedClients forKey:IRCWorldControllerCloudDeletedClientsStorageKey];
+	@synchronized(self.clients) {
+		for (IRCClient *c in self.clients) {
+			[c prepareForApplicationTermination];
 		}
 	}
 }
-
-- (void)removeClientConfigurationCloudEntry:(NSString *)itemUUID
-{
-	NSString *prefKey = [IRCWorldControllerCloudClientEntryKeyPrefix stringByAppendingString:itemUUID];
-	
-	[self.cloudSyncManager removeObjectForKey:prefKey];
-}
-
-- (void)processCloudCientDeletionList:(NSArray *)deletedClients
-{
-	NSAssertReturn([TPCPreferences syncPreferencesToTheCloud]); // Are we even syncing?
-	
-	NSObjectIsEmptyAssert(deletedClients);
-	
-	[deletedClients enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-		/* Try to find a client from the imported list. */
-		IRCClient *u = [self findClientById:obj];
-		
-		/* We only delete clients that are set to be synced. */
-		if (u && u.config.excludedFromCloudSyncing == NO) {
-			[self destroyClient:u bySkippingCloud:YES];
-		}
-	}];
-}
-
-- (TPCPreferencesCloudSync *)cloudSyncManager
-{
-	return self.masterController.cloudSyncManager;
-}
-#endif
 
 #pragma mark -
 #pragma mark Properties
 
-- (NSDateFormatter *)isoStandardDateFormatter
+- (NSArray *)clientList
 {
-	PointerIsNotEmptyAssertReturn(_isoStandardDateFormatter, _isoStandardDateFormatter);
-
-	NSDateFormatter *dateFormatter = [NSDateFormatter new];
-
-	[dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-	[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"]; //2011-10-19T16:40:51.620Z
-
-	_isoStandardDateFormatter = dateFormatter;
-
-	return _isoStandardDateFormatter;
-}
-
-- (IRCClient *)selectedClient
-{
-	PointerIsEmptyAssertReturn(self.selectedItem, nil);
-	
-	return self.selectedItem.client;
-}
-
-- (IRCChannel *)selectedChannel
-{
-	PointerIsEmptyAssertReturn(self.selectedItem, nil);
-
-	if (self.selectedItem.isClient) {
-		return nil;
+	@synchronized(self.clients) {
+		return [NSArray arrayWithArray:self.clients];
 	}
-	
-	return (IRCChannel *)self.selectedItem;
 }
 
-- (IRCChannel *)selectedChannelOn:(IRCClient *)c
+- (void)setClientList:(NSArray *)clientList
 {
-	IRCChannel *selectedChannel = self.selectedChannel;
-
-	PointerIsEmptyAssertReturn(selectedChannel, nil);
-
-	if ([c.treeUUID isEqualToString:selectedChannel.client.treeUUID] == NO) {
-		return nil;
+	@synchronized(self.clients) {
+		[self.clients removeAllObjects];
+		
+		[self.clients addObjectsFromArray:clientList];
 	}
-	
-	return (IRCChannel *)self.selectedItem;
 }
 
-- (TVCLogController *)selectedViewController
+- (NSInteger)clientCount
 {
-	PointerIsEmptyAssertReturn(self.selectedItem, nil);
-
-	return [self.selectedItem viewController];
-}
-
-- (TVCServerList *)serverList
-{
-	return self.masterController.serverList;
-}
-
-- (TVCMemberList *)memberList
-{
-	return self.masterController.memberList;
-}
-
-- (NSBox *)channelViewBox
-{
-	return self.masterController.channelViewBox;
+	@synchronized(self.clients) {
+		return [self.clients count];
+	}
 }
 
 #pragma mark -
 #pragma mark Utilities
 
-- (void)addHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine
-{
-	PointerIsEmptyAssert(channel);
-	PointerIsEmptyAssert(logLine);
-	
-	if ([TPCPreferences logHighlights]) {
-		/* Render message. */
-		NSString *messageBody;
-		NSString *nicknameBody = [[logLine formattedNickname:channel] trim];
-
-		if ([logLine lineType] == TVCLogLineActionType) {
-			if ([nicknameBody hasSuffix:@":"]) {
-				messageBody = [NSString stringWithFormat:TXNotificationHighlightLogAlternativeActionFormat, nicknameBody, logLine.messageBody];
-			} else {
-				messageBody = [NSString stringWithFormat:TXNotificationHighlightLogStandardActionFormat, nicknameBody, logLine.messageBody];
-			}
-		} else {
-			messageBody = [NSString stringWithFormat:TXNotificationHighlightLogStandardMessageFormat, nicknameBody, logLine.messageBody];
-		}
-
-		/* Create entry. */
-		NSArray *entry = @[channel.name, @([NSDate epochTime]), [messageBody attributedStringWithIRCFormatting:TXDefaultListViewControllerFont]];
-		
-		/* We insert at head so that latest is always on top. */
-		[channel.client.highlights insertObject:entry atIndex:0];
-
-		/* Reload table if the window is open. */
-		id highlightSheet = [self.menuController windowFromWindowList:@"TDCHighlightListSheet"];
-
-		if (highlightSheet) {
-            [highlightSheet performSelector:@selector(reloadTable) withObject:nil afterDelay:2.0];
-		}
-	} 
-}
-
 - (void)autoConnectAfterWakeup:(BOOL)afterWakeUp
 {
-	if (self.masterController.ghostMode && afterWakeUp == NO) {
+	if ([masterController() ghostModeIsOn] && afterWakeUp == NO) {
 		return;
 	}
 	
@@ -421,24 +157,34 @@
 		delay += _reconnectAfterWakeupDelay;
 	}
 	
-	for (IRCClient *c in self.clients) {
-        if ((afterWakeUp && c.disconnectType == IRCDisconnectComputerSleepMode && c.config.autoSleepModeDisconnect) || afterWakeUp == NO) {
-            if (afterWakeUp || (c.config.autoConnect && afterWakeUp == NO)) {
-                [c autoConnect:delay afterWakeUp:afterWakeUp];
+#define _isWakingFromSleep		(afterWakeUp	   && c.config.autoSleepModeDisconnect && c.disconnectType == IRCClientDisconnectComputerSleepMode)
+#define _isAutoConnecting		(afterWakeUp == NO && c.config.autoConnect)
+	
+	@synchronized(self.clients) {
+		for (IRCClient *c in self.clients) {
+			if (_isWakingFromSleep || _isAutoConnecting) {
+				[c autoConnect:delay afterWakeUp:afterWakeUp];
 				
-                delay += _autoConnectDelay;
-            }
-        }
+				delay += _autoConnectDelay;
+			}
+		}
 	}
+	
+#undef _isWakingFromSleep
+#undef _isAutoConnecting
 }
 
 - (void)prepareForSleep
 {
-	for (IRCClient *c in self.clients) {
-		if (c.config.autoSleepModeDisconnect && c.isLoggedIn) {
-			c.disconnectType = IRCDisconnectComputerSleepMode;
-        
-			[c quit:c.config.sleepModeLeavingComment];
+	@synchronized(self.clients) {
+		for (IRCClient *c in self.clients) {
+			if (c.isLoggedIn) {
+				if (c.config.autoSleepModeDisconnect) {
+					c.disconnectType = IRCClientDisconnectComputerSleepMode;
+			
+					[c quit:c.config.sleepModeLeavingComment];
+				}
+			}
 		}
 	}
 }
@@ -446,41 +192,49 @@
 - (void)prepareForScreenSleep
 {
     NSAssertReturn([TPCPreferences setAwayOnScreenSleep]);
-
-	for (IRCClient *c in self.clients) {
-        [c toggleAwayStatus:YES];
+	
+	@synchronized(self.clients) {
+		for (IRCClient *c in self.clients) {
+			[c toggleAwayStatus:YES];
+		}
 	}
 }
 
 - (void)awakeFomScreenSleep
 {
     NSAssertReturn([TPCPreferences setAwayOnScreenSleep]);
-
-	for (IRCClient *c in self.clients) {
-        [c toggleAwayStatus:NO];
+	
+	@synchronized(self.clients) {
+		for (IRCClient *c in self.clients) {
+			[c toggleAwayStatus:NO];
+		}
 	}
 }
 
-- (void)inputText:(id)str command:(NSString *)command
+
+- (void)reachabilityChanged:(BOOL)reachable
 {
-	PointerIsEmptyAssert(self.selectedItem);
-
-    str = [THOPluginManagerSharedInstance() processInterceptedUserInput:str command:command];
-
-	[self.selectedItem.client inputText:str command:command];
+	@synchronized(self.clients) {
+		for (IRCClient *u in self.clients) {
+			[u reachabilityChanged:reachable];
+		}
+	}
 }
 
 - (void)destroyAllEvidence
 {
-	for (IRCClient *u in self.clients) {
-		[self clearContentsOfClient:u];
+	@synchronized(self.clients) {
+		for (IRCClient *u in self.clients) {
+			[self clearContentsOfClient:u];
 
-		for (IRCChannel *c in u.channels) {
-			[self clearContentsOfChannel:c inClient:u];
+			for (IRCChannel *c in u.channelList) {
+				[self clearContentsOfChannel:c inClient:u];
+			}
 		}
 	}
 
-	[self reloadTree];
+	[mainWindow() reloadTree];
+	
 	[self markAllAsRead];
 }
 
@@ -492,166 +246,59 @@
 - (void)markAllAsRead:(IRCClient *)limitedClient
 {
 	BOOL markScrollback = [TPCPreferences autoAddScrollbackMark];
-
-	for (IRCClient *u in self.clients) {
-		if (PointerIsNotEmpty(limitedClient) && NSDissimilarObjects(u, limitedClient)) {
-			continue;
-		}
-
-		if (markScrollback) {
-			[u.viewController mark];
-		}
-		
-		for (IRCChannel *c in u.channels) {
-			[c resetState];
+	
+	@synchronized(self.clients) {
+		for (IRCClient *u in self.clients) {
+			if (limitedClient && NSDissimilarObjects(u, limitedClient)) {
+				continue;
+			}
 
 			if (markScrollback) {
-				[c.viewController mark];
+				[u.viewController mark];
+			}
+			
+			for (IRCChannel *c in u.channelList) {
+				[c resetState];
+
+				if (markScrollback) {
+					[c.viewController mark];
+				}
 			}
 		}
 	}
 
 	if (limitedClient) {
-		[self reloadTreeGroup:limitedClient];
+		[mainWindow() reloadTreeGroup:limitedClient];
 	} else {
-		[self reloadTree];
+		[mainWindow() reloadTree];
 	}
 
-	[self updateIcon];
+	[TVCDockIcon updateDockIcon];
 }
 
 - (void)markAllScrollbacks
 {
 	NSAssertReturn([TPCPreferences autoAddScrollbackMark]);
 	
-	for (IRCClient *u in self.clients) {
-		[u.viewController mark];
-		
-		for (IRCChannel *c in u.channels) {
-			[c.viewController mark];
-		}
-	}
-}
-
-- (void)updateIcon
-{
-	NSAssertReturn([TPCPreferences displayDockBadge]);
-	
-	NSInteger messageCount = 0;
-	NSInteger highlightCount = 0;
-	
-	for (IRCClient *u in self.clients) {
-		for (IRCChannel *c in u.channels) {
-			if (c.config.pushNotifications) {
-				messageCount += c.dockUnreadCount;
+	@synchronized(self.clients) {
+		for (IRCClient *u in self.clients) {
+			[u.viewController mark];
+			
+			for (IRCChannel *c in u.channelList) {
+				[c.viewController mark];
 			}
-
-			highlightCount += c.nicknameHighlightCount;
 		}
-	}
-	
-	if (messageCount == 0 && highlightCount == 0) {
-		[TVCDockIcon drawWithoutCount];
-	} else {
-		[TVCDockIcon drawWithHilightCount:highlightCount messageCount:messageCount];
-	}
-}
-
-- (void)reloadLoadingScreen
-{
-	if (self.isPopulatingSeeds == NO) {
-		if ([self.clients count] <= 0) {
-			[self.masterController.mainWindowLoadingScreen hideAll:NO];
-			[self.masterController.mainWindowLoadingScreen popWelcomeAddServerView];
-		} else {
-			[self.masterController.mainWindowLoadingScreen hideAll:YES];
-		}
-	}
-}
-
-- (void)reloadTreeItem:(IRCTreeItem *)item
-{
-	[self.serverList updateDrawingForItem:item];
-}
-
-- (void)reloadTreeGroup:(IRCTreeItem *)item
-{
-	[self.serverList updateDrawingForItem:item];
-
-	for (IRCChannel *channel in item.client.channels) {
-		[self reloadTreeItem:channel];
-	}
-}
-
-- (void)reloadTree
-{
-	[self.serverList reloadAllDrawings];
-}
-
-- (void)expandClient:(IRCClient *)client
-{
-	[self.serverList.animator expandItem:client];
-}
-
-- (void)adjustSelection
-{
-	NSInteger selectedRow = [self.serverList selectedRow];
-	NSInteger selectionRow = [self.serverList rowForItem:self.selectedItem];
-
-	if (0 <= selectedRow && NSDissimilarObjects(selectedRow, selectionRow)) {
-		[self.serverList selectItemAtIndex:selectionRow];
-	}
-}
-
-- (void)storePreviousSelection
-{
-	NSAssertReturn(self.temporarilyDisablePreviousSelectionUpdates == NO);
-	
-	if (PointerIsEmpty(self.selectedItem)) {
-		self.previousSelectedClientId = nil;
-		self.previousSelectedChannelId = nil;
-	} else if (self.selectedItem.isClient) {
-		self.previousSelectedClientId = self.selectedItem.treeUUID;
-		self.previousSelectedChannelId = nil;
-	} else {		
-		self.previousSelectedClientId = self.selectedItem.client.treeUUID;
-		self.previousSelectedChannelId = self.selectedItem.treeUUID;
-	}
-}
-
-- (IRCTreeItem *)previouslySelectedItem
-{
-	NSObjectIsEmptyAssertReturn(self.previousSelectedClientId, nil);
-	
-	NSString *uid = self.previousSelectedClientId;
-	NSString *cid = self.previousSelectedChannelId;
-	
-	IRCTreeItem *item = nil;
-	
-	if (NSObjectIsEmpty(cid)) {
-		item = [self findClientById:uid];
-	} else {
-		item = [self findChannelByClientId:uid channelId:cid];
-	}
-	
-	return item;
-}
-
-- (void)selectPreviousItem
-{
-	IRCTreeItem *item = [self previouslySelectedItem];
-	
-	if (item) {
-		[self select:item];
 	}
 }
 
 - (void)preferencesChanged
 {
-	[self.menuController preferencesChanged];
+	[menuController() preferencesChanged];
 	
-	for (IRCClient *c in self.clients) {
-		[c preferencesChanged];
+	@synchronized(self.clients) {
+		for (IRCClient *c in self.clients) {
+			[c preferencesChanged];
+		}
 	}
 
 	/* Redraw dock icon on changes. There is possiblity the downstream
@@ -662,83 +309,7 @@
 	} else {
 		[TVCDockIcon resetCachedCount];
 
-		[self updateIcon];
-	}
-}
-
-#pragma mark -
-#pragma mark Window Title
-
-- (void)updateTitleFor:(IRCTreeItem *)item
-{
-	if (self.selectedItem == item) {
-		[self updateTitle];
-	}
-}
-
-- (void)updateTitle
-{
-	NSWindow *mainWindow = self.masterController.mainWindow;
-
-	id selectedItem = self.selectedItem;
-	
-	if (PointerIsEmpty(selectedItem)) {
-		[mainWindow setTitle:[TPCPreferences applicationName]];
-		[mainWindow setRepresentedURL:nil]; // Hide lock.
-		
-		return;
-	}
-	
-	IRCClient *client = self.selectedClient;
-	IRCChannel *channel = self.selectedChannel;
-	
-	NSMutableString *title = [NSMutableString string];
-
-	if ([selectedItem isClient]) {
-		[title appendString:TXTLS(@"BasicLanguage[1008]", client.localNickname, client.altNetworkName)];
-		[title appendString:BLS(1005)];
-        
-		NSString *networkAddress = [client networkAddress];
-
-		if (NSObjectIsEmpty(networkAddress)) {
-			[title appendString:client.config.serverAddress];
-		} else {
-			[title appendString:networkAddress];
-		}
-	} else {
-		[title appendString:TXTLS(@"BasicLanguage[1008]", client.localNickname, client.altNetworkName)];
-		[title appendString:BLS(1005)];
-
-        if (channel.isPrivateMessage) {
-            /* Textual defines the topic of a private message as the user host. */
-            NSString *hostmask = channel.topic;
-
-            if ([hostmask isHostmask] == NO) {
-                [title appendString:channel.name];
-            } else {
-                [title appendString:hostmask];
-            }
-        }
-		
-		if (channel.isChannel) {
-			[title appendString:channel.name];
-			[title appendFormat:BLS(1007), channel.numberOfMembers];
-			
-			NSString *modes = [channel.modeInfo titleString];
-			
-			if (modes.length >= 2) {
-				[title appendFormat:BLS(1006), modes];
-			}
-		}
-	}
-
-	[mainWindow setTitle:title];
-	[mainWindow setRepresentedURL:[RZMainBundle() bundleURL]];
-
-	if (client.config.connectionUsesSSL) {
-		[[mainWindow standardWindowButton:NSWindowDocumentIconButton] setImage:[NSImage imageNamed:@"NSLockLockedTemplate"]];
-	} else {
-		[[mainWindow standardWindowButton:NSWindowDocumentIconButton] setImage:[NSImage imageNamed:@"NSLockUnlockedTemplate"]];
+		[TVCDockIcon updateDockIcon];
 	}
 }
 
@@ -747,9 +318,13 @@
 
 - (IRCClient *)findClientById:(NSString *)uid
 {
-	for (IRCClient *u in self.clients) {
-		if ([u.treeUUID isEqualToString:uid] || [u.config.itemUUID isEqualToString:uid]) {
-			return u;
+	@synchronized(self.clients) {
+		for (IRCClient *u in self.clients)
+		{
+			if ([uid isEqualToString:[u treeUUID]] || [uid isEqualToString:[u uniqueIdentifier]])
+			{
+				return u;
+			}
 		}
 	}
 	
@@ -758,12 +333,14 @@
 
 - (IRCChannel *)findChannelByClientId:(NSString *)uid channelId:(NSString *)cid
 {
-	for (IRCClient *u in self.clients) {
-		if ([u.treeUUID isEqualToString:uid] || [u.config.itemUUID isEqualToString:uid]) {
-			for (IRCChannel *c in u.channels) {
-				if ([c.treeUUID isEqualToString:cid] || [c.config.itemUUID isEqualToString:cid]) {
-					return c;
-				}
+	IRCClient *u = [self findClientById:uid];
+	
+	if (u) {
+		for (IRCChannel *c in u.channelList)
+		{
+			if ([cid isEqualToString:[c treeUUID]] || [cid isEqualToString:[c uniqueIdentifier]])
+			{
+				return c;
 			}
 		}
 	}
@@ -771,43 +348,32 @@
 	return nil;
 }
 
-- (void)select:(id)item
+- (NSString *)findItemFromInfoGeneratedValue:(IRCTreeItem *)item
 {
-	if (self.selectedItem == item) {
-		return;
+	NSString *s;
+	
+	if ([item isClient] == NO) {
+		s = [NSString stringWithFormat:@"%@ %@", item.treeUUID, item.associatedClient.treeUUID];
+	} else {
+		s = [NSString stringWithFormat:@"%@", item.treeUUID];
 	}
 	
-	[self storePreviousSelection];
+	return s;
+}
+
+- (IRCTreeItem *)findItemFromInfo:(NSString *)s
+{
+	NSObjectIsEmptyAssertReturn(s, nil);
 	
-	if (PointerIsEmpty(item)) {
-		self.selectedItem = nil;
-
-		[self.channelViewBox setContentView:nil];
-
-		[self.memberList setDataSource:nil];
-		[self.memberList reloadData];
+	if ([s contains:@" "]) {
+		NSArray *ary = [s split:@" "];
 		
-		return;
-	}
-	
-	BOOL isClient = [item isClient];
-	
-	IRCClient *client = (IRCClient *)[item client];
-	
-	if (isClient == NO) {
-		[self.serverList.animator expandItem:client];
-	}
-	
-	NSInteger i = [self.serverList rowForItem:item];
-	
-	if (i >= 0) {
-		[self.serverList selectItemAtIndex:i];
-
-		if (isClient) {
-			client.lastSelectedChannel = nil;
-		} else {
-			client.lastSelectedChannel = (IRCChannel *)item;
-		}
+		NSString *uid = [ary objectAtIndex:1];
+		NSString *cid = [ary objectAtIndex:0];
+		
+		return [self findChannelByClientId:uid channelId:cid];
+	} else {
+		return [self findClientById:s];
 	}
 }
 
@@ -821,56 +387,56 @@
 
 - (void)reloadTheme:(BOOL)reloadUserInterface
 {
-	[self.themeController load];
+	[themeController() load];
+	
+	@synchronized(self.clients) {
+		for (IRCClient *u in self.clients) {
+			[u.viewController reloadTheme];
 
-	for (IRCClient *u in self.clients) {
-		[u.viewController reloadTheme];
-
-		for (IRCChannel *c in u.channels) {
-			[c.viewController reloadTheme];
+			for (IRCChannel *c in u.channelList) {
+				[c.viewController reloadTheme];
+			}
 		}
 	}
 
 	if (reloadUserInterface) {
-		[self.serverList updateBackgroundColor];
-		[self.serverList reloadAllDrawingsIgnoringOtherReloads];
+		[mainWindowServerList() updateBackgroundColor];
+		[mainWindowServerList() reloadAllDrawingsIgnoringOtherReloads];
 
-		[self.memberList reloadAllUserInterfaceElements];
+		[mainWindowMemberList() updateBackgroundColor];
+		[mainWindowMemberList() reloadAllUserInterfaceElements];
 
-		[self.masterController.contentSplitView setNeedsDisplay:YES];
+		[[mainWindow() contentSplitView] setNeedsDisplay:YES];
 
-		[self.masterController.inputTextField redrawOriginPoints];
+		[mainWindowTextField() redrawOriginPoints];
 	}
 }
 
 - (void)changeTextSize:(BOOL)bigger
 {
-	for (IRCClient *u in self.clients) {
-		[u.viewController changeTextSize:bigger];
-
-		for (IRCChannel *c in u.channels) {
-			[c.viewController changeTextSize:bigger];
+	if (bigger) {
+		self.textSizeMultiplier += 1;
+		
+		if (self.textSizeMultiplier > 6) {
+			self.textSizeMultiplier = 6;
+		}
+	} else {
+		self.textSizeMultiplier -= 1;
+		
+		if (self.textSizeMultiplier < -3) {
+			self.textSizeMultiplier = -3;
 		}
 	}
-}
-
-- (NSInteger)textSizeMultiplier
-{
-	/* The text size multiplier is used when creating new views to match
-	 existing font size changes using cmd+=/- which is dynamic in the 
-	 changeTextSize: call above. We get the multiplier by asking the
-	 first view that exists in Textual what its multiplier is. If there
-	 is no first view, then we default to 1.0 which is 100%. */
-
-	NSObjectIsEmptyAssertReturn(self.clients, 1);
 	
-	IRCClient *c = [self.clients objectAtIndex:0];
-
-	if (c) {
-		return [c.viewController.view textSizeMultiplier];
+	@synchronized(self.clients) {
+		for (IRCClient *u in self.clients) {
+			[u.viewController changeTextSize:bigger];
+			
+			for (IRCChannel *c in u.channelList) {
+				[c.viewController changeTextSize:bigger];
+			}
+		}
 	}
-
-	return 1;
 }
 
 #pragma mark -
@@ -883,11 +449,13 @@
 
 - (void)executeScriptCommandOnAllViews:(NSString *)command arguments:(NSArray *)args onQueue:(BOOL)onQueue
 {
-	for (IRCClient *u in self.clients) {
-		[u.viewController executeScriptCommand:command withArguments:args onQueue:onQueue];
+	@synchronized(self.clients) {
+		for (IRCClient *u in self.clients) {
+			[u.viewController executeScriptCommand:command withArguments:args onQueue:onQueue];
 
-		for (IRCChannel *c in u.channels) {
-			[c.viewController executeScriptCommand:command withArguments:args onQueue:onQueue];
+			for (IRCChannel *c in u.channelList) {
+				[c.viewController executeScriptCommand:command withArguments:args onQueue:onQueue];
+			}
 		}
 	}
 }
@@ -904,7 +472,7 @@
 	
 	[c.viewController setTopic:c.topic];
 
-	[self reloadTreeItem:c];
+	[mainWindow() reloadTreeItem:c];
 }
 
 - (void)clearContentsOfClient:(IRCClient *)u
@@ -914,114 +482,138 @@
 	[u.viewController clear];
 	[u.viewController notifyDidBecomeVisible];
 
-	[self reloadTreeItem:u];
+	[mainWindow() reloadTreeItem:u];
 }
 
 - (IRCClient *)createClient:(id)seed reload:(BOOL)reload
 {
+	/* We are very strict about this. */
+	if (seed == nil) {
+		NSAssert(NO, @"nil configuration seed.");
+	}
+	
+	/* Create new client. */
 	IRCClient *c = [IRCClient new];
 	
+	/* Populate new seed. */
 	[c setup:seed];
 
-	PointerIsEmptyAssertReturn(c.config, nil);
-
+	/* Assign factories. */
 	c.viewController = [self createLogWithClient:c channel:nil];
 
 	c.printingQueue = [TVCLogControllerOperationQueue new];
 
-	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
-		c.inputHistory = [TLOInputHistory new];
-	}
-
+	/* Create all channels. */
 	for (IRCChannelConfig *e in c.config.channelList) {
 		[self createChannel:e client:c reload:NO adjust:NO];
 	}
 	
-	[self.clients addObject:c];
+	/* Populate client list and tree view. */
+	@synchronized(self.clients) {
+		[self.clients addObject:c];
 	
-	if (reload) {
-		NSInteger index = [self.clients indexOfObject:c];
+		if (reload) {
+			NSInteger index = [self.clients indexOfObject:c];
 
-		[self.serverList addItemToList:index inParent:nil];
+			[mainWindowServerList() addItemToList:index inParent:nil];
+		}
 	}
 
-	if ([self.clients count] == 1 && self.isPopulatingSeeds == NO) {
+	/* Finsih up creation. */
+	if ([self clientCount] == 1 && self.isPopulatingSeeds == NO) {
 		/* If our client count is 1, then it means we just added our
 		 first client ever. We want to force the selection to this 
 		 because if we had no client beforehand, then we did not have
 		 any selection at all. */
 
-		[self select:c];
+		[mainWindow() select:c];
 	}
 
-	[self reloadLoadingScreen];
+	[mainWindow() reloadLoadingScreen];
 	
 	return c;
 }
 
 - (IRCChannel *)createChannel:(IRCChannelConfig *)seed client:(IRCClient *)client reload:(BOOL)reload adjust:(BOOL)adjust
 {
-	PointerIsEmptyAssertReturn(client, nil);
+	/* We are very strict about this. */
+	if (seed == nil) {
+		NSAssert(NO, @"nil configuration seed.");
+	}
 	
+	if (client == nil) {
+		NSAssert(NO, @"nil associated client.");
+	}
+	
+	/* Check if channel already exists. */
 	IRCChannel *c = [client findChannel:seed.channelName];
 
-	NSObjectIsNotEmptyAssertReturn(c.name, c);
-
+	if (c) {
+		return c;
+	}
+	
+	/* Create new channel. */
 	c = [IRCChannel new];
 	
-	c.client = client;
-
-	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
-		c.inputHistory = [TLOInputHistory new];
-	}
+	/* Make sure we can trace our origin. */
+	c.associatedClient = client;
 	
 	c.modeInfo.isupport = client.isupport;
 	
+	/* Setup new channel. */
 	[c setup:seed];
 	
 	c.viewController = [self createLogWithClient:client channel:c];
 
-	if (seed.type == IRCChannelNormalType) {
+	/* Insert ourself into a specific index if we are query. */
+	if ([c isChannel]) {
 		NSInteger n = [client indexOfFirstPrivateMessage];
 
 		if (n >= 0) {
-			[client.channels insertObject:c atIndex:n];
+			[client addChannel:c atPosition:n];
 		} else {
-			[client.channels addObject:c];
+			[client addChannel:c];
 		}
 	} else {
-		[client.channels addObject:c];
+		[client addChannel:c];
 	}
 	
+	/* Reload server list. */
 	if (reload) {
-		NSInteger index = [client.channels indexOfObject:c];
+		NSInteger index = [client.channelList indexOfObject:c];
 
-		[self.serverList addItemToList:index inParent:client];
+		[mainWindowServerList() addItemToList:index inParent:client];
 	}
 	
+	/* Update selection. */
 	if (adjust) {
-		[self adjustSelection];
+		[mainWindow() adjustSelection];
 	}
 
-	[self updateNavigationChannelList];
+	/* Populate channel list. */
+	[menuController() populateNavgiationChannelList];
 	
 	return c;
 }
 
 - (IRCChannel *)createPrivateMessage:(NSString *)nick client:(IRCClient *)client
 {
-	PointerIsEmptyAssertReturn(client, nil);
+	/* Be very strict. */
+	if (NSObjectIsEmpty(nick)) {
+		NSAssert(NO, @"empty nickname value.");
+	}
 	
-	NSObjectIsEmptyAssertReturn(nick, nil);
-	
+	/* Create base configuration. */
 	IRCChannelConfig *seed = [IRCChannelConfig new];
 	
 	seed.type = IRCChannelPrivateMessageType;
 	seed.channelName = nick;
 	
+	/* Create channel. */
 	IRCChannel *c = [self createChannel:seed client:client reload:YES adjust:YES];
 	
-	if (client.isLoggedIn) {
+	/* Active? */
+	if ([client isLoggedIn]) {
 		[c activate];
 	}
 	
@@ -1030,60 +622,66 @@
 
 - (void)selectOtherAndDestroy:(IRCTreeItem *)target
 {
-	NSInteger i = 0;
-	
-	IRCTreeItem *sel = nil;
-	
-	if (target.isClient) {
-		i = [self.clients indexOfObjectIdenticalTo:target];
+	@synchronized(self.clients) {
+		NSInteger i = 0;
 		
-		NSInteger n = (i + 1);
+		IRCTreeItem *sel = nil;
 		
-		if (0 <= n && n < [self.clients count]) {
-			sel = [self.clients objectAtIndex:n];
-		}
-		
-		i = [self.serverList rowForItem:target];
-	} else {		
-		i = [self.serverList rowForItem:target];
-		
-		NSInteger n = (i + 1);
-		
-		if (0 <= n && n < [self.serverList numberOfRows]) {
-			sel = [self.serverList itemAtRow:n];
-		}
-		
-		if (sel && sel.isClient) {
-			n = (i - 1);
+		if ([target isChannel]) {
+			i = [self.clients indexOfObjectIdenticalTo:target];
 			
-			if (0 <= n && n < [self.serverList numberOfRows]) {
-				sel = [self.serverList itemAtRow:n];
+			NSInteger n = (i + 1);
+			
+			if (0 <= n && n < [self clientCount]) {
+				sel = self.clients[n];
+			}
+			
+			i = [mainWindowServerList() rowForItem:target];
+		} else {		
+			i = [mainWindowServerList() rowForItem:target];
+			
+			NSInteger n = (i + 1);
+			
+			if (0 <= n && n < [mainWindowServerList() numberOfRows]) {
+				sel = [mainWindowServerList() itemAtRow:n];
+			}
+			
+			if (sel && [sel isClient]) {
+				n = (i - 1);
+				
+				if (0 <= n && n < [mainWindowServerList() numberOfRows]) {
+					sel = [mainWindowServerList() itemAtRow:n];
+				}
 			}
 		}
-	}
-	
-	if (sel) {
-		[self select:sel];
-	} else {
-		NSInteger n = (i - 1);
 		
-		if (0 <= n && n < [self.serverList numberOfRows]) {
-			sel = [self.serverList itemAtRow:n];
+		if (sel) {
+			[mainWindow() select:sel];
+		} else {
+			NSInteger n = (i - 1);
+			
+			if (0 <= n && n < [mainWindowServerList() numberOfRows]) {
+				sel = [mainWindowServerList() itemAtRow:n];
+			}
+			
+			[mainWindow() select:sel];
 		}
 		
-		[self select:sel];
-	}
-	
-	if (target.isClient) {
-		[self.clients removeObjectIdenticalTo:target];
-	} else {		
-		[target.client.channels removeObjectIdenticalTo:target];
-	}
+		if ([target isClient]) {
+			[self.clients removeObjectIdenticalTo:target];
+		} else {
+			IRCClient *u = [target associatedClient];
+			
+			[u removeChannel:(id)target];
+		}
 
-	[self.serverList removeItemFromList:target];
-	
-	if (self.selectedItem) {
-		[self.serverList selectItemAtIndex:[self.serverList rowForItem:sel]];
+		[mainWindowServerList() removeItemFromList:target];
+		
+		id selectedItem = [mainWindow() selectedItem];
+		
+		if (selectedItem) {
+			[mainWindowServerList() selectItemAtIndex:[mainWindowServerList() rowForItem:sel]];
+		}
 	}
 }
 
@@ -1097,27 +695,26 @@
 	[u prepareForPermanentDestruction];
 	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	if ([TPCPreferences syncPreferencesToTheCloud]) {
-		if (u.config.excludedFromCloudSyncing == NO) {
-			if (skipCloud == NO) {
-				[self addClientToListOfDeletedClients:u.config.itemUUID]; // Set client as deleted.
-				[self removeClientConfigurationCloudEntry:u.config.itemUUID];
-			}
-		}
+	if (skipCloud == NO) {
+		[self destroyClientInCloud:u];
 	}
 #endif
 	
-	if (self.selectedItem && self.selectedItem.client == u) {
+	id selectedItem = [mainWindow() selectedItem];
+	
+	if (selectedItem && [selectedItem associatedClient] == u) {
 		[self selectOtherAndDestroy:u];
-	} else {		
-		[self.clients removeObjectIdenticalTo:u];
+	} else {
+		@synchronized(self.clients) {
+			[self.clients removeObjectIdenticalTo:u];
+		}
+		
+		[mainWindowServerList() removeItemFromList:u];
 
-		[self.serverList removeItemFromList:u];
-
-		[self adjustSelection];
+		[mainWindow() adjustSelection];
 	}
 
-	[self reloadLoadingScreen];
+	[mainWindow() reloadLoadingScreen];
 }
 
 - (void)destroyChannel:(IRCChannel *)c
@@ -1127,10 +724,10 @@
 
 - (void)destroyChannel:(IRCChannel *)c part:(BOOL)forcePart
 {
-	IRCClient *u = c.client;
+	IRCClient *u = [c associatedClient];
 	
-	if (c.isChannel && forcePart) {
-		if (u.isLoggedIn && c.isActive) {
+	if ([c isChannel] && forcePart) {
+		if ([u isLoggedIn] && [c isActive]) {
 			[u partChannel:c];
 		}
 	}
@@ -1141,30 +738,31 @@
 		u.lastSelectedChannel = nil;
 	}
 	
-	if (self.selectedItem == c) {
+	if ([mainWindow() selectedItem] == c) {
 		[self selectOtherAndDestroy:c];
 	} else {
-		[u.channels removeObjectIdenticalTo:c];
+		[u removeChannel:c];
 
-		[self.serverList removeItemFromList:c];
+		[mainWindowServerList() removeItemFromList:c];
 
-		[self adjustSelection];
+		[mainWindow() adjustSelection];
 	}
 
-	[self updateNavigationChannelList];
+	[menuController() populateNavgiationChannelList];
 }
 
 - (TVCLogController *)createLogWithClient:(IRCClient *)client channel:(IRCChannel *)channel
 {
 	TVCLogController *c = [TVCLogController new];
 
-	c.client = client;
-	c.channel = channel;
-	c.maximumLineCount = [TPCPreferences maxLogLines];
+	c.associatedClient = client;
+	c.associatedChannel = channel;
+	
+	c.maximumLineCount = [TPCPreferences scrollbackLimit];
 	
 	[c setUp];
 	
-	[c.view setHostWindow:self.masterController.mainWindow];
+	[c.webView setHostWindow:mainWindow()];
 	
 	return c;
 }
@@ -1174,488 +772,15 @@
 
 - (void)logKeyDown:(NSEvent *)e
 {
-	[self.masterController.inputTextField focus];
+	[mainWindowTextField() focus];
 
-	if (e.keyCode == TXKeyReturnCode ||
-		e.keyCode == TXKeyEnterCode)
+	if ([e keyCode] == TXKeyReturnCode ||
+		[e keyCode] == TXKeyEnterCode)
 	{
 		return;
 	}
 
-	[self.masterController.inputTextField keyDown:e];
-}
-
-#pragma mark -
-#pragma mark NSOutlineView Delegate
-
-- (void)outlineViewDoubleClicked:(id)sender
-{
-	PointerIsEmptyAssert(self.selectedItem);
-	
-	IRCClient *u = [self selectedClient];
-	IRCChannel *c = [self selectedChannel];
-	
-	if (PointerIsEmpty(c)) {
-		if (u.isConnecting || u.isConnected || u.isLoggedIn) {
-			if ([TPCPreferences disconnectOnDoubleclick]) {
-				[u quit];
-			}
-		} else {
-			if ([TPCPreferences connectOnDoubleclick]) {
-				[u connect];
-			}
-		}
-		
-		[self expandClient:u];
-	} else {		
-		if (u.isLoggedIn) {
-			if (c.isActive) {
-				if ([TPCPreferences leaveOnDoubleclick]) {
-					[u partChannel:c];
-				}
-			} else {
-				if ([TPCPreferences joinOnDoubleclick]) {
-					[u joinChannel:c];
-				}
-			}
-		}
-	}
-}
-
-- (NSInteger)outlineView:(NSOutlineView *)sender numberOfChildrenOfItem:(id)item
-{
-	PointerIsEmptyAssertReturn(item, [self.clients count]);
-	
-	return [item numberOfChildren];
-}
-
-- (BOOL)outlineView:(NSOutlineView *)sender isItemExpandable:(id)item
-{
-	return ([item numberOfChildren] > 0);
-}
-
-- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(IRCTreeItem *)item
-{
-	PointerIsEmptyAssertReturn(item, self.clients[index]);
-	
-	return [item childAtIndex:index];
-}
-
-- (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
-{
-	return [item label];
-}
-
-- (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(IRCTreeItem *)item
-{
-	if (PointerIsEmpty(item) || item.isClient) {
-		return _treeClientHeight;
-	}
-	
-	return _treeChannelHeight;
-}
-
-- (NSTableRowView *)outlineView:(NSOutlineView *)outlineView rowViewForItem:(id)item
-{
-	TVCServerListRowCell *rowView = [[TVCServerListRowCell alloc] initWithFrame:NSZeroRect];
-
-	return rowView;
-}
-
-- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(IRCTreeItem *)item
-{
-	/* Ask our view controller what we are. */
-	if (item.isClient) {
-		/* We are a group item. A client. */
-
-		NSView *newView = [outlineView makeViewWithIdentifier:@"GroupView" owner:self];
-
-		if ([newView isKindOfClass:[TVCServerListCellGroupItem class]]) {
-			TVCServerListCellGroupItem *groupItem = (TVCServerListCellGroupItem *)newView;
-
-			[groupItem setCellItem:item];
-		}
-
-		return newView;
-	} else {
-		/* We are a child item. A channel. */
-		NSView *newView = [outlineView makeViewWithIdentifier:@"ChildView" owner:self];
-
-		if ([newView isKindOfClass:[TVCServerListCellChildItem class]]) {
-			TVCServerListCellChildItem *childItem = (TVCServerListCellChildItem *)newView;
-
-			[childItem setCellItem:item];
-		}
-
-		return newView;
-	}
-
-	return nil;
-}
-
-- (void)outlineView:(NSOutlineView *)outlineView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
-{
-	[self.serverList updateDrawingForRow:row skipDrawingCheck:YES];
-}
-
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldExpandItem:(IRCTreeItem *)item
-{
-	[item.client.config setSidebarItemExpanded:YES];
-
-	return YES;
-}
-
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(IRCTreeItem *)item
-{
-	[item.client.config setSidebarItemExpanded:NO];
-
-	return YES;
-}
-
-- (void)outlineViewItemWillCollapse:(NSNotification *)notification
-{
-	PointerIsEmptyAssert(self.selectedChannel);
-
-	/* If the item being collapsed is the one our selected channel is on,
-	 then move selection to the console of the collapsed server. */
-	id itemBeingCollapsed = [notification.userInfo objectForKey:@"NSObject"];
-
-	if (itemBeingCollapsed == self.selectedClient && [itemBeingCollapsed isClient] == NO) {
-		[self select:self.selectedClient];
-	}
-}
-
-- (void)outlineViewSelectionDidChange:(NSNotification *)note
-{
-	/* Store previous selection. */
-	[self storePreviousSelection];
-
-	/* Reset spelling for text field. */
-	TVCMainWindowTextView *textField = [self.masterController inputTextField];
-	
-	if ([textField hasModifiedSpellingDictionary]) {
-		[RZSpellChecker() setIgnoredWords:@[] inSpellDocumentWithTag:textField.spellCheckerDocumentTag];
-	}
-	
-	/* Prepare next item. */
-	id nextItem = [self.serverList itemAtRow:[self.serverList selectedRow]];
-
-	[self.selectedItem resetState]; // Reset state of old item.
-	 self.selectedItem = nextItem;
-
-	[self.selectedItem resetState]; // Reset state of new item.
-
-	/* Destroy member list if we have no selection. */
-	if (PointerIsEmpty(self.selectedItem)) {
-		[self.channelViewBox setContentView:nil];
-		
-		self.memberList.dataSource = nil;
-		self.memberList.delegate = nil;
-        
-		[self.memberList reloadData];
-		
-		self.serverList.menu = self.menuController.addServerMenu;
-		
-		return;
-	}
-	
-	/* Setup WebKit. */
-	TVCLogController *log = self.selectedViewController;
-
-	[self.channelViewBox setContentView:log.view];
-	
-	[log notifyDidBecomeVisible];
-
-	[log.view clearSelection];
-
-	/* Some common defines. */
-	IRCChannel *newChannel;
-
-	if (self.selectedItem && [self.selectedItem isChannel]) {
-		newChannel = (id)self.selectedItem;
-	}
-
-	/* Prepare the member list for the selection. */
-	if ([self.selectedItem isClient] ||
-		[self.selectedItem isPrivateMessage])
-	{
-		if ([self.selectedItem isClient]) {
-			self.serverList.menu = self.menuController.serverMenuItem.submenu;
-		} else {
-			self.serverList.menu = self.menuController.channelMenuItem.submenu;
-		}
-
-		/* Private messages and the client console
-		 do not have a member list. */
-		self.memberList.dataSource = nil;
-		self.memberList.delegate = nil;
-		
-		[self.memberList reloadData];
-	} else {		
-		self.serverList.menu = self.menuController.channelMenuItem.submenu;
-		
-		self.memberList.dataSource = (id)self.selectedItem;
-		self.memberList.delegate = (id)self.selectedItem;
-
-		[self.memberList deselectAll:nil];
-		[self.memberList scrollRowToVisible:0];
-		
-		[newChannel reloadDataForTableView];
-	}
-
-	/* Begin work on text field. */
-    [textField focus];
-
-	/* Setup text field value with history item when we have 
-	 history setup to be channel specific. */
-	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
-		NSAttributedString *inputValue = [textField attributedStringValue];
-
-		IRCTreeItem *selected = [self selectedItem];
-		IRCTreeItem *previous = [self previouslySelectedItem];
-		
-		TLOInputHistory *oldHistory = [previous inputHistory];
-		TLOInputHistory *newHistory = [selected inputHistory];
-		
-		[oldHistory setLastHistoryItem:inputValue];
-		
-		[textField setStringValue:NSStringEmptyPlaceholder];
-		
-		if ([newHistory lastHistoryItem]) {
-			[textField setAttributedStringValue:[newHistory lastHistoryItem]];
-		}
-	}
-	
-	if ([self.selectedItem isClient] || [self.selectedItem isPrivateMessage]) {
-		[self.masterController.contentSplitView collapseMemberList];
-	} else {
-		if (self.memberList.setHiddenByUser == NO) {
-			[self.masterController.contentSplitView expandMemberList];
-		}
-	}
-
-	/* Finish up. */
-	[self.masterController updateSegmentedController];
-
-	[self updateIcon];
-	[self updateTitle];
-
-	[self.serverList updateDrawingForItem:self.selectedItem				skipDrawingCheck:YES];
-	[self.serverList updateDrawingForItem:self.previouslySelectedItem	skipDrawingCheck:YES];
-}
-
-- (BOOL)outlineView:(NSOutlineView *)sender writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
-{
-	NSObjectIsEmptyAssertReturn(items, NO);
-	
-	IRCTreeItem *i = [items objectAtIndex:0];
-
-	NSString *s = i.treeUUID;
-	
-	if (i.isClient == NO) {
-		s = [NSString stringWithFormat:@"%@ %@", i.client.treeUUID, i.treeUUID];
-	}
-	
-	[pboard declareTypes:_treeDragItemTypes owner:self];
-	
-	[pboard setPropertyList:s forType:_treeDragItemType];
-	
-	return YES;
-}
-
-- (IRCTreeItem *)findItemFromInfo:(NSString *)s
-{
-	NSObjectIsEmptyAssertReturn(s, nil);
-	
-	if ([s contains:@" "]) {
-		NSArray *ary = [s split:@" "];
-
-		NSString *uid = [ary objectAtIndex:0];
-		NSString *cid = [ary objectAtIndex:1];
-		
-		return [self findChannelByClientId:uid channelId:cid];
-	} else {
-		return [self findClientById:s];
-	}
-}
-
-- (NSDragOperation)outlineView:(NSOutlineView *)sender validateDrop:(id < NSDraggingInfo >)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
-{
-    NSAssertReturnR((index >= 0), NSDragOperationNone);
-	
-	NSPasteboard *pboard = [info draggingPasteboard];
-    PointerIsEmptyAssertReturn([pboard availableTypeFromArray:_treeDragItemTypes], NSDragOperationNone);
-	
-	NSString *infoStr = [pboard propertyListForType:_treeDragItemType];
-    PointerIsEmptyAssertReturn(infoStr, NSDragOperationNone);
-	
-	IRCTreeItem *i = [self findItemFromInfo:infoStr];
-    PointerIsEmptyAssertReturn(i, NSDragOperationNone);
-	
-	if (i.isClient) {
-		if (item) {
-			return NSDragOperationNone;
-		}
-	} else {
-        PointerIsEmptyAssertReturn(item, NSDragOperationNone);
-		
-		IRCChannel *c = (IRCChannel *)i;
-        
-		if (NSDissimilarObjects(item, c.client)) {
-            return NSDragOperationNone;
-        }
-		
-		IRCClient *toClient = (IRCClient *)item;
-		
-		NSArray *ary = toClient.channels;
-		
-		NSMutableArray *low = [[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy];
-		NSMutableArray *high = [[ary subarrayWithRange:NSMakeRange(index, ([ary count] - index))] mutableCopy];
-		
-		[low removeObjectIdenticalTo:c];
-		[high removeObjectIdenticalTo:c];
-		
-		if (c.isChannel) {
-			if ([low count] > 0) {
-				IRCChannel *prev = [low lastObject];
-
-                NSAssertReturnR(prev.isChannel, NSDragOperationNone);
-			}
-		} else {
-			if ([high count] > 0) {
-				IRCChannel *next = [high objectAtIndex:0];
-
-                NSAssertReturnR((next.isChannel == NO), NSDragOperationNone);
-			}
-		}
-	}
-	
-	return NSDragOperationGeneric;
-}
-
-- (BOOL)outlineView:(NSOutlineView *)sender acceptDrop:(id <NSDraggingInfo>)info item:(id)item childIndex:(NSInteger)index
-{
-    NSAssertReturnR((index >= 0), NSDragOperationNone);
-
-	NSPasteboard *pboard = [info draggingPasteboard];
-    PointerIsEmptyAssertReturn([pboard availableTypeFromArray:_treeDragItemTypes], NSDragOperationNone);
-
-	NSString *infoStr = [pboard propertyListForType:_treeDragItemType];
-    PointerIsEmptyAssertReturn(infoStr, NSDragOperationNone);
-
-	IRCTreeItem *i = [self findItemFromInfo:infoStr];
-    PointerIsEmptyAssertReturn(i, NSDragOperationNone);
-	
-	if (i.isClient) {
-		if (item) {
-            return NO;
-        }
-		
-		NSMutableArray *ary = self.clients;
-        
-		NSMutableArray *low = [[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy];
-		NSMutableArray *high = [[ary subarrayWithRange:NSMakeRange(index, ([ary count] - index))] mutableCopy];
-
-		NSInteger originalIndex = [ary indexOfObject:i];
-
-		[low removeObjectIdenticalTo:i];
-		[high removeObjectIdenticalTo:i];
-		
-		[ary removeAllObjects];
-		
-		[ary addObjectsFromArray:low];
-		[ary addObject:i];
-		[ary addObjectsFromArray:high];
-
-		NSArray *childItems = [self.serverList groupItems];
-
-		NSObjectIsEmptyAssertReturn(childItems, NO);
-
-		NSInteger oldIndex = [childItems indexOfObject:i];
-		NSInteger newIndex = 0;
-
-		id lastObject = [low lastObject];
-
-		if (lastObject) {
-			newIndex = [childItems indexOfObject:lastObject];
-
-			if (originalIndex <= oldIndex && newIndex < ([childItems count] - 1)) {
-				newIndex += 1;
-			}
-		}
-
-		if (oldIndex == newIndex) {
-			return NO;
-		}
-
-		[self.serverList moveItemAtIndex:oldIndex inParent:nil toIndex:newIndex inParent:nil];
-	} else {
-		if (PointerIsEmpty(item) || NSDissimilarObjects(item, i.client)) {
-            return NO;
-        }
-		
-		IRCClient *u = (IRCClient *)item;
-		
-		NSMutableArray *ary = u.channels;
-        
-		NSMutableArray *low = [[ary subarrayWithRange:NSMakeRange(0, index)] mutableCopy];
-		NSMutableArray *high = [[ary subarrayWithRange:NSMakeRange(index, ([ary count] - index))] mutableCopy];
-
-		NSInteger originalIndex = [ary indexOfObject:i];
-		
-		[low removeObjectIdenticalTo:i];
-		[high removeObjectIdenticalTo:i];
-		
-		[ary removeAllObjects];
-		
-		[ary addObjectsFromArray:low];
-		[ary addObject:i];
-		[ary addObjectsFromArray:high];
-
-		NSArray *childItems = [self.serverList rowsFromParentGroup:u];
-
-		NSObjectIsEmptyAssertReturn(childItems, NO);
-
-		NSInteger oldIndex = [childItems indexOfObject:i];
-		NSInteger newIndex = 0;
-		
-		id lastObject = [low lastObject];
-
-		if (lastObject) {
-			newIndex  = [childItems indexOfObject:lastObject];
-			newIndex += 1;
-			
-			if (newIndex > originalIndex) {
-				newIndex -= 1;
-			}
-		}
-
-		if (oldIndex == newIndex) {
-			return NO;
-		}
-
-		[self.serverList moveItemAtIndex:oldIndex inParent:u toIndex:newIndex inParent:u];
-	}
-	
-	NSInteger n = [self.serverList rowForItem:self.selectedItem];
-	
-	if (n >= 0) {
-		[self.masterController.serverList selectItemAtIndex:n];
-	}
-
-	[self updateNavigationChannelList]; // Update order on drop.
-	
-	return YES;
-}
-
-- (void)memberListViewKeyDown:(NSEvent *)e
-{
-	[self logKeyDown:e];
-}
-
-- (void)serverListKeyDown:(NSEvent *)e
-{
-	[self logKeyDown:e];
+	[mainWindowTextField() keyDown:e];
 }
 
 @end

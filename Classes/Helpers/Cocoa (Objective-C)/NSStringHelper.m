@@ -621,7 +621,7 @@
     NSDictionary *input = @{@"attributedStringFont" : defaultFont};
 
 	return [TVCLogRenderer renderBody:self
-						   controller:[worldController() selectedViewController]
+						   controller:[mainWindow() selectedViewController]
 						   renderType:TVCLogRendererAttributedStringType
 						   properties:input
 						   resultInfo:NULL];

@@ -67,8 +67,8 @@
 - (void)completeNickname:(BOOL)forward
 {
 	/* Global variables. */
-	IRCClient *client = [worldController() selectedClient];
-	IRCChannel *channel = [worldController() selectedChannel];
+	IRCClient *client = [mainWindow() selectedClient];
+	IRCChannel *channel = [mainWindow() selectedChannel];
 	
 	TVCMainWindowTextView *inputTextField = mainWindowTextField();
 
@@ -357,7 +357,7 @@
 		// Prioritize selected channel for channel completion
 		[upperChoices addObject:[channel name]];
 
-		for (IRCChannel *c in [client channels]) {
+		for (IRCChannel *c in [client channelList]) {
 			if ([c isEqual:channel] == NO) {
 				[upperChoices addObject:[c name]];
 			}

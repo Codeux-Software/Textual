@@ -105,8 +105,8 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 @property (nonatomic, assign) ClientIRCv3SupportedCapacities CAPAcceptedCaps;
 @property (nonatomic, assign) ClientIRCv3SupportedCapacities CAPPendingCaps;
 @property (nonatomic, assign) ClientIRCv3SupportedCapacities capacities;
-@property (nonatomic, copy) NSArray *channels;
-@property (nonatomic, copy) NSArray *highlights;
+@property (nonatomic, nweak) NSArray *channelList; // channelList is actually a proxy setter/getter for internal storage.
+@property (nonatomic, copy) NSArray *cachedHighlights;
 @property (nonatomic, strong) IRCChannel *lastSelectedChannel;
 @property (nonatomic, copy) NSString *preAwayNickname; // Nickname before away was set.
 @property (nonatomic, assign) NSTimeInterval lastMessageReceived;			// The time at which the last of any incoming data was received.
@@ -123,6 +123,13 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 
 - (NSMutableDictionary *)dictionaryValue;
 - (NSMutableDictionary *)dictionaryValue:(BOOL)isCloudDictionary;
+
+- (void)prepareForApplicationTermination;
+- (void)prepareForPermanentDestruction;
+
+- (void)preferencesChanged;
+
+- (void)closeDialogs;
 
 - (NSString *)uniqueIdentifier;
 
@@ -141,28 +148,21 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 - (NSInteger)channelCount;
 
 - (void)addChannel:(IRCChannel *)channel;
+- (void)addChannel:(IRCChannel *)channel atPosition:(NSInteger)pos;
 - (void)removeChannel:(IRCChannel *)channel;
+
+- (NSInteger)indexOfFirstPrivateMessage;
+- (NSInteger)indexOfChannel:(IRCChannel *)channel;
 
 - (void)selectFirstChannelInChannelList;
 
 - (void)addHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine;
 
-/* Returns the value of _lastMessageServerTime which is the value of the last message
- received server-time capacity value. If logging is enabled in Textual, then it is 
- possible that the value returned is cached from previous session. If you want the 
- value without any cache, then access -lastMessageServerTime itself. */
-/* The cached value is only asked for one time by this method so it is fast as possible. */
 - (NSTimeInterval)lastMessageServerTimeWithCachedValue;
 
 - (void)reachabilityChanged:(BOOL)reachable;
 
 - (void)autoConnect:(NSInteger)delay afterWakeUp:(BOOL)afterWakeUp;
-
-- (void)prepareForApplicationTermination;
-- (void)prepareForPermanentDestruction;
-
-- (void)closeDialogs;
-- (void)preferencesChanged;
 
 - (BOOL)isReconnecting;
 
@@ -226,8 +226,6 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 
 - (void)sendLine:(NSString *)str;
 - (void)send:(NSString *)str, ...;
-
-- (NSInteger)indexOfFirstPrivateMessage;
 
 - (IRCChannel *)findChannel:(NSString *)name;
 - (IRCChannel *)findChannelOrCreate:(NSString *)name;

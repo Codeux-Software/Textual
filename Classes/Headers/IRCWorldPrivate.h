@@ -5,7 +5,6 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 — 2014 Codeux Software & respective contributors.
      Please see Acknowledgements.pdf for additional information.
 
@@ -38,17 +37,6 @@
 
 #import "TextualApplication.h"
 
-@interface TDChannelSheet : TDCSheetBase
-@property (nonatomic, assign) BOOL newItem;
-@property (nonatomic, copy) NSString *clientID;
-@property (nonatomic, copy) NSString *channelID;
-@property (nonatomic, copy) IRCChannelConfig *config;
-- (void)start;
-
-- (IBAction)onMenuBarItemChanged:(id)sender;
-@end
-
-@interface NSObject (TDChannelSheetDelegate)
-- (void)channelSheetOnOK:(TDChannelSheet *)sender;
-- (void)channelSheetWillClose:(TDChannelSheet *)sender;
+@interface IRCWorld ()
+@property (nonatomic, strong) NSMutableArray *clients;
 @end

@@ -533,7 +533,7 @@
 {
 	TVCMainWindowNegateActionWithAttachedSheet();
 	
-	TVCLogController *currentCtrl = [worldController() selectedViewController];
+	TVCLogController *currentCtrl = [self selectedViewController];
 	
 	[self makeFirstResponder:[currentCtrl webView]];
 }
@@ -943,6 +943,8 @@
 		} else {
 			return (id)self.selectedItem;
 		}
+	} else {
+		return nil;
 	}
 }
 
@@ -974,7 +976,7 @@
 	if ([item isClient]) {
 		[self reloadTreeItem:item];
 		
-		for (IRCChannel *channel in [item channels]) {
+		for (IRCChannel *channel in [item channelList]) {
 			[self reloadTreeItem:channel];
 		}
 	}
@@ -1407,7 +1409,7 @@
 		
 		IRCClient *toClient = (IRCClient *)item;
 		
-		NSArray *ary = [toClient channels];
+		NSArray *ary = [toClient channelList];
 		
 		/* Get list of items below and above insertion point. */
 		NSMutableArray *low = [ary mutableSubarrayWithRange:NSMakeRange(0, index)];
@@ -1535,7 +1537,7 @@
 		IRCClient *u = (IRCClient *)item;
 		
 		/* Some comment that is supposed to tell you whats happening. */
-		NSArray *ary = [u channels];
+		NSArray *ary = [u channelList];
 		
 		NSMutableArray *mutary = [ary mutableCopy];
 		
@@ -1558,7 +1560,7 @@
 		[mutary addObject:i];
 		[mutary addObjectsFromArray:high];
 		
-		[u setChannels:mutary];
+		[u setChannelList:mutary];
 		
 		/* I am pretty tired. */
 		NSArray *childItems = [self.serverList rowsFromParentGroup:u];

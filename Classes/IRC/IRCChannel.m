@@ -801,7 +801,7 @@
 
 - (BOOL)isSelectedChannel
 {
-	return [self isEqual:[worldController() selectedChannel]];
+	return [self isEqual:[mainWindow() selectedChannel]];
 }
 
 - (BOOL)isActive

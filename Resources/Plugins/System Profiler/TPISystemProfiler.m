@@ -96,7 +96,7 @@
 						  commandString:(NSString *)commandString
 						  messageString:(NSString *)messageString
 {
-	IRCChannel *channel = [worldController() selectedChannel];
+	IRCChannel *channel = [mainWindow() selectedChannel];
 	
 	if (channel) {
 		if ([commandString isEqualToString:@"SYSINFO"]) {

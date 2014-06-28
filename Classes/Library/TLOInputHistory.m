@@ -113,7 +113,7 @@
 			for (IRCClient *u in [worldController() clientList]) {
 				[self inputHistoryObjectScopeDidChangeApplyToItem:[u uniqueIdentifier]];
 
-				for (IRCChannel *c in [u channels]) {
+				for (IRCChannel *c in [u channelList]) {
 					[self inputHistoryObjectScopeDidChangeApplyToItem:[c uniqueIdentifier]];
 				}
 			}

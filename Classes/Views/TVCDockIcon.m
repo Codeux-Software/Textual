@@ -44,6 +44,30 @@
 static NSInteger _cachedMessageCount = -1;
 static NSInteger _cachedHighlightCount = -1;
 
++ (void)updateDockIcon
+{
+	NSAssertReturn([TPCPreferences displayDockBadge]);
+	
+	NSInteger messageCount = 0;
+	NSInteger highlightCount = 0;
+	
+	for (IRCClient *u in [worldController() clientList]) {
+		for (IRCChannel *c in [u channelList]) {
+			if (c.config.pushNotifications) {
+				messageCount += c.dockUnreadCount;
+			}
+			
+			highlightCount += c.nicknameHighlightCount;
+		}
+	}
+	
+	if (messageCount == 0 && highlightCount == 0) {
+		[TVCDockIcon drawWithoutCount];
+	} else {
+		[TVCDockIcon drawWithHilightCount:highlightCount messageCount:messageCount];
+	}
+}
+
 + (NSImage *)applicationIcon
 {
     /* THIS IS A SECRET!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

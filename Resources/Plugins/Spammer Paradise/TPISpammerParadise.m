@@ -46,7 +46,7 @@
 						  commandString:(NSString *)commandString
 						  messageString:(NSString *)messageString
 {
-	IRCChannel *channel = [[self worldController] selectedChannel];
+	IRCChannel *channel = [mainWindow() selectedChannel];
 
 	if ([channel isChannel]) {
 		if ([commandString isEqualToString:@"CLONES"]) {

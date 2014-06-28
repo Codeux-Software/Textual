@@ -44,10 +44,12 @@
 @interface IRCWorld (IRCWorldCloudExtension)
 - (NSMutableDictionary *)cloudDictionaryValue;
 
-- (void)addClientToListOfDeletedClients:(NSString *)itemUUID;
-- (void)removeClientFromListOfDeletedClients:(NSString *)itemUUID;
+- (void)destroyClientInCloud:(IRCClient *)client;
 
-- (void)removeClientConfigurationCloudEntry:(NSString *)itemUUID;
+- (void)removeClientFromListOfDeletedClients:(NSString *)clientID;
+- (void)removeClientConfigurationCloudEntry:(NSString *)clientID;
+
+- (void)addClientToListOfDeletedClients:(NSString *)clientID;
 
 - (void)processCloudCientDeletionList:(NSArray *)deletedClients;
 @end

@@ -126,7 +126,7 @@
 	if (NSIsCurrentThreadMain() == NO) {
 		[self userInputCommandInvokedOnClient:client commandString:commandString messageString:messageString];
 	} else {
-		IRCChannel *c = [worldController() selectedChannelOn:client];
+		IRCChannel *c = [mainWindow() selectedChannelOn:client];
 		
 		if ([c isChannel] || [c isPrivateMessage]) {
 			messageString = [messageString trimAndGetFirstToken];

@@ -72,7 +72,7 @@
 
 	NSInteger channelCount = 0;
 	
-	for (IRCChannel *channel in [client channels]) {
+	for (IRCChannel *channel in [client channelList]) {
 		NSAssertReturnLoopContinue([channel isChannel]);
 		
 		/* Add channels that are actual channels. */
