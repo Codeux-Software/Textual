@@ -102,7 +102,7 @@
 	NSMutableArray *ary = [NSMutableArray array];
 
 	/* Invalidate passed information if we are in console. */
-	TVCLogController *controller = [worldController() selectedViewController];
+	TVCLogController *controller = [mainWindow() selectedViewController];
 	
 	if ([controller associatedChannel] == nil) {
 		self.nickname = nil;
@@ -128,7 +128,7 @@
 
 		self.nickname = nil;
 
-		BOOL isIRCop = [[worldController() selectedClient] hasIRCopAccess];
+		BOOL isIRCop = [[mainWindow() selectedClient] hasIRCopAccess];
 
 		NSMenu *memberMenu = [menuController() userControlMenu];
 		

@@ -231,7 +231,7 @@
 + (void)importPostflightCleanup:(NSArray *)changedKeys
 {
 	/* Update selection. */
-	[worldController() setupTree];
+	[mainWindow() setupTree];
 
 	/* Reload preferences. */
 	[TPCPreferences performReloadActionForKeyValues:changedKeys];
@@ -240,7 +240,7 @@
 	[worldController() setIsPopulatingSeeds:NO];
 
 	/* Pop loading screen. */
-	[worldController() reloadLoadingScreen];
+	[mainWindow() reloadLoadingScreen];
 }
 
 #pragma mark -

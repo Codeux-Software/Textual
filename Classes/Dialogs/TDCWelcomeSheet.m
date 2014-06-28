@@ -38,6 +38,17 @@
 
 #import "TextualApplication.h"
 
+@interface TDCWelcomeSheet ()
+@property (nonatomic, nweak) IBOutlet NSButton *autoConnectCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *addChannelButton;
+@property (nonatomic, nweak) IBOutlet NSButton *deleteChannelButton;
+@property (nonatomic, nweak) IBOutlet NSTextField *nicknameField;
+@property (nonatomic, nweak) IBOutlet NSComboBox *serverAddressField;
+@property (nonatomic, nweak) IBOutlet TVCListView *channelTable;
+@property (nonatomic, strong) NSMutableArray *channelList;
+@property (nonatomic, copy) NSDictionary *serverList;
+@end
+
 @implementation TDCWelcomeSheet
 
 #pragma mark -
@@ -94,7 +105,7 @@
 	[self tableViewSelectionIsChanging:nil];
 	[self updateOKButton];
 
-	self.channelTable.textEditingDelegate = self;
+	[self.channelTable setTextEditingDelegate:self];
 	
 	[self.nicknameField setStringValue:[TPCPreferences defaultNickname]];
 	
@@ -108,12 +119,29 @@
 
 - (void)releaseTableViewDataSourceBeforeSheetClosure
 {
-	self.channelTable.delegate = nil;
-	self.channelTable.dataSource = nil;
+	[self.channelTable setDelegate:nil];
+	[self.channelTable setDataSource:nil];
 }
 
 - (void)ok:(id)sender
 {
+	IRCClientConfig *newConfig = [IRCClientConfig new];
+	
+	NSString *userServAddress = [[self.serverAddressField firstTokenStringValue] cleanedServerHostmask];
+	
+	NSString *realhost = [self nameMatchesServerInList:userServAddress];
+	
+	if (NSObjectIsEmpty(realhost)) {
+		realhost = userServAddress;
+	} else {
+		realhost = self.serverList[realhost];
+	}
+	
+	[newConfig setClientName:realhost];
+	[newConfig setServerAddress:realhost];
+	[newConfig setAutoConnect:[self.autoConnectCheck state]];
+	[newConfig setNickname:[self.nicknameField firstTokenStringValue]];
+	
 	NSMutableArray *channels = [NSMutableArray array];
 	
 	for (__strong NSString *s in self.channelList) {
@@ -123,28 +151,13 @@
 			s = [@"#" stringByAppendingString:s];
 		}
 
-		[channels safeAddObjectWithoutDuplication:s];
-	}
-
-	NSString *userServAddress = [self.serverAddressField.firstTokenStringValue cleanedServerHostmask];
-
-	NSString *realhost = [self nameMatchesServerInList:userServAddress];
-
-	if (NSObjectIsEmpty(realhost)) {
-		realhost = userServAddress;
-	} else {
-		realhost = (self.serverList)[realhost];
+		[channels addObjectWithoutDuplication:s];
 	}
 	
-	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-	
-	dic[@"channelList"]			= channels;
-	dic[@"serverAddress"]		= realhost;
-	dic[@"connectOnLaunch"]		= @(self.autoConnectCheck.state);
-	dic[@"identityNickname"]	= self.nicknameField.firstTokenStringValue;
+	[newConfig setChannelList:channels];
 
 	if ([self.delegate respondsToSelector:@selector(welcomeSheet:onOK:)]) {
-		[self.delegate welcomeSheet:self onOK:dic];
+		[self.delegate welcomeSheet:self onOK:newConfig];
 	}
 
 	[super ok:nil];

@@ -46,7 +46,8 @@
 @property (nonatomic, assign) TXUnsignedLongLong bandwidthIn;
 @property (nonatomic, assign) TXUnsignedLongLong bandwidthOut;
 @property (nonatomic, assign) BOOL isPopulatingSeeds;
-@property (nonatomic, nweak) NSArray *clientList;
+@property (nonatomic, nweak) NSArray *clientList; // clientList as a proxy setter/getter for the internal storage.
+@property (nonatomic, assign) NSInteger textSizeMultiplier;
 
 - (void)setupConfiguration;
 
@@ -67,12 +68,11 @@
 - (void)reachabilityChanged:(BOOL)reachable;
 
 - (void)changeTextSize:(BOOL)bigger;
-- (NSInteger)textSizeMultiplier;
 
 - (void)markAllAsRead;
 - (void)markAllAsRead:(IRCClient *)limitedClient;
 
-- (void)markAllScrollbacks;
+- (void)markAllScrollbacks; // Only marks if auto marking of scrollback is enabled.
 
 - (void)reloadTheme;
 - (void)reloadTheme:(BOOL)reloadUserInterface;

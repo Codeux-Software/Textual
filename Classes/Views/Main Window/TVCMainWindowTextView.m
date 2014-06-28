@@ -190,8 +190,8 @@
 		[self.segmentedController setEnabled:(condition1 && condition2)];
 		
 		/* Selection Settings. */
-		IRCClient *u = [worldController() selectedClient];
-		IRCChannel *c = [worldController() selectedChannel];
+		IRCClient *u = [mainWindow() selectedClient];
+		IRCChannel *c = [mainWindow() selectedChannel];
 
 		/* Segment 0 menu. */
 		[self.segmentedController setMenu:[menuController() segmentedControllerMenu] forSegment:0];

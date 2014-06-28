@@ -84,7 +84,7 @@
 		if ([messageString isChannelName:client]) {
 			matchedChannel = [client findChannel:messageString];
 		} else {
-			matchedChannel = [worldController() selectedChannel];
+			matchedChannel = [mainWindow() selectedChannel];
 		}
 		
 		if (matchedChannel) {
@@ -280,14 +280,14 @@
 
 - (void)handleIRCSideDisconnect:(IRCClient *)client
 {
-	for (IRCChannel *c in [client channels]) {
+	for (IRCChannel *c in [client channelList]) {
 		NSAssertReturnLoopContinue( [c isActive]);
         NSAssertReturnLoopContinue([[c name] hasPrefix:@"~#"] == NO);
 		
         [c deactivate];
 	}
 
-	[worldController() reloadTreeGroup:client];
+	[mainWindow() reloadTreeGroup:client];
 }
 
 @end

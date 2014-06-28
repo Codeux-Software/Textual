@@ -168,8 +168,7 @@
 	NSAssertReturn(self.applicationIsTerminating == NO);
 	
 	[TVCDockIcon resetCachedCount];
-	
-	[worldController() updateIcon];
+	[TVCDockIcon updateDockIcon];
 	
 	[mainWindowMemberList() reloadAllUserInterfaceElements];
 		
@@ -191,13 +190,13 @@
 {
 	NSAssertReturn(self.applicationIsTerminating == NO);
 
-	id sel = [worldController() selectedItem];
+	id sel = [mainWindow() selectedItem];
 
 	if (sel) {
 		[sel resetState];
 	}
 
-	[worldController() updateIcon];
+	[TVCDockIcon updateDockIcon];
 }
 
 - (void)applicationWillResignActive:(NSNotification *)notification

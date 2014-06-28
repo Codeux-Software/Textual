@@ -56,19 +56,19 @@
 
 - (void)releaseTableViewDataSourceBeforeSheetClosure
 {
-	[_highlightListTable setDelegate:nil];
-	[_highlightListTable setDataSource:nil];
+	[self.highlightListTable setDelegate:nil];
+	[self.highlightListTable setDataSource:nil];
 }
 
 - (void)show
 {
-	IRCClient *currentNetwork = [worldController() findClientById:_clientID];
+	IRCClient *currentNetwork = [worldController() findClientById:self.clientID];
 
 	NSString *network = [currentNetwork altNetworkName];
 
-	[_headerTitleField setStringValue:[NSString stringWithFormat:[_headerTitleField stringValue], network]];
+	[self.headerTitleField setStringValue:[NSString stringWithFormat:[self.headerTitleField stringValue], network]];
 
-	[_highlightListTable setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
+	[self.highlightListTable setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
 	
     [self startSheet];
 	[self reloadTable];
@@ -76,9 +76,9 @@
 
 - (void)onClearList:(id)sender
 {
-	IRCClient *currentNetwork = [worldController() findClientById:_clientID];
+	IRCClient *currentNetwork = [worldController() findClientById:self.clientID];
 	
-	[currentNetwork setHighlights:@[]];
+	[currentNetwork setCachedHighlights:@[]];
 
     [self reloadTable];
 }
@@ -88,27 +88,27 @@
 
 - (void)reloadTable
 {
-	IRCClient *currentNetwork = [worldController() findClientById:_clientID];
+	IRCClient *currentNetwork = [worldController() findClientById:self.clientID];
 
-	[self setHighlightList:[currentNetwork highlights]];
+	[self setHighlightList:[currentNetwork cachedHighlights]];
 	
-    [_highlightListTable reloadData];
+    [self.highlightListTable reloadData];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-	return [_highlightList count];
+	return [self.highlightList count];
 }
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
 {
 	/* See the addHighlight… in IRCClieht.m for a description of the format
 	 of highlight entries for a client. */
-	NSObjectIsEmptyAssertReturn(_highlightList, _rowHeightMultiplier);
+	NSObjectIsEmptyAssertReturn(self.highlightList, _rowHeightMultiplier);
 	
 	NSRect columnRect = [tableView rectOfColumn:1];
 	
-	NSArray *data = [_highlightList objectAtIndex:row];
+	NSArray *data = [self.highlightList objectAtIndex:row];
 
 	NSAttributedString *baseString = [data objectAtIndex:2];
 
@@ -121,7 +121,7 @@
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	NSArray *item = _highlightList[row];
+	NSArray *item = self.highlightList[row];
 	
     if ([[column identifier] isEqualToString:@"chan"]) {
 		return item[0];

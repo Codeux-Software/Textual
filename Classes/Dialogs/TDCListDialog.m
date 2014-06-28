@@ -40,6 +40,14 @@
 
 @interface TDCListDialog ()
 @property (nonatomic, assign) BOOL waitingForReload;
+@property (nonatomic, nweak) IBOutlet NSButton *updateButton;
+@property (nonatomic, nweak) IBOutlet NSSearchField *searchField;
+@property (nonatomic, nweak) IBOutlet NSTextField *networkNameField;
+@property (nonatomic, nweak) IBOutlet TVCListView *channelListTable;
+@property (nonatomic, strong) NSMutableArray *unfilteredList;
+@property (nonatomic, strong) NSMutableArray *filteredList;
+@property (nonatomic, assign) NSComparisonResult sortOrder;
+@property (nonatomic, assign) NSInteger sortKey;
 @end
 
 @implementation TDCListDialog
@@ -67,7 +75,9 @@
 
 - (void)show
 {
-    [self.networkNameField setStringValue:TXTLS(@"TDCListDialog[1000]", self.client.altNetworkName)];
+	IRCClient *client = [worldController() findClientById:self.clientID];
+
+    [self.networkNameField setStringValue:TXTLS(@"TDCListDialog[1000]", [client altNetworkName])];
 
 	[self.window restoreWindowStateForClass:self.class];
 	
@@ -76,13 +86,15 @@
 
 - (void)close
 {
+	[NSObject cancelPreviousPerformRequestsWithTarget:self];
+
 	[self.window close];
 }
 
 - (void)releaseTableViewDataSourceBeforeClosure
 {
-	self.channelListTable.delegate = nil;
-	self.channelListTable.dataSource = nil;
+	[self.channelListTable setDelegate:nil];
+	[self.channelListTable setDataSource:nil];
 }
 
 - (void)clear
@@ -97,19 +109,19 @@
 - (void)addChannel:(NSString *)channel count:(NSInteger)count topic:(NSString *)topic
 {
 	if ([channel isChannelName]) {
-		NSArray *item = @[channel, @(count), topic, [topic attributedStringWithIRCFormatting:TXDefaultListViewControllerFont]];
+		NSArray *item = @[channel, @(count), topic, [topic attributedStringWithIRCFormatting:TXPreferredGlobalTableViewFont]];
 
-		NSString *filter = self.searchField.stringValue;
+		NSString *filter = [self.searchField stringValue];
 
 		if (NSObjectIsNotEmpty(filter)) {
-			if (PointerIsEmpty(self.filteredList)) {
+			if (self.filteredList == nil) {
 				self.filteredList = [NSMutableArray new];
 			}
 
 			NSInteger tr = [topic stringPositionIgnoringCase:filter];
 			NSInteger cr = [channel stringPositionIgnoringCase:filter];
 
-			if (tr >= 0 || cr >= 0) {
+			if (tr > -1 || cr > -1) {
 				[self sortedInsert:item inArray:self.filteredList];
 			}
 		}
@@ -121,7 +133,7 @@
          large as freenode with 12,000 channels. This is much better than 
          a reload for each. */
         
-        if (self.unfilteredList.count < 200) {
+        if ([self.unfilteredList count] < 200) {
             [self reloadTable];
         } else {
             if (self.waitingForReload == NO) {
@@ -139,10 +151,10 @@
 
 	NSString *titleCount;
 
-	NSString *count1 = TXFormattedNumber(self.unfilteredList.count);
-	NSString *count2 = TXFormattedNumber(self.filteredList.count);
+	NSString *count1 = TXFormattedNumber([self.unfilteredList count]);
+	NSString *count2 = TXFormattedNumber([self.filteredList count]);
 
-	if (NSObjectIsNotEmpty(self.searchField.stringValue) && NSDissimilarObjects(self.unfilteredList.count, self.filteredList.count)) {
+	if (NSObjectIsNotEmpty([self.searchField stringValue]) && [count1 isEqual:count2] == NO) {
 		titleCount = TXTLS(@"TDCListDialog[1003]", count1, count2);
 	} else {
 		titleCount = TXTLS(@"TDCListDialog[1002]", count1);

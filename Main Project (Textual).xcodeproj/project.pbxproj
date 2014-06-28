@@ -890,6 +890,8 @@
 		4CD63F3015C59C5B00E8DE92 /* NSScreenHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5A6DC015C39BD600143574 /* NSScreenHelper.m */; };
 		4CDB24A118CAB914007EF6DE /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
 		4CDB24A218CAB914007EF6DE /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
+		4CE77C7D195E7A8A000DA30D /* IRCWorldPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE77C7C195E7A8A000DA30D /* IRCWorldPrivate.h */; };
+		4CE77C7E195E7A8A000DA30D /* IRCWorldPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE77C7C195E7A8A000DA30D /* IRCWorldPrivate.h */; };
 		4CEA09BE1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CEA09C41875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */; };
 		4CEA09C51875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */; };
@@ -1537,6 +1539,7 @@
 		4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCProgressInformationSheet.m; path = Dialogs/TDCProgressInformationSheet.m; sourceTree = "<group>"; };
 		4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogTransferController.m; path = "Dialogs/File Transfers/TDCFileTransferDialogTransferController.m"; sourceTree = "<group>"; };
 		4CDB24A018CAB914007EF6DE /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HockeySDK.framework; path = Frameworks/HockeySDK.framework; sourceTree = "<group>"; };
+		4CE77C7C195E7A8A000DA30D /* IRCWorldPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCWorldPrivate.h; sourceTree = "<group>"; };
 		4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogRemoteAddress.h; sourceTree = "<group>"; };
 		4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogRemoteAddress.m; path = "Dialogs/File Transfers/TDCFileTransferDialogRemoteAddress.m"; sourceTree = "<group>"; };
 		4CF09D16195D4AA100A29486 /* IRCWorldCloudExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCWorldCloudExtension.m; sourceTree = "<group>"; };
@@ -2110,6 +2113,7 @@
 				4C8AF543158E99520026668C /* IRCUser.h */,
 				4C8AF544158E99520026668C /* IRCWorld.h */,
 				4CF09D19195D4AAF00A29486 /* IRCWorldCloudExtension.h */,
+				4CE77C7C195E7A8A000DA30D /* IRCWorldPrivate.h */,
 				4C8AF546158E99520026668C /* NSArrayHelper.h */,
 				4C69F4A518676CCE00E6FCEC /* NSBundleHelper.h */,
 				4C0C720C1742C444000F82C4 /* NSByteCountFormatterHelper.h */,
@@ -2322,8 +2326,6 @@
 		4C8AF5EF158E99520026668C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				4C8AF5F0158E99520026668C /* Channel View */,
-				4C8AF5F9158E99520026668C /* Input Text Field */,
 				4C8AF6AE194B84050039E7E2 /* Main Window */,
 				4C8AF600158E99520026668C /* TVCDockIcon.m */,
 				4C8AF601158E99520026668C /* TVCInputPromptDialog.m */,
@@ -2383,13 +2385,15 @@
 		4C8AF6AE194B84050039E7E2 /* Main Window */ = {
 			isa = PBXGroup;
 			children = (
+				4C8AF5F0158E99520026668C /* Channel View */,
+				4C8AF5F9158E99520026668C /* Input Text Field */,
 				4C8AF5FD158E99520026668C /* Server List */,
-				4C8AF606158E99520026668C /* User List */,
 				4CA110E61955AAA10062EC4E /* TVCMainWindow.m */,
 				4CA110E71955AAA10062EC4E /* TVCMainWindowLoadingScreen.m */,
 				4CA110E81955AAA10062EC4E /* TVCMainWindowSegmentedControl.m */,
 				4CA110E91955AAA10062EC4E /* TVCMainWindowSplitView.m */,
 				4CA110EA1955AAA10062EC4E /* TVCMainWindowTextView.m */,
+				4C8AF606158E99520026668C /* User List */,
 			);
 			name = "Main Window";
 			sourceTree = "<group>";
@@ -2575,6 +2579,8 @@
 				4C8AF5C1158E99520026668C /* IRCSendingMessage.m */,
 				4C8AF5C2158E99520026668C /* IRCTreeItem.m */,
 				4C8AF5C3158E99520026668C /* IRCUser.m */,
+				4C8AF5C4158E99520026668C /* IRCWorld.m */,
+				4CF09D16195D4AA100A29486 /* IRCWorldCloudExtension.m */,
 			);
 			name = IRC;
 			sourceTree = "<group>";
@@ -2776,8 +2782,6 @@
 			children = (
 				4C8AF5B8158E99520026668C /* IRCChannelMode.m */,
 				4C8AF5B9158E99520026668C /* IRCClient.m */,
-				4C8AF5C4158E99520026668C /* IRCWorld.m */,
-				4CF09D16195D4AA100A29486 /* IRCWorldCloudExtension.m */,
 			);
 			name = IRC;
 			sourceTree = "<group>";
@@ -2866,6 +2870,7 @@
 				4C5BA42816F1302F00A96CA2 /* TDCServerSheet.h in Headers */,
 				4C5BA42916F1302F00A96CA2 /* TDCSheetBase.h in Headers */,
 				4C5BA42A16F1302F00A96CA2 /* TDCTopicSheet.h in Headers */,
+				4CE77C7E195E7A8A000DA30D /* IRCWorldPrivate.h in Headers */,
 				4C5BA42B16F1302F00A96CA2 /* TDCWelcomeSheet.h in Headers */,
 				4C5BA42C16F1302F00A96CA2 /* TextualApplication.h in Headers */,
 				4C5BA42D16F1302F00A96CA2 /* THOPluginItem.h in Headers */,
@@ -3030,6 +3035,7 @@
 				4C8AF65B158E99520026668C /* TDCServerSheet.h in Headers */,
 				4C8AF65C158E99520026668C /* TDCSheetBase.h in Headers */,
 				4C8AF65D158E99520026668C /* TDCTopicSheet.h in Headers */,
+				4CE77C7D195E7A8A000DA30D /* IRCWorldPrivate.h in Headers */,
 				4C8AF65E158E99520026668C /* TDCWelcomeSheet.h in Headers */,
 				4C8AF65F158E99520026668C /* TextualApplication.h in Headers */,
 				4C8AF660158E99520026668C /* THOPluginItem.h in Headers */,
