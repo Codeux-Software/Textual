@@ -114,14 +114,23 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 @property (nonatomic, copy) NSString *serverRedirectAddressTemporaryStore; // Temporary store for RPL_BOUNCE (010) redirects.
 @property (nonatomic, assign) NSInteger serverRedirectPortTemporaryStore; // Temporary store for RPL_BOUNCE (010) redirects.
 
+// seed can be either an NSDictionary representation of an IRCClientConfig instance or an IRCClientConfig instance itself.
+// Supplying an empty NSDictionary will result in the client using default values.
 - (void)setup:(id)seed;
 
 - (void)updateConfig:(IRCClientConfig *)seed;
 - (void)updateConfig:(IRCClientConfig *)seed fromTheCloud:(BOOL)isCloudUpdate withSelectionUpdate:(BOOL)reloadSelection;
 
-- (IRCClientConfig *)storedConfig;
+// Use -copyOfStoredConfig to return the configuration that DOES NOT contain any private messages.
+// It is also a COPY, not the one used internally, which means it can be passed around and modified without
+// fear that it will have any negative effects on the IRC client itself.
+// Accessing -config property directly will return the current configuration used internally by the client.
+// This configuration will include any associated private messages.
+- (IRCClientConfig *)copyOfStoredConfig;
 
-- (NSMutableDictionary *)dictionaryValue;
+// -dictionaryValue may return a value that contains private messages. This depends on whether
+// end user has configured Textual to remember the state of queries between saves.
+- (NSMutableDictionary *)dictionaryValue; // Values to be used for saving to NSUserDefaults and no other purposes.
 - (NSMutableDictionary *)dictionaryValue:(BOOL)isCloudDictionary;
 
 - (void)prepareForApplicationTermination;
@@ -133,7 +142,7 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 
 - (NSString *)uniqueIdentifier;
 
-- (NSString *)networkName; // Only returns the actual network name.
+- (NSString *)networkName; // Only returns the actual network name or nil.
 - (NSString *)altNetworkName; // Will return the configured name if the actual name is not available.
 - (NSString *)networkAddress;
 
@@ -204,7 +213,7 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 - (void)partUnlistedChannel:(NSString *)channel withComment:(NSString *)comment;
 
 - (void)sendWhois:(NSString *)nick;
-- (void)changeNick:(NSString *)newNick;
+- (void)changeNickname:(NSString *)newNick;
 - (void)kick:(IRCChannel *)channel target:(NSString *)nick;
 - (void)sendCTCPQuery:(NSString *)target command:(NSString *)command text:(NSString *)text;
 - (void)sendCTCPReply:(NSString *)target command:(NSString *)command text:(NSString *)text;
@@ -218,15 +227,11 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 - (void)createChanBanExceptionListDialog;
 - (void)createChanInviteExceptionListDialog;
 
-- (void)sendCommand:(id)str;
-- (void)sendCommand:(id)str completeTarget:(BOOL)completeTarget target:(NSString *)targetChannelName;
-- (void)sendText:(NSAttributedString *)str command:(NSString *)command channel:(IRCChannel *)channel;
-- (void)sendText:(NSAttributedString *)str command:(NSString *)command channel:(IRCChannel *)channel withEncryption:(BOOL)encryptChat;
-- (void)inputText:(id)str command:(NSString *)command;
-
-- (void)sendLine:(NSString *)str;
-- (void)send:(NSString *)str, ...;
-
+// Creating a channel will require Textual to create a new WebView
+// Invoking this method on anything other than the main thread will
+// crash Textual because WebView requires all operations to occur on
+// the main thread. If you already are certain that the channel will
+// already exist, then call from whatever thread you want.
 - (IRCChannel *)findChannel:(NSString *)name;
 - (IRCChannel *)findChannelOrCreate:(NSString *)name;
 - (IRCChannel *)findChannelOrCreate:(NSString *)name isPrivateMessage:(BOOL)isPM;
@@ -234,38 +239,75 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 - (NSData *)convertToCommonEncoding:(NSString *)data;
 - (NSString *)convertFromCommonEncoding:(NSData *)data;
 
-- (NSString *)formatNick:(NSString *)nick channel:(IRCChannel *)channel;
-- (NSString *)formatNick:(NSString *)nick channel:(IRCChannel *)channel formatOverride:(NSString *)forcedFormat;
-
-- (void)sendPrivmsgToSelectedChannel:(NSString *)message;
+- (NSString *)formatNickname:(NSString *)nick channel:(IRCChannel *)channel;
+- (NSString *)formatNickname:(NSString *)nick channel:(IRCChannel *)channel formatOverride:(NSString *)forcedFormat;
 
 - (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype;
-- (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nick:(NSString *)nick text:(NSString *)text;
-- (BOOL)notifyText:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nick:(NSString *)nick text:(NSString *)text;
+- (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nickname:(NSString *)nick text:(NSString *)text;
+- (BOOL)notifyText:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nickname:(NSString *)nick text:(NSString *)text;
 
 - (void)notifyFileTransfer:(TXNotificationType)type nickname:(NSString *)nickname filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize;
 
-- (void)populateISONTrackedUsersList:(NSMutableArray *)ignores;
+- (void)populateISONTrackedUsersList:(NSArray *)ignores;
+
+#pragma mark -
+
+/* WARNING:
+ 
+	WebKit which Textual uses for rendering messages will crash if it is not
+	interacted with on the main thread. Therefore, always make sure you send
+	messages on the main thread. Otherwise, happy crashing. :)
+ */
+
+- (void)sendCommand:(id)str;
+- (void)sendCommand:(id)str completeTarget:(BOOL)completeTarget target:(NSString *)targetChannelName;
+- (void)sendText:(NSAttributedString *)str command:(NSString *)command channel:(IRCChannel *)channel;
+- (void)sendText:(NSAttributedString *)str command:(NSString *)command channel:(IRCChannel *)channel withEncryption:(BOOL)encryptChat;
+- (void)inputText:(id)str command:(NSString *)command; // This is call invoked by the input text field. There is no reason to call directly.
+
+- (void)sendLine:(NSString *)str;
+- (void)send:(NSString *)str, ...;
+
+- (void)sendPrivmsgToSelectedChannel:(NSString *)message;
 
 #pragma mark -
 
 /* ------ */
+/* Printing to the WebView for each channel/server in Textual is actually very complicated and
+ over the years there have been a lot of design changes. The current design works like the 
+ following:
+ 
+ 1. print… method is called with all associated information. 
+ 2. Once called, the code behind it parses the input and places all relevant information inside
+ a copy of TVCLogLine which is then passed around. 
+ 3. Once the instance of TVCLogLine is created, it is handed down to the associated TVCLogController
+ for either the server console or the actual channel view. TVCLogController will then attach the 
+ copy of TVCLogLine to a background concurrent operation queue. Each server is assigned its very 
+ own concurrent queue. On the queue, each print operation occurs. This is done to allow all work 
+ to be processed in the background without locking up the main thread. It is also designed so 
+ incoming spam on one server does not interfere with the operations of another server. Each 
+ printing operation is handled on a first come, first served basis. 
+ 4. When an individual print operation is fired, the renderring of each message to HTML occurs. 
+ This is the heaviest part of the printing operation as it requires extensive text based analysis
+ of the actual incoming message. Once completed, the actual HTML is handed off back to the main
+ thread where WebKit handles all the drawing operations. At that point it is out of the hands of
+ Textual and will be displayed to the user as soon as WebKit renders it. */
 /* All print calls point to this single one: */
-- (void)print:(id)chan											// An IRCChannel or nil for the console.
-		 type:(TVCLogLineType)type								// The line type. See TVCLogLine.h
-		 nick:(NSString *)nick									// The nickname associated with the print.
-		 text:(NSString *)text									// The actual text being printed.
-	encrypted:(BOOL)isEncrypted									// Is the text encrypted?
-   receivedAt:(NSDate *)receivedAt								// The time the message was received at for the timestamp.
-	  command:(NSString *)command								// Can be the actual command (PRIVMSG, NOTICE, etc.) or a raw numeric (001, 002, etc.) — … -100 = internal debug command.
-	  message:(IRCMessage *)rawMessage							// Actual IRCMessage to associate with the print job. 
-completionBlock:(void(^)(BOOL highlighted))completionBlock;		// A block to call when the actual print occurs.
+- (void)printToWebView:(id)channel										// An IRCChannel or nil for the console.
+				  type:(TVCLogLineType)type								// The time the message was received at for the timestamp.
+			   command:(NSString *)command								// The line type. See TVCLogLine.h
+			  nickname:(NSString *)nickname								// The nickname associated with the print.
+		   messageBody:(NSString *)messageBody							// The actual text being printed.
+		   isEncrypted:(BOOL)isEncrypted								// Is the text encrypted? This flag DOES NOT encrypt it. It informs the WebView if it was in fact encrypted so it can be treated with more privacy.
+			receivedAt:(NSDate *)receivedAt								// Can be the actual command (PRIVMSG, NOTICE, etc.) or a raw numeric (001, 002, etc.) — … TVCLogLineDefaultRawCommandValue = internal debug command.
+	  referenceMessage:(IRCMessage *)referenceMessage					// Actual IRCMessage to associate with the print job.
+	   completionBlock:(void(^)(BOOL highlighted))completionBlock;		// A block to call when the actual print occurs.
 /* ------ */
 
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text command:(NSString *)command;
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt command:(NSString *)command;
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command;
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command message:(IRCMessage *)rawMessage;
+- (void)print:(id)chan type:(TVCLogLineType)type nickname:(NSString *)nickname messageBody:(NSString *)messageBody command:(NSString *)command;
+- (void)print:(id)chan type:(TVCLogLineType)type nickname:(NSString *)nickname messageBody:(NSString *)messageBody receivedAt:(NSDate *)receivedAt command:(NSString *)command;
+- (void)print:(id)chan type:(TVCLogLineType)type nickname:(NSString *)nickname messageBody:(NSString *)messageBody isEncrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command;
+- (void)print:(id)chan type:(TVCLogLineType)type nickname:(NSString *)nickname messageBody:(NSString *)messageBody isEncrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command referenceMessage:(IRCMessage *)referenceMessage;
 
 - (void)printReply:(IRCMessage *)m;
 - (void)printUnknownReply:(IRCMessage *)m;
@@ -283,4 +325,15 @@ completionBlock:(void(^)(BOOL highlighted))completionBlock;		// A block to call 
 
 - (void)printErrorReply:(IRCMessage *)m;
 - (void)printErrorReply:(IRCMessage *)m channel:(IRCChannel *)channel;
+
+/* ******************************** Deprecated ********************************  */
+/* Use of these methods will throw an exception.								 */
+/* ****************************************************************************  */
+
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command message:(IRCMessage *)rawMessage completionBlock:(void(^)(BOOL highlighted))completionBlock TEXTUAL_DEPRECATED;
+
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text command:(NSString *)command TEXTUAL_DEPRECATED;
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt command:(NSString *)command TEXTUAL_DEPRECATED;
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command TEXTUAL_DEPRECATED;
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command message:(IRCMessage *)rawMessage TEXTUAL_DEPRECATED;
 @end

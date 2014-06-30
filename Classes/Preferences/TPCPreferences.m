@@ -276,6 +276,11 @@
 	return [RZUserDefaults() boolForKey:@"LogTranscript"];
 }
 
++ (BOOL)logToDiskIsEnabled
+{
+	return ([RZUserDefaults() boolForKey:@"LogTranscript"] && [TPCPathInfo logFileFolderLocation]);
+}
+
 + (BOOL)openBrowserInBackground
 {
 	return [RZUserDefaults() boolForKey:@"OpenClickedLinksInBackgroundBrowser"];

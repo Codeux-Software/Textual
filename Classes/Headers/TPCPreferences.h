@@ -114,7 +114,8 @@ typedef enum TXFileTransferIPAddressDetectionMethod : NSInteger {
 
 + (TVCMainWindowTextViewFontSize)mainTextViewFontSize;
 
-+ (BOOL)logToDisk;
++ (BOOL)logToDisk; // Checks whether checkbox for logging is checked.
++ (BOOL)logToDiskIsEnabled; // Checks whether checkbox is checked and whether an actual path is configured.
 
 + (BOOL)postNotificationsWhileInFocus;
 

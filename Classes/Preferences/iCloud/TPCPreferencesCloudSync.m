@@ -136,7 +136,7 @@
 		NSURL *ucurl = [RZFileManager() URLForUbiquityContainerIdentifier:nil];
 		
 		if (ucurl) {
-			self.ubiquitousContainerURL = [ucurl copy];
+			self.ubiquitousContainerURL = ucurl;
 		} else {
 			self.ubiquitousContainerURL = nil;
 			

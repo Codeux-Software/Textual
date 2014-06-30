@@ -89,15 +89,15 @@
 /* These are all considered private. */
 
 @property (nonatomic, strong) IRCConnection *socket;
-@property (nonatomic, assign) BOOL inFirstISONRun;
+@property (nonatomic, assign) BOOL isInvokingISONCommandForFirstTime;
 @property (nonatomic, assign) BOOL sendLagcheckReplyToChannel;
 @property (nonatomic, assign) BOOL timeoutWarningShownToUser;
-@property (nonatomic, assign) NSInteger tryingNickNumber;
+@property (nonatomic, assign) NSInteger tryingNicknameNumber;
 @property (nonatomic, assign) NSUInteger CAPPausedStatus;
 @property (nonatomic, assign) NSTimeInterval lastLagCheck;
-@property (nonatomic, strong) NSString *myHost;
-@property (nonatomic, strong) NSString *myNick;
-@property (nonatomic, strong) NSString *sentNick;
+@property (nonatomic, strong) NSString *cachedLocalHostmask;
+@property (nonatomic, strong) NSString *cachedLocalNickname;
+@property (nonatomic, strong) NSString *tryingNicknameSentNickname;
 @property (nonatomic, strong) TLOFileLogger *logFile;
 @property (nonatomic, strong) TLOTimer *isonTimer;
 @property (nonatomic, strong) TLOTimer *pongTimer;
@@ -105,6 +105,7 @@
 @property (nonatomic, strong) TLOTimer *retryTimer;
 @property (nonatomic, strong) TLOTimer *trialPeriodTimer;
 @property (nonatomic, strong) TLOTimer *commandQueueTimer;
+@property (nonatomic, strong) NSMutableArray *channels;
 @property (nonatomic, strong) NSMutableArray *commandQueue;
 @property (nonatomic, strong) NSMutableDictionary *trackedUsers;
 @end
@@ -118,50 +119,112 @@
 {
 	if ((self = [super init]))
 	{
+		/* ---- */
 		self.isupport = [IRCISupportInfo new];
-
-		self.channels			= [NSMutableArray new];
-		self.highlights			= [NSMutableArray new];
-		self.commandQueue		= [NSMutableArray new];
-		self.CAPAcceptedCaps	= [NSMutableArray new];
-		self.CAPPendingCaps		= [NSMutableArray new];
-
-		self.trackedUsers = [NSMutableDictionary new];
-
-		self.reconnectTimer				= [TLOTimer new];
-		self.reconnectTimer.delegate	= self;
-		self.reconnectTimer.reqeatTimer = NO;
-		self.reconnectTimer.selector	= @selector(onReconnectTimer:);
-
-		self.retryTimer				= [TLOTimer new];
-		self.retryTimer.delegate	= self;
-		self.retryTimer.reqeatTimer	= NO;
-		self.retryTimer.selector	= @selector(onRetryTimer:);
-
+		
+		/* ---- */
+		self.connectType = IRCClientConnectNormalMode;
+		self.disconnectType = IRCClientDisconnectNormalMode;
+		
+		/* ---- */
+		self.inUserInvokedJoinRequest = NO;
+		self.inUserInvokedModeRequest = NO;
+		self.inUserInvokedNamesRequest = NO;
+		self.inUserInvokedWatchRequest = NO;
+		self.inUserInvokedWhoRequest = NO;
+		self.inUserInvokedWhowasRequest = NO;
+		
+		/* ---- */
+		self.isAutojoined = NO;
+		self.isAway = NO;
+		self.isConnected = NO;
+		self.isConnecting = NO;
+		self.isIdentifiedWithNickServ = NO;
+		self.isInvokingISONCommandForFirstTime = NO;
+		self.isLoggedIn = NO;
+		self.isQuitting = NO;
+		self.isWaitingForNickServ = NO;
+		self.isZNCBouncerConnection = NO;
+		
+		/* ---- */
+		self.autojoinInProgress = NO;
+		self.rawModeEnabled = NO;
+		self.reconnectEnabled = NO;
+		self.serverHasNickServ = NO;
+		self.sendLagcheckReplyToChannel = NO;
+		self.timeoutWarningShownToUser = NO;
+		
+		/* ---- */
+		self.cachedHighlights = @[];
+		
+		/* ---- */
+		self.lastSelectedChannel = nil;
+		
+		/* ---- */
+		self.lastLagCheck = 0;
+		
+		/* ---- */
+		self.cachedLocalHostmask = nil;
+		self.cachedLocalNickname = nil;
+		
+		/* ---- */
+		self.tryingNicknameSentNickname = nil;
+		
+		/* ---- */
+		self.channels = [NSMutableArray array];
+		self.commandQueue = [NSMutableArray array];
+		
+		/* ---- */
+		self.trackedUsers = [NSMutableDictionary dictionary];
+		
+		/* ---- */
+		self.preAwayNickname = nil;
+		
+		/* ---- */
+		self.lastMessageReceived = 0;
+		self.lastMessageServerTime = 0;
+		
+		/* ---- */
+		self.serverRedirectAddressTemporaryStore = nil;
+		self.serverRedirectPortTemporaryStore = 0;
+		
+		/* ---- */
+		self.reconnectTimer					= [TLOTimer new];
+		self.reconnectTimer.delegate		= self;
+		self.reconnectTimer.reqeatTimer		= NO;
+		self.reconnectTimer.selector		= @selector(onReconnectTimer:);
+		
+		/* ---- */
+		self.retryTimer						= [TLOTimer new];
+		self.retryTimer.delegate			= self;
+		self.retryTimer.reqeatTimer			= NO;
+		self.retryTimer.selector			= @selector(onRetryTimer:);
+		
+		/* ---- */
 		self.commandQueueTimer				= [TLOTimer new];
 		self.commandQueueTimer.delegate		= self;
 		self.commandQueueTimer.reqeatTimer	= NO;
 		self.commandQueueTimer.selector		= @selector(onCommandQueueTimer:);
-
-		self.pongTimer				= [TLOTimer new];
-		self.pongTimer.delegate		= self;
-		self.pongTimer.reqeatTimer	= YES;
-		self.pongTimer.selector		= @selector(onPongTimer:);
-
-		self.isonTimer				= [TLOTimer new];
-		self.isonTimer.delegate		= self;
-		self.isonTimer.reqeatTimer	= YES;
-		self.isonTimer.selector		= @selector(onISONTimer:);
-
+		
+		/* ---- */
+		self.pongTimer						= [TLOTimer new];
+		self.pongTimer.delegate				= self;
+		self.pongTimer.reqeatTimer			= YES;
+		self.pongTimer.selector				= @selector(onPongTimer:);
+		
+		/* ---- */
+		self.isonTimer						= [TLOTimer new];
+		self.isonTimer.delegate				= self;
+		self.isonTimer.reqeatTimer			= YES;
+		self.isonTimer.selector				= @selector(onISONTimer:);
+		
+		/* ---- */
 #ifdef TEXTUAL_TRIAL_BINARY
 		self.trialPeriodTimer				= [TLOTimer new];
 		self.trialPeriodTimer.delegate		= self;
 		self.trialPeriodTimer.reqeatTimer	= NO;
 		self.trialPeriodTimer.selector		= @selector(onTrialPeriodTimer:);
 #endif
-
-		self.lastMessageServerTime = 0;
-		self.lastMessageReceived = 0;
 	}
 	
 	return self;
@@ -174,28 +237,24 @@
 	[self.retryTimer stop];
 	[self.reconnectTimer stop];
 	[self.commandQueueTimer stop];
-
-	[self.socket close];
-
+	
 #ifdef TEXTUAL_TRIAL_BINARY
 	[self.trialPeriodTimer stop];
 #endif
+
+	[self.socket close];
 }
 
 - (void)setup:(id)seed
 {
-	if (PointerIsNotEmpty(self.config)) {
-		return;
-	}
+	TXLockMethodForOneTimeFire()
 	
 	if ([seed isKindOfClass:[NSDictionary class]]) {
-		NSObjectIsEmptyAssert(seed);
-		
 		self.config = [[IRCClientConfig alloc] initWithDictionary:seed];
 	} else if ([seed isKindOfClass:[IRCClientConfig class]]) {
-		self.config = [seed mutableCopy];
+		self.config = seed; // Setter will copy.
 	} else {
-		return;
+		NSAssert(NO, @"Bad configuration type.");
 	}
 
 	[self resetAllPropertyValues];
@@ -213,33 +272,23 @@
 
 - (void)updateConfig:(IRCClientConfig *)seed fromTheCloud:(BOOL)isCloudUpdate withSelectionUpdate:(BOOL)reloadSelection
 {
-	PointerIsEmptyAssert(seed);
-	
 	/* Ignore if we have equality. */
-	if ([self.config isEqualToClientConfiguration:seed]) {
-		return;
-	}
+	NSAssertReturn([seed isEqualToClientConfiguration:_config] == NO);
 	
-	BOOL ignoreListChanged = (NSObjectsAreEqual(self.config.ignoreList, seed.ignoreList) == NO);
+	/* Did the ignore list change at all? */
+	BOOL ignoreListIsSame = NSObjectsAreEqual(self.config.ignoreList, seed.ignoreList);
 	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	/* It is important to know this value changed before seed update. */
-	BOOL syncToCloudChanged = NSDissimilarObjects(self.config.excludedFromCloudSyncing, seed.excludedFromCloudSyncing);
+	BOOL syncToCloudIsSame = (self.config.excludedFromCloudSyncing == seed.excludedFromCloudSyncing);
 	
 	/* Temporary store. */
-	NSData *identitySSLCertificateInformation;
-	
-	if (isCloudUpdate) {
-		/* The identity certificate cannot be stored in the cloud since it requires to
-		 a reference to a local resource. Therefore, when updating from the cloud, we
-		 take the value stored locally, cache it into a local variable, allow the new
-		 seed to be applied, then apply that value back to the seed. This allows the 
-		 user to define certificates on each machine. */
-		
-		if (self.config.identitySSLCertificate) {
-			identitySSLCertificateInformation = self.config.identitySSLCertificate;
-		}
-	}
+	/* The identity certificate cannot be stored in the cloud since it requires to
+	 a reference to a local resource. Therefore, when updating from the cloud, we
+	 take the value stored locally, cache it into a local variable, allow the new
+	 seed to be applied, then apply that value back to the seed. This allows the
+	 user to define certificates on each machine. */
+	NSData *identitySSLCertificateInformation = self.config.identitySSLCertificate;
 #endif
 	
 	/* Write all channel keychains before copying over new configuration. */
@@ -248,48 +297,54 @@
 	}
 	
 	/* Populate new seed. */
-	self.config = nil;
-	self.config = [seed mutableCopy];
+	self.config = seed; // Setter handles copy.
 	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	if (isCloudUpdate) {
-		/* Update new, local seed with cache SSL certificate. */
-		
-		if (identitySSLCertificateInformation) {
-			[self.config setIdentitySSLCertificate:identitySSLCertificateInformation];
-			
-			identitySSLCertificateInformation = nil;
-		}
-	}
+	/* Update new, local seed with cache SSL certificate. */
+	self.config.identitySSLCertificate = identitySSLCertificateInformation;
 	
 	/* Maybe remove this client from deleted list (maybe). */
 	if ([TPCPreferences syncPreferencesToTheCloud]) {
-		if (syncToCloudChanged) {
+		if (syncToCloudIsSame == NO) {
 			if (self.config.excludedFromCloudSyncing == NO) {
-				[self.worldController removeClientFromListOfDeletedClients:self.config.itemUUID];
+				[worldController() removeClientFromListOfDeletedClients:[self uniqueIdentifier]];
 			}
 		}
 	}
 #endif
 	
 	/* Begin normal operations. */
-	NSArray *chans = [self.config channelList];
+	/* List of channels that are in current configuration. */
+	NSArray *channelConfigurations = self.config.channelList;
+	
+	/* List of channels actively particpating with this client. */
+	NSMutableArray *originalChannelList;
+	
+	@synchronized(self.channels) {
+		originalChannelList = [NSMutableArray arrayWithObject:self.channels];
+	}
+	
+	/* New list of channels to reflect configuration. */
+	NSMutableArray *newChannelList = [NSMutableArray array];
 
-	NSMutableArray *ory = [self.channels mutableCopy];
-
-	NSMutableArray *ary = [NSMutableArray array];
-
-	for (IRCChannelConfig *i in chans) {
-		IRCChannel *cinl = [self findChannel:i.channelName inList:ory];
+	for (IRCChannelConfig *i in channelConfigurations) {
+		/* First we check whether the configured channel 
+		 exists in the current context of the client. */
+		IRCChannel *cinl = [self findChannel:[i channelName] inList:originalChannelList];
 
 		if (cinl) {
+			/* It exists so we update its configuration. */
 			[cinl updateConfig:i];
 
-			[ary safeAddObject:cinl];
+			/* We also are sure to add it to new list of channels. */
+			[newChannelList addObject:cinl];
 
-			[ory removeObjectIdenticalTo:cinl];
+			/* Lastly, we remove the channel from the old list. */
+			[originalChannelList removeObjectIdenticalTo:cinl];
 		} else {
-			IRCChannel *cina = [self findChannel:i.channelName inList:ary];
+			/* The channel was not found in the old list so we now check if it
+			 exists again in the new array. */
+			IRCChannel *cina = [self findChannel:[i channelName] inList:newChannelList];
 
 			if (cina) {
 				/* Channels are removed from self.channels here which means that
@@ -298,122 +353,111 @@
 
 				continue; // Do not allow duplicates.
 			} else {
-				cinl = [self.worldController createChannel:i client:self reload:NO adjust:NO];
+				cinl = [worldController() createChannel:i client:self reload:NO adjust:NO];
 
-				[ary safeAddObject:cinl];
+				[newChannelList addObject:cinl];
 			}
 		}
 	}
 
-	for (IRCChannel *c in ory) {
-		if (c.isChannel) {
+	/* Any channels left in the old array can be destroyed 
+	 or if they are not a channel, then they can be reinserted
+	 because we do not care about private messages being updated
+	 above so they must be reinserted here. */
+	for (IRCChannel *c in originalChannelList) {
+		if ([c isChannel]) {
 			[self partChannel:c];
 		} else {
-			[ary safeAddObject:c];
+			[newChannelList addObject:c];
 		}
 	}
 
-	[self.channels removeAllObjects];
-	[self.channels addObjectsFromArray:ary];
+	/* And of course once we are done, we update the actual
+	 client side list of channels. */
+	@synchronized(self.channels) {
+		[self.channels removeAllObjects];
+		[self.channels addObjectsFromArray:newChannelList];
+	}
+	
+	/* Reset stored channel list now that we are done. */
+	[self updateStoredChannelList];
 
-	[self.config.channelList removeAllObjects];
-
+	/* We also write all passwords to Keychain here. */
+	[self.config writeKeychainItemsToDisk];
+	
+	/* Lastly, if our ignore list changed, we need to inform
+	 downstream of that fact. */
+	if (ignoreListIsSame == NO) {
+		[self populateISONTrackedUsersList:self.config.ignoreList];
+	}
+	
 	/* reloadItem will drop the views and reload them. We need to remember
 	 the selection because of this. */
 	if (reloadSelection) {
-		id selectedItem = [self.worldController selectedItem];
+		id selectedItem = [mainWindow() selectedItem];
 		
-		[self.worldController setTemporarilyDisablePreviousSelectionUpdates:YES];
+		[mainWindow() setTemporarilyDisablePreviousSelectionUpdates:YES];
 	
-		[self.masterController.serverList reloadItem:self reloadChildren:YES];
+		[mainWindowServerList() reloadItem:self reloadChildren:YES];
 
-		[self.worldController select:selectedItem];
-		[self.worldController adjustSelection];
+		[mainWindow() select:selectedItem];
+		[mainWindow() adjustSelection];
 		
-		[self.worldController setTemporarilyDisablePreviousSelectionUpdates:NO];
-	}
-		
-	[self.config writeKeychainItemsToDisk];
-	
-	if (ignoreListChanged) {
-		[self updateIgnoreConfiguration:YES];
+		[mainWindow() setTemporarilyDisablePreviousSelectionUpdates:NO];
 	}
 }
 
-- (IRCClientConfig *)storedConfig
+- (void)updateStoredChannelList
 {
-	IRCClientConfig *u = self.config;
-
-	[u.channelList removeAllObjects];
-
-	for (IRCChannel *c in self.channels) {
-		if (c.isChannel) {
-			[u.channelList safeAddObject:[c.config mutableCopy]];
-		}
-	}
-
-	return u;
-}
-
-- (void)updateIgnoreConfiguration:(BOOL)reloadUserStatus
-{
-	if (self == [self.worldController selectedClient]) {
+	NSMutableArray *newChannelList = [NSMutableArray array];
+	
+	@synchronized(self.channels) {
 		for (IRCChannel *c in self.channels) {
-			NSAssertReturnLoopContinue([c isChannel]);
-
-			[c updateTableViewByRemovingIgnoredUsers];
+			if ([c isChannel] || [TPCPreferences rememberServerListQueryStates]) {
+				[newChannelList addObject:[c.config copy]];
+			}
 		}
 	}
 	
-	if (reloadUserStatus) {
-		[self populateISONTrackedUsersList:self.config.ignoreList];
-	}
+	[self.config setChannelList:newChannelList];
+}
+
+- (IRCClientConfig *)copyOfStoredConfig
+{
+	return [self.config copyWithoutPrivateMessages];
 }
 
 - (NSMutableDictionary *)dictionaryValue
 {
-	return [self dictionaryValue:NO];
+	return [self.config dictionaryValue:NO];
 }
 
 - (NSMutableDictionary *)dictionaryValue:(BOOL)isCloudDictionary
 {
-	NSMutableDictionary *dic = [self.config dictionaryValue:isCloudDictionary];
-
-	NSMutableArray *ary = [NSMutableArray array];
-
-	for (IRCChannel *c in self.channels) {
-		if (c.isChannel || [TPCPreferences rememberServerListQueryStates]) {
-			[ary addObject:[c dictionaryValue]];
-		}
-	}
-
-	dic[@"channelList"] = ary;
-	
-	return dic;
+	return [self.config dictionaryValue:isCloudDictionary];
 }
 
 - (void)prepareForApplicationTermination
 {
 	/* Archive server-time timestamp if certain conditions are met. */
-	if (self.capacities.serverTimeCapInUse) {
-		if (self.lastMessageServerTime > 0) {
-			if ([TPCPreferences logTranscript]) {
-				if ([TPCPreferences transcriptFolder]) {
-					[[self auxiliaryConfiguration] setDouble:self.lastMessageServerTime
-													  forKey:@"IRCv3 server-time Capacity Cached Timestamp"];
-				}
+	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityServerTime]) {
+		if ([TPCPreferences logToDiskIsEnabled]) {
+			if (self.lastMessageServerTime > 0) {
+				self.config.cachedLastServerTimeCapacityReceivedAtTimestamp = self.lastMessageServerTime;
 			}
 		}
 	}
-
+	
 	/* Perform normal operations. */
 	[self quit];
 	
 	[self closeDialogs];
 	[self closeLogFile];
-
-	for (IRCChannel *c in self.channels) {
-		[c prepareForApplicationTermination];
+	
+	@synchronized(self.channels) {
+		for (IRCChannel *c in self.channels) {
+			[c prepareForApplicationTermination];
+		}
 	}
 
 	[self.viewController prepareForApplicationTermination];
@@ -426,8 +470,10 @@
 	[self closeDialogs];
 	[self closeLogFile];
 	
-	for (IRCChannel *c in self.channels) {
-		[c prepareForPermanentDestruction];
+	@synchronized(self.channels) {
+		for (IRCChannel *c in self.channels) {
+			[c prepareForPermanentDestruction];
+		}
 	}
 	
 	[self.viewController prepareForPermanentDestruction];
@@ -435,10 +481,8 @@
 
 - (void)closeDialogs
 {
-    TXMenuController *menuController = [self menuController];
-
-    [menuController popWindowViewIfExists:[self listDialogWindowKey]];
-    [menuController popWindowSheetIfExists];
+    [menuController() popWindowViewIfExists:[self listDialogWindowKey]];
+    [menuController() popWindowSheetIfExists];
 }
 
 - (void)preferencesChanged
@@ -446,17 +490,19 @@
 	[self reopenLogFileIfNeeded];
 
 	[self.viewController preferencesChanged];
+	
+	@synchronized(self.channels) {
+		for (IRCChannel *c in self.channels) {
+			[c preferencesChanged];
 
-	for (IRCChannel *c in self.channels) {
-		[c preferencesChanged];
-
-        if (self.capacities.awayNotifyCapInUse == NO) {
-            if ([c numberOfMembers] > [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
-                for (IRCUser *u in [c unsortedMemberList]) {
-                    u.isAway = NO;
-                }
-            }
-        }
+			if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify]) {
+				if ([c numberOfMembers] > [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
+					for (IRCUser *u in [c sortedByChannelRankMemberList]) {
+						u.isAway = NO;
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -465,7 +511,7 @@
 
 - (NSString *)uniqueIdentifier
 {
-	return [self.config itemUUID];
+	return self.config.itemUUID;
 }
 
 - (NSString *)name
@@ -480,9 +526,11 @@
 
 - (NSString *)altNetworkName
 {
-	NSObjectIsEmptyAssertReturn(self.isupport.networkName, self.config.clientName);
-
-	return self.isupport.networkName;
+	if (NSObjectIsEmpty(self.isupport.networkName)) {
+		return self.config.clientName;
+	} else {
+		return self.isupport.networkName;
+	}
 }
 
 - (NSString *)networkAddress
@@ -492,29 +540,26 @@
 
 - (NSString *)localNickname
 {
-	NSObjectIsEmptyAssertReturn(self.myNick, self.config.nickname);
-
-	return self.myNick;
+	if (NSObjectIsEmpty(self.cachedLocalNickname)) {
+		return self.config.nickname;
+	} else {
+		return self.cachedLocalNickname;
+	}
 }
 
 - (NSString *)localHostmask
 {
-	return self.myHost;
+	return self.cachedLocalHostmask;
 }
 
 - (TDCFileTransferDialog *)fileTransferController
 {
-	return self.menuController.fileTransferController;
+	return [menuController() fileTransferController];
 }
 
 - (BOOL)isReconnecting
 {
-	return (self.reconnectTimer && self.reconnectTimer.timerIsActive);
-}
-
-- (NSMutableDictionary *)auxiliaryConfiguration
-{
-	return [self.config auxiliaryConfiguration];
+	return self.reconnectTimer.timerIsActive;
 }
 
 - (NSTimeInterval)lastMessageServerTimeWithCachedValue
@@ -525,14 +570,12 @@
 	static BOOL _checkedForPreviousSessionTime = NO;
 
 	if (_checkedForPreviousSessionTime == NO) {
-		if (self.lastMessageServerTime == 0) {
-			if ([TPCPreferences logTranscript]) {
-				if ([TPCPreferences transcriptFolder]) {
-					double storedTime = [[self auxiliaryConfiguration] doubleForKey:@"IRCv3 server-time Capacity Cached Timestamp"];
+		if ([TPCPreferences logToDiskIsEnabled]) {
+			if (self.lastMessageServerTime == 0) {
+				double storedTime = self.config.cachedLastServerTimeCapacityReceivedAtTimestamp;
 
-					if (storedTime) {
-						self.lastMessageServerTime = storedTime;
-					}
+				if (storedTime) {
+					self.lastMessageServerTime = storedTime;
 				}
 			}
 
@@ -544,24 +587,151 @@
 }
 
 #pragma mark -
+#pragma mark Highlights
+
+- (void)addHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine
+{
+	PointerIsEmptyAssert(channel);
+	PointerIsEmptyAssert(logLine);
+	
+	if ([TPCPreferences logHighlights]) {
+		/* Render message. */
+		NSString *messageBody;
+		NSString *nicknameBody = [logLine formattedNickname:channel];
+		
+		if ([logLine lineType] == TVCLogLineActionType) {
+			if ([nicknameBody hasSuffix:@":"]) {
+				messageBody = [NSString stringWithFormat:TXNotificationHighlightLogAlternativeActionFormat, [nicknameBody trim], logLine.messageBody];
+			} else {
+				messageBody = [NSString stringWithFormat:TXNotificationHighlightLogStandardActionFormat, [nicknameBody trim], logLine.messageBody];
+			}
+		} else {
+			messageBody = [NSString stringWithFormat:TXNotificationHighlightLogStandardMessageFormat, [nicknameBody trim], logLine.messageBody];
+		}
+		
+		/* Create entry. */
+		NSArray *entry = @[channel.name, @([NSDate epochTime]), [messageBody attributedStringWithIRCFormatting:TXPreferredGlobalTableViewFont]];
+		
+		/* We insert at head so that latest is always on top. */
+		NSMutableArray *highlightData = [self.cachedHighlights mutableCopy];
+		
+		[highlightData insertObject:entry atIndex:0];
+		
+		self.cachedHighlights = highlightData; // Setter will perform copy.
+		
+		/* Reload table if the window is open. */
+		id highlightSheet = [menuController() windowFromWindowList:@"TDCHighlightListSheet"];
+		
+		if (highlightSheet) {
+			[highlightSheet performSelector:@selector(reloadTable) withObject:nil afterDelay:2.0];
+		}
+	}
+}
+#pragma mark -
 #pragma mark Reachability
 
 - (BOOL)isHostReachable
 {
-	return ([[[self worldController] networkReachability] isReachable]);
+	return [[TXSharedApplication sharedNetworkReachabilityObject] isReachable];
 }
 
 - (void)reachabilityChanged:(BOOL)reachable
 {
-	if (self.isLoggedIn) {
-		if (reachable == NO) {
+	if (reachable == NO) {
+		if (self.isLoggedIn) {
 			if (self.config.performDisconnectOnReachabilityChange) {
-				self.disconnectType = IRCDisconnectReachabilityChangeMode;
+				self.disconnectType = IRCClientDisconnectReachabilityChangeMode;
 				self.reconnectEnabled = YES;
 				
 				[self performSelectorOnMainThread:@selector(disconnect) withObject:nil waitUntilDone:YES];
 			}
 		}
+	}
+}
+
+#pragma mark -
+#pragma mark Channel Storage
+
+- (NSInteger)channelCount
+{
+	@synchronized(self.channels) {
+		return [self.channels count];
+	}
+}
+
+- (void)addChannel:(IRCChannel *)channel
+{
+	@synchronized(self.channels) {
+		[self.channels addObjectWithoutDuplication:channel];
+		
+		[self updateStoredChannelList];
+	}
+}
+
+- (void)addChannel:(IRCChannel *)channel atPosition:(NSInteger)pos
+{
+	@synchronized(self.channels) {
+		[self.channels insertObject:channel atIndex:pos];
+		
+		[self updateStoredChannelList];
+	}
+}
+
+- (void)removeChannel:(IRCChannel *)channel
+{
+	@synchronized(self.channels) {
+		[self.channels removeObjectIdenticalTo:channel];
+	}
+}
+
+- (NSInteger)indexOfFirstPrivateMessage
+{
+	NSInteger i = 0;
+	
+	@synchronized(self.channels) {
+		for (IRCChannel *e in self.channels) {
+			if (e.isPrivateMessage) {
+				return i;
+			}
+			
+			i += 1;
+		}
+	}
+	
+	return -1;
+}
+
+- (NSInteger)indexOfChannel:(IRCChannel *)channel
+{
+	@synchronized(self.channels) {
+		return [self.channels indexOfObject:channel];
+	}
+}
+
+- (void)selectFirstChannelInChannelList
+{
+	@synchronized(self.channels) {
+		if ([self.channels count] > 0) {
+			[mainWindow() select:self.channels[0]];
+		}
+	}
+}
+
+- (NSArray *)channelList
+{
+	@synchronized(self.channels) {
+		return [NSArray arrayWithArray:self.channels];
+	}
+}
+
+- (void)setChannelList:(NSArray *)channelList
+{
+	@synchronized(self.channels) {
+		[self.channels removeAllObjects];
+		
+		[self.channels addObjectsFromArray:channelList];
+		
+		[self updateStoredChannelList];
 	}
 }
 
@@ -578,19 +748,24 @@
 	return self.isLoggedIn;
 }
 
-- (IRCClient *)client
+- (IRCClient *)associatedClient
 {
 	return self;
 }
 
+- (IRCChannel *)associatedChannel
+{
+	return nil;
+}
+
 - (NSInteger)numberOfChildren
 {
-	return self.channels.count;
+	return [self channelCount];
 }
 
 - (id)childAtIndex:(NSInteger)index
 {
-	return [self.channels safeObjectAtIndex:index];
+	return self.channels[index];
 }
 
 - (NSString *)label
@@ -675,7 +850,7 @@
 		raw = [raw stripIRCEffects];
 	}
 
-	NSArray *rules = [THOPluginManagerSharedInstance() outputRulesForCommand:IRCCommandFromLineType(type)];
+	NSArray *rules = [sharedPluginManager() outputRulesForCommand:IRCCommandFromLineType(type)];
 
 	for (NSArray *ruleData in rules) {
 		NSString *ruleRegex = ruleData[0];
@@ -729,7 +904,7 @@
 	if ([self isSupportedMessageEncryptionFormat:(*message) channel:channel]) {
 		NSString *newstr = [CSFWBlowfish encodeData:(*message) key:channel.config.encryptionKey encoding:self.config.primaryEncoding];
 
-		if (newstr.length < 5) {
+		if ([newstr length]< 5) {
 			[self printDebugInformation:BLS(1001) channel:channel];
 
 			return NO;
@@ -747,7 +922,7 @@
 		NSString *newstr = [CSFWBlowfish decodeData:(*message) key:channel.config.encryptionKey encoding:self.config.primaryEncoding];
 
 		if (NSObjectIsNotEmpty(newstr)) {
-			(*message)= newstr;
+			(*message) = newstr;
 		}
 	}
 }
@@ -800,7 +975,7 @@
 
 			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
 			
-			formattedMessage = TXTLS(nformatString, target.name.channelNameToken, nick, text);
+			formattedMessage = TXTLS(nformatString, [[target name] channelNameToken], nick, text);
 
 			break;
 		}
@@ -820,7 +995,7 @@
 		{
 			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
 
-			formattedMessage = TXTLS(nformatString, target.name.channelNameToken, nick);
+			formattedMessage = TXTLS(nformatString, [[target name] channelNameToken], nick);
 
 			break;
 		}
@@ -828,7 +1003,7 @@
 		{
 			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
 
-			formattedMessage = TXTLS(nformatString, text.channelNameToken, nick);
+			formattedMessage = TXTLS(nformatString, [text channelNameToken], nick);
 
 			break;
 		}
@@ -837,7 +1012,7 @@
 		{
 			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
 
-			formattedMessage = TXTLS(nformatString, self.altNetworkName);
+			formattedMessage = TXTLS(nformatString, [self altNetworkName]);
 			
 			break;
 		}
@@ -861,10 +1036,10 @@
 
 	NSObjectIsEmptyAssert(formattedMessage);
 
-	[self.masterController.speechSynthesizer speak:formattedMessage];
+	[[TXSharedApplication sharedSpeechSynthesizer] speak:formattedMessage];
 }
 
-- (BOOL)notifyText:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nick:(NSString *)nick text:(NSString *)text
+- (BOOL)notifyText:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nickname:(NSString *)nick text:(NSString *)text
 {
 	if ([self outputRuleMatchedInMessage:text inChannel:target withLineType:ltype] == YES) {
 		return NO;
@@ -875,11 +1050,11 @@
 	NSObjectIsEmptyAssertReturn(text, NO);
 	NSObjectIsEmptyAssertReturn(nick, NO);
 
-	if ([self.localNickname isEqualIgnoringCase:nick]) {
+	if ([nick isEqualIgnoringCase:[self localNickname]]) {
 		return NO;
 	}
 
-	NSString *channelName = target.name;
+	NSString *channelName = [target name];
 
 	if (type == TXNotificationHighlightType) {
 		if (target.config.ignoreHighlights) {
@@ -893,11 +1068,11 @@
         [NSApp requestUserAttention:NSInformationalRequest];
     }
 
-	if (self.worldController.areNotificationsDisabled) {
+	if ([sharedGrowlController() areNotificationsDisabled]) {
 		return YES;
 	}
-    
-	if (self.worldController.isSoundMuted == NO) {
+	
+	if ([sharedGrowlController() areNotificationSoundsDisabled]) {
 		[TLOSoundPlayer playAlertSound:[TPCPreferences soundForEvent:type]];
 
 		if ([TPCPreferences speakEvent:type]) {
@@ -909,7 +1084,7 @@
 		return YES;
 	}
 
-	if ([TPCPreferences postNotificationsWhileInFocus] == NO && [[[self masterController] mainWindow] isInactive] == NO) {
+	if ([TPCPreferences postNotificationsWhileInFocus] == NO && [mainWindow() isInactive] == NO) {
 		if (NSDissimilarObjects(type, TXNotificationAddressBookMatchType)) {
 			return YES;
 		}
@@ -930,17 +1105,19 @@
 		desc = [NSString stringWithFormat:TXNotificationDialogStandardNicknameFormat, nick, text];
 	}
 
-	[self.masterController.growlController notify:type title:title description:desc userInfo:@{@"client" : self.treeUUID, @"channel" : target.treeUUID}];
+	NSDictionary *userInfo = @{@"client" : self.treeUUID, @"channel" : target.treeUUID};
+	
+	[sharedGrowlController() notify:type title:title description:desc userInfo:userInfo];
 
 	return YES;
 }
 
 - (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype
 {
-	return [self notifyEvent:type lineType:ltype target:nil nick:NSStringEmptyPlaceholder text:NSStringEmptyPlaceholder];
+	return [self notifyEvent:type lineType:ltype target:nil nickname:NSStringEmptyPlaceholder text:NSStringEmptyPlaceholder];
 }
 
-- (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nick:(NSString *)nick text:(NSString *)text
+- (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nickname:(NSString *)nick text:(NSString *)text
 {
 	if ([self outputRuleMatchedInMessage:text inChannel:target withLineType:ltype] == YES) {
 		return NO;
@@ -952,12 +1129,12 @@
     if ([TPCPreferences bounceDockIconForEvent:type]) {
         [NSApp requestUserAttention:NSInformationalRequest];
     }
-
-	if (self.worldController.areNotificationsDisabled) {
+	
+	if ([sharedGrowlController() areNotificationsDisabled]) {
 		return YES;
 	}
-
-	if (self.worldController.isSoundMuted == NO) {
+	
+	if ([sharedGrowlController() areNotificationSoundsDisabled]) {
 		[TLOSoundPlayer playAlertSound:[TPCPreferences soundForEvent:type]];
 		
 		if ([TPCPreferences speakEvent:type]) {
@@ -969,7 +1146,7 @@
 		return YES;
 	}
 
-	if ([TPCPreferences postNotificationsWhileInFocus] == NO && [[[self masterController] mainWindow] isInactive] == NO) {
+	if ([TPCPreferences postNotificationsWhileInFocus] == NO && [mainWindow() isInactive] == NO) {
 		if (NSDissimilarObjects(type, TXNotificationAddressBookMatchType)) {
 			return YES;
 		}
@@ -985,8 +1162,8 @@
 		}
 	}
 
-	NSString *title = NSStringEmptyPlaceholder;
-	NSString *desc = NSStringEmptyPlaceholder;
+	NSString *title = nil;
+	NSString *desc = nil;
 	
 	NSDictionary *info = nil;
 	
@@ -1032,9 +1209,9 @@
 		{
 			PointerIsEmptyAssertReturn(target, YES);
 			
-			title = target.name;
+			title = [target name];
 			
-			desc = TXTLS(@"BasicLanguage[1077]", nick, text);
+			desc = BLS(1077, nick, text);
 
 			break;
 		}
@@ -1042,14 +1219,14 @@
 		{
 			title = [self altNetworkName];
 			
-			desc = TXTLS(@"BasicLanguage[1076]", nick, text);
+			desc = BLS(1076, nick, text);
 
 			break;
 		}
 		default: { return YES; }
 	}
 
-	[self.masterController.growlController notify:type title:title description:desc userInfo:info];
+	[sharedGrowlController() notify:type title:title description:desc userInfo:info];
 	
 	return YES;
 }
@@ -1059,12 +1236,16 @@
 
 - (BOOL)isSafeToPostNotificationForMessage:(IRCMessage *)m inChannel:(IRCChannel *)channel
 {
+	// Validate input.
 	PointerIsEmptyAssertReturn(m, NO);
 	PointerIsEmptyAssertReturn(channel, NO);
+	
+	// Post if user doesn't give a shit.
+	if (self.config.zncIgnorePlaybackNotifications == NO) {
+		return YES;
+	}
 
-	NSAssertReturnR(self.isZNCBouncerConnection, YES); // Post if we aren't ZNC connection.
-	NSAssertReturnR(self.config.zncIgnorePlaybackNotifications, YES); // Post if user doesn't give a shit.
-
+	// Check other conditionals.
 	return ([self messageIsPartOfZNCPlaybackBuffer:m inChannel:channel] == NO); // Do playback check…
 }
 
@@ -1072,9 +1253,14 @@
 {
 	PointerIsEmptyAssertReturn(m, NO);
 	PointerIsEmptyAssertReturn(channel, NO);
-
-	NSAssertReturnR(self.capacities.serverTimeCapInUse, NO);
-	NSAssertReturnR(self.isZNCBouncerConnection, NO);
+	
+	if (self.isZNCBouncerConnection == NO) {
+		return NO;
+	}
+	
+	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityServerTime] == NO) {
+		return NO;
+	}
 
 	/* When Textual is using the server-time CAP with ZNC it does not tell us when
 	 the playback buffer begins and when it ends. Therefore, we must make a best 
@@ -1090,16 +1276,17 @@
 
 - (void)setKeywordState:(IRCChannel *)t
 {
-	BOOL isActiveWindow = [[[self masterController] mainWindow] isKeyWindow];
+	BOOL isActiveWindow = [mainWindow() isKeyWindow];
 
-	if (NSDissimilarObjects(self.worldController.selectedItem, t) || isActiveWindow == NO) {
+	if (NSDissimilarObjects([mainWindow() selectedItem], t) || isActiveWindow == NO) {
 		t.nicknameHighlightCount += 1;
 
-        [self.worldController updateIcon];
-        [self.worldController reloadTreeItem:t];
+		[TVCDockIcon updateDockIcon];
+		
+		[mainWindow() reloadTreeItem:t];
 	}
 
-	if (t.isUnread || (isActiveWindow && self.worldController.selectedItem == t)) {
+	if (t.isUnread || (isActiveWindow && [mainWindow() selectedItem] == t)) {
 		return;
 	}
 }
@@ -1111,21 +1298,21 @@
 
 - (void)setUnreadState:(IRCChannel *)t isHighlight:(BOOL)isHighlight
 {
-	BOOL isActiveWindow = [[[self masterController] mainWindow] isKeyWindow];
+	BOOL isActiveWindow = [mainWindow() isKeyWindow];
 
 	if (t.isPrivateMessage || ([TPCPreferences displayPublicMessageCountOnDockBadge] && t.isChannel)) {
-		if (NSDissimilarObjects(self.worldController.selectedItem, t) || isActiveWindow == NO) {
+		if (NSDissimilarObjects([mainWindow() selectedItem], t) || isActiveWindow == NO) {
 			t.dockUnreadCount += 1;
-            
-            [self.worldController updateIcon];
+			
+			[TVCDockIcon updateDockIcon];
 		}
 	}
 
-	if (isActiveWindow == NO || (NSDissimilarObjects(self.worldController.selectedItem, t) && isActiveWindow)) {
+	if (isActiveWindow == NO || (NSDissimilarObjects([mainWindow() selectedItem], t) && isActiveWindow)) {
 		t.treeUnreadCount += 1;
 
 		if (t.config.showTreeBadgeCount || (t.config.showTreeBadgeCount == NO && isHighlight)) {
-			[self.worldController reloadTreeItem:t];
+			[mainWindow() reloadTreeItem:t];
 		}
 	}
 }
@@ -1136,7 +1323,7 @@
 - (IRCChannel *)findChannel:(NSString *)name inList:(NSArray *)channelList
 {
 	for (IRCChannel *c in channelList) {
-		if ([c.name isEqualIgnoringCase:name]) {
+		if ([name isEqualIgnoringCase:c.name]) {
 			return c;
 		}
 	}
@@ -1146,7 +1333,9 @@
 
 - (IRCChannel *)findChannel:(NSString *)name
 {
-	return [self findChannel:name inList:self.channels];
+	@synchronized(self.channels) {
+		return [self findChannel:name inList:self.channels];
+	}
 }
 
 - (IRCChannel *)findChannelOrCreate:(NSString *)name
@@ -1158,34 +1347,19 @@
 {
 	IRCChannel *c = [self findChannel:name];
 
-	if (PointerIsEmpty(c)) {
+	if (c == nil) {
 		if (isPM) {
-			return [self.worldController createPrivateMessage:name client:self];
+			return [worldController() createPrivateMessage:name client:self];
 		} else {
 			IRCChannelConfig *seed = [IRCChannelConfig new];
 
-			seed.channelName = name;
+			[seed setChannelName:name];
 
-			return [self.worldController createChannel:seed client:self reload:YES adjust:YES];
+			return [worldController() createChannel:seed client:self reload:YES adjust:YES];
 		}
 	}
 
 	return c;
-}
-
-- (NSInteger)indexOfFirstPrivateMessage
-{
-	NSInteger i = 0;
-
-	for (IRCChannel *e in self.channels) {
-		if (e.isPrivateMessage) {
-			return i;
-		}
-		
-		i += 1;
-	}
-	
-	return -1;
 }
 
 #pragma mark -
@@ -1199,8 +1373,8 @@
 
 	[self.socket sendLine:str];
 
-	self.worldController.messagesSent++;
-	self.worldController.bandwidthOut += str.length;
+	worldController().messagesSent += 1;
+	worldController().bandwidthOut += [str length];
 }
 
 - (void)send:(NSString *)str, ...
@@ -1213,7 +1387,7 @@
 	va_start(args, str);
 
 	while ((obj = va_arg(args, id))) {
-		[ary safeAddObject:obj];
+		[ary addObject:obj];
 	}
 
 	va_end(args);
@@ -2319,7 +2493,7 @@
 			if (PointerIsEmpty(selChannel)) {
 				[self printDebugInformationToConsole:text];
 			} else {
-				text = TXTLS(@"BasicLanguage[1114]", text);
+				text = BLS(1114, text);
 
 				[self sendPrivmsgToSelectedChannel:text];
 			}
@@ -2356,7 +2530,7 @@
 
 			NSTimeInterval timeDiff = [NSDate secondsSinceUnixTimestamp:TXBirthdayReferenceDate];
 
-			NSString *message = TXTLS(@"BasicLanguage[1226]", TXReadableTime(timeDiff));
+			NSString *message = BLS(1226, TXReadableTime(timeDiff));
 
 			if (PointerIsEmpty(selChannel)) {
 				[self printDebugInformationToConsole:message];
@@ -2382,8 +2556,8 @@
 				scriptResult = BLS(1105);
 			}
 
-			[self printDebugInformation:TXTLS(@"BasicLanguage[1103]", bundleResult)];
-			[self printDebugInformation:TXTLS(@"BasicLanguage[1104]", scriptResult)];
+			[self printDebugInformation:BLS(1103, bundleResult)];
+			[self printDebugInformation:BLS(1104, scriptResult)];
 
 			break;
 		}
@@ -2496,7 +2670,7 @@
 			if (NSObjectIsNotEmpty(self.CAPAcceptedCaps)) {
 				NSString *caps = [self.CAPAcceptedCaps componentsJoinedByString:@", "];
 
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1121]", caps)];
+				[self printDebugInformation:BLS(1121, caps)];
 			} else {
 				[self printDebugInformation:BLS(1120)];
 			}
@@ -2638,9 +2812,9 @@
 						(applyToAll		  && [providedKeys containsObject:section3] == NO))
 					{
 						if (applyToAll) {
-							[self printDebugInformation:TXTLS(@"BasicLanguage[1035]", section3)];
+							[self printDebugInformation:BLS(1035, section3)];
 						} else {
-							[self printDebugInformation:TXTLS(@"BasicLanguage[1035]", section2)];
+							[self printDebugInformation:BLS(1035, section2)];
 						}
 					} else {
 						if (applyToAll) {
@@ -2648,15 +2822,15 @@
 								[[u.config auxiliaryConfiguration] setBool:YES forKey:section3];
 
 								if (u == self) {
-									[u printDebugInformation:TXTLS(@"BasicLanguage[1037]", section3)];
+									[u printDebugInformation:BLS(1037, section3)];
 								} else {
-									[u printDebugInformationToConsole:TXTLS(@"BasicLanguage[1037]", section3)];
+									[u printDebugInformationToConsole:BLS(1037, section3)];
 								}
 							}
 						} else {
 							[[self auxiliaryConfiguration] setBool:YES forKey:section2];
 
-							[self printDebugInformation:TXTLS(@"BasicLanguage[1037]", section2)];
+							[self printDebugInformation:BLS(1037, section2)];
 						}
 
 						[self.worldController save];
@@ -2674,9 +2848,9 @@
 						(applyToAll		  && [providedKeys containsObject:section3] == NO))
 					{
 						if (applyToAll) {
-							[self printDebugInformation:TXTLS(@"BasicLanguage[1036]", section3)];
+							[self printDebugInformation:BLS(1036, section3)];
 						} else {
-							[self printDebugInformation:TXTLS(@"BasicLanguage[1036]", section2)];
+							[self printDebugInformation:BLS(1036, section2)];
 						}
 					} else {
 						if (applyToAll) {
@@ -2684,15 +2858,15 @@
 								[[u.config auxiliaryConfiguration] setBool:NO forKey:section3];
 
 								if (u == self) {
-									[u printDebugInformation:TXTLS(@"BasicLanguage[1038]", section3)];
+									[u printDebugInformation:BLS(1038, section3)];
 								} else {
-									[u printDebugInformationToConsole:TXTLS(@"BasicLanguage[1038]", section3)];
+									[u printDebugInformationToConsole:BLS(1038, section3)];
 								}
 							}
 						} else {
 							[[self auxiliaryConfiguration] setBool:NO forKey:section2];
 
-							[self printDebugInformation:TXTLS(@"BasicLanguage[1038]", section2)];
+							[self printDebugInformation:BLS(1038, section2)];
 						}
 
 						[self.worldController save];
@@ -2707,7 +2881,7 @@
 			/* Scan scripts first. */
 			NSDictionary *scriptPaths = [THOPluginManagerSharedInstance() supportedAppleScriptCommands:YES];
 
-			NSString *scriptPath = NSStringEmptyPlaceholder;
+			NSString *scriptPath = nil;
 
 			for (NSString *scriptCommand in scriptPaths) {
 				if ([scriptCommand isEqualToString:lowercaseCommand]) {
@@ -3125,7 +3299,7 @@
 
 - (void)printErrorReply:(IRCMessage *)m channel:(IRCChannel *)channel
 {
-	NSString *text = TXTLS(@"BasicLanguage[1139]", m.numericReply, [m sequence]);
+	NSString *text = BLS(1139, m.numericReply, [m sequence]);
 
 	[self print:channel type:TVCLogLineDebugType nick:nil text:text encrypted:NO receivedAt:m.receivedAt command:m.command message:nil completionBlock:NULL];
 }
@@ -3272,7 +3446,7 @@
 	if ([[self.config serverAddress] isIPAddress]) {
 		[self printDebugInformationToConsole:BLS(1129)];
 	} else {
-		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1130]", [self.socket connectedAddress])];
+		[self printDebugInformationToConsole:BLS(1130, [self.socket connectedAddress])];
 	}
 
 	self.isLoggedIn	= NO;
@@ -3988,7 +4162,7 @@
 	NSObjectIsEmptyAssert(command);
 
 	if ([TPCPreferences replyToCTCPRequests] == NO) {
-		return [self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1116]", command, sendern)];
+		return [self printDebugInformationToConsole:BLS(1116, command, sendern)];
 	}
 
 	if ([command isEqualToString:IRCPrivateCommandIndex("dcc")]) {
@@ -4002,7 +4176,7 @@
 			target = [self.worldController selectedChannelOn:self];
 		}
 
-		NSString *textm = TXTLS(@"BasicLanguage[1148]", command, sendern);
+		NSString *textm = BLS(1148, command, sendern);
 
 		if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_lagcheck")] == NO) {
 			[self print:target
@@ -4062,7 +4236,7 @@
 				} else if (delta >= 10.0 && delta < 30.0) {		rating = TXTLS(@"BasicLanguage[1109][08]");
 				} else if (delta >= 30.0) {						rating = TXTLS(@"BasicLanguage[1109][09]"); }
 
-				textm = TXTLS(@"BasicLanguage[1106]", [self networkAddress], delta, rating);
+				textm = BLS(1106, [self networkAddress], delta, rating);
 			} else {
 				textm = BLS(1108);
 			}
@@ -4103,9 +4277,9 @@
 	if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_ping")]) {
 		double delta = ([NSDate epochTime] - [s doubleValue]);
 		
-		text = TXTLS(@"BasicLanguage[1146]", sendern, command, delta);
+		text = BLS(1146, sendern, command, delta);
 	} else {
-		text = TXTLS(@"BasicLanguage[1147]", sendern, command, s);
+		text = BLS(1147, sendern, command, s);
 	}
 
 	[self print:c
@@ -4184,7 +4358,7 @@
 				[self print:query
 					   type:TVCLogLineJoinType
 					   nick:nil
-					   text:TXTLS(@"BasicLanguage[1155]", sendern)
+					   text:BLS(1155, sendern)
 				 receivedAt:m.receivedAt
 					command:m.command];
 				
@@ -4205,7 +4379,7 @@
 	}
 
 	if ([TPCPreferences showJoinLeave] || myself) {
-		NSString *text = TXTLS(@"BasicLanguage[1161]", sendern, m.sender.username, m.sender.address);
+		NSString *text = BLS(1161, sendern, m.sender.username, m.sender.address);
 
 		[self print:c
 			   type:TVCLogLineJoinType
@@ -4258,10 +4432,10 @@
 			return;
 		}
 
-		NSString *message = TXTLS(@"BasicLanguage[1163]", sendern, m.sender.username, m.sender.address);
+		NSString *message = BLS(1163, sendern, m.sender.username, m.sender.address);
 
 		if (NSObjectIsNotEmpty(comment)) {
-			message = TXTLS(@"BasicLanguage[1164]", message, comment);
+			message = BLS(1164, message, comment);
 		}
 
 		[self print:c
@@ -4318,7 +4492,7 @@
 			return;
 		}
 
-		NSString *message = TXTLS(@"BasicLanguage[1162]", sendern, targetu, comment);
+		NSString *message = BLS(1162, sendern, targetu, comment);
 
 		[self print:c
 			   type:TVCLogLineKickType
@@ -4356,16 +4530,16 @@
 	}
 
 	/* Continue. */
-	NSString *text = TXTLS(@"BasicLanguage[1153]", sendern, m.sender.username, m.sender.address);
+	NSString *text = BLS(1153, sendern, m.sender.username, m.sender.address);
 
 	if (NSObjectIsNotEmpty(comment)) {
 		NSString *nsrgx = @"^((([a-zA-Z0-9-_\\.\\*]+)\\.([a-zA-Z0-9-_]+)) (([a-zA-Z0-9-_\\.\\*]+)\\.([a-zA-Z0-9-_]+)))$";
 		
 		if ([TLORegularExpression string:comment isMatchedByRegex:nsrgx]) {
-			comment = TXTLS(@"BasicLanguage[1149]", comment);
+			comment = BLS(1149, comment);
 		}
 
-		text = TXTLS(@"BasicLanguage[1150]", text, comment);
+		text = BLS(1150, text, comment);
 	}
 
 	/* Is this a targetted print message? */
@@ -4393,7 +4567,7 @@
 		if ([c memberWithNickname:sendern]) {
 			if (([TPCPreferences showJoinLeave] && [ignoreChecks ignoreJPQE] == NO && c.config.ignoreJPQActivity == NO) || myself || c.isPrivateMessage) {
 				if (c.isPrivateMessage) {
-					text = TXTLS(@"BasicLanguage[1154]", sendern);
+					text = BLS(1154, sendern);
 				}
 
 				[self print:c
@@ -4609,7 +4783,7 @@
 			[self print:c
 				   type:TVCLogLineModeType
 				   nick:nil
-				   text:TXTLS(@"BasicLanguage[1145]", sendern, modestr)
+				   text:BLS(1145, sendern, modestr)
 			 receivedAt:m.receivedAt
 				command:m.command];
 		}
@@ -4621,7 +4795,7 @@
 		[self print:nil
 			   type:TVCLogLineModeType
 			   nick:nil
-			   text:TXTLS(@"BasicLanguage[1145]", sendern, modestr)
+			   text:BLS(1145, sendern, modestr)
 		 receivedAt:m.receivedAt
 			command:m.command];
 	}
@@ -4650,7 +4824,7 @@
 	[self print:c
 		   type:TVCLogLineTopicType
 		   nick:nil
-		   text:TXTLS(@"BasicLanguage[1128]", sendern, topicav)
+		   text:BLS(1128, sendern, topicav)
 	  encrypted:isEncrypted
 	 receivedAt:m.receivedAt
 		command:m.command];
@@ -4663,7 +4837,7 @@
 	NSString *sendern = m.sender.nickname;
 	NSString *channel = [m paramAt:1];
 	
-	NSString *text = TXTLS(@"BasicLanguage[1158]", sendern, m.sender.username, m.sender.address, channel);
+	NSString *text = BLS(1158, sendern, m.sender.username, m.sender.address, channel);
 	
 	[self print:[self.worldController selectedChannelOn:self]
 		   type:TVCLogLineInviteType
@@ -5166,7 +5340,7 @@
 			[self print:nil
 				   type:TVCLogLineDebugType
 				   nick:nil
-				   text:TXTLS(@"BasicLanguage[1156]", self.localNickname, modestr)
+				   text:BLS(1156, self.localNickname, modestr)
 			 receivedAt:m.receivedAt
 				command:m.command];
 
@@ -5197,7 +5371,7 @@
 
 			IRCChannel *ac = [self findChannel:awaynick];
 
-			NSString *text = TXTLS(@"BasicLanguage[1159]", awaynick, comment);
+			NSString *text = BLS(1159, awaynick, comment);
 
             if (ac) {
                 [self print:ac
@@ -5298,7 +5472,7 @@
 			}
 
 			if (self.inUserInvokedWhowasRequest) {
-				text = TXTLS(@"BasicLanguage[1170]", nickname, username, hostmask, realname);
+				text = BLS(1170, nickname, username, hostmask, realname);
 			} else {
 				/* Update local cache of our hostmask. */
 				if ([self.myNick isEqualIgnoringCase:nickname]) {
@@ -5308,7 +5482,7 @@
 				}
 
 				/* Continue normal WHOIS event. */
-				text = TXTLS(@"BasicLanguage[1167]", nickname, username, hostmask, realname);
+				text = BLS(1167, nickname, username, hostmask, realname);
 			}
 
 			[self print:[self.worldController selectedChannelOn:self]
@@ -5335,9 +5509,9 @@
 																	dateStyle:NSDateFormatterLongStyle
 																	timeStyle:NSDateFormatterLongStyle];
 				
-				text = TXTLS(@"BasicLanguage[1169]", nickname, serverHost, timeInfo);
+				text = BLS(1169, nickname, serverHost, timeInfo);
 			} else {
-				text = TXTLS(@"BasicLanguage[1166]", nickname, serverHost, serverInfo);
+				text = BLS(1166, nickname, serverHost, serverInfo);
 			}
 
 			[self print:[self.worldController selectedChannelOn:self]
@@ -5363,7 +5537,7 @@
 													  dateStyle:NSDateFormatterLongStyle
 													  timeStyle:NSDateFormatterLongStyle];
 
-			NSString *text = TXTLS(@"BasicLanguage[1168]", nickname, connTime, idleTime);
+			NSString *text = BLS(1168, nickname, connTime, idleTime);
 
 			[self print:[self.worldController selectedChannelOn:self]
 				   type:TVCLogLineDebugType
@@ -5381,7 +5555,7 @@
 			NSString *nickname = [m paramAt:1];
 			NSString *channels = [m paramAt:2];
 
-			NSString *text = TXTLS(@"BasicLanguage[1165]", nickname, channels);
+			NSString *text = BLS(1165, nickname, channels);
 
 			[self print:[self.worldController selectedChannelOn:self]
 				   type:TVCLogLineDebugType
@@ -5418,7 +5592,7 @@
 				[self print:c
 					   type:TVCLogLineModeType
 					   nick:nil
-					   text:TXTLS(@"BasicLanguage[1123]", fmodestr)
+					   text:BLS(1123, fmodestr)
 				 receivedAt:m.receivedAt
 					command:m.command];
 
@@ -5454,7 +5628,7 @@
 				[self print:c
 					   type:TVCLogLineTopicType
 					   nick:nil
-					   text:TXTLS(@"BasicLanguage[1124]", topicva)
+					   text:BLS(1124, topicva)
 				  encrypted:isEncrypted
 				 receivedAt:m.receivedAt
 					command:m.command];
@@ -5508,7 +5682,7 @@
 				[self print:c
 					   type:TVCLogLineDebugType
 					   nick:nil
-					   text:TXTLS(@"BasicLanguage[1157]", nickname, channel)
+					   text:BLS(1157, nickname, channel)
 				 receivedAt:m.receivedAt
 					command:m.command];
 			}
@@ -6121,7 +6295,7 @@
 				[self print:nil
 					   type:TVCLogLineDebugType
 					   nick:nil
-					   text:TXTLS(@"BasicLanguage[1160]", m.sender.nickname)
+					   text:BLS(1160, m.sender.nickname)
 				 receivedAt:m.receivedAt
 					command:m.command];
 
@@ -6143,7 +6317,7 @@
 				[self print:c
 					   type:TVCLogLineWebsiteType
 					   nick:nil
-					   text:TXTLS(@"BasicLanguage[1126]", website)
+					   text:BLS(1126, website)
 				 receivedAt:m.receivedAt
 					command:m.command];
 			}
@@ -6250,7 +6424,7 @@
 
 			NSString *sendern = [m paramAt:1];
 			
-			[self printDebugInformation:TXTLS(@"BasicLanguage[1171]", sendern)];
+			[self printDebugInformation:BLS(1171, sendern)];
 			
 			break;
 		}
@@ -6264,9 +6438,9 @@
 			if ([TPCPreferences locationToSendNotices] == TXNoticeSendCurrentChannelType) {
 				IRCChannel *c = [self.worldController selectedChannelOn:self];
 
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1172]", sendern, hostmask) channel:c];
+				[self printDebugInformation:BLS(1172, sendern, hostmask) channel:c];
 			} else {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1172]", sendern, hostmask)];
+				[self printDebugInformation:BLS(1172, sendern, hostmask)];
 			}
 
 			break;
@@ -6345,7 +6519,7 @@
 		}
 		case 402: // ERR_NOSUCHSERVER
 		{
-			NSString *text = TXTLS(@"BasicLanguage[1139]", m.numericReply, [m sequence:1]);
+			NSString *text = BLS(1139, m.numericReply, [m sequence:1]);
 
 			[self print:nil
 				   type:TVCLogLineDebugType
@@ -6371,7 +6545,7 @@
 		}
 		case 404: // ERR_CANNOTSENDTOCHAN
 		{
-			NSString *text = TXTLS(@"BasicLanguage[1139]", m.numericReply, [m sequence:2]);
+			NSString *text = BLS(1139, m.numericReply, [m sequence:2]);
 
 			IRCChannel *c = [self findChannel:[m paramAt:1]];
 			
@@ -6565,12 +6739,12 @@
 	if (timeSpent >= _timeoutInterval) {
 
 		if (self.config.performDisconnectOnPongTimer) {
-			[self printDebugInformation:TXTLS(@"BasicLanguage[1137]", (timeSpent / 60)) channel:nil];
+			[self printDebugInformation:BLS(1137, (timeSpent / 60)) channel:nil];
 
 			[self disconnect];
 		} else {
 			if (self.timeoutWarningShownToUser == NO) {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1138]", (timeSpent / 60)) channel:nil];
+				[self printDebugInformation:BLS(1138, (timeSpent / 60)) channel:nil];
 
 				self.timeoutWarningShownToUser = YES;
 			}
@@ -6604,7 +6778,7 @@
 		BOOL hideWarnings = [[self auxiliaryConfiguration] boolForKey:@"Hide Network Unavailability Notices on Reconnect"];
 
 		if (hideWarnings == NO) {
-			[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1032]", @(_reconnectInterval))];
+			[self printDebugInformationToConsole:BLS(1032, @(_reconnectInterval))];
 		}
 
 		/* Restart timer. */
@@ -6704,7 +6878,7 @@
 	}
 
 	if (devmode) {
-		[self printDebugInformation:TXTLS(@"BasicLanguage[1196]", script, scriptInput, errord)];
+		[self printDebugInformation:BLS(1196, script, scriptInput, errord)];
 	}
 
 	LogToConsole(BLS(1195), errorb);
@@ -6985,7 +7159,7 @@
 	if (self.config.proxyType == TXConnectionSystemSocksProxyType) {
 		self.socket.connectionUsesSystemSocks = YES;
 
-		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1142]", host, port)];
+		[self printDebugInformationToConsole:BLS(1142, host, port)];
 	} else if (self.config.proxyType == TXConnectionSocks4ProxyType ||
 			   self.config.proxyType == TXConnectionSocks5ProxyType)
 	{
@@ -6997,9 +7171,9 @@
 		self.socket.proxyUsername = self.config.proxyUsername;
 		self.socket.proxySocksVersion = self.config.proxyType;
 
-		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1141]", host, port, self.config.proxyAddress, self.config.proxyPort)];
+		[self printDebugInformationToConsole:BLS(1141, host, port, self.config.proxyAddress, self.config.proxyPort)];
 	} else {
-		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1140]", host, port)];
+		[self printDebugInformationToConsole:BLS(1140, host, port)];
 	}
 
 	self.socket.connectionUsesFloodControl = self.config.outgoingFloodControl;
@@ -7032,7 +7206,7 @@
 	if ([self isHostReachable]) {
 		[self connect:IRCConnectReconnectMode];
 	} else {
-		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1031]", @(self.connectDelay))];
+		[self printDebugInformationToConsole:BLS(1031, @(self.connectDelay))];
 
 		[self performSelector:@selector(autoConnectAfterWakeUp) withObject:nil afterDelay:self.connectDelay];
 	}
@@ -7343,31 +7517,31 @@
 	switch (type) {
 		case TXNotificationFileTransferSendSuccessfulType:
 		{
-			description = TXTLS(@"BasicLanguage[1078]", filename, totalFilesize);
+			description = BLS(1078, filename, totalFilesize);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveSuccessfulType:
 		{
-			description = TXTLS(@"BasicLanguage[1079]", filename, totalFilesize);
+			description = BLS(1079, filename, totalFilesize);
 			
 			break;
 		}
 		case TXNotificationFileTransferSendFailedType:
 		{
-			description = TXTLS(@"BasicLanguage[1080]", filename, totalFilesize);
+			description = BLS(1080, filename, totalFilesize);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveFailedType:
 		{
-			description = TXTLS(@"BasicLanguage[1081]", filename, totalFilesize);
+			description = BLS(1081, filename, totalFilesize);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveRequestedType:
 		{
-			description = TXTLS(@"BasicLanguage[1082]", filename, totalFilesize);
+			description = BLS(1082, filename, totalFilesize);
 			
 			break;
 		}
@@ -7545,7 +7719,7 @@
 - (void)receivedDCCSend:(NSString *)nickname filename:(NSString *)filename address:(NSString *)address port:(NSInteger)port filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken
 {
 	/* Inform of the DCC and possibly ignore it. */
-	NSString *message = TXTLS(@"BasicLanguage[1040]", nickname, filename, totalFilesize);
+	NSString *message = BLS(1040, nickname, filename, totalFilesize);
 	
 	[self print:nil type:TVCLogLineDCCFileTransferType nick:nil text:message command:TXLogLineDefaultRawCommandValue];
 	
@@ -7590,7 +7764,7 @@
 	
 	[self sendCTCPQuery:nickname command:@"DCC SEND" text:trail];
 	
-	NSString *message = TXTLS(@"BasicLanguage[1039]", nickname, filename, totalFilesize);
+	NSString *message = BLS(1039, nickname, filename, totalFilesize);
 	
 	[self print:nil type:TVCLogLineDCCFileTransferType nick:nil text:message command:TXLogLineDefaultRawCommandValue];
 }
@@ -8064,29 +8238,6 @@
 - (void)listDialogWillClose:(TDCListDialog *)sender
 {
     [self.menuController removeWindowFromWindowList:self.listDialogWindowKey];
-}
-
-#pragma mark -
-#pragma mark Deprecated
-
-- (void)printError:(NSString *)error
-{
-	TEXTUAL_DEPRECATED_ASSERT;
-}
-
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text
-{
-	TEXTUAL_DEPRECATED_ASSERT;
-}
-
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt
-{
-	TEXTUAL_DEPRECATED_ASSERT;
-}
-
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt
-{
-	TEXTUAL_DEPRECATED_ASSERT;
 }
 
 @end

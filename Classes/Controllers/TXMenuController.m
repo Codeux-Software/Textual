@@ -50,7 +50,6 @@
 #define _noClientOrChannel			(u == nil || c == nil)
 
 #define _serverCurrentConfig		[u config]
-#define _serverStoredConfig			[u storedConfig]
 
 #define _channelConfig				[c config]
 
@@ -127,7 +126,7 @@
 		[channelMenu setHidden:YES];
 	}
 
-	[logMenuItem setEnabled:[TPCPreferences logToDisk]];
+	[logMenuItem setEnabled:[TPCPreferences logToDiskIsEnabled]];
 	
 #undef _channelMenuSeparatorGlobalMenuTag
 #undef _channelMenuSeparatorContextMenuTag
@@ -300,7 +299,7 @@
 		}
 		case 592: // "Textual Logs"
 		{
-			return _disableInSheet([TPCPreferences logToDisk]);
+			return _disableInSheet([TPCPreferences logToDiskIsEnabled]);
 			
 			break;
 		}
@@ -403,7 +402,7 @@
 				
 				[separator1 setHidden:YES]; 
 				
-				return _disableInSheet([TPCPreferences logToDisk]);
+				return _disableInSheet([TPCPreferences logToDiskIsEnabled]);
 			} else {
 				[item setHidden:YES];
 				
@@ -1196,7 +1195,7 @@
 		return;
 	}
 	
-	[u changeNick:nickname];
+	[u changeNickname:nickname];
 }
 
 - (void)nickSheetWillClose:(TDCNickSheet *)sender
@@ -1244,7 +1243,7 @@
 		return;
 	}
 	
-	IRCClientConfig *config = [u storedConfig];
+	IRCClientConfig *config = [u copyOfStoredConfig];
 	
 	NSString *newName = [[config clientName] stringByAppendingString:@"_"];
 
@@ -1317,7 +1316,7 @@
 	[d setWindow:mainWindow()];
 	
 	[d setClientID:[u treeUUID]];
-	[d setConfig:_serverStoredConfig];
+	[d setConfig:[u copyOfStoredConfig]];
 	
 	[d start:viewType withContext:context];
 
@@ -2513,7 +2512,7 @@
 		
 		[u setChannelList:channels];
 		
-		[u updateConfig:_serverStoredConfig fromTheCloud:NO withSelectionUpdate:NO];
+		[u updateConfig:[u copyOfStoredConfig] fromTheCloud:NO withSelectionUpdate:NO];
 		
 		// Reload actual views.
 		[serverList reloadItem:u reloadChildren:YES];

@@ -59,17 +59,20 @@ typedef enum TXConnectionProxyType : NSInteger {
 @property (nonatomic, assign) BOOL performDisconnectOnPongTimer;
 @property (nonatomic, assign) BOOL performDisconnectOnReachabilityChange;
 @property (nonatomic, assign) BOOL connectionUsesSSL;
+@property (nonatomic, assign) BOOL hideNetworkUnavailabilityNotices;
 @property (nonatomic, assign) BOOL invisibleMode;
 @property (nonatomic, assign) BOOL outgoingFloodControl;
+@property (nonatomic, assign) BOOL saslAuthenticationUsesExternalMechanism;
+@property (nonatomic, assign) BOOL sendAuthenticationRequestsToUserServ;
 @property (nonatomic, assign) BOOL sidebarItemExpanded;
 @property (nonatomic, assign) BOOL validateServerSSLCertificate;
+@property (nonatomic, assign) BOOL zncIgnoreConfiguredAutojoin;
+@property (nonatomic, assign) BOOL zncIgnorePlaybackNotifications;		/* ZNC Related option. */
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 @property (nonatomic, assign) BOOL excludedFromCloudSyncing;
 #endif
 
-@property (nonatomic, assign) BOOL zncIgnoreConfiguredAutojoin;
-@property (nonatomic, assign) BOOL zncIgnorePlaybackNotifications;		/* ZNC Related option. */
 @property (nonatomic, assign) NSInteger floodControlDelayTimerInterval;
 @property (nonatomic, assign) NSInteger floodControlMaximumMessages;
 @property (nonatomic, assign) NSInteger fallbackEncoding;
@@ -100,13 +103,13 @@ typedef enum TXConnectionProxyType : NSInteger {
 @property (nonatomic, assign) BOOL serverPasswordIsSet;
 @property (nonatomic, assign) BOOL nicknamePasswordIsSet;
 @property (nonatomic, assign) BOOL proxyPasswordIsSet;
-@property (nonatomic, strong) NSDictionary *auxiliaryConfiguration;
+@property (nonatomic, assign) NSTimeInterval cachedLastServerTimeCapacityReceivedAtTimestamp;
 
 - (BOOL)isEqualToClientConfiguration:(IRCClientConfig *)seed;
 
 - (id)initWithDictionary:(NSDictionary *)dic;
 
-- (void)setValueToAuxiliaryConfiguration:(id)value forKey:(NSString *)key;
+- (id)copyWithoutPrivateMessages;
 
 - (NSMutableDictionary *)dictionaryValue;
 - (NSMutableDictionary *)dictionaryValue:(BOOL)isCloudDictionary;
