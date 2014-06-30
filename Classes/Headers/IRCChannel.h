@@ -104,12 +104,10 @@ typedef enum IRCChannelStatus : NSInteger {
  It is marked as deprecated instead of being completely removed for now. */
 - (NSArray *)unsortedMemberList TEXTUAL_DEPRECATED;
 
-/* To prevent a plugin from modifying a user that is maintained on the user
- list without then redrawing them, the values returned from these list arrays
- are COPIES of the IRCUser instances that are maintained internally. Modifying
- them once received will only modify the returned result and have absolutely 
- no change at all on those shown in member list. To change the behavior of the
- users shown in the member list, use the above mentioned methods. */
+/* The member list methods returns the actual instance of user stored in 
+ the channels internal cache. IRCUser is not KVO based so if you modify a
+ user returned, then do Textual the kindness of reloading that member in 
+ the member list view. */
 - (NSArray *)sortedByChannelRankMemberList;
 - (NSArray *)sortedByNicknameLengthMemberList;
 

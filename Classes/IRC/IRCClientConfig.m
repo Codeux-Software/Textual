@@ -57,7 +57,11 @@
 		self.channelList				= @[];
 		self.ignoreList					= @[];
 
-		self.auxiliaryConfiguration		= @{};
+		self.cachedLastServerTimeCapacityReceivedAtTimestamp = 0;
+		
+		self.hideNetworkUnavailabilityNotices			= NO;
+		self.saslAuthenticationUsesExternalMechanism	= NO;
+		self.sendAuthenticationRequestsToUserServ		= NO;
 		
 		self.identitySSLCertificate			= nil;
 
@@ -309,6 +313,11 @@
 
 - (id)initWithDictionary:(NSDictionary *)dic
 {
+	return [self initWithDictionary:dic ignorePrivateMessages:NO];
+}
+
+- (id)initWithDictionary:(NSDictionary *)dic ignorePrivateMessages:(BOOL)ignorePMs
+{
 	if ((self = [self init])) {
 		/* If any key does not exist, then its value is inherited from the -init method. */
         [dic assignBoolTo:&_sidebarItemExpanded forKey:@"serverListItemIsExpanded"];
@@ -366,7 +375,11 @@
 		[dic assignBoolTo:&_zncIgnoreConfiguredAutojoin forKey:@"ZNC —> Ignore Pre-configured Autojoin"];
 		[dic assignBoolTo:&_zncIgnorePlaybackNotifications forKey:@"ZNC —> Ignore Playback Buffer Highlights"];
 		
-		[dic assignDictionaryTo:&_auxiliaryConfiguration forKey:@"auxiliaryConfiguration"];
+		[dic assignBoolTo:&_hideNetworkUnavailabilityNotices forKey:@"hideNetworkUnavailabilityNotices"];
+		[dic assignBoolTo:&_saslAuthenticationUsesExternalMechanism forKey:@"saslAuthenticationUsesExternalMechanism"];
+		[dic assignBoolTo:&_sendAuthenticationRequestsToUserServ forKey:@"sendAuthenticationRequestsToUserServ"];
+		
+		[dic assignDoubleTo:&_cachedLastServerTimeCapacityReceivedAtTimestamp forKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
 		
 		[dic assignArrayTo:&_loginCommands forKey:@"onConnectCommands"];
 		
@@ -376,7 +389,13 @@
 		for (NSDictionary *e in [dic arrayForKey:@"channelList"]) {
 			IRCChannelConfig *c = [[IRCChannelConfig alloc] initWithDictionary:e];
 			
-			[channelList addObject:c];
+			if (c.type == IRCChannelPrivateMessageType) {
+				if (ignorePMs == NO) {
+					[channelList addObject:c];
+				}
+			} else {
+				[channelList addObject:c];
+			}
 		}
 		
 		self.channelList = channelList;
@@ -498,7 +517,11 @@
 	[dic setBool:self.zncIgnorePlaybackNotifications	forKey:@"ZNC —> Ignore Playback Buffer Highlights"];
 	[dic setBool:self.zncIgnoreConfiguredAutojoin		forKey:@"ZNC —> Ignore Pre-configured Autojoin"];
 
-	[dic maybeSetObject:self.auxiliaryConfiguration		forKey:@"auxiliaryConfiguration"];
+	[dic setBool:self.hideNetworkUnavailabilityNotices			forKey:@"hideNetworkUnavailabilityNotices"];
+	[dic setBool:self.saslAuthenticationUsesExternalMechanism	forKey:@"saslAuthenticationUsesExternalMechanism"];
+	[dic setBool:self.sendAuthenticationRequestsToUserServ		forKey:@"sendAuthenticationRequestsToUserServ"];
+	
+	[dic setDouble:self.cachedLastServerTimeCapacityReceivedAtTimestamp		forKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
 	
 	[dic maybeSetObject:self.alternateNicknames			forKey:@"identityAlternateNicknames"];
 	[dic maybeSetObject:self.clientName					forKey:@"connectionName"];
@@ -511,7 +534,7 @@
 	[dic maybeSetObject:self.proxyUsername				forKey:@"proxyServerUsername"];
 	[dic maybeSetObject:self.realname					forKey:@"identityRealname"];
 	[dic maybeSetObject:self.serverAddress				forKey:@"serverAddress"];
-	[dic maybeSetObject:self.sleepModeLeavingComment		forKey:@"connectionDisconnectSleepModeMessage"];
+	[dic maybeSetObject:self.sleepModeLeavingComment	forKey:@"connectionDisconnectSleepModeMessage"];
 	[dic maybeSetObject:self.username					forKey:@"identityUsername"];
     
     NSMutableDictionary *floodControl = [NSMutableDictionary dictionary];
@@ -546,18 +569,24 @@
 	return dic;
 }
 
-- (void)setValueToAuxiliaryConfiguration:(id)value forKey:(NSString *)key
-{
-	NSMutableDictionary *mutconf = [self.auxiliaryConfiguration mutableCopy];
-	
-	[mutconf setObject:value forKey:key];
-	
-	self.auxiliaryConfiguration = mutconf;
-}
-
 - (id)copyWithZone:(NSZone *)zone
 {
 	IRCClientConfig *mut = [[IRCClientConfig allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
+	
+	[mut setNicknamePassword:_nicknamePassword];
+	[mut setServerPassword:_serverPassword];
+	[mut setProxyPassword:_proxyPassword];
+	
+	[mut setNicknamePasswordIsSet:_nicknamePasswordIsSet];
+	[mut setServerPasswordIsSet:_serverPasswordIsSet];
+	[mut setProxyPasswordIsSet:_proxyPasswordIsSet];
+	
+	return mut;
+}
+
+- (id)copyWithoutPrivateMessages
+{
+	IRCClientConfig *mut = [[IRCClientConfig alloc] initWithDictionary:[self dictionaryValue] ignorePrivateMessages:YES];
 	
 	[mut setNicknamePassword:_nicknamePassword];
 	[mut setServerPassword:_serverPassword];

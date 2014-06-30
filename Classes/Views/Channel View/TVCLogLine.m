@@ -150,7 +150,7 @@
 		}
 	}
 
-	return [[owner associatedClient] formatNick:self.nickname channel:owner formatOverride:format];
+	return [[owner associatedClient] formatNickname:self.nickname channel:owner formatOverride:format];
 }
 
 - (NSString *)renderedBodyForTranscriptLogInChannel:(IRCChannel *)channel

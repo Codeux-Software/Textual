@@ -139,17 +139,17 @@
 
 - (NSString *)uniqueIdentifier
 {
-	return [self.config itemUUID];
+	return self.config.itemUUID;
 }
 
 - (NSString *)name
 {
-	return [self.config channelName];
+	return self.config.channelName;
 }
 
 - (NSString *)secretKey
 {
-	return [self.config secretKey];
+	return self.config.secretKey;
 }
 
 - (BOOL)isChannel
@@ -310,7 +310,7 @@
 
 - (void)reopenLogFileIfNeeded
 {
-	if ([TPCPreferences logToDisk]) {
+	if ([TPCPreferences logToDiskIsEnabled]) {
 		if ( self.logFile) {
 			[self.logFile reopenIfNeeded];
 		}
@@ -331,7 +331,7 @@
 
 - (void)writeToLogFile:(TVCLogLine *)line
 {
-	if ([TPCPreferences logToDisk]) {
+	if ([TPCPreferences logToDiskIsEnabled]) {
 		if (self.logFile == nil) {
 			self.logFile = [TLOFileLogger new];
 
@@ -620,7 +620,7 @@
 	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueSyncOperationType, ^{
 		@synchronized(self.memberListLengthSortedContainer) {
 			for (IRCUser *user in self.memberListLengthSortedContainer) {
-				[mutlist addObject:[user copy]];
+				[mutlist addObject:user];
 			}
 		}
 	});
@@ -635,7 +635,7 @@
 	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueSyncOperationType, ^{
 		@synchronized(self.memberListStandardSortedContainer) {
 			for (IRCUser *user in self.memberListStandardSortedContainer) {
-				[mutlist addObject:[user copy]];
+				[mutlist addObject:user];
 			}
 		}
 	});

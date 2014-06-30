@@ -897,7 +897,7 @@
 			}
 		}
 
-		self.highlightedLineNumbers = [newList copy];
+		self.highlightedLineNumbers = [newList mutableCopy];
 	}
 }
 
