@@ -268,7 +268,11 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 - (void)sendLine:(NSString *)str;
 - (void)send:(NSString *)str, ...;
 
-- (void)sendPrivmsgToSelectedChannel:(NSString *)message;
+/* When using -sendPrivmsgToSelectedChannel:, if the actual selected channel in the main
+ window is not owned by this client, then the message will be sent to the server console. */
+/* The method obviously does not work as expected so it has been marked as deprecated.
+ However, it will remain functional for plugin authors who wish to use it. */
+- (void)sendPrivmsgToSelectedChannel:(NSString *)message TEXTUAL_DEPRECATED;
 
 #pragma mark -
 

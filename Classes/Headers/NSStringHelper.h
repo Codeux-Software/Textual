@@ -227,6 +227,8 @@
 
 - (NSArray *)splitIntoLines;
 
+- (NSString *)trimmedString;
+
 - (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight;
 - (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight forcedFont:(NSFont *)textFont;
 
@@ -239,6 +241,8 @@
 
 @interface NSMutableAttributedString (TXMutableAttributedStringHelper)
 + (NSMutableAttributedString *)mutableStringWithBase:(NSString *)base attributes:(NSDictionary *)baseAttributes;
+
+- (NSString *)getTokenAsString;
 
 - (NSAttributedString *)getToken;
 - (NSAttributedString *)getTokenIncludingQuotes;
