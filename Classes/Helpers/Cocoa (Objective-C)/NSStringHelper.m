@@ -1427,6 +1427,11 @@
 	return nil;
 }
 
+- (NSString *)trimmedString
+{
+	return [[self string] trim];
+}
+
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set
 {
 	return [self attributedStringByTrimmingCharactersInSet:set frontChop:NULL];
@@ -1555,6 +1560,11 @@
 + (NSMutableAttributedString *)mutableStringWithBase:(NSString *)base attributes:(NSDictionary *)baseAttributes
 {
 	return [[NSMutableAttributedString alloc] initWithString:base attributes:baseAttributes];
+}
+
+- (NSString *)getTokenAsString
+{
+	return [[self getToken] string];
 }
 
 - (NSAttributedString *)getToken

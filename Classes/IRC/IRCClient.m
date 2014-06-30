@@ -1404,12 +1404,12 @@
 
 - (void)inputText:(id)str command:(NSString *)command
 {
-	id sel = self.worldController.selectedItem;
+	id sel = [mainWindow() selectedItem];
+	
+	PointerIsEmptyAssert(sel);
 
 	NSObjectIsEmptyAssert(str);
 	NSObjectIsEmptyAssert(command);
-	
-	PointerIsEmptyAssert(sel);
 
 	if ([str isKindOfClass:[NSString class]]) {
 		str = [NSAttributedString emptyStringWithBase:str];
@@ -1418,11 +1418,11 @@
 	NSArray *lines = [str performSelector:@selector(splitIntoLines)];
 
 	for (__strong NSAttributedString *s in lines) {
-		NSRange chopRange = NSMakeRange(1, (s.length - 1));
+		NSRange chopRange = NSMakeRange(1, ([s length] - 1));
 
 		if ([sel isClient]) {
-			if ([s.string hasPrefix:@"/"]) {
-				if (s.length > 1) {
+			if ([[s string] hasPrefix:@"/"]) {
+				if ([s length] > 1) {
 					s = [s attributedSubstringFromRange:chopRange];
 					
 					[self sendCommand:s];
@@ -1433,12 +1433,12 @@
 		} else {
 			IRCChannel *channel = (IRCChannel *)sel;
 
-			if ([s.string hasPrefix:@"/"] && [s.string hasPrefix:@"//"] == NO && s.length > 1) {
+			if ([[s string] hasPrefix:@"/"] && [[s string] hasPrefix:@"//"] == NO && [s length] > 1) {
 				s = [s attributedSubstringFromRange:chopRange];
 
 				[self sendCommand:s];
 			} else {
-				if ([s.string hasPrefix:@"/"] && s.length > 1) {
+				if ([[s string] hasPrefix:@"/"] && [s length] > 1) {
 					s = [s attributedSubstringFromRange:chopRange];
 				}
 
@@ -1481,20 +1481,20 @@
 	for (NSAttributedString *line in lines) {
 		NSMutableAttributedString *strc = [line mutableCopy];
 
-		while (strc.length >= 1)
+		while ([strc length] >= 1)
 		{
 			NSString *newstr = [strc attributedStringToASCIIFormatting:&strc
 															  lineType:type
-															   channel:channel.name
-															  hostmask:self.myHost];
+															   channel:[channel name]
+															  hostmask:self.cachedLocalHostmask];
 
             BOOL encrypted = (encryptChat && [self isSupportedMessageEncryptionFormat:newstr channel:channel]);
 
-            [self print:channel
+			[self print:channel
 				   type:type
-				   nick:self.localNickname
-				   text:newstr
-			  encrypted:encrypted
+			   nickname:[self localNickname]
+			messageBody:newstr
+			isEncrypted:encrypted
 			 receivedAt:[NSDate date]
 				command:commandActual];
 
@@ -1508,22 +1508,20 @@
 				newstr = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, IRCPrivateCommandIndex("action"), newstr, 0x01];
 			}
 
-			[self send:command, channel.name, newstr, nil];
+			[self send:command, [channel name], newstr, nil];
 		}
 	}
 	
-	[self processBundlesUserMessage:str.string command:NSStringEmptyPlaceholder];
+	[self processBundlesUserMessage:[str string] command:NSStringEmptyPlaceholder];
 }
 
 - (void)sendPrivmsgToSelectedChannel:(NSString *)message
 {
-	if (NSIsCurrentThreadMain() == NO) {
-		[[self invokeOnMainThread] sendPrivmsgToSelectedChannel:message];
-	} else {
+	[self performBlockOnMainThread:^{
 		[self sendText:[NSAttributedString emptyStringWithBase:message]
 			   command:IRCPrivateCommandIndex("privmsg")
-			   channel:[self.worldController selectedChannelOn:self]];
-	}
+			   channel:[mainWindow() selectedChannelOn:self]];
+	}];
 }
 
 - (void)sendCTCPQuery:(NSString *)target command:(NSString *)command text:(NSString *)text
@@ -1587,17 +1585,17 @@
 		}
 	}
 
-	NSString *rawcaseCommand = s.getToken.string;
+	NSString *rawcaseCommand = [s getTokenAsString];
 	
 	NSString *uppercaseCommand = [rawcaseCommand uppercaseString];
 	NSString *lowercaseCommand = [rawcaseCommand lowercaseString];
 	
-	IRCClient *u = [self.worldController selectedClient];
-	IRCChannel *c = [self.worldController selectedChannel];
+	IRCClient *u = [mainWindow() selectedClient];
+	IRCChannel *c = [mainWindow() selectedChannel];
 
 	IRCChannel *selChannel = nil;
 
-	if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("mode")] && ([s.string hasPrefix:@"+"] || [s.string hasPrefix:@"-"]) == NO) {
+	if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("mode")] && ([[s string] hasPrefix:@"+"] || [[s string] hasPrefix:@"-"]) == NO) {
 		// Do not complete for /mode #chname ...
 	} else if (completeTarget && targetChannelName) {
 		selChannel = [self findChannel:targetChannelName];
@@ -1605,9 +1603,9 @@
 		selChannel = c;
 	}
 	
-	NSString *uncutInput = s.string;
+	NSString *uncutInput = [s string];
 
-	switch ([TPCPreferences indexOfIRCommand:uppercaseCommand publicSearch:YES]) {
+	switch ([IRCCommandIndex indexOfIRCommand:uppercaseCommand publicSearch:YES]) {
 		case 5004: // Command: AWAY
 		{
 			if (NSObjectIsEmpty(uncutInput)) {
@@ -1617,13 +1615,15 @@
             if (self.isAway) {
                 uncutInput = nil;
             }
+			
+			BOOL setAway = NSObjectIsNotEmpty(uncutInput);
 
             if ([TPCPreferences awayAllConnections]) {
-                for (IRCClient *client in self.worldController.clients) {
-                    [client toggleAwayStatus:NSObjectIsNotEmpty(uncutInput) withReason:uncutInput];
+                for (IRCClient *client in [worldController() clientList]) {
+                    [client toggleAwayStatus:setAway withReason:uncutInput];
                 }
             } else {
-                [self toggleAwayStatus:NSObjectIsNotEmpty(uncutInput) withReason:uncutInput];
+                [self toggleAwayStatus:setAway withReason:uncutInput];
             }
 
 			break;
@@ -1634,12 +1634,12 @@
 
 			NSMutableArray *nicks = [NSMutableArray arrayWithArray:[uncutInput componentsSeparatedByString:NSStringWhitespacePlaceholder]];
 
-			if (NSObjectIsNotEmpty(nicks) && [nicks.lastObject isChannelName:self]) {
+			if (NSObjectIsNotEmpty(nicks) && [[nicks lastObject] isChannelName:self]) {
 				targetChannelName = [nicks lastObject];
 
 				[nicks removeLastObject];
-			} else if (selChannel && selChannel.isChannel) {
-				targetChannelName = selChannel.name;
+			} else if (selChannel && [selChannel isChannel]) {
+				targetChannelName = [selChannel name];
 			} else {
 				return;
 			}
@@ -1655,12 +1655,12 @@
 		case 5031: // Command: J
 		case 5032:  // Command: JOIN
 		{
-			if (selChannel && selChannel.isChannel && NSObjectIsEmpty(uncutInput)) {
-				targetChannelName = selChannel.name;
+			if (selChannel && [selChannel isChannel] && NSObjectIsEmpty(uncutInput)) {
+				targetChannelName = [selChannel name];
 			} else {
 				NSObjectIsEmptyAssert(uncutInput);
 
-				targetChannelName = s.getToken.string;
+				targetChannelName = [s getTokenAsString];
 
 				if ([targetChannelName isChannelName:self] == NO && [targetChannelName isEqualToString:@"0"] == NO) {
 					targetChannelName = [@"#" stringByAppendingString:targetChannelName];
@@ -1669,7 +1669,7 @@
 
 			self.inUserInvokedJoinRequest = YES;
 
-			[self send:IRCPrivateCommandIndex("join"), targetChannelName, s.string, nil];
+			[self send:IRCPrivateCommandIndex("join"), targetChannelName, [s string], nil];
 
 			break;
 		}
@@ -1677,16 +1677,16 @@
 		{
 			NSObjectIsEmptyAssert(uncutInput);
 				
-			if (selChannel && selChannel.isChannel && [uncutInput isChannelName:self] == NO) {
-				targetChannelName = selChannel.name;
+			if (selChannel && [selChannel isChannel] && [uncutInput isChannelName:self] == NO) {
+				targetChannelName = [selChannel name];
 			} else {
-				targetChannelName = s.getToken.string;
+				targetChannelName = [s getTokenAsString];
 			}
 
 			NSAssertReturn([targetChannelName isChannelName:self]);
 
-			NSString *nickname = s.getToken.string;
-			NSString *reason = s.string.trim;
+			NSString *nickname = [s getTokenAsString];
+			NSString *reason = [s trimmedString];
 
 			NSObjectIsEmptyAssert(nickname);
 
@@ -1702,8 +1702,8 @@
 		{
 			NSObjectIsEmptyAssert(uncutInput);
 
-			NSString *nickname = s.getToken.string;
-			NSString *reason = s.string.trim;
+			NSString *nickname = [s getTokenAsString];
+			NSString *reason = [s trimmedString];
 
 			if (NSObjectIsEmpty(reason)) {
 				reason = [TPCPreferences IRCopDefaultKillMessage];
@@ -1715,11 +1715,11 @@
 		}
 		case 5037: // Command: LIST
 		{
-			if (PointerIsEmpty([self listDialog])) {
+			if ([self listDialog] == nil) {
 				[self createChannelListDialog];
 			}
 
-			[self send:IRCPrivateCommandIndex("list"), s.string, nil];
+			[self send:IRCPrivateCommandIndex("list"), [s string], nil];
 
 			break;
 		}
@@ -1727,14 +1727,14 @@
 		{
 			NSObjectIsEmptyAssert(uncutInput);
 			
-			NSString *newnick = s.getToken.string;
+			NSString *newnick = [s getTokenAsString];
 			
 			if ([TPCPreferences nickAllConnections]) {
-				for (IRCClient *client in self.worldController.clients) {
-					[client changeNick:newnick];
+				for (IRCClient *client in [worldController() clientList]) {
+					[client changeNickname:newnick];
 				}
 			} else {
-				[self changeNick:newnick];
+				[self changeNickname:newnick];
 			}
 
 			break;
@@ -1800,16 +1800,13 @@
 				uppercaseCommand = IRCPrivateCommandIndex("privmsg");
 			}
 
-			//rawcaseCommand = uppercaseCommand; // Analyze: Never read.
-			//lowercaseCommand = uppercaseCommand.lowercaseString; // Analyze: Never read.
-
 			/* Destination. */
 			if (selChannel && type == TVCLogLineActionType && secretMsg == NO) {
-				targetChannelName = selChannel.name;
-			} else if (selChannel && selChannel.isChannel && opMsg && [s.string isChannelName:self] == NO) {
-				targetChannelName = selChannel.name;
+				targetChannelName = [selChannel name];
+			} else if (selChannel && [selChannel isChannel] && [[s string] isChannelName:self] == NO && opMsg) {
+				targetChannelName = [selChannel name];
 			} else {
-				targetChannelName = s.getToken.string;
+				targetChannelName = [s getTokenAsString];
 			}
 
 			if (type == TVCLogLineActionType) {
@@ -1818,7 +1815,7 @@
 					 when using the /me command so that the use of /me without any input
 					 still sends an action. */
 
-					s = [[NSAttributedString emptyStringWithBase:NSStringWhitespacePlaceholder] mutableCopy];
+					s = [NSMutableAttributedString mutableStringWithBase:NSStringWhitespacePlaceholder attributes:nil];
 				}
 			} else {
 				NSObjectIsEmptyAssert(s);
@@ -1828,9 +1825,9 @@
 			
 			NSArray *targets = [targetChannelName componentsSeparatedByString:@","];
 
-			while (s.length >= 1)
+			while ([s length] >= 1)
 			{
-				NSString *t = [s attributedStringToASCIIFormatting:&s lineType:type channel:targetChannelName hostmask:self.myHost];
+				NSString *t = [s attributedStringToASCIIFormatting:&s lineType:type channel:targetChannelName hostmask:self.cachedLocalHostmask];
 
 				for (__strong NSString *channelName in targets) {
 					BOOL opPrefix = NO;
@@ -1838,25 +1835,25 @@
 					if ([channelName hasPrefix:@"@"]) {
 						opPrefix = YES;
 
-						channelName = [channelName safeSubstringFromIndex:1];
+						channelName = [channelName substringFromIndex:1];
 					}
 
 					IRCChannel *channel = [self findChannel:channelName];
 
-					if (PointerIsEmpty(channel) && secretMsg == NO) {
+					if (channel == nil && secretMsg == NO) {
 						if ([channelName isChannelName:self] == NO) {
-							channel = [self.worldController createPrivateMessage:channelName client:self];
+							channel = [worldController() createPrivateMessage:channelName client:self];
 						}
 					}
 
 					if (channel) {
                         BOOL encrypted = (doNotEncrypt == NO && [self isSupportedMessageEncryptionFormat:t channel:channel]);
 
-                        [self print:channel
+						[self print:channel
 							   type:type
-							   nick:self.localNickname
-							   text:t
-						  encrypted:encrypted
+						   nickname:[self localNickname]
+						messageBody:t
+						isEncrypted:encrypted
 						 receivedAt:[NSDate date]
 							command:uppercaseCommand];
 
@@ -1879,7 +1876,7 @@
 
 					/* Focus message destination? */
 					if (channel && secretMsg == NO && [TPCPreferences giveFocusOnMessageCommand]) {
-						[self.worldController select:channel];
+						[mainWindow() select:channel];
 					}
 				}
 			}
@@ -1889,21 +1886,21 @@
 		case 5054: // Command: PART
 		case 5036: // Command: LEAVE
 		{
-			if (selChannel && selChannel.isChannel && [uncutInput isChannelName:self] == NO) {
-				targetChannelName = selChannel.name;
-			} else if (selChannel && selChannel.isPrivateMessage && [uncutInput isChannelName:self] == NO) {
-				[self.worldController destroyChannel:selChannel];
+			if (selChannel && [selChannel isChannel] && [uncutInput isChannelName:self] == NO) {
+				targetChannelName = [selChannel name];
+			} else if (selChannel && [selChannel isPrivateMessage] && [uncutInput isChannelName:self] == NO) {
+				[worldController() destroyChannel:selChannel];
 
 				return;
 			} else {
 				NSObjectIsEmptyAssert(uncutInput);
 				
-				targetChannelName = s.getToken.string;
+				targetChannelName = [s getTokenAsString];
 			}
 
 			NSAssertReturn([targetChannelName isChannelName:self]);
 
-			NSString *reason = s.string.trim;
+			NSString *reason = [s trimmedString];
 
 			if (NSObjectIsEmpty(reason)) {
 				reason = self.config.normalLeavingComment;
@@ -1922,10 +1919,10 @@
 		case 5070: // Command: TOPIC
 		case 5067: // Command: T
 		{
-			if (selChannel && selChannel.isChannel && [uncutInput isChannelName:self] == NO) {
-				targetChannelName = selChannel.name;
+			if (selChannel && [selChannel isChannel] && [uncutInput isChannelName:self] == NO) {
+				targetChannelName = [selChannel name];
 			} else {
-				targetChannelName = s.getToken.string;
+				targetChannelName = [s getTokenAsString];
 			}
 
 			NSAssertReturn([targetChannelName isChannelName:self]);
@@ -1974,12 +1971,12 @@
 		}
 		case 5080: // Command: WHOIS
 		{
-			NSString *nickname1 = s.getToken.string;
-			NSString *nickname2 = s.getToken.string;
+			NSString *nickname1 = [s getTokenAsString];
+			NSString *nickname2 = [s getTokenAsString];
 
 			if (NSObjectIsEmpty(nickname1)) {
 				if (selChannel.isPrivateMessage) {
-					nickname1 = selChannel.name;
+					nickname1 = [selChannel name];
 				} else {
 					return;
 				}
@@ -1995,13 +1992,13 @@
 		}
 		case 5014: // Command: CTCP
 		{
-			if (selChannel && selChannel.isPrivateMessage) {
-				targetChannelName = selChannel.name;
+			if (selChannel && [selChannel isPrivateMessage]) {
+				targetChannelName = [selChannel name];
 			} else {
-				targetChannelName = s.getToken.string;
+				targetChannelName = [s getTokenAsString];
 			}
 
-			NSString *subCommand = s.getToken.string.uppercaseString;
+			NSString *subCommand = [[s getTokenAsString] uppercaseString];
 
 			NSObjectIsEmptyAssert(subCommand);
 			NSObjectIsEmptyAssert(targetChannelName);
@@ -2009,25 +2006,25 @@
 			if ([subCommand isEqualToString:IRCPrivateCommandIndex("ctcp_ping")]) {
 				[self sendCTCPPing:targetChannelName];
 			} else {
-				[self sendCTCPQuery:targetChannelName command:subCommand text:s.string];
+				[self sendCTCPQuery:targetChannelName command:subCommand text:[s string]];
 			}
 
 			break;
 		}
 		case 5015: // Command: CTCPREPLY
 		{
-			if (selChannel && selChannel.isPrivateMessage) {
-				targetChannelName = selChannel.name;
+			if (selChannel && [selChannel isPrivateMessage]) {
+				targetChannelName = [selChannel name];
 			} else {
-				targetChannelName = s.getToken.string;
+				targetChannelName = [s getTokenAsString];
 			}
-
-			NSString *subCommand = s.getToken.string.uppercaseString;
-
+			
+			NSString *subCommand = [[s getTokenAsString] uppercaseString];
+			
 			NSObjectIsEmptyAssert(subCommand);
 			NSObjectIsEmptyAssert(targetChannelName);
 
-			[self sendCTCPReply:targetChannelName command:subCommand text:s.string];
+			[self sendCTCPReply:targetChannelName command:subCommand text:[s string]];
 			
 			break;
 		}
@@ -2036,22 +2033,22 @@
 		{
 			NSObjectIsEmptyAssert(uncutInput);
 			
-			if (selChannel && selChannel.isChannel && [uncutInput isChannelName:self] == NO) {
-				targetChannelName = selChannel.name;
+			if (selChannel && [selChannel isChannel] && [uncutInput isChannelName:self] == NO) {
+				targetChannelName = [selChannel name];
 			} else {
-				targetChannelName = s.getToken.string;
+				targetChannelName = [s getTokenAsString];
 			}
 
 			NSAssertReturn([targetChannelName isChannelName:self]);
 
-			NSString *banmask = s.getToken.string;
+			NSString *banmask = [s getTokenAsString];
 			
 			NSObjectIsEmptyAssert(banmask);
 
 			IRCChannel *channel = [self findChannel:targetChannelName];
 
 			if (channel) {
-				IRCUser *user = [channel memberWithNickname:banmask];
+				IRCUser *user = [channel findMember:banmask];
 
 				if (user) {
 					banmask = [user banMask];
@@ -2214,7 +2211,7 @@
 			BOOL isIgnoreCommand = [uppercaseCommand isEqualToString:IRCPublicCommandIndex("ignore")];
 
 			if (isIgnoreCommand) {
-				NSString *nickname = [[s getToken] string];
+				NSString *nickname = [s getTokenAsString];
 
 				if (NSObjectIsNotEmpty(nickname) || PointerIsEmpty(selChannel)) {
 					[self.menuController showServerPropertyDialog:self withDefaultView:@"addressBook" andContext:nickname];
