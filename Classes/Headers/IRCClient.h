@@ -63,6 +63,14 @@ typedef enum IRCClientIdentificationWithSASLMechanism : NSInteger {
 	IRCClientIdentificationWithSASLExternalMechanism,
 } IRCClientIdentificationWithSASLMechanism;
 
+/* Always check for ClientIRCv3SupportedCapacityServerTime if the server-time
+ capacity is being checked. ClientIRCv3SupportedCapacityZNCServerTime and
+ ClientIRCv3SupportedCapacityZNCServerTimeISO are used internally for 
+ capacity negotation but once accepted, the default server-time flag 
+ is set for the maintained capacity. */
+/* ClientIRCv3SupportedCapacitySASL… is sent once negotation begins. It is 
+ reset if negotation fails. Use ClientIRCv3SupportedCapacityIsIdentifiedWithSASL
+ to find actual status of identification. */
 typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 	ClientIRCv3SupportedCapacityAwayNotify				= 1 << 0, // YES if away-notify CAP supported.
 	ClientIRCv3SupportedCapacityIdentifyCTCP			= 1 << 1, // YES if identify-ctcp CAP supported.
@@ -71,9 +79,13 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 	ClientIRCv3SupportedCapacityServerTime				= 1 << 4, // YES if server-time CAP supported.
 	ClientIRCv3SupportedCapacityUserhostInNames			= 1 << 5, // YES if userhost-in-names CAP supported.
 	ClientIRCv3SupportedCapacityWatchCommand			= 1 << 6, // YES if the WATCH command is supported.
-	ClientIRCv3SupportedCapacityZNCPlaybackModule		= 1 << 7, // YES if the ZNC vendor specific playback CAP supported.
-	ClientIRCv3SupportedCapacityIsInSASLNegotiation		= 1 << 8, // YES if in SASL CAP authentication request, else NO.
-	ClientIRCv3SupportedCapacityIsIdentifiedWithSASL	= 1 << 9, // YES if SASL authentication was successful, else NO.
+	ClientIRCv3SupportedCapacityZNCPlaybackModule		= 1 << 7, // YES if the ZNC vendor specific CAP supported.
+	ClientIRCv3SupportedCapacityZNCServerTime			= 1 << 8, // YES if the ZNC vendor specific CAP supported.
+	ClientIRCv3SupportedCapacityZNCServerTimeISO		= 1 << 9, // YES if the ZNC vendor specific CAP supported.
+	ClientIRCv3SupportedCapacitySASLPlainText			= 1 << 10, // YES if SASL plain text CAP is supported.
+	ClientIRCv3SupportedCapacitySASLExternal			= 1 << 11, // YES if SASL external CAP is supported.
+	ClientIRCv3SupportedCapacityIsInSASLNegotiation		= 1 << 12, // YES if in SASL CAP authentication request, else NO.
+	ClientIRCv3SupportedCapacityIsIdentifiedWithSASL	= 1 << 13, // YES if SASL authentication was successful, else NO.
 } ClientIRCv3SupportedCapacities;
 
 typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
@@ -104,8 +116,6 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 @property (nonatomic, assign) BOOL rawModeEnabled;				// YES if sent & received data should be logged to console, else NO.
 @property (nonatomic, assign) BOOL reconnectEnabled;			// YES if reconnection is allowed, else NO.
 @property (nonatomic, assign) BOOL serverHasNickServ;			// YES if NickServ service was found on server, else NO.
-@property (nonatomic, assign) ClientIRCv3SupportedCapacities CAPAcceptedCaps;
-@property (nonatomic, assign) ClientIRCv3SupportedCapacities CAPPendingCaps;
 @property (nonatomic, assign) ClientIRCv3SupportedCapacities capacities;
 @property (nonatomic, nweak) NSArray *channelList; // channelList is actually a proxy setter/getter for internal storage.
 @property (nonatomic, copy) NSArray *cachedHighlights;

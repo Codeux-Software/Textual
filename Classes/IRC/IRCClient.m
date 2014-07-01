@@ -104,6 +104,7 @@
 @property (nonatomic, strong) TLOTimer *retryTimer;
 @property (nonatomic, strong) TLOTimer *trialPeriodTimer;
 @property (nonatomic, strong) TLOTimer *commandQueueTimer;
+@property (nonatomic, assign) ClientIRCv3SupportedCapacities capacitiesPending;
 @property (nonatomic, strong) NSMutableArray *channels;
 @property (nonatomic, strong) NSMutableArray *commandQueue;
 @property (nonatomic, strong) NSMutableDictionary *trackedUsers;
@@ -136,6 +137,10 @@
 		self.inUserInvokedWatchRequest = NO;
 		
 		/* ---- */
+		self.capacitiesPending = 0;
+		self.capacities = 0;
+		
+		/* ---- */
 		self.isAutojoined = NO;
 		self.isAway = NO;
 		self.isConnected = NO;
@@ -152,7 +157,6 @@
 		self.rawModeEnabled = NO;
 		self.reconnectEnabled = NO;
 		self.serverHasNickServ = NO;
-		self.sendLagcheckReplyToChannel = NO;
 		self.timeoutWarningShownToUser = NO;
 		
 		/* ---- */
@@ -3465,9 +3469,8 @@
 	self.lastMessageReceived = 0;
 	
 	self.CAPPausedStatus = 0;
-	self.CAPAcceptedCaps = 0;
-	self.CAPPendingCaps = 0;
 	
+	self.capacitiesPending = 0;
 	self.capacities = 0;
 
 	@synchronized(self.commandQueue) {
@@ -4755,17 +4758,18 @@
 {
 	IRCAddressBookEntry *ignoreChecks;
 
-	NSString *oldNick = m.sender.nickname;
+	NSString *oldNick = [m senderNickname];
+	
 	NSString *newNick;
 	NSString *target;
 
 	/* Check input conditions. */
-	if (m.isPrintOnlyMessage == NO) {
+	if ([m isPrintOnlyMessage] == NO) {
 		NSAssert(([m paramsCount] == 1), @"Bad receiveNick: conditions.");
 
         newNick = [m paramAt:0];
 	} else {
-		NSAssert(([m paramsCount] == 2), @"Bad m.isPrintOnlyMessage conditions.");
+		NSAssert(([m paramsCount] == 2), @"Bad [m isPrintOnlyMessage] conditions.");
 
 		target = [m paramAt:0];
         newNick = [m paramAt:1];
@@ -4777,15 +4781,16 @@
 	}
 
 	/* Prepare ignore checks. */
-	BOOL myself = [oldNick isEqualIgnoringCase:self.localNickname];
+	BOOL myself = [oldNick isEqualIgnoringCase:[self localNickname]];
 
 	if (myself) {
-		if (m.isPrintOnlyMessage == NO) {
-			self.myNick = newNick;
-			self.sentNick = newNick;
+		if ([m isPrintOnlyMessage] == NO) {
+			self.cachedLocalNickname = newNick;
+			
+			self.tryingNicknameSentNickname = newNick;
 		}
 	} else {
-		if (m.isPrintOnlyMessage == NO) {
+		if ([m isPrintOnlyMessage] == NO) {
 			/* Check new nickname in address book user check. */
 			ignoreChecks = [self checkIgnoreAgainstHostmask:[newNick stringByAppendingString:@"!-@-"]
 												withMatches:@[@"notifyJoins"]];
@@ -4794,39 +4799,37 @@
 		}
 
 		/* Check old nickname in address book user check. */
-		ignoreChecks = [self checkIgnoreAgainstHostmask:m.sender.hostmask
+		ignoreChecks = [self checkIgnoreAgainstHostmask:[m senderHostmask]
 											withMatches:@[@"ignoreJPQE", @"notifyJoins"]];
 
-		if (m.isPrintOnlyMessage == NO) {
+		if ([m isPrintOnlyMessage] == NO) {
 			[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
 		}
 	}
 
 	/* Is this a targetted print message? */
-	if (m.isPrintOnlyMessage) {
+	if ([m isPrintOnlyMessage]) {
 		IRCChannel *c = [self findChannel:target];
 
 		if (c) {
-			if ((myself == NO && [ignoreChecks ignoreJPQE] == NO && [TPCPreferences showJoinLeave] && c.config.ignoreJPQActivity == NO)) {
-				NSString *text = TXTLS(@"BasicLanguage[1152][0]", oldNick, newNick);
+			NSString *text = nil;
+			
+			if (myself == NO && [TPCPreferences showJoinLeave] && [ignoreChecks ignoreJPQE] == NO && c.config.ignoreJPQActivity == NO) {
+				text = TXTLS(@"BasicLanguage[1152][0]", oldNick, newNick);
 
-				[self print:c
-					   type:TVCLogLineNickType
-					   nick:nil
-					   text:text
-				 receivedAt:m.receivedAt
-					command:m.command];
 			}
             
 			if (myself == YES) {
-				NSString *text = TXTLS(@"BasicLanguage[1152][1]", newNick);
-
+				text = TXTLS(@"BasicLanguage[1152][1]", newNick);
+			}
+			
+			if (text) {
 				[self print:c
 					   type:TVCLogLineNickType
-					   nick:nil
-					   text:text
-				 receivedAt:m.receivedAt
-					command:m.command];
+				   nickname:nil
+				messageBody:text
+				 receivedAt:[m receivedAt]
+					command:[m command]];
 			}
 		}
 
@@ -4836,32 +4839,30 @@
 	}
 
 	/* Continue with normal operations. */
-	for (IRCChannel *c in self.channels) {
-		if ([c memberWithNickname:oldNick]) {
-            
-			if ((myself == NO && [ignoreChecks ignoreJPQE] == NO && [TPCPreferences showJoinLeave] && c.config.ignoreJPQActivity == NO)) {
-				NSString *text = TXTLS(@"BasicLanguage[1152][0]", oldNick, newNick);
-
-				[self print:c
-					   type:TVCLogLineNickType
-					   nick:nil
-					   text:text
-				 receivedAt:m.receivedAt
-					command:m.command];
+	@synchronized(self.channels) {
+		for (IRCChannel *c in self.channels) {
+			if ([c memberExists:oldNick]) {
+				NSString *text = nil;
+				
+				if ((myself == NO && [TPCPreferences showJoinLeave] && [ignoreChecks ignoreJPQE] == NO && c.config.ignoreJPQActivity == NO)) {
+					text = TXTLS(@"BasicLanguage[1152][0]", oldNick, newNick);
+				}
+				
+				if (myself == YES) {
+					text = TXTLS(@"BasicLanguage[1152][1]", newNick);
+				}
+				
+				if (text) {
+					[self print:c
+						   type:TVCLogLineNickType
+					   nickname:nil
+					messageBody:text
+					 receivedAt:[m receivedAt]
+						command:[m command]];
+				}
+				
+				[c renameMember:oldNick to:newNick];
 			}
-            
-			if (myself == YES) {
-				NSString *text = TXTLS(@"BasicLanguage[1152][1]", newNick);
-
-				[self print:c
-					   type:TVCLogLineNickType
-					   nick:nil
-					   text:text
-				 receivedAt:m.receivedAt
-					command:m.command];
-			}
-
-			[c renameMember:oldNick to:newNick];
 		}
 	}
 
@@ -4870,26 +4871,31 @@
 
 	PointerIsEmptyAssert(c);
 
-	if (t && [c.name isEqualIgnoringCase:t.name] == NO) {
-		[self.worldController destroyChannel:t];
+	if (t) {
+		/* If a query of this name already exists, then we
+		 destroy it before changing name of old. */
+		if (NSObjectsAreEqual([c name], [t name]) == NO) {
+			[worldController() destroyChannel:t];
+		}
 	}
 
-	c.name = newNick;
+	[c setName:newNick];
 
-	[self.worldController reloadTreeItem:c];
+	[mainWindow() reloadTreeItem:c];
 	
 	if (myself) {
-		[self.worldController updateTitleFor:c];
+		[mainWindow() updateTitleFor:c];
 	}
 	
-	[self.fileTransferController nicknameChanged:oldNick toNickname:newNick client:self];
+	[[self fileTransferController] nicknameChanged:oldNick toNickname:newNick client:self];
 }
 
 - (void)receiveMode:(IRCMessage *)m
 {
 	NSAssertReturn([m paramsCount] >= 2);
 
-	NSString *sendern = m.sender.nickname;
+	NSString *sendern = [m senderNickname];
+	
 	NSString *targetc = [m paramAt:0];
 	NSString *modestr = [m sequence:1];
 
@@ -4898,43 +4904,43 @@
 
 		PointerIsEmptyAssert(c);
 		
-		if (m.isPrintOnlyMessage == NO) {
-			NSArray *info = [c.modeInfo update:modestr];
+		if ([m isPrintOnlyMessage] == NO) {
+			NSArray *info = [[c modeInfo] update:modestr];
 
 			BOOL performWho = NO;
 
 			for (IRCModeInfo *h in info) {
-				[c changeMember:h.modeParamater mode:h.modeToken value:h.modeIsSet];
+				[c changeMember:[h modeParamater] mode:[h modeToken] value:[h modeIsSet]];
 
-				if (h.modeIsSet == NO && self.capacities.multiPrefixCapInUse == NO) {
+				if ([h modeIsSet] == NO && [self isCapacityEnabled:ClientIRCv3SupportedCapacityMultiPreifx] == NO) {
 					performWho = YES;
 				}
 			}
 
 			if (performWho) {
-				[self send:IRCPrivateCommandIndex("who"), c.name, nil, nil];
+				[self send:IRCPrivateCommandIndex("who"), [c name], nil, nil];
 			}
 		}
 
 		if ([TPCPreferences showJoinLeave] && c.config.ignoreJPQActivity == NO) {
 			[self print:c
 				   type:TVCLogLineModeType
-				   nick:nil
-				   text:BLS(1145, sendern, modestr)
-			 receivedAt:m.receivedAt
-				command:m.command];
+			   nickname:nil
+			messageBody:BLS(1145, sendern, modestr)
+			 receivedAt:[m receivedAt]
+				command:[m command]];
 		}
 
-		if (m.isPrintOnlyMessage == NO) {
-			[self.worldController updateTitleFor:c];
+		if ([m isPrintOnlyMessage] == NO) {
+			[mainWindow() updateTitleFor:c];
 		}
 	} else {
 		[self print:nil
 			   type:TVCLogLineModeType
-			   nick:nil
-			   text:BLS(1145, sendern, modestr)
-		 receivedAt:m.receivedAt
-			command:m.command];
+		   nickname:nil
+		messageBody:BLS(1145, sendern, modestr)
+		 receivedAt:[m receivedAt]
+			command:[m command]];
 	}
 }
 
@@ -4942,7 +4948,8 @@
 {
 	NSAssertReturn([m paramsCount] == 2);
 
-	NSString *sendern = m.sender.nickname;
+	NSString *sendern = [m senderNickname];
+	
 	NSString *channel = [m paramAt:0];
 	NSString *topicav = [m paramAt:1];
 
@@ -4954,36 +4961,39 @@
 		[self decryptIncomingMessage:&topicav channel:c];
 	}
 	
-	if (m.isPrintOnlyMessage == NO) {
+	if ([m isPrintOnlyMessage] == NO) {
 		[c setTopic:topicav];
 	}
 
 	[self print:c
 		   type:TVCLogLineTopicType
-		   nick:nil
-		   text:BLS(1128, sendern, topicav)
-	  encrypted:isEncrypted
-	 receivedAt:m.receivedAt
-		command:m.command];
+	   nickname:nil
+	messageBody:BLS(1128, sendern, topicav)
+	isEncrypted:isEncrypted
+	 receivedAt:[m receivedAt]
+		command:[m command]];
 }
 
 - (void)receiveInvite:(IRCMessage *)m
 {
 	NSAssertReturn([m paramsCount] == 2);
 
-	NSString *sendern = m.sender.nickname;
+	NSString *sendern = [m senderNickname];
+	
 	NSString *channel = [m paramAt:1];
 	
-	NSString *text = BLS(1158, sendern, m.sender.username, m.sender.address, channel);
+	NSString *text = BLS(1158, sendern, [m senderUsername], [m senderAddress], channel);
 	
-	[self print:[self.worldController selectedChannelOn:self]
+	/* Invite notifications are sent to frontmost channel on server of if it is
+	 not on server, then it will be redirected to console. */
+	[self print:[mainWindow() selectedChannelOn:self]
 		   type:TVCLogLineInviteType
-		   nick:nil
-		   text:text
-	 receivedAt:m.receivedAt
-		command:m.command];
+	   nickname:nil
+	messageBody:text
+	 receivedAt:[m receivedAt]
+		command:[m command]];
 	
-	[self notifyEvent:TXNotificationInviteType lineType:TVCLogLineInviteType target:nil nick:sendern text:channel];
+	[self notifyEvent:TXNotificationInviteType lineType:TVCLogLineInviteType target:nil nickname:sendern text:channel];
 	
 	if ([TPCPreferences autoJoinOnInvite]) {
 		[self joinUnlistedChannel:channel];
@@ -4997,34 +5007,30 @@
     } else if (returnType == TLOPopupPromptReturnSecondaryType) {
         [self cancelReconnect];
     } else {
-        /* Our menuController already has built in methods for handling the opening
-         of our server properties so we are going to call that instead of creating a 
-         new instance of TDCServerSheet here ourselves. */
-
-        [self.menuController showServerPropertyDialog:self withDefaultView:@"floodControl" andContext:nil];
+		[menuController() showServerPropertyDialog:self withDefaultView:TDCServerSheetFloodControlNavigationSelection andContext:nil];
     }
 }
 
 - (void)receiveError:(IRCMessage *)m
 {
-    NSString *message = m.sequence;
+	NSString *message = [m sequence];
 
     /* This match is pretty general, but it works in most situations. */
     if (([message hasPrefix:@"Closing Link:"] && [message hasSuffix:@"(Excess Flood)"]) ||
 		([message hasPrefix:@"Closing Link:"] && [message hasSuffix:@"(Max SendQ exceeded)"]))
 	{
-        [self.worldController select:self]; // Bring server to attention before popping view.
+		[mainWindow() select:self]; // Bring server to attention before popping view.
 
         /* Cancel any active reconnect before asking if the user wants to do it. */
         /* We cancel after 1.0 second to allow this popup prompt to be called and then 
          for Textual to process the actual drop in socket. receiveError: is called before
          our reconnect begins so we have to race it. */
-        [self performSelector:@selector(cancelReconnect) withObject:nil afterDelay:1.0];
+        [self performSelector:@selector(cancelReconnect) withObject:nil afterDelay:2.0];
 
         /* Prompt user about disconnect. */
         TLOPopupPrompts *prompt = [TLOPopupPrompts new];
 
-        [prompt sheetWindowWithQuestion:self.masterController.mainWindow
+        [prompt sheetWindowWithQuestion:mainWindow()
                                  target:self
                                  action:@selector(receiveErrorExcessFloodWarningPopupCallback:withOriginalAlert:)
                                    body:TXTLS(@"BasicLanguage[1041][2]")
@@ -5035,26 +5041,175 @@
                          suppressionKey:nil
                         suppressionText:nil];
     } else {
-        [self printError:m.sequence forCommand:m.command];
+		[self printError:message forCommand:[m command]];
     }
 }
 
 #pragma mark -
 #pragma mark Server CAP
 
-- (void)sendNextCap
+- (void)enableCapacity:(ClientIRCv3SupportedCapacities)capacity
 {
-	if (self.CAPPausedStatus == NO) {
-		if (NSObjectIsNotEmpty(self.CAPPendingCaps)) {
-			NSString *cap = [self.CAPPendingCaps lastObject];
+	if ([self isCapacityEnabled:capacity] == NO) {
+		_capacities |= capacity;
+	}
+}
 
-			[self send:IRCPrivateCommandIndex("cap"), @"REQ", cap, nil];
+- (void)disableCapacity:(ClientIRCv3SupportedCapacities)capacity
+{
+	if ([self isCapacityEnabled:capacity]) {
+		_capacities &= ~capacity;
+	}
+}
 
-			[self.CAPPendingCaps removeLastObject];
-		} else {
-			[self send:IRCPrivateCommandIndex("cap"), @"END", nil];
+- (BOOL)isCapacityEnabled:(ClientIRCv3SupportedCapacities)capacity
+{
+	return (_capacities & capacity);
+}
+
+- (NSString *)stringValueOfCapacity:(ClientIRCv3SupportedCapacities)capacity
+{
+	NSString *stringValue = nil;
+	
+	switch (capacity) {
+		case ClientIRCv3SupportedCapacityAwayNotify:
+		{
+			stringValue = @"away-notify";
+			
+			break;
+		}
+		case ClientIRCv3SupportedCapacityIdentifyCTCP:
+		{
+			stringValue = @"identify-ctcp";
+			
+			break;
+		}
+		case ClientIRCv3SupportedCapacityIdentifyMsg:
+		{
+			stringValue = @"identify-msg";
+			
+			break;
+		}
+		case ClientIRCv3SupportedCapacityMultiPreifx:
+		{
+			stringValue = @"multi-prefix";
+			
+			break;
+		}
+		case ClientIRCv3SupportedCapacitySASLExternal:
+		case ClientIRCv3SupportedCapacitySASLPlainText:
+		{
+			stringValue = @"sasl";
+			
+			break;
+		}
+		case ClientIRCv3SupportedCapacityServerTime:
+		{
+			stringValue = @"server-time";
+			
+			break;
+		}
+		case ClientIRCv3SupportedCapacityUserhostInNames:
+		{
+			stringValue = @"away-notify";
+			
+			break;
+		}
+		case ClientIRCv3SupportedCapacityWatchCommand:
+		{
+			stringValue = @"watch-command";
+			
+			break;
+		}
+		case ClientIRCv3SupportedCapacityZNCPlaybackModule:
+		{
+			stringValue = @"znc.in/playback";
+			
+			break;
+		}
+		case ClientIRCv3SupportedCapacityZNCServerTime:
+		{
+			stringValue = @"znc.in/server-time";
+			
+			break;
+		}
+		case ClientIRCv3SupportedCapacityZNCServerTimeISO:
+		{
+			stringValue = @"znc.in/server-time-iso";
+			
+			break;
+		}
+		default:
+		{
+			break;
 		}
 	}
+	
+	return stringValue;
+}
+
+- (void)appendStringValueOfCapacity:(ClientIRCv3SupportedCapacities)capacity toSource:(NSMutableArray **)writePoint
+{
+	if ([self isCapacityEnabled:capacity]) {
+		[*writePoint addObject:[self stringValueOfCapacity:capacity]];
+	}
+}
+
+- (NSString *)enabledCapacitiesStringValue
+{
+	NSMutableArray *enabledCaps = [NSMutableArray array];
+	
+	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacityAwayNotify toSource:&enabledCaps];
+	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacityIdentifyCTCP toSource:&enabledCaps];
+	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacityIdentifyMsg toSource:&enabledCaps];
+	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacityMultiPreifx toSource:&enabledCaps];
+	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacitySASLPlainText toSource:&enabledCaps];
+	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacitySASLExternal toSource:&enabledCaps];
+	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacityServerTime toSource:&enabledCaps];
+	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacityUserhostInNames toSource:&enabledCaps];
+	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacityZNCPlaybackModule toSource:&enabledCaps];
+	
+	NSString *stringValue = [enabledCaps componentsJoinedByString:@", "];
+	
+	return stringValue;
+}
+
+- (BOOL)maybeSendNextCapacity:(ClientIRCv3SupportedCapacities)capacity
+{
+	if (_capacitiesPending & capacity) {
+		NSString *capVaule = [self stringValueOfCapacity:capacity];
+		
+		[self send:IRCPrivateCommandIndex("cap"), @"REQ", capVaule, nil];
+		
+		_capacitiesPending &= ~capacity;
+		
+		return YES; // Let receiver know we sent this cap.
+	}
+	
+	return NO;
+}
+
+- (void)sendNextCap
+{
+	/* We try to send each cap. First one to return a YES for sending
+	 itself will break the chain and we'll try next one later. */
+#define _rony(s)		if ([self maybeSendNextCapacity:(s)] == YES) { return; }
+	
+	if (_capacitiesPending == 0) {
+		[self send:IRCPrivateCommandIndex("cap"), @"END", nil];
+	} else {
+		_rony(ClientIRCv3SupportedCapacityAwayNotify)
+		_rony(ClientIRCv3SupportedCapacityIdentifyCTCP)
+		_rony(ClientIRCv3SupportedCapacityIdentifyMsg)
+		_rony(ClientIRCv3SupportedCapacityMultiPreifx)
+		_rony(ClientIRCv3SupportedCapacityServerTime)
+		_rony(ClientIRCv3SupportedCapacityUserhostInNames)
+		_rony(ClientIRCv3SupportedCapacityZNCPlaybackModule)
+		_rony(ClientIRCv3SupportedCapacityZNCServerTime)
+		_rony(ClientIRCv3SupportedCapacityZNCServerTimeISO)
+	}
+	
+#undef _rony
 }
 
 - (void)pauseCap
@@ -5069,40 +5224,11 @@
 	[self sendNextCap];
 }
 
-- (IRCIdentificationWithSASLMechanism)identificationMechanismForSASL
-{
-	/* If we have certificate, we will use the fingerprint from that 
-	 for identification if the user configured that. */
-	if (self.socket.isConnectedWithClientSideCertificate) {
-		BOOL usesExternalSASL = [[self auxiliaryConfiguration] boolForKey:@"SASL Authentication Uses External Mechanism"];
-
-		if (usesExternalSASL) {
-			return IRCIdentificationWithSASLExternalMechanism;
-		}
-	}
-
-	/* If the user has a configured nickname password, then we will
-	 use that instead for plain text authentication. */
-	if (self.config.nicknamePasswordIsSet) {
-		return IRCIdentificationWithSASLPlainTextMechanism;
-	}
-
-	/* Cannot use SASL for identification. */
-	return IRCIdentificationWithSASLNoMechanism;
-}
-
-- (BOOL)isSASLInformationAvailable
-{
-	IRCIdentificationWithSASLMechanism idtype = [self identificationMechanismForSASL];
-
-	return NSDissimilarObjects(idtype, IRCIdentificationWithSASLNoMechanism);
-}
-
 - (BOOL)isCapAvailable:(NSString *)cap
 {
 	// Information about several of these supported CAP
 	// extensions can be found at: http://ircv3.atheme.org
-
+	
 	BOOL condition1 = ([cap isEqualIgnoringCase:@"identify-msg"]			||
 					   [cap isEqualIgnoringCase:@"identify-ctcp"]			||
 					   [cap isEqualIgnoringCase:@"away-notify"]				||
@@ -5112,7 +5238,7 @@
 					   [cap isEqualIgnoringCase:@"znc.in/playback"]			||
 					   [cap isEqualIgnoringCase:@"znc.in/server-time"]		||
 					   [cap isEqualIgnoringCase:@"znc.in/server-time-iso"]);
-
+	
 	if (condition1 == NO) {
 		if ([cap isEqualIgnoringCase:@"sasl"]) {
 			return [self isSASLInformationAvailable];
@@ -5124,14 +5250,95 @@
 	}
 }
 
+- (ClientIRCv3SupportedCapacities)capacityFromStringValue:(NSString *)stringValue
+{
+	if ([stringValue isEqualIgnoringCase:@"userhost-in-names"]) {
+		return ClientIRCv3SupportedCapacityUserhostInNames;
+	} else if ([stringValue isEqualIgnoringCase:@"multi-prefix"]) {
+		return ClientIRCv3SupportedCapacityMultiPreifx;
+	} else if ([stringValue isEqualIgnoringCase:@"identify-msg"]) {
+		return ClientIRCv3SupportedCapacityIdentifyMsg;
+	} else if ([stringValue isEqualIgnoringCase:@"identify-ctcp"]) {
+		return ClientIRCv3SupportedCapacityIdentifyCTCP;
+	} else if ([stringValue isEqualIgnoringCase:@"away-notify"]) {
+		return ClientIRCv3SupportedCapacityAwayNotify;
+	} else if ([stringValue isEqualIgnoringCase:@"server-time"]) {
+		return ClientIRCv3SupportedCapacityServerTime;
+	} else if ([stringValue isEqualIgnoringCase:@"znc.in/server-time"]) {
+		return ClientIRCv3SupportedCapacityZNCServerTime;
+	} else if ([stringValue isEqualIgnoringCase:@"znc.in/server-time-iso"]) {
+		return ClientIRCv3SupportedCapacityZNCServerTimeISO;
+	} else if ([stringValue isEqualIgnoringCase:@"znc.in/playback"]) {
+		return ClientIRCv3SupportedCapacityZNCPlaybackModule;
+	} else {
+		return 0;
+	}
+}
+
+- (void)cap:(NSString *)cap result:(BOOL)supported
+{
+	if ([cap isEqualIgnoringCase:@"sasl"]) {
+		if (supported) {
+			[self pauseCap];
+			
+			[self sendSASLIdentificationRequest];
+		}
+	} else {
+		ClientIRCv3SupportedCapacities capacity = [self capacityFromStringValue:cap];
+		
+		if (capacity == 0) {
+			; // Unknown capacity.
+		} else {
+			if (capacity == ClientIRCv3SupportedCapacityZNCServerTime ||
+				capacity == ClientIRCv3SupportedCapacityZNCServerTimeISO)
+			{
+				capacity = ClientIRCv3SupportedCapacityServerTime;
+			}
+			
+			if (supported) {
+				[self enableCapacity:capacity];
+			} else {
+				[self disableCapacity:capacity];
+			}
+		}
+	}
+}
+
+- (IRCClientIdentificationWithSASLMechanism)identificationMechanismForSASL
+{
+	/* If we have certificate, we will use the fingerprint from that 
+	 for identification if the user configured that. */
+	if (self.socket.isConnectedWithClientSideCertificate) {
+		if (self.config.sendAuthenticationRequestsToUserServ) {
+			return IRCClientIdentificationWithSASLExternalMechanism;
+		}
+	}
+
+	/* If the user has a configured nickname password, then we will
+	 use that instead for plain text authentication. */
+	if (self.config.nicknamePasswordIsSet) {
+		return IRCClientIdentificationWithSASLPlainTextMechanism;
+	}
+
+	/* Cannot use SASL for identification. */
+	return IRCClientIdentificationWithSASLNoMechanism;
+}
+
+- (BOOL)isSASLInformationAvailable
+{
+	IRCClientIdentificationWithSASLMechanism idtype = [self identificationMechanismForSASL];
+
+	return NSDissimilarObjects(idtype, IRCClientIdentificationWithSASLNoMechanism);
+}
+
 - (void)sendSASLIdentificationInformation
 {
 	switch ([self identificationMechanismForSASL]) {
-		case IRCIdentificationWithSASLPlainTextMechanism:
+		case IRCClientIdentificationWithSASLPlainTextMechanism:
 		{
 			NSString *authStringD = [NSString stringWithFormat:@"%@%C%@%C%@",
-									 self.config.nickname, 0x00,
-									 self.config.nickname, 0x00,
+									 self.config.username, 0x00,
+									 self.config.username, 0x00,
 									 self.config.nicknamePassword];
 
 			NSString *authStringE = [authStringD base64EncodingWithLineLength:400];
@@ -5150,61 +5357,43 @@
 
 			break;
 		}
-		case IRCIdentificationWithSASLExternalMechanism:
+		case IRCClientIdentificationWithSASLExternalMechanism:
 		{
 			[self send:IRCPrivateCommandIndex("cap_authenticate"), @"+", nil];
 
 			break;
 		}
-		default: { break; }
+		default:
+		{
+			break;
+		}
 	}
 }
 
 - (void)sendSASLIdentificationRequest
 {
+	[self enableCapacity:ClientIRCv3SupportedCapacityIsInSASLNegotiation];
+
 	switch ([self identificationMechanismForSASL]) {
-		case IRCIdentificationWithSASLPlainTextMechanism:
+		case IRCClientIdentificationWithSASLPlainTextMechanism:
 		{
+			[self enableCapacity:ClientIRCv3SupportedCapacitySASLPlainText];
+			
 			[self send:IRCPrivateCommandIndex("cap_authenticate"), @"PLAIN", nil];
 
 			break;
 		}
-		case IRCIdentificationWithSASLExternalMechanism:
+		case IRCClientIdentificationWithSASLExternalMechanism:
 		{
+			[self enableCapacity:ClientIRCv3SupportedCapacitySASLExternal];
+
 			[self send:IRCPrivateCommandIndex("cap_authenticate"), @"EXTERNAL", nil];
 
 			break;
 		}
-		default: { break; }
-	}
-}
-
-- (void)cap:(NSString *)cap result:(BOOL)supported
-{
-	if (supported) {
-		if ([cap isEqualIgnoringCase:@"sasl"]) {
-			_capacities.isInActiveSASLNegotation = YES;
-
-			[self pauseCap];
-
-			[self sendSASLIdentificationRequest];
-		} else if ([cap isEqualIgnoringCase:@"userhost-in-names"]) {
-			_capacities.userhostInNamesCapInUse = YES;
-		} else if ([cap isEqualIgnoringCase:@"multi-prefix"]) {
-			_capacities.multiPrefixCapInUse = YES;
-		} else if ([cap isEqualIgnoringCase:@"identify-msg"]) {
-			_capacities.identifyMsgCapInUse = YES;
-		} else if ([cap isEqualIgnoringCase:@"identify-ctcp"]) {
-			_capacities.identifyCTCPCapInUse = YES;
-		} else if ([cap isEqualIgnoringCase:@"away-notify"]) {
-			_capacities.awayNotifyCapInUse = YES;
-        } else if ([cap isEqualIgnoringCase:@"server-time"] ||
-				   [cap isEqualIgnoringCase:@"znc.in/server-time"] ||
-				   [cap isEqualIgnoringCase:@"znc.in/server-time-iso"])
+		default:
 		{
-			_capacities.serverTimeCapInUse = YES;
-		} else if ([cap isEqualIgnoringCase:@"znc.in/playback"]) {
-			_capacities.zncPlaybackCapInUse = YES;
+			break;
 		}
 	}
 }
@@ -5226,15 +5415,17 @@
 
 			for (NSString *cap in caps) {
 				if ([self isCapAvailable:cap]) {
-					[self.CAPPendingCaps addObject:cap];
+					ClientIRCv3SupportedCapacities capacity = [self capacityFromStringValue:cap];
+					
+					if ((_capacitiesPending & capacity) == 0) {
+						 _capacitiesPending |= capacity;
+					}
 				}
 			}
 		} else if ([baseprt isEqualIgnoringCase:@"ACK"]) {
 			NSArray *caps = [actions componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
 			for (NSString *cap in caps) {
-				[self.CAPAcceptedCaps addObject:cap];
-
 				[self cap:cap result:YES];
 			}
 		} else if ([baseprt isEqualIgnoringCase:@"NAK"]) {
@@ -5255,33 +5446,35 @@
 
 - (void)receivePing:(IRCMessage *)m
 {
-	NSAssertReturn([m paramsCount] >= 1);
+	NSAssertReturn([m paramsCount] > 0);
 
 	[self send:IRCPrivateCommandIndex("pong"), [m sequence:0], nil];
 }
 
 - (void)receiveAwayNotifyCapacity:(IRCMessage *)m
 {
-    NSAssertReturn(self.capacities.awayNotifyCapInUse);
+    NSAssertReturn([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify]);
 
     /* What are we changing to? */
     BOOL isAway = NSObjectIsNotEmpty([m sequence]);
 
     /* Find all users matching user info. */
-    NSString *nickname = m.sender.nickname;
+	NSString *nickname = [m senderNickname];
 
-    for (IRCChannel *channel in self.channels) {
-        IRCUser *user = [channel memberWithNickname:nickname];
+	@synchronized(self.channels) {
+		for (IRCChannel *channel in self.channels) {
+			IRCUser *user = [channel findMember:nickname];
 
-        PointerIsEmptyAssertLoopContinue(user);
-
-        user.isAway = isAway;
-
-		[channel updateMemberOnTableView:user]; // Redraw the user in the user list.
-    }
+			if (user) {
+				[user setIsAway:isAway];
+				
+				[channel updateMemberOnTableView:user]; // Redraw the user in the user list.
+			}
+		}
+	}
 }
 
-- (void)receiveInit:(IRCMessage *)m
+- (void)receiveInit:(IRCMessage *)m // Raw numeric = 001
 {
 	/* Manage timers. */
 #ifdef TEXTUAL_TRIAL_BINARY
@@ -5292,19 +5485,22 @@
 	[self stopRetryTimer];
 
 	/* Manage local variables. */
-	self.supportInfo.networkAddress = m.sender.hostmask;
+	[self.supportInfo setNetworkAddress:[m senderHostmask]];
 
 	self.isLoggedIn = YES;
 	self.isConnected = YES;
-	self.inFirstISONRun = YES;
-  
-	[self postEventToViewController:@"serverConnected"];
+	
+	self.isInvokingISONCommandForFirstTime = YES;
 
 	self.serverRedirectAddressTemporaryStore = nil;
 	self.serverRedirectPortTemporaryStore = 0;
 
-	self.myNick	= [m paramAt:0];
-	self.sentNick = self.myNick;
+	self.cachedLocalNickname = [m paramAt:0];
+	
+	self.tryingNicknameSentNickname = [m paramAt:0];
+	
+	/* Post event. */
+	[self postEventToViewController:@"serverConnected"];
 
 	/* Notify Growl. */
 	[self notifyEvent:TXNotificationConnectType lineType:TVCLogLineDebugType];
@@ -5312,31 +5508,33 @@
 	/* Perform login commands. */
 	for (__strong NSString *s in self.config.loginCommands) {
 		if ([s hasPrefix:@"/"]) {
-			s = [s safeSubstringFromIndex:1];
+			s = [s substringFromIndex:1];
 		}
 
 		[self sendCommand:s completeTarget:NO target:nil];
 	}
 
 	/* Request playback since the last seen message when previously connected. */
-	if (self.capacities.zncPlaybackCapInUse) {
+	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCPlaybackModule]) {
 		[self send:IRCPrivateCommandIndex("privmsg"), @"*playback", @"play", @"*", [NSString stringWithFloat:[self lastMessageServerTimeWithCachedValue]], nil];
 	}
 
 	/* Activate existing queries. */
-	for (IRCChannel *c in self.channels) {
-		if (c.isPrivateMessage) {
-			[c activate];
+	@synchronized(self.channels) {
+		for (IRCChannel *c in self.channels) {
+			if ([c isPrivateMessage]) {
+				[c activate];
+			}
 		}
 	}
 
-	[self.worldController reloadTreeGroup:self];
-    [self.worldController updateTitle];
+	[mainWindow() reloadTreeGroup:self];
+    [mainWindow() updateTitle];
 
-	[self.masterController updateSegmentedController];
+	[mainWindowTextField() updateSegmentedController];
 
 	/* Everything else. */
-	if ([TPCPreferences autojoinWaitsForNickServ] == NO || self.capacities.isIdentifiedWithSASL) {
+	if ([TPCPreferences autojoinWaitsForNickServ] == NO || [self isCapacityEnabled:ClientIRCv3SupportedCapacityIsIdentifiedWithSASL]) {
 		[self performAutoJoin];
 	} else {
         /* If we wait for NickServ we set a timer of 3.0 seconds before performing auto join.
@@ -5349,15 +5547,15 @@
          this is the best patch. At least for right now. */
 
         [self performSelector:@selector(performAutoJoin) withObject:nil afterDelay:3.0];
-    }
-
+	}
+	
 	/* We need time for the server to send its configuration. */
-	[self performSelector:@selector(populateISONTrackedUsersList:) withObject:self.config.ignoreList afterDelay:3.0];
+	[self performSelector:@selector(populateISONTrackedUsersList:) withObject:self.config.ignoreList afterDelay:10.0];
 }
 
 - (void)receiveNumericReply:(IRCMessage *)m
 {
-	NSInteger n = m.numericReply;
+	NSInteger n = [m numericReply];
 
 	if (400 <= n && n < 600 && (n == 403) == NO && (n == 422) == NO) {
 		return [self receiveErrorNumericReply:m];
@@ -5367,6 +5565,7 @@
 		case 1: // RPL_WELCOME
 		{
 			[self receiveInit:m];
+			
 			[self printReply:m];
 
 			break;
@@ -5390,7 +5589,7 @@
                 [self printDebugInformationToConsole:[configRep lastObject] forCommand:m.command];
             }
 
-			[self.worldController reloadTreeGroup:self];
+			[mainWindow() reloadTreeGroup:self];
 
 			break;
 		}
