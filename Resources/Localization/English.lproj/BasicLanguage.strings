@@ -392,7 +392,7 @@
 "BasicLanguage[1115]" = "Be back later.";
 "BasicLanguage[1116]" = "\002-CTCP-\002 %1$@ from %2$@ was ignored.";
 "BasicLanguage[1117]" = "away-notify multi-prefix userhost-in-names sasl server-time";
-"BasicLanguage[1118]" = "CLIENTINFO DCC FINGER PING TIME USERINFO VERSION";
+"BasicLanguage[1118]" = "CAP CLIENTINFO DCC FINGER PING TIME USERINFO VERSION";
 "BasicLanguage[1119]" = "Stop fingering me pervert!";
 "BasicLanguage[1120]" = "There are no capabilities in use.";
 "BasicLanguage[1121]" = "The following capabilities are currently enabled: %@";
