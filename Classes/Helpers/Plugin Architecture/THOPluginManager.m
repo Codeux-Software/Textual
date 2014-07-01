@@ -334,10 +334,10 @@
 
 		NSDictionary *senderData = @{
 			@"senderIsServer"	: @([[message sender] isServer]),
-			@"senderHostmask"	: NSStringNilValueSubstitute([[message sender] hostmask]),
-			@"senderNickname"	: NSStringNilValueSubstitute([[message sender] nickname]),
-			@"senderUsername"	: NSStringNilValueSubstitute([[message sender] username]),
-			@"senderDNSMask"	: NSStringNilValueSubstitute([[message sender] address])
+			@"senderHostmask"	: NSStringNilValueSubstitute([message senderHostmask]),
+			@"senderNickname"	: NSStringNilValueSubstitute([message senderNickname]),
+			@"senderUsername"	: NSStringNilValueSubstitute([message senderUsername]),
+			@"senderDNSMask"	: NSStringNilValueSubstitute([message senderAddress])
 		};
 
 		NSDictionary *messageData = @{

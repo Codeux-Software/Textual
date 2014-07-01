@@ -86,6 +86,8 @@ typedef enum IRCChannelStatus : NSInteger {
 
 - (void)setEncryptionKey:(NSString *)encryptionKey; // Use this instead of config to inform view of change.
 
+- (BOOL)memberExists:(NSString *)nickname;
+
 - (IRCUser *)findMember:(NSString *)nickname;
 - (IRCUser *)findMember:(NSString *)nickname options:(NSStringCompareOptions)mask;
 

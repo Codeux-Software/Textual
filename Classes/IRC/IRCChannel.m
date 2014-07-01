@@ -651,6 +651,25 @@
 #pragma mark -
 #pragma mark User Search
 
+- (BOOL)memberExists:(NSString *)nickname
+{
+	__block BOOL foundUser;
+	
+	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueSyncOperationType, ^{
+		@synchronized(self.memberListStandardSortedContainer) {
+			NSInteger somi = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:self.memberListStandardSortedContainer];
+			
+			if (somi == NSNotFound) {
+				foundUser = NO;
+			} else {
+				foundUser = YES;
+			}
+		}
+	});
+	
+	return foundUser;
+}
+
 - (IRCUser *)memberWithNickname:(NSString *)nickname
 {
 	return [self findMember:nickname options:0];

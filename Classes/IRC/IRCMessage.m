@@ -258,4 +258,29 @@
 	return s;
 }
 
+- (NSString *)senderNickname
+{
+	return self.sender.nickname;
+}
+
+- (NSString *)senderUsername
+{
+	return self.sender.username;
+}
+
+- (NSString *)senderAddress
+{
+	return self.sender.address;
+}
+
+- (NSString *)senderHostmask
+{
+	return self.sender.hostmask;
+}
+
+- (BOOL)senderIsServer
+{
+	return self.sender.isServer;
+}
+
 @end

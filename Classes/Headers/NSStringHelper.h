@@ -102,6 +102,8 @@
 
 - (NSInteger)compareWithWord:(NSString *)stringB matchGain:(NSInteger)gain missingCost:(NSInteger)cost;
 
+- (BOOL)hasPrefixIgnoringCase:(NSString *)aString;
+
 - (BOOL)isEqualIgnoringCase:(NSString *)other;
 
 - (BOOL)contains:(NSString *)str;
@@ -203,6 +205,8 @@
 - (NSString *)getToken;
 - (NSString *)getTokenIncludingQuotes;
 
+- (NSString *)uppercaseGetToken;
+
 - (void)safeDeleteCharactersInRange:(NSRange)range;
 @end
 
@@ -243,6 +247,7 @@
 + (NSMutableAttributedString *)mutableStringWithBase:(NSString *)base attributes:(NSDictionary *)baseAttributes;
 
 - (NSString *)getTokenAsString;
+- (NSString *)uppercaseGetToken;
 
 - (NSAttributedString *)getToken;
 - (NSAttributedString *)getTokenIncludingQuotes;
