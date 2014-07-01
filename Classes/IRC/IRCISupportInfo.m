@@ -68,7 +68,7 @@
 
 	self.channelNamePrefixes = @"#";
 
-	self.nicknameLength = 9; // Default for IRC protocol.
+	self.nicknameLength = IRCProtocolDefaultNicknameMaximumLength;
 	self.modesCount = TXMaximumNodesPerModeCommand;
 
 	self.userModePrefixes = @{

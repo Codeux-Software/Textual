@@ -771,6 +771,16 @@
 	}
 }
 
+- (BOOL)isMemberListVisible
+{
+	return ([self.contentSplitView isMemberListCollapsed] == NO);
+}
+
+- (BOOL)isServerListVisible
+{
+	return [self.contentSplitView isServerListCollapsed] == NO);
+}
+
 #pragma mark -
 #pragma mark Loading Screen
 
