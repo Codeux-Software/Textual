@@ -569,7 +569,7 @@
 					}
 				}
 
-				BOOL halfOpModeSupported = [[u isupport] modeIsSupportedUserPrefix:@"h"];
+				BOOL halfOpModeSupported = [[u supportInfo] modeIsSupportedUserPrefix:@"h"];
 
 				if (tag == _userControlsMenuTakeModeHMenuTag ||
 					tag == _userControlsMenuGiveModeHMenuTag)
@@ -2100,7 +2100,7 @@
 		
 		currentIndex += 1;
 
-		if (currentIndex == [[u isupport] modesCount]) {
+		if (currentIndex == [[u supportInfo] modesCount]) {
 			[u sendCommand:[NSString stringWithFormat:@"%@ %@", tmode, opString] completeTarget:YES target:[c name]];
 			
 			opString = NSStringEmptyPlaceholder;

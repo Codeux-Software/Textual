@@ -378,7 +378,7 @@
 		[upperChoices addObject:[TPCApplicationInfo applicationName]];
 
 		/* Complete network name. */
-		[upperChoices addObject:[[client isupport] networkNameActual]];
+		[upperChoices addObject:[[client supportInfo] networkNameActual]];
 	}
 
 	/* Quick method for replacing the value of each array

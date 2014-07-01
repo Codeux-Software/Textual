@@ -41,7 +41,8 @@
 typedef enum TDCServerSheetNavigationSelection : NSInteger {
 	TDCServerSheetDefaultNavigationSelection	= 0,
 	TDCServerSheetAddressBookNavigationSelection,
-	TDCServerSheetFloodControlNavigationSelection
+	TDCServerSheetFloodControlNavigationSelection,
+	TDCServerSheetNewIgnoreEntryNavigationSelection
 } TDCServerSheetNavigationSelection;
 
 @interface TDCServerSheet : TDCSheetBase

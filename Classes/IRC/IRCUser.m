@@ -118,7 +118,7 @@
 
 - (NSString *)mark
 {
-	IRCISupportInfo *supportInfo = self.associatedClient.isupport;
+	IRCISupportInfo *supportInfo = self.associatedClient.supportInfo;
 	
 	if (self.q) {
 		if (self.binircd_O) {
