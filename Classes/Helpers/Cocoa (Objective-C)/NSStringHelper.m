@@ -452,7 +452,7 @@
 		return [self isChannelName];
 	}
 
-	NSString *validChars = [[client isupport] channelNamePrefixes];
+	NSString *validChars = [[client supportInfo] channelNamePrefixes];
 
 	if ([self length] == 1) {
 		NSString *c = [self stringCharacterAtIndex:0];
@@ -516,7 +516,7 @@
 		return [self channelNameToken];
 	}
 	
-	NSString *prefixes = [[client isupport] channelNamePrefixes];
+	NSString *prefixes = [[client supportInfo] channelNamePrefixes];
 	
 	NSCharacterSet *validChars = [NSCharacterSet characterSetWithCharactersInString:prefixes];
 	

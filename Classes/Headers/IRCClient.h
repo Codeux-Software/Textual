@@ -78,7 +78,7 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 
 @interface IRCClient : IRCTreeItem
 @property (nonatomic, copy) IRCClientConfig *config;
-@property (nonatomic, copy) IRCISupportInfo *isupport;
+@property (nonatomic, copy) IRCISupportInfo *supportInfo;
 @property (nonatomic, assign) IRCClientConnectMode connectType;
 @property (nonatomic, assign) IRCClientDisconnectMode disconnectType;
 @property (nonatomic, assign) NSInteger connectDelay;
@@ -153,6 +153,8 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 - (void)disableCapacity:(ClientIRCv3SupportedCapacities)capacity;
 
 - (BOOL)isCapacityEnabled:(ClientIRCv3SupportedCapacities)capacity;
+
+- (NSString *)enabledCapacitiesStringValue;
 
 - (NSInteger)channelCount;
 
@@ -239,6 +241,7 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 - (NSData *)convertToCommonEncoding:(NSString *)data;
 - (NSString *)convertFromCommonEncoding:(NSData *)data;
 
+// Defaults to TVCLogLineUndefinedNicknameFormat
 - (NSString *)formatNickname:(NSString *)nick channel:(IRCChannel *)channel;
 - (NSString *)formatNickname:(NSString *)nick channel:(IRCChannel *)channel formatOverride:(NSString *)forcedFormat;
 
@@ -273,6 +276,10 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 /* The method obviously does not work as expected so it has been marked as deprecated.
  However, it will remain functional for plugin authors who wish to use it. */
 - (void)sendPrivmsgToSelectedChannel:(NSString *)message TEXTUAL_DEPRECATED;
+
+- (void)sendPrivmsg:(NSString *)message toChannel:(IRCChannel *)channel;
+- (void)sendAction:(NSString *)message toChannel:(IRCChannel *)channel;
+- (void)sendNotice:(NSString *)message toChannel:(IRCChannel *)channel;
 
 #pragma mark -
 

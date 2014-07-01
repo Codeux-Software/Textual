@@ -558,7 +558,7 @@
 	/* Make sure we can trace our origin. */
 	c.associatedClient = client;
 	
-	c.modeInfo.isupport = client.isupport;
+	c.modeInfo.isupport = client.supportInfo;
 	
 	/* Setup new channel. */
 	[c setup:seed];
