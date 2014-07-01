@@ -2388,12 +2388,12 @@
 				4C8AF5F0158E99520026668C /* Channel View */,
 				4C8AF5F9158E99520026668C /* Input Text Field */,
 				4C8AF5FD158E99520026668C /* Server List */,
+				4C8AF606158E99520026668C /* User List */,
 				4CA110E61955AAA10062EC4E /* TVCMainWindow.m */,
 				4CA110E71955AAA10062EC4E /* TVCMainWindowLoadingScreen.m */,
 				4CA110E81955AAA10062EC4E /* TVCMainWindowSegmentedControl.m */,
 				4CA110E91955AAA10062EC4E /* TVCMainWindowSplitView.m */,
 				4CA110EA1955AAA10062EC4E /* TVCMainWindowTextView.m */,
-				4C8AF606158E99520026668C /* User List */,
 			);
 			name = "Main Window";
 			sourceTree = "<group>";

@@ -121,25 +121,39 @@
 
 - (NSArray *)clientList
 {
-	@synchronized(self.clients) {
-		return [NSArray arrayWithArray:self.clients];
-	}
+	__block NSArray *clientList = nil;
+	
+	TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueSyncOperationType, ^{
+		@synchronized(self.clients) {
+			clientList = [NSArray arrayWithArray:self.clients];
+		}
+	});
+	
+	return clientList;
 }
 
 - (void)setClientList:(NSArray *)clientList
 {
-	@synchronized(self.clients) {
-		[self.clients removeAllObjects];
-		
-		[self.clients addObjectsFromArray:clientList];
-	}
+	TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueBarrierAsyncOperationType, ^{
+		@synchronized(self.clients) {
+			[self.clients removeAllObjects];
+			
+			[self.clients addObjectsFromArray:clientList];
+		}
+	});
 }
 
 - (NSInteger)clientCount
 {
-	@synchronized(self.clients) {
-		return [self.clients count];
-	}
+	__block NSInteger clientCount = 0;
+	
+	TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueSyncOperationType, ^{
+		@synchronized(self.clients) {
+			clientCount = [self.clients count];
+		}
+	});
+	
+	return clientCount;
 }
 
 #pragma mark -

@@ -280,6 +280,13 @@
 	return [self stringByReplacingOccurrencesOfString:NSStringNewlinePlaceholder withString:NSStringEmptyPlaceholder];
 }
 
+- (BOOL)hasPrefixIgnoringCase:(NSString *)aString
+{
+	NSRange prefixRange = [self rangeOfString:aString options:(NSAnchoredSearch | NSCaseInsensitiveSearch)];
+	
+	return (prefixRange.location == 0 && prefixRange.length > 0);
+}
+
 - (NSInteger)compareWithWord:(NSString *)stringB matchGain:(NSInteger)gain missingCost:(NSInteger)cost
 {
 	// normalize strings
@@ -1382,6 +1389,11 @@
 	}
 }
 
+- (NSString *)uppercaseGetToken
+{
+	return [[self getToken] uppercaseString];
+}
+
 @end
 
 @implementation NSAttributedString (NSAttributedStringHelper)
@@ -1565,6 +1577,11 @@
 - (NSString *)getTokenAsString
 {
 	return [[self getToken] string];
+}
+
+- (NSString *)uppercaseGetToken
+{
+	return [[self getTokenAsString] uppercaseString];
 }
 
 - (NSAttributedString *)getToken

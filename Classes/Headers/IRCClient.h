@@ -76,6 +76,8 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 	ClientIRCv3SupportedCapacityIsIdentifiedWithSASL	= 1 << 9, // YES if SASL authentication was successful, else NO.
 } ClientIRCv3SupportedCapacities;
 
+typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
+
 @interface IRCClient : IRCTreeItem
 @property (nonatomic, copy) IRCClientConfig *config;
 @property (nonatomic, copy) IRCISupportInfo *supportInfo;
@@ -304,15 +306,15 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
  thread where WebKit handles all the drawing operations. At that point it is out of the hands of
  Textual and will be displayed to the user as soon as WebKit renders it. */
 /* All print calls point to this single one: */
-- (void)printToWebView:(id)channel										// An IRCChannel or nil for the console.
-				  type:(TVCLogLineType)type								// The time the message was received at for the timestamp.
-			   command:(NSString *)command								// The line type. See TVCLogLine.h
-			  nickname:(NSString *)nickname								// The nickname associated with the print.
-		   messageBody:(NSString *)messageBody							// The actual text being printed.
-		   isEncrypted:(BOOL)isEncrypted								// Is the text encrypted? This flag DOES NOT encrypt it. It informs the WebView if it was in fact encrypted so it can be treated with more privacy.
-			receivedAt:(NSDate *)receivedAt								// Can be the actual command (PRIVMSG, NOTICE, etc.) or a raw numeric (001, 002, etc.) — … TVCLogLineDefaultRawCommandValue = internal debug command.
-	  referenceMessage:(IRCMessage *)referenceMessage					// Actual IRCMessage to associate with the print job.
-	   completionBlock:(void(^)(BOOL highlighted))completionBlock;		// A block to call when the actual print occurs.
+- (void)printToWebView:(id)channel													// An IRCChannel or nil for the console.
+				  type:(TVCLogLineType)type											// The time the message was received at for the timestamp.
+			   command:(NSString *)command											// The line type. See TVCLogLine.h
+			  nickname:(NSString *)nickname											// The nickname associated with the print.
+		   messageBody:(NSString *)messageBody										// The actual text being printed.
+		   isEncrypted:(BOOL)isEncrypted											// Is the text encrypted? This flag DOES NOT encrypt it. It informs the WebView if it was in fact encrypted so it can be treated with more privacy.
+			receivedAt:(NSDate *)receivedAt											// Can be the actual command (PRIVMSG, NOTICE, etc.) or a raw numeric (001, 002, etc.) — … TVCLogLineDefaultRawCommandValue = internal debug command.
+	  referenceMessage:(IRCMessage *)referenceMessage								// Actual IRCMessage to associate with the print job.
+	   completionBlock:(IRCClientPrintToWebViewCallbackBlock)completionBlock;		// A block to call when the actual print occurs.
 /* ------ */
 
 - (void)print:(id)chan type:(TVCLogLineType)type nickname:(NSString *)nickname messageBody:(NSString *)messageBody command:(NSString *)command;

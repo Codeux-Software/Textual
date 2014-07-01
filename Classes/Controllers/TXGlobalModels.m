@@ -83,7 +83,7 @@ NSString *TXFormattedTimestamp(NSDate *date, NSString *format)
 	time_t global = (time_t)[date timeIntervalSince1970];
 	
 	/* Format time. */
-	static NSInteger _timeBufferSize = 256;
+	const NSInteger _timeBufferSize = 256;
 	
 	struct tm *local = localtime(&global);
 	

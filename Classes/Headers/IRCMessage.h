@@ -52,6 +52,13 @@
 - (void)parseLine:(NSString *)line;
 - (void)parseLine:(NSString *)line forClient:(IRCClient *)client;
 
+- (NSString *)senderNickname;
+- (NSString *)senderUsername;
+- (NSString *)senderAddress;
+- (NSString *)senderHostmask;
+
+- (BOOL)senderIsServer;
+
 - (NSInteger)paramsCount;
 
 - (NSString *)paramAt:(NSInteger)index;
