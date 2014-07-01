@@ -124,6 +124,9 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 - (void)selectPreviousUnreadChannel:(NSEvent *)e;
 - (void)selectPreviousActiveChannel:(NSEvent *)e;
 
+- (BOOL)isMemberListVisible;
+- (BOOL)isServerListVisible;
+
 - (NSRect)defaultWindowFrame;
 
 - (void)setKeyHandlerTarget:(id)target;

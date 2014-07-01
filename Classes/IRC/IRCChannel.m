@@ -559,7 +559,9 @@
 		case 'h':
 		case 'v':
 		{
-			SEL changeSelector = NSSelectorFromString([NSString stringWithFormat:@"set%C:", modeChar]);
+			NSString *modeString = [NSString stringWithUniChar:modeChar];
+			
+			SEL changeSelector = NSSelectorFromString([NSString stringWithFormat:@"set%@:", [modeString uppercaseString]]);
 			
 			objc_msgSend(newUser, changeSelector, value);
 			

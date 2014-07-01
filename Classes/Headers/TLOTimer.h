@@ -42,9 +42,8 @@
 @property (nonatomic, uweak) id delegate;
 @property (nonatomic, uweak) SEL selector;
 @property (nonatomic, assign) BOOL reqeatTimer;
+@property (readonly) BOOL timerIsActive;
 
 - (void)start:(NSTimeInterval)interval;
 - (void)stop;
-
-- (BOOL)timerIsActive;
 @end
