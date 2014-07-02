@@ -127,35 +127,45 @@
 {
 	IRCClientConfig *newConfig = [IRCClientConfig new];
 	
-	NSString *userServAddress = [[self.serverAddressField firstTokenStringValue] cleanedServerHostmask];
+	/* Get actaul server. */
+	NSString *userServAddress = [self.serverAddressField firstTokenStringValue];
 	
 	NSString *realhost = [self nameMatchesServerInList:userServAddress];
 	
-	if (NSObjectIsEmpty(realhost)) {
-		realhost = userServAddress;
+	if (realhost == nil) {
+		realhost = [userServAddress cleanedServerHostmask];
 	} else {
 		realhost = self.serverList[realhost];
 	}
 	
+	/* Complete basic information. */
+	BOOL autoConnect = [self.autoConnectCheck state];
+	
+	NSString *nickname = [self.nicknameField firstTokenStringValue];
+	
 	[newConfig setClientName:realhost];
 	[newConfig setServerAddress:realhost];
-	[newConfig setAutoConnect:[self.autoConnectCheck state]];
-	[newConfig setNickname:[self.nicknameField firstTokenStringValue]];
+	[newConfig setAutoConnect:autoConnect];
+	[newConfig setNickname:nickname];
 	
+	/* Populate channels. */
 	NSMutableArray *channels = [NSMutableArray array];
 	
-	for (__strong NSString *s in self.channelList) {
-		NSObjectIsEmptyAssertLoopContinue(s);
+	for (NSString *s in self.channelList) {
+		NSString *t = [s trim];
 		
-		if ([s isChannelName] == NO) {
-			s = [@"#" stringByAppendingString:s];
-		}
+		if ([t length] > 0) {
+			if ([t isChannelName] == NO) {
+				 t = [@"#" stringByAppendingString:s];
+			}
 
-		[channels addObjectWithoutDuplication:s];
+			[channels addObjectWithoutDuplication:t];
+		}
 	}
 	
 	[newConfig setChannelList:channels];
 
+	/* Inform delegate and finish. */
 	if ([self.delegate respondsToSelector:@selector(welcomeSheet:onOK:)]) {
 		[self.delegate welcomeSheet:self onOK:newConfig];
 	}
@@ -165,13 +175,14 @@
 
 - (void)onAddChannel:(id)sender
 {
-	[self.channelList safeAddObject:NSStringEmptyPlaceholder];
+	[self.channelList addObject:NSStringEmptyPlaceholder];
 	
 	[self.channelTable reloadData];
 	
-	NSInteger row = (self.channelList.count - 1);
+	NSInteger row = ([self.channelList count] - 1);
 	
 	[self.channelTable selectItemAtIndex:row];
+	
 	[self.channelTable editColumn:0 row:row withEvent:nil select:YES];
 }
 
@@ -179,12 +190,12 @@
 {
 	NSInteger n = [self.channelTable selectedRow];
 	
-	if (n >= 0) {
-		[self.channelList safeRemoveObjectAtIndex:n];
+	if (n > -1) {
+		[self.channelList removeObjectAtIndex:n];
 
 		[self.channelTable reloadData];
 		
-		NSInteger count = self.channelList.count;
+		NSInteger count = [self.channelList count];
 		
 		if (count <= n) {
 			n = (count - 1);
@@ -214,7 +225,7 @@
 
 - (void)askAboutTheSupportChannel
 {
-	NSString *host = self.serverAddressField.stringValue;
+	NSString *host = [self.serverAddressField stringValue];
 
 	if ([host hasSuffix:@"freenode.net"] || [host isEqualIgnoringCase:@"freenode"]) {
 		NSString *key = [TLOPopupPrompts suppressionKeyWithBase:@"welcomesheet_join_support_channel"];
@@ -227,10 +238,10 @@
 																 defaultButton:BLS(1219)
 															   alternateButton:BLS(1182)
 																suppressionKey:@"welcomesheet_join_support_channel"
-															   suppressionText:TXPopupPromptSpecialSuppressionTextValue];
+															   suppressionText:TLOPopupPromptSpecialSuppressionTextValue];
 
 			if (addSupportChannel) {
-				[self.channelList safeAddObjectWithoutDuplication:@"#textual"];
+				[self.channelList addObjectWithoutDuplication:@"#textual"];
 
 				[self.channelTable reloadData];
 			}
@@ -240,8 +251,8 @@
 
 - (void)updateOKButton
 {
-	NSString *nick = self.nicknameField.trimmedStringValue;
-	NSString *host = self.serverAddressField.trimmedStringValue;
+	NSString *nick = [self.nicknameField trimmedStringValue];
+	NSString *host = [self.serverAddressField trimmedStringValue];
 	
 	BOOL enabled = (NSObjectIsNotEmpty(nick) && NSObjectIsNotEmpty(host));
 	
@@ -253,7 +264,7 @@
 
 - (BOOL)textView:(NSTextView *)textView clickedOnLink:(NSURL *)link atIndex:(NSUInteger)charIndex
 {
-	if ([link.absoluteString hasPrefix:@"textual://"]) {
+	if ([[link absoluteString] hasPrefix:@"textual://"]) {
 		[self cancel:nil];
 
 		return NO; // Tell delegate we did not handle it.
@@ -269,8 +280,8 @@
 {
 	NSInteger n = [self.channelTable editedRow];
 	
-	if (n >= 0) {
-		NSString *s = [note.object textStorage].string.copy;
+	if (n > -1) {
+		NSString *s = [[[[note object] textStorage] string] copy];
 		
 		self.channelList[n] = s;
 		
@@ -283,17 +294,17 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-	return self.channelList.count;
+	return [self.channelList count];
 }
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	return [self.channelList safeObjectAtIndex:row];
+	return self.channelList[row];
 }
 
 - (void)tableViewSelectionIsChanging:(NSNotification *)note
 {
-	[self.deleteChannelButton setEnabled:(self.channelTable.selectedRow >= 0)];
+	[self.deleteChannelButton setEnabled:([self.channelTable selectedRow] > -1)];
 }
 
 #pragma mark -
