@@ -43,6 +43,7 @@
 @property (nonatomic, copy) NSString *clientID;
 @property (nonatomic, copy) NSString *channelID;
 @property (nonatomic, copy) IRCChannelConfig *config;
+
 - (void)start;
 
 - (IBAction)onMenuBarItemChanged:(id)sender;

@@ -82,7 +82,7 @@
 
 - (void)show
 {
-	_scriptsController = [TDCPreferencesScriptWrapper new];
+	self.scriptsController = [TDCPreferencesScriptWrapper new];
 
 	NSMutableArray *alertSounds = [NSMutableArray new];
 

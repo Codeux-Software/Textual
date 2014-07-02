@@ -832,7 +832,7 @@ CQ
                                         <menuItem title="Open &quot;Default IRC Client&quot; Dialog" id="2730">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="openDefaultIRCClientDialog:" target="267" id="2733"/>
+                                                <action selector="openDefaultIRCClientDialog:" target="267" id="Hpi-8N-lOk"/>
                                                 <binding destination="3106" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="3120">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
@@ -904,6 +904,10 @@ CQ
                 <outlet property="closeWindowMenuItem" destination="1770" id="fJx-2N-mHr"/>
                 <outlet property="dockMenu" destination="Q9Y-E0-gAT" id="930-9r-xqt"/>
                 <outlet property="joinChannelMenu" destination="963" id="LXx-Gs-vAU"/>
+                <outlet property="muteNotificationsDockMenuItem" destination="dnc-ku-aQ3" id="Af9-tD-wlC"/>
+                <outlet property="muteNotificationsFileMenuItem" destination="QNy-Fk-SRO" id="nHn-Ki-RJX"/>
+                <outlet property="muteNotificationsSoundsDockMenuItem" destination="5jG-1t-WG4" id="bTl-Aa-XkS"/>
+                <outlet property="muteNotificationsSoundsFileMenuItem" destination="3092" id="hgY-Y1-W6o"/>
                 <outlet property="navigationChannelList" destination="89a-J1-2zg" id="O5d-Jz-eif"/>
                 <outlet property="openDefaultIRCClientDialog" destination="2730" id="2732"/>
                 <outlet property="segmentedControllerMenu" destination="2953" id="kBw-cr-chH"/>
