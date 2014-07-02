@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+#define _reservedSlotDictionaryKey			@"Reserved Information"
+
 @implementation IRCCommandIndex
 
 static NSDictionary *IRCCommandIndexPublicValues = nil;
@@ -60,7 +62,11 @@ static NSDictionary *IRCCommandIndexPrivateValues = nil;
 																			 format:NULL
 																   errorDescription:NULL];
 			
-			IRCCommandIndexPublicValues = [plist copy];
+			NSMutableDictionary *mutplist = [plist mutableCopy];
+			
+			[mutplist removeObjectForKey:_reservedSlotDictionaryKey];
+			
+			IRCCommandIndexPublicValues = [mutplist copy];
 		}
 		
 		/* Get private information. */
@@ -74,7 +80,11 @@ static NSDictionary *IRCCommandIndexPrivateValues = nil;
 																			 format:NULL
 																   errorDescription:NULL];
 			
-			IRCCommandIndexPrivateValues = [plist copy];
+			NSMutableDictionary *mutplist = [plist mutableCopy];
+			
+			[mutplist removeObjectForKey:_reservedSlotDictionaryKey];
+			
+			IRCCommandIndexPrivateValues = [mutplist copy];
 		}
 		
 		/* Only error checking we need. It either fails or succeeds. */
@@ -88,7 +98,6 @@ static NSDictionary *IRCCommandIndexPrivateValues = nil;
 	}
 	
 	_dataPopulated = YES;
-	
 }
 
 + (NSDictionary *)IRCCommandIndex:(BOOL)isPublic

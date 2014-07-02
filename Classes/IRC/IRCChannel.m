@@ -95,8 +95,6 @@
 
 - (void)setup:(IRCChannelConfig *)seed
 {
-	TXLockMethodForOneTimeFire();
-	
 	if (seed) {
 		if (self.config == nil) {
 			self.config = seed; // Value is copied on assign.
@@ -406,7 +404,9 @@
 			[self.memberListStandardSortedContainer removeObjectAtIndex:crmi];
 			
 			/* Maybe remove from tree view. */
-			[self _removeMemberFromTreeView:matchedUser];
+			TXPerformBlockSynchronouslyOnMainQueue(^{
+				[self _removeMemberFromTreeView:matchedUser];
+			});
 		}
 	}
 	
@@ -429,17 +429,20 @@
 {
 	PointerIsEmptyAssert(user);
 	
-	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueBarrierAsyncOperationType, ^{
-		/* Do sorted insert. */
-		NSInteger insertedIndex = [self _sortedInsert:user];
+	__block NSInteger insertedIndex = -1;
+	
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+		insertedIndex = [self _sortedInsert:user];
+	});
+	
+	TXPerformBlockSynchronouslyOnMainQueue(^{
+		/* Update the actual member list view. */
+		[self informMemberListViewOfAdditionalUserAtIndex:insertedIndex];
 		
 		/* Post event to the style. */
 		if (self.isChannel) {
 			[self.associatedClient postEventToViewController:@"channelMemberAdded" forChannel:self];
 		}
-		
-		/* Update the actual member list view. */
-		[self informMemberListViewOfAdditionalUserAtIndex:insertedIndex];
 	});
 }
 
@@ -447,11 +450,11 @@
 {
 	NSObjectIsEmptyAssert(nickname);
 	
-	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueBarrierAsyncOperationType, ^{
-		/* Internal list. */
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		[self _removeMemberWithNickname:nickname];
-		
-		/* Post event to the style. */
+	});
+	
+	TXPerformBlockSynchronouslyOnMainQueue(^{
 		if (self.isChannel) {
 			[self.associatedClient postEventToViewController:@"channelMemberRemoved" forChannel:self];
 		}
@@ -464,7 +467,9 @@
 	NSObjectIsEmptyAssert(toNickname);
 
 	/* Find user. */
-	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueBarrierAsyncOperationType, ^{
+	__block NSInteger insertedIndex = -1;
+	
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		IRCUser *user = [self findMember:fromNickname options:NSCaseInsensitiveSearch];
 	
 		if (user) {
@@ -475,11 +480,13 @@
 			[user setNickname:toNickname];
 			
 			/* Insert new copy of user. */
-			NSInteger insertedIndex = [self _sortedInsert:user];
-
-			/* Update the actual member list view. */
-			[self informMemberListViewOfAdditionalUserAtIndex:insertedIndex];
+			insertedIndex = [self _sortedInsert:user];
 		}
+	});
+	
+	/* Update the actual member list view. */
+	TXPerformBlockSynchronouslyOnMainQueue(^{
+		[self informMemberListViewOfAdditionalUserAtIndex:insertedIndex];
 	});
 }
 
@@ -570,8 +577,10 @@
 	}
 
 	/* Did something change. */
+	__block NSInteger insertedIndex = -1;
+
 	if ([self memberRequiresRedraw:user comparedTo:newUser]) {
-		TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueBarrierAsyncOperationType, ^{
+		TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 			/* Remove existing user from user list. */
 			[self _removeMember:user];
 			
@@ -579,9 +588,11 @@
 			[user migrate:newUser];
 			
 			/* Insert new copy of user. */
-			NSInteger insertedIndex = [self _sortedInsert:user];
-			
-			/* Update the actual member list view. */
+			insertedIndex = [self _sortedInsert:user];
+		});
+		
+		/* Update the actual member list view. */
+		TXPerformBlockSynchronouslyOnMainQueue(^{
 			[self informMemberListViewOfAdditionalUserAtIndex:insertedIndex];
 		});
 	}
@@ -591,7 +602,7 @@
 
 - (void)clearMembers
 {
-	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueBarrierAsyncOperationType, ^{
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.memberListStandardSortedContainer) {
 			[self.memberListStandardSortedContainer removeAllObjects];
 		}
@@ -606,7 +617,7 @@
 {
 	__block NSUInteger memberCount = 0;
 	
-	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueSyncOperationType, ^{
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.memberListStandardSortedContainer) {
 			memberCount = [self.memberListStandardSortedContainer count];
 		}
@@ -619,7 +630,7 @@
 {
 	__block NSMutableArray *mutlist = [NSMutableArray array];
 	
-	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueSyncOperationType, ^{
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.memberListLengthSortedContainer) {
 			for (IRCUser *user in self.memberListLengthSortedContainer) {
 				[mutlist addObject:user];
@@ -634,7 +645,7 @@
 {
 	__block NSMutableArray *mutlist = [NSMutableArray array];
 	
-	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueSyncOperationType, ^{
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.memberListStandardSortedContainer) {
 			for (IRCUser *user in self.memberListStandardSortedContainer) {
 				[mutlist addObject:user];
@@ -657,7 +668,7 @@
 {
 	__block BOOL foundUser;
 	
-	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueSyncOperationType, ^{
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.memberListStandardSortedContainer) {
 			NSInteger somi = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:self.memberListStandardSortedContainer];
 			
@@ -686,7 +697,7 @@
 {
 	__block IRCUser *foundUser;
 	
-	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueSyncOperationType, ^{
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.memberListStandardSortedContainer) {
 			NSInteger somi = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:self.memberListStandardSortedContainer];
 			
@@ -705,7 +716,7 @@
 {
 	__block IRCUser *foundUser;
 	
-	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueSyncOperationType, ^{
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.memberListStandardSortedContainer) {
 			foundUser = [self.memberListStandardSortedContainer objectAtIndex:index];
 		}
@@ -739,7 +750,7 @@
 {
 	_cancelOnNotSelectedChannel;
 
-	TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueBarrierAsyncOperationType, ^{
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.memberListStandardSortedContainer) {
 			[self.memberListStandardSortedContainer sortUsingComparator:NSDefaultComparator];
 			
@@ -800,6 +811,10 @@
 		TVCMemberListCell *groupItem = (TVCMemberListCell *)newView;
 
 		[groupItem setMemberPointer:item];
+		
+#warning Setting text field manually here should remain temporary. 
+		
+		[[groupItem textField] setStringValue:[item nickname]];
 	}
 
 	return newView;

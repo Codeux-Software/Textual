@@ -334,15 +334,12 @@
 		4C529E1817AEFE17009BA0B3 /* NSDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C529E1617AEFE17009BA0B3 /* NSDataHelper.m */; };
 		4C529E1E17AEFE44009BA0B3 /* NSDataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C529E1D17AEFE44009BA0B3 /* NSDataHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C529E1F17AEFE44009BA0B3 /* NSDataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C529E1D17AEFE44009BA0B3 /* NSDataHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C529E2117AF0050009BA0B3 /* TPCResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C529E2017AF0050009BA0B3 /* TPCResourceManager.m */; };
-		4C529E2217AF0050009BA0B3 /* TPCResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C529E2017AF0050009BA0B3 /* TPCResourceManager.m */; };
 		4C5798B3179B44F500968800 /* TVCMemberListCellBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5798B2179B44F500968800 /* TVCMemberListCellBadge.m */; };
 		4C5798B4179B44F500968800 /* TVCMemberListCellBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5798B2179B44F500968800 /* TVCMemberListCellBadge.m */; };
 		4C5798BA179B451400968800 /* TVCMemberListCellBadge.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5798B9179B451400968800 /* TVCMemberListCellBadge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5798BB179B451400968800 /* TVCMemberListCellBadge.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5798B9179B451400968800 /* TVCMemberListCellBadge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C58B572186011B900834882 /* Acknowledgments.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgments.pdf */; };
 		4C58B573186011BE00834882 /* Acknowledgments.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgments.pdf */; };
-		4C5A0311170C2C010016BB1A /* TPCPreferencesImportExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5A0310170C2C010016BB1A /* TPCPreferencesImportExport.m */; };
 		4C5A0317170C2C170016BB1A /* TPCPreferencesImportExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5A0318170C31010016BB1A /* TPCPreferencesImportExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5A0319170C31110016BB1A /* TPCPreferencesImportExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5A0310170C2C010016BB1A /* TPCPreferencesImportExport.m */; };
@@ -804,7 +801,6 @@
 		4CA110E01955AA890062EC4E /* TPCPathInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DB1955AA890062EC4E /* TPCPathInfo.m */; };
 		4CA110E11955AA890062EC4E /* TPCPathInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DB1955AA890062EC4E /* TPCPathInfo.m */; };
 		4CA110E21955AA890062EC4E /* TPCPreferencesImportExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DC1955AA890062EC4E /* TPCPreferencesImportExport.m */; };
-		4CA110E31955AA890062EC4E /* TPCPreferencesImportExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DC1955AA890062EC4E /* TPCPreferencesImportExport.m */; };
 		4CA110E41955AA890062EC4E /* TPCResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DD1955AA890062EC4E /* TPCResourceManager.m */; };
 		4CA110E51955AA890062EC4E /* TPCResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DD1955AA890062EC4E /* TPCResourceManager.m */; };
 		4CA110EB1955AAA10062EC4E /* TVCMainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110E61955AAA10062EC4E /* TVCMainWindow.m */; };
@@ -3580,7 +3576,6 @@
 				4C04450216F1603B00EBB665 /* TDCHighlightListSheet.m in Sources */,
 				4C04450316F1603B00EBB665 /* TDCInviteSheet.m in Sources */,
 				4C04450416F1603B00EBB665 /* TDCListDialog.m in Sources */,
-				4CA110E31955AA890062EC4E /* TPCPreferencesImportExport.m in Sources */,
 				4C04450516F1603B00EBB665 /* TDCModeSheet.m in Sources */,
 				4C04450616F1603B00EBB665 /* TDCNickSheet.m in Sources */,
 				4C69F4A018676C9400E6FCEC /* NSBundleHelper.m in Sources */,
@@ -3636,7 +3631,6 @@
 				4C1893ED17980F060091D173 /* TVCImageURLoader.m in Sources */,
 				4C0445AA16F1603C00EBB665 /* IRCTreeItem.m in Sources */,
 				4C0445AB16F1603C00EBB665 /* IRCUser.m in Sources */,
-				4C529E2217AF0050009BA0B3 /* TPCResourceManager.m in Sources */,
 				4C0445AC16F1603C00EBB665 /* IRCWorld.m in Sources */,
 				4C0445AD16F1603C00EBB665 /* IRCColorFormat.m in Sources */,
 				4C0445AE16F1603C00EBB665 /* GCDAsyncSocket.m in Sources */,
@@ -3784,7 +3778,6 @@
 				4C1893EC17980F060091D173 /* TVCImageURLoader.m in Sources */,
 				4C8AF6B4158E99520026668C /* IRCColorFormat.m in Sources */,
 				4C8AF6BA158E99520026668C /* AGKeychain.m in Sources */,
-				4C529E2117AF0050009BA0B3 /* TPCResourceManager.m in Sources */,
 				4C8AF6BC158E99520026668C /* GCDAsyncSocket.m in Sources */,
 				4C8AF6BD158E99520026668C /* GCDAsyncSocketExtensions.m in Sources */,
 				4C8AF6BE158E99520026668C /* RLMAsyncSocket.m in Sources */,
@@ -3840,7 +3833,6 @@
 				4C1E2BEF16FB1F13007C9717 /* NSUserDefaultsHelper.m in Sources */,
 				4C937BD5170618940050CEF3 /* TLOSpeechSynthesizer.m in Sources */,
 				4C83D8EF1842008D00BCC0E1 /* NSFileManagerHelper.m in Sources */,
-				4C5A0311170C2C010016BB1A /* TPCPreferencesImportExport.m in Sources */,
 				4C529E1717AEFE17009BA0B3 /* NSDataHelper.m in Sources */,
 				5D4846C3171F0AC00015F2B0 /* OELReachability.m in Sources */,
 				4C0C72051742C431000F82C4 /* NSByteCountFormatterHelper.m in Sources */,

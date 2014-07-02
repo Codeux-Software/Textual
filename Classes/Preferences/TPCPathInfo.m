@@ -227,6 +227,26 @@
 
 + (NSArray *)buildPathArray:(NSString *)path, ...
 {
+	/* Add any paths that follow. */
+	NSMutableArray *pathObjects = [NSMutableArray array];
+	
+	/* Add first path in arguments. */
+	if ( path) {
+		[pathObjects addObject:path];
+	}
+	
+	id pathObj;
+	
+	va_list args;
+	va_start(args, path);
+	
+	while ((pathObj = va_arg(args, id))) {
+		[pathObjects addObject:pathObj];
+	}
+	
+	va_end(args);
+	
+	/* We now filter based on conditions. */
 	NSMutableArray *pathData = [NSMutableArray array];
 	
 	/* What considers are path valid? */
@@ -242,20 +262,10 @@
 		}
 	};
 	
-	/* Add first path in arguments. */
-	checkPath(path);
-
-	/* Add any paths that follow. */
-	NSString *pathObj;
-	
-	va_list args;
-	va_start(args, path);
-	
-	while ((pathObj = va_arg(args, NSString *))) {
-		checkPath(pathObj);
+	/* Filter list. */
+	for (NSString *path in pathObjects) {
+		checkPath(path);
 	}
-	
-	va_end(args);
 	
 	/* Return results. */
 	return [pathData copy];

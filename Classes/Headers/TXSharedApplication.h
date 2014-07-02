@@ -67,6 +67,14 @@
 + (TVCQueuedCertificateTrustPanel *)sharedQueuedCertificateTrustPanel;
 + (OELReachability *)sharedNetworkReachabilityObject;
 
+/* Mutable sets in Textual (e.g. channel user lists) are accessed on this queue
+ and this queue alone to prevent accessing on different threads at same time 
+ which could result in corrupted data access. It is not recommended to call 
+ this serial queue for any reason from a plugin. It is a work horse for Textual
+ and should be respected as such. */
++ (dispatch_queue_t)sharedMutableSynchronizationSerialQueue;
++ (void)releaseSharedMutableSynchronizationSerialQueue;
+
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 + (TPCPreferencesCloudSync *)sharedCloudSyncManager;
 #endif
@@ -81,4 +89,6 @@
 
 - (TXMenuController *)menuController;
 + (TXMenuController *)menuController;
+
++ (void)setGlobalMasterControllerClassReference:(id)masterController;
 @end

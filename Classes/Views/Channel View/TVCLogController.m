@@ -127,8 +127,6 @@
 
 - (void)setUp
 {
-	TXLockMethodForOneTimeFire()
-
 	 self.webViewScriptSink = [TVCLogScriptEventSink new];
 	[self.webViewScriptSink setLogController:self];
 	
@@ -231,7 +229,7 @@
 - (void)setMaximumLineCount:(NSInteger)value
 {
 	if (NSDissimilarObjects(self.maximumLineCount, value)) {
-		self.maximumLineCount = value;
+		_maximumLineCount = value;
 
 		NSAssertReturn(self.isLoaded);
 

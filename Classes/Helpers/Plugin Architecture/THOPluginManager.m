@@ -166,7 +166,8 @@
 	/* Begin building list. Topmost take priority. */
 	NSArray *scriptPaths = [TPCPathInfo buildPathArray:
 							[TPCPathInfo systemUnsupervisedScriptFolderPath],
-							[TPCPathInfo bundledScriptFolderPath]];
+							[TPCPathInfo bundledScriptFolderPath],
+							nil];
 	
 	/* Begin scanning folders. */
 	id returnData;

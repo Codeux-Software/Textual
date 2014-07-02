@@ -934,7 +934,8 @@
 #endif
 					  
 					  [TPCPathInfo customThemeFolderPath],
-					  bundledThemePath
+					  bundledThemePath,
+					  nil
 	];
 	
 	/* Build list of all theme names and the theme type (custom or bundled). */

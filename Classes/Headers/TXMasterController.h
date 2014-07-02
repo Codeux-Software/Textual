@@ -52,7 +52,7 @@
 @property (nonatomic, assign) BOOL applicationIsTerminating;
 @property (nonatomic, assign) BOOL applicationIsChangingActiveState;
 @property (nonatomic, assign) NSInteger terminatingClientCount;
-@property (nonatomic, uweak) IBOutlet TVCMainWindow *mainWindow;
+@property (nonatomic, strong) IBOutlet TVCMainWindow *mainWindow;
 @property (nonatomic, nweak) IBOutlet TXMenuController *menuController;
 
 /* Both wake cycle methods are invoked by TVCMainWindow -awakeFromNib */

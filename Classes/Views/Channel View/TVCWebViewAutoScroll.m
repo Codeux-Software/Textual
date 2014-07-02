@@ -24,7 +24,7 @@
 		return;
 	}
 	
-	self.webFrame = aWebFrame;
+	_webFrame = aWebFrame;
 	
 	if (self.webFrame) {
 		[RZNotificationCenter() addObserver:self selector:@selector(webViewDidChangeFrame:) name:NSViewFrameDidChangeNotification object:nil];

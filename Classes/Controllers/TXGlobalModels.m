@@ -277,6 +277,13 @@ NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...)
 #pragma mark -
 #pragma mark Grand Central Dispatch
 
+void TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(dispatch_block_t block)
+{
+	dispatch_queue_t workerQueue = [TXSharedApplication sharedMutableSynchronizationSerialQueue];
+	
+	TXPerformBlockOnDispatchQueue(workerQueue, block, TXPerformBlockOnDispatchQueueSyncOperationType);
+}
+
 void TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block)
 {
 	dispatch_queue_t workerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -300,11 +307,25 @@ void TXPerformBlockAsynchronouslyOnGlobalQueue(dispatch_block_t block)
 
 void TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block)
 {
-	TXPerformBlockOnDispatchQueue(dispatch_get_main_queue(), block, operationType);
+	if (operationType == TXPerformBlockOnDispatchQueueSyncOperationType) {
+		TXPerformBlockSynchronouslyOnMainQueue(block);
+	} else {
+		TXPerformBlockOnDispatchQueue(dispatch_get_main_queue(), block, operationType);
+	}
 }
 
 void TXPerformBlockSynchronouslyOnMainQueue(dispatch_block_t block)
 {
+	/* Check thread we are on. */
+	/* If we are already on the main thread and performing a synchronous action,
+	 then all we have to do is invoke the block supplied to us. */
+	if (NSIsCurrentThreadMain()) {
+		block(); // Perform block.
+			
+		return; // Kill rest of function.
+	}
+	
+	/* Perform normal dispatch operation. */
 	TXPerformBlockOnDispatchQueue(dispatch_get_main_queue(), block, TXPerformBlockOnDispatchQueueSyncOperationType);
 }
 

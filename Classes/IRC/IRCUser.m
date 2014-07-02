@@ -157,13 +157,13 @@
 
 - (NSInteger)colorNumber
 {
-	if (self.colorNumber < 0) {
+	if (_colorNumber < 0) {
 		NSString *hashName = [self.lowercaseNickname sha1];
 
-		self.colorNumber = ([hashName hash] % _colorNumberMax);
+		_colorNumber = ([hashName hash] % _colorNumberMax);
 	}
 	
-	return self.colorNumber;
+	return _colorNumber;
 }
 
 - (BOOL)isEqual:(id)other

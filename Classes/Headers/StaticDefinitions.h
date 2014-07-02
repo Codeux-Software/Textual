@@ -126,14 +126,6 @@
 
 #define NSIsCurrentThreadMain()					[[NSThread currentThread] isEqual:[NSThread mainThread]]
 
-#define TXLockMethodForOneTimeFire()			static BOOL __methodFired = NO;											\
-																														\
-												if (__methodFired == NO) {												\
-													__methodFired = YES;												\
-												} else {																\
-													NSAssert(NO, @"Method cannot be invoked more than one time.");		\
-												}
-
 /* Developer extras. */
 /* The developer environment token is saved to the user defaults
  dictionary and is used to tell Textual whether or not developer
@@ -169,10 +161,6 @@
 /* Just like nweak and uweak, these are useless, but hey, whatever.
  The defined type is used for filesize storage in Textual. */
 typedef unsigned long long						TXUnsignedLongLong;
-
-/* DO NOT access this directly. Be a good boy and use the helper methods
- provided by the implementation in TXSharedApplication.h */
-__weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 /* Standard out logging. */
 /* It is recommended to always use these calls above plain-ol' NSLog. */

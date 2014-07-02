@@ -150,12 +150,16 @@
 			currentObjectKey = _inputHistoryGlobalObjectKey;
 		}
 		
+		if (currentObjectKey == nil) {
+			return nil;
+		}
+		
 		TLOInputHistoryObject *currentObject = [self.historyObjects objectForKey:currentObjectKey];
 		
 		if (currentObject == nil) {
 			currentObject = [TLOInputHistoryObject new];
 			
-			[self.historyObjects setObject:currentObject forKey:self.currentTreeItem];
+			[self.historyObjects setObject:currentObject forKey:currentObjectKey];
 		}
 		
 		return currentObject;

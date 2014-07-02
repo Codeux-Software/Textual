@@ -60,53 +60,58 @@
 
 - (void)awakeFromNib
 {
-	[masterController() performAwakeningBeforeMainWindowDidLoad];
+	/* -awakeFromNib is called multiple times because of reloads. */
+	static BOOL _awakeFromNibCalled = NO;
+	
+	if (_awakeFromNibCalled == NO) {
+		_awakeFromNibCalled = YES;
+		
+		[masterController() performAwakeningBeforeMainWindowDidLoad];
 
-	[self setDelegate:self];
-	
-	[self setAllowsConcurrentViewDrawing:NO];
-	
-	[self setAlphaValue:[TPCPreferences themeTransparency]];
-	
-	[self.loadingScreen hideAll:NO];
-	[self.loadingScreen popLoadingConfigurationView];
-	
-	[self makeMainWindow];
-	[self makeKeyAndOrderFront:nil];
-	
-	[self loadWindowState];
-	
-	[themeController() load];
-	
-	[menuController() setupOtherServices];
-	
-	[self.inputTextField redrawOriginPoints:YES];
-	[self.inputTextField updateTextDirection];
-	
-	[self.inputTextField setBackgroundColor:[NSColor clearColor]];
-	
-	[self registerKeyHandlers];
-	
-	[self.contentSplitView setDelegate:self];
-	
-	[self.formattingMenu enableWindowField:self.inputTextField];
-	
-	[worldController() setupConfiguration];
-	
-	[self.serverList setDelegate:self];
-	[self.serverList setDataSource:self];
-	
-	[self.memberList setKeyDelegate:self];
-	[self.serverList setKeyDelegate:self];
-	
-	[self.serverList reloadData];
-	
-	[self setupTree];
-	
-	[self.memberList setTarget:menuController()];
-	[self.memberList setDoubleAction:@selector(memberInMemberListDoubleClicked:)];
+		[self setDelegate:self];
+		
+		[self setAllowsConcurrentViewDrawing:NO];
+		
+		[self setAlphaValue:[TPCPreferences themeTransparency]];
+		
+		[self.loadingScreen hideAll:NO];
+		[self.loadingScreen popLoadingConfigurationView];
+		
+		[self makeMainWindow];
+		[self makeKeyAndOrderFront:nil];
+		
+		[self loadWindowState];
+		
+		[themeController() load];
+		
+		[menuController() setupOtherServices];
+		
+		[self.inputTextField redrawOriginPoints:YES];
+		[self.inputTextField updateTextDirection];
+		
+		[self.inputTextField setBackgroundColor:[NSColor clearColor]];
+		
+		[self registerKeyHandlers];
+		
+		[self.contentSplitView setDelegate:self];
+		
+		[self.formattingMenu enableWindowField:self.inputTextField];
+		
+		[worldController() setupConfiguration];
+		
+		[self.serverList setDelegate:self];
+		[self.serverList setDataSource:self];
+		
+		[self.memberList setKeyDelegate:self];
+		[self.serverList setKeyDelegate:self];
+		
+		[self setupTree];
+		
+		[self.memberList setTarget:menuController()];
+		[self.memberList setDoubleAction:@selector(memberInMemberListDoubleClicked:)];
 
-	[masterController() performAwakeningAfterMainWindowDidLoad];
+		[masterController() performAwakeningAfterMainWindowDidLoad];
+	}
 }
 
 - (void)maybeToggleFullscreenAfterLaunch
@@ -156,12 +161,12 @@
 
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
-	[self windowDidBecomeKey:notification];
+	[masterController() windowDidBecomeKey:notification];
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification
 {
-	[self windowDidResignKey:notification];
+	[masterController() windowDidResignKey:notification];
 	
 	[self.memberList destroyUserInfoPopoverOnWindowKeyChange];
 }
@@ -857,13 +862,13 @@
 		if ([c isChannel]) {
 			/* We always want the channel name and user count. */
 			[title appendString:[c name]];
-			[title appendFormat:BLS(1007), [c numberOfMembers]];
+			[title appendString:BLS(1007, [c numberOfMembers])];
 			
 			/* If we are aware of the channel modes, then we append that. */
 			NSString *modes = [[c modeInfo] titleString];
 			
 			if ([modes length] > 1) {
-				[title appendFormat:BLS(1006), modes];
+				[title appendString:BLS(1006, modes)];
 			}
 		}
 	}
@@ -971,6 +976,8 @@
 {
 	if (	   self.selectedChannel) {
 		return self.selectedChannel.viewController;
+	} else if (self.selectedClient) {
+		return self.selectedClient.viewController;
 	} else {
 		return nil;
 	}
