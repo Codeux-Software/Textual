@@ -95,6 +95,8 @@
 
 - (void)onUpdate:(id)sender
 {
+	[self.exceptionList removeAllObjects];
+
     if ([self.delegate respondsToSelector:@selector(chanBanExceptionDialogOnUpdate:)]) {
 		[self.delegate chanBanExceptionDialogOnUpdate:self];
     }

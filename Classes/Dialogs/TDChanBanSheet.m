@@ -95,6 +95,8 @@
 
 - (void)onUpdate:(id)sender
 {
+	[self.banList removeAllObjects];
+
 	if ([self.delegate respondsToSelector:@selector(chanBanDialogOnUpdate:)]) {
 		[self.delegate chanBanDialogOnUpdate:self];
 	}

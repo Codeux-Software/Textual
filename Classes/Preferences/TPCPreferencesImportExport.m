@@ -134,9 +134,14 @@
 /* Conditional for keys that require special processing during the import process. */
 + (BOOL)isKeyNameExcludedFromNormalImportProcess:(NSString *)key
 {
-	return ([key hasPrefix:IRCWorldControllerCloudClientEntryKeyPrefix] ||
-			[key isEqualToString:IRCWorldControllerDefaultsStorageKey] ||
+	return ([key isEqualToString:IRCWorldControllerDefaultsStorageKey] ||
+			
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+			[key hasPrefix:IRCWorldControllerCloudClientEntryKeyPrefix] ||
+			
 			[key isEqualToString:IRCWorldControllerCloudDeletedClientsStorageKey] ||
+#endif
+			
 			[key isEqualToString:TPCPreferencesThemeNameDefaultsKey] ||
 			[key isEqualToString:TPCPreferencesThemeFontNameDefaultsKey]);
 }

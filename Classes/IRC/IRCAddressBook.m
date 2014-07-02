@@ -78,7 +78,7 @@
 
 - (NSString *)trackingNickname
 {
-	return [self.hostmask nicknameFromHostmask];
+	return [[self.hostmask nicknameFromHostmask] lowercaseString];
 }
 
 - (void)setHostmask:(NSString *)hostmask
