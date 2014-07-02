@@ -253,8 +253,6 @@
 
 - (void)setup:(id)seed
 {
-	TXLockMethodForOneTimeFire()
-	
 	if ([seed isKindOfClass:[NSDictionary class]]) {
 		self.config = [[IRCClientConfig alloc] initWithDictionary:seed];
 	} else if ([seed isKindOfClass:[IRCClientConfig class]]) {
@@ -662,7 +660,7 @@
 {
 	__block NSInteger channelCount = 0;
 	
-	TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueSyncOperationType, ^{
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.channels) {
 			channelCount = [self.channels count];
 		}
@@ -673,7 +671,7 @@
 
 - (void)addChannel:(IRCChannel *)channel
 {
-	TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueBarrierAsyncOperationType, ^{
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.channels) {
 			[self.channels addObjectWithoutDuplication:channel];
 			
@@ -684,7 +682,7 @@
 
 - (void)addChannel:(IRCChannel *)channel atPosition:(NSInteger)pos
 {
-	TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueBarrierAsyncOperationType, ^{
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.channels) {
 			[self.channels insertObject:channel atIndex:pos];
 			
@@ -695,7 +693,7 @@
 
 - (void)removeChannel:(IRCChannel *)channel
 {
-	TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueBarrierAsyncOperationType, ^{
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.channels) {
 			[self.channels removeObjectIdenticalTo:channel];
 		}
@@ -706,7 +704,7 @@
 {
 	__block NSInteger i = 0;
 	
-	TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueSyncOperationType, ^{
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.channels) {
 			for (IRCChannel *e in self.channels) {
 				if ([e isPrivateMessage]) {
@@ -725,7 +723,7 @@
 {
 	__block NSInteger i = 0;
 	
-	TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueSyncOperationType, ^{
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.channels) {
 			i = [self.channels indexOfObject:channel];
 		}
@@ -736,7 +734,7 @@
 
 - (void)selectFirstChannelInChannelList
 {
-	TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueBarrierAsyncOperationType, ^{
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.channels) {
 			if ([self.channels count] > 0) {
 				[mainWindow() select:self.channels[0]];
@@ -749,7 +747,7 @@
 {
 	__block NSArray *channelList = nil;
 	
-	TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueSyncOperationType, ^{
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.channels) {
 			channelList = [NSArray arrayWithArray:self.channels];
 		}
@@ -760,7 +758,7 @@
 
 - (void)setChannelList:(NSArray *)channelList
 {
-	TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueBarrierAsyncOperationType, ^{
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.channels) {
 			[self.channels removeAllObjects];
 			
@@ -2559,9 +2557,9 @@
 			NSString *text;
 			
 			if ([uncutInput isEqualIgnoringCase:@"-d"]) {
-				text = [NSString stringWithFormat:BLS(1113), name, vers, gref, code];
+				text = BLS(1113, name, vers, gref, code);
 			} else {
-				text = [NSString stringWithFormat:BLS(1112), name, vers, ccnt];
+				text = BLS(1112, name, vers, ccnt);
 			}
 
 			if (PointerIsEmpty(selChannel)) {
@@ -4346,7 +4344,7 @@
 				NSString *vers = [TPCApplicationInfo applicationInfoPlist][@"CFBundleVersion"];
 				NSString *code = [TPCApplicationInfo applicationInfoPlist][@"TXBundleBuildCodeName"];
 
-				NSString *textoc = [NSString stringWithFormat:BLS(1111), name, vers, code];
+				NSString *textoc = BLS(1111, name, vers, code);
 
 				[self sendCTCPReply:sendern command:command text:textoc];
 			}
@@ -4478,17 +4476,19 @@
 			/* Add to existing query? */
 			IRCChannel *query = [self findChannel:sendern];
 			
-			if ([query isActive] == NO) {
-				[query activate];
-				
-				[self print:query
-					   type:TVCLogLineJoinType
-				   nickname:nil
-				messageBody:BLS(1155, sendern)
-				 receivedAt:[m receivedAt]
-					command:[m command]];
-				
-				[mainWindow() reloadTreeItem:query];
+			if (query) {
+				if ([query isActive] == NO) {
+					[query activate];
+					
+					[self print:query
+						   type:TVCLogLineJoinType
+					   nickname:nil
+					messageBody:BLS(1155, sendern)
+					 receivedAt:[m receivedAt]
+						command:[m command]];
+					
+					[mainWindow() reloadTreeItem:query];
+				}
 			}
 		}
 	}
@@ -5984,7 +5984,7 @@
 			PointerIsEmptyAssertLoopBreak(c);
 
 			if ([c isActive]) {
-				NSString *text = [NSString stringWithFormat:BLS(1125), topicow, settime];
+				NSString *text = BLS(1125, topicow, settime);
 
 				[self print:c
 					   type:TVCLogLineTopicType

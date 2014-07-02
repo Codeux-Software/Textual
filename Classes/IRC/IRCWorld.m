@@ -64,8 +64,6 @@
 
 - (void)setupConfiguration
 {
-	TXLockMethodForOneTimeFire()
-
 	self.isPopulatingSeeds = YES;
 	
 	NSDictionary *config = [TPCPreferences loadWorld];
@@ -123,7 +121,7 @@
 {
 	__block NSArray *clientList = nil;
 	
-	TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueSyncOperationType, ^{
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.clients) {
 			clientList = [NSArray arrayWithArray:self.clients];
 		}
@@ -134,7 +132,7 @@
 
 - (void)setClientList:(NSArray *)clientList
 {
-	TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueBarrierAsyncOperationType, ^{
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.clients) {
 			[self.clients removeAllObjects];
 			
@@ -147,7 +145,7 @@
 {
 	__block NSInteger clientCount = 0;
 	
-	TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueSyncOperationType, ^{
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.clients) {
 			clientCount = [self.clients count];
 		}

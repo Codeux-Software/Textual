@@ -892,7 +892,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	id result = nil;
 	
 	if (drawingType == TVCLogRendererAttributedStringType) {
-		result = [NSMutableAttributedString emptyStringWithBase:body];
+		result = [NSMutableAttributedString mutableStringWithBase:body attributes:nil];
 
 		[result beginEditing];
 	} else {

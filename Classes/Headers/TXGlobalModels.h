@@ -67,6 +67,8 @@ typedef enum TXPerformBlockOnDispatchQueueOperationType	: NSInteger {
 	TXPerformBlockOnDispatchQueueSyncOperationType,
 } TXPerformBlockOnDispatchQueueOperationType;
 
+TEXTUAL_EXTERN void TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(dispatch_block_t block);
+
 TEXTUAL_EXTERN void TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block); // Uses default priority on queue.
 TEXTUAL_EXTERN void TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block);
 

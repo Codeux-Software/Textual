@@ -123,12 +123,12 @@
 
 - (NSAttributedString *)attributedStringValue
 {
-	return [self attributedString];
+	return [[self attributedString] copy];
 }
 
 - (NSString *)stringValue
 {
-	return [self string];
+	return [[self string] copy];
 }
 
 - (void)setAttributedStringValue:(NSAttributedString *)string

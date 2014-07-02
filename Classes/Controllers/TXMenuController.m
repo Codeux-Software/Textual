@@ -74,8 +74,6 @@
 
 - (void)setupOtherServices
 {
-	TXLockMethodForOneTimeFire();
-	
 	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
 		 self.fileTransferController = [TDCFileTransferDialog new];
 

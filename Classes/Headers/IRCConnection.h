@@ -50,7 +50,6 @@
 @property (nonatomic, assign) BOOL connectionUsesNormalSocks;
 @property (nonatomic, assign) BOOL connectionUsesSystemSocks;
 @property (nonatomic, assign) BOOL connectionUsesFloodControl;
-@property (nonatomic, assign) BOOL isConnectedWithClientSideCertificate; // This flag should be considered readonly.
 @property (nonatomic, assign) NSInteger floodControlDelayInterval;
 @property (nonatomic, assign) NSInteger floodControlMaximumMessageCount;
 @property (nonatomic, copy) NSString *serverAddress;
@@ -60,6 +59,14 @@
 @property (nonatomic, copy) NSString *proxyUsername;
 @property (nonatomic, assign) NSInteger proxyPort;
 @property (nonatomic, assign) NSInteger proxySocksVersion;
+
+/* These should be considered readonly. */
+/* Trying to modify/access them directly with a plugin will result in a bad time. */
+@property (nonatomic, assign) BOOL isConnectedWithClientSideCertificate;
+@property (nonatomic, assign) dispatch_queue_t dispatchQueue;
+@property (nonatomic, assign) dispatch_queue_t socketQueue;
+@property (nonatomic, copy) NSData *bufferOverflowString;
+@property (nonatomic, strong) id socketConnection;
 
 - (void)open;
 - (void)close;

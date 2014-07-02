@@ -151,6 +151,37 @@
 	return sharedSelf;
 }
 
++ (void)releaseSharedMutableSynchronizationSerialQueue
+{
+	(void)[TXSharedApplication sharedMutableSynchronizationSerialQueue:YES];
+}
+
++ (dispatch_queue_t)sharedMutableSynchronizationSerialQueue:(BOOL)performRelease
+{
+	static dispatch_queue_t workQueue = NULL;
+	
+	if (performRelease) {
+		if (workQueue) {
+			dispatch_release(workQueue);
+			
+			workQueue = NULL;
+		}
+	} else {
+		static dispatch_once_t onceToken;
+		
+		dispatch_once(&onceToken, ^{
+			workQueue = dispatch_queue_create("sharedMutableSynchronizationSerialQueue", DISPATCH_QUEUE_SERIAL);
+		});
+	}
+	
+	return workQueue;
+}
+
++ (dispatch_queue_t)sharedMutableSynchronizationSerialQueue
+{
+	return [TXSharedApplication sharedMutableSynchronizationSerialQueue:NO];
+}
+
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 + (TPCPreferencesCloudSync *)sharedCloudSyncManager
 {
@@ -169,6 +200,13 @@
 @end
 
 @implementation NSObject (TXSharedApplicationObjectExtension)
+
+__weak static TXMasterController *TXGlobalMasterControllerClassReference;
+
++ (void)setGlobalMasterControllerClassReference:(id)masterController
+{
+	TXGlobalMasterControllerClassReference = masterController;
+}
 
 - (TXMasterController *)masterController
 {

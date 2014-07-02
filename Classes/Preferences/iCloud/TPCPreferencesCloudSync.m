@@ -884,8 +884,6 @@
 
 - (void)initializeCloudSyncSession
 {
-	TXLockMethodForOneTimeFire()
-	
 	/* Debug data. */
 	DebugLogToConsole(@"iCloud: Beginning session.");
 

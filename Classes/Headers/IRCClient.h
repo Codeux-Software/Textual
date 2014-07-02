@@ -68,7 +68,7 @@ typedef enum IRCClientIdentificationWithSASLMechanism : NSInteger {
  ClientIRCv3SupportedCapacityZNCServerTimeISO are used internally for 
  capacity negotation but once accepted, the default server-time flag 
  is set for the maintained capacity. */
-/* ClientIRCv3SupportedCapacitySASL… is sent once negotation begins. It is 
+/* ClientIRCv3SupportedCapacitySASL… is set once negotation begins. It is 
  reset if negotation fails. Use ClientIRCv3SupportedCapacityIsIdentifiedWithSASL
  to find actual status of identification. */
 typedef enum ClientIRCv3SupportedCapacities : NSInteger {
@@ -92,7 +92,7 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 
 @interface IRCClient : IRCTreeItem
 @property (nonatomic, copy) IRCClientConfig *config;
-@property (nonatomic, copy) IRCISupportInfo *supportInfo;
+@property (nonatomic, strong) IRCISupportInfo *supportInfo;
 @property (nonatomic, assign) IRCClientConnectMode connectType;
 @property (nonatomic, assign) IRCClientDisconnectMode disconnectType;
 @property (nonatomic, assign) NSInteger connectDelay;

@@ -51,7 +51,7 @@
 - (id)init
 {
     if ((self = [super init])) {
-		TXGlobalMasterControllerClassReference = self;
+		[NSObject setGlobalMasterControllerClassReference:self];
 		
 		// ---- //
 		
@@ -99,9 +99,9 @@
 	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
 		[sharedCloudManager() initializeCloudSyncSession];
 	}
+#endif
 	
 	self.world = [IRCWorld new];
-#endif
 }
 
 - (void)performAwakeningAfterMainWindowDidLoad
@@ -121,6 +121,8 @@
 	[sharedPluginManager() loadPlugins];
 	
 	[TPCResourceManager copyResourcesToCustomAddonsFolder];
+	
+	[self applicationDidFinishLaunching];
 }
 
 #pragma mark -
@@ -137,7 +139,7 @@
 #endif
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)note
+- (void)applicationDidFinishLaunching
 {
 	/* Register for HockeyApp. */
 	[self awakeHockeyApp];
@@ -285,6 +287,8 @@
 {
 	[mainWindow() prepareForApplicationTermination];
 
+	[TXSharedApplication releaseSharedMutableSynchronizationSerialQueue];
+	
 	[RZRunningApplication() hide];
 
 	[RZWorkspaceNotificationCenter() removeObserver:self];
