@@ -3983,7 +3983,7 @@
 			isEncrypted:isEncrypted
 			 receivedAt:[m receivedAt]
 				command:[m command]
-			 referenceMessage:m];
+	   referenceMessage:m];
 
 			if ([self isSafeToPostNotificationForMessage:m inChannel:c]) {
 				[self notifyText:TXNotificationChannelNoticeType lineType:type target:c nickname:sender text:text];

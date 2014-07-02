@@ -970,7 +970,7 @@
 
 		/* Render everything. */
 		NSDictionary *resultInfo = nil;
-
+		
 		NSString *html = [self renderLogLine:logLine resultInfo:&resultInfo];
 
 		if (html) {
@@ -1179,7 +1179,7 @@
 	if (NSObjectIsNotEmpty([line nickname])) {
 		NSString *nickname = [line formattedNickname:self.associatedChannel];
 		
-		if (nickname) {
+		if (nickname == nil) {
 			attributes[@"isNicknameAvailable"] = @(NO);
 		} else {
 			attributes[@"isNicknameAvailable"] = @(YES);
@@ -1260,7 +1260,7 @@
 	
 	[outputDictionary setObject:newLinenNumber forKey:@"lineNumber"];
 	[outputDictionary setObject:lineRenderTime forKey:@"lineRenderTime"];
-
+	
 	// ************************************************************************** /
 	// Return information.											              /
 	// ************************************************************************** /

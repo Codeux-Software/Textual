@@ -389,7 +389,7 @@
 																 (bang2pos - (bang1pos + 1)))];
 
 	NSString *addressInt = [self substringAfterIndex:bang2pos];
-
+	
 	/* Perform basic validation. */
 	NSAssertReturnR([nicknameInt isNickname], NO);
 	NSAssertReturnR([usernameInt isHostmaskUsername], NO);

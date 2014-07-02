@@ -281,7 +281,13 @@ void TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(dispatch_block_t 
 {
 	dispatch_queue_t workerQueue = [TXSharedApplication sharedMutableSynchronizationSerialQueue];
 	
-	TXPerformBlockOnDispatchQueue(workerQueue, block, TXPerformBlockOnDispatchQueueSyncOperationType);
+	dispatch_queue_set_specific(workerQueue, workerQueue, (void *)1, NULL);
+	
+	if (dispatch_get_specific(workerQueue)) {
+		block();
+	} else {
+		TXPerformBlockOnDispatchQueue(workerQueue, block, TXPerformBlockOnDispatchQueueSyncOperationType);
+	}
 }
 
 void TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block)
