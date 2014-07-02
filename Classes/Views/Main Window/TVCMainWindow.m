@@ -778,7 +778,7 @@
 
 - (BOOL)isServerListVisible
 {
-	return [self.contentSplitView isServerListCollapsed] == NO);
+	return ([self.contentSplitView isServerListCollapsed] == NO);
 }
 
 #pragma mark -

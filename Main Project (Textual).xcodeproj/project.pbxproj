@@ -2567,6 +2567,7 @@
 				4CA110D01955AA5A0062EC4E /* IRCAddressBook.m */,
 				4C8AF5B6158E99520026668C /* IRCChannel.m */,
 				4C8AF5B7158E99520026668C /* IRCChannelConfig.m */,
+				4C8AF5B9158E99520026668C /* IRCClient.m */,
 				4C8AF5BA158E99520026668C /* IRCClientConfig.m */,
 				4CB26C6F19529003005F927C /* IRCCommandIndex.m */,
 				4C8AF5BB158E99520026668C /* IRCConnection.m */,
@@ -2781,7 +2782,6 @@
 			isa = PBXGroup;
 			children = (
 				4C8AF5B8158E99520026668C /* IRCChannelMode.m */,
-				4C8AF5B9158E99520026668C /* IRCClient.m */,
 			);
 			name = IRC;
 			sourceTree = "<group>";
