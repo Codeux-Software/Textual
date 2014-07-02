@@ -42,7 +42,7 @@
 
 - (void)startSheet
 {
-	[self startSheetWithWindow:self.sheet];
+	[self startSheetWithWindow:self.window];
 }
 
 - (void)startSheetWithWindow:(NSWindow *)awindow

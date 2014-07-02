@@ -141,7 +141,7 @@
 - (NSString *)formattedNickname:(IRCChannel *)owner withForcedFormat:(NSString *)format
 {
 	NSObjectIsEmptyAssertReturn(self.nickname, nil);
-
+	
 	if (format == nil) {
 		if ([self lineType] == TVCLogLineActionType) {
 			return [NSString stringWithFormat:TVCLogLineActionNicknameFormat, self.nickname];

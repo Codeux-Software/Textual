@@ -52,6 +52,15 @@
 
 - (void)start:(NSString *)nickname
 {
+	/* Define nickname field for user tracking. */
+	[self.tnewNicknameField setStringValueIsInvalidOnEmpty:YES];
+	[self.tnewNicknameField setStringValueUsesOnlyFirstToken:YES];
+	[self.tnewNicknameField setTextDidChangeCallback:self];
+	
+	[self.tnewNicknameField setValidationBlock:^BOOL(NSString *currentValue) {
+		return [currentValue isNickname];
+	}];
+	
 	[self.tnewNicknameField setStringValue:nickname];
 	[self.toldNicknameField setStringValue:nickname];
 	
@@ -60,10 +69,15 @@
 	[self startSheet];
 }
 
+- (void)validatedTextFieldTextDidChange:(id)sender
+{
+	[self.okButton setEnabled:[self.tnewNicknameField valueIsValid]];
+}
+
 - (void)ok:(id)sender
 {
 	if ([self.delegate respondsToSelector:@selector(nickSheet:didInputNickname:)]) {
-		NSString *newNickname = [self.tnewNicknameField firstTokenStringValue];
+		NSString *newNickname = [self.tnewNicknameField value];
 		
 		[self.delegate nickSheet:self didInputNickname:newNickname];
 	}
