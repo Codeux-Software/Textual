@@ -49,6 +49,6 @@
 @end
 
 @interface NSObject (TDCWelcomeSheetDelegate)
-- (void)welcomeSheet:(TDCWelcomeSheet *)sender onOK:(NSDictionary *)config;
+- (void)welcomeSheet:(TDCWelcomeSheet *)sender onOK:(IRCClientConfig *)config;
 - (void)welcomeSheetWillClose:(TDCWelcomeSheet *)sender;
 @end

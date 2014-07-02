@@ -39,7 +39,7 @@
 #import "TextualApplication.h"
 
 @interface IRCChannelMode : NSObject <NSCopying>
-@property (nonatomic, nweak) IRCISupportInfo *isupport;
+@property (nonatomic, nweak) IRCISupportInfo *supportInfo;
 
 - (void)clear;
 
@@ -47,6 +47,9 @@
 
 - (IRCModeInfo *)modeInfoFor:(NSString *)mode;
 
+// -modeInformation returns a copy of the internal storage for this class. The objects
+// in the dictionary are the same that are maintained by the class so any direct changes
+// to any returned values will have a direct impact on everything else. 
 - (NSDictionary *)modeInformation;
 
 - (NSString *)string;

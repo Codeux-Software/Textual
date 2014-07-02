@@ -2046,9 +2046,7 @@
 		4C7A309D16DAC1F500B231DE /* Dialogs */ = {
 			isa = PBXGroup;
 			children = (
-				4C8AF520158E99520026668C /* TDCListDialog.m */,
 				4C8AF523158E99520026668C /* TDCServerSheet.m */,
-				4C8AF526158E99520026668C /* TDCWelcomeSheet.m */,
 			);
 			name = Dialogs;
 			sourceTree = "<group>";
@@ -2552,11 +2550,13 @@
 				4CBE64C61743720600831D69 /* TDCHighlightEntrySheet.m */,
 				4C8AF51E158E99520026668C /* TDCHighlightListSheet.m */,
 				4C8AF51F158E99520026668C /* TDCInviteSheet.m */,
+				4C8AF520158E99520026668C /* TDCListDialog.m */,
 				4C8AF521158E99520026668C /* TDCModeSheet.m */,
 				4C8AF522158E99520026668C /* TDCNickSheet.m */,
 				4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */,
 				4C8AF524158E99520026668C /* TDCSheetBase.m */,
 				4C8AF525158E99520026668C /* TDCTopicSheet.m */,
+				4C8AF526158E99520026668C /* TDCWelcomeSheet.m */,
 			);
 			name = Dialogs;
 			sourceTree = "<group>";
@@ -2567,6 +2567,7 @@
 				4CA110D01955AA5A0062EC4E /* IRCAddressBook.m */,
 				4C8AF5B6158E99520026668C /* IRCChannel.m */,
 				4C8AF5B7158E99520026668C /* IRCChannelConfig.m */,
+				4C8AF5B8158E99520026668C /* IRCChannelMode.m */,
 				4C8AF5B9158E99520026668C /* IRCClient.m */,
 				4C8AF5BA158E99520026668C /* IRCClientConfig.m */,
 				4CB26C6F19529003005F927C /* IRCCommandIndex.m */,
@@ -2590,7 +2591,6 @@
 			isa = PBXGroup;
 			children = (
 				4C7A309D16DAC1F500B231DE /* Dialogs */,
-				4CFF8DBD16DC4CBA00E4204D /* IRC */,
 			);
 			name = "Textual 4";
 			sourceTree = "<group>";
@@ -2776,14 +2776,6 @@
 				4CF4D48916BC54C2000C5AC8 /* SpammerParadise.bundle */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		4CFF8DBD16DC4CBA00E4204D /* IRC */ = {
-			isa = PBXGroup;
-			children = (
-				4C8AF5B8158E99520026668C /* IRCChannelMode.m */,
-			);
-			name = IRC;
 			sourceTree = "<group>";
 		};
 		5D9B8EB1170A0EA700919CB0 /* Build */ = {
