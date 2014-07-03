@@ -40,7 +40,6 @@
 
 @implementation TDCNickSheet
 
-#warning Update dialog not to allow empty values.
 - (id)init
 {
 	if ((self = [super init])) {

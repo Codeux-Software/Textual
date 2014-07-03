@@ -44,7 +44,15 @@
 
 - (void)updateDrawing
 {
+	/* This ugly code is only temporary while refacotring is being worked on. */
 	
+	NSString *mark = [self.memberPointer mark];
+
+	if (mark) {
+		[self.textField setStringValue:[mark stringByAppendingString:[self.memberPointer nickname]]];
+	} else {
+		[self.textField setStringValue:[self.memberPointer nickname]];
+	}
 }
 
 #pragma mark -

@@ -811,10 +811,6 @@
 		TVCMemberListCell *groupItem = (TVCMemberListCell *)newView;
 
 		[groupItem setMemberPointer:item];
-		
-#warning Setting text field manually here should remain temporary. 
-		
-		[[groupItem textField] setStringValue:[item nickname]];
 	}
 
 	return newView;
@@ -829,7 +825,7 @@
 
 - (void)outlineView:(NSOutlineView *)outlineView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
 {
-	[mainWindowMemberList() reloadSelectionDrawingForRow:row];
+	[mainWindowMemberList() updateDrawingForRow:row];
 }
 
 #pragma mark -

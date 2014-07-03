@@ -91,7 +91,7 @@
 		// [self.contentView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
 		
 		/* Use font color depending on appearance. */
-		[self setPreferredFontColor:[self.backgroundView systemSpecificPlaceholderTextFontColor]];
+		[self setPreferredFontColor:[self.backgroundView systemSpecificTextFieldTextFontColor]];
 	}
 	
 	/* We changed the font color so we must inform our parent. */

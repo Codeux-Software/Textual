@@ -714,6 +714,8 @@
 	
 	id selectedItem = [mainWindow() selectedItem];
 	
+	[[TXSharedApplication sharedInputHistoryManager] destroy:u];
+	
 	if (selectedItem && [selectedItem associatedClient] == u) {
 		[self selectOtherAndDestroy:u];
 	} else {
@@ -749,6 +751,8 @@
 	if (u.lastSelectedChannel == c) {
 		u.lastSelectedChannel = nil;
 	}
+	
+	[[TXSharedApplication sharedInputHistoryManager] destroy:c];
 	
 	if ([mainWindow() selectedItem] == c) {
 		[self selectOtherAndDestroy:c];

@@ -231,7 +231,6 @@
 		}
 	};
 
-#warning Need to test whether performBlockOnMainThread: allows __block value to be inherited.
 	[self performBlockOnMainThread:runblock];
 
 	return result;

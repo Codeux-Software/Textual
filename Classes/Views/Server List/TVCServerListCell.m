@@ -45,12 +45,14 @@
 
 - (void)updateDrawing:(NSRect)cellFrame
 {
-	
+	[self updateDrawing:cellFrame skipDrawingCheck:NO];
 }
 
 - (void)updateDrawing:(NSRect)cellFrame skipDrawingCheck:(BOOL)doNotLimit
 {
+	/* This ugly code is only temporary while refacotring is being worked on. */
 	
+	[self.textField setStringValue:[self.cellItem label]];
 }
 
 - (void)updateGroupDisclosureTriangle

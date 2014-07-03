@@ -163,9 +163,9 @@
 		self.badgeRenderer = [TVCMemberListCellBadge new];
 		
 		self.userPopoverTrackingArea = [[NSTrackingArea alloc] initWithRect:frame
-																options:(NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveInKeyWindow)
-																  owner:self
-															   userInfo:nil];
+																	options:(NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveInKeyWindow)
+																	  owner:self
+																   userInfo:nil];
 
 		[self addTrackingArea:self.userPopoverTrackingArea];
 
@@ -178,11 +178,11 @@
 - (void)updateTrackingAreas
 {
     [self removeTrackingArea:self.userPopoverTrackingArea];
-
+	
 	self.userPopoverTrackingArea = [[NSTrackingArea alloc] initWithRect:[self frame]
-															options:(NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveInKeyWindow)
-															  owner:self
-														   userInfo:nil];
+																options:(NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveInKeyWindow)
+																  owner:self
+															   userInfo:nil];
 
 	[self addTrackingArea:self.userPopoverTrackingArea];
 }
@@ -360,28 +360,67 @@
 
 - (void)updateDrawingForMember:(IRCUser *)cellItem
 {
+	PointerIsEmptyAssert(cellItem);
+	
+	NSInteger rowIndex = [self rowForItem:cellItem];
+	
+	NSAssertReturn(rowIndex >= 0);
+	
+	[self updateDrawingForRow:rowIndex];
 }
 
 #pragma mark -
 
 - (void)reloadAllDrawings
 {
+	/* Reload drawings for all rows. */
+	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
+		[self updateDrawingForRow:i];
+	}
+	
+	/* Set display. */
+	[self setNeedsDisplay:YES];
 }
 
 - (void)reloadAllUserInterfaceElements
 {
+	/* Update background color. */
+	[self updateBackgroundColor];
+	
+	/* Clear selection and re-draw it. */
+	NSIndexSet *selectedRows = [self selectedRowIndexes];
+	
+	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
+		[self updateSelectionDrawingForRow:i byEnabling:[selectedRows containsIndex:i] forcefully:YES];
+	}
+	
+	/* Set display. */
+	[self setNeedsDisplay:YES];
 }
 
 - (void)reloadSelectionDrawingBySelectingItemsInIndexSet:(NSIndexSet *)rows
 {
+	PointerIsEmptyAssert(rows);
+	
+	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
+		[self updateSelectionDrawingForRow:i byEnabling:[rows containsIndex:i] forcefully:NO];
+	}
 }
 
 - (void)reloadSelectionDrawingForRow:(NSInteger)row
 {
+	NSIndexSet *selectedRows = [self selectedRowIndexes];
+	
+	[self updateSelectionDrawingForRow:row byEnabling:[selectedRows containsIndex:row] forcefully:YES];
 }
 
 - (void)updateDrawingForRow:(NSInteger)rowIndex
 {
+	NSAssertReturn(rowIndex >= 0);
+	
+	id rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
+	
+	[rowView updateDrawing];
 }
 
 - (void)updateSelectionDrawingForRow:(NSInteger)rowIndex byEnabling:(BOOL)isSelected forcefully:(BOOL)forceRedraw
@@ -394,7 +433,7 @@
 
 - (BOOL)allowsVibrancy
 {
-	return NO;
+	return YES;
 }
 
 - (NSScrollView *)scrollView

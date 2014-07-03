@@ -60,8 +60,6 @@
 - (NSAttributedString *)down:(NSAttributedString *)s;
 @end
 
-#warning Test new class changes.
-
 #pragma mark -
 #pragma mark Input History Manager
 
@@ -74,6 +72,15 @@
 	}
 	
 	return self;
+}
+
+- (void)destroy:(id)treeItem
+{
+	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
+		@synchronized(self.historyObjects) {
+			[self.historyObjects removeObjectForKey:[treeItem uniqueIdentifier]];
+		}
+	}
 }
 
 - (void)moveFocusTo:(id)treeItem
