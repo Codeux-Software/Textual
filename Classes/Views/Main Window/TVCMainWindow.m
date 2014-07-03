@@ -41,7 +41,7 @@
 #define _treeDragItemType		@"tree"
 #define _treeDragItemTypes		[NSArray arrayWithObject:_treeDragItemType]
 
-#define _treeClientHeight		21.0
+#define _treeClientHeight		22.0
 #define _treeChannelHeight		18.0
 
 @implementation TVCMainWindow
@@ -613,9 +613,9 @@
 	[self.inputTextField setAttributedStringValue:[NSAttributedString emptyString]];
 	
 	if ([as length] > 0) {
-		[self inputText:as command:command];
-		
 		[[TXSharedApplication sharedInputHistoryManager] add:as];
+		
+		[self inputText:as command:command];
 	}
 	
 	[[TXSharedApplication sharedNicknameCompletionStatus] clear:YES];

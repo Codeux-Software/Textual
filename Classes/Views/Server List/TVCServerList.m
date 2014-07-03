@@ -94,30 +94,62 @@
 
 - (void)reloadAllDrawings:(BOOL)doNotLimit
 {
+	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
+		[self updateDrawingForRow:i skipDrawingCheck:doNotLimit];
+	}
+	
+	[self setNeedsDisplay:YES];
 }
 
 - (void)reloadAllDrawings
 {
+	[self reloadAllDrawings:NO];
 }
 
 - (void)reloadAllDrawingsIgnoringOtherReloads
 {
+	[self reloadAllDrawings:YES];
 }
 
 - (void)updateDrawingForItem:(IRCTreeItem *)cellItem
 {
+	[self updateDrawingForItem:cellItem skipDrawingCheck:NO];
 }
 
 - (void)updateDrawingForItem:(IRCTreeItem *)cellItem skipDrawingCheck:(BOOL)doNotLimit
 {
+	PointerIsEmptyAssert(cellItem);
+	
+	NSInteger rowIndex = [self rowForItem:cellItem];
+	
+	NSAssertReturn(rowIndex >= 0);
+	
+	[self updateDrawingForRow:rowIndex skipDrawingCheck:doNotLimit];
 }
 
 - (void)updateDrawingForRow:(NSInteger)rowIndex
 {
+	[self updateDrawingForRow:rowIndex skipDrawingCheck:NO];
 }
 
 - (void)updateDrawingForRow:(NSInteger)rowIndex skipDrawingCheck:(BOOL)doNotLimit
 {
+	NSAssertReturn(rowIndex >= 0);
+	
+	id rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
+	
+	BOOL isGroupItem = [rowView isKindOfClass:[TVCServerListCellGroupItem class]];
+	BOOL isChildItem = [rowView isKindOfClass:[TVCServerListCellChildItem class]];
+	
+	if (isGroupItem || isChildItem) {
+		NSRect cellFrame = [self frameOfCellAtColumn:0 row:rowIndex];
+		
+		[rowView updateDrawing:cellFrame skipDrawingCheck:doNotLimit];
+		
+		if (isGroupItem) {
+			[rowView updateGroupDisclosureTriangle];
+		}
+	}
 }
 
 - (void)updateBackgroundColor
@@ -126,7 +158,7 @@
 
 - (BOOL)allowsVibrancy
 {
-	return NO;
+	return YES;
 }
 
 - (NSScrollView *)scrollView

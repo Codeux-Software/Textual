@@ -55,14 +55,6 @@
 		
 		// ---- //
 		
-		if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-			[RZMainBundle() loadCustomNibNamed:@"TVCMainWindowYosemite" owner:self topLevelObjects:nil];
-		} else {
-			[RZMainBundle() loadCustomNibNamed:@"TVCMainWindowMavericks" owner:self topLevelObjects:nil];
-		}
-		
-		// ---- //
-		
 #if defined(DEBUG)
 		self.ghostModeIsOn = YES; // Do not use autoconnect during debug.
 #else
@@ -87,6 +79,23 @@
     }
 
     return nil;
+}
+
+- (void)awakeFromNib
+{
+	static BOOL _awakeFromNibCalled = NO;
+	
+	if (_awakeFromNibCalled == NO) {
+		_awakeFromNibCalled = YES;
+	
+		/* We wait until -awakeFromNib to wake the window so that the menu
+		 controller created by the main nib has time to load. */
+		if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+			[RZMainBundle() loadCustomNibNamed:@"TVCMainWindowYosemite" owner:self topLevelObjects:nil];
+		} else {
+			[RZMainBundle() loadCustomNibNamed:@"TVCMainWindowMavericks" owner:self topLevelObjects:nil];
+		}
+	}
 }
 
 - (void)performAwakeningBeforeMainWindowDidLoad
@@ -286,8 +295,6 @@
 - (void)applicationWillTerminate:(NSNotification *)note
 {
 	[mainWindow() prepareForApplicationTermination];
-
-	[TXSharedApplication releaseSharedMutableSynchronizationSerialQueue];
 	
 	[RZRunningApplication() hide];
 
@@ -322,6 +329,8 @@
 	}
 	
 	[sharedPluginManager() unloadPlugins];
+	
+	[TXSharedApplication releaseSharedMutableSynchronizationSerialQueue];
 	
 	[TPCApplicationInfo saveTimeIntervalSinceApplicationInstall];
 

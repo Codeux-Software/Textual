@@ -41,6 +41,8 @@
 @interface TLOInputHistory : NSObject
 - (void)moveFocusTo:(id)treeItem;
 
+- (void)destroy:(id)treeItem;
+
 - (void)inputHistoryObjectScopeDidChange;
 
 - (void)add:(NSAttributedString *)s;
