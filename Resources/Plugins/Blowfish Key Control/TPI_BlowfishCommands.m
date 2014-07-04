@@ -124,7 +124,7 @@
 						  messageString:(NSString *)messageString
 {
 	if (NSIsCurrentThreadMain() == NO) {
-		[self userInputCommandInvokedOnClient:client commandString:commandString messageString:messageString];
+		[[self invokeOnMainThread] userInputCommandInvokedOnClient:client commandString:commandString messageString:messageString];
 	} else {
 		IRCChannel *c = [mainWindow() selectedChannelOn:client];
 		
