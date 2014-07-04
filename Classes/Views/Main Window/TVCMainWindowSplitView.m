@@ -55,7 +55,7 @@
 
 - (BOOL)allowsVibrancy
 {
-	return NO;
+	return YES;
 }
 
 - (void)expandServerList

@@ -75,7 +75,7 @@
 				   messageInformation:(NSDictionary *)messageDict
 {
 	if (NSIsCurrentThreadMain() == NO) {
-		[self didReceiveServerInputOnClient:client senderInformation:senderDict messageInformation:messageDict];
+		[[self invokeOnMainThread] didReceiveServerInputOnClient:client senderInformation:senderDict messageInformation:messageDict];
 	} else {
 		NSString *person  = senderDict[@"senderNickname"];
 		NSString *message = messageDict[@"messageSequence"];
