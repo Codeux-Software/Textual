@@ -355,8 +355,10 @@
 		[upperChoices addObjectsFromArray:[sharedPluginManager() supportedAppleScriptCommands]];
 	} else if (channelMode) {
 		// Prioritize selected channel for channel completion
-		[upperChoices addObject:[channel name]];
-
+		if (channel) {
+			[upperChoices addObject:[channel name]];
+		}
+		
 		for (IRCChannel *c in [client channelList]) {
 			if ([c isEqual:channel] == NO) {
 				[upperChoices addObject:[c name]];

@@ -74,6 +74,8 @@
 	
 	if ([stringValue isEqualTo:labelValue] == NO) {
 		[textField setStringValue:labelValue];
+	} else {
+		[textField setNeedsDisplay:YES];
 	}
 	
 	/* Maybe update icon image. */
