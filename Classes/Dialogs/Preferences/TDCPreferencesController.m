@@ -1028,7 +1028,7 @@
 - (void)onManageiCloudButtonClicked:(id)sender
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	for (NSDictionary *subdic in self.navigationTreeMatrix) {
+	for (NSDictionary *subdic in [self.navigationOutlineview navigationTreeMatrix]) {
 		for (NSDictionary *chldic in subdic[@"children"]) {
 			if ([chldic boolForKey:@"iCloudSyncingNavigationItem"]) {
 				if ([self.navigationOutlineview isItemExpanded:subdic] == NO) {
