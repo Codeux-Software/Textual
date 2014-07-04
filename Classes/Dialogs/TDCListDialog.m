@@ -43,7 +43,7 @@
 @property (nonatomic, nweak) IBOutlet NSButton *updateButton;
 @property (nonatomic, nweak) IBOutlet NSSearchField *searchField;
 @property (nonatomic, nweak) IBOutlet NSTextField *networkNameField;
-@property (nonatomic, nweak) IBOutlet TVCListView *channelListTable;
+@property (nonatomic, nweak) IBOutlet TVCBasicTableView *channelListTable;
 @property (nonatomic, strong) NSMutableArray *unfilteredList;
 @property (nonatomic, strong) NSMutableArray *filteredList;
 @property (nonatomic, readonly) NSMutableArray *activeList; // Proxies one of the two above.

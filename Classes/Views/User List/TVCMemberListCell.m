@@ -154,4 +154,10 @@
 #pragma mark Row View Cell
 
 @implementation TVCMemberListRowCell
+
+- (BOOL)isEmphasized
+{
+	return YES;
+}
+
 @end

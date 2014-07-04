@@ -5,6 +5,7 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
+ Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 — 2014 Codeux Software & respective contributors.
      Please see Acknowledgements.pdf for additional information.
 
@@ -37,5 +38,74 @@
 
 #import "TextualApplication.h"
 
-@implementation TVCServerListCellBadge
+@implementation TVCBasicTableView
+
+#pragma mark -
+#pragma mark Table View
+
+- (NSInteger)countSelectedRows
+{
+	return [[self selectedRowIndexes] count];
+}
+
+- (NSArray *)selectedRows
+{
+    NSMutableArray *allRows = [NSMutableArray array];
+    
+    NSIndexSet *indexes = [self selectedRowIndexes];
+	
+	for (NSNumber *index in [indexes arrayFromIndexSet]) {
+		[allRows addObject:index];
+	}
+    
+    return allRows;
+}
+
+- (void)selectItemAtIndex:(NSInteger)index
+{
+	[self selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
+	
+	[self scrollRowToVisible:index];
+}
+
+- (void)selectRows:(NSArray *)indices
+{
+	[self selectRows:indices extendSelection:NO];
+}
+
+- (void)selectRows:(NSArray *)indices extendSelection:(BOOL)extend
+{
+	NSMutableIndexSet *set = [NSMutableIndexSet indexSet];
+	
+	for (NSNumber *n in indices) {
+		[set addIndex:[n integerValue]];
+	}
+	
+	[self selectRowIndexes:set byExtendingSelection:extend];
+}
+
+- (void)rightMouseDown:(NSEvent *)e
+{
+	NSPoint p = [self convertPoint:e.locationInWindow fromView:nil];
+	
+	NSInteger i = [self rowAtPoint:p];
+	
+	if (i >= 0) {
+		if ([[self selectedRowIndexes] containsIndex:i] == NO) {
+			[self selectItemAtIndex:i];
+		}
+	}
+	
+	[super rightMouseDown:e];
+}
+
+- (void)textDidEndEditing:(NSNotification *)note
+{
+	if ([self.textEditingDelegate respondsToSelector:@selector(textDidEndEditing:)]) {
+		[self.textEditingDelegate textDidEndEditing:note];
+	} else {
+		[super textDidEndEditing:note];
+	}
+}
+
 @end

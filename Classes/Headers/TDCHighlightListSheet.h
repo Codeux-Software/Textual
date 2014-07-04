@@ -40,7 +40,7 @@
 @interface TDCHighlightListSheet : TDCSheetBase
 @property (nonatomic, copy) NSString *clientID;
 @property (nonatomic, nweak) IBOutlet NSTextField *headerTitleField;
-@property (nonatomic, nweak) IBOutlet TVCListView *highlightListTable;
+@property (nonatomic, nweak) IBOutlet TVCBasicTableView *highlightListTable;
 
 - (void)show;
 

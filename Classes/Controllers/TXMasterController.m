@@ -191,7 +191,7 @@
 	NSAssertReturn(self.applicationIsTerminating == NO);
 	
 	[mainWindowServerList() updateBackgroundColor];
-	[mainWindowServerList() reloadAllDrawingsIgnoringOtherReloads];
+	[mainWindowServerList() reloadAllDrawings];
 
 	[mainWindowMemberList() updateBackgroundColor];
 	[mainWindowMemberList() reloadAllDrawings];

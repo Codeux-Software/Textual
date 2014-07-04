@@ -37,5 +37,13 @@
 
 #import "TextualApplication.h"
 
-@interface TVCServerListCellBadge : NSObject
+@interface TVCAnimatedContentNavigationOutlineView : NSOutlineView <NSOutlineViewDelegate, NSOutlineViewDataSource>
+@property (nonatomic, assign) NSInteger contentViewPadding;
+@property (nonatomic, assign) NSInteger contentViewPreferredWidth;
+@property (nonatomic, assign) NSInteger contentViewPreferredHeight;
+@property (nonatomic, copy) NSArray *navigationTreeMatrix;
+@property (nonatomic, nweak) IBOutlet NSView *contentView;
+@property (nonatomic, nweak) IBOutlet NSWindow *parentWindow;
+
+- (void)startAtSelectionIndex:(NSInteger)startingSelection;
 @end

@@ -42,7 +42,7 @@
 #define _treeDragItemTypes		[NSArray arrayWithObject:_treeDragItemType]
 
 #define _treeClientHeight		22.0
-#define _treeChannelHeight		18.0
+#define _treeChannelHeight		20.0
 
 @implementation TVCMainWindow
 
@@ -1221,7 +1221,7 @@
 
 - (void)outlineView:(NSOutlineView *)outlineView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
 {
-	[self.serverList updateDrawingForRow:row skipDrawingCheck:YES];
+	[self.serverList updateDrawingForRow:row];
 }
 
 - (void)outlineViewItemDidCollapse:(NSNotification *)notification
@@ -1360,8 +1360,8 @@
 	
 	[self updateTitle];
 	
-	[self.serverList updateDrawingForItem:self.selectedItem				skipDrawingCheck:YES];
-	[self.serverList updateDrawingForItem:self.previouslySelectedItem	skipDrawingCheck:YES];
+	[self.serverList updateDrawingForItem:self.selectedItem];
+	[self.serverList updateDrawingForItem:self.previouslySelectedItem];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)sender writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard

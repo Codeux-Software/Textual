@@ -43,12 +43,9 @@
 - (NSDictionary *)drawingContext;
 
 - (void)updateDrawing:(NSRect)cellFrame;
-- (void)updateDrawing:(NSRect)cellFrame skipDrawingCheck:(BOOL)doNotLimit;
 
 - (void)updateGroupDisclosureTriangle;
 - (void)updateGroupDisclosureTriangle:(NSButton *)theButtonParent;
-
-- (void)updateSelectionBackgroundView;
 @end
 
 @interface TVCServerListCellChildItem : TVCServerListCell
@@ -58,4 +55,8 @@
 @end
 
 @interface TVCServerListRowCell : NSTableRowView
+@end
+
+@interface TVCServerLisCellTextFieldInterior : NSTextFieldCell
+@property (nonatomic, nweak) IBOutlet TVCServerListCell *parentCell;
 @end
