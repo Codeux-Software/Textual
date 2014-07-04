@@ -171,8 +171,10 @@
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
 	/* Build draw context for border of text field. When we draw the text field,
-	we will also render the unread count badge with it. */
-	NSDictionary *drawingContext = [self.parentCell drawingContext];
+	 we will also render the unread count badge with it. */
+	TVCServerListCell *parentCell = [self parentCell];
+	
+	NSDictionary *drawingContext = [parentCell drawingContext];
 	
 	BOOL isWindowInactive = [drawingContext boolForKey:@"isInactiveWindow"];
 	BOOL isKeyWindow = [drawingContext boolForKey:@"isKeyWindow"];
@@ -180,11 +182,11 @@
 	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
 	
 	Class interfaceObjects = [mainWindowServerList() userInterfaceObjects];
-	
+
 	/* If we are a client, then there will be no badged. */
 	if (isGroupItem == NO) {
 		/* Gather information about this badge draw. */
-		IRCChannel *channelPointer = (id)[self.parentCell cellItem];
+		IRCChannel *channelPointer = (id)[parentCell cellItem];
 		
 		BOOL windowIsOutoffocus = (isKeyWindow == NO || isWindowInactive);
 

@@ -37,6 +37,10 @@
 
 #import "TextualApplication.h"
 
+@interface TVCServerList ()
+@property (nonatomic, assign) BOOL viewBeenLiveResizedBefore;
+@end
+
 @implementation TVCServerList
 
 #pragma mark -
@@ -144,6 +148,28 @@
 - (BOOL)allowsVibrancy
 {
 	return YES;
+}
+
+- (void)viewWillStartLiveResize
+{
+	self.viewBeenLiveResizedBefore = YES;
+}
+
+- (NSRect)rectOfColumn:(NSInteger)column
+{
+	NSRect superRect = [super rectOfColumn:column];
+	
+	/* This is an extremely ugly hack to fix a bug with the underlying
+	 drawing engine of NSOutlineView. I thought about submitting a radar
+	 for this particular case, but never got around to it because I 
+	 managed to fix it here. If you would like to submit one on behalf
+	 of me, go ahead. */
+	
+	if (self.viewBeenLiveResizedBefore == NO) {
+		superRect.size.width += 10;
+	}
+	
+	return superRect;
 }
 
 - (NSScrollView *)scrollView
@@ -261,7 +287,7 @@
 
 + (NSColor *)serverCellDisabledItemTextColor
 {
-	return [NSColor colorWithCalibratedRed:0.35 green:0.35 blue:0.35 alpha:1.0];
+	return [NSColor colorWithCalibratedRed:0.0 green:0.0 blue:0.0 alpha:0.3];
 }
 
 + (NSColor *)serverCellNormalItemTextColor
@@ -387,7 +413,7 @@
 
 + (NSColor *)serverCellDisabledItemTextColor
 {
-	return [NSColor colorWithCalibratedRed:0.35 green:0.35 blue:0.35 alpha:1.0];
+	return [NSColor colorWithCalibratedRed:0.0 green:0.0 blue:0.0 alpha:0.3];
 }
 
 + (NSColor *)serverCellNormalItemTextColor
