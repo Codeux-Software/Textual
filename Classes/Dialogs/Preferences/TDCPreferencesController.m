@@ -56,10 +56,6 @@
 #define _addonsToolbarItemMultiplier		65
 
 @interface TDCPreferencesController ()
-@property (nonatomic, assign) BOOL navgiationTreeIsAnimating;
-@property (nonatomic, copy) NSArray *navigationTreeMatrix;
-@property (nonatomic, assign) NSInteger lastSelectedNavigationItem;
-@property (nonatomic, assign) NSInteger currentSelectedNavigationItem;
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 @property (nonatomic, strong) TDCProgressInformationSheet *tcopyStyleFilesProgressIndicator;
@@ -196,21 +192,19 @@
 		]
 	   }];
 	
-	self.navigationTreeMatrix = navigationTreeMatrix;
+	[self.navigationOutlineview setNavigationTreeMatrix:navigationTreeMatrix];
 
-	[self.navigationOutlineview setDataSource:self];
-	[self.navigationOutlineview setDelegate:self];
-
+	[self.navigationOutlineview setContentViewPadding:_preferencePaneViewFramePadding];
+	[self.navigationOutlineview setContentViewPreferredWidth:_forcedPreferencePaneViewFrameWidth];
+	[self.navigationOutlineview setContentViewPreferredHeight:_forcedPreferencePaneViewFrameHeight];
+	
 	[self.navigationOutlineview reloadData];
 
-	[self.navigationOutlineview expandItem:_navigationTreeMatrix[0]];
-	[self.navigationOutlineview expandItem:_navigationTreeMatrix[1]];
-	[self.navigationOutlineview expandItem:_navigationTreeMatrix[3]];
+	[self.navigationOutlineview expandItem:navigationTreeMatrix[0]];
+	[self.navigationOutlineview expandItem:navigationTreeMatrix[1]];
+	[self.navigationOutlineview expandItem:navigationTreeMatrix[3]];
 
-	self.lastSelectedNavigationItem = 6;
-	self.currentSelectedNavigationItem = 6;
-
-	[self.navigationOutlineview selectItemAtIndex:6];
+	[self.navigationOutlineview startAtSelectionIndex:6];
 
 	/* Growl check. */
 	BOOL growlRunning = [GrowlApplicationBridge isGrowlRunning];
@@ -265,208 +259,6 @@
 	[self.window makeKeyAndOrderFront:nil];
 }
 
-#pragma mark -
-#pragma mark NSOutlineViewDelegate Delegates
-
-- (NSInteger)outlineView:(NSOutlineView *)sender numberOfChildrenOfItem:(NSDictionary *)item
-{
-	if (item) {
-		return [item[@"children"] count];
-	} else {
-		return [self.navigationTreeMatrix count];
-	}
-}
-
-- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(NSDictionary *)item
-{
-	if (item) {
-		return item[@"children"][index];
-	} else {
-		return self.navigationTreeMatrix[index];
-	}
-}
-
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(NSDictionary *)item
-{
-	return ([item boolForKey:@"blockCollapse"] == NO);
-}
-
-- (BOOL)outlineView:(NSOutlineView *)sender isItemExpandable:(NSDictionary *)item
-{
-	return [item containsKey:@"children"];
-}
-
-- (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(NSDictionary *)item
-{
-	return item[@"name"];
-}
-
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
-{
-	if (self.navgiationTreeIsAnimating) {
-		return NO;
-	} else {
-		return ([item containsKey:@"children"] == NO);
-	}
-}
-
-- (id)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(NSDictionary *)item
-{
-	NSTableCellView *newView = [outlineView makeViewWithIdentifier:@"navEntry" owner:self];
-
-	[[newView textField] setStringValue:item[@"name"]];
-
-	return newView;
-}
-
-- (void)outlineViewSelectionDidChange:(NSNotification *)notification
-{
-	NSInteger selectedRow = [self.navigationOutlineview selectedRow];
-
-	NSDictionary *navItem = [self.navigationOutlineview itemAtRow:selectedRow];
-
-	self.lastSelectedNavigationItem = self.currentSelectedNavigationItem;
-	
-	self.currentSelectedNavigationItem = selectedRow;
-
-	[self presentPreferencesPane:navItem[@"view"]];
-}
-
-- (NSRect)currentWindowFrame
-{
-	return [self.window frame];
-}
-
-- (void)presentPreferencesPane:(NSView *)newView
-{
-	/* Determine direction. */
-	BOOL isGoingDown = NO;
-
-	if (self.currentSelectedNavigationItem > self.lastSelectedNavigationItem) {
-		isGoingDown = YES;
-	}
-
-	BOOL invertedScrollingDirection = [RZUserDefaults() boolForKey:@"com.apple.swipescrolldirection"];
-
-	if (invertedScrollingDirection) {
-		if (isGoingDown) {
-			isGoingDown = NO;
-		} else {
-			isGoingDown = YES;
-		}
-	}
-
-	self.navgiationTreeIsAnimating = YES;
-
-	/* Set view frame. */
-	NSRect newViewFinalFrame = [newView frame];
-
-	newViewFinalFrame.origin.x = 0;
-	newViewFinalFrame.origin.y = 0;
-
-	newViewFinalFrame.size.width = _forcedPreferencePaneViewFrameWidth;
-
-	if (newViewFinalFrame.size.height < _forcedPreferencePaneViewFrameHeight) {
-		newViewFinalFrame.size.height = _forcedPreferencePaneViewFrameHeight;
-	}
-
-	/* Set frame animation will start at. */
-	NSRect newViewAnimationFrame = newViewFinalFrame;
-
-	if (isGoingDown) {
-		newViewAnimationFrame.origin.y += newViewAnimationFrame.size.height;
-	} else {
-		newViewAnimationFrame.origin.y -= newViewAnimationFrame.size.height;
-	}
-
-	[newView setFrame:newViewAnimationFrame];
-
-	/* Update window size. */
-	NSRect contentViewFrame = [self.contentView frame];
-
-	BOOL contentSizeDidntChange =  (contentViewFrame.size.height == newViewFinalFrame.size.height);
-	BOOL windowWillBecomeSmaller = (contentViewFrame.size.height >  newViewFinalFrame.size.height);
-
-	/* Special condition to allow for smoother animations when going up
-	 with a window which is resizing to a smaller size. */
-	if (isGoingDown && windowWillBecomeSmaller) {
-		isGoingDown = NO;
-	}
-
-	/* Set window frame. */
-	NSRect windowFrame = [self currentWindowFrame];
-
-	if (contentSizeDidntChange == NO) {
-		windowFrame.size.height = (_preferencePaneViewFramePadding + newViewFinalFrame.size.height);
-
-		windowFrame.origin.y = (NSMaxY([self currentWindowFrame]) - windowFrame.size.height);
-
-		[self.window setFrame:windowFrame display:YES animate:YES];
-	}
-
-	/* Add new frame. */
-	[self.contentView addSubview:newView];
-
-	/* Update content frame. */
-	if (contentSizeDidntChange == NO) {
-		contentViewFrame.size.height = newViewFinalFrame.size.height;
-	}
-
-	/* Cancel any previous animation resets. */
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(timedRemoveFrame:) object:newView];
-
-	/* Begin animation. */
-	[RZAnimationCurrentContext() setDuration:0.7];
-
-	/* Find existing views. */
-	/* If count is 0, then that means preferences just launched
-	 and we have not added anything to our window yet. */
-	NSArray *subviews = [self.contentView subviews];
-
-	NSInteger subviewCount = [subviews count];
-
-	if (subviewCount > 1) {
-		NSView *oldView = [self.contentView subviews][0];
-
-		/* If the number of visible views is more than 2 (the one we added and the old),
-		 then we erase the old views because the user could be clicking the navigation
-		 list fast which means the old views would stick until animations complete. */
-		if (subviewCount > 2) {
-			for (NSInteger i = 2; i < subviewCount; i++) {
-				[subviews[i] removeFromSuperview];
-			}
-		}
-
-		NSRect oldViewAnimationFrame = [oldView frame]; // Set frame animation will end at.
-
-		if (isGoingDown) {
-			oldViewAnimationFrame.origin.y = -(windowFrame.size.height); // No way anything will be there…
-		} else {
-			oldViewAnimationFrame.origin.y =   windowFrame.size.height; // No way anything will be there…
-		}
-
-		[oldView.animator setAlphaValue:0.0];
-		[oldView.animator setFrame:oldViewAnimationFrame];
-
-		[newView.animator setAlphaValue:1.0];
-		[newView.animator setFrame:newViewFinalFrame];
-
-		[self performSelector:@selector(timedRemoveFrame:) withObject:oldView afterDelay:0.3];
-	} else {
-		[newView setFrame:newViewFinalFrame];
-
-		self.navgiationTreeIsAnimating = NO;
-	}
-
-	[self.window recalculateKeyViewLoop];
-}
-
-- (void)timedRemoveFrame:(NSView *)oldView
-{
-	self.navgiationTreeIsAnimating = NO;
-
-	[oldView removeFromSuperview];
-}
 
 #pragma mark -
 #pragma mark KVC Properties
@@ -1562,7 +1354,7 @@
 	/* We set alpha to hide window but also change frame underneath user. */
 	[self.window setAlphaValue:0.0];
 
-	NSRect windowFrame = [self currentWindowFrame];
+	NSRect windowFrame = [self.window frame];
 
 	windowFrame.size.height = _forcedPreferencePaneViewFrameHeight;
 

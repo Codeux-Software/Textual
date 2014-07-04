@@ -110,20 +110,21 @@
 	@class TLOTimer;
 	@class TLOTimerCommand;
 	@class TLOpenLink;
-	@class TPCPreferences;
 	@class TPCApplicationInfo;
 	@class TPCPathInfo;
+	@class TPCPreferences;
 	@class TPCPreferencesCloudSync;
 	@class TPCPreferencesImportExport;
 	@class TPCResourceManager;
 	@class TPCThemeController;
 	@class TPCThemeSettings;
+	@class TVCAnimatedContentNavigationOutlineView;
+	@class TVCBasicTableView;
 	@class TVCDockIcon;
 	@class TVCImageURLParser;
 	@class TVCImageURLoader;
 	@class TVCInputPromptDialog;
 	@class TVCListSeparatorCell;
-	@class TVCListView;
 	@class TVCLogController;
 	@class TVCLogControllerHistoricLogFile;
 	@class TVCLogControllerOperationQueue;
@@ -134,8 +135,8 @@
 	@class TVCLogView;
 	@class TVCMainWindow;
 	@class TVCMainWindowLoadingScreenView;
-	@class TVCMainWindowSegmentedControllerCell;
 	@class TVCMainWindowSegmentedController;
+	@class TVCMainWindowSegmentedControllerCell;
 	@class TVCMainWindowSplitView;
 	@class TVCMainWindowTextView;
 	@class TVCMainWindowTextViewBackground;
@@ -147,10 +148,13 @@
 	@class TVCMemberListUserInfoPopover;
 	@class TVCQueuedCertificateTrustPanel;
 	@class TVCServerList; // This has a lot of classes.
+	@class TVCServerLisCellTextFieldInterior;
 	@class TVCServerListCell;
-	@class TVCServerListCellBadge;
 	@class TVCServerListCellChildItem;
 	@class TVCServerListCellGroupItem;
+	@class TVCServerListDarkYosemiteUserInterface;
+	@class TVCServerListLightYosemiteUserInterface;
+	@class TVCServerListMavericksUserInterface;
 	@class TVCServerListRowCell;
 	@class TVCTextFieldWithValueValidation;
 	@class TVCTextFieldWithValueValidationCell;
@@ -311,13 +315,14 @@
 
 	/* View Controllers. */
 
+	#import "TVCAnimatedContentNavigationOutlineView.h"
 	#import "TVCDockIcon.h"
 	#import "TVCImageURLParser.h"
 	#import "TVCImageURLoader.h"
 	#import "TVCInputPromptDialog.h"
 	#import "TVCMainWindowTextView.h"
 	#import "TVCListSeparatorCell.h"
-	#import "TVCListView.h"
+	#import "TVCBasicTableView.h"
 	#import "TVCLogController.h"
 	#import "TVCLogControllerHistoricLogFile.h"
 	#import "TVCLogControllerOperationQueue.h"
@@ -338,7 +343,6 @@
 	#import "TVCQueuedCertificateTrustPanel.h"
 	#import "TVCServerList.h"
 	#import "TVCServerListCell.h"
-	#import "TVCServerListCellBadge.h"
 	#import "TVCTextFieldWithValueValidation.h"
 	#import "TVCTextViewWithIRCFormatter.h"
 	#import "TVCTextFormatterMenu.h"

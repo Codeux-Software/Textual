@@ -38,74 +38,17 @@
 
 #import "TextualApplication.h"
 
-@implementation TVCListView
+#define TXPreferredGlobalTableViewFont			[NSFont fontWithName:@"Lucida Grande" size:12.0]
 
-#pragma mark -
-#pragma mark Table View
+@interface TVCBasicTableView : NSTableView
+@property (nonatomic, uweak) id keyDelegate;
+@property (nonatomic, uweak) id textEditingDelegate;
 
-- (NSInteger)countSelectedRows
-{
-	return [[self selectedRowIndexes] count];
-}
+- (NSArray *)selectedRows;
+- (NSInteger)countSelectedRows;
 
-- (NSArray *)selectedRows
-{
-    NSMutableArray *allRows = [NSMutableArray array];
-    
-    NSIndexSet *indexes = [self selectedRowIndexes];
-	
-	for (NSNumber *index in [indexes arrayFromIndexSet]) {
-		[allRows addObject:index];
-	}
-    
-    return allRows;
-}
+- (void)selectItemAtIndex:(NSInteger)index;
 
-- (void)selectItemAtIndex:(NSInteger)index
-{
-	[self selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
-	
-	[self scrollRowToVisible:index];
-}
-
-- (void)selectRows:(NSArray *)indices
-{
-	[self selectRows:indices extendSelection:NO];
-}
-
-- (void)selectRows:(NSArray *)indices extendSelection:(BOOL)extend
-{
-	NSMutableIndexSet *set = [NSMutableIndexSet indexSet];
-	
-	for (NSNumber *n in indices) {
-		[set addIndex:[n integerValue]];
-	}
-	
-	[self selectRowIndexes:set byExtendingSelection:extend];
-}
-
-- (void)rightMouseDown:(NSEvent *)e
-{
-	NSPoint p = [self convertPoint:e.locationInWindow fromView:nil];
-	
-	NSInteger i = [self rowAtPoint:p];
-	
-	if (i >= 0) {
-		if ([[self selectedRowIndexes] containsIndex:i] == NO) {
-			[self selectItemAtIndex:i];
-		}
-	}
-	
-	[super rightMouseDown:e];
-}
-
-- (void)textDidEndEditing:(NSNotification *)note
-{
-	if ([self.textEditingDelegate respondsToSelector:@selector(textDidEndEditing:)]) {
-		[self.textEditingDelegate textDidEndEditing:note];
-	} else {
-		[super textDidEndEditing:note];
-	}
-}
-
+- (void)selectRows:(NSArray *)indices;
+- (void)selectRows:(NSArray *)indices extendSelection:(BOOL)extend;
 @end

@@ -413,7 +413,7 @@
 
 	if (reloadUserInterface) {
 		[mainWindowServerList() updateBackgroundColor];
-		[mainWindowServerList() reloadAllDrawingsIgnoringOtherReloads];
+		[mainWindowServerList() reloadAllDrawings];
 
 		[mainWindowMemberList() updateBackgroundColor];
 		[mainWindowMemberList() reloadAllUserInterfaceElements];

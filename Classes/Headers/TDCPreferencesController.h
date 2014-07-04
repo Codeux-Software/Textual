@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-@interface TDCPreferencesController : NSWindowController <NSOutlineViewDataSource, NSOutlineViewDelegate>
+@interface TDCPreferencesController : NSWindowController
 @property (nonatomic, uweak) id delegate;
 @property (nonatomic, copy) NSArray *alertSounds;
 @property (nonatomic, nweak) IBOutlet NSArrayController *excludeKeywordsArrayController;
@@ -61,7 +61,6 @@
 @property (nonatomic, nweak) IBOutlet NSTableView *keywordsTable;
 @property (nonatomic, nweak) IBOutlet NSTextField *alertNotificationDestinationTextField;
 @property (nonatomic, nweak) IBOutlet NSTextField *fileTransferManuallyEnteredIPAddressField;
-@property (nonatomic, nweak) IBOutlet NSView *contentView;
 @property (nonatomic, nweak) IBOutlet NSView *contentViewAlerts;
 @property (nonatomic, nweak) IBOutlet NSView *contentViewChannelManagement;
 @property (nonatomic, nweak) IBOutlet NSView *contentViewCommandScope;
@@ -82,7 +81,7 @@
 @property (nonatomic, nweak) IBOutlet NSView *contentViewMainTextField;
 @property (nonatomic, nweak) IBOutlet NSView *contentViewStyle;
 @property (nonatomic, nweak) IBOutlet NSView *contentViewUserListColors;
-@property (nonatomic, nweak) IBOutlet NSOutlineView *navigationOutlineview;
+@property (nonatomic, nweak) IBOutlet TVCAnimatedContentNavigationOutlineView *navigationOutlineview;
 @property (nonatomic, strong) TDCPreferencesScriptWrapper *scriptsController;
 
 - (void)show;

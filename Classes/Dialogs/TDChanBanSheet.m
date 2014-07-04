@@ -39,7 +39,7 @@
 
 @interface TDChanBanSheet ()
 @property (nonatomic, nweak) IBOutlet NSTextField *headerTitleField;
-@property (nonatomic, nweak) IBOutlet TVCListView *banTable;
+@property (nonatomic, nweak) IBOutlet TVCBasicTableView *banTable;
 @property (nonatomic, strong) NSMutableArray *banList;
 @end
 
