@@ -85,6 +85,16 @@
 {
 	[self popWindowSheetIfExists];
 	
+	for (NSString *windowKey in self.openWindowList) {
+		id windowObject = self.openWindowList[windowKey];
+		
+		if ([[windowObject class] isSubclassOfClass:[NSWindowController class]]) {
+			 [windowObject close];
+		}
+	}
+	
+	self.openWindowList = nil;
+	
 	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
 		[self.fileTransferController prepareForApplicationTermination];
 	}
