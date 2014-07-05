@@ -805,6 +805,8 @@
 		4CABE85B1840615A002FE4B8 /* TDCProgressInformationSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CABE8591840615A002FE4B8 /* TDCProgressInformationSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CABE85E184061E5002FE4B8 /* TDCProgressInformationSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CABE85C184061E5002FE4B8 /* TDCProgressInformationSheet.xib */; };
 		4CABE85F184061E5002FE4B8 /* TDCProgressInformationSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CABE85C184061E5002FE4B8 /* TDCProgressInformationSheet.xib */; };
+		4CB0B1D11968846100EECF27 /* liveresize.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CB0B1C919687F5C00EECF27 /* liveresize.js */; };
+		4CB0B1D21968846500EECF27 /* liveresize.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CB0B1C919687F5C00EECF27 /* liveresize.js */; };
 		4CB1362116D881150025DD7F /* Textual IRC Client Extras.pkg in Copy Installers */ = {isa = PBXBuildFile; fileRef = 4CB1361F16D881080025DD7F /* Textual IRC Client Extras.pkg */; };
 		4CB26C6319528FA5005F927C /* IRCCommandIndexPrivateValues.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CB26C6119528FA5005F927C /* IRCCommandIndexPrivateValues.plist */; };
 		4CB26C6419528FA5005F927C /* IRCCommandIndexPrivateValues.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CB26C6119528FA5005F927C /* IRCCommandIndexPrivateValues.plist */; };
@@ -1008,6 +1010,7 @@
 			dstSubfolderSpec = 7;
 			files = (
 				4C5BA3D316F1302F00A96CA2 /* core.js in Copy JavaScript Files */,
+				4CB0B1D21968846500EECF27 /* liveresize.js in Copy JavaScript Files */,
 			);
 			name = "Copy JavaScript Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1079,6 +1082,7 @@
 			dstSubfolderSpec = 7;
 			files = (
 				4CCF2F9915804BC9006FFE21 /* core.js in Copy JavaScript Files */,
+				4CB0B1D11968846100EECF27 /* liveresize.js in Copy JavaScript Files */,
 			);
 			name = "Copy JavaScript Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1494,6 +1498,7 @@
 		4CA110EA1955AAA10062EC4E /* TVCMainWindowTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCMainWindowTextView.m; path = "Main Window/TVCMainWindowTextView.m"; sourceTree = "<group>"; };
 		4CABE8591840615A002FE4B8 /* TDCProgressInformationSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCProgressInformationSheet.h; sourceTree = "<group>"; };
 		4CABE85D184061E5002FE4B8 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/Localization/English.lproj/TDCProgressInformationSheet.xib; sourceTree = SOURCE_ROOT; };
+		4CB0B1C919687F5C00EECF27 /* liveresize.js */ = {isa = PBXFileReference; explicitFileType = sourcecode.javascript; fileEncoding = 4; path = liveresize.js; sourceTree = SOURCE_ROOT; };
 		4CB1361F16D881080025DD7F /* Textual IRC Client Extras.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Textual IRC Client Extras.pkg"; path = "Resources/All Scripts/Sandbox Exceptions/Installers/Textual IRC Client Extras.pkg"; sourceTree = SOURCE_ROOT; };
 		4CB26C6119528FA5005F927C /* IRCCommandIndexPrivateValues.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = IRCCommandIndexPrivateValues.plist; path = Resources/Miscellaneous/IRCCommandIndexPrivateValues.plist; sourceTree = SOURCE_ROOT; };
 		4CB26C6219528FA5005F927C /* IRCCommandIndexPublicValues.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = IRCCommandIndexPublicValues.plist; path = Resources/Miscellaneous/IRCCommandIndexPublicValues.plist; sourceTree = SOURCE_ROOT; };
@@ -1798,6 +1803,7 @@
 			isa = PBXGroup;
 			children = (
 				4CCF2F5315804888006FFE21 /* core.js */,
+				4CB0B1C919687F5C00EECF27 /* liveresize.js */,
 			);
 			name = API;
 			sourceTree = "<group>";
