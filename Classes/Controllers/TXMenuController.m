@@ -821,7 +821,6 @@
 	return NO;
 }
 
-#warning Test to make sure isEqual selection is correct.
 - (void)popWindowSheetIfExists
 {
 	/* Close any existing sheet by canceling the previous instance of it. */
@@ -1427,6 +1426,8 @@
 	[d setDelegate:self];
 	[d setWindow:mainWindow()];
 	
+	[d setClientID:[u uniqueIdentifier]];
+	
 	[d show];
 
 	[self addWindowToWindowList:d];
@@ -1457,7 +1458,7 @@
 	[t setWindow:mainWindow()];
 	
 	[t setClientID:[u treeUUID]];
-	[t setChannelID:[u treeUUID]];
+	[t setChannelID:[c treeUUID]];
 
 	[t start:[c topic]];
 

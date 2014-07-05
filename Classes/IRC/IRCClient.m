@@ -325,7 +325,7 @@
 	NSMutableArray *originalChannelList;
 	
 	@synchronized(self.channels) {
-		originalChannelList = [NSMutableArray arrayWithObject:self.channels];
+		originalChannelList = [NSMutableArray arrayWithArray:self.channels];
 	}
 	
 	/* New list of channels to reflect configuration. */
@@ -696,6 +696,8 @@
 	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.channels) {
 			[self.channels removeObjectIdenticalTo:channel];
+			
+			[self updateStoredChannelList];
 		}
 	});
 }
@@ -2535,6 +2537,8 @@
 			}
 
 			if (self.isQuitting) {
+				[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(connect) object:nil];
+
 				[self performSelector:@selector(connect) withObject:nil afterDelay:2.0];
 			} else {
 				[self connect];
@@ -2578,8 +2582,8 @@
 				[self printDebugInformation:BLS(1220)];
 			} else {
 				[self printDebugInformation:BLS(1223)];
-
-				[menuController() toggleMuteOnNotificationSoundsShortcut:NSOffState];
+				
+				[menuController() toggleMuteOnNotificationSoundsShortcut:NSOnState];
 			}
 
 			break;
@@ -2588,8 +2592,8 @@
 		{
 			if ([sharedGrowlController() areNotificationSoundsDisabled]) {
 				[self printDebugInformation:BLS(1221)];
-
-				[menuController() toggleMuteOnNotificationSoundsShortcut:NSOnState];
+				
+				[menuController() toggleMuteOnNotificationSoundsShortcut:NSOffState];
 			} else {
 				[self printDebugInformation:BLS(1222)];
 			}
@@ -5492,9 +5496,6 @@
 	
 	self.isInvokingISONCommandForFirstTime = YES;
 
-	self.serverRedirectAddressTemporaryStore = nil;
-	self.serverRedirectPortTemporaryStore = 0;
-
 	self.cachedLocalNickname = [m paramAt:0];
 	
 	self.tryingNicknameSentNickname = [m paramAt:0];
@@ -5600,8 +5601,8 @@
 		{
 			NSAssertReturnLoopBreak([m paramsCount] > 2);
 
-			NSString *address = [m paramAt:1];
-			NSString *portraw = [m paramAt:2];
+			NSString *address = [m paramAt:0];
+			NSString *portraw = [m paramAt:1];
 
 			self.disconnectType = IRCClientDisconnectServerRedirectMode;
 
@@ -6460,7 +6461,7 @@
 			NSString *banowner = BLS(1218);
 			NSString *settime = BLS(1218);
 
-			BOOL extendedLine = ([m paramsCount] > 5);
+			BOOL extendedLine = ([m paramsCount] > 4);
 
 			if (extendedLine) {
 				banowner = [m paramAt:3];
@@ -6524,7 +6525,7 @@
 			NSString *banowner = BLS(1218);
 			NSString *settime = BLS(1218);
 
-			BOOL extendedLine = ([m paramsCount] > 5);
+			BOOL extendedLine = ([m paramsCount] > 4);
 
 			if (extendedLine) {
 				banowner = [m paramAt:3];
@@ -6588,7 +6589,7 @@
 			NSString *banowner = BLS(1218);
 			NSString *settime = BLS(1218);
 
-			BOOL extendedLine = ([m paramsCount] > 5);
+			BOOL extendedLine = ([m paramsCount] > 4);
 
 			if (extendedLine) {
 				banowner = [m paramAt:3];
@@ -6716,7 +6717,7 @@
 		case 604: // RPL_NOWON
 		case 605: // RPL_NOWOFF
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 5);
+			NSAssertReturnLoopBreak([m paramsCount] > 4);
 
 			if (self.inUserInvokedWatchRequest) {
 				[self printUnknownReply:m];
@@ -7511,6 +7512,11 @@
 	} else {
 		socketPort = self.config.serverPort;
 	}
+	
+	/* Do not wait for an actual connect before destroying the temporary
+	 store. Once its defined, its to be nil'd out no matter what. */
+	self.serverRedirectAddressTemporaryStore = nil;
+	self.serverRedirectPortTemporaryStore = 0;
 
 	/* Continue connection… */
 	[self logFileWriteSessionBegin];
@@ -8289,6 +8295,7 @@
 #pragma mark -
 #pragma mark User Tracking
 
+#warning Important to test user tracking once Server Properties is fixed.
 - (void)handleUserTrackingNotification:(IRCAddressBookEntry *)ignoreItem
 							  nickname:(NSString *)nick
 							  langitem:(NSInteger)localKey

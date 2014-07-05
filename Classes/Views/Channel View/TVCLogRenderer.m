@@ -560,7 +560,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 						NSString *keyMatch = [urlAry objectForKey:matchedURL];
 
 						/* Do we have a key already or no? */
-						if (keyMatch) {
+						if (keyMatch == nil) {
 							/* If we do not already have a key, then we add one. */
 							NSString *itemID = [NSString stringWithUUID];
 

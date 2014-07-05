@@ -45,6 +45,17 @@
 
 @implementation TVCQueuedCertificateTrustPanel
 
+- (id)init
+{
+	if ((self = [super init])) {
+		self.queuedEntries = [NSMutableArray array];
+		
+		return self;
+	}
+	
+	return nil;
+}
+
 - (void)enqueue:(SecTrustRef)trustRef withCompletionBlock:(TVCQueuedCertificateTrustPanelCompletionBlock)completionBlock
 {
 	/* Add new entry. */

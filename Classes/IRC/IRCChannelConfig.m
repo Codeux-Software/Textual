@@ -209,15 +209,13 @@
 #pragma mark -
 #pragma mark Channel Configuration
 
-+ (NSDictionary *)seedDictionary:(NSString *)channelName
++ (IRCChannelConfig *)seedWithName:(NSString *)channelName
 {
-	if ([channelName isChannelName]) {
-		return @{
-			@"channelName" : channelName,
-		};
-	}
-
-	return nil;
+	IRCChannelConfig *seed = [IRCChannelConfig new];
+		
+	[seed setChannelName:channelName];
+		
+	return seed;
 }
 
 - (id)initWithDictionary:(NSDictionary *)dic

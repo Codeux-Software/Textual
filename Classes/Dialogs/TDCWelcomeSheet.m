@@ -158,8 +158,10 @@
 			if ([t isChannelName] == NO) {
 				 t = [@"#" stringByAppendingString:s];
 			}
+			
+			IRCChannelConfig *cc = [IRCChannelConfig seedWithName:t];
 
-			[channels addObjectWithoutDuplication:t];
+			[channels addObjectWithoutDuplication:cc];
 		}
 	}
 	

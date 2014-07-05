@@ -174,7 +174,7 @@
 	return [^(NSArray *obj1, NSArray *obj2)
 	{
 		NSString *str1 = obj1[self.sortKey];
-		NSString *str2 = obj1[self.sortKey];
+		NSString *str2 = obj2[self.sortKey];
 		
 		NSComparisonResult result;
 		
