@@ -155,9 +155,15 @@
 	} else {
 		display = @"none";
 	}
-
+	
 	[[imageNode style] setDisplay:display];
-
+	
+	if ([display isEqualToString:@"none"]) {
+		[self.logController executeScriptCommand:@"didToggleInlineImageToHidden" withArguments:@[imageNode] onQueue:NO];
+	} else {
+		[self.logController executeScriptCommand:@"didToggleInlineImageToVisible" withArguments:@[imageNode] onQueue:NO];
+	}
+	
 	/* Update upstream. */
 	return @"false";
 }
