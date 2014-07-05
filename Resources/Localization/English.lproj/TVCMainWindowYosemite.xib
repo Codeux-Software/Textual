@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.21" systemVersion="14A261i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment version="101000" defaultVersion="1070" identifier="macosx"/>
+        <deployment version="101000" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.21"/>
     </dependencies>
@@ -17,7 +17,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="957" y="539" width="800" height="477"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="697"/>
             <value key="minSize" type="size" width="600" height="250"/>
             <view key="contentView" id="2">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="477"/>
@@ -93,7 +93,7 @@
                                         <segment toolTip="Manage Selection" image="NSActionTemplate" width="48" tag="1">
                                             <nil key="label"/>
                                         </segment>
-                                        <segment toolTip="Open Address Book" image="D33DBB30-218B-4627-9819-4C2F6984E432" width="46" tag="2">
+                                        <segment toolTip="Open Address Book" image="3D522E90-5580-4F8F-8F92-6A4AD1B50B90" width="46" tag="2">
                                             <nil key="label"/>
                                         </segment>
                                     </segments>
@@ -182,8 +182,8 @@
                                                                             </constraints>
                                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="HRK-4F-2iY"/>
                                                                         </imageView>
-                                                                        <textField horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PLe-Wh-US5">
-                                                                            <rect key="frame" x="27" y="2" width="87" height="16"/>
+                                                                        <textField horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="PLe-Wh-US5">
+                                                                            <rect key="frame" x="25" y="2" width="91" height="16"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Table View Cell" id="pUK-O8-NbH" customClass="TVCServerLisCellTextFieldInterior">
                                                                                 <font key="font" metaFont="cellTitle"/>
                                                                                 <color key="textColor" red="0.28273809519999998" green="0.28273809519999998" blue="0.28273809519999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -1623,6 +1623,9 @@ There are no other limits. What you see, is what you get.</string>
                         </menu>
                     </menuItem>
                 </items>
+                <connections>
+                    <outlet property="delegate" destination="j7v-mc-UwU" id="cZL-rX-76X"/>
+                </connections>
             </menu>
         </menuItem>
         <customObject id="j7v-mc-UwU" userLabel="FormatTextController" customClass="TVCTextViewIRCFormattingMenu">
@@ -1634,7 +1637,7 @@ There are no other limits. What you see, is what you get.</string>
         </customObject>
     </objects>
     <resources>
-        <image name="D33DBB30-218B-4627-9819-4C2F6984E432" width="20" height="18">
+        <image name="3D522E90-5580-4F8F-8F92-6A4AD1B50B90" width="20" height="18">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGREVYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QDwcI
 ExgdHicoKSoyNTg+QVUkbnVsbNUJCgsMDQ4PEBESViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzXE5T

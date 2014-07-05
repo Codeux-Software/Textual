@@ -591,7 +591,6 @@
 	NSAssertReturn((self.transferStatus == TDCFileTransferDialogTransferReceivingStatus) ||
 				   (self.transferStatus == TDCFileTransferDialogTransferSendingStatus));
 	
-#warning Test different from going to async -> sync queue call.
 	TXPerformBlockSynchronouslyOnQueue(self.serverDispatchQueue, ^{
 		/* Update record. */
 		@synchronized(self.speedRecords) {

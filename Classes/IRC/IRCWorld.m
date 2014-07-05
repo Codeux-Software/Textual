@@ -529,16 +529,16 @@
 
 			[mainWindowServerList() addItemToList:index inParent:nil];
 		}
-	}
-
-	/* Finsih up creation. */
-	if ([self clientCount] == 1 && self.isPopulatingSeeds == NO) {
-		/* If our client count is 1, then it means we just added our
-		 first client ever. We want to force the selection to this 
-		 because if we had no client beforehand, then we did not have
-		 any selection at all. */
-
-		[mainWindow() select:c];
+		
+		/* Finsih up creation. */
+		if ([self.clients count] == 1 && self.isPopulatingSeeds == NO) {
+			/* If our client count is 1, then it means we just added our
+			 first client ever. We want to force the selection to this
+			 because if we had no client beforehand, then we did not have
+			 any selection at all. */
+			
+			[mainWindow() select:c];
+		}
 	}
 
 	[mainWindow() reloadLoadingScreen];
@@ -639,12 +639,12 @@
 		
 		IRCTreeItem *sel = nil;
 		
-		if ([target isChannel]) {
+		if ([target isClient]) {
 			i = [self.clients indexOfObjectIdenticalTo:target];
 			
 			NSInteger n = (i + 1);
 			
-			if (0 <= n && n < [self clientCount]) {
+			if (0 <= n && n < [self.clients count]) {
 				sel = self.clients[n];
 			}
 			

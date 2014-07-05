@@ -401,7 +401,7 @@
 	NSArray *chunks = [channelList split:@","];
 		
 	for (NSString *cc in chunks) {
-		[channels addObject:[IRCChannelConfig seedDictionary:[cc trim]]];
+		[channels addObject:[IRCChannelConfig seedWithName:[cc trim]]];
 	}
 
 	[baseConfig setChannelList:channels];

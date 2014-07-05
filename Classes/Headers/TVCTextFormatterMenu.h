@@ -42,7 +42,7 @@
 /* There is only one instance of TVCTextViewIRCFormattingMenu per-window.
  When enabled inside a sheet, the right click menu is available but the
  keyboard shortcuts are reserved for main window access. */
-@interface TVCTextViewIRCFormattingMenu : NSObject
+@interface TVCTextViewIRCFormattingMenu : NSObject <NSMenuDelegate>
 @property (nonatomic, nweak) IBOutlet NSMenuItem *formatterMenu;
 @property (nonatomic, nweak) IBOutlet NSMenu *foregroundColorMenu;
 @property (nonatomic, nweak) IBOutlet NSMenu *backgroundColorMenu;

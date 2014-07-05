@@ -9,7 +9,6 @@
             <connections>
                 <outlet property="clearButton" destination="117" id="KoN-Uc-Nhi"/>
                 <outlet property="fileTransferTable" destination="xso-Ti-Pvf" id="qiD-QC-Rrt"/>
-                <outlet property="navigationController" destination="fj7-Wr-P1f" id="Bw9-7x-c3V"/>
                 <outlet property="navigationControllerCell" destination="nY8-F3-7sa" id="LNN-nZ-NGY"/>
                 <outlet property="window" destination="5" id="oY6-kl-EqU"/>
             </connections>

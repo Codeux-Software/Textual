@@ -137,7 +137,7 @@
 
 - (void)unloadPlugins
 {
-	TXPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
+	TXPerformBlockSynchronouslyOnQueue(self.dispatchQueue, ^{
 		self.allLoadedPlugins = nil;
 
 		for (NSBundle *bundle in self.allLoadedBundles) {

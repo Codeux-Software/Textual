@@ -65,7 +65,7 @@ typedef enum IRCChannelType : NSInteger {
 
 - (BOOL)isEqualToChannelConfiguration:(IRCChannelConfig *)seed;
 
-+ (NSDictionary *)seedDictionary:(NSString *)channelName;
++ (IRCChannelConfig *)seedWithName:(NSString *)channelName;
 
 - (void)destroyKeychains;
 - (void)writeKeychainItemsToDisk;

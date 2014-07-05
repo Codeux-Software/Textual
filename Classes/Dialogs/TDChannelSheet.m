@@ -168,7 +168,7 @@
 	if ([TPCPreferences showInlineImages]) {
 		[self.disableInlineImagesCheck setState:[self.config ignoreInlineImages]];
 	} else {
-		[self.disableInlineImagesCheck setState:[self.config ignoreInlineImages]];
+		[self.enableInlineImagesCheck setState:[self.config ignoreInlineImages]];
 	}
 }
 
