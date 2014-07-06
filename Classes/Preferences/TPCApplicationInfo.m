@@ -44,16 +44,14 @@
 + (NSString *)applicationName
 {
 	NSString *name = [RZMainBundle() infoDictionary][@"CFBundleName"];
+
+	NSInteger spacePosition = [name stringPosition:NSStringWhitespacePlaceholder];
 	
-#ifdef TEXTUAL_TRIAL_BINARY
-	if ([name hasSuffix:@" Trial"]) {
-		NSInteger trialPos = [name stringPosition:@" Trial"];
-		
-		name = [name substringToIndex:trialPos];
+	if (spacePosition > 0) {
+		return [name substringToIndex:spacePosition];
+	} else {
+		return  name;
 	}
-#endif
-	
-	return name;
 }
 
 + (NSInteger)applicationProcessID
