@@ -168,7 +168,10 @@
  sequential order based on when it was loaded. Keep this in mind as another plugin
  loaded may have altered the input already. This is unlikely unless the user has
  loaded a lot of custom plugins, but it is a possibility. */
-- (NSString *)willRenderMessage:(NSString *)newMessage lineType:(TVCLogLineType)lineType memberType:(TVCLogLineMemberType)memberType;
+- (NSString *)willRenderMessage:(NSString *)newMessage
+			  forViewController:(TVCLogController *)viewController
+					   lineType:(TVCLogLineType)lineType
+					 memberType:(TVCLogLineMemberType)memberType;
 
 /* Process inline media to add custom support for various URLs. */
 /* Given a URL, the plugin is expected to return an NSString which represents

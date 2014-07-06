@@ -81,7 +81,7 @@
 	return TPILocalizedString(@"BasicLanguage[1000]");
 }
 
-- (NSString *)willRenderMessage:(NSString *)newMessage lineType:(TVCLogLineType)lineType memberType:(TVCLogLineMemberType)memberType
+- (NSString *)willRenderMessage:(NSString *)newMessage forViewController:(TVCLogController *)viewController lineType:(TVCLogLineType)lineType memberType:(TVCLogLineMemberType)memberType
 {
 	BOOL serviceEnabled = [RZUserDefaults() boolForKey:@"Smiley Converter Extension -> Enable Service"];
 	

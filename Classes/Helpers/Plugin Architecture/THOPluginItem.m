@@ -197,7 +197,7 @@
 		self.supportsNewMessagePostedEventNotifications = YES;
 	}
 	
-	if ([self.primaryClass respondsToSelector:@selector(willRenderMessage:lineType:memberType:)])
+	if ([self.primaryClass respondsToSelector:@selector(willRenderMessage:forViewController:lineType:memberType:)])
 	{
 		self.supportsWillRenderMessageEventNotifications = YES;
 	}
