@@ -71,6 +71,7 @@
 - (void)sendUserInputDataToBundles:(IRCClient *)client message:(NSString *)message command:(NSString *)command;
 
 - (NSString *)postWillRenderMessageEvent:(NSString *)newMessage
+					   forViewController:(TVCLogController *)viewController
 								lineType:(TVCLogLineType)lineType
 							  memberType:(TVCLogLineMemberType)memberType;
 

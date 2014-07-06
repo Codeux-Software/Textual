@@ -508,7 +508,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	body = [NSString stringWithCharacters:dest length:n];
 	
 	/* Let plugins have first shot. */
-	body = [sharedPluginManager() postWillRenderMessageEvent:body lineType:lineType memberType:memberType];
+	body = [sharedPluginManager() postWillRenderMessageEvent:body forViewController:log lineType:lineType memberType:memberType];
 	
 	length = [body length];
 
