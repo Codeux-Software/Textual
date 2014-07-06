@@ -8,6 +8,8 @@
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
 	<string>TXTL</string>
+	<key>CFBundleDisplayName</key>
+	<string>Textual IRC Client</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.codeux.irc.textual5</string>
 	<key>CFBundleName</key>

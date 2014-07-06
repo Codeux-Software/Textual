@@ -4209,7 +4209,6 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -4220,7 +4219,6 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -4271,7 +4269,6 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				PROVISIONING_PROFILE = "";
 			};
 			name = "Release (Trial)";
 		};
@@ -4333,7 +4330,6 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				PROVISIONING_PROFILE = "";
 			};
 			name = "Release (App Store)";
 		};
