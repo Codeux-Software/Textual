@@ -168,10 +168,6 @@
 		4C1893ED17980F060091D173 /* TVCImageURLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1893EB17980F060091D173 /* TVCImageURLoader.m */; };
 		4C1893F317980F460091D173 /* TVCImageURLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1893F217980F460091D173 /* TVCImageURLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C1893F417980F460091D173 /* TVCImageURLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1893F217980F460091D173 /* TVCImageURLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C1E2BEF16FB1F13007C9717 /* NSUserDefaultsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1E2BEE16FB1F13007C9717 /* NSUserDefaultsHelper.m */; };
-		4C1E2BF516FB1F22007C9717 /* NSUserDefaultsHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1E2BF416FB1F22007C9717 /* NSUserDefaultsHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C1E2BF616FB2483007C9717 /* NSUserDefaultsHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1E2BF416FB1F22007C9717 /* NSUserDefaultsHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C1E2BF716FB2497007C9717 /* NSUserDefaultsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1E2BEE16FB1F13007C9717 /* NSUserDefaultsHelper.m */; };
 		4C1ED4A116CEA081006DD0CA /* IRCConnectionSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C1ED4A316CEA0A9006DD0CA /* IRCConnectionSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */; };
 		4C211D5715BF21BA00E218DA /* libmustache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C211D5615BF21BA00E218DA /* libmustache.a */; };
@@ -894,6 +890,10 @@
 		4CD63F3015C59C5B00E8DE92 /* NSScreenHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5A6DC015C39BD600143574 /* NSScreenHelper.m */; };
 		4CDB24A118CAB914007EF6DE /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
 		4CDB24A218CAB914007EF6DE /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
+		4CE204E8196989EE00D7E220 /* TPCPreferencesUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE204E7196989EE00D7E220 /* TPCPreferencesUserDefaults.m */; };
+		4CE204E9196989EE00D7E220 /* TPCPreferencesUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE204E7196989EE00D7E220 /* TPCPreferencesUserDefaults.m */; };
+		4CE204F0196989FB00D7E220 /* TPCPreferencesUserDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE204EF196989FB00D7E220 /* TPCPreferencesUserDefaults.h */; };
+		4CE204F1196989FB00D7E220 /* TPCPreferencesUserDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE204EF196989FB00D7E220 /* TPCPreferencesUserDefaults.h */; };
 		4CE4B7761968B7E3003CBF67 /* liveresize.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CE4B7731968B7D3003CBF67 /* liveresize.js */; };
 		4CE4B7771968B800003CBF67 /* liveresize.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CE4B7731968B7D3003CBF67 /* liveresize.js */; };
 		4CE77C7D195E7A8A000DA30D /* IRCWorldPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE77C7C195E7A8A000DA30D /* IRCWorldPrivate.h */; };
@@ -1122,8 +1122,6 @@
 		4C1893EB17980F060091D173 /* TVCImageURLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCImageURLoader.m; path = "Classes/Views/Channel View/TVCImageURLoader.m"; sourceTree = SOURCE_ROOT; };
 		4C1893F217980F460091D173 /* TVCImageURLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCImageURLoader.h; sourceTree = "<group>"; };
 		4C1DC5521580420500A47BC9 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4C1E2BEE16FB1F13007C9717 /* NSUserDefaultsHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSUserDefaultsHelper.m; sourceTree = "<group>"; };
-		4C1E2BF416FB1F22007C9717 /* NSUserDefaultsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSUserDefaultsHelper.h; sourceTree = "<group>"; };
 		4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCConnectionSocket.h; path = Classes/Headers/IRCConnectionSocket.h; sourceTree = SOURCE_ROOT; };
 		4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCConnectionSocket.m; path = IRC/IRCConnectionSocket.m; sourceTree = "<group>"; };
 		4C211D5615BF21BA00E218DA /* libmustache.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmustache.a; path = "Frameworks/Mustache Templates/libmustache.a"; sourceTree = "<group>"; };
@@ -1551,6 +1549,8 @@
 		4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCProgressInformationSheet.m; path = Dialogs/TDCProgressInformationSheet.m; sourceTree = "<group>"; };
 		4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogTransferController.m; path = "Dialogs/File Transfers/TDCFileTransferDialogTransferController.m"; sourceTree = "<group>"; };
 		4CDB24A018CAB914007EF6DE /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HockeySDK.framework; path = Frameworks/HockeySDK.framework; sourceTree = "<group>"; };
+		4CE204E7196989EE00D7E220 /* TPCPreferencesUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCPreferencesUserDefaults.m; sourceTree = "<group>"; };
+		4CE204EF196989FB00D7E220 /* TPCPreferencesUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPreferencesUserDefaults.h; sourceTree = "<group>"; };
 		4CE4B7731968B7D3003CBF67 /* liveresize.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = liveresize.js; path = Resources/Javascript/API/liveresize.js; sourceTree = SOURCE_ROOT; };
 		4CE77C7C195E7A8A000DA30D /* IRCWorldPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCWorldPrivate.h; sourceTree = "<group>"; };
 		4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogRemoteAddress.h; sourceTree = "<group>"; };
@@ -2147,7 +2147,6 @@
 				4C8AF551158E99520026668C /* NSSplitViewHelper.h */,
 				4C8AF552158E99520026668C /* NSStringHelper.h */,
 				4C8AF553158E99520026668C /* NSTextFieldHelper.h */,
-				4C1E2BF416FB1F22007C9717 /* NSUserDefaultsHelper.h */,
 				4C8AF554158E99520026668C /* NSWindowHelper.h */,
 				4C8AF558158E99520026668C /* TDCAboutPanel.h */,
 				4C8AF559158E99520026668C /* TDCAddressBookSheet.h */,
@@ -2197,6 +2196,7 @@
 				4C17385D18197F800099EEC2 /* TPCPreferencesCloudSync.h */,
 				4C0095A71952AA73008A81C7 /* TPCPreferencesCloudSyncExtension.h */,
 				4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */,
+				4CE204EF196989FB00D7E220 /* TPCPreferencesUserDefaults.h */,
 				4C92FECA17A8C8F2003888F4 /* TPCResourceManager.h */,
 				4C8AF57F158E99520026668C /* TPCThemeController.h */,
 				4C8AF57D158E99520026668C /* TPCThemeSettings.h */,
@@ -2263,7 +2263,6 @@
 				4C8AF5A5158E99520026668C /* NSSplitViewHelper.m */,
 				4C8AF5A6158E99520026668C /* NSStringHelper.m */,
 				4C8AF5A7158E99520026668C /* NSTextFieldHelper.m */,
-				4C1E2BEE16FB1F13007C9717 /* NSUserDefaultsHelper.m */,
 				4C8AF5A8158E99520026668C /* NSWindowHelper.m */,
 			);
 			name = "Cocoa (Objective-C)";
@@ -2749,6 +2748,7 @@
 				4C3D0B7A1594909500567623 /* Migration Assistant */,
 				4C8AF5EB158E99520026668C /* Theme */,
 				4C8AF5EE158E99520026668C /* TPCPreferences.m */,
+				4CE204E7196989EE00D7E220 /* TPCPreferencesUserDefaults.m */,
 				4CA110DA1955AA890062EC4E /* TPCApplicationInfo.m */,
 				4CA110DB1955AA890062EC4E /* TPCPathInfo.m */,
 				4CA110DC1955AA890062EC4E /* TPCPreferencesImportExport.m */,
@@ -2857,6 +2857,7 @@
 				4C5BA40916F1302F00A96CA2 /* IRCTreeItem.h in Headers */,
 				4C5BA40A16F1302F00A96CA2 /* IRCUser.h in Headers */,
 				4C5BA40B16F1302F00A96CA2 /* IRCWorld.h in Headers */,
+				4CE204F1196989FB00D7E220 /* TPCPreferencesUserDefaults.h in Headers */,
 				4C5BA40C16F1302F00A96CA2 /* NSArrayHelper.h in Headers */,
 				4C5BA40D16F1302F00A96CA2 /* NSColorHelper.h in Headers */,
 				4C5BA40E16F1302F00A96CA2 /* NSDateHelper.h in Headers */,
@@ -2933,7 +2934,6 @@
 				4C5BA45416F1302F00A96CA2 /* TXGlobalModels.h in Headers */,
 				4C5BA45516F1302F00A96CA2 /* TXMasterController.h in Headers */,
 				4C5BA45616F1302F00A96CA2 /* TXMenuController.h in Headers */,
-				4C1E2BF616FB2483007C9717 /* NSUserDefaultsHelper.h in Headers */,
 				4CB331BE16F1BBE000D65CBE /* NSImageHelper.h in Headers */,
 				4C937BDC17061A3F0050CEF3 /* TLOSpeechSynthesizer.h in Headers */,
 				4C3EB79E17898FD600D21A07 /* TVCLogControllerHistoricLogFile.h in Headers */,
@@ -3022,6 +3022,7 @@
 				4C8AF637158E99520026668C /* IRCTreeItem.h in Headers */,
 				4C8AF638158E99520026668C /* IRCUser.h in Headers */,
 				4C8AF639158E99520026668C /* IRCWorld.h in Headers */,
+				4CE204F0196989FB00D7E220 /* TPCPreferencesUserDefaults.h in Headers */,
 				4C8AF63B158E99520026668C /* NSArrayHelper.h in Headers */,
 				4C8AF63D158E99520026668C /* NSColorHelper.h in Headers */,
 				4C8AF63F158E99520026668C /* NSDateHelper.h in Headers */,
@@ -3098,7 +3099,6 @@
 				4C8AF689158E99520026668C /* TVCWebViewAutoScroll.h in Headers */,
 				4C8AF68A158E99520026668C /* TXGlobalModels.h in Headers */,
 				4C8AF68B158E99520026668C /* TXMasterController.h in Headers */,
-				4C1E2BF516FB1F22007C9717 /* NSUserDefaultsHelper.h in Headers */,
 				4C8AF68C158E99520026668C /* TXMenuController.h in Headers */,
 				5D4846CA171F0ACD0015F2B0 /* OELReachability.h in Headers */,
 				4C937BDB170618A80050CEF3 /* TLOSpeechSynthesizer.h in Headers */,
@@ -3597,7 +3597,6 @@
 				4C5A0319170C31110016BB1A /* TPCPreferencesImportExport.m in Sources */,
 				4C0879D4187061BF0034F5EB /* TDCFileTransferDialogTableCell.m in Sources */,
 				4C937BDD17061A4D0050CEF3 /* TLOSpeechSynthesizer.m in Sources */,
-				4C1E2BF716FB2497007C9717 /* NSUserDefaultsHelper.m in Sources */,
 				4C0444F616F1603B00EBB665 /* TXGlobalModels.m in Sources */,
 				4C0444F716F1603B00EBB665 /* TXMasterController.m in Sources */,
 				4CA110F01955AAA10062EC4E /* TVCMainWindowSegmentedControl.m in Sources */,
@@ -3658,6 +3657,7 @@
 				4C0445A216F1603B00EBB665 /* IRCConnection.m in Sources */,
 				4C0445A316F1603C00EBB665 /* IRCConnectionSocket.m in Sources */,
 				4C0445A416F1603C00EBB665 /* IRCExtras.m in Sources */,
+				4CE204E9196989EE00D7E220 /* TPCPreferencesUserDefaults.m in Sources */,
 				4C0445A516F1603C00EBB665 /* IRCISupportInfo.m in Sources */,
 				4C0445A616F1603C00EBB665 /* IRCMessage.m in Sources */,
 				4CA110E51955AA890062EC4E /* TPCResourceManager.m in Sources */,
@@ -3803,6 +3803,7 @@
 				4C8AF6AA158E99520026668C /* IRCExtras.m in Sources */,
 				4C8AF6AB158E99520026668C /* IRCISupportInfo.m in Sources */,
 				4C8AF6AC158E99520026668C /* IRCMessage.m in Sources */,
+				4CE204E8196989EE00D7E220 /* TPCPreferencesUserDefaults.m in Sources */,
 				4C8AF6AD158E99520026668C /* IRCModeInfo.m in Sources */,
 				4C8AF6AE158E99520026668C /* IRCPrefix.m in Sources */,
 				4CB4806C1965344300E0782E /* TVCAnimatedContentNavigationOutlineView.m in Sources */,
@@ -3868,7 +3869,6 @@
 				4C8D624F16D02688007D6C60 /* NSRangeHelper.m in Sources */,
 				4CBBD19E16E356F400D2FEFE /* TVCMemberListUserInfoPopover.m in Sources */,
 				4CB331B516F1BBC700D65CBE /* NSImageHelper.m in Sources */,
-				4C1E2BEF16FB1F13007C9717 /* NSUserDefaultsHelper.m in Sources */,
 				4C937BD5170618940050CEF3 /* TLOSpeechSynthesizer.m in Sources */,
 				4C83D8EF1842008D00BCC0E1 /* NSFileManagerHelper.m in Sources */,
 				4C529E1717AEFE17009BA0B3 /* NSDataHelper.m in Sources */,
@@ -4122,8 +4122,9 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
+				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual5;
 				TEXTUAL_GITREF_BUILD_ID = debug;
+				TEXTUAL_GROUP_ID = 8482Q6EPL6.com.codeux.irc.textual;
 			};
 			name = Debug;
 		};
@@ -4132,8 +4133,9 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
+				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual5;
 				TEXTUAL_GITREF_BUILD_ID = devid;
+				TEXTUAL_GROUP_ID = 8482Q6EPL6.com.codeux.irc.textual;
 			};
 			name = Release;
 		};
@@ -4142,8 +4144,9 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
+				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual5;
 				TEXTUAL_GITREF_BUILD_ID = appstore;
+				TEXTUAL_GROUP_ID = 8482Q6EPL6.com.codeux.irc.textual;
 			};
 			name = "Release (App Store)";
 		};
@@ -4158,6 +4161,7 @@
 				STRIP_STYLE = "non-global";
 				TEXTUAL_BUNDLE_ID = "";
 				TEXTUAL_GITREF_BUILD_ID = "";
+				TEXTUAL_GROUP_ID = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -4173,6 +4177,7 @@
 				STRIP_STYLE = "non-global";
 				TEXTUAL_BUNDLE_ID = "";
 				TEXTUAL_GITREF_BUILD_ID = "";
+				TEXTUAL_GROUP_ID = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -4180,7 +4185,6 @@
 		4C1DC5711580420500A47BC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconYosemite;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
@@ -4189,7 +4193,6 @@
 		4C1DC5721580420500A47BC9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconYosemite;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
@@ -4230,6 +4233,7 @@
 				STRIP_STYLE = "non-global";
 				TEXTUAL_BUNDLE_ID = "";
 				TEXTUAL_GITREF_BUILD_ID = "";
+				TEXTUAL_GROUP_ID = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Release (Trial)";
@@ -4237,7 +4241,6 @@
 		4C77A3261748BCDC00D9BD05 /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconYosemite;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
@@ -4272,8 +4275,9 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
+				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual5;
 				TEXTUAL_GITREF_BUILD_ID = trial;
+				TEXTUAL_GROUP_ID = 8482Q6EPL6.com.codeux.irc.textual;
 			};
 			name = "Release (Trial)";
 		};
@@ -4288,6 +4292,7 @@
 				STRIP_STYLE = "non-global";
 				TEXTUAL_BUNDLE_ID = "";
 				TEXTUAL_GITREF_BUILD_ID = "";
+				TEXTUAL_GROUP_ID = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Release (App Store)";
@@ -4295,7 +4300,6 @@
 		4CCF2F9115804987006FFE21 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconYosemite;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};

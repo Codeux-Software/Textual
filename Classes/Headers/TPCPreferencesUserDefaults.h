@@ -37,8 +37,48 @@
 
 #import "TextualApplication.h"
 
-@interface NSUserDefaults (TXUserDefaultsHelper)
-- (void)setColor:(NSColor *)aColor forKey:(NSString *)aKey;
+#define RZUserDefaults()						[TPCPreferencesUserDefaults sharedUserDefaults]
 
-- (NSColor*)colorForKey:(NSString *)aKey;
+#define RZUserDefaultsValueProxy()				[TPCPreferencesUserDefaultsObjectProxy values]
+
+@interface TPCPreferencesUserDefaults : NSUserDefaults
+/* Our reading object will read from our own application container
+ and the shared group container defined for Textual. */
++ (TPCPreferencesUserDefaults *)sharedUserDefaults;
+
+/* This class proxies these methods. */
+/* Depending on whether we are on Mavericks or later, these methods
+ will either write to our group container or application container. */
+- (id)objectForKey:(NSString *)defaultName;
+
+- (NSString *)stringForKey:(NSString *)defaultName;
+- (NSArray *)arrayForKey:(NSString *)defaultName;
+- (NSDictionary *)dictionaryForKey:(NSString *)defaultName;
+- (NSData *)dataForKey:(NSString *)defaultName;
+- (NSArray *)stringArrayForKey:(NSString *)defaultName;
+- (NSColor *)colorForKey:(NSString *)defaultName;
+- (NSInteger)integerForKey:(NSString *)defaultName;
+- (float)floatForKey:(NSString *)defaultName;
+- (double)doubleForKey:(NSString *)defaultName;
+- (BOOL)boolForKey:(NSString *)defaultName;
+- (NSURL *)URLForKey:(NSString *)defaultName;
+
+- (void)setObject:(id)value forKey:(NSString *)defaultName;
+- (void)setInteger:(NSInteger)value forKey:(NSString *)defaultName;
+- (void)setFloat:(float)value forKey:(NSString *)defaultName;
+- (void)setDouble:(double)value forKey:(NSString *)defaultName;
+- (void)setBool:(BOOL)value forKey:(NSString *)defaultName;
+- (void)setURL:(NSURL *)url forKey:(NSString *)defaultName;
+- (void)setColor:(NSColor *)color forKey:(NSString *)defaultName;
+
+- (void)removeObjectForKey:(NSString *)defaultName;
+@end
+
+@interface TPCPreferencesUserDefaultsObjectProxy : NSObject
+/* Similiar to NSUserDefaultsController, -values can be bound to in
+ Interface Builder for reading and writing defaults. It will handle
+ decision between which shared object to call for us. Do not access
+ this value for any other reason than to read and write in a bound
+ Interface Builder. It is not a shorthand for retreiving all values. */
++ (id)values;
 @end
