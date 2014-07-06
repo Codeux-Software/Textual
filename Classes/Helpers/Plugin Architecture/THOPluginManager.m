@@ -382,7 +382,7 @@
 				NSURL *outputURL = [NSURL URLWithString:input];
 				
 				if (outputURL) { // Valid URL?
-					return input;
+					return [input copy];
 				}
 			}
         }
@@ -401,7 +401,7 @@
 		if ([plugin supportsUserInputDataInterception]) {
 			/* Inform plugin of data. */
 			input = [[plugin primaryClass] interceptUserInput:input command:command];
-
+			
 			/* If this plugin returned nil, then stop here. Do not pass it on to others. */
 			if (input == nil) {
 				return nil; // Refuse to continue.
@@ -454,7 +454,7 @@
 			if (NSObjectIsEmpty(pluginResult)) {
 				;
 			} else {
-				newMessage = pluginResult;
+				newMessage = [pluginResult copy];
 			}
 		}
 	}
