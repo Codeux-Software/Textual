@@ -654,6 +654,14 @@
 }
 
 #pragma mark -
+#pragma mark KVC Properties
+
+- (id)userDefaultsValues
+{
+	return RZUserDefaultsValueProxy();
+}
+
+#pragma mark -
 #pragma mark Navigation Channel List
 
 - (void)populateNavgiationChannelList

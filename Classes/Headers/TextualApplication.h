@@ -115,6 +115,8 @@
 	@class TPCPreferences;
 	@class TPCPreferencesCloudSync;
 	@class TPCPreferencesImportExport;
+	@class TPCPreferencesUserDefaults;
+	@class TPCPreferencesUserDefaultsObjectProxy;
 	@class TPCResourceManager;
 	@class TPCThemeController;
 	@class TPCThemeSettings;
@@ -248,7 +250,6 @@
 	#import "NSSplitViewHelper.h"
 	#import "NSStringHelper.h"
 	#import "NSTextFieldHelper.h"
-	#import "NSUserDefaultsHelper.h"
 	#import "NSWindowHelper.h"
 
 	/* Dialogs. */
@@ -309,6 +310,7 @@
 	#import "TPCPreferencesCloudSync.h"
 	#import "TPCPreferencesCloudSyncExtension.h"
 	#import "TPCPreferencesImportExport.h"
+	#import "TPCPreferencesUserDefaults.h"
 	#import "TPCResourceManager.h"
 	#import "TPCThemeController.h"
 	#import "TPCThemeSettings.h"

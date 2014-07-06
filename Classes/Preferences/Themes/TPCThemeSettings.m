@@ -229,17 +229,13 @@
 	/* These setValue calls basically tell the NSUserDefaultsController for the "Preferences" 
 	 window that the active theme has overrode a few user configurable options. The window then 
 	 blanks out the options specified to prevent the user from modifying. */
-	[[RZUserDefaultsController() values] setValue:@(NSObjectIsEmpty(self.nicknameFormat))
-										   forKey:@"Theme -> Nickname Format Preference Enabled"];
-
-	[[RZUserDefaultsController() values] setValue:@(NSObjectIsEmpty(self.timestampFormat))
-										   forKey:@"Theme -> Timestamp Format Preference Enabled"];
-
-    [[RZUserDefaultsController() values] setValue:@(self.channelViewFont == nil)
-										   forKey:@"Theme -> Channel Font Preference Enabled"];
-
-	[[RZUserDefaultsController() values] setValue:@(self.forceInvertSidebarColors == NO)
-										   forKey:@"Theme -> Invert Sidebar Colors Preference Enabled"];
+	[RZUserDefaults() setBool:NSObjectIsEmpty(self.nicknameFormat) forKey:@"Theme -> Nickname Format Preference Enabled"];
+	
+	[RZUserDefaults() setBool:NSObjectIsEmpty(self.timestampFormat) forKey:@"Theme -> Timestamp Format Preference Enabled"];
+	
+	[RZUserDefaults() setBool:(self.channelViewFont == nil) forKey:@"Theme -> Channel Font Preference Enabled"];
+	
+	[RZUserDefaults() setBool:(self.forceInvertSidebarColors == NO) forKey:@"Theme -> Invert Sidebar Colors Preference Enabled"];
 }
 
 @end

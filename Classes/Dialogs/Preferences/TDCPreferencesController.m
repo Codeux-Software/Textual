@@ -259,9 +259,13 @@
 	[self.window makeKeyAndOrderFront:nil];
 }
 
-
 #pragma mark -
 #pragma mark KVC Properties
+
+- (id)userDefaultsValues
+{
+	return RZUserDefaultsValueProxy();
+}
 
 - (NSInteger)maxLogLines
 {
@@ -922,19 +926,12 @@
 	NSData *modehcolor = [NSArchiver archivedDataWithRootObject:[memberList userMarkBadgeBackgroundColor_HDefault]];
 	NSData *modevcolor = [NSArchiver archivedDataWithRootObject:[memberList userMarkBadgeBackgroundColor_VDefault]];
 
-	[RZUserDefaults() setObject:modeycolor forKey:@"User List Mode Badge Colors —> +y"];
-	[RZUserDefaults() setObject:modeqcolor forKey:@"User List Mode Badge Colors —> +q"];
-	[RZUserDefaults() setObject:modeacolor forKey:@"User List Mode Badge Colors —> +a"];
-	[RZUserDefaults() setObject:modeocolor forKey:@"User List Mode Badge Colors —> +o"];
-	[RZUserDefaults() setObject:modehcolor forKey:@"User List Mode Badge Colors —> +h"];
-	[RZUserDefaults() setObject:modevcolor forKey:@"User List Mode Badge Colors —> +v"];
-
-	[[RZUserDefaultsController() values] setValue:modeycolor forKey:@"User List Mode Badge Colors —> +y"];
-	[[RZUserDefaultsController() values] setValue:modeqcolor forKey:@"User List Mode Badge Colors —> +q"];
-	[[RZUserDefaultsController() values] setValue:modeacolor forKey:@"User List Mode Badge Colors —> +a"];
-	[[RZUserDefaultsController() values] setValue:modeocolor forKey:@"User List Mode Badge Colors —> +o"];
-	[[RZUserDefaultsController() values] setValue:modehcolor forKey:@"User List Mode Badge Colors —> +h"];
-	[[RZUserDefaultsController() values] setValue:modevcolor forKey:@"User List Mode Badge Colors —> +v"];
+	[RZUserDefaultsValueProxy() setValue:modeycolor forKey:@"User List Mode Badge Colors —> +y"];
+	[RZUserDefaultsValueProxy() setValue:modeqcolor forKey:@"User List Mode Badge Colors —> +q"];
+	[RZUserDefaultsValueProxy() setValue:modeacolor forKey:@"User List Mode Badge Colors —> +a"];
+	[RZUserDefaultsValueProxy() setValue:modeocolor forKey:@"User List Mode Badge Colors —> +o"];
+	[RZUserDefaultsValueProxy() setValue:modehcolor forKey:@"User List Mode Badge Colors —> +h"];
+	[RZUserDefaultsValueProxy() setValue:modevcolor forKey:@"User List Mode Badge Colors —> +v"];
 
 	[self onChangedUserListModeColor:sender];
 }
