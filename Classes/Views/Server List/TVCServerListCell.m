@@ -307,7 +307,7 @@
 	NSPoint badgeTextPoint;
 	
 	badgeTextPoint = NSMakePoint((NSMidX(badgeFrame) - (mcstring.size.width  / 2.0)),
-								((NSMidY(badgeFrame) - (mcstring.size.height / 2.0)) + 1));
+								 (NSMidY(badgeFrame) - (mcstring.size.height / 2.0)));
 	
 	/* Gotta be pixel (point?) perfect. */
 	if ([mainWindow() runningInHighResolutionMode]) {
