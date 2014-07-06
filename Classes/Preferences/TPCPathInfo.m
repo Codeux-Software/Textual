@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+#import "BuildConfig.h"
+
 #include <unistd.h>         // -------
 #include <sys/types.h>      // --- | For +userHomeDirectoryPathOutsideSandbox
 #include <pwd.h>            // -------
@@ -72,10 +74,12 @@
 
 + (NSString *)applicationSupportFolderPath
 {
-	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+	NSURL *url = [RZFileManager() containerURLForSecurityApplicationGroupIdentifier:TXBundleGroupIdentifier];
 	
-	if ([searchArray count]) {
-		NSString *dest = [searchArray[0] stringByAppendingPathComponent:@"/Textual IRC/"];
+	NSString *dest = [url relativePath];
+	
+	if (dest) {
+		dest = [dest stringByAppendingPathComponent:@"/Library/Application Support/Textual/"];
 		
 		if ([RZFileManager() fileExistsAtPath:dest] == NO) {
 			[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
@@ -112,7 +116,7 @@
 
 + (NSString *)customExtensionFolderPath
 {
-	NSString *dest = [[TPCPathInfo applicationSupportFolderPath] stringByAppendingPathComponent:@"/Extensions (v5)/"];
+	NSString *dest = [[TPCPathInfo applicationSupportFolderPath] stringByAppendingPathComponent:@"/Extensions/"];
 	
 	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
 		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
@@ -181,23 +185,17 @@
 
 + (NSString *)systemUnsupervisedScriptFolderRootPath
 {
-	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
-		NSString *oldpath = [TPCPathInfo systemUnsupervisedScriptFolderPath]; // Returns our path.
+	NSString *oldpath = [TPCPathInfo systemUnsupervisedScriptFolderPath]; // Returns our path.
 		
-		return [oldpath stringByDeletingLastPathComponent]; // Remove bundle ID from path.
-	}
-	
-	return nil;
+	return [oldpath stringByDeletingLastPathComponent]; // Remove bundle ID from path.
 }
 
 + (NSString *)systemUnsupervisedScriptFolderPath
 {
-	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
-		NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationScriptsDirectory, NSUserDomainMask, YES);
+	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationScriptsDirectory, NSUserDomainMask, YES);
 		
-		if ([searchArray count]) {
-			return searchArray[0];
-		}
+	if ([searchArray count]) {
+		return searchArray[0];
 	}
 	
 	return nil;

@@ -41,13 +41,7 @@
 
 - (BOOL)loadCustomNibNamed:(NSString *)nibName owner:(id)owner topLevelObjects:(NSArray *__autoreleasing *)topLevelObjects;
 {
-	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
-		return [self loadNibNamed:nibName owner:owner topLevelObjects:topLevelObjects];
-	} else {
-		NSDictionary *objects = @{NSNibOwner : owner};
-		
-		return [self loadNibFile:nibName externalNameTable:objects withZone:nil];
-	}
+	return [self loadNibNamed:nibName owner:owner topLevelObjects:topLevelObjects];
 }
 
 @end

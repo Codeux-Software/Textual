@@ -50,9 +50,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
-			[RZUserNotificationCenter() setDelegate:self];
-		}
+		[RZUserNotificationCenter() setDelegate:self];
 		
 		[GrowlApplicationBridge setGrowlDelegate:self];
 
@@ -204,32 +202,30 @@
 	eventDescription = [eventDescription stripIRCEffects];
 
 	/* Send to notification center? */
-	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
-		if ([GrowlApplicationBridge isGrowlRunning] == NO) {
-			NSUserNotification *notification = [NSUserNotification new];
-			
-			[notification setTitle:eventTitle];
-			[notification setInformativeText:eventDescription];
-			[notification setDeliveryDate:[NSDate date]];
-			[notification setUserInfo:eventContext];
+	if ([GrowlApplicationBridge isGrowlRunning] == NO) {
+		NSUserNotification *notification = [NSUserNotification new];
+		
+		[notification setTitle:eventTitle];
+		[notification setInformativeText:eventDescription];
+		[notification setDeliveryDate:[NSDate date]];
+		[notification setUserInfo:eventContext];
 
 #ifdef TXSystemIsMacOSMavericksOrNewer
-			if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
-				/* These are the only event types we want to support for now. */
+		if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+			/* These are the only event types we want to support for now. */
 
-				if (eventType == TXNotificationNewPrivateMessageType ||
-					eventType == TXNotificationPrivateMessageType)
-				{
-					[notification setHasReplyButton:YES];
-					[notification setResponsePlaceholder:BLS(1235)];
-				}
+			if (eventType == TXNotificationNewPrivateMessageType ||
+				eventType == TXNotificationPrivateMessageType)
+			{
+				[notification setHasReplyButton:YES];
+				[notification setResponsePlaceholder:BLS(1235)];
 			}
+		}
 #endif 
 
-			[RZUserNotificationCenter() scheduleNotification:notification];
+		[RZUserNotificationCenter() scheduleNotification:notification];
 
-			return; // Do not continue to Growl…
-		}
+		return; // Do not continue to Growl…
 	}
 
 	/* Nope, let Growl handle. */

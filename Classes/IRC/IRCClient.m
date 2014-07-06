@@ -7308,10 +7308,8 @@
 	 be ran outside of the Mac OS sandbox attached to Textual. */
 	NSString *userScriptsPath = [TPCPathInfo systemUnsupervisedScriptFolderPath];
 
-	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
-		if ([scriptPath hasPrefix:userScriptsPath]) {
-			MLNonsandboxedScript = YES;
-		}
+	if ([scriptPath hasPrefix:userScriptsPath]) {
+		MLNonsandboxedScript = YES;
 	}
 
 	/* Is it AppleScript? */
@@ -7966,160 +7964,158 @@
 
 - (void)receivedDCCQuery:(IRCMessage *)m message:(NSMutableString *)rawMessage ignoreInfo:(IRCAddressBookEntry *)ignoreChecks
 {
-	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
-		/* Gather inital information. */
-		NSString *nickname = [m senderNickname];
-		
-		/* Only target ourself. */
-		if (NSObjectsAreEqual([m paramAt:0], [self localNickname]) == NO) {
+	/* Gather inital information. */
+	NSString *nickname = [m senderNickname];
+	
+	/* Only target ourself. */
+	if (NSObjectsAreEqual([m paramAt:0], [self localNickname]) == NO) {
+		return;
+	}
+	
+	/* Gather basic information. */
+	NSString *subcommand = [rawMessage uppercaseGetToken];
+	
+	/* For now, we recognize ACCEPT and RESUME, but we do not act on it. Just adding
+	 code for future expansion in another update. Basically, I had time to write the
+	 basic handler so I will thank myself in time when it comes to write the rest. */
+	BOOL isSendRequest = ([subcommand isEqualToString:@"SEND"]);
+//	BOOL isResumeRequest = ([subcommand isEqualToString:@"RESUME"]);
+//	BOOL isAcceptRequest = ([subcommand isEqualToString:@"ACCEPT"]);
+	
+	// Process file transfer requests.
+	if (isSendRequest /* || isResumeRequest || isAcceptRequest */) {
+		/* Check ignore status. */
+		if ([ignoreChecks ignoreFileTransferRequests] == YES) {
 			return;
 		}
 		
-		/* Gather basic information. */
-		NSString *subcommand = [rawMessage uppercaseGetToken];
+		/* Gather information about the actual transfer. */
+		NSString *section1 = [rawMessage getTokenIncludingQuotes];
+		NSString *section2 = [rawMessage getToken];
+		NSString *section3 = [rawMessage getToken];
+		NSString *section4 = [rawMessage getToken];
+		NSString *section5 = [rawMessage getToken];
+
+		/* Trim whitespaces if someone tries to send blank spaces 
+		 in a quoted string for filename. */
+		section1 = [section1 trim];
 		
-		/* For now, we recognize ACCEPT and RESUME, but we do not act on it. Just adding
-		 code for future expansion in another update. Basically, I had time to write the
-		 basic handler so I will thank myself in time when it comes to write the rest. */
-		BOOL isSendRequest = ([subcommand isEqualToString:@"SEND"]);
-	//	BOOL isResumeRequest = ([subcommand isEqualToString:@"RESUME"]);
-	//	BOOL isAcceptRequest = ([subcommand isEqualToString:@"ACCEPT"]);
+		/* Remove T from in front of token if it is there. */
+		if (isSendRequest) {
+			if ([section5 hasPrefix:@"T"]) {
+				section5 = [section5 substringFromIndex:1];
+			}
+		} /* else if (isAcceptRequest || isResumeRequest) {
+		   if ([section4 hasPrefix:@"T"]) {
+				section4 = [section4 substringFromIndex:1];
+		   }
+		} */
 		
-		// Process file transfer requests.
-		if (isSendRequest /* || isResumeRequest || isAcceptRequest */) {
-			/* Check ignore status. */
-			if ([ignoreChecks ignoreFileTransferRequests] == YES) {
-				return;
+		/* Valid values? */
+		NSObjectIsEmptyAssert(section1);
+		NSObjectIsEmptyAssert(section2);
+	  //NSObjectIsEmptyAssert(section3);
+		NSObjectIsEmptyAssert(section4);
+
+		/* Start data association. */
+		NSString *hostAddress;
+		NSString *hostPort;
+		NSString *filename;
+		NSString *filesize;
+		NSString *transferToken;
+		
+		/* Match data variables. */
+		if (isSendRequest)
+		{
+			/* Get normal information. */
+			filename = [section1 safeFilename];
+			filesize =  section4;
+			
+			hostPort = section3;
+			
+			transferToken = section5;
+			
+			/* Translate host address. */
+			if ([section2 isNumericOnly]) {
+				long long a = [section2 longLongValue];
+				
+				NSInteger w = (a & 0xff); a >>= 8;
+				NSInteger x = (a & 0xff); a >>= 8;
+				NSInteger y = (a & 0xff); a >>= 8;
+				NSInteger z = (a & 0xff);
+				
+				hostAddress = [NSString stringWithFormat:@"%d.%d.%d.%d", z, y, x, w];
+			} else {
+				hostAddress = section2;
 			}
-			
-			/* Gather information about the actual transfer. */
-			NSString *section1 = [rawMessage getTokenIncludingQuotes];
-			NSString *section2 = [rawMessage getToken];
-			NSString *section3 = [rawMessage getToken];
-			NSString *section4 = [rawMessage getToken];
-			NSString *section5 = [rawMessage getToken];
+		}
+		/* else if (isResumeRequest || isAcceptRequest)
+		 {
+			 filename = section1;
+			 filesize = section3;
+			 
+			 hostPort = section2;
+			 
+			 transferToken = section4;
+			 
+			 hostAddress = nil; // ACCEPT and RESUME do not carry the host address.
+		 } */
+		
+		/* Process invidiual commands. */
+		if (isSendRequest) {
+			/* DCC SEND <filename> <peer-ip> <port> <filesize> [token] */
 
-			/* Trim whitespaces if someone tries to send blank spaces 
-			 in a quoted string for filename. */
-			section1 = [section1 trim];
-			
-			/* Remove T from in front of token if it is there. */
-			if (isSendRequest) {
-				if ([section5 hasPrefix:@"T"]) {
-					section5 = [section5 substringFromIndex:1];
-				}
-			} /* else if (isAcceptRequest || isResumeRequest) {
-			   if ([section4 hasPrefix:@"T"]) {
-					section4 = [section4 substringFromIndex:1];
-			   }
-			} */
-			
-			/* Valid values? */
-			NSObjectIsEmptyAssert(section1);
-			NSObjectIsEmptyAssert(section2);
-		  //NSObjectIsEmptyAssert(section3);
-			NSObjectIsEmptyAssert(section4);
+			/* Important check. */
+			NSAssertReturn([filesize longLongValue] > 0);
 
-			/* Start data association. */
-			NSString *hostAddress;
-			NSString *hostPort;
-			NSString *filename;
-			NSString *filesize;
-			NSString *transferToken;
-			
-			/* Match data variables. */
-			if (isSendRequest)
-			{
-				/* Get normal information. */
-				filename = [section1 safeFilename];
-				filesize =  section4;
-				
-				hostPort = section3;
-				
-				transferToken = section5;
-				
-				/* Translate host address. */
-				if ([section2 isNumericOnly]) {
-					long long a = [section2 longLongValue];
-					
-					NSInteger w = (a & 0xff); a >>= 8;
-					NSInteger x = (a & 0xff); a >>= 8;
-					NSInteger y = (a & 0xff); a >>= 8;
-					NSInteger z = (a & 0xff);
-					
-					hostAddress = [NSString stringWithFormat:@"%d.%d.%d.%d", z, y, x, w];
-				} else {
-					hostAddress = section2;
-				}
-			}
-			/* else if (isResumeRequest || isAcceptRequest)
-			 {
-				 filename = section1;
-				 filesize = section3;
-				 
-				 hostPort = section2;
-				 
-				 transferToken = section4;
-				 
-				 hostAddress = nil; // ACCEPT and RESUME do not carry the host address.
-			 } */
-			
-			/* Process invidiual commands. */
-			if (isSendRequest) {
-				/* DCC SEND <filename> <peer-ip> <port> <filesize> [token] */
+			/* Add the actual file. */
+			if ([transferToken length] > 0) {
+				/* Validate the transfer token is a number. */
+				if ([transferToken isNumericOnly]) {
+					/* Is part of reverse DCC request. Let's check if the token
+					 already exists somewhere. If it does, we ignore this request. */
+					BOOL transferExists = [[self fileTransferController] fileTransferExistsWithToken:transferToken];
 
-				/* Important check. */
-				NSAssertReturn([filesize longLongValue] > 0);
+					/* 0 port indicates a new request in reverse DCC */
+					if ([hostPort integerValue] == 0) {
+						if (transferExists == NO) {
+							[self receivedDCCSend:nickname
+										 filename:filename
+										  address:hostAddress
+											 port:[hostPort integerValue]
+										 filesize:[filesize longLongValue]
+											token:transferToken];
 
-				/* Add the actual file. */
-				if ([transferToken length] > 0) {
-					/* Validate the transfer token is a number. */
-					if ([transferToken isNumericOnly]) {
-						/* Is part of reverse DCC request. Let's check if the token
-						 already exists somewhere. If it does, we ignore this request. */
-						BOOL transferExists = [[self fileTransferController] fileTransferExistsWithToken:transferToken];
+							return;
+						} else {
+							LogToConsole(@"Received reverse DCC request with token '%@' but the token already exists.", transferToken);
+						}
+					} else {
+						if (transferExists) {
+							TDCFileTransferDialogTransferController *e = [[self fileTransferController] fileTransferSenderMatchingToken:transferToken];
 
-						/* 0 port indicates a new request in reverse DCC */
-						if ([hostPort integerValue] == 0) {
-							if (transferExists == NO) {
-								[self receivedDCCSend:nickname
-											 filename:filename
-											  address:hostAddress
-												 port:[hostPort integerValue]
-											 filesize:[filesize longLongValue]
-												token:transferToken];
+							if (e) {
+								/* Define transfer information. */
+								[e setHostAddress:hostAddress];
+								[e setTransferPort:[hostPort integerValue]];
+
+								[e didReceiveSendRequestFromClient];
 
 								return;
-							} else {
-								LogToConsole(@"Received reverse DCC request with token '%@' but the token already exists.", transferToken);
-							}
-						} else {
-							if (transferExists) {
-								TDCFileTransferDialogTransferController *e = [[self fileTransferController] fileTransferSenderMatchingToken:transferToken];
-
-								if (e) {
-									/* Define transfer information. */
-									[e setHostAddress:hostAddress];
-									[e setTransferPort:[hostPort integerValue]];
-
-									[e didReceiveSendRequestFromClient];
-
-									return;
-								}
 							}
 						}
 					}
-				} else {
-					/* Treat as normal DCC request. */
-					[self receivedDCCSend:nickname
-								 filename:filename
-								  address:hostAddress
-									 port:[hostPort integerValue]
-								 filesize:[filesize longLongValue]
-									token:nil];
-
-					return;
 				}
+			} else {
+				/* Treat as normal DCC request. */
+				[self receivedDCCSend:nickname
+							 filename:filename
+							  address:hostAddress
+								 port:[hostPort integerValue]
+							 filesize:[filesize longLongValue]
+								token:nil];
+
+				return;
 			}
 		}
 	}
@@ -8154,9 +8150,6 @@
 
 - (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken
 {
-	/* DCC is mountain lion or later. */
-	NSAssertReturn([CSFWSystemInformation featureAvailableToOSXMountainLion]);
-	
 	/* Build a safe filename. */
 	NSString *escapedFileName = [filename stringByReplacingOccurrencesOfString:NSStringWhitespacePlaceholder withString:@"_"];
 	

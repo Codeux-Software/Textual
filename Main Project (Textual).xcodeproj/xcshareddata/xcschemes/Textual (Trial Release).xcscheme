@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4C1DC5511580420500A47BC9"
-               BuildableName = "Textual.app"
+               BuildableName = "Textual 5.app"
                BlueprintName = "Textual"
                ReferencedContainer = "container:Main Project (Textual).xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4C1DC5511580420500A47BC9"
-            BuildableName = "Textual.app"
+            BuildableName = "Textual 5.app"
             BlueprintName = "Textual"
             ReferencedContainer = "container:Main Project (Textual).xcodeproj">
          </BuildableReference>
@@ -52,7 +52,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4C1DC5511580420500A47BC9"
-            BuildableName = "Textual.app"
+            BuildableName = "Textual 5.app"
             BlueprintName = "Textual"
             ReferencedContainer = "container:Main Project (Textual).xcodeproj">
          </BuildableReference>
@@ -70,7 +70,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4C1DC5511580420500A47BC9"
-            BuildableName = "Textual.app"
+            BuildableName = "Textual 5.app"
             BlueprintName = "Textual"
             ReferencedContainer = "container:Main Project (Textual).xcodeproj">
          </BuildableReference>

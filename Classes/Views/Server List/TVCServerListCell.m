@@ -309,11 +309,6 @@
 	badgeTextPoint = NSMakePoint((NSMidX(badgeFrame) - (mcstring.size.width  / 2.0)),
 								((NSMidY(badgeFrame) - (mcstring.size.height / 2.0)) + 1));
 	
-	/* Mountain Lion did not like our origin. */
-	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
-		badgeTextPoint.y -= 1;
-	}
-	
 	/* Gotta be pixel (point?) perfect. */
 	if ([mainWindow() runningInHighResolutionMode]) {
 		badgeTextPoint.y += 0.5;

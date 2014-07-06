@@ -211,14 +211,10 @@
 
 	/* We only have notification center on mountain lion or newer so we have to
 	 check what OS we are running on before we even doing anything. */
-	if ([CSFWSystemInformation featureAvailableToOSXMountainLion] == NO || growlRunning) {
-		if (growlRunning) {
-			[self.alertNotificationDestinationTextField setStringValue:TXTLS(@"TDCPreferencesController[1005]")];
-		} else {
-			[self.alertNotificationDestinationTextField setStringValue:TXTLS(@"TDCPreferencesController[1007]")];
-		}
+	if (growlRunning) {
+		[self.alertNotificationDestinationTextField setStringValue:TXTLS(@"TDCPreferencesController[1005]")];
 	} else {
-		[self.alertNotificationDestinationTextField setStringValue:TXTLS(@"TDCPreferencesController[1006]")];
+		[self.alertNotificationDestinationTextField setStringValue:TXTLS(@"TDCPreferencesController[1007]")];
 	}
 
 	// Complete startup of preferences.

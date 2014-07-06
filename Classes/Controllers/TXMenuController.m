@@ -74,11 +74,9 @@
 
 - (void)setupOtherServices
 {
-	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
-		 self.fileTransferController = [TDCFileTransferDialog new];
+ 	 self.fileTransferController = [TDCFileTransferDialog new];
 
-		[self.fileTransferController startUsingDownloadDestinationFolderSecurityScopedBookmark];
-	}
+	[self.fileTransferController startUsingDownloadDestinationFolderSecurityScopedBookmark];
 }
 
 - (void)prepareForApplicationTermination
@@ -95,16 +93,12 @@
 	
 	self.openWindowList = nil;
 	
-	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
-		[self.fileTransferController prepareForApplicationTermination];
-	}
+	[self.fileTransferController prepareForApplicationTermination];
 }
 
 - (void)preferencesChanged
 {
-	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
-		[self.fileTransferController clearCachedIPAddress];
-	}
+	[self.fileTransferController clearCachedIPAddress];
 }
 
 - (void)validateChannelMenuSubmenus:(NSMenuItem *)item
@@ -201,16 +195,10 @@
 		case 6885: // "Manage All Modes"
 		case 51065: // "Toggle Visbility of Server List"
 		case 64611: // "Channel List…"
+		case 52694: // "Send file…"
 		{
 			return _disableInSheet(YES);
 
-			break;
-		}
-		case 594: // "File Transfers"
-		case 52694: // "Send file…"
-		{
-			return _disableInSheet([CSFWSystemInformation featureAvailableToOSXMountainLion]);
-			
 			break;
 		}
 		case 51066: // "Toggle Visbility of Member List"
