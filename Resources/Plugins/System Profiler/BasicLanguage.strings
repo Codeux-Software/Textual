@@ -64,11 +64,6 @@
 "BasicLanguage[1018]" = "%.2f GHz";
 "BasicLanguage[1019]" = "%.2f MHz"; // really?
 
-"BasicLanguage[1029]" = "%.2f TB";
-"BasicLanguage[1030]" = "%.2f GB";
-"BasicLanguage[1031]" = "%.2f MB";
-"BasicLanguage[1032]" = "%.2f KB";
-
 /* /memory/ command. */
 "BasicLanguage[1020]" = "Textual is privately using %1$@ of memory. It is also sharing %2$@ with other processes. ";
 

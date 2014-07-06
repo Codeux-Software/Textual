@@ -492,25 +492,7 @@
 
 + (NSString *)formattedDiskSize:(TXUnsignedLongLong)size
 {
-	/* Use cocoa API if available. */
-	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
-		return [NSByteCountFormatter stringFromByteCountWithPaddedDigits:size];
-	}
-
-	/* Use our own math. */
-	if (size >= 1000000000000.0) {
-		return TPILocalizedString(@"BasicLanguage[1029]", (size / 1000000000000.0));
-	} else {
-		if (size < 1000000000.0) {
-			if (size < 1000000.0) {
-				return TPILocalizedString(@"BasicLanguage[1032]", (size / 1000.0));
-			} else {
-				return TPILocalizedString(@"BasicLanguage[1031]", (size / 1000000.0));
-			}
-		} else {
-			return TPILocalizedString(@"BasicLanguage[1030]", (size / 1000000000.0));
-		}
-	}
+	return [NSByteCountFormatter stringFromByteCountWithPaddedDigits:size];
 }
 
 + (NSString *)formattedCPUFrequency:(double)rate

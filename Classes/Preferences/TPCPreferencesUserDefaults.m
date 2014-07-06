@@ -307,7 +307,11 @@
 {
 	[self willChangeValueForKey:key];
 	
-	[_groupDefaults setObject:value forKey:key];
+	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+		[_groupDefaults setObject:value forKey:key];
+	} else {
+		[_userDefaults setObject:value forKey:key];
+	}
 	
 	[self didChangeValueForKey:key];
 }

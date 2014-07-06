@@ -41,11 +41,7 @@
 
 - (id <NSObject, NSCopying, NSCoding>)cloudUbiquityIdentityToken
 {
-	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
-		return [RZFileManager() ubiquityIdentityToken];
-	} else {
-		return nil;
-	}
+	return [RZFileManager() ubiquityIdentityToken];
 }
 
 - (BOOL)lockItemAtPath:(NSString *)path error:(NSError **)error

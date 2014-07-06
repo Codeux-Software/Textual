@@ -105,9 +105,7 @@
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	/* Cloud files are synced regardless of user preference
 	 so we still have to initalize it at some point. */
-	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
-		[sharedCloudManager() initializeCloudSyncSession];
-	}
+	[sharedCloudManager() initializeCloudSyncSession];
 #endif
 	
 	self.world = [IRCWorld new];
@@ -307,11 +305,7 @@
 	[[TXSharedApplication sharedNetworkReachabilityObject] stopNotifier];
 	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	BOOL onMountainLionOrLater = [CSFWSystemInformation featureAvailableToOSXMountainLion];
-	
-	if (onMountainLionOrLater) {
-		[sharedCloudManager() setApplicationIsTerminating:YES];
-	}
+	[sharedCloudManager() setApplicationIsTerminating:YES];
 #endif
 	
 	[menuController() prepareForApplicationTermination];
@@ -335,9 +329,7 @@
 	[TPCApplicationInfo saveTimeIntervalSinceApplicationInstall];
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	if (onMountainLionOrLater) {
-		[sharedCloudManager() closeCloudSyncSession];
-	}
+	[sharedCloudManager() closeCloudSyncSession];
 #endif
 }
 

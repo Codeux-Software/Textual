@@ -170,18 +170,6 @@
 	if (performInstall) {
 		return; // Do not install.
 	}
-
-	/* Scripts can only be Mountain Lion or later. */
-	if ([CSFWSystemInformation featureAvailableToOSXMountainLion] == NO) {
-		[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1190][2]")
-											title:TXTLS(@"BasicLanguage[1190][1]")
-									defaultButton:BLS(1186)
-								  alternateButton:nil
-								   suppressionKey:nil
-								  suppressionText:nil];
-		
-		return; // Cancel.
-	}
 	
 	/* Script install. */
 	NSSavePanel *d = [NSSavePanel savePanel];

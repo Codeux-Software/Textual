@@ -42,15 +42,11 @@
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 + (BOOL)syncPreferencesToTheCloud
 {
-	NSAssertReturnR([CSFWSystemInformation featureAvailableToOSXMountainLion], NO);
-	
 	return [RZUserDefaults() boolForKey:TPCPreferencesCloudSyncKeyValueStoreServicesDefaultsKey];
 }
 
 + (BOOL)syncPreferencesToTheCloudLimitedToServers
 {
-	NSAssertReturnR([CSFWSystemInformation featureAvailableToOSXMountainLion], NO);
-	
 	return [RZUserDefaults() boolForKey:TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDefaultsKey];
 }
 #endif
