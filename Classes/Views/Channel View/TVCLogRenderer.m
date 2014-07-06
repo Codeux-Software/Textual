@@ -347,13 +347,17 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	id highlightWords = [inputDictionary arrayForKey:@"highlightKeywords"];
 	id excludeWords	= [inputDictionary arrayForKey:@"excludeKeywords"];
 	
-	NSArray *clientHighlightList = [clientConfig highlightList];
+	NSArray *clientHighlightList = nil;
 
 	/* Only bother spending time creating a copy if we actually need them. */
-	if ([clientHighlightList count] >= 1) {
-		highlightWords = [highlightWords mutableCopy];
+	if (isPlainText) {
+		clientHighlightList = [clientConfig highlightList];
 
-		excludeWords = [excludeWords mutableCopy];
+		if ([clientHighlightList count] >= 1) {
+			highlightWords = [highlightWords mutableCopy];
+
+			excludeWords = [excludeWords mutableCopy];
+		}
 	}
 
     NSFont *attributedStringFont = inputDictionary[@"attributedStringFont"];
@@ -578,7 +582,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 		if (isPlainText) {
 			/* Add server/channel specific matches. */
-			for (TDCHighlightEntryMatchCondition *e in [clientConfig highlightList]) {
+			for (TDCHighlightEntryMatchCondition *e in clientHighlightList) {
 				BOOL addKeyword = NO;
 				
 				NSString *matchChannel = [e matchChannelID];
