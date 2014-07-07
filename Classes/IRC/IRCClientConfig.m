@@ -313,10 +313,10 @@
 
 - (id)initWithDictionary:(NSDictionary *)dic
 {
-	return [self initWithDictionary:dic ignorePrivateMessages:NO];
+	return [self initWithDictionary:dic ignorePrivateMessages:NO checkKeychainStatus:YES];
 }
 
-- (id)initWithDictionary:(NSDictionary *)dic ignorePrivateMessages:(BOOL)ignorePMs
+- (id)initWithDictionary:(NSDictionary *)dic ignorePrivateMessages:(BOOL)ignorePMs checkKeychainStatus:(BOOL)checkKeychainIsSet
 {
 	if ((self = [self init])) {
 		/* If any key does not exist, then its value is inherited from the -init method. */
@@ -443,10 +443,12 @@
 		}
 
 		/* Get a base reading. */
-		self.proxyPasswordIsSet		= NSObjectIsNotEmpty(self.proxyPassword);
-		self.serverPasswordIsSet	= NSObjectIsNotEmpty(self.serverPassword);
-		self.nicknamePasswordIsSet	= NSObjectIsNotEmpty(self.nicknamePassword);
-
+		if (checkKeychainIsSet) {
+			self.proxyPasswordIsSet		= NSObjectIsNotEmpty(self.proxyPassword);
+			self.serverPasswordIsSet	= NSObjectIsNotEmpty(self.serverPassword);
+			self.nicknamePasswordIsSet	= NSObjectIsNotEmpty(self.nicknamePassword);
+		}
+		
 		/* We're done. */
 		return self;
 	}
@@ -571,7 +573,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	IRCClientConfig *mut = [[IRCClientConfig allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
+	IRCClientConfig *mut = [[IRCClientConfig allocWithZone:zone] initWithDictionary:[self dictionaryValue] ignorePrivateMessages:NO checkKeychainStatus:NO];
 	
 	[mut setNicknamePassword:_nicknamePassword];
 	[mut setServerPassword:_serverPassword];
@@ -586,7 +588,7 @@
 
 - (id)copyWithoutPrivateMessages
 {
-	IRCClientConfig *mut = [[IRCClientConfig alloc] initWithDictionary:[self dictionaryValue] ignorePrivateMessages:YES];
+	IRCClientConfig *mut = [[IRCClientConfig alloc] initWithDictionary:[self dictionaryValue] ignorePrivateMessages:YES checkKeychainStatus:NO];
 	
 	[mut setNicknamePassword:_nicknamePassword];
 	[mut setServerPassword:_serverPassword];
