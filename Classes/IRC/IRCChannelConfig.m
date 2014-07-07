@@ -220,6 +220,11 @@
 
 - (id)initWithDictionary:(NSDictionary *)dic
 {
+	return [self initWithDictionary:dic checkKeychainStatus:YES];
+}
+
+- (id)initWithDictionary:(NSDictionary *)dic checkKeychainStatus:(BOOL)checkKeychainIsSet
+{
 	if ((self = [self init])) {
 		/* If any key does not exist, then its value is inherited from the -init method. */
 		
@@ -240,9 +245,11 @@
 		[dic assignStringTo:&_defaultTopic forKey:@"defaultTopic"];
 
 		/* Establish state. */
-		self.secretKeyIsSet			= NSObjectIsNotEmpty(self.secretKey);
-		self.encryptionKeyIsSet		= NSObjectIsNotEmpty(self.encryptionKey);
-
+		if (checkKeychainIsSet) {
+			self.secretKeyIsSet			= NSObjectIsNotEmpty(self.secretKey);
+			self.encryptionKeyIsSet		= NSObjectIsNotEmpty(self.encryptionKey);
+		}
+		
 		return self;
 	}
 	
@@ -294,7 +301,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	IRCChannelConfig *mut = [[IRCChannelConfig allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
+	IRCChannelConfig *mut = [[IRCChannelConfig allocWithZone:zone] initWithDictionary:[self dictionaryValue] checkKeychainStatus:NO];
 	
 	[mut setSecretKey:_secretKey];
 	[mut setEncryptionKey:_encryptionKey];
