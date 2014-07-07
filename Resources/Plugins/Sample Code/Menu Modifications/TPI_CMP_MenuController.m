@@ -41,7 +41,7 @@
 
 - (void)postLinkToTextualHomepage:(id)sender
 {
-	IRCClient *u = [worldController() selectedClient];
+	IRCClient *u = [mainWindow() selectedClient];
 	
 	/* See StaticDefentitions.h for what PointerIsEmptyAsert
 	 is actually designed to do. It's not an actual assert
