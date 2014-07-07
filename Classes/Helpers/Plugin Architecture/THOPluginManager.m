@@ -444,6 +444,8 @@
 
 - (NSString *)postWillRenderMessageEvent:(NSString *)newMessage forViewController:(TVCLogController *)viewController lineType:(TVCLogLineType)lineType memberType:(TVCLogLineMemberType)memberType
 {
+	BOOL valueChanged = NO;
+	
 	for (THOPluginItem *plugin in self.allLoadedPlugins)
 	{
 		if ([plugin supportsWillRenderMessageEventNotifications]) {
@@ -454,12 +456,20 @@
 			if (NSObjectIsEmpty(pluginResult)) {
 				;
 			} else {
-				newMessage = [pluginResult copy];
+				if ([pluginResult isEqualToString:newMessage] == NO) {
+					newMessage = pluginResult;
+					
+					valueChanged = YES;
+				}
 			}
 		}
 	}
 	
-	return newMessage;
+	if (valueChanged) {
+		return [newMessage copy];
+	} else {
+		return  newMessage;
+	}
 }
 
 @end

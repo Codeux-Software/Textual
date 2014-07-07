@@ -361,12 +361,14 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	}
 
     NSFont *attributedStringFont = inputDictionary[@"attributedStringFont"];
-
+	
+	/* Let plugins have first shot. */
+	body = [sharedPluginManager() postWillRenderMessageEvent:body forViewController:log lineType:lineType memberType:memberType];
+	
 	/* This is the most important part of the entire process of rendering each line.
 	 The following code will scan each character of the input body one by one judging
 	 each character based on what surrounds it in order to find formatting related to 
 	 bold, color, italics, and underline. */
-	
 	NSInteger length = [body length];
 	NSInteger start  = 0;
 	NSInteger n		 = 0;
@@ -510,12 +512,9 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	/* Now that we have scanned the input body for all fomatting characters,
 	 we will now build upon the string minus those. */
 	body = [NSString stringWithCharacters:dest length:n];
-	
-	/* Let plugins have first shot. */
-	body = [sharedPluginManager() postWillRenderMessageEvent:body forViewController:log lineType:lineType memberType:memberType];
-	
-	length = [body length];
 
+	length = [body length];
+	
 	/* When rendering a message as HTML output, TVCLogRenderer takes pride 
 	 in finding as much information about the message as possible. Information
 	 that it looks for includes nicknames from the channel the message is being
