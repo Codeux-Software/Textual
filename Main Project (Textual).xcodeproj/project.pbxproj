@@ -3129,7 +3129,6 @@
 				ORGANIZATIONNAME = "Codeux Software";
 				TargetAttributes = {
 					4C1DC5511580420500A47BC9 = {
-						DevelopmentTeam = 8482Q6EPL6;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.Mac = {
 								enabled = 1;
