@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A238x" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.21" systemVersion="14A261i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.17"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.21"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TPIWikipediaLinkParser">
@@ -28,8 +28,8 @@
                 <userLayoutGuide location="26" affinity="minX"/>
             </userGuides>
             <subviews>
-                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="60">
-                    <rect key="frame" x="34" y="249" width="468" height="136"/>
+                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="60">
+                    <rect key="frame" x="34" y="264" width="468" height="124"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="pdQ-DS-ILK">
                         <rect key="frame" x="0.0" y="0.0" width="468" height="136"/>
@@ -39,7 +39,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="468" height="136"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="468" height="136"/>
+                                <size key="minSize" width="468" height="124"/>
                                 <size key="maxSize" width="488" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="The ">
@@ -55,22 +55,38 @@
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content=" automatically scans text that has been entered into the input text field and replaces Wiki-style link syntax blocks: ">
+                                    <fragment content=" automatically replaces Wiki-style link syntax blocks similar to ">
                                         <attributes>
                                             <font key="NSFont" size="13" name="HelveticaNeue"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content="[[&lt;title&gt;]]">
+                                    <fragment content="[[&lt;title&gt;]] ">
+                                        <attributes>
+                                            <font key="NSFont" size="13" name="HelveticaNeue-Bold"/>
+                                            <font key="NSOriginalFont" size="13" name="HelveticaNeue-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">with their equivalent.
+
+</string>
                                         <attributes>
                                             <font key="NSFont" size="13" name="HelveticaNeue"/>
                                             <font key="NSOriginalFont" size="12" name="LucidaGrande-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
+                                    <fragment content="Any parsed link blocks only show for yourself. ">
+                                        <attributes>
+                                            <font key="NSFont" size="13" name="HelveticaNeue-Bold"/>
+                                            <font key="NSOriginalFont" size="13" name="HelveticaNeue-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
                                     <fragment>
-                                        <string key="content"> 
-It also looks for the same syntax within messages posted in a channel and shows a list of links based on the ones that it has found.
+                                        <string key="content">
 
 Click the </string>
                                         <attributes>
@@ -106,7 +122,7 @@ Click the </string>
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="468" height="136"/>
+                                <size key="minSize" width="468" height="124"/>
                                 <size key="maxSize" width="488" height="10000000"/>
                             </textView>
                         </subviews>
@@ -116,13 +132,13 @@ Click the </string>
                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="63">
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="63">
                         <rect key="frame" x="452" y="0.0" width="16" height="136"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
                 <button id="64">
-                    <rect key="frame" x="52" y="219" width="137" height="18"/>
+                    <rect key="frame" x="55" y="235" width="137" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Enable parser." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="65">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -133,7 +149,7 @@ Click the </string>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="68">
-                    <rect key="frame" x="36" y="190" width="89" height="17"/>
+                    <rect key="frame" x="39" y="206" width="89" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Link Prefixes:" id="69">
                         <font key="font" metaFont="system"/>
@@ -142,7 +158,7 @@ Click the </string>
                     </textFieldCell>
                 </textField>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="273">
-                    <rect key="frame" x="36" y="50" width="494" height="132"/>
+                    <rect key="frame" x="39" y="47" width="494" height="151"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" id="K0X-dB-5Eh">
                         <rect key="frame" x="1" y="17" width="492" height="114"/>
@@ -205,7 +221,7 @@ Click the </string>
                     </tableHeaderView>
                 </scrollView>
                 <button verticalHuggingPriority="750" id="284">
-                    <rect key="frame" x="471" y="20" width="30" height="23"/>
+                    <rect key="frame" x="471" y="17" width="30" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="285">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -217,7 +233,7 @@ Click the </string>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="286">
-                    <rect key="frame" x="503" y="20" width="30" height="23"/>
+                    <rect key="frame" x="503" y="17" width="30" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="287">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -229,7 +245,7 @@ Click the </string>
                     </connections>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="413" y="444.5"/>
+            <point key="canvasLocation" x="412.5" y="444"/>
         </customView>
         <window title="New Condition" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="224">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>

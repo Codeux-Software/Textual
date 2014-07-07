@@ -75,116 +75,59 @@
 #pragma mark -
 #pragma mark Server Input.
 
-- (void)didReceiveServerInputOnClient:(IRCClient *)client
-					senderInformation:(NSDictionary *)senderDict
-				   messageInformation:(NSDictionary *)messageDict
+- (NSString *)willRenderMessage:(NSString *)newMessage forViewController:(TVCLogController *)logController lineType:(TVCLogLineType)lineType memberType:(TVCLogLineMemberType)memberType
 {
-    NSAssertReturn([self processWikiStyleLinks]);
+	NSAssertReturnR([self processWikiStyleLinks], nil);
 	
-	/* Gather information about message. */
-    NSArray *params = messageDict[@"messageParamaters"];
-
-	NSString *message = messageDict[@"messageSequence"];
-
-	IRCChannel *channel = [client findChannel:params[0]];
-
-    PointerIsEmptyAssert(channel);
-
-	NSString *linkPrefix = [self linkPrefixFromID:[channel uniqueIdentifier]];
-
-	NSObjectIsEmptyAssert(linkPrefix);
-
-    /* Parse the message for all possible matches. */
-    NSArray *linkMatches = [TLORegularExpression matchesInString:[message stripIRCEffects] withRegex:_linkMatchRegex];
-
-    if ([linkMatches count] > 0) {
-        NSInteger loopIndex = 0;
-
-        /* Loop through each match. */
-        for (__strong NSString *linkRaw in linkMatches) {
-            NSAssertReturnLoopContinue([linkRaw length] > 4);
-
-            loopIndex += 1;
-
-            /* Get the inside of the brackets. */
-            NSRange cutRange = NSMakeRange(2, ([linkRaw length] - 4));
-
-            linkRaw = [linkRaw substringWithRange:cutRange];
-
-            /* Get the left side. */
-            if ([linkRaw contains:@"|"]) {
-                linkRaw = [linkRaw substringToIndex:[linkRaw stringPosition:@"|"]];
-                linkRaw = [linkRaw trim];
-            }
-
-            /* Create our message and post it. */
-            NSString *message = [NSString stringWithFormat:@" %i: %@ —> %@%@", loopIndex, linkRaw, linkPrefix, [linkRaw encodeURIComponent]];
-
-            [client printDebugInformation:message channel:channel];
-        }
-    }
-}
-
-- (NSArray *)subscribedServerInputCommands
-{
-    return @[@"privmsg"];
-}
-
-#pragma mark -
-#pragma mark User Input.
-
-- (id)interceptUserInput:(id)input command:(NSString *)command
-{
-	/* Return input if we are not going to process anything. */
-    NSAssertReturnR([self processWikiStyleLinks], input);
-
-    /* Do not handle NSString. */
-    if ([input isKindOfClass:[NSAttributedString class]] == NO) {
-        return input;
-    }
-
-	/* Link prefix. */
-	IRCChannel *channel = [worldController() selectedChannel];
-
-	NSString *linkPrefix = [self linkPrefixFromID:[channel uniqueIdentifier]];
-
-	NSObjectIsEmptyAssertReturn(linkPrefix, input);
-
-    /* Start parser. */
-    NSMutableAttributedString *muteString = [input mutableCopy];
-
-    while (1 == 1) {
-        /* Get the range of next match. */
-        NSRange linkRange = [TLORegularExpression string:[muteString string] rangeOfRegex:_linkMatchRegex];
-
-        /* No match found? Break our loop. */
-        if (linkRange.location == NSNotFound) {
-            break;
-        }
-
-        NSAssertReturnLoopContinue(linkRange.length > 4);
-
-        /* Get inside of brackets. */
-        NSRange cutRange = NSMakeRange((linkRange.location + 2),
-                                       (linkRange.length - 4));
-
-        NSString *linkInside;
-
-        linkInside = [[muteString string] substringWithRange:cutRange];
-
-        /* Get the left side. */
-        if ([linkInside contains:@"|"]) {
-            linkInside = [linkInside substringToIndex:[linkInside stringPosition:@"|"]];
-            linkInside = [linkInside trim];
-        }
-
-        /* Build our link and replace it in the input. */
-        linkInside = [linkPrefix stringByAppendingString:[linkInside encodeURIComponent]];
-
-        [muteString replaceCharactersInRange:linkRange withString:linkInside];
-    }
-
-    return muteString;
+	/* Only work on plain text messages. */
+	if (lineType == TVCLogLinePrivateMessageType ||
+		lineType == TVCLogLineActionType)
+	{
+		/* Link prefix. */
+		IRCChannel *channel = [logController associatedChannel];
+		
+		NSString *linkPrefix = [self linkPrefixFromID:[channel uniqueIdentifier]];
+		
+		NSObjectIsEmptyAssertReturn(linkPrefix, nil);
+		
+		/* Start parser. */
+		NSMutableString *muteString = [newMessage mutableCopy];
+		
+		while (1 == 1) {
+			/* Get the range of next match. */
+			NSRange linkRange = [TLORegularExpression string:muteString rangeOfRegex:_linkMatchRegex];
+			
+			/* No match found? Break our loop. */
+			if (linkRange.location == NSNotFound) {
+				break;
+			}
+			
+			NSAssertReturnLoopContinue(linkRange.length > 4);
+			
+			/* Get inside of brackets. */
+			NSRange cutRange = NSMakeRange((linkRange.location + 2),
+										   (linkRange.length - 4));
+			
+			NSString *linkInside;
+			
+			linkInside = [muteString substringWithRange:cutRange];
+			
+			/* Get the left side. */
+			if ([linkInside contains:@"|"]) {
+				linkInside = [linkInside substringToIndex:[linkInside stringPosition:@"|"]];
+				linkInside = [linkInside trim];
+			}
+			
+			/* Build our link and replace it in the input. */
+			linkInside = [linkPrefix stringByAppendingString:[linkInside encodeURIComponent]];
+			
+			[muteString replaceCharactersInRange:linkRange withString:linkInside];
+		}
+		
+		return muteString;
+	}
+	
+	return nil; // Let renderer know we chose not to modify message.
 }
 
 #pragma mark -
@@ -276,7 +219,7 @@
 		[[self.rnewConditionChannelPopup menu] addItem:umi];
 
 		/* Build list of channels part of this client. */
-		for (IRCChannel *c in [u channels]) {
+		for (IRCChannel *c in [u channelList]) {
 			/* Only include channels. */
 			NSAssertReturnLoopContinue([c isChannel]);
 			
@@ -428,7 +371,7 @@
 	NSObjectIsEmptyAssertReturn(itemUUID, nil);
 
 	for (IRCClient *u in [worldController() clientList]) {
-		for (IRCChannel *c in [u channels]) {
+		for (IRCChannel *c in [u channelList]) {
 			if ([itemUUID isEqualToString:[c uniqueIdentifier]]) {
 				return [c name];
 			}
