@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.21" systemVersion="14A261i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment version="101000" identifier="macosx"/>
+        <deployment version="101000" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.21"/>
     </dependencies>
@@ -654,11 +654,6 @@ CQ
                                 <modifierMask key="keyEquivalentModifierMask" control="YES"/>
                                 <connections>
                                     <action selector="showFileTransfersDialog:" target="267" id="wVQ-9Q-HNj"/>
-                                    <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.System —&gt; Running Mac OS Mountain Lion Or Newer" id="BSx-Oy-zg4">
-                                        <dictionary key="options">
-                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                        </dictionary>
-                                    </binding>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="92">
@@ -1008,22 +1003,9 @@ CQ
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="memberSendFileRequest:" target="267" id="ILQ-5P-8gU"/>
-                                    <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.System —&gt; Running Mac OS Mountain Lion Or Newer" id="X82-2S-mxh">
-                                        <dictionary key="options">
-                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                        </dictionary>
-                                    </binding>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="tkc-j6-xvy">
-                                <connections>
-                                    <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.System —&gt; Running Mac OS Mountain Lion Or Newer" id="xqK-en-PQe">
-                                        <dictionary key="options">
-                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                        </dictionary>
-                                    </binding>
-                                </connections>
-                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="tkc-j6-xvy"/>
                             <menuItem title="Lag (PING)" tag="2101" id="439">
                                 <connections>
                                     <action selector="memberSendCTCPPing:" target="267" id="2628"/>

@@ -46,7 +46,6 @@
                 <outlet property="matchKeywordsArrayController" destination="4310" id="7392"/>
                 <outlet property="navigationOutlineview" destination="55F-OG-plu" id="xRb-H0-wGA"/>
                 <outlet property="setAsDefaultIRCClientButton" destination="dwq-UD-go0" id="0ye-qH-XAp"/>
-                <outlet property="syncPreferencesToTheCloudButton" destination="cmM-pE-bve" id="vAj-9I-SKN"/>
                 <outlet property="themeSelectionButton" destination="A1z-X7-AQ9" id="1O7-ff-1LW"/>
                 <outlet property="transcriptFolderButton" destination="H7x-dV-MZS" id="uXJ-hj-ydF"/>
                 <outlet property="window" destination="4929" id="4933"/>
@@ -250,7 +249,7 @@
                     </connections>
                 </button>
                 <button appearanceType="aqua" id="bVD-Sa-BSk">
-                    <rect key="frame" x="49" y="260" width="312" height="18"/>
+                    <rect key="frame" x="50" y="260" width="312" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Share data between devices using iCloud" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="wdb-hN-q1F">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -258,13 +257,8 @@
                     </buttonCell>
                     <connections>
                         <action selector="onChangedCloudSyncingServices:" target="-2" id="EWm-sP-reg"/>
-                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.System —&gt; Built with iCloud Support" id="f72-cf-gRu"/>
-                        <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.System —&gt; Running Mac OS Mountain Lion Or Newer" previousBinding="f72-cf-gRu" id="mpO-0p-LUE">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                            </dictionary>
-                        </binding>
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloud" id="VDg-HO-mwB"/>
+                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.System —&gt; Built with iCloud Support" id="f72-cf-gRu"/>
                     </connections>
                 </button>
                 <button appearanceType="aqua" verticalHuggingPriority="750" tag="13" id="dqH-Sc-1ei">
@@ -277,75 +271,10 @@
                     <connections>
                         <action selector="onManageiCloudButtonClicked:" target="-2" id="1fB-rJ-kxy"/>
                         <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.System —&gt; Built with iCloud Support" id="48w-li-BcB"/>
-                        <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.System —&gt; Running Mac OS Mountain Lion Or Newer" previousBinding="48w-li-BcB" id="yNp-Ck-CeT">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                            </dictionary>
-                        </binding>
                     </connections>
                 </button>
-                <customView wantsLayer="YES" appearanceType="aqua" id="4g8-h6-VCD">
-                    <rect key="frame" x="39" y="259" width="488" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <subviews>
-                        <button id="cmM-pE-bve">
-                            <rect key="frame" x="10" y="0.0" width="312" height="18"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                            <buttonCell key="cell" type="check" title="Share data between devices using iCloud." bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" state="on" inset="2" id="FiD-9a-kAO">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="titleBar" size="12"/>
-                            </buttonCell>
-                        </button>
-                        <button verticalHuggingPriority="750" tag="13" id="Ton-u4-Iwf">
-                            <rect key="frame" x="326" y="-5" width="157" height="28"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="push" title="Manage iCloud" bezelStyle="rounded" alignment="center" controlSize="small" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="J9N-wg-ZjT">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="smallSystem"/>
-                            </buttonCell>
-                        </button>
-                        <customView wantsLayer="YES" id="fyY-Dt-PjT">
-                            <rect key="frame" x="0.0" y="-38" width="488" height="96"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <subviews>
-                                <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="21z-4g-4bB">
-                                    <rect key="frame" x="37" y="40" width="416" height="17"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <shadow key="shadow">
-                                        <size key="offset" width="1" height="1"/>
-                                        <color key="color" red="0.90372669449999998" green="0.90372669449999998" blue="0.90372669449999998" alpha="1" colorSpace="calibratedRGB"/>
-                                    </shadow>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iCloud sharing is available for Mac OS Mountain Lion or later." id="Tid-GV-JiX">
-                                        <font key="font" metaFont="systemBold"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                </textField>
-                            </subviews>
-                            <backgroundFilters>
-                                <ciFilter name="CIGaussianBlur">
-                                    <configuration>
-                                        <null key="inputImage"/>
-                                        <real key="inputRadius" value="1.5"/>
-                                    </configuration>
-                                </ciFilter>
-                            </backgroundFilters>
-                        </customView>
-                    </subviews>
-                    <backgroundFilters>
-                        <ciFilter name="CIGaussianBlur">
-                            <configuration>
-                                <null key="inputImage"/>
-                                <real key="inputRadius" value="2"/>
-                            </configuration>
-                        </ciFilter>
-                    </backgroundFilters>
-                    <connections>
-                        <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.System —&gt; Running Mac OS Mountain Lion Or Newer" id="Bef-Mg-P24"/>
-                    </connections>
-                </customView>
             </subviews>
-            <point key="canvasLocation" x="1096.5" y="226"/>
+            <point key="canvasLocation" x="1184.5" y="243"/>
         </customView>
         <customView id="d6J-SH-Xgl" userLabel="Default Identity">
             <rect key="frame" x="0.0" y="0.0" width="567" height="406"/>
@@ -1496,12 +1425,12 @@
                                         <connections>
                                             <accessibilityConnection property="title" destination="rQW-NA-Y3y" id="zaq-5d-HKN"/>
                                             <action selector="onChangedStyle:" target="-2" id="nwV-2b-DJc"/>
+                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.Theme -&gt; Nickname Format" id="nqF-f6-abA"/>
                                             <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.Theme -&gt; Nickname Format Preference Enabled" id="kPD-JU-hkN">
                                                 <dictionary key="options">
                                                     <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
                                                 </dictionary>
                                             </binding>
-                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.Theme -&gt; Nickname Format" id="nqF-f6-abA"/>
                                         </connections>
                                     </comboBox>
                                     <comboBox verticalHuggingPriority="750" id="ZvU-QB-dko">
@@ -1521,12 +1450,12 @@
                                         <connections>
                                             <accessibilityConnection property="title" destination="0GD-DG-0a4" id="C2e-uU-ppE"/>
                                             <action selector="onChangedStyle:" target="-2" id="xyM-gW-VOW"/>
+                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.Theme -&gt; Timestamp Format" id="zdU-kq-jyG"/>
                                             <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.Theme -&gt; Timestamp Format Preference Enabled" id="1oy-sy-gxF">
                                                 <dictionary key="options">
                                                     <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
                                                 </dictionary>
                                             </binding>
-                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.Theme -&gt; Timestamp Format" id="zdU-kq-jyG"/>
                                         </connections>
                                     </comboBox>
                                     <button id="B8G-ch-URC">
@@ -3020,7 +2949,7 @@
                 <button appearanceType="aqua" id="ZwK-yE-OaM">
                     <rect key="frame" x="54" y="302" width="250" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <buttonCell key="cell" type="check" title="Open browser links in the background." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="teD-cX-ebj">
+                    <buttonCell key="cell" type="check" title="Open browser links in the background" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="teD-cX-ebj">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
@@ -3031,7 +2960,7 @@
                 <button appearanceType="aqua" id="g7g-wa-Lin">
                     <rect key="frame" x="54" y="195" width="357" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Use &quot;x&quot; to indicate user with no mode set in user list." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="CTi-8F-Hm0">
+                    <buttonCell key="cell" type="check" title="Use &quot;x&quot; to indicate user with no mode set in user list" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="CTi-8F-Hm0">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
@@ -3042,14 +2971,14 @@
                 <button appearanceType="aqua" id="nZc-E3-Yfg">
                     <rect key="frame" x="54" y="223" width="201" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Darken main window colors." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="eXm-bv-mly">
+                    <buttonCell key="cell" type="check" title="Darken main window colors" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="eXm-bv-mly">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
                         <action selector="onChangedSidebarColorInversion:" target="-2" id="hOG-8T-L69"/>
-                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.Theme -&gt; Invert Sidebar Colors Preference Enabled" id="ZGV-NS-YAj"/>
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.InvertSidebarColors" id="owU-B6-Bzt"/>
+                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.Theme -&gt; Invert Sidebar Colors Preference Enabled" id="ZGV-NS-YAj"/>
                     </connections>
                 </button>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="ZWs-Sg-lWH">
@@ -3062,7 +2991,7 @@
                 <button appearanceType="aqua" id="qkl-on-l5t">
                     <rect key="frame" x="54" y="251" width="284" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Use large font for the server list and user list." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="kJA-n9-4Om">
+                    <buttonCell key="cell" type="check" title="Use large font for the server list and user list" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="kJA-n9-4Om">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
@@ -3074,7 +3003,7 @@
                 <button appearanceType="aqua" id="CbH-Wp-1Uz">
                     <rect key="frame" x="54" y="167" width="357" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Place known server staff members at top of user list." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="3Ge-78-jOo">
+                    <buttonCell key="cell" type="check" title="Place known server staff members at top of user list" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="3Ge-78-jOo">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
@@ -3130,7 +3059,7 @@
                 <button appearanceType="aqua" id="FKV-vg-lhM">
                     <rect key="frame" x="54" y="139" width="357" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Save the state of queries between restarts." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Xe6-MU-fhd">
+                    <buttonCell key="cell" type="check" title="Save the state of queries between restarts" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Xe6-MU-fhd">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
@@ -3149,7 +3078,7 @@
                 <button appearanceType="aqua" id="tKc-zC-6Gt">
                     <rect key="frame" x="53" y="298" width="338" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="           and          applies to all active connections." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="PkM-k2-Dgn">
+                    <buttonCell key="cell" type="check" title="           and          applies to all active connections" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="PkM-k2-Dgn">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
@@ -3171,7 +3100,7 @@
                 <button appearanceType="aqua" id="Y4Q-Ki-gfe">
                     <rect key="frame" x="53" y="242" width="265" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="/nick applies to all active connections." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="gih-NF-Noz">
+                    <buttonCell key="cell" type="check" title="/nick applies to all active connections" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="gih-NF-Noz">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
@@ -3182,7 +3111,7 @@
                 <button appearanceType="aqua" id="HZq-oo-s5C">
                     <rect key="frame" x="53" y="214" width="329" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="              only applies to the active server." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="QcP-gl-hx4">
+                    <buttonCell key="cell" type="check" title="              only applies to the active server" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="QcP-gl-hx4">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
@@ -3238,7 +3167,7 @@
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="cpW-OV-Hac">
                     <rect key="frame" x="111" y="272" width="194" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="applies to all active connections." id="utO-C5-ZBC">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="applies to all active connections" id="utO-C5-ZBC">
                         <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -3267,7 +3196,7 @@
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="Afd-Lo-RU4">
                     <rect key="frame" x="292" y="165" width="138" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="command." id="HNi-l7-SMY">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="command" id="HNi-l7-SMY">
                         <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -3424,7 +3353,7 @@
                 <button appearanceType="aqua" id="sai-Hx-ldL">
                     <rect key="frame" x="56" y="319" width="273" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Only share IRC servers between devices." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="tLh-7R-INw">
+                    <buttonCell key="cell" type="check" title="Only share IRC servers between devices" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="tLh-7R-INw">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
@@ -3616,7 +3545,7 @@
                 <button appearanceType="aqua" id="LDB-vI-gC1">
                     <rect key="frame" x="60" y="111" width="307" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Send passive file transfer requests by default." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="aCp-7c-Ils">
+                    <buttonCell key="cell" type="check" title="Send passive file transfer requests by default" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="aCp-7c-Ils">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -3644,7 +3573,7 @@
                 <button appearanceType="aqua" id="uSb-WR-Mph">
                     <rect key="frame" x="105" y="194" width="294" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Automatically handle highlight spam." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="9iB-R9-pX3">
+                    <buttonCell key="cell" type="check" title="Automatically handle highlight spam" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="9iB-R9-pX3">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
@@ -3655,7 +3584,7 @@
                 <button appearanceType="aqua" id="bX7-BN-4lf">
                     <rect key="frame" x="105" y="222" width="356" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Automatically handle dangerous Unicode characters." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="wTY-bZ-ZLP">
+                    <buttonCell key="cell" type="check" title="Automatically handle dangerous Unicode characters" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="wTY-bZ-ZLP">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
@@ -3664,9 +3593,9 @@
                     </connections>
                 </button>
                 <button appearanceType="aqua" id="qfG-DF-6ev">
-                    <rect key="frame" x="105" y="166" width="302" height="18"/>
+                    <rect key="frame" x="106" y="166" width="302" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Automatically reply to CTCP requests." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="MT3-bO-x65">
+                    <buttonCell key="cell" type="check" title="Automatically reply to CTCP requests" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="MT3-bO-x65">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
