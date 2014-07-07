@@ -101,7 +101,7 @@
                 <button id="122">
                     <rect key="frame" x="23" y="216" width="195" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <buttonCell key="cell" type="check" title="Join on connect." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="131">
+                    <buttonCell key="cell" type="check" title="Join on connect" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="131">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -153,7 +153,7 @@ DQ
                 <button id="112">
                     <rect key="frame" x="23" y="189" width="235" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Post notifications for channel." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="141">
+                    <buttonCell key="cell" type="check" title="Post notifications for channel" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="141">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -170,7 +170,7 @@ DQ
                 <button id="111">
                     <rect key="frame" x="23" y="108" width="168" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Disable highlights." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="142">
+                    <buttonCell key="cell" type="check" title="Disable highlights" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="142">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -178,7 +178,7 @@ DQ
                 <button id="279">
                     <rect key="frame" x="23" y="135" width="168" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Disable inline images." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="280">
+                    <buttonCell key="cell" type="check" title="Disable inline images" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="280">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -193,7 +193,7 @@ DQ
                 <button id="HBZ-KH-HBg">
                     <rect key="frame" x="23" y="135" width="168" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Show inline images." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="K3N-Px-fl5">
+                    <buttonCell key="cell" type="check" title="Show inline images" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="K3N-Px-fl5">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -204,7 +204,7 @@ DQ
                 <button id="281">
                     <rect key="frame" x="23" y="81" width="226" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Disable general event messages." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="282">
+                    <buttonCell key="cell" type="check" title="Disable general event messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="282">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -226,7 +226,7 @@ DQ
                 <button id="356">
                     <rect key="frame" x="23" y="162" width="267" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Show unread count in channel list." bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="357">
+                    <buttonCell key="cell" type="check" title="Show unread count in channel list" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="357">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
