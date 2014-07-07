@@ -123,12 +123,12 @@
     return [grabber prepareWithInvocationTarget:self];
 }
 
-+ (void)performBlockOnMainThread:(DDExtensionsWorkerBlock)block
++ (void)performBlockOnMainThread:(TXEmtpyBlockDataType)block
 {
 	TXPerformBlockSynchronouslyOnMainQueue(block);
 }
 
-- (void)performBlockOnMainThread:(DDExtensionsWorkerBlock)block
+- (void)performBlockOnMainThread:(TXEmtpyBlockDataType)block
 {
 	TXPerformBlockSynchronouslyOnMainQueue(block);
 }

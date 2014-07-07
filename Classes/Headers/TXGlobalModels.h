@@ -59,6 +59,11 @@ TEXTUAL_EXTERN NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOO
 
 TEXTUAL_EXTERN NSDateFormatter *TXSharedISOStandardDateFormatter(void);
 
+/* Performance testing. */
+/* Given a block, the block is executed. The time that was required to perform
+ that work is then printed to system console. */
+TEXTUAL_EXTERN void TXMeasurePerformanceOfBlock(NSString *description, TXEmtpyBlockDataType block);
+
 /* Grand Central Dispatch. */
 typedef enum TXPerformBlockOnDispatchQueueOperationType	: NSInteger {
 	TXPerformBlockOnDispatchQueueBarrierAsyncOperationType,

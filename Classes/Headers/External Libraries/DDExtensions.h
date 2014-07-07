@@ -24,8 +24,6 @@
 
 #import "TextualApplication.h"
 
-typedef void (^DDExtensionsWorkerBlock)(void);
-
 @interface NSObject (DDExtensions)
 - (id)iomt; // Invoke On Main Thread
 - (id)invokeOnThread:(NSThread *)thread;
@@ -33,7 +31,7 @@ typedef void (^DDExtensionsWorkerBlock)(void);
 - (id)invokeInBackgroundThread;
 - (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone;
 
-- (void)performBlockOnMainThread:(DDExtensionsWorkerBlock)block;
+- (void)performBlockOnMainThread:(TXEmtpyBlockDataType)block;
 
 + (id)iomt; // Invoke On Main Thread
 + (id)invokeOnThread:(NSThread *)thread;
@@ -41,5 +39,5 @@ typedef void (^DDExtensionsWorkerBlock)(void);
 + (id)invokeInBackgroundThread;
 + (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone;
 
-+ (void)performBlockOnMainThread:(DDExtensionsWorkerBlock)block;
++ (void)performBlockOnMainThread:(TXEmtpyBlockDataType)block;
 @end
