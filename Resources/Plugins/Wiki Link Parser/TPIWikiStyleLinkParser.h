@@ -38,16 +38,4 @@
 #import "TextualApplication.h"
 
 @interface TPIWikiStyleLinkParser : NSObject <THOPluginProtocol, NSTextDelegate, NSTableViewDataSource, NSTableViewDelegate>
-- (void)pluginLoadedIntoMemory;
-
-- (void)didReceiveServerInputOnClient:(IRCClient *)client
-					senderInformation:(NSDictionary *)senderDict
-				   messageInformation:(NSDictionary *)messageDict;
-
-- (NSArray *)subscribedServerInputCommands;
-
-- (id)interceptUserInput:(id)input command:(NSString *)command;
-
-- (NSString *)pluginPreferencesPaneMenuItemName;
-- (NSView *)pluginPreferencesPaneView;
 @end
