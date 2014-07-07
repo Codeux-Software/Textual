@@ -275,6 +275,26 @@ NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...)
 }
 
 #pragma mark -
+#pragma mark Performance 
+
+void TXMeasurePerformanceOfBlock(NSString *description, TXEmtpyBlockDataType block)
+{
+	if (block) {
+		CFAbsoluteTime _startTime = CFAbsoluteTimeGetCurrent();
+	
+		block();
+		
+		CFAbsoluteTime _endTime =  CFAbsoluteTimeGetCurrent();
+		
+		if (description) {
+			LogToConsole(@"Performed block (\"%@\") with measurement of %f seconds.", description, (_endTime - _startTime));
+		} else {
+			LogToConsole(@"Performed block with measurement of %f seconds.", (_endTime - _startTime));
+		}
+	}
+}
+
+#pragma mark -
 #pragma mark Grand Central Dispatch
 
 void TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(dispatch_block_t block)
