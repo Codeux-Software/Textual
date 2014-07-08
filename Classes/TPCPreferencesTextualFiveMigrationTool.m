@@ -65,7 +65,9 @@
 
 - (void)performMigration
 {
-	[[self invokeInBackgroundThread] _performMigration];
+	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
+		[[self invokeInBackgroundThread] _performMigration];
+	}
 }
 
 - (void)_performMigration
