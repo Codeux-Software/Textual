@@ -180,6 +180,14 @@
 }
 
 #pragma mark -
+#pragma mark KVC Properties
+
+- (id)userDefaultsValues
+{
+	return RZUserDefaultsValueProxy();
+}
+
+#pragma mark -
 #pragma mark Server List Factory
 
 - (NSString *)nameMatchesServerInList:(NSString *)name
