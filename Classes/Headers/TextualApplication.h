@@ -117,6 +117,7 @@
 	@class TPCPreferences;
 	@class TPCPreferencesCloudSync;
 	@class TPCPreferencesImportExport;
+	@class TPCPreferencesTextualFiveMigrationTool;
 	@class TPCPreferencesUserDefaults;
 	@class TPCPreferencesUserDefaultsObjectProxy;
 	@class TPCResourceManager;
@@ -292,6 +293,7 @@
 	#import "TPCPreferences.h"
 	#import "TPCPreferencesCloudSync.h"
 	#import "TPCPreferencesImportExport.h"
+	#import "TPCPreferencesTextualFiveMigrationTool.h"
 	#import "TPCPreferencesUserDefaults.h"
 	#import "TPCResourceManager.h"
 	#import "TPCThemeController.h"

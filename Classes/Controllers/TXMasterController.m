@@ -216,6 +216,9 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 	[[BITHockeyManager sharedHockeyManager] startManager];
 
+	/* Check migration status. */
+	[self.migrationTool performMigration];
+	
 	/* Update application status. */
 	[self.serverList updateBackgroundColor];
 	

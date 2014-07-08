@@ -1,4 +1,4 @@
-/* ********************************************************************* 
+/* *********************************************************************
        _____        _               _    ___ ____   ____
       |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
        | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
@@ -82,6 +82,7 @@
 @property (nonatomic, strong) TPCThemeController *themeControllerPntr;
 @property (nonatomic, uweak) IBOutlet TVCMainWindowTextView *inputTextField;
 @property (nonatomic, uweak) IBOutlet TVCMainWindow *mainWindow;
+@property (nonatomic, nweak) IBOutlet TPCPreferencesTextualFiveMigrationTool *migrationTool;
 
 /* self.inputHistory may return the inputHistory controller of the selected view
  instead of _globalInputHistory if Textual is configured to use channel specific

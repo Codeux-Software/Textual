@@ -190,6 +190,10 @@
 		4C36092218B500F100243B3A /* ErroneousTextFieldValueIndicator.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C36092018B500F100243B3A /* ErroneousTextFieldValueIndicator.tif */; };
 		4C36092418B50F8D00243B3A /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C36092318B50F8D00243B3A /* ProperlyFormattedTextFieldValueIndicator.tif */; };
 		4C36092518B50F8D00243B3A /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C36092318B50F8D00243B3A /* ProperlyFormattedTextFieldValueIndicator.tif */; };
+		4C39BFB2196C5D61005A9C20 /* applicationIconYosemite.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C39BFB1196C5D61005A9C20 /* applicationIconYosemite.icns */; };
+		4C39BFB3196C5D61005A9C20 /* applicationIconYosemite.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C39BFB1196C5D61005A9C20 /* applicationIconYosemite.icns */; };
+		4C39BFBD196C6166005A9C20 /* Download_on_the_App_Store_Badge_US-UK_135x40.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C39BFBC196C6166005A9C20 /* Download_on_the_App_Store_Badge_US-UK_135x40.png */; };
+		4C39BFBE196C6166005A9C20 /* Download_on_the_App_Store_Badge_US-UK_135x40.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C39BFBC196C6166005A9C20 /* Download_on_the_App_Store_Badge_US-UK_135x40.png */; };
 		4C3E69881789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E69861789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m */; };
 		4C3E69891789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E69861789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m */; };
 		4C3E698A1789A31E00B1CB6B /* TVCLogControllerOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E69871789A31E00B1CB6B /* TVCLogControllerOperationQueue.m */; };
@@ -858,6 +862,10 @@
 		4CDDF3481678C5DF00FE8684 /* encryptionLockIconDark@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3441678C5DF00FE8684 /* encryptionLockIconDark@2x.tif */; };
 		4CDDF3491678C5DF00FE8684 /* encryptionLockIconLight.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3451678C5DF00FE8684 /* encryptionLockIconLight.tif */; };
 		4CDDF34A1678C5DF00FE8684 /* encryptionLockIconLight@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3461678C5DF00FE8684 /* encryptionLockIconLight@2x.tif */; };
+		4CE13317196C70A800A3603C /* TPCPreferencesTextualFiveMigrationTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE13316196C70A800A3603C /* TPCPreferencesTextualFiveMigrationTool.m */; };
+		4CE13318196C70A800A3603C /* TPCPreferencesTextualFiveMigrationTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE13316196C70A800A3603C /* TPCPreferencesTextualFiveMigrationTool.m */; };
+		4CE1331E196C70C500A3603C /* TPCPreferencesTextualFiveMigrationTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE1331D196C70C500A3603C /* TPCPreferencesTextualFiveMigrationTool.h */; };
+		4CE1331F196C70C500A3603C /* TPCPreferencesTextualFiveMigrationTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE1331D196C70C500A3603C /* TPCPreferencesTextualFiveMigrationTool.h */; };
 		4CEA09BE1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CEA09C41875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */; };
 		4CEA09C51875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */; };
@@ -1080,6 +1088,8 @@
 		4C36091C18B4E8A800243B3A /* TVCTextFieldWithValueValidation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCTextFieldWithValueValidation.m; sourceTree = "<group>"; };
 		4C36092018B500F100243B3A /* ErroneousTextFieldValueIndicator.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ErroneousTextFieldValueIndicator.tif; sourceTree = "<group>"; };
 		4C36092318B50F8D00243B3A /* ProperlyFormattedTextFieldValueIndicator.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ProperlyFormattedTextFieldValueIndicator.tif; sourceTree = "<group>"; };
+		4C39BFB1196C5D61005A9C20 /* applicationIconYosemite.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = applicationIconYosemite.icns; path = Resources/Images/Application/Yosemite/applicationIconYosemite.icns; sourceTree = SOURCE_ROOT; };
+		4C39BFBC196C6166005A9C20 /* Download_on_the_App_Store_Badge_US-UK_135x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Download_on_the_App_Store_Badge_US-UK_135x40.png"; sourceTree = "<group>"; };
 		4C3E69861789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogControllerHistoricLogFile.m; sourceTree = "<group>"; };
 		4C3E69871789A31E00B1CB6B /* TVCLogControllerOperationQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogControllerOperationQueue.m; sourceTree = "<group>"; };
 		4C3E729617C39DD7008F2B08 /* THOUnicodeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THOUnicodeHelper.h; sourceTree = "<group>"; };
@@ -1476,6 +1486,8 @@
 		4CDDF3441678C5DF00FE8684 /* encryptionLockIconDark@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "encryptionLockIconDark@2x.tif"; sourceTree = "<group>"; };
 		4CDDF3451678C5DF00FE8684 /* encryptionLockIconLight.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = encryptionLockIconLight.tif; sourceTree = "<group>"; };
 		4CDDF3461678C5DF00FE8684 /* encryptionLockIconLight@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "encryptionLockIconLight@2x.tif"; sourceTree = "<group>"; };
+		4CE13316196C70A800A3603C /* TPCPreferencesTextualFiveMigrationTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCPreferencesTextualFiveMigrationTool.m; sourceTree = "<group>"; };
+		4CE1331D196C70C500A3603C /* TPCPreferencesTextualFiveMigrationTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPreferencesTextualFiveMigrationTool.h; sourceTree = "<group>"; };
 		4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogRemoteAddress.h; sourceTree = "<group>"; };
 		4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogRemoteAddress.m; path = "Dialogs/File Transfers/TDCFileTransferDialogRemoteAddress.m"; sourceTree = "<group>"; };
 		4CF8B40F16E631EF00F2A68F /* birthdayIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = birthdayIcon.icns; path = Resources/Images/Application/birthdayIcon.icns; sourceTree = SOURCE_ROOT; };
@@ -1616,6 +1628,15 @@
 			path = "Resources/Images/User Interface/Miscellaneous";
 			sourceTree = SOURCE_ROOT;
 		};
+		4C39BFBB196C6166005A9C20 /* App Store */ = {
+			isa = PBXGroup;
+			children = (
+				4C39BFBC196C6166005A9C20 /* Download_on_the_App_Store_Badge_US-UK_135x40.png */,
+			);
+			name = "App Store";
+			path = "Resources/Images/App Store";
+			sourceTree = SOURCE_ROOT;
+		};
 		4C3D0B7A1594909500567623 /* Migration Assistant */ = {
 			isa = PBXGroup;
 			children = (
@@ -1693,10 +1714,11 @@
 		4C46CC96158042DD00846B64 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				4C39BFBB196C6166005A9C20 /* App Store */,
 				4C46CC98158042FE00846B64 /* Application */,
 				4C46CC991580430700846B64 /* Dock Icon Badges */,
-				4C46CC9A1580431000846B64 /* IRC Formatting Colors */,
 				4CDDF3421678C5DF00FE8684 /* Encryption Badges */,
+				4C46CC9A1580431000846B64 /* IRC Formatting Colors */,
 				4C46CC9C1580432400846B64 /* Status Badges */,
 				4C63C6AD1592F0B0009F1635 /* Toolbar Icons */,
 				4C46CC9D1580432F00846B64 /* User Interface */,
@@ -1723,6 +1745,7 @@
 			isa = PBXGroup;
 			children = (
 				4CCF2EF7158047E9006FFE21 /* application.icns */,
+				4C39BFB1196C5D61005A9C20 /* applicationIconYosemite.icns */,
 				4CF8B40F16E631EF00F2A68F /* birthdayIcon.icns */,
 			);
 			name = Application;
@@ -2142,6 +2165,7 @@
 				4C8AF57E158E99520026668C /* TPCPreferences.h */,
 				4C17385D18197F800099EEC2 /* TPCPreferencesCloudSync.h */,
 				4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */,
+				4CE1331D196C70C500A3603C /* TPCPreferencesTextualFiveMigrationTool.h */,
 				4C6FB417196C3640006E9F41 /* TPCPreferencesUserDefaults.h */,
 				4C92FECA17A8C8F2003888F4 /* TPCResourceManager.h */,
 				4C8AF57F158E99520026668C /* TPCThemeController.h */,
@@ -2524,6 +2548,7 @@
 				4C8AF5EB158E99520026668C /* Theme */,
 				4C8AF5EE158E99520026668C /* TPCPreferences.m */,
 				4C6FB410196C3627006E9F41 /* TPCPreferencesUserDefaults.m */,
+				4CE13316196C70A800A3603C /* TPCPreferencesTextualFiveMigrationTool.m */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";
@@ -2693,6 +2718,7 @@
 				4C5BA42516F1302F00A96CA2 /* TDCPreferencesController.h in Headers */,
 				4C5BA42616F1302F00A96CA2 /* TDCPreferencesScriptWrapper.h in Headers */,
 				4C5BA42716F1302F00A96CA2 /* TDCPreferencesSoundWrapper.h in Headers */,
+				4CE1331F196C70C500A3603C /* TPCPreferencesTextualFiveMigrationTool.h in Headers */,
 				4C5BA42816F1302F00A96CA2 /* TDCServerSheet.h in Headers */,
 				4C5BA42916F1302F00A96CA2 /* TDCSheetBase.h in Headers */,
 				4C5BA42A16F1302F00A96CA2 /* TDCTopicSheet.h in Headers */,
@@ -2851,6 +2877,7 @@
 				4C8AF658158E99520026668C /* TDCPreferencesController.h in Headers */,
 				4C8AF659158E99520026668C /* TDCPreferencesScriptWrapper.h in Headers */,
 				4C8AF65A158E99520026668C /* TDCPreferencesSoundWrapper.h in Headers */,
+				4CE1331E196C70C500A3603C /* TPCPreferencesTextualFiveMigrationTool.h in Headers */,
 				4C8AF65B158E99520026668C /* TDCServerSheet.h in Headers */,
 				4C8AF65C158E99520026668C /* TDCSheetBase.h in Headers */,
 				4C8AF65D158E99520026668C /* TDCTopicSheet.h in Headers */,
@@ -3095,6 +3122,7 @@
 				4CCF2F1A1580481E006FFE21 /* FormattingColor_0.png in Resources */,
 				4CCF2F1B1580481E006FFE21 /* FormattingColor_1.png in Resources */,
 				4CCF2F1C1580481E006FFE21 /* FormattingColor_2.png in Resources */,
+				4C39BFB2196C5D61005A9C20 /* applicationIconYosemite.icns in Resources */,
 				4CCF2F1D1580481E006FFE21 /* FormattingColor_3.png in Resources */,
 				4CCF2F1E1580481E006FFE21 /* FormattingColor_4.png in Resources */,
 				4CCF2F1F1580481E006FFE21 /* FormattingColor_5.png in Resources */,
@@ -3117,6 +3145,7 @@
 				4C8AF72D158E9B330026668C /* TDChannelSheet.xib in Resources */,
 				4C8AF72E158E9B330026668C /* TDCHighlightListSheet.xib in Resources */,
 				4C8AF72F158E9B330026668C /* TDCInviteSheet.xib in Resources */,
+				4C39BFBD196C6166005A9C20 /* Download_on_the_App_Store_Badge_US-UK_135x40.png in Resources */,
 				4C8AF730158E9B330026668C /* TDCListDialog.xib in Resources */,
 				4C8AF731158E9B330026668C /* TDCModeSheet.xib in Resources */,
 				4C8AF732158E9B330026668C /* TDCNickSheet.xib in Resources */,
@@ -3199,6 +3228,7 @@
 				4C5BA37C16F1302F00A96CA2 /* FormattingColor_0.png in Resources */,
 				4C5BA37D16F1302F00A96CA2 /* FormattingColor_1.png in Resources */,
 				4C5BA37E16F1302F00A96CA2 /* FormattingColor_2.png in Resources */,
+				4C39BFB3196C5D61005A9C20 /* applicationIconYosemite.icns in Resources */,
 				4C5BA37F16F1302F00A96CA2 /* FormattingColor_3.png in Resources */,
 				4C5BA38016F1302F00A96CA2 /* FormattingColor_4.png in Resources */,
 				4C5BA38116F1302F00A96CA2 /* FormattingColor_5.png in Resources */,
@@ -3221,6 +3251,7 @@
 				4C5BA39316F1302F00A96CA2 /* TDChannelSheet.xib in Resources */,
 				4C5BA39416F1302F00A96CA2 /* TDCHighlightListSheet.xib in Resources */,
 				4C5BA39516F1302F00A96CA2 /* TDCInviteSheet.xib in Resources */,
+				4C39BFBE196C6166005A9C20 /* Download_on_the_App_Store_Badge_US-UK_135x40.png in Resources */,
 				4C5BA39616F1302F00A96CA2 /* TDCListDialog.xib in Resources */,
 				4C5BA39716F1302F00A96CA2 /* TDCModeSheet.xib in Resources */,
 				4C5BA39816F1302F00A96CA2 /* TDCNickSheet.xib in Resources */,
@@ -3365,6 +3396,7 @@
 				4C0444F616F1603B00EBB665 /* TXGlobalModels.m in Sources */,
 				4C0444F716F1603B00EBB665 /* TXMasterController.m in Sources */,
 				4C0444F816F1603B00EBB665 /* TXMenuController.m in Sources */,
+				4CE13318196C70A800A3603C /* TPCPreferencesTextualFiveMigrationTool.m in Sources */,
 				4C0444F916F1603B00EBB665 /* TDCPreferencesController.m in Sources */,
 				4C0444FA16F1603B00EBB665 /* TDCPreferencesScriptWrapper.m in Sources */,
 				4C0444FB16F1603B00EBB665 /* TDCPreferencesSoundWrapper.m in Sources */,
@@ -3505,6 +3537,7 @@
 				4CD63F3015C59C5B00E8DE92 /* NSScreenHelper.m in Sources */,
 				4C8AF609158E99520026668C /* TXGlobalModels.m in Sources */,
 				4C8AF60A158E99520026668C /* TXMasterController.m in Sources */,
+				4CE13317196C70A800A3603C /* TPCPreferencesTextualFiveMigrationTool.m in Sources */,
 				4C8AF60B158E99520026668C /* TXMenuController.m in Sources */,
 				4C8AF60C158E99520026668C /* TDCPreferencesController.m in Sources */,
 				4C8AF60D158E99520026668C /* TDCPreferencesScriptWrapper.m in Sources */,
