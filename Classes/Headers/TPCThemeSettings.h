@@ -38,15 +38,14 @@
 
 #import "TextualApplication.h"
 
-#define TXThemeDisabledIndentationOffset     -99
+#define TPCThemeSettingsDisabledIndentationOffset     -99
 
 @interface TPCThemeSettings : NSObject
 @property (nonatomic, assign) BOOL forceInvertSidebarColors;
-@property (nonatomic, strong) NSFont *channelViewFont;
-@property (nonatomic, strong) NSString *nicknameFormat;
-@property (nonatomic, strong) NSString *timestampFormat;
-@property (nonatomic, strong) NSColor *underlyingWindowColor;
-@property (nonatomic, strong) NSDictionary *languageLocalizations;
+@property (nonatomic, copy) NSFont *channelViewFont;
+@property (nonatomic, copy) NSString *nicknameFormat;
+@property (nonatomic, copy) NSString *timestampFormat;
+@property (nonatomic, copy) NSColor *underlyingWindowColor;
 @property (nonatomic, assign) double indentationOffset;
 
 - (void)reloadWithPath:(NSString *)path;

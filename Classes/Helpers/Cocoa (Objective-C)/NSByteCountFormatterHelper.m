@@ -44,8 +44,8 @@
 {
 	NSByteCountFormatter *formatter = [NSByteCountFormatter new];
 
-	formatter.zeroPadsFractionDigits = YES;
-
+	[formatter setZeroPadsFractionDigits:YES];
+	
 	return [formatter stringFromByteCount:byteCount];
 }
 

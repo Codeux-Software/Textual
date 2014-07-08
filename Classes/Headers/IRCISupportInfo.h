@@ -41,21 +41,15 @@
 #define IRCISupportRawSuffix				@"are supported by this server"
 
 @interface IRCISupportInfo : NSObject
-/* Technically speaking, all these properties should be readonly, but
- Textual does not enforce that too much since almost no plugins will
- be trying to override these. That is the way it is in most of the
- headers. We put trust in the idea that plugins will be basic bundles
- that do fine with our plugin API. */
-
-@property (nonatomic, strong) NSDictionary *channelModes;
+@property (nonatomic, copy) NSDictionary *channelModes;
 @property (nonatomic, assign) NSInteger nicknameLength;
 @property (nonatomic, assign) NSInteger modesCount;
-@property (nonatomic, strong) NSString *channelNamePrefixes;
-@property (nonatomic, strong) NSString *networkAddress;
-@property (nonatomic, strong) NSString *networkName;
-@property (nonatomic, strong) NSString *networkNameActual;
-@property (nonatomic, strong) NSDictionary *userModePrefixes;
-@property (nonatomic, readonly, strong) NSArray *cachedConfiguration;
+@property (nonatomic, copy) NSString *channelNamePrefixes;
+@property (nonatomic, copy) NSString *networkAddress;
+@property (nonatomic, copy) NSString *networkName;
+@property (nonatomic, copy) NSString *networkNameActual;
+@property (nonatomic, copy) NSDictionary *userModePrefixes;
+@property (nonatomic, copy) NSArray *cachedConfiguration;
 
 - (void)reset;
 

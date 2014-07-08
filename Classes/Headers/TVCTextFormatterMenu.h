@@ -37,14 +37,18 @@
 
 #import "TextualApplication.h"
 
-#define IRCTextFormatterMenuTag			53037
+#define TVCTextViewIRCFormattingMenuFormatterMenuTag			53037
 
-@interface TVCTextFormatterMenu : NSObject
-@property (nonatomic, uweak) TVCTextViewWithIRCFormatter *textField;
+/* There is only one instance of TVCTextViewIRCFormattingMenu per-window.
+ When enabled inside a sheet, the right click menu is available but the
+ keyboard shortcuts are reserved for main window access. */
+@interface TVCTextViewIRCFormattingMenu : NSObject <NSMenuDelegate>
 @property (nonatomic, nweak) IBOutlet NSMenuItem *formatterMenu;
 @property (nonatomic, nweak) IBOutlet NSMenu *foregroundColorMenu;
 @property (nonatomic, nweak) IBOutlet NSMenu *backgroundColorMenu;
 @property (nonatomic, assign) BOOL sheetOverrideEnabled;
+@property (nonatomic, assign) dispatch_queue_t formattingQueue;
+@property (nonatomic, uweak) TVCTextViewWithIRCFormatter *textField;
 
 - (void)enableSheetField:(TVCTextViewWithIRCFormatter *)field;
 - (void)enableWindowField:(TVCTextViewWithIRCFormatter *)field;

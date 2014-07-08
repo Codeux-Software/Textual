@@ -81,7 +81,7 @@
 												userInfo:nil
 												 repeats:self.reqeatTimer];
 
-	[[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSEventTrackingRunLoopMode];
+	[RZCurrentRunLoop() addTimer:self.timer forMode:NSEventTrackingRunLoopMode];
 }
 
 - (void)stop
@@ -92,7 +92,7 @@
 
 - (void)onTimer:(id)sender
 {
-	NSAssertReturn(self.timerIsActive);
+	NSAssertReturn([self timerIsActive]);
 
 	if (self.reqeatTimer == NO) {
 		[self stop];

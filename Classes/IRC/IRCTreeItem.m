@@ -51,7 +51,12 @@
     return nil;
 }
 
-- (IRCClient *)client
+- (IRCClient *)associatedClient
+{
+	return nil;
+}
+
+- (IRCChannel *)associatedChannel
 {
 	return nil;
 }
@@ -85,6 +90,7 @@
 {
 	self.dockUnreadCount = 0;
 	self.treeUnreadCount = 0;
+	
 	self.nicknameHighlightCount = 0;
 }
 
@@ -100,12 +106,12 @@
 
 - (NSString *)label
 {
-	return NSStringEmptyPlaceholder;
+	return nil;
 }
 
 - (NSString *)name
 {
-	return NSStringEmptyPlaceholder;
+	return nil;
 }
 
 @end

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A238x" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.21" systemVersion="14A261i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment version="1070" identifier="macosx"/>
+        <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.17"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.21"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCWelcomeSheet">
@@ -34,17 +34,8 @@
                     <userLayoutGuide location="113" affinity="minX"/>
                 </userGuides>
                 <subviews>
-                    <textField verticalHuggingPriority="750" id="145">
-                        <rect key="frame" x="36" y="275" width="71" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Nickname:" id="179">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <textField verticalHuggingPriority="750" id="146">
-                        <rect key="frame" x="113" y="272" width="141" height="22"/>
+                        <rect key="frame" x="113" y="273" width="141" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Guest" drawsBackground="YES" id="178">
                             <font key="font" metaFont="system"/>
@@ -65,13 +56,13 @@
                         </textFieldCell>
                     </textField>
                     <scrollView focusRingType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="149">
-                        <rect key="frame" x="113" y="153" width="233" height="112"/>
+                        <rect key="frame" x="113" y="154" width="233" height="112"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <clipView key="contentView" id="UXg-Uw-XfU">
                             <rect key="frame" x="1" y="1" width="231" height="110"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" id="173" customClass="TVCListView">
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" id="173" customClass="TVCBasicTableView">
                                     <rect key="frame" x="0.0" y="0.0" width="231" height="19"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -111,7 +102,7 @@
                         </scroller>
                     </scrollView>
                     <textField verticalHuggingPriority="750" id="150">
-                        <rect key="frame" x="42" y="246" width="67" height="17"/>
+                        <rect key="frame" x="42" y="247" width="67" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Channels:" id="170">
                             <font key="font" metaFont="system"/>
@@ -120,9 +111,9 @@
                         </textFieldCell>
                     </textField>
                     <button id="151">
-                        <rect key="frame" x="203" y="129" width="145" height="18"/>
+                        <rect key="frame" x="203" y="130" width="145" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Connect on launch." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="169">
+                        <buttonCell key="cell" type="check" title="Connect on launch" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="169">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -153,7 +144,7 @@ Gw
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="154">
-                        <rect key="frame" x="113" y="127" width="23" height="23"/>
+                        <rect key="frame" x="113" y="128" width="23" height="23"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="166">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -164,7 +155,7 @@ Gw
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="155">
-                        <rect key="frame" x="135" y="127" width="23" height="23"/>
+                        <rect key="frame" x="135" y="128" width="23" height="23"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="165">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -188,7 +179,7 @@ Gw
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" alignment="left" allowsEditingTextAttributes="YES" id="162">
                             <font key="font" metaFont="cellTitle"/>
-                            <string key="title">Textual provides many features to help make IRC a more enjoyable experience.    First, we need to add a server or you can chose to connect to our                          .</string>
+                            <string key="title">Textual provides many features to help make IRC a more enjoyable experience.    To get started, add a server or you can chose to connect to our                           .</string>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -201,7 +192,7 @@ Gw
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <textField verticalHuggingPriority="750" id="160">
-                        <rect key="frame" x="110" y="76" width="265" height="39"/>
+                        <rect key="frame" x="110" y="77" width="265" height="39"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" alignment="left" id="161">
                             <font key="font" metaFont="system" size="10"/>
@@ -231,7 +222,7 @@ Gw
                         </connections>
                     </comboBox>
                     <scrollView borderType="none" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="225">
-                        <rect key="frame" x="250" y="355" width="113" height="14"/>
+                        <rect key="frame" x="248" y="355" width="113" height="14"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Bsg-eV-iEN">
                             <rect key="frame" x="0.0" y="0.0" width="113" height="14"/>
@@ -295,6 +286,15 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="164"/>
                     </imageView>
+                    <textField verticalHuggingPriority="750" id="145">
+                        <rect key="frame" x="37" y="275" width="71" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Nickname:" id="179">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
             <connections>

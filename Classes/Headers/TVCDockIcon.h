@@ -38,6 +38,8 @@
 #import "TextualApplication.h"
 
 @interface TVCDockIcon : NSObject
++ (void)updateDockIcon;
+
 + (void)resetCachedCount;
 
 + (void)drawWithoutCount;

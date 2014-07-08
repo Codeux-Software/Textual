@@ -33,7 +33,7 @@
 					
 					{{#inlineMediaAvailable}}
 						{{#inlineMediaArray}}
-							<a href="{{{anchorLink}}}" onclick="return Textual.toggleInlineImage('{{anchorInlineImageUniqueID}}')"><img src="{{{imageURL}}}" class="inlineimage" id="inlineImage-{{anchorInlineImageUniqueID}}" style="display: none; max-width: {{preferredMaximumWidth}}px;" title="Hide image by shift clicking." /></a>
+							<a href="{{{anchorLink}}}" onclick="return Textual.toggleInlineImage('{{anchorInlineImageUniqueID}}')"><img src="{{{imageURL}}}" class="inlineimage" id="inlineImage-{{anchorInlineImageUniqueID}}" style="display: none; min-width: 10px; max-width: {{preferredMaximumWidth}}px;" title="Hide image by shift clicking." /></a>
 						{{/inlineMediaArray}}
 					{{/inlineMediaAvailable}}
 			</span>

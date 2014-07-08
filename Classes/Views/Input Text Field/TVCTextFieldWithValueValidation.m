@@ -38,12 +38,12 @@
 #import "TextualApplication.h"
 
 @interface TVCTextFieldWithValueValidation ()
-/* Maintain cached value so that the drawing does not call 
+/* Maintain cached value so that the drawing does not call
  the validaton block every time that it is called. */
 @property (nonatomic, assign) BOOL cachedValidValue;
 @end
 
-@implementation TVCTextFieldWithValueValidation;
+@implementation TVCTextFieldWithValueValidation
 
 #pragma mark -
 #pragma mark Public API
@@ -72,15 +72,20 @@
 
 - (void)textDidChange:(NSNotification *)notification
 {
+	/* Validate new value. */
 	[self performValidation];
+	
 	[self informCallbackTextDidChange];
 }
 
 - (void)setStringValue:(NSString *)aString
 {
+	/* Set string value. */
 	[super setStringValue:aString];
-
+	
+	/* Validate new value. */
 	[self performValidation];
+	
 	[self informCallbackTextDidChange];
 }
 
@@ -104,7 +109,7 @@
 	} else {
 		self.cachedValidValue = (self.stringValueIsInvalidOnEmpty == NO);
 	}
-
+	
 	[self setNeedsDisplay:YES];
 }
 
@@ -119,7 +124,7 @@
 {
 	/* Update size. */
 	aRect.size.width -= 12;
-
+	
 	/* Return frame. */
 	return aRect;
 }
@@ -131,33 +136,35 @@
 
 - (NSRect)erroneousValueBadgeIconRectInParentRect:(NSRect)aRect
 {
+	/* Look at all those magic numbers… */
 	NSInteger rightEdge = (NSMaxX(aRect) - 22);
-
+	
 	return NSMakeRect(rightEdge, 4, 15, 15);
-}
-
-- (BOOL)isEditing
-{
-	return NSDissimilarObjects([[self parentField] currentEditor], nil);
 }
 
 - (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
 	/* Draw a background color. */
 	if ([self parentValueIsValid] == NO) {
+		/* Define frame. */
 		NSRect backgroundFrame = cellFrame;
-
+		
 		backgroundFrame.origin.x += 1;
 		backgroundFrame.origin.y += 1;
-
+		
 		backgroundFrame.size.width -= 2;
 		backgroundFrame.size.height -= 2;
-
-		[[self erroneousValueBackgroundColor] set];
-
-		[[NSBezierPath bezierPathWithRect:backgroundFrame] fill];
+		
+		/* Define color and fill it. */
+		NSColor *backgroundColor = [self erroneousValueBackgroundColor];
+		
+		NSBezierPath *backgroundFill = [NSBezierPath bezierPathWithRect:backgroundFrame];
+		
+		[backgroundColor set];
+		
+		[backgroundFill fill];
 	}
-
+	
 	/* Draw rest of text field. */
 	[super drawInteriorWithFrame:cellFrame inView:controlView];
 }
@@ -166,10 +173,10 @@
 {
 	/* Draw to super. */
 	[super drawWithFrame:cellFrame inView:controlView];
-
+	
 	/* Draw status image badge. */
 	NSImage *statusImage;
-
+	
 	if ([self parentValueIsValid] == NO) {
 		statusImage = [NSImage imageNamed:@"ErroneousTextFieldValueIndicator"];
 	} else {
@@ -177,10 +184,10 @@
 			statusImage = [NSImage imageNamed:@"ProperlyFormattedTextFieldValueIndicator"];
 		}
 	}
-
+	
 	if (statusImage) {
 		NSRect statusImageDrawRect = [self erroneousValueBadgeIconRectInParentRect:cellFrame];
-
+		
 		[statusImage drawInRect:statusImageDrawRect
 					   fromRect:NSZeroRect
 					  operation:NSCompositeSourceOver
@@ -192,22 +199,23 @@
 
 - (void)editWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(id)anObject event:(NSEvent *)theEvent
 {
-	[super editWithFrame:[self correctedDrawingRect:aRect] inView:controlView editor:textObj delegate:anObject event:theEvent];
+	NSRect fixedRect = [self correctedDrawingRect:aRect];
+	
+	[super editWithFrame:fixedRect inView:controlView editor:textObj delegate:anObject event:theEvent];
 }
 
 - (void)selectWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(id)anObject start:(NSInteger)selStart length:(NSInteger)selLength
 {
-	[super selectWithFrame:[self correctedDrawingRect:aRect] inView:controlView editor:textObj delegate:anObject start:selStart length:selLength];
+	NSRect fixedRect = [self correctedDrawingRect:aRect];
+	
+	[super selectWithFrame:fixedRect inView:controlView editor:textObj delegate:anObject start:selStart length:selLength];
 }
 
 - (NSRect)drawingRectForBounds:(NSRect)theRect
 {
-	return [self correctedDrawingRect:[super drawingRectForBounds:theRect]];
-}
-
-- (BOOL)parentsAllowsEmptyValue
-{
-	return ([[self parentField] stringValueIsInvalidOnEmpty] == NO);
+	NSRect fixedRect = [super drawingRectForBounds:theRect];
+	
+	return [self correctedDrawingRect:fixedRect];
 }
 
 - (BOOL)parentValueIsEmpty

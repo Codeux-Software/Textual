@@ -40,6 +40,11 @@
 
 @implementation NSWindow (TXWindowHelper)
 
+- (BOOL)runningInHighResolutionMode
+{
+	return [[self screen] runningInHighResolutionMode];
+}
+
 - (void)exactlyCenterWindow
 {
 	NSScreen *screen = [NSScreen mainScreen];
@@ -47,11 +52,13 @@
 	if (screen) {
 		NSRect rect = [screen visibleFrame];
 		
+		NSRect size = [self frame];
+		
 		NSPoint p = NSMakePoint((rect.origin.x + (rect.size.width / 2)), 
 								(rect.origin.y + (rect.size.height / 2)));
 		
-		NSInteger w = self.frame.size.width;
-		NSInteger h = self.frame.size.height;
+		NSInteger w = size.size.width;
+		NSInteger h = size.size.height;
 		
 		rect = NSMakeRect((p.x - (w / 2)), (p.y - (h / 2)), w, h);
 		
@@ -89,7 +96,7 @@
 
 - (BOOL)isInFullscreenMode
 {
-	return ((self.styleMask & NSFullScreenWindowMask) == NSFullScreenWindowMask);
+	return (([self styleMask] & NSFullScreenWindowMask) == NSFullScreenWindowMask);
 }
 
 @end

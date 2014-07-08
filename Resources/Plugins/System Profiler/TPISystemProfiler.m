@@ -72,7 +72,7 @@
 
 - (NSString *)pluginPreferencesPaneMenuItemName
 {
-	return TPILS(@"BasicLanguage[1000]");
+	return TPILocalizedString(@"BasicLanguage[1000]");
 }
 
 #pragma mark -
@@ -85,37 +85,44 @@
 	@"runcount", @"loadavg", @"sysmem", @"sfont"];
 }
 
+- (void)sendMessage:(NSString *)message onClient:(IRCClient *)client toChannel:(IRCChannel *)channel
+{
+	[client sendText:[NSAttributedString emptyStringWithBase:message]
+			 command:IRCPrivateCommandIndex("privmsg")
+			 channel:channel];
+}
+
 - (void)userInputCommandInvokedOnClient:(IRCClient *)client
 						  commandString:(NSString *)commandString
 						  messageString:(NSString *)messageString
 {
-	NSString *channelName = [[[self worldController] selectedChannel] name];
+	IRCChannel *channel = [mainWindow() selectedChannel];
 	
-	if ([channelName length] >= 1) {
+	if (channel) {
 		if ([commandString isEqualToString:@"SYSINFO"]) {
-			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemInformation]];
+			[self sendMessage:[TPI_SP_CompiledOutput systemInformation] onClient:client toChannel:channel];
 		} else if ([commandString isEqualToString:@"MEMORY"]) {
-			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationMemoryUsage]];
+			[self sendMessage:[TPI_SP_CompiledOutput applicationMemoryUsage] onClient:client toChannel:channel];
 		} else if ([commandString isEqualToString:@"UPTIME"]) {
-			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationAndSystemUptime]];
+			[self sendMessage:[TPI_SP_CompiledOutput applicationAndSystemUptime] onClient:client toChannel:channel];
 		} else if ([commandString isEqualToString:@"NETSTATS"]) {
-			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemNetworkInformation]];
+			[self sendMessage:[TPI_SP_CompiledOutput systemNetworkInformation] onClient:client toChannel:channel];
 		} else if ([commandString isEqualToString:@"MSGCOUNT"]) {
-			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationBandwidthStatistics]];
+			[self sendMessage:[TPI_SP_CompiledOutput applicationBandwidthStatistics] onClient:client toChannel:channel];
 		} else if ([commandString isEqualToString:@"DISKSPACE"]) {
-			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemDiskspaceInformation]];
+			[self sendMessage:[TPI_SP_CompiledOutput systemDiskspaceInformation] onClient:client toChannel:channel];
 		} else if ([commandString isEqualToString:@"STYLE"]) {
-			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationActiveStyle]];
+			[self sendMessage:[TPI_SP_CompiledOutput applicationActiveStyle] onClient:client toChannel:channel];
 		} else if ([commandString isEqualToString:@"SCREENS"]) {
-			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemDisplayInformation]];
+			[self sendMessage:[TPI_SP_CompiledOutput systemDisplayInformation] onClient:client toChannel:channel];
 		} else if ([commandString isEqualToString:@"RUNCOUNT"]) {
-			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationRuntimeStatistics]];
+			[self sendMessage:[TPI_SP_CompiledOutput applicationRuntimeStatistics] onClient:client toChannel:channel];
 		} else if ([commandString isEqualToString:@"LOADAVG"]) {
-			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemCPULoadInformation]];
+			[self sendMessage:[TPI_SP_CompiledOutput systemCPULoadInformation] onClient:client toChannel:channel];
 		} else if ([commandString isEqualToString:@"SYSMEM"]) {
-			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput systemMemoryInformation]];
+			[self sendMessage:[TPI_SP_CompiledOutput systemMemoryInformation] onClient:client toChannel:channel];
 		} else if ([commandString isEqualToString:@"SFONT"]) {
-			[client sendPrivmsgToSelectedChannel:[TPI_SP_CompiledOutput applicationConfiguredFontInformation]];
+			[self sendMessage:[TPI_SP_CompiledOutput applicationConfiguredFontInformation] onClient:client toChannel:channel];
 		}
 	}
 }

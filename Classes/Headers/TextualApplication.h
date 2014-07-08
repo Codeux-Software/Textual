@@ -48,9 +48,6 @@
 	#import <BlowfishEncryption/BlowfishEncryption.h>
 	#import <SystemInformation/SystemInformation.h>
 	#import <AutoHyperlinks/AutoHyperlinks.h>
-	#import <HockeySDK/HockeySDK.h>
-
-	#import "StaticDefinitions.h"
 
 	/* Class Forwarders. */
 
@@ -60,6 +57,7 @@
 	@class IRCChannelMode;
 	@class IRCClient;
 	@class IRCClientConfig;
+	@class IRCCommandIndex;
 	@class IRCConnection;
 	@class IRCExtras;
 	@class IRCISupportInfo;
@@ -70,7 +68,6 @@
 	@class IRCTreeItem;
 	@class IRCUser;
 	@class IRCWorld;
-	@class NSMenuExtendedHelperItem;
 	@class TDCAboutPanel;
 	@class TDCAddressBookSheet;
 	@class TDCFileTransferDialog;
@@ -105,7 +102,7 @@
 	@class TLOKeyEventHandler;
 	@class TLOLanguagePreferences;
 	@class TLOLinkParser;
-	@class TLONickCompletionStatus;
+	@class TLONicknameCompletionStatus;
 	@class TLOPopupPrompts;
 	@class TLORegularExpression;
 	@class TLOSoundPlayer;
@@ -113,18 +110,23 @@
 	@class TLOTimer;
 	@class TLOTimerCommand;
 	@class TLOpenLink;
+	@class TPCApplicationInfo;
+	@class TPCPathInfo;
 	@class TPCPreferences;
 	@class TPCPreferencesCloudSync;
 	@class TPCPreferencesImportExport;
+	@class TPCPreferencesUserDefaults;
+	@class TPCPreferencesUserDefaultsObjectProxy;
 	@class TPCResourceManager;
 	@class TPCThemeController;
 	@class TPCThemeSettings;
+	@class TVCAnimatedContentNavigationOutlineView;
+	@class TVCBasicTableView;
 	@class TVCDockIcon;
 	@class TVCImageURLParser;
 	@class TVCImageURLoader;
 	@class TVCInputPromptDialog;
 	@class TVCListSeparatorCell;
-	@class TVCListView;
 	@class TVCLogController;
 	@class TVCLogControllerHistoricLogFile;
 	@class TVCLogControllerOperationQueue;
@@ -135,8 +137,8 @@
 	@class TVCLogView;
 	@class TVCMainWindow;
 	@class TVCMainWindowLoadingScreenView;
-	@class TVCMainWindowSegmentedCell;
-	@class TVCMainWindowSegmentedControl;
+	@class TVCMainWindowSegmentedController;
+	@class TVCMainWindowSegmentedControllerCell;
 	@class TVCMainWindowSplitView;
 	@class TVCMainWindowTextView;
 	@class TVCMainWindowTextViewBackground;
@@ -148,18 +150,32 @@
 	@class TVCMemberListUserInfoPopover;
 	@class TVCQueuedCertificateTrustPanel;
 	@class TVCServerList; // This has a lot of classes.
+	@class TVCServerLisCellTextFieldInterior;
 	@class TVCServerListCell;
-	@class TVCServerListCellBadge;
 	@class TVCServerListCellChildItem;
 	@class TVCServerListCellGroupItem;
+	@class TVCServerListDarkYosemiteUserInterface;
+	@class TVCServerListLightYosemiteUserInterface;
+	@class TVCServerListMavericksUserInterface;
 	@class TVCServerListRowCell;
 	@class TVCTextFieldWithValueValidation;
 	@class TVCTextFieldWithValueValidationCell;
-	@class TVCTextFormatterMenu;
+	@class TVCTextViewIRCFormattingMenu;
 	@class TVCTextViewWithIRCFormatter;
 	@class TVCWebViewAutoScroll;
 	@class TXMasterController;
 	@class TXMenuController;
+	@class TXSharedApplication;
+	@class TXUserInterface;
+
+	/* Static Defeinitions. */
+
+	#import "StaticDefinitions.h"
+
+	/* Import frameworks based on defines. */
+	#ifndef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_DISABLED
+		#import <HockeySDK/HockeySDK.h>
+	#endif
 
 	/* 3rd Party Extensions. */
 
@@ -198,6 +214,7 @@
 	#import "IRCClient.h"
 	#import "IRCClientConfig.h"
 	#import "IRCColorFormat.h"
+	#import "IRCCommandIndex.h"
 	#import "IRCConnection.h"
 	#import "IRCConnectionSocket.h"
 	#import "IRCExtras.h"
@@ -209,6 +226,7 @@
 	#import "IRCTreeItem.h"
 	#import "IRCUser.h"
 	#import "IRCWorld.h"
+	#import "IRCWorldCloudExtension.h"
 
 	/* Framework Extensions (Helpers). */
 
@@ -232,7 +250,6 @@
 	#import "NSSplitViewHelper.h"
 	#import "NSStringHelper.h"
 	#import "NSTextFieldHelper.h"
-	#import "NSUserDefaultsHelper.h"
 	#import "NSWindowHelper.h"
 
 	/* Dialogs. */
@@ -276,7 +293,7 @@
 	#import "TLOKeyEventHandler.h"
 	#import "TLOLanguagePreferences.h"
 	#import "TLOLinkParser.h"
-	#import "TLONickCompletionStatus.h"
+	#import "TLONicknameCompletionStatus.h"
 	#import "TLOPopupPrompts.h"
 	#import "TLORegularExpression.h"
 	#import "TLOSoundPlayer.h"
@@ -287,22 +304,27 @@
 
 	/* Preferences. */
 
+	#import "TPCApplicationInfo.h"
+	#import "TPCPathInfo.h"
 	#import "TPCPreferences.h"
 	#import "TPCPreferencesCloudSync.h"
+	#import "TPCPreferencesCloudSyncExtension.h"
 	#import "TPCPreferencesImportExport.h"
+	#import "TPCPreferencesUserDefaults.h"
 	#import "TPCResourceManager.h"
 	#import "TPCThemeController.h"
 	#import "TPCThemeSettings.h"
 
 	/* View Controllers. */
 
+	#import "TVCAnimatedContentNavigationOutlineView.h"
 	#import "TVCDockIcon.h"
 	#import "TVCImageURLParser.h"
 	#import "TVCImageURLoader.h"
 	#import "TVCInputPromptDialog.h"
 	#import "TVCMainWindowTextView.h"
 	#import "TVCListSeparatorCell.h"
-	#import "TVCListView.h"
+	#import "TVCBasicTableView.h"
 	#import "TVCLogController.h"
 	#import "TVCLogControllerHistoricLogFile.h"
 	#import "TVCLogControllerOperationQueue.h"
@@ -323,7 +345,6 @@
 	#import "TVCQueuedCertificateTrustPanel.h"
 	#import "TVCServerList.h"
 	#import "TVCServerListCell.h"
-	#import "TVCServerListCellBadge.h"
 	#import "TVCTextFieldWithValueValidation.h"
 	#import "TVCTextViewWithIRCFormatter.h"
 	#import "TVCTextFormatterMenu.h"
@@ -334,6 +355,8 @@
 	#import "TXGlobalModels.h"
 	#import "TXMasterController.h"
 	#import "TXMenuController.h"
+	#import "TXSharedApplication.h"
+	#import "TXUserInterface.h"
 #endif
 
 /* @end */

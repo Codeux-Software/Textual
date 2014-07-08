@@ -40,16 +40,41 @@
 
 #define _colorNumberMax				 30
 
+@interface IRCUser ()
+@property (nonatomic, nweak) IRCClient *associatedClient;
+@end
+
 @implementation IRCUser
 
 - (id)init
 {
 	if ((self = [super init])) {
 		self.colorNumber = -1;
+		
 		self.lastWeightFade = CFAbsoluteTimeGetCurrent();
 	}
 	
 	return self;
+}
+
+- (id)initWithUser:(IRCUser *)otherUser
+{
+	if ((self = [super init])) {
+		[self migrate:otherUser];
+	}
+	
+	return self;
+}
+
++ (id)newUserOnClient:(IRCClient *)client withNickname:(NSString *)nickname
+{
+	IRCUser *newUser = [IRCUser new];
+	
+	newUser.associatedClient = client;
+	
+	newUser.nickname = nickname;
+	
+	return newUser;
 }
 
 - (NSString *)hostmask
@@ -69,13 +94,20 @@
 		return [NSString stringWithFormat:@"%@!*@*", self.nickname];
 	} else {
 		switch ([TPCPreferences banFormat]) {
-			case TXHostmaskBanWHNINFormat: {
+			case TXHostmaskBanWHNINFormat:
+			{
 				return [NSString stringWithFormat:@"*!*@%@", self.address];
-			} case TXHostmaskBanWHAINNFormat: {
+			}
+			case TXHostmaskBanWHAINNFormat:
+			{
 				return [NSString stringWithFormat:@"*!%@@%@", self.username, self.address];
-			} case TXHostmaskBanWHANNIFormat: {
+			}
+			case TXHostmaskBanWHANNIFormat:
+			{
 				return [NSString stringWithFormat:@"%@!*%@", self.nickname, self.address];
-			} case TXHostmaskBanExactFormat: {
+			}
+			case TXHostmaskBanExactFormat:
+			{
 				return [NSString stringWithFormat:@"%@!%@@%@", self.nickname, self.username, self.address];
 			}
 		}
@@ -86,25 +118,27 @@
 
 - (NSString *)mark
 {
+	IRCISupportInfo *supportInfo = self.associatedClient.supportInfo;
+	
 	if (self.q) {
 		if (self.binircd_O) {
-			return [self.supportInfo userModePrefixSymbol:@"O"]; // binircd-1.0.0
+			return [supportInfo userModePrefixSymbol:@"O"]; // binircd-1.0.0
 		} else {
-			return [self.supportInfo userModePrefixSymbol:@"q"];
+			return [supportInfo userModePrefixSymbol:@"q"];
 		}
 	} else if (self.a) {
-		return [self.supportInfo userModePrefixSymbol:@"a"];
+		return [supportInfo userModePrefixSymbol:@"a"];
 	} else if (self.o) {
-		return [self.supportInfo userModePrefixSymbol:@"o"];
+		return [supportInfo userModePrefixSymbol:@"o"];
 	} else if (self.h) {
-		return [self.supportInfo userModePrefixSymbol:@"h"];
+		return [supportInfo userModePrefixSymbol:@"h"];
 	} else if (self.v) {
-		return [self.supportInfo userModePrefixSymbol:@"v"];
+		return [supportInfo userModePrefixSymbol:@"v"];
 	} else if (self.isCop) {
 		if (self.InspIRCd_y_lower) {
-			return [self.supportInfo userModePrefixSymbol:@"y"]; // InspIRCd-2.0
+			return [supportInfo userModePrefixSymbol:@"y"]; // InspIRCd-2.0
 		} else if (self.InspIRCd_y_upper) {
-			return [self.supportInfo userModePrefixSymbol:@"Y"]; // InspIRCd-2.0
+			return [supportInfo userModePrefixSymbol:@"Y"]; // InspIRCd-2.0
 		}
 	}
 
@@ -124,9 +158,9 @@
 - (NSInteger)colorNumber
 {
 	if (_colorNumber < 0) {
-		NSString *hashName = [self.nickname.lowercaseString sha1];
+		NSString *hashName = [self.lowercaseNickname sha1];
 
-		self.colorNumber = ([hashName hash] % _colorNumberMax);
+		_colorNumber = ([hashName hash] % _colorNumberMax);
 	}
 	
 	return _colorNumber;
@@ -134,14 +168,14 @@
 
 - (BOOL)isEqual:(id)other
 {
-	NSAssertReturnR([other isKindOfClass:[IRCUser class]], NO);
+	NSObjectIsKindOfClassAssertReturn(other, IRCUser, NO);
 	
 	return [self.nickname isEqualIgnoringCase:[other nickname]];
 }
 
 - (NSUInteger)hash
 {
-	return [[self.nickname lowercaseString] hash];
+	return [self.lowercaseNickname hash];
 }
 
 - (NSString *)lowercaseNickname
@@ -160,21 +194,21 @@
 {
 	CGFloat change = ((self.outgoingWeight == 0) ? 20 : 5);
 
-	_outgoingWeight += change;
+	self.outgoingWeight += change;
 }
 
 - (void)incomingConversation
 {
 	CGFloat change = ((self.incomingWeight == 0) ? 100 : 20);
 
-	_incomingWeight += change;
+	self.incomingWeight += change;
 }
 
 - (void)conversation
 {
 	CGFloat change = ((self.incomingWeight == 0) ? 4 : 1);
 
-	_incomingWeight += change;
+	self.incomingWeight += change;
 }
 
 - (void)decayConversation
@@ -187,19 +221,19 @@
 		self.lastWeightFade = now;
 
 		if (self.incomingWeight > 0) {
-			_incomingWeight /= pow(2, minutes);
+			self.incomingWeight /= pow(2, minutes);
 		}
 
 		if (self.outgoingWeight > 0) {
-			_outgoingWeight /= pow(2, minutes);
+			self.outgoingWeight /= pow(2, minutes);
 		}
 	}
 }
 
 - (NSComparisonResult)compareUsingWeights:(IRCUser *)other
 {
-	CGFloat local = [self totalWeight];
-	CGFloat remte = [other totalWeight];
+	CGFloat local = self.totalWeight;
+	CGFloat remte = other.totalWeight;
 
 	if (local > remte) {
 		return NSOrderedAscending;
@@ -231,22 +265,21 @@
 	 a and NOT IRCop next
 	 and so on
 	 */
-
-	BOOL favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
-
-	id objc1 = @([self channelRank]);
-	id objc2 = @([other channelRank]);
 	
-	NSComparisonResult rank = NSInvertedComparisonResult([objc1 compare:objc2]);
-
-	if (favorIRCop && self.isCop && BOOLReverseValue(other.isCop)) {
+	NSComparisonResult normalRank = [@([self channelRank]) compare:@([other channelRank])];
+	
+	NSComparisonResult invertedRank = NSInvertedComparisonResult(normalRank);
+	
+	BOOL favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
+	
+	if (favorIRCop && self.isCop && other.isCop == NO) {
 		return NSOrderedAscending;
-	} else if (favorIRCop && BOOLReverseValue(self.isCop) && other.isCop) {
+	} else if (favorIRCop && self.isCop == NO && other.isCop) {
 		return NSOrderedDescending;
-	} else if (rank == NSOrderedSame) {
+	} else if (invertedRank == NSOrderedSame) {
 		return [self.nickname caseInsensitiveCompare:other.nickname];
 	} else {
-		return rank;
+		return invertedRank;
 	}
 }
 
@@ -271,51 +304,46 @@
 
 + (NSComparator)nicknameLengthComparator
 {
-	return [^(id obj1, id obj2){
-		IRCUser *s1 = obj1;
-		IRCUser *s2 = obj2;
-
-		return ([s1.nickname length] <= [s2.nickname length]);
+	return [^(IRCUser *obj1, IRCUser *obj2){
+		return ([[obj1 nickname] length] <=
+				[[obj2 nickname] length]);
 	} copy];
 }
 
 - (void)migrate:(IRCUser *)from
 {
 	/* Lazy-man copy. */
-	self.nickname = from.nickname;
-	self.username = from.username;
-	self.address = from.address;
+	self.associatedClient = [from associatedClient];
+	
+	self.nickname = [from nickname];
+	self.username = [from username];
+	self.address = [from address];
 
-	self.colorNumber = from.colorNumber;
-	self.supportInfo = from.supportInfo;
+	self.colorNumber = [from colorNumber];
 
-	self.q = from.q;
-	self.a = from.a;
-	self.o = from.o;
-	self.h = from.h;
-	self.v = from.v;
+	self.q = [from q];
+	self.a = [from a];
+	self.o = [from o];
+	self.h = [from h];
+	self.v = [from v];
 
-	self.isCop = from.isCop;
-	self.isAway = from.isAway;
+	self.isCop = [from isCop];
+	self.isAway = [from isAway];
 
-	self.InspIRCd_y_upper = from.InspIRCd_y_upper;
-	self.InspIRCd_y_lower = from.InspIRCd_y_lower;
+	self.InspIRCd_y_upper = [from InspIRCd_y_upper];
+	self.InspIRCd_y_lower = [from InspIRCd_y_lower];
 
-	self.binircd_O = from.binircd_O;
-}
-
-- (id)copyWithZone:(NSZone *)zone
-{
-	IRCUser *newUser = [[IRCUser allocWithZone:zone] init];
-
-	[newUser migrate:self];
-
-	return newUser;
+	self.binircd_O = [from binircd_O];
 }
 
 - (NSString *)description
 {
 	return [NSString stringWithFormat:@"<IRCUser %@%@>", self.mark, self.nickname];
+}
+
+- (id)copyWithZone:(NSZone *)zone
+{
+	return [[IRCUser allocWithZone:zone] initWithUser:self];
 }
 
 @end

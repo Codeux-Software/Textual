@@ -53,8 +53,8 @@
 @interface TLOFileLogger : NSObject
 @property (nonatomic, nweak) IRCClient *client;
 @property (nonatomic, nweak) IRCChannel *channel;
-@property (nonatomic, strong) NSURL *filename;
-@property (nonatomic, strong) NSURL *fileWritePath;
+@property (nonatomic, copy) NSURL *filename;
+@property (nonatomic, copy) NSURL *fileWritePath;
 @property (nonatomic, strong) NSFileHandle *file;
 
 - (void)open;

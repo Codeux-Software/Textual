@@ -86,8 +86,8 @@
 	NSString *clientDispatchQueueName = [NSString stringWithFormat:@"DCC-SocketDispatchQueue-%@", uniqueID];
 	NSString *clientSocketQueueName = [NSString stringWithFormat:@"DCC-SocketReadWriteQueue-%@", uniqueID];
 
-	_serverDispatchQueue = dispatch_queue_create([clientDispatchQueueName UTF8String], NULL);
-	_serverSocketQueue = dispatch_queue_create([clientSocketQueueName UTF8String], NULL);
+	self.serverDispatchQueue = dispatch_queue_create([clientDispatchQueueName UTF8String], DISPATCH_QUEUE_SERIAL);
+	self.serverSocketQueue = dispatch_queue_create([clientSocketQueueName UTF8String], DISPATCH_QUEUE_SERIAL);
 }
 
 - (void)destroyDispatchQueues
@@ -95,13 +95,13 @@
 	if (self.serverSocketQueue) {
 		dispatch_release(self.serverSocketQueue);
 
-		_serverSocketQueue = nil;
+		self.serverSocketQueue = nil;
 	}
 
 	if (self.serverDispatchQueue) {
 		dispatch_release(self.serverDispatchQueue);
 
-		_serverDispatchQueue = nil;
+		self.serverDispatchQueue = nil;
 	}
 }
 
@@ -185,7 +185,7 @@
 	self.transferStatus = TDCFileTransferDialogTransferConnectingStatus;
 	
 	/* Try to establish connection. */
-	_connectionToRemoteServer = [GCDAsyncSocket socketWithDelegate:self
+	self.connectionToRemoteServer = [GCDAsyncSocket socketWithDelegate:self
 													 delegateQueue:self.serverDispatchQueue
 													   socketQueue:self.serverSocketQueue];
 	
@@ -251,7 +251,7 @@
 - (BOOL)tryToOpenConnectionAsServer
 {
 	/* Create the server and try opening it. */
-	_listeningServer = [GCDAsyncSocket socketWithDelegate:self
+	self.listeningServer = [GCDAsyncSocket socketWithDelegate:self
 											delegateQueue:self.serverDispatchQueue
 											  socketQueue:self.serverSocketQueue];
 
@@ -265,8 +265,8 @@
 		[RZNotificationCenter() addObserver:self selector:@selector(portMapperDidStartWork:) name:TCMPortMapperDidStartWorkNotification object:pm];
 		[RZNotificationCenter() addObserver:self selector:@selector(portMapperDidFinishWork:) name:TCMPortMapperDidFinishWorkNotification object:pm];
 
-		[pm addPortMapping:[TCMPortMapping portMappingWithLocalPort:(int)self.transferPort
-												desiredExternalPort:(int)self.transferPort
+		[pm addPortMapping:[TCMPortMapping portMappingWithLocalPort:(int)_transferPort
+												desiredExternalPort:(int)_transferPort
 												  transportProtocol:TCMPortMappingTransportProtocolTCP
 														   userInfo:nil]];
 
@@ -507,7 +507,7 @@
 		}
 
 		/* Send to user. */
-		TXFSLongInt filesize = [fileAttrs longLongForKey:NSFileSize];
+		TXUnsignedLongLong filesize = [fileAttrs longLongForKey:NSFileSize];
 
 		/* Determine which type of message is sent… */
 		if ([self isReversed]) {
@@ -534,17 +534,17 @@
 	/* Destroy sockets. */
     if (self.listeningServer) {
 	   [self.listeningServer disconnect];
-			_listeningServer = nil;
+			self.listeningServer = nil;
 	}
 
 	if (self.listeningServerConnectedClient) {
 	   [self.listeningServerConnectedClient disconnect];
-			_listeningServerConnectedClient = nil;
+			self.listeningServerConnectedClient = nil;
 	}
 
 	if (self.connectionToRemoteServer) {
 		[self.connectionToRemoteServer disconnect];
-			 _connectionToRemoteServer = nil;
+			 self.connectionToRemoteServer = nil;
 	}
 
 	[self destroyDispatchQueues];
@@ -591,12 +591,14 @@
 	NSAssertReturn((self.transferStatus == TDCFileTransferDialogTransferReceivingStatus) ||
 				   (self.transferStatus == TDCFileTransferDialogTransferSendingStatus));
 	
-	dispatch_async(self.serverDispatchQueue, ^{
+	TXPerformBlockSynchronouslyOnQueue(self.serverDispatchQueue, ^{
 		/* Update record. */
-		[self.speedRecords addObject:@(self.currentRecord)];
-		
-		if ([self.speedRecords count] > RECORDS_LEN) {
-			[self.speedRecords removeObjectAtIndex:0];
+		@synchronized(self.speedRecords) {
+			[self.speedRecords addObject:@(self.currentRecord)];
+			
+			if ([self.speedRecords count] > RECORDS_LEN) {
+				[self.speedRecords removeObjectAtIndex:0];
+			}
 		}
 		
 		self.currentRecord = 0;
@@ -643,7 +645,7 @@
 	PointerIsEmptyAssert(self.fileHandle);
 	
 	[self.fileHandle closeFile];
-	 self.fileHandle = nil;
+		 self.fileHandle = nil;
 }
 
 #pragma mark -
@@ -661,7 +663,7 @@
 	}
 
 	/* Maintain reference to client. */
-	_listeningServerConnectedClient = newSocket;
+	self.listeningServerConnectedClient = newSocket;
 
 	/* Update status. */
 	if ([self isReversed]) {
@@ -783,7 +785,7 @@
 	NSAssertReturn([self isSender]);
 
 	/* Update pending sends. */
-	_sendQueueSize -= 1;
+	self.sendQueueSize -= 1;
 
 	/* Update transfer information. */
 	if (self.processedFilesize >= self.totalFilesize) {
@@ -839,7 +841,7 @@
 		self.processedFilesize += [data length];
 		self.currentRecord += [data length];
 
-		_sendQueueSize += 1;
+		self.sendQueueSize += 1;
 
 		[[self writeSocket] writeData:data withTimeout:30 tag:0];
     }
@@ -904,9 +906,11 @@
 	
 	self.errorMessageToken = nil;
 
-	_sendQueueSize = 0;
+	self.sendQueueSize = 0;
 	
-	[self.speedRecords removeAllObjects];
+	@synchronized(self.speedRecords) {
+		[self.speedRecords removeAllObjects];
+	}
 }
 
 @end

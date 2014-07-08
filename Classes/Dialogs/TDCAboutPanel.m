@@ -50,11 +50,11 @@
 
 - (void)show
 {
-	NSString *bundleVersion = [TPCPreferences textualInfoPlist][@"CFBundleVersion"];
+	NSString *bundleVersion = [TPCApplicationInfo applicationInfoPlist][@"CFBundleVersion"];
 	
-	[self.versionInfoField setStringValue:TXTFLS(@"TDCAboutPanel[1000]", bundleVersion)];
+	[self.versionInfoField setStringValue:TXTLS(@"TDCAboutPanel[1000]", bundleVersion)];
 
-	[self.window restoreWindowStateForClass:self.class];
+	[self.window restoreWindowStateForClass:[self class]];
 	
 	[self.window makeKeyAndOrderFront:nil];
 }
@@ -68,7 +68,7 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	[self.window saveWindowStateForClass:self.class];
+	[self.window saveWindowStateForClass:[self class]];
 	
 	if ([self.delegate respondsToSelector:@selector(aboutPanelWillClose:)]) {
 		[self.delegate aboutPanelWillClose:self];

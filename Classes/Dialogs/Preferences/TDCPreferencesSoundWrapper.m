@@ -58,7 +58,7 @@
 
 - (NSString *)displayName
 {
-	return [TPCPreferences titleForEvent:self.eventType];
+	return [sharedGrowlController() titleForEvent:self.eventType];
 }
 
 - (NSString *)alertSound
@@ -123,4 +123,5 @@
 {
     [TPCPreferences setBounceDockIcon:value forEvent:self.eventType];
 }
+
 @end

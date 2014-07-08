@@ -40,6 +40,16 @@
 
 @interface TDCListDialog ()
 @property (nonatomic, assign) BOOL waitingForReload;
+@property (nonatomic, nweak) IBOutlet NSButton *updateButton;
+@property (nonatomic, nweak) IBOutlet NSSearchField *searchField;
+@property (nonatomic, nweak) IBOutlet NSTextField *networkNameField;
+@property (nonatomic, nweak) IBOutlet TVCBasicTableView *channelListTable;
+@property (nonatomic, strong) NSMutableArray *unfilteredList;
+@property (nonatomic, strong) NSMutableArray *filteredList;
+@property (nonatomic, readonly) NSMutableArray *activeList; // Proxies one of the two above.
+@property (nonatomic, readonly) NSInteger listCount; // Proxies one of the two above.
+@property (nonatomic, assign) NSComparisonResult sortOrder;
+@property (nonatomic, assign) NSInteger sortKey;
 @end
 
 @implementation TDCListDialog
@@ -67,29 +77,33 @@
 
 - (void)show
 {
-    [self.networkNameField setStringValue:TXTFLS(@"TDCListDialog[1000]", self.client.altNetworkName)];
+	IRCClient *client = [worldController() findClientById:self.clientID];
 
-	[self.window restoreWindowStateForClass:self.class];
+    [self.networkNameField setStringValue:TXTLS(@"TDCListDialog[1000]", [client altNetworkName])];
+
+	[self.window restoreWindowStateForClass:[self class]];
 	
 	[self.window makeKeyAndOrderFront:nil];
 }
 
 - (void)close
 {
+	[NSObject cancelPreviousPerformRequestsWithTarget:self];
+
 	[self.window close];
 }
 
 - (void)releaseTableViewDataSourceBeforeClosure
 {
-	self.channelListTable.delegate = nil;
-	self.channelListTable.dataSource = nil;
+	[self.channelListTable setDelegate:nil];
+	[self.channelListTable setDataSource:nil];
 }
 
 - (void)clear
 {
 	[self.unfilteredList removeAllObjects];
 
-	self.filteredList = nil;
+	 self.filteredList = nil;
 
 	[self reloadTable];
 }
@@ -97,31 +111,31 @@
 - (void)addChannel:(NSString *)channel count:(NSInteger)count topic:(NSString *)topic
 {
 	if ([channel isChannelName]) {
-		NSArray *item = @[channel, @(count), topic, [topic attributedStringWithIRCFormatting:TXDefaultListViewControllerFont]];
+		NSArray *item = @[channel, @(count), topic, [topic attributedStringWithIRCFormatting:TXPreferredGlobalTableViewFont]];
 
-		NSString *filter = self.searchField.stringValue;
+		NSString *filter = [self.searchField stringValue];
 
-		if (NSObjectIsNotEmpty(filter)) {
-			if (PointerIsEmpty(self.filteredList)) {
+		if ([filter length] > 0) {
+			if (self.filteredList == nil) {
 				self.filteredList = [NSMutableArray new];
 			}
 
 			NSInteger tr = [topic stringPositionIgnoringCase:filter];
 			NSInteger cr = [channel stringPositionIgnoringCase:filter];
 
-			if (tr >= 0 || cr >= 0) {
-				[self sortedInsert:item inArray:self.filteredList];
+			if (tr > -1 || cr > -1) {
+				[self.filteredList insertSortedObject:item usingComparator:[self sortComparator]];
 			}
 		}
 
-		[self sortedInsert:item inArray:self.unfilteredList];
+		[self.unfilteredList insertSortedObject:item usingComparator:[self sortComparator]];
 
         /* Reload table instantly until we reach at least 200 channels. 
          At that point we begin reloading every 2.0 seconds. For networks
          large as freenode with 12,000 channels. This is much better than 
          a reload for each. */
         
-        if (self.unfilteredList.count < 200) {
+        if (self.listCount < 200) {
             [self reloadTable];
         } else {
             if (self.waitingForReload == NO) {
@@ -139,77 +153,48 @@
 
 	NSString *titleCount;
 
-	NSString *count1 = TXFormattedNumber(self.unfilteredList.count);
-	NSString *count2 = TXFormattedNumber(self.filteredList.count);
+	NSString *count1 = TXFormattedNumber([self.unfilteredList count]);
+	NSString *count2 = TXFormattedNumber([self.filteredList count]);
+	
+	NSString *filterText = [self.searchField stringValue];
 
-	if (NSObjectIsNotEmpty(self.searchField.stringValue) && NSDissimilarObjects(self.unfilteredList.count, self.filteredList.count)) {
-		titleCount = TXTFLS(@"TDCListDialog[1003]", count1, count2);
+	if ([filterText length] > 0 && [count1 isEqual:count2] == NO) {
+		titleCount = TXTLS(@"TDCListDialog[1003]", count1, count2);
 	} else {
-		titleCount = TXTFLS(@"TDCListDialog[1002]", count1);
+		titleCount = TXTLS(@"TDCListDialog[1002]", count1);
 	}
 
-	[self.window setTitle:TXTFLS(@"TDCListDialog[1001]", titleCount)];
+	[self.window setTitle:TXTLS(@"TDCListDialog[1001]", titleCount)];
 
 	[self.channelListTable reloadData];
 }
 
-static NSInteger compareItems(NSArray *self, NSArray *other, void *context)
+- (NSComparator)sortComparator
 {
-	TDCListDialog *dialog = (__bridge TDCListDialog *)context;
-
-	NSInteger key = dialog.sortKey;
-
-	NSComparisonResult order = dialog.sortOrder;
-
-	NSString *mine = [self safeObjectAtIndex:key];
-	NSString *others = [other safeObjectAtIndex:key];
-
-	NSComparisonResult result;
-
-	if (key == 1) {
-		result = [mine compare:others];
-	} else {
-		result = [mine caseInsensitiveCompare:others];
-	}
-
-	if (order == NSOrderedDescending) {
-		return (-result);
-	} else {
-		return result;
-	}
+	return [^(NSArray *obj1, NSArray *obj2)
+	{
+		NSString *str1 = obj1[self.sortKey];
+		NSString *str2 = obj2[self.sortKey];
+		
+		NSComparisonResult result;
+		
+		if (self.sortKey == 1) {
+			result = [str1 compare:str2];
+		} else {
+			result = [str1 caseInsensitiveCompare:str2];
+		}
+		
+		if (self.sortOrder == NSOrderedDescending) {
+			return (NSComparisonResult) -(result);
+		} else {
+			return (NSComparisonResult)   result;
+		}
+	} copy];
 }
 
 - (void)sort
 {
-	[self.unfilteredList sortUsingFunction:compareItems context:(__bridge void *)(self)];
-}
-
-- (void)sortedInsert:(NSArray *)item inArray:(NSMutableArray *)ary
-{
-	const NSInteger THRESHOLD = 5;
-
-	NSInteger left = 0;
-	NSInteger right = ary.count;
-
-	while ((right - left) > THRESHOLD) {
-		NSInteger pivot = ((left + right) / 2);
-
-		if (compareItems([ary safeObjectAtIndex:pivot], item, (__bridge void *)(self)) == NSOrderedDescending) {
-			right = pivot;
-		} else {
-			left = pivot;
-		}
-	}
-
-	for (NSInteger i = left; i < right; ++i) {
-		if (compareItems([ary safeObjectAtIndex:i], item, (__bridge void *)(self)) == NSOrderedDescending) {
-			[ary safeInsertObject:item atIndex:i];
-
-			return;
-		}
-	}
-
-	[ary safeInsertObject:item atIndex:right];
+	[self.unfilteredList sortUsingComparator:[self sortComparator]];
 }
 
 #pragma mark -
@@ -217,18 +202,16 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void *context)
 
 - (void)onClose:(id)sender
 {
-	[self.window close];
+	[self close];
 }
 
 - (void)onUpdate:(id)sender
 {
-    [self.unfilteredList removeAllObjects];
+	[self clear];
 
 	if ([self.delegate respondsToSelector:@selector(listDialogOnUpdate:)]) {
 		[self.delegate listDialogOnUpdate:self];
 	}
-
-    [self reloadTable];
 }
 
 /* onJoinChannels: handles join for selected items. */
@@ -240,19 +223,15 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void *context)
 /* onJoin: is a legacy method. It handles join on double click. */
 - (void)onJoin:(id)sender
 {
-	NSArray *list = self.unfilteredList;
-
-	if (self.filteredList) {
-		list = self.filteredList;
-	}
-
 	NSIndexSet *indexes = [self.channelListTable selectedRowIndexes];
-
-	for (NSUInteger i = indexes.firstIndex; NSDissimilarObjects(i, NSNotFound); i = [indexes indexGreaterThanIndex:i]) {
-		NSArray *item = [list safeObjectAtIndex:i];
-
+	
+	for (NSNumber *index in [indexes arrayFromIndexSet]) {
+		NSUInteger i = [index unsignedIntegerValue];
+		
+		NSArray *item = self.activeList[i];
+		
 		if ([self.delegate respondsToSelector:@selector(listDialogOnJoin:channel:)]) {
-			[self.delegate listDialogOnJoin:self channel:[item safeObjectAtIndex:0]];
+			[self.delegate listDialogOnJoin:self channel:item[0]];
 		}
 	}
 }
@@ -261,24 +240,24 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void *context)
 {
 	self.filteredList = nil;
 
-	NSString *filter = self.searchField.stringValue;
+	NSString *filter = [self.searchField stringValue];
 
-	if (NSObjectIsNotEmpty(filter)) {
+	if ([filter length] > 0) {
 		NSMutableArray *ary = [NSMutableArray new];
 
 		for (NSArray *item in self.unfilteredList) {
-			NSString *channel = [item safeObjectAtIndex:0];
-			NSString *topicva = [item safeObjectAtIndex:2];
+			NSString *channel = item[0];
+			NSString *topicva = item[2];
 
 			NSInteger tr = [topicva stringPositionIgnoringCase:filter];
 			NSInteger cr = [channel stringPositionIgnoringCase:filter];
 
 			if (tr >= 0 || cr >= 0) {
-				[ary safeAddObject:item];
+				[ary addObject:item];
 			}
 		}
 
-		self.filteredList = ary;
+		self.filteredList = [ary mutableCopy];
 	}
 
 	[self reloadTable];
@@ -287,31 +266,39 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void *context)
 #pragma mark -
 #pragma mark NSTableView Delegate
 
+- (NSInteger)listCount
+{
+	if (	    self.filteredList) {
+		return [self.filteredList count];
+	} else {
+		return [self.unfilteredList count];
+	}
+}
+
+- (NSArray *)activeList
+{
+	if (	   self.filteredList) {
+		return self.filteredList;
+	} else {
+		return self.unfilteredList;
+	}
+}
+
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-	if (self.filteredList) {
-		return self.filteredList.count;
-	}
-
-	return self.unfilteredList.count;
+	return self.listCount;
 }
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	NSArray *list = self.unfilteredList;
+	NSArray *item = self.activeList[row];
 
-    if (self.filteredList) {
-        list = self.filteredList;
-    }
-
-	NSArray *item = [list safeObjectAtIndex:row];
-
-	if ([column.identifier isEqualToString:@"chname"]) {
-		return [item safeObjectAtIndex:0];
-	} else if ([column.identifier isEqualToString:@"count"]) {
-		return [item safeObjectAtIndex:1];
+	if ([[column identifier] isEqualToString:@"chname"]) {
+		return item[0];
+	} else if ([[column identifier] isEqualToString:@"count"]) {
+		return item[1];
 	} else {
-		return [item safeObjectAtIndex:3];
+		return item[3];
 	}
 }
 
@@ -319,16 +306,16 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void *context)
 {
 	NSInteger i = 0;
 
-	if ([column.identifier isEqualToString:@"chname"]) {
+	if ([[column identifier] isEqualToString:@"chname"]) {
 		i = 0;
-	} else if ([column.identifier isEqualToString:@"count"]) {
+	} else if ([[column identifier] isEqualToString:@"count"]) {
 		i = 1;
 	} else {
 		i = 2;
 	}
 
 	if (self.sortKey == i) {
-		self.sortOrder = - self.sortOrder;
+		self.sortOrder = -(self.sortOrder);
 	} else {
 		self.sortKey = i;
 
@@ -355,7 +342,7 @@ static NSInteger compareItems(NSArray *self, NSArray *other, void *context)
 {
 	[self releaseTableViewDataSourceBeforeClosure];
 
-	[self.window saveWindowStateForClass:self.class];
+	[self.window saveWindowStateForClass:[self class]];
 	
 	if ([self.delegate respondsToSelector:@selector(listDialogWillClose:)]) {
 		[self.delegate listDialogWillClose:self];

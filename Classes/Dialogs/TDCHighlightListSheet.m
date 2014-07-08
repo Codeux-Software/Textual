@@ -40,7 +40,7 @@
 #define _rowHeightMultiplier		17
 
 @interface TDCHighlightListSheet ()
-@property (nonatomic, readonly, nweak) NSMutableArray *highlightList;
+@property (nonatomic, copy) NSArray *highlightList;
 @end
 
 @implementation TDCHighlightListSheet
@@ -56,26 +56,29 @@
 
 - (void)releaseTableViewDataSourceBeforeSheetClosure
 {
-	self.highlightListTable.delegate = nil;
-	self.highlightListTable.dataSource = nil;
+	[self.highlightListTable setDelegate:nil];
+	[self.highlightListTable setDataSource:nil];
 }
 
 - (void)show
 {
-	IRCClient *currentNetwork = self.worldController.selectedClient;
+	IRCClient *currentNetwork = [worldController() findClientById:self.clientID];
 
 	NSString *network = [currentNetwork altNetworkName];
 
-	self.headerTitleField.stringValue = [NSString stringWithFormat:self.headerTitleField.stringValue, network];
+	[self.headerTitleField setStringValue:[NSString stringWithFormat:[self.headerTitleField stringValue], network]];
 
-	self.highlightListTable.selectionHighlightStyle = NSTableViewSelectionHighlightStyleNone;
+	[self.highlightListTable setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
 	
     [self startSheet];
+	[self reloadTable];
 }
 
 - (void)onClearList:(id)sender
 {
-    [self.highlightList removeAllObjects];
+	IRCClient *currentNetwork = [worldController() findClientById:self.clientID];
+	
+	[currentNetwork setCachedHighlights:@[]];
 
     [self reloadTable];
 }
@@ -83,30 +86,31 @@
 #pragma mark -
 #pragma mark NSTableView Delegate
 
-- (NSMutableArray *)highlightList
-{
-	return self.worldController.selectedClient.highlights;
-}
-
 - (void)reloadTable
 {
+	IRCClient *currentNetwork = [worldController() findClientById:self.clientID];
+
+	[self setHighlightList:[currentNetwork cachedHighlights]];
+	
     [self.highlightListTable reloadData];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-    return self.highlightList.count;
+	return [self.highlightList count];
 }
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
 {
+	/* See the addHighlight… in IRCClieht.m for a description of the format
+	 of highlight entries for a client. */
 	NSObjectIsEmptyAssertReturn(self.highlightList, _rowHeightMultiplier);
 	
 	NSRect columnRect = [tableView rectOfColumn:1];
 	
-	NSArray *data = [self.highlightList safeObjectAtIndex:row];
+	NSArray *data = [self.highlightList objectAtIndex:row];
 
-	NSAttributedString *baseString = [data safeObjectAtIndex:2];
+	NSAttributedString *baseString = [data objectAtIndex:2];
 
 	NSInteger totalLines = [baseString wrappedLineCount:columnRect.size.width
 										 lineMultiplier:_rowHeightMultiplier
@@ -117,16 +121,18 @@
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    NSArray *item = [self.highlightList safeObjectAtIndex:row];
+	NSArray *item = self.highlightList[row];
 	
-    if ([column.identifier isEqualToString:@"chan"]) {
-		return [item safeObjectAtIndex:0];
-	} else if ([column.identifier isEqualToString:@"time"]) {
+    if ([[column identifier] isEqualToString:@"chan"]) {
+		return item[0];
+	} else if ([[column identifier] isEqualToString:@"time"]) {
 		NSInteger timeInterval = [item integerAtIndex:1];
 		
-		return TXTFLS(@"BasicLanguage[1216]", TXSpecialReadableTime([NSDate secondsSinceUnixTimestamp:timeInterval], YES, nil));
+		NSString *timestring = TXHumanReadableTimeInterval([NSDate secondsSinceUnixTimestamp:timeInterval], YES, 0);
+		
+		return BLS(1216, timestring);
     } else {
-        return [item safeObjectAtIndex:2];
+		return item[2];
     }
 }
 

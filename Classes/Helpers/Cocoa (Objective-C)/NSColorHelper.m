@@ -89,18 +89,16 @@
 
 + (id)defineUserInterfaceItem:(id)normalItem invertedItem:(id)invertedItem
 {
-	return [NSColor defineUserInterfaceItem:normalItem invertedItem:invertedItem withOperator:YES];
+	TEXTUAL_DEPRECATED_ASSERT;
+	
+	return nil;
 }
 
 + (id)defineUserInterfaceItem:(id)normalItem invertedItem:(id)invertedItem withOperator:(BOOL)specialCondition
 {
-	BOOL invertedColors = [TPCPreferences invertSidebarColors];
-
-	if (invertedColors && specialCondition) {
-		return invertedItem;
-	} else {
-		return normalItem;
-	}
+	TEXTUAL_DEPRECATED_ASSERT;
+	
+	return nil;
 }
 
 #pragma mark -

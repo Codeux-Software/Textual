@@ -39,19 +39,12 @@
 #import "TextualApplication.h"
 
 @interface TVCLogController : NSObject
-@property (nonatomic, nweak) IRCClient *client;
-@property (nonatomic, nweak) IRCChannel *channel;
-@property (nonatomic, strong) TVCLogView *view;
-@property (nonatomic, strong) TVCLogPolicy *policy;
-@property (nonatomic, strong) TVCLogScriptEventSink *sink;
-@property (nonatomic, strong) TVCLogControllerHistoricLogFile *historicLogFile;
-@property (nonatomic, strong) TVCWebViewAutoScroll *autoScroller;
+@property (nonatomic, nweak) IRCClient *associatedClient;
+@property (nonatomic, nweak) IRCChannel *associatedChannel;
+@property (nonatomic, strong) TVCLogView *webView;
+@property (nonatomic, strong) TVCLogPolicy *webViewPolicy;
 @property (nonatomic, assign) BOOL isLoaded;
-@property (nonatomic, assign) BOOL needsLimitNumberOfLines;
-@property (nonatomic, assign) NSInteger activeLineCount;
 @property (nonatomic, assign) NSInteger maximumLineCount;
-@property (nonatomic, strong) NSString *lastVisitedHighlight;
-@property (nonatomic, strong) NSMutableArray *highlightedLineNumbers;
 
 @property (assign) BOOL reloadingBacklog;
 @property (assign) BOOL reloadingHistory;

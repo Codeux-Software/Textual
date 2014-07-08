@@ -39,9 +39,9 @@
 #import "TextualApplication.h"
 
 @interface TVCLogPolicy : NSObject
-@property (nonatomic, strong) NSString *anchorURL;
-@property (nonatomic, strong) NSString *channelName;
-@property (nonatomic, strong) NSString *nickname;
+@property (nonatomic, copy) NSString *anchorURL;
+@property (nonatomic, copy) NSString *channelName;
+@property (nonatomic, copy) NSString *nickname;
 
 - (void)channelDoubleClicked;
 - (void)nicknameDoubleClicked;

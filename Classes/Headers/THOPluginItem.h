@@ -38,18 +38,20 @@
 #import "TextualApplication.h"
 
 @interface THOPluginItem : NSObject
-@property (nonatomic, readonly, strong) id primaryClass;
-@property (nonatomic, readonly, assign) BOOL hasPreferencePaneView;
-@property (nonatomic, readonly, assign) BOOL supportsUserInputDataInterception;
-@property (nonatomic, readonly, assign) BOOL supportsServerInputDataInterception;
-@property (nonatomic, readonly, assign) BOOL supportsInlineMediaManipulation;
-@property (nonatomic, readonly, assign) BOOL supportsNewMessagePostedEventNotifications;
-@property (nonatomic, readonly, assign) BOOL supportsWillRenderMessageEventNotifications;
-@property (nonatomic, readonly, strong) NSArray *supportedUserInputCommands;
-@property (nonatomic, readonly, strong) NSArray *supportedServerInputCommands;
-@property (nonatomic, readonly, strong) NSDictionary *outputSuppressionRules;
+@property (nonatomic, strong) id primaryClass;
+@property (nonatomic, assign) BOOL hasPreferencePaneView;
+@property (nonatomic, assign) BOOL supportsUserInputDataInterception;
+@property (nonatomic, assign) BOOL supportsServerInputDataInterception;
+@property (nonatomic, assign) BOOL supportsInlineMediaManipulation;
+@property (nonatomic, assign) BOOL supportsNewMessagePostedEventNotifications;
+@property (nonatomic, assign) BOOL supportsWillRenderMessageEventNotifications;
+@property (nonatomic, copy) NSArray *supportedUserInputCommands;
+@property (nonatomic, copy) NSArray *supportedServerInputCommands;
+@property (nonatomic, copy) NSDictionary *outputSuppressionRules;
 
 - (void)loadBundle:(NSBundle *)bundle;
+
+- (void)sendDealloc;
 
 - (NSView *)pluginPreferenesPaneView;
 - (NSString *)pluginPreferencesPaneMenuItemName;

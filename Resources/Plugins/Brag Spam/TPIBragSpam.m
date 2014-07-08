@@ -49,7 +49,7 @@
 		valueKey = [NSString stringWithFormat:@"BasicLanguage[%ld][0]", valueToken];
 	}
 
-	*resultString = [*resultString stringByAppendingString:TPIFLS(valueKey, valueActual)];
+	*resultString = [*resultString stringByAppendingString:TPILocalizedString(valueKey, valueActual)];
 }
 
 - (void)userInputCommandInvokedOnClient:(IRCClient *)client
@@ -57,7 +57,7 @@
 						  messageString:(NSString *)messageString
 {
 	if ([commandString isEqualToString:@"BRAG"]) {
-		IRCChannel *selectedChannel = [[self worldController] selectedChannel];
+		IRCChannel *selectedChannel = [mainWindow() selectedChannel];
 
 		NSAssertReturn([selectedChannel isChannel]);
 		
@@ -69,7 +69,7 @@
 		NSInteger networkCount   = 0;
 		NSInteger powerOverCount = 0;
 		
-		for (IRCClient *c in [[self worldController] clients]) {
+		for (IRCClient *c in [worldController() clientList]) {
 			if ([c isConnected] == NO) {
 				continue;
 			}
@@ -82,7 +82,7 @@
 			
 			NSMutableArray *trackedUsers = [NSMutableArray new];
 			
-			for (IRCChannel *ch in [c channels]) {
+			for (IRCChannel *ch in [c channelList]) {
 				if ([ch isActive] == NO || [ch isChannel] == NO) {
 					continue;
 				}
@@ -136,7 +136,7 @@
 		[self appendPluralOrSingular:&resultString valueToken:1001 value:networkCount];
 
 		if (powerOverCount == 0) {
-			resultString = [resultString stringByAppendingString:TPILS(@"BasicLanguage[1007]")];
+			resultString = [resultString stringByAppendingString:TPILocalizedString(@"BasicLanguage[1007]")];
 		} else {
 			[self appendPluralOrSingular:&resultString valueToken:1002 value:operCount];
 			[self appendPluralOrSingular:&resultString valueToken:1003 value:chanOpCount];
@@ -145,7 +145,9 @@
 			[self appendPluralOrSingular:&resultString valueToken:1006 value:powerOverCount];
 		}
 
-		[client sendPrivmsgToSelectedChannel:resultString];
+		[client sendText:[NSAttributedString emptyStringWithBase:resultString]
+				 command:IRCPrivateCommandIndex("privmsg")
+				 channel:selectedChannel];
 	}
 }
 

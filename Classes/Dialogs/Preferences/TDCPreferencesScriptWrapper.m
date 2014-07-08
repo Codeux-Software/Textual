@@ -40,25 +40,20 @@
 
 @implementation TDCPreferencesScriptWrapper
 
-- (id)init
-{
-	if ((self = [super init])) {
-        self.scripts = [NSMutableArray new];
-	}
-    
-	return self;
-}
-
 - (void)populateData
 {
-	[self.scripts addObjectsFromArray:[THOPluginManagerSharedInstance() supportedAppleScriptCommands]];
-	[self.scripts addObjectsFromArray:[THOPluginManagerSharedInstance() supportedUserInputCommands]];
+	NSMutableArray *scripts = [NSMutableArray array];
+	
+	[scripts addObjectsFromArray:[sharedPluginManager() supportedAppleScriptCommands]];
+	[scripts addObjectsFromArray:[sharedPluginManager() supportedUserInputCommands]];
 
-    for (NSString *command in [THOPluginManagerSharedInstance() dangerousCommandNames]) {
-        [self.scripts removeObject:command];
+    for (NSString *command in [sharedPluginManager() dangerousCommandNames]) {
+        [scripts removeObject:command];
     }
 	
-	[self.scripts sortUsingSelector:@selector(compare:)];
+	[scripts sortUsingSelector:@selector(compare:)];
+	
+	self.scripts = scripts;
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
@@ -68,7 +63,7 @@
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-	return [self.scripts safeObjectAtIndex:rowIndex];
+	return self.scripts[rowIndex];
 }
 
 @end

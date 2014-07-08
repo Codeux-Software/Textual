@@ -47,9 +47,25 @@
 		self.nickname	= NSStringEmptyPlaceholder;
 		self.username	= NSStringEmptyPlaceholder;
 		self.address	= NSStringEmptyPlaceholder;
+		
+		self.isServer	= NO;
 	}
 
 	return self;
+}
+
+- (id)copyWithZone:(NSZone *)zone
+{
+	IRCPrefix *newPrefix = [IRCPrefix new];
+	
+	[newPrefix setHostmask:self.hostmask];
+	[newPrefix setNickname:self.nickname];
+	[newPrefix setUsername:self.username];
+	[newPrefix setAddress:self.address];
+	
+	[newPrefix setIsServer:self.isServer];
+	
+	return newPrefix;
 }
 
 @end

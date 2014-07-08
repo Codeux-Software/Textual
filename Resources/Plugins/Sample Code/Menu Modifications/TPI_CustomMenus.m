@@ -40,21 +40,21 @@
 
 @implementation TPI_CustomMenus
 
-- (void)pluginLoadedIntoMemory:(IRCWorld *)world
+- (void)pluginLoadedIntoMemory
 {
-	NSMenu *newMenu = self.masterController.userControlMenu;
+	NSMenu *newMenu = [menuController() userControlMenu];
 
 	NSMenuItem *newMenuItem = [NSMenuItem new];
 
 	[newMenuItem setTitle:@"Post Link to Textual Download Page"];
 	[newMenuItem setKeyEquivalent:NSStringEmptyPlaceholder];
-	[newMenuItem setTarget:self.masterController.menuController];
+	[newMenuItem setTarget:menuController()];
 	[newMenuItem setAction:@selector(postLinkToTextualHomepage:)];
 	
 	[newMenu addItem:[NSMenuItem separatorItem]];
 	[newMenu addItem:newMenuItem];
 
-    self.masterController.userControlMenu = newMenu;
+	[menuController() setUserControlMenu:[newMenu copy]];
 }
 
 @end

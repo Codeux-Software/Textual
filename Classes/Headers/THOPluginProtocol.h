@@ -49,19 +49,15 @@
 #pragma mark -
 #pragma mark Localization
 
-/* TPILS and TPIFLS allow a plugin to use localized text within the plugin itself using
- Textual's own API. TPILS takes a single paramater and that is the key to look inside 
- the .strings file for. TPIFLS takes a key then as many paramaters as needed after. 
- TPIFLS takes the key given, finds the localized string, then formats it similar to 
- NSString stringWithFormat:… 
- 
- These calls expect the localized strings to be inside the filename "BasicLanguage.strings"
+/* TPILocalizedString allows a plugin to use localized text within the plugin itself
+ using Textual's own API. TPILocalizedString takes a two paramaters and that is the
+ key to look inside the .strings file for and the formatting values.  */
+/* This call expects the localized strings to be inside the filename "BasicLanguage.strings"
  Any other name will not work unless the actual cocoa APIs for accessing localized strings
  is used in place of these. */
-#define TPIBundleFromClass()		[NSBundle bundleForClass:[self class]]
+#define TPIBundleFromClass()				[NSBundle bundleForClass:[self class]]
 
-#define TPILS(k)			 TSBLS(k, [NSBundle bundleForClass:[self class]])
-#define TPIFLS(k, ...)		TSBFLS(k, [NSBundle bundleForClass:[self class]], ##__VA_ARGS__)
+#define TPILocalizedString(k, ...)		TXLocalizedStringAlternative(TPIBundleFromClass(), k, ##__VA_ARGS__)
 
 @protocol THOPluginProtocol <NSObject>
 
@@ -172,7 +168,10 @@
  sequential order based on when it was loaded. Keep this in mind as another plugin
  loaded may have altered the input already. This is unlikely unless the user has
  loaded a lot of custom plugins, but it is a possibility. */
-- (NSString *)willRenderMessage:(NSString *)newMessage lineType:(TVCLogLineType)lineType memberType:(TVCLogLineMemberType)memberType;
+- (NSString *)willRenderMessage:(NSString *)newMessage
+			  forViewController:(TVCLogController *)viewController
+					   lineType:(TVCLogLineType)lineType
+					 memberType:(TVCLogLineMemberType)memberType;
 
 /* Process inline media to add custom support for various URLs. */
 /* Given a URL, the plugin is expected to return an NSString which represents

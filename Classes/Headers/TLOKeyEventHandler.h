@@ -57,9 +57,6 @@
 @interface TLOKeyEventHandler : NSObject
 @property (nonatomic, uweak) id target;
 
-@property (nonatomic, strong) NSMutableDictionary *codeHandlerMap;
-@property (nonatomic, strong) NSMutableDictionary *characterHandlerMap;
-
 - (void)registerSelector:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;
 - (void)registerSelector:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods;
 - (void)registerSelector:(SEL)selector characters:(NSRange)characterRange modifiers:(NSUInteger)mods;

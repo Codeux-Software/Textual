@@ -37,6 +37,12 @@
 
 #import "TextualApplication.h"
 
+@interface TDChanBanSheet ()
+@property (nonatomic, nweak) IBOutlet NSTextField *headerTitleField;
+@property (nonatomic, nweak) IBOutlet TVCBasicTableView *banTable;
+@property (nonatomic, strong) NSMutableArray *banList;
+@end
+
 @implementation TDChanBanSheet
 
 - (id)init
@@ -45,7 +51,6 @@
 		[RZMainBundle() loadCustomNibNamed:@"TDChanBanSheet" owner:self topLevelObjects:nil];
 		
 		self.banList = [NSMutableArray new];
-        self.changeModeList = [NSMutableArray new];
     }
     
     return self;
@@ -53,36 +58,36 @@
 
 - (void)releaseTableViewDataSourceBeforeSheetClosure
 {
-	self.banTable.delegate = nil;
-	self.banTable.dataSource = nil;
+	[self.banTable setDelegate:nil];
+	[self.banTable setDataSource:nil];
 }
 
 - (void)show
 {
-	IRCChannel *c = self.worldController.selectedChannel;
-
-	self.headerTitleField.stringValue = [NSString stringWithFormat:self.headerTitleField.stringValue, c.name];
-
-    [self startSheet];
+	IRCChannel *c = [worldController() findChannelByClientId:self.clientID channelId:self.channelID];
+	
+	[self.headerTitleField setStringValue:[NSString stringWithFormat:[self.headerTitleField stringValue], [c name]]];
+	
+	[self startSheet];
 }
 
 - (void)clear
 {
-    [self.banList removeAllObjects];
+	[self.banList removeAllObjects];
 	
-    [self reloadTable];
+	[self reloadTable];
 }
 
 - (void)addBan:(NSString *)host tset:(NSString *)timeSet setby:(NSString *)owner
 {
-    [self.banList safeAddObject:@[host, [owner nicknameFromHostmask], timeSet]];
-    
-    [self reloadTable];
+	[self.banList addObject:@[host, [owner nicknameFromHostmask], timeSet]];
+	
+	[self reloadTable];
 }
 
 - (void)reloadTable
 {
-    [self.banTable reloadData];
+	[self.banTable reloadData];
 }
 
 #pragma mark -
@@ -90,50 +95,54 @@
 
 - (void)onUpdate:(id)sender
 {
-    if ([self.delegate respondsToSelector:@selector(chanBanDialogOnUpdate:)]) {
+	[self.banList removeAllObjects];
+
+	if ([self.delegate respondsToSelector:@selector(chanBanDialogOnUpdate:)]) {
 		[self.delegate chanBanDialogOnUpdate:self];
-    }
+	}
 }
 
 - (void)onRemoveBans:(id)sender
 {
-    NSString *modeString;
+	NSMutableArray *changeArray = [NSMutableArray array];
 
+	NSString *modeString;
+	
 	NSMutableString *mdstr = [NSMutableString stringWithString:@"-"];
 	NSMutableString *trail = [NSMutableString string];
-
+	
 	NSIndexSet *indexes = [self.banTable selectedRowIndexes];
-
-    NSInteger indexTotal = 0;
-
+	
+	NSInteger indexTotal = 0;
+	
 	for (NSNumber *index in [indexes arrayFromIndexSet]) {
-        indexTotal++;
-
-		NSArray *iteml = [self.banList safeObjectAtIndex:index.unsignedIntegerValue];
-
-		if (NSObjectIsNotEmpty(iteml)) {
-			[mdstr appendString:@"b"];
-			[trail appendFormat:@" %@", [iteml safeObjectAtIndex:0]];
-		}
-
+		indexTotal++;
+		
+		NSArray *iteml = [self.banList objectAtIndex:[index unsignedIntegerValue]];
+		
+		[mdstr appendString:@"b"];
+		[trail appendFormat:@" %@", iteml[0]];
+		
 		if (indexTotal == TXMaximumNodesPerModeCommand) {
-            modeString = (id)[mdstr stringByAppendingString:trail];
-
-            [self.changeModeList safeAddObject:modeString];
-
-            [mdstr setString:@"-"];
-            [trail setString:NSStringEmptyPlaceholder];
-
-            indexTotal = 0;
-        }
+			modeString = (id)[mdstr stringByAppendingString:trail];
+			
+			[changeArray addObject:modeString];
+			
+			[mdstr setString:@"-"];
+			[trail setString:NSStringEmptyPlaceholder];
+			
+			indexTotal = 0;
+		}
 	}
-
-    if (NSObjectIsNotEmpty(mdstr)) {
-        modeString = (id)[mdstr stringByAppendingString:trail];
-
-        [self.changeModeList safeAddObject:modeString];
-    }
-
+	
+	if (NSObjectIsNotEmpty(mdstr)) {
+		modeString = (id)[mdstr stringByAppendingString:trail];
+		
+		[changeArray addObject:modeString];
+	}
+	
+	self.changeModeList = changeArray;
+	
 	[super cancel:nil];
 }
 
@@ -142,20 +151,20 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-    return self.banList.count;
+	return [self.banList count];
 }
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    NSArray *item = [self.banList safeObjectAtIndex:row];
-
-    if ([column.identifier isEqualToString:@"mask"]) {
-		return [item safeObjectAtIndex:0];
-    } else if ([column.identifier isEqualToString:@"setby"]) {
-		return [item safeObjectAtIndex:1];
-    } else {
-		return [item safeObjectAtIndex:2];
-    }
+	NSArray *item = [self.banList objectAtIndex:row];
+	
+	if ([[column identifier] isEqualToString:@"mask"]) {
+		return item[0];
+	} else if ([[column identifier] isEqualToString:@"setby"]) {
+		return item[1];
+	} else {
+		return item[2];
+	}
 }
 
 #pragma mark -

@@ -72,8 +72,10 @@
 	NSObjectIsEmptyAssert(message);
 
 	/* Add item and speak. */
-	[self.itemsToBeSpoken addObject:message];
-
+	@synchronized(self.itemsToBeSpoken) {
+		[self.itemsToBeSpoken addObject:message];
+	}
+	
 	if ([self isSpeaking] == NO) {
 		[self speakNextQueueEntry];
 	}
@@ -106,36 +108,38 @@
 	NSAssertReturn(self.isStopped == NO);
 
 	/* Speak next item. */
-	if ([self.itemsToBeSpoken count] > 0) {
-		if ([NSSpeechSynthesizer isAnyApplicationSpeaking]) {
-			/* If the system is speaking, then special actions must be performed. */
+	@synchronized(self.itemsToBeSpoken) {
+		if ([self.itemsToBeSpoken count] > 0) {
+			if ([NSSpeechSynthesizer isAnyApplicationSpeaking]) {
+				/* If the system is speaking, then special actions must be performed. */
 
-			/* Loop in background. */
-			if (self.isWaitingForSystemToStopSpeaking == NO) {
-				/* Set flag. */
-				self.isWaitingForSystemToStopSpeaking = YES;
+				/* Loop in background. */
+				if (self.isWaitingForSystemToStopSpeaking == NO) {
+					/* Set flag. */
+					self.isWaitingForSystemToStopSpeaking = YES;
 
-				/* Start waiting for system to finish. */
-				[[self invokeInBackgroundThread] speakNextItemWhenSystemFinishes];
+					/* Start waiting for system to finish. */
+					[[self invokeInBackgroundThread] speakNextItemWhenSystemFinishes];
+				}
+
+				/* Do not continue. */
+				return;
 			}
 
-			/* Do not continue. */
-			return;
+			/* Continue with normal speaking operation. */
+			NSString *nextMessage = self.itemsToBeSpoken[0]; // Get item.
+
+			[self.itemsToBeSpoken removeObjectAtIndex:0]; // Remove from queue.
+
+			[self.speechSynthesizer startSpeakingString:nextMessage]; // Speak.
 		}
-
-		/* Continue with normal speaking operation. */
-		NSString *nextMessage = self.itemsToBeSpoken[0]; // Get item.
-
-		[self.itemsToBeSpoken removeObjectAtIndex:0]; // Remove from queue.
-
-		[self.speechSynthesizer startSpeakingString:nextMessage]; // Speak.
 	}
 }
 
 - (void)setIsStopped:(BOOL)isStopped
 {
 	/* Update internal flag. */
-	_isStopped = isStopped;
+	self.isStopped = isStopped;
 
 	/* Stop speaking. */
 	if ([self isSpeaking]) {
@@ -145,7 +149,9 @@
 
 - (void)clearQueue
 {
-	[self.itemsToBeSpoken removeAllObjects];
+	@synchronized(self.itemsToBeSpoken) {
+		[self.itemsToBeSpoken removeAllObjects];
+	}
 }
 
 - (BOOL)isSpeaking

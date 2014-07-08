@@ -83,9 +83,9 @@
 	PointerIsEmptyAssert(self.file);
 
 	[self.file closeFile];
-	self.file = nil;
+	 self.file = nil;
 
-	self.filename = nil; // Invalidate everything. 
+	self.filename = nil; // Invalidate everything.
 }
 
 - (void)reopenIfNeeded
@@ -105,7 +105,7 @@
 	[self close];
 
 	/* Where are we writing to? */
-	NSURL *path = self.fileWritePath;
+	NSURL *path = [self fileWritePath];
 
 	NSObjectIsEmptyAssert(path);
 
@@ -152,7 +152,7 @@
 	/* Open our file handle. */
 	self.file = [NSFileHandle fileHandleForUpdatingAtPath:[self.filename path]];
 
-	if (self.file) {
+	if ( self.file) {
 		[self.file seekToEndOfFile];
 	}
 }
@@ -162,7 +162,7 @@
 
 - (NSURL *)fileWritePath
 {
-	return [TPCPreferences transcriptFolder];
+	return [TPCPathInfo logFileFolderLocation];
 }
 
 - (NSURL *)buildPath
@@ -172,12 +172,12 @@
 
 - (NSURL *)buildPath:(BOOL)forceUUID
 {
-	NSURL *base = self.fileWritePath;
+	NSURL *base = [self fileWritePath];
 
 	NSObjectIsEmptyAssertReturn(base, nil);
 
-	NSString *serv = [self.client.name safeFilename];
-	NSString *chan = [self.channel.name safeFilename];
+	NSString *serverName = [[self.client name] safeFilename];
+	NSString *channelName = [[self.channel name] safeFilename];
 
 	/* When our folder structure is not flat, then we have to make sure the folders
 	 that we create our unique. The check of whether our folders are unique was not
@@ -189,7 +189,6 @@
 	/* To make the folder unique, we take the first five characters of the client's
 	 UUID which does not change between restarts. Not 100% accurate, but still works
 	 99.9999% of the time. */
-
 	if (forceUUID) {
 		NSURL *oldPath = [self buildPath:NO];
 
@@ -199,31 +198,35 @@
 		}
 
 		/* It did not exist… use new naming scheme. */
-		NSString *servHead = [self.client.config.itemUUID safeSubstringToIndex:5];
+		NSString *servHead = [[self.client uniqueIdentifier] substringToIndex:5];
 
-		serv = [serv stringByAppendingFormat:@" (%@)", servHead];
+		serverName = [NSString stringWithFormat:@"%@ (%@)", serverName, servHead];
 	}
 	
-	if (PointerIsEmpty(self.channel)) {
-		return [base URLByAppendingPathComponent:[NSString stringWithFormat:@"/%@/%@/", serv, TLOFileLoggerConsoleDirectoryName] isDirectory:YES];
-	} else if (self.channel.isPrivateMessage) {
-		return [base URLByAppendingPathComponent:[NSString stringWithFormat:@"/%@/%@/%@/", serv, TLOFileLoggerPrivateMessageDirectoryName, chan] isDirectory:YES];
-	} else {
-		return [base URLByAppendingPathComponent:[NSString stringWithFormat:@"/%@/%@/%@/", serv, TLOFileLoggerChannelDirectoryName, chan] isDirectory:YES];
+	if (self.channel == nil) {
+		return [base URLByAppendingPathComponent:[NSString stringWithFormat:@"/%@/%@/", serverName, TLOFileLoggerConsoleDirectoryName] isDirectory:YES];
+	} else if ([self.channel isChannel]) {
+		return [base URLByAppendingPathComponent:[NSString stringWithFormat:@"/%@/%@/%@/", serverName, TLOFileLoggerChannelDirectoryName, channelName] isDirectory:YES];
+	} else if ([self.channel isPrivateMessage]) {
+		return [base URLByAppendingPathComponent:[NSString stringWithFormat:@"/%@/%@/%@/", serverName, TLOFileLoggerPrivateMessageDirectoryName, channelName] isDirectory:YES];
 	}
 
-	return base;
+	return nil;
 }
 
 - (NSURL *)buildFileName
 {
-	NSDate *filename = [[NSDate date] dateWithCalendarFormat:@"%Y-%m-%d" timeZone:nil];
-
 	NSURL *buildPath = [self buildPath];
+	
+	if (buildPath) {
+		NSDate *datetime = [[NSDate date] dateWithCalendarFormat:@"%Y-%m-%d" timeZone:nil];
 
-	NSObjectIsEmptyAssertReturn(buildPath, nil);
-
-	return [buildPath URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt", filename] isDirectory:NO];
+		NSString *filename = [NSString stringWithFormat:@"%@.txt", datetime];
+		
+		return [buildPath URLByAppendingPathComponent:filename isDirectory:NO];
+	}
+	
+	return nil;
 }
 
 #pragma mark -

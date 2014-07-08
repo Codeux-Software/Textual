@@ -38,11 +38,96 @@
 
 #import "TextualApplication.h"
 
-@interface TVCMainWindow : NSWindow
-@property (nonatomic, strong) TLOKeyEventHandler *keyHandler;
-@property (nonatomic, strong) NSValue *cachedSwipeOriginPoint;
+#define TVCMainWindowDefaultFrameWidth		800
+#define TVCMainWindowDefaultFrameHeight		474
+
+#define TVCMainWindowNegateActionWithAttachedSheet()		if ([mainWindow() attachedSheet]) { return; }
+#define TVCMainWindowNegateActionWithAttachedSheetR(r)		if ([mainWindow() attachedSheet]) { return r; }
+
+typedef enum TVCServerListNavigationMovementType : NSInteger {
+	TVCServerListNavigationMovementAllType,     // Move to next item.
+	TVCServerListNavigationMovementActiveType,  // Move to next active item.
+	TVCServerListNavigationMovementUnreadType,  // Move to next unread item.
+} TVCServerListNavigationMovementType;
+
+typedef enum TVCServerListNavigationSelectionType : NSInteger {
+	TVCServerListNavigationSelectionAnyType,		// Move to next item.
+	TVCServerListNavigationSelectionChannelType,	// Move to next channel item.
+	TVCServerListNavigationSelectionServerType,		// Move to next server item.
+} TVCServerListNavigationSelectionType;
+
+@interface TVCMainWindow : NSWindow <NSSplitViewDelegate, NSWindowDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate>
+@property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
+@property (nonatomic, copy) NSValue *cachedSwipeOriginPoint;
+@property (nonatomic, nweak) IBOutlet NSBox *channelViewBox;
+@property (nonatomic, strong) IBOutlet TVCTextViewIRCFormattingMenu *formattingMenu;
+@property (nonatomic, uweak) IBOutlet TVCMainWindowTextView *inputTextField;
+@property (nonatomic, nweak) IBOutlet TVCMainWindowSplitView *contentSplitView;
+@property (nonatomic, nweak) IBOutlet TVCMainWindowLoadingScreenView *loadingScreen;
+@property (nonatomic, nweak) IBOutlet TVCMemberList *memberList;
+@property (nonatomic, nweak) IBOutlet TVCServerList *serverList;
+@property (nonatomic, strong) IRCTreeItem *selectedItem; // Please don't directy modify this without calling -adjustSelection
+@property (nonatomic, copy) NSString *previousSelectedClientId; // There are no reasons to modify this.
+@property (nonatomic, copy) NSString *previousSelectedChannelId; // There are no reasons to modify this.
+@property (nonatomic, assign) BOOL temporarilyDisablePreviousSelectionUpdates;
+
+@property (readonly) IRCClient *selectedClient;
+@property (readonly) IRCChannel *selectedChannel;
+@property (readonly) TVCLogController *selectedViewController;
+@property (readonly) IRCTreeItem *previouslySelectedItem;
+
+- (void)prepareForApplicationTermination;
+
+- (void)setupTree;
+
+- (void)reloadLoadingScreen;
+
+- (void)updateTitle;
+- (void)updateTitleFor:(id)item;
+
+- (void)reloadTree;
+- (void)reloadTreeItem:(id)item; // Can be either IRCClient or IRCChannel
+- (void)reloadTreeGroup:(id)item; // Will do not unless item is a IRCClient
+
+- (void)adjustSelection;
+
+- (void)select:(id)item;
+- (void)selectPreviousItem;
+
+- (void)expandClient:(IRCClient *)client;
+
+- (IRCChannel *)selectedChannelOn:(IRCClient *)c;
+
+- (void)maybeToggleFullscreenAfterLaunch;
 
 - (BOOL)isInactive;
+
+- (void)navigateChannelEntries:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType;
+- (void)navigateServerEntries:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType;
+- (void)navigateToNextEntry:(BOOL)isMovingDown;
+
+- (void)textEntered;
+
+- (void)inputText:(id)str command:(NSString *)command; // Do not call this directly unless you must.
+
+- (void)selectNextServer:(NSEvent *)e;
+- (void)selectNextChannel:(NSEvent *)e;
+- (void)selectNextWindow:(NSEvent *)e;
+- (void)selectPreviousServer:(NSEvent *)e;
+- (void)selectPreviousChannel:(NSEvent *)e;
+- (void)selectPreviousWindow:(NSEvent *)e;
+- (void)selectNextActiveServer:(NSEvent *)e;
+- (void)selectNextUnreadChannel:(NSEvent *)e;
+- (void)selectNextActiveChannel:(NSEvent *)e;
+- (void)selectPreviousSelection:(NSEvent *)e;
+- (void)selectPreviousActiveServer:(NSEvent *)e;
+- (void)selectPreviousUnreadChannel:(NSEvent *)e;
+- (void)selectPreviousActiveChannel:(NSEvent *)e;
+
+- (BOOL)isMemberListVisible;
+- (BOOL)isServerListVisible;
+
+- (NSRect)defaultWindowFrame;
 
 - (void)setKeyHandlerTarget:(id)target;
 

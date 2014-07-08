@@ -38,5 +38,5 @@
 #import "TextualApplication.h"
 
 @interface TPI_CustomMenus : NSObject <THOPluginProtocol>
-- (void)pluginLoadedIntoMemory:(IRCWorld *)world;
+- (void)pluginLoadedIntoMemory;
 @end

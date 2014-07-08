@@ -38,8 +38,8 @@
 #import "TPISmileyConverter.h"
 
 @interface TPISmileyConverter ()
-@property (nonatomic, strong) NSDictionary *conversionTable;
-@property (nonatomic, strong) NSArray *sortedSmileyList;
+@property (nonatomic, copy) NSDictionary *conversionTable;
+@property (nonatomic, copy) NSArray *sortedSmileyList;
 @property (nonatomic, strong) IBOutlet NSView *preferencesPane;
 @end
 
@@ -78,10 +78,10 @@
 
 - (NSString *)pluginPreferencesPaneMenuItemName
 {
-	return TPILS(@"BasicLanguage[1000]");
+	return TPILocalizedString(@"BasicLanguage[1000]");
 }
 
-- (NSString *)willRenderMessage:(NSString *)newMessage lineType:(TVCLogLineType)lineType memberType:(TVCLogLineMemberType)memberType
+- (NSString *)willRenderMessage:(NSString *)newMessage forViewController:(TVCLogController *)viewController lineType:(TVCLogLineType)lineType memberType:(TVCLogLineMemberType)memberType
 {
 	BOOL serviceEnabled = [RZUserDefaults() boolForKey:@"Smiley Converter Extension -> Enable Service"];
 	

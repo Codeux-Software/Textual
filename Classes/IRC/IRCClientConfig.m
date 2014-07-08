@@ -49,23 +49,30 @@
 	if ((self = [super init])) {
 		self.itemUUID = [NSString stringWithUUID];
 		
-		self.alternateNicknames		= [NSMutableArray new];
-		self.loginCommands			= [NSMutableArray new];
-		self.highlightList			= [NSMutableArray new];
-		self.channelList			= [NSMutableArray new];
-		self.ignoreList				= [NSMutableArray new];
-
-		self.auxiliaryConfiguration = [NSMutableDictionary new];
+		self.sidebarItemExpanded		= YES;
 		
-		self.identitySSLCertificate = nil;
+		self.alternateNicknames			= @[];
+		self.loginCommands				= @[];
+		self.highlightList				= @[];
+		self.channelList				= @[];
+		self.ignoreList					= @[];
+
+		self.cachedLastServerTimeCapacityReceivedAtTimestamp = 0;
+		
+		self.hideNetworkUnavailabilityNotices			= NO;
+		self.saslAuthenticationUsesExternalMechanism	= NO;
+		self.sendAuthenticationRequestsToUserServ		= NO;
+		
+		self.identitySSLCertificate			= nil;
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-		self.excludedFromCloudSyncing = NO;
+		self.excludedFromCloudSyncing		= NO;
 #endif
 
 		self.autoConnect					= NO;
 		self.autoReconnect					= NO;
 		self.autoSleepModeDisconnect		= YES;
+		
 		self.performPongTimer				= YES;
 
 		self.performDisconnectOnPongTimer				= NO;
@@ -73,10 +80,10 @@
 		
 		self.validateServerSSLCertificate = YES;
 		
-		self.connectionUsesSSL	= NO;
-		self.nicknamePassword	= NSStringEmptyPlaceholder;
+		self.connectionUsesSSL			= NO;
+		self.connectionPrefersIPv6		= NO;
+		
 		self.serverAddress      = NSStringEmptyPlaceholder;
-		self.serverPassword     = NSStringEmptyPlaceholder;
 		self.serverPort         = IRCConnectionDefaultServerPort;
 		
 		self.invisibleMode = NO;
@@ -84,30 +91,35 @@
 		self.zncIgnoreConfiguredAutojoin = NO;
 		self.zncIgnorePlaybackNotifications = YES;
 
-		self.proxyType		 = TXConnectionNoProxyType;
+		self.proxyType		 = IRCConnectionSocketNoProxyType;
 		self.proxyAddress    = NSStringEmptyPlaceholder;
 		self.proxyPort       = 1080;
 		self.proxyUsername   = NSStringEmptyPlaceholder;
-		self.proxyPassword   = NSStringEmptyPlaceholder;
-
-        self.connectionPrefersIPv6 = NO;
 		
-		self.primaryEncoding = TXDefaultPrimaryTextEncoding;
-		self.fallbackEncoding = TXDefaultFallbackTextEncoding;
+		self.primaryEncoding	= TXDefaultPrimaryStringEncoding;
+		self.fallbackEncoding	= TXDefaultFallbackStringEncoding;
         
         self.outgoingFloodControl            = YES;
-        self.floodControlMaximumMessages     = TXFloodControlDefaultMessageCount;
-		self.floodControlDelayTimerInterval  = TXFloodControlDefaultDelayTimer;
 		
-		self.clientName = TXTLS(@"BasicLanguage[1022]");
+		self.floodControlMaximumMessages     = IRCClientConfigFloodControlDefaultMessageCount;
+		self.floodControlDelayTimerInterval  = IRCClientConfigFloodControlDefaultDelayTimer;
 		
-		self.nickname = [TPCPreferences defaultNickname];
-		self.awayNickname = [TPCPreferences defaultAwayNickname];
-		self.username = [TPCPreferences defaultUsername];
-		self.realname = [TPCPreferences defaultRealname];
+		self.clientName = BLS(1022);
 		
-		self.normalLeavingComment		= TXTLS(@"BasicLanguage[1021]");
-		self.sleepModeLeavingComment	= TXTFLS(@"BasicLanguage[1185]", [CSFWSystemInformation systemModelName]);
+		self.nickname		= [TPCPreferences defaultNickname];
+		self.awayNickname	= [TPCPreferences defaultAwayNickname];
+		self.username		= [TPCPreferences defaultUsername];
+		self.realname		= [TPCPreferences defaultRealname];
+		
+		self.normalLeavingComment		= BLS(1021);
+		
+		NSString *modelName = [CSFWSystemInformation systemModelName];
+		
+		if (modelName == nil) { // Value can be nil in virtual machine.
+			self.sleepModeLeavingComment = BLS(1235);
+		} else {
+			self.sleepModeLeavingComment = BLS(1185, modelName);
+		}
 	}
 	
 	return self;
@@ -126,7 +138,7 @@
 	if (kcPassword == nil) {
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (NickServ)"
 												withItemKind:@"application password"
-												 forUsername:[TPCPreferences applicationName] // Compatible with 2.1.1
+												 forUsername:[TPCApplicationInfo applicationName] // Compatible with 2.1.1
 												 serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.itemUUID]];
 		
 	}
@@ -144,7 +156,7 @@
 	if (kcPassword == nil) {
 		kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Server Password)"
 												withItemKind:@"application password"
-												 forUsername:[TPCPreferences applicationName] // Compatible with 2.1.1
+												 forUsername:[TPCApplicationInfo applicationName] // Compatible with 2.1.1
 												 serviceName:[NSString stringWithFormat:@"textual.server.%@", self.itemUUID]];
 	}
 
@@ -301,90 +313,124 @@
 
 - (id)initWithDictionary:(NSDictionary *)dic
 {
-	if ((self = [self init])) {
-		/* General preferences. */
-        self.sidebarItemExpanded = NSDictionaryBOOLKeyValueCompare(dic, @"serverListItemIsExpanded", YES);
+	return [self initWithDictionary:dic ignorePrivateMessages:NO checkKeychainStatus:YES];
+}
 
-		self.itemUUID		= NSDictionaryObjectKeyValueCompare(dic, @"uniqueIdentifier", self.itemUUID);
-		self.clientName		= NSDictionaryObjectKeyValueCompare(dic, @"connectionName", self.clientName);
-		self.nickname		= NSDictionaryObjectKeyValueCompare(dic, @"identityNickname", self.nickname);
-		self.awayNickname	= NSDictionaryObjectKeyValueCompare(dic, @"identityAwayNickname", self.awayNickname);
-		self.realname		= NSDictionaryObjectKeyValueCompare(dic, @"identityRealname", self.realname);
-		self.serverAddress	= NSDictionaryObjectKeyValueCompare(dic, @"serverAddress", self.serverAddress);
-		self.serverPort		= NSDictionaryIntegerKeyValueCompare(dic, @"serverPort", self.serverPort);
-		self.username		= NSDictionaryObjectKeyValueCompare(dic, @"identityUsername", self.username);
+- (id)initWithDictionary:(NSDictionary *)dic ignorePrivateMessages:(BOOL)ignorePMs checkKeychainStatus:(BOOL)checkKeychainIsSet
+{
+	if ((self = [self init])) {
+		/* If any key does not exist, then its value is inherited from the -init method. */
+        [dic assignBoolTo:&_sidebarItemExpanded forKey:@"serverListItemIsExpanded"];
+
+		[dic assignStringTo:&_itemUUID forKey:@"uniqueIdentifier"];
+		
+		[dic assignStringTo:&_clientName forKey:@"connectionName"];
+
+		[dic assignStringTo:&_nickname forKey:@"identityNickname"];
+		[dic assignStringTo:&_awayNickname forKey:@"identityAwayNickname"];
+		
+		[dic assignArrayTo:&_alternateNicknames forKey:@"identityAlternateNicknames"];
+		
+		[dic assignStringTo:&_realname forKey:@"identityRealname"];
+		[dic assignStringTo:&_username forKey:@"identityUsername"];
+
+		[dic assignObjectTo:&_identitySSLCertificate forKey:@"IdentitySSLCertificate" performCopy:YES];
+		
+		[dic assignStringTo:&_serverAddress forKey:@"serverAddress"];
+		
+		[dic assignIntegerTo:&_serverPort forKey:@"serverPort"];
+		
+		[dic assignBoolTo:&_autoConnect forKey:@"connectOnLaunch"];
+		[dic assignBoolTo:&_autoReconnect forKey:@"connectOnDisconnect"];
+		[dic assignBoolTo:&_autoSleepModeDisconnect forKey:@"disconnectOnSleepMode"];
+		
+		[dic assignBoolTo:&_connectionUsesSSL forKey:@"connectUsingSSL"];
+		[dic assignBoolTo:&_connectionPrefersIPv6 forKey:@"DNSResolverPrefersIPv6"];
+		
+		[dic assignBoolTo:&_validateServerSSLCertificate forKey:@"validateServerSideSSLCertificate"];
+		
+		[dic assignBoolTo:&_performPongTimer forKey:@"performPongTimer"];
+		
+		[dic assignBoolTo:&_invisibleMode forKey:@"setInvisibleOnConnect"];
+		
+		[dic assignBoolTo:&_performDisconnectOnPongTimer forKey:@"performDisconnectOnPongTimer"];
+		[dic assignBoolTo:&_performDisconnectOnReachabilityChange forKey:@"performDisconnectOnReachabilityChange"];
+		
+		[dic assignIntegerTo:&_proxyType forKey:@"proxyServerType"];
+		
+		[dic assignStringTo:&_proxyAddress forKey:@"proxyServerAddress"];
+		[dic assignIntegerTo:&_proxyPort forKey:@"proxyServerPort"];
+		[dic assignStringTo:&_proxyUsername forKey:@"proxyServerUsername"];
+		
+		[dic assignIntegerTo:&_primaryEncoding forKey:@"characterEncodingDefault"];
+		[dic assignIntegerTo:&_fallbackEncoding forKey:@"characterEncodingFallback"];
+		
+		[dic assignStringTo:&_normalLeavingComment forKey:@"connectionDisconnectDefaultMessage"];
+		[dic assignStringTo:&_sleepModeLeavingComment forKey:@"connectionDisconnectSleepModeMessage"];
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-		self.excludedFromCloudSyncing = NSDictionaryBOOLKeyValueCompare(dic, @"excludeFromCloudSyncing", self.excludedFromCloudSyncing);
+		[dic assignBoolTo:&_excludedFromCloudSyncing forKey:@"excludeFromCloudSyncing"];
 #endif
-
-		self.zncIgnoreConfiguredAutojoin = NSDictionaryBOOLKeyValueCompare(dic, @"ZNC —> Ignore Pre-configured Autojoin", self.zncIgnoreConfiguredAutojoin);
-		self.zncIgnorePlaybackNotifications	= NSDictionaryBOOLKeyValueCompare(dic, @"ZNC —> Ignore Playback Buffer Highlights", self.zncIgnorePlaybackNotifications);
-
-		[self.alternateNicknames addObjectsFromArray:[dic arrayForKey:@"identityAlternateNicknames"]];
 		
-		self.proxyType       = (TXConnectionProxyType)NSDictionaryIntegerKeyValueCompare(dic, @"proxyServerType", self.proxyType);
+		[dic assignBoolTo:&_zncIgnoreConfiguredAutojoin forKey:@"ZNC —> Ignore Pre-configured Autojoin"];
+		[dic assignBoolTo:&_zncIgnorePlaybackNotifications forKey:@"ZNC —> Ignore Playback Buffer Highlights"];
 		
-		self.proxyAddress	= NSDictionaryObjectKeyValueCompare(dic, @"proxyServerAddress", self.proxyAddress);
-		self.proxyPort      = NSDictionaryIntegerKeyValueCompare(dic, @"proxyServerPort", self.proxyPort);
-		self.proxyUsername	= NSDictionaryObjectKeyValueCompare(dic, @"proxyServerUsername", self.proxyUsername);
+		[dic assignBoolTo:&_hideNetworkUnavailabilityNotices forKey:@"hideNetworkUnavailabilityNotices"];
+		[dic assignBoolTo:&_saslAuthenticationUsesExternalMechanism forKey:@"saslAuthenticationUsesExternalMechanism"];
+		[dic assignBoolTo:&_sendAuthenticationRequestsToUserServ forKey:@"sendAuthenticationRequestsToUserServ"];
 		
-		self.autoConnect				= NSDictionaryBOOLKeyValueCompare(dic, @"connectOnLaunch", self.autoConnect);
-		self.autoReconnect				= NSDictionaryBOOLKeyValueCompare(dic, @"connectOnDisconnect", self.autoReconnect);
-		self.autoSleepModeDisconnect	= NSDictionaryBOOLKeyValueCompare(dic, @"disconnectOnSleepMode", self.autoSleepModeDisconnect);
-		self.connectionUsesSSL			= NSDictionaryBOOLKeyValueCompare(dic, @"connectUsingSSL", self.connectionUsesSSL);
-
-		self.validateServerSSLCertificate = NSDictionaryBOOLKeyValueCompare(dic, @"validateServerSideSSLCertificate", self.validateServerSSLCertificate);
-
-		self.performPongTimer				= NSDictionaryBOOLKeyValueCompare(dic, @"performPongTimer", self.performPongTimer);
+		[dic assignDoubleTo:&_cachedLastServerTimeCapacityReceivedAtTimestamp forKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
 		
-		self.performDisconnectOnPongTimer			= NSDictionaryBOOLKeyValueCompare(dic, @"performDisconnectOnPongTimer", self.performDisconnectOnPongTimer);
-		self.performDisconnectOnReachabilityChange	= NSDictionaryBOOLKeyValueCompare(dic, @"performDisconnectOnReachabilityChange", self.performDisconnectOnReachabilityChange);
+		[dic assignArrayTo:&_loginCommands forKey:@"onConnectCommands"];
 		
-		self.fallbackEncoding			= NSDictionaryIntegerKeyValueCompare(dic, @"characterEncodingFallback", self.fallbackEncoding);
-		self.normalLeavingComment		= NSDictionaryObjectKeyValueCompare(dic, @"connectionDisconnectDefaultMessage", self.normalLeavingComment);
-		self.primaryEncoding			= NSDictionaryIntegerKeyValueCompare(dic, @"characterEncodingDefault", self.primaryEncoding);
-		self.sleepModeLeavingComment	= NSDictionaryObjectKeyValueCompare(dic, @"connectionDisconnectSleepModeMessage", self.sleepModeLeavingComment);
-		
-		self.connectionPrefersIPv6  = NSDictionaryBOOLKeyValueCompare(dic, @"DNSResolverPrefersIPv6", self.connectionPrefersIPv6);
-		self.invisibleMode			= NSDictionaryBOOLKeyValueCompare(dic, @"setInvisibleOnConnect", self.invisibleMode);
-
-		self.identitySSLCertificate = [dic objectForKey:@"IdentitySSLCertificate"];
-
-		[self.auxiliaryConfiguration addEntriesFromDictionary:[dic dictionaryForKey:@"auxiliaryConfiguration"]];
-
-		[self.loginCommands addObjectsFromArray:[dic arrayForKey:@"onConnectCommands"]];
-
 		/* Channel list. */
+		NSMutableArray *channelList = [NSMutableArray array];
+
 		for (NSDictionary *e in [dic arrayForKey:@"channelList"]) {
 			IRCChannelConfig *c = [[IRCChannelConfig alloc] initWithDictionary:e];
 			
-			[self.channelList addObject:c];
+			if (c.type == IRCChannelPrivateMessageType) {
+				if (ignorePMs == NO) {
+					[channelList addObject:c];
+				}
+			} else {
+				[channelList addObject:c];
+			}
 		}
+		
+		self.channelList = channelList;
 
 		/* Ignore list. */
+		NSMutableArray *ignoreList = [NSMutableArray array];
+
 		for (NSDictionary *e in [dic arrayForKey:@"ignoreList"]) {
-			IRCAddressBook *ignore = [[IRCAddressBook alloc] initWithDictionary:e];
+			IRCAddressBookEntry *ignore = [[IRCAddressBookEntry alloc] initWithDictionary:e];
 			
-			[self.ignoreList addObject:ignore];
+			[ignoreList addObject:ignore];
 		}
+		
+		self.ignoreList = ignoreList;
 
 		/* Server specific highlight list. */
+		NSMutableArray *highlightList = [NSMutableArray array];
+
 		for (NSDictionary *e in [dic arrayForKey:@"highlightList"]) {
 			TDCHighlightEntryMatchCondition *c = [[TDCHighlightEntryMatchCondition alloc] initWithDictionary:e];
 
-			[self.highlightList addObject:c];
+			[highlightList addObject:c];
 		}
+		
+		self.highlightList = highlightList;
 
 		/* Flood control. */
 		if ([dic containsKey:@"floodControl"]) {
 			NSDictionary *e = [dic dictionaryForKey:@"floodControl"];
 			
 			if (e) {
-				self.outgoingFloodControl = NSDictionaryBOOLKeyValueCompare(e, @"serviceEnabled", self.outgoingFloodControl);
-
-				self.floodControlMaximumMessages = NSDictionaryIntegerKeyValueCompare(e, @"maximumMessageCount", TXFloodControlDefaultMessageCount);
-				self.floodControlDelayTimerInterval	= NSDictionaryIntegerKeyValueCompare(e, @"delayTimerInterval", TXFloodControlDefaultDelayTimer);
+				[e assignBoolTo:&_outgoingFloodControl forKey:@"serviceEnabled"];
+			
+				[e assignIntegerTo:&_floodControlMaximumMessages forKey:@"maximumMessageCount"];
+				[e assignIntegerTo:&_floodControlDelayTimerInterval forKey:@"delayTimerInterval"];
 			}
 		}
 
@@ -397,10 +443,12 @@
 		}
 
 		/* Get a base reading. */
-		self.serverPasswordIsSet = NSObjectIsNotEmpty(self.serverPassword);
-		self.nicknamePasswordIsSet = NSObjectIsNotEmpty(self.nicknamePassword);
-		self.proxyPasswordIsSet = NSObjectIsNotEmpty(self.proxyPassword);
-
+		if (checkKeychainIsSet) {
+			self.proxyPasswordIsSet		= NSObjectIsNotEmpty(self.proxyPassword);
+			self.serverPasswordIsSet	= NSObjectIsNotEmpty(self.serverPassword);
+			self.nicknamePasswordIsSet	= NSObjectIsNotEmpty(self.nicknamePassword);
+		}
+		
 		/* We're done. */
 		return self;
 	}
@@ -413,6 +461,7 @@
 	PointerIsEmptyAssertReturn(seed, NO);
 	
 	NSDictionary *s1 = [seed dictionaryValue];
+	
 	NSDictionary *s2 = [self dictionaryValue];
 	
 	/* Only declare ourselves as equal when we do not have any
@@ -462,7 +511,7 @@
 		/* Identify certificate is stored as a referenced to the actual keychain. */
 		/* This cannot be transmitted over the cloud. */
 
-		[dic safeSetObject:self.identitySSLCertificate forKey:@"IdentitySSLCertificate"];
+		[dic maybeSetObject:self.identitySSLCertificate forKey:@"IdentitySSLCertificate"];
 	}
 
 	[dic setBool:self.validateServerSSLCertificate		forKey:@"validateServerSideSSLCertificate"];
@@ -470,21 +519,25 @@
 	[dic setBool:self.zncIgnorePlaybackNotifications	forKey:@"ZNC —> Ignore Playback Buffer Highlights"];
 	[dic setBool:self.zncIgnoreConfiguredAutojoin		forKey:@"ZNC —> Ignore Pre-configured Autojoin"];
 
-	[dic safeSetObject:self.auxiliaryConfiguration		forKey:@"auxiliaryConfiguration"];
+	[dic setBool:self.hideNetworkUnavailabilityNotices			forKey:@"hideNetworkUnavailabilityNotices"];
+	[dic setBool:self.saslAuthenticationUsesExternalMechanism	forKey:@"saslAuthenticationUsesExternalMechanism"];
+	[dic setBool:self.sendAuthenticationRequestsToUserServ		forKey:@"sendAuthenticationRequestsToUserServ"];
 	
-	[dic safeSetObject:self.alternateNicknames			forKey:@"identityAlternateNicknames"];
-	[dic safeSetObject:self.clientName					forKey:@"connectionName"];
-	[dic safeSetObject:self.itemUUID					forKey:@"uniqueIdentifier"];
-	[dic safeSetObject:self.loginCommands				forKey:@"onConnectCommands"];
-	[dic safeSetObject:self.nickname					forKey:@"identityNickname"];
-	[dic safeSetObject:self.awayNickname				forKey:@"identityAwayNickname"];
-	[dic safeSetObject:self.normalLeavingComment		forKey:@"connectionDisconnectDefaultMessage"];
-	[dic safeSetObject:self.proxyAddress				forKey:@"proxyServerAddress"];
-	[dic safeSetObject:self.proxyUsername				forKey:@"proxyServerUsername"];
-	[dic safeSetObject:self.realname					forKey:@"identityRealname"];
-	[dic safeSetObject:self.serverAddress				forKey:@"serverAddress"];
-	[dic safeSetObject:self.sleepModeLeavingComment		forKey:@"connectionDisconnectSleepModeMessage"];
-	[dic safeSetObject:self.username					forKey:@"identityUsername"];
+	[dic setDouble:self.cachedLastServerTimeCapacityReceivedAtTimestamp		forKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
+	
+	[dic maybeSetObject:self.alternateNicknames			forKey:@"identityAlternateNicknames"];
+	[dic maybeSetObject:self.clientName					forKey:@"connectionName"];
+	[dic maybeSetObject:self.itemUUID					forKey:@"uniqueIdentifier"];
+	[dic maybeSetObject:self.loginCommands				forKey:@"onConnectCommands"];
+	[dic maybeSetObject:self.nickname					forKey:@"identityNickname"];
+	[dic maybeSetObject:self.awayNickname				forKey:@"identityAwayNickname"];
+	[dic maybeSetObject:self.normalLeavingComment		forKey:@"connectionDisconnectDefaultMessage"];
+	[dic maybeSetObject:self.proxyAddress				forKey:@"proxyServerAddress"];
+	[dic maybeSetObject:self.proxyUsername				forKey:@"proxyServerUsername"];
+	[dic maybeSetObject:self.realname					forKey:@"identityRealname"];
+	[dic maybeSetObject:self.serverAddress				forKey:@"serverAddress"];
+	[dic maybeSetObject:self.sleepModeLeavingComment	forKey:@"connectionDisconnectSleepModeMessage"];
+	[dic maybeSetObject:self.username					forKey:@"identityUsername"];
     
     NSMutableDictionary *floodControl = [NSMutableDictionary dictionary];
     
@@ -493,34 +546,49 @@
 	
     [floodControl setBool:self.outgoingFloodControl forKey:@"serviceEnabled"];
     
-	[dic safeSetObject:floodControl forKey:@"floodControl"];
+	[dic maybeSetObject:floodControl forKey:@"floodControl"];
 
 	NSMutableArray *highlightAry = [NSMutableArray array];
 	NSMutableArray *channelAry = [NSMutableArray array];
 	NSMutableArray *ignoreAry = [NSMutableArray array];
 	
 	for (IRCChannelConfig *e in self.channelList) {
-		[channelAry safeAddObject:[e dictionaryValue]];
+		[channelAry addObject:[e dictionaryValue]];
 	}
 	
-	for (IRCAddressBook *e in self.ignoreList) {
-		[ignoreAry safeAddObject:[e dictionaryValue]];
+	for (IRCAddressBookEntry *e in self.ignoreList) {
+		[ignoreAry addObject:[e dictionaryValue]];
 	}
 
 	for (TDCHighlightEntryMatchCondition *e in self.highlightList) {
-		[highlightAry safeAddObject:[e dictionaryValue]];
+		[highlightAry addObject:[e dictionaryValue]];
 	}
 
-	[dic safeSetObject:highlightAry forKey:@"highlightList"];
-	[dic safeSetObject:channelAry forKey:@"channelList"];
-	[dic safeSetObject:ignoreAry forKey:@"ignoreList"];
+	[dic maybeSetObject:highlightAry forKey:@"highlightList"];
+	[dic maybeSetObject:channelAry forKey:@"channelList"];
+	[dic maybeSetObject:ignoreAry forKey:@"ignoreList"];
 	
 	return dic;
 }
 
-- (id)mutableCopyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone *)zone
 {
-	IRCClientConfig *mut = [[IRCClientConfig allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
+	IRCClientConfig *mut = [[IRCClientConfig allocWithZone:zone] initWithDictionary:[self dictionaryValue] ignorePrivateMessages:NO checkKeychainStatus:NO];
+	
+	[mut setNicknamePassword:_nicknamePassword];
+	[mut setServerPassword:_serverPassword];
+	[mut setProxyPassword:_proxyPassword];
+	
+	[mut setNicknamePasswordIsSet:_nicknamePasswordIsSet];
+	[mut setServerPasswordIsSet:_serverPasswordIsSet];
+	[mut setProxyPasswordIsSet:_proxyPasswordIsSet];
+	
+	return mut;
+}
+
+- (id)copyWithoutPrivateMessages
+{
+	IRCClientConfig *mut = [[IRCClientConfig alloc] initWithDictionary:[self dictionaryValue] ignorePrivateMessages:YES checkKeychainStatus:NO];
 	
 	[mut setNicknamePassword:_nicknamePassword];
 	[mut setServerPassword:_serverPassword];

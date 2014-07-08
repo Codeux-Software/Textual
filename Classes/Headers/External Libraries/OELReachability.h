@@ -41,8 +41,8 @@ typedef void (^OELReachabilityNetworkReachableBlock)(OELReachability *reachabili
 typedef void (^OELReachabilityNetworkUnreachableBlock)(OELReachability *reachability);
 
 @interface OELReachability : NSObject
-@property (nonatomic, strong) OELReachabilityNetworkReachableBlock reachableBlock;
-@property (nonatomic, strong) OELReachabilityNetworkUnreachableBlock unreachableBlock;
+@property (nonatomic, copy) OELReachabilityNetworkReachableBlock reachableBlock;
+@property (nonatomic, copy) OELReachabilityNetworkUnreachableBlock unreachableBlock;
 
 + (OELReachability *)reachabilityForInternetConnection;
 

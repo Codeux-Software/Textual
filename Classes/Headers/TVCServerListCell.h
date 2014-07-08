@@ -39,19 +39,13 @@
 
 @interface TVCServerListCell : NSTableCellView
 @property (nonatomic, nweak) IRCTreeItem *cellItem;
-@property (nonatomic, nweak) NSTextField *customTextField;
-@property (nonatomic, nweak) NSImageView *backgroundImageCell;
-@property (nonatomic, nweak) NSImageView *badgeCountImageCell;
 
 - (NSDictionary *)drawingContext;
 
 - (void)updateDrawing:(NSRect)cellFrame;
-- (void)updateDrawing:(NSRect)cellFrame skipDrawingCheck:(BOOL)doNotLimit;
 
 - (void)updateGroupDisclosureTriangle;
 - (void)updateGroupDisclosureTriangle:(NSButton *)theButtonParent;
-
-- (void)updateSelectionBackgroundView;
 @end
 
 @interface TVCServerListCellChildItem : TVCServerListCell
@@ -61,4 +55,8 @@
 @end
 
 @interface TVCServerListRowCell : NSTableRowView
+@end
+
+@interface TVCServerLisCellTextFieldInterior : NSTextFieldCell
+@property (nonatomic, nweak) IBOutlet TVCServerListCell *parentCell;
 @end

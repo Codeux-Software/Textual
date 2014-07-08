@@ -65,7 +65,7 @@
 
 - (void)destroyConnectionRequest
 {
-	if (self.requestConnection) {
+	if ( self.requestConnection) {
 		[self.requestConnection cancel];
 	}
 	
@@ -89,7 +89,7 @@
 	[baseRequest setHTTPMethod:@"GET"];
 	
 	/* Create the connection and request it. */
-	self.requestConnection = [[NSURLConnection alloc] initWithRequest:baseRequest delegate:self];
+	 self.requestConnection = [[NSURLConnection alloc] initWithRequest:baseRequest delegate:self];
 	
 	[self.requestConnection start];
 }

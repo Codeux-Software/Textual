@@ -43,6 +43,4 @@
 #define TXMaximumIRCUsernameLength			40
 #define TXMaximumNodesPerModeCommand		4
 
-/* Command index. */
-TEXTUAL_EXTERN NSString *IRCPrivateCommandIndex(const char *key); 
-TEXTUAL_EXTERN NSString *IRCPublicCommandIndex(const char *key); 
+#define IRCProtocolDefaultNicknameMaximumLength			9

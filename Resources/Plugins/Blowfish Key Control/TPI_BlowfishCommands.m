@@ -74,41 +74,45 @@
 					senderInformation:(NSDictionary *)senderDict
 				   messageInformation:(NSDictionary *)messageDict
 {
-	NSString *person  = senderDict[@"senderNickname"];
-	NSString *message = messageDict[@"messageSequence"];
+	if (NSIsCurrentThreadMain() == NO) {
+		[[self invokeOnMainThread] didReceiveServerInputOnClient:client senderInformation:senderDict messageInformation:messageDict];
+	} else {
+		NSString *person  = senderDict[@"senderNickname"];
+		NSString *message = messageDict[@"messageSequence"];
 
-    if ([message hasPrefix:@"+"]) {
-        /* For some reason, NOTICE has a + prefix for key exchange on
-         freenode. This fixex that. */
-        
-        message = [message safeSubstringFromIndex:1];
-    }
-
-	BOOL isRequest = [message hasPrefix:TXExchangeRequestPrefix];
-	BOOL isResponse = [message hasPrefix:TXExchangeResponsePrefix];
-
-	if (isRequest || isResponse) {
-		if (isRequest) {
-			/* A request may create a query so it must be invoked on
-			 the main thread. Creating a channel requires access to
-			 WebKit and WebKit will throw an exception because they
-			 hate running on anything else. */
-
-			[self.iomt keyExchangeRequestReceived:message on:client from:person];
-		} else {
-			/* We do not want to create the channel if it is a response.
-			 If the user closed the query, then allow old request to expire.
-			 This is done so that the IRCChannel pointer part of our request
-			 dictionary will remain same instead of creating a new one and
-			 the old pointing to nothing. */
+		if ([message hasPrefix:@"+"]) {
+			/* For some reason, NOTICE has a + prefix for key exchange on
+			 freenode. This fixex that. */
 			
-			IRCChannel *channel = [client findChannel:person];
+			message = [message substringFromIndex:1];
+		}
 
-			if (channel) {
-				NSString *requestKey = [self keyExchangeDictionaryKey:channel];
+		BOOL isRequest = [message hasPrefix:TXExchangeRequestPrefix];
+		BOOL isResponse = [message hasPrefix:TXExchangeResponsePrefix];
 
-				if (NSObjectIsNotEmpty(requestKey)) {
-					[self keyExchangeResponseReceived:message on:client from:requestKey];
+		if (isRequest || isResponse) {
+			if (isRequest) {
+				/* A request may create a query so it must be invoked on
+				 the main thread. Creating a channel requires access to
+				 WebKit and WebKit will throw an exception because they
+				 hate running on anything else. */
+
+				[self keyExchangeRequestReceived:message on:client from:person];
+			} else {
+				/* We do not want to create the channel if it is a response.
+				 If the user closed the query, then allow old request to expire.
+				 This is done so that the IRCChannel pointer part of our request
+				 dictionary will remain same instead of creating a new one and
+				 the old pointing to nothing. */
+				
+				IRCChannel *channel = [client findChannel:person];
+
+				if (channel) {
+					NSString *requestKey = [self keyExchangeDictionaryKey:channel];
+
+					if (requestKey) {
+						[self keyExchangeResponseReceived:message on:client from:requestKey];
+					}
 				}
 			}
 		}
@@ -119,69 +123,74 @@
 						  commandString:(NSString *)commandString
 						  messageString:(NSString *)messageString
 {
-	IRCChannel *c = [[self worldController] selectedChannelOn:client];
-	
-	if ([c isChannel] || [c isPrivateMessage]) {
-		messageString = [messageString trimAndGetFirstToken];
+	if (NSIsCurrentThreadMain() == NO) {
+		[[self invokeOnMainThread] userInputCommandInvokedOnClient:client commandString:commandString messageString:messageString];
+	} else {
+		IRCChannel *c = [mainWindow() selectedChannelOn:client];
+		
+		if ([c isChannel] || [c isPrivateMessage]) {
+			messageString = [messageString trimAndGetFirstToken];
 
-		if ([commandString isEqualToString:@"SETKEY"]) {
-			if (NSObjectIsEmpty(messageString)) {
+			if ([commandString isEqualToString:@"SETKEY"]) {
+				if (NSObjectIsEmpty(messageString)) {
+					[c setEncryptionKey:nil];
+					
+					[client printDebugInformation:BLS(1004) channel:c];
+				} else {
+					if ([[c config] encryptionKeyIsSet]) {
+						if ([[[c config] encryptionKey] isEqualToString:messageString] == NO) {
+							[client printDebugInformation:BLS(1002) channel:c];
+						}
+					} else {
+						if ([c isPrivateMessage]) {
+							[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1002]") channel:c];
+						} else {
+							[client printDebugInformation:BLS(1003) channel:c];
+						}
+					}
+					
+					[c setEncryptionKey:messageString];
+				}
+			} else if ([commandString isEqualToString:@"DELKEY"]) {
 				[c setEncryptionKey:nil];
 				
-				[client printDebugInformation:TXTLS(@"BasicLanguage[1004]") channel:c];
-			} else {
+				[client printDebugInformation:BLS(1004) channel:c];
+			} else if ([commandString isEqualToString:@"KEY"]) {
 				if ([[c config] encryptionKeyIsSet]) {
-					if ([[[c config] encryptionKey] isEqualToString:messageString] == NO) {
-						[client printDebugInformation:TXTLS(@"BasicLanguage[1002]") channel:c];
-					}
-				} else {
-					if ([c isPrivateMessage]) {
-						[client printDebugInformation:TPILS(@"BasicLanguage[1002]") channel:c];
-					} else {
-						[client printDebugInformation:TXTLS(@"BasicLanguage[1003]") channel:c];
-					}
+					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1001]", [[c config] encryptionKey]) channel:c];
+				} else {	
+					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1000]") channel:c];
 				}
-				
-				[c setEncryptionKey:messageString];
-			}
-		} else if ([commandString isEqualToString:@"DELKEY"]) {
-			[c setEncryptionKey:nil];
-			
-			[client printDebugInformation:TXTLS(@"BasicLanguage[1004]") channel:c];
-		} else if ([commandString isEqualToString:@"KEY"]) {
-			if ([[c config] encryptionKeyIsSet]) {
-				[client printDebugInformation:TPIFLS(@"BasicLanguage[1001]", [[c config] encryptionKey]) channel:c];
-			} else {	
-				[client printDebugInformation:TPILS(@"BasicLanguage[1000]") channel:c];
-			}
-		} else if ([commandString isEqualToString:@"KEYX"]) {
-			if ([c isPrivateMessage] == NO) {
-				[client printDebugInformation:TPILS(@"BasicLanguage[1008]") channel:c];
-			} else {
-				if ([self keyExchangeRequestExists:c]) {
-					[client printDebugInformation:TPIFLS(@"BasicLanguage[1009]", [c name]) channel:c];
-				} else if ([[c config] encryptionKeyIsSet]) {
-                    [client printDebugInformation:TPIFLS(@"BasicLanguage[1016]", [c name]) channel:c];
-                } else {
-					CFDH1080 *keyRequest = [CFDH1080 new];
-
-					NSString *publicKey = [keyRequest generatePublicKey];
-
-					if (NSObjectIsEmpty(publicKey)) {
-						[client printDebugInformation:TPILS(@"BasicLanguage[1003]") channel:c];
+			} else if ([commandString isEqualToString:@"KEYX"]) {
+				if ([c isPrivateMessage] == NO) {
+					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1008]") channel:c];
+				} else {
+					if ([self keyExchangeRequestExists:c]) {
+						[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1009]", [c name]) channel:c];
+					} else if ([[c config] encryptionKeyIsSet]) {
+						[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1016]", [c name]) channel:c];
 					} else {
-						NSString *requestKey = [self keyExchangeDictionaryKey:c];
-						NSString *requestMsg = [TXExchangeRequestPrefix stringByAppendingString:publicKey];
+						CFDH1080 *keyRequest = [CFDH1080 new];
 
-						[[self keyExchangeRequests] setObject:@[keyRequest, c] forKey:requestKey];
+						NSString *publicKey = [keyRequest generatePublicKey];
 
-						[client sendText:[NSAttributedString emptyStringWithBase:requestMsg]
-								 command:IRCPrivateCommandIndex("notice")
-								 channel:c];
+						if (NSObjectIsEmpty(publicKey)) {
+							[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1003]") channel:c];
+						} else {
+							NSString *requestKey = [self keyExchangeDictionaryKey:c];
+							
+							NSString *requestMsg = [TXExchangeRequestPrefix stringByAppendingString:publicKey];
 
-						[self performSelectorOnMainThread:@selector(keyExchangeSetupTimeoutTimer:) withObject:requestKey waitUntilDone:NO];
-						
-						[client printDebugInformation:TPIFLS(@"BasicLanguage[1011]", [c name]) channel:c];
+							[[self keyExchangeRequests] setObject:@[keyRequest, c] forKey:requestKey];
+
+							[client sendText:[NSAttributedString emptyStringWithBase:requestMsg]
+									 command:IRCPrivateCommandIndex("notice")
+									 channel:c];
+
+							[self keyExchangeSetupTimeoutTimer:requestKey];
+							
+							[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1011]", [c name]) channel:c];
+						}
 					}
 				}
 			}
@@ -220,7 +229,7 @@
 	IRCChannel *channel = [client findChannelOrCreate:requestSender isPrivateMessage:YES];
 
     if ([[channel config] encryptionKeyIsSet]) {
-        [client printDebugInformation:TPIFLS(@"BasicLanguage[1015]", [channel name]) channel:channel];
+        [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1015]", [channel name]) channel:channel];
 
         return;
     }
@@ -233,8 +242,8 @@
 	//DebugLogToConsole(@"	Message: %@", requestData);
 	
 	if ([self keyExchangeRequestExists:channel]) {
-        [client printDebugInformation:TPIFLS(@"BasicLanguage[1010]", [channel name]) channel:channel];
-		[client printDebugInformation:TPIFLS(@"BasicLanguage[1009]", [channel name]) channel:channel];
+        [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1010]", [channel name]) channel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1009]", [channel name]) channel:channel];
 	} else {
 		CFDH1080 *keyRequest = [CFDH1080 new];
 
@@ -242,7 +251,7 @@
 		NSString *theSecret = [keyRequest secretKeyFromPublicKey:requestData];
 
 		if (NSObjectIsEmpty(theSecret)) {
-			[client printDebugInformation:TPILS(@"BasicLanguage[1004]") channel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1004]") channel:channel];
 
             return;
 		}
@@ -253,7 +262,7 @@
 		NSString *publicKey = [keyRequest generatePublicKey];
 
 		if (NSObjectIsEmpty(publicKey)) {
-			[client printDebugInformation:TPILS(@"BasicLanguage[1003]") channel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1003]") channel:channel];
 
             return;
 		}
@@ -270,12 +279,12 @@
 				 channel:channel
           withEncryption:NO];
 
-        [client printDebugInformation:TPIFLS(@"BasicLanguage[1010]", [channel name]) channel:channel];
-		[client printDebugInformation:TPIFLS(@"BasicLanguage[1013]", [channel name]) channel:channel];
+        [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1010]", [channel name]) channel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1013]", [channel name]) channel:channel];
 		
-		[client printDebugInformation:TPIFLS(@"BasicLanguage[1005]", [channel name]) channel:channel];
-		[client printDebugInformation:TPIFLS(@"BasicLanguage[1006]", [channel name]) channel:channel];
-		[client printDebugInformation:TPIFLS(@"BasicLanguage[1007]", [channel name]) channel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1005]", [channel name]) channel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1006]", [channel name]) channel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1007]", [channel name]) channel:channel];
 	}
 }
 
@@ -292,15 +301,16 @@
 		//DebugLogToConsole(@"	Message: %@", responseData);
 
 		CFDH1080 *request = exchangeData[0];
+		
 		IRCChannel *channel = exchangeData[1];
 
 		if ([[channel config] encryptionKeyIsSet]) {
-            [client printDebugInformation:TPIFLS(@"BasicLanguage[1015]", [channel name]) channel:channel];
+            [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1015]", [channel name]) channel:channel];
 
             return;
         }
 		
-		[client printDebugInformation:TPIFLS(@"BasicLanguage[1014]", [channel name]) channel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1014]", [channel name]) channel:channel];
 		
 		/* Compute the public key received against our own. Our original public key
 		 was sent to the user which has responded by computing their own against 
@@ -308,7 +318,7 @@
 		NSString *theSecret = [request secretKeyFromPublicKey:responseData];
 
 		if (NSObjectIsEmpty(theSecret)) {
-			return [client printDebugInformation:TPILS(@"BasicLanguage[1004]") channel:channel];
+			return [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1004]") channel:channel];
 		}
 		
 		//DebugLogToConsole(@"	Shared Secret: %@", theSecret);
@@ -316,9 +326,9 @@
 		[channel setEncryptionKey:theSecret];
 
 		/* Finish up. */
-		[client printDebugInformation:TPIFLS(@"BasicLanguage[1005]", [channel name]) channel:channel];
-		[client printDebugInformation:TPIFLS(@"BasicLanguage[1006]", [channel name]) channel:channel];
-		[client printDebugInformation:TPIFLS(@"BasicLanguage[1007]", [channel name]) channel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1005]", [channel name]) channel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1006]", [channel name]) channel:channel];
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1007]", [channel name]) channel:channel];
 		
 		[[self keyExchangeRequests] removeObjectForKey:responseKey];
 	}
@@ -339,7 +349,7 @@
 	if (NSObjectIsNotEmpty(requestKey)) {
 		IRCChannel *channel = requestData[1];
 		
-		[[channel client] printDebugInformation:TPIFLS(@"BasicLanguage[1012]", [channel name]) channel:channel];
+		[[channel associatedClient] printDebugInformation:TPILocalizedString(@"BasicLanguage[1012]", [channel name]) channel:channel];
 
 		[[self keyExchangeRequests] removeObjectForKey:requestKey];
 	}
@@ -366,7 +376,7 @@
 		if ([requestData count] == 2							&& // Array count is equal to 2.
 			PointerIsNotEmpty( request )						&& // Pointer are not empty.
 			PointerIsNotEmpty( channel )						&& // Pointer are not empty.
-			PointerIsNotEmpty([channel client])					&& // Pointer are not empty.
+			PointerIsNotEmpty([channel associatedClient])		&& // Pointer are not empty.
 			[request isKindOfClass:[CFDH1080 class]]			&& // Type of class is correct.
 			[channel isKindOfClass:[IRCChannel class]]) {		   // Type of class is correct.
 

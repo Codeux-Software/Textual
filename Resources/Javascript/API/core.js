@@ -36,9 +36,9 @@
  *********************************************************************** */
 
 /* Internal state. */
-var nicknameDoubleClickTimer;
-
 Textual = {
+	nicknameDoubleClickTimer: null,
+
 	/* Callbacks for each WebView in Textual. — Self explanatory. */
 	
 	/* These callbacks are limited to the context of this view. The view can represent either 
@@ -227,15 +227,15 @@ Textual = {
 
 	nicknameMaybeWasDoubleClicked: function(e)
 	{
-		if (nicknameDoubleClickTimer) {
-			clearTimeout(nicknameDoubleClickTimer);
+		if (Textual.nicknameDoubleClickTimer) {
+			clearTimeout(Textual.nicknameDoubleClickTimer);
 			
-			nicknameDoubleClickTimer = null;
+			Textual.nicknameDoubleClickTimer = null;
 				
 			Textual.nicknameDoubleClicked(e);
 		} else {
-			nicknameDoubleClickTimer = setTimeout(function() {
-				nicknameDoubleClickTimer = null;
+			Textual.nicknameDoubleClickTimer = setTimeout(function() {
+				Textual.nicknameDoubleClickTimer = null;
 
 				Textual.nicknameSingleClicked(e);
 			}, 250);
@@ -275,10 +275,30 @@ Textual = {
 	
 	toggleInlineImage: function(object) 
 	{
-		if (app.toggleInlineImage(object) == "false") {
-			return false;
-		}
+		/* toggleInlineImage() is called when an onclick event is thrown on the associated
+		link anchor of an inline image. If the last mouse down event was related to a resize,
+		then we return false to stop link from opening. Else, we pass the event information 
+		to the internals of Textual itself to determine whether to cancel the request. It may
+		decide to cancel the request if the shift key is held down. */
 		
-		return true;
+		if (InlineImageLiveResize.previousMouseActionWasForResizing) {
+			return false;
+		} else {
+			if (app.toggleInlineImage(object) == "false") {
+				return false;
+			} else {
+				return true;
+			}
+		}
+	},
+	
+	didToggleInlineImageToHidden: function(imageElement)
+	{
+		/* Do something here? */
+	},
+	
+	didToggleInlineImageToVisible: function(imageElement)
+	{
+		imageElement.addEventListener("mousedown", InlineImageLiveResize.onMouseDown, false);
 	},
 }

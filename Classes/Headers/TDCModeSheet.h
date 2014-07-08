@@ -39,9 +39,9 @@
 #import "TextualApplication.h"
 
 @interface TDCModeSheet : TDCSheetBase
-@property (nonatomic, strong) IRCChannelMode *mode;
-@property (nonatomic, strong) NSString *clientID;
-@property (nonatomic, strong) NSString *channelID;
+@property (nonatomic, copy) IRCChannelMode *mode;
+@property (nonatomic, copy) NSString *clientID;
+@property (nonatomic, copy) NSString *channelID;
 @property (nonatomic, nweak) IBOutlet NSButton *sCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *pCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *nCheck;

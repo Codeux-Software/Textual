@@ -8,14 +8,14 @@
 {
 	NSRect visibleRect = [aView visibleRect];
 	
-	visibleRect.origin.y = (NSHeight(aView.frame) - NSHeight(visibleRect));
+	visibleRect.origin.y = (NSHeight([aView frame]) - NSHeight(visibleRect));
 	
 	[aView scrollRectToVisible:visibleRect];
 }
 
 - (void)dealloc
 {
-	self.webFrame = nil;
+	[self setWebFrame:nil];
 }
 
 - (void)setWebFrame:(WebFrameView *)aWebFrame
@@ -40,9 +40,9 @@
 
 - (void)webViewDidChangeBounds:(NSNotification *)aNotification
 {
-	NSClipView *clipView = [self.webFrame.documentView.enclosingScrollView contentView];
+	NSClipView *clipView = [[[self.webFrame documentView] enclosingScrollView] contentView];
 	
-	if (NSDissimilarObjects(clipView, aNotification.object)) {
+	if (NSDissimilarObjects(clipView, [aNotification object])) {
 		return;
 	}
 	
@@ -53,7 +53,9 @@
 {
 	NSView *view = [aNotification object];
 	
-	if (NSDissimilarObjects(view, self.webFrame) && NSDissimilarObjects(view, self.webFrame.documentView)) {
+	if (NSDissimilarObjects(view,  self.webFrame) &&
+		NSDissimilarObjects(view, [self.webFrame documentView]))
+	{
 		return;
 	}
 	

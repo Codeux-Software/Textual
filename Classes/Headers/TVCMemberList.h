@@ -39,8 +39,9 @@
 
 @interface TVCMemberList : NSOutlineView
 @property (nonatomic, uweak) id keyDelegate;
-@property (nonatomic, strong) id badgeRenderer;
-@property (nonatomic, assign) BOOL setHiddenByUser;
+@property (nonatomic, assign) BOOL isHiddenByUser;
+@property (nonatomic, strong) TVCMemberListCellBadge *badgeRenderer;
+@property (nonatomic, strong) IBOutlet TVCMemberListUserInfoPopover *memberListUserInfoPopover;
 
 /* Additions & Removals. */
 - (void)addItemToList:(NSInteger)index;
@@ -63,11 +64,6 @@
 - (void)updateDrawingForRow:(NSInteger)rowIndex;
 
 - (void)updateBackgroundColor;
-
-- (BOOL)windowIsActive;
-
-/* Badge renderer. */
-- (void)createBadgeRenderer;
 
 /* Event monitor. */
 - (void)destroyUserInfoPopoverOnWindowKeyChange;

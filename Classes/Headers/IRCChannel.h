@@ -39,18 +39,17 @@
 #import "IRCTreeItem.h" // superclass
 
 typedef enum IRCChannelStatus : NSInteger {
-	IRCChannelParted,
-	IRCChannelJoining,
-	IRCChannelJoined,
-	IRCChannelTerminated,
+	IRCChannelStatusParted,
+	IRCChannelStatusJoining,
+	IRCChannelStatusJoined,
+	IRCChannelStatusTerminated,
 } IRCChannelStatus;
 
 @interface IRCChannel : IRCTreeItem <NSOutlineViewDataSource, NSOutlineViewDelegate>
 @property (nonatomic, nweak) NSString *name;
-@property (nonatomic, strong) NSString *topic;
-@property (nonatomic, strong) TLOFileLogger *logFile;
+@property (nonatomic, copy) NSString *topic;
+@property (nonatomic, copy) IRCChannelConfig *config;
 @property (nonatomic, strong) IRCChannelMode *modeInfo;
-@property (nonatomic, strong) IRCChannelConfig *config;
 @property (nonatomic, assign) IRCChannelStatus status;
 @property (nonatomic, assign) BOOL errorOnLastJoinAttempt;
 @property (nonatomic, assign) BOOL inUserInvokedModeRequest;
@@ -78,32 +77,42 @@ typedef enum IRCChannelStatus : NSInteger {
 - (void)activate;
 - (void)deactivate;
 
+- (NSURL *)logFilePath;
+
 - (void)writeToLogFile:(TVCLogLine *)line;
 
 - (void)print:(TVCLogLine *)logLine;
 - (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock;
 
+- (void)setEncryptionKey:(NSString *)encryptionKey; // Use this instead of config to inform view of change.
+
+- (BOOL)memberExists:(NSString *)nickname;
+
 - (IRCUser *)findMember:(NSString *)nickname;
 - (IRCUser *)findMember:(NSString *)nickname options:(NSStringCompareOptions)mask;
 
-- (IRCUser *)memberWithNickname:(NSString *)nickname;
-- (IRCUser *)memberAtIndex:(NSInteger)idx; // idx must be on table view.
+- (IRCUser *)memberWithNickname:(NSString *)nickname TEXTUAL_DEPRECATED; // Use findMember:
 
 - (void)addMember:(IRCUser *)user;
 - (void)removeMember:(NSString *)nickname;
 - (void)renameMember:(NSString *)fromNickname to:(NSString *)toNickname;
 - (void)changeMember:(NSString *)nickname mode:(NSString *)mode value:(BOOL)value;
 
-- (void)clearMembers;
+- (void)clearMembers; // This will not reload table view. 
 
 - (NSInteger)numberOfMembers;
 
-- (NSArray *)unsortedMemberList;
+/* -unsortedMemberList actually invokes -sortedByChannelRankMemberList. 
+ It is marked as deprecated instead of being completely removed for now. */
+- (NSArray *)unsortedMemberList TEXTUAL_DEPRECATED;
+
+/* The member list methods returns the actual instance of user stored in 
+ the channels internal cache. IRCUser is not KVO based so if you modify a
+ user returned, then do Textual the kindness of reloading that member in 
+ the member list view. */
+- (NSArray *)sortedByChannelRankMemberList;
 - (NSArray *)sortedByNicknameLengthMemberList;
 
-- (void)setEncryptionKey:(NSString *)encryptionKey; // Use this instead of config to inform view of change.
-
-/* For redrawing the member cells in table view. */
 - (BOOL)memberRequiresRedraw:(IRCUser *)user1 comparedTo:(IRCUser *)user2;
 
 - (void)updateAllMembersOnTableView;
@@ -111,6 +120,4 @@ typedef enum IRCChannelStatus : NSInteger {
 
 - (void)reloadDataForTableView;
 - (void)reloadDataForTableViewBySortingMembers;
-
-- (void)updateTableViewByRemovingIgnoredUsers;
 @end

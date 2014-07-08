@@ -38,75 +38,30 @@
 
 #import "TextualApplication.h"
 
-@interface TXMasterController : NSObject <NSSplitViewDelegate, NSApplicationDelegate, NSWindowDelegate, BITHockeyManagerDelegate>
-@property (nonatomic, strong) IRCWorld *world;
-@property (nonatomic, assign) BOOL ghostMode;
-@property (nonatomic, assign) BOOL terminating;
-@property (nonatomic, assign) BOOL debugModeOn;
-@property (nonatomic, assign) BOOL skipTerminateSave;
-@property (nonatomic, assign) BOOL applicationIsActive;
-@property (nonatomic, assign) BOOL applicationIsChangingActiveState;
-@property (nonatomic, assign) BOOL applicationIsRunningInHighResMode;
-@property (nonatomic, nweak) IBOutlet NSBox *channelViewBox;
-@property (nonatomic, nweak) IBOutlet TVCMainWindowSplitView *contentSplitView;
-@property (nonatomic, nweak) IBOutlet TVCMainWindowLoadingScreenView *mainWindowLoadingScreen;
-@property (nonatomic, nweak) IBOutlet TVCMainWindowSegmentedCell *mainWindowButtonControllerCell;
-@property (nonatomic, nweak) IBOutlet TVCMainWindowSegmentedControl *mainWindowButtonController;
-@property (nonatomic, nweak) IBOutlet TVCMemberList *memberList;
-@property (nonatomic, nweak) IBOutlet TVCMemberListUserInfoPopover *memberListUserInfoPopover;
-@property (nonatomic, nweak) IBOutlet TVCServerList *serverList;
-@property (nonatomic, nweak) IBOutlet TVCTextFormatterMenu *formattingMenu;
-@property (nonatomic, nweak) IBOutlet TXMenuController *menuController;
-@property (nonatomic, strong) TLOGrowlController *growlController;
-@property (nonatomic, strong) TLONickCompletionStatus *completionStatus;
-@property (nonatomic, strong) TLOSpeechSynthesizer *speechSynthesizer;
-@property (nonatomic, strong) TPCThemeController *themeControllerPntr;
-@property (nonatomic, uweak) IBOutlet TVCMainWindowTextView *inputTextField;
-@property (nonatomic, uweak) IBOutlet TVCMainWindow *mainWindow;
-
-/* self.inputHistory may return the inputHistory controller of the selected view
- instead of _globalInputHistory if Textual is configured to use channel specific
- input history. In that case, _globalInputHistory does not exist. */
-@property (nonatomic, strong) TLOInputHistory *globalInputHistory;
-
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-@property (nonatomic, strong) TPCPreferencesCloudSync *cloudSyncManager;
+#ifndef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_DISABLED
+@interface TXMasterController : NSObject <NSApplicationDelegate, BITHockeyManagerDelegate>
+#else
+@interface TXMasterController : NSObject <NSApplicationDelegate>
 #endif
 
-@property (assign) NSInteger terminatingClientCount;
+@property (nonatomic, strong) IRCWorld *world;
+@property (nonatomic, assign) BOOL ghostModeIsOn;
+@property (nonatomic, assign) BOOL debugModeIsOn;
+@property (nonatomic, assign) BOOL skipTerminateSave;
+@property (nonatomic, assign) BOOL applicationIsActive;
+@property (nonatomic, assign) BOOL applicationIsTerminating;
+@property (nonatomic, assign) BOOL applicationIsChangingActiveState;
+@property (nonatomic, assign) NSInteger terminatingClientCount;
+@property (nonatomic, strong) IBOutlet TVCMainWindow *mainWindow;
+@property (nonatomic, nweak) IBOutlet TXMenuController *menuController;
 
-- (IBAction)openWelcomeSheet:(id)sender;
+/* Both wake cycle methods are invoked by TVCMainWindow -awakeFromNib */
+- (void)performAwakeningBeforeMainWindowDidLoad;
+- (void)performAwakeningAfterMainWindowDidLoad;
 
-- (void)textEntered;
-
-- (void)updateSegmentedController;
-- (void)reloadSegmentedControllerOrigin;
-
-- (void)selectNextServer:(NSEvent *)e;
-- (void)selectNextChannel:(NSEvent *)e;
-- (void)selectNextWindow:(NSEvent *)e;
-- (void)selectPreviousServer:(NSEvent *)e;
-- (void)selectPreviousChannel:(NSEvent *)e;
-- (void)selectPreviousWindow:(NSEvent *)e;
-- (void)selectNextActiveServer:(NSEvent *)e;
-- (void)selectNextUnreadChannel:(NSEvent *)e;
-- (void)selectNextActiveChannel:(NSEvent *)e;
-- (void)selectPreviousSelection:(NSEvent *)e;
-- (void)selectPreviousActiveServer:(NSEvent *)e;
-- (void)selectPreviousUnreadChannel:(NSEvent *)e;
-- (void)selectPreviousActiveChannel:(NSEvent *)e;
-@end
-
-@interface NSObject (TXMasterControllerObjectExtension)
-- (TXMasterController *)masterController;
-+ (TXMasterController *)masterController;
-
-- (IRCWorld *)worldController;
-+ (IRCWorld *)worldController;
-
-- (TPCThemeController *)themeController;
-+ (TPCThemeController *)themeController;
-
-- (TXMenuController *)menuController;
-+ (TXMenuController *)menuController;
+/* Notifications are delegated to TVCMainWindow and TVCMainWindow 
+ hands important notifications back to this class. */
+- (void)windowDidChangeScreen:(NSNotification *)notification;
+- (void)windowDidBecomeKey:(NSNotification *)notification;
+- (void)windowDidResignKey:(NSNotification *)notification;
 @end

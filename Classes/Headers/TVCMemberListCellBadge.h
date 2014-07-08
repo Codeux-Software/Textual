@@ -38,14 +38,4 @@
 #import "TextualApplication.h"
 
 @interface TVCMemberListCellBadge : NSObject
-@property (nonatomic, strong, readonly) NSImage *userModeBadgeImage_Y;
-@property (nonatomic, strong, readonly) NSImage *userModeBadgeImage_Q;
-@property (nonatomic, strong, readonly) NSImage *userModeBadgeImage_A;
-@property (nonatomic, strong, readonly) NSImage *userModeBadgeImage_O;
-@property (nonatomic, strong, readonly) NSImage *userModeBadgeImage_H;
-@property (nonatomic, strong, readonly) NSImage *userModeBadgeImage_V;
-@property (nonatomic, strong, readonly) NSImage *userModeBadgeImage_X;
-@property (nonatomic, strong, readonly) NSImage *userModeBadgeImage_Selected;
-
-- (void)invalidateBadgeImageCacheAndRebuild;
 @end
