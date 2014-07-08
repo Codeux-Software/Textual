@@ -74,6 +74,19 @@
 	return sharedSelf;
 }
 
+- (void)migrateValuesToGroupContainer
+{
+	if ([TPCPreferences featureAvailableToOSXMavericks]) {
+		NSDictionary *localDictionary = [super dictionaryRepresentation];
+		
+		for (NSString *dictKey in localDictionary) {
+			if ([_groupDefaults objectForKey:dictKey] == nil) {
+				[_groupDefaults setObject:localDictionary[dictKey] forKey:dictKey];
+			}
+		}
+	}
+}
+
 - (void)setObject:(id)value forKey:(NSString *)defaultName
 {
 	[RZUserDefaultsValueProxy() setValue:value forKey:defaultName];
