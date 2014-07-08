@@ -38,15 +38,8 @@
 
 #import "TextualApplication.h"
 
-#define NSDictionaryObjectKeyValueCompare(o,n,s)			   (id)(([o containsKey:n]) ? [o objectForKey:n]  : s) 
-#define NSDictionaryIntegerKeyValueCompare(o,n,s)		(NSInteger)(([o containsKey:n]) ? [o integerForKey:n] : s)
-#define NSDictionaryBOOLKeyValueCompare(o,n,s)               (BOOL)(([o containsKey:n]) ? [o boolForKey:n]    : s)
-#define NSDictionaryFloatKeyValueCompare(o,n,s)				(float)(([o containsKey:n]) ? [o floatForKey:n]   : s)
-#define NSDictionaryDoubleKeyValueCompare(o,n,s)		   (double)(([o containsKey:n]) ? [o doubleForKey:n]  : s)
-
 @interface NSDictionary (TXDictionaryHelper)
 - (NSString *)stringForKey:(NSString *)key;
-
 - (BOOL)boolForKey:(NSString *)key;
 - (NSArray *)arrayForKey:(NSString *)key;
 - (NSDictionary *)dictionaryForKey:(NSString *)key;
@@ -55,6 +48,30 @@
 - (double)doubleForKey:(NSString *)key;
 - (float)floatForKey:(NSString *)key;
 - (void *)pointerForKey:(NSString *)key;
+
+- (id)objectForKey:(id)key orUseDefault:(id)defaultValue;
+- (NSString *)stringForKey:(id)key orUseDefault:(NSString *)defaultValue;
+- (BOOL)boolForKey:(NSString *)key orUseDefault:(BOOL)defaultValue;
+- (NSArray *)arrayForKey:(NSString *)key orUseDefault:(NSArray *)defaultValue;
+- (NSDictionary *)dictionaryForKey:(NSString *)key orUseDefault:(NSDictionary *)defaultValue;
+- (NSInteger)integerForKey:(NSString *)key orUseDefault:(NSInteger)defaultValue;
+- (long long)longLongForKey:(NSString *)key orUseDefault:(long long)defaultValue;
+- (double)doubleForKey:(NSString *)key orUseDefault:(double)defaultValue;
+- (float)floatForKey:(NSString *)key orUseDefault:(float)defaultValue;
+
+/* The assign… helpers ask the dictionary whether the key exists and if 
+ it does, it sets the value to pointer. Otherwise, it does absolutely nothing. */
+/* When returning a string, dictionary, or array; the value is copied to pointer. */
+- (void)assignObjectTo:(__strong id *)pointer forKey:(NSString *)key;
+- (void)assignObjectTo:(__strong id *)pointer forKey:(NSString *)key performCopy:(BOOL)copyValue;
+- (void)assignStringTo:(__strong NSString **)pointer forKey:(NSString *)key;
+- (void)assignBoolTo:(BOOL *)pointer forKey:(NSString *)key;
+- (void)assignArrayTo:(__strong NSArray **)pointer forKey:(NSString *)key;
+- (void)assignDictionaryTo:(__strong NSDictionary **)pointer forKey:(NSString *)key;
+- (void)assignIntegerTo:(NSInteger *)pointer forKey:(NSString *)key;
+- (void)assignLongLongTo:(long long *)pointer forKey:(NSString *)key;
+- (void)assignDoubleTo:(double *)pointer forKey:(NSString *)key;
+- (void)assignFloatTo:(float *)pointer forKey:(NSString *)key;
 
 - (NSString *)firstKeyForObject:(id)object;
 
@@ -71,8 +88,13 @@
 @end
 
 @interface NSMutableDictionary (TXMutableDictionaryHelper)
-- (void)safeSetObject:(id)value forKey:(NSString *)key;
-- (void)safeSetObjectWithoutOverride:(id)value forKey:(NSString *)key;
+- (void)safeSetObject:(id)value forKey:(NSString *)key TEXTUAL_DEPRECATED;
+- (void)safeSetObjectWithoutOverride:(id)value forKey:(NSString *)key TEXTUAL_DEPRECATED;
+
+/* maybeSetObject provides nil checks for inserted objects. */
+- (void)maybeSetObject:(id)value forKey:(NSString *)key;
+
+- (void)setObjectWithoutOverride:(id)value forKey:(NSString *)key;
 
 - (void)setBool:(BOOL)value forKey:(NSString *)key;
 - (void)setInteger:(NSInteger)value forKey:(NSString *)key;

@@ -25,6 +25,7 @@ cd "${PROJECT_DIR}/.tmp/"
 echo "/* ANY CHANGES TO THIS FILE WILL NOT BE SAVED AND WILL NOT BE COMMITTED */" > BuildConfig.h
 echo "" >> BuildConfig.h
 echo "#define TXBundleCommitCount		@\"${gitCommitCount}\"" >> BuildConfig.h
+echo "#define TXBundleGroupIdentifier	@\"${TEXTUAL_GROUP_ID}\"" >> BuildConfig.h
 
 if [ -n "$CODE_SIGN_IDENTITY" ]; then
 echo "#define TXBundleBuildReference	@\"${buildRef}\"" >> BuildConfig.h

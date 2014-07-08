@@ -38,8 +38,9 @@
 
 #import "TextualApplication.h"
 
-#define TXDefaultTextualLogStyle			@"resource:Simplified Light"
-#define TXDefaultTextualLogFont				@"Lucida Grande"
+#define TXDefaultTextualChannelViewStyle			@"resource:Simplified Light"
+#define TXDefaultTextualChannelViewFont				@"Lucida Grande"
+
 #define TXDefaultTextualTimestampFormat		TLOFileLoggerTwentyFourHourClockFormat
 
 #define TPCPreferencesThemeNameDefaultsKey						@"Theme -> Name"
@@ -85,11 +86,11 @@ typedef enum TXHostmaskBanFormat : NSInteger {
 	TXHostmaskBanExactFormat  = 3, // Exact Match
 } TXHostmaskBanFormat;
 
-typedef enum TXMainTextBoxFontSize : NSInteger {
-	TXMainTextBoxFontNormalSize			= 1,
-	TXMainTextBoxFontLargeSize			= 2,
-	TXMainTextBoxFontExtraLargeSize		= 3,
-} TXMainTextBoxFontSize;
+typedef enum TVCMainWindowTextViewFontSize : NSInteger {
+	TVCMainWindowTextViewFontNormalSize			= 1,
+	TVCMainWindowTextViewFontLargeSize			= 2,
+	TVCMainWindowTextViewFontExtraLargeSize		= 3,
+} TVCMainWindowTextViewFontSize;
 
 typedef enum TXFileTransferRequestReplyAction : NSInteger {
 	TXFileTransferRequestReplyIgnoreAction						= 1,
@@ -102,82 +103,8 @@ typedef enum TXFileTransferIPAddressDetectionMethod : NSInteger {
 	TXFileTransferIPAddressManualDetectionMethod			= 2,
 } TXFileTransferIPAddressDetectionMethod;
 
-/* These actions are used for import purposes. */
-typedef enum TPCPreferencesKeyReloadAction : NSInteger {
-	TPCPreferencesKeyReloadDockIconBadgesAction,
-	TPCPreferencesKeyReloadHighlightKeywordsAction,
-	TPCPreferencesKeyReloadHighlightLoggingAction,
-	TPCPreferencesKeyReloadInputHistoryScopeAction,
-	TPCPreferencesKeyReloadMainWindowAppearanceAction,
-	TPCPreferencesKeyReloadMainWindowTransparencyLevelAction,
-	TPCPreferencesKeyReloadMemberListAction,
-	TPCPreferencesKeyReloadMemberListSortOrderAction,
-	TPCPreferencesKeyReloadMemberListUserBadgesAction,
-	TPCPreferencesKeyReloadPreferencesChangedAction,
-	TPCPreferencesKeyReloadServerListAction,
-	TPCPreferencesKeyReloadStyleAction,
-	TPCPreferencesKeyReloadStyleWithTableViewsAction,
-	TPCPreferencesKeyReloadTextDirectionAction,
-	TPCPreferencesKeyReloadTextFieldFontSizeAction,
-	TPCPreferencesKeyReloadTextFieldSegmentedControllerOriginAction
-} TPCPreferencesKeyReloadAction;
-
 @interface TPCPreferences : NSObject
-+ (BOOL)isDefaultIRCClient;
-
-+ (BOOL)sandboxEnabled;
-
-+ (NSDate *)applicationLaunchDate;
-+ (NSTimeInterval)timeIntervalSinceApplicationLaunch;
-+ (NSTimeInterval)timeIntervalSinceApplicationInstall;
-+ (void)saveTimeIntervalSinceApplicationInstall;
-
-+ (NSInteger)applicationRunCount;
-+ (void)updateApplicationRunCount;
-
-+ (NSSize)minimumWindowSize;
-+ (NSRect)defaultWindowFrame;
-
-+ (BOOL)featureAvailableToOSXLion;
-+ (BOOL)featureAvailableToOSXMountainLion;
-+ (BOOL)featureAvailableToOSXMavericks;
-+ (BOOL)featureAvailableToOSXYosemite;
-
-+ (BOOL)runningInHighResolutionMode;
-
 + (NSString *)masqueradeCTCPVersion;
-
-+ (NSString *)applicationName;
-+ (NSString *)applicationBundleIdentifier;
-
-+ (NSInteger)applicationProcessID;
-
-+ (NSString *)gitBuildReference;
-+ (NSString *)gitCommitCount;
-
-+ (NSDictionary *)textualInfoPlist;
-
-+ (NSString *)applicationBundlePath;
-+ (NSString *)applicationSupportFolderPath;
-+ (NSString *)applicationTemporaryFolderPath;
-+ (NSString *)applicationCachesFolderPath;
-+ (NSString *)applicationResourcesFolderPath;
-+ (NSString *)customExtensionFolderPath;
-+ (NSString *)customThemeFolderPath;
-+ (NSString *)bundledThemeFolderPath;
-+ (NSString *)bundledExtensionFolderPath;
-+ (NSString *)bundledScriptFolderPath;
-+ (NSString *)systemUnsupervisedScriptFolderPath; // Textual's folder.
-+ (NSString *)systemUnsupervisedScriptFolderRootPath; // Root path.
-+ (NSString *)userHomeDirectoryPathOutsideSandbox;
-+ (NSString *)userDownloadFolderPath;
-
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-+ (NSString *)applicationUbiquitousContainerPath;
-
-+ (NSString *)cloudCustomThemeFolderPath; // Actual iCloud folder.
-+ (NSString *)cloudCustomThemeCachedFolderPath; // Where iCloud folder is cached locally.
-#endif
 
 + (BOOL)channelNavigationIsServerSpecific;
 
@@ -185,24 +112,16 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 
 + (BOOL)rememberServerListQueryStates;
 
-+ (TXMainTextBoxFontSize)mainTextBoxFontSize;
++ (TVCMainWindowTextViewFontSize)mainTextViewFontSize;
 
-+ (BOOL)logTranscript;
++ (BOOL)logToDisk; // Checks whether checkbox for logging is checked.
++ (BOOL)logToDiskIsEnabled; // Checks whether checkbox is checked and whether an actual path is configured.
 
 + (BOOL)postNotificationsWhileInFocus;
 
 + (BOOL)automaticallyFilterUnicodeTextSpam;
 
 + (BOOL)conversationTrackingIncludesUserModeSymbol;
-
-+ (NSURL *)transcriptFolder;
-+ (void)setTranscriptFolder:(id)value;
-
-+ (NSArray *)publicIRCCommandList;
-+ (NSInteger)indexOfIRCommand:(NSString *)command;
-+ (NSInteger)indexOfIRCommand:(NSString *)command publicSearch:(BOOL)isPublic;
-
-+ (NSArray *)IRCCommandIndex:(BOOL)isPublic;
 
 + (NSString *)defaultRealname;
 + (NSString *)defaultUsername;
@@ -215,11 +134,6 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 + (NSString *)IRCopDefaultShunMessage;
 
 + (BOOL)giveFocusOnMessageCommand;
-
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-+ (BOOL)syncPreferencesToTheCloud; /* ZE CLOUD! */
-+ (BOOL)syncPreferencesToTheCloudLimitedToServers;
-#endif
 
 + (BOOL)amsgAllConnections;
 + (BOOL)awayAllConnections;
@@ -280,7 +194,7 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 
 + (TXHostmaskBanFormat)banFormat;
 
-+ (TXFSLongInt)inlineImagesMaxFilesize;
++ (TXUnsignedLongLong)inlineImagesMaxFilesize;
 
 + (NSInteger)inlineImagesMaxWidth;
 + (void)setInlineImagesMaxWidth:(NSInteger)value;
@@ -308,10 +222,9 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 
 + (void)setThemeChannelViewFontSize:(double)value;
 
-+ (NSInteger)maxLogLines;
-+ (void)setMaxLogLines:(NSInteger)value;
++ (NSInteger)scrollbackLimit;
++ (void)setScrollbackLimit:(NSInteger)value;
 
-+ (NSString *)titleForEvent:(TXNotificationType)event;
 + (NSString *)soundForEvent:(TXNotificationType)event;
 
 + (BOOL)speakEvent:(TXNotificationType)event;
@@ -320,6 +233,7 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 + (BOOL)bounceDockIconForEvent:(TXNotificationType)event;
 
 + (void)setSound:(NSString *)value forEvent:(TXNotificationType)event;
+
 + (void)setGrowlEnabled:(BOOL)value forEvent:(TXNotificationType)event;
 + (void)setDisabledWhileAway:(BOOL)value forEvent:(TXNotificationType)event;
 + (void)setBounceDockIcon:(BOOL)value forEvent:(TXNotificationType)event;
@@ -358,14 +272,9 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 
 + (void)cleanUpHighlightKeywords;
 
-+ (void)defaultIRCClientPrompt:(BOOL)forced;
-
 + (NSDictionary *)defaultPreferences;
 
 + (void)initPreferences;
-
-#pragma mark -
-#pragma mark NSTextView Preferences
 
 + (BOOL)textFieldAutomaticSpellCheck;
 + (void)setTextFieldAutomaticSpellCheck:(BOOL)value;
@@ -393,10 +302,4 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 
 + (BOOL)textFieldTextReplacement;
 + (void)setTextFieldTextReplacement:(BOOL)value;
-
-+ (BOOL)performValidationForKeyValues:(BOOL)duringInitialization;
-
-/* The following should only be called by TPCPreferencesImportExport */
-+ (void)performReloadActionForKeyValues:(NSArray *)prefKeys;
-+ (void)performReloadActionForActionType:(TPCPreferencesKeyReloadAction)reloadAction;
 @end

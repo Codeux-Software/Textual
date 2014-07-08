@@ -75,7 +75,7 @@
 				return NO;
 			}
 		} else if (0x80 <= c && c <= 0xBF) {
-			code = (code << 6) | (c & 0x3F);
+			code = ((code << 6) | (c & 0x3F));
 			
 			if (--rest <= 0) {
 				if (NSLocationInRange(code, range) == NO || (0xD800 <= code && code <= 0xDFFF)) {

@@ -48,7 +48,7 @@
 @interface TVCImageURLoader ()
 @property (nonatomic, nweak) TVCLogController *requestOwner;
 @property (nonatomic, strong) NSMutableData *responseData;
-@property (nonatomic, strong) NSString *requestImageUniqeID;
+@property (nonatomic, copy) NSString *requestImageUniqeID;
 @property (nonatomic, strong) NSURLConnection *requestConnection;
 @property (nonatomic, strong) NSHTTPURLResponse *requestResponse;
 @property (nonatomic, assign) BOOL isInRequestWithCheckForMaximumHeight;
@@ -61,7 +61,7 @@
 
 - (void)destroyConnectionRequest
 {
-	if (self.requestConnection) {
+	if ( self.requestConnection) {
 		[self.requestConnection cancel];
 	}
 
@@ -95,7 +95,7 @@
 
 	/* This is stored in a local variable so that a user changing something during a load in
 	 progess, it does not fuck up any of the already existing requests. */
-	self.isInRequestWithCheckForMaximumHeight = ([TPCPreferences inlineImagesMaxHeight] > 0);
+		self.isInRequestWithCheckForMaximumHeight = ([TPCPreferences inlineImagesMaxHeight] > 0);
 
 	if (self.isInRequestWithCheckForMaximumHeight) {
 		self.responseData = [NSMutableData data];
@@ -107,7 +107,7 @@
 	self.requestImageUniqeID = uniqueID;
 	self.requestOwner = controller;
 
-	self.requestConnection = [[NSURLConnection alloc] initWithRequest:baseRequest delegate:self];
+	 self.requestConnection = [[NSURLConnection alloc] initWithRequest:baseRequest delegate:self];
 
 	[self.requestConnection start];
 }
@@ -120,9 +120,9 @@
 	PointerIsEmptyAssertReturn(self.requestResponse, NO);
 
 	/* Get data from headers. */
-	NSDictionary *headers = self.requestResponse.allHeaderFields;
+	NSDictionary *headers = [self.requestResponse allHeaderFields];
 
-	TXFSLongInt sizeInBytes = [headers longLongForKey:@"Content-Length"];
+	TXUnsignedLongLong sizeInBytes = [headers longLongForKey:@"Content-Length"];
 
 	NSString *imageContentType = [headers stringForKey:@"Content-Type"];
 
@@ -144,15 +144,15 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
 	/* Yay! It finished loading. Time to check the data out. :-D */
-	BOOL isValidResponse = (self.requestResponse.statusCode == 200); // Setting as a var incase I end up adding more conditions down the line.
+	BOOL isValidResponse = ([self.requestResponse statusCode] == 200); // Setting as a var incase I end up adding more conditions down the line.
 
     if (isValidResponse) {
 		if (self.isInRequestWithCheckForMaximumHeight) { // Are we checking the actual image size?
-			if (PointerIsEmpty(self.responseData)) {
+			if (self.responseData == nil) {
 				return [self destroyConnectionRequest]; // Destroy and return for bad input.
 			}
 			
-			CGImageSourceRef imageSource = CGImageSourceCreateWithData ((__bridge CFDataRef)self.responseData, NULL);
+			CGImageSourceRef imageSource = CGImageSourceCreateWithData((__bridge CFDataRef)_responseData, NULL);
 			
 			if (PointerIsEmpty(imageSource)) {
 				return [self destroyConnectionRequest]; // Destroy and return for bad input.
@@ -179,7 +179,7 @@
 			}
 
 			/* Post the image. */
-			if (self.requestOwner) {
+			if ( self.requestOwner) {
 				[self.requestOwner imageLoaderFinishedLoadingForImageWithID:self.requestImageUniqeID orientation:[orientation integerValue]];
 			}
 

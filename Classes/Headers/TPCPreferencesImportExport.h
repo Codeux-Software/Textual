@@ -37,8 +37,8 @@
 
 #import "TextualApplication.h"
 
-#define TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	@"Theme -> Font Name -> Did Not Exist During Last Sync"
 #define TPCPreferencesThemeNameMissingLocallyDefaultsKey		@"Theme -> Name -> Did Not Exist During Last Sync"
+#define TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	@"Theme -> Font Name -> Did Not Exist During Last Sync"
 
 /* Absolutely no plugin should call this class. */
 @interface TPCPreferencesImportExport : NSObject

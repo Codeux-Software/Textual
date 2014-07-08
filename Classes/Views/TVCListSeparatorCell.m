@@ -43,7 +43,7 @@
 {
 	NSString *value = [self stringValue];
 	
-	if ([value isEqualToString:TXDefaultListSeperatorCellIndex]) {
+	if ([value isEqualToString:TVCListSeparatorCellItemIndex]) {
 		NSColor *fillColor = [NSColor darkGrayColor];
 		
 		CGFloat lineW = 0;

@@ -53,16 +53,18 @@
 	settings[(id)kCFStreamSSLIsServer] = (id)kCFBooleanFalse;
 	settings[(id)kCFStreamSSLPeerName] = (id)client.config.serverAddress;
 
-	if (client.connectType == IRCConnectBadSSLCertificateMode) {
+	if ([client connectType] == IRCClientConnectBadSSLCertificateMode) {
 		settings[(id)kCFStreamSSLValidatesCertificateChain] = (id)kCFBooleanFalse;
 	} else {
 		settings[(id)kCFStreamSSLValidatesCertificateChain] = (id)kCFBooleanTrue;
 	}
 	
-	if (client.config.identitySSLCertificate) {
+	NSData *localCertData = client.config.identitySSLCertificate;
+	
+	if (localCertData) {
 		SecKeychainItemRef cert;
 		
-		CFDataRef rawCertData = (__bridge CFDataRef)(client.config.identitySSLCertificate);
+		CFDataRef rawCertData = (__bridge CFDataRef)(localCertData);
 		
 		OSStatus status = SecKeychainItemCopyFromPersistentReference(rawCertData, &cert);
 		
@@ -74,7 +76,7 @@
 			if (status == noErr) {
 				settings[(id)kCFStreamSSLCertificates] = @[(__bridge id)identity, (__bridge id)cert];
 
-				controller.isConnectedWithClientSideCertificate = YES;
+				[controller setIsConnectedWithClientSideCertificate:YES];
 
 				CFRelease(identity);
 			}
@@ -105,7 +107,7 @@
 			@(errSSLHostNameMismatch
 		)];
 
-		return [errorCodes containsObject:@(error.code)];
+		return [errorCodes containsObject:@([error code])];
 	}
 
 	return NO;
@@ -179,6 +181,7 @@
 	settings[(id)kCFStreamSSLLevel] = (id)kCFStreamSocketSecurityLevelNegotiatedSSL;
 
 	settings[(id)kCFStreamSSLPeerName] = (id)kCFNull;
+	
 	settings[(id)kCFStreamSSLIsServer] = (id)kCFBooleanFalse;
 	settings[(id)kCFStreamSSLValidatesCertificateChain] = (id)kCFBooleanFalse;
 

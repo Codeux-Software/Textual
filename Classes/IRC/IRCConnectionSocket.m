@@ -38,17 +38,6 @@
 
 #import "TextualApplication.h"
 
-/* IRCConnectionSocket.m is merely a class extension of IRCConnection.m.
- It used to be a separate class entirely, but it was made an extension
- to make it more easily maintainable and be more tightly integrated
- into the connection handling scheme. The old class, TLOSocketClient
- had to be communicated changes in the connection it was handling
- such as server address changes, enabling/disabling of proxy, etc.
-
- Now that it is just a subset of IRCConnection, the socket can access
- the connection information as well as owning client for quicker decisions
- regarding the nature of the socket. */
-
 #define _LF	0xa
 #define _CR	0xd
 
@@ -82,14 +71,14 @@
 
 - (void)createDispatchQueue
 {
-	NSString *dqname = [@"socketDispatchQueue." stringByAppendingString:self.client.config.itemUUID];
+	NSString *dqname = [@"socketDispatchQueue." stringByAppendingString:[self.associatedClient uniqueIdentifier]];
 
-	self.dispatchQueue = dispatch_queue_create([dqname UTF8String], NULL);
+	self.dispatchQueue = dispatch_queue_create([dqname UTF8String], DISPATCH_QUEUE_SERIAL);
 
 	if ([self useNewSocketEngine]) {
-		NSString *sqname = [@"socketReadWriteQueue." stringByAppendingString:self.client.config.itemUUID];
+		NSString *sqname = [@"socketReadWriteQueue." stringByAppendingString:[self.associatedClient uniqueIdentifier]];
 
-		self.socketQueue = dispatch_queue_create([sqname UTF8String], NULL);
+		self.socketQueue = dispatch_queue_create([sqname UTF8String], DISPATCH_QUEUE_SERIAL);
 	}
 }
 
@@ -126,7 +115,7 @@
 
 - (void)closeSocket
 {
-	if (PointerIsNotEmpty(self.socketConnection)) {
+	if ( self.socketConnection) {
 		[self.socketConnection setDelegate:nil];
 		[self.socketConnection disconnect];
 
@@ -210,7 +199,7 @@
 
 	if (self.connectionUsesSSL) {
 		if ([self useNewSocketEngine]) {
-			[self.socketConnection useSSLWithClient:self.client withConnectionController:self];
+			[self.socketConnection useSSLWithClient:self.associatedClient withConnectionController:self];
 		} else {
 			[self.socketConnection useSSL];
 		}
@@ -255,10 +244,10 @@
 		NSString *errorMessage = nil;
 
 		if ([GCDAsyncSocket badSSLCertificateErrorFound:error]) {
-			self.client.disconnectType = IRCDisconnectBadSSLCertificateMode;
+			[self.associatedClient setDisconnectType:IRCClientDisconnectBadSSLCertificateMode];
 		} else {
 			if ([error.domain isEqualToString:NSPOSIXErrorDomain]) {
-				errorMessage = [GCDAsyncSocket posixErrorStringFromError:error.code];
+				errorMessage = [GCDAsyncSocket posixErrorStringFromError:[error code]];
 			}
 
 			if (NSObjectIsEmpty(errorMessage)) {
@@ -301,7 +290,7 @@
 			break;
 		}
 
-		dispatch_sync(dispatch_get_main_queue(), ^{
+		TXPerformBlockSynchronouslyOnMainQueue(^{
 			[self performSelector:@selector(tcpClientDidReceiveData:) withObject:sdata];
 		});
 	}
@@ -310,7 +299,11 @@
 - (void)onSocket:(id)sock didReadData:(NSData *)data withTag:(long)tag
 {
 	if ([self useNewSocketEngine] == NO) {
-		dispatch_async(self.dispatchQueue, ^{
+		/* The classic socket does not use GCD, but seeing as read events can be
+		 time consuming we chose to perform all read actions on a dispatch queue. */
+		/* This behavior is inherited automatically when using the new socket
+		 engine which is pretty much anytime a proxy is not enabled. */
+		TXPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
 			[self completeReadForData:data];
 		});
 	} else {
@@ -330,7 +323,7 @@
 
 - (void)socket:(id)sock didConnectToHost:(NSString *)ahost port:(UInt16)aport
 {
-	dispatch_sync(dispatch_get_main_queue(), ^{
+	TXPerformBlockSynchronouslyOnMainQueue(^{
 		[self onSocketWillConnect:sock];
 
 		[self onSocket:sock didConnectToHost:ahost port:aport];
@@ -339,7 +332,7 @@
 
 - (void)socketDidDisconnect:(id)sock withError:(NSError *)err
 {
-	dispatch_sync(dispatch_get_main_queue(), ^{
+	TXPerformBlockSynchronouslyOnMainQueue(^{
 		[self onSocket:sock willDisconnectWithError:err];
 	});
 }
@@ -351,7 +344,7 @@
 
 - (void)socket:(id)sock didWriteDataWithTag:(long)tag
 {
-	dispatch_sync(dispatch_get_main_queue(), ^{
+	TXPerformBlockSynchronouslyOnMainQueue(^{
 		[self onSocket:sock didWriteDataWithTag:tag];
 	});
 }
@@ -366,7 +359,7 @@
 									modalDelegate:nil
 								   didEndSelector:nil
 									  contextInfo:nil
-									defaultButton:TXTLS(@"BasicLanguage[1011]")
+									defaultButton:BLS(1011)
 								  alternateButton:nil];
 	}
 }

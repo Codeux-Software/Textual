@@ -65,7 +65,7 @@
 #pragma mark -
 #pragma mark Init.
 
-- (void)pluginLoadedIntoMemory:(IRCWorld *)world
+- (void)pluginLoadedIntoMemory
 {
 	[TPIBundleFromClass() loadCustomNibNamed:@"TPIWikiStyleLinkParser" owner:self topLevelObjects:nil];
 	
@@ -75,127 +75,70 @@
 #pragma mark -
 #pragma mark Server Input.
 
-- (void)messageReceivedByServer:(IRCClient *)client
-                         sender:(NSDictionary *)senderDict
-                        message:(NSDictionary *)messageDict
+- (NSString *)willRenderMessage:(NSString *)newMessage forViewController:(TVCLogController *)logController lineType:(TVCLogLineType)lineType memberType:(TVCLogLineMemberType)memberType
 {
-    NSAssertReturn([self processWikiStyleLinks]);
+	NSAssertReturnR([self processWikiStyleLinks], nil);
 	
-	/* Gather information about message. */
-    NSArray *params = messageDict[@"messageParamaters"];
-
-	NSString *message = messageDict[@"messageSequence"];
-
-	IRCChannel *channel = [client findChannel:params[0]];
-
-    PointerIsEmptyAssert(channel);
-
-	NSString *linkPrefix = [self linkPrefixFromID:[channel uniqueIdentifier]];
-
-	NSObjectIsEmptyAssert(linkPrefix);
-
-    /* Parse the message for all possible matches. */
-    NSArray *linkMatches = [TLORegularExpression matchesInString:[message stripIRCEffects] withRegex:_linkMatchRegex];
-
-    if ([linkMatches count] > 0) {
-        NSInteger loopIndex = 0;
-
-        /* Loop through each match. */
-        for (__strong NSString *linkRaw in linkMatches) {
-            NSAssertReturnLoopContinue([linkRaw length] > 4);
-
-            loopIndex += 1;
-
-            /* Get the inside of the brackets. */
-            NSRange cutRange = NSMakeRange(2, ([linkRaw length] - 4));
-
-            linkRaw = [linkRaw safeSubstringWithRange:cutRange];
-
-            /* Get the left side. */
-            if ([linkRaw contains:@"|"]) {
-                linkRaw = [linkRaw safeSubstringToIndex:[linkRaw stringPosition:@"|"]];
-                linkRaw = [linkRaw trim];
-            }
-
-            /* Create our message and post it. */
-            NSString *message = [NSString stringWithFormat:@" %i: %@ —> %@%@", loopIndex, linkRaw, linkPrefix, [linkRaw encodeURIComponent]];
-
-            [client printDebugInformation:message channel:channel];
-        }
-    }
-}
-
-- (NSArray *)pluginSupportsServerInputCommands
-{
-    return @[@"privmsg"];
-}
-
-#pragma mark -
-#pragma mark User Input.
-
-- (id)interceptUserInput:(id)input command:(NSString *)command
-{
-	/* Return input if we are not going to process anything. */
-    NSAssertReturnR([self processWikiStyleLinks], input);
-
-    /* Do not handle NSString. */
-    if ([input isKindOfClass:[NSAttributedString class]] == NO) {
-        return input;
-    }
-
-	/* Link prefix. */
-	IRCChannel *channel = [[self worldController] selectedChannel];
-
-	NSString *linkPrefix = [self linkPrefixFromID:[channel uniqueIdentifier]];
-
-	NSObjectIsEmptyAssertReturn(linkPrefix, input);
-
-    /* Start parser. */
-    NSMutableAttributedString *muteString = [input mutableCopy];
-
-    while (1 == 1) {
-        /* Get the range of next match. */
-        NSRange linkRange = [TLORegularExpression string:[muteString string] rangeOfRegex:_linkMatchRegex];
-
-        /* No match found? Break our loop. */
-        if (linkRange.location == NSNotFound) {
-            break;
-        }
-
-        NSAssertReturnLoopContinue(linkRange.length > 4);
-
-        /* Get inside of brackets. */
-        NSRange cutRange = NSMakeRange((linkRange.location + 2),
-                                       (linkRange.length - 4));
-
-        NSString *linkInside;
-
-        linkInside = [[muteString string] safeSubstringWithRange:cutRange];
-
-        /* Get the left side. */
-        if ([linkInside contains:@"|"]) {
-            linkInside = [linkInside safeSubstringToIndex:[linkInside stringPosition:@"|"]];
-            linkInside = [linkInside trim];
-        }
-
-        /* Build our link and replace it in the input. */
-        linkInside = [linkPrefix stringByAppendingString:[linkInside encodeURIComponent]];
-
-        [muteString replaceCharactersInRange:linkRange withString:linkInside];
-    }
-
-    return muteString;
+	/* Only work on plain text messages. */
+	if (lineType == TVCLogLinePrivateMessageType ||
+		lineType == TVCLogLineActionType)
+	{
+		/* Link prefix. */
+		IRCChannel *channel = [logController associatedChannel];
+		
+		NSString *linkPrefix = [self linkPrefixFromID:[channel uniqueIdentifier]];
+		
+		NSObjectIsEmptyAssertReturn(linkPrefix, nil);
+		
+		/* Start parser. */
+		NSMutableString *muteString = [newMessage mutableCopy];
+		
+		while (1 == 1) {
+			/* Get the range of next match. */
+			NSRange linkRange = [TLORegularExpression string:muteString rangeOfRegex:_linkMatchRegex];
+			
+			/* No match found? Break our loop. */
+			if (linkRange.location == NSNotFound) {
+				break;
+			}
+			
+			NSAssertReturnLoopContinue(linkRange.length > 4);
+			
+			/* Get inside of brackets. */
+			NSRange cutRange = NSMakeRange((linkRange.location + 2),
+										   (linkRange.length - 4));
+			
+			NSString *linkInside;
+			
+			linkInside = [muteString substringWithRange:cutRange];
+			
+			/* Get the left side. */
+			if ([linkInside contains:@"|"]) {
+				linkInside = [linkInside substringToIndex:[linkInside stringPosition:@"|"]];
+				linkInside = [linkInside trim];
+			}
+			
+			/* Build our link and replace it in the input. */
+			linkInside = [linkPrefix stringByAppendingString:[linkInside encodeURIComponent]];
+			
+			[muteString replaceCharactersInRange:linkRange withString:linkInside];
+		}
+		
+		return muteString;
+	}
+	
+	return nil; // Let renderer know we chose not to modify message.
 }
 
 #pragma mark -
 #pragma mark Preference Pane.
 
-- (NSString *)preferencesMenuItemName
+- (NSString *)pluginPreferencesPaneMenuItemName
 {
-    return TPILS(@"BasicLanguage[1000]");
+    return TPILocalizedString(@"BasicLanguage[1000]");
 }
 
-- (NSView *)preferencesView
+- (NSView *)pluginPreferencesPaneView
 {
     return self.preferencePane;
 }
@@ -219,10 +162,10 @@
 
 	NSAssertReturnR(([entryInfo count] == 2), nil);
 
-	if ([tableColumn.identifier isEqualToString:@"channel"]) {
+	if ([[tableColumn identifier] isEqualToString:@"channel"]) {
 		NSString *entryName = [self channelNameFromID:entryInfo[0]];
 
-		NSObjectIsEmptyAssertReturn(entryName, TPILS(@"BasicLanguage[1001]"));
+		NSObjectIsEmptyAssertReturn(entryName, TPILocalizedString(@"BasicLanguage[1001]"));
 
 		return entryName;
 	} else {
@@ -241,13 +184,13 @@
 - (void)addCondition:(id)sender
 {
 	/* Reset conditions. */
-	[_rnewConditionLinkPrefixField setStringValue:NSStringEmptyPlaceholder];
+	[self.rnewConditionLinkPrefixField setStringValue:NSStringEmptyPlaceholder];
 
-	[_rnewConditionChannelPopup removeAllItems];
+	[self.rnewConditionChannelPopup removeAllItems];
 
 	/* Disable adding new conditions when we are already doing one. */
-	[_addConditionButton setEnabled:NO];
-	[_removeConditionButton setEnabled:NO];
+	[self.addConditionButton setEnabled:NO];
+	[self.removeConditionButton setEnabled:NO];
 
 	/* We need some way to match the tag to the UUID of the channel we
 	 want to track. To do that, we keep a dictionary matching the tags
@@ -256,12 +199,12 @@
 	 then we have the UUID that we need saved. We do not save the actual
 	 channel names. We save the UUID of that channel since it is unique,
 	 always and forever. Even between restarts. */
-	_rnewConditionChannelMatrix = [NSMutableDictionary dictionary];
+	self.rnewConditionChannelMatrix = [NSMutableDictionary dictionary];
 
 	NSInteger channelTag = 1;
 
 	/* Start populating. */
-	for (IRCClient *u in [[self worldController] clients]) {
+	for (IRCClient *u in [worldController() clientList]) {
 		/* We keep track of the number of channels we add because we do not add
 		 channels that we do not already track. Therefore, if our count is zero,
 		 then we have to know so we do not add the client title. */
@@ -273,10 +216,10 @@
 		[umi setEnabled:NO]; // Do not let user pick only a client.
 		[umi setTitle:[[u config] clientName]];
 
-		[[_rnewConditionChannelPopup menu] addItem:umi];
+		[[self.rnewConditionChannelPopup menu] addItem:umi];
 
 		/* Build list of channels part of this client. */
-		for (IRCChannel *c in [u channels]) {
+		for (IRCChannel *c in [u channelList]) {
 			/* Only include channels. */
 			NSAssertReturnLoopContinue([c isChannel]);
 			
@@ -294,10 +237,10 @@
 			[cmi setTitle:[NSString stringWithFormat:@"    %@", [c name]]];
 
 			/* Update the tag --> UUID dictionary. */
-			[_rnewConditionChannelMatrix setObject:[c uniqueIdentifier] forKey:@(channelTag)];
+			[self.rnewConditionChannelMatrix setObject:[c uniqueIdentifier] forKey:@(channelTag)];
 
 			/* Add the actual menu item. */
-			[[_rnewConditionChannelPopup menu] addItem:cmi];
+			[[self.rnewConditionChannelPopup menu] addItem:cmi];
 
 			/* Bump the tag by one. */
 			channelTag += 1;
@@ -306,7 +249,7 @@
 
 		/* Remove the client title? */
 		if (channelCount <= 0) {
-			[[_rnewConditionChannelPopup menu] removeItem:umi];
+			[[self.rnewConditionChannelPopup menu] removeItem:umi];
 		}
 	}
 
@@ -318,7 +261,7 @@
 		  contextInfo:nil];
 
 	/* Make text field the first responder. */
-	[[self rnewConditionWindow] makeFirstResponder:_rnewConditionLinkPrefixField];
+	[[self rnewConditionWindow] makeFirstResponder:self.rnewConditionLinkPrefixField];
 
 	/* Update save button state. */
 	[self updateNewConditionWindowSaveButton:nil];
@@ -331,7 +274,7 @@
 
 - (void)removeCondition:(id)sender
 {
-	NSInteger selectedRow = [_linkPrefixesTable selectedRow];
+	NSInteger selectedRow = [self.linkPrefixesTable selectedRow];
 
 	NSAssertReturn(selectedRow >= 0);
 
@@ -342,7 +285,7 @@
 	[mutOldPrefixes removeObjectAtIndex:selectedRow];
 
 	/* Update defaults. */
-	[RZUserDefaults() setObject:mutOldPrefixes forKey:@"Wiki-style Link Parser Extension -> Link Prefixes"];
+	[RZUserDefaults() setObject:[mutOldPrefixes copy] forKey:@"Wiki-style Link Parser Extension -> Link Prefixes"];
 
 	/* Reload the table. */
 	[[self linkPrefixesTable] reloadData];
@@ -354,15 +297,15 @@
 	NSMutableArray *mutOldPrefixes = [[self linkPrefixes] mutableCopy];
 
 	/* Get the information to save. */
-	NSString *linkPrefix = [_rnewConditionLinkPrefixField stringValue];
+	NSString *linkPrefix = [self.rnewConditionLinkPrefixField stringValue];
 
-	NSString *channelUUID = [_rnewConditionChannelMatrix objectForKey:@([_rnewConditionChannelPopup selectedTag])];
+	NSString *channelUUID = [self.rnewConditionChannelMatrix objectForKey:@([_rnewConditionChannelPopup selectedTag])];
 
 	/* Add to dictionary. */
-	[mutOldPrefixes safeAddObjectWithoutDuplication:@[channelUUID, linkPrefix]];
+	[mutOldPrefixes addObjectWithoutDuplication:@[channelUUID, linkPrefix]];
 
 	/* Update defaults. */
-	[RZUserDefaults() setObject:mutOldPrefixes forKey:@"Wiki-style Link Parser Extension -> Link Prefixes"];
+	[RZUserDefaults() setObject:[mutOldPrefixes copy] forKey:@"Wiki-style Link Parser Extension -> Link Prefixes"];
 
 	/* Clear the matrix. */
 	_rnewConditionChannelMatrix = nil;
@@ -376,8 +319,8 @@
 
 - (void)cancelNewCondition:(id)sender
 {
-	[_addConditionButton setEnabled:YES];
-	[_removeConditionButton setEnabled:YES];
+	[self.addConditionButton setEnabled:YES];
+	[self.removeConditionButton setEnabled:YES];
 
 	[NSApp endSheet:[self rnewConditionWindow]];
 
@@ -386,17 +329,17 @@
 
 - (void)updateNewConditionWindowSaveButton:(id)sender
 {
-	BOOL cond1 = ([[_rnewConditionLinkPrefixField stringValue] length] > 0);
-	BOOL cond2 =  ([_rnewConditionChannelPopup selectedTag] > 0);
+	BOOL cond1 = ([[self.rnewConditionLinkPrefixField stringValue] length] > 0);
+	BOOL cond2 =  ([self.rnewConditionChannelPopup selectedTag] > 0);
 
-	[_rnewConditionSaveButton setEnabled:(cond1 && cond2)];
+	[self.rnewConditionSaveButton setEnabled:(cond1 && cond2)];
 }
 
 - (void)updateRemoveConditionButton
 {
 	NSInteger selectedRow = [[self linkPrefixesTable] selectedRow];
 
-	[_removeConditionButton setEnabled:(selectedRow >= 0)];
+	[self.removeConditionButton setEnabled:(selectedRow >= 0)];
 }
 
 #pragma mark -
@@ -427,8 +370,8 @@
 	 every server and every channel to find our ID. */
 	NSObjectIsEmptyAssertReturn(itemUUID, nil);
 
-	for (IRCClient *u in [[self worldController] clients]) {
-		for (IRCChannel *c in [u channels]) {
+	for (IRCClient *u in [worldController() clientList]) {
+		for (IRCChannel *c in [u channelList]) {
 			if ([itemUUID isEqualToString:[c uniqueIdentifier]]) {
 				return [c name];
 			}

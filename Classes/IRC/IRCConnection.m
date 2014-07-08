@@ -41,6 +41,11 @@
 /* The actual socket is handled by IRCConnectionSocket.m,
  which is an extension of this class. */
 
+@interface IRCConnection ()
+@property (nonatomic, strong) NSMutableArray *sendQueue;
+@property (nonatomic, assign) NSInteger floodControlCurrentMessageCount;
+@end
+
 @implementation IRCConnection
 
 #pragma mark -
@@ -52,9 +57,10 @@
 		self.sendQueue = [NSMutableArray new];
 		
 		self.floodTimer = [TLOTimer new];
-		self.floodTimer.delegate = self;
-        self.floodTimer.selector = @selector(timerOnTimer:);
-
+		
+		[self.floodTimer setDelegate:self];
+		[self.floodTimer setSelector:@selector(timerOnTimer:)];
+		
 		self.floodControlCurrentMessageCount = 0;
 	}
 	
@@ -96,12 +102,12 @@
 
 - (NSString *)convertFromCommonEncoding:(NSData *)data
 {
-	return [self.client convertFromCommonEncoding:data];
+	return [self.associatedClient convertFromCommonEncoding:data];
 }
 
 - (NSData *)convertToCommonEncoding:(NSString *)data
 {
-	return [self.client convertToCommonEncoding:data];
+	return [self.associatedClient convertToCommonEncoding:data];
 }
 
 #pragma mark -
@@ -124,7 +130,7 @@
 			if (data) {
 				[self write:data];
 
-				[self.client ircConnectionWillSend:firstItem];
+				[self.associatedClient ircConnectionWillSend:firstItem];
 
 				return;
 			}
@@ -132,7 +138,7 @@
 	}
 
 	/* Normal send. */
-	[self.sendQueue safeAddObject:line];
+	[self.sendQueue addObject:line];
 
 	[self tryToSend];
 }
@@ -147,7 +153,7 @@
 	/* We are not sending so we need to check our numbers. */
 	/* Only count flood control once we are fully connected since the initial connect
 	 will flood the server regardless so we do not want to timeout waiting for ourself. */
-	if (self.connectionUsesFloodControl && self.client.isLoggedIn) {
+	if (self.connectionUsesFloodControl && self.associatedClient.isLoggedIn) {
 		if (self.floodControlCurrentMessageCount >= self.floodControlMaximumMessageCount) {
 			/* The number of lines sent during our timer period has gone above the 
 			 maximum allowed count so we have to return NO to let everyone know we
@@ -180,7 +186,7 @@
 
 		[self write:data];
 
-		[self.client ircConnectionWillSend:firstItem];
+		[self.associatedClient ircConnectionWillSend:firstItem];
 	}
 }
 
@@ -194,7 +200,7 @@
 
 - (void)startTimer
 {
-	if (self.floodTimer.timerIsActive == NO) {
+	if ([self.floodTimer timerIsActive] == NO) {
 		if (self.connectionUsesFloodControl) {
 			[self.floodTimer start:self.floodControlDelayInterval];
 		}
@@ -203,7 +209,7 @@
 
 - (void)stopTimer
 {
-	if (self.floodTimer.timerIsActive) {
+	if ([self.floodTimer timerIsActive]) {
 		[self.floodTimer stop];
 	}
 }
@@ -224,26 +230,26 @@
 {
 	[self clearSendQueue];
 	
-	[self.client ircConnectionDidConnect:self];
+	[self.associatedClient ircConnectionDidConnect:self];
 }
 
 - (void)tcpClientDidError:(NSString *)error
 {
 	[self clearSendQueue];
 	
-	[self.client ircConnectionDidError:error];
+	[self.associatedClient ircConnectionDidError:error];
 }
 
 - (void)tcpClientDidDisconnect:(NSError *)distcError
 {
 	[self clearSendQueue];
 	
-	[self.client ircConnectionDidDisconnect:self withError:distcError];
+	[self.associatedClient ircConnectionDidDisconnect:self withError:distcError];
 }
 
 - (void)tcpClientDidReceiveData:(NSString *)data
 {
-	[self.client ircConnectionDidReceive:data];
+	[self.associatedClient ircConnectionDidReceive:data];
 }
 
 - (void)tcpClientDidSendData

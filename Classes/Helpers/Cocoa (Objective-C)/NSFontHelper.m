@@ -49,7 +49,7 @@ const CGFloat kRotationForItalicText = -14.0;
 		NSAffineTransform *fontTransform = [NSAffineTransform transform];    
 		NSAffineTransform *italicTransform = [NSAffineTransform transform];  
 		
-		[fontTransform scaleBy:self.pointSize];
+		[fontTransform scaleBy:[self pointSize]];
 		
 		NSAffineTransformStruct italicTransformData;   
 		
@@ -93,7 +93,7 @@ const CGFloat kRotationForItalicText = -14.0;
 
 - (BOOL)fontMatchesName:(NSString *)fontName
 {
-	return ([self.fontName isEqualIgnoringCase:fontName]);
+	return ([[self fontName] isEqualIgnoringCase:fontName]);
 }
 
 @end

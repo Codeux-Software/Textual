@@ -39,15 +39,6 @@
 #import "TextualApplication.h"
 
 @interface TDCWelcomeSheet : TDCSheetBase <NSTextViewDelegate>
-@property (nonatomic, nweak) IBOutlet NSButton *autoConnectCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *addChannelButton;
-@property (nonatomic, nweak) IBOutlet NSButton *deleteChannelButton;
-@property (nonatomic, nweak) IBOutlet NSTextField *nicknameField;
-@property (nonatomic, nweak) IBOutlet NSComboBox *serverAddressField;
-@property (nonatomic, nweak) IBOutlet TVCListView *channelTable;
-@property (nonatomic, strong) NSMutableArray *channelList;
-@property (nonatomic, strong) NSDictionary *serverList;
-
 - (void)show;
 - (void)close;
 
@@ -58,6 +49,6 @@
 @end
 
 @interface NSObject (TDCWelcomeSheetDelegate)
-- (void)welcomeSheet:(TDCWelcomeSheet *)sender onOK:(NSDictionary *)config;
+- (void)welcomeSheet:(TDCWelcomeSheet *)sender onOK:(IRCClientConfig *)config;
 - (void)welcomeSheetWillClose:(TDCWelcomeSheet *)sender;
 @end

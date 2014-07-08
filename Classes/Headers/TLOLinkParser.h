@@ -40,5 +40,6 @@
 
 @interface TLOLinkParser : NSObject
 + (NSArray *)locatedLinksForString:(NSString *)body;
+
 + (NSArray *)bannedURLRegexLineTypes;
 @end

@@ -91,7 +91,7 @@
 		return nil;
 	}
 
-	NSString *plguinResult = [THOPluginManagerSharedInstance() processInlineMediaContentURL:[u absoluteString]];
+	NSString *plguinResult = [sharedPluginManager() processInlineMediaContentURL:[u absoluteString]];
 
 	if (plguinResult) {
 		return plguinResult;
@@ -126,8 +126,8 @@
 		}
 	} else if ([host hasSuffix:@"instacod.es"]) {
 		NSObjectIsEmptyAssertReturn(path, nil);
-
-		NSString *s = [path safeSubstringFromIndex:1];
+		
+		NSString *s = [path substringFromIndex:1];
 
 		if ([s isNumericOnly]) {
 			return [@"http://instacod.es/file/" stringByAppendingString:s];
@@ -136,11 +136,11 @@
 		if ([path hasPrefix:@"/file/d/"]) {
 			NSArray *parts = [path componentsSeparatedByString:@"/"];
 
-			NSAssertReturnR((parts.count == 4 || parts.count == 5), nil);
+			NSAssertReturnR(([parts count] == 4 || [parts count] == 5), nil);
 
 			NSString *photoID;
 
-			if (parts.count == 5) {
+			if ([parts count] == 5) {
 				if ([parts[4] isEqualToString:@"edit"]) { // Add a little validation.
 					photoID = parts[3];
 				}
@@ -154,11 +154,13 @@
 		}
 	} else if ([host hasSuffix:@"twitpic.com"]) {
 		NSObjectIsEmptyAssertReturn(path, nil);
+		
+		NSString *s = [path substringFromIndex:1];
 
-		NSString *s = [path safeSubstringFromIndex:1];
-
-		if ([s hasSuffix:@"/full"]) {
-			s = [s safeSubstringToIndex:(s.length - 5)];
+		if ([s length] > 5) {
+			if ([s hasSuffix:@"/full"]) {
+				s = [s substringToIndex:([s length] - 5)];
+			}
 		}
 
 		if ([s isAlphabeticNumericOnly]) {
@@ -167,11 +169,11 @@
 	} else if ([host hasSuffix:@"cl.ly"]) {
 		NSObjectIsEmptyAssertReturn(path, nil);
 
-		NSString *p = [path safeSubstringFromIndex:1];
+		NSString *p = [path substringFromIndex:1];
         
         NSArray *components = [p componentsSeparatedByString:@"/"];
 
-		NSAssertReturnR((components.count == 2), nil);
+		NSAssertReturnR(([components count] == 2), nil);
 
 		NSString *p1 = components[0];
 		NSString *p2 = components[1];
@@ -190,7 +192,7 @@
 	} else if ([host hasSuffix:@"twitgoo.com"]) {
 		NSObjectIsEmptyAssertReturn(path, nil);
 
-		NSString *s = [path safeSubstringFromIndex:1];
+		NSString *s = [path substringFromIndex:1];
 
 		if ([s isAlphabeticNumericOnly]) {
 			return [NSString stringWithFormat:@"http://twitgoo.com/show/Img/%@", s];
@@ -198,14 +200,14 @@
 	} else if ([host isEqualToString:@"img.ly"]) {
 		NSObjectIsEmptyAssertReturn(path, nil);
 
-		NSString *s = [path safeSubstringFromIndex:1];
+		NSString *s = [path substringFromIndex:1];
 
 		if ([s isAlphabeticNumericOnly]) {
 			return [NSString stringWithFormat:@"http://img.ly/show/large/%@", s];
 		}
 	} else if ([host hasSuffix:@"movapic.com"]) {
 		if ([path hasPrefix:@"/pic/"]) {
-			NSString *s = [path safeSubstringFromIndex:5];
+			NSString *s = [path substringFromIndex:5];
 
 			if ([s isAlphabeticNumericOnly]) {
 				return [NSString stringWithFormat:@"http://image.movapic.com/pic/m_%@.jpeg", s];
@@ -214,13 +216,13 @@
 	} else if ([host hasSuffix:@"f.hatena.ne.jp"]) {
 		NSArray *ary = [path componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]];
 
-		if (ary.count >= 3) {
-			NSString *userId = [ary safeObjectAtIndex:1];
-			NSString *photoId = [ary safeObjectAtIndex:2];
+		if ([ary count] >= 3) {
+			NSString *userId = ary[1];
+			NSString *photoId = ary[2];
 
-			if (userId.length && photoId.length > 8 && [photoId isNumericOnly]) {
-				NSString *userIdHead  = [userId safeSubstringToIndex:1];
-				NSString *photoIdHead = [photoId safeSubstringToIndex:8];
+			if ([userId length] > 0 && [photoId length] > 8 && [photoId isNumericOnly]) {
+				NSString *userIdHead  = [userId substringToIndex:1];
+				NSString *photoIdHead = [photoId substringToIndex:8];
 
 				return [NSString stringWithFormat:@"http://img.f.hatena.ne.jp/images/fotolife/%@/%@/%@/%@.jpg", userIdHead, userId, photoIdHead, photoId];
 			}
@@ -228,7 +230,7 @@
 	} else if ([host isEqualToString:@"puu.sh"]) {
 		NSObjectIsEmptyAssertReturn(path, nil);
 
-		NSString *s = [path safeSubstringFromIndex:1];
+		NSString *s = [path substringFromIndex:1];
 
 		if ([s isAlphabeticNumericOnly]) {
 			return [NSString stringWithFormat:@"http://puu.sh/%@.jpg", s];
@@ -243,23 +245,23 @@
 		} */
 	} else if ([host hasSuffix:@"ubuntuone.com"]) {
 		if ([path hasPrefix:@"/"]) {
-			NSString *s = [path safeSubstringFromIndex:1];
+			NSString *s = [path substringFromIndex:1];
 
-			if ([s isAlphabeticNumericOnly] && s.length == 22) {
+			if ([s isAlphabeticNumericOnly] && [s length] == 22) {
 				return url;
 			}
 		}
 	} else if ([host hasSuffix:@"d.pr"]) {
 		if ([path hasPrefix:@"/i/"]) {
-			NSString *s = [path safeSubstringFromIndex:3];
+			NSString *s = [path substringFromIndex:3];
 
 			if ([s isAlphabeticNumericOnly]) {
 				return [NSString stringWithFormat:@"http://d.pr/i/%@.png", s];
 			}
 		}
 	} else if ([host hasSuffix:@"mediacru.sh"]) {
-		if ([path hasPrefix:@"/"] && path.length == 13) {
-			NSString *s = [path safeSubstringFromIndex:1];
+		if ([path hasPrefix:@"/"] && [path length] == 13) {
+			NSString *s = [path substringFromIndex:1];
 
 			if ([s onlyContainsCharacters:TXWesternAlphabetIncludingUnderscoreDashCharacaterSet]) {
 				/* This site does both http and https. */
@@ -271,26 +273,26 @@
 		NSString *vid = nil;
 
 		if ([host isEqualToString:@"youtu.be"]) {
-			NSString *path = u.path;
-
-			if (NSObjectIsNotEmpty(path)) {
-				vid = [path safeSubstringFromIndex:1];
-			}
+			NSString *path = [u path];
+			
+			NSObjectIsEmptyAssertReturn(path, nil);
+			
+			vid = [path substringFromIndex:1];
 		} else {
-			NSString *query = u.query;
+			NSString *query = [u query];
 
-			if (query.length) {
+			if ([query length] > 0) {
 				NSArray *queries = [query componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"&"]];
 
-				if (NSObjectIsNotEmpty(queries)) {
+				if ([queries count] > 0) {
 					NSCharacterSet *equal = [NSCharacterSet characterSetWithCharactersInString:@"="];
 
 					for (NSString *e in queries) {
 						NSArray *ary = [e componentsSeparatedByCharactersInSet:equal];
 
-						if (ary.count >= 2) {
-							NSString *key = [ary safeObjectAtIndex:0];
-							NSString *value = [ary safeObjectAtIndex:1];
+						if ([ary count] >= 2) {
+							NSString *key = ary[0];
+							NSString *value = ary[1];
 
 							if ([key isEqualToString:@"v"]) {
 								vid = value;
@@ -304,7 +306,7 @@
 		}
 
 		if (vid) {
-			if (vid.length > 11) {
+			if ([vid length] > 11) {
 				/* This behavior is was found by accident but is quite interesting. YouTube
 				 links limit the video ID to a maximum length of eleven. If it exceeds that,
 				 it only takes the first eleven characters. So a video link like:
@@ -319,7 +321,7 @@
 				 Therefore, this is a fix in Textual to catch the length and resize so that
 				 we provide valid images for the weird links. */
 
-				vid = [vid safeSubstringToIndex:11];
+				vid = [vid substringToIndex:11];
 			}
 
 			return [NSString stringWithFormat:@"http://i.ytimg.com/vi/%@/mqdefault.jpg", vid];
@@ -328,20 +330,20 @@
 		NSString *vid = nil;
 
 		if ([host isEqualToString:@"nico.ms"]) {
-			NSString *path = u.path;
+			NSString *path = [u path];
+			
+			NSObjectIsEmptyAssertReturn(path, nil);
+			
+			path = [path substringFromIndex:1];
 
-			if (NSObjectIsNotEmpty(path)) {
-				path = [path safeSubstringFromIndex:1];
-
-				if ([path hasPrefix:@"sm"] || [path hasPrefix:@"nm"]) {
-					vid = path;
-				}
+			if ([path hasPrefix:@"sm"] || [path hasPrefix:@"nm"]) {
+				vid = path;
 			}
 		} else {
-			NSString *path = u.path;
-
+			NSString *path = [u path];
+			
 			if ([path hasPrefix:@"/watch/"]) {
-				path = [path safeSubstringFromIndex:7];
+				path = [path substringFromIndex:7];
 
 				if ([path hasPrefix:@"sm"] || [path hasPrefix:@"nm"]) {
 					vid = path;
@@ -349,17 +351,16 @@
 			}
 		}
 
-		if (vid && vid.length > 2) {
-			long long vidNum = [[vid safeSubstringFromIndex:2] longLongValue];
+		if (vid && [vid length] > 2) {
+			long long vidNum = [[vid substringFromIndex:2] longLongValue];
 
 			return [NSString stringWithFormat:@"http://tn-skr%qi.smilevideo.jp/smile?i=%qi", ((vidNum % 4) + 1), vidNum];
 		}
 	} else if ([path hasPrefix:@"/image/"]) {
 		/* Try our best to regonize cl.ly custom domains. */
+		NSString *s = [path substringFromIndex:7];
 
-		NSString *s = [path safeSubstringFromIndex:7];
-
-		if ([s isAlphabeticNumericOnly] && s.length == 12) {
+		if ([s isAlphabeticNumericOnly] && [s length] == 12) {
 			return [NSString stringWithFormat:@"http://cl.ly%@/content", path];
 		}
 	}

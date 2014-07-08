@@ -38,13 +38,13 @@
 
 #import "TextualApplication.h"
 
-#define TXLogLineUndefinedNicknameFormat	@"<%@%n>"
-#define TXLogLineActionNicknameFormat		@"%@ "
-#define TXLogLineNoticeNicknameFormat		@"-%@-"
+#define TVCLogLineUndefinedNicknameFormat	@"<%@%n>"
+#define TVCLogLineActionNicknameFormat		@"%@ "
+#define TVCLogLineNoticeNicknameFormat		@"-%@-"
 
-#define TXLogLineSpecialNoticeMessageFormat		@"[%@]: %@"
+#define TVCLogLineSpecialNoticeMessageFormat		@"[%@]: %@"
 
-#define TXLogLineDefaultRawCommandValue			@"-100"
+#define TVCLogLineDefaultRawCommandValue			@"-100"
 
 typedef enum TVCLogLineType : NSInteger {
 	TVCLogLineUndefinedType					= 0,
@@ -78,15 +78,15 @@ typedef enum TVCLogLineMemberType : NSInteger {
 @interface TVCLogLine : NSObject
 @property (nonatomic, assign) BOOL isEncrypted;
 @property (nonatomic, assign) BOOL isHistoric; /* Identifies a line restored from previous session. */
-@property (nonatomic, strong) NSDate *receivedAt;
-@property (nonatomic, strong) NSString *nickname;
-@property (nonatomic, strong) NSString *messageBody;
-@property (nonatomic, strong) NSString *rawCommand; // Can be the actual command (PRIVMSG, NOTICE, etc.) or the raw numeric (001, 002, etc.)
+@property (nonatomic, copy) NSDate *receivedAt;
+@property (nonatomic, copy) NSString *nickname;
+@property (nonatomic, copy) NSString *messageBody;
+@property (nonatomic, copy) NSString *rawCommand; // Can be the actual command (PRIVMSG, NOTICE, etc.) or the raw numeric (001, 002, etc.)
 @property (nonatomic, assign) TVCLogLineType lineType;
 @property (nonatomic, assign) TVCLogLineMemberType memberType;
 @property (nonatomic, assign) NSInteger nicknameColorNumber;
-@property (nonatomic, strong) NSArray *highlightKeywords;
-@property (nonatomic, strong) NSArray *excludeKeywords;
+@property (nonatomic, copy) NSArray *highlightKeywords;
+@property (nonatomic, copy) NSArray *excludeKeywords;
 
 - (TVCLogLine *)initWithRawJSONData:(NSData *)input; // This automatically calls the appropriate initWithJSON… call.
 - (TVCLogLine *)initWithJSONRepresentation:(NSDictionary *)input;

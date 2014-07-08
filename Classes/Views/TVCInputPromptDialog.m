@@ -39,8 +39,6 @@
 
 #define _textContainerPadding		3
 
-#define _informativeTextFont		[NSFont fontWithName:@"Lucida Grande" size:11.0] 
-
 @interface TVCInputPromptDialog ()
 @property (nonatomic, assign) BOOL defaultButtonClicked;
 @end
@@ -57,23 +55,36 @@
 	[RZMainBundle() loadCustomNibNamed:@"TVCInputPromptDialog" owner:self topLevelObjects:nil];
 
 	if (NSObjectIsNotEmpty(userInputText)) {
-		[_informationalInput setStringValue:userInputText];
+		[self.informationalInput setStringValue:userInputText];
 	}
 	
-	[_defaultButton	setTitle:defaultButtonTitle];
-	[_defaultButton setAction:@selector(modalDidCloseWithDefaultButton:)];
-	[_defaultButton setTarget:self];
+	[self.defaultButton	setTitle:defaultButtonTitle];
+	[self.defaultButton setAction:@selector(modalDidCloseWithDefaultButton:)];
+	[self.defaultButton setTarget:self];
 
-	[_alternateButton setTitle:alternateButtonTitle];
-	[_alternateButton setAction:@selector(modalDidCloseWithAlternateButton:)];
-	[_alternateButton setTarget:self];
+	[self.alternateButton setTitle:alternateButtonTitle];
+	[self.alternateButton setAction:@selector(modalDidCloseWithAlternateButton:)];
+	[self.alternateButton setTarget:self];
 	
-	[_informationalText	setStringValue:informativeText];
-	[_informationalTitle setStringValue:messageTitle];
+	[self.informationalText	setStringValue:informativeText];
+	[self.informationalTitle setStringValue:messageTitle];
 
-	_completionBlock = callbackBlock;
+	self.completionBlock = callbackBlock;
 
 	[self runModal];
+}
+
+- (NSFont *)informativeTextFont
+{
+	/* The value of this font is not actually applied anywhere. Instead, it
+	 is fed to Textual's internal APIs to measure the size that the frame of
+	 our informativ text should be. Keep this in sync with interface builder. */
+	
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		return [NSFont fontWithName:@"Helvetica Neue" size:11.0];
+	} else {
+		return [NSFont fontWithName:@"Lucida Grande" size:11.0];
+	}
 }
 
 - (void)runModal
@@ -81,42 +92,48 @@
 	/* The following math dynamically resizes the dialog window and informational
 	 text view based on any value provided to the modal. It is actually very complex,
 	 but Textual has some strong APIs to assist. */
-	NSString *informativeText = [_informationalText stringValue];
+	
+	/* Get base measurements. */
+	NSString *informativeText = [self.informationalText stringValue];
 
-	NSRect windowFrame = [[self window] frame];
-	NSRect infoTextFrame = [_informationalText frame];
+	NSRect infoTextFrame = [self.informationalText frame];
 
-	CGFloat newHeight = [informativeText pixelHeightInWidth:infoTextFrame.size.width forcedFont:_informativeTextFont];
+	CGFloat newHeight = [informativeText pixelHeightInWidth:infoTextFrame.size.width forcedFont:[self informativeTextFont]];
 
 	NSInteger heightDiff = (infoTextFrame.size.height - newHeight);
 
+	/* Compare it to windows frame. */
+	NSRect windowFrame = [[self window] frame];
+	
 	windowFrame.size.height = ((windowFrame.size.height - heightDiff) + _textContainerPadding);
+	
 	infoTextFrame.size.height = (newHeight + _textContainerPadding);
 	
+	/* Apply new frames. */
 	[[self window] setFrame:windowFrame display:NO animate:NO];
 	[[self window] makeKeyAndOrderFront:nil];
 	
-	[_informationalText setFrame:infoTextFrame];
+	[self.informationalText setFrame:infoTextFrame];
 }
 
 - (void)modalDidCloseWithDefaultButton:(id)sender
 {
-	_defaultButtonClicked = YES;
+	self.defaultButtonClicked = YES;
 
 	[[self window] close];
 }
 
 - (void)modalDidCloseWithAlternateButton:(id)sender
 {
-	_defaultButtonClicked = NO;
+	self.defaultButtonClicked = NO;
 
 	[[self window] close];
 }
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if (_completionBlock) {
-		_completionBlock(_defaultButtonClicked, [_informationalInput stringValue]);
+	if (self.completionBlock) {
+		self.completionBlock(self.defaultButtonClicked, [self.informationalInput stringValue]);
 	}
 }
 

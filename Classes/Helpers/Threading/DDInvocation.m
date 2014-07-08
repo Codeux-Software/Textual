@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2009 Dave Dribin
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -8,7 +8,7 @@
  * modify, merge, publish, distribute, sublicense, and/or sell copies
  * of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
  *
@@ -28,35 +28,35 @@
 
 + (id)invocationGrabber
 {
-    return [[self alloc] init];
+	return [[self alloc] init];
 }
 
 - (id)init
 {
-    self.target = nil;
-    self.invocation = nil;
+	self.target = nil;
+	self.invocation = nil;
 	self.parentThread = nil;
-    self.waitUntilDone = NO;
-    self.threadType = DDInvocationBackgroundThread;
-    
-    return self;
+	self.waitUntilDone = NO;
+	self.threadType = DDInvocationBackgroundThread;
+	
+	return self;
 }
 
 - (id)prepareWithInvocationTarget:(id)inTarget
 {
-    self.target = inTarget;
+	self.target = inTarget;
 	
-    return self;
+	return self;
 }
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)selector
 {
-    return [self.target methodSignatureForSelector:selector];
+	return [self.target methodSignatureForSelector:selector];
 }
 
 - (void)forwardInvocation:(NSInvocation *)ioInvocation
 {
-    [ioInvocation setTarget:self.target];
+	[ioInvocation setTarget:self.target];
 	
 	self.invocation = ioInvocation;
 	
@@ -65,7 +65,7 @@
 	}
 	
 	if (self.parentThread && self.threadType == DDInvocationParentThread) {
-		[self.invocation performSelector:@selector(performInvocation:) 
+		[self.invocation performSelector:@selector(performInvocation:)
 								onThread:self.parentThread
 							  withObject:self.invocation
 						   waitUntilDone:NO];
@@ -85,7 +85,7 @@
 
 @implementation NSInvocation (DDInvocationWrapper)
 
-- (void)performInvocation:(NSInvocation *)anInvocation 
+- (void)performInvocation:(NSInvocation *)anInvocation
 {
 	/* Mac OS does not automatically place background threads in an
 	 autorelease pool like the default application run loop. For that

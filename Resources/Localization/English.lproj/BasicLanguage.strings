@@ -392,7 +392,7 @@
 "BasicLanguage[1115]" = "Be back later.";
 "BasicLanguage[1116]" = "\002-CTCP-\002 %1$@ from %2$@ was ignored.";
 "BasicLanguage[1117]" = "away-notify multi-prefix userhost-in-names sasl server-time";
-"BasicLanguage[1118]" = "CLIENTINFO DCC FINGER PING TIME USERINFO VERSION";
+"BasicLanguage[1118]" = "CAP CLIENTINFO DCC FINGER PING TIME USERINFO VERSION";
 "BasicLanguage[1119]" = "Stop fingering me pervert!";
 "BasicLanguage[1120]" = "There are no capabilities in use.";
 "BasicLanguage[1121]" = "The following capabilities are currently enabled: %@";
@@ -466,7 +466,7 @@
 "BasicLanguage[1180]" = "Please select the location in which to save the file.\n\nIMPORTANT: The file that will be saved does not contain passwords\nas those are considered sensitive information. It also does not include\nany custom addons such as scripts and styles.";
 
 "BasicLanguage[1181][1]" = "Import Preferences";
-"BasicLanguage[1181][2]" = "Please take note that the following preferences cannot be imported:\n\n    • Passwords\n    • Log location\n    • File transfer download location\n    • Any custom addons. Styles or scripts.\n\nAll other preferences will apply immediately.";
+"BasicLanguage[1181][2]" = "Please take note that the following preferences cannot be imported:\n\n    • Passwords\n    • Log location\n    • File transfer download location\n    • Any custom addons: Styles or scripts.\n\nAll other preferences will apply immediately.";
 "BasicLanguage[1181][3]" = "Select File";
 
 /* No button for dialogs. */
@@ -478,6 +478,7 @@
 
 /* Default sleep message. */
 "BasicLanguage[1185]" = "My %@ has gone to sleep. 💤";
+"BasicLanguage[1235]" = "My Mac has gone to sleep. 💤";
 
 /* Ok button for dialogs. */
 "BasicLanguage[1186]" = "OK";
@@ -631,3 +632,8 @@
 
 /* Empty alert sound label. */
 "BasicLanguage[1234]" = "None";
+
+
+/* Next unusued key: 1236 */
+
+

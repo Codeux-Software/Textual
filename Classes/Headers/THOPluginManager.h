@@ -37,12 +37,8 @@
 
 #import "TextualApplication.h"
 
-#define THOPluginManagerSharedInstance()			[THOPluginManager defaultManager]
-
 @interface THOPluginManager : NSObject
-@property (nonatomic, assign, readonly) dispatch_queue_t dispatchQueue;
-
-+ (THOPluginManager *)defaultManager;
+@property (nonatomic, assign) dispatch_queue_t dispatchQueue;
 
 /* Manage loaded plugins. */
 - (void)loadPlugins;
@@ -75,6 +71,7 @@
 - (void)sendUserInputDataToBundles:(IRCClient *)client message:(NSString *)message command:(NSString *)command;
 
 - (NSString *)postWillRenderMessageEvent:(NSString *)newMessage
+					   forViewController:(TVCLogController *)viewController
 								lineType:(TVCLogLineType)lineType
 							  memberType:(TVCLogLineMemberType)memberType;
 

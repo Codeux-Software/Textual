@@ -40,8 +40,8 @@
 
 @interface IRCModeInfo : NSObject
 @property (nonatomic, assign) BOOL modeIsSet;
-@property (nonatomic, strong) NSString *modeParamater;
-@property (nonatomic, strong) NSString *modeToken;
+@property (nonatomic, copy) NSString *modeParamater;
+@property (nonatomic, copy) NSString *modeToken;
 
 + (IRCModeInfo *)modeInfo;
 @end

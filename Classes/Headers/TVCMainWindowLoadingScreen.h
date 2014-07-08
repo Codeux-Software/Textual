@@ -40,7 +40,7 @@
 
 @interface TVCMainWindowLoadingScreenView : NSBox
 @property (nonatomic, nweak) IBOutlet NSView *backgroundContentView;
-@property (nonatomic, nweak) IBOutlet NSView *welcomeAddServerView;
+@property (nonatomic, nweak) IBOutlet NSView *welcomeAddServerNormalView;
 @property (nonatomic, nweak) IBOutlet NSView *welcomeAddServerTrialView;
 @property (nonatomic, nweak) IBOutlet NSView *loadingConfigurationView;
 @property (nonatomic, uweak) IBOutlet NSButton *welcomeAddServerViewButton;

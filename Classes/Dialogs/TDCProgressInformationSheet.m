@@ -66,7 +66,7 @@
 		NSAssert(NO, @"No window specified.");
 	}
 
-	self.window = window;
+	[self setWindow:window];
 
 	[self startSheet];
 

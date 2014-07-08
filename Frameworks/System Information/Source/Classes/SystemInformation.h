@@ -47,4 +47,9 @@
 + (NSString *)systemModelName; // "iMac," "MacBook," "MacBook Pro," etc.
 
 + (NSString *)retrieveSystemInformationKey:(NSString *)key;
+
++ (BOOL)featureAvailableToOSXLion;
++ (BOOL)featureAvailableToOSXMountainLion;
++ (BOOL)featureAvailableToOSXMavericks;
++ (BOOL)featureAvailableToOSXYosemite;
 @end

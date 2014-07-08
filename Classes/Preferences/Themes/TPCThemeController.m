@@ -43,7 +43,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		_customSettings = [TPCThemeSettings new];
+		self.customSettings = [TPCThemeSettings new];
 	}
 	
 	return self;
@@ -51,22 +51,22 @@
 
 - (NSString *)path
 {
-	return [_baseURL path];
+	return [self.baseURL path];
 }
 
 - (NSString *)actualPath
 {
-	return [TPCThemeController pathOfThemeWithName:_associatedThemeName skipCloudCache:YES];
+	return [TPCThemeController pathOfThemeWithName:self.associatedThemeName skipCloudCache:YES];
 }
 
 - (NSString *)name
 {
-	return [TPCThemeController extractThemeName:_associatedThemeName];
+	return [TPCThemeController extractThemeName:self.associatedThemeName];
 }
 
 - (BOOL)actualPathForCurrentThemeIsEqualToCachedPath
 {
-	NSString *updatedPath = [TPCThemeController pathOfThemeWithName:_associatedThemeName];
+	NSString *updatedPath = [TPCThemeController pathOfThemeWithName:self.associatedThemeName];
 
 	NSString *otherPath = [self path];
 
@@ -104,9 +104,9 @@
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 		if (ignoreCloudCache) {
-			path = [[TPCPreferences cloudCustomThemeFolderPath] stringByAppendingPathComponent:filename];
+			path = [[TPCPathInfo cloudCustomThemeFolderPath] stringByAppendingPathComponent:filename];
 		} else {
-			path = [[TPCPreferences cloudCustomThemeCachedFolderPath] stringByAppendingPathComponent:filename];
+			path = [[TPCPathInfo cloudCustomThemeCachedFolderPath] stringByAppendingPathComponent:filename];
 		}
 		
 		if ([RZFileManager() fileExistsAtPath:path]) {
@@ -119,7 +119,7 @@
 #endif
 		
 		/* Does it exist locally? */
-		path = [[TPCPreferences customThemeFolderPath] stringByAppendingPathComponent:filename];
+		path = [[TPCPathInfo customThemeFolderPath] stringByAppendingPathComponent:filename];
 		
 		if ([RZFileManager() fileExistsAtPath:path]) {
 			NSString *cssFile = [path stringByAppendingPathComponent:@"design.css"];
@@ -130,7 +130,7 @@
 		}
 	} else {
 		/* Does the theme exist in app? */
-		path = [[TPCPreferences bundledThemeFolderPath] stringByAppendingPathComponent:filename];
+		path = [[TPCPathInfo bundledThemeFolderPath] stringByAppendingPathComponent:filename];
 		
 		if ([RZFileManager() fileExistsAtPath:path]) {
 			NSString *cssFile = [path stringByAppendingPathComponent:@"design.css"];
@@ -147,22 +147,22 @@
 - (void)validateFilePathExistanceAndReload
 {
 	/* Try to find a theme by the stored name. */
-	_associatedThemeName = [TPCPreferences themeName];
+	self.associatedThemeName = [TPCPreferences themeName];
 	
-	NSString *path = [TPCThemeController pathOfThemeWithName:_associatedThemeName];
+	NSString *path = [TPCThemeController pathOfThemeWithName:self.associatedThemeName];
 	
 	if (NSObjectIsEmpty(path)) {
 		NSAssert(NO, @"Missing style resource files.");
 	}
 
 	/* We have a path. */
-	_baseURL = [NSURL fileURLWithPath:path];
+	self.baseURL = [NSURL fileURLWithPath:path];
 
 	/* Define a shared cache ID for files. */
-	_sharedCacheID = [NSString stringWithInteger:TXRandomNumber(5000)];
+	self.sharedCacheID = [NSString stringWithInteger:TXRandomNumber(5000)];
 
 	/* Reload theme settings. */
-	[_customSettings reloadWithPath:path];
+	[self.customSettings reloadWithPath:path];
 }
 
 - (void)load
@@ -199,18 +199,16 @@
 
 + (TPCThemeControllerStorageLocation)storageLocationOfThemeAtPath:(NSString *)path
 {
-	NSObjectIsEmptyAssertReturn(path, TPCThemeControllerStorageUnknownLocation);
-	
-	if ([path hasPrefix:[TPCPreferences bundledThemeFolderPath]]) {
+	if ([path hasPrefix:[TPCPathInfo bundledThemeFolderPath]]) {
 		return TPCThemeControllerStorageBundleLocation;
 	}
 	
-	if ([path hasPrefix:[TPCPreferences customThemeFolderPath]]) {
+	if ([path hasPrefix:[TPCPathInfo customThemeFolderPath]]) {
 		return TPCThemeControllerStorageCustomLocation;
 	}
 	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	if ([path hasPrefix:[TPCPreferences cloudCustomThemeCachedFolderPath]]) {
+	if ([path hasPrefix:[TPCPathInfo cloudCustomThemeCachedFolderPath]]) {
 		return TPCThemeControllerStorageCloudLocation;
 	}
 #endif
@@ -226,7 +224,7 @@
 		return nil;
     }
 
-	return [source safeSubstringToIndex:[source stringPosition:@":"]];
+	return [source substringToIndex:[source stringPosition:@":"]];
 }
 
 + (NSString *)extractThemeName:(NSString *)source

@@ -40,26 +40,9 @@
 
 @interface TDChannelSheet : TDCSheetBase
 @property (nonatomic, assign) BOOL newItem;
-@property (nonatomic, strong) NSString *clientID;
-@property (nonatomic, strong) NSString *channelID;
-@property (nonatomic, strong) IRCChannelConfig *config;
-@property (nonatomic, nweak) IBOutlet NSButton *JPQActivityCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *autoJoinCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *disableInlineImagesCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *enableInlineImagesCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignoreHighlightsCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *pushNotificationsCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *showTreeBadgeCountCheck;
-@property (nonatomic, nweak) IBOutlet NSSegmentedControl *contentViewTabView;
-@property (nonatomic, nweak) IBOutlet NSTextField *channelNameField;
-@property (nonatomic, nweak) IBOutlet NSTextField *defaultModesField;
-@property (nonatomic, nweak) IBOutlet NSTextField *defaultTopicField;
-@property (nonatomic, nweak) IBOutlet NSTextField *encryptionKeyField;
-@property (nonatomic, nweak) IBOutlet NSTextField *secretKeyField;
-@property (nonatomic, nweak) IBOutlet NSView *contentView;
-@property (nonatomic, strong) IBOutlet NSView *defaultsView;
-@property (nonatomic, strong) IBOutlet NSView *encryptionView;
-@property (nonatomic, strong) IBOutlet NSView *generalView;
+@property (nonatomic, copy) NSString *clientID;
+@property (nonatomic, copy) NSString *channelID;
+@property (nonatomic, copy) IRCChannelConfig *config;
 
 - (void)start;
 

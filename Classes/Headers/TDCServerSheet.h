@@ -38,12 +38,19 @@
 
 #import "TextualApplication.h"
 
-@interface TDCServerSheet : TDCSheetBase
-@property (nonatomic, strong) NSString *clientID;
-@property (nonatomic, strong) NSArray *tabViewList;
-@property (nonatomic, strong) NSDictionary *serverList;
-@property (nonatomic, strong) NSDictionary *encodingList;
-@property (nonatomic, strong) IRCClientConfig *config;
+typedef enum TDCServerSheetNavigationSelection : NSInteger {
+	TDCServerSheetDefaultNavigationSelection	= 0,
+	TDCServerSheetAddressBookNavigationSelection,
+	TDCServerSheetFloodControlNavigationSelection,
+	TDCServerSheetNewIgnoreEntryNavigationSelection
+} TDCServerSheetNavigationSelection;
+
+@interface TDCServerSheet : TDCSheetBase <NSOutlineViewDataSource, NSOutlineViewDelegate>
+@property (nonatomic, copy) NSString *clientID;
+@property (nonatomic, copy) NSArray *tabViewList;
+@property (nonatomic, copy) NSDictionary *serverList;
+@property (nonatomic, copy) NSDictionary *encodingList;
+@property (nonatomic, copy) IRCClientConfig *config;
 @property (nonatomic, nweak) IBOutlet NSButton *addChannelButton;
 @property (nonatomic, nweak) IBOutlet NSButton *addHighlightButton;
 @property (nonatomic, nweak) IBOutlet NSButton *addIgnoreButton;
@@ -95,31 +102,31 @@
 @property (nonatomic, nweak) IBOutlet NSTextField *sslCertificateSHA1FingerprintField;
 @property (nonatomic, nweak) IBOutlet NSTextField *sslCertificateMD5FingerprintField;
 @property (nonatomic, nweak) IBOutlet NSTextField *usernameField;
+@property (nonatomic, nweak) IBOutlet TVCBasicTableView *channelTable;
+@property (nonatomic, nweak) IBOutlet TVCBasicTableView *highlightsTable;
+@property (nonatomic, nweak) IBOutlet TVCBasicTableView *ignoreTable;
+@property (nonatomic, nweak) IBOutlet NSOutlineView *navigationOutlineview;
 @property (nonatomic, nweak) IBOutlet NSView *contentView;
-@property (nonatomic, nweak) IBOutlet TVCListView *channelTable;
-@property (nonatomic, nweak) IBOutlet TVCListView *highlightsTable;
-@property (nonatomic, nweak) IBOutlet TVCListView *ignoreTable;
-@property (nonatomic, nweak) IBOutlet TVCListView *tabView;
-@property (nonatomic, strong) IBOutlet NSView *autojoinView;
-@property (nonatomic, strong) IBOutlet NSView *commandsView;
-@property (nonatomic, strong) IBOutlet NSView *encodingView;
-@property (nonatomic, strong) IBOutlet NSView *floodControlToolView;
-@property (nonatomic, strong) IBOutlet NSView *floodControlView;
-@property (nonatomic, strong) IBOutlet NSView *generalView;
-@property (nonatomic, strong) IBOutlet NSView *highlightsView;
-@property (nonatomic, strong) IBOutlet NSView *identityView;
-@property (nonatomic, strong) IBOutlet NSView *ignoresView;
-@property (nonatomic, strong) IBOutlet NSView *messagesView;
-@property (nonatomic, strong) IBOutlet NSView *networkingView;
-@property (nonatomic, strong) IBOutlet NSView *proxyServerView;
-@property (nonatomic, strong) IBOutlet NSView *sslCertificateView;
-@property (nonatomic, strong) IBOutlet NSView *zncBouncerView;
+@property (nonatomic,strong) IBOutlet NSView *addressBookContentView;
+@property (nonatomic,strong) IBOutlet NSView *autojoinContentView;
+@property (nonatomic,strong) IBOutlet NSView *connectCommandsContentView;
+@property (nonatomic,strong) IBOutlet NSView *contentEncodingContentView;
+@property (nonatomic,strong) IBOutlet NSView *disconnectMessagesContentView;
+@property (nonatomic,strong) IBOutlet NSView *floodControlContentView;
+@property (nonatomic,strong) IBOutlet NSView *floodControlContentViewToolView;
+@property (nonatomic,strong) IBOutlet NSView *generalContentView;
+@property (nonatomic,strong) IBOutlet NSView *highlightsContentView;
+@property (nonatomic,strong) IBOutlet NSView *identityContentView;
+@property (nonatomic,strong) IBOutlet NSView *networkSocketContentView;
+@property (nonatomic,strong) IBOutlet NSView *proxyServerContentView;
+@property (nonatomic,strong) IBOutlet NSView *sslCertificateContentView;
+@property (nonatomic,strong) IBOutlet NSView *zncBouncerContentView;
 @property (nonatomic, uweak) IBOutlet NSTextView *loginCommandsField;
 @property (nonatomic, strong) TDChannelSheet *channelSheet;
 @property (nonatomic, strong) TDCAddressBookSheet *ignoreSheet;
 @property (nonatomic, strong) TDCHighlightEntrySheet *highlightSheet;
 
-- (void)start:(NSString *)viewToken withContext:(NSString *)context;
+- (void)start:(TDCServerSheetNavigationSelection)viewToken withContext:(NSString *)context;
 
 - (void)close;
 

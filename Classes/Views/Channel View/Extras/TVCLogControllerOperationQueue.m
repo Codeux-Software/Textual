@@ -42,7 +42,7 @@
 
 @interface TVCLogControllerOperationItem : NSOperation
 @property (nonatomic, nweak) TVCLogController *controller;
-@property (nonatomic, strong) TVCLogControllerOperationBlock executionBlock;
+@property (nonatomic, copy) TVCLogControllerOperationBlock executionBlock;
 @property (nonatomic, assign) BOOL isStandalone;
 
 - (NSInteger)dependencyCount;
@@ -57,6 +57,8 @@
 {
 	if (self = [super init]) {
 		[self setName:@"TVCLogControllerOperationQueue"];
+		
+		[self setMaxConcurrentOperationCount:2];
 
 		return self;
 	}
@@ -74,7 +76,7 @@
 
 - (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender isStandalone:(BOOL)isStandalone
 {
-	dispatch_async(dispatch_get_main_queue(), ^{
+	[self performBlockOnMainThread:^{
 		PointerIsEmptyAssert(callbackBlock);
 		PointerIsEmptyAssert(sender);
 
@@ -93,7 +95,7 @@
 
 		/* Add the operations. */
 		[self addOperation:operation];
-	});
+	}];
 }
 
 #pragma mark -
@@ -125,7 +127,7 @@
 
 - (void)updateReadinessState:(TVCLogController *)controller
 {
-	dispatch_async(dispatch_get_main_queue(), ^{
+	[self performBlockOnMainThread:^{
 		PointerIsEmptyAssert(controller);
 
 		/* Mark all objects part of this controller
@@ -143,7 +145,7 @@
 				}
 			}
 		}
-	});
+	}];
 }
 
 #pragma mark -
@@ -184,6 +186,11 @@
 	self.executionBlock(self);
 
 	/* Kill existing dependency. */
+	/* Discussion: Normally NSOperationQueue removes all strong references to 
+	 dependencies once all operations have completed. As this operation queue 
+	 can have thousands of operations chained together, this is not a desired
+	 behavior as a pseudo infinite loop can be created. Therefore, once we 
+	 have executed the block we wanted, we release any dependency assigned. */
 	NSArray *operations = [self dependencies];
 
 	if ([operations count] > 0) {

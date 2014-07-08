@@ -40,6 +40,10 @@
 @interface NSMenu (TXMenuHelper)
 @end
 
+@interface NSMenuItem ()
+@property (nonatomic, copy) NSString *userInfo;
+@end
+
 @interface NSMenuItem (TXMenuItemHelper)
 + (id)menuItemWithTitle:(NSString *)aString
 				 target:(id)aTarget
@@ -50,10 +54,4 @@
 				 action:(SEL)aSelector
 		  keyEquivalent:(NSString *)charCode
 	  keyEquivalentMask:(NSUInteger)mask;
-@end
-
-/* It is easier to track what a menu item represents by
- keeping in memory some bit of string telling about it. */
-@interface NSMenuExtendedHelperItem : NSMenuItem
-@property (nonatomic, strong) NSString *userInfo;
 @end

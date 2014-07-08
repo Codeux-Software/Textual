@@ -45,11 +45,11 @@
 {
 	NSObjectIsEmptyAssertReturn(base, nil);
 
-	if ([base hasPrefix:TXPopupPromptSuppressionPrefix]) {
+	if ([base hasPrefix:TLOPopupPromptSuppressionPrefix]) {
 		return base;
 	}
 
-	return [TXPopupPromptSuppressionPrefix stringByAppendingString:base];
+	return [TLOPopupPromptSuppressionPrefix stringByAppendingString:base];
 }
 
 #pragma mark -
@@ -58,7 +58,6 @@
 + (void)sheetWindowWithQuestionCallback:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
 	/* This callback is internal so we will not verify the context. */
-	
 	NSArray *sheetInfo = (NSArray *)CFBridgingRelease(contextInfo);
 
 	NSString *suppressionKey = sheetInfo[0];
@@ -75,7 +74,7 @@
 		} else {
 			NSButton *button = [alert suppressionButton];
 
-			[RZUserDefaults() setBool:button.state forKey:suppressionKey];
+			[RZUserDefaults() setBool:[button state] forKey:suppressionKey];
 		}
 	}
 
@@ -87,7 +86,9 @@
 
 	if (returnCode == NSAlertSecondButtonReturn) {
 		returnValue = TLOPopupPromptReturnSecondaryType;
-	} else if (returnCode == NSAlertOtherReturn || returnCode == NSAlertThirdButtonReturn) {
+	} else if (returnCode == NSAlertOtherReturn ||
+			   returnCode == NSAlertThirdButtonReturn)
+	{
 		returnValue = TLOPopupPromptReturnOtherType;
 	}
 
@@ -111,7 +112,7 @@
 	NSString *privateSuppressionKey = NSStringEmptyPlaceholder;
 
 	if (suppressKey) {
-		privateSuppressionKey = [TXPopupPromptSuppressionPrefix stringByAppendingString:suppressKey];
+		privateSuppressionKey = [TLOPopupPromptSuppressionPrefix stringByAppendingString:suppressKey];
 
 		if (useSupression && [RZUserDefaults() boolForKey:privateSuppressionKey]) {
 			return;
@@ -119,10 +120,10 @@
 	}
 
 	if (NSObjectIsEmpty(suppressText)) {
-		suppressText = TXTLS(@"BasicLanguage[1194]");
+		suppressText = BLS(1194);
 	}
 
-	BOOL isForcedSuppression = [suppressText isEqualToString:TXPopupPromptSpecialSuppressionTextValue];
+	BOOL isForcedSuppression = [suppressText isEqualToString:TLOPopupPromptSpecialSuppressionTextValue];
 
 	/* Pop sheet. */
 	NSAlert *alert = [NSAlert new];
@@ -138,7 +139,7 @@
 	if (useSupression && isForcedSuppression == NO) {
 		[alert setShowsSuppressionButton:useSupression];
 
-		[alert.suppressionButton setTitle:suppressText];
+		[[alert suppressionButton] setTitle:suppressText];
 	}
 	
 	NSArray *context = @[privateSuppressionKey, targetClass, NSStringFromSelector(actionSelector), @(isForcedSuppression)];
@@ -149,10 +150,10 @@
 						 didEndSelector:@selector(sheetWindowWithQuestionCallback:returnCode:contextInfo:)
 							contextInfo:(void *)CFBridgingRetain(context)];
 	} else {
-		[alert.iomt beginSheetModalForWindow:window
-							   modalDelegate:[self class]
-							  didEndSelector:@selector(sheetWindowWithQuestionCallback:returnCode:contextInfo:)
-								 contextInfo:(void *)CFBridgingRetain(context)];
+		[[alert invokeOnMainThread] beginSheetModalForWindow:window
+											   modalDelegate:[self class]
+											  didEndSelector:@selector(sheetWindowWithQuestionCallback:returnCode:contextInfo:)
+												 contextInfo:(void *)CFBridgingRetain(context)];
 	}
 }
 
@@ -177,7 +178,7 @@
 	NSString *privateSuppressionKey = nil;
 
 	if (suppressKey) {
-		privateSuppressionKey = [TXPopupPromptSuppressionPrefix stringByAppendingString:suppressKey];
+		privateSuppressionKey = [TLOPopupPromptSuppressionPrefix stringByAppendingString:suppressKey];
 
 		if (useSupression && [RZUserDefaults() boolForKey:privateSuppressionKey]) {
 			return YES;
@@ -185,10 +186,10 @@
 	}
 
 	if (NSObjectIsEmpty(suppressText)) {
-		suppressText = TXTLS(@"BasicLanguage[1194]");
+		suppressText = BLS(1194);
 	}
 
-	BOOL isForcedSuppression = [suppressText isEqualToString:TXPopupPromptSpecialSuppressionTextValue];
+	BOOL isForcedSuppression = [suppressText isEqualToString:TLOPopupPromptSpecialSuppressionTextValue];
 
 	/* Pop dialog. */
 	NSAlert *alert = [NSAlert alertWithMessageText:titleText
@@ -214,7 +215,7 @@
 				if (isForcedSuppression) {
 					[RZUserDefaults() setBool:YES forKey:privateSuppressionKey];
 				} else {
-					[RZUserDefaults() setBool:suppressionButton.state forKey:privateSuppressionKey];
+					[RZUserDefaults() setBool:[suppressionButton state] forKey:privateSuppressionKey];
 				}
 			}
 
@@ -230,11 +231,7 @@
 		}
 	};
 
-	if (NSIsCurrentThreadMain()) {
-		runblock();
-	} else {
-		dispatch_sync(dispatch_get_main_queue(), runblock);
-	}
+	[self performBlockOnMainThread:runblock];
 
 	return result;
 }

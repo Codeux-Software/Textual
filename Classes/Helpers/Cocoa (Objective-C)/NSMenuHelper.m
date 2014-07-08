@@ -42,6 +42,18 @@
 
 @implementation NSMenuItem (TXMenuItemHelper)
 
+static void *_internalUserInfo = nil;
+
+- (NSString *)userInfo
+{
+	return objc_getAssociatedObject(self, _internalUserInfo);
+}
+
+- (void)setUserInfo:(NSString *)userInfo
+{
+	objc_setAssociatedObject(self, _internalUserInfo, userInfo, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
 + (id)menuItemWithTitle:(NSString *)aString target:(id)aTarget action:(SEL)aSelector
 {
 	return [self menuItemWithTitle:aString target:aTarget action:aSelector keyEquivalent:NSStringEmptyPlaceholder keyEquivalentMask:0];
@@ -57,7 +69,4 @@
 	return menuItem;
 }
 
-@end
-
-@implementation NSMenuExtendedHelperItem
 @end

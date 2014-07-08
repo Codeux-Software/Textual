@@ -39,9 +39,9 @@
 #import "TextualApplication.h"
 
 @interface NSArray (TXArrayHelper)
-@property (nonatomic, readonly, assign) NSRange range;
+@property (nonatomic, assign, readonly) NSRange range;
 
-- (id)safeObjectAtIndex:(NSInteger)n;
+- (id)safeObjectAtIndex:(NSInteger)n TEXTUAL_DEPRECATED;
 
 - (BOOL)boolAtIndex:(NSInteger)n;
 - (NSArray *)arrayAtIndex:(NSInteger)n;
@@ -58,16 +58,19 @@
 
 - (NSArray *)arrayByRemovingObjectAtIndex:(NSUInteger)idx;
 
-- (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath;
+- (NSMutableArray *)mutableSubarrayWithRange:(NSRange)range;
 
+- (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath;
 - (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath usingSelector:(SEL)comparison;
 @end
 
 @interface NSMutableArray (TXMutableArrayHelper)
-- (void)safeRemoveObjectAtIndex:(NSInteger)n;
+- (void)safeRemoveObjectAtIndex:(NSInteger)n TEXTUAL_DEPRECATED;
 
-- (void)safeAddObject:(id)anObject;
-- (void)safeAddObjectWithoutDuplication:(id)anObject;
+- (void)addObjectWithoutDuplication:(id)anObject;
+
+- (void)safeAddObject:(id)anObject TEXTUAL_DEPRECATED;
+- (void)safeAddObjectWithoutDuplication:(id)anObject TEXTUAL_DEPRECATED;
 
 - (void)addBool:(BOOL)value;
 - (void)addInteger:(NSInteger)value;
@@ -75,7 +78,7 @@
 - (void)addDouble:(double)value;
 - (void)addPointer:(void *)value;
 
-- (void)safeInsertObject:(id)anObject atIndex:(NSUInteger)index;
+- (void)safeInsertObject:(id)anObject atIndex:(NSUInteger)index TEXTUAL_DEPRECATED;
 
 - (void)insertBool:(BOOL)value atIndex:(NSUInteger)index;
 - (void)insertInteger:(NSInteger)value atIndex:(NSUInteger)index;
@@ -85,7 +88,7 @@
 
 - (void)performSelectorOnObjectValueAndReplace:(SEL)performSelector;
 
-- (void)insertSortedObject:(id)obj usingComparator:(NSComparator)comparator;
+- (NSUInteger)insertSortedObject:(id)obj usingComparator:(NSComparator)comparator;
 @end
 
 @interface NSIndexSet (TXIndexSetHelper)

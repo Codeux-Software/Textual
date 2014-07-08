@@ -31,9 +31,13 @@
 - (id)invokeInBackgroundThread;
 - (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone;
 
+- (void)performBlockOnMainThread:(TXEmtpyBlockDataType)block;
+
 + (id)iomt; // Invoke On Main Thread
 + (id)invokeOnThread:(NSThread *)thread;
 + (id)invokeOnMainThread;
 + (id)invokeInBackgroundThread;
 + (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone;
+
++ (void)performBlockOnMainThread:(TXEmtpyBlockDataType)block;
 @end

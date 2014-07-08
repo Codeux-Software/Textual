@@ -39,10 +39,9 @@
 #import "TextualApplication.h"
 
 @interface IRCUser : NSObject <NSCopying>
-@property (nonatomic, nweak) IRCISupportInfo *supportInfo;
-@property (nonatomic, strong) NSString *nickname;
-@property (nonatomic, strong) NSString *username;
-@property (nonatomic, strong) NSString *address;
+@property (nonatomic, copy) NSString *nickname;
+@property (nonatomic, copy) NSString *username;
+@property (nonatomic, copy) NSString *address;
 @property (nonatomic, assign) NSInteger colorNumber;
 @property (nonatomic, assign) BOOL q;
 @property (nonatomic, assign) BOOL a;
@@ -54,10 +53,12 @@
 @property (nonatomic, assign) BOOL InspIRCd_y_lower; // Channel mode (+y) for IRCop on InspIRCd-2.0
 @property (nonatomic, assign) BOOL isCop;
 @property (nonatomic, assign) BOOL isAway;
-@property (nonatomic, readonly) CGFloat totalWeight;
-@property (nonatomic, readonly) CGFloat incomingWeight;
-@property (nonatomic, readonly) CGFloat outgoingWeight;
+@property (nonatomic, assign) CGFloat totalWeight;
+@property (nonatomic, assign) CGFloat incomingWeight;
+@property (nonatomic, assign) CGFloat outgoingWeight;
 @property (nonatomic, assign) CFAbsoluteTime lastWeightFade;
+
++ (id)newUserOnClient:(IRCClient *)client withNickname:(NSString *)nickname;
 
 - (NSString *)mark;
 

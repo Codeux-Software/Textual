@@ -137,11 +137,11 @@
  */
 
 @interface TXMenuController : NSObject
-@property (nonatomic, strong) NSString *pointedUrl;
-@property (nonatomic, strong) NSString *pointedNickname;
-@property (nonatomic, strong) NSString *pointedChannelName;
-@property (nonatomic, strong) NSString *currentSearchPhrase;
-@property (nonatomic, strong) NSDictionary *openWindowList;
+@property (nonatomic, copy) NSString *pointedUrl;
+@property (nonatomic, copy) NSString *pointedNickname;
+@property (nonatomic, copy) NSString *pointedChannelName;
+@property (nonatomic, copy) NSString *currentSearchPhrase;
+@property (nonatomic, copy) NSDictionary *openWindowList;
 @property (nonatomic, strong) TDCFileTransferDialog *fileTransferController;
 @property (nonatomic, nweak) IBOutlet NSMenu *navigationChannelList;
 @property (nonatomic, nweak) IBOutlet NSMenu *addServerMenu;
@@ -151,9 +151,13 @@
 @property (nonatomic, nweak) IBOutlet NSMenu *segmentedControllerMenu;
 @property (nonatomic, nweak) IBOutlet NSMenu *tcopyURLMenu;
 @property (nonatomic, nweak) IBOutlet NSMenu *userControlMenu;
-@property (nonatomic, nweak) IBOutlet NSMenuItem *channelMenuItem;
 @property (nonatomic, nweak) IBOutlet NSMenuItem *closeWindowMenuItem;
+@property (nonatomic, nweak) IBOutlet NSMenuItem *channelMenuItem;
 @property (nonatomic, nweak) IBOutlet NSMenuItem *serverMenuItem;
+@property (nonatomic, nweak) IBOutlet NSMenuItem *muteNotificationsFileMenuItem;
+@property (nonatomic, nweak) IBOutlet NSMenuItem *muteNotificationsDockMenuItem;
+@property (nonatomic, nweak) IBOutlet NSMenuItem *muteNotificationsSoundsFileMenuItem;
+@property (nonatomic, nweak) IBOutlet NSMenuItem *muteNotificationsSoundsDockMenuItem;
 
 - (void)setupOtherServices;
 
@@ -176,7 +180,7 @@
 - (id)windowFromWindowList:(NSString *)windowClass;
 
 - (BOOL)popWindowViewIfExists:(NSString *)windowClass;
-- (void)popWindowSheetIfExists;
+- (void)popWindowSheetIfExists; // Only applies to main window.
 
 - (IBAction)showPreferencesDialog:(id)sender;
 
@@ -197,7 +201,9 @@
 
 - (IBAction)showFileTransfersDialog:(id)sender;
 
-- (void)showServerPropertyDialog:(IRCClient *)u withDefaultView:(NSString *)viewType andContext:(NSString *)context;
+- (IBAction)openWelcomeSheet:(id)sender;
+
+- (void)showServerPropertyDialog:(IRCClient *)u withDefaultView:(TDCServerSheetNavigationSelection)viewType andContext:(NSString *)context;
 
 - (IBAction)markScrollback:(id)sender;
 - (IBAction)clearScrollback:(id)sender;

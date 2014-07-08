@@ -37,16 +37,15 @@
 
 #import "TextualApplication.h"
 
-@interface TPCResourceManager : NSObject
-+ (void)copyResourcesToCustomAddonsFolder;
-@end
-
-/* I should make these defines longer… */
 #define TPCResourceManagerBundleDocumentTypeExtension				@".bundle"
 #define TPCResourceManagerBundleDocumentTypeExtensionWithotuDot		@"bundle"
 
 #define TPCResourceManagerScriptDocumentTypeExtension				@".scpt"
 #define TPCResourceManagerScriptDocumentTypeExtensionWithotuDot		@"scpt"
+
+@interface TPCResourceManager : NSObject
++ (void)copyResourcesToCustomAddonsFolder;
+@end
 
 @interface TPCResourceManagerDocumentTypeImporter : NSDocument
 @end

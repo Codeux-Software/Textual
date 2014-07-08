@@ -39,41 +39,8 @@
 #import "TextualApplication.h"
 
 @interface IRCExtras : NSObject
-
-/*
-	See the wiki (textual://wiki) for more information about the URL parser. 
- */
-
 + (void)parseIRCProtocolURI:(NSString *)location;
 + (void)parseIRCProtocolURI:(NSString *)location withDescriptor:(NSAppleEventDescriptor *)event;
-
-/*
-	+createConnectionAndJoinChannel:channel:autoConnect: is the method used to
-	parse the input of the "/server" command. It also handles input from
-	+parseIRCProtocolURI:
-
-	The following syntax is supported by this method and is recommended:
-
-	"-SSL irc.example.com:0000 serverpassword"
-
-	Input can also vary including formats such as:
-
-	"irc.example.com:0000 serverpassword"
-	"irc.example.com 0000 serverpassword"
-
-	"irc.example.com:+0000 serverpassword"
-	"irc.example.com +0000 serverpassword"
-
-	Of course -SSL being the front most token would favor SSL for the
-	connection being created. Additionally, a server port proceeded by
-	a plus sign (+) also indicates the connection will be SSL based.
-
-	Server port can be associated with the server using a colon (:) or
-	simply making it second to the server using a space.
-
-	The server password passed using the "PASS" command is last in list.
-	Nothing should follow it.
- */
 
 + (void)createConnectionAndJoinChannel:(NSString *)serverInfo channel:(NSString *)channelList autoConnect:(BOOL)autoConnect;
 + (void)createConnectionAndJoinChannel:(NSString *)serverInfo channel:(NSString *)channelList autoConnect:(BOOL)autoConnect focusChannel:(BOOL)focusChannel;

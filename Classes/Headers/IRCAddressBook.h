@@ -42,11 +42,11 @@ typedef enum IRCAddressBookEntryType : NSInteger {
 	IRCAddressBookUserTrackingEntryType
 } IRCAddressBookEntryType;
 
-@interface IRCAddressBook : NSObject <NSMutableCopying>
+@interface IRCAddressBookEntry : NSObject <NSCopying>
 @property (nonatomic, assign) IRCAddressBookEntryType entryType;
-@property (nonatomic, strong) NSString *itemUUID; // Unique Identifier (UUID)
-@property (nonatomic, strong) NSString *hostmask;
-@property (nonatomic, strong) NSString *hostmaskRegex;
+@property (nonatomic, copy) NSString *hostmask;
+@property (nonatomic, copy) NSString *hostmaskRegex;
+@property (nonatomic, copy) NSString *itemUUID; // Unique Identifier (UUID)
 @property (nonatomic, assign) BOOL ignoreCTCP;
 @property (nonatomic, assign) BOOL ignoreJPQE;
 @property (nonatomic, assign) BOOL ignoreNotices;
@@ -56,7 +56,6 @@ typedef enum IRCAddressBookEntryType : NSInteger {
 @property (nonatomic, assign) BOOL ignorePublicMessages;
 @property (nonatomic, assign) BOOL ignoreFileTransferRequests;
 @property (nonatomic, assign) BOOL hideMessagesContainingMatch;
-@property (nonatomic, assign) BOOL hideInMemberList;
 @property (nonatomic, assign) BOOL notifyJoins;
 
 - (id)initWithDictionary:(NSDictionary *)dic;

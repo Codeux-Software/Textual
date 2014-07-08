@@ -41,55 +41,65 @@
 #import "TVCLogLine.h"			// typedef enum
 #import "TLOGrowlController.h"	// typedef enum
 
-typedef enum IRCConnectMode : NSInteger {
-	IRCConnectNormalMode,
-	IRCConnectRetryMode,
-	IRCConnectReconnectMode,
-	IRCConnectBadSSLCertificateMode,
-} IRCConnectMode;
+typedef enum IRCClientConnectMode : NSInteger {
+	IRCClientConnectNormalMode,
+	IRCClientConnectRetryMode,
+	IRCClientConnectReconnectMode,
+	IRCClientConnectBadSSLCertificateMode,
+} IRCClientConnectMode;
 
-typedef enum IRCDisconnectMode : NSInteger {
-	IRCDisconnectNormalMode,
-	IRCDisconnectTrialPeriodMode,
-	IRCDisconnectComputerSleepMode,
-	IRCDisconnectBadSSLCertificateMode,
-	IRCDisconnectReachabilityChangeMode,
-	IRCDisconnectServerRedirectMode,
-} IRCDisconnectMode;
+typedef enum IRCClientDisconnectMode : NSInteger {
+	IRCClientDisconnectNormalMode,
+	IRCClientDisconnectTrialPeriodMode,
+	IRCClientDisconnectComputerSleepMode,
+	IRCClientDisconnectBadSSLCertificateMode,
+	IRCClientDisconnectReachabilityChangeMode,
+	IRCClientDisconnectServerRedirectMode,
+} IRCClientDisconnectMode;
 
-typedef enum IRCIdentificationWithSASLMechanism : NSInteger {
-	IRCIdentificationWithSASLNoMechanism,
-	IRCIdentificationWithSASLPlainTextMechanism,
-	IRCIdentificationWithSASLExternalMechanism,
-} IRCIdentificationWithSASLMechanism;
+typedef enum IRCClientIdentificationWithSASLMechanism : NSInteger {
+	IRCClientIdentificationWithSASLNoMechanism,
+	IRCClientIdentificationWithSASLPlainTextMechanism,
+	IRCClientIdentificationWithSASLExternalMechanism,
+} IRCClientIdentificationWithSASLMechanism;
 
-typedef struct IRCv3SupportedClientCapacities {
-	BOOL awayNotifyCapInUse;		// YES if away-notify CAP supported.
-	BOOL identifyCTCPCapInUse;		// YES if identify-ctcp CAP supported.
-	BOOL identifyMsgCapInUse;		// YES if identify-msg CAP supported.
-	BOOL multiPrefixCapInUse;		// YES if multi-prefix CAP supported.
-	BOOL serverTimeCapInUse;		// YES if server-time CAP supported.
-	BOOL userhostInNamesCapInUse;	// YES if userhost-in-names CAP supported.
-	BOOL watchCommandCapInUse;		// YES if the WATCH command is supported.
-	BOOL zncPlaybackCapInUse;		// YES if the ZNC vendor specific playback CAP supported.
-	BOOL isInActiveSASLNegotation;	// YES if in SASL CAP authentication request, else NO.
-	BOOL isIdentifiedWithSASL;		// YES if SASL authentication was successful, else NO.
-} IRCv3SupportedClientCapacities;
+/* Always check for ClientIRCv3SupportedCapacityServerTime if the server-time
+ capacity is being checked. ClientIRCv3SupportedCapacityZNCServerTime and
+ ClientIRCv3SupportedCapacityZNCServerTimeISO are used internally for 
+ capacity negotation but once accepted, the default server-time flag 
+ is set for the maintained capacity. */
+/* ClientIRCv3SupportedCapacitySASL… is set once negotation begins. It is 
+ reset if negotation fails. Use ClientIRCv3SupportedCapacityIsIdentifiedWithSASL
+ to find actual status of identification. */
+typedef enum ClientIRCv3SupportedCapacities : NSInteger {
+	ClientIRCv3SupportedCapacityAwayNotify				= 1 << 0, // YES if away-notify CAP supported.
+	ClientIRCv3SupportedCapacityIdentifyCTCP			= 1 << 1, // YES if identify-ctcp CAP supported.
+	ClientIRCv3SupportedCapacityIdentifyMsg				= 1 << 2, // YES if identify-msg CAP supported.
+	ClientIRCv3SupportedCapacityMultiPreifx				= 1 << 3, // YES if multi-prefix CAP supported.
+	ClientIRCv3SupportedCapacityServerTime				= 1 << 4, // YES if server-time CAP supported.
+	ClientIRCv3SupportedCapacityUserhostInNames			= 1 << 5, // YES if userhost-in-names CAP supported.
+	ClientIRCv3SupportedCapacityWatchCommand			= 1 << 6, // YES if the WATCH command is supported.
+	ClientIRCv3SupportedCapacityZNCPlaybackModule		= 1 << 7, // YES if the ZNC vendor specific CAP supported.
+	ClientIRCv3SupportedCapacityZNCServerTime			= 1 << 8, // YES if the ZNC vendor specific CAP supported.
+	ClientIRCv3SupportedCapacityZNCServerTimeISO		= 1 << 9, // YES if the ZNC vendor specific CAP supported.
+	ClientIRCv3SupportedCapacitySASLPlainText			= 1 << 10, // YES if SASL plain text CAP is supported.
+	ClientIRCv3SupportedCapacitySASLExternal			= 1 << 11, // YES if SASL external CAP is supported.
+	ClientIRCv3SupportedCapacityIsInSASLNegotiation		= 1 << 12, // YES if in SASL CAP authentication request, else NO.
+	ClientIRCv3SupportedCapacityIsIdentifiedWithSASL	= 1 << 13, // YES if SASL authentication was successful, else NO.
+} ClientIRCv3SupportedCapacities;
+
+typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 
 @interface IRCClient : IRCTreeItem
-/* Public information. They are considered read-only outside of
- IRCClient. Just not enforced. Play nice plugins. */
-
-@property (nonatomic, strong) IRCClientConfig *config;
-@property (nonatomic, strong) IRCISupportInfo *isupport;
-@property (nonatomic, assign) IRCConnectMode connectType;
-@property (nonatomic, assign) IRCDisconnectMode disconnectType;
+@property (nonatomic, copy) IRCClientConfig *config;
+@property (nonatomic, strong) IRCISupportInfo *supportInfo;
+@property (nonatomic, assign) IRCClientConnectMode connectType;
+@property (nonatomic, assign) IRCClientDisconnectMode disconnectType;
 @property (nonatomic, assign) NSInteger connectDelay;
-@property (nonatomic, assign) IRCv3SupportedClientCapacities capacities;
+@property (nonatomic, assign) BOOL inUserInvokedJoinRequest;
 @property (nonatomic, assign) BOOL inUserInvokedNamesRequest;
 @property (nonatomic, assign) BOOL inUserInvokedWhoRequest;
 @property (nonatomic, assign) BOOL inUserInvokedWhowasRequest;
-@property (nonatomic, assign) BOOL inUserInvokedJoinRequest;
 @property (nonatomic, assign) BOOL inUserInvokedWatchRequest;
 @property (nonatomic, assign) BOOL inUserInvokedModeRequest;
 @property (nonatomic, assign) BOOL autojoinInProgress;			// YES if autojoin is running, else NO.
@@ -106,70 +116,94 @@ typedef struct IRCv3SupportedClientCapacities {
 @property (nonatomic, assign) BOOL rawModeEnabled;				// YES if sent & received data should be logged to console, else NO.
 @property (nonatomic, assign) BOOL reconnectEnabled;			// YES if reconnection is allowed, else NO.
 @property (nonatomic, assign) BOOL serverHasNickServ;			// YES if NickServ service was found on server, else NO.
-@property (nonatomic, strong) NSMutableArray *CAPAcceptedCaps;
-@property (nonatomic, strong) NSMutableArray *CAPPendingCaps;
+@property (nonatomic, assign) ClientIRCv3SupportedCapacities capacities;
+@property (nonatomic, nweak) NSArray *channelList; // channelList is actually a proxy setter/getter for internal storage.
+@property (nonatomic, copy) NSArray *cachedHighlights;
 @property (nonatomic, strong) IRCChannel *lastSelectedChannel;
-@property (nonatomic, strong) NSMutableArray *channels;
-@property (nonatomic, strong) NSMutableArray *highlights;
-@property (nonatomic, strong) NSString *preAwayNickname; // Nickname before away was set.
+@property (nonatomic, copy) NSString *preAwayNickname; // Nickname before away was set.
 @property (nonatomic, assign) NSTimeInterval lastMessageReceived;			// The time at which the last of any incoming data was received.
 @property (nonatomic, assign) NSTimeInterval lastMessageServerTime;			// The time of the last message received that contained a server-time CAP.
-@property (nonatomic, strong) NSString *serverRedirectAddressTemporaryStore; // Temporary store for RPL_BOUNCE (010) redirects.
+@property (nonatomic, copy) NSString *serverRedirectAddressTemporaryStore; // Temporary store for RPL_BOUNCE (010) redirects.
 @property (nonatomic, assign) NSInteger serverRedirectPortTemporaryStore; // Temporary store for RPL_BOUNCE (010) redirects.
 
+// seed can be either an NSDictionary representation of an IRCClientConfig instance or an IRCClientConfig instance itself.
+// Supplying an empty NSDictionary will result in the client using default values.
 - (void)setup:(id)seed;
 
 - (void)updateConfig:(IRCClientConfig *)seed;
 - (void)updateConfig:(IRCClientConfig *)seed fromTheCloud:(BOOL)isCloudUpdate withSelectionUpdate:(BOOL)reloadSelection;
 
-- (IRCClientConfig *)storedConfig;
+// Use -copyOfStoredConfig to return the configuration that DOES NOT contain any private messages.
+// It is also a COPY, not the one used internally, which means it can be passed around and modified without
+// fear that it will have any negative effects on the IRC client itself.
+// Accessing -config property directly will return the current configuration used internally by the client.
+// This configuration will include any associated private messages.
+- (IRCClientConfig *)copyOfStoredConfig;
 
-- (NSMutableDictionary *)dictionaryValue;
+// -dictionaryValue may return a value that contains private messages. This depends on whether
+// end user has configured Textual to remember the state of queries between saves.
+- (NSMutableDictionary *)dictionaryValue; // Values to be used for saving to NSUserDefaults and no other purposes.
 - (NSMutableDictionary *)dictionaryValue:(BOOL)isCloudDictionary;
+
+- (void)prepareForApplicationTermination;
+- (void)prepareForPermanentDestruction;
+
+- (void)preferencesChanged;
+
+- (void)closeDialogs;
 
 - (NSString *)uniqueIdentifier;
 
-- (NSString *)networkName; // Only returns the actual network name.
+- (NSString *)networkName; // Only returns the actual network name or nil.
 - (NSString *)altNetworkName; // Will return the configured name if the actual name is not available.
 - (NSString *)networkAddress;
 
 - (NSString *)localNickname;
 - (NSString *)localHostmask;
 
-/* Returns the value of _lastMessageServerTime which is the value of the last message
- received server-time capacity value. If logging is enabled in Textual, then it is 
- possible that the value returned is cached from previous session. If you want the 
- value without any cache, then access -lastMessageServerTime itself. */
-/* The cached value is only asked for one time by this method so it is fast as possible. */
+- (void)enableCapacity:(ClientIRCv3SupportedCapacities)capacity;
+- (void)disableCapacity:(ClientIRCv3SupportedCapacities)capacity;
+
+- (BOOL)isCapacityEnabled:(ClientIRCv3SupportedCapacities)capacity;
+
+- (NSString *)enabledCapacitiesStringValue;
+
+- (NSInteger)channelCount;
+
+- (void)addChannel:(IRCChannel *)channel;
+- (void)addChannel:(IRCChannel *)channel atPosition:(NSInteger)pos;
+- (void)removeChannel:(IRCChannel *)channel;
+
+- (NSInteger)indexOfFirstPrivateMessage;
+- (NSInteger)indexOfChannel:(IRCChannel *)channel;
+
+- (void)selectFirstChannelInChannelList;
+
+- (void)addHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine;
+
 - (NSTimeInterval)lastMessageServerTimeWithCachedValue;
 
 - (void)reachabilityChanged:(BOOL)reachable;
 
 - (void)autoConnect:(NSInteger)delay afterWakeUp:(BOOL)afterWakeUp;
 
-- (void)prepareForApplicationTermination;
-- (void)prepareForPermanentDestruction;
-
-- (void)closeDialogs;
-- (void)preferencesChanged;
-
 - (BOOL)isReconnecting;
 
 - (void)postEventToViewController:(NSString *)eventToken;
 - (void)postEventToViewController:(NSString *)eventToken forChannel:(IRCChannel *)channel;
 
-- (IRCAddressBook *)checkIgnoreAgainstHostmask:(NSString *)host withMatches:(NSArray *)matches;
+- (IRCAddressBookEntry *)checkIgnoreAgainstHostmask:(NSString *)host withMatches:(NSArray *)matches;
 
 - (BOOL)encryptOutgoingMessage:(NSString **)message channel:(IRCChannel *)channel;
 - (void)decryptIncomingMessage:(NSString **)message channel:(IRCChannel *)channel;
 
 - (BOOL)outputRuleMatchedInMessage:(NSString *)raw inChannel:(IRCChannel *)chan withLineType:(TVCLogLineType)type;
 
-- (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXFSLongInt)totalFilesize token:(NSString *)transferToken;
+- (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken;
 
 - (void)connect;
-- (void)connect:(IRCConnectMode)mode;
-- (void)connect:(IRCConnectMode)mode preferringIPv6:(BOOL)preferIPv6;
+- (void)connect:(IRCClientConnectMode)mode;
+- (void)connect:(IRCClientConnectMode)mode preferringIPv6:(BOOL)preferIPv6;
 
 - (void)disconnect;
 - (void)quit;
@@ -193,7 +227,7 @@ typedef struct IRCv3SupportedClientCapacities {
 - (void)partUnlistedChannel:(NSString *)channel withComment:(NSString *)comment;
 
 - (void)sendWhois:(NSString *)nick;
-- (void)changeNick:(NSString *)newNick;
+- (void)changeNickname:(NSString *)newNick;
 - (void)kick:(IRCChannel *)channel target:(NSString *)nick;
 - (void)sendCTCPQuery:(NSString *)target command:(NSString *)command text:(NSString *)text;
 - (void)sendCTCPReply:(NSString *)target command:(NSString *)command text:(NSString *)text;
@@ -207,17 +241,11 @@ typedef struct IRCv3SupportedClientCapacities {
 - (void)createChanBanExceptionListDialog;
 - (void)createChanInviteExceptionListDialog;
 
-- (void)sendCommand:(id)str;
-- (void)sendCommand:(id)str completeTarget:(BOOL)completeTarget target:(NSString *)targetChannelName;
-- (void)sendText:(NSAttributedString *)str command:(NSString *)command channel:(IRCChannel *)channel;
-- (void)sendText:(NSAttributedString *)str command:(NSString *)command channel:(IRCChannel *)channel withEncryption:(BOOL)encryptChat;
-- (void)inputText:(id)str command:(NSString *)command;
-
-- (void)sendLine:(NSString *)str;
-- (void)send:(NSString *)str, ...;
-
-- (NSInteger)indexOfFirstPrivateMessage;
-
+// Creating a channel will require Textual to create a new WebView
+// Invoking this method on anything other than the main thread will
+// crash Textual because WebView requires all operations to occur on
+// the main thread. If you already are certain that the channel will
+// already exist, then call from whatever thread you want.
 - (IRCChannel *)findChannel:(NSString *)name;
 - (IRCChannel *)findChannelOrCreate:(NSString *)name;
 - (IRCChannel *)findChannelOrCreate:(NSString *)name isPrivateMessage:(BOOL)isPM;
@@ -225,38 +253,84 @@ typedef struct IRCv3SupportedClientCapacities {
 - (NSData *)convertToCommonEncoding:(NSString *)data;
 - (NSString *)convertFromCommonEncoding:(NSData *)data;
 
-- (NSString *)formatNick:(NSString *)nick channel:(IRCChannel *)channel;
-- (NSString *)formatNick:(NSString *)nick channel:(IRCChannel *)channel formatOverride:(NSString *)forcedFormat;
-
-- (void)sendPrivmsgToSelectedChannel:(NSString *)message;
+// Defaults to TVCLogLineUndefinedNicknameFormat
+- (NSString *)formatNickname:(NSString *)nick channel:(IRCChannel *)channel;
+- (NSString *)formatNickname:(NSString *)nick channel:(IRCChannel *)channel formatOverride:(NSString *)forcedFormat;
 
 - (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype;
-- (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nick:(NSString *)nick text:(NSString *)text;
-- (BOOL)notifyText:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nick:(NSString *)nick text:(NSString *)text;
+- (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nickname:(NSString *)nick text:(NSString *)text;
+- (BOOL)notifyText:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nickname:(NSString *)nick text:(NSString *)text;
 
-- (void)notifyFileTransfer:(TXNotificationType)type nickname:(NSString *)nickname filename:(NSString *)filename filesize:(TXFSLongInt)totalFilesize;
+- (void)notifyFileTransfer:(TXNotificationType)type nickname:(NSString *)nickname filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize;
 
-- (void)populateISONTrackedUsersList:(NSMutableArray *)ignores;
+- (void)populateISONTrackedUsersList:(NSArray *)ignores;
+
+#pragma mark -
+
+/* WARNING:
+ 
+	WebKit which Textual uses for rendering messages will crash if it is not
+	interacted with on the main thread. Therefore, always make sure you send
+	messages on the main thread. Otherwise, happy crashing. :)
+ */
+
+- (void)sendCommand:(id)str;
+- (void)sendCommand:(id)str completeTarget:(BOOL)completeTarget target:(NSString *)targetChannelName;
+- (void)sendText:(NSAttributedString *)str command:(NSString *)command channel:(IRCChannel *)channel;
+- (void)sendText:(NSAttributedString *)str command:(NSString *)command channel:(IRCChannel *)channel withEncryption:(BOOL)encryptChat;
+- (void)inputText:(id)str command:(NSString *)command; // This is call invoked by the input text field. There is no reason to call directly.
+
+- (void)sendLine:(NSString *)str;
+- (void)send:(NSString *)str, ...;
+
+/* When using -sendPrivmsgToSelectedChannel:, if the actual selected channel in the main
+ window is not owned by this client, then the message will be sent to the server console. */
+/* The method obviously does not work as expected so it has been marked as deprecated.
+ However, it will remain functional for plugin authors who wish to use it. */
+- (void)sendPrivmsgToSelectedChannel:(NSString *)message TEXTUAL_DEPRECATED;
+
+- (void)sendPrivmsg:(NSString *)message toChannel:(IRCChannel *)channel;
+- (void)sendAction:(NSString *)message toChannel:(IRCChannel *)channel;
+- (void)sendNotice:(NSString *)message toChannel:(IRCChannel *)channel;
 
 #pragma mark -
 
 /* ------ */
+/* Printing to the WebView for each channel/server in Textual is actually very complicated and
+ over the years there have been a lot of design changes. The current design works like the 
+ following:
+ 
+ 1. print… method is called with all associated information. 
+ 2. Once called, the code behind it parses the input and places all relevant information inside
+ a copy of TVCLogLine which is then passed around. 
+ 3. Once the instance of TVCLogLine is created, it is handed down to the associated TVCLogController
+ for either the server console or the actual channel view. TVCLogController will then attach the 
+ copy of TVCLogLine to a background concurrent operation queue. Each server is assigned its very 
+ own concurrent queue. On the queue, each print operation occurs. This is done to allow all work 
+ to be processed in the background without locking up the main thread. It is also designed so 
+ incoming spam on one server does not interfere with the operations of another server. Each 
+ printing operation is handled on a first come, first served basis. 
+ 4. When an individual print operation is fired, the renderring of each message to HTML occurs. 
+ This is the heaviest part of the printing operation as it requires extensive text based analysis
+ of the actual incoming message. Once completed, the actual HTML is handed off back to the main
+ thread where WebKit handles all the drawing operations. At that point it is out of the hands of
+ Textual and will be displayed to the user as soon as WebKit renders it. */
 /* All print calls point to this single one: */
-- (void)print:(id)chan											// An IRCChannel or nil for the console.
-		 type:(TVCLogLineType)type								// The line type. See TVCLogLine.h
-		 nick:(NSString *)nick									// The nickname associated with the print.
-		 text:(NSString *)text									// The actual text being printed.
-	encrypted:(BOOL)isEncrypted									// Is the text encrypted?
-   receivedAt:(NSDate *)receivedAt								// The time the message was received at for the timestamp.
-	  command:(NSString *)command								// Can be the actual command (PRIVMSG, NOTICE, etc.) or a raw numeric (001, 002, etc.) — … -100 = internal debug command.
-	  message:(IRCMessage *)rawMessage							// Actual IRCMessage to associate with the print job. 
-completionBlock:(void(^)(BOOL highlighted))completionBlock;		// A block to call when the actual print occurs.
+- (void)printToWebView:(id)channel													// An IRCChannel or nil for the console.
+				  type:(TVCLogLineType)type											// The time the message was received at for the timestamp.
+			   command:(NSString *)command											// The line type. See TVCLogLine.h
+			  nickname:(NSString *)nickname											// The nickname associated with the print.
+		   messageBody:(NSString *)messageBody										// The actual text being printed.
+		   isEncrypted:(BOOL)isEncrypted											// Is the text encrypted? This flag DOES NOT encrypt it. It informs the WebView if it was in fact encrypted so it can be treated with more privacy.
+			receivedAt:(NSDate *)receivedAt											// Can be the actual command (PRIVMSG, NOTICE, etc.) or a raw numeric (001, 002, etc.) — … TVCLogLineDefaultRawCommandValue = internal debug command.
+	  referenceMessage:(IRCMessage *)referenceMessage								// Actual IRCMessage to associate with the print job.
+	   completionBlock:(IRCClientPrintToWebViewCallbackBlock)completionBlock;		// A block to call when the actual print occurs.
 /* ------ */
 
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text command:(NSString *)command;
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt command:(NSString *)command;
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command;
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command message:(IRCMessage *)rawMessage;
+- (void)print:(id)chan type:(TVCLogLineType)type nickname:(NSString *)nickname messageBody:(NSString *)messageBody command:(NSString *)command;
+- (void)print:(id)chan type:(TVCLogLineType)type nickname:(NSString *)nickname messageBody:(NSString *)messageBody receivedAt:(NSDate *)receivedAt command:(NSString *)command;
+- (void)print:(id)chan type:(TVCLogLineType)type nickname:(NSString *)nickname messageBody:(NSString *)messageBody isEncrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command;
+- (void)print:(id)chan type:(TVCLogLineType)type nickname:(NSString *)nickname messageBody:(NSString *)messageBody isEncrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command referenceMessage:(IRCMessage *)referenceMessage;
 
 - (void)printReply:(IRCMessage *)m;
 - (void)printUnknownReply:(IRCMessage *)m;
@@ -279,9 +353,10 @@ completionBlock:(void(^)(BOOL highlighted))completionBlock;		// A block to call 
 /* Use of these methods will throw an exception.								 */
 /* ****************************************************************************  */
 
-- (void)printError:(NSString *)error TEXTUAL_DEPRECATED;
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command message:(IRCMessage *)rawMessage completionBlock:(void(^)(BOOL highlighted))completionBlock TEXTUAL_DEPRECATED;
 
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text TEXTUAL_DEPRECATED;
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt TEXTUAL_DEPRECATED;
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt TEXTUAL_DEPRECATED;
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text command:(NSString *)command TEXTUAL_DEPRECATED;
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt command:(NSString *)command TEXTUAL_DEPRECATED;
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command TEXTUAL_DEPRECATED;
+- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command message:(IRCMessage *)rawMessage TEXTUAL_DEPRECATED;
 @end

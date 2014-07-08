@@ -49,7 +49,7 @@
 
 - (NSString *)integerWithLeadingZero:(NSInteger)forcedWidth
 {
-	NSInteger trlzp = (forcedWidth - [self.stringValue length]);
+	NSInteger trlzp = (forcedWidth - [[self stringValue] length]);
 
 	if (trlzp <= 0) {
 		return [self stringValue];

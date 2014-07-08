@@ -37,6 +37,12 @@
 
 #import "TextualApplication.h"
 
+@interface TDChanInviteExceptionSheet ()
+@property (nonatomic, strong) NSMutableArray *exceptionList;
+@property (nonatomic, nweak) IBOutlet NSTextField *headerTitleField;
+@property (nonatomic, nweak) IBOutlet TVCBasicTableView *exceptionTable;
+@end
+
 @implementation TDChanInviteExceptionSheet
 
 - (id)init
@@ -45,7 +51,6 @@
 		[RZMainBundle() loadCustomNibNamed:@"TDChanInviteExceptionSheet" owner:self topLevelObjects:nil];
 
 		self.exceptionList = [NSMutableArray new];
-        self.changeModeList = [NSMutableArray new];
     }
 
     return self;
@@ -53,36 +58,36 @@
 
 - (void)releaseTableViewDataSourceBeforeSheetClosure
 {
-	self.exceptionTable.delegate = nil;
-	self.exceptionTable.dataSource = nil;
+	[self.exceptionTable setDelegate:nil];
+	[self.exceptionTable setDataSource:nil];
 }
 
 - (void)show
 {
-	IRCChannel *c = self.worldController.selectedChannel;
-
-	self.headerTitleField.stringValue = [NSString stringWithFormat:self.headerTitleField.stringValue, c.name];
-
-    [self startSheet];
+	IRCChannel *c = [worldController() findChannelByClientId:self.clientID channelId:self.channelID];
+	
+	[self.headerTitleField setStringValue:[NSString stringWithFormat:[self.headerTitleField stringValue], [c name]]];
+	
+	[self startSheet];
 }
 
 - (void)clear
 {
-    [self.exceptionList removeAllObjects];
-
-    [self reloadTable];
+	[self.exceptionList removeAllObjects];
+	
+	[self reloadTable];
 }
 
 - (void)addException:(NSString *)host tset:(NSString *)timeSet setby:(NSString *)owner
 {
-    [self.exceptionList safeAddObject:@[host, [owner nicknameFromHostmask], timeSet]];
-
-    [self reloadTable];
+	[self.exceptionList addObject:@[host, [owner nicknameFromHostmask], timeSet]];
+	
+	[self reloadTable];
 }
 
 - (void)reloadTable
 {
-    [self.exceptionTable reloadData];
+	[self.exceptionTable reloadData];
 }
 
 #pragma mark -
@@ -90,6 +95,8 @@
 
 - (void)onUpdate:(id)sender
 {
+	[self.exceptionList removeAllObjects];
+	
     if ([self.delegate respondsToSelector:@selector(chanInviteExceptionDialogOnUpdate:)]) {
 		[self.delegate chanInviteExceptionDialogOnUpdate:self];
     }
@@ -97,43 +104,45 @@
 
 - (void)onRemoveExceptions:(id)sender
 {
-    NSString *modeString;
+	NSMutableArray *changeArray = [NSMutableArray array];
 
+	NSString *modeString;
+	
 	NSMutableString *mdstr = [NSMutableString stringWithString:@"-"];
 	NSMutableString *trail = [NSMutableString string];
-
+	
 	NSIndexSet *indexes = [self.exceptionTable selectedRowIndexes];
-
-    NSInteger indexTotal = 0;
-
+	
+	NSInteger indexTotal = 0;
+	
 	for (NSNumber *index in [indexes arrayFromIndexSet]) {
-        indexTotal++;
-
-		NSArray *iteml = [self.exceptionList safeObjectAtIndex:index.unsignedIntegerValue];
-
-		if (NSObjectIsNotEmpty(iteml)) {
-			[mdstr appendString:@"I"];
-			[trail appendFormat:@" %@", [iteml safeObjectAtIndex:0]];
-		}
-
+		indexTotal++;
+		
+		NSArray *iteml = [self.exceptionList objectAtIndex:[index unsignedIntegerValue]];
+		
+		[mdstr appendString:@"I"];
+		[trail appendFormat:@" %@", iteml[0]];
+		
 		if (indexTotal == TXMaximumNodesPerModeCommand) {
-            modeString = (id)[mdstr stringByAppendingString:trail];
-
-            [self.changeModeList safeAddObject:modeString];
-
-            [mdstr setString:@"-"];
-            [trail setString:NSStringEmptyPlaceholder];
-
-            indexTotal = 0;
-        }
+			modeString = (id)[mdstr stringByAppendingString:trail];
+			
+			[changeArray addObject:modeString];
+			
+			[mdstr setString:@"-"];
+			[trail setString:NSStringEmptyPlaceholder];
+			
+			indexTotal = 0;
+		}
 	}
-
-    if (NSObjectIsNotEmpty(mdstr)) {
-        modeString = (id)[mdstr stringByAppendingString:trail];
-
-        [self.changeModeList safeAddObject:modeString];
-    }
-
+	
+	if (NSObjectIsNotEmpty(mdstr)) {
+		modeString = (id)[mdstr stringByAppendingString:trail];
+		
+		[changeArray addObject:modeString];
+	}
+	
+	self.changeModeList = changeArray;
+	
 	[super cancel:nil];
 }
 
@@ -142,20 +151,20 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-    return self.exceptionList.count;
+	return [self.exceptionList count];
 }
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-    NSArray *item = [self.exceptionList safeObjectAtIndex:row];
-
-    if ([column.identifier isEqualToString:@"mask"]) {
-		return [item safeObjectAtIndex:0];
-    } else if ([column.identifier isEqualToString:@"setby"]) {
-		return [item safeObjectAtIndex:1];
-    } else {
-		return [item safeObjectAtIndex:2];
-    }
+	NSArray *item = [self.exceptionList objectAtIndex:row];
+	
+	if ([[column identifier] isEqualToString:@"mask"]) {
+		return item[0];
+	} else if ([[column identifier] isEqualToString:@"setby"]) {
+		return item[1];
+	} else {
+		return item[2];
+	}
 }
 
 #pragma mark -

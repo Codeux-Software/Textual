@@ -44,7 +44,7 @@
     self = [super initWithCoder:coder];
 
 	if (self) {
-		self.delegate = self;
+		[self setDelegate:self];
 
 		if ([TPCPreferences rightToLeftFormatting]) {
 			[self setBaseWritingDirection:NSWritingDirectionRightToLeft];
@@ -52,35 +52,27 @@
             [self setBaseWritingDirection:NSWritingDirectionLeftToRight];
 		}
 
-		[self setDefaultTextFieldFont:TXDefaultTextFieldFont];
-		[self setDefaultTextFieldFontColor:TXDefaultTextFieldFontColor];
+		[self setPreferredFont:TXPreferredGlobalTextFieldFont];
+		[self setPreferredFontColor:TXPreferredGlobalTextFieldFontColor];
 
 		[self defineDefaultTypeSetterAttributes];
 		[self updateTypeSetterAttributes];
 
-        [super setTextContainerInset:NSMakeSize(TXDefaultTextFieldWidthPadding, TXDefaultTextFieldHeightPadding)];
+        [super setTextContainerInset:NSMakeSize(TVCTextViewWithIRCFormatterWidthPadding,
+												TVCTextViewWithIRCFormatterHeightPadding)];
 
-        if (PointerIsEmpty(self.keyHandler)) {
-            self.keyHandler = [TLOKeyEventHandler new];
-        }
-        
-        self.formattingQueue = dispatch_queue_create("formattingQueue", NULL);
+		self.keyEventHandler = [TLOKeyEventHandler new];
     }
 	
     return self;
 }
 
-- (void)dealloc
-{
-	dispatch_release(self.formattingQueue);
-
-	self.formattingQueue = NULL;
-}
-
 - (void)mouseDown:(NSEvent *)theEvent
 {
-    [self.window makeFirstResponder:self];
+	/* Make ourself the first responder. */
+    [[self window] makeFirstResponder:self];
 
+	/* Pass event to super. */
     [super mouseDown:theEvent];
 }
 
@@ -89,22 +81,22 @@
 
 - (void)setKeyHandlerTarget:(id)target
 {
-	[self.keyHandler setTarget:target];
+	[self.keyEventHandler setTarget:target];
 }
 
 - (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods
 {
-	[self.keyHandler registerSelector:selector key:code modifiers:mods];
+	[self.keyEventHandler registerSelector:selector key:code modifiers:mods];
 }
 
 - (void)registerKeyHandler:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods
 {
-	[self.keyHandler registerSelector:selector character:c modifiers:mods];
+	[self.keyEventHandler registerSelector:selector character:c modifiers:mods];
 }
 
 - (void)keyDown:(NSEvent *)e
 {
-	if ([self.keyHandler processKeyEvent:e]) {
+	if ([self.keyEventHandler processKeyEvent:e]) {
 		return;
 	}
 
@@ -131,29 +123,34 @@
 
 - (NSAttributedString *)attributedStringValue
 {
-    return self.attributedString.copy;
-}
-
-- (void)setAttributedStringValue:(NSAttributedString *)string
-{
-	[[self undoManager] removeAllActions];
-	
-	NSData *stringData = [string RTFFromRange:NSMakeRange(0, [string length]) documentAttributes:nil];
-
-    [self replaceCharactersInRange:[self fullSelectionRange] withRTF:stringData];
-
-	[self didChangeText];
+	return [[self attributedString] copy];
 }
 
 - (NSString *)stringValue
 {
-    return [self string];
+	return [[self string] copy];
+}
+
+- (void)setAttributedStringValue:(NSAttributedString *)string
+{
+	/* Wipe any undo actions already stored. */
+	[[self undoManager] removeAllActions];
+	
+	/* Set new value. */
+	NSData *stringData = [string RTFFromRange:NSMakeRange(0, [string length]) documentAttributes:nil];
+
+    [self replaceCharactersInRange:[self fullSelectionRange] withRTF:stringData];
+
+	/* Inform others of the change. */
+	[self didChangeText];
 }
 
 - (void)setStringValue:(NSString *)string
 {
+	/* Set new value. */
     [self replaceCharactersInRange:[self fullSelectionRange] withString:string];
 	
+	/* Inform others of the change. */
 	[self didChangeText];
 }
 
@@ -165,8 +162,6 @@
 	if (NSObjectIsEmpty(attributes) || NSRangeIsValid(local) == NO) {
 		return;
 	}
-	
-	//DebugLogToConsole(@"%@; %@", attributes, NSStringFromRange(local));
 
 	[self.undoManager registerUndoWithTarget:self
 									selector:@selector(setAttributesWithContext:)
@@ -185,8 +180,6 @@
 									selector:@selector(setAttributesWithContext:)
 									  object:@[attrs, NSStringFromRange(local)]];
 
-	//DebugLogToConsole(@"old: %@; new: %@", attrs, contextArray[0]);
-	
 	[self setAttributes:contextArray[0] inRange:local];
 }
 
@@ -194,23 +187,26 @@
 
 - (void)removeAttribute:(id)attr inRange:(NSRange)local
 {
-    [self.textStorage removeAttribute:attr range:local];
+    [[self textStorage] removeAttribute:attr range:local];
 }
 
 - (void)setAttributes:(id)attrs inRange:(NSRange)local
 {
-	[self.textStorage addAttributes:attrs range:local];
+	[[self textStorage] addAttributes:attrs range:local];
 }
 
 #pragma mark -
 
 - (void)textDidChange:(NSNotification *)aNotification
 {
-	if (self.string.length < 1) {
-		[self defineDefaultTypeSetterAttributes]; // -------------/
-		[self updateTypeSetterAttributes]; // Reset these values when field becomes empty.
+	if ([self stringLength] < 1) {
+		/* Reset these values when field becomes empty. */
+		[self defineDefaultTypeSetterAttributes];
+		
+		[self updateTypeSetterAttributes];
 	}
 
+	/* Internal text did change notification. */
 	if ([self respondsToSelector:@selector(internalTextDidChange:)]) {
 		[self performSelector:@selector(internalTextDidChange:) withObject:aNotification];
 	}
@@ -220,42 +216,41 @@
 
 - (void)updateAllFontSizesToMatchTheDefaultFont
 {
-	CGFloat newPointSize = self.defaultTextFieldFont.pointSize;
+	CGFloat newPointSize = [self.preferredFont pointSize];
 
-    [self.textStorage beginEditing];
-
-    [self.textStorage enumerateAttribute:NSFontAttributeName
-                            inRange:[self fullSelectionRange]
-                            options:0
-                         usingBlock:^(id value, NSRange range, BOOL *stop)
+    [[self textStorage] beginEditing];
+    [[self textStorage] enumerateAttribute:NSFontAttributeName
+								inRange:[self fullSelectionRange]
+								options:0
+							usingBlock:^(id value, NSRange range, BOOL *stop)
 	{
 		NSFont *oldfont = value;
 
-		if (NSDissimilarObjects(oldfont.pointSize, newPointSize)) {
+		if (NSDissimilarObjects([oldfont pointSize], newPointSize)) {
 			NSFont *font = [RZFontManager() convertFont:value toSize:newPointSize];
 
-			if (PointerIsNotEmpty(font)) {
-				[self.textStorage removeAttribute:NSFontAttributeName range:range];
-				
-				[self.textStorage addAttribute:NSFontAttributeName value:font range:range];
+			if (font) {
+				[[self textStorage] removeAttribute:NSFontAttributeName range:range];
+
+				[[self textStorage] addAttribute:NSFontAttributeName value:font range:range];
 			}
 		}
 	}];
 
-    [self.textStorage endEditing];
+    [[self textStorage] endEditing];
 }
 
 - (void)updateTypeSetterAttributes
 {
-	[self setTypingAttributes:@{NSFontAttributeName : self.defaultTextFieldFont, NSForegroundColorAttributeName : self.defaultTextFieldFontColor}];
+	[self setTypingAttributes:@{NSFontAttributeName : self.preferredFont, NSForegroundColorAttributeName : self.preferredFontColor}];
 }
 
 - (void)defineDefaultTypeSetterAttributes
 {
-	[self setFont:self.defaultTextFieldFont];
+	[self setFont:self.preferredFont];
 
-	[self setTextColor:self.defaultTextFieldFontColor];
-	[self setInsertionPointColor:self.defaultTextFieldFontColor];
+	[self setTextColor:self.preferredFontColor];
+	[self setInsertionPointColor:self.preferredFontColor];
 }
 
 #pragma mark -
@@ -277,32 +272,33 @@
 	
 	/* Range of selected line. */
 	NSRange blr;
-	NSRange selr = self.selectedRange;
+	NSRange selr = [self selectedRange];
 	
-	if (selr.location <= self.stringLength) {
+	if (selr.location <= [self stringLength]) {
 		[layoutManager lineFragmentRectForGlyphAtIndex:selr.location effectiveRange:&blr];
 	} else {
 		return -1;
 	}
 	
 	/* Loop through the range of each line in our text view using
-	 the same technique we use for counting our total number of 
-	 lines. If a range matches our base while looping, then that 
+	 the same technique we use for counting our total number of
+	 lines. If a range matches our base while looping, then that
 	 is our selected line number. */
-	NSUInteger numberOfLines, index, numberOfGlyphs = [layoutManager numberOfGlyphs];
+	NSUInteger numberOfLines = 0;
+	NSUInteger numberOfGlyphs = [layoutManager numberOfGlyphs];
 	
 	NSRange lineRange;
 	
-	for (numberOfLines = 0, index = 0; index < numberOfGlyphs; numberOfLines++) {
-		[layoutManager lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
-
+	for (NSInteger i = 0; i < numberOfGlyphs; numberOfLines++) {
+		[layoutManager lineFragmentRectForGlyphAtIndex:i effectiveRange:&lineRange];
+		
 		if (NSEqualRanges(blr, lineRange)) {
 			return (numberOfLines + 1);
 		}
 		
-		index = NSMaxRange(lineRange);
+		i = NSMaxRange(lineRange);
 	}
-
+	
 	return [self numberOfLines];
 }
 
@@ -311,20 +307,21 @@
 	/* Base line number count. */
 	NSLayoutManager *layoutManager = [self layoutManager];
 	
-	NSUInteger numberOfLines, index, numberOfGlyphs = [layoutManager numberOfGlyphs];
+	NSUInteger numberOfLines = 0;
+	NSUInteger numberOfGlyphs = [layoutManager numberOfGlyphs];
 	
 	NSRange lineRange;
 	
-	for (numberOfLines = 0, index = 0; index < numberOfGlyphs; numberOfLines++) {
-		[layoutManager lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
-
-		index = NSMaxRange(lineRange);
+	for (NSInteger i = 0; i < numberOfGlyphs; numberOfLines++) {
+		[layoutManager lineFragmentRectForGlyphAtIndex:i effectiveRange:&lineRange];
+		
+		i = NSMaxRange(lineRange);
 	}
 	
 	/* The method used above for counting the number of lines in
 	 our text view does not take into consideration blank lines at
-	 the end of our field. Therefore, we must manually check if the 
-	 last line of our input is a blank newline. If it is, then 
+	 the end of our field. Therefore, we must manually check if the
+	 last line of our input is a blank newline. If it is, then
 	 increase our count by one. */
 	NSInteger lastIndex = ([self stringLength] - 1);
 	

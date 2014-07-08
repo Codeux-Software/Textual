@@ -39,6 +39,14 @@
 
 #include <sys/sysctl.h>
 
+#define NSAppKitVersionNumber10_6		1038
+#define NSAppKitVersionNumber10_7		1138
+#define NSAppKitVersionNumber10_7_2		1138.23
+#define NSAppKitVersionNumber10_7_3		1138.32
+#define NSAppKitVersionNumber10_7_4		1138.47
+#define NSAppKitVersionNumber10_8		1187
+#define NSAppKitVersionNumber10_9		1265
+
 @implementation CSFWSystemInformation
 
 #pragma mark -
@@ -57,6 +65,26 @@
 + (NSString *)systemOperatingSystemName
 {
 	return [self retrieveSystemInformationKey:@"ProductName"];
+}
+
++ (BOOL)featureAvailableToOSXLion
+{
+	return (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_6);
+}
+
++ (BOOL)featureAvailableToOSXMountainLion
+{
+	return (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_7);
+}
+
++ (BOOL)featureAvailableToOSXMavericks
+{
+	return (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_8);
+}
+
++ (BOOL)featureAvailableToOSXYosemite
+{
+	return (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9);
 }
 
 #pragma mark -

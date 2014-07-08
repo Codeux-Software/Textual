@@ -40,6 +40,8 @@
 
 @implementation IRCExtras
 
+#warning Test new channel enumeration logic. 
+
 + (void)parseIRCProtocolURI:(NSString *)location
 {
 	[self parseIRCProtocolURI:location withDescriptor:nil];
@@ -63,7 +65,7 @@
 
 	NSArray *slashMatches = [TLORegularExpression matchesInString:location withRegex:@"([/])"];
 
-	if (NSNumberInRange(slashMatches.count, 2, 3) == NO) {
+	if (NSNumberInRange([slashMatches count], 2, 3) == NO) {
 		return;
 	}
 
@@ -124,12 +126,9 @@
 	 */
 
 	if ([addressScheme isEqualToString:@"textual"]) {
-		/* We will use the menu controller often so just make a local var. */
-		TXMenuController *menuc = [self.masterController menuController];
-		
 		if ([serverAddress isEqualToString:@"acknowledgements"])
 		{
-			[menuc showAcknowledgments:nil];
+			[menuController() showAcknowledgments:nil];
 		}
 		else if ([serverAddress isEqualToString:@"appstore-page"])
 		{
@@ -140,12 +139,12 @@
 		}
 		else if ([serverAddress isEqualToString:@"contributors"])
 		{
-			[menuc showAcknowledgments:nil];
+			[menuController() showAcknowledgments:nil];
 		}
 		else if ([serverAddress isEqualToString:@"custom-style-folder"] ||
 				 [serverAddress isEqualToString:@"custom-styles-folder"])
 		{
-			[RZWorkspace() openFile:[TPCPreferences customThemeFolderPath]];
+			[RZWorkspace() openFile:[TPCPathInfo customThemeFolderPath]];
 		}
 		else if ([serverAddress isEqualToString:@"newsletter"])
 		{
@@ -153,30 +152,28 @@
 		}
 		else if ([serverAddress isEqualToString:@"diagnostic-reports-folder"])
 		{
-			NSString *userpath = [[TPCPreferences userHomeDirectoryPathOutsideSandbox] stringByAppendingPathComponent:@"/Library/Logs/DiagnosticReports"];
-			
-			[RZWorkspace() openFile:@"/Library/Logs/DiagnosticReports"];
-			[RZWorkspace() openFile:userpath];
+			[RZWorkspace() openFile:[TPCPathInfo localUserDiagnosticReportsFolderPath]];
+			[RZWorkspace() openFile:[TPCPathInfo systemDiagnosticReportsFolderPath]];
 		}
 		else if ([serverAddress isEqualToString:@"support-channel"])
 		{
-			[menuc connectToTextualHelpChannel:nil];
+			[menuController() connectToTextualHelpChannel:nil];
+		}
+		else if ([serverAddress isEqualToString:@"testing-channel"])
+		{
+			[menuController() connectToTextualTestingChannel:nil];
 		}
 		else if ([serverAddress isEqualToString:@"icloud-style-folder"] ||
 				 [serverAddress isEqualToString:@"icloud-styles-folder"])
 		{
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-			[RZWorkspace() openFile:[TPCPreferences cloudCustomThemeFolderPath]];
+			[RZWorkspace() openFile:[TPCPathInfo cloudCustomThemeFolderPath]];
 #endif
-		}
-		else if ([serverAddress isEqualToString:@"testing-channel"])
-		{
-			[menuc connectToTextualTestingChannel:nil];
 		}
 		else if ([serverAddress isEqualToString:@"unsupervised-script-folder"] ||
 				 [serverAddress isEqualToString:@"unsupervised-scripts-folder"])
 		{
-			[RZWorkspace() openFile:[TPCPreferences systemUnsupervisedScriptFolderPath]];
+			[RZWorkspace() openFile:[TPCPathInfo systemUnsupervisedScriptFolderPath]];
 		}
 		else if ([serverAddress isEqualToString:@"wiki"])
 		{
@@ -193,7 +190,7 @@
 		serverPort = @(IRCConnectionDefaultServerPort);
 	}
 
-	BOOL connectionUsesSSL = NO;
+	__block BOOL connectionUsesSSL = NO;
 
 	NSObjectIsEmptyAssert(serverAddress);
 	NSObjectIsEmptyAssert(addressScheme);
@@ -215,33 +212,33 @@
 	NSMutableString *channelList = [NSMutableString string];
 
 	if (channelInfo) {
-		NSInteger channelCount = 0;
-
 		NSArray *dataSections = [channelInfo split:@","];
 
-		NSString *lastObject = dataSections.lastObject;
-
-		for (__strong NSString *dataValue in dataSections) {
-			NSAssertReturnLoopBreak(channelCount < 5);
-
-			BOOL isLastObject = [dataValue isEqualToString:lastObject];
-
-			if ([dataValue isEqualIgnoringCase:@"needssl"] && isLastObject) {
-				connectionUsesSSL = YES;
+		[dataSections enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+			if (idx > 4) {
+				*stop = YES;
+				
+				return;
 			} else {
-				if ([dataValue isChannelName] == NO) {
-					dataValue = [@"#" stringByAppendingString:dataValue];
+				BOOL isLastObject = ((idx - 1) == [dataSections count]);
+				
+				if ([obj isEqualIgnoringCase:@"needssl"] && isLastObject) {
+					connectionUsesSSL = YES;
+				} else {
+					NSString *objcopy = [obj copy];
+					
+					if ([objcopy isChannelName] == NO) {
+						objcopy = [@"#" stringByAppendingString:objcopy];
+					}
+					
+					[channelList appendString:objcopy];
+					[channelList appendString:@","];
 				}
-
-				[channelList appendString:dataValue];
-				[channelList appendString:@","];
 			}
-
-			channelCount += 1;
-		}
+		}];
 
 		/* Erase end commas. */
-		[channelList deleteCharactersInRange:NSMakeRange((channelList.length - 1), 1)];
+		[channelList deleteCharactersInRange:NSMakeRange(([channelList length] - 1), 1)];
 	}
 
 	/* We have parsed every part of our URL. Build the final result and
@@ -389,35 +386,36 @@
     
     /* Add Server. */
 	NSObjectIsEmptyAssert(serverAddress);
-    
-	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
-	dic[@"serverAddress"] = serverAddress;
-	dic[@"connectionName"] = serverAddress;
-
-	dic[@"serverPort"]		= @(serverPort);
-	dic[@"connectOnLaunch"] = @(autoConnect);
-	dic[@"connectUsingSSL"]	= @(connectionUsesSSL);
+	IRCClientConfig *baseConfig = [IRCClientConfig new];
+	
+	[baseConfig setClientName:serverAddress];
+	
+	[baseConfig setServerAddress:serverAddress];
+	[baseConfig setServerPort:serverPort];
+	
+	[baseConfig setConnectionUsesSSL:connectionUsesSSL];
 	
 	NSMutableArray *channels = [NSMutableArray array];
 	
 	NSArray *chunks = [channelList split:@","];
 		
 	for (NSString *cc in chunks) {
-		[channels safeAddObject:[IRCChannelConfig seedDictionary:cc.trim]];
+		[channels addObject:[IRCChannelConfig seedWithName:[cc trim]]];
 	}
 
-	dic[@"channelList"] = channels;
+	[baseConfig setChannelList:channels];
+	
+	if (serverPassword) {
+		[baseConfig setServerPassword:serverPassword];
+		
+		[baseConfig writeServerPasswordKeychainItemToDisk];
+	}
 
 	/* Feed the world our seed and finish up. */
-	IRCClient *uf = [self.worldController createClient:dic reload:YES];
-
-	if (serverPassword) {
-		[uf.config setServerPassword:serverPassword];
-		[uf.config writeServerPasswordKeychainItemToDisk];
-	}
+	IRCClient *uf = [worldController() createClient:baseConfig reload:YES];
 	
-	[self.worldController save];
+	[worldController() save];
 
 	if (autoConnect) {
 		[uf connect];
@@ -425,12 +423,7 @@
 
 	/* Focus the newly added connection? */
 	if (focusChannel) {
-		[self.worldController expandClient:uf];
-		
-		/* select: can only work on one channel so we only ask for the top-most one. */
-		NSObjectIsEmptyAssert(uf.channels);
-
-		[self.worldController select:uf.channels[0]];
+		[uf selectFirstChannelInChannelList];
 	}
 }
 

@@ -69,13 +69,13 @@
 - (NSString *)contentString
 {
 	DOMDocument *doc = [self.mainFrame DOMDocument];
-	PointerIsEmptyAssertReturn(doc, NSStringEmptyPlaceholder);
+	PointerIsEmptyAssertReturn(doc, nil);
 	
 	DOMElement *body = [doc body];
-	PointerIsEmptyAssertReturn(body, NSStringEmptyPlaceholder);
+	PointerIsEmptyAssertReturn(body, nil);
 	
 	DOMHTMLElement *root = (DOMHTMLElement *)[body parentNode];
-	PointerIsEmptyAssertReturn(root, NSStringEmptyPlaceholder);
+	PointerIsEmptyAssertReturn(root, nil);
 	
 	return [root outerHTML];
 }

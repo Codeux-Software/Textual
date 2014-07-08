@@ -41,7 +41,7 @@
 #define _clickInterval			2
 
 @interface TLOGrowlController ()
-@property (nonatomic, strong) NSDictionary *lastClickedContext;
+@property (nonatomic, copy) NSDictionary *lastClickedContext;
 @property (nonatomic, assign) NSTimeInterval lastClickedTime;
 @end
 
@@ -50,9 +50,7 @@
 - (id)init
 {
 	if ((self = [super init])) {
-		if ([TPCPreferences featureAvailableToOSXMountainLion]) {
-			[RZUserNotificationCenter() setDelegate:self];
-		}
+		[RZUserNotificationCenter() setDelegate:self];
 		
 		[GrowlApplicationBridge setGrowlDelegate:self];
 
@@ -62,12 +60,39 @@
 	return self;
 }
 
+- (NSString *)titleForEvent:(TXNotificationType)event
+{
+	switch (event) {
+		case TXNotificationAddressBookMatchType:				{ return BLS(1086);		}
+		case TXNotificationChannelMessageType:					{ return BLS(1087);		}
+		case TXNotificationChannelNoticeType:					{ return BLS(1088);		}
+		case TXNotificationConnectType:							{ return BLS(1089);		}
+		case TXNotificationDisconnectType:						{ return BLS(1090);		}
+		case TXNotificationInviteType:							{ return BLS(1092);		}
+		case TXNotificationKickType:							{ return BLS(1093);		}
+		case TXNotificationNewPrivateMessageType:				{ return BLS(1094);		}
+		case TXNotificationPrivateMessageType:					{ return BLS(1095);		}
+		case TXNotificationPrivateNoticeType:					{ return BLS(1096);		}
+		case TXNotificationHighlightType:						{ return BLS(1091);		}
+			
+		case TXNotificationFileTransferSendSuccessfulType:		{ return BLS(1097);		}
+		case TXNotificationFileTransferReceiveSuccessfulType:	{ return BLS(1098);		}
+		case TXNotificationFileTransferSendFailedType:			{ return BLS(1099);		}
+		case TXNotificationFileTransferReceiveFailedType:		{ return BLS(1100);		}
+		case TXNotificationFileTransferReceiveRequestedType:	{ return BLS(1101);		}
+			
+		default: { return nil; }
+	}
+	
+	return nil;
+}
+
 - (void)notify:(TXNotificationType)eventType title:(NSString *)eventTitle description:(NSString *)eventDescription userInfo:(NSDictionary *)eventContext
 {
 	NSAssertReturn([TPCPreferences growlEnabledForEvent:eventType]);
 
 	/* titleForEvent: invokes TXTLS for the event type. */
-	NSString *eventKind = [TPCPreferences titleForEvent:eventType];
+	NSString *eventKind = [self titleForEvent:eventType];
 	
 	NSInteger eventPriority = 0;
 	
@@ -75,100 +100,100 @@
 		case TXNotificationHighlightType:
 		{
 			eventPriority = 1;
-			eventTitle = TXTFLS(@"BasicLanguage[1063]", eventTitle);
+			eventTitle = BLS(1063, eventTitle);
 			
 			break;
 		}
 		case TXNotificationNewPrivateMessageType:
 		{
 			eventPriority = 1;
-			eventTitle = TXTLS(@"BasicLanguage[1066]");
+			eventTitle = BLS(1066);
 			
 			break;
 		}
 		case TXNotificationChannelMessageType:
 		{
-			eventTitle = TXTFLS(@"BasicLanguage[1059]", eventTitle);
+			eventTitle = BLS(1059, eventTitle);
 			
 			break;
 		}
 		case TXNotificationChannelNoticeType:
 		{
-			eventTitle = TXTFLS(@"BasicLanguage[1060]", eventTitle);
+			eventTitle = BLS(1060, eventTitle);
 			
 			break;
 		}
 		case TXNotificationPrivateMessageType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1067]");
+			eventTitle = BLS(1067);
 			
 			break;
 		}
 		case TXNotificationPrivateNoticeType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1068]");
+			eventTitle = BLS(1068);
 			
 			break;
 		}
 		case TXNotificationKickType:
 		{
-			eventTitle = TXTFLS(@"BasicLanguage[1065]", eventTitle);
+			eventTitle = BLS(1065, eventTitle);
 			
 			break;
 		}
 		case TXNotificationInviteType:
 		{
-			eventTitle = TXTFLS(@"BasicLanguage[1064]", eventTitle);
+			eventTitle = BLS(1064, eventTitle);
 			
 			break;
 		}
 		case TXNotificationConnectType:
 		{
-			eventTitle = TXTFLS(@"BasicLanguage[1061]", eventTitle);
-			eventDescription = TXTLS(@"BasicLanguage[1074]");
+			eventTitle = BLS(1061, eventTitle);
+			eventDescription = BLS(1074);
 			
 			break;
 		}
 		case TXNotificationDisconnectType:
 		{
-			eventTitle = TXTFLS(@"BasicLanguage[1062]", eventTitle);
-			eventDescription = TXTLS(@"BasicLanguage[1075]");
+			eventTitle = BLS(1062, eventTitle);
+			eventDescription = BLS(1075);
 			
 			break;
 		}
 		case TXNotificationAddressBookMatchType: 
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1058]");
+			eventTitle = BLS(1058);
 			
 			break;
 		}
 		case TXNotificationFileTransferSendSuccessfulType:
 		{
-			eventTitle = TXTFLS(@"BasicLanguage[1069]", eventTitle);
+			eventTitle = BLS(1069, eventTitle);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveSuccessfulType:
 		{
-			eventTitle = TXTFLS(@"BasicLanguage[1070]", eventTitle);
+			eventTitle = BLS(1070, eventTitle);
 			
 			break;
 		}
 		case TXNotificationFileTransferSendFailedType:
 		{
-			eventTitle = TXTFLS(@"BasicLanguage[1071]", eventTitle);
+			eventTitle = BLS(1071, eventTitle);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveFailedType:
 		{
-			eventTitle = TXTFLS(@"BasicLanguage[1072]", eventTitle);
+			eventTitle = BLS(1072, eventTitle);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveRequestedType:
 		{
-			eventTitle = TXTFLS(@"BasicLanguage[1073]", eventTitle);
+			eventTitle = BLS(1073, eventTitle);
 			
 			break;
 		}
@@ -177,32 +202,30 @@
 	eventDescription = [eventDescription stripIRCEffects];
 
 	/* Send to notification center? */
-	if ([TPCPreferences featureAvailableToOSXMountainLion]) {
-		if ([GrowlApplicationBridge isGrowlRunning] == NO) {
-			NSUserNotification *notification = [NSUserNotification new];
-			
-			notification.title = eventTitle;
-			notification.informativeText = eventDescription;
-			notification.deliveryDate = [NSDate date];
-			notification.userInfo = eventContext;
+	if ([GrowlApplicationBridge isGrowlRunning] == NO) {
+		NSUserNotification *notification = [NSUserNotification new];
+		
+		[notification setTitle:eventTitle];
+		[notification setInformativeText:eventDescription];
+		[notification setDeliveryDate:[NSDate date]];
+		[notification setUserInfo:eventContext];
 
 #ifdef TXSystemIsMacOSMavericksOrNewer
-			if ([TPCPreferences featureAvailableToOSXMavericks]) {
-				/* These are the only event types we want to support for now. */
+		if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+			/* These are the only event types we want to support for now. */
 
-				if (eventType == TXNotificationNewPrivateMessageType ||
-					eventType == TXNotificationPrivateMessageType)
-				{
-					notification.hasReplyButton = YES;
-					notification.responsePlaceholder = TXTFLS(@"BasicLanguage[1235]");
-				}
+			if (eventType == TXNotificationNewPrivateMessageType ||
+				eventType == TXNotificationPrivateMessageType)
+			{
+				[notification setHasReplyButton:YES];
+				[notification setResponsePlaceholder:BLS(1235)];
 			}
+		}
 #endif 
 
-			[RZUserNotificationCenter() scheduleNotification:notification];
+		[RZUserNotificationCenter() scheduleNotification:notification];
 
-			return; // Do not continue to Growl…
-		}
+		return; // Do not continue to Growl…
 	}
 
 	/* Nope, let Growl handle. */
@@ -223,8 +246,8 @@
 	[RZUserNotificationCenter() removeDeliveredNotification:notification];
 
 #ifdef TXSystemIsMacOSMavericksOrNewer
-	if ([TPCPreferences featureAvailableToOSXMavericks]) {
-		if (notification.activationType == NSUserNotificationActivationTypeReplied) {
+	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+		if ([notification activationType] == NSUserNotificationActivationTypeReplied) {
 			NSString *replyMessage = [[notification response] string]; // It is attributed string, we only want string.
 
 			[self growlNotificationWasClicked:[notification userInfo]
@@ -243,33 +266,33 @@
 
 - (NSString *)applicationNameForGrowl
 {
-	return [TPCPreferences applicationName];
+	return [TPCApplicationInfo applicationName];
 }
 
 - (NSDictionary *)registrationDictionaryForGrowl
 {
 	NSArray *allNotifications = @[
-		TXTLS(@"BasicLanguage[1086]"),
-		TXTLS(@"BasicLanguage[1087]"),
-		TXTLS(@"BasicLanguage[1088]"),
-		TXTLS(@"BasicLanguage[1089]"),
-		TXTLS(@"BasicLanguage[1090]"),
-		TXTLS(@"BasicLanguage[1091]"),
-		TXTLS(@"BasicLanguage[1092]"),
-		TXTLS(@"BasicLanguage[1093]"),
-		TXTLS(@"BasicLanguage[1094]"),
-		TXTLS(@"BasicLanguage[1095]"),
-		TXTLS(@"BasicLanguage[1096]"),
-		TXTLS(@"BasicLanguage[1097]"),
-		TXTLS(@"BasicLanguage[1098]"),
-		TXTLS(@"BasicLanguage[1099]"),
-		TXTLS(@"BasicLanguage[1100]"),
-		TXTLS(@"BasicLanguage[1101]"),
+		BLS(1086),
+		BLS(1087),
+		BLS(1088),
+		BLS(1089),
+		BLS(1090),
+		BLS(1091),
+		BLS(1092),
+		BLS(1093),
+		BLS(1094),
+		BLS(1095),
+		BLS(1096),
+		BLS(1097),
+		BLS(1098),
+		BLS(1099),
+		BLS(1100),
+		BLS(1101),
 	];
 	
 	return @{
-		GROWL_NOTIFICATIONS_ALL : allNotifications,
-		GROWL_NOTIFICATIONS_DEFAULT : allNotifications
+		GROWL_NOTIFICATIONS_ALL			: allNotifications,
+		GROWL_NOTIFICATIONS_DEFAULT		: allNotifications
 	};
 }
 
@@ -283,7 +306,7 @@
 	NSTimeInterval now = [NSDate epochTime];
 	
 	if ((now - self.lastClickedTime) < _clickInterval) {
-		if (self.lastClickedContext && [self.lastClickedContext isEqual:context]) {
+		if (   self.lastClickedContext && [self.lastClickedContext isEqual:context]) {
 			return;
 		}
 	}
@@ -292,7 +315,7 @@
 	self.lastClickedContext = context;
 
 	if (changeFocus) {
-		[[self.masterController mainWindow] makeKeyAndOrderFront:nil];
+		[mainWindow() makeKeyAndOrderFront:nil];
 		
 		[NSApp activateIgnoringOtherApps:YES];
 	}
@@ -301,7 +324,7 @@
 		BOOL isFileTransferNotification = [context boolForKey:@"isFileTransferNotification"];
 		
 		if (isFileTransferNotification) {
-			[[self.menuController fileTransferController] show:YES restorePosition:NO];
+			[[menuController() fileTransferController] show:YES restorePosition:NO];
 		} else {
 			NSString *uid = [context objectForKey:@"client"];
 			NSString *cid = [context objectForKey:@"channel"];
@@ -312,16 +335,16 @@
 			NSObjectIsEmptyAssert(uid);
 			
 			if (cid) {
-				c = [self.worldController findChannelByClientId:uid channelId:cid];
+				c = [worldController() findChannelByClientId:uid channelId:cid];
 			} else {
-				u = [self.worldController findClientById:uid];
+				u = [worldController() findClientById:uid];
 			}
 			
 			if (changeFocus) {
 				if (c) {
-					[self.worldController select:c];
+					[mainWindow() select:c];
 				} else if (u) {
-					[self.worldController select:u];
+					[mainWindow() select:u];
 				}
 			}
 			
@@ -330,15 +353,15 @@
 			if (c) { // We want both a client and channel.
 				/* A user may want to do an action… #yolo */
 				if ([message hasPrefix:@"/"] && [message hasPrefix:@"//"] == NO && [message length] > 1) {
-					message = [message safeSubstringFromIndex:1];
+					message = [message substringFromIndex:1];
 					
-					[c.client sendCommand:message
-						   completeTarget:YES
-								   target:c.name];
+					[[c associatedClient] sendCommand:message
+									   completeTarget:YES
+											   target:[c name]];
 				} else {
-					[c.client sendText:[NSAttributedString emptyStringWithBase:message]
-							   command:IRCPrivateCommandIndex("privmsg")
-							   channel:c];
+					[[c associatedClient] sendText:[NSAttributedString emptyStringWithBase:message]
+										   command:IRCPrivateCommandIndex("privmsg")
+										   channel:c];
 				}
 			}
 		}

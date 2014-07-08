@@ -40,106 +40,139 @@
 #import <objc/objc-runtime.h>
 #import <time.h>
 
-#define _timeBufferSize		256 /* Let's hope to God no one tries to overflow this… */
-
 #pragma mark -
 #pragma mark Validity.
 
 BOOL NSObjectIsEmpty(id obj)
 {
+	/* Check for common string length. */
 	if ([obj respondsToSelector:@selector(length)]) {
-		return ((NSInteger)[obj performSelector:@selector(length)] < 1);
-	}
-
-	if ([obj respondsToSelector:@selector(count)]) {
-		return ((NSInteger)[obj performSelector:@selector(count)] < 1);
+		return ((NSInteger)objc_msgSend(obj, @selector(length)) < 1);
 	}
 	
-	return PointerIsEmpty(obj);
+	/* Check for common array types. */
+	if ([obj respondsToSelector:@selector(count)]) {
+		return ((NSInteger)objc_msgSend(obj, @selector(count)) < 1);
+	}
+	
+	/* Check everything else. */
+	return (obj == nil || obj == NULL);
 }
 
 BOOL NSObjectIsNotEmpty(id obj)
 {
-	return BOOLReverseValue(NSObjectIsEmpty(obj));
+	return (NSObjectIsEmpty(obj) == NO);
 }
 
 BOOL NSObjectsAreEqual(id obj1, id obj2)
 {
-    return ((obj1 == nil && obj2 == nil) || [obj1 isEqual:obj2]);
+	return ((obj1 == nil && obj2 == nil) || [obj1 isEqual:obj2]);
 }
 
 #pragma mark -
 #pragma mark Time.
 
-NSString *TXFormattedTimestampWithOverride(NSDate *date, NSString *format, NSString *override) 
+NSString *TXFormattedTimestamp(NSDate *date, NSString *format)
 {
+	/* If the format is empty, a default is called. */
 	if (NSObjectIsEmpty(format)) {
 		format = TXDefaultTextualTimestampFormat;
 	}
-
-	if (NSObjectIsNotEmpty(override)) {
-		format = override;
-	}
-
-	time_t global = (time_t) [date timeIntervalSince1970];
+	
+	/* Convert time to C object. */
+	time_t global = (time_t)[date timeIntervalSince1970];
+	
+	/* Format time. */
+	const NSInteger _timeBufferSize = 256;
 	
 	struct tm *local = localtime(&global);
+	
 	char buf[(_timeBufferSize + 1)];
 	
 	strftime(buf, _timeBufferSize, [format UTF8String], local);
-
+	
 	buf[_timeBufferSize] = 0;
-
+	
+	/* Return results as UTF-8 string. */
 	return [NSString stringWithBytes:buf length:strlen(buf) encoding:NSUTF8StringEncoding];
 }
 
-NSString *TXFormattedTimestamp(NSDate *date, NSString *format) 
+NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, NSUInteger orderMatrix)
 {
-	return TXFormattedTimestampWithOverride(date, format, nil);
-}
-
-NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue, NSArray *orderMatrix)
-{
-	if (NSObjectIsEmpty(orderMatrix)) {
-		orderMatrix = @[@"year", @"month", @"week", @"day", @"hour", @"minute", @"second"];
+	/* Default what we will return. */
+	if (orderMatrix == 0) {
+		orderMatrix = (NSYearCalendarUnit		|
+					   NSMonthCalendarUnit		|
+					   NSWeekCalendarUnit		|
+					   NSDayCalendarUnit		|
+					   NSHourCalendarUnit		|
+					   NSMinuteCalendarUnit		|
+					   NSSecondCalendarUnit);
 	}
 	
+	/* Convert calander units to a text rep. */
+	NSMutableArray *orderStrings = [NSMutableArray array];
+	
+	if (orderMatrix & NSYearCalendarUnit) {
+		[orderStrings addObject:@"year"];
+	}
+	
+	if (orderMatrix & NSMonthCalendarUnit) {
+		[orderStrings addObject:@"month"];
+	}
+	
+	if (orderMatrix & NSWeekCalendarUnit) {
+		[orderStrings addObject:@"week"];
+	}
+	
+	if (orderMatrix & NSDayCalendarUnit) {
+		[orderStrings addObject:@"day"];
+	}
+	
+	if (orderMatrix & NSHourCalendarUnit) {
+		[orderStrings addObject:@"hour"];
+	}
+	
+	if (orderMatrix & NSMinuteCalendarUnit) {
+		[orderStrings addObject:@"minute"];
+	}
+	
+	if (orderMatrix & NSSecondCalendarUnit) {
+		[orderStrings addObject:@"second"];
+	}
+	
+	/* Build compare information. */
 	NSCalendar *sysCalendar = [NSCalendar currentCalendar];
 	
 	NSDate *date1 = [NSDate date];
 	NSDate *date2 = [NSDate dateWithTimeIntervalSinceNow:(-(dateInterval + 1))];
 	
-	NSUInteger unitFlags = 0;
-
-	if ([orderMatrix containsObject:@"year"])		{ unitFlags |= NSYearCalendarUnit;		}
-	if ([orderMatrix containsObject:@"month"])		{ unitFlags |= NSMonthCalendarUnit;		}
-	if ([orderMatrix containsObject:@"week"])		{ unitFlags |= NSWeekCalendarUnit;		}
-	if ([orderMatrix containsObject:@"day"])		{ unitFlags |= NSDayCalendarUnit;		}
-	if ([orderMatrix containsObject:@"hour"])		{ unitFlags |= NSHourCalendarUnit;		}
-	if ([orderMatrix containsObject:@"minute"])		{ unitFlags |= NSMinuteCalendarUnit;	}
-	if ([orderMatrix containsObject:@"second"])		{ unitFlags |= NSSecondCalendarUnit;	}
-	
-	NSDateComponents *breakdownInfo = [sysCalendar components:unitFlags fromDate:date1 toDate:date2 options:0];
+	/* Perform comparison. */
+	NSDateComponents *breakdownInfo = [sysCalendar components:orderMatrix fromDate:date1 toDate:date2 options:0];
 	
 	if (breakdownInfo) {
 		NSMutableString *finalResult = [NSMutableString string];
 		
-		for (NSString *unit in orderMatrix) {
+		for (NSString *unit in orderStrings) {
+			/* For each entry in the orderMatrix, we call that selector name on the
+			 comparison result to retreive whatever information it contains. */
 			NSInteger total = (NSInteger)objc_msgSend(breakdownInfo, NSSelectorFromString(unit));
 			
 			if (total < 0) {
 				total *= -1;
 			}
 			
+			/* If results isn't zero, we show it. */
 			if (total >= 1) {
 				NSString *languageKey;
-
+				
 				if (total > 1 || total < 1) {
-					languageKey = [NSString stringWithFormat:@"BasicLanguage[1204][%@]", unit.uppercaseString];
+					languageKey = [NSString stringWithFormat:@"BasicLanguage[1204][%@]", [unit uppercaseString]];
 				} else {
-					languageKey = [NSString stringWithFormat:@"BasicLanguage[1205][%@]", unit.uppercaseString];
+					languageKey = [NSString stringWithFormat:@"BasicLanguage[1205][%@]", [unit uppercaseString]];
 				}
 				
+				/* shortValue returns only the first time component. */
 				if (shortValue) {
 					return [NSString stringWithFormat:@"%ld %@", total, TXTLS(languageKey)];
 				} else {
@@ -148,11 +181,15 @@ NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue, NSArray
 			}
 		}
 		
-		if ([finalResult length] >= 3) {
-			[finalResult safeDeleteCharactersInRange:NSMakeRange((finalResult.length - 2), 2)];
+		if ([finalResult length]) {
+			/* Delete the end ", " */
+			NSRange cutRange = NSMakeRange(([finalResult length] - 2), 2);
+			
+			[finalResult deleteCharactersInRange:cutRange];
 		} else {
+			/* Return "0 seconds" when there are no results. */
 			NSString *emptyTime = [NSString stringWithFormat:@"0 %@", TXTLS(@"BasicLanguage[1204][SECOND]")];
-
+			
 			[finalResult setString:emptyTime];
 		}
 		
@@ -162,52 +199,205 @@ NSString *TXSpecialReadableTime(NSInteger dateInterval, BOOL shortValue, NSArray
 	return nil;
 }
 
-NSString *TXReadableTime(NSInteger dateInterval)
+NSDateFormatter *TXSharedISOStandardDateFormatter(void)
 {
-	return TXSpecialReadableTime(dateInterval, NO, nil);
+	static NSDateFormatter *_isoStandardDateFormatter;
+	
+	if (_isoStandardDateFormatter == nil) {
+		NSDateFormatter *dateFormatter = [NSDateFormatter new];
+		
+		[dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+		[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"]; //2011-10-19T16:40:51.620Z
+		
+		_isoStandardDateFormatter = dateFormatter;
+	}
+	
+	return _isoStandardDateFormatter;
 }
 
 #pragma mark -
 #pragma mark Localized String File.
 
-NSString *TXTLS(NSString *key)
+NSString *TXTLS(NSString *key, ...)
 {
-	return [TLOLanguagePreferences localizedStringWithKey:key];
-}
-
-NSString *TSBLS(NSString *key, NSBundle *bundle)
-{
-	return [TLOLanguagePreferences localizedStringWithKey:key from:bundle];
-}
-
-NSString *TXTFLS(NSString *key, ...)
-{
-	NSString *formattedString = [NSString alloc];
-	NSString *languageString  = [TLOLanguagePreferences localizedStringWithKey:key];
-
+	/* Build result using newer API. */
 	va_list args;
 	va_start(args, key);
 	
-	formattedString = [formattedString initWithFormat:languageString arguments:args];
-
+	NSString *result = TXLocalizedString(RZMainBundle(), key, args);
+	
 	va_end(args);
+	
+	/* Return result. */
+	return result;
+}
 
+NSString *BLS(NSInteger key, ...)
+{
+	/* Build result using newer API. */
+	va_list args;
+	va_start(args, key);
+	
+	NSString *resultKey = [NSString stringWithFormat:@"BasicLanguage[%i]", key];
+	
+	NSString *result = TXLocalizedString(RZMainBundle(), resultKey, args);
+	
+	va_end(args);
+	
+	/* Return result. */
+	return result;
+}
+
+NSString *TXLocalizedString(NSBundle *bundle, NSString *key, va_list args)
+{
+	/* Get the unformatted value. */
+	NSString *languageString  = [TLOLanguagePreferences localizedStringWithKey:key from:bundle];
+	
+	/* Format it based on input. */
+	NSString *formattedString = [[NSString alloc] initWithFormat:languageString arguments:args];
+	
+	/* Return result. */
 	return formattedString;
 }
 
-NSString *TSBFLS(NSString *key, NSBundle *bundle, ...)
+NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...)
 {
-	NSString *formattedString = [NSString alloc];
-	NSString *languageString  = [TLOLanguagePreferences localizedStringWithKey:key from:bundle];
-
+	/* Build result using newer API. */
 	va_list args;
-	va_start(args, bundle);
-
-	formattedString = [formattedString initWithFormat:languageString arguments:args];
-
+	va_start(args, key);
+	
+	NSString *result = TXLocalizedString(bundle, key, args);
+	
 	va_end(args);
+	
+	/* Return result. */
+	return result;
+}
 
-	return formattedString;
+#pragma mark -
+#pragma mark Performance 
+
+void TXMeasurePerformanceOfBlock(NSString *description, TXEmtpyBlockDataType block)
+{
+	if (block) {
+		CFAbsoluteTime _startTime = CFAbsoluteTimeGetCurrent();
+	
+		block();
+		
+		CFAbsoluteTime _endTime =  CFAbsoluteTimeGetCurrent();
+		
+		if (description) {
+			LogToConsole(@"Performed block (\"%@\") with measurement of %f seconds.", description, (_endTime - _startTime));
+		} else {
+			LogToConsole(@"Performed block with measurement of %f seconds.", (_endTime - _startTime));
+		}
+	}
+}
+
+#pragma mark -
+#pragma mark Grand Central Dispatch
+
+void TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(dispatch_block_t block)
+{
+	dispatch_queue_t workerQueue = [TXSharedApplication sharedMutableSynchronizationSerialQueue];
+	
+	dispatch_queue_set_specific(workerQueue, workerQueue, (void *)1, NULL);
+	
+	if (dispatch_get_specific(workerQueue)) {
+		block();
+	} else {
+		TXPerformBlockOnDispatchQueue(workerQueue, block, TXPerformBlockOnDispatchQueueSyncOperationType);
+	}
+}
+
+void TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block)
+{
+	dispatch_queue_t workerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+	
+	TXPerformBlockOnDispatchQueue(workerQueue, block, operationType);
+}
+
+void TXPerformBlockSynchronouslyOnGlobalQueue(dispatch_block_t block)
+{
+	dispatch_queue_t workerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+	
+	TXPerformBlockOnDispatchQueue(workerQueue, block, TXPerformBlockOnDispatchQueueSyncOperationType);
+}
+
+void TXPerformBlockAsynchronouslyOnGlobalQueue(dispatch_block_t block)
+{
+	dispatch_queue_t workerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+	
+	TXPerformBlockOnDispatchQueue(workerQueue, block, TXPerformBlockOnDispatchQueueAsyncOperationType);
+}
+
+void TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block)
+{
+	if (operationType == TXPerformBlockOnDispatchQueueSyncOperationType) {
+		TXPerformBlockSynchronouslyOnMainQueue(block);
+	} else {
+		TXPerformBlockOnDispatchQueue(dispatch_get_main_queue(), block, operationType);
+	}
+}
+
+void TXPerformBlockSynchronouslyOnMainQueue(dispatch_block_t block)
+{
+	/* Check thread we are on. */
+	/* If we are already on the main thread and performing a synchronous action,
+	 then all we have to do is invoke the block supplied to us. */
+	if (NSIsCurrentThreadMain()) {
+		block(); // Perform block.
+			
+		return; // Kill rest of function.
+	}
+	
+	/* Perform normal dispatch operation. */
+	TXPerformBlockOnDispatchQueue(dispatch_get_main_queue(), block, TXPerformBlockOnDispatchQueueSyncOperationType);
+}
+
+void TXPerformBlockAsynchronouslyOnMainQueue(dispatch_block_t block)
+{
+	TXPerformBlockOnDispatchQueue(dispatch_get_main_queue(), block, TXPerformBlockOnDispatchQueueAsyncOperationType);
+}
+
+void TXPerformBlockSynchronouslyOnQueue(dispatch_queue_t queue, dispatch_block_t block)
+{
+	TXPerformBlockOnDispatchQueue(queue, block, TXPerformBlockOnDispatchQueueSyncOperationType);
+}
+
+void TXPerformBlockAsynchronouslyOnQueue(dispatch_queue_t queue, dispatch_block_t block)
+{
+	TXPerformBlockOnDispatchQueue(queue, block, TXPerformBlockOnDispatchQueueAsyncOperationType);
+}
+
+void TXPerformBlockOnDispatchQueue(dispatch_queue_t queue, dispatch_block_t block, TXPerformBlockOnDispatchQueueOperationType operationType)
+{
+	switch (operationType) {
+		case TXPerformBlockOnDispatchQueueAsyncOperationType:
+		{
+			dispatch_async(queue, block);
+			
+			break;
+		}
+		case TXPerformBlockOnDispatchQueueSyncOperationType:
+		{
+			dispatch_sync(queue, block);
+			
+			break;
+		}
+		case TXPerformBlockOnDispatchQueueBarrierAsyncOperationType:
+		{
+			dispatch_barrier_async(queue, block);
+			
+			break;
+		}
+		case TXPerformBlockOnDispatchQueueBarrierSyncOperationType:
+		{
+			dispatch_barrier_sync(queue, block);
+			
+			break;
+		}
+	}
 }
 
 #pragma mark -
@@ -215,7 +405,7 @@ NSString *TSBFLS(NSString *key, NSBundle *bundle, ...)
 
 NSInteger TXRandomNumber(NSInteger maxset)
 {
-	NSAssertReturnR((maxset > 0), 0); // Only Chuck Norris can divide by zero.
+	NSAssertReturnR((maxset > 0), 0);
 	
 	return ((1 + arc4random()) % (maxset + 1));
 }

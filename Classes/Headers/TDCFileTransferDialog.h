@@ -60,14 +60,10 @@ typedef enum TDCFileTransferDialogNavigationControllerSelectedTab : NSInteger {
 } TDCFileTransferDialogNavigationControllerSelectedTab;
 
 @interface TDCFileTransferDialog : NSWindowController <NSTableViewDataSource, NSTableViewDelegate>
-@property (nonatomic, strong) NSMutableArray *fileTransfers;
-@property (nonatomic, strong) NSString *cachedIPAddress;
+@property (nonatomic, copy) NSString *cachedIPAddress;
 @property (nonatomic, assign) BOOL sourceIPAddressRequestPending;
-@property (nonatomic, strong) TLOTimer *maintenanceTimer;
-@property (nonatomic, strong, readonly) NSURL *downloadDestination;
-@property (nonatomic, nweak) IBOutlet NSButton *clearButton;
-@property (nonatomic, nweak) IBOutlet TVCListView *fileTransferTable;
-@property (nonatomic, nweak) IBOutlet NSSegmentedCell *navigationControllerCell;
+@property (nonatomic, copy) NSURL *downloadDestination;
+@property (nonatomic, nweak) IBOutlet TVCBasicTableView *fileTransferTable;
 
 - (void)show:(BOOL)key restorePosition:(BOOL)restoreFrame;
 
@@ -86,7 +82,7 @@ typedef enum TDCFileTransferDialogNavigationControllerSelectedTab : NSInteger {
 					 address:(NSString *)hostAddress
 						port:(NSInteger)hostPort
 					filename:(NSString *)filename
-					filesize:(TXFSLongInt)totalFilesize
+					filesize:(TXUnsignedLongLong)totalFilesize
 					   token:(NSString *)transferToken;
 
 - (void)addSenderForClient:(IRCClient *)client

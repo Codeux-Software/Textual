@@ -67,14 +67,14 @@
 
 + (NSString *)loadAverageWithCores:(NSInteger)cores;
 
-+ (TXFSLongInt)freeMemorySize;
-+ (TXFSLongInt)totalMemorySize;
++ (TXUnsignedLongLong)freeMemorySize;
++ (TXUnsignedLongLong)totalMemorySize;
 
 + (NSDictionary *)applicationMemoryInformation;
 
 + (NSString *)formattedGraphicsCardInformation;
 + (NSString *)formattedLocalVolumeDiskUsage;
 + (NSString *)formattedTotalMemorySize;
-+ (NSString *)formattedDiskSize:(TXFSLongInt)size;
++ (NSString *)formattedDiskSize:(TXUnsignedLongLong)size;
 + (NSString *)formattedCPUFrequency:(double)rate;
 @end

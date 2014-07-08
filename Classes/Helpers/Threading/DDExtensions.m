@@ -24,6 +24,9 @@
 
 #import "TextualApplication.h"
 
+#pragma mark -
+#pragma mark Public Helper Methods
+
 @implementation NSObject (DDExtensions)
 
 - (id)invokeOnThread:(NSThread *)thread
@@ -118,6 +121,16 @@
     [grabber setThreadType:DDInvocationMainThread];
 	
     return [grabber prepareWithInvocationTarget:self];
+}
+
++ (void)performBlockOnMainThread:(TXEmtpyBlockDataType)block
+{
+	TXPerformBlockSynchronouslyOnMainQueue(block);
+}
+
+- (void)performBlockOnMainThread:(TXEmtpyBlockDataType)block
+{
+	TXPerformBlockSynchronouslyOnMainQueue(block);
 }
 
 @end

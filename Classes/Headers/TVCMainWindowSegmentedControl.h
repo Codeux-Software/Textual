@@ -37,8 +37,8 @@
 
 #import "TextualApplication.h"
 
-@interface TVCMainWindowSegmentedControl : NSSegmentedControl
+@interface TVCMainWindowSegmentedController : NSSegmentedControl
 @end
 
-@interface TVCMainWindowSegmentedCell : NSSegmentedCell
+@interface TVCMainWindowSegmentedControllerCell : NSSegmentedCell
 @end

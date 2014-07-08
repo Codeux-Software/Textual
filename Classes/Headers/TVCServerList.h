@@ -38,12 +38,7 @@
 #import "TextualApplication.h"
 
 @interface TVCServerList : NSOutlineView
-@property (nonatomic, assign, readonly) BOOL isDrawing;
-
 @property (nonatomic, uweak) id keyDelegate;
-
-@property (nonatomic, strong) NSImage *defaultDisclosureTriangle;
-@property (nonatomic, strong) NSImage *alternateDisclosureTriangle;
 
 /* addItemToList and removeItemFromList work two completely different ways. 
  addItemToList expects that you have already added the item to the data source
@@ -57,79 +52,83 @@
 - (void)removeItemFromList:(id)oldObject;
 
 /* Drawing. */
-/* All these drawing calls are pretty much reserved for internal use by Textual.
- Just because these are defined in a header does not mean they should ever, EVER,
- EEEEEEVVVVVVEEEEERRRRRRRR be called from a plugin. Ever. Use IRCWorld for any
- updates you may need to make to a item. */
-
 - (void)reloadAllDrawings;
-- (void)reloadAllDrawingsIgnoringOtherReloads;
 
 - (void)updateDrawingForItem:(IRCTreeItem *)cellItem;
-- (void)updateDrawingForItem:(IRCTreeItem *)cellItem skipDrawingCheck:(BOOL)doNotLimit;
-
 - (void)updateDrawingForRow:(NSInteger)rowIndex;
-- (void)updateDrawingForRow:(NSInteger)rowIndex skipDrawingCheck:(BOOL)doNotLimit;
 
 - (void)updateBackgroundColor;
 
-- (BOOL)windowIsActive;
-
-/* User interface elements. */
-- (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected;
-
-- (NSString *)privateMessageStatusIconFilename:(BOOL)selected;
-
-- (NSColor *)inactiveWindowListBackgroundColor;
-- (NSColor *)activeWindowListBackgroundColor;
-
-- (NSFont *)messageCountBadgeFont;
-- (NSFont *)normalChannelCellFont;
-- (NSFont *)selectedChannelCellFont;
-- (NSFont *)serverCellFont;
-
-- (NSInteger)serverCellTextFieldRightMargin;
-- (NSInteger)serverCellTextFieldLeftMargin;
-
-- (NSInteger)channelCellTextFieldLeftMargin;
-
-- (NSInteger)messageCountBadgeHeight;
-- (NSInteger)messageCountBadgeMinimumWidth;
-- (NSInteger)messageCountBadgePadding;
-- (NSInteger)messageCountBadgeRightMargin;
-
-- (NSColor *)messageCountBadgeAquaBackgroundColor;
-- (NSColor *)messageCountBadgeGraphtieBackgroundColor;
-- (NSColor *)messageCountBadgeHighlightBackgroundColor;
-- (NSColor *)messageCountBadgeNormalTextColor;
-- (NSColor *)messageCountBadgeSelectedBackgroundColor;
-- (NSColor *)messageCountBadgeSelectedTextColor;
-- (NSColor *)messageCountBadgeShadowColor;
-
-- (NSColor *)serverCellDisabledTextColor;
-- (NSColor *)serverCellNormalTextColor;
-- (NSColor *)serverCellNormalTextShadowColorForActiveWindow;
-- (NSColor *)serverCellNormalTextShadowColorForInactiveWindow;
-- (NSColor *)serverCellSelectedTextColorForActiveWindow;
-- (NSColor *)serverCellSelectedTextColorForInactiveWindow;
-- (NSColor *)serverCellSelectedTextShadowColorForActiveWindow;
-- (NSColor *)serverCellSelectedTextShadowColorForInactiveWindow;
-
-- (NSColor *)channelCellNormalTextColor;
-- (NSColor *)channelCellNormalTextShadowColor;
-- (NSColor *)channelCellDisabledItemTextColor;
-- (NSColor *)channelCellSelectedTextColorForActiveWindow;
-- (NSColor *)channelCellSelectedTextColorForInactiveWindow;
-- (NSColor *)channelCellSelectedTextShadowColorForActiveWindow;
-- (NSColor *)channelCellSelectedTextShadowColorForInactiveWindow;
-
-- (NSColor *)graphiteTextSelectionShadowColor;
+- (Class)userInterfaceObjects;
 @end
 
-@interface TVCServerListScrollClipView : NSClipView
+@interface TVCServerListMavericksUserInterface : NSObject
 @end
 
-@interface TVCServerListScrollView : NSScrollView
+@interface TVCServerListLightYosemiteUserInterface : NSObject
++ (NSString *)privateMessageStatusIconFilename:(BOOL)isActive;
+
++ (NSColor *)channelCellNormalItemTextColor;
++ (NSColor *)channelCellDisabledItemTextColor;
++ (NSColor *)channelCellErroneousItemTextColor;
++ (NSColor *)channelCellHighlightedItemTextColor;
++ (NSColor *)channelCellSelectedTextColorForActiveWindow;
++ (NSColor *)channelCellSelectedTextColorForInactiveWindow;
+
++ (NSColor *)serverCellDisabledItemTextColor;
++ (NSColor *)serverCellNormalItemTextColor;
++ (NSColor *)serverCellSelectedTextColorForActiveWindow;
++ (NSColor *)serverCellSelectedTextColorForInactiveWindow;
+
++ (NSColor *)messageCountNormalBadgeTextColor;
++ (NSColor *)messageCountSelectedBadgeTextdColor;
++ (NSColor *)messageCountHighlightedBadgeTextColor;
+
++ (NSColor *)messageCountNormalBadgeBackgroundColor;
++ (NSColor *)messageCountSelectedBadgeBackgroundColor;
++ (NSColor *)messageCountHighlightedBadgeBackgroundColor;
+
++ (NSFont *)messageCountBadgeFont;
+
++ (NSInteger)messageCountBadgeHeight;
++ (NSInteger)messageCountBadgeMinimumWidth;
++ (NSInteger)messageCountBadgePadding;
++ (NSInteger)messageCountBadgeRightMargin;
+
++ (NSInteger)channelCellTextFieldWithBadgeRightMargin;
+@end
+
+@interface TVCServerListDarkYosemiteUserInterface : NSObject
++ (NSString *)privateMessageStatusIconFilename:(BOOL)isActive;
+
++ (NSColor *)channelCellNormalItemTextColor;
++ (NSColor *)channelCellDisabledItemTextColor;
++ (NSColor *)channelCellErroneousItemTextColor;
++ (NSColor *)channelCellHighlightedItemTextColor;
++ (NSColor *)channelCellSelectedTextColorForActiveWindow;
++ (NSColor *)channelCellSelectedTextColorForInactiveWindow;
+
++ (NSColor *)serverCellDisabledItemTextColor;
++ (NSColor *)serverCellNormalItemTextColor;
++ (NSColor *)serverCellSelectedTextColorForActiveWindow;
++ (NSColor *)serverCellSelectedTextColorForInactiveWindow;
+
++ (NSColor *)messageCountNormalBadgeTextColor;
++ (NSColor *)messageCountSelectedBadgeTextdColor;
++ (NSColor *)messageCountHighlightedBadgeTextColor;
+
++ (NSColor *)messageCountNormalBadgeBackgroundColor;
++ (NSColor *)messageCountSelectedBadgeBackgroundColor;
++ (NSColor *)messageCountHighlightedBadgeBackgroundColor;
+
++ (NSFont *)messageCountBadgeFont;
+
++ (NSInteger)messageCountBadgeHeight;
++ (NSInteger)messageCountBadgeMinimumWidth;
++ (NSInteger)messageCountBadgePadding;
++ (NSInteger)messageCountBadgeRightMargin;
+
++ (NSInteger)channelCellTextFieldWithBadgeRightMargin;
 @end
 
 @interface NSObject (TVCServerListDelegate)

@@ -45,32 +45,29 @@
 
 @implementation TVCQueuedCertificateTrustPanel
 
-+ (TVCQueuedCertificateTrustPanel *)sharedInstance
+- (id)init
 {
-	/* Create a copy of self and maintain as static reference. */
-	static id sharedSelf = nil;
-
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		 sharedSelf = [self new];
-
-		[sharedSelf setQueuedEntries:[NSMutableArray new]];
-	});
-
-	return sharedSelf;
+	if ((self = [super init])) {
+		self.queuedEntries = [NSMutableArray array];
+		
+		return self;
+	}
+	
+	return nil;
 }
 
 - (void)enqueue:(SecTrustRef)trustRef withCompletionBlock:(TVCQueuedCertificateTrustPanelCompletionBlock)completionBlock
 {
 	/* Add new entry. */
 	NSArray *newEntry = @[(__bridge id)(trustRef), completionBlock];
+	
+	@synchronized(self.queuedEntries) {
+		[self.queuedEntries addObject:newEntry];
 
-	[_queuedEntries addObject:newEntry];
-
-	/* Maybe present window. */
-	if ([_queuedEntries count] == 1) {
-		[self presentNextQueuedEntry];
+		/* Maybe present window. */
+		if ([self.queuedEntries count] == 1) {
+			[self presentNextQueuedEntry];
+		}
 	}
 }
 
@@ -78,12 +75,12 @@
 {
 	/* Gather information. */
 	/* The oldest entry will be at index 0. */
-	NSArray *contextInfo = _queuedEntries[0];
+	NSArray *contextInfo = self.queuedEntries[0];
 
 	/* Build panel. */
 	SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
 
-	[panel setAlternateButtonTitle:TXTLS(@"BasicLanguage[1009]")];
+	[panel setAlternateButtonTitle:BLS(1009)];
 
 	[panel setInformativeText:TXTLS(@"BasicLanguage[1229][2]")];
 
@@ -107,13 +104,15 @@
 	TVCQueuedCertificateTrustPanelCompletionBlock completionBlock = contextArray[1];
 
 	completionBlock(isTrusted);
+	
+	@synchronized(self.queuedEntries) {
+		/* Remove entry. */
+		[self.queuedEntries removeObjectAtIndex:0];
 
-	/* Remove entry. */
-	[_queuedEntries removeObjectAtIndex:0];
-
-	/* Maybe show next window. */
-	if ([_queuedEntries count] > 0) {
-		[self presentNextQueuedEntry];
+		/* Maybe show next window. */
+		if ([self.queuedEntries count] > 0) {
+			[self presentNextQueuedEntry];
+		}
 	}
 }
 
