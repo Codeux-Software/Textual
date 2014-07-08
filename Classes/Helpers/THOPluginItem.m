@@ -134,7 +134,7 @@
 	}
 }
 
-- (void)dealloc
+- (void)performDealloc
 {
 	if ([self.primaryClass respondsToSelector:@selector(pluginUnloadedFromMemory)]) {
 		[self.primaryClass pluginUnloadedFromMemory];

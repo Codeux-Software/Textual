@@ -45,4 +45,6 @@
 @property (nonatomic, readonly, strong) NSDictionary *outputSuppressionRules;
 
 - (void)loadBundle:(NSBundle *)bundle;
+
+- (void)performDealloc;
 @end

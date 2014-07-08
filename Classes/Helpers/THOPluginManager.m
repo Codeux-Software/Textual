@@ -144,14 +144,11 @@
 - (void)unloadPlugins
 {
 	dispatch_async(_dispatchQueue, ^{
-		self.allLoadedPlugins = nil;
-
-		for (NSBundle *bundle in self.allLoadedBundles) {
-			if ([bundle isLoaded]) {
-				[bundle unload];
-			}
+		for (THOPluginItem *plugin in self.allLoadedPlugins) {
+			[plugin performDealloc];
 		}
 		
+		self.allLoadedPlugins = nil;
 		self.allLoadedBundles = nil;
 	});
 }
