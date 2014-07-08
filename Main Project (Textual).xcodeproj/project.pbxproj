@@ -500,6 +500,10 @@
 		4C6D464E180830E60098BA12 /* NSMenuHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6D464C180830E60098BA12 /* NSMenuHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C6ED7F115901562001AD200 /* TVCMainWindowSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */; };
 		4C6ED7F315901579001AD200 /* TVCMainWindowSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C6FB411196C3627006E9F41 /* TPCPreferencesUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6FB410196C3627006E9F41 /* TPCPreferencesUserDefaults.m */; };
+		4C6FB412196C3627006E9F41 /* TPCPreferencesUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6FB410196C3627006E9F41 /* TPCPreferencesUserDefaults.m */; };
+		4C6FB418196C3640006E9F41 /* TPCPreferencesUserDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6FB417196C3640006E9F41 /* TPCPreferencesUserDefaults.h */; };
+		4C6FB419196C3640006E9F41 /* TPCPreferencesUserDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6FB417196C3640006E9F41 /* TPCPreferencesUserDefaults.h */; };
 		4C7188C61591AB7A00FC5E54 /* DIRedBadgeCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7188C31591AB7A00FC5E54 /* DIRedBadgeCenter.png */; };
 		4C7188C71591AB7A00FC5E54 /* DIRedBadgeLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7188C41591AB7A00FC5E54 /* DIRedBadgeLeft.png */; };
 		4C7188C81591AB7A00FC5E54 /* DIRedBadgeRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7188C51591AB7A00FC5E54 /* DIRedBadgeRight.png */; };
@@ -1137,6 +1141,8 @@
 		4C6D464C180830E60098BA12 /* NSMenuHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMenuHelper.h; sourceTree = "<group>"; };
 		4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMainWindowSegmentedControl.m; sourceTree = "<group>"; };
 		4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowSegmentedControl.h; sourceTree = "<group>"; };
+		4C6FB410196C3627006E9F41 /* TPCPreferencesUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCPreferencesUserDefaults.m; sourceTree = "<group>"; };
+		4C6FB417196C3640006E9F41 /* TPCPreferencesUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPreferencesUserDefaults.h; sourceTree = "<group>"; };
 		4C7188C31591AB7A00FC5E54 /* DIRedBadgeCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DIRedBadgeCenter.png; path = "Resources/Images/Dock Icon Badges/Red/DIRedBadgeCenter.png"; sourceTree = SOURCE_ROOT; };
 		4C7188C41591AB7A00FC5E54 /* DIRedBadgeLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DIRedBadgeLeft.png; path = "Resources/Images/Dock Icon Badges/Red/DIRedBadgeLeft.png"; sourceTree = SOURCE_ROOT; };
 		4C7188C51591AB7A00FC5E54 /* DIRedBadgeRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DIRedBadgeRight.png; path = "Resources/Images/Dock Icon Badges/Red/DIRedBadgeRight.png"; sourceTree = SOURCE_ROOT; };
@@ -2136,6 +2142,7 @@
 				4C8AF57E158E99520026668C /* TPCPreferences.h */,
 				4C17385D18197F800099EEC2 /* TPCPreferencesCloudSync.h */,
 				4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */,
+				4C6FB417196C3640006E9F41 /* TPCPreferencesUserDefaults.h */,
 				4C92FECA17A8C8F2003888F4 /* TPCResourceManager.h */,
 				4C8AF57F158E99520026668C /* TPCThemeController.h */,
 				4C8AF57D158E99520026668C /* TPCThemeSettings.h */,
@@ -2516,6 +2523,7 @@
 				4C3D0B7A1594909500567623 /* Migration Assistant */,
 				4C8AF5EB158E99520026668C /* Theme */,
 				4C8AF5EE158E99520026668C /* TPCPreferences.m */,
+				4C6FB410196C3627006E9F41 /* TPCPreferencesUserDefaults.m */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";
@@ -2662,6 +2670,7 @@
 				4C5BA40F16F1302F00A96CA2 /* NSDictionaryHelper.h in Headers */,
 				4C5BA41016F1302F00A96CA2 /* NSFontHelper.h in Headers */,
 				4C5BA41116F1302F00A96CA2 /* NSNumberHelper.h in Headers */,
+				4C6FB419196C3640006E9F41 /* TPCPreferencesUserDefaults.h in Headers */,
 				4C5BA41216F1302F00A96CA2 /* NSOutlineViewHelper.h in Headers */,
 				4C5BA41316F1302F00A96CA2 /* NSPasteboardHelper.h in Headers */,
 				4C5BA41416F1302F00A96CA2 /* NSRectHelper.h in Headers */,
@@ -2819,6 +2828,7 @@
 				4C8AF640158E99520026668C /* NSDictionaryHelper.h in Headers */,
 				4C8AF641158E99520026668C /* NSFontHelper.h in Headers */,
 				4C8AF642158E99520026668C /* NSNumberHelper.h in Headers */,
+				4C6FB418196C3640006E9F41 /* TPCPreferencesUserDefaults.h in Headers */,
 				4C8AF643158E99520026668C /* NSOutlineViewHelper.h in Headers */,
 				4C8AF644158E99520026668C /* NSPasteboardHelper.h in Headers */,
 				4C8AF645158E99520026668C /* NSRectHelper.h in Headers */,
@@ -3450,6 +3460,7 @@
 				4C0445C816F1603C00EBB665 /* TVCLogPolicy.m in Sources */,
 				4C0445C916F1603C00EBB665 /* TVCLogRenderer.m in Sources */,
 				4C0445CA16F1603C00EBB665 /* TVCLogScriptEventSink.m in Sources */,
+				4C6FB412196C3627006E9F41 /* TPCPreferencesUserDefaults.m in Sources */,
 				4C0445CB16F1603C00EBB665 /* TVCLogView.m in Sources */,
 				4C0445CC16F1603C00EBB665 /* TVCWebViewAutoScroll.m in Sources */,
 				4C0445CD16F1603C00EBB665 /* TVCMainWindowTextView.m in Sources */,
@@ -3589,6 +3600,7 @@
 				4C8AF6D8158E99520026668C /* TVCLogScriptEventSink.m in Sources */,
 				4C8AF6D9158E99520026668C /* TVCLogView.m in Sources */,
 				4C8AF6DA158E99520026668C /* TVCWebViewAutoScroll.m in Sources */,
+				4C6FB411196C3627006E9F41 /* TPCPreferencesUserDefaults.m in Sources */,
 				4C8AF6DB158E99520026668C /* TVCMainWindowTextView.m in Sources */,
 				4C8AF6DC158E99520026668C /* TVCTextViewWithIRCFormatter.m in Sources */,
 				4C8AF6DD158E99520026668C /* TVCTextFormatterMenu.m in Sources */,
@@ -3850,6 +3862,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
 				TEXTUAL_GITREF_BUILD_ID = debug;
+				TEXTUAL_GROUP_ID = 8482Q6EPL6.com.codeux.irc.textual;
 			};
 			name = Debug;
 		};
@@ -3860,6 +3873,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
 				TEXTUAL_GITREF_BUILD_ID = devid;
+				TEXTUAL_GROUP_ID = 8482Q6EPL6.com.codeux.irc.textual;
 			};
 			name = Release;
 		};
@@ -3870,6 +3884,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
 				TEXTUAL_GITREF_BUILD_ID = appstore;
+				TEXTUAL_GROUP_ID = 8482Q6EPL6.com.codeux.irc.textual;
 			};
 			name = "Release (App Store)";
 		};
@@ -3884,6 +3899,7 @@
 				STRIP_STYLE = "non-global";
 				TEXTUAL_BUNDLE_ID = "";
 				TEXTUAL_GITREF_BUILD_ID = "";
+				TEXTUAL_GROUP_ID = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -3899,6 +3915,7 @@
 				STRIP_STYLE = "non-global";
 				TEXTUAL_BUNDLE_ID = "";
 				TEXTUAL_GITREF_BUILD_ID = "";
+				TEXTUAL_GROUP_ID = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -3954,6 +3971,7 @@
 				STRIP_STYLE = "non-global";
 				TEXTUAL_BUNDLE_ID = "";
 				TEXTUAL_GITREF_BUILD_ID = "";
+				TEXTUAL_GROUP_ID = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Release (Trial)";
@@ -3997,6 +4015,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEXTUAL_BUNDLE_ID = com.codeux.irc.textual;
 				TEXTUAL_GITREF_BUILD_ID = trial;
+				TEXTUAL_GROUP_ID = 8482Q6EPL6.com.codeux.irc.textual;
 			};
 			name = "Release (Trial)";
 		};
@@ -4011,6 +4030,7 @@
 				STRIP_STYLE = "non-global";
 				TEXTUAL_BUNDLE_ID = "";
 				TEXTUAL_GITREF_BUILD_ID = "";
+				TEXTUAL_GROUP_ID = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Release (App Store)";

@@ -2490,7 +2490,7 @@
 	}
 
 	NSMenu *fileMenu = [[[NSApp mainMenu] itemWithTag:2] submenu];
-	NSMenu *dockMenu =  [[NSApp delegate] applicationDockMenu:NSApp];
+	NSMenu *dockMenu =  [(id)[NSApp delegate] applicationDockMenu:NSApp];
 
 	[[fileMenu itemWithTag:6667] setState:state];
 	[[dockMenu itemWithTag:6667] setState:state];
@@ -2505,7 +2505,7 @@
 	}
 
 	NSMenu *fileMenu = [[[NSApp mainMenu] itemWithTag:2] submenu];
-	NSMenu *dockMenu =  [[NSApp delegate] applicationDockMenu:NSApp];
+	NSMenu *dockMenu =  [(id)[NSApp delegate] applicationDockMenu:NSApp];
 
 	[[fileMenu itemWithTag:6666] setState:state];
 	[[dockMenu itemWithTag:6666] setState:state];

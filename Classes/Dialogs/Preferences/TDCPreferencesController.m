@@ -317,6 +317,11 @@
 #pragma mark -
 #pragma mark KVC Properties
 
+- (id)userDefaultsValues
+{
+	return RZUserDefaultsValueProxy();
+}
+
 - (NSInteger)maxLogLines
 {
 	return [TPCPreferences maxLogLines];
@@ -1010,13 +1015,6 @@
 	[RZUserDefaults() setObject:modeocolor forKey:@"User List Mode Badge Colors —> +o"];
 	[RZUserDefaults() setObject:modehcolor forKey:@"User List Mode Badge Colors —> +h"];
 	[RZUserDefaults() setObject:modevcolor forKey:@"User List Mode Badge Colors —> +v"];
-
-	[[RZUserDefaultsController() values] setValue:modeycolor forKey:@"User List Mode Badge Colors —> +y"];
-	[[RZUserDefaultsController() values] setValue:modeqcolor forKey:@"User List Mode Badge Colors —> +q"];
-	[[RZUserDefaultsController() values] setValue:modeacolor forKey:@"User List Mode Badge Colors —> +a"];
-	[[RZUserDefaultsController() values] setValue:modeocolor forKey:@"User List Mode Badge Colors —> +o"];
-	[[RZUserDefaultsController() values] setValue:modehcolor forKey:@"User List Mode Badge Colors —> +h"];
-	[[RZUserDefaultsController() values] setValue:modevcolor forKey:@"User List Mode Badge Colors —> +v"];
 
 	[self onChangedUserListModeColor:sender];
 }
