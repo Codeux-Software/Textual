@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6185.7" systemVersion="14A283o" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5053"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.7"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -657,7 +657,7 @@ CQ
                                 <modifierMask key="keyEquivalentModifierMask" control="YES"/>
                                 <connections>
                                     <action selector="showFileTransfersDialog:" target="267" id="wVQ-9Q-HNj"/>
-                                    <binding destination="3106" name="hidden" keyPath="values.System —> Running Mac OS Mountain Lion Or Newer" id="Qoy-Hk-xUF">
+                                    <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.System —&gt; Running Mac OS Mountain Lion Or Newer" id="tiZ-Zd-weu">
                                         <dictionary key="options">
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                         </dictionary>
@@ -814,7 +814,7 @@ CQ
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="2721">
                                             <connections>
-                                                <binding destination="3106" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="3109">
+                                                <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.TextualDeveloperEnvironment" id="Fs9-yE-wIp">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                     </dictionary>
@@ -825,7 +825,7 @@ CQ
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="resetDoNotAskMePopupWarnings:" target="267" id="2729"/>
-                                                <binding destination="3106" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="3122">
+                                                <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.TextualDeveloperEnvironment" id="Kdi-6F-ovi">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                     </dictionary>
@@ -836,7 +836,7 @@ CQ
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="openDefaultIRCClientDialog:" target="267" id="2733"/>
-                                                <binding destination="3106" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="3120">
+                                                <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.TextualDeveloperEnvironment" id="pUb-xj-YDD">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                     </dictionary>
@@ -847,7 +847,7 @@ CQ
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="openWelcomeSheet:" target="196" id="3105"/>
-                                                <binding destination="3106" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="3118">
+                                                <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.TextualDeveloperEnvironment" id="mhb-7t-a8b">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                     </dictionary>
@@ -856,7 +856,7 @@ CQ
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="3085">
                                             <connections>
-                                                <binding destination="3106" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="3115">
+                                                <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.TextualDeveloperEnvironment" id="7MY-dD-T9T">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                     </dictionary>
@@ -867,7 +867,7 @@ CQ
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="exportPreferences:" target="267" id="3091"/>
-                                                <binding destination="3106" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="3113">
+                                                <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.TextualDeveloperEnvironment" id="PaW-PX-uVd">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                     </dictionary>
@@ -878,7 +878,7 @@ CQ
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="importPreferences:" target="267" id="3090"/>
-                                                <binding destination="3106" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="3111">
+                                                <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.TextualDeveloperEnvironment" id="tco-qG-N2Q">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                     </dictionary>
@@ -1718,7 +1718,7 @@ CQ
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="memberSendFileRequest:" target="267" id="ILQ-5P-8gU"/>
-                                    <binding destination="3106" name="hidden" keyPath="values.System —> Running Mac OS Mountain Lion Or Newer" id="yXw-x0-JJl">
+                                    <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.System —&gt; Running Mac OS Mountain Lion Or Newer" id="PTS-0f-KIo">
                                         <dictionary key="options">
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                         </dictionary>
@@ -1727,7 +1727,7 @@ CQ
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="tkc-j6-xvy">
                                 <connections>
-                                    <binding destination="3106" name="hidden" keyPath="values.System —> Running Mac OS Mountain Lion Or Newer" id="3L5-R3-nBd">
+                                    <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.System —&gt; Running Mac OS Mountain Lion Or Newer" id="dA1-Nl-dtn">
                                         <dictionary key="options">
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                         </dictionary>
@@ -2063,7 +2063,7 @@ CA
                             <segmentedControl verticalHuggingPriority="750" id="2853" customClass="TVCMainWindowSegmentedControl">
                                 <rect key="frame" x="10" y="5" width="146" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                                <segmentedCell key="cell" alignment="left" style="texturedSquare" trackingMode="momentary" id="2870" customClass="TVCMainWindowSegmentedCell">
+                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="2870" customClass="TVCMainWindowSegmentedCell">
                                     <font key="font" metaFont="system"/>
                                     <segments>
                                         <segment toolTip="Add Server or Channel" image="NSAddTemplate" width="48">
@@ -2091,12 +2091,11 @@ CA
                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="21" horizontalPageScroll="0.0" verticalLineScroll="21" verticalPageScroll="0.0" hasHorizontalScroller="NO" maxMagnification="8" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" id="2800">
                                         <rect key="frame" x="0.0" y="0.0" width="267" height="437"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <clipView key="contentView" copiesOnScroll="NO" id="J8g-Az-QMA">
+                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="J8g-Az-QMA">
                                             <rect key="frame" x="0.0" y="0.0" width="267" height="437"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="21" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="14" indentationMarkerFollowsCell="NO" outlineTableColumn="2804" id="2801" customClass="TVCServerList">
-                                                    <rect key="frame" x="0.0" y="0.0" width="267" height="437"/>
+                                                <outlineView focusRingType="none" appearanceType="vibrantLight" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="21" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="14" indentationMarkerFollowsCell="NO" outlineTableColumn="2804" id="2801" customClass="TVCServerList">
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="0.0"/>
                                                     <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2180,7 +2179,7 @@ CA
                                                     </tableColumns>
                                                 </outlineView>
                                             </subviews>
-                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <nil key="backgroundColor"/>
                                         </clipView>
                                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="2802">
                                             <rect key="frame" x="-100" y="-100" width="223" height="15"/>
@@ -2214,12 +2213,11 @@ CA
                                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="18" horizontalPageScroll="0.0" verticalLineScroll="18" verticalPageScroll="0.0" hasHorizontalScroller="NO" maxMagnification="8" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" id="VfW-Q0-igm" userLabel="Member List Scroll View">
                                                         <rect key="frame" x="0.0" y="0.0" width="256" height="437"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        <clipView key="contentView" copiesOnScroll="NO" id="3cN-gg-HxB">
+                                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="3cN-gg-HxB">
                                                             <rect key="frame" x="0.0" y="0.0" width="256" height="437"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" autosaveColumns="NO" rowHeight="18" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="14" indentationMarkerFollowsCell="NO" outlineTableColumn="npr-ez-jah" id="BfG-Qj-vW8" userLabel="Member List" customClass="TVCMemberList">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="256" height="437"/>
+                                                                <outlineView focusRingType="none" appearanceType="vibrantLight" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" autosaveColumns="NO" rowHeight="18" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="14" indentationMarkerFollowsCell="NO" outlineTableColumn="npr-ez-jah" id="BfG-Qj-vW8" userLabel="Member List" customClass="TVCMemberList">
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                     <size key="intercellSpacing" width="3" height="0.0"/>
                                                                     <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2282,14 +2280,13 @@ CA
                                                                     </tableColumns>
                                                                 </outlineView>
                                                             </subviews>
-                                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            <nil key="backgroundColor"/>
                                                         </clipView>
                                                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="2Z1-D1-fZq">
                                                             <rect key="frame" x="-100" y="-100" width="223" height="15"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </scroller>
                                                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="vhV-ex-ySL">
-                                                            <rect key="frame" x="-16" y="0.0" width="16" height="0.0"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </scroller>
                                                     </scrollView>
@@ -2529,7 +2526,6 @@ CA
                                         <attributes>
                                             <color key="NSColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name="LucidaGrande-Bold"/>
-                                            <font key="NSOriginalFont" size="12" name="LucidaGrande-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
@@ -2569,7 +2565,6 @@ CA
                                         <attributes>
                                             <color key="NSColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name="LucidaGrande-Bold"/>
-                                            <font key="NSOriginalFont" size="12" name="LucidaGrande-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
@@ -2609,7 +2604,6 @@ CA
                                         <attributes>
                                             <color key="NSColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name="LucidaGrande-Bold"/>
-                                            <font key="NSOriginalFont" size="12" name="LucidaGrande-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
@@ -2649,7 +2643,6 @@ CA
                                         <attributes>
                                             <color key="NSColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name="LucidaGrande-Bold"/>
-                                            <font key="NSOriginalFont" size="12" name="LucidaGrande-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
@@ -2725,7 +2718,6 @@ CA
                                         <attributes>
                                             <color key="NSColor" red="0.077961980080000007" green="0.077961980080000007" blue="0.077961980080000007" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name="LucidaGrande-Bold"/>
-                                            <font key="NSOriginalFont" size="12" name="LucidaGrande-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
@@ -2757,7 +2749,6 @@ CA
                 </textField>
             </subviews>
         </customView>
-        <userDefaultsController id="3106"/>
         <menuItem title="File" tag="2" id="DYg-n3-mPQ" userLabel="Menu Item - Dock Menu">
             <modifierMask key="keyEquivalentModifierMask"/>
             <menu key="submenu" title="File" id="Q9Y-E0-gAT" userLabel="Menu - Dock Menu">
@@ -2797,7 +2788,7 @@ CA
         <image name="FormattingColor_Rainbow" width="16" height="16"/>
         <image name="MainWindowSegmentedControlUserTemplate" width="20" height="18"/>
         <image name="NSActionTemplate" width="14" height="14"/>
-        <image name="NSAddTemplate" width="8" height="8"/>
+        <image name="NSAddTemplate" width="11" height="11"/>
         <image name="application" width="512" height="512"/>
     </resources>
 </document>
