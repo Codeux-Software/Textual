@@ -220,7 +220,7 @@
 	}
 }
 
-- (void)dealloc
+- (void)sendDealloc
 {
 	BOOL supportsOldFeature = [self.primaryClass respondsToSelector:@selector(pluginUnloadedFromMemory)];
 	BOOL supportsNewFeature = [self.primaryClass respondsToSelector:@selector(pluginWillBeUnloadedFromMemory)];

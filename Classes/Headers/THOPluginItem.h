@@ -51,6 +51,8 @@
 
 - (void)loadBundle:(NSBundle *)bundle;
 
+- (void)sendDealloc;
+
 - (NSView *)pluginPreferenesPaneView;
 - (NSString *)pluginPreferencesPaneMenuItemName;
 @end

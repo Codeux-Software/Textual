@@ -138,14 +138,11 @@
 - (void)unloadPlugins
 {
 	TXPerformBlockSynchronouslyOnQueue(self.dispatchQueue, ^{
-		self.allLoadedPlugins = nil;
-
-		for (NSBundle *bundle in self.allLoadedBundles) {
-			if ([bundle isLoaded]) {
-				[bundle unload];
-			}
+		for (THOPluginItem *plugin in self.allLoadedPlugins) {
+			[plugin sendDealloc];
 		}
 		
+		self.allLoadedPlugins = nil;
 		self.allLoadedBundles = nil;
 	});
 }

@@ -331,8 +331,6 @@
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[sharedCloudManager() closeCloudSyncSession];
 #endif
-	
-	[RZUserDefaults() synchronize];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
