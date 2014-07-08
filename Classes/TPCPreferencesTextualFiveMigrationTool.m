@@ -212,6 +212,8 @@
 	if (self.requestResponse.statusCode == 200) {
 		[self openDialogWindow];
 	}
+	
+	[_userDefaults setDouble:[NSDate epochTime] forKey:@"Textual Five Migration Tool -> Last Check Time"];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
@@ -255,9 +257,6 @@
 - (IBAction)hideDialogTemporarly:(id)sender
 {
 	[self closeDialogWindow];
-	
-	/* Update time. */
-	[_userDefaults setDouble:[NSDate epochTime] forKey:@"Textual Five Migration Tool -> Last Check Time"];
 }
 
 - (IBAction)hideDialogPermanently:(id)sender
