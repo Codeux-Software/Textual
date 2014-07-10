@@ -1016,6 +1016,8 @@
 - (void)setTextualAsDefaultIRCClient:(id)sender
 {
 	[TPCApplicationInfo defaultIRCClientPrompt:YES];
+	
+	[self.setAsDefaultIRCClientButton setHidden:[TPCApplicationInfo isDefaultIRCClient]];
 }
 
 - (void)onManageiCloudButtonClicked:(id)sender
