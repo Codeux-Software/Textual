@@ -122,8 +122,8 @@ static NSInteger _cachedHighlightCount = -1;
 		highlightCount = 9999;
 	}
 	
-	BOOL showRedBadge = (highlightCount >= 1);
-	BOOL showGreenBadge = (messageCount >= 1);
+	BOOL showRedBadge = (messageCount >= 1);
+	BOOL showGreenBadge = (highlightCount >= 1);
 	
 	/* ////////////////////////////////////////////////////////// */
 	/* Define Text Drawing Globals. */
@@ -258,7 +258,7 @@ static NSInteger _cachedHighlightCount = -1;
 		[redBadgeRight	drawInRect:redBadgeRightFrame	fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 		
 		/* Red Badge Text. */
-		badgeText		= [badgeText initWithString:[NSString stringWithInteger:highlightCount] attributes:badgeTextAttrs];
+		badgeText		= [badgeText initWithString:[NSString stringWithInteger:messageCount] attributes:badgeTextAttrs];
 		badgeTextSize   = [badgeText size];
 		
 		NSInteger redBadgeTotalWidth = (redBadgeLeftFrame.size.width +
@@ -282,9 +282,9 @@ static NSInteger _cachedHighlightCount = -1;
 		
 		/* Green Badge Text. */
 		if (showRedBadge) {
-			[badgeText replaceCharactersInRange:NSMakeRange(0, [badgeText length]) withString:[NSString stringWithInteger:messageCount]];
+			[badgeText replaceCharactersInRange:NSMakeRange(0, badgeText.length) withString:[NSString stringWithInteger:highlightCount]];
 		} else {
-			badgeText = [badgeText initWithString:[NSString stringWithInteger:messageCount] attributes:badgeTextAttrs];
+			badgeText = [badgeText initWithString:[NSString stringWithInteger:highlightCount] attributes:badgeTextAttrs];
 		}
 		
 		badgeTextSize = [badgeText size];
