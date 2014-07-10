@@ -1272,7 +1272,7 @@
 		4C8AF569158E99520026668C /* TDCWelcomeSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCWelcomeSheet.h; sourceTree = "<group>"; };
 		4C8AF56A158E99520026668C /* TextualApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextualApplication.h; path = ../Headers/TextualApplication.h; sourceTree = "<group>"; };
 		4C8AF56B158E99520026668C /* THOPluginItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THOPluginItem.h; sourceTree = "<group>"; };
-		4C8AF56C158E99520026668C /* THOPluginProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THOPluginProtocol.h; sourceTree = "<group>"; };
+		4C8AF56C158E99520026668C /* THOPluginProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THOPluginProtocol.h; sourceTree = "<group>"; usesTabs = 0; };
 		4C8AF56E158E99520026668C /* TLOFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLOFileLogger.h; sourceTree = "<group>"; };
 		4C8AF570158E99520026668C /* TLOGrowlController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLOGrowlController.h; sourceTree = "<group>"; };
 		4C8AF571158E99520026668C /* TLOInputHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLOInputHistory.h; sourceTree = "<group>"; };
@@ -1367,7 +1367,7 @@
 		4C8AF5EC158E99520026668C /* TPCThemeSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCThemeSettings.m; sourceTree = "<group>"; };
 		4C8AF5ED158E99520026668C /* TPCThemeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCThemeController.m; sourceTree = "<group>"; };
 		4C8AF5EE158E99520026668C /* TPCPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCPreferences.m; path = Preferences/TPCPreferences.m; sourceTree = "<group>"; };
-		4C8AF5F1158E99520026668C /* TVCLogRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogRenderer.m; sourceTree = "<group>"; };
+		4C8AF5F1158E99520026668C /* TVCLogRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogRenderer.m; sourceTree = "<group>"; usesTabs = 1; };
 		4C8AF5F2158E99520026668C /* TVCImageURLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCImageURLParser.m; path = ../TVCImageURLParser.m; sourceTree = "<group>"; };
 		4C8AF5F3158E99520026668C /* TVCLogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogController.m; sourceTree = "<group>"; };
 		4C8AF5F4158E99520026668C /* TVCLogLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TVCLogLine.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
