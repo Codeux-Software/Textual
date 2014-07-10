@@ -107,30 +107,37 @@
  
  logController has access to the DOM of that view and all associated data.
  
- messageInfo is a dictionary passed down by the renderer to the internals of
- TVCLogController which is ultimately passed down to this method call. The
- actual values within this dictionary can vary but the most common values are
- as follows:
+ messageInfo is a dictionary containing information related to the message
+ posted. The following is a list of keys that promised to be in it. Some of
+ these keys will not be in the dictionary depending on the actual line type
+ but for the most part, we try to promise a few at most.
  
-	messageBody (String) — Raw, unrendered content of message sent to renderer. 
-	mentionedUsers (Array) — List of users mentioned in the message.
-	wordMatchFound (BOOL) — Whether or not a highlight word was found.
-	lineNumber (String) — The line number associated with actual object in the DOM.
-	lineReceivedAtTime (Date) — Exact date and time shown on the left side of the
-								message in the main channel view. This value is
-								returned as an NSDate object.
-	allHyperlinksInBody (Array) — Array of ranges (NSRange) of text in the message
-								body considered to be a URL. Each entry in this array
-								is another array containing two indexes. First index (0)
-								is the range in messageBody that the URL was at. The 
-								second index (1) is the actual URL that was found. 
-								The actual URL may differe from the value in the 
-								range as URL schemes may have been appended.
+ ----------------------------------------------------------------------------------------------------------------
+ |		Key				|		Type		|					Description										|
+ ----------------------------------------------------------------------------------------------------------------
+ | senderNickname		| String			| The nickname associated with this event.							|
+ ----------------------------------------------------------------------------------------------------------------
+ | lineType				| Integer			| Integer representation of TVCLogLineType							|
+ ----------------------------------------------------------------------------------------------------------------
+ | memberType			| Integer			| Integer representation of TVCLogLineMemberType					|
+ ----------------------------------------------------------------------------------------------------------------
+ | receivedAtTime		| Date (NSDate)		| Date & time of the message. This is not the render time. This is	|
+ |						|					| the actual date & time shown left of the message.					|
+ ----------------------------------------------------------------------------------------------------------------
+ | allHyperlinksInBody	| Array (NSArray)	| Array of ranges (NSRange) of text in the message body considered	|
+ |						|					| to be a URL. Each entry in this array is another array containing	|
+ |						|					| two indexes. First index (0) is the range in messageBody that the	|
+ |						|					| URL was at. The second index (1) is the actual URL that was found.|
+ |						|					| The actual URL may differ from the value in the range as URL		|
+ |						|					| schemes may have been appended.									|
+ ----------------------------------------------------------------------------------------------------------------
+ | mentionedUsers		| Set (NSSet)		| List of users from the channel that appear in the message.		|
+ ----------------------------------------------------------------------------------------------------------------
+ | messageBody			| String			| Raw, unrendered content of message sent to renderer.				|
+ ----------------------------------------------------------------------------------------------------------------
+ | wordMatchFound		| Boolean (BOOL)	| Whether or not a highlight word was found.						|
+ ----------------------------------------------------------------------------------------------------------------
  
- The messageInfo dictionary is not strictly defined. Only the above mentioned
- values are prompised to be in the dictionary. Any other values retreived from
- this dictionary are considered non-supported and will have undefined behavior.
-
  isThemeReload informs the call whether the insertion occured during a style
  reload. Style reloads occur when a style is changed and the entire view has
  to have each message repopulated.
