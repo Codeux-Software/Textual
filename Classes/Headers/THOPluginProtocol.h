@@ -133,9 +133,9 @@
  ------------------------------------------------------------------------------------------------------------------------
  | mentionedUsers            | Set (NSSet)        | List of users from the channel that appear in the message.          |
  ------------------------------------------------------------------------------------------------------------------------
- | messageBody               | String            | Raw, unrendered content of message sent to renderer.                 |
+ | messageBody               | String             | Raw, unrendered content of message sent to renderer.                 |
  ------------------------------------------------------------------------------------------------------------------------
- | wordMatchFound            | Boolean (BOOL)    | Whether or not a highlight word was found.                           |
+ | wordMatchFound            | Boolean (BOOL)     | Whether or not a highlight word was found.                           |
  ------------------------------------------------------------------------------------------------------------------------
  
  isThemeReload informs the call whether the insertion occured during a style
