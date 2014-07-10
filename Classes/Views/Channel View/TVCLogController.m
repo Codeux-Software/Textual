@@ -622,7 +622,7 @@
 			NSDictionary *resultInfo = lineInfo[1];
 			
 			[sharedPluginManager() postNewMessageEventForViewController:self
-															messageInfo:resultInfo
+															messageInfo:resultInfo[@"pluginDictionary"]
 														  isThemeReload:(markHistoric == NO)
 														isHistoryReload: markHistoric];
 		}
@@ -1002,7 +1002,7 @@
 				
 				/* Inform plugins. */
 				[sharedPluginManager() postNewMessageEventForViewController:self
-																messageInfo:resultInfo
+																messageInfo:resultInfo[@"pluginDictionary"]
 															  isThemeReload:NO
 															isHistoryReload:NO];
 				
@@ -1085,7 +1085,7 @@
 	[inputDictionary maybeSetObject:[line highlightKeywords] forKey:@"highlightKeywords"];
 	[inputDictionary maybeSetObject:[line excludeKeywords] forKey:@"excludeKeywords"];
 	[inputDictionary maybeSetObject:[line nickname] forKey:@"nickname"];
-
+	
 	[inputDictionary setBool:drawLinks forKey:@"renderLinks"];
 	[inputDictionary setBool:isNormalMsg forKey:@"isNormalMessage"];
 	[inputDictionary setBool:isPlainText forKey:@"isPlainTextMessage"];
@@ -1254,12 +1254,26 @@
 
 	attributes[@"lineNumber"] = newLinenNumber;
 	attributes[@"lineRenderTime"] = lineRenderTime;
-
-	[outputDictionary setObject:line.receivedAt forKey:@"lineReceivedAtTime"];
-	[outputDictionary setObject:line.messageBody forKey:@"messageBody"];
 	
 	[outputDictionary setObject:newLinenNumber forKey:@"lineNumber"];
-	[outputDictionary setObject:lineRenderTime forKey:@"lineRenderTime"];
+	
+	NSMutableDictionary *pluginDictionary = [NSMutableDictionary dictionary];
+	
+	[pluginDictionary setBool:highlighted forKey:@"wordMatchFound"];
+	
+	[pluginDictionary setInteger:[line lineType] forKey:@"lineType"];
+	[pluginDictionary setInteger:[line memberType] forKey:@"memberType"];
+	
+	[pluginDictionary maybeSetObject:[line nickname] forKey:@"senderNickname"];
+	[pluginDictionary maybeSetObject:[line receivedAt] forKey:@"receivedAtTime"];
+	
+	[pluginDictionary maybeSetObject:newLinenNumber forKey:@"lineNumber"];
+	
+	[pluginDictionary maybeSetObject:outputDictionary[@"allHyperlinksInBody"] forKey:@"allHyperlinksInBody"];
+	[pluginDictionary maybeSetObject:outputDictionary[@"mentionedUsers"] forKey:@"mentionedUsers"];
+	[pluginDictionary maybeSetObject:outputDictionary[@"messageBody"] forKey:@"messageBody"];
+	
+	[outputDictionary setObject:pluginDictionary forKey:@"pluginDictionary"];
 	
 	// ************************************************************************** /
 	// Return information.											              /

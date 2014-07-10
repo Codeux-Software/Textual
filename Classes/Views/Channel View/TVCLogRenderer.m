@@ -515,6 +515,12 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 	length = [body length];
 	
+	/* We set this because if a plugin was sent the messageBody value of the line
+	 sent to the renderer, then the value may be different than what appears in 
+	 here because a plugin can still intercept the renderer value which is set 
+	 as /body/. Therefore, we set the renderer value to the output dictionary. */
+	resultInfo[@"messageBody"] = body;
+	
 	/* When rendering a message as HTML output, TVCLogRenderer takes pride 
 	 in finding as much information about the message as possible. Information
 	 that it looks for includes nicknames from the channel the message is being
