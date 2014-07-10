@@ -112,31 +112,31 @@
  these keys will not be in the dictionary depending on the actual line type
  but for the most part, we try to promise a few at most.
  
- ----------------------------------------------------------------------------------------------------------------
- |		Key				|		Type		|					Description										|
- ----------------------------------------------------------------------------------------------------------------
- | senderNickname		| String			| The nickname associated with this event.							|
- ----------------------------------------------------------------------------------------------------------------
- | lineType				| Integer			| Integer representation of TVCLogLineType							|
- ----------------------------------------------------------------------------------------------------------------
- | memberType			| Integer			| Integer representation of TVCLogLineMemberType					|
- ----------------------------------------------------------------------------------------------------------------
- | receivedAtTime		| Date (NSDate)		| Date & time of the message. This is not the render time. This is	|
- |						|					| the actual date & time shown left of the message.					|
- ----------------------------------------------------------------------------------------------------------------
- | allHyperlinksInBody	| Array (NSArray)	| Array of ranges (NSRange) of text in the message body considered	|
- |						|					| to be a URL. Each entry in this array is another array containing	|
- |						|					| two indexes. First index (0) is the range in messageBody that the	|
- |						|					| URL was at. The second index (1) is the actual URL that was found.|
- |						|					| The actual URL may differ from the value in the range as URL		|
- |						|					| schemes may have been appended.									|
- ----------------------------------------------------------------------------------------------------------------
- | mentionedUsers		| Set (NSSet)		| List of users from the channel that appear in the message.		|
- ----------------------------------------------------------------------------------------------------------------
- | messageBody			| String			| Raw, unrendered content of message sent to renderer.				|
- ----------------------------------------------------------------------------------------------------------------
- | wordMatchFound		| Boolean (BOOL)	| Whether or not a highlight word was found.						|
- ----------------------------------------------------------------------------------------------------------------
+ ------------------------------------------------------------------------------------------------------------------------
+ |        Key                |        Type        |                    Description                                      |
+ ------------------------------------------------------------------------------------------------------------------------
+ | senderNickname            | String             | The nickname associated with this event.                            |
+ ------------------------------------------------------------------------------------------------------------------------
+ | lineType                  | Integer            | Integer representation of TVCLogLineType                            |
+ ------------------------------------------------------------------------------------------------------------------------
+ | memberType                | Integer            | Integer representation of TVCLogLineMemberType                      |
+ ------------------------------------------------------------------------------------------------------------------------
+ | receivedAtTime            | Date (NSDate)      | Date & time of the message. This is not the render time. This is    |
+ |                           |                    | the actual date & time shown left of the message.                   |
+ ------------------------------------------------------------------------------------------------------------------------
+ | allHyperlinksInBody       | Array (NSArray)    | Array of ranges (NSRange) of text in the message body considered    |
+ |                           |                    | to be a URL. Each entry in this array is another array containing   |
+ |                           |                    | two indexes. First index (0) is the range in messageBody that the   |
+ |                           |                    | URL was at. The second index (1) is the actual URL that was found.  |
+ |                           |                    | The actual URL may differ from the value in the range as URL        |
+ |                           |                    | schemes may have been appended.                                     |
+ ------------------------------------------------------------------------------------------------------------------------
+ | mentionedUsers            | Set (NSSet)        | List of users from the channel that appear in the message.          |
+ ------------------------------------------------------------------------------------------------------------------------
+ | messageBody               | String            | Raw, unrendered content of message sent to renderer.                 |
+ ------------------------------------------------------------------------------------------------------------------------
+ | wordMatchFound            | Boolean (BOOL)    | Whether or not a highlight word was found.                           |
+ ------------------------------------------------------------------------------------------------------------------------
  
  isThemeReload informs the call whether the insertion occured during a style
  reload. Style reloads occur when a style is changed and the entire view has
