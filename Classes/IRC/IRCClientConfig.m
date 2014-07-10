@@ -63,6 +63,8 @@
 		self.saslAuthenticationUsesExternalMechanism	= NO;
 		self.sendAuthenticationRequestsToUserServ		= NO;
 		
+		self.sendWhoCommandRequestsToChannels			= YES;
+		
 		self.identitySSLCertificate			= nil;
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
@@ -378,6 +380,7 @@
 		[dic assignBoolTo:&_hideNetworkUnavailabilityNotices forKey:@"hideNetworkUnavailabilityNotices"];
 		[dic assignBoolTo:&_saslAuthenticationUsesExternalMechanism forKey:@"saslAuthenticationUsesExternalMechanism"];
 		[dic assignBoolTo:&_sendAuthenticationRequestsToUserServ forKey:@"sendAuthenticationRequestsToUserServ"];
+		[dic assignBoolTo:&_sendWhoCommandRequestsToChannels forKey:@"sendWhoCommandRequestsToChannels"];
 		
 		[dic assignDoubleTo:&_cachedLastServerTimeCapacityReceivedAtTimestamp forKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
 		
@@ -522,6 +525,7 @@
 	[dic setBool:self.hideNetworkUnavailabilityNotices			forKey:@"hideNetworkUnavailabilityNotices"];
 	[dic setBool:self.saslAuthenticationUsesExternalMechanism	forKey:@"saslAuthenticationUsesExternalMechanism"];
 	[dic setBool:self.sendAuthenticationRequestsToUserServ		forKey:@"sendAuthenticationRequestsToUserServ"];
+	[dic setBool:self.sendWhoCommandRequestsToChannels			forKey:@"sendWhoCommandRequestsToChannels"];
 	
 	[dic setDouble:self.cachedLastServerTimeCapacityReceivedAtTimestamp		forKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
 	

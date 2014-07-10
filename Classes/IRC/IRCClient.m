@@ -2858,7 +2858,8 @@
 			NSDictionary *providedKeys = @{
 				@"Send Authentication Requests to UserServ"				: @"setHideNetworkUnavailabilityNotices:",
 				@"Hide Network Unavailability Notices on Reconnect"		: @"setSaslAuthenticationUsesExternalMechanism:",
-				@"SASL Authentication Uses External Mechanism"			: @"setSendAuthenticationRequestsToUserServ:"
+				@"SASL Authentication Uses External Mechanism"			: @"setSendAuthenticationRequestsToUserServ:",
+				@"Send WHO Command Requests to Channels"				: @"setSendWhoCommandRequestsToChannels:",
 			};
 			
 			void (^applyKey)(IRCClient *, NSString *, BOOL) = ^(IRCClient *client, NSString *valueKey, BOOL valueValue) {
@@ -6367,7 +6368,9 @@
 					}
 				}
 
-				[self send:IRCPrivateCommandIndex("who"), [c name], nil, nil];
+				if (self.config.sendWhoCommandRequestsToChannels) {
+					[self send:IRCPrivateCommandIndex("who"), [c name], nil, nil];
+				}
 			}
 
 			if (self.inUserInvokedNamesRequest) {

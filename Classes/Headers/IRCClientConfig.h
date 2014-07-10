@@ -64,6 +64,7 @@ typedef enum TXConnectionProxyType : NSInteger {
 @property (nonatomic, assign) BOOL outgoingFloodControl;
 @property (nonatomic, assign) BOOL saslAuthenticationUsesExternalMechanism;
 @property (nonatomic, assign) BOOL sendAuthenticationRequestsToUserServ;
+@property (nonatomic, assign) BOOL sendWhoCommandRequestsToChannels;
 @property (nonatomic, assign) BOOL sidebarItemExpanded;
 @property (nonatomic, assign) BOOL validateServerSSLCertificate;
 @property (nonatomic, assign) BOOL zncIgnoreConfiguredAutojoin;
