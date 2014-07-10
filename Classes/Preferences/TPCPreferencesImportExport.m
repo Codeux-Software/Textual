@@ -260,6 +260,8 @@
 		[key hasPrefix:@"WebKit"] ||										/* Apple owned prefix. */
 		[key hasPrefix:@"com.apple."] ||									/* Apple owned prefix. */
 		[key hasPrefix:@"DataDetectorsSettings"] ||							/* Apple owned prefix. */
+		
+		[key hasPrefix:@"HockeySDK"] ||										/* HockeyApp owned prefix. */
 
 		[key hasPrefix:@"TXRunCount"] ||									/* Textual owned prefix. */
 		[key hasPrefix:@"TXRunTime"] ||										/* Textual owned prefix. */
@@ -270,6 +272,7 @@
 		[key hasPrefix:@"Saved Window State —> Internal —> "] ||			/* Textual owned prefix. */
 		[key hasPrefix:@"Saved Window State —> Internal (v2) —> "] ||		/* Textual owned prefix. */
 		[key hasPrefix:@"Text Input Prompt Suppression -> "] ||				/* Textual owned prefix. */
+		[key hasPrefix:@"Textual Five Migration Tool ->"] ||					/* Textual owned prefix. */
 
 		[key hasPrefix:@"File Transfers -> File Transfer Download Folder Bookmark"]		||		/* Textual owned prefix. */
 
