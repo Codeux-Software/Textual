@@ -504,8 +504,6 @@
 		4C6D464E180830E60098BA12 /* NSMenuHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6D464C180830E60098BA12 /* NSMenuHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C6ED7F115901562001AD200 /* TVCMainWindowSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */; };
 		4C6ED7F315901579001AD200 /* TVCMainWindowSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C6FB411196C3627006E9F41 /* TPCPreferencesUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6FB410196C3627006E9F41 /* TPCPreferencesUserDefaults.m */; };
-		4C6FB412196C3627006E9F41 /* TPCPreferencesUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6FB410196C3627006E9F41 /* TPCPreferencesUserDefaults.m */; };
 		4C6FB418196C3640006E9F41 /* TPCPreferencesUserDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6FB417196C3640006E9F41 /* TPCPreferencesUserDefaults.h */; };
 		4C6FB419196C3640006E9F41 /* TPCPreferencesUserDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6FB417196C3640006E9F41 /* TPCPreferencesUserDefaults.h */; };
 		4C7188C61591AB7A00FC5E54 /* DIRedBadgeCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7188C31591AB7A00FC5E54 /* DIRedBadgeCenter.png */; };
@@ -780,6 +778,10 @@
 		4C937BDB170618A80050CEF3 /* TLOSpeechSynthesizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C937BDA170618A80050CEF3 /* TLOSpeechSynthesizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C937BDC17061A3F0050CEF3 /* TLOSpeechSynthesizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C937BDA170618A80050CEF3 /* TLOSpeechSynthesizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C937BDD17061A4D0050CEF3 /* TLOSpeechSynthesizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C937BD4170618940050CEF3 /* TLOSpeechSynthesizer.m */; };
+		4C943FC2196EEA74006A7048 /* TPCPreferencesTextualFiveMigrationTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C943FC0196EEA74006A7048 /* TPCPreferencesTextualFiveMigrationTool.m */; };
+		4C943FC3196EEA74006A7048 /* TPCPreferencesTextualFiveMigrationTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C943FC0196EEA74006A7048 /* TPCPreferencesTextualFiveMigrationTool.m */; };
+		4C943FC4196EEA74006A7048 /* TPCPreferencesUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C943FC1196EEA74006A7048 /* TPCPreferencesUserDefaults.m */; };
+		4C943FC5196EEA74006A7048 /* TPCPreferencesUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C943FC1196EEA74006A7048 /* TPCPreferencesUserDefaults.m */; };
 		4C9A1D9A1836E6D000C14835 /* BlowfishCommandLine.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D901836E6A100C14835 /* BlowfishCommandLine.bundle */; };
 		4C9A1D9B1836E6D200C14835 /* BragSpam.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D911836E6A100C14835 /* BragSpam.bundle */; };
 		4C9A1D9C1836E6D300C14835 /* SpammerParadise.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */; };
@@ -862,8 +864,6 @@
 		4CDDF3481678C5DF00FE8684 /* encryptionLockIconDark@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3441678C5DF00FE8684 /* encryptionLockIconDark@2x.tif */; };
 		4CDDF3491678C5DF00FE8684 /* encryptionLockIconLight.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3451678C5DF00FE8684 /* encryptionLockIconLight.tif */; };
 		4CDDF34A1678C5DF00FE8684 /* encryptionLockIconLight@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CDDF3461678C5DF00FE8684 /* encryptionLockIconLight@2x.tif */; };
-		4CE13317196C70A800A3603C /* TPCPreferencesTextualFiveMigrationTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE13316196C70A800A3603C /* TPCPreferencesTextualFiveMigrationTool.m */; };
-		4CE13318196C70A800A3603C /* TPCPreferencesTextualFiveMigrationTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE13316196C70A800A3603C /* TPCPreferencesTextualFiveMigrationTool.m */; };
 		4CE1331E196C70C500A3603C /* TPCPreferencesTextualFiveMigrationTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE1331D196C70C500A3603C /* TPCPreferencesTextualFiveMigrationTool.h */; };
 		4CE1331F196C70C500A3603C /* TPCPreferencesTextualFiveMigrationTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE1331D196C70C500A3603C /* TPCPreferencesTextualFiveMigrationTool.h */; };
 		4CEA09BE1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1151,7 +1151,6 @@
 		4C6D464C180830E60098BA12 /* NSMenuHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMenuHelper.h; sourceTree = "<group>"; };
 		4C6ED7F015901562001AD200 /* TVCMainWindowSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMainWindowSegmentedControl.m; sourceTree = "<group>"; };
 		4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowSegmentedControl.h; sourceTree = "<group>"; };
-		4C6FB410196C3627006E9F41 /* TPCPreferencesUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCPreferencesUserDefaults.m; sourceTree = "<group>"; };
 		4C6FB417196C3640006E9F41 /* TPCPreferencesUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPreferencesUserDefaults.h; sourceTree = "<group>"; };
 		4C7188C31591AB7A00FC5E54 /* DIRedBadgeCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DIRedBadgeCenter.png; path = "Resources/Images/Dock Icon Badges/Red/DIRedBadgeCenter.png"; sourceTree = SOURCE_ROOT; };
 		4C7188C41591AB7A00FC5E54 /* DIRedBadgeLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DIRedBadgeLeft.png; path = "Resources/Images/Dock Icon Badges/Red/DIRedBadgeLeft.png"; sourceTree = SOURCE_ROOT; };
@@ -1420,6 +1419,8 @@
 		4C92FECA17A8C8F2003888F4 /* TPCResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCResourceManager.h; sourceTree = "<group>"; };
 		4C937BD4170618940050CEF3 /* TLOSpeechSynthesizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOSpeechSynthesizer.m; path = Library/TLOSpeechSynthesizer.m; sourceTree = "<group>"; };
 		4C937BDA170618A80050CEF3 /* TLOSpeechSynthesizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLOSpeechSynthesizer.h; sourceTree = "<group>"; };
+		4C943FC0196EEA74006A7048 /* TPCPreferencesTextualFiveMigrationTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCPreferencesTextualFiveMigrationTool.m; path = Preferences/TPCPreferencesTextualFiveMigrationTool.m; sourceTree = "<group>"; };
+		4C943FC1196EEA74006A7048 /* TPCPreferencesUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCPreferencesUserDefaults.m; path = Preferences/TPCPreferencesUserDefaults.m; sourceTree = "<group>"; };
 		4C994BAB181FB3E0002FECA6 /* Auxiliary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Auxiliary.entitlements; path = Resources/Sandbox/Exceptions/Auxiliary.entitlements; sourceTree = SOURCE_ROOT; };
 		4C994BAC181FB3E0002FECA6 /* Textual.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Textual.entitlements; path = Resources/Sandbox/Exceptions/Textual.entitlements; sourceTree = SOURCE_ROOT; };
 		4C994BAD181FB3E0002FECA6 /* TextualWithoutCloud.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualWithoutCloud.entitlements; path = Resources/Sandbox/Exceptions/TextualWithoutCloud.entitlements; sourceTree = SOURCE_ROOT; };
@@ -1486,7 +1487,6 @@
 		4CDDF3441678C5DF00FE8684 /* encryptionLockIconDark@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "encryptionLockIconDark@2x.tif"; sourceTree = "<group>"; };
 		4CDDF3451678C5DF00FE8684 /* encryptionLockIconLight.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = encryptionLockIconLight.tif; sourceTree = "<group>"; };
 		4CDDF3461678C5DF00FE8684 /* encryptionLockIconLight@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "encryptionLockIconLight@2x.tif"; sourceTree = "<group>"; };
-		4CE13316196C70A800A3603C /* TPCPreferencesTextualFiveMigrationTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCPreferencesTextualFiveMigrationTool.m; sourceTree = "<group>"; };
 		4CE1331D196C70C500A3603C /* TPCPreferencesTextualFiveMigrationTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPreferencesTextualFiveMigrationTool.h; sourceTree = "<group>"; };
 		4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogRemoteAddress.h; sourceTree = "<group>"; };
 		4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogRemoteAddress.m; path = "Dialogs/File Transfers/TDCFileTransferDialogRemoteAddress.m"; sourceTree = "<group>"; };
@@ -2547,8 +2547,8 @@
 				4C3D0B7A1594909500567623 /* Migration Assistant */,
 				4C8AF5EB158E99520026668C /* Theme */,
 				4C8AF5EE158E99520026668C /* TPCPreferences.m */,
-				4C6FB410196C3627006E9F41 /* TPCPreferencesUserDefaults.m */,
-				4CE13316196C70A800A3603C /* TPCPreferencesTextualFiveMigrationTool.m */,
+				4C943FC0196EEA74006A7048 /* TPCPreferencesTextualFiveMigrationTool.m */,
+				4C943FC1196EEA74006A7048 /* TPCPreferencesUserDefaults.m */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";
@@ -3396,7 +3396,6 @@
 				4C0444F616F1603B00EBB665 /* TXGlobalModels.m in Sources */,
 				4C0444F716F1603B00EBB665 /* TXMasterController.m in Sources */,
 				4C0444F816F1603B00EBB665 /* TXMenuController.m in Sources */,
-				4CE13318196C70A800A3603C /* TPCPreferencesTextualFiveMigrationTool.m in Sources */,
 				4C0444F916F1603B00EBB665 /* TDCPreferencesController.m in Sources */,
 				4C0444FA16F1603B00EBB665 /* TDCPreferencesScriptWrapper.m in Sources */,
 				4C0444FB16F1603B00EBB665 /* TDCPreferencesSoundWrapper.m in Sources */,
@@ -3428,6 +3427,7 @@
 				4C04458E16F1603B00EBB665 /* NSPasteboardHelper.m in Sources */,
 				4C04458F16F1603B00EBB665 /* NSRangeHelper.m in Sources */,
 				4C04459016F1603B00EBB665 /* NSRectHelper.m in Sources */,
+				4C943FC3196EEA74006A7048 /* TPCPreferencesTextualFiveMigrationTool.m in Sources */,
 				4C5798B4179B44F500968800 /* TVCMemberListCellBadge.m in Sources */,
 				4C04459116F1603B00EBB665 /* NSScreenHelper.m in Sources */,
 				4C04459216F1603B00EBB665 /* NSSplitViewHelper.m in Sources */,
@@ -3452,6 +3452,7 @@
 				4C0445A216F1603B00EBB665 /* IRCConnection.m in Sources */,
 				4C0445A316F1603C00EBB665 /* IRCConnectionSocket.m in Sources */,
 				4C0445A416F1603C00EBB665 /* IRCExtras.m in Sources */,
+				4C943FC5196EEA74006A7048 /* TPCPreferencesUserDefaults.m in Sources */,
 				4C0445A516F1603C00EBB665 /* IRCISupportInfo.m in Sources */,
 				4C0445A616F1603C00EBB665 /* IRCMessage.m in Sources */,
 				4C0445A716F1603C00EBB665 /* IRCModeInfo.m in Sources */,
@@ -3492,7 +3493,6 @@
 				4C0445C816F1603C00EBB665 /* TVCLogPolicy.m in Sources */,
 				4C0445C916F1603C00EBB665 /* TVCLogRenderer.m in Sources */,
 				4C0445CA16F1603C00EBB665 /* TVCLogScriptEventSink.m in Sources */,
-				4C6FB412196C3627006E9F41 /* TPCPreferencesUserDefaults.m in Sources */,
 				4C0445CB16F1603C00EBB665 /* TVCLogView.m in Sources */,
 				4C0445CC16F1603C00EBB665 /* TVCWebViewAutoScroll.m in Sources */,
 				4C0445CD16F1603C00EBB665 /* TVCMainWindowTextView.m in Sources */,
@@ -3537,7 +3537,6 @@
 				4CD63F3015C59C5B00E8DE92 /* NSScreenHelper.m in Sources */,
 				4C8AF609158E99520026668C /* TXGlobalModels.m in Sources */,
 				4C8AF60A158E99520026668C /* TXMasterController.m in Sources */,
-				4CE13317196C70A800A3603C /* TPCPreferencesTextualFiveMigrationTool.m in Sources */,
 				4C8AF60B158E99520026668C /* TXMenuController.m in Sources */,
 				4C8AF60C158E99520026668C /* TDCPreferencesController.m in Sources */,
 				4C8AF60D158E99520026668C /* TDCPreferencesScriptWrapper.m in Sources */,
@@ -3569,6 +3568,7 @@
 				4C8AF695158E99520026668C /* NSOutlineViewHelper.m in Sources */,
 				4C8AF696158E99520026668C /* NSPasteboardHelper.m in Sources */,
 				4C8AF697158E99520026668C /* NSRectHelper.m in Sources */,
+				4C943FC2196EEA74006A7048 /* TPCPreferencesTextualFiveMigrationTool.m in Sources */,
 				4C5798B3179B44F500968800 /* TVCMemberListCellBadge.m in Sources */,
 				4C8AF698158E99520026668C /* NSSplitViewHelper.m in Sources */,
 				4C8AF699158E99520026668C /* NSStringHelper.m in Sources */,
@@ -3593,6 +3593,7 @@
 				4C8AF6AB158E99520026668C /* IRCISupportInfo.m in Sources */,
 				4C8AF6AC158E99520026668C /* IRCMessage.m in Sources */,
 				4C8AF6AD158E99520026668C /* IRCModeInfo.m in Sources */,
+				4C943FC4196EEA74006A7048 /* TPCPreferencesUserDefaults.m in Sources */,
 				4C8AF6AE158E99520026668C /* IRCPrefix.m in Sources */,
 				4C8AF6AF158E99520026668C /* IRCSendingMessage.m in Sources */,
 				4C8AF6B0158E99520026668C /* IRCTreeItem.m in Sources */,
@@ -3633,7 +3634,6 @@
 				4C8AF6D8158E99520026668C /* TVCLogScriptEventSink.m in Sources */,
 				4C8AF6D9158E99520026668C /* TVCLogView.m in Sources */,
 				4C8AF6DA158E99520026668C /* TVCWebViewAutoScroll.m in Sources */,
-				4C6FB411196C3627006E9F41 /* TPCPreferencesUserDefaults.m in Sources */,
 				4C8AF6DB158E99520026668C /* TVCMainWindowTextView.m in Sources */,
 				4C8AF6DC158E99520026668C /* TVCTextViewWithIRCFormatter.m in Sources */,
 				4C8AF6DD158E99520026668C /* TVCTextFormatterMenu.m in Sources */,
