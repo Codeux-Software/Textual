@@ -87,48 +87,50 @@
 
 + (void)importPostflight:(NSURL *)pathURL
 {
-	/* The loading screen is a generic way to show something during import. */
-	[mainWindowLoadingScreen() hideAll:NO];
-	[mainWindowLoadingScreen() popLoadingConfigurationView];
-
-	/* isPopulatingSeeds tells the world to not close the loading screen on state
-	 changes when creating new connections. */
-	[worldController() setIsPopulatingSeeds:YES];
-
-	/* Before we do anything at all, we create a backup of the old configuration. */
-	/* We refuse to continue unless that wrote successfully. */
-	/* These are stored in the home directory of our container. */
-	NSString *basePath = [NSString stringWithFormat:@"/importBackup-%@.plist", [NSString stringWithUUID]];
-
-	NSString *backupPath = [NSHomeDirectory() stringByAppendingPathComponent:basePath];
-
-	BOOL backupWrite = [self exportPostflightForURL:[NSURL fileURLWithPath:backupPath] filterJunk:NO];
-
-	if (backupWrite == NO) {
-		LogToConsole(@"Import cancelled. Creation of backup file failed.");
-
-		return;
-	}
-
-	/* Begin import. */
-	NSData *rawData = [NSData dataWithContentsOfURL:pathURL];
-
-	NSDictionary *plist = [NSPropertyListSerialization propertyListFromData:rawData
-														   mutabilityOption:NSPropertyListImmutable
-																	 format:NULL
-														   errorDescription:NULL];
-
-	/* Perform actual import if we have the dictionary. */
-	if (plist) {
-		/* Import data. */
-		[self importContentsOfDictionary:plist withAutomaticReload:NO];
-
-		/* Do not push the loading screen right away. Add a little delay to give everything
-		 a chance to settle down before presenting the changes to the user. */
-		[self performSelector:@selector(importPostflightCleanup:) withObject:[plist allKeys] afterDelay:1.0];
-	} else {
-		LogToConsole(@"Import failed. Could not read property list.");
-	}
+	TXPerformBlockAsynchronouslyOnMainQueue(^{
+		/* The loading screen is a generic way to show something during import. */
+		[mainWindowLoadingScreen() hideAll:NO];
+		[mainWindowLoadingScreen() popLoadingConfigurationView];
+		
+		/* isPopulatingSeeds tells the world to not close the loading screen on state
+		 changes when creating new connections. */
+		[worldController() setIsPopulatingSeeds:YES];
+		
+		/* Before we do anything at all, we create a backup of the old configuration. */
+		/* We refuse to continue unless that wrote successfully. */
+		/* These are stored in the home directory of our container. */
+		NSString *basePath = [NSString stringWithFormat:@"/importBackup-%@.plist", [NSString stringWithUUID]];
+		
+		NSString *backupPath = [NSHomeDirectory() stringByAppendingPathComponent:basePath];
+		
+		BOOL backupWrite = [self exportPostflightForURL:[NSURL fileURLWithPath:backupPath] filterJunk:NO];
+		
+		if (backupWrite == NO) {
+			LogToConsole(@"Import cancelled. Creation of backup file failed.");
+			
+			return;
+		}
+		
+		/* Begin import. */
+		NSData *rawData = [NSData dataWithContentsOfURL:pathURL];
+		
+		NSDictionary *plist = [NSPropertyListSerialization propertyListFromData:rawData
+															   mutabilityOption:NSPropertyListImmutable
+																		 format:NULL
+															   errorDescription:NULL];
+		
+		/* Perform actual import if we have the dictionary. */
+		if (plist) {
+			/* Import data. */
+			[self importContentsOfDictionary:plist withAutomaticReload:NO];
+			
+			/* Do not push the loading screen right away. Add a little delay to give everything
+			 a chance to settle down before presenting the changes to the user. */
+			[self performSelector:@selector(importPostflightCleanup:) withObject:[plist allKeys] afterDelay:2.0];
+		} else {
+			LogToConsole(@"Import failed. Could not read property list.");
+		}
+	});
 }
 
 /* Conditional for keys that require special processing during the import process. */
