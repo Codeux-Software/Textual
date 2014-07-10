@@ -133,10 +133,25 @@ static NSInteger _cachedHighlightCount = -1;
 	
 	NSMutableAttributedString *badgeText = [NSMutableAttributedString alloc];
 	
-	NSDictionary *badgeTextAttrs = @{
-		NSFontAttributeName				: [NSFont fontWithName:@"Helvetica" size:22.0],
-		NSForegroundColorAttributeName	: [NSColor whiteColor]
-	};
+	NSDictionary *badgeTextAttrs;
+	
+	NSInteger badgeTextFrameCorrection = 0;
+	
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		badgeTextFrameCorrection = 2;
+		
+		badgeTextAttrs = @{
+			NSFontAttributeName				: [NSFont fontWithName:@"Helvetica" size:24.0],
+			NSForegroundColorAttributeName	: [NSColor whiteColor]
+		};
+	}else {
+		badgeTextFrameCorrection = 1;
+		
+		badgeTextAttrs = @{
+			NSFontAttributeName				: [NSFont fontWithName:@"Helvetica" size:22.0],
+			NSForegroundColorAttributeName	: [NSColor whiteColor]
+		};
+	}
 	
 	/* ////////////////////////////////////////////////////////// */
 	/* Load Drawing Images. */
@@ -180,23 +195,43 @@ static NSInteger _cachedHighlightCount = -1;
 	
 	[appIcon lockFocus];
 	
-	/* Red Badge Size. */
-	redBadgeRightFrame.size.height	= 44;
-	redBadgeCenterFrame.size.height = 44;
-	redBadgeLeftFrame.size.height	= 44;
-	
-	redBadgeLeftFrame.size.width    = 21;
-	redBadgeCenterFrame.size.width	= [self badgeCenterTileWidth:highlightCount];
-	redBadgeRightFrame.size.width	= 20;
-	
-	/* Green Badge Size. */
-	greenBadgeRightFrame.size.height	= 44;
-	greenBadgeCenterFrame.size.height	= 44;
-	greenBadgeLeftFrame.size.height		= 44;
-	
-	greenBadgeLeftFrame.size.width		= 21;
-	greenBadgeCenterFrame.size.width	= [self badgeCenterTileWidth:messageCount];
-	greenBadgeRightFrame.size.width		= 20;
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		/* Red Badge Size. */
+		redBadgeRightFrame.size.height	= 53;
+		redBadgeCenterFrame.size.height = 53;
+		redBadgeLeftFrame.size.height	= 53;
+		
+		redBadgeLeftFrame.size.width    = 27;
+		redBadgeCenterFrame.size.width	= [self badgeCenterTileWidthForYosemite:messageCount];
+		redBadgeRightFrame.size.width	= 26;
+		
+		/* Green Badge Size. */
+		greenBadgeRightFrame.size.height	= 53;
+		greenBadgeCenterFrame.size.height	= 53;
+		greenBadgeLeftFrame.size.height		= 53;
+		
+		greenBadgeLeftFrame.size.width		= 27;
+		greenBadgeCenterFrame.size.width	= [self badgeCenterTileWidthForYosemite:highlightCount];
+		greenBadgeRightFrame.size.width		= 26;
+	} else {
+		/* Red Badge Size. */
+		redBadgeRightFrame.size.height	= 44;
+		redBadgeCenterFrame.size.height = 44;
+		redBadgeLeftFrame.size.height	= 44;
+		
+		redBadgeLeftFrame.size.width    = 21;
+		redBadgeCenterFrame.size.width	= [self badgeCenterTileWidthForMavericks:messageCount];
+		redBadgeRightFrame.size.width	= 20;
+		
+		/* Green Badge Size. */
+		greenBadgeRightFrame.size.height	= 44;
+		greenBadgeCenterFrame.size.height	= 44;
+		greenBadgeLeftFrame.size.height		= 44;
+		
+		greenBadgeLeftFrame.size.width		= 21;
+		greenBadgeCenterFrame.size.width	= [self badgeCenterTileWidthForMavericks:highlightCount];
+		greenBadgeRightFrame.size.width		= 20;
+	}
 	
 	/* ////////////////////////////////////////////////////////// */
 	
@@ -271,7 +306,7 @@ static NSInteger _cachedHighlightCount = -1;
 		NSInteger redBadgeHeightCenter = ((redBadgeTotalHeight - badgeTextSize.height) / 2);
 		
 		[badgeText drawAtPoint:NSMakePoint((appIcon.size.width - redBadgeTotalWidth + redBadgeWidthCenter),
-										   (appIcon.size.height - redBadgeTotalHeight + redBadgeHeightCenter + 1))];
+										   (appIcon.size.height - redBadgeTotalHeight + redBadgeHeightCenter + badgeTextFrameCorrection))];
 	}
 	
 	if (showGreenBadge) {
@@ -299,7 +334,7 @@ static NSInteger _cachedHighlightCount = -1;
 		NSInteger greenBadgeHeightCenter = ((greenBadgeTotalHeight - badgeTextSize.height) / 2);
 		
 		NSPoint badgeTextDrawPath = NSMakePoint((appIcon.size.width - greenBadgeTotalWidth + greenBadgeWidthCenter),
-												(appIcon.size.height - greenBadgeTotalHeight + greenBadgeHeightCenter + 1));
+												(appIcon.size.height - greenBadgeTotalHeight + greenBadgeHeightCenter + badgeTextFrameCorrection));
 		
 		if (showRedBadge) {
 			badgeTextDrawPath.y -= (redBadgeCenterFrame.size.height + _badgeSeperationSpace);
@@ -317,7 +352,7 @@ static NSInteger _cachedHighlightCount = -1;
 	[NSApp setApplicationIconImage:appIcon];
 }
 
-+ (NSInteger)badgeCenterTileWidth:(NSInteger)count
++ (NSInteger)badgeCenterTileWidthForMavericks:(NSInteger)count
 {
 	switch (count) {
 		case 1 ... 9:
@@ -341,6 +376,38 @@ static NSInteger _cachedHighlightCount = -1;
 		case 1000 ... 9999:
 		{
 			return 38;
+			
+			break;
+		}
+	}
+	
+	return 1;
+}
+
++ (NSInteger)badgeCenterTileWidthForYosemite:(NSInteger)count
+{
+	switch (count) {
+		case 1 ... 9:
+		{
+			return 1;
+			
+			break;
+		}
+		case 10 ... 99:
+		{
+			return 1;
+			
+			break;
+		}
+		case 100 ... 999:
+		{
+			return 18;
+			
+			break;
+		}
+		case 1000 ... 9999:
+		{
+			return 28;
 			
 			break;
 		}
