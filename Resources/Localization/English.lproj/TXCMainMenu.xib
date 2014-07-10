@@ -912,6 +912,7 @@ CQ
                 <outlet property="memberListUserInfoPopover" destination="2963" id="2968"/>
                 <outlet property="memberSplitView" destination="2799" id="2935"/>
                 <outlet property="menuController" destination="267" id="2926"/>
+                <outlet property="migrationTool" destination="iY9-RC-EfJ" id="Ykg-OG-0jK"/>
                 <outlet property="segmentedControllerMenu" destination="2953" id="2956"/>
                 <outlet property="serverList" destination="2801" id="2932"/>
                 <outlet property="serverMenuItem" destination="286" id="2945"/>
@@ -931,6 +932,11 @@ CQ
                 <outlet property="backgroundColorMenu" destination="2463" id="2951"/>
                 <outlet property="foregroundColorMenu" destination="2484" id="2952"/>
                 <outlet property="formatterMenu" destination="1929" id="2005"/>
+            </connections>
+        </customObject>
+        <customObject id="iY9-RC-EfJ" userLabel="MigrationTool" customClass="TPCPreferencesTextualFiveMigrationTool">
+            <connections>
+                <outlet property="dialogWindow" destination="svN-4P-6VV" id="YUG-em-6OW"/>
             </connections>
         </customObject>
         <menuItem title="IRC Formatting" tag="53037" id="1929">
@@ -2776,8 +2782,124 @@ CA
                 </items>
             </menu>
         </menuItem>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="svN-4P-6VV">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="128" y="143" width="545" height="527"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1419" height="820"/>
+            <view key="contentView" id="LKu-MS-uMy">
+                <rect key="frame" x="0.0" y="0.0" width="545" height="527"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="uSu-HR-Qib">
+                        <rect key="frame" x="18" y="115" width="509" height="204"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" id="OXm-31-Ctx">
+                            <font key="font" metaFont="system"/>
+                            <mutableString key="title">The goal of Textual 5 was to audit the entire application by going through it piece by piece in order to fix a lot of outstanding issues as well as make it even more lightweight than before. A lot of sleepless nights have been put into this upgrade to improve the performance, stability, and overall usability of Textual.
+
+Textual 5 sports a revamped user interface for OS X Yosemite users. It also has great user interface changes for users of OS X Mavericks and earlier including a brand new, much easier to navigate preferences window.
+
+In the coming months, you can expect to see many great features coming to Textual. We, the development team, believe that Textual is now a much better product overall and that you would enjoy it much more!</mutableString>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" id="Bnp-9R-aj9">
+                        <rect key="frame" x="200" y="47" width="150" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Download Trial" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cQK-yr-zen">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="openDownloadTrialPage:" target="iY9-RC-EfJ" id="otx-TV-jxv"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" id="IDC-RA-Qpa">
+                        <rect key="frame" x="350" y="47" width="150" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Remind Me Later" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7KP-sz-0xa">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="hideDialogTemporarly:" target="iY9-RC-EfJ" id="G4U-L8-5l9"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" id="Mg7-Ct-wJ5">
+                        <rect key="frame" x="350" y="72" width="150" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Ask Question" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="V4T-BT-pGv">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="openSupportPage:" target="iY9-RC-EfJ" id="Twd-jJ-pgt"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" id="qfQ-tO-8BI">
+                        <rect key="frame" x="200" y="72" width="150" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="View Changes" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7C5-0e-TaI">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="openListOfChangesPage:" target="iY9-RC-EfJ" id="UUe-mf-yNx"/>
+                        </connections>
+                    </button>
+                    <button id="NJr-AL-mRX">
+                        <rect key="frame" x="51" y="57" width="135" height="40"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Download_on_the_App_Store_Badge_US-UK_135x40" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="QK2-yH-XNV">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="openAppStorePage:" target="iY9-RC-EfJ" id="YBN-wH-oIW"/>
+                        </connections>
+                    </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="X2c-p4-bIl">
+                        <rect key="frame" x="18" y="479" width="509" height="28"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Textual 5 is now available!" id="KLj-JC-pUb">
+                            <font key="font" metaFont="system" size="23"/>
+                            <color key="textColor" red="0.41907269021739135" green="0.41907269021739135" blue="0.41907269021739135" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="hi6-08-kU2">
+                        <rect key="frame" x="18" y="332" width="509" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Textual 5 is a paid upgrade." id="cvg-P1-1te">
+                            <font key="font" metaFont="systemBold"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="BsW-Bp-BYA">
+                        <rect key="frame" x="213" y="364" width="131" height="107"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="applicationIconYosemite" id="Tl6-EY-GOi"/>
+                    </imageView>
+                    <button id="C1D-uO-TKy">
+                        <rect key="frame" x="163" y="18" width="219" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Never show this dialog again." bezelStyle="regularSquare" imagePosition="left" inset="2" id="liA-sp-79r">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="hideDialogPermanently:" target="iY9-RC-EfJ" id="OHR-wW-TrL"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+        </window>
     </objects>
     <resources>
+        <image name="Download_on_the_App_Store_Badge_US-UK_135x40" width="135" height="40"/>
         <image name="FormattingColor_0" width="16" height="16"/>
         <image name="FormattingColor_1" width="16" height="16"/>
         <image name="FormattingColor_10" width="16" height="16"/>
@@ -2799,5 +2921,6 @@ CA
         <image name="NSActionTemplate" width="14" height="14"/>
         <image name="NSAddTemplate" width="8" height="8"/>
         <image name="application" width="512" height="512"/>
+        <image name="applicationIconYosemite" width="512" height="512"/>
     </resources>
 </document>
