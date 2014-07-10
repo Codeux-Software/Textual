@@ -148,6 +148,8 @@
 
 - (void)prepareForApplicationTermination
 {
+	[self saveWindowState];
+
 	[self setDelegate:nil];
 }
 
