@@ -40,7 +40,7 @@
 
 @interface TDCSheetBase : NSObject
 @property (nonatomic, uweak) id delegate;
-@property (nonatomic, uweak) NSWindow *window; // Window being attached to.
+@property (nonatomic, nweak) NSWindow *window; // Window being attached to.
 @property (nonatomic, strong) IBOutlet NSWindow *sheet; // Window being attached.
 @property (nonatomic, nweak) IBOutlet NSButton *okButton;
 @property (nonatomic, nweak) IBOutlet NSButton *cancelButton;
