@@ -915,12 +915,12 @@
 {
 	TVCMemberList *memberList = mainWindowMemberList();
 
-	NSData *modeycolor = [NSArchiver archivedDataWithRootObject:[memberList userMarkBadgeBackgroundColor_YDefault]];
-	NSData *modeqcolor = [NSArchiver archivedDataWithRootObject:[memberList userMarkBadgeBackgroundColor_QDefault]];
-	NSData *modeacolor = [NSArchiver archivedDataWithRootObject:[memberList userMarkBadgeBackgroundColor_ADefault]];
-	NSData *modeocolor = [NSArchiver archivedDataWithRootObject:[memberList userMarkBadgeBackgroundColor_ODefault]];
-	NSData *modehcolor = [NSArchiver archivedDataWithRootObject:[memberList userMarkBadgeBackgroundColor_HDefault]];
-	NSData *modevcolor = [NSArchiver archivedDataWithRootObject:[memberList userMarkBadgeBackgroundColor_VDefault]];
+	NSData *modeycolor = [NSArchiver archivedDataWithRootObject:[[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_YDefault]];
+	NSData *modeqcolor = [NSArchiver archivedDataWithRootObject:[[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_QDefault]];
+	NSData *modeacolor = [NSArchiver archivedDataWithRootObject:[[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_ADefault]];
+	NSData *modeocolor = [NSArchiver archivedDataWithRootObject:[[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_ODefault]];
+	NSData *modehcolor = [NSArchiver archivedDataWithRootObject:[[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_HDefault]];
+	NSData *modevcolor = [NSArchiver archivedDataWithRootObject:[[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_VDefault]];
 
 	[RZUserDefaultsValueProxy() setValue:modeycolor forKey:@"User List Mode Badge Colors —> +y"];
 	[RZUserDefaultsValueProxy() setValue:modeqcolor forKey:@"User List Mode Badge Colors —> +q"];

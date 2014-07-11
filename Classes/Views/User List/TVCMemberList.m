@@ -160,8 +160,6 @@
 - (id)initWithFrame:(NSRect)frame
 {
 	if ((self = [super initWithFrame:frame])) {
-		self.badgeRenderer = [TVCMemberListCellBadge new];
-		
 		self.userPopoverTrackingArea = [[NSTrackingArea alloc] initWithRect:frame
 																	options:(NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveInKeyWindow)
 																	  owner:self
@@ -382,38 +380,6 @@
 	[self setNeedsDisplay:YES];
 }
 
-- (void)reloadAllUserInterfaceElements
-{
-	/* Update background color. */
-	[self updateBackgroundColor];
-	
-	/* Clear selection and re-draw it. */
-	NSIndexSet *selectedRows = [self selectedRowIndexes];
-	
-	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
-		[self updateSelectionDrawingForRow:i byEnabling:[selectedRows containsIndex:i] forcefully:YES];
-	}
-	
-	/* Set display. */
-	[self setNeedsDisplay:YES];
-}
-
-- (void)reloadSelectionDrawingBySelectingItemsInIndexSet:(NSIndexSet *)rows
-{
-	PointerIsEmptyAssert(rows);
-	
-	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
-		[self updateSelectionDrawingForRow:i byEnabling:[rows containsIndex:i] forcefully:NO];
-	}
-}
-
-- (void)reloadSelectionDrawingForRow:(NSInteger)row
-{
-	NSIndexSet *selectedRows = [self selectedRowIndexes];
-	
-	[self updateSelectionDrawingForRow:row byEnabling:[selectedRows containsIndex:row] forcefully:YES];
-}
-
 - (void)updateDrawingForRow:(NSInteger)rowIndex
 {
 	NSAssertReturn(rowIndex >= 0);
@@ -421,10 +387,6 @@
 	id rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
 	
 	[rowView updateDrawing];
-}
-
-- (void)updateSelectionDrawingForRow:(NSInteger)rowIndex byEnabling:(BOOL)isSelected forcefully:(BOOL)forceRedraw
-{
 }
 
 - (void)updateBackgroundColor
@@ -451,226 +413,176 @@
     // Do not draw focus ring …
 }
 
-#pragma mark -
-#pragma mark User Interface Design Elements
-
-- (NSColor *)properBackgroundColor
+- (id)userInterfaceObjects
 {
-	if ([mainWindow() isInactive] == NO) {
-		return [self activeWindowListBackgroundColor];
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		return [TVCMemberListLightYosemiteUserInterface class];
 	} else {
-		return [self inactiveWindowListBackgroundColor];
+		return nil;
 	}
 }
 
-- (NSColor *)activeWindowListBackgroundColor
-{
-	return [TXUserInterface defineUserInterfaceItem:[NSColor sourceListBackgroundColor]
-									   invertedItem:[NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1.0]];
-}
+@end
 
-- (NSColor *)inactiveWindowListBackgroundColor
-{
-	return [TXUserInterface defineUserInterfaceItem:[NSColor internalCalibratedRed:237.0 green:237.0 blue:237.0 alpha:1.0]
-									   invertedItem:[NSColor internalCalibratedRed:38.0 green:38.0 blue:38.0 alpha:1.0]];
-}
+#pragma mark -
+#pragma mark User Interface Design Elements
 
-- (NSColor *)userMarkBadgeBackgroundColor_XGraphite
-{
-	return [TXUserInterface defineUserInterfaceItem:[NSColor internalCalibratedRed:132 green:147 blue:163 alpha:1.0]
-									   invertedItem:[NSColor internalCalibratedRed:48 green:48 blue:48 alpha:1.0]];
-}
+@implementation TVCMemberListSharedUserInterface
 
-- (NSColor *)userMarkBadgeBackgroundColor_XAqua
-{
-	return [TXUserInterface defineUserInterfaceItem:[NSColor internalCalibratedRed:152 green:168 blue:202 alpha:1.0]
-									   invertedItem:[NSColor internalCalibratedRed:48 green:48 blue:48 alpha:1.0]];
-}
-
-- (NSColor *)userMarkBadgeBackgroundColor_YDefault // InspIRCd-2.0
++ (NSColor *)userMarkBadgeBackgroundColor_YDefault // InspIRCd-2.0
 {
 	return [NSColor internalCalibratedRed:162 green:86 blue:58 alpha:1.0];
 }
 
-- (NSColor *)userMarkBadgeBackgroundColor_QDefault
++ (NSColor *)userMarkBadgeBackgroundColor_QDefault
 {
 	return [NSColor internalCalibratedRed:186 green:0 blue:0 alpha:1.0];
 }
 
-- (NSColor *)userMarkBadgeBackgroundColor_ADefault
++ (NSColor *)userMarkBadgeBackgroundColor_ADefault
 {
 	return [NSColor internalCalibratedRed:157 green:0 blue:89 alpha:1.0];
 }
 
-- (NSColor *)userMarkBadgeBackgroundColor_ODefault
++ (NSColor *)userMarkBadgeBackgroundColor_ODefault
 {
 	return [NSColor internalCalibratedRed:90 green:51 blue:156 alpha:1.0];
 }
 
-- (NSColor *)userMarkBadgeBackgroundColor_HDefault
++ (NSColor *)userMarkBadgeBackgroundColor_HDefault
 {
 	return [NSColor internalCalibratedRed:17 green:125 blue:19 alpha:1.0];
 }
 
-- (NSColor *)userMarkBadgeBackgroundColor_VDefault
++ (NSColor *)userMarkBadgeBackgroundColor_VDefault
 {
 	return [NSColor internalCalibratedRed:51 green:123 blue:156 alpha:1.0];
 }
 
-- (NSColor *)userMarkBadgeBackgroundColor_Y // InspIRCd-2.0
++ (NSColor *)userMarkBadgeBackgroundColorWithAlphaCorrect:(NSString *)defaultsKey
 {
-	return [RZUserDefaults() colorForKey:@"User List Mode Badge Colors —> +y"];
+	NSColor *defaultColor = [RZUserDefaults() colorForKey:defaultsKey];
+	
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		return [defaultColor colorWithAlphaComponent:0.7];
+	} else {
+		return  defaultColor;
+	}
 }
 
-- (NSColor *)userMarkBadgeBackgroundColor_Q
++ (NSColor *)userMarkBadgeBackgroundColor_Y // InspIRCd-2.0
 {
-	return [RZUserDefaults() colorForKey:@"User List Mode Badge Colors —> +q"];
+	return [TVCMemberListSharedUserInterface userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors —> +y"];
 }
 
-- (NSColor *)userMarkBadgeBackgroundColor_A
++ (NSColor *)userMarkBadgeBackgroundColor_Q
 {
-	return [RZUserDefaults() colorForKey:@"User List Mode Badge Colors —> +a"];
+	return [TVCMemberListSharedUserInterface userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors —> +q"];
 }
 
-- (NSColor *)userMarkBadgeBackgroundColor_O
++ (NSColor *)userMarkBadgeBackgroundColor_A
 {
-	return [RZUserDefaults() colorForKey:@"User List Mode Badge Colors —> +o"];
+	return [TVCMemberListSharedUserInterface userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors —> +a"];
 }
 
-- (NSColor *)userMarkBadgeBackgroundColor_H
++ (NSColor *)userMarkBadgeBackgroundColor_O
 {
-	return [RZUserDefaults() colorForKey:@"User List Mode Badge Colors —> +h"];
+	return [TVCMemberListSharedUserInterface userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors —> +o"];
 }
 
-- (NSColor *)userMarkBadgeBackgroundColor_V
++ (NSColor *)userMarkBadgeBackgroundColor_H
 {
-	return [RZUserDefaults() colorForKey:@"User List Mode Badge Colors —> +v"];
+	return [TVCMemberListSharedUserInterface userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors —> +h"];
 }
 
-- (NSColor *)userMarkBadgeSelectedBackgroundColor
++ (NSColor *)userMarkBadgeBackgroundColor_V
+{
+	return [TVCMemberListSharedUserInterface userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors —> +v"];
+}
+
++ (NSColor *)userMarkBadgeBackgroundColor
+{
+	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:0.7];
+}
+
+@end
+
+@implementation TVCMemberListMavericksUserInterface
+@end
+
+@implementation TVCMemberListLightYosemiteUserInterface
+
++ (NSColor *)normalCellTextColor
+{
+	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:1.0];
+}
+
++ (NSColor *)awayUserCellTextColor
+{
+	return [NSColor colorWithCalibratedRed:0.0 green:0.0 blue:0.0 alpha:0.3];
+}
+
++ (NSColor *)selectedCellTextColorForActiveWindow
 {
 	return [NSColor whiteColor];
 }
 
-- (NSColor *)userMarkBadgeNormalTextColor
++ (NSColor *)selectedCellTextColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+}
+
++ (NSColor *)userMarkBadgeNormalTextColor
 {
 	return [NSColor whiteColor];
 }
 
-- (NSColor *)userMarkBadgeSelectedTextColor
++ (NSColor *)userMarkBadgeSelectedBackgroundColor
 {
-	return [TXUserInterface defineUserInterfaceItem:[NSColor internalCalibratedRed:158 green:169 blue:197 alpha:1.0]
-									   invertedItem:[NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1.0]];
+	return [NSColor whiteColor];
 }
 
-- (NSColor *)userMarkBadgeShadowColor
++ (NSColor *)userMarkBadgeSelectedTextColor
 {
-	return [TXUserInterface defineUserInterfaceItem:[NSColor colorWithCalibratedWhite:1.00 alpha:0.60]
-									   invertedItem:[NSColor internalCalibratedRed:60.0 green:60.0 blue:60.0 alpha:1.0]];
+	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:0.7];
 }
 
-- (NSFont *)userMarkBadgeFont
++ (NSFont *)userMarkBadgeFont
 {
-	return [RZFontManager() fontWithFamily:@"Helvetica" traits:NSBoldFontMask weight:15 size:11.0];
+	return [NSFont systemFontOfSize:12.0];
 }
 
-- (NSInteger)userMarkBadgeMargin
++ (NSInteger)userMarkBadgeBottomMargin
+{
+	return 2.0;
+}
+
++ (NSInteger)userMarkBadgeLeftMargin
 {
 	return 5.0;
 }
 
-- (NSInteger)userMarkBadgeWidth
++ (NSInteger)userMarkBadgeWidth
 {
-	return 18.0;
+	return 20.0;
 }
 
-- (NSInteger)userMarkBadgeHeight
++ (NSInteger)userMarkBadgeHeight
 {
-	return 14.0;
+	return 16.0;
 }
 
-- (NSPoint)userMarkBadgeTextOrigin_Normal
++ (NSInteger)textCellLeftMargin
 {
-	return NSMakePoint(7, 5);
+	return 29.0;
 }
 
-- (NSPoint)userMarkBadgeTextOrigin_AtSign /* @ */
++ (NSInteger)textCellBottomMargin
 {
-	return NSMakePoint(5, 4);
+	return 2.0;
 }
 
-- (NSPoint)userMarkBadgeTextOrigin_AndSign /* & */
-{
-	return NSMakePoint(6, 4);
-}
+@end
 
-- (NSPoint)userMarkBadgeTextOrigin_PercentSign /* % */
-{
-	return NSMakePoint(5, 4);
-}
-
-- (NSPoint)userMarkBadgeTextOrigin_ExclamationMark /* ! */
-{
-	return NSMakePoint(7, 4);
-}
-
-- (NSFont *)normalCellFont
-{
-	if ([TPCPreferences useLargeFontForSidebars]) {
-		return [NSFont fontWithName:@"LucidaGrande" size:12.0];
-	} else {
-		return [NSFont fontWithName:@"LucidaGrande" size:11.0];
-	}
-}
-
-- (NSFont *)selectedCellFont
-{
-	if ([TPCPreferences useLargeFontForSidebars]) {
-		return [NSFont fontWithName:@"LucidaGrande-Bold" size:12.0];
-	} else {
-		return [NSFont fontWithName:@"LucidaGrande-Bold" size:11.0];
-	}
-}
-
-- (NSColor *)normalCellTextColor
-{
-	return [TXUserInterface defineUserInterfaceItem:[NSColor blackColor]
-									   invertedItem:[NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:1.0]];
-}
-
-- (NSColor *)awayUserCellTextColor
-{
-	return [TXUserInterface defineUserInterfaceItem:[NSColor colorWithCalibratedWhite:0.0 alpha:0.6]
-									   invertedItem:[NSColor internalCalibratedRed:225.0 green:224.0 blue:224.0 alpha:0.6]];
-}
-
-- (NSColor *)selectedCellTextColor
-{
-	return [TXUserInterface defineUserInterfaceItem:[NSColor whiteColor]
-									   invertedItem:[NSColor internalCalibratedRed:36.0 green:36.0 blue:36.0 alpha:1.0]];
-}
-
-- (NSColor *)normalCellTextShadowColor
-{
-	return [TXUserInterface defineUserInterfaceItem:[NSColor colorWithSRGBRed:1.0 green:1.0 blue:1.0 alpha:0.6]
-									   invertedItem:[NSColor colorWithCalibratedWhite:0.00 alpha:0.90]];
-}
-
-- (NSColor *)normalSelectedCellTextShadowColorForActiveWindow
-{
-	return [TXUserInterface defineUserInterfaceItem:[NSColor colorWithCalibratedWhite:0.00 alpha:0.48]
-									   invertedItem:[NSColor colorWithCalibratedWhite:1.00 alpha:0.30]];
-}
-
-- (NSColor *)normalSelectedCellTextShadowColorForInactiveWindow
-{
-	return [TXUserInterface defineUserInterfaceItem:[NSColor colorWithCalibratedWhite:0.00 alpha:0.30]
-									   invertedItem:[NSColor colorWithCalibratedWhite:1.00 alpha:0.30]];
-}
-
-- (NSColor *)graphiteSelectedCellTextShadowColorForActiveWindow
-{
-	return [NSColor internalCalibratedRed:17 green:73 blue:126 alpha:1.00];
-}
-
+@implementation TVCMemberListDarkYosemiteUserInterface
 @end

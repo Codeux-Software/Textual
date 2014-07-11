@@ -890,12 +890,12 @@ static NSMutableArray *excludeKeywords = nil;
 	
 	TVCMemberList *memberList = [mainWindow() memberList];
 	
-	d[@"User List Mode Badge Colors —> +y"] = [NSArchiver archivedDataWithRootObject:[memberList userMarkBadgeBackgroundColor_YDefault]];
-	d[@"User List Mode Badge Colors —> +q"] = [NSArchiver archivedDataWithRootObject:[memberList userMarkBadgeBackgroundColor_QDefault]];
-	d[@"User List Mode Badge Colors —> +a"] = [NSArchiver archivedDataWithRootObject:[memberList userMarkBadgeBackgroundColor_ADefault]];
-	d[@"User List Mode Badge Colors —> +o"] = [NSArchiver archivedDataWithRootObject:[memberList userMarkBadgeBackgroundColor_ODefault]];
-	d[@"User List Mode Badge Colors —> +h"] = [NSArchiver archivedDataWithRootObject:[memberList userMarkBadgeBackgroundColor_HDefault]];
-	d[@"User List Mode Badge Colors —> +v"] = [NSArchiver archivedDataWithRootObject:[memberList userMarkBadgeBackgroundColor_VDefault]];
+	d[@"User List Mode Badge Colors —> +y"] = [NSArchiver archivedDataWithRootObject:[[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_YDefault]];
+	d[@"User List Mode Badge Colors —> +q"] = [NSArchiver archivedDataWithRootObject:[[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_QDefault]];
+	d[@"User List Mode Badge Colors —> +a"] = [NSArchiver archivedDataWithRootObject:[[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_ADefault]];
+	d[@"User List Mode Badge Colors —> +o"] = [NSArchiver archivedDataWithRootObject:[[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_ODefault]];
+	d[@"User List Mode Badge Colors —> +h"] = [NSArchiver archivedDataWithRootObject:[[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_HDefault]];
+	d[@"User List Mode Badge Colors —> +v"] = [NSArchiver archivedDataWithRootObject:[[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_VDefault]];
 	
 	d[@"ChannelOperatorDefaultLocalization -> Kick Reason"] = BLS(1028);
 	

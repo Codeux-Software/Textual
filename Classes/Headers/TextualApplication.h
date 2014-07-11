@@ -145,8 +145,11 @@
 	@class TVCMainWindowTextViewContentView;
 	@class TVCMemberList;
 	@class TVCMemberListCell;
-	@class TVCMemberListCellBadge;
+	@class TVCMemberListDarkYosemiteUserInterface;
+	@class TVCMemberListLightYosemiteUserInterface;
+	@class TVCMemberListMavericksUserInterface;
 	@class TVCMemberListRowCell;
+	@class TVCMemberListSharedUserInterface;
 	@class TVCMemberListUserInfoPopover;
 	@class TVCQueuedCertificateTrustPanel;
 	@class TVCServerList; // This has a lot of classes.
@@ -340,7 +343,6 @@
 	#import "TDCProgressInformationSheet.h"
 	#import "TVCMemberList.h"
 	#import "TVCMemberListCell.h"
-	#import "TVCMemberListCellBadge.h"
 	#import "TVCMemberListUserInfoPopover.h"
 	#import "TVCQueuedCertificateTrustPanel.h"
 	#import "TVCServerList.h"

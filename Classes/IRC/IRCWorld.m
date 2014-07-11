@@ -416,7 +416,7 @@
 		[mainWindowServerList() reloadAllDrawings];
 
 		[mainWindowMemberList() updateBackgroundColor];
-		[mainWindowMemberList() reloadAllUserInterfaceElements];
+		[mainWindowMemberList() reloadAllDrawings];
 
 		[[mainWindow() contentSplitView] setNeedsDisplay:YES];
 

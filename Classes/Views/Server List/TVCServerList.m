@@ -151,7 +151,7 @@
 	return [self enclosingScrollView];
 }
 
-- (Class)userInterfaceObjects
+- (id)userInterfaceObjects
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 		return [TVCServerListLightYosemiteUserInterface class];
