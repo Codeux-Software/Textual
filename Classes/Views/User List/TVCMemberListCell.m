@@ -293,36 +293,60 @@
 											((NSMidY(boxFrame) - (badgeTextSize.height / 2.0))));
 		
 		/* Small frame corrections. */
-		if ([mcstring isEqualToString:@"+"] ||
-			[mcstring isEqualToString:@"~"] ||
-			[mcstring isEqualToString:@"x"])
-		{
-			badgeTextPoint.y -= 1.5;
-		}
-		else if ([mcstring isEqualToString:@"@"] ||
-				 [mcstring isEqualToString:@"!"] ||
-				 [mcstring isEqualToString:@"%"] ||
-				 [mcstring isEqualToString:@"&"] ||
-				 [mcstring isEqualToString:@"#"] ||
-				 [mcstring isEqualToString:@"?"])
-		{
-			badgeTextPoint.y -= 1.0;
-		}
-		else if ([mcstring isEqualToString:@"^"])
-		{
-			badgeTextPoint.y += 1;
-		}
-		else if ([mcstring isEqualToString:@"*"])
-		{
-			badgeTextPoint.y += 2;
-		}
-		else if ([mcstring isEqualToString:@"$"])
-		{
-			badgeTextPoint.y -= 0.5;
-		}
-		
+		/* This is so ugly, I know. */
 		if ([mainWindow() runningInHighResolutionMode]) {
-			badgeTextPoint.y -= 1;
+			if ([mcstring isEqualToString:@"+"] ||
+				[mcstring isEqualToString:@"~"] ||
+				[mcstring isEqualToString:@"x"])
+			{
+				badgeTextPoint.y -= 1.5;
+			}
+			else if ([mcstring isEqualToString:@"^"])
+			{
+				badgeTextPoint.y += 1;
+			}
+			else if ([mcstring isEqualToString:@"*"])
+			{
+				badgeTextPoint.y += 2;
+			}
+			else if ([mcstring isEqualToString:@"@"] ||
+					 [mcstring isEqualToString:@"!"] ||
+					 [mcstring isEqualToString:@"%"] ||
+					 [mcstring isEqualToString:@"&"] ||
+					 [mcstring isEqualToString:@"#"] ||
+					 [mcstring isEqualToString:@"?"] ||
+					 [mcstring isEqualToString:@"$"])
+			{
+				badgeTextPoint.y -= 0.5;
+			}
+		} else {
+			if ([mcstring isEqualToString:@"+"] ||
+				[mcstring isEqualToString:@"~"] ||
+				[mcstring isEqualToString:@"x"])
+			{
+				badgeTextPoint.y -= 1.5;
+			}
+			else if ([mcstring isEqualToString:@"@"] ||
+					 [mcstring isEqualToString:@"!"] ||
+					 [mcstring isEqualToString:@"%"] ||
+					 [mcstring isEqualToString:@"&"] ||
+					 [mcstring isEqualToString:@"#"] ||
+					 [mcstring isEqualToString:@"?"])
+			{
+				badgeTextPoint.y -= 1.0;
+			}
+			else if ([mcstring isEqualToString:@"^"])
+			{
+				badgeTextPoint.y += 1;
+			}
+			else if ([mcstring isEqualToString:@"*"])
+			{
+				badgeTextPoint.y += 2;
+			}
+			else if ([mcstring isEqualToString:@"$"])
+			{
+				badgeTextPoint.y -= 0.5;
+			}
 		}
 		
 		/* Draw mode string. */
