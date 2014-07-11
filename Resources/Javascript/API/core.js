@@ -281,7 +281,7 @@ Textual = {
 		to the internals of Textual itself to determine whether to cancel the request. It may
 		decide to cancel the request if the shift key is held down. */
 		
-		if (InlineImageLiveResize.previousMouseActionWasForResizing) {
+		if (InlineImageLiveResize && InlineImageLiveResize.previousMouseActionWasForResizing) {
 			return false;
 		} else {
 			if (app.toggleInlineImage(object) == "false") {
