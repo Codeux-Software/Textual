@@ -2283,17 +2283,76 @@
 		{
 #warning Add back way to skip dialog.
 			BOOL isIgnoreCommand = [uppercaseCommand isEqualToString:IRCPublicCommandIndex("ignore")];
-
-			if (isIgnoreCommand) {
-				NSString *nickname = [s getTokenAsString];
-
-				if (NSObjectIsNotEmpty(nickname) || PointerIsEmpty(selChannel)) {
-					[menuController() showServerPropertyDialog:self withDefaultView:TDCServerSheetNewIgnoreEntryNavigationSelection	andContext:nickname];
+			
+			if (NSObjectIsEmpty(uncutInput) || PointerIsEmpty(selChannel)) {
+				if (isIgnoreCommand) {
+					[menuController() showServerPropertyDialog:self withDefaultView:TDCServerSheetNewIgnoreEntryNavigationSelection andContext:nil];
 				} else {
-					[menuController() showServerPropertyDialog:self withDefaultView:TDCServerSheetNewIgnoreEntryNavigationSelection	andContext:@"--"];
+					[menuController() showServerPropertyDialog:self withDefaultView:TDCServerSheetAddressBookNavigationSelection andContext:nil];
 				}
 			} else {
-				[menuController() showServerPropertyDialog:self withDefaultView:TDCServerSheetAddressBookNavigationSelection andContext:nil];
+				NSString *nickname = [s getTokenAsString];
+				
+				IRCUser *user = [selChannel findMember:nickname];
+				
+				if (user == nil) {
+					if (isIgnoreCommand) {
+						[menuController() showServerPropertyDialog:self withDefaultView:TDCServerSheetNewIgnoreEntryNavigationSelection andContext:nickname];
+					} else {
+						[menuController() showServerPropertyDialog:self withDefaultView:TDCServerSheetAddressBookNavigationSelection andContext:nil];
+					}
+					
+					return;
+				}
+				
+				IRCAddressBookEntry *g = [IRCAddressBookEntry new];
+				
+				[g setHostmask:[user banMask]];
+				
+				[g setIgnoreCTCP:YES];
+				[g setIgnoreJPQE:YES];
+				[g setIgnoreNotices:YES];
+				[g setIgnorePrivateHighlights:YES];
+				[g setIgnorePrivateMessages:YES];
+				[g setIgnorePublicHighlights:YES];
+				[g setIgnorePublicMessages:YES];
+				[g setIgnoreFileTransferRequests:YES];
+				
+				[g setHideMessagesContainingMatch:NO];
+				
+				[g setNotifyJoins:NO];
+				
+				if (isIgnoreCommand) {
+					BOOL found = NO;
+					
+					for (IRCAddressBookEntry *e in self.config.ignoreList) {
+						if (NSObjectsAreEqual([g hostmask], [e hostmask])) {
+							found = YES;
+							
+							break;
+						}
+					}
+					
+					if (found == NO) {
+						@synchronized(self.config.ignoreList) {
+							self.config.ignoreList = [self.config.ignoreList arrayByAddingObject:g];
+						}
+					}
+				} else {
+					for (IRCAddressBookEntry *e in self.config.ignoreList) {
+						if ([[g hostmask] isEqualToString:[e hostmask]]) {
+							@synchronized(self.config.ignoreList) {
+								NSMutableArray *newArray = [self.config.ignoreList mutableCopy];
+								
+								[newArray removeObject:e];
+								
+								self.config.ignoreList = newArray;
+							}
+							
+							break;
+						}
+					}
+				}
 			}
 
 			break;
