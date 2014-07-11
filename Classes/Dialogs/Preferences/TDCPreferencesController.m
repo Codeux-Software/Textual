@@ -915,19 +915,19 @@
 {
 	TVCMemberList *memberList = mainWindowMemberList();
 
-	NSData *modeycolor = [NSArchiver archivedDataWithRootObject:[[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_YDefault]];
-	NSData *modeqcolor = [NSArchiver archivedDataWithRootObject:[[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_QDefault]];
-	NSData *modeacolor = [NSArchiver archivedDataWithRootObject:[[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_ADefault]];
-	NSData *modeocolor = [NSArchiver archivedDataWithRootObject:[[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_ODefault]];
-	NSData *modehcolor = [NSArchiver archivedDataWithRootObject:[[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_HDefault]];
-	NSData *modevcolor = [NSArchiver archivedDataWithRootObject:[[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_VDefault]];
+	NSColor *modeycolor = [[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_YDefault];
+	NSColor *modeqcolor = [[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_QDefault];
+	NSColor *modeacolor = [[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_ADefault];
+	NSColor *modeocolor = [[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_ODefault];
+	NSColor *modehcolor = [[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_HDefault];
+	NSColor *modevcolor = [[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_VDefault];
 
-	[RZUserDefaultsValueProxy() setValue:modeycolor forKey:@"User List Mode Badge Colors —> +y"];
-	[RZUserDefaultsValueProxy() setValue:modeqcolor forKey:@"User List Mode Badge Colors —> +q"];
-	[RZUserDefaultsValueProxy() setValue:modeacolor forKey:@"User List Mode Badge Colors —> +a"];
-	[RZUserDefaultsValueProxy() setValue:modeocolor forKey:@"User List Mode Badge Colors —> +o"];
-	[RZUserDefaultsValueProxy() setValue:modehcolor forKey:@"User List Mode Badge Colors —> +h"];
-	[RZUserDefaultsValueProxy() setValue:modevcolor forKey:@"User List Mode Badge Colors —> +v"];
+	[RZUserDefaults() setColor:modeycolor forKey:@"User List Mode Badge Colors —> +y"];
+	[RZUserDefaults() setColor:modeqcolor forKey:@"User List Mode Badge Colors —> +q"];
+	[RZUserDefaults() setColor:modeacolor forKey:@"User List Mode Badge Colors —> +a"];
+	[RZUserDefaults() setColor:modeocolor forKey:@"User List Mode Badge Colors —> +o"];
+	[RZUserDefaults() setColor:modehcolor forKey:@"User List Mode Badge Colors —> +h"];
+	[RZUserDefaults() setColor:modevcolor forKey:@"User List Mode Badge Colors —> +v"];
 
 	[self onChangedUserListModeColor:sender];
 }
