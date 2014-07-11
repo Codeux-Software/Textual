@@ -43,11 +43,11 @@
 @property (nonatomic, nweak) IBOutlet NSView *welcomeAddServerNormalView;
 @property (nonatomic, nweak) IBOutlet NSView *welcomeAddServerTrialView;
 @property (nonatomic, nweak) IBOutlet NSView *loadingConfigurationView;
-@property (nonatomic, uweak) IBOutlet NSButton *welcomeAddServerViewButton;
-@property (nonatomic, uweak) IBOutlet NSButton *welcomePurchaseTextualButton;
-@property (nonatomic, uweak) IBOutlet NSProgressIndicator *loadingConfigurationViewPI;
-@property (nonatomic, uweak) IBOutlet NSLayoutConstraint *loadingScreenMinimumWidthConstraint;
-@property (nonatomic, uweak) IBOutlet NSLayoutConstraint *loadingScreenMinimumHeightConstraint;
+@property (nonatomic, nweak) IBOutlet NSButton *welcomeAddServerViewButton;
+@property (nonatomic, nweak) IBOutlet NSButton *welcomePurchaseTextualButton;
+@property (nonatomic, nweak) IBOutlet NSProgressIndicator *loadingConfigurationViewPI;
+@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *loadingScreenMinimumWidthConstraint;
+@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *loadingScreenMinimumHeightConstraint;
 
 - (void)popWelcomeAddServerView;
 - (void)popLoadingConfigurationView;

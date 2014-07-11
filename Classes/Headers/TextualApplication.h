@@ -126,7 +126,7 @@
 	@class TVCImageURLParser;
 	@class TVCImageURLoader;
 	@class TVCInputPromptDialog;
-	@class TVCListSeparatorCell;
+	@class TVCBasicTableViewSeparatorCell;
 	@class TVCLogController;
 	@class TVCLogControllerHistoricLogFile;
 	@class TVCLogControllerOperationQueue;
@@ -326,7 +326,7 @@
 	#import "TVCImageURLoader.h"
 	#import "TVCInputPromptDialog.h"
 	#import "TVCMainWindowTextView.h"
-	#import "TVCListSeparatorCell.h"
+	#import "TVCBasicTableViewSeparatorCell.h"
 	#import "TVCBasicTableView.h"
 	#import "TVCLogController.h"
 	#import "TVCLogControllerHistoricLogFile.h"
