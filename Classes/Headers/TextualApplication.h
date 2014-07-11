@@ -163,6 +163,7 @@
 	@class TVCServerListRowCell;
 	@class TVCTextFieldWithValueValidation;
 	@class TVCTextFieldWithValueValidationCell;
+	@class TVCTextFieldComboBoxWithValueValidation;
 	@class TVCTextViewIRCFormattingMenu;
 	@class TVCTextViewWithIRCFormatter;
 	@class TVCWebViewAutoScroll;

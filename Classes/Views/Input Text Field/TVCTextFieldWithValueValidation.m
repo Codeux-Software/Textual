@@ -46,15 +46,133 @@
 @implementation TVCTextFieldWithValueValidation
 
 #pragma mark -
-#pragma mark Public API
+#pragma mark Public API (Normal Text Field)
 
 - (NSString *)value
 {
+	NSString *stringValue = nil;
+	
 	if (self.stringValueUsesOnlyFirstToken) {
-		return [self firstTokenStringValue];
+		stringValue = [self firstTokenStringValue];
 	} else {
-		return [self stringValue];
+		stringValue = [self stringValue];
+		
+		if (self.stringValueIsTrimmed) {
+			stringValue = [stringValue trim];
+		}
 	}
+	
+	return stringValue;
+}
+
+- (NSString *)lowercaseValue
+{
+	return [[self value] lowercaseString];
+}
+
+- (NSString *)uppercaseValue
+{
+	return [[self value] uppercaseString];
+}
+
+- (NSInteger)integerValue
+{
+	return [[self value] integerValue];
+}
+
+- (BOOL)valueIsEmpty
+{
+	return NSObjectIsEmpty([self value]);
+}
+
+- (BOOL)valueIsValid
+{
+	return self.cachedValidValue;
+}
+
+#pragma mark -
+#pragma mark Interval Validation
+
+- (void)textDidChange:(NSNotification *)notification
+{
+	/* Validate new value. */
+	[self performValidation];
+	
+	[self informCallbackTextDidChange];
+}
+
+- (void)setStringValue:(NSString *)aString
+{
+	/* Set string value. */
+	[super setStringValue:aString];
+	
+	/* Validate new value. */
+	[self performValidation];
+	
+	[self informCallbackTextDidChange];
+}
+
+- (void)informCallbackTextDidChange
+{
+	if (self.textDidChangeCallback) {
+		if ([self.textDidChangeCallback respondsToSelector:@selector(validatedTextFieldTextDidChange:)]) {
+			[self.textDidChangeCallback performSelector:@selector(validatedTextFieldTextDidChange:) withObject:self];
+		}
+	}
+}
+
+- (void)performValidation
+{
+	if ([self valueIsEmpty] == NO) {
+		if (self.validationBlock) {
+			self.cachedValidValue = self.validationBlock([self stringValue]);
+		} else {
+			self.cachedValidValue = YES;
+		}
+	} else {
+		self.cachedValidValue = (self.stringValueIsInvalidOnEmpty == NO);
+	}
+	
+	[self setNeedsDisplay:YES];
+}
+
+@end
+
+@implementation TVCTextFieldComboBoxWithValueValidation
+
+#pragma mark -
+#pragma mark Public API (Combo Box Text Field)
+
+- (NSString *)value
+{
+	NSString *stringValue = nil;
+	
+	if (self.stringValueUsesOnlyFirstToken) {
+		stringValue = [self firstTokenStringValue];
+	} else {
+		stringValue = [self stringValue];
+		
+		if (self.stringValueIsTrimmed) {
+			stringValue = [stringValue trim];
+		}
+	}
+	
+	return stringValue;
+}
+
+- (NSString *)lowercaseValue
+{
+	return [[self value] lowercaseString];
+}
+
+- (NSString *)uppercaseValue
+{
+	return [[self value] uppercaseString];
+}
+
+- (NSInteger)integerValue
+{
+	return [[self value] integerValue];
 }
 
 - (BOOL)valueIsEmpty
@@ -122,6 +240,13 @@
 
 - (NSRect)correctedDrawingRect:(NSRect)aRect
 {
+	/* Return default rect if we are doing nothing. */
+	if ([self onlyShowStatusIfErrorOccurs]) {
+		if ([self parentValueIsValid]) {
+			return aRect;
+		}
+	}
+	
 	/* Update size. */
 	aRect.size.width -= 12;
 	
@@ -173,6 +298,13 @@
 {
 	/* Draw to super. */
 	[super drawWithFrame:cellFrame inView:controlView];
+	
+	/* Maybe not draw icon. */
+	if ([self onlyShowStatusIfErrorOccurs]) {
+		if ([self parentValueIsValid]) {
+			return; // Do not continue, we have valid value.
+		}
+	}
 	
 	/* Draw status image badge. */
 	NSImage *statusImage;
@@ -226,6 +358,16 @@
 - (BOOL)parentValueIsValid
 {
 	return [[self parentField] valueIsValid];
+}
+
+- (BOOL)onlyShowStatusIfErrorOccurs
+{
+	return [[self parentField] onlyShowStatusIfErrorOccurs];
+}
+
+- (BOOL)parentIsComboBox
+{
+	return [[self parentField] isKindOfClass:[TVCTextFieldComboBoxWithValueValidation class]];
 }
 
 @end
