@@ -2281,7 +2281,6 @@
 		case 5029: // Command: IGNORE
 		case 5073: // Command: UNIGNORE
 		{
-#warning Add back way to skip dialog.
 			BOOL isIgnoreCommand = [uppercaseCommand isEqualToString:IRCPublicCommandIndex("ignore")];
 			
 			if (NSObjectIsEmpty(uncutInput) || PointerIsEmpty(selChannel)) {
