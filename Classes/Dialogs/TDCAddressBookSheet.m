@@ -55,6 +55,7 @@
 	/* Define host field for ignore entries. */
 	[self.ignoreEntryHostmaskField setStringValueIsInvalidOnEmpty:YES];
 	[self.ignoreEntryHostmaskField setStringValueUsesOnlyFirstToken:YES];
+	
 	[self.ignoreEntryHostmaskField setTextDidChangeCallback:self];
 
 	[self.ignoreEntryHostmaskField setValidationBlock:^BOOL(NSString *currentValue) {
@@ -66,6 +67,7 @@
 	/* Define nickname field for user tracking. */
 	[self.userTrackingEntryNicknameField setStringValueIsInvalidOnEmpty:YES];
 	[self.userTrackingEntryNicknameField setStringValueUsesOnlyFirstToken:YES];
+	
 	[self.userTrackingEntryNicknameField setTextDidChangeCallback:self];
 
 	[self.userTrackingEntryNicknameField setValidationBlock:^BOOL(NSString *currentValue) {

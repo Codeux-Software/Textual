@@ -49,6 +49,27 @@
 "TDCServerSheet[1003][1]" = "iCloud Sharing Enabled";
 "TDCServerSheet[1003][2]" = "iCloud sharing will be enabled for this server on save.\n\nBy saving, Textual will override any copy of this server's configuration already stored on iCloud.";
 
+/* Server specific highlight entry things. */
+"TDCServerSheet[1004]" = "All Channels";
+"TDCServerSheet[1005]" = "Exclude";
+"TDCServerSheet[1006]" = "Match";
+
+/* Server properties navigation menu. */
+"TDCServerSheet[1007][01]" = "Channel List";
+"TDCServerSheet[1007][02]" = "Connect Commands";
+"TDCServerSheet[1007][03]" = "Encoding";
+"TDCServerSheet[1007][04]" = "Flood Control";
+"TDCServerSheet[1007][05]" = "General";
+"TDCServerSheet[1007][06]" = "Identity";
+"TDCServerSheet[1007][07]" = "Address Book";
+"TDCServerSheet[1007][08]" = "Messages";
+"TDCServerSheet[1007][09]" = "Miscellaneous";
+"TDCServerSheet[1007][10]" = "Proxy Server";
+"TDCServerSheet[1007][11]" = "SSL Certificate";
+"TDCServerSheet[1007][12]" = "Highlights";
+"TDCServerSheet[1007][13]" = "Network Socket";
+"TDCServerSheet[1007][14]" = "ZNC Bouncer";
+
 /* Address Book add item menu items. */
 "TDCServerSheet[1004]" = "Add User Ignore Entry";
 "TDCServerSheet[1005]" = "Add User Tracking Entry";
@@ -522,27 +543,6 @@
 
 /* Misc. error. */
 "BasicLanguage[1199]" = "Failed to send data to server. Not connected.";
-
-/* Server specific highlight entry things. */
-"BasicLanguage[1200]" = "All Channels";
-"BasicLanguage[1201]" = "Exclude";
-"BasicLanguage[1202]" = "Match";
-
-/* Server properties navigation menu. */
-"BasicLanguage[1203][01]" = "Channel List";
-"BasicLanguage[1203][02]" = "Connect Commands";
-"BasicLanguage[1203][03]" = "Encoding";
-"BasicLanguage[1203][04]" = "Flood Control";
-"BasicLanguage[1203][05]" = "General";
-"BasicLanguage[1203][06]" = "Identity";
-"BasicLanguage[1203][07]" = "Address Book";
-"BasicLanguage[1203][08]" = "Messages";
-"BasicLanguage[1203][09]" = "Miscellaneous";
-"BasicLanguage[1203][10]" = "Proxy Server";
-"BasicLanguage[1203][11]" = "SSL Certificate";
-"BasicLanguage[1203][12]" = "Mentions";
-"BasicLanguage[1203][13]" = "Network Socket";
-"BasicLanguage[1203][14]" = "ZNC Bouncer";
 
 /* Formatted time. */
 "BasicLanguage[1204][DAY]" = "days";

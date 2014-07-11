@@ -423,7 +423,7 @@
 			[self containsCharactersFromCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] == NO);
 }
 
-- (BOOL)isHostmaskUsername /* Ident — @private */
+- (BOOL)isHostmaskUsername
 {
 	NSString *bob = self;
 

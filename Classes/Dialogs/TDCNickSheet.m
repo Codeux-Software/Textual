@@ -54,6 +54,7 @@
 	/* Define nickname field for user tracking. */
 	[self.tnewNicknameField setStringValueIsInvalidOnEmpty:YES];
 	[self.tnewNicknameField setStringValueUsesOnlyFirstToken:YES];
+	
 	[self.tnewNicknameField setTextDidChangeCallback:self];
 	
 	[self.tnewNicknameField setValidationBlock:^BOOL(NSString *currentValue) {

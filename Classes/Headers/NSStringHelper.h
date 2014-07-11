@@ -153,6 +153,9 @@
 
 - (BOOL)isNickname;
 
+- (BOOL)isHostmaskAddress;
+- (BOOL)isHostmaskUsername;
+
 - (BOOL)isChannelName;
 - (BOOL)isChannelName:(IRCClient *)client; // Client to parse CHANTYPES from.
 
