@@ -121,8 +121,6 @@
 	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerScreenDidWake:) name:NSWorkspaceScreensDidWakeNotification object:nil];
 	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerScreenWillSleep:) name:NSWorkspaceScreensDidSleepNotification object:nil];
 	
-	[RZNotificationCenter() addObserver:self selector:@selector(systemTintChangedNotification:) name:NSControlTintDidChangeNotification object:nil];
-	
 	[RZAppleEventManager() setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
 	
 	[sharedPluginManager() loadPlugins];
@@ -163,27 +161,12 @@
 	[mainWindow() maybeToggleFullscreenAfterLaunch];
 }
 
-- (void)systemTintChangedNotification:(NSNotification *)notification;
-{
-	NSAssertReturn(self.applicationIsTerminating == NO);
-	
-	; // Do something here…
-}
-
 - (void)reloadMainWindowFrameOnScreenChange
 {
 	NSAssertReturn(self.applicationIsTerminating == NO);
 	
 	[TVCDockIcon resetCachedCount];
 	[TVCDockIcon updateDockIcon];
-}
-
-- (void)reloadUserInterfaceItems
-{
-	NSAssertReturn(self.applicationIsTerminating == NO);
-	
-	[mainWindowServerList() updateBackgroundColor];
-	[mainWindowMemberList() updateBackgroundColor];
 }
 
 - (void)resetSelectedItemState
@@ -213,16 +196,12 @@
 {
 	self.applicationIsActive = NO;
 	self.applicationIsChangingActiveState = NO;
-
-	[self reloadUserInterfaceItems];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification
 {
 	self.applicationIsActive = YES;
 	self.applicationIsChangingActiveState = NO;
-
-	[self reloadUserInterfaceItems];
 }
 
 - (BOOL)queryTerminate
@@ -393,18 +372,12 @@
 
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
-	if (self.applicationIsChangingActiveState == NO) {
-		[self reloadUserInterfaceItems];
-	}
-
 	[self resetSelectedItemState];
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification
 {
-	if (self.applicationIsChangingActiveState == NO) {
-		[self reloadUserInterfaceItems];
-	}
+	; // Nothing to do here.
 }
 
 @end
