@@ -549,7 +549,7 @@
 
 + (NSFont *)userMarkBadgeFont
 {
-	return [NSFont systemFontOfSize:12.0];
+	return [NSFont boldSystemFontOfSize:13.5];
 }
 
 + (NSInteger)userMarkBadgeBottomMargin
