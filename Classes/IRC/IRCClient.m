@@ -4726,7 +4726,7 @@
 	}
 
 	/* Continue. */
-	NSString *text = BLS(1153, sendern, [m senderUsername], [m senderNickname]);
+	NSString *text = BLS(1153, sendern, [m senderUsername], [m senderAddress]);
 
 	if (NSObjectIsNotEmpty(comment)) {
 		/* Crude regular expression for matching netsplits. */
