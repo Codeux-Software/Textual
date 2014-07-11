@@ -270,8 +270,6 @@
 		4C46F4CA1943A654004CA8BA /* ServerCellSelection_Inverted.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F4221943A654004CA8BA /* ServerCellSelection_Inverted.tif */; };
 		4C46F4CB1943A654004CA8BA /* ServerCellSelection_Inverted@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F4231943A654004CA8BA /* ServerCellSelection_Inverted@2x.tif */; };
 		4C46F4CC1943A654004CA8BA /* ServerCellSelection_Inverted@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F4231943A654004CA8BA /* ServerCellSelection_Inverted@2x.tif */; };
-		4C46F4DE1943A6A1004CA8BA /* applicationIconMavericks.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F4DD1943A6A1004CA8BA /* applicationIconMavericks.icns */; };
-		4C46F4DF1943A6A1004CA8BA /* applicationIconMavericks.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F4DD1943A6A1004CA8BA /* applicationIconMavericks.icns */; };
 		4C46F4E11943A6B9004CA8BA /* applicationIconYosemite.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F4E01943A6B9004CA8BA /* applicationIconYosemite.icns */; };
 		4C46F4E21943A6B9004CA8BA /* applicationIconYosemite.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F4E01943A6B9004CA8BA /* applicationIconYosemite.icns */; };
 		4C49494C18735BC400B7F00A /* TDCFileTransferDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C49494818735BC400B7F00A /* TDCFileTransferDialog.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1146,7 +1144,6 @@
 		4C46F4211943A654004CA8BA /* DarkServerListViewSelectedPrivateMessageUser.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = DarkServerListViewSelectedPrivateMessageUser.tif; sourceTree = "<group>"; };
 		4C46F4221943A654004CA8BA /* ServerCellSelection_Inverted.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ServerCellSelection_Inverted.tif; sourceTree = "<group>"; };
 		4C46F4231943A654004CA8BA /* ServerCellSelection_Inverted@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "ServerCellSelection_Inverted@2x.tif"; sourceTree = "<group>"; };
-		4C46F4DD1943A6A1004CA8BA /* applicationIconMavericks.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = applicationIconMavericks.icns; sourceTree = "<group>"; };
 		4C46F4E01943A6B9004CA8BA /* applicationIconYosemite.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = applicationIconYosemite.icns; sourceTree = "<group>"; };
 		4C49494818735BC400B7F00A /* TDCFileTransferDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialog.h; sourceTree = "<group>"; };
 		4C49494918735BC400B7F00A /* TDCFileTransferDialogTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogTableCell.h; sourceTree = "<group>"; };
@@ -1819,18 +1816,9 @@
 			isa = PBXGroup;
 			children = (
 				4C46F3C31943A654004CA8BA /* birthdayIcon.icns */,
-				4C46F3C41943A654004CA8BA /* Mavericks */,
 				4C46F3CA1943A654004CA8BA /* Yosemite */,
 			);
 			path = Application;
-			sourceTree = "<group>";
-		};
-		4C46F3C41943A654004CA8BA /* Mavericks */ = {
-			isa = PBXGroup;
-			children = (
-				4C46F4DD1943A6A1004CA8BA /* applicationIconMavericks.icns */,
-			);
-			path = Mavericks;
 			sourceTree = "<group>";
 		};
 		4C46F3CA1943A654004CA8BA /* Yosemite */ = {
@@ -1914,19 +1902,10 @@
 		4C46F40F1943A654004CA8BA /* Server List */ = {
 			isa = PBXGroup;
 			children = (
-				4C46F4101943A654004CA8BA /* Aqua */,
 				4C46F4191943A654004CA8BA /* Black */,
 				4CB480951966ED3B00E0782E /* Glass */,
-				4C46F4241943A654004CA8BA /* Graphite */,
 			);
 			path = "Server List";
-			sourceTree = "<group>";
-		};
-		4C46F4101943A654004CA8BA /* Aqua */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Aqua;
 			sourceTree = "<group>";
 		};
 		4C46F4191943A654004CA8BA /* Black */ = {
@@ -1943,13 +1922,6 @@
 				4C46F4231943A654004CA8BA /* ServerCellSelection_Inverted@2x.tif */,
 			);
 			path = Black;
-			sourceTree = "<group>";
-		};
-		4C46F4241943A654004CA8BA /* Graphite */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Graphite;
 			sourceTree = "<group>";
 		};
 		4C51B8B7196ACDBB00003A87 /* Localizations */ = {
@@ -3279,7 +3251,6 @@
 				4CC164BC1943B17100B0D4B6 /* DIRedBadgeLeftMavericks.png in Resources */,
 				4C46F4591943A654004CA8BA /* FormattingColor_1.png in Resources */,
 				4C46F4711943A654004CA8BA /* FormattingColor_7.png in Resources */,
-				4C46F4DE1943A6A1004CA8BA /* applicationIconMavericks.icns in Resources */,
 				4C46F4671943A654004CA8BA /* FormattingColor_2.png in Resources */,
 				4C8AF730158E9B330026668C /* TDCListDialog.xib in Resources */,
 				4CB480981966ED3B00E0782E /* VibrantLightServerListViewPrivateMessageUserIconActive.tif in Resources */,
@@ -3376,7 +3347,6 @@
 				4CC164BD1943B17100B0D4B6 /* DIRedBadgeLeftMavericks.png in Resources */,
 				4C46F45A1943A654004CA8BA /* FormattingColor_1.png in Resources */,
 				4C46F4721943A654004CA8BA /* FormattingColor_7.png in Resources */,
-				4C46F4DF1943A6A1004CA8BA /* applicationIconMavericks.icns in Resources */,
 				4C46F4681943A654004CA8BA /* FormattingColor_2.png in Resources */,
 				4C5BA39616F1302F00A96CA2 /* TDCListDialog.xib in Resources */,
 				4CB480991966ED3B00E0782E /* VibrantLightServerListViewPrivateMessageUserIconActive.tif in Resources */,
