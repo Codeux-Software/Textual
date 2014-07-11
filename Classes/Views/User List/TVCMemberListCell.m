@@ -231,7 +231,7 @@
 	IRCUser *assosicatedUser = [parentCell memberPointer];
 	
 	NSString *mcstring = [assosicatedUser mark];
-	
+
 	/* Build the drawing frame. */
 	NSRect boxFrame = NSMakeRect([userInterfaceObjects userMarkBadgeLeftMargin],
 								 [userInterfaceObjects userMarkBadgeBottomMargin],
@@ -297,7 +297,28 @@
 			[mcstring isEqualToString:@"~"] ||
 			[mcstring isEqualToString:@"x"])
 		{
-			badgeTextPoint.y -= 1;
+			badgeTextPoint.y -= 1.5;
+		}
+		else if ([mcstring isEqualToString:@"@"] ||
+				 [mcstring isEqualToString:@"!"] ||
+				 [mcstring isEqualToString:@"%"] ||
+				 [mcstring isEqualToString:@"&"] ||
+				 [mcstring isEqualToString:@"#"] ||
+				 [mcstring isEqualToString:@"?"])
+		{
+			badgeTextPoint.y -= 1.0;
+		}
+		else if ([mcstring isEqualToString:@"^"])
+		{
+			badgeTextPoint.y += 1;
+		}
+		else if ([mcstring isEqualToString:@"*"])
+		{
+			badgeTextPoint.y += 2;
+		}
+		else if ([mcstring isEqualToString:@"$"])
+		{
+			badgeTextPoint.y -= 0.5;
 		}
 		
 		if ([mainWindow() runningInHighResolutionMode]) {
