@@ -6277,6 +6277,8 @@
 
 			for (__strong NSString *nickname in items) {
 				/* Create shell user. */
+				NSObjectIsEmptyAssertLoopContinue(nickname); // Some networks append empty spaces…
+				
 				IRCUser *member = [IRCUser newUserOnClient:self withNickname:nil];
 
 				NSInteger i;
