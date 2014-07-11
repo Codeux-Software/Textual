@@ -43,6 +43,12 @@
 @property (nonatomic, assign) BOOL cachedValidValue;
 @end
 
+@interface TVCTextFieldComboBoxWithValueValidation ()
+/* Maintain cached value so that the drawing does not call
+ the validaton block every time that it is called. */
+@property (nonatomic, assign) BOOL cachedValidValue;
+@end
+
 @implementation TVCTextFieldWithValueValidation
 
 #pragma mark -
