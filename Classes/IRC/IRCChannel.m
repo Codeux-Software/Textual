@@ -40,7 +40,7 @@
 
 #include <objc/message.h>
 
-#define _treeUserlistHeight					18.0
+#define _treeUserlistHeight					20.0
 
 #define _cancelOnNotSelectedChannel			if (self.isChannel == NO || self.isSelectedChannel == NO) {			\
 												return;															\

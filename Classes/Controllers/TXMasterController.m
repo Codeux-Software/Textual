@@ -167,9 +167,7 @@
 {
 	NSAssertReturn(self.applicationIsTerminating == NO);
 	
-	[mainWindowMemberList() reloadAllUserInterfaceElements];
-	
-	[mainWindowServerList() reloadAllDrawings];
+	; // Do something here…
 }
 
 - (void)reloadMainWindowFrameOnScreenChange
@@ -178,10 +176,6 @@
 	
 	[TVCDockIcon resetCachedCount];
 	[TVCDockIcon updateDockIcon];
-	
-	[mainWindowMemberList() reloadAllUserInterfaceElements];
-		
-	[mainWindowServerList() reloadAllDrawings];
 }
 
 - (void)reloadUserInterfaceItems
@@ -189,10 +183,7 @@
 	NSAssertReturn(self.applicationIsTerminating == NO);
 	
 	[mainWindowServerList() updateBackgroundColor];
-	[mainWindowServerList() reloadAllDrawings];
-
 	[mainWindowMemberList() updateBackgroundColor];
-	[mainWindowMemberList() reloadAllDrawings];
 }
 
 - (void)resetSelectedItemState

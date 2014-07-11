@@ -49,3 +49,7 @@
 
 @interface TVCMemberListRowCell : NSTableRowView
 @end
+
+@interface TVCMemberLisCellTextFieldInterior : NSTextFieldCell
+@property (nonatomic, nweak) IBOutlet TVCMemberListCell *parentCell;
+@end

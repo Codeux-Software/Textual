@@ -44,14 +44,29 @@
 
 - (void)updateDrawing
 {
-	/* This ugly code is only temporary while refacotring is being worked on. */
-	
-	NSString *mark = [self.memberPointer mark];
-
-	if (mark) {
-		[self.textField setStringValue:[mark stringByAppendingString:[self.memberPointer nickname]]];
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		[self updateDrawingForYosemite:[mainWindowMemberList() userInterfaceObjects]];
 	} else {
-		[self.textField setStringValue:[self.memberPointer nickname]];
+		;
+	}
+}
+
+- (void)updateDrawingForYosemite:(id)interfaceObject
+{
+	/* Define context. */
+	IRCUser *associatedUser = [self memberPointer];
+	
+	/* Maybe update text field value. */
+	NSTextField *textField = [self textField];
+	
+	NSString *stringValue = [textField stringValue];
+	
+	NSString *labelValue = [associatedUser nickname];
+	
+	if ([stringValue isEqualTo:labelValue] == NO) {
+		[textField setStringValue:labelValue];
+	} else {
+		[textField setNeedsDisplay:YES];
 	}
 }
 
@@ -63,31 +78,33 @@
     /* Begin popover. */
 	TVCMemberListUserInfoPopover *userInfoPopover = [mainWindowMemberList() memberListUserInfoPopover];
 
-    /* What permissions does the user have? */
+	/* What permissions does the user have? */
+	IRCUser *associatedUser = [self memberPointer];
+	
     NSString *permissions = @"BasicLanguage[1206]";
 
-	if ([self.memberPointer q]) {
+	if ([associatedUser q]) {
         permissions = @"BasicLanguage[1211]";
-    } else if ([self.memberPointer a]) {
+    } else if ([associatedUser a]) {
         permissions = @"BasicLanguage[1210]";
-    } else if ([self.memberPointer o]) {
+    } else if ([associatedUser o]) {
         permissions = @"BasicLanguage[1209]";
-    } else if ([self.memberPointer h]) {
+    } else if ([associatedUser h]) {
         permissions = @"BasicLanguage[1208]";
-    } else if ([self.memberPointer v]) {
+    } else if ([associatedUser v]) {
         permissions = @"BasicLanguage[1207]";
     }
 
     permissions = TXTLS(permissions);
 
-    if ([self.memberPointer isCop]) {
+    if ([associatedUser isCop]) {
         permissions = [permissions stringByAppendingString:BLS(1212)];
     }
 
     /* User info. */
-	NSString *nickname = [self.memberPointer nickname];
-	NSString *username = [self.memberPointer username];
-	NSString *address = [self.memberPointer address];
+	NSString *nickname = [associatedUser nickname];
+	NSString *username = [associatedUser username];
+	NSString *address = [associatedUser address];
 
     if (NSObjectIsEmpty(username)) {
         username = BLS(1215);
@@ -117,7 +134,7 @@
 	[[userInfoPopover addressField] setAttributedStringValue:addressAttr];
 	
 	/* Update away status. */
-	if ([self.memberPointer isAway]) {
+	if ([associatedUser isAway]) {
 		[[userInfoPopover awayStatusField] setStringValue:BLS(1213)];
 	} else {
 		[[userInfoPopover awayStatusField] setStringValue:BLS(1214)];
@@ -132,20 +149,22 @@
 
 - (NSInteger)rowIndex
 {
-	return [mainWindowMemberList() rowForItem:self.memberPointer];
+	return [mainWindowMemberList() rowForItem:[self memberPointer]];
 }
 
 - (NSDictionary *)drawingContext
 {
 	NSInteger rowIndex = [self rowIndex];
-
+	
 	return @{
-		@"isInverted"	: @([TPCPreferences invertSidebarColors]),
-		@"isRetina"		: @([mainWindow() runningInHighResolutionMode]),
-		@"isKeyWindow"	: @([mainWindow() isInactive] == NO),
-		@"isSelected"	: @([mainWindowServerList() isRowSelected:rowIndex]),
-		@"isGraphite"	: @([NSColor currentControlTint] == NSGraphiteControlTint)
-	};
+			 @"rowIndex"			: @(rowIndex),
+			 @"isInverted"			: @([TPCPreferences invertSidebarColors]),
+			 @"isRetina"			: @([mainWindow() runningInHighResolutionMode]),
+			 @"isInactiveWindow"	: @([mainWindow() isInactive] == NO),
+			 @"isKeyWindow"			: @([mainWindow() isKeyWindow]),
+			 @"isSelected"			: @([mainWindowMemberList() isRowSelected:rowIndex]),
+			 @"isGraphite"			: @([NSColor currentControlTint] == NSGraphiteControlTint)
+		};
 }
 
 @end
@@ -158,6 +177,190 @@
 - (BOOL)isEmphasized
 {
 	return YES;
+}
+
+@end
+
+@implementation TVCMemberLisCellTextFieldInterior
+
+- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
+{
+	TVCMemberListCell *parentCell = [self parentCell];
+	
+	NSDictionary *drawingContext = [parentCell drawingContext];
+	
+	[self drawModeBadge:[drawingContext boolForKey:@"isSelected"]];
+	
+	id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
+	
+	cellFrame.origin.x = [userInterfaceObjects textCellLeftMargin];
+	cellFrame.origin.y = [userInterfaceObjects textCellBottomMargin];
+	
+	[super drawWithFrame:cellFrame inView:controlView];
+}
+
+#pragma mark -
+#pragma mark Badge Drawing
+
+- (NSAttributedString *)modeBadgeText:(NSString *)badgeString isSelected:(BOOL)selected
+{
+	id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
+	
+	NSColor *textColor = nil;
+	
+	if (selected) {
+		textColor = [userInterfaceObjects userMarkBadgeSelectedTextColor];
+	} else {
+		textColor = [userInterfaceObjects userMarkBadgeNormalTextColor];
+	}
+	
+	NSDictionary *attributes = @{NSForegroundColorAttributeName : textColor, NSFontAttributeName : [userInterfaceObjects userMarkBadgeFont]};
+	
+	NSAttributedString *mcstring = [NSAttributedString stringWithBase:badgeString attributes:attributes];
+	
+	return mcstring;
+}
+
+- (void)drawModeBadge:(BOOL)selected
+{
+	/* Define context information. */
+	id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
+	
+	TVCMemberListCell *parentCell = [self parentCell];
+	
+	IRCUser *assosicatedUser = [parentCell memberPointer];
+	
+	NSString *mcstring = [assosicatedUser mark];
+	
+	/* Build the drawing frame. */
+	NSRect boxFrame = NSMakeRect([userInterfaceObjects userMarkBadgeLeftMargin],
+								 [userInterfaceObjects userMarkBadgeBottomMargin],
+								 [userInterfaceObjects userMarkBadgeWidth],
+								 [userInterfaceObjects userMarkBadgeHeight]);
+
+	/* Decide the background color. */
+	NSColor *backgroundColor;
+	
+	BOOL favorIRCop = ([assosicatedUser InspIRCd_y_lower] ||
+					   [assosicatedUser InspIRCd_y_upper]);
+	
+	if (favorIRCop == NO) {
+		favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
+	}
+	
+	if (selected) {
+		backgroundColor = [userInterfaceObjects userMarkBadgeSelectedBackgroundColor];
+	} else if ([assosicatedUser isCop] && favorIRCop) {
+		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_Y];
+	} else if ([assosicatedUser q]) {
+		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_Q];
+	} else if ([assosicatedUser a]) {
+		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_A];
+	} else if ([assosicatedUser o]) {
+		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_O];
+	} else if ([assosicatedUser h]) {
+		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_H];
+	} else if ([assosicatedUser v]) {
+		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_V];
+	} else {
+		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor];
+	}
+	
+	/* Maybe set a default mark. */
+	if (mcstring == nil) {
+		if ([RZUserDefaults() boolForKey:@"DisplayUserListNoModeSymbol"]) {
+			mcstring = @"x";
+		} else {
+			mcstring = NSStringEmptyPlaceholder;
+		}
+	}
+	
+	/* Draw the background of the badge. */
+	NSBezierPath *badgePath = [NSBezierPath bezierPathWithRoundedRect:boxFrame xRadius:4.0 yRadius:4.0];
+	
+	[backgroundColor set];
+	
+	[badgePath fill];
+	
+	/* Begin building the actual mode string. */
+	if ([mcstring length] > 0) {
+		NSAttributedString *modeString = [self modeBadgeText:mcstring isSelected:selected];
+		
+		NSSize badgeTextSize = [modeString size];
+		
+		/* Calculate frame of text. */
+		NSPoint badgeTextPoint = NSMakePoint((NSMidX(boxFrame) - (badgeTextSize.width / 2.0)),
+											((NSMidY(boxFrame) - (badgeTextSize.height / 2.0))));
+		
+		/* Small frame corrections. */
+		if ([mcstring isEqualToString:@"+"] ||
+			[mcstring isEqualToString:@"~"] ||
+			[mcstring isEqualToString:@"x"])
+		{
+			badgeTextPoint.y -= 1;
+		}
+		
+		if ([mainWindow() runningInHighResolutionMode]) {
+			badgeTextPoint.y -= 1;
+		}
+		
+		/* Draw mode string. */
+		[modeString drawAtPoint:badgeTextPoint];
+	}
+}
+
+#pragma mark -
+#pragma mark Interior Drawing
+
+- (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
+{
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		[self drawInteriorWithFrameForYosemite:cellFrame withUserInterfaceObject:[mainWindowMemberList() userInterfaceObjects]];
+	} else {
+		;
+	}
+}
+
+- (void)drawInteriorWithFrameForYosemite:(NSRect)cellFrame withUserInterfaceObject:(id)interfaceObject
+{
+	/* Gather basic context information. */
+	TVCMemberListCell *parentCell = [self parentCell];
+	
+	NSDictionary *drawingContext = [parentCell drawingContext];
+	
+	BOOL isWindowInactive = [drawingContext boolForKey:@"isInactiveWindow"];
+	BOOL isKeyWindow = [drawingContext boolForKey:@"isKeyWindow"];
+	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
+	
+	IRCUser *assosicatedUser = [parentCell memberPointer];
+	
+	/* Update attributed string. */
+	NSAttributedString *stringValue = [self attributedStringValue];
+	
+	NSMutableAttributedString *mutableStringValue = [stringValue mutableCopy];
+	
+	NSRange stringLengthRange = NSMakeRange(0, [mutableStringValue length]);
+	
+	[mutableStringValue beginEditing];
+	
+	if (isSelected == NO) {
+		if ([assosicatedUser isAway] == NO) {
+			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject normalCellTextColor] range:stringLengthRange];
+		} else {
+			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject awayUserCellTextColor] range:stringLengthRange];
+		}
+	} else {
+		if (isKeyWindow || isWindowInactive) {
+			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject selectedCellTextColorForActiveWindow] range:stringLengthRange];
+		} else {
+			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject selectedCellTextColorForInactiveWindow] range:stringLengthRange];
+		}
+	}
+	
+	[mutableStringValue endEditing];
+	
+	/* Draw new attributed string. */
+	[mutableStringValue drawInRect:cellFrame];
 }
 
 @end

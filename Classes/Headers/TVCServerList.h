@@ -59,7 +59,7 @@
 
 - (void)updateBackgroundColor;
 
-- (Class)userInterfaceObjects;
+- (id)userInterfaceObjects;
 @end
 
 @interface TVCServerListMavericksUserInterface : NSObject

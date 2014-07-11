@@ -56,7 +56,7 @@
 	}
 }
 
-- (void)updateDrawingForYosemite:(NSRect)cellFrame withUserInterfaceObject:(Class)interfaceObject
+- (void)updateDrawingForYosemite:(NSRect)cellFrame withUserInterfaceObject:(id)interfaceObject
 {
 	/* Define context. */
 	NSDictionary *drawingContext = [self drawingContext];
@@ -183,7 +183,7 @@
 	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
 	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
 	
-	Class interfaceObjects = [mainWindowServerList() userInterfaceObjects];
+	id interfaceObjects = [mainWindowServerList() userInterfaceObjects];
 
 	/* If we are a client, then there will be no badged. */
 	if (isGroupItem == NO) {
@@ -237,7 +237,7 @@
 {
 	NSString *messageCountString = TXFormattedNumber(messageCount);
 	
-	Class interfaceObjects = [mainWindowServerList() userInterfaceObjects];
+	id interfaceObjects = [mainWindowServerList() userInterfaceObjects];
 	
 	NSColor *textColor = nil;
 	
@@ -256,7 +256,7 @@
 
 - (NSRect)messageCountBadgeRect:(NSRect)cellFrame withText:(NSAttributedString *)mcstring
 {
-	Class interfaceObjects = [mainWindowServerList() userInterfaceObjects];
+	id interfaceObjects = [mainWindowServerList() userInterfaceObjects];
 	
 	NSInteger messageCountWidth = (mcstring.size.width + ([interfaceObjects messageCountBadgePadding] * 2));
 	
@@ -280,7 +280,7 @@
 	/* Begin drawing badge. */
 	NSBezierPath *badgePath = nil;
 	
-	Class interfaceObjects = [mainWindowServerList() userInterfaceObjects];
+	id interfaceObjects = [mainWindowServerList() userInterfaceObjects];
 
 	/* Draw the background color. */
 	NSColor *backgroundColor = nil;
@@ -330,10 +330,12 @@
 	}
 }
 
-- (void)drawInteriorWithFrameForYosemite:(NSRect)cellFrame withUserInterfaceObject:(Class)interfaceObject
+- (void)drawInteriorWithFrameForYosemite:(NSRect)cellFrame withUserInterfaceObject:(id)interfaceObject
 {
 	/* Gather basic context information. */
-	NSDictionary *drawingContext = [self.parentCell drawingContext];
+	TVCServerListCell *parentCell = [self parentCell];
+	
+	NSDictionary *drawingContext = [parentCell drawingContext];
 	
 	BOOL isWindowInactive = [drawingContext boolForKey:@"isInactiveWindow"];
 	BOOL isKeyWindow = [drawingContext boolForKey:@"isKeyWindow"];
@@ -344,7 +346,7 @@
 	BOOL isHighlight = NO;
 	BOOL isErroneous = NO;
 	
-	IRCTreeItem *rawPointer = [self.parentCell cellItem];
+	IRCTreeItem *rawPointer = [parentCell cellItem];
 	
 	/* Gather channel specific context information. */
 	IRCChannel *channelPointer = nil;
