@@ -519,7 +519,7 @@
 
 + (NSColor *)awayUserCellTextColor
 {
-	return [NSColor colorWithCalibratedRed:0.0 green:0.0 blue:0.0 alpha:0.3];
+	return [NSColor colorWithCalibratedRed:0.0 green:0.0 blue:0.0 alpha:0.5];
 }
 
 + (NSColor *)selectedCellTextColorForActiveWindow
