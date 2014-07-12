@@ -834,9 +834,6 @@
 
 	[self onChangedStyle:nil];
 
-	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListAction];
-	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
-
 	// ---- //
 
 	NSMutableString *sf = [NSMutableString string];
@@ -975,16 +972,14 @@
 
 - (void)onChangedSidebarColorInversion:(id)sender
 {
-	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListAction];
-	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
+	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMainWindowAppearanceAction];
 
 	[worldController() executeScriptCommandOnAllViews:@"sidebarInversionPreferenceChanged" arguments:@[] onQueue:NO];
 }
 
 - (void)onChangedStyle:(id)sender
 {
-  //[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction]; // Text direction will reload it too.
-	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadTextDirectionAction];
+	[TPCPreferences performReloadActionForActionType:(TPCPreferencesKeyReloadStyleWithTableViewsAction | TPCPreferencesKeyReloadTextDirectionAction)];
 }
 
 - (void)onChangedMainWindowSegmentedController:(id)sender
@@ -995,7 +990,6 @@
 - (void)onChangedUserListModeColor:(id)sender
 {
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListUserBadgesAction];
-	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
 }
 
 - (void)onChangedMainInputTextFieldFontSize:(id)sender

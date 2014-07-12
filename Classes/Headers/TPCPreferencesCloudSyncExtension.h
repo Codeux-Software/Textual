@@ -37,24 +37,24 @@
 
 #import "TextualApplication.h"
 
-typedef enum TPCPreferencesKeyReloadAction : NSInteger {
-	TPCPreferencesKeyReloadDockIconBadgesAction,
-	TPCPreferencesKeyReloadHighlightKeywordsAction,
-	TPCPreferencesKeyReloadHighlightLoggingAction,
-	TPCPreferencesKeyReloadInputHistoryScopeAction,
-	TPCPreferencesKeyReloadMainWindowAppearanceAction,
-	TPCPreferencesKeyReloadMainWindowTransparencyLevelAction,
-	TPCPreferencesKeyReloadMemberListAction,
-	TPCPreferencesKeyReloadMemberListSortOrderAction,
-	TPCPreferencesKeyReloadMemberListUserBadgesAction,
-	TPCPreferencesKeyReloadPreferencesChangedAction,
-	TPCPreferencesKeyReloadServerListAction,
-	TPCPreferencesKeyReloadStyleAction,
-	TPCPreferencesKeyReloadStyleWithTableViewsAction,
-	TPCPreferencesKeyReloadTextDirectionAction,
-	TPCPreferencesKeyReloadTextFieldFontSizeAction,
-	TPCPreferencesKeyReloadTextFieldSegmentedControllerOriginAction
-} TPCPreferencesKeyReloadAction;
+typedef enum TPCPreferencesKeyReloadActionMask : NSInteger {
+	TPCPreferencesKeyReloadDockIconBadgesAction							= 1 << 0,
+	TPCPreferencesKeyReloadHighlightKeywordsAction						= 1 << 1,
+	TPCPreferencesKeyReloadHighlightLoggingAction						= 1 << 2,
+	TPCPreferencesKeyReloadInputHistoryScopeAction						= 1 << 3,
+    TPCPreferencesKeyReloadMainWindowAppearanceAction					= 1 << 4,  // Redraws all window elements including text field, lists, and center view to match appearance.
+	TPCPreferencesKeyReloadMainWindowTransparencyLevelAction			= 1 << 5,
+	TPCPreferencesKeyReloadMemberListAction								= 1 << 6, // Redraws apperance of member list and associated views. Usually unnecessary to call directly. Use window appearance instead.
+	TPCPreferencesKeyReloadMemberListSortOrderAction					= 1 << 7,
+	TPCPreferencesKeyReloadMemberListUserBadgesAction					= 1 << 8, // Redraws all items in member list and does not update the actual appearance of the member list.
+	TPCPreferencesKeyReloadPreferencesChangedAction						= 1 << 9, // Invokes -preferencesChanged on all views from top, down.
+	TPCPreferencesKeyReloadServerListAction								= 1 << 10, // Redraws appearance of server list and associated views. Usually unncessary to call directly. Use window appearance instead.
+	TPCPreferencesKeyReloadStyleAction									= 1 << 11, // Reloads the style without reloading window appearance.
+	TPCPreferencesKeyReloadStyleWithTableViewsAction					= 1 << 12, // Reloads the style as well as the window appearance.
+	TPCPreferencesKeyReloadTextDirectionAction							= 1 << 13,
+	TPCPreferencesKeyReloadTextFieldFontSizeAction						= 1 << 14,
+	TPCPreferencesKeyReloadTextFieldSegmentedControllerOriginAction		= 1 << 15
+} TPCPreferencesKeyReloadActionMask;
 
 @interface TPCPreferences (TPCPreferencesCloudSyncExtension)
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
@@ -65,5 +65,5 @@ typedef enum TPCPreferencesKeyReloadAction : NSInteger {
 + (BOOL)performValidationForKeyValues:(BOOL)duringInitialization;
 
 + (void)performReloadActionForKeyValues:(NSArray *)prefKeys;
-+ (void)performReloadActionForActionType:(TPCPreferencesKeyReloadAction)reloadAction;
++ (void)performReloadActionForActionType:(TPCPreferencesKeyReloadActionMask)reloadAction;
 @end
