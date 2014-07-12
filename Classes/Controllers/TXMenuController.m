@@ -2676,8 +2676,8 @@
 		[sharedGrowlController() setAreNotificationSoundsDisabled:NO];
 	}
 	
-	[self.muteNotificationsFileMenuItem setState:state];
-	[self.muteNotificationsDockMenuItem setState:state];
+	[self.muteNotificationsSoundsDockMenuItem setState:state];
+	[self.muteNotificationsSoundsFileMenuItem setState:state];
 }
 
 - (void)toggleMuteOnNotificationSounds:(id)sender
