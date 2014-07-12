@@ -682,7 +682,7 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 
 + (NSColor *)messageCountNormalBadgeBackgroundColorForActiveWindow
 {
-	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
 }
 
 + (NSColor *)messageCountNormalBadgeBackgroundColorForInactiveWindow
