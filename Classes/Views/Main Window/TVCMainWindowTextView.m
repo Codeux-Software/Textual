@@ -39,8 +39,10 @@
 
 #define _WindowContentBorderTotalPadding		14.0
 
-#define _WindowSegmentedControllerDefaultWidth	150.0
-#define _WindowSegmentedControllerLeadingEdge	10.0
+#define _WindowSegmentedControllerDefaultWidth			150.0
+
+#define _WindowSegmentedControllerLeadingVisibleEdge	10.0
+#define _WindowSegmentedControllerLeadingHiddenEdge		5.0
 
 #define _WindowContentViewMinimumHeightConstraint		35.0
 
@@ -158,16 +160,16 @@
 	 be removed when it is hidden from view. */
 	if ([TPCPreferences hideMainWindowSegmentedController]) {
 		[self.segmentedControllerWidthConstraint setConstant:0];
-		[self.segmentedControllerLeadingConstraint setConstant:0];
+		[self.segmentedControllerLeadingConstraint setConstant:_WindowSegmentedControllerLeadingHiddenEdge];
 	} else {
 		[self.segmentedControllerWidthConstraint setConstant:_WindowSegmentedControllerDefaultWidth];
-		[self.segmentedControllerLeadingConstraint setConstant:_WindowSegmentedControllerLeadingEdge];
+		[self.segmentedControllerLeadingConstraint setConstant:_WindowSegmentedControllerLeadingVisibleEdge];
 	}
 	
 	/* There seems to be a slight delay while the constraints are updated
 	 so we set a very small timer to resize the text field. */
 	if (resetSize) {
-		[self performSelector:@selector(resetTextFieldCellSize:) withObject:@(YES) afterDelay:0.1];
+		[self performSelector:@selector(resetTextFieldCellSize:) withObject:@(YES) afterDelay:1.0];
 	}
 }
 
