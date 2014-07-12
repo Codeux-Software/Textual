@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6185.7" systemVersion="14A283o" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment version="101000" defaultVersion="1070" identifier="macosx"/>
+        <deployment version="101000" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.7"/>
     </dependencies>
@@ -352,7 +352,7 @@ There are no other limits. What you see, is what you get.</string>
                                         <segment toolTip="Manage Selection" image="NSActionTemplate" width="48" tag="1">
                                             <nil key="label"/>
                                         </segment>
-                                        <segment toolTip="Open Address Book" image="F6F0DD1E-3FE8-41BB-8610-A7CFAF356B90" width="46" tag="2">
+                                        <segment toolTip="Open Address Book" image="5FA95FF0-B6C4-4DF6-A56C-83928EF8837B" width="46" tag="2">
                                             <nil key="label"/>
                                         </segment>
                                     </segments>
@@ -1659,7 +1659,7 @@ There are no other limits. What you see, is what you get.</string>
         </customObject>
     </objects>
     <resources>
-        <image name="F6F0DD1E-3FE8-41BB-8610-A7CFAF356B90" width="20" height="18">
+        <image name="5FA95FF0-B6C4-4DF6-A56C-83928EF8837B" width="20" height="18">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGS0xYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QEAcI
 ExgdHicoKS00OTw/RUhVJG51bGzVCQoLDA0ODxARElYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVwc1xO

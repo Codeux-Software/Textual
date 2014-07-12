@@ -193,6 +193,8 @@
 
 - (void)populateNavgiationChannelList;
 
+- (IBAction)toggleMainWindowAppearance:(id)sender;
+
 - (IBAction)toggleDeveloperMode:(id)sender;
 - (IBAction)resetDoNotAskMePopupWarnings:(id)sender;
 - (IBAction)openDefaultIRCClientDialog:(id)sender;

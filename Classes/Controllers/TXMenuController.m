@@ -2717,4 +2717,22 @@
 	[[mainWindow() contentSplitView] toggleMemberListVisbility];
 }
 
+#pragma mark -
+#pragma mark Appearance Toggle
+
+- (void)toggleMainWindowAppearance:(id)sender
+{
+	if ([TPCPreferences invertSidebarColors]) {
+		[RZUserDefaults() setBool:NO forKey:@"InvertSidebarColors"];
+		
+		[sender setState:NSOffState];
+	} else {
+		[RZUserDefaults() setBool:YES forKey:@"InvertSidebarColors"];
+		
+		[sender setState:NSOnState];
+	}
+	
+	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMainWindowAppearanceAction];
+}
+
 @end
