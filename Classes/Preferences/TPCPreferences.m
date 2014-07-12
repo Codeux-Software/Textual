@@ -952,8 +952,8 @@ static NSMutableArray *excludeKeywords = nil;
 
 	[RZUserDefaults() registerDefaults:d];
 
-	[RZUserDefaults() addObserver:(id)self forKeyPath:@"Highlight List -> Primary Matches"  options:NSKeyValueObservingOptionNew context:NULL];
-	[RZUserDefaults() addObserver:(id)self forKeyPath:@"Highlight List -> Excluded Matches" options:NSKeyValueObservingOptionNew context:NULL];
+	[RZUserDefaultsValueProxy() addObserver:(id)self forKeyPath:@"Highlight List -> Primary Matches"  options:NSKeyValueObservingOptionNew context:NULL];
+	[RZUserDefaultsValueProxy() addObserver:(id)self forKeyPath:@"Highlight List -> Excluded Matches" options:NSKeyValueObservingOptionNew context:NULL];
 
 	[TPCPreferences loadMatchKeywords];
 	[TPCPreferences loadExcludeKeywords];
