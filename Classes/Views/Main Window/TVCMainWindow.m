@@ -107,10 +107,7 @@
 		
 		[self setupTree];
 		
-		[self.memberList updateBackgroundColor];
-		[self.serverList updateBackgroundColor];
-		
-		[self.inputTextField updateBackgroundColor];
+		[self updateBackgroundColor];
 		
 		[self.memberList setTarget:menuController()];
 		[self.memberList setDoubleAction:@selector(memberInMemberListDoubleClicked:)];
@@ -133,6 +130,24 @@
 	if ([self isInFullscreenMode] == NO) {
 		[self toggleFullScreen:nil];
 	}
+}
+
+- (void)updateBackgroundColor
+{
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		if ([TPCPreferences invertSidebarColors]) {
+			[self.channelViewBox setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
+		} else {
+			[self.channelViewBox setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
+		}
+	}
+	
+	[self.memberList updateBackgroundColor];
+	[self.serverList updateBackgroundColor];
+	
+	[self.inputTextField updateBackgroundColor];
+	
+	[self.contentView setNeedsDisplay:YES];
 }
 
 - (void)loadWindowState

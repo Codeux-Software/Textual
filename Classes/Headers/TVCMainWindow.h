@@ -106,6 +106,8 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 - (void)navigateServerEntries:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType;
 - (void)navigateToNextEntry:(BOOL)isMovingDown;
 
+- (void)updateBackgroundColor;
+
 - (void)textEntered;
 
 - (void)inputText:(id)str command:(NSString *)command; // Do not call this directly unless you must.
