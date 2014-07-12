@@ -442,6 +442,10 @@
 - (void)updateBackgroundColor
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		/* When changing from vibrant light to vibrant dark we must deselect all
+		 rows, change the appearance, and reselect them. If we don't do this, the
+		 drawing that NSOutlineView uses for drawling vibrant light rows will stick
+		 forever leaving blue on selected rows no matter how hard we try to draw. */
 		NSIndexSet *selectedRows = [self selectedRowIndexes];
 		
 		[self deselectAll:nil];

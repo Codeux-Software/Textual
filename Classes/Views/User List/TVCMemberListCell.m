@@ -235,7 +235,9 @@
 	
 	cellFrame.size.width -= [userInterfaceObjects textCellLeftMargin];
 	
-	[self drawInteriorWithFrameForYosemite:cellFrame withUserInterfaceObject:userInterfaceObjects];
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		[self drawInteriorWithFrameForYosemite:cellFrame withUserInterfaceObject:userInterfaceObjects];
+	}
 }
 
 #pragma mark -
@@ -399,16 +401,6 @@
 
 #pragma mark -
 #pragma mark Interior Drawing
-
-- (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
-{
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		[self drawInteriorWithFrameForYosemite:cellFrame withUserInterfaceObject:[mainWindowMemberList() userInterfaceObjects]];
-	} else {
-		;
-	}
-}
-
 
 - (void)drawInteriorWithFrameForYosemite:(NSRect)cellFrame withUserInterfaceObject:(id)interfaceObject
 {
