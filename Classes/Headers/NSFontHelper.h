@@ -40,7 +40,7 @@
 @interface NSFont (TXFontHelper)
 + (BOOL)fontIsAvailable:(NSString *)fontName;
 
-- (NSFont *)convertToItalics;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSFont *convertToItalics;
 
 - (BOOL)fontMatchesName:(NSString *)fontName;
 

@@ -86,8 +86,6 @@
 
 - (void)show;
 
-- (id)userDefaultsValues;
-
 - (IBAction)onAddKeyword:(id)sender;
 - (IBAction)onAddExcludeKeyword:(id)sender;
 

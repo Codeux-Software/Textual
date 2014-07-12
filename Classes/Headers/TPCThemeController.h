@@ -60,16 +60,16 @@ typedef enum TPCThemeControllerStorageLocation : NSInteger {
 /* Calls for the active theme. */
 - (void)load;
 
-- (NSString *)path;
-- (NSString *)actualPath; // Ignores iCloud cache and queries iCloud directly.
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *path;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *actualPath; // Ignores iCloud cache and queries iCloud directly.
 
-- (NSString *)name;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *name;
 
-- (TPCThemeControllerStorageLocation)storageLocation;
+@property (NS_NONATOMIC_IOSONLY, readonly) TPCThemeControllerStorageLocation storageLocation;
 
-- (BOOL)isBundledTheme;
+@property (NS_NONATOMIC_IOSONLY, getter=isBundledTheme, readonly) BOOL bundledTheme;
 
-- (BOOL)actualPathForCurrentThemeIsEqualToCachedPath;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL actualPathForCurrentThemeIsEqualToCachedPath;
 
 /* Calls for all themes. */
 + (BOOL)themeExists:(NSString *)themeName;

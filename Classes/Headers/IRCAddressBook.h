@@ -61,7 +61,7 @@ typedef enum IRCAddressBookEntryType : NSInteger {
 - (instancetype)initWithDictionary:(NSDictionary *)dic NS_DESIGNATED_INITIALIZER;
 - (NSDictionary *)dictionaryValue;
 
-- (NSString *)trackingNickname;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *trackingNickname;
 
 - (BOOL)checkIgnore:(NSString *)thehost;
 @end

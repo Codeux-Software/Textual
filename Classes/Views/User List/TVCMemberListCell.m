@@ -194,7 +194,7 @@
 		
 		NSColor *selectionColor;
 		
-		if ([mainWindow() isInactive]) {
+		if ([mainWindow() isInactive] || [mainWindow() isKeyWindow] == NO) {
 			selectionColor = [userInterfaceObjects rowSelectionColorForInactiveWindow];
 		} else {
 			selectionColor = [userInterfaceObjects rowSelectionColorForActiveWindow];
@@ -303,7 +303,7 @@
 	} else if ([assosicatedUser v]) {
 		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_V];
 	} else {
-		if ([mainWindow() isInactive]) {
+		if ([mainWindow() isInactive] || [mainWindow() isKeyWindow] == NO) {
 			backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColorForInactiveWindow];
 		} else {
 			backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColorForActiveWindow];
@@ -435,13 +435,13 @@
 	
 	if (isSelected == NO) {
 		if ([assosicatedUser isAway] == NO) {
-			if (isWindowInactive) {
+			if (isWindowInactive || isKeyWindow == NO) {
 				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject normalCellTextColorForInactiveWindow] range:stringLengthRange];
 			} else {
 				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject normalCellTextColorForActiveWindow] range:stringLengthRange];
 			}
 		} else {
-			if (isWindowInactive) {
+			if (isWindowInactive || isKeyWindow == NO) {
 				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject awayUserCellTextColorForInactiveWindow] range:stringLengthRange];
 			} else {
 				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject awayUserCellTextColorForActiveWindow] range:stringLengthRange];

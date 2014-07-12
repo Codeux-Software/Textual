@@ -53,11 +53,11 @@
 - (void)enableSheetField:(TVCTextViewWithIRCFormatter *)field;
 - (void)enableWindowField:(TVCTextViewWithIRCFormatter *)field;
 
-- (BOOL)boldSet;
-- (BOOL)italicSet;
-- (BOOL)underlineSet;
-- (BOOL)foregroundColorSet;
-- (BOOL)backgroundColorSet;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL boldSet;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL italicSet;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL underlineSet;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL foregroundColorSet;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL backgroundColorSet;
 
 - (IBAction)insertBoldCharIntoTextBox:(id)sender;
 - (IBAction)insertItalicCharIntoTextBox:(id)sender;

@@ -63,17 +63,17 @@
 
 - (BOOL)highlightAvailable:(BOOL)previous;
 
-- (NSString *)uniqueIdentifier;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *uniqueIdentifier;
 
-- (DOMDocument *)mainFrameDocument;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) DOMDocument *mainFrameDocument;
 
 - (void)moveToTop;
 - (void)moveToBottom;
 
-- (NSString *)topicValue;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *topicValue;
 - (void)setTopic:(NSString *)topic;
 
-- (BOOL)inlineImagesEnabledForView;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL inlineImagesEnabledForView;
 
 - (void)mark;
 - (void)unmark;

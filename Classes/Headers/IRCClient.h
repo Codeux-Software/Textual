@@ -138,7 +138,7 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 // fear that it will have any negative effects on the IRC client itself.
 // Accessing -config property directly will return the current configuration used internally by the client.
 // This configuration will include any associated private messages.
-- (IRCClientConfig *)copyOfStoredConfig;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) IRCClientConfig *copyOfStoredConfig;
 
 // -dictionaryValue may return a value that contains private messages. This depends on whether
 // end user has configured Textual to remember the state of queries between saves.
@@ -152,42 +152,42 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 
 - (void)closeDialogs;
 
-- (NSString *)uniqueIdentifier;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *uniqueIdentifier;
 
-- (NSString *)networkName; // Only returns the actual network name or nil.
-- (NSString *)altNetworkName; // Will return the configured name if the actual name is not available.
-- (NSString *)networkAddress;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *networkName; // Only returns the actual network name or nil.
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *altNetworkName; // Will return the configured name if the actual name is not available.
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *networkAddress;
 
-- (NSString *)localNickname;
-- (NSString *)localHostmask;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *localNickname;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *localHostmask;
 
 - (void)enableCapacity:(ClientIRCv3SupportedCapacities)capacity;
 - (void)disableCapacity:(ClientIRCv3SupportedCapacities)capacity;
 
 - (BOOL)isCapacityEnabled:(ClientIRCv3SupportedCapacities)capacity;
 
-- (NSString *)enabledCapacitiesStringValue;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *enabledCapacitiesStringValue;
 
-- (NSInteger)channelCount;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger channelCount;
 
 - (void)addChannel:(IRCChannel *)channel;
 - (void)addChannel:(IRCChannel *)channel atPosition:(NSInteger)pos;
 - (void)removeChannel:(IRCChannel *)channel;
 
-- (NSInteger)indexOfFirstPrivateMessage;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger indexOfFirstPrivateMessage;
 - (NSInteger)indexOfChannel:(IRCChannel *)channel;
 
 - (void)selectFirstChannelInChannelList;
 
 - (void)addHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine;
 
-- (NSTimeInterval)lastMessageServerTimeWithCachedValue;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSTimeInterval lastMessageServerTimeWithCachedValue;
 
 - (void)reachabilityChanged:(BOOL)reachable;
 
 - (void)autoConnect:(NSInteger)delay afterWakeUp:(BOOL)afterWakeUp;
 
-- (BOOL)isReconnecting;
+@property (NS_NONATOMIC_IOSONLY, getter=isReconnecting, readonly) BOOL reconnecting;
 
 - (void)postEventToViewController:(NSString *)eventToken;
 - (void)postEventToViewController:(NSString *)eventToken forChannel:(IRCChannel *)channel;

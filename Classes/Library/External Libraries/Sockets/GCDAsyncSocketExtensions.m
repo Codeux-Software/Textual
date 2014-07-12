@@ -39,7 +39,7 @@
 
 @implementation GCDAsyncSocket (GCDsyncSocketExtensions)
 
-+ (id)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq
++ (instancetype)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq
 {
     return [[self alloc] initWithDelegate:aDelegate delegateQueue:dq socketQueue:sq];
 }
@@ -169,7 +169,7 @@
 
 @implementation AsyncSocket (RLMAsyncSocketExtensions)
 
-+ (id)socketWithDelegate:(id)delegate
++ (instancetype)socketWithDelegate:(id)delegate
 {
 	return [[self alloc] initWithDelegate:delegate];
 }

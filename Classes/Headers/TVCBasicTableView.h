@@ -44,8 +44,8 @@
 @property (nonatomic, uweak) id keyDelegate;
 @property (nonatomic, uweak) id textEditingDelegate;
 
-- (NSArray *)selectedRows;
-- (NSInteger)countSelectedRows;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *selectedRows;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger countSelectedRows;
 
 - (void)selectItemAtIndex:(NSInteger)index;
 

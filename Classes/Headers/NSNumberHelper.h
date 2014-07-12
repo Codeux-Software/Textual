@@ -49,6 +49,6 @@
 @interface NSNumber (TXNumberHelper)
 + (BOOL)compareCGFloat:(CGFloat)num1 toFloat:(CGFloat)num2;
 
-- (NSString *)integerWithLeadingZero;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *integerWithLeadingZero;
 - (NSString *)integerWithLeadingZero:(NSInteger)forcedWidth;
 @end

@@ -60,14 +60,14 @@ typedef enum IRCChannelStatus : NSInteger {
 
 - (NSMutableDictionary *)dictionaryValue;
 
-- (NSString *)uniqueIdentifier;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *uniqueIdentifier;
 
-- (NSString *)secretKey;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *secretKey;
 
-- (BOOL)isChannel;
-- (BOOL)isPrivateMessage;
+@property (NS_NONATOMIC_IOSONLY, getter=isChannel, readonly) BOOL channel;
+@property (NS_NONATOMIC_IOSONLY, getter=isPrivateMessage, readonly) BOOL privateMessage;
 
-- (NSString *)channelTypeString;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *channelTypeString;
 
 - (void)prepareForApplicationTermination;
 - (void)prepareForPermanentDestruction;
@@ -77,7 +77,7 @@ typedef enum IRCChannelStatus : NSInteger {
 - (void)activate;
 - (void)deactivate;
 
-- (NSURL *)logFilePath;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSURL *logFilePath;
 
 - (void)writeToLogFile:(TVCLogLine *)line;
 
@@ -100,7 +100,7 @@ typedef enum IRCChannelStatus : NSInteger {
 
 - (void)clearMembers; // This will not reload table view. 
 
-- (NSInteger)numberOfMembers;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfMembers;
 
 /* -unsortedMemberList actually invokes -sortedByChannelRankMemberList. 
  It is marked as deprecated instead of being completely removed for now. */
@@ -110,8 +110,8 @@ typedef enum IRCChannelStatus : NSInteger {
  the channels internal cache. IRCUser is not KVO based so if you modify a
  user returned, then do Textual the kindness of reloading that member in 
  the member list view. */
-- (NSArray *)sortedByChannelRankMemberList;
-- (NSArray *)sortedByNicknameLengthMemberList;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *sortedByChannelRankMemberList;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *sortedByNicknameLengthMemberList;
 
 - (BOOL)memberRequiresRedraw:(IRCUser *)user1 comparedTo:(IRCUser *)user2;
 

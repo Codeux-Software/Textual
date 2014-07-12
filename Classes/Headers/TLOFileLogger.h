@@ -62,7 +62,7 @@
 - (void)reset;
 - (void)reopenIfNeeded;
 
-- (NSURL *)buildPath;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSURL *buildPath;
 
 - (void)writeLine:(TVCLogLine *)logLine;
 - (void)writePlainTextLine:(NSString *)s;

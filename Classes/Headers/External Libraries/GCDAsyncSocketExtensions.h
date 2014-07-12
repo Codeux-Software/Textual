@@ -38,7 +38,7 @@
 #import "RLMAsyncSocket.h" // superclass
 
 @interface GCDAsyncSocket (GCDsyncSocketExtensions)
-+ (id)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq;
++ (instancetype)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq;
 
 - (void)useSSLWithClient:(IRCClient *)client withConnectionController:(IRCConnection *)controller;
 
@@ -54,7 +54,7 @@
 @end
 
 @interface AsyncSocket (RLMAsyncSocketExtensions)
-+ (id)socketWithDelegate:(id)delegate;
++ (instancetype)socketWithDelegate:(id)delegate;
 
 - (void)useSSL;
 - (void)useSystemSocksProxy;

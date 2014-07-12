@@ -489,7 +489,7 @@
 {
 	id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
 	
-	if ([mainWindow() isInactive]) {
+	if ([mainWindow() isInactive] || [mainWindow() isKeyWindow] == NO) {
 		return [userInterfaceObjects memberListBackgroundColorForInactiveWindow];
 	} else {
 		return [userInterfaceObjects memberListBackgroundColorForActiveWindow];

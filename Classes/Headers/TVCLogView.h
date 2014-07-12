@@ -42,13 +42,13 @@
 @property (nonatomic, uweak) id keyDelegate;
 @property (nonatomic, uweak) id resizeDelegate;
 
-- (NSString *)contentString;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *contentString;
 
-- (WebScriptObject *)javaScriptAPI;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) WebScriptObject *javaScriptAPI;
 
-- (BOOL)hasSelection;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL hasSelection;
 - (void)clearSelection;
-- (NSString *)selection;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *selection;
 @end
 
 @interface NSObject (TVCLogViewDelegate)

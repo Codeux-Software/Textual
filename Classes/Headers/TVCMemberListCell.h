@@ -40,7 +40,7 @@
 @interface TVCMemberListCell : NSTableCellView
 @property (nonatomic, nweak) IRCUser *memberPointer;
 
-- (NSDictionary *)drawingContext;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSDictionary *drawingContext;
 
 - (void)updateDrawing;
 

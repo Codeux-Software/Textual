@@ -80,11 +80,11 @@
 
 - (NSString *)keyIgnoringCase:(NSString *)baseKey;
 
-- (id)sortedDictionary;
-- (id)sortedReversedDictionary;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) id sortedDictionary;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) id sortedReversedDictionary;
 
-- (NSArray *)sortedDictionaryKeys;
-- (NSArray *)sortedDictionaryReversedKeys;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *sortedDictionaryKeys;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *sortedDictionaryReversedKeys;
 @end
 
 @interface NSMutableDictionary (TXMutableDictionaryHelper)

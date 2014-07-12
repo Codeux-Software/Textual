@@ -66,8 +66,8 @@
 @interface TVCMainWindowTextViewBackground : NSView
 @property (nonatomic, nweak) IBOutlet TVCMainWindowTextViewContentView *contentView;
 
-- (NSColor *)systemSpecificTextFieldTextFontColor;
-- (NSColor *)systemSpecificPlaceholderTextFontColor;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSColor *systemSpecificTextFieldTextFontColor;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSColor *systemSpecificPlaceholderTextFontColor;
 @end
 
 @interface TVCMainWindowTextViewContentView : NSVisualEffectView

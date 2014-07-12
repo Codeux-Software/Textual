@@ -42,7 +42,7 @@
 - (void)openSocket;
 - (void)closeSocket;
 
-- (NSString *)connectedAddress;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *connectedAddress;
 
 - (void)write:(NSData *)data;
 
