@@ -92,18 +92,13 @@
 #pragma mark -
 #pragma mark Drawing Updates
 
-- (void)reloadAllDrawings:(BOOL)doNotLimit
+- (void)reloadAllDrawings
 {
 	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
 		[self updateDrawingForRow:i];
 	}
 	
 	[self setNeedsDisplay:YES];
-}
-
-- (void)reloadAllDrawings
-{
-	[self reloadAllDrawings:NO];
 }
 
 - (void)updateDrawingForItem:(IRCTreeItem *)cellItem
