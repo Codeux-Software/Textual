@@ -54,7 +54,7 @@
 #pragma mark -
 #pragma mark Init.
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		[RZMainBundle() loadCustomNibNamed:@"TDCWelcomeSheet" owner:self topLevelObjects:nil];

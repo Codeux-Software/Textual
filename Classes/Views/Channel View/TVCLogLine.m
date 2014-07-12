@@ -40,7 +40,7 @@
 
 @implementation TVCLogLine
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super init]) {
 		/* Define defaults. */

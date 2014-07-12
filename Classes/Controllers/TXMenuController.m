@@ -61,10 +61,10 @@
 
 @implementation TXMenuController
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
-		self.openWindowList = [NSDictionary dictionary];
+		self.openWindowList = @{};
 		
 		self.currentSearchPhrase = NSStringEmptyPlaceholder;
 	}
@@ -520,7 +520,7 @@
 				
 				return _disableInSheet(YES);
 			} else {
-				IRCUser *m = [nicknames objectAtIndex:0];
+				IRCUser *m = nicknames[0];
 				
 				switch (tag) {
 					case _userControlsMenuGiveModeOMenuTag:
@@ -790,7 +790,7 @@
 
 - (id)windowFromWindowList:(NSString *)windowClass
 {
-	return [self.openWindowList objectForKey:windowClass];
+	return (self.openWindowList)[windowClass];
 }
 
 - (void)removeWindowFromWindowList:(NSString *)windowClass
@@ -824,7 +824,7 @@
 	
 	if (attachedSheet) {
 		for (NSString *windowKey in self.openWindowList) {
-			id windowObject = [self.openWindowList objectForKey:windowKey];
+			id windowObject = (self.openWindowList)[windowKey];
 
 			if ([[windowObject class] isSubclassOfClass:[TDCSheetBase class]]) {
 				NSWindow *ownedWindow = (id)[windowObject sheet];
@@ -2463,7 +2463,7 @@
 		};
 	}
 	
-	NSString *linkloc = [_helpMenuLinks objectForKey:@([sender tag])];
+	NSString *linkloc = _helpMenuLinks[@([sender tag])];
 	
 	[TLOpenLink openWithString:linkloc];
 }

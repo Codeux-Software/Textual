@@ -66,12 +66,12 @@
 @implementation NSString (TXStringHelper)
 
 /* Helper Methods */
-+ (id)stringWithBytes:(const void *)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding
++ (instancetype)stringWithBytes:(const void *)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding
 {
 	return [[NSString alloc] initWithBytes:bytes length:length encoding:encoding];
 }
 
-+ (id)stringWithData:(NSData *)data encoding:(NSStringEncoding)encoding
++ (instancetype)stringWithData:(NSData *)data encoding:(NSStringEncoding)encoding
 {
 	return [[NSString alloc] initWithData:data encoding:encoding];
 }

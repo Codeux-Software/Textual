@@ -50,7 +50,7 @@
 - (NSInteger)integerAtIndex:(NSInteger)n;
 - (long long)longLongAtIndex:(NSInteger)n;
 - (double)doubleAtIndex:(NSInteger)n;
-- (void *)pointerAtIndex:(NSInteger)n;
+- (void *)pointerAtIndex:(NSInteger)n NS_RETURNS_INNER_POINTER;
 
 - (BOOL)containsObjectIgnoringCase:(id)anObject;
 

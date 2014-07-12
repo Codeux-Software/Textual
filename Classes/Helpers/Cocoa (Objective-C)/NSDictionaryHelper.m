@@ -142,7 +142,7 @@
 - (id)objectForKey:(id)key orUseDefault:(id)defaultValue
 {
 	if ([self containsKey:key]) {
-		return [self objectForKey:key];
+		return self[key];
 	} else {
 		return defaultValue;
 	}
@@ -223,7 +223,7 @@
 - (void)assignObjectTo:(__strong id *)pointer forKey:(NSString *)key
 {
 	if ([self containsKey:key]) {
-		*pointer = [self objectForKey:key];
+		*pointer = self[key];
 	}
 }
 
@@ -231,9 +231,9 @@
 {
 	if ([self containsKey:key]) {
 		if (copyValue) {
-			*pointer = [[self objectForKey:key] copy];
+			*pointer = [self[key] copy];
 		} else {
-			*pointer =  [self objectForKey:key];
+			*pointer =  self[key];
 		}
 	}
 }
@@ -296,7 +296,7 @@
 
 - (BOOL)containsKey:(NSString *)baseKey
 {	
-	return NSDissimilarObjects(nil, [self objectForKey:baseKey]);
+	return NSDissimilarObjects(nil, self[baseKey]);
 }
 	
 - (BOOL)containsKeyIgnoringCase:(NSString *)baseKey
@@ -388,7 +388,7 @@
 - (void)maybeSetObject:(id)value forKey:(NSString *)key
 {
 	if (PointerIsNotEmpty(value)) {
-		[self setObject:value forKey:key];
+		self[key] = value;
 	}
 }
 
@@ -404,32 +404,32 @@
 
 - (void)setBool:(BOOL)value forKey:(NSString *)key
 {
-	[self setObject:@(value) forKey:key];
+	self[key] = @(value);
 }
 
 - (void)setInteger:(NSInteger)value forKey:(NSString *)key
 {
-	[self setObject:@(value) forKey:key];
+	self[key] = @(value);
 }
 
 - (void)setLongLong:(long long)value forKey:(NSString *)key
 {
-	[self setObject:@(value) forKey:key];
+	self[key] = @(value);
 }
 
 - (void)setDouble:(double)value forKey:(NSString *)key
 {
-	[self setObject:@(value) forKey:key];
+	self[key] = @(value);
 }
 
 - (void)setFloat:(float)value forKey:(NSString *)key
 {
-	[self setObject:@(value) forKey:key];
+	self[key] = @(value);
 }
 
 - (void)setPointer:(void *)value forKey:(NSString *)key
 {
-	[self setObject:[NSValue valueWithPointer:value] forKey:key];
+	self[key] = [NSValue valueWithPointer:value];
 }
 
 @end

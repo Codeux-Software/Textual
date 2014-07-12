@@ -49,7 +49,7 @@
 #pragma mark -
 #pragma mark Awakening
 
-- (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation
+- (instancetype)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation
 {
 	if ((self = [super initWithContentRect:contentRect styleMask:windowStyle backing:bufferingType defer:deferCreation])) {
 		self.keyEventHandler = [TLOKeyEventHandler new];
@@ -1229,7 +1229,7 @@
 
 - (void)outlineViewItemDidCollapse:(NSNotification *)notification
 {
-	id itemBeingCollapsed = [[notification userInfo] objectForKey:@"NSObject"];
+	id itemBeingCollapsed = [notification userInfo][@"NSObject"];
 	
 	IRCClient *u = [itemBeingCollapsed associatedClient];
 	
@@ -1238,7 +1238,7 @@
 
 - (void)outlineViewItemDidExpand:(NSNotification *)notification
 {
-	id itemBeingCollapsed = [[notification userInfo] objectForKey:@"NSObject"];
+	id itemBeingCollapsed = [notification userInfo][@"NSObject"];
 	
 	IRCClient *u = [itemBeingCollapsed associatedClient];
 	
@@ -1259,7 +1259,7 @@
 {
 	/* If the item being collapsed is the one our selected channel is on,
 	 then move selection to the console of the collapsed server. */
-	id itemBeingCollapsed = [[notification userInfo] objectForKey:@"NSObject"];
+	id itemBeingCollapsed = [notification userInfo][@"NSObject"];
 	
 	if ([itemBeingCollapsed isClient] == NO) {
 		if (itemBeingCollapsed == self.selectedClient) {
@@ -1371,7 +1371,7 @@
 {
 	NSObjectIsEmptyAssertReturn(items, NO);
 	
-	IRCTreeItem *i = [items objectAtIndex:0];
+	IRCTreeItem *i = items[0];
 	
 	NSString *s = [worldController() findItemFromInfoGeneratedValue:i];
 	
@@ -1450,7 +1450,7 @@
 			}
 		} else {
 			if ([high count] > 0) {
-				IRCChannel *next = [high objectAtIndex:0];
+				IRCChannel *next = high[0];
 				
 				if ([next isChannel]) {
 					return NSDragOperationNone;

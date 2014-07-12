@@ -40,7 +40,7 @@
 
 @implementation TLONicknameCompletionStatus
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		[self clear:YES];
@@ -424,7 +424,7 @@
 	for (NSString *s in lowerChoices) {
 		if ([s hasPrefix:lowerBackwardCut]) {
 			[currentLowerChoices addObject:s];
-			[currentUpperChoices addObject:[upperChoices objectAtIndex:i]];
+			[currentUpperChoices addObject:upperChoices[i]];
 		}
 
 		i += 1;
@@ -440,7 +440,7 @@
 	NSUInteger index = self.lastCompletionSelectionIndex;
 
 	if (index == NSNotFound || index >= [currentLowerChoices count]) {
-		ut = [currentUpperChoices objectAtIndex:0];
+		ut = currentUpperChoices[0];
 
 		self.lastCompletionSelectionIndex = 0;
 	} else {
@@ -458,7 +458,7 @@
 			}
 		}
 
-		ut = [currentUpperChoices objectAtIndex:index];
+		ut = currentUpperChoices[index];
 
 		self.lastCompletionSelectionIndex = index;
 	}

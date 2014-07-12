@@ -42,7 +42,7 @@
 
 @implementation TVCLogScriptEventSink
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		self.x = -10000;

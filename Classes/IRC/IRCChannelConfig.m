@@ -43,7 +43,7 @@
 @synthesize secretKey = _secretKey;
 @synthesize encryptionKey = _encryptionKey;
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		self.itemUUID = [NSString stringWithUUID];
@@ -218,12 +218,12 @@
 	return seed;
 }
 
-- (id)initWithDictionary:(NSDictionary *)dic
+- (instancetype)initWithDictionary:(NSDictionary *)dic
 {
 	return [self initWithDictionary:dic checkKeychainStatus:YES];
 }
 
-- (id)initWithDictionary:(NSDictionary *)dic checkKeychainStatus:(BOOL)checkKeychainIsSet
+- (instancetype)initWithDictionary:(NSDictionary *)dic checkKeychainStatus:(BOOL)checkKeychainIsSet
 {
 	if ((self = [self init])) {
 		/* If any key does not exist, then its value is inherited from the -init method. */

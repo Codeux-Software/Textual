@@ -46,7 +46,7 @@
 
 @implementation IRCUser
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		self.colorNumber = -1;
@@ -57,7 +57,7 @@
 	return self;
 }
 
-- (id)initWithUser:(IRCUser *)otherUser
+- (instancetype)initWithUser:(IRCUser *)otherUser
 {
 	if ((self = [super init])) {
 		[self migrate:otherUser];

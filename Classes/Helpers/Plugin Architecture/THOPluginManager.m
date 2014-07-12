@@ -48,7 +48,7 @@
 #pragma mark -
 #pragma mark Init.
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		self.dispatchQueue = dispatch_queue_create("PluginManagerDispatchQueue", DISPATCH_QUEUE_SERIAL);

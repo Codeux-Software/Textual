@@ -40,7 +40,7 @@
 
 @implementation TDCPreferencesSoundWrapper
 
-- (id)initWithEventType:(TXNotificationType)aEventType
+- (instancetype)initWithEventType:(TXNotificationType)aEventType
 {
 	if ((self = [super init])) {
 		self.eventType = aEventType;

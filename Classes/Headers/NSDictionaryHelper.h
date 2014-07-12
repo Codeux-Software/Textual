@@ -47,7 +47,7 @@
 - (long long)longLongForKey:(NSString *)key;
 - (double)doubleForKey:(NSString *)key;
 - (float)floatForKey:(NSString *)key;
-- (void *)pointerForKey:(NSString *)key;
+- (void *)pointerForKey:(NSString *)key NS_RETURNS_INNER_POINTER;
 
 - (id)objectForKey:(id)key orUseDefault:(id)defaultValue;
 - (NSString *)stringForKey:(id)key orUseDefault:(NSString *)defaultValue;

@@ -274,7 +274,7 @@
 	return sharedSelf;
 }
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		[RZNotificationCenter() addObserver:self

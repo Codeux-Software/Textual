@@ -58,7 +58,7 @@
 #pragma mark -
 #pragma mark Initialization
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		self.highlightedLineNumbers	= [NSMutableArray new];
@@ -415,7 +415,7 @@
 										 controller:self
 										 renderType:TVCLogRendererHTMLType
 										 properties:@{
-											@"renderLinks" : NSNumberWithBOOL(YES),
+											@"renderLinks" : @YES,
 											@"lineType" : @(TVCLogLineTopicType)
 										 }
 										 resultInfo:NULL];
@@ -577,7 +577,7 @@
 		NSObjectIsEmptyAssertLoopContinue(html);
 
 		/* Gather result information. */
-		NSString *lineNumber = [resultInfo objectForKey:@"lineNumber"];
+		NSString *lineNumber = resultInfo[@"lineNumber"];
 
 		[patchedAppend appendString:html];
 
@@ -977,7 +977,7 @@
 			/* Gather result information. */
 			BOOL highlighted = [resultInfo boolForKey:@"wordMatchFound"];
 
-			NSString *lineNumber = [resultInfo objectForKey:@"lineNumber"];
+			NSString *lineNumber = resultInfo[@"lineNumber"];
 		  //NSString *renderTime = [resultInfo objectForKey:@"lineRenderTime"];
 
 			NSArray *mentionedUsers = [resultInfo arrayForKey:@"mentionedUsers"];
@@ -1145,7 +1145,7 @@
 
 					NSObjectIsEmptyAssertLoopContinue(iurl);
 
-					[inlineImagesToValidate setObject:uniqueKey forKey:iurl];
+					inlineImagesToValidate[iurl] = uniqueKey;
 
 					[inlineImageLinks addObject:@{
 						  @"preferredMaximumWidth"		: @([TPCPreferences inlineImagesMaxWidth]),
@@ -1161,7 +1161,7 @@
 		
 		attributes[@"inlineMediaArray"]		= inlineImageLinks;
 
-		[outputDictionary setObject:inlineImagesToValidate forKey:@"InlineImagesToValidate"];
+		outputDictionary[@"InlineImagesToValidate"] = inlineImagesToValidate;
 	}
 
 	// ---- //
@@ -1255,7 +1255,7 @@
 	attributes[@"lineNumber"] = newLinenNumber;
 	attributes[@"lineRenderTime"] = lineRenderTime;
 	
-	[outputDictionary setObject:newLinenNumber forKey:@"lineNumber"];
+	outputDictionary[@"lineNumber"] = newLinenNumber;
 	
 	NSMutableDictionary *pluginDictionary = [NSMutableDictionary dictionary];
 	
@@ -1273,7 +1273,7 @@
 	[pluginDictionary maybeSetObject:outputDictionary[@"mentionedUsers"] forKey:@"mentionedUsers"];
 	[pluginDictionary maybeSetObject:outputDictionary[@"messageBody"] forKey:@"messageBody"];
 	
-	[outputDictionary setObject:pluginDictionary forKey:@"pluginDictionary"];
+	outputDictionary[@"pluginDictionary"] = pluginDictionary;
 	
 	// ************************************************************************** /
 	// Return information.											              /

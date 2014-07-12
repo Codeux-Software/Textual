@@ -157,7 +157,7 @@
 #pragma mark -
 #pragma mark Mouse Tracking
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	if ((self = [super initWithFrame:frame])) {
 		self.userPopoverTrackingArea = [[NSTrackingArea alloc] initWithRect:frame
@@ -275,7 +275,7 @@
 								   name:NSViewBoundsDidChangeNotification
 								 object:[self scrollViewContentView]];
 	
-	[self registerForDraggedTypes:[NSArray arrayWithObject:NSFilenamesPboardType]];
+	[self registerForDraggedTypes:@[NSFilenamesPboardType]];
 }
 
 - (void)scrollViewBoundsDidChangeNotification:(NSNotification *)aNote

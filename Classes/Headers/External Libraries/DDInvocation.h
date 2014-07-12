@@ -37,7 +37,7 @@ typedef enum DDInvocationThreadType : NSInteger {
 @property (nonatomic, strong) NSInvocation *invocation;
 @property (nonatomic, assign) DDInvocationThreadType threadType;
 
-+ (id)invocationGrabber;
++ (instancetype)invocationGrabber;
 
 - (id)prepareWithInvocationTarget:(id)inTarget;
 @end

@@ -26,12 +26,12 @@
 
 @implementation DDInvocation
 
-+ (id)invocationGrabber
++ (instancetype)invocationGrabber
 {
 	return [[self alloc] init];
 }
 
-- (id)init
+- (instancetype)init
 {
 	self.target = nil;
 	self.invocation = nil;

@@ -53,7 +53,7 @@
 		
 		NSString *namewpath = [path stringByAppendingPathComponent:filename];
 
-		[resultData setObject:namewpath forKey:namewoext];
+		resultData[namewoext] = namewpath;
 	}
 
 	return resultData;

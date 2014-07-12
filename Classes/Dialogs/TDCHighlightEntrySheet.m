@@ -40,7 +40,7 @@
 
 @implementation TDCHighlightEntrySheet
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		[RZMainBundle() loadCustomNibNamed:@"TDCHighlightEntrySheet" owner:self topLevelObjects:nil];
@@ -166,7 +166,7 @@
 
 @implementation TDCHighlightEntryMatchCondition
 
-- (id)initWithDictionary:(NSDictionary *)dic
+- (instancetype)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [super init])) {
 		self.itemUUID = [dic objectForKey:@"uniqueIdentifier" orUseDefault:[NSString stringWithUUID]];

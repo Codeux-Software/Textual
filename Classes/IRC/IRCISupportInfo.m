@@ -42,7 +42,7 @@
 
 @implementation IRCISupportInfo
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		[self reset];
@@ -105,7 +105,7 @@
 			vakey = [cvar substringToIndex:r.location];
 			value = [cvar substringFromIndex:NSMaxRange(r)];
 
-			[cachedConfig setObject:value forKey:vakey];
+			cachedConfig[vakey] = value;
 		} else {
 			[cachedConfig setBool:YES forKey:vakey];
         }
@@ -257,7 +257,7 @@
 				NSString *modeKey = [nodes stringCharacterAtIndex:i];
 				NSString *modeChar = [chars stringCharacterAtIndex:i];
 
-				[modePrefixes setObject:modeChar forKey:modeKey];
+				modePrefixes[modeKey] = modeChar;
 				
 				[channelModes setInteger:_channelUserModeValue forKey:modeKey];
 			}
@@ -316,7 +316,7 @@
 
 - (NSString *)userModePrefixSymbol:(NSString *)mode
 {
-	return [self.userModePrefixes objectForKey:mode];
+	return (self.userModePrefixes)[mode];
 }
 
 - (BOOL)modeIsSupportedUserPrefix:(NSString *)mode

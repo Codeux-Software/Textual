@@ -54,7 +54,7 @@
 #pragma mark -
 #pragma mark Menu Management
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		self.formattingQueue = dispatch_queue_create("formattingQueue", DISPATCH_QUEUE_SERIAL);
@@ -203,7 +203,7 @@
 		_returnMethodOnBadRange
 		
 		[self.textField setIRCFormatterAttribute:IRCTextFormatterBoldEffect
-									   value:NSNumberWithBOOL(YES)
+									   value:@YES
 									   range:selectedTextRange];
 		
 		[self.textField focus];
@@ -218,7 +218,7 @@
 		_returnMethodOnBadRange
 		
 		[self.textField setIRCFormatterAttribute:IRCTextFormatterItalicEffect
-									   value:NSNumberWithBOOL(YES)
+									   value:@YES
 									   range:selectedTextRange];
 		
 		[self.textField focus];
@@ -233,7 +233,7 @@
 		_returnMethodOnBadRange
 		
 		[self.textField setIRCFormatterAttribute:IRCTextFormatterUnderlineEffect
-									   value:NSNumberWithBOOL(YES)
+									   value:@YES
 									   range:selectedTextRange];
 		
 		[self.textField focus];

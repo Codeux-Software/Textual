@@ -216,7 +216,7 @@
 {
 	struct passwd *pw = getpwuid(getuid());
 	
-	return [NSString stringWithUTF8String:pw->pw_dir];
+	return @(pw->pw_dir);
 }
 
 

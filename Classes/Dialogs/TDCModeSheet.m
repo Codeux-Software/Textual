@@ -40,7 +40,7 @@
 
 @implementation TDCModeSheet
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		[RZMainBundle() loadCustomNibNamed:@"TDCModeSheet" owner:self topLevelObjects:nil];

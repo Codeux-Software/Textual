@@ -58,7 +58,7 @@ highlights for a server by using Command+5 or the actual Windows menu bar item. 
 @property (nonatomic, copy) NSString *matchChannelID; // The itemUUID of the IRCChannelConfig
 @property (nonatomic, assign) BOOL matchIsExcluded;
 
-- (id)initWithDictionary:(NSDictionary *)dic;
+- (instancetype)initWithDictionary:(NSDictionary *)dic NS_DESIGNATED_INITIALIZER;
 - (NSDictionary *)dictionaryValue;
 @end
 

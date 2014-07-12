@@ -64,7 +64,7 @@
 
 @implementation TDChannelSheet
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		[RZMainBundle() loadCustomNibNamed:@"TDChannelSheet" owner:self topLevelObjects:nil];

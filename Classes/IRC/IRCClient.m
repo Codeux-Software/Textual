@@ -116,7 +116,7 @@
 #pragma mark -
 #pragma mark Initialization
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init]))
 	{
@@ -3027,7 +3027,7 @@
 
 			for (NSString *scriptCommand in scriptPaths) {
 				if ([scriptCommand isEqualToString:lowercaseCommand]) {
-					scriptPath = [scriptPaths objectForKey:lowercaseCommand];
+					scriptPath = scriptPaths[lowercaseCommand];
 				}
 			}
 
@@ -3576,7 +3576,7 @@
 		};
 	}
 	
-	NSNumber *disconnectMessage = [disconnectMessages objectForKey:@(self.disconnectType)];
+	NSNumber *disconnectMessage = disconnectMessages[@(self.disconnectType)];
 
 	@synchronized(self.channels) {
 		for (IRCChannel *c in self.channels) {
@@ -3670,7 +3670,7 @@
 	[self cancelReconnect];
 
 	if (distcError) {
-		SecTrustRef trustRef = (__bridge SecTrustRef)([[distcError userInfo] objectForKey:@"peerCertificateTrustRef"]);
+		SecTrustRef trustRef = (__bridge SecTrustRef)([distcError userInfo][@"peerCertificateTrustRef"]);
 
 		if (trustRef) {
 			TVCQueuedCertificateTrustPanel *panel = [TXSharedApplication sharedQueuedCertificateTrustPanel];
@@ -3825,7 +3825,7 @@
 
 				[params insertObject:[self localNickname] atIndex:0];
 
-				NSString *text = [params objectAtIndex:1];
+				NSString *text = params[1];
 
 				[params removeObjectAtIndex:1];
 				

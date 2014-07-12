@@ -40,7 +40,7 @@
 
 @implementation IRCMessage
 
-- (id)initWithLine:(NSString *)line
+- (instancetype)initWithLine:(NSString *)line
 {
 	if ((self = [super init])) {
 		[self parseLine:line];
@@ -105,7 +105,7 @@
 			NSString *extKey = info[0];
 			NSString *extVal = info[1];
 			
-			[valueMatrix setObject:extVal forKey:extKey];
+			valueMatrix[extKey] = extVal;
 		}
 		
 		/* Now that we have values, we can check against our capacities. */
@@ -114,13 +114,13 @@
 			 time in the format as defined by ISO 8601:2004(E) 4.3.2. */
 			/* The t= value is a legacy value in a epoch time. We always favor
 			 the new time= format over the old. */
-			NSString *timeObject = [valueMatrix objectForKey:@"time"];
+			NSString *timeObject = valueMatrix[@"time"];
 			
 			NSDate *date;
 			
 			if (timeObject == nil) {
 				/* time= does not exist so now we try t= */
-				timeObject = [valueMatrix objectForKey:@"t"];
+				timeObject = valueMatrix[@"t"];
 				
 				if (timeObject) {
 					date = [NSDate dateWithTimeIntervalSince1970:[timeObject doubleValue]];
