@@ -94,6 +94,8 @@
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 		if ([TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode]) {
 			icon = [icon imageTintedWithColor:[NSColor whiteColor]];
+			
+			[icon setTemplate:NO];
 		} else {
 			[icon setTemplate:YES];
 		}
