@@ -40,8 +40,6 @@
 
 #include <objc/message.h>
 
-#define _treeUserlistHeight					20.0
-
 #define _cancelOnNotSelectedChannel			if (self.isChannel == NO || self.isSelectedChannel == NO) {			\
 												return;															\
 											}
@@ -394,19 +392,20 @@
 	/* Find in normal member list. */
 	/* This also removes matched user from tree view. */
 	@synchronized(self.memberListStandardSortedContainer) {
+		/* Remove from internal list. */
 		NSInteger crmi = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:self.memberListStandardSortedContainer];
 		
 		if (NSDissimilarObjects(crmi, NSNotFound)) {
 			/* Get matched user. */
 			IRCUser *matchedUser = self.memberListStandardSortedContainer[crmi];
 			
-			/* Remove from array archive. */
-			[self.memberListStandardSortedContainer removeObjectAtIndex:crmi];
-			
 			/* Maybe remove from tree view. */
 			TXPerformBlockSynchronouslyOnMainQueue(^{
 				[self _removeMemberFromTreeView:matchedUser];
 			});
+			
+			/* Remove from array archive. */
+			[self.memberListStandardSortedContainer removeObjectAtIndex:crmi];
 		}
 	}
 	
@@ -796,11 +795,6 @@
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
 	return [self memberAtIndex:index];
-}
-
-- (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
-{
-    return _treeUserlistHeight;
 }
 
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(IRCUser *)item
