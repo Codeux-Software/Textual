@@ -56,9 +56,128 @@
 	#warning Needs to be implemented.
 }
 
-+ (void)performReloadActionForActionType:(TPCPreferencesKeyReloadAction)reloadAction
++ (void)performReloadActionForActionType:(TPCPreferencesKeyReloadActionMask)reloadAction
 {
-	#warning Needs to be implemented.
+	/* Reload style. */
+	/* Given an action mask, this method is designed to find every reload action in it,
+	 break them down so there is none repeating themselves, then reload everything. */
+	/* As the mask will specify more than one action, a switch statement is not used. 
+	 Instead, individual if statements are used. */
+	
+	/* Update dock icon. */
+	if (reloadAction & TPCPreferencesKeyReloadDockIconBadgesAction) {
+		[TVCDockIcon updateDockIcon];
+	}
+	
+	/* As reloading the theme will also reload the server and member list, we keep 
+	 track of whether that happened so it is not performed more than one time. */
+	BOOL didReloadUserInterface = NO;
+	BOOL didReloadActiveStyle = NO;
+	
+	/* Window appearance. */
+	if (reloadAction & TPCPreferencesKeyReloadMainWindowAppearanceAction) {
+		[mainWindow() updateBackgroundColor];
+		
+		didReloadUserInterface = YES;
+	}
+	
+	/* Active style. */
+	if (reloadAction & TPCPreferencesKeyReloadStyleAction) {
+		[worldController() reloadTheme:NO];
+		
+		didReloadActiveStyle = YES;
+	} else if (reloadAction & TPCPreferencesKeyReloadStyleWithTableViewsAction) {
+		[worldController() reloadTheme:(didReloadUserInterface == NO)]; // -reloadTheme being sent NO tells it not to reload appearance. We did tha above.
+		
+		didReloadActiveStyle = YES;
+		didReloadUserInterface = YES;
+	}
+	
+	/* Server list. */
+	if (reloadAction & TPCPreferencesKeyReloadServerListAction) {
+		if (didReloadUserInterface == NO) {
+			[mainWindowServerList() updateBackgroundColor];
+			
+			[mainWindowServerList() reloadAllDrawings];
+		}
+	}
+	
+	/* Member list sort order. */
+	if (reloadAction & TPCPreferencesKeyReloadMemberListSortOrderAction) {
+		IRCChannel *selectedChannel = [mainWindow() selectedChannel];
+		
+		if ( selectedChannel) {
+			[selectedChannel reloadDataForTableViewBySortingMembers];
+		}
+	}
+	
+	/* Member list appearance. */
+	BOOL didReloadMemberListUserInterface = NO;
+	
+	if (reloadAction & TPCPreferencesKeyReloadMemberListAction) {
+		if (didReloadUserInterface == NO) {
+			[mainWindowMemberList() updateBackgroundColor];
+			
+			[mainWindowMemberList() reloadAllDrawings];
+		}
+		
+		didReloadMemberListUserInterface = YES;
+	}
+	
+	/* Memeber list badge drawings. */
+	if (reloadAction & TPCPreferencesKeyReloadMemberListUserBadgesAction) {
+		if (didReloadMemberListUserInterface == NO) {
+			[mainWindowMemberList() reloadAllDrawings];
+		}
+	}
+	
+	/* Main window segmented controller. */
+	if (reloadAction & TPCPreferencesKeyReloadTextFieldSegmentedControllerOriginAction) {
+		[mainWindowTextField() reloadSegmentedControllerOrigin];
+	}
+	
+	/* Main window alpha level. */
+	if (reloadAction & TPCPreferencesKeyReloadMainWindowTransparencyLevelAction) {
+		[mainWindow() setAlphaValue:[TPCPreferences themeTransparency]];
+	}
+
+	/* Highlight keywords. */
+	if (reloadAction & TPCPreferencesKeyReloadHighlightKeywordsAction) {
+		[TPCPreferences cleanUpHighlightKeywords];
+	}
+	
+	/* Highlight logging. */
+	if (reloadAction & TPCPreferencesKeyReloadHighlightLoggingAction) {
+		if ([TPCPreferences logHighlights] == NO) {
+			for (IRCClient *u in [worldController() clientList]) {
+				[u setCachedHighlights:@[]];
+			}
+		}
+	}
+	
+	/* Text direction: right-to-left, left-to-right */
+	if (reloadAction & TPCPreferencesKeyReloadTextDirectionAction) {
+		[mainWindowTextField() updateTextDirection];
+		
+		if (didReloadActiveStyle == NO) {
+			[worldController() reloadTheme:NO]; // Reload style to set ltr or rtl on WebKit
+		}
+	}
+	
+	/* Text field font size. */
+	if (reloadAction & TPCPreferencesKeyReloadTextFieldFontSizeAction) {
+		[mainWindowTextField() updateTextBoxBasedOnPreferredFontSize];
+	}
+	
+	/* Input history scope. */
+	if (reloadAction & TPCPreferencesKeyReloadInputHistoryScopeAction) {
+		[[TXSharedApplication sharedInputHistoryManager] inputHistoryObjectScopeDidChange];
+	}
+	
+	/* World controller preferences changed call. */
+	if (reloadAction & TPCPreferencesKeyReloadPreferencesChangedAction) {
+		[worldController() preferencesChanged];
+	}
 }
 
 + (BOOL)performValidationForKeyValues:(BOOL)duringInitialization
