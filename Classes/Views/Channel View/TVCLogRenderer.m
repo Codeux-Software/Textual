@@ -194,7 +194,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		if (resultContext && [logController inlineImagesEnabledForView]) {
 			NSDictionary *urlMatches = [resultContext dictionaryForKey:@"InlineImageURLMatches"];
 
-			NSString *keyValue = [urlMatches objectForKey:templateTokens[@"anchorLocation"]];
+			NSString *keyValue = urlMatches[templateTokens[@"anchorLocation"]];
 
 			if (keyValue) {
 				templateTokens[@"anchorInlineImageAvailable"] = @(YES);
@@ -566,14 +566,14 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 						NSString *matchedURL = rn[1];
 
 						/* We search for a key matching this string. */
-						NSString *keyMatch = [urlAry objectForKey:matchedURL];
+						NSString *keyMatch = urlAry[matchedURL];
 
 						/* Do we have a key already or no? */
 						if (keyMatch == nil) {
 							/* If we do not already have a key, then we add one. */
 							NSString *itemID = [NSString stringWithUUID];
 
-							[urlAry setObject:itemID forKey:matchedURL];
+							urlAry[matchedURL] = itemID;
 						}
 					}
 				}
@@ -582,7 +582,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			resultInfo[@"allHyperlinksInBody"] = urlAryRanges;
 			resultInfo[@"InlineImageURLMatches"] = urlAry;
 		} else {
-			resultInfo[@"allHyperlinksInBody"] = [NSArray array];
+			resultInfo[@"allHyperlinksInBody"] = @[];
 		}
 
 		if (isPlainText) {

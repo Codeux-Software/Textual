@@ -39,7 +39,7 @@
 
 @implementation TDCProgressInformationSheet
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		[RZMainBundle() loadCustomNibNamed:@"TDCProgressInformationSheet" owner:self topLevelObjects:nil];

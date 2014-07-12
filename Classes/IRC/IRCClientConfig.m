@@ -44,7 +44,7 @@
 @synthesize proxyPassword = _proxyPassword;
 @synthesize nicknamePassword = _nicknamePassword;
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		self.itemUUID = [NSString stringWithUUID];
@@ -313,12 +313,12 @@
 #pragma mark -
 #pragma mark Server Configuration
 
-- (id)initWithDictionary:(NSDictionary *)dic
+- (instancetype)initWithDictionary:(NSDictionary *)dic
 {
 	return [self initWithDictionary:dic ignorePrivateMessages:NO checkKeychainStatus:YES];
 }
 
-- (id)initWithDictionary:(NSDictionary *)dic ignorePrivateMessages:(BOOL)ignorePMs checkKeychainStatus:(BOOL)checkKeychainIsSet
+- (instancetype)initWithDictionary:(NSDictionary *)dic ignorePrivateMessages:(BOOL)ignorePMs checkKeychainStatus:(BOOL)checkKeychainIsSet
 {
 	if ((self = [self init])) {
 		/* If any key does not exist, then its value is inherited from the -init method. */

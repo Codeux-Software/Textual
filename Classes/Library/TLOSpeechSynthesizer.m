@@ -45,7 +45,7 @@
 
 @implementation TLOSpeechSynthesizer
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		self.isStopped = NO;

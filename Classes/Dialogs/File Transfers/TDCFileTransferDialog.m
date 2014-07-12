@@ -52,7 +52,7 @@
 
 @implementation TDCFileTransferDialog
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super init]) {
 		self.fileTransfers = [NSMutableArray array];

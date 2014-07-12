@@ -40,7 +40,7 @@
 
 @implementation TDCInviteSheet
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		[RZMainBundle() loadCustomNibNamed:@"TDCInviteSheet" owner:self topLevelObjects:nil];

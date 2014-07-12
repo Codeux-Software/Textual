@@ -64,7 +64,7 @@
 
 @implementation TDCPreferencesController
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		[RZMainBundle() loadCustomNibNamed:@"TDCPreferences" owner:self topLevelObjects:nil];
@@ -385,25 +385,25 @@
 		NSInteger n = [*value integerValue];
 
 		if (n < _linesMin) {
-			*value = NSNumberWithInteger(_linesMin);
+			*value = @_linesMin;
 		} else if (n > _linesMax) {
-			*value = NSNumberWithInteger(_linesMax);
+			*value = @_linesMax;
 		}
 	} else if ([key isEqualToString:@"inlineImageMaxWidth"]) {
 		NSInteger n = [*value integerValue];
 
 		if (n < _inlineImageWidthMin) {
-			*value = NSNumberWithInteger(_inlineImageWidthMin);
+			*value = @_inlineImageWidthMin;
 		} else if (_inlineImageWidthMax < n) {
-			*value = NSNumberWithInteger(_inlineImageWidthMax);
+			*value = @_inlineImageWidthMax;
 		}
 	} else if ([key isEqualToString:@"inlineImageMaxHeight"]) {
 		NSInteger n = [*value integerValue];
 
 		if (n < _inlineImageHeightMin) {
-			*value = NSNumberWithInteger(_inlineImageHeightMin);
+			*value = @_inlineImageHeightMin;
 		} else if (_inlineImageHeightMax < n) {
-			*value = NSNumberWithInteger(_inlineImageHeightMax);
+			*value = @_inlineImageHeightMax;
 		}
 	} else if ([key isEqualToString:@"fileTransferPortRangeStart"]) {
 		NSInteger n = [*value integerValue];
@@ -411,15 +411,15 @@
 		NSInteger t = [TPCPreferences fileTransferPortRangeEnd];
 		
 		if (n < _fileTransferPortRangeMin) {
-			*value = [NSNumber numberWithInteger:_fileTransferPortRangeMin];
+			*value = @_fileTransferPortRangeMin;
 		} else if (_fileTransferPortRangeMax < n) {
-			*value = [NSNumber numberWithInteger:_fileTransferPortRangeMax];
+			*value = @_fileTransferPortRangeMax;
 		}
 		
 		n = [*value integerValue];
 		
 		if (n > t) {
-			*value = [NSNumber numberWithInteger:t];
+			*value = @(t);
 		}
 	} else if ([key isEqualToString:@"fileTransferPortRangeEnd"]) {
 		NSInteger n = [*value integerValue];
@@ -427,15 +427,15 @@
 		NSInteger t = [TPCPreferences fileTransferPortRangeStart];
 		
 		if (n < _fileTransferPortRangeMin) {
-			*value = [NSNumber numberWithInteger:_fileTransferPortRangeMin];
+			*value = @_fileTransferPortRangeMin;
 		} else if (_fileTransferPortRangeMax < n) {
-			*value = [NSNumber numberWithInteger:_fileTransferPortRangeMax];
+			*value = @_fileTransferPortRangeMax;
 		}
 		
 		n = [*value integerValue];
 		
 		if (n < t) {
-			*value = [NSNumber numberWithInteger:t];
+			*value = @(t);
 		}
 	}
 
@@ -788,9 +788,9 @@
 					
 					
 					if ([path isEqualToString:bundledThemePath]) {
-						[themeChoices setObject:TPCThemeControllerBundledStyleNameBasicPrefix forKey:file];
+						themeChoices[file] = TPCThemeControllerBundledStyleNameBasicPrefix;
 					} else {
-						[themeChoices setObject:TPCThemeControllerCustomStyleNameBasicPrefix forKey:file];
+						themeChoices[file] = TPCThemeControllerCustomStyleNameBasicPrefix;
 					}
 				}
 			}

@@ -45,7 +45,7 @@
 
 @implementation TDCHighlightListSheet
 
-- (id)init
+- (instancetype)init
 {
     if ((self = [super init])) {
 		[RZMainBundle() loadCustomNibNamed:@"TDCHighlightListSheet" owner:self topLevelObjects:nil];
@@ -108,9 +108,9 @@
 	
 	NSRect columnRect = [tableView rectOfColumn:1];
 	
-	NSArray *data = [self.highlightList objectAtIndex:row];
+	NSArray *data = (self.highlightList)[row];
 
-	NSAttributedString *baseString = [data objectAtIndex:2];
+	NSAttributedString *baseString = data[2];
 
 	NSInteger totalLines = [baseString wrappedLineCount:columnRect.size.width
 										 lineMultiplier:_rowHeightMultiplier

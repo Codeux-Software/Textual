@@ -68,7 +68,7 @@
 #pragma mark -
 #pragma mark Initialization
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super init]) {
 		self.transferStatus = TDCFileTransferDialogTransferStoppedStatus;

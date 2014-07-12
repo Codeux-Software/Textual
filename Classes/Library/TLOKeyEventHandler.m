@@ -47,7 +47,7 @@
 
 @implementation TLOKeyEventHandler
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		self.codeHandlerMap = [NSMutableDictionary new];

@@ -54,7 +54,7 @@
 
 @implementation TDCListDialog
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		[RZMainBundle() loadCustomNibNamed:@"TDCListDialog" owner:self topLevelObjects:nil];

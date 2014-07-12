@@ -193,7 +193,7 @@
 			NSObjectIsKindOfClassAssert(obj, NSDictionary);
 			
 			/* Start import. */
-			NSArray *clientList = [obj objectForKey:@"clients"];
+			NSArray *clientList = obj[@"clients"];
 			
 			NSObjectIsEmptyAssert(clientList);
 			
@@ -305,7 +305,7 @@
 
 		[settings enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 			if ([self isKeyNameSupposedToBeIgnored:key] == NO) {
-				[fnlsettings setObject:obj forKey:key];
+				fnlsettings[key] = obj;
 			}
 		}];
 

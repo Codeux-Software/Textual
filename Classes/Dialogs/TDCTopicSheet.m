@@ -40,7 +40,7 @@
 
 @implementation TDCTopicSheet
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		[RZMainBundle() loadCustomNibNamed:@"TDCTopicSheet" owner:self topLevelObjects:nil];

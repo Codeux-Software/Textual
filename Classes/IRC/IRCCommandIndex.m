@@ -147,12 +147,12 @@ static NSDictionary *IRCCommandIndexPrivateValues = nil;
 
 NSString *IRCPrivateCommandIndex(const char *key)
 {
-	return [IRCCommandIndex IRCCommandFromIndexKey:[NSString stringWithUTF8String:key] publicSearch:NO];
+	return [IRCCommandIndex IRCCommandFromIndexKey:@(key) publicSearch:NO];
 }
 
 NSString *IRCPublicCommandIndex(const char *key)
 {
-	return [IRCCommandIndex IRCCommandFromIndexKey:[NSString stringWithUTF8String:key] publicSearch:YES];
+	return [IRCCommandIndex IRCCommandFromIndexKey:@(key) publicSearch:YES];
 }
 
 + (NSInteger)indexOfIRCommand:(NSString *)command

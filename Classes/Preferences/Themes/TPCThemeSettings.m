@@ -54,7 +54,7 @@
 
 - (NSColor *)colorForKey:(NSString *)key fromDictionary:(NSDictionary *)dict
 {
-	NSString *hexValue = [dict objectForKey:key];
+	NSString *hexValue = dict[key];
 
 	/* Supported format: #FFF or #FFFFFF */
 	if ([hexValue length] == 7 || [hexValue length] == 4) {

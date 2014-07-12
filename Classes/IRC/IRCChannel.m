@@ -67,7 +67,7 @@
 @synthesize associatedClient = _associatedClient;
 @synthesize printingQueue = _printingQueue;
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		/* Channel mode info. */
@@ -717,7 +717,7 @@
 	
 	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.memberListStandardSortedContainer) {
-			foundUser = [self.memberListStandardSortedContainer objectAtIndex:index];
+			foundUser = (self.memberListStandardSortedContainer)[index];
 		}
 	});
 	

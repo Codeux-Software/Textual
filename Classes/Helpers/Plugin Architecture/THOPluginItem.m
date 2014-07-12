@@ -84,7 +84,7 @@
 				NSArray *appndix = [self processOutputSuppressionRules:outputRulesO forCommand:command];
 
 				if (NSObjectIsNotEmpty(appndix)) {
-					[sharedRules setObject:appndix forKey:command];
+					sharedRules[command] = appndix;
 				}
 			}
 

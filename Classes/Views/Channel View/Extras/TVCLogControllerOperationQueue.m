@@ -53,7 +53,7 @@
 
 @implementation TVCLogControllerOperationQueue
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super init]) {
 		[self setName:@"TVCLogControllerOperationQueue"];

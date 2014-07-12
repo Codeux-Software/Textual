@@ -47,7 +47,7 @@
 
 @implementation TLOGrowlController
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		[RZUserNotificationCenter() setDelegate:self];
@@ -326,8 +326,8 @@
 		if (isFileTransferNotification) {
 			[[menuController() fileTransferController] show:YES restorePosition:NO];
 		} else {
-			NSString *uid = [context objectForKey:@"client"];
-			NSString *cid = [context objectForKey:@"channel"];
+			NSString *uid = context[@"client"];
+			NSString *cid = context[@"channel"];
 			
 			IRCClient *u = nil;
 			IRCChannel *c = nil;

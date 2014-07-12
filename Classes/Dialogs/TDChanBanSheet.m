@@ -45,7 +45,7 @@
 
 @implementation TDChanBanSheet
 
-- (id)init
+- (instancetype)init
 {
     if ((self = [super init])) {
 		[RZMainBundle() loadCustomNibNamed:@"TDChanBanSheet" owner:self topLevelObjects:nil];
@@ -118,7 +118,7 @@
 	for (NSNumber *index in [indexes arrayFromIndexSet]) {
 		indexTotal++;
 		
-		NSArray *iteml = [self.banList objectAtIndex:[index unsignedIntegerValue]];
+		NSArray *iteml = (self.banList)[[index unsignedIntegerValue]];
 		
 		[mdstr appendString:@"b"];
 		[trail appendFormat:@" %@", iteml[0]];
@@ -156,7 +156,7 @@
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	NSArray *item = [self.banList objectAtIndex:row];
+	NSArray *item = (self.banList)[row];
 	
 	if ([[column identifier] isEqualToString:@"mask"]) {
 		return item[0];

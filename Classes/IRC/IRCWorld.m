@@ -48,7 +48,7 @@
 #pragma mark -
 #pragma mark Initialization
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		self.clients = [NSMutableArray new];
@@ -89,9 +89,9 @@
 
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 	
-	[dict setObject:ary	forKey:@"clients"];
+	dict[@"clients"] = ary;
 	
-	[dict setObject:@([sharedGrowlController() areNotificationSoundsDisabled]) forKey:@"soundIsMuted"];
+	dict[@"soundIsMuted"] = @([sharedGrowlController() areNotificationSoundsDisabled]);
 
 	return dict;
 }
@@ -380,8 +380,8 @@
 	if ([s contains:@" "]) {
 		NSArray *ary = [s split:@" "];
 		
-		NSString *uid = [ary objectAtIndex:1];
-		NSString *cid = [ary objectAtIndex:0];
+		NSString *uid = ary[1];
+		NSString *cid = ary[0];
 		
 		return [self findChannelByClientId:uid channelId:cid];
 	} else {

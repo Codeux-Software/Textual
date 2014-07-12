@@ -62,8 +62,8 @@
  help provide server specific configuration validation. */
 
 @interface NSString (TXStringHelper)
-+ (id)stringWithBytes:(const void *)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding;
-+ (id)stringWithData:(NSData *)data encoding:(NSStringEncoding)encoding;
++ (instancetype)stringWithBytes:(const void *)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding;
++ (instancetype)stringWithData:(NSData *)data encoding:(NSStringEncoding)encoding;
 
 + (NSString *)stringWithUUID;
 

@@ -65,7 +65,7 @@
 
 @implementation TLOInputHistory
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		self.historyObjects = [NSMutableDictionary dictionary];
@@ -135,7 +135,7 @@
 
 - (void)inputHistoryObjectScopeDidChangeApplyToItem:(NSString *)treeItem
 {
-	TLOInputHistoryObject *globalObject = [self.historyObjects objectForKey:_inputHistoryGlobalObjectKey];
+	TLOInputHistoryObject *globalObject = (self.historyObjects)[_inputHistoryGlobalObjectKey];
 	
 	if (globalObject) {
 		TLOInputHistoryObject *newObject = [globalObject copy];
@@ -161,12 +161,12 @@
 			return nil;
 		}
 		
-		TLOInputHistoryObject *currentObject = [self.historyObjects objectForKey:currentObjectKey];
+		TLOInputHistoryObject *currentObject = (self.historyObjects)[currentObjectKey];
 		
 		if (currentObject == nil) {
 			currentObject = [TLOInputHistoryObject new];
 			
-			[self.historyObjects setObject:currentObject forKey:currentObjectKey];
+			(self.historyObjects)[currentObjectKey] = currentObject;
 		}
 		
 		return currentObject;
@@ -238,7 +238,7 @@
 			NSAttributedString *cur = nil;
 			
 			if (0 <= self.historyBufferPosition && self.historyBufferPosition < [self.historyBuffer count]) {
-				cur = [self.historyBuffer objectAtIndex:self.historyBufferPosition];
+				cur = (self.historyBuffer)[self.historyBufferPosition];
 			}
 			
 			if (NSObjectIsEmpty(cur) || [[cur string] isEqualToString:[s string]] == NO) {
@@ -259,7 +259,7 @@
 			
 			return nil;
 		} else if (0 <= self.historyBufferPosition && self.historyBufferPosition < [self.historyBuffer count]) {
-			return [self.historyBuffer objectAtIndex: self.historyBufferPosition];
+			return (self.historyBuffer)[self.historyBufferPosition];
 		} else {
 			return [NSAttributedString emptyString];
 		}
@@ -278,7 +278,7 @@
 		NSAttributedString *cur = nil;
 		
 		if (0 <= self.historyBufferPosition && self.historyBufferPosition < [self.historyBuffer count]) {
-			cur = [self.historyBuffer objectAtIndex:self.historyBufferPosition];
+			cur = (self.historyBuffer)[self.historyBufferPosition];
 		}
 		
 		if (NSObjectIsEmpty(cur) || [[cur string] isEqualToString:[s string]] == NO) {
@@ -289,7 +289,7 @@
 			self.historyBufferPosition += 1;
 			
 			if (0 <= self.historyBufferPosition &&	self.historyBufferPosition < [self.historyBuffer count]) {
-				return [self.historyBuffer objectAtIndex:self.historyBufferPosition];
+				return (self.historyBuffer)[self.historyBufferPosition];
 			}
 			
 			return [NSAttributedString emptyString];

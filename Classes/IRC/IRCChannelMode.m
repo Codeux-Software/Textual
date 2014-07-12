@@ -44,7 +44,7 @@
 
 @implementation IRCChannelMode
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		self.allModes = [NSMutableDictionary dictionary];
@@ -92,7 +92,7 @@
 			}
 			
 			/* Populate new info. */
-			[self.allModes setObject:h forKey:modeSymbol];
+			(self.allModes)[modeSymbol] = h;
 		}
 	}
 
@@ -179,12 +179,12 @@
 		IRCModeInfo *m = [self.supportInfo createMode:mode];
 		
 		@synchronized(self.allModes) {
-			[self.allModes setObject:m forKey:mode];
+			(self.allModes)[mode] = m;
 		}
 	}
 	
 	@synchronized(self.allModes) {
-		return [self.allModes objectForKey:mode];
+		return (self.allModes)[mode];
 	}
 }
 

@@ -19,16 +19,16 @@
 {
 	NSMutableDictionary *searchDictionary = [NSMutableDictionary dictionary];
 
-	[searchDictionary setObject:(id)kSecClassGenericPassword forKey:(id)kSecClass];
+	searchDictionary[(id)kSecClass] = (id)kSecClassGenericPassword;
 
-	[searchDictionary setObject:keychainItemName forKey:(id)kSecAttrLabel];
-	[searchDictionary setObject:keychainItemKind forKey:(id)kSecAttrDescription];
+	searchDictionary[(id)kSecAttrLabel] = keychainItemName;
+	searchDictionary[(id)kSecAttrDescription] = keychainItemKind;
 
 	if ([username length] > 0) {
-		[searchDictionary setObject:username forKey:(id)kSecAttrAccount];
+		searchDictionary[(id)kSecAttrAccount] = username;
 	}
 
-	[searchDictionary setObject:service	forKey:(id)kSecAttrService];
+	searchDictionary[(id)kSecAttrService] = service;
 
 	return searchDictionary;
 }
@@ -43,8 +43,8 @@
 																forUsername:username
 																serviceName:service];
 
-	[searchDictionary setObject:(id)kSecMatchLimitOne forKey:(id)kSecMatchLimit];
-	[searchDictionary setObject:(id)kCFBooleanTrue forKey:(id)kSecReturnData];
+	searchDictionary[(id)kSecMatchLimit] = (id)kSecMatchLimitOne;
+	searchDictionary[(id)kSecReturnData] = (id)kCFBooleanTrue;
 
 	CFDataRef result = nil;
 
@@ -87,7 +87,7 @@
 
 	NSData *encodedPassword = [newPassword dataUsingEncoding:NSUTF8StringEncoding];
 
-	[newDictionary setObject:encodedPassword forKey:(id)kSecValueData];
+	newDictionary[(id)kSecValueData] = encodedPassword;
 
 	OSStatus status = SecItemUpdate((__bridge CFDictionaryRef)oldDictionary,
 									(__bridge CFDictionaryRef)newDictionary);
@@ -116,7 +116,7 @@
 
 	NSData *encodedPassword = [password dataUsingEncoding:NSUTF8StringEncoding];
 
-	[dictionary setObject:encodedPassword forKey:(id)kSecValueData];
+	dictionary[(id)kSecValueData] = encodedPassword;
 
 	OSStatus status = SecItemAdd((__bridge CFDictionaryRef)dictionary, NULL);
 

@@ -39,7 +39,7 @@
 
 @implementation IRCAddressBookEntry
 
-- (id)initWithDictionary:(NSDictionary *)dic
+- (instancetype)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [super init])) {
 		self.itemUUID = [dic objectForKey:@"uniqueIdentifier" orUseDefault:[NSString stringWithUUID]];

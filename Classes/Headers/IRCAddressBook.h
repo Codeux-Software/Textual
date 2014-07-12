@@ -58,7 +58,7 @@ typedef enum IRCAddressBookEntryType : NSInteger {
 @property (nonatomic, assign) BOOL hideMessagesContainingMatch;
 @property (nonatomic, assign) BOOL notifyJoins;
 
-- (id)initWithDictionary:(NSDictionary *)dic;
+- (instancetype)initWithDictionary:(NSDictionary *)dic NS_DESIGNATED_INITIALIZER;
 - (NSDictionary *)dictionaryValue;
 
 - (NSString *)trackingNickname;

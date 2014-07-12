@@ -45,11 +45,11 @@
 @end
 
 @interface NSMenuItem (TXMenuItemHelper)
-+ (id)menuItemWithTitle:(NSString *)aString
++ (instancetype)menuItemWithTitle:(NSString *)aString
 				 target:(id)aTarget
 				 action:(SEL)aSelector;
 
-+ (id)menuItemWithTitle:(NSString *)aString
++ (instancetype)menuItemWithTitle:(NSString *)aString
 				 target:(id)aTarget
 				 action:(SEL)aSelector
 		  keyEquivalent:(NSString *)charCode
