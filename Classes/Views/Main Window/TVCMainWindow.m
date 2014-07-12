@@ -1290,6 +1290,11 @@
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)note
 {
+	/* Do nothing under special circumstances. */
+	if (self.temporarilyIgnoreOutlineViewSelectionChanges) {
+		return;
+	}
+	
 	/* Store previous selection. */
 	[self storePreviousSelection];
 	

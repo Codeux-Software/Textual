@@ -39,4 +39,6 @@
 
 @interface NSImage (TXImageHelper)
 + (NSImage *)newImageWithSize:(NSSize)size;
+
+- (NSImage *)imageTintedWithColor:(NSColor *)tint;
 @end

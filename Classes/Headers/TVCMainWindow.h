@@ -70,6 +70,7 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 @property (nonatomic, copy) NSString *previousSelectedClientId; // There are no reasons to modify this.
 @property (nonatomic, copy) NSString *previousSelectedChannelId; // There are no reasons to modify this.
 @property (nonatomic, assign) BOOL temporarilyDisablePreviousSelectionUpdates;
+@property (nonatomic, assign) BOOL temporarilyIgnoreOutlineViewSelectionChanges;
 
 @property (readonly) IRCClient *selectedClient;
 @property (readonly) IRCChannel *selectedChannel;

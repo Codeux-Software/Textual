@@ -351,7 +351,7 @@ There are no other limits. What you see, is what you get.</string>
                                         <segment toolTip="Manage Selection" image="NSActionTemplate" width="48" tag="1">
                                             <nil key="label"/>
                                         </segment>
-                                        <segment toolTip="Open Address Book" image="DFDB1AA0-AF46-4BF6-BC9A-FD171DC5A232" width="46" tag="2">
+                                        <segment toolTip="Open Address Book" image="88351F14-828F-45F9-91E0-68FEB5B667BD" width="46" tag="2">
                                             <nil key="label"/>
                                         </segment>
                                     </segments>
@@ -374,116 +374,128 @@ There are no other limits. What you see, is what you get.</string>
                             <splitView autosaveName="TVCMainWindowSplitView" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EoU-ff-awt" userLabel="Thin Split View" customClass="TVCMainWindowSplitView">
                                 <rect key="frame" x="0.0" y="0.0" width="800" height="439"/>
                                 <subviews>
-                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="GMF-uZ-87p">
+                                    <visualEffectView appearanceType="vibrantDark" blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" id="xuy-nf-gdf">
                                         <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <clipView key="contentView" drawsBackground="NO" id="X67-u8-2Ff">
-                                            <rect key="frame" x="1" y="17" width="238" height="117"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <subviews>
-                                                <outlineView appearanceType="vibrantLight" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" selectionHighlightStyle="sourceList" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationPerLevel="2" outlineTableColumn="maK-Rw-4BV" id="jdZ-2h-ck2" customClass="TVCServerList">
+                                        <subviews>
+                                            <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GMF-uZ-87p">
+                                                <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
+                                                <clipView key="contentView" drawsBackground="NO" id="X67-u8-2Ff">
+                                                    <rect key="frame" x="1" y="17" width="238" height="117"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <outlineView appearanceType="vibrantLight" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" selectionHighlightStyle="sourceList" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationPerLevel="2" outlineTableColumn="maK-Rw-4BV" id="jdZ-2h-ck2" customClass="TVCServerList">
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <size key="intercellSpacing" width="3" height="0.0"/>
+                                                            <color key="backgroundColor" red="0.0" green="0.47843137254901963" blue="1" alpha="0.0" colorSpace="deviceRGB"/>
+                                                            <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                                            <tableColumns>
+                                                                <tableColumn identifier="" width="147" minWidth="40" maxWidth="1000" id="maK-Rw-4BV">
+                                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
+                                                                        <font key="font" metaFont="smallSystem"/>
+                                                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                                                    </tableHeaderCell>
+                                                                    <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="l1S-Nn-2kq">
+                                                                        <font key="font" metaFont="system"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    </textFieldCell>
+                                                                    <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                                    <prototypeCellViews>
+                                                                        <tableCellView identifier="GroupView" id="3NT-zk-e3Z" customClass="TVCServerListCellGroupItem">
+                                                                            <rect key="frame" x="1" y="0.0" width="147" height="17"/>
+                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                            <subviews>
+                                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="MxI-61-AkA">
+                                                                                    <rect key="frame" x="1" y="3" width="145" height="17"/>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="height" constant="17" id="AFM-ex-4ma"/>
+                                                                                    </constraints>
+                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Table View Cell" id="8t2-xa-R30" customClass="TVCServerLisCellTextFieldInterior">
+                                                                                        <font key="font" metaFont="systemBold"/>
+                                                                                        <color key="textColor" red="0.28273809523809523" green="0.28273809523809523" blue="0.28273809523809523" alpha="1" colorSpace="calibratedRGB"/>
+                                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                                        <connections>
+                                                                                            <outlet property="parentCell" destination="3NT-zk-e3Z" id="Yup-S9-62O"/>
+                                                                                        </connections>
+                                                                                    </textFieldCell>
+                                                                                </textField>
+                                                                            </subviews>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="trailing" secondItem="MxI-61-AkA" secondAttribute="trailing" constant="3" id="BJv-nn-gDx"/>
+                                                                                <constraint firstItem="MxI-61-AkA" firstAttribute="leading" secondItem="3NT-zk-e3Z" secondAttribute="leading" constant="3" id="IBu-78-twt"/>
+                                                                                <constraint firstAttribute="bottom" secondItem="MxI-61-AkA" secondAttribute="bottom" constant="3" id="hml-xo-ru0"/>
+                                                                            </constraints>
+                                                                            <connections>
+                                                                                <outlet property="textField" destination="MxI-61-AkA" id="GBY-bZ-j8C"/>
+                                                                            </connections>
+                                                                        </tableCellView>
+                                                                        <tableCellView identifier="ChildView" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" id="3X4-gg-m2P" customClass="TVCServerListCellChildItem">
+                                                                            <rect key="frame" x="1" y="17" width="147" height="17"/>
+                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                            <subviews>
+                                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jmi-yB-Wev">
+                                                                                    <rect key="frame" x="3" y="2" width="16" height="16"/>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="height" constant="16" id="1ol-FP-JgN"/>
+                                                                                        <constraint firstAttribute="width" constant="16" id="MMX-qx-6tn"/>
+                                                                                    </constraints>
+                                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="HRK-4F-2iY"/>
+                                                                                </imageView>
+                                                                                <textField horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="PLe-Wh-US5">
+                                                                                    <rect key="frame" x="25" y="2" width="91" height="16"/>
+                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Table View Cell" id="pUK-O8-NbH" customClass="TVCServerLisCellTextFieldInterior">
+                                                                                        <font key="font" metaFont="cellTitle"/>
+                                                                                        <color key="textColor" red="0.28273809519999998" green="0.28273809519999998" blue="0.28273809519999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                                        <connections>
+                                                                                            <outlet property="parentCell" destination="3X4-gg-m2P" id="tMR-oN-hPG"/>
+                                                                                        </connections>
+                                                                                    </textFieldCell>
+                                                                                </textField>
+                                                                            </subviews>
+                                                                            <constraints>
+                                                                                <constraint firstItem="PLe-Wh-US5" firstAttribute="leading" secondItem="Jmi-yB-Wev" secondAttribute="trailing" constant="8" id="ElA-pA-Ct6"/>
+                                                                                <constraint firstAttribute="bottom" secondItem="PLe-Wh-US5" secondAttribute="bottom" constant="2" id="GY2-CA-kW7"/>
+                                                                                <constraint firstAttribute="trailing" secondItem="PLe-Wh-US5" secondAttribute="trailing" constant="3" id="Ujq-zN-gVO"/>
+                                                                                <constraint firstAttribute="bottom" secondItem="Jmi-yB-Wev" secondAttribute="bottom" constant="2" id="cI4-VS-7GH"/>
+                                                                                <constraint firstItem="Jmi-yB-Wev" firstAttribute="leading" secondItem="3X4-gg-m2P" secondAttribute="leading" constant="3" id="unh-LY-MUH"/>
+                                                                            </constraints>
+                                                                            <connections>
+                                                                                <outlet property="imageView" destination="Jmi-yB-Wev" id="EWS-j2-OXd"/>
+                                                                                <outlet property="textField" destination="PLe-Wh-US5" id="gFv-ap-RGK"/>
+                                                                            </connections>
+                                                                        </tableCellView>
+                                                                    </prototypeCellViews>
+                                                                </tableColumn>
+                                                            </tableColumns>
+                                                            <connections>
+                                                                <outlet property="visualEffectView" destination="xuy-nf-gdf" id="GZ5-bn-o24"/>
+                                                            </connections>
+                                                        </outlineView>
+                                                    </subviews>
+                                                    <nil key="backgroundColor"/>
+                                                </clipView>
+                                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="1Fh-VC-ioi">
+                                                    <rect key="frame" x="1" y="119" width="223" height="15"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <size key="intercellSpacing" width="3" height="0.0"/>
-                                                    <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
-                                                    <tableColumns>
-                                                        <tableColumn identifier="" width="147" minWidth="40" maxWidth="1000" id="maK-Rw-4BV">
-                                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
-                                                                <font key="font" metaFont="smallSystem"/>
-                                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
-                                                            </tableHeaderCell>
-                                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="l1S-Nn-2kq">
-                                                                <font key="font" metaFont="system"/>
-                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                            <prototypeCellViews>
-                                                                <tableCellView identifier="GroupView" id="3NT-zk-e3Z" customClass="TVCServerListCellGroupItem">
-                                                                    <rect key="frame" x="1" y="0.0" width="147" height="17"/>
-                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                                    <subviews>
-                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="MxI-61-AkA">
-                                                                            <rect key="frame" x="1" y="3" width="145" height="17"/>
-                                                                            <constraints>
-                                                                                <constraint firstAttribute="height" constant="17" id="AFM-ex-4ma"/>
-                                                                            </constraints>
-                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Table View Cell" id="8t2-xa-R30" customClass="TVCServerLisCellTextFieldInterior">
-                                                                                <font key="font" metaFont="systemBold"/>
-                                                                                <color key="textColor" red="0.28273809523809523" green="0.28273809523809523" blue="0.28273809523809523" alpha="1" colorSpace="calibratedRGB"/>
-                                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                                <connections>
-                                                                                    <outlet property="parentCell" destination="3NT-zk-e3Z" id="Yup-S9-62O"/>
-                                                                                </connections>
-                                                                            </textFieldCell>
-                                                                        </textField>
-                                                                    </subviews>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="trailing" secondItem="MxI-61-AkA" secondAttribute="trailing" constant="3" id="BJv-nn-gDx"/>
-                                                                        <constraint firstItem="MxI-61-AkA" firstAttribute="leading" secondItem="3NT-zk-e3Z" secondAttribute="leading" constant="3" id="IBu-78-twt"/>
-                                                                        <constraint firstAttribute="bottom" secondItem="MxI-61-AkA" secondAttribute="bottom" constant="3" id="hml-xo-ru0"/>
-                                                                    </constraints>
-                                                                    <connections>
-                                                                        <outlet property="textField" destination="MxI-61-AkA" id="GBY-bZ-j8C"/>
-                                                                    </connections>
-                                                                </tableCellView>
-                                                                <tableCellView identifier="ChildView" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" id="3X4-gg-m2P" customClass="TVCServerListCellChildItem">
-                                                                    <rect key="frame" x="1" y="17" width="117" height="17"/>
-                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                                    <subviews>
-                                                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jmi-yB-Wev">
-                                                                            <rect key="frame" x="3" y="2" width="16" height="16"/>
-                                                                            <constraints>
-                                                                                <constraint firstAttribute="height" constant="16" id="1ol-FP-JgN"/>
-                                                                                <constraint firstAttribute="width" constant="16" id="MMX-qx-6tn"/>
-                                                                            </constraints>
-                                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="HRK-4F-2iY"/>
-                                                                        </imageView>
-                                                                        <textField horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="PLe-Wh-US5">
-                                                                            <rect key="frame" x="25" y="2" width="91" height="16"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Table View Cell" id="pUK-O8-NbH" customClass="TVCServerLisCellTextFieldInterior">
-                                                                                <font key="font" metaFont="cellTitle"/>
-                                                                                <color key="textColor" red="0.28273809519999998" green="0.28273809519999998" blue="0.28273809519999998" alpha="1" colorSpace="calibratedRGB"/>
-                                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                                <connections>
-                                                                                    <outlet property="parentCell" destination="3X4-gg-m2P" id="tMR-oN-hPG"/>
-                                                                                </connections>
-                                                                            </textFieldCell>
-                                                                        </textField>
-                                                                    </subviews>
-                                                                    <constraints>
-                                                                        <constraint firstItem="PLe-Wh-US5" firstAttribute="leading" secondItem="Jmi-yB-Wev" secondAttribute="trailing" constant="8" id="ElA-pA-Ct6"/>
-                                                                        <constraint firstAttribute="bottom" secondItem="PLe-Wh-US5" secondAttribute="bottom" constant="2" id="GY2-CA-kW7"/>
-                                                                        <constraint firstAttribute="trailing" secondItem="PLe-Wh-US5" secondAttribute="trailing" constant="3" id="Ujq-zN-gVO"/>
-                                                                        <constraint firstAttribute="bottom" secondItem="Jmi-yB-Wev" secondAttribute="bottom" constant="2" id="cI4-VS-7GH"/>
-                                                                        <constraint firstItem="Jmi-yB-Wev" firstAttribute="leading" secondItem="3X4-gg-m2P" secondAttribute="leading" constant="3" id="unh-LY-MUH"/>
-                                                                    </constraints>
-                                                                    <connections>
-                                                                        <outlet property="imageView" destination="Jmi-yB-Wev" id="EWS-j2-OXd"/>
-                                                                        <outlet property="textField" destination="PLe-Wh-US5" id="gFv-ap-RGK"/>
-                                                                    </connections>
-                                                                </tableCellView>
-                                                            </prototypeCellViews>
-                                                        </tableColumn>
-                                                    </tableColumns>
-                                                </outlineView>
-                                            </subviews>
-                                            <nil key="backgroundColor"/>
-                                        </clipView>
+                                                </scroller>
+                                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="gqn-hi-JF8">
+                                                    <rect key="frame" x="224" y="17" width="15" height="102"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </scroller>
+                                            </scrollView>
+                                        </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="bp1-gM-zVQ"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="wvA-du-6Fi"/>
+                                            <constraint firstItem="GMF-uZ-87p" firstAttribute="leading" secondItem="xuy-nf-gdf" secondAttribute="leading" id="3to-1T-AeH"/>
+                                            <constraint firstAttribute="bottom" secondItem="GMF-uZ-87p" secondAttribute="bottom" id="EcP-gS-M6w"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="Pxg-hG-VvS"/>
+                                            <constraint firstAttribute="trailing" secondItem="GMF-uZ-87p" secondAttribute="trailing" id="Qg5-w0-Edk"/>
+                                            <constraint firstItem="GMF-uZ-87p" firstAttribute="top" secondItem="xuy-nf-gdf" secondAttribute="top" id="jx5-ab-TrE"/>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="oQd-p4-vgO"/>
                                         </constraints>
-                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="1Fh-VC-ioi">
-                                            <rect key="frame" x="1" y="119" width="223" height="15"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </scroller>
-                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="gqn-hi-JF8">
-                                            <rect key="frame" x="224" y="17" width="15" height="102"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </scroller>
-                                    </scrollView>
+                                    </visualEffectView>
                                     <box title="Title" boxType="custom" borderType="none" titlePosition="noTitle" id="6tX-VC-UtT" userLabel="Chat Box - Title">
                                         <rect key="frame" x="151" y="0.0" width="498" height="439"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -531,8 +543,8 @@ There are no other limits. What you see, is what you get.</string>
                                                                             <rect key="frame" x="1" y="1" width="147" height="16"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
-                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zky-Wi-OqQ">
-                                                                                    <rect key="frame" x="-2" y="0.0" width="151" height="17"/>
+                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zky-Wi-OqQ">
+                                                                                    <rect key="frame" x="-2" y="0.0" width="147" height="16"/>
                                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Label" id="M3m-Nq-BVp" customClass="TVCMemberLisCellTextFieldInterior">
                                                                                         <font key="font" metaFont="cellTitle"/>
                                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1646,7 +1658,7 @@ There are no other limits. What you see, is what you get.</string>
         </customObject>
     </objects>
     <resources>
-        <image name="DFDB1AA0-AF46-4BF6-BC9A-FD171DC5A232" width="20" height="18">
+        <image name="88351F14-828F-45F9-91E0-68FEB5B667BD" width="20" height="18">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGREVYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QDwcI
 ExgdHicoKSoyNTg+QVUkbnVsbNUJCgsMDQ4PEBESViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzXE5T
