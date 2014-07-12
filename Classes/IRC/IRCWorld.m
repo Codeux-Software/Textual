@@ -414,9 +414,6 @@
 	if (reloadUserInterface) {
 		[mainWindow() updateBackgroundColor];
 		
-		[mainWindowServerList() reloadAllDrawings];
-		[mainWindowMemberList() reloadAllDrawings];
-		
 		[mainWindowTextField() redrawOriginPoints];
 	}
 }

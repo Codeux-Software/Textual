@@ -145,6 +145,9 @@
 	[self.memberList updateBackgroundColor];
 	[self.serverList updateBackgroundColor];
 	
+	[self.memberList reloadAllDrawings];
+	[self.serverList reloadAllDrawings];
+	
 	[self.inputTextField updateBackgroundColor];
 	
 	[self.contentView setNeedsDisplay:YES];
