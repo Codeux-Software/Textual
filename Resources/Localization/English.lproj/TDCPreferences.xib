@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6185.7" systemVersion="14A283o" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.7"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCPreferencesController">
@@ -58,7 +58,7 @@
                 <string>string</string>
             </declaredKeys>
             <connections>
-                <binding destination="-2" name="contentArray" keyPath="self.userDefaultsValues.Highlight List -&gt; Primary Matches" id="7uy-tL-YaN">
+                <binding destination="-2" name="contentArray" keyPath="keywordsArrayControllerDataSource" id="GCa-WN-nFf">
                     <dictionary key="options">
                         <bool key="NSHandlesContentAsCompoundValue" value="YES"/>
                     </dictionary>
@@ -70,7 +70,7 @@
                 <string>string</string>
             </declaredKeys>
             <connections>
-                <binding destination="-2" name="contentArray" keyPath="self.userDefaultsValues.Highlight List -&gt; Excluded Matches" id="qd7-cc-Xo1">
+                <binding destination="-2" name="contentArray" keyPath="excludeWordsArrayControllerDataSource" id="zJP-5A-7e8">
                     <dictionary key="options">
                         <bool key="NSHandlesContentAsCompoundValue" value="YES"/>
                     </dictionary>
@@ -176,7 +176,7 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="onPrefPaneSelected:" target="-2" id="6322"/>
-                                                <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.System —&gt; Running Mac OS Mountain Lion Or Newer" id="tsQ-hc-sIv">
+                                                <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.System —> Running Mac OS Mountain Lion Or Newer" id="tsQ-hc-sIv">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                     </dictionary>
@@ -185,7 +185,7 @@
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="lkk-mV-JXI">
                                             <connections>
-                                                <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.System —&gt; Running Mac OS Mountain Lion Or Newer" id="krE-h0-OBE">
+                                                <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.System —> Running Mac OS Mountain Lion Or Newer" id="krE-h0-OBE">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                     </dictionary>
@@ -273,7 +273,6 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="6064"/>
             </connections>
-            <point key="canvasLocation" x="435" y="-39"/>
         </window>
         <customView id="4778" userLabel="General Settings">
             <rect key="frame" x="0.0" y="0.0" width="534" height="250"/>
@@ -379,13 +378,13 @@
                     </buttonCell>
                     <connections>
                         <action selector="onChangedCloudSyncingServices:" target="-2" id="smz-bV-8yF"/>
-                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.System —&gt; Built with iCloud Support" id="lBl-GP-Ced"/>
-                        <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.System —&gt; Running Mac OS Mountain Lion Or Newer" previousBinding="lBl-GP-Ced" id="icv-9e-JjE">
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloud" id="Onn-FF-Q0d"/>
+                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.System —> Built with iCloud Support" id="lBl-GP-Ced"/>
+                        <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.System —> Running Mac OS Mountain Lion Or Newer" previousBinding="lBl-GP-Ced" id="icv-9e-JjE">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloud" id="Onn-FF-Q0d"/>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" tag="13" id="C9P-6C-k4O">
@@ -397,8 +396,8 @@
                     </buttonCell>
                     <connections>
                         <action selector="onPrefPaneSelected:" target="-2" id="or2-cx-aKu"/>
-                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.System —&gt; Built with iCloud Support" id="bE2-3f-jla"/>
-                        <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.System —&gt; Running Mac OS Mountain Lion Or Newer" previousBinding="bE2-3f-jla" id="V2V-Cx-36O">
+                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.System —> Built with iCloud Support" id="bE2-3f-jla"/>
+                        <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.System —> Running Mac OS Mountain Lion Or Newer" previousBinding="bE2-3f-jla" id="V2V-Cx-36O">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
@@ -462,7 +461,7 @@
                         </ciFilter>
                     </backgroundFilters>
                     <connections>
-                        <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.System —&gt; Running Mac OS Mountain Lion Or Newer" id="xpP-pA-uyK"/>
+                        <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.System —> Running Mac OS Mountain Lion Or Newer" id="xpP-pA-uyK"/>
                     </connections>
                 </customView>
             </subviews>
@@ -485,7 +484,7 @@
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="title" destination="5353" id="6505"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DefaultIdentity -&gt; Nickname" id="7dr-nk-Hfv">
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DefaultIdentity -> Nickname" id="7dr-nk-Hfv">
                             <dictionary key="options">
                                 <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                             </dictionary>
@@ -511,7 +510,7 @@
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="title" destination="5356" id="6506"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DefaultIdentity -&gt; Username" id="N4t-bf-ckV">
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DefaultIdentity -> Username" id="N4t-bf-ckV">
                             <dictionary key="options">
                                 <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                             </dictionary>
@@ -537,7 +536,7 @@
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="title" destination="5360" id="6507"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DefaultIdentity -&gt; Realname" id="kfu-NA-dvC">
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DefaultIdentity -> Realname" id="kfu-NA-dvC">
                             <dictionary key="options">
                                 <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                             </dictionary>
@@ -573,7 +572,7 @@
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="title" destination="7584" id="7587"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DefaultIdentity -&gt; AwayNickname" id="aqg-gf-eLf">
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DefaultIdentity -> AwayNickname" id="aqg-gf-eLf">
                             <dictionary key="options">
                                 <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                             </dictionary>
@@ -657,7 +656,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="4879">
-                                <rect key="frame" x="0.0" y="0.0" width="227" height="19"/>
+                                <rect key="frame" x="0.0" y="0.0" width="227" height="152"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -729,7 +728,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="4872">
-                                <rect key="frame" x="0.0" y="0.0" width="227" height="19"/>
+                                <rect key="frame" x="0.0" y="0.0" width="227" height="152"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1047,7 +1046,7 @@
                     <tabViewItems>
                         <tabViewItem label="General" identifier="1" id="5773">
                             <view key="view" id="5776">
-                                <rect key="frame" x="10" y="25" width="495" height="308"/>
+                                <rect key="frame" x="10" y="29" width="495" height="304"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <userGuides>
                                     <userLayoutGuide location="69" affinity="minX"/>
@@ -1055,7 +1054,7 @@
                                 </userGuides>
                                 <subviews>
                                     <popUpButton verticalHuggingPriority="750" id="5777">
-                                        <rect key="frame" x="91" y="262" width="208" height="22"/>
+                                        <rect key="frame" x="91" y="258" width="208" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" id="5842">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1067,7 +1066,7 @@
                                         </connections>
                                     </popUpButton>
                                     <textField verticalHuggingPriority="750" id="5778">
-                                        <rect key="frame" x="43" y="266" width="45" height="17"/>
+                                        <rect key="frame" x="43" y="262" width="45" height="17"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Style:" id="5841">
                                             <font key="font" metaFont="cellTitle"/>
@@ -1076,7 +1075,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <button id="6037">
-                                        <rect key="frame" x="74" y="146" width="289" height="19"/>
+                                        <rect key="frame" x="74" y="142" width="289" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Remove formatting from incoming messages." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6040">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1087,7 +1086,7 @@
                                         </connections>
                                     </button>
                                     <button id="6038">
-                                        <rect key="frame" x="75" y="75" width="279" height="18"/>
+                                        <rect key="frame" x="75" y="71" width="279" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Automatically add scrollback markers." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6039">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1098,21 +1097,21 @@
                                         </connections>
                                     </button>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="6052">
-                                        <rect key="frame" x="26" y="239" width="442" height="5"/>
+                                        <rect key="frame" x="26" y="235" width="442" height="5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="6366">
-                                        <rect key="frame" x="26" y="184" width="442" height="5"/>
+                                        <rect key="frame" x="26" y="180" width="442" height="5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <textField verticalHuggingPriority="750" id="6367">
-                                        <rect key="frame" x="165" y="205" width="180" height="18"/>
+                                        <rect key="frame" x="165" y="201" width="180" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="LOL" drawsBackground="YES" id="6380">
                                             <font key="font" metaFont="smallSystem"/>
@@ -1120,13 +1119,13 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                         <connections>
-                                            <binding destination="-2" name="displayPatternValue2" keyPath="themeChannelViewFontSize" previousBinding="6590" id="BcK-Ga-74H">
+                                            <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.Theme -> Channel Font Preference Enabled" id="faJ-Q9-Qae"/>
+                                            <binding destination="-2" name="displayPatternValue1" keyPath="themeChannelViewFontName" id="6590">
                                                 <dictionary key="options">
                                                     <string key="NSDisplayPattern">%{value1}@ %{value2}@pt.</string>
                                                 </dictionary>
                                             </binding>
-                                            <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.Theme -&gt; Channel Font Preference Enabled" id="faJ-Q9-Qae"/>
-                                            <binding destination="-2" name="displayPatternValue1" keyPath="themeChannelViewFontName" id="6590">
+                                            <binding destination="-2" name="displayPatternValue2" keyPath="themeChannelViewFontSize" previousBinding="6590" id="BcK-Ga-74H">
                                                 <dictionary key="options">
                                                     <string key="NSDisplayPattern">%{value1}@ %{value2}@pt.</string>
                                                 </dictionary>
@@ -1134,7 +1133,7 @@
                                         </connections>
                                     </textField>
                                     <textField verticalHuggingPriority="750" id="6373">
-                                        <rect key="frame" x="77" y="206" width="84" height="16"/>
+                                        <rect key="frame" x="77" y="202" width="84" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Channel font:" id="6374">
                                             <font key="font" metaFont="cellTitle"/>
@@ -1143,7 +1142,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <button verticalHuggingPriority="750" id="6388">
-                                        <rect key="frame" x="353" y="204" width="63" height="19"/>
+                                        <rect key="frame" x="353" y="200" width="63" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="roundRect" title="Select" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6389">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1152,11 +1151,11 @@
                                         <connections>
                                             <accessibilityConnection property="title" destination="6373" id="6495"/>
                                             <action selector="onSelectNewFont:" target="-2" id="7364"/>
-                                            <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.Theme -&gt; Channel Font Preference Enabled" id="RaZ-77-4P2"/>
+                                            <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.Theme -> Channel Font Preference Enabled" id="RaZ-77-4P2"/>
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" id="6395">
-                                        <rect key="frame" x="308" y="264" width="140" height="19"/>
+                                        <rect key="frame" x="308" y="260" width="140" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="roundRect" title="Browse Style Files" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6396">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1167,18 +1166,18 @@
                                         </connections>
                                     </button>
                                     <button id="7145">
-                                        <rect key="frame" x="75" y="47" width="198" height="18"/>
+                                        <rect key="frame" x="75" y="43" width="198" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Show general event messages." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="7146">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DisplayEventInLogView -&gt; Join, Part, Quit" id="RAa-Pz-r0E"/>
+                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DisplayEventInLogView -> Join, Part, Quit" id="RAa-Pz-r0E"/>
                                         </connections>
                                     </button>
                                     <button id="efy-Tp-Fqe">
-                                        <rect key="frame" x="74" y="103" width="325" height="18"/>
+                                        <rect key="frame" x="74" y="99" width="325" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Remember old messages when closing Textual." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="mIl-C9-fqw">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1189,7 +1188,7 @@
                                         </connections>
                                     </button>
                                     <scrollView borderType="none" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="jla-12-9TQ">
-                                        <rect key="frame" x="91" y="119" width="329" height="19"/>
+                                        <rect key="frame" x="91" y="117" width="329" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="N3v-41-k1h">
                                             <rect key="frame" x="0.0" y="0.0" width="329" height="19"/>
@@ -1486,7 +1485,7 @@
                                         </scroller>
                                     </scrollView>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="wJI-7E-rvx">
-                                        <rect key="frame" x="92" y="28" width="239" height="14"/>
+                                        <rect key="frame" x="92" y="24" width="239" height="14"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="These include join, part, and quit messages. " id="H8R-Xi-EE0">
                                             <font key="font" metaFont="smallSystem"/>
@@ -1511,7 +1510,7 @@
                                         </buttonCell>
                                         <connections>
                                             <action selector="onChangedStyle:" target="-2" id="XTo-Jo-jPA"/>
-                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DisplayEventInLogView -&gt; Inline Media" id="3PH-G3-MAe"/>
+                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DisplayEventInLogView -> Inline Media" id="3PH-G3-MAe"/>
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" id="56K-8v-xe7">
@@ -1929,7 +1928,7 @@
                                     <comboBox verticalHuggingPriority="750" id="6013">
                                         <rect key="frame" x="163" y="268" width="227" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="&lt;%@%n&gt;" drawsBackground="YES" completes="NO" numberOfVisibleItems="100" id="6028">
+                                        <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="&lt;%@%n>" drawsBackground="YES" completes="NO" numberOfVisibleItems="100" id="6028">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1945,12 +1944,12 @@
                                         <connections>
                                             <accessibilityConnection property="title" destination="6391" id="6498"/>
                                             <action selector="onChangedStyle:" target="-2" id="7372"/>
-                                            <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.Theme -&gt; Nickname Format Preference Enabled" id="XOk-jb-hsc">
+                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.Theme -> Nickname Format" id="WW5-Ts-dld"/>
+                                            <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.Theme -> Nickname Format Preference Enabled" id="XOk-jb-hsc">
                                                 <dictionary key="options">
                                                     <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
                                                 </dictionary>
                                             </binding>
-                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.Theme -&gt; Nickname Format" id="WW5-Ts-dld"/>
                                         </connections>
                                     </comboBox>
                                     <comboBox verticalHuggingPriority="750" id="6015">
@@ -1970,12 +1969,12 @@
                                         <connections>
                                             <accessibilityConnection property="title" destination="6393" id="6499"/>
                                             <action selector="onChangedStyle:" target="-2" id="7373"/>
-                                            <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.Theme -&gt; Timestamp Format Preference Enabled" id="moR-R0-G4c">
+                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.Theme -> Timestamp Format" id="g1j-Mf-nn6"/>
+                                            <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.Theme -> Timestamp Format Preference Enabled" id="moR-R0-G4c">
                                                 <dictionary key="options">
                                                     <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
                                                 </dictionary>
                                             </binding>
-                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.Theme -&gt; Timestamp Format" id="g1j-Mf-nn6"/>
                                         </connections>
                                     </comboBox>
                                     <button id="6231">
@@ -2047,7 +2046,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" id="6551">
-                                                    <rect key="frame" x="0.0" y="0.0" width="376" height="14"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="376" height="13"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2214,7 +2213,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" id="hXp-w6-0tE">
-                                                    <rect key="frame" x="0.0" y="0.0" width="314" height="14"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="314" height="13"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2410,7 +2409,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" id="5174">
-                                <rect key="frame" x="0.0" y="0.0" width="468" height="19"/>
+                                <rect key="frame" x="0.0" y="0.0" width="468" height="208"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2533,7 +2532,7 @@
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="title" destination="6076" id="7063"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.IRCopDefaultLocalizaiton -&gt; Kill Reason" id="BIE-6X-K4X"/>
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.IRCopDefaultLocalizaiton -> Kill Reason" id="BIE-6X-K4X"/>
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="7054">
@@ -2546,7 +2545,7 @@
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="title" destination="6080" id="7064"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.IRCopDefaultLocalizaiton -&gt; G:Line Reason" id="Krg-J1-Jdr"/>
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.IRCopDefaultLocalizaiton -> G:Line Reason" id="Krg-J1-Jdr"/>
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="7059">
@@ -2559,7 +2558,7 @@
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="title" destination="6082" id="7065"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.IRCopDefaultLocalizaiton -&gt; Shun Reason" id="Tgr-kT-dwT"/>
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.IRCopDefaultLocalizaiton -> Shun Reason" id="Tgr-kT-dwT"/>
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" id="7282">
@@ -2909,7 +2908,7 @@
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         <connections>
-                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ChannelOperatorDefaultLocalization -&gt; Kick Reason" id="cFR-P1-nz6"/>
+                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ChannelOperatorDefaultLocalization -> Kick Reason" id="cFR-P1-nz6"/>
                         </connections>
                     </textFieldCell>
                     <connections>
@@ -3021,7 +3020,7 @@
                     <tabViewItems>
                         <tabViewItem label="General" identifier="1" id="6913">
                             <view key="view" id="6914">
-                                <rect key="frame" x="10" y="25" width="495" height="380"/>
+                                <rect key="frame" x="10" y="29" width="495" height="376"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <userGuides>
                                     <userLayoutGuide location="35" affinity="maxY"/>
@@ -3039,7 +3038,7 @@
                                         </connections>
                                     </button>
                                     <button id="6702">
-                                        <rect key="frame" x="10" y="211" width="357" height="18"/>
+                                        <rect key="frame" x="10" y="207" width="357" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Use &quot;x&quot; to indicate user with no mode set in user list." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6703">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3050,7 +3049,7 @@
                                         </connections>
                                     </button>
                                     <button id="7255">
-                                        <rect key="frame" x="10" y="239" width="201" height="18"/>
+                                        <rect key="frame" x="10" y="235" width="201" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Darken main window colors." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7256">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3058,19 +3057,19 @@
                                         </buttonCell>
                                         <connections>
                                             <action selector="onChangedSidebarColorInversion:" target="-2" id="7369"/>
-                                            <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.Theme -&gt; Invert Sidebar Colors Preference Enabled" id="DA0-iA-guy"/>
                                             <binding destination="-2" name="value" keyPath="self.userDefaultsValues.InvertSidebarColors" id="v2G-rG-4M1"/>
+                                            <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.Theme -> Invert Sidebar Colors Preference Enabled" id="DA0-iA-guy"/>
                                         </connections>
                                     </button>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7332">
-                                        <rect key="frame" x="24" y="299" width="442" height="5"/>
+                                        <rect key="frame" x="24" y="295" width="442" height="5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <button id="7503">
-                                        <rect key="frame" x="10" y="267" width="284" height="18"/>
+                                        <rect key="frame" x="10" y="263" width="284" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Use large font for the server list and user list." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7504">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3082,7 +3081,7 @@
                                         </connections>
                                     </button>
                                     <button id="7578">
-                                        <rect key="frame" x="10" y="183" width="357" height="18"/>
+                                        <rect key="frame" x="10" y="179" width="357" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Place known server staff members at top of user list." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="7579">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3094,7 +3093,7 @@
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" id="kL4-Js-8e7">
-                                        <rect key="frame" x="42" y="104" width="134" height="16"/>
+                                        <rect key="frame" x="42" y="100" width="134" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Window Transparency:" id="bNd-e3-dZf">
                                             <font key="font" metaFont="cellTitle"/>
@@ -3103,7 +3102,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <slider verticalHuggingPriority="750" id="D0f-oB-97t">
-                                        <rect key="frame" x="209" y="103" width="197" height="15"/>
+                                        <rect key="frame" x="209" y="99" width="197" height="15"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="0.20000000000000001" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="f75-2j-XO9"/>
                                         <connections>
@@ -3113,7 +3112,7 @@
                                         </connections>
                                     </slider>
                                     <textField verticalHuggingPriority="750" id="2Db-0T-2Gc">
-                                        <rect key="frame" x="181" y="105" width="25" height="11"/>
+                                        <rect key="frame" x="181" y="101" width="25" height="11"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="80%" id="k58-Xg-O9e">
                                             <font key="font" metaFont="miniSystem"/>
@@ -3122,7 +3121,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" id="k84-6p-82M">
-                                        <rect key="frame" x="412" y="105" width="23" height="11"/>
+                                        <rect key="frame" x="412" y="101" width="23" height="11"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0%" id="z0u-Fe-ni8">
                                             <font key="font" metaFont="miniSystem"/>
@@ -3131,14 +3130,14 @@
                                         </textFieldCell>
                                     </textField>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="SKs-oC-6WA">
-                                        <rect key="frame" x="25" y="136" width="442" height="5"/>
+                                        <rect key="frame" x="25" y="132" width="442" height="5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <button id="891-QM-5Ov">
-                                        <rect key="frame" x="10" y="155" width="357" height="18"/>
+                                        <rect key="frame" x="10" y="151" width="357" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Save the state of queries between restarts." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="8az-P4-nKq">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3225,7 +3224,7 @@
                                         </popUpButtonCell>
                                         <connections>
                                             <accessibilityConnection property="title" destination="7094" id="7121"/>
-                                            <binding destination="-2" name="selectedTag" keyPath="self.userDefaultsValues.Keyboard -&gt; Tab Key Action" id="VHR-4r-F1l"/>
+                                            <binding destination="-2" name="selectedTag" keyPath="self.userDefaultsValues.Keyboard -> Tab Key Action" id="VHR-4r-F1l"/>
                                         </connections>
                                     </popUpButton>
                                     <textField verticalHuggingPriority="750" id="7084">
@@ -3251,7 +3250,7 @@
                                             <accessibilityConnection property="title" destination="7084" id="7124"/>
                                             <accessibilityConnection property="title" destination="7084" id="7125"/>
                                             <accessibilityConnection property="title" destination="7084" id="7126"/>
-                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.Keyboard -&gt; Tab Key Completion Suffix" id="ONP-kc-WXb">
+                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.Keyboard -> Tab Key Completion Suffix" id="ONP-kc-WXb">
                                                 <dictionary key="options">
                                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                                 </dictionary>
@@ -3316,7 +3315,7 @@
                                         <connections>
                                             <accessibilityConnection property="title" destination="7089" id="7129"/>
                                             <accessibilityConnection property="title" destination="7089" id="7130"/>
-                                            <binding destination="-2" name="selectedIndex" keyPath="self.userDefaultsValues.Keyboard -&gt; Command+W Action" id="m5Q-TC-zy7"/>
+                                            <binding destination="-2" name="selectedIndex" keyPath="self.userDefaultsValues.Keyboard -> Command+W Action" id="m5Q-TC-zy7"/>
                                         </connections>
                                     </popUpButton>
                                     <textField verticalHuggingPriority="750" id="7091">
@@ -3328,7 +3327,7 @@
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                         <connections>
-                                            <binding destination="-2" name="displayPatternValue1" keyPath="self.userDefaultsValues.Keyboard -&gt; Tab Key Completion Suffix" id="eaz-YP-sWm">
+                                            <binding destination="-2" name="displayPatternValue1" keyPath="self.userDefaultsValues.Keyboard -> Tab Key Completion Suffix" id="eaz-YP-sWm">
                                                 <dictionary key="options">
                                                     <string key="NSDisplayPattern">"JohnDoe%{value1}@…"</string>
                                                 </dictionary>
@@ -3499,7 +3498,7 @@
                                         </popUpButtonCell>
                                         <connections>
                                             <action selector="onChangedMainInputTextFieldFontSize:" target="-2" id="Amf-b7-S5G"/>
-                                            <binding destination="-2" name="selectedTag" keyPath="self.userDefaultsValues.Main Input Text Field -&gt; Font Size" id="zad-kU-LZd"/>
+                                            <binding destination="-2" name="selectedTag" keyPath="self.userDefaultsValues.Main Input Text Field -> Font Size" id="zad-kU-LZd"/>
                                         </connections>
                                     </popUpButton>
                                     <button id="kkp-rn-ifq">
@@ -3563,7 +3562,7 @@
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="onChangedUserListModeColor:" target="-2" id="7562"/>
-                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.User List Mode Badge Colors —&gt; +y" id="eiE-X0-enT">
+                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.User List Mode Badge Colors —> +y" id="eiE-X0-enT">
                                                 <dictionary key="options">
                                                     <string key="NSValueTransformerName">NSUnarchiveFromData</string>
                                                 </dictionary>
@@ -3585,7 +3584,7 @@
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="onChangedUserListModeColor:" target="-2" id="7561"/>
-                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.User List Mode Badge Colors —&gt; +q" id="8NP-Ny-qaD">
+                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.User List Mode Badge Colors —> +q" id="8NP-Ny-qaD">
                                                 <dictionary key="options">
                                                     <string key="NSValueTransformerName">NSUnarchiveFromData</string>
                                                 </dictionary>
@@ -3607,7 +3606,7 @@
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="onChangedUserListModeColor:" target="-2" id="7560"/>
-                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.User List Mode Badge Colors —&gt; +a" id="IGB-RC-CIC">
+                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.User List Mode Badge Colors —> +a" id="IGB-RC-CIC">
                                                 <dictionary key="options">
                                                     <string key="NSValueTransformerName">NSUnarchiveFromData</string>
                                                 </dictionary>
@@ -3629,7 +3628,7 @@
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="onChangedUserListModeColor:" target="-2" id="7559"/>
-                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.User List Mode Badge Colors —&gt; +o" id="bIk-0R-Fun">
+                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.User List Mode Badge Colors —> +o" id="bIk-0R-Fun">
                                                 <dictionary key="options">
                                                     <string key="NSValueTransformerName">NSUnarchiveFromData</string>
                                                 </dictionary>
@@ -3651,7 +3650,7 @@
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="onChangedUserListModeColor:" target="-2" id="7558"/>
-                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.User List Mode Badge Colors —&gt; +h" id="k8b-d5-jHh">
+                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.User List Mode Badge Colors —> +h" id="k8b-d5-jHh">
                                                 <dictionary key="options">
                                                     <string key="NSValueTransformerName">NSUnarchiveFromData</string>
                                                 </dictionary>
@@ -3673,7 +3672,7 @@
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="onChangedUserListModeColor:" target="-2" id="7557"/>
-                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.User List Mode Badge Colors —&gt; +v" id="60O-NK-gJH">
+                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.User List Mode Badge Colors —> +v" id="60O-NK-gJH">
                                                 <dictionary key="options">
                                                     <string key="NSValueTransformerName">NSUnarchiveFromData</string>
                                                 </dictionary>
@@ -3767,7 +3766,7 @@
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ApplyCommandToAllConnections -&gt; amsg" id="F4X-v4-E93"/>
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ApplyCommandToAllConnections -> amsg" id="F4X-v4-E93"/>
                     </connections>
                 </button>
                 <button id="5193">
@@ -3778,7 +3777,7 @@
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ApplyCommandToAllConnections -&gt; away" id="Nbo-2g-Fze"/>
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ApplyCommandToAllConnections -> away" id="Nbo-2g-Fze"/>
                     </connections>
                 </button>
                 <button id="5195">
@@ -3789,7 +3788,7 @@
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ApplyCommandToAllConnections -&gt; nick" id="eec-Qu-zg0"/>
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ApplyCommandToAllConnections -> nick" id="eec-Qu-zg0"/>
                     </connections>
                 </button>
                 <button id="5618">
@@ -3800,7 +3799,7 @@
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ApplyCommandToAllConnections -&gt; clearall" id="rtb-cR-CXO"/>
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ApplyCommandToAllConnections -> clearall" id="rtb-cR-CXO"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="6734">
@@ -4089,7 +4088,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="selectedTag" keyPath="self.userDefaultsValues.File Transfers -&gt; File Transfer Request Reply Action" id="I0j-Ii-E6W"/>
+                        <binding destination="-2" name="selectedTag" keyPath="self.userDefaultsValues.File Transfers -> File Transfer Request Reply Action" id="I0j-Ii-E6W"/>
                     </connections>
                 </popUpButton>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="55S-aE-bqT">
@@ -4116,7 +4115,7 @@
                     </popUpButtonCell>
                     <connections>
                         <action selector="onFileTransferIPAddressDetectionMethodChanged:" target="-2" id="9TF-3z-Q0V"/>
-                        <binding destination="-2" name="selectedTag" keyPath="self.userDefaultsValues.File Transfers -&gt; File Transfer IP Address Detection Method" id="uQQ-gd-5e7"/>
+                        <binding destination="-2" name="selectedTag" keyPath="self.userDefaultsValues.File Transfers -> File Transfer IP Address Detection Method" id="uQQ-gd-5e7"/>
                     </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" id="fmg-Fb-LTz">
@@ -4128,7 +4127,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.File Transfers -&gt; File Transfer Manually Entered IP Address" id="9RJ-Ro-kQ7"/>
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.File Transfers -> File Transfer Manually Entered IP Address" id="9RJ-Ro-kQ7"/>
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="wk3-Gl-h5g">
@@ -4224,7 +4223,7 @@
                                 <menuItem title="Select Destination…" tag="2" id="XJE-U8-Az3"/>
                                 <menuItem title="Clear Destination" tag="3" id="T6x-Hf-LKx">
                                     <connections>
-                                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.File Transfers -&gt; File Transfer Download Folder Bookmark" id="EhE-G6-GQT">
+                                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.File Transfers -> File Transfer Download Folder Bookmark" id="EhE-G6-GQT">
                                             <dictionary key="options">
                                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                                             </dictionary>
@@ -4246,7 +4245,7 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.File Transfers -&gt; File Transfer Requests Use Reverse DCC" id="ru3-Hk-578"/>
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.File Transfers -> File Transfer Requests Use Reverse DCC" id="ru3-Hk-578"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="Jzj-cm-m3i">
@@ -4308,10 +4307,10 @@
         </customView>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="11" height="11"/>
+        <image name="NSAddTemplate" width="8" height="8"/>
         <image name="NSAdvanced" width="32" height="32"/>
         <image name="NSColorPanel" width="32" height="32"/>
-        <image name="NSRemoveTemplate" width="11" height="11"/>
+        <image name="NSRemoveTemplate" width="8" height="8"/>
         <image name="NSUser" width="32" height="32"/>
         <image name="TPWTB_Alerts" width="32" height="32"/>
         <image name="TPWTB_Extensions" width="32" height="32"/>
