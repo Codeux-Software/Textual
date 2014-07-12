@@ -38,7 +38,7 @@
 #import "TextualApplication.h"
 
 @interface NSFileManager (TXFileManagerHelper)
-- (id <NSObject, NSCopying, NSCoding>)cloudUbiquityIdentityToken;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) id<NSObject, NSCopying, NSCoding> cloudUbiquityIdentityToken;
 
 - (BOOL)lockItemAtPath:(NSString *)path error:(NSError **)error;
 - (BOOL)unlockItemAtPath:(NSString *)path error:(NSError **)error;

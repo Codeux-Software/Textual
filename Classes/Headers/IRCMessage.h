@@ -52,17 +52,17 @@
 - (void)parseLine:(NSString *)line;
 - (void)parseLine:(NSString *)line forClient:(IRCClient *)client;
 
-- (NSString *)senderNickname;
-- (NSString *)senderUsername;
-- (NSString *)senderAddress;
-- (NSString *)senderHostmask;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *senderNickname;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *senderUsername;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *senderAddress;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *senderHostmask;
 
-- (BOOL)senderIsServer;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL senderIsServer;
 
-- (NSInteger)paramsCount;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger paramsCount;
 
 - (NSString *)paramAt:(NSInteger)index;
 
-- (NSString *)sequence;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *sequence;
 - (NSString *)sequence:(NSInteger)index;
 @end

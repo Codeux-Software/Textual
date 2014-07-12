@@ -45,17 +45,17 @@
 - (void)unloadPlugins;
 
 /* Information about loaded plugins. */
-- (NSArray *)allLoadedExtensions;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allLoadedExtensions;
 
-- (NSArray *)dangerousCommandNames;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *dangerousCommandNames;
 
-- (NSArray *)supportedUserInputCommands;
-- (NSArray *)supportedServerInputCommands;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *supportedUserInputCommands;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *supportedServerInputCommands;
 
-- (id)supportedAppleScriptCommands;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) id supportedAppleScriptCommands;
 - (id)supportedAppleScriptCommands:(BOOL)returnPathInfo;
 
-- (NSArray *)pluginsWithPreferencePanes;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *pluginsWithPreferencePanes;
 
 - (NSArray *)outputRulesForCommand:(NSString *)command;
 

@@ -38,13 +38,13 @@
 #import "TextualApplication.h"
 
 @interface NSOutlineView (TXOutlineViewHelper)
-- (NSArray *)groupItems;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *groupItems;
 - (BOOL)isGroupItem:(id)item;
 
 - (NSArray *)rowsInGroup:(id)group;
 - (NSArray *)rowsFromParentGroup:(id)child;
 
-- (NSInteger)countSelectedRows;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger countSelectedRows;
 
 - (void)selectItemAtIndex:(NSInteger)index;
 @end

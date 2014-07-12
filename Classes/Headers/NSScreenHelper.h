@@ -38,5 +38,5 @@
 #import "TextualApplication.h"
 
 @interface NSScreen (TXScreenHelper)
-- (BOOL)runningInHighResolutionMode;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL runningInHighResolutionMode;
 @end

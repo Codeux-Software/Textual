@@ -39,9 +39,9 @@
 #import "TextualApplication.h"
 
 @interface NSData (TXDataHelper)
-- (BOOL)isValidUTF8;
+@property (NS_NONATOMIC_IOSONLY, getter=isValidUTF8, readonly) BOOL validUTF8;
 
-- (NSString *)sha1;
-- (NSString *)sha256;
-- (NSString *)md5;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *sha1;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *sha256;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *md5;
 @end

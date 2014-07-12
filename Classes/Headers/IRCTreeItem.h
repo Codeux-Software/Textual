@@ -57,6 +57,6 @@
 
 - (void)resetState;
 
-- (NSInteger)numberOfChildren;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfChildren;
 - (IRCTreeItem *)childAtIndex:(NSInteger)index;
 @end

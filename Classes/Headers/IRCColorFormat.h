@@ -49,7 +49,7 @@ typedef enum IRCTextFormatterEffectType : NSInteger {
 #define IRCTextFormatterMaximumRainbowTextFormattingLength   300
 
 @interface NSAttributedString (IRCTextFormatter)
-- (NSString *)attributedStringToASCIIFormatting;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *attributedStringToASCIIFormatting;
 - (NSString *)attributedStringToASCIIFormatting:(NSMutableAttributedString **)string
                                        lineType:(TVCLogLineType)type
                                         channel:(NSString *)channelName

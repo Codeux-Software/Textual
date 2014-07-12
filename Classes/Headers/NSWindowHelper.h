@@ -41,9 +41,9 @@
 @interface NSWindow (TXWindowHelper)
 - (void)exactlyCenterWindow;
 
-- (BOOL)runningInHighResolutionMode;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL runningInHighResolutionMode;
 
-- (BOOL)isInFullscreenMode;
+@property (NS_NONATOMIC_IOSONLY, getter=isInFullscreenMode, readonly) BOOL inFullscreenMode;
 
 - (void)saveWindowStateUsingKeyword:(NSString *)keyword;
 - (void)restoreWindowStateUsingKeyword:(NSString *)keyword;

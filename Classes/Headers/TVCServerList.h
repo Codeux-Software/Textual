@@ -59,7 +59,7 @@
 
 - (void)updateBackgroundColor;
 
-- (id)userInterfaceObjects;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) id userInterfaceObjects;
 @end
 
 @interface TVCServerListMavericksUserInterface : NSObject

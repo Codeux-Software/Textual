@@ -100,7 +100,7 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 
 - (void)maybeToggleFullscreenAfterLaunch;
 
-- (BOOL)isInactive;
+@property (NS_NONATOMIC_IOSONLY, getter=isInactive, readonly) BOOL inactive;
 
 - (void)navigateChannelEntries:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType;
 - (void)navigateServerEntries:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType;
@@ -124,8 +124,8 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 - (void)selectPreviousUnreadChannel:(NSEvent *)e;
 - (void)selectPreviousActiveChannel:(NSEvent *)e;
 
-- (BOOL)isMemberListVisible;
-- (BOOL)isServerListVisible;
+@property (NS_NONATOMIC_IOSONLY, getter=isMemberListVisible, readonly) BOOL memberListVisible;
+@property (NS_NONATOMIC_IOSONLY, getter=isServerListVisible, readonly) BOOL serverListVisible;
 
 - (NSRect)defaultWindowFrame;
 

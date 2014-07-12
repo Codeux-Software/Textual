@@ -38,16 +38,16 @@
 #import "TextualApplication.h"
 
 @interface NSTextField (TXTextFieldHelper)
-- (NSString *)trimmedStringValue;
-- (NSString *)firstTokenStringValue;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *trimmedStringValue;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *firstTokenStringValue;
 @end
 
 @interface NSTextView (TXTextViewHelper)
 - (void)focus;
-- (BOOL)isFocused;
+@property (NS_NONATOMIC_IOSONLY, getter=isFocused, readonly) BOOL focused;
 
-- (NSRange)fullSelectionRange;
-- (NSInteger)stringLength;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSRange fullSelectionRange;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger stringLength;
 
-- (NSScrollView *)scrollView;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSScrollView *scrollView;
 @end

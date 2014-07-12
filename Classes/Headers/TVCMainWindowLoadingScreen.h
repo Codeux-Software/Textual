@@ -52,7 +52,7 @@
 - (void)popWelcomeAddServerView;
 - (void)popLoadingConfigurationView;
 
-- (BOOL)viewIsVisible;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL viewIsVisible;
 
 - (void)hideAll;
 - (void)hideAll:(BOOL)animate;

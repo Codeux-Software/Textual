@@ -91,16 +91,16 @@ typedef enum TVCLogLineMemberType : NSInteger {
 - (TVCLogLine *)initWithRawJSONData:(NSData *)input; // This automatically calls the appropriate initWithJSON… call.
 - (TVCLogLine *)initWithJSONRepresentation:(NSDictionary *)input;
 
-- (NSData *)jsonDictionaryRepresentation;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSData *jsonDictionaryRepresentation;
 
-- (NSString *)formattedTimestamp;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *formattedTimestamp;
 - (NSString *)formattedTimestampWithForcedFormat:(NSString *)format;
 
 - (NSString *)formattedNickname:(IRCChannel *)owner;
 - (NSString *)formattedNickname:(IRCChannel *)owner withForcedFormat:(NSString *)format;
 
-- (NSString *)lineTypeString;
-- (NSString *)memberTypeString;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *lineTypeString;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *memberTypeString;
 
 - (NSString *)renderedBodyForTranscriptLogInChannel:(IRCChannel *)channel;
 
