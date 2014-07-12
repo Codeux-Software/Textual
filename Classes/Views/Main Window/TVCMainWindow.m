@@ -107,6 +107,11 @@
 		
 		[self setupTree];
 		
+		[self.memberList updateBackgroundColor];
+		[self.serverList updateBackgroundColor];
+		
+		[self.inputTextField updateBackgroundColor];
+		
 		[self.memberList setTarget:menuController()];
 		[self.memberList setDoubleAction:@selector(memberInMemberListDoubleClicked:)];
 

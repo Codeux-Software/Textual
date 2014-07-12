@@ -417,6 +417,8 @@
 
 		[mainWindowMemberList() updateBackgroundColor];
 		[mainWindowMemberList() reloadAllDrawings];
+		
+		[mainWindowTextField() updateBackgroundColor];
 
 		[[mainWindow() contentSplitView] setNeedsDisplay:YES];
 

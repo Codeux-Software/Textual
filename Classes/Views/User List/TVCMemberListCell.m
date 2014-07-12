@@ -160,7 +160,7 @@
 			 @"rowIndex"			: @(rowIndex),
 			 @"isInverted"			: @([TPCPreferences invertSidebarColors]),
 			 @"isRetina"			: @([mainWindow() runningInHighResolutionMode]),
-			 @"isInactiveWindow"	: @([mainWindow() isInactive] == NO),
+			 @"isInactiveWindow"	: @([mainWindow() isInactive]),
 			 @"isKeyWindow"			: @([mainWindow() isKeyWindow]),
 			 @"isSelected"			: @([mainWindowMemberList() isRowSelected:rowIndex]),
 			 @"isGraphite"			: @([NSColor currentControlTint] == NSGraphiteControlTint)
@@ -173,6 +173,44 @@
 #pragma mark Row View Cell
 
 @implementation TVCMemberListRowCell
+
+- (NSTableViewSelectionHighlightStyle)selectionHighlightStyle
+{
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		if ([TVCMemberListSharedUserInterface yosemiteIsUsingVibrantDarkMode]) {
+			return NSTableViewSelectionHighlightStyleRegular;
+		} else {
+			return NSTableViewSelectionHighlightStyleSourceList;
+		}
+	} else {
+		return NSTableViewSelectionHighlightStyleSourceList;
+	}
+}
+
+- (void)drawSelectionInRect:(NSRect)dirtyRect
+{
+	if ([self needsToDrawRect:dirtyRect]) {
+		id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
+		
+		NSColor *selectionColor;
+		
+		if ([mainWindow() isInactive]) {
+			selectionColor = [userInterfaceObjects rowSelectionColorForInactiveWindow];
+		} else {
+			selectionColor = [userInterfaceObjects rowSelectionColorForActiveWindow];
+		}
+		
+		if (selectionColor) {
+			NSRect selectionRect = [self bounds];
+			
+			[selectionColor set];
+			
+			NSRectFill(selectionRect);
+		} else {
+			[super drawSelectionInRect:dirtyRect];
+		}
+	}
+}
 
 - (BOOL)isEmphasized
 {
@@ -196,7 +234,9 @@
 	cellFrame.origin.x = [userInterfaceObjects textCellLeftMargin];
 	cellFrame.origin.y = [userInterfaceObjects textCellBottomMargin];
 	
-	[super drawWithFrame:cellFrame inView:controlView];
+	cellFrame.size.width -= [userInterfaceObjects textCellLeftMargin];
+	
+	[self drawInteriorWithFrameForYosemite:cellFrame withUserInterfaceObject:userInterfaceObjects];
 }
 
 #pragma mark -
@@ -263,7 +303,11 @@
 	} else if ([assosicatedUser v]) {
 		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_V];
 	} else {
-		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor];
+		if ([mainWindow() isInactive]) {
+			backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColorForInactiveWindow];
+		} else {
+			backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColorForActiveWindow];
+		}
 	}
 	
 	/* Maybe set a default mark. */
@@ -366,6 +410,7 @@
 	}
 }
 
+
 - (void)drawInteriorWithFrameForYosemite:(NSRect)cellFrame withUserInterfaceObject:(id)interfaceObject
 {
 	/* Gather basic context information. */
@@ -390,15 +435,23 @@
 	
 	if (isSelected == NO) {
 		if ([assosicatedUser isAway] == NO) {
-			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject normalCellTextColor] range:stringLengthRange];
+			if (isWindowInactive) {
+				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject normalCellTextColorForInactiveWindow] range:stringLengthRange];
+			} else {
+				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject normalCellTextColorForActiveWindow] range:stringLengthRange];
+			}
 		} else {
-			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject awayUserCellTextColor] range:stringLengthRange];
+			if (isWindowInactive) {
+				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject awayUserCellTextColorForInactiveWindow] range:stringLengthRange];
+			} else {
+				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject awayUserCellTextColorForActiveWindow] range:stringLengthRange];
+			}
 		}
 	} else {
-		if (isKeyWindow || isWindowInactive) {
-			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject selectedCellTextColorForActiveWindow] range:stringLengthRange];
-		} else {
+		if (isKeyWindow == NO || isWindowInactive) {
 			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject selectedCellTextColorForInactiveWindow] range:stringLengthRange];
+		} else {
+			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject selectedCellTextColorForActiveWindow] range:stringLengthRange];
 		}
 	}
 	
