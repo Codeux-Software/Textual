@@ -499,7 +499,7 @@
 		for (IRCChannel *c in self.channels) {
 			[c preferencesChanged];
 
-			if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify]) {
+			if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify] == NO) {
 				if ([c numberOfMembers] > [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
 					for (IRCUser *u in [c sortedByChannelRankMemberList]) {
 						u.isAway = NO;
