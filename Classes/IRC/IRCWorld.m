@@ -412,16 +412,11 @@
 	}
 
 	if (reloadUserInterface) {
-		[mainWindowServerList() updateBackgroundColor];
+		[mainWindow() updateBackgroundColor];
+		
 		[mainWindowServerList() reloadAllDrawings];
-
-		[mainWindowMemberList() updateBackgroundColor];
 		[mainWindowMemberList() reloadAllDrawings];
 		
-		[mainWindowTextField() updateBackgroundColor];
-
-		[[mainWindow() contentSplitView] setNeedsDisplay:YES];
-
 		[mainWindowTextField() redrawOriginPoints];
 	}
 }
