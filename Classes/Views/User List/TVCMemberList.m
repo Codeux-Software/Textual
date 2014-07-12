@@ -646,7 +646,7 @@
 
 + (NSColor *)selectedCellTextColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.5];
 }
 
 + (NSColor *)userMarkBadgeNormalTextColor
@@ -661,7 +661,7 @@
 
 + (NSColor *)userMarkBadgeSelectedTextColor
 {
-	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:0.7];
+	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:1.0];
 }
 
 + (NSColor *)rowSelectionColorForActiveWindow
@@ -690,7 +690,7 @@
 
 + (NSColor *)userMarkBadgeBackgroundColorForActiveWindow
 {
-	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:0.7];
+	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:1.0];
 }
 
 + (NSColor *)userMarkBadgeBackgroundColorForInactiveWindow
