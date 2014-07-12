@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.21" systemVersion="14A261i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6185.7" systemVersion="14A283o" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.21"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.7"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCPreferencesController">
@@ -58,7 +58,7 @@
                 <string>string</string>
             </declaredKeys>
             <connections>
-                <binding destination="-2" name="contentArray" keyPath="self.userDefaultsValues.Highlight List -&gt; Primary Matches" id="gtv-9s-uuQ">
+                <binding destination="-2" name="contentArray" keyPath="keywordsArrayControllerDataSource" id="aaH-D6-KhW">
                     <dictionary key="options">
                         <bool key="NSHandlesContentAsCompoundValue" value="YES"/>
                     </dictionary>
@@ -70,7 +70,7 @@
                 <string>string</string>
             </declaredKeys>
             <connections>
-                <binding destination="-2" name="contentArray" keyPath="self.userDefaultsValues.Highlight List -&gt; Excluded Matches" id="zOd-Bv-hh2">
+                <binding destination="-2" name="contentArray" keyPath="excludeWordsArrayControllerDataSource" id="1lL-vc-qgd">
                     <dictionary key="options">
                         <bool key="NSHandlesContentAsCompoundValue" value="YES"/>
                     </dictionary>
@@ -985,7 +985,6 @@
                                         <attributes>
                                             <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                                             <font key="NSFont" metaFont="smallSystemBold"/>
-                                            <font key="NSOriginalFont" metaFont="smallSystemBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
@@ -1000,7 +999,6 @@
                                         <attributes>
                                             <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                                             <font key="NSFont" metaFont="smallSystemBold"/>
-                                            <font key="NSOriginalFont" metaFont="smallSystemBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
@@ -1015,7 +1013,6 @@
                                         <attributes>
                                             <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                                             <font key="NSFont" metaFont="smallSystemBold"/>
-                                            <font key="NSOriginalFont" metaFont="smallSystemBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
@@ -1062,7 +1059,6 @@
                                         <attributes>
                                             <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                                             <font key="NSFont" metaFont="smallSystemBold"/>
-                                            <font key="NSOriginalFont" metaFont="smallSystemBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
@@ -1244,7 +1240,7 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="352" height="20"/>
+                                                    <size key="minSize" width="352" height="16"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="Strips away formatting such as ">
@@ -1307,7 +1303,6 @@
                                                             <attributes>
                                                                 <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <font key="NSFont" metaFont="smallSystemBold"/>
-                                                                <font key="NSOriginalFont" metaFont="smallSystemBold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
                                                         </fragment>
@@ -1335,7 +1330,7 @@
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="352" height="20"/>
+                                                    <size key="minSize" width="352" height="16"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
@@ -1610,7 +1605,6 @@
                                                             <attributes>
                                                                 <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <font key="NSFont" metaFont="smallSystemBold"/>
-                                                                <font key="NSOriginalFont" metaFont="smallSystemBold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
                                                         </fragment>
