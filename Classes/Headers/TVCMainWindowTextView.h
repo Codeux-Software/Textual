@@ -55,6 +55,8 @@
 - (void)updateTextDirection;
 - (void)updateTextBoxBasedOnPreferredFontSize;
 
+- (void)updateBackgroundColor;
+
 - (void)redrawOriginPoints;
 - (void)redrawOriginPoints:(BOOL)resetSize;
 

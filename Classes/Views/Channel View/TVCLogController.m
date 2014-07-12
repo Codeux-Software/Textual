@@ -1420,7 +1420,7 @@
 	PointerIsEmptyAssert(scrollView);
 
 	[scrollView setHasHorizontalScroller:NO];
-	[scrollView setHasVerticalScroller:YES];
+	[scrollView setHasVerticalScroller:NO];
 }
 
 #pragma mark -

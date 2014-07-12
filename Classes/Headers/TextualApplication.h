@@ -144,6 +144,7 @@
 	@class TVCMainWindowTextViewBackground;
 	@class TVCMainWindowTextViewContentView;
 	@class TVCMemberList;
+	@class TVCMemberLisCellTextFieldInterior;
 	@class TVCMemberListCell;
 	@class TVCMemberListDarkYosemiteUserInterface;
 	@class TVCMemberListLightYosemiteUserInterface;

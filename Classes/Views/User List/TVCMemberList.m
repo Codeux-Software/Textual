@@ -121,7 +121,7 @@
 	if (i >= 0 && [selectedRows containsIndex:i] == NO) {
 		[self selectItemAtIndex:i];
 	}
-
+	
 	return [menuController() userControlMenu];
 }
 
@@ -389,10 +389,6 @@
 	[rowView updateDrawing];
 }
 
-- (void)updateBackgroundColor
-{
-}
-
 - (BOOL)allowsVibrancy
 {
 	return YES;
@@ -413,12 +409,57 @@
     // Do not draw focus ring …
 }
 
+- (void)drawBackgroundInClipRect:(NSRect)clipRect
+{
+	if ([self needsToDrawRect:clipRect]) {
+		id userInterfaceObjects = [self userInterfaceObjects];
+		
+		NSColor *backgroundColor = [userInterfaceObjects memberListBackgroundColor];
+		
+		if (backgroundColor) {
+			[backgroundColor set];
+			
+			NSRectFill(clipRect);
+		} else {
+			[super drawBackgroundInClipRect:clipRect];
+		}
+	}
+}
+
 - (id)userInterfaceObjects
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		return [TVCMemberListLightYosemiteUserInterface class];
+		if ([TVCMemberListSharedUserInterface yosemiteIsUsingVibrantDarkMode] == NO) {
+			return [TVCMemberListLightYosemiteUserInterface class];
+		} else {
+			return [TVCMemberListDarkYosemiteUserInterface class];
+		}
 	} else {
 		return nil;
+	}
+}
+
+- (void)updateBackgroundColor
+{
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		NSIndexSet *selectedRows = [self selectedRowIndexes];
+		
+		[self deselectAll:nil];
+		
+		if ([TPCPreferences invertSidebarColors]) {
+			/* Source List style of NSOutlineView will actually ignore this appearance… that's
+			 why we have self.visualEffectView behind it. However, we still set the appearance
+			 so that the menu that inherits form it is dark. */
+			[self setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
+			
+			[self.visualEffectView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
+		} else {
+			[self setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
+		
+			[self.visualEffectView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
+		}
+		
+		[self selectRowIndexes:selectedRows byExtendingSelection:NO];
 	}
 }
 
@@ -428,6 +469,32 @@
 #pragma mark User Interface Design Elements
 
 @implementation TVCMemberListSharedUserInterface
+
++ (BOOL)yosemiteIsUsingVibrantDarkMode
+{
+	NSVisualEffectView *visualEffectView = [mainWindowMemberList() visualEffectView];
+	
+	NSAppearance *currentDesign = [visualEffectView appearance];
+	
+	NSString *name = [currentDesign name];
+	
+	if ([name hasPrefix:NSAppearanceNameVibrantDark]) {
+		return YES;
+	} else {
+		return NO;
+	}
+}
+
++ (NSColor *)memberListBackgroundColor
+{
+	id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
+	
+	if ([mainWindow() isInactive]) {
+		return [userInterfaceObjects memberListBackgroundColorForInactiveWindow];
+	} else {
+		return [userInterfaceObjects memberListBackgroundColorForActiveWindow];
+	}
+}
 
 + (NSColor *)userMarkBadgeBackgroundColor_YDefault // InspIRCd-2.0
 {
@@ -500,53 +567,6 @@
 	return [TVCMemberListSharedUserInterface userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors —> +v"];
 }
 
-+ (NSColor *)userMarkBadgeBackgroundColor
-{
-	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:0.7];
-}
-
-@end
-
-@implementation TVCMemberListMavericksUserInterface
-@end
-
-@implementation TVCMemberListLightYosemiteUserInterface
-
-+ (NSColor *)normalCellTextColor
-{
-	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:1.0];
-}
-
-+ (NSColor *)awayUserCellTextColor
-{
-	return [NSColor colorWithCalibratedRed:0.0 green:0.0 blue:0.0 alpha:0.5];
-}
-
-+ (NSColor *)selectedCellTextColorForActiveWindow
-{
-	return [NSColor whiteColor];
-}
-
-+ (NSColor *)selectedCellTextColorForInactiveWindow
-{
-	return [NSColor colorWithCalibratedRed:0.0 green:0.0 blue:0.0 alpha:0.5];
-}
-
-+ (NSColor *)userMarkBadgeNormalTextColor
-{
-	return [NSColor whiteColor];
-}
-
-+ (NSColor *)userMarkBadgeSelectedBackgroundColor
-{
-	return [NSColor whiteColor];
-}
-
-+ (NSColor *)userMarkBadgeSelectedTextColor
-{
-	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:0.7];
-}
-
 + (NSFont *)userMarkBadgeFont
 {
 	return [NSFont boldSystemFontOfSize:13.5];
@@ -584,5 +604,163 @@
 
 @end
 
+@implementation TVCMemberListMavericksUserInterface
+@end
+
+@implementation TVCMemberListLightYosemiteUserInterface
+
++ (NSColor *)userMarkBadgeBackgroundColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:0.7];
+}
+
++ (NSColor *)userMarkBadgeBackgroundColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:0.7];
+}
+
++ (NSColor *)normalCellTextColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:1.0];
+}
+
++ (NSColor *)normalCellTextColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:1.0];
+}
+
++ (NSColor *)awayUserCellTextColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+}
+
++ (NSColor *)awayUserCellTextColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+}
+
++ (NSColor *)selectedCellTextColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
+}
+
++ (NSColor *)selectedCellTextColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+}
+
++ (NSColor *)userMarkBadgeNormalTextColor
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)userMarkBadgeSelectedBackgroundColor
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)userMarkBadgeSelectedTextColor
+{
+	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:0.7];
+}
+
++ (NSColor *)rowSelectionColorForActiveWindow
+{
+	return nil; // Use system default.
+}
+
++ (NSColor *)rowSelectionColorForInactiveWindow
+{
+	return nil; // Use system default.
+}
+
++ (NSColor *)memberListBackgroundColorForInactiveWindow
+{
+	return [NSColor clearColor]; // -clearColor informs receiver to disregard drawing entirely
+}
+
++ (NSColor *)memberListBackgroundColorForActiveWindow
+{
+	return [NSColor clearColor];
+}
+
+@end
+
 @implementation TVCMemberListDarkYosemiteUserInterface
+
++ (NSColor *)userMarkBadgeBackgroundColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:0.7];
+}
+
++ (NSColor *)userMarkBadgeBackgroundColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.5 alpha:1.0];
+}
+
++ (NSColor *)normalCellTextColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.8 alpha:1.0];
+}
+
++ (NSColor *)awayUserCellTextColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.4 alpha:1.0];
+}
+
++ (NSColor *)normalCellTextColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.9 alpha:1.0];
+}
+
++ (NSColor *)awayUserCellTextColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.6 alpha:1.0];
+}
+
++ (NSColor *)selectedCellTextColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.7 alpha:1.0];
+}
+
++ (NSColor *)selectedCellTextColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
+}
+
++ (NSColor *)userMarkBadgeNormalTextColor
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)userMarkBadgeSelectedBackgroundColor
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)userMarkBadgeSelectedTextColor
+{
+	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:1.0];
+}
+
++ (NSColor *)rowSelectionColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
+}
+
++ (NSColor *)rowSelectionColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.6 alpha:1.0];
+}
+
++ (NSColor *)memberListBackgroundColorForActiveWindow
+{
+	return [NSColor clearColor];
+}
+
++ (NSColor *)memberListBackgroundColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.248 green:0.248 blue:0.248 alpha:1.0];
+}
+
 @end

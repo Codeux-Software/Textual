@@ -75,27 +75,6 @@
 							  options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew)
 							  context:NULL];
 	}
-	
-	/* Blending background. */
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		/* Comment out a specific variation for debugging purposes. */
-		/* The uncommented sections are the defaults. */
-		/* nil value indicates that the value is inherited. */
-		[self.contentView setAppearance:nil];
-		
-		/* Uncomment one of the following. */
-		/* 1. */
-		// [self.contentView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
-		
-		/* 2. */
-		// [self.contentView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
-		
-		/* Use font color depending on appearance. */
-		[self setPreferredFontColor:[self.backgroundView systemSpecificTextFieldTextFontColor]];
-	}
-	
-	/* We changed the font color so we must inform our parent. */
-	[self updateTypeSetterAttributesBasedOnAppearanceSettings];
 }
 
 - (void)dealloc
@@ -112,6 +91,24 @@
 	[self updateTextBoxCachedPreferredFontSize];
 	[self defineDefaultTypeSetterAttributes];
 	[self updateTypeSetterAttributes];
+}
+
+- (void)updateBackgroundColor
+{
+	/* Set background appearance. */
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		if ([TPCPreferences invertSidebarColors]) {
+			[self.contentView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
+		} else {
+			[self.contentView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
+		}
+	}
+	
+	/* Use font color depending on appearance. */
+	[self setPreferredFontColor:[self.backgroundView systemSpecificTextFieldTextFontColor]];
+	
+	/* We changed the font color so we must inform our parent. */
+	[self updateTypeSetterAttributesBasedOnAppearanceSettings];
 }
 
 #pragma mark -
