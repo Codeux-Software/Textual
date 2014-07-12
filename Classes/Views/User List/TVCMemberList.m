@@ -699,7 +699,7 @@
 
 + (NSColor *)userMarkBadgeBackgroundColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.5 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:0.3 alpha:1.0];
 }
 
 + (NSColor *)normalCellTextColorForActiveWindow
@@ -764,7 +764,7 @@
 
 + (NSColor *)memberListBackgroundColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedRed:0.248 green:0.248 blue:0.248 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:0.18 alpha:1.0];
 }
 
 @end
