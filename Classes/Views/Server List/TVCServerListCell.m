@@ -141,6 +141,8 @@
 	/* Set image. */
 	[theButton setImage:primary];
 	[theButton setAlternateImage:alterna];
+	
+	[theButton setHighlightsBy:NSNoCellMask];
 }
 
 #pragma mark -
