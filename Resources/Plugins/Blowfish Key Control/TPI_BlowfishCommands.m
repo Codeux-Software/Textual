@@ -301,7 +301,7 @@
 	if (NSObjectIsNotEmpty(exchangeData)) {
 		NSString *responseData = nil;
 		
-		if ([responseData length] >= TXExchangeResponsePrefix length]) {
+		if ([responseData length] >= [TXExchangeResponsePrefix length]) {
 			responseData = [responseDataRaw substringFromIndex:[TXExchangeResponsePrefix length]];
 		} else {
 			responseData =  responseDataRaw;
