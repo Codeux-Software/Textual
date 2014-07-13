@@ -1108,7 +1108,7 @@
 		return YES;
 	}
 	
-	if ([sharedGrowlController() areNotificationSoundsDisabled]) {
+	if ([sharedGrowlController() areNotificationSoundsDisabled] == NO) {
 		[TLOSoundPlayer playAlertSound:[TPCPreferences soundForEvent:type]];
 
 		if ([TPCPreferences speakEvent:type]) {
@@ -1170,7 +1170,7 @@
 		return YES;
 	}
 	
-	if ([sharedGrowlController() areNotificationSoundsDisabled]) {
+	if ([sharedGrowlController() areNotificationSoundsDisabled] == NO) {
 		[TLOSoundPlayer playAlertSound:[TPCPreferences soundForEvent:type]];
 		
 		if ([TPCPreferences speakEvent:type]) {
