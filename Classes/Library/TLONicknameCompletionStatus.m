@@ -380,7 +380,11 @@
 		[upperChoices addObject:[TPCApplicationInfo applicationName]];
 
 		/* Complete network name. */
-		[upperChoices addObject:[[client supportInfo] networkNameActual]];
+		NSString *networkName = [[client supportInfo] networkNameActual];
+		
+		if (networkName) {
+			[upperChoices addObject:networkName];
+		}
 	}
 
 	/* Quick method for replacing the value of each array
