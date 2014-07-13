@@ -51,10 +51,3 @@
 - (IBAction)onUpdate:(id)sender;
 - (IBAction)onRemoveExceptions:(id)sender;
 @end
-
-@protocol TDChanBanExceptionSheetDelegate <NSObject>
-@required
-
-- (void)chanBanExceptionDialogOnUpdate:(TDChanBanExceptionSheet *)sender;
-- (void)chanBanExceptionDialogWillClose:(TDChanBanExceptionSheet *)sender;
-@end

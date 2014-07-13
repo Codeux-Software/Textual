@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+#define TDCSheetBaseDeclared		1
+
 @interface TDCSheetBase : NSObject
 @property (nonatomic, uweak) id delegate;
 @property (nonatomic, nweak) NSWindow *window; // Window being attached to.

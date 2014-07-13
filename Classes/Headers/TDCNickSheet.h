@@ -45,10 +45,3 @@
 
 - (void)start:(NSString *)nickname;
 @end
-
-@protocol TDCNickSheetDelegate <NSObject>
-@required
-
-- (void)nickSheet:(TDCNickSheet *)sender didInputNickname:(NSString *)nickname;
-- (void)nickSheetWillClose:(TDCNickSheet *)sender;
-@end

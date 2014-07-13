@@ -320,6 +320,8 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 			}
 		}
 	}
+	
+	return nil;
 }
 
 @end

@@ -60,10 +60,3 @@
 
 - (void)start;
 @end
-
-@protocol TDCAddressBookSheetDelegate <NSObject>
-@required
-
-- (void)ignoreItemSheetOnOK:(TDCAddressBookSheet *)sender;
-- (void)ignoreItemSheetWillClose:(TDCAddressBookSheet *)sender;
-@end

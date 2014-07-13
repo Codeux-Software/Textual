@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+#import "TVCLogView.h" // @protocol
+
 @interface TVCLogController : NSObject <TVCLogViewDelegate>
 @property (nonatomic, nweak) IRCClient *associatedClient;
 @property (nonatomic, nweak) IRCChannel *associatedChannel;

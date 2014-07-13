@@ -56,11 +56,3 @@
 - (IBAction)onJoinChannels:(id)sender;
 - (IBAction)onSearchFieldChange:(id)sender;
 @end
-
-@protocol TDCListDialogDelegate <NSObject>
-@required
-
-- (void)listDialogOnUpdate:(TDCListDialog *)sender;
-- (void)listDialogOnJoin:(TDCListDialog *)sender channel:(NSString *)channel;
-- (void)listDialogWillClose:(TDCListDialog *)sender;
-@end

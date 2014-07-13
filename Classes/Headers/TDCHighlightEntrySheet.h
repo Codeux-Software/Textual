@@ -61,10 +61,3 @@ highlights for a server by using Command+5 or the actual Windows menu bar item. 
 - (instancetype)initWithDictionary:(NSDictionary *)dic NS_DESIGNATED_INITIALIZER;
 - (NSDictionary *)dictionaryValue;
 @end
-
-@protocol TDCHighlightEntrySheetDelegate <NSObject>
-@required
-
-- (void)highlightEntrySheetOnOK:(TDCHighlightEntrySheet *)sender;
-- (void)highlightEntrySheetWillClose:(TDCHighlightEntrySheet *)sender;
-@end

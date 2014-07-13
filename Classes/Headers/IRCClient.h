@@ -90,6 +90,8 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 
 typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 
+#import "IRCConnection.h" // @protocol
+
 @interface IRCClient : IRCTreeItem <IRCConnectionDelegate, TDChanBanExceptionSheetDelegate, TDChanBanSheetDelegate, TDChanInviteExceptionSheetDelegate, TDCListDialogDelegate>
 @property (nonatomic, copy) IRCClientConfig *config;
 @property (nonatomic, strong) IRCISupportInfo *supportInfo;

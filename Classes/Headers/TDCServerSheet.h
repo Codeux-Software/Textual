@@ -161,14 +161,3 @@ typedef enum TDCServerSheetNavigationSelection : NSInteger {
 - (IBAction)onSSLCertificateFingerprintSHA1CopyRequested:(id)sender;
 - (IBAction)onSSLCertificateFingerprintMD5CopyRequested:(id)sender;
 @end
-
-@protocol TDCServerSheetDelegate <NSObject>
-@required
-
-- (void)serverSheetOnOK:(TDCServerSheet *)sender;
-- (void)serverSheetWillClose:(TDCServerSheet *)sender;
-
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-- (void)serverSheetRequestedCloudExclusionByDeletion:(TDCServerSheet *)sender;
-#endif
-@end

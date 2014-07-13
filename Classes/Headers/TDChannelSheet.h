@@ -48,10 +48,3 @@
 
 - (IBAction)onMenuBarItemChanged:(id)sender;
 @end
-
-@protocol TDChannelSheetDelegate <NSObject>
-@required
-
-- (void)channelSheetOnOK:(TDChannelSheet *)sender;
-- (void)channelSheetWillClose:(TDChannelSheet *)sender;
-@end

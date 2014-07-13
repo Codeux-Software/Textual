@@ -98,8 +98,6 @@
 @end
 
 @interface TVCMemberListMavericksUserInterface : TVCMemberListSharedUserInterface
-+ (NSColor *)userMarkBadgeBackgroundColor_XAqua;
-+ (NSColor *)userMarkBadgeBackgroundColor_XGraphite;
 @end
 
 @interface TVCMemberListLightYosemiteUserInterface : TVCMemberListSharedUserInterface
