@@ -160,7 +160,6 @@ typedef enum TXFileTransferIPAddressDetectionMethod : NSInteger {
 
 + (NSInteger)trackUserAwayStatusMaximumChannelSize;
 
-+ (BOOL)useLargeFontForSidebars;
 + (BOOL)invertSidebarColors;
 + (BOOL)hideMainWindowSegmentedController;
 
