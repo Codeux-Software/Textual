@@ -61,7 +61,9 @@
 - (void)start;
 @end
 
-@interface NSObject (TDCAddressBookSheetDelegate)
+@protocol TDCAddressBookSheetDelegate <NSObject>
+@required
+
 - (void)ignoreItemSheetOnOK:(TDCAddressBookSheet *)sender;
 - (void)ignoreItemSheetWillClose:(TDCAddressBookSheet *)sender;
 @end

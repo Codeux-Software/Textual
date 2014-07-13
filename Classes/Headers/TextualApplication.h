@@ -173,6 +173,30 @@
 	@class TXSharedApplication;
 	@class TXUserInterface;
 
+	/* Protocol forwarders. */
+	@protocol IRCConnectionDelegate;
+	@protocol TDCAboutPanelDelegate;
+	@protocol TDCAddressBookSheetDelegate;
+	@protocol TDCFileTransferDialogRemoteAddressDelegate;
+	@protocol TDChanBanExceptionSheetDelegate;
+	@protocol TDChanBanSheetDelegate;
+	@protocol TDChanInviteExceptionSheetDelegate;
+	@protocol TDChannelSheetDelegate;
+	@protocol TDCHighlightEntrySheetDelegate;
+	@protocol TDCHighlightListSheetDelegate;
+	@protocol TDCInviteSheetDelegate;
+	@protocol TDCListDialogDelegate;
+	@protocol TDCModeSheetDelegate;
+	@protocol TDCNickSheetDelegate;
+	@protocol TDCPreferencesControllerDelegate;
+	@protocol TDCServerSheetDelegate;
+	@protocol TDCTopicSheetDelegate;
+	@protocol TDCWelcomeSheetDelegate;
+	@protocol THOPluginProtocol;
+	@protocol TVCLogViewDelegate;
+	@protocol TVCMemberListDelegate;
+	@protocol TVCServerListDelegate;
+
 	/* Static Defeinitions. */
 
 	#import "StaticDefinitions.h"

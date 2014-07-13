@@ -58,7 +58,9 @@
 - (IBAction)onChangeCheck:(id)sender;
 @end
 
-@interface NSObject (TDCModeSheetDelegate)
+@protocol TDCModeSheetDelegate <NSObject>
+@required
+
 - (void)modeSheetOnOK:(TDCModeSheet *)sender;
 - (void)modeSheetWillClose:(TDCModeSheet *)sender;
 @end

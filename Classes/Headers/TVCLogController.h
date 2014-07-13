@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-@interface TVCLogController : NSObject
+@interface TVCLogController : NSObject <TVCLogViewDelegate>
 @property (nonatomic, nweak) IRCClient *associatedClient;
 @property (nonatomic, nweak) IRCChannel *associatedChannel;
 @property (nonatomic, strong) TVCLogView *webView;

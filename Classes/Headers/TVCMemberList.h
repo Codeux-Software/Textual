@@ -152,6 +152,8 @@
 + (NSColor *)userMarkBadgeBackgroundColorForInactiveWindow;
 @end
 
-@interface NSObject (TVCMemberListDelegate)
+@protocol TVCMemberListDelegate <NSObject>
+@required
+
 - (void)memberListViewKeyDown:(NSEvent *)e;
 @end

@@ -132,6 +132,8 @@
 - (IBAction)onSelectNewFont:(id)sender;
 @end
 
-@interface NSObject (TDCPreferencesControllerDelegate)
+@protocol TDCPreferencesControllerDelegate <NSObject>
+@required
+
 - (void)preferencesDialogWillClose:(TDCPreferencesController *)sender;
 @end

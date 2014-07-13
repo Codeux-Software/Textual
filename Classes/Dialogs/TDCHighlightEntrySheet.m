@@ -154,8 +154,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([self.sheet respondsToSelector:@selector(highlightEntrySheetWillClose:)]) {
-		[self.sheet highlightEntrySheetWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(highlightEntrySheetWillClose:)]) {
+		[self.delegate highlightEntrySheetWillClose:self];
 	}
 }
 

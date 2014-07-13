@@ -51,6 +51,8 @@
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *selection;
 @end
 
-@interface NSObject (TVCLogViewDelegate)
+@protocol TVCLogViewDelegate <NSObject>
+@required
+
 - (void)logViewKeyDown:(NSEvent *)e;
 @end

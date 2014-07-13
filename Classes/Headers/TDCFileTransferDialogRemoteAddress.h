@@ -41,7 +41,9 @@
 - (void)requestRemoteIPAddressFromExternalSource:(id)delegate;
 @end
 
-@interface NSObject (TDCFileTransferDialogRemoteAddressDelegate)
+@protocol TDCFileTransferDialogRemoteAddressDelegate <NSObject>
+@required
+
 - (void)fileTransferRemoteAddressRequestDidDetectAddress:(NSString *)address;
 - (void)fileTransferRemoteAddressRequestDidCloseWithError:(NSError *)errPntr;
 @end

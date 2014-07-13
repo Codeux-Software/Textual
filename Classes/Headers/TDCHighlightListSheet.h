@@ -49,6 +49,8 @@
 - (IBAction)onClearList:(id)sender;
 @end
 
-@interface NSObject (TDCHighlightListSheetDelegate)
+@protocol TDCHighlightListSheetDelegate <NSObject>
+@required
+
 - (void)highlightListSheetWillClose:(TDCHighlightListSheet *)sender;
 @end

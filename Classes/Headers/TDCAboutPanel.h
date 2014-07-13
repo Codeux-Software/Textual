@@ -46,6 +46,8 @@
 - (IBAction)displayAcknowledgments:(id)sender;
 @end
 
-@interface NSObject (TDCAboutPanelDelegate)
+@protocol TDCAboutPanelDelegate <NSObject>
+@required
+
 - (void)aboutPanelWillClose:(TDCAboutPanel *)sender;
 @end

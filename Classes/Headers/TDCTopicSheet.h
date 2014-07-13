@@ -47,7 +47,9 @@
 - (void)start:(NSString *)topic;
 @end
 
-@interface NSObject (TDCTopicSheetDelegate)
+@protocol TDCTopicSheetDelegate <NSObject>
+@required
+
 - (void)topicSheet:(TDCTopicSheet *)sender onOK:(NSString *)topic;
 - (void)topicSheetWillClose:(TDCTopicSheet *)sender;
 @end
