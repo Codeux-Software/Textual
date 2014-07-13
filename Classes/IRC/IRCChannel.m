@@ -122,6 +122,9 @@
 		if (encryptionUnchanged == NO) {
 			[self.viewController channelLevelEncryptionChanged];
 		}
+		
+		/* Rebuild cached version. */
+		[self.associatedClient updateStoredChannelList];
 	}
 }
 

@@ -177,6 +177,8 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 @property (NS_NONATOMIC_IOSONLY, readonly) NSInteger indexOfFirstPrivateMessage;
 - (NSInteger)indexOfChannel:(IRCChannel *)channel;
 
+- (void)updateStoredChannelList;
+
 - (void)selectFirstChannelInChannelList;
 
 - (void)addHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine;
