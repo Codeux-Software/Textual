@@ -51,10 +51,3 @@
 - (IBAction)onUpdate:(id)sender;
 - (IBAction)onRemoveExceptions:(id)sender;
 @end
-
-@protocol TDChanInviteExceptionSheetDelegate <NSObject>
-@required
-
-- (void)chanInviteExceptionDialogOnUpdate:(TDChanInviteExceptionSheet *)sender;
-- (void)chanInviteExceptionDialogWillClose:(TDChanInviteExceptionSheet *)sender;
-@end

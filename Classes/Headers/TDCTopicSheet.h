@@ -46,10 +46,3 @@
 
 - (void)start:(NSString *)topic;
 @end
-
-@protocol TDCTopicSheetDelegate <NSObject>
-@required
-
-- (void)topicSheet:(TDCTopicSheet *)sender onOK:(NSString *)topic;
-- (void)topicSheetWillClose:(TDCTopicSheet *)sender;
-@end

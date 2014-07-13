@@ -206,6 +206,9 @@
 		#import <HockeySDK/HockeySDK.h>
 	#endif
 
+	/* Protocol defenitions. (see file) */
+	#import "TDCSharedProtocolDefinitions.h"
+
 	/* 3rd Party Extensions. */
 
 	#import "AGKeychain.h"

@@ -57,10 +57,3 @@
 
 - (IBAction)onChangeCheck:(id)sender;
 @end
-
-@protocol TDCModeSheetDelegate <NSObject>
-@required
-
-- (void)modeSheetOnOK:(TDCModeSheet *)sender;
-- (void)modeSheetWillClose:(TDCModeSheet *)sender;
-@end

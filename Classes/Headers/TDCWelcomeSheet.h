@@ -47,10 +47,3 @@
 
 - (IBAction)onServerAddressChanged:(id)sender;
 @end
-
-@protocol TDCWelcomeSheetDelegate <NSObject>
-@required
-
-- (void)welcomeSheet:(TDCWelcomeSheet *)sender onOK:(IRCClientConfig *)config;
-- (void)welcomeSheetWillClose:(TDCWelcomeSheet *)sender;
-@end
