@@ -294,15 +294,17 @@
 	}
 }
 
-- (void)keyExchangeResponseReceived:(NSString *)responseData on:(IRCClient *)client from:(NSString *)responseKey
+- (void)keyExchangeResponseReceived:(NSString *)responseDataRaw on:(IRCClient *)client from:(NSString *)responseKey
 {
 	NSArray *exchangeData = [self keyExchangeInformation:responseKey];
 
 	if (NSObjectIsNotEmpty(exchangeData)) {
-		if ([requestData length] >= TXExchangeResponsePrefix length]) {
-			responseData = [responseData substringFromIndex:[TXExchangeResponsePrefix length]];
+		NSString *responseData = nil;
+		
+		if ([responseData length] >= TXExchangeResponsePrefix length]) {
+			responseData = [responseDataRaw substringFromIndex:[TXExchangeResponsePrefix length]];
 		} else {
-			responseData =  responseData;
+			responseData =  responseDataRaw;
 		}
 		
 		//DebugLogToConsole(@"Key Exchange Response Received:");
