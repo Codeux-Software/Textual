@@ -57,7 +57,9 @@
 - (IBAction)onSearchFieldChange:(id)sender;
 @end
 
-@interface NSObject (TXListDialogDelegate)
+@protocol TDCListDialogDelegate <NSObject>
+@required
+
 - (void)listDialogOnUpdate:(TDCListDialog *)sender;
 - (void)listDialogOnJoin:(TDCListDialog *)sender channel:(NSString *)channel;
 - (void)listDialogWillClose:(TDCListDialog *)sender;

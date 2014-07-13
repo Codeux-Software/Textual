@@ -193,6 +193,8 @@
 + (NSInteger)channelCellTextFieldWithBadgeRightMargin;
 @end
 
-@interface NSObject (TVCServerListDelegate)
+@protocol TVCServerListDelegate <NSObject>
+@required
+
 - (void)serverListKeyDown:(NSEvent *)e;
 @end

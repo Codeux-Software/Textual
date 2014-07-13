@@ -136,7 +136,7 @@
 	990003: "Previous Highlight"
  */
 
-@interface TXMenuController : NSObject
+@interface TXMenuController : NSObject <TDCAboutPanelDelegate, TDChannelSheetDelegate, TDCHighlightListSheetDelegate, TDCInviteSheetDelegate, TDCModeSheetDelegate, TDCNickSheetDelegate, TDCPreferencesControllerDelegate, TDCServerSheetDelegate, TDCTopicSheetDelegate, TDCWelcomeSheetDelegate>
 @property (nonatomic, copy) NSString *pointedUrl;
 @property (nonatomic, copy) NSString *pointedNickname;
 @property (nonatomic, copy) NSString *pointedChannelName;

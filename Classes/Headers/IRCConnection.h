@@ -79,7 +79,9 @@
 - (NSData *)convertToCommonEncoding:(NSString *)data;
 @end
 
-@interface NSObject (IRCConnectionDelegate)
+@protocol IRCConnectionDelegate <NSObject>
+@required
+
 - (void)ircConnectionDidConnect:(IRCConnection *)sender;
 - (void)ircConnectionDidDisconnect:(IRCConnection *)sender withError:(NSError *)distcError;
 - (void)ircConnectionDidError:(NSString *)error;

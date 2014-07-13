@@ -52,7 +52,9 @@
 - (IBAction)onRemoveBans:(id)sender;
 @end
 
-@interface NSObject (TDChanBanSheetDelegate)
+@protocol TDChanBanSheetDelegate <NSObject>
+@required
+
 - (void)chanBanDialogOnUpdate:(TDChanBanSheet *)sender;
 - (void)chanBanDialogWillClose:(TDChanBanSheet *)sender;
 @end

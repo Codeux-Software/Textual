@@ -47,7 +47,9 @@
 - (void)startWithChannels:(NSArray *)channels;
 @end
 
-@interface NSObject (TDCInviteSheetDelegate)
+@protocol TDCInviteSheetDelegate <NSObject>
+@required
+
 - (void)inviteSheet:(TDCInviteSheet *)sender onSelectChannel:(NSString *)channelName;
 - (void)inviteSheetWillClose:(TDCInviteSheet *)sender;
 @end

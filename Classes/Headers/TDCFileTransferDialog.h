@@ -59,7 +59,7 @@ typedef enum TDCFileTransferDialogNavigationControllerSelectedTab : NSInteger {
 	TDCFileTransferDialogNavigationControllerReceivingSelectedTab	= 2
 } TDCFileTransferDialogNavigationControllerSelectedTab;
 
-@interface TDCFileTransferDialog : NSWindowController <NSTableViewDataSource, NSTableViewDelegate>
+@interface TDCFileTransferDialog : NSWindowController <NSTableViewDataSource, NSTableViewDelegate, TDCFileTransferDialogRemoteAddressDelegate>
 @property (nonatomic, copy) NSString *cachedIPAddress;
 @property (nonatomic, assign) BOOL sourceIPAddressRequestPending;
 @property (nonatomic, copy) NSURL *downloadDestination;

@@ -45,7 +45,7 @@ typedef enum TDCServerSheetNavigationSelection : NSInteger {
 	TDCServerSheetNewIgnoreEntryNavigationSelection
 } TDCServerSheetNavigationSelection;
 
-@interface TDCServerSheet : TDCSheetBase <NSOutlineViewDataSource, NSOutlineViewDelegate>
+@interface TDCServerSheet : TDCSheetBase <NSOutlineViewDataSource, NSOutlineViewDelegate, TDCAddressBookSheetDelegate, TDCHighlightEntrySheetDelegate, TDChannelSheetDelegate>
 @property (nonatomic, copy) NSString *clientID;
 @property (nonatomic, copy) NSArray *tabViewList;
 @property (nonatomic, copy) NSDictionary *serverList;
@@ -162,7 +162,9 @@ typedef enum TDCServerSheetNavigationSelection : NSInteger {
 - (IBAction)onSSLCertificateFingerprintMD5CopyRequested:(id)sender;
 @end
 
-@interface NSObject (TDCServerSheetDelegate)
+@protocol TDCServerSheetDelegate <NSObject>
+@required
+
 - (void)serverSheetOnOK:(TDCServerSheet *)sender;
 - (void)serverSheetWillClose:(TDCServerSheet *)sender;
 
