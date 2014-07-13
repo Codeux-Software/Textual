@@ -53,7 +53,99 @@
 
 + (void)performReloadActionForKeyValues:(NSArray *)prefKeys
 {
-	#warning Needs to be implemented.
+	/* Begin the process… */
+	/* Some of these keys may be repeated because they are shared amongst different elements… */
+	/* The -performReloadActionForActionType: method the keys are used to update is smart enough
+	 to know when specific actions repeat and will accomidate that. */
+	TPCPreferencesKeyReloadActionMask reloadActions = 0;
+	
+	/* Style specific reloads… */
+	if ([prefKeys containsObject:TPCPreferencesThemeNameDefaultsKey] ||					/* Style name. */
+		[prefKeys containsObject:TPCPreferencesThemeFontNameDefaultsKey] ||				/* Style font name. */
+		[prefKeys containsObject:@"Theme -> Font Size"] ||								/* Style font size. */
+		[prefKeys containsObject:@"Theme -> Nickname Format"] ||						/* Nickname format. */
+		[prefKeys containsObject:@"Theme -> Timestamp Format"] ||						/* Timestamp format. */
+		[prefKeys containsObject:@"Theme -> Channel Font Preference Enabled"] ||		/* Indicates whether a style overrides a specific preference. */
+		[prefKeys containsObject:@"Theme -> Nickname Format Preference Enabled"] ||		/* Indicates whether a style overrides a specific preference. */
+		[prefKeys containsObject:@"Theme -> Timestamp Format Preference Enabled"] ||	/* Indicates whether a style overrides a specific preference. */
+		[prefKeys containsObject:@"DisableRemoteNicknameColorHashing"] ||				/* Do not colorize nicknames. */
+		[prefKeys containsObject:@"DisplayEventInLogView -> Inline Media"])				/* Display inline media. */
+	{
+		reloadActions |= TPCPreferencesKeyReloadStyleAction;
+	}
+	
+	/* Highlight lists. */
+	if ([prefKeys containsObject:@"Highlight List -> Primary Matches"] ||		/* Primary keyword list. */
+		[prefKeys containsObject:@"Highlight List -> Excluded Matches"])		/* Excluded keyword list. */
+	{
+		reloadActions |= TPCPreferencesKeyReloadHighlightKeywordsAction;
+	}
+	
+	/* Highlight logging. */
+	if ([prefKeys containsObject:@"LogHighlights"]) {
+		reloadActions |= TPCPreferencesKeyReloadHighlightLoggingAction;
+	}
+	
+	/* Text direction: right-to-left, left-to-right */
+	if ([prefKeys containsObject:@"RightToLeftTextFormatting"]) {
+		reloadActions |= TPCPreferencesKeyReloadTextDirectionAction;
+	}
+	
+	/* Text field font size. */
+	if ([prefKeys containsObject:@"Main Input Text Field -> Font Size"]) {
+		reloadActions |= TPCPreferencesKeyReloadTextFieldFontSizeAction;
+	}
+	
+	/* Input history scope. */
+	if ([prefKeys containsObject:@"SaveInputHistoryPerSelection"]) {
+		reloadActions |= TPCPreferencesKeyReloadInputHistoryScopeAction;
+	}
+	
+	/* Main window segmented controller. */
+	if ([prefKeys containsObject:@"DisableMainWindowSegmentedController"]) {
+		reloadActions |= TPCPreferencesKeyReloadTextFieldSegmentedControllerOriginAction;
+	}
+	
+	/* Main window alpha level. */
+	if ([prefKeys containsObject:@"MainWindowTransparencyLevel"]) {
+		reloadActions |= TPCPreferencesKeyReloadMainWindowTransparencyLevelAction;
+	}
+	
+	/* Dock icon. */
+	if ([prefKeys containsObject:@"DisplayDockBadges"] ||						/* Display dock badges. */
+		[prefKeys containsObject:@"DisplayPublicMessageCountInDockBadge"])		/* Count public messages in dock badges. */
+	{
+		reloadActions |= TPCPreferencesKeyReloadDockIconBadgesAction;
+	}
+	
+	/* Main window appearance. */
+	if ([prefKeys containsObject:@"InvertSidebarColors"] ||									/* Dark or light mode UI. */
+		[prefKeys containsObject:@"Theme -> Invert Sidebar Colors Preference Enabled"])		/* Indicates whether a style overrides a specific preference. */
+	{
+		reloadActions |= TPCPreferencesKeyReloadMainWindowAppearanceAction;
+	}
+	
+	/* Member list sort order. */
+	if ([prefKeys containsObject:@"MemberListSortFavorsServerStaff"]) { // Place server staff at top of list…
+		reloadActions |= TPCPreferencesKeyReloadMemberListSortOrderAction;
+	}
+	
+	/* Member list user badge colors. */
+	if ([prefKeys containsObject:@"User List Mode Badge Colors —> +y"] ||						/* User mode badge color. */
+		[prefKeys containsObject:@"User List Mode Badge Colors —> +q"] ||						/* User mode badge color. */
+		[prefKeys containsObject:@"User List Mode Badge Colors —> +a"] ||						/* User mode badge color. */
+		[prefKeys containsObject:@"User List Mode Badge Colors —> +o"] ||						/* User mode badge color. */
+		[prefKeys containsObject:@"User List Mode Badge Colors —> +h"] ||						/* User mode badge color. */
+		[prefKeys containsObject:@"User List Mode Badge Colors —> +v"])							/* User mode badge color. */
+	{
+		reloadActions |= TPCPreferencesKeyReloadMemberListUserBadgesAction;
+	}
+	
+	/* After this is all complete; we call preferencesChanged just to take care
+	 of everything else that does not need specific reloads. */
+	reloadActions |= TPCPreferencesKeyReloadPreferencesChangedAction;
+	
+	[TPCPreferences performReloadActionForActionType:reloadActions];
 }
 
 + (void)performReloadActionForActionType:(TPCPreferencesKeyReloadActionMask)reloadAction
@@ -102,31 +194,36 @@
 		}
 	}
 	
-	/* Member list sort order. */
-	if (reloadAction & TPCPreferencesKeyReloadMemberListSortOrderAction) {
-		IRCChannel *selectedChannel = [mainWindow() selectedChannel];
-		
-		if ( selectedChannel) {
-			[selectedChannel reloadDataForTableViewBySortingMembers];
-		}
-	}
-	
 	/* Member list appearance. */
 	BOOL didReloadMemberListUserInterface = NO;
 	
 	if (reloadAction & TPCPreferencesKeyReloadMemberListAction) {
 		if (didReloadUserInterface == NO) {
 			[mainWindowMemberList() updateBackgroundColor];
-			
-			[mainWindowMemberList() reloadAllDrawings];
 		}
 		
 		didReloadMemberListUserInterface = YES;
 	}
 	
-	/* Memeber list badge drawings. */
-	if (reloadAction & TPCPreferencesKeyReloadMemberListUserBadgesAction) {
-		if (didReloadMemberListUserInterface == NO) {
+	/* Member list sort order. */
+	BOOL didReloadMemberListSortOrder = NO;
+	
+	if (reloadAction & TPCPreferencesKeyReloadMemberListSortOrderAction) {
+		IRCChannel *selectedChannel = [mainWindow() selectedChannel];
+		
+		if ( selectedChannel) {
+			didReloadMemberListSortOrder = YES;
+			
+			[selectedChannel reloadDataForTableViewBySortingMembers];
+		}
+	}
+	
+	/* Member list appearance. */
+	if (reloadAction & TPCPreferencesKeyReloadMemberListAction ||
+		reloadAction & TPCPreferencesKeyReloadMemberListUserBadgesAction)
+	{
+		/* Sort order will redraw these for us. */
+		if (didReloadMemberListSortOrder == NO) {
 			[mainWindowMemberList() reloadAllDrawings];
 		}
 	}

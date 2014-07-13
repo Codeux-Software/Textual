@@ -171,11 +171,6 @@
 	return [RZUserDefaults() boolForKey:@"DisableRemoteNicknameColorHashing"];
 }
 
-+ (BOOL)useLargeFontForSidebars
-{
-	return [RZUserDefaults() boolForKey:@"UseLargeFontForSidebars"];
-}
-
 + (BOOL)conversationTrackingIncludesUserModeSymbol
 {
 	return [RZUserDefaults() boolForKey:@"ConversationTrackingIncludesUserModeSymbol"];
