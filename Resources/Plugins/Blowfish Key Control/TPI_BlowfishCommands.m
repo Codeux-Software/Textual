@@ -234,7 +234,13 @@
         return;
     }
 
-	NSString *requestData = [requestDataRaw safeSubstringFromIndex:[TXExchangeRequestPrefix length]];
+	NSString *requestData = nil;
+	
+	if ([requestData length] >= [TXExchangeRequestPrefix length]) {
+		requestData = [requestDataRaw substringFromIndex:[TXExchangeRequestPrefix length]];
+	} else {
+		requestData =  requestDataRaw;
+	}
 
 	//DebugLogToConsole(@"Key Exchange Request Received:");
 	//DebugLogToConsole(@"	Client: %@", client);
@@ -293,7 +299,11 @@
 	NSArray *exchangeData = [self keyExchangeInformation:responseKey];
 
 	if (NSObjectIsNotEmpty(exchangeData)) {
-		responseData = [responseData safeSubstringFromIndex:[TXExchangeResponsePrefix length]];
+		if ([requestData length] >= TXExchangeResponsePrefix length]) {
+			responseData = [responseData substringFromIndex:[TXExchangeResponsePrefix length]];
+		} else {
+			responseData =  responseData;
+		}
 		
 		//DebugLogToConsole(@"Key Exchange Response Received:");
 		//DebugLogToConsole(@"	Response Key: %@", responseKey);
