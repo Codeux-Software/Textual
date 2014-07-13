@@ -698,7 +698,7 @@
 	
 	BOOL inHighresMode = [mainWindow() runningInHighResolutionMode];
 	
-	NSRect controlFrame = NSMakeRect(1.0, 1.0,  (cellBounds.size.width - 2.0),
+	NSRect controlFrame = NSMakeRect(0.0, 1.0,   cellBounds.size.width,
 												(cellBounds.size.height - 2.0));
 
 	/* Inner background color. */
@@ -743,7 +743,7 @@
 
 	BOOL inHighresMode = [mainWindow() runningInHighResolutionMode];
 
-	NSRect controlFrame = NSMakeRect(1.0, 1.0,  (cellBounds.size.width - 2.0),
+	NSRect controlFrame = NSMakeRect(0.0, 1.0,   cellBounds.size.width,
 												(cellBounds.size.height - 2.0));
 	
 	/* Inner gradient color. */
