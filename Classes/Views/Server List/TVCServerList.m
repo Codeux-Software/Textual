@@ -168,7 +168,11 @@
 			return [TVCServerListDarkYosemiteUserInterface class];
 		}
 	} else {
-		return nil;
+		if ([TPCPreferences invertSidebarColors]) {
+			return [TVCServerListMavericksDarkUserInterface class];
+		} else {
+			return [TVCServerListMavericksLightUserInterface class];
+		}
 	}
 }
 
@@ -329,7 +333,52 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 #pragma mark -
 #pragma mark User Interface for Mavericks
 
-@implementation TVCServerListMavericksUserInterface
+@implementation TVCServerListMavericksLightUserInterface
+
++ (NSColor *)rowSelectionColorForActiveWindow
+{
+	return nil; // Use system default.
+}
+
++ (NSColor *)rowSelectionColorForInactiveWindow
+{
+	return nil; // Use system default.
+}
+
++ (NSColor *)serverListBackgroundColorForInactiveWindow
+{
+	return nil; // Use system default.
+}
+
++ (NSColor *)serverListBackgroundColorForActiveWindow
+{
+	return nil; // Use system default.
+}
+
+@end
+
+@implementation TVCServerListMavericksDarkUserInterface
+
++ (NSColor *)rowSelectionColorForActiveWindow
+{
+	return nil; // Use system default.
+}
+
++ (NSColor *)rowSelectionColorForInactiveWindow
+{
+	return nil; // Use system default.
+}
+
++ (NSColor *)serverListBackgroundColorForInactiveWindow
+{
+	return nil; // Use system default.
+}
+
++ (NSColor *)serverListBackgroundColorForActiveWindow
+{
+	return nil; // Use system default.
+}
+
 @end
 
 #pragma mark -

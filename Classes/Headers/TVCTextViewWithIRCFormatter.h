@@ -54,6 +54,8 @@
 @property (NS_NONATOMIC_IOSONLY, readonly) NSInteger selectedLineNumber;
 @property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfLines;
 
+- (NSInteger)highestHeightBelowHeight:(NSInteger)maximumHeight withPadding:(NSInteger)valuePadding;
+
 - (void)keyDownToSuper:(NSEvent *)e;
 
 - (void)setKeyHandlerTarget:(id)target;

@@ -158,7 +158,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="6064"/>
             </connections>
-            <point key="canvasLocation" x="1164" y="370"/>
+            <point key="canvasLocation" x="736" y="380"/>
         </window>
         <customView id="Eyz-5p-IkU" userLabel="General">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -2607,7 +2607,7 @@
                 <popUpButton appearanceType="aqua" verticalHuggingPriority="750" id="EhE-q3-eNi">
                     <rect key="frame" x="255" y="136" width="159" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="Extra Large" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="3" imageScaling="proportionallyDown" inset="2" selectedItem="cuo-Kl-8df" id="eMi-yb-O9S">
+                    <popUpButtonCell key="cell" type="push" title="Humongous" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" tag="4" imageScaling="proportionallyDown" inset="2" selectedItem="XIz-4F-ZpS" id="eMi-yb-O9S">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="smallSystem"/>
                         <menu key="menu" title="OtherViews" id="yv6-KW-qnS">
@@ -2618,7 +2618,10 @@
                                 <menuItem title="Large" tag="2" id="fGK-dU-kjw">
                                     <attributedString key="attributedTitle"/>
                                 </menuItem>
-                                <menuItem title="Extra Large" state="on" tag="3" id="cuo-Kl-8df">
+                                <menuItem title="Extra Large" tag="3" id="cuo-Kl-8df">
+                                    <attributedString key="attributedTitle"/>
+                                </menuItem>
+                                <menuItem title="Humongous" tag="4" id="XIz-4F-ZpS">
                                     <attributedString key="attributedTitle"/>
                                 </menuItem>
                             </items>

@@ -90,6 +90,7 @@ typedef enum TVCMainWindowTextViewFontSize : NSInteger {
 	TVCMainWindowTextViewFontNormalSize			= 1,
 	TVCMainWindowTextViewFontLargeSize			= 2,
 	TVCMainWindowTextViewFontExtraLargeSize		= 3,
+	TVCMainWindowTextViewFontHumongousSize		= 4,
 } TVCMainWindowTextViewFontSize;
 
 typedef enum TXFileTransferRequestReplyAction : NSInteger {

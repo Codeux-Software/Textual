@@ -334,4 +334,49 @@
 	return numberOfLines;
 }
 
+- (NSInteger)highestHeightBelowHeight:(NSInteger)maximumHeight withPadding:(NSInteger)valuePadding
+{
+	/* Base line number count. */
+	NSLayoutManager *layoutManager = [self layoutManager];
+	
+	NSUInteger totalLineHeight = valuePadding;
+	
+	NSUInteger numberOfLines = 0;
+	NSUInteger numberOfGlyphs = [layoutManager numberOfGlyphs];
+	
+	BOOL skipNewlineSymbolCheck = NO;
+	
+	NSRange lineRange;
+	
+	for (NSInteger i = 0; i < numberOfGlyphs; numberOfLines++) {
+		NSRect r = [layoutManager lineFragmentRectForGlyphAtIndex:i effectiveRange:&lineRange];
+		
+		if ((totalLineHeight +  r.size.height) <= maximumHeight) {
+			 totalLineHeight += r.size.height;
+		} else {
+			skipNewlineSymbolCheck = YES;
+			
+			break;
+		}
+		
+		i = NSMaxRange(lineRange);
+	}
+	
+	if (skipNewlineSymbolCheck == NO) {
+		NSInteger lastIndex = ([self stringLength] - 1);
+		
+		UniChar lastChar = [[self stringValue] characterAtIndex:lastIndex];
+		
+		if ([[NSCharacterSet newlineCharacterSet] characterIsMember:lastChar]) {
+			CGFloat defaultHeight = [layoutManager defaultLineHeightForFont:self.preferredFont];
+			
+			if ((totalLineHeight +  defaultHeight) <= maximumHeight) {
+				 totalLineHeight += defaultHeight;
+			}
+		}
+	}
+	
+	return totalLineHeight;
+}
+
 @end

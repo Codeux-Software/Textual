@@ -435,7 +435,11 @@
 			return [TVCMemberListDarkYosemiteUserInterface class];
 		}
 	} else {
-		return nil;
+		if ([TPCPreferences invertSidebarColors]) {
+			return [TVCMemberListMavericksDarkUserInterface class];
+		} else {
+			return [TVCMemberListMavericksLightUserInterface class];
+		}
 	}
 }
 
@@ -608,7 +612,52 @@
 
 @end
 
-@implementation TVCMemberListMavericksUserInterface
+@implementation TVCMemberListMavericksLightUserInterface
+
++ (NSColor *)rowSelectionColorForActiveWindow
+{
+	return nil; // Use system default.
+}
+
++ (NSColor *)rowSelectionColorForInactiveWindow
+{
+	return nil; // Use system default.
+}
+
++ (NSColor *)memberListBackgroundColorForInactiveWindow
+{
+	return nil; // Use system default.
+}
+
++ (NSColor *)memberListBackgroundColorForActiveWindow
+{
+	return nil; // Use system default.
+}
+
+@end
+
+@implementation TVCMemberListMavericksDarkUserInterface
+
++ (NSColor *)rowSelectionColorForActiveWindow
+{
+	return nil; // Use system default.
+}
+
++ (NSColor *)rowSelectionColorForInactiveWindow
+{
+	return nil; // Use system default.
+}
+
++ (NSColor *)memberListBackgroundColorForInactiveWindow
+{
+	return nil; // Use system default.
+}
+
++ (NSColor *)memberListBackgroundColorForActiveWindow
+{
+	return nil; // Use system default.
+}
+
 @end
 
 @implementation TVCMemberListLightYosemiteUserInterface
