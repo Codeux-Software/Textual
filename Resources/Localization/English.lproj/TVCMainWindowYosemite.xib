@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6185.7" systemVersion="14A283o" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment version="101000" defaultVersion="1070" identifier="macosx"/>
+        <deployment version="101000" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.7"/>
     </dependencies>
@@ -27,10 +27,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="800" height="38"/>
                         <subviews>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="2851" customClass="TVCMainWindowTextViewBackground">
-                                <rect key="frame" x="161" y="6" width="629" height="25"/>
+                                <rect key="frame" x="170" y="6" width="620" height="25"/>
                                 <subviews>
                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2852">
-                                        <rect key="frame" x="0.0" y="3" width="619" height="19"/>
+                                        <rect key="frame" x="0.0" y="3" width="610" height="19"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="qmu-eN-SPq">
                                             <rect key="frame" x="0.0" y="0.0" width="624" height="18"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -39,10 +39,10 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="624" height="19"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="619" height="19"/>
+                                                    <size key="minSize" width="610" height="19"/>
                                                     <size key="maxSize" width="629" height="10000000"/>
                                                     <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="619" height="19"/>
+                                                    <size key="minSize" width="610" height="19"/>
                                                     <size key="maxSize" width="629" height="10000000"/>
                                                     <connections>
                                                         <outlet property="backgroundView" destination="2851" id="Izu-dD-CPe"/>
@@ -81,9 +81,9 @@
                                 </connections>
                             </customView>
                             <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2853" customClass="TVCMainWindowSegmentedController">
-                                <rect key="frame" x="10" y="5" width="146" height="25"/>
+                                <rect key="frame" x="10" y="5" width="150" height="25"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="146" id="Iyf-FE-y9H"/>
+                                    <constraint firstAttribute="width" constant="150" id="Iyf-FE-y9H"/>
                                 </constraints>
                                 <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="2870" customClass="TVCMainWindowSegmentedControllerCell">
                                     <font key="font" metaFont="system"/>
@@ -94,7 +94,7 @@
                                         <segment toolTip="Manage Selection" image="NSActionTemplate" width="48" tag="1">
                                             <nil key="label"/>
                                         </segment>
-                                        <segment toolTip="Open Address Book" image="B83818E5-8E84-412B-93B0-282869702DC0" width="46" tag="2">
+                                        <segment toolTip="Open Address Book" image="56ADB1D7-4EB7-43FA-BF64-261BC936E2B9" width="46" tag="2">
                                             <nil key="label"/>
                                         </segment>
                                     </segments>
@@ -108,7 +108,7 @@
                             <constraint firstAttribute="trailing" secondItem="2851" secondAttribute="trailing" constant="10" id="TQ1-DG-4O8"/>
                             <constraint firstItem="2853" firstAttribute="leading" secondItem="QWX-3d-xlG" secondAttribute="leading" constant="10" id="V8Y-xx-Qb2"/>
                             <constraint firstAttribute="height" constant="38" id="dbt-8E-Ux8"/>
-                            <constraint firstItem="2851" firstAttribute="leading" secondItem="2853" secondAttribute="trailing" constant="5" id="uIC-Q8-qfZ"/>
+                            <constraint firstItem="2851" firstAttribute="leading" secondItem="2853" secondAttribute="trailing" constant="10" id="uIC-Q8-qfZ"/>
                         </constraints>
                     </visualEffectView>
                     <view hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2793" userLabel="Main View">
@@ -1659,7 +1659,7 @@ There are no other limits. What you see, is what you get.</string>
         </customObject>
     </objects>
     <resources>
-        <image name="B83818E5-8E84-412B-93B0-282869702DC0" width="20" height="18">
+        <image name="56ADB1D7-4EB7-43FA-BF64-261BC936E2B9" width="20" height="18">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGREVYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QDwcI
 ExgdHicoKSoyNTg+QVUkbnVsbNUJCgsMDQ4PEBESViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzXE5T

@@ -242,60 +242,62 @@
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	/* Build draw context for border of text field. When we draw the text field,
-	 we will also render the unread count badge with it. */
-	TVCServerListCell *parentCell = [self parentCell];
-	
-	NSDictionary *drawingContext = [parentCell drawingContext];
-	
-	BOOL isWindowInactive = [drawingContext boolForKey:@"isInactiveWindow"];
-	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
-	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
-	
-	id interfaceObjects = [mainWindowServerList() userInterfaceObjects];
-
-	/* If we are a client, then there will be no badged. */
-	if (isGroupItem == NO) {
-		/* Gather information about this badge draw. */
-		IRCChannel *channelPointer = (id)[parentCell cellItem];
-
-		BOOL drawMessageBadge = (isSelected == NO || (isWindowInactive && isSelected));
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		/* Build draw context for border of text field. When we draw the text field,
+		 we will also render the unread count badge with it. */
+		TVCServerListCell *parentCell = [self parentCell];
 		
-		NSInteger channelTreeUnreadCount = [channelPointer treeUnreadCount];
-		NSInteger nicknameHighlightCount = [channelPointer nicknameHighlightCount];
+		NSDictionary *drawingContext = [parentCell drawingContext];
 		
-		BOOL isHighlight = (nicknameHighlightCount >= 1);
+		BOOL isWindowInactive = [drawingContext boolForKey:@"isInactiveWindow"];
+		BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
+		BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
 		
-		if (channelPointer.config.showTreeBadgeCount == NO) {
-			if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-				drawMessageBadge = NO; /* On Yosemite we colorize the channel name itself. */
-			} else {
-				if (isHighlight) {
-					channelTreeUnreadCount = nicknameHighlightCount;
+		id interfaceObjects = [mainWindowServerList() userInterfaceObjects];
+		
+		/* If we are a client, then there will be no badged. */
+		if (isGroupItem == NO) {
+			/* Gather information about this badge draw. */
+			IRCChannel *channelPointer = (id)[parentCell cellItem];
+			
+			BOOL drawMessageBadge = (isSelected == NO || (isWindowInactive && isSelected));
+			
+			NSInteger channelTreeUnreadCount = [channelPointer treeUnreadCount];
+			NSInteger nicknameHighlightCount = [channelPointer nicknameHighlightCount];
+			
+			BOOL isHighlight = (nicknameHighlightCount >= 1);
+			
+			if (channelPointer.config.showTreeBadgeCount == NO) {
+				if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+					drawMessageBadge = NO; /* On Yosemite we colorize the channel name itself. */
 				} else {
-					drawMessageBadge = NO;
+					if (isHighlight) {
+						channelTreeUnreadCount = nicknameHighlightCount;
+					} else {
+						drawMessageBadge = NO;
+					}
 				}
+			}
+			
+			/* Begin draw if we want to. */
+			if (channelTreeUnreadCount > 0 && drawMessageBadge) {
+				/* Get the string being draw. */
+				NSAttributedString *mcstring = [self messageCountBadgeText:channelTreeUnreadCount selected:(isSelected && isHighlight == NO)];
+				
+				/* Get the rect being drawn. */
+				NSRect badgeRect = [self messageCountBadgeRect:cellFrame withText:mcstring];
+				
+				/* Draw the badge. */
+				[self drawMessageCountBadge:mcstring inCell:badgeRect isHighlighgt:isHighlight isSelected:isSelected];
+				
+				/* Trim our text field to make room for the newly drawn badge. */
+				cellFrame.size.width -= (badgeRect.size.width + [interfaceObjects channelCellTextFieldWithBadgeRightMargin]);
 			}
 		}
 		
-		/* Begin draw if we want to. */
-		if (channelTreeUnreadCount > 0 && drawMessageBadge) {
-			/* Get the string being draw. */
-			NSAttributedString *mcstring = [self messageCountBadgeText:channelTreeUnreadCount selected:(isSelected && isHighlight == NO)];
-			
-			/* Get the rect being drawn. */
-			NSRect badgeRect = [self messageCountBadgeRect:cellFrame withText:mcstring];
-			
-			/* Draw the badge. */
-			[self drawMessageCountBadge:mcstring inCell:badgeRect isHighlighgt:isHighlight isSelected:isSelected];
-			
-			/* Trim our text field to make room for the newly drawn badge. */
-			cellFrame.size.width -= (badgeRect.size.width + [interfaceObjects channelCellTextFieldWithBadgeRightMargin]);
-		}
-	}
-	
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 		[self drawInteriorWithFrameForYosemite:cellFrame withUserInterfaceObject:interfaceObjects];
+	} else {
+		[super drawWithFrame:cellFrame inView:controlView];
 	}
 }
 

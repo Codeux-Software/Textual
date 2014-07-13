@@ -47,7 +47,7 @@
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 		[self updateDrawingForYosemite:[mainWindowMemberList() userInterfaceObjects]];
 	} else {
-		;
+		[self updateDrawingForYosemite:[mainWindowMemberList() userInterfaceObjects]];
 	}
 }
 
@@ -222,21 +222,23 @@
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	TVCMemberListCell *parentCell = [self parentCell];
-	
-	NSDictionary *drawingContext = [parentCell drawingContext];
-	
-	[self drawModeBadge:[drawingContext boolForKey:@"isSelected"]];
-	
-	id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
-	
-	cellFrame.origin.x = [userInterfaceObjects textCellLeftMargin];
-	cellFrame.origin.y = [userInterfaceObjects textCellBottomMargin];
-	
-	cellFrame.size.width -= [userInterfaceObjects textCellLeftMargin];
-	
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		TVCMemberListCell *parentCell = [self parentCell];
+		
+		NSDictionary *drawingContext = [parentCell drawingContext];
+		
+		[self drawModeBadge:[drawingContext boolForKey:@"isSelected"]];
+		
+		id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
+		
+		cellFrame.origin.x = [userInterfaceObjects textCellLeftMargin];
+		cellFrame.origin.y = [userInterfaceObjects textCellBottomMargin];
+		
+		cellFrame.size.width -= [userInterfaceObjects textCellLeftMargin];
+		
 		[self drawInteriorWithFrameForYosemite:cellFrame withUserInterfaceObject:userInterfaceObjects];
+	} else {
+		[super drawWithFrame:cellFrame inView:controlView];
 	}
 }
 

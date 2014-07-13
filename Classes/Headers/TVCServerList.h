@@ -74,7 +74,20 @@
 + (NSColor *)serverListBackgroundColor;
 @end
 
-@interface TVCServerListMavericksUserInterface : TVCServerListSharedUserInterface
+@interface TVCServerListMavericksLightUserInterface : TVCServerListSharedUserInterface
++ (NSColor *)rowSelectionColorForActiveWindow;
++ (NSColor *)rowSelectionColorForInactiveWindow;
+
++ (NSColor *)serverListBackgroundColorForActiveWindow;
++ (NSColor *)serverListBackgroundColorForInactiveWindow;
+@end
+
+@interface TVCServerListMavericksDarkUserInterface : TVCServerListSharedUserInterface
++ (NSColor *)rowSelectionColorForActiveWindow;
++ (NSColor *)rowSelectionColorForInactiveWindow;
+
++ (NSColor *)serverListBackgroundColorForActiveWindow;
++ (NSColor *)serverListBackgroundColorForInactiveWindow;
 @end
 
 @interface TVCServerListLightYosemiteUserInterface : TVCServerListSharedUserInterface

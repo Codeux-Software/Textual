@@ -97,7 +97,20 @@
 + (NSInteger)textCellBottomMargin;
 @end
 
-@interface TVCMemberListMavericksUserInterface : TVCMemberListSharedUserInterface
+@interface TVCMemberListMavericksLightUserInterface : TVCMemberListSharedUserInterface
++ (NSColor *)rowSelectionColorForActiveWindow;
++ (NSColor *)rowSelectionColorForInactiveWindow;
+
++ (NSColor *)memberListBackgroundColorForActiveWindow;
++ (NSColor *)memberListBackgroundColorForInactiveWindow;
+@end
+
+@interface TVCMemberListMavericksDarkUserInterface : TVCMemberListSharedUserInterface
++ (NSColor *)rowSelectionColorForActiveWindow;
++ (NSColor *)rowSelectionColorForInactiveWindow;
+
++ (NSColor *)memberListBackgroundColorForActiveWindow;
++ (NSColor *)memberListBackgroundColorForInactiveWindow;
 @end
 
 @interface TVCMemberListLightYosemiteUserInterface : TVCMemberListSharedUserInterface

@@ -37,12 +37,13 @@
 
 #import "TextualApplication.h"
 
-#define _WindowContentBorderTotalPadding		14.0
+#define _WindowContentBorderTotalPaddingYosemite		23.0
+#define _WindowContentBorderTotalPaddingMavericks		23.0
 
 #define _WindowSegmentedControllerDefaultWidth			150.0
 
 #define _WindowSegmentedControllerLeadingVisibleEdge	10.0
-#define _WindowSegmentedControllerLeadingHiddenEdge		5.0
+#define _WindowSegmentedControllerLeadingHiddenEdge		0.0
 
 #define _WindowContentViewMinimumHeightConstraint		35.0
 
@@ -59,7 +60,6 @@
 								@"TextFieldTextReplacement"]
 
 @interface TVCMainWindowTextView ()
-@property (nonatomic, assign) NSInteger lastDrawLineCount;
 @property (nonatomic, assign) TVCMainWindowTextViewFontSize cachedFontSize;
 @end
 
@@ -292,6 +292,8 @@
 		[self setPreferredFont:[NSFont fontWithName:@"Helvetica" size:14.0]];
 	} else if (self.cachedFontSize == TVCMainWindowTextViewFontExtraLargeSize) {
 		[self setPreferredFont:[NSFont fontWithName:@"Helvetica" size:16.0]];
+	} else if (self.cachedFontSize == TVCMainWindowTextViewFontHumongousSize) {
+		[self setPreferredFont:[NSFont fontWithName:@"Helvetica" size:24.0]];
 	}
 
 	/* Update the placeholder string. */
@@ -326,35 +328,12 @@
 
 - (NSInteger)backgroundViewDefaultHeight
 {
-	if (self.cachedFontSize == TVCMainWindowTextViewFontNormalSize) {
-		return 23.0;
-	} else if (self.cachedFontSize == TVCMainWindowTextViewFontLargeSize) {
-		return 27.0;
-	} else if (self.cachedFontSize == TVCMainWindowTextViewFontExtraLargeSize) {
-		return 28.0;
-	}
-	
-	return 23.0;
-}
-
-- (NSInteger)backgroundViewHeightMultiplier
-{
-	if (self.cachedFontSize == TVCMainWindowTextViewFontNormalSize) {
-		return 14.0;
-	} else if (self.cachedFontSize == TVCMainWindowTextViewFontLargeSize) {
-		return 17.0;
-	} else if (self.cachedFontSize == TVCMainWindowTextViewFontExtraLargeSize) {
-		return 19.0;
-	}
-
-	return 14.0;
+	return [[self layoutManager] defaultLineHeightForFont:self.preferredFont];
 }
 
 /* Do actual size math. */
 - (void)resetTextFieldCellSize:(BOOL)force
 {
-	BOOL drawBezel = YES;
-
 	/* Get window data. */
 	NSWindow *mainWindow = mainWindow();
 	
@@ -366,78 +345,40 @@
 	id scrollViewDocumentView = [scrollView contentView];
 	
 	NSRect documentViewBounds = [scrollViewDocumentView bounds];
+	
+	/* Content border padding. */
+	NSInteger contentBorderPadding = 0;
+	
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		contentBorderPadding = _WindowContentBorderTotalPaddingYosemite;
+	} else {
+		contentBorderPadding = _WindowContentBorderTotalPaddingMavericks;
+	}
 
 	/* Set defaults. */
 	NSInteger backgroundHeight;
 	
 	NSInteger backgroundDefaultHeight = [self backgroundViewDefaultHeight];
-	NSInteger backgroundHeightMultiplier = [self backgroundViewHeightMultiplier];
-
-	NSString *stringv = [self stringValue];
 
 	/* Begin works… */
-	if ([stringv length] < 1) {
-		backgroundHeight = (backgroundDefaultHeight + _WindowContentBorderTotalPadding);
-
-		if (self.lastDrawLineCount > 1 || force) {
-			drawBezel = YES;
-		}
-
-		self.lastDrawLineCount = 1;
+	if ([self stringLength] < 1) {
+		backgroundHeight = (backgroundDefaultHeight + contentBorderPadding);
 	} else {
-		NSInteger totalLinesBase = [self numberOfLines];
-
-		if (self.lastDrawLineCount == totalLinesBase && force == NO) {
-			drawBezel = NO;
-		}
-
-		self.lastDrawLineCount = totalLinesBase;
-
-		if (drawBezel) {
-			NSInteger totalLinesMath = (totalLinesBase - 1);
-	
-			/* Calculate unfiltered height. */
-			backgroundHeight  = _WindowContentBorderTotalPadding;
-			
-			backgroundHeight +=  backgroundDefaultHeight;
-			backgroundHeight += (backgroundHeightMultiplier * totalLinesMath);
-
-			NSInteger backgroundViewMaxHeight = (windowFrame.size.height - (_WindowContentViewMinimumHeightConstraint + _WindowContentBorderTotalPadding));
-
-			/* Fix height if it exceeds are maximum. */
-			if (backgroundHeight > backgroundViewMaxHeight) {
-				for (NSInteger i = totalLinesMath; i >= 0; i--) {
-					NSInteger newSize = 0;
-					
-					newSize  = _WindowContentBorderTotalPadding;
-					
-					newSize +=      backgroundDefaultHeight;
-					newSize += (i * backgroundHeightMultiplier);
-
-					if (newSize > backgroundViewMaxHeight) {
-						continue;
-					} else {
-						backgroundHeight = newSize;
-
-						break;
-					}
-				}
-			}
-		}
+		NSInteger backgroundViewMaxHeight = (windowFrame.size.height - (_WindowContentViewMinimumHeightConstraint + contentBorderPadding));
+		
+		backgroundHeight = [self highestHeightBelowHeight:backgroundViewMaxHeight withPadding:contentBorderPadding];
 	}
 
-	if (drawBezel) {
-		if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
-			[mainWindow setContentBorderThickness:backgroundHeight forEdge:NSMinYEdge];
-		}
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
+		[mainWindow setContentBorderThickness:backgroundHeight forEdge:NSMinYEdge];
+	}
 
-		[self.textFieldHeightConstraint setConstant:backgroundHeight];
+	[self.textFieldHeightConstraint setConstant:backgroundHeight];
+	
+	if (documentViewBounds.origin.x > 0) {
+		documentViewBounds.origin.x = 0;
 		
-		if (documentViewBounds.origin.x > 0) {
-			documentViewBounds.origin.x = 0;
-			
-			[scrollViewDocumentView scrollToPoint:documentViewBounds.origin];
-		}
+		[scrollViewDocumentView scrollToPoint:documentViewBounds.origin];
 	}
 }
 
@@ -542,10 +483,10 @@
 #pragma mark -
 #pragma mark Mavericks UI Drawing
 
-- (NSColor *)inputTextFieldBlackOutlineColorMavericks
+- (NSColor *)inputTextFieldOutlineColorMavericks
 {
 	if ([self windowIsActive]) {
-		return [NSColor colorWithCalibratedWhite:0.0 alpha:0.4];
+		return [NSColor colorWithCalibratedWhite:0.0 alpha:0.42];
 	} else {
 		return [NSColor colorWithCalibratedWhite:0.0 alpha:0.23];
 	}
@@ -558,12 +499,16 @@
 
 - (NSColor *)inputTextFieldInsideShadowColorMavericks
 {
-	return [NSColor colorWithCalibratedWhite:0.88 alpha:1.0];
+	if ([self windowIsActive]) {
+		return [NSColor colorWithCalibratedWhite:0.88 alpha:1.0];
+	} else {
+		return [NSColor clearColor];
+	}
 }
 
-- (NSColor *)inputTextFieldOutsideWhiteShadowColorMavericks
+- (NSColor *)inputTextFieldOutsideShadowColorMavericks
 {
-	return [NSColor colorWithCalibratedWhite:1.0 alpha:0.394];
+	return [NSColor colorWithCalibratedWhite:1.0 alpha:0.70];
 }
 
 - (NSColor *)inputTextFieldPlaceholderTextColorMavericks
@@ -580,43 +525,85 @@
 {
 	/* General Declarations. */
 	NSRect cellBounds = [self frame];
-	NSRect controlFrame;
+	
+	CGContextRef context = [RZGraphicsCurrentContext() graphicsPort];
+	
+	NSRect backgroundFrame = NSMakeRect(0.0, 1.0,   cellBounds.size.width,
+												   (cellBounds.size.height - 1.0));
+	
+	NSRect foregroundFrame = NSMakeRect(1.0, 2.0,  (cellBounds.size.width - 2.0),
+												   (cellBounds.size.height - 3.0));
+	
+	/* Color values. */
+	NSColor *backgroundColor = [self inputTextFieldBackgroundColorMavericks];
+	NSColor *backgroundBorderColor = [self inputTextFieldOutlineColorMavericks];
+	NSColor *innerShadowColor = [self inputTextFieldInsideShadowColorMavericks];
+	NSColor *outerShadowColor = [self inputTextFieldOutsideShadowColorMavericks];
+	
+	/* Shadow values. */
+	NSShadow *outterShadow = [NSShadow new];
+	
+	[outterShadow setShadowColor:outerShadowColor];
+	[outterShadow setShadowOffset:NSMakeSize(0.0, -1.0)];
+	[outterShadow setShadowBlurRadius:0.0];
+	
+	NSShadow *innerShadow = [NSShadow new];
+	
+	[innerShadow setShadowColor:innerShadowColor];
+	[innerShadow setShadowOffset:NSMakeSize(0.0, -1.0)];
+	[innerShadow setShadowBlurRadius:0.0];
+	
+	/* Draw the background rectangle which will act as the stroke of
+	 the foreground rectangle. It will also host the bottom shadow. */
+	NSBezierPath *rectanglePath = [NSBezierPath bezierPathWithRoundedRect:backgroundFrame xRadius:3.5 yRadius:3.5];
+	
+	[NSGraphicsContext saveGraphicsState];
+	
+	[outterShadow set];
+	
+	[backgroundBorderColor setFill];
+	
+	[rectanglePath fill];
+	
+	[NSGraphicsContext restoreGraphicsState];
+	
+	/* Draw the foreground rectangle. */
+	NSBezierPath *rectangle2Path = [NSBezierPath bezierPathWithRoundedRect:foregroundFrame xRadius:3.5 yRadius:3.5];
 
-	NSColor *controlColor;
-
-	NSBezierPath *controlPath;
-
-	/* Control Outside White Shadow. */
-	controlColor = [self inputTextFieldOutsideWhiteShadowColorMavericks];
-	controlFrame = NSMakeRect(0.0, 0.0, cellBounds.size.width, 1.0);
-	controlPath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:3.6 yRadius:3.6];
-
-	[controlColor set];
-	[controlPath fill];
-
-	/* Black Outline. */
-	controlColor = [self inputTextFieldBlackOutlineColorMavericks];
-	controlFrame = NSMakeRect(0.0, 1.0, cellBounds.size.width, (cellBounds.size.height - 1.0));
-	controlPath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:3.6 yRadius:3.6];
-
-	[controlColor set];
-	[controlPath fill];
-
-	/* White Background. */
-	controlColor = [self inputTextFieldBackgroundColorMavericks];
-	controlFrame = NSMakeRect(1, 2, (cellBounds.size.width - 2.0), (cellBounds.size.height - 4.0));
-	controlPath	= [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:2.6 yRadius:2.6];
-
-	[controlColor set];
-	[controlPath fill];
-
-	/* Inside White Shadow. */
-	controlColor = [self inputTextFieldInsideShadowColorMavericks];
-	controlFrame = NSMakeRect(2, (cellBounds.size.height - 2.0), (cellBounds.size.width - 4.0), 1.0);
-	controlPath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:2.9 yRadius:2.9];
-
-	[controlColor set];
-	[controlPath fill];
+	[backgroundColor setFill];
+	
+	[rectangle2Path fill];
+	
+	/* Draw the inside shadow of the foreground rectangle. */
+	[NSGraphicsContext saveGraphicsState];
+	
+	NSRectClip([rectangle2Path bounds]);
+	
+	CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
+	
+	CGContextSetAlpha(context, [innerShadowColor alphaComponent]);
+	
+	CGContextBeginTransparencyLayer(context, NULL);
+	{
+		/* Inside shadow drawing. */
+		[innerShadow set];
+		
+		CGContextSetBlendMode(context, kCGBlendModeSourceOut);
+		
+		CGContextBeginTransparencyLayer(context, NULL);
+		
+		/* Fill shadow. */
+		[innerShadowColor setFill];
+		
+		[rectangle2Path fill];
+		
+		/* Complete drawing. */
+		CGContextEndTransparencyLayer(context);
+	}
+	
+	CGContextEndTransparencyLayer(context);
+	
+	[NSGraphicsContext restoreGraphicsState];
 }
 
 #pragma mark -
@@ -697,7 +684,7 @@
 
 - (void)drawControllerForYosemite
 {
-	if ([self.contentView yosemiteIsUsingVibrantDarkMode]) {
+	if ([self yosemiteIsUsingVibrantDarkMode]) {
 		[self drawBlackControllerForYosemiteInFocusedWindow];
 	} else {
 		[self drawWhiteControllerForYosemiteInFocusedWindow];
@@ -711,8 +698,8 @@
 	
 	BOOL inHighresMode = [mainWindow() runningInHighResolutionMode];
 	
-	NSRect controlFrame = NSMakeRect(1, 1,  (cellBounds.size.width - 2.0),
-											(cellBounds.size.height - 2.0));
+	NSRect controlFrame = NSMakeRect(1.0, 1.0,  (cellBounds.size.width - 2.0),
+												(cellBounds.size.height - 2.0));
 
 	/* Inner background color. */
 	NSColor *background = [self blackInputTextFieldInsideBlackBackgroundColorYosemite];
@@ -726,7 +713,7 @@
 		[shadow4 setShadowColor:[self blackInputTextFieldOutsideBottomGrayShadowColorWithoutRetinaYosemite]];
 	}
 	
-	[shadow4 setShadowOffset:NSMakeSize(0.1, -1.1)];
+	[shadow4 setShadowOffset:NSMakeSize(0.0, -(1.0))];
 	[shadow4 setShadowBlurRadius:0.0];
 	
 	/* Rectangle drawing. */
@@ -756,8 +743,8 @@
 
 	BOOL inHighresMode = [mainWindow() runningInHighResolutionMode];
 
-	NSRect controlFrame = NSMakeRect(1, 1,  (cellBounds.size.width - 2.0),
-											(cellBounds.size.height - 2.0));
+	NSRect controlFrame = NSMakeRect(1.0, 1.0,  (cellBounds.size.width - 2.0),
+												(cellBounds.size.height - 2.0));
 	
 	/* Inner gradient color. */
 	NSGradient *gradient = [self whiteInputTextFieldInsideWhiteGradientYosemite];
@@ -765,18 +752,20 @@
 	/* Shadow colors. */
 	NSShadow *shadow3 = [NSShadow new];
 	NSShadow *shadow4 = [NSShadow new];
+	
+	NSColor *shadow3Color = [self whiteInputTextFieldOutsideTopsideWhiteBorderYosemite];
 
-	[shadow3 setShadowColor:[self whiteInputTextFieldOutsideTopsideWhiteBorderYosemite]];
-	[shadow3 setShadowOffset:NSMakeSize(0.1, -1.1)];
+	[shadow3 setShadowColor:shadow3Color];
+	[shadow3 setShadowOffset:NSMakeSize(0.0, -1.0)];
 	[shadow3 setShadowBlurRadius:0.0];
 
 	if (inHighresMode) {
 		[shadow4 setShadowColor:[self whiteInputTextFieldOutsideBottomPrimaryGrayShadowColorWithRetinaYosemite]];
-		[shadow4 setShadowOffset:NSMakeSize(0.1, -0.5)];
+		[shadow4 setShadowOffset:NSMakeSize(0.0, -(0.5))];
 		[shadow4 setShadowBlurRadius:0.0];
 	} else {
 		[shadow4 setShadowColor:[self whiteInputTextFieldOutsideBottomGrayShadowColorWithoutRetinaYosemite]];
-		[shadow4 setShadowOffset:NSMakeSize(0.1, -1.1)];
+		[shadow4 setShadowOffset:NSMakeSize(0.0, -(1.0))];
 		[shadow4 setShadowBlurRadius:0.0];
 	}
 
@@ -794,7 +783,7 @@
 	/* Prepare drawing for inside shadow. */
 	CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
 
-	CGContextSetAlpha(context, [[shadow3 shadowColor] alphaComponent]);
+	CGContextSetAlpha(context, [shadow3Color alphaComponent]);
 
 	CGContextBeginTransparencyLayer(context, NULL);
 	{
@@ -806,7 +795,7 @@
 		CGContextBeginTransparencyLayer(context, NULL);
 
 		/* Fill shadow. */
-		[[shadow3 shadowColor] setFill];
+		[shadow3Color setFill];
 
 		[rectanglePath fill];
 
@@ -835,32 +824,37 @@
 - (NSColor *)systemSpecificTextFieldTextFontColor
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		if ([self.contentView yosemiteIsUsingVibrantDarkMode]) {
+		if ([self yosemiteIsUsingVibrantDarkMode]) {
 			return [self blackInputTextFieldPlaceholderTextColorYosemite];
 		} else {
 			return [self whiteInputTextFieldPlaceholderTextColorYosemite];
-		}
-	} else {
-		return [self inputTextFieldPlaceholderTextColorMavericks];
-	}
-}
-
-- (NSColor *)systemSpecificPlaceholderTextFontColor
-{
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		if ([self.contentView yosemiteIsUsingVibrantDarkMode]) {
-			return [self blackInputTextFieldPrimaryTextColorYosemite];
-		} else {
-			return [self whiteInputTextFieldPrimaryTextColorYosemite];
 		}
 	} else {
 		return [self inputTextFieldPrimaryTextColorMavericks];
 	}
 }
 
+- (NSColor *)systemSpecificPlaceholderTextFontColor
+{
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		if ([self yosemiteIsUsingVibrantDarkMode]) {
+			return [self blackInputTextFieldPrimaryTextColorYosemite];
+		} else {
+			return [self whiteInputTextFieldPrimaryTextColorYosemite];
+		}
+	} else {
+		return [self inputTextFieldPlaceholderTextColorMavericks];
+	}
+}
+
+- (BOOL)yosemiteIsUsingVibrantDarkMode
+{
+	return [self.contentView yosemiteIsUsingVibrantDarkMode];
+}
+
 - (BOOL)windowIsActive
 {
-	return ([mainWindow() isInactive] == NO);
+	return ([mainWindow() isInactiveForDrawing] == NO);
 }
 
 - (void)drawRect:(NSRect)dirtyRect

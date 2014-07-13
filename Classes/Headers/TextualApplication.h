@@ -143,28 +143,31 @@
 	@class TVCMainWindowTextView;
 	@class TVCMainWindowTextViewBackground;
 	@class TVCMainWindowTextViewContentView;
-	@class TVCMemberList;
 	@class TVCMemberLisCellTextFieldInterior;
+	@class TVCMemberList;
 	@class TVCMemberListCell;
 	@class TVCMemberListDarkYosemiteUserInterface;
 	@class TVCMemberListLightYosemiteUserInterface;
+	@class TVCMemberListMavericksDarkUserInterface;
+	@class TVCMemberListMavericksLightUserInterface;
 	@class TVCMemberListMavericksUserInterface;
 	@class TVCMemberListRowCell;
 	@class TVCMemberListSharedUserInterface;
 	@class TVCMemberListUserInfoPopover;
 	@class TVCQueuedCertificateTrustPanel;
-	@class TVCServerList; // This has a lot of classes.
 	@class TVCServerLisCellTextFieldInterior;
+	@class TVCServerList; // This has a lot of classes.
 	@class TVCServerListCell;
 	@class TVCServerListCellChildItem;
 	@class TVCServerListCellGroupItem;
 	@class TVCServerListDarkYosemiteUserInterface;
 	@class TVCServerListLightYosemiteUserInterface;
-	@class TVCServerListMavericksUserInterface;
+	@class TVCServerListMavericksDarkUserInterface;
+	@class TVCServerListMavericksLightUserInterface;
 	@class TVCServerListRowCell;
+	@class TVCTextFieldComboBoxWithValueValidation;
 	@class TVCTextFieldWithValueValidation;
 	@class TVCTextFieldWithValueValidationCell;
-	@class TVCTextFieldComboBoxWithValueValidation;
 	@class TVCTextViewIRCFormattingMenu;
 	@class TVCTextViewWithIRCFormatter;
 	@class TVCWebViewAutoScroll;
