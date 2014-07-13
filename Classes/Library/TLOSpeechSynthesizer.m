@@ -139,11 +139,13 @@
 - (void)setIsStopped:(BOOL)isStopped
 {
 	/* Update internal flag. */
-	self.isStopped = isStopped;
+	_isStopped = isStopped;
 
 	/* Stop speaking. */
-	if ([self isSpeaking]) {
-		[self.speechSynthesizer stopSpeaking];
+	if ([self isStopped]) {
+		if ([self isSpeaking]) {
+			[self.speechSynthesizer stopSpeaking];
+		}
 	}
 }
 
