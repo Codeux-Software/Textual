@@ -145,6 +145,7 @@
 	@class TVCMainWindowTextViewContentView;
 	@class TVCMemberLisCellTextFieldInterior;
 	@class TVCMemberList;
+	@class TVCMemberListBackgroundView;
 	@class TVCMemberListCell;
 	@class TVCMemberListDarkYosemiteUserInterface;
 	@class TVCMemberListLightYosemiteUserInterface;
@@ -157,6 +158,7 @@
 	@class TVCQueuedCertificateTrustPanel;
 	@class TVCServerLisCellTextFieldInterior;
 	@class TVCServerList; // This has a lot of classes.
+	@class TVCServerListBackgroundView;
 	@class TVCServerListCell;
 	@class TVCServerListCellChildItem;
 	@class TVCServerListCellGroupItem;

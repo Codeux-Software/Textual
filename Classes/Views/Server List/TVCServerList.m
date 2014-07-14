@@ -142,23 +142,6 @@
 	return [self enclosingScrollView];
 }
 
-- (void)drawBackgroundInClipRect:(NSRect)clipRect
-{
-	if ([self needsToDrawRect:clipRect]) {
-		id userInterfaceObjects = [self userInterfaceObjects];
-		
-		NSColor *backgroundColor = [userInterfaceObjects serverListBackgroundColor];
-		
-		if (backgroundColor) {
-			[backgroundColor set];
-			
-			NSRectFill(clipRect);
-		} else {
-			[super drawBackgroundInClipRect:clipRect];
-		}
-	}
-}
-
 - (id)userInterfaceObjects
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
@@ -176,6 +159,27 @@
 	}
 }
 
+- (void)updateFillColor
+{
+	[self.backgroundView updateFillColor];
+}
+
+- (void)updateVibrancy
+{
+	if ([TPCPreferences invertSidebarColors]) {
+		/* Source List style of NSOutlineView will actually ignore this appearance… that's
+		 why we have self.visualEffectView behind it. However, we still set the appearance
+		 so that the menu that inherits form it is dark. */
+		[self setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
+		
+		[self.visualEffectView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
+	} else {
+		[self setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
+		
+		[self.visualEffectView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
+	}
+}
+
 - (void)updateBackgroundColor
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
@@ -190,18 +194,8 @@
 		
 		[self deselectAll:nil];
 		
-		if ([TPCPreferences invertSidebarColors]) {
-			/* Source List style of NSOutlineView will actually ignore this appearance… that's
-			 why we have self.visualEffectView behind it. However, we still set the appearance
-			 so that the menu that inherits form it is dark. */
-			[self setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
-			
-			[self.visualEffectView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
-		} else {
-			[self setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
-			
-			[self.visualEffectView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
-		}
+		[self updateVibrancy];
+		[self updateFillColor];
 		
 		[self selectRowIndexes:selectedRows byExtendingSelection:NO];
 		
@@ -254,6 +248,31 @@
 				break;
 			}
 		}
+	}
+}
+
+@end
+
+#pragma mark -
+#pragma mark Background View
+
+@implementation TVCServerListBackgroundView
+
+- (BOOL)allowsVibrancy
+{
+	return NO;
+}
+
+- (void)updateFillColor
+{
+	id userInterfaceObjects = [mainWindowServerList() userInterfaceObjects];
+	
+	NSColor *backgroundColor = [userInterfaceObjects serverListBackgroundColor];
+	
+	if (backgroundColor) {
+		[self setFillColor:backgroundColor];
+	} else {
+		[self setFillColor:[NSColor clearColor]];
 	}
 }
 

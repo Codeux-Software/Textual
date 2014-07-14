@@ -40,6 +40,7 @@
 @interface TVCServerList : NSOutlineView
 @property (nonatomic, uweak) id keyDelegate;
 @property (nonatomic, nweak) IBOutlet NSVisualEffectView *visualEffectView;
+@property (nonatomic, nweak) IBOutlet TVCServerListBackgroundView *backgroundView;
 
 /* addItemToList and removeItemFromList work two completely different ways. 
  addItemToList expects that you have already added the item to the data source
@@ -58,9 +59,14 @@
 - (void)updateDrawingForItem:(IRCTreeItem *)cellItem;
 - (void)updateDrawingForRow:(NSInteger)rowIndex;
 
-- (void)updateBackgroundColor;
+- (void)updateFillColor; // Do not call.
+- (void)updateBackgroundColor; // Do not call.
 
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) id userInterfaceObjects;
+@end
+
+@interface TVCServerListBackgroundView : NSBox
+- (void)updateFillColor;
 @end
 
 @interface TVCServerListSharedUserInterface : NSObject
