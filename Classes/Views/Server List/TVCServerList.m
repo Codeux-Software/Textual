@@ -201,6 +201,14 @@
 		
 		[mainWindow() setTemporarilyDisablePreviousSelectionUpdates:NO];
 		[mainWindow() setTemporarilyIgnoreOutlineViewSelectionChanges:NO];
+	} else {
+		if ([TPCPreferences invertSidebarColors]) {
+			[self setBackgroundColor:nil];
+		} else {
+			[self setBackgroundColor:[NSColor sourceListBackgroundColor]];
+		}
+		
+		[self updateFillColor];
 	}
 }
 
@@ -390,12 +398,12 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 
 + (NSColor *)serverListBackgroundColorForInactiveWindow
 {
-	return nil; // Use system default.
+	return [NSColor colorWithCalibratedRed:0.148 green:0.148 blue:0.148 alpha:1.0];
 }
 
 + (NSColor *)serverListBackgroundColorForActiveWindow
 {
-	return nil; // Use system default.
+	return [NSColor colorWithCalibratedRed:0.148 green:0.148 blue:0.148 alpha:1.0];
 }
 
 @end
