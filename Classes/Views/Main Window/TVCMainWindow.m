@@ -187,11 +187,17 @@
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
 	[masterController() windowDidBecomeKey:notification];
+	
+	[self.serverList updateFillColor];
+	[self.memberList updateFillColor];
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification
 {
 	[masterController() windowDidResignKey:notification];
+	
+	[self.serverList updateFillColor];
+	[self.memberList updateFillColor];
 	
 	[self.memberList destroyUserInfoPopoverOnWindowKeyChange];
 }
@@ -772,7 +778,9 @@
 
 - (BOOL)isInactiveForDrawing
 {
-	return ([self isInactive] || ([self isMainWindow] && [self isKeyWindow] == NO && [self attachedSheet] == nil));
+	return (([self isInactive] ||
+			([self isMainWindow] && [self isKeyWindow] == NO && [self attachedSheet] == nil)) &&
+			 [self isOnActiveSpace]);
 }
 
 - (BOOL)canBecomeMainWindow
