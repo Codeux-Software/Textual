@@ -527,32 +527,32 @@
 
 + (NSColor *)userMarkBadgeBackgroundColor_YDefault // InspIRCd-2.0
 {
-	return [NSColor internalCalibratedRed:162 green:86 blue:58 alpha:1.0];
+	return [NSColor colorWithCalibratedRed:0.632 green:0.335 blue:0.226 alpha:1.0];
 }
 
 + (NSColor *)userMarkBadgeBackgroundColor_QDefault
 {
-	return [NSColor internalCalibratedRed:186 green:0 blue:0 alpha:1.0];
+	return [NSColor colorWithCalibratedRed:0.726 green:0.0 blue:0.0 alpha:1.0];
 }
 
 + (NSColor *)userMarkBadgeBackgroundColor_ADefault
 {
-	return [NSColor internalCalibratedRed:157 green:0 blue:89 alpha:1.0];
+	return [NSColor colorWithCalibratedRed:0.613 green:0.0 blue:0.347 alpha:1.0];
 }
 
 + (NSColor *)userMarkBadgeBackgroundColor_ODefault
 {
-	return [NSColor internalCalibratedRed:90 green:51 blue:156 alpha:1.0];
+	return [NSColor colorWithCalibratedRed:0.351 green:0.199 blue:0.609 alpha:1.0];
 }
 
 + (NSColor *)userMarkBadgeBackgroundColor_HDefault
 {
-	return [NSColor internalCalibratedRed:17 green:125 blue:19 alpha:1.0];
+	return [NSColor colorWithCalibratedRed:0.066 green:0.488 blue:0.074 alpha:1.0];
 }
 
 + (NSColor *)userMarkBadgeBackgroundColor_VDefault
 {
-	return [NSColor internalCalibratedRed:51 green:123 blue:156 alpha:1.0];
+	return [NSColor colorWithCalibratedRed:0.199 green:0.480 blue:0.609 alpha:1.0];
 }
 
 + (NSColor *)userMarkBadgeBackgroundColorWithAlphaCorrect:(NSString *)defaultsKey
@@ -634,6 +634,86 @@
 @end
 
 @implementation TVCMemberListMavericksLightUserInterface
+
++ (NSColor *)userMarkBadgeBackgroundColorForGraphite
+{
+	return [NSColor colorWithCalibratedRed:0.515 green:0.574 blue:0.636 alpha:1.0];
+}
+
++ (NSColor *)userMarkBadgeBackgroundColorForAqua
+{
+	return [NSColor colorWithCalibratedRed:0.593 green:0.656 blue:0.789 alpha:1.0];
+}
+
++ (NSColor *)userMarkBadgeSelectedBackgroundColor
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)userMarkBadgeNormalTextColor
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)userMarkBadgeSelectedTextColor
+{
+	return [NSColor colorWithCalibratedRed:0.617 green:0.660 blue:0.769 alpha:1.0];
+}
+
++ (NSColor *)userMarkBadgeShadowColor
+{
+	return [NSColor colorWithCalibratedWhite:1.00 alpha:0.60];
+}
+
++ (NSFont *)userMarkBadgeFont
+{
+	return [RZFontManager() fontWithFamily:@"Helvetica" traits:NSBoldFontMask weight:15 size:11.0];
+}
+
++ (NSFont *)normalCellFont
+{
+	return [NSFont fontWithName:@"LucidaGrande" size:12.0];
+}
+
++ (NSFont *)selectedCellFont
+{
+	return [NSFont fontWithName:@"LucidaGrande-Bold" size:12.0];
+}
+
++ (NSColor *)normalCellTextColor
+{
+	return [NSColor blackColor];
+}
+
++ (NSColor *)awayUserCellTextColor
+{
+	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.6];
+}
+
++ (NSColor *)selectedCellTextColor
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)normalCellTextShadowColor
+{
+	return [NSColor colorWithSRGBRed:1.0 green:1.0 blue:1.0 alpha:0.6];
+}
+
++ (NSColor *)normalSelectedCellTextShadowColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.00 alpha:0.48];
+}
+
++ (NSColor *)normalSelectedCellTextShadowColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.00 alpha:0.30];
+}
+
++ (NSColor *)graphiteSelectedCellTextShadowColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.066 green:0.285 blue:0.492 alpha:1.0];
+}
 
 + (NSColor *)rowSelectionColorForActiveWindow
 {
