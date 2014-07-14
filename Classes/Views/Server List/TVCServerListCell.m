@@ -82,19 +82,23 @@
 	if ([cellItem isPrivateMessage]) {
 		icon = [NSImage imageNamed:[interfaceObject privateMessageStatusIconFilename:isActive]];
 	} else {
-		if (isActive) {
-			icon = [NSImage imageNamed:@"channelRoomStatusIcon_Glass_Active"];
-		} else {
-			icon = [NSImage imageNamed:@"channelRoomStatusIcon_Glass_Inactive"];
+		if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+			if (isActive) {
+				icon = [NSImage imageNamed:@"channelRoomStatusIcon_Glass_Active"];
+			} else {
+				icon = [NSImage imageNamed:@"channelRoomStatusIcon_Glass_Inactive"];
+			}
 		}
 	}
 	
-	if ([mainWindow() isUsingVibrantDarkAppearance]) {
-		icon = [icon imageTintedWithColor:[NSColor whiteColor]];
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		if ([TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode]) {
+			icon = [icon imageTintedWithColor:[NSColor whiteColor]];
 			
-		[icon setTemplate:NO];
-	} else {
-		[icon setTemplate:YES];
+			[icon setTemplate:NO];
+		} else {
+			[icon setTemplate:YES];
+		}
 	}
 	
 	[imageView setImage:icon];
@@ -160,9 +164,9 @@
 		@"isInverted"			: @([TPCPreferences invertSidebarColors]),
 		@"isRetina"				: @([mainWindow() runningInHighResolutionMode]),
 		@"isActiveWindow"		: @([mainWindow() isActiveForDrawing]),
-		@"isVibrantDark"		: @([mainWindow() isUsingVibrantDarkAppearance]),
 		@"isSelected"			: @([mainWindowServerList() isRowSelected:rowIndex]),
-		@"isGraphite"			: @([NSColor currentControlTint] == NSGraphiteControlTint)
+		@"isGraphite"			: @([NSColor currentControlTint] == NSGraphiteControlTint),
+		@"isVibrantDark"		: @([TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode])
 	};
 }
 
@@ -179,7 +183,7 @@
 - (NSTableViewSelectionHighlightStyle)selectionHighlightStyle
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		if ([mainWindow() isUsingVibrantDarkAppearance]) {
+		if ([TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode]) {
 			return NSTableViewSelectionHighlightStyleRegular;
 		} else {
 			return NSTableViewSelectionHighlightStyleSourceList;
@@ -362,8 +366,8 @@
 	/* Draw the background color. */
 	NSColor *backgroundColor = nil;
 	
-	if (isHighlight && (( [mainWindow() isUsingVibrantDarkAppearance]			&& [mainWindow() isActiveForDrawing]) ||
-						 ([mainWindow() isUsingVibrantDarkAppearance] == NO)))
+	if (isHighlight && (( [interfaceObjects yosemiteIsUsingVibrantDarkMode]			&& [mainWindow() isActiveForDrawing]) ||
+						 ([interfaceObjects yosemiteIsUsingVibrantDarkMode] == NO)))
 	{
 		if ([mainWindow() isActiveForDrawing]) {
 			backgroundColor = [interfaceObjects messageCountHighlightedBadgeBackgroundColorForActiveWindow];
