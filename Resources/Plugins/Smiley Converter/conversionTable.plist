@@ -98,15 +98,15 @@
 	<string>😳</string>
 	<key>o_0</key>
 	<string>😳</string>
-        <key>o.o</key>
+	<key>o.o</key>
 	<string>😳</string>
 	<key>0_0</key>
 	<string>😳</string>
-        <key>O.O</key>
+	<key>O.O</key>
 	<string>😳</string>
-        <key>o.O</key>
+	<key>o.O</key>
 	<string>😳</string>
-        <key>O.o</key>
+	<key>O.o</key>
 	<string>😳</string>
 	<key>:@</key>
 	<string>😡</string>
@@ -191,6 +191,8 @@
 	<key>:-0</key>
 	<string>😱</string>
 	<key>-_-</key>
+	<string>😑</string>
+	<key>-.-</key>
 	<string>😑</string>
 	<key>:***</key>
 	<string>😘</string>
