@@ -38,6 +38,9 @@
 
 #import "TextualApplication.h"
 
+#define TXCalibratedRGBColor(r, g, b)		([NSColor internalCalibratedRed:r green:g blue:b alpha:1.0])
+#define TXCalibratedDeviceColor(r, g, b)	([NSColor internalDeviceRed:r green:g blue:b alpha:1.0])
+
 @implementation NSColor (TXColorHelper)
 
 #pragma mark -

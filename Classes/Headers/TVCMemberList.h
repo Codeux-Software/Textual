@@ -107,6 +107,31 @@
 
 + (NSColor *)memberListBackgroundColorForActiveWindow;
 + (NSColor *)memberListBackgroundColorForInactiveWindow;
+
++ (NSColor *)userMarkBadgeBackgroundColorForAqua;
++ (NSColor *)userMarkBadgeBackgroundColorForGraphite;
+
++ (NSColor *)userMarkBadgeSelectedBackgroundColor;
+
++ (NSColor *)userMarkBadgeNormalTextColor;
++ (NSColor *)userMarkBadgeSelectedTextColor;
+
++ (NSColor *)userMarkBadgeShadowColor;
+
++ (NSFont *)userMarkBadgeFont;
+
++ (NSFont *)normalCellFont;
++ (NSFont *)selectedCellFont;
+
++ (NSColor *)normalCellTextColor;
++ (NSColor *)awayUserCellTextColor;
++ (NSColor *)selectedCellTextColor;
+
++ (NSColor *)normalCellTextShadowColor;
+
++ (NSColor *)normalSelectedCellTextShadowColorForActiveWindow;
++ (NSColor *)normalSelectedCellTextShadowColorForInactiveWindow;
++ (NSColor *)graphiteSelectedCellTextShadowColorForActiveWindow;
 @end
 
 @interface TVCMemberListMavericksDarkUserInterface : TVCMemberListSharedUserInterface
