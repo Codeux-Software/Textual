@@ -161,27 +161,6 @@
 	[mainWindow() maybeToggleFullscreenAfterLaunch];
 }
 
-- (void)reloadMainWindowFrameOnScreenChange
-{
-	NSAssertReturn(self.applicationIsTerminating == NO);
-	
-	[TVCDockIcon resetCachedCount];
-	[TVCDockIcon updateDockIcon];
-}
-
-- (void)resetSelectedItemState
-{
-	NSAssertReturn(self.applicationIsTerminating == NO);
-
-	id sel = [mainWindow() selectedItem];
-
-	if (sel) {
-		[sel resetState];
-	}
-
-	[TVCDockIcon updateDockIcon];
-}
-
 - (void)applicationWillResignActive:(NSNotification *)notification
 {
 	self.applicationIsChangingActiveState = YES;
@@ -360,24 +339,6 @@
 	[self.mainWindow makeKeyAndOrderFront:nil];
 	
 	return YES;
-}
-
-#pragma mark -
-#pragma mark NSWindow Delegate
-
-- (void)windowDidChangeScreen:(NSNotification *)notification
-{
-	[self reloadMainWindowFrameOnScreenChange];
-}
-
-- (void)windowDidBecomeKey:(NSNotification *)notification
-{
-	[self resetSelectedItemState];
-}
-
-- (void)windowDidResignKey:(NSNotification *)notification
-{
-	; // Nothing to do here.
 }
 
 @end

@@ -179,22 +179,46 @@
 }
 
 #pragma mark -
+#pragma mark Item Update
+
+- (void)reloadMainWindowFrameOnScreenChange
+{
+	NSAssertReturn([masterController() applicationIsTerminating] == NO);
+	
+	[TVCDockIcon resetCachedCount];
+	[TVCDockIcon updateDockIcon];
+	
+	[self updateBackgroundColor];
+}
+
+- (void)resetSelectedItemState
+{
+	NSAssertReturn([masterController() applicationIsTerminating] == NO);
+	
+	id sel = [mainWindow() selectedItem];
+	
+	if (sel) {
+		[sel resetState];
+	}
+	
+	[TVCDockIcon updateDockIcon];
+}
+
+#pragma mark -
 #pragma mark NSWindow Delegate
 
 - (void)windowDidChangeScreen:(NSNotification *)notification
 {
-	[masterController() windowDidChangeScreen:notification];
+	[self reloadMainWindowFrameOnScreenChange];
 }
 
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
-	[masterController() windowDidBecomeKey:notification];
+	[self resetSelectedItemState];
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification
 {
-	[masterController() windowDidResignKey:notification];
-	
 	[self.memberList destroyUserInfoPopoverOnWindowKeyChange];
 }
 

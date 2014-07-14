@@ -58,10 +58,4 @@
 /* Both wake cycle methods are invoked by TVCMainWindow -awakeFromNib */
 - (void)performAwakeningBeforeMainWindowDidLoad;
 - (void)performAwakeningAfterMainWindowDidLoad;
-
-/* Notifications are delegated to TVCMainWindow and TVCMainWindow 
- hands important notifications back to this class. */
-- (void)windowDidChangeScreen:(NSNotification *)notification;
-- (void)windowDidBecomeKey:(NSNotification *)notification;
-- (void)windowDidResignKey:(NSNotification *)notification;
 @end
