@@ -72,6 +72,8 @@
 - (void)setColor:(NSColor *)color forKey:(NSString *)defaultName;
 
 - (void)removeObjectForKey:(NSString *)defaultName;
+
+- (NSDictionary *)dictionaryRepresentation;
 @end
 
 @interface TPCPreferencesUserDefaultsObjectProxy : NSObject

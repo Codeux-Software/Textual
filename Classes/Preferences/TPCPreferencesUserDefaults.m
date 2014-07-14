@@ -74,6 +74,32 @@
 	return sharedSelf;
 }
 
+- (NSDictionary *)dictionaryRepresentation
+{
+	/* Group container will take priority. */
+	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
+	
+	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+		NSDictionary *groupDict = [_groupDefaults dictionaryRepresentation];
+		
+		for (NSString *key in groupDict) {
+			settings[key] = groupDict[key];
+		}
+	}
+	
+	/* Default back to self. */
+	NSDictionary *localGroup = [super dictionaryRepresentation];
+	
+	for (NSString *key in localGroup) {
+		if (settings[key] == nil) {
+			settings[key] = localGroup[key];
+		}
+	}
+	
+	/* Return value. */
+	return settings;
+}
+
 - (void)setObject:(id)value forKey:(NSString *)defaultName
 {
 	[RZUserDefaultsValueProxy() setValue:value forKey:defaultName];
