@@ -776,11 +776,9 @@
 	return ([self isKeyWindow] == NO && [self isMainWindow] == NO);
 }
 
-- (BOOL)isInactiveForDrawing
+- (BOOL)isActiveForDrawing
 {
-	return (([self isInactive] ||
-			([self isMainWindow] && [self isKeyWindow] == NO && [self attachedSheet] == nil)) &&
-			 [self isOnActiveSpace]);
+	return (([self isMainWindow] || [self isOnActiveSpace] == NO) && [self isVisible]);
 }
 
 - (BOOL)canBecomeMainWindow
