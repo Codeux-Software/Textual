@@ -877,14 +877,18 @@
 
 - (BOOL)yosemiteIsUsingVibrantDarkMode
 {
-	NSAppearance *currentDesign = [self appearance];
-	
-	NSString *name = [currentDesign name];
-	
-	if ([name hasPrefix:NSAppearanceNameVibrantDark]) {
-		return YES;
-	} else {
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
 		return NO;
+	} else {
+		NSAppearance *currentDesign = [self appearance];
+		
+		NSString *name = [currentDesign name];
+		
+		if ([name hasPrefix:NSAppearanceNameVibrantDark]) {
+			return YES;
+		} else {
+			return NO;
+		}
 	}
 }
 

@@ -39,7 +39,4 @@
 
 @interface TXUserInterface : NSObject
 + (BOOL)runningInHighResolutionMode;
-
-+ (id)defineUserInterfaceItem:(id)normalItem invertedItem:(id)invertedItem;
-+ (id)defineUserInterfaceItem:(id)normalItem invertedItem:(id)invertedItem withOperator:(BOOL)specialCondition;
 @end

@@ -527,6 +527,7 @@
 	
 	NSRange stringLengthRange = NSMakeRange(0, [mutableStringValue length]);
 	
+	/* Finish editing. */
 	[mutableStringValue beginEditing];
 	
 	if (isSelected == NO) {
@@ -551,6 +552,7 @@
 		}
 	}
 	
+	/* Finish editing. */
 	[mutableStringValue endEditing];
 	
 	/* Draw new attributed string. */

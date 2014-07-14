@@ -287,16 +287,20 @@
 
 + (BOOL)yosemiteIsUsingVibrantDarkMode
 {
-	NSVisualEffectView *visualEffectView = [mainWindowServerList() visualEffectView];
-	
-	NSAppearance *currentDesign = [visualEffectView appearance];
-	
-	NSString *name = [currentDesign name];
-	
-	if ([name hasPrefix:NSAppearanceNameVibrantDark]) {
-		return YES;
-	} else {
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
 		return NO;
+	} else {
+		NSVisualEffectView *visualEffectView = [mainWindowServerList() visualEffectView];
+		
+		NSAppearance *currentDesign = [visualEffectView appearance];
+		
+		NSString *name = [currentDesign name];
+		
+		if ([name hasPrefix:NSAppearanceNameVibrantDark]) {
+			return YES;
+		} else {
+			return NO;
+		}
 	}
 }
 
@@ -355,6 +359,196 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 #pragma mark User Interface for Mavericks
 
 @implementation TVCServerListMavericksLightUserInterface
+
++ (NSString *)privateMessageStatusIconFilename:(BOOL)isActive
+{
+	return @"NSUser";
+}
+
++ (NSFont *)messageCountBadgeFont
+{
+	return [RZFontManager() fontWithFamily:@"Helvetica" traits:NSBoldFontMask weight:15 size:10.5];
+}
+
++ (NSFont *)serverCellFont
+{
+	return [NSFont fontWithName:@"LucidaGrande-Bold" size:12.0];
+}
+
++ (NSFont *)normalChannelCellFont
+{
+	return [NSFont fontWithName:@"LucidaGrande" size:12.0];
+}
+
++ (NSFont *)selectedChannelCellFont
+{
+	return [NSFont fontWithName:@"LucidaGrande-Bold" size:12.0];
+}
+
++ (NSInteger)messageCountBadgeHeight
+{
+	return 14.0;
+}
+
++ (NSInteger)messageCountBadgeMinimumWidth
+{
+	return 22.0;
+}
+
++ (NSInteger)messageCountBadgePadding
+{
+	return 6.0;
+}
+
++ (NSInteger)messageCountBadgeRightMargin
+{
+	return 3.0;
+}
+
++ (NSInteger)channelCellTextFieldWithBadgeRightMargin
+{
+	return 8.0;
+}
+
++ (NSInteger)channelCellTextFieldBottomMargin
+{
+	return -(0.5);
+}
+
++ (NSColor *)messageCountHighlightedBadgeBackgroundColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.820 green:0.058 blue:0.058 alpha:1.0];
+}
+
++ (NSColor *)messageCountHighlightedBadgeBackgroundColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.820 green:0.058 blue:0.058 alpha:1.0];
+}
+
++ (NSColor *)messageCountBadgeAquaBackgroundColor
+{
+	return [NSColor colorWithCalibratedRed:0.593 green:0.656 blue:0.789 alpha:1.0];
+}
+
++ (NSColor *)messageCountBadgeGraphtieBackgroundColor
+{
+	return [NSColor colorWithCalibratedRed:0.512 green:0.574 blue:0.636 alpha:1.0];
+}
+
++ (NSColor *)messageCountSelectedBadgeBackgroundColorForActiveWindow
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)messageCountSelectedBadgeBackgroundColorForInactiveWindow
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)messageCountBadgeShadowColor
+{
+	return [NSColor colorWithCalibratedWhite:1.00 alpha:0.60];
+}
+
++ (NSColor *)messageCountNormalBadgeTextColorForActiveWindow
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)messageCountNormalBadgeTextColorForInactiveWindow
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)messageCountSelectedBadgeTextColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.617 green:0.660 blue:0.769 alpha:1.0];
+}
+
++ (NSColor *)messageCountSelectedBadgeTextColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.617 green:0.660 blue:0.769 alpha:1.0];
+}
+
++ (NSColor *)serverCellNormalTextColor
+{
+	return [NSColor outlineViewHeaderTextColor];
+}
+
++ (NSColor *)serverCellDisabledTextColor
+{
+	return [NSColor outlineViewHeaderDisabledTextColor];
+}
+
++ (NSColor *)serverCellSelectedTextColorForActiveWindow
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)serverCellSelectedTextColorForInactiveWindow
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)serverCellNormalTextShadowColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:1.00 alpha:1.00];
+}
+
++ (NSColor *)serverCellNormalTextShadowColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:1.00 alpha:1.00];
+}
+
++ (NSColor *)serverCellSelectedTextShadowColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.00 alpha:0.30];
+}
+
++ (NSColor *)serverCellSelectedTextShadowColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.00 alpha:0.20];
+}
+
++ (NSColor *)channelCellNormalTextColor
+{
+	return [NSColor blackColor];
+}
+
++ (NSColor *)channelCellDisabledTextColor
+{
+	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.6];
+}
+
++ (NSColor *)channelCellSelectedTextColorForActiveWindow
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)channelCellSelectedTextColorForInactiveWindow
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)channelCellNormalTextShadowColor
+{
+	return [NSColor colorWithSRGBRed:1.0 green:1.0 blue:1.0 alpha:0.6];
+}
+
++ (NSColor *)channelCellSelectedTextShadowColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.00 alpha:0.48];
+}
+
++ (NSColor *)channelCellSelectedTextShadowColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.00 alpha:0.30];
+}
+
++ (NSColor *)graphiteTextSelectionShadowColor
+{
+	return [NSColor colorWithCalibratedRed:0.066 green:0.285 blue:0.249 alpha:1.0];
+}
 
 + (NSColor *)rowSelectionColorForActiveWindow
 {
@@ -524,6 +718,11 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 + (NSInteger)channelCellTextFieldWithBadgeRightMargin
 {
 	return 8.0;
+}
+
++ (NSInteger)channelCellTextFieldBottomMargin
+{
+	return 0.0;
 }
 
 + (NSColor *)messageCountNormalBadgeTextColorForActiveWindow
@@ -725,6 +924,11 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 + (NSInteger)channelCellTextFieldWithBadgeRightMargin
 {
 	return 8.0;
+}
+
++ (NSInteger)channelCellTextFieldBottomMargin
+{
+	return 0.0;
 }
 
 + (NSColor *)messageCountNormalBadgeTextColorForActiveWindow

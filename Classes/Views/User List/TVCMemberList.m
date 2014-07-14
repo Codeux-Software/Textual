@@ -501,16 +501,20 @@
 
 + (BOOL)yosemiteIsUsingVibrantDarkMode
 {
-	NSVisualEffectView *visualEffectView = [mainWindowMemberList() visualEffectView];
-	
-	NSAppearance *currentDesign = [visualEffectView appearance];
-	
-	NSString *name = [currentDesign name];
-	
-	if ([name hasPrefix:NSAppearanceNameVibrantDark]) {
-		return YES;
-	} else {
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
 		return NO;
+	} else {
+		NSVisualEffectView *visualEffectView = [mainWindowMemberList() visualEffectView];
+		
+		NSAppearance *currentDesign = [visualEffectView appearance];
+		
+		NSString *name = [currentDesign name];
+		
+		if ([name hasPrefix:NSAppearanceNameVibrantDark]) {
+			return YES;
+		} else {
+			return NO;
+		}
 	}
 }
 

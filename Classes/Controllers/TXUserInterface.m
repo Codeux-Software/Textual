@@ -44,20 +44,4 @@
 	return [[[NSApp mainWindow] screen] runningInHighResolutionMode];
 }
 
-+ (id)defineUserInterfaceItem:(id)normalItem invertedItem:(id)invertedItem
-{
-	return [TXUserInterface defineUserInterfaceItem:normalItem invertedItem:invertedItem withOperator:YES];
-}
-
-+ (id)defineUserInterfaceItem:(id)normalItem invertedItem:(id)invertedItem withOperator:(BOOL)specialCondition
-{
-	BOOL invertedColors = [TPCPreferences invertSidebarColors];
-	
-	if (invertedColors && specialCondition) {
-		return invertedItem;
-	} else {
-		return normalItem;
-	}
-}
-
 @end
