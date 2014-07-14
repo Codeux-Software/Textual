@@ -1349,7 +1349,7 @@ There are no other limits. What you see, is what you get.</string>
                                         <segment toolTip="Manage Selection" image="NSActionTemplate" width="48" tag="1">
                                             <nil key="label"/>
                                         </segment>
-                                        <segment toolTip="Open Address Book" image="46FB421F-355A-4917-9936-5363CFA80C97" width="46" tag="2">
+                                        <segment toolTip="Open Address Book" image="D38B5C99-6189-408C-8425-B97608A6A83A" width="46" tag="2">
                                             <nil key="label"/>
                                         </segment>
                                     </segments>
@@ -1681,7 +1681,7 @@ There are no other limits. What you see, is what you get.</string>
         </popover>
     </objects>
     <resources>
-        <image name="46FB421F-355A-4917-9936-5363CFA80C97" width="20" height="18">
+        <image name="D38B5C99-6189-408C-8425-B97608A6A83A" width="20" height="18">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGREVYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QDwcI
 ExgdHicoKSoyNTg+QVUkbnVsbNUJCgsMDQ4PEBESViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzXE5T
