@@ -294,19 +294,145 @@
 #pragma mark -
 #pragma mark Navigation
 
+- (void)navigateServerListEntries:(NSArray *)scannedRows
+					   entryCount:(NSInteger)entryCount
+					startingPoint:(NSInteger)startingPoint
+					 isMovingDown:(BOOL)isMovingDown
+				   navigationType:(TVCServerListNavigationMovementType)navigationType
+					selectionType:(TVCServerListNavigationSelectionType)selectionType
+{
+	NSInteger currentPosition = startingPoint;
+	
+	while (1 == 1) {
+		/* Move to next selection. */
+		if (isMovingDown) {
+			currentPosition += 1;
+		} else {
+			currentPosition -= 1;
+		}
+		
+		/* Make sure selection is within our bounds. */
+		if (currentPosition >= entryCount || currentPosition < 0) {
+			if (isMovingDown == NO && currentPosition < 0) {
+				currentPosition = (entryCount - 1);
+			} else {
+				currentPosition = 0;
+			}
+		}
+		
+		/* Once we scanned everything, break. */
+		if (currentPosition == startingPoint) {
+			break;
+		}
+		
+		/* Get next selection depending on data source. */
+		id i;
+		
+		if (scannedRows == nil) {
+			i = [self.serverList itemAtRow:currentPosition];
+		} else {
+			i = scannedRows[currentPosition];
+		}
+		
+		/* Skip entries depending on navigation type. */
+		if (selectionType == TVCServerListNavigationSelectionChannelType)
+		{
+			if ([i isClient]) {
+				continue;
+			}
+		}
+		else if (selectionType == TVCServerListNavigationSelectionServerType)
+		{
+			if ([i isChannel]) {
+				continue;
+			}
+		}
+		
+		/* Select current item if it is matched by our condition. */
+		if (navigationType == TVCServerListNavigationMovementAllType)
+		{
+			[self select:i];
+			
+			break;
+		}
+		else if (navigationType == TVCServerListNavigationMovementActiveType)
+		{
+			if ([i isActive]) {
+				[self select:i];
+				
+				break;
+			}
+		}
+		else if (navigationType == TVCServerListNavigationMovementUnreadType)
+		{
+			if ([i isUnread]) {
+				[self select:i];
+				
+				break;
+			}
+		}
+	}
+}
+
 - (void)navigateChannelEntries:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType
 {
-#warning Need to implement.
+	if ([TPCPreferences channelNavigationIsServerSpecific]) {
+		[self navigateChannelEntriesWithinServerScope:isMovingDown withNavigationType:navigationType];
+	} else {
+		[self navigateChannelEntriesOutsideServerScope:isMovingDown withNavigationType:navigationType];
+	}
+}
+
+- (void)navigateChannelEntriesOutsideServerScope:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType
+{
+	NSInteger entryCount = [self.serverList numberOfRows];
+	
+	NSInteger startingPoint = [self.serverList rowForItem:self.selectedItem];
+	
+	[self navigateServerListEntries:nil
+						 entryCount:entryCount
+					  startingPoint:startingPoint
+					   isMovingDown:isMovingDown
+					 navigationType:navigationType
+					  selectionType:TVCServerListNavigationSelectionChannelType];
+}
+
+- (void)navigateChannelEntriesWithinServerScope:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType
+{
+	NSArray *scannedRows = [self.serverList rowsFromParentGroup:self.selectedClient];
+	
+	[self navigateServerListEntries: scannedRows
+						 entryCount:[scannedRows count]
+					  startingPoint:[scannedRows indexOfObject:self.selectedItem]
+					   isMovingDown:isMovingDown
+					 navigationType:navigationType
+					  selectionType:TVCServerListNavigationSelectionChannelType];
 }
 
 - (void)navigateServerEntries:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType
 {
-#warning Need to implement.
+	NSArray *scannedRows = [self.serverList groupItems];
+	
+	[self navigateServerListEntries: scannedRows
+						 entryCount:[scannedRows count]
+					  startingPoint:[scannedRows indexOfObject:self.selectedItem]
+					   isMovingDown:isMovingDown
+					 navigationType:navigationType
+					  selectionType:TVCServerListNavigationSelectionServerType];
 }
 
 - (void)navigateToNextEntry:(BOOL)isMovingDown
 {
-#warning Need to implement.
+	NSInteger entryCount = [self.serverList numberOfRows];
+	
+	NSInteger startingPoint = [self.serverList rowForItem:self.selectedItem];
+	
+	[self navigateServerListEntries:nil
+						 entryCount:entryCount
+					  startingPoint:startingPoint
+					   isMovingDown:isMovingDown
+					 navigationType:TVCServerListNavigationMovementAllType
+					  selectionType:TVCServerListNavigationSelectionAnyType];
 }
 
 - (void)selectPreviousChannel:(NSEvent *)e
