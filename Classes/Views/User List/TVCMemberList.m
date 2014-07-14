@@ -462,6 +462,14 @@
 		[self updateFillColor];
 		
 		[self selectRowIndexes:selectedRows byExtendingSelection:NO];
+	} else {
+		if ([TPCPreferences invertSidebarColors]) {
+			[self setBackgroundColor:nil];
+		} else {
+			[self setBackgroundColor:[NSColor sourceListBackgroundColor]];
+		}
+		
+		[self updateFillColor];
 	}
 }
 
@@ -669,12 +677,12 @@
 
 + (NSColor *)memberListBackgroundColorForInactiveWindow
 {
-	return nil; // Use system default.
+	return [NSColor colorWithCalibratedRed:0.148 green:0.148 blue:0.148 alpha:1.0];
 }
 
 + (NSColor *)memberListBackgroundColorForActiveWindow
 {
-	return nil; // Use system default.
+	return [NSColor colorWithCalibratedRed:0.148 green:0.148 blue:0.148 alpha:1.0];
 }
 
 @end
