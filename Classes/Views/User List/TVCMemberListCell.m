@@ -176,7 +176,7 @@
 - (NSTableViewSelectionHighlightStyle)selectionHighlightStyle
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		if ([TVCMemberListSharedUserInterface yosemiteIsUsingVibrantDarkMode]) {
+		if ([mainWindow() isUsingVibrantDarkAppearance]) {
 			return NSTableViewSelectionHighlightStyleRegular;
 		} else {
 			return NSTableViewSelectionHighlightStyleSourceList;

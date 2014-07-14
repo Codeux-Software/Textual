@@ -73,8 +73,6 @@
 
 + (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected;
 
-+ (BOOL)yosemiteIsUsingVibrantDarkMode;
-
 + (NSColor *)serverListBackgroundColor;
 @end
 

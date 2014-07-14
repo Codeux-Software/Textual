@@ -96,10 +96,9 @@
 }
 
 - (void)updateBackgroundColor
-{
-	/* Set background appearance. */
+{	/* Set background appearance. */
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		if ([TPCPreferences invertSidebarColors]) {
+		if ([mainWindow() isUsingVibrantDarkAppearance]) {
 			[self.contentView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
 		} else {
 			[self.contentView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
@@ -684,7 +683,7 @@
 
 - (void)drawControllerForYosemite
 {
-	if ([self yosemiteIsUsingVibrantDarkMode]) {
+	if ([mainWindow() isUsingVibrantDarkAppearance]) {
 		[self drawBlackControllerForYosemiteInFocusedWindow];
 	} else {
 		[self drawWhiteControllerForYosemiteInFocusedWindow];
@@ -824,7 +823,7 @@
 - (NSColor *)systemSpecificTextFieldTextFontColor
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		if ([self yosemiteIsUsingVibrantDarkMode]) {
+		if ([mainWindow() isUsingVibrantDarkAppearance]) {
 			return [self blackInputTextFieldPlaceholderTextColorYosemite];
 		} else {
 			return [self whiteInputTextFieldPlaceholderTextColorYosemite];
@@ -837,7 +836,7 @@
 - (NSColor *)systemSpecificPlaceholderTextFontColor
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		if ([self yosemiteIsUsingVibrantDarkMode]) {
+		if ([mainWindow() isUsingVibrantDarkAppearance]) {
 			return [self blackInputTextFieldPrimaryTextColorYosemite];
 		} else {
 			return [self whiteInputTextFieldPrimaryTextColorYosemite];
@@ -845,11 +844,6 @@
 	} else {
 		return [self inputTextFieldPlaceholderTextColorMavericks];
 	}
-}
-
-- (BOOL)yosemiteIsUsingVibrantDarkMode
-{
-	return [self.contentView yosemiteIsUsingVibrantDarkMode];
 }
 
 - (BOOL)windowIsActive
@@ -874,19 +868,6 @@
 #pragma mark Text Field Background Vibrant View
 
 @implementation TVCMainWindowTextViewContentView
-
-- (BOOL)yosemiteIsUsingVibrantDarkMode
-{
-	NSAppearance *currentDesign = [self appearance];
-	
-	NSString *name = [currentDesign name];
-	
-	if ([name hasPrefix:NSAppearanceNameVibrantDark]) {
-		return YES;
-	} else {
-		return NO;
-	}
-}
 
 - (void)drawRect:(NSRect)dirtyRect
 {
@@ -920,7 +901,7 @@
 		 achive this, we create a bezier path that replicate the frame of segmented
 		 controller. This is a very ugly hack and can break easily in an OS update. */
 		if ([TPCPreferences hideMainWindowSegmentedController] == NO) {
-			if ([self yosemiteIsUsingVibrantDarkMode]) {
+			if ([mainWindow() isUsingVibrantDarkAppearance]) {
 				/* Get controller and controller frame. */
 				TVCMainWindowSegmentedController *controller = [mainWindowTextField() segmentedController];
 				
@@ -948,7 +929,7 @@
 
 - (NSColor *)backgroundColor
 {
-	if ([self yosemiteIsUsingVibrantDarkMode]) {
+	if ([mainWindow() isUsingVibrantDarkAppearance]) {
 		return [self vibrantDarkBackgroundColor];
 	} else {
 		return [self vibrantLightBackgroundColor];
@@ -957,7 +938,7 @@
 
 - (NSColor *)dividerColor
 {
-	if ([self yosemiteIsUsingVibrantDarkMode]) {
+	if ([mainWindow() isUsingVibrantDarkAppearance]) {
 		return [self vibrantDarkDividerColor];
 	} else {
 		return [self vibrantLightDividerColor];

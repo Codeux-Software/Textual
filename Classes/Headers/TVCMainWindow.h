@@ -107,6 +107,8 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 @property (NS_NONATOMIC_IOSONLY, getter=isInactive, readonly) BOOL inactive;
 @property (NS_NONATOMIC_IOSONLY, getter=isActiveForDrawing, readonly) BOOL activeForDrawing;
 
+@property (NS_NONATOMIC_IOSONLY, getter=isUsingVibrantDarkAppearance) BOOL usingVibrantDarkAppearance; // On Mavericks and earlier, this is always NO.
+
 - (void)navigateChannelEntries:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType;
 - (void)navigateServerEntries:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType;
 - (void)navigateToNextEntry:(BOOL)isMovingDown;
