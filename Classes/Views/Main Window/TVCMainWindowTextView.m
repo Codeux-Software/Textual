@@ -854,7 +854,7 @@
 
 - (BOOL)windowIsActive
 {
-	return ([mainWindow() isInactiveForDrawing] == NO);
+	return [mainWindow() isActiveForDrawing];
 }
 
 - (void)drawRect:(NSRect)dirtyRect

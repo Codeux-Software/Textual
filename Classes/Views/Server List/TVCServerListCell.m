@@ -163,7 +163,7 @@
 		@"isGroupItem"			: @([self.cellItem isClient]),
 		@"isInverted"			: @([TPCPreferences invertSidebarColors]),
 		@"isRetina"				: @([mainWindow() runningInHighResolutionMode]),
-		@"isInactiveWindow"		: @([mainWindow() isInactiveForDrawing]),
+		@"isActiveWindow"		: @([mainWindow() isActiveForDrawing]),
 		@"isSelected"			: @([mainWindowServerList() isRowSelected:rowIndex]),
 		@"isGraphite"			: @([NSColor currentControlTint] == NSGraphiteControlTint),
 		@"isVibrantDark"		: @([TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode])
@@ -200,10 +200,10 @@
 		
 		NSColor *selectionColor;
 		
-		if ([mainWindow() isInactiveForDrawing]) {
-			selectionColor = [userInterfaceObjects rowSelectionColorForInactiveWindow];
-		} else {
+		if ([mainWindow() isActiveForDrawing]) {
 			selectionColor = [userInterfaceObjects rowSelectionColorForActiveWindow];
+		} else {
+			selectionColor = [userInterfaceObjects rowSelectionColorForInactiveWindow];
 		}
 		
 		if (selectionColor) {
@@ -315,16 +315,16 @@
 	NSColor *textColor = nil;
 	
 	if (isSelected) {
-		if ([mainWindow() isInactiveForDrawing]) {
-			textColor = [interfaceObjects messageCountSelectedBadgeTextColorForInactiveWindow];
-		} else {
+		if ([mainWindow() isActiveForDrawing]) {
 			textColor = [interfaceObjects messageCountSelectedBadgeTextColorForActiveWindow];
+		} else {
+			textColor = [interfaceObjects messageCountSelectedBadgeTextColorForInactiveWindow];
 		}
 	} else {
-		if ([mainWindow() isInactiveForDrawing]) {
-			textColor = [interfaceObjects messageCountNormalBadgeTextColorForInactiveWindow];
-		} else {
+		if ([mainWindow() isActiveForDrawing]) {
 			textColor = [interfaceObjects messageCountNormalBadgeTextColorForActiveWindow];
+		} else {
+			textColor = [interfaceObjects messageCountNormalBadgeTextColorForInactiveWindow];
 		}
 	}
 	
@@ -366,26 +366,26 @@
 	/* Draw the background color. */
 	NSColor *backgroundColor = nil;
 	
-	if (isHighlight && (( [interfaceObjects yosemiteIsUsingVibrantDarkMode]			&& [mainWindow() isInactiveForDrawing] == NO) ||
+	if (isHighlight && (( [interfaceObjects yosemiteIsUsingVibrantDarkMode]			&& [mainWindow() isActiveForDrawing]) ||
 						 ([interfaceObjects yosemiteIsUsingVibrantDarkMode] == NO)))
 	{
-		if ([mainWindow() isInactiveForDrawing]) {
-			backgroundColor = [interfaceObjects messageCountHighlightedBadgeBackgroundColorForInactiveWindow];
-		} else {
+		if ([mainWindow() isActiveForDrawing]) {
 			backgroundColor = [interfaceObjects messageCountHighlightedBadgeBackgroundColorForActiveWindow];
+		} else {
+			backgroundColor = [interfaceObjects messageCountHighlightedBadgeBackgroundColorForInactiveWindow];
 		}
 	} else {
 		if (isSelected) {
-			if ([mainWindow() isInactiveForDrawing]) {
-				backgroundColor = [interfaceObjects messageCountSelectedBadgeBackgroundColorForInactiveWindow];
-			} else {
+			if ([mainWindow() isActiveForDrawing]) {
 				backgroundColor = [interfaceObjects messageCountSelectedBadgeBackgroundColorForActiveWindow];
+			} else {
+				backgroundColor = [interfaceObjects messageCountSelectedBadgeBackgroundColorForInactiveWindow];
 			}
 		} else {
-			if ([mainWindow() isInactiveForDrawing]) {
-				backgroundColor = [interfaceObjects messageCountNormalBadgeBackgroundColorForInactiveWindow];
-			} else {
+			if ([mainWindow() isActiveForDrawing]) {
 				backgroundColor = [interfaceObjects messageCountNormalBadgeBackgroundColorForActiveWindow];
+			} else {
+				backgroundColor = [interfaceObjects messageCountNormalBadgeBackgroundColorForInactiveWindow];
 			}
 		}
 	}
@@ -423,7 +423,7 @@
 	
 	NSDictionary *drawingContext = [parentCell drawingContext];
 	
-	BOOL isWindowInactive = [drawingContext boolForKey:@"isInactiveWindow"];
+	BOOL isWindowActive = [drawingContext boolForKey:@"isActiveWindow"];
 	BOOL isVibrantDark = [drawingContext boolForKey:@"isVibrantDark"];
 	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
 	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
@@ -457,7 +457,7 @@
 		if (isGroupItem == NO) {
 			if (isActive) {
 				if (isHighlight) {
-					if (isWindowInactive) {
+					if (isWindowActive == NO) {
 						if (isVibrantDark) {
 							[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellNormalItemTextColorForInactiveWindow] range:stringLengthRange];
 						} else {
@@ -467,7 +467,7 @@
 						[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellHighlightedItemTextColorForActiveWindow] range:stringLengthRange];
 					}
 				} else {
-					if (isWindowInactive) {
+					if (isWindowActive == NO) {
 						[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellNormalItemTextColorForInactiveWindow] range:stringLengthRange];
 					} else {
 						[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellNormalItemTextColorForActiveWindow] range:stringLengthRange];
@@ -475,7 +475,7 @@
 				}
 			} else {
 				if (isErroneous) {
-					if (isWindowInactive) {
+					if (isWindowActive == NO) {
 						if (isVibrantDark) {
 							[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellDisabledItemTextColorForInactiveWindow] range:stringLengthRange];
 						} else {
@@ -485,7 +485,7 @@
 						[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellErroneousItemTextColorForActiveWindow] range:stringLengthRange];
 					}
 				} else {
-					if (isWindowInactive) {
+					if (isWindowActive == NO) {
 						[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellDisabledItemTextColorForInactiveWindow] range:stringLengthRange];
 					} else {
 						[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellDisabledItemTextColorForActiveWindow] range:stringLengthRange];
@@ -494,13 +494,13 @@
 			}
 		} else {
 			if (isActive) {
-				if (isWindowInactive) {
+				if (isWindowActive == NO) {
 					[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject serverCellNormalItemTextColorForInactiveWindow] range:stringLengthRange];
 				} else {
 					[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject serverCellNormalItemTextColorForActiveWindow] range:stringLengthRange];
 				}
 			} else {
-				if (isWindowInactive) {
+				if (isWindowActive == NO) {
 					[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject serverCellDisabledItemTextColorForInactiveWindow] range:stringLengthRange];
 				} else {
 					[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject serverCellDisabledItemTextColorForActiveWindow] range:stringLengthRange];
@@ -509,13 +509,13 @@
 		}
 	} else {
 		if (isGroupItem == NO) {
-			if (isWindowInactive == NO) {
+			if (isWindowActive) {
 				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellSelectedTextColorForActiveWindow] range:stringLengthRange];
 			} else {
 				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellSelectedTextColorForInactiveWindow] range:stringLengthRange];
 			}
 		} else {
-			if (isWindowInactive == NO) {
+			if (isWindowActive) {
 				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject serverCellSelectedTextColorForActiveWindow] range:stringLengthRange];
 			} else {
 				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject serverCellSelectedTextColorForInactiveWindow] range:stringLengthRange];

@@ -160,7 +160,7 @@
 			 @"rowIndex"			: @(rowIndex),
 			 @"isInverted"			: @([TPCPreferences invertSidebarColors]),
 			 @"isRetina"			: @([mainWindow() runningInHighResolutionMode]),
-			 @"isInactiveWindow"	: @([mainWindow() isInactiveForDrawing]),
+			 @"isActiveWindow"		: @([mainWindow() isActiveForDrawing]),
 			 @"isSelected"			: @([mainWindowMemberList() isRowSelected:rowIndex]),
 			 @"isGraphite"			: @([NSColor currentControlTint] == NSGraphiteControlTint)
 		};
@@ -193,10 +193,10 @@
 		
 		NSColor *selectionColor;
 		
-		if ([mainWindow() isInactiveForDrawing]) {
-			selectionColor = [userInterfaceObjects rowSelectionColorForInactiveWindow];
-		} else {
+		if ([mainWindow() isActiveForDrawing]) {
 			selectionColor = [userInterfaceObjects rowSelectionColorForActiveWindow];
+		} else {
+			selectionColor = [userInterfaceObjects rowSelectionColorForInactiveWindow];
 		}
 		
 		if (selectionColor) {
@@ -306,10 +306,10 @@
 	} else if ([assosicatedUser v]) {
 		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_V];
 	} else {
-		if ([mainWindow() isInactiveForDrawing]) {
-			backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColorForInactiveWindow];
-		} else {
+		if ([mainWindow() isActiveForDrawing]) {
 			backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColorForActiveWindow];
+		} else {
+			backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColorForInactiveWindow];
 		}
 	}
 	
@@ -411,7 +411,7 @@
 	
 	NSDictionary *drawingContext = [parentCell drawingContext];
 	
-	BOOL isWindowInactive = [drawingContext boolForKey:@"isInactiveWindow"];
+	BOOL isWindowActive = [drawingContext boolForKey:@"isActiveWindow"];
 	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
 	
 	IRCUser *assosicatedUser = [parentCell memberPointer];
@@ -427,20 +427,20 @@
 	
 	if (isSelected == NO) {
 		if ([assosicatedUser isAway] == NO) {
-			if (isWindowInactive) {
+			if (isWindowActive == NO) {
 				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject normalCellTextColorForInactiveWindow] range:stringLengthRange];
 			} else {
 				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject normalCellTextColorForActiveWindow] range:stringLengthRange];
 			}
 		} else {
-			if (isWindowInactive) {
+			if (isWindowActive == NO) {
 				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject awayUserCellTextColorForInactiveWindow] range:stringLengthRange];
 			} else {
 				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject awayUserCellTextColorForActiveWindow] range:stringLengthRange];
 			}
 		}
 	} else {
-		if (isWindowInactive) {
+		if (isWindowActive == NO) {
 			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject selectedCellTextColorForInactiveWindow] range:stringLengthRange];
 		} else {
 			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject selectedCellTextColorForActiveWindow] range:stringLengthRange];

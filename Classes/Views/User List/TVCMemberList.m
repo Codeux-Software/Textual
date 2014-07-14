@@ -524,10 +524,10 @@
 {
 	id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
 	
-	if ([mainWindow() isInactiveForDrawing]) {
-		return [userInterfaceObjects memberListBackgroundColorForInactiveWindow];
-	} else {
+	if ([mainWindow() isActiveForDrawing]) {
 		return [userInterfaceObjects memberListBackgroundColorForActiveWindow];
+	} else {
+		return [userInterfaceObjects memberListBackgroundColorForInactiveWindow];
 	}
 }
 

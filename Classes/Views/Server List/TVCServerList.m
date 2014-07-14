@@ -310,10 +310,10 @@
 {
 	id userInterfaceObjects = [mainWindowServerList() userInterfaceObjects];
 	
-	if ([mainWindow() isInactiveForDrawing]) {
-		return [userInterfaceObjects serverListBackgroundColorForInactiveWindow];
-	} else {
+	if ([mainWindow() isActiveForDrawing]) {
 		return [userInterfaceObjects serverListBackgroundColorForActiveWindow];
+	} else {
+		return [userInterfaceObjects serverListBackgroundColorForInactiveWindow];
 	}
 }
 
