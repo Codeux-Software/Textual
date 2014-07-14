@@ -40,8 +40,6 @@
 
 @implementation IRCExtras
 
-#warning Test new channel enumeration logic. 
-
 + (void)parseIRCProtocolURI:(NSString *)location
 {
 	[self parseIRCProtocolURI:location withDescriptor:nil];
@@ -220,19 +218,21 @@
 				
 				return;
 			} else {
-				BOOL isLastObject = ((idx - 1) == [dataSections count]);
+				BOOL isLastObject = ((idx + 1) == [dataSections count]);
 				
 				if ([obj isEqualIgnoringCase:@"needssl"] && isLastObject) {
 					connectionUsesSSL = YES;
 				} else {
 					NSString *objcopy = [obj copy];
 					
-					if ([objcopy isChannelName] == NO) {
+					if ([objcopy hasPrefix:@"#"] == NO) {
 						objcopy = [@"#" stringByAppendingString:objcopy];
 					}
 					
-					[channelList appendString:objcopy];
-					[channelList appendString:@","];
+					if ([objcopy isChannelName]) {
+						[channelList appendString:objcopy];
+						[channelList appendString:@","];
+					}
 				}
 			}
 		}];
@@ -396,15 +396,17 @@
 	
 	[baseConfig setConnectionUsesSSL:connectionUsesSSL];
 	
-	NSMutableArray *channels = [NSMutableArray array];
-	
-	NSArray *chunks = [channelList split:@","];
+	if ([channelList length] > 0) {
+		NSMutableArray *channels = [NSMutableArray array];
 		
-	for (NSString *cc in chunks) {
-		[channels addObject:[IRCChannelConfig seedWithName:[cc trim]]];
-	}
+		NSArray *chunks = [channelList split:@","];
+			
+		for (NSString *cc in chunks) {
+			[channels addObject:[IRCChannelConfig seedWithName:[cc trim]]];
+		}
 
-	[baseConfig setChannelList:channels];
+		[baseConfig setChannelList:channels];
+	}
 	
 	if (serverPassword) {
 		[baseConfig setServerPassword:serverPassword];
