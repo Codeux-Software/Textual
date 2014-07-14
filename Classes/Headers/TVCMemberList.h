@@ -43,6 +43,7 @@
 @property (nonatomic, strong) IBOutlet TVCMemberListUserInfoPopover *memberListUserInfoPopover;
 @property (nonatomic, nweak) IBOutlet NSVisualEffectView *visualEffectView;
 @property (nonatomic, nweak) IBOutlet TVCMemberListBackgroundView *backgroundView;
+
 /* Additions & Removals. */
 - (void)addItemToList:(NSInteger)index;
 
@@ -59,7 +60,6 @@
 - (void)updateDrawingForMember:(IRCUser *)cellItem;
 - (void)updateDrawingForRow:(NSInteger)rowIndex;
 
-- (void)updateFillColor; // Do not call.
 - (void)updateBackgroundColor; // Do not call.
 
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) id userInterfaceObjects;
@@ -69,7 +69,6 @@
 @end
 
 @interface TVCMemberListBackgroundView : NSBox
-- (void)updateFillColor;
 @end
 
 @interface TVCMemberListSharedUserInterface : NSObject

@@ -426,11 +426,6 @@
 	}
 }
 
-- (void)updateFillColor
-{
-	[self.backgroundView updateFillColor];
-}
-
 - (void)updateVibrancy
 {
 	if ([TPCPreferences invertSidebarColors]) {
@@ -459,7 +454,6 @@
 		[self deselectAll:nil];
 		
 		[self updateVibrancy];
-		[self updateFillColor];
 		
 		[self selectRowIndexes:selectedRows byExtendingSelection:NO];
 	} else {
@@ -468,8 +462,6 @@
 		} else {
 			[self setBackgroundColor:[NSColor sourceListBackgroundColor]];
 		}
-		
-		[self updateFillColor];
 	}
 }
 
@@ -485,16 +477,18 @@
 	return NO;
 }
 
-- (void)updateFillColor
+- (void)drawRect:(NSRect)dirtyRect
 {
-	id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
-	
-	NSColor *backgroundColor = [userInterfaceObjects memberListBackgroundColor];
-	
-	if (backgroundColor) {
-		[self setFillColor:backgroundColor];
-	} else {
-		[self setFillColor:[NSColor clearColor]];
+	if ([self needsToDrawRect:dirtyRect]) {
+		id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
+		
+		NSColor *backgroundColor = [userInterfaceObjects memberListBackgroundColor];
+		
+		if (backgroundColor) {
+			[backgroundColor set];
+			
+			NSRectFill(dirtyRect);
+		}
 	}
 }
 

@@ -187,17 +187,11 @@
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
 	[masterController() windowDidBecomeKey:notification];
-	
-	[self.serverList updateFillColor];
-	[self.memberList updateFillColor];
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification
 {
 	[masterController() windowDidResignKey:notification];
-	
-	[self.serverList updateFillColor];
-	[self.memberList updateFillColor];
 	
 	[self.memberList destroyUserInfoPopoverOnWindowKeyChange];
 }
@@ -778,7 +772,7 @@
 
 - (BOOL)isActiveForDrawing
 {
-	return (([self isMainWindow] || [self isOnActiveSpace] == NO) && [self isVisible]);
+	return (([self isMainWindow] || [self isOnActiveSpace] == NO) && [self isVisible] && [NSApp modalWindow] == nil);
 }
 
 - (BOOL)canBecomeMainWindow

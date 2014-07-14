@@ -59,14 +59,12 @@
 - (void)updateDrawingForItem:(IRCTreeItem *)cellItem;
 - (void)updateDrawingForRow:(NSInteger)rowIndex;
 
-- (void)updateFillColor; // Do not call.
 - (void)updateBackgroundColor; // Do not call.
 
 @property (NS_NONATOMIC_IOSONLY, readonly, strong) id userInterfaceObjects;
 @end
 
 @interface TVCServerListBackgroundView : NSBox
-- (void)updateFillColor;
 @end
 
 @interface TVCServerListSharedUserInterface : NSObject
