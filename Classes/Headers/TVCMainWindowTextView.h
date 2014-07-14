@@ -71,4 +71,5 @@
 @end
 
 @interface TVCMainWindowTextViewContentView : NSVisualEffectView
+@property (nonatomic, assign) BOOL yosemiteIsUsingVibrantDarkMode;
 @end

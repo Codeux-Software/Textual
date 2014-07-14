@@ -145,7 +145,7 @@
 - (id)userInterfaceObjects
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		if ([mainWindow() isUsingVibrantDarkAppearance] == NO) {
+		if ([TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode] == NO) {
 			return [TVCServerListLightYosemiteUserInterface class];
 		} else {
 			return [TVCServerListDarkYosemiteUserInterface class];
@@ -161,7 +161,7 @@
 
 - (void)updateVibrancy
 {
-	if ([mainWindow() isUsingVibrantDarkAppearance]) {
+	if ([TPCPreferences invertSidebarColors]) {
 		/* Source List style of NSOutlineView will actually ignore this appearance… that's
 		 why we have self.visualEffectView behind it. However, we still set the appearance
 		 so that the menu that inherits form it is dark. */
@@ -285,6 +285,21 @@
 
 @implementation TVCServerListSharedUserInterface
 
++ (BOOL)yosemiteIsUsingVibrantDarkMode
+{
+	NSVisualEffectView *visualEffectView = [mainWindowServerList() visualEffectView];
+	
+	NSAppearance *currentDesign = [visualEffectView appearance];
+	
+	NSString *name = [currentDesign name];
+	
+	if ([name hasPrefix:NSAppearanceNameVibrantDark]) {
+		return YES;
+	} else {
+		return NO;
+	}
+}
+
 + (NSColor *)serverListBackgroundColor
 {
 	id userInterfaceObjects = [mainWindowServerList() userInterfaceObjects];
@@ -316,7 +331,7 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 + (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		if ([mainWindow() isUsingVibrantDarkAppearance]) {
+		if ([TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode]) {
 			if (up) {
 				return [NSImage imageNamed:@"YosemiteDarkServerListViewDisclosureUp"];
 			} else {

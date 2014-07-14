@@ -72,6 +72,8 @@
 @end
 
 @interface TVCMemberListSharedUserInterface : NSObject
++ (BOOL)yosemiteIsUsingVibrantDarkMode;
+
 + (NSColor *)memberListBackgroundColor;
 
 + (NSColor *)userMarkBadgeBackgroundColor_Y;
