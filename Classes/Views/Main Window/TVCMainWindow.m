@@ -135,6 +135,8 @@
 - (void)updateBackgroundColor
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		self.usingVibrantDarkAppearance = [TPCPreferences invertSidebarColors];
+		
 		if ([TPCPreferences invertSidebarColors]) {
 			[self.channelViewBox setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
 		} else {
@@ -772,6 +774,15 @@
 
 - (BOOL)isActiveForDrawing
 {
+	/* For now, in developer preview 3 there are visual glitches when switching from inactive
+	 to active state of window when trying to draw a custom background color behind a visual
+	 effect view. For this reason, all views are considered active for drawing for now. Going
+	 to report a radar for better appearnce customizations, but until then, we have to do this
+	 to stop our sidebars from flashing. */
+	if (self.isUsingVibrantDarkAppearance) {
+		return YES;
+	}
+	
 	return (([self isMainWindow] || [self isOnActiveSpace] == NO) && [self isVisible] && [NSApp modalWindow] == nil);
 }
 

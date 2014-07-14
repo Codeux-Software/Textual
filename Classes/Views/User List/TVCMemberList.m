@@ -412,7 +412,7 @@
 - (id)userInterfaceObjects
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		if ([TVCMemberListSharedUserInterface yosemiteIsUsingVibrantDarkMode] == NO) {
+		if ([mainWindow() isUsingVibrantDarkAppearance] == NO) {
 			return [TVCMemberListLightYosemiteUserInterface class];
 		} else {
 			return [TVCMemberListDarkYosemiteUserInterface class];
@@ -428,7 +428,7 @@
 
 - (void)updateVibrancy
 {
-	if ([TPCPreferences invertSidebarColors]) {
+	if ([mainWindow() isUsingVibrantDarkAppearance]) {
 		/* Source List style of NSOutlineView will actually ignore this appearance… that's
 		 why we have self.visualEffectView behind it. However, we still set the appearance
 		 so that the menu that inherits form it is dark. */
@@ -498,21 +498,6 @@
 #pragma mark User Interface Design Elements
 
 @implementation TVCMemberListSharedUserInterface
-
-+ (BOOL)yosemiteIsUsingVibrantDarkMode
-{
-	NSVisualEffectView *visualEffectView = [mainWindowMemberList() visualEffectView];
-	
-	NSAppearance *currentDesign = [visualEffectView appearance];
-	
-	NSString *name = [currentDesign name];
-	
-	if ([name hasPrefix:NSAppearanceNameVibrantDark]) {
-		return YES;
-	} else {
-		return NO;
-	}
-}
 
 + (NSColor *)memberListBackgroundColor
 {
