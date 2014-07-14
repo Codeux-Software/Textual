@@ -284,7 +284,7 @@
 			/* Begin draw if we want to. */
 			if (channelTreeUnreadCount > 0 && drawMessageBadge) {
 				/* Get the string being draw. */
-				NSAttributedString *mcstring = [self messageCountBadgeText:channelTreeUnreadCount selected:(isSelected && isHighlight == NO)];
+				NSAttributedString *mcstring = [self messageCountBadgeText:channelTreeUnreadCount selected:isSelected];
 				
 				/* Get the rect being drawn. */
 				NSRect badgeRect = [self messageCountBadgeRect:cellFrame withText:mcstring];
