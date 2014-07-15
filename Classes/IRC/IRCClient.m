@@ -3662,6 +3662,9 @@
 		return;
 	}
 	
+	NSAssertReturn(self.isConnected);
+	NSAssertReturn(self.isQuitting == NO);
+
 	NSString *s = data;
 
 	self.lastMessageReceived = [NSDate epochTime];
