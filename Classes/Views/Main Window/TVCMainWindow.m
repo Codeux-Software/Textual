@@ -93,8 +93,6 @@
 		
 		[self registerKeyHandlers];
 		
-		[self.contentSplitView setDelegate:self];
-		
 		[self.formattingMenu enableWindowField:self.inputTextField];
 		
 		[worldController() setupConfiguration];
@@ -963,19 +961,6 @@
 
 #pragma mark -
 #pragma mark Split View
-
-- (BOOL)splitView:(NSSplitView *)splitView shouldHideDividerAtIndex:(NSInteger)dividerIndex
-{
-	if (dividerIndex == 0) {
-		return [self.contentSplitView isServerListCollapsed];
-	} else {
-		if (dividerIndex == 1) {
-			return [self.contentSplitView isMemberListCollapsed];
-		} else {
-			return NO;
-		}
-	}
-}
 
 - (BOOL)isMemberListVisible
 {

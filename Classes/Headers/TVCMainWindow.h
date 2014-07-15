@@ -59,7 +59,7 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 #import "TVCMemberList.h" // @protocol
 #import "TVCServerList.h" // @protocol
 
-@interface TVCMainWindow : NSWindow <NSSplitViewDelegate, NSWindowDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate, TVCServerListDelegate, TVCMemberListDelegate>
+@interface TVCMainWindow : NSWindow <NSWindowDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate, TVCServerListDelegate, TVCMemberListDelegate>
 @property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
 @property (nonatomic, copy) NSValue *cachedSwipeOriginPoint;
 @property (nonatomic, nweak) IBOutlet NSBox *channelViewBox;
