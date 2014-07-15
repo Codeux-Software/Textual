@@ -158,9 +158,19 @@
 - (NSInteger)colorNumber
 {
 	if (_colorNumber < 0) {
-		NSString *hashName = [self.lowercaseNickname sha1];
-
-		_colorNumber = ([hashName hash] % _colorNumberMax);
+		NSString *name = [self lowercaseNickname];
+		
+		NSInteger nameLength = [name length];
+		
+		NSUInteger hashedValue = 0;
+		
+		for (NSInteger i = 0; i < nameLength; i++) {
+			UniChar c = [name characterAtIndex:i];
+			
+			hashedValue = ((hashedValue << 6) + hashedValue + c);
+		}
+		
+		_colorNumber = (hashedValue % _colorNumberMax);
 	}
 	
 	return _colorNumber;
