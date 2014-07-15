@@ -821,6 +821,12 @@
 - (void)swipeWithEvent:(NSEvent *)event
 {
     CGFloat x = [event deltaX];
+
+	BOOL invertedScrollingDirection = [RZUserDefaults() boolForKey:@"com.apple.swipescrolldirection"];
+	
+	if (invertedScrollingDirection) {
+		x = (x * -(1));
+	}
 	
     if (x > 0) {
         [self selectNextWindow:nil];
@@ -885,12 +891,20 @@
 	if (fabs(delta.y) > fabs(delta.x)) {
 		return;
 	}
-
+	
 	if (fabs(delta.x) < TVCSwipeMinimumLength) {
 		return;
 	}
+	
+	CGFloat x = delta.x;
+	
+	BOOL invertedScrollingDirection = [RZUserDefaults() boolForKey:@"com.apple.swipescrolldirection"];
+	
+	if (invertedScrollingDirection) {
+		x = (x * -(1));
+	}
 
-	if (delta.x > 0) {
+	if (x > 0) {
 		[self selectPreviousWindow:nil];
 	} else {
 		[self selectNextWindow:nil];
