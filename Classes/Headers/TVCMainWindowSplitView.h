@@ -40,14 +40,16 @@
 
 #define TVCMainWindowSplitViewDividerColor		[NSColor colorWithCalibratedWhite:0.65 alpha:1.0]
 
-@interface TVCMainWindowSplitView : NSSplitView
+@interface TVCMainWindowSplitView : NSSplitView <NSSplitViewDelegate>
 - (void)expandServerList;
 - (void)collapseServerList;
 - (void)toggleServerListVisbility;
+
 @property (NS_NONATOMIC_IOSONLY, getter=isServerListCollapsed, readonly) BOOL serverListCollapsed;
 
 - (void)expandMemberList;
 - (void)collapseMemberList;
 - (void)toggleMemberListVisbility;
+
 @property (NS_NONATOMIC_IOSONLY, getter=isMemberListCollapsed, readonly) BOOL memberListCollapsed;
 @end

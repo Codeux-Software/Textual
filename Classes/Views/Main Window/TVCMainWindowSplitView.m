@@ -38,6 +38,13 @@
 
 #import "TextualApplication.h"
 
+#define _minimumSplitViewWidth			120
+
+@interface TVCMainWindowSplitView ()
+@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *serverListWidthConstraint;
+@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *memberListWidthConstraint;
+@end
+
 @implementation TVCMainWindowSplitView
 
 - (void)drawDividerInRect:(NSRect)rect
@@ -53,6 +60,20 @@
 	NSRectFill(rect);
 }
 
+- (void)awakeFromNib
+{
+	[self setDelegate:self];
+}
+
+- (BOOL)splitView:(NSSplitView *)splitView shouldHideDividerAtIndex:(NSInteger)dividerIndex
+{
+	if (dividerIndex == 0) {
+		return [self isServerListCollapsed];
+	} else {
+		return [self isMemberListCollapsed];
+	}
+}
+
 - (BOOL)allowsVibrancy
 {
 	return YES;
@@ -60,21 +81,29 @@
 
 - (void)expandServerList
 {
+	[self.serverListWidthConstraint setConstant:_minimumSplitViewWidth];
+	
 	[self expandViewAtIndex:0];
 }
 
 - (void)expandMemberList
 {
+	[self.memberListWidthConstraint setConstant:_minimumSplitViewWidth];
+	
 	[self expandViewAtIndex:2];
 }
 
 - (void)collapseServerList
 {
+	[self.serverListWidthConstraint setConstant:0.0];
+	
 	[self collapseViewAtIndex:0];
 }
 
 - (void)collapseMemberList
 {
+	[self.memberListWidthConstraint setConstant:0.0];
+
 	[self collapseViewAtIndex:2];
 }
 
