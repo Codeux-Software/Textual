@@ -293,7 +293,7 @@
 	
 	NSDictionary *drawingContext = [parentCell drawingContext];
 	
-	BOOL isWindowInactive = [drawingContext boolForKey:@"isInactiveWindow"];
+	BOOL isWindowActive = [drawingContext boolForKey:@"isActiveWindow"];
 	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
 	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
 	
@@ -304,7 +304,7 @@
 		/* Gather information about this badge draw. */
 		IRCChannel *channelPointer = (id)[parentCell cellItem];
 		
-		BOOL drawMessageBadge = (isSelected == NO || (isWindowInactive && isSelected));
+		BOOL drawMessageBadge = (isSelected == NO || (isWindowActive == NO && isSelected));
 		
 		NSInteger channelTreeUnreadCount = [channelPointer treeUnreadCount];
 		NSInteger nicknameHighlightCount = [channelPointer nicknameHighlightCount];
