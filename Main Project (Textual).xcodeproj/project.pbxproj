@@ -459,7 +459,6 @@
 		4C5BA46616F1302F00A96CA2 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC11580469E00846B64 /* SystemConfiguration.framework */; };
 		4C5BA46716F1302F00A96CA2 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC21580469E00846B64 /* WebKit.framework */; };
 		4C5BA46816F1302F00A96CA2 /* SystemInformation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C78926716C6259D0081E859 /* SystemInformation.framework */; };
-		4C5BA4E016F1302F00A96CA2 /* Textual IRC Client Extras.pkg in Copy Installers */ = {isa = PBXBuildFile; fileRef = 4CB1361F16D881080025DD7F /* Textual IRC Client Extras.pkg */; };
 		4C5E4D1818260131001F3E6B /* TVCLogControllerHistoricLogFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3EB79C17898FD600D21A07 /* TVCLogControllerHistoricLogFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C68425716C5AF730005A59E /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425516C5AF730005A59E /* AutoHyperlinks.framework */; };
 		4C68425816C5AF730005A59E /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425616C5AF730005A59E /* BlowfishEncryption.framework */; };
@@ -779,7 +778,6 @@
 		4CABE85B1840615A002FE4B8 /* TDCProgressInformationSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CABE8591840615A002FE4B8 /* TDCProgressInformationSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CABE85E184061E5002FE4B8 /* TDCProgressInformationSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CABE85C184061E5002FE4B8 /* TDCProgressInformationSheet.xib */; };
 		4CABE85F184061E5002FE4B8 /* TDCProgressInformationSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CABE85C184061E5002FE4B8 /* TDCProgressInformationSheet.xib */; };
-		4CB1362116D881150025DD7F /* Textual IRC Client Extras.pkg in Copy Installers */ = {isa = PBXBuildFile; fileRef = 4CB1361F16D881080025DD7F /* Textual IRC Client Extras.pkg */; };
 		4CB26C6319528FA5005F927C /* IRCCommandIndexPrivateValues.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CB26C6119528FA5005F927C /* IRCCommandIndexPrivateValues.plist */; };
 		4CB26C6419528FA5005F927C /* IRCCommandIndexPrivateValues.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CB26C6119528FA5005F927C /* IRCCommandIndexPrivateValues.plist */; };
 		4CB26C6519528FA5005F927C /* IRCCommandIndexPublicValues.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CB26C6219528FA5005F927C /* IRCCommandIndexPublicValues.plist */; };
@@ -1012,17 +1010,6 @@
 			name = "Copy Acknowledgements";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4C5BA4DF16F1302F00A96CA2 /* Copy Installers */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
-			dstPath = "Script Installers";
-			dstSubfolderSpec = 7;
-			files = (
-				4C5BA4E016F1302F00A96CA2 /* Textual IRC Client Extras.pkg in Copy Installers */,
-			);
-			name = "Copy Installers";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4C9E534415B4C171000E84A9 /* Copy Acknowledgements */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1032,17 +1019,6 @@
 				4C58B572186011B900834882 /* Acknowledgments.pdf in Copy Acknowledgements */,
 			);
 			name = "Copy Acknowledgements";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4CA218B316D81F6C0012DAA8 /* Copy Installers */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
-			dstPath = "Script Installers";
-			dstSubfolderSpec = 7;
-			files = (
-				4CB1362116D881150025DD7F /* Textual IRC Client Extras.pkg in Copy Installers */,
-			);
-			name = "Copy Installers";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4CCF2F9815804BB9006FFE21 /* Copy JavaScript Files */ = {
@@ -1454,7 +1430,6 @@
 		4CA110EA1955AAA10062EC4E /* TVCMainWindowTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCMainWindowTextView.m; path = "Main Window/TVCMainWindowTextView.m"; sourceTree = "<group>"; };
 		4CABE8591840615A002FE4B8 /* TDCProgressInformationSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCProgressInformationSheet.h; sourceTree = "<group>"; };
 		4CABE85D184061E5002FE4B8 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/Localization/English.lproj/TDCProgressInformationSheet.xib; sourceTree = SOURCE_ROOT; };
-		4CB1361F16D881080025DD7F /* Textual IRC Client Extras.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Textual IRC Client Extras.pkg"; path = "Resources/All Scripts/Sandbox Exceptions/Installers/Textual IRC Client Extras.pkg"; sourceTree = SOURCE_ROOT; };
 		4CB26C6119528FA5005F927C /* IRCCommandIndexPrivateValues.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = IRCCommandIndexPrivateValues.plist; path = Resources/Miscellaneous/IRCCommandIndexPrivateValues.plist; sourceTree = SOURCE_ROOT; };
 		4CB26C6219528FA5005F927C /* IRCCommandIndexPublicValues.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = IRCCommandIndexPublicValues.plist; path = Resources/Miscellaneous/IRCCommandIndexPublicValues.plist; sourceTree = SOURCE_ROOT; };
 		4CB26C6F19529003005F927C /* IRCCommandIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCCommandIndex.m; path = Classes/IRC/IRCCommandIndex.m; sourceTree = SOURCE_ROOT; };
@@ -1626,7 +1601,6 @@
 				4C46CCA4158043A300846B64 /* JavaScript */,
 				4C51B8B7196ACDBB00003A87 /* Localizations */,
 				4C46CCA31580437B00846B64 /* Miscellaneous */,
-				4CA218B416D81F8F0012DAA8 /* Script Installers */,
 				4CCC6B60158E8C48003A102B /* Scripts */,
 				4C52379115C0E0CA00414852 /* Styles */,
 				4C46CC5A158042B600846B64 /* User Interface */,
@@ -2434,14 +2408,6 @@
 			name = iCloud;
 			sourceTree = "<group>";
 		};
-		4CA218B416D81F8F0012DAA8 /* Script Installers */ = {
-			isa = PBXGroup;
-			children = (
-				4CB1361F16D881080025DD7F /* Textual IRC Client Extras.pkg */,
-			);
-			name = "Script Installers";
-			sourceTree = "<group>";
-		};
 		4CA8AD25195B475600B99BFB /* Textual 5 */ = {
 			isa = PBXGroup;
 			children = (
@@ -3062,7 +3028,6 @@
 				4C01BA101581104D007E2DAF /* Build Extensions */,
 				4C52AED515811C2000940619 /* Copy Extensions */,
 				4C9E534415B4C171000E84A9 /* Copy Acknowledgements */,
-				4CA218B316D81F6C0012DAA8 /* Copy Installers */,
 			);
 			buildRules = (
 			);
@@ -3087,7 +3052,6 @@
 				4C5BA45716F1302F00A96CA2 /* Frameworks */,
 				4C0444F316F1602900EBB665 /* Sources */,
 				4C5BA4DC16F1302F00A96CA2 /* Copy Acknowledgements */,
-				4C5BA4DF16F1302F00A96CA2 /* Copy Installers */,
 			);
 			buildRules = (
 			);

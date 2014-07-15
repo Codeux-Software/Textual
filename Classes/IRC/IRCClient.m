@@ -2862,10 +2862,8 @@
 		}
 		case 5098: // Command: GETSCRIPTS
 		{
-			NSString *installer = [RZMainBundle() pathForResource:@"Textual IRC Client Extras" ofType:@"pkg" inDirectory:@"Script Installers"];
+			[sharedPluginManager() openExtrasInstallerDownloadURL];
 			
-			[RZWorkspace() openFile:installer withApplication:@"Installer"];
-
 			break;
 		}
 		case 5099: // Command: GOTO
@@ -3020,21 +3018,13 @@
 		}
 		default:
 		{
-			/* Scan scripts first. */
-			NSDictionary *scriptPaths = [sharedPluginManager() supportedAppleScriptCommands:YES];
-
+			/* Find an addon responsible for this command. */
 			NSString *scriptPath = nil;
-
-			for (NSString *scriptCommand in scriptPaths) {
-				if ([scriptCommand isEqualToString:lowercaseCommand]) {
-					scriptPath = scriptPaths[lowercaseCommand];
-				}
-			}
-
-			BOOL scriptFound = NSObjectIsNotEmpty(scriptPath);
-
-			/* Scan plugins second. */
-			BOOL pluginFound = [[sharedPluginManager() supportedUserInputCommands] containsObject:lowercaseCommand];
+			
+			BOOL pluginFound = NO;
+			BOOL scriptFound = NO;
+			
+			[sharedPluginManager() findHandlerForOutgoingCommand:lowercaseCommand scriptPath:&scriptPath isScript:&scriptFound isExtension:&pluginFound];
 
 			/* Perform script or plugin. */
 			if (pluginFound && scriptFound) {

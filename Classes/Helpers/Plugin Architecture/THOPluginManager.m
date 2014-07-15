@@ -211,26 +211,81 @@
 }
 
 #pragma mark -
-#pragma mark Extension Information.
+#pragma mark Extras Installer
 
-- (NSArray *)dangerousCommandNames
+- (NSArray *)reservedCommandNamesForExtrasInstaller
 {
-	/* List of commands that may be part of Textual that we hide due to them
-	 being known to the general populous may result in unexpected harm such as
-	 spamming by not understanding what they do.
-	 
-	 These commands are only excluded from the list of installed addons. We
-	 cannot actually prevent the user from executing them. */
-    return @[@"clone", @"cloned", @"unclone", @"hspam", @"spam", @"namel"];
+	return @[@"apps", @"hermes", @"itunes", @"music", @"np", @"page", @"qt", @"radium", @"rdio", @"spotify", @"uuid", @"vlc", @"yolo"];
 }
+
+- (void)findHandlerForOutgoingCommand:(NSString *)command scriptPath:(NSString **)scriptPath isScript:(BOOL *)isScript isExtension:(BOOL *)isExtension
+{
+	/* Find any script patching this command. */
+	NSDictionary *scriptPaths = [sharedPluginManager() supportedAppleScriptCommands:YES];
+	
+	NSString *_scriptPath = nil;
+	
+	for (NSString *scriptCommand in scriptPaths) {
+		if ([scriptCommand isEqualToString:command]) {
+			_scriptPath = scriptPaths[command];
+		}
+	}
+	
+	/* If the script exists, return it, otherwise continue to 
+	 the list of reserved script names. */
+	if (_scriptPath) {
+		*scriptPath = _scriptPath;
+		
+		*isScript = YES;
+		
+		return; // We have something so shutdown…
+	} else {
+		*isScript = NO;
+		
+		/* Check if list of extensions. */
+		BOOL _pluginFound = [self.supportedUserInputCommands containsObject:command];
+
+		if (_pluginFound) {
+			*isExtension = YES;
+			
+			return; // We found an extension.
+		} else {
+			*isExtension = NO;
+		}
+		
+		/* Prompt user if command exists as a reserved command. */
+		NSArray *reservedNames = [self reservedCommandNamesForExtrasInstaller];
+		
+		if ([reservedNames containsObject:command]) {
+			BOOL download = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1236][2]", command)
+																title:TXTLS(@"BasicLanguage[1236][1]")
+														defaultButton:TXTLS(@"BasicLanguage[1236][3]")
+													  alternateButton:BLS(1009)
+													   suppressionKey:@"plugin_manager_reserved_command_dialog"
+													  suppressionText:nil];
+			
+			if (download) {
+				[self openExtrasInstallerDownloadURL];
+			}
+		}
+	}
+}
+
+- (void)openExtrasInstallerDownloadURL
+{
+	NSString *currentVersion = [TPCApplicationInfo applicationInfoPlist][@"CFBundleVersion"];
+	
+	NSString *urlToOpen = [NSString stringWithFormat:@"http://www.codeux.com/textual/downloads/latestExtrasInstaller.download?version=%@", [currentVersion encodeURIFragment]];
+	
+	[RZWorkspace() openURL:[NSURL URLWithString:urlToOpen]];
+}
+
+#pragma mark -
+#pragma mark Extension Information.
 
 - (NSArray *)bannedExtensionBundleNames
 {
-	/* We do not want to allow bundles with this name to be loaded
-	 unless they are inside Textual itself. This allows us to package
-	 a bundle which was previously installed from an installer to
-	 instead by packaged with Textual by default. */
-	return @[@"SmileyConverter.bundle"];
+	return @[];
 }
 
 /* Everything else. */

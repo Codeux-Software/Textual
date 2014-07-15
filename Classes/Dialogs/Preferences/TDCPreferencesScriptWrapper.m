@@ -46,10 +46,6 @@
 	
 	[scripts addObjectsFromArray:[sharedPluginManager() supportedAppleScriptCommands]];
 	[scripts addObjectsFromArray:[sharedPluginManager() supportedUserInputCommands]];
-
-    for (NSString *command in [sharedPluginManager() dangerousCommandNames]) {
-        [scripts removeObject:command];
-    }
 	
 	[scripts sortUsingSelector:@selector(compare:)];
 	
