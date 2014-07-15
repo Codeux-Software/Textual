@@ -2377,6 +2377,8 @@
 
 	TVCInputPromptDialog *dialog = [TVCInputPromptDialog new];
 
+	NSString *windowToken = [NSString stringWithFormat:@"TXMenuControllerSetUserVhostPanel-%@", [NSString stringWithUUID]];
+	
 	[dialog alertWithMessageTitle:TXTLS(@"BasicLanguage[1228][1]")
 					defaultButton:BLS(1186)
 				  alternateButton:BLS(1009)
@@ -2390,7 +2392,12 @@
 							  }
 						  }
 					  }
+					  
+					  [self removeWindowFromWindowList:windowToken];
+					  
 				  }];
+	
+	[self addWindowToWindowList:dialog withKeyValue:windowToken];
 }
 
 - (void)showSetVhostPrompt:(id)sender
