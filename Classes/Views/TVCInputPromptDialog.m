@@ -76,15 +76,7 @@
 
 - (NSFont *)informativeTextFont
 {
-	/* The value of this font is not actually applied anywhere. Instead, it
-	 is fed to Textual's internal APIs to measure the size that the frame of
-	 our informativ text should be. Keep this in sync with interface builder. */
-	
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		return [NSFont fontWithName:@"Helvetica Neue" size:11.0];
-	} else {
-		return [NSFont fontWithName:@"Lucida Grande" size:11.0];
-	}
+	return [NSFont boldSystemFontOfSize:11.0];
 }
 
 - (void)runModal
