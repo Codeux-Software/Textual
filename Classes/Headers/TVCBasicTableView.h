@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-#define TXPreferredGlobalTableViewFont			[NSFont fontWithName:@"Lucida Grande" size:12.0]
+#define TXPreferredGlobalTableViewFont			[NSFont boldSystemFontOfSize:12.0]
 
 @interface TVCBasicTableView : NSTableView
 @property (nonatomic, uweak) id keyDelegate;
