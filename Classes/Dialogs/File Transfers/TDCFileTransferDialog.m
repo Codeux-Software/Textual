@@ -1,4 +1,4 @@
-/* ********************************************************************* 
+/* *********************************************************************
        _____        _               _    ___ ____   ____
       |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
        | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
@@ -48,6 +48,8 @@
 @property (nonatomic, strong) NSMutableArray *fileTransfers;
 @property (nonatomic, nweak) IBOutlet NSButton *clearButton;
 @property (nonatomic, nweak) IBOutlet NSSegmentedCell *navigationControllerCell;
+
+- (IBAction)hideWindow:(id)sender;
 @end
 
 @implementation TDCFileTransferDialog
@@ -842,6 +844,11 @@
 - (void)windowWillClose:(NSNotification *)note
 {
 	[self.window saveWindowStateForClass:[self class]];
+}
+
+- (IBAction)hideWindow:(id)sender
+{
+	[self.window close];
 }
 
 @end
