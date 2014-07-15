@@ -1823,9 +1823,9 @@
 	}
 	
 	for (IRCUser *m in [self selectedMembers:sender]) {
-		IRCChannel *c = [u findChannelOrCreate:[m nickname] isPrivateMessage:YES];
+		IRCChannel *cc = [u findChannelOrCreate:[m nickname] isPrivateMessage:YES];
 		
-		[mainWindow() select:c];
+		[mainWindow() select:cc];
 	}
 
 	if (deselectPointedNickname) {

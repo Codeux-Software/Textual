@@ -38,5 +38,5 @@
 #import "TextualApplication.h"
 
 @interface NSSplitView (TXSplitViewHelper)
-@property (NS_NONATOMIC_IOSONLY, readonly) BOOL hasHiddenView;
+@property (readonly) BOOL hasHiddenView;
 @end

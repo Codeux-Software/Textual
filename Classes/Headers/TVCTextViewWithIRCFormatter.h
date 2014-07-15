@@ -48,11 +48,11 @@
 @property (nonatomic, copy) NSColor *preferredFontColor;
 @property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
 
-@property (NS_NONATOMIC_IOSONLY, getter=isAtTopOfView, readonly) BOOL atTopOfView;
-@property (NS_NONATOMIC_IOSONLY, getter=isAtBottomOfView, readonly) BOOL atBottomOfView;
+@property (getter=isAtTopOfView, readonly) BOOL atTopOfView;
+@property (getter=isAtBottomOfView, readonly) BOOL atBottomOfView;
 
-@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger selectedLineNumber;
-@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfLines;
+@property (readonly) NSInteger selectedLineNumber;
+@property (readonly) NSInteger numberOfLines;
 
 - (NSInteger)highestHeightBelowHeight:(NSInteger)maximumHeight withPadding:(NSInteger)valuePadding;
 
@@ -63,9 +63,9 @@
 - (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;
 - (void)registerKeyHandler:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods;
 
-@property (NS_NONATOMIC_IOSONLY, copy) NSAttributedString *attributedStringValue;
+@property (copy) NSAttributedString *attributedStringValue;
 
-@property (NS_NONATOMIC_IOSONLY, copy) NSString *stringValue;
+@property (copy) NSString *stringValue;
 
 - (void)updateTypeSetterAttributes;
 - (void)defineDefaultTypeSetterAttributes;

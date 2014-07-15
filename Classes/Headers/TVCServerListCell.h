@@ -40,7 +40,7 @@
 @interface TVCServerListCell : NSTableCellView
 @property (nonatomic, nweak) IRCTreeItem *cellItem;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSDictionary *drawingContext;
+@property (readonly, copy) NSDictionary *drawingContext;
 
 - (void)updateDrawing:(NSRect)cellFrame;
 

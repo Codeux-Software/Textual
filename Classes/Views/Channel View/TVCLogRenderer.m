@@ -604,9 +604,9 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 				if (addKeyword) {
 					if ([e matchIsExcluded]) {
-						[excludeWords safeAddObjectWithoutDuplication:[e matchKeyword]];
+						[excludeWords addObjectWithoutDuplication:[e matchKeyword]];
 					} else {
-						[highlightWords safeAddObjectWithoutDuplication:[e matchKeyword]];
+						[highlightWords addObjectWithoutDuplication:[e matchKeyword]];
 					}
 				}
 			}

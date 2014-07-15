@@ -45,11 +45,11 @@
 - (void)collapseServerList;
 - (void)toggleServerListVisbility;
 
-@property (NS_NONATOMIC_IOSONLY, getter=isServerListCollapsed, readonly) BOOL serverListCollapsed;
+@property (getter=isServerListCollapsed, readonly) BOOL serverListCollapsed;
 
 - (void)expandMemberList;
 - (void)collapseMemberList;
 - (void)toggleMemberListVisbility;
 
-@property (NS_NONATOMIC_IOSONLY, getter=isMemberListCollapsed, readonly) BOOL memberListCollapsed;
+@property (getter=isMemberListCollapsed, readonly) BOOL memberListCollapsed;
 @end

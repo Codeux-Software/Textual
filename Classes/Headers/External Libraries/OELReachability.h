@@ -46,7 +46,7 @@ typedef void (^OELReachabilityNetworkUnreachableBlock)(OELReachability *reachabi
 
 + (OELReachability *)reachabilityForInternetConnection;
 
-@property (NS_NONATOMIC_IOSONLY, getter=isReachable, readonly) BOOL reachable;
+@property (getter=isReachable, readonly) BOOL reachable;
 
 - (BOOL)startNotifier;
 - (void)stopNotifier;

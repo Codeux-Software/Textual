@@ -104,10 +104,10 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 
 - (void)maybeToggleFullscreenAfterLaunch;
 
-@property (NS_NONATOMIC_IOSONLY, getter=isInactive, readonly) BOOL inactive;
-@property (NS_NONATOMIC_IOSONLY, getter=isActiveForDrawing, readonly) BOOL activeForDrawing;
+@property (getter=isInactive, readonly) BOOL inactive;
+@property (getter=isActiveForDrawing, readonly) BOOL activeForDrawing;
 
-@property (NS_NONATOMIC_IOSONLY, getter=isUsingVibrantDarkAppearance) BOOL usingVibrantDarkAppearance; // On Mavericks and earlier, this is always NO.
+@property (getter=isUsingVibrantDarkAppearance) BOOL usingVibrantDarkAppearance; // On Mavericks and earlier, this is always NO.
 
 - (void)navigateChannelEntries:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType;
 - (void)navigateServerEntries:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType;
@@ -133,8 +133,8 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 - (void)selectPreviousUnreadChannel:(NSEvent *)e;
 - (void)selectPreviousActiveChannel:(NSEvent *)e;
 
-@property (NS_NONATOMIC_IOSONLY, getter=isMemberListVisible, readonly) BOOL memberListVisible;
-@property (NS_NONATOMIC_IOSONLY, getter=isServerListVisible, readonly) BOOL serverListVisible;
+@property (getter=isMemberListVisible, readonly) BOOL memberListVisible;
+@property (getter=isServerListVisible, readonly) BOOL serverListVisible;
 
 - (NSRect)defaultWindowFrame;
 

@@ -658,11 +658,6 @@
 	return mutlist;
 }
 
-- (NSArray *)unsortedMemberList
-{
-	return [self sortedByChannelRankMemberList];
-}
-
 #pragma mark -
 #pragma mark User Search
 
@@ -683,11 +678,6 @@
 	});
 	
 	return foundUser;
-}
-
-- (IRCUser *)memberWithNickname:(NSString *)nickname
-{
-	return [self findMember:nickname options:0];
 }
 
 - (IRCUser *)findMember:(NSString *)nickname

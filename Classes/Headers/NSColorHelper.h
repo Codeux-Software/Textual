@@ -39,9 +39,6 @@
 #import "TextualApplication.h"
 
 @interface NSColor (TXColorHelper)
-+ (id)defineUserInterfaceItem:(id)normalItem invertedItem:(id)invertedItem TEXTUAL_DEPRECATED;
-+ (id)defineUserInterfaceItem:(id)normalItem invertedItem:(id)invertedItem withOperator:(BOOL)specialCondition TEXTUAL_DEPRECATED;
-
 - (NSColor *)invertColor;
 
 + (NSColor *)formatterWhiteColor;

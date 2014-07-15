@@ -89,7 +89,7 @@
 
 				channelCount += 1;
 				
-				IRCUser *myself = [ch memberWithNickname:[c localNickname]];
+				IRCUser *myself = [ch findMember:[c localNickname]];
 				
 				if ([myself q] || [myself a] || [myself o]) {
 					chanOpCount++;
@@ -99,7 +99,7 @@
 					chanVopCount++;
 				}
 				
-				for (IRCUser *m in [ch unsortedMemberList]) {
+				for (IRCUser *m in [ch sortedByChannelRankMemberList]) {
 					if ([m isEqual:myself]) {
 						continue;
 					}

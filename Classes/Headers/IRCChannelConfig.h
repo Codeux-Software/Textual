@@ -73,9 +73,9 @@ typedef enum IRCChannelType : NSInteger {
 - (void)writeSecretKeyKeychainItemToDisk;
 - (void)writeEncryptionKeyKeychainItemToDisk;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *temporarySecretKey;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *temporaryEncryptionKey;
+@property (readonly, copy) NSString *temporarySecretKey;
+@property (readonly, copy) NSString *temporaryEncryptionKey;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *secretKeyValue;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *encryptionKeyValue;
+@property (readonly, copy) NSString *secretKeyValue;
+@property (readonly, copy) NSString *encryptionKeyValue;
 @end

@@ -39,5 +39,5 @@
 #import "TextualApplication.h"
 
 @interface NSPasteboard (TXPasteboardHelper)
-@property (NS_NONATOMIC_IOSONLY, copy) NSString *stringContent;
+@property (copy) NSString *stringContent;
 @end

@@ -46,9 +46,9 @@
 @property (nonatomic, nweak) IBOutlet NSTextField *transferProgressField;
 @property (nonatomic, nweak) id associatedController;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *completePath;
+@property (readonly, copy) NSString *completePath;
 
-@property (NS_NONATOMIC_IOSONLY, readonly) TXUnsignedLongLong currentSpeed;
+@property (readonly) TXUnsignedLongLong currentSpeed;
 
 - (void)populateBasicInformation;
 

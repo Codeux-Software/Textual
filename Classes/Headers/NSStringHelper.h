@@ -76,10 +76,6 @@
 - (NSString *)substringAfterIndex:(NSInteger)anIndex;
 - (NSString *)substringBeforeIndex:(NSInteger)anIndex;
 
-- (NSString *)safeSubstringFromIndex:(NSInteger)anIndex TEXTUAL_DEPRECATED;
-- (NSString *)safeSubstringToIndex:(NSInteger)anIndex TEXTUAL_DEPRECATED;
-- (NSString *)safeSubstringWithRange:(NSRange)range TEXTUAL_DEPRECATED;
-
 - (NSString *)stringCharacterAtIndex:(NSInteger)anIndex;
 
 - (NSString *)stringByDeletingPreifx:(NSString *)prefix;
@@ -87,18 +83,18 @@
 - (NSString *)stringByDeletingAllCharactersInSet:(NSString *)validChars;
 - (NSString *)stringByDeletingAllCharactersNotInSet:(NSString *)validChars;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *channelNameToken;
+@property (readonly, copy) NSString *channelNameToken;
 - (NSString *)channelNameTokenByTrimmingAllPrefixes:(IRCClient *)client;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *sha1;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *sha256;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *md5;
+@property (readonly, copy) NSString *sha1;
+@property (readonly, copy) NSString *sha256;
+@property (readonly, copy) NSString *md5;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *nicknameFromHostmask;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *usernameFromHostmask;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *addressFromHostmask;
+@property (readonly, copy) NSString *nicknameFromHostmask;
+@property (readonly, copy) NSString *usernameFromHostmask;
+@property (readonly, copy) NSString *addressFromHostmask;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *cleanedServerHostmask;
+@property (readonly, copy) NSString *cleanedServerHostmask;
 
 - (NSInteger)compareWithWord:(NSString *)stringB matchGain:(NSInteger)gain missingCost:(NSInteger)cost;
 
@@ -117,51 +113,47 @@
 
 - (NSArray *)split:(NSString *)delimiter;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *trim;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *trimNewlines;
+@property (readonly, copy) NSString *trim;
+@property (readonly, copy) NSString *trimNewlines;
 - (NSString *)trimCharacters:(NSString *)charset;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *removeAllNewlines;
+@property (readonly, copy) NSString *removeAllNewlines;
 
 - (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont honorFormattingPreference:(BOOL)formattingPreference;
 - (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont;
 
-- (UniChar)safeCharacterAtIndex:(NSInteger)anIndex;
+@property (getter=isAlphabeticNumericOnly, readonly) BOOL alphabeticNumericOnly;
+@property (getter=isNumericOnly, readonly) BOOL numericOnly;
 
-@property (NS_NONATOMIC_IOSONLY, getter=isAlphabeticNumericOnly, readonly) BOOL alphabeticNumericOnly;
-@property (NS_NONATOMIC_IOSONLY, getter=isNumericOnly, readonly) BOOL numericOnly;
+@property (readonly, copy) NSString *safeFilename;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *safeFilename;
-
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *stripIRCEffects;
+@property (readonly, copy) NSString *stripIRCEffects;
 
 - (NSRange)rangeOfNextSegmentMatchingRegularExpression:(NSString *)regex startingAt:(NSInteger)start;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *encodeURIComponent;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *encodeURIFragment;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *decodeURIFragement;
+@property (readonly, copy) NSString *encodeURIComponent;
+@property (readonly, copy) NSString *encodeURIFragment;
+@property (readonly, copy) NSString *decodeURIFragement;
 
-@property (NS_NONATOMIC_IOSONLY, getter=isHostmask, readonly) BOOL hostmask;
+@property (getter=isHostmask, readonly) BOOL hostmask;
 
-@property (NS_NONATOMIC_IOSONLY, getter=isIPv4Address, readonly) BOOL IPv4Address;
-@property (NS_NONATOMIC_IOSONLY, getter=isIPv6Address, readonly) BOOL IPv6Address;
-@property (NS_NONATOMIC_IOSONLY, getter=isIPAddress, readonly) BOOL IPAddress;
+@property (getter=isIPv4Address, readonly) BOOL IPv4Address;
+@property (getter=isIPv6Address, readonly) BOOL IPv6Address;
+@property (getter=isIPAddress, readonly) BOOL IPAddress;
 
-@property (NS_NONATOMIC_IOSONLY, getter=isModeChannelName, readonly) BOOL modeChannelName;
+@property (getter=isModeChannelName, readonly) BOOL modeChannelName;
 
 - (BOOL)hostmaskComponents:(NSString **)nickname username:(NSString **)username address:(NSString **)address;
 
-@property (NS_NONATOMIC_IOSONLY, getter=isNickname, readonly) BOOL nickname;
+@property (getter=isNickname, readonly) BOOL nickname;
 
-@property (NS_NONATOMIC_IOSONLY, getter=isHostmaskAddress, readonly) BOOL hostmaskAddress;
-@property (NS_NONATOMIC_IOSONLY, getter=isHostmaskUsername, readonly) BOOL hostmaskUsername;
+@property (getter=isHostmaskAddress, readonly) BOOL hostmaskAddress;
+@property (getter=isHostmaskUsername, readonly) BOOL hostmaskUsername;
 
-@property (NS_NONATOMIC_IOSONLY, getter=isChannelName, readonly) BOOL channelName;
+@property (getter=isChannelName, readonly) BOOL channelName;
 - (BOOL)isChannelName:(IRCClient *)client; // Client to parse CHANTYPES from.
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *stringWithValidURIScheme;
-
-- (NSString *)reservedCharactersToIRCFormatting TEXTUAL_DEPRECATED;
+@property (readonly, copy) NSString *stringWithValidURIScheme;
 
 - (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight forcedFont:(NSFont *)textFont;
 
@@ -169,9 +161,9 @@
 
 - (NSString *)base64EncodingWithLineLength:(NSInteger)lineLength;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *string; // Returns self.
+@property (readonly, copy) NSString *string; // Returns self.
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *trimAndGetFirstToken;
+@property (readonly, copy) NSString *trimAndGetFirstToken;
 
 /* This call is used internally by getToken and getTokenIncludingQuotes. 
  Call that instead. It is declared in header so that it can be used for 
@@ -205,19 +197,17 @@
 #pragma mark Mutable String Helpers
 
 @interface NSMutableString (TXMutableStringHelper)
-@property (NS_NONATOMIC_IOSONLY, getter=getToken, readonly, copy) NSString *token;
-@property (NS_NONATOMIC_IOSONLY, getter=getTokenIncludingQuotes, readonly, copy) NSString *tokenIncludingQuotes;
+@property (getter=getToken, readonly, copy) NSString *token;
+@property (getter=getTokenIncludingQuotes, readonly, copy) NSString *tokenIncludingQuotes;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *uppercaseGetToken;
-
-- (void)safeDeleteCharactersInRange:(NSRange)range;
+@property (readonly, copy) NSString *uppercaseGetToken;
 @end
 
 #pragma mark 
 #pragma mark Attributed String Helpers
 
 @interface NSAttributedString (TXAttributedStringHelper)
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSDictionary *attributes;
+@property (readonly, copy) NSDictionary *attributes;
 
 + (NSAttributedString *)emptyString;
 + (NSAttributedString *)emptyStringWithBase:(NSString *)base;
@@ -227,14 +217,9 @@
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set;
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set frontChop:(NSRangePointer)front;
 
-- (id)safeAttribute:(NSString *)attrName atIndex:(NSUInteger)location effectiveRange:(NSRangePointer)range TEXTUAL_DEPRECATED;
-- (id)safeAttribute:(NSString *)attrName atIndex:(NSUInteger)location longestEffectiveRange:(NSRangePointer)range inRange:(NSRange)rangeLimit TEXTUAL_DEPRECATED;
+@property (readonly, copy) NSArray *splitIntoLines;
 
-- (NSDictionary *)safeAttributesAtIndex:(NSUInteger)location longestEffectiveRange:(NSRangePointer)range inRange:(NSRange)rangeLimit TEXTUAL_DEPRECATED;
-
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *splitIntoLines;
-
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *trimmedString;
+@property (readonly, copy) NSString *trimmedString;
 
 - (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight;
 - (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight forcedFont:(NSFont *)textFont;
@@ -249,9 +234,9 @@
 @interface NSMutableAttributedString (TXMutableAttributedStringHelper)
 + (NSMutableAttributedString *)mutableStringWithBase:(NSString *)base attributes:(NSDictionary *)baseAttributes;
 
-@property (NS_NONATOMIC_IOSONLY, getter=getTokenAsString, readonly, copy) NSString *tokenAsString;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *uppercaseGetToken;
+@property (getter=getTokenAsString, readonly, copy) NSString *tokenAsString;
+@property (readonly, copy) NSString *uppercaseGetToken;
 
-@property (NS_NONATOMIC_IOSONLY, getter=getToken, readonly, copy) NSAttributedString *token;
-@property (NS_NONATOMIC_IOSONLY, getter=getTokenIncludingQuotes, readonly, copy) NSAttributedString *tokenIncludingQuotes;
+@property (getter=getToken, readonly, copy) NSAttributedString *token;
+@property (getter=getTokenIncludingQuotes, readonly, copy) NSAttributedString *tokenIncludingQuotes;
 @end

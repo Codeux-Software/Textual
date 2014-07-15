@@ -53,6 +53,6 @@
 
 - (void)sendDealloc;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) NSView *pluginPreferenesPaneView;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *pluginPreferencesPaneMenuItemName;
+@property (readonly, strong) NSView *pluginPreferenesPaneView;
+@property (readonly, copy) NSString *pluginPreferencesPaneMenuItemName;
 @end

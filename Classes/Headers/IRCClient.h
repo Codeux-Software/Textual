@@ -140,7 +140,7 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 // fear that it will have any negative effects on the IRC client itself.
 // Accessing -config property directly will return the current configuration used internally by the client.
 // This configuration will include any associated private messages.
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) IRCClientConfig *copyOfStoredConfig;
+@property (readonly, copy) IRCClientConfig *copyOfStoredConfig;
 
 // -dictionaryValue may return a value that contains private messages. This depends on whether
 // end user has configured Textual to remember the state of queries between saves.
@@ -154,29 +154,29 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 
 - (void)closeDialogs;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *uniqueIdentifier;
+@property (readonly, copy) NSString *uniqueIdentifier;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *networkName; // Only returns the actual network name or nil.
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *altNetworkName; // Will return the configured name if the actual name is not available.
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *networkAddress;
+@property (readonly, copy) NSString *networkName; // Only returns the actual network name or nil.
+@property (readonly, copy) NSString *altNetworkName; // Will return the configured name if the actual name is not available.
+@property (readonly, copy) NSString *networkAddress;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *localNickname;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *localHostmask;
+@property (readonly, copy) NSString *localNickname;
+@property (readonly, copy) NSString *localHostmask;
 
 - (void)enableCapacity:(ClientIRCv3SupportedCapacities)capacity;
 - (void)disableCapacity:(ClientIRCv3SupportedCapacities)capacity;
 
 - (BOOL)isCapacityEnabled:(ClientIRCv3SupportedCapacities)capacity;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *enabledCapacitiesStringValue;
+@property (readonly, copy) NSString *enabledCapacitiesStringValue;
 
-@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger channelCount;
+@property (readonly) NSInteger channelCount;
 
 - (void)addChannel:(IRCChannel *)channel;
 - (void)addChannel:(IRCChannel *)channel atPosition:(NSInteger)pos;
 - (void)removeChannel:(IRCChannel *)channel;
 
-@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger indexOfFirstPrivateMessage;
+@property (readonly) NSInteger indexOfFirstPrivateMessage;
 - (NSInteger)indexOfChannel:(IRCChannel *)channel;
 
 - (void)updateStoredChannelList;
@@ -185,13 +185,13 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 
 - (void)addHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine;
 
-@property (NS_NONATOMIC_IOSONLY, readonly) NSTimeInterval lastMessageServerTimeWithCachedValue;
+@property (readonly) NSTimeInterval lastMessageServerTimeWithCachedValue;
 
 - (void)reachabilityChanged:(BOOL)reachable;
 
 - (void)autoConnect:(NSInteger)delay afterWakeUp:(BOOL)afterWakeUp;
 
-@property (NS_NONATOMIC_IOSONLY, getter=isReconnecting, readonly) BOOL reconnecting;
+@property (getter=isReconnecting, readonly) BOOL reconnecting;
 
 - (void)postEventToViewController:(NSString *)eventToken;
 - (void)postEventToViewController:(NSString *)eventToken forChannel:(IRCChannel *)channel;
@@ -352,15 +352,4 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 
 - (void)printErrorReply:(IRCMessage *)m;
 - (void)printErrorReply:(IRCMessage *)m channel:(IRCChannel *)channel;
-
-/* ******************************** Deprecated ********************************  */
-/* Use of these methods will throw an exception.								 */
-/* ****************************************************************************  */
-
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command message:(IRCMessage *)rawMessage completionBlock:(void(^)(BOOL highlighted))completionBlock TEXTUAL_DEPRECATED;
-
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text command:(NSString *)command TEXTUAL_DEPRECATED;
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt command:(NSString *)command TEXTUAL_DEPRECATED;
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command TEXTUAL_DEPRECATED;
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command message:(IRCMessage *)rawMessage TEXTUAL_DEPRECATED;
 @end

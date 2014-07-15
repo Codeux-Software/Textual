@@ -77,7 +77,7 @@
 - (void)reloadTheme;
 - (void)reloadTheme:(BOOL)reloadUserInterface;
 
-@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger clientCount;
+@property (readonly) NSInteger clientCount;
 
 - (IRCClient *)findClientById:(NSString *)uid;
 - (IRCChannel *)findChannelByClientId:(NSString *)uid channelId:(NSString *)cid;

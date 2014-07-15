@@ -117,9 +117,9 @@ typedef enum TXConnectionProxyType : NSInteger {
 
 - (void)destroyKeychains;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *temporaryNicknamePassword;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *temporaryServerPassword;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *temporaryProxyPassword;
+@property (readonly, copy) NSString *temporaryNicknamePassword;
+@property (readonly, copy) NSString *temporaryServerPassword;
+@property (readonly, copy) NSString *temporaryProxyPassword;
 
 - (void)writeKeychainItemsToDisk;
 

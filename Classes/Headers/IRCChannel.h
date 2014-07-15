@@ -60,14 +60,14 @@ typedef enum IRCChannelStatus : NSInteger {
 
 - (NSMutableDictionary *)dictionaryValue;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *uniqueIdentifier;
+@property (readonly, copy) NSString *uniqueIdentifier;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *secretKey;
+@property (readonly, copy) NSString *secretKey;
 
-@property (NS_NONATOMIC_IOSONLY, getter=isChannel, readonly) BOOL channel;
-@property (NS_NONATOMIC_IOSONLY, getter=isPrivateMessage, readonly) BOOL privateMessage;
+@property (getter=isChannel, readonly) BOOL channel;
+@property (getter=isPrivateMessage, readonly) BOOL privateMessage;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *channelTypeString;
+@property (readonly, copy) NSString *channelTypeString;
 
 - (void)prepareForApplicationTermination;
 - (void)prepareForPermanentDestruction;
@@ -77,7 +77,7 @@ typedef enum IRCChannelStatus : NSInteger {
 - (void)activate;
 - (void)deactivate;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSURL *logFilePath;
+@property (readonly, copy) NSURL *logFilePath;
 
 - (void)writeToLogFile:(TVCLogLine *)line;
 
@@ -91,8 +91,6 @@ typedef enum IRCChannelStatus : NSInteger {
 - (IRCUser *)findMember:(NSString *)nickname;
 - (IRCUser *)findMember:(NSString *)nickname options:(NSStringCompareOptions)mask;
 
-- (IRCUser *)memberWithNickname:(NSString *)nickname TEXTUAL_DEPRECATED; // Use findMember:
-
 - (void)addMember:(IRCUser *)user;
 - (void)removeMember:(NSString *)nickname;
 - (void)renameMember:(NSString *)fromNickname to:(NSString *)toNickname;
@@ -100,18 +98,14 @@ typedef enum IRCChannelStatus : NSInteger {
 
 - (void)clearMembers; // This will not reload table view. 
 
-@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfMembers;
-
-/* -unsortedMemberList actually invokes -sortedByChannelRankMemberList. 
- It is marked as deprecated instead of being completely removed for now. */
-- (NSArray *)unsortedMemberList TEXTUAL_DEPRECATED;
+@property (readonly) NSInteger numberOfMembers;
 
 /* The member list methods returns the actual instance of user stored in 
  the channels internal cache. IRCUser is not KVO based so if you modify a
  user returned, then do Textual the kindness of reloading that member in 
  the member list view. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *sortedByChannelRankMemberList;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *sortedByNicknameLengthMemberList;
+@property (readonly, copy) NSArray *sortedByChannelRankMemberList;
+@property (readonly, copy) NSArray *sortedByNicknameLengthMemberList;
 
 - (BOOL)memberRequiresRedraw:(IRCUser *)user1 comparedTo:(IRCUser *)user2;
 

@@ -284,7 +284,7 @@
 		NSString *_exact_model;
 
 		if ([_model hasPrefix:@"VMware"]) {
-			_exact_model = [_all_models objectForKey:@"VMware"];
+			_exact_model = _all_models[@"VMware"];
 		} else {
 			_exact_model = [CSFWSystemInformation systemModelName];
 
@@ -375,7 +375,7 @@
 	}
 
 	if ([sysinfo hasSuffix:@" \002•\002"]) {
-		sysinfo = [sysinfo safeSubstringToIndex:([sysinfo length] - 3)];
+		sysinfo = [sysinfo substringToIndex:([sysinfo length] - 3)];
 	}
 
 	/* Compiled Output. */

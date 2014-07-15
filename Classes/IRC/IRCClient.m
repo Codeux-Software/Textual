@@ -3261,31 +3261,6 @@
 	[self writeToLogFile:line];
 }
 
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text command:(NSString *)command
-{
-	TEXTUAL_DEPRECATED_ASSERT
-}
-
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text receivedAt:(NSDate *)receivedAt command:(NSString *)command
-{
-	TEXTUAL_DEPRECATED_ASSERT
-}
-
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command
-{
-	TEXTUAL_DEPRECATED_ASSERT
-}
-
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command message:(IRCMessage *)rawMessage
-{
-	TEXTUAL_DEPRECATED_ASSERT
-}
-
-- (void)print:(id)chan type:(TVCLogLineType)type nick:(NSString *)nick text:(NSString *)text encrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt command:(NSString *)command message:(IRCMessage *)rawMessage completionBlock:(IRCClientPrintToWebViewCallbackBlock)completionBlock
-{
-	TEXTUAL_DEPRECATED_ASSERT
-}
-
 - (void)print:(id)chan type:(TVCLogLineType)type nickname:(NSString *)nickname messageBody:(NSString *)messageBody command:(NSString *)command
 {
 	[self printToWebView:chan type:type command:command nickname:nickname messageBody:messageBody isEncrypted:NO receivedAt:[NSDate date] referenceMessage:nil completionBlock:nil];

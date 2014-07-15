@@ -41,6 +41,8 @@
 @property (nonatomic, copy) NSDictionary *conversionTable;
 @property (nonatomic, copy) NSArray *sortedSmileyList;
 @property (nonatomic, strong) IBOutlet NSView *preferencesPane;
+
+- (IBAction)preferenceChanged:(id)sender;
 @end
 
 @implementation TPISmileyConverter
@@ -52,23 +54,49 @@
 {
 	/* Load Interface. */
 	[TPIBundleFromClass() loadCustomNibNamed:@"TPISmileyConverter" owner:self topLevelObjects:nil];
+}
 
-	/* Find conversion table. */
-	NSBundle *currBundle = [NSBundle bundleForClass:[self class]];
-
+- (void)buildConversionTable
+{
 	/* Find ourselves. */
-	NSURL *tablePath = [currBundle URLForResource:@"conversionTable" withExtension:@"plist"];
-
+	NSURL *tablePath = [TPIBundleFromClass() URLForResource:@"conversionTable" withExtension:@"plist"];
+	
 	/* Load dictionary. */
 	NSDictionary *tableData = [NSDictionary dictionaryWithContentsOfURL:tablePath];
 	
 	if (NSObjectIsEmpty(tableData)) {
 		NSAssert(NO, @"Failed to find conversion table.");
 	}
-
+	
 	/* Save dictionary contents. */
 	self.conversionTable	=  tableData;
 	self.sortedSmileyList	= [tableData sortedDictionaryReversedKeys];
+}
+
+- (void)destroyConversionTable
+{
+	self.conversionTable = nil;
+	self.sortedSmileyList = nil;
+}
+
+- (void)updateConversionTable
+{
+	BOOL serviceEnabled = [RZUserDefaults() boolForKey:@"Smiley Converter Extension -> Enable Service"];
+	
+	if (serviceEnabled == NO) {
+		if (self.conversionTable) {
+			[self destroyConversionTable];
+		}
+	} else {
+		if (self.conversionTable == nil) {
+			[self buildConversionTable];
+		}
+	}
+}
+
+- (IBAction)preferenceChanged:(id)sender
+{
+	[self updateConversionTable];
 }
 
 - (NSView *)pluginPreferencesPaneView
@@ -92,6 +120,8 @@
 	if (lineType == TVCLogLineActionType ||
 		lineType == TVCLogLinePrivateMessageType)
 	{
+		[self updateConversionTable];
+		
 		return [self convertStringToEmoji:newMessage];
 	} else {
 		return newMessage;
@@ -167,7 +197,7 @@
 		/* Replace the actual smiley. */
 		if (enabled) {
 			/* Build the emoji. */
-			NSString *theEmoji = [self.conversionTable objectForKey:smiley];
+			NSString *theEmoji = (self.conversionTable)[smiley];
 			
 			/* Replace the smiley. */
 			[body replaceCharactersInRange:r withString:theEmoji];

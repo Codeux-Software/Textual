@@ -49,14 +49,14 @@ typedef BOOL (^TVCTextFieldWithValueValidationBlock)(NSString *currentValue);
 @property (nonatomic, assign) BOOL stringValueIsInvalidOnEmpty; // Is an empty string considered invalid?
 @property (nonatomic, uweak) id textDidChangeCallback; // Calls method "-(void)validatedTextFieldTextDidChange:(id)sender" whereas "sender" is the text field.
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *value; /* The current value. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *lowercaseValue;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *uppercaseValue;
+@property (readonly, copy) NSString *value; /* The current value. */
+@property (readonly, copy) NSString *lowercaseValue;
+@property (readonly, copy) NSString *uppercaseValue;
 
-@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger integerValue;
+@property (readonly) NSInteger integerValue;
 
-@property (NS_NONATOMIC_IOSONLY, readonly) BOOL valueIsEmpty;
-@property (NS_NONATOMIC_IOSONLY, readonly) BOOL valueIsValid;
+@property (readonly) BOOL valueIsEmpty;
+@property (readonly) BOOL valueIsValid;
 
 - (void)performValidation; /* Force the text field to clear cache and validate value. */
 @end
@@ -73,14 +73,14 @@ typedef BOOL (^TVCTextFieldWithValueValidationBlock)(NSString *currentValue);
 @property (nonatomic, assign) BOOL stringValueIsInvalidOnEmpty; // Is an empty string considered invalid?
 @property (nonatomic, uweak) id textDidChangeCallback; // Calls method "-(void)validatedTextFieldTextDidChange:(id)sender" whereas "sender" is the text field.
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *value; /* The current value. */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *lowercaseValue;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *uppercaseValue;
+@property (readonly, copy) NSString *value; /* The current value. */
+@property (readonly, copy) NSString *lowercaseValue;
+@property (readonly, copy) NSString *uppercaseValue;
 
-@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger integerValue;
+@property (readonly) NSInteger integerValue;
 
-@property (NS_NONATOMIC_IOSONLY, readonly) BOOL valueIsEmpty;
-@property (NS_NONATOMIC_IOSONLY, readonly) BOOL valueIsValid;
+@property (readonly) BOOL valueIsEmpty;
+@property (readonly) BOOL valueIsValid;
 
 - (void)performValidation; /* Force the text field to clear cache and validate value. */
 @end
