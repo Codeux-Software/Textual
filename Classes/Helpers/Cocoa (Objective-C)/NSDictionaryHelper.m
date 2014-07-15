@@ -392,16 +392,6 @@
 	}
 }
 
-- (void)safeSetObject:(id)value forKey:(NSString *)key
-{
-	TEXTUAL_DEPRECATED_ASSERT;
-}
-
-- (void)safeSetObjectWithoutOverride:(id)value forKey:(NSString *)key
-{
-	TEXTUAL_DEPRECATED_ASSERT;
-}
-
 - (void)setBool:(BOOL)value forKey:(NSString *)key
 {
 	self[key] = @(value);

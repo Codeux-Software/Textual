@@ -140,34 +140,6 @@
     return encodingList;
 }
 
-- (NSString *)safeSubstringWithRange:(NSRange)range
-{
-	TEXTUAL_DEPRECATED_ASSERT;
-	
-	return nil;
-}
-
-- (NSString *)safeSubstringFromIndex:(NSInteger)anIndex
-{
-	TEXTUAL_DEPRECATED_ASSERT;
-	
-	return nil;
-}
-
-- (NSString *)safeSubstringToIndex:(NSInteger)anIndex
-{
-	TEXTUAL_DEPRECATED_ASSERT;
-	
-	return nil;
-}
-
-- (UniChar)safeCharacterAtIndex:(NSInteger)anIndex
-{
-	TEXTUAL_DEPRECATED_ASSERT;
-	
-	return 0;
-}
-
 - (NSString *)stringCharacterAtIndex:(NSInteger)anIndex
 {
 	if (anIndex > [self length] || anIndex < 0) {
@@ -562,13 +534,6 @@
 		return address;
 	}
 
-	return nil;
-}
-
-- (NSString *)reservedCharactersToIRCFormatting
-{
-	TEXTUAL_DEPRECATED_ASSERT;
-	
 	return nil;
 }
 
@@ -1350,11 +1315,6 @@
 
 @implementation NSMutableString (NSMutableStringHelper)
 
-- (void)safeDeleteCharactersInRange:(NSRange)range
-{
-	TEXTUAL_DEPRECATED_ASSERT;
-}
-
 - (NSString *)getTokenIncludingQuotes
 {
 	NSRange deletionRange = NSEmptyRange();
@@ -1416,27 +1376,6 @@
 - (NSDictionary *)attributes
 {
 	return [self attributesAtIndex:0 longestEffectiveRange:NULL inRange:NSMakeRange(0, [self length])];
-}
-
-- (id)safeAttribute:(NSString *)attrName atIndex:(NSUInteger)location effectiveRange:(NSRangePointer)range
-{
-	TEXTUAL_DEPRECATED_ASSERT;
-	
-	return nil;
-}
-
-- (NSDictionary *)safeAttributesAtIndex:(NSUInteger)location longestEffectiveRange:(NSRangePointer)range inRange:(NSRange)rangeLimit
-{
-	TEXTUAL_DEPRECATED_ASSERT;
-	
-	return nil;
-}
-
-- (id)safeAttribute:(NSString *)attrName atIndex:(NSUInteger)location longestEffectiveRange:(NSRangePointer)range inRange:(NSRange)rangeLimit
-{
-	TEXTUAL_DEPRECATED_ASSERT;
-	
-	return nil;
 }
 
 - (NSString *)trimmedString

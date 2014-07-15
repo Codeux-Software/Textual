@@ -1,0 +1,36 @@
+#!/bin/bash
+
+SYSTEM_BUNDLE_PATH="/Users/Shared/._private-B17F59AE-DA70-4C19-AECD-0EF1CE94CDC7/"
+
+USER_BUNDLE_PATH="$HOME/Library/Group Containers/8482Q6EPL6.com.codeux.irc.textual/Library/Application Support/Textual/Extensions/"
+
+mkdir -p "${USER_BUNDLE_PATH}"
+
+cd "${SYSTEM_BUNDLE_PATH}"
+
+chown -R $USER .
+chgrp -R staff .
+
+ZIPPED_BUNDLES=`find . -name "*.tar.gz"`
+
+for BUNDLE in $ZIPPED_BUNDLES; do	
+	gunzip -c "${BUNDLE}" | tar xopf -
+	
+	rm -f "${BUNDLE}"
+done
+
+BUNDLES=`find . -name "*.bundle"`
+
+for BUNDLE in $BUNDLES; do
+	BUNDLE_PATH="${USER_BUNDLE_PATH}/${BUNDLE}"
+	
+	if [ -d "${BUNDLE_PATH}" ]; then
+		rm -rf "${BUNDLE_PATH}"
+	fi
+	
+	mv "${BUNDLE}" "${BUNDLE_PATH}"
+done
+
+rm -R "${SYSTEM_BUNDLE_PATH}"
+
+exit

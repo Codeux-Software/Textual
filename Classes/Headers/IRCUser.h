@@ -60,15 +60,15 @@
 
 + (id)newUserOnClient:(IRCClient *)client withNickname:(NSString *)nickname;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *mark;
+@property (readonly, copy) NSString *mark;
 
-@property (NS_NONATOMIC_IOSONLY, getter=isOp, readonly) BOOL op;
-@property (NS_NONATOMIC_IOSONLY, getter=isHalfOp, readonly) BOOL halfOp;
+@property (getter=isOp, readonly) BOOL op;
+@property (getter=isHalfOp, readonly) BOOL halfOp;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *banMask;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *hostmask;
+@property (readonly, copy) NSString *banMask;
+@property (readonly, copy) NSString *hostmask;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *lowercaseNickname;
+@property (readonly, copy) NSString *lowercaseNickname;
 
 - (void)outgoingConversation;
 - (void)incomingConversation;

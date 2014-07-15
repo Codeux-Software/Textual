@@ -237,7 +237,7 @@
 		}
 	/* } else if ([host hasSuffix:@"imgur.com"]) {
 		if ([path hasPrefix:@"/gallery/"]) {
-			NSString *s = [path safeSubstringFromIndex:9];
+			NSString *s = [path substringFromIndex:9];
 
 			if ([s isAlphabeticNumericOnly]) {
 				return [NSString stringWithFormat:@"http://i.imgur.com/%@.png", s];

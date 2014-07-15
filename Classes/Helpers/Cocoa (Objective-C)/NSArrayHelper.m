@@ -42,15 +42,6 @@
 
 @implementation NSArray (TXArrayHelper)
 
-- (id)safeObjectAtIndex:(NSInteger)n
-{
-	if (n >= 0 && n < self.count) {
-		return self[n];
-	}
-	
-	return nil;
-}
-
 - (BOOL)boolAtIndex:(NSInteger)n
 {
 	id obj = self[n];
@@ -222,26 +213,6 @@
 			[self addObject:anObject];
 		}
 	}
-}
-
-- (void)safeRemoveObjectAtIndex:(NSInteger)n
-{
-	TEXTUAL_DEPRECATED_ASSERT;
-}
-
-- (void)safeAddObject:(id)anObject
-{
-	TEXTUAL_DEPRECATED_ASSERT;
-}
-
-- (void)safeAddObjectWithoutDuplication:(id)anObject
-{
-	TEXTUAL_DEPRECATED_ASSERT;
-}
-
-- (void)safeInsertObject:(id)anObject atIndex:(NSUInteger)index
-{
-	TEXTUAL_DEPRECATED_ASSERT;
 }
 
 - (void)insertBool:(BOOL)value atIndex:(NSUInteger)index

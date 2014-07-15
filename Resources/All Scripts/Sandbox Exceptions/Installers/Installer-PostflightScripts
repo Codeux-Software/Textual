@@ -1,0 +1,32 @@
+#!/bin/bash
+
+SYSTEM_SCRIPT_PATH="/Users/Shared/._private-07D9874F-7FCE-40DD-826B-00F5E0DE8CC4/"
+
+USER_SCRIPT_PATH="$HOME/Library/Application Scripts/com.codeux.irc.textual5/"
+
+mkdir -p "${USER_SCRIPT_PATH}"
+
+cd "${SYSTEM_SCRIPT_PATH}"
+
+chown -R $USER .
+chgrp -R staff .
+
+SCRIPT_EXTENSIONS="php scpt"
+
+for EXTENSION in $SCRIPT_EXTENSIONS; do
+	SCRIPTS=`find . -name "*.${EXTENSION}"`
+	
+	for SCRIPT in $SCRIPTS; do
+		SCRIPT_PATH="${USER_SCRIPT_PATH}/${SCRIPT}"
+		
+		if [ -f "${SCRIPT_PATH}" ]; then
+			rm "${SCRIPT_PATH}"
+		fi
+		
+		mv "${SCRIPT}" "${SCRIPT_PATH}"
+	done
+done
+
+rm -R "${SYSTEM_SCRIPT_PATH}"
+
+exit

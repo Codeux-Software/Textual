@@ -46,7 +46,7 @@
 
 #pragma mark -
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		self.keyExchanger = [DH1080Base new];

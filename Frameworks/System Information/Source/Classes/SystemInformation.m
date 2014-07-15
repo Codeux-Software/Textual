@@ -143,7 +143,7 @@
 {
 	NSDictionary *sysinfo = [self systemInformationDictionary];
 
-	NSString *infos = [sysinfo objectForKey:key];
+	NSString *infos = sysinfo[key];
 
 	if ([infos length] <= 0) {
 		return nil;

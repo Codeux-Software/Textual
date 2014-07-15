@@ -53,7 +53,7 @@
 - (void)beginGroupedUpdates;
 - (void)endGroupedUpdates;
 
-@property (NS_NONATOMIC_IOSONLY, readonly) BOOL updatesArePaging;
+@property (readonly) BOOL updatesArePaging;
 
 - (void)reloadAllDrawings;
 
@@ -62,7 +62,7 @@
 
 - (void)updateBackgroundColor; // Do not call.
 
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) id userInterfaceObjects;
+@property (readonly, strong) id userInterfaceObjects;
 
 /* Event monitor. */
 - (void)destroyUserInfoPopoverOnWindowKeyChange;

@@ -61,7 +61,7 @@
 
 - (void)updateBackgroundColor; // Do not call.
 
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) id userInterfaceObjects;
+@property (readonly, strong) id userInterfaceObjects;
 @end
 
 @interface TVCServerListBackgroundView : NSBox

@@ -80,17 +80,14 @@
 
 - (NSString *)keyIgnoringCase:(NSString *)baseKey;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) id sortedDictionary;
-@property (NS_NONATOMIC_IOSONLY, readonly, strong) id sortedReversedDictionary;
+@property (readonly, strong) id sortedDictionary;
+@property (readonly, strong) id sortedReversedDictionary;
 
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *sortedDictionaryKeys;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *sortedDictionaryReversedKeys;
+@property (readonly, copy) NSArray *sortedDictionaryKeys;
+@property (readonly, copy) NSArray *sortedDictionaryReversedKeys;
 @end
 
 @interface NSMutableDictionary (TXMutableDictionaryHelper)
-- (void)safeSetObject:(id)value forKey:(NSString *)key TEXTUAL_DEPRECATED;
-- (void)safeSetObjectWithoutOverride:(id)value forKey:(NSString *)key TEXTUAL_DEPRECATED;
-
 /* maybeSetObject provides nil checks for inserted objects. */
 - (void)maybeSetObject:(id)value forKey:(NSString *)key;
 

@@ -68,8 +68,8 @@
 
 - (void)open;
 
-@property (NS_NONATOMIC_IOSONLY, getter=isActingAsServer, readonly) BOOL actingAsServer;
-@property (NS_NONATOMIC_IOSONLY, getter=isActingAsClient, readonly) BOOL actingAsClient;
+@property (getter=isActingAsServer, readonly) BOOL actingAsServer;
+@property (getter=isActingAsClient, readonly) BOOL actingAsClient;
 
 - (void)setDidErrorOnBadSenderAddress;
 
