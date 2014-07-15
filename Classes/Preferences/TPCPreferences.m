@@ -934,7 +934,7 @@ static NSMutableArray *excludeKeywords = nil;
 #ifndef TEXTUAL_TRIAL_BINARY
 	NSInteger numberOfRuns = [TPCApplicationInfo applicationRunCount];
 
-	if (numberOfRuns >= 2) {
+	if (numberOfRuns > 4) {
 		[TPCApplicationInfo defaultIRCClientPrompt:NO];
 	}
 #endif
