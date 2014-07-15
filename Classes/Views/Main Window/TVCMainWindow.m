@@ -929,11 +929,21 @@
 	 effect view. For this reason, all views are considered active for drawing for now. Going
 	 to report a radar for better appearnce customizations, but until then, we have to do this
 	 to stop our sidebars from flashing. */
-	if (self.isUsingVibrantDarkAppearance) {
-		return YES;
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		if (self.isUsingVibrantDarkAppearance) {
+			return YES;
+		}
 	}
 	
-	return (([self isMainWindow] || [self isOnActiveSpace] == NO) && [self isVisible] && [NSApp modalWindow] == nil);
+	BOOL isActive = [masterController() applicationIsActive];
+	
+	BOOL isVisible = [self isVisible];
+	BOOL isMainWindow = [self isMainWindow];
+	BOOL isOnActiveSpace = [self isOnActiveSpace];
+	
+	BOOL hasNoModal = ([NSApp modalWindow] == nil);
+	
+	return (isVisible && isActive && isMainWindow && isOnActiveSpace && hasNoModal);
 }
 
 - (BOOL)canBecomeMainWindow
