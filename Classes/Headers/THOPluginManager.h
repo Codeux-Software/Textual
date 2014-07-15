@@ -59,6 +59,11 @@
 
 - (NSArray *)outputRulesForCommand:(NSString *)command;
 
+- (void)findHandlerForOutgoingCommand:(NSString *)command scriptPath:(NSString **)scriptPath isScript:(BOOL *)isScript isExtension:(BOOL *)isExtension;
+
+/* Installer */
+- (void)openExtrasInstallerDownloadURL;
+
 /* Talk to plugins. */
 /* Unless you are Textual, do not call these. We mean it. */
 - (NSString *)processInlineMediaContentURL:(NSString *)resource;
