@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6185.7" systemVersion="14A283o" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
+        <deployment version="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.7"/>
     </dependencies>
@@ -46,6 +46,7 @@
                 <outlet property="matchKeywordsArrayController" destination="4310" id="7392"/>
                 <outlet property="navigationOutlineview" destination="55F-OG-plu" id="xRb-H0-wGA"/>
                 <outlet property="setAsDefaultIRCClientButton" destination="dwq-UD-go0" id="0ye-qH-XAp"/>
+                <outlet property="syncPreferencesToTheCloudButton" destination="dqH-Sc-1ei" id="B0E-Ct-lY6"/>
                 <outlet property="themeSelectionButton" destination="A1z-X7-AQ9" id="1O7-ff-1LW"/>
                 <outlet property="transcriptFolderButton" destination="H7x-dV-MZS" id="uXJ-hj-ydF"/>
                 <outlet property="window" destination="4929" id="4933"/>
@@ -2607,7 +2608,7 @@
                 <popUpButton appearanceType="aqua" verticalHuggingPriority="750" id="EhE-q3-eNi">
                     <rect key="frame" x="255" y="136" width="159" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="Humongous" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" tag="4" imageScaling="proportionallyDown" inset="2" selectedItem="XIz-4F-ZpS" id="eMi-yb-O9S">
+                    <popUpButtonCell key="cell" type="push" title="Humongous" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="4" imageScaling="proportionallyDown" inset="2" selectedItem="XIz-4F-ZpS" id="eMi-yb-O9S">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="smallSystem"/>
                         <menu key="menu" title="OtherViews" id="yv6-KW-qnS">
@@ -2621,7 +2622,7 @@
                                 <menuItem title="Extra Large" tag="3" id="cuo-Kl-8df">
                                     <attributedString key="attributedTitle"/>
                                 </menuItem>
-                                <menuItem title="Humongous" tag="4" id="XIz-4F-ZpS">
+                                <menuItem title="Humongous" state="on" tag="4" id="XIz-4F-ZpS">
                                     <attributedString key="attributedTitle"/>
                                 </menuItem>
                             </items>
