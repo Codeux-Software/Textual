@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6185.7" systemVersion="14A283o" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
+        <deployment version="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.7"/>
     </dependencies>
@@ -10,11 +10,9 @@
             <connections>
                 <outlet property="alternateButton" destination="m2g-gZ-J37" id="tF5-Sg-M83"/>
                 <outlet property="defaultButton" destination="sOY-pD-RXm" id="QRM-ab-lB9"/>
-                <outlet property="dialogTitle" destination="5" id="19"/>
                 <outlet property="informationalInput" destination="15" id="30"/>
                 <outlet property="informationalText" destination="7" id="21"/>
                 <outlet property="informationalTitle" destination="5" id="29"/>
-                <outlet property="userInputField" destination="15" id="22"/>
                 <outlet property="window" destination="1" id="l1W-NH-1gi"/>
             </connections>
         </customObject>

@@ -909,7 +909,6 @@ CQ
                 <outlet property="muteNotificationsSoundsDockMenuItem" destination="5jG-1t-WG4" id="bTl-Aa-XkS"/>
                 <outlet property="muteNotificationsSoundsFileMenuItem" destination="3092" id="hgY-Y1-W6o"/>
                 <outlet property="navigationChannelList" destination="89a-J1-2zg" id="O5d-Jz-eif"/>
-                <outlet property="openDefaultIRCClientDialog" destination="2730" id="2732"/>
                 <outlet property="segmentedControllerMenu" destination="2953" id="kBw-cr-chH"/>
                 <outlet property="serverMenuItem" destination="286" id="uMf-9B-PRK"/>
                 <outlet property="tcopyURLMenu" destination="426" id="LBr-q7-iPv"/>
@@ -1083,6 +1082,7 @@ CQ
             <connections>
                 <outlet property="delegate" destination="267" id="421"/>
             </connections>
+            <point key="canvasLocation" x="384" y="308.5"/>
         </menu>
         <menu title="Menu" showsStateColumn="NO" id="367" userLabel="Add Server Menu">
             <items>
