@@ -266,8 +266,6 @@
 
 + (NSInteger)channelCellTextFieldWithBadgeRightMargin;
 + (NSInteger)channelCellTextFieldBottomMargin;
-
-+ (NSInteger)channelCellTextFieldWithBadgeRightMargin;
 @end
 
 @protocol TVCServerListDelegate <NSObject>

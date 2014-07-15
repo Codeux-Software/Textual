@@ -418,7 +418,7 @@
 														 ([interfaceObjects yosemiteIsUsingVibrantDarkMode] == NO)));
 	}
 	
-	if ((isHighlight && isDrawingForMavericks) && drawHighlightColorForYosemite) {
+	if ((isHighlight && isDrawingForMavericks) || drawHighlightColorForYosemite) {
 		if ([mainWindow() isActiveForDrawing]) {
 			backgroundColor = [interfaceObjects messageCountHighlightedBadgeBackgroundColorForActiveWindow];
 		} else {
