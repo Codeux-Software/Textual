@@ -367,6 +367,10 @@
 		NSInteger backgroundViewMaxHeight = (windowFrame.size.height - (_WindowContentViewMinimumHeightConstraint + contentBorderPadding));
 		
 		backgroundHeight = [self highestHeightBelowHeight:backgroundViewMaxHeight withPadding:contentBorderPadding];
+		
+		if ((backgroundHeight - contentBorderPadding) < backgroundDefaultHeight) {
+			 backgroundHeight = backgroundDefaultHeight;
+		}
 	}
 
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
