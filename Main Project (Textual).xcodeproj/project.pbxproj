@@ -180,8 +180,6 @@
 		4C34AC5F1971BFC300421208 /* MavericksDarkServerCellSelection.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C34AC491971BFC300421208 /* MavericksDarkServerCellSelection.tif */; };
 		4C34AC601971BFC300421208 /* MavericksDarkServerCellSelection@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C34AC4A1971BFC300421208 /* MavericksDarkServerCellSelection@2x.tif */; };
 		4C34AC611971BFC300421208 /* MavericksDarkServerCellSelection@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C34AC4A1971BFC300421208 /* MavericksDarkServerCellSelection@2x.tif */; };
-		4C34AC621971BFC300421208 /* MavericksDarkServerListViewDisclosure.psd in Resources */ = {isa = PBXBuildFile; fileRef = 4C34AC4B1971BFC300421208 /* MavericksDarkServerListViewDisclosure.psd */; };
-		4C34AC631971BFC300421208 /* MavericksDarkServerListViewDisclosure.psd in Resources */ = {isa = PBXBuildFile; fileRef = 4C34AC4B1971BFC300421208 /* MavericksDarkServerListViewDisclosure.psd */; };
 		4C34AC641971BFC300421208 /* MavericksDarkServerListViewDisclosureDown.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C34AC4C1971BFC300421208 /* MavericksDarkServerListViewDisclosureDown.tif */; };
 		4C34AC651971BFC300421208 /* MavericksDarkServerListViewDisclosureDown.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C34AC4C1971BFC300421208 /* MavericksDarkServerListViewDisclosureDown.tif */; };
 		4C34AC661971BFC300421208 /* MavericksDarkServerListViewDisclosureDownSelected.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C34AC4D1971BFC300421208 /* MavericksDarkServerListViewDisclosureDownSelected.tif */; };
@@ -1076,7 +1074,6 @@
 		4C34AC481971BFC300421208 /* MavericksDarkChannelCellSelection@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "MavericksDarkChannelCellSelection@2x.tif"; sourceTree = "<group>"; };
 		4C34AC491971BFC300421208 /* MavericksDarkServerCellSelection.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MavericksDarkServerCellSelection.tif; sourceTree = "<group>"; };
 		4C34AC4A1971BFC300421208 /* MavericksDarkServerCellSelection@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "MavericksDarkServerCellSelection@2x.tif"; sourceTree = "<group>"; };
-		4C34AC4B1971BFC300421208 /* MavericksDarkServerListViewDisclosure.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = MavericksDarkServerListViewDisclosure.psd; sourceTree = "<group>"; };
 		4C34AC4C1971BFC300421208 /* MavericksDarkServerListViewDisclosureDown.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MavericksDarkServerListViewDisclosureDown.tif; sourceTree = "<group>"; };
 		4C34AC4D1971BFC300421208 /* MavericksDarkServerListViewDisclosureDownSelected.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MavericksDarkServerListViewDisclosureDownSelected.tif; sourceTree = "<group>"; };
 		4C34AC4E1971BFC300421208 /* MavericksDarkServerListViewDisclosureUp.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MavericksDarkServerListViewDisclosureUp.tif; sourceTree = "<group>"; };
@@ -1633,7 +1630,6 @@
 				4C34AC481971BFC300421208 /* MavericksDarkChannelCellSelection@2x.tif */,
 				4C34AC491971BFC300421208 /* MavericksDarkServerCellSelection.tif */,
 				4C34AC4A1971BFC300421208 /* MavericksDarkServerCellSelection@2x.tif */,
-				4C34AC4B1971BFC300421208 /* MavericksDarkServerListViewDisclosure.psd */,
 				4C34AC4C1971BFC300421208 /* MavericksDarkServerListViewDisclosureDown.tif */,
 				4C34AC4D1971BFC300421208 /* MavericksDarkServerListViewDisclosureDownSelected.tif */,
 				4C34AC4E1971BFC300421208 /* MavericksDarkServerListViewDisclosureUp.tif */,
@@ -3253,7 +3249,6 @@
 				4C8AF736158E9B330026668C /* TDCWelcomeSheet.xib in Resources */,
 				4C46F4A71943A654004CA8BA /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */,
 				4C46F46D1943A654004CA8BA /* FormattingColor_5.png in Resources */,
-				4C34AC621971BFC300421208 /* MavericksDarkServerListViewDisclosure.psd in Resources */,
 				4C46F4751943A654004CA8BA /* FormattingColor_9.png in Resources */,
 				4C34AC6C1971BFC300421208 /* MavericksDarkServerListViewSelectedPrivateMessageUser.tif in Resources */,
 				4C34AC7A1971BFC300421208 /* YosemiteDarkServerListViewDisclosureUp.tif in Resources */,
@@ -3352,7 +3347,6 @@
 				4C5BA39C16F1302F00A96CA2 /* TDCWelcomeSheet.xib in Resources */,
 				4C46F4A81943A654004CA8BA /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */,
 				4C46F46E1943A654004CA8BA /* FormattingColor_5.png in Resources */,
-				4C34AC631971BFC300421208 /* MavericksDarkServerListViewDisclosure.psd in Resources */,
 				4C46F4761943A654004CA8BA /* FormattingColor_9.png in Resources */,
 				4C34AC6D1971BFC300421208 /* MavericksDarkServerListViewSelectedPrivateMessageUser.tif in Resources */,
 				4C34AC7B1971BFC300421208 /* YosemiteDarkServerListViewDisclosureUp.tif in Resources */,
