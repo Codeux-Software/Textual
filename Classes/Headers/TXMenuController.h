@@ -287,6 +287,8 @@
 
 - (void)openMacAppStoreDownloadPage:(id)sender;
 
+- (IBAction)toggleFullscreen:(id)sender;
+
 - (IBAction)commandWShortcutUsed:(id)sender;
 - (IBAction)openHelpMenuLinkItem:(id)sender;
 - (IBAction)showAcknowledgments:(id)sender;

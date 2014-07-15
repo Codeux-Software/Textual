@@ -2647,6 +2647,11 @@
 	}
 }
 
+- (void)toggleFullscreen:(id)sender
+{
+	[mainWindow() toggleFullScreen:nil];
+}
+
 #pragma mark -
 #pragma mark Import/Export
 

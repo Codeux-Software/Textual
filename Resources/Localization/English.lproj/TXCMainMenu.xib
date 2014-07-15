@@ -229,6 +229,9 @@
                             <menuItem isSeparatorItem="YES" id="1918"/>
                             <menuItem title="Toggle Fullscreen" keyEquivalent="f" id="1790">
                                 <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleFullscreen:" target="267" id="v4x-I2-JVb"/>
+                                </connections>
                             </menuItem>
                         </items>
                     </menu>
