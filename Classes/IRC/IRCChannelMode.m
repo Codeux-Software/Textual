@@ -239,6 +239,8 @@
 		[newInstance.allModes addEntriesFromDictionary:self.allModes];
 	}
 	
+	[newInstance setSupportInfo:self.supportInfo];
+	
 	return newInstance;
 }
 
