@@ -936,17 +936,6 @@
 
 - (BOOL)isActiveForDrawing
 {
-	/* For now, in developer preview 3 there are visual glitches when switching from inactive
-	 to active state of window when trying to draw a custom background color behind a visual
-	 effect view. For this reason, all views are considered active for drawing for now. Going
-	 to report a radar for better appearnce customizations, but until then, we have to do this
-	 to stop our sidebars from flashing. */
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		if (self.isUsingVibrantDarkAppearance) {
-			return YES;
-		}
-	}
-	
 	BOOL isActive = [masterController() applicationIsActive];
 	
 	BOOL isVisible = [self isVisible];

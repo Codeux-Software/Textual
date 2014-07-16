@@ -326,7 +326,7 @@
 		/* Begin draw if we want to. */
 		if (channelTreeUnreadCount > 0 && drawMessageBadge) {
 			/* Get the string being draw. */
-			NSAttributedString *mcstring = [self messageCountBadgeText:channelTreeUnreadCount selected:isSelected];
+			NSAttributedString *mcstring = [self messageCountBadgeText:channelTreeUnreadCount isSelected:isSelected isHighlight:isHighlight];
 			
 			/* Get the rect being drawn. */
 			NSRect badgeRect = [self messageCountBadgeRect:cellFrame withText:mcstring];
@@ -351,7 +351,7 @@
 #pragma mark -
 #pragma mark Badge Drawing
 
-- (NSAttributedString *)messageCountBadgeText:(NSInteger)messageCount selected:(BOOL)isSelected
+- (NSAttributedString *)messageCountBadgeText:(NSInteger)messageCount isSelected:(BOOL)isSelected isHighlight:(BOOL)isHighlight
 {
 	NSString *messageCountString = TXFormattedNumber(messageCount);
 	
@@ -359,17 +359,21 @@
 	
 	NSColor *textColor = nil;
 	
-	if (isSelected) {
-		if ([mainWindow() isActiveForDrawing]) {
-			textColor = [interfaceObjects messageCountSelectedBadgeTextColorForActiveWindow];
-		} else {
-			textColor = [interfaceObjects messageCountSelectedBadgeTextColorForInactiveWindow];
-		}
+	if (isHighlight) {
+		textColor = [interfaceObjects messageCountHighlightedBadgeTextColor];
 	} else {
-		if ([mainWindow() isActiveForDrawing]) {
-			textColor = [interfaceObjects messageCountNormalBadgeTextColorForActiveWindow];
+		if (isSelected) {
+			if ([mainWindow() isActiveForDrawing]) {
+				textColor = [interfaceObjects messageCountSelectedBadgeTextColorForActiveWindow];
+			} else {
+				textColor = [interfaceObjects messageCountSelectedBadgeTextColorForInactiveWindow];
+			}
 		} else {
-			textColor = [interfaceObjects messageCountNormalBadgeTextColorForInactiveWindow];
+			if ([mainWindow() isActiveForDrawing]) {
+				textColor = [interfaceObjects messageCountNormalBadgeTextColorForActiveWindow];
+			} else {
+				textColor = [interfaceObjects messageCountNormalBadgeTextColorForInactiveWindow];
+			}
 		}
 	}
 	
@@ -411,14 +415,7 @@
 	/* Draw the background color. */
 	NSColor *backgroundColor = nil;
 	
-	BOOL drawHighlightColorForYosemite = NO;
-	
-	if (isDrawingForMavericks == NO) {
-		drawHighlightColorForYosemite = (isHighlight && (([interfaceObjects yosemiteIsUsingVibrantDarkMode]			&& [mainWindow() isActiveForDrawing]) ||
-														 ([interfaceObjects yosemiteIsUsingVibrantDarkMode] == NO)));
-	}
-	
-	if ((isHighlight && isDrawingForMavericks) || drawHighlightColorForYosemite) {
+	if (isHighlight) {
 		if ([mainWindow() isActiveForDrawing]) {
 			backgroundColor = [interfaceObjects messageCountHighlightedBadgeBackgroundColorForActiveWindow];
 		} else {
