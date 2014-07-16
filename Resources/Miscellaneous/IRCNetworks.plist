@@ -16,6 +16,8 @@
 	<string>irc.flux.cd</string>
 	<key>freenode</key>
 	<string>chat.freenode.net</string>
+	<key>GeeksIRC</key>
+	<string>irc.geeksirc.net</string>
 	<key>GameSurge</key>
 	<string>irc.gamesurge.net</string>
 	<key>German-Elite</key>
