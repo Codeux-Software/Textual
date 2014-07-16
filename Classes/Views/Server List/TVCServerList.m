@@ -460,6 +460,11 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 	return [NSColor whiteColor];
 }
 
++ (NSColor *)messageCountHighlightedBadgeTextColor
+{
+	return [NSColor whiteColor];
+}
+
 + (NSColor *)messageCountSelectedBadgeTextColorForActiveWindow
 {
 	return [NSColor colorWithCalibratedRed:0.617 green:0.660 blue:0.769 alpha:1.0];
@@ -792,12 +797,12 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 
 + (NSColor *)serverListBackgroundColorForInactiveWindow
 {
-	return [NSColor clearColor]; // -clearColor informs receiver to disregard drawing entirely
+	return nil; // Use system default.
 }
 
 + (NSColor *)serverListBackgroundColorForActiveWindow
 {
-	return [NSColor clearColor];
+	return nil; // Use system default.
 }
 
 @end
@@ -823,7 +828,7 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 
 + (NSColor *)channelCellNormalItemTextColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.9 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:0.8 alpha:1.0];
 }
 
 + (NSColor *)channelCellDisabledItemTextColorForActiveWindow
@@ -833,7 +838,7 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 
 + (NSColor *)channelCellDisabledItemTextColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.6 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:0.4 alpha:1.0];
 }
 
 + (NSColor *)channelCellHighlightedItemTextColorForActiveWindow
@@ -843,7 +848,7 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 
 + (NSColor *)channelCellHighlightedItemTextColorForInactiveWindow
 {
-	return nil; // This value is ignored on dark mode.
+	return [NSColor colorWithCalibratedRed:0.0 green:0.414 blue:0.117 alpha:1.0];
 }
 
 + (NSColor *)channelCellErroneousItemTextColorForActiveWindow
@@ -853,7 +858,7 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 
 + (NSColor *)channelCellErroneousItemTextColorForInactiveWindow
 {
-	return nil; // This value is ignored on dark mode.
+	return [NSColor colorWithCalibratedRed:0.850 green:0.0 blue:0.0 alpha:1.0];
 }
 
 + (NSColor *)channelCellSelectedTextColorForActiveWindow
@@ -863,7 +868,7 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 
 + (NSColor *)channelCellSelectedTextColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:0.7 alpha:1.0];
 }
 
 + (NSColor *)serverCellDisabledItemTextColorForActiveWindow
@@ -873,7 +878,7 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 
 + (NSColor *)serverCellDisabledItemTextColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.6 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:0.4 alpha:1.0];
 }
 
 + (NSColor *)serverCellNormalItemTextColorForActiveWindow
@@ -883,7 +888,7 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 
 + (NSColor *)serverCellNormalItemTextColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.9 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:0.8 alpha:1.0];
 }
 
 + (NSColor *)serverCellSelectedTextColorForActiveWindow
@@ -893,7 +898,7 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 
 + (NSColor *)serverCellSelectedTextColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:0.7 alpha:1.0];
 }
 
 + (NSFont *)messageCountBadgeFont
@@ -963,7 +968,7 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 
 + (NSColor *)messageCountNormalBadgeBackgroundColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.3 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
 }
 
 + (NSColor *)messageCountSelectedBadgeBackgroundColorForActiveWindow
@@ -983,7 +988,7 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 
 + (NSColor *)messageCountHighlightedBadgeBackgroundColorForInactiveWindow
 {
-	return nil; // This value is ignored on dark mode.
+	return [NSColor colorWithCalibratedRed:0.0117 green:0.1562 blue:0.0 alpha:1.0];
 }
 
 + (NSColor *)rowSelectionColorForActiveWindow
@@ -993,17 +998,17 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 
 + (NSColor *)rowSelectionColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.6 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
 }
 
 + (NSColor *)serverListBackgroundColorForActiveWindow
 {
-	return [NSColor clearColor];
+	return nil; // Use system default.
 }
 
 + (NSColor *)serverListBackgroundColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.18 alpha:1.0];
+	return nil; // Use system default.
 }
 
 @end
