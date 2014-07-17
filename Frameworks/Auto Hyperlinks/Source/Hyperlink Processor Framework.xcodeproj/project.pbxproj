@@ -251,7 +251,7 @@
 				GCC_PREFIX_HEADER = Source/AutoHyperlinks.framework_Prefix.pch;
 				GCC_WARN_UNUSED_FUNCTION = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "@executable_path/../Frameworks";
+				INSTALL_PATH = "@rpath";
 				PRODUCT_NAME = AutoHyperlinks;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -267,7 +267,7 @@
 				GCC_PREFIX_HEADER = Source/AutoHyperlinks.framework_Prefix.pch;
 				GCC_WARN_UNUSED_FUNCTION = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "@executable_path/../Frameworks";
+				INSTALL_PATH = "@rpath";
 				PRODUCT_NAME = AutoHyperlinks;
 				WRAPPER_EXTENSION = framework;
 			};

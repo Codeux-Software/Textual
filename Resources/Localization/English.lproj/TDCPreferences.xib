@@ -1241,7 +1241,7 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="352" height="20"/>
+                                                    <size key="minSize" width="352" height="16"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="Strips away formatting such as ">
@@ -1331,7 +1331,7 @@
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="352" height="20"/>
+                                                    <size key="minSize" width="352" height="16"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
@@ -3237,250 +3237,104 @@
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <customView id="J7B-sM-EWB" userLabel="Mavericks">
-                    <rect key="frame" x="0.0" y="0.0" width="567" height="406"/>
+                <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="2dk-Hd-ZIP">
+                    <rect key="frame" x="62" y="253" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <subviews>
-                        <button appearanceType="aqua" verticalHuggingPriority="750" id="wJD-gh-HnP">
-                            <rect key="frame" x="343" y="184" width="103" height="19"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundRect" title="Open In Finder" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ekC-TS-CBT">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="cellTitle"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="onOpenPathToCloudFolder:" target="-2" id="rp8-eK-T6m"/>
-                            </connections>
-                        </button>
-                        <textField appearanceType="aqua" verticalHuggingPriority="750" id="tey-hL-gon">
-                            <rect key="frame" x="69" y="73" width="428" height="52"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="Nha-xi-ydZ">
-                                <font key="font" metaFont="system" size="10"/>
-                                <string key="title">There are two options for erasing the data stored by Textual: The "Erase Data" button erases shared preferences and keychain items leaving custom add-on files such as styles on iCloud. The "Erase Files" button does the complete opposite. Custom add-on files such as styles will be erased leaving shared preferences intact.</string>
-                                <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField appearanceType="aqua" verticalHuggingPriority="750" id="GaI-OV-qgR">
-                            <rect key="frame" x="84" y="237" width="384" height="39"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="Y5X-AE-LN8">
-                                <font key="font" metaFont="system" size="10"/>
-                                <string key="title">When shared, passwords are maintained within the Mac OS keychain which is encrypted using the password of the local user. Passwords stored on iCloud take priority over any passwords that may be configured locally.</string>
-                                <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                            <connections>
-                                <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.System —&gt; Running Mac OS Mavericks Or Newer" id="WfA-AF-hhg"/>
-                            </connections>
-                        </textField>
-                        <button appearanceType="aqua" verticalHuggingPriority="750" id="jNJ-zJ-X4v">
-                            <rect key="frame" x="101" y="32" width="180" height="25"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" title="Erase Data" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tLi-Ef-RXq">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="onPurgeOfCloudDataRequested:" target="-2" id="xgL-Kc-Fa3"/>
-                            </connections>
-                        </button>
-                        <button appearanceType="aqua" verticalHuggingPriority="750" id="Q7A-td-QSR">
-                            <rect key="frame" x="289" y="32" width="174" height="25"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" title="Erase Files" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xuj-FJ-IKe">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="onPurgeOfCloudFilesRequested:" target="-2" id="Z69-4N-YhS"/>
-                            </connections>
-                        </button>
-                        <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="5Y2-AL-Lg4">
-                            <rect key="frame" x="62" y="216" width="442" height="5"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <font key="titleFont" metaFont="system"/>
-                        </box>
-                        <button appearanceType="aqua" id="PMo-0U-9w5">
-                            <rect key="frame" x="66" y="356" width="273" height="18"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="check" title="Only share IRC servers between devices" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Kpm-Gh-QB8">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="titleBar" size="12"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="onChangedCloudSyncingServicesServersOnly:" target="-2" id="WYI-0m-8l5"/>
-                                <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloud" id="18G-H9-Ry0"/>
-                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloudLimitedToServers" id="6bN-jg-7NM"/>
-                            </connections>
-                        </button>
-                        <textField appearanceType="aqua" verticalHuggingPriority="750" id="hab-8V-CKZ">
-                            <rect key="frame" x="84" y="311" width="384" height="39"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="2hH-Bj-oAo">
-                                <font key="font" metaFont="system" size="10"/>
-                                <string key="title">When enabled, Textual will ignore all preferences shared with iCloud that are not related to the configured IRC servers. Disabling this setting will force an immediate synchronization of all preferences with iCloud.</string>
-                                <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="5Db-0W-EsB">
-                            <rect key="frame" x="243" y="131" width="81" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Erase Data" id="Ep2-IA-eQ7">
-                                <font key="font" metaFont="systemBold" size="14"/>
-                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="Stv-Bu-1P6">
-                            <rect key="frame" x="62" y="165" width="442" height="5"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <font key="titleFont" metaFont="system"/>
-                        </box>
-                        <button appearanceType="aqua" id="B4j-kc-DM7">
-                            <rect key="frame" x="66" y="282" width="273" height="18"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="check" title="Share passwords using iCloud" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="M7q-FD-CXT">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="titleBar" size="12"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="onChangedCloudSyncingServicesIncludesKeychainItems:" target="-2" id="Y2i-GL-MMC"/>
-                                <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloud" id="If5-K2-a5T"/>
-                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloudIncludesKeychainItems" id="SKl-8f-Tkr"/>
-                            </connections>
-                        </button>
-                        <textField appearanceType="aqua" verticalHuggingPriority="750" id="Oiw-JR-Luj">
-                            <rect key="frame" x="130" y="185" width="207" height="17"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iCloud Custom Addons Location:" id="da6-Q9-VUu">
-                                <font key="font" metaFont="systemBold" size="12"/>
-                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                    </subviews>
-                    <connections>
-                        <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.System —&gt; Running Mac OS Mavericks Or Newer" id="7XG-IP-jfb">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </customView>
-                <customView id="OL6-Sf-jeX" userLabel="Mountain Lion">
-                    <rect key="frame" x="-10" y="0.0" width="577" height="406"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <textField appearanceType="aqua" verticalHuggingPriority="750" id="Ee7-Dv-LFa">
+                    <rect key="frame" x="130" y="222" width="207" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <subviews>
-                        <button appearanceType="aqua" verticalHuggingPriority="750" id="Z22-fx-9Qs">
-                            <rect key="frame" x="348" y="221" width="103" height="19"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundRect" title="Open In Finder" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ZsB-My-2AC">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="cellTitle"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="onOpenPathToCloudFolder:" target="-2" id="pzq-Yi-H1L"/>
-                            </connections>
-                        </button>
-                        <textField appearanceType="aqua" verticalHuggingPriority="750" id="7dw-a3-eZF">
-                            <rect key="frame" x="74" y="110" width="428" height="52"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="o6g-5K-eaA">
-                                <font key="font" metaFont="system" size="10"/>
-                                <string key="title">There are two options for erasing the data stored by Textual: The "Erase Data" button erases shared preferences and keychain items leaving custom add-on files such as styles on iCloud. The "Erase Files" button does the complete opposite. Custom add-on files such as styles will be erased leaving shared preferences intact.</string>
-                                <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <button appearanceType="aqua" verticalHuggingPriority="750" id="M4r-Bc-Rtd">
-                            <rect key="frame" x="106" y="69" width="180" height="25"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" title="Erase Data" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="sJf-J1-xvh">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="onPurgeOfCloudDataRequested:" target="-2" id="9C6-NB-Mkh"/>
-                            </connections>
-                        </button>
-                        <button appearanceType="aqua" verticalHuggingPriority="750" id="ENb-87-7bT">
-                            <rect key="frame" x="294" y="69" width="174" height="25"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" title="Erase Files" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ug1-Nh-IEk">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="onPurgeOfCloudFilesRequested:" target="-2" id="Tfa-Eg-KJ8"/>
-                            </connections>
-                        </button>
-                        <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7A5-mk-3Yr">
-                            <rect key="frame" x="67" y="253" width="442" height="5"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <font key="titleFont" metaFont="system"/>
-                        </box>
-                        <button appearanceType="aqua" id="C4B-7k-0hl">
-                            <rect key="frame" x="78" y="319" width="273" height="18"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="check" title="Only share IRC servers between devices" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="FVd-Td-477">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="titleBar" size="12"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="onChangedCloudSyncingServicesServersOnly:" target="-2" id="2qh-Tu-VrT"/>
-                                <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloud" id="4Ml-a0-4LP"/>
-                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloudLimitedToServers" id="3BV-Hx-afs"/>
-                            </connections>
-                        </button>
-                        <textField appearanceType="aqua" verticalHuggingPriority="750" id="GQl-dO-1ON">
-                            <rect key="frame" x="96" y="274" width="384" height="39"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="Jae-1F-7Ja">
-                                <font key="font" metaFont="system" size="10"/>
-                                <string key="title">When enabled, Textual will ignore all preferences shared with iCloud that are not related to the configured IRC servers. Disabling this setting will force an immediate synchronization of all preferences with iCloud.</string>
-                                <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="218-9B-z5F">
-                            <rect key="frame" x="248" y="168" width="81" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Erase Data" id="APc-Ee-lyL">
-                                <font key="font" metaFont="systemBold" size="14"/>
-                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="QEr-2q-Han">
-                            <rect key="frame" x="67" y="202" width="442" height="5"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <font key="titleFont" metaFont="system"/>
-                        </box>
-                        <textField appearanceType="aqua" verticalHuggingPriority="750" id="9mT-Se-lLS">
-                            <rect key="frame" x="135" y="222" width="207" height="17"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iCloud Custom Addons Location:" id="VTj-uw-nbh">
-                                <font key="font" metaFont="systemBold" size="12"/>
-                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                    </subviews>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iCloud Custom Addons Location:" id="ECd-Ce-gea">
+                        <font key="font" metaFont="systemBold" size="12"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button appearanceType="aqua" id="Vi7-Vk-65D">
+                    <rect key="frame" x="73" y="319" width="273" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Only share IRC servers between devices" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="fal-6N-HEj">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
                     <connections>
-                        <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.System —&gt; Running Mac OS Mavericks Or Newer" id="Oih-FF-28c"/>
+                        <action selector="onChangedCloudSyncingServicesServersOnly:" target="-2" id="wmj-jD-pAW"/>
+                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloud" id="zWO-Dl-ZGt"/>
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloudLimitedToServers" id="rU8-cQ-R4j"/>
                     </connections>
-                </customView>
+                </button>
+                <button appearanceType="aqua" verticalHuggingPriority="750" id="CK0-Yb-yhA">
+                    <rect key="frame" x="343" y="221" width="103" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="roundRect" title="Open In Finder" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bhr-SP-5AM">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onOpenPathToCloudFolder:" target="-2" id="ac1-OF-mht"/>
+                    </connections>
+                </button>
+                <button appearanceType="aqua" verticalHuggingPriority="750" id="5YP-vA-4dz">
+                    <rect key="frame" x="289" y="69" width="174" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="roundTextured" title="Erase Files" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pl4-5A-bb5">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onPurgeOfCloudFilesRequested:" target="-2" id="RA6-Aq-ara"/>
+                    </connections>
+                </button>
+                <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="o3d-BG-svr">
+                    <rect key="frame" x="62" y="202" width="442" height="5"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <textField appearanceType="aqua" verticalHuggingPriority="750" id="XQh-D0-Ehi">
+                    <rect key="frame" x="69" y="110" width="420" height="52"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="GhK-dw-xt2">
+                        <font key="font" metaFont="system" size="10"/>
+                        <string key="title">There are two options for erasing the data stored by Textual: The "Erase Data" button erases shared preferences leaving custom add-on files such as styles on iCloud. The "Erase Files" button does the complete opposite. Custom add-on files such as styles will be erased leaving shared preferences intact.</string>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button appearanceType="aqua" verticalHuggingPriority="750" id="26j-gf-7Ma">
+                    <rect key="frame" x="101" y="69" width="180" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="roundTextured" title="Erase Data" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Epr-O7-fie">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onPurgeOfCloudDataRequested:" target="-2" id="qGX-68-CyX"/>
+                    </connections>
+                </button>
+                <textField appearanceType="aqua" verticalHuggingPriority="750" id="S1T-hH-yI7">
+                    <rect key="frame" x="91" y="274" width="384" height="39"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="Kw7-gh-pLV">
+                        <font key="font" metaFont="system" size="10"/>
+                        <string key="title">When enabled, Textual will ignore all preferences shared with iCloud that are not related to the configured IRC servers. Disabling this setting will force an immediate synchronization of all preferences with iCloud.</string>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="vDp-5l-asa">
+                    <rect key="frame" x="243" y="168" width="81" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Erase Data" id="i2X-WZ-GKC">
+                        <font key="font" metaFont="systemBold" size="14"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <point key="canvasLocation" x="365.5" y="-4054"/>
         </customView>

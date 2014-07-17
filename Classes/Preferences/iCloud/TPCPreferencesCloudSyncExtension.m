@@ -45,48 +45,9 @@
 	return [RZUserDefaults() boolForKey:TPCPreferencesCloudSyncKeyValueStoreServicesDefaultsKey];
 }
 
-+ (BOOL)syncPreferencesToTheCloudIncludesKeychain
-{
-	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
-		return NO;
-	} else {
-		return [RZUserDefaults() boolForKey:TPCPreferencesCloudSyncIncludeKeychainItemsDefaultsKey];
-	}
-}
-
 + (BOOL)syncPreferencesToTheCloudLimitedToServers
 {
 	return [RZUserDefaults() boolForKey:TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDefaultsKey];
-}
-
-+ (void)destroyCloudBasedKeychainItems
-{
-	for (IRCClient *u in [worldController() clientList]) {
-		for (IRCChannel *c in [u channelList]) {
-			[[c config] destroyKeychainsThatExistOnCloud];
-		}
-		
-		[[u config] destroyKeychainsThatExistOnCloud];
-	}
-}
-
-+ (void)migrateKeychainItems:(BOOL)fromCloud
-{
-	for (IRCClient *u in [worldController() clientList]) {
-		for (IRCChannel *c in [u channelList]) {
-			if (fromCloud) {
-				[[c config] migrateKeychainItemsFromCloud];
-			} else {
-				[[c config] migrateKeychainItemsToCloud];
-			}
-		}
-		
-		if (fromCloud) {
-			[[u config] migrateKeychainItemsFromCloud];
-		} else {
-			[[u config] migrateKeychainItemsToCloud];
-		}
-	}
 }
 #endif
 

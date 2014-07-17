@@ -1108,22 +1108,11 @@
 #endif
 }
 
-- (void)onChangedCloudSyncingServicesIncludesKeychainItems:(id)sender
-{
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	BOOL syncToCloud = [TPCPreferences syncPreferencesToTheCloudIncludesKeychain];
-	
-	[TPCPreferences migrateKeychainItems:(syncToCloud == NO)];
-#endif
-}
-
 - (void)onPurgeOfCloudDataRequestedCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if (returnCode == TLOPopupPromptReturnSecondaryType) {
 		[sharedCloudManager() purgeDataStoredWithCloud];
-		
-		[TPCPreferences destroyCloudBasedKeychainItems];
 	}
 #endif
 }
