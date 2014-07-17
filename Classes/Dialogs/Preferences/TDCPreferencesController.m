@@ -299,14 +299,14 @@
 	[RZUserDefaultsValueProxy() setValue:value forKey:@"Highlight List -> Excluded Matches"];
 }
 
-- (NSInteger)maxLogLines
+- (NSString *)maxLogLines
 {
-	return [TPCPreferences scrollbackLimit];
+	return [NSString stringWithInteger:[TPCPreferences scrollbackLimit]];
 }
 
-- (void)setMaxLogLines:(NSInteger)value
+- (void)setMaxLogLines:(NSString *)value
 {
-	[TPCPreferences setScrollbackLimit:value];
+	[TPCPreferences setScrollbackLimit:[value integerValue]];
 }
 
 - (NSString *)completionSuffix
@@ -319,24 +319,24 @@
 	[TPCPreferences setTabCompletionSuffix:value];
 }
 
-- (NSInteger)inlineImageMaxWidth
+- (NSString *)inlineImageMaxWidth
 {
-	return [TPCPreferences inlineImagesMaxWidth];
+	return [NSString stringWithInteger:[TPCPreferences inlineImagesMaxWidth]];
 }
 
-- (NSInteger)inlineImageMaxHeight
+- (NSString *)inlineImageMaxHeight
 {
-	return [TPCPreferences inlineImagesMaxHeight];
+	return [NSString stringWithInteger:[TPCPreferences inlineImagesMaxHeight]];;
 }
 
-- (void)setInlineImageMaxWidth:(NSInteger)value
+- (void)setInlineImageMaxWidth:(NSString *)value
 {
-	[TPCPreferences setInlineImagesMaxWidth:value];
+	[TPCPreferences setInlineImagesMaxWidth:[value integerValue]];
 }
 
-- (void)setInlineImageMaxHeight:(NSInteger)value
+- (void)setInlineImageMaxHeight:(NSString *)value
 {
-	[TPCPreferences setInlineImagesMaxHeight:value];
+	[TPCPreferences setInlineImagesMaxHeight:[value integerValue]];
 }
 
 - (NSString *)themeChannelViewFontName
@@ -359,24 +359,24 @@
 	return;
 }
 
-- (NSInteger)fileTransferPortRangeStart
+- (NSString *)fileTransferPortRangeStart
 {
-	return [TPCPreferences fileTransferPortRangeStart];
+	return [NSString stringWithInteger:[TPCPreferences fileTransferPortRangeStart]];
 }
 
-- (NSInteger)fileTransferPortRangeEnd
+- (NSString *)fileTransferPortRangeEnd
 {
-	return [TPCPreferences fileTransferPortRangeEnd];
+	return [NSString stringWithInteger:[TPCPreferences fileTransferPortRangeEnd]];
 }
 
-- (void)setFileTransferPortRangeStart:(NSInteger)value
+- (void)setFileTransferPortRangeStart:(NSString *)value
 {
-	[TPCPreferences setFileTransferPortRangeStart:value];
+	[TPCPreferences setFileTransferPortRangeStart:[value integerValue]];
 }
 
-- (void)setFileTransferPortRangeEnd:(NSInteger)value
+- (void)setFileTransferPortRangeEnd:(NSString *)value
 {
-	[TPCPreferences setFileTransferPortRangeEnd:value];
+	[TPCPreferences setFileTransferPortRangeEnd:[value integerValue]];
 }
 
 - (BOOL)validateValue:(id *)value forKey:(NSString *)key error:(NSError **)error
