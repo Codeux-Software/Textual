@@ -285,7 +285,7 @@
 - (IBAction)showChannelBanExceptionList:(id)sender;
 - (IBAction)showChannelInviteExceptionList:(id)sender;
 
-- (void)openMacAppStoreDownloadPage:(id)sender;
+- (IBAction)openMacAppStoreDownloadPage:(id)sender;
 
 - (IBAction)toggleFullscreen:(id)sender;
 
@@ -309,4 +309,10 @@
 
 - (void)toggleMuteOnAllNotifcationsShortcut:(NSInteger)state;
 - (void)toggleMuteOnNotificationSoundsShortcut:(NSInteger)state;
+@end
+
+@interface TXMenuControllerMainWindowProxy : NSObject
+- (IBAction)openWelcomeSheet:(id)sender;
+
+- (IBAction)openMacAppStoreDownloadPage:(id)sender;
 @end

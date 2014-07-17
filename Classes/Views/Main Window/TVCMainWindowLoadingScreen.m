@@ -51,9 +51,6 @@
 	if (self.stackLocked == NO) {
 #ifdef TEXTUAL_TRIAL_BINARY
 		[self displayView:self.welcomeAddServerTrialView];
-		
-		[self.welcomePurchaseTextualButton setAction:@selector(openMacAppStoreDownloadPage:)];
-		[self.welcomePurchaseTextualButton setTarget:menuController()];
 #else
 		[self displayView:self.welcomeAddServerNormalView];
 #endif

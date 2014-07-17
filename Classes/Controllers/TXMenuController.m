@@ -2750,3 +2750,17 @@
 }
 
 @end
+
+@implementation TXMenuControllerMainWindowProxy
+
+- (IBAction)openWelcomeSheet:(id)sender
+{
+	[menuController() openWelcomeSheet:sender];
+}
+
+- (IBAction)openMacAppStoreDownloadPage:(id)sender
+{
+	[menuController() openMacAppStoreDownloadPage:sender];
+}
+
+@end
