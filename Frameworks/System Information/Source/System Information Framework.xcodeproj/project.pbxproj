@@ -216,7 +216,7 @@
 				FRAMEWORK_VERSION = A;
 				GCC_PREFIX_HEADER = SystemInformation_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "@executable_path/../Frameworks";
+				INSTALL_PATH = "@rpath";
 				PRODUCT_NAME = SystemInformation;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -231,7 +231,7 @@
 				FRAMEWORK_VERSION = A;
 				GCC_PREFIX_HEADER = SystemInformation_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "@executable_path/../Frameworks";
+				INSTALL_PATH = "@rpath";
 				PRODUCT_NAME = SystemInformation;
 				WRAPPER_EXTENSION = framework;
 			};

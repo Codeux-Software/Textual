@@ -834,12 +834,12 @@
 
 + (NSColor *)memberListBackgroundColorForInactiveWindow
 {
-	return [NSColor clearColor]; // -clearColor informs receiver to disregard drawing entirely
+	return nil; // Use system default.
 }
 
 + (NSColor *)memberListBackgroundColorForActiveWindow
 {
-	return [NSColor clearColor];
+	return nil; // Use system default.
 }
 
 @end
@@ -853,7 +853,7 @@
 
 + (NSColor *)userMarkBadgeBackgroundColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.3 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
 }
 
 + (NSColor *)normalCellTextColorForActiveWindow
@@ -863,7 +863,7 @@
 
 + (NSColor *)awayUserCellTextColorForActiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.4 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:0.8 alpha:1.0];
 }
 
 + (NSColor *)normalCellTextColorForInactiveWindow
@@ -873,7 +873,7 @@
 
 + (NSColor *)awayUserCellTextColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.6 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:0.9 alpha:1.0];
 }
 
 + (NSColor *)selectedCellTextColorForActiveWindow
@@ -883,7 +883,7 @@
 
 + (NSColor *)selectedCellTextColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:0.7 alpha:1.0];
 }
 
 + (NSColor *)userMarkBadgeNormalTextColor
@@ -908,17 +908,17 @@
 
 + (NSColor *)rowSelectionColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.6 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
 }
 
 + (NSColor *)memberListBackgroundColorForActiveWindow
 {
-	return [NSColor clearColor];
+	return nil; // Use system default.
 }
 
 + (NSColor *)memberListBackgroundColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.18 alpha:1.0];
+	return nil; // Use system default.
 }
 
 @end

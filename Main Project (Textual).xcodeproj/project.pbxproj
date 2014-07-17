@@ -171,6 +171,8 @@
 		4C1ED4A116CEA081006DD0CA /* IRCConnectionSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C1ED4A316CEA0A9006DD0CA /* IRCConnectionSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */; };
 		4C211D5715BF21BA00E218DA /* libmustache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C211D5615BF21BA00E218DA /* libmustache.a */; };
+		4C22B2FD1976EA8F006438E8 /* RegisteredUserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C22B2FC1976EA8F006438E8 /* RegisteredUserDefaults.plist */; };
+		4C22B2FE1976EA8F006438E8 /* RegisteredUserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C22B2FC1976EA8F006438E8 /* RegisteredUserDefaults.plist */; };
 		4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */; };
 		4C34AC5A1971BFC300421208 /* MavericksDarkChannelCellSelection.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C34AC471971BFC300421208 /* MavericksDarkChannelCellSelection.tif */; };
 		4C34AC5B1971BFC300421208 /* MavericksDarkChannelCellSelection.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C34AC471971BFC300421208 /* MavericksDarkChannelCellSelection.tif */; };
@@ -1069,6 +1071,7 @@
 		4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCConnectionSocket.h; path = Classes/Headers/IRCConnectionSocket.h; sourceTree = SOURCE_ROOT; };
 		4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCConnectionSocket.m; path = IRC/IRCConnectionSocket.m; sourceTree = "<group>"; };
 		4C211D5615BF21BA00E218DA /* libmustache.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmustache.a; path = "Frameworks/Mustache Templates/libmustache.a"; sourceTree = "<group>"; };
+		4C22B2FC1976EA8F006438E8 /* RegisteredUserDefaults.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; name = RegisteredUserDefaults.plist; path = Resources/Miscellaneous/RegisteredUserDefaults.plist; sourceTree = SOURCE_ROOT; };
 		4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = ../../../../System/Library/Frameworks/SecurityInterface.framework; sourceTree = "<group>"; };
 		4C34AC471971BFC300421208 /* MavericksDarkChannelCellSelection.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MavericksDarkChannelCellSelection.tif; sourceTree = "<group>"; };
 		4C34AC481971BFC300421208 /* MavericksDarkChannelCellSelection@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "MavericksDarkChannelCellSelection@2x.tif"; sourceTree = "<group>"; };
@@ -1724,6 +1727,7 @@
 				4CB26C6119528FA5005F927C /* IRCCommandIndexPrivateValues.plist */,
 				4CB26C6219528FA5005F927C /* IRCCommandIndexPublicValues.plist */,
 				4CCF2EEA15804790006FFE21 /* IRCNetworks.plist */,
+				4C22B2FC1976EA8F006438E8 /* RegisteredUserDefaults.plist */,
 			);
 			name = Miscellaneous;
 			sourceTree = "<group>";
@@ -3083,6 +3087,9 @@
 							com.apple.ApplicationGroups.Mac = {
 								enabled = 1;
 							};
+							com.apple.Keychain = {
+								enabled = 1;
+							};
 						};
 					};
 				};
@@ -3272,6 +3279,7 @@
 				4C46F4A51943A654004CA8BA /* ErroneousTextFieldValueIndicator.tif in Resources */,
 				4CABE85E184061E5002FE4B8 /* TDCProgressInformationSheet.xib in Resources */,
 				4C52379415C18F6700414852 /* Style Default Templates in Resources */,
+				4C22B2FD1976EA8F006438E8 /* RegisteredUserDefaults.plist in Resources */,
 				4C46F44F1943A654004CA8BA /* encryptionLockIconDark.tif in Resources */,
 				4C52379515C18F6700414852 /* Styles in Resources */,
 				4CBE64C4174371C700831D69 /* TDCHighlightEntrySheet.xib in Resources */,
@@ -3370,6 +3378,7 @@
 				4C46F4A61943A654004CA8BA /* ErroneousTextFieldValueIndicator.tif in Resources */,
 				4CABE85F184061E5002FE4B8 /* TDCProgressInformationSheet.xib in Resources */,
 				4C5BA3CB16F1302F00A96CA2 /* Style Default Templates in Resources */,
+				4C22B2FE1976EA8F006438E8 /* RegisteredUserDefaults.plist in Resources */,
 				4C46F4501943A654004CA8BA /* encryptionLockIconDark.tif in Resources */,
 				4C5BA3CC16F1302F00A96CA2 /* Styles in Resources */,
 				4CBE64C5174371C700831D69 /* TDCHighlightEntrySheet.xib in Resources */,

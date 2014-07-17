@@ -1472,8 +1472,10 @@
 		return;
 	}
 	
-	if ([u encryptOutgoingMessage:&topic channel:c] == YES) {
-		[u send:IRCPrivateCommandIndex("topic"), [c name], topic, nil];
+	NSString *encryptedString = [u encryptOutgoingMessage:topic channel:c performedEncryption:NULL];
+	
+	if (encryptedString) {
+		[u send:IRCPrivateCommandIndex("topic"), [c name], encryptedString, nil];
 	}
 }
 

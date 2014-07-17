@@ -101,6 +101,8 @@
 + (NSColor *)messageCountNormalBadgeTextColorForActiveWindow;
 + (NSColor *)messageCountNormalBadgeTextColorForInactiveWindow;
 
++ (NSColor *)messageCountHighlightedBadgeTextColor;
+
 + (NSColor *)messageCountSelectedBadgeTextColorForActiveWindow;
 + (NSColor *)messageCountSelectedBadgeTextColorForInactiveWindow;
 
@@ -186,6 +188,8 @@
 + (NSColor *)messageCountNormalBadgeTextColorForActiveWindow;
 + (NSColor *)messageCountNormalBadgeTextColorForInactiveWindow;
 
++ (NSColor *)messageCountHighlightedBadgeTextColor;
+
 + (NSColor *)messageCountSelectedBadgeTextColorForActiveWindow;;
 + (NSColor *)messageCountSelectedBadgeTextColorForInactiveWindow;
 
@@ -244,6 +248,8 @@
 
 + (NSColor *)messageCountNormalBadgeTextColorForActiveWindow;
 + (NSColor *)messageCountNormalBadgeTextColorForInactiveWindow;
+
++ (NSColor *)messageCountHighlightedBadgeTextColor;
 
 + (NSColor *)messageCountSelectedBadgeTextColorForActiveWindow;
 + (NSColor *)messageCountSelectedBadgeTextColorForInactiveWindow;

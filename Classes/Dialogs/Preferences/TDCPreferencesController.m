@@ -1088,7 +1088,6 @@
 						suppressionKey:nil
 					   suppressionText:nil];
 	} else {
-		/* Poll server for latest. */
 		[RZUbiquitousKeyValueStore() synchronize];
 		
 		[sharedCloudManager() synchronizeFromCloud];
@@ -1099,11 +1098,12 @@
 - (void)onChangedCloudSyncingServicesServersOnly:(id)sender
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	if ([TPCPreferences syncPreferencesToTheCloud] && [TPCPreferences syncPreferencesToTheCloudLimitedToServers] == NO) {
-		/* Poll server for latest. */
-		[RZUbiquitousKeyValueStore() synchronize];
-		
-		[sharedCloudManager() synchronizeFromCloud];
+	if ([TPCPreferences syncPreferencesToTheCloud]) {
+		if ([TPCPreferences syncPreferencesToTheCloudLimitedToServers] == NO) {
+			[RZUbiquitousKeyValueStore() synchronize];
+			
+			[sharedCloudManager() synchronizeFromCloud];
+		}
 	}
 #endif
 }

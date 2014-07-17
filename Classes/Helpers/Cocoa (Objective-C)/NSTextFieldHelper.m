@@ -59,6 +59,13 @@
 	return value;
 }
 
+- (void)setStringValue:(NSString *)stringValue
+{
+	if (stringValue) {
+		[super setStringValue:stringValue];
+	}
+}
+
 @end
 
 @implementation NSTextView (TXTextViewHelper)
