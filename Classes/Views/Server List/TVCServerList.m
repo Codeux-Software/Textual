@@ -948,12 +948,12 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 
 + (NSColor *)messageCountSelectedBadgeTextColorForActiveWindow
 {
-	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:1.0];
+	return [NSColor colorWithCalibratedRed:0.1 green:0.1 blue:0.1 alpha:1.0];
 }
 
 + (NSColor *)messageCountSelectedBadgeTextColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:1.0];
+	return [NSColor colorWithCalibratedRed:0.1 green:0.1 blue:0.1 alpha:1.0];
 }
 
 + (NSColor *)messageCountHighlightedBadgeTextColor
