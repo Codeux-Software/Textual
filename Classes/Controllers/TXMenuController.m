@@ -1296,8 +1296,6 @@
 		return;
 	}
 	
-	[_serverCurrentConfig destroyKeychains];
-	
 	[worldController() destroyClient:u];
 	[worldController() save];
 }
