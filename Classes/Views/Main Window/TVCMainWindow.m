@@ -1486,6 +1486,8 @@
 		
 		self.serverList.menu = [menuController() addServerMenu];
 		
+		[self updateTitle];
+		
 		return; // Nothing more to do for empty selections.
 	}
 	

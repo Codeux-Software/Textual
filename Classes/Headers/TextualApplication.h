@@ -175,6 +175,7 @@
 	@class TVCWebViewAutoScroll;
 	@class TXMasterController;
 	@class TXMenuController;
+	@class TXMenuControllerMainWindowProxy;
 	@class TXSharedApplication;
 	@class TXUserInterface;
 
