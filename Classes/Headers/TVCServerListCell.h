@@ -55,6 +55,7 @@
 @end
 
 @interface TVCServerListRowCell : NSTableRowView
+@property (nonatomic, assign) BOOL isGroupItem;
 @end
 
 @interface TVCServerLisCellTextFieldInterior : NSTextFieldCell

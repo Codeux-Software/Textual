@@ -334,23 +334,40 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 
 + (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected
 {
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite])
+	{
 		if ([TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode]) {
 			if (up) {
 				return [NSImage imageNamed:@"YosemiteDarkServerListViewDisclosureUp"];
 			} else {
 				return [NSImage imageNamed:@"YosemiteDarkServerListViewDisclosureDown"];
 			}
-		} else {
+		}
+	}
+	else
+	{
+		if ([TPCPreferences invertSidebarColors]) {
 			if (up) {
-				return _outlineViewDefaultDisclosureTriangle;
+				if (selected) {
+					return [NSImage imageNamed:@"MavericksDarkServerListViewDisclosureUpSelected"];
+				} else {
+					return [NSImage imageNamed:@"MavericksDarkServerListViewDisclosureUp"];
+				}
 			} else {
-				return _outlineViewAlternateDisclosureTriangle;
+				if (selected) {
+					return [NSImage imageNamed:@"MavericksDarkServerListViewDisclosureDownSelected"];
+				} else {
+					return [NSImage imageNamed:@"MavericksDarkServerListViewDisclosureDown"];
+				}
 			}
 		}
 	}
 	
-	return nil;
+	if (up) {
+		return _outlineViewDefaultDisclosureTriangle;
+	} else {
+		return _outlineViewAlternateDisclosureTriangle;
+	}
 }
 
 @end
@@ -360,7 +377,7 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 
 @implementation TVCServerListMavericksLightUserInterface
 
-+ (NSString *)privateMessageStatusIconFilename:(BOOL)isActive
++ (NSString *)privateMessageStatusIconFilename:(BOOL)isActive selected:(BOOL)selected
 {
 	return @"NSUser";
 }
@@ -417,12 +434,12 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 
 + (NSColor *)messageCountHighlightedBadgeBackgroundColorForActiveWindow
 {
-	return [NSColor colorWithCalibratedRed:0.820 green:0.058 blue:0.058 alpha:1.0];
+	return [NSColor colorWithCalibratedRed:0.0 green:0.414 blue:0.117 alpha:1.0];
 }
 
 + (NSColor *)messageCountHighlightedBadgeBackgroundColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedRed:0.820 green:0.058 blue:0.058 alpha:1.0];
+	return [NSColor colorWithCalibratedRed:0.0 green:0.414 blue:0.117 alpha:1.0];
 }
 
 + (NSColor *)messageCountBadgeAquaBackgroundColor
@@ -555,12 +572,22 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 	return [NSColor colorWithCalibratedRed:0.066 green:0.285 blue:0.249 alpha:1.0];
 }
 
-+ (NSColor *)rowSelectionColorForActiveWindow
++ (NSImage *)channelRowSelectionImageForActiveWindow
 {
 	return nil; // Use system default.
 }
 
-+ (NSColor *)rowSelectionColorForInactiveWindow
++ (NSImage *)channelRowSelectionImageForInactiveWindow
+{
+	return nil; // Use system default.
+}
+
++ (NSImage *)serverRowSelectionImageForActiveWindow
+{
+	return nil; // Use system default.
+}
+
++ (NSImage *)serverRowSelectionImageForInactiveWindow
 {
 	return nil; // Use system default.
 }
@@ -579,14 +606,227 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 
 @implementation TVCServerListMavericksDarkUserInterface
 
-+ (NSColor *)rowSelectionColorForActiveWindow
++ (NSString *)privateMessageStatusIconFilename:(BOOL)isActive selected:(BOOL)selected
 {
-	return nil; // Use system default.
+	if (selected) {
+		return @"NSUser";
+	} else {
+		if (isActive) {
+			return @"MavericksDarkServerListViewSelectedPrivateMessageUserActive";
+		} else {
+			return @"MavericksDarkServerListViewSelectedPrivateMessageUserInactive";
+		}
+	}
 }
 
-+ (NSColor *)rowSelectionColorForInactiveWindow
++ (NSFont *)messageCountBadgeFont
 {
-	return nil; // Use system default.
+	return [RZFontManager() fontWithFamily:@"Helvetica" traits:NSBoldFontMask weight:15 size:10.5];
+}
+
++ (NSFont *)serverCellFont
+{
+	return [NSFont fontWithName:@"LucidaGrande-Bold" size:12.0];
+}
+
++ (NSFont *)normalChannelCellFont
+{
+	return [NSFont fontWithName:@"LucidaGrande" size:12.0];
+}
+
++ (NSFont *)selectedChannelCellFont
+{
+	return [NSFont fontWithName:@"LucidaGrande-Bold" size:12.0];
+}
+
++ (NSInteger)messageCountBadgeHeight
+{
+	return 14.0;
+}
+
++ (NSInteger)messageCountBadgeMinimumWidth
+{
+	return 22.0;
+}
+
++ (NSInteger)messageCountBadgePadding
+{
+	return 6.0;
+}
+
++ (NSInteger)messageCountBadgeRightMargin
+{
+	return 3.0;
+}
+
++ (NSInteger)channelCellTextFieldWithBadgeRightMargin
+{
+	return 8.0;
+}
+
++ (NSInteger)channelCellTextFieldBottomMargin
+{
+	return -(0.5);
+}
+
++ (NSColor *)messageCountHighlightedBadgeBackgroundColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.0 green:0.414 blue:0.117 alpha:1.0];
+}
+
++ (NSColor *)messageCountHighlightedBadgeBackgroundColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.0 green:0.414 blue:0.117 alpha:1.0];
+}
+
++ (NSColor *)messageCountBadgeAquaBackgroundColor
+{
+	return [NSColor colorWithCalibratedRed:0.187 green:0.187 blue:0.187 alpha:1.0];
+}
+
++ (NSColor *)messageCountBadgeGraphtieBackgroundColor
+{
+	return [NSColor colorWithCalibratedRed:0.187 green:0.187 blue:0.187 alpha:1.0];
+}
+
++ (NSColor *)messageCountSelectedBadgeBackgroundColorForActiveWindow
+{
+	return [NSColor darkGrayColor];
+}
+
++ (NSColor *)messageCountSelectedBadgeBackgroundColorForInactiveWindow
+{
+	return [NSColor darkGrayColor];
+}
+
++ (NSColor *)messageCountBadgeShadowColor
+{
+	return [NSColor colorWithCalibratedRed:0.234 green:0.234 blue:0.234 alpha:1.0];
+}
+
++ (NSColor *)messageCountNormalBadgeTextColorForActiveWindow
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)messageCountNormalBadgeTextColorForInactiveWindow
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)messageCountHighlightedBadgeTextColor
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)messageCountSelectedBadgeTextColorForActiveWindow
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)messageCountSelectedBadgeTextColorForInactiveWindow
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)serverCellNormalTextColor
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)serverCellDisabledTextColor
+{
+	return [NSColor colorWithCalibratedRed:0.660 green:0.660 blue:0.660 alpha:1.0];
+}
+
++ (NSColor *)serverCellSelectedTextColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.140 green:0.140 blue:0.140 alpha:1.0];
+}
+
++ (NSColor *)serverCellSelectedTextColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.140 green:0.140 blue:0.140 alpha:1.0];
+}
+
++ (NSColor *)serverCellNormalTextShadowColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.00 alpha:0.90];
+}
+
++ (NSColor *)serverCellNormalTextShadowColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.00 alpha:0.90];
+}
+
++ (NSColor *)serverCellSelectedTextShadowColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
+}
+
++ (NSColor *)serverCellSelectedTextShadowColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
+}
+
++ (NSColor *)channelCellNormalTextColor
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)channelCellDisabledTextColor
+{
+	return [NSColor colorWithCalibratedWhite:1.0 alpha:0.6];
+}
+
++ (NSColor *)channelCellSelectedTextColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.140 green:0.140 blue:0.140 alpha:1.0];
+}
+
++ (NSColor *)channelCellSelectedTextColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.140 green:0.140 blue:0.140 alpha:1.0];
+}
+
++ (NSColor *)channelCellNormalTextShadowColor
+{
+	return [NSColor colorWithCalibratedWhite:0.00 alpha:0.90];
+}
+
++ (NSColor *)channelCellSelectedTextShadowColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
+}
+
++ (NSColor *)channelCellSelectedTextShadowColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
+}
+
++ (NSColor *)graphiteTextSelectionShadowColor
+{
+	return [NSColor colorWithCalibratedRed:0.066 green:0.285 blue:0.249 alpha:1.0];
+}
+
++ (NSImage *)channelRowSelectionImageForActiveWindow
+{
+	return [NSImage imageNamed:@"MavericksDarkChannelCellSelection"];
+}
+
++ (NSImage *)channelRowSelectionImageForInactiveWindow
+{
+	return [NSImage imageNamed:@"MavericksDarkChannelCellSelection"];
+}
+
++ (NSImage *)serverRowSelectionImageForActiveWindow
+{
+	return [NSImage imageNamed:@"MavericksDarkServerCellSelection"];
+}
+
++ (NSImage *)serverRowSelectionImageForInactiveWindow
+{
+	return [NSImage imageNamed:@"MavericksDarkServerCellSelection"];
 }
 
 + (NSColor *)serverListBackgroundColorForInactiveWindow
