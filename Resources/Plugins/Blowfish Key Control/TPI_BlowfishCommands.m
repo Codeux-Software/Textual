@@ -131,14 +131,16 @@
 		if ([c isChannel] || [c isPrivateMessage]) {
 			messageString = [messageString trimAndGetFirstToken];
 
+			NSString *encryptionKey = [c encryptionKey];
+			
 			if ([commandString isEqualToString:@"SETKEY"]) {
 				if (NSObjectIsEmpty(messageString)) {
 					[c setEncryptionKey:nil];
 					
 					[client printDebugInformation:BLS(1004) channel:c];
 				} else {
-					if ([[c config] encryptionKeyIsSet]) {
-						if ([[[c config] encryptionKey] isEqualToString:messageString] == NO) {
+					if (encryptionKey) {
+						if ([encryptionKey isEqualToString:messageString] == NO) {
 							[client printDebugInformation:BLS(1002) channel:c];
 						}
 					} else {
@@ -156,8 +158,8 @@
 				
 				[client printDebugInformation:BLS(1004) channel:c];
 			} else if ([commandString isEqualToString:@"KEY"]) {
-				if ([[c config] encryptionKeyIsSet]) {
-					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1001]", [[c config] encryptionKey]) channel:c];
+				if (encryptionKey) {
+					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1001]", encryptionKey) channel:c];
 				} else {	
 					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1000]") channel:c];
 				}
@@ -167,7 +169,7 @@
 				} else {
 					if ([self keyExchangeRequestExists:c]) {
 						[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1009]", [c name]) channel:c];
-					} else if ([[c config] encryptionKeyIsSet]) {
+					} else if (encryptionKey) {
 						[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1016]", [c name]) channel:c];
 					} else {
 						CFDH1080 *keyRequest = [CFDH1080 new];
@@ -194,6 +196,8 @@
 					}
 				}
 			}
+			
+			encryptionKey = nil;
 		}
 	}
 }
@@ -227,8 +231,10 @@
 - (void)keyExchangeRequestReceived:(NSString *)requestDataRaw on:(IRCClient *)client from:(NSString *)requestSender
 {
 	IRCChannel *channel = [client findChannelOrCreate:requestSender isPrivateMessage:YES];
-
-    if ([[channel config] encryptionKeyIsSet]) {
+	
+	NSString *encryptionKey = [channel encryptionKey];
+	
+    if (encryptionKey) {
         [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1015]", [channel name]) channel:channel];
 
         return;
@@ -298,7 +304,7 @@
 {
 	NSArray *exchangeData = [self keyExchangeInformation:responseKey];
 
-	if (NSObjectIsNotEmpty(exchangeData)) {
+	if (exchangeData) {
 		NSString *responseData = nil;
 		
 		if ([responseData length] >= [TXExchangeResponsePrefix length]) {
@@ -315,12 +321,14 @@
 		CFDH1080 *request = exchangeData[0];
 		
 		IRCChannel *channel = exchangeData[1];
-
-		if ([[channel config] encryptionKeyIsSet]) {
-            [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1015]", [channel name]) channel:channel];
-
-            return;
-        }
+		
+		NSString *encryptionKey = [channel encryptionKey];
+		
+		if (encryptionKey) {
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1015]", [channel name]) channel:channel];
+			
+			return;
+		}
 		
 		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1014]", [channel name]) channel:channel];
 		

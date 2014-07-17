@@ -5,4 +5,4 @@
 // Store Release" configuration file. That supersedes this value when
 // that configuration is being targetted.
 
-CODE_SIGN_IDENTITY = Developer ID Application
+CODE_SIGN_IDENTITY = Mac Developer

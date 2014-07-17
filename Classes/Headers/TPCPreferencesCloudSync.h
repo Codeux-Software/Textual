@@ -38,10 +38,6 @@
 #import "TextualApplication.h"
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-
-#define TPCPreferencesCloudSyncKeyValueStoreServicesDefaultsKey						@"SyncPreferencesToTheCloud"
-#define TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDefaultsKey		@"SyncPreferencesToTheCloudLimitedToServers"
-
 #define TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification		@"TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification"
 
 #define TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification		@"TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification"

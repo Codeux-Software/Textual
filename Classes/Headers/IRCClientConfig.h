@@ -88,22 +88,19 @@ typedef enum TXConnectionProxyType : NSInteger {
 @property (nonatomic, copy) NSString *clientName;
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *awayNickname;
-@property (nonatomic, nweak) NSString *nicknamePassword;
+@property (nonatomic, copy) NSString *nicknamePassword;
 @property (nonatomic, copy) NSString *proxyAddress;
 @property (nonatomic, assign) NSInteger proxyPort;
-@property (nonatomic, nweak) NSString *proxyPassword;
+@property (nonatomic, copy) NSString *proxyPassword;
 @property (nonatomic, copy) NSString *proxyUsername;
 @property (nonatomic, copy) NSString *realname;
 @property (nonatomic, copy) NSString *serverAddress;
 @property (nonatomic, assign) NSInteger serverPort;
-@property (nonatomic, nweak) NSString *serverPassword;
+@property (nonatomic, copy) NSString *serverPassword;
 @property (nonatomic, copy) NSString *username;
 @property (nonatomic, copy) NSString *normalLeavingComment;
 @property (nonatomic, copy) NSString *sleepModeLeavingComment;
 @property (nonatomic, copy) NSData *identitySSLCertificate;
-@property (nonatomic, assign) BOOL serverPasswordIsSet;
-@property (nonatomic, assign) BOOL nicknamePasswordIsSet;
-@property (nonatomic, assign) BOOL proxyPasswordIsSet;
 @property (nonatomic, assign) NSTimeInterval cachedLastServerTimeCapacityReceivedAtTimestamp;
 
 - (BOOL)isEqualToClientConfiguration:(IRCClientConfig *)seed;
@@ -126,4 +123,11 @@ typedef enum TXConnectionProxyType : NSInteger {
 - (void)writeProxyPasswordKeychainItemToDisk;
 - (void)writeServerPasswordKeychainItemToDisk;
 - (void)writeNicknamePasswordKeychainItemToDisk;
+
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+- (void)migrateKeychainItemsToCloud;
+- (void)migrateKeychainItemsFromCloud;
+
+- (void)destroyKeychainsThatExistOnCloud;
+#endif
 @end

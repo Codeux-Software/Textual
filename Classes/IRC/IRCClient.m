@@ -915,50 +915,55 @@
 #pragma mark -
 #pragma mark Encryption and Decryption Handling
 
-- (BOOL)isSupportedMessageEncryptionFormat:(NSString *)message channel:(IRCChannel *)channel
-{
-	NSObjectIsEmptyAssertReturn(message, NO);
-	
-	if (channel && (channel.isChannel || channel.isPrivateMessage)) {
-		return channel.config.encryptionKeyIsSet;
-	}
-	
-	return NO;
-}
-
 - (BOOL)isMessageEncrypted:(NSString *)message channel:(IRCChannel *)channel
 {
-	if ([self isSupportedMessageEncryptionFormat:message channel:channel]) {
+	if (channel.isChannel || channel.isPrivateMessage) {
 		return ([message hasPrefix:@"+OK "] || [message hasPrefix:@"mcps"]);
 	}
 
 	return NO;
 }
 
-- (BOOL)encryptOutgoingMessage:(NSString **)message channel:(IRCChannel *)channel
+- (NSString *)encryptOutgoingMessage:(NSString *)message channel:(IRCChannel *)channel performedEncryption:(BOOL *)performedEncryption
 {
-	if ([self isSupportedMessageEncryptionFormat:(*message) channel:channel]) {
-		NSString *newstr = [CSFWBlowfish encodeData:(*message) key:channel.config.encryptionKey encoding:self.config.primaryEncoding];
+	if ( performedEncryption) {
+		*performedEncryption = NO;
+	}
+	
+	if (channel.isChannel || channel.isPrivateMessage) {
+		NSString *encryptionKey = channel.config.encryptionKey;
+		
+		if (encryptionKey) {
+			NSString *newstr = [CSFWBlowfish encodeData:message key:encryptionKey encoding:self.config.primaryEncoding];
 
-		if ([newstr length]< 5) {
-			[self printDebugInformation:BLS(1001) channel:channel];
+			if ([newstr length] < 5) {
+				[self printDebugInformation:BLS(1001) channel:channel];
 
-			return NO;
-		} else {
-			(*message) = newstr;
+				return nil;
+			} else {
+				if ( performedEncryption) {
+					*performedEncryption = YES;
+				}
+				
+				return newstr;
+			}
 		}
 	}
 
-	return YES;
+	return message;
 }
 
 - (void)decryptIncomingMessage:(NSString **)message channel:(IRCChannel *)channel
 {
-	if ([self isSupportedMessageEncryptionFormat:(*message) channel:channel]) {
-		NSString *newstr = [CSFWBlowfish decodeData:(*message) key:channel.config.encryptionKey encoding:self.config.primaryEncoding];
+	if (channel.isChannel || channel.isPrivateMessage) {
+		NSString *encryptionKey = channel.encryptionKey;
+		
+		if (encryptionKey) {
+			NSString *newstr = [CSFWBlowfish decodeData:(*message) key:encryptionKey encoding:self.config.primaryEncoding];
 
-		if (NSObjectIsNotEmpty(newstr)) {
-			(*message) = newstr;
+			if (NSObjectIsNotEmpty(newstr)) {
+				(*message) = newstr;
+			}
 		}
 	}
 }
@@ -1524,8 +1529,10 @@
 															   channel:[channel name]
 															  hostmask:self.cachedLocalHostmask];
 
-            BOOL encrypted = (encryptChat && [self isSupportedMessageEncryptionFormat:newstr channel:channel]);
-
+			BOOL encrypted = NO;
+			
+			NSString *encryptedString = [self encryptOutgoingMessage:newstr channel:channel performedEncryption:&encrypted];
+			
 			[self print:channel
 				   type:type
 			   nickname:[self localNickname]
@@ -1534,17 +1541,17 @@
 			 receivedAt:[NSDate date]
 				command:commandActual];
 
-            if (encrypted) {
-                NSAssertReturnLoopContinue([self encryptOutgoingMessage:&newstr channel:channel]);
+            if (encryptedString == nil) {
+				continue; // Encryption failed.
             }
             
 			if (type == TVCLogLineActionType) {
 				command = IRCPrivateCommandIndex("privmsg");
 
-				newstr = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, IRCPrivateCommandIndex("action"), newstr, 0x01];
+				encryptedString = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, IRCPrivateCommandIndex("action"), encryptedString, 0x01];
 			}
 
-			[self send:command, [channel name], newstr, nil];
+			[self send:command, [channel name], encryptedString, nil];
 		}
 	}
 	
@@ -1908,9 +1915,15 @@
 							channel = [worldController() createPrivateMessage:channelName client:self];
 						}
 					}
+					
+					NSString *encryptedString = t;
 
 					if (channel) {
-                        BOOL encrypted = (doNotEncrypt == NO && [self isSupportedMessageEncryptionFormat:t channel:channel]);
+						BOOL encrypted = NO;
+						
+						if (doNotEncrypt == NO) {
+							encryptedString = [self encryptOutgoingMessage:t channel:channel performedEncryption:&encrypted];
+						}
 
 						[self print:channel
 							   type:type
@@ -1920,8 +1933,8 @@
 						 receivedAt:[NSDate date]
 							command:uppercaseCommand];
 
-                        if (encrypted) {
-                            NSAssertReturnLoopContinue([self encryptOutgoingMessage:&t channel:channel]);
+                        if (encryptedString == nil) {
+							continue; // Encryption failed. Break here.
                         }
                     }
 
@@ -1932,10 +1945,10 @@
 					}
 
 					if (type == TVCLogLineActionType) {
-						t = [NSString stringWithFormat:@"%C%@ %@%C", 0x01, IRCPrivateCommandIndex("action"), t, 0x01];
+						encryptedString = [NSString stringWithFormat:@"%C%@ %@%C", 0x01, IRCPrivateCommandIndex("action"), encryptedString, 0x01];
 					}
 
-					[self send:uppercaseCommand, channelName, t, nil];
+					[self send:uppercaseCommand, channelName, encryptedString, nil];
 
 					/* Focus message destination? */
 					if (channel && secretMsg == NO && [TPCPreferences giveFocusOnMessageCommand]) {
@@ -1997,8 +2010,10 @@
 			} else {
 				IRCChannel *channel = [self findChannel:targetChannelName];
 
-				if ([self encryptOutgoingMessage:&topic channel:channel] == YES) {
-					[self send:IRCPrivateCommandIndex("topic"), targetChannelName, topic, nil];
+				NSString *encryptedString = [self encryptOutgoingMessage:topic channel:channel performedEncryption:NULL];
+				
+				if (encryptedString) {
+					[self send:IRCPrivateCommandIndex("topic"), targetChannelName, encryptedString, nil];
 				}
 			}
 
@@ -3594,6 +3609,8 @@
 	NSString *realname = self.config.realname;
 	
 	NSString *modeParam = @"0";
+	
+	NSString *serverPassword = self.config.serverPassword;
 
 	if (self.config.invisibleMode) {
 		modeParam = @"8";
@@ -3609,8 +3626,8 @@
 
 	[self send:IRCPrivateCommandIndex("cap"), @"LS", nil];
 
-	if (self.config.serverPasswordIsSet) {
-		[self send:IRCPrivateCommandIndex("pass"), self.config.serverPassword, nil];
+	if (serverPassword) {
+		[self send:IRCPrivateCommandIndex("pass"), serverPassword, nil];
 	}
 
 	[self send:IRCPrivateCommandIndex("nick"), self.tryingNicknameSentNickname, nil];
@@ -4164,42 +4181,38 @@
 					}
 					
 					if (self.isWaitingForNickServ == NO) {
-						/* Scan for messages telling us that we need to identify. */
-						for (NSString *token in [self nickServSupportedNeedIdentificationTokens]) {
-							if ([cleanedText containsIgnoringCase:token]) {
-								continueNickServScan = NO;
-								
-								NSAssertReturnLoopContinue(self.config.nicknamePasswordIsSet);
-								
-								/* Accessing nickname password is very slow because it has to access the
-								 keychain on the disk so set it as a single variable then define the actual
-								 identification message its formatted into later on. */
-								NSString *password = self.config.nicknamePassword;
-								
-								if ([self.networkAddress hasSuffix:@"dal.net"])
-								{
-									NSString *IDMessage = [NSString stringWithFormat:@"IDENTIFY %@", password];
+						NSString *nicknamePassword = self.config.nicknamePassword;
+						
+						if (nicknamePassword) {
+							for (NSString *token in [self nickServSupportedNeedIdentificationTokens]) {
+								if ([cleanedText containsIgnoringCase:token]) {
+									continueNickServScan = NO;
 									
-									[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ@services.dal.net", IDMessage, nil];
-								}
-								else if (self.config.sendAuthenticationRequestsToUserServ)
-								{
-									NSString *IDMessage = [NSString stringWithFormat:@"login %@ %@", self.config.nickname, self.config.nicknamePassword];
+									if ([self.networkAddress hasSuffix:@"dal.net"])
+									{
+										NSString *IDMessage = [NSString stringWithFormat:@"IDENTIFY %@", nicknamePassword];
+										
+										[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ@services.dal.net", IDMessage, nil];
+									}
+									else if (self.config.sendAuthenticationRequestsToUserServ)
+									{
+										NSString *IDMessage = [NSString stringWithFormat:@"login %@ %@", self.config.nickname, nicknamePassword];
+										
+										[self send:IRCPrivateCommandIndex("privmsg"), @"userserv", IDMessage, nil];
+									}
+									else
+									{
+										NSString *IDMessage = [NSString stringWithFormat:@"IDENTIFY %@", nicknamePassword];
+										
+										[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ", IDMessage, nil];
+									}
 									
-									[self send:IRCPrivateCommandIndex("privmsg"), @"userserv", IDMessage, nil];
-								}
-								else
-								{
-									NSString *IDMessage = [NSString stringWithFormat:@"IDENTIFY %@", password];
+									self.isWaitingForNickServ = YES;
 									
-									[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ", IDMessage, nil];
+									nicknamePassword = nil;
+									
+									break;
 								}
-								
-								self.isWaitingForNickServ = YES;
-								
-								password = nil;
-								
-								break;
 							}
 						}
 					}
@@ -4486,7 +4499,7 @@
 		
 		[mainWindow() reloadTreeItem:c];
 
-		if (c.config.encryptionKeyIsSet) {
+		if (c.encryptionKey) {
 			[self printDebugInformation:BLS(1003) channel:c];
 		}
 		
@@ -5347,7 +5360,7 @@
 
 	/* If the user has a configured nickname password, then we will
 	 use that instead for plain text authentication. */
-	if (self.config.nicknamePasswordIsSet) {
+	if (self.config.nicknamePassword) {
 		return IRCClientIdentificationWithSASLPlainTextMechanism;
 	}
 
@@ -6390,7 +6403,9 @@
 					NSString *topic = c.config.defaultTopic;
 
 					if (NSObjectIsNotEmpty(topic)) {
-						if ([self encryptOutgoingMessage:&topic channel:c] == YES) {
+						NSString *encryptedString = [self encryptOutgoingMessage:topic channel:c performedEncryption:NULL];
+						
+						if (encryptedString) {
 							[self send:IRCPrivateCommandIndex("topic"), [c name], topic, nil];
 						}
 					}
@@ -7852,11 +7867,11 @@
 			BOOL channelListEmpty = NSObjectIsEmpty(channelList);
 			BOOL passwordListEmpty = NSObjectIsEmpty(passwordList);
 			
-			BOOL keyIsSet = c.config.secretKeyIsSet;
+			NSString *secretKey = c.config.secretKey;
 
 			[c setStatus:IRCChannelStatusJoining];
 
-			if (keyIsSet) {
+			if (secretKey) {
 				if (passKeys == NO) {
 					continue;
 				}
@@ -7865,7 +7880,7 @@
 					[passwordList appendString:@","];
 				}
 
-				[passwordList appendString:[c secretKey]];
+				[passwordList appendString:secretKey];
 			} else {
 				if (passKeys) {
 					continue;
@@ -7888,8 +7903,8 @@
 
 				[channelList setString:[c name]];
 
-				if (keyIsSet) {
-					[passwordList setString:[c secretKey]];
+				if (secretKey) {
+					[passwordList setString:secretKey];
 				}
 
 				channelCount = 1; // To match setString: statements up above.
