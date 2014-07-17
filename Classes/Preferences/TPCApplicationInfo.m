@@ -54,9 +54,31 @@
 	}
 }
 
++ (NSDate *)applicationBuildDate
+{
+	NSTimeInterval buildInterval = [TXBundleBuildDate integerValue];
+	
+	return [NSDate dateWithTimeIntervalSince1970:buildInterval];
+}
+
++ (NSString *)applicationVersion
+{
+	return TXBundleBuildVersion;
+}
+
++ (NSString *)applicationVersionShort
+{
+	return TXBundleBuildVersionShort;
+}
+
 + (NSInteger)applicationProcessID
 {
 	return [RZProcessInfo() processIdentifier];
+}
+
++ (NSString *)applicationVersionFlavor
+{
+	return [RZMainBundle() infoDictionary][@"TXBundleBuildCodeName"];
 }
 
 + (NSString *)applicationBundleIdentifier
@@ -81,7 +103,7 @@
 
 + (NSString *)gitCommitCount
 {
-	return TXBundleCommitCount;
+	return TXBundleBuildCommitCount;
 }
 
 + (BOOL)sandboxEnabled

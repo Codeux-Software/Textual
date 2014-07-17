@@ -2623,8 +2623,8 @@
 		{
 			NSString *gref = [TPCApplicationInfo gitBuildReference];
 			NSString *name = [TPCApplicationInfo applicationName];
-			NSString *vers = [TPCApplicationInfo applicationInfoPlist][@"CFBundleVersion"];
-			NSString *code = [TPCApplicationInfo applicationInfoPlist][@"TXBundleBuildCodeName"];
+			NSString *vers = [TPCApplicationInfo applicationVersion];
+			NSString *code = [TPCApplicationInfo applicationVersionFlavor];
 			NSString *ccnt = [TPCApplicationInfo gitCommitCount];
 
 			if (NSObjectIsEmpty(gref)) {
@@ -2634,7 +2634,14 @@
 			NSString *text;
 			
 			if ([uncutInput isEqualIgnoringCase:@"-d"]) {
-				text = BLS(1113, name, vers, gref, code);
+				NSDateFormatter *dateFormatter = [NSDateFormatter new];
+				
+				[dateFormatter setDateStyle:NSDateFormatterFullStyle];
+				[dateFormatter setTimeStyle:NSDateFormatterLongStyle];
+				
+				NSDate *apbd = [TPCApplicationInfo applicationBuildDate];
+				
+				text = BLS(1113, name, vers, gref, code, [dateFormatter stringFromDate:apbd]);
 			} else {
 				text = BLS(1112, name, vers, ccnt);
 			}
@@ -4385,8 +4392,8 @@
 				[self sendCTCPReply:sendern command:command text:fakever];
 			} else {
 				NSString *name = [TPCApplicationInfo applicationName];
-				NSString *vers = [TPCApplicationInfo applicationInfoPlist][@"CFBundleVersion"];
-				NSString *code = [TPCApplicationInfo applicationInfoPlist][@"TXBundleBuildCodeName"];
+				NSString *vers = [TPCApplicationInfo applicationVersion];
+				NSString *code = [TPCApplicationInfo applicationVersionFlavor];
 
 				NSString *textoc = BLS(1111, name, vers, code);
 

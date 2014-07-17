@@ -406,7 +406,7 @@
 
 /* /myversion/ command. */
 "BasicLanguage[1112]" = "%1$@ %2$@ (Build #%3$@)";
-"BasicLanguage[1113]" = "%1$@ %2$@ (Git Reference: %3$@) (Flavor: %4$@)";
+"BasicLanguage[1113]" = "%1$@ %2$@ (Git Reference: %3$@) (Flavor: %4$@) (Build Date: %5$@)";
 "BasicLanguage[1114]" = "\002Current Version:\002 %@";
 
 /* Miscellaneous messages related to IRC events. */
