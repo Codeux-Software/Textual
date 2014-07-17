@@ -25,7 +25,7 @@
 {
 	if (&kSecAttrSynchronizable) {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-		return [TPCPreferences syncPreferencesToTheCloudIncludesKeychain];
+		return NO;
 #else
 		return NO;
 #endif

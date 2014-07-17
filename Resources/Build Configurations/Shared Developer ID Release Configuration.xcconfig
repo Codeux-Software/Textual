@@ -14,6 +14,7 @@ STRINGS_FILE_OUTPUT_ENCODING = binary
 FRAMEWORK_SEARCH_PATHS = "${SRCROOT}/Frameworks/**" "${SRCROOT}/.tmp/SharedBuildProducts/**"
 HEADER_SEARCH_PATHS = "${SRCROOT}/Classes/Headers/**"
 LIBRARY_SEARCH_PATHS = "${SRCROOT}/Frameworks/**"
+LD_RUNPATH_SEARCH_PATHS = @loader_path/../Frameworks
 VERSION_INFO_BUILDER = Codeux Software
 GCC_OPTIMIZATION_LEVEL = s
 GCC_DYNAMIC_NO_PIC = YES
