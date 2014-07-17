@@ -40,7 +40,15 @@
 
 #define TVCMainWindowSplitViewDividerColor		[NSColor colorWithCalibratedWhite:0.65 alpha:1.0]
 
+#define TVCMainWindowSplitViewMaximumDividerPosition			300
+#define TVCMainWindowSplitViewMinimumDividerPosition			120
+
+#define TVCMainWindowSplitViewServerListDefaultPosition			190
+#define TVCMainWindowSplitViewMemberListDefaultPosition			120
+
 @interface TVCMainWindowSplitView : NSSplitView <NSSplitViewDelegate>
+- (void)restorePositions;
+
 - (void)expandServerList;
 - (void)collapseServerList;
 - (void)toggleServerListVisbility;

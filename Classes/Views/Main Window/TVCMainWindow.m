@@ -91,6 +91,8 @@
 		
 		[self.inputTextField setBackgroundColor:[NSColor clearColor]];
 		
+		[self.contentSplitView restorePositions];
+		
 		[self registerKeyHandlers];
 		
 		[self.formattingMenu enableWindowField:self.inputTextField];
