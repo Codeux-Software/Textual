@@ -3352,6 +3352,7 @@
                             </buttonCell>
                             <connections>
                                 <action selector="onChangedCloudSyncingServicesIncludesKeychainItems:" target="-2" id="Y2i-GL-MMC"/>
+                                <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloud" id="If5-K2-a5T"/>
                                 <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloudIncludesKeychainItems" id="SKl-8f-Tkr"/>
                             </connections>
                         </button>
