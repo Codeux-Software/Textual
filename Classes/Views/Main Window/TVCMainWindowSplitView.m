@@ -40,7 +40,14 @@
 
 #define _minimumSplitViewWidth			120
 
+#define _userDefaults					[NSUserDefaults standardUserDefaults]
+
+#define _userDefaultsKey				@"NSSplitView Saved Frames -> TVCMainWindowSplitView"
+
 @interface TVCMainWindowSplitView ()
+@property (nonatomic, assign) BOOL restoredPositions;
+@property (nonatomic, assign) BOOL stopFrameUpdatesForMemberList;
+@property (nonatomic, assign) BOOL stopFrameUpdatesForServerList;
 @property (nonatomic, nweak) IBOutlet NSLayoutConstraint *serverListWidthConstraint;
 @property (nonatomic, nweak) IBOutlet NSLayoutConstraint *memberListWidthConstraint;
 @end
@@ -65,13 +72,29 @@
 	[self setDelegate:self];
 }
 
-- (BOOL)splitView:(NSSplitView *)splitView shouldHideDividerAtIndex:(NSInteger)dividerIndex
+- (void)restorePositions
+{
+	if (self.restoredPositions == NO) {
+		[self expandServerList];
+		[self expandMemberList];
+		
+		self.restoredPositions = YES;
+	}
+}
+
+- (NSRect)splitView:(NSSplitView *)splitView effectiveRect:(NSRect)proposedEffectiveRect forDrawnRect:(NSRect)drawnRect ofDividerAtIndex:(NSInteger)dividerIndex NS_AVAILABLE_MAC(10_5);
 {
 	if (dividerIndex == 0) {
-		return [self isServerListCollapsed];
+		if ([self isServerListCollapsed]) {
+			return NSZeroRect;
+		}
 	} else {
-		return [self isMemberListCollapsed];
+		if ([self isMemberListCollapsed]) {
+			return NSZeroRect;
+		}
 	}
+	
+	return proposedEffectiveRect;
 }
 
 - (BOOL)allowsVibrancy
@@ -81,30 +104,56 @@
 
 - (void)expandServerList
 {
+	NSView *subview = [self subviews][0];
+	
+	[subview setHidden:NO];
+	
+	[self setPosition:[self positionToRestoreServerListAt] ofDividerAtIndex:0];
+	
 	[self.serverListWidthConstraint setConstant:_minimumSplitViewWidth];
 	
-	[self expandViewAtIndex:0];
+	self.stopFrameUpdatesForServerList = NO;
 }
 
 - (void)expandMemberList
 {
+	NSView *subview = [self subviews][2];
+	
+	[subview setHidden:NO];
+	
+	[self setPosition:[self positionToRestoreMemberListAt] ofDividerAtIndex:1];
+	
 	[self.memberListWidthConstraint setConstant:_minimumSplitViewWidth];
 	
-	[self expandViewAtIndex:2];
+	self.stopFrameUpdatesForMemberList = NO;
 }
 
 - (void)collapseServerList
 {
+	self.stopFrameUpdatesForServerList = YES;
+	
 	[self.serverListWidthConstraint setConstant:0.0];
 	
-	[self collapseViewAtIndex:0];
+	NSView *subview = [self subviews][0];
+	
+	[self setPosition:0.0 ofDividerAtIndex:0];
+	
+	[subview setHidden:YES];
 }
 
 - (void)collapseMemberList
 {
+	self.stopFrameUpdatesForMemberList = YES;
+	
 	[self.memberListWidthConstraint setConstant:0.0];
-
-	[self collapseViewAtIndex:2];
+	
+	NSView *subview = [self subviews][2];
+	
+	NSRect windowFrame = [mainWindow() frame];
+	
+	[self setPosition:NSWidth(windowFrame) ofDividerAtIndex:1];
+	
+	[subview setHidden:YES];
 }
 
 - (void)toggleServerListVisbility
@@ -125,6 +174,131 @@
 	}
 }
 
+- (NSInteger)positionForDividerAtIndex:(NSInteger)idx
+{
+	NSRect subviewFrame = [[self subviews][idx] frame];
+	
+	return (NSMaxX(subviewFrame) + ([self dividerThickness] * idx));
+}
+
+- (NSInteger)positionToRestoreServerListAt
+{
+	NSDictionary *frames = [self savedFrames];
+	
+	NSInteger position = 0;
+	
+	if ([frames containsKey:@"serverList"]) {
+		position = [frames integerForKey:@"serverList"];
+	}
+	
+	if (position < TVCMainWindowSplitViewMinimumDividerPosition) {
+		position = TVCMainWindowSplitViewServerListDefaultPosition;
+	} else if (position > TVCMainWindowSplitViewMaximumDividerPosition) {
+		position = TVCMainWindowSplitViewServerListDefaultPosition;
+	}
+	
+	return position;
+}
+
+- (NSInteger)positionToRestoreMemberListAt
+{
+	return [self positionToRestoreMemberListAt:YES];
+}
+
+- (NSInteger)positionToRestoreMemberListAt:(BOOL)correctedFrame
+{
+	NSDictionary *frames = [self savedFrames];
+	
+	NSInteger position = 0;
+	
+	if ([frames containsKey:@"memberList"]) {
+		position = [frames integerForKey:@"memberList"];
+	}
+	
+	if (position < TVCMainWindowSplitViewMinimumDividerPosition) {
+		position = TVCMainWindowSplitViewMemberListDefaultPosition;
+	} else if (position > TVCMainWindowSplitViewMaximumDividerPosition) {
+		position = TVCMainWindowSplitViewMemberListDefaultPosition;
+	}
+	
+	if (correctedFrame) {
+		NSRect windowFrame = [mainWindow() frame];
+		
+		return (NSWidth(windowFrame) - position);
+	}
+	
+	return position;
+}
+
+- (NSInteger)positionOfServerListForSaving
+{
+	NSInteger position = [self positionForDividerAtIndex:0];
+	
+	if (position < TVCMainWindowSplitViewMinimumDividerPosition) {
+		position = TVCMainWindowSplitViewServerListDefaultPosition;
+	} else if (position > TVCMainWindowSplitViewMaximumDividerPosition) {
+		position = TVCMainWindowSplitViewServerListDefaultPosition;
+	}
+	
+	return position;
+}
+
+- (NSInteger)positionOfMemberListForSaving
+{
+	NSInteger rawPosition = [self positionForDividerAtIndex:1];
+	
+	NSRect windowFrame = [mainWindow() frame];
+	
+	NSInteger position = ((rawPosition - NSWidth(windowFrame)) * -(1));
+	
+	if (position < TVCMainWindowSplitViewMinimumDividerPosition) {
+		position = TVCMainWindowSplitViewMemberListDefaultPosition;
+	} else if (position > TVCMainWindowSplitViewMaximumDividerPosition) {
+		position = TVCMainWindowSplitViewMemberListDefaultPosition;
+	}
+	
+	return position;
+}
+
+- (void)updateSavedFrames
+{
+	NSInteger serverListPosition = 0;
+	NSInteger memberListPosition = 0;
+	
+	if (self.stopFrameUpdatesForServerList) {
+		serverListPosition = [self positionToRestoreServerListAt];
+	} else {
+		serverListPosition = [self positionOfServerListForSaving];
+	}
+	
+	if (self.stopFrameUpdatesForMemberList) {
+		memberListPosition = [self positionToRestoreMemberListAt:NO];
+	} else {
+		memberListPosition = [self positionOfMemberListForSaving];
+	}
+	
+	NSDictionary *newFrames = @{
+		@"serverList" : @(serverListPosition),
+		@"memberList" : @(memberListPosition),
+	};
+	
+	[_userDefaults setObject:newFrames forKey:_userDefaultsKey];
+}
+
+- (NSDictionary *)savedFrames
+{
+	return [_userDefaults objectForKey:_userDefaultsKey];
+}
+
+- (void)resizeWithOldSuperviewSize:(NSSize)oldSize
+{
+	if (self.restoredPositions) {
+		[self updateSavedFrames];
+	}
+	
+	[super resizeWithOldSuperviewSize:oldSize];
+}
+
 - (BOOL)isServerListCollapsed
 {
 	return [self isSubviewCollapsed:[self subviews][0]];
@@ -133,24 +307,6 @@
 - (BOOL)isMemberListCollapsed
 {
 	return [self isSubviewCollapsed:[self subviews][2]];
-}
-
-- (void)collapseViewAtIndex:(NSInteger)dividerIndex
-{
-	NSView *theView = [self subviews][dividerIndex];
-	
-	[theView setHidden:YES];
-	
-	[self adjustSubviews];
-}
-
-- (void)expandViewAtIndex:(NSInteger)dividerIndex
-{
-	NSView *theView = [self subviews][dividerIndex];
-	
-	[theView setHidden:NO];
-	
-	[self adjustSubviews];
 }
 
 @end
