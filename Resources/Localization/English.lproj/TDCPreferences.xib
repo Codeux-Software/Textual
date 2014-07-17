@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6185.7" systemVersion="14A283o" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment version="1070" identifier="macosx"/>
+        <deployment version="1070" defaultVersion="1070" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.7"/>
     </dependencies>
@@ -795,7 +795,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Growl is running. Notifications will be forwarded to it." id="9fD-5A-S0y">
                         <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -970,49 +970,49 @@
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" id="pcR-4g-Mjb">
                                 <rect key="frame" x="0.0" y="0.0" width="223" height="133"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="textColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="minSize" width="407" height="53"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="A value of ">
                                         <attributes>
-                                            <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="zero (0)">
                                         <attributes>
-                                            <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystemBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content=" disables the checking of image height. ">
                                         <attributes>
-                                            <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="Enabling this feature will require Textual to asynchronously download each image posted">
                                         <attributes>
-                                            <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystemBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content=" which may take a long time on connections with slow internet connections. ">
                                         <attributes>
-                                            <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="1440 is a recommended value.">
                                         <attributes>
-                                            <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystemBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
@@ -1044,28 +1044,28 @@
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="QHS-kD-Vge">
                                 <rect key="frame" x="0.0" y="0.0" width="223" height="133"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="textColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="minSize" width="394" height="27"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="If inline images are disabled here, then Textual provides the option to enable them on a per-channel basis using ">
                                         <attributes>
-                                            <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="Channel Properties">
                                         <attributes>
-                                            <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystemBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content=".">
                                         <attributes>
-                                            <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
@@ -1225,7 +1225,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="These include join, part, and quit messages. " id="oK8-zB-HCo">
                                             <font key="font" metaFont="smallSystem"/>
-                                            <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
@@ -1239,14 +1239,14 @@
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="1AW-f9-jIu">
                                                     <rect key="frame" x="0.0" y="0.0" width="223" height="133"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="textColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="352" height="16"/>
+                                                    <size key="minSize" width="352" height="20"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="Strips away formatting such as ">
                                                             <attributes>
-                                                                <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
@@ -1295,28 +1295,28 @@
                                                         </fragment>
                                                         <fragment content=", ">
                                                             <attributes>
-                                                                <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
                                                         </fragment>
                                                         <fragment content="bold">
                                                             <attributes>
-                                                                <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystemBold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
                                                         </fragment>
                                                         <fragment content=", ">
                                                             <attributes>
-                                                                <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
                                                         </fragment>
                                                         <fragment content="underline">
                                                             <attributes>
-                                                                <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                                 <integer key="NSUnderline" value="1"/>
@@ -1324,14 +1324,14 @@
                                                         </fragment>
                                                         <fragment content=", etc.">
                                                             <attributes>
-                                                                <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="352" height="16"/>
+                                                    <size key="minSize" width="352" height="20"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
@@ -1550,14 +1550,14 @@
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="LsK-nq-gHj">
                                                     <rect key="frame" x="0.0" y="0.0" width="223" height="133"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="textColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <size key="minSize" width="352" height="13"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="A list of formatting symbols can be found at ">
                                                             <attributes>
-                                                                <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
@@ -1597,21 +1597,21 @@
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="JJf-Sj-V68">
                                                     <rect key="frame" x="0.0" y="0.0" width="223" height="133"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="textColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <size key="minSize" width="279" height="13"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="Symbols:">
                                                             <attributes>
-                                                                <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystemBold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
                                                         </fragment>
                                                         <fragment content="  %@ = User mode; %n = User nickname">
                                                             <attributes>
-                                                                <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
@@ -1643,21 +1643,14 @@
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="I4g-PP-IyL">
                                                     <rect key="frame" x="0.0" y="0.0" width="223" height="133"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="textColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <size key="minSize" width="356" height="13"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
-                                                        <fragment content="A lower value can help reduce the">
+                                                        <fragment content="A lower value can help reduce the ">
                                                             <attributes>
-                                                                <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                <font key="NSFont" metaFont="smallSystem"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                            </attributes>
-                                                        </fragment>
-                                                        <fragment content=" ">
-                                                            <attributes>
-                                                                <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
@@ -1670,16 +1663,9 @@
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
                                                         </fragment>
-                                                        <fragment content=" ">
+                                                        <fragment content=" of Textual.">
                                                             <attributes>
-                                                                <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" metaFont="smallSystem"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                            </attributes>
-                                                        </fragment>
-                                                        <fragment content="of Textual.">
-                                                            <attributes>
-                                                                <color key="NSColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
@@ -1760,7 +1746,7 @@
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="2rT-lJ-27T">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">The location in which log files are stored cannot be shared with Cloud. This is a limitation of Mac OS that Textual cannot circumvent.</string>
-                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -1930,7 +1916,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(Includes Ban Length)" id="WL8-Lc-POK">
                         <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -1939,7 +1925,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(Includes Ban Length)" id="4rX-hA-Ty8">
                         <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -2013,60 +1999,6 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="5bf-Zg-Aoj">
-                    <rect key="frame" x="48" y="239" width="172" height="40"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="zdS-8U-w4l">
-                        <rect key="frame" x="0.0" y="0.0" width="172" height="40"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" spellingCorrection="YES" id="5yh-HL-dh0">
-                                <rect key="frame" x="0.0" y="0.0" width="172" height="40"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="172" height="40"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                                <attributedString key="textStorage">
-                                    <fragment content="Number of channels permitted to be joined at a single time during autojoin.">
-                                        <attributes>
-                                            <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="11" name="LucidaGrande"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                <tabStops>
-                                                    <textTab alignment="left" location="36"/>
-                                                    <textTab alignment="left" location="72"/>
-                                                    <textTab alignment="left" location="108"/>
-                                                    <textTab alignment="left" location="144"/>
-                                                    <textTab alignment="left" location="180"/>
-                                                    <textTab alignment="left" location="216"/>
-                                                    <textTab alignment="left" location="252"/>
-                                                    <textTab alignment="left" location="288"/>
-                                                    <textTab alignment="left" location="324"/>
-                                                    <textTab alignment="left" location="360"/>
-                                                    <textTab alignment="left" location="396"/>
-                                                    <textTab alignment="left" location="432"/>
-                                                </tabStops>
-                                            </paragraphStyle>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="172" height="40"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="wB4-ij-Cuo">
-                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="cpM-rn-hRs">
-                        <rect key="frame" x="-100" y="-100" width="15" height="28"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                </scrollView>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="6pI-nG-5UE">
                     <rect key="frame" x="67" y="223" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -2092,7 +2024,7 @@
                             <textView drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" spellingCorrection="YES" id="E68-u1-PKY">
                                 <rect key="frame" x="0.0" y="0.0" width="457" height="40"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="minSize" width="457" height="40"/>
                                 <size key="maxSize" width="463" height="10000000"/>
@@ -2100,7 +2032,7 @@
                                     <fragment>
                                         <string key="content">Textual queries each channel every thirty seconds for away status information. This setting defines the maximum number of users that a channel can have before it stops requesting information. A lower setting can help reduce network load.</string>
                                         <attributes>
-                                            <color key="NSColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="11" name="LucidaGrande"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
                                                 <tabStops>
@@ -2200,6 +2132,60 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="5bf-Zg-Aoj">
+                    <rect key="frame" x="49" y="239" width="172" height="40"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="zdS-8U-w4l">
+                        <rect key="frame" x="0.0" y="0.0" width="172" height="40"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" spellingCorrection="YES" id="5yh-HL-dh0">
+                                <rect key="frame" x="0.0" y="0.0" width="172" height="40"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="textColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="minSize" width="172" height="40"/>
+                                <size key="maxSize" width="463" height="10000000"/>
+                                <attributedString key="textStorage">
+                                    <fragment content="Number of channels permitted to be joined at a single time during autojoin.">
+                                        <attributes>
+                                            <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="11" name="LucidaGrande"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                <tabStops>
+                                                    <textTab alignment="left" location="36"/>
+                                                    <textTab alignment="left" location="72"/>
+                                                    <textTab alignment="left" location="108"/>
+                                                    <textTab alignment="left" location="144"/>
+                                                    <textTab alignment="left" location="180"/>
+                                                    <textTab alignment="left" location="216"/>
+                                                    <textTab alignment="left" location="252"/>
+                                                    <textTab alignment="left" location="288"/>
+                                                    <textTab alignment="left" location="324"/>
+                                                    <textTab alignment="left" location="360"/>
+                                                    <textTab alignment="left" location="396"/>
+                                                    <textTab alignment="left" location="432"/>
+                                                </tabStops>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <size key="minSize" width="172" height="40"/>
+                                <size key="maxSize" width="463" height="10000000"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="wB4-ij-Cuo">
+                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="cpM-rn-hRs">
+                        <rect key="frame" x="-100" y="-100" width="15" height="28"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
             </subviews>
             <point key="canvasLocation" x="596.5" y="-252"/>
         </customView>
@@ -2250,7 +2236,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="When used in the context of a hostmask an asterisk (*) represents a wildcard character that is matched by any possible value. " id="lyl-DA-xkL">
                         <font key="font" metaFont="system" size="10"/>
-                        <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -2347,7 +2333,7 @@
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="** Restart required to apply changes." id="4mD-0b-eUd">
                         <font key="font" metaFont="system" size="10"/>
-                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -2471,7 +2457,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Holding the command key (⌘) during selection disables option temporarily." id="RLT-k4-fiT">
                         <font key="font" metaFont="system" size="10"/>
-                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -2707,7 +2693,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="nt0-2m-g8m">
                         <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
@@ -2723,7 +2709,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Preview:" id="LMb-tr-4jg">
                         <font key="font" metaFont="smallSystemBold"/>
-                        <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -3247,109 +3233,255 @@
             </subviews>
             <point key="canvasLocation" x="283.5" y="-3978"/>
         </customView>
-        <customView id="UpX-LQ-mM5" userLabel="iCloud">
+        <customView wantsLayer="YES" id="UpX-LQ-mM5" userLabel="iCloud">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="Isc-FG-TMU">
-                    <rect key="frame" x="74" y="112" width="428" height="52"/>
+                <customView id="J7B-sM-EWB" userLabel="Mavericks">
+                    <rect key="frame" x="0.0" y="0.0" width="567" height="406"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="xFn-em-Vsh">
-                        <font key="font" metaFont="system" size="10"/>
-                        <string key="title">There are two options for erasing the data stored by Textual: The "Erase Data" button erases shared preferences and keychain items leaving custom add-on files such as styles on iCloud. The "Erase Files" button does the complete opposite. Custom add-on files such as styles will be erased leaving shared preferences intact.</string>
-                        <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <button appearanceType="aqua" verticalHuggingPriority="750" id="c4V-ww-j6x">
-                    <rect key="frame" x="106" y="71" width="180" height="25"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="roundTextured" title="Erase Data" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mud-m8-yng">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
+                    <subviews>
+                        <button appearanceType="aqua" verticalHuggingPriority="750" id="wJD-gh-HnP">
+                            <rect key="frame" x="343" y="184" width="103" height="19"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="roundRect" title="Open In Finder" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ekC-TS-CBT">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="cellTitle"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="onOpenPathToCloudFolder:" target="-2" id="rp8-eK-T6m"/>
+                            </connections>
+                        </button>
+                        <textField appearanceType="aqua" verticalHuggingPriority="750" id="tey-hL-gon">
+                            <rect key="frame" x="69" y="73" width="428" height="52"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="Nha-xi-ydZ">
+                                <font key="font" metaFont="system" size="10"/>
+                                <string key="title">There are two options for erasing the data stored by Textual: The "Erase Data" button erases shared preferences and keychain items leaving custom add-on files such as styles on iCloud. The "Erase Files" button does the complete opposite. Custom add-on files such as styles will be erased leaving shared preferences intact.</string>
+                                <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField appearanceType="aqua" verticalHuggingPriority="750" id="GaI-OV-qgR">
+                            <rect key="frame" x="84" y="237" width="384" height="39"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="Y5X-AE-LN8">
+                                <font key="font" metaFont="system" size="10"/>
+                                <string key="title">When shared, passwords are maintained within the Mac OS keychain which is encrypted using the password of the local user. Passwords stored on iCloud take priority over any passwords that may be configured locally.</string>
+                                <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                            <connections>
+                                <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.System —&gt; Running Mac OS Mavericks Or Newer" id="WfA-AF-hhg"/>
+                            </connections>
+                        </textField>
+                        <button appearanceType="aqua" verticalHuggingPriority="750" id="jNJ-zJ-X4v">
+                            <rect key="frame" x="101" y="32" width="180" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="roundTextured" title="Erase Data" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tLi-Ef-RXq">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="onPurgeOfCloudDataRequested:" target="-2" id="xgL-Kc-Fa3"/>
+                            </connections>
+                        </button>
+                        <button appearanceType="aqua" verticalHuggingPriority="750" id="Q7A-td-QSR">
+                            <rect key="frame" x="289" y="32" width="174" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="roundTextured" title="Erase Files" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xuj-FJ-IKe">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="onPurgeOfCloudFilesRequested:" target="-2" id="Z69-4N-YhS"/>
+                            </connections>
+                        </button>
+                        <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="5Y2-AL-Lg4">
+                            <rect key="frame" x="62" y="216" width="442" height="5"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <font key="titleFont" metaFont="system"/>
+                        </box>
+                        <button appearanceType="aqua" id="PMo-0U-9w5">
+                            <rect key="frame" x="66" y="356" width="273" height="18"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="check" title="Only share IRC servers between devices" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Kpm-Gh-QB8">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="titleBar" size="12"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="onChangedCloudSyncingServicesServersOnly:" target="-2" id="WYI-0m-8l5"/>
+                                <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloud" id="18G-H9-Ry0"/>
+                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloudLimitedToServers" id="6bN-jg-7NM"/>
+                            </connections>
+                        </button>
+                        <textField appearanceType="aqua" verticalHuggingPriority="750" id="hab-8V-CKZ">
+                            <rect key="frame" x="84" y="311" width="384" height="39"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="2hH-Bj-oAo">
+                                <font key="font" metaFont="system" size="10"/>
+                                <string key="title">When enabled, Textual will ignore all preferences shared with iCloud that are not related to the configured IRC servers. Disabling this setting will force an immediate synchronization of all preferences with iCloud.</string>
+                                <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="5Db-0W-EsB">
+                            <rect key="frame" x="243" y="131" width="81" height="22"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Erase Data" id="Ep2-IA-eQ7">
+                                <font key="font" metaFont="systemBold" size="14"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="Stv-Bu-1P6">
+                            <rect key="frame" x="62" y="165" width="442" height="5"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <font key="titleFont" metaFont="system"/>
+                        </box>
+                        <button appearanceType="aqua" id="B4j-kc-DM7">
+                            <rect key="frame" x="66" y="282" width="273" height="18"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="check" title="Share passwords using iCloud" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="M7q-FD-CXT">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="titleBar" size="12"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="onChangedCloudSyncingServicesIncludesKeychainItems:" target="-2" id="Y2i-GL-MMC"/>
+                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloudIncludesKeychainItems" id="SKl-8f-Tkr"/>
+                            </connections>
+                        </button>
+                        <textField appearanceType="aqua" verticalHuggingPriority="750" id="Oiw-JR-Luj">
+                            <rect key="frame" x="130" y="185" width="207" height="17"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iCloud Custom Addons Location:" id="da6-Q9-VUu">
+                                <font key="font" metaFont="systemBold" size="12"/>
+                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </subviews>
                     <connections>
-                        <action selector="onPurgeOfCloudDataRequested:" target="-2" id="mor-Of-7jf"/>
+                        <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.System —&gt; Running Mac OS Mavericks Or Newer" id="7XG-IP-jfb">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
                     </connections>
-                </button>
-                <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="EdJ-jG-RHu">
-                    <rect key="frame" x="248" y="170" width="81" height="22"/>
+                </customView>
+                <customView id="OL6-Sf-jeX" userLabel="Mountain Lion">
+                    <rect key="frame" x="-10" y="0.0" width="577" height="406"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Erase Data" id="vkf-yV-n20">
-                        <font key="font" metaFont="systemBold" size="14"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <button appearanceType="aqua" verticalHuggingPriority="750" id="rIv-Pp-rDg">
-                    <rect key="frame" x="294" y="71" width="174" height="25"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="roundTextured" title="Erase Files" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Bpb-YV-DBp">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
+                    <subviews>
+                        <button appearanceType="aqua" verticalHuggingPriority="750" id="Z22-fx-9Qs">
+                            <rect key="frame" x="348" y="221" width="103" height="19"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="roundRect" title="Open In Finder" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ZsB-My-2AC">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="cellTitle"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="onOpenPathToCloudFolder:" target="-2" id="pzq-Yi-H1L"/>
+                            </connections>
+                        </button>
+                        <textField appearanceType="aqua" verticalHuggingPriority="750" id="7dw-a3-eZF">
+                            <rect key="frame" x="74" y="110" width="428" height="52"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="o6g-5K-eaA">
+                                <font key="font" metaFont="system" size="10"/>
+                                <string key="title">There are two options for erasing the data stored by Textual: The "Erase Data" button erases shared preferences and keychain items leaving custom add-on files such as styles on iCloud. The "Erase Files" button does the complete opposite. Custom add-on files such as styles will be erased leaving shared preferences intact.</string>
+                                <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <button appearanceType="aqua" verticalHuggingPriority="750" id="M4r-Bc-Rtd">
+                            <rect key="frame" x="106" y="69" width="180" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="roundTextured" title="Erase Data" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="sJf-J1-xvh">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="onPurgeOfCloudDataRequested:" target="-2" id="9C6-NB-Mkh"/>
+                            </connections>
+                        </button>
+                        <button appearanceType="aqua" verticalHuggingPriority="750" id="ENb-87-7bT">
+                            <rect key="frame" x="294" y="69" width="174" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="roundTextured" title="Erase Files" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ug1-Nh-IEk">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="onPurgeOfCloudFilesRequested:" target="-2" id="Tfa-Eg-KJ8"/>
+                            </connections>
+                        </button>
+                        <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="7A5-mk-3Yr">
+                            <rect key="frame" x="67" y="253" width="442" height="5"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <font key="titleFont" metaFont="system"/>
+                        </box>
+                        <button appearanceType="aqua" id="C4B-7k-0hl">
+                            <rect key="frame" x="78" y="319" width="273" height="18"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="check" title="Only share IRC servers between devices" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="FVd-Td-477">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="titleBar" size="12"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="onChangedCloudSyncingServicesServersOnly:" target="-2" id="2qh-Tu-VrT"/>
+                                <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloud" id="4Ml-a0-4LP"/>
+                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloudLimitedToServers" id="3BV-Hx-afs"/>
+                            </connections>
+                        </button>
+                        <textField appearanceType="aqua" verticalHuggingPriority="750" id="GQl-dO-1ON">
+                            <rect key="frame" x="96" y="274" width="384" height="39"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="Jae-1F-7Ja">
+                                <font key="font" metaFont="system" size="10"/>
+                                <string key="title">When enabled, Textual will ignore all preferences shared with iCloud that are not related to the configured IRC servers. Disabling this setting will force an immediate synchronization of all preferences with iCloud.</string>
+                                <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="218-9B-z5F">
+                            <rect key="frame" x="248" y="168" width="81" height="22"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Erase Data" id="APc-Ee-lyL">
+                                <font key="font" metaFont="systemBold" size="14"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="QEr-2q-Han">
+                            <rect key="frame" x="67" y="202" width="442" height="5"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <font key="titleFont" metaFont="system"/>
+                        </box>
+                        <textField appearanceType="aqua" verticalHuggingPriority="750" id="9mT-Se-lLS">
+                            <rect key="frame" x="135" y="222" width="207" height="17"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iCloud Custom Addons Location:" id="VTj-uw-nbh">
+                                <font key="font" metaFont="systemBold" size="12"/>
+                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </subviews>
                     <connections>
-                        <action selector="onPurgeOfCloudFilesRequested:" target="-2" id="EDP-wo-wYe"/>
+                        <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.System —&gt; Running Mac OS Mavericks Or Newer" id="Oih-FF-28c"/>
                     </connections>
-                </button>
-                <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="DdM-dv-vNg">
-                    <rect key="frame" x="67" y="204" width="442" height="5"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="OTb-OB-lkO">
-                    <rect key="frame" x="135" y="224" width="207" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iCloud Custom Addons Location:" id="UZG-us-IbW">
-                        <font key="font" metaFont="systemBold" size="12"/>
-                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <button appearanceType="aqua" verticalHuggingPriority="750" id="hRP-Dc-rq7">
-                    <rect key="frame" x="348" y="223" width="103" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="roundRect" title="Open In Finder" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lra-Af-4Dk">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="cellTitle"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="onOpenPathToCloudFolder:" target="-2" id="Qvh-PU-MgG"/>
-                    </connections>
-                </button>
-                <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="mVo-ik-w6d">
-                    <rect key="frame" x="67" y="255" width="442" height="5"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="57W-Aa-N5R">
-                    <rect key="frame" x="74" y="274" width="384" height="39"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="XeB-VF-T7P">
-                        <font key="font" metaFont="system" size="10"/>
-                        <string key="title">When enabled, Textual will ignore all preferences shared with iCloud that are not related to the configured IRC servers. Disabling this setting will force an immediate synchronization of all preferences with iCloud.</string>
-                        <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <button appearanceType="aqua" id="sai-Hx-ldL">
-                    <rect key="frame" x="56" y="319" width="273" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Only share IRC servers between devices" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="tLh-7R-INw">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="onChangedCloudSyncingServicesServersOnly:" target="-2" id="UNe-I3-zYk"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloudLimitedToServers" id="5u1-T0-lvd"/>
-                    </connections>
-                </button>
+                </customView>
             </subviews>
-            <point key="canvasLocation" x="293.5" y="-4115"/>
+            <point key="canvasLocation" x="365.5" y="-4054"/>
         </customView>
         <customView id="4pD-W0-ghZ" userLabel="File Transfers">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -3495,7 +3627,7 @@
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="gab-qG-6dQ">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">Textual, by default, will ask where to save files when downloading them from a sender. This option allows you to skip that process. Please take note this preference cannot be shared using iCloud.</string>
-                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -3545,12 +3677,12 @@
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="LZC-MX-Iyp">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">A passive file transfer provides the ability to send files without the need to perform port forwarding or configuration of the firewall as it is made the responsiblity of the receiver. It is recommended to leave this option off by default for greatest compatibility with legacy IRC clients.</string>
-                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="178.5" y="-4609"/>
+            <point key="canvasLocation" x="175.5" y="-4608"/>
         </customView>
         <customView id="KpN-mD-prv" userLabel="Incoming Data">
             <rect key="frame" x="170" y="8" width="567" height="406"/>

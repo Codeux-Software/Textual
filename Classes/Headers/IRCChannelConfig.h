@@ -57,8 +57,6 @@ typedef enum IRCChannelType : NSInteger {
 @property (nonatomic, assign) BOOL ignoreInlineImages;
 @property (nonatomic, assign) BOOL ignoreHighlights;
 @property (nonatomic, assign) BOOL ignoreJPQActivity;
-@property (nonatomic, assign) BOOL encryptionKeyIsSet;
-@property (nonatomic, assign) BOOL secretKeyIsSet;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dic;
 - (NSMutableDictionary *)dictionaryValue;
@@ -72,6 +70,13 @@ typedef enum IRCChannelType : NSInteger {
 
 - (void)writeSecretKeyKeychainItemToDisk;
 - (void)writeEncryptionKeyKeychainItemToDisk;
+
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+- (void)migrateKeychainItemsToCloud;
+- (void)migrateKeychainItemsFromCloud;
+
+- (void)destroyKeychainsThatExistOnCloud;
+#endif
 
 @property (readonly, copy) NSString *temporarySecretKey;
 @property (readonly, copy) NSString *temporaryEncryptionKey;

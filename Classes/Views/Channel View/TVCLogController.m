@@ -112,7 +112,13 @@
 
 - (BOOL)viewIsEncrypted
 {
-	return (self.associatedChannel && self.associatedChannel.config.encryptionKeyIsSet);
+	if (self.associatedChannel == nil) {
+		return NO;
+	} else {
+		NSString *encryptionKey = self.associatedChannel.encryptionKey;
+		
+		return ([encryptionKey length] > 0);
+	}
 }
 
 - (void)channelLevelEncryptionChanged

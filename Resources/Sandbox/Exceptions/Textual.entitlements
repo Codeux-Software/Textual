@@ -29,5 +29,9 @@
 		<string>com.apple.itunes</string>
 		<string>com.apple.safari</string>
 	</array>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>8482Q6EPL6.com.codeux.irc.textual</string>
+	</array>
 </dict>
 </plist>

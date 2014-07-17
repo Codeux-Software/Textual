@@ -65,13 +65,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	if (self.type == IRCChannelPrivateMessageType) {
-		[self destroyKeychains];
-	}
-}
-
 #pragma mark -
 #pragma mark Keychain Management
 
@@ -97,15 +90,11 @@
 
 - (void)setEncryptionKey:(NSString *)pass
 {
-	self.encryptionKeyIsSet = NSObjectIsNotEmpty(pass);
-
 	_encryptionKey = [pass copy];
 }
 
 - (void)setSecretKey:(NSString *)pass
 {
-	self.secretKeyIsSet = NSObjectIsNotEmpty(pass);
-
 	_secretKey = [pass copy];
 }
 
@@ -145,47 +134,66 @@
 
 - (void)writeSecretKeyKeychainItemToDisk
 {
-	if (self.secretKeyIsSet == NO) {
-		[AGKeychain modifyOrAddKeychainItem:@"Textual (Channel JOIN Key)"
-							   withItemKind:@"application password"
-								forUsername:nil
-							withNewPassword:NSStringEmptyPlaceholder
-								serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
-	} else {
-		/* Write secret key. */
-		NSObjectIsEmptyAssert(_secretKey);
-		
-		[AGKeychain modifyOrAddKeychainItem:@"Textual (Channel JOIN Key)"
-							   withItemKind:@"application password"
-								forUsername:nil
-							withNewPassword:_secretKey
-								serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
-	
-		_secretKey = nil;
-	}
+	[AGKeychain modifyOrAddKeychainItem:@"Textual (Channel JOIN Key)"
+						   withItemKind:@"application password"
+							forUsername:nil
+						withNewPassword:nil
+							serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
 }
 
 - (void)writeEncryptionKeyKeychainItemToDisk
 {
-	if (self.encryptionKeyIsSet == NO) {
-		[AGKeychain modifyOrAddKeychainItem:@"Textual (Blowfish Encryption)"
-							   withItemKind:@"application password"
-								forUsername:nil
-							withNewPassword:NSStringEmptyPlaceholder
-								serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
-	} else {
-		/* Write encryption key. */
-		NSObjectIsEmptyAssert(_encryptionKey);
-		
-		[AGKeychain modifyOrAddKeychainItem:@"Textual (Blowfish Encryption)"
-							   withItemKind:@"application password"
-								forUsername:nil
-							withNewPassword:_encryptionKey
-								serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
-	
-		_encryptionKey = nil;
-	}
+	[AGKeychain modifyOrAddKeychainItem:@"Textual (Blowfish Encryption)"
+						   withItemKind:@"application password"
+							forUsername:nil
+						withNewPassword:_encryptionKey
+							serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
+
+	_encryptionKey = nil;
 }
+
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+- (void)migrateKeychainItemsToCloud
+{
+	[AGKeychain migrateKeychainItemToCloud:@"Textual (Blowfish Encryption)"
+							  withItemKind:@"application password"
+							   forUsername:nil
+							   serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
+	
+	[AGKeychain migrateKeychainItemToCloud:@"Textual (Channel JOIN Key)"
+							  withItemKind:@"application password"
+							   forUsername:nil
+							   serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
+}
+
+- (void)migrateKeychainItemsFromCloud
+{
+	[AGKeychain migrateKeychainItemFromCloud:@"Textual (Blowfish Encryption)"
+								withItemKind:@"application password"
+								 forUsername:nil
+								 serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
+	
+	[AGKeychain migrateKeychainItemFromCloud:@"Textual (Channel JOIN Key)"
+								withItemKind:@"application password"
+								 forUsername:nil
+								 serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
+}
+
+- (void)destroyKeychainsThatExistOnCloud
+{
+	[AGKeychain deleteKeychainItem:@"Textual (Blowfish Encryption)"
+					  withItemKind:@"application password"
+					   forUsername:nil
+					   serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]
+						 fromCloud:YES];
+	
+	[AGKeychain deleteKeychainItem:@"Textual (Channel JOIN Key)"
+					  withItemKind:@"application password"
+					   forUsername:nil
+					   serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]
+						 fromCloud:YES];
+}
+#endif
 
 - (void)destroyKeychains
 {
@@ -199,9 +207,12 @@
 					   forUsername:nil
 					   serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
 
-	self.secretKeyIsSet = NO;
-	self.encryptionKeyIsSet = NO;
-	
+	[self resetKeychainStatus];
+}
+
+- (void)resetKeychainStatus
+{
+	/* Reset temporary store. */
 	_secretKey = nil;
 	_encryptionKey = nil;
 }
@@ -219,11 +230,6 @@
 }
 
 - (instancetype)initWithDictionary:(NSDictionary *)dic
-{
-	return [self initWithDictionary:dic checkKeychainStatus:YES];
-}
-
-- (instancetype)initWithDictionary:(NSDictionary *)dic checkKeychainStatus:(BOOL)checkKeychainIsSet
 {
 	if ((self = [self init])) {
 		/* If any key does not exist, then its value is inherited from the -init method. */
@@ -243,12 +249,6 @@
 
 		[dic assignStringTo:&_defaultModes forKey:@"defaultMode"];
 		[dic assignStringTo:&_defaultTopic forKey:@"defaultTopic"];
-
-		/* Establish state. */
-		if (checkKeychainIsSet) {
-			self.secretKeyIsSet			= NSObjectIsNotEmpty(self.secretKey);
-			self.encryptionKeyIsSet		= NSObjectIsNotEmpty(self.encryptionKey);
-		}
 		
 		return self;
 	}
@@ -268,9 +268,7 @@
 	 temporary keychain items stored in memory. */
 	return (NSObjectsAreEqual(s1, s2) &&
 			NSObjectsAreEqual(_secretKey, [seed temporarySecretKey]) &&
-			NSObjectsAreEqual(_encryptionKey, [seed temporaryEncryptionKey]) &&
-			_encryptionKeyIsSet == [seed encryptionKeyIsSet] &&
-			_secretKeyIsSet == [seed secretKeyIsSet]);
+			NSObjectsAreEqual(_encryptionKey, [seed temporaryEncryptionKey]));
 }
 
 - (NSMutableDictionary *)dictionaryValue
@@ -301,13 +299,10 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	IRCChannelConfig *mut = [[IRCChannelConfig allocWithZone:zone] initWithDictionary:[self dictionaryValue] checkKeychainStatus:NO];
+	IRCChannelConfig *mut = [[IRCChannelConfig allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
 	
 	[mut setSecretKey:_secretKey];
 	[mut setEncryptionKey:_encryptionKey];
-	
-	[mut setSecretKeyIsSet:_secretKeyIsSet];
-	[mut setEncryptionKeyIsSet:_encryptionKeyIsSet];
 	
 	return mut;
 }

@@ -272,6 +272,7 @@
 				[key isEqualToString:IRCWorldControllerCloudDeletedClientsStorageKey] ||
 				[key isEqualToString:TPCPreferencesCloudSyncKeyValueStoreServicesDefaultsKey] ||
 				[key isEqualToString:TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDefaultsKey] ||
+				[key isEqualToString:TPCPreferencesCloudSyncIncludeKeychainItemsDefaultsKey] ||
 				[key isEqualToString:TPCPreferencesThemeNameMissingLocallyDefaultsKey] ||
 				[key isEqualToString:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey]);
 	}
@@ -285,6 +286,7 @@
 		return ([key isEqualToString:IRCWorldControllerDefaultsStorageKey] ||
 				[key isEqualToString:TPCPreferencesCloudSyncKeyValueStoreServicesDefaultsKey] ||
 				[key isEqualToString:TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDefaultsKey] ||
+				[key isEqualToString:TPCPreferencesCloudSyncIncludeKeychainItemsDefaultsKey] ||
 				[key isEqualToString:TPCPreferencesThemeNameMissingLocallyDefaultsKey] ||
 				[key isEqualToString:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey]);
 	}
