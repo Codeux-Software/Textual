@@ -4637,7 +4637,7 @@
 	
 	PointerIsEmptyAssert(c);
 	
-	BOOL myself = [sendern isEqualIgnoringCase:[self localNickname]];
+	BOOL myself = [targetu isEqualIgnoringCase:[self localNickname]];
 	
 	if ([m isPrintOnlyMessage] == NO) {
 		if (myself) {
