@@ -1373,6 +1373,12 @@
 {
 	TVCServerListRowCell *rowView = [[TVCServerListRowCell alloc] initWithFrame:NSZeroRect];
 	
+	if ([item isClient]) {
+		[rowView setIsGroupItem:YES];
+	} else {
+		[rowView setIsGroupItem:NO];
+	}
+	
 	return rowView;
 }
 

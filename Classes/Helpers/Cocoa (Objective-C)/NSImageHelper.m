@@ -44,21 +44,4 @@
 	return [[NSImage alloc] initWithSize:size];
 }
 
-- (NSImage *)imageTintedWithColor:(NSColor *)tint
-{
-	NSImage *image = [self copy];
-
-	[image lockFocus];
-	
-	[tint set];
-	
-	NSRect imageRect = {NSZeroPoint, [image size]};
-	
-	NSRectFillUsingOperation(imageRect, NSCompositeSourceAtop);
-	
-	[image unlockFocus];
-	
-	return image;
-}
-
 @end

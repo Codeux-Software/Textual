@@ -75,6 +75,8 @@
 	}
 	
 	/* Maybe update icon image. */
+	BOOL isVibrantDark = [TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode];
+	
 	NSImageView *imageView = [self imageView];
 	
 	NSImage *icon;
@@ -85,15 +87,21 @@
 		icon = [NSImage imageNamed:queryIcon];
 	} else {
 		if (isActive) {
-			icon = [NSImage imageNamed:@"channelRoomStatusIcon_Glass_Active"];
+			if (isVibrantDark) {
+				icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteDarkActive"];
+			} else {
+				icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteLightActive"];
+			}
 		} else {
-			icon = [NSImage imageNamed:@"channelRoomStatusIcon_Glass_Inactive"];
+			if (isVibrantDark) {
+				icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteDarkInactive"];
+			} else {
+				icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteLightIactive"];
+			}
 		}
 	}
 	
-	if ([TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode]) {
-		icon = [icon imageTintedWithColor:[NSColor whiteColor]];
-		
+	if (isVibrantDark) {
 		[icon setTemplate:NO];
 	} else {
 		[icon setTemplate:YES];
@@ -108,6 +116,7 @@
 	NSDictionary *drawingContext = [self drawingContext];
 	
 	BOOL isActive = [drawingContext boolForKey:@"isActive"];
+	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
 	
 	IRCTreeItem *cellItem = [self cellItem];
 	
@@ -129,12 +138,26 @@
 	
 	NSImage *icon;
 	
+	BOOL isInverted = [TPCPreferences invertSidebarColors];
+	
 	if ([cellItem isPrivateMessage]) {
-		NSString *queryIcon = [interfaceObject privateMessageStatusIconFilename:isActive];
+		NSString *queryIcon = [interfaceObject privateMessageStatusIconFilename:isActive selected:isSelected];
 		
 		icon = [NSImage imageNamed:queryIcon];
 	} else {
-		icon = [NSImage imageNamed:@"channelRoomStatusIcon_Aqua"];
+		if (isActive) {
+			if (isInverted) {
+				icon = [NSImage imageNamed:@"channelRoomStatusIconMavericksDarkActive"];
+			} else {
+				icon = [NSImage imageNamed:@"channelRoomStatusIconMavericksLightActive"];
+			}
+		} else {
+			if (isInverted) {
+				icon = [NSImage imageNamed:@"channelRoomStatusIconMavericksDarkInactive"];
+			} else {
+				icon = [NSImage imageNamed:@"channelRoomStatusIconMavericksLightInactive"];
+			}
+		}
 	}
 	
 	[imageView setImage:icon];
@@ -246,22 +269,56 @@
 	if ([self needsToDrawRect:dirtyRect]) {
 		id userInterfaceObjects = [mainWindowServerList() userInterfaceObjects];
 		
-		NSColor *selectionColor;
-		
-		if ([mainWindow() isActiveForDrawing]) {
-			selectionColor = [userInterfaceObjects rowSelectionColorForActiveWindow];
-		} else {
-			selectionColor = [userInterfaceObjects rowSelectionColorForInactiveWindow];
+		if ([CSFWSystemInformation featureAvailableToOSXYosemite])
+		{
+			NSColor *selectionColor = nil;
+			
+			if ([mainWindow() isActiveForDrawing]) {
+				selectionColor = [userInterfaceObjects rowSelectionColorForActiveWindow];
+			} else {
+				selectionColor = [userInterfaceObjects rowSelectionColorForInactiveWindow];
+			}
+			
+			if (selectionColor) {
+				NSRect selectionRect = [self bounds];
+				
+				[selectionColor set];
+				
+				NSRectFill(selectionRect);
+			} else {
+				[super drawSelectionInRect:dirtyRect];
+			}
 		}
-		
-		if (selectionColor) {
-			NSRect selectionRect = [self bounds];
+		else
+		{
+			NSImage *selectionImage = nil;
 			
-			[selectionColor set];
+			if ([self isGroupItem]) {
+				if ([mainWindow() isActiveForDrawing]) {
+					selectionImage = [userInterfaceObjects serverRowSelectionImageForActiveWindow];
+				} else {
+					selectionImage = [userInterfaceObjects serverRowSelectionImageForInactiveWindow];
+				}
+			} else {
+				if ([mainWindow() isActiveForDrawing]) {
+					selectionImage = [userInterfaceObjects channelRowSelectionImageForActiveWindow];
+				} else {
+					selectionImage = [userInterfaceObjects channelRowSelectionImageForInactiveWindow];
+				}
+			}
 			
-			NSRectFill(selectionRect);
-		} else {
-			[super drawSelectionInRect:dirtyRect];
+			if (selectionImage) {
+				NSRect selectionRect = [self bounds];
+				
+				[selectionImage drawInRect:selectionRect
+								  fromRect:NSZeroRect
+								 operation:NSCompositeSourceOver
+								  fraction:1.0
+							respectFlipped:YES
+									 hints:nil];
+			} else {
+				[super drawSelectionInRect:dirtyRect];
+			}
 		}
 	}
 }
@@ -269,10 +326,8 @@
 - (void)didAddSubview:(NSView *)subview
 {
 	if ([subview isKindOfClass:[NSButton class]]) {
-		id firstObject = self.subviews[0];
-	
-		if ([firstObject isKindOfClass:[TVCServerListCellGroupItem class]]) {
-			TVCServerListCellGroupItem *groupItem = firstObject;
+		if ([self isGroupItem]) {
+			TVCServerListCellGroupItem *groupItem = [self subviews][0];
 			
 			[groupItem updateGroupDisclosureTriangle:(id)subview];
 		}

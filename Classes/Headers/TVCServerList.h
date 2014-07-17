@@ -79,11 +79,16 @@
 @end
 
 @interface TVCServerListMavericksLightUserInterface : TVCServerListSharedUserInterface
-+ (NSColor *)rowSelectionColorForActiveWindow;
-+ (NSColor *)rowSelectionColorForInactiveWindow;
++ (NSString *)privateMessageStatusIconFilename:(BOOL)isActive selected:(BOOL)selected;
 
 + (NSColor *)serverListBackgroundColorForActiveWindow;
 + (NSColor *)serverListBackgroundColorForInactiveWindow;
+
++ (NSImage *)channelRowSelectionImageForActiveWindow;
++ (NSImage *)channelRowSelectionImageForInactiveWindow;
+
++ (NSImage *)serverRowSelectionImageForActiveWindow;
++ (NSImage *)serverRowSelectionImageForInactiveWindow;
 
 + (NSFont *)messageCountBadgeFont;
 
@@ -145,11 +150,74 @@
 @end
 
 @interface TVCServerListMavericksDarkUserInterface : TVCServerListSharedUserInterface
-+ (NSColor *)rowSelectionColorForActiveWindow;
-+ (NSColor *)rowSelectionColorForInactiveWindow;
++ (NSString *)privateMessageStatusIconFilename:(BOOL)isActive selected:(BOOL)selected;
 
 + (NSColor *)serverListBackgroundColorForActiveWindow;
 + (NSColor *)serverListBackgroundColorForInactiveWindow;
+
++ (NSImage *)channelRowSelectionImageForActiveWindow;
++ (NSImage *)channelRowSelectionImageForInactiveWindow;
+
++ (NSImage *)serverRowSelectionImageForActiveWindow;
++ (NSImage *)serverRowSelectionImageForInactiveWindow;
+
++ (NSFont *)messageCountBadgeFont;
+
++ (NSFont *)normalChannelCellFont;
++ (NSFont *)selectedChannelCellFont;
+
++ (NSFont *)serverCellFont;
+
++ (NSColor *)messageCountBadgeAquaBackgroundColor;
++ (NSColor *)messageCountBadgeGraphtieBackgroundColor;
+
++ (NSColor *)messageCountHighlightedBadgeBackgroundColorForActiveWindow;
++ (NSColor *)messageCountHighlightedBadgeBackgroundColorForInactiveWindow;
+
++ (NSColor *)messageCountNormalBadgeTextColorForActiveWindow;
++ (NSColor *)messageCountNormalBadgeTextColorForInactiveWindow;
+
++ (NSColor *)messageCountHighlightedBadgeTextColor;
+
++ (NSColor *)messageCountSelectedBadgeTextColorForActiveWindow;
++ (NSColor *)messageCountSelectedBadgeTextColorForInactiveWindow;
+
++ (NSColor *)messageCountSelectedBadgeBackgroundColorForActiveWindow;
++ (NSColor *)messageCountSelectedBadgeBackgroundColorForInactiveWindow;
+
++ (NSColor *)messageCountBadgeShadowColor;
+
++ (NSColor *)serverCellNormalTextColor;
++ (NSColor *)serverCellDisabledTextColor;
+
++ (NSColor *)serverCellNormalTextShadowColorForActiveWindow;
++ (NSColor *)serverCellNormalTextShadowColorForInactiveWindow;
+
++ (NSColor *)serverCellSelectedTextColorForActiveWindow;
++ (NSColor *)serverCellSelectedTextColorForInactiveWindow;
+
++ (NSColor *)serverCellSelectedTextShadowColorForActiveWindow;
++ (NSColor *)serverCellSelectedTextShadowColorForInactiveWindow;
+
++ (NSColor *)channelCellNormalTextColor;
++ (NSColor *)channelCellDisabledTextColor;
+
++ (NSColor *)channelCellNormalTextShadowColor;
+
++ (NSColor *)channelCellSelectedTextColorForActiveWindow;
++ (NSColor *)channelCellSelectedTextColorForInactiveWindow;
++ (NSColor *)channelCellSelectedTextShadowColorForActiveWindow;
++ (NSColor *)channelCellSelectedTextShadowColorForInactiveWindow;
+
++ (NSColor *)graphiteTextSelectionShadowColor;
+
++ (NSInteger)messageCountBadgeHeight;
++ (NSInteger)messageCountBadgeMinimumWidth;
++ (NSInteger)messageCountBadgePadding;
++ (NSInteger)messageCountBadgeRightMargin;
+
++ (NSInteger)channelCellTextFieldWithBadgeRightMargin;
++ (NSInteger)channelCellTextFieldBottomMargin;
 @end
 
 @interface TVCServerListLightYosemiteUserInterface : TVCServerListSharedUserInterface
