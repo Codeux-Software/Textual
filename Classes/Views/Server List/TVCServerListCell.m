@@ -344,6 +344,13 @@
 		}
 		
 		cellFrame.origin.y = [interfaceObjects channelCellTextFieldBottomMargin];
+	} else {
+		/* Small magic number fix for alignment on Mountain Lion. */
+		if ([CSFWSystemInformation featureAvailableToOSXMavericks] == NO) {
+			cellFrame.origin.x += 4;
+			
+			cellFrame.size.width -= 4;
+		}
 	}
 	
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
