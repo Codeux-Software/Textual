@@ -223,6 +223,11 @@
 
 @implementation TVCServerListRowCell
 
+- (void)drawDraggingDestinationFeedbackInRect:(NSRect)dirtyRect
+{
+	; // Do nothing for this…
+}
+
 - (NSTableViewSelectionHighlightStyle)selectionHighlightStyle
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
