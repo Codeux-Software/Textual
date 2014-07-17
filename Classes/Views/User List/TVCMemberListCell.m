@@ -373,20 +373,28 @@
 		
 		/* Small frame corrections. */
 		/* This is so ugly, I know. */
-		if ([mainWindow() runningInHighResolutionMode] || isDrawingForMavericks) {
+		BOOL isDrawingForRetina = [mainWindow() runningInHighResolutionMode];
+		
+		BOOL frameCorrection = 0.0;
+		
+		if (isDrawingForRetina && isDrawingForMavericks) {
+			frameCorrection = -(1.0);
+		}
+		
+		if (isDrawingForRetina || isDrawingForMavericks) {
 			if ([mcstring isEqualToString:@"+"] ||
 				[mcstring isEqualToString:@"~"] ||
 				[mcstring isEqualToString:@"x"])
 			{
-				badgeTextPoint.y -= 1.5;
+				badgeTextPoint.y -= (1.5 + frameCorrection);
 			}
 			else if ([mcstring isEqualToString:@"^"])
 			{
-				badgeTextPoint.y += 1;
+				badgeTextPoint.y += (1.0 + frameCorrection);
 			}
 			else if ([mcstring isEqualToString:@"*"])
 			{
-				badgeTextPoint.y += 2;
+				badgeTextPoint.y += (2.0 + frameCorrection);
 			}
 			else if ([mcstring isEqualToString:@"@"] ||
 					 [mcstring isEqualToString:@"!"] ||
@@ -396,14 +404,14 @@
 					 [mcstring isEqualToString:@"?"] ||
 					 [mcstring isEqualToString:@"$"])
 			{
-				badgeTextPoint.y -= 0.5;
+				badgeTextPoint.y -= (0.5 + frameCorrection);
 			}
 		} else {
 			if ([mcstring isEqualToString:@"+"] ||
 				[mcstring isEqualToString:@"~"] ||
 				[mcstring isEqualToString:@"x"])
 			{
-				badgeTextPoint.y -= 1.5;
+				badgeTextPoint.y -= (1.5 + frameCorrection);
 			}
 			else if ([mcstring isEqualToString:@"@"] ||
 					 [mcstring isEqualToString:@"!"] ||
@@ -412,19 +420,19 @@
 					 [mcstring isEqualToString:@"#"] ||
 					 [mcstring isEqualToString:@"?"])
 			{
-				badgeTextPoint.y -= 1.0;
+				badgeTextPoint.y -= (1.0 + frameCorrection);
 			}
 			else if ([mcstring isEqualToString:@"^"])
 			{
-				badgeTextPoint.y += 1;
+				badgeTextPoint.y += (1.0 + frameCorrection);
 			}
 			else if ([mcstring isEqualToString:@"*"])
 			{
-				badgeTextPoint.y += 2;
+				badgeTextPoint.y += (2.0 + frameCorrection);
 			}
 			else if ([mcstring isEqualToString:@"$"])
 			{
-				badgeTextPoint.y -= 0.5;
+				badgeTextPoint.y -= (0.5 + frameCorrection);
 			}
 		}
 		
