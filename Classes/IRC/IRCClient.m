@@ -474,6 +474,8 @@
 	[self closeDialogs];
 	[self closeLogFile];
 	
+	[self.config destroyKeychains];
+	
 	@synchronized(self.channels) {
 		for (IRCChannel *c in self.channels) {
 			[c prepareForPermanentDestruction];
