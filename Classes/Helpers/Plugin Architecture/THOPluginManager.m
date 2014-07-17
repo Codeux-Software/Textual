@@ -273,7 +273,7 @@
 
 - (void)openExtrasInstallerDownloadURL
 {
-	NSString *currentVersion = [TPCApplicationInfo applicationInfoPlist][@"CFBundleVersion"];
+	NSString *currentVersion = [TPCApplicationInfo applicationVersion];
 	
 	NSString *urlToOpen = [NSString stringWithFormat:@"http://www.codeux.com/textual/downloads/latestExtrasInstaller.download?version=%@", [currentVersion encodeURIFragment]];
 	

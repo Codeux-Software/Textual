@@ -74,7 +74,7 @@
 
 + (NSString *)applicationSupportFolderPath
 {
-	NSURL *url = [RZFileManager() containerURLForSecurityApplicationGroupIdentifier:TXBundleGroupIdentifier];
+	NSURL *url = [RZFileManager() containerURLForSecurityApplicationGroupIdentifier:TXBundleBuildGroupIdentifier];
 	
 	NSString *dest = [url relativePath];
 	

@@ -51,7 +51,14 @@
 + (void)updateApplicationRunCount;
 
 + (NSString *)applicationName;
+
++ (NSString *)applicationVersion;
++ (NSString *)applicationVersionShort;
++ (NSString *)applicationVersionFlavor;
+
 + (NSString *)applicationBundleIdentifier;
+
++ (NSDate *)applicationBuildDate;
 
 + (NSInteger)applicationProcessID;
 
