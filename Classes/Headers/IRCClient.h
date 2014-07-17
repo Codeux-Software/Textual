@@ -196,10 +196,10 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 - (void)postEventToViewController:(NSString *)eventToken;
 - (void)postEventToViewController:(NSString *)eventToken forChannel:(IRCChannel *)channel;
 
-- (IRCAddressBookEntry *)checkIgnoreAgainstHostmask:(NSString *)host withMatches:(NSArray *)matches;
-
-- (BOOL)encryptOutgoingMessage:(NSString **)message channel:(IRCChannel *)channel;
+- (NSString *)encryptOutgoingMessage:(NSString *)message channel:(IRCChannel *)channel performedEncryption:(BOOL *)performedEncryption;
 - (void)decryptIncomingMessage:(NSString **)message channel:(IRCChannel *)channel;
+
+- (IRCAddressBookEntry *)checkIgnoreAgainstHostmask:(NSString *)host withMatches:(NSArray *)matches;
 
 - (BOOL)outputRuleMatchedInMessage:(NSString *)raw inChannel:(IRCChannel *)chan withLineType:(TVCLogLineType)type;
 

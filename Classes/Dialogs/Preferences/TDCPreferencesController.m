@@ -1088,7 +1088,6 @@
 						suppressionKey:nil
 					   suppressionText:nil];
 	} else {
-		/* Poll server for latest. */
 		[RZUbiquitousKeyValueStore() synchronize];
 		
 		[sharedCloudManager() synchronizeFromCloud];
@@ -1099,12 +1098,22 @@
 - (void)onChangedCloudSyncingServicesServersOnly:(id)sender
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	if ([TPCPreferences syncPreferencesToTheCloud] && [TPCPreferences syncPreferencesToTheCloudLimitedToServers] == NO) {
-		/* Poll server for latest. */
-		[RZUbiquitousKeyValueStore() synchronize];
-		
-		[sharedCloudManager() synchronizeFromCloud];
+	if ([TPCPreferences syncPreferencesToTheCloud]) {
+		if ([TPCPreferences syncPreferencesToTheCloudLimitedToServers] == NO) {
+			[RZUbiquitousKeyValueStore() synchronize];
+			
+			[sharedCloudManager() synchronizeFromCloud];
+		}
 	}
+#endif
+}
+
+- (void)onChangedCloudSyncingServicesIncludesKeychainItems:(id)sender
+{
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	BOOL syncToCloud = [TPCPreferences syncPreferencesToTheCloudIncludesKeychain];
+	
+	[TPCPreferences migrateKeychainItems:(syncToCloud == NO)];
 #endif
 }
 
@@ -1113,6 +1122,8 @@
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if (returnCode == TLOPopupPromptReturnSecondaryType) {
 		[sharedCloudManager() purgeDataStoredWithCloud];
+		
+		[TPCPreferences destroyCloudBasedKeychainItems];
 	}
 #endif
 }

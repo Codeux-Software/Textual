@@ -100,6 +100,7 @@
 
 - (IBAction)onChangedCloudSyncingServices:(id)sender;
 - (IBAction)onChangedCloudSyncingServicesServersOnly:(id)sender;
+- (IBAction)onChangedCloudSyncingServicesIncludesKeychainItems:(id)sender;
 
 - (IBAction)onOpenPathToCloudFolder:(id)sender;
 

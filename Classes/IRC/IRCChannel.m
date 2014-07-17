@@ -110,7 +110,7 @@
 		NSString *temporaryKey = [seed temporaryEncryptionKey];
 		
 		/* Both values are either going to be nil or one will be different than the other. */
-		BOOL encryptionUnchanged = NSObjectsAreEqual(temporaryKey, self.config.encryptionKey);
+		BOOL encryptionUnchanged = NSObjectsAreEqual(temporaryKey, self.encryptionKey);
 
 		/* Update the actual local config. */
 		self.config = seed; // Value is copied on assign.
@@ -149,6 +149,11 @@
 - (NSString *)secretKey
 {
 	return self.config.secretKey;
+}
+
+- (NSString *)encryptionKey
+{
+	return self.config.encryptionKey;
 }
 
 - (BOOL)isChannel
@@ -206,7 +211,7 @@
 	 Do not call setEncryptionKey: direction on self.config or that
 	 will only be written to the temporary store. */
 	
-	BOOL encryptionUnchanged = NSObjectsAreEqual(encryptionKey, self.config.encryptionKey);
+	BOOL encryptionUnchanged = NSObjectsAreEqual(encryptionKey, self.encryptionKey);
 	
 	if (encryptionUnchanged == NO) {
 		[self.config setEncryptionKey:encryptionKey];
@@ -292,6 +297,10 @@
 	
 	[self closeLogFile];
 	
+	if (self.isPrivateMessage) {
+		[self.config destroyKeychains];
+	}
+	
 	[self.viewController prepareForPermanentDestruction];
 }
 
@@ -300,6 +309,10 @@
 	[self resetStatus:IRCChannelStatusTerminated];
 	
 	[self closeLogFile];
+	
+	if (self.isPrivateMessage) {
+		[self.config destroyKeychains];
+	}
 
 	[self.viewController prepareForApplicationTermination];
 }

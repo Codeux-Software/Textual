@@ -159,19 +159,15 @@
 	[self.defaultModesField setStringValue:[self.config defaultModes]];
 	[self.defaultTopicField setStringValue:[self.config defaultTopic]];
 	
-	if ([self.config encryptionKeyIsSet]) {
-		[self.encryptionKeyField setStringValue:[self.config encryptionKeyValue]];
-	}
+	[self.encryptionKeyField setStringValue:[self.config encryptionKeyValue]];
+	
+	[self.secretKeyField setStringValue:[self.config secretKeyValue]];
 
-	if ([self.config secretKeyIsSet]) {
-		[self.secretKeyField setStringValue:[self.config secretKeyValue]];
-	}
-
-	[self.autoJoinCheck				setState:[self.config autoJoin]];
-	[self.JPQActivityCheck			setState:[self.config ignoreJPQActivity]];
-	[self.ignoreHighlightsCheck		setState:[self.config ignoreHighlights]];
-	[self.pushNotificationsCheck	setState:[self.config pushNotifications]];
-	[self.showTreeBadgeCountCheck	setState:[self.config showTreeBadgeCount]];
+	[self.autoJoinCheck	setState:[self.config autoJoin]];
+	[self.JPQActivityCheck setState:[self.config ignoreJPQActivity]];
+	[self.ignoreHighlightsCheck	setState:[self.config ignoreHighlights]];
+	[self.pushNotificationsCheck setState:[self.config pushNotifications]];
+	[self.showTreeBadgeCountCheck setState:[self.config showTreeBadgeCount]];
 
 	if ([TPCPreferences showInlineImages]) {
 		[self.disableInlineImagesCheck setState:[self.config ignoreInlineImages]];
@@ -187,14 +183,14 @@
 	[self.config setDefaultModes:[self.defaultModesField trimmedStringValue]];
 	[self.config setDefaultTopic:[self.defaultTopicField trimmedStringValue]];
 	
-	[self.config setSecretKey:		[self.secretKeyField firstTokenStringValue]];
-	[self.config setEncryptionKey:	[self.encryptionKeyField trimmedStringValue]];
+	[self.config setSecretKey:[self.secretKeyField firstTokenStringValue]];
+	[self.config setEncryptionKey:[self.encryptionKeyField trimmedStringValue]];
 	
-	[self.config setAutoJoin:			[self.autoJoinCheck state]];
-	[self.config setIgnoreJPQActivity:	[self.JPQActivityCheck state]];
-	[self.config setIgnoreHighlights:	[self.ignoreHighlightsCheck state]];
-	[self.config setPushNotifications:	[self.pushNotificationsCheck state]];
-	[self.config setShowTreeBadgeCount:	[self.showTreeBadgeCountCheck state]];
+	[self.config setAutoJoin:[self.autoJoinCheck state]];
+	[self.config setIgnoreJPQActivity:[self.JPQActivityCheck state]];
+	[self.config setIgnoreHighlights:[self.ignoreHighlightsCheck state]];
+	[self.config setPushNotifications:[self.pushNotificationsCheck state]];
+	[self.config setShowTreeBadgeCount:[self.showTreeBadgeCountCheck state]];
 
 	if ([TPCPreferences showInlineImages]) {
 		[self.config setIgnoreInlineImages:[self.disableInlineImagesCheck state]];

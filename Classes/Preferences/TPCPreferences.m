@@ -812,7 +812,7 @@ static NSMutableArray *excludeKeywords = nil;
 	NSString *defaultPrefsFile = [RZMainBundle() pathForResource:@"RegisteredUserDefaults" ofType:@"plist"];
 	
 	NSDictionary *defaultPreferences = [NSDictionary dictionaryWithContentsOfFile:defaultPrefsFile];
-	
+
 	return defaultPreferences;
 }
 

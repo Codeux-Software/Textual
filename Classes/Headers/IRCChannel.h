@@ -51,6 +51,7 @@ typedef enum IRCChannelStatus : NSInteger {
 @property (nonatomic, copy) IRCChannelConfig *config;
 @property (nonatomic, strong) IRCChannelMode *modeInfo;
 @property (nonatomic, assign) IRCChannelStatus status;
+@property (nonatomic, copy) NSString *encryptionKey;
 @property (nonatomic, assign) BOOL errorOnLastJoinAttempt;
 @property (nonatomic, assign) BOOL inUserInvokedModeRequest;
 @property (nonatomic, assign) NSInteger channelJoinTime;
@@ -83,8 +84,6 @@ typedef enum IRCChannelStatus : NSInteger {
 
 - (void)print:(TVCLogLine *)logLine;
 - (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock;
-
-- (void)setEncryptionKey:(NSString *)encryptionKey; // Use this instead of config to inform view of change.
 
 - (BOOL)memberExists:(NSString *)nickname;
 

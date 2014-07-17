@@ -103,7 +103,7 @@
 "TDCPreferencesController[1001][2]" = "Selecting \"Continue\" will erase all files stored by Textual on iCloud.\n\nThis erase will leave shared preferences intact. Only custom files such as shared styles will be erased.";
 
 "TDCPreferencesController[1002][1]" = "Are you sure you wish to continue?";
-"TDCPreferencesController[1002][2]" = "Selecting \"Continue\" will erase all data stored by Textual on iCloud related to shared preferences.\n\nPlease keep in mind that if any other copy of Textual is still configured for sharing, then the data you just erased may be placed back on iCloud by the device running that copy.";
+"TDCPreferencesController[1002][2]" = "Selecting \"Continue\" will erase all data stored by Textual on iCloud including passwords and preferences.\n\nPlease keep in mind that if any other copy of Textual is still configured for sharing, then the data you just erased may be placed back on iCloud by the device running that copy.";
 
 "TDCPreferencesController[1003]" = "No Log Location Selected";
 "TDCPreferencesController[1004]" = "No Location Selected";
