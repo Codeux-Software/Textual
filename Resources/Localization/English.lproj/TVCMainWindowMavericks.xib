@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6185.7" systemVersion="14A283o" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment version="1090" defaultVersion="1070" identifier="macosx"/>
+        <deployment version="1090" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.7"/>
     </dependencies>
@@ -1091,7 +1091,7 @@
                                         <segment toolTip="Manage Selection" image="NSActionTemplate" width="48" tag="1">
                                             <nil key="label"/>
                                         </segment>
-                                        <segment toolTip="Open Address Book" image="D58FCC4F-6B8D-40C6-B4C8-5CDD5291D938" width="46" tag="2">
+                                        <segment toolTip="Open Address Book" image="12FEE65A-4340-4B71-96EE-37D49CD35A01" width="46" tag="2">
                                             <nil key="label"/>
                                         </segment>
                                     </segments>
@@ -1680,7 +1680,7 @@ There are no other limits. What you see, is what you get.</string>
         <customObject id="oRw-Te-R5j" customClass="TXMenuControllerMainWindowProxy"/>
     </objects>
     <resources>
-        <image name="D58FCC4F-6B8D-40C6-B4C8-5CDD5291D938" width="20" height="18">
+        <image name="12FEE65A-4340-4B71-96EE-37D49CD35A01" width="20" height="18">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGS0xYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QEAcI
 ExgdHicoKS00OTw/RUhVJG51bGzVCQoLDA0ODxARElYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVwc1xO
