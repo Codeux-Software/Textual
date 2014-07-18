@@ -1099,7 +1099,6 @@
 		4C0095A71952AA73008A81C7 /* TPCPreferencesCloudSyncExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPreferencesCloudSyncExtension.h; sourceTree = "<group>"; };
 		4C0095AA1952AB88008A81C7 /* TXSharedApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXSharedApplication.m; sourceTree = "<group>"; };
 		4C0095AD1952AB9C008A81C7 /* TXSharedApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TXSharedApplication.h; sourceTree = "<group>"; };
-		4C028D951978F93C00D63D33 /* Main Project (Textual).profdata */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Main Project (Textual).profdata"; sourceTree = "<group>"; };
 		4C0444EA16F15F8200EBB665 /* TVCServerList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCServerList.m; sourceTree = "<group>"; };
 		4C0444EB16F15F8200EBB665 /* TVCServerListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCServerListCell.m; sourceTree = "<group>"; };
 		4C0879BD187061760034F5EB /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/Localization/English.lproj/TDCFileTransferDialog.xib; sourceTree = SOURCE_ROOT; };
@@ -1614,14 +1613,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4C028D941978F93C00D63D33 /* OptimizationProfiles */ = {
-			isa = PBXGroup;
-			children = (
-				4C028D951978F93C00D63D33 /* Main Project (Textual).profdata */,
-			);
-			path = OptimizationProfiles;
-			sourceTree = "<group>";
-		};
 		4C0879C4187061920034F5EB /* File Transfers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1640,7 +1631,6 @@
 				4C1DC55C1580420500A47BC9 /* Resources */,
 				4C1DC5551580420500A47BC9 /* Frameworks */,
 				4C1DC5531580420500A47BC9 /* Products */,
-				4C028D941978F93C00D63D33 /* OptimizationProfiles */,
 			);
 			sourceTree = "<group>";
 		};
