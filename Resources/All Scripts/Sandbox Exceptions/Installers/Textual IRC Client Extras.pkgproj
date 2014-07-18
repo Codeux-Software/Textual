@@ -1093,7 +1093,7 @@
 										<key>LANGUAGE</key>
 										<string>English</string>
 										<key>VALUE</key>
-										<string>This package installs all custom scripts that are exempt from the sandbox. What's included: apps, hermes, music, np, page, qt, spotify, rdio, vlc, and yolo. </string>
+										<string>This package installs all custom scripts that are exempt from the sandbox. What's included: apps, hermes, instacast, music, np, page, qt, spotify, rdio, vlc, and yolo. </string>
 									</dict>
 								</array>
 								<key>OPTIONS</key>
