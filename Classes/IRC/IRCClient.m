@@ -2641,6 +2641,8 @@
 				[dateFormatter setDateStyle:NSDateFormatterFullStyle];
 				[dateFormatter setTimeStyle:NSDateFormatterLongStyle];
 				
+				[dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+				
 				NSDate *apbd = [TPCApplicationInfo applicationBuildDate];
 				
 				text = BLS(1113, name, vers, gref, code, [dateFormatter stringFromDate:apbd]);
