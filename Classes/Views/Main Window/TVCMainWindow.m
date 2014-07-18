@@ -1444,7 +1444,7 @@
 	 then move selection to the console of the collapsed server. */
 	id itemBeingCollapsed = [notification userInfo][@"NSObject"];
 	
-	if ([itemBeingCollapsed isClient] == NO) {
+	if ([itemBeingCollapsed isClient]) {
 		if (itemBeingCollapsed == self.selectedClient) {
 			[self select:self.selectedClient];
 		}
