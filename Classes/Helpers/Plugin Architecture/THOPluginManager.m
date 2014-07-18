@@ -194,13 +194,9 @@
 			}
 
 			if (returnPathInfo) {
-				if ([returnData containsKey:script] == NO) {
-					[returnData setObjectWithoutOverride:fullpa forKey:script];
-				}
+				[returnData setObjectWithoutOverride:fullpa forKey:script];
 			} else {
-				if ([returnData containsObject:script] == NO) {
-					[returnData addObjectWithoutDuplication:script];
-				}
+				[returnData addObjectWithoutDuplication:script];
 			}
 		}
 	}
