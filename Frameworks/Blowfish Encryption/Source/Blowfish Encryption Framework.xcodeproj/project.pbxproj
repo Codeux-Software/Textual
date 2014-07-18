@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C1AD6F912DF624100B4AD56 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1AD6F812DF624100B4AD56 /* Security.framework */; };
 		4C1AD73E12DF625D00B4AD56 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1AD73D12DF625D00B4AD56 /* libcrypto.dylib */; };
 		4C1AD75912DF636E00B4AD56 /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1AD75812DF636E00B4AD56 /* libssl.dylib */; };
 		4C292F7F12DFD69400BE23FE /* Encryption.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C292F7D12DFD69400BE23FE /* Encryption.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -21,15 +20,11 @@
 		4CCE47E916C0EEF800915F60 /* Base64Encoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCE47E716C0EEF800915F60 /* Base64Encoding.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CCE47EA16C0EEF800915F60 /* Base64Encoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCE47E816C0EEF800915F60 /* Base64Encoding.m */; };
 		4CEC815D133F13140026DFAE /* BlowfishEncryption.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEC815C133F13140026DFAE /* BlowfishEncryption.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
-		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF5E0370ADEE00C91783 /* BlowfishEncryption_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlowfishEncryption_Prefix.pch; sourceTree = "<group>"; };
-		4C1AD6F812DF624100B4AD56 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4C1AD73D12DF625D00B4AD56 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
 		4C1AD75812DF636E00B4AD56 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = usr/lib/libssl.dylib; sourceTree = SDKROOT; };
 		4C292F7D12DFD69400BE23FE /* Encryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Encryption.h; sourceTree = "<group>"; };
@@ -49,7 +44,6 @@
 		4CF2F9A916E4CC7000B2F999 /* License.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = License.txt; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* BlowfishEncryption.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BlowfishEncryption.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,8 +51,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */,
-				4C1AD6F912DF624100B4AD56 /* Security.framework in Frameworks */,
 				4C1AD73E12DF625D00B4AD56 /* libcrypto.dylib in Frameworks */,
 				4C1AD75912DF636E00B4AD56 /* libssl.dylib in Frameworks */,
 			);
@@ -109,7 +101,6 @@
 		1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -117,10 +108,7 @@
 		1058C7B2FEA5585E11CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0867D6A5FE840307C02AAC07 /* AppKit.framework */,
-				D2F7E79907B2D74100F64583 /* CoreData.framework */,
 				0867D69BFE84028FC02AAC07 /* Foundation.framework */,
-				4C1AD6F812DF624100B4AD56 /* Security.framework */,
 			);
 			name = "Other Frameworks";
 			sourceTree = "<group>";

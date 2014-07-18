@@ -301,9 +301,9 @@ void TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(dispatch_block_t 
 {
 	dispatch_queue_t workerQueue = [TXSharedApplication sharedMutableSynchronizationSerialQueue];
 	
-	dispatch_queue_set_specific(workerQueue, workerQueue, (void *)1, NULL);
+	dispatch_queue_set_specific(workerQueue, (__bridge const void *)(workerQueue), (void *)1, NULL);
 	
-	if (dispatch_get_specific(workerQueue)) {
+	if (dispatch_get_specific((__bridge const void *)(workerQueue))) {
 		block();
 	} else {
 		TXPerformBlockOnDispatchQueue(workerQueue, block, TXPerformBlockOnDispatchQueueSyncOperationType);

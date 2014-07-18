@@ -162,8 +162,6 @@
 	
 	if (performRelease) {
 		if (workQueue) {
-			dispatch_release(workQueue);
-			
 			workQueue = NULL;
 		}
 	} else {
