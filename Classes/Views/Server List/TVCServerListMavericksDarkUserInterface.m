@@ -136,7 +136,11 @@
 
 + (NSInteger)serverCellTextFieldLeftMargin
 {
-	return 0.0;
+	if ([CSFWSystemInformation featureAvailableToOSXMavericks] == NO) {
+		return 4.0;
+	} else {
+		return 0.0;
+	}
 }
 
 + (NSInteger)serverCellTextFieldBottomMargin
