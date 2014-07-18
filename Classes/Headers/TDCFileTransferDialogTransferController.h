@@ -60,8 +60,8 @@
 @property (nonatomic, assign) TDCFileTransferDialogTransferStatus transferStatus;
 @property (nonatomic, strong) id portMapping;
 @property (nonatomic, assign) NSInteger sendQueueSize;
-@property (nonatomic, assign) dispatch_queue_t serverDispatchQueue;
-@property (nonatomic, assign) dispatch_queue_t serverSocketQueue;
+@property (nonatomic, strong) dispatch_queue_t serverDispatchQueue;
+@property (nonatomic, strong) dispatch_queue_t serverSocketQueue;
 @property (nonatomic, strong) GCDAsyncSocket *listeningServer;
 @property (nonatomic, strong) GCDAsyncSocket *listeningServerConnectedClient;
 @property (nonatomic, strong) GCDAsyncSocket *connectionToRemoteServer;

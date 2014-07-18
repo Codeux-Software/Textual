@@ -38,7 +38,7 @@
 #import "TextualApplication.h"
 
 @interface THOPluginManager : NSObject
-@property (nonatomic, assign) dispatch_queue_t dispatchQueue;
+@property (nonatomic, strong) dispatch_queue_t dispatchQueue;
 
 /* Manage loaded plugins. */
 - (void)loadPlugins;

@@ -53,7 +53,7 @@
 @property (nonatomic, strong) id ubiquityIdentityToken;
 @property (nonatomic, assign) BOOL localKeysWereUpdated;
 @property (nonatomic, assign) BOOL isSafeToPerformPreferenceValidation;
-@property (nonatomic, assign) dispatch_queue_t workerQueue;
+@property (nonatomic, strong) dispatch_queue_t workerQueue;
 @property (nonatomic, strong) NSTimer *cloudOneMinuteSyncTimer;
 @property (nonatomic, strong) NSTimer *cloudTenMinuteSyncTimer;
 @property (nonatomic, copy) NSURL *ubiquitousContainerURL;
@@ -985,8 +985,6 @@
 	
 	/* Dispatch clean-up. */
 	if (self.workerQueue) {
-		dispatch_release(self.workerQueue);
-		
 		self.workerQueue = NULL;
 	}
 	

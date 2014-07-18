@@ -57,14 +57,6 @@
 
 - (void)destroyDispatchQueue
 {
-	if (self.dispatchQueue) {
-		dispatch_release(self.dispatchQueue);
-	}
-
-	if (self.socketQueue) {
-		dispatch_release(self.socketQueue);
-	}
-
 	self.dispatchQueue = NULL;
 	self.socketQueue = NULL;
 }

@@ -62,8 +62,6 @@
 - (void)dealloc
 {
 	if (self.dispatchQueue) {
-		dispatch_release(self.dispatchQueue);
-
 		self.dispatchQueue = NULL;
 	}
 }

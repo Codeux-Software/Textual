@@ -93,14 +93,10 @@
 - (void)destroyDispatchQueues
 {
 	if (self.serverSocketQueue) {
-		dispatch_release(self.serverSocketQueue);
-
 		self.serverSocketQueue = nil;
 	}
 
 	if (self.serverDispatchQueue) {
-		dispatch_release(self.serverDispatchQueue);
-
 		self.serverDispatchQueue = nil;
 	}
 }
