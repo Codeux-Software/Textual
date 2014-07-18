@@ -215,7 +215,7 @@
 
 - (NSArray *)reservedCommandNamesForExtrasInstaller
 {
-	return @[@"apps", @"hermes", @"itunes", @"music", @"np", @"page", @"qt", @"radium", @"rdio", @"spotify", @"uuid", @"vlc", @"yolo"];
+	return @[@"apps", @"hermes", @"instacast", @"itunes", @"music", @"np", @"page", @"qt", @"radium", @"rdio", @"spotify", @"uuid", @"vlc", @"yolo"];
 }
 
 - (void)findHandlerForOutgoingCommand:(NSString *)command scriptPath:(NSString **)scriptPath isScript:(BOOL *)isScript isExtension:(BOOL *)isExtension
