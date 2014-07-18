@@ -51,9 +51,9 @@
 + (NSString *)privateMessageStatusIconFilename:(BOOL)isActive
 {
 	if (isActive) {
-		return @"VibrantLightServerListViewPrivateMessageUserIconActive";
+		return @"VibrantDarkServerListViewPrivateMessageUserIconActive";
 	} else {
-		return @"VibrantLightServerListViewPrivateMessageUserIconInactive";
+		return @"VibrantDarkServerListViewPrivateMessageUserIconInactive";
 	}
 }
 
