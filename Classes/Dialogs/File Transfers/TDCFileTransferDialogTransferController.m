@@ -152,6 +152,22 @@
 #pragma mark -
 #pragma mark Opening/Closing Transfer
 
+- (void)beginPreventingSystemSleep
+{
+	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+		self.transferProgressHandler = [RZProcessInfo() beginActivityWithOptions:NSActivityUserInitiated reason:@"Transferring file"];
+	}
+}
+
+- (void)endPreventingSystemSleep
+{
+	if (self.transferProgressHandler) {
+		[RZProcessInfo() endActivity:self.transferProgressHandler];
+		
+		self.transferProgressHandler = nil;
+	}
+}
+
 - (void)open
 {
 	if ([self isSender]) {
@@ -214,6 +230,8 @@
 	
 	/* Update status information. */
 	[self reloadStatusInformation];
+	
+	[self beginPreventingSystemSleep];
 }
 
 - (void)openConnectionAsServer
@@ -242,6 +260,8 @@
 
 	/* Update status information. */
 	[self reloadStatusInformation];
+	
+	[self beginPreventingSystemSleep];
 }
 
 - (BOOL)tryToOpenConnectionAsServer
@@ -572,6 +592,8 @@
 	[self.transferDialog updateMaintenanceTimer];
 
 	[self reloadStatusInformation];
+
+	[self endPreventingSystemSleep];
 }
 
 - (void)setDidErrorOnBadSenderAddress
