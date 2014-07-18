@@ -242,6 +242,7 @@ typedef enum TXFileTransferIPAddressDetectionMethod : NSInteger {
 + (TXTabKeyAction)tabKeyAction;
 
 + (BOOL)fileTransferRequestsAreReversed;
++ (BOOL)fileTransfersPreventIdleSystemSleep;
 
 + (TXFileTransferRequestReplyAction)fileTransferRequestReplyAction;
 + (TXFileTransferIPAddressDetectionMethod)fileTransferIPAddressDetectionMethod;

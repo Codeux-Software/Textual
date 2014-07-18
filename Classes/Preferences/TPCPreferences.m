@@ -516,6 +516,11 @@
 	return [RZUserDefaults() boolForKey:@"File Transfers -> File Transfer Requests Use Reverse DCC"];
 }
 
++ (BOOL)fileTransfersPreventIdleSystemSleep
+{
+	return [RZUserDefaults() boolForKey:@"File Transfers -> Idle System Sleep Prevented During File Transfer"];
+}
+
 + (NSInteger)fileTransferPortRangeStart
 {
 	return [RZUserDefaults() integerForKey:@"File Transfers -> File Transfer Port Range Start"];
