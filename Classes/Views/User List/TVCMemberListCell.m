@@ -175,38 +175,68 @@
 
 - (NSTableViewSelectionHighlightStyle)selectionHighlightStyle
 {
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite])
+	{
 		if ([TVCMemberListSharedUserInterface yosemiteIsUsingVibrantDarkMode]) {
 			return NSTableViewSelectionHighlightStyleRegular;
 		} else {
 			return NSTableViewSelectionHighlightStyleSourceList;
 		}
-	} else {
+	}
+	else
+	{
 		return NSTableViewSelectionHighlightStyleSourceList;
 	}
 }
 
 - (void)drawSelectionInRect:(NSRect)dirtyRect
 {
-	if ([self needsToDrawRect:dirtyRect]) {
+	if ([self needsToDrawRect:dirtyRect])
+	{
 		id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
 		
-		NSColor *selectionColor;
-		
-		if ([mainWindow() isActiveForDrawing]) {
-			selectionColor = [userInterfaceObjects rowSelectionColorForActiveWindow];
-		} else {
-			selectionColor = [userInterfaceObjects rowSelectionColorForInactiveWindow];
+		if ([CSFWSystemInformation featureAvailableToOSXYosemite])
+		{
+			NSColor *selectionColor;
+			
+			if ([mainWindow() isActiveForDrawing]) {
+				selectionColor = [userInterfaceObjects rowSelectionColorForActiveWindow];
+			} else {
+				selectionColor = [userInterfaceObjects rowSelectionColorForInactiveWindow];
+			}
+			
+			if (selectionColor) {
+				NSRect selectionRect = [self bounds];
+				
+				[selectionColor set];
+				
+				NSRectFill(selectionRect);
+			} else {
+				[super drawSelectionInRect:dirtyRect];
+			}
 		}
-		
-		if (selectionColor) {
-			NSRect selectionRect = [self bounds];
+		else
+		{
+			NSImage *selectionImage = nil;
 			
-			[selectionColor set];
+			if ([mainWindow() isActiveForDrawing]) {
+				selectionImage = [userInterfaceObjects rowSelectionImageForActiveWindow];
+			} else {
+				selectionImage = [userInterfaceObjects rowSelectionImageForInactiveWindow];
+			}
 			
-			NSRectFill(selectionRect);
-		} else {
-			[super drawSelectionInRect:dirtyRect];
+			if (selectionImage) {
+				NSRect selectionRect = [self bounds];
+				
+				[selectionImage drawInRect:selectionRect
+								  fromRect:NSZeroRect
+								 operation:NSCompositeSourceOver
+								  fraction:1.0
+							respectFlipped:YES
+									 hints:nil];
+			} else {
+				[super drawSelectionInRect:dirtyRect];
+			}
 		}
 	}
 }
