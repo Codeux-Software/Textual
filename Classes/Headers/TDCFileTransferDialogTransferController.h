@@ -65,6 +65,7 @@
 @property (nonatomic, strong) GCDAsyncSocket *listeningServer;
 @property (nonatomic, strong) GCDAsyncSocket *listeningServerConnectedClient;
 @property (nonatomic, strong) GCDAsyncSocket *connectionToRemoteServer;
+@property (nonatomic, strong) id transferProgressHandler; // Used to prevent system sleep.
 
 - (void)open;
 
