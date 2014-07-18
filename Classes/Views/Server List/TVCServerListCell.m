@@ -45,10 +45,30 @@
 
 - (void)updateDrawing:(NSRect)cellFrame
 {
+	[self updateTextFieldValue];
+	
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 		[self updateDrawingForYosemite:cellFrame withUserInterfaceObject:[mainWindowServerList() userInterfaceObjects]];
 	} else {
 		[self updateDrawingForMavericks:cellFrame withUserInterfaceObject:[mainWindowServerList() userInterfaceObjects]];
+	}
+}
+
+- (void)updateTextFieldValue
+{
+	/* Maybe update text field value. */
+	IRCTreeItem *cellItem = [self cellItem];
+	
+	NSTextField *textField = [self textField];
+	
+	NSString *stringValue = [textField stringValue];
+	
+	NSString *labelValue = [cellItem label];
+	
+	if ([stringValue isEqualTo:labelValue] == NO) {
+		[textField setStringValue:labelValue];
+	} else {
+		[textField setNeedsDisplay:YES];
 	}
 }
 
@@ -60,19 +80,6 @@
 	BOOL isActive = [drawingContext boolForKey:@"isActive"];
 	
 	IRCTreeItem *cellItem = [self cellItem];
-	
-	/* Maybe update text field value. */
-	NSTextField *textField = [self textField];
-
-	NSString *stringValue = [textField stringValue];
-	
-	NSString *labelValue = [cellItem label];
-	
-	if ([stringValue isEqualTo:labelValue] == NO) {
-		[textField setStringValue:labelValue];
-	} else {
-		[textField setNeedsDisplay:YES];
-	}
 	
 	/* Maybe update icon image. */
 	BOOL isVibrantDark = [TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode];
@@ -96,7 +103,7 @@
 			if (isVibrantDark) {
 				icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteDarkInactive"];
 			} else {
-				icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteLightIactive"];
+				icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteLightInactive"];
 			}
 		}
 	}
@@ -119,19 +126,6 @@
 	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
 	
 	IRCTreeItem *cellItem = [self cellItem];
-	
-	/* Maybe update text field value. */
-	NSTextField *textField = [self textField];
-	
-	NSString *stringValue = [textField stringValue];
-	
-	NSString *labelValue = [cellItem label];
-	
-	if ([stringValue isEqualTo:labelValue] == NO) {
-		[textField setStringValue:labelValue];
-	} else {
-		[textField setNeedsDisplay:YES];
-	}
 	
 	/* Maybe update icon image. */
 	NSImageView *imageView = [self imageView];
@@ -200,6 +194,7 @@
 	[theButton setImage:primary];
 	[theButton setAlternateImage:alterna];
 	
+	/* Update style of button. */
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 		[theButton setHighlightsBy:NSNoCellMask];
 	} else {
@@ -222,11 +217,13 @@
 - (NSDictionary *)drawingContext
 {
 	NSInteger rowIndex = [self rowIndex];
+	
+	IRCTreeItem *cellItem = [self cellItem];
 
 	return @{
 		@"rowIndex"				: @(rowIndex),
-		@"isActive"				: @([self.cellItem isActive]),
-		@"isGroupItem"			: @([self.cellItem isClient]),
+		@"isActive"				: @([cellItem isActive]),
+		@"isGroupItem"			: @([cellItem isClient]),
 		@"isInverted"			: @([TPCPreferences invertSidebarColors]),
 		@"isRetina"				: @([mainWindow() runningInHighResolutionMode]),
 		@"isActiveWindow"		: @([mainWindow() isActiveForDrawing]),
@@ -253,20 +250,24 @@
 
 - (NSTableViewSelectionHighlightStyle)selectionHighlightStyle
 {
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite])
+	{
 		if ([TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode]) {
 			return NSTableViewSelectionHighlightStyleRegular;
 		} else {
 			return NSTableViewSelectionHighlightStyleSourceList;
 		}
-	} else {
+	}
+	else
+	{
 		return NSTableViewSelectionHighlightStyleSourceList;
 	}
 }
 
 - (void)drawSelectionInRect:(NSRect)dirtyRect
 {
-	if ([self needsToDrawRect:dirtyRect]) {
+	if ([self needsToDrawRect:dirtyRect])
+	{
 		id userInterfaceObjects = [mainWindowServerList() userInterfaceObjects];
 		
 		if ([CSFWSystemInformation featureAvailableToOSXYosemite])
@@ -325,9 +326,14 @@
 
 - (void)didAddSubview:(NSView *)subview
 {
-	if ([subview isKindOfClass:[NSButton class]]) {
-		if ([self isGroupItem]) {
-			TVCServerListCellGroupItem *groupItem = [self subviews][0];
+	if ([subview isKindOfClass:[NSButton class]])
+	{
+		id firstObject = [self subviews][0];
+		
+		if ([firstObject isKindOfClass:[TVCServerListCellGroupItem class]]) {
+			TVCServerListCellGroupItem *groupItem = firstObject;
+			
+			[self setIsGroupItem:YES];
 			
 			[groupItem updateGroupDisclosureTriangle:(id)subview];
 		}
@@ -398,16 +404,17 @@
 			cellFrame.size.width -= (badgeRect.size.width + [interfaceObjects channelCellTextFieldWithBadgeRightMargin]);
 		}
 		
+		cellFrame.size.width -= [interfaceObjects channelCellTextFieldLeftMargin];
+		
+		cellFrame.origin.x = [interfaceObjects channelCellTextFieldLeftMargin];
 		cellFrame.origin.y = [interfaceObjects channelCellTextFieldBottomMargin];
 	} else {
-		/* Small magic number fix for alignment on Mountain Lion. */
-		if ([CSFWSystemInformation featureAvailableToOSXMavericks] == NO) {
-			cellFrame.origin.x += 4;
-			
-			cellFrame.size.width -= 4;
-		}
+		cellFrame.size.width -= [interfaceObjects serverCellTextFieldLeftMargin];
+		
+		cellFrame.origin.x = [interfaceObjects serverCellTextFieldLeftMargin];
+		cellFrame.origin.y = [interfaceObjects serverCellTextFieldBottomMargin];
 	}
-	
+
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 		[self drawInteriorWithFrameForYosemite:cellFrame withUserInterfaceObject:interfaceObjects];
 	} else {

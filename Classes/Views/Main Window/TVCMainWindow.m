@@ -41,9 +41,6 @@
 #define _treeDragItemType		@"tree"
 #define _treeDragItemTypes		[NSArray arrayWithObject:_treeDragItemType]
 
-#define _treeClientHeight		22.0
-#define _treeChannelHeight		20.0
-
 @implementation TVCMainWindow
 
 #pragma mark -
@@ -1362,23 +1359,19 @@
 
 - (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(IRCTreeItem *)item
 {
+	id userInterfaceObjects = [mainWindowServerList() userInterfaceObjects];
+	
 	if (item == nil || [item isClient]) {
-		return _treeClientHeight;
+		return [userInterfaceObjects serverCellRowHeight];
 	} else {
-		return _treeChannelHeight;
+		return [userInterfaceObjects channelCellRowHeight];
 	}
 }
 
 - (NSTableRowView *)outlineView:(NSOutlineView *)outlineView rowViewForItem:(id)item
 {
 	TVCServerListRowCell *rowView = [[TVCServerListRowCell alloc] initWithFrame:NSZeroRect];
-	
-	if ([item isClient]) {
-		[rowView setIsGroupItem:YES];
-	} else {
-		[rowView setIsGroupItem:NO];
-	}
-	
+
 	return rowView;
 }
 

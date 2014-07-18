@@ -37,35 +37,77 @@
 
 #import "TextualApplication.h"
 
-@interface TVCServerList : NSOutlineView
-@property (nonatomic, uweak) id keyDelegate;
-@property (nonatomic, nweak) IBOutlet NSVisualEffectView *visualEffectView;
-@property (nonatomic, nweak) IBOutlet TVCServerListBackgroundView *backgroundView;
+@implementation TVCServerListSharedUserInterface
 
-/* addItemToList and removeItemFromList work two completely different ways. 
- addItemToList expects that you have already added the item to the data source
- and that you are giving the list the index of the newly inserted item relative
- to the parent group. The list then manages that object. */
-- (void)addItemToList:(NSInteger)index inParent:(id)parent;
+static NSImage *_outlineViewDefaultDisclosureTriangle = nil;
+static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 
-/* removeItemFromList does not care about the index of an object as long as the
- object exists in the list. It will look for it anywhere. It checks if the item
- is a parent group or just a child and removes it based on that context. */
-- (void)removeItemFromList:(id)oldObject;
++ (BOOL)yosemiteIsUsingVibrantDarkMode
+{
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
+		return NO;
+	} else {
+		NSVisualEffectView *visualEffectView = [mainWindowServerList() visualEffectView];
+		
+		NSAppearance *currentDesign = [visualEffectView appearance];
+		
+		NSString *name = [currentDesign name];
+		
+		if ([name hasPrefix:NSAppearanceNameVibrantDark]) {
+			return YES;
+		} else {
+			return NO;
+		}
+	}
+}
 
-/* Drawing. */
-- (void)reloadAllDrawings;
++ (NSColor *)serverListBackgroundColor
+{
+	id userInterfaceObjects = [mainWindowServerList() userInterfaceObjects];
+	
+	if ([mainWindow() isActiveForDrawing]) {
+		return [userInterfaceObjects serverListBackgroundColorForActiveWindow];
+	} else {
+		return [userInterfaceObjects serverListBackgroundColorForInactiveWindow];
+	}
+}
 
-- (void)updateDrawingForItem:(IRCTreeItem *)cellItem;
-- (void)updateDrawingForRow:(NSInteger)rowIndex;
++ (void)setOutlineViewDefaultDisclosureTriangle:(NSImage *)image
+{
+	if (_outlineViewDefaultDisclosureTriangle == nil) {
+		_outlineViewDefaultDisclosureTriangle = [image copy];
+	}
+}
 
-- (void)updateBackgroundColor; // Do not call.
++ (void)setOutlineViewAlternateDisclosureTriangle:(NSImage *)image
+{
+	if (_outlineViewAlternateDisclosureTriangle == nil) {
+		_outlineViewAlternateDisclosureTriangle = [image copy];
+	}
+}
 
-@property (readonly, strong) id userInterfaceObjects;
++ (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected
+{
+	id userInterfaceObjects = [mainWindowServerList() userInterfaceObjects];
+	
+	NSImage *triangle = [userInterfaceObjects disclosureTriangleInContext:up selected:selected];
+	
+	if (triangle) {
+		return triangle;
+	} else {
+		if (up) {
+			return _outlineViewDefaultDisclosureTriangle;
+		} else {
+			return _outlineViewAlternateDisclosureTriangle;
+		}
+	}
+}
+
+
 @end
 
-@protocol TVCServerListDelegate <NSObject>
-@required
+@implementation TVCServerListMavericksUserInterface
+@end
 
-- (void)serverListKeyDown:(NSEvent *)e;
+@implementation TVCServerListYosemiteUserInterface
 @end
