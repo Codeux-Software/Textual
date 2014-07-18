@@ -55,6 +55,10 @@
 		
 		// ---- //
 		
+		[self checkForOtherCopiesOfTextualRunning];
+		
+		// ---- //
+		
 #if defined(DEBUG)
 		self.ghostModeIsOn = YES; // Do not use autoconnect during debug.
 #else
@@ -128,6 +132,28 @@
 	[TPCResourceManager copyResourcesToCustomAddonsFolder];
 	
 	[self applicationDidFinishLaunching];
+}
+
+- (void)checkForOtherCopiesOfTextualRunning
+{
+	NSArray *textualFourRunning = [NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.codeux.irc.textual"];
+	NSArray *textualFiveRunning = [NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.codeux.irc.textual5"];
+	
+	if ([textualFourRunning count] > 0 || [textualFiveRunning count] > 1) {
+		BOOL continueLaunch = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1237][2]")
+																  title:TXTLS(@"BasicLanguage[1237][1]")
+														  defaultButton:TXTLS(@"BasicLanguage[1237][3]")
+														alternateButton:TXTLS(@"BasicLanguage[1237][4]")
+														 suppressionKey:nil
+														suppressionText:nil];
+		
+		if (continueLaunch == NO) {
+			self.skipTerminateSave = YES;
+			self.applicationIsTerminating = YES;
+			
+			[RZSharedApplication() terminate:nil];
+		}
+	}
 }
 
 #pragma mark -
