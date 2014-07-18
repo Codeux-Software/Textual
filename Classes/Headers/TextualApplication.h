@@ -51,7 +51,7 @@
 
 	/* Class Forwarders. */
 
-	@class IRCAddressBook;
+	@class IRCAddressBookEntry;
 	@class IRCChannel;
 	@class IRCChannelConfig;
 	@class IRCChannelMode;
@@ -74,8 +74,12 @@
 	@class TDCFileTransferDialogRemoteAddress;
 	@class TDCFileTransferDialogTableCell;
 	@class TDCFileTransferDialogTransferController;
-	@class TDCHighlightEntryMatchCondition;
+	@class TDChanBanExceptionSheet;
+	@class TDChanBanSheet;
+	@class TDChanInviteExceptionSheet;
+	@class TDChannelSheet;
 	@class TDCHighlightEntrySheet;
+	@class TDCHighlightEntryMatchCondition;
 	@class TDCHighlightListSheet;
 	@class TDCInviteSheet;
 	@class TDCListDialog;
@@ -89,27 +93,24 @@
 	@class TDCSheetBase;
 	@class TDCTopicSheet;
 	@class TDCWelcomeSheet;
-	@class TDChanBanExceptionSheet;
-	@class TDChanBanSheet;
-	@class TDChanInviteExceptionSheet;
-	@class TDChannelSheet;
 	@class THOPluginItem;
 	@class THOPluginManager;
 	@class THOUnicodeHelper;
 	@class TLOFileLogger;
 	@class TLOGrowlController;
 	@class TLOInputHistory;
+	@class TLOInputHistoryObject;
 	@class TLOKeyEventHandler;
 	@class TLOLanguagePreferences;
 	@class TLOLinkParser;
 	@class TLONicknameCompletionStatus;
+	@class TLOpenLink;
 	@class TLOPopupPrompts;
 	@class TLORegularExpression;
 	@class TLOSoundPlayer;
 	@class TLOSpeechSynthesizer;
 	@class TLOTimer;
 	@class TLOTimerCommand;
-	@class TLOpenLink;
 	@class TPCApplicationInfo;
 	@class TPCPathInfo;
 	@class TPCPreferences;
@@ -118,18 +119,20 @@
 	@class TPCPreferencesUserDefaults;
 	@class TPCPreferencesUserDefaultsObjectProxy;
 	@class TPCResourceManager;
+	@class TPCResourceManagerDocumentTypeImporter;
 	@class TPCThemeController;
 	@class TPCThemeSettings;
 	@class TVCAnimatedContentNavigationOutlineView;
 	@class TVCBasicTableView;
-	@class TVCDockIcon;
-	@class TVCImageURLParser;
-	@class TVCImageURLoader;
-	@class TVCInputPromptDialog;
 	@class TVCBasicTableViewSeparatorCell;
+	@class TVCDockIcon;
+	@class TVCImageURLoader;
+	@class TVCImageURLParser;
+	@class TVCInputPromptDialog;
 	@class TVCLogController;
 	@class TVCLogControllerHistoricLogFile;
 	@class TVCLogControllerOperationQueue;
+	@class TVCLogControllerOperationItem;
 	@class TVCLogLine;
 	@class TVCLogPolicy;
 	@class TVCLogRenderer;
@@ -143,36 +146,41 @@
 	@class TVCMainWindowTextView;
 	@class TVCMainWindowTextViewBackground;
 	@class TVCMainWindowTextViewContentView;
-	@class TVCMemberLisCellTextFieldInterior;
 	@class TVCMemberList;
-	@class TVCMemberListBackgroundView;
 	@class TVCMemberListCell;
-	@class TVCMemberListDarkYosemiteUserInterface;
-	@class TVCMemberListLightYosemiteUserInterface;
-	@class TVCMemberListMavericksDarkUserInterface;
-	@class TVCMemberListMavericksLightUserInterface;
-	@class TVCMemberListMavericksUserInterface;
 	@class TVCMemberListRowCell;
+	@class TVCMemberLisCellTextFieldInterior;
+	@class TVCMemberListMavericksUserInterface;
+	@class TVCMemberListMavericksLightUserInterface;
+	@class TVCMemberListMavericksDarkUserInterface;
 	@class TVCMemberListSharedUserInterface;
+	@class TVCMemberListBackgroundView;
 	@class TVCMemberListUserInfoPopover;
+	@class TVCMemberListYosemiteUserInterface;
+	@class TVCMemberListLightYosemiteUserInterface;
+	@class TVCMemberListDarkYosemiteUserInterface;
 	@class TVCQueuedCertificateTrustPanel;
-	@class TVCServerLisCellTextFieldInterior;
-	@class TVCServerList; // This has a lot of classes.
-	@class TVCServerListBackgroundView;
+	@class TVCServerList;
 	@class TVCServerListCell;
 	@class TVCServerListCellChildItem;
 	@class TVCServerListCellGroupItem;
-	@class TVCServerListDarkYosemiteUserInterface;
-	@class TVCServerListLightYosemiteUserInterface;
-	@class TVCServerListMavericksDarkUserInterface;
-	@class TVCServerListMavericksLightUserInterface;
 	@class TVCServerListRowCell;
-	@class TVCTextFieldComboBoxWithValueValidation;
+	@class TVCServerLisCellTextFieldInterior;
+	@class TVCServerListMavericksUserInterface;
+	@class TVCServerListMavericksLightUserInterface;
+	@class TVCServerListMavericksDarkUserInterface;
+	@class TVCServerListSharedUserInterface;
+	@class TVCServerListBackgroundView;
+	@class TVCServerListYosemiteUserInterface;
+	@class TVCServerListLightYosemiteUserInterface;
+	@class TVCServerListDarkYosemiteUserInterface;
 	@class TVCTextFieldWithValueValidation;
+	@class TVCTextFieldComboBoxWithValueValidation;
 	@class TVCTextFieldWithValueValidationCell;
 	@class TVCTextViewIRCFormattingMenu;
 	@class TVCTextViewWithIRCFormatter;
 	@class TVCWebViewAutoScroll;
+	@class TXMasterController;
 	@class TXMasterController;
 	@class TXMenuController;
 	@class TXMenuControllerMainWindowProxy;
@@ -379,6 +387,9 @@
 	#import "TVCMemberList.h"
 	#import "TVCMemberListCell.h"
 	#import "TVCMemberListUserInfoPopover.h"
+	#import "TVCMemberListSharedUserInterface.h"
+	#import "TVCMemberListMavericksUserInterface.h"
+	#import "TVCMemberListYosemiteUserInterface.h"
 	#import "TVCQueuedCertificateTrustPanel.h"
 	#import "TVCServerList.h"
 	#import "TVCServerListCell.h"

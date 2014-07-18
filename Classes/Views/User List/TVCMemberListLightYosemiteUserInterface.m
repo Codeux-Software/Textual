@@ -37,39 +37,86 @@
 
 #import "TextualApplication.h"
 
-@interface TVCMemberList : NSOutlineView
-@property (nonatomic, uweak) id keyDelegate;
-@property (nonatomic, assign) BOOL isHiddenByUser;
-@property (nonatomic, strong) IBOutlet TVCMemberListUserInfoPopover *memberListUserInfoPopover;
-@property (nonatomic, nweak) IBOutlet NSVisualEffectView *visualEffectView;
-@property (nonatomic, nweak) IBOutlet TVCMemberListBackgroundView *backgroundView;
+@implementation TVCMemberListDarkYosemiteUserInterface
 
-/* Additions & Removals. */
-- (void)addItemToList:(NSInteger)index;
++ (NSInteger)cellRowHeight
+{
+	return 20.0;
+}
 
-- (void)removeItemFromList:(id)oldObject;
++ (NSColor *)userMarkBadgeBackgroundColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
+}
 
-/* Drawing. */
-- (void)beginGroupedUpdates;
-- (void)endGroupedUpdates;
++ (NSColor *)userMarkBadgeBackgroundColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
+}
 
-@property (readonly) BOOL updatesArePaging;
++ (NSColor *)normalCellTextColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.8 alpha:1.0];
+}
 
-- (void)reloadAllDrawings;
++ (NSColor *)awayUserCellTextColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.8 alpha:1.0];
+}
 
-- (void)updateDrawingForMember:(IRCUser *)cellItem;
-- (void)updateDrawingForRow:(NSInteger)rowIndex;
++ (NSColor *)normalCellTextColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.9 alpha:1.0];
+}
 
-- (void)updateBackgroundColor; // Do not call.
++ (NSColor *)awayUserCellTextColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.9 alpha:1.0];
+}
 
-@property (readonly, strong) id userInterfaceObjects;
++ (NSColor *)selectedCellTextColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.7 alpha:1.0];
+}
 
-/* Event monitor. */
-- (void)destroyUserInfoPopoverOnWindowKeyChange;
-@end
++ (NSColor *)selectedCellTextColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.7 alpha:1.0];
+}
 
-@protocol TVCMemberListDelegate <NSObject>
-@required
++ (NSColor *)userMarkBadgeNormalTextColor
+{
+	return [NSColor whiteColor];
+}
 
-- (void)memberListViewKeyDown:(NSEvent *)e;
++ (NSColor *)userMarkBadgeSelectedBackgroundColor
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)userMarkBadgeSelectedTextColor
+{
+	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:1.0];
+}
+
++ (NSColor *)rowSelectionColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
+}
+
++ (NSColor *)rowSelectionColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
+}
+
++ (NSColor *)memberListBackgroundColorForActiveWindow
+{
+	return nil; // Use system default.
+}
+
++ (NSColor *)memberListBackgroundColorForInactiveWindow
+{
+	return nil; // Use system default.
+}
+
 @end

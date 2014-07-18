@@ -37,39 +37,59 @@
 
 #import "TextualApplication.h"
 
-@interface TVCMemberList : NSOutlineView
-@property (nonatomic, uweak) id keyDelegate;
-@property (nonatomic, assign) BOOL isHiddenByUser;
-@property (nonatomic, strong) IBOutlet TVCMemberListUserInfoPopover *memberListUserInfoPopover;
-@property (nonatomic, nweak) IBOutlet NSVisualEffectView *visualEffectView;
-@property (nonatomic, nweak) IBOutlet TVCMemberListBackgroundView *backgroundView;
-
-/* Additions & Removals. */
-- (void)addItemToList:(NSInteger)index;
-
-- (void)removeItemFromList:(id)oldObject;
-
-/* Drawing. */
-- (void)beginGroupedUpdates;
-- (void)endGroupedUpdates;
-
-@property (readonly) BOOL updatesArePaging;
-
-- (void)reloadAllDrawings;
-
-- (void)updateDrawingForMember:(IRCUser *)cellItem;
-- (void)updateDrawingForRow:(NSInteger)rowIndex;
-
-- (void)updateBackgroundColor; // Do not call.
-
-@property (readonly, strong) id userInterfaceObjects;
-
-/* Event monitor. */
-- (void)destroyUserInfoPopoverOnWindowKeyChange;
+@interface TVCMemberListYosemiteUserInterface : TVCMemberListSharedUserInterface
 @end
 
-@protocol TVCMemberListDelegate <NSObject>
-@required
+@interface TVCMemberListLightYosemiteUserInterface : TVCMemberListYosemiteUserInterface
++ (NSInteger)cellRowHeight;
 
-- (void)memberListViewKeyDown:(NSEvent *)e;
++ (NSColor *)normalCellTextColorForActiveWindow;
++ (NSColor *)normalCellTextColorForInactiveWindow;
+
++ (NSColor *)awayUserCellTextColorForActiveWindow;
++ (NSColor *)awayUserCellTextColorForInactiveWindow;
+
++ (NSColor *)selectedCellTextColorForActiveWindow;
++ (NSColor *)selectedCellTextColorForInactiveWindow;
+
++ (NSColor *)userMarkBadgeNormalTextColor;
+
++ (NSColor *)userMarkBadgeSelectedBackgroundColor;
++ (NSColor *)userMarkBadgeSelectedTextColor;
+
++ (NSColor *)rowSelectionColorForActiveWindow;
++ (NSColor *)rowSelectionColorForInactiveWindow;
+
++ (NSColor *)memberListBackgroundColorForActiveWindow;
++ (NSColor *)memberListBackgroundColorForInactiveWindow;
+
++ (NSColor *)userMarkBadgeBackgroundColorForActiveWindow;
++ (NSColor *)userMarkBadgeBackgroundColorForInactiveWindow;
+@end
+
+@interface TVCMemberListDarkYosemiteUserInterface : TVCMemberListYosemiteUserInterface
++ (NSInteger)cellRowHeight;
+
++ (NSColor *)normalCellTextColorForActiveWindow;
++ (NSColor *)normalCellTextColorForInactiveWindow;
+
++ (NSColor *)awayUserCellTextColorForActiveWindow;
++ (NSColor *)awayUserCellTextColorForInactiveWindow;
+
++ (NSColor *)selectedCellTextColorForActiveWindow;
++ (NSColor *)selectedCellTextColorForInactiveWindow;
+
++ (NSColor *)userMarkBadgeNormalTextColor;
+
++ (NSColor *)userMarkBadgeSelectedBackgroundColor;
++ (NSColor *)userMarkBadgeSelectedTextColor;
+
++ (NSColor *)rowSelectionColorForActiveWindow;
++ (NSColor *)rowSelectionColorForInactiveWindow;
+
++ (NSColor *)memberListBackgroundColorForActiveWindow;
++ (NSColor *)memberListBackgroundColorForInactiveWindow;
+
++ (NSColor *)userMarkBadgeBackgroundColorForActiveWindow;
++ (NSColor *)userMarkBadgeBackgroundColorForInactiveWindow;
 @end

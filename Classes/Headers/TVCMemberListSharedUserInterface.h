@@ -37,39 +37,35 @@
 
 #import "TextualApplication.h"
 
-@interface TVCMemberList : NSOutlineView
-@property (nonatomic, uweak) id keyDelegate;
-@property (nonatomic, assign) BOOL isHiddenByUser;
-@property (nonatomic, strong) IBOutlet TVCMemberListUserInfoPopover *memberListUserInfoPopover;
-@property (nonatomic, nweak) IBOutlet NSVisualEffectView *visualEffectView;
-@property (nonatomic, nweak) IBOutlet TVCMemberListBackgroundView *backgroundView;
+@interface TVCMemberListSharedUserInterface : NSObject
++ (BOOL)yosemiteIsUsingVibrantDarkMode;
 
-/* Additions & Removals. */
-- (void)addItemToList:(NSInteger)index;
++ (NSColor *)memberListBackgroundColor;
 
-- (void)removeItemFromList:(id)oldObject;
++ (NSColor *)userMarkBadgeBackgroundColor_Y;
++ (NSColor *)userMarkBadgeBackgroundColor_A;
++ (NSColor *)userMarkBadgeBackgroundColor_H;
++ (NSColor *)userMarkBadgeBackgroundColor_O;
++ (NSColor *)userMarkBadgeBackgroundColor_Q;
++ (NSColor *)userMarkBadgeBackgroundColor_V;
 
-/* Drawing. */
-- (void)beginGroupedUpdates;
-- (void)endGroupedUpdates;
++ (NSColor *)userMarkBadgeBackgroundColor_YDefault;
++ (NSColor *)userMarkBadgeBackgroundColor_ADefault;
++ (NSColor *)userMarkBadgeBackgroundColor_HDefault;
++ (NSColor *)userMarkBadgeBackgroundColor_ODefault;
++ (NSColor *)userMarkBadgeBackgroundColor_QDefault;
++ (NSColor *)userMarkBadgeBackgroundColor_VDefault;
 
-@property (readonly) BOOL updatesArePaging;
++ (NSFont *)userMarkBadgeFont;
 
-- (void)reloadAllDrawings;
++ (NSInteger)userMarkBadgeHeight;
++ (NSInteger)userMarkBadgeWidth;
++ (NSInteger)userMarkBadgeLeftMargin;
++ (NSInteger)userMarkBadgeBottomMargin;
 
-- (void)updateDrawingForMember:(IRCUser *)cellItem;
-- (void)updateDrawingForRow:(NSInteger)rowIndex;
-
-- (void)updateBackgroundColor; // Do not call.
-
-@property (readonly, strong) id userInterfaceObjects;
-
-/* Event monitor. */
-- (void)destroyUserInfoPopoverOnWindowKeyChange;
++ (NSInteger)textCellLeftMargin;
++ (NSInteger)textCellBottomMargin;
 @end
 
-@protocol TVCMemberListDelegate <NSObject>
-@required
-
-- (void)memberListViewKeyDown:(NSEvent *)e;
+@interface TVCMemberListBackgroundView : NSBox
 @end

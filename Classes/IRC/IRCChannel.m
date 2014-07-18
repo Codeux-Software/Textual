@@ -798,6 +798,13 @@
 	return NO;
 }
 
+- (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
+{
+	id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
+	
+	return [userInterfaceObjects cellRowHeight];
+}
+
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
 	return [self memberAtIndex:index];

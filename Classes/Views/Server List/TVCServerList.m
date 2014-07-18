@@ -181,7 +181,6 @@
 	
 	/* Use the underlying visual effect view for real situations. */
 	[visaulEffectView setAppearance:appearance];
-	
 }
 
 - (void)updateBackgroundColor
@@ -259,33 +258,6 @@
 				
 				break;
 			}
-		}
-	}
-}
-
-@end
-
-#pragma mark -
-#pragma mark Background View
-
-@implementation TVCServerListBackgroundView
-
-- (BOOL)allowsVibrancy
-{
-	return NO;
-}
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-	if ([self needsToDrawRect:dirtyRect]) {
-		id userInterfaceObjects = [mainWindowServerList() userInterfaceObjects];
-		
-		NSColor *backgroundColor = [userInterfaceObjects serverListBackgroundColor];
-		
-		if (backgroundColor) {
-			[backgroundColor set];
-			
-			NSRectFill(dirtyRect);
 		}
 	}
 }
