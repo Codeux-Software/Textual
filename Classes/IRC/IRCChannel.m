@@ -249,6 +249,7 @@
 {
 	self.errorOnLastJoinAttempt = NO;
 	self.inUserInvokedModeRequest = NO;
+	self.sentInitialWhoRequest = NO;
 
 	self.channelJoinTime = -1;
 	

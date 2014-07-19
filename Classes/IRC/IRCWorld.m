@@ -572,17 +572,7 @@
 	c.viewController = [self createLogWithClient:client channel:c];
 
 	/* Insert ourself into a specific index if we are query. */
-	if ([c isChannel]) {
-		NSInteger n = [client indexOfFirstPrivateMessage];
-
-		if (n >= 0) {
-			[client addChannel:c atPosition:n];
-		} else {
-			[client addChannel:c];
-		}
-	} else {
-		[client addChannel:c];
-	}
+	[client addChannel:c];
 	
 	/* Reload server list. */
 	if (reload) {

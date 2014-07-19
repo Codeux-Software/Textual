@@ -85,6 +85,8 @@
 #define _timeoutInterval			360
 #define _trialPeriodInterval		43200 // 12 HOURS
 
+#define _maximumChannelCountPerWhoBatchRequest		5
+
 @interface IRCClient ()
 /* These are all considered private. */
 
@@ -93,6 +95,7 @@
 @property (nonatomic, assign) BOOL timeoutWarningShownToUser;
 @property (nonatomic, assign) NSInteger tryingNicknameNumber;
 @property (nonatomic, assign) NSUInteger CAPPausedStatus;
+@property (nonatomic, assign) NSUInteger lastWhoRequestChannelListIndex;
 @property (nonatomic, assign) NSTimeInterval lastLagCheck;
 @property (nonatomic, strong) NSString *cachedLocalHostmask;
 @property (nonatomic, strong) NSString *cachedLocalNickname;
@@ -164,6 +167,8 @@
 		
 		/* ---- */
 		self.lastSelectedChannel = nil;
+		
+		self.lastWhoRequestChannelListIndex = 0;
 		
 		/* ---- */
 		self.lastLagCheck = 0;
@@ -689,9 +694,31 @@
 {
 	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.channels) {
-			[self.channels addObjectWithoutDuplication:channel];
-			
-			[self updateStoredChannelList];
+			if ([channel isChannel]) {
+				[self.channels addObjectWithoutDuplication:channel];
+				
+				[self updateStoredChannelList];
+			} else {
+				NSInteger i = 0;
+				
+				BOOL completedInsert = NO;
+				
+				for (IRCChannel *e in self.channels) {
+					if ([e isPrivateMessage]) {
+						completedInsert = YES;
+						
+						[self.channels insertObject:channel atIndex:i];
+						
+						break;
+					}
+					
+					i += 1;
+				}
+				
+				if (completedInsert == NO) {
+					[self.channels addObject:channel];
+				}
+			}
 		}
 	});
 }
@@ -716,25 +743,6 @@
 			[self updateStoredChannelList];
 		}
 	});
-}
-
-- (NSInteger)indexOfFirstPrivateMessage
-{
-	__block NSInteger i = 0;
-	
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		@synchronized(self.channels) {
-			for (IRCChannel *e in self.channels) {
-				if ([e isPrivateMessage]) {
-					return;
-				}
-				
-				i += 1;
-			}
-		}
-	});
-	
-	return -1;
 }
 
 - (NSInteger)indexOfChannel:(IRCChannel *)channel
@@ -3523,6 +3531,8 @@
 	self.lagCheckDestinationChannel = nil;
 	
 	self.lastLagCheck = 0;
+	
+	self.lastWhoRequestChannelListIndex = 0;
 	
 	self.cachedLocalHostmask = nil;
 	self.cachedLocalNickname = self.config.nickname;
@@ -6445,10 +6455,6 @@
 						}
 					}
 				}
-
-				if (self.config.sendWhoCommandRequestsToChannels) {
-					[self send:IRCPrivateCommandIndex("who"), [c name], nil, nil];
-				}
 			}
 
 			if (self.inUserInvokedNamesRequest) {
@@ -8510,20 +8516,48 @@
 	 If a channel is an actual channel and it meets certain conditions, then we send
 	 a WHO request here to gather away status information. */
 	@synchronized(self.channels) {
-		for (IRCChannel *channel in self.channels) {
-			if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify] == NO) {
-				if ([channel isChannel]) {
-					if ([channel isActive]) {
-						if ([channel numberOfMembers] <= [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
-							[self send:IRCPrivateCommandIndex("who"), [channel name], nil];
+		NSInteger channelCount = [self.channels count];
+		
+		NSInteger startingPosition = self.lastWhoRequestChannelListIndex;
+		
+		NSMutableArray *channelBatch = [NSMutableArray arrayWithCapacity:_maximumChannelCountPerWhoBatchRequest];
+		
+		for (NSInteger i = startingPosition; i <= channelCount; i++) {
+			if ([channelBatch count] == _maximumChannelCountPerWhoBatchRequest) {
+				self.lastWhoRequestChannelListIndex = i;
+				
+				break;
+			} else {
+				if (i >= channelCount) {
+					i = 0;
+				} else {
+					IRCChannel *c = self.channels[i];
+					
+					if ([c isChannel]) {
+						if ([c isActive]) {
+							if ([c sentInitialWhoRequest] == NO) {
+								[c setSentInitialWhoRequest:YES];
+								
+								/* We set the flag even if user doesn't want them just to
+								 maintain internal state information. */
+								if (self.config.sendWhoCommandRequestsToChannels) {
+									[channelBatch addObject:c];
+								}
+							} else {
+								if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify] == NO) {
+									if ([c numberOfMembers] <= [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
+										[channelBatch addObject:c];
+									}
+								}
+							}
 						}
 					}
 				}
 			}
-
-			if ([channel isPrivateMessage]) {
-				[userstr appendFormat:@" %@", [channel name]];
-			}
+		}
+		
+		for (IRCChannel *c in channelBatch) {
+			[self send:IRCPrivateCommandIndex("who"), [c name], nil];
 		}
 	}
 

@@ -179,7 +179,6 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 - (void)addChannel:(IRCChannel *)channel atPosition:(NSInteger)pos;
 - (void)removeChannel:(IRCChannel *)channel;
 
-@property (readonly) NSInteger indexOfFirstPrivateMessage;
 - (NSInteger)indexOfChannel:(IRCChannel *)channel;
 
 - (void)updateStoredChannelList;
