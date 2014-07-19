@@ -43,6 +43,10 @@
 @property (nonatomic, assign) BOOL cachedValidValue;
 @end
 
+@interface TVCTextFieldWithValueValidationCell ()
+- (void)recalculatePositionOfClipView:(NSClipView *)clipView;
+@end
+
 @implementation TVCTextFieldWithValueValidation
 
 #pragma mark -
@@ -99,6 +103,8 @@
 	[self performValidation];
 	
 	[self informCallbackTextDidChange];
+	
+	[self recalculatePositionOfClipView];
 }
 
 - (void)setStringValue:(NSString *)aString
@@ -110,6 +116,8 @@
 	[self performValidation];
 	
 	[self informCallbackTextDidChange];
+	
+	[self recalculatePositionOfClipView];
 }
 
 - (void)informCallbackTextDidChange
@@ -132,8 +140,27 @@
 	} else {
 		self.cachedValidValue = (self.stringValueIsInvalidOnEmpty == NO);
 	}
+}
+
+- (void)recalculatePositionOfClipView
+{
+	NSArray *subviews = [self subviews];
 	
-	[self setNeedsDisplay:YES];
+	id internalClipView = nil;
+	
+	if ([subviews count] > 0) {
+		for (id object in subviews) {
+			if ([[object class] isSubclassOfClass:[NSClipView class]]) {
+				internalClipView = object;
+				
+				break;
+			}
+		}
+	}
+	
+	if (internalClipView) {
+		[[self cell] recalculatePositionOfClipView:internalClipView];
+	}
 }
 
 @end
@@ -145,7 +172,6 @@
 
 - (NSRect)correctedDrawingRect:(NSRect)aRect
 {
-	/* Return default rect if we are doing nothing. */
 	if ([self onlyShowStatusIfErrorOccurs]) {
 		if ([self parentValueIsValid]) {
 			return aRect;
@@ -153,10 +179,29 @@
 	}
 	
 	/* Update size. */
-	aRect.size.width -= 12;
+	aRect.size.width = [self correctedWidthForClipViewRect];
 	
 	/* Return frame. */
 	return aRect;
+}
+
+- (NSInteger)correctedWidthForClipViewRect
+{
+	NSRect parentRect = [self parentViewFrame];
+	
+	NSInteger parentWidth = NSWidth(parentRect);
+	
+	if ([self onlyShowStatusIfErrorOccurs]) {
+		if ([self parentValueIsValid]) {
+			return (parentWidth - 4.0);
+		}
+	}
+	
+	/* Update size. */
+	parentWidth -= 28;
+	
+	/* Return frame. */
+	return parentWidth;
 }
 
 - (NSColor *)erroneousValueBackgroundColor
@@ -167,9 +212,9 @@
 - (NSRect)erroneousValueBadgeIconRectInParentRect:(NSRect)aRect
 {
 	/* Look at all those magic numbers… */
-	NSInteger rightEdge = (NSMaxX(aRect) - 22);
+	NSInteger rightEdge = (NSMaxX(aRect) - 21.0);
 	
-	return NSMakeRect(rightEdge, 4, 15, 15);
+	return NSMakeRect(rightEdge, 4.0, 15.0, 15.0);
 }
 
 - (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
@@ -179,11 +224,11 @@
 		/* Define frame. */
 		NSRect backgroundFrame = cellFrame;
 		
-		backgroundFrame.origin.x += 1;
-		backgroundFrame.origin.y += 1;
+		backgroundFrame.origin.x += 1.0;
+		backgroundFrame.origin.y += 1.0;
 		
-		backgroundFrame.size.width -= 2;
-		backgroundFrame.size.height -= 2;
+		backgroundFrame.size.width -= 2.0;
+		backgroundFrame.size.height -= 2.0;
 		
 		/* Define color and fill it. */
 		NSColor *backgroundColor = [self erroneousValueBackgroundColor];
@@ -236,16 +281,16 @@
 
 - (void)editWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(id)anObject event:(NSEvent *)theEvent
 {
-	NSRect fixedRect = [self correctedDrawingRect:aRect];
-	
-	[super editWithFrame:fixedRect inView:controlView editor:textObj delegate:anObject event:theEvent];
+	[super editWithFrame:aRect inView:controlView editor:textObj delegate:anObject event:theEvent];
+
+	[self recalculatePositionOfClipView];
 }
 
 - (void)selectWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(id)anObject start:(NSInteger)selStart length:(NSInteger)selLength
 {
-	NSRect fixedRect = [self correctedDrawingRect:aRect];
-	
-	[super selectWithFrame:fixedRect inView:controlView editor:textObj delegate:anObject start:selStart length:selLength];
+	[super selectWithFrame:aRect inView:controlView editor:textObj delegate:anObject start:selStart length:selLength];
+
+	[self recalculatePositionOfClipView];
 }
 
 - (NSRect)drawingRectForBounds:(NSRect)theRect
@@ -253,6 +298,27 @@
 	NSRect fixedRect = [super drawingRectForBounds:theRect];
 	
 	return [self correctedDrawingRect:fixedRect];
+}
+
+- (void)recalculatePositionOfClipView:(NSClipView *)clipView
+{
+	NSRect clipViewRect = [clipView frame];
+	
+	clipViewRect.size.width = [self correctedWidthForClipViewRect];
+	
+	[clipView setFrame:clipViewRect];
+	
+	[[self parentField] resetCursorRects];
+}
+
+- (NSRect)parentViewFrame
+{
+	return [[self parentField] frame];
+}
+
+- (void)recalculatePositionOfClipView
+{
+	[[self parentField] recalculatePositionOfClipView];
 }
 
 - (BOOL)parentValueIsEmpty

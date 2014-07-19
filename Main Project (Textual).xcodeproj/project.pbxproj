@@ -777,6 +777,7 @@
 		4CA110F21955AAA10062EC4E /* TVCMainWindowSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110E91955AAA10062EC4E /* TVCMainWindowSplitView.m */; };
 		4CA110F31955AAA10062EC4E /* TVCMainWindowTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110EA1955AAA10062EC4E /* TVCMainWindowTextView.m */; };
 		4CA110F41955AAA10062EC4E /* TVCMainWindowTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110EA1955AAA10062EC4E /* TVCMainWindowTextView.m */; };
+		4CA6CA48197A3BE200AF1D19 /* TVCTextFieldComboBoxWithValueValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C001C07197A10DC0061C2C5 /* TVCTextFieldComboBoxWithValueValidation.m */; };
 		4CABE85A1840615A002FE4B8 /* TDCProgressInformationSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CABE8591840615A002FE4B8 /* TDCProgressInformationSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CABE85B1840615A002FE4B8 /* TDCProgressInformationSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CABE8591840615A002FE4B8 /* TDCProgressInformationSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CABE85E184061E5002FE4B8 /* TDCProgressInformationSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CABE85C184061E5002FE4B8 /* TDCProgressInformationSheet.xib */; };
@@ -3607,7 +3608,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CA110E51955AA890062EC4E /* TPCResourceManager.m in Sources */,
 				4C5A0319170C31110016BB1A /* TPCPreferencesImportExport.m in Sources */,
+				4CA6CA48197A3BE200AF1D19 /* TVCTextFieldComboBoxWithValueValidation.m in Sources */,
 				4C0879D4187061BF0034F5EB /* TDCFileTransferDialogTableCell.m in Sources */,
 				4C937BDD17061A4D0050CEF3 /* TLOSpeechSynthesizer.m in Sources */,
 				4C0444F616F1603B00EBB665 /* TXGlobalModels.m in Sources */,
@@ -3674,7 +3677,6 @@
 				4C0445A416F1603C00EBB665 /* IRCExtras.m in Sources */,
 				4C0445A516F1603C00EBB665 /* IRCISupportInfo.m in Sources */,
 				4C0445A616F1603C00EBB665 /* IRCMessage.m in Sources */,
-				4CA110E51955AA890062EC4E /* TPCResourceManager.m in Sources */,
 				4CB4806D1965344300E0782E /* TVCAnimatedContentNavigationOutlineView.m in Sources */,
 				4C0445A716F1603C00EBB665 /* IRCModeInfo.m in Sources */,
 				4C0445A816F1603C00EBB665 /* IRCPrefix.m in Sources */,
