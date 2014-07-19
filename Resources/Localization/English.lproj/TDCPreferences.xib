@@ -1286,7 +1286,7 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="352" height="20"/>
+                                                    <size key="minSize" width="352" height="16"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="Strips away formatting such as ">
@@ -1376,7 +1376,7 @@
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="352" height="20"/>
+                                                    <size key="minSize" width="352" height="16"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
@@ -1982,7 +1982,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="MpU-MJ-P1S">
-                    <rect key="frame" x="51" y="287" width="151" height="16"/>
+                    <rect key="frame" x="50" y="307" width="151" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Maximum Channel Joins:" id="r8a-IS-36w">
                         <font key="font" metaFont="cellTitle"/>
@@ -1991,7 +1991,7 @@
                     </textFieldCell>
                 </textField>
                 <slider appearanceType="aqua" verticalHuggingPriority="750" id="9XR-dG-6jw">
-                    <rect key="frame" x="227" y="270" width="276" height="17"/>
+                    <rect key="frame" x="226" y="290" width="276" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <sliderCell key="cell" controlSize="small" state="on" alignment="left" minValue="1" maxValue="20" doubleValue="1" tickMarkPosition="below" numberOfTickMarks="20" allowsTickMarkValuesOnly="YES" sliderType="linear" id="ROR-5N-lPB"/>
                     <connections>
@@ -2000,7 +2000,7 @@
                     </connections>
                 </slider>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="Vi1-qf-oHg">
-                    <rect key="frame" x="228" y="254" width="11" height="14"/>
+                    <rect key="frame" x="227" y="274" width="11" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="1" id="sXf-Xv-avB">
                         <font key="font" metaFont="smallSystem"/>
@@ -2009,7 +2009,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="0JH-yX-1pA">
-                    <rect key="frame" x="488" y="255" width="18" height="14"/>
+                    <rect key="frame" x="487" y="275" width="18" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="20" id="d2Q-58-yZq">
                         <font key="font" metaFont="smallSystem"/>
@@ -2018,7 +2018,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="sxr-6Y-z9j">
-                    <rect key="frame" x="283" y="254" width="11" height="14"/>
+                    <rect key="frame" x="282" y="274" width="11" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="5" id="szD-RT-eEJ">
                         <font key="font" metaFont="smallSystem"/>
@@ -2027,7 +2027,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="cGZ-Pz-aZ4">
-                    <rect key="frame" x="350" y="254" width="18" height="14"/>
+                    <rect key="frame" x="349" y="274" width="18" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="10" id="t7B-FL-ehc">
                         <font key="font" metaFont="smallSystem"/>
@@ -2036,7 +2036,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="iQU-cc-yi3">
-                    <rect key="frame" x="419" y="254" width="18" height="14"/>
+                    <rect key="frame" x="418" y="274" width="18" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="15" id="22Y-44-XNk">
                         <font key="font" metaFont="smallSystem"/>
@@ -2045,14 +2045,14 @@
                     </textFieldCell>
                 </textField>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="6pI-nG-5UE">
-                    <rect key="frame" x="67" y="223" width="442" height="5"/>
+                    <rect key="frame" x="66" y="243" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <slider appearanceType="aqua" verticalHuggingPriority="750" id="tfY-TP-YZN">
-                    <rect key="frame" x="52" y="119" width="458" height="17"/>
+                    <rect key="frame" x="52" y="100" width="458" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="2000" tickMarkPosition="below" numberOfTickMarks="50" allowsTickMarkValuesOnly="YES" sliderType="linear" id="JHI-LK-miQ"/>
                     <connections>
@@ -2060,7 +2060,7 @@
                     </connections>
                 </slider>
                 <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="aoy-4f-aLZ">
-                    <rect key="frame" x="49" y="149" width="457" height="40"/>
+                    <rect key="frame" x="48" y="125" width="457" height="84"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="VVG-e6-qMd">
                         <rect key="frame" x="0.0" y="0.0" width="457" height="40"/>
@@ -2071,11 +2071,11 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="textColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="457" height="40"/>
+                                <size key="minSize" width="457" height="84"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment>
-                                        <string key="content">Textual queries each channel every thirty seconds for away status information. This setting defines the maximum number of users that a channel can have before it stops requesting information. A lower setting can help reduce network load.</string>
+                                        <string key="content">Every thirty seconds Textual takes five (5) channels from the channel list for each server and sends the WHO command to them in order to establish the state of the channel. This state information includes the away status of every user. Drag the slider below to change the maximum size of a channel that Textual should query. It is recommended to set the value to 400 to cover most channels. The away status information of very large channels is usually not relevant. </string>
                                         <attributes>
                                             <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="11" name="LucidaGrande"/>
@@ -2099,7 +2099,7 @@
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="457" height="40"/>
+                                <size key="minSize" width="457" height="84"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                             </textView>
                         </subviews>
@@ -2115,7 +2115,7 @@
                     </scroller>
                 </scrollView>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="wcy-2K-Z0C">
-                    <rect key="frame" x="51" y="199" width="240" height="16"/>
+                    <rect key="frame" x="50" y="219" width="240" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="WHO Command Maximum Channel Size:" id="xkB-rD-fPk">
                         <font key="font" metaFont="cellTitle"/>
@@ -2124,7 +2124,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="cIi-Pq-WPZ">
-                    <rect key="frame" x="53" y="103" width="11" height="14"/>
+                    <rect key="frame" x="53" y="84" width="11" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="M5q-ps-YMl">
                         <font key="font" metaFont="smallSystem"/>
@@ -2133,7 +2133,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="hUG-W4-cww">
-                    <rect key="frame" x="485" y="103" width="36" height="14"/>
+                    <rect key="frame" x="485" y="84" width="36" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="2,000" id="Fde-ve-jLK">
                         <font key="font" metaFont="smallSystem"/>
@@ -2142,7 +2142,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="nYa-5J-0VR">
-                    <rect key="frame" x="135" y="103" width="25" height="14"/>
+                    <rect key="frame" x="135" y="84" width="25" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="400" id="6EW-Df-jxu">
                         <font key="font" metaFont="smallSystem"/>
@@ -2151,7 +2151,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="V7m-3A-nss">
-                    <rect key="frame" x="227" y="103" width="25" height="14"/>
+                    <rect key="frame" x="227" y="84" width="25" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="800" id="J0v-lX-lSI">
                         <font key="font" metaFont="smallSystem"/>
@@ -2160,7 +2160,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="LRz-ln-JIt">
-                    <rect key="frame" x="304" y="103" width="36" height="14"/>
+                    <rect key="frame" x="304" y="84" width="36" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="1,200" id="xVW-kp-5fh">
                         <font key="font" metaFont="smallSystem"/>
@@ -2169,7 +2169,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="pt3-ra-o1s">
-                    <rect key="frame" x="394" y="103" width="36" height="14"/>
+                    <rect key="frame" x="394" y="84" width="36" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="1,600" id="NsV-py-07s">
                         <font key="font" metaFont="smallSystem"/>
@@ -2178,7 +2178,7 @@
                     </textFieldCell>
                 </textField>
                 <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="5bf-Zg-Aoj">
-                    <rect key="frame" x="49" y="239" width="172" height="40"/>
+                    <rect key="frame" x="48" y="259" width="172" height="40"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="zdS-8U-w4l">
                         <rect key="frame" x="0.0" y="0.0" width="172" height="40"/>
