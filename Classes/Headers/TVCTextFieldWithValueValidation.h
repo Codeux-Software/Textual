@@ -61,32 +61,6 @@ typedef BOOL (^TVCTextFieldWithValueValidationBlock)(NSString *currentValue);
 - (void)performValidation; /* Force the text field to clear cache and validate value. */
 @end
 
-/* NSComboBox is actually a subclass of NSTextField, but because there is 
- no way to have TVCTextFieldWithValueValidation as our superclass without
- reimplementing all the dynamics of NSComboBox, we have to redeclare the 
- entire API of TVCTextFieldWithValueValidation. */
-@interface TVCTextFieldComboBoxWithValueValidation : NSComboBox
-@property (nonatomic, copy) TVCTextFieldWithValueValidationBlock validationBlock;
-@property (nonatomic, assign) BOOL onlyShowStatusIfErrorOccurs; // Only show color or symbol if value is erroneous.
-@property (nonatomic, assign) BOOL stringValueUsesOnlyFirstToken; // Only use everything before first space (" ") as value.
-@property (nonatomic, assign) BOOL stringValueIsTrimmed; // -stringValueUsesOnlyFirstToken returns a trimmed value of newlines and spaces. However, if you want mroe than first token, then specify this.
-@property (nonatomic, assign) BOOL stringValueIsInvalidOnEmpty; // Is an empty string considered invalid?
-@property (nonatomic, uweak) id textDidChangeCallback; // Calls method "-(void)validatedTextFieldTextDidChange:(id)sender" whereas "sender" is the text field.
-
-@property (readonly, copy) NSString *value; /* The current value. */
-@property (readonly, copy) NSString *lowercaseValue;
-@property (readonly, copy) NSString *uppercaseValue;
-
-@property (readonly) NSInteger integerValue;
-
-@property (readonly) BOOL valueIsEmpty;
-@property (readonly) BOOL valueIsValid;
-
-- (void)performValidation; /* Force the text field to clear cache and validate value. */
-@end
-
-/* The cell is shared by both normal text field and combo box. */
-/* It will adjust the underlying frames depending on which. */
 @interface TVCTextFieldWithValueValidationCell : NSTextFieldCell
 @property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *parentField;
 @end
