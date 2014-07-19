@@ -366,12 +366,12 @@
 		@"children" : @[
 			@{@"name" : TXTLS(@"TDCServerSheet[1007][07]"),	@"view" : self.addressBookContentView},
 			@{@"name" : TXTLS(@"TDCServerSheet[1007][01]"),	@"view" : self.autojoinContentView},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][02]"),	@"view" : self.connectCommandsContentView,		@"firstResponder" : self.connectCommandsField},
+			@{@"name" : TXTLS(@"TDCServerSheet[1007][02]"),	@"view" : self.connectCommandsContentView},
 			@{@"name" : TXTLS(@"TDCServerSheet[1007][03]"),	@"view" : self.contentEncodingContentView},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][05]"),	@"view" : self.generalContentView,				@"firstResponder" : self.serverAddressCombo},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][06]"),	@"view" : self.identityContentView,				@"firstResponder" : self.usernameField},
+			@{@"name" : TXTLS(@"TDCServerSheet[1007][05]"),	@"view" : self.generalContentView},
+			@{@"name" : TXTLS(@"TDCServerSheet[1007][06]"),	@"view" : self.identityContentView},
 			@{@"name" : TXTLS(@"TDCServerSheet[1007][12]"),	@"view" : self.highlightsContentView},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][08]"),	@"view" : self.disconnectMessagesContentView,	@"firstResponder" : self.normalLeavingCommentField},
+			@{@"name" : TXTLS(@"TDCServerSheet[1007][08]"),	@"view" : self.disconnectMessagesContentView},
 		]
 	}];
 	
