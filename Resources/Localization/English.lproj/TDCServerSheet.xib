@@ -232,7 +232,7 @@ Gw
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button id="1531">
-                    <rect key="frame" x="136" y="101" width="225" height="18"/>
+                    <rect key="frame" x="136" y="91" width="225" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Connect when Textual opens" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="1536">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -240,7 +240,7 @@ Gw
                     </buttonCell>
                 </button>
                 <button id="1532">
-                    <rect key="frame" x="136" y="81" width="281" height="18"/>
+                    <rect key="frame" x="136" y="71" width="281" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Perform reconnect on disconnect" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="1535">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -248,7 +248,7 @@ Gw
                     </buttonCell>
                 </button>
                 <textField verticalHuggingPriority="750" id="1538">
-                    <rect key="frame" x="100" y="245" width="104" height="17"/>
+                    <rect key="frame" x="100" y="235" width="104" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Network Name:" id="1559">
                         <font key="font" metaFont="system"/>
@@ -257,7 +257,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1540">
-                    <rect key="frame" x="99" y="211" width="107" height="17"/>
+                    <rect key="frame" x="99" y="201" width="107" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Server Address:" id="1557">
                         <font key="font" metaFont="system"/>
@@ -266,7 +266,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1541" customClass="TVCTextFieldWithValueValidation">
-                    <rect key="frame" x="209" y="177" width="152" height="22"/>
+                    <rect key="frame" x="209" y="167" width="152" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="6667" placeholderString="6667" id="1556" customClass="TVCTextFieldWithValueValidationCell">
                         <font key="font" metaFont="system"/>
@@ -284,7 +284,7 @@ Gw
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1542">
-                    <rect key="frame" x="157" y="182" width="50" height="17"/>
+                    <rect key="frame" x="157" y="172" width="50" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Port:" id="1555">
                         <font key="font" metaFont="system"/>
@@ -293,7 +293,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1543" customClass="NSSecureTextField">
-                    <rect key="frame" x="210" y="143" width="229" height="22"/>
+                    <rect key="frame" x="210" y="133" width="229" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="" drawsBackground="YES" id="1554">
                         <font key="font" metaFont="system"/>
@@ -302,7 +302,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1544">
-                    <rect key="frame" x="88" y="148" width="119" height="17"/>
+                    <rect key="frame" x="88" y="138" width="119" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Server Password:" id="1553">
                         <font key="font" metaFont="system"/>
@@ -311,7 +311,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1547">
-                    <rect key="frame" x="159" y="172" width="48" height="11"/>
+                    <rect key="frame" x="159" y="162" width="48" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="1550">
                         <font key="font" metaFont="miniSystem"/>
@@ -320,7 +320,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <comboBox verticalHuggingPriority="750" id="1548" customClass="TVCTextFieldComboBoxWithValueValidation">
-                    <rect key="frame" x="209" y="207" width="233" height="26"/>
+                    <rect key="frame" x="209" y="197" width="233" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <comboBoxCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="irc.example.com" usesSingleLineMode="YES" numberOfVisibleItems="5" id="1549" customClass="TVCTextFieldComboBoxWithValueValidationCell">
                         <font key="font" metaFont="system"/>
@@ -332,15 +332,47 @@ Gw
                     </comboBoxCell>
                 </comboBox>
                 <button id="2250">
-                    <rect key="frame" x="136" y="61" width="290" height="18"/>
+                    <rect key="frame" x="136" y="51" width="298" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Perform reconnect when waking from sleep" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2251">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
+                <button id="1545">
+                    <rect key="frame" x="362" y="168" width="85" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Use SSL" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="1552">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="useSSLCheckChanged:" target="-2" id="IhZ-Nw-b7g"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" id="1546">
+                    <rect key="frame" x="159" y="128" width="48" height="11"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="1551">
+                        <font key="font" metaFont="miniSystem"/>
+                        <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" id="1539" customClass="TVCTextFieldWithValueValidation">
+                    <rect key="frame" x="209" y="233" width="230" height="22"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Example IRC Network" id="1558" customClass="TVCTextFieldWithValueValidationCell">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        <connections>
+                            <outlet property="parentField" destination="1539" id="I7s-Or-pOr"/>
+                        </connections>
+                    </textFieldCell>
+                </textField>
                 <button id="dLD-ut-ncd">
-                    <rect key="frame" x="136" y="41" width="298" height="18"/>
+                    <rect key="frame" x="136" y="31" width="298" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Do not share with other devices using iCloud" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="eql-rS-Io2">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -364,38 +396,6 @@ Gw
                         </binding>
                     </connections>
                 </button>
-                <button id="1545">
-                    <rect key="frame" x="362" y="178" width="85" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Use SSL" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="1552">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="useSSLCheckChanged:" target="-2" id="IhZ-Nw-b7g"/>
-                    </connections>
-                </button>
-                <textField verticalHuggingPriority="750" id="1546">
-                    <rect key="frame" x="159" y="138" width="48" height="11"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="1551">
-                        <font key="font" metaFont="miniSystem"/>
-                        <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField verticalHuggingPriority="750" id="1539" customClass="TVCTextFieldWithValueValidation">
-                    <rect key="frame" x="209" y="243" width="230" height="22"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Example IRC Network" id="1558" customClass="TVCTextFieldWithValueValidationCell">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        <connections>
-                            <outlet property="parentField" destination="1539" id="I7s-Or-pOr"/>
-                        </connections>
-                    </textFieldCell>
-                </textField>
             </subviews>
             <point key="canvasLocation" x="234.5" y="157.5"/>
         </customView>
@@ -838,7 +838,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="1804">
-                        <rect key="frame" x="404.90499999999997" y="17" width="15" height="154"/>
+                        <rect key="frame" x="405.09500000000003" y="17" width="15" height="154"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1802">
@@ -962,7 +962,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="2453">
-                        <rect key="frame" x="404.90499999999997" y="17" width="15" height="154"/>
+                        <rect key="frame" x="405.09500000000003" y="17" width="15" height="154"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="2451">
@@ -1113,7 +1113,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="1849">
-                        <rect key="frame" x="293.77800000000002" y="16.555999999999983" width="15" height="340"/>
+                        <rect key="frame" x="294.22199999999998" y="16.555999999999983" width="15" height="340"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1852">
