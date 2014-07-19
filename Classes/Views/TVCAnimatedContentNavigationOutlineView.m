@@ -132,6 +132,12 @@
 	self.currentSelectedNavigationItem = selectedRow;
 	
 	[self presentView:navItem[@"view"]];
+	
+	id firstResponder = navItem[@"firstResponder"];
+	
+	if (firstResponder) {
+		[self.parentWindow makeFirstResponder:firstResponder];
+	}
 }
 
 - (NSRect)currentWindowFrame
@@ -203,7 +209,7 @@
 		
 		windowFrame.origin.y = (NSMaxY([self currentWindowFrame]) - windowFrame.size.height);
 		
-		[self.window setFrame:windowFrame display:YES animate:YES];
+		[self.parentWindow setFrame:windowFrame display:YES animate:YES];
 	}
 	
 	/* Add new frame. */
@@ -260,7 +266,7 @@
 		self.navgiationTreeIsAnimating = NO;
 	}
 	
-	[self.window recalculateKeyViewLoop];
+	[self.parentWindow recalculateKeyViewLoop];
 }
 
 - (void)timedRemoveFrame:(NSView *)oldView
