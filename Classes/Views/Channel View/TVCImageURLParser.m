@@ -266,7 +266,7 @@
 			if ([s onlyContainsCharacters:TXWesternAlphabetIncludingUnderscoreDashCharacaterSet]) {
 				/* This site does both http and https. */
 
-				return [NSString stringWithFormat:@"%@://mediacru.sh/%@.png", scheme, s];
+				return [NSString stringWithFormat:@"https://cdn.mediacru.sh/%@.jpg", s];
 			}
 		}
 	} else if ([host hasSuffix:@"youtube.com"] || [host isEqualToString:@"youtu.be"]) {
