@@ -130,8 +130,11 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 
 @end
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wincomplete-implementation"
 @implementation TVCServerListMavericksUserInterface
 @end
 
 @implementation TVCServerListYosemiteUserInterface
 @end
+#pragma clang diagnostic pop

@@ -201,8 +201,11 @@
 
 @end
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wincomplete-implementation"
 @implementation TVCMemberListMavericksUserInterface
 @end
 
 @implementation TVCMemberListYosemiteUserInterface
 @end
+#pragma clang diagnostic pop
