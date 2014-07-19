@@ -28,11 +28,6 @@ Textual.nicknameSingleClicked = function(e)
 	userNicknameSingleClickEvent(e);
 }
 
-Textual.nicknameSingleClicked = function()
-{
-	userNicknameSingleClickEvent(event.target);
-}
-
 function updateNicknameAssociatedWithNewMessage(e)
 {
 	/* We only want to target plain text messages. */
