@@ -4505,9 +4505,11 @@
 
 	BOOL myself = [sendern isEqualIgnoringCase:[self localNickname]];
 
-	IRCChannel *c = [self findChannelOrCreate:channel];
+	IRCChannel *c = nil;
 
 	if (myself) {
+		c = [self findChannelOrCreate:channel];
+		
 		if ([c status] == IRCChannelStatusJoined) {
 			return;
 		}
@@ -4531,6 +4533,12 @@
 		self.cachedLocalHostmask = [m senderHostmask];
 		
 		self.inUserInvokedJoinRequest = NO;
+	} else {
+		c = [self findChannel:channel];
+		
+		if (c == nil) {
+			return; // Do not continue…
+		}
 	}
 
 	if ([m isPrintOnlyMessage] == NO) {
