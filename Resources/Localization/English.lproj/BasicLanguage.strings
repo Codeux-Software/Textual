@@ -642,7 +642,7 @@
 "BasicLanguage[1237][1]" = "More than one copy of Textual is currently in use";
 "BasicLanguage[1237][2]" = "One or more copies of Textual are currently in use on this Mac. As a result, preferences may become out of sync resulting in undefined behavior.\n\nAre you sure that you would like to continue launching this copy of Textual?";
 "BasicLanguage[1237][3]" = "Continue";
-"BasicLanguage[1237][4]" = "Terminate this Copy of Textual";
+"BasicLanguage[1237][4]" = "Terminate this copy of Textual";
 
 /* Next unusued key: 1238 */
 
