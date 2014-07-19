@@ -8523,36 +8523,36 @@
 		
 		NSMutableArray *channelBatch = [NSMutableArray arrayWithCapacity:_maximumChannelCountPerWhoBatchRequest];
 		
-		for (NSInteger i = startingPosition; i <= channelCount; i++) {
+		for (NSInteger i = startingPosition; i < channelCount; i++) {
 			if ([channelBatch count] == _maximumChannelCountPerWhoBatchRequest) {
 				self.lastWhoRequestChannelListIndex = i;
 				
 				break;
 			} else {
-				if (i >= channelCount) {
-					i = 0;
-				} else {
-					IRCChannel *c = self.channels[i];
-					
-					if ([c isChannel]) {
-						if ([c isActive]) {
-							if ([c sentInitialWhoRequest] == NO) {
-								[c setSentInitialWhoRequest:YES];
-								
-								/* We set the flag even if user doesn't want them just to
-								 maintain internal state information. */
-								if (self.config.sendWhoCommandRequestsToChannels) {
+				IRCChannel *c = self.channels[i];
+				
+				if ([c isChannel]) {
+					if ([c isActive]) {
+						if ([c sentInitialWhoRequest] == NO) {
+							[c setSentInitialWhoRequest:YES];
+							
+							/* We set the flag even if user doesn't want them just to
+							 maintain internal state information. */
+							if (self.config.sendWhoCommandRequestsToChannels) {
+								[channelBatch addObject:c];
+							}
+						} else {
+							if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify] == NO) {
+								if ([c numberOfMembers] <= [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
 									[channelBatch addObject:c];
-								}
-							} else {
-								if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify] == NO) {
-									if ([c numberOfMembers] <= [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
-										[channelBatch addObject:c];
-									}
 								}
 							}
 						}
 					}
+				}
+				
+				if ((i + 1) == channelCount) {
+					self.lastWhoRequestChannelListIndex = 0;
 				}
 			}
 		}
