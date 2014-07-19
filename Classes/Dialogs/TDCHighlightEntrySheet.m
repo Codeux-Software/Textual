@@ -44,19 +44,22 @@
 {
 	if ((self = [super init])) {
 		[RZMainBundle() loadCustomNibNamed:@"TDCHighlightEntrySheet" owner:self topLevelObjects:nil];
+	
+		[self.matchKeywordTextField setOnlyShowStatusIfErrorOccurs:YES];
+		[self.matchKeywordTextField setStringValueUsesOnlyFirstToken:YES];
+		[self.matchKeywordTextField setStringValueIsInvalidOnEmpty:YES];
+		
+		[self.matchKeywordTextField setTextDidChangeCallback:self];
 	}
 
 	return self;
 }
 
-- (void)controlTextDidChange:(NSNotification *)obj
-{
-	[self updateSaveButton];
-}
-
-- (void)start
+- (void)startWithChannels:(NSArray *)channels
 {
 	/* Start populating. */
+	self.channelList = channels;
+	
 	if ([self.config matchKeyword]) {
 		[self.matchKeywordTextField setStringValue:[self.config matchKeyword]];
 	}
@@ -68,25 +71,21 @@
 	}
 
 	/* Channel list. */
-	IRCClient *client = [worldController() findClientById:self.clientID];
-
 	NSInteger channelCount = 0;
 	
-	for (IRCChannel *channel in [client channelList]) {
-		NSAssertReturnLoopContinue([channel isChannel]);
-		
+	for (IRCChannelConfig *channel in self.channelList) {
 		/* Add channels that are actual channels. */
-		[self.matchChannelPopupButton addItemWithTitle:[channel name]];
+		[self.matchChannelPopupButton addItemWithTitle:[channel channelName]];
 		
 		channelCount += 1;
 		
 		/* Select the channel with matching IDs. */
-		if ([[channel uniqueIdentifier] isEqualToString:[self.config matchChannelID]]) {
-			[self.matchChannelPopupButton selectItemWithTitle:[channel name]];
+		if ([[channel itemUUID] isEqualToString:[self.config matchChannelID]]) {
+			[self.matchChannelPopupButton selectItemWithTitle:[channel channelName]];
 		}
 	}
 	
-	if (client == nil || channelCount == 0) {
+	if (channelCount == 0) {
 		/* If we have nothing, hide the menu divider under "All Channels" */
 		
 		[self.matchChannelPopupButton removeItemAtIndex:1];
@@ -103,7 +102,7 @@
 - (void)ok:(id)sender
 {
 	/* Save keyword. */
-	[self.config setMatchKeyword:[self.matchKeywordTextField stringValue]];
+	[self.config setMatchKeyword:[self.matchKeywordTextField value]];
 
 	/* Channel. */
 	NSInteger selectedItem = [self.matchChannelPopupButton indexOfSelectedItem];
@@ -113,16 +112,18 @@
 	BOOL zeroOutChannel = YES;
 
 	if (selectedItem > 0) { // 0 = ALL CHANNELS
-		IRCClient *client = [worldController() findClientById:self.clientID];
-
-		if (client) {
-			IRCChannel *channel = [client findChannel:selectedTitle];
-
-			if (channel) {
-				zeroOutChannel = NO;
-				
-				[self.config setMatchChannelID:[channel uniqueIdentifier]];
+		IRCChannelConfig *channel = nil;
+		
+		for (IRCChannelConfig *c in self.channelList) {
+			if ([[c channelName] isEqualToString:selectedTitle]) {
+				channel = c;
 			}
+		}
+		
+		if (channel) {
+			zeroOutChannel = NO;
+			
+			[self.config setMatchChannelID:[channel itemUUID]];
 		}
 	}
 
@@ -142,11 +143,14 @@
 	[super ok:nil];
 }
 
+- (void)validatedTextFieldTextDidChange:(id)sender
+{
+	[self updateSaveButton];
+}
+
 - (void)updateSaveButton
 {
-	NSString *keyword = [self.matchKeywordTextField trimmedStringValue];
-
-	[self.okButton setEnabled:([keyword length] > 0)];
+	[self.okButton setEnabled:[self.matchKeywordTextField valueIsValid]];
 }
 
 #pragma mark -

@@ -125,6 +125,11 @@
 		
 		/* Rebuild cached version. */
 		[self.associatedClient updateStoredChannelList];
+		
+		/* Post notification. */
+		[RZNotificationCenter() postNotificationName:IRCChannelConfigurationWasUpdatedNotification
+											  object:self
+											userInfo:@{@"channelID" : [self uniqueIdentifier]}];
 	}
 }
 

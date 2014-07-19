@@ -47,6 +47,7 @@
 @property (nonatomic, assign) BOOL stringValueUsesOnlyFirstToken; // Only use everything before first space (" ") as value.
 @property (nonatomic, assign) BOOL stringValueIsTrimmed; // -stringValueUsesOnlyFirstToken returns a trimmed value of newlines and spaces. However, if you want mroe than first token, then specify this.
 @property (nonatomic, assign) BOOL stringValueIsInvalidOnEmpty; // Is an empty string considered invalid?
+@property (nonatomic, assign) BOOL performValidationWhenEmpty;
 @property (nonatomic, uweak) id textDidChangeCallback; // Calls method "-(void)validatedTextFieldTextDidChange:(id)sender" whereas "sender" is the text field.
 
 @property (readonly, copy) NSString *value; /* The current value. */

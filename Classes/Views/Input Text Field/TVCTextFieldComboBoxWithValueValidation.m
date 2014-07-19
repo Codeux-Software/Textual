@@ -138,7 +138,11 @@
 			self.cachedValidValue = YES;
 		}
 	} else {
-		self.cachedValidValue = (self.stringValueIsInvalidOnEmpty == NO);
+		if (self.performValidationWhenEmpty) {
+			self.cachedValidValue = self.validationBlock([self stringValue]);
+		} else {
+			self.cachedValidValue = (self.stringValueIsInvalidOnEmpty == NO);
+		}
 	}
 }
 
