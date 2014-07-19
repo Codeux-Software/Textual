@@ -1300,6 +1300,7 @@
 		if (u.isConnecting) {
 			if ([TPCPreferences disconnectOnDoubleclick]) {
 				[u disconnect]; // Forcefully breaks connection.
+				[u cancelReconnect];
 			}
 		} else if (u.isConnected || u.isLoggedIn) {
 			if ([TPCPreferences disconnectOnDoubleclick]) {
