@@ -1723,7 +1723,6 @@
 		4C46CB001580429D00846B64 /* Source Code */ = {
 			isa = PBXGroup;
 			children = (
-				4CA8AD2E195B489000B99BFB /* Textual 4 */,
 				4CA8AD25195B475600B99BFB /* Textual 5 */,
 			);
 			name = "Source Code";
@@ -1961,14 +1960,6 @@
 				4C7766351978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserInactive.tif */,
 			);
 			path = Black;
-			sourceTree = "<group>";
-		};
-		4C7A309D16DAC1F500B231DE /* Dialogs */ = {
-			isa = PBXGroup;
-			children = (
-				4C8AF523158E99520026668C /* TDCServerSheet.m */,
-			);
-			name = Dialogs;
 			sourceTree = "<group>";
 		};
 		4C86B4A8181FB40A0043C544 /* Entitlements */ = {
@@ -2482,6 +2473,7 @@
 				4C8AF521158E99520026668C /* TDCModeSheet.m */,
 				4C8AF522158E99520026668C /* TDCNickSheet.m */,
 				4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */,
+				4C8AF523158E99520026668C /* TDCServerSheet.m */,
 				4C8AF524158E99520026668C /* TDCSheetBase.m */,
 				4C8AF525158E99520026668C /* TDCTopicSheet.m */,
 				4C8AF526158E99520026668C /* TDCWelcomeSheet.m */,
@@ -2513,14 +2505,6 @@
 				4CFC40E11969B5A0004C6EF4 /* IRCWorldCloudExtension.m */,
 			);
 			name = IRC;
-			sourceTree = "<group>";
-		};
-		4CA8AD2E195B489000B99BFB /* Textual 4 */ = {
-			isa = PBXGroup;
-			children = (
-				4C7A309D16DAC1F500B231DE /* Dialogs */,
-			);
-			name = "Textual 4";
 			sourceTree = "<group>";
 		};
 		4CB228F61978811700EB02D3 /* Status Badges */ = {

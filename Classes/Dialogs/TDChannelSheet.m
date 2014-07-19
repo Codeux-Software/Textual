@@ -51,7 +51,7 @@
 @property (nonatomic, nweak) IBOutlet NSButton *pushNotificationsCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *showTreeBadgeCountCheck;
 @property (nonatomic, nweak) IBOutlet NSSegmentedControl *contentViewTabView;
-@property (nonatomic, nweak) IBOutlet NSTextField *channelNameField;
+@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *channelNameField;
 @property (nonatomic, nweak) IBOutlet NSTextField *defaultModesField;
 @property (nonatomic, nweak) IBOutlet NSTextField *defaultTopicField;
 @property (nonatomic, nweak) IBOutlet NSTextField *encryptionKeyField;
@@ -75,6 +75,16 @@
 			@[self.encryptionView,		self.encryptionKeyField],
 			@[self.defaultsView,		self.defaultTopicField],
 		];
+		
+		[self.channelNameField setOnlyShowStatusIfErrorOccurs:YES];
+		[self.channelNameField setStringValueUsesOnlyFirstToken:YES];
+		[self.channelNameField setStringValueIsInvalidOnEmpty:YES];
+		
+		[self.channelNameField setTextDidChangeCallback:self];
+		
+		[self.channelNameField setValidationBlock:^(NSString *currentValue) {
+			return [currentValue isChannelName];
+		}];
 	}
 
 	return self;
@@ -178,7 +188,7 @@
 
 - (void)save
 {
-	[self.config setChannelName:[self.channelNameField firstTokenStringValue]];
+	[self.config setChannelName:[self.channelNameField value]];
 	
 	[self.config setDefaultModes:[self.defaultModesField trimmedStringValue]];
 	[self.config setDefaultTopic:[self.defaultTopicField trimmedStringValue]];
@@ -197,22 +207,16 @@
 	} else {
 		[self.config setIgnoreInlineImages:[self.enableInlineImagesCheck state]];
 	}
-	
-	if ([[self.config channelName] isChannelName] == NO) {
-		 [self.config setChannelName:[@"#" stringByAppendingString:[self.config channelName]]];
-	}
 }
 
 - (void)update
 {
-	NSString *s = [self.channelNameField trimmedStringValue];
-	
-	[self.okButton setEnabled:[s isChannelName]];
+	[self.okButton setEnabled:[self.channelNameField valueIsValid]];
 	
 	[self.channelNameField setEditable:self.newItem];
 }
 
-- (void)controlTextDidChange:(NSNotification *)note
+- (void)validatedTextFieldTextDidChange:(id)sender
 {
 	[self update];
 }

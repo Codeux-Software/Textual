@@ -92,7 +92,6 @@ typedef enum TDCFileTransferDialogNavigationControllerSelectedTab : NSInteger {
 					  path:(NSString *)completePath
 				  autoOpen:(BOOL)autoOpen;
 
-
 - (BOOL)fileTransferExistsWithToken:(NSString *)transferToken;
 
 - (TDCFileTransferDialogTransferController *)fileTransferSenderMatchingToken:(NSString *)transferToken;

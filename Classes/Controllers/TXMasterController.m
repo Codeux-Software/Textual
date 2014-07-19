@@ -54,8 +54,10 @@
 		[NSObject setGlobalMasterControllerClassReference:self];
 		
 		// ---- //
-		
+
+#ifndef DEBUG
 		[self checkForOtherCopiesOfTextualRunning];
+#endif
 		
 		// ---- //
 		

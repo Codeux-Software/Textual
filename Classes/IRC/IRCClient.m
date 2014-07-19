@@ -292,7 +292,11 @@
 	 take the value stored locally, cache it into a local variable, allow the new
 	 seed to be applied, then apply that value back to the seed. This allows the
 	 user to define certificates on each machine. */
-	NSData *identitySSLCertificateInformation = self.config.identitySSLCertificate;
+	NSData *identitySSLCertificateInformation = nil;
+	
+	if (isCloudUpdate) {
+		identitySSLCertificateInformation = self.config.identitySSLCertificate;
+	}
 #endif
 	
 	/* Write all channel keychains before copying over new configuration. */
@@ -305,7 +309,9 @@
 	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	/* Update new, local seed with cache SSL certificate. */
-	self.config.identitySSLCertificate = identitySSLCertificateInformation;
+	if (isCloudUpdate) {
+		self.config.identitySSLCertificate = identitySSLCertificateInformation;
+	}
 	
 	/* Maybe remove this client from deleted list (maybe). */
 	if ([TPCPreferences syncPreferencesToTheCloud]) {
@@ -409,6 +415,14 @@
 		
 		[mainWindow() setTemporarilyDisablePreviousSelectionUpdates:NO];
 	}
+	
+	/* Update title. */
+	[mainWindow() updateTitleFor:self];
+	
+	/* Post notification. */
+	[RZNotificationCenter() postNotificationName:IRCClientConfigurationWasUpdatedNotification
+										  object:self
+										userInfo:@{@"clientID" : [self uniqueIdentifier]}];
 }
 
 - (void)updateStoredChannelList
@@ -4575,9 +4589,11 @@
 		[mainWindow() updateTitleFor:c];
 
 		if (myself) {
-			[c setInUserInvokedModeRequest:YES];
+			if (self.config.sendWhoCommandRequestsToChannels) {
+				[c setInUserInvokedModeRequest:YES];
 
-			[self send:IRCPrivateCommandIndex("mode"), [c name], nil];
+				[self send:IRCPrivateCommandIndex("mode"), [c name], nil];
+			}
 		}
 	}
 }

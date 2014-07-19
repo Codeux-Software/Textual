@@ -43,13 +43,13 @@ highlights for a server by using Command+5 or the actual Windows menu bar item. 
 
 @interface TDCHighlightEntrySheet : TDCSheetBase
 @property (nonatomic, assign) BOOL newItem;
-@property (nonatomic, copy) NSString *clientID; // To reference a channel list.
-@property (nonatomic, nweak) IBOutlet NSTextField *matchKeywordTextField;
+@property (nonatomic, copy) NSArray *channelList;
+@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *matchKeywordTextField;
 @property (nonatomic, nweak) IBOutlet NSPopUpButton *matchTypePopupButton;
 @property (nonatomic, nweak) IBOutlet NSPopUpButton *matchChannelPopupButton;
 @property (nonatomic, copy) TDCHighlightEntryMatchCondition *config;
 
-- (void)start;
+- (void)startWithChannels:(NSArray *)channels;
 @end
 
 @interface TDCHighlightEntryMatchCondition : NSObject <NSCopying>

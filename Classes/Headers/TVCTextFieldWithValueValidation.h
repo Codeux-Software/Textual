@@ -47,6 +47,7 @@ typedef BOOL (^TVCTextFieldWithValueValidationBlock)(NSString *currentValue);
 @property (nonatomic, assign) BOOL stringValueUsesOnlyFirstToken; // Only use everything before first space (" ") as value.
 @property (nonatomic, assign) BOOL stringValueIsTrimmed; // Returned value is trimmed of whitespaces and newlines when returned. The value is returned trimmed by -value. It is also sent to the validation block as trimmed.
 @property (nonatomic, assign) BOOL stringValueIsInvalidOnEmpty; // Is an empty string considered invalid?
+@property (nonatomic, assign) BOOL performValidationWhenEmpty;
 @property (nonatomic, uweak) id textDidChangeCallback; // Calls method "-(void)validatedTextFieldTextDidChange:(id)sender" whereas "sender" is the text field.
 
 @property (readonly, copy) NSString *value; /* The current value. */
