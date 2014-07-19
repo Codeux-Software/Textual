@@ -5,7 +5,6 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 — 2014 Codeux Software & respective contributors.
      Please see Acknowledgements.pdf for additional information.
 
@@ -38,17 +37,30 @@
 
 #import "TextualApplication.h"
 
-#define _tableRowType		@"row"
-#define _tableRowTypes		[NSArray arrayWithObject:_tableRowType]
+/* NSComboBox is actually a subclass of NSTextField, but because there is
+ no way to have TVCTextFieldWithValueValidation as our superclass without
+ reimplementing all the dynamics of NSComboBox, we have to redeclare the
+ entire API of TVCTextFieldWithValueValidation. */
+@interface TVCTextFieldComboBoxWithValueValidation : NSComboBox
+@property (nonatomic, copy) TVCTextFieldWithValueValidationBlock validationBlock;
+@property (nonatomic, assign) BOOL onlyShowStatusIfErrorOccurs; // Only show color or symbol if value is erroneous.
+@property (nonatomic, assign) BOOL stringValueUsesOnlyFirstToken; // Only use everything before first space (" ") as value.
+@property (nonatomic, assign) BOOL stringValueIsTrimmed; // -stringValueUsesOnlyFirstToken returns a trimmed value of newlines and spaces. However, if you want mroe than first token, then specify this.
+@property (nonatomic, assign) BOOL stringValueIsInvalidOnEmpty; // Is an empty string considered invalid?
+@property (nonatomic, uweak) id textDidChangeCallback; // Calls method "-(void)validatedTextFieldTextDidChange:(id)sender" whereas "sender" is the text field.
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-@interface TDCServerSheet ()
-@property (nonatomic, assign) BOOL requestCloudDeletionOnClose;
-@end
-#endif
+@property (readonly, copy) NSString *value; /* The current value. */
+@property (readonly, copy) NSString *lowercaseValue;
+@property (readonly, copy) NSString *uppercaseValue;
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wincomplete-implementation"
-@implementation TDCServerSheet
+@property (readonly) NSInteger integerValue;
+
+@property (readonly) BOOL valueIsEmpty;
+@property (readonly) BOOL valueIsValid;
+
+- (void)performValidation; /* Force the text field to clear cache and validate value. */
 @end
-#pragma clang diagnostic pop
+
+@interface TVCTextFieldComboBoxWithValueValidationCell : NSComboBoxCell
+@property (nonatomic, nweak) IBOutlet TVCTextFieldComboBoxWithValueValidation *parentField;
+@end

@@ -176,6 +176,7 @@
 	@class TVCServerListDarkYosemiteUserInterface;
 	@class TVCTextFieldWithValueValidation;
 	@class TVCTextFieldComboBoxWithValueValidation;
+	@class TVCTextFieldComboBoxWithValueValidationCell;
 	@class TVCTextFieldWithValueValidationCell;
 	@class TVCTextViewIRCFormattingMenu;
 	@class TVCTextViewWithIRCFormatter;
@@ -397,6 +398,7 @@
 	#import "TVCServerListMavericksUserInterface.h"
 	#import "TVCServerListYosemiteUserInterface.h"
 	#import "TVCTextFieldWithValueValidation.h"
+	#import "TVCTextFieldComboBoxWithValueValidation.h"
 	#import "TVCTextViewWithIRCFormatter.h"
 	#import "TVCTextFormatterMenu.h"
 	#import "TVCWebViewAutoScroll.h"

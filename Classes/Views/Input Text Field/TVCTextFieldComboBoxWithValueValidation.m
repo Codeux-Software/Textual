@@ -37,16 +37,16 @@
 
 #import "TextualApplication.h"
 
-@interface TVCTextFieldWithValueValidation ()
+@interface TVCTextFieldComboBoxWithValueValidation ()
 /* Maintain cached value so that the drawing does not call
  the validaton block every time that it is called. */
 @property (nonatomic, assign) BOOL cachedValidValue;
 @end
 
-@implementation TVCTextFieldWithValueValidation
+@implementation TVCTextFieldComboBoxWithValueValidation
 
 #pragma mark -
-#pragma mark Public API (Normal Text Field)
+#pragma mark Public API (Combo Box Text Field)
 
 - (NSString *)value
 {
@@ -141,7 +141,7 @@
 #pragma mark -
 #pragma mark Text Field Cell
 
-@implementation TVCTextFieldWithValueValidationCell
+@implementation TVCTextFieldComboBoxWithValueValidationCell
 
 - (NSRect)correctedDrawingRect:(NSRect)aRect
 {
