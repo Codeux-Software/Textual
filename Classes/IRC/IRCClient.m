@@ -3632,6 +3632,7 @@
 
 	self.isLoggedIn	= NO;
 	self.isConnected = YES;
+	self.isConnecting = NO;
 	self.reconnectEnabled = YES;
 
 	self.cachedLocalNickname = self.config.nickname;
