@@ -47,5 +47,8 @@
 @end
 #endif
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wincomplete-implementation"
 @implementation TDCServerSheet
 @end
+#pragma clang diagnostic pop
