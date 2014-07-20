@@ -60,7 +60,9 @@ typedef enum IRCChannelStatus : NSInteger {
 @property (nonatomic, assign) NSInteger channelJoinTime;
 
 - (void)setup:(IRCChannelConfig *)seed;
+
 - (void)updateConfig:(IRCChannelConfig *)seed;
+- (void)updateConfig:(IRCChannelConfig *)seed fireChangedNotification:(BOOL)fireChangedNotification;
 
 - (NSMutableDictionary *)dictionaryValue;
 

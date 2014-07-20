@@ -61,12 +61,16 @@
 										return;									\
 									}
 
+@interface TXMenuController ()
+@property (nonatomic, strong) NSMutableDictionary *openWindowList;
+@end
+
 @implementation TXMenuController
 
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		self.openWindowList = @{};
+		self.openWindowList = [NSMutableDictionary dictionary];
 		
 		self.currentSearchPhrase = NSStringEmptyPlaceholder;
 	}
@@ -783,25 +787,40 @@
 
 - (void)addWindowToWindowList:(id)window withKeyValue:(NSString *)key
 {
-	NSMutableDictionary *newList = [self.openWindowList mutableCopy];
-
-	[newList setObjectWithoutOverride:window forKey:key];
-
-	self.openWindowList = newList;
+	@synchronized(self.openWindowList) {
+		[self.openWindowList setObjectWithoutOverride:window forKey:key];
+	}
 }
 
 - (id)windowFromWindowList:(NSString *)windowClass
 {
-	return (self.openWindowList)[windowClass];
+	@synchronized(self.openWindowList) {
+		return self.openWindowList[windowClass];
+	}
+}
+
+- (NSArray *)windowsFromWindowList:(NSArray *)windowClasses
+{
+	@synchronized(self.openWindowList) {
+		NSMutableArray *returnedValues = [NSMutableArray array];
+		
+		for (NSString *windowClass in windowClasses) {
+			id windowObject = self.openWindowList[windowClass];
+			
+			if (windowObject) {
+				[returnedValues addObject:windowObject];
+			}
+		}
+		
+		return [returnedValues copy];
+	}
 }
 
 - (void)removeWindowFromWindowList:(NSString *)windowClass
 {
-	NSMutableDictionary *newList = [self.openWindowList mutableCopy];
-
-	[newList removeObjectForKey:windowClass];
-
-	self.openWindowList = newList;
+	@synchronized(self.openWindowList) {
+		[self.openWindowList removeObjectForKey:windowClass];
+	}
 }
 
 - (BOOL)popWindowViewIfExists:(NSString *)windowClass
@@ -825,16 +844,18 @@
 	NSWindow *attachedSheet = [mainWindow() attachedSheet];
 	
 	if (attachedSheet) {
-		for (NSString *windowKey in self.openWindowList) {
-			id windowObject = (self.openWindowList)[windowKey];
+		@synchronized(self.openWindowList) {
+			for (NSString *windowKey in self.openWindowList) {
+				id windowObject = self.openWindowList[windowKey];
 
-			if ([[windowObject class] isSubclassOfClass:[TDCSheetBase class]]) {
-				NSWindow *ownedWindow = (id)[windowObject sheet];
-				
-				if ([ownedWindow isEqual:attachedSheet]) {
-					[windowObject cancel:nil];
+				if ([[windowObject class] isSubclassOfClass:[TDCSheetBase class]]) {
+					NSWindow *ownedWindow = (id)[windowObject sheet];
 					
-					return; // No need to continue.
+					if ([ownedWindow isEqual:attachedSheet]) {
+						[windowObject cancel:nil];
+						
+						return; // No need to continue.
+					}
 				}
 			}
 		}

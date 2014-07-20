@@ -166,6 +166,14 @@
 			[self.serverAddressCombo addItemWithObjectValue:key];
 		}
 		
+		/* Subscribe to notifications. */
+		IRCClient *client = [worldController() findClientById:self.clientID];
+		
+		[RZNotificationCenter() addObserver:self
+								   selector:@selector(underlyingConfigurationChanged:)
+									   name:IRCClientConfigurationWasUpdatedNotification
+									 object:client];
+		
 		/* Create temporary stores. */
 		self.mutableChannelList = [NSMutableArray array];
 		self.mutableHighlightList = [NSMutableArray array];
@@ -574,11 +582,62 @@
 	[self.navigationOutlineview startAtSelectionIndex:viewIndex];
 }
 
+- (void)closeSheets
+{
+	if (self.channelSheet) {
+		[self.channelSheet cancel:nil];
+	} else if (self.highlightSheet) {
+		[self.highlightSheet cancel:nil];
+	} else if (self.ignoreSheet) {
+		[self.ignoreSheet cancel:nil];
+	}
+}
+
 - (void)close
 {
-	self.delegate = nil;
-	
+	[self closeSheets];
+
 	[super cancel:nil];
+}
+
+- (void)updateUnderlyingConfigurationProfileCallback:(TLOPopupPromptReturnType)returnType withOriginalAlert:(NSAlert *)originalAlert
+{
+	if (returnType == TLOPopupPromptReturnPrimaryType) {
+		IRCClient *client = [worldController() findClientById:self.clientID];
+		
+		[self close];
+		
+		self.config = [client copyOfStoredConfig];
+		
+		[self load];
+		[self showWithDefaultView:_navigationIndexForGeneral];
+	}
+}
+
+- (void)underlyingConfigurationChanged:(NSNotification *)notification
+{
+	TLOPopupPrompts *popup = [TLOPopupPrompts new];
+	
+	NSWindow *sheetWindow = self.sheet;
+	
+	if (self.channelSheet) {
+		sheetWindow = self.channelSheet.sheet;
+	} else if (self.highlightSheet) {
+		sheetWindow = self.highlightSheet.sheet;
+	} else if (self.ignoreSheet) {
+		sheetWindow = self.ignoreSheet.sheet;
+	}
+	
+	[popup sheetWindowWithQuestion:sheetWindow
+							target:self
+							action:@selector(updateUnderlyingConfigurationProfileCallback:withOriginalAlert:)
+							  body:TXTLS(@"BasicLanguage[1240][2]", self.config.clientName)
+							 title:TXTLS(@"BasicLanguage[1240][1]")
+					 defaultButton:TXTLS(@"BasicLanguage[1240][3]")
+				   alternateButton:TXTLS(@"BasicLanguage[1240][4]")
+					   otherButton:nil
+					suppressionKey:nil
+				   suppressionText:nil];
 }
 
 - (void)load
@@ -954,6 +1013,12 @@
 
 - (void)ok:(id)sender
 {
+	/* Close anything open just incase. */
+	[self closeSheets];
+	
+	/* Remove observer before calling updateConfig: */
+	[RZNotificationCenter() removeObserver:self];
+	
 	/* Save changes. */
 	[self save];
 	
@@ -978,6 +1043,10 @@
 
 - (void)cancel:(id)sender
 {
+	[self closeSheets];
+
+	[RZNotificationCenter() removeObserver:self];
+	
 	[self.sheet makeFirstResponder:nil];
 	
 	[super cancel:nil];

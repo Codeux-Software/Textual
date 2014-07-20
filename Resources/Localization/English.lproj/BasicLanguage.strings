@@ -644,6 +644,19 @@
 "BasicLanguage[1237][3]" = "Continue";
 "BasicLanguage[1237][4]" = "Terminate this copy of Textual";
 
-/* Next unusued key: 1239 */
+/* Configuration updated for client. */
+"BasicLanguage[1240][1]" = "Underlying Configuration Changed";
+"BasicLanguage[1240][2]" = "The configuration settings for the connection \"%@\" have changed as a result of outside sources such as iCloud or importing preferences.\n\nWould you like to populate the Server Properties window with the latest version of the configuration settings for this connection?\n\nReloading the configuration will replace any unsaved changes with those from the new configuration.\n\nHowever, if you chose to save the current values, then the saved values will take priority.";
+"BasicLanguage[1240][3]" = "Load New Configuration";
+"BasicLanguage[1240][4]" = "Cancel";
+
+/* Configuration updated for channel. */
+"BasicLanguage[1241][1]" = "Underlying Configuration Changed";
+"BasicLanguage[1241][2]" = "The configuration settings for the channel \"%@\" have changed as a result of outside sources such as iCloud or importing preferences.\n\nWould you like to populate the Channel Properties window with the latest version of the configuration settings for this channel?\n\nReloading the configuration will replace any unsaved changes with those from the new configuration.\n\nHowever, if you chose to save the current values, then the saved values will take priority.";
+"BasicLanguage[1241][3]" = "Load New Configuration";
+"BasicLanguage[1241][4]" = "Cancel";
+
+
+/* Next unusued key: 1242 */
 
 
