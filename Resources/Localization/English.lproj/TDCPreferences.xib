@@ -3263,7 +3263,7 @@
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content=" applies to all active connections">
+                                    <fragment content=" only applies to active connection">
                                         <attributes>
                                             <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
