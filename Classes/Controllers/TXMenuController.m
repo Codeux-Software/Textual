@@ -417,7 +417,7 @@
 			if ([mainWindow isKeyWindow]) {
 				TXCommandWKeyAction keyAction = [TPCPreferences commandWKeyAction];
 				
-				if (_noClientOrChannel) {
+				if (_noClient) {
 					if (NSDissimilarObjects(keyAction, TXCommandWKeyCloseWindowAction)) {
 						return NO;
 					}
@@ -432,7 +432,7 @@
 					}
 					case TXCommandWKeyPartChannelAction:
 					{
-						if (_isClient) {
+						if (_noChannel) {
 							[item setTitle:BLS(1013)];
 
 							return NO;
