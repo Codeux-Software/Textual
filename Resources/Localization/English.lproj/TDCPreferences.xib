@@ -2370,9 +2370,9 @@
                     </connections>
                 </button>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="lQy-BU-bub">
-                    <rect key="frame" x="81" y="51" width="423" height="13"/>
+                    <rect key="frame" x="73" y="51" width="423" height="13"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Holding the command key (⌘) during selection disables option temporarily." id="RLT-k4-fiT">
+                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Holding the command key (⌘) during selection disables option temporarily" id="RLT-k4-fiT">
                         <font key="font" metaFont="system" size="10"/>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
