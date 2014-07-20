@@ -221,7 +221,7 @@
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 		return NSMakeRect(rightEdge, 6.0, 14.0, 14.0);
 	} else {
-		return NSMakeRect(rightEdge, 5.0, 14.0, 14.0);
+		return NSMakeRect(rightEdge, 7.0, 14.0, 14.0);
 	}
 }
 
