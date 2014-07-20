@@ -8533,6 +8533,12 @@
 		for (IRCChannel *c in channelBatch) {
 			[self send:IRCPrivateCommandIndex("who"), [c name], nil];
 		}
+		
+		for (IRCChannel *channel in self.channels) {
+			if ([channel isPrivateMessage]) {
+				[userstr appendFormat:@" %@", [channel name]];
+			}
+		}
 	}
 
 	/* If there is no WATCH command, then we populate ISON list. */
