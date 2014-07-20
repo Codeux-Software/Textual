@@ -385,25 +385,25 @@
 		NSInteger n = [*value integerValue];
 
 		if (n < _linesMin) {
-			*value = @_linesMin;
+			*value = [NSString stringWithInteger:_linesMin];
 		} else if (n > _linesMax) {
-			*value = @_linesMax;
+			*value = [NSString stringWithInteger:_linesMax];
 		}
 	} else if ([key isEqualToString:@"inlineImageMaxWidth"]) {
 		NSInteger n = [*value integerValue];
 
 		if (n < _inlineImageWidthMin) {
-			*value = @_inlineImageWidthMin;
+			*value = [NSString stringWithInteger:_inlineImageWidthMin];
 		} else if (_inlineImageWidthMax < n) {
-			*value = @_inlineImageWidthMax;
+			*value = [NSString stringWithInteger:_inlineImageWidthMax];
 		}
 	} else if ([key isEqualToString:@"inlineImageMaxHeight"]) {
 		NSInteger n = [*value integerValue];
 
 		if (n < _inlineImageHeightMin) {
-			*value = @_inlineImageHeightMin;
+			*value = [NSString stringWithInteger:_inlineImageHeightMin];
 		} else if (_inlineImageHeightMax < n) {
-			*value = @_inlineImageHeightMax;
+			*value = [NSString stringWithInteger:_inlineImageHeightMax];
 		}
 	} else if ([key isEqualToString:@"fileTransferPortRangeStart"]) {
 		NSInteger n = [*value integerValue];
@@ -411,15 +411,15 @@
 		NSInteger t = [TPCPreferences fileTransferPortRangeEnd];
 		
 		if (n < _fileTransferPortRangeMin) {
-			*value = @_fileTransferPortRangeMin;
+			*value = [NSString stringWithInteger:_fileTransferPortRangeMin];
 		} else if (_fileTransferPortRangeMax < n) {
-			*value = @_fileTransferPortRangeMax;
+			*value = [NSString stringWithInteger:_fileTransferPortRangeMax];
 		}
 		
 		n = [*value integerValue];
 		
 		if (n > t) {
-			*value = @(t);
+			*value = [NSString stringWithInteger:t];
 		}
 	} else if ([key isEqualToString:@"fileTransferPortRangeEnd"]) {
 		NSInteger n = [*value integerValue];
@@ -427,15 +427,15 @@
 		NSInteger t = [TPCPreferences fileTransferPortRangeStart];
 		
 		if (n < _fileTransferPortRangeMin) {
-			*value = @_fileTransferPortRangeMin;
+			*value = [NSString stringWithInteger:_fileTransferPortRangeMin];
 		} else if (_fileTransferPortRangeMax < n) {
-			*value = @_fileTransferPortRangeMax;
+			*value = [NSString stringWithInteger:_fileTransferPortRangeMax];
 		}
 		
 		n = [*value integerValue];
 		
 		if (n < t) {
-			*value = @(t);
+			*value = [NSString stringWithInteger:t];
 		}
 	}
 
