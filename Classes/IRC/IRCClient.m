@@ -506,7 +506,11 @@
 
 - (void)closeDialogs
 {
-    [menuController() popWindowViewIfExists:[self listDialogWindowKey]];
+	id listDialog = [menuController() windowFromWindowList:[self listDialogWindowKey]];
+	
+	if (listDialog) {
+		[listDialog close];
+	}
 	
 	NSArray *openWindows = [menuController() windowsFromWindowList:@[@"TDCServerSheet",
 																	 @"TDCNickSheet",
