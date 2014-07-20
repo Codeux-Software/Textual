@@ -350,15 +350,6 @@
                         </binding>
                     </connections>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="11g-Me-msX">
-                    <rect key="frame" x="155" y="122" width="71" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Real name:" id="jRf-a0-3jI">
-                        <font key="font" metaFont="cellTitle"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="Sne-aI-1Oj">
                     <rect key="frame" x="81" y="239" width="404" height="48"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -401,6 +392,15 @@
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="iYy-yb-Bx8">
                         <font key="font" metaFont="miniSystem"/>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField appearanceType="aqua" verticalHuggingPriority="750" id="11g-Me-msX">
+                    <rect key="frame" x="155" y="122" width="71" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Real name:" id="jRf-a0-3jI">
+                        <font key="font" metaFont="cellTitle"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -1266,7 +1266,7 @@
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="ohg-AA-uhq">
-                                        <rect key="frame" x="92" y="29" width="239" height="14"/>
+                                        <rect key="frame" x="92" y="25" width="255" height="14"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="These include join, part, and quit messages. " id="oK8-zB-HCo">
                                             <font key="font" metaFont="smallSystem"/>
@@ -2187,10 +2187,10 @@
                     </connections>
                 </popUpButton>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="kWh-2T-Yta">
-                    <rect key="frame" x="68" y="219" width="357" height="28"/>
+                    <rect key="frame" x="68" y="221" width="357" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="When used in the context of a hostmask an asterisk (*) represents a wildcard character that is matched by any possible value. " id="lyl-DA-xkL">
-                        <font key="font" metaFont="system" size="10"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -3348,14 +3348,14 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="2dk-Hd-ZIP">
-                    <rect key="frame" x="62" y="253" width="442" height="5"/>
+                    <rect key="frame" x="62" y="255" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="Ee7-Dv-LFa">
-                    <rect key="frame" x="130" y="222" width="207" height="17"/>
+                    <rect key="frame" x="130" y="224" width="207" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iCloud Custom Addons Location:" id="ECd-Ce-gea">
                         <font key="font" metaFont="systemBold" size="12"/>
@@ -3364,7 +3364,7 @@
                     </textFieldCell>
                 </textField>
                 <button appearanceType="aqua" id="Vi7-Vk-65D">
-                    <rect key="frame" x="73" y="319" width="273" height="18"/>
+                    <rect key="frame" x="73" y="321" width="273" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Only share IRC servers between devices" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="fal-6N-HEj">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3377,7 +3377,7 @@
                     </connections>
                 </button>
                 <button appearanceType="aqua" verticalHuggingPriority="750" id="CK0-Yb-yhA">
-                    <rect key="frame" x="343" y="221" width="103" height="19"/>
+                    <rect key="frame" x="343" y="223" width="103" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundRect" title="Open In Finder" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bhr-SP-5AM">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -3388,7 +3388,7 @@
                     </connections>
                 </button>
                 <button appearanceType="aqua" verticalHuggingPriority="750" id="5YP-vA-4dz">
-                    <rect key="frame" x="289" y="69" width="174" height="25"/>
+                    <rect key="frame" x="290" y="67" width="174" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundTextured" title="Erase Files" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pl4-5A-bb5">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -3399,24 +3399,24 @@
                     </connections>
                 </button>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="o3d-BG-svr">
-                    <rect key="frame" x="62" y="202" width="442" height="5"/>
+                    <rect key="frame" x="62" y="204" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="XQh-D0-Ehi">
-                    <rect key="frame" x="69" y="110" width="420" height="52"/>
+                    <rect key="frame" x="69" y="108" width="420" height="56"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="GhK-dw-xt2">
-                        <font key="font" metaFont="system" size="10"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <string key="title">There are two options for erasing the data stored by Textual: The "Erase Data" button erases shared preferences leaving custom add-on files such as styles on iCloud. The "Erase Files" button does the complete opposite. Custom add-on files such as styles will be erased leaving shared preferences intact.</string>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <button appearanceType="aqua" verticalHuggingPriority="750" id="26j-gf-7Ma">
-                    <rect key="frame" x="101" y="69" width="180" height="25"/>
+                    <rect key="frame" x="102" y="67" width="180" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundTextured" title="Erase Data" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Epr-O7-fie">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -3427,17 +3427,17 @@
                     </connections>
                 </button>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="S1T-hH-yI7">
-                    <rect key="frame" x="91" y="274" width="384" height="39"/>
+                    <rect key="frame" x="91" y="276" width="384" height="39"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="Kw7-gh-pLV">
-                        <font key="font" metaFont="system" size="10"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <string key="title">When enabled, Textual will ignore all preferences shared with iCloud that are not related to the configured IRC servers. Disabling this setting will force an immediate synchronization of all preferences with iCloud.</string>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="vDp-5l-asa">
-                    <rect key="frame" x="243" y="168" width="81" height="22"/>
+                    <rect key="frame" x="243" y="170" width="81" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Erase Data" id="i2X-WZ-GKC">
                         <font key="font" metaFont="systemBold" size="14"/>
