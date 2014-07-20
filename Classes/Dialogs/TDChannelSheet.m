@@ -37,7 +37,8 @@
 
 #import "TextualApplication.h"
 
-#define _TXWindowToolbarHeight			25
+#define _windowPadding					98
+#define _windowStaringPosition			61
 
 @interface TDChannelSheet ()
 /* Each entry of the array is an array with index 0 equal to the
@@ -116,7 +117,7 @@
 	NSRect windowFrame = [self currentSheetFrame];
 	
 	windowFrame.size.width  =  view.frame.size.width;
-	windowFrame.size.height = (view.frame.size.height + _TXWindowToolbarHeight);
+	windowFrame.size.height = (view.frame.size.height + _windowPadding);
 
 	windowFrame.origin.y = (NSMaxY([self currentSheetFrame]) - windowFrame.size.height);
 	
@@ -130,7 +131,11 @@
 	/* Set new frame. */
 	[self.sheet setFrame:windowFrame display:YES animate:YES];
 	
-	[self.contentView setFrame:[view frame]];
+	NSRect viewFrame = [view frame];
+	
+	viewFrame.origin.y = _windowStaringPosition;
+	
+	[self.contentView setFrame:viewFrame];
 	
 	/* Add new view. */
 	[self.contentView addSubview:view];
