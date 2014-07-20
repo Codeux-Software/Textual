@@ -76,14 +76,33 @@
 		[self.kText setStringValue:NSStringEmptyPlaceholder];
 	}
 	
-	if (lcheckInfoActl < 0) {
-		lcheckInfoActl = 0;
-	}
-	
-	[self.lText setStringValue:[NSString stringWithInteger:lcheckInfoActl]];
-	
 	[self updateTextFields];
 	[self startSheet];
+}
+
+- (NSString *)channelUserLimitMode
+{
+	return [[self.mode modeInfoFor:@"l"] modeParamater];
+}
+
+- (void)setChannelUserLimitMode:(NSString *)value
+{
+	[[self.mode modeInfoFor:@"l"] setModeParamater:value];
+}
+
+- (BOOL)validateValue:(id *)value forKey:(NSString *)key error:(NSError **)error
+{
+	if ([key isEqualToString:@"channelUserLimitMode"]) {
+		NSInteger n = [*value integerValue];
+		
+		if (n < 0) {
+			*value = [NSString stringWithInteger:0];
+		} else if (n > 9999) {
+			*value = [NSString stringWithInteger:9999];
+		}
+	}
+	
+	return YES;
 }
 
 - (void)updateTextFields
@@ -125,7 +144,6 @@
 	
 	if ([self.lCheck state] == NSOnState) {
 		[[self.mode modeInfoFor:@"l"] setModeIsSet:YES];
-		[[self.mode modeInfoFor:@"l"] setModeParamater:[self.lText firstTokenStringValue]];
 	} else {
 		[[self.mode modeInfoFor:@"l"] setModeIsSet:NO];
 		[[self.mode modeInfoFor:@"l"] setModeParamater:@"0"];
