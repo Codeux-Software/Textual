@@ -52,15 +52,35 @@
 #pragma mark -
 #pragma mark Public API (Combo Box Text Field)
 
+- (void)awakeFromNib
+{
+	[self setDelegate:self];
+}
+
+- (NSString *)actualValue
+{
+	NSString *selectedObject = [self objectValueOfSelectedItem];
+	
+	if (selectedObject) {
+		return selectedObject;
+	} else {
+		return [self stringValue];
+	}
+}
+
 - (NSString *)value
 {
-	NSString *stringValue = nil;
+	NSString *stringValue = [self actualValue];
 	
 	if (self.stringValueUsesOnlyFirstToken) {
-		stringValue = [self firstTokenStringValue];
-	} else {
-		stringValue = [self stringValue];
+		stringValue = [stringValue trim];
 		
+		NSInteger spacePosition = [stringValue stringPosition:NSStringWhitespacePlaceholder];
+		
+		if (spacePosition >= 1) {
+			stringValue = [stringValue substringToIndex:spacePosition];
+		}
+	} else {
 		if (self.stringValueIsTrimmed) {
 			stringValue = [stringValue trim];
 		}
@@ -96,6 +116,16 @@
 
 #pragma mark -
 #pragma mark Interval Validation
+
+- (void)comboBoxSelectionDidChange:(NSNotification *)notification
+{
+	/* Validate new value. */
+	[self performValidation];
+	
+	[self informCallbackTextDidChange];
+	
+	[self recalculatePositionOfClipView];
+}
 
 - (void)textDidChange:(NSNotification *)notification
 {
@@ -133,13 +163,13 @@
 {
 	if ([self valueIsEmpty] == NO) {
 		if (self.validationBlock) {
-			self.cachedValidValue = self.validationBlock([self stringValue]);
+			self.cachedValidValue = self.validationBlock([self actualValue]);
 		} else {
 			self.cachedValidValue = YES;
 		}
 	} else {
 		if (self.performValidationWhenEmpty) {
-			self.cachedValidValue = self.validationBlock([self stringValue]);
+			self.cachedValidValue = self.validationBlock([self actualValue]);
 		} else {
 			self.cachedValidValue = (self.stringValueIsInvalidOnEmpty == NO);
 		}
