@@ -162,24 +162,24 @@
 	if (NSObjectIsEmpty(attributes) || NSRangeIsValid(local) == NO) {
 		return;
 	}
-
-	[self.undoManager registerUndoWithTarget:self
-									selector:@selector(setAttributesWithContext:)
-									  object:@[attributes, NSStringFromRange(local)]];
+	
+	[[self undoManager] registerUndoWithTarget:self
+									  selector:@selector(setAttributesWithContext:)
+										object:@[attributes, NSStringFromRange(local)]];
 }
 
 - (void)setAttributesWithContext:(NSArray *)contextArray /* @private */
 {
 	NSRange local = NSRangeFromString(contextArray[1]);
-
-	NSDictionary *attrs = [self.attributedString attributesAtIndex:0
-											 longestEffectiveRange:NULL
-														   inRange:local];
-
-	[self.undoManager registerUndoWithTarget:self
-									selector:@selector(setAttributesWithContext:)
-									  object:@[attrs, NSStringFromRange(local)]];
-
+	
+	NSDictionary *attrs = [[self attributedString] attributesAtIndex:0
+											   longestEffectiveRange:NULL
+															 inRange:local];
+	
+	[[self undoManager] registerUndoWithTarget:self
+									  selector:@selector(setAttributesWithContext:)
+										object:@[attrs, NSStringFromRange(local)]];
+	
 	[self setAttributes:contextArray[0] inRange:local];
 }
 
@@ -251,6 +251,11 @@
 
 	[self setTextColor:self.preferredFontColor];
 	[self setInsertionPointColor:self.preferredFontColor];
+}
+
+- (void)updateTextColorInRange:(NSRange)range
+{
+	[self setTextColor:self.preferredFontColor range:range];
 }
 
 #pragma mark -

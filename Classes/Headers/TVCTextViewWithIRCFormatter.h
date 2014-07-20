@@ -67,6 +67,8 @@
 
 @property (copy) NSString *stringValue;
 
+- (void)updateTextColorInRange:(NSRange)range;
+
 - (void)updateTypeSetterAttributes;
 - (void)defineDefaultTypeSetterAttributes;
 
