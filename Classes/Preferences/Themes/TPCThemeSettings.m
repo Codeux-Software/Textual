@@ -76,7 +76,13 @@
 
 - (NSString *)stringForKey:(NSString *)key fromDictionary:(NSDictionary *)dict
 {
-	return [dict stringForKey:key];
+	NSString *hexValue = dict[key];
+
+	if ([hexValue length] == 0) {
+		return nil;
+	}
+	
+	return hexValue;
 }
 
 - (BOOL)boolForKey:(NSString *)key fromDictionary:(NSDictionary *)dict
