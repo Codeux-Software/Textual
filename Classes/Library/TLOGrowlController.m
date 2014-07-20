@@ -218,7 +218,7 @@
 				eventType == TXNotificationPrivateMessageType)
 			{
 				[notification setHasReplyButton:YES];
-				[notification setResponsePlaceholder:BLS(1235)];
+				[notification setResponsePlaceholder:BLS(1239)];
 			}
 		}
 #endif 
