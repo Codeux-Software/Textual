@@ -286,11 +286,6 @@
 	return [RZUserDefaults() boolForKey:@"DisplayEventInLogView -> Inline Media"];
 }
 
-+ (BOOL)inlineImagesDownloadsAllIgnoringCommonPatterns
-{
-	return [RZUserDefaults() boolForKey:@"InlineMediaDownloadsAllIgnoringCommonPatterns"];
-}
-
 + (BOOL)showJoinLeave
 {
 	return [RZUserDefaults() boolForKey:@"DisplayEventInLogView -> Join, Part, Quit"];

@@ -2217,7 +2217,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="m6k-uS-I0e">
-                    <rect key="frame" x="41" y="280" width="473" height="28"/>
+                    <rect key="frame" x="44" y="243" width="473" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" id="m0T-jg-XXP">
                         <font key="font" metaFont="systemBold" size="10"/>
@@ -2227,7 +2227,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="cwh-JV-tWi">
-                    <rect key="frame" x="41" y="167" width="117" height="13"/>
+                    <rect key="frame" x="50" y="205" width="117" height="13"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Fake CTCP Version:" id="Jfe-QS-I1T">
                         <font key="font" metaFont="cellTitle"/>
@@ -2236,7 +2236,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="Qoz-jq-Y9W">
-                    <rect key="frame" x="53" y="98" width="459" height="61"/>
+                    <rect key="frame" x="62" y="136" width="459" height="61"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="mLE-94-QqL">
                         <font key="font" metaFont="cellTitle"/>
@@ -2247,51 +2247,13 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ApplicationCTCPVersionMasquerade" id="vH0-9e-ycZ"/>
                     </connections>
                 </textField>
-                <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="wOj-dv-jiz">
-                    <rect key="frame" x="56" y="268" width="442" height="5"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="OhO-2g-Ujx">
-                    <rect key="frame" x="55" y="191" width="442" height="5"/>
+                    <rect key="frame" x="64" y="229" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <button appearanceType="aqua" id="adg-kr-slw">
-                    <rect key="frame" x="41" y="238" width="251" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Do not force minimum window size" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="HVb-qy-6T1">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.MinimumWindowSizeIsNotForced" id="X4j-2n-VYn"/>
-                    </connections>
-                </button>
-                <button appearanceType="aqua" id="acC-0E-rB8">
-                    <rect key="frame" x="41" y="210" width="373" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Every single link posted is scanned to check if it is an image" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="mFc-qe-Ga3">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.InlineMediaDownloadsAllIgnoringCommonPatterns" id="xCz-eB-mSq"/>
-                    </connections>
-                </button>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="SPN-dD-Qhj">
-                    <rect key="frame" x="325" y="239" width="201" height="14"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="** Restart required to apply changes." id="4mD-0b-eUd">
-                        <font key="font" metaFont="system" size="10"/>
-                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
             </subviews>
         </customView>
         <customView id="Fnm-DD-Hbc" userLabel="Keyboard &amp; Mouse">
