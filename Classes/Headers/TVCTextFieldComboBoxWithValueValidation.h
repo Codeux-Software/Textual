@@ -41,7 +41,7 @@
  no way to have TVCTextFieldWithValueValidation as our superclass without
  reimplementing all the dynamics of NSComboBox, we have to redeclare the
  entire API of TVCTextFieldWithValueValidation. */
-@interface TVCTextFieldComboBoxWithValueValidation : NSComboBox
+@interface TVCTextFieldComboBoxWithValueValidation : NSComboBox <NSComboBoxDelegate>
 @property (nonatomic, copy) TVCTextFieldWithValueValidationBlock validationBlock;
 @property (nonatomic, assign) BOOL onlyShowStatusIfErrorOccurs; // Only show color or symbol if value is erroneous.
 @property (nonatomic, assign) BOOL stringValueUsesOnlyFirstToken; // Only use everything before first space (" ") as value.
