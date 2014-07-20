@@ -55,6 +55,8 @@
 	[self.tnewNicknameField setStringValueIsInvalidOnEmpty:YES];
 	[self.tnewNicknameField setStringValueUsesOnlyFirstToken:YES];
 	
+	[self.tnewNicknameField setOnlyShowStatusIfErrorOccurs:YES];
+	
 	[self.tnewNicknameField setTextDidChangeCallback:self];
 	
 	[self.tnewNicknameField setValidationBlock:^BOOL(NSString *currentValue) {
