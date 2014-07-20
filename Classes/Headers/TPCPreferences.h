@@ -202,8 +202,6 @@ typedef enum TXFileTransferIPAddressDetectionMethod : NSInteger {
 + (NSInteger)inlineImagesMaxHeight;
 + (void)setInlineImagesMaxHeight:(NSInteger)value;
 
-+ (BOOL)inlineImagesDownloadsAllIgnoringCommonPatterns;
-
 + (NSString *)themeName;
 + (NSString *)themeNicknameFormat;
 + (NSString *)themeTimestampFormat;

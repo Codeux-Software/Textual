@@ -365,10 +365,6 @@
 		}
 	}
 
-	if ([TPCPreferences inlineImagesDownloadsAllIgnoringCommonPatterns]) {
-		return [u absoluteString];
-	}
-
 	return nil;
 }
 
