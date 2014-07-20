@@ -1768,12 +1768,10 @@
     }
     
 	/* Insert names. */
-	NSAttributedString *stringInsert = [NSAttributedString emptyStringWithBase:insertString];
-    
-	NSData *stringData = [stringInsert RTFFromRange:NSMakeRange(0, [stringInsert length]) documentAttributes:nil];
-    
-    [textField replaceCharactersInRange:selectedRange withRTF:stringData];
+	[textField replaceCharactersInRange:selectedRange withString:insertString];
 
+	[textField updateTextColorInRange:selectedRange];
+	
 	/* Close users. */
 	if (deselectPointedNickname) {
 		self.pointedNickname = nil;
