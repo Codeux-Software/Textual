@@ -4318,6 +4318,14 @@
 							 
 							 [self setUnreadState:c isHighlight:isHighlight];
 						 }
+					 } else {
+						 if (isZNCprivmsg == NO) {
+							 if (isHighlight) {
+								 [self setKeywordState:c];
+							 }
+							 
+							 [self setUnreadState:c isHighlight:isHighlight];
+						 }
 					 }
 				}];
 
