@@ -696,8 +696,6 @@
 		@synchronized(self.channels) {
 			if ([channel isChannel]) {
 				[self.channels addObjectWithoutDuplication:channel];
-				
-				[self updateStoredChannelList];
 			} else {
 				NSInteger i = 0;
 				
@@ -719,6 +717,8 @@
 					[self.channels addObject:channel];
 				}
 			}
+			
+			[self updateStoredChannelList];
 		}
 	});
 }
