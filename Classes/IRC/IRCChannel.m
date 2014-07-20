@@ -102,6 +102,11 @@
 
 - (void)updateConfig:(IRCChannelConfig *)seed
 {
+	[self updateConfig:seed fireChangedNotification:YES];
+}
+
+- (void)updateConfig:(IRCChannelConfig *)seed fireChangedNotification:(BOOL)fireChangedNotification;
+{
 	if (seed) {
 		/* We do not want to bother on equality. */
 		NSAssertReturn([seed isEqualToChannelConfiguration:_config] == NO);
@@ -127,9 +132,11 @@
 		[self.associatedClient updateStoredChannelList];
 		
 		/* Post notification. */
-		[RZNotificationCenter() postNotificationName:IRCChannelConfigurationWasUpdatedNotification
-											  object:self
-											userInfo:@{@"channelID" : [self uniqueIdentifier]}];
+		if (fireChangedNotification) {
+			[RZNotificationCenter() postNotificationName:IRCChannelConfigurationWasUpdatedNotification
+												  object:self
+												userInfo:@{@"channelID" : [self uniqueIdentifier]}];
+		}
 	}
 }
 
@@ -305,6 +312,19 @@
 	
 	if (self.isPrivateMessage) {
 		[self.config destroyKeychains];
+	}
+	
+	NSArray *openWindows = [menuController() windowsFromWindowList:@[@"TDChannelSheet",
+																	 @"TDCTopicSheet",
+																	 @"TDCModeSheet",
+																	 @"TDChanInviteExceptionSheet",
+																	 @"TDChanBanSheet",
+																	 @"TDChanBanExceptionSheet"]];
+	
+	for (id windowObject in openWindows) {
+		if (NSObjectsAreEqual([windowObject channelID], [self uniqueIdentifier])) {
+			[windowObject cancel:nil];
+		}
 	}
 	
 	[self.viewController prepareForPermanentDestruction];

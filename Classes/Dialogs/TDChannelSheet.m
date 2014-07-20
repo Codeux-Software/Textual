@@ -70,6 +70,13 @@
 	if ((self = [super init])) {
 		[RZMainBundle() loadCustomNibNamed:@"TDChannelSheet" owner:self topLevelObjects:nil];
 		
+		IRCChannel *channel = [worldController() findChannelByClientId:self.clientID channelId:self.channelID];
+		
+		[RZNotificationCenter() addObserver:self
+								   selector:@selector(underlyingConfigurationChanged:)
+									   name:IRCChannelConfigurationWasUpdatedNotification
+									 object:channel];
+		
 		self.navigationTree = @[
 			//    view				  first responder
 			@[self.generalView,			self.channelNameField],
@@ -226,11 +233,54 @@
 	[self update];
 }
 
+- (void)close
+{
+	[self cancel:nil];
+}
+
+- (void)updateUnderlyingConfigurationProfileCallback:(TLOPopupPromptReturnType)returnType withOriginalAlert:(NSAlert *)originalAlert
+{
+	if (returnType == TLOPopupPromptReturnPrimaryType) {
+		IRCChannel *channel = [worldController() findChannelByClientId:self.clientID channelId:self.channelID];
+		
+		[self close];
+		
+		self.config = [channel config];
+		
+		[self start];
+	}
+}
+
+- (void)underlyingConfigurationChanged:(NSNotification *)notification
+{
+	TLOPopupPrompts *popup = [TLOPopupPrompts new];
+	
+	[popup sheetWindowWithQuestion:self.sheet
+							target:self
+							action:@selector(updateUnderlyingConfigurationProfileCallback:withOriginalAlert:)
+							  body:TXTLS(@"BasicLanguage[1241][2]", self.config.channelName)
+							 title:TXTLS(@"BasicLanguage[1241][1]")
+					 defaultButton:TXTLS(@"BasicLanguage[1241][3]")
+				   alternateButton:TXTLS(@"BasicLanguage[1241][4]")
+					   otherButton:nil
+					suppressionKey:nil
+				   suppressionText:nil];
+}
+
 #pragma mark -
 #pragma mark Actions
 
+- (void)cancel:(id)sender
+{
+	[RZNotificationCenter() removeObserver:self];
+
+	[super cancel:sender];
+}
+
 - (void)ok:(id)sender
 {
+	[RZNotificationCenter() removeObserver:self];
+
 	[self save];
 	
 	if ([self.delegate respondsToSelector:@selector(channelSheetOnOK:)]) {

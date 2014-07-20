@@ -141,7 +141,6 @@
 @property (nonatomic, copy) NSString *pointedNickname;
 @property (nonatomic, copy) NSString *pointedChannelName;
 @property (nonatomic, copy) NSString *currentSearchPhrase;
-@property (nonatomic, copy) NSDictionary *openWindowList;
 @property (nonatomic, strong) TDCFileTransferDialog *fileTransferController;
 @property (nonatomic, nweak) IBOutlet NSMenu *navigationChannelList;
 @property (nonatomic, nweak) IBOutlet NSMenu *addServerMenu;
@@ -178,6 +177,8 @@
 - (void)removeWindowFromWindowList:(NSString *)windowClass;
 
 - (id)windowFromWindowList:(NSString *)windowClass;
+
+- (NSArray *)windowsFromWindowList:(NSArray *)windowClasses;
 
 - (BOOL)popWindowViewIfExists:(NSString *)windowClass;
 - (void)popWindowSheetIfExists; // Only applies to main window.

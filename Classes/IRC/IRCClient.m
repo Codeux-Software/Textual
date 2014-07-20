@@ -349,7 +349,7 @@
 
 		if (cinl) {
 			/* It exists so we update its configuration. */
-			[cinl updateConfig:i];
+			[cinl updateConfig:i fireChangedNotification:NO];
 
 			/* We also are sure to add it to new list of channels. */
 			[newChannelList addObject:cinl];
@@ -507,7 +507,17 @@
 - (void)closeDialogs
 {
     [menuController() popWindowViewIfExists:[self listDialogWindowKey]];
-    [menuController() popWindowSheetIfExists];
+	
+	NSArray *openWindows = [menuController() windowsFromWindowList:@[@"TDCServerSheet",
+																	 @"TDCNickSheet",
+																	 @"TDCInviteSheet",
+																	 @"TDCHighlightSheetList"]];
+	
+	for (id windowObject in openWindows) {
+		if (NSObjectsAreEqual([windowObject clientID], [self uniqueIdentifier])) {
+			[windowObject cancel:nil];
+		}
+	}
 }
 
 - (void)preferencesChanged
@@ -4493,7 +4503,7 @@
 
 	if (myself) {
 		c = [self findChannelOrCreate:channel];
-		
+
 		if ([c status] == IRCChannelStatusJoined) {
 			return;
 		}
