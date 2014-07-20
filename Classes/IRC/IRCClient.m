@@ -4932,22 +4932,26 @@
 	IRCChannel *c = [self findChannel:oldNick];
 	IRCChannel *t = [self findChannel:newNick];
 
-	PointerIsEmptyAssert(c);
-
-	if (t) {
-		/* If a query of this name already exists, then we
-		 destroy it before changing name of old. */
-		if (NSObjectsAreEqual([c name], [t name]) == NO) {
-			[worldController() destroyChannel:t];
+	if (c) {
+		if (t) {
+			/* If a query of this name already exists, then we
+			 destroy it before changing name of old. */
+			if (NSObjectsAreEqual([c name], [t name]) == NO) {
+				[worldController() destroyChannel:t];
+			}
 		}
-	}
 
-	[c setName:newNick];
+		[c setName:newNick];
 
-	[mainWindow() reloadTreeItem:c];
-	
-	if (myself) {
-		[mainWindow() updateTitleFor:c];
+		[mainWindow() reloadTreeItem:c];
+		
+		if (myself) {
+			[mainWindow() updateTitleFor:c];
+		}
+	} else {
+		if (myself) {
+			[mainWindow() updateTitleFor:self];
+		}
 	}
 	
 	[[self fileTransferController] nicknameChanged:oldNick toNickname:newNick client:self];
