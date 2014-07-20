@@ -8458,7 +8458,7 @@
 	if (useWatchCommand) {
 		if (populatingForFirstTime == NO) {
 			for (NSString *lname in oldEntriesNicknames) {
-				if ([newEntries containsKeyIgnoringCase:lname]) {
+				if ([newEntries containsKeyIgnoringCase:lname] == NO) {
 					[watchRemovals addObject:lname];
 				}
 			}
