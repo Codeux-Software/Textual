@@ -1982,7 +1982,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="MpU-MJ-P1S">
-                    <rect key="frame" x="50" y="307" width="151" height="16"/>
+                    <rect key="frame" x="32" y="302" width="151" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Maximum Channel Joins:" id="r8a-IS-36w">
                         <font key="font" metaFont="cellTitle"/>
@@ -1991,7 +1991,7 @@
                     </textFieldCell>
                 </textField>
                 <slider appearanceType="aqua" verticalHuggingPriority="750" id="9XR-dG-6jw">
-                    <rect key="frame" x="226" y="290" width="276" height="17"/>
+                    <rect key="frame" x="208" y="285" width="276" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <sliderCell key="cell" controlSize="small" state="on" alignment="left" minValue="1" maxValue="20" doubleValue="1" tickMarkPosition="below" numberOfTickMarks="20" allowsTickMarkValuesOnly="YES" sliderType="linear" id="ROR-5N-lPB"/>
                     <connections>
@@ -2000,7 +2000,7 @@
                     </connections>
                 </slider>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="Vi1-qf-oHg">
-                    <rect key="frame" x="227" y="274" width="11" height="14"/>
+                    <rect key="frame" x="209" y="269" width="11" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="1" id="sXf-Xv-avB">
                         <font key="font" metaFont="smallSystem"/>
@@ -2009,7 +2009,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="0JH-yX-1pA">
-                    <rect key="frame" x="487" y="275" width="18" height="14"/>
+                    <rect key="frame" x="469" y="270" width="18" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="20" id="d2Q-58-yZq">
                         <font key="font" metaFont="smallSystem"/>
@@ -2018,7 +2018,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="sxr-6Y-z9j">
-                    <rect key="frame" x="282" y="274" width="11" height="14"/>
+                    <rect key="frame" x="264" y="269" width="11" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="5" id="szD-RT-eEJ">
                         <font key="font" metaFont="smallSystem"/>
@@ -2027,7 +2027,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="cGZ-Pz-aZ4">
-                    <rect key="frame" x="349" y="274" width="18" height="14"/>
+                    <rect key="frame" x="331" y="269" width="18" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="10" id="t7B-FL-ehc">
                         <font key="font" metaFont="smallSystem"/>
@@ -2036,7 +2036,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="iQU-cc-yi3">
-                    <rect key="frame" x="418" y="274" width="18" height="14"/>
+                    <rect key="frame" x="400" y="269" width="18" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="15" id="22Y-44-XNk">
                         <font key="font" metaFont="smallSystem"/>
@@ -2045,77 +2045,22 @@
                     </textFieldCell>
                 </textField>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="6pI-nG-5UE">
-                    <rect key="frame" x="66" y="243" width="442" height="5"/>
+                    <rect key="frame" x="48" y="238" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <slider appearanceType="aqua" verticalHuggingPriority="750" id="tfY-TP-YZN">
-                    <rect key="frame" x="52" y="100" width="458" height="17"/>
+                    <rect key="frame" x="53" y="104" width="458" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="2000" tickMarkPosition="below" numberOfTickMarks="50" allowsTickMarkValuesOnly="YES" sliderType="linear" id="JHI-LK-miQ"/>
                     <connections>
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.TrackUserAwayStatusMaximumChannelSize" id="R7b-3V-IUf"/>
                     </connections>
                 </slider>
-                <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="aoy-4f-aLZ">
-                    <rect key="frame" x="48" y="125" width="457" height="84"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="VVG-e6-qMd">
-                        <rect key="frame" x="0.0" y="0.0" width="457" height="40"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" spellingCorrection="YES" id="E68-u1-PKY">
-                                <rect key="frame" x="0.0" y="0.0" width="457" height="40"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="457" height="84"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                                <attributedString key="textStorage">
-                                    <fragment>
-                                        <string key="content">Every thirty seconds Textual takes five (5) channels from the channel list for each server and sends the WHO command to them in order to establish the state of the channel. This state information includes the away status of every user. Drag the slider below to change the maximum size of a channel that Textual should query. It is recommended to set the value to 400 to cover most channels. The away status information of very large channels is usually not relevant. </string>
-                                        <attributes>
-                                            <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="11" name="LucidaGrande"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                <tabStops>
-                                                    <textTab alignment="left" location="36"/>
-                                                    <textTab alignment="left" location="72"/>
-                                                    <textTab alignment="left" location="108"/>
-                                                    <textTab alignment="left" location="144"/>
-                                                    <textTab alignment="left" location="180"/>
-                                                    <textTab alignment="left" location="216"/>
-                                                    <textTab alignment="left" location="252"/>
-                                                    <textTab alignment="left" location="288"/>
-                                                    <textTab alignment="left" location="324"/>
-                                                    <textTab alignment="left" location="360"/>
-                                                    <textTab alignment="left" location="396"/>
-                                                    <textTab alignment="left" location="432"/>
-                                                </tabStops>
-                                            </paragraphStyle>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="457" height="84"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="KpB-wE-Xnv">
-                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="vh3-en-Buh">
-                        <rect key="frame" x="-100" y="-100" width="15" height="28"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                </scrollView>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="wcy-2K-Z0C">
-                    <rect key="frame" x="50" y="219" width="240" height="16"/>
+                    <rect key="frame" x="32" y="214" width="240" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="WHO Command Maximum Channel Size:" id="xkB-rD-fPk">
                         <font key="font" metaFont="cellTitle"/>
@@ -2124,7 +2069,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="cIi-Pq-WPZ">
-                    <rect key="frame" x="53" y="84" width="11" height="14"/>
+                    <rect key="frame" x="54" y="88" width="11" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="M5q-ps-YMl">
                         <font key="font" metaFont="smallSystem"/>
@@ -2133,7 +2078,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="hUG-W4-cww">
-                    <rect key="frame" x="485" y="84" width="36" height="14"/>
+                    <rect key="frame" x="486" y="88" width="36" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="2,000" id="Fde-ve-jLK">
                         <font key="font" metaFont="smallSystem"/>
@@ -2142,7 +2087,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="nYa-5J-0VR">
-                    <rect key="frame" x="135" y="84" width="25" height="14"/>
+                    <rect key="frame" x="136" y="88" width="25" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="400" id="6EW-Df-jxu">
                         <font key="font" metaFont="smallSystem"/>
@@ -2151,7 +2096,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="V7m-3A-nss">
-                    <rect key="frame" x="227" y="84" width="25" height="14"/>
+                    <rect key="frame" x="228" y="88" width="25" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="800" id="J0v-lX-lSI">
                         <font key="font" metaFont="smallSystem"/>
@@ -2160,7 +2105,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="LRz-ln-JIt">
-                    <rect key="frame" x="304" y="84" width="36" height="14"/>
+                    <rect key="frame" x="305" y="88" width="36" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="1,200" id="xVW-kp-5fh">
                         <font key="font" metaFont="smallSystem"/>
@@ -2169,7 +2114,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="pt3-ra-o1s">
-                    <rect key="frame" x="394" y="84" width="36" height="14"/>
+                    <rect key="frame" x="395" y="88" width="36" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="1,600" id="NsV-py-07s">
                         <font key="font" metaFont="smallSystem"/>
@@ -2177,60 +2122,25 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="5bf-Zg-Aoj">
-                    <rect key="frame" x="48" y="259" width="172" height="40"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="zdS-8U-w4l">
-                        <rect key="frame" x="0.0" y="0.0" width="172" height="40"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" spellingCorrection="YES" id="5yh-HL-dh0">
-                                <rect key="frame" x="0.0" y="0.0" width="172" height="40"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="172" height="40"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                                <attributedString key="textStorage">
-                                    <fragment content="Number of channels permitted to be joined at a single time during autojoin.">
-                                        <attributes>
-                                            <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="11" name="LucidaGrande"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
-                                                <tabStops>
-                                                    <textTab alignment="left" location="36"/>
-                                                    <textTab alignment="left" location="72"/>
-                                                    <textTab alignment="left" location="108"/>
-                                                    <textTab alignment="left" location="144"/>
-                                                    <textTab alignment="left" location="180"/>
-                                                    <textTab alignment="left" location="216"/>
-                                                    <textTab alignment="left" location="252"/>
-                                                    <textTab alignment="left" location="288"/>
-                                                    <textTab alignment="left" location="324"/>
-                                                    <textTab alignment="left" location="360"/>
-                                                    <textTab alignment="left" location="396"/>
-                                                    <textTab alignment="left" location="432"/>
-                                                </tabStops>
-                                            </paragraphStyle>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="172" height="40"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="wB4-ij-Cuo">
-                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="cpM-rn-hRs">
-                        <rect key="frame" x="-100" y="-100" width="15" height="28"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                </scrollView>
+                <textField appearanceType="aqua" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="OVq-cn-ftD">
+                    <rect key="frame" x="35" y="134" width="503" height="70"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="juM-7X-6WQ">
+                        <font key="font" metaFont="smallSystem"/>
+                        <string key="title">Textual sends a WHO command to five (5) channels per-server in sequential order every thirty (30) seconds in order to monitor the away status of every user. This preference will define the maximum number of users a channel can have before Textual ignores a particular channel. Zero (0) disables this behavior with four-hundred (400) as a recommended value. Any more than that seems excessive as the away status of large channels is usually irrelevant. </string>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField appearanceType="aqua" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="GHO-yi-WAR">
+                    <rect key="frame" x="35" y="252" width="162" height="42"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Number of channels permitted to be joined at a single time during autojoin." id="F2Z-xU-spz">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <point key="canvasLocation" x="596.5" y="-252"/>
         </customView>
