@@ -47,17 +47,12 @@
 - (void)useSSLWithClient:(IRCClient *)client withConnectionController:(IRCConnection *)controller
 {
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
-
-	settings[(id)kCFStreamSSLLevel] = (id)kCFStreamSocketSecurityLevelNegotiatedSSL;
+	
+	settings[GCDAsyncSocketManuallyEvaluateTrust] = @(YES);
+	settings[GCDAsyncSocketSSLProtocolVersionMin] = @(kSSLProtocolUnknown);
 	
 	settings[(id)kCFStreamSSLIsServer] = (id)kCFBooleanFalse;
 	settings[(id)kCFStreamSSLPeerName] = (id)controller.serverAddress;
-
-	if ([client connectType] == IRCClientConnectBadSSLCertificateMode) {
-		settings[(id)kCFStreamSSLValidatesCertificateChain] = (id)kCFBooleanFalse;
-	} else {
-		settings[(id)kCFStreamSSLValidatesCertificateChain] = (id)kCFBooleanTrue;
-	}
 	
 	NSData *localCertData = client.config.identitySSLCertificate;
 	

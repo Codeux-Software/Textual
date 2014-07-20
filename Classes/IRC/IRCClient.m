@@ -3556,17 +3556,6 @@
 
 - (void)changeStateOff
 {
-	/* We don't destroy the socket address for bad certificates. We will
-	 recycle the address during the connection attempt if user approves.
-	 This is done so if user was part of a server redirect and the 
-	 temporary store for that redirect was destroyed, we still send
-	 the user to the correct destination. */
-	if (self.disconnectType == IRCClientConnectBadSSLCertificateMode) {
-		self.serverRedirectAddressTemporaryStore = self.socket.serverAddress;
-		
-		self.serverRedirectPortTemporaryStore = self.socket.serverPort;
-	}
-	
 	self.socket = nil;
 	
 	[self stopPongTimer];
@@ -3684,32 +3673,6 @@
 - (void)ircConnectionDidDisconnect:(IRCConnection *)sender withError:(NSError *)distcError;
 {
 	[self disconnect];
-
-	if (self.disconnectType == IRCClientDisconnectBadSSLCertificateMode) {
-		[self presentSSLCertificateTrustPanelWithError:distcError];
-	}
-}
-
-- (void)presentSSLCertificateTrustPanelWithError:(NSError *)distcError
-{
-	[self cancelReconnect];
-
-	if (distcError) {
-		SecTrustRef trustRef = (__bridge SecTrustRef)([distcError userInfo][@"peerCertificateTrustRef"]);
-
-		if (trustRef) {
-			TVCQueuedCertificateTrustPanel *panel = [TXSharedApplication sharedQueuedCertificateTrustPanel];
-
-			[panel enqueue:trustRef withCompletionBlock:^(BOOL isTrusted) {
-				if (isTrusted) {
-					[self connect:IRCClientConnectBadSSLCertificateMode];
-				} else {
-					self.serverRedirectAddressTemporaryStore = nil; // Destroy temporary store if user disapproves.
-					self.serverRedirectPortTemporaryStore = 0;
-				}
-			}];
-		}
-	}
 }
 
 #pragma mark -
@@ -7618,8 +7581,6 @@
 	[self logFileWriteSessionBegin];
 
 	if (mode == IRCClientConnectReconnectMode) {
-		[self printDebugInformationToConsole:BLS(1143)];
-	} else if (mode == IRCClientConnectBadSSLCertificateMode) {
 		[self printDebugInformationToConsole:BLS(1143)];
 	} else if (mode == IRCClientConnectRetryMode) {
 		[self printDebugInformationToConsole:BLS(1144)];

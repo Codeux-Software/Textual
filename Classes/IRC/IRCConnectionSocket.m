@@ -88,7 +88,7 @@
 													 delegateQueue:self.dispatchQueue
 													   socketQueue:self.socketQueue];
 
-        [self.socketConnection setPreferIPv4OverIPv6:(self.connectionPrefersIPv6 == NO)];
+		[self.socketConnection setIPv4PreferredOverIPv6:(self.connectionPrefersIPv6 == NO)];
 	} else {
 		self.socketConnection = [AsyncSocket socketWithDelegate:self];
 	}
@@ -199,6 +199,28 @@
 	return YES;
 }
 
+- (void)socket:(id)sock didReceiveTrust:(SecTrustRef)trust completionHandler:(void (^)(BOOL shouldTrustPeer))completionHandler
+{
+	SecTrustResultType result;
+	
+	OSStatus trustEvalStatus = SecTrustEvaluate(trust, &result);
+	
+	if (trustEvalStatus == errSecSuccess)
+	{
+		if (result == kSecTrustResultUnspecified || result == kSecTrustResultProceed) {
+			completionHandler(YES);
+		} else if (result == kSecTrustResultRecoverableTrustFailure) {
+			[[TXSharedApplication sharedQueuedCertificateTrustPanel] enqueue:trust withCompletionBlock:completionHandler];
+		} else {
+			completionHandler(NO);
+		}
+	}
+	else
+	{
+		completionHandler(NO);
+	}
+}
+	
 - (void)onSocket:(id)sock didConnectToHost:(NSString *)ahost port:(UInt16)aport
 {
 	[self.socketConnection readDataWithTimeout:(-1) tag:0];
