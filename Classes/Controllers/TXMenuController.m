@@ -40,8 +40,10 @@
 
 #define _activate					(c && [c isActive])
 #define _notActive					(c && [c isActive] == NO)
-#define _connected					(u && [u isConnected] && [u isLoggedIn])
-#define _notConnected				(u && [u isConnected] == NO && [u isLoggedIn] == NO && [u isConnecting] == NO)
+#define _connected					(u && [u isConnected])
+#define _notConnected				(u && [u isConnected] == NO && [u isConnecting] == NO)
+#define _connectionLoggedIn			(u && [u isConnected] && [u isLoggedIn])
+#define _connectionNotLoggedIn		(u && [u isConnected] == NO && [u isLoggedIn] == NO)
 #define _isChannel					([c isPrivateMessage] == NO && [c isChannel] == YES && [c isClient] == NO)
 #define _isClient					([c isPrivateMessage] == NO && [c isChannel] == NO && [c isClient] == YES)
 #define _isQuery					([c isPrivateMessage] == YES && [c isChannel] == NO && [c isClient] == NO)
@@ -274,7 +276,7 @@
 		case 511: // "Change Nickname…"
 		case 519: // "Channel List…"
 		{
-			return _disableInSheet(_connected);
+			return _disableInSheet(_connectionLoggedIn);
 			
 			break;
 		}
@@ -308,9 +310,9 @@
 				
 				return NO;
 			} else {
-				BOOL condition = (_connected && _notActive && _isChannel);
+				BOOL condition = (_connectionLoggedIn && _notActive && _isChannel);
 				
-				if (_connected) {
+				if (_connectionLoggedIn) {
 					[item setHidden:(condition == NO)];
 				} else {
 					[item setHidden:NO];
@@ -371,7 +373,7 @@
 		}
 		case 2005: // "Invite To…"
 		{
-			if (_notConnected || [self checkSelectedMembers:item] == NO) {
+			if (_connectionNotLoggedIn || [self checkSelectedMembers:item] == NO) {
 				return NO;
 			}
 			
@@ -477,7 +479,7 @@
 		}
 		case 593: // "Highlight List"
 		{
-			return _disableInSheet([TPCPreferences logHighlights] && _connected);
+			return _disableInSheet([TPCPreferences logHighlights] && _connectionLoggedIn);
 			
 			break;
 		}
@@ -729,7 +731,7 @@
 	
 	NSMutableArray *ary = [NSMutableArray array];
 	
-	if (_noClientOrChannel || _notActive || _notConnected || _isClient) {
+	if (_noClientOrChannel || _notActive || _connectionNotLoggedIn || _isClient) {
 		return ary;
 	} else {
 		NSIndexSet *indexes = [mainWindowMemberList() selectedRowIndexes];
@@ -1175,7 +1177,7 @@
 	
 	IRCClient *u = [mainWindow() selectedClient];
 	
-	if (_noClient || _notConnected) {
+	if (_noClient || _connectionNotLoggedIn) {
 		return;
 	}
 
@@ -1194,7 +1196,7 @@
 {
 	IRCClient *u = [worldController() findClientById:[sender clientID]];
 	
-	if (_noClient || _notConnected) {
+	if (_noClient || _connectionNotLoggedIn) {
 		return;
 	}
 	
@@ -1213,7 +1215,7 @@
 {
 	IRCClient *u = [mainWindow() selectedClient];
 	
-	if (_noClient || _notConnected) {
+	if (_noClient || _connectionNotLoggedIn) {
 		return;
 	}
 	
@@ -1271,7 +1273,7 @@
 {
 	IRCClient *u = [mainWindow() selectedClient];
 	
-	if (_noClient || _connected) {
+	if (_noClient || _connectionLoggedIn) {
 		return;
 	}
 	
@@ -1379,7 +1381,7 @@
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
 	
-	if (_noClientOrChannel || _isClient || _isQuery || _activate || _notConnected) {
+	if (_noClientOrChannel || _isClient || _isQuery || _activate || _connectionNotLoggedIn) {
 		return;
 	}
 
@@ -1393,7 +1395,7 @@
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
 	
-	if (_noClientOrChannel || _notActive || _notConnected) {
+	if (_noClientOrChannel || _notActive || _connectionNotLoggedIn) {
 		return;
 	}
 	
@@ -1845,7 +1847,7 @@
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
 	
-	if (_noClientOrChannel || _notConnected) {
+	if (_noClientOrChannel || _connectionNotLoggedIn) {
 		return;
 	}
 
@@ -2008,7 +2010,7 @@
 	
 	IRCClient *u = [mainWindow() selectedClient];
 	
-	if (_noClient || _notConnected) {
+	if (_noClient || _connectionNotLoggedIn) {
 		return;
 	}
 
@@ -2256,7 +2258,7 @@
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
 	
-	if (_noClientOrChannel || _isClient || _notConnected) {
+	if (_noClientOrChannel || _isClient || _connectionNotLoggedIn) {
 		return;
 	}
 	
@@ -2290,7 +2292,7 @@
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
 	
-	if (_noClientOrChannel || _isClient || _notConnected) {
+	if (_noClientOrChannel || _isClient || _connectionNotLoggedIn) {
 		return;
 	}
 	

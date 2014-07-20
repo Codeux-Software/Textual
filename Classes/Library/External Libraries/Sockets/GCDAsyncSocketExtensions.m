@@ -51,7 +51,7 @@
 	settings[(id)kCFStreamSSLLevel] = (id)kCFStreamSocketSecurityLevelNegotiatedSSL;
 	
 	settings[(id)kCFStreamSSLIsServer] = (id)kCFBooleanFalse;
-	settings[(id)kCFStreamSSLPeerName] = (id)client.config.serverAddress;
+	settings[(id)kCFStreamSSLPeerName] = (id)controller.serverAddress;
 
 	if ([client connectType] == IRCClientConnectBadSSLCertificateMode) {
 		settings[(id)kCFStreamSSLValidatesCertificateChain] = (id)kCFBooleanFalse;

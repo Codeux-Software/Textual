@@ -3556,12 +3556,19 @@
 
 - (void)changeStateOff
 {
-	if (self.isLoggedIn == NO && self.isConnecting == NO) {
-		return;
+	/* We don't destroy the socket address for bad certificates. We will
+	 recycle the address during the connection attempt if user approves.
+	 This is done so if user was part of a server redirect and the 
+	 temporary store for that redirect was destroyed, we still send
+	 the user to the correct destination. */
+	if (self.disconnectType == IRCClientConnectBadSSLCertificateMode) {
+		self.serverRedirectAddressTemporaryStore = self.socket.serverAddress;
+		
+		self.serverRedirectPortTemporaryStore = self.socket.serverPort;
 	}
 	
 	self.socket = nil;
-
+	
 	[self stopPongTimer];
 	[self stopRetryTimer];
 	[self stopISONTimer];
@@ -3696,6 +3703,9 @@
 			[panel enqueue:trustRef withCompletionBlock:^(BOOL isTrusted) {
 				if (isTrusted) {
 					[self connect:IRCClientConnectBadSSLCertificateMode];
+				} else {
+					self.serverRedirectAddressTemporaryStore = nil; // Destroy temporary store if user disapproves.
+					self.serverRedirectPortTemporaryStore = 0;
 				}
 			}];
 		}
@@ -7616,11 +7626,9 @@
 	}
 
 	/* Create socket. */
-	if (self.socket == nil) {
-		self.socket = [IRCConnection new];
+	self.socket = [IRCConnection new];
 		
-		self.socket.associatedClient = self;
-	}
+	self.socket.associatedClient = self;
 
 	/* Begin populating configuration. */
 	self.socket.serverAddress = socketAddress;
