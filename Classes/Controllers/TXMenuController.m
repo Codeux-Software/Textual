@@ -1352,6 +1352,8 @@
 		if (samencoding == NO) {
 			[worldController() reloadTheme];
 		}
+		
+		[mainWindow() reloadTreeGroup:u];
 	}
 	
 	[worldController() save];
