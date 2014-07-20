@@ -79,8 +79,7 @@
 
 - (void)openSocket
 {
-    [self closeSocket]; // Reset state. 
-	[self createDispatchQueue];
+    [self createDispatchQueue];
 
 	self.isConnecting = YES;
 
