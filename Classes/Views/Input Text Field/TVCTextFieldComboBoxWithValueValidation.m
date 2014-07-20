@@ -218,7 +218,11 @@
 	/* Look at all those magic numbers… */
 	NSInteger rightEdge = (NSMaxX(aRect) - 40.0);
 	
-	return NSMakeRect(rightEdge, 6.0, 14.0, 14.0);
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		return NSMakeRect(rightEdge, 6.0, 14.0, 14.0);
+	} else {
+		return NSMakeRect(rightEdge, 5.0, 14.0, 14.0);
+	}
 }
 
 - (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
