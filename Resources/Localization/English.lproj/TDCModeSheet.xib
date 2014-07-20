@@ -302,6 +302,13 @@
                                 <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                             </allowedInputSourceLocales>
                         </textFieldCell>
+                        <connections>
+                            <binding destination="-2" name="value" keyPath="self.channelUserLimitMode" id="H6I-sV-jvk">
+                                <dictionary key="options">
+                                    <bool key="NSValidatesImmediately" value="YES"/>
+                                </dictionary>
+                            </binding>
+                        </connections>
                     </textField>
                     <button verticalHuggingPriority="750" id="64">
                         <rect key="frame" x="141" y="12" width="83" height="32"/>
