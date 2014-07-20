@@ -351,7 +351,7 @@
 "BasicLanguage[1085]" = "User with nickname \"%1$@\" is now available.";
 
 /* Notification bubble replyb button placeholders. */
-"BasicLanguage[1235]" = "Enter message to reply to this private message.";
+"BasicLanguage[1239]" = "Enter message to reply to this private message.";
 
 /* Notification type titles. */
 "BasicLanguage[1086]" = "Address Book Notification";
@@ -644,6 +644,6 @@
 "BasicLanguage[1237][3]" = "Continue";
 "BasicLanguage[1237][4]" = "Terminate this copy of Textual";
 
-/* Next unusued key: 1238 */
+/* Next unusued key: 1239 */
 
 
