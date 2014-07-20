@@ -387,7 +387,7 @@
                     </connections>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="xt6-0d-74R">
-                    <rect key="frame" x="126" y="176" width="100" height="16"/>
+                    <rect key="frame" x="126" y="177" width="100" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Away Nickname:" id="Fie-vu-Czl">
                         <font key="font" metaFont="cellTitle"/>
@@ -396,7 +396,7 @@
                     </textFieldCell>
                 </textField>
                 <textField appearanceType="aqua" verticalHuggingPriority="750" id="YhK-iA-Uk0">
-                    <rect key="frame" x="178" y="167" width="48" height="11"/>
+                    <rect key="frame" x="178" y="168" width="48" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="iYy-yb-Bx8">
                         <font key="font" metaFont="miniSystem"/>
