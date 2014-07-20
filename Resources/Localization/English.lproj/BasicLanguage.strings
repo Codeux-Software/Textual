@@ -656,7 +656,19 @@
 "BasicLanguage[1241][3]" = "Load New Configuration";
 "BasicLanguage[1241][4]" = "Cancel";
 
+/* Beta warning dialog. */
+"BasicLanguage[1242][1]" = "Thank you for beta testing Textual";
+"BasicLanguage[1242][2]" = "This copy of Textual will expire in %@. Once expired, it can no longer be used.";
+"BasicLanguage[1242][3]" = "OK";
 
-/* Next unusued key: 1242 */
+/* Beta warning dialog. */
+"BasicLanguage[1243][1]" = "Thank you for beta testing Textual";
+"BasicLanguage[1243][2]" = "Your copy of Textual has expired. Please download the latest release.";
+"BasicLanguage[1243][3]" = "OK";
+
+
+
+
+/* Next unusued key: 1244 */
 
 

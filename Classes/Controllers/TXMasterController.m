@@ -38,6 +38,12 @@
 
 #import "TextualApplication.h"
 
+#ifdef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
+#import "BuildConfig.h"
+
+#define _betaTesterMaxApplicationLifespan			2592000 // 30 days
+#endif 
+
 #define KInternetEventClass		1196773964
 #define KAEGetURL				1196773964
 
@@ -54,7 +60,11 @@
 		[NSObject setGlobalMasterControllerClassReference:self];
 		
 		// ---- //
-
+		
+#ifdef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
+		[self presentBetaTesterDialog];
+#endif
+		
 #ifndef DEBUG
 		[self checkForOtherCopiesOfTextualRunning];
 #endif
@@ -157,6 +167,41 @@
 		}
 	}
 }
+
+#ifdef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
+- (void)presentBetaTesterDialog
+{
+	NSTimeInterval currentTime = [NSDate epochTime];
+	
+	NSTimeInterval buildTime = [TXBundleBuildDate integerValue];
+	
+	NSTimeInterval timeSpent = (currentTime - buildTime);
+	NSTimeInterval timeleft = (_betaTesterMaxApplicationLifespan - timeSpent);
+	
+	if (timeSpent > _betaTesterMaxApplicationLifespan) {
+		(void)[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1243][2]")
+												  title:TXTLS(@"BasicLanguage[1243][1]")
+										  defaultButton:TXTLS(@"BasicLanguage[1243][3]")
+								  alternateButton:nil
+								   suppressionKey:nil
+								  suppressionText:nil];
+		
+		self.skipTerminateSave = YES;
+		self.applicationIsTerminating = YES;
+		
+		[RZSharedApplication() terminate:nil];
+	} else {
+		NSString *formattedTime = TXHumanReadableTimeInterval(timeleft, YES, 0);
+		
+		(void)[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1242][2]", formattedTime)
+												  title:TXTLS(@"BasicLanguage[1242][1]")
+										  defaultButton:TXTLS(@"BasicLanguage[1242][3]")
+								  alternateButton:nil
+								   suppressionKey:nil
+								  suppressionText:nil];
+	}
+}
+#endif
 
 #pragma mark -
 #pragma mark NSApplication Delegate
