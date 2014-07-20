@@ -59,7 +59,7 @@
 - (void)enqueue:(SecTrustRef)trustRef withCompletionBlock:(TVCQueuedCertificateTrustPanelCompletionBlock)completionBlock
 {
 	/* Add new entry. */
-	NSArray *newEntry = @[(__bridge id)(trustRef), completionBlock];
+	NSArray *newEntry = @[(__bridge id)(trustRef), [completionBlock copy]];
 	
 	@synchronized(self.queuedEntries) {
 		[self.queuedEntries addObject:newEntry];
