@@ -102,6 +102,7 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 @property (nonatomic, assign) IRCClientDisconnectMode disconnectType;
 @property (nonatomic, assign) NSInteger connectDelay;
 @property (nonatomic, assign) BOOL inUserInvokedJoinRequest;
+@property (nonatomic, assign) BOOL inUserInvokedIsonRequest;
 @property (nonatomic, assign) BOOL inUserInvokedNamesRequest;
 @property (nonatomic, assign) BOOL inUserInvokedWhoRequest;
 @property (nonatomic, assign) BOOL inUserInvokedWhowasRequest;
