@@ -809,7 +809,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (NSDictionary *)defaultPreferences
 {
-	NSString *groupDefaultsPath = [RZMainBundle() pathForResource:@"GroupContainerRegisteredUserDefaults" ofType:@"plist"];
+	NSString *groupDefaultsPath = [RZMainBundle() pathForResource:@"RegisteredUserDefaultsForGroupContainer" ofType:@"plist"];
 
 	NSDictionary *groupDefaults = [NSDictionary dictionaryWithContentsOfFile:groupDefaultsPath];
 
