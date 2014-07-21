@@ -16,7 +16,7 @@
 	<key>Indentation Offset</key>
 	<integer>6</integer>
 	<key>Underlying Window Color</key>
-	<string>#000000</string>
+	<string>#2D2D2D</string>
 	<key>Force Invert Sidebars</key>
 	<false/>
 	<key>Template Engine Version</key>
