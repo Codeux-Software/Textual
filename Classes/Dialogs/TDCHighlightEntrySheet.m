@@ -46,8 +46,9 @@
 		[RZMainBundle() loadCustomNibNamed:@"TDCHighlightEntrySheet" owner:self topLevelObjects:nil];
 	
 		[self.matchKeywordTextField setOnlyShowStatusIfErrorOccurs:YES];
-		[self.matchKeywordTextField setStringValueUsesOnlyFirstToken:YES];
+		[self.matchKeywordTextField setStringValueUsesOnlyFirstToken:NO];
 		[self.matchKeywordTextField setStringValueIsInvalidOnEmpty:YES];
+		[self.matchKeywordTextField setStringValueIsTrimmed:YES];
 		
 		[self.matchKeywordTextField setTextDidChangeCallback:self];
 	}
