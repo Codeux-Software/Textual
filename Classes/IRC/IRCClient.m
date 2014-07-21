@@ -2067,6 +2067,14 @@
 
 			break;
 		}
+		case 5100: // Command: ISON
+		{
+			self.inUserInvokedIsonRequest = YES;
+			
+			[self send:IRCPrivateCommandIndex("ison"), uncutInput, nil];
+			
+			break;
+		}
 		case 5097: // Command: WATCH
 		{
 			self.inUserInvokedWatchRequest = YES;
@@ -6107,79 +6115,85 @@
 		case 303: // RPL_ISON
 		{
 			/* Cut the users up. */
-			NSString *userInfo = [[m sequence] lowercaseString];
-			
-			NSArray *users = [userInfo split:NSStringWhitespacePlaceholder];
-
-			/* Start going over the list of tracked nicknames. */
-			@synchronized(self.trackedUsers) {
-				NSArray *trackedUsers = [self.trackedUsers allKeys];
+			if (self.inUserInvokedIsonRequest) {
+				[self printErrorReply:m];
 				
-				for (NSString *name in trackedUsers) {
-					NSInteger langKey = 0;
+				self.inUserInvokedIsonRequest = NO;
+			} else {
+				NSString *userInfo = [[m sequence] lowercaseString];
+				
+				NSArray *users = [userInfo split:NSStringWhitespacePlaceholder];
+
+				/* Start going over the list of tracked nicknames. */
+				@synchronized(self.trackedUsers) {
+					NSArray *trackedUsers = [self.trackedUsers allKeys];
 					
-					/* Was the user on during the last check? */
-					BOOL ison = [self.trackedUsers boolForKey:name];
-					
-					if (ison) {
-						/* If the user was on before, but is not in the list of ISON
-						 users in this reply, then they are considered gone. Log that. */
-						if ([users containsObjectIgnoringCase:name] == NO) {
-							if (self.isInvokingISONCommandForFirstTime == NO) {
-								langKey = 1084;
+					for (NSString *name in trackedUsers) {
+						NSInteger langKey = 0;
+						
+						/* Was the user on during the last check? */
+						BOOL ison = [self.trackedUsers boolForKey:name];
+						
+						if (ison) {
+							/* If the user was on before, but is not in the list of ISON
+							 users in this reply, then they are considered gone. Log that. */
+							if ([users containsObjectIgnoringCase:name] == NO) {
+								if (self.isInvokingISONCommandForFirstTime == NO) {
+									langKey = 1084;
+								}
+								
+								[self.trackedUsers setBool:NO forKey:name];
 							}
-							
-							[self.trackedUsers setBool:NO forKey:name];
-						}
-					} else {
-						/* If they were not on but now are, then log that too. */
-						if ([users containsObjectIgnoringCase:name]) {
-							if (self.isInvokingISONCommandForFirstTime) {
-								langKey = 1082;
-							} else {
-								langKey = 1085;
+						} else {
+							/* If they were not on but now are, then log that too. */
+							if ([users containsObjectIgnoringCase:name]) {
+								if (self.isInvokingISONCommandForFirstTime) {
+									langKey = 1082;
+								} else {
+									langKey = 1085;
+								}
+								
+								[self.trackedUsers setBool:YES forKey:name];
 							}
-							
-							[self.trackedUsers setBool:YES forKey:name];
 						}
-					}
-					
-					/* If we have a langkey, then there was something logged. We will now
-					 find the actual tracking rule that matches the name and post that to the
-					 end user to see the user status. */
-					if (langKey > 0) {
-						for (IRCAddressBookEntry *g in self.config.ignoreList) {
-							NSString *trname = [g trackingNickname];
-							
-							if ([trname isEqualIgnoringCase:name]) {
-								[self handleUserTrackingNotification:g nickname:name langitem:langKey];
+						
+						/* If we have a langkey, then there was something logged. We will now
+						 find the actual tracking rule that matches the name and post that to the
+						 end user to see the user status. */
+						if (langKey > 0) {
+							for (IRCAddressBookEntry *g in self.config.ignoreList) {
+								NSString *trname = [g trackingNickname];
+								
+								if ([trname isEqualIgnoringCase:name]) {
+									[self handleUserTrackingNotification:g nickname:name langitem:langKey];
+								}
 							}
 						}
 					}
 				}
-			}
 
-			if (self.isInvokingISONCommandForFirstTime) { // Reset internal var.
-				self.isInvokingISONCommandForFirstTime = NO;
-			}
+				if (self.isInvokingISONCommandForFirstTime) { // Reset internal var.
+					self.isInvokingISONCommandForFirstTime = NO;
+				}
 
-			/* Update private messages. */
-			@synchronized(self.channels) {
-				for (IRCChannel *channel in self.channels) {
-					if ([channel isPrivateMessage]) {
-						if ([channel isActive]) {
-							/* If the user is no longer on, deactivate the private message. */
-							if ([users containsObjectIgnoringCase:[channel name]] == NO) {
-								[channel deactivate];
+				/* Update private messages. */
+				@synchronized(self.channels) {
+					for (IRCChannel *channel in self.channels) {
+						if ([channel isPrivateMessage]) {
+							if ([channel isActive]) {
+								/* If the user is no longer on, deactivate the private message. */
+								if ([users containsObjectIgnoringCase:[channel name]] == NO) {
+									[channel deactivate];
 
-								[mainWindow() reloadTreeItem:channel];
-							}
-						} else {
-							/* Activate the private message if the user is back on. */
-							if ([users containsObjectIgnoringCase:[channel name]]) {
-								[channel activate];
+									[mainWindow() reloadTreeItem:channel];
+								}
+							} else {
+								/* Activate the private message if the user is back on. */
+								if ([users containsObjectIgnoringCase:[channel name]]) {
+									[channel activate];
 
-								[mainWindow() reloadTreeItem:channel];
+									[mainWindow() reloadTreeItem:channel];
+								}
 							}
 						}
 					}
