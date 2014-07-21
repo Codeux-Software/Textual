@@ -37,8 +37,17 @@
 
 #import "TextualApplication.h"
 
-@interface TXUserInterface : NSObject
-+ (BOOL)runningInHighResolutionMode;
+@interface TVCMainWindowTextViewMavericksUserInterace : NSObject
++ (NSColor *)inputTextFieldPrimaryTextColor;
++ (NSColor *)inputTextFieldPlaceholderTextColor;
 
-+ (BOOL)userUsesReducedTransparencyOnYosemite;
++ (NSColor *)inputTextFieldOutlineColorForActiveWindow;
++ (NSColor *)inputTextFieldOutlineColorForInactiveWindow;
+
++ (NSColor *)inputTextFieldBackgroundColor;
+
++ (NSColor *)inputTextFieldInsideShadowColorForActiveWindow;
++ (NSColor *)inputTextFieldInsideShadowColorForInactiveWindow;
+
++ (NSColor *)inputTextFieldOutsideShadowColor;
 @end

@@ -37,16 +37,27 @@
 
 #import "TextualApplication.h"
 
+/* Invoke RZUserDefaults() for writing directly to either the group container or
+ the application container. Depending on the OS in use, it will automatically
+ handle all the nasty bits of deciding where to write data. */
 #define RZUserDefaults()						[TPCPreferencesUserDefaults sharedUserDefaults]
 
+/* See comments below for proxy. */
 #define RZUserDefaultsValueProxy()				[TPCPreferencesUserDefaultsObjectProxy values]
 
+/* Write to the standard user defaults to write directly to the application container.
+ Certain state information such as saved frames should be saved there. */
 #define RZStandardUserDefualts()				[NSUserDefaults standardUserDefaults]
 
 @interface TPCPreferencesUserDefaults : NSUserDefaults
 /* Our reading object will read from our own application container
  and the shared group container defined for Textual. */
 + (TPCPreferencesUserDefaults *)sharedUserDefaults;
+
+/* Declares an object for reading the com.apple.universalaccess suite name. Writing to
+ this object will do nothing to the accessbility object itself. Any changes written will
+ be written to the application continer which means there is no reason to write to this. */
++ (NSUserDefaults *)accessbilityUserDefaults;
 
 /* This class proxies these methods. */
 /* Depending on whether we are on Mavericks or later, these methods

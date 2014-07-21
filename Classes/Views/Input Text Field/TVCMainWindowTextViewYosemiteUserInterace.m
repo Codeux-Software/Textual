@@ -37,8 +37,79 @@
 
 #import "TextualApplication.h"
 
-@interface TXUserInterface : NSObject
-+ (BOOL)runningInHighResolutionMode;
+@implementation TVCMainWindowTextViewYosemiteUserInterace
 
-+ (BOOL)userUsesReducedTransparencyOnYosemite;
++ (NSColor *)blackInputTextFieldPlaceholderTextColor
+{
+	/* Cannot be exactly white or it will interfere with text formatting engine for IRC. */
+	
+	return [NSColor colorWithCalibratedWhite:0.99 alpha:1.0];
+}
+
++ (NSColor *)whiteInputTextFieldPlaceholderTextColor
+{
+	return TXPreferredGlobalTextFieldFontColor;
+}
+
++ (NSColor *)blackInputTextFieldPrimaryTextColor
+{
+	return [NSColor colorWithCalibratedRed:0.660 green:0.660 blue:0.660 alpha:1.0];
+}
+
++ (NSColor *)whiteInputTextFieldPrimaryTextColor
+{
+	return [NSColor grayColor];
+}
+
++ (NSColor *)blackInputTextFieldInsideBlackBackgroundColor
+{
+	return [NSColor colorWithCalibratedRed:0.386 green:0.386 blue:0.386 alpha:1.0];
+}
+
++ (NSColor *)blackInputTextFieldOutsideBottomGrayShadowColorWithRetina
+{
+	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.15];
+}
+
++ (NSColor *)blackInputTextFieldOutsideBottomGrayShadowColorWithoutRetina
+{
+	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.10];
+}
+
++ (NSColor *)whiteInputTextFieldOutsideTopsideWhiteBorder
+{
+	return [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
+}
+
++ (NSColor *)whiteInputTextFieldInsideWhiteGradientStartColor
+{
+	return [NSColor colorWithCalibratedRed:0.992 green:0.992 blue:0.992 alpha:1.0];
+}
+
++ (NSColor *)whiteInputTextFieldInsideWhiteGradientEndColor
+{
+	return [NSColor colorWithCalibratedRed:0.988 green:0.988 blue:0.988 alpha:1.0];
+}
+
++ (NSGradient *)whiteInputTextFieldInsideWhiteGradient
+{
+	return [NSGradient gradientWithStartingColor:[self whiteInputTextFieldInsideWhiteGradientStartColor]
+									 endingColor:[self whiteInputTextFieldInsideWhiteGradientEndColor]];
+}
+
++ (NSColor *)whiteInputTextFieldOutsideBottomPrimaryGrayShadowColorWithRetina
+{
+	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.15];
+}
+
++ (NSColor *)whiteInputTextFieldOutsideBottomSecondaryGrayShadowColorWithRetina
+{
+	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.06];
+}
+
++ (NSColor *)whiteInputTextFieldOutsideBottomGrayShadowColorWithoutRetina
+{
+	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.10];
+}
+
 @end
