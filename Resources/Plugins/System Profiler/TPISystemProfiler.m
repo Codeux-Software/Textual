@@ -61,6 +61,11 @@
 	[TPIBundleFromClass() loadCustomNibNamed:@"TPISystemProfiler" owner:self topLevelObjects:nil];
 }
 
+- (id)userDefaultsValues
+{
+	return RZUserDefaultsValueProxy();
+}
+
 #pragma mark -
 #pragma mark Preference Pane
 

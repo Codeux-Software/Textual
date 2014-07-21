@@ -100,6 +100,20 @@
 	return settings;
 }
 
+- (void)registerDefaultsForApplicationContainer:(NSDictionary *)registrationDictionary
+{
+	[_userDefaults registerDefaults:registrationDictionary];
+}
+
+- (void)registerDefaultsForGroupContainer:(NSDictionary *)registrationDictionary
+{
+	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+		[_groupDefaults registerDefaults:registrationDictionary];
+	} else {
+		[_userDefaults registerDefaults:registrationDictionary];
+	}
+}
+
 - (void)setObject:(id)value forKey:(NSString *)defaultName
 {
 	[RZUserDefaultsValueProxy() setValue:value forKey:defaultName];

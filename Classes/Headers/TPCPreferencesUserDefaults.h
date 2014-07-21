@@ -41,6 +41,8 @@
 
 #define RZUserDefaultsValueProxy()				[TPCPreferencesUserDefaultsObjectProxy values]
 
+#define RZStandardUserDefualts()				[NSUserDefaults standardUserDefaults]
+
 @interface TPCPreferencesUserDefaults : NSUserDefaults
 /* Our reading object will read from our own application container
  and the shared group container defined for Textual. */
@@ -74,6 +76,9 @@
 - (void)removeObjectForKey:(NSString *)defaultName;
 
 - (NSDictionary *)dictionaryRepresentation;
+
+- (void)registerDefaultsForApplicationContainer:(NSDictionary *)registrationDictionary;
+- (void)registerDefaultsForGroupContainer:(NSDictionary *)registrationDictionary;
 @end
 
 @interface TPCPreferencesUserDefaultsObjectProxy : NSObject

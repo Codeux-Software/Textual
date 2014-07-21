@@ -29,7 +29,7 @@
                     </buttonCell>
                     <connections>
                         <action selector="preferenceChanged:" target="-2" id="hl1-Tp-jqb"/>
-                        <binding destination="73" name="value" keyPath="values.Smiley Converter Extension -&gt; Enable Service" id="L9T-dR-8zM"/>
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.Smiley Converter Extension -&gt; Enable Service" id="nMn-Gw-nyC"/>
                     </connections>
                 </button>
                 <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="f0J-Xd-jFm">
@@ -104,6 +104,5 @@
             </subviews>
             <point key="canvasLocation" x="412.5" y="445"/>
         </customView>
-        <userDefaultsController representsSharedInstance="YES" id="73"/>
     </objects>
 </document>

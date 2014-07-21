@@ -2642,7 +2642,7 @@
 
 	for (NSString *key in allSettings) {
 		if ([key hasPrefix:TLOPopupPromptSuppressionPrefix]) {
-			[RZUserDefaults() setBool:NO forKey:key];
+			[RZStandardUserDefualts() setBool:NO forKey:key];
 		}
 	}
 }
