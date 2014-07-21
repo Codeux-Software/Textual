@@ -417,10 +417,10 @@
 		4C5FB0F5197D3560009C6760 /* TVCMainWindowTextViewMavericksUserInterace.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5FB0F3197D3560009C6760 /* TVCMainWindowTextViewMavericksUserInterace.m */; };
 		4C5FB0F7197D356E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5FB0F6197D356E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.m */; };
 		4C5FB0F8197D356E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5FB0F6197D356E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.m */; };
-		4C5FB0FA197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5FB0F9197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h */; };
-		4C5FB0FB197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5FB0F9197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h */; };
-		4C5FB0FD197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5FB0FC197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h */; };
-		4C5FB0FE197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5FB0FC197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h */; };
+		4C5FB0FA197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5FB0F9197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C5FB0FB197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5FB0F9197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C5FB0FD197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5FB0FC197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C5FB0FE197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5FB0FC197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C68425716C5AF730005A59E /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425516C5AF730005A59E /* AutoHyperlinks.framework */; };
 		4C68425816C5AF730005A59E /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425616C5AF730005A59E /* BlowfishEncryption.framework */; };
 		4C68425916C5AF900005A59E /* AutoHyperlinks.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425516C5AF730005A59E /* AutoHyperlinks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -2807,7 +2807,6 @@
 				4C5BA3EC16F1302F00A96CA2 /* TVCMainWindowLoadingScreen.h in Headers */,
 				4C5BA3ED16F1302F00A96CA2 /* NSScreenHelper.h in Headers */,
 				4C5BA3EF16F1302F00A96CA2 /* TVCMainWindowSegmentedControl.h in Headers */,
-				4C5FB0FE197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
 				4C5BA3F016F1302F00A96CA2 /* AGKeychain.h in Headers */,
 				4C5BA3F116F1302F00A96CA2 /* DDExtensions.h in Headers */,
 				4C5BA3F216F1302F00A96CA2 /* DDInvocation.h in Headers */,
@@ -2961,10 +2960,11 @@
 				4CB480701965345200E0782E /* TVCAnimatedContentNavigationOutlineView.h in Headers */,
 				4C9FFBA019059C3A008C600C /* TVCQueuedCertificateTrustPanel.h in Headers */,
 				4C7766261978A74D00759774 /* TVCServerListSharedUserInterface.h in Headers */,
+				4C5FB0FB197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
+				4C5FB0FE197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
 				4C38526319721E9100A6845C /* TDCSharedProtocolDefinitions.h in Headers */,
 				4C001C0B197A11E60061C2C5 /* TVCTextFieldComboBoxWithValueValidation.h in Headers */,
 				4C0C720E1742C444000F82C4 /* NSByteCountFormatterHelper.h in Headers */,
-				4C5FB0FB197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
 				4CEA09C61875A734005D6184 /* TDCFileTransferDialogRemoteAddress.h in Headers */,
 				4CC70204171E1CB400BDFAE0 /* BuildConfig.h in Headers */,
 			);
@@ -2981,7 +2981,6 @@
 				4C8EE97C16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h in Headers */,
 				4C5A6DBF15C39B1900143574 /* NSScreenHelper.h in Headers */,
 				4C6ED7F315901579001AD200 /* TVCMainWindowSegmentedControl.h in Headers */,
-				4C5FB0FD197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
 				4C8AF74B158EB6CA0026668C /* AGKeychain.h in Headers */,
 				4C8AF74C158EB6CA0026668C /* DDExtensions.h in Headers */,
 				4C8AF74D158EB6CA0026668C /* DDInvocation.h in Headers */,
@@ -3136,9 +3135,10 @@
 				4C38526219721E9100A6845C /* TDCSharedProtocolDefinitions.h in Headers */,
 				4C001C0A197A10E80061C2C5 /* TVCTextFieldComboBoxWithValueValidation.h in Headers */,
 				4C77661C19789F8E00759774 /* TVCServerListYosemiteUserInterface.h in Headers */,
+				4C5FB0FA197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
+				4C5FB0FD197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
 				4CB4806F1965345200E0782E /* TVCAnimatedContentNavigationOutlineView.h in Headers */,
 				4C9FFB9F19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h in Headers */,
-				4C5FB0FA197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
 				4C5E4D1818260131001F3E6B /* TVCLogControllerHistoricLogFile.h in Headers */,
 				4CC70203171E1CB400BDFAE0 /* BuildConfig.h in Headers */,
 			);
