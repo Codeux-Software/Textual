@@ -115,7 +115,7 @@
 
 - (void)maybeToggleFullscreenAfterLaunch
 {
-	NSDictionary *dic = [RZUserDefaults() dictionaryForKey:@"Window -> Main Window Window State"];
+	NSDictionary *dic = [RZStandardUserDefualts() dictionaryForKey:@"Window -> Main Window Window State"];
 	
 	if ([dic boolForKey:@"fullscreen"]) {
 		[self performSelector:@selector(toggleFullscreenAfterLaunch) withObject:nil afterDelay:1.0];
@@ -165,7 +165,7 @@
 	
 	[self saveWindowStateUsingKeyword:@"Main Window"];
 	
-	[RZUserDefaults() setObject:dic forKey:@"Window -> Main Window Window State"];
+	[RZStandardUserDefualts() setObject:dic forKey:@"Window -> Main Window Window State"];
 }
 
 - (void)prepareForApplicationTermination

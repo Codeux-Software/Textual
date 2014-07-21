@@ -809,11 +809,11 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (NSDictionary *)defaultPreferences
 {
-	NSString *defaultPrefsFile = [RZMainBundle() pathForResource:@"RegisteredUserDefaults" ofType:@"plist"];
-	
-	NSDictionary *defaultPreferences = [NSDictionary dictionaryWithContentsOfFile:defaultPrefsFile];
+	NSString *groupDefaultsPath = [RZMainBundle() pathForResource:@"GroupContainerRegisteredUserDefaults" ofType:@"plist"];
 
-	return defaultPreferences;
+	NSDictionary *groupDefaults = [NSDictionary dictionaryWithContentsOfFile:groupDefaultsPath];
+
+	return groupDefaults;
 }
 
 + (void)initPreferences
@@ -827,14 +827,17 @@ static NSMutableArray *excludeKeywords = nil;
 		[TPCApplicationInfo defaultIRCClientPrompt:NO];
 	}
 #endif
-
+	
 	// ====================================================== //
+	
+	NSString *groupDefaultsPath = [RZMainBundle() pathForResource:@"RegisteredUserDefaultsForGroupContainer" ofType:@"plist"];
+	NSString *localDefaultsPath = [RZMainBundle() pathForResource:@"RegisteredUserDefaultsForApplicationContainer" ofType:@"plist"];
+	
+	NSDictionary *groupDefaults = [NSDictionary dictionaryWithContentsOfFile:groupDefaultsPath];
+	NSDictionary *localDefaults = [NSDictionary dictionaryWithContentsOfFile:localDefaultsPath];
 
-	NSDictionary *d = [TPCPreferences defaultPreferences];
-
-	// ====================================================== //
-
-	[RZUserDefaults() registerDefaults:d];
+	[RZUserDefaults() registerDefaultsForGroupContainer:groupDefaults];
+	[RZUserDefaults() registerDefaultsForApplicationContainer:localDefaults];
 
 	[RZUserDefaultsValueProxy() addObserver:(id)self forKeyPath:@"Highlight List -> Primary Matches"  options:NSKeyValueObservingOptionNew context:NULL];
 	[RZUserDefaultsValueProxy() addObserver:(id)self forKeyPath:@"Highlight List -> Excluded Matches" options:NSKeyValueObservingOptionNew context:NULL];
@@ -846,20 +849,20 @@ static NSMutableArray *excludeKeywords = nil;
 
 	/* Sandbox Check */
 
-	[RZUserDefaults() setBool:[TPCApplicationInfo sandboxEnabled]							forKey:@"Security -> Sandbox Enabled"];
+	[RZStandardUserDefualts() setBool:[TPCApplicationInfo sandboxEnabled]							forKey:@"Security -> Sandbox Enabled"];
 
-	[RZUserDefaults() setBool:[CSFWSystemInformation featureAvailableToOSXLion]				forKey:@"System —> Running Mac OS Lion Or Newer"];
-	[RZUserDefaults() setBool:[CSFWSystemInformation featureAvailableToOSXMountainLion]		forKey:@"System —> Running Mac OS Mountain Lion Or Newer"];
-	[RZUserDefaults() setBool:[CSFWSystemInformation featureAvailableToOSXMavericks]		forKey:@"System —> Running Mac OS Mavericks Or Newer"];
-	[RZUserDefaults() setBool:[CSFWSystemInformation featureAvailableToOSXYosemite]			forKey:@"System —> Running Mac OS Yosemite Or Newer"];
+	[RZStandardUserDefualts() setBool:[CSFWSystemInformation featureAvailableToOSXLion]				forKey:@"System —> Running Mac OS Lion Or Newer"];
+	[RZStandardUserDefualts() setBool:[CSFWSystemInformation featureAvailableToOSXMountainLion]		forKey:@"System —> Running Mac OS Mountain Lion Or Newer"];
+	[RZStandardUserDefualts() setBool:[CSFWSystemInformation featureAvailableToOSXMavericks]		forKey:@"System —> Running Mac OS Mavericks Or Newer"];
+	[RZStandardUserDefualts() setBool:[CSFWSystemInformation featureAvailableToOSXYosemite]			forKey:@"System —> Running Mac OS Yosemite Or Newer"];
 	
 #ifndef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	[RZUserDefaults() setBool:NO forKey:@"System —> Built with iCloud Support"];
+	[RZStandardUserDefualts() setBool:NO forKey:@"System —> Built with iCloud Support"];
 #else
 	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
-		[RZUserDefaults() setBool:YES forKey:@"System —> Built with iCloud Support"];
+		[RZStandardUserDefualts() setBool:YES forKey:@"System —> Built with iCloud Support"];
 	} else {
-		[RZUserDefaults() setBool:NO forKey:@"System —> Built with iCloud Support"];
+		[RZStandardUserDefualts() setBool:NO forKey:@"System —> Built with iCloud Support"];
 	}
 #endif
 	
@@ -875,109 +878,109 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (BOOL)textFieldAutomaticSpellCheck
 {
-	return [RZUserDefaults() boolForKey:@"TextFieldAutomaticSpellCheck"];
+	return [RZStandardUserDefualts() boolForKey:@"TextFieldAutomaticSpellCheck"];
 }
 
 + (void)setTextFieldAutomaticSpellCheck:(BOOL)value
 {
 	if (NSDissimilarObjects(value, [TPCPreferences textFieldAutomaticSpellCheck])) {
-		[RZUserDefaults() setBool:value forKey:@"TextFieldAutomaticSpellCheck"];
+		[RZStandardUserDefualts() setBool:value forKey:@"TextFieldAutomaticSpellCheck"];
 	}
 }
 
 + (BOOL)textFieldAutomaticGrammarCheck
 {
-	return [RZUserDefaults() boolForKey:@"TextFieldAutomaticGrammarCheck"];
+	return [RZStandardUserDefualts() boolForKey:@"TextFieldAutomaticGrammarCheck"];
 }
 
 + (void)setTextFieldAutomaticGrammarCheck:(BOOL)value
 {
 	if (NSDissimilarObjects(value, [TPCPreferences textFieldAutomaticGrammarCheck])) {
-		[RZUserDefaults() setBool:value forKey:@"TextFieldAutomaticGrammarCheck"];
+		[RZStandardUserDefualts() setBool:value forKey:@"TextFieldAutomaticGrammarCheck"];
 	}
 }
 
 + (BOOL)textFieldAutomaticSpellCorrection
 {
-	return [RZUserDefaults() boolForKey:@"TextFieldAutomaticSpellCorrection"];
+	return [RZStandardUserDefualts() boolForKey:@"TextFieldAutomaticSpellCorrection"];
 }
 
 + (void)setTextFieldAutomaticSpellCorrection:(BOOL)value
 {
 	if (NSDissimilarObjects(value, [TPCPreferences textFieldAutomaticSpellCorrection])) {
-		[RZUserDefaults() setBool:value forKey:@"TextFieldAutomaticSpellCorrection"];
+		[RZStandardUserDefualts() setBool:value forKey:@"TextFieldAutomaticSpellCorrection"];
 	}
 }
 
 + (BOOL)textFieldSmartCopyPaste
 {
-	return [RZUserDefaults() boolForKey:@"TextFieldSmartCopyPaste"];
+	return [RZStandardUserDefualts() boolForKey:@"TextFieldSmartCopyPaste"];
 }
 
 + (void)setTextFieldSmartCopyPaste:(BOOL)value
 {
 	if (NSDissimilarObjects(value, [TPCPreferences textFieldSmartCopyPaste])) {
-		[RZUserDefaults() setBool:value forKey:@"TextFieldSmartCopyPaste"];
+		[RZStandardUserDefualts() setBool:value forKey:@"TextFieldSmartCopyPaste"];
 	}
 }
 
 + (BOOL)textFieldSmartQuotes
 {
-	return [RZUserDefaults() boolForKey:@"TextFieldSmartQuotes"];
+	return [RZStandardUserDefualts() boolForKey:@"TextFieldSmartQuotes"];
 }
 
 + (void)setTextFieldSmartQuotes:(BOOL)value
 {
 	if (NSDissimilarObjects(value, [TPCPreferences textFieldSmartQuotes])) {
-		[RZUserDefaults() setBool:value forKey:@"TextFieldSmartQuotes"];
+		[RZStandardUserDefualts() setBool:value forKey:@"TextFieldSmartQuotes"];
 	}
 }
 
 + (BOOL)textFieldSmartDashes
 {
-	return [RZUserDefaults() boolForKey:@"TextFieldSmartDashes"];
+	return [RZStandardUserDefualts() boolForKey:@"TextFieldSmartDashes"];
 }
 
 + (void)setTextFieldSmartDashes:(BOOL)value
 {
 	if (NSDissimilarObjects(value, [TPCPreferences textFieldSmartDashes])) {
-		[RZUserDefaults() setBool:value forKey:@"TextFieldSmartDashes"];
+		[RZStandardUserDefualts() setBool:value forKey:@"TextFieldSmartDashes"];
 	}
 }
 
 + (BOOL)textFieldSmartLinks
 {
-	return [RZUserDefaults() boolForKey:@"TextFieldSmartLinks"];
+	return [RZStandardUserDefualts() boolForKey:@"TextFieldSmartLinks"];
 }
 
 + (void)setTextFieldSmartLinks:(BOOL)value
 {
 	if (NSDissimilarObjects(value, [TPCPreferences textFieldSmartLinks])) {
-		[RZUserDefaults() setBool:value forKey:@"TextFieldSmartLinks"];
+		[RZStandardUserDefualts() setBool:value forKey:@"TextFieldSmartLinks"];
 	}
 }
 
 + (BOOL)textFieldDataDetectors
 {
-	return [RZUserDefaults() boolForKey:@"TextFieldDataDetectors"];
+	return [RZStandardUserDefualts() boolForKey:@"TextFieldDataDetectors"];
 }
 
 + (void)setTextFieldDataDetectors:(BOOL)value
 {
 	if (NSDissimilarObjects(value, [TPCPreferences textFieldDataDetectors])) {
-		[RZUserDefaults() setBool:value forKey:@"TextFieldDataDetectors"];
+		[RZStandardUserDefualts() setBool:value forKey:@"TextFieldDataDetectors"];
 	}
 }
 
 + (BOOL)textFieldTextReplacement
 {
-	return [RZUserDefaults() boolForKey:@"TextFieldTextReplacement"];
+	return [RZStandardUserDefualts() boolForKey:@"TextFieldTextReplacement"];
 }
 
 + (void)setTextFieldTextReplacement:(BOOL)value
 {
 	if (NSDissimilarObjects(value, [TPCPreferences textFieldTextReplacement])) {
-		[RZUserDefaults() setBool:value forKey:@"TextFieldTextReplacement"];
+		[RZStandardUserDefualts() setBool:value forKey:@"TextFieldTextReplacement"];
 	}
 }
 

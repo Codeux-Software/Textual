@@ -8371,7 +8371,6 @@
 #pragma mark -
 #pragma mark User Tracking
 
-#warning Important to test user tracking once Server Properties is fixed.
 - (void)handleUserTrackingNotification:(IRCAddressBookEntry *)ignoreItem
 							  nickname:(NSString *)nick
 							  langitem:(NSInteger)localKey

@@ -70,11 +70,11 @@
 
 	if (NSObjectIsNotEmpty(suppressionKey)) {
 		if (isForcedSuppression) {
-			[RZUserDefaults() setBool:YES forKey:suppressionKey];
+			[RZStandardUserDefualts() setBool:YES forKey:suppressionKey];
 		} else {
 			NSButton *button = [alert suppressionButton];
 
-			[RZUserDefaults() setBool:[button state] forKey:suppressionKey];
+			[RZStandardUserDefualts() setBool:[button state] forKey:suppressionKey];
 		}
 	}
 
@@ -114,7 +114,7 @@
 	if (suppressKey) {
 		privateSuppressionKey = [TLOPopupPromptSuppressionPrefix stringByAppendingString:suppressKey];
 
-		if (useSupression && [RZUserDefaults() boolForKey:privateSuppressionKey]) {
+		if (useSupression && [RZStandardUserDefualts() boolForKey:privateSuppressionKey]) {
 			return;
 		}
 	}
@@ -180,7 +180,7 @@
 	if (suppressKey) {
 		privateSuppressionKey = [TLOPopupPromptSuppressionPrefix stringByAppendingString:suppressKey];
 
-		if (useSupression && [RZUserDefaults() boolForKey:privateSuppressionKey]) {
+		if (useSupression && [RZStandardUserDefualts() boolForKey:privateSuppressionKey]) {
 			return YES;
 		}
 	}
@@ -213,9 +213,9 @@
 		if ([alert runModal] == NSAlertDefaultReturn) {
 			if (useSupression) {
 				if (isForcedSuppression) {
-					[RZUserDefaults() setBool:YES forKey:privateSuppressionKey];
+					[RZStandardUserDefualts() setBool:YES forKey:privateSuppressionKey];
 				} else {
-					[RZUserDefaults() setBool:[suppressionButton state] forKey:privateSuppressionKey];
+					[RZStandardUserDefualts() setBool:[suppressionButton state] forKey:privateSuppressionKey];
 				}
 			}
 
@@ -223,7 +223,7 @@
 		} else {
 			if (useSupression) {
 				if (isForcedSuppression) {
-					[RZUserDefaults() setBool:YES forKey:privateSuppressionKey];
+					[RZStandardUserDefualts() setBool:YES forKey:privateSuppressionKey];
 				}
 			}
 

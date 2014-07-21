@@ -56,6 +56,11 @@
 	[TPIBundleFromClass() loadCustomNibNamed:@"TPISmileyConverter" owner:self topLevelObjects:nil];
 }
 
+- (id)userDefaultsValues
+{
+	return RZUserDefaultsValueProxy();
+}
+
 - (void)buildConversionTable
 {
 	/* Find ourselves. */
