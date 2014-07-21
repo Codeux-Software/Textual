@@ -146,6 +146,8 @@
 	@class TVCMainWindowTextView;
 	@class TVCMainWindowTextViewBackground;
 	@class TVCMainWindowTextViewContentView;
+	@class TVCMainWindowTextViewMavericksUserInterace;
+	@class TVCMainWindowTextViewYosemiteUserInterace;
 	@class TVCMemberList;
 	@class TVCMemberListCell;
 	@class TVCMemberListRowCell;
@@ -384,6 +386,8 @@
 	#import "TVCMainWindowLoadingScreen.h"
 	#import "TVCMainWindowSegmentedControl.h"
 	#import "TVCMainWindowSplitView.h"
+	#import "TVCMainWindowTextViewMavericksUserInterace.h"
+	#import "TVCMainWindowTextViewYosemiteUserInterace.h"
 	#import "TDCProgressInformationSheet.h"
 	#import "TVCMemberList.h"
 	#import "TVCMemberListCell.h"

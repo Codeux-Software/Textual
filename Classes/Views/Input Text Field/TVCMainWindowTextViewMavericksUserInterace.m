@@ -37,8 +37,46 @@
 
 #import "TextualApplication.h"
 
-@interface TXUserInterface : NSObject
-+ (BOOL)runningInHighResolutionMode;
+@implementation TVCMainWindowTextViewMavericksUserInterace
 
-+ (BOOL)userUsesReducedTransparencyOnYosemite;
++ (NSColor *)inputTextFieldPlaceholderTextColor
+{
+	return [NSColor grayColor];
+}
+
++ (NSColor *)inputTextFieldPrimaryTextColor
+{
+	return TXPreferredGlobalTextFieldFontColor;
+}
+
++ (NSColor *)inputTextFieldOutlineColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.42];
+}
+
++ (NSColor *)inputTextFieldOutlineColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.23];
+}
+
++ (NSColor *)inputTextFieldBackgroundColor
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)inputTextFieldInsideShadowColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.88 alpha:1.0];
+}
+
++ (NSColor *)inputTextFieldInsideShadowColorForInactiveWindow
+{
+	return [NSColor clearColor];
+}
+
++ (NSColor *)inputTextFieldOutsideShadowColor
+{
+	return [NSColor colorWithCalibratedWhite:1.0 alpha:0.70];
+}
+
 @end

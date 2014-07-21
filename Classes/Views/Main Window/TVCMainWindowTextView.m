@@ -214,6 +214,51 @@
 #pragma mark -
 #pragma mark Everything Else.
 
+- (void)setAttributedStringValue:(NSAttributedString *)attributedStringValue
+{
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		if (attributedStringValue) {
+			NSMutableAttributedString *mutableCopy = [attributedStringValue mutableCopy];
+			
+			NSRange textRange = NSMakeRange(0, [mutableCopy length]);
+			
+			static NSArray *colorsToReset = nil;
+  
+			if (colorsToReset == nil) {
+				colorsToReset = @[
+				   [TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldPrimaryTextColor],
+				   [TVCMainWindowTextViewYosemiteUserInterace blackInputTextFieldPrimaryTextColor],
+				   [TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldPlaceholderTextColor],
+				   [TVCMainWindowTextViewYosemiteUserInterace blackInputTextFieldPlaceholderTextColor]
+				];
+			}
+			
+			NSColor *preferredColor = [self preferredFontColor];
+			
+			[mutableCopy enumerateAttribute:NSForegroundColorAttributeName
+									inRange:textRange
+									options:0
+								 usingBlock:^(id value, NSRange range, BOOL *stop) {
+									 if ([value isEqual:preferredColor] == NO) {
+										 for (NSColor *color in colorsToReset) {
+											 if ([value isEqual:color]) {
+												 [mutableCopy removeAttribute:NSForegroundColorAttributeName range:range];
+												 
+												 [mutableCopy addAttribute:NSForegroundColorAttributeName value:preferredColor range:range];
+											 }
+										 }
+									 }
+								 }];
+			
+			[super setAttributedStringValue:mutableCopy];
+		} else {
+			[super setAttributedStringValue:attributedStringValue];
+		}
+	} else {
+		[super setAttributedStringValue:attributedStringValue];
+	}
+}
+
 - (void)updateTextDirection
 {
 	if ([TPCPreferences rightToLeftFormatting]) {
@@ -487,44 +532,6 @@
 #pragma mark -
 #pragma mark Mavericks UI Drawing
 
-- (NSColor *)inputTextFieldOutlineColorMavericks
-{
-	if ([self windowIsActive]) {
-		return [NSColor colorWithCalibratedWhite:0.0 alpha:0.42];
-	} else {
-		return [NSColor colorWithCalibratedWhite:0.0 alpha:0.23];
-	}
-}
-
-- (NSColor *)inputTextFieldBackgroundColorMavericks
-{
-	return [NSColor whiteColor];
-}
-
-- (NSColor *)inputTextFieldInsideShadowColorMavericks
-{
-	if ([self windowIsActive]) {
-		return [NSColor colorWithCalibratedWhite:0.88 alpha:1.0];
-	} else {
-		return [NSColor clearColor];
-	}
-}
-
-- (NSColor *)inputTextFieldOutsideShadowColorMavericks
-{
-	return [NSColor colorWithCalibratedWhite:1.0 alpha:0.70];
-}
-
-- (NSColor *)inputTextFieldPlaceholderTextColorMavericks
-{
-	return [NSColor grayColor];
-}
-
-- (NSColor *)inputTextFieldPrimaryTextColorMavericks
-{
-	return TXPreferredGlobalTextFieldFontColor;
-}
-
 - (void)drawControllerForMavericks
 {
 	/* General Declarations. */
@@ -539,11 +546,22 @@
 												   (cellBounds.size.height - 3.0));
 	
 	/* Color values. */
-	NSColor *backgroundColor = [self inputTextFieldBackgroundColorMavericks];
-	NSColor *backgroundBorderColor = [self inputTextFieldOutlineColorMavericks];
-	NSColor *innerShadowColor = [self inputTextFieldInsideShadowColorMavericks];
-	NSColor *outerShadowColor = [self inputTextFieldOutsideShadowColorMavericks];
+	NSColor *backgroundColor		= [TVCMainWindowTextViewMavericksUserInterace inputTextFieldBackgroundColor];
+	NSColor *outerShadowColor		= [TVCMainWindowTextViewMavericksUserInterace inputTextFieldOutsideShadowColor];
 	
+	NSColor *innerShadowColor		= nil;
+	NSColor *backgroundBorderColor	= nil;
+	
+	if ([mainWindow() isActiveForDrawing]) {
+		backgroundBorderColor = [TVCMainWindowTextViewMavericksUserInterace inputTextFieldOutlineColorForActiveWindow];
+		
+		innerShadowColor = [TVCMainWindowTextViewMavericksUserInterace inputTextFieldInsideShadowColorForActiveWindow];
+	} else {
+		backgroundBorderColor = [TVCMainWindowTextViewMavericksUserInterace inputTextFieldOutlineColorForInactiveWindow];
+		
+		innerShadowColor = [TVCMainWindowTextViewMavericksUserInterace inputTextFieldInsideShadowColorForInactiveWindow];
+	}
+
 	/* Shadow values. */
 	NSShadow *outterShadow = [NSShadow new];
 	
@@ -613,79 +631,6 @@
 #pragma mark -
 #pragma mark Yosemite UI Drawing
 
-- (NSColor *)blackInputTextFieldPlaceholderTextColorYosemite
-{
-	/* Cannot be exactly white or it will interfere with text formatting engine for IRC. */
-
-	return [NSColor colorWithCalibratedWhite:0.99 alpha:1.0];
-}
-
-- (NSColor *)whiteInputTextFieldPlaceholderTextColorYosemite
-{
-	return TXPreferredGlobalTextFieldFontColor;
-}
-
-- (NSColor *)blackInputTextFieldPrimaryTextColorYosemite
-{
-	return [NSColor colorWithCalibratedRed:0.660 green:0.660 blue:0.660 alpha:1.0];
-}
-
-- (NSColor *)whiteInputTextFieldPrimaryTextColorYosemite
-{
-	return [NSColor grayColor];
-}
-
-- (NSColor *)blackInputTextFieldInsideBlackBackgroundColorYosemite
-{
-	return [NSColor colorWithCalibratedRed:0.386 green:0.386 blue:0.386 alpha:1.0];
-}
-
-- (NSColor *)blackInputTextFieldOutsideBottomGrayShadowColorWithRetinaYosemite
-{
-	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.15];
-}
-
-- (NSColor *)blackInputTextFieldOutsideBottomGrayShadowColorWithoutRetinaYosemite
-{
-	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.10];
-}
-
-- (NSColor *)whiteInputTextFieldOutsideTopsideWhiteBorderYosemite
-{
-	return [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
-}
-
-- (NSColor *)whiteInputTextFieldInsideWhiteGradientStartColorYosemite
-{
-	return [NSColor colorWithCalibratedRed:0.992 green:0.992 blue:0.992 alpha:1.0];
-}
-
-- (NSColor *)whiteInputTextFieldInsideWhiteGradientEndColorYosemite
-{
-	return [NSColor colorWithCalibratedRed:0.988 green:0.988 blue:0.988 alpha:1.0];
-}
-
-- (NSGradient *)whiteInputTextFieldInsideWhiteGradientYosemite
-{
-	return [NSGradient gradientWithStartingColor:[self whiteInputTextFieldInsideWhiteGradientStartColorYosemite]
-									 endingColor:[self whiteInputTextFieldInsideWhiteGradientEndColorYosemite]];
-}
-
-- (NSColor *)whiteInputTextFieldOutsideBottomPrimaryGrayShadowColorWithRetinaYosemite
-{
-	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.15];
-}
-
-- (NSColor *)whiteInputTextFieldOutsideBottomSecondaryGrayShadowColorWithRetinaYosemite
-{
-	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.06];
-}
-
-- (NSColor *)whiteInputTextFieldOutsideBottomGrayShadowColorWithoutRetinaYosemite
-{
-	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.10];
-}
-
 - (void)drawControllerForYosemite
 {
 	if ([self yosemiteIsUsingVibrantDarkMode]) {
@@ -706,15 +651,15 @@
 												(cellBounds.size.height - 2.0));
 
 	/* Inner background color. */
-	NSColor *background = [self blackInputTextFieldInsideBlackBackgroundColorYosemite];
+	NSColor *background = [TVCMainWindowTextViewYosemiteUserInterace blackInputTextFieldInsideBlackBackgroundColor];
 	
 	/* Shadow colors. */
 	NSShadow *shadow4 = [NSShadow new];
 	
 	if (inHighresMode) {
-		[shadow4 setShadowColor:[self blackInputTextFieldOutsideBottomGrayShadowColorWithRetinaYosemite]];
+		[shadow4 setShadowColor:[TVCMainWindowTextViewYosemiteUserInterace  blackInputTextFieldOutsideBottomGrayShadowColorWithRetina]];
 	} else {
-		[shadow4 setShadowColor:[self blackInputTextFieldOutsideBottomGrayShadowColorWithoutRetinaYosemite]];
+		[shadow4 setShadowColor:[TVCMainWindowTextViewYosemiteUserInterace blackInputTextFieldOutsideBottomGrayShadowColorWithoutRetina]];
 	}
 	
 	[shadow4 setShadowOffset:NSMakeSize(0.0, -(1.0))];
@@ -751,24 +696,24 @@
 												(cellBounds.size.height - 2.0));
 	
 	/* Inner gradient color. */
-	NSGradient *gradient = [self whiteInputTextFieldInsideWhiteGradientYosemite];
+	NSGradient *gradient = [TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldInsideWhiteGradient];
 
 	/* Shadow colors. */
 	NSShadow *shadow3 = [NSShadow new];
 	NSShadow *shadow4 = [NSShadow new];
 	
-	NSColor *shadow3Color = [self whiteInputTextFieldOutsideTopsideWhiteBorderYosemite];
+	NSColor *shadow3Color = [TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldOutsideTopsideWhiteBorder];
 
 	[shadow3 setShadowColor:shadow3Color];
 	[shadow3 setShadowOffset:NSMakeSize(0.0, -1.0)];
 	[shadow3 setShadowBlurRadius:0.0];
 
 	if (inHighresMode) {
-		[shadow4 setShadowColor:[self whiteInputTextFieldOutsideBottomPrimaryGrayShadowColorWithRetinaYosemite]];
+		[shadow4 setShadowColor:[TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldOutsideBottomPrimaryGrayShadowColorWithRetina]];
 		[shadow4 setShadowOffset:NSMakeSize(0.0, -(0.5))];
 		[shadow4 setShadowBlurRadius:0.0];
 	} else {
-		[shadow4 setShadowColor:[self whiteInputTextFieldOutsideBottomGrayShadowColorWithoutRetinaYosemite]];
+		[shadow4 setShadowColor:[TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldOutsideBottomGrayShadowColorWithoutRetina]];
 		[shadow4 setShadowOffset:NSMakeSize(0.0, -(1.0))];
 		[shadow4 setShadowBlurRadius:0.0];
 	}
@@ -814,7 +759,7 @@
 		NSPoint linePoint1 = NSMakePoint(4.0, 0.0);
 		NSPoint linePoint2 = NSMakePoint((cellBounds.size.width - 4.0), 0.0);
 
-		NSColor *controlColor = [self whiteInputTextFieldOutsideBottomSecondaryGrayShadowColorWithRetinaYosemite];
+		NSColor *controlColor = [TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldOutsideBottomSecondaryGrayShadowColorWithRetina];
 
 		[controlColor setStroke];
 
@@ -829,12 +774,12 @@
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 		if ([self yosemiteIsUsingVibrantDarkMode]) {
-			return [self blackInputTextFieldPlaceholderTextColorYosemite];
+			return [TVCMainWindowTextViewYosemiteUserInterace blackInputTextFieldPlaceholderTextColor];
 		} else {
-			return [self whiteInputTextFieldPlaceholderTextColorYosemite];
+			return [TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldPlaceholderTextColor];
 		}
 	} else {
-		return [self inputTextFieldPrimaryTextColorMavericks];
+		return [TVCMainWindowTextViewMavericksUserInterace inputTextFieldPrimaryTextColor];
 	}
 }
 
@@ -842,12 +787,12 @@
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 		if ([self yosemiteIsUsingVibrantDarkMode]) {
-			return [self blackInputTextFieldPrimaryTextColorYosemite];
+			return [TVCMainWindowTextViewYosemiteUserInterace blackInputTextFieldPrimaryTextColor];
 		} else {
-			return [self whiteInputTextFieldPrimaryTextColorYosemite];
+			return [TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldPrimaryTextColor];
 		}
 	} else {
-		return [self inputTextFieldPlaceholderTextColorMavericks];
+		return [TVCMainWindowTextViewMavericksUserInterace inputTextFieldPlaceholderTextColor];
 	}
 }
 

@@ -37,8 +37,24 @@
 
 #import "TextualApplication.h"
 
-@interface TXUserInterface : NSObject
-+ (BOOL)runningInHighResolutionMode;
+@interface TVCMainWindowTextViewYosemiteUserInterace : NSObject
++ (NSColor *)blackInputTextFieldPlaceholderTextColor;
++ (NSColor *)whiteInputTextFieldPlaceholderTextColor;
 
-+ (BOOL)userUsesReducedTransparencyOnYosemite;
++ (NSColor *)blackInputTextFieldPrimaryTextColor;
++ (NSColor *)whiteInputTextFieldPrimaryTextColor;
+
++ (NSColor *)blackInputTextFieldInsideBlackBackgroundColor;
+
++ (NSColor *)blackInputTextFieldOutsideBottomGrayShadowColorWithRetina;
++ (NSColor *)blackInputTextFieldOutsideBottomGrayShadowColorWithoutRetina;
+
++ (NSColor *)whiteInputTextFieldOutsideTopsideWhiteBorder;
+
++ (NSGradient *)whiteInputTextFieldInsideWhiteGradient;
+
++ (NSColor *)whiteInputTextFieldOutsideBottomPrimaryGrayShadowColorWithRetina;
++ (NSColor *)whiteInputTextFieldOutsideBottomSecondaryGrayShadowColorWithRetina;
+
++ (NSColor *)whiteInputTextFieldOutsideBottomGrayShadowColorWithoutRetina;
 @end
