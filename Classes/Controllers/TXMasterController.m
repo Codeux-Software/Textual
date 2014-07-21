@@ -48,7 +48,7 @@
 #define KAEGetURL				1196773964
 
 #ifndef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_DISABLED
-	#define _hockeyAppApplicationIdentifier			@"b0b1c84f339487c2e184f7d1ebfe5997"
+	#define _hockeyAppApplicationIdentifier			@"93d6d315ace023a30793e8c52a02f920"
 	#define _hockeyAppApplicationCompanyName		@"Codeux Software"
 #endif
 
