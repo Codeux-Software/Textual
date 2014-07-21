@@ -660,7 +660,9 @@
 	if ([self viewIsEncrypted] == NO) {
 		[self reloadOldLines:YES withOldLines:objects];
 
-		[self moveToBottom];
+		[self performBlockOnMainThread:^{
+			[self moveToBottom];
+		}];
 	}
 
 	self.reloadingHistory = NO;
@@ -693,7 +695,9 @@
 	if ([self viewIsEncrypted] == NO) {
 		[self reloadOldLines:NO withOldLines:objects];
 		
-		[self moveToBottom];
+		[self performBlockOnMainThread:^{
+			[self moveToBottom];
+		}];
 	}
 
 	self.reloadingBacklog = NO;
