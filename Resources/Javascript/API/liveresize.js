@@ -140,6 +140,15 @@ InlineImageLiveResize = {
 			e.preventDefault();
 		}
 	},
+	
+	/* Called by image anchors to know whether to open link. */
+	negateAnchorOpen: function() {
+		if (InlineImageLiveResize.previousMouseActionWasForResizing === true) {
+			return false;
+		} else {
+			return true;
+		}
+	},
 };
 
 /* Bind the key down event for the shift key and

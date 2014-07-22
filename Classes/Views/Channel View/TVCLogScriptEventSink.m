@@ -110,12 +110,12 @@
     LogToConsole(@"JavaScript: %@", message);
 }
 
-- (NSString *)toggleInlineImage:(NSString *)object
+- (void)toggleInlineImage:(NSString *)object
 {
-	return [self toggleInlineImage:object withKeyCheck:YES orientation:(-1)];
+	[self toggleInlineImage:object withKeyCheck:YES orientation:(-1)];
 }
 
-- (NSString *)toggleInlineImage:(NSString *)object withKeyCheck:(BOOL)checkShiftKey orientation:(NSInteger)orientationIndex
+- (void)toggleInlineImage:(NSString *)object withKeyCheck:(BOOL)checkShiftKey orientation:(NSInteger)orientationIndex
 {
 	/* Possible values for orientation index:
 	
@@ -130,13 +130,6 @@
 	  8 Left, bottom
 	 */
 
-	/* What type of request is this? */
-	if (([NSEvent modifierFlags] & NSShiftKeyMask) == NO && checkShiftKey) {
-		return @"true";
-	}
-
-	NSObjectIsEmptyAssertReturn(object, @"true");
-
 	/* Do we have a properly formatted ID? */
 	if ([object hasPrefix:@"inlineImage-"] == NO) {
 		object = [@"inlineImage-" stringByAppendingString:object];
@@ -145,7 +138,7 @@
 	/* Find the element. */
 	DOMElement *imageNode = [[self.logController mainFrameDocument] getElementById:object];
 
-	PointerIsEmptyAssertReturn(imageNode, @"true");
+	PointerIsEmptyAssert(imageNode);
 
 	/* Update the display information. */
 	NSString *display = [[imageNode style] display];
@@ -163,9 +156,6 @@
 	} else {
 		[self.logController executeScriptCommand:@"didToggleInlineImageToVisible" withArguments:@[imageNode] onQueue:NO];
 	}
-	
-	/* Update upstream. */
-	return @"false";
 }
 
 - (void)setURLAddress:(NSString *)s

@@ -36,6 +36,7 @@ body[viewtype=channel] div#body_home {
 
 body .line {
  	margin-top: -1px;
+	clear: both;
 }
 
 body[dir=rtl] .sender {
@@ -143,14 +144,31 @@ a:hover {
 
 /* Images */
 
-body a img {
-	border: 0;
+.inlineImageCell {
+	display: block;
 }
 
-body img {
-	display: block;
-	max-width: 95%;
-	margin: 15px 15px 12px 15px;
+.inlineImageCell .image {
+	display: inline-block;
+	float: left;
+	margin: 15px 15px 12px 10px;
+	min-width: 40px;
+	max-width: 90%;
+}
+
+.inlineImageCell .closeButton {
+	background: #6B6B6B;
+	border-radius: 5px;
+	border: 1px solid #2C2C2C;
+	color: #2C2C2C;
+	display: inline-block;
+	width: 15px;
+	height: 17px;
+	float: left;
+	text-align: right;
+	padding-right: 7px;
+	padding-left: 0px;
+	margin: 15px 0px 12px 0px;
 }
 
 /* Remember Line */
@@ -190,7 +208,7 @@ body div[ltype*=notice] .sender {
 	font-weight: 700;
 }
 
-/* SELECTED USER MESSAGES */
+/* Selected User Messages */
 
 .sender {
 	cursor: pointer;

@@ -273,23 +273,29 @@ Textual = {
         app.topicDoubleClicked();
     },
 	
-	toggleInlineImage: function(object) 
+	toggleInlineImage: function(object, onlyPerformForShiftKey)
 	{
-		/* toggleInlineImage() is called when an onclick event is thrown on the associated
-		link anchor of an inline image. If the last mouse down event was related to a resize,
-		then we return false to stop link from opening. Else, we pass the event information 
-		to the internals of Textual itself to determine whether to cancel the request. It may
-		decide to cancel the request if the shift key is held down. */
-		
-		if (InlineImageLiveResize && InlineImageLiveResize.previousMouseActionWasForResizing) {
-			return false;
-		} else {
-			if (app.toggleInlineImage(object) == "false") {
-				return false;
-			} else {
+		/* We only want certain actions to happen for shift key. */
+		if (onlyPerformForShiftKey) {
+			if (window.event.shiftKey === false) {
 				return true;
 			}
 		}
+	
+		/* toggleInlineImage() is called when an onclick event is thrown on the associated
+		link anchor of an inline image. If the last mouse down event was related to a resize,
+		then we return false to stop link from opening. Else, we pass the event information 
+		to the internals of Textual itself to determine whether to cancel the request. */
+		
+		if (InlineImageLiveResize) {
+			if (InlineImageLiveResize.previousMouseActionWasForResizing === false) {
+				app.toggleInlineImage(object);
+			}
+		} else {
+			app.toggleInlineImage(object);
+		}
+		
+		return false;
 	},
 	
 	didToggleInlineImageToHidden: function(imageElement)
@@ -299,6 +305,8 @@ Textual = {
 	
 	didToggleInlineImageToVisible: function(imageElement)
 	{
-		imageElement.addEventListener("mousedown", InlineImageLiveResize.onMouseDown, false);
+		var realImageElement = imageElement.querySelector("a .image");
+	
+		realImageElement.addEventListener("mousedown", InlineImageLiveResize.onMouseDown, false);
 	},
 }
