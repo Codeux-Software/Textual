@@ -219,8 +219,6 @@
 
 @property (readonly, copy) NSArray *splitIntoLines;
 
-@property (readonly, copy) NSString *trimmedString;
-
 - (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight;
 - (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight forcedFont:(NSFont *)textFont;
 
@@ -236,6 +234,8 @@
 
 @property (getter=getTokenAsString, readonly, copy) NSString *tokenAsString;
 @property (readonly, copy) NSString *uppercaseGetToken;
+
+@property (readonly, copy) NSString *trimmedString;
 
 @property (getter=getToken, readonly, copy) NSAttributedString *token;
 @property (getter=getTokenIncludingQuotes, readonly, copy) NSAttributedString *tokenIncludingQuotes;

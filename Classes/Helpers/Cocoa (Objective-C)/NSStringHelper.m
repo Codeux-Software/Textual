@@ -1378,11 +1378,6 @@
 	return [self attributesAtIndex:0 longestEffectiveRange:NULL inRange:NSMakeRange(0, [self length])];
 }
 
-- (NSString *)trimmedString
-{
-	return [[self string] trim];
-}
-
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set
 {
 	return [self attributedStringByTrimmingCharactersInSet:set frontChop:NULL];
@@ -1521,6 +1516,11 @@
 - (NSString *)uppercaseGetToken
 {
 	return [[self getTokenAsString] uppercaseString];
+}
+
+- (NSString *)trimmedString
+{
+	return [[self string] trim];
 }
 
 - (NSAttributedString *)getToken

@@ -847,7 +847,7 @@
 	self.config.nicknamePassword = [self.nicknamePasswordField trimmedStringValue];
 	
 	/* Alternate nicknames. */
-	NSString *alternateNicknames = [self.alternateNicknamesField trimmedStringValue];
+	NSString *alternateNicknames = [self.alternateNicknamesField value];
 	
 	NSArray *nicks = [alternateNicknames split:NSStringWhitespacePlaceholder];
 	
@@ -862,8 +862,8 @@
 	self.config.alternateNicknames = newAlternateNicknameList;
 	
 	/* Messages */
-	self.config.sleepModeLeavingComment	= [self.sleepModeQuitMessageField trimmedStringValue];
-	self.config.normalLeavingComment = [self.normalLeavingCommentField trimmedStringValue];
+	self.config.sleepModeLeavingComment	= [self.sleepModeQuitMessageField value];
+	self.config.normalLeavingComment = [self.normalLeavingCommentField value];
 	
 	/* Encoding */
 	NSInteger primaryEncoding = [self.encodingList integerForKey:[self.primaryEncodingButton title]];
