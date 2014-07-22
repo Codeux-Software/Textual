@@ -224,7 +224,7 @@
 	if (correctedFrame) {
 		NSRect windowFrame = [mainWindow() frame];
 		
-		return (NSWidth(windowFrame) - position);
+		return ((NSWidth(windowFrame) - position) - [self dividerThickness]);
 	}
 	
 	return position;
