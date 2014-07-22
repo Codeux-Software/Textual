@@ -935,15 +935,19 @@
 
 - (BOOL)isActiveForDrawing
 {
-	BOOL isActive = [masterController() applicationIsActive];
-	
-	BOOL isVisible = [self isVisible];
-	BOOL isMainWindow = [self isMainWindow];
-	BOOL isOnActiveSpace = [self isOnActiveSpace];
-	
-	BOOL hasNoModal = ([NSApp modalWindow] == nil);
-	
-	return (isVisible && isActive && isMainWindow && isOnActiveSpace && hasNoModal);
+	if ([self isInFullscreenMode]) {
+		return YES;
+	} else {
+		BOOL isActive = [masterController() applicationIsActive];
+		
+		BOOL isVisible = [self isVisible];
+		BOOL isMainWindow = [self isMainWindow];
+		BOOL isOnActiveSpace = [self isOnActiveSpace];
+		
+		BOOL hasNoModal = ([NSApp modalWindow] == nil);
+		
+		return (isVisible && isActive && isMainWindow && isOnActiveSpace && hasNoModal);
+	}
 }
 
 - (BOOL)canBecomeMainWindow
