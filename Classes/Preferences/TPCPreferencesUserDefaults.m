@@ -314,56 +314,61 @@
 #pragma mark -
 #pragma mark Object KVO Proxying
 
+@interface TPCPreferencesUserDefaultsObjectProxy ()
+@property (nonatomic, assign) BOOL writesToGroupContainer;
+@end
+
 @implementation TPCPreferencesUserDefaultsObjectProxy
 
-+ (id)values
++ (id)userDefaultValues
 {
 	static id sharedSelf = nil;
 	
 	static dispatch_once_t onceToken;
 	
 	dispatch_once(&onceToken, ^{
-		sharedSelf = [TPCPreferencesUserDefaultsObjectProxy new];
+		 sharedSelf = [TPCPreferencesUserDefaultsObjectProxy new];
+		
+		[sharedSelf setWritesToGroupContainer:YES];
 	});
 	
 	return sharedSelf;
 }
 
-- (instancetype)init
++ (id)localDefaultValues
 {
-	if ((self = [super init])) {
-		[RZNotificationCenter() addObserver:self
-								   selector:@selector(userDefaultsDidChange:)
-									   name:NSUserDefaultsDidChangeNotification
-									 object:nil];
-		
-		return self;
-	}
+	static id sharedSelf = nil;
 	
-	return nil;
-}
-
-- (void)dealloc
-{
-	[RZNotificationCenter() removeObserver:self name:NSUserDefaultsDidChangeNotification object:nil];
-}
-
-- (void)userDefaultsDidChange:(NSNotification *)aNotification
-{
-	/* We do nothing for now. */
+	static dispatch_once_t onceToken;
+	
+	dispatch_once(&onceToken, ^{
+		 sharedSelf = [TPCPreferencesUserDefaultsObjectProxy new];
+		
+		[sharedSelf setWritesToGroupContainer:NO];
+	});
+	
+	return sharedSelf;
 }
 
 - (id)valueForKey:(NSString *)key
 {
-	return [RZUserDefaults() objectForKey:key];
+	if ([self writesToGroupContainer]) {
+		return [RZUserDefaults() objectForKey:key];
+	} else {
+		return [_userDefaults objectForKey:key];
+	}
 }
 
 - (void)setValue:(id)value forKey:(NSString *)key
 {
 	[self willChangeValueForKey:key];
 	
-	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
-		[_groupDefaults setObject:value forKey:key];
+	if ([self writesToGroupContainer]) {
+		if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+			[_groupDefaults setObject:value forKey:key];
+		} else {
+			[_userDefaults setObject:value forKey:key];
+		}
 	} else {
 		[_userDefaults setObject:value forKey:key];
 	}

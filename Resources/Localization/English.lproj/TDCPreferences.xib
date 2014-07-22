@@ -2435,18 +2435,7 @@
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.TextFieldAutomaticSpellCheck" id="wQs-Dr-XN5"/>
-                    </connections>
-                </button>
-                <button id="UUF-Y9-L5m">
-                    <rect key="frame" x="52" y="326" width="196" height="18"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <buttonCell key="cell" type="check" title="Check grammar with spelling" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="0E3-3e-LWm">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.TextFieldAutomaticGrammarCheck" id="d1e-Mm-35z"/>
+                        <binding destination="-2" name="value" keyPath="self.localDefaultValues.TextFieldAutomaticSpellCheck" id="yh4-bF-9qw"/>
                     </connections>
                 </button>
                 <button id="Max-AW-9Fo">
@@ -2457,7 +2446,7 @@
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.TextFieldAutomaticSpellCorrection" id="kpY-lo-7U6"/>
+                        <binding destination="-2" name="value" keyPath="self.localDefaultValues.TextFieldAutomaticSpellCorrection" id="gTn-2X-jmh"/>
                     </connections>
                 </button>
                 <button id="WRe-tM-8Xc">
@@ -2666,6 +2655,17 @@
                         </binding>
                     </connections>
                 </textField>
+                <button id="UUF-Y9-L5m">
+                    <rect key="frame" x="52" y="326" width="196" height="18"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <buttonCell key="cell" type="check" title="Check grammar with spelling" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="0E3-3e-LWm">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="self.localDefaultValues.TextFieldAutomaticGrammarCheck" id="yzX-6W-qer"/>
+                    </connections>
+                </button>
             </subviews>
             <point key="canvasLocation" x="356.5" y="-2919"/>
         </customView>
