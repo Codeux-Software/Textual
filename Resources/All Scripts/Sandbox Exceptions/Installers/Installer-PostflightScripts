@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SYSTEM_SCRIPT_PATH="/Users/Shared/._private-07D9874F-7FCE-40DD-826B-00F5E0DE8CC4/"
+SYSTEM_SCRIPT_PATH="/Users/Shared/._private-07D9874F-7FCE-40DD-826B-00F5E0DE8CC4/Scripts/"
 
 USER_SCRIPT_PATH="$HOME/Library/Application Scripts/com.codeux.irc.textual5/"
 
