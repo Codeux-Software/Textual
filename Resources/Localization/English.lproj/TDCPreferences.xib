@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6185.7" systemVersion="14A283o" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6185.11" systemVersion="14A298i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1080" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.7"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.11"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCPreferencesController">
@@ -53,7 +53,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <arrayController avoidsEmptySelection="NO" id="4310" userLabel="Keywords">
             <declaredKeys>
                 <string>string</string>
@@ -86,7 +86,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="750" height="422"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView appearanceType="aqua" borderType="groove" horizontalLineScroll="21" horizontalPageScroll="10" verticalLineScroll="21" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="pJW-4J-xuL">
+                    <scrollView appearanceType="aqua" borderType="groove" autohidesScrollers="YES" horizontalLineScroll="21" horizontalPageScroll="10" verticalLineScroll="21" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="pJW-4J-xuL">
                         <rect key="frame" x="8" y="8" width="159" height="406"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="CUZ-c4-TVa">
@@ -159,13 +159,13 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="6064"/>
             </connections>
-            <point key="canvasLocation" x="954" y="463"/>
+            <point key="canvasLocation" x="1140" y="476"/>
         </window>
         <customView id="Eyz-5p-IkU" userLabel="General">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <button appearanceType="aqua" id="dKD-ra-U21">
+                <button id="dKD-ra-U21">
                     <rect key="frame" x="50" y="288" width="312" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Request confirmation before quitting Textual" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="nXm-Y7-fZ3">
@@ -176,7 +176,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ConfirmApplicationQuit" id="LAX-0Z-YN1"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" id="UuQ-ZG-ozB">
+                <button id="UuQ-ZG-ozB">
                     <rect key="frame" x="50" y="209" width="332" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Rejoin a channel after being kicked" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2Ak-mJ-q70">
@@ -187,7 +187,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.RejoinChannelOnLocalKick" id="OtR-7u-CDy"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" id="pdA-b6-BIw">
+                <button id="pdA-b6-BIw">
                     <rect key="frame" x="50" y="181" width="302" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Automatically join a channel when invited" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="g1J-XE-6ta">
@@ -198,7 +198,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.AutojoinChannelOnInvite" id="tdc-bV-Eh7"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" id="XEZ-Sv-jfL">
+                <button id="XEZ-Sv-jfL">
                     <rect key="frame" x="50" y="153" width="452" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Display the Message of the Day (MOTD) of a server upon connection" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="6Hr-zc-ebu">
@@ -209,7 +209,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DisplayServerMessageOfTheDayOnConnect" id="rTn-VH-P0O"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" id="qJT-Ie-BD3">
+                <button id="qJT-Ie-BD3">
                     <rect key="frame" x="50" y="125" width="452" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Wait for NickServ identification before joining channels" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Pcv-fz-BnJ">
@@ -220,7 +220,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.AutojoinWaitsForNickservIdentification" id="Xql-4m-DZG"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" verticalHuggingPriority="750" id="dwq-UD-go0">
+                <button verticalHuggingPriority="750" id="dwq-UD-go0">
                     <rect key="frame" x="365" y="283" width="157" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="Set as Default IRC Client" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NeX-Zq-Jjx">
@@ -238,7 +238,7 @@
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <button appearanceType="aqua" id="zMu-H1-M7w">
+                <button id="zMu-H1-M7w">
                     <rect key="frame" x="50" y="97" width="260" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Toggle away status on display sleep" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="SAT-ip-owc">
@@ -249,7 +249,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SetAwayOnScreenSleep" id="wTj-0c-qtW"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" id="bVD-Sa-BSk">
+                <button id="bVD-Sa-BSk">
                     <rect key="frame" x="50" y="260" width="312" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Share data between devices using iCloud" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="wdb-hN-q1F">
@@ -262,7 +262,7 @@
                         <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.System —&gt; Built with iCloud Support" id="f72-cf-gRu"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" verticalHuggingPriority="750" tag="13" id="dqH-Sc-1ei">
+                <button verticalHuggingPriority="750" tag="13" id="dqH-Sc-1ei">
                     <rect key="frame" x="365" y="255" width="157" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="Manage iCloud" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="EEt-NX-Vln">
@@ -281,7 +281,7 @@
             <rect key="frame" x="0.0" y="0.0" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="6H1-Tg-Tt8">
+                <textField verticalHuggingPriority="750" id="6H1-Tg-Tt8">
                     <rect key="frame" x="231" y="201" width="207" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="OMU-g9-Wob">
@@ -298,7 +298,7 @@
                         </binding>
                     </connections>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="cC6-1A-pvW">
+                <textField verticalHuggingPriority="750" id="cC6-1A-pvW">
                     <rect key="frame" x="155" y="203" width="71" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Nickname:" id="0bY-1G-9fo">
@@ -307,7 +307,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="AEb-I8-O30">
+                <textField verticalHuggingPriority="750" id="AEb-I8-O30">
                     <rect key="frame" x="231" y="147" width="207" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="d1d-pG-lez">
@@ -324,7 +324,7 @@
                         </binding>
                     </connections>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="uNQ-s8-bAv">
+                <textField verticalHuggingPriority="750" id="uNQ-s8-bAv">
                     <rect key="frame" x="155" y="149" width="71" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Username:" id="crB-fG-ufp">
@@ -333,7 +333,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="Odd-uF-wUV">
+                <textField verticalHuggingPriority="750" id="Odd-uF-wUV">
                     <rect key="frame" x="231" y="120" width="207" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="kc8-cg-xFg">
@@ -350,7 +350,7 @@
                         </binding>
                     </connections>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="Sne-aI-1Oj">
+                <textField verticalHuggingPriority="750" id="Sne-aI-1Oj">
                     <rect key="frame" x="81" y="239" width="404" height="48"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="Kn7-a5-s6a">
@@ -360,7 +360,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="iNX-QK-nm1">
+                <textField verticalHuggingPriority="750" id="iNX-QK-nm1">
                     <rect key="frame" x="231" y="174" width="207" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="9WX-iW-Isu">
@@ -377,7 +377,7 @@
                         </binding>
                     </connections>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="xt6-0d-74R">
+                <textField verticalHuggingPriority="750" id="xt6-0d-74R">
                     <rect key="frame" x="126" y="177" width="100" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Away Nickname:" id="Fie-vu-Czl">
@@ -386,7 +386,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="YhK-iA-Uk0">
+                <textField verticalHuggingPriority="750" id="YhK-iA-Uk0">
                     <rect key="frame" x="178" y="168" width="48" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="iYy-yb-Bx8">
@@ -395,7 +395,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="11g-Me-msX">
+                <textField verticalHuggingPriority="750" id="11g-Me-msX">
                     <rect key="frame" x="155" y="122" width="71" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Real name:" id="jRf-a0-3jI">
@@ -411,7 +411,7 @@
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="DPo-1x-FIa">
+                <textField verticalHuggingPriority="750" id="DPo-1x-FIa">
                     <rect key="frame" x="46" y="254" width="114" height="16"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Highlight words:" id="tR6-jH-Ll6">
@@ -420,7 +420,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button appearanceType="aqua" id="IVv-zw-dDv">
+                <button id="IVv-zw-dDv">
                     <rect key="frame" x="280" y="322" width="195" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Highlight current nickname" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="9of-Kp-Asv">
@@ -431,7 +431,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.TrackNicknameHighlightsOfLocalUser" id="7TX-Na-5NF"/>
                     </connections>
                 </button>
-                <popUpButton appearanceType="aqua" verticalHuggingPriority="750" id="8oP-r2-z2R">
+                <popUpButton verticalHuggingPriority="750" id="8oP-r2-z2R">
                     <rect key="frame" x="50" y="310" width="185" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="Partial Matches" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" selectedItem="dnX-v4-Rf4" id="j6z-4b-d9v">
@@ -497,7 +497,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
-                <button appearanceType="aqua" verticalHuggingPriority="750" id="Nqu-81-VCV">
+                <button verticalHuggingPriority="750" id="Nqu-81-VCV">
                     <rect key="frame" x="49" y="68" width="23" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" controlSize="mini" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zrw-3F-rh2">
@@ -509,7 +509,7 @@
                         <action selector="onAddKeyword:" target="-2" id="cS0-Fw-6bd"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" verticalHuggingPriority="750" id="G7B-Kp-Af8">
+                <button verticalHuggingPriority="750" id="G7B-Kp-Af8">
                     <rect key="frame" x="72" y="68" width="23" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" controlSize="mini" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pYZ-UH-gZy">
@@ -574,7 +574,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
-                <button appearanceType="aqua" verticalHuggingPriority="750" id="KgU-fm-1CL">
+                <button verticalHuggingPriority="750" id="KgU-fm-1CL">
                     <rect key="frame" x="291" y="68" width="23" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" controlSize="mini" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9PI-h7-aCh">
@@ -591,7 +591,7 @@
                         </binding>
                     </connections>
                 </button>
-                <button appearanceType="aqua" verticalHuggingPriority="750" id="qcU-SW-8KI">
+                <button verticalHuggingPriority="750" id="qcU-SW-8KI">
                     <rect key="frame" x="313" y="68" width="23" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" controlSize="mini" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="q8O-20-DrL">
@@ -612,7 +612,7 @@
                         <binding destination="-2" name="enabled" keyPath="self.excludeKeywordsTable.enabled" id="Qeh-dN-yl0"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" id="xJN-JU-VGr">
+                <button id="xJN-JU-VGr">
                     <rect key="frame" x="280" y="303" width="240" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Log highlights to separate window" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="z4k-RQ-V0s">
@@ -624,7 +624,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.LogHighlights" id="b05-J5-F0K"/>
                     </connections>
                 </button>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="jN5-O0-8cZ">
+                <textField verticalHuggingPriority="750" id="jN5-O0-8cZ">
                     <rect key="frame" x="287" y="257" width="100" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Exclude words:" id="oKh-Ma-cAV">
@@ -649,7 +649,7 @@
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <button appearanceType="aqua" id="GjT-uP-Qs3">
+                <button id="GjT-uP-Qs3">
                     <rect key="frame" x="49" y="119" width="465" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Display a badge on the dock to indicate a new highlight or private message" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="2zu-lB-mQq">
@@ -660,7 +660,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DisplayDockBadges" id="0bv-32-LW0"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" id="aAm-Wb-rMO">
+                <button id="aAm-Wb-rMO">
                     <rect key="frame" x="50" y="91" width="436" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Include public channel messages in the above mentioned badge count" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="NHa-ip-Ihi">
@@ -671,7 +671,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DisplayPublicMessageCountInDockBadge" id="ccG-2N-KP9"/>
                     </connections>
                 </button>
-                <popUpButton appearanceType="aqua" verticalHuggingPriority="750" id="WuE-Q5-q8G">
+                <popUpButton verticalHuggingPriority="750" id="WuE-Q5-q8G">
                     <rect key="frame" x="231" y="340" width="198" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" id="lCf-A2-Gib">
@@ -689,7 +689,7 @@
                         <action selector="onChangedAlertType:" target="-2" id="e3C-JF-AXp"/>
                     </connections>
                 </popUpButton>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="1jd-UU-VQN">
+                <textField verticalHuggingPriority="750" id="1jd-UU-VQN">
                     <rect key="frame" x="133" y="345" width="94" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="Current Alert:" id="AuT-BU-VxX">
@@ -698,7 +698,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button appearanceType="aqua" id="fyC-tf-kOI">
+                <button id="fyC-tf-kOI">
                     <rect key="frame" x="117" y="307" width="252" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Display notification for alert" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="kuK-CY-8vo">
@@ -709,7 +709,7 @@
                         <action selector="onChangedAlertNotification:" target="-2" id="c1S-wp-lbA"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" id="pyR-Yq-9tk">
+                <button id="pyR-Yq-9tk">
                     <rect key="frame" x="117" y="232" width="322" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="hlg-Zw-rVE">
@@ -720,7 +720,7 @@
                         <action selector="onChangedAlertDisableWhileAway:" target="-2" id="iay-m2-0sX"/>
                     </connections>
                 </button>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="0Hy-Fo-BoC">
+                <textField verticalHuggingPriority="750" id="0Hy-Fo-BoC">
                     <rect key="frame" x="135" y="177" width="119" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Play sound on alert:" id="JIW-3U-XLk">
@@ -729,7 +729,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <popUpButton appearanceType="aqua" verticalHuggingPriority="750" id="xvN-SN-jAW">
+                <popUpButton verticalHuggingPriority="750" id="xvN-SN-jAW">
                     <rect key="frame" x="257" y="174" width="142" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" id="ucj-cO-J7n">
@@ -754,7 +754,7 @@
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <button appearanceType="aqua" id="pPF-N7-ZNY">
+                <button id="pPF-N7-ZNY">
                     <rect key="frame" x="117" y="260" width="234" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Speak using system voice" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="jPT-kI-nWE">
@@ -765,7 +765,7 @@
                         <action selector="onChangedAlertSpoken:" target="-2" id="iph-MR-aty"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" id="lHl-sy-SBb">
+                <button id="lHl-sy-SBb">
                     <rect key="frame" x="117" y="204" width="161" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Bounce dock icon" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="QLU-i1-tIY">
@@ -790,7 +790,7 @@
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="O82-On-A00">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="O82-On-A00">
                     <rect key="frame" x="132" y="284" width="386" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Growl is running. Notifications will be forwarded to it." id="9fD-5A-S0y">
@@ -806,7 +806,7 @@
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <button appearanceType="aqua" id="7gR-L1-aOU">
+                <button id="7gR-L1-aOU">
                     <rect key="frame" x="53" y="40" width="465" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Display notifications when Textual is the selected application" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="rbi-o7-6Hw">
@@ -877,7 +877,7 @@
             <rect key="frame" x="0.0" y="0.0" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <button appearanceType="aqua" id="aBI-aO-f4v">
+                <button id="aBI-aO-f4v">
                     <rect key="frame" x="56" y="307" width="186" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Show linked images inline" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="hAr-eA-GcX">
@@ -889,7 +889,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DisplayEventInLogView -&gt; Inline Media" id="tle-kk-evH"/>
                     </connections>
                 </button>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="uLI-Lc-c9B">
+                <textField verticalHuggingPriority="750" id="uLI-Lc-c9B">
                     <rect key="frame" x="241" y="198" width="60" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="300" drawsBackground="YES" usesSingleLineMode="YES" id="0qj-wG-TbN">
@@ -905,7 +905,7 @@
                         </binding>
                     </connections>
                 </textField>
-                <popUpButton appearanceType="aqua" verticalHuggingPriority="750" id="eSS-GH-uW9">
+                <popUpButton verticalHuggingPriority="750" id="eSS-GH-uW9">
                     <rect key="frame" x="351" y="220" width="114" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="100 Megabytes" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="10" imageScaling="proportionallyDown" inset="2" selectedItem="VIr-I6-sXp" id="i5F-1N-o1j">
@@ -930,7 +930,7 @@
                         <binding destination="-2" name="selectedTag" keyPath="self.userDefaultsValues.inlineImageMaxFilesize" id="o3Y-CM-Ayi"/>
                     </connections>
                 </popUpButton>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="kyL-8P-YHU">
+                <textField verticalHuggingPriority="750" id="kyL-8P-YHU">
                     <rect key="frame" x="55" y="224" width="299" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Limit images shown inline to a maxium file size of " id="Ve9-42-YiN">
@@ -939,7 +939,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="Xh7-XO-VK8">
+                <textField verticalHuggingPriority="750" id="Xh7-XO-VK8">
                     <rect key="frame" x="55" y="200" width="182" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Scale images to a maximum of" id="OcL-Uv-3hN">
@@ -948,7 +948,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="DNO-2u-LgP">
+                <textField verticalHuggingPriority="750" id="DNO-2u-LgP">
                     <rect key="frame" x="306" y="200" width="73" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="pixels wide" id="Zhd-Mj-FHH">
@@ -964,7 +964,7 @@
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="2oi-Ub-WNz">
+                <textField verticalHuggingPriority="750" id="2oi-Ub-WNz">
                     <rect key="frame" x="57" y="146" width="288" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Do not display images with a height greater than" id="2fY-qH-Pmo">
@@ -973,7 +973,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="CCd-bA-zYe">
+                <textField verticalHuggingPriority="750" id="CCd-bA-zYe">
                     <rect key="frame" x="348" y="144" width="60" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="300" drawsBackground="YES" usesSingleLineMode="YES" id="sUT-nu-psj">
@@ -989,7 +989,7 @@
                         </binding>
                     </connections>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="nrx-Je-gLc">
+                <textField verticalHuggingPriority="750" id="nrx-Je-gLc">
                     <rect key="frame" x="414" y="146" width="38" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="pixels" id="V2a-C5-MII">
@@ -1744,7 +1744,7 @@
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <button appearanceType="aqua" id="Ldq-4s-vGV">
+                <button id="Ldq-4s-vGV">
                     <rect key="frame" x="84" y="212" width="164" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Log transcripts to folder:" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Yh4-3q-f6X">
@@ -1755,7 +1755,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.LogTranscript" id="uqm-Rw-J1g"/>
                     </connections>
                 </button>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="ZeM-Wr-wwc">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="ZeM-Wr-wwc">
                     <rect key="frame" x="93" y="175" width="381" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="2rT-lJ-27T">
@@ -1765,7 +1765,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <popUpButton appearanceType="aqua" verticalHuggingPriority="750" id="H7x-dV-MZS">
+                <popUpButton verticalHuggingPriority="750" id="H7x-dV-MZS">
                     <rect key="frame" x="251" y="209" width="231" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="7JI-Be-FO7">
@@ -1844,7 +1844,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="Ut7-9O-xlD">
+                <textField verticalHuggingPriority="750" id="Ut7-9O-xlD">
                     <rect key="frame" x="45" y="362" width="227" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="The following addons are installed:" id="KaT-z7-mCE">
@@ -1853,7 +1853,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="Pxa-Um-3pA">
+                <textField verticalHuggingPriority="750" id="Pxa-Um-3pA">
                     <rect key="frame" x="45" y="71" width="476" height="48"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" alignment="left" id="pVP-3h-Oiy">
@@ -1863,7 +1863,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="UuX-nP-keM">
+                <textField verticalHuggingPriority="750" id="UuX-nP-keM">
                     <rect key="frame" x="146" y="32" width="163" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Custom Addons Location:" id="aKI-dl-dpt">
@@ -1872,7 +1872,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button appearanceType="aqua" verticalHuggingPriority="750" id="wqE-6p-1vl">
+                <button verticalHuggingPriority="750" id="wqE-6p-1vl">
                     <rect key="frame" x="315" y="30" width="103" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundRect" title="Open In Finder" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="T7i-UT-s8v">
@@ -1890,7 +1890,7 @@
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="9GL-Fm-FRS">
+                <textField verticalHuggingPriority="750" id="9GL-Fm-FRS">
                     <rect key="frame" x="52" y="333" width="172" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Default Kill Reason: " id="KGB-V1-WkX">
@@ -1899,7 +1899,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="qig-yp-6aY">
+                <textField verticalHuggingPriority="750" id="qig-yp-6aY">
                     <rect key="frame" x="53" y="234" width="172" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Default G:Line Reason: " id="kN3-5K-4fJ">
@@ -1908,7 +1908,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="9Fb-qx-dGB">
+                <textField verticalHuggingPriority="750" id="9Fb-qx-dGB">
                     <rect key="frame" x="55" y="135" width="172" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Default Shun Reason: " id="6vn-da-cA0">
@@ -1917,7 +1917,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="qvB-sf-fih">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="qvB-sf-fih">
                     <rect key="frame" x="66" y="258" width="434" height="65"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="T0B-CS-3t3">
@@ -1930,7 +1930,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.IRCopDefaultLocalizaiton -&gt; Kill Reason" id="qK9-GI-Duh"/>
                     </connections>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="ckK-Ko-G8O">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="ckK-Ko-G8O">
                     <rect key="frame" x="67" y="159" width="434" height="65"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="JRA-rV-k6G">
@@ -1943,7 +1943,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.IRCopDefaultLocalizaiton -&gt; G:Line Reason" id="jC4-to-p72"/>
                     </connections>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="qg5-rl-Ov0">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="qg5-rl-Ov0">
                     <rect key="frame" x="67" y="60" width="434" height="65"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="tZR-F3-Bdo">
@@ -1956,7 +1956,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.IRCopDefaultLocalizaiton -&gt; Shun Reason" id="aMW-2e-qdQ"/>
                     </connections>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="b4u-EN-XAj">
+                <textField verticalHuggingPriority="750" id="b4u-EN-XAj">
                     <rect key="frame" x="385" y="234" width="124" height="12"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(Includes Ban Length)" id="WL8-Lc-POK">
@@ -1965,7 +1965,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="n2n-Vq-Lb7">
+                <textField verticalHuggingPriority="750" id="n2n-Vq-Lb7">
                     <rect key="frame" x="390" y="135" width="124" height="12"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(Includes Ban Length)" id="4rX-hA-Ty8">
@@ -1981,7 +1981,7 @@
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="MpU-MJ-P1S">
+                <textField verticalHuggingPriority="750" id="MpU-MJ-P1S">
                     <rect key="frame" x="32" y="302" width="151" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Maximum Channel Joins:" id="r8a-IS-36w">
@@ -1990,7 +1990,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <slider appearanceType="aqua" verticalHuggingPriority="750" id="9XR-dG-6jw">
+                <slider verticalHuggingPriority="750" id="9XR-dG-6jw">
                     <rect key="frame" x="208" y="285" width="276" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <sliderCell key="cell" controlSize="small" state="on" alignment="left" minValue="1" maxValue="20" doubleValue="1" tickMarkPosition="below" numberOfTickMarks="20" allowsTickMarkValuesOnly="YES" sliderType="linear" id="ROR-5N-lPB"/>
@@ -1999,7 +1999,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.AutojoinMaximumChannelJoinCount" id="AkV-XD-wn9"/>
                     </connections>
                 </slider>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="Vi1-qf-oHg">
+                <textField verticalHuggingPriority="750" id="Vi1-qf-oHg">
                     <rect key="frame" x="209" y="269" width="11" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="1" id="sXf-Xv-avB">
@@ -2008,7 +2008,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="0JH-yX-1pA">
+                <textField verticalHuggingPriority="750" id="0JH-yX-1pA">
                     <rect key="frame" x="469" y="270" width="18" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="20" id="d2Q-58-yZq">
@@ -2017,7 +2017,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="sxr-6Y-z9j">
+                <textField verticalHuggingPriority="750" id="sxr-6Y-z9j">
                     <rect key="frame" x="264" y="269" width="11" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="5" id="szD-RT-eEJ">
@@ -2026,7 +2026,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="cGZ-Pz-aZ4">
+                <textField verticalHuggingPriority="750" id="cGZ-Pz-aZ4">
                     <rect key="frame" x="331" y="269" width="18" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="10" id="t7B-FL-ehc">
@@ -2035,7 +2035,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="iQU-cc-yi3">
+                <textField verticalHuggingPriority="750" id="iQU-cc-yi3">
                     <rect key="frame" x="400" y="269" width="18" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="15" id="22Y-44-XNk">
@@ -2051,7 +2051,7 @@
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <slider appearanceType="aqua" verticalHuggingPriority="750" id="tfY-TP-YZN">
+                <slider verticalHuggingPriority="750" id="tfY-TP-YZN">
                     <rect key="frame" x="53" y="104" width="458" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="2000" tickMarkPosition="below" numberOfTickMarks="50" allowsTickMarkValuesOnly="YES" sliderType="linear" id="JHI-LK-miQ"/>
@@ -2059,7 +2059,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.TrackUserAwayStatusMaximumChannelSize" id="R7b-3V-IUf"/>
                     </connections>
                 </slider>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="wcy-2K-Z0C">
+                <textField verticalHuggingPriority="750" id="wcy-2K-Z0C">
                     <rect key="frame" x="32" y="214" width="240" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="WHO Command Maximum Channel Size:" id="xkB-rD-fPk">
@@ -2068,7 +2068,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="cIi-Pq-WPZ">
+                <textField verticalHuggingPriority="750" id="cIi-Pq-WPZ">
                     <rect key="frame" x="54" y="88" width="11" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="M5q-ps-YMl">
@@ -2077,7 +2077,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="hUG-W4-cww">
+                <textField verticalHuggingPriority="750" id="hUG-W4-cww">
                     <rect key="frame" x="486" y="88" width="36" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="2,000" id="Fde-ve-jLK">
@@ -2086,7 +2086,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="nYa-5J-0VR">
+                <textField verticalHuggingPriority="750" id="nYa-5J-0VR">
                     <rect key="frame" x="136" y="88" width="25" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="400" id="6EW-Df-jxu">
@@ -2095,7 +2095,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="V7m-3A-nss">
+                <textField verticalHuggingPriority="750" id="V7m-3A-nss">
                     <rect key="frame" x="228" y="88" width="25" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="800" id="J0v-lX-lSI">
@@ -2104,7 +2104,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="LRz-ln-JIt">
+                <textField verticalHuggingPriority="750" id="LRz-ln-JIt">
                     <rect key="frame" x="305" y="88" width="36" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="1,200" id="xVW-kp-5fh">
@@ -2113,7 +2113,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="pt3-ra-o1s">
+                <textField verticalHuggingPriority="750" id="pt3-ra-o1s">
                     <rect key="frame" x="395" y="88" width="36" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="1,600" id="NsV-py-07s">
@@ -2122,7 +2122,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="OVq-cn-ftD">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="OVq-cn-ftD">
                     <rect key="frame" x="35" y="134" width="503" height="70"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="juM-7X-6WQ">
@@ -2132,7 +2132,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="GHO-yi-WAR">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="GHO-yi-WAR">
                     <rect key="frame" x="35" y="252" width="162" height="42"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Number of channels permitted to be joined at a single time during autojoin." id="F2Z-xU-spz">
@@ -2148,7 +2148,7 @@
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="jTo-pM-g6s">
+                <textField verticalHuggingPriority="750" id="jTo-pM-g6s">
                     <rect key="frame" x="53" y="192" width="172" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Default Kick Reason: " id="8Tj-Z2-BEA">
@@ -2157,7 +2157,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="Ttq-5L-YOn">
+                <textField verticalHuggingPriority="750" id="Ttq-5L-YOn">
                     <rect key="frame" x="53" y="257" width="134" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Hostmask Ban Format:" id="1sH-tB-X5p">
@@ -2166,7 +2166,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <popUpButton appearanceType="aqua" verticalHuggingPriority="750" id="doe-fL-WAB">
+                <popUpButton verticalHuggingPriority="750" id="doe-fL-WAB">
                     <rect key="frame" x="190" y="253" width="242" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="*!*@hostmask" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="pb2-SP-miv" id="wVg-8i-HY5">
@@ -2186,7 +2186,7 @@
                         <binding destination="-2" name="selectedIndex" keyPath="self.userDefaultsValues.DefaultBanCommandHostmaskFormat" id="hq6-rd-I3T"/>
                     </connections>
                 </popUpButton>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="kWh-2T-Yta">
+                <textField verticalHuggingPriority="750" id="kWh-2T-Yta">
                     <rect key="frame" x="68" y="221" width="357" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="When used in the context of a hostmask an asterisk (*) represents a wildcard character that is matched by any possible value. " id="lyl-DA-xkL">
@@ -2195,7 +2195,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="Giv-s5-hR3">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="Giv-s5-hR3">
                     <rect key="frame" x="71" y="132" width="440" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="2aJ-p3-18o">
@@ -2216,7 +2216,7 @@
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="m6k-uS-I0e">
+                <textField verticalHuggingPriority="750" id="m6k-uS-I0e">
                     <rect key="frame" x="44" y="243" width="473" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" id="m0T-jg-XXP">
@@ -2226,7 +2226,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="cwh-JV-tWi">
+                <textField verticalHuggingPriority="750" id="cwh-JV-tWi">
                     <rect key="frame" x="50" y="205" width="117" height="13"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Fake CTCP Version:" id="Jfe-QS-I1T">
@@ -2235,7 +2235,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="Qoz-jq-Y9W">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="Qoz-jq-Y9W">
                     <rect key="frame" x="62" y="136" width="459" height="61"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="mLE-94-QqL">
@@ -2260,7 +2260,7 @@
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <button appearanceType="aqua" id="6hg-qY-80F">
+                <button id="6hg-qY-80F">
                     <rect key="frame" x="53" y="205" width="234" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Connect to server on double click" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="3oy-Xl-xyI">
@@ -2275,7 +2275,7 @@
                         </binding>
                     </connections>
                 </button>
-                <button appearanceType="aqua" id="qYA-Ao-CJT">
+                <button id="qYA-Ao-CJT">
                     <rect key="frame" x="53" y="121" width="211" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Leave channel on double click" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Cjf-6V-hOw">
@@ -2286,7 +2286,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ServerListDoubleClickLeaveChannel" id="Oqz-uL-CHQ"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" id="oEq-yQ-bhN">
+                <button id="oEq-yQ-bhN">
                     <rect key="frame" x="53" y="177" width="269" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Disconnect from server on double click" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="O3A-4K-i4v">
@@ -2297,7 +2297,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ServerListDoubleClickDisconnectServer" id="ceL-aZ-sDf"/>
                     </connections>
                 </button>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="pym-29-wtE">
+                <textField verticalHuggingPriority="750" id="pym-29-wtE">
                     <rect key="frame" x="107" y="289" width="138" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Double clicking a user:" id="XxY-Ns-ahg">
@@ -2306,7 +2306,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <popUpButton appearanceType="aqua" verticalHuggingPriority="750" id="zTA-WJ-SjA">
+                <popUpButton verticalHuggingPriority="750" id="zTA-WJ-SjA">
                     <rect key="frame" x="247" y="285" width="244" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="PTD-y5-C4m">
@@ -2326,7 +2326,7 @@
                         <binding destination="-2" name="selectedTag" keyPath="self.userDefaultsValues.UserListDoubleClickAction" id="0ZO-hY-GuY"/>
                     </connections>
                 </popUpButton>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="dfk-Ny-wKr">
+                <textField verticalHuggingPriority="750" id="dfk-Ny-wKr">
                     <rect key="frame" x="87" y="259" width="158" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Command + W key action:" id="8Bc-Xn-6b4">
@@ -2335,7 +2335,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <popUpButton appearanceType="aqua" verticalHuggingPriority="750" id="2qK-iK-wM4">
+                <popUpButton verticalHuggingPriority="750" id="2qK-iK-wM4">
                     <rect key="frame" x="247" y="255" width="244" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="Close Main Window" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="lcs-Gp-Sfx" id="Ix3-Mw-KMk">
@@ -2358,7 +2358,7 @@
                         <binding destination="-2" name="selectedIndex" keyPath="self.userDefaultsValues.Keyboard -&gt; Command+W Action" id="e5G-Hs-Zdt"/>
                     </connections>
                 </popUpButton>
-                <button appearanceType="aqua" id="uO3-nq-aL8">
+                <button id="uO3-nq-aL8">
                     <rect key="frame" x="54" y="70" width="333" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Copy selected text when mouse button is released" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="7gY-Ef-oOF">
@@ -2369,7 +2369,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.CopyTextSelectionOnMouseUp" id="j6E-EF-8AJ"/>
                     </connections>
                 </button>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="lQy-BU-bub">
+                <textField verticalHuggingPriority="750" id="lQy-BU-bub">
                     <rect key="frame" x="73" y="51" width="423" height="13"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Holding the command key (⌘) during selection disables option temporarily" id="RLT-k4-fiT">
@@ -2399,7 +2399,7 @@
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <button appearanceType="aqua" id="SPK-GE-J9a">
+                <button id="SPK-GE-J9a">
                     <rect key="frame" x="54" y="339" width="325" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Channel navigation is limited to the selected server" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="vW7-Mu-zJg">
@@ -2410,7 +2410,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ChannelNavigationIsServerSpecific" id="QtN-X0-Uza"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" id="fFh-vJ-6zs">
+                <button id="fFh-vJ-6zs">
                     <rect key="frame" x="53" y="149" width="200" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Join channel on double click" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="0LE-Pz-Aym">
@@ -2428,7 +2428,7 @@
             <rect key="frame" x="0.0" y="1" width="567" height="476"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <button appearanceType="aqua" id="eEF-gB-Apx">
+                <button id="eEF-gB-Apx">
                     <rect key="frame" x="52" y="354" width="186" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Check spelling while typing" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="A1e-Kf-LWk">
@@ -2439,7 +2439,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.TextFieldAutomaticSpellCheck" id="wQs-Dr-XN5"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" id="UUF-Y9-L5m">
+                <button id="UUF-Y9-L5m">
                     <rect key="frame" x="52" y="326" width="196" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Check grammar with spelling" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="0E3-3e-LWm">
@@ -2450,7 +2450,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.TextFieldAutomaticGrammarCheck" id="d1e-Mm-35z"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" id="Max-AW-9Fo">
+                <button id="Max-AW-9Fo">
                     <rect key="frame" x="52" y="298" width="200" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Correct spelling automatically" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="kZx-LY-bsq">
@@ -2461,7 +2461,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.TextFieldAutomaticSpellCorrection" id="kpY-lo-7U6"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" id="WRe-tM-8Xc">
+                <button id="WRe-tM-8Xc">
                     <rect key="frame" x="53" y="247" width="349" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Save input history for each channel rather than globally" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="61Q-8P-zCa">
@@ -2487,7 +2487,7 @@
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <button appearanceType="aqua" id="Y06-Na-oV8">
+                <button id="Y06-Na-oV8">
                     <rect key="frame" x="53" y="219" width="326" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Command Return (⌘⏎) sends message as an action" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="G0y-us-DSL">
@@ -2499,7 +2499,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.CommandReturnSendsMessageAsAction" id="2YF-7t-hnk"/>
                     </connections>
                 </button>
-                <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="nw2-BH-7zb">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="nw2-BH-7zb">
                     <rect key="frame" x="66" y="140" width="186" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Text size of the input text field:" id="4hD-Zg-dGj">
@@ -2508,7 +2508,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <popUpButton appearanceType="aqua" verticalHuggingPriority="750" id="EhE-q3-eNi">
+                <popUpButton verticalHuggingPriority="750" id="EhE-q3-eNi">
                     <rect key="frame" x="255" y="136" width="159" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="Humongous" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="4" imageScaling="proportionallyDown" inset="2" selectedItem="XIz-4F-ZpS" id="eMi-yb-O9S">
@@ -2536,7 +2536,7 @@
                         <binding destination="-2" name="selectedTag" keyPath="self.userDefaultsValues.Main Input Text Field -&gt; Font Size" id="sbc-cO-Cmn"/>
                     </connections>
                 </popUpButton>
-                <button appearanceType="aqua" id="aSq-7e-M6q">
+                <button id="aSq-7e-M6q">
                     <rect key="frame" x="53" y="191" width="393" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Control Enter (⌃⎆) sends message instead of inserting new line" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="8lJ-qF-2sA">
@@ -2548,7 +2548,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ControlEnterSendsMessage" id="15G-FK-eCA"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" id="GxI-If-1nB">
+                <button id="GxI-If-1nB">
                     <rect key="frame" x="52" y="405" width="275" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Hide the buttons left of the input text field" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7mF-lD-N3s">
@@ -2574,7 +2574,7 @@
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <popUpButton appearanceType="aqua" verticalHuggingPriority="750" id="aHd-3P-Sb8">
+                <popUpButton verticalHuggingPriority="750" id="aHd-3P-Sb8">
                     <rect key="frame" x="194" y="83" width="309" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="Complete nicknames, channels, and commands" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="EDY-rV-gik" id="2zz-eb-6Oe">
@@ -2596,7 +2596,7 @@
                         <binding destination="-2" name="selectedTag" keyPath="self.userDefaultsValues.Keyboard -&gt; Tab Key Action" id="JNa-f9-x9m"/>
                     </connections>
                 </popUpButton>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="Zos-pv-UQf">
+                <textField verticalHuggingPriority="750" id="Zos-pv-UQf">
                     <rect key="frame" x="66" y="57" width="126" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Autocomplete Suffix:" id="m1z-Ag-GBx">
@@ -2605,7 +2605,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="Fr3-06-ouC">
+                <textField verticalHuggingPriority="750" id="Fr3-06-ouC">
                     <rect key="frame" x="344" y="58" width="159" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="nt0-2m-g8m">
@@ -2621,7 +2621,7 @@
                         </binding>
                     </connections>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="Ups-NA-I5X">
+                <textField verticalHuggingPriority="750" id="Ups-NA-I5X">
                     <rect key="frame" x="291" y="58" width="64" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Preview:" id="LMb-tr-4jg">
@@ -2637,7 +2637,7 @@
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="uq6-r6-RGd">
+                <textField verticalHuggingPriority="750" id="uq6-r6-RGd">
                     <rect key="frame" x="97" y="87" width="95" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Tab key Action:" id="3iK-aY-pUk">
@@ -2646,7 +2646,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="Q4G-sW-NkK">
+                <textField verticalHuggingPriority="750" id="Q4G-sW-NkK">
                     <rect key="frame" x="197" y="55" width="62" height="19"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="XOt-l6-RM8">
@@ -2674,7 +2674,7 @@
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <colorWell appearanceType="aqua" id="0o9-EJ-NF7">
+                <colorWell id="0o9-EJ-NF7">
                     <rect key="frame" x="352" y="263" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -2687,7 +2687,7 @@
                         </binding>
                     </connections>
                 </colorWell>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="lHE-vA-K89">
+                <textField verticalHuggingPriority="750" id="lHE-vA-K89">
                     <rect key="frame" x="155" y="267" width="125" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Server Staff Member:" id="nuK-zL-9NI">
@@ -2696,7 +2696,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <colorWell appearanceType="aqua" id="7IT-ms-X6W">
+                <colorWell id="7IT-ms-X6W">
                     <rect key="frame" x="352" y="232" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -2709,7 +2709,7 @@
                         </binding>
                     </connections>
                 </colorWell>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="VWW-h9-zq0">
+                <textField verticalHuggingPriority="750" id="VWW-h9-zq0">
                     <rect key="frame" x="155" y="236" width="126" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Channel Owner (+q):" id="Va8-VC-pjm">
@@ -2718,7 +2718,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <colorWell appearanceType="aqua" id="vrF-BA-HTG">
+                <colorWell id="vrF-BA-HTG">
                     <rect key="frame" x="352" y="201" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -2731,7 +2731,7 @@
                         </binding>
                     </connections>
                 </colorWell>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="O9r-HJ-xU7">
+                <textField verticalHuggingPriority="750" id="O9r-HJ-xU7">
                     <rect key="frame" x="155" y="205" width="168" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Channel Administrator (+a):" id="k1Q-JU-JRn">
@@ -2740,7 +2740,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <colorWell appearanceType="aqua" id="8AI-fb-Hjr">
+                <colorWell id="8AI-fb-Hjr">
                     <rect key="frame" x="352" y="170" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -2753,7 +2753,7 @@
                         </binding>
                     </connections>
                 </colorWell>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="lEq-t7-cUx">
+                <textField verticalHuggingPriority="750" id="lEq-t7-cUx">
                     <rect key="frame" x="155" y="174" width="140" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Channel Operator (+o):" id="ern-zL-b5d">
@@ -2762,7 +2762,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <colorWell appearanceType="aqua" id="BxL-R2-RLD">
+                <colorWell id="BxL-R2-RLD">
                     <rect key="frame" x="352" y="139" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -2775,7 +2775,7 @@
                         </binding>
                     </connections>
                 </colorWell>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="V2K-Et-AJu">
+                <textField verticalHuggingPriority="750" id="V2K-Et-AJu">
                     <rect key="frame" x="155" y="143" width="170" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Channel Half-Operator (+h):" id="WJG-Ko-Xqd">
@@ -2784,7 +2784,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <colorWell appearanceType="aqua" id="SDk-a6-JRL">
+                <colorWell id="SDk-a6-JRL">
                     <rect key="frame" x="352" y="108" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -2797,7 +2797,7 @@
                         </binding>
                     </connections>
                 </colorWell>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="5FV-to-oqT">
+                <textField verticalHuggingPriority="750" id="5FV-to-oqT">
                     <rect key="frame" x="155" y="112" width="105" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Voiced User (+v):" id="yVi-mR-KHM">
@@ -2806,7 +2806,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="ao6-Xd-YrK">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="ao6-Xd-YrK">
                     <rect key="frame" x="63" y="323" width="364" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="These colors represent the various user modes shown on the user list for each channel." id="ggS-ce-iw1">
@@ -2829,7 +2829,7 @@
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <button appearanceType="aqua" verticalHuggingPriority="750" id="ba4-Mk-VLc">
+                <button verticalHuggingPriority="750" id="ba4-Mk-VLc">
                     <rect key="frame" x="204" y="41" width="158" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="Reset to Defaults" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cBl-rZ-MyX">
@@ -2847,7 +2847,7 @@
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <button appearanceType="aqua" id="ZwK-yE-OaM">
+                <button id="ZwK-yE-OaM">
                     <rect key="frame" x="54" y="288" width="250" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Open browser links in the background" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="teD-cX-ebj">
@@ -2858,7 +2858,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.OpenClickedLinksInBackgroundBrowser" id="dsW-G1-gR1"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" id="g7g-wa-Lin">
+                <button id="g7g-wa-Lin">
                     <rect key="frame" x="54" y="209" width="357" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Use &quot;x&quot; to indicate user with no mode set in user list" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="CTi-8F-Hm0">
@@ -2869,7 +2869,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DisplayUserListNoModeSymbol" id="ktp-rd-Ijp"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" id="nZc-E3-Yfg">
+                <button id="nZc-E3-Yfg">
                     <rect key="frame" x="54" y="237" width="201" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Darken main window colors" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="eXm-bv-mly">
@@ -2889,7 +2889,7 @@
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <button appearanceType="aqua" id="CbH-Wp-1Uz">
+                <button id="CbH-Wp-1Uz">
                     <rect key="frame" x="54" y="181" width="357" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Place known server staff members at top of user list" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="3Ge-78-jOo">
@@ -2901,7 +2901,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.MemberListSortFavorsServerStaff" id="oWy-3A-yhG"/>
                     </connections>
                 </button>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="24e-Sn-hc0">
+                <textField verticalHuggingPriority="750" id="24e-Sn-hc0">
                     <rect key="frame" x="86" y="102" width="134" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Window Transparency:" id="p9v-sF-fnd">
@@ -2910,7 +2910,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <slider appearanceType="aqua" verticalHuggingPriority="750" id="dL3-1Y-d6c">
+                <slider verticalHuggingPriority="750" id="dL3-1Y-d6c">
                     <rect key="frame" x="253" y="101" width="197" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="0.20000000000000001" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="rOl-dP-bbN"/>
@@ -2920,7 +2920,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.MainWindowTransparencyLevel" id="baK-7R-E7T"/>
                     </connections>
                 </slider>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="ty6-SS-X7V">
+                <textField verticalHuggingPriority="750" id="ty6-SS-X7V">
                     <rect key="frame" x="225" y="103" width="25" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="80%" id="5cm-qm-cnK">
@@ -2929,7 +2929,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="WVk-ba-eef">
+                <textField verticalHuggingPriority="750" id="WVk-ba-eef">
                     <rect key="frame" x="456" y="103" width="23" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0%" id="mEC-bF-yWk">
@@ -2945,7 +2945,7 @@
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <button appearanceType="aqua" id="FKV-vg-lhM">
+                <button id="FKV-vg-lhM">
                     <rect key="frame" x="54" y="153" width="357" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Save the state of queries between restarts" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Xe6-MU-fhd">
@@ -2964,7 +2964,7 @@
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <button appearanceType="aqua" id="tKc-zC-6Gt">
+                <button id="tKc-zC-6Gt">
                     <rect key="frame" x="53" y="298" width="338" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="PkM-k2-Dgn">
@@ -2975,7 +2975,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ApplyCommandToAllConnections -&gt; amsg" id="FVC-R6-AOL"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" id="Y4Q-Ki-gfe">
+                <button id="Y4Q-Ki-gfe">
                     <rect key="frame" x="53" y="242" width="265" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="gih-NF-Noz">
@@ -3032,7 +3032,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
-                <button appearanceType="aqua" id="zY5-8K-Mie">
+                <button id="zY5-8K-Mie">
                     <rect key="frame" x="53" y="156" width="452" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="ekF-Cf-Mjw">
@@ -3043,7 +3043,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.FocusSelectionOnMessageCommandExecution" id="O7w-61-9Do"/>
                     </connections>
                 </button>
-                <matrix appearanceType="aqua" verticalHuggingPriority="750" allowsEmptySelection="NO" id="6AC-Oj-s1p">
+                <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" id="6AC-Oj-s1p">
                     <rect key="frame" x="243" y="90" width="137" height="38"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -3076,7 +3076,7 @@
                         <binding destination="-2" name="selectedIndex" keyPath="self.userDefaultsValues.DestinationOfNonserverNotices" id="Fa3-zV-c8n"/>
                     </connections>
                 </matrix>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="xEg-Db-K0K">
+                <textField verticalHuggingPriority="750" id="xEg-Db-K0K">
                     <rect key="frame" x="53" y="112" width="185" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Forward non-server notices to:" id="UgN-n4-JIQ">
@@ -3173,7 +3173,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
-                <button appearanceType="aqua" id="fg1-OG-7A7">
+                <button id="fg1-OG-7A7">
                     <rect key="frame" x="53" y="270" width="270" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="jGt-tN-qzV">
@@ -3230,7 +3230,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
-                <button appearanceType="aqua" id="HZq-oo-s5C">
+                <button id="HZq-oo-s5C">
                     <rect key="frame" x="53" y="214" width="329" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="QcP-gl-hx4">
@@ -3354,7 +3354,7 @@
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="Ee7-Dv-LFa">
+                <textField verticalHuggingPriority="750" id="Ee7-Dv-LFa">
                     <rect key="frame" x="130" y="224" width="207" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iCloud Custom Addons Location:" id="ECd-Ce-gea">
@@ -3363,7 +3363,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button appearanceType="aqua" id="Vi7-Vk-65D">
+                <button id="Vi7-Vk-65D">
                     <rect key="frame" x="73" y="321" width="273" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Only share IRC servers between devices" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="fal-6N-HEj">
@@ -3376,7 +3376,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloudLimitedToServers" id="rU8-cQ-R4j"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" verticalHuggingPriority="750" id="CK0-Yb-yhA">
+                <button verticalHuggingPriority="750" id="CK0-Yb-yhA">
                     <rect key="frame" x="343" y="223" width="103" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundRect" title="Open In Finder" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bhr-SP-5AM">
@@ -3387,7 +3387,7 @@
                         <action selector="onOpenPathToCloudFolder:" target="-2" id="ac1-OF-mht"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" verticalHuggingPriority="750" id="5YP-vA-4dz">
+                <button verticalHuggingPriority="750" id="5YP-vA-4dz">
                     <rect key="frame" x="290" y="67" width="174" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundTextured" title="Erase Files" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pl4-5A-bb5">
@@ -3405,7 +3405,7 @@
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="XQh-D0-Ehi">
+                <textField verticalHuggingPriority="750" id="XQh-D0-Ehi">
                     <rect key="frame" x="69" y="108" width="420" height="56"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="GhK-dw-xt2">
@@ -3415,7 +3415,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button appearanceType="aqua" verticalHuggingPriority="750" id="26j-gf-7Ma">
+                <button verticalHuggingPriority="750" id="26j-gf-7Ma">
                     <rect key="frame" x="102" y="67" width="180" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundTextured" title="Erase Data" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Epr-O7-fie">
@@ -3426,7 +3426,7 @@
                         <action selector="onPurgeOfCloudDataRequested:" target="-2" id="qGX-68-CyX"/>
                     </connections>
                 </button>
-                <textField appearanceType="aqua" verticalHuggingPriority="750" id="S1T-hH-yI7">
+                <textField verticalHuggingPriority="750" id="S1T-hH-yI7">
                     <rect key="frame" x="91" y="276" width="384" height="39"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="Kw7-gh-pLV">
@@ -3436,7 +3436,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="vDp-5l-asa">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="vDp-5l-asa">
                     <rect key="frame" x="243" y="170" width="81" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Erase Data" id="i2X-WZ-GKC">
@@ -3456,7 +3456,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="567" height="406"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
-                        <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Haz-P1-u0A">
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Haz-P1-u0A">
                             <rect key="frame" x="60" y="354" width="223" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="When file transfer request is received:" id="Z8s-VT-Lio">
@@ -3465,7 +3465,7 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <popUpButton appearanceType="aqua" verticalHuggingPriority="750" id="qiX-aN-rDk">
+                        <popUpButton verticalHuggingPriority="750" id="qiX-aN-rDk">
                             <rect key="frame" x="286" y="351" width="193" height="22"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <popUpButtonCell key="cell" type="push" title="Automatically Download" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="3" imageScaling="proportionallyDown" inset="2" selectedItem="cSc-xH-5lN" id="d9D-Lc-B5D">
@@ -3483,7 +3483,7 @@
                                 <binding destination="-2" name="selectedTag" keyPath="self.userDefaultsValues.File Transfers -&gt; File Transfer Request Reply Action" id="01J-Rj-Xuh"/>
                             </connections>
                         </popUpButton>
-                        <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="xfW-xE-1x8">
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="xfW-xE-1x8">
                             <rect key="frame" x="60" y="315" width="175" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="IP Address detection method:" id="xb3-Dj-gQD">
@@ -3492,7 +3492,7 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <popUpButton appearanceType="aqua" verticalHuggingPriority="750" id="yyW-8c-SXp">
+                        <popUpButton verticalHuggingPriority="750" id="yyW-8c-SXp">
                             <rect key="frame" x="238" y="312" width="269" height="22"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <popUpButtonCell key="cell" type="push" title="Request Address from External Source" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="YHR-iU-LUI" id="TIT-j4-opL">
@@ -3510,7 +3510,7 @@
                                 <binding destination="-2" name="selectedTag" keyPath="self.userDefaultsValues.File Transfers -&gt; File Transfer IP Address Detection Method" id="y2M-Gf-aeM"/>
                             </connections>
                         </popUpButton>
-                        <textField appearanceType="aqua" verticalHuggingPriority="750" id="hRh-he-Eij">
+                        <textField verticalHuggingPriority="750" id="hRh-he-Eij">
                             <rect key="frame" x="241" y="289" width="177" height="19"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="127.0.0.1" drawsBackground="YES" usesSingleLineMode="YES" id="SNl-sJ-NKm">
@@ -3522,7 +3522,7 @@
                                 <binding destination="-2" name="value" keyPath="self.userDefaultsValues.File Transfers -&gt; File Transfer Manually Entered IP Address" id="xDc-CM-NPj"/>
                             </connections>
                         </textField>
-                        <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="2EM-ea-xHg">
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="2EM-ea-xHg">
                             <rect key="frame" x="79" y="290" width="156" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Manually entered address:" id="14R-jo-JuH">
@@ -3531,7 +3531,7 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="DnX-oD-3cg">
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="DnX-oD-3cg">
                             <rect key="frame" x="60" y="249" width="142" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="File transfer port range:" id="Etn-ho-m8M">
@@ -3540,7 +3540,7 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField appearanceType="aqua" verticalHuggingPriority="750" id="wUZ-QM-hbg">
+                        <textField verticalHuggingPriority="750" id="wUZ-QM-hbg">
                             <rect key="frame" x="208" y="248" width="74" height="19"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="1096" drawsBackground="YES" usesSingleLineMode="YES" id="Wf2-to-2ix">
@@ -3556,7 +3556,7 @@
                                 </binding>
                             </connections>
                         </textField>
-                        <textField appearanceType="aqua" verticalHuggingPriority="750" id="AjL-LA-eBc">
+                        <textField verticalHuggingPriority="750" id="AjL-LA-eBc">
                             <rect key="frame" x="311" y="248" width="74" height="19"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="1115" drawsBackground="YES" usesSingleLineMode="YES" id="JaN-Jr-0K2">
@@ -3572,7 +3572,7 @@
                                 </binding>
                             </connections>
                         </textField>
-                        <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="yFI-Kg-PY5">
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="yFI-Kg-PY5">
                             <rect key="frame" x="288" y="249" width="17" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="to" id="df2-Bl-gux">
@@ -3581,7 +3581,7 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="vwp-O3-xS7">
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="vwp-O3-xS7">
                             <rect key="frame" x="60" y="208" width="203" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Downloaded files go to the folder:" id="kf1-8a-JOw">
@@ -3590,7 +3590,7 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField appearanceType="aqua" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="cNc-Cu-GiA">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="cNc-Cu-GiA">
                             <rect key="frame" x="80" y="158" width="366" height="42"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="AwJ-9v-OvG">
@@ -3600,7 +3600,7 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <popUpButton appearanceType="aqua" verticalHuggingPriority="750" id="eBB-la-cgd">
+                        <popUpButton verticalHuggingPriority="750" id="eBB-la-cgd">
                             <rect key="frame" x="266" y="205" width="201" height="22"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="8Rd-lN-LTO" id="DsF-3z-KTP">
@@ -3629,7 +3629,7 @@
                                 <action selector="onFileTransferDownloadDestinationFolderChanged:" target="-2" id="NZv-vk-9wk"/>
                             </connections>
                         </popUpButton>
-                        <button appearanceType="aqua" id="XW8-Nq-abl">
+                        <button id="XW8-Nq-abl">
                             <rect key="frame" x="60" y="126" width="307" height="18"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="check" title="Send passive file transfer requests by default" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="cFg-zF-wCO">
@@ -3640,7 +3640,7 @@
                                 <binding destination="-2" name="value" keyPath="self.userDefaultsValues.File Transfers -&gt; File Transfer Requests Use Reverse DCC" id="Ezy-PC-a1l"/>
                             </connections>
                         </button>
-                        <textField appearanceType="aqua" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="ceD-QY-fwv">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="ceD-QY-fwv">
                             <rect key="frame" x="80" y="64" width="391" height="56"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="NbG-BB-kZj">
@@ -3650,7 +3650,7 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <button appearanceType="aqua" id="pWV-kW-Wnt">
+                        <button id="pWV-kW-Wnt">
                             <rect key="frame" x="60" y="32" width="334" height="18"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="check" title="Prevent Mac from sleeping while transferring a file " bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="yS6-HJ-6h0">
@@ -3675,7 +3675,7 @@
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <button appearanceType="aqua" id="uSb-WR-Mph">
+                <button id="uSb-WR-Mph">
                     <rect key="frame" x="105" y="194" width="294" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Automatically handle highlight spam" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="9iB-R9-pX3">
@@ -3686,7 +3686,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.AutomaticallyDetectHighlightSpam" id="b9K-al-nZM"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" id="bX7-BN-4lf">
+                <button id="bX7-BN-4lf">
                     <rect key="frame" x="105" y="222" width="356" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Automatically handle dangerous Unicode characters" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="wTY-bZ-ZLP">
@@ -3697,7 +3697,7 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.AutomaticallyFilterUnicodeTextSpam" id="exa-I5-Qba"/>
                     </connections>
                 </button>
-                <button appearanceType="aqua" id="qfG-DF-6ev">
+                <button id="qfG-DF-6ev">
                     <rect key="frame" x="106" y="166" width="302" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Automatically reply to CTCP requests" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="MT3-bO-x65">
