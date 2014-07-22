@@ -58,7 +58,7 @@
 	if (self = [super init]) {
 		[self setName:@"TVCLogControllerOperationQueue"];
 		
-		[self setMaxConcurrentOperationCount:2];
+		[self setMaxConcurrentOperationCount:4];
 
 		return self;
 	}
