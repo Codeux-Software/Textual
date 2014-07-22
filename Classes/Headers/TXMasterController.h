@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-#ifndef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_DISABLED
+#ifdef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED
 @interface TXMasterController : NSObject <NSApplicationDelegate, BITHockeyManagerDelegate>
 #else
 @interface TXMasterController : NSObject <NSApplicationDelegate>

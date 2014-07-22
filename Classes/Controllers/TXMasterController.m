@@ -47,7 +47,7 @@
 #define KInternetEventClass		1196773964
 #define KAEGetURL				1196773964
 
-#ifndef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_DISABLED
+#ifdef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED
 	#define _hockeyAppApplicationIdentifier			@"93d6d315ace023a30793e8c52a02f920"
 	#define _hockeyAppApplicationCompanyName		@"Codeux Software"
 #endif
@@ -208,7 +208,7 @@
 
 - (void)awakeHockeyApp
 {
-#ifndef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_DISABLED
+#ifdef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED
 	[[BITHockeyManager sharedHockeyManager] configureWithIdentifier:_hockeyAppApplicationIdentifier
 														companyName:_hockeyAppApplicationCompanyName
 														   delegate:self];
