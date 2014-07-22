@@ -260,7 +260,12 @@
 
 - (id)userDefaultsValues
 {
-	return RZUserDefaultsValueProxy();
+	return [TPCPreferencesUserDefaultsObjectProxy userDefaultValues];
+}
+
+- (id)localDefaultValues
+{
+	return [TPCPreferencesUserDefaultsObjectProxy localDefaultValues];
 }
 
 - (NSArray *)keywordsArrayControllerDataSource

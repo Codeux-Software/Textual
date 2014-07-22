@@ -43,7 +43,7 @@
 #define RZUserDefaults()						[TPCPreferencesUserDefaults sharedUserDefaults]
 
 /* See comments below for proxy. */
-#define RZUserDefaultsValueProxy()				[TPCPreferencesUserDefaultsObjectProxy values]
+#define RZUserDefaultsValueProxy()				[TPCPreferencesUserDefaultsObjectProxy userDefaultValues]
 
 /* Write to the standard user defaults to write directly to the application container.
  Certain state information such as saved frames should be saved there. */
@@ -93,10 +93,11 @@
 @end
 
 @interface TPCPreferencesUserDefaultsObjectProxy : NSObject
-/* Similiar to NSUserDefaultsController, -values can be bound to in
- Interface Builder for reading and writing defaults. It will handle
- decision between which shared object to call for us. Do not access
- this value for any other reason than to read and write in a bound
- Interface Builder. It is not a shorthand for retreiving all values. */
-+ (id)values;
+/* Use -userDefaultValues for KVO writing from Interface Builder when 
+ access to the group container is wanted. That means, bascially always. */
++ (id)userDefaultValues;
+
+/* -localDefaultValues only reads and writes to the application container.
+ It exists to allow certain preferences to be written there only. */
++ (id)localDefaultValues;
 @end
