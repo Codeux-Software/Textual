@@ -209,12 +209,12 @@
 	BOOL didReloadMemberListSortOrder = NO;
 	
 	if (reloadAction & TPCPreferencesKeyReloadMemberListSortOrderAction) {
-		IRCChannel *selectedChannel = [mainWindow() selectedChannel];
-		
-		if ( selectedChannel) {
-			didReloadMemberListSortOrder = YES;
-			
-			[selectedChannel reloadDataForTableViewBySortingMembers];
+		for (IRCClient *u in [worldController() clientList]) {
+			for (IRCChannel *c in [u channelList]) {
+				didReloadMemberListSortOrder = YES;
+				
+				[c reloadDataForTableViewBySortingMembers];
+			}
 		}
 	}
 	
