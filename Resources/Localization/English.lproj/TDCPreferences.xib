@@ -2220,7 +2220,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" id="m0T-jg-XXP">
                         <font key="font" metaFont="systemBold" size="10"/>
-                        <string key="title">The following settings are for testing purposes only and are considered experiemtnal. Use at your own risk. There is no guarantee these will function or even continue to exist.</string>
+                        <string key="title">The following settings are for testing purposes only and are considered experimental. Use at your own risk. There is no guarantee these will function or even continue to exist.</string>
                         <color key="textColor" red="1" green="0.0" blue="0.021699211209647906" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
