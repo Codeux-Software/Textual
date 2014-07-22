@@ -1858,7 +1858,8 @@
 		case 5089: // Command: UME
 		case 5090: // Command: UNOTICE
 		{
-			BOOL opMsg = NO;
+			NSString *destinationPrefix = nil;
+			
 			BOOL secretMsg = NO;
             BOOL doNotEncrypt = NO;
 
@@ -1872,7 +1873,7 @@
 
 				type = TVCLogLinePrivateMessageType;
 			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("omsg")]) {
-				opMsg = YES;
+				destinationPrefix = [self.supportInfo userModePrefixSymbol:@"o"];
 
 				type = TVCLogLinePrivateMessageType;
 			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("umsg")]) {
@@ -1882,7 +1883,7 @@
 			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("notice")]) {
 				type = TVCLogLineNoticeType;
 			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("onotice")]) {
-				opMsg = YES;
+				destinationPrefix = [self.supportInfo userModePrefixSymbol:@"o"];
 
 				type = TVCLogLineNoticeType;
 			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("unotice")]) {
@@ -1911,7 +1912,7 @@
 			/* Destination. */
 			if (selChannel && type == TVCLogLineActionType && secretMsg == NO) {
 				targetChannelName = [selChannel name];
-			} else if (selChannel && [selChannel isChannel] && [[s string] isChannelName:self] == NO && opMsg) {
+			} else if (selChannel && [selChannel isChannel] && [[s string] isChannelName:self] == NO && destinationPrefix) {
 				targetChannelName = [selChannel name];
 			} else {
 				targetChannelName = [s getTokenAsString];
@@ -1931,6 +1932,8 @@
 			
 			NSObjectIsEmptyAssert(targetChannelName);
 			
+			NSDictionary *userModePrefixes = [self.supportInfo userModePrefixes];
+			
 			NSArray *targets = [targetChannelName componentsSeparatedByString:@","];
 
 			while ([s length] > 0)
@@ -1938,12 +1941,14 @@
 				NSString *t = [s attributedStringToASCIIFormatting:&s lineType:type channel:targetChannelName hostmask:self.cachedLocalHostmask];
 
 				for (__strong NSString *channelName in targets) {
-					BOOL opPrefix = NO;
-
-					if ([channelName hasPrefix:@"@"]) {
-						opPrefix = YES;
-
-						channelName = [channelName substringFromIndex:1];
+					for (NSString *prefixMode in userModePrefixes) {
+						NSString *symbol = userModePrefixes[prefixMode];
+						
+						if ([channelName hasPrefix:symbol]) {
+							destinationPrefix = symbol;
+							
+							channelName = [channelName substringFromIndex:1];
+						}
 					}
 
 					IRCChannel *channel = [self findChannel:channelName];
@@ -1977,8 +1982,8 @@
                     }
 
 					if ([channelName isChannelName:self]) {
-						if (opMsg || opPrefix) {
-							channelName = [@"@" stringByAppendingString:channelName];
+						if (destinationPrefix) {
+							channelName = [destinationPrefix stringByAppendingString:channelName];
 						}
 					}
 
@@ -4009,8 +4014,14 @@
 	BOOL isEncrypted = NO;
 
 	/* Operator message? */
-	if ([target hasPrefix:@"@"]) {
-		target = [target substringFromIndex:1];
+	NSDictionary *userModePrefixes = [self.supportInfo userModePrefixes];
+	
+	for (NSString *prefixMode in userModePrefixes) {
+		NSString *symbol = userModePrefixes[prefixMode];
+		
+		if ([target hasPrefix:symbol]) {
+			target = [target substringFromIndex:1];
+		}
 	}
 
 	/* Ignore dictionary. */
