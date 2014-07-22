@@ -182,13 +182,6 @@ typedef void (^TXEmtpyBlockDataType)(void);
 #define TEXTUAL_DEPRECATED_ASSERT				NSAssert1(NO, @"Deprecated Method: %s", __PRETTY_FUNCTION__);
 #define TEXTUAL_DEPRECATED_ASSERT_C				NSCAssert1(NO, @"Deprecated Method: %s", __PRETTY_FUNCTION__);
 
-/* Whether to build Textual with the HockeyApp SDK. */
-/* The framework file is still copied even if disabled,
- the code however is never called. */
-#ifndef TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION
-	#define TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_DISABLED
-#endif
-
 /* Include a forced lifespan for beta builds. */
 // #define TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
 

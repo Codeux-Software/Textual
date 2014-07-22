@@ -219,7 +219,7 @@
 	#import "StaticDefinitions.h"
 
 	/* Import frameworks based on defines. */
-	#ifndef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_DISABLED
+	#ifdef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED
 		#import <HockeySDK/HockeySDK.h>
 	#endif
 
