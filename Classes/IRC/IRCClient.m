@@ -5206,6 +5206,9 @@
 		}
 		case ClientIRCv3SupportedCapacitySASLExternal:
 		case ClientIRCv3SupportedCapacitySASLPlainText:
+		case ClientIRCv3SupportedCapacitySASLGeneric:
+		case ClientIRCv3SupportedCapacityIsIdentifiedWithSASL:
+		case ClientIRCv3SupportedCapacityIsInSASLNegotiation:
 		{
 			stringValue = @"sasl";
 			
@@ -5271,8 +5274,7 @@
 	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacityIdentifyCTCP toSource:&enabledCaps];
 	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacityIdentifyMsg toSource:&enabledCaps];
 	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacityMultiPreifx toSource:&enabledCaps];
-	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacitySASLPlainText toSource:&enabledCaps];
-	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacitySASLExternal toSource:&enabledCaps];
+	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacityIsIdentifiedWithSASL toSource:&enabledCaps];;
 	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacityServerTime toSource:&enabledCaps];
 	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacityUserhostInNames toSource:&enabledCaps];
 	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacityZNCPlaybackModule toSource:&enabledCaps];
@@ -5306,6 +5308,7 @@
 	if (_capacitiesPending == 0) {
 		[self send:IRCPrivateCommandIndex("cap"), @"END", nil];
 	} else {
+		_rony(ClientIRCv3SupportedCapacitySASLGeneric)
 		_rony(ClientIRCv3SupportedCapacityAwayNotify)
 		_rony(ClientIRCv3SupportedCapacityIdentifyCTCP)
 		_rony(ClientIRCv3SupportedCapacityIdentifyMsg)
@@ -5378,6 +5381,8 @@
 		return ClientIRCv3SupportedCapacityZNCServerTimeISO;
 	} else if ([stringValue isEqualIgnoringCase:@"znc.in/playback"]) {
 		return ClientIRCv3SupportedCapacityZNCPlaybackModule;
+	} else if ([stringValue isEqualIgnoringCase:@"sasl"]) {
+		return ClientIRCv3SupportedCapacitySASLGeneric;
 	} else {
 		return 0;
 	}
@@ -5401,6 +5406,11 @@
 				capacity == ClientIRCv3SupportedCapacityZNCServerTimeISO)
 			{
 				capacity = ClientIRCv3SupportedCapacityServerTime;
+			}
+			else if (capacity == ClientIRCv3SupportedCapacitySASLPlainText ||
+					 capacity == ClientIRCv3SupportedCapacitySASLExternal)
+			{
+				capacity = ClientIRCv3SupportedCapacitySASLGeneric;
 			}
 			
 			if (supported) {

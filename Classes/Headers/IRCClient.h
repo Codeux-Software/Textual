@@ -83,10 +83,11 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 	ClientIRCv3SupportedCapacityZNCPlaybackModule		= 1 << 7, // YES if the ZNC vendor specific CAP supported.
 	ClientIRCv3SupportedCapacityZNCServerTime			= 1 << 8, // YES if the ZNC vendor specific CAP supported.
 	ClientIRCv3SupportedCapacityZNCServerTimeISO		= 1 << 9, // YES if the ZNC vendor specific CAP supported.
-	ClientIRCv3SupportedCapacitySASLPlainText			= 1 << 10, // YES if SASL plain text CAP is supported.
-	ClientIRCv3SupportedCapacitySASLExternal			= 1 << 11, // YES if SASL external CAP is supported.
-	ClientIRCv3SupportedCapacityIsInSASLNegotiation		= 1 << 12, // YES if in SASL CAP authentication request, else NO.
-	ClientIRCv3SupportedCapacityIsIdentifiedWithSASL	= 1 << 13, // YES if SASL authentication was successful, else NO.
+	ClientIRCv3SupportedCapacitySASLGeneric				= 1 << 10, // YES if any type of SASL is in use.
+	ClientIRCv3SupportedCapacitySASLPlainText			= 1 << 11, // YES if SASL plain text CAP is supported.
+	ClientIRCv3SupportedCapacitySASLExternal			= 1 << 12, // YES if SASL external CAP is supported.
+	ClientIRCv3SupportedCapacityIsInSASLNegotiation		= 1 << 13, // YES if in SASL CAP authentication request, else NO.
+	ClientIRCv3SupportedCapacityIsIdentifiedWithSASL	= 1 << 14, // YES if SASL authentication was successful, else NO.
 } ClientIRCv3SupportedCapacities;
 
 typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
