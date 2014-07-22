@@ -12,7 +12,6 @@
                 <outlet property="alertBounceDockIconButton" destination="lHl-sy-SBb" id="dNa-Ig-gbA"/>
                 <outlet property="alertDisableWhileAwayButton" destination="pyR-Yq-9tk" id="YHI-cT-iku"/>
                 <outlet property="alertNotificationDestinationTextField" destination="O82-On-A00" id="K1U-BT-rCB"/>
-                <outlet property="alertPushNotificationButton" destination="xvN-SN-jAW" id="7gD-KV-L3X"/>
                 <outlet property="alertSoundChoiceButton" destination="xvN-SN-jAW" id="Ktx-0a-oEv"/>
                 <outlet property="alertSpeakEventButton" destination="pPF-N7-ZNY" id="kmo-7b-saK"/>
                 <outlet property="alertTypeChoiceButton" destination="WuE-Q5-q8G" id="TJn-ky-9zi"/>
@@ -159,7 +158,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="6064"/>
             </connections>
-            <point key="canvasLocation" x="1140" y="476"/>
+            <point key="canvasLocation" x="1627" y="541"/>
         </window>
         <customView id="Eyz-5p-IkU" userLabel="General">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -871,7 +870,7 @@
                     </scroller>
                 </scrollView>
             </subviews>
-            <point key="canvasLocation" x="104.5" y="-254"/>
+            <point key="canvasLocation" x="317.5" y="-109"/>
         </customView>
         <customView id="qvS-li-dv0" userLabel="Inline Media">
             <rect key="frame" x="0.0" y="0.0" width="567" height="406"/>
