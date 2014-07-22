@@ -847,7 +847,7 @@
 	self.config.nicknamePassword = [self.nicknamePasswordField trimmedStringValue];
 	
 	/* Alternate nicknames. */
-	NSString *alternateNicknames = [self.alternateNicknamesField value];
+	NSString *alternateNicknames = [self.alternateNicknamesField stringValue];
 	
 	NSArray *nicks = [alternateNicknames split:NSStringWhitespacePlaceholder];
 	
