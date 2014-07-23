@@ -146,12 +146,15 @@ a:hover {
 
 .inlineImageCell {
 	display: block;
+	margin-top: 15px;
+	margin-bottom: 12px;
 }
 
 .inlineImageCell .image {
 	display: inline-block;
 	float: left;
-	margin: 15px 15px 12px 10px;
+	margin-right: 12px;
+	margin-left: 10px;
 	min-width: 40px;
 	max-width: 90%;
 }
@@ -168,7 +171,6 @@ a:hover {
 	text-align: right;
 	padding-right: 7px;
 	padding-left: 0px;
-	margin: 15px 0px 12px 0px;
 }
 
 /* Remember Line */
