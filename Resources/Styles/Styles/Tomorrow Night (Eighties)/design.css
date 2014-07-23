@@ -41,6 +41,7 @@ body[viewtype=channel] div#body_home {
 
 .line {
 	padding: 2px 5px 2px 5px;
+	clear: both;
 }
 
 .sender {
@@ -147,14 +148,33 @@ a:hover {
 
 /* @group Images */
 
-a img {
-	border: 0;
+.inlineImageCell {
+	display: block;
+	margin-top: 5px;
+	margin-bottom: 2px;
 }
 
-img {
-	display: block;
-	max-width: 95%;
-	margin: 5px 1em 2px;
+.inlineImageCell .image {
+	display: inline-block;
+	float: left;
+	margin-right: 15px;
+	margin-left: 10px;
+	min-width: 40px;
+	max-width: 90%;
+}
+
+.inlineImageCell .closeButton {
+	background: #6B6B6B;
+	border-radius: 5px;
+	border: 1px solid #2C2C2C;
+	color: #2C2C2C;
+	display: inline-block;
+	width: 15px;
+	height: 17px;
+	float: left;
+	text-align: right;
+	padding-right: 7px;
+	padding-left: 0px;
 }
 
 /* @end */
@@ -648,4 +668,4 @@ div[mtype*=myself] {
 	vim: set foldmethod=marker:
 	vim: set foldmarker=@group,@end:
 	vim: set nofoldenable:
-*/
+ */
