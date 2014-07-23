@@ -242,7 +242,7 @@
 
 	NSString *requestData = nil;
 	
-	if ([requestData length] >= [TXExchangeRequestPrefix length]) {
+	if ([requestDataRaw length] >= [TXExchangeRequestPrefix length]) {
 		requestData = [requestDataRaw substringFromIndex:[TXExchangeRequestPrefix length]];
 	} else {
 		requestData =  requestDataRaw;
@@ -307,7 +307,7 @@
 	if (exchangeData) {
 		NSString *responseData = nil;
 		
-		if ([responseData length] >= [TXExchangeResponsePrefix length]) {
+		if ([responseDataRaw length] >= [TXExchangeResponsePrefix length]) {
 			responseData = [responseDataRaw substringFromIndex:[TXExchangeResponsePrefix length]];
 		} else {
 			responseData =  responseDataRaw;

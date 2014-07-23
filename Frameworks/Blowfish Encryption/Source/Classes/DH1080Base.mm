@@ -285,7 +285,7 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 {
 	NSInteger inputLength = [input length];
 
-	DHAssertNO(input.length >= 1);
+	DHAssertNO([input length] >= 1);
 
 	NSString *ecv = [input substringFromIndex:(inputLength - 1)];
 
