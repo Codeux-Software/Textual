@@ -209,6 +209,13 @@
 		[notification setInformativeText:eventDescription];
 		[notification setDeliveryDate:[NSDate date]];
 		[notification setUserInfo:eventContext];
+		
+		if (eventType == TXNotificationFileTransferReceiveRequestedType) {
+			/* sshhhh… you didn't see nothing. */
+			[notification setValue:@(YES) forKey:@"_showsButtons"];
+
+			[notification setActionButtonTitle:BLS(1244)];
+		}
 
 #ifdef TXSystemIsMacOSMavericksOrNewer
 		if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
@@ -251,15 +258,17 @@
 			NSString *replyMessage = [[notification response] string]; // It is attributed string, we only want string.
 
 			[self growlNotificationWasClicked:[notification userInfo]
-							 withReplyMessage:replyMessage
-								  changeFocus:NO];
+							   activationType:[notification activationType]
+							 withReplyMessage:replyMessage];
 
 			return; // Do not continue this method.
 		}
 	}
 #endif
-
-	[self growlNotificationWasClicked:[notification userInfo]];
+	
+	[self growlNotificationWasClicked:[notification userInfo]
+					   activationType:[notification activationType]
+					 withReplyMessage:nil];
 }
 
 /* Growl delegate */
@@ -298,10 +307,10 @@
 
 - (void)growlNotificationWasClicked:(NSDictionary *)context
 {
-	[self growlNotificationWasClicked:context withReplyMessage:nil changeFocus:YES];
+	[self growlNotificationWasClicked:context activationType:0 withReplyMessage:nil];
 }
 
-- (void)growlNotificationWasClicked:(NSDictionary *)context withReplyMessage:(NSString *)message changeFocus:(BOOL)changeFocus
+- (void)growlNotificationWasClicked:(NSDictionary *)context activationType:(NSUserNotificationActivationType)activationType withReplyMessage:(NSString *)message
 {
 	NSTimeInterval now = [NSDate epochTime];
 	
@@ -314,6 +323,14 @@
 	self.lastClickedTime = now;
 	self.lastClickedContext = context;
 
+	BOOL changeFocus = NO;
+	
+	if (NSDissimilarObjects(activationType, NSUserNotificationActivationTypeReplied) &&
+		NSDissimilarObjects(activationType, NSUserNotificationActivationTypeActionButtonClicked))
+	{
+		changeFocus = YES;
+	}
+	
 	if (changeFocus) {
 		[mainWindow() makeKeyAndOrderFront:nil];
 		
@@ -324,6 +341,29 @@
 		BOOL isFileTransferNotification = [context boolForKey:@"isFileTransferNotification"];
 		
 		if (isFileTransferNotification) {
+			NSInteger alertType = [context integerForKey:@"fileTransferNotificationType"];
+			
+			if (alertType == TXNotificationFileTransferReceiveRequestedType) {
+				if (activationType == NSUserNotificationActivationTypeActionButtonClicked)
+				{
+					NSString *uniqueIdentifier = [context objectForKey:@"fileTransferUniqeIdentifier"];
+					
+					TDCFileTransferDialogTransferController *transfer = [[menuController() fileTransferController] fileTransferFromUniqueIdentifier:uniqueIdentifier];
+					
+					if (transfer) {
+						TDCFileTransferDialogTransferStatus transferStatus = [transfer transferStatus];
+					
+						if (transferStatus == TDCFileTransferDialogTransferStoppedStatus) {
+							if ([transfer path] == nil) {
+								[transfer setPath:[TPCPathInfo userDownloadFolderPath]];
+							}
+							
+							[transfer open];
+						}
+					}
+				}
+			}
+			
 			[[menuController() fileTransferController] show:YES restorePosition:NO];
 		} else {
 			NSString *uid = context[@"client"];

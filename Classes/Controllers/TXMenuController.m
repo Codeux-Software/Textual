@@ -2297,7 +2297,7 @@
 			
 			for (IRCUser *m in [self selectedMembers:sender]) {
 				for (NSURL *pathURL in [d URLs]) {
-					[self.fileTransferController addSenderForClient:u nickname:[m nickname] path:[pathURL path] autoOpen:YES];
+					(void)[self.fileTransferController addSenderForClient:u nickname:[m nickname] path:[pathURL path] autoOpen:YES];
 				}
 			}
 			
@@ -2328,7 +2328,7 @@
 			}
 		}
 		
-		[self.fileTransferController addSenderForClient:u nickname:[member nickname] path:pathURL autoOpen:YES];
+		(void)[self.fileTransferController addSenderForClient:u nickname:[member nickname] path:pathURL autoOpen:YES];
 	}
 }
 

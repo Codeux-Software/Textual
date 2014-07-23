@@ -49,6 +49,7 @@
 @property (nonatomic, copy) NSString *errorMessageToken;
 @property (nonatomic, copy) NSString *hostAddress;
 @property (nonatomic, copy) NSString *transferToken;
+@property (nonatomic, copy) NSString *uniqueIdentifier;
 @property (nonatomic, assign) NSInteger transferPort;
 @property (nonatomic, strong) NSFileHandle *fileHandle;
 @property (nonatomic, uweak) TDCFileTransferDialog *transferDialog;

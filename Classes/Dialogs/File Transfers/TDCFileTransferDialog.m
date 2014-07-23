@@ -89,6 +89,19 @@
 	[self.window close];
 }
 
+- (TDCFileTransferDialogTransferController *)fileTransferFromUniqueIdentifier:(NSString *)identifier
+{
+	@synchronized(self.fileTransfers) {
+		for (id e in self.fileTransfers) {
+			if (NSObjectsAreEqual(identifier, [e uniqueIdentifier])) {
+				return e;
+			}
+		}
+	}
+	
+	return nil;
+}
+
 - (BOOL)fileTransferExistsWithToken:(NSString *)transferToken
 {
 	@synchronized(self.fileTransfers) {
@@ -166,12 +179,12 @@
 	}
 }
 
-- (void)addReceiverForClient:(IRCClient *)client nickname:(NSString *)nickname address:(NSString *)hostAddress port:(NSInteger)hostPort filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken
+- (NSString *)addReceiverForClient:(IRCClient *)client nickname:(NSString *)nickname address:(NSString *)hostAddress port:(NSInteger)hostPort filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken
 {
 	if ([self countNumberOfReceivers] > _addReceiverHardLimit) {
 		LogToConsole(@"Max receiver count of %i exceeded.", _addReceiverHardLimit);
 		
-		return;
+		return nil;
 	}
 	
 	TDCFileTransferDialogTransferController *groupItem = [TDCFileTransferDialogTransferController new];
@@ -184,6 +197,7 @@
 	[groupItem setTransferPort:hostPort];
 	[groupItem setFilename:filename];
 	[groupItem setTotalFilesize:totalFilesize];
+	[groupItem setUniqueIdentifier:[NSString stringWithUUID]];
 	
 	if (transferToken && [transferToken length] > 0) {
 		[groupItem setTransferToken:transferToken];
@@ -208,18 +222,20 @@
 		/* Begin the transfer. */
 		[groupItem open];
 	}
+	
+	return [groupItem uniqueIdentifier];
 }
 
-- (void)addSenderForClient:(IRCClient *)client nickname:(NSString *)nickname path:(NSString *)completePath autoOpen:(BOOL)autoOpen
+- (NSString *)addSenderForClient:(IRCClient *)client nickname:(NSString *)nickname path:(NSString *)completePath autoOpen:(BOOL)autoOpen
 {
 	/* Gather file information. */
 	NSDictionary *fileAttrs = [RZFileManager() attributesOfItemAtPath:completePath error:NULL];
 	
-	NSObjectIsEmptyAssert(fileAttrs);
+	NSObjectIsEmptyAssertReturn(fileAttrs, nil);
 	
 	TXUnsignedLongLong filesize = [fileAttrs longLongForKey:NSFileSize];
 	
-	NSAssertReturn(filesize > 0);
+	NSAssertReturnR((filesize > 0), nil);
 	
 	NSString *actualFilename = [completePath lastPathComponent];
 	NSString *actualFilePath = [completePath stringByDeletingLastPathComponent];
@@ -234,6 +250,7 @@
 	[groupItem setFilename:actualFilename];
 	[groupItem setPath:actualFilePath];
 	[groupItem setTotalFilesize:filesize];
+	[groupItem setUniqueIdentifier:[NSString stringWithUUID]];
 	
 	if ([TPCPreferences fileTransferRequestsAreReversed]) {
 		[groupItem setIsReversed:YES];
@@ -248,6 +265,8 @@
 	if (autoOpen) {
 		[groupItem open];
 	}
+	
+	return [groupItem uniqueIdentifier];
 }
 
 - (void)updateClearButton
