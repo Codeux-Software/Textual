@@ -6169,7 +6169,7 @@
 							/* If they were not on but now are, then log that too. */
 							if ([users containsObjectIgnoringCase:name]) {
 								if (self.isInvokingISONCommandForFirstTime) {
-									langKey = 1082;
+									langKey = 1083;
 								} else {
 									langKey = 1085;
 								}
