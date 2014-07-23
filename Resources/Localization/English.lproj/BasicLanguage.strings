@@ -353,6 +353,9 @@
 /* Notification bubble replyb button placeholders. */
 "BasicLanguage[1239]" = "Enter message to reply to this private message.";
 
+/* File transfer notification accept button. */
+"BasicLanguage[1244]" = "Accept";
+
 /* Notification type titles. */
 "BasicLanguage[1086]" = "Address Book Notification";
 "BasicLanguage[1087]" = "Channel Message";
@@ -669,6 +672,6 @@
 
 
 
-/* Next unusued key: 1244 */
+/* Next unusued key: 1245 */
 
 

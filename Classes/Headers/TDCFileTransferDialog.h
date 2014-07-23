@@ -79,15 +79,21 @@ typedef enum TDCFileTransferDialogNavigationControllerSelectedTab : NSInteger {
 			 toNickname:(NSString *)newNickname
 				 client:(IRCClient *)client;
 
-- (void)addReceiverForClient:(IRCClient *)client
-					nickname:(NSString *)nickname
-					 address:(NSString *)hostAddress
-						port:(NSInteger)hostPort
-					filename:(NSString *)filename
-					filesize:(TXUnsignedLongLong)totalFilesize
+/* The next two method return a unique identifier specific to each
+ added request. This identifier is different from a request token
+ as it is available always and never is seen by the other user. It
+ is used internally for finding specific requests. */
+/* Returning nil means that something failed and the transfer was
+ never added to list of transfers. */
+- (NSString *)addReceiverForClient:(IRCClient *)client
+						  nickname:(NSString *)nickname
+						   address:(NSString *)hostAddress
+							  port:(NSInteger)hostPort
+						  filename:(NSString *)filename
+						  filesize:(TXUnsignedLongLong)totalFilesize
 					   token:(NSString *)transferToken;
 
-- (void)addSenderForClient:(IRCClient *)client
+- (NSString *)addSenderForClient:(IRCClient *)client
 				  nickname:(NSString *)nickname
 					  path:(NSString *)completePath
 				  autoOpen:(BOOL)autoOpen;
@@ -96,6 +102,8 @@ typedef enum TDCFileTransferDialogNavigationControllerSelectedTab : NSInteger {
 
 - (TDCFileTransferDialogTransferController *)fileTransferSenderMatchingToken:(NSString *)transferToken;
 - (TDCFileTransferDialogTransferController *)fileTransferReceiverMatchingToken:(NSString *)transferToken;
+
+- (TDCFileTransferDialogTransferController *)fileTransferFromUniqueIdentifier:(NSString *)identifier;
 
 - (void)updateClearButton;
 - (void)updateMaintenanceTimer;

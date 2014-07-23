@@ -581,9 +581,9 @@
 	if (postNotifications) {
 		if (self.transferStatus == TDCFileTransferDialogTransferErrorStatus) {
 			if ([self isSender]) {
-				[self.associatedClient notifyFileTransfer:TXNotificationFileTransferSendFailedType nickname:self.peerNickname filename:self.filename filesize:self.totalFilesize];
+				[self.associatedClient notifyFileTransfer:TXNotificationFileTransferSendFailedType nickname:self.peerNickname filename:self.filename filesize:self.totalFilesize requestIdentifier:[self uniqueIdentifier]];
 			} else {
-				[self.associatedClient notifyFileTransfer:TXNotificationFileTransferReceiveFailedType nickname:self.peerNickname filename:self.filename filesize:self.totalFilesize];
+				[self.associatedClient notifyFileTransfer:TXNotificationFileTransferReceiveFailedType nickname:self.peerNickname filename:self.filename filesize:self.totalFilesize requestIdentifier:[self uniqueIdentifier]];
 			}
 		}
 	}
@@ -791,7 +791,7 @@
     if (self.processedFilesize >= self.totalFilesize) {
 		self.transferStatus = TDCFileTransferDialogTransferCompleteStatus;
 		
-		[self.associatedClient notifyFileTransfer:TXNotificationFileTransferReceiveSuccessfulType nickname:self.peerNickname filename:self.filename filesize:self.totalFilesize];
+		[self.associatedClient notifyFileTransfer:TXNotificationFileTransferReceiveSuccessfulType nickname:self.peerNickname filename:self.filename filesize:self.totalFilesize requestIdentifier:[self uniqueIdentifier]];
 		
 		[self close]; // Close Connection
     }
@@ -810,7 +810,7 @@
 		if (self.sendQueueSize <= 0) {
 			self.transferStatus = TDCFileTransferDialogTransferCompleteStatus;
 
-			[self.associatedClient notifyFileTransfer:TXNotificationFileTransferSendSuccessfulType nickname:self.peerNickname filename:self.filename filesize:self.totalFilesize];
+			[self.associatedClient notifyFileTransfer:TXNotificationFileTransferSendSuccessfulType nickname:self.peerNickname filename:self.filename filesize:self.totalFilesize requestIdentifier:[self uniqueIdentifier]];
 
 			[self reloadStatusInformation];
 		}

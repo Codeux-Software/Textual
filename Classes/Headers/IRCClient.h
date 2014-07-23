@@ -267,9 +267,11 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 
 - (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype;
 - (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nickname:(NSString *)nick text:(NSString *)text;
+- (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nickname:(NSString *)nick text:(NSString *)text userInfo:(NSDictionary *)userInfo;
+
 - (BOOL)notifyText:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nickname:(NSString *)nick text:(NSString *)text;
 
-- (void)notifyFileTransfer:(TXNotificationType)type nickname:(NSString *)nickname filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize;
+- (void)notifyFileTransfer:(TXNotificationType)type nickname:(NSString *)nickname filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize requestIdentifier:(NSString *)identifier;
 
 - (void)populateISONTrackedUsersList:(NSArray *)ignores;
 

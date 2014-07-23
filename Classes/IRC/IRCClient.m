@@ -1193,10 +1193,15 @@
 
 - (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype
 {
-	return [self notifyEvent:type lineType:ltype target:nil nickname:NSStringEmptyPlaceholder text:NSStringEmptyPlaceholder];
+	return [self notifyEvent:type lineType:ltype target:nil nickname:NSStringEmptyPlaceholder text:NSStringEmptyPlaceholder userInfo:nil];
 }
 
 - (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nickname:(NSString *)nick text:(NSString *)text
+{
+	return [self notifyEvent:type lineType:ltype target:target nickname:nick text:text userInfo:nil];
+}
+
+- (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nickname:(NSString *)nick text:(NSString *)text userInfo:(NSDictionary *)userInfo
 {
 	if ([self outputRuleMatchedInMessage:text inChannel:target withLineType:ltype] == YES) {
 		return NO;
@@ -1246,10 +1251,14 @@
 	
 	NSDictionary *info = nil;
 	
-	if (target) {
-		info = @{@"client": self.treeUUID, @"channel": target.treeUUID};
+	if (userInfo) {
+		info = userInfo;
 	} else {
-		info = @{@"client": self.treeUUID};
+		if (target) {
+			info = @{@"client": self.treeUUID, @"channel": target.treeUUID};
+		} else {
+			info = @{@"client": self.treeUUID};
+		}
 	}
 
 	switch (type) {
@@ -1261,8 +1270,6 @@
 		{
 			title = nick;
 			desc = text;
-			
-			info = @{@"isFileTransferNotification" : @(YES)};
 			
 			break;
 		}
@@ -8036,7 +8043,7 @@
 #pragma mark -
 #pragma mark File Transfers
 
-- (void)notifyFileTransfer:(TXNotificationType)type nickname:(NSString *)nickname filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize
+- (void)notifyFileTransfer:(TXNotificationType)type nickname:(NSString *)nickname filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize requestIdentifier:(NSString *)identifier
 {
 	NSString *description = nil;
 	
@@ -8077,7 +8084,13 @@
 		}
 	}
 	
-	[self notifyEvent:type lineType:0 target:nil nickname:nickname text:description];
+	NSDictionary *info = @{
+	   @"isFileTransferNotification" : @(YES),
+	   @"fileTransferUniqeIdentifier" : identifier,
+	   @"fileTransferNotificationType" : @(type)
+	};
+	
+	[self notifyEvent:type lineType:0 target:nil nickname:nickname text:description userInfo:info];
 }
 
 - (void)receivedDCCQuery:(IRCMessage *)m message:(NSMutableString *)rawMessage ignoreInfo:(IRCAddressBookEntry *)ignoreChecks
@@ -8253,17 +8266,14 @@
 		return;
 	}
 	
-	/* Post notification. */
-	[self notifyFileTransfer:TXNotificationFileTransferReceiveRequestedType nickname:nickname filename:filename filesize:totalFilesize];
-	
 	/* Add file. */
-	[[self fileTransferController] addReceiverForClient:self
-											   nickname:nickname
-												address:address
-												   port:port
-											   filename:filename
-											   filesize:totalFilesize
-												  token:transferToken];
+	NSString *addedRequest = [[self fileTransferController] addReceiverForClient:self nickname:nickname address:address port:port filename:filename filesize:totalFilesize token:transferToken];
+	
+	/* Value returned is nil if it failed to add. */
+	if (addedRequest) {
+		/* Post notification. */
+		[self notifyFileTransfer:TXNotificationFileTransferReceiveRequestedType nickname:nickname filename:filename filesize:totalFilesize requestIdentifier:addedRequest];
+	}
 }
 
 - (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken
