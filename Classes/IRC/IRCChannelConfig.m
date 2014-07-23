@@ -134,20 +134,36 @@
 
 - (void)writeSecretKeyKeychainItemToDisk
 {
-	[AGKeychain modifyOrAddKeychainItem:@"Textual (Channel JOIN Key)"
-						   withItemKind:@"application password"
-							forUsername:nil
-						withNewPassword:nil
-							serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
+	if (_secretKey == nil){
+		[AGKeychain deleteKeychainItem:@"Textual (Channel JOIN Key)"
+						  withItemKind:@"application password"
+						   forUsername:nil
+						   serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
+	} else {
+		[AGKeychain modifyOrAddKeychainItem:@"Textual (Channel JOIN Key)"
+							   withItemKind:@"application password"
+								forUsername:nil
+							withNewPassword:_secretKey
+								serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
+	}
+	
+	_secretKey = nil;
 }
 
 - (void)writeEncryptionKeyKeychainItemToDisk
 {
-	[AGKeychain modifyOrAddKeychainItem:@"Textual (Blowfish Encryption)"
-						   withItemKind:@"application password"
-							forUsername:nil
-						withNewPassword:_encryptionKey
-							serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
+	if (_encryptionKey == nil) {
+		[AGKeychain deleteKeychainItem:@"Textual (Blowfish Encryption)"
+						  withItemKind:@"application password"
+						   forUsername:nil
+						   serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
+	} else {
+		[AGKeychain modifyOrAddKeychainItem:@"Textual (Blowfish Encryption)"
+							   withItemKind:@"application password"
+								forUsername:nil
+							withNewPassword:_encryptionKey
+								serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
+	}
 
 	_encryptionKey = nil;
 }

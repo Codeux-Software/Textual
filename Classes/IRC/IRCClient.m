@@ -1582,7 +1582,13 @@
 
 			BOOL encrypted = NO;
 			
-			NSString *encryptedString = [self encryptOutgoingMessage:newstr channel:channel performedEncryption:&encrypted];
+			NSString *encryptedString = nil;
+			
+			if (encryptChat) {
+				encryptedString = [self encryptOutgoingMessage:newstr channel:channel performedEncryption:&encrypted];
+			} else {
+				encryptedString = newstr;
+			}
 			
 			[self print:channel
 				   type:type
