@@ -104,6 +104,10 @@
 
 - (void)expandServerList
 {
+	NSScrollView *scrollView = [mainWindowMemberList() enclosingScrollView];
+	
+	[scrollView setHasVerticalScroller:YES];
+	
 	NSView *subview = [self subviews][0];
 	
 	[subview setHidden:NO];
@@ -117,6 +121,10 @@
 
 - (void)expandMemberList
 {
+	NSScrollView *scrollView = [mainWindowMemberList() enclosingScrollView];
+	
+	[scrollView setHasVerticalScroller:YES];
+	
 	NSView *subview = [self subviews][2];
 	
 	[subview setHidden:NO];
@@ -134,6 +142,10 @@
 	
 	[self.serverListWidthConstraint setConstant:0.0];
 	
+	NSScrollView *scrollView = [mainWindowServerList() enclosingScrollView];
+	
+	[scrollView setHasVerticalScroller:NO];
+	
 	NSView *subview = [self subviews][0];
 	
 	[self setPosition:0.0 ofDividerAtIndex:0];
@@ -148,6 +160,10 @@
 	[self.memberListWidthConstraint setConstant:0.0];
 	
 	NSView *subview = [self subviews][2];
+	
+	NSScrollView *scrollView = [mainWindowMemberList() enclosingScrollView];
+	
+	[scrollView setHasVerticalScroller:NO];
 	
 	NSRect windowFrame = [mainWindow() frame];
 	
