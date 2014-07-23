@@ -191,7 +191,7 @@
 		
 		[RZSharedApplication() terminate:nil];
 	} else {
-		NSString *formattedTime = TXHumanReadableTimeInterval(timeleft, YES, 0);
+		NSString *formattedTime = TXHumanReadableTimeInterval(timeleft, YES, (NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit));
 		
 		(void)[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1242][2]", formattedTime)
 												  title:TXTLS(@"BasicLanguage[1242][1]")
