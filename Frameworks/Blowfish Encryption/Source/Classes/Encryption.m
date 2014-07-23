@@ -51,7 +51,7 @@
 	return [@"+OK " stringByAppendingString:result];
 }
 
-+ (NSString *)decodeData:(NSString *)input key:(NSString *)phrase encoding:(NSStringEncoding)local
++ (NSString *)decodeData:(NSString *)input key:(NSString *)phrase encoding:(NSStringEncoding)local badBytes:(NSInteger *)badByteCount
 {
 	BOOL hasOKPrefix = [input hasPrefix:@"+OK "];
 	BOOL hasMCPSPrefix = [input hasPrefix:@"mcps "];
@@ -74,7 +74,7 @@
 		return nil;
 	}
 
-	NSString *result = [BlowfishBase decrypt:input key:phrase encoding:local];
+	NSString *result = [BlowfishBase decrypt:input key:phrase encoding:local badBytes:badByteCount];
 
 	if ([result length] <= 0) {
 		return nil;

@@ -37,5 +37,5 @@
 
 @interface CSFWBlowfish : NSObject
 + (NSString *)encodeData:(NSString *)input key:(NSString *)phrase encoding:(NSStringEncoding)local;
-+ (NSString *)decodeData:(NSString *)input key:(NSString *)phrase encoding:(NSStringEncoding)local;
++ (NSString *)decodeData:(NSString *)input key:(NSString *)phrase encoding:(NSStringEncoding)local badBytes:(NSInteger *)badByteCount;
 @end

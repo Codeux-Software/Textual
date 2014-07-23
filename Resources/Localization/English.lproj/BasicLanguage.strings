@@ -201,6 +201,7 @@
 "BasicLanguage[1000][3]" = "Quit";
 
 /* Basic encryption related localizations. */
+"BasicLanguage[1245]" = "Decryption failed. When attempting to decrypt, %i bad sections were found and were unable to be repaired.";
 "BasicLanguage[1001]" = "Encryption of message failed; not sending to server.";
 "BasicLanguage[1002]" = "Encryption key changed; adjusting accordingly.";
 "BasicLanguage[1003]" = "Encryption started.";
@@ -672,6 +673,6 @@
 
 
 
-/* Next unusued key: 1245 */
+/* Next unusued key: 1246 */
 
 

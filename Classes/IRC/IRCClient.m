@@ -997,10 +997,16 @@
 		NSString *encryptionKey = channel.encryptionKey;
 		
 		if (encryptionKey) {
-			NSString *newstr = [CSFWBlowfish decodeData:(*message) key:encryptionKey encoding:self.config.primaryEncoding];
+			NSInteger badCharCount = 0;
+			
+			NSString *newstr = [CSFWBlowfish decodeData:(*message) key:encryptionKey encoding:self.config.primaryEncoding badBytes:&badCharCount];
 
-			if (NSObjectIsNotEmpty(newstr)) {
-				(*message) = newstr;
+			if (badCharCount > 0) {
+				[self printDebugInformation:BLS(1245, badCharCount) channel:channel];
+			} else {
+				if (NSObjectIsNotEmpty(newstr)) {
+					(*message) = newstr;
+				}
 			}
 		}
 	}
