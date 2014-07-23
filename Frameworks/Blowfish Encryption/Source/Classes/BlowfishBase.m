@@ -21,6 +21,7 @@
 */
 
 #import "BlowfishBase.h"
+#import "NSDataHelper.h"
 
 #include <openssl/blowfish.h>
 
@@ -150,7 +151,7 @@ static const signed char fish_unbase64[256] = {
 #pragma mark -
 #pragma mark Decryption.
 
-+ (NSString *)decrypt:(NSString *)rawInput key:(NSString *)secretKey encoding:(NSStringEncoding)dataEncoding;
++ (NSString *)decrypt:(NSString *)rawInput key:(NSString *)secretKey encoding:(NSStringEncoding)dataEncoding badBytes:(NSInteger *)badByteCount
 {
 	if ([secretKey length] <= 0 || [rawInput length] <= 0) {
 		return nil;
@@ -215,7 +216,15 @@ static const signed char fish_unbase64[256] = {
 	
 	// ========================================== //
 
-	NSString *cypher = [NSString stringWithCString:decrypted encoding:dataEncoding];
+	NSData *rawData = [NSData dataWithBytes:decrypted length:strlen(decrypted)];
+	
+	if (dataEncoding == NSUTF8StringEncoding) {
+		rawData = [rawData repairedCharacterBufferForUTF8Encoding:badByteCount];
+	} else {
+		*badByteCount = 0;
+	}
+	
+	NSString *cypher = [[NSString alloc] initWithData:rawData encoding:dataEncoding];
 
 	free(decrypted);
 
@@ -227,5 +236,6 @@ static const signed char fish_unbase64[256] = {
 	
     return cypher;
 }
+
 
 @end

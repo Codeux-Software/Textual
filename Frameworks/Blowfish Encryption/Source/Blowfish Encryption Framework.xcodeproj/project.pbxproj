@@ -19,6 +19,8 @@
 		4C7FC88516C05C7A00B912A5 /* BlowfishBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7FC88316C05C7A00B912A5 /* BlowfishBase.m */; };
 		4CCE47E916C0EEF800915F60 /* Base64Encoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCE47E716C0EEF800915F60 /* Base64Encoding.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CCE47EA16C0EEF800915F60 /* Base64Encoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCE47E816C0EEF800915F60 /* Base64Encoding.m */; };
+		4CE8EAE819802FC000DE9846 /* NSDataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE8EAE619802FC000DE9846 /* NSDataHelper.h */; };
+		4CE8EAE919802FC000DE9846 /* NSDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE8EAE719802FC000DE9846 /* NSDataHelper.m */; };
 		4CEC815D133F13140026DFAE /* BlowfishEncryption.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEC815C133F13140026DFAE /* BlowfishEncryption.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -40,6 +42,8 @@
 		4C86B0181748B94D0028C7AE /* Shared Developer ID Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Shared Developer ID Release Configuration.xcconfig"; sourceTree = "<group>"; };
 		4CCE47E716C0EEF800915F60 /* Base64Encoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Encoding.h; sourceTree = "<group>"; };
 		4CCE47E816C0EEF800915F60 /* Base64Encoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64Encoding.m; sourceTree = "<group>"; };
+		4CE8EAE619802FC000DE9846 /* NSDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataHelper.h; sourceTree = "<group>"; };
+		4CE8EAE719802FC000DE9846 /* NSDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataHelper.m; sourceTree = "<group>"; };
 		4CEC815C133F13140026DFAE /* BlowfishEncryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlowfishEncryption.h; path = Classes/BlowfishEncryption.h; sourceTree = "<group>"; };
 		4CF2F9A916E4CC7000B2F999 /* License.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = License.txt; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -162,6 +166,8 @@
 				4C500F3B16C06C5A001692AF /* DH1080Base.mm */,
 				4C7FC88216C05C7A00B912A5 /* BlowfishBase.h */,
 				4C7FC88316C05C7A00B912A5 /* BlowfishBase.m */,
+				4CE8EAE619802FC000DE9846 /* NSDataHelper.h */,
+				4CE8EAE719802FC000DE9846 /* NSDataHelper.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -188,6 +194,7 @@
 				4CCE47E916C0EEF800915F60 /* Base64Encoding.h in Headers */,
 				4C292F7F12DFD69400BE23FE /* Encryption.h in Headers */,
 				4C500F4116C06C79001692AF /* DH1080.h in Headers */,
+				4CE8EAE819802FC000DE9846 /* NSDataHelper.h in Headers */,
 				4C7FC88416C05C7A00B912A5 /* BlowfishBase.h in Headers */,
 				4C500F3C16C06C5A001692AF /* DH1080Base.h in Headers */,
 			);
@@ -251,6 +258,7 @@
 				4C7FC88516C05C7A00B912A5 /* BlowfishBase.m in Sources */,
 				4C500F3D16C06C5A001692AF /* DH1080Base.mm in Sources */,
 				4C500F4216C06C79001692AF /* DH1080.mm in Sources */,
+				4CE8EAE919802FC000DE9846 /* NSDataHelper.m in Sources */,
 				4CCE47EA16C0EEF800915F60 /* Base64Encoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
