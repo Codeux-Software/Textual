@@ -247,6 +247,12 @@
 
 /* NSUserNotificationCenter */
 
+- (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center
+	 shouldPresentNotification:(NSUserNotification *)notification
+{
+	return YES;
+}
+
 - (void)userNotificationCenter:(NSUserNotificationCenter *)center
 	   didActivateNotification:(NSUserNotification *)notification
 {
@@ -340,10 +346,12 @@
 	if ([context isKindOfClass:[NSDictionary class]]) {
 		BOOL isFileTransferNotification = [context boolForKey:@"isFileTransferNotification"];
 		
-		if (isFileTransferNotification) {
+		if (isFileTransferNotification)
+		{
 			NSInteger alertType = [context integerForKey:@"fileTransferNotificationType"];
 			
-			if (alertType == TXNotificationFileTransferReceiveRequestedType) {
+			if (alertType == TXNotificationFileTransferReceiveRequestedType)
+			{
 				if (activationType == NSUserNotificationActivationTypeActionButtonClicked)
 				{
 					NSString *uniqueIdentifier = [context objectForKey:@"fileTransferUniqeIdentifier"];
@@ -365,7 +373,9 @@
 			}
 			
 			[[menuController() fileTransferController] show:YES restorePosition:NO];
-		} else {
+		}
+		else
+		{
 			NSString *uid = context[@"client"];
 			NSString *cid = context[@"channel"];
 			
