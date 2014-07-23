@@ -19,6 +19,10 @@ body {
     font-weight: 200;
 }
 
+ body .line {
+	clear: both;
+  }
+
 #body_home {
 	left: 0;
 	right: 0;
@@ -45,6 +49,7 @@ body[dir=rtl] .sender {
 }
 
 /* Loading Screen */
+
 #loading_screen {
 	position:fixed;
 	margin: auto;
@@ -95,6 +100,7 @@ body[dir=ltr] .time {
 }
 
 /* Links */
+
 a {
 	color: #ccc;
     border-color: #ccc;
@@ -109,6 +115,7 @@ a:hover {
 }
 
 /* Topic Bar */
+
 #topic_bar {
 	top: 0;
 	left: 0;
@@ -133,15 +140,54 @@ a:hover {
 }
 
 /* Images */
+
 body a img {
 	border: 0;
 }
 
+body video,
 body img {
 	display: block;
-	max-width: 95%;
-    margin: 15px 15px 12px 15px;
 }
+
+.inlineImageCell {
+	position: relative;
+	display: table;
+	overflow: auto;
+	width: auto;
+	height: auto;
+}
+
+.inlineImageCell > a {
+	display: inline-block;
+}
+
+.inlineImageCell .image {
+	display: inline-block;
+	float: left;
+	margin: 15px 15px 12px 10px;
+	min-width: 40px;
+	max-width: 90%;
+}
+
+.inlineImageCell .closeButton {
+	background: #000000;
+	border-radius: 50%;
+	position: absolute;
+	box-sizing: border-box;
+	font-size: 20px !important;
+	font-family: "Helvetica Neue" !important;
+	font-weight: 100 !important;
+	text-align: center;
+	line-height: 17px;
+	color: #fff;
+	border: 2px solid #fff;
+	top: 5px;
+	right: 5px;
+	width: 25px;
+	height: 25px;
+}
+
 
 /* Remember Line */
 div[id=mark] {
@@ -154,17 +200,18 @@ div[id=mark] {
 }
 
 body[dir=ltr] div[ltype=action] .sender:before {
-	margin-right: 0.4em;
-}
+	margin-right: 0.6em;
+	font-weight: bold;
+	font-size: 80% !important;
+	content: "●";
 
--body[dir=ltr] div[ltype=action] .sender:after {
-	content: "";
-  	/* margin-right: 0.4em; */
 }
 
 .senderDot {
-	margin-right: 0.4em;
-	color: #b359ff;
+}
+-body[dir=ltr] div[ltype=action] .sender:after {
+	content: "";
+  	/* margin-right: 0.4em; */
 }
 
 body[dir=rtl] div[ltype=action] .sender:after {
@@ -263,15 +310,15 @@ body div[ltype=action] .sender {
 	bottom: 0;
 	left: 0;
 	font-weight: 700;
-	width: 134px;
+	width:134px;
 	border-right: 1px solid rgb(64, 64, 64);
 	border-top: 1px solid transparent;
 	border-bottom: 1px solid transparent;
     background-color: #1d1d1d;
-	height: 22px;
-	padding-right: 7px;
-	text-align: right;
-	display: inline-block;
+	height:22px;
+	padding-right:7px;
+	text-align:right;
+	display:inline-block;
 	overflow: auto;
 }
 
@@ -390,6 +437,7 @@ body[dir=ltr] div[ltype=join] .message:before {
     margin-right: 5px;
 }
 
+
 body[dir=ltr] div[ltype=kick] .message:before,
 body[dir=ltr] div[ltype=part] .message:before,
 body[dir=ltr] div[ltype=quit] .message:before {
@@ -432,6 +480,7 @@ body[dir=rtl] div[ltype=quit] .message:before {
 }
 
 /* Nickname Colors */
+
 body .inline_nickname {
 	font-weight: 700;
 }
@@ -441,6 +490,7 @@ body .sender[mtype=myself] {
 }
 
 /* SELECTED USER MESSAGES */
+
 .sender {
 	cursor: pointer;
 }

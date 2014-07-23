@@ -90,7 +90,6 @@ Textual.newMessagePostedToView = function (line) {
 	if (message.getAttribute('ltype') == 'privmsg' || message.getAttribute('ltype') == 'action') {
         new NickColorGenerator(message);
     }
-
     updateNicknameAssociatedWithNewMessage(message);
 };
 
@@ -103,7 +102,8 @@ Textual.nicknameSingleClicked = function(e) {
 function updateNicknameAssociatedWithNewMessage(e) {
 	/* We only want to target plain text messages. */
 	var elementType = e.getAttribute("ltype");
-	if (elementType == "privmsg" || elementType == "action") {
+    var acceptedElementTypes = ["privmsg", "action", "notice"];
+	if (acceptedElementTypes.indexOf(elementType) !== -1) {
 		/* Get the nickname information. */
 		var senderSelector = e.querySelector(".sender");
 		if (senderSelector) {
