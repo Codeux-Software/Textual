@@ -40,8 +40,39 @@
 
 @implementation CSFWBlowfish
 
++ (NSUInteger)estimatedLengthOfStringEncryptedUsing:(CSFWBlowfishEncryptionAlgorithm)algorithm thatFitsWithinBounds:(NSInteger)maximumLength;
+{
+	if (algorithm == CSFWBlowfishEncryptionNoneAlgorithm) {
+		return maximumLength;
+	}
+
+	NSInteger lastEstimatedSize = 0;
+	
+	for (NSInteger i = 0; i <= maximumLength; i++) {
+		NSInteger sizeForLength = 0;
+		
+		if (algorithm == CSFWBlowfishEncryptionDefaultAlgorithm || algorithm == CSFWBlowfishEncryptionECBAlgorithm) {
+			sizeForLength = [BlowfishBase estimatedLengthForECBEncryptedLength:i];
+		} else {
+			sizeForLength = [BlowfishBase estimatedLengthForCBCEncryptedLength:i];
+		}
+		
+		if (sizeForLength > maximumLength) {
+			break;
+		} else {
+			lastEstimatedSize = i;
+		}
+	}
+	
+	return lastEstimatedSize;
+}
+
 + (NSString *)encodeData:(NSString *)input key:(NSString *)phrase algorithm:(CSFWBlowfishEncryptionAlgorithm)algorithm encoding:(NSStringEncoding)local
 {
+	if (algorithm == CSFWBlowfishEncryptionNoneAlgorithm) {
+		return input;
+	}
+
 	NSString *result = [BlowfishBase encrypt:input key:phrase algorithm:algorithm encoding:local];
 
 	if ([result length] <= 0) {
@@ -57,6 +88,10 @@
 
 + (NSString *)decodeData:(NSString *)input key:(NSString *)phrase algorithm:(CSFWBlowfishEncryptionAlgorithm)algorithm encoding:(NSStringEncoding)local badBytes:(NSInteger *)badByteCount
 {
+	if (algorithm == CSFWBlowfishEncryptionNoneAlgorithm) {
+		return input;
+	}
+
 	BOOL hasOKPrefix = [input hasPrefix:@"+OK "];
 	BOOL hasMCPSPrefix = [input hasPrefix:@"mcps "];
 
@@ -77,8 +112,6 @@
 	} else {
 		return nil;
 	}
-	
-	NSLog(@"input %@", input);
 	
 	/* Star symbol acts as an auto-on. */
 	if ([input hasPrefix:@"*"]) {

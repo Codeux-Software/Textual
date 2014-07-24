@@ -51,7 +51,7 @@
 + (NSData *)decodeData:(NSString *)input
 {
 	if ([NSData instancesRespondToSelector:@selector(initWithBase64EncodedString:options:)]) {
-		return [[NSData alloc] initWithBase64EncodedString:input options:0];
+		return [[NSData alloc] initWithBase64EncodedString:input options:NSDataBase64DecodingIgnoreUnknownCharacters];
 	} else {
 		return [[NSData alloc] initWithBase64Encoding:input];
 	}

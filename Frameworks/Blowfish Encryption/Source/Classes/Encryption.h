@@ -36,12 +36,15 @@
  *********************************************************************** */
 
 typedef enum CSFWBlowfishEncryptionAlgorithm : NSInteger {
+	CSFWBlowfishEncryptionNoneAlgorithm		= -1,				// Does nothing, just returns original
 	CSFWBlowfishEncryptionDefaultAlgorithm	= 0,				// Defualt goes to ECB
 	CSFWBlowfishEncryptionECBAlgorithm		= 1,
 	CSFWBlowfishEncryptionCBCAlgorithm		= 2
 } CSFWBlowfishEncryptionAlgorithm;
 
 @interface CSFWBlowfish : NSObject
++ (NSUInteger)estimatedLengthOfStringEncryptedUsing:(CSFWBlowfishEncryptionAlgorithm)algorithm thatFitsWithinBounds:(NSInteger)maximumLength;
+
 + (NSString *)encodeData:(NSString *)input key:(NSString *)phrase algorithm:(CSFWBlowfishEncryptionAlgorithm)algorithm encoding:(NSStringEncoding)local;
 + (NSString *)decodeData:(NSString *)input key:(NSString *)phrase algorithm:(CSFWBlowfishEncryptionAlgorithm)algorithm encoding:(NSStringEncoding)local badBytes:(NSInteger *)badByteCount;
 @end
