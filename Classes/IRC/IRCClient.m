@@ -5188,7 +5188,7 @@
 
 - (BOOL)isCapacityEnabled:(ClientIRCv3SupportedCapacities)capacity
 {
-	return (_capacities & capacity);
+	return ((_capacities & capacity) == capacity);
 }
 
 - (NSString *)stringValueOfCapacity:(ClientIRCv3SupportedCapacities)capacity
@@ -7154,9 +7154,11 @@
 	}
 	
 	/* Do nothing unless certain conditions are met. */
-	if ([TPCPreferences autojoinWaitsForNickServ]) {
-		if (self.serverHasNickServ && self.isIdentifiedWithNickServ == NO) {
-			return;
+	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityIsIdentifiedWithSASL] == NO) {
+		if ([TPCPreferences autojoinWaitsForNickServ]) {
+			if (self.serverHasNickServ && self.isIdentifiedWithNickServ == NO) {
+				return;
+			}
 		}
 	}
 	
