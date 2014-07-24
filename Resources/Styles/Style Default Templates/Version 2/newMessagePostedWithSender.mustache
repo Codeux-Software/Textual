@@ -6,11 +6,14 @@
 		mtype="{{nicknameType}}"
 {{/isRemoteMessage}}
 
+{{#isEncrypted}}
+		encrypted="true"
+{{/isEncrypted}}
+
 		command="{{rawCommand}}"
 		highlight="{{highlightAttributeRepresentation}}" 
 		class="line {{lineClassAttributeRepresentation}}" 
-		id="line-{{lineNumber}}"
-		time="{{lineRenderTime}}">
+		id="line-{{lineNumber}}">
 
 	<p>
 		<span class="time">{{formattedTimestamp}} </span>
