@@ -149,6 +149,7 @@ a:hover {
 /* @group Images */
 
 .inlineImageCell {
+	overflow: auto;
 	display: block;
 	margin-top: 5px;
 	margin-bottom: 2px;
@@ -182,6 +183,7 @@ a:hover {
 /* @group Separating History */
 
 div[id=mark] {
+	clear: both;
 	position: relative;
 	z-index: 295;
 	margin-top: -1px;
