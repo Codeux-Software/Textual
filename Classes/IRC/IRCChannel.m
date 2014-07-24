@@ -168,6 +168,11 @@
 	return self.config.encryptionKey;
 }
 
+- (CSFWBlowfishEncryptionAlgorithm)encryptionAlgorithm
+{
+	return self.config.encryptionAlgorithm;
+}
+
 - (BOOL)isChannel
 {
 	return (self.config.type == IRCChannelNormalType);
@@ -201,9 +206,6 @@
 
 - (void)setName:(NSString *)value
 {
-	/* The channelName property which is automatically created 
-	 will handle isEqual comparison for the new value. */
-	
 	self.config.channelName = value;
 }
 
@@ -214,6 +216,11 @@
 	}
 
     [self.viewController setTopic:topic];
+}
+
+- (void)setEncryptionAlgorithm:(CSFWBlowfishEncryptionAlgorithm)encryptionAlgorithm
+{
+	self.config.encryptionAlgorithm = encryptionAlgorithm;
 }
 
 - (void)setEncryptionKey:(NSString *)encryptionKey

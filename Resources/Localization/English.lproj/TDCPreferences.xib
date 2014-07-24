@@ -3650,7 +3650,7 @@
                             </textFieldCell>
                         </textField>
                         <button id="pWV-kW-Wnt">
-                            <rect key="frame" x="60" y="32" width="334" height="18"/>
+                            <rect key="frame" x="60" y="32" width="350" height="18"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="check" title="Prevent Mac from sleeping while transferring a file " bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="yS6-HJ-6h0">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>

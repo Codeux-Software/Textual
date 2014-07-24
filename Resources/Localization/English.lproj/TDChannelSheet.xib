@@ -19,6 +19,7 @@
                 <outlet property="defaultsView" destination="243" id="344"/>
                 <outlet property="disableInlineImagesCheck" destination="279" id="iwc-dc-DN4"/>
                 <outlet property="enableInlineImagesCheck" destination="HBZ-KH-HBg" id="IAK-i2-siX"/>
+                <outlet property="encryptionAlgorithmPopup" destination="wJA-xE-WhN" id="ZPF-9f-b2o"/>
                 <outlet property="encryptionKeyField" destination="151" id="347"/>
                 <outlet property="encryptionView" destination="147" id="348"/>
                 <outlet property="generalView" destination="109" id="346"/>
@@ -282,23 +283,14 @@ DQ
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="560.5" y="1203.5"/>
+            <point key="canvasLocation" x="415.5" y="1010.5"/>
         </view>
         <view id="147">
-            <rect key="frame" x="0.0" y="0.0" width="343" height="248"/>
+            <rect key="frame" x="0.0" y="0.0" width="343" height="386"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <textField verticalHuggingPriority="750" id="151" customClass="NSSecureTextField">
-                    <rect key="frame" x="108" y="206" width="210" height="22"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="178">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="oky-HV-Bq9">
-                    <rect key="frame" x="34" y="17" width="274" height="173"/>
+                    <rect key="frame" x="38" y="139" width="267" height="94"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="JFM-YA-v04">
                         <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
@@ -309,22 +301,17 @@ DQ
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="274" height="173"/>
+                                <size key="minSize" width="267" height="94"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                                 <attributedString key="textStorage">
-                                    <fragment>
-                                        <string key="content">This passphrase will be used to encrypt and decrypt messages so that only those with it may be able to read the transmitted conversation.
-
-When enabled, Textual will refuse to write any cache files to disk related to this channel. These files do not include log files written to the log location. Those are still produced.
-
-</string>
+                                    <fragment content="The ">
                                         <attributes>
                                             <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content="Blowfish ECB">
+                                    <fragment content="Electronic Codebook (ECB)">
                                         <attributes>
                                             <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
@@ -332,7 +319,28 @@ When enabled, Textual will refuse to write any cache files to disk related to th
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content=" is used by default for encryption. While safe, this algorithm may not be secure enough for all purposes. See the ">
+                                    <fragment>
+                                        <string key="content"> algorithm is used by default to provide greatest compatibility with legacy IRC clients.
+
+However, if backwards compatibility is not a concern, then it is highly recommended to use the </string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" metaFont="smallSystem"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Cypher-block Chaining (CBC)">
+                                        <attributes>
+                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" metaFont="smallSystem"/>
+                                            <url key="NSLink" string="http://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher-block_chaining_.28CBC.29"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content"> algorithm.
+
+See the </string>
                                         <attributes>
                                             <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
@@ -356,7 +364,7 @@ When enabled, Textual will refuse to write any cache files to disk related to th
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="274" height="173"/>
+                                <size key="minSize" width="267" height="94"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                             </textView>
                         </subviews>
@@ -371,8 +379,105 @@ When enabled, Textual will refuse to write any cache files to disk related to th
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
+                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="b4H-ig-AYn">
+                    <rect key="frame" x="38" y="16" width="267" height="93"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="YGd-y2-Ras">
+                        <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="eQ1-x3-dtS">
+                                <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="minSize" width="267" height="93"/>
+                                <size key="maxSize" width="463" height="10000000"/>
+                                <attributedString key="textStorage">
+                                    <fragment>
+                                        <string key="content">When enabled, Textual will refuse to write any cache files to disk related to this channel. These files do not include log files written to the log location. Those are still produced.
+
+See the </string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" metaFont="smallSystem"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Encrypting Chat">
+                                        <attributes>
+                                            <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" metaFont="smallSystem"/>
+                                            <url key="NSLink" string="http://www.codeux.com/textual/wiki/Encrypted-Chat.wiki"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=" wiki page for more information.">
+                                        <attributes>
+                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" metaFont="smallSystem"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <size key="minSize" width="267" height="93"/>
+                                <size key="maxSize" width="463" height="10000000"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="kgg-17-o8l">
+                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Zk0-ao-KOE">
+                        <rect key="frame" x="-100" y="-100" width="16" height="133"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
+                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="IV7-Zt-7XT">
+                    <rect key="frame" x="38" y="295" width="267" height="41"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="i2q-Qt-P30">
+                        <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="b2i-86-aO8">
+                                <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="minSize" width="267" height="41"/>
+                                <size key="maxSize" width="463" height="10000000"/>
+                                <attributedString key="textStorage">
+                                    <fragment>
+                                        <string key="content">This passphrase will be used to encrypt and decrypt messages so that only those with it may be able to read the transmitted conversation.</string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" metaFont="smallSystem"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <size key="minSize" width="267" height="41"/>
+                                <size key="maxSize" width="463" height="10000000"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="Mb9-gp-YNZ">
+                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="hrJ-SA-q4M">
+                        <rect key="frame" x="-100" y="-100" width="16" height="133"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
                 <textField verticalHuggingPriority="750" id="155">
-                    <rect key="frame" x="22" y="208" width="80" height="17"/>
+                    <rect key="frame" x="23" y="346" width="80" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Passphrase:" id="174">
                         <font key="font" metaFont="system"/>
@@ -380,8 +485,58 @@ When enabled, Textual will refuse to write any cache files to disk related to th
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <textField verticalHuggingPriority="750" id="151" customClass="NSSecureTextField">
+                    <rect key="frame" x="109" y="344" width="209" height="22"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="178">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" id="wJA-xE-WhN">
+                    <rect key="frame" x="91" y="239" width="231" height="26"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <popUpButtonCell key="cell" type="push" title="Default" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="xj8-qa-tOq" id="l5W-tg-6hY">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="bwJ-HS-537">
+                            <items>
+                                <menuItem title="Default" id="xj8-qa-tOq">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                </menuItem>
+                                <menuItem isSeparatorItem="YES" id="Nbp-xf-MIy"/>
+                                <menuItem title="Electronic Codebok (ECB)" tag="1" id="0bV-6Q-M7g"/>
+                                <menuItem title="Cypher-block Chaining (CBC)" tag="2" id="zgR-Ea-XR7"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                </popUpButton>
+                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="TMK-zQ-Spf">
+                    <rect key="frame" x="20" y="278" width="303" height="5"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="mL5-yH-ck1">
+                    <rect key="frame" x="21" y="122" width="303" height="5"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <textField verticalHuggingPriority="750" id="eUD-Za-iXF">
+                    <rect key="frame" x="19" y="241" width="68" height="20"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Strength:" id="oEt-hm-1i1">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
-            <point key="canvasLocation" x="316.5" y="493"/>
+            <point key="canvasLocation" x="316.5" y="561.5"/>
         </view>
     </objects>
 </document>
