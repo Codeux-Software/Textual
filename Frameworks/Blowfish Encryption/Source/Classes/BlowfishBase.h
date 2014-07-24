@@ -20,7 +20,9 @@
 	THE SOFTWARE.
 */
 
+#import "Encryption.h"
+
 @interface BlowfishBase : NSObject
-+ (NSString *)encrypt:(NSString *)rawInput key:(NSString *)secretKey encoding:(NSStringEncoding)dataEncoding;
-+ (NSString *)decrypt:(NSString *)rawInput key:(NSString *)secretKey encoding:(NSStringEncoding)dataEncoding badBytes:(NSInteger *)badByteCount
-;@end
++ (NSString *)encrypt:(NSString *)rawInput key:(NSString *)secretKey algorithm:(CSFWBlowfishEncryptionAlgorithm)algorithm encoding:(NSStringEncoding)dataEncoding;
++ (NSString *)decrypt:(NSString *)rawInput key:(NSString *)secretKey algorithm:(CSFWBlowfishEncryptionAlgorithm)algorithm encoding:(NSStringEncoding)dataEncoding badBytes:(NSInteger *)badByteCount;
+@end

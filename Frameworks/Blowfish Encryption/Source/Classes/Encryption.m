@@ -40,18 +40,22 @@
 
 @implementation CSFWBlowfish
 
-+ (NSString *)encodeData:(NSString *)input key:(NSString *)phrase encoding:(NSStringEncoding)local
++ (NSString *)encodeData:(NSString *)input key:(NSString *)phrase algorithm:(CSFWBlowfishEncryptionAlgorithm)algorithm encoding:(NSStringEncoding)local
 {
-	NSString *result = [BlowfishBase encrypt:input key:phrase encoding:local];
+	NSString *result = [BlowfishBase encrypt:input key:phrase algorithm:algorithm encoding:local];
 
 	if ([result length] <= 0) {
 		return nil;
 	}
 
-	return [@"+OK " stringByAppendingString:result];
+	if (algorithm == CSFWBlowfishEncryptionCBCAlgorithm) {
+		return [@"+OK *" stringByAppendingString:result];
+	} else {
+		return [@"+OK " stringByAppendingString:result];
+	}
 }
 
-+ (NSString *)decodeData:(NSString *)input key:(NSString *)phrase encoding:(NSStringEncoding)local badBytes:(NSInteger *)badByteCount
++ (NSString *)decodeData:(NSString *)input key:(NSString *)phrase algorithm:(CSFWBlowfishEncryptionAlgorithm)algorithm encoding:(NSStringEncoding)local badBytes:(NSInteger *)badByteCount
 {
 	BOOL hasOKPrefix = [input hasPrefix:@"+OK "];
 	BOOL hasMCPSPrefix = [input hasPrefix:@"mcps "];
@@ -73,8 +77,15 @@
 	} else {
 		return nil;
 	}
+	
+	/* Star symbol acts as an auto-on. */
+	if ([input hasPrefix:@"*"]) {
+		input = [input substringFromIndex:1];
+		
+		algorithm = CSFWBlowfishEncryptionCBCAlgorithm;
+	}
 
-	NSString *result = [BlowfishBase decrypt:input key:phrase encoding:local badBytes:badByteCount];
+	NSString *result = [BlowfishBase decrypt:input key:phrase algorithm:algorithm encoding:local badBytes:badByteCount];
 
 	if ([result length] <= 0) {
 		return nil;
