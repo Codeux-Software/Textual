@@ -276,25 +276,29 @@ static const signed char fish_unbase64[256] = {
 	EVP_CIPHER_CTX_cleanup(&context);
 	
 	/* Return result. */
-	if (result) {
-		[outputHandler replaceBytesInRange:NSMakeRange(0, 8) withBytes:NULL length:0];
-		
-		NSData *finalData = nil;
-		
-		if (dataEncoding == NSUTF8StringEncoding) {
-			finalData = [outputHandler repairedCharacterBufferForUTF8Encoding:badByteCount];
-		} else {
-			finalData =  outputHandler;
+	// if (result) {
+		if ([outputHandler length] > 8) {
+			[outputHandler replaceBytesInRange:NSMakeRange(0, 8) withBytes:NULL length:0];
 			
-			*badByteCount = 0;
+			NSData *finalData = nil;
+			
+			if (dataEncoding == NSUTF8StringEncoding) {
+				finalData = [outputHandler repairedCharacterBufferForUTF8Encoding:badByteCount];
+			} else {
+				finalData =  outputHandler;
+				
+				*badByteCount = 0;
+			}
+			
+			NSString *cypher = [[NSString alloc] initWithData:outputHandler encoding:dataEncoding];
+			
+			return cypher;
+		} else {
+			return nil;
 		}
-		
-		NSString *cypher = [[NSString alloc] initWithData:outputHandler encoding:dataEncoding];
-		
-		return cypher;
-	} else {
-		return nil;
-	}
+	// } else {
+	//	return nil;
+	// }
 }
 
 #pragma mark -

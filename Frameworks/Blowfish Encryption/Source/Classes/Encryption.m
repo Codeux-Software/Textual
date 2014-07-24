@@ -78,11 +78,15 @@
 		return nil;
 	}
 	
+	NSLog(@"input %@", input);
+	
 	/* Star symbol acts as an auto-on. */
 	if ([input hasPrefix:@"*"]) {
 		input = [input substringFromIndex:1];
 		
 		algorithm = CSFWBlowfishEncryptionCBCAlgorithm;
+	} else {
+		algorithm = CSFWBlowfishEncryptionECBAlgorithm;
 	}
 
 	NSString *result = [BlowfishBase decrypt:input key:phrase algorithm:algorithm encoding:local badBytes:badByteCount];
