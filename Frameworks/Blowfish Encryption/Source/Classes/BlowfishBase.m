@@ -32,6 +32,7 @@
 #include <openssl/blowfish.h>
 #include <openssl/evp.h>
 #include <openssl/rand.h>
+#include <openssl/bio.h>
 
 /* =============================================== */
 
@@ -85,6 +86,27 @@ static const signed char fish_unbase64[256] = {
 #pragma mark -
 #pragma mark CBC Encryption
 
++ (NSInteger)estimatedLengthForCBCEncryptedLength:(NSInteger)length
+{
+	/* Base length of input. */
+	NSInteger basicLength = length;
+	
+	if (basicLength % 8) {
+		basicLength += (8 - (basicLength % 8));
+	}
+	
+	basicLength += 8;
+	
+	/* Resulting cipher length. */
+	NSInteger cipherLen = ((basicLength / 8) * 8);
+	
+	/* Base64 estimated length. */
+	NSInteger base64Length = (ceil(cipherLen / 3) * 4);
+	
+	/* Return estimate. */
+	return base64Length;
+}
+
 + (BOOL)walkBlowfishCypherForCBC:(EVP_CIPHER_CTX *)context inputStream:(unsigned char *)inputStream inputSize:(size_t)inputSize outputHandler:(NSMutableData **)outputHandler
 {
 	/* Define basic context. */
@@ -105,6 +127,8 @@ static const signed char fish_unbase64[256] = {
 		}
 		
 		if (EVP_CipherUpdate(context, _temporaryBuffer, &_outLength, _inputPointer, _inSize) == 0) {
+			LogToConsole(@"Walking the cipher failed on EVP_CipherUpdate");
+			
 			return NO;
 		}
 		
@@ -120,6 +144,8 @@ static const signed char fish_unbase64[256] = {
 	
 	if (success) {
 		[*outputHandler appendBytes:_temporaryBuffer length:_outLength];
+	} else {
+		LogToConsole(@"Walking the cipher failed on EVP_CipherFinal_ex");
 	}
 	
 	return success;
@@ -128,11 +154,25 @@ static const signed char fish_unbase64[256] = {
 + (NSString *)cbc_encrypt:(NSString *)rawInput key:(NSString *)secretKey encoding:(NSStringEncoding)dataEncoding
 {
 	if ([secretKey length] <= 0 || [rawInput length] <= 0) {
+		LogToConsole(@"Received bad input with a empty value or empty key.");
+		
 		return nil;
 	}
 	
 	const char *message	= [rawInput	 cStringUsingEncoding:dataEncoding];
 	const char *secrkey	= [secretKey cStringUsingEncoding:dataEncoding];
+	
+	if (message == NULL) {
+		LogToConsole(@"C string value of message could not be created.");
+		
+		return nil;
+	}
+	
+	if (secrkey == NULL) {
+		LogToConsole(@"C string value of the secret key could not be created.");
+		
+		return nil;
+	}
 	
 	size_t keylen = strlen(secrkey);
 	size_t msglen = strlen(message);
@@ -145,6 +185,8 @@ static const signed char fish_unbase64[256] = {
 	
 	if (keylen > 56) {
 		keylen = 56;
+		
+		LogToConsole(@"WARNING: Using a key length greater than 56 will result in that key itself being struncted to the first 56 characters.");
 	} else {
 		keylen = keylen;
 	}
@@ -200,46 +242,62 @@ static const signed char fish_unbase64[256] = {
 	BOOL result = [BlowfishBase walkBlowfishCypherForCBC:&context inputStream:inputStream inputSize:bufferSize outputHandler:&outputHandler];
 	
 	EVP_CIPHER_CTX_cleanup(&context);
-	
+
 	free(inputStream);
 
 	if (result) {
 		return [CSFWBase64Encoding encodeData:outputHandler];
 	} else {
+		LogToConsole(@"Walking the cipher returned NO.");
+		
 		return nil;
 	}
 }
 
-
 #pragma mark -
-#pragma mark CBC Encryption
+#pragma mark CBC Decryption
 
 + (NSString *)cbc_decrypt:(NSString *)rawInput key:(NSString *)secretKey encoding:(NSStringEncoding)dataEncoding badBytes:(NSInteger *)badByteCount
 {
+	*badByteCount = 0;
+		
 	if ([secretKey length] <= 0 || [rawInput length] <= 0) {
-		*badByteCount = 0;
+		LogToConsole(@"Received bad input with a empty value or empty key.");
 		
 		return nil;
 	}
 	
 	/* Decode encoded data. */
-	NSData *decodedMessage = [CSFWBase64Encoding decodeData:rawInput];
+	NSData *decodedMessage = [BlowfishBase base64DecodedCDCData:rawInput];
 	
+	NSInteger trueLength = [decodedMessage length];
+
 	/* Check if message is fragment. */
-	if ((([decodedMessage length] % 8) == 0 && [decodedMessage length] > 8) == NO) {
-		*badByteCount = 0;
+	if (trueLength <= 8) {
+		LogToConsole(@"Received corrupt input with a length less than 8.");
 		
 		return nil; // Cancel operation.
 	}
 	
 	/* Begin decoding message. */
-	const char *message	= [decodedMessage bytes];
+	BOOL beenCut = (trueLength % 8);
+	
+	if (beenCut) {
+		LogToConsole(@"WARNING: Received input not divisible by 8. Moving to last block which is. This may lose data.");
+		
+		trueLength = (trueLength - (trueLength % 8));
+	}
+	
+	unsigned char *message = malloc(trueLength);
+	
+	[decodedMessage getBytes:message length:trueLength];
 	
 	const char *secrkey	= [secretKey cStringUsingEncoding:dataEncoding];
 	
 	size_t keylen = strlen(secrkey);
-	size_t msglen = strlen(message);
 	
+	size_t msglen = trueLength;
+
 	/* =============================================== */
 	
 	EVP_CIPHER_CTX context;
@@ -248,6 +306,8 @@ static const signed char fish_unbase64[256] = {
 	
 	if (keylen > 56) {
 		keylen = 56;
+		
+		LogToConsole(@"WARNING: Using a key length greater than 56 will result in that key itself being struncted to the first 56 characters.");
 	} else {
 		keylen = keylen;
 	}
@@ -271,12 +331,14 @@ static const signed char fish_unbase64[256] = {
 	NSMutableData *outputHandler = [NSMutableData data];
 	
 	/* Perform encryption. */
-	BOOL result = [BlowfishBase walkBlowfishCypherForCBC:&context inputStream:(unsigned char *)message inputSize:msglen outputHandler:&outputHandler];
+	BOOL result = [BlowfishBase walkBlowfishCypherForCBC:&context inputStream:message inputSize:msglen outputHandler:&outputHandler];
 	
 	EVP_CIPHER_CTX_cleanup(&context);
 	
+	free(message);
+	
 	/* Return result. */
-	// if (result) {
+	if (result) {
 		if ([outputHandler length] > 8) {
 			[outputHandler replaceBytesInRange:NSMakeRange(0, 8) withBytes:NULL length:0];
 			
@@ -286,33 +348,94 @@ static const signed char fish_unbase64[256] = {
 				finalData = [outputHandler repairedCharacterBufferForUTF8Encoding:badByteCount];
 			} else {
 				finalData =  outputHandler;
-				
-				*badByteCount = 0;
 			}
 			
 			NSString *cypher = [[NSString alloc] initWithData:outputHandler encoding:dataEncoding];
-			
+
 			return cypher;
 		} else {
+			LogToConsole(@"outputHandler returned a result with a length less or equal to 8.");
+			
 			return nil;
 		}
-	// } else {
-	//	return nil;
-	// }
+	} else {
+		LogToConsole(@"Walking the cipher returned NO.");
+		
+		return nil;
+	}
+}
+
+#pragma mark -
+#pragma mark CDC Utilities
+
++ (NSData *)base64DecodedCDCData:(NSString *)rawInput
+{
+	NSData *data = [rawInput dataUsingEncoding:NSASCIIStringEncoding];
+	
+	BIO *command = BIO_new(BIO_f_base64());
+	
+	BIO_set_flags(command, BIO_FLAGS_BASE64_NO_NL);
+	
+	BIO *context = BIO_new_mem_buf((void *)[data bytes], (int)[data length]);
+	
+	context = BIO_push(command, context);
+ 
+	NSMutableData *decodedMessage = [NSMutableData data];
+	
+#define BUFFSIZE 256
+	int len;
+	
+	char inbuf[BUFFSIZE];
+	
+	while ((len = BIO_read(context, inbuf, BUFFSIZE)) > 0) {
+		[decodedMessage appendBytes:inbuf length:len];
+	}
+ 
+	BIO_free_all(context);
+#undef BUFFSIZE
+	
+	return decodedMessage;
 }
 
 #pragma mark -
 #pragma mark ECB Decryption
 
++ (NSInteger)estimatedLengthForECBEncryptedLength:(NSInteger)length
+{
+	NSInteger mallocSize = length;
+
+	mallocSize -= 1;
+	mallocSize /= 8;
+	mallocSize *= 12;
+	mallocSize += 12;
+	mallocSize += 1;
+	
+	return mallocSize;
+}
+
 + (NSString *)ecb_encrypt:(NSString *)rawInput key:(NSString *)secretKey encoding:(NSStringEncoding)dataEncoding
 {
 	if ([secretKey length] <= 0 || [rawInput length] <= 0) {
+		LogToConsole(@"Received bad input with a empty value or empty key.");
+		
 		return nil;
 	}
 	
 	const char *message	= [rawInput	 cStringUsingEncoding:dataEncoding];
 	const char *secrkey	= [secretKey cStringUsingEncoding:dataEncoding];
-
+	
+	if (message == NULL) {
+		LogToConsole(@"C string value of message could not be created.");
+		
+		return nil;
+	}
+	
+	if (secrkey == NULL) {
+		LogToConsole(@"C string value of the secret key could not be created.");
+		
+		return nil;
+	}
+	
 	size_t keylen = strlen(secrkey);
 	size_t msglen = strlen(message);
 
@@ -331,9 +454,12 @@ static const signed char fish_unbase64[256] = {
 	mallocSize += 1;
 	
     char *encrypted = malloc(mallocSize);
+
     char *end = encrypted;
 
     if (encrypted == NULL) {
+		LogToConsole(@"Malloc block for encrypted segment returned NULL result.");
+
 		return nil;
 	}
 
@@ -399,15 +525,29 @@ static const signed char fish_unbase64[256] = {
 
 + (NSString *)ecb_decrypt:(NSString *)rawInput key:(NSString *)secretKey encoding:(NSStringEncoding)dataEncoding badBytes:(NSInteger *)badByteCount
 {
+	*badByteCount = 0;
+		
 	if ([secretKey length] <= 0 || [rawInput length] <= 0) {
-		*badByteCount = 0;
+		LogToConsole(@"Received bad input with a empty value or empty key.");
 		
 		return nil;
 	}
 
 	const char *message	= [rawInput	 cStringUsingEncoding:dataEncoding];
 	const char *secrkey	= [secretKey cStringUsingEncoding:dataEncoding];
-
+	
+	if (message == NULL) {
+		LogToConsole(@"C string value of message could not be created.");
+		
+		return nil;
+	}
+	
+	if (secrkey == NULL) {
+		LogToConsole(@"C string value of the secret key could not be created.");
+		
+		return nil;
+	}
+	
 	size_t keylen = strlen(secrkey);
 	size_t msglen = strlen(message);
 
@@ -418,9 +558,12 @@ static const signed char fish_unbase64[256] = {
     BF_set_key(&bfkey, (int)keylen, (const unsigned char *)secrkey);
 
     char *decrypted = malloc((msglen + 1));
+	
     char *end = decrypted;
 
-    if (decrypted == NULL) {
+	if (decrypted == NULL) {
+		LogToConsole(@"Malloc block for encrypted segment returned NULL result.");
+
 		return nil;
 	}
 
