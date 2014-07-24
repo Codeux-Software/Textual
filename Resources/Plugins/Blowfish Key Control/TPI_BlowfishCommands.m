@@ -163,6 +163,16 @@
 				} else {	
 					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1000]") channel:c];
 				}
+			} else if ([commandString isEqualToString:@"SETKEYMODE"]) {
+				if ([messageString isEqualIgnoringCase:@"CBC"]) {
+					[c setEncryptionAlgorithm:CSFWBlowfishEncryptionCBCAlgorithm];
+					
+					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1020]") channel:c];
+				} else {
+					[c setEncryptionAlgorithm:CSFWBlowfishEncryptionECBAlgorithm];
+					
+					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1021]") channel:c];
+				}
 			} else if ([commandString isEqualToString:@"KEYX"]) {
 				if ([c isPrivateMessage] == NO) {
 					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1008]") channel:c];
@@ -181,7 +191,13 @@
 						} else {
 							NSString *requestKey = [self keyExchangeDictionaryKey:c];
 							
-							NSString *requestMsg = [TXExchangeRequestPrefix stringByAppendingString:publicKey];
+							NSString *requestMsg = nil;
+							
+							if ([messageString isEqualIgnoringCase:@"nocbc"]) {
+								requestMsg = [NSString stringWithFormat:@"%@ %@", TXExchangeRequestPrefix, publicKey];
+							} else {
+								requestMsg = [NSString stringWithFormat:@"%@ %@ CBC", TXExchangeRequestPrefix, publicKey];
+							}
 
 							[[self keyExchangeRequests] setObject:@[keyRequest, c] forKey:requestKey];
 
@@ -204,7 +220,7 @@
 
 - (NSArray *)subscribedUserInputCommands
 {
-	return @[@"setkey", @"delkey", @"key", @"keyx"];
+	return @[@"setkey", @"delkey", @"key", @"keyx", @"setkeymode"];
 }
 
 - (NSArray *)subscribedServerInputCommands
@@ -239,11 +255,21 @@
 
         return;
     }
+	
+	CSFWBlowfishEncryptionAlgorithm algorithm = CSFWBlowfishEncryptionDefaultAlgorithm;
 
 	NSString *requestData = nil;
 	
-	if ([requestDataRaw length] >= [TXExchangeRequestPrefix length]) {
+	if ([requestDataRaw length] > [TXExchangeRequestPrefix length]) {
 		requestData = [requestDataRaw substringFromIndex:[TXExchangeRequestPrefix length]];
+		
+		NSArray *parts = [requestData split:NSStringWhitespacePlaceholder];
+		
+		requestData = parts[0];
+		
+		if ([parts count] > 1 && [parts[1] isEqualToString:@"CBC"]) {
+			algorithm = CSFWBlowfishEncryptionCBCAlgorithm;
+		}
 	} else {
 		requestData =  requestDataRaw;
 	}
@@ -253,50 +279,67 @@
 	//DebugLogToConsole(@"	Channel: %@", channel);
 	//DebugLogToConsole(@"	Message: %@", requestData);
 	
-	if ([self keyExchangeRequestExists:channel]) {
-        [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1010]", [channel name]) channel:channel];
-		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1009]", [channel name]) channel:channel];
+	if ([requestData length] <= 0) {
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1019]") channel:channel];
 	} else {
-		CFDH1080 *keyRequest = [CFDH1080 new];
+		if ([self keyExchangeRequestExists:channel]) {
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1010]", [channel name]) channel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1009]", [channel name]) channel:channel];
+		} else {
+			CFDH1080 *keyRequest = [CFDH1080 new];
 
-		/* Process secret from the Receiver. */
-		NSString *theSecret = [keyRequest secretKeyFromPublicKey:requestData];
+			/* Process secret from the Receiver. */
+			NSString *theSecret = [keyRequest secretKeyFromPublicKey:requestData];
 
-		if (NSObjectIsEmpty(theSecret)) {
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1004]") channel:channel];
+			if (NSObjectIsEmpty(theSecret)) {
+				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1004]") channel:channel];
 
-            return;
+				return;
+			}
+
+			/* Generate our own public key. If everything has gone correctly up to here,
+			 then when the user that sent the request computes our public key, we both
+			 should have the same secret. */
+			NSString *publicKey = [keyRequest generatePublicKey];
+
+			if (NSObjectIsEmpty(publicKey)) {
+				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1003]") channel:channel];
+
+				return;
+			}
+
+			//DebugLogToConsole(@"	Shared Secret: %@", theSecret);
+			
+			[channel setEncryptionKey:theSecret];
+			
+			[channel setEncryptionAlgorithm:algorithm];
+
+			/* Finish up. */
+			NSString *requestMsg = [TXExchangeResponsePrefix stringByAppendingString:publicKey];
+			
+			if (algorithm == CSFWBlowfishEncryptionCBCAlgorithm) {
+				requestMsg = [requestMsg stringByAppendingString:@" CBC"];
+			}
+
+			[client sendText:[NSAttributedString emptyStringWithBase:requestMsg]
+					 command:IRCPrivateCommandIndex("notice")
+					 channel:channel
+			  withEncryption:NO];
+
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1010]", [channel name]) channel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1013]", [channel name]) channel:channel];
+			
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1005]", [channel name]) channel:channel];
+			
+			if (algorithm == CSFWBlowfishEncryptionDefaultAlgorithm || algorithm == CSFWBlowfishEncryptionECBAlgorithm) {
+				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1017]") channel:channel];
+			} else {
+				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1018]") channel:channel];
+			}
+			
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1006]", [channel name]) channel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1007]", [channel name]) channel:channel];
 		}
-
-		/* Generate our own public key. If everything has gone correctly up to here,
-		 then when the user that sent the request computes our public key, we both
-		 should have the same secret. */
-		NSString *publicKey = [keyRequest generatePublicKey];
-
-		if (NSObjectIsEmpty(publicKey)) {
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1003]") channel:channel];
-
-            return;
-		}
-
-		//DebugLogToConsole(@"	Shared Secret: %@", theSecret);
-		
-		[channel setEncryptionKey:theSecret];
-
-		/* Finish up. */
-		NSString *requestMsg = [TXExchangeResponsePrefix stringByAppendingString:publicKey];
-
-		[client sendText:[NSAttributedString emptyStringWithBase:requestMsg]
-				 command:IRCPrivateCommandIndex("notice")
-				 channel:channel
-          withEncryption:NO];
-
-        [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1010]", [channel name]) channel:channel];
-		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1013]", [channel name]) channel:channel];
-		
-		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1005]", [channel name]) channel:channel];
-		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1006]", [channel name]) channel:channel];
-		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1007]", [channel name]) channel:channel];
 	}
 }
 
@@ -307,8 +350,18 @@
 	if (exchangeData) {
 		NSString *responseData = nil;
 		
-		if ([responseDataRaw length] >= [TXExchangeResponsePrefix length]) {
+		CSFWBlowfishEncryptionAlgorithm algorithm = CSFWBlowfishEncryptionDefaultAlgorithm;
+
+		if ([responseDataRaw length] > [TXExchangeResponsePrefix length]) {
 			responseData = [responseDataRaw substringFromIndex:[TXExchangeResponsePrefix length]];
+			
+			NSArray *parts = [responseData split:NSStringWhitespacePlaceholder];
+			
+			responseData = parts[0];
+			
+			if ([parts count] > 1 && [parts[1] isEqualToString:@"CBC"]) {
+				algorithm = CSFWBlowfishEncryptionCBCAlgorithm;
+			}
 		} else {
 			responseData =  responseDataRaw;
 		}
@@ -322,33 +375,46 @@
 		
 		IRCChannel *channel = exchangeData[1];
 		
-		NSString *encryptionKey = [channel encryptionKey];
-		
-		if (encryptionKey) {
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1015]", [channel name]) channel:channel];
+		if ([responseData length] <= 0) {
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1019]") channel:channel];
+		} else {
+			NSString *encryptionKey = [channel encryptionKey];
 			
-			return;
+			if (encryptionKey) {
+				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1015]", [channel name]) channel:channel];
+				
+				return;
+			}
+			
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1014]", [channel name]) channel:channel];
+			
+			/* Compute the public key received against our own. Our original public key
+			 was sent to the user which has responded by computing their own against
+			 that. Now we compute the key received to obtain the shared secret. What?… */
+			NSString *theSecret = [request secretKeyFromPublicKey:responseData];
+			
+			if (NSObjectIsEmpty(theSecret)) {
+				return [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1004]") channel:channel];
+			}
+			
+			//DebugLogToConsole(@"	Shared Secret: %@", theSecret);
+			
+			[channel setEncryptionKey:theSecret];
+			
+			[channel setEncryptionAlgorithm:algorithm];
+			
+			/* Finish up. */
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1005]", [channel name]) channel:channel];
+			
+			if (algorithm == CSFWBlowfishEncryptionDefaultAlgorithm || algorithm == CSFWBlowfishEncryptionECBAlgorithm) {
+				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1017]") channel:channel];
+			} else {
+				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1018]") channel:channel];
+			}
+			
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1006]", [channel name]) channel:channel];
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1007]", [channel name]) channel:channel];
 		}
-		
-		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1014]", [channel name]) channel:channel];
-		
-		/* Compute the public key received against our own. Our original public key
-		 was sent to the user which has responded by computing their own against 
-		 that. Now we compute the key received to obtain the shared secret. What?… */
-		NSString *theSecret = [request secretKeyFromPublicKey:responseData];
-
-		if (NSObjectIsEmpty(theSecret)) {
-			return [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1004]") channel:channel];
-		}
-		
-		//DebugLogToConsole(@"	Shared Secret: %@", theSecret);
-		
-		[channel setEncryptionKey:theSecret];
-
-		/* Finish up. */
-		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1005]", [channel name]) channel:channel];
-		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1006]", [channel name]) channel:channel];
-		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1007]", [channel name]) channel:channel];
 		
 		[[self keyExchangeRequests] removeObjectForKey:responseKey];
 	}
