@@ -1575,10 +1575,7 @@
 
 		while ([strc length] > 0)
 		{
-			NSString *newstr = [strc attributedStringToASCIIFormatting:&strc
-															  lineType:type
-															   channel:[channel name]
-															  hostmask:self.cachedLocalHostmask];
+			NSString *newstr = [strc attributedStringToASCIIFormatting:&strc lineType:type client:self channel:channel];
 
 			BOOL encrypted = NO;
 			
@@ -1957,8 +1954,6 @@
 
 			while ([s length] > 0)
 			{
-				NSString *t = [s attributedStringToASCIIFormatting:&s lineType:type channel:targetChannelName hostmask:self.cachedLocalHostmask];
-
 				for (__strong NSString *channelName in targets) {
 					for (NSString *prefixMode in userModePrefixes) {
 						NSString *symbol = userModePrefixes[prefixMode];
@@ -1978,6 +1973,8 @@
 						}
 					}
 					
+					NSString *t = [s attributedStringToASCIIFormatting:&s lineType:type client:self channel:channel];
+
 					NSString *encryptedString = t;
 
 					if (channel) {
