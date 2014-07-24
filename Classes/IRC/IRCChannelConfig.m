@@ -266,6 +266,8 @@
 		[dic assignStringTo:&_defaultModes forKey:@"defaultMode"];
 		[dic assignStringTo:&_defaultTopic forKey:@"defaultTopic"];
 		
+		[dic assignIntegerTo:&_encryptionAlgorithm forKey:@"encryptionAlgorithm"];
+		
 		return self;
 	}
 	
@@ -302,6 +304,8 @@
 		[dic setBool:self.showTreeBadgeCount	forKey:@"enableTreeBadgeCountDrawing"];
 	}
 
+	[dic setInteger:self.encryptionAlgorithm	forKey:@"encryptionAlgorithm"];
+	
 	[dic maybeSetObject:self.itemUUID			forKey:@"uniqueIdentifier"];
 	[dic maybeSetObject:self.channelName		forKey:@"channelName"];
 

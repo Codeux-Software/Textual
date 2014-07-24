@@ -51,6 +51,7 @@
 @property (nonatomic, nweak) IBOutlet NSButton *ignoreHighlightsCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *pushNotificationsCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *showTreeBadgeCountCheck;
+@property (nonatomic, nweak) IBOutlet NSPopUpButton *encryptionAlgorithmPopup;
 @property (nonatomic, nweak) IBOutlet NSSegmentedControl *contentViewTabView;
 @property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *channelNameField;
 @property (nonatomic, nweak) IBOutlet NSTextField *defaultModesField;
@@ -184,6 +185,8 @@
 	[self.encryptionKeyField setStringValue:[self.config encryptionKeyValue]];
 	
 	[self.secretKeyField setStringValue:[self.config secretKeyValue]];
+	
+	[self.encryptionAlgorithmPopup selectItemWithTag:[self.config encryptionAlgorithm]];
 
 	[self.autoJoinCheck	setState:[self.config autoJoin]];
 	[self.JPQActivityCheck setState:[self.config ignoreJPQActivity]];
@@ -207,6 +210,8 @@
 	
 	[self.config setSecretKey:[self.secretKeyField firstTokenStringValue]];
 	[self.config setEncryptionKey:[self.encryptionKeyField trimmedStringValue]];
+	
+	[self.config setEncryptionAlgorithm:[self.encryptionAlgorithmPopup selectedTag]];
 	
 	[self.config setAutoJoin:[self.autoJoinCheck state]];
 	[self.config setIgnoreJPQActivity:[self.JPQActivityCheck state]];

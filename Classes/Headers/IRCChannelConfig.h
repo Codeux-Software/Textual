@@ -57,6 +57,7 @@ typedef enum IRCChannelType : NSInteger {
 @property (nonatomic, assign) BOOL ignoreInlineImages;
 @property (nonatomic, assign) BOOL ignoreHighlights;
 @property (nonatomic, assign) BOOL ignoreJPQActivity;
+@property (nonatomic, assign) CSFWBlowfishEncryptionAlgorithm encryptionAlgorithm;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dic;
 - (NSMutableDictionary *)dictionaryValue;
