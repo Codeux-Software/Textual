@@ -151,7 +151,9 @@
 		struct statfs stat;
 
 		const char *fsRep = [fullpath fileSystemRepresentation];
-
+		
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 		if ((FSPathMakeRef((const UInt8 *)fsRep, &fsRef, NULL) == 0) == NO) {
 			continue;
 		}
@@ -159,7 +161,8 @@
 		if ((FSGetCatalogInfo(&fsRef, kFSCatInfoParentDirID, &catalogInfo, NULL, NULL, NULL) == 0) == NO) {
 			continue;
 		}
-
+#pragma clang diagnostic pop
+		
 		BOOL isVolume = (catalogInfo.parentDirID == fsRtParID);
 
 		if (isVolume) {
