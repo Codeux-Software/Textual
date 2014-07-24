@@ -326,9 +326,9 @@
 			}
 
 			/* Only update if we aren't at max. */
-			stringDeletionLength += characterSize;
+			stringDeletionLength += charRange.length;
 			
-			i += characterSize;
+			i += charRange.length;
 
 			/* Do the actual append. */
 			[result appendString:c];
@@ -342,11 +342,17 @@
 		if (breakLoopAfterAppend) {
 			break; // We cannot go any further in this line.
 		}
-
-		effectiveRange.location = stringDeletionLength;
-		effectiveRange.length   = ([base length] - stringDeletionLength);
-
-		limitRange = effectiveRange;
+		
+		NSInteger effectiveRangeNewLength = ([base length] - stringDeletionLength);
+		
+		if (effectiveRangeNewLength <= 0) {
+			break;
+		} else {
+			effectiveRange.location = stringDeletionLength;
+			effectiveRange.length   = effectiveRangeNewLength;
+			
+			limitRange = effectiveRange;
+		}
 	}
 
 	/* Return our attributed string to caller with our formatted line
