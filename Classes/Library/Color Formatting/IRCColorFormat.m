@@ -104,8 +104,8 @@
 
 - (NSString *)attributedStringToASCIIFormatting:(NSMutableAttributedString **)string
                                        lineType:(TVCLogLineType)type
-                                        channel:(NSString *)channelName
-                                       hostmask:(NSString *)hostmask
+										 client:(IRCClient *)client
+                                        channel:(IRCChannel *)channel
 {
     NSMutableAttributedString *base = [*string copy];
 
@@ -132,7 +132,7 @@
 	
     NSInteger baseMath = 0;
 	
-	baseMath += ([channelName length] + [hostmask length]);
+	baseMath += ([[channel name] length] + [[client localHostmask] length]);
 
 	if (type == TVCLogLinePrivateMessageType || type == TVCLogLineActionType) {
 		baseMath += _textTruncationPRIVMSGCommandConstant;
@@ -146,10 +146,23 @@
 		NSAssert(NO, @"Bad line type.");
 	}
 	
-	/* Begin actual work. */
+	/* Write out status. */
 	NSInteger totalCalculatedLength = baseMath;
 	NSInteger stringDeletionLength  = 0;
-
+	
+	NSInteger maximumLength = TXMaximumIRCBodyLength;
+	
+	/* If message is going to be encrypted, we have to take that into account. */
+	if ([channel encryptionKey]) {
+		/* This method will take a given size and estimate the maximum number of
+		 characters that can fit within that range. */
+		NSUInteger newEstimation = [CSFWBlowfish estimatedLengthOfStringEncryptedUsing:[channel encryptionAlgorithm]
+																  thatFitsWithinBounds:(maximumLength - baseMath)];
+		
+		maximumLength = newEstimation;
+	}
+	
+	/* Begin actual work. */
 	NSInteger startCharCount = 0;
 	NSInteger stopCharCount = 0;
 	
@@ -226,7 +239,7 @@
 						 2);						  // The sad little two. A single unicode character.
 
 			/* Will this new segment exceed the maximum size? */
-			if (newLength >= TXMaximumIRCBodyLength) {
+			if (newLength > maximumLength) {
 				/* Yes? Break that shit! */
 
 				break;
@@ -260,23 +273,25 @@
 		 the formatting characters into the math so any math checked against in the loop will 
 		 only be counted towards the actual characters. */
 
-		for (NSInteger i = 0; i < effectiveRange.length; i ++) {
+		for (NSInteger i = 0; i < effectiveRange.length;) {
 			NSInteger clocal = (effectiveRange.location + i);
 
-			UniChar c = [[base string] characterAtIndex:clocal];
-
+			NSRange charRange = [[base string] rangeOfComposedCharacterSequenceAtIndex:clocal];
+			
+			NSString *c = [[base string] substringWithRange:charRange];
+			
 			/* Update math. */
-			NSInteger characterSize = 1;
-
-			if (c > 0x7f) {
-				characterSize = 2;
+			NSInteger characterSize = [c lengthOfBytesUsingEncoding:client.config.primaryEncoding];
+			
+			if (characterSize == 0) {
+				characterSize = charRange.length; // Just incase…
 			}
-
+			
 			/* Update locals. */
 			totalCalculatedLength += characterSize;
 
 			/* Would this character go over the max body length? */
-			if ((totalCalculatedLength + characterSize) >= TXMaximumIRCBodyLength) {
+			if (totalCalculatedLength > maximumLength) {
 				/* We are leaving after this. */
 				breakLoopAfterAppend = YES;
 
@@ -311,10 +326,12 @@
 			}
 
 			/* Only update if we aren't at max. */
-			stringDeletionLength += 1;
+			stringDeletionLength += characterSize;
+			
+			i += characterSize;
 
 			/* Do the actual append. */
-			[result appendFormat:@"%C", c];
+			[result appendString:c];
 		}
 
 		if (foregroundColorD)   { [result appendFormat:@"%c", 0x03]; }
@@ -331,7 +348,7 @@
 
 		limitRange = effectiveRange;
 	}
-	
+
 	/* Return our attributed string to caller with our formatted line
 	 so that the next one can be served up. */
     [*string deleteCharactersInRange:NSMakeRange(0, stringDeletionLength)];
