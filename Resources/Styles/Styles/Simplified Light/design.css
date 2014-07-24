@@ -141,6 +141,7 @@ a:hover {
 /* Images */
 
 .inlineImageCell {
+	overflow: auto;
 	display: block;
 	margin-top: 15px;
 	margin-bottom: 12px;
@@ -172,6 +173,7 @@ a:hover {
 /* Remember Line */
 
 div[id=mark] {
+	clear: both;
 	position: relative;
 	z-index: 295;
 	margin-top: -1px;
