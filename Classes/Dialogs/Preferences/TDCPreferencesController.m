@@ -1287,6 +1287,8 @@
 							otherButton:TXTLS(copyButton)
 						 suppressionKey:nil
 						suppressionText:nil];
+		
+		return;
     } else {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 		BOOL containerAvlb = [sharedCloudManager() ubiquitousContainerIsAvailable];
@@ -1329,26 +1331,6 @@
 								 suppressionKey:nil
 								suppressionText:nil];
 			}
-			
-			return;
-		}
-#else 
-		if ([themeController() storageLocation] == TPCThemeControllerStorageCustomLocation) {
-			/* If the theme exists in app support folder, but cloud syncing is available,
-			 then offer to sync it to the cloud. */
-			
-			TLOPopupPrompts *prompt = [TLOPopupPrompts new];
-			
-			[prompt sheetWindowWithQuestion:[NSApp keyWindow]
-									 target:self
-									 action:@selector(openPathToThemesCallback:withOriginalAlert:)
-									   body:TXTLS(@"TDCPreferencesController[1012]")
-									  title:TXTLS(@"TDCPreferencesController[1013]")
-							  defaultButton:BLS(1017)
-							alternateButton:BLS(1009)
-								otherButton:TXTLS(@"TDCPreferencesController[1009]")
-							 suppressionKey:nil
-							suppressionText:nil];
 			
 			return;
 		}
