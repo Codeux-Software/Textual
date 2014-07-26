@@ -210,7 +210,7 @@
 /* Sections of channel information in main window title bar. */
 "BasicLanguage[1005]" = " — ";
 "BasicLanguage[1006]" = " (%@)";
-"BasicLanguage[1007]" = " (%ld Users)";
+"BasicLanguage[1007]" = " (%ld users)";
 "BasicLanguage[1008]" = "%1$@ on %2$@";
 
 /* Cancel button used by prompts. */
