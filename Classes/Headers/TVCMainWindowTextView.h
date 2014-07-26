@@ -70,6 +70,5 @@
 @property (readonly, copy) NSColor *systemSpecificPlaceholderTextFontColor;
 @end
 
-@interface TVCMainWindowTextViewContentView : NSVisualEffectView
-@property (nonatomic, assign) BOOL yosemiteIsUsingVibrantDarkMode;
+@interface TVCMainWindowTextViewContentView : NSView
 @end

@@ -943,6 +943,8 @@
 		4CF09D1A195D4AAF00A29486 /* IRCWorldCloudExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF09D19195D4AAF00A29486 /* IRCWorldCloudExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CF09D1B195D4AAF00A29486 /* IRCWorldCloudExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF09D19195D4AAF00A29486 /* IRCWorldCloudExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC11580469E00846B64 /* SystemConfiguration.framework */; };
+		4CF4D6B719837C1700FB5AF0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF4D6B619837C1700FB5AF0 /* QuartzCore.framework */; };
+		4CF4D6B819837C3000FB5AF0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF4D6B619837C1700FB5AF0 /* QuartzCore.framework */; };
 		4CFC40DF1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFC40DE1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m */; };
 		4CFC40E01969B58F004C6EF4 /* TPCPreferencesUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFC40DE1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m */; };
 		4CFC40E21969B5A0004C6EF4 /* IRCWorldCloudExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFC40E11969B5A0004C6EF4 /* IRCWorldCloudExtension.m */; };
@@ -1592,6 +1594,7 @@
 		4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogRemoteAddress.h; sourceTree = "<group>"; };
 		4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogRemoteAddress.m; path = "Dialogs/File Transfers/TDCFileTransferDialogRemoteAddress.m"; sourceTree = "<group>"; };
 		4CF09D19195D4AAF00A29486 /* IRCWorldCloudExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCWorldCloudExtension.h; sourceTree = "<group>"; };
+		4CF4D6B619837C1700FB5AF0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4CFC40DE1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCPreferencesUserDefaults.m; path = Preferences/TPCPreferencesUserDefaults.m; sourceTree = "<group>"; };
 		4CFC40E11969B5A0004C6EF4 /* IRCWorldCloudExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCWorldCloudExtension.m; path = IRC/IRCWorldCloudExtension.m; sourceTree = "<group>"; };
 		5D4846C2171F0AC00015F2B0 /* OELReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OELReachability.m; sourceTree = "<group>"; };
@@ -1613,15 +1616,16 @@
 				4C68425816C5AF730005A59E /* BlowfishEncryption.framework in Frameworks */,
 				4C46CCC51580469E00846B64 /* Cocoa.framework in Frameworks */,
 				4C46CCC71580469E00846B64 /* Foundation.framework in Frameworks */,
-				4CDB24A118CAB914007EF6DE /* HockeySDK.framework in Frameworks */,
 				4CCF2EE2158046F9006FFE21 /* Growl.framework in Frameworks */,
-				4C85D197187EC18900860129 /* TCMPortMapper.framework in Frameworks */,
+				4CDB24A118CAB914007EF6DE /* HockeySDK.framework in Frameworks */,
 				4C211D5715BF21BA00E218DA /* libmustache.a in Frameworks */,
+				4CF4D6B819837C3000FB5AF0 /* QuartzCore.framework in Frameworks */,
 				4C46CCC91580469E00846B64 /* Security.framework in Frameworks */,
 				4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */,
 				4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */,
-				4C46CCCB1580469E00846B64 /* WebKit.framework in Frameworks */,
 				4C78926816C6259D0081E859 /* SystemInformation.framework in Frameworks */,
+				4C85D197187EC18900860129 /* TCMPortMapper.framework in Frameworks */,
+				4C46CCCB1580469E00846B64 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1635,13 +1639,14 @@
 				4C5BA45A16F1302F00A96CA2 /* BlowfishEncryption.framework in Frameworks */,
 				4C5BA45B16F1302F00A96CA2 /* Cocoa.framework in Frameworks */,
 				4C5BA45D16F1302F00A96CA2 /* Foundation.framework in Frameworks */,
-				4CDB24A218CAB914007EF6DE /* HockeySDK.framework in Frameworks */,
 				4C5BA45E16F1302F00A96CA2 /* Growl.framework in Frameworks */,
-				4C85D198187EC18900860129 /* TCMPortMapper.framework in Frameworks */,
+				4CDB24A218CAB914007EF6DE /* HockeySDK.framework in Frameworks */,
 				4C5BA46216F1302F00A96CA2 /* libmustache.a in Frameworks */,
+				4CF4D6B719837C1700FB5AF0 /* QuartzCore.framework in Frameworks */,
 				4C5BA46416F1302F00A96CA2 /* Security.framework in Frameworks */,
 				4C5BA46516F1302F00A96CA2 /* SecurityInterface.framework in Frameworks */,
 				4C5BA46616F1302F00A96CA2 /* SystemConfiguration.framework in Frameworks */,
+				4C85D198187EC18900860129 /* TCMPortMapper.framework in Frameworks */,
 				4C5BA46716F1302F00A96CA2 /* WebKit.framework in Frameworks */,
 				4C5BA46816F1302F00A96CA2 /* SystemInformation.framework in Frameworks */,
 			);
@@ -1683,6 +1688,7 @@
 		4C1DC5551580420500A47BC9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4CF4D6B619837C1700FB5AF0 /* QuartzCore.framework */,
 				4C46CCCC158046BE00846B64 /* External Frameworks */,
 				4C211D3F15BF1F5E00E218DA /* External Libraries */,
 				4C46CCB91580469200846B64 /* System Frameworks */,
@@ -4236,6 +4242,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/.tmp/SharedBuildProducts",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Debug;
@@ -4244,6 +4255,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/.tmp/SharedBuildProducts",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Release;
@@ -4252,6 +4268,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Debug;
@@ -4260,6 +4280,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Release;
@@ -4268,6 +4292,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (App Store)";
@@ -4292,6 +4320,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/.tmp/SharedBuildProducts",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (Trial)";
@@ -4300,6 +4333,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (Trial)";
@@ -4352,6 +4389,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/.tmp/SharedBuildProducts",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (App Store)";

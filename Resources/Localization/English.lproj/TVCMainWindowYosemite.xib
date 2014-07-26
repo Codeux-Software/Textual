@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6185.7" systemVersion="14A283o" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6185.11" systemVersion="14A298i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="101000" defaultVersion="1080" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.7"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.11"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TXMasterController">
@@ -12,7 +12,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Textual" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="21" userLabel="Window" customClass="TVCMainWindow">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
@@ -23,9 +23,29 @@
                 <rect key="frame" x="0.0" y="0.0" width="800" height="477"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <visualEffectView blendingMode="behindWindow" material="appearanceBased" state="inactive" translatesAutoresizingMaskIntoConstraints="NO" id="QWX-3d-xlG" userLabel="Text Field" customClass="TVCMainWindowTextViewContentView">
+                    <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nl0-Ur-GuY" userLabel="Text Field" customClass="TVCMainWindowTextViewContentView">
                         <rect key="frame" x="0.0" y="0.0" width="800" height="38"/>
                         <subviews>
+                            <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2853" customClass="TVCMainWindowSegmentedController">
+                                <rect key="frame" x="10" y="5" width="150" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="Iyf-FE-y9H"/>
+                                </constraints>
+                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="2870" customClass="TVCMainWindowSegmentedControllerCell">
+                                    <font key="font" metaFont="system"/>
+                                    <segments>
+                                        <segment toolTip="Add Server or Channel" image="NSAddTemplate" width="48">
+                                            <nil key="label"/>
+                                        </segment>
+                                        <segment toolTip="Manage Selection" image="NSActionTemplate" width="48" tag="1">
+                                            <nil key="label"/>
+                                        </segment>
+                                        <segment toolTip="Open Address Book" image="3B957DD7-B065-415E-A36D-67C2272093B5" width="46" tag="2">
+                                            <nil key="label"/>
+                                        </segment>
+                                    </segments>
+                                </segmentedCell>
+                            </segmentedControl>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="2851" customClass="TVCMainWindowTextViewBackground">
                                 <rect key="frame" x="170" y="6" width="620" height="25"/>
                                 <subviews>
@@ -46,12 +66,12 @@
                                                     <size key="maxSize" width="629" height="10000000"/>
                                                     <connections>
                                                         <outlet property="backgroundView" destination="2851" id="Izu-dD-CPe"/>
-                                                        <outlet property="contentView" destination="QWX-3d-xlG" id="3gd-DJ-dDL"/>
+                                                        <outlet property="contentView" destination="nl0-Ur-GuY" id="rR0-xi-mmE"/>
                                                         <outlet property="segmentedController" destination="2853" id="qG1-5D-rWQ"/>
                                                         <outlet property="segmentedControllerCell" destination="2870" id="NUT-bV-L7f"/>
-                                                        <outlet property="segmentedControllerLeadingConstraint" destination="V8Y-xx-Qb2" id="3kf-Lf-0qq"/>
+                                                        <outlet property="segmentedControllerLeadingConstraint" destination="3fa-Sb-E6M" id="vxO-4t-mAf"/>
                                                         <outlet property="segmentedControllerWidthConstraint" destination="Iyf-FE-y9H" id="iap-hh-bxA"/>
-                                                        <outlet property="textFieldHeightConstraint" destination="dbt-8E-Ux8" id="Y8g-WR-RPq"/>
+                                                        <outlet property="textFieldHeightConstraint" destination="I0u-lq-GQo" id="hj0-ep-c7K"/>
                                                     </connections>
                                                 </textView>
                                             </subviews>
@@ -73,41 +93,18 @@
                                     <constraint firstAttribute="bottom" secondItem="2852" secondAttribute="bottom" constant="3" id="p2A-vn-l58"/>
                                     <constraint firstItem="2852" firstAttribute="top" secondItem="2851" secondAttribute="top" constant="3" id="xSF-3A-HgQ"/>
                                 </constraints>
-                                <connections>
-                                    <outlet property="contentView" destination="QWX-3d-xlG" id="9Jr-34-EMb"/>
-                                </connections>
                             </customView>
-                            <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2853" customClass="TVCMainWindowSegmentedController">
-                                <rect key="frame" x="10" y="5" width="150" height="25"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="Iyf-FE-y9H"/>
-                                </constraints>
-                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="2870" customClass="TVCMainWindowSegmentedControllerCell">
-                                    <font key="font" metaFont="system"/>
-                                    <segments>
-                                        <segment toolTip="Add Server or Channel" image="NSAddTemplate" width="48">
-                                            <nil key="label"/>
-                                        </segment>
-                                        <segment toolTip="Manage Selection" image="NSActionTemplate" width="48" tag="1">
-                                            <nil key="label"/>
-                                        </segment>
-                                        <segment toolTip="Open Address Book" image="164FE75C-DB0B-4C03-82C2-2A0FE3BC931C" width="46" tag="2">
-                                            <nil key="label"/>
-                                        </segment>
-                                    </segments>
-                                </segmentedCell>
-                            </segmentedControl>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="2853" secondAttribute="bottom" constant="7" id="5q7-VY-75j"/>
-                            <constraint firstAttribute="bottom" secondItem="2851" secondAttribute="bottom" constant="6" id="BJ7-a1-8eR"/>
-                            <constraint firstItem="2851" firstAttribute="top" secondItem="QWX-3d-xlG" secondAttribute="top" constant="7" id="Rac-Gt-zkI"/>
-                            <constraint firstAttribute="trailing" secondItem="2851" secondAttribute="trailing" constant="10" id="TQ1-DG-4O8"/>
-                            <constraint firstItem="2853" firstAttribute="leading" secondItem="QWX-3d-xlG" secondAttribute="leading" constant="10" id="V8Y-xx-Qb2"/>
-                            <constraint firstAttribute="height" constant="38" id="dbt-8E-Ux8"/>
-                            <constraint firstItem="2851" firstAttribute="leading" secondItem="2853" secondAttribute="trailing" constant="10" id="uIC-Q8-qfZ"/>
+                            <constraint firstItem="2853" firstAttribute="leading" secondItem="nl0-Ur-GuY" secondAttribute="leading" constant="10" id="3fa-Sb-E6M"/>
+                            <constraint firstItem="2851" firstAttribute="top" secondItem="nl0-Ur-GuY" secondAttribute="top" constant="7" id="E7x-dv-DLk"/>
+                            <constraint firstAttribute="height" constant="38" id="I0u-lq-GQo"/>
+                            <constraint firstItem="2851" firstAttribute="leading" secondItem="2853" secondAttribute="trailing" constant="10" id="KBa-ya-o2F"/>
+                            <constraint firstAttribute="bottom" secondItem="2853" secondAttribute="bottom" constant="7" id="Pre-KS-vrJ"/>
+                            <constraint firstAttribute="trailing" secondItem="2851" secondAttribute="trailing" constant="10" id="gAN-XW-Tk9"/>
+                            <constraint firstAttribute="bottom" secondItem="2851" secondAttribute="bottom" constant="6" id="gCw-ka-5Xv"/>
                         </constraints>
-                    </visualEffectView>
+                    </customView>
                     <view hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2793" userLabel="Main View">
                         <rect key="frame" x="0.0" y="38" width="800" height="439"/>
                         <subviews>
@@ -639,16 +636,16 @@ There are no other limits. What you see, is what you get.</string>
                 </subviews>
                 <constraints>
                     <constraint firstItem="2793" firstAttribute="top" secondItem="2" secondAttribute="top" id="1kl-dP-hIR"/>
-                    <constraint firstAttribute="trailing" secondItem="QWX-3d-xlG" secondAttribute="trailing" id="7Ix-1n-u2a"/>
-                    <constraint firstItem="QWX-3d-xlG" firstAttribute="top" secondItem="2793" secondAttribute="bottom" id="7ZV-zd-PbA"/>
-                    <constraint firstItem="QWX-3d-xlG" firstAttribute="top" secondItem="2850" secondAttribute="bottom" id="DDg-yh-Wy2"/>
+                    <constraint firstItem="nl0-Ur-GuY" firstAttribute="top" secondItem="2850" secondAttribute="bottom" id="AtI-Oq-DDu"/>
                     <constraint firstItem="2850" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="HIK-9U-VIt"/>
-                    <constraint firstAttribute="bottom" secondItem="QWX-3d-xlG" secondAttribute="bottom" id="RZp-JM-UvU"/>
+                    <constraint firstAttribute="bottom" secondItem="nl0-Ur-GuY" secondAttribute="bottom" id="N5d-gh-8ce"/>
                     <constraint firstAttribute="trailing" secondItem="2850" secondAttribute="trailing" id="Tor-kH-dtc"/>
+                    <constraint firstAttribute="trailing" secondItem="nl0-Ur-GuY" secondAttribute="trailing" id="azt-nR-ReZ"/>
                     <constraint firstAttribute="trailing" secondItem="2793" secondAttribute="trailing" id="ehK-4h-L2G"/>
                     <constraint firstItem="2793" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="jUT-BO-0fE"/>
+                    <constraint firstItem="nl0-Ur-GuY" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="nlb-LZ-gg1"/>
                     <constraint firstItem="2850" firstAttribute="top" secondItem="2" secondAttribute="top" id="qGw-yV-n3w"/>
-                    <constraint firstItem="QWX-3d-xlG" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="wk2-GX-5La"/>
+                    <constraint firstItem="nl0-Ur-GuY" firstAttribute="top" secondItem="2793" secondAttribute="bottom" id="tZF-eO-n4w"/>
                 </constraints>
             </view>
             <connections>
@@ -661,7 +658,7 @@ There are no other limits. What you see, is what you get.</string>
                 <outlet property="memberList" destination="HfF-rs-W6T" id="l9w-fB-AG8"/>
                 <outlet property="serverList" destination="jdZ-2h-ck2" id="z2h-tt-SG6"/>
             </connections>
-            <point key="canvasLocation" x="437" y="139.5"/>
+            <point key="canvasLocation" x="696" y="159.5"/>
         </window>
         <customView id="2965" userLabel="User Info Popover View">
             <rect key="frame" x="0.0" y="0.0" width="352" height="114"/>
@@ -1683,7 +1680,7 @@ There are no other limits. What you see, is what you get.</string>
         <customObject id="U6M-jc-NbT" customClass="TXMenuControllerMainWindowProxy"/>
     </objects>
     <resources>
-        <image name="164FE75C-DB0B-4C03-82C2-2A0FE3BC931C" width="20" height="18">
+        <image name="3B957DD7-B065-415E-A36D-67C2272093B5" width="20" height="18">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGS0xYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QEAcI
 ExgdHicoKS00OTw/RUhVJG51bGzVCQoLDA0ODxARElYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVwc1xO
