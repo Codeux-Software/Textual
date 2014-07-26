@@ -708,7 +708,7 @@
 {
 	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.channels) {
-			if ([channel isChannel]) {
+			if ([channel isChannel] == NO) {
 				[self.channels addObjectWithoutDuplication:channel];
 			} else {
 				NSInteger i = 0;
