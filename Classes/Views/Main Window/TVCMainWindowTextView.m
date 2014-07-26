@@ -94,15 +94,25 @@
 {
 	/* Set background appearance. */
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		if ([TPCPreferences invertSidebarColors]) {
-			[self.contentView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
+		/* Update button appearance. */
+		if ([mainWindow() isUsingVibrantDarkAppearance]) {
+			[self.segmentedController setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
 		} else {
-			[self.contentView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
+			[self.segmentedController setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
 		}
+		
+		/* Update layer for the content view. */
+		/* The content view exists soley on Yosemite or later. */
+		[self.contentView setNeedsDisplay:YES];
 	}
 	
+	/* Update layer for the text field background. */
+	[self.backgroundView setNeedsDisplay:YES];
+	
 	/* Use font color depending on appearance. */
-	[self setPreferredFontColor:[self.backgroundView systemSpecificTextFieldTextFontColor]];
+	NSColor *preferredFontColor = [self.backgroundView systemSpecificTextFieldTextFontColor];
+	
+	[self setPreferredFontColor:preferredFontColor];
 	
 	/* We changed the font color so we must inform our parent. */
 	[self updateTypeSetterAttributesBasedOnAppearanceSettings];
@@ -419,6 +429,8 @@
 
 	[self.textFieldHeightConstraint setConstant:backgroundHeight];
 	
+	[self.backgroundView setNeedsDisplay:YES];
+	
 	if (documentViewBounds.origin.x > 0) {
 		documentViewBounds.origin.x = 0;
 		
@@ -644,7 +656,7 @@
 	
 	NSRect controlFrame = NSMakeRect(0.0, 1.0,   cellBounds.size.width,
 												(cellBounds.size.height - 2.0));
-
+	
 	/* Inner background color. */
 	NSColor *background = [TVCMainWindowTextViewYosemiteUserInterace blackInputTextFieldInsideBlackBackgroundColor];
 	
@@ -682,27 +694,27 @@
 {
 	/* General Declarations. */
 	NSRect cellBounds = [self frame];
-
+	
 	CGContextRef context = [RZGraphicsCurrentContext() graphicsPort];
-
+	
 	BOOL inHighresMode = [mainWindow() runningInHighResolutionMode];
-
+	
 	NSRect controlFrame = NSMakeRect(0.0, 1.0,   cellBounds.size.width,
 												(cellBounds.size.height - 2.0));
 	
 	/* Inner gradient color. */
 	NSGradient *gradient = [TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldInsideWhiteGradient];
-
+	
 	/* Shadow colors. */
 	NSShadow *shadow3 = [NSShadow new];
 	NSShadow *shadow4 = [NSShadow new];
 	
 	NSColor *shadow3Color = [TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldOutsideTopsideWhiteBorder];
-
+	
 	[shadow3 setShadowColor:shadow3Color];
 	[shadow3 setShadowOffset:NSMakeSize(0.0, -1.0)];
 	[shadow3 setShadowBlurRadius:0.0];
-
+	
 	if (inHighresMode) {
 		[shadow4 setShadowColor:[TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldOutsideBottomPrimaryGrayShadowColorWithRetina]];
 		[shadow4 setShadowOffset:NSMakeSize(0.0, -(0.5))];
@@ -712,52 +724,52 @@
 		[shadow4 setShadowOffset:NSMakeSize(0.0, -(1.0))];
 		[shadow4 setShadowBlurRadius:0.0];
 	}
-
+	
 	/* Rectangle drawing. */
 	NSBezierPath *rectanglePath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:3.0 yRadius:3.0];
-
+	
 	[shadow4 set];
-
+	
 	CGContextBeginTransparencyLayer(context, NULL);
-
+	
 	[gradient drawInBezierPath:rectanglePath angle:-(90)];
-
+	
 	CGContextEndTransparencyLayer(context);
-
+	
 	/* Prepare drawing for inside shadow. */
 	CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
-
+	
 	CGContextSetAlpha(context, [shadow3Color alphaComponent]);
-
+	
 	CGContextBeginTransparencyLayer(context, NULL);
 	{
 		/* Inside shadow drawing. */
 		[shadow3 set];
-
+		
 		CGContextSetBlendMode(context, kCGBlendModeSourceOut);
-
+		
 		CGContextBeginTransparencyLayer(context, NULL);
-
+		
 		/* Fill shadow. */
 		[shadow3Color setFill];
-
+		
 		[rectanglePath fill];
-
+		
 		/* Complete drawing. */
 		CGContextEndTransparencyLayer(context);
 	}
-
+	
 	CGContextEndTransparencyLayer(context);
-
+	
 	/* On retina, we fake a second shadow under the bottommost one. */
 	if (inHighresMode) {
 		NSPoint linePoint1 = NSMakePoint(4.0, 0.0);
 		NSPoint linePoint2 = NSMakePoint((cellBounds.size.width - 4.0), 0.0);
-
+		
 		NSColor *controlColor = [TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldOutsideBottomSecondaryGrayShadowColorWithRetina];
-
+		
 		[controlColor setStroke];
-
+		
 		[NSBezierPath strokeLineFromPoint:linePoint1 toPoint:linePoint2];
 	}
 }
@@ -793,7 +805,7 @@
 
 - (BOOL)yosemiteIsUsingVibrantDarkMode
 {
-	return [self.contentView yosemiteIsUsingVibrantDarkMode];
+	return [mainWindow() isUsingVibrantDarkAppearance];
 }
 
 - (BOOL)windowIsActive
@@ -801,15 +813,35 @@
 	return [mainWindow() isActiveForDrawing];
 }
 
-- (void)drawRect:(NSRect)dirtyRect
+- (BOOL)wantsUpdateLayer
 {
-	if ([self needsToDrawRect:dirtyRect]) {
-		if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-			[self drawControllerForYosemite];
-		} else {
-			[self drawControllerForMavericks];
-		}
+	return YES;
+}
+
+- (NSViewLayerContentsRedrawPolicy)layerContentsRedrawPolicy
+{
+	return NSViewLayerContentsRedrawOnSetNeedsDisplay;
+}
+
+- (void)updateLayer
+{
+	/* Draw the text field into a background image layer. */
+	NSRect currentFrame = [self frame];
+	
+	NSImage *contentsImage = [NSImage newImageWithSize:NSMakeSize(NSWidth(currentFrame), NSHeight(currentFrame))];
+	
+	[contentsImage lockFocus];
+	
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		[self drawControllerForYosemite];
+	} else {
+		[self drawControllerForMavericks];
 	}
+	
+	[contentsImage unlockFocus];
+	
+	/* Set the image as the layer contents. */
+	[[self layer] setContents:contentsImage];
 }
 
 @end
@@ -817,81 +849,69 @@
 #pragma mark -
 #pragma mark Text Field Background Vibrant View
 
+/* The content view layer only exists on Yosemite and later. 
+ Textual on Mavericks and earlier uses the content border of
+ the window in place of this layer for the content view. */
+
 @implementation TVCMainWindowTextViewContentView
+
+- (BOOL)wantsUpdateLayer
+{
+	return YES;
+}
+
+- (NSViewLayerContentsRedrawPolicy)layerContentsRedrawPolicy
+{
+	return NSViewLayerContentsRedrawOnSetNeedsDisplay;
+}
 
 - (BOOL)yosemiteIsUsingVibrantDarkMode
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
 		return NO;
 	} else {
-		NSAppearance *currentDesign = [self appearance];
-		
-		NSString *name = [currentDesign name];
-		
-		if ([name hasPrefix:NSAppearanceNameVibrantDark]) {
-			return YES;
-		} else {
-			return NO;
-		}
+		return [mainWindow() isUsingVibrantDarkAppearance];
 	}
 }
 
-- (void)drawRect:(NSRect)dirtyRect
+- (void)updateLayer
 {
-	if ([self needsToDrawRect:dirtyRect]) {
-		/* Draw background color. */
-		NSColor *drawColor = [self backgroundColor];
-		
-		[drawColor set];
-		
-		NSRectFill(dirtyRect);
-		
-		/* Draw divider. */
-		NSRect contentViewFrame = [self frame];
-		
-		contentViewFrame.origin.x = 0;
-		contentViewFrame.origin.y = (NSMaxY(contentViewFrame) - 1);
-		
-		contentViewFrame.size.height = 1;
-		
-		NSBezierPath *dividerPath = [NSBezierPath bezierPathWithRect:contentViewFrame];
-		
-		drawColor = [self dividerColor];
-		
-		[drawColor set];
-		
-		[dividerPath fill];
-		
-		/* Discussion: On Yosemite, when a segmented controller is set as vibrant dark,
-		 it inherits whatever color is behind it in a translucent manor. To allow for
-		 a darker controller in Textual, we set the background of ours to black. To
-		 achive this, we create a bezier path that replicate the frame of segmented
-		 controller. This is a very ugly hack and can break easily in an OS update. */
-		if ([TPCPreferences hideMainWindowSegmentedController] == NO) {
-			if ([self yosemiteIsUsingVibrantDarkMode]) {
-				/* Get controller and controller frame. */
-				TVCMainWindowSegmentedController *controller = [mainWindowTextField() segmentedController];
-				
-				NSRect controllerFrame = [controller frame];
-				
-				/* Update frame with some magic numbers. */
-				controllerFrame.size.width -= 4;
-				controllerFrame.size.height -= 3;
-				
-				controllerFrame.origin.y += 2;
-				
-				/* Define new path and color. */
-				dividerPath  = [NSBezierPath bezierPathWithRoundedRect:controllerFrame xRadius:4.0 yRadius:4.0];
-				
-				drawColor = [NSColor blackColor];
-				
-				/* Complete draw. */
-				[drawColor set];
-				
-				[dividerPath fill];
-			}
-		}
-	}
+	/* To get started, we get the current frame and make an image
+	 out of it. The image will be set as the layer's contents. */
+	NSRect contentViewFrame = [self frame];
+	
+	NSRect displacedFrame = NSMakeRect(0.0, 0.0, NSWidth(contentViewFrame), NSHeight(contentViewFrame));
+	
+	NSImage *backgroundImage = [NSImage newImageWithSize:displacedFrame.size];
+	
+	[backgroundImage lockFocus];
+	
+	/* Fill in the background color first. */
+	NSColor *backgroundColor = [self backgroundColor];
+	
+	[backgroundColor set];
+	
+	NSRectFill(displacedFrame);
+	
+	/* Now that we have the background color, we can set the
+	 frame for the divider at the top of it and draw it. */
+	displacedFrame.origin.x = 0.0;
+	displacedFrame.origin.y = (NSMaxY(displacedFrame) - 1.0);
+	
+	contentViewFrame.size.height = 1.0;
+	
+	NSBezierPath *dividerPath = [NSBezierPath bezierPathWithRect:displacedFrame];
+	
+	NSColor *drawColor = [self dividerColor];
+	
+	[drawColor set];
+	
+	[dividerPath fill];
+	
+	/* Finish drawing our background and set it to the layer. */
+	[backgroundImage unlockFocus];
+	
+	[[self layer] setContents:backgroundImage];
 }
 
 - (NSColor *)backgroundColor
