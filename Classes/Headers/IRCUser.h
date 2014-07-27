@@ -38,6 +38,16 @@
 
 #import "TextualApplication.h"
 
+typedef enum IRCUserRank : NSInteger {
+	IRCUserNoRank				= 0,	// nothing
+	IRCUserIRCopRank,					// +y/+Y
+	IRCUserChannelOwnerRank,			// +q
+	IRCUserSuperOperatorRank,			// +a
+	IRCUserNormalOperatorRank,			// +o
+	IRCUserHalfOperatorRank,			// +h
+	IRCUserVoicedRank,					// +v
+} IRCUserRank;
+
 @interface IRCUser : NSObject <NSCopying>
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *username;
@@ -69,6 +79,8 @@
 @property (readonly, copy) NSString *hostmask;
 
 @property (readonly, copy) NSString *lowercaseNickname;
+
+@property (readonly) IRCUserRank currentRank;
 
 - (void)outgoingConversation;
 - (void)incomingConversation;

@@ -39,84 +39,69 @@
 
 @implementation TVCMemberListDarkYosemiteUserInterface
 
-+ (NSInteger)cellRowHeight
+- (NSInteger)cellRowHeight
 {
 	return 20.0;
 }
 
-+ (NSColor *)userMarkBadgeBackgroundColorForActiveWindow
+- (NSColor *)userMarkBadgeBackgroundColor
 {
 	return [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
 }
 
-+ (NSColor *)userMarkBadgeBackgroundColorForInactiveWindow
-{
-	return [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
-}
-
-+ (NSColor *)normalCellTextColorForActiveWindow
+- (NSColor *)normalCellTextColorForActiveWindow
 {
 	return [NSColor colorWithCalibratedWhite:0.8 alpha:1.0];
 }
 
-+ (NSColor *)awayUserCellTextColorForActiveWindow
+- (NSColor *)awayUserCellTextColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.4 alpha:1.0];
+}
+
+- (NSColor *)normalCellTextColorForInactiveWindow
 {
 	return [NSColor colorWithCalibratedWhite:0.8 alpha:1.0];
 }
 
-+ (NSColor *)normalCellTextColorForInactiveWindow
+- (NSColor *)awayUserCellTextColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.9 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:0.4 alpha:1.0];
 }
 
-+ (NSColor *)awayUserCellTextColorForInactiveWindow
-{
-	return [NSColor colorWithCalibratedWhite:0.9 alpha:1.0];
-}
-
-+ (NSColor *)selectedCellTextColorForActiveWindow
+- (NSColor *)selectedCellTextColorForActiveWindow
 {
 	return [NSColor colorWithCalibratedWhite:0.7 alpha:1.0];
 }
 
-+ (NSColor *)selectedCellTextColorForInactiveWindow
+- (NSColor *)selectedCellTextColorForInactiveWindow
 {
 	return [NSColor colorWithCalibratedWhite:0.7 alpha:1.0];
 }
 
-+ (NSColor *)userMarkBadgeNormalTextColor
+- (NSColor *)userMarkBadgeNormalTextColor
 {
 	return [NSColor whiteColor];
 }
 
-+ (NSColor *)userMarkBadgeSelectedBackgroundColor
+- (NSColor *)userMarkBadgeSelectedBackgroundColor
 {
 	return [NSColor whiteColor];
 }
 
-+ (NSColor *)userMarkBadgeSelectedTextColor
+- (NSColor *)userMarkBadgeSelectedTextColor
 {
 	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:1.0];
 }
 
-+ (NSColor *)rowSelectionColorForActiveWindow
+- (NSColor *)rowSelectionColorForActiveWindow
 {
 	return [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
 }
 
-+ (NSColor *)rowSelectionColorForInactiveWindow
+- (NSColor *)rowSelectionColorForInactiveWindow
 {
 	return [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
-}
-
-+ (NSColor *)memberListBackgroundColorForActiveWindow
-{
-	return nil; // Use system default.
-}
-
-+ (NSColor *)memberListBackgroundColorForInactiveWindow
-{
-	return nil; // Use system default.
 }
 
 @end

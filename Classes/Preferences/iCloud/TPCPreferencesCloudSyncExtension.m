@@ -138,6 +138,7 @@
 		[prefKeys containsObject:@"User List Mode Badge Colors —> +h"] ||						/* User mode badge color. */
 		[prefKeys containsObject:@"User List Mode Badge Colors —> +v"])							/* User mode badge color. */
 	{
+		reloadActions |= TPCPreferencesKeyReloadMemberListAction;
 		reloadActions |= TPCPreferencesKeyReloadMemberListUserBadgesAction;
 	}
 	
@@ -157,7 +158,7 @@
 	 Instead, individual if statements are used. */
 	
 	/* Update dock icon. */
-	if (reloadAction & TPCPreferencesKeyReloadDockIconBadgesAction) {
+	if ((reloadAction & TPCPreferencesKeyReloadDockIconBadgesAction) == TPCPreferencesKeyReloadDockIconBadgesAction) {
 		[TVCDockIcon updateDockIcon];
 	}
 	
@@ -166,19 +167,27 @@
 	BOOL didReloadUserInterface = NO;
 	BOOL didReloadActiveStyle = NO;
 	
+	/* Member list appearance. */
+	if ((reloadAction & TPCPreferencesKeyReloadMemberListUserBadgesAction) == TPCPreferencesKeyReloadMemberListUserBadgesAction) {
+		/* This call will only invalidate the cache for the badges. It does not
+		 actually reload the user interface. This call should be paired with one
+		 of the actions for reloading the user interface. */
+		[[mainWindowMemberList() userInterfaceObjects] invalidateAllUserMarkBadgeCaches];
+	}
+	
 	/* Window appearance. */
-	if (reloadAction & TPCPreferencesKeyReloadMainWindowAppearanceAction) {
+	if ((reloadAction & TPCPreferencesKeyReloadMainWindowAppearanceAction) == TPCPreferencesKeyReloadMainWindowAppearanceAction) {
 		[mainWindow() updateBackgroundColor];
 		
 		didReloadUserInterface = YES;
 	}
 	
 	/* Active style. */
-	if (reloadAction & TPCPreferencesKeyReloadStyleAction) {
+	if ((reloadAction & TPCPreferencesKeyReloadStyleAction) == TPCPreferencesKeyReloadStyleAction) {
 		[worldController() reloadTheme:NO];
 		
 		didReloadActiveStyle = YES;
-	} else if (reloadAction & TPCPreferencesKeyReloadStyleWithTableViewsAction) {
+	} else if ((reloadAction & TPCPreferencesKeyReloadStyleWithTableViewsAction) == TPCPreferencesKeyReloadStyleWithTableViewsAction) {
 		[worldController() reloadTheme:(didReloadUserInterface == NO)]; // -reloadTheme being sent NO tells it not to reload appearance. We did tha above.
 		
 		didReloadActiveStyle = YES;
@@ -186,7 +195,7 @@
 	}
 	
 	/* Server list. */
-	if (reloadAction & TPCPreferencesKeyReloadServerListAction) {
+	if ((reloadAction & TPCPreferencesKeyReloadServerListAction) == TPCPreferencesKeyReloadServerListAction) {
 		if (didReloadUserInterface == NO) {
 			[mainWindowServerList() updateBackgroundColor];
 			
@@ -197,7 +206,7 @@
 	/* Member list appearance. */
 	BOOL didReloadMemberListUserInterface = NO;
 	
-	if (reloadAction & TPCPreferencesKeyReloadMemberListAction) {
+	if ((reloadAction & TPCPreferencesKeyReloadMemberListAction) == TPCPreferencesKeyReloadMemberListAction) {
 		if (didReloadUserInterface == NO) {
 			[mainWindowMemberList() updateBackgroundColor];
 		}
@@ -208,7 +217,7 @@
 	/* Member list sort order. */
 	BOOL didReloadMemberListSortOrder = NO;
 	
-	if (reloadAction & TPCPreferencesKeyReloadMemberListSortOrderAction) {
+	if ((reloadAction & TPCPreferencesKeyReloadMemberListSortOrderAction) == TPCPreferencesKeyReloadMemberListSortOrderAction) {
 		for (IRCClient *u in [worldController() clientList]) {
 			for (IRCChannel *c in [u channelList]) {
 				didReloadMemberListSortOrder = YES;
@@ -217,11 +226,8 @@
 			}
 		}
 	}
-	
 	/* Member list appearance. */
-	if (reloadAction & TPCPreferencesKeyReloadMemberListAction ||
-		reloadAction & TPCPreferencesKeyReloadMemberListUserBadgesAction)
-	{
+	if ((reloadAction & TPCPreferencesKeyReloadMemberListAction) == TPCPreferencesKeyReloadMemberListAction) {
 		/* Sort order will redraw these for us. */
 		if (didReloadMemberListSortOrder == NO) {
 			[mainWindowMemberList() reloadAllDrawings];
@@ -229,22 +235,22 @@
 	}
 	
 	/* Main window segmented controller. */
-	if (reloadAction & TPCPreferencesKeyReloadTextFieldSegmentedControllerOriginAction) {
+	if ((reloadAction & TPCPreferencesKeyReloadTextFieldSegmentedControllerOriginAction) == TPCPreferencesKeyReloadTextFieldSegmentedControllerOriginAction) {
 		[mainWindowTextField() reloadSegmentedControllerOrigin];
 	}
 	
 	/* Main window alpha level. */
-	if (reloadAction & TPCPreferencesKeyReloadMainWindowTransparencyLevelAction) {
+	if ((reloadAction & TPCPreferencesKeyReloadMainWindowTransparencyLevelAction) == TPCPreferencesKeyReloadMainWindowTransparencyLevelAction) {
 		[mainWindow() setAlphaValue:[TPCPreferences themeTransparency]];
 	}
 
 	/* Highlight keywords. */
-	if (reloadAction & TPCPreferencesKeyReloadHighlightKeywordsAction) {
+	if ((reloadAction & TPCPreferencesKeyReloadHighlightKeywordsAction) == TPCPreferencesKeyReloadHighlightKeywordsAction) {
 		[TPCPreferences cleanUpHighlightKeywords];
 	}
 	
 	/* Highlight logging. */
-	if (reloadAction & TPCPreferencesKeyReloadHighlightLoggingAction) {
+	if ((reloadAction & TPCPreferencesKeyReloadHighlightLoggingAction) == TPCPreferencesKeyReloadHighlightLoggingAction) {
 		if ([TPCPreferences logHighlights] == NO) {
 			for (IRCClient *u in [worldController() clientList]) {
 				[u setCachedHighlights:@[]];
@@ -253,7 +259,7 @@
 	}
 	
 	/* Text direction: right-to-left, left-to-right */
-	if (reloadAction & TPCPreferencesKeyReloadTextDirectionAction) {
+	if ((reloadAction & TPCPreferencesKeyReloadTextDirectionAction) == TPCPreferencesKeyReloadTextDirectionAction) {
 		[mainWindowTextField() updateTextDirection];
 		
 		if (didReloadActiveStyle == NO) {
@@ -262,17 +268,17 @@
 	}
 	
 	/* Text field font size. */
-	if (reloadAction & TPCPreferencesKeyReloadTextFieldFontSizeAction) {
+	if ((reloadAction & TPCPreferencesKeyReloadTextFieldFontSizeAction) == TPCPreferencesKeyReloadTextFieldFontSizeAction) {
 		[mainWindowTextField() updateTextBoxBasedOnPreferredFontSize];
 	}
 	
 	/* Input history scope. */
-	if (reloadAction & TPCPreferencesKeyReloadInputHistoryScopeAction) {
+	if ((reloadAction & TPCPreferencesKeyReloadInputHistoryScopeAction) == TPCPreferencesKeyReloadInputHistoryScopeAction) {
 		[[TXSharedApplication sharedInputHistoryManager] inputHistoryObjectScopeDidChange];
 	}
 	
 	/* World controller preferences changed call. */
-	if (reloadAction & TPCPreferencesKeyReloadPreferencesChangedAction) {
+	if ((reloadAction & TPCPreferencesKeyReloadPreferencesChangedAction) == TPCPreferencesKeyReloadPreferencesChangedAction) {
 		[worldController() preferencesChanged];
 	}
 }

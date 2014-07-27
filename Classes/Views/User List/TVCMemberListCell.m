@@ -42,6 +42,21 @@
 #pragma mark -
 #pragma mark Drawing
 
+- (BOOL)wantsUpdateLayer
+{
+	return YES;
+}
+
+- (NSViewLayerContentsRedrawPolicy)layerContentsRedrawPolicy
+{
+	return NSViewLayerContentsRedrawOnSetNeedsDisplay;
+}
+
+- (void)updateLayer
+{
+	[self updateDrawing];
+}
+
 - (void)updateDrawing
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
@@ -65,9 +80,441 @@
 	
 	if ([stringValue isEqualTo:labelValue] == NO) {
 		[textField setStringValue:labelValue];
-	} else {
-		[textField setNeedsDisplay:YES];
 	}
+	
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		[self reloadTextFieldValueForYosemite:[mainWindowMemberList() userInterfaceObjects]];
+	} else {
+		[self reloadTextFieldValueForYosemite:[mainWindowMemberList() userInterfaceObjects]];
+	}
+}
+
+- (void)reloadTextFieldValueForMavericks:(id)interfaceObject
+{
+	/* Gather basic context information. */
+	NSDictionary *drawingContext = [self drawingContext];
+	
+	BOOL isWindowActive = [drawingContext boolForKey:@"isActiveWindow"];
+	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
+	BOOL isInverted = [drawingContext boolForKey:@"isInverted"];
+	BOOL isGraphite = [drawingContext boolForKey:@"isGraphite"];
+	
+	/* We already have the context here, so update the badge. */
+	[self updateUserMarkBadge:isSelected];
+	
+	/* Update actual text field value. */
+	IRCUser *assosicatedUser = [self memberPointer];
+	
+	/* Update attributed string. */
+	NSTextField *textField = [self textField];
+	
+	NSAttributedString *stringValue = [textField attributedStringValue];
+	
+	NSMutableAttributedString *mutableStringValue = [stringValue mutableCopy];
+	
+	NSRange stringLengthRange = NSMakeRange(0, [mutableStringValue length]);
+	
+	[mutableStringValue beginEditing];
+	
+	/* Prepare the drop shadow for text. */
+	NSShadow *itemShadow = [NSShadow new];
+	
+	[itemShadow setShadowOffset:NSMakeSize(0, -(1.0))];
+	
+	if (isSelected == NO) {
+		[itemShadow setShadowColor:[interfaceObject normalCellTextShadowColor]];
+	} else {
+		if (isInverted) {
+			[itemShadow setShadowBlurRadius:1.0];
+		} else {
+			[itemShadow setShadowBlurRadius:2.0];
+		}
+		
+		if (isWindowActive) {
+			if (isGraphite && isInverted == NO) {
+				[itemShadow setShadowColor:[interfaceObject graphiteSelectedCellTextShadowColorForActiveWindow]];
+			} else {
+				[itemShadow setShadowColor:[interfaceObject normalSelectedCellTextShadowColorForActiveWindow]];
+			}
+		} else {
+			[itemShadow setShadowColor:[interfaceObject normalSelectedCellTextShadowColorForInactiveWindow]];
+		}
+	}
+	
+	/* Prepare other attributes. */
+	if (isSelected) {
+		[mutableStringValue addAttribute:NSFontAttributeName value:[interfaceObject selectedCellFont] range:stringLengthRange];
+		
+		[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject selectedCellTextColor] range:stringLengthRange];
+	} else {
+		[mutableStringValue addAttribute:NSFontAttributeName value:[interfaceObject normalCellFont] range:stringLengthRange];
+		
+		if ([assosicatedUser isAway]) {
+			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject awayUserCellTextColor] range:stringLengthRange];
+		} else {
+			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject normalCellTextColor] range:stringLengthRange];
+		}
+	}
+	
+	[mutableStringValue addAttribute:NSShadowAttributeName value:itemShadow range:stringLengthRange];
+	
+	/* End editing. */
+	[mutableStringValue endEditing];
+	
+	/* Draw new attributed string. */
+	[textField setAttributedStringValue:mutableStringValue];
+}
+
+- (void)reloadTextFieldValueForYosemite:(id)interfaceObject
+{
+	/* Gather basic context information. */
+	NSDictionary *drawingContext = [self drawingContext];
+	
+	BOOL isWindowActive = [drawingContext boolForKey:@"isActiveWindow"];
+	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
+	
+	/* We already have the context here, so update the badge. */
+	[self updateUserMarkBadge:isSelected];
+	
+	/* Update actual text field value. */
+	IRCUser *assosicatedUser = [self memberPointer];
+	
+	/* Update attributed string. */
+	NSTextField *textField = [self textField];
+	
+	NSAttributedString *stringValue = [textField attributedStringValue];
+	
+	NSMutableAttributedString *mutableStringValue = [stringValue mutableCopy];
+	
+	NSRange stringLengthRange = NSMakeRange(0, [mutableStringValue length]);
+	
+	/* Finish editing. */
+	[mutableStringValue beginEditing];
+	
+	if (isSelected == NO) {
+		if ([assosicatedUser isAway] == NO) {
+			if (isWindowActive == NO) {
+				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject normalCellTextColorForInactiveWindow] range:stringLengthRange];
+			} else {
+				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject normalCellTextColorForActiveWindow] range:stringLengthRange];
+			}
+		} else {
+			if (isWindowActive == NO) {
+				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject awayUserCellTextColorForInactiveWindow] range:stringLengthRange];
+			} else {
+				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject awayUserCellTextColorForActiveWindow] range:stringLengthRange];
+			}
+		}
+	} else {
+		if (isWindowActive == NO) {
+			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject selectedCellTextColorForInactiveWindow] range:stringLengthRange];
+		} else {
+			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject selectedCellTextColorForActiveWindow] range:stringLengthRange];
+		}
+	}
+	
+	/* Finish editing. */
+	[mutableStringValue endEditing];
+	
+	/* Draw new attributed string. */
+	[textField setAttributedStringValue:mutableStringValue];
+}
+
+#pragma mark -
+#pragma mark Badge Drawing
+
+- (NSAttributedString *)modeBadgeText:(NSString *)badgeString isSelected:(BOOL)selected
+{
+	id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
+	
+	BOOL isDrawingForRetina = [mainWindow() runningInHighResolutionMode];
+	
+	NSColor *textColor = nil;
+	
+	NSFont *textFont = nil;
+	
+	if (selected) {
+		textColor = [userInterfaceObjects userMarkBadgeSelectedTextColor];
+		
+		if (isDrawingForRetina) {
+			textFont = [userInterfaceObjects userMarkBadgeFontSelectedForRetina];
+		} else {
+			textFont = [userInterfaceObjects userMarkBadgeFontSelected];
+		}
+	} else {
+		textColor = [userInterfaceObjects userMarkBadgeNormalTextColor];
+		
+		if (isDrawingForRetina) {
+			textFont = [userInterfaceObjects userMarkBadgeFontForRetina];
+		} else {
+			textFont = [userInterfaceObjects userMarkBadgeFont];
+		}
+	}
+	
+	NSDictionary *attributes = @{NSForegroundColorAttributeName : textColor, NSFontAttributeName : textFont};
+	
+	NSAttributedString *mcstring = [NSAttributedString stringWithBase:badgeString attributes:attributes];
+	
+	return mcstring;
+}
+
+- (void)updateUserMarkBadge:(BOOL)selected
+{
+	/* Define context information. */
+	id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
+
+	IRCUser *assosicatedUser = [self memberPointer];
+	
+	NSString *userMark = [assosicatedUser mark];
+	
+	/* We manually define userRank instead of asking IRCUser what it is
+	 directly because we weant it set based on whether users prefer IRCops
+	 placed at the top of the user list. */
+	IRCUserRank userRank = IRCUserNoRank;
+	
+	/* Find the cache image based on user mode. */
+	BOOL favorIRCop = ([assosicatedUser InspIRCd_y_lower] ||
+					   [assosicatedUser InspIRCd_y_upper]);
+	
+	if (favorIRCop == NO) {
+		favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
+	}
+	
+	if ([assosicatedUser isCop] && favorIRCop) {
+		userRank = IRCUserIRCopRank;
+	} else if ([assosicatedUser q]) {
+		userRank = IRCUserChannelOwnerRank;
+	} else if ([assosicatedUser a]) {
+		userRank = IRCUserSuperOperatorRank;
+	} else if ([assosicatedUser o]) {
+		userRank = IRCUserNormalOperatorRank;
+	} else if ([assosicatedUser h]) {
+		userRank = IRCUserHalfOperatorRank;
+	} else if ([assosicatedUser v]) {
+		userRank = IRCUserVoicedRank;
+	}
+	
+	/* Get value by performing cache token. */
+	NSImage *cachedImage = nil;
+	
+	if (selected == NO) {
+		cachedImage = [userInterfaceObjects cachedUserMarkBadgeForSymbol:userMark rank:userRank];
+	}
+	
+	/* Do we have a cache? */
+	if (cachedImage == nil) {
+		/* There is no cache so we generate the image live then set it. */
+		cachedImage = [self drawModeBadge:selected];
+		
+		/* If we are not selected, we write the cached value to the UI. */
+		if (selected == NO) {
+			[userInterfaceObjects cacheUserMarkBadge:cachedImage forSymbol:userMark rank:userRank];
+		}
+	}
+	
+	/* Now that we have a cached image, we compare it. */
+	NSImageView *imageView = [self imageView];
+	
+	if (NSObjectsAreEqual([imageView image], cachedImage) == NO) {
+		[imageView setImage:cachedImage];
+	}
+}
+
+- (NSImage *)drawModeBadge:(BOOL)selected
+{
+	/* Define context information. */
+	id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
+
+	IRCUser *assosicatedUser = [self memberPointer];
+	
+	BOOL isDrawingForMavericks = ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO);
+	
+	NSString *mcstring = [assosicatedUser mark];
+	
+	/* Build the drawing frame. */
+	NSRect boxFrame = NSMakeRect(0.0,
+								 0.0,
+								 [userInterfaceObjects userMarkBadgeWidth],
+								 [userInterfaceObjects userMarkBadgeHeight]);
+	
+	/* Create image that we will draw into. If we are drawing for Mavericks,
+	 then the frame of our image is one pixel greater because we draw a shadow. */
+	NSImage *newImage = nil;
+	
+	if (isDrawingForMavericks) {
+		newImage = [NSImage newImageWithSize:NSMakeSize(NSWidth(boxFrame), (NSHeight(boxFrame) + 1.0))];
+	} else {
+		newImage = [NSImage newImageWithSize:NSMakeSize(NSWidth(boxFrame),  NSHeight(boxFrame))];
+	}
+	
+	[newImage lockFocus];
+	
+	/* Decide the background color. */
+	NSColor *backgroundColor;
+	
+	BOOL favorIRCop = ([assosicatedUser InspIRCd_y_lower] ||
+					   [assosicatedUser InspIRCd_y_upper]);
+	
+	if (favorIRCop == NO) {
+		favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
+	}
+	
+	if (selected) {
+		backgroundColor = [userInterfaceObjects userMarkBadgeSelectedBackgroundColor];
+	} else if ([assosicatedUser isCop] && favorIRCop) {
+		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_Y];
+	} else if ([assosicatedUser q]) {
+		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_Q];
+	} else if ([assosicatedUser a]) {
+		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_A];
+	} else if ([assosicatedUser o]) {
+		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_O];
+	} else if ([assosicatedUser h]) {
+		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_H];
+	} else if ([assosicatedUser v]) {
+		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_V];
+	} else {
+		if (isDrawingForMavericks) {
+			if ([NSColor currentControlTint] == NSGraphiteControlTint) {
+				backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColorForGraphite];
+			} else {
+				backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColorForAqua];
+			}
+		} else {
+			backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor];
+		}
+	}
+	
+	/* Maybe set a default mark. */
+	if (mcstring == nil) {
+		if ([RZUserDefaults() boolForKey:@"DisplayUserListNoModeSymbol"]) {
+			mcstring = @"x";
+		} else {
+			mcstring = NSStringEmptyPlaceholder;
+		}
+	}
+	
+	/* Frame is dropped by 1 to make room for shadow. */
+	if (isDrawingForMavericks) {
+		if (selected == NO) {
+			/* Begin work on shadow frame. */
+			NSRect shadowFrame = boxFrame;
+			
+			/* Change size. */
+			shadowFrame.origin.y += 1;
+			
+			/* The shadow frame is a round rectangle that matches the one
+			 being drawn with a 1 point offset below the badge to give the
+			 appearance of a drop shadow. */
+			NSBezierPath *shadowPath = [NSBezierPath bezierPathWithRoundedRect:shadowFrame xRadius:4.0 yRadius:4.0];
+			
+			NSColor *shadowColor = [userInterfaceObjects userMarkBadgeShadowColor];
+			
+			[shadowColor set];
+			
+			[shadowPath fill];
+		}
+	}
+
+	/* Draw the background of the badge. */
+	NSBezierPath *badgePath = [NSBezierPath bezierPathWithRoundedRect:boxFrame xRadius:4.0 yRadius:4.0];
+	
+	[backgroundColor set];
+	
+	[badgePath fill];
+	
+	/* Begin building the actual mode string. */
+	if ([mcstring length] > 0) {
+		NSAttributedString *modeString = [self modeBadgeText:mcstring isSelected:selected];
+		
+		NSSize badgeTextSize = [modeString size];
+		
+		/* Calculate frame of text. */
+		NSPoint badgeTextPoint = NSMakePoint((NSMidX(boxFrame) - (badgeTextSize.width / 2.0)),
+											((NSMidY(boxFrame) - (badgeTextSize.height / 2.0))));
+		
+		/* Small frame corrections. */
+		/* This is so ugly, I know. */
+		BOOL isDrawingForRetina = [mainWindow() runningInHighResolutionMode];
+
+		
+		if (isDrawingForRetina)
+		{
+			if ([mcstring isEqualToString:@"+"] ||
+				[mcstring isEqualToString:@"~"] ||
+				[mcstring isEqualToString:@"x"])
+			{
+				badgeTextPoint.y -= -(1.0);
+			}
+			else if ([mcstring isEqualToString:@"^"])
+			{
+				badgeTextPoint.y -= 2.0;
+			}
+			else if ([mcstring isEqualToString:@"*"])
+			{
+				badgeTextPoint.y -= 2.5;
+			}
+			else if ([mcstring isEqualToString:@"@"] ||
+					 [mcstring isEqualToString:@"!"] ||
+					 [mcstring isEqualToString:@"%"] ||
+					 [mcstring isEqualToString:@"&"] ||
+					 [mcstring isEqualToString:@"#"] ||
+					 [mcstring isEqualToString:@"?"] ||
+					 [mcstring isEqualToString:@"$"])
+			{
+				badgeTextPoint.y -= 0.0;
+			}
+		}
+		else // isDrawingForRetina
+		{
+			if ([mcstring isEqualToString:@"+"] ||
+				[mcstring isEqualToString:@"~"] ||
+				[mcstring isEqualToString:@"x"])
+			{
+				badgeTextPoint.y -= -(2.0);
+			}
+			else if ([mcstring isEqualToString:@"@"] ||
+					 [mcstring isEqualToString:@"!"] ||
+					 [mcstring isEqualToString:@"%"] ||
+					 [mcstring isEqualToString:@"&"] ||
+					 [mcstring isEqualToString:@"#"] ||
+					 [mcstring isEqualToString:@"?"])
+			{
+				badgeTextPoint.y -= -(1.0);
+			}
+			else if ([mcstring isEqualToString:@"^"])
+			{
+				badgeTextPoint.y -= 0.0;
+			}
+			else if ([mcstring isEqualToString:@"*"])
+			{
+				badgeTextPoint.y -= 1.0;
+			}
+			else if ([mcstring isEqualToString:@"$"])
+			{
+				badgeTextPoint.y -= -(1.0);
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		/* Draw mode string. */
+		[modeString drawAtPoint:badgeTextPoint];
+	}
+	
+	/* Now that we finished drawing, return the result. */
+	[newImage unlockFocus];
+	
+	return newImage;
 }
 
 #pragma mark -
@@ -173,19 +620,45 @@
 
 @implementation TVCMemberListRowCell
 
-- (NSTableViewSelectionHighlightStyle)selectionHighlightStyle
+- (void)setSelected:(BOOL)selected
 {
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite])
+	[super setSelected:selected];
+	
+	[self postSelectionChangeNeedsDisplay];
+}
+
+- (void)postSelectionChangeNeedsDisplay
+{
+	NSArray *subviews = [self subviews];
+	
+	if ([subviews count] == 1) {
+		[subviews[0] setNeedsDisplay:YES];
+	}
+	
+	[self setNeedsDisplay:YES];
+
+	if ([self isSelected])
 	{
-		if ([TVCMemberListSharedUserInterface yosemiteIsUsingVibrantDarkMode]) {
-			return NSTableViewSelectionHighlightStyleRegular;
-		} else {
-			return NSTableViewSelectionHighlightStyleSourceList;
+		if ([CSFWSystemInformation featureAvailableToOSXYosemite])
+		{
+			if ([TVCMemberListSharedUserInterface yosemiteIsUsingVibrantDarkMode]) {
+				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
+			} else {
+				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleSourceList];
+			}
+		}
+		else
+		{
+			if ([TPCPreferences invertSidebarColors]) {
+				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
+			} else {
+				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleSourceList];
+			}
 		}
 	}
 	else
 	{
-		return NSTableViewSelectionHighlightStyleSourceList;
+		[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
 	}
 }
 
@@ -250,351 +723,13 @@
 
 @implementation TVCMemberLisCellTextFieldInterior
 
-- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
+- (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	TVCMemberListCell *parentCell = [self parentCell];
+	CGContextRef ctx = [RZGraphicsCurrentContext() graphicsPort];
 	
-	NSDictionary *drawingContext = [parentCell drawingContext];
+	CGContextSetShouldSmoothFonts(ctx, true);
 	
-	[self drawModeBadge:[drawingContext boolForKey:@"isSelected"]];
-	
-	id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
-	
-	cellFrame.origin.x = [userInterfaceObjects textCellLeftMargin];
-	cellFrame.origin.y = [userInterfaceObjects textCellBottomMargin];
-	
-	cellFrame.size.width -= [userInterfaceObjects textCellLeftMargin];
-	
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		[self drawInteriorWithFrameForYosemite:cellFrame withUserInterfaceObject:userInterfaceObjects];
-	} else {
-		[self drawInteriorWithFrameForMavericks:cellFrame withUserInterfaceObject:userInterfaceObjects];
-	}
-}
-
-#pragma mark -
-#pragma mark Badge Drawing
-
-- (NSAttributedString *)modeBadgeText:(NSString *)badgeString isSelected:(BOOL)selected
-{
-	id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
-	
-	NSColor *textColor = nil;
-	
-	if (selected) {
-		textColor = [userInterfaceObjects userMarkBadgeSelectedTextColor];
-	} else {
-		textColor = [userInterfaceObjects userMarkBadgeNormalTextColor];
-	}
-	
-	NSDictionary *attributes = @{NSForegroundColorAttributeName : textColor, NSFontAttributeName : [userInterfaceObjects userMarkBadgeFont]};
-	
-	NSAttributedString *mcstring = [NSAttributedString stringWithBase:badgeString attributes:attributes];
-	
-	return mcstring;
-}
-
-- (void)drawModeBadge:(BOOL)selected
-{
-	/* Define context information. */
-	id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
-	
-	TVCMemberListCell *parentCell = [self parentCell];
-	
-	IRCUser *assosicatedUser = [parentCell memberPointer];
-	
-	BOOL isDrawingForMavericks = ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO);
-	
-	NSString *mcstring = [assosicatedUser mark];
-
-	/* Build the drawing frame. */
-	NSRect boxFrame = NSMakeRect([userInterfaceObjects userMarkBadgeLeftMargin],
-								 [userInterfaceObjects userMarkBadgeBottomMargin],
-								 [userInterfaceObjects userMarkBadgeWidth],
-								 [userInterfaceObjects userMarkBadgeHeight]);
-
-	/* Decide the background color. */
-	NSColor *backgroundColor;
-	
-	BOOL favorIRCop = ([assosicatedUser InspIRCd_y_lower] ||
-					   [assosicatedUser InspIRCd_y_upper]);
-	
-	if (favorIRCop == NO) {
-		favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
-	}
-	
-	if (selected) {
-		backgroundColor = [userInterfaceObjects userMarkBadgeSelectedBackgroundColor];
-	} else if ([assosicatedUser isCop] && favorIRCop) {
-		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_Y];
-	} else if ([assosicatedUser q]) {
-		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_Q];
-	} else if ([assosicatedUser a]) {
-		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_A];
-	} else if ([assosicatedUser o]) {
-		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_O];
-	} else if ([assosicatedUser h]) {
-		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_H];
-	} else if ([assosicatedUser v]) {
-		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_V];
-	} else {
-		if (isDrawingForMavericks) {
-			if ([NSColor currentControlTint] == NSGraphiteControlTint) {
-				backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColorForGraphite];
-			} else {
-				backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColorForAqua];
-			}
-		} else {
-			if ([mainWindow() isActiveForDrawing]) {
-				backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColorForActiveWindow];
-			} else {
-				backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColorForInactiveWindow];
-			}
-		}
-	}
-	
-	/* Maybe set a default mark. */
-	if (mcstring == nil) {
-		if ([RZUserDefaults() boolForKey:@"DisplayUserListNoModeSymbol"]) {
-			mcstring = @"x";
-		} else {
-			mcstring = NSStringEmptyPlaceholder;
-		}
-	}
-	
-	/* Frame is dropped by 1 to make room for shadow. */
-	if (isDrawingForMavericks) {
-		if (selected == NO) {
-			/* Begin work on shadow frame. */
-			NSRect shadowFrame = boxFrame;
-			
-			/* Change size. */
-			shadowFrame.origin.y += 1;
-			
-			/* The shadow frame is a round rectangle that matches the one
-			 being drawn with a 1 point offset below the badge to give the
-			 appearance of a drop shadow. */
-			NSBezierPath *shadowPath = [NSBezierPath bezierPathWithRoundedRect:shadowFrame xRadius:4.0 yRadius:4.0];
-			
-			NSColor *shadowColor = [userInterfaceObjects userMarkBadgeShadowColor];
-			
-			[shadowColor set];
-			
-			[shadowPath fill];
-		}
-	}
-	
-	/* Draw the background of the badge. */
-	NSBezierPath *badgePath = [NSBezierPath bezierPathWithRoundedRect:boxFrame xRadius:4.0 yRadius:4.0];
-	
-	[backgroundColor set];
-	
-	[badgePath fill];
-	
-	/* Begin building the actual mode string. */
-	if ([mcstring length] > 0) {
-		NSAttributedString *modeString = [self modeBadgeText:mcstring isSelected:selected];
-		
-		NSSize badgeTextSize = [modeString size];
-		
-		/* Calculate frame of text. */
-		NSPoint badgeTextPoint = NSMakePoint((NSMidX(boxFrame) - (badgeTextSize.width / 2.0)),
-											((NSMidY(boxFrame) - (badgeTextSize.height / 2.0))));
-		
-		/* Small frame corrections. */
-		/* This is so ugly, I know. */
-		BOOL isDrawingForRetina = [mainWindow() runningInHighResolutionMode];
-		
-		BOOL frameCorrection = 0.0;
-		
-		if (isDrawingForRetina && isDrawingForMavericks) {
-			frameCorrection = -(1.0);
-		}
-		
-		if (isDrawingForRetina || isDrawingForMavericks) {
-			if ([mcstring isEqualToString:@"+"] ||
-				[mcstring isEqualToString:@"~"] ||
-				[mcstring isEqualToString:@"x"])
-			{
-				badgeTextPoint.y -= (1.5 + frameCorrection);
-			}
-			else if ([mcstring isEqualToString:@"^"])
-			{
-				badgeTextPoint.y += (1.0 + frameCorrection);
-			}
-			else if ([mcstring isEqualToString:@"*"])
-			{
-				badgeTextPoint.y += (2.0 + frameCorrection);
-			}
-			else if ([mcstring isEqualToString:@"@"] ||
-					 [mcstring isEqualToString:@"!"] ||
-					 [mcstring isEqualToString:@"%"] ||
-					 [mcstring isEqualToString:@"&"] ||
-					 [mcstring isEqualToString:@"#"] ||
-					 [mcstring isEqualToString:@"?"] ||
-					 [mcstring isEqualToString:@"$"])
-			{
-				badgeTextPoint.y -= (0.5 + frameCorrection);
-			}
-		} else {
-			if ([mcstring isEqualToString:@"+"] ||
-				[mcstring isEqualToString:@"~"] ||
-				[mcstring isEqualToString:@"x"])
-			{
-				badgeTextPoint.y -= (1.5 + frameCorrection);
-			}
-			else if ([mcstring isEqualToString:@"@"] ||
-					 [mcstring isEqualToString:@"!"] ||
-					 [mcstring isEqualToString:@"%"] ||
-					 [mcstring isEqualToString:@"&"] ||
-					 [mcstring isEqualToString:@"#"] ||
-					 [mcstring isEqualToString:@"?"])
-			{
-				badgeTextPoint.y -= (1.0 + frameCorrection);
-			}
-			else if ([mcstring isEqualToString:@"^"])
-			{
-				badgeTextPoint.y += (1.0 + frameCorrection);
-			}
-			else if ([mcstring isEqualToString:@"*"])
-			{
-				badgeTextPoint.y += (2.0 + frameCorrection);
-			}
-			else if ([mcstring isEqualToString:@"$"])
-			{
-				badgeTextPoint.y -= (0.5 + frameCorrection);
-			}
-		}
-		
-		/* Draw mode string. */
-		[modeString drawAtPoint:badgeTextPoint];
-	}
-}
-
-#pragma mark -
-#pragma mark Interior Drawing
-
-- (void)drawInteriorWithFrameForMavericks:(NSRect)cellFrame withUserInterfaceObject:(id)interfaceObject
-{
-	/* Gather basic context information. */
-	TVCMemberListCell *parentCell = [self parentCell];
-	
-	NSDictionary *drawingContext = [parentCell drawingContext];
-	
-	BOOL isWindowActive = [drawingContext boolForKey:@"isActiveWindow"];
-	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
-	BOOL isInverted = [drawingContext boolForKey:@"isInverted"];
-	BOOL isGraphite = [drawingContext boolForKey:@"isGraphite"];
-	
-	IRCUser *assosicatedUser = [parentCell memberPointer];
-	
-	/* Update attributed string. */
-	NSAttributedString *stringValue = [self attributedStringValue];
-	
-	NSMutableAttributedString *mutableStringValue = [stringValue mutableCopy];
-	
-	NSRange stringLengthRange = NSMakeRange(0, [mutableStringValue length]);
-	
-	[mutableStringValue beginEditing];
-	
-	/* Prepare the drop shadow for text. */
-	NSShadow *itemShadow = [NSShadow new];
-	
-	[itemShadow setShadowOffset:NSMakeSize(0, -(1.0))];
-	
-	if (isSelected == NO) {
-		[itemShadow setShadowColor:[interfaceObject normalCellTextShadowColor]];
-	} else {
-		if (isInverted) {
-			[itemShadow setShadowBlurRadius:1.0];
-		} else {
-			[itemShadow setShadowBlurRadius:2.0];
-		}
-		
-		if (isWindowActive) {
-			if (isGraphite && isInverted == NO) {
-				[itemShadow setShadowColor:[interfaceObject graphiteSelectedCellTextShadowColorForActiveWindow]];
-			} else {
-				[itemShadow setShadowColor:[interfaceObject normalSelectedCellTextShadowColorForActiveWindow]];
-			}
-		} else {
-			[itemShadow setShadowColor:[interfaceObject normalSelectedCellTextShadowColorForInactiveWindow]];
-		}
-	}
-	
-	/* Prepare other attributes. */
-	if (isSelected) {
-		[mutableStringValue addAttribute:NSFontAttributeName value:[interfaceObject selectedCellFont] range:stringLengthRange];
-		
-		[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject selectedCellTextColor] range:stringLengthRange];
-	} else {
-		[mutableStringValue addAttribute:NSFontAttributeName value:[interfaceObject normalCellFont] range:stringLengthRange];
-		
-		if ([assosicatedUser isAway]) {
-			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject awayUserCellTextColor] range:stringLengthRange];
-		} else {
-			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject normalCellTextColor] range:stringLengthRange];
-		}
-	}
-	
-	[mutableStringValue addAttribute:NSShadowAttributeName value:itemShadow range:stringLengthRange];
-
-	/* End editing. */
-	[mutableStringValue endEditing];
-	
-	/* Draw new attributed string. */
-	[mutableStringValue drawInRect:cellFrame];
-}
-
-- (void)drawInteriorWithFrameForYosemite:(NSRect)cellFrame withUserInterfaceObject:(id)interfaceObject
-{
-	/* Gather basic context information. */
-	TVCMemberListCell *parentCell = [self parentCell];
-	
-	NSDictionary *drawingContext = [parentCell drawingContext];
-	
-	BOOL isWindowActive = [drawingContext boolForKey:@"isActiveWindow"];
-	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
-	
-	IRCUser *assosicatedUser = [parentCell memberPointer];
-	
-	/* Update attributed string. */
-	NSAttributedString *stringValue = [self attributedStringValue];
-	
-	NSMutableAttributedString *mutableStringValue = [stringValue mutableCopy];
-	
-	NSRange stringLengthRange = NSMakeRange(0, [mutableStringValue length]);
-	
-	/* Finish editing. */
-	[mutableStringValue beginEditing];
-	
-	if (isSelected == NO) {
-		if ([assosicatedUser isAway] == NO) {
-			if (isWindowActive == NO) {
-				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject normalCellTextColorForInactiveWindow] range:stringLengthRange];
-			} else {
-				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject normalCellTextColorForActiveWindow] range:stringLengthRange];
-			}
-		} else {
-			if (isWindowActive == NO) {
-				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject awayUserCellTextColorForInactiveWindow] range:stringLengthRange];
-			} else {
-				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject awayUserCellTextColorForActiveWindow] range:stringLengthRange];
-			}
-		}
-	} else {
-		if (isWindowActive == NO) {
-			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject selectedCellTextColorForInactiveWindow] range:stringLengthRange];
-		} else {
-			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject selectedCellTextColorForActiveWindow] range:stringLengthRange];
-		}
-	}
-	
-	/* Finish editing. */
-	[mutableStringValue endEditing];
-	
-	/* Draw new attributed string. */
-	[mutableStringValue drawInRect:cellFrame];
+	[[self attributedStringValue] drawInRect:cellFrame];
 }
 
 @end

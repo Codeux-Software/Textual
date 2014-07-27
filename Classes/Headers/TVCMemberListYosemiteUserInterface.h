@@ -38,58 +38,30 @@
 #import "TextualApplication.h"
 
 @interface TVCMemberListYosemiteUserInterface : TVCMemberListSharedUserInterface
+- (NSInteger)cellRowHeight;
+
+- (NSColor *)normalCellTextColorForActiveWindow;
+- (NSColor *)normalCellTextColorForInactiveWindow;
+
+- (NSColor *)awayUserCellTextColorForActiveWindow;
+- (NSColor *)awayUserCellTextColorForInactiveWindow;
+
+- (NSColor *)selectedCellTextColorForActiveWindow;
+- (NSColor *)selectedCellTextColorForInactiveWindow;
+
+- (NSColor *)userMarkBadgeNormalTextColor;
+
+- (NSColor *)userMarkBadgeSelectedBackgroundColor;
+- (NSColor *)userMarkBadgeSelectedTextColor;
+
+- (NSColor *)rowSelectionColorForActiveWindow;
+- (NSColor *)rowSelectionColorForInactiveWindow;
+
+- (NSColor *)userMarkBadgeBackgroundColor;
 @end
 
 @interface TVCMemberListLightYosemiteUserInterface : TVCMemberListYosemiteUserInterface
-+ (NSInteger)cellRowHeight;
-
-+ (NSColor *)normalCellTextColorForActiveWindow;
-+ (NSColor *)normalCellTextColorForInactiveWindow;
-
-+ (NSColor *)awayUserCellTextColorForActiveWindow;
-+ (NSColor *)awayUserCellTextColorForInactiveWindow;
-
-+ (NSColor *)selectedCellTextColorForActiveWindow;
-+ (NSColor *)selectedCellTextColorForInactiveWindow;
-
-+ (NSColor *)userMarkBadgeNormalTextColor;
-
-+ (NSColor *)userMarkBadgeSelectedBackgroundColor;
-+ (NSColor *)userMarkBadgeSelectedTextColor;
-
-+ (NSColor *)rowSelectionColorForActiveWindow;
-+ (NSColor *)rowSelectionColorForInactiveWindow;
-
-+ (NSColor *)memberListBackgroundColorForActiveWindow;
-+ (NSColor *)memberListBackgroundColorForInactiveWindow;
-
-+ (NSColor *)userMarkBadgeBackgroundColorForActiveWindow;
-+ (NSColor *)userMarkBadgeBackgroundColorForInactiveWindow;
 @end
 
 @interface TVCMemberListDarkYosemiteUserInterface : TVCMemberListYosemiteUserInterface
-+ (NSInteger)cellRowHeight;
-
-+ (NSColor *)normalCellTextColorForActiveWindow;
-+ (NSColor *)normalCellTextColorForInactiveWindow;
-
-+ (NSColor *)awayUserCellTextColorForActiveWindow;
-+ (NSColor *)awayUserCellTextColorForInactiveWindow;
-
-+ (NSColor *)selectedCellTextColorForActiveWindow;
-+ (NSColor *)selectedCellTextColorForInactiveWindow;
-
-+ (NSColor *)userMarkBadgeNormalTextColor;
-
-+ (NSColor *)userMarkBadgeSelectedBackgroundColor;
-+ (NSColor *)userMarkBadgeSelectedTextColor;
-
-+ (NSColor *)rowSelectionColorForActiveWindow;
-+ (NSColor *)rowSelectionColorForInactiveWindow;
-
-+ (NSColor *)memberListBackgroundColorForActiveWindow;
-+ (NSColor *)memberListBackgroundColorForInactiveWindow;
-
-+ (NSColor *)userMarkBadgeBackgroundColorForActiveWindow;
-+ (NSColor *)userMarkBadgeBackgroundColorForInactiveWindow;
 @end

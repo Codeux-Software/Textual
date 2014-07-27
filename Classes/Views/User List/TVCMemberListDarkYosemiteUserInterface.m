@@ -39,109 +39,99 @@
 
 @implementation TVCMemberListMavericksLightUserInterface
 
-+ (NSInteger)cellRowHeight
+- (NSInteger)cellRowHeight
 {
 	return 20.0;
 }
 
-+ (NSImage *)rowSelectionImageForActiveWindow
+- (NSImage *)rowSelectionImageForActiveWindow
 {
 	return nil; // Use system default.
 }
 
-+ (NSImage *)rowSelectionImageForInactiveWindow
+- (NSImage *)rowSelectionImageForInactiveWindow
 {
 	return nil; // Use system default.
 }
 
-+ (NSColor *)userMarkBadgeBackgroundColorForGraphite
+- (NSColor *)userMarkBadgeBackgroundColorForGraphite
 {
 	return [NSColor colorWithCalibratedRed:0.515 green:0.574 blue:0.636 alpha:1.0];
 }
 
-+ (NSColor *)userMarkBadgeBackgroundColorForAqua
+- (NSColor *)userMarkBadgeBackgroundColorForAqua
 {
 	return [NSColor colorWithCalibratedRed:0.593 green:0.656 blue:0.789 alpha:1.0];
 }
 
-+ (NSColor *)userMarkBadgeSelectedBackgroundColor
+- (NSColor *)userMarkBadgeSelectedBackgroundColor
 {
 	return [NSColor whiteColor];
 }
 
-+ (NSColor *)userMarkBadgeNormalTextColor
+- (NSColor *)userMarkBadgeNormalTextColor
 {
 	return [NSColor whiteColor];
 }
 
-+ (NSColor *)userMarkBadgeSelectedTextColor
+- (NSColor *)userMarkBadgeSelectedTextColor
 {
 	return [NSColor colorWithCalibratedRed:0.617 green:0.660 blue:0.769 alpha:1.0];
 }
 
-+ (NSColor *)userMarkBadgeShadowColor
+- (NSColor *)userMarkBadgeShadowColor
 {
 	return [NSColor colorWithCalibratedWhite:1.00 alpha:0.60];
 }
 
-+ (NSFont *)userMarkBadgeFont
-{
-	return [RZFontManager() fontWithFamily:@"Helvetica" traits:NSBoldFontMask weight:15 size:11.0];
-}
-
-+ (NSFont *)normalCellFont
+- (NSFont *)normalCellFont
 {
 	return [NSFont fontWithName:@"LucidaGrande" size:12.0];
 }
 
-+ (NSFont *)selectedCellFont
+- (NSFont *)selectedCellFont
 {
 	return [NSFont fontWithName:@"LucidaGrande-Bold" size:12.0];
 }
 
-+ (NSColor *)normalCellTextColor
+- (NSColor *)normalCellTextColor
 {
 	return [NSColor blackColor];
 }
 
-+ (NSColor *)awayUserCellTextColor
+- (NSColor *)awayUserCellTextColor
 {
 	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.6];
 }
 
-+ (NSColor *)selectedCellTextColor
+- (NSColor *)selectedCellTextColor
 {
 	return [NSColor whiteColor];
 }
 
-+ (NSColor *)normalCellTextShadowColor
+- (NSColor *)normalCellTextShadowColor
 {
 	return [NSColor colorWithSRGBRed:1.0 green:1.0 blue:1.0 alpha:0.6];
 }
 
-+ (NSColor *)normalSelectedCellTextShadowColorForActiveWindow
+- (NSColor *)normalSelectedCellTextShadowColorForActiveWindow
 {
 	return [NSColor colorWithCalibratedWhite:0.00 alpha:0.48];
 }
 
-+ (NSColor *)normalSelectedCellTextShadowColorForInactiveWindow
+- (NSColor *)normalSelectedCellTextShadowColorForInactiveWindow
 {
 	return [NSColor colorWithCalibratedWhite:0.00 alpha:0.30];
 }
 
-+ (NSColor *)graphiteSelectedCellTextShadowColorForActiveWindow
+- (NSColor *)graphiteSelectedCellTextShadowColorForActiveWindow
 {
 	return [NSColor colorWithCalibratedRed:0.066 green:0.285 blue:0.492 alpha:1.0];
 }
 
-+ (NSColor *)memberListBackgroundColorForInactiveWindow
+- (NSColor *)memberListBackgroundColor
 {
-	return nil; // Use system default.
-}
-
-+ (NSColor *)memberListBackgroundColorForActiveWindow
-{
-	return nil; // Use system default.
+	return [NSColor sourceListBackgroundColor];
 }
 
 @end

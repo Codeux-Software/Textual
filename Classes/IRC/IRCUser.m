@@ -155,6 +155,25 @@
 	return (self.h || self.o || self.a || self.q);
 }
 
+- (IRCUserRank)currentRank
+{
+	if (self.isCop) {
+		return IRCUserIRCopRank;
+	} else if (self.q) {
+		return IRCUserChannelOwnerRank;
+	} else if (self.a) {
+		return IRCUserSuperOperatorRank;
+	} else if (self.o) {
+		return IRCUserNormalOperatorRank;
+	} else if (self.h) {
+		return IRCUserHalfOperatorRank;
+	} else if (self.v) {
+		return IRCUserVoicedRank;
+	} else {
+		return IRCUserNoRank;
+	}
+}
+
 - (NSInteger)colorNumber
 {
 	if (_colorNumber < 0) {

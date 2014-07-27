@@ -40,9 +40,9 @@
 @interface TVCMemberList : NSOutlineView
 @property (nonatomic, uweak) id keyDelegate;
 @property (nonatomic, assign) BOOL isHiddenByUser;
+@property (nonatomic, strong) id userInterfaceObjects;
 @property (nonatomic, strong) IBOutlet TVCMemberListUserInfoPopover *memberListUserInfoPopover;
 @property (nonatomic, nweak) IBOutlet NSVisualEffectView *visualEffectView;
-@property (nonatomic, nweak) IBOutlet TVCMemberListBackgroundView *backgroundView;
 
 /* Additions & Removals. */
 - (void)addItemToList:(NSInteger)index;
@@ -61,8 +61,6 @@
 - (void)updateDrawingForRow:(NSInteger)rowIndex;
 
 - (void)updateBackgroundColor; // Do not call.
-
-@property (readonly, strong) id userInterfaceObjects;
 
 /* Event monitor. */
 - (void)destroyUserInfoPopoverOnWindowKeyChange;

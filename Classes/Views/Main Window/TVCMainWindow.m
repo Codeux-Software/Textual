@@ -144,9 +144,6 @@
 	[self.memberList updateBackgroundColor];
 	[self.serverList updateBackgroundColor];
 	
-	[self.memberList reloadAllDrawings];
-	[self.serverList reloadAllDrawings];
-	
 	[self.inputTextField updateBackgroundColor];
 	
 	[self.contentView setNeedsDisplay:YES];
@@ -212,10 +209,13 @@
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
 	[self resetSelectedItemState];
+	
+	[self.memberList reloadAllDrawings];
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification
 {
+	[self.memberList reloadAllDrawings];
 	[self.memberList destroyUserInfoPopoverOnWindowKeyChange];
 }
 
@@ -1377,6 +1377,10 @@
 {
 	TVCServerListRowCell *rowView = [[TVCServerListRowCell alloc] initWithFrame:NSZeroRect];
 
+	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+		[rowView setCanDrawSubviewsIntoLayer:YES];
+	}
+	
 	return rowView;
 }
 

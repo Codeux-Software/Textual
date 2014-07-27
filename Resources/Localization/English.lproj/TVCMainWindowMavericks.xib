@@ -1020,11 +1020,11 @@
             <rect key="contentRect" x="957" y="539" width="800" height="477"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <value key="minSize" type="size" width="600" height="250"/>
-            <view key="contentView" id="vSf-eS-cbh">
+            <view key="contentView" wantsLayer="YES" id="vSf-eS-cbh">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="477"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sIi-NW-j8L" userLabel="Text Field">
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="sIi-NW-j8L" userLabel="Text Field">
                         <rect key="frame" x="0.0" y="0.0" width="800" height="38"/>
                         <subviews>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="Jl3-QW-y8e" customClass="TVCMainWindowTextViewBackground">
@@ -1088,7 +1088,7 @@
                                         <segment toolTip="Manage Selection" image="NSActionTemplate" width="48" tag="1">
                                             <nil key="label"/>
                                         </segment>
-                                        <segment toolTip="Open Address Book" image="A678B9CB-3678-48B9-B6E0-2FD5DABDB802" width="46" tag="2">
+                                        <segment toolTip="Open Address Book" image="246CE823-6982-4FD0-9B99-07BCF7E5E535" width="46" tag="2">
                                             <nil key="label"/>
                                         </segment>
                                     </segments>
@@ -1264,25 +1264,16 @@
                                         <rect key="frame" x="650" y="0.0" width="150" height="439"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <subviews>
-                                            <box autoresizesSubviews="NO" boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Blv-Yb-wCC" customClass="TVCMemberListBackgroundView">
-                                                <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
-                                                <view key="contentView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                </view>
-                                                <color key="borderColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <color key="fillColor" red="0.73235294120000005" green="0.0" blue="0.0082272150780000001" alpha="1" colorSpace="calibratedRGB"/>
-                                            </box>
-                                            <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="20" horizontalPageScroll="10" verticalLineScroll="20" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wSp-xO-TND">
+                                            <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wSp-xO-TND">
                                                 <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                                 <clipView key="contentView" drawsBackground="NO" id="ho0-TW-pGh">
                                                     <rect key="frame" x="1" y="17" width="238" height="117"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" selectionHighlightStyle="sourceList" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" rowHeight="20" viewBased="YES" floatsGroupRows="NO" outlineTableColumn="RjB-S2-Ikl" id="b5a-7f-xc2" customClass="TVCMemberList">
+                                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" rowHeight="20" viewBased="YES" floatsGroupRows="NO" outlineTableColumn="RjB-S2-Ikl" id="b5a-7f-xc2" customClass="TVCMemberList">
                                                             <autoresizingMask key="autoresizingMask"/>
-                                                            <size key="intercellSpacing" width="3" height="0.0"/>
-                                                            <color key="backgroundColor" red="0.95455980630000004" green="0.99835759400000001" blue="0.94772262230000004" alpha="0.0" colorSpace="calibratedRGB"/>
+                                                            <size key="intercellSpacing" width="2" height="-1"/>
+                                                            <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                             <tableColumns>
                                                                 <tableColumn identifier="GroupView" width="147" minWidth="40" maxWidth="1000" id="RjB-S2-Ikl">
@@ -1298,37 +1289,46 @@
                                                                     </textFieldCell>
                                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                     <prototypeCellViews>
-                                                                        <tableCellView id="Vor-yy-j1Z" customClass="TVCMemberListCell">
-                                                                            <rect key="frame" x="1" y="0.0" width="147" height="16"/>
+                                                                        <tableCellView id="pm5-vG-5eb" customClass="TVCMemberListCell">
+                                                                            <rect key="frame" x="1" y="1" width="147" height="16"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
-                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Y6p-0N-f0J">
-                                                                                    <rect key="frame" x="-2" y="0.0" width="147" height="16"/>
-                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Label" id="rxv-5Y-lR7" customClass="TVCMemberLisCellTextFieldInterior">
+                                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nsW-bQ-tyM">
+                                                                                    <rect key="frame" x="2" y="1" width="20" height="17"/>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="width" constant="20" id="9Ix-4k-4pf"/>
+                                                                                        <constraint firstAttribute="height" constant="17" id="F8b-v4-LCO"/>
+                                                                                    </constraints>
+                                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="FormattingColor_2" id="4D8-9z-8pb"/>
+                                                                                </imageView>
+                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NUd-Xj-eLM">
+                                                                                    <rect key="frame" x="26" y="2" width="118" height="16"/>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="height" constant="16" id="nCD-vV-RZX"/>
+                                                                                    </constraints>
+                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Label" id="RJr-Ar-1Jx" customClass="TVCMemberLisCellTextFieldInterior">
                                                                                         <font key="font" metaFont="cellTitle"/>
                                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                                        <connections>
-                                                                                            <outlet property="parentCell" destination="Vor-yy-j1Z" id="6Qv-QD-sXP"/>
-                                                                                        </connections>
                                                                                     </textFieldCell>
                                                                                 </textField>
                                                                             </subviews>
                                                                             <constraints>
-                                                                                <constraint firstAttribute="trailing" secondItem="Y6p-0N-f0J" secondAttribute="trailing" constant="4" id="49F-nh-xaf"/>
-                                                                                <constraint firstItem="Y6p-0N-f0J" firstAttribute="leading" secondItem="Vor-yy-j1Z" secondAttribute="leading" id="74J-di-odQ"/>
-                                                                                <constraint firstItem="Y6p-0N-f0J" firstAttribute="top" secondItem="Vor-yy-j1Z" secondAttribute="top" id="doT-hC-Wu1"/>
-                                                                                <constraint firstAttribute="bottom" secondItem="Y6p-0N-f0J" secondAttribute="bottom" id="odu-WK-ORt"/>
+                                                                                <constraint firstAttribute="bottom" secondItem="NUd-Xj-eLM" secondAttribute="bottom" constant="2" id="1U7-cg-k2Q"/>
+                                                                                <constraint firstAttribute="bottom" secondItem="nsW-bQ-tyM" secondAttribute="bottom" constant="1" id="1vU-mS-ugq"/>
+                                                                                <constraint firstItem="NUd-Xj-eLM" firstAttribute="leading" secondItem="nsW-bQ-tyM" secondAttribute="trailing" constant="6" id="5gg-cc-6x4"/>
+                                                                                <constraint firstAttribute="trailing" secondItem="NUd-Xj-eLM" secondAttribute="trailing" constant="5" id="a3f-0b-dPn"/>
+                                                                                <constraint firstItem="nsW-bQ-tyM" firstAttribute="leading" secondItem="pm5-vG-5eb" secondAttribute="leading" constant="2" id="pN6-bT-Xov"/>
                                                                             </constraints>
                                                                             <connections>
-                                                                                <outlet property="textField" destination="Y6p-0N-f0J" id="h8G-1w-U5A"/>
+                                                                                <outlet property="imageView" destination="nsW-bQ-tyM" id="aG3-sB-JiS"/>
+                                                                                <outlet property="textField" destination="NUd-Xj-eLM" id="Ons-bc-CUf"/>
                                                                             </connections>
                                                                         </tableCellView>
                                                                     </prototypeCellViews>
                                                                 </tableColumn>
                                                             </tableColumns>
                                                             <connections>
-                                                                <outlet property="backgroundView" destination="Blv-Yb-wCC" id="lkr-7h-cIx"/>
                                                                 <outlet property="memberListUserInfoPopover" destination="hCd-Nn-UE3" id="n8d-Th-55j"/>
                                                             </connections>
                                                         </outlineView>
@@ -1346,14 +1346,10 @@
                                             </scrollView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="Blv-Yb-wCC" firstAttribute="leading" secondItem="Xag-z5-ifO" secondAttribute="leading" id="0C8-yE-JLv"/>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="Nfh-1e-rAW"/>
-                                            <constraint firstItem="Blv-Yb-wCC" firstAttribute="top" secondItem="Xag-z5-ifO" secondAttribute="top" id="WQE-8f-TEe"/>
-                                            <constraint firstAttribute="bottom" secondItem="Blv-Yb-wCC" secondAttribute="bottom" id="Xs8-tj-evW"/>
                                             <constraint firstItem="wSp-xO-TND" firstAttribute="top" secondItem="Xag-z5-ifO" secondAttribute="top" id="YQq-sX-Ed4"/>
                                             <constraint firstAttribute="bottom" secondItem="wSp-xO-TND" secondAttribute="bottom" id="gAd-q8-MwN"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="glr-2P-bef"/>
-                                            <constraint firstAttribute="trailing" secondItem="Blv-Yb-wCC" secondAttribute="trailing" id="izl-sn-iWU"/>
                                             <constraint firstItem="wSp-xO-TND" firstAttribute="leading" secondItem="Xag-z5-ifO" secondAttribute="leading" id="nJU-Ec-Ci8"/>
                                             <constraint firstAttribute="trailing" secondItem="wSp-xO-TND" secondAttribute="trailing" id="urN-pP-47J"/>
                                         </constraints>
@@ -1678,7 +1674,7 @@ There are no other limits. What you see, is what you get.</string>
         <customObject id="oRw-Te-R5j" customClass="TXMenuControllerMainWindowProxy"/>
     </objects>
     <resources>
-        <image name="A678B9CB-3678-48B9-B6E0-2FD5DABDB802" width="20" height="18">
+        <image name="246CE823-6982-4FD0-9B99-07BCF7E5E535" width="20" height="18">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGS0xYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QEAcI
 ExgdHicoKS00OTw/RUhVJG51bGzVCQoLDA0ODxARElYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVwc1xO

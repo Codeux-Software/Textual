@@ -279,16 +279,15 @@
 }
 
 - (void)scrollViewBoundsDidChangeNotification:(NSNotification *)aNote
-{
-	/* Only responds to events that are related to us… */
+{	/* Only responds to events that are related to us… */
 	if ([[aNote object] isEqual:[self scrollViewContentView]]) {
 		/* Get current mouse position. */
 		NSPoint mouseLocation = [NSEvent mouseLocation];
-
+		
 		NSRect fakeMouseLocation = NSMakeRect(mouseLocation.x, mouseLocation.y, 1, 1);
-
+		
 		NSRect rawPoint = [self.window convertRectFromScreen:fakeMouseLocation];
-
+		
 		NSPoint localPoint = [self convertPoint:rawPoint.origin fromView:nil];
 		
 		/* Handle popover. */
@@ -375,9 +374,6 @@
 	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
 		[self updateDrawingForRow:i];
 	}
-	
-	/* Set display. */
-	[self setNeedsDisplay:YES];
 }
 
 - (void)updateDrawingForRow:(NSInteger)rowIndex
@@ -386,7 +382,7 @@
 	
 	id rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
 	
-	[rowView updateDrawing];
+	[rowView setNeedsDisplay:YES];
 }
 
 - (BOOL)allowsVibrancy
@@ -409,24 +405,29 @@
     // Do not draw focus ring …
 }
 
-- (id)userInterfaceObjects
+- (void)reloadUserInterfaceObjects
 {
+	Class newObjects = nil;
+	
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite])
 	{
 		if ([TVCMemberListSharedUserInterface yosemiteIsUsingVibrantDarkMode] == NO) {
-			return [TVCMemberListLightYosemiteUserInterface class];
+			newObjects = [TVCMemberListLightYosemiteUserInterface class];
 		} else {
-			return [TVCMemberListDarkYosemiteUserInterface class];
+			newObjects = [TVCMemberListDarkYosemiteUserInterface class];
 		}
 	}
 	else
 	{
 		if ([TPCPreferences invertSidebarColors]) {
-			return [TVCMemberListMavericksDarkUserInterface class];
+			newObjects = [TVCMemberListMavericksDarkUserInterface class];
 		} else {
-			return [TVCMemberListMavericksLightUserInterface class];
+			newObjects = [TVCMemberListMavericksLightUserInterface class];
 		}
 	}
+	
+	self.userInterfaceObjects = nil;
+	self.userInterfaceObjects = [newObjects new];
 }
 
 - (void)updateVibrancy
@@ -452,28 +453,29 @@
 
 - (void)updateBackgroundColor
 {
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite])
-	{
-		/* When changing from vibrant light to vibrant dark we must deselect all
-		 rows, change the appearance, and reselect them. If we don't do this, the
-		 drawing that NSOutlineView uses for drawling vibrant light rows will stick
-		 forever leaving blue on selected rows no matter how hard we try to draw. */
-		NSIndexSet *selectedRows = [self selectedRowIndexes];
-		
-		[self deselectAll:nil];
-		
+	/* When changing from vibrant light to vibrant dark we must deselect all
+	 rows, change the appearance, and reselect them. If we don't do this, the
+	 drawing that NSOutlineView uses for drawling vibrant light rows will stick
+	 forever leaving blue on selected rows no matter how hard we try to draw. */
+	NSIndexSet *selectedRows = [self selectedRowIndexes];
+	
+	[self deselectAll:nil];
+	
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 		[self updateVibrancy];
-		
-		[self selectRowIndexes:selectedRows byExtendingSelection:NO];
 	}
-	else
-	{
-		if ([TPCPreferences invertSidebarColors]) {
-			[self setBackgroundColor:nil];
-		} else {
-			[self setBackgroundColor:[NSColor sourceListBackgroundColor]];
-		}
+	
+	[self reloadUserInterfaceObjects];
+	
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
+		[self setBackgroundColor:[self.userInterfaceObjects memberListBackgroundColor]];
 	}
+	
+	[self setNeedsDisplay:YES];
+	
+	[self selectRowIndexes:selectedRows byExtendingSelection:NO];
+	
+	[self reloadAllDrawings];
 }
 
 @end
