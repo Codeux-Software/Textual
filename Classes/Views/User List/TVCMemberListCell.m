@@ -59,14 +59,10 @@
 
 - (void)updateDrawing
 {
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		[self updateDrawingForYosemite:[mainWindowMemberList() userInterfaceObjects]];
-	} else {
-		[self updateDrawingForYosemite:[mainWindowMemberList() userInterfaceObjects]];
-	}
+	[self updateDrawing:[mainWindowMemberList() userInterfaceObjects]];
 }
 
-- (void)updateDrawingForYosemite:(id)interfaceObject
+- (void)updateDrawing:(id)interfaceObject
 {
 	/* Define context. */
 	IRCUser *associatedUser = [self memberPointer];
@@ -85,7 +81,7 @@
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 		[self reloadTextFieldValueForYosemite:[mainWindowMemberList() userInterfaceObjects]];
 	} else {
-		[self reloadTextFieldValueForYosemite:[mainWindowMemberList() userInterfaceObjects]];
+		[self reloadTextFieldValueForMavericks:[mainWindowMemberList() userInterfaceObjects]];
 	}
 }
 
@@ -331,19 +327,25 @@
 	
 	NSString *mcstring = [assosicatedUser mark];
 	
-	/* Build the drawing frame. */
-	NSRect boxFrame = NSMakeRect(0.0,
-								 0.0,
-								 [userInterfaceObjects userMarkBadgeWidth],
-								 [userInterfaceObjects userMarkBadgeHeight]);
-	
 	/* Create image that we will draw into. If we are drawing for Mavericks,
 	 then the frame of our image is one pixel greater because we draw a shadow. */
 	NSImage *newImage = nil;
 	
+	NSRect boxFrame = NSZeroRect;
+	
 	if (isDrawingForMavericks) {
+		boxFrame = NSMakeRect(0.0,
+							  1.0,
+							  [userInterfaceObjects userMarkBadgeWidth],
+							  [userInterfaceObjects userMarkBadgeHeight]);
+		
 		newImage = [NSImage newImageWithSize:NSMakeSize(NSWidth(boxFrame), (NSHeight(boxFrame) + 1.0))];
 	} else {
+		boxFrame = NSMakeRect(0.0,
+							  0.0,
+							  [userInterfaceObjects userMarkBadgeWidth],
+							  [userInterfaceObjects userMarkBadgeHeight]);
+		
 		newImage = [NSImage newImageWithSize:NSMakeSize(NSWidth(boxFrame),  NSHeight(boxFrame))];
 	}
 	
@@ -401,7 +403,7 @@
 			NSRect shadowFrame = boxFrame;
 			
 			/* Change size. */
-			shadowFrame.origin.y += 1;
+			shadowFrame.origin.y -= 1;
 			
 			/* The shadow frame is a round rectangle that matches the one
 			 being drawn with a 1 point offset below the badge to give the
@@ -437,7 +439,6 @@
 		/* This is so ugly, I know. */
 		BOOL isDrawingForRetina = [mainWindow() runningInHighResolutionMode];
 
-		
 		if (isDrawingForRetina)
 		{
 			if ([mcstring isEqualToString:@"+"] ||
@@ -495,18 +496,7 @@
 				badgeTextPoint.y -= -(1.0);
 			}
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 		/* Draw mode string. */
 		[modeString drawAtPoint:badgeTextPoint];
 	}
