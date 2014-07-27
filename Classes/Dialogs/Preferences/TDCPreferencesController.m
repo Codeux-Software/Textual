@@ -994,7 +994,7 @@
 
 - (void)onChangedUserListModeColor:(id)sender
 {
-	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListUserBadgesAction];
+	[TPCPreferences performReloadActionForActionType:(TPCPreferencesKeyReloadMemberListUserBadgesAction | TPCPreferencesKeyReloadMemberListAction)];
 }
 
 - (void)onChangedMainInputTextFieldFontSize:(id)sender

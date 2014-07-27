@@ -792,9 +792,7 @@
 		@synchronized(self.memberListStandardSortedContainer) {
 			[self.memberListStandardSortedContainer sortUsingComparator:NSDefaultComparator];
 			
-			if (self.isSelectedChannel) {
-				[self reloadDataForTableView];
-			}
+			[self reloadDataForTableView];
 		}
 	});
 }

@@ -37,6 +37,10 @@
 
 #import "TextualApplication.h"
 
+@interface TVCMemberListSharedUserInterface ()
+@property (nonatomic, strong) NSCache *cachedUserMarkBadges;
+@end
+
 @implementation TVCMemberListSharedUserInterface
 
 + (BOOL)yosemiteIsUsingVibrantDarkMode
@@ -58,43 +62,68 @@
 	}
 }
 
-+ (NSColor *)memberListBackgroundColor
+- (NSString *)keyForRetrievingCachedUserMarkBadgeWithSymbol:(NSString *)mark rank:(IRCUserRank)rank
 {
-	id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
-	
-	if ([mainWindow() isActiveForDrawing]) {
-		return [userInterfaceObjects memberListBackgroundColorForActiveWindow];
+	return [NSString stringWithFormat:@"%lu > %@", rank, mark];
+}
+
+- (NSImage *)cachedUserMarkBadgeForSymbol:(NSString *)mark rank:(IRCUserRank)rank
+{
+	if (self.cachedUserMarkBadges == nil) {
+		self.cachedUserMarkBadges = [NSCache new];
+		
+		return nil;
 	} else {
-		return [userInterfaceObjects memberListBackgroundColorForInactiveWindow];
+		NSString *key = [self keyForRetrievingCachedUserMarkBadgeWithSymbol:mark rank:rank];
+		
+		return [self.cachedUserMarkBadges objectForKey:key];
 	}
 }
 
-+ (NSColor *)userMarkBadgeBackgroundColor_YDefault // InspIRCd-2.0
+- (void)cacheUserMarkBadge:(NSImage *)badgeImage forSymbol:(NSString *)mark rank:(IRCUserRank)rank
+{
+	if (self.cachedUserMarkBadges == nil) {
+		self.cachedUserMarkBadges = [NSCache new];
+	}
+	
+	NSString *key = [self keyForRetrievingCachedUserMarkBadgeWithSymbol:mark rank:rank];
+	
+	[self.cachedUserMarkBadges setObject:[badgeImage copy] forKey:key];
+}
+
+- (void)invalidateAllUserMarkBadgeCaches
+{
+	if ( self.cachedUserMarkBadges) {
+		[self.cachedUserMarkBadges removeAllObjects];
+	}
+}
+
+- (NSColor *)userMarkBadgeBackgroundColor_YDefault // InspIRCd-2.0
 {
 	return [NSColor colorWithCalibratedRed:0.632 green:0.335 blue:0.226 alpha:1.0];
 }
 
-+ (NSColor *)userMarkBadgeBackgroundColor_QDefault
+- (NSColor *)userMarkBadgeBackgroundColor_QDefault
 {
 	return [NSColor colorWithCalibratedRed:0.726 green:0.0 blue:0.0 alpha:1.0];
 }
 
-+ (NSColor *)userMarkBadgeBackgroundColor_ADefault
+- (NSColor *)userMarkBadgeBackgroundColor_ADefault
 {
 	return [NSColor colorWithCalibratedRed:0.613 green:0.0 blue:0.347 alpha:1.0];
 }
 
-+ (NSColor *)userMarkBadgeBackgroundColor_ODefault
+- (NSColor *)userMarkBadgeBackgroundColor_ODefault
 {
 	return [NSColor colorWithCalibratedRed:0.351 green:0.199 blue:0.609 alpha:1.0];
 }
 
-+ (NSColor *)userMarkBadgeBackgroundColor_HDefault
+- (NSColor *)userMarkBadgeBackgroundColor_HDefault
 {
 	return [NSColor colorWithCalibratedRed:0.066 green:0.488 blue:0.074 alpha:1.0];
 }
 
-+ (NSColor *)userMarkBadgeBackgroundColor_VDefault
+- (NSColor *)userMarkBadgeBackgroundColor_VDefault
 {
 	return [NSColor colorWithCalibratedRed:0.199 green:0.480 blue:0.609 alpha:1.0];
 }
@@ -110,93 +139,64 @@
 	}
 }
 
-+ (NSColor *)userMarkBadgeBackgroundColor_Y // InspIRCd-2.0
+- (NSColor *)userMarkBadgeBackgroundColor_Y // InspIRCd-2.0
 {
 	return [TVCMemberListSharedUserInterface userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors —> +y"];
 }
 
-+ (NSColor *)userMarkBadgeBackgroundColor_Q
+- (NSColor *)userMarkBadgeBackgroundColor_Q
 {
 	return [TVCMemberListSharedUserInterface userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors —> +q"];
 }
 
-+ (NSColor *)userMarkBadgeBackgroundColor_A
+- (NSColor *)userMarkBadgeBackgroundColor_A
 {
 	return [TVCMemberListSharedUserInterface userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors —> +a"];
 }
 
-+ (NSColor *)userMarkBadgeBackgroundColor_O
+- (NSColor *)userMarkBadgeBackgroundColor_O
 {
 	return [TVCMemberListSharedUserInterface userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors —> +o"];
 }
 
-+ (NSColor *)userMarkBadgeBackgroundColor_H
+- (NSColor *)userMarkBadgeBackgroundColor_H
 {
 	return [TVCMemberListSharedUserInterface userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors —> +h"];
 }
 
-+ (NSColor *)userMarkBadgeBackgroundColor_V
+- (NSColor *)userMarkBadgeBackgroundColor_V
 {
 	return [TVCMemberListSharedUserInterface userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors —> +v"];
 }
 
-+ (NSFont *)userMarkBadgeFont
+- (NSFont *)userMarkBadgeFont
 {
-	return [NSFont boldSystemFontOfSize:13.5];
+	return [RZFontManager() fontWithFamily:@"Helvetica" traits:0 weight:15 size:12.5];
 }
 
-+ (NSInteger)userMarkBadgeBottomMargin
+- (NSFont *)userMarkBadgeFontForRetina
 {
-	return 2.0;
+	return [RZFontManager() fontWithFamily:@"Helvetica" traits:0 weight:15 size:12.0];
 }
 
-+ (NSInteger)userMarkBadgeLeftMargin
+- (NSFont *)userMarkBadgeFontSelected
 {
-	return 5.0;
+	return [RZFontManager() fontWithFamily:@"Helvetica" traits:0 weight:15 size:12.5];
 }
 
-+ (NSInteger)userMarkBadgeWidth
+- (NSFont *)userMarkBadgeFontSelectedForRetina
+{
+	return [RZFontManager() fontWithFamily:@"Helvetica" traits:0 weight:15 size:12.0];
+}
+
+- (NSInteger)userMarkBadgeWidth
 {
 	return 20.0;
 }
 
-+ (NSInteger)userMarkBadgeHeight
+- (NSInteger)userMarkBadgeHeight
 {
 	return 16.0;
-}
-
-+ (NSInteger)textCellLeftMargin
-{
-	return 29.0;
-}
-
-+ (NSInteger)textCellBottomMargin
-{
-	return 2.0;
-}
-
-@end
-
-@implementation TVCMemberListBackgroundView
-
-- (BOOL)allowsVibrancy
-{
-	return NO;
-}
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-	if ([self needsToDrawRect:dirtyRect]) {
-		id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
-		
-		NSColor *backgroundColor = [userInterfaceObjects memberListBackgroundColor];
-		
-		if (backgroundColor) {
-			[backgroundColor set];
-			
-			NSRectFill(dirtyRect);
-		}
-	}
 }
 
 @end

@@ -38,38 +38,33 @@
 #import "TextualApplication.h"
 
 @interface TVCMemberListMavericksUserInterface : TVCMemberListSharedUserInterface
-+ (NSInteger)cellRowHeight;
+- (NSInteger)cellRowHeight;
 
-+ (NSImage *)rowSelectionImageForActiveWindow;
-+ (NSImage *)rowSelectionImageForInactiveWindow;
+- (NSImage *)rowSelectionImageForActiveWindow;
+- (NSImage *)rowSelectionImageForInactiveWindow;
 
-+ (NSColor *)memberListBackgroundColorForActiveWindow;
-+ (NSColor *)memberListBackgroundColorForInactiveWindow;
+- (NSColor *)userMarkBadgeBackgroundColorForAqua;
+- (NSColor *)userMarkBadgeBackgroundColorForGraphite;
 
-+ (NSColor *)userMarkBadgeBackgroundColorForAqua;
-+ (NSColor *)userMarkBadgeBackgroundColorForGraphite;
+- (NSColor *)userMarkBadgeSelectedBackgroundColor;
 
-+ (NSColor *)userMarkBadgeSelectedBackgroundColor;
+- (NSColor *)userMarkBadgeNormalTextColor;
+- (NSColor *)userMarkBadgeSelectedTextColor;
 
-+ (NSColor *)userMarkBadgeNormalTextColor;
-+ (NSColor *)userMarkBadgeSelectedTextColor;
+- (NSColor *)userMarkBadgeShadowColor;
 
-+ (NSColor *)userMarkBadgeShadowColor;
+- (NSFont *)normalCellFont;
+- (NSFont *)selectedCellFont;
 
-+ (NSFont *)userMarkBadgeFont;
+- (NSColor *)normalCellTextColor;
+- (NSColor *)awayUserCellTextColor;
+- (NSColor *)selectedCellTextColor;
 
-+ (NSFont *)normalCellFont;
-+ (NSFont *)selectedCellFont;
+- (NSColor *)normalCellTextShadowColor;
 
-+ (NSColor *)normalCellTextColor;
-+ (NSColor *)awayUserCellTextColor;
-+ (NSColor *)selectedCellTextColor;
-
-+ (NSColor *)normalCellTextShadowColor;
-
-+ (NSColor *)normalSelectedCellTextShadowColorForActiveWindow;
-+ (NSColor *)normalSelectedCellTextShadowColorForInactiveWindow;
-+ (NSColor *)graphiteSelectedCellTextShadowColorForActiveWindow;
+- (NSColor *)normalSelectedCellTextShadowColorForActiveWindow;
+- (NSColor *)normalSelectedCellTextShadowColorForInactiveWindow;
+- (NSColor *)graphiteSelectedCellTextShadowColorForActiveWindow;
 @end
 
 @interface TVCMemberListMavericksLightUserInterface : TVCMemberListMavericksUserInterface

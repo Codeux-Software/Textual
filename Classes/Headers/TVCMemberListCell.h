@@ -42,8 +42,6 @@
 
 @property (readonly, copy) NSDictionary *drawingContext;
 
-- (void)updateDrawing;
-
 - (void)drawWithExpansionFrame;
 @end
 
@@ -51,5 +49,4 @@
 @end
 
 @interface TVCMemberLisCellTextFieldInterior : NSTextFieldCell
-@property (nonatomic, nweak) IBOutlet TVCMemberListCell *parentCell;
 @end

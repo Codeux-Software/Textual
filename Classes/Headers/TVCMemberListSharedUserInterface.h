@@ -40,32 +40,33 @@
 @interface TVCMemberListSharedUserInterface : NSObject
 + (BOOL)yosemiteIsUsingVibrantDarkMode;
 
-+ (NSColor *)memberListBackgroundColor;
+- (NSImage *)cachedUserMarkBadgeForSymbol:(NSString *)mark rank:(IRCUserRank)rank;
+- (void)cacheUserMarkBadge:(NSImage *)badgeImage forSymbol:(NSString *)mark rank:(IRCUserRank)rank;
 
-+ (NSColor *)userMarkBadgeBackgroundColor_Y;
-+ (NSColor *)userMarkBadgeBackgroundColor_A;
-+ (NSColor *)userMarkBadgeBackgroundColor_H;
-+ (NSColor *)userMarkBadgeBackgroundColor_O;
-+ (NSColor *)userMarkBadgeBackgroundColor_Q;
-+ (NSColor *)userMarkBadgeBackgroundColor_V;
+- (void)invalidateAllUserMarkBadgeCaches;
 
-+ (NSColor *)userMarkBadgeBackgroundColor_YDefault;
-+ (NSColor *)userMarkBadgeBackgroundColor_ADefault;
-+ (NSColor *)userMarkBadgeBackgroundColor_HDefault;
-+ (NSColor *)userMarkBadgeBackgroundColor_ODefault;
-+ (NSColor *)userMarkBadgeBackgroundColor_QDefault;
-+ (NSColor *)userMarkBadgeBackgroundColor_VDefault;
+- (NSColor *)memberListBackgroundColor;
 
-+ (NSFont *)userMarkBadgeFont;
+- (NSColor *)userMarkBadgeBackgroundColor_Y;
+- (NSColor *)userMarkBadgeBackgroundColor_A;
+- (NSColor *)userMarkBadgeBackgroundColor_H;
+- (NSColor *)userMarkBadgeBackgroundColor_O;
+- (NSColor *)userMarkBadgeBackgroundColor_Q;
+- (NSColor *)userMarkBadgeBackgroundColor_V;
 
-+ (NSInteger)userMarkBadgeHeight;
-+ (NSInteger)userMarkBadgeWidth;
-+ (NSInteger)userMarkBadgeLeftMargin;
-+ (NSInteger)userMarkBadgeBottomMargin;
+- (NSColor *)userMarkBadgeBackgroundColor_YDefault;
+- (NSColor *)userMarkBadgeBackgroundColor_ADefault;
+- (NSColor *)userMarkBadgeBackgroundColor_HDefault;
+- (NSColor *)userMarkBadgeBackgroundColor_ODefault;
+- (NSColor *)userMarkBadgeBackgroundColor_QDefault;
+- (NSColor *)userMarkBadgeBackgroundColor_VDefault;
 
-+ (NSInteger)textCellLeftMargin;
-+ (NSInteger)textCellBottomMargin;
-@end
+- (NSFont *)userMarkBadgeFont;
+- (NSFont *)userMarkBadgeFontSelected;
 
-@interface TVCMemberListBackgroundView : NSBox
+- (NSFont *)userMarkBadgeFontForRetina;
+- (NSFont *)userMarkBadgeFontSelectedForRetina;
+
+- (NSInteger)userMarkBadgeHeight;
+- (NSInteger)userMarkBadgeWidth;
 @end
