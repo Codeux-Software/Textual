@@ -98,6 +98,11 @@
 	}
 }
 
+- (NSColor *)memberListBackgroundColor
+{
+	return nil;
+}
+
 - (NSColor *)userMarkBadgeBackgroundColor_YDefault // InspIRCd-2.0
 {
 	return [NSColor colorWithCalibratedRed:0.632 green:0.335 blue:0.226 alpha:1.0];
