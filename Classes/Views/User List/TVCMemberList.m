@@ -468,7 +468,9 @@
 	[self reloadUserInterfaceObjects];
 	
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
-		[self setBackgroundColor:[self.userInterfaceObjects memberListBackgroundColor]];
+		NSColor *backgroundColor = [[self userInterfaceObjects] memberListBackgroundColor];
+		
+		[self setBackgroundColor:backgroundColor];
 	}
 	
 	[self setNeedsDisplay:YES];
