@@ -281,10 +281,6 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
 	if ([self needsToDrawRect:dirtyRect]) {
-		CGContextRef ctx = [RZGraphicsCurrentContext() graphicsPort];
-		
-		CGContextSetShouldSmoothFonts(ctx, true);
-		
 		NSString *value = [self stringValue];
 		
 		if ([value length] == 0) {
@@ -846,6 +842,11 @@
 	
 	/* Set the image as the layer contents. */
 	[[self layer] setContents:contentsImage];
+}
+
+- (BOOL)isOpaque
+{
+	return YES;
 }
 
 @end
