@@ -37,10 +37,6 @@
 
 #import "TextualApplication.h"
 
-@interface TVCMemberListRowCell ()
-@property (nonatomic, strong) CALayer *selectionDrawingLayer;
-@end
-
 @implementation TVCMemberListCell
 
 #pragma mark -
@@ -633,12 +629,8 @@
 		{
 			if ([TVCMemberListSharedUserInterface yosemiteIsUsingVibrantDarkMode]) {
 				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
-				
-				[self setNeedsDisplayOnChild];
 			} else {
 				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleSourceList];
-				
-				[self toggleVibrancyDirtyFix];
 			}
 		}
 		else
@@ -648,67 +640,24 @@
 			} else {
 				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleSourceList];
 			}
-			
-			[self setNeedsDisplayOnChild];
 		}
 	}
 	else
 	{
 		[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
-		
-		[self setNeedsDisplayOnChild];
-	}
-}
-
-- (void)toggleVibrancyDirtyFix
-{
-	/* This is an extremely dirty fix. I am not going to write paragraphs in here
-	 about what its purpose is but if you ever want to know, shoot me an e-mail over
-	 at michael@codeux.com and I'll be sure to give you a run down. */
-	
-	NSArray *subviews = [self subviews];
-	
-	if ([subviews count] == 0) {
-		return; // We have nothing to work with.
 	}
 	
-	id secondView = nil;
-	
-	if ([subviews count] == 2) {
-		secondView = subviews[1];
-		
-		if ([self isSelected] == NO) {
-			id firstView = subviews[0];
-			
-			if ([firstView isKindOfClass:[NSVisualEffectView class]]) {
-				[firstView removeFromSuperview];
-			}
-		}
-	} else {
-		secondView = subviews[0];
-	}
-	
-	if ([secondView isKindOfClass:[TVCMemberListCell class]]) {
-		NSImageView *imageView = [secondView imageView];
-		
-		if ([self isSelected] == NO) {
-			[[imageView layer] setFilters:nil];
-		} else {
-			CIFilter *filter = [CIFilter filterWithName:@"CIVibrance" keysAndValues:@"inputImage", [NSNull null], @"inputAmount", @(0), nil];
-			
-			[[imageView layer] setFilters:@[filter]];
-		}
-		
-		[secondView setNeedsDisplay:YES];
-	}
+	[self setNeedsDisplayOnChild];
 }
 
 - (void)setNeedsDisplayOnChild
 {
 	NSArray *subviews = [self subviews];
 	
-	if ([subviews count] == 1) {
-		[subviews[0] setNeedsDisplay:YES];
+	for (id subview in subviews) {
+		if ([subview isKindOfClass:[TVCMemberListCell class]]) {
+			[subview setNeedsDisplay:YES];
+		}
 	}
 }
 
