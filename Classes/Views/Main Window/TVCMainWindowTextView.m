@@ -419,7 +419,7 @@
 		backgroundHeight = [self highestHeightBelowHeight:backgroundViewMaxHeight withPadding:contentBorderPadding];
 		
 		if ((backgroundHeight - contentBorderPadding) < backgroundDefaultHeight) {
-			 backgroundHeight = backgroundDefaultHeight;
+			 backgroundHeight = (backgroundDefaultHeight + contentBorderPadding);
 		}
 	}
 
