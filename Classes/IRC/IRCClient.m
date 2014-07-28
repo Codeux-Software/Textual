@@ -542,7 +542,7 @@
 - (void)maybeResetUserAwayStatusForChannel:(IRCChannel *)channel
 {
 	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify] == NO) {
-		if ([c numberOfMembers] > [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
+		if ([channel numberOfMembers] > [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
 			for (IRCUser *u in [channel sortedByChannelRankMemberList]) {
 				u.isAway = NO;
 			}
