@@ -2847,7 +2847,7 @@
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <button id="ZwK-yE-OaM">
-                    <rect key="frame" x="54" y="288" width="250" height="18"/>
+                    <rect key="frame" x="54" y="302" width="250" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Open browser links in the background" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="teD-cX-ebj">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2858,7 +2858,7 @@
                     </connections>
                 </button>
                 <button id="g7g-wa-Lin">
-                    <rect key="frame" x="54" y="209" width="357" height="18"/>
+                    <rect key="frame" x="54" y="223" width="357" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Use &quot;x&quot; to indicate user with no mode set in user list" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="CTi-8F-Hm0">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2869,7 +2869,7 @@
                     </connections>
                 </button>
                 <button id="nZc-E3-Yfg">
-                    <rect key="frame" x="54" y="237" width="201" height="18"/>
+                    <rect key="frame" x="54" y="251" width="201" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Darken main window colors" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="eXm-bv-mly">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2882,14 +2882,14 @@
                     </connections>
                 </button>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="ZWs-Sg-lWH">
-                    <rect key="frame" x="68" y="269" width="442" height="5"/>
+                    <rect key="frame" x="68" y="283" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <button id="CbH-Wp-1Uz">
-                    <rect key="frame" x="54" y="181" width="357" height="18"/>
+                    <rect key="frame" x="54" y="195" width="357" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Place known server staff members at top of user list" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="3Ge-78-jOo">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2901,7 +2901,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="24e-Sn-hc0">
-                    <rect key="frame" x="86" y="102" width="134" height="16"/>
+                    <rect key="frame" x="86" y="88" width="134" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Window Transparency:" id="p9v-sF-fnd">
                         <font key="font" metaFont="cellTitle"/>
@@ -2910,7 +2910,7 @@
                     </textFieldCell>
                 </textField>
                 <slider verticalHuggingPriority="750" id="dL3-1Y-d6c">
-                    <rect key="frame" x="253" y="101" width="197" height="15"/>
+                    <rect key="frame" x="253" y="87" width="197" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="0.20000000000000001" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="rOl-dP-bbN"/>
                     <connections>
@@ -2920,7 +2920,7 @@
                     </connections>
                 </slider>
                 <textField verticalHuggingPriority="750" id="ty6-SS-X7V">
-                    <rect key="frame" x="225" y="103" width="25" height="11"/>
+                    <rect key="frame" x="225" y="89" width="25" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="80%" id="5cm-qm-cnK">
                         <font key="font" metaFont="miniSystem"/>
@@ -2929,7 +2929,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="WVk-ba-eef">
-                    <rect key="frame" x="456" y="103" width="23" height="11"/>
+                    <rect key="frame" x="456" y="89" width="23" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0%" id="mEC-bF-yWk">
                         <font key="font" metaFont="miniSystem"/>
@@ -2938,14 +2938,14 @@
                     </textFieldCell>
                 </textField>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="HoJ-30-vS3">
-                    <rect key="frame" x="69" y="134" width="442" height="5"/>
+                    <rect key="frame" x="69" y="120" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <button id="FKV-vg-lhM">
-                    <rect key="frame" x="54" y="153" width="357" height="18"/>
+                    <rect key="frame" x="54" y="139" width="357" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Save the state of queries between restarts" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Xe6-MU-fhd">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2956,8 +2956,19 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ServerListRetainsQueriesBetweenRestarts" id="kvo-BJ-klt"/>
                     </connections>
                 </button>
+                <button id="Lod-ox-r5n">
+                    <rect key="frame" x="54" y="167" width="280" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="User list info popover updates while scrolling" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ZfD-HJ-RMG">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.MemberListUpdatesUserInfoPopoverOnScroll" id="cOL-ws-W6g"/>
+                    </connections>
+                </button>
             </subviews>
-            <point key="canvasLocation" x="1497.5" y="351"/>
+            <point key="canvasLocation" x="1244.5" y="250"/>
         </customView>
         <customView id="1YF-k7-FrW" userLabel="Command Scope">
             <rect key="frame" x="170" y="8" width="567" height="406"/>

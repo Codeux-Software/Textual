@@ -142,6 +142,7 @@ typedef enum TXFileTransferIPAddressDetectionMethod : NSInteger {
 + (BOOL)clearAllOnlyOnActiveServer;
 
 + (BOOL)memberListSortFavorsServerStaff;
++ (BOOL)memberListUpdatesUserInfoPopoverOnScroll;
 
 + (TXNoticeSendLocationType)locationToSendNotices;
 

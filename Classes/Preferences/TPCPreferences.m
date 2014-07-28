@@ -206,6 +206,11 @@
 	return [RZUserDefaults() boolForKey:@"MemberListSortFavorsServerStaff"];
 }
 
++ (BOOL)memberListUpdatesUserInfoPopoverOnScroll
+{
+	return [RZUserDefaults() boolForKey:@"MemberListUpdatesUserInfoPopoverOnScroll"];
+}
+
 + (BOOL)postNotificationsWhileInFocus
 {
 	return [RZUserDefaults() boolForKey:@"PostNotificationsWhileInFocus"];
