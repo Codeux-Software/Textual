@@ -422,14 +422,16 @@
 			 backgroundHeight = (backgroundDefaultHeight + contentBorderPadding);
 		}
 	}
-
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
-		[mainWindow setContentBorderThickness:backgroundHeight forEdge:NSMinYEdge];
-	}
-
+	
 	[self.textFieldHeightConstraint setConstant:backgroundHeight];
 	
 	[self.backgroundView setNeedsDisplay:YES];
+
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
+		[mainWindow setContentBorderThickness:backgroundHeight forEdge:NSMinYEdge];
+	} else {
+		[self.contentView setNeedsDisplay:YES];
+	}
 	
 	if (documentViewBounds.origin.x > 0) {
 		documentViewBounds.origin.x = 0;
@@ -844,11 +846,6 @@
 	[[self layer] setContents:contentsImage];
 }
 
-- (BOOL)isOpaque
-{
-	return YES;
-}
-
 @end
 
 #pragma mark -
@@ -859,6 +856,11 @@
  the window in place of this layer for the content view. */
 
 @implementation TVCMainWindowTextViewContentView
+
+- (BOOL)isOpaque
+{
+	return YES;
+}
 
 - (BOOL)wantsUpdateLayer
 {
