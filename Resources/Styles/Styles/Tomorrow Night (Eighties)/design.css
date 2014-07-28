@@ -130,6 +130,8 @@ a:hover {
 	padding: 2px 0.5em 3px;
 	background-color: rgba(113, 140, 00, 0.9); /* Tomorrow: Green 90% */
 	-webkit-transition: opacity 0.8s linear;
+	-webkit-transform: translateZ(0);
+	-webkit-font-smoothing: subpixel-antialiased;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;

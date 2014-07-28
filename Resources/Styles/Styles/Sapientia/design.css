@@ -118,6 +118,8 @@ a:hover {
 	border-bottom: 1px solid #544E45;
 	-webkit-box-shadow: 0 1px 5px #000;
 	-webkit-transition: opacity 0.8s linear;
+	-webkit-transform: translateZ(0);
+	-webkit-font-smoothing: subpixel-antialiased;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
