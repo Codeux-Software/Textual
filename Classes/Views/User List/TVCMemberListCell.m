@@ -777,9 +777,14 @@
 {
 	CGContextRef ctx = [RZGraphicsCurrentContext() graphicsPort];
 	
+	CGContextSaveGState(ctx);
+	
+	CGContextSetShouldAntialias(ctx, true);
 	CGContextSetShouldSmoothFonts(ctx, true);
 	
 	[[self attributedStringValue] drawInRect:cellFrame];
+	
+	CGContextRestoreGState(ctx);
 }
 
 @end
