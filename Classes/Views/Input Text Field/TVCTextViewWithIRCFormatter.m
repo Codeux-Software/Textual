@@ -111,6 +111,13 @@
 #pragma mark -
 #pragma mark Value Management
 
+- (void)paste:(id)sender
+{
+	[RZPasteboard() maybeConvertURLDataToStringContent];
+	
+	[super paste:sender];
+}
+
 - (NSArray *)readablePasteboardTypes
 {
 	return @[NSPasteboardTypeString, NSFilenamesPboardType];

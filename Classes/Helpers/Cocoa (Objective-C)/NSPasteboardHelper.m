@@ -40,6 +40,23 @@
 
 @implementation NSPasteboard (TXPasteboardHelper)
 
+- (void)maybeConvertURLDataToStringContent
+{
+	if ([self stringContent] == nil) {
+		id urlPropertyList = [self propertyListForType:NSURLPboardType];
+		
+		if ([urlPropertyList isKindOfClass:[NSArray class]]) {
+			if ([urlPropertyList count] == 2) {
+				NSString *urlStringValue = urlPropertyList[0];
+				
+				if ([urlStringValue length] > 0) {
+					[self setStringContent:urlStringValue];
+				}
+			}
+		}	
+	}
+}
+
 - (NSString *)stringContent
 {
 	return [self stringForType:NSStringPboardType];
