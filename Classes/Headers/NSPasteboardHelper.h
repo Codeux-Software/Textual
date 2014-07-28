@@ -39,5 +39,7 @@
 #import "TextualApplication.h"
 
 @interface NSPasteboard (TXPasteboardHelper)
+- (void)maybeConvertURLDataToStringContent;
+
 @property (copy) NSString *stringContent;
 @end
