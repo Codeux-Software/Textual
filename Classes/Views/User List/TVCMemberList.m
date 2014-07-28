@@ -279,19 +279,22 @@
 }
 
 - (void)scrollViewBoundsDidChangeNotification:(NSNotification *)aNote
-{	/* Only responds to events that are related to us… */
-	if ([[aNote object] isEqual:[self scrollViewContentView]]) {
-		/* Get current mouse position. */
-		NSPoint mouseLocation = [NSEvent mouseLocation];
-		
-		NSRect fakeMouseLocation = NSMakeRect(mouseLocation.x, mouseLocation.y, 1, 1);
-		
-		NSRect rawPoint = [self.window convertRectFromScreen:fakeMouseLocation];
-		
-		NSPoint localPoint = [self convertPoint:rawPoint.origin fromView:nil];
-		
-		/* Handle popover. */
-		[self popUserInfoExpansionFrameAtPoint:localPoint ignoreTimerCheck:YES];
+{
+	if ([TPCPreferences memberListUpdatesUserInfoPopoverOnScroll]) {
+		/* Only responds to events that are related to us… */
+		if ([[aNote object] isEqual:[self scrollViewContentView]]) {
+			/* Get current mouse position. */
+			NSPoint mouseLocation = [NSEvent mouseLocation];
+			
+			NSRect fakeMouseLocation = NSMakeRect(mouseLocation.x, mouseLocation.y, 1, 1);
+			
+			NSRect rawPoint = [self.window convertRectFromScreen:fakeMouseLocation];
+			
+			NSPoint localPoint = [self convertPoint:rawPoint.origin fromView:nil];
+			
+			/* Handle popover. */
+			[self popUserInfoExpansionFrameAtPoint:localPoint ignoreTimerCheck:YES];
+		}
 	}
 }
 

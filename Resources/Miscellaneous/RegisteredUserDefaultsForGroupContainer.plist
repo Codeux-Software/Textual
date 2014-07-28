@@ -64,6 +64,8 @@
 	<integer>0</integer>
 	<key>LogHighlights</key>
 	<true/>
+	<key>MemberListUpdatesUserInfoPopoverOnScroll</key>
+	<true/>
 	<key>Main Input Text Field -&gt; Font Size</key>
 	<integer>1</integer>
 	<key>MainWindowTransparencyLevel</key>
