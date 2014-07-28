@@ -1377,10 +1377,6 @@
 {
 	TVCServerListRowCell *rowView = [[TVCServerListRowCell alloc] initWithFrame:NSZeroRect];
 
-	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
-		[rowView setCanDrawSubviewsIntoLayer:YES];
-	}
-	
 	return rowView;
 }
 

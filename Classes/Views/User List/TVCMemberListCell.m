@@ -37,6 +37,10 @@
 
 #import "TextualApplication.h"
 
+@interface TVCMemberListRowCell ()
+@property (nonatomic, strong) CALayer *selectionDrawingLayer;
+@end
+
 @implementation TVCMemberListCell
 
 #pragma mark -
@@ -78,25 +82,34 @@
 		[textField setStringValue:labelValue];
 	}
 	
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		[self reloadTextFieldValueForYosemite:[mainWindowMemberList() userInterfaceObjects]];
-	} else {
-		[self reloadTextFieldValueForMavericks:[mainWindowMemberList() userInterfaceObjects]];
-	}
-}
-
-- (void)reloadTextFieldValueForMavericks:(id)interfaceObject
-{
-	/* Gather basic context information. */
 	NSDictionary *drawingContext = [self drawingContext];
 	
+	id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
+	
+	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
+	
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		NSAttributedString *newValue = [self attributedTextFieldValueForYosemite:userInterfaceObjects inContext:drawingContext];
+		
+		[textField setAttributedStringValue:newValue];
+	} else {
+		NSAttributedString *newValue = [self attributedTextFieldValueForMavericks:userInterfaceObjects inContext:drawingContext];
+		
+		[textField setAttributedStringValue:newValue];
+	}
+		
+	[self updateUserMarkBadge:isSelected];
+}
+
+#pragma mark -
+#pragma mark Text Field Attributes
+
+- (NSAttributedString *)attributedTextFieldValueForMavericks:(id)interfaceObject inContext:(NSDictionary *)drawingContext
+{
 	BOOL isWindowActive = [drawingContext boolForKey:@"isActiveWindow"];
 	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
 	BOOL isInverted = [drawingContext boolForKey:@"isInverted"];
 	BOOL isGraphite = [drawingContext boolForKey:@"isGraphite"];
-	
-	/* We already have the context here, so update the badge. */
-	[self updateUserMarkBadge:isSelected];
 	
 	/* Update actual text field value. */
 	IRCUser *assosicatedUser = [self memberPointer];
@@ -158,19 +171,14 @@
 	[mutableStringValue endEditing];
 	
 	/* Draw new attributed string. */
-	[textField setAttributedStringValue:mutableStringValue];
+	return mutableStringValue;
 }
 
-- (void)reloadTextFieldValueForYosemite:(id)interfaceObject
+- (NSAttributedString *)attributedTextFieldValueForYosemite:(id)interfaceObject inContext:(NSDictionary *)drawingContext
 {
 	/* Gather basic context information. */
-	NSDictionary *drawingContext = [self drawingContext];
-	
 	BOOL isWindowActive = [drawingContext boolForKey:@"isActiveWindow"];
 	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
-	
-	/* We already have the context here, so update the badge. */
-	[self updateUserMarkBadge:isSelected];
 	
 	/* Update actual text field value. */
 	IRCUser *assosicatedUser = [self memberPointer];
@@ -213,7 +221,7 @@
 	[mutableStringValue endEditing];
 	
 	/* Draw new attributed string. */
-	[textField setAttributedStringValue:mutableStringValue];
+	return mutableStringValue;
 }
 
 #pragma mark -
@@ -619,22 +627,18 @@
 
 - (void)postSelectionChangeNeedsDisplay
 {
-	NSArray *subviews = [self subviews];
-	
-	if ([subviews count] == 1) {
-		[subviews[0] setNeedsDisplay:YES];
-	}
-	
-	[self setNeedsDisplay:YES];
-
 	if ([self isSelected])
 	{
 		if ([CSFWSystemInformation featureAvailableToOSXYosemite])
 		{
 			if ([TVCMemberListSharedUserInterface yosemiteIsUsingVibrantDarkMode]) {
 				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
+				
+				[self setNeedsDisplayOnChild];
 			} else {
 				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleSourceList];
+				
+				[self toggleVibrancyDirtyFix];
 			}
 		}
 		else
@@ -644,11 +648,67 @@
 			} else {
 				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleSourceList];
 			}
+			
+			[self setNeedsDisplayOnChild];
 		}
 	}
 	else
 	{
 		[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
+		
+		[self setNeedsDisplayOnChild];
+	}
+}
+
+- (void)toggleVibrancyDirtyFix
+{
+	/* This is an extremely dirty fix. I am not going to write paragraphs in here
+	 about what its purpose is but if you ever want to know, shoot me an e-mail over
+	 at michael@codeux.com and I'll be sure to give you a run down. */
+	
+	NSArray *subviews = [self subviews];
+	
+	if ([subviews count] == 0) {
+		return; // We have nothing to work with.
+	}
+	
+	id secondView = nil;
+	
+	if ([subviews count] == 2) {
+		secondView = subviews[1];
+		
+		if ([self isSelected] == NO) {
+			id firstView = subviews[0];
+			
+			if ([firstView isKindOfClass:[NSVisualEffectView class]]) {
+				[firstView removeFromSuperview];
+			}
+		}
+	} else {
+		secondView = subviews[0];
+	}
+	
+	if ([secondView isKindOfClass:[TVCMemberListCell class]]) {
+		NSImageView *imageView = [secondView imageView];
+		
+		if ([self isSelected] == NO) {
+			[[imageView layer] setFilters:nil];
+		} else {
+			CIFilter *filter = [CIFilter filterWithName:@"CIVibrance" keysAndValues:@"inputImage", [NSNull null], @"inputAmount", @(0), nil];
+			
+			[[imageView layer] setFilters:@[filter]];
+		}
+		
+		[secondView setNeedsDisplay:YES];
+	}
+}
+
+- (void)setNeedsDisplayOnChild
+{
+	NSArray *subviews = [self subviews];
+	
+	if ([subviews count] == 1) {
+		[subviews[0] setNeedsDisplay:YES];
 	}
 }
 
