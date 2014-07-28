@@ -281,6 +281,10 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
 	if ([self needsToDrawRect:dirtyRect]) {
+		CGContextRef ctx = [RZGraphicsCurrentContext() graphicsPort];
+		
+		CGContextSetShouldSmoothFonts(ctx, true);
+		
 		NSString *value = [self stringValue];
 		
 		if ([value length] == 0) {

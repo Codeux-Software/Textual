@@ -40,7 +40,7 @@
                                         <segment toolTip="Manage Selection" image="NSActionTemplate" width="48" tag="1">
                                             <nil key="label"/>
                                         </segment>
-                                        <segment toolTip="Open Address Book" image="E994BE30-2C0E-41AA-BDFB-8E4F6311610E" width="46" tag="2">
+                                        <segment toolTip="Open Address Book" image="DB6E7FAD-FF69-4E08-A989-F45C59716A6E" width="46" tag="2">
                                             <nil key="label"/>
                                         </segment>
                                     </segments>
@@ -1685,7 +1685,7 @@ There are no other limits. What you see, is what you get.</string>
         <customObject id="U6M-jc-NbT" customClass="TXMenuControllerMainWindowProxy"/>
     </objects>
     <resources>
-        <image name="E994BE30-2C0E-41AA-BDFB-8E4F6311610E" width="20" height="18">
+        <image name="DB6E7FAD-FF69-4E08-A989-F45C59716A6E" width="20" height="18">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGS0xYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QEAcI
 ExgdHicoKS00OTw/RUhVJG51bGzVCQoLDA0ODxARElYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVwc1xO
