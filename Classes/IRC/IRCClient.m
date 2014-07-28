@@ -2096,6 +2096,12 @@
 			
 			break;
 		}
+		case 5077: // Command: WALLOPS
+		{
+			[self send:IRCPrivateCommandIndex("wallops"), uncutInput, nil];
+			
+			break;
+		}
 		case 5097: // Command: WATCH
 		{
 			self.inUserInvokedWatchRequest = YES;
