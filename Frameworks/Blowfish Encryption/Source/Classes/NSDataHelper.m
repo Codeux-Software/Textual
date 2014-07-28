@@ -16,7 +16,48 @@
 
 #import "NSDataHelper.h"
 
+@implementation NSMutableData (BlowfishEncryptionDataHelper)
+
+- (void)removeBadCharacters
+{
+	[self replaceAllOccurrencesOfData:[NSData dataWithBytes:"\x0D" length:1] withBytes:NULL length:0]; // Line break
+	[self replaceAllOccurrencesOfData:[NSData dataWithBytes:"\x0A" length:1] withBytes:NULL length:0]; // Line feed
+	[self replaceAllOccurrencesOfData:[NSData dataWithBytes:"\x00" length:1] withBytes:NULL length:0]; // NULL character
+}
+
+- (void)replaceAllOccurrencesOfData:(NSData *)needle withBytes:(const void *)replacementBytes length:(NSUInteger)replacementLength;
+{
+	NSInteger start = 0;
+	
+	while (1 == 1) {
+		if (start >= [self length]) {
+			break;
+		}
+		
+		NSRange r = [self rangeOfData:needle options:0 range:NSMakeRange(start, ([self length] - start))];
+
+		if (r.location == NSNotFound) {
+			break;
+		}
+		
+		[self replaceBytesInRange:r withBytes:replacementBytes length:replacementLength];;
+		
+		start = (r.location + replacementLength + 1);
+	}
+}
+
+@end
+
 @implementation NSData (BlowfishEncryptionDataHelper)
+
+- (NSData *)dataByRemovingBadCharacters
+{
+	NSMutableData *mut = [self mutableCopy];
+	
+	[mut removeBadCharacters];
+	
+	return mut;
+}
 
 - (NSData *)repairedCharacterBufferForUTF8Encoding:(NSInteger *)badByteCount
 {

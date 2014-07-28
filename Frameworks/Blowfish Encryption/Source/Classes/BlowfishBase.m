@@ -342,6 +342,8 @@ static const signed char fish_unbase64[256] = {
 		if ([outputHandler length] > 8) {
 			[outputHandler replaceBytesInRange:NSMakeRange(0, 8) withBytes:NULL length:0];
 			
+			[outputHandler removeBadCharacters];
+			
 			NSData *finalData = nil;
 			
 			if (dataEncoding == NSUTF8StringEncoding) {
@@ -350,7 +352,7 @@ static const signed char fish_unbase64[256] = {
 				finalData =  outputHandler;
 			}
 			
-			NSString *cypher = [[NSString alloc] initWithData:outputHandler encoding:dataEncoding];
+			NSString *cypher = [[NSString alloc] initWithData:finalData encoding:dataEncoding];
 
 			return cypher;
 		} else {
@@ -609,6 +611,8 @@ static const signed char fish_unbase64[256] = {
 	// ========================================== //
 
 	NSData *rawData = [NSData dataWithBytes:decrypted length:strlen(decrypted)];
+	
+	rawData = [rawData dataByRemovingBadCharacters];
 	
 	if (dataEncoding == NSUTF8StringEncoding) {
 		rawData = [rawData repairedCharacterBufferForUTF8Encoding:badByteCount];

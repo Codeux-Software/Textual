@@ -17,5 +17,11 @@
 #import <Foundation/Foundation.h>
 
 @interface NSData (BlowfishEncryptionDatHelper)
+- (NSData *)dataByRemovingBadCharacters;
+
 - (NSData *)repairedCharacterBufferForUTF8Encoding:(NSInteger *)badByteCount;
+@end
+
+@interface NSMutableData (BlowfishEncryptionDatHelper)
+- (void)removeBadCharacters;
 @end
