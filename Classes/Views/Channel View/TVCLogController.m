@@ -770,7 +770,7 @@
 	@synchronized(self.highlightedLineNumbers) {
 		NSObjectIsEmptyAssertReturn(self.highlightedLineNumbers, NO);
 
-		NSInteger lastHighlightIndex = 0;
+		NSInteger lastHighlightIndex = -1;
 
 		if ([self.highlightedLineNumbers containsObject:self.lastVisitedHighlight]) {
 			lastHighlightIndex = [self.highlightedLineNumbers indexOfObject:self.lastVisitedHighlight];
