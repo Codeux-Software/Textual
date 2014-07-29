@@ -53,7 +53,7 @@
 	if ((self = [super init])) {
 		self.clients = [NSMutableArray new];
 		
-		self.textSizeMultiplier = 1;
+		self.textSizeMultiplier = 1.0;
 	}
 	
 	return self;
@@ -420,17 +420,28 @@
 
 - (void)changeTextSize:(BOOL)bigger
 {
+	/* These defines are from WebKit herself. */
+#define MinimumZoomMultiplier       0.5f
+#define MaximumZoomMultiplier       3.0f
+#define ZoomMultiplierRatio         1.2f
+	
+	float newMultiplier = self.textSizeMultiplier;
+	
 	if (bigger) {
-		self.textSizeMultiplier += 1;
+		newMultiplier *= ZoomMultiplierRatio;
 		
-		if (self.textSizeMultiplier > 6) {
-			self.textSizeMultiplier = 6;
+		if (newMultiplier > MaximumZoomMultiplier) {
+			return; // Do not perform an action.
+		} else {
+			self.textSizeMultiplier = newMultiplier;
 		}
 	} else {
-		self.textSizeMultiplier -= 1;
+		newMultiplier /= ZoomMultiplierRatio;
 		
-		if (self.textSizeMultiplier < -3) {
-			self.textSizeMultiplier = -3;
+		if (self.textSizeMultiplier < MinimumZoomMultiplier) {
+			return; // Do not perform an action.
+		} else {
+			self.textSizeMultiplier = newMultiplier;
 		}
 	}
 	
@@ -443,6 +454,10 @@
 			}
 		}
 	}
+	
+#undef MinimumZoomMultiplier
+#undef MaximumZoomMultiplier
+#undef ZoomMultiplierRatio
 }
 
 #pragma mark -
