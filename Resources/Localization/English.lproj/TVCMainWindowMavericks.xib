@@ -1027,12 +1027,12 @@
                     <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sIi-NW-j8L" userLabel="Text Field">
                         <rect key="frame" x="0.0" y="0.0" width="800" height="38"/>
                         <subviews>
-                            <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jl3-QW-y8e" customClass="TVCMainWindowTextViewBackground">
-                                <rect key="frame" x="166" y="6" width="624" height="24"/>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Jl3-QW-y8e" customClass="TVCMainWindowTextViewBackground">
+                                <rect key="frame" x="170" y="6" width="620" height="24"/>
                                 <subviews>
-                                    <scrollView misplaced="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fM6-4m-qZc">
-                                        <rect key="frame" x="0.0" y="3" width="614" height="19"/>
-                                        <clipView key="contentView" misplaced="YES" drawsBackground="NO" copiesOnScroll="NO" id="0kO-pf-9ZA">
+                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fM6-4m-qZc">
+                                        <rect key="frame" x="0.0" y="3" width="610" height="19"/>
+                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="0kO-pf-9ZA">
                                             <rect key="frame" x="0.0" y="0.0" width="624" height="18"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -1040,10 +1040,10 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="624" height="19"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="614" height="19"/>
+                                                    <size key="minSize" width="610" height="19"/>
                                                     <size key="maxSize" width="629" height="10000000"/>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="614" height="19"/>
+                                                    <size key="minSize" width="610" height="19"/>
                                                     <size key="maxSize" width="629" height="10000000"/>
                                                     <connections>
                                                         <outlet property="backgroundView" destination="Jl3-QW-y8e" id="qHs-h8-s9V"/>
@@ -1074,8 +1074,8 @@
                                     <constraint firstItem="fM6-4m-qZc" firstAttribute="leading" secondItem="Jl3-QW-y8e" secondAttribute="leading" id="eN2-SM-AOM"/>
                                 </constraints>
                             </customView>
-                            <segmentedControl verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ijw-SU-h2Z" customClass="TVCMainWindowSegmentedController">
-                                <rect key="frame" x="10" y="5" width="146" height="25"/>
+                            <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ijw-SU-h2Z" customClass="TVCMainWindowSegmentedController">
+                                <rect key="frame" x="10" y="5" width="150" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="rAs-uE-LJj"/>
                                 </constraints>
