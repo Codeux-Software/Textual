@@ -729,6 +729,9 @@
 			[theButton setBackgroundStyle:NSBackgroundStyleRaised];
 		}
 	}
+	
+	[theButtonParent setHidden:YES];
+	[theButtonParent setHidden:NO];
 }
 
 #pragma mark -

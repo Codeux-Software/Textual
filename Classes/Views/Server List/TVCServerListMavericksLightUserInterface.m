@@ -261,7 +261,7 @@
 
 - (NSColor *)serverListBackgroundColor
 {
-	return nil; // Use system default.
+	return [NSColor sourceListBackgroundColor];
 }
 
 @end
