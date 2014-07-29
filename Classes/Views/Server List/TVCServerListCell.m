@@ -691,19 +691,19 @@
 	}
 	
 	if (theButtonParent) {
-		[self updateGroupDisclosureTriangle:theButtonParent setNeedsDisplay:YES];
+		NSInteger rowIndex = [self rowIndex];
+		
+		BOOL isSelected = [mainWindowServerList() isRowSelected:rowIndex];
+		
+		[self updateGroupDisclosureTriangle:theButtonParent isSelected:isSelected setNeedsDisplay:YES];
 	}
 }
 
-- (void)updateGroupDisclosureTriangle:(NSButton *)theButtonParent setNeedsDisplay:(BOOL)setNeedsDisplay
+- (void)updateGroupDisclosureTriangle:(NSButton *)theButtonParent isSelected:(BOOL)isSelected setNeedsDisplay:(BOOL)setNeedsDisplay
 {
 	NSButtonCell *theButton = [theButtonParent cell];
 	
 	/* Button, yay! */
-	NSInteger rowIndex = [self rowIndex];
-	
-	BOOL isSelected = [mainWindowServerList() isRowSelected:rowIndex];
-	
 	id interfaceObjects = [mainWindowServerList() userInterfaceObjects];
 
 	/* We keep a reference to the default button. */
@@ -716,9 +716,12 @@
 	NSImage *alterna = [interfaceObjects disclosureTriangleInContext:NO selected:isSelected];
 	
 	/* Set image. */
+	[theButton setImage:nil];
+	[theButton setAlternateImage:nil];
+	
 	[theButton setImage:primary];
 	[theButton setAlternateImage:alterna];
-	
+
 	/* Update style of button. */
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 		[theButton setHighlightsBy:NSNoCellMask];
@@ -815,9 +818,30 @@
 {
 	NSArray *subviews = [self subviews];
 	
-	for (id subview in subviews) {
-		if ([subview isKindOfClass:[TVCServerListCell class]]) {
-			[subview setNeedsDisplay:YES];
+	if ([self isGroupItem]) {
+		id theButton = nil;
+		id theBackground = nil;
+		
+		for (id subview in subviews) {
+			if ([subview isKindOfClass:[TVCServerListCell class]]) {
+				theBackground = subview;
+			} else if ([subview isKindOfClass:[NSButton class]]) {
+				theButton = subview;
+			}
+		}
+		
+		if (theBackground) {
+			if (theButton) {
+				[theBackground updateGroupDisclosureTriangle:theButton isSelected:[self isSelected] setNeedsDisplay:YES];
+			} else {
+				[theBackground setNeedsDisplay:YES];
+			}
+		}
+	} else {
+		for (id subview in subviews) {
+			if ([subview isKindOfClass:[TVCServerListCell class]]) {
+				[subview setNeedsDisplay:YES];
+			}
 		}
 	}
 }
@@ -894,7 +918,7 @@
 				
 				[self setIsGroupItem:YES];
 				
-				[groupItem updateGroupDisclosureTriangle:(id)subview setNeedsDisplay:NO];
+				[groupItem updateGroupDisclosureTriangle:(id)subview isSelected:[self isSelected] setNeedsDisplay:NO];
 			}
 		}
 	}

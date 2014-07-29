@@ -63,7 +63,6 @@
 + (NSColor *)fromCSS:(NSString *)str;
 
 + (NSColor *)sourceListBackgroundColor;
-+ (NSColor *)sourceListBackgroundColorTop;
 
 + (NSColor *)outlineViewHeaderTextColor;
 + (NSColor *)outlineViewHeaderDisabledTextColor;

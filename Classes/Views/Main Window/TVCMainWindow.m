@@ -207,6 +207,8 @@
 {
 	[self resetSelectedItemState];
 	
+	[self.inputTextField windowDidChangeKeyState];
+	
 	[self.serverList reloadAllDrawings];
 	
 	[self.memberList reloadAllDrawings];
@@ -214,6 +216,8 @@
 
 - (void)windowDidResignKey:(NSNotification *)notification
 {
+	[self.inputTextField windowDidChangeKeyState];
+	
 	[self.serverList reloadAllDrawings];
 	
 	[self.memberList reloadAllDrawings];

@@ -208,6 +208,31 @@
 	[visaulEffectView setAppearance:appearance];
 }
 
+- (void)drawBackgroundInClipRect:(NSRect)clipRect
+{
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
+		/* The following is specialized drawing for the normal source list
+		 background when inside a backed layer view. */
+		
+		/* Establish graphics state. */
+		[RZGraphicsCurrentContext() saveGraphicsState];
+		
+		[RZGraphicsCurrentContext() setPatternPhase:NSMakePoint(0.0, NSHeight(clipRect))];
+		
+		/* Fill in appropriate color for a source list. */
+		NSColor *backgroundColor = [self backgroundColor];
+		
+		[backgroundColor set];
+		
+		NSRectFill(clipRect);
+		
+		/* Restore graphics state. */
+		[RZGraphicsCurrentContext() restoreGraphicsState];
+	} else {
+		[super drawBackgroundInClipRect:clipRect];
+	}
+}
+
 - (void)updateBackgroundColor
 {
 	/* When changing from vibrant light to vibrant dark we must deselect all

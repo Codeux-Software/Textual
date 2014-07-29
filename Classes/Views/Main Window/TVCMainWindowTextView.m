@@ -118,6 +118,12 @@
 	[self updateTypeSetterAttributesBasedOnAppearanceSettings];
 }
 
+- (void)windowDidChangeKeyState
+{
+	/* Update layer for the text field background. */
+	[self.backgroundView setNeedsDisplay:YES];
+}
+
 #pragma mark -
 #pragma mark Events
 
