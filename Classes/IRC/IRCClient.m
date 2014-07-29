@@ -5294,7 +5294,7 @@
 		NSString *stringValue = [self stringValueOfCapacity:capacity];
 		
 		if (stringValue) {
-			[*writePoint addObject:];
+			[*writePoint addObject:stringValue];
 		}
 	}
 }
