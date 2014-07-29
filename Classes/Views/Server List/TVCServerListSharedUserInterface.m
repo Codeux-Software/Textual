@@ -39,9 +39,6 @@
 
 @implementation TVCServerListSharedUserInterface
 
-static NSImage *_outlineViewDefaultDisclosureTriangle = nil;
-static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
-
 + (BOOL)yosemiteIsUsingVibrantDarkMode
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
@@ -61,70 +58,30 @@ static NSImage *_outlineViewAlternateDisclosureTriangle = nil;
 	}
 }
 
-+ (NSColor *)serverListBackgroundColor
+- (void)setOutlineViewDefaultDisclosureTriangle:(NSImage *)image
 {
-	id userInterfaceObjects = [mainWindowServerList() userInterfaceObjects];
+	id cachedObject = [mainWindowServerList() outlineViewDefaultDisclosureTriangle];
 	
-	if ([mainWindow() isActiveForDrawing]) {
-		return [userInterfaceObjects serverListBackgroundColorForActiveWindow];
+	if (cachedObject == nil) {
+		[mainWindowServerList() setOutlineViewDefaultDisclosureTriangle:image];
+	}
+}
+
+- (void)setOutlineViewAlternateDisclosureTriangle:(NSImage *)image
+{
+	id cachedObject = [mainWindowServerList() outlineViewAlternateDisclosureTriangle];
+					   
+	if (cachedObject == nil) {
+		[mainWindowServerList() setOutlineViewAlternateDisclosureTriangle:image];
+	}
+}
+
+- (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected
+{
+	if (up) {
+		return [mainWindowServerList() outlineViewDefaultDisclosureTriangle];
 	} else {
-		return [userInterfaceObjects serverListBackgroundColorForInactiveWindow];
-	}
-}
-
-+ (void)setOutlineViewDefaultDisclosureTriangle:(NSImage *)image
-{
-	if (_outlineViewDefaultDisclosureTriangle == nil) {
-		_outlineViewDefaultDisclosureTriangle = [image copy];
-	}
-}
-
-+ (void)setOutlineViewAlternateDisclosureTriangle:(NSImage *)image
-{
-	if (_outlineViewAlternateDisclosureTriangle == nil) {
-		_outlineViewAlternateDisclosureTriangle = [image copy];
-	}
-}
-
-+ (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected
-{
-	id userInterfaceObjects = [mainWindowServerList() userInterfaceObjects];
-	
-	NSImage *triangle = [userInterfaceObjects disclosureTriangleInContext:up selected:selected];
-	
-	if (triangle) {
-		return triangle;
-	} else {
-		if (up) {
-			return _outlineViewDefaultDisclosureTriangle;
-		} else {
-			return _outlineViewAlternateDisclosureTriangle;
-		}
-	}
-}
-
-
-@end
-
-@implementation TVCServerListBackgroundView
-
-- (BOOL)allowsVibrancy
-{
-	return NO;
-}
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-	if ([self needsToDrawRect:dirtyRect]) {
-		id userInterfaceObjects = [mainWindowServerList() userInterfaceObjects];
-		
-		NSColor *backgroundColor = [userInterfaceObjects serverListBackgroundColor];
-		
-		if (backgroundColor) {
-			[backgroundColor set];
-			
-			NSRectFill(dirtyRect);
-		}
+		return [mainWindowServerList() outlineViewAlternateDisclosureTriangle];
 	}
 }
 

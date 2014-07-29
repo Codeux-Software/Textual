@@ -157,7 +157,6 @@
 	@class TVCMemberListMavericksLightUserInterface;
 	@class TVCMemberListMavericksDarkUserInterface;
 	@class TVCMemberListSharedUserInterface;
-	@class TVCMemberListBackgroundView;
 	@class TVCMemberListUserInfoPopover;
 	@class TVCMemberListYosemiteUserInterface;
 	@class TVCMemberListLightYosemiteUserInterface;
@@ -173,7 +172,6 @@
 	@class TVCServerListMavericksLightUserInterface;
 	@class TVCServerListMavericksDarkUserInterface;
 	@class TVCServerListSharedUserInterface;
-	@class TVCServerListBackgroundView;
 	@class TVCServerListYosemiteUserInterface;
 	@class TVCServerListLightYosemiteUserInterface;
 	@class TVCServerListDarkYosemiteUserInterface;

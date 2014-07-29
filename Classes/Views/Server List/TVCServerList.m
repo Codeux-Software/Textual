@@ -97,8 +97,6 @@
 	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
 		[self updateDrawingForRow:i];
 	}
-	
-	[self setNeedsDisplay:YES];
 }
 
 - (void)updateDrawingForItem:(IRCTreeItem *)cellItem
@@ -112,6 +110,30 @@
 	[self updateDrawingForRow:rowIndex];
 }
 
+- (void)updateMessageCountForItem:(IRCTreeItem *)cellItem
+{
+	PointerIsEmptyAssert(cellItem);
+	
+	NSInteger rowIndex = [self rowForItem:cellItem];
+	
+	NSAssertReturn(rowIndex >= 0);
+	
+	[self updateMessageCountForRow:rowIndex];
+}
+
+- (void)updateMessageCountForRow:(NSInteger)rowIndex
+{
+	NSAssertReturn(rowIndex >= 0);
+	
+	id rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
+	
+	BOOL isChildItem = [rowView isKindOfClass:[TVCServerListCellChildItem class]];
+	
+	if (isChildItem) {
+		[rowView populateMessageCountBadge];
+	}
+}
+
 - (void)updateDrawingForRow:(NSInteger)rowIndex
 {
 	NSAssertReturn(rowIndex >= 0);
@@ -122,9 +144,7 @@
 	BOOL isChildItem = [rowView isKindOfClass:[TVCServerListCellChildItem class]];
 	
 	if (isGroupItem || isChildItem) {
-		NSRect cellFrame = [self frameOfCellAtColumn:0 row:rowIndex];
-		
-		[rowView updateDrawing:cellFrame];
+		[rowView setNeedsDisplay:YES];
 		
 		if (isGroupItem) {
 			[rowView updateGroupDisclosureTriangle];
@@ -142,24 +162,29 @@
 	return [self enclosingScrollView];
 }
 
-- (id)userInterfaceObjects
+- (void)reloadUserInterfaceObjects
 {
+	Class newObjects = nil;
+	
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite])
 	{
 		if ([TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode] == NO) {
-			return [TVCServerListLightYosemiteUserInterface class];
+			newObjects = [TVCServerListLightYosemiteUserInterface class];
 		} else {
-			return [TVCServerListDarkYosemiteUserInterface class];
+			newObjects = [TVCServerListDarkYosemiteUserInterface class];
 		}
 	}
 	else
 	{
 		if ([TPCPreferences invertSidebarColors]) {
-			return [TVCServerListMavericksDarkUserInterface class];
+			newObjects = [TVCServerListMavericksDarkUserInterface class];
 		} else {
-			return [TVCServerListMavericksLightUserInterface class];
+			newObjects = [TVCServerListMavericksLightUserInterface class];
 		}
 	}
+	
+	self.userInterfaceObjects = nil;
+	self.userInterfaceObjects = [newObjects new];
 }
 
 - (void)updateVibrancy
@@ -176,7 +201,7 @@
 		appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
 	}
 	
-	/* Fake the appearance of self. */
+	/* Set appearance of self to inherit menu color. */
 	[self setAppearance:appearance];
 	
 	/* Use the underlying visual effect view for real situations. */
@@ -185,34 +210,37 @@
 
 - (void)updateBackgroundColor
 {
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite])
-	{
-		/* When changing from vibrant light to vibrant dark we must deselect all
-		 rows, change the appearance, and reselect them. If we don't do this, the
-		 drawing that NSOutlineView uses for drawling vibrant light rows will stick
-		 forever leaving blue on selected rows no matter how hard we try to draw. */
-		[mainWindow() setTemporarilyDisablePreviousSelectionUpdates:YES];
-		[mainWindow() setTemporarilyIgnoreOutlineViewSelectionChanges:YES];
-		
-		NSIndexSet *selectedRows = [self selectedRowIndexes];
-		
-		[self deselectAll:nil];
-		
+	/* When changing from vibrant light to vibrant dark we must deselect all
+	 rows, change the appearance, and reselect them. If we don't do this, the
+	 drawing that NSOutlineView uses for drawling vibrant light rows will stick
+	 forever leaving blue on selected rows no matter how hard we try to draw. */
+	[mainWindow() setTemporarilyDisablePreviousSelectionUpdates:YES];
+	[mainWindow() setTemporarilyIgnoreOutlineViewSelectionChanges:YES];
+	
+	NSIndexSet *selectedRows = [self selectedRowIndexes];
+	
+	[self deselectAll:nil];
+	
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 		[self updateVibrancy];
-		
-		[self selectRowIndexes:selectedRows byExtendingSelection:NO];
-		
-		[mainWindow() setTemporarilyDisablePreviousSelectionUpdates:NO];
-		[mainWindow() setTemporarilyIgnoreOutlineViewSelectionChanges:NO];
 	}
-	else
-	{
-		if ([TPCPreferences invertSidebarColors]) {
-			[self setBackgroundColor:nil];
-		} else {
-			[self setBackgroundColor:[NSColor sourceListBackgroundColor]];
-		}
+	
+	[self reloadUserInterfaceObjects];
+	
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
+		NSColor *backgroundColor = [[self userInterfaceObjects] serverListBackgroundColor];
+		
+		[self setBackgroundColor:backgroundColor];
 	}
+	
+	[self setNeedsDisplay:YES];
+	
+	[self selectRowIndexes:selectedRows byExtendingSelection:NO];
+	
+	[mainWindow() setTemporarilyDisablePreviousSelectionUpdates:NO];
+	[mainWindow() setTemporarilyIgnoreOutlineViewSelectionChanges:NO];
+	
+	[self reloadAllDrawings];
 }
 
 #pragma mark -
