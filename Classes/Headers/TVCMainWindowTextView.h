@@ -57,6 +57,8 @@
 
 - (void)updateBackgroundColor;
 
+- (void)windowDidChangeKeyState;
+
 - (void)redrawOriginPoints;
 - (void)redrawOriginPoints:(BOOL)resetSize;
 

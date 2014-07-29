@@ -235,11 +235,6 @@
 	return [NSColor colorWithCatalogName:@"System" colorName:@"_sourceListBackgroundColor"];
 }
 
-+ (NSColor *)sourceListBackgroundColorTop
-{
-	return [NSColor internalCalibratedRed:234 green:237 blue:242 alpha:1.0];
-}
-
 + (NSColor *)outlineViewHeaderTextColor
 {
 	return [self internalCalibratedRed:0.439216 green:0.494118 blue:0.54902 alpha:1.0];

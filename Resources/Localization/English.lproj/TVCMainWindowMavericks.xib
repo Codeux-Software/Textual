@@ -1121,7 +1121,7 @@
                                                     <rect key="frame" x="1" y="17" width="238" height="117"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <outlineView horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsExpansionToolTips="YES" selectionHighlightStyle="sourceList" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationPerLevel="14" outlineTableColumn="EmX-BK-oNg" id="fkt-MZ-yL4" customClass="TVCServerList">
+                                                        <outlineView horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsExpansionToolTips="YES" selectionHighlightStyle="sourceList" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationPerLevel="2" outlineTableColumn="EmX-BK-oNg" id="fkt-MZ-yL4" customClass="TVCServerList">
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <size key="intercellSpacing" width="3" height="0.0"/>
                                                             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
@@ -1144,32 +1144,29 @@
                                                                             <rect key="frame" x="1" y="0.0" width="147" height="17"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
-                                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="b96-Vf-pd3">
-                                                                                    <rect key="frame" x="1" y="3" width="145" height="17"/>
+                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w3L-Uk-tev">
+                                                                                    <rect key="frame" x="1" y="2" width="145" height="17"/>
                                                                                     <constraints>
-                                                                                        <constraint firstAttribute="height" constant="17" id="zn3-Wf-3Bn"/>
+                                                                                        <constraint firstAttribute="height" constant="17" id="Fbf-mM-LRX"/>
                                                                                     </constraints>
-                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Table View Cell" allowsEditingTextAttributes="YES" id="55p-9w-nwB" customClass="TVCServerLisCellTextFieldInterior">
-                                                                                        <font key="font" metaFont="systemBold"/>
-                                                                                        <color key="textColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
+                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Label" id="tmy-9q-KET" customClass="TVCServerLisCellTextFieldInterior">
+                                                                                        <font key="font" metaFont="titleBar" size="12"/>
+                                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                                        <connections>
-                                                                                            <outlet property="parentCell" destination="ng8-Pp-2i5" id="Qvx-TM-KcN"/>
-                                                                                        </connections>
                                                                                     </textFieldCell>
                                                                                 </textField>
                                                                             </subviews>
                                                                             <constraints>
-                                                                                <constraint firstAttribute="bottom" secondItem="b96-Vf-pd3" secondAttribute="bottom" constant="3" id="O1Q-1b-Oep"/>
-                                                                                <constraint firstItem="b96-Vf-pd3" firstAttribute="leading" secondItem="ng8-Pp-2i5" secondAttribute="leading" constant="3" id="QG4-CL-ube"/>
-                                                                                <constraint firstAttribute="trailing" secondItem="b96-Vf-pd3" secondAttribute="trailing" constant="3" id="suQ-PP-8nt"/>
+                                                                                <constraint firstAttribute="bottom" secondItem="w3L-Uk-tev" secondAttribute="bottom" constant="2" id="WAv-YT-Nvg"/>
+                                                                                <constraint firstAttribute="trailing" secondItem="w3L-Uk-tev" secondAttribute="trailing" constant="3" id="ajM-zB-T59"/>
+                                                                                <constraint firstItem="w3L-Uk-tev" firstAttribute="leading" secondItem="ng8-Pp-2i5" secondAttribute="leading" constant="3" id="gUC-fa-BIx"/>
                                                                             </constraints>
                                                                             <connections>
-                                                                                <outlet property="textField" destination="b96-Vf-pd3" id="rhd-eP-1Vk"/>
+                                                                                <outlet property="textField" destination="w3L-Uk-tev" id="Wop-Kh-ciR"/>
                                                                             </connections>
                                                                         </tableCellView>
                                                                         <tableCellView identifier="ChildView" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" id="VxL-UA-I85" customClass="TVCServerListCellChildItem">
-                                                                            <rect key="frame" x="1" y="17" width="139" height="17"/>
+                                                                            <rect key="frame" x="1" y="33" width="147" height="17"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
                                                                                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Dhq-rQ-RCF">
@@ -1180,30 +1177,33 @@
                                                                                     </constraints>
                                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="ePT-DT-gr9"/>
                                                                                 </imageView>
-                                                                                <textField horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Omu-hj-Grz">
+                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MYQ-KU-XK0">
                                                                                     <rect key="frame" x="25" y="2" width="91" height="16"/>
-                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Table View Cell" allowsEditingTextAttributes="YES" id="KPE-1p-xlX" customClass="TVCServerLisCellTextFieldInterior">
-                                                                                        <font key="font" metaFont="cellTitle"/>
-                                                                                        <color key="textColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="height" constant="16" id="fKo-hR-CMZ"/>
+                                                                                    </constraints>
+                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Label" id="rbm-je-l80" customClass="TVCMemberLisCellTextFieldInterior">
+                                                                                        <font key="font" metaFont="titleBar" size="12"/>
+                                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                                     </textFieldCell>
                                                                                 </textField>
-                                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xsI-x5-puZ">
-                                                                                    <rect key="frame" x="122" y="1" width="14" height="15"/>
+                                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xsI-x5-puZ">
+                                                                                    <rect key="frame" x="122" y="0.0" width="14" height="15"/>
                                                                                     <constraints>
-                                                                                        <constraint firstAttribute="width" constant="14" id="voN-zd-S5O"/>
+                                                                                        <constraint firstAttribute="width" constant="16" id="voN-zd-S5O"/>
                                                                                     </constraints>
                                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="HEN-P9-bRe"/>
                                                                                 </imageView>
                                                                             </subviews>
                                                                             <constraints>
-                                                                                <constraint firstAttribute="bottom" secondItem="Omu-hj-Grz" secondAttribute="bottom" constant="2" id="8G9-wm-54o"/>
+                                                                                <constraint firstItem="MYQ-KU-XK0" firstAttribute="leading" secondItem="Dhq-rQ-RCF" secondAttribute="trailing" constant="8" id="8ap-hN-Eym"/>
                                                                                 <constraint firstAttribute="trailing" secondItem="xsI-x5-puZ" secondAttribute="trailing" constant="3" id="9pj-uk-Ozc"/>
-                                                                                <constraint firstItem="xsI-x5-puZ" firstAttribute="top" secondItem="VxL-UA-I85" secondAttribute="top" constant="1" id="EgB-kl-SWE"/>
-                                                                                <constraint firstItem="Omu-hj-Grz" firstAttribute="leading" secondItem="Dhq-rQ-RCF" secondAttribute="trailing" constant="8" id="dGB-YY-Pbw"/>
+                                                                                <constraint firstItem="xsI-x5-puZ" firstAttribute="top" secondItem="VxL-UA-I85" secondAttribute="top" constant="2" id="EgB-kl-SWE"/>
+                                                                                <constraint firstAttribute="bottom" secondItem="MYQ-KU-XK0" secondAttribute="bottom" constant="2" id="GzY-1y-o9f"/>
+                                                                                <constraint firstItem="xsI-x5-puZ" firstAttribute="leading" secondItem="MYQ-KU-XK0" secondAttribute="trailing" constant="8" id="Sfk-IX-p3W"/>
                                                                                 <constraint firstAttribute="bottom" secondItem="Dhq-rQ-RCF" secondAttribute="bottom" constant="2" id="daZ-0u-Z3r"/>
-                                                                                <constraint firstAttribute="bottom" secondItem="xsI-x5-puZ" secondAttribute="bottom" constant="1" id="lI4-Fe-cc0"/>
-                                                                                <constraint firstItem="xsI-x5-puZ" firstAttribute="leading" secondItem="Omu-hj-Grz" secondAttribute="trailing" constant="8" id="umk-hP-W5D"/>
+                                                                                <constraint firstAttribute="bottom" secondItem="xsI-x5-puZ" secondAttribute="bottom" id="lI4-Fe-cc0"/>
                                                                                 <constraint firstItem="Dhq-rQ-RCF" firstAttribute="leading" secondItem="VxL-UA-I85" secondAttribute="leading" constant="3" id="x8t-oc-65Z"/>
                                                                             </constraints>
                                                                             <connections>
@@ -1211,7 +1211,7 @@
                                                                                 <outlet property="messageCountBadgeImageView" destination="xsI-x5-puZ" id="RZS-uv-0nd"/>
                                                                                 <outlet property="messageCountBadgeTrailingConstraint" destination="9pj-uk-Ozc" id="VDg-hg-Oba"/>
                                                                                 <outlet property="messageCountBadgeWidthConstraint" destination="voN-zd-S5O" id="R6W-fd-1Jt"/>
-                                                                                <outlet property="textField" destination="Omu-hj-Grz" id="wMf-Kr-hAx"/>
+                                                                                <outlet property="textField" destination="MYQ-KU-XK0" id="EJw-dL-0Mc"/>
                                                                             </connections>
                                                                         </tableCellView>
                                                                     </prototypeCellViews>
