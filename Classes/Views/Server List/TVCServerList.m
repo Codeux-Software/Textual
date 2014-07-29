@@ -144,10 +144,10 @@
 	BOOL isChildItem = [rowView isKindOfClass:[TVCServerListCellChildItem class]];
 	
 	if (isGroupItem || isChildItem) {
-		[rowView setNeedsDisplay:YES];
-		
 		if (isGroupItem) {
-			[rowView updateGroupDisclosureTriangle];
+			[rowView updateGroupDisclosureTriangle]; // Calls setNeedsDisplay: for item
+		} else {
+			[rowView setNeedsDisplay:YES];
 		}
 	}
 }
