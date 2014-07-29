@@ -5671,7 +5671,7 @@
 		if (interval == 0) {
 			[self send:IRCPrivateCommandIndex("privmsg"), @"*playback", @"play", @"*", @"0", nil];
 		} else {
-			NSString *timetosend = [NSString stringWithFloat:interval];
+			NSString *timetosend = [NSString stringWithFormat:@"%.0f", interval];
 			
 			[self send:IRCPrivateCommandIndex("privmsg"), @"*playback", @"play", @"*", timetosend, nil];
 		}
