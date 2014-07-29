@@ -1564,9 +1564,6 @@
 	[TVCDockIcon updateDockIcon];
 	
 	[self updateTitle];
-	
-	[self.serverList updateDrawingForItem:self.selectedItem];
-	[self.serverList updateDrawingForItem:self.previouslySelectedItem];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)sender writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard

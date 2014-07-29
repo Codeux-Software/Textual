@@ -732,6 +732,8 @@
 	
 	[theButtonParent setHidden:YES];
 	[theButtonParent setHidden:NO];
+	
+	[self setNeedsDisplay:YES];
 }
 
 #pragma mark -
