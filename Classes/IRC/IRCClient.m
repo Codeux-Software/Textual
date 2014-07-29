@@ -5281,29 +5281,28 @@
 	return stringValue;
 }
 
-- (void)appendStringValueOfCapacity:(ClientIRCv3SupportedCapacities)capacity toSource:(NSMutableArray **)writePoint
-{
-	if ([self isCapacityEnabled:capacity]) {
-		NSString *stringValue = [self stringValueOfCapacity:capacity];
-		
-		if (stringValue) {
-			[*writePoint addObject:stringValue];
-		}
-	}
-}
-
 - (NSString *)enabledCapacitiesStringValue
 {
 	NSMutableArray *enabledCaps = [NSMutableArray array];
 	
-	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacityAwayNotify toSource:&enabledCaps];
-	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacityIdentifyCTCP toSource:&enabledCaps];
-	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacityIdentifyMsg toSource:&enabledCaps];
-	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacityMultiPreifx toSource:&enabledCaps];
-	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacityIsIdentifiedWithSASL toSource:&enabledCaps];;
-	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacityServerTime toSource:&enabledCaps];
-	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacityUserhostInNames toSource:&enabledCaps];
-	[self appendStringValueOfCapacity:ClientIRCv3SupportedCapacityZNCPlaybackModule toSource:&enabledCaps];
+	void (^appendValue)(ClientIRCv3SupportedCapacities) = ^(ClientIRCv3SupportedCapacities capacity) {
+		if ([self isCapacityEnabled:capacity]) {
+			NSString *stringValue = [self stringValueOfCapacity:capacity];
+			
+			if (stringValue) {
+				[enabledCaps addObject:stringValue];
+			}
+		}
+	};
+
+	appendValue(ClientIRCv3SupportedCapacityAwayNotify);
+	appendValue(ClientIRCv3SupportedCapacityIdentifyCTCP);
+	appendValue(ClientIRCv3SupportedCapacityIdentifyMsg);
+	appendValue(ClientIRCv3SupportedCapacityMultiPreifx);
+	appendValue(ClientIRCv3SupportedCapacityIsIdentifiedWithSASL);;
+	appendValue(ClientIRCv3SupportedCapacityServerTime);
+	appendValue(ClientIRCv3SupportedCapacityUserhostInNames);
+	appendValue(ClientIRCv3SupportedCapacityZNCPlaybackModule);
 	
 	NSString *stringValue = [enabledCaps componentsJoinedByString:@", "];
 	
