@@ -131,6 +131,16 @@ Textual = {
 
 	// app.printDebugInformation(message)				— Show a debug message to the user in the associated channel.
 
+	// app.styleSettingsRetreiveValue(key)				— Retreive value of /key/ from styleSettings.plist file of a style.
+	// app.styleSettingsSetValue(key, value)			— Set /value/ to /key/ in the styleSettings.plist file of a style.
+	//													  The value stored is based on whatever WebKit converts the objects into.
+	//													  Setting a value of undefined will remove the /key/ from settings.
+	//													  Return true on success or false otherwise. 
+
+	/* This function is invoked when a style setting has changed. It is invoked on all WebViews 
+	including the one that was responsible for changing the original value. */
+	styleSettingDidChange:                            function(changedKey) { },
+
 	/* *********************************************************************** */
 	/*																		   */
 	/* DO NOT EDIT ANYTHING BELOW THIS LINE FROM WITHIN A STYLE. 			   */
