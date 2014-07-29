@@ -316,4 +316,5 @@
 - (IBAction)openWelcomeSheet:(id)sender;
 
 - (IBAction)openMacAppStoreDownloadPage:(id)sender;
+- (IBAction)openMigrationAssistantDownloadPage:(id)sender;
 @end

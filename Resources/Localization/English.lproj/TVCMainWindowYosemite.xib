@@ -378,6 +378,38 @@
                             <rect key="frame" x="0.0" y="0.0" width="800" height="439"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
+                                <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2875" userLabel="Loading View Content.">
+                                    <rect key="frame" x="237" y="97" width="325" height="244"/>
+                                    <subviews>
+                                        <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2877">
+                                            <rect key="frame" x="87" y="81" width="150" height="151"/>
+                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="2881"/>
+                                        </imageView>
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2876">
+                                            <rect key="frame" x="30" y="38" width="264" height="35"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Welcome to Textual" id="2882">
+                                                <font key="font" metaFont="system" size="30"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2878">
+                                            <rect key="frame" x="42" y="13" width="189" height="17"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Loading Configuration …" id="2880">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="2879">
+                                            <rect key="frame" x="239" y="13" width="16" height="16"/>
+                                        </progressIndicator>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="244" id="a4a-tn-v7M"/>
+                                        <constraint firstAttribute="width" constant="325" id="ory-CZ-SVP"/>
+                                    </constraints>
+                                </customView>
                                 <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2999" userLabel="Welcome, Add Server. (Trial)">
                                     <rect key="frame" x="183" y="16" width="434" height="407"/>
                                     <userGuides>
@@ -385,60 +417,47 @@
                                         <userLayoutGuide location="27" affinity="minY"/>
                                     </userGuides>
                                     <subviews>
-                                        <imageView translatesAutoresizingMaskIntoConstraints="NO" id="3003">
+                                        <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3003">
                                             <rect key="frame" x="134" y="247" width="150" height="152"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="150" id="AzA-fW-Hro"/>
-                                                <constraint firstAttribute="height" constant="152" id="jCL-iI-z8m"/>
-                                            </constraints>
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="3004"/>
                                         </imageView>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3002">
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3002">
                                             <rect key="frame" x="18" y="212" width="399" height="30"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="30" id="gYR-f5-6wz"/>
-                                            </constraints>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Welcome to Textual" id="3005">
                                                 <font key="font" metaFont="system" size="30"/>
-                                                <color key="textColor" red="0.34122644949999997" green="0.34514859260000003" blue="0.34514859260000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3012">
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3012">
                                             <rect key="frame" x="34" y="146" width="366" height="51"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="3013">
                                                 <font key="font" metaFont="system"/>
                                                 <string key="title">This version of Textual is designed to demonstrate the features, performance, reliability, and usability of Textual without having to purchase it. </string>
-                                                <color key="textColor" red="0.59842751949999995" green="0.59842751949999995" blue="0.59842751949999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3014">
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3014">
                                             <rect key="frame" x="10" y="86" width="415" height="51"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="3015">
                                                 <font key="font" metaFont="systemBold"/>
                                                 <string key="title">However, as this is a trial version, it will disconnect you from any IRC server that you are connected to every twelve hours. 
 There are no other limits. What you see, is what you get.</string>
-                                                <color key="textColor" red="0.59842751949999995" green="0.59842751949999995" blue="0.59842751949999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3001">
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3001">
                                             <rect key="frame" x="53" y="41" width="328" height="36"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="36" id="iLe-UA-dxk"/>
-                                            </constraints>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="We hope that this glimpse of Textual will help show that it is worth its low sale price." id="3006">
                                                 <font key="font" metaFont="system"/>
-                                                <color key="textColor" red="0.59842751949999995" green="0.59842751949999995" blue="0.59842751949999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3000">
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3000">
                                             <rect key="frame" x="53" y="1" width="164" height="32"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="152" id="Vtm-Fd-IFZ"/>
-                                            </constraints>
                                             <buttonCell key="cell" type="push" title="Begin Trial" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="3007">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -447,7 +466,7 @@ There are no other limits. What you see, is what you get.</string>
                                                 <action selector="openWelcomeSheet:" target="U6M-jc-NbT" id="a09-Ow-oSD"/>
                                             </connections>
                                         </button>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3009">
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3009">
                                             <rect key="frame" x="217" y="1" width="164" height="32"/>
                                             <buttonCell key="cell" type="push" title="Purchase Textual" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="3010">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -459,72 +478,40 @@ There are no other limits. What you see, is what you get.</string>
                                         </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="3001" firstAttribute="top" secondItem="3014" secondAttribute="bottom" constant="9" id="1s2-m1-ywu"/>
-                                        <constraint firstItem="3012" firstAttribute="centerX" secondItem="3002" secondAttribute="centerX" id="2ie-nG-Wx4"/>
-                                        <constraint firstItem="3000" firstAttribute="baseline" secondItem="3009" secondAttribute="baseline" id="3gc-bC-czf"/>
-                                        <constraint firstItem="3002" firstAttribute="top" secondItem="3003" secondAttribute="bottom" constant="5" id="4gB-3f-yCb"/>
-                                        <constraint firstItem="3002" firstAttribute="leading" secondItem="2999" secondAttribute="leading" constant="20" symbolic="YES" id="6M8-de-xGE"/>
-                                        <constraint firstItem="3012" firstAttribute="top" secondItem="3002" secondAttribute="bottom" constant="15" id="7v7-U4-cAe"/>
-                                        <constraint firstItem="3003" firstAttribute="leading" secondItem="2999" secondAttribute="leading" constant="134" id="9hn-6f-xDd"/>
-                                        <constraint firstItem="3001" firstAttribute="leading" secondItem="2999" secondAttribute="leading" constant="55" id="9pZ-cz-1YX"/>
-                                        <constraint firstItem="3003" firstAttribute="top" secondItem="2999" secondAttribute="top" constant="8" id="G7G-rb-zwV"/>
-                                        <constraint firstItem="3000" firstAttribute="leading" secondItem="2999" secondAttribute="leading" constant="59" id="K4c-ui-6t8"/>
-                                        <constraint firstAttribute="height" constant="407" id="PQI-t4-0hs"/>
-                                        <constraint firstItem="3014" firstAttribute="top" secondItem="3012" secondAttribute="bottom" constant="9" id="PxQ-k7-hgI"/>
-                                        <constraint firstAttribute="trailing" secondItem="3009" secondAttribute="trailing" constant="59" id="Smf-Zq-Nb4"/>
-                                        <constraint firstItem="3009" firstAttribute="leading" secondItem="3000" secondAttribute="trailing" constant="12" symbolic="YES" id="bZx-0Z-Gbf"/>
-                                        <constraint firstItem="3014" firstAttribute="leading" secondItem="2999" secondAttribute="leading" constant="12" id="bwz-BD-ibK"/>
-                                        <constraint firstItem="3001" firstAttribute="centerX" secondItem="2999" secondAttribute="centerX" id="gSR-uy-hOn"/>
-                                        <constraint firstAttribute="width" constant="434" id="n7R-yz-7CX"/>
-                                        <constraint firstItem="3000" firstAttribute="top" secondItem="3001" secondAttribute="bottom" constant="12" id="oVY-ip-ml7"/>
-                                        <constraint firstItem="3001" firstAttribute="centerX" secondItem="3014" secondAttribute="centerX" id="r7x-nl-gxd"/>
-                                        <constraint firstItem="3012" firstAttribute="leading" secondItem="2999" secondAttribute="leading" constant="36" id="sUD-ou-hNf"/>
-                                        <constraint firstItem="3012" firstAttribute="centerX" secondItem="3014" secondAttribute="centerX" id="ztf-m6-q3U"/>
+                                        <constraint firstAttribute="width" constant="434" id="2tZ-Xs-Lb4"/>
+                                        <constraint firstAttribute="height" constant="407" id="tWC-45-h36"/>
                                     </constraints>
                                 </customView>
                                 <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2900" userLabel="Welcome, Add Server.">
-                                    <rect key="frame" x="159" y="71" width="482" height="296"/>
+                                    <rect key="frame" x="159" y="21" width="482" height="396"/>
                                     <userGuides>
                                         <userLayoutGuide location="43" affinity="minY"/>
                                         <userLayoutGuide location="27" affinity="minY"/>
                                     </userGuides>
                                     <subviews>
-                                        <imageView translatesAutoresizingMaskIntoConstraints="NO" id="2901">
-                                            <rect key="frame" x="158" y="142" width="150" height="152"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="152" id="1GK-bd-Ole"/>
-                                                <constraint firstAttribute="width" constant="150" id="ro7-zj-zXq"/>
-                                            </constraints>
+                                        <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2901">
+                                            <rect key="frame" x="158" y="242" width="150" height="152"/>
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="2902"/>
                                         </imageView>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2903">
-                                            <rect key="frame" x="101" y="104" width="264" height="30"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="30" id="yCw-iJ-MiV"/>
-                                            </constraints>
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2903">
+                                            <rect key="frame" x="101" y="204" width="264" height="30"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Welcome to Textual" id="2904">
                                                 <font key="font" metaFont="system" size="30"/>
-                                                <color key="textColor" red="0.34122644949999997" green="0.34514859260000003" blue="0.34514859260000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2905">
-                                            <rect key="frame" x="31" y="42" width="421" height="50"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="50" id="KUm-CL-bHW"/>
-                                            </constraints>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2905">
+                                            <rect key="frame" x="31" y="142" width="421" height="50"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="2906">
                                                 <font key="font" metaFont="system"/>
                                                 <string key="title">Textual is a powerful, yet lightweight, IRC client built exclusively for the Mac. To get started, Textual will walk you through adding your first server. Click the button below to continue.</string>
-                                                <color key="textColor" red="0.59842751949999995" green="0.59842751949999995" blue="0.59842751949999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2907">
-                                            <rect key="frame" x="159" y="-1" width="164" height="32"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="152" id="kaq-DA-0yw"/>
-                                            </constraints>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2907">
+                                            <rect key="frame" x="159" y="99" width="164" height="32"/>
                                             <buttonCell key="cell" type="push" title="Continue" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="2908">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -533,80 +520,46 @@ There are no other limits. What you see, is what you get.</string>
                                                 <action selector="openWelcomeSheet:" target="U6M-jc-NbT" id="qyR-JZ-IRK"/>
                                             </connections>
                                         </button>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="296" id="3tf-GD-rxx"/>
-                                        <constraint firstItem="2901" firstAttribute="top" secondItem="2900" secondAttribute="top" constant="2" id="Cv5-zY-vmh"/>
-                                        <constraint firstItem="2905" firstAttribute="top" secondItem="2903" secondAttribute="bottom" constant="12" id="KoG-iA-ktY"/>
-                                        <constraint firstItem="2903" firstAttribute="top" secondItem="2901" secondAttribute="bottom" constant="8" symbolic="YES" id="Rbs-Xe-k1v"/>
-                                        <constraint firstItem="2907" firstAttribute="top" secondItem="2905" secondAttribute="bottom" constant="15" id="XDl-sz-pzv"/>
-                                        <constraint firstItem="2905" firstAttribute="centerX" secondItem="2900" secondAttribute="centerX" id="YtF-Tz-rhB"/>
-                                        <constraint firstItem="2901" firstAttribute="centerX" secondItem="2903" secondAttribute="centerX" id="f0h-Vd-Fpc"/>
-                                        <constraint firstAttribute="width" constant="482" id="ifK-BJ-nuX"/>
-                                        <constraint firstItem="2905" firstAttribute="leading" secondItem="2900" secondAttribute="leading" constant="33" id="lcr-8d-4Ia"/>
-                                        <constraint firstItem="2907" firstAttribute="centerX" secondItem="2905" secondAttribute="centerX" id="ntt-Ja-uAK"/>
-                                        <constraint firstItem="2903" firstAttribute="leading" secondItem="2900" secondAttribute="leading" constant="103" id="phr-1h-X2d"/>
-                                    </constraints>
-                                </customView>
-                                <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2875" userLabel="Loading View Content.">
-                                    <rect key="frame" x="237" y="97" width="325" height="244"/>
-                                    <subviews>
-                                        <imageView translatesAutoresizingMaskIntoConstraints="NO" id="2877">
-                                            <rect key="frame" x="87" y="81" width="150" height="151"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="150" id="blz-vg-nfi"/>
-                                                <constraint firstAttribute="height" constant="151" id="y53-Nx-FLP"/>
-                                            </constraints>
-                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="2881"/>
-                                        </imageView>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2876">
-                                            <rect key="frame" x="30" y="38" width="264" height="35"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="35" id="R4z-LD-MlY"/>
-                                            </constraints>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Welcome to Textual" id="2882">
-                                                <font key="font" metaFont="system" size="30"/>
-                                                <color key="textColor" red="0.34836142399999998" green="0.34836142399999998" blue="0.34836142399999998" alpha="1" colorSpace="calibratedRGB"/>
-                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2878">
-                                            <rect key="frame" x="42" y="13" width="189" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Loading Configuration …" id="2880">
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sHW-v7-XTm">
+                                            <rect key="frame" x="31" y="50" width="421" height="17"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Are you a Textual 4 user?" id="yha-N5-FsP">
                                                 <font key="font" metaFont="system"/>
-                                                <color key="textColor" red="0.56122448979999995" green="0.56122448979999995" blue="0.56122448979999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="2879">
-                                            <rect key="frame" x="239" y="13" width="16" height="16"/>
-                                        </progressIndicator>
+                                        <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="VUe-tI-0dY">
+                                            <rect key="frame" x="39" y="83" width="405" height="4"/>
+                                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <font key="titleFont" metaFont="system"/>
+                                        </box>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4yW-yF-5NB">
+                                            <rect key="frame" x="152" y="7" width="178" height="32"/>
+                                            <buttonCell key="cell" type="push" title="Migrate from Textual 4" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="kqy-sw-0wo">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="openMigrationAssistantDownloadPage:" target="U6M-jc-NbT" id="z5H-Bx-al8"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="2877" firstAttribute="top" secondItem="2875" secondAttribute="top" constant="12" id="9Kq-1o-xSN"/>
-                                        <constraint firstItem="2879" firstAttribute="leading" secondItem="2878" secondAttribute="trailing" constant="10" id="AZO-kG-wpN"/>
-                                        <constraint firstItem="2877" firstAttribute="centerX" secondItem="2875" secondAttribute="centerX" id="Agn-QV-Fbx"/>
-                                        <constraint firstItem="2879" firstAttribute="bottom" secondItem="2878" secondAttribute="bottom" id="ENn-eH-Oyo"/>
-                                        <constraint firstAttribute="height" constant="244" id="LIc-da-JVT"/>
-                                        <constraint firstItem="2876" firstAttribute="top" secondItem="2877" secondAttribute="bottom" constant="8" symbolic="YES" id="e3i-vt-zpi"/>
-                                        <constraint firstItem="2877" firstAttribute="centerX" secondItem="2876" secondAttribute="centerX" id="gPV-2X-hkf"/>
-                                        <constraint firstItem="2878" firstAttribute="leading" secondItem="2875" secondAttribute="leading" constant="44" id="myb-H8-aL0"/>
-                                        <constraint firstItem="2878" firstAttribute="top" secondItem="2876" secondAttribute="bottom" constant="8" symbolic="YES" id="r3Z-HU-tPg"/>
-                                        <constraint firstAttribute="trailing" secondItem="2879" secondAttribute="trailing" constant="70" id="wv8-g1-BcV"/>
-                                        <constraint firstAttribute="width" constant="325" id="zOU-As-D4Y"/>
+                                        <constraint firstAttribute="width" constant="482" id="4fL-R9-LZs"/>
+                                        <constraint firstAttribute="height" constant="396" id="spc-O2-eCj"/>
                                     </constraints>
                                 </customView>
                             </subviews>
                         </view>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="10" id="0IF-9i-56D"/>
-                            <constraint firstAttribute="centerX" secondItem="2875" secondAttribute="centerX" constant="0.5" id="8IU-GX-Vo0"/>
-                            <constraint firstItem="2875" firstAttribute="centerY" secondItem="2900" secondAttribute="centerY" id="Fzm-G0-B4x"/>
-                            <constraint firstAttribute="centerY" secondItem="2900" secondAttribute="centerY" constant="-0.5" id="Itb-9v-glS"/>
-                            <constraint firstAttribute="centerY" secondItem="2999" secondAttribute="centerY" id="S2S-6A-hJ3"/>
-                            <constraint firstAttribute="centerY" secondItem="2875" secondAttribute="centerY" constant="-0.5" id="Zfd-qX-urG"/>
-                            <constraint firstAttribute="centerX" secondItem="2900" secondAttribute="centerX" id="oyi-1n-jqc"/>
-                            <constraint firstAttribute="centerX" secondItem="2999" secondAttribute="centerX" id="r2W-VW-1j8"/>
+                            <constraint firstAttribute="centerY" secondItem="2999" secondAttribute="centerY" id="ASw-nL-qvt"/>
+                            <constraint firstAttribute="centerY" secondItem="2875" secondAttribute="centerY" constant="-0.5" id="IAd-cA-pIK"/>
+                            <constraint firstAttribute="centerX" secondItem="2999" secondAttribute="centerX" id="JiV-zt-Er4"/>
+                            <constraint firstAttribute="centerX" secondItem="2875" secondAttribute="centerX" constant="0.5" id="hB8-ub-Wlv"/>
+                            <constraint firstAttribute="centerX" secondItem="2900" secondAttribute="centerX" id="nuR-ZW-xam"/>
+                            <constraint firstAttribute="centerY" secondItem="2900" secondAttribute="centerY" constant="-0.5" id="nxR-qu-Oo5"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="10" id="yKo-J3-ovv"/>
                         </constraints>
                         <color key="borderColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

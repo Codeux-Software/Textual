@@ -2779,6 +2779,13 @@
 	[menuController() openWelcomeSheet:sender];
 }
 
+- (IBAction)openMigrationAssistantDownloadPage:(id)sender
+{
+	NSURL *assistantURL = [NSURL URLWithString:@"http://www.codeux.com/textual/downloads/migrationAssistant.download"];
+	
+	[RZWorkspace() openURL:assistantURL];
+}
+
 - (IBAction)openMacAppStoreDownloadPage:(id)sender
 {
 	[menuController() openMacAppStoreDownloadPage:sender];
