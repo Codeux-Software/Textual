@@ -40,9 +40,14 @@
 @interface TVCServerListCell : NSTableCellView
 @property (nonatomic, nweak) IRCTreeItem *cellItem;
 
+@property (nonatomic, nweak) IBOutlet NSImageView *messageCountBadgeImageView;
+
+@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *messageCountBadgeWidthConstraint;
+@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *messageCountBadgeTrailingConstraint;
+
 @property (readonly, copy) NSDictionary *drawingContext;
 
-- (void)updateDrawing:(NSRect)cellFrame;
+- (void)populateMessageCountBadge;
 
 - (void)updateGroupDisclosureTriangle;
 - (void)updateGroupDisclosureTriangle:(NSButton *)theButtonParent;
@@ -59,5 +64,4 @@
 @end
 
 @interface TVCServerLisCellTextFieldInterior : NSTextFieldCell
-@property (nonatomic, nweak) IBOutlet TVCServerListCell *parentCell;
 @end

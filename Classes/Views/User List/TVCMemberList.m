@@ -429,8 +429,10 @@
 		}
 	}
 	
-	self.userInterfaceObjects = nil;
-	self.userInterfaceObjects = [newObjects new];
+	[self.userInterfaceObjects invalidateAllUserMarkBadgeCaches];
+	
+	 self.userInterfaceObjects = nil;
+	 self.userInterfaceObjects = [newObjects new];
 }
 
 - (void)updateVibrancy

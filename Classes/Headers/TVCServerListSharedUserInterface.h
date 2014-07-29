@@ -1,5 +1,4 @@
-
-/* ********************************************************************* 
+/* *********************************************************************
        _____        _               _    ___ ____   ____
       |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
        | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
@@ -39,15 +38,10 @@
 #import "TextualApplication.h"
 
 @interface TVCServerListSharedUserInterface : NSObject
-+ (void)setOutlineViewDefaultDisclosureTriangle:(NSImage *)image;
-+ (void)setOutlineViewAlternateDisclosureTriangle:(NSImage *)image;
+- (void)setOutlineViewDefaultDisclosureTriangle:(NSImage *)image;
+- (void)setOutlineViewAlternateDisclosureTriangle:(NSImage *)image;
 
-+ (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected;
+- (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected;
 
 + (BOOL)yosemiteIsUsingVibrantDarkMode;
-
-+ (NSColor *)serverListBackgroundColor;
-@end
-
-@interface TVCServerListBackgroundView : NSBox
 @end

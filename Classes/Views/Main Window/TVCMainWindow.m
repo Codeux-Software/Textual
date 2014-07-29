@@ -96,15 +96,12 @@
 		
 		[worldController() setupConfiguration];
 		
-		[self.serverList setDelegate:self];
-		[self.serverList setDataSource:self];
-		
 		[self.memberList setKeyDelegate:self];
 		[self.serverList setKeyDelegate:self];
 		
-		[self setupTree];
-		
 		[self updateBackgroundColor];
+		
+		[self setupTree];
 		
 		[self.memberList setTarget:menuController()];
 		[self.memberList setDoubleAction:@selector(memberInMemberListDoubleClicked:)];
@@ -210,11 +207,15 @@
 {
 	[self resetSelectedItemState];
 	
+	[self.serverList reloadAllDrawings];
+	
 	[self.memberList reloadAllDrawings];
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification
 {
+	[self.serverList reloadAllDrawings];
+	
 	[self.memberList reloadAllDrawings];
 	[self.memberList destroyUserInfoPopoverOnWindowKeyChange];
 }
@@ -1084,6 +1085,9 @@
 - (void)setupTree
 {
 	/* Set double click action. */
+	[self.serverList setDelegate:self];
+	[self.serverList setDataSource:self];
+	
 	[self.serverList setTarget:self];
 	[self.serverList setDoubleAction:@selector(outlineViewDoubleClicked:)];
 	

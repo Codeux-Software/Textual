@@ -39,8 +39,10 @@
 
 @interface TVCServerList : NSOutlineView
 @property (nonatomic, uweak) id keyDelegate;
+@property (nonatomic, strong) id userInterfaceObjects;
 @property (nonatomic, nweak) IBOutlet NSVisualEffectView *visualEffectView;
-@property (nonatomic, nweak) IBOutlet TVCServerListBackgroundView *backgroundView;
+@property (nonatomic, copy) NSImage *outlineViewDefaultDisclosureTriangle;
+@property (nonatomic, copy) NSImage *outlineViewAlternateDisclosureTriangle;
 
 /* addItemToList and removeItemFromList work two completely different ways. 
  addItemToList expects that you have already added the item to the data source
@@ -59,9 +61,10 @@
 - (void)updateDrawingForItem:(IRCTreeItem *)cellItem;
 - (void)updateDrawingForRow:(NSInteger)rowIndex;
 
-- (void)updateBackgroundColor; // Do not call.
+- (void)updateMessageCountForItem:(IRCTreeItem *)cellItem;
+- (void)updateMessageCountForRow:(NSInteger)rowIndex;
 
-@property (readonly, strong) id userInterfaceObjects;
+- (void)updateBackgroundColor; // Do not call.
 @end
 
 @protocol TVCServerListDelegate <NSObject>

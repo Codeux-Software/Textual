@@ -1409,7 +1409,7 @@
 		t.treeUnreadCount += 1;
 
 		if (t.config.showTreeBadgeCount || (t.config.showTreeBadgeCount == NO && isHighlight)) {
-			[mainWindow() reloadTreeItem:t];
+			[mainWindowServerList() updateMessageCountForItem:t];
 		}
 	}
 }

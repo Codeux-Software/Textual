@@ -39,7 +39,7 @@
 
 @implementation TVCServerListMavericksDarkUserInterface
 
-+ (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected
+- (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected
 {
 	if (up) {
 		if (selected) {
@@ -56,7 +56,7 @@
 	}
 }
 
-+ (NSString *)privateMessageStatusIconFilename:(BOOL)isActive selected:(BOOL)selected
+- (NSString *)privateMessageStatusIconFilename:(BOOL)isActive selected:(BOOL)selected
 {
 	if (selected) {
 		return @"NSUser";
@@ -69,251 +69,217 @@
 	}
 }
 
-+ (NSInteger)serverCellRowHeight
+- (NSInteger)serverCellRowHeight
 {
 	return 21.0;
 }
 
-+ (NSInteger)channelCellRowHeight
+- (NSInteger)channelCellRowHeight
 {
 	return 20.0;
 }
 
-+ (NSFont *)messageCountBadgeFont
+- (NSFont *)messageCountBadgeFont
 {
 	return [RZFontManager() fontWithFamily:@"Helvetica" traits:NSBoldFontMask weight:15 size:10.5];
 }
 
-+ (NSFont *)serverCellFont
+- (NSFont *)serverCellFont
 {
 	return [NSFont fontWithName:@"LucidaGrande-Bold" size:12.0];
 }
 
-+ (NSFont *)normalChannelCellFont
+- (NSFont *)normalChannelCellFont
 {
 	return [NSFont fontWithName:@"LucidaGrande" size:12.0];
 }
 
-+ (NSFont *)selectedChannelCellFont
+- (NSFont *)selectedChannelCellFont
 {
 	return [NSFont fontWithName:@"LucidaGrande-Bold" size:12.0];
 }
 
-+ (NSInteger)messageCountBadgeHeight
+- (NSInteger)messageCountBadgeHeight
 {
 	return 14.0;
 }
 
-+ (NSInteger)messageCountBadgeMinimumWidth
+- (NSInteger)messageCountBadgeMinimumWidth
 {
 	return 22.0;
 }
 
-+ (NSInteger)messageCountBadgePadding
+- (NSInteger)messageCountBadgePadding
 {
 	return 6.0;
 }
 
-+ (NSInteger)messageCountBadgeRightMargin
+- (NSInteger)messageCountBadgeRightMargin
 {
 	return 3.0;
 }
 
-+ (NSInteger)channelCellTextFieldWithBadgeRightMargin
-{
-	return 8.0;
-}
-
-+ (NSInteger)channelCellTextFieldBottomMargin
-{
-	return -(0.5);
-}
-
-+ (NSInteger)channelCellTextFieldLeftMargin
-{
-	return 0.0;
-}
-
-+ (NSInteger)serverCellTextFieldLeftMargin
-{
-	if ([CSFWSystemInformation featureAvailableToOSXMavericks] == NO) {
-		return 4.0;
-	} else {
-		return 0.0;
-	}
-}
-
-+ (NSInteger)serverCellTextFieldBottomMargin
-{
-	return 0.0;
-}
-
-+ (NSColor *)messageCountHighlightedBadgeBackgroundColorForActiveWindow
+- (NSColor *)messageCountHighlightedBadgeBackgroundColorForActiveWindow
 {
 	return [NSColor colorWithCalibratedRed:0.0 green:0.414 blue:0.117 alpha:1.0];
 }
 
-+ (NSColor *)messageCountHighlightedBadgeBackgroundColorForInactiveWindow
+- (NSColor *)messageCountHighlightedBadgeBackgroundColorForInactiveWindow
 {
 	return [NSColor colorWithCalibratedRed:0.0 green:0.414 blue:0.117 alpha:1.0];
 }
 
-+ (NSColor *)messageCountBadgeAquaBackgroundColor
+- (NSColor *)messageCountBadgeAquaBackgroundColor
 {
 	return [NSColor colorWithCalibratedRed:0.187 green:0.187 blue:0.187 alpha:1.0];
 }
 
-+ (NSColor *)messageCountBadgeGraphtieBackgroundColor
+- (NSColor *)messageCountBadgeGraphtieBackgroundColor
 {
 	return [NSColor colorWithCalibratedRed:0.187 green:0.187 blue:0.187 alpha:1.0];
 }
 
-+ (NSColor *)messageCountSelectedBadgeBackgroundColorForActiveWindow
+- (NSColor *)messageCountSelectedBadgeBackgroundColorForActiveWindow
 {
 	return [NSColor darkGrayColor];
 }
 
-+ (NSColor *)messageCountSelectedBadgeBackgroundColorForInactiveWindow
+- (NSColor *)messageCountSelectedBadgeBackgroundColorForInactiveWindow
 {
 	return [NSColor darkGrayColor];
 }
 
-+ (NSColor *)messageCountBadgeShadowColor
+- (NSColor *)messageCountBadgeShadowColor
 {
 	return [NSColor colorWithCalibratedRed:0.234 green:0.234 blue:0.234 alpha:1.0];
 }
 
-+ (NSColor *)messageCountNormalBadgeTextColorForActiveWindow
+- (NSColor *)messageCountNormalBadgeTextColorForActiveWindow
 {
 	return [NSColor whiteColor];
 }
 
-+ (NSColor *)messageCountNormalBadgeTextColorForInactiveWindow
+- (NSColor *)messageCountNormalBadgeTextColorForInactiveWindow
 {
 	return [NSColor whiteColor];
 }
 
-+ (NSColor *)messageCountHighlightedBadgeTextColor
+- (NSColor *)messageCountHighlightedBadgeTextColor
 {
 	return [NSColor whiteColor];
 }
 
-+ (NSColor *)messageCountSelectedBadgeTextColorForActiveWindow
+- (NSColor *)messageCountSelectedBadgeTextColorForActiveWindow
 {
 	return [NSColor whiteColor];
 }
 
-+ (NSColor *)messageCountSelectedBadgeTextColorForInactiveWindow
+- (NSColor *)messageCountSelectedBadgeTextColorForInactiveWindow
 {
 	return [NSColor whiteColor];
 }
 
-+ (NSColor *)serverCellNormalTextColor
+- (NSColor *)serverCellNormalTextColor
 {
 	return [NSColor whiteColor];
 }
 
-+ (NSColor *)serverCellDisabledTextColor
+- (NSColor *)serverCellDisabledTextColor
 {
 	return [NSColor colorWithCalibratedRed:0.660 green:0.660 blue:0.660 alpha:1.0];
 }
 
-+ (NSColor *)serverCellSelectedTextColorForActiveWindow
+- (NSColor *)serverCellSelectedTextColorForActiveWindow
 {
 	return [NSColor colorWithCalibratedRed:0.140 green:0.140 blue:0.140 alpha:1.0];
 }
 
-+ (NSColor *)serverCellSelectedTextColorForInactiveWindow
+- (NSColor *)serverCellSelectedTextColorForInactiveWindow
 {
 	return [NSColor colorWithCalibratedRed:0.140 green:0.140 blue:0.140 alpha:1.0];
 }
 
-+ (NSColor *)serverCellNormalTextShadowColorForActiveWindow
+- (NSColor *)serverCellNormalTextShadowColorForActiveWindow
 {
 	return [NSColor colorWithCalibratedWhite:0.00 alpha:0.90];
 }
 
-+ (NSColor *)serverCellNormalTextShadowColorForInactiveWindow
+- (NSColor *)serverCellNormalTextShadowColorForInactiveWindow
 {
 	return [NSColor colorWithCalibratedWhite:0.00 alpha:0.90];
 }
 
-+ (NSColor *)serverCellSelectedTextShadowColorForActiveWindow
+- (NSColor *)serverCellSelectedTextShadowColorForActiveWindow
 {
 	return [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
 }
 
-+ (NSColor *)serverCellSelectedTextShadowColorForInactiveWindow
+- (NSColor *)serverCellSelectedTextShadowColorForInactiveWindow
 {
 	return [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
 }
 
-+ (NSColor *)channelCellNormalTextColor
+- (NSColor *)channelCellNormalTextColor
 {
 	return [NSColor whiteColor];
 }
 
-+ (NSColor *)channelCellDisabledTextColor
+- (NSColor *)channelCellDisabledTextColor
 {
 	return [NSColor colorWithCalibratedWhite:1.0 alpha:0.6];
 }
 
-+ (NSColor *)channelCellSelectedTextColorForActiveWindow
+- (NSColor *)channelCellSelectedTextColorForActiveWindow
 {
 	return [NSColor colorWithCalibratedRed:0.140 green:0.140 blue:0.140 alpha:1.0];
 }
 
-+ (NSColor *)channelCellSelectedTextColorForInactiveWindow
+- (NSColor *)channelCellSelectedTextColorForInactiveWindow
 {
 	return [NSColor colorWithCalibratedRed:0.140 green:0.140 blue:0.140 alpha:1.0];
 }
 
-+ (NSColor *)channelCellNormalTextShadowColor
+- (NSColor *)channelCellNormalTextShadowColor
 {
 	return [NSColor colorWithCalibratedWhite:0.00 alpha:0.90];
 }
 
-+ (NSColor *)channelCellSelectedTextShadowColorForActiveWindow
+- (NSColor *)channelCellSelectedTextShadowColorForActiveWindow
 {
 	return [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
 }
 
-+ (NSColor *)channelCellSelectedTextShadowColorForInactiveWindow
+- (NSColor *)channelCellSelectedTextShadowColorForInactiveWindow
 {
 	return [NSColor colorWithCalibratedWhite:1.00 alpha:0.30];
 }
 
-+ (NSColor *)graphiteTextSelectionShadowColor
+- (NSColor *)graphiteTextSelectionShadowColor
 {
 	return [NSColor colorWithCalibratedRed:0.066 green:0.285 blue:0.249 alpha:1.0];
 }
 
-+ (NSImage *)channelRowSelectionImageForActiveWindow
+- (NSImage *)channelRowSelectionImageForActiveWindow
 {
 	return [NSImage imageNamed:@"MavericksDarkChannelCellSelection"];
 }
 
-+ (NSImage *)channelRowSelectionImageForInactiveWindow
+- (NSImage *)channelRowSelectionImageForInactiveWindow
 {
 	return [NSImage imageNamed:@"MavericksDarkChannelCellSelection"];
 }
 
-+ (NSImage *)serverRowSelectionImageForActiveWindow
+- (NSImage *)serverRowSelectionImageForActiveWindow
 {
 	return [NSImage imageNamed:@"MavericksDarkServerCellSelection"];
 }
 
-+ (NSImage *)serverRowSelectionImageForInactiveWindow
+- (NSImage *)serverRowSelectionImageForInactiveWindow
 {
 	return [NSImage imageNamed:@"MavericksDarkServerCellSelection"];
 }
 
-+ (NSColor *)serverListBackgroundColorForInactiveWindow
-{
-	return [NSColor colorWithCalibratedRed:0.148 green:0.148 blue:0.148 alpha:1.0];
-}
-
-+ (NSColor *)serverListBackgroundColorForActiveWindow
+- (NSColor *)serverListBackgroundColor
 {
 	return [NSColor colorWithCalibratedRed:0.148 green:0.148 blue:0.148 alpha:1.0];
 }

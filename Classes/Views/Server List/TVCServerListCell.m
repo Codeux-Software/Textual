@@ -43,14 +43,34 @@
 #pragma mark -
 #pragma mark Cell Drawing
 
-- (void)updateDrawing:(NSRect)cellFrame
+- (BOOL)wantsUpdateLayer
+{
+	return YES;
+}
+
+- (NSViewLayerContentsRedrawPolicy)layerContentsRedrawPolicy
+{
+	return NSViewLayerContentsRedrawOnSetNeedsDisplay;
+}
+
+- (void)updateLayer
+{
+	[self updateDrawing];
+}
+
+- (void)updateDrawing
+{
+	[self updateDrawing:[mainWindowServerList() userInterfaceObjects]];
+}
+
+- (void)updateDrawing:(id)interfaceObject
 {
 	[self updateTextFieldValue];
 	
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		[self updateDrawingForYosemite:cellFrame withUserInterfaceObject:[mainWindowServerList() userInterfaceObjects]];
+		[self updateDrawingForYosemite:interfaceObject];
 	} else {
-		[self updateDrawingForMavericks:cellFrame withUserInterfaceObject:[mainWindowServerList() userInterfaceObjects]];
+		[self updateDrawingForMavericks:interfaceObject];
 	}
 }
 
@@ -67,522 +87,139 @@
 	
 	if ([stringValue isEqualTo:labelValue] == NO) {
 		[textField setStringValue:labelValue];
-	} else {
-		[textField setNeedsDisplay:YES];
 	}
 }
 
-- (void)updateDrawingForYosemite:(NSRect)cellFrame withUserInterfaceObject:(id)interfaceObject
+- (void)updateDrawingForYosemite:(id)interfaceObject
 {
 	/* Define context. */
 	NSDictionary *drawingContext = [self drawingContext];
 	
 	BOOL isActive = [drawingContext boolForKey:@"isActive"];
-	
-	IRCTreeItem *cellItem = [self cellItem];
-	
-	/* Maybe update icon image. */
-	BOOL isVibrantDark = [TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode];
-	
-	NSImageView *imageView = [self imageView];
-	
-	NSImage *icon;
-	
-	if ([cellItem isPrivateMessage]) {
-		NSString *queryIcon = [interfaceObject privateMessageStatusIconFilename:isActive];
-		
-		icon = [NSImage imageNamed:queryIcon];
-	} else {
-		if (isActive) {
-			if (isVibrantDark) {
-				icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteDarkActive"];
-			} else {
-				icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteLightActive"];
-			}
-		} else {
-			if (isVibrantDark) {
-				icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteDarkInactive"];
-			} else {
-				icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteLightInactive"];
-			}
-		}
-	}
-	
-	if (isVibrantDark) {
-		[icon setTemplate:NO];
-	} else {
-		[icon setTemplate:YES];
-	}
-	
-	[imageView setImage:icon];
-}
-
-- (void)updateDrawingForMavericks:(NSRect)cellFrame withUserInterfaceObject:(id)interfaceObject
-{
-	/* Define context. */
-	NSDictionary *drawingContext = [self drawingContext];
-	
-	BOOL isActive = [drawingContext boolForKey:@"isActive"];
-	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
-	
-	IRCTreeItem *cellItem = [self cellItem];
-	
-	/* Maybe update icon image. */
-	NSImageView *imageView = [self imageView];
-	
-	NSImage *icon;
-	
-	BOOL isInverted = [TPCPreferences invertSidebarColors];
-	
-	if ([cellItem isPrivateMessage]) {
-		NSString *queryIcon = [interfaceObject privateMessageStatusIconFilename:isActive selected:isSelected];
-		
-		icon = [NSImage imageNamed:queryIcon];
-	} else {
-		if (isActive) {
-			if (isInverted) {
-				icon = [NSImage imageNamed:@"channelRoomStatusIconMavericksDarkActive"];
-			} else {
-				icon = [NSImage imageNamed:@"channelRoomStatusIconMavericksLightActive"];
-			}
-		} else {
-			if (isInverted) {
-				icon = [NSImage imageNamed:@"channelRoomStatusIconMavericksDarkInactive"];
-			} else {
-				icon = [NSImage imageNamed:@"channelRoomStatusIconMavericksLightInactive"];
-			}
-		}
-	}
-	
-	[imageView setImage:icon];
-}
-
-- (void)updateGroupDisclosureTriangle
-{
-	NSButton *theButtonParent;
-	
-	for (id view in [[self superview] subviews]) {
-		if ([view isKindOfClass:[NSButton class]]) {
-			theButtonParent = view;
-		}
-	}
-	
-	if (theButtonParent) {
-		[self updateGroupDisclosureTriangle:theButtonParent];
-	}
-}
-
-- (void)updateGroupDisclosureTriangle:(NSButton *)theButtonParent
-{
-	NSButtonCell *theButton = [theButtonParent cell];
-	
-	/* Button, yay! */
-	NSInteger rowIndex = [self rowIndex];
-	
-	BOOL isSelected = [mainWindowServerList() isRowSelected:rowIndex];
-	
-	/* We keep a reference to the default button. */
-	/* These two methods only copy the image if it has never been set before. */
-	[TVCServerListSharedUserInterface setOutlineViewDefaultDisclosureTriangle:[theButton image]];
-	[TVCServerListSharedUserInterface setOutlineViewAlternateDisclosureTriangle:[theButton alternateImage]];
-	
-	/* Now the fun can begin. */
-	NSImage *primary = [TVCServerListSharedUserInterface disclosureTriangleInContext:YES selected:isSelected];
-	NSImage *alterna = [TVCServerListSharedUserInterface disclosureTriangleInContext:NO selected:isSelected];
-	
-	/* Set image. */
-	[theButton setImage:primary];
-	[theButton setAlternateImage:alterna];
-	
-	/* Update style of button. */
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		[theButton setHighlightsBy:NSNoCellMask];
-	} else {
-		if (isSelected) {
-			[theButton setBackgroundStyle:NSBackgroundStyleLowered];
-		} else {
-			[theButton setBackgroundStyle:NSBackgroundStyleRaised];
-		}
-	}
-}
-
-#pragma mark -
-#pragma mark Cell Information
-
-- (NSInteger)rowIndex
-{
-	return [mainWindowServerList() rowForItem:[self cellItem]];
-}
-
-- (NSDictionary *)drawingContext
-{
-	NSInteger rowIndex = [self rowIndex];
-	
-	IRCTreeItem *cellItem = [self cellItem];
-
-	return @{
-		@"rowIndex"				: @(rowIndex),
-		@"isActive"				: @([cellItem isActive]),
-		@"isGroupItem"			: @([cellItem isClient]),
-		@"isInverted"			: @([TPCPreferences invertSidebarColors]),
-		@"isRetina"				: @([mainWindow() runningInHighResolutionMode]),
-		@"isActiveWindow"		: @([mainWindow() isActiveForDrawing]),
-		@"isSelected"			: @([mainWindowServerList() isRowSelected:rowIndex]),
-		@"isGraphite"			: @([NSColor currentControlTint] == NSGraphiteControlTint),
-		@"isVibrantDark"		: @([TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode])
-	};
-}
-
-@end
-
-@implementation TVCServerListCellGroupItem
-@end
-
-@implementation TVCServerListCellChildItem
-@end
-
-@implementation TVCServerListRowCell
-
-- (void)drawDraggingDestinationFeedbackInRect:(NSRect)dirtyRect
-{
-	; // Do nothing for this…
-}
-
-- (NSTableViewSelectionHighlightStyle)selectionHighlightStyle
-{
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite])
-	{
-		if ([TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode]) {
-			return NSTableViewSelectionHighlightStyleRegular;
-		} else {
-			return NSTableViewSelectionHighlightStyleSourceList;
-		}
-	}
-	else
-	{
-		return NSTableViewSelectionHighlightStyleSourceList;
-	}
-}
-
-- (void)drawSelectionInRect:(NSRect)dirtyRect
-{
-	if ([self needsToDrawRect:dirtyRect])
-	{
-		id userInterfaceObjects = [mainWindowServerList() userInterfaceObjects];
-		
-		if ([CSFWSystemInformation featureAvailableToOSXYosemite])
-		{
-			NSColor *selectionColor = nil;
-			
-			if ([mainWindow() isActiveForDrawing]) {
-				selectionColor = [userInterfaceObjects rowSelectionColorForActiveWindow];
-			} else {
-				selectionColor = [userInterfaceObjects rowSelectionColorForInactiveWindow];
-			}
-			
-			if (selectionColor) {
-				NSRect selectionRect = [self bounds];
-				
-				[selectionColor set];
-				
-				NSRectFill(selectionRect);
-			} else {
-				[super drawSelectionInRect:dirtyRect];
-			}
-		}
-		else
-		{
-			NSImage *selectionImage = nil;
-			
-			if ([self isGroupItem]) {
-				if ([mainWindow() isActiveForDrawing]) {
-					selectionImage = [userInterfaceObjects serverRowSelectionImageForActiveWindow];
-				} else {
-					selectionImage = [userInterfaceObjects serverRowSelectionImageForInactiveWindow];
-				}
-			} else {
-				if ([mainWindow() isActiveForDrawing]) {
-					selectionImage = [userInterfaceObjects channelRowSelectionImageForActiveWindow];
-				} else {
-					selectionImage = [userInterfaceObjects channelRowSelectionImageForInactiveWindow];
-				}
-			}
-			
-			if (selectionImage) {
-				NSRect selectionRect = [self bounds];
-				
-				[selectionImage drawInRect:selectionRect
-								  fromRect:NSZeroRect
-								 operation:NSCompositeSourceOver
-								  fraction:1.0
-							respectFlipped:YES
-									 hints:nil];
-			} else {
-				[super drawSelectionInRect:dirtyRect];
-			}
-		}
-	}
-}
-
-- (void)didAddSubview:(NSView *)subview
-{
-	if ([subview isKindOfClass:[NSButton class]])
-	{
-		id firstObject = [self subviews][0];
-		
-		if ([firstObject isKindOfClass:[TVCServerListCellGroupItem class]]) {
-			TVCServerListCellGroupItem *groupItem = firstObject;
-			
-			[self setIsGroupItem:YES];
-			
-			[groupItem updateGroupDisclosureTriangle:(id)subview];
-		}
-	}
-	
-	[super didAddSubview:subview];
-}
-
-- (BOOL)isEmphasized
-{
-	return YES;
-}
-
-@end
-
-@implementation TVCServerLisCellTextFieldInterior
-
-- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
-{
-	/* Build draw context for border of text field. When we draw the text field,
-	 we will also render the unread count badge with it. */
-	TVCServerListCell *parentCell = [self parentCell];
-	
-	NSDictionary *drawingContext = [parentCell drawingContext];
-	
-	BOOL isWindowActive = [drawingContext boolForKey:@"isActiveWindow"];
 	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
-	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
 	
-	id interfaceObjects = [mainWindowServerList() userInterfaceObjects];
-	
-	/* If we are a client, then there will be no badged. */
 	if (isGroupItem == NO) {
-		/* Gather information about this badge draw. */
-		IRCChannel *channelPointer = (id)[parentCell cellItem];
+		/* Maybe update icon image. */
+		IRCTreeItem *cellItem = [self cellItem];
 		
-		BOOL drawMessageBadge = (isSelected == NO || (isWindowActive == NO && isSelected));
+		BOOL isVibrantDark = [TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode];
 		
-		NSInteger channelTreeUnreadCount = [channelPointer treeUnreadCount];
-		NSInteger nicknameHighlightCount = [channelPointer nicknameHighlightCount];
+		NSImageView *imageView = [self imageView];
 		
-		BOOL isHighlight = (nicknameHighlightCount >= 1);
+		NSImage *icon = nil;
 		
-		if (channelPointer.config.showTreeBadgeCount == NO) {
-			if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-				drawMessageBadge = NO; /* On Yosemite we colorize the channel name itself. */
-			} else {
-				if (isHighlight) {
-					channelTreeUnreadCount = nicknameHighlightCount;
+		if ([cellItem isPrivateMessage]) {
+			NSString *queryIcon = [interfaceObject privateMessageStatusIconFilename:isActive];
+			
+			icon = [NSImage imageNamed:queryIcon];
+		} else {
+			if (isActive) {
+				if (isVibrantDark) {
+					icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteDarkActive"];
 				} else {
-					drawMessageBadge = NO;
+					icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteLightActive"];
+				}
+			} else {
+				if (isVibrantDark) {
+					icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteDarkInactive"];
+				} else {
+					icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteLightInactive"];
 				}
 			}
 		}
 		
-		/* Begin draw if we want to. */
-		if (channelTreeUnreadCount > 0 && drawMessageBadge) {
-			/* Get the string being draw. */
-			NSAttributedString *mcstring = [self messageCountBadgeText:channelTreeUnreadCount isSelected:isSelected isHighlight:isHighlight];
-			
-			/* Get the rect being drawn. */
-			NSRect badgeRect = [self messageCountBadgeRect:cellFrame withText:mcstring];
-			
-			/* Draw the badge. */
-			[self drawMessageCountBadge:mcstring inCell:badgeRect isHighlighgt:isHighlight isSelected:isSelected];
-			
-			/* Trim our text field to make room for the newly drawn badge. */
-			cellFrame.size.width -= (badgeRect.size.width + [interfaceObjects channelCellTextFieldWithBadgeRightMargin]);
+		if (isVibrantDark) {
+			[icon setTemplate:NO];
+		} else {
+			[icon setTemplate:YES];
 		}
 		
-		cellFrame.size.width -= [interfaceObjects channelCellTextFieldLeftMargin];
-		
-		cellFrame.origin.x = [interfaceObjects channelCellTextFieldLeftMargin];
-		cellFrame.origin.y = [interfaceObjects channelCellTextFieldBottomMargin];
-	} else {
-		cellFrame.size.width -= [interfaceObjects serverCellTextFieldLeftMargin];
-		
-		cellFrame.origin.x = [interfaceObjects serverCellTextFieldLeftMargin];
-		cellFrame.origin.y = [interfaceObjects serverCellTextFieldBottomMargin];
+		[imageView setImage:icon];
 	}
 
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		[self drawInteriorWithFrameForYosemite:cellFrame withUserInterfaceObject:interfaceObjects];
-	} else {
-		[self drawInteriorWithFrameForMavericks:cellFrame withUserInterfaceObject:interfaceObjects];
+	/* Update attributed value. */
+	NSAttributedString *newValue = [self attributedTextFieldValueForYosemite:interfaceObject inContext:drawingContext];
+	
+	NSTextField *textField = [self textField];
+	
+	[textField setAttributedStringValue:newValue];
+	
+	/* Maybe update badge. */
+	if (isGroupItem == NO) {
+		[self populateMessageCountBadge:interfaceObject inContext:drawingContext];
 	}
 }
 
-#pragma mark -
-#pragma mark Badge Drawing
-
-- (NSAttributedString *)messageCountBadgeText:(NSInteger)messageCount isSelected:(BOOL)isSelected isHighlight:(BOOL)isHighlight
+- (void)updateDrawingForMavericks:(id)interfaceObject
 {
-	NSString *messageCountString = TXFormattedNumber(messageCount);
+	/* Define context. */
+	NSDictionary *drawingContext = [self drawingContext];
 	
-	id interfaceObjects = [mainWindowServerList() userInterfaceObjects];
+	BOOL isActive = [drawingContext boolForKey:@"isActive"];
+	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
+	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
 	
-	NSColor *textColor = nil;
+	if (isGroupItem == NO) {
+		/* Maybe update icon image. */
+		IRCTreeItem *cellItem = [self cellItem];
 	
-	if (isHighlight) {
-		textColor = [interfaceObjects messageCountHighlightedBadgeTextColor];
-	} else {
-		if (isSelected) {
-			if ([mainWindow() isActiveForDrawing]) {
-				textColor = [interfaceObjects messageCountSelectedBadgeTextColorForActiveWindow];
-			} else {
-				textColor = [interfaceObjects messageCountSelectedBadgeTextColorForInactiveWindow];
-			}
-		} else {
-			if ([mainWindow() isActiveForDrawing]) {
-				textColor = [interfaceObjects messageCountNormalBadgeTextColorForActiveWindow];
-			} else {
-				textColor = [interfaceObjects messageCountNormalBadgeTextColorForInactiveWindow];
-			}
-		}
-	}
-	
-	NSDictionary *attributes = @{NSForegroundColorAttributeName : textColor, NSFontAttributeName : [interfaceObjects messageCountBadgeFont]};
-	
-	NSAttributedString *mcstring = [NSAttributedString stringWithBase:messageCountString attributes:attributes];
-	
-	return mcstring;
-}
-
-- (NSRect)messageCountBadgeRect:(NSRect)cellFrame withText:(NSAttributedString *)mcstring
-{
-	id interfaceObjects = [mainWindowServerList() userInterfaceObjects];
-	
-	NSInteger messageCountWidth = (mcstring.size.width + ([interfaceObjects messageCountBadgePadding] * 2));
-	
-	NSRect badgeFrame = NSMakeRect((NSMaxX(cellFrame) - ([interfaceObjects messageCountBadgeRightMargin] + messageCountWidth)),
-								   (NSMidY(cellFrame) - ([interfaceObjects messageCountBadgeHeight] / 2.0)),
-								   messageCountWidth,    [interfaceObjects messageCountBadgeHeight]);
-	
-	if (badgeFrame.size.width < [interfaceObjects messageCountBadgeMinimumWidth]) {
-		NSInteger widthDiff  = ([interfaceObjects messageCountBadgeMinimumWidth] - badgeFrame.size.width);
+		NSImageView *imageView = [self imageView];
 		
-		badgeFrame.size.width += widthDiff;
+		NSImage *icon = nil;
 		
-		badgeFrame.origin.x -= widthDiff;
-	}
-	
-	return badgeFrame;
-}
-
-- (void)drawMessageCountBadge:(NSAttributedString *)mcstring inCell:(NSRect)badgeFrame isHighlighgt:(BOOL)isHighlight isSelected:(BOOL)isSelected
-{
-	/* Begin drawing badge. */
-	BOOL isDrawingForMavericks = ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO);
-	
-	id interfaceObjects = [mainWindowServerList() userInterfaceObjects];
-
-	/* Draw the background color. */
-	NSColor *backgroundColor = nil;
-	
-	if (isHighlight) {
-		if ([mainWindow() isActiveForDrawing]) {
-			backgroundColor = [interfaceObjects messageCountHighlightedBadgeBackgroundColorForActiveWindow];
+		BOOL isInverted = [TPCPreferences invertSidebarColors];
+		
+		if ([cellItem isPrivateMessage]) {
+			NSString *queryIcon = [interfaceObject privateMessageStatusIconFilename:isActive selected:isSelected];
+			
+			icon = [NSImage imageNamed:queryIcon];
 		} else {
-			backgroundColor = [interfaceObjects messageCountHighlightedBadgeBackgroundColorForInactiveWindow];
-		}
-	} else {
-		if (isSelected) {
-			if ([mainWindow() isActiveForDrawing]) {
-				backgroundColor = [interfaceObjects messageCountSelectedBadgeBackgroundColorForActiveWindow];
-			} else {
-				backgroundColor = [interfaceObjects messageCountSelectedBadgeBackgroundColorForInactiveWindow];
-			}
-		} else {
-			if (isDrawingForMavericks) {
-				if ([NSColor currentControlTint] == NSGraphiteControlTint) {
-					backgroundColor = [interfaceObjects messageCountBadgeGraphtieBackgroundColor];
+			if (isActive) {
+				if (isInverted) {
+					icon = [NSImage imageNamed:@"channelRoomStatusIconMavericksDarkActive"];
 				} else {
-					backgroundColor = [interfaceObjects messageCountBadgeAquaBackgroundColor];
+					icon = [NSImage imageNamed:@"channelRoomStatusIconMavericksLightActive"];
 				}
 			} else {
-				if ([mainWindow() isActiveForDrawing]) {
-					backgroundColor = [interfaceObjects messageCountNormalBadgeBackgroundColorForActiveWindow];
+				if (isInverted) {
+					icon = [NSImage imageNamed:@"channelRoomStatusIconMavericksDarkInactive"];
 				} else {
-					backgroundColor = [interfaceObjects messageCountNormalBadgeBackgroundColorForInactiveWindow];
+					icon = [NSImage imageNamed:@"channelRoomStatusIconMavericksLightInactive"];
 				}
 			}
 		}
+		
+		[imageView setImage:icon];
 	}
 	
-	/* Frame is dropped by 1 to make room for shadow. */
-	if (isDrawingForMavericks) {
-		if (isSelected == NO) {
-			/* Begin work on shadow frame. */
-			NSRect shadowFrame = badgeFrame;
-			
-			/* Change size. */
-			shadowFrame.origin.y += 1;
-			
-			/* The shadow frame is a round rectangle that matches the one
-			 being drawn with a 1 point offset below the badge to give the
-			 appearance of a drop shadow. */
-			NSBezierPath *shadowPath = [NSBezierPath bezierPathWithRoundedRect:shadowFrame xRadius:7.0 yRadius:7.0];
-			
-			NSColor *shadowColor = [interfaceObjects messageCountBadgeShadowColor];
-			
-			[shadowColor set];
-			
-			[shadowPath fill];
-		}
+	/* Update attributed value. */
+	NSAttributedString *newValue = [self attributedTextFieldValueForMavericks:interfaceObject inContext:drawingContext];
+
+	NSTextField *textField = [self textField];
+
+	[textField setAttributedStringValue:newValue];
+	
+	/* Maybe update badge. */
+	if (isGroupItem == NO) {
+		[self populateMessageCountBadge:interfaceObject inContext:drawingContext];
 	}
-	
-	/* Draw the background of the badge. */
-	NSBezierPath *badgePath = [NSBezierPath bezierPathWithRoundedRect:badgeFrame xRadius:7.0 yRadius:7.0];
-	
-	[backgroundColor set];
-	
-	[badgePath fill];
-	
-	/* Center the text relative to the badge itself. */
-	NSPoint badgeTextPoint;
-	
-	badgeTextPoint = NSMakePoint((NSMidX(badgeFrame) - (mcstring.size.width  / 2.0)),
-								 (NSMidY(badgeFrame) - (mcstring.size.height / 2.0)));
-	
-	/* Gotta be pixel (point?) perfect. */
-	if ([mainWindow() runningInHighResolutionMode]) {
-		badgeTextPoint.y += 0.5;
-	}
-	
-	/* The actual draw. */
-	[mcstring drawAtPoint:badgeTextPoint];
 }
 
-#pragma mark -
-#pragma mark Interior Drawing
-
-- (void)drawInteriorWithFrameForMavericks:(NSRect)cellFrame withUserInterfaceObject:(id)interfaceObject
+- (NSAttributedString *)attributedTextFieldValueForMavericks:(id)interfaceObject inContext:(NSDictionary *)drawingContext
 {
 	/* Gather basic context information. */
-	TVCServerListCell *parentCell = [self parentCell];
-	
-	NSDictionary *drawingContext = [parentCell drawingContext];
-	
 	BOOL isWindowActive = [drawingContext boolForKey:@"isActiveWindow"];
 	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
 	BOOL isInverted = [drawingContext boolForKey:@"isInverted"];
 	BOOL isGraphite = [drawingContext boolForKey:@"isGraphite"];
 	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
 	
-	IRCTreeItem *rawPointer = [parentCell cellItem];
+	IRCTreeItem *rawPointer = [self cellItem];
 	
 	/* Update attributed string. */
-	NSAttributedString *stringValue = [self attributedStringValue];
+	NSTextField *textField = [self textField];
+	
+	NSAttributedString *stringValue = [textField attributedStringValue];
 	
 	NSMutableAttributedString *mutableStringValue = [stringValue mutableCopy];
 	
@@ -696,16 +333,12 @@
 	[mutableStringValue endEditing];
 	
 	/* Draw new attributed string. */
-	[mutableStringValue drawInRect:cellFrame];
+	return mutableStringValue;
 }
 
-- (void)drawInteriorWithFrameForYosemite:(NSRect)cellFrame withUserInterfaceObject:(id)interfaceObject
+- (NSAttributedString *)attributedTextFieldValueForYosemite:(id)interfaceObject inContext:(NSDictionary *)drawingContext
 {
 	/* Gather basic context information. */
-	TVCServerListCell *parentCell = [self parentCell];
-	
-	NSDictionary *drawingContext = [parentCell drawingContext];
-	
 	BOOL isWindowActive = [drawingContext boolForKey:@"isActiveWindow"];
 	BOOL isVibrantDark = [drawingContext boolForKey:@"isVibrantDark"];
 	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
@@ -715,7 +348,7 @@
 	BOOL isHighlight = NO;
 	BOOL isErroneous = NO;
 	
-	IRCTreeItem *rawPointer = [parentCell cellItem];
+	IRCTreeItem *rawPointer = [self cellItem];
 	
 	/* Gather channel specific context information. */
 	IRCChannel *channelPointer = nil;
@@ -728,7 +361,9 @@
 	}
 	
 	/* Update attributed string. */
-	NSAttributedString *stringValue = [self attributedStringValue];
+	NSTextField *textField = [self textField];
+	
+	NSAttributedString *stringValue = [textField attributedStringValue];
 	
 	NSMutableAttributedString *mutableStringValue = [stringValue mutableCopy];
 	
@@ -811,7 +446,454 @@
 	[mutableStringValue endEditing];
 	
 	/* Draw new attributed string. */
-	[mutableStringValue drawInRect:cellFrame];
+	return mutableStringValue;
+}
+
+#pragma mark -
+#pragma mark Badge Drawing
+
+- (void)populateMessageCountBadge
+{
+	[self populateMessageCountBadge:[mainWindowServerList() userInterfaceObjects] inContext:[self drawingContext]];
+}
+
+- (void)populateMessageCountBadge:(id)interfaceObject inContext:(NSDictionary *)drawingContext
+{
+	BOOL isWindowActive = [drawingContext boolForKey:@"isActiveWindow"];
+	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
+
+	/* Gather information about this badge draw. */
+	IRCChannel *channelPointer = (id)[self cellItem];
+	
+	BOOL drawMessageBadge = (isSelected == NO || (isWindowActive == NO && isSelected));
+	
+	NSInteger channelTreeUnreadCount = [channelPointer treeUnreadCount];
+	NSInteger nicknameHighlightCount = [channelPointer nicknameHighlightCount];
+	
+	BOOL isHighlight = (nicknameHighlightCount > 0);
+	
+	if (channelPointer.config.showTreeBadgeCount == NO) {
+		if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+			drawMessageBadge = NO; /* On Yosemite we colorize the channel name itself. */
+		} else {
+			if (isHighlight) {
+				channelTreeUnreadCount = nicknameHighlightCount;
+			} else {
+				drawMessageBadge = NO;
+			}
+		}
+	}
+	
+	/* Begin draw if we want to. */
+	if (channelTreeUnreadCount > 0 && drawMessageBadge) {
+		/* Get the string being draw. */
+		NSAttributedString *mcstring = [self messageCountBadgeText:channelTreeUnreadCount isSelected:isSelected isHighlight:isHighlight];
+		
+		/* Get the rect being drawn. */
+		NSRect badgeRect = [self messageCountBadgeRectWithText:mcstring];
+		
+		/* Draw the badge. */
+		[self drawMessageCountBadge:mcstring inCell:badgeRect isHighlighgt:isHighlight isSelected:isSelected];
+		
+		/* Set the right margin for badge image. */
+		[self.messageCountBadgeTrailingConstraint setConstant:[interfaceObject messageCountBadgeRightMargin]];
+		
+		/* Set the width of the badge image. */
+		[self.messageCountBadgeWidthConstraint setConstant:NSWidth(badgeRect)];
+	} else {
+		/* Reset auto layout constraint for right margin. */
+		[self.messageCountBadgeTrailingConstraint setConstant:0.0];
+
+		/* Reset auto layout constraint for width. */
+		[self.messageCountBadgeWidthConstraint setConstant:0.0];
+		
+		/* Reset any existing badge image. */
+		NSImageView *badgeView = [self messageCountBadgeImageView];
+		
+		[badgeView setImage:nil];
+	}
+}
+
+- (NSAttributedString *)messageCountBadgeText:(NSInteger)messageCount isSelected:(BOOL)isSelected isHighlight:(BOOL)isHighlight
+{
+	NSString *messageCountString = TXFormattedNumber(messageCount);
+	
+	id interfaceObjects = [mainWindowServerList() userInterfaceObjects];
+	
+	NSFont *textFont = [interfaceObjects messageCountBadgeFont];
+	
+	NSColor *textColor = nil;
+	
+	if (isHighlight) {
+		textColor = [interfaceObjects messageCountHighlightedBadgeTextColor];
+	} else {
+		if (isSelected) {
+			if ([mainWindow() isActiveForDrawing]) {
+				textColor = [interfaceObjects messageCountSelectedBadgeTextColorForActiveWindow];
+			} else {
+				textColor = [interfaceObjects messageCountSelectedBadgeTextColorForInactiveWindow];
+			}
+		} else {
+			if ([mainWindow() isActiveForDrawing]) {
+				textColor = [interfaceObjects messageCountNormalBadgeTextColorForActiveWindow];
+			} else {
+				textColor = [interfaceObjects messageCountNormalBadgeTextColorForInactiveWindow];
+			}
+		}
+	}
+	
+	NSDictionary *attributes = @{NSForegroundColorAttributeName : textColor, NSFontAttributeName : textFont};
+	
+	NSAttributedString *mcstring = [NSAttributedString stringWithBase:messageCountString attributes:attributes];
+	
+	return mcstring;
+}
+
+- (NSRect)messageCountBadgeRectWithText:(NSAttributedString *)mcstring
+{
+	id interfaceObjects = [mainWindowServerList() userInterfaceObjects];
+	
+	NSInteger messageCountWidth = (mcstring.size.width + ([interfaceObjects messageCountBadgePadding] * 2));
+	
+	NSRect badgeFrame = NSMakeRect(0.0, 0.0, messageCountWidth, [interfaceObjects messageCountBadgeHeight]);
+	
+	if (badgeFrame.size.width < [interfaceObjects messageCountBadgeMinimumWidth]) {
+		NSInteger widthDiff  = ([interfaceObjects messageCountBadgeMinimumWidth] - badgeFrame.size.width);
+		
+		badgeFrame.size.width += widthDiff;
+		
+		badgeFrame.origin.x -= widthDiff;
+	}
+	
+	return badgeFrame;
+}
+
+- (void)drawMessageCountBadge:(NSAttributedString *)mcstring inCell:(NSRect)badgeFrame isHighlighgt:(BOOL)isHighlight isSelected:(BOOL)isSelected
+{
+	/* Begin drawing badge. */
+	BOOL isDrawingForMavericks = ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO);
+	
+	id interfaceObjects = [mainWindowServerList() userInterfaceObjects];
+
+	/* Create image that we will draw into. If we are drawing for Mavericks,
+	 then the frame of our image is one pixel greater because we draw a shadow. */
+	NSImage *newImage = nil;
+	
+	NSRect boxFrame = NSZeroRect;
+	
+	if (isDrawingForMavericks) {
+		boxFrame = NSMakeRect(0.0, 1.0, NSWidth(badgeFrame), NSHeight(badgeFrame));
+		
+		newImage = [NSImage newImageWithSize:NSMakeSize(NSWidth(boxFrame), (NSHeight(boxFrame) + 1.0))];
+	} else {
+		boxFrame = NSMakeRect(0.0, 0.0, NSWidth(badgeFrame), NSHeight(badgeFrame));
+		
+		newImage = [NSImage newImageWithSize:NSMakeSize(NSWidth(boxFrame),  NSHeight(boxFrame))];
+	}
+	
+	[newImage lockFocus];
+	
+	/* Draw the background color. */
+	NSColor *backgroundColor = nil;
+	
+	if (isHighlight) {
+		if ([mainWindow() isActiveForDrawing]) {
+			backgroundColor = [interfaceObjects messageCountHighlightedBadgeBackgroundColorForActiveWindow];
+		} else {
+			backgroundColor = [interfaceObjects messageCountHighlightedBadgeBackgroundColorForInactiveWindow];
+		}
+	} else {
+		if (isSelected) {
+			if ([mainWindow() isActiveForDrawing]) {
+				backgroundColor = [interfaceObjects messageCountSelectedBadgeBackgroundColorForActiveWindow];
+			} else {
+				backgroundColor = [interfaceObjects messageCountSelectedBadgeBackgroundColorForInactiveWindow];
+			}
+		} else {
+			if (isDrawingForMavericks) {
+				if ([NSColor currentControlTint] == NSGraphiteControlTint) {
+					backgroundColor = [interfaceObjects messageCountBadgeGraphtieBackgroundColor];
+				} else {
+					backgroundColor = [interfaceObjects messageCountBadgeAquaBackgroundColor];
+				}
+			} else {
+				if ([mainWindow() isActiveForDrawing]) {
+					backgroundColor = [interfaceObjects messageCountNormalBadgeBackgroundColorForActiveWindow];
+				} else {
+					backgroundColor = [interfaceObjects messageCountNormalBadgeBackgroundColorForInactiveWindow];
+				}
+			}
+		}
+	}
+	
+	/* Frame is dropped by 1 to make room for shadow. */
+	if (isDrawingForMavericks) {
+		if (isSelected == NO) {
+			/* Begin work on shadow frame. */
+			NSRect shadowFrame = boxFrame;
+			
+			/* Change size. */
+			shadowFrame.origin.y -= 1;
+			
+			/* The shadow frame is a round rectangle that matches the one
+			 being drawn with a 1 point offset below the badge to give the
+			 appearance of a drop shadow. */
+			NSBezierPath *shadowPath = [NSBezierPath bezierPathWithRoundedRect:shadowFrame xRadius:7.0 yRadius:7.0];
+			
+			NSColor *shadowColor = [interfaceObjects messageCountBadgeShadowColor];
+			
+			[shadowColor set];
+			
+			[shadowPath fill];
+		}
+	}
+	
+	/* Draw the background of the badge. */
+	NSBezierPath *badgePath = [NSBezierPath bezierPathWithRoundedRect:boxFrame xRadius:7.0 yRadius:7.0];
+	
+	[backgroundColor set];
+	
+	[badgePath fill];
+	
+	/* Center the text relative to the badge itself. */
+	NSPoint badgeTextPoint;
+	
+	badgeTextPoint = NSMakePoint((NSMidX(boxFrame) - (mcstring.size.width  / 2.0)),
+								 (NSMidY(boxFrame) - (mcstring.size.height / 2.0)));
+	
+	/* Gotta be pixel (point?) perfect. */
+	if ([mainWindow() runningInHighResolutionMode]) {
+		badgeTextPoint.y -= 0.5;
+	}
+	
+	/* The actual draw. */
+	[mcstring drawAtPoint:badgeTextPoint];
+	
+	/* Set the new image. */
+	[newImage unlockFocus];
+	
+	NSImageView *badgeView = [self messageCountBadgeImageView];
+	
+	[badgeView setImage:newImage];
+}
+
+#pragma mark -
+#pragma mark Disclosure Triangle
+
+- (void)updateGroupDisclosureTriangle
+{
+	NSButton *theButtonParent = nil;
+	
+	for (id view in [[self superview] subviews]) {
+		if ([view isKindOfClass:[NSButton class]]) {
+			theButtonParent = view;
+		}
+	}
+	
+	if (theButtonParent) {
+		[self updateGroupDisclosureTriangle:theButtonParent];
+	}
+}
+
+- (void)updateGroupDisclosureTriangle:(NSButton *)theButtonParent
+{
+	NSButtonCell *theButton = [theButtonParent cell];
+	
+	/* Button, yay! */
+	NSInteger rowIndex = [self rowIndex];
+	
+	BOOL isSelected = [mainWindowServerList() isRowSelected:rowIndex];
+	
+	id interfaceObjects = [mainWindowServerList() userInterfaceObjects];
+
+	/* We keep a reference to the default button. */
+	/* These two methods only copy the image if it has never been set before. */
+	[interfaceObjects setOutlineViewDefaultDisclosureTriangle:[theButton image]];
+	[interfaceObjects setOutlineViewAlternateDisclosureTriangle:[theButton alternateImage]];
+	
+	/* Now the fun can begin. */
+	NSImage *primary = [interfaceObjects disclosureTriangleInContext:YES selected:isSelected];
+	NSImage *alterna = [interfaceObjects disclosureTriangleInContext:NO selected:isSelected];
+	
+	/* Set image. */
+	[theButton setImage:primary];
+	[theButton setAlternateImage:alterna];
+	
+	/* Update style of button. */
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		[theButton setHighlightsBy:NSNoCellMask];
+	} else {
+		if (isSelected) {
+			[theButton setBackgroundStyle:NSBackgroundStyleLowered];
+		} else {
+			[theButton setBackgroundStyle:NSBackgroundStyleRaised];
+		}
+	}
+}
+
+#pragma mark -
+#pragma mark Cell Information
+
+- (NSInteger)rowIndex
+{
+	return [mainWindowServerList() rowForItem:[self cellItem]];
+}
+
+- (NSDictionary *)drawingContext
+{
+	NSInteger rowIndex = [self rowIndex];
+	
+	IRCTreeItem *cellItem = [self cellItem];
+
+	return @{
+		@"rowIndex"				: @(rowIndex),
+		@"isActive"				: @([cellItem isActive]),
+		@"isGroupItem"			: @([cellItem isClient]),
+		@"isInverted"			: @([TPCPreferences invertSidebarColors]),
+		@"isRetina"				: @([mainWindow() runningInHighResolutionMode]),
+		@"isActiveWindow"		: @([mainWindow() isActiveForDrawing]),
+		@"isSelected"			: @([mainWindowServerList() isRowSelected:rowIndex]),
+		@"isGraphite"			: @([NSColor currentControlTint] == NSGraphiteControlTint),
+		@"isVibrantDark"		: @([TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode])
+	};
+}
+
+@end
+
+@implementation TVCServerListCellGroupItem
+@end
+
+@implementation TVCServerListCellChildItem
+@end
+
+#pragma mark -
+#pragma mark Row Cell
+
+@implementation TVCServerListRowCell
+
+- (void)setSelected:(BOOL)selected
+{
+	[super setSelected:selected];
+	
+	[self postSelectionChangeNeedsDisplay];
+}
+
+- (void)postSelectionChangeNeedsDisplay
+{
+	if ([self isSelected])
+	{
+		if ([CSFWSystemInformation featureAvailableToOSXYosemite])
+		{
+			if ([TVCMemberListSharedUserInterface yosemiteIsUsingVibrantDarkMode]) {
+				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
+			} else {
+				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleSourceList];
+			}
+		}
+		else
+		{
+			if ([TPCPreferences invertSidebarColors]) {
+				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
+			} else {
+				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleSourceList];
+			}
+		}
+	}
+	else
+	{
+		[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
+	}
+	
+	[self setNeedsDisplayOnChild];
+}
+
+- (void)setNeedsDisplayOnChild
+{
+	NSArray *subviews = [self subviews];
+	
+	for (id subview in subviews) {
+		if ([subview isKindOfClass:[TVCServerListCell class]]) {
+			[subview setNeedsDisplay:YES];
+		}
+	}
+}
+
+- (void)drawSelectionInRect:(NSRect)dirtyRect
+{
+	if ([self needsToDrawRect:dirtyRect])
+	{
+		id userInterfaceObjects = [mainWindowServerList() userInterfaceObjects];
+		
+		if ([CSFWSystemInformation featureAvailableToOSXYosemite])
+		{
+			NSColor *selectionColor;
+			
+			if ([mainWindow() isActiveForDrawing]) {
+				selectionColor = [userInterfaceObjects rowSelectionColorForActiveWindow];
+			} else {
+				selectionColor = [userInterfaceObjects rowSelectionColorForInactiveWindow];
+			}
+			
+			if (selectionColor) {
+				NSRect selectionRect = [self bounds];
+				
+				[selectionColor set];
+				
+				NSRectFill(selectionRect);
+			} else {
+				[super drawSelectionInRect:dirtyRect];
+			}
+		}
+		else
+		{
+			NSImage *selectionImage = nil;
+			
+			if ([mainWindow() isActiveForDrawing]) {
+				selectionImage = [userInterfaceObjects rowSelectionImageForActiveWindow];
+			} else {
+				selectionImage = [userInterfaceObjects rowSelectionImageForInactiveWindow];
+			}
+			
+			if (selectionImage) {
+				NSRect selectionRect = [self bounds];
+				
+				[selectionImage drawInRect:selectionRect
+								  fromRect:NSZeroRect
+								 operation:NSCompositeSourceOver
+								  fraction:1.0
+							respectFlipped:YES
+									 hints:nil];
+			} else {
+				[super drawSelectionInRect:dirtyRect];
+			}
+		}
+	}
+}
+
+- (BOOL)isEmphasized
+{
+	return YES;
+}
+
+@end
+
+#pragma mark -
+#pragma mark Interior Drawing
+
+@implementation TVCServerLisCellTextFieldInterior
+
+- (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
+{
+	CGContextRef ctx = [RZGraphicsCurrentContext() graphicsPort];
+	
+	CGContextSaveGState(ctx);
+	
+	CGContextSetShouldAntialias(ctx, true);
+	CGContextSetShouldSmoothFonts(ctx, true);
+	
+	[[self attributedStringValue] drawInRect:cellFrame];
+	
+	CGContextRestoreGState(ctx);
 }
 
 @end
