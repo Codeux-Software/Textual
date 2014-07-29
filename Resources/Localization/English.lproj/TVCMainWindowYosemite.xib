@@ -26,8 +26,8 @@
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="nl0-Ur-GuY" userLabel="Text Field" customClass="TVCMainWindowTextViewContentView">
                         <rect key="frame" x="0.0" y="0.0" width="800" height="38"/>
                         <subviews>
-                            <segmentedControl verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2853" customClass="TVCMainWindowSegmentedController">
-                                <rect key="frame" x="10" y="5" width="146" height="25"/>
+                            <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2853" customClass="TVCMainWindowSegmentedController">
+                                <rect key="frame" x="10" y="5" width="150" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="Iyf-FE-y9H"/>
                                 </constraints>
@@ -46,12 +46,12 @@
                                     </segments>
                                 </segmentedCell>
                             </segmentedControl>
-                            <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2851" customClass="TVCMainWindowTextViewBackground">
-                                <rect key="frame" x="166" y="6" width="624" height="25"/>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="2851" customClass="TVCMainWindowTextViewBackground">
+                                <rect key="frame" x="170" y="6" width="620" height="25"/>
                                 <subviews>
-                                    <scrollView misplaced="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2852">
-                                        <rect key="frame" x="0.0" y="3" width="614" height="19"/>
-                                        <clipView key="contentView" misplaced="YES" drawsBackground="NO" copiesOnScroll="NO" id="qmu-eN-SPq">
+                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2852">
+                                        <rect key="frame" x="0.0" y="3" width="610" height="19"/>
+                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="qmu-eN-SPq">
                                             <rect key="frame" x="0.0" y="0.0" width="624" height="18"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -59,10 +59,10 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="624" height="19"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="614" height="19"/>
+                                                    <size key="minSize" width="610" height="19"/>
                                                     <size key="maxSize" width="629" height="10000000"/>
                                                     <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="614" height="19"/>
+                                                    <size key="minSize" width="610" height="19"/>
                                                     <size key="maxSize" width="629" height="10000000"/>
                                                     <connections>
                                                         <outlet property="backgroundView" destination="2851" id="Izu-dD-CPe"/>
