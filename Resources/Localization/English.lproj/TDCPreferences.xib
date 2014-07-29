@@ -158,7 +158,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="6064"/>
             </connections>
-            <point key="canvasLocation" x="1627" y="541"/>
+            <point key="canvasLocation" x="1871" y="559"/>
         </window>
         <customView id="Eyz-5p-IkU" userLabel="General">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -2865,6 +2865,7 @@
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
+                        <action selector="onChangedUserListModeColor:" target="-2" id="Jf5-Lv-tY5"/>
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DisplayUserListNoModeSymbol" id="ktp-rd-Ijp"/>
                     </connections>
                 </button>
@@ -2968,7 +2969,7 @@
                     </connections>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="1244.5" y="250"/>
+            <point key="canvasLocation" x="1560.5" y="487"/>
         </customView>
         <customView id="1YF-k7-FrW" userLabel="Command Scope">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
