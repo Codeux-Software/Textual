@@ -848,10 +848,18 @@
 		{
 			NSImage *selectionImage = nil;
 			
-			if ([mainWindow() isActiveForDrawing]) {
-				selectionImage = [userInterfaceObjects rowSelectionImageForActiveWindow];
+			if ([self isGroupItem]) {
+				if ([mainWindow() isActiveForDrawing]) {
+					selectionImage = [userInterfaceObjects serverRowSelectionImageForActiveWindow];
+				} else {
+					selectionImage = [userInterfaceObjects serverRowSelectionImageForInactiveWindow];
+				}
 			} else {
-				selectionImage = [userInterfaceObjects rowSelectionImageForInactiveWindow];
+				if ([mainWindow() isActiveForDrawing]) {
+					selectionImage = [userInterfaceObjects channelRowSelectionImageForActiveWindow];
+				} else {
+					selectionImage = [userInterfaceObjects channelRowSelectionImageForInactiveWindow];
+				}
 			}
 			
 			if (selectionImage) {
