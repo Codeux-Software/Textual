@@ -608,22 +608,13 @@
 
 - (NSTimeInterval)lastMessageServerTimeWithCachedValue
 {
-	/* If the server time being fetched is currently has no value
-	 and logging is enabled, then check whether we stored a timestamp
-	 from a previous session of Textual and restore that. */
-	static BOOL _checkedForPreviousSessionTime = NO;
+	if ([TPCPreferences logToDiskIsEnabled]) {
+		if (self.lastMessageServerTime == 0) {
+			double storedTime = self.config.cachedLastServerTimeCapacityReceivedAtTimestamp;
 
-	if (_checkedForPreviousSessionTime == NO) {
-		if ([TPCPreferences logToDiskIsEnabled]) {
-			if (self.lastMessageServerTime == 0) {
-				double storedTime = self.config.cachedLastServerTimeCapacityReceivedAtTimestamp;
-
-				if (storedTime) {
-					self.lastMessageServerTime = storedTime;
-				}
+			if (storedTime) {
+				self.lastMessageServerTime = storedTime;
 			}
-
-			_checkedForPreviousSessionTime = YES;
 		}
 	}
 
