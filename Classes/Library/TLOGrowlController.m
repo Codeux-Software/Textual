@@ -277,6 +277,24 @@
 					 withReplyMessage:nil];
 }
 
+- (void)dismissNotificationsInNotificationCenterForClient:(IRCClient *)client channel:(IRCChannel *)channel
+{
+	NSArray *notifications = [RZUserNotificationCenter() deliveredNotifications];
+	
+	for (NSUserNotification *note in notifications) {
+		NSDictionary *context = [note userInfo];
+		
+		NSString *uid = context[@"client"];
+		NSString *cid = context[@"channel"];
+		
+		if (NSObjectsAreEqual(uid, [client treeUUID]) &&
+			NSObjectsAreEqual(cid, [channel treeUUID]))
+		{
+			[RZUserNotificationCenter() removeDeliveredNotification:note];
+		}
+	}
+}
+
 /* Growl delegate */
 
 - (NSString *)applicationNameForGrowl

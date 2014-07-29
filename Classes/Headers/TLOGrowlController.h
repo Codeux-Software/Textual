@@ -76,4 +76,6 @@ typedef enum TXNotificationType : NSInteger {
 		 title:(NSString *)eventTitle
    description:(NSString *)eventDescription
 	  userInfo:(NSDictionary *)eventContext;
+
+- (void)dismissNotificationsInNotificationCenterForClient:(IRCClient *)client channel:(IRCChannel *)channel;
 @end

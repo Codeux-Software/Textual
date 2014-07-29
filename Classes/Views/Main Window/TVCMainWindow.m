@@ -1557,6 +1557,9 @@
 		}
 	}
 	
+	/* Dimiss notification center. */
+	[sharedGrowlController() dismissNotificationsInNotificationCenterForClient:self.selectedClient channel:self.selectedChannel];
+	
 	/* Finish up. */
 	[TVCDockIcon updateDockIcon];
 	
