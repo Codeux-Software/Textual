@@ -214,7 +214,7 @@
 	if (growlRunning) {
 		[self.alertNotificationDestinationTextField setStringValue:TXTLS(@"TDCPreferencesController[1005]")];
 	} else {
-		[self.alertNotificationDestinationTextField setStringValue:TXTLS(@"TDCPreferencesController[1007]")];
+		[self.alertNotificationDestinationTextField setStringValue:TXTLS(@"TDCPreferencesController[1006]")];
 	}
 
 	// Complete startup of preferences.
