@@ -47,7 +47,7 @@
 @property (nonatomic, assign) TXUnsignedLongLong bandwidthOut;
 @property (nonatomic, assign) BOOL isPopulatingSeeds;
 @property (nonatomic, nweak) NSArray *clientList; // clientList as a proxy setter/getter for the internal storage.
-@property (nonatomic, assign) NSInteger textSizeMultiplier;
+@property (nonatomic, assign) float textSizeMultiplier;
 
 - (void)setupConfiguration;
 
