@@ -68,6 +68,15 @@
 	return nil;
 }
 
+- (id)invokeUndefinedMethodFromWebScript:(NSString *)name withArguments:(NSArray *)args
+{
+	if ([name isEqualToString:@"styleSettingsSetValue"]) {
+		return @([self _styleSettingsSetValue:args]);
+	}
+	
+	return nil;
+}
+
 + (BOOL)isKeyExcludedFromWebScript:(const char *)name
 {
 	return YES;
@@ -241,6 +250,27 @@
 - (BOOL)sidebarInversionIsEnabled
 {
 	return [TPCPreferences invertSidebarColors];
+}
+
+- (BOOL)styleSettingsSetValue:(NSString *)key
+{
+	return [themeSettings() styleSettingsSetValue:[WebUndefined undefined] forKey:key];
+}
+
+- (BOOL)_styleSettingsSetValue:(NSArray *)arguments
+{
+	if ([arguments count] == 2) {
+		return [themeSettings() styleSettingsSetValue:arguments[1] forKey:arguments[0]];
+	} else {
+		LogToConsole(@"Improperly formatted arguments");
+		
+		return NO;
+	}
+}
+
+- (id)styleSettingsRetreiveValue:(NSString *)key
+{
+	return [themeSettings() styleSettingsRetreiveValueForKey:key];
 }
 
 - (void)print:(NSString *)s

@@ -153,6 +153,79 @@
 }
 
 #pragma mark -
+#pragma mark Style Settings
+
+- (NSString *)settingsFilePath
+{
+	NSURL *baseURL = [themeController() baseURL];
+	
+	return [[baseURL relativePath] stringByAppendingPathComponent:@"/Data/Settings/styleSettings.plist"];
+}
+
+- (void)postStyleSettingsDidChangeNotification:(NSString *)name
+{
+	[worldController() executeScriptCommandOnAllViews:@"styleSettingDidChange" arguments:@[name]];
+}
+
+- (id)styleSettingsRetreiveValueForKey:(NSString *)key
+{
+	if ([key length] <= 0) {
+		LogToConsole(@"Empty key value");
+	} else {
+		NSString *filePath = [self settingsFilePath];
+		
+		if ([RZFileManager() fileExistsAtPath:filePath]) {
+			NSDictionary *styleSettings = [NSDictionary dictionaryWithContentsOfFile:filePath];
+			
+			return [styleSettings objectForKey:key];
+		} else {
+			LogToConsole(@"No styleSettings.plist file was found at path \"%@\"", filePath);
+		}
+	}
+
+	return nil;
+}
+
+- (BOOL)styleSettingsSetValue:(id)objectValue forKey:(NSString *)objectKey
+{
+	if ([objectKey length] <= 0) {
+		LogToConsole(@"Empty key value");
+	} else {
+		NSString *filePath = [self settingsFilePath];
+		
+		if ([RZFileManager() fileExistsAtPath:filePath]) {
+			NSDictionary *styleSettings = [NSDictionary dictionaryWithContentsOfFile:filePath];
+			
+			if (styleSettings == nil) {
+				LogToConsole(@"Unable to load existing settings file at path \"%@\"", filePath);
+			} else {
+				NSMutableDictionary *mutSettings = [styleSettings mutableCopy];
+				
+				if (objectValue == nil || [objectValue isEqual:[WebUndefined undefined]]) {
+					[mutSettings removeObjectForKey:objectKey];
+				} else {
+					[mutSettings setObject:objectValue forKey:objectKey];
+				}
+				
+				BOOL result = [mutSettings writeToFile:filePath atomically:YES];
+				
+				if (result) {
+					[self postStyleSettingsDidChangeNotification:objectKey];
+					
+					return YES;
+				} else {
+					return NO;
+				}
+			}
+		} else {
+			LogToConsole(@"No styleSettings.plist file was found at path \"%@\"", filePath);
+		}
+	}
+	
+	return NO;
+}
+
+#pragma mark -
 #pragma mark Load Settings
 
 - (void)loadApplicationStyleRespository:(NSInteger)version

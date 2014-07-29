@@ -52,6 +52,9 @@
 
 - (NSString *)templateNameWithLineType:(TVCLogLineType)type;
 
+- (id)styleSettingsRetreiveValueForKey:(NSString *)key;
+- (BOOL)styleSettingsSetValue:(id)objectValue forKey:(NSString *)objectKey;
+
 - (GRMustacheTemplate *)templateWithLineType:(TVCLogLineType)type;
 - (GRMustacheTemplate *)templateWithName:(NSString *)name;
 @end
