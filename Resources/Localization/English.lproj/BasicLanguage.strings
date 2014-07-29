@@ -595,9 +595,6 @@
 "BasicLanguage[1222]" = "Sound is not muted.";
 "BasicLanguage[1223]" = "Sound has been muted.";
 
-/* Style template load fail. */
-"BasicLanguage[1224]" = "Template Load Failed: %@";
-
 /* Selet button for dialogs. */
 "BasicLanguage[1225]" = "Select";
 
