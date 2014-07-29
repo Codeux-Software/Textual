@@ -1423,7 +1423,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="hza-mA-H5d">
-                                            <rect key="frame" x="39" y="83" width="405" height="4"/>
+                                            <rect key="frame" x="39" y="83" width="405" height="5"/>
                                             <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                             <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <font key="titleFont" metaFont="system"/>
@@ -1570,7 +1570,9 @@ There are no other limits. What you see, is what you get.</string>
                             <outlet property="loadingConfigurationViewPI" destination="D2c-cK-o7J" id="OmG-8e-4se"/>
                             <outlet property="loadingScreenMinimumHeightConstraint" destination="rQt-vh-NBH" id="AP4-6V-c6F"/>
                             <outlet property="loadingScreenMinimumWidthConstraint" destination="pFC-Nx-ZCH" id="VxQ-fJ-hP1"/>
+                            <outlet property="welcomeAddServerNormalView" destination="Pfx-ea-jON" id="T3N-Rf-Jml"/>
                             <outlet property="welcomeAddServerTrialView" destination="ROb-zX-1LK" id="kS9-NW-OcQ"/>
+                            <outlet property="welcomeAddServerViewButton" destination="hXp-DO-nJl" id="xch-Qs-rBZ"/>
                             <outlet property="welcomePurchaseTextualButton" destination="KQd-Pg-Kw8" id="G8N-RI-8EV"/>
                         </connections>
                     </box>
