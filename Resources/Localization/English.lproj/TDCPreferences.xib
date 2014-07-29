@@ -3416,16 +3416,6 @@
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <textField verticalHuggingPriority="750" id="XQh-D0-Ehi">
-                    <rect key="frame" x="69" y="108" width="420" height="56"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="GhK-dw-xt2">
-                        <font key="font" metaFont="smallSystem"/>
-                        <string key="title">There are two options for erasing the data stored by Textual: The "Erase Data" button erases shared preferences leaving custom add-on files such as styles on iCloud. The "Erase Files" button does the complete opposite. Custom add-on files such as styles will be erased leaving shared preferences intact.</string>
-                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <button verticalHuggingPriority="750" id="26j-gf-7Ma">
                     <rect key="frame" x="102" y="67" width="180" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -3453,6 +3443,16 @@
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Erase Data" id="i2X-WZ-GKC">
                         <font key="font" metaFont="systemBold" size="14"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" id="XQh-D0-Ehi">
+                    <rect key="frame" x="59" y="108" width="447" height="56"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="GhK-dw-xt2">
+                        <font key="font" metaFont="smallSystem"/>
+                        <string key="title">There are two options for erasing the data stored by Textual: The "Erase Data" button erases shared preferences leaving custom add-on files such as styles on iCloud. The "Erase Files" button does the complete opposite. Custom add-on files such as styles will be erased leaving shared preferences intact.</string>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
