@@ -5291,7 +5291,11 @@
 - (void)appendStringValueOfCapacity:(ClientIRCv3SupportedCapacities)capacity toSource:(NSMutableArray **)writePoint
 {
 	if ([self isCapacityEnabled:capacity]) {
-		[*writePoint addObject:[self stringValueOfCapacity:capacity]];
+		NSString *stringValue = [self stringValueOfCapacity:capacity];
+		
+		if (stringValue) {
+			[*writePoint addObject:];
+		}
 	}
 }
 
