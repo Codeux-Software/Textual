@@ -50,7 +50,6 @@
 - (void)populateMessageCountBadge;
 
 - (void)updateGroupDisclosureTriangle;
-- (void)updateGroupDisclosureTriangle:(NSButton *)theButtonParent;
 @end
 
 @interface TVCServerListCellChildItem : TVCServerListCell
