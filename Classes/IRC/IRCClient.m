@@ -3770,20 +3770,22 @@
     PointerIsEmptyAssert(m);
 
 	/* Keep track of the server time of the last seen message. */
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityServerTime]) {
-		if ([m isHistoric]) {
-			NSTimeInterval serverTime = [[m receivedAt] timeIntervalSince1970];
-
-			if (serverTime > [self lastMessageServerTimeWithCachedValue]) {
-				/* If znc playback module is in use, then all messages are
-				 set as historic so we set any lines above our current reference
-				 date as not historic to avoid collisions. */
-				if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCPlaybackModule]) {
-					[m setIsHistoric:NO];
+	if (self.isLoggedIn) {
+		if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityServerTime]) {
+			if ([m isHistoric]) {
+				NSTimeInterval serverTime = [[m receivedAt] timeIntervalSince1970];
+				
+				if (serverTime > [self lastMessageServerTimeWithCachedValue]) {
+					/* If znc playback module is in use, then all messages are
+					 set as historic so we set any lines above our current reference
+					 date as not historic to avoid collisions. */
+					if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCPlaybackModule]) {
+						[m setIsHistoric:NO];
+					}
+					
+					/* Update last server time flag. */
+					self.lastMessageServerTime = serverTime;
 				}
-
-				/* Update last server time flag. */
-				self.lastMessageServerTime = serverTime;
 			}
 		}
 	}
@@ -5664,9 +5666,15 @@
 
 	/* Request playback since the last seen message when previously connected. */
 	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCPlaybackModule]) {
-		NSString *timetosend = [NSString stringWithFloat:[self lastMessageServerTimeWithCachedValue]];
+		NSTimeInterval interval = [self lastMessageServerTimeWithCachedValue];
 		
-		[self send:IRCPrivateCommandIndex("privmsg"), @"*playback", @"play", @"*", timetosend, nil];
+		if (interval == 0) {
+			[self send:IRCPrivateCommandIndex("privmsg"), @"*playback", @"play", @"*", @"0", nil];
+		} else {
+			NSString *timetosend = [NSString stringWithFloat:interval];
+			
+			[self send:IRCPrivateCommandIndex("privmsg"), @"*playback", @"play", @"*", timetosend, nil];
+		}
 	}
 
 	/* Activate existing queries. */
