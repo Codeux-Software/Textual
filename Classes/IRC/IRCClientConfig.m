@@ -214,12 +214,7 @@
 
 - (void)writeProxyPasswordKeychainItemToDisk
 {
-	if (_proxyPassword == nil) {
-		[AGKeychain deleteKeychainItem:@"Textual (Proxy Server Password)"
-						  withItemKind:@"application password"
-						   forUsername:nil
-						   serviceName:[NSString stringWithFormat:@"textual.proxy-server.%@", self.itemUUID]];
-	} else {
+	if (_proxyPassword) {
 		[AGKeychain modifyOrAddKeychainItem:@"Textual (Proxy Server Password)"
 							   withItemKind:@"application password"
 								forUsername:nil
@@ -232,12 +227,7 @@
 
 - (void)writeServerPasswordKeychainItemToDisk
 {
-	if (_serverPassword == nil) {
-		[AGKeychain deleteKeychainItem:@"Textual (Server Password)"
-						  withItemKind:@"application password"
-						   forUsername:nil
-						   serviceName:[NSString stringWithFormat:@"textual.server.%@", self.itemUUID]];
-	} else {
+	if (_serverPassword) {
 		[AGKeychain modifyOrAddKeychainItem:@"Textual (Server Password)"
 							   withItemKind:@"application password"
 								forUsername:nil
@@ -250,12 +240,7 @@
 
 - (void)writeNicknamePasswordKeychainItemToDisk
 {
-	if (_nicknamePassword == nil) {
-		[AGKeychain deleteKeychainItem:@"Textual (NickServ)"
-						  withItemKind:@"application password"
-						   forUsername:nil
-						   serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.itemUUID]];
-	} else {
+	if (_nicknamePassword) {
 		[AGKeychain modifyOrAddKeychainItem:@"Textual (NickServ)"
 							   withItemKind:@"application password"
 								forUsername:nil
