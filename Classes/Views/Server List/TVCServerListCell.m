@@ -691,11 +691,11 @@
 	}
 	
 	if (theButtonParent) {
-		[self updateGroupDisclosureTriangle:theButtonParent];
+		[self updateGroupDisclosureTriangle:theButtonParent setNeedsDisplay:YES];
 	}
 }
 
-- (void)updateGroupDisclosureTriangle:(NSButton *)theButtonParent
+- (void)updateGroupDisclosureTriangle:(NSButton *)theButtonParent setNeedsDisplay:(BOOL)setNeedsDisplay
 {
 	NSButtonCell *theButton = [theButtonParent cell];
 	
@@ -729,11 +729,10 @@
 			[theButton setBackgroundStyle:NSBackgroundStyleRaised];
 		}
 	}
-	
-	[theButtonParent setHidden:YES];
-	[theButtonParent setHidden:NO];
-	
-	[self setNeedsDisplay:YES];
+
+	if (setNeedsDisplay) {
+		[self setNeedsDisplay:YES];
+	}
 }
 
 #pragma mark -
@@ -881,6 +880,26 @@
 			}
 		}
 	}
+}
+
+- (void)didAddSubview:(NSView *)subview
+{
+	if ([subview isKindOfClass:[NSButton class]])
+	{
+		NSArray *subviews = [self subviews];
+		
+		for (id subviewd in subviews) {
+			if ([subviewd isKindOfClass:[TVCServerListCellGroupItem class]]) {
+				TVCServerListCellGroupItem *groupItem = subviewd;
+				
+				[self setIsGroupItem:YES];
+				
+				[groupItem updateGroupDisclosureTriangle:(id)subview setNeedsDisplay:NO];
+			}
+		}
+	}
+	
+	[super didAddSubview:subview];
 }
 
 - (BOOL)isEmphasized
