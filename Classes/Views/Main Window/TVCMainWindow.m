@@ -1988,7 +1988,7 @@
 
 - (BOOL)canBecomeKeyWindow
 {
-	return YES;
+	return ([mainWindow() attachedSheet] == nil);
 }
 
 - (BOOL)canBecomeMainWindow
