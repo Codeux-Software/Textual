@@ -77,6 +77,10 @@
 
 - (void)focus
 {
+	if ([mainWindow() isReallyKeyWindow] == NO) {
+		[mainWindow() makeKeyWindow];
+	}
+	
     if ([self isFocused] == NO) {
 		[[self window] makeFirstResponder:self];
 	}

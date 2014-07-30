@@ -1012,7 +1012,7 @@
 
 - (void)paste:(id)sender
 {
-    NSWindow *keyWindow = [NSApp keyWindow];
+    NSWindow *keyWindow = [NSApp mainWindow];
 
     if ([keyWindow isEqual:mainWindow()]) {
 		[mainWindowTextField() focus];

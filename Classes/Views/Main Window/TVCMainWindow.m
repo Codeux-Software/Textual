@@ -813,10 +813,8 @@
 - (void)focusWebview
 {
 	TVCMainWindowNegateActionWithAttachedSheet();
-	
-	TVCLogController *currentCtrl = [self selectedViewController];
-	
-	[self makeFirstResponder:[currentCtrl webView]];
+
+	[[mainWindow() webViewChildWindow] makeKeyWindow];
 }
 
 - (void)handler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
@@ -1027,6 +1025,20 @@
 
 	if ([self makeFirstResponder:self] == NO) {
 		[super endEditingFor:object];
+	}
+}
+
+- (BOOL)isReallyKeyWindow
+{
+	return [super isKeyWindow];
+}
+
+- (BOOL)isKeyWindow
+{
+	if ([NSApp isActive]) {
+		return YES;
+	} else {
+		return [super isKeyWindow];
 	}
 }
 
@@ -1937,18 +1949,29 @@
 
 @implementation TVCMainWindowWebViewChildWindow
 
-- (BOOL)isMainWindow
+- (void)awakeFromNib
+{
+	[self setDelegate:self];
+}
+
+- (void)windowDidBecomeKey:(NSNotification *)notification
+{
+	[mainWindow() makeFirstResponder:nil];
+}
+
+- (void)windowDidResignKey:(NSNotification *)notification
+{
+	[mainWindow() makeFirstResponder:mainWindowTextField()];
+}
+
+- (BOOL)canBecomeKeyWindow
 {
 	return YES;
 }
 
-- (BOOL)isKeyWindow
+- (BOOL)canBecomeMainWindow
 {
-	if ([NSApp isActive]) {
-		return YES;
-	} else {
-		return [super isKeyWindow];
-	}
+	return NO;
 }
 
 @end
