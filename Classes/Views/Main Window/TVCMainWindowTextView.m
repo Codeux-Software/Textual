@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-#define _WindowContentBorderTotalPaddingYosemite		23.0
+#define _WindowContentBorderTotalPaddingYosemite		24.0
 #define _WindowContentBorderTotalPaddingMavericks		23.0
 
 #define _WindowSegmentedControllerDefaultWidth			150.0
@@ -103,7 +103,7 @@
 		
 		/* Update layer for the content view. */
 		/* The content view exists soley on Yosemite or later. */
-		[self.contentView setNeedsDisplay:YES];
+		[self.contentView updateView];
 	}
 	
 	/* Update layer for the text field background. */
@@ -430,14 +430,12 @@
 	}
 	
 	[self.textFieldHeightConstraint setConstant:backgroundHeight];
-	
-	[self.backgroundView setNeedsDisplay:YES];
 
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
 		[mainWindow setContentBorderThickness:backgroundHeight forEdge:NSMinYEdge];
-	} else {
-		[self.contentView setNeedsDisplay:YES];
 	}
+
+	[mainWindow setContentBorderThickness:backgroundHeight forEdge:NSMinYEdge];
 
 	if (documentViewBounds.origin.x > 0) {
 		documentViewBounds.origin.x = 0;
@@ -821,35 +819,13 @@
 	return [mainWindow() isActiveForDrawing];
 }
 
-- (BOOL)wantsUpdateLayer
+- (void)drawRect:(NSRect)dirtyRect
 {
-	return YES;
-}
-
-- (NSViewLayerContentsRedrawPolicy)layerContentsRedrawPolicy
-{
-	return NSViewLayerContentsRedrawOnSetNeedsDisplay;
-}
-
-- (void)updateLayer
-{
-	/* Draw the text field into a background image layer. */
-	NSRect currentFrame = [self frame];
-	
-	NSImage *contentsImage = [NSImage newImageWithSize:NSMakeSize(NSWidth(currentFrame), NSHeight(currentFrame))];
-	
-	[contentsImage lockFocus];
-	
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 		[self drawControllerForYosemite];
 	} else {
 		[self drawControllerForMavericks];
 	}
-	
-	[contentsImage unlockFocus];
-	
-	/* Set the image as the layer contents. */
-	[[self layer] setContents:contentsImage];
 }
 
 @end
@@ -863,21 +839,6 @@
 
 @implementation TVCMainWindowTextViewContentView
 
-- (BOOL)isOpaque
-{
-	return YES;
-}
-
-- (BOOL)wantsUpdateLayer
-{
-	return YES;
-}
-
-- (NSViewLayerContentsRedrawPolicy)layerContentsRedrawPolicy
-{
-	return NSViewLayerContentsRedrawOnSetNeedsDisplay;
-}
-
 - (BOOL)yosemiteIsUsingVibrantDarkMode
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
@@ -887,44 +848,11 @@
 	}
 }
 
-- (void)updateLayer
+- (void)updateView
 {
-	/* To get started, we get the current frame and make an image
-	 out of it. The image will be set as the layer's contents. */
-	NSRect contentViewFrame = [self frame];
+	[self setFillColor:[self backgroundColor]];
 	
-	NSRect displacedFrame = NSMakeRect(0.0, 0.0, NSWidth(contentViewFrame), NSHeight(contentViewFrame));
-	
-	NSImage *backgroundImage = [NSImage newImageWithSize:displacedFrame.size];
-	
-	[backgroundImage lockFocus];
-	
-	/* Fill in the background color first. */
-	NSColor *backgroundColor = [self backgroundColor];
-	
-	[backgroundColor set];
-	
-	NSRectFill(displacedFrame);
-	
-	/* Now that we have the background color, we can set the
-	 frame for the divider at the top of it and draw it. */
-	displacedFrame.origin.x = 0.0;
-	displacedFrame.origin.y = (NSMaxY(displacedFrame) - 1.0);
-	
-	contentViewFrame.size.height = 1.0;
-	
-	NSBezierPath *dividerPath = [NSBezierPath bezierPathWithRect:displacedFrame];
-	
-	NSColor *drawColor = [self dividerColor];
-	
-	[drawColor set];
-	
-	[dividerPath fill];
-	
-	/* Finish drawing our background and set it to the layer. */
-	[backgroundImage unlockFocus];
-	
-	[[self layer] setContents:backgroundImage];
+	[self setBorderColor:[self dividerColor]];
 }
 
 - (NSColor *)backgroundColor
@@ -963,11 +891,6 @@
 - (NSColor *)vibrantLightDividerColor
 {
 	return [NSColor lightGrayColor];
-}
-
-- (BOOL)allowsVibrancy
-{
-	return NO;
 }
 
 @end

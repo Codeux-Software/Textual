@@ -206,9 +206,10 @@
 	
 	[mainWindowTextField() updateSegmentedController];
 	
+	[[mainWindow() contentSplitView] setHidden:YES];
+	
 	[[mainWindow() webViewChildWindow] setAlphaValue:0.0];
 
-	[self.backgroundContentView setHidden:YES];
 }
 
 - (void)enableBackgroundControls
@@ -217,8 +218,8 @@
 	[mainWindowTextField() setSelectable:YES];
 	
 	[mainWindowTextField() updateSegmentedController];
-
-	[self.backgroundContentView setHidden:NO];
+	
+	[[mainWindow() contentSplitView] setHidden:NO];
 }
 
 @end
