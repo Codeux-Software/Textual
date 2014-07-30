@@ -60,7 +60,7 @@
 	
 	if ([currentEvent type] == NSLeftMouseUp) {
 		if ([sender hasSelection]) {
-			[NSApp sendAction:@selector(copy:) to:[[NSApp mainWindow] firstResponder] from:self];
+			[NSApp sendAction:@selector(copy:) to:sender from:self];
 		
 			[sender clearSelection];
 		}
