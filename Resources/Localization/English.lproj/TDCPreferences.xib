@@ -12,6 +12,7 @@
                 <outlet property="alertBounceDockIconButton" destination="lHl-sy-SBb" id="dNa-Ig-gbA"/>
                 <outlet property="alertDisableWhileAwayButton" destination="pyR-Yq-9tk" id="YHI-cT-iku"/>
                 <outlet property="alertNotificationDestinationTextField" destination="O82-On-A00" id="K1U-BT-rCB"/>
+                <outlet property="alertPushNotificationButton" destination="fyC-tf-kOI" id="Yru-lz-bqp"/>
                 <outlet property="alertSoundChoiceButton" destination="xvN-SN-jAW" id="Ktx-0a-oEv"/>
                 <outlet property="alertSpeakEventButton" destination="pPF-N7-ZNY" id="kmo-7b-saK"/>
                 <outlet property="alertTypeChoiceButton" destination="WuE-Q5-q8G" id="TJn-ky-9zi"/>
@@ -44,7 +45,6 @@
                 <outlet property="keywordsTable" destination="nIO-jH-FEm" id="Kk5-Be-I9z"/>
                 <outlet property="matchKeywordsArrayController" destination="4310" id="7392"/>
                 <outlet property="navigationOutlineview" destination="55F-OG-plu" id="xRb-H0-wGA"/>
-                <outlet property="setAsDefaultIRCClientButton" destination="dwq-UD-go0" id="0ye-qH-XAp"/>
                 <outlet property="syncPreferencesToTheCloudButton" destination="dqH-Sc-1ei" id="B0E-Ct-lY6"/>
                 <outlet property="themeSelectionButton" destination="A1z-X7-AQ9" id="1O7-ff-1LW"/>
                 <outlet property="transcriptFolderButton" destination="H7x-dV-MZS" id="uXJ-hj-ydF"/>
@@ -217,17 +217,6 @@
                     </buttonCell>
                     <connections>
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.AutojoinWaitsForNickservIdentification" id="Xql-4m-DZG"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" id="dwq-UD-go0">
-                    <rect key="frame" x="365" y="283" width="157" height="28"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="Set as Default IRC Client" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NeX-Zq-Jjx">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="smallSystem"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="setTextualAsDefaultIRCClient:" target="-2" id="xWf-f2-W7s"/>
                     </connections>
                 </button>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="pH4-W2-1NV">

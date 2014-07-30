@@ -248,8 +248,6 @@
 	[self.syncPreferencesToTheCloudButton setState:[TPCPreferences syncPreferencesToTheCloud]];
 #endif
 	
-	[self.setAsDefaultIRCClientButton setHidden:[TPCApplicationInfo isDefaultIRCClient]];
-
 	[self.window restoreWindowStateForClass:[self class]];
 	
 	[self.window makeKeyAndOrderFront:nil];
@@ -1046,13 +1044,6 @@
 - (void)onOpenPathToScripts:(id)sender
 {
 	[RZWorkspace() openFile:[TPCPathInfo applicationSupportFolderPath]];
-}
-
-- (void)setTextualAsDefaultIRCClient:(id)sender
-{
-	[TPCApplicationInfo defaultIRCClientPrompt:YES];
-	
-	[self.setAsDefaultIRCClientButton setHidden:[TPCApplicationInfo isDefaultIRCClient]];
 }
 
 - (void)onManageiCloudButtonClicked:(id)sender
