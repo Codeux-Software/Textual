@@ -215,48 +215,19 @@
 
 - (void)updateChildWebViewWindowFrame:(NSRect)mainWindowFrame animate:(BOOL)animate
 {
-	/* Determine height of text field to update Y position. */
-	NSInteger textFieldHeight = 0;
-	
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		TVCMainWindowTextViewContentView *textFieldContentView = [self.inputTextField contentView];
-		
-		NSRect backgroundFrame = [textFieldContentView frame];
-		
-		textFieldHeight = NSHeight(backgroundFrame);
-	} else {
-		textFieldHeight = [self contentBorderThicknessForEdge:NSMinYEdge];
-	}
-	
-	/* The main window frame is used to perform correct positioning
-	 when transitioning through fullscreen mode. */
-	NSInteger listViewThickness = 0;
-	NSInteger listViewStartingPosition = 0;
-	
-	/* Add server list into math. */
-	if ([self isServerListVisible]) {
-		NSRect serverListViewFrame = [self.serverList frame];
-		
-		listViewThickness += (serverListViewFrame.size.width + [self.contentSplitView dividerThickness]);
-	
-		listViewStartingPosition = (NSMaxX(serverListViewFrame) + [self.contentSplitView dividerThickness]);
-	}
-	
-	/* Add member list into math. */
-	if ([self isMemberListVisible]) {
-		NSRect memberListViewFrame = [self.memberList frame];
-		
-		listViewThickness += (memberListViewFrame.size.width + [self.contentSplitView dividerThickness]);
-	}
-
 	/* Calculate final frame. */
 	NSRect childWindowFrame = NSZeroRect;
 	
-	childWindowFrame.size.width = (mainWindowFrame.size.width - listViewThickness);
-	childWindowFrame.size.height = (mainWindowFrame.size.height - textFieldHeight);
+	NSRect contentSplitViewFrame = [self.contentSplitView frame];
+	NSRect channelBoxViewFrame = [self.channelViewBox frame];
 	
-	childWindowFrame.origin.x = (mainWindowFrame.origin.x + listViewStartingPosition);
-	childWindowFrame.origin.y = (mainWindowFrame.origin.y + textFieldHeight);
+	NSInteger textFieldHeightDiff = (mainWindowFrame.size.height - contentSplitViewFrame.size.height);
+	
+	childWindowFrame.origin.x = (mainWindowFrame.origin.x + channelBoxViewFrame.origin.x);
+	childWindowFrame.origin.y = (mainWindowFrame.origin.y + textFieldHeightDiff);
+	
+	childWindowFrame.size.width = channelBoxViewFrame.size.width;
+	childWindowFrame.size.height = channelBoxViewFrame.size.height;
 	
 	if (animate) {
 		[self.webViewChildWindow setFrame:childWindowFrame display:YES animate:YES];
