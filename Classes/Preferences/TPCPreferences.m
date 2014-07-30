@@ -825,14 +825,6 @@ static NSMutableArray *excludeKeywords = nil;
 {
 	[TPCApplicationInfo updateApplicationRunCount];
 
-#ifndef TEXTUAL_TRIAL_BINARY
-	NSInteger numberOfRuns = [TPCApplicationInfo applicationRunCount];
-
-	if (numberOfRuns > 4) {
-		[TPCApplicationInfo defaultIRCClientPrompt:NO];
-	}
-#endif
-	
 	// ====================================================== //
 	
 	NSString *groupDefaultsPath = [RZMainBundle() pathForResource:@"RegisteredUserDefaultsForGroupContainer" ofType:@"plist"];

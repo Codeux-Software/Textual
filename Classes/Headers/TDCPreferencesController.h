@@ -49,7 +49,6 @@
 @property (nonatomic, nweak) IBOutlet NSButton *alertPushNotificationButton;
 @property (nonatomic, nweak) IBOutlet NSButton *alertSpeakEventButton;
 @property (nonatomic, nweak) IBOutlet NSButton *highlightNicknameButton;
-@property (nonatomic, nweak) IBOutlet NSButton *setAsDefaultIRCClientButton;
 @property (nonatomic, nweak) IBOutlet NSButton *syncPreferencesToTheCloudButton;
 @property (nonatomic, nweak) IBOutlet NSPopUpButton *alertSoundChoiceButton;
 @property (nonatomic, nweak) IBOutlet NSPopUpButton *alertTypeChoiceButton;
@@ -88,8 +87,6 @@
 
 - (IBAction)onAddKeyword:(id)sender;
 - (IBAction)onAddExcludeKeyword:(id)sender;
-
-- (IBAction)setTextualAsDefaultIRCClient:(id)sender;
 
 - (IBAction)onChangedAlertSpoken:(id)sender;
 - (IBAction)onChangedAlertSound:(id)sender;
