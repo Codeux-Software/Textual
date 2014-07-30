@@ -140,6 +140,7 @@
 	@class TVCLogScriptEventSink;
 	@class TVCLogView;
 	@class TVCMainWindow;
+	@class TVCMainWindowChannelViewBox;
 	@class TVCMainWindowLoadingScreenView;
 	@class TVCMainWindowSegmentedController;
 	@class TVCMainWindowSegmentedControllerCell;
@@ -149,6 +150,7 @@
 	@class TVCMainWindowTextViewContentView;
 	@class TVCMainWindowTextViewMavericksUserInterace;
 	@class TVCMainWindowTextViewYosemiteUserInterace;
+	@class TVCMainWindowWebViewChildWindow;
 	@class TVCMemberList;
 	@class TVCMemberListCell;
 	@class TVCMemberListRowCell;
