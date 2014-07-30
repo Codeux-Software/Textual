@@ -85,6 +85,11 @@
 	return [[self windowScriptObject] evaluateWebScript:@"Textual"];
 }
 
+- (WebScriptObject *)javaScriptConsoleAPI
+{
+	return [[self windowScriptObject] evaluateWebScript:@"console"];
+}
+
 - (void)clearSelection
 {
 	[self setSelectedDOMRange:nil affinity:NSSelectionAffinityDownstream];

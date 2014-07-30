@@ -155,11 +155,15 @@
 #pragma mark -
 #pragma mark Style Settings
 
-- (NSString *)settingsFilePath
+- (NSString *)keyValueStoreActualName
 {
-	NSURL *baseURL = [themeController() baseURL];
+	NSString *storeName = [self settingsKeyValueStoreName];
 	
-	return [[baseURL relativePath] stringByAppendingPathComponent:@"/Data/Settings/styleSettings.plist"];
+	if ([storeName length] > 0) {
+		return [NSString stringWithFormat:@"Internal Theme Settings Key-value Store -> %@", storeName];
+	}
+	
+	return nil;
 }
 
 - (void)postStyleSettingsDidChangeNotification:(NSString *)name
@@ -167,58 +171,60 @@
 	[worldController() executeScriptCommandOnAllViews:@"styleSettingDidChange" arguments:@[name]];
 }
 
-- (id)styleSettingsRetreiveValueForKey:(NSString *)key
+- (id)styleSettingsRetrieveValueForKey:(NSString *)key error:(NSString **)resultError
 {
 	if ([key length] <= 0) {
-		LogToConsole(@"Empty key value");
+		*resultError = @"Empty key value";
 	} else {
-		NSString *filePath = [self settingsFilePath];
+		NSString *storeKey = [self keyValueStoreActualName];
 		
-		if ([RZFileManager() fileExistsAtPath:filePath]) {
-			NSDictionary *styleSettings = [NSDictionary dictionaryWithContentsOfFile:filePath];
+		if (storeKey == nil) {
+			*resultError = @"Empty key-value store name in styleSettings.plist — Set the key \"Key-value Store Name\" in styleSettings.plist as a string. The current style name is the recommended value.";
+		} else {
+			NSDictionary *styleSettings = [RZStandardUserDefualts() dictionaryForKey:storeKey];
 			
 			return [styleSettings objectForKey:key];
-		} else {
-			LogToConsole(@"No styleSettings.plist file was found at path \"%@\"", filePath);
 		}
 	}
 
 	return nil;
 }
 
-- (BOOL)styleSettingsSetValue:(id)objectValue forKey:(NSString *)objectKey
+- (BOOL)styleSettingsSetValue:(id)objectValue forKey:(NSString *)objectKey error:(NSString **)resultError
 {
 	if ([objectKey length] <= 0) {
-		LogToConsole(@"Empty key value");
+		*resultError = @"Empty key value";
 	} else {
-		NSString *filePath = [self settingsFilePath];
+		NSString *storeKey = [self keyValueStoreActualName];
 		
-		if ([RZFileManager() fileExistsAtPath:filePath]) {
-			NSDictionary *styleSettings = [NSDictionary dictionaryWithContentsOfFile:filePath];
+		if (storeKey == nil) {
+			*resultError = @"Empty key-value store name in styleSettings.plist — Set the key \"Key-value Store Name\" in styleSettings.plist as a string. The current style name is the recommended value.";
+		} else {
+			BOOL removeValue = (objectValue == nil || [objectValue isEqual:[WebUndefined undefined]]);
+			
+			id styleSettings = [RZStandardUserDefualts() dictionaryForKey:storeKey];
 			
 			if (styleSettings == nil) {
-				LogToConsole(@"Unable to load existing settings file at path \"%@\"", filePath);
-			} else {
-				NSMutableDictionary *mutSettings = [styleSettings mutableCopy];
-				
-				if (objectValue == nil || [objectValue isEqual:[WebUndefined undefined]]) {
-					[mutSettings removeObjectForKey:objectKey];
-				} else {
-					[mutSettings setObject:objectValue forKey:objectKey];
-				}
-				
-				BOOL result = [mutSettings writeToFile:filePath atomically:YES];
-				
-				if (result) {
-					[self postStyleSettingsDidChangeNotification:objectKey];
-					
+				if (removeValue) {
 					return YES;
-				} else {
-					return NO;
 				}
+				
+				styleSettings = [NSMutableDictionary dictionaryWithCapacity:1]; // We are only inserting one value
+			} else {
+				styleSettings = [styleSettings mutableCopy];
 			}
-		} else {
-			LogToConsole(@"No styleSettings.plist file was found at path \"%@\"", filePath);
+			
+			if (removeValue) {
+				[styleSettings removeObjectForKey:objectKey];
+			} else {
+				[styleSettings setObject:objectValue forKey:objectKey];
+			}
+		
+			[RZStandardUserDefualts() setObject:[styleSettings copy] forKey:storeKey];
+			
+			[self postStyleSettingsDidChangeNotification:objectKey];
+				
+			return YES;
 		}
 	}
 	
@@ -255,6 +261,8 @@
 
 	self.nicknameFormat = nil;
 	self.timestampFormat = nil;
+	
+	self.settingsKeyValueStoreName = nil;
 
 	self.forceInvertSidebarColors = NO;
 
@@ -284,6 +292,8 @@
 
 		self.indentationOffset			= [self doubleForKey:@"Indentation Offset" fromDictionary:styleSettings];
 
+		self.settingsKeyValueStoreName	= [self stringForKey:@"Key-value Store Name" fromDictionary:styleSettings];
+		
 		/* Disable indentation? */
 		if (self.indentationOffset <= 0.0) {
 			self.indentationOffset = TPCThemeSettingsDisabledIndentationOffset;

@@ -45,6 +45,7 @@
 @property (nonatomic, copy) NSFont *channelViewFont;
 @property (nonatomic, copy) NSString *nicknameFormat;
 @property (nonatomic, copy) NSString *timestampFormat;
+@property (nonatomic, copy) NSString *settingsKeyValueStoreName;
 @property (nonatomic, copy) NSColor *underlyingWindowColor;
 @property (nonatomic, assign) double indentationOffset;
 
@@ -52,8 +53,8 @@
 
 - (NSString *)templateNameWithLineType:(TVCLogLineType)type;
 
-- (id)styleSettingsRetreiveValueForKey:(NSString *)key;
-- (BOOL)styleSettingsSetValue:(id)objectValue forKey:(NSString *)objectKey;
+- (id)styleSettingsRetrieveValueForKey:(NSString *)key error:(NSString **)resultError;
+- (BOOL)styleSettingsSetValue:(id)objectValue forKey:(NSString *)objectKey error:(NSString **)resultError;
 
 - (GRMustacheTemplate *)templateWithLineType:(TVCLogLineType)type;
 - (GRMustacheTemplate *)templateWithName:(NSString *)name;
