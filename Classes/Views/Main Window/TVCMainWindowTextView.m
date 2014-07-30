@@ -154,6 +154,13 @@
 	[super mouseDown:theEvent];
 }
 
+- (void)focus
+{
+	[mainWindow() makeKeyAndMainIfNot];
+	
+	[super focus];
+}
+
 #pragma mark -
 #pragma mark Segmented Controller
 

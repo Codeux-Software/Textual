@@ -301,6 +301,11 @@
 	[self.memberList destroyUserInfoPopoverOnWindowKeyChange];
 }
 
+- (void)windowDidResignMain:(NSNotification *)notification
+{
+	[self.webViewChildWindow setWindowShouldRefuseFirstResponderOnNextKeyChange:YES];
+}
+
 - (BOOL)window:(NSWindow *)window shouldPopUpDocumentPathMenu:(NSMenu *)menu
 {
 	return NO;
@@ -1012,6 +1017,17 @@
 
 #pragma mark -
 #pragma mark Misc.
+
+- (void)makeKeyAndMainIfNot
+{
+	if ([self.webViewChildWindow isKeyWindow]) {
+		[self makeKeyWindow];
+	}
+	
+	if ([self.webViewChildWindow isMainWindow]) {
+		[self makeMainWindow];
+	}
+}
 
 - (void)endEditingFor:(id)object
 {
@@ -1956,7 +1972,13 @@
 
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
-	[mainWindow() makeFirstResponder:nil];
+	if (self.windowShouldRefuseFirstResponderOnNextKeyChange) {
+		self.windowShouldRefuseFirstResponderOnNextKeyChange = NO;
+		
+		[mainWindow() makeKeyAndMainIfNot];
+	} else {
+		[mainWindow() makeFirstResponder:nil];
+	}
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification
