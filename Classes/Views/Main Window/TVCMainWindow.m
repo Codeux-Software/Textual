@@ -132,9 +132,9 @@
 		self.usingVibrantDarkAppearance = [TPCPreferences invertSidebarColors];
 		
 		if ([TPCPreferences invertSidebarColors]) {
-			[self.channelViewBox setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
+			[self.webViewChildWindow setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
 		} else {
-			[self.channelViewBox setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
+			[self.webViewChildWindow setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
 		}
 	}
 	
@@ -142,6 +142,8 @@
 	[self.serverList updateBackgroundColor];
 	
 	[self.inputTextField updateBackgroundColor];
+	
+	[self updateChannelViewBackgroundColor];
 	
 	[self.contentView setNeedsDisplay:YES];
 }
@@ -167,6 +169,49 @@
 	[self saveWindowState];
 
 	[self setDelegate:nil];
+}
+
+#pragma mark -
+#pragma mark Child Webview Window
+
+- (void)addChildWebViewWindow
+{
+	[self addChildWindow:self.webViewChildWindow ordered:NSWindowAbove];
+	
+	[self.webViewChildWindow orderFront:nil];
+}
+
+- (void)updateChildWebViewWindowFrameToReflectContextBox
+{
+	NSInteger textFieldHeight = 0;
+	
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		TVCMainWindowTextViewContentView *textFieldContentView = [self.inputTextField contentView];
+		
+		NSRect backgroundFrame = [textFieldContentView frame];
+		
+		textFieldHeight = NSHeight(backgroundFrame);
+	} else {
+		textFieldHeight = [self contentBorderThicknessForEdge:NSMinYEdge];
+	}
+	
+	NSRect channelViewFrame = [self.channelViewBox frame];
+	
+	NSRect childWindowFrame = [self convertRectToScreen:channelViewFrame];
+	
+	childWindowFrame.origin.y += textFieldHeight;
+	
+	[self.webViewChildWindow setFrame:childWindowFrame display:YES animate:NO];
+}
+
+- (void)setChannelViewContentView:(NSView *)view
+{
+	[self.webViewChildWindow setContentView:view];
+}
+
+- (void)updateChannelViewBackgroundColor
+{
+	[self.channelViewBox setFillColor:[themeSettings() underlyingWindowColor]];
 }
 
 #pragma mark -
@@ -1264,7 +1309,7 @@
 	if (item == nil) {
 		self.selectedItem = nil;
 		
-		[self.channelViewBox setContentView:nil];
+		[self setChannelViewContentView:nil];
 		
 		[self.memberList setDataSource:nil];
 		[self.memberList reloadData];
@@ -1491,7 +1536,7 @@
 	
 	/* Destroy member list if we have no selection. */
 	if (self.selectedItem == nil) {
-		[self.channelViewBox setContentView:nil];
+		[self setChannelViewContentView:nil];
 		
 		 self.memberList.delegate = nil;
 		 self.memberList.dataSource = nil;
@@ -1509,7 +1554,7 @@
 	TVCLogController *log = self.selectedViewController;
 	
 	/* Set content view to WebView. */
-	[self.channelViewBox setContentView:[log webView]];
+	[self setChannelViewContentView:[log webView]];
 	
 	/* Allow selected WebView time to update. */
 	[log notifyDidBecomeVisible];
@@ -1834,6 +1879,30 @@
 - (void)serverListKeyDown:(NSEvent *)e
 {
 	[worldController() logKeyDown:e];
+}
+
+@end
+
+@implementation TVCMainWindowChannelViewBox
+
+- (void)awakeFromNib
+{
+	[RZNotificationCenter() addObserver:self selector:@selector(frameDidChangeNotification:) name:NSViewFrameDidChangeNotification object:self];
+	
+	[self setPostsFrameChangedNotifications:YES];
+	
+	[mainWindow() addChildWebViewWindow];
+	[mainWindow() updateChildWebViewWindowFrameToReflectContextBox];
+}
+
+- (void)dealloc
+{
+	[RZNotificationCenter() removeObserver:self];
+}
+
+- (void)frameDidChangeNotification:(NSNotification *)note
+{
+	[mainWindow() updateChildWebViewWindowFrameToReflectContextBox];
 }
 
 @end

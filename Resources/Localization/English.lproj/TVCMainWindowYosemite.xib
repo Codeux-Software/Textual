@@ -240,7 +240,7 @@
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="oQd-p4-vgO"/>
                                         </constraints>
                                     </visualEffectView>
-                                    <box title="Title" boxType="custom" borderType="none" titlePosition="noTitle" id="6tX-VC-UtT" userLabel="Chat Box - Title">
+                                    <box boxType="custom" borderType="none" titlePosition="noTitle" id="6tX-VC-UtT" userLabel="Chat Box - Title" customClass="TVCMainWindowChannelViewBox">
                                         <rect key="frame" x="151" y="0.0" width="498" height="439"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <view key="contentView">
@@ -250,7 +250,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="AUT-GE-SwR"/>
                                         </constraints>
-                                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                                        <color key="borderColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <accessibility description="Channel view"/>
                                     </box>
@@ -600,6 +600,7 @@ There are no other limits. What you see, is what you get.</string>
                 <outlet property="mainMenuProxy" destination="U6M-jc-NbT" id="QeA-Xy-1ah"/>
                 <outlet property="memberList" destination="HfF-rs-W6T" id="l9w-fB-AG8"/>
                 <outlet property="serverList" destination="jdZ-2h-ck2" id="z2h-tt-SG6"/>
+                <outlet property="webViewChildWindow" destination="7gS-7K-W2q" id="NKt-Hx-rwg"/>
             </connections>
             <point key="canvasLocation" x="1737" y="501.5"/>
         </window>
@@ -1621,6 +1622,14 @@ There are no other limits. What you see, is what you get.</string>
             </connections>
         </customObject>
         <customObject id="U6M-jc-NbT" customClass="TXMenuControllerMainWindowProxy"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" hasShadow="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="7gS-7K-W2q" userLabel="Webview Window">
+            <rect key="contentRect" x="1000" y="556" width="480" height="270"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <view key="contentView" id="odf-sj-PBk">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                <autoresizingMask key="autoresizingMask"/>
+            </view>
+        </window>
     </objects>
     <resources>
         <image name="FormattingColor_0" width="16" height="16"/>
