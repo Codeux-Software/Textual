@@ -183,6 +183,12 @@
 
 - (void)updateChildWebViewWindowFrameToReflectContextBox
 {
+	[self updateChildWebViewWindowFrame:[self frame] animate:NO];
+}
+
+- (void)updateChildWebViewWindowFrame:(NSRect)mainWindowFrame animate:(BOOL)animate
+{
+	/* Determine height of text field to update Y position. */
 	NSInteger textFieldHeight = 0;
 	
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
@@ -195,13 +201,49 @@
 		textFieldHeight = [self contentBorderThicknessForEdge:NSMinYEdge];
 	}
 	
-	NSRect channelViewFrame = [self.channelViewBox frame];
+	/* The main window frame is used to perform correct positioning
+	 when transitioning through fullscreen mode. */
+	NSInteger listViewThickness = 0;
+	NSInteger listViewStartingPosition = 0;
 	
-	NSRect childWindowFrame = [self convertRectToScreen:channelViewFrame];
+	/* Add server list into math. */
+	if ([self isServerListVisible]) {
+		NSRect serverListViewFrame = [self.serverList frame];
+		
+		listViewThickness += (serverListViewFrame.size.width + [self.contentSplitView dividerThickness]);
 	
-	childWindowFrame.origin.y += textFieldHeight;
+		listViewStartingPosition = (NSMaxX(serverListViewFrame) + [self.contentSplitView dividerThickness]);
+	}
 	
-	[self.webViewChildWindow setFrame:childWindowFrame display:YES animate:NO];
+	/* Add member list into math. */
+	if ([self isMemberListVisible]) {
+		NSRect memberListViewFrame = [self.memberList frame];
+		
+		listViewThickness += (memberListViewFrame.size.width + [self.contentSplitView dividerThickness]);
+	}
+	
+	/* Calculate window height. */
+	/* Just use a magic number for title bar height for now… */
+	NSInteger windowHeight = mainWindowFrame.size.height;
+	
+	if ([self isInFullscreenMode] == NO) {
+		windowHeight -= 22;
+	}
+	
+	/* Calculate final frame. */
+	NSRect childWindowFrame = NSZeroRect;
+	
+	childWindowFrame.size.width = (mainWindowFrame.size.width - listViewThickness);
+	childWindowFrame.size.height = (windowHeight - textFieldHeight);
+	
+	childWindowFrame.origin.x = (mainWindowFrame.origin.x + listViewStartingPosition);
+	childWindowFrame.origin.y = (mainWindowFrame.origin.y + textFieldHeight);
+	
+	if (animate) {
+		[self.webViewChildWindow setFrame:childWindowFrame display:YES animate:YES];
+	} else {
+		[self.webViewChildWindow setFrame:childWindowFrame display:YES animate:NO];
+	}
 }
 
 - (void)setChannelViewContentView:(NSView *)view
@@ -282,6 +324,38 @@
 - (void)windowDidResize:(NSNotification *)notification
 {
 	[self.inputTextField resetTextFieldCellSize:YES];
+}
+
+- (void)windowDidEnterFullScreen:(NSNotification *)notification
+{
+	self.isPerformingFullscreenTransition = NO;
+	
+	[self updateChildWebViewWindowFrameToReflectContextBox];
+	
+	[self.webViewChildWindow setAlphaValue:1.0];
+}
+
+- (void)windowDidExitFullScreen:(NSNotification *)notification
+{
+	self.isPerformingFullscreenTransition = NO;
+	
+	[self updateChildWebViewWindowFrameToReflectContextBox];
+	
+	[self.webViewChildWindow setAlphaValue:1.0];
+}
+
+- (void)windowWillEnterFullScreen:(NSNotification *)notification
+{
+	self.isPerformingFullscreenTransition = YES;
+	
+	[self.webViewChildWindow setAlphaValue:0.0];
+}
+
+- (void)windowWillExitFullScreen:(NSNotification *)notification
+{
+	self.isPerformingFullscreenTransition = YES;
+	
+	[self.webViewChildWindow setAlphaValue:0.0];
 }
 
 - (BOOL)windowShouldZoom:(NSWindow *)awindow toFrame:(NSRect)newFrame
@@ -1920,7 +1994,9 @@
 
 - (void)frameDidChangeNotification:(NSNotification *)note
 {
-	[mainWindow() updateChildWebViewWindowFrameToReflectContextBox];
+	if ([mainWindow() isPerformingFullscreenTransition] == NO && self.pauseFrameUpdates == NO) {
+		[mainWindow() updateChildWebViewWindowFrameToReflectContextBox];
+	}
 }
 
 @end

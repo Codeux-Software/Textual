@@ -438,7 +438,7 @@
 	} else {
 		[self.contentView setNeedsDisplay:YES];
 	}
-	
+
 	if (documentViewBounds.origin.x > 0) {
 		documentViewBounds.origin.x = 0;
 		
@@ -889,6 +889,9 @@
 
 - (void)updateLayer
 {
+	/* Update underlying window to reflect any size changes. */
+	[[mainWindow() channelViewBox] setPauseFrameUpdates:YES];
+	
 	/* To get started, we get the current frame and make an image
 	 out of it. The image will be set as the layer's contents. */
 	NSRect contentViewFrame = [self frame];
@@ -925,6 +928,11 @@
 	[backgroundImage unlockFocus];
 	
 	[[self layer] setContents:backgroundImage];
+	
+	/* Update window. */
+	[mainWindow() updateChildWebViewWindowFrameToReflectContextBox];
+	
+	[[mainWindow() channelViewBox] setPauseFrameUpdates:NO];
 }
 
 - (NSColor *)backgroundColor
