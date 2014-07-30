@@ -1035,7 +1035,7 @@
 
 - (BOOL)isKeyWindow
 {
-	if ([NSApp isActive]) {
+	if ([self.webViewChildWindow isKeyWindow]) {
 		return YES;
 	} else {
 		return [super isKeyWindow];
