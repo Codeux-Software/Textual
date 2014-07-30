@@ -174,6 +174,31 @@
 #pragma mark -
 #pragma mark Child Webview Window
 
+- (void)startTransitionForWebViewChildWindow
+{
+	[self.webViewChildWindow setAlphaValue:0.0];
+	
+	[self.channelViewBox setPauseFrameUpdates:YES];
+}
+
+- (void)endTransitionForWebViewChildWindow:(BOOL)isExitingFullscreen
+{
+	if (isExitingFullscreen) {
+		[self finishPreparingWebViewChildWindowDuringFullscreen];
+	} else {
+		[self performSelector:@selector(finishPreparingWebViewChildWindowDuringFullscreen) withObject:nil afterDelay:0.8];
+	}
+}
+
+- (void)finishPreparingWebViewChildWindowDuringFullscreen
+{
+	[self.webViewChildWindow setAlphaValue:1.0];
+	
+	[self.channelViewBox setPauseFrameUpdates:NO];
+	
+	[self updateChildWebViewWindowFrameToReflectContextBox];
+}
+
 - (void)addChildWebViewWindow
 {
 	[self addChildWindow:self.webViewChildWindow ordered:NSWindowAbove];
@@ -183,7 +208,9 @@
 
 - (void)updateChildWebViewWindowFrameToReflectContextBox
 {
-	[self updateChildWebViewWindowFrame:[self frame] animate:NO];
+	NSRect newFrame = [self contentRectForFrameRect:[self frame]];
+	
+	[self updateChildWebViewWindowFrame:newFrame animate:NO];
 }
 
 - (void)updateChildWebViewWindowFrame:(NSRect)mainWindowFrame animate:(BOOL)animate
@@ -221,20 +248,12 @@
 		
 		listViewThickness += (memberListViewFrame.size.width + [self.contentSplitView dividerThickness]);
 	}
-	
-	/* Calculate window height. */
-	/* Just use a magic number for title bar height for now… */
-	NSInteger windowHeight = mainWindowFrame.size.height;
-	
-	if ([self isInFullscreenMode] == NO) {
-		windowHeight -= 22;
-	}
-	
+
 	/* Calculate final frame. */
 	NSRect childWindowFrame = NSZeroRect;
 	
 	childWindowFrame.size.width = (mainWindowFrame.size.width - listViewThickness);
-	childWindowFrame.size.height = (windowHeight - textFieldHeight);
+	childWindowFrame.size.height = (mainWindowFrame.size.height - textFieldHeight);
 	
 	childWindowFrame.origin.x = (mainWindowFrame.origin.x + listViewStartingPosition);
 	childWindowFrame.origin.y = (mainWindowFrame.origin.y + textFieldHeight);
@@ -328,34 +347,22 @@
 
 - (void)windowDidEnterFullScreen:(NSNotification *)notification
 {
-	self.isPerformingFullscreenTransition = NO;
-	
-	[self updateChildWebViewWindowFrameToReflectContextBox];
-	
-	[self.webViewChildWindow setAlphaValue:1.0];
+	[self endTransitionForWebViewChildWindow:NO];
 }
 
 - (void)windowDidExitFullScreen:(NSNotification *)notification
 {
-	self.isPerformingFullscreenTransition = NO;
-	
-	[self updateChildWebViewWindowFrameToReflectContextBox];
-	
-	[self.webViewChildWindow setAlphaValue:1.0];
+	[self endTransitionForWebViewChildWindow:YES];
 }
 
 - (void)windowWillEnterFullScreen:(NSNotification *)notification
 {
-	self.isPerformingFullscreenTransition = YES;
-	
-	[self.webViewChildWindow setAlphaValue:0.0];
+	[self startTransitionForWebViewChildWindow];
 }
 
 - (void)windowWillExitFullScreen:(NSNotification *)notification
 {
-	self.isPerformingFullscreenTransition = YES;
-	
-	[self.webViewChildWindow setAlphaValue:0.0];
+	[self startTransitionForWebViewChildWindow];
 }
 
 - (BOOL)windowShouldZoom:(NSWindow *)awindow toFrame:(NSRect)newFrame
@@ -1994,7 +2001,7 @@
 
 - (void)frameDidChangeNotification:(NSNotification *)note
 {
-	if ([mainWindow() isPerformingFullscreenTransition] == NO && self.pauseFrameUpdates == NO) {
+	if (self.pauseFrameUpdates == NO) {
 		[mainWindow() updateChildWebViewWindowFrameToReflectContextBox];
 	}
 }
