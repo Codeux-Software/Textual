@@ -106,6 +106,8 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 
 - (void)maybeToggleFullscreenAfterLaunch;
 
+- (void)makeKeyAndMainIfNot;
+
 @property (getter=isReallyKeyWindow, readonly) BOOL reallyKeyWindow;
 
 @property (getter=isInactive, readonly) BOOL inactive;
@@ -151,6 +153,7 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 @end
 
 @interface TVCMainWindowWebViewChildWindow : NSWindow <NSWindowDelegate>
+@property (nonatomic, assign) BOOL windowShouldRefuseFirstResponderOnNextKeyChange;
 @end
 
 @interface TVCMainWindowChannelViewBox : NSBox
