@@ -118,8 +118,6 @@ a:hover {
 	text-shadow: 1px 1px rgba(83, 86, 94, 0.7);
 	background: -webkit-linear-gradient(top, #A2B0D0 0%, #7385AD 100%);
 	-webkit-transition: opacity 0.8s linear;
-	-webkit-transform: translateZ(0);
-	-webkit-font-smoothing: subpixel-antialiased;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
