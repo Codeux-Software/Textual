@@ -151,6 +151,8 @@
 	[self.webView setUIDelegate:self.webViewPolicy];
 
 	[self.webView setShouldUpdateWhileOffscreen:NO];
+	
+	[self.webView setHostWindow:[mainWindow() webViewChildWindow]];
 
 	/* Update a few preferences. */
 	[[self.webView preferences] setCacheModel:WebCacheModelDocumentViewer];

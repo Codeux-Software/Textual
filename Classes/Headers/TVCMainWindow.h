@@ -106,6 +106,8 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 
 - (void)maybeToggleFullscreenAfterLaunch;
 
+@property (getter=isReallyKeyWindow, readonly) BOOL reallyKeyWindow;
+
 @property (getter=isInactive, readonly) BOOL inactive;
 @property (getter=isActiveForDrawing, readonly) BOOL activeForDrawing;
 
@@ -148,7 +150,7 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 - (void)registerKeyHandler:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods;
 @end
 
-@interface TVCMainWindowWebViewChildWindow : NSWindow
+@interface TVCMainWindowWebViewChildWindow : NSWindow <NSWindowDelegate>
 @end
 
 @interface TVCMainWindowChannelViewBox : NSBox
