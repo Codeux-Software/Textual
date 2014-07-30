@@ -131,7 +131,7 @@ Textual = {
 
 	// app.printDebugInformation(message)				— Show a debug message to the user in the associated channel.
 
-	// app.styleSettingsRetreiveValue(key)				— Retreive value of /key/ from styleSettings.plist file of a style.
+	// app.styleSettingsRetrieveValue(key)				— Retrieve value of /key/ from styleSettings.plist file of a style.
 	// app.styleSettingsSetValue(key, value)			— Set /value/ to /key/ in the styleSettings.plist file of a style.
 	//													  The value stored is based on whatever WebKit converts the objects into.
 	//													  Setting a value of undefined will remove the /key/ from settings.

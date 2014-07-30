@@ -61,6 +61,10 @@
 {
 	NSString *s = NSStringFromSelector(sel);
 	
+	if ([s hasPrefix:@"styleSettingsSetValue"]) {
+		return nil;
+	}
+	
 	if ([s hasSuffix:@":"]) {
 		return [s substringToIndex:([s length] - 1)];
 	}
@@ -71,9 +75,9 @@
 - (id)invokeUndefinedMethodFromWebScript:(NSString *)name withArguments:(NSArray *)args
 {
 	if ([name isEqualToString:@"styleSettingsSetValue"]) {
-		return @([self _styleSettingsSetValue:args]);
+		return @([self styleSettingsSetValue:args]);
 	}
-	
+
 	return nil;
 }
 
@@ -117,6 +121,20 @@
 - (void)logToConsole:(NSString *)message
 {
     LogToConsole(@"JavaScript: %@", message);
+}
+
+- (void)throwJavaScriptException:(NSString *)message
+{
+	[WebScriptObject throwException:message];
+}
+
+- (void)logToJavaScriptConsole:(NSString *)message
+{
+	TVCLogView *webView = [self.logController webView];
+	
+	WebScriptObject *console = [webView javaScriptConsoleAPI];
+	
+	[console callWebScriptMethod:@"log" withArguments:@[message]];
 }
 
 - (void)toggleInlineImage:(NSString *)object
@@ -252,25 +270,47 @@
 	return [TPCPreferences invertSidebarColors];
 }
 
-- (BOOL)styleSettingsSetValue:(NSString *)key
+- (BOOL)styleSettingsSetValue:(NSArray *)arguments
 {
-	return [themeSettings() styleSettingsSetValue:[WebUndefined undefined] forKey:key];
-}
-
-- (BOOL)_styleSettingsSetValue:(NSArray *)arguments
-{
-	if ([arguments count] == 2) {
-		return [themeSettings() styleSettingsSetValue:arguments[1] forKey:arguments[0]];
+	id objectKey = nil;
+	id objectValue = nil;
+	
+	if (NSNumberInRange([arguments count], 1, 2)) {
+		objectKey = arguments[0];
+		
+		if ([arguments count] == 1) {
+			objectValue = [WebUndefined undefined];
+		} else {
+			objectValue = arguments[1];
+		}
+		
+		NSString *errorValue = nil;
+		
+		BOOL result = [themeSettings() styleSettingsSetValue:objectValue forKey:objectKey error:&errorValue];
+		
+		if (errorValue) {
+			[self throwJavaScriptException:errorValue];
+		}
+		
+		return result;
 	} else {
-		LogToConsole(@"Improperly formatted arguments");
+		[self throwJavaScriptException:@"Improperly formatted arguments"];
 		
 		return NO;
 	}
 }
 
-- (id)styleSettingsRetreiveValue:(NSString *)key
+- (id)styleSettingsRetrieveValue:(NSString *)key
 {
-	return [themeSettings() styleSettingsRetreiveValueForKey:key];
+	NSString *errorValue = nil;
+	
+	id result = [themeSettings() styleSettingsRetrieveValueForKey:key error:&errorValue];
+	
+	if (errorValue) {
+		[self throwJavaScriptException:errorValue];
+	}
+	
+	return result;
 }
 
 - (void)print:(NSString *)s

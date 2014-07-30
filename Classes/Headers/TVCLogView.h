@@ -45,6 +45,7 @@
 @property (readonly, copy) NSString *contentString;
 
 @property (readonly, strong) WebScriptObject *javaScriptAPI;
+@property (readonly, strong) WebScriptObject *javaScriptConsoleAPI;
 
 @property (readonly) BOOL hasSelection;
 - (void)clearSelection;
