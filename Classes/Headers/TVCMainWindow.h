@@ -60,11 +60,12 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 #import "TVCServerList.h" // @protocol
 
 @class TVCMainWindowChannelViewBox;
+@class TVCMainWindowWebViewChildWindow;
 
 @interface TVCMainWindow : NSWindow <NSWindowDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate, TVCServerListDelegate, TVCMemberListDelegate>
 @property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
 @property (nonatomic, copy) NSValue *cachedSwipeOriginPoint;
-@property (nonatomic, strong) IBOutlet NSWindow *webViewChildWindow; // Hosts the child window so that the WebView is not in a layered back view.
+@property (nonatomic, strong) IBOutlet TVCMainWindowWebViewChildWindow *webViewChildWindow; // Hosts the child window so that the WebView is not in a layered back view.
 @property (nonatomic, nweak) IBOutlet TVCMainWindowChannelViewBox *channelViewBox; // Is hosted in main window and is used to retrieve frames for child window.
 @property (nonatomic, strong) IBOutlet TXMenuControllerMainWindowProxy *mainMenuProxy;
 @property (nonatomic, strong) IBOutlet TVCTextViewIRCFormattingMenu *formattingMenu;
@@ -146,6 +147,9 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 
 - (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;
 - (void)registerKeyHandler:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods;
+@end
+
+@interface TVCMainWindowWebViewChildWindow : NSWindow
 @end
 
 @interface TVCMainWindowChannelViewBox : NSBox

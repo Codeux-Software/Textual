@@ -1883,6 +1883,24 @@
 
 @end
 
+@implementation TVCMainWindowWebViewChildWindow
+
+- (BOOL)isMainWindow
+{
+	return YES;
+}
+
+- (BOOL)isKeyWindow
+{
+	if ([NSApp isActive]) {
+		return YES;
+	} else {
+		return [super isKeyWindow];
+	}
+}
+
+@end
+
 @implementation TVCMainWindowChannelViewBox
 
 - (void)awakeFromNib
