@@ -122,21 +122,27 @@ a:hover {
 /* Topic Bar */
 
 #topic_bar {
-	top: 0;
+	top: -50px;
 	left: 0;
 	right: 0;
 	padding-bottom: 5px;
 	opacity: 0; /* Set by JavaScript */
 	z-index: 400;
 	color: #dddddd;
+	overflow: hidden;
+	white-space: nowrap;
 	position: fixed;
-	padding: 6px 0.5em 7px;
+	padding: 55px 0.5em 7px;
 	box-shadow: 0 1px 5px #777;
 	border-bottom: 1px solid #404040;
+	-webkit-transition: opacity 0.8s linear;
 	text-shadow: 1px 1px rgba(10, 10, 10, 0.7);
 	background: rgba(60, 60, 60, 0.91);
-	-webkit-transform: translateZ(0);
-	-webkit-font-smoothing: subpixel-antialiased;
+}
+
+#topic_bar:hover {
+	overflow: visible;
+	white-space: normal;
 }
 
 #topic_bar a,
