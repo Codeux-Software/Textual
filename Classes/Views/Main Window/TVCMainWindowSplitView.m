@@ -104,6 +104,8 @@
 
 - (void)expandServerList
 {
+	[[mainWindow() channelViewBox] setPauseFrameUpdates:YES];
+	
 	NSScrollView *scrollView = [mainWindowMemberList() enclosingScrollView];
 	
 	[scrollView setHasVerticalScroller:YES];
@@ -116,11 +118,17 @@
 	
 	[self.serverListWidthConstraint setConstant:_minimumSplitViewWidth];
 	
+	[mainWindow() updateChildWebViewWindowFrameToReflectContextBox];
+	
+	[[mainWindow() channelViewBox] setPauseFrameUpdates:NO];
+	
 	self.stopFrameUpdatesForServerList = NO;
 }
 
 - (void)expandMemberList
 {
+	[[mainWindow() channelViewBox] setPauseFrameUpdates:YES];
+	
 	NSScrollView *scrollView = [mainWindowMemberList() enclosingScrollView];
 	
 	[scrollView setHasVerticalScroller:YES];
@@ -133,12 +141,18 @@
 	
 	[self.memberListWidthConstraint setConstant:_minimumSplitViewWidth];
 	
+	[mainWindow() updateChildWebViewWindowFrameToReflectContextBox];
+	
+	[[mainWindow() channelViewBox] setPauseFrameUpdates:NO];
+	
 	self.stopFrameUpdatesForMemberList = NO;
 }
 
 - (void)collapseServerList
 {
 	self.stopFrameUpdatesForServerList = YES;
+	
+	[[mainWindow() channelViewBox] setPauseFrameUpdates:YES];
 	
 	[self.serverListWidthConstraint setConstant:0.0];
 	
@@ -151,10 +165,16 @@
 	[self setPosition:0.0 ofDividerAtIndex:0];
 	
 	[subview setHidden:YES];
+	
+	[mainWindow() updateChildWebViewWindowFrameToReflectContextBox];
+	
+	[[mainWindow() channelViewBox] setPauseFrameUpdates:NO];
 }
 
 - (void)collapseMemberList
 {
+	[[mainWindow() channelViewBox] setPauseFrameUpdates:YES];
+	
 	self.stopFrameUpdatesForMemberList = YES;
 	
 	[self.memberListWidthConstraint setConstant:0.0];
@@ -170,6 +190,10 @@
 	[self setPosition:NSWidth(windowFrame) ofDividerAtIndex:1];
 	
 	[subview setHidden:YES];
+	
+	[mainWindow() updateChildWebViewWindowFrameToReflectContextBox];
+	
+	[[mainWindow() channelViewBox] setPauseFrameUpdates:NO];
 }
 
 - (void)toggleServerListVisbility
