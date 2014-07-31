@@ -212,7 +212,7 @@
 {
 	[self addChildWindow:self.webViewChildWindow ordered:NSWindowAbove];
 	
-	[self.webViewChildWindow orderFront:nil];
+	[self.webViewChildWindow orderWindow:NSWindowAbove relativeTo:[self windowNumber]];
 }
 
 - (void)updateChildWebViewWindowFrameToReflectContextBox
@@ -272,7 +272,7 @@
 {
 	NSAssertReturn([masterController() applicationIsTerminating] == NO);
 	
-	id sel = [mainWindow() selectedItem];
+	id sel = [self selectedItem];
 	
 	if (sel) {
 		[sel resetState];
