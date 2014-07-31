@@ -154,8 +154,13 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 
 @interface TVCMainWindowWebViewChildWindow : NSWindow <NSWindowDelegate>
 @property (nonatomic, assign) BOOL windowShouldRefuseFirstResponderOnNextKeyChange;
+
+- (void)setWebView:(id)view;
+@end
+
+@interface TVCMainWindowWebViewChildWindowContentView : NSView
+@property (nonatomic, assign) IBOutlet NSBox *webView;
 @end
 
 @interface TVCMainWindowChannelViewBox : NSBox
-@property (nonatomic, assign) BOOL pauseFrameUpdates;
 @end

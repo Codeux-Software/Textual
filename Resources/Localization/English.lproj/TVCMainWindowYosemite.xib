@@ -70,7 +70,7 @@
                                                                         <textField horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="3fx-4r-8tq">
                                                                             <rect key="frame" x="25" y="2" width="91" height="16"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Table View Cell" id="ym4-Is-Lhi" customClass="TVCServerLisCellTextFieldInterior">
-                                                                                <font key="font" metaFont="titleBar" size="12"/>
+                                                                                <font key="font" metaFont="cellTitle"/>
                                                                                 <color key="textColor" red="0.28273809519999998" green="0.28273809519999998" blue="0.28273809519999998" alpha="1" colorSpace="calibratedRGB"/>
                                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                             </textFieldCell>
@@ -216,7 +216,7 @@
                                                                                 <constraint firstAttribute="height" constant="16" id="ey9-hk-PaU"/>
                                                                             </constraints>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Label" id="Kxh-ox-Uqw" customClass="TVCMemberLisCellTextFieldInterior">
-                                                                                <font key="font" metaFont="titleBar" size="12"/>
+                                                                                <font key="font" metaFont="cellTitle"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                             </textFieldCell>
@@ -582,7 +582,7 @@ There are no other limits. What you see, is what you get.</string>
                 <outlet property="serverList" destination="y7H-vm-42j" id="WIp-kv-hcH"/>
                 <outlet property="webViewChildWindow" destination="7gS-7K-W2q" id="NKt-Hx-rwg"/>
             </connections>
-            <point key="canvasLocation" x="2960" y="767.5"/>
+            <point key="canvasLocation" x="3139" y="780.5"/>
         </window>
         <customView id="2965" userLabel="User Info Popover View">
             <rect key="frame" x="0.0" y="0.0" width="352" height="114"/>
@@ -1605,9 +1605,29 @@ There are no other limits. What you see, is what you get.</string>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" hasShadow="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="7gS-7K-W2q" userLabel="Webview Window" customClass="TVCMainWindowWebViewChildWindow">
             <rect key="contentRect" x="1000" y="556" width="480" height="270"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
-            <view key="contentView" id="odf-sj-PBk">
+            <view key="contentView" id="odf-sj-PBk" customClass="TVCMainWindowWebViewChildWindowContentView">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <box autoresizesSubviews="NO" boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="kyM-8h-zxr">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <view key="contentView">
+                            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        </view>
+                        <color key="borderColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </box>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="kyM-8h-zxr" firstAttribute="top" secondItem="odf-sj-PBk" secondAttribute="top" id="Dr2-Ef-WOU"/>
+                    <constraint firstAttribute="trailing" secondItem="kyM-8h-zxr" secondAttribute="trailing" id="FbJ-8f-1WI"/>
+                    <constraint firstAttribute="bottom" secondItem="kyM-8h-zxr" secondAttribute="bottom" id="TSo-1G-ioq"/>
+                    <constraint firstItem="kyM-8h-zxr" firstAttribute="leading" secondItem="odf-sj-PBk" secondAttribute="leading" id="Zik-Wb-1Dv"/>
+                </constraints>
+                <connections>
+                    <outlet property="webView" destination="kyM-8h-zxr" id="sz4-0n-Jp1"/>
+                </connections>
             </view>
         </window>
     </objects>
