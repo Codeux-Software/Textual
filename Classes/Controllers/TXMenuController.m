@@ -1012,9 +1012,9 @@
 
 - (void)paste:(id)sender
 {
-    NSWindow *keyWindow = [NSApp mainWindow];
+    NSWindow *keyWindow = [NSApp keyWindow];
 
-    if ([keyWindow isEqual:mainWindow()]) {
+    if ([keyWindow isEqual:mainWindow()] || [keyWindow isEqual:[mainWindow() webViewChildWindow]]) {
 		[mainWindowTextField() focus];
 		
 		[mainWindowTextField() paste:sender];
