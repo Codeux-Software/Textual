@@ -41,6 +41,18 @@
 #define _treeDragItemType		@"tree"
 #define _treeDragItemTypes		[NSArray arrayWithObject:_treeDragItemType]
 
+typedef enum TVCMainWindowFullscreenMenubarStatus : NSInteger {
+	TVCMainWindowFullscreenMenubarUnkownStatus			= -1,
+	TVCMainWindowFullscreenMenubarHiddenStatus			=  1,
+	TVCMainWindowFullscreenMenubarVisibleStatus			=  2
+} TVCMainWindowFullscreenMenubarStatus;
+
+@interface TVCMainWindow ()
+@property (nonatomic, strong) id trackingArea;
+@property (nonatomic, assign) BOOL timerForUpdateWebViewChildWindowFrameUpdatesIsPending;
+@property (nonatomic, assign) TVCMainWindowFullscreenMenubarStatus fullscreenMenubarStatus;
+@end
+
 @interface TVCMainWindowWebViewChildWindowContentView ()
 @property (nonatomic, strong) id trackingArea;
 @property (nonatomic, assign) BOOL isInTrackingArea;
@@ -59,6 +71,12 @@
 {
 	if ((self = [super initWithContentRect:contentRect styleMask:windowStyle backing:bufferingType defer:deferCreation])) {
 		self.keyEventHandler = [TLOKeyEventHandler new];
+		
+		self.trackingArea = [NSEvent addLocalMonitorForEventsMatchingMask:NSMouseMovedMask handler:^NSEvent *(NSEvent *event) {
+			[self performHitTestForMenubarInFullscreenMode];
+			
+			return nil;
+		}];
 	}
 	
 	return self;
@@ -183,7 +201,7 @@
 #pragma mark -
 #pragma mark Child Webview Window
 
-- (void)startTransitionForWebViewChildWindow
+- (void)startTransitionForWebViewChildWindow:(BOOL)isExitingFullscreen
 {
 	[self.webViewChildWindow setAlphaValue:0.0];
 	
@@ -192,18 +210,12 @@
 
 - (void)endTransitionForWebViewChildWindow:(BOOL)isExitingFullscreen
 {
-	if (isExitingFullscreen) {
-		[self finishPreparingWebViewChildWindowDuringFullscreen];
-	} else {
-		[self performSelector:@selector(finishPreparingWebViewChildWindowDuringFullscreen) withObject:nil afterDelay:0.8];
-	}
-}
-
-- (void)finishPreparingWebViewChildWindowDuringFullscreen
-{
 	[self.webViewChildWindow setAlphaValue:1.0];
 	
 	[self.channelViewBox setPauseFrameUpdates:NO];
+	
+	self.timerForUpdateWebViewChildWindowFrameUpdatesIsPending = NO;
+	self.fullscreenMenubarStatus = TVCMainWindowFullscreenMenubarUnkownStatus;
 	
 	[self updateChildWebViewWindowFrameToReflectContextBox];
 }
@@ -213,6 +225,75 @@
 	[self addChildWindow:self.webViewChildWindow ordered:NSWindowAbove];
 	
 	[self.webViewChildWindow orderWindow:NSWindowAbove relativeTo:[self windowNumber]];
+}
+
+- (void)performHitTestForMenubarInFullscreenMode
+{
+#define _timedFullscreenHitTestTimeoutTimerInterval			0.1
+#define _timedFullscreenHitTestFrameUpdateTimerInterval		0.22
+	
+	if ([self isInFullscreenMode] == NO) {
+		return; // We aren't in fullscreen mode…
+	} else {
+		/* Cancel any previous ran timers. */
+		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(performHitTestForMenubarInFullscreenMode) object:nil];
+
+		/* Build context information. */
+		NSScreen *currentScreen = [self screen];
+		
+		NSRect currentScreenFrame = [currentScreen frame];
+		
+		NSPoint mouseLocation = [NSEvent mouseLocation];
+		
+		NSInteger positionDifference = (currentScreenFrame.size.height - mouseLocation.y);
+
+		/* If we are at the very top, then we maybe think menu will exist. */
+		if (positionDifference < 1.0 || [NSMenu menuBarVisible]) {
+			if (self.fullscreenMenubarStatus == TVCMainWindowFullscreenMenubarUnkownStatus ||
+				self.fullscreenMenubarStatus == TVCMainWindowFullscreenMenubarHiddenStatus)
+			{
+				self.fullscreenMenubarStatus = TVCMainWindowFullscreenMenubarVisibleStatus;
+				
+				if (self.timerForUpdateWebViewChildWindowFrameUpdatesIsPending == NO) {
+					self.timerForUpdateWebViewChildWindowFrameUpdatesIsPending = YES;
+					
+					[self performSelector:@selector(performHitTestForMenubarInFullscreenModeTimedFrameUpdate) withObject:nil afterDelay:_timedFullscreenHitTestFrameUpdateTimerInterval];
+				}
+			}
+		} else {
+			if (self.fullscreenMenubarStatus == TVCMainWindowFullscreenMenubarVisibleStatus) {
+				if ([NSMenu menuBarVisible] == NO) {
+					self.fullscreenMenubarStatus = TVCMainWindowFullscreenMenubarHiddenStatus;
+					
+					if (self.timerForUpdateWebViewChildWindowFrameUpdatesIsPending) {
+						self.timerForUpdateWebViewChildWindowFrameUpdatesIsPending = NO;
+						
+						[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateChildWebViewWindowFrameToReflectContextBox) object:nil];
+					}
+					
+					[self updateChildWebViewWindowFrameToReflectContextBox];
+				}
+			}
+		}
+		
+		/* If the mouse is positioned correctly (stopped) at a certain point below the
+		 menu bar while it is expanded, then it will automatically collapse. Because we 
+		 don't get mouse moved events when stopped, we set a timer that is reset every
+		 time that this method fires while it is visible to do our own hit tests. */
+		[self performSelector:@selector(performHitTestForMenubarInFullscreenMode) withObject:nil afterDelay:_timedFullscreenHitTestTimeoutTimerInterval];
+
+		/* Reset status variable. */
+	}
+	
+#undef _timedFullscreenHitTestTimeoutTimerInterval
+#undef _timedFullscreenHitTestFrameUpdateTimerInterval
+}
+
+- (void)performHitTestForMenubarInFullscreenModeTimedFrameUpdate
+{
+	self.timerForUpdateWebViewChildWindowFrameUpdatesIsPending = NO;
+	
+	[self updateChildWebViewWindowFrameToReflectContextBox];
 }
 
 - (void)updateChildWebViewWindowFrameToReflectContextBox
@@ -238,11 +319,13 @@
 	childWindowFrame.size.width = channelBoxViewFrame.size.width;
 	childWindowFrame.size.height = channelBoxViewFrame.size.height;
 	
-	if (animate) {
-		[self.webViewChildWindow setFrame:childWindowFrame display:YES animate:YES];
-	} else {
-		[self.webViewChildWindow setFrame:childWindowFrame display:YES animate:NO];
+	if (self.fullscreenMenubarStatus == TVCMainWindowFullscreenMenubarVisibleStatus) {
+		childWindowFrame.size.height -= 45.0;
+
+		animate = YES;
 	}
+	
+	[self.webViewChildWindow setFrame:childWindowFrame display:YES animate:animate];
 }
 
 - (void)setChannelViewContentView:(NSView *)view
@@ -344,12 +427,12 @@
 
 - (void)windowWillEnterFullScreen:(NSNotification *)notification
 {
-	[self startTransitionForWebViewChildWindow];
+	[self startTransitionForWebViewChildWindow:NO];
 }
 
 - (void)windowWillExitFullScreen:(NSNotification *)notification
 {
-	[self startTransitionForWebViewChildWindow];
+	[self startTransitionForWebViewChildWindow:YES];
 }
 
 - (BOOL)windowShouldZoom:(NSWindow *)awindow toFrame:(NSRect)newFrame
