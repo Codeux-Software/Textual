@@ -333,6 +333,8 @@
 - (void)windowDidEnterFullScreen:(NSNotification *)notification
 {
 	[self endTransitionForWebViewChildWindow:NO];
+	
+	[self.inputTextField focus];
 }
 
 - (void)windowDidExitFullScreen:(NSNotification *)notification
@@ -812,7 +814,7 @@
 
 - (void)exitFullscreenMode:(NSEvent *)e
 {
-	if ([self isInFullscreenMode] && [self.inputTextField isFocused] == NO) {
+	if ([self isInFullscreenMode]) {
 		[self toggleFullScreen:nil];
 	} else {
 		[self.inputTextField keyDown:e];
@@ -828,7 +830,7 @@
 {
 	TVCMainWindowNegateActionWithAttachedSheet();
 
-	[[mainWindow() webViewChildWindow] makeKeyWindow];
+	[[self webViewChildWindow] makeKeyWindow];
 }
 
 - (void)handler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
@@ -2021,6 +2023,16 @@
 - (void)sendEvent:(NSEvent *)theEvent
 {
 	if ([theEvent type] == NSKeyDown) {
+		/* Maybe escape window from fullscreen. */
+		if ([theEvent keyCode] == TXKeyEscapeCode) {
+			if ([mainWindow() isInFullscreenMode]) {
+				[mainWindow() toggleFullScreen:nil];
+				
+				return;
+			}
+		}
+		
+		/* Send event downstream. */
 		TVCMainWindowWebViewChildWindowContentView *contentView = [self contentView];
 		
 		[[[contentView webView] contentView] keyDown:theEvent];
@@ -2028,7 +2040,23 @@
 		return;
 	}
 	
+	/* Send other actions to self. */
 	[super sendEvent:theEvent];
+}
+
+- (void)swipeWithEvent:(NSEvent *)event
+{
+	[mainWindow() swipeWithEvent:event];
+}
+
+- (void)beginGestureWithEvent:(NSEvent *)event
+{
+	[mainWindow() beginGestureWithEvent:event];
+}
+
+- (void)endGestureWithEvent:(NSEvent *)event
+{
+	[mainWindow() endGestureWithEvent:event];
 }
 
 @end
@@ -2055,21 +2083,6 @@
 	[self removeTrackingArea:self.trackingArea];
 	
 	[self addTrackingArea];
-}
-
-- (void)swipeWithEvent:(NSEvent *)event
-{
-	[mainWindow() swipeWithEvent:event];
-}
-
-- (void)beginGestureWithEvent:(NSEvent *)event
-{
-	[mainWindow() beginGestureWithEvent:event];
-}
-
-- (void)endGestureWithEvent:(NSEvent *)event
-{
-	[mainWindow() endGestureWithEvent:event];
 }
 
 - (void)mouseEntered:(NSEvent *)theEvent
