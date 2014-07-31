@@ -41,6 +41,15 @@
 #define _treeDragItemType		@"tree"
 #define _treeDragItemTypes		[NSArray arrayWithObject:_treeDragItemType]
 
+@interface TVCMainWindowWebViewChildWindowContentView ()
+@property (nonatomic, strong) id trackingArea;
+@property (nonatomic, assign) BOOL isInTrackingArea;
+@end
+
+@interface TVCMainWindowChannelViewBox ()
+@property (nonatomic, assign) BOOL pauseFrameUpdates;
+@end
+
 @implementation TVCMainWindow
 
 #pragma mark -
@@ -238,7 +247,7 @@
 
 - (void)setChannelViewContentView:(NSView *)view
 {
-	[self.webViewChildWindow setContentView:view];
+	[self.webViewChildWindow setWebView:view];
 }
 
 - (void)updateChannelViewBackgroundColor
@@ -1042,6 +1051,11 @@
 	if ([self makeFirstResponder:self] == NO) {
 		[super endEditingFor:object];
 	}
+}
+
+- (BOOL)_hasKeyAppearance
+{
+	return [self isMainWindow];
 }
 
 - (BOOL)isReallyKeyWindow
@@ -1963,11 +1977,19 @@
 
 @end
 
+#pragma mark -
+#pragma mark WebKit Child Window
+
 @implementation TVCMainWindowWebViewChildWindow
 
 - (void)awakeFromNib
 {
 	[self setDelegate:self];
+}
+
+- (void)setWebView:(id)view
+{
+	[[(TVCMainWindowWebViewChildWindowContentView *)[self contentView] webView] setContentView:view];
 }
 
 - (void)windowDidBecomeKey:(NSNotification *)notification
@@ -1996,7 +2018,67 @@
 	return NO;
 }
 
+- (void)sendEvent:(NSEvent *)theEvent
+{
+	if ([theEvent type] == NSKeyDown) {
+		TVCMainWindowWebViewChildWindowContentView *contentView = [self contentView];
+		
+		[[[contentView webView] contentView] keyDown:theEvent];
+		
+		return;
+	}
+	
+	[super sendEvent:theEvent];
+}
+
 @end
+
+#pragma mark -
+#pragma mark WebKit Child Window Content View
+
+@implementation TVCMainWindowWebViewChildWindowContentView
+
+- (void)awakeFromNib
+{
+	[self addTrackingArea];
+}
+
+- (void)addTrackingArea
+{
+	self.trackingArea = [[NSTrackingArea alloc] initWithRect:[self frame] options:(NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveAlways) owner:self userInfo:nil];
+	
+	[self addTrackingArea:self.trackingArea];
+}
+
+- (void)updateTrackingAreas
+{
+	[self removeTrackingArea:self.trackingArea];
+	
+	[self addTrackingArea];
+}
+
+- (void)mouseEntered:(NSEvent *)theEvent
+{
+	if ([mainWindow() isMainWindow]) {
+		[[self window] makeKeyWindow];
+	}
+	
+	self.isInTrackingArea = YES;
+}
+
+- (void)mouseExited:(NSEvent *)theEvent
+{
+	if ([mainWindow() isMainWindow]) {
+		[mainWindow() makeKeyWindow];
+	}
+	
+	self.isInTrackingArea = NO;
+}
+
+@end
+
+#pragma mark -
+#pragma mark Channel View Box
 
 @implementation TVCMainWindowChannelViewBox
 
