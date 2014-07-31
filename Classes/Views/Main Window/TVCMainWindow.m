@@ -194,8 +194,6 @@ typedef enum TVCMainWindowFullscreenMenubarStatus : NSInteger {
 - (void)prepareForApplicationTermination
 {
 	[self saveWindowState];
-	
-	[NSEvent removeMonitor:self.trackingArea];
 
 	[self setDelegate:nil];
 }
