@@ -23,14 +23,16 @@
 {{/isEncrypted}}
 
 		<span class="message" ltype="{{lineType}}">
-			<span class="sender"
-				onclick="Textual.nicknameMaybeWasDoubleClicked(this)"
-				oncontextmenu="Textual.openStandardNicknameContextualMenu()" 
-				mtype="{{nicknameType}}"
-				nickname="{{nickname}}" 
-				{{#nicknameColorHashingEnabled}} 
-					colornumber="{{nicknameColorNumber}}"
-				{{/nicknameColorHashingEnabled}}>{{formattedNickname}}</span>
+			<span class="senderContainer">
+				<span class="sender"
+					onclick="Textual.nicknameMaybeWasDoubleClicked(this)"
+					oncontextmenu="Textual.openStandardNicknameContextualMenu()"
+					mtype="{{nicknameType}}"
+					nickname="{{nickname}}"
+					{{#nicknameColorHashingEnabled}}
+						colornumber="{{nicknameColorNumber}}"
+					{{/nicknameColorHashingEnabled}}>{{formattedNickname}}</span>
+			</span>
 			<span class="innerMessage">
 					{{{formattedMessage}}}
 					
