@@ -2057,6 +2057,21 @@
 	[self addTrackingArea];
 }
 
+- (void)swipeWithEvent:(NSEvent *)event
+{
+	[mainWindow() swipeWithEvent:event];
+}
+
+- (void)beginGestureWithEvent:(NSEvent *)event
+{
+	[mainWindow() beginGestureWithEvent:event];
+}
+
+- (void)endGestureWithEvent:(NSEvent *)event
+{
+	[mainWindow() endGestureWithEvent:event];
+}
+
 - (void)mouseEntered:(NSEvent *)theEvent
 {
 	if ([mainWindow() isMainWindow]) {
