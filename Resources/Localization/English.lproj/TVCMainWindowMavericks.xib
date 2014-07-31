@@ -317,7 +317,7 @@
                 <constraint firstItem="2Mc-lV-ZUM" firstAttribute="leading" secondItem="XKF-ho-ywZ" secondAttribute="leading" id="rcP-cR-Bcn"/>
                 <constraint firstItem="2Mc-lV-ZUM" firstAttribute="leading" secondItem="jeF-ZS-X1m" secondAttribute="leading" constant="94" id="xFo-sD-zRs"/>
             </constraints>
-            <point key="canvasLocation" x="561" y="-30"/>
+            <point key="canvasLocation" x="609" y="65"/>
         </customView>
         <menuItem title="IRC Formatting" tag="53037" id="TOA-qG-wJC">
             <modifierMask key="keyEquivalentModifierMask"/>
@@ -523,7 +523,7 @@
                                     </connections>
                                 </menuItem>
                                 <menuItem isSeparatorItem="YES" tag="99" id="ADC-gW-8G3"/>
-                                <menuItem title=" Rainbow" onStateImage="FormattingColor_Rainbow" offStateImage="FormattingColor_Rainbow" mixedStateImage="FormattingColor_Rainbow" tag="100" id="oEw-6L-5ta">
+                                <menuItem title=" Rainbow" onStateImage="FormattingColor_Rainbow" offStateImage="FormattingColor_Rainbow" mixedStateImage="FormattingColor_Rainbow" tag="299" id="oEw-6L-5ta">
                                     <attributedString key="attributedTitle">
                                         <fragment content=" ">
                                             <attributes>
@@ -707,6 +707,49 @@
                                         <action selector="insertForegroundColorCharIntoTextBox:" target="yyd-f5-aHb" id="PiS-1p-E5q"/>
                                     </connections>
                                 </menuItem>
+                                <menuItem title=" Random" onStateImage="FormattingColor_Random" offStateImage="FormattingColor_Random" mixedStateImage="FormattingColor_Random" tag="199" id="CsR-vt-Gem">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content=" R">
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="0.050980392156862744" blue="0.039215686274509803" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content="an">
+                                            <attributes>
+                                                <color key="NSColor" red="0.5490196078431373" green="0.0" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content="d">
+                                            <attributes>
+                                                <color key="NSColor" red="0.0" green="1" blue="0.14901960784313725" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content="o">
+                                            <attributes>
+                                                <color key="NSColor" red="0.070588235294117646" green="0.0" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content="m">
+                                            <attributes>
+                                                <color key="NSColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertForegroundColorCharIntoTextBox:" target="yyd-f5-aHb" id="2pY-5g-aKs"/>
+                                    </connections>
+                                </menuItem>
                             </items>
                         </menu>
                     </menuItem>
@@ -821,7 +864,7 @@
                                     </connections>
                                 </menuItem>
                                 <menuItem isSeparatorItem="YES" tag="99" id="JHg-4C-AVB"/>
-                                <menuItem title=" Rainbow" onStateImage="FormattingColor_Rainbow" offStateImage="FormattingColor_Rainbow" mixedStateImage="FormattingColor_Rainbow" tag="100" id="CVb-Xt-GnE">
+                                <menuItem title=" Rainbow" onStateImage="FormattingColor_Rainbow" offStateImage="FormattingColor_Rainbow" mixedStateImage="FormattingColor_Rainbow" tag="299" id="CVb-Xt-GnE">
                                     <attributedString key="attributedTitle">
                                         <fragment content=" ">
                                             <attributes>
@@ -1005,6 +1048,49 @@
                                         <action selector="insertBackgroundColorCharIntoTextBox:" target="yyd-f5-aHb" id="XOt-xw-lR0"/>
                                     </connections>
                                 </menuItem>
+                                <menuItem title=" Random" onStateImage="FormattingColor_Random" offStateImage="FormattingColor_Random" mixedStateImage="FormattingColor_Random" tag="199" id="QbV-Ta-nV9">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content=" R">
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="0.050980392156862744" blue="0.039215686274509803" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content="an">
+                                            <attributes>
+                                                <color key="NSColor" red="0.5490196078431373" green="0.0" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content="d">
+                                            <attributes>
+                                                <color key="NSColor" red="0.0" green="1" blue="0.14901960784313725" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content="o">
+                                            <attributes>
+                                                <color key="NSColor" red="0.070588235294117646" green="0.0" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content="m">
+                                            <attributes>
+                                                <color key="NSColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="insertBackgroundColorCharIntoTextBox:" target="yyd-f5-aHb" id="aOu-QZ-yvv"/>
+                                    </connections>
+                                </menuItem>
                             </items>
                         </menu>
                     </menuItem>
@@ -1018,7 +1104,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="957" y="539" width="800" height="477"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="697"/>
             <value key="minSize" type="size" width="600" height="250"/>
             <view key="contentView" id="vSf-eS-cbh">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="477"/>
@@ -1591,7 +1677,7 @@ There are no other limits. What you see, is what you get.</string>
                 <outlet property="serverList" destination="bhZ-Cj-KBM" id="QGQ-U3-gy6"/>
                 <outlet property="webViewChildWindow" destination="Dlm-oc-ab9" id="QFP-fe-v3w"/>
             </connections>
-            <point key="canvasLocation" x="1537" y="342.5"/>
+            <point key="canvasLocation" x="1901" y="363.5"/>
         </window>
         <customObject id="yyd-f5-aHb" userLabel="FormatTextController" customClass="TVCTextViewIRCFormattingMenu">
             <connections>
@@ -1613,11 +1699,32 @@ There are no other limits. What you see, is what you get.</string>
         <customObject id="oRw-Te-R5j" customClass="TXMenuControllerMainWindowProxy"/>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" hasShadow="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="Dlm-oc-ab9" userLabel="Webview Window" customClass="TVCMainWindowWebViewChildWindow">
             <rect key="contentRect" x="1000" y="556" width="480" height="270"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
-            <view key="contentView" id="gZ6-YJ-7Lg">
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="697"/>
+            <view key="contentView" id="gZ6-YJ-7Lg" customClass="TVCMainWindowWebViewChildWindowContentView">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <box autoresizesSubviews="NO" boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="4dr-Zb-Hww">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <view key="contentView">
+                            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        </view>
+                        <color key="borderColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </box>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="4dr-Zb-Hww" firstAttribute="top" secondItem="gZ6-YJ-7Lg" secondAttribute="top" id="Eto-Dr-j0h"/>
+                    <constraint firstAttribute="trailing" secondItem="4dr-Zb-Hww" secondAttribute="trailing" id="N2F-bn-5xx"/>
+                    <constraint firstAttribute="bottom" secondItem="4dr-Zb-Hww" secondAttribute="bottom" id="lpM-AX-OU6"/>
+                    <constraint firstItem="4dr-Zb-Hww" firstAttribute="leading" secondItem="gZ6-YJ-7Lg" secondAttribute="leading" id="qON-br-hyj"/>
+                </constraints>
+                <connections>
+                    <outlet property="webView" destination="4dr-Zb-Hww" id="qVI-e3-Sba"/>
+                </connections>
             </view>
+            <point key="canvasLocation" x="1856" y="352"/>
         </window>
     </objects>
     <resources>
@@ -1638,6 +1745,7 @@ There are no other limits. What you see, is what you get.</string>
         <image name="FormattingColor_8" width="16" height="16"/>
         <image name="FormattingColor_9" width="16" height="16"/>
         <image name="FormattingColor_Rainbow" width="8" height="8"/>
+        <image name="FormattingColor_Random" width="16" height="16"/>
         <image name="MainWindowSegmentedControlUserTemplate" width="20" height="18"/>
         <image name="NSActionTemplate" width="14" height="14"/>
         <image name="NSAddTemplate" width="11" height="11"/>
