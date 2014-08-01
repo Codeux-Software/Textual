@@ -327,7 +327,7 @@ Textual = {
 		then we return false to stop link from opening. Else, we pass the event information 
 		to the internals of Textual itself to determine whether to cancel the request. */
 		
-		if (InlineImageLiveResize) {
+		if (typeof InlineImageLiveResize !== 'undefined') {
 			if (InlineImageLiveResize.previousMouseActionWasForResizing === false) {
 				app.toggleInlineImage(object);
 			}
