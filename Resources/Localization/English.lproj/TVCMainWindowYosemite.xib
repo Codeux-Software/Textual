@@ -455,6 +455,9 @@ There are no other limits. What you see, is what you get.</string>
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="openWelcomeSheet:" target="U6M-jc-NbT" id="Qg8-Tn-1Jf"/>
+                                            </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t6B-Mn-g8d">
                                             <rect key="frame" x="217" y="1" width="164" height="32"/>
@@ -462,6 +465,9 @@ There are no other limits. What you see, is what you get.</string>
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="openMacAppStoreDownloadPage:" target="U6M-jc-NbT" id="bDN-Bm-a39"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>
@@ -503,6 +509,9 @@ There are no other limits. What you see, is what you get.</string>
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="openWelcomeSheet:" target="U6M-jc-NbT" id="1XC-Cy-mVc"/>
+                                            </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wDr-fm-SYg">
                                             <rect key="frame" x="31" y="50" width="421" height="17"/>
@@ -524,6 +533,9 @@ There are no other limits. What you see, is what you get.</string>
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="openMigrationAssistantDownloadPage:" target="U6M-jc-NbT" id="0hf-1n-pq7"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>
