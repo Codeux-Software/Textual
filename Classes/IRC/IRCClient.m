@@ -1014,30 +1014,30 @@
 /* Spoken events are only called from within the following calls so we are going to 
  shove the key value matching in here to make it all in one place for management. */
 
-- (NSString *)localizedSpokenMessageForEvent:(TXNotificationType)event
+- (NSInteger)localizedSpokenMessageForEvent:(TXNotificationType)event
 {
 	switch (event) {
-		case TXNotificationChannelMessageType:						{ return BLS(1043);		}
-		case TXNotificationChannelNoticeType:						{ return BLS(1044);		}
-		case TXNotificationConnectType:								{ return BLS(1051);		}
-		case TXNotificationDisconnectType:							{ return BLS(1052);		}
-		case TXNotificationInviteType:								{ return BLS(1046);		}
-		case TXNotificationKickType:								{ return BLS(1047);		}
-		case TXNotificationNewPrivateMessageType:					{ return BLS(1048);		}
-		case TXNotificationPrivateMessageType:						{ return BLS(1049);		}
-		case TXNotificationPrivateNoticeType:						{ return BLS(1050);		}
-		case TXNotificationHighlightType:							{ return BLS(1045);		}
+		case TXNotificationChannelMessageType:						{ return (1043);		}
+		case TXNotificationChannelNoticeType:						{ return (1044);		}
+		case TXNotificationConnectType:								{ return (1051);		}
+		case TXNotificationDisconnectType:							{ return (1052);		}
+		case TXNotificationInviteType:								{ return (1046);		}
+		case TXNotificationKickType:								{ return (1047);		}
+		case TXNotificationNewPrivateMessageType:					{ return (1048);		}
+		case TXNotificationPrivateMessageType:						{ return (1049);		}
+		case TXNotificationPrivateNoticeType:						{ return (1050);		}
+		case TXNotificationHighlightType:							{ return (1045);		}
 
-		case TXNotificationFileTransferSendSuccessfulType:			{ return BLS(1053);		}
-		case TXNotificationFileTransferReceiveSuccessfulType:		{ return BLS(1054);		}
-		case TXNotificationFileTransferSendFailedType:				{ return BLS(1055);		}
-		case TXNotificationFileTransferReceiveFailedType:			{ return BLS(1056);		}
-		case TXNotificationFileTransferReceiveRequestedType:		{ return BLS(1057);		}
+		case TXNotificationFileTransferSendSuccessfulType:			{ return (1053);		}
+		case TXNotificationFileTransferReceiveSuccessfulType:		{ return (1054);		}
+		case TXNotificationFileTransferSendFailedType:				{ return (1055);		}
+		case TXNotificationFileTransferReceiveFailedType:			{ return (1056);		}
+		case TXNotificationFileTransferReceiveRequestedType:		{ return (1057);		}
 	
-		default: { return nil; }
+		default: { return 0; }
 	}
 
-	return nil;
+	return 0;
 }
 
 - (void)speakEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nick:(NSString *)nick text:(NSString *)text
@@ -1054,9 +1054,9 @@
 		{
 			NSObjectIsEmptyAssertLoopBreak(text); // Do not speak empty messages.
 
-			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
+			NSInteger nformatString = [self localizedSpokenMessageForEvent:type];
 			
-			formattedMessage = TXTLS(nformatString, [[target name] channelNameToken], nick, text);
+			formattedMessage = BLS(nformatString, [[target name] channelNameToken], nick, text);
 
 			break;
 		}
@@ -1066,34 +1066,34 @@
 		{
 			NSObjectIsEmptyAssertLoopBreak(text); // Do not speak empty messages.
 
-			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
+			NSInteger nformatString = [self localizedSpokenMessageForEvent:type];
 
-			formattedMessage = TXTLS(nformatString, nick, text);
+			formattedMessage = BLS(nformatString, nick, text);
 			
 			break;
 		}
 		case TXNotificationKickType:
 		{
-			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
+			NSInteger nformatString = [self localizedSpokenMessageForEvent:type];
 
-			formattedMessage = TXTLS(nformatString, [[target name] channelNameToken], nick);
+			formattedMessage = BLS(nformatString, [[target name] channelNameToken], nick);
 
 			break;
 		}
 		case TXNotificationInviteType:
 		{
-			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
+			NSInteger nformatString = [self localizedSpokenMessageForEvent:type];
 
-			formattedMessage = TXTLS(nformatString, [text channelNameToken], nick);
+			formattedMessage = BLS(nformatString, [text channelNameToken], nick);
 
 			break;
 		}
 		case TXNotificationConnectType:
 		case TXNotificationDisconnectType:
 		{
-			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
+			NSInteger nformatString = [self localizedSpokenMessageForEvent:type];
 
-			formattedMessage = TXTLS(nformatString, [self altNetworkName]);
+			formattedMessage = BLS(nformatString, [self altNetworkName]);
 			
 			break;
 		}
@@ -1109,9 +1109,9 @@
 		case TXNotificationFileTransferReceiveFailedType:
 		case TXNotificationFileTransferReceiveRequestedType:
 		{
-			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
+			NSInteger nformatString = [self localizedSpokenMessageForEvent:type];
 			
-			formattedMessage = TXTLS(nformatString, nick);
+			formattedMessage = BLS(nformatString, nick);
 		}
 	}
 
