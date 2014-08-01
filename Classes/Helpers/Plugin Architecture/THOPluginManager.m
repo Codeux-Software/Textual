@@ -118,10 +118,14 @@
 				if (currBundle) {
 					THOPluginItem *currPlugin = [THOPluginItem new];
 
-					[currPlugin loadBundle:currBundle];
+				 	BOOL bundleLoaded = [currPlugin loadBundle:currBundle];
 
-					[loadedBundles addObject:currBundle];
-					[loadedPlugins addObject:currPlugin];
+					if (bundleLoaded) {
+						[loadedBundles addObject:currBundle];
+						[loadedPlugins addObject:currPlugin];
+					} else {
+						currPlugin = nil;
+					}
 				}
 			}
 		}
