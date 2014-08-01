@@ -362,7 +362,7 @@
 #define _navigationIndexForAddressBook				1
 #define _navigationIndexForConnectCommands			3
 #define _navigationIndexForDisconnectMessages		8
-#define _navigationIndexForFloodControl				12
+#define _navigationIndexForFloodControl				13
 #define _navigationIndexForGeneral					5
 #define _navigationIndexForIdentity					6
 	
@@ -393,10 +393,10 @@
 	[navigationTreeMatrix addObject:@{
 		@"name" : TXTLS(@"TDCServerSheet[1007][17]"),
 		@"children" : @[
+			@{@"name" : TXTLS(@"TDCServerSheet[1007][11]"),	@"view" : self.sslCertificateContentView},
 			@{@"name" : TXTLS(@"TDCServerSheet[1007][04]"),	@"view" : self.floodControlContentView},
 			@{@"name" : TXTLS(@"TDCServerSheet[1007][13]"),	@"view" : self.networkSocketContentView},
 			@{@"name" : TXTLS(@"TDCServerSheet[1007][10]"),	@"view" : self.proxyServerContentView},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][11]"),	@"view" : self.sslCertificateContentView},
 		]
 	}];
 	
