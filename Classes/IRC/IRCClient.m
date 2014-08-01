@@ -6283,9 +6283,7 @@
 			IRCChannel *c = [self findChannel:channel];
 
 			PointerIsEmptyAssertLoopBreak(c);
-			
-			BOOL isSelectedChannel = (c == [mainWindow() selectedItem]);
-			
+					
 			/* Example incoming data:
 				<channel> <user> <host> <server> <nick> <H|G>[*][@|+] <hopcount> <real name>
 			 
