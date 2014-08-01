@@ -6390,7 +6390,7 @@
 				[oldUser migrate:newUser];
 				
 				if (requiresRedraw) {
-					if ([c isChannel]) {self
+					if ([c isChannel]) {
 						[c removeMember:[oldUser nickname]];
 						
 						[c addMember:oldUser];
