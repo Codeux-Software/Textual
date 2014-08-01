@@ -1545,11 +1545,11 @@
 	IRCAddressBookEntry *newIgnore = [IRCAddressBookEntry new];
 
 	if ([sender tag] == 4) {
-		self.ignoreSheet.ignore.entryType = IRCAddressBookUserTrackingEntryType;
+		newIgnore.entryType = IRCAddressBookUserTrackingEntryType;
 		
 		newIgnore.notifyJoins = YES;
 	} else {
-		self.ignoreSheet.ignore.entryType = IRCAddressBookIgnoreEntryType;
+		newIgnore.entryType = IRCAddressBookIgnoreEntryType;
 		
 		newIgnore.ignoreCTCP = YES;
 		newIgnore.ignoreJPQE = YES;
