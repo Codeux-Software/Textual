@@ -65,7 +65,7 @@
 "TDCServerSheet[1007][08]" = "Messages";
 "TDCServerSheet[1007][09]" = "Miscellaneous";
 "TDCServerSheet[1007][10]" = "Proxy Server";
-"TDCServerSheet[1007][11]" = "SSL Certificate";
+"TDCServerSheet[1007][11]" = "Client Certificate";
 "TDCServerSheet[1007][12]" = "Highlights";
 "TDCServerSheet[1007][13]" = "Network Socket";
 "TDCServerSheet[1007][14]" = "ZNC Bouncer";
