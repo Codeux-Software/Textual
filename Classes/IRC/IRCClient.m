@@ -6389,19 +6389,11 @@
 				
 				[oldUser migrate:newUser];
 				
-				/* If the member list is visible, we are the selected channel, and
-				 the user requires redraw, then we remove them and readd them. */
-				/* We actually remove them instead of calling redraw method because
-				 the sort order could have changed. */
 				if (requiresRedraw) {
-					if (isSelectedChannel) {
-						if ([c isChannel]) {
-							if ([mainWindow() isMemberListVisible]) {
-								[c removeMember:[oldUser nickname]];
-								
-								[c addMember:oldUser];
-							}
-						}
+					if ([c isChannel]) {self
+						[c removeMember:[oldUser nickname]];
+						
+						[c addMember:oldUser];
 					}
 				}
 			}
