@@ -1543,26 +1543,28 @@
 	self.ignoreSheet = [TDCAddressBookSheet new];
 	
 	IRCAddressBookEntry *newIgnore = [IRCAddressBookEntry new];
-	
-	newIgnore.ignoreCTCP = YES;
-	newIgnore.ignoreJPQE = YES;
-	newIgnore.ignoreNotices = YES;
-	newIgnore.ignorePrivateHighlights = YES;
-	newIgnore.ignorePrivateMessages = YES;
-	newIgnore.ignorePublicHighlights = YES;
-	newIgnore.ignorePublicMessages = YES;
-	newIgnore.ignoreFileTransferRequests = YES;
+
+	if ([sender tag] == 4) {
+		self.ignoreSheet.ignore.entryType = IRCAddressBookUserTrackingEntryType;
+		
+		newIgnore.notifyJoins = YES;
+	} else {
+		self.ignoreSheet.ignore.entryType = IRCAddressBookIgnoreEntryType;
+		
+		newIgnore.ignoreCTCP = YES;
+		newIgnore.ignoreJPQE = YES;
+		newIgnore.ignoreNotices = YES;
+		newIgnore.ignorePrivateHighlights = YES;
+		newIgnore.ignorePrivateMessages = YES;
+		newIgnore.ignorePublicHighlights = YES;
+		newIgnore.ignorePublicMessages = YES;
+		newIgnore.ignoreFileTransferRequests = YES;
+	}
 	
 	self.ignoreSheet.newItem = YES;
 	self.ignoreSheet.delegate = self;
 	self.ignoreSheet.window = self.sheet;
 	self.ignoreSheet.ignore = newIgnore;
-	
-	if ([sender tag] == 4) {
-		self.ignoreSheet.ignore.entryType = IRCAddressBookUserTrackingEntryType;
-	} else {
-		self.ignoreSheet.ignore.entryType = IRCAddressBookIgnoreEntryType;
-	}
 	
 	[self.ignoreSheet start];
 }
