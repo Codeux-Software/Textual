@@ -110,7 +110,7 @@
 
 - (NSColor *)channelCellSelectedTextColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.5];
+	return [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
 }
 
 - (NSColor *)serverCellDisabledItemTextColorForActiveWindow
@@ -140,7 +140,7 @@
 
 - (NSColor *)serverCellSelectedTextColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.5];
+	return [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
 }
 
 - (NSFont *)messageCountBadgeFont
@@ -225,12 +225,20 @@
 
 - (NSColor *)rowSelectionColorForActiveWindow
 {
-	return nil; // Use system default.
+	if ([NSColor currentControlTint] == NSGraphiteControlTint) {
+		return [NSColor colorWithCalibratedWhite:0.5 alpha:1.0];
+	} else {
+		return [NSColor colorWithCalibratedRed:0.0347571 green:0.315221 blue:0.814913 alpha:1.0];
+	}
 }
 
 - (NSColor *)rowSelectionColorForInactiveWindow
 {
-	return nil; // Use system default.
+	if ([NSColor currentControlTint] == NSGraphiteControlTint) {
+		return [NSColor colorWithCalibratedWhite:0.7 alpha:1.0];
+	} else {
+		return [NSColor colorWithCalibratedWhite:0.7 alpha:1.0];
+	}
 }
 
 @end

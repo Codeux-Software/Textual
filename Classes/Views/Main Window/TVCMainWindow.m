@@ -41,15 +41,6 @@
 #define _treeDragItemType		@"tree"
 #define _treeDragItemTypes		[NSArray arrayWithObject:_treeDragItemType]
 
-@interface TVCMainWindowWebViewChildWindowContentView ()
-@property (nonatomic, strong) id trackingArea;
-@property (nonatomic, assign) BOOL isInTrackingArea;
-@end
-
-@interface TVCMainWindowChannelViewBox ()
-@property (nonatomic, assign) BOOL pauseFrameUpdates;
-@end
-
 @implementation TVCMainWindow
 
 #pragma mark -
@@ -141,9 +132,9 @@
 		self.usingVibrantDarkAppearance = [TPCPreferences invertSidebarColors];
 		
 		if ([TPCPreferences invertSidebarColors]) {
-			[self.webViewChildWindow setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
+			[self.channelViewBox setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
 		} else {
-			[self.webViewChildWindow setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
+			[self.channelViewBox setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
 		}
 	}
 	
@@ -151,9 +142,7 @@
 	[self.serverList updateBackgroundColor];
 	
 	[self.inputTextField updateBackgroundColor];
-	
-	[self updateChannelViewBackgroundColor];
-	
+
 	[self.contentView setNeedsDisplay:YES];
 }
 
@@ -178,81 +167,6 @@
 	[self saveWindowState];
 
 	[self setDelegate:nil];
-}
-
-#pragma mark -
-#pragma mark Child Webview Window
-
-- (void)startTransitionForWebViewChildWindow
-{
-	[self.webViewChildWindow setAlphaValue:0.0];
-	
-	[self.channelViewBox setPauseFrameUpdates:YES];
-}
-
-- (void)endTransitionForWebViewChildWindow:(BOOL)isExitingFullscreen
-{
-	if (isExitingFullscreen) {
-		[self finishPreparingWebViewChildWindowDuringFullscreen];
-	} else {
-		[self performSelector:@selector(finishPreparingWebViewChildWindowDuringFullscreen) withObject:nil afterDelay:0.8];
-	}
-}
-
-- (void)finishPreparingWebViewChildWindowDuringFullscreen
-{
-	[self.webViewChildWindow setAlphaValue:1.0];
-	
-	[self.channelViewBox setPauseFrameUpdates:NO];
-	
-	[self updateChildWebViewWindowFrameToReflectContextBox];
-}
-
-- (void)addChildWebViewWindow
-{
-	[self addChildWindow:self.webViewChildWindow ordered:NSWindowAbove];
-	
-	[self.webViewChildWindow orderWindow:NSWindowAbove relativeTo:[self windowNumber]];
-}
-
-- (void)updateChildWebViewWindowFrameToReflectContextBox
-{
-	NSRect newFrame = [self contentRectForFrameRect:[self frame]];
-	
-	[self updateChildWebViewWindowFrame:newFrame animate:NO];
-}
-
-- (void)updateChildWebViewWindowFrame:(NSRect)mainWindowFrame animate:(BOOL)animate
-{
-	/* Calculate final frame. */
-	NSRect childWindowFrame = NSZeroRect;
-	
-	NSRect contentSplitViewFrame = [self.contentSplitView frame];
-	NSRect channelBoxViewFrame = [self.channelViewBox frame];
-	
-	NSInteger textFieldHeightDiff = (mainWindowFrame.size.height - contentSplitViewFrame.size.height);
-	
-	childWindowFrame.origin.x = (mainWindowFrame.origin.x + channelBoxViewFrame.origin.x);
-	childWindowFrame.origin.y = (mainWindowFrame.origin.y + textFieldHeightDiff);
-	
-	childWindowFrame.size.width = channelBoxViewFrame.size.width;
-	childWindowFrame.size.height = channelBoxViewFrame.size.height;
-	
-	if (animate) {
-		[self.webViewChildWindow setFrame:childWindowFrame display:YES animate:YES];
-	} else {
-		[self.webViewChildWindow setFrame:childWindowFrame display:YES animate:NO];
-	}
-}
-
-- (void)setChannelViewContentView:(NSView *)view
-{
-	[self.webViewChildWindow setWebView:view];
-}
-
-- (void)updateChannelViewBackgroundColor
-{
-	[self.channelViewBox setFillColor:[themeSettings() underlyingWindowColor]];
 }
 
 #pragma mark -
@@ -310,11 +224,6 @@
 	[self.memberList destroyUserInfoPopoverOnWindowKeyChange];
 }
 
-- (void)windowDidResignMain:(NSNotification *)notification
-{
-	[self.webViewChildWindow setWindowShouldRefuseFirstResponderOnNextKeyChange:YES];
-}
-
 - (BOOL)window:(NSWindow *)window shouldPopUpDocumentPathMenu:(NSMenu *)menu
 {
 	return NO;
@@ -328,28 +237,6 @@
 - (void)windowDidResize:(NSNotification *)notification
 {
 	[self.inputTextField resetTextFieldCellSize:YES];
-}
-
-- (void)windowDidEnterFullScreen:(NSNotification *)notification
-{
-	[self endTransitionForWebViewChildWindow:NO];
-	
-	[self.inputTextField focus];
-}
-
-- (void)windowDidExitFullScreen:(NSNotification *)notification
-{
-	[self endTransitionForWebViewChildWindow:YES];
-}
-
-- (void)windowWillEnterFullScreen:(NSNotification *)notification
-{
-	[self startTransitionForWebViewChildWindow];
-}
-
-- (void)windowWillExitFullScreen:(NSNotification *)notification
-{
-	[self startTransitionForWebViewChildWindow];
 }
 
 - (BOOL)windowShouldZoom:(NSWindow *)awindow toFrame:(NSRect)newFrame
@@ -830,7 +717,7 @@
 {
 	TVCMainWindowNegateActionWithAttachedSheet();
 
-	[[self webViewChildWindow] makeKeyWindow];
+	[self makeFirstResponder:[[self selectedViewController] webView]];
 }
 
 - (void)handler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
@@ -1029,17 +916,6 @@
 #pragma mark -
 #pragma mark Misc.
 
-- (void)makeKeyAndMainIfNot
-{
-	if ([self.webViewChildWindow isKeyWindow]) {
-		[self makeKeyWindow];
-	}
-	
-	if ([self.webViewChildWindow isMainWindow]) {
-		[self makeMainWindow];
-	}
-}
-
 - (void)endEditingFor:(id)object
 {
 	/* WebHTMLView results in this method being called.
@@ -1052,25 +928,6 @@
 
 	if ([self makeFirstResponder:self] == NO) {
 		[super endEditingFor:object];
-	}
-}
-
-- (BOOL)_hasKeyAppearance
-{
-	return [self isMainWindow];
-}
-
-- (BOOL)isReallyKeyWindow
-{
-	return [super isKeyWindow];
-}
-
-- (BOOL)isKeyWindow
-{
-	if ([self.webViewChildWindow isKeyWindow]) {
-		return YES;
-	} else {
-		return [super isKeyWindow];
 	}
 }
 
@@ -1405,7 +1262,7 @@
 	if (item == nil) {
 		self.selectedItem = nil;
 		
-		[self setChannelViewContentView:nil];
+		[self.channelViewBox setContentView:nil];
 		
 		[self.memberList setDataSource:nil];
 		[self.memberList reloadData];
@@ -1632,7 +1489,7 @@
 	
 	/* Destroy member list if we have no selection. */
 	if (self.selectedItem == nil) {
-		[self setChannelViewContentView:nil];
+		[self.channelViewBox setContentView:nil];
 		
 		 self.memberList.delegate = nil;
 		 self.memberList.dataSource = nil;
@@ -1650,7 +1507,7 @@
 	TVCLogController *log = self.selectedViewController;
 	
 	/* Set content view to WebView. */
-	[self setChannelViewContentView:[log webView]];
+	[self.channelViewBox setContentView:[log webView]];
 	
 	/* Allow selected WebView time to update. */
 	[log notifyDidBecomeVisible];
@@ -1975,161 +1832,6 @@
 - (void)serverListKeyDown:(NSEvent *)e
 {
 	[worldController() logKeyDown:e];
-}
-
-@end
-
-#pragma mark -
-#pragma mark WebKit Child Window
-
-@implementation TVCMainWindowWebViewChildWindow
-
-- (void)awakeFromNib
-{
-	[self setDelegate:self];
-}
-
-- (void)setWebView:(id)view
-{
-	[[(TVCMainWindowWebViewChildWindowContentView *)[self contentView] webView] setContentView:view];
-}
-
-- (void)windowDidBecomeKey:(NSNotification *)notification
-{
-	if (self.windowShouldRefuseFirstResponderOnNextKeyChange) {
-		self.windowShouldRefuseFirstResponderOnNextKeyChange = NO;
-		
-		[mainWindow() makeKeyAndMainIfNot];
-	} else {
-		[mainWindow() makeFirstResponder:nil];
-	}
-}
-
-- (void)windowDidResignKey:(NSNotification *)notification
-{
-	[mainWindow() makeFirstResponder:mainWindowTextField()];
-}
-
-- (BOOL)canBecomeKeyWindow
-{
-	return ([mainWindow() attachedSheet] == nil);
-}
-
-- (BOOL)canBecomeMainWindow
-{
-	return NO;
-}
-
-- (void)sendEvent:(NSEvent *)theEvent
-{
-	if ([theEvent type] == NSKeyDown) {
-		/* Maybe escape window from fullscreen. */
-		if ([theEvent keyCode] == TXKeyEscapeCode) {
-			if ([mainWindow() isInFullscreenMode]) {
-				[mainWindow() toggleFullScreen:nil];
-				
-				return;
-			}
-		}
-		
-		/* Send event downstream. */
-		TVCMainWindowWebViewChildWindowContentView *contentView = [self contentView];
-		
-		[[[contentView webView] contentView] keyDown:theEvent];
-		
-		return;
-	}
-	
-	/* Send other actions to self. */
-	[super sendEvent:theEvent];
-}
-
-- (void)swipeWithEvent:(NSEvent *)event
-{
-	[mainWindow() swipeWithEvent:event];
-}
-
-- (void)beginGestureWithEvent:(NSEvent *)event
-{
-	[mainWindow() beginGestureWithEvent:event];
-}
-
-- (void)endGestureWithEvent:(NSEvent *)event
-{
-	[mainWindow() endGestureWithEvent:event];
-}
-
-@end
-
-#pragma mark -
-#pragma mark WebKit Child Window Content View
-
-@implementation TVCMainWindowWebViewChildWindowContentView
-
-- (void)awakeFromNib
-{
-	[self addTrackingArea];
-}
-
-- (void)addTrackingArea
-{
-	self.trackingArea = [[NSTrackingArea alloc] initWithRect:[self frame] options:(NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveAlways) owner:self userInfo:nil];
-	
-	[self addTrackingArea:self.trackingArea];
-}
-
-- (void)updateTrackingAreas
-{
-	[self removeTrackingArea:self.trackingArea];
-	
-	[self addTrackingArea];
-}
-
-- (void)mouseEntered:(NSEvent *)theEvent
-{
-	if ([mainWindow() isMainWindow]) {
-		[[self window] makeKeyWindow];
-	}
-	
-	self.isInTrackingArea = YES;
-}
-
-- (void)mouseExited:(NSEvent *)theEvent
-{
-	if ([mainWindow() isMainWindow]) {
-		[mainWindow() makeKeyWindow];
-	}
-	
-	self.isInTrackingArea = NO;
-}
-
-@end
-
-#pragma mark -
-#pragma mark Channel View Box
-
-@implementation TVCMainWindowChannelViewBox
-
-- (void)awakeFromNib
-{
-	[RZNotificationCenter() addObserver:self selector:@selector(frameDidChangeNotification:) name:NSViewFrameDidChangeNotification object:self];
-	
-	[self setPostsFrameChangedNotifications:YES];
-	
-	[mainWindow() addChildWebViewWindow];
-	[mainWindow() updateChildWebViewWindowFrameToReflectContextBox];
-}
-
-- (void)dealloc
-{
-	[RZNotificationCenter() removeObserver:self];
-}
-
-- (void)frameDidChangeNotification:(NSNotification *)note
-{
-	if (self.pauseFrameUpdates == NO) {
-		[mainWindow() updateChildWebViewWindowFrameToReflectContextBox];
-	}
 }
 
 @end
