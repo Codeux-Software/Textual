@@ -90,6 +90,53 @@
                         </items>
                     </menu>
                 </menuItem>
+                <menuItem title="View" id="1782">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="View" id="1783">
+                        <items>
+                            <menuItem title="Mark Scrollback" tag="32345" keyEquivalent="l" id="1786">
+                                <connections>
+                                    <action selector="markScrollback:" target="267" id="2593"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Scrollback Marker" tag="32346" keyEquivalent="l" id="2305">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                <connections>
+                                    <action selector="gotoScrollbackMarker:" target="267" id="2595"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="2307"/>
+                            <menuItem title="Mark All As Read" tag="32347" keyEquivalent="U" id="1924">
+                                <connections>
+                                    <action selector="markAllAsRead:" target="267" id="2596"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Clear Scrollback" tag="32348" keyEquivalent="k" id="2299">
+                                <connections>
+                                    <action selector="clearScrollback:" target="267" id="2594"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1788"/>
+                            <menuItem title="Increase Font Size" tag="32349" keyEquivalent="=" id="1919">
+                                <connections>
+                                    <action selector="increaseLogFontSize:" target="267" id="2597"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Decrease Font Size" tag="32350" keyEquivalent="-" id="1921">
+                                <connections>
+                                    <action selector="decreaseLogFontSize:" target="267" id="2598"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1918"/>
+                            <menuItem title="Toggle Fullscreen" keyEquivalent="f" id="1790">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleFullscreen:" target="267" id="v4x-I2-JVb"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
                 <menuItem title="Edit" id="163">
                     <menu key="submenu" title="Edit" id="169">
                         <items>
@@ -184,53 +231,6 @@
                             <menuItem title="Search in Google" tag="331" id="394">
                                 <connections>
                                     <action selector="searchGoogle:" target="267" id="2592"/>
-                                </connections>
-                            </menuItem>
-                        </items>
-                    </menu>
-                </menuItem>
-                <menuItem title="View" id="1782">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="View" id="1783">
-                        <items>
-                            <menuItem title="Mark Scrollback" tag="32345" keyEquivalent="l" id="1786">
-                                <connections>
-                                    <action selector="markScrollback:" target="267" id="2593"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Scrollback Marker" tag="32346" keyEquivalent="l" id="2305">
-                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
-                                <connections>
-                                    <action selector="gotoScrollbackMarker:" target="267" id="2595"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="2307"/>
-                            <menuItem title="Mark All As Read" tag="32347" keyEquivalent="U" id="1924">
-                                <connections>
-                                    <action selector="markAllAsRead:" target="267" id="2596"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Clear Scrollback" tag="32348" keyEquivalent="k" id="2299">
-                                <connections>
-                                    <action selector="clearScrollback:" target="267" id="2594"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="1788"/>
-                            <menuItem title="Increase Font Size" tag="32349" keyEquivalent="=" id="1919">
-                                <connections>
-                                    <action selector="increaseLogFontSize:" target="267" id="2597"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Decrease Font Size" tag="32350" keyEquivalent="-" id="1921">
-                                <connections>
-                                    <action selector="decreaseLogFontSize:" target="267" id="2598"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="1918"/>
-                            <menuItem title="Toggle Fullscreen" keyEquivalent="f" id="1790">
-                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
-                                <connections>
-                                    <action selector="toggleFullscreen:" target="267" id="v4x-I2-JVb"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -597,7 +597,7 @@ CQ
                                     <action selector="toggleServerListVisibility:" target="267" id="QZ5-GG-Vjc"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Toggle On Dark Window Appearance" keyEquivalent="D" id="MdO-DZ-V1C">
+                            <menuItem title="Toggle Window Appearance" keyEquivalent="D" id="MdO-DZ-V1C">
                                 <connections>
                                     <action selector="toggleMainWindowAppearance:" target="267" id="2rc-PG-gd2"/>
                                     <binding destination="267" name="enabled" keyPath="self.userDefaultsValues.Theme -&gt; Invert Sidebar Colors Preference Enabled" id="AbF-GT-89r"/>
