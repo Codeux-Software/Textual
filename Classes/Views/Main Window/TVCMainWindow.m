@@ -1487,6 +1487,9 @@
 	
 	[self.selectedItem resetState]; // Reset state of new item.
 	
+	/* Destroy any floating popup. */
+	[self.memberList destroyUserInfoPopoverOnWindowKeyChange];
+	
 	/* Destroy member list if we have no selection. */
 	if (self.selectedItem == nil) {
 		[self.channelViewBox setContentView:nil];
