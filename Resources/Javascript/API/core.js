@@ -99,6 +99,46 @@ Textual = {
     */
     handleEvent:                            function(eventToken) {}, 
 	
+	/* 
+		Textual provides the ability to store values within a key-value store which is shared 
+		amongst all views. The values stored within this key-value store are maintained within
+		the preferences file of Textual within its sandbox and will exist even if the style is
+		renamed, removed, or replaced. 
+		
+		To opt-in to using a key-value store, add a string value to the styleSettings.plist file 
+		of a style with the name of it being "Key-value Store Name" — the value of this additional
+		key should be whatever the name the key-value stored should be saved under. Preferably,
+		it would be named whatever the style is, but a different one can be picked so that multiple
+		variants of a style can share the same values. 
+		
+		When setting a value of undefined or null, the specified key is removed from the store. 
+		Any other value is automatically converted by WebKit to match the following data types:
+		
+		    JavaScript              ObjC
+		    ----------              ----------
+		    number          =>      NSNumber
+		    boolean         =>      CFBoolean
+		    string          =>      NSString
+		    object          =>      id
+		    
+		    ObjC                    JavaScript
+		    ----                    ----------
+		    CFBoolean       =>      boolean
+		    NSNumber        =>      number
+		    NSString        =>      string
+		    NSArray         =>      array object
+		    WebScriptObject =>      object
+		    
+		 When the value of a setting is retrieved, undefined will be returned if key is not found.
+	*/
+
+	// app.styleSettingsRetrieveValue(key)				— Retrieve value of /key/ from the key-value store.
+	// app.styleSettingsSetValue(key, value)			— Set /value/ to /key/ in the key-value store.
+
+	/* This function is invoked when a style setting has changed. It is invoked on all WebViews 
+	including the one that was responsible for changing the original value. */
+	styleSettingDidChange:                            function(changedKey) { },
+	
     /* The following API calls can be called at any time. */
     
 	// app.logToConsole(<input>)        - Log a message to the Mac OS console.
@@ -130,16 +170,6 @@ Textual = {
 	//													  This is the equivalent of a script using the /debug command.
 
 	// app.printDebugInformation(message)				— Show a debug message to the user in the associated channel.
-
-	// app.styleSettingsRetrieveValue(key)				— Retrieve value of /key/ from styleSettings.plist file of a style.
-	// app.styleSettingsSetValue(key, value)			— Set /value/ to /key/ in the styleSettings.plist file of a style.
-	//													  The value stored is based on whatever WebKit converts the objects into.
-	//													  Setting a value of undefined will remove the /key/ from settings.
-	//													  Return true on success or false otherwise. 
-
-	/* This function is invoked when a style setting has changed. It is invoked on all WebViews 
-	including the one that was responsible for changing the original value. */
-	styleSettingDidChange:                            function(changedKey) { },
 
 	/* *********************************************************************** */
 	/*																		   */
