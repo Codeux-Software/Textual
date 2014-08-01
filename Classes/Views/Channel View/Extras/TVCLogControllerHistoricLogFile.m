@@ -53,8 +53,14 @@
 {
 	if (self.fileHandle) {
 		/* Write to file. */
-		[self.fileHandle writeData:jsondata];
+		[self maybeReopen];
 
+		if ( self.fileHandle) {
+			[self.fileHandle writeData:jsondata];
+		} else {
+			LogToConsole(@"An error occured that resulted in the file handle being unable to be re-opened.");
+		}
+		
 		[self scheduleNextRandomFileTruncationEvent];
 	} else {
 		LogToConsole(@"Unable to perform write operation because of missing file handle.");
@@ -68,12 +74,25 @@
 		NSData *jsondata = [logLine jsonDictionaryRepresentation];
 
 		/* Write to file. */
-		[self.fileHandle writeData:jsondata];
-		[self.fileHandle writeData:[NSStringNewlinePlaceholder dataUsingEncoding:NSUTF8StringEncoding]];
+		[self maybeReopen];
 
+		if (self.fileHandle) {
+			[self.fileHandle writeData:jsondata];
+			[self.fileHandle writeData:[NSStringNewlinePlaceholder dataUsingEncoding:NSUTF8StringEncoding]];
+		} else {
+			LogToConsole(@"An error occured that resulted in the file handle being unable to be re-opened.");
+		}
+		
 		[self scheduleNextRandomFileTruncationEvent];
 	} else {
 		LogToConsole(@"Unable to perform write operation because of missing file handle.");
+	}
+}
+
+- (void)maybeReopen
+{
+	if ([RZFileManager() fileExistsAtPath:[self writePath]] == NO) {
+		[self open];
 	}
 }
 
