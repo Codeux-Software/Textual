@@ -786,8 +786,6 @@
 
 - (void)reloadDataForTableViewBySortingMembers
 {
-	_cancelOnNotSelectedChannel;
-
 	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.memberListStandardSortedContainer) {
 			[self.memberListStandardSortedContainer sortUsingComparator:NSDefaultComparator];
