@@ -150,7 +150,6 @@
 	@class TVCMainWindowTextViewContentView;
 	@class TVCMainWindowTextViewMavericksUserInterace;
 	@class TVCMainWindowTextViewYosemiteUserInterace;
-	@class TVCMainWindowWebViewChildWindow;
 	@class TVCMemberList;
 	@class TVCMemberListCell;
 	@class TVCMemberListRowCell;
