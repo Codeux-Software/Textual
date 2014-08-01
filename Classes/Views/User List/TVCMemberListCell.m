@@ -623,17 +623,8 @@
 
 - (void)postSelectionChangeNeedsDisplay
 {
-	if ([self isSelected])
-	{
-		if ([CSFWSystemInformation featureAvailableToOSXYosemite])
-		{
-			if ([TVCMemberListSharedUserInterface yosemiteIsUsingVibrantDarkMode]) {
-				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
-			} else {
-				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleSourceList];
-			}
-		}
-		else
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
+		if ([self isSelected])
 		{
 			if ([TPCPreferences invertSidebarColors]) {
 				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
@@ -641,12 +632,12 @@
 				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleSourceList];
 			}
 		}
+		else
+		{
+			[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
+		}
 	}
-	else
-	{
-		[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
-	}
-	
+
 	[self setNeedsDisplayOnChild];
 }
 

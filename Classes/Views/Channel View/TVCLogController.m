@@ -152,7 +152,7 @@
 
 	[self.webView setShouldUpdateWhileOffscreen:NO];
 	
-	[self.webView setHostWindow:[mainWindow() webViewChildWindow]];
+	[self.webView setHostWindow:mainWindow()];
 
 	/* Update a few preferences. */
 	[[self.webView preferences] setCacheModel:WebCacheModelDocumentViewer];

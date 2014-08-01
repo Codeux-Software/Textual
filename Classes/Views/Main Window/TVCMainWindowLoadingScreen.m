@@ -160,8 +160,6 @@
 	
 		[self setHidden:YES];
 		[self setAlphaValue:0.0];
-		
-		[[mainWindow() webViewChildWindow] setAlphaValue:1.0];
 	} else {
 		[RZAnimationCurrentContext() setDuration:0.8];
 
@@ -169,8 +167,6 @@
 			self.stackLocked = animate;
 
 			[[self animator] setAlphaValue:0.0];
-			
-			[[[mainWindow() webViewChildWindow] animator] setAlphaValue:1.0];
 		} completionHandler:^{
 			[view setHidden:YES];
 			[self setHidden:YES];
@@ -207,8 +203,6 @@
 	[mainWindowTextField() updateSegmentedController];
 	
 	[[mainWindow() contentSplitView] setHidden:YES];
-	
-	[[mainWindow() webViewChildWindow] setAlphaValue:0.0];
 
 }
 
