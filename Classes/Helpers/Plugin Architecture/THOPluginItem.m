@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+#import "BuildConfig.h"
+
 @implementation THOPluginItem
 
 #define OINE(o)					 NSObjectIsNotEmpty(o)
@@ -44,15 +46,53 @@
 #define VOCT(o, t)				 [o isKindOfClass:[t class]]
 #define VTAE(o, t)				([o isKindOfClass:[t class]] && NSObjectIsNotEmpty(o))
 
-- (void)loadBundle:(NSBundle *)bundle
+- (BOOL)loadBundle:(NSBundle *)bundle
 {
 	/* Only load once. */
-	PointerIsNotEmptyAssert(self.primaryClass);
+	PointerIsNotEmptyAssertReturn(self.primaryClass, NO);
 
+	/* Begin version comparison. */
+	NSDictionary *bundleInfo = [bundle infoDictionary];
+	
+	NSString *comparisonVersion = [bundleInfo objectForKey:@"MinimumTextualVersion"];
+	
+	if (comparisonVersion == nil) {
+		LogToConsole(@"-------------- WARNING -------------- ");
+		LogToConsole(@"Textual has loaded a bundle at the following path which did not specify a minimum version:");
+		LogToConsole(@"  ");
+		LogToConsole(@"   Bundle Path: %@", [bundle bundlePath]);
+		LogToConsole(@"  ");
+		LogToConsole(@"Please add a key-value pair in the bundle's Info.plist file with the key name as \"MinimumTextualVersion\"");
+		LogToConsole(@"For example, to support this version and later, add the value:");
+		LogToConsole(@"  ");
+		LogToConsole(@"     <key>MinimumTextualVersion</key>");
+		LogToConsole(@"     <string>%@</string>", TXBundleBuildVersionForComparisons);
+		LogToConsole(@"  ");
+		LogToConsole(@"Failure to provide a minimum version is currently only a warning, but in the future, Textual will");
+		LogToConsole(@"refuse to load bundles that do not specify a minimum version to load within.");
+		LogToConsole(@"-------------- WARNING -------------- ");
+	} else {
+		NSComparisonResult comparisonResult = [comparisonVersion compare:TXBundleBuildVersionForComparisons options:NSNumericSearch];
+		
+		if (comparisonResult == NSOrderedDescending) {
+			LogToConsole(@"-------------- ERROR -------------- ");
+			LogToConsole(@"Textual has failed to load the bundle at the followig path because the specified minimum version is out of range:");
+			LogToConsole(@"  ");
+			LogToConsole(@"   Bundle Path: %@", [bundle bundlePath]);
+			LogToConsole(@"  ");
+			LogToConsole(@"   Minimum version specified by bundle: %@", comparisonVersion);
+			LogToConsole(@"   Version used by Textual for comparison: %@", TXBundleBuildVersionForComparisons);
+			LogToConsole(@"  ");
+			LogToConsole(@"-------------- ERROR -------------- ");
+			
+			return NO; // Cancel operation.
+		}
+	}
+	
 	/* Initialize the principal class. */
 	Class principalClass = [bundle principalClass];
 
-	PointerIsEmptyAssert(principalClass);
+	PointerIsEmptyAssertReturn(principalClass, NO);
 
 	self.primaryClass = [principalClass new];
 
@@ -218,6 +258,8 @@
 	{
 		self.supportsUserInputDataInterception = YES;
 	}
+	
+	return YES;
 }
 
 - (void)sendDealloc

@@ -49,7 +49,7 @@
 @property (nonatomic, copy) NSArray *supportedServerInputCommands;
 @property (nonatomic, copy) NSDictionary *outputSuppressionRules;
 
-- (void)loadBundle:(NSBundle *)bundle;
+- (BOOL)loadBundle:(NSBundle *)bundle;
 
 - (void)sendDealloc;
 

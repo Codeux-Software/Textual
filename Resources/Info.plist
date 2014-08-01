@@ -71,6 +71,8 @@
 	<true/>
 	<key>TXBundleBuildCodeName</key>
 	<string>Ajwain</string>
+	<key>TXBundleVersionForComparisons</key>
+	<string>5.0.0</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
