@@ -1351,6 +1351,8 @@
 	} else {
 		templateTokens[@"viewTypeToken"] = @"server";
 	}
+	
+	templateTokens[@"sidebarInversionIsEnabled"] = @([TPCPreferences invertSidebarColors]);
 
 	// ---- //
 
