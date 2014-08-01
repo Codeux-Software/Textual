@@ -204,14 +204,10 @@
 	}
 	
 	/* Member list appearance. */
-	BOOL didReloadMemberListUserInterface = NO;
-	
 	if ((reloadAction & TPCPreferencesKeyReloadMemberListAction) == TPCPreferencesKeyReloadMemberListAction) {
 		if (didReloadUserInterface == NO) {
 			[mainWindowMemberList() updateBackgroundColor];
 		}
-		
-		didReloadMemberListUserInterface = YES;
 	}
 	
 	/* Member list sort order. */
