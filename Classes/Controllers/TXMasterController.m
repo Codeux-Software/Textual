@@ -65,10 +65,6 @@
 		[self presentBetaTesterDialog];
 #endif
 		
-#ifndef DEBUG
-		[self checkForOtherCopiesOfTextualRunning];
-#endif
-		
 		// ---- //
 		
 #if defined(DEBUG)
@@ -219,6 +215,10 @@
 
 - (void)applicationDidFinishLaunching
 {
+#ifndef DEBUG
+	[self checkForOtherCopiesOfTextualRunning];
+#endif
+	
 	/* Register for HockeyApp. */
 	[self awakeHockeyApp];
 	
