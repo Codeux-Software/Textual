@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6185.7" systemVersion="14A283o" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6185.11" systemVersion="14A298i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1080" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.7"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.11"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCAddressBookSheet">
@@ -15,7 +15,7 @@
                 <outlet property="ignoreFileTransferRequestsCheck" destination="rur-OE-BUc" id="j5n-cr-6wF"/>
                 <outlet property="ignoreJPQECheck" destination="477" id="601"/>
                 <outlet property="ignoreNoticesCheck" destination="476" id="603"/>
-                <outlet property="ignorePrivateHighlightsCheck" destination="478" id="610"/>
+                <outlet property="ignorePrivateHighlightsCheck" destination="44o-H8-79C" id="geo-eq-S5E"/>
                 <outlet property="ignorePrivateMessagesCheck" destination="481" id="613"/>
                 <outlet property="ignorePublicHighlightsCheck" destination="480" id="614"/>
                 <outlet property="ignorePublicMessagesCheck" destination="482" id="616"/>
@@ -27,7 +27,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Track" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="521" userLabel="Notify User Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -293,14 +293,6 @@ DQ
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                     </button>
-                    <button id="478">
-                        <rect key="frame" x="258" y="188" width="214" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Highlights in Queries (PM)" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="492">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                    </button>
                     <button id="479">
                         <rect key="frame" x="52" y="160" width="215" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -397,6 +389,14 @@ DQ
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button id="44o-H8-79C">
+                        <rect key="frame" x="258" y="188" width="223" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Highlights in Queries (PM)" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="5Dh-LG-xCS">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
                 </subviews>
             </view>
             <connections>
