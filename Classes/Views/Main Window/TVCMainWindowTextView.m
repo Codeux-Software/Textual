@@ -79,7 +79,9 @@
 - (void)dealloc
 {
 	/* Stop observing keys. */
-	[[TPCPreferencesUserDefaultsObjectProxy localDefaultValues] removeObserver:self];
+	for (NSString *key in _KeyObservingArray) {
+		[[TPCPreferencesUserDefaultsObjectProxy localDefaultValues] removeObserver:self forKeyPath:key];
+	}
 }
 
 - (void)updateTypeSetterAttributesBasedOnAppearanceSettings
