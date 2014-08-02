@@ -72,6 +72,5 @@
 @property (readonly, copy) NSColor *systemSpecificPlaceholderTextFontColor;
 @end
 
-@interface TVCMainWindowTextViewContentView : NSBox
-- (void)updateView;
+@interface TVCMainWindowTextViewContentView : NSView
 @end

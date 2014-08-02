@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-#define _WindowContentBorderTotalPaddingYosemite		24.0
+#define _WindowContentBorderTotalPaddingYosemite		23.0
 #define _WindowContentBorderTotalPaddingMavericks		23.0
 
 #define _WindowSegmentedControllerDefaultWidth			150.0
@@ -102,15 +102,8 @@
 		} else {
 			[self.segmentedController setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
 		}
-		
-		/* Update layer for the content view. */
-		/* The content view exists soley on Yosemite or later. */
-		[self.contentView updateView];
 	}
-	
-	/* Update layer for the text field background. */
-	[self.backgroundView setNeedsDisplay:YES];
-	
+
 	/* Use font color depending on appearance. */
 	NSColor *preferredFontColor = [self.backgroundView systemSpecificTextFieldTextFontColor];
 	
@@ -122,8 +115,7 @@
 
 - (void)windowDidChangeKeyState
 {
-	/* Update layer for the text field background. */
-	[self.backgroundView setNeedsDisplay:YES];
+	; // Nothing to do here…
 }
 
 #pragma mark -
@@ -436,8 +428,6 @@
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
 		[mainWindow setContentBorderThickness:backgroundHeight forEdge:NSMinYEdge];
 	}
-
-	[mainWindow setContentBorderThickness:backgroundHeight forEdge:NSMinYEdge];
 
 	if (documentViewBounds.origin.x > 0) {
 		documentViewBounds.origin.x = 0;
@@ -823,10 +813,12 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		[self drawControllerForYosemite];
-	} else {
-		[self drawControllerForMavericks];
+	if ([self needsToDrawRect:dirtyRect]) {
+		if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+			[self drawControllerForYosemite];
+		} else {
+			[self drawControllerForMavericks];
+		}
 	}
 }
 
@@ -841,25 +833,67 @@
 
 @implementation TVCMainWindowTextViewContentView
 
-- (BOOL)yosemiteIsUsingVibrantDarkMode
+- (void)drawRect:(NSRect)dirtyRect
 {
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
-		return NO;
-	} else {
-		return [mainWindow() isUsingVibrantDarkAppearance];
+	if ([self needsToDrawRect:dirtyRect]) {
+		/* Draw background color. */
+		NSColor *drawColor = [self backgroundColor];
+		
+		[drawColor set];
+		
+		NSRectFill(dirtyRect);
+		
+		/* Draw divider. */
+		NSRect contentViewFrame = [self frame];
+		
+		contentViewFrame.origin.x = 0;
+		contentViewFrame.origin.y = (NSMaxY(contentViewFrame) - 1);
+		
+		contentViewFrame.size.height = 1;
+		
+		NSBezierPath *dividerPath = [NSBezierPath bezierPathWithRect:contentViewFrame];
+		
+		drawColor = [self dividerColor];
+		
+		[drawColor set];
+		
+		[dividerPath fill];
+		
+		/* Discussion: On Yosemite, when a segmented controller is set as vibrant dark,
+		 it inherits whatever color is behind it in a translucent manor. To allow for
+		 a darker controller in Textual, we set the background of ours to black. To
+		 achive this, we create a bezier path that replicate the frame of segmented
+		 controller. This is a very ugly hack and can break easily in an OS update. */
+		if ([TPCPreferences hideMainWindowSegmentedController] == NO) {
+			if ([mainWindow() isUsingVibrantDarkAppearance]) {
+				/* Get controller and controller frame. */
+				TVCMainWindowSegmentedController *controller = [mainWindowTextField() segmentedController];
+				
+				NSRect controllerFrame = [controller frame];
+				
+				/* Update frame with some magic numbers. */
+				controllerFrame.size.width -= 4;
+				controllerFrame.size.height -= 3;
+				
+				controllerFrame.origin.y += 2;
+				
+				/* Define new path and color. */
+				dividerPath  = [NSBezierPath bezierPathWithRoundedRect:controllerFrame xRadius:4.0 yRadius:4.0];
+				
+				drawColor = [NSColor blackColor];
+				
+				/* Complete draw. */
+				[drawColor set];
+				
+				[dividerPath fill];
+			}
+		}
 	}
-}
-
-- (void)updateView
-{
-	[self setFillColor:[self backgroundColor]];
-	
-	[self setBorderColor:[self dividerColor]];
 }
 
 - (NSColor *)backgroundColor
 {
-	if ([self yosemiteIsUsingVibrantDarkMode]) {
+	if ([mainWindow() isUsingVibrantDarkAppearance]) {
 		return [self vibrantDarkBackgroundColor];
 	} else {
 		return [self vibrantLightBackgroundColor];
@@ -868,7 +902,7 @@
 
 - (NSColor *)dividerColor
 {
-	if ([self yosemiteIsUsingVibrantDarkMode]) {
+	if ([mainWindow() isUsingVibrantDarkAppearance]) {
 		return [self vibrantDarkDividerColor];
 	} else {
 		return [self vibrantLightDividerColor];
@@ -893,6 +927,11 @@
 - (NSColor *)vibrantLightDividerColor
 {
 	return [NSColor lightGrayColor];
+}
+
+- (BOOL)allowsVibrancy
+{
+	return NO;
 }
 
 @end

@@ -23,15 +23,96 @@
                 <rect key="frame" x="0.0" y="0.0" width="800" height="477"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="phB-0r-qij" userLabel="Text Field" customClass="TVCMainWindowTextViewContentView">
+                        <rect key="frame" x="0.0" y="0.0" width="800" height="38"/>
+                        <subviews>
+                            <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Q9x-Ny-Yn4" customClass="TVCMainWindowSegmentedController">
+                                <rect key="frame" x="10" y="5" width="150" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="1ir-ed-Ia3"/>
+                                </constraints>
+                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="l5w-Kh-b34" customClass="TVCMainWindowSegmentedControllerCell">
+                                    <font key="font" metaFont="system"/>
+                                    <segments>
+                                        <segment toolTip="Add Server or Channel" image="NSAddTemplate" width="48">
+                                            <nil key="label"/>
+                                        </segment>
+                                        <segment toolTip="Manage Selection" image="NSActionTemplate" width="48" tag="1">
+                                            <nil key="label"/>
+                                        </segment>
+                                        <segment toolTip="Open Address Book" image="MainWindowSegmentedControlUserTemplate" width="46" tag="2">
+                                            <nil key="label"/>
+                                        </segment>
+                                    </segments>
+                                </segmentedCell>
+                            </segmentedControl>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="nbK-l5-9k5" customClass="TVCMainWindowTextViewBackground">
+                                <rect key="frame" x="170" y="6" width="620" height="25"/>
+                                <subviews>
+                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xnK-JZ-PNd">
+                                        <rect key="frame" x="0.0" y="3" width="610" height="19"/>
+                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="R89-6i-JgM">
+                                            <rect key="frame" x="0.0" y="0.0" width="624" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" continuousSpellChecking="YES" allowsUndo="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" grammarChecking="YES" smartInsertDelete="YES" id="Ub5-no-pBU" customClass="TVCMainWindowTextView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="624" height="19"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <size key="minSize" width="610" height="19"/>
+                                                    <size key="maxSize" width="629" height="10000000"/>
+                                                    <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <size key="minSize" width="610" height="19"/>
+                                                    <size key="maxSize" width="629" height="10000000"/>
+                                                    <connections>
+                                                        <outlet property="backgroundView" destination="nbK-l5-9k5" id="9hb-sC-ujn"/>
+                                                        <outlet property="contentView" destination="phB-0r-qij" id="q5a-XP-rcM"/>
+                                                        <outlet property="segmentedController" destination="Q9x-Ny-Yn4" id="Wfb-bb-UFY"/>
+                                                        <outlet property="segmentedControllerCell" destination="l5w-Kh-b34" id="bCl-8m-PYT"/>
+                                                        <outlet property="segmentedControllerWidthConstraint" destination="1ir-ed-Ia3" id="XL1-Lc-1gy"/>
+                                                        <outlet property="textFieldHeightConstraint" destination="4wi-57-9OA" id="DZ4-Dq-r9n"/>
+                                                    </connections>
+                                                </textView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </clipView>
+                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="CHU-gl-rY2">
+                                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="kWB-tP-6YF">
+                                            <rect key="frame" x="481" y="1" width="16" height="13"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                    </scrollView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="xnK-JZ-PNd" secondAttribute="bottom" constant="3" id="dVz-Ga-jCK"/>
+                                    <constraint firstItem="xnK-JZ-PNd" firstAttribute="leading" secondItem="nbK-l5-9k5" secondAttribute="leading" id="h2j-vU-jjP"/>
+                                    <constraint firstItem="xnK-JZ-PNd" firstAttribute="top" secondItem="nbK-l5-9k5" secondAttribute="top" constant="3" id="lXH-1e-q4x"/>
+                                    <constraint firstAttribute="trailing" secondItem="xnK-JZ-PNd" secondAttribute="trailing" constant="10" id="xYw-C2-alv"/>
+                                </constraints>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="nbK-l5-9k5" secondAttribute="trailing" constant="10" id="4Uj-Jq-fdw"/>
+                            <constraint firstAttribute="height" constant="38" id="4wi-57-9OA"/>
+                            <constraint firstItem="Q9x-Ny-Yn4" firstAttribute="leading" secondItem="phB-0r-qij" secondAttribute="leading" constant="10" id="BVS-64-Ck9"/>
+                            <constraint firstItem="nbK-l5-9k5" firstAttribute="top" secondItem="phB-0r-qij" secondAttribute="top" constant="7" id="awN-Bn-Ddd"/>
+                            <constraint firstItem="nbK-l5-9k5" firstAttribute="leading" secondItem="Q9x-Ny-Yn4" secondAttribute="trailing" constant="10" id="bvY-ST-GSO"/>
+                            <constraint firstAttribute="bottom" secondItem="nbK-l5-9k5" secondAttribute="bottom" constant="6" id="hXg-Rj-6BH"/>
+                            <constraint firstAttribute="bottom" secondItem="Q9x-Ny-Yn4" secondAttribute="bottom" constant="7" id="v8w-4Y-Bsd"/>
+                        </constraints>
+                    </customView>
                     <splitView autosaveName="" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dVR-2U-X51" userLabel="Thin Split View" customClass="TVCMainWindowSplitView">
-                        <rect key="frame" x="0.0" y="37" width="800" height="440"/>
+                        <rect key="frame" x="0.0" y="38" width="800" height="439"/>
                         <subviews>
                             <visualEffectView blendingMode="behindWindow" material="appearanceBased" state="active" id="KgM-JY-9PC">
-                                <rect key="frame" x="0.0" y="0.0" width="150" height="440"/>
+                                <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KbE-36-qMw">
-                                        <rect key="frame" x="0.0" y="0.0" width="150" height="440"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                         <clipView key="contentView" drawsBackground="NO" id="pGy-N5-8Z2">
                                             <rect key="frame" x="1" y="17" width="238" height="117"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -156,10 +237,10 @@
                                 </constraints>
                             </visualEffectView>
                             <box boxType="custom" borderType="none" titlePosition="noTitle" id="9mT-cT-dVF" userLabel="Chat Box - Title">
-                                <rect key="frame" x="151" y="0.0" width="498" height="440"/>
+                                <rect key="frame" x="151" y="0.0" width="498" height="439"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <view key="contentView">
-                                    <rect key="frame" x="0.0" y="0.0" width="498" height="440"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="498" height="439"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                                 <constraints>
@@ -170,11 +251,11 @@
                                 <accessibility description="Channel view"/>
                             </box>
                             <visualEffectView appearanceType="vibrantDark" blendingMode="behindWindow" material="appearanceBased" state="active" id="2k7-ax-6YE">
-                                <rect key="frame" x="650" y="0.0" width="150" height="440"/>
+                                <rect key="frame" x="650" y="0.0" width="150" height="439"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="20" horizontalPageScroll="10" verticalLineScroll="20" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BB4-Tt-eGZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="150" height="440"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                         <clipView key="contentView" drawsBackground="NO" id="Dzw-xD-cR8">
                                             <rect key="frame" x="1" y="17" width="238" height="117"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -278,101 +359,14 @@
                             <outlet property="serverListWidthConstraint" destination="5hi-RS-NLb" id="C8w-HP-YZw"/>
                         </connections>
                     </splitView>
-                    <box autoresizesSubviews="NO" wantsLayer="YES" title="Box" boxType="custom" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="d91-WB-5Bu" userLabel="Text Field" customClass="TVCMainWindowTextViewContentView">
-                        <rect key="frame" x="-1" y="-1" width="802" height="38"/>
-                        <view key="contentView">
-                            <rect key="frame" x="1" y="1" width="800" height="36"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Q9x-Ny-Yn4" customClass="TVCMainWindowSegmentedController">
-                                    <rect key="frame" x="10" y="5" width="150" height="25"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="150" id="1ir-ed-Ia3"/>
-                                    </constraints>
-                                    <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="l5w-Kh-b34" customClass="TVCMainWindowSegmentedControllerCell">
-                                        <font key="font" metaFont="system"/>
-                                        <segments>
-                                            <segment toolTip="Add Server or Channel" image="NSAddTemplate" width="48">
-                                                <nil key="label"/>
-                                            </segment>
-                                            <segment toolTip="Manage Selection" image="NSActionTemplate" width="48" tag="1">
-                                                <nil key="label"/>
-                                            </segment>
-                                            <segment toolTip="Open Address Book" image="MainWindowSegmentedControlUserTemplate" width="46" tag="2">
-                                                <nil key="label"/>
-                                            </segment>
-                                        </segments>
-                                    </segmentedCell>
-                                </segmentedControl>
-                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="nbK-l5-9k5" customClass="TVCMainWindowTextViewBackground">
-                                    <rect key="frame" x="170" y="6" width="620" height="24"/>
-                                    <subviews>
-                                        <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xnK-JZ-PNd">
-                                            <rect key="frame" x="0.0" y="3" width="610" height="18"/>
-                                            <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="R89-6i-JgM">
-                                                <rect key="frame" x="0.0" y="0.0" width="624" height="18"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <subviews>
-                                                    <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" continuousSpellChecking="YES" allowsUndo="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" grammarChecking="YES" smartInsertDelete="YES" id="Ub5-no-pBU" customClass="TVCMainWindowTextView">
-                                                        <rect key="frame" x="0.0" y="0.0" width="624" height="19"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <size key="minSize" width="610" height="18"/>
-                                                        <size key="maxSize" width="629" height="10000000"/>
-                                                        <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                        <size key="minSize" width="610" height="18"/>
-                                                        <size key="maxSize" width="629" height="10000000"/>
-                                                        <connections>
-                                                            <outlet property="backgroundView" destination="nbK-l5-9k5" id="9hb-sC-ujn"/>
-                                                            <outlet property="contentView" destination="d91-WB-5Bu" id="lOO-1t-6lT"/>
-                                                            <outlet property="segmentedController" destination="Q9x-Ny-Yn4" id="Wfb-bb-UFY"/>
-                                                            <outlet property="segmentedControllerCell" destination="l5w-Kh-b34" id="bCl-8m-PYT"/>
-                                                            <outlet property="segmentedControllerWidthConstraint" destination="1ir-ed-Ia3" id="XL1-Lc-1gy"/>
-                                                            <outlet property="textFieldHeightConstraint" destination="7pX-jq-a5B" id="soD-n8-rfc"/>
-                                                        </connections>
-                                                    </textView>
-                                                </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            </clipView>
-                                            <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="CHU-gl-rY2">
-                                                <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                            </scroller>
-                                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="kWB-tP-6YF">
-                                                <rect key="frame" x="481" y="1" width="16" height="13"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                            </scroller>
-                                        </scrollView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="xnK-JZ-PNd" secondAttribute="bottom" constant="3" id="dVz-Ga-jCK"/>
-                                        <constraint firstItem="xnK-JZ-PNd" firstAttribute="leading" secondItem="nbK-l5-9k5" secondAttribute="leading" id="h2j-vU-jjP"/>
-                                        <constraint firstItem="xnK-JZ-PNd" firstAttribute="top" secondItem="nbK-l5-9k5" secondAttribute="top" constant="3" id="lXH-1e-q4x"/>
-                                        <constraint firstAttribute="trailing" secondItem="xnK-JZ-PNd" secondAttribute="trailing" constant="10" id="xYw-C2-alv"/>
-                                    </constraints>
-                                </customView>
-                            </subviews>
-                        </view>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="38" id="7pX-jq-a5B"/>
-                            <constraint firstAttribute="trailing" secondItem="nbK-l5-9k5" secondAttribute="trailing" constant="11" id="AVu-bf-bOz"/>
-                            <constraint firstItem="Q9x-Ny-Yn4" firstAttribute="leading" secondItem="d91-WB-5Bu" secondAttribute="leading" constant="11" id="DaD-8k-8uY"/>
-                            <constraint firstAttribute="bottom" secondItem="nbK-l5-9k5" secondAttribute="bottom" constant="7" id="MbI-uY-WmC"/>
-                            <constraint firstItem="nbK-l5-9k5" firstAttribute="top" secondItem="d91-WB-5Bu" secondAttribute="top" constant="7" id="WOR-Bk-0au"/>
-                            <constraint firstAttribute="bottom" secondItem="Q9x-Ny-Yn4" secondAttribute="bottom" constant="8" id="cUf-Do-grv"/>
-                            <constraint firstItem="nbK-l5-9k5" firstAttribute="leading" secondItem="Q9x-Ny-Yn4" secondAttribute="trailing" constant="10" id="z5D-72-N1F"/>
-                        </constraints>
-                        <color key="borderColor" red="0.42571428569999997" green="0.42571428569999997" blue="0.42571428569999997" alpha="0.38" colorSpace="calibratedRGB"/>
-                        <color key="fillColor" red="0.99607849120000003" green="0.99215692280000001" blue="0.99607849120000003" alpha="1" colorSpace="deviceRGB"/>
-                    </box>
                     <box autoresizesSubviews="NO" title="Box" boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="ub4-hV-1Sb" userLabel="Loading Screen" customClass="TVCMainWindowLoadingScreenView">
-                        <rect key="frame" x="0.0" y="37" width="800" height="440"/>
+                        <rect key="frame" x="0.0" y="38" width="800" height="439"/>
                         <view key="contentView">
-                            <rect key="frame" x="0.0" y="0.0" width="800" height="440"/>
+                            <rect key="frame" x="0.0" y="0.0" width="800" height="439"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y3v-lS-079" userLabel="Loading View Content.">
-                                    <rect key="frame" x="237" y="98" width="325" height="244"/>
+                                    <rect key="frame" x="237" y="97" width="325" height="244"/>
                                     <subviews>
                                         <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CO7-Vv-WsQ">
                                             <rect key="frame" x="87" y="81" width="150" height="151"/>
@@ -404,7 +398,7 @@
                                     </constraints>
                                 </customView>
                                 <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wGo-s9-W80" userLabel="Welcome, Add Server. (Trial)">
-                                    <rect key="frame" x="183" y="17" width="434" height="407"/>
+                                    <rect key="frame" x="183" y="16" width="434" height="407"/>
                                     <userGuides>
                                         <userLayoutGuide location="43" affinity="minY"/>
                                         <userLayoutGuide location="27" affinity="minY"/>
@@ -476,7 +470,7 @@ There are no other limits. What you see, is what you get.</string>
                                     </constraints>
                                 </customView>
                                 <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8hV-Px-fjE" userLabel="Welcome, Add Server.">
-                                    <rect key="frame" x="159" y="22" width="482" height="396"/>
+                                    <rect key="frame" x="159" y="21" width="482" height="396"/>
                                     <userGuides>
                                         <userLayoutGuide location="43" affinity="minY"/>
                                         <userLayoutGuide location="27" affinity="minY"/>
@@ -571,16 +565,16 @@ There are no other limits. What you see, is what you get.</string>
                 </subviews>
                 <constraints>
                     <constraint firstItem="dVR-2U-X51" firstAttribute="top" secondItem="2" secondAttribute="top" id="59T-Uq-aYP"/>
-                    <constraint firstItem="d91-WB-5Bu" firstAttribute="top" secondItem="dVR-2U-X51" secondAttribute="bottom" id="9E5-0r-J0S"/>
+                    <constraint firstItem="phB-0r-qij" firstAttribute="top" secondItem="ub4-hV-1Sb" secondAttribute="bottom" id="6mt-Xv-1OG"/>
+                    <constraint firstAttribute="trailing" secondItem="phB-0r-qij" secondAttribute="trailing" id="6oD-Jp-7wd"/>
+                    <constraint firstItem="phB-0r-qij" firstAttribute="top" secondItem="dVR-2U-X51" secondAttribute="bottom" id="Fq1-Ur-m33"/>
+                    <constraint firstAttribute="bottom" secondItem="phB-0r-qij" secondAttribute="bottom" id="KD5-T4-WZX"/>
                     <constraint firstItem="ub4-hV-1Sb" firstAttribute="top" secondItem="2" secondAttribute="top" id="NbE-7K-xI3"/>
                     <constraint firstItem="dVR-2U-X51" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="OFC-to-sA7"/>
                     <constraint firstAttribute="trailing" secondItem="ub4-hV-1Sb" secondAttribute="trailing" id="PU8-GM-Jp3"/>
                     <constraint firstAttribute="trailing" secondItem="dVR-2U-X51" secondAttribute="trailing" id="Vg3-1f-s1J"/>
-                    <constraint firstAttribute="trailing" secondItem="d91-WB-5Bu" secondAttribute="trailing" constant="-1" id="ZHc-gQ-jbg"/>
-                    <constraint firstAttribute="bottom" secondItem="d91-WB-5Bu" secondAttribute="bottom" constant="-1" id="jmh-OR-gSM"/>
-                    <constraint firstItem="d91-WB-5Bu" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="-1" id="pEz-np-jky"/>
                     <constraint firstItem="ub4-hV-1Sb" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="q0V-Ub-ryy"/>
-                    <constraint firstItem="d91-WB-5Bu" firstAttribute="top" secondItem="ub4-hV-1Sb" secondAttribute="bottom" id="vrx-RQ-qxC"/>
+                    <constraint firstItem="phB-0r-qij" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="qin-63-ACL"/>
                 </constraints>
             </view>
             <connections>
@@ -593,7 +587,7 @@ There are no other limits. What you see, is what you get.</string>
                 <outlet property="memberList" destination="wUC-XW-0WV" id="kW1-Mr-P02"/>
                 <outlet property="serverList" destination="MLD-Aa-PLM" id="SZb-p4-bEc"/>
             </connections>
-            <point key="canvasLocation" x="3416" y="836.5"/>
+            <point key="canvasLocation" x="3572" y="852.5"/>
         </window>
         <customView id="2965" userLabel="User Info Popover View">
             <rect key="frame" x="0.0" y="0.0" width="352" height="114"/>
