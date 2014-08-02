@@ -1321,9 +1321,9 @@
 									otherButton:nil
 								 suppressionKey:nil
 								suppressionText:nil];
+				
+				return;
 			}
-			
-			return;
 		}
 #endif
 		
