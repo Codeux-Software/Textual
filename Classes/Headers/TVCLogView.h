@@ -40,7 +40,7 @@
 
 @interface TVCLogView : WebView
 @property (nonatomic, uweak) id keyDelegate;
-@property (nonatomic, uweak) id resizeDelegate;
+@property (nonatomic, uweak) id draggingDelegate;
 
 @property (readonly, copy) NSString *contentString;
 
@@ -56,4 +56,5 @@
 @required
 
 - (void)logViewKeyDown:(NSEvent *)e;
+- (void)logViewRecievedDropWithFile:(NSString *)filename;
 @end

@@ -263,6 +263,7 @@
 - (IBAction)memberShunFromServer:(id)sender;
 
 - (void)memberSendDroppedFiles:(NSArray *)files row:(NSNumber *)row;
+- (void)memberSendDroppedFilesToSelectedChannel:(NSArray *)files; // Only works if selectedChannel is a private message
 
 - (IBAction)copyUrl:(id)sender;
 
