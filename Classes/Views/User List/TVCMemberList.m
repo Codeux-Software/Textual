@@ -501,6 +501,12 @@
 		NSColor *backgroundColor = [[self userInterfaceObjects] memberListBackgroundColor];
 		
 		[self setBackgroundColor:backgroundColor];
+		
+		if ([TPCPreferences invertSidebarColors]) {
+			[[self enclosingScrollView] setScrollerKnobStyle:NSScrollerKnobStyleLight];
+		} else {
+			[[self enclosingScrollView] setScrollerKnobStyle:NSScrollerKnobStyleDark];
+		}
 	}
 	
 	[self setNeedsDisplay:YES];
