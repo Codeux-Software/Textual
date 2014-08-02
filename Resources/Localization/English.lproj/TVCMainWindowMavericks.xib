@@ -1364,7 +1364,7 @@
                             <outlet property="serverListWidthConstraint" destination="Shw-gN-4CR" id="5TQ-3F-4Lt"/>
                         </connections>
                     </splitView>
-                    <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sIi-NW-j8L" userLabel="Text Field">
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="sIi-NW-j8L" userLabel="Text Field">
                         <rect key="frame" x="0.0" y="0.0" width="800" height="38"/>
                         <subviews>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="Jl3-QW-y8e" customClass="TVCMainWindowTextViewBackground">
