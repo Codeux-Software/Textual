@@ -87,6 +87,34 @@
 
 @end
 
+@implementation TVCServerListMavericksUserInterfaceBackground
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+	/* The following is specialized drawing for the normal source list
+	 background when inside a backed layer view. */
+	
+	NSColor *backgroundColor = nil;
+	
+	if ([mainWindow() isActiveForDrawing]) {
+		backgroundColor = [[mainWindowServerList() userInterfaceObjects] serverListBackgroundColorForActiveWindow];
+	} else {
+		backgroundColor = [[mainWindowServerList() userInterfaceObjects] serverListBackgroundColorForInactiveWindow];
+	}
+	
+	if (backgroundColor) {
+		[backgroundColor set];
+		
+		NSRectFill([self bounds]);
+	} else {
+		NSGradient *backgroundGradient = [NSGradient sourceListBackgroundGradientColor];
+		
+		[backgroundGradient drawInRect:[self bounds] angle:270.0];
+	}
+}
+
+@end
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wincomplete-implementation"
 @implementation TVCServerListMavericksUserInterface

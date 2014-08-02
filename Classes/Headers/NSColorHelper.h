@@ -72,4 +72,6 @@
 
 @interface NSGradient (TXGradientHelper)
 + (NSGradient *)gradientWithStartingColor:(NSColor *)startingColor endingColor:(NSColor *)endingColor;
+
++ (NSGradient *)sourceListBackgroundGradientColor;
 @end

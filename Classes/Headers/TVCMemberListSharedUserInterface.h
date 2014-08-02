@@ -45,7 +45,8 @@
 
 - (void)invalidateAllUserMarkBadgeCaches;
 
-- (NSColor *)memberListBackgroundColor;
+- (NSColor *)memberListBackgroundColorForActiveWindow;
+- (NSColor *)memberListBackgroundColorForInactiveWindow;
 
 - (NSColor *)userMarkBadgeBackgroundColor_Y;
 - (NSColor *)userMarkBadgeBackgroundColor_A;
@@ -69,4 +70,7 @@
 
 - (NSInteger)userMarkBadgeHeight;
 - (NSInteger)userMarkBadgeWidth;
+@end
+
+@interface TVCMemberListMavericksUserInterfaceBackground : NSBox
 @end

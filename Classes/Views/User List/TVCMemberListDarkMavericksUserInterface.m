@@ -129,7 +129,12 @@
 	return [NSColor colorWithCalibratedRed:0.066 green:0.285 blue:0.492 alpha:1.0];
 }
 
-- (NSColor *)memberListBackgroundColor
+- (NSColor *)memberListBackgroundColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.148 green:0.148 blue:0.148 alpha:1.0];
+}
+
+- (NSColor *)memberListBackgroundColorForInactiveWindow
 {
 	return [NSColor colorWithCalibratedRed:0.148 green:0.148 blue:0.148 alpha:1.0];
 }

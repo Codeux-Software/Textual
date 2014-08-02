@@ -237,12 +237,12 @@
 
 + (NSColor *)outlineViewHeaderTextColor
 {
-	return [self internalCalibratedRed:0.439216 green:0.494118 blue:0.54902 alpha:1.0];
+	return [self colorWithCalibratedRed:0.439216 green:0.494118 blue:0.54902 alpha:1.0];
 }
 
 + (NSColor *)outlineViewHeaderDisabledTextColor
 {
-	return [NSColor internalCalibratedRed:158 green:162 blue:173 alpha:1.0];
+	return [NSColor colorWithCalibratedRed:0.619 green:0.635 blue:0.678 alpha:1.0];
 }
 
 @end
@@ -252,6 +252,12 @@
 + (NSGradient *)gradientWithStartingColor:(NSColor *)startingColor endingColor:(NSColor *)endingColor
 {
 	return [[self alloc] initWithStartingColor:startingColor endingColor:endingColor];
+}
+
++ (NSGradient *)sourceListBackgroundGradientColor
+{
+	return [self gradientWithStartingColor:[NSColor colorWithCalibratedRed:0.917 green:0.929 blue:0.949 alpha:1.0]
+							   endingColor:[NSColor colorWithCalibratedRed:0.780 green:0.811 blue:0.847 alpha:1.0]];
 }
 
 @end

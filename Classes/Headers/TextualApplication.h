@@ -155,6 +155,7 @@
 	@class TVCMemberListRowCell;
 	@class TVCMemberLisCellTextFieldInterior;
 	@class TVCMemberListMavericksUserInterface;
+	@class TVCMemberListMavericksUserInterfaceBackground;
 	@class TVCMemberListMavericksLightUserInterface;
 	@class TVCMemberListMavericksDarkUserInterface;
 	@class TVCMemberListSharedUserInterface;
@@ -170,6 +171,7 @@
 	@class TVCServerListRowCell;
 	@class TVCServerLisCellTextFieldInterior;
 	@class TVCServerListMavericksUserInterface;
+	@class TVCServerListMavericksUserInterfaceBackground;
 	@class TVCServerListMavericksLightUserInterface;
 	@class TVCServerListMavericksDarkUserInterface;
 	@class TVCServerListSharedUserInterface;

@@ -41,10 +41,11 @@
 @property (nonatomic, uweak) id keyDelegate;
 @property (nonatomic, strong) id userInterfaceObjects;
 @property (nonatomic, nweak) IBOutlet NSVisualEffectView *visualEffectView;
+@property (nonatomic, nweak) IBOutlet TVCServerListMavericksUserInterfaceBackground *backgroundView;
 @property (nonatomic, copy) NSImage *outlineViewDefaultDisclosureTriangle;
 @property (nonatomic, copy) NSImage *outlineViewAlternateDisclosureTriangle;
 
-/* addItemToList and removeItemFromList work two completely different ways. 
+/* addItemToList and removeItemFromList work two completely different ways.
  addItemToList expects that you have already added the item to the data source
  and that you are giving the list the index of the newly inserted item relative
  to the parent group. The list then manages that object. */
@@ -65,6 +66,8 @@
 - (void)updateMessageCountForRow:(NSInteger)rowIndex;
 
 - (void)updateBackgroundColor; // Do not call.
+
+- (void)windowDidChangeKeyState;
 @end
 
 @protocol TVCServerListDelegate <NSObject>
