@@ -44,6 +44,8 @@
 - (NSArray *)rowsInGroup:(id)group;
 - (NSArray *)rowsFromParentGroup:(id)child;
 
+- (NSInteger)rowForGroupItem:(id)item;
+
 @property (readonly) NSInteger countSelectedRows;
 
 - (void)selectItemAtIndex:(NSInteger)index;
