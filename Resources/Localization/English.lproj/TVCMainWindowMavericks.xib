@@ -1110,6 +1110,87 @@
                 <rect key="frame" x="0.0" y="0.0" width="800" height="477"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="sIi-NW-j8L" userLabel="Text Field">
+                        <rect key="frame" x="0.0" y="0.0" width="800" height="38"/>
+                        <subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Jl3-QW-y8e" customClass="TVCMainWindowTextViewBackground">
+                                <rect key="frame" x="170" y="6" width="620" height="24"/>
+                                <subviews>
+                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fM6-4m-qZc">
+                                        <rect key="frame" x="0.0" y="3" width="610" height="19"/>
+                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="0kO-pf-9ZA">
+                                            <rect key="frame" x="0.0" y="0.0" width="624" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" continuousSpellChecking="YES" allowsUndo="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" grammarChecking="YES" smartInsertDelete="YES" id="AbN-7J-waj" customClass="TVCMainWindowTextView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="624" height="19"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <size key="minSize" width="610" height="19"/>
+                                                    <size key="maxSize" width="629" height="10000000"/>
+                                                    <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <size key="minSize" width="610" height="19"/>
+                                                    <size key="maxSize" width="629" height="10000000"/>
+                                                    <connections>
+                                                        <outlet property="backgroundView" destination="Jl3-QW-y8e" id="qHs-h8-s9V"/>
+                                                        <outlet property="segmentedController" destination="Ijw-SU-h2Z" id="L11-W6-6qN"/>
+                                                        <outlet property="segmentedControllerCell" destination="pkk-4P-MNX" id="qdM-kk-0XX"/>
+                                                        <outlet property="segmentedControllerLeadingConstraint" destination="yuB-pq-Xnd" id="Wwd-Ky-Nm2"/>
+                                                        <outlet property="segmentedControllerWidthConstraint" destination="rAs-uE-LJj" id="9n0-32-EUp"/>
+                                                        <outlet property="textFieldHeightConstraint" destination="1Oz-Li-WCr" id="HWX-WN-83g"/>
+                                                    </connections>
+                                                </textView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </clipView>
+                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="eIA-9M-JaU">
+                                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="iKt-3c-baO">
+                                            <rect key="frame" x="481" y="1" width="16" height="13"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                    </scrollView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="fM6-4m-qZc" secondAttribute="trailing" constant="10" id="Svt-Yg-xEb"/>
+                                    <constraint firstItem="fM6-4m-qZc" firstAttribute="top" secondItem="Jl3-QW-y8e" secondAttribute="top" constant="2" id="VzX-TV-08P"/>
+                                    <constraint firstAttribute="bottom" secondItem="fM6-4m-qZc" secondAttribute="bottom" constant="3" id="WZ3-cl-4oi"/>
+                                    <constraint firstItem="fM6-4m-qZc" firstAttribute="leading" secondItem="Jl3-QW-y8e" secondAttribute="leading" id="eN2-SM-AOM"/>
+                                </constraints>
+                            </customView>
+                            <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ijw-SU-h2Z" customClass="TVCMainWindowSegmentedController">
+                                <rect key="frame" x="10" y="5" width="150" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="rAs-uE-LJj"/>
+                                </constraints>
+                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="pkk-4P-MNX" customClass="TVCMainWindowSegmentedControllerCell">
+                                    <font key="font" metaFont="system"/>
+                                    <segments>
+                                        <segment toolTip="Add Server or Channel" image="NSAddTemplate" width="48">
+                                            <nil key="label"/>
+                                        </segment>
+                                        <segment toolTip="Manage Selection" image="NSActionTemplate" width="48" tag="1">
+                                            <nil key="label"/>
+                                        </segment>
+                                        <segment toolTip="Open Address Book" image="MainWindowSegmentedControlUserTemplate" width="46" tag="2">
+                                            <nil key="label"/>
+                                        </segment>
+                                    </segments>
+                                </segmentedCell>
+                            </segmentedControl>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="38" id="1Oz-Li-WCr"/>
+                            <constraint firstItem="Jl3-QW-y8e" firstAttribute="leading" secondItem="Ijw-SU-h2Z" secondAttribute="trailing" constant="10" id="FWc-Xl-X5m"/>
+                            <constraint firstAttribute="trailing" secondItem="Jl3-QW-y8e" secondAttribute="trailing" constant="10" id="Gae-nq-NER"/>
+                            <constraint firstAttribute="bottom" secondItem="Jl3-QW-y8e" secondAttribute="bottom" constant="6" id="W9Q-Pt-N5s"/>
+                            <constraint firstAttribute="bottom" secondItem="Ijw-SU-h2Z" secondAttribute="bottom" constant="7" id="n8H-Gl-DbW"/>
+                            <constraint firstItem="Jl3-QW-y8e" firstAttribute="top" secondItem="sIi-NW-j8L" secondAttribute="top" constant="8" id="wAV-8e-gZU"/>
+                            <constraint firstItem="Ijw-SU-h2Z" firstAttribute="leading" secondItem="sIi-NW-j8L" secondAttribute="leading" constant="10" id="yuB-pq-Xnd"/>
+                        </constraints>
+                    </customView>
                     <splitView autosaveName="" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2wO-1t-EIG" userLabel="Thin Split View" customClass="TVCMainWindowSplitView">
                         <rect key="frame" x="0.0" y="38" width="800" height="439"/>
                         <subviews>
@@ -1164,7 +1245,7 @@
                                                                         <constraint firstItem="ZCL-DX-q0C" firstAttribute="leading" secondItem="hec-u0-yi1" secondAttribute="leading" constant="3" id="gF3-6E-Pyp"/>
                                                                     </constraints>
                                                                     <connections>
-                                                                        <outlet property="textField" destination="ZCL-DX-q0C" id="nsp-fi-HgX"/>
+                                                                        <outlet property="cellTextField" destination="ZCL-DX-q0C" id="n8s-tA-T2y"/>
                                                                     </connections>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="ChildView" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" id="Pd5-iT-icw" customClass="TVCServerListCellChildItem">
@@ -1209,11 +1290,11 @@
                                                                         <constraint firstItem="Cwj-qa-na9" firstAttribute="leading" secondItem="imX-oI-lC7" secondAttribute="trailing" constant="8" id="nlU-Z6-MsZ"/>
                                                                     </constraints>
                                                                     <connections>
+                                                                        <outlet property="cellTextField" destination="Cwj-qa-na9" id="7PC-CD-Arc"/>
                                                                         <outlet property="imageView" destination="imX-oI-lC7" id="chY-u4-ZBL"/>
                                                                         <outlet property="messageCountBadgeImageView" destination="boO-xE-alR" id="Mu8-nV-I6j"/>
                                                                         <outlet property="messageCountBadgeTrailingConstraint" destination="cTm-xq-TXV" id="a7Z-LE-4xD"/>
                                                                         <outlet property="messageCountBadgeWidthConstraint" destination="mga-7W-viL" id="avw-Pp-kV8"/>
-                                                                        <outlet property="textField" destination="Cwj-qa-na9" id="eCx-U1-udy"/>
                                                                     </connections>
                                                                 </tableCellView>
                                                             </prototypeCellViews>
@@ -1317,8 +1398,8 @@
                                                                         <constraint firstAttribute="trailing" secondItem="Nao-T2-KM7" secondAttribute="trailing" constant="5" id="y94-b9-EDx"/>
                                                                     </constraints>
                                                                     <connections>
+                                                                        <outlet property="cellTextField" destination="Nao-T2-KM7" id="CkH-Xg-xyW"/>
                                                                         <outlet property="imageView" destination="Reg-g1-lse" id="Mn0-ea-7Kr"/>
-                                                                        <outlet property="textField" destination="Nao-T2-KM7" id="5Ga-p9-JzK"/>
                                                                     </connections>
                                                                 </tableCellView>
                                                             </prototypeCellViews>
@@ -1364,87 +1445,6 @@
                             <outlet property="serverListWidthConstraint" destination="Shw-gN-4CR" id="5TQ-3F-4Lt"/>
                         </connections>
                     </splitView>
-                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="sIi-NW-j8L" userLabel="Text Field">
-                        <rect key="frame" x="0.0" y="0.0" width="800" height="38"/>
-                        <subviews>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Jl3-QW-y8e" customClass="TVCMainWindowTextViewBackground">
-                                <rect key="frame" x="170" y="6" width="620" height="24"/>
-                                <subviews>
-                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fM6-4m-qZc">
-                                        <rect key="frame" x="0.0" y="3" width="610" height="19"/>
-                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="0kO-pf-9ZA">
-                                            <rect key="frame" x="0.0" y="0.0" width="624" height="18"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <subviews>
-                                                <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" continuousSpellChecking="YES" allowsUndo="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" grammarChecking="YES" smartInsertDelete="YES" id="AbN-7J-waj" customClass="TVCMainWindowTextView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="624" height="19"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="610" height="19"/>
-                                                    <size key="maxSize" width="629" height="10000000"/>
-                                                    <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="610" height="19"/>
-                                                    <size key="maxSize" width="629" height="10000000"/>
-                                                    <connections>
-                                                        <outlet property="backgroundView" destination="Jl3-QW-y8e" id="qHs-h8-s9V"/>
-                                                        <outlet property="segmentedController" destination="Ijw-SU-h2Z" id="L11-W6-6qN"/>
-                                                        <outlet property="segmentedControllerCell" destination="pkk-4P-MNX" id="qdM-kk-0XX"/>
-                                                        <outlet property="segmentedControllerLeadingConstraint" destination="yuB-pq-Xnd" id="Wwd-Ky-Nm2"/>
-                                                        <outlet property="segmentedControllerWidthConstraint" destination="rAs-uE-LJj" id="9n0-32-EUp"/>
-                                                        <outlet property="textFieldHeightConstraint" destination="1Oz-Li-WCr" id="HWX-WN-83g"/>
-                                                    </connections>
-                                                </textView>
-                                            </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </clipView>
-                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="eIA-9M-JaU">
-                                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </scroller>
-                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="iKt-3c-baO">
-                                            <rect key="frame" x="481" y="1" width="16" height="13"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </scroller>
-                                    </scrollView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="fM6-4m-qZc" secondAttribute="trailing" constant="10" id="Svt-Yg-xEb"/>
-                                    <constraint firstItem="fM6-4m-qZc" firstAttribute="top" secondItem="Jl3-QW-y8e" secondAttribute="top" constant="2" id="VzX-TV-08P"/>
-                                    <constraint firstAttribute="bottom" secondItem="fM6-4m-qZc" secondAttribute="bottom" constant="3" id="WZ3-cl-4oi"/>
-                                    <constraint firstItem="fM6-4m-qZc" firstAttribute="leading" secondItem="Jl3-QW-y8e" secondAttribute="leading" id="eN2-SM-AOM"/>
-                                </constraints>
-                            </customView>
-                            <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ijw-SU-h2Z" customClass="TVCMainWindowSegmentedController">
-                                <rect key="frame" x="10" y="5" width="150" height="25"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="rAs-uE-LJj"/>
-                                </constraints>
-                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="pkk-4P-MNX" customClass="TVCMainWindowSegmentedControllerCell">
-                                    <font key="font" metaFont="system"/>
-                                    <segments>
-                                        <segment toolTip="Add Server or Channel" image="NSAddTemplate" width="48">
-                                            <nil key="label"/>
-                                        </segment>
-                                        <segment toolTip="Manage Selection" image="NSActionTemplate" width="48" tag="1">
-                                            <nil key="label"/>
-                                        </segment>
-                                        <segment toolTip="Open Address Book" image="MainWindowSegmentedControlUserTemplate" width="46" tag="2">
-                                            <nil key="label"/>
-                                        </segment>
-                                    </segments>
-                                </segmentedCell>
-                            </segmentedControl>
-                        </subviews>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="38" id="1Oz-Li-WCr"/>
-                            <constraint firstItem="Jl3-QW-y8e" firstAttribute="leading" secondItem="Ijw-SU-h2Z" secondAttribute="trailing" constant="10" id="FWc-Xl-X5m"/>
-                            <constraint firstAttribute="trailing" secondItem="Jl3-QW-y8e" secondAttribute="trailing" constant="10" id="Gae-nq-NER"/>
-                            <constraint firstAttribute="bottom" secondItem="Jl3-QW-y8e" secondAttribute="bottom" constant="6" id="W9Q-Pt-N5s"/>
-                            <constraint firstAttribute="bottom" secondItem="Ijw-SU-h2Z" secondAttribute="bottom" constant="7" id="n8H-Gl-DbW"/>
-                            <constraint firstItem="Jl3-QW-y8e" firstAttribute="top" secondItem="sIi-NW-j8L" secondAttribute="top" constant="8" id="wAV-8e-gZU"/>
-                            <constraint firstItem="Ijw-SU-h2Z" firstAttribute="leading" secondItem="sIi-NW-j8L" secondAttribute="leading" constant="10" id="yuB-pq-Xnd"/>
-                        </constraints>
-                    </customView>
                     <box autoresizesSubviews="NO" title="Box" boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="jef-7M-R83" userLabel="Loading Screen" customClass="TVCMainWindowLoadingScreenView">
                         <rect key="frame" x="0.0" y="38" width="800" height="439"/>
                         <view key="contentView">
@@ -1665,7 +1665,6 @@ There are no other limits. What you see, is what you get.</string>
                     <constraint firstItem="jef-7M-R83" firstAttribute="top" secondItem="vSf-eS-cbh" secondAttribute="top" id="zxY-I9-q6S"/>
                 </constraints>
             </view>
-            <contentBorderThickness minY="38"/>
             <connections>
                 <outlet property="channelViewBox" destination="diP-H5-Ek0" id="en9-Px-YEk"/>
                 <outlet property="contentSplitView" destination="2wO-1t-EIG" id="7dJ-Lw-BiU"/>
@@ -1676,7 +1675,7 @@ There are no other limits. What you see, is what you get.</string>
                 <outlet property="memberList" destination="uZZ-ie-yHv" id="gm8-QW-Z2m"/>
                 <outlet property="serverList" destination="bhZ-Cj-KBM" id="QGQ-U3-gy6"/>
             </connections>
-            <point key="canvasLocation" x="1889" y="335.5"/>
+            <point key="canvasLocation" x="2262" y="529.5"/>
         </window>
         <customObject id="yyd-f5-aHb" userLabel="FormatTextController" customClass="TVCTextViewIRCFormattingMenu">
             <connections>

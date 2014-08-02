@@ -68,7 +68,7 @@
 	IRCUser *associatedUser = [self memberPointer];
 	
 	/* Maybe update text field value. */
-	NSTextField *textField = [self textField];
+	NSTextField *textField = [self cellTextField];
 	
 	NSString *stringValue = [textField stringValue];
 	
@@ -111,7 +111,7 @@
 	IRCUser *assosicatedUser = [self memberPointer];
 	
 	/* Update attributed string. */
-	NSTextField *textField = [self textField];
+	NSTextField *textField = [self cellTextField];
 	
 	NSAttributedString *stringValue = [textField attributedStringValue];
 	
@@ -180,7 +180,7 @@
 	IRCUser *assosicatedUser = [self memberPointer];
 	
 	/* Update attributed string. */
-	NSTextField *textField = [self textField];
+	NSTextField *textField = [self cellTextField];
 	
 	NSAttributedString *stringValue = [textField attributedStringValue];
 	
@@ -624,17 +624,10 @@
 - (void)postSelectionChangeNeedsDisplay
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
-		if ([self isSelected])
-		{
-			if ([TPCPreferences invertSidebarColors]) {
-				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
-			} else {
-				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleSourceList];
-			}
-		}
-		else
-		{
+		if ([TPCPreferences invertSidebarColors]) {
 			[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
+		} else {
+			[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleSourceList];
 		}
 	}
 
