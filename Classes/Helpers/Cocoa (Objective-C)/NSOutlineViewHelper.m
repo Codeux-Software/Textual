@@ -57,6 +57,27 @@
 	return ([self levelForItem:item] == 0);
 }
 
+- (NSInteger)rowForGroupItem:(id)item
+{
+	if ([self isGroupItem:item]) {
+		NSInteger rowCount = -1;
+		
+		for (NSInteger i = 0; i < [self numberOfRows]; i++) {
+			id curRow = [self itemAtRow:i];
+			
+			if ([self isGroupItem:curRow]) {
+				rowCount += 1;
+				
+				if (item == curRow) {
+					return rowCount;
+				}
+			}
+		}
+	}
+	
+	return -1;
+}
+
 - (NSArray *)groupItems
 {
 	NSMutableArray *groups = [NSMutableArray array];

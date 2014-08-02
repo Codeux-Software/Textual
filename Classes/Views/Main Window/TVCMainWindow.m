@@ -1724,31 +1724,9 @@
 		[mutary addObjectsFromArray:high];
 		
 		[worldController() setClientList:mutary];
-		
-		/* Now, the hard part… */
-		NSArray *childItems = [self.serverList groupItems];
-		
-		NSObjectIsEmptyAssertReturn(childItems, NO);
-		
-		NSInteger oldIndex = [childItems indexOfObject:i];
-		NSInteger newIndex = 0;
-		
-		id lastObject = [low lastObject];
-		
-		if (lastObject) {
-			newIndex = [childItems indexOfObject:lastObject];
-			
-			if (originalIndex <= oldIndex && newIndex < ([childItems count] - 1)) {
-				newIndex += 1;
-			}
-		}
-		
-		if (oldIndex == newIndex) {
-			return NO;
-		}
-		
-		/* Move the actual placement to reflect internal storage. */
-		[self.serverList moveItemAtIndex:oldIndex inParent:nil toIndex:newIndex inParent:nil];
+
+		/* Move the item. */
+		[self.serverList moveItemAtIndex:originalIndex inParent:nil toIndex: index inParent:nil];
 	}
 	else
 	{
@@ -1786,31 +1764,12 @@
 		
 		[u setChannelList:mutary];
 		
-		/* I am pretty tired. */
-		NSArray *childItems = [self.serverList rowsFromParentGroup:u];
-		
-		NSObjectIsEmptyAssertReturn(childItems, NO);
-		
-		NSInteger oldIndex = [childItems indexOfObject:i];
-		NSInteger newIndex = 0;
-		
-		id lastObject = [low lastObject];
-		
-		if (lastObject) {
-			newIndex  = [childItems indexOfObject:lastObject];
-			newIndex += 1;
-			
-			if (newIndex > originalIndex) {
-				newIndex -= 1;
-			}
-		}
-		
-		if (oldIndex == newIndex) {
-			return NO;
-		}
-		
 		/* And I just want this refacotring to be over with. */
-		[self.serverList moveItemAtIndex:oldIndex inParent:u toIndex:newIndex inParent:u];
+		if (originalIndex < index) {
+			[self.serverList moveItemAtIndex:originalIndex inParent:u toIndex:(index - 1) inParent:u];
+		} else {
+			[self.serverList moveItemAtIndex:originalIndex inParent:u toIndex: index inParent:u];
+		}
 	}
 	
 	/* Update selection. */
