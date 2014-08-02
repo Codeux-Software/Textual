@@ -40,6 +40,8 @@
 @interface TVCMemberListCell : NSTableCellView
 @property (nonatomic, nweak) IRCUser *memberPointer;
 
+@property (nonatomic, nweak) IBOutlet NSTextField *cellTextField;
+
 @property (readonly, copy) NSDictionary *drawingContext;
 
 - (void)drawWithExpansionFrame;

@@ -39,9 +39,8 @@
 
 @interface TVCServerListCell : NSTableCellView
 @property (nonatomic, nweak) IRCTreeItem *cellItem;
-
+@property (nonatomic, nweak) IBOutlet NSTextField *cellTextField;
 @property (nonatomic, nweak) IBOutlet NSImageView *messageCountBadgeImageView;
-
 @property (nonatomic, nweak) IBOutlet NSLayoutConstraint *messageCountBadgeWidthConstraint;
 @property (nonatomic, nweak) IBOutlet NSLayoutConstraint *messageCountBadgeTrailingConstraint;
 

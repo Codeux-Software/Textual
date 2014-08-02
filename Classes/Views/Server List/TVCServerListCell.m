@@ -79,7 +79,7 @@
 	/* Maybe update text field value. */
 	IRCTreeItem *cellItem = [self cellItem];
 	
-	NSTextField *textField = [self textField];
+	NSTextField *textField = [self cellTextField];
 	
 	NSString *stringValue = [textField stringValue];
 	
@@ -140,7 +140,7 @@
 	/* Update attributed value. */
 	NSAttributedString *newValue = [self attributedTextFieldValueForYosemite:interfaceObject inContext:drawingContext];
 	
-	NSTextField *textField = [self textField];
+	NSTextField *textField = [self cellTextField];
 	
 	[textField setAttributedStringValue:newValue];
 	
@@ -195,7 +195,7 @@
 	/* Update attributed value. */
 	NSAttributedString *newValue = [self attributedTextFieldValueForMavericks:interfaceObject inContext:drawingContext];
 
-	NSTextField *textField = [self textField];
+	NSTextField *textField = [self cellTextField];
 
 	[textField setAttributedStringValue:newValue];
 	
@@ -217,7 +217,7 @@
 	IRCTreeItem *rawPointer = [self cellItem];
 	
 	/* Update attributed string. */
-	NSTextField *textField = [self textField];
+	NSTextField *textField = [self cellTextField];
 	
 	NSAttributedString *stringValue = [textField attributedStringValue];
 	
@@ -361,7 +361,7 @@
 	}
 	
 	/* Update attributed string. */
-	NSTextField *textField = [self textField];
+	NSTextField *textField = [self cellTextField];
 	
 	NSAttributedString *stringValue = [textField attributedStringValue];
 	
@@ -793,17 +793,10 @@
 - (void)postSelectionChangeNeedsDisplay
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
-		if ([self isSelected])
-		{
-			if ([TPCPreferences invertSidebarColors]) {
-				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
-			} else {
-				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleSourceList];
-			}
-		}
-		else
-		{
+		if ([TPCPreferences invertSidebarColors]) {
 			[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
+		} else {
+			[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleSourceList];
 		}
 	}
 	
