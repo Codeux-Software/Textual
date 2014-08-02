@@ -228,10 +228,6 @@
 	[self reloadUserInterfaceObjects];
 	
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
-		NSColor *backgroundColor = [[self userInterfaceObjects] serverListBackgroundColor];
-		
-		[self setBackgroundColor:backgroundColor];
-		
 		if ([TPCPreferences invertSidebarColors]) {
 			[[self enclosingScrollView] setScrollerKnobStyle:NSScrollerKnobStyleLight];
 		} else {
@@ -246,6 +242,15 @@
 	[mainWindow() setTemporarilyDisablePreviousSelectionUpdates:NO];
 	[mainWindow() setTemporarilyIgnoreOutlineViewSelectionChanges:NO];
 	
+	[self reloadAllDrawings];
+}
+
+- (void)windowDidChangeKeyState
+{
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
+		[self.backgroundView setNeedsDisplay:YES];
+	}
+
 	[self reloadAllDrawings];
 }
 

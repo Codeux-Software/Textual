@@ -43,6 +43,7 @@
 @property (nonatomic, strong) id userInterfaceObjects;
 @property (nonatomic, strong) IBOutlet TVCMemberListUserInfoPopover *memberListUserInfoPopover;
 @property (nonatomic, nweak) IBOutlet NSVisualEffectView *visualEffectView;
+@property (nonatomic, nweak) IBOutlet TVCMemberListMavericksUserInterfaceBackground *backgroundView;
 
 /* Additions & Removals. */
 - (void)addItemToList:(NSInteger)index;
@@ -61,6 +62,8 @@
 - (void)updateDrawingForRow:(NSInteger)rowIndex;
 
 - (void)updateBackgroundColor; // Do not call.
+
+- (void)windowDidChangeKeyState;
 
 /* Event monitor. */
 - (void)destroyUserInfoPopoverOnWindowKeyChange;

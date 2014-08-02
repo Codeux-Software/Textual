@@ -1198,9 +1198,18 @@
                                 <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
+                                    <box autoresizesSubviews="NO" boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="2Vr-x4-oub" customClass="TVCServerListMavericksUserInterfaceBackground">
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
+                                        <view key="contentView">
+                                            <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </view>
+                                        <color key="borderColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
+                                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </box>
                                     <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pRq-5j-Tbj">
                                         <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
-                                        <clipView key="contentView" drawsBackground="NO" id="Ugn-kA-dZH">
+                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Ugn-kA-dZH">
                                             <rect key="frame" x="1" y="17" width="238" height="117"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -1300,6 +1309,9 @@
                                                             </prototypeCellViews>
                                                         </tableColumn>
                                                     </tableColumns>
+                                                    <connections>
+                                                        <outlet property="backgroundView" destination="2Vr-x4-oub" id="RCl-Ol-fqb"/>
+                                                    </connections>
                                                 </outlineView>
                                             </subviews>
                                             <nil key="backgroundColor"/>
@@ -1318,9 +1330,13 @@
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="Ca9-ju-phm"/>
                                     <constraint firstItem="pRq-5j-Tbj" firstAttribute="top" secondItem="xiq-lf-ykL" secondAttribute="top" id="ESU-C1-lfx"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="Shw-gN-4CR"/>
+                                    <constraint firstAttribute="bottom" secondItem="2Vr-x4-oub" secondAttribute="bottom" id="YX1-GP-ZA1"/>
                                     <constraint firstAttribute="trailing" secondItem="pRq-5j-Tbj" secondAttribute="trailing" id="ZwV-BQ-Xlw"/>
                                     <constraint firstItem="pRq-5j-Tbj" firstAttribute="leading" secondItem="xiq-lf-ykL" secondAttribute="leading" id="dN8-w4-lKB"/>
                                     <constraint firstAttribute="bottom" secondItem="pRq-5j-Tbj" secondAttribute="bottom" id="fek-IK-4Ks"/>
+                                    <constraint firstItem="2Vr-x4-oub" firstAttribute="leading" secondItem="xiq-lf-ykL" secondAttribute="leading" id="j8Z-jU-SKw"/>
+                                    <constraint firstItem="2Vr-x4-oub" firstAttribute="top" secondItem="xiq-lf-ykL" secondAttribute="top" id="kit-sy-UeK"/>
+                                    <constraint firstAttribute="trailing" secondItem="2Vr-x4-oub" secondAttribute="trailing" id="xRT-3Q-roK"/>
                                 </constraints>
                             </customView>
                             <box title="Title" boxType="custom" borderType="none" titlePosition="noTitle" id="diP-H5-Ek0" userLabel="Chat Box - Title">
@@ -1341,6 +1357,15 @@
                                 <rect key="frame" x="650" y="0.0" width="150" height="439"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
+                                    <box autoresizesSubviews="NO" boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="03i-f2-qEP" customClass="TVCMemberListMavericksUserInterfaceBackground">
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
+                                        <view key="contentView">
+                                            <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </view>
+                                        <color key="borderColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
+                                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </box>
                                     <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="20" horizontalPageScroll="10" verticalLineScroll="20" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zg5-cz-li9">
                                         <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                         <clipView key="contentView" drawsBackground="NO" id="iqZ-oE-HbV">
@@ -1350,7 +1375,7 @@
                                                 <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" selectionHighlightStyle="sourceList" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" rowHeight="20" viewBased="YES" floatsGroupRows="NO" outlineTableColumn="bdD-7t-ks4" id="uZZ-ie-yHv" customClass="TVCMemberList">
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="0.0"/>
-                                                    <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                     <tableColumns>
                                                         <tableColumn identifier="GroupView" width="147" minWidth="40" maxWidth="1000" id="bdD-7t-ks4">
@@ -1406,6 +1431,7 @@
                                                         </tableColumn>
                                                     </tableColumns>
                                                     <connections>
+                                                        <outlet property="backgroundView" destination="03i-f2-qEP" id="Cdn-0M-e96"/>
                                                         <outlet property="memberListUserInfoPopover" destination="hCd-Nn-UE3" id="9rd-t5-379"/>
                                                     </connections>
                                                 </outlineView>
@@ -1423,10 +1449,14 @@
                                     </scrollView>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="03i-f2-qEP" firstAttribute="leading" secondItem="VPt-er-ffg" secondAttribute="leading" id="0Kk-6w-lr5"/>
                                     <constraint firstAttribute="bottom" secondItem="Zg5-cz-li9" secondAttribute="bottom" id="533-sM-zhe"/>
                                     <constraint firstAttribute="trailing" secondItem="Zg5-cz-li9" secondAttribute="trailing" id="6fZ-lN-WLD"/>
+                                    <constraint firstAttribute="bottom" secondItem="03i-f2-qEP" secondAttribute="bottom" id="A9t-U4-2mi"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="JlD-4o-tpf"/>
+                                    <constraint firstItem="03i-f2-qEP" firstAttribute="top" secondItem="VPt-er-ffg" secondAttribute="top" id="Wif-0g-93u"/>
                                     <constraint firstItem="Zg5-cz-li9" firstAttribute="top" secondItem="VPt-er-ffg" secondAttribute="top" id="Y7S-tO-0ll"/>
+                                    <constraint firstAttribute="trailing" secondItem="03i-f2-qEP" secondAttribute="trailing" id="pln-sk-pjU"/>
                                     <constraint firstItem="Zg5-cz-li9" firstAttribute="leading" secondItem="VPt-er-ffg" secondAttribute="leading" id="tHq-vU-zRc"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="wR4-2T-o8C"/>
                                 </constraints>

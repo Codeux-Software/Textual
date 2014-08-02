@@ -45,7 +45,8 @@
 - (NSInteger)serverCellRowHeight;
 - (NSInteger)channelCellRowHeight;
 
-- (NSColor *)serverListBackgroundColor;
+- (NSColor *)serverListBackgroundColorForActiveWindow;
+- (NSColor *)serverListBackgroundColorForInactiveWindow;
 
 - (NSImage *)channelRowSelectionImageForActiveWindow;
 - (NSImage *)channelRowSelectionImageForInactiveWindow;

@@ -45,3 +45,6 @@
 
 + (BOOL)yosemiteIsUsingVibrantDarkMode;
 @end
+
+@interface TVCServerListMavericksUserInterfaceBackground : NSBox
+@end

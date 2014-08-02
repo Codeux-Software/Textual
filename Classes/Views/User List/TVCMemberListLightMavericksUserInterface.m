@@ -98,7 +98,12 @@
 	}
 }
 
-- (NSColor *)memberListBackgroundColor
+- (NSColor *)memberListBackgroundColorForActiveWindow
+{
+	return nil;
+}
+
+- (NSColor *)memberListBackgroundColorForInactiveWindow
 {
 	return nil;
 }
@@ -202,6 +207,34 @@
 - (NSInteger)userMarkBadgeHeight
 {
 	return 16.0;
+}
+
+@end
+
+@implementation TVCMemberListMavericksUserInterfaceBackground
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+	/* The following is specialized drawing for the normal source list
+	 background when inside a backed layer view. */
+	
+	NSColor *backgroundColor = nil;
+	
+	if ([mainWindow() isActiveForDrawing]) {
+		backgroundColor = [[mainWindowMemberList() userInterfaceObjects] memberListBackgroundColorForActiveWindow];
+	} else {
+		backgroundColor = [[mainWindowMemberList() userInterfaceObjects] memberListBackgroundColorForInactiveWindow];
+	}
+	
+	if (backgroundColor) {
+		[backgroundColor set];
+		
+		NSRectFill([self bounds]);
+	} else {
+		NSGradient *backgroundGradient = [NSGradient sourceListBackgroundGradientColor];
+		
+		[backgroundGradient drawInRect:[self bounds] angle:270.0];
+	}
 }
 
 @end

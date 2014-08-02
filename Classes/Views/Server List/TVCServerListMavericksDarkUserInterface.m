@@ -279,7 +279,12 @@
 	return [NSImage imageNamed:@"MavericksDarkServerCellSelection"];
 }
 
-- (NSColor *)serverListBackgroundColor
+- (NSColor *)serverListBackgroundColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.148 green:0.148 blue:0.148 alpha:1.0];
+}
+
+- (NSColor *)serverListBackgroundColorForInactiveWindow
 {
 	return [NSColor colorWithCalibratedRed:0.148 green:0.148 blue:0.148 alpha:1.0];
 }

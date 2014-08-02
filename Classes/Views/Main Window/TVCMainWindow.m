@@ -209,18 +209,18 @@
 	
 	[self.inputTextField windowDidChangeKeyState];
 	
-	[self.serverList reloadAllDrawings];
+	[self.serverList windowDidChangeKeyState];
 	
-	[self.memberList reloadAllDrawings];
+	[self.memberList windowDidChangeKeyState];
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification
 {
 	[self.inputTextField windowDidChangeKeyState];
 	
-	[self.serverList reloadAllDrawings];
+	[self.serverList windowDidChangeKeyState];
 	
-	[self.memberList reloadAllDrawings];
+	[self.memberList windowDidChangeKeyState];
 	[self.memberList destroyUserInfoPopoverOnWindowKeyChange];
 }
 

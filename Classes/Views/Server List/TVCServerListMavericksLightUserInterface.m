@@ -259,9 +259,14 @@
 	return nil; // Use system default.
 }
 
-- (NSColor *)serverListBackgroundColor
+- (NSColor *)serverListBackgroundColorForActiveWindow
 {
-	return [NSColor sourceListBackgroundColor];
+	return nil; // Use system default.
+}
+
+- (NSColor *)serverListBackgroundColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedRed:0.901 green:0.901 blue:0.901 alpha:1.0];
 }
 
 @end
