@@ -145,6 +145,7 @@
 	[self.webView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 
 	[self.webView setKeyDelegate:self];
+	[self.webView setDraggingDelegate:self];
 	[self.webView setFrameLoadDelegate:self];
 	[self.webView setResourceLoadDelegate:self];
 	[self.webView setPolicyDelegate:self.webViewPolicy];
@@ -1539,6 +1540,13 @@
 - (void)logViewKeyDown:(NSEvent *)e
 {
 	[worldController() logKeyDown:e];
+}
+
+- (void)logViewRecievedDropWithFile:(NSString *)filename
+{
+	/* TVCLogView guarantees that this delegate method is only called for private messages. */
+	
+	[menuController() memberSendDroppedFilesToSelectedChannel:@[filename]];
 }
 
 @end

@@ -66,9 +66,24 @@
 	return YES;
 }
 
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
+{
+	NSURL *fileURL = [NSURL URLFromPasteboard:[sender draggingPasteboard]];
+
+	if (fileURL) {
+		NSString *filename = [fileURL relativePath];
+		
+		if ([self.draggingDelegate respondsToSelector:@selector(logViewRecievedDropWithFile:)]) {
+			[self.draggingDelegate logViewRecievedDropWithFile:filename];
+		}
+	}
+	
+	return NO;
+}
+
 - (NSString *)contentString
 {
-	DOMDocument *doc = [self.mainFrame DOMDocument];
+	DOMDocument *doc = [[self mainFrame] DOMDocument];
 	PointerIsEmptyAssertReturn(doc, nil);
 	
 	DOMElement *body = [doc body];

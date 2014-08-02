@@ -2308,6 +2308,28 @@
 	}];
 }
 
+- (void)memberSendDroppedFilesToSelectedChannel:(NSArray *)files
+{
+	IRCClient *u = [mainWindow() selectedClient];
+	IRCChannel *c = [mainWindow() selectedChannel];
+	
+	if (_noClientOrChannel || _isChannel || _isClient || _connectionNotLoggedIn) {
+		return;
+	}
+
+	for (NSString *pathURL in files) {
+		BOOL isDirectory = NO;
+		
+		if ([RZFileManager() fileExistsAtPath:pathURL isDirectory:&isDirectory]) {
+			if (isDirectory) {
+				continue;
+			}
+		}
+		
+		(void)[self.fileTransferController addSenderForClient:u nickname:[c name] path:pathURL autoOpen:YES];
+	}
+}
+
 - (void)memberSendDroppedFiles:(NSArray *)files row:(NSNumber *)row
 {
 	IRCClient *u = [mainWindow() selectedClient];

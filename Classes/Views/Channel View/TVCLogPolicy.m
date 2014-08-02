@@ -67,11 +67,6 @@
 	}
 }
 
-- (NSUInteger)webView:(WebView *)sender dragDestinationActionMaskForDraggingInfo:(id)draggingInfo
-{
-	return WebDragDestinationActionNone;
-}
-
 - (void)channelDoubleClicked
 {
 	[menuController() setPointedChannelName:self.channelName];
@@ -218,6 +213,21 @@
 	} else {
 		[listener use];
 	}
+}
+
+- (NSUInteger)webView:(WebView *)webView dragDestinationActionMaskForDraggingInfo:(id<NSDraggingInfo>)draggingInfo
+{
+	IRCChannel *channel = [mainWindow() selectedChannel];
+	
+	if ([channel isPrivateMessage]) {
+		NSPasteboard *pboard = [draggingInfo draggingPasteboard];
+
+		if ([[pboard types] containsObject:NSFilenamesPboardType]) {
+			return WebDragDestinationActionAny;
+		}
+	}
+	
+	return WebDragDestinationActionNone;
 }
 
 @end
