@@ -72,6 +72,13 @@ Textual = {
 	viewPositionMovedToLine: 				function(lineNumber) {},
 	viewPositionMovedToTop: 				function() {},
 	
+	/* This function is not called by Textual itself but by WebKit. It is appended
+	to <body> as the function to call during onload phase. It is used by the newer
+	templates to replace viewDidFinishLoading as the function responsible for 
+	fading out the loading screen. It is defined here so style's that do not
+	implement it do not error out. */
+	viewBodyDidLoad:						function() {},
+	
 	/* Allows a style to respond to the user switching between light and
 	dark mode. */
 	sidebarInversionPreferenceChanged:		function() {},
@@ -187,6 +194,15 @@ Textual = {
 	/* Loading screen. */
 	
 	fadeInLoadingScreen: function(bodyOp, topicOp)
+	{
+		/* fadeInLoadingScreen is the old API name and makes no sense since we are
+		not bringing the loading screen into view, we are removing it. So it is 
+		being faded "out" not "in" */
+
+		Textual.fadeOutLoadingScreen(bodyOp, topicOp);
+	},
+	
+	fadeOutLoadingScreen: function(bodyOp, topicOp)
 	{
 		/* Reserved element IDs. */
 		var bhe = document.getElementById("body_home");

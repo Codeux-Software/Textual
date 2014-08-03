@@ -69,16 +69,12 @@ var NickColorGenerator = (function () {
     return NickColorGenerator;
 })();
 
-Textual.viewFinishedLoading = function() {
-    Textual.fadeInLoadingScreen(1.00, 0.95);
+Textual.viewBodyDidLoad = function() {
+	Textual.fadeOutLoadingScreen(1.00, 0.95);
 
     setTimeout(function() {
         Textual.scrollToBottomOfView();
     }, 500);
-};
-
-Textual.viewFinishedReload = function() {
-    Textual.viewFinishedLoading();
 };
 
 Textual.newMessagePostedToView = function (line) {
