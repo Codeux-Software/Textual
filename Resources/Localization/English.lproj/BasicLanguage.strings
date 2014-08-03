@@ -167,9 +167,9 @@
 "TDCFileTransferDialog[1001]" = "Transfer to %@ is stopped. Right click to start.";
 "TDCFileTransferDialog[1002]" = "Transfer to %@ is initializing. Attempting to map listening port.";
 "TDCFileTransferDialog[1003]" = "Transfer to %@ is initializing. Determining local IP address.";
-"TDCFileTransferDialog[1004]" = "Transfer to %@ is initializing.";
+"TDCFileTransferDialog[1004]" = "Transfer to %@ is initializing";
 "TDCFileTransferDialog[1005]" = "Transfer to %@ is ready. Waiting for them to accept.";
-"TDCFileTransferDialog[1006]" = "Transfer to %@ is complete.";
+"TDCFileTransferDialog[1006]" = "Transfer to %@ is complete";
 "TDCFileTransferDialog[1007]" = "Transfer to %@ is ready. Waiting for them to accept.";
 
 "TDCFileTransferDialog[1008][1]" = "%1$@ of %2$@ (%3$@/s) received from %4$@";
@@ -178,11 +178,11 @@
 "TDCFileTransferDialog[1009]" = "Transfer from %@ is stopped. Right click to start.";
 "TDCFileTransferDialog[1010]" = "Transfer from %@ is initializing. Attempting to map listening port.";
 "TDCFileTransferDialog[1011]" = "Transfer from %@ is initializing. Determining local IP address.";
-"TDCFileTransferDialog[1012]" = "Transfer from %@ is initializing.";
+"TDCFileTransferDialog[1012]" = "Transfer from %@ is initializing";
 "TDCFileTransferDialog[1013]" = "Transfer from %@ is ready. Right click to start.";
 "TDCFileTransferDialog[1014]" = "Transfer from %@ is complete. Right click to open in Finder.";
 
-"TDCFileTransferDialog[1015]" = "Connecting to %@.";
+"TDCFileTransferDialog[1015]" = "Connecting to %@";
 
 "TDCFileTransferDialog[1016]" = "Transfer with %@ failed. Could not establish connection.";
 "TDCFileTransferDialog[1017]" = "Transfer with %@ failed. There is no open port.";
@@ -190,7 +190,7 @@
 "TDCFileTransferDialog[1019]" = "Transfer with %@ failed. Unknown source IP address.";
 "TDCFileTransferDialog[1020]" = "Transfer with %@ failed. Connection was disconnected.";
 
-"TDCFileTransferDialog[1021]" = "Select the folder in which this file will be saved.";
+"TDCFileTransferDialog[1021]" = "Select the folder in which this file will be saved";
 
 /* Main window text field placeholder. */
 "TDCMainWindow[1000]" = "Send Message …";
@@ -204,8 +204,8 @@
 "BasicLanguage[1245]" = "Decryption failed. When attempting to decrypt, %i bad sections were found and were unable to be repaired.";
 "BasicLanguage[1001]" = "Encryption of message failed; not sending to server.";
 "BasicLanguage[1002]" = "Encryption key changed; adjusting accordingly.";
-"BasicLanguage[1003]" = "Encryption started.";
-"BasicLanguage[1004]" = "Encryption stopped.";
+"BasicLanguage[1003]" = "Encryption started";
+"BasicLanguage[1004]" = "Encryption stopped";
 
 /* Sections of channel information in main window title bar. */
 "BasicLanguage[1005]" = " — ";
@@ -257,10 +257,10 @@
 "BasicLanguage[1026][3]" = "Search for Message";
 
 /* Default G:Line reason. */
-"BasicLanguage[1027]" = "35d Your behavior is not conducive to the desired environment.";
-"BasicLanguage[1028]" = "Your behavior is not conducive to the desired environment.";
-"BasicLanguage[1029]" = "Your behavior is not conducive to the desired environment.";
-"BasicLanguage[1030]" = "1d Shunned.";
+"BasicLanguage[1027]" = "35d Your behavior is not conducive to the desired environment";
+"BasicLanguage[1028]" = "Your behavior is not conducive to the desired environment";
+"BasicLanguage[1029]" = "Your behavior is not conducive to the desired environment";
+"BasicLanguage[1030]" = "1d Shunned";
 
 /* Network not available messages. */
 "BasicLanguage[1031]" = "Delaying auto connect after waking up for %1$@ seconds due to the unavailability of the local network. To force connect at any time, right-click the server and click \002Connect\002.";
@@ -274,14 +274,14 @@
 "BasicLanguage[1034][03]" = "and would otherwise waste unnecessary space being presented in an actual interactive list.";
 "BasicLanguage[1034][04]" = " ";
 "BasicLanguage[1034][05]" = "Usage:";
-"BasicLanguage[1034][06]" = "\t\"/defaults enable <token>\" — Enables the feature associated with \002<token>\002.";
-"BasicLanguage[1034][07]" = "\t\"/defaults disable <token>\" — Disables the feature associated with \002<token>\002.";
-"BasicLanguage[1034][08]" = "\t\"/defaults features\" — Opens Webpage in the default browser which contains list of supported features.";
+"BasicLanguage[1034][06]" = "\t\"/defaults enable <token>\" — Enables the feature associated with \002<token>\002";
+"BasicLanguage[1034][07]" = "\t\"/defaults disable <token>\" — Disables the feature associated with \002<token>\002";
+"BasicLanguage[1034][08]" = "\t\"/defaults features\" — Opens Webpage in the default browser which contains list of supported features";
 "BasicLanguage[1034][09]" = " ";
 "BasicLanguage[1034][10]" = "The \002<token>\002 parameter supplied to this command can be encapsulated in double quotes (\") to allow for spaces.";
 
-"BasicLanguage[1035]" = "Cannot enable the feature \"%@\" as it is not supported.";
-"BasicLanguage[1036]" = "Cannot disable the feature \"%@\" as it is not supported.";
+"BasicLanguage[1035]" = "Cannot enable the feature \"%@\" as it is not supported";
+"BasicLanguage[1036]" = "Cannot disable the feature \"%@\" as it is not supported";
 
 "BasicLanguage[1037]" = "Enabled Feature: %@";
 "BasicLanguage[1038]" = "Disabled Feature: %@";
@@ -296,7 +296,7 @@
 "BasicLanguage[1041][3]" = "Configure Flood Control";
 
 /* /mode/ command error. */
-"BasicLanguage[1042]" = "The half-op (+h) mode is not supported on this server.";
+"BasicLanguage[1042]" = "The half-op (+h) mode is not supported on this server";
 
 /* Notification spoken text. */
 /* Address Book spoken text uses the actual notification message for that
@@ -311,10 +311,10 @@
 "BasicLanguage[1050]" = "Private Notice from %1$@, %2$@";
 "BasicLanguage[1051]" = "Connected to %@";
 "BasicLanguage[1052]" = "Disconnected from %@";
-"BasicLanguage[1053]" = "File transfer to %@ has completed.";
-"BasicLanguage[1054]" = "File transfer from %@ has completed.";
-"BasicLanguage[1055]" = "File transfer to %@ has failed.";
-"BasicLanguage[1056]" = "File transfer from %@ has failed.";
+"BasicLanguage[1053]" = "File transfer to %@ has completed";
+"BasicLanguage[1054]" = "File transfer from %@ has completed";
+"BasicLanguage[1055]" = "File transfer to %@ has failed";
+"BasicLanguage[1056]" = "File transfer from %@ has failed";
 "BasicLanguage[1057]" = "Received file transfer request from %@";
 
 /* Notification bubble titles. */
@@ -338,8 +338,8 @@
 /* Notification bubble descriptions. 
  These are only notifications that require localization. Many notifications
  just send the raw message received so they are not localized here. */
-"BasicLanguage[1074]" = "Connection successful.";
-"BasicLanguage[1075]" = "Disconnection successful.";
+"BasicLanguage[1074]" = "Connection successful";
+"BasicLanguage[1075]" = "Disconnection successful";
 "BasicLanguage[1076]" = "%1$@ has invited you to %2$@";
 "BasicLanguage[1077]" = "%1$@ has kicked you out: %2$@";
 "BasicLanguage[1078]" = "%1$@ (%2$qi bytes)";
@@ -347,12 +347,12 @@
 "BasicLanguage[1080]" = "%1$@";
 "BasicLanguage[1081]" = "%1$@";
 "BasicLanguage[1082]" = "%1$@ (%2$qi bytes)";
-"BasicLanguage[1083]" = "User with nickname \"%1$@\" is available.";
-"BasicLanguage[1084]" = "User with nickname \"%1$@\" is no longer available.";
-"BasicLanguage[1085]" = "User with nickname \"%1$@\" is now available.";
+"BasicLanguage[1083]" = "User with nickname \"%1$@\" is available";
+"BasicLanguage[1084]" = "User with nickname \"%1$@\" is no longer available";
+"BasicLanguage[1085]" = "User with nickname \"%1$@\" is now available";
 
 /* Notification bubble replyb button placeholders. */
-"BasicLanguage[1239]" = "Enter message to reply to this private message.";
+"BasicLanguage[1239]" = "Enter message to reply to this private message";
 
 /* File transfer notification accept button. */
 "BasicLanguage[1244]" = "Accept";
@@ -382,7 +382,7 @@
 /* /loaded_plugins/ command. */
 "BasicLanguage[1103]" = "Loaded Bundles: %@";
 "BasicLanguage[1104]" = "Loaded Scripts: %@";
-"BasicLanguage[1105]" = "Nothing loaded.";
+"BasicLanguage[1105]" = "Nothing loaded";
 
 /* /lagcheck/ command. */
 "BasicLanguage[1106]" = "Received lag check reply from %1$@. Time elapsed: %2$1.5f seconds. (Rating: %3$@)";
@@ -391,18 +391,18 @@
 
 "BasicLanguage[1109][00]" = "Yeah, okay…";
 "BasicLanguage[1109][01]" = "Are you plugged into the server?";
-"BasicLanguage[1109][02]" = "Almost No Lag.";
-"BasicLanguage[1109][03]" = "Very Fast.";
-"BasicLanguage[1109][04]" = "Fast.";
-"BasicLanguage[1109][05]" = "Average.";
-"BasicLanguage[1109][06]" = "Slow.";
-"BasicLanguage[1109][07]" = "Very Slow.";
-"BasicLanguage[1109][08]" = "Dang! Call your ISP.";
+"BasicLanguage[1109][02]" = "Almost No Lag";
+"BasicLanguage[1109][03]" = "Very Fast";
+"BasicLanguage[1109][04]" = "Fast";
+"BasicLanguage[1109][05]" = "Average";
+"BasicLanguage[1109][06]" = "Slow";
+"BasicLanguage[1109][07]" = "Very Slow";
+"BasicLanguage[1109][08]" = "Dang! Call your ISP";
 "BasicLanguage[1109][09]" = "You Fail! (www.youfail.org)";
 
 /* Open log folder error dialog. */
 "BasicLanguage[1110][1]" = "No Logs Found";
-"BasicLanguage[1110][2]" = "No logs were found for this chat session.";
+"BasicLanguage[1110][2]" = "No logs were found for this chat session";
 
 /* Version info. */
 "BasicLanguage[1111]" = "%1$@ IRC Client: www.textualapp.com — v%2$@ (Flavor: %3$@)";
@@ -413,27 +413,27 @@
 "BasicLanguage[1114]" = "\002Current Version:\002 %@";
 
 /* Miscellaneous messages related to IRC events. */
-"BasicLanguage[1115]" = "Be back later.";
-"BasicLanguage[1116]" = "\002-CTCP-\002 %1$@ from %2$@ was ignored.";
+"BasicLanguage[1115]" = "Be back later";
+"BasicLanguage[1116]" = "\002-CTCP-\002 %1$@ from %2$@ was ignored";
 "BasicLanguage[1117]" = "away-notify multi-prefix userhost-in-names sasl server-time";
 "BasicLanguage[1118]" = "CAP CLIENTINFO DCC FINGER PING TIME USERINFO VERSION";
 "BasicLanguage[1119]" = "Stop fingering me pervert!";
-"BasicLanguage[1120]" = "There are no capabilities in use.";
+"BasicLanguage[1120]" = "There are no capabilities in use";
 "BasicLanguage[1121]" = "The following capabilities are currently enabled: %@";
 "BasicLanguage[1122]" = "(No Topic)";
 "BasicLanguage[1123]" = "Mode is \002%@\002";
 "BasicLanguage[1124]" = "Topic is \002%@\002";
 "BasicLanguage[1125]" = "Set by \002%1$@\002 on %2$@";
 "BasicLanguage[1126]" = "Website is \002%@\002";
-"BasicLanguage[1127]" = "Attempting to rejoin channel in three seconds.";
+"BasicLanguage[1127]" = "Attempting to rejoin channel in three seconds";
 "BasicLanguage[1128]" = "\002%1$@\002 changed the topic to \002%2$@\002";
-"BasicLanguage[1129]" = "Connection to host established.";
-"BasicLanguage[1130]" = "Connection to host at [%@] established.";
+"BasicLanguage[1129]" = "Connection to host established";
+"BasicLanguage[1130]" = "Connection to host at [%@] established";
 "BasicLanguage[1131]" = "Disconnect for Sleep Mode";
-"BasicLanguage[1132]" = "Disconnected for server redirect.";
-"BasicLanguage[1133]" = "Disconnected from server because of an untrusted SSL certificate.";
+"BasicLanguage[1132]" = "Disconnected for server redirect";
+"BasicLanguage[1133]" = "Disconnected from server because of an untrusted SSL certificate";
 "BasicLanguage[1134]" = "Disconnected from server due to trial period limit. Please consider purchasing Textual to continue or simply reconnect.";
-"BasicLanguage[1135]" = "Disconnected from server because the configured IRC server is not reachable.";
+"BasicLanguage[1135]" = "Disconnected from server because the configured IRC server is not reachable";
 "BasicLanguage[1136]" = "Disconnected";
 "BasicLanguage[1137]" = "%ld minutes have elapsed since last response from this connection. Disconnecting due to timeout.";
 "BasicLanguage[1138]" = "%ld minutes have elapsed since last response from this connection. It is possible the connection is timing out.";
@@ -452,17 +452,17 @@
 "BasicLanguage[1151]" = "%@ IRC Network";
 "BasicLanguage[1152][0]" = "%1$@ is now known as \002%2$@\002";
 "BasicLanguage[1152][1]" = "You're now known as \002%2$@\002";
-"BasicLanguage[1153]" = "\002%1$@\002 (%2$@@%3$@) left IRC.";
-"BasicLanguage[1154]" = "\002%1$@\002 left the query by disconnecting from IRC.";
-"BasicLanguage[1155]" = "\002%1$@\002 joined the query by connecting to IRC.";
+"BasicLanguage[1153]" = "\002%1$@\002 (%2$@@%3$@) left IRC";
+"BasicLanguage[1154]" = "\002%1$@\002 left the query by disconnecting from IRC";
+"BasicLanguage[1155]" = "\002%1$@\002 joined the query by connecting to IRC";
 "BasicLanguage[1156]" = "%@, your user mode is %@";
 "BasicLanguage[1157]" = "Inviting %1$@ to join %2$@";
 "BasicLanguage[1158]" = "%1$@!%2$@@%3$@ invited you to join %4$@";
 "BasicLanguage[1159]" = "%1$@ is away (%2$@)";
 "BasicLanguage[1160]" = "You are now an IRC Operator on %@";
-"BasicLanguage[1161]" = "\002%1$@\002 (%2$@@%3$@) joined the channel.";
-"BasicLanguage[1162]" = "\002%1$@\002 kicked \002%2$@\002 from the channel. (%3$@)";
-"BasicLanguage[1163]" = "\002%1$@\002 (%2$@@%3$@) left the channel.";
+"BasicLanguage[1161]" = "\002%1$@\002 (%2$@@%3$@) joined the channel";
+"BasicLanguage[1162]" = "\002%1$@\002 kicked \002%2$@\002 from the channel (%3$@)";
+"BasicLanguage[1163]" = "\002%1$@\002 (%2$@@%3$@) left the channel";
 "BasicLanguage[1164]" = "%1$@ (%2$@)";
 "BasicLanguage[1165]" = "%1$@ is on %2$@";
 "BasicLanguage[1166]" = "%1$@ is connected on %2$@ (%3$@)";
@@ -537,7 +537,7 @@
 "BasicLanguage[1196]" = "Script Execution Failure (%1$@: %2$@): %3$@";
 
 /* Good thing to catch… */
-"BasicLanguage[1197]" = "Textual has prevented you from banning yourself on %@.";
+"BasicLanguage[1197]" = "Textual has prevented you from banning yourself on %@";
 
 /* Server delete dialog. */
 "BasicLanguage[1198][1]" = "Do you want to delete the selection?";
@@ -572,8 +572,8 @@
 "BasicLanguage[1210]" = "Super Admin";
 "BasicLanguage[1211]" = "Channel Owner";
 "BasicLanguage[1212]" = " — Server Staff Member";
-"BasicLanguage[1213]" = "User is away.";
-"BasicLanguage[1214]" = "User is not away.";
+"BasicLanguage[1213]" = "User is away";
+"BasicLanguage[1214]" = "User is not away";
 
 "BasicLanguage[1215]" = "Information Not Available";
 
@@ -590,10 +590,10 @@
 "BasicLanguage[1219]" = "Yes";
 
 /* /mute/ command. */
-"BasicLanguage[1220]" = "Sound is already muted.";
-"BasicLanguage[1221]" = "Sound is no longer muted. ";
-"BasicLanguage[1222]" = "Sound is not muted.";
-"BasicLanguage[1223]" = "Sound has been muted.";
+"BasicLanguage[1220]" = "Sound is already muted";
+"BasicLanguage[1221]" = "Sound is no longer muted";
+"BasicLanguage[1222]" = "Sound is not muted";
+"BasicLanguage[1223]" = "Sound has been muted";
 
 /* Selet button for dialogs. */
 "BasicLanguage[1225]" = "Select";
