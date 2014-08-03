@@ -70,7 +70,7 @@ var NickColorGenerator = (function () {
 })();
 
 Textual.viewBodyDidLoad = function() {
-	Textual.fadeOutLoadingScreen(1.00, 0.95);
+    Textual.fadeOutLoadingScreen(1.00, 0.95);
 
     setTimeout(function() {
         Textual.scrollToBottomOfView();
