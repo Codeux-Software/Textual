@@ -4,11 +4,7 @@
 	margin: 0;
 	padding: 0;
 	font-size: 100%;
-	-webkit-hyphens: auto;
-	hyphens: auto;
 	-webkit-word-break: break-word;
-	word-wrap: break-word;
-	-webkit-word-wrap: break-word;
 	word-wrap: break-word;
 }
 
@@ -129,8 +125,6 @@ a:hover {
 	opacity: 0; /* Set by JavaScript */
 	z-index: 400;
 	color: #dddddd;
-	overflow: hidden;
-	white-space: nowrap;
 	position: fixed;
 	padding: 55px 0.5em 7px;
 	box-shadow: 0 1px 5px #777;
@@ -138,11 +132,6 @@ a:hover {
 	-webkit-transition: opacity 0.8s linear;
 	text-shadow: 1px 1px rgba(10, 10, 10, 0.7);
 	background: rgba(60, 60, 60, 0.91);
-}
-
-#topic_bar:hover {
-	overflow: visible;
-	white-space: normal;
 }
 
 #topic_bar a,
@@ -249,53 +238,25 @@ body div.line[ltype=wallops] {
 	border-left: none;
 }
 
-body div.line[ltype=action] .message {
-	padding-top: 1px;
-}
-
-body div.line[ltype=action][highlight=true] .message {
-	color: #fff;
-}
-
-body div[ltype="privmsg"] .message {
-    word-break: break-word;
-    color: #fff;
-}
-
-body div[ltype="privmsg"][encrypted="true"] {
-     background: repeating-linear-gradient(-45deg, rgba(79, 79, 79, 0.1), rgba(79, 79, 79, 0.1) 20px, rgba(68, 89, 63, 0.3) 20px, rgba(68, 89, 63, 0.3) 40px) !important;
-}
-
-body div[ltype="privmsg"][encrypted="failed"] {
-	background: repeating-linear-gradient(-45deg, rgba(45, 6, 6, 0.2), rgba(45, 6, 6, 0.2) 20px, rgba(104, 15, 15, 0.2) 20px, rgba(104, 15, 15, 0.2) 40px) !important;
-}
-
-body div[ltype="privmsg"][highlight=true][encrypted="true"] {
-	background: repeating-linear-gradient(-45deg, #3b5847, #3b5847 20px, rgba(68, 89, 63, 0.3) 20px, rgba(68, 89, 63, 0.3) 40px) !important;
-}
-
-body div[ltype=privmsg] p[ltype=myself] .message {
- 	color: #fff;
-}
-
+body div[ltype=ctcp] .senderContainer,
 body div[ltype=notice] .senderContainer {
 	color: #f00;
 	font-weight: 700;
-    min-height:23px;
-	width: 13px;
+	min-height:23px;
+	width: 134px;
 	padding-right:7px;
-    text-align:right;
-    display:inline-block;
-    overflow: auto;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    text-overflow: ellipsis;
+	text-align:right;
+	display:inline-block;
+	overflow: auto;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	text-overflow: ellipsis;
 }
 
 body div[ltype=notice] .message {
- 	color: #fff;
+	color: #fff;
 }
 
 /* PRIVMSG */
@@ -322,6 +283,27 @@ body div[ltype=privmsg] .senderContainer {
 	text-overflow: ellipsis;
 }
 
+body div[ltype="privmsg"] .message {
+	word-break: break-word;
+	color: #fff;
+}
+
+body div[ltype="privmsg"][encrypted="true"] {
+	background: repeating-linear-gradient(-45deg, rgba(79, 79, 79, 0.1), rgba(79, 79, 79, 0.1) 20px, rgba(68, 89, 63, 0.3) 20px, rgba(68, 89, 63, 0.3) 40px) !important;
+}
+
+body div[ltype="privmsg"][encrypted="failed"] {
+	background: repeating-linear-gradient(-45deg, rgba(45, 6, 6, 0.2), rgba(45, 6, 6, 0.2) 20px, rgba(104, 15, 15, 0.2) 20px, rgba(104, 15, 15, 0.2) 40px) !important;
+}
+
+body div[ltype="privmsg"][highlight=true][encrypted="true"] {
+	background: repeating-linear-gradient(-45deg, #3b5847, #3b5847 20px, rgba(68, 89, 63, 0.3) 20px, rgba(68, 89, 63, 0.3) 40px) !important;
+}
+
+body div[ltype=privmsg] p[ltype=myself] .message {
+	color: #fff;
+}
+
 /* ACTION */
 body div[ltype=action] .senderContainer {
 	position: absolute;
@@ -338,6 +320,15 @@ body div[ltype=action] .senderContainer {
 	text-align:right;
 	display:inline-block;
 	overflow: hidden;
+}
+
+body div.line[ltype=action] .message {
+	word-break: break-word;
+	padding-top: 1px;
+}
+
+body div.line[ltype=action][highlight=true] .message {
+	color: #fff;
 }
 
 /* DEBUG/INVITE */
@@ -357,7 +348,8 @@ body div.line[ltype=rawhtml] {
 body div.line[ltype=invite] .message,
 body div.line[ltype=debug] .message,
 body div.line[ltype=dccfiletransfer] .message,
-body div.line[ltype=rawhtml] .message {
+body div.line[ltype=rawhtml] .message ,
+body div.line[ltype=ctcp] .message {
 	text-indent: 0;
     padding-left: 145px !important;
 }
