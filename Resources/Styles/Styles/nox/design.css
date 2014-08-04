@@ -130,6 +130,7 @@ a:hover {
 	box-shadow: 0 1px 5px #777;
 	border-bottom: 1px solid #404040;
 	-webkit-transition: opacity 0.8s linear;
+	-webkit-font-smoothing: subpixel-antialiased;
 	text-shadow: 1px 1px rgba(10, 10, 10, 0.7);
 	background: rgba(60, 60, 60, 0.91);
 }
