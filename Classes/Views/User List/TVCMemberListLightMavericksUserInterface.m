@@ -237,6 +237,11 @@
 	}
 }
 
+- (BOOL)isOpaque
+{
+	return YES;
+}
+
 @end
 
 #pragma clang diagnostic push
