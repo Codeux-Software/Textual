@@ -141,7 +141,7 @@
 	NSAttributedString *newValue = [self attributedTextFieldValueForYosemite:interfaceObject inContext:drawingContext];
 	
 	NSTextField *textField = [self cellTextField];
-	
+
 	[textField setAttributedStringValue:newValue];
 	
 	/* Maybe update badge. */
@@ -925,7 +925,38 @@
 #pragma mark -
 #pragma mark Interior Drawing
 
-@implementation TVCServerLisCellTextFieldInterior
+@implementation TVCServerListCellMavericksTextField
+
+- (BOOL)wantsLayer
+{
+	return YES;
+}
+
+- (NSViewLayerContentsRedrawPolicy)layerContentsRedrawPolicy
+{
+	return NSViewLayerContentsRedrawBeforeViewResize;
+}
+
+- (CALayer *)makeBackingLayer
+{
+	return [TVCServerListCellMavericksTextFieldBackingLayer layer];
+}
+
+@end
+
+@implementation TVCServerListCellMavericksTextFieldBackingLayer
+
+- (void)drawInContext:(CGContextRef)ctx
+{
+	CGContextSetShouldAntialias(ctx, true);
+	CGContextSetShouldSmoothFonts(ctx, true);
+	
+	[super drawInContext:ctx];
+}
+
+@end
+
+@implementation TVCServerListCellYosemiteTextFieldInterior
 
 - (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {

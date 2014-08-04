@@ -50,5 +50,11 @@
 @interface TVCMemberListRowCell : NSTableRowView
 @end
 
-@interface TVCMemberLisCellTextFieldInterior : NSTextFieldCell
+@interface TVCMemberListCellMavericksTextField : NSTextField
+@end
+
+@interface TVCMemberListCellMavericksTextFieldBackingLayer : CALayer
+@end
+
+@interface TVCMemberListCellYosemiteTextFieldInterior : NSTextFieldCell
 @end

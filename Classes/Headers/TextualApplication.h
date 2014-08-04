@@ -150,34 +150,38 @@
 	@class TVCMainWindowTextViewContentView;
 	@class TVCMainWindowTextViewMavericksUserInterace;
 	@class TVCMainWindowTextViewYosemiteUserInterace;
+	@class TVCMemberLisCellYosemiteTextFieldInterior;
 	@class TVCMemberList;
 	@class TVCMemberListCell;
-	@class TVCMemberListRowCell;
-	@class TVCMemberLisCellTextFieldInterior;
+	@class TVCMemberListCellMavericksTextField;
+	@class TVCMemberListCellMavericksTextFieldBackingLayer;
+	@class TVCMemberListDarkYosemiteUserInterface;
+	@class TVCMemberListLightYosemiteUserInterface;
+	@class TVCMemberListMavericksDarkUserInterface;
+	@class TVCMemberListMavericksLightUserInterface;
 	@class TVCMemberListMavericksUserInterface;
 	@class TVCMemberListMavericksUserInterfaceBackground;
-	@class TVCMemberListMavericksLightUserInterface;
-	@class TVCMemberListMavericksDarkUserInterface;
+	@class TVCMemberListRowCell;
 	@class TVCMemberListSharedUserInterface;
 	@class TVCMemberListUserInfoPopover;
 	@class TVCMemberListYosemiteUserInterface;
-	@class TVCMemberListLightYosemiteUserInterface;
-	@class TVCMemberListDarkYosemiteUserInterface;
 	@class TVCQueuedCertificateTrustPanel;
 	@class TVCServerList;
 	@class TVCServerListCell;
 	@class TVCServerListCellChildItem;
 	@class TVCServerListCellGroupItem;
-	@class TVCServerListRowCell;
-	@class TVCServerLisCellTextFieldInterior;
+	@class TVCServerListCellMavericksTextField;
+	@class TVCServerListCellMavericksTextFieldBackingLayer;
+	@class TVCServerListCellYosemiteTextFieldInterior;
+	@class TVCServerListDarkYosemiteUserInterface;
+	@class TVCServerListLightYosemiteUserInterface;
+	@class TVCServerListMavericksDarkUserInterface;
+	@class TVCServerListMavericksLightUserInterface;
 	@class TVCServerListMavericksUserInterface;
 	@class TVCServerListMavericksUserInterfaceBackground;
-	@class TVCServerListMavericksLightUserInterface;
-	@class TVCServerListMavericksDarkUserInterface;
+	@class TVCServerListRowCell;
 	@class TVCServerListSharedUserInterface;
 	@class TVCServerListYosemiteUserInterface;
-	@class TVCServerListLightYosemiteUserInterface;
-	@class TVCServerListDarkYosemiteUserInterface;
 	@class TVCTextFieldWithValueValidation;
 	@class TVCTextFieldComboBoxWithValueValidation;
 	@class TVCTextFieldComboBoxWithValueValidationCell;
@@ -191,6 +195,7 @@
 	@class TXMenuControllerMainWindowProxy;
 	@class TXSharedApplication;
 	@class TXUserInterface;
+
 
 	/* Protocol forwarders. */
 	@protocol IRCConnectionDelegate;
