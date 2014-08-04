@@ -193,11 +193,40 @@
 	
 	if (isSelected == NO) {
 		if ([assosicatedUser isAway] == NO) {
+			NSColor *controlColor = nil;
+			
 			if (isWindowActive == NO) {
-				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject normalCellTextColorForInactiveWindow] range:stringLengthRange];
+				controlColor = [interfaceObject normalCellTextColorForInactiveWindow];
 			} else {
-				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject normalCellTextColorForActiveWindow] range:stringLengthRange];
+				controlColor = [interfaceObject normalCellTextColorForActiveWindow];
 			}
+			
+			BOOL overrideControlColorWithBadgeColor = [RZUserDefaults() boolForKey:@"MemberListUsesUserMarkBadgeBackgroundForControlColor"];
+			
+			if (overrideControlColorWithBadgeColor) {
+				BOOL favorIRCop = ([assosicatedUser InspIRCd_y_lower] ||
+								   [assosicatedUser InspIRCd_y_upper]);
+				
+				if (favorIRCop == NO) {
+					favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
+				}
+				
+				if ([assosicatedUser isCop] && favorIRCop) {
+					controlColor = [interfaceObject userMarkBadgeBackgroundColor_Y];
+				} else if ([assosicatedUser q]) {
+					controlColor = [interfaceObject userMarkBadgeBackgroundColor_Q];
+				} else if ([assosicatedUser a]) {
+					controlColor = [interfaceObject userMarkBadgeBackgroundColor_A];
+				} else if ([assosicatedUser o]) {
+					controlColor = [interfaceObject userMarkBadgeBackgroundColor_O];
+				} else if ([assosicatedUser h]) {
+					controlColor = [interfaceObject userMarkBadgeBackgroundColor_H];
+				} else if ([assosicatedUser v]) {
+					controlColor = [interfaceObject userMarkBadgeBackgroundColor_V];
+				}
+			}
+			
+			[mutableStringValue addAttribute:NSForegroundColorAttributeName value:controlColor range:stringLengthRange];
 		} else {
 			if (isWindowActive == NO) {
 				[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject awayUserCellTextColorForInactiveWindow] range:stringLengthRange];
@@ -356,7 +385,7 @@
 	[newImage lockFocus];
 	
 	/* Decide the background color. */
-	NSColor *backgroundColor;
+	NSColor *backgroundColor = nil;
 	
 	BOOL favorIRCop = ([assosicatedUser InspIRCd_y_lower] ||
 					   [assosicatedUser InspIRCd_y_upper]);
