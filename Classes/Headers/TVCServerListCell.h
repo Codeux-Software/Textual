@@ -61,5 +61,11 @@
 @property (nonatomic, assign) BOOL isGroupItem;
 @end
 
-@interface TVCServerLisCellTextFieldInterior : NSTextFieldCell
+@interface TVCServerListCellMavericksTextField : NSTextField
+@end
+
+@interface TVCServerListCellMavericksTextFieldBackingLayer : CALayer
+@end
+
+@interface TVCServerListCellYosemiteTextFieldInterior : NSTextFieldCell
 @end

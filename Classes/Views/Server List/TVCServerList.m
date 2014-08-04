@@ -248,7 +248,7 @@
 - (void)windowDidChangeKeyState
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
-		[self.backgroundView setNeedsDisplay:YES];
+		[[self backgroundView] setNeedsDisplay:YES];
 	}
 
 	[self reloadAllDrawings];

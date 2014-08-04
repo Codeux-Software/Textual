@@ -91,7 +91,7 @@
 
 - (NSFont *)selectedCellFont
 {
-	return [NSFont fontWithName:@"LucidaGrande-Bold" size:12.0];
+	return [RZFontManager() fontWithFamily:@"Lucida Grande" traits:0 weight:9 size:12.0];
 }
 
 - (NSColor *)normalCellTextColor
