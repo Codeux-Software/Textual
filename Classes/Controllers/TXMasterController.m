@@ -41,7 +41,7 @@
 #ifdef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
 #import "BuildConfig.h"
 
-#define _betaTesterMaxApplicationLifespan			2592000 // 30 days
+#define _betaTesterMaxApplicationLifespan			5184000 // 60 days
 #endif 
 
 #define KInternetEventClass		1196773964
