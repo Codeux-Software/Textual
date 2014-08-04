@@ -120,6 +120,7 @@ a:hover {
 	text-shadow: 1px 1px rgba(10, 10, 10, 0.7);
 	background: #171814;
 	-webkit-transition: opacity 0.8s linear;
+	-webkit-font-smoothing: subpixel-antialiased;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;

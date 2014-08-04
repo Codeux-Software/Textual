@@ -130,6 +130,7 @@ a:hover {
 	padding: 2px 0.5em 3px;
 	background-color: rgba(209, 241, 169, 0.95); /* Tomorrow Night Blue: Green 95% */
 	-webkit-transition: opacity 0.8s linear;
+	-webkit-font-smoothing: subpixel-antialiased;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
