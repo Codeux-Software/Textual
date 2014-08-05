@@ -14,5 +14,7 @@
 	<string>1.0.1</string>
 	<key>NSPrincipalClass</key>
 	<string>TPIWikiStyleLinkParser</string>
+	<key>MinimumTextualVersion</key>
+	<string>5.0.0</string>
 </dict>
 </plist>

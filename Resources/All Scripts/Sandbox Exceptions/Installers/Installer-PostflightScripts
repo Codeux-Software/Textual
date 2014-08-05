@@ -1,0 +1,31 @@
+#!/bin/bash
+
+USER_SCRIPT_PATH="$HOME/Library/Application Scripts/com.codeux.irc.textual5/"
+
+ZIPPED_BUNDLES="/Library/Caches/com.codeux.irc.textual5/._private-2D7EBC2C-984F-41E1-94BC-6BF3DBA228D1/"
+
+mkdir -p "${USER_SCRIPT_PATH}"
+
+chown $USER:$USER "${USER_SCRIPT_PATH}"
+		
+for ZIPPED_PATH in $ZIPPED_BUNDLES; do	
+	cd "${ZIPPED_PATH}"
+
+	ZIPPED_BUNDLES=`find . -name "*.*"`
+	
+	for BUNDLE in $ZIPPED_BUNDLES; do	
+		BUNDLENAME=$(basename $BUNDLE)
+		
+		DESTINATION="${USER_SCRIPT_PATH}${BUNDLENAME}"
+		
+		echo "${DESTINATION}" >> $HOME/text.txt
+	
+		rm -rf "${DESTINATION}"
+
+		mv "./${BUNDLENAME}" "${DESTINATION}"
+		
+		rm -f "${BUNDLE}"
+	done
+done
+
+exit
