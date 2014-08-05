@@ -1153,12 +1153,28 @@
 		return YES;
 	}
 	
+	BOOL onlySpeakEvent = NO;
+	
+	if ([TPCPreferences postNotificationsWhileInFocus]) {
+		if ([mainWindow() isInactive] == NO) {
+			if ([mainWindow() selectedItem] == target) {
+				onlySpeakEvent = YES;
+			}
+		}
+	}
+	
 	if ([sharedGrowlController() areNotificationSoundsDisabled] == NO) {
-		[TLOSoundPlayer playAlertSound:[TPCPreferences soundForEvent:type]];
-
+		if (onlySpeakEvent == NO) {
+			[TLOSoundPlayer playAlertSound:[TPCPreferences soundForEvent:type]];
+		}
+		
 		if ([TPCPreferences speakEvent:type]) {
 			[self speakEvent:type lineType:ltype target:target nick:nick text:text];
 		}
+	}
+	
+	if (onlySpeakEvent) {
+		return YES;
 	}
 
 	if ([TPCPreferences growlEnabledForEvent:type] == NO) {
@@ -1220,16 +1236,40 @@
 		return YES;
 	}
 	
+	BOOL onlySpeakEvent = NO;
+	
+	if ([TPCPreferences postNotificationsWhileInFocus]) {
+		if ([mainWindow() isInactive] == NO) {
+			if ([mainWindow() selectedItem] == target) {
+				onlySpeakEvent = YES;
+			}
+		}
+	}
+	
 	if ([sharedGrowlController() areNotificationSoundsDisabled] == NO) {
-		[TLOSoundPlayer playAlertSound:[TPCPreferences soundForEvent:type]];
-		
+		if (onlySpeakEvent == NO) {
+			[TLOSoundPlayer playAlertSound:[TPCPreferences soundForEvent:type]];
+		}
+	
 		if ([TPCPreferences speakEvent:type]) {
 			[self speakEvent:type lineType:ltype target:target nick:nick text:text];
 		}
 	}
 
+	if (onlySpeakEvent) {
+		return YES;
+	}
+	
 	if ([TPCPreferences growlEnabledForEvent:type] == NO) {
 		return YES;
+	}
+	
+	if ([TPCPreferences postNotificationsWhileInFocus]) {
+		if ([mainWindow() isInactive] == NO) {
+			if ([mainWindow() selectedItem] == target) {
+				return YES;
+			}
+		}
 	}
 
 	if ([TPCPreferences postNotificationsWhileInFocus] == NO && [mainWindow() isInactive] == NO) {
