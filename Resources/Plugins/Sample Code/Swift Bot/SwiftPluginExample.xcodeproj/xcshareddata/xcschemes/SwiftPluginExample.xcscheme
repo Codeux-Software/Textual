@@ -40,6 +40,15 @@
       debugDocumentVersioning = "YES"
       debugXPCServices = "NO"
       allowLocationSimulation = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "8D57630D048677EA00EA77CD"
+            BuildableName = "SwiftPluginExample.bundle"
+            BlueprintName = "SwiftPluginExample"
+            ReferencedContainer = "container:SwiftPluginExample.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

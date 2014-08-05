@@ -1,4 +1,4 @@
-/* ********************************************************************* 
+/* *********************************************************************
        _____        _               _    ___ ____   ____
       |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
        | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
@@ -39,6 +39,8 @@
 
 @interface TPI_PreferencePaneExample : NSObject <THOPluginProtocol>
 @property (nonatomic, strong) IBOutlet NSView *ourView;
+
+- (IBAction)preferenceChanged:(id)sender;
 
 - (NSView *)pluginPreferencesPaneView;
 - (NSString *)pluginPreferencesPaneMenuItemName;
