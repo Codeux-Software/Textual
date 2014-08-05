@@ -1267,7 +1267,7 @@
                                                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="bHa-DY-GoK"/>
                                                                                     </imageView>
                                                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Cwj-qa-na9" customClass="TVCServerListCellMavericksTextField">
-                                                                                        <rect key="frame" x="25" y="2" width="97" height="16"/>
+                                                                                        <rect key="frame" x="23" y="2" width="99" height="16"/>
                                                                                         <constraints>
                                                                                             <constraint firstAttribute="height" constant="16" id="OXR-0j-0wQ"/>
                                                                                         </constraints>
@@ -1293,7 +1293,7 @@
                                                                                     <constraint firstAttribute="trailing" secondItem="boO-xE-alR" secondAttribute="trailing" constant="3" id="cTm-xq-TXV"/>
                                                                                     <constraint firstAttribute="bottom" secondItem="Cwj-qa-na9" secondAttribute="bottom" constant="2" id="iaW-Nx-Hv0"/>
                                                                                     <constraint firstAttribute="bottom" secondItem="boO-xE-alR" secondAttribute="bottom" id="ncn-i6-4JJ"/>
-                                                                                    <constraint firstItem="Cwj-qa-na9" firstAttribute="leading" secondItem="imX-oI-lC7" secondAttribute="trailing" constant="8" id="nlU-Z6-MsZ"/>
+                                                                                    <constraint firstItem="Cwj-qa-na9" firstAttribute="leading" secondItem="imX-oI-lC7" secondAttribute="trailing" constant="6" id="nlU-Z6-MsZ"/>
                                                                                 </constraints>
                                                                                 <connections>
                                                                                     <outlet property="cellTextField" destination="Cwj-qa-na9" id="7PC-CD-Arc"/>
@@ -1405,7 +1405,7 @@
                                                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="FormattingColor_2" id="H2s-dy-99V"/>
                                                                                     </imageView>
                                                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Nao-T2-KM7" customClass="TVCMemberListCellMavericksTextField">
-                                                                                        <rect key="frame" x="26" y="2" width="118" height="16"/>
+                                                                                        <rect key="frame" x="25" y="2" width="119" height="16"/>
                                                                                         <constraints>
                                                                                             <constraint firstAttribute="height" constant="16" id="UXG-ra-BzM"/>
                                                                                         </constraints>
@@ -1419,7 +1419,7 @@
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="bottom" secondItem="Reg-g1-lse" secondAttribute="bottom" constant="1" id="Dtx-Rv-E7Q"/>
                                                                                     <constraint firstAttribute="bottom" secondItem="Nao-T2-KM7" secondAttribute="bottom" constant="2" id="VCy-Nq-be5"/>
-                                                                                    <constraint firstItem="Nao-T2-KM7" firstAttribute="leading" secondItem="Reg-g1-lse" secondAttribute="trailing" constant="6" id="XWJ-G1-DcD"/>
+                                                                                    <constraint firstItem="Nao-T2-KM7" firstAttribute="leading" secondItem="Reg-g1-lse" secondAttribute="trailing" constant="5" id="XWJ-G1-DcD"/>
                                                                                     <constraint firstItem="Reg-g1-lse" firstAttribute="leading" secondItem="ydc-Er-I2k" secondAttribute="leading" constant="2" id="clz-d4-VCK"/>
                                                                                     <constraint firstAttribute="trailing" secondItem="Nao-T2-KM7" secondAttribute="trailing" constant="5" id="y94-b9-EDx"/>
                                                                                 </constraints>
