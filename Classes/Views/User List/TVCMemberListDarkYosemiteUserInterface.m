@@ -86,22 +86,22 @@
 
 - (NSFont *)normalCellFont
 {
-	return [NSFont fontWithName:@"LucidaGrande" size:12.0];
+	return [RZFontManager() fontWithFamily:@"Lucida Grande" traits:0 weight:0 size:12.0];
 }
 
 - (NSFont *)selectedCellFont
 {
-	return [RZFontManager() fontWithFamily:@"Lucida Grande" traits:0 weight:9 size:12.0];
+	return [RZFontManager() fontWithFamily:@"Lucida Grande" traits:0 weight:15 size:12.0];
 }
 
 - (NSColor *)normalCellTextColor
 {
-	return [NSColor blackColor];
+	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.8];
 }
 
 - (NSColor *)awayUserCellTextColor
 {
-	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.6];
+	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.35];
 }
 
 - (NSColor *)selectedCellTextColor

@@ -86,17 +86,17 @@
 
 - (NSFont *)serverCellFont
 {
-	return [RZFontManager() fontWithFamily:@"Lucida Grande" traits:0 weight:9 size:12.0];
+	return [RZFontManager() fontWithFamily:@"Lucida Grande" traits:0 weight:15 size:12.0];
 }
 
 - (NSFont *)normalChannelCellFont
 {
-	return [NSFont fontWithName:@"LucidaGrande" size:12.0];
+	return [RZFontManager() fontWithFamily:@"Lucida Grande" traits:0 weight:0 size:12.0];
 }
 
 - (NSFont *)selectedChannelCellFont
 {
-	return [RZFontManager() fontWithFamily:@"Lucida Grande" traits:0 weight:9 size:12.0];
+	return [RZFontManager() fontWithFamily:@"Lucida Grande" traits:0 weight:15 size:12.0];
 }
 
 - (NSInteger)messageCountBadgeHeight
