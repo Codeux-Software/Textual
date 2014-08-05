@@ -90,6 +90,7 @@
 	[self updateTextBoxCachedPreferredFontSize];
 	[self defineDefaultTypeSetterAttributes];
 	[self updateTypeSetterAttributes];
+	[self maybeUpdateInsertionPointColor];
 }
 
 - (void)updateBackgroundColor
@@ -270,6 +271,25 @@
 		[self setBaseWritingDirection:NSWritingDirectionRightToLeft];
 	} else {
 		[self setBaseWritingDirection:NSWritingDirectionLeftToRight];
+	}
+}
+
+- (void)maybeUpdateInsertionPointColor
+{
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		BOOL usesWriterProsColors = [RZUserDefaults() boolForKey:@"TVCMainWindowTextViewUsesCustomInsertionPointColors"];
+		
+		if (usesWriterProsColors) {
+			NSColor *cursorColor = nil;
+			
+			if ([mainWindow() isUsingVibrantDarkAppearance]) {
+				cursorColor = [TVCMainWindowTextViewYosemiteUserInterace writersProTextFieldCursorBlueColor];
+			} else {
+				cursorColor = [TVCMainWindowTextViewYosemiteUserInterace writersProTextFieldCursorPinkColor];
+			}
+			
+			[self setInsertionPointColor:cursorColor];
+		}
 	}
 }
 

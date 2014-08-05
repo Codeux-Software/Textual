@@ -112,4 +112,14 @@
 	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.10];
 }
 
++ (NSColor *)writersProTextFieldCursorPinkColor
+{
+	return [NSColor colorWithCalibratedRed:0.850 green:0.0 blue:0.431 alpha:1.0];
+}
+
++ (NSColor *)writersProTextFieldCursorBlueColor
+{
+	return [NSColor colorWithCalibratedRed:0.125 green:0.517 blue:0.760 alpha:1.0];
+}
+
 @end

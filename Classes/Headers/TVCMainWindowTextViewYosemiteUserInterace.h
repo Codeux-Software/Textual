@@ -57,4 +57,7 @@
 + (NSColor *)whiteInputTextFieldOutsideBottomSecondaryGrayShadowColorWithRetina;
 
 + (NSColor *)whiteInputTextFieldOutsideBottomGrayShadowColorWithoutRetina;
+
++ (NSColor *)writersProTextFieldCursorPinkColor;
++ (NSColor *)writersProTextFieldCursorBlueColor;
 @end
