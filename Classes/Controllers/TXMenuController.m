@@ -2433,7 +2433,7 @@
 					  if (defaultButtonClicked) {
 						  if (NSObjectIsNotEmpty(resultString)) {
 							  for (NSString *nickname in nicknames) {
-								  [u sendCommand:[NSString stringWithFormat:@"hs setall %@ %@", nickname, resultString] completeTarget:NO target:nil];
+								  [u sendCommand:[NSString stringWithFormat:@"msg hostserv vhost %@ %@", nickname, resultString] completeTarget:NO target:nil];							  }
 							  }
 						  }
 					  }
