@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.developer.ubiquity-container-identifiers</key>
 	<array>
-		<string>iCloud.$(CFBundleIdentifier)</string>
+		<string>8482Q6EPL6.com.codeux.irc.textual</string>
 	</array>
 	<key>com.apple.developer.icloud-container-identifiers</key>
 	<array>
