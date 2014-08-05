@@ -39,20 +39,56 @@
 
 @implementation TPI_PreferencePaneExample
 
+- (instancetype)init
+{
+    self = [super init];
+
+	if (self) {
+		if ([TPIBundleFromClass() loadCustomNibNamed:@"PreferencePane" owner:self topLevelObjects:nil] == NO) {
+			NSAssert(NO, @"TPI_PrefsTest: Failed to load view.");
+		}
+    }
+
+    return self;
+}
+
 - (NSView *)pluginPreferencesPaneView
 {
-	if (self.ourView == nil) {
-		if ([NSBundle loadNibNamed:@"PreferencePane" owner:self] == NO) {
-			NSLog(@"TPI_PrefsTest: Failed to load view.");
-		}
-	}
-	
 	return self.ourView;
 }
 
 - (NSString *)pluginPreferencesPaneMenuItemName
 {
 	return @"My Test Plugin";
+}
+
+- (void)doSomethingWithPreferences
+{
+	BOOL isSomethingChecked = [RZUserDefaults() boolForKey:@"TPIPreferencesSomethingCheckboxIsChecked"];
+	
+	if (isSomethingChecked) {
+		LogToConsole(@"Checkbox is checked");
+	} else {
+		LogToConsole(@"Checkbox is not checked");
+	}
+}
+
+- (IBAction)preferenceChanged:(id)sender
+{
+	[self doSomethingWithPreferences];
+}
+
+- (id)userDefaultsValues
+{
+	/* Returns key used by interface builder to retrieve key-values. */
+	/* Textual maintains its own version of NSUserDefaultsController which is
+	 maintained by the RZUserDefaultsValuesProxy() define. Writing and reading
+	 to this object from the user interface will inline plugin preferences with
+	 Textual's own. For that reason, use a TPI prefix or other variant in your
+	 preferences keys. Another option is to use your own implementation of
+	 NSUserDefaults to manage your preferences. */
+	
+	return RZUserDefaultsValueProxy();
 }
 
 @end
