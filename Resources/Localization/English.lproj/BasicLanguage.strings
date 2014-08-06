@@ -193,7 +193,7 @@
 "TDCFileTransferDialog[1021]" = "Select the folder in which this file will be saved";
 
 /* Main window text field placeholder. */
-"TDCMainWindow[1000]" = "Send Message …";
+"TDCMainWindow[1000]" = "Send message…";
 
 /* Application terminating confirmation dialog. */
 "BasicLanguage[1000][1]" = "Quitting will disconnect you from any IRC server that you are connected to until you restart Textual.";
