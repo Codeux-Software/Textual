@@ -995,6 +995,18 @@
 		4C77664F1978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserActive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7766341978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserActive.tif */; };
 		4C7766501978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserInactive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7766351978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserInactive.tif */; };
 		4C7766511978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserInactive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7766351978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserInactive.tif */; };
+		4C77FF1B1991F01F00E8A7B8 /* NSObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C77FF1A1991F01F00E8A7B8 /* NSObjectHelper.m */; };
+		4C77FF1C1991F01F00E8A7B8 /* NSObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C77FF1A1991F01F00E8A7B8 /* NSObjectHelper.m */; };
+		4C77FF1D1991F01F00E8A7B8 /* NSObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C77FF1A1991F01F00E8A7B8 /* NSObjectHelper.m */; };
+		4C77FF241991F02E00E8A7B8 /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77FF231991F02E00E8A7B8 /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C77FF251991F02E00E8A7B8 /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77FF231991F02E00E8A7B8 /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C77FF261991F02E00E8A7B8 /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77FF231991F02E00E8A7B8 /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C77FF281992613100E8A7B8 /* NSValueHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C77FF271992613100E8A7B8 /* NSValueHelper.m */; };
+		4C77FF291992613100E8A7B8 /* NSValueHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C77FF271992613100E8A7B8 /* NSValueHelper.m */; };
+		4C77FF2A1992613100E8A7B8 /* NSValueHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C77FF271992613100E8A7B8 /* NSValueHelper.m */; };
+		4C77FF2C1992614500E8A7B8 /* NSValueHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77FF2B1992614500E8A7B8 /* NSValueHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C77FF2D1992614500E8A7B8 /* NSValueHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77FF2B1992614500E8A7B8 /* NSValueHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C77FF2E1992614500E8A7B8 /* NSValueHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77FF2B1992614500E8A7B8 /* NSValueHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C78926816C6259D0081E859 /* SystemInformation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C78926716C6259D0081E859 /* SystemInformation.framework */; };
 		4C78926916C625C50081E859 /* SystemInformation.framework in Copy Additional Frameworks */ = {isa = PBXBuildFile; fileRef = 4C78926716C6259D0081E859 /* SystemInformation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C7A21931979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7A218F1979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive.tif */; };
@@ -1814,6 +1826,10 @@
 		4C7766341978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserActive.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MavericksDarkServerListViewSelectedPrivateMessageUserActive.tif; sourceTree = "<group>"; };
 		4C7766351978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserInactive.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MavericksDarkServerListViewSelectedPrivateMessageUserInactive.tif; sourceTree = "<group>"; };
 		4C77A31F1748BCCF00D9BD05 /* Shared Trial Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Trial Release Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Trial Release Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
+		4C77FF1A1991F01F00E8A7B8 /* NSObjectHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObjectHelper.m; sourceTree = "<group>"; };
+		4C77FF231991F02E00E8A7B8 /* NSObjectHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSObjectHelper.h; sourceTree = "<group>"; };
+		4C77FF271992613100E8A7B8 /* NSValueHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSValueHelper.m; sourceTree = "<group>"; };
+		4C77FF2B1992614500E8A7B8 /* NSValueHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSValueHelper.h; sourceTree = "<group>"; };
 		4C78926716C6259D0081E859 /* SystemInformation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemInformation.framework; path = .tmp/SharedBuildProducts/SystemInformation.framework; sourceTree = "<group>"; };
 		4C7A218F1979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = VibrantDarkServerListViewPrivateMessageUserIconActive.tif; sourceTree = "<group>"; };
 		4C7A21901979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif"; sourceTree = "<group>"; };
@@ -2626,6 +2642,7 @@
 				4CB331BC16F1BBE000D65CBE /* NSImageHelper.h */,
 				4C6D464C180830E60098BA12 /* NSMenuHelper.h */,
 				4C8AF54D158E99520026668C /* NSNumberHelper.h */,
+				4C77FF231991F02E00E8A7B8 /* NSObjectHelper.h */,
 				4C8AF54E158E99520026668C /* NSOutlineViewHelper.h */,
 				4C8AF54F158E99520026668C /* NSPasteboardHelper.h */,
 				4C8D625016D026D8007D6C60 /* NSRangeHelper.h */,
@@ -2634,6 +2651,7 @@
 				4C8AF551158E99520026668C /* NSSplitViewHelper.h */,
 				4C8AF552158E99520026668C /* NSStringHelper.h */,
 				4C8AF553158E99520026668C /* NSTextFieldHelper.h */,
+				4C77FF2B1992614500E8A7B8 /* NSValueHelper.h */,
 				4C8AF554158E99520026668C /* NSWindowHelper.h */,
 				4C8AF558158E99520026668C /* TDCAboutPanel.h */,
 				4C8AF559158E99520026668C /* TDCAddressBookSheet.h */,
@@ -2751,6 +2769,7 @@
 				4CB331B416F1BBC700D65CBE /* NSImageHelper.m */,
 				4C6D4645180830D40098BA12 /* NSMenuHelper.m */,
 				4C8AF5A1158E99520026668C /* NSNumberHelper.m */,
+				4C77FF1A1991F01F00E8A7B8 /* NSObjectHelper.m */,
 				4C8AF5A2158E99520026668C /* NSOutlineViewHelper.m */,
 				4C8AF5A3158E99520026668C /* NSPasteboardHelper.m */,
 				4C8D624E16D02688007D6C60 /* NSRangeHelper.m */,
@@ -2759,6 +2778,7 @@
 				4C8AF5A5158E99520026668C /* NSSplitViewHelper.m */,
 				4C8AF5A6158E99520026668C /* NSStringHelper.m */,
 				4C8AF5A7158E99520026668C /* NSTextFieldHelper.m */,
+				4C77FF271992613100E8A7B8 /* NSValueHelper.m */,
 				4C8AF5A8158E99520026668C /* NSWindowHelper.m */,
 			);
 			name = "Cocoa (Objective-C)";
@@ -3538,7 +3558,9 @@
 				4C0BA61B1990798800857343 /* TVCServerListYosemiteUserInterface.h in Headers */,
 				4C0BA61C1990798800857343 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
 				4C0BA61D1990798800857343 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
+				4C77FF261991F02E00E8A7B8 /* NSObjectHelper.h in Headers */,
 				4C0BA61E1990798800857343 /* TVCAnimatedContentNavigationOutlineView.h in Headers */,
+				4C77FF2E1992614500E8A7B8 /* NSValueHelper.h in Headers */,
 				4C0BA61F1990798800857343 /* TVCQueuedCertificateTrustPanel.h in Headers */,
 				4C0BA6201990798800857343 /* TVCLogControllerHistoricLogFile.h in Headers */,
 				4C0BA6211990798800857343 /* BuildConfig.h in Headers */,
@@ -3712,6 +3734,8 @@
 				4C5FB0FB197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
 				4C5FB0FE197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
 				4C38526319721E9100A6845C /* TDCSharedProtocolDefinitions.h in Headers */,
+				4C77FF251991F02E00E8A7B8 /* NSObjectHelper.h in Headers */,
+				4C77FF2D1992614500E8A7B8 /* NSValueHelper.h in Headers */,
 				4C001C0B197A11E60061C2C5 /* TVCTextFieldComboBoxWithValueValidation.h in Headers */,
 				4C0C720E1742C444000F82C4 /* NSByteCountFormatterHelper.h in Headers */,
 				4CEA09C61875A734005D6184 /* TDCFileTransferDialogRemoteAddress.h in Headers */,
@@ -3885,7 +3909,9 @@
 				4C001C0A197A10E80061C2C5 /* TVCTextFieldComboBoxWithValueValidation.h in Headers */,
 				4C77661C19789F8E00759774 /* TVCServerListYosemiteUserInterface.h in Headers */,
 				4C5FB0FA197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
+				4C77FF2C1992614500E8A7B8 /* NSValueHelper.h in Headers */,
 				4C5FB0FD197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
+				4C77FF241991F02E00E8A7B8 /* NSObjectHelper.h in Headers */,
 				4CB4806F1965345200E0782E /* TVCAnimatedContentNavigationOutlineView.h in Headers */,
 				4C9FFB9F19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h in Headers */,
 				4C5E4D1818260131001F3E6B /* TVCLogControllerHistoricLogFile.h in Headers */,
@@ -4595,10 +4621,12 @@
 				4CA110F41955AAA10062EC4E /* TVCMainWindowTextView.m in Sources */,
 				4C04459D16F1603B00EBB665 /* IRCChannel.m in Sources */,
 				4C6D4647180830D40098BA12 /* NSMenuHelper.m in Sources */,
+				4C77FF1C1991F01F00E8A7B8 /* NSObjectHelper.m in Sources */,
 				4C04459E16F1603B00EBB665 /* IRCChannelConfig.m in Sources */,
 				4C9234AC195330D30009AAAE /* TXUserInterface.m in Sources */,
 				4CA110EE1955AAA10062EC4E /* TVCMainWindowLoadingScreen.m in Sources */,
 				4C04459F16F1603B00EBB665 /* IRCChannelMode.m in Sources */,
+				4C77FF291992613100E8A7B8 /* NSValueHelper.m in Sources */,
 				4C0445A016F1603B00EBB665 /* IRCClient.m in Sources */,
 				4C0445A116F1603B00EBB665 /* IRCClientConfig.m in Sources */,
 				4C0445A216F1603B00EBB665 /* IRCConnection.m in Sources */,
@@ -4752,10 +4780,12 @@
 				4C0BA66C1990798800857343 /* THOUnicodeHelper.m in Sources */,
 				4C0BA66D1990798800857343 /* IRCChannelMode.m in Sources */,
 				4C0BA66E1990798800857343 /* NSMenuHelper.m in Sources */,
+				4C77FF1D1991F01F00E8A7B8 /* NSObjectHelper.m in Sources */,
 				4C0BA66F1990798800857343 /* IRCClient.m in Sources */,
 				4C0BA6701990798800857343 /* TVCMainWindowLoadingScreen.m in Sources */,
 				4C0BA6711990798800857343 /* TXUserInterface.m in Sources */,
 				4C0BA6721990798800857343 /* IRCClientConfig.m in Sources */,
+				4C77FF2A1992613100E8A7B8 /* NSValueHelper.m in Sources */,
 				4C0BA6731990798800857343 /* IRCConnection.m in Sources */,
 				4C0BA6741990798800857343 /* IRCExtras.m in Sources */,
 				4C0BA6751990798800857343 /* IRCISupportInfo.m in Sources */,
@@ -4909,10 +4939,12 @@
 				4CB9980917C39E83008F56D7 /* THOUnicodeHelper.m in Sources */,
 				4C8AF6A6158E99520026668C /* IRCChannelMode.m in Sources */,
 				4C6D4646180830D40098BA12 /* NSMenuHelper.m in Sources */,
+				4C77FF1B1991F01F00E8A7B8 /* NSObjectHelper.m in Sources */,
 				4C8AF6A7158E99520026668C /* IRCClient.m in Sources */,
 				4CA110ED1955AAA10062EC4E /* TVCMainWindowLoadingScreen.m in Sources */,
 				4C9234AB195330D30009AAAE /* TXUserInterface.m in Sources */,
 				4C8AF6A8158E99520026668C /* IRCClientConfig.m in Sources */,
+				4C77FF281992613100E8A7B8 /* NSValueHelper.m in Sources */,
 				4C8AF6A9158E99520026668C /* IRCConnection.m in Sources */,
 				4C8AF6AA158E99520026668C /* IRCExtras.m in Sources */,
 				4C8AF6AB158E99520026668C /* IRCISupportInfo.m in Sources */,

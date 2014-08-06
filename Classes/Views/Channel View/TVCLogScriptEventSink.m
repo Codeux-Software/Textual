@@ -63,6 +63,10 @@
 	
 	if ([s hasPrefix:@"styleSettingsSetValue"]) {
 		return nil;
+	} else if ([s hasPrefix:@"performBridgedSelector"]) {
+		return nil;
+	} else if ([s hasPrefix:@"performBridgedSelectorWithString"]) {
+		return nil;
 	}
 	
 	if ([s hasSuffix:@":"]) {
@@ -76,6 +80,10 @@
 {
 	if ([name isEqualToString:@"styleSettingsSetValue"]) {
 		return @([self styleSettingsSetValue:args]);
+	} else if ([name isEqualToString:@"performBridgedSelector"]) {
+		return [self performBridgedSelector:args];
+	} else if ([name isEqualToString:@"performBridgedSelectorWithString"]) {
+		return [self performBridgedSelectorWithString:args];
 	}
 
 	return nil;
@@ -311,6 +319,133 @@
 	}
 	
 	return result;
+}
+
+- (id)performBridgedSelector:(NSArray *)arguments
+{
+	return [self _performBridgedSelector:NO arguments:arguments];
+}
+
+- (id)performBridgedSelectorWithString:(NSArray *)arguments
+{
+	return [self _performBridgedSelector:YES arguments:arguments];
+}
+
+- (id)_performBridgedSelector:(BOOL)treatStringAsObject arguments:(NSArray *)arguments
+{
+	if ([arguments count] <= 1) {
+		[self throwJavaScriptException:@"Too few arguments provided to performBridgedSelector"];
+	} else {
+		id selectorOwner = arguments[0];
+		id selectorName = arguments[1];
+		
+		if ([selectorName isKindOfClass:[NSString class]] == NO) {
+			[self throwJavaScriptException:@"The selector name provided to performBridgedSelector must be a string"];
+		} else {
+			BOOL safeToPerform = YES;
+
+			NSMutableArray *selectorArguments = [NSMutableArray array];
+			
+			for (NSInteger i = 2; i < [arguments count]; i++) {
+				id argumentValue = arguments[i];
+				
+				if ([argumentValue isKindOfClass:[WebScriptObject class]] == NO) {
+					if ([argumentValue isKindOfClass:[WebUndefined class]]) {
+						[selectorArguments addObject:[NSNull null]];
+					} else {
+						[selectorArguments addObject:argumentValue];
+					}
+				} else {
+					id objectType = [argumentValue valueForKey:@"type"];
+					
+					__unsafe_unretained id objectValue = [argumentValue valueForKey:@"value"];
+					
+					if ((objectType == nil || [objectType isKindOfClass:[NSString class]] == NO) ||
+						(objectValue == nil || [objectValue isKindOfClass:[NSString class]] == NO))
+					{
+						NSString *message = [NSString stringWithFormat:@"An improperly cast argument was found at index %lu", i];
+						
+						[self throwJavaScriptException:message];
+						
+						safeToPerform = NO;
+						
+						break; // Do not continue with arguments…
+					}
+					else
+					{
+						NSNumber *result = nil;
+						
+						NSString *realObjectValue = [NSString stringWithString:objectValue];
+						
+						if ([objectType isEqualToString:@"i"]) {
+							result = [NSNumber numberWithLong:[realObjectValue integerValue]];
+						} else if ([objectType isEqualToString:@"l"]) {  // long long
+							result = [NSNumber numberWithLongLong:[realObjectValue longLongValue]];
+						} else if ([objectType isEqualToString:@"f"]) {  // float
+							result = [NSNumber numberWithFloat:[realObjectValue floatValue]];
+						} else if ([objectType isEqualToString:@"d"]) {  // double
+							result = [NSNumber numberWithDouble:[realObjectValue doubleValue]];
+						} else if ([objectType isEqualToString:@"b"]) { // BOOL
+							result = [NSNumber numberWithBool:[realObjectValue boolValue]];
+						} else {
+							NSString *message = [NSString stringWithFormat:@"An improperly cast argument was found at index %lu", i];
+							
+							[self throwJavaScriptException:message];
+							
+							safeToPerform = NO;
+							
+							break; // Do not continue with arguments…
+						}
+						
+						[selectorArguments addObject:result];
+					}
+				}
+			}
+			
+			if (safeToPerform) {
+				if ([selectorOwner isKindOfClass:[NSString class]]) {
+					if (treatStringAsObject == NO) {
+						if (objc_getClass([selectorOwner UTF8String]) == nil) {
+							NSString *message = [NSString stringWithFormat:@"The class named %@ provided to performBridgedSelector does not exist within Textual", selectorOwner];
+							
+							[self throwJavaScriptException:message];
+							
+							return nil; // Obviously not safe to continue…
+						}
+						
+						selectorOwner = NSClassFromString(selectorOwner);
+					}
+				}
+				
+				NSArray *resultErrors = nil;
+				
+				id returnValue = [selectorOwner performSelector:NSSelectorFromString(selectorName)
+												  withArguments:[selectorArguments copy]
+											  returnsPrimitives:YES
+											   usesTypeChecking:NO
+														  error:&resultErrors];
+				
+				if (resultErrors) {
+					for (NSDictionary *error in resultErrors) {
+						if ([error boolForKey:@"isWarning"]) {
+							[self logToJavaScriptConsole:error[@"errorMessage"]];
+						} else {
+							[self throwJavaScriptException:error[@"errorMessage"]];
+						}
+					}
+				}
+				
+				return returnValue;
+			}
+		}
+	}
+	
+	return nil;
+}
+
+- (id)retrievePreferencesWithMethodName:(NSString *)name
+{
+	return [WebUndefined undefined];
 }
 
 - (void)print:(NSString *)s
