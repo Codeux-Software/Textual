@@ -77,8 +77,6 @@
 
 - (void)open
 {
-	[self close]; // Reset state.
-
 	[self startTimer];
 	[self openSocket];
 }

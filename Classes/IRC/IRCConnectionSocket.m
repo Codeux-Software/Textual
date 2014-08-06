@@ -106,17 +106,25 @@
 
 - (void)closeSocket
 {
-	if ( self.socketConnection) {
-		[self.socketConnection setDelegate:nil];
+	if (self.socketConnection) {
+		if ([self useNewSocketEngine]) {
+			[self.socketConnection setDelegate:nil];
+		}
+		
 		[self.socketConnection disconnect];
-
-		self.socketConnection = nil;
 	}
+}
 
-    [self destroyDispatchQueue];
-
+- (void)destroySocket
+{
+	if ( self.socketConnection) {
+		 self.socketConnection = nil;
+	}
+	
+	[self destroyDispatchQueue];
+	
 	self.isConnectedWithClientSideCertificate = NO;
-
+	
 	self.isConnected = NO;
 	self.isConnecting = NO;
 }
@@ -235,6 +243,7 @@
 {
 	if ([self useNewSocketEngine] == NO) {
 		[self closeSocket];
+		[self destroySocket];
 	}
 }
 
@@ -242,6 +251,7 @@
 {
 	if ([self useNewSocketEngine]) {
 		[self closeSocket];
+		[self destroySocket];
 	}
 
 	[self performSelector:@selector(tcpClientDidDisconnect:) withObject:distcError];
