@@ -82,7 +82,9 @@ Textual = {
 	/* Allows a style to respond to the user switching between light and
 	dark mode. */
 	sidebarInversionPreferenceChanged:		function() {},
-    
+
+	/* *********************************************************************** */
+
     /* 
         handleEvent allows a style to receive status information about several
         actions going on behind the scenes. The following event tokens are 
@@ -105,7 +107,9 @@ Textual = {
         stored in a local database.  
     */
     handleEvent:                            function(eventToken) {}, 
-	
+
+	/* *********************************************************************** */
+
 	/* 
 		Textual provides the ability to store values within a key-value store which is shared 
 		amongst all views. The values stored within this key-value store are maintained within
@@ -145,7 +149,9 @@ Textual = {
 	/* This function is invoked when a style setting has changed. It is invoked on all WebViews 
 	including the one that was responsible for changing the original value. */
 	styleSettingDidChange:                            function(changedKey) { },
-	
+
+	/* *********************************************************************** */
+
     /* The following API calls can be called at any time. */
     
 	// app.logToConsole(<input>)        - Log a message to the Mac OS console.
@@ -177,6 +183,88 @@ Textual = {
 	//													  This is the equivalent of a script using the /debug command.
 
 	// app.printDebugInformation(message)				— Show a debug message to the user in the associated channel.
+
+	/* *********************************************************************** */
+
+	/* JavaScript <-> Objective-C bridge (only for Advanced users)
+
+	Textual includes its own homemade bridge similar to the Objective-C -performSelector: method provided on objects
+	which can be invoked from within JavaScript.
+
+	The two functions related to this bridge are:
+		app.performBridgedSelector(object, selector, ...)
+		app.performBridgedSelectorWithString(object, selector, ...)
+
+	performBridgedSelector() is the function which will be used in 99% of use cases. The first argument of this function
+	is one of two things. A string or an Objective-C object (not JavaScript created object) returned from a previous call
+	to performBridgedSelector(). When a string is given for the /object/ value, then the value of that string is assumed to
+	be a class name which Textual will automatically translate. For example, "NSObject" would represent the class NSObject.
+
+	Because /object/ treats strings as class names, performing a selector on a string itself is not possible with
+	performBridgedSelector(). Instead, when invoking a selector on a string, call performBridgedSelectorWithString()
+	which will treat the /object/ value as an actual object and not do class lookup.
+
+	/selector/ (string) is the method that will be invoked on /object/
+
+	----------------------
+
+	Everything that follows /object/ and /selector/ are the arguments supplied to /selector/ — Textual enforces strict
+	checking when invoking a method with arguments. If the number of arguments supplied doe not match the number expected,
+	then an error is returned and nothing happens.
+
+	By default, both functions use lose type checking for arguments. This basically means that when the method is invoked
+	in Objective-C, the translation of numbers from JavaScript to WebKit uses the type "double" as that is what WebKit
+	gives us by default. However, arguments can be cast using a specific set of types. Casting is the preferred method of
+	specifying arguments because 99% of the Objective-C code in Textual uses integers.
+
+	Casting is performed by specifying a JavaScript object as an argument in the following format:
+
+		{type: "<type symbol>", value: "<object value>"}
+
+	Both values of this object are strings. The first value, "type", is one of the following tokens:
+
+		 Token			        Cast Type
+		-------                -----------
+		   i					  long (NSInteger)
+		   l					  long long
+		   f					  float
+		   d					  double (WebKit's default)
+
+	----------------------
+
+	In most cases, Textual relies on WebKit to handle the translation of Objective-C return types into their JavaScript
+	counterparts. Here are a few example of translated values:
+
+		ObjC                    JavaScript
+		----                    ----------
+	 	 BOOL			 =>      boolean
+		 NSNumber        =>      number
+		 NSString        =>      string
+		 NSArray         =>      array object
+		 id				 =>      objective-c object
+
+	The result value of some types are undefined and the behavior of these is not well understood.
+
+	----------------------
+
+	In summary, here are a few examples:
+
+		app.performBridgedSelector("TPCPreferences", "invertSidebarColors")
+
+		var masterController = app.performBridgedSelector("NSObject", "masterController");
+		var mainWindow = app.performBridgedSelector(masterController, "mainWindow")
+		var selectedClient = app.performBridgedSelector(mainWindow, "selectedClient");
+		app.performBridgedSelector(selectedClient, "name");
+
+		var masterController = app.performBridgedSelector("NSObject", "masterController");
+		var mainWindow = app.performBridgedSelector(masterController, "mainWindow")
+		var selectedChannel = app.performBridgedSelector(mainWindow, "selectedChannel");
+		app.performBridgedSelector(selectedChannel, "setDockUnreadCount:", {type: "i", value: "1"});
+		app.performBridgedSelector("TVCDockIcon", "updateDockIcon")
+
+		app.performBridgedSelector("100", "integerValue"); // Would return error that "100" is not a class
+		app.performBridgedSelectorWithString("100", "integerValue"); // Would return error that "100" is not a class
+	*/
 
 	/* *********************************************************************** */
 	/*																		   */

@@ -298,6 +298,8 @@
 	#import "NSImageHelper.h"
 	#import "NSMenuHelper.h"
 	#import "NSNumberHelper.h"
+	#import "NSValueHelper.h"
+	#import "NSObjectHelper.h"
 	#import "NSOutlineViewHelper.h"
 	#import "NSPasteboardHelper.h"
 	#import "NSRangeHelper.h"
