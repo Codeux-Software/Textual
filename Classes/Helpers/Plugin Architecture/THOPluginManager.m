@@ -393,20 +393,20 @@
 
 		NSDictionary *senderData = @{
 			@"senderIsServer"	: @([[message sender] isServer]),
-			@"senderHostmask"	: NSStringNilValueSubstitute([message senderHostmask]),
-			@"senderNickname"	: NSStringNilValueSubstitute([message senderNickname]),
-			@"senderUsername"	: NSStringNilValueSubstitute([message senderUsername]),
-			@"senderDNSMask"	: NSStringNilValueSubstitute([message senderAddress])
+			@"senderHostmask"	: NSDictionaryNilValue([message senderHostmask]),
+			@"senderNickname"	: NSDictionaryNilValue([message senderNickname]),
+			@"senderUsername"	: NSDictionaryNilValue([message senderUsername]),
+			@"senderDNSMask"	: NSDictionaryNilValue([message senderAddress])
 		};
 
 		NSDictionary *messageData = @{
 			@"messageReceived"      : [message receivedAt],
 			@"messageParamaters"	: [message params],
 			@"messageNumericReply"	: @([message numericReply]),
-			@"messageCommand"		: NSStringNilValueSubstitute([message command]),
-			@"messageSequence"		: NSStringNilValueSubstitute([message sequence]),
-			@"messageServer"		: NSStringNilValueSubstitute([client networkAddress]),
-			@"messageNetwork"		: NSStringNilValueSubstitute([client networkName])
+			@"messageCommand"		: NSDictionaryNilValue([message command]),
+			@"messageSequence"		: NSDictionaryNilValue([message sequence]),
+			@"messageServer"		: NSDictionaryNilValue([client networkAddress]),
+			@"messageNetwork"		: NSDictionaryNilValue([client networkName])
 		};
 		
 		for (THOPluginItem *plugin in self.allLoadedPlugins)

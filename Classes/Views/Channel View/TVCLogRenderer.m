@@ -241,7 +241,9 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 									}
 								}
 							} else {
-								modeSymbol = NSStringNilValueSubstitute(usermark);
+								if (usermark) {
+									modeSymbol = usermark;
+								}
 							}
 						}
 						
