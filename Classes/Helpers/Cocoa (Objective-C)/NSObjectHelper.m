@@ -73,13 +73,20 @@
 				safeToPerform = NO;
 			}
 			
-			/* Check the argument count of the method we are invoking. */
-			NSUInteger realArgumentCount = ([signature numberOfArguments] - 2); // See docs for reason behind the minus
-			
-			if (NSDissimilarObjects([arguments count], realArgumentCount)) {
-				_insertError(NO, ([NSString stringWithFormat:@"Error performing %@ on %@: The number of arguments supplied does not match the expected number of arguments that %@ expects. Expected value: %lu", NSStringFromSelector(aSelector), NSStringFromClass([self class]), NSStringFromSelector(aSelector), realArgumentCount]));
-			
-				safeToPerform = NO;
+			if (safeToPerform) {
+				/* Check the argument count of the method we are invoking. */
+				NSUInteger realArgumentCount = ([signature numberOfArguments] - 2); // See docs for reason behind the minus
+				NSUInteger actualArgumentCount = 0;
+				
+				if (arguments) {
+					actualArgumentCount = [arguments count];
+				}
+				
+				if (NSDissimilarObjects(actualArgumentCount, realArgumentCount)) {
+					_insertError(NO, ([NSString stringWithFormat:@"Error performing %@ on %@: The number of arguments supplied does not match the expected number of arguments that %@ expects. Expected value: %lu", NSStringFromSelector(aSelector), NSStringFromClass([self class]), NSStringFromSelector(aSelector), realArgumentCount]));
+				
+					safeToPerform = NO;
+				}
 			}
 			
 			/* Maybe continue. */
