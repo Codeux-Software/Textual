@@ -8093,7 +8093,7 @@
 		 then use the configured nickname instead. User probably was on bouncer
 		 and relaunched Textual losing preAwayNickname.*/
 		if (newNick == nil) {
-			if (self.config.awayNickname) {
+			if (NSObjectIsNotEmpty(self.config.awayNickname)) {
 				newNick = self.config.nickname;
 			}
 		}
