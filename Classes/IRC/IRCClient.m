@@ -7244,7 +7244,7 @@
 
 - (void)postEventToViewController:(NSString *)eventToken
 {
-    [self.viewController executeScriptCommand:@"handleEvent" withArguments:@[eventToken] onQueue:NO];
+    [[self viewController] executeScriptCommand:@"handleEvent" withArguments:@[eventToken] onQueue:NO];
 
 	@synchronized(self.channels) {
 		for (IRCChannel *channel in self.channels) {
