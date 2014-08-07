@@ -36,6 +36,14 @@
 
  *********************************************************************** */
 
+/* *********************************************************************** */
+/*																		   */
+/* DO NOT EDIT ANYTHING BELOW THIS LINE FROM WITHIN A STYLE. 			   */
+/* THE FUNCTIONS DELCARED WITHIN THIS FILE ARE USED FOR INTERNAL		   */
+/* PURPOSES AND THE RESULT OF OVERRIDING A FUNCTION IS UNDEFINED.		   */
+/*																		   */
+/* *********************************************************************** */
+
 InlineImageLiveResize = {
 	dragElement: null,
 

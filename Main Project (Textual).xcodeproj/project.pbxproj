@@ -1240,6 +1240,9 @@
 		4C9A1D9C1836E6D300C14835 /* SpammerParadise.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C9A1D9D1836E6D500C14835 /* SystemProfiler.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D931836E6A100C14835 /* SystemProfiler.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C9A1D9E1836E6D700C14835 /* ZNCAdditions.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4C9C110419930697004FDFE9 /* corePrivate.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4C9C10FA1992FE37004FDFE9 /* corePrivate.js */; };
+		4C9C110B199306A1004FDFE9 /* corePrivate.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4C9C10FA1992FE37004FDFE9 /* corePrivate.js */; };
+		4C9C110C199306A5004FDFE9 /* corePrivate.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4C9C10FA1992FE37004FDFE9 /* corePrivate.js */; };
 		4C9FFB9919059BF1008C600C /* TVCQueuedCertificateTrustPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9FFB9819059BF1008C600C /* TVCQueuedCertificateTrustPanel.m */; };
 		4C9FFB9F19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9FFB9E19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9FFBA019059C3A008C600C /* TVCQueuedCertificateTrustPanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9FFB9E19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1533,6 +1536,7 @@
 			dstSubfolderSpec = 7;
 			files = (
 				4C0BA5711990798800857343 /* core.js in Copy JavaScript Files */,
+				4C9C110C199306A5004FDFE9 /* corePrivate.js in Copy JavaScript Files */,
 				4C0BA5721990798800857343 /* liveresize.js in Copy JavaScript Files */,
 			);
 			name = "Copy JavaScript Files";
@@ -1604,6 +1608,7 @@
 			dstSubfolderSpec = 7;
 			files = (
 				4C5BA3D316F1302F00A96CA2 /* core.js in Copy JavaScript Files */,
+				4C9C110B199306A1004FDFE9 /* corePrivate.js in Copy JavaScript Files */,
 				4CE4B7761968B7E3003CBF67 /* liveresize.js in Copy JavaScript Files */,
 			);
 			name = "Copy JavaScript Files";
@@ -1654,6 +1659,7 @@
 			dstSubfolderSpec = 7;
 			files = (
 				4CCF2F9915804BC9006FFE21 /* core.js in Copy JavaScript Files */,
+				4C9C110419930697004FDFE9 /* corePrivate.js in Copy JavaScript Files */,
 				4CE4B7771968B800003CBF67 /* liveresize.js in Copy JavaScript Files */,
 			);
 			name = "Copy JavaScript Files";
@@ -2056,6 +2062,7 @@
 		4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SpammerParadise.bundle; path = .tmp/SharedBuildProducts/SpammerParadise.bundle; sourceTree = SOURCE_ROOT; };
 		4C9A1D931836E6A100C14835 /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = .tmp/SharedBuildProducts/SystemProfiler.bundle; sourceTree = SOURCE_ROOT; };
 		4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ZNCAdditions.bundle; path = .tmp/SharedBuildProducts/ZNCAdditions.bundle; sourceTree = SOURCE_ROOT; };
+		4C9C10FA1992FE37004FDFE9 /* corePrivate.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = corePrivate.js; path = Resources/Javascript/API/corePrivate.js; sourceTree = SOURCE_ROOT; };
 		4C9FFB9819059BF1008C600C /* TVCQueuedCertificateTrustPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCQueuedCertificateTrustPanel.m; sourceTree = "<group>"; };
 		4C9FFB9E19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCQueuedCertificateTrustPanel.h; sourceTree = "<group>"; };
 		4CA110CA1955AA4A0062EC4E /* THOPluginItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = THOPluginItem.m; path = "Plugin Architecture/THOPluginItem.m"; sourceTree = "<group>"; };
@@ -2394,6 +2401,7 @@
 			isa = PBXGroup;
 			children = (
 				4CCF2F5315804888006FFE21 /* core.js */,
+				4C9C10FA1992FE37004FDFE9 /* corePrivate.js */,
 				4CE4B7731968B7D3003CBF67 /* liveresize.js */,
 			);
 			name = API;
