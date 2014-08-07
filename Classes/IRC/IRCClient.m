@@ -8088,6 +8088,15 @@
 		newNick = self.config.awayNickname;
 	} else {
 		newNick = self.preAwayNickname;
+		
+		/* If we have an away nickname configured but no preAawayNickname set,
+		 then use the configured nickname instead. User probably was on bouncer
+		 and relaunched Textual losing preAwayNickname.*/
+		if (newNick == nil) {
+			if (self.config.awayNickname) {
+				newNick = self.config.nickname;
+			}
+		}
 	}
 
 	if (NSObjectIsNotEmpty(newNick)) {
