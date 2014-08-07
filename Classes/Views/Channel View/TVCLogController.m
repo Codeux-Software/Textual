@@ -1257,8 +1257,12 @@
 
 	// ---- //
 
-	attributes[@"configuredServerName"] = NSStringNilValueSubstitute([self.associatedClient altNetworkName]);
-
+	NSString *serverName = [self.associatedClient altNetworkName];
+	
+	if (serverName) {
+		attributes[@"configuredServerName"] = serverName;
+	}
+	
 	// ---- //
 
 	NSString *newLinenNumber = [self uniquePrintIdentifier];
@@ -1476,10 +1480,10 @@
 	}
 
 	[self executeQuickScriptCommand:@"viewInitiated" withArguments:@[
-		 NSStringNilValueSubstitute(viewType),
-		 NSStringNilValueSubstitute([self.associatedClient uniqueIdentifier]),
-		 NSStringNilValueSubstitute([self.associatedChannel uniqueIdentifier]),
-		 NSStringNilValueSubstitute([self.associatedChannel name])
+		 NSDictionaryNilValue(viewType),
+		 NSDictionaryNilValue([self.associatedClient uniqueIdentifier]),
+		 NSDictionaryNilValue([self.associatedChannel uniqueIdentifier]),
+		 NSDictionaryNilValue([self.associatedChannel name])
 	]];
 
 	if (self.reloadingBacklog == NO) {

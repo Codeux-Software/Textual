@@ -50,8 +50,6 @@
 #define NSStringNewlinePlaceholder			@"\n"
 #define NSStringWhitespacePlaceholder		@" "
 
-#define NSStringNilValueSubstitute(s)		((s == nil) ? NSStringEmptyPlaceholder : s)
-
 /* That is one long define name. */
 #define TXWesternAlphabetIncludingUnderscoreDashCharacaterSet			@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_"
 
