@@ -166,11 +166,6 @@
 	return nil;
 }
 
-- (void)postStyleSettingsDidChangeNotification:(NSString *)name
-{
-	[worldController() executeScriptCommandOnAllViews:@"styleSettingDidChange" arguments:@[name]];
-}
-
 - (id)styleSettingsRetrieveValueForKey:(NSString *)key error:(NSString **)resultError
 {
 	if ([key length] <= 0) {
@@ -221,8 +216,6 @@
 			}
 		
 			[RZStandardUserDefualts() setObject:[styleSettings copy] forKey:storeKey];
-			
-			[self postStyleSettingsDidChangeNotification:objectKey];
 				
 			return YES;
 		}

@@ -95,6 +95,7 @@
 		[self.formattingMenu enableWindowField:self.inputTextField];
 		
 		[worldController() setupConfiguration];
+		[worldController() setupOtherServices];
 		
 		[self.memberList setKeyDelegate:self];
 		[self.serverList setKeyDelegate:self];

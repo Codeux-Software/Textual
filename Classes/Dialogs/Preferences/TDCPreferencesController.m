@@ -977,7 +977,7 @@
 {
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMainWindowAppearanceAction];
 
-	[worldController() executeScriptCommandOnAllViews:@"sidebarInversionPreferenceChanged" arguments:@[] onQueue:NO];
+	[worldController() informViewsThatTheSidebarInversionPreferenceDidChange];
 }
 
 - (void)onChangedStyle:(id)sender

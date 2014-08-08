@@ -79,6 +79,11 @@
 	self.isPopulatingSeeds = NO;
 }
 
+- (void)setupOtherServices
+{
+	[RZNotificationCenter() addObserver:self selector:@selector(userDefaultsDidChange:) name:NSUserDefaultsDidChangeNotification object:nil];
+}
+
 - (NSMutableDictionary *)dictionaryValue
 {
 	NSMutableArray *ary = [NSMutableArray array];
@@ -107,11 +112,23 @@
 
 - (void)prepareForApplicationTermination
 {
+	[RZNotificationCenter() removeObserver:self];
+
 	@synchronized(self.clients) {
 		for (IRCClient *c in self.clients) {
 			[c prepareForApplicationTermination];
 		}
 	}
+}
+
+- (void)userDefaultsDidChange:(NSNotification *)notification
+{
+	[self executeScriptCommandOnAllViews:@"preferencesDidChange" arguments:@[] onQueue:YES];
+}
+
+- (void)informViewsThatTheSidebarInversionPreferenceDidChange
+{
+	[self executeScriptCommandOnAllViews:@"sidebarInversionPreferenceChanged" arguments:@[] onQueue:NO];
 }
 
 #pragma mark -
@@ -470,12 +487,14 @@
 
 - (void)executeScriptCommandOnAllViews:(NSString *)command arguments:(NSArray *)args onQueue:(BOOL)onQueue
 {
-	@synchronized(self.clients) {
-		for (IRCClient *u in self.clients) {
-			[u.viewController executeScriptCommand:command withArguments:args onQueue:onQueue];
+	if ([masterController() applicationIsTerminating] == NO) {
+		@synchronized(self.clients) {
+			for (IRCClient *u in self.clients) {
+				[u.viewController executeScriptCommand:command withArguments:args onQueue:onQueue];
 
-			for (IRCChannel *c in u.channelList) {
-				[c.viewController executeScriptCommand:command withArguments:args onQueue:onQueue];
+				for (IRCChannel *c in u.channelList) {
+					[c.viewController executeScriptCommand:command withArguments:args onQueue:onQueue];
+				}
 			}
 		}
 	}
