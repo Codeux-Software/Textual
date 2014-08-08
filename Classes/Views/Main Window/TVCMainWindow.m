@@ -414,7 +414,7 @@
 {
 	NSInteger entryCount = [self.serverList numberOfRows];
 	
-	NSInteger startingPoint = [self.serverList rowForItem:self.selectedChannel];
+	NSInteger startingPoint = [self.serverList rowForItem:self.selectedItem];
 	
 	[self navigateServerListEntries:nil
 						 entryCount:entryCount
