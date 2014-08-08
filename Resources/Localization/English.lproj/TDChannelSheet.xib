@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6185.11" systemVersion="14A298i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6205" systemVersion="14A314h" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1080" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.11"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6205"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDChannelSheet">
@@ -286,11 +286,11 @@ DQ
             <point key="canvasLocation" x="415.5" y="1010.5"/>
         </view>
         <view id="147">
-            <rect key="frame" x="0.0" y="0.0" width="343" height="386"/>
+            <rect key="frame" x="0.0" y="0.0" width="343" height="411"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="oky-HV-Bq9">
-                    <rect key="frame" x="38" y="139" width="267" height="94"/>
+                    <rect key="frame" x="38" y="75" width="267" height="131"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="JFM-YA-v04">
                         <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
@@ -301,7 +301,7 @@ DQ
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="267" height="94"/>
+                                <size key="minSize" width="267" height="131"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="The ">
@@ -364,7 +364,7 @@ See the </string>
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="267" height="94"/>
+                                <size key="minSize" width="267" height="131"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                             </textView>
                         </subviews>
@@ -380,7 +380,7 @@ See the </string>
                     </scroller>
                 </scrollView>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="b4H-ig-AYn">
-                    <rect key="frame" x="38" y="16" width="267" height="93"/>
+                    <rect key="frame" x="38" y="16" width="267" height="27"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="YGd-y2-Ras">
                         <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
@@ -391,13 +391,10 @@ See the </string>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="267" height="93"/>
+                                <size key="minSize" width="267" height="27"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                                 <attributedString key="textStorage">
-                                    <fragment>
-                                        <string key="content">When enabled, Textual will refuse to write any cache files to disk related to this channel. These files do not include log files written to the log location. Those are still produced.
-
-See the </string>
+                                    <fragment content="See the ">
                                         <attributes>
                                             <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
@@ -421,7 +418,7 @@ See the </string>
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="267" height="93"/>
+                                <size key="minSize" width="267" height="27"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                             </textView>
                         </subviews>
@@ -437,7 +434,7 @@ See the </string>
                     </scroller>
                 </scrollView>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="IV7-Zt-7XT">
-                    <rect key="frame" x="38" y="295" width="267" height="41"/>
+                    <rect key="frame" x="38" y="269" width="267" height="92"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="i2q-Qt-P30">
                         <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
@@ -448,11 +445,13 @@ See the </string>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="267" height="41"/>
+                                <size key="minSize" width="267" height="92"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment>
-                                        <string key="content">This passphrase will be used to encrypt and decrypt messages so that only those with it may be able to read the transmitted conversation.</string>
+                                        <string key="content">This passphrase will be used to encrypt and decrypt messages so that only those with it may be able to read the transmitted conversation.
+
+Passphrase length is limited to 56 characters. Any characters that exceed this limit will be truncated automatically.</string>
                                         <attributes>
                                             <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
@@ -461,7 +460,7 @@ See the </string>
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="267" height="41"/>
+                                <size key="minSize" width="267" height="92"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                             </textView>
                         </subviews>
@@ -477,7 +476,7 @@ See the </string>
                     </scroller>
                 </scrollView>
                 <textField verticalHuggingPriority="750" id="155">
-                    <rect key="frame" x="23" y="346" width="80" height="17"/>
+                    <rect key="frame" x="23" y="371" width="80" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Passphrase:" id="174">
                         <font key="font" metaFont="system"/>
@@ -486,7 +485,7 @@ See the </string>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="151" customClass="NSSecureTextField">
-                    <rect key="frame" x="109" y="344" width="209" height="22"/>
+                    <rect key="frame" x="109" y="369" width="209" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="178">
                         <font key="font" metaFont="system"/>
@@ -495,14 +494,14 @@ See the </string>
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" id="wJA-xE-WhN">
-                    <rect key="frame" x="91" y="239" width="231" height="26"/>
+                    <rect key="frame" x="91" y="213" width="231" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="Default" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="xj8-qa-tOq" id="l5W-tg-6hY">
+                    <popUpButtonCell key="cell" type="push" title="Default" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="xj8-qa-tOq" id="l5W-tg-6hY">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
                         <menu key="menu" id="bwJ-HS-537">
                             <items>
-                                <menuItem title="Default" id="xj8-qa-tOq">
+                                <menuItem title="Default" state="on" id="xj8-qa-tOq">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                 </menuItem>
                                 <menuItem isSeparatorItem="YES" id="Nbp-xf-MIy"/>
@@ -513,21 +512,21 @@ See the </string>
                     </popUpButtonCell>
                 </popUpButton>
                 <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="TMK-zQ-Spf">
-                    <rect key="frame" x="20" y="278" width="303" height="5"/>
+                    <rect key="frame" x="20" y="252" width="303" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="mL5-yH-ck1">
-                    <rect key="frame" x="21" y="122" width="303" height="5"/>
+                    <rect key="frame" x="21" y="58" width="303" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <textField verticalHuggingPriority="750" id="eUD-Za-iXF">
-                    <rect key="frame" x="19" y="241" width="68" height="20"/>
+                    <rect key="frame" x="19" y="215" width="68" height="20"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Strength:" id="oEt-hm-1i1">
                         <font key="font" metaFont="system"/>
@@ -536,7 +535,7 @@ See the </string>
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="316.5" y="561.5"/>
+            <point key="canvasLocation" x="524.5" y="600"/>
         </view>
     </objects>
 </document>

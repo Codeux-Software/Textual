@@ -182,15 +182,7 @@ static const signed char fish_unbase64[256] = {
 	EVP_CIPHER_CTX context;
 	
 	const unsigned char iv[8] = {0};
-	
-	if (keylen > 56) {
-		keylen = 56;
-		
-		LogToConsole(@"WARNING: Using a key length greater than 56 will result in that key itself being struncted to the first 56 characters.");
-	} else {
-		keylen = keylen;
-	}
-	
+
 	/* =============================================== */
 	
 	/* Create structure for encryption. */
@@ -303,14 +295,6 @@ static const signed char fish_unbase64[256] = {
 	EVP_CIPHER_CTX context;
 	
 	const unsigned char iv[8] = {0};
-	
-	if (keylen > 56) {
-		keylen = 56;
-		
-		LogToConsole(@"WARNING: Using a key length greater than 56 will result in that key itself being struncted to the first 56 characters.");
-	} else {
-		keylen = keylen;
-	}
 	
 	/* Create structure for encryption. */
 	EVP_CIPHER_CTX_init(&context);
