@@ -646,7 +646,7 @@
 
 	[[self printingQueue] enqueueMessageBlock:^(id operation) {
 		if ([operation isCancelled] == NO) {
-			NSArray *objects = [self.historicLogFile listEntriesWithfetchLimit:100];
+			NSArray *objects = [self.historicLogFile listEntriesWithFetchLimit:100];
 
 			[self.historicLogFile resetData];
 			[self.historicLogFile open];
@@ -681,7 +681,7 @@
 
 	[[self printingQueue] enqueueMessageBlock:^(id operation) {
 		if ([operation isCancelled] == NO) {
-			NSArray *objects = [self.historicLogFile listEntriesWithfetchLimit:1000];
+			NSArray *objects = [self.historicLogFile listEntriesWithFetchLimit:1000];
 			
 			[self.historicLogFile resetData];
 			[self.historicLogFile open];
