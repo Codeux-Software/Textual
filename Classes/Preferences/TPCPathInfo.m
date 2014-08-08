@@ -137,7 +137,7 @@
 	
 	NSObjectIsEmptyAssertReturn(source, nil); // We need a source folder first…
 	
-	NSString *dest = [source stringByAppendingPathComponent:@"/Styles/"];
+	NSString *dest = [source stringByAppendingPathComponent:@"/Documents/Styles/"];
 	
 	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
 		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
