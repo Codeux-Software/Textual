@@ -37,8 +37,6 @@
 
 #import "TextualApplication.h"
 
-#define _requestUserAgent					@"Textual/1.0 (+http://www.codeux.com/textual/wiki/Inline-Media-Scanner-User-Agent.wiki)"
-
 #define _imageLoaderMaxRequestTime			30
 
 /* We shouldn't want to load anything larger than this. */
@@ -91,7 +89,7 @@
 															   cachePolicy:NSURLRequestReloadIgnoringCacheData
 														   timeoutInterval:_imageLoaderMaxRequestTime];
 
-	[baseRequest setValue:_requestUserAgent forHTTPHeaderField:@"User-Agent"];
+	[baseRequest setValue:TVCLogViewCommonUserAgentString forHTTPHeaderField:@"User-Agent"];
 
 	/* This is stored in a local variable so that a user changing something during a load in
 	 progess, it does not fuck up any of the already existing requests. */
