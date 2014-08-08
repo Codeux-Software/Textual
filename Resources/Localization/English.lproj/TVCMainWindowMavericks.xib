@@ -1210,7 +1210,7 @@
                                                         <rect key="frame" x="1" y="17" width="238" height="117"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
-                                                            <outlineView horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsExpansionToolTips="YES" selectionHighlightStyle="sourceList" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationPerLevel="2" outlineTableColumn="uPw-dS-cnM" id="bhZ-Cj-KBM" customClass="TVCServerList">
+                                                            <outlineView horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsExpansionToolTips="YES" selectionHighlightStyle="sourceList" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationPerLevel="2" outlineTableColumn="uPw-dS-cnM" id="bhZ-Cj-KBM" customClass="TVCServerList">
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <size key="intercellSpacing" width="3" height="0.0"/>
                                                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
@@ -1713,7 +1713,7 @@ There are no other limits. What you see, is what you get.</string>
                 <outlet property="memberList" destination="uZZ-ie-yHv" id="gm8-QW-Z2m"/>
                 <outlet property="serverList" destination="bhZ-Cj-KBM" id="QGQ-U3-gy6"/>
             </connections>
-            <point key="canvasLocation" x="2262" y="529.5"/>
+            <point key="canvasLocation" x="2525" y="518.5"/>
         </window>
         <customObject id="yyd-f5-aHb" userLabel="FormatTextController" customClass="TVCTextViewIRCFormattingMenu">
             <connections>
