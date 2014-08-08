@@ -72,6 +72,12 @@
 	if (algorithm == CSFWBlowfishEncryptionNoneAlgorithm) {
 		return input;
 	}
+	
+	if ([phrase length] > 56) {
+		LogToConsole(@"WARNING: Using a key length greater than 56 will result in that key itself being struncted to the first 56 characters.");
+
+		phrase = [phrase substringToIndex:56];
+	}
 
 	NSString *result = [BlowfishBase encrypt:input key:phrase algorithm:algorithm encoding:local];
 
@@ -120,6 +126,12 @@
 		algorithm = CSFWBlowfishEncryptionCBCAlgorithm;
 	} else {
 		algorithm = CSFWBlowfishEncryptionECBAlgorithm;
+	}
+	
+	if ([phrase length] > 56) {
+		LogToConsole(@"WARNING: Using a key length greater than 56 will result in that key itself being struncted to the first 56 characters.");
+
+		phrase = [phrase substringToIndex:56];
 	}
 
 	NSString *result = [BlowfishBase decrypt:input key:phrase algorithm:algorithm encoding:local badBytes:badByteCount];
