@@ -133,52 +133,61 @@
 
 - (void)setUp
 {
+	/* Update a few preferences. */
+	static WebPreferences *_preferencesInitd = nil;
+	
+	if (_preferencesInitd == nil) {
+		_preferencesInitd = [[WebPreferences alloc] initWithIdentifier:@"TVCLogControllerSharedWebPreferencesObject"];
+		
+		[_preferencesInitd setCacheModel:WebCacheModelDocumentViewer];
+		[_preferencesInitd setUsesPageCache:NO];
+
+		if ([_preferencesInitd respondsToSelector:@selector(setShouldRespectImageOrientation:)]) {
+			(void)objc_msgSend(_preferencesInitd, @selector(setShouldRespectImageOrientation:), YES);
+		}
+	}
+	
+	/* Create view. */
 	 self.webViewScriptSink = [TVCLogScriptEventSink new];
 	[self.webViewScriptSink setLogController:self];
 	
-	self.webViewAutoScroller = [TVCWebViewAutoScroll new];
-
-	self.webView = [[TVCLogView alloc] initWithFrame:NSZeroRect];
+	 self.webViewAutoScroller = [TVCWebViewAutoScroll new];
 	
-	self.webViewPolicy = [TVCLogPolicy new];
-
+	 self.webView = [[TVCLogView alloc] initWithFrame:NSZeroRect];
+	
+	 self.webViewPolicy = [TVCLogPolicy new];
+	
+	[self.webView setPreferences:_preferencesInitd];
+	
 	[self.webView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-
+	
 	[self.webView setKeyDelegate:self];
 	[self.webView setDraggingDelegate:self];
 	[self.webView setFrameLoadDelegate:self];
 	[self.webView setResourceLoadDelegate:self];
 	[self.webView setPolicyDelegate:self.webViewPolicy];
 	[self.webView setUIDelegate:self.webViewPolicy];
-
+	
 	[self.webView setShouldUpdateWhileOffscreen:NO];
 	
 	[self.webView setHostWindow:mainWindow()];
-
-	/* Update a few preferences. */
-	[[self.webView preferences] setCacheModel:WebCacheModelDocumentViewer];
-	[[self.webView preferences] setUsesPageCache:NO];
-
-	if ([[self.webView preferences] respondsToSelector:@selector(setShouldRespectImageOrientation:)]) {
-		(void)objc_msgSend([self.webView preferences], @selector(setShouldRespectImageOrientation:), YES);
-	}
-
+	
 	/* Load initial document. */
 	[self loadAlternateHTML:[self initialDocument:nil]];
-
+	
 	/* Change the font size to the one of others for new views. */
 	NSInteger math = [worldController() textSizeMultiplier];
-
+	
 	[self.webView setTextSizeMultiplier:math];
-
+	
 	/* Playback history. */
 	self.historicLogFile = [TVCLogControllerHistoricLogFile new];
-
+	
 	/* Even if we aren't playing back history, we still open it
 	 because theme reloads use it to playback messages. */
 	[self.historicLogFile setAssociatedController:self];
 	[self.historicLogFile open];
-
+	
 	if ([TPCPreferences reloadScrollbackOnLaunch] == NO) {
 		self.historyLoaded = YES;
 	} else {
