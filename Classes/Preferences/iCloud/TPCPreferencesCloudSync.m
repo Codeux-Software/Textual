@@ -827,7 +827,7 @@
 	/* Setup query for container changes. */
 	self.cloudContainerNotificationQuery = [NSMetadataQuery new];
 	
-	[self.cloudContainerNotificationQuery setSearchScopes:@[NSMetadataQueryUbiquitousDataScope]];
+	[self.cloudContainerNotificationQuery setSearchScopes:@[NSMetadataQueryUbiquitousDocumentsScope]];
 	[self.cloudContainerNotificationQuery setPredicate:[NSPredicate predicateWithFormat:@"%K LIKE %@", NSMetadataItemFSNameKey, @"*"]];
 	
 	[RZNotificationCenter() addObserver:self
@@ -995,6 +995,7 @@
 	
 	self.ubiquityIdentityToken = nil;
 	self.ubiquitousContainerURL = nil;
+
 	self.cloudOneMinuteSyncTimer = nil;
 	self.cloudTenMinuteSyncTimer = nil;
 }
