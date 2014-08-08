@@ -123,7 +123,9 @@
 
 - (void)userDefaultsDidChange:(NSNotification *)notification
 {
-	[self executeScriptCommandOnAllViews:@"preferencesDidChange" arguments:@[] onQueue:YES];
+	[self performBlockOnMainThread:^{
+		[self executeScriptCommandOnAllViews:@"preferencesDidChange" arguments:@[] onQueue:YES];
+	}];
 }
 
 - (void)informViewsThatTheSidebarInversionPreferenceDidChange
