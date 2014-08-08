@@ -274,7 +274,7 @@
 	self.truncationTimerScheduled = NO;
 }
 
-- (NSArray *)listEntriesWithfetchLimit:(NSInteger)maxEntryCount
+- (NSArray *)listEntriesWithFetchLimit:(NSInteger)maxEntryCount
 {
 	if (self.fileHandle) {
 		/* Force file to write to disk. */
