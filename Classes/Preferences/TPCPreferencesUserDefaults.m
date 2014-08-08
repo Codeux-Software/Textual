@@ -359,13 +359,6 @@
 	}
 }
 
-- (void)postPreferencesDidChangeNotificationsForAllViews
-{
-	if ([masterController() applicationIsTerminating] == NO) {
-		[worldController() executeScriptCommandOnAllViews:@"preferencesDidChange" arguments:@[] onQueue:YES];
-	}
-}
-
 - (void)setValue:(id)value forKey:(NSString *)key
 {
 	[self willChangeValueForKey:key];
@@ -379,8 +372,6 @@
 	} else {
 		[_userDefaults setObject:value forKey:key];
 	}
-	
-	[self postPreferencesDidChangeNotificationsForAllViews];
 	
 	[self didChangeValueForKey:key];
 }

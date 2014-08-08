@@ -297,6 +297,10 @@
 			[self throwJavaScriptException:errorValue];
 		}
 		
+		if (result) {
+			[worldController() executeScriptCommandOnAllViews:@"styleSettingDidChange" arguments:@[objectKey]];
+		}
+		
 		return result;
 	} else {
 		[self throwJavaScriptException:@"Improperly formatted arguments"];

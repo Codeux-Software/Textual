@@ -103,8 +103,9 @@ Textual.preferencesDidChange						= function() {};
 /* Allows a style to respond to the user switching between light and dark mode. */
 Textual.sidebarInversionPreferenceChanged			= function() {};
 
-/* As of Yosemite, this function does not always gurantee that the value returned is what the users see. There
-   may be a one or two second delay between the two because of a more complex drawing engine used on Yosemite. */
+/* When switching styles, the sidebarInversionPreferenceChanged() function is not called, but a style may force the
+   sidebar color to dark (a.k.a inverted). Therefore, it is important to use the app.sidebarInversionIsEnabled()
+   function call at some point to update your style logic if it depends on the value. */
 // app.sidebarInversionIsEnabled()					- Returns true if the sidebar colors are inverted (dark mode).
 
 /* *********************************************************************** */

@@ -50,6 +50,7 @@
 @property (nonatomic, assign) float textSizeMultiplier;
 
 - (void)setupConfiguration;
+- (void)setupOtherServices;
 
 - (void)save;
 
@@ -99,6 +100,8 @@
 
 - (void)executeScriptCommandOnAllViews:(NSString *)command arguments:(NSArray *)args; // Defaults to onQueue YES
 - (void)executeScriptCommandOnAllViews:(NSString *)command arguments:(NSArray *)args onQueue:(BOOL)onQueue;
+
+- (void)informViewsThatTheSidebarInversionPreferenceDidChange;
 
 - (void)logKeyDown:(NSEvent *)e;
 
