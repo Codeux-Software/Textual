@@ -161,6 +161,8 @@
 	
 	[self.webView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 	
+	[self.webView setCustomUserAgent:TVCLogViewCommonUserAgentString];
+	
 	[self.webView setKeyDelegate:self];
 	[self.webView setDraggingDelegate:self];
 	[self.webView setFrameLoadDelegate:self];

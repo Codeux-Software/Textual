@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+#define TVCLogViewCommonUserAgentString					@"Textual/1.0 (+http://www.codeux.com/textual/wiki/Inline-Media-Scanner-User-Agent.wiki)"
+
 @interface TVCLogView : WebView
 @property (nonatomic, uweak) id keyDelegate;
 @property (nonatomic, uweak) id draggingDelegate;
