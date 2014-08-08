@@ -414,7 +414,7 @@
 {
 	NSInteger entryCount = [self.serverList numberOfRows];
 	
-	NSInteger startingPoint = [self.serverList rowForItem:self.selectedItem];
+	NSInteger startingPoint = [self.serverList rowForItem:self.selectedChannel];
 	
 	[self navigateServerListEntries:nil
 						 entryCount:entryCount
@@ -427,6 +427,9 @@
 - (void)navigateChannelEntriesWithinServerScope:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType
 {
 	NSArray *scannedRows = [self.serverList rowsFromParentGroup:self.selectedClient];
+	
+	/* We add selected server so navigation falls within its scope if its the selected item. */
+	scannedRows = [scannedRows arrayByAddingObject:self.selectedClient];
 	
 	[self navigateServerListEntries: scannedRows
 						 entryCount:[scannedRows count]
@@ -442,7 +445,7 @@
 	
 	[self navigateServerListEntries: scannedRows
 						 entryCount:[scannedRows count]
-					  startingPoint:[scannedRows indexOfObject:self.selectedItem]
+					  startingPoint:[scannedRows indexOfObject:self.selectedClient]
 					   isMovingDown:isMovingDown
 					 navigationType:navigationType
 					  selectionType:TVCServerListNavigationSelectionServerType];
