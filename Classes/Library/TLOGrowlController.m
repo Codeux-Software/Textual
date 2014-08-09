@@ -216,19 +216,13 @@
 
 			[notification setActionButtonTitle:BLS(1244)];
 		}
-
-#ifdef TXSystemIsMacOSMavericksOrNewer
-		if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
-			/* These are the only event types we want to support for now. */
-
-			if (eventType == TXNotificationNewPrivateMessageType ||
-				eventType == TXNotificationPrivateMessageType)
-			{
-				[notification setHasReplyButton:YES];
-				[notification setResponsePlaceholder:BLS(1239)];
-			}
+		
+		if (eventType == TXNotificationNewPrivateMessageType ||
+			eventType == TXNotificationPrivateMessageType)
+		{
+			[notification setHasReplyButton:YES];
+			[notification setResponsePlaceholder:BLS(1239)];
 		}
-#endif 
 
 		[RZUserNotificationCenter() scheduleNotification:notification];
 
@@ -258,20 +252,16 @@
 {
 	[RZUserNotificationCenter() removeDeliveredNotification:notification];
 
-#ifdef TXSystemIsMacOSMavericksOrNewer
-	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
-		if ([notification activationType] == NSUserNotificationActivationTypeReplied) {
-			NSString *replyMessage = [[notification response] string]; // It is attributed string, we only want string.
+	if ([notification activationType] == NSUserNotificationActivationTypeReplied) {
+		NSString *replyMessage = [[notification response] string]; // It is attributed string, we only want string.
 
-			[self growlNotificationWasClicked:[notification userInfo]
-							   activationType:[notification activationType]
-							 withReplyMessage:replyMessage];
+		[self growlNotificationWasClicked:[notification userInfo]
+						   activationType:[notification activationType]
+						 withReplyMessage:replyMessage];
 
-			return; // Do not continue this method.
-		}
+		return; // Do not continue this method.
 	}
-#endif
-	
+
 	[self growlNotificationWasClicked:[notification userInfo]
 					   activationType:[notification activationType]
 					 withReplyMessage:nil];

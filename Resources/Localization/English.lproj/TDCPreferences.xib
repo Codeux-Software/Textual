@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6205" systemVersion="14A314h" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment version="1070" defaultVersion="1080" identifier="macosx"/>
+        <deployment version="1070" defaultVersion="1090" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6205"/>
     </dependencies>
@@ -247,7 +247,6 @@
                     <connections>
                         <action selector="onChangedCloudSyncingServices:" target="-2" id="EWm-sP-reg"/>
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloud" id="VDg-HO-mwB"/>
-                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.System —&gt; Built with iCloud Support" id="f72-cf-gRu"/>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" tag="13" id="dqH-Sc-1ei">
@@ -259,11 +258,10 @@
                     </buttonCell>
                     <connections>
                         <action selector="onManageiCloudButtonClicked:" target="-2" id="1fB-rJ-kxy"/>
-                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.System —&gt; Built with iCloud Support" id="48w-li-BcB"/>
                     </connections>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="1184.5" y="243"/>
+            <point key="canvasLocation" x="1299.5" y="258"/>
         </customView>
         <customView id="d6J-SH-Xgl" userLabel="Default Identity">
             <rect key="frame" x="0.0" y="0.0" width="567" height="406"/>

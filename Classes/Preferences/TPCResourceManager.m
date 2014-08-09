@@ -198,11 +198,7 @@
 
 	[d setNameFieldStringValue:[url lastPathComponent]];
 	
-#ifdef TXSystemIsMacOSMavericksOrNewer
-	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
-		[d setShowsTagField:NO];
-	}
-#endif
+	[d setShowsTagField:NO];
 	
 	/* Complete the import. */
 	[d beginWithCompletionHandler:^(NSInteger returnCode) {
