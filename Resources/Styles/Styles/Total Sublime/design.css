@@ -176,6 +176,11 @@ a:hover {
 	padding-left: 0px;
 }
 
+html[systemversion^="10.9"] .inlineImageCell .closeButton,
+html[systemversion^="10.8"] .inlineImageCell .closeButton {
+	line-height: 13px;
+}
+
 /* Remember Line */
 
 div[id=mark] {

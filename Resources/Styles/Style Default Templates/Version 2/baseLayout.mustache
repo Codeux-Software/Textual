@@ -7,9 +7,11 @@
 		{{#isPrivateMessageView}}
 			channelname="{{channelName}}" 
 		{{/isPrivateMessageView}}
-		
+
+		{{! The operating system version declaration allows CSS selectors to target specific versions. }}
+		systemversion="{{operatingSystemVersion}}"
+
 		dir="{{textDirectionToken}}">
-		
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset={{userConfiguredTextEncoding}}">
 		
@@ -89,7 +91,7 @@
 	<body viewtype="{{viewTypeToken}}"
 	
 		onload="Textual.viewBodyDidLoad()"
-	
+
 		{{#isChannelView}}
 			channelname="{{channelName}}" 
 		{{/isChannelView}}
