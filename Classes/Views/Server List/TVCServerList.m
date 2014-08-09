@@ -217,6 +217,8 @@
 	[mainWindow() setTemporarilyDisablePreviousSelectionUpdates:YES];
 	[mainWindow() setTemporarilyIgnoreOutlineViewSelectionChanges:YES];
 	
+	[self setAllowsEmptySelection:YES];
+	
 	NSIndexSet *selectedRows = [self selectedRowIndexes];
 	
 	[self deselectAll:nil];
@@ -238,6 +240,8 @@
 	[self setNeedsDisplay:YES];
 	
 	[self selectRowIndexes:selectedRows byExtendingSelection:NO];
+	
+	[self setAllowsEmptySelection:NO];
 	
 	[mainWindow() setTemporarilyDisablePreviousSelectionUpdates:NO];
 	[mainWindow() setTemporarilyIgnoreOutlineViewSelectionChanges:NO];
