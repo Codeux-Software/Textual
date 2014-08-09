@@ -54,37 +54,95 @@
 
 + (NSString *)systemBuildVersion
 {
-	return [self retrieveSystemInformationKey:@"ProductBuildVersion"];
+	id cachedValue = nil;
+	
+	if (cachedValue == nil) {
+		cachedValue = [self retrieveSystemInformationKey:@"ProductBuildVersion"];
+	}
+	
+	return cachedValue;
 }
 
 + (NSString *)systemStandardVersion
 {
-	return [self retrieveSystemInformationKey:@"ProductVersion"];
+	id cachedValue = nil;
+	
+	if (cachedValue == nil) {
+		cachedValue = [self retrieveSystemInformationKey:@"ProductVersion"];
+	}
+	
+	return cachedValue;
 }
 
 + (NSString *)systemOperatingSystemName
 {
-	return [self retrieveSystemInformationKey:@"ProductName"];
+	id cachedValue = nil;
+	
+	if (cachedValue == nil) {
+		cachedValue = [self retrieveSystemInformationKey:@"ProductName"];
+	}
+	
+	return cachedValue;
 }
 
 + (BOOL)featureAvailableToOSXLion
 {
-	return (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_6);
+	BOOL _valueCached = NO;
+	
+	BOOL cachedValue = NO;
+	
+	if (_valueCached == NO) {
+		_valueCached = YES;
+		
+		cachedValue = (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_6);
+	}
+	
+	return cachedValue;
 }
 
 + (BOOL)featureAvailableToOSXMountainLion
 {
-	return (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_7);
+	BOOL _valueCached = NO;
+	
+	BOOL cachedValue = NO;
+	
+	if (_valueCached == NO) {
+		_valueCached = YES;
+		
+		cachedValue = (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_7);
+	}
+	
+	return cachedValue;
 }
 
 + (BOOL)featureAvailableToOSXMavericks
 {
-	return (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_8);
+	BOOL _valueCached = NO;
+	
+	BOOL cachedValue = NO;
+	
+	if (_valueCached == NO) {
+		_valueCached = YES;
+		
+		cachedValue = (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_8);
+	}
+	
+	return cachedValue;
 }
 
 + (BOOL)featureAvailableToOSXYosemite
 {
-	return (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9);
+	BOOL _valueCached = NO;
+	
+	BOOL cachedValue = NO;
+	
+	if (_valueCached == NO) {
+		_valueCached = YES;
+		
+		cachedValue = (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9);
+	}
+	
+	return cachedValue;
 }
 
 #pragma mark -
@@ -92,51 +150,61 @@
 
 + (NSString *)systemModelToken
 {
-	char modelBuffer[256];
-
-	size_t sz = sizeof(modelBuffer);
-
-	if (sysctlbyname("hw.model", modelBuffer, &sz, NULL, 0) == 0) {
-		modelBuffer[(sizeof(modelBuffer) - 1)] = 0;
-
-		return @(modelBuffer);
+	id cachedValue = nil;
+	
+	if (cachedValue == nil) {
+		char modelBuffer[256];
+		
+		size_t sz = sizeof(modelBuffer);
+		
+		if (sysctlbyname("hw.model", modelBuffer, &sz, NULL, 0) == 0) {
+			modelBuffer[(sizeof(modelBuffer) - 1)] = 0;
+			
+			cachedValue = @(modelBuffer);
+		}
 	}
-
-	return nil;
+	
+	return cachedValue;
 }
 
 + (NSString *)systemModelName
 {
-	/* This method is not returning very detailed information. Only
-	 the model being ran on. Therefore, not much love will be put into
-	 it. As can be seen below, we are defining our models inline instead
-	 of using a dictionary that will have to be loaded from a file. */
+	id cachedValue = nil;
 	
-	NSDictionary *modelPrefixes = @{
-		 @"macbookpro"	: @"MacBook Pro",
-		 @"macbookair"	: @"MacBook Air",
-		 @"macbook"		: @"MacBook",
-		 @"macpro"		: @"Mac Pro",
-		 @"macmini"		: @"Mac Mini",
-		 @"imac"		: @"iMac",
-		 @"xserve"		: @"Xserve"
-	};
-
-	NSString *modelToken = [self systemModelToken];
-
-	if ([modelToken length] <= 0) {
-		return nil;
-	}
-
-	modelToken = [modelToken lowercaseString];
-
-	for (NSString *modelPrefix in modelPrefixes) {
-		if ([modelToken hasPrefix:modelPrefix]) {
-			return modelPrefixes[modelPrefix];
+	if (cachedValue == nil) {
+		/* This method is not returning very detailed information. Only
+		the model being ran on. Therefore, not much love will be put into
+		it. As can be seen below, we are defining our models inline instead
+		of using a dictionary that will have to be loaded from a file. */
+		
+		NSDictionary *modelPrefixes = @{
+			@"macbookpro"	: @"MacBook Pro",
+			@"macbookair"	: @"MacBook Air",
+			@"macbook"		: @"MacBook",
+			@"macpro"		: @"Mac Pro",
+			@"macmini"		: @"Mac Mini",
+			@"imac"			: @"iMac",
+			@"xserve"		: @"Xserve"
+		};
+		
+		NSString *modelToken = [self systemModelToken];
+		
+		if ([modelToken length] <= 0) {
+			return nil;
 		}
+		
+		modelToken = [modelToken lowercaseString];
+		
+		for (NSString *modelPrefix in modelPrefixes) {
+			if ([modelToken hasPrefix:modelPrefix]) {
+				cachedValue = modelPrefixes[modelPrefix];
+			}
+		}
+		
+		cachedValue = nil;
 	}
-
-	return nil;
+	
+	return cachedValue;
 }
 
 + (NSString *)retrieveSystemInformationKey:(NSString *)key
