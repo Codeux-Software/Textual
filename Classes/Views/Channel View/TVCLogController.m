@@ -1377,7 +1377,11 @@
 	} else {
 		templateTokens[@"textDirectionToken"] = @"ltr";
 	}
-
+	
+	// ---- //
+	
+	templateTokens[@"operatingSystemVersion"] = [CSFWSystemInformation systemStandardVersion];
+	
 	// ---- //
 
 	return [TVCLogRenderer renderTemplate:@"baseLayout" attributes:templateTokens];
