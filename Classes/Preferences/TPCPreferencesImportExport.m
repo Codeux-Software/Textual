@@ -256,31 +256,12 @@
 /* Conditional for matching whether we want a key in the exported dictionary. */
 + (BOOL)isKeyNameSupposedToBeIgnored:(NSString *)key
 {
-	if ([key hasPrefix:@"NS"] ||											/* Apple owned prefix. */
-		[key hasPrefix:@"SGT"] ||											/* Apple owned prefix. */
-		[key hasPrefix:@"Apple"] ||											/* Apple owned prefix. */
-		[key hasPrefix:@"WebKit"] ||										/* Apple owned prefix. */
-		[key hasPrefix:@"com.apple."] ||									/* Apple owned prefix. */
-		[key hasPrefix:@"DataDetectorsSettings"] ||							/* Apple owned prefix. */
-		
-		[key hasPrefix:@"HockeySDK"] ||										/* HockeyApp owned prefix. */
-
-		[key hasPrefix:@"TXRunCount"] ||									/* Textual owned prefix. */
-		[key hasPrefix:@"TXRunTime"] ||										/* Textual owned prefix. */
-
-		[key hasPrefix:@"System —>"] ||										/* Textual owned prefix. */
-		[key hasPrefix:@"Security ->"] ||									/* Textual owned prefix. */
-		[key hasPrefix:@"Window -> Main Window"] ||							/* Textual owned prefix. */
-		[key hasPrefix:@"Saved Window State —> Internal —> "] ||			/* Textual owned prefix. */
-		[key hasPrefix:@"Saved Window State —> Internal (v2) —> "] ||		/* Textual owned prefix. */
-		[key hasPrefix:@"Text Input Prompt Suppression -> "] ||				/* Textual owned prefix. */
-		[key hasPrefix:@"Textual Five Migration Tool ->"] ||					/* Textual owned prefix. */
-		[key hasPrefix:@"Internal Theme Settings Key-value Store -> "] ||		/* Textual owned prefix. */
+	if ([RZUserDefaults() keyIsExcludedFromGroupContainer:key] ||
 		
 		[key hasPrefix:@"File Transfers -> File Transfer Download Folder Bookmark"]		||		/* Textual owned prefix. */
 
 		[key hasPrefix:@"LogTranscriptDestinationSecurityBookmark"] ||				/* Textual owned prefix. */
-		
+
 		[key hasPrefix:TPCPreferencesThemeNameMissingLocallyDefaultsKey] ||			/* Textual owned prefix. */
 		[key hasPrefix:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey])		/* Textual owned prefix. */
 	{
