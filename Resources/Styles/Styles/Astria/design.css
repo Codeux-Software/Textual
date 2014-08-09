@@ -162,15 +162,18 @@ a:hover {
 }
 
 .inlineImageCell .closeButton {
-	background: #6B6B6B;
+	cursor: pointer;
 	border-radius: 5px;
-	border: 1px solid #2C2C2C;
-	color: #2C2C2C;
+	border: 2px solid #a1a1a1;
+	color: #a1a1a1;
 	display: inline-block;
-	width: 15px;
-	height: 17px;
+	line-height: 14px;
+	font-size: 15px;
+	font-family: "Helvetica Neue" !important;
+	text-indent: 7px;
+	width: 16px;
+	height: 16px;
 	float: left;
-	text-align: right;
 	padding-right: 7px;
 	padding-left: 0px;
 }

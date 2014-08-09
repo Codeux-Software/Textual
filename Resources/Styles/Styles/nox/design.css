@@ -211,14 +211,6 @@ body[dir=ltr] div[ltype=action] .sender:before {
 
 }
 
--body[dir=ltr] div[ltype=action] .sender:after {
-	content: "";
-  	/* margin-right: 0.4em; */
-}
-
-body[dir=rtl] div[ltype=action] .sender:after {
-	content: "";
-}
 
 /* Historic / Log readback */
 .historic {
@@ -329,7 +321,7 @@ body div.line[ltype=action] .message {
 }
 
 body div.line[ltype=action][highlight=true] .message {
-	color: #fff;
+	color: #fff !important;
 }
 
 /* DEBUG/INVITE */
@@ -417,6 +409,8 @@ body div.line[ltype=quit],
 body div.line[ltype=mode],
 body div.line[ltype=nick],
 body div.line[ltype=topic],
+body div.line[ltype=kill],
+body div.line[ltype=kick],
 body div.line[ltype=website] {
     font-size: 85%;
 	min-height: 19px;
@@ -432,14 +426,9 @@ body div.line[ltype=topic] span.message {
 body div.line[ltype=nick] {
 	color: #529567;
 }
-
 body div.line[ltype=kill],
 body div.line[ltype=kick] {
-    font-size: 85%;
-	min-height: 19px;
-	padding-left: 125px;
 	color: #ec5151;
-    background: #1d1d1d;
 }
 
 body[dir=ltr] div[ltype=join] .message:before {
