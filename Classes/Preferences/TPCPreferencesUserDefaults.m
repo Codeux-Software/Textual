@@ -331,7 +331,9 @@
 		[key hasPrefix:@"Saved Window State —> Internal (v2) —> "] ||		/* Textual owned prefix. */
 		[key hasPrefix:@"Text Input Prompt Suppression -> "] ||				/* Textual owned prefix. */
 		[key hasPrefix:@"Textual Five Migration Tool ->"] ||				/* Textual owned prefix. */
-		[key hasPrefix:@"Internal Theme Settings Key-value Store -> "])		/* Textual owned prefix. */
+		[key hasPrefix:@"Internal Theme Settings Key-value Store -> "] ||	/* Textual owned prefix. */
+		
+		[key hasPrefix:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"])		/* Textual owned prefix. */
 	{
 		return YES;
 	} else {
