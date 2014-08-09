@@ -309,6 +309,61 @@
 	[RZUserDefaultsValueProxy() didChangeValueForKey:defaultName];
 }
 
+- (BOOL)keyIsExcludedFromGroupContainer:(NSString *)key
+{
+	if ([key hasPrefix:@"NS"] ||											/* Apple owned prefix. */
+		[key hasPrefix:@"SGT"] ||											/* Apple owned prefix. */
+		[key hasPrefix:@"Apple"] ||											/* Apple owned prefix. */
+		[key hasPrefix:@"WebKit"] ||										/* Apple owned prefix. */
+		[key hasPrefix:@"com.apple."] ||									/* Apple owned prefix. */
+		[key hasPrefix:@"DataDetectorsSettings"] ||							/* Apple owned prefix. */
+		
+		[key hasPrefix:@"HockeySDK"] ||										/* HockeyApp owned prefix. */
+		
+		[key hasPrefix:@"TXRunCount"] ||									/* Textual owned prefix. */
+		[key hasPrefix:@"TXRunTime"] ||										/* Textual owned prefix. */
+		
+		[key hasPrefix:@"TextField"] ||										/* Textual owned prefix. */
+		[key hasPrefix:@"System —>"] ||										/* Textual owned prefix. */
+		[key hasPrefix:@"Security ->"] ||									/* Textual owned prefix. */
+		[key hasPrefix:@"Window -> Main Window"] ||							/* Textual owned prefix. */
+		[key hasPrefix:@"Saved Window State —> Internal —> "] ||			/* Textual owned prefix. */
+		[key hasPrefix:@"Saved Window State —> Internal (v2) —> "] ||		/* Textual owned prefix. */
+		[key hasPrefix:@"Text Input Prompt Suppression -> "] ||				/* Textual owned prefix. */
+		[key hasPrefix:@"Textual Five Migration Tool ->"] ||				/* Textual owned prefix. */
+		[key hasPrefix:@"Internal Theme Settings Key-value Store -> "])		/* Textual owned prefix. */
+	{
+		return YES;
+	} else {
+		return NO;
+	}
+}
+
+- (void)migrateValuesToGroupContainer
+{
+	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+		id usesGroupContainer = [_userDefaults objectForKey:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"];
+		
+		if (usesGroupContainer) { // make sure the key even exists (non-nil)
+			if ([usesGroupContainer boolValue] == NO) {
+				NSDictionary *localDictionary = [_userDefaults dictionaryRepresentation];
+				
+				for (NSString *dictKey in localDictionary) {
+					if ([self keyIsExcludedFromGroupContainer:dictKey] == NO) {
+						if ([_groupDefaults objectForKey:dictKey] == nil) {
+							[_groupDefaults setObject:localDictionary[dictKey] forKey:dictKey];
+						}
+					}
+				}
+			}
+		}
+		
+		[_userDefaults setBool:YES forKey:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"];
+	} else {
+		[_userDefaults setBool:NO forKey:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"];
+	}
+}
+
 @end
 
 #pragma mark -

@@ -833,6 +833,8 @@ static NSMutableArray *excludeKeywords = nil;
 	NSDictionary *groupDefaults = [NSDictionary dictionaryWithContentsOfFile:groupDefaultsPath];
 	NSDictionary *localDefaults = [NSDictionary dictionaryWithContentsOfFile:localDefaultsPath];
 
+	[RZUserDefaults() migrateValuesToGroupContainer];
+	
 	[RZUserDefaults() registerDefaultsForGroupContainer:groupDefaults];
 	[RZUserDefaults() registerDefaultsForApplicationContainer:localDefaults];
 

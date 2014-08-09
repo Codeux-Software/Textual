@@ -90,6 +90,10 @@
 
 - (void)registerDefaultsForApplicationContainer:(NSDictionary *)registrationDictionary;
 - (void)registerDefaultsForGroupContainer:(NSDictionary *)registrationDictionary;
+
+- (void)migrateValuesToGroupContainer;
+
+- (BOOL)keyIsExcludedFromGroupContainer:(NSString *)key;
 @end
 
 @interface TPCPreferencesUserDefaultsObjectProxy : NSObject
