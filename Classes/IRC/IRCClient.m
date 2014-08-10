@@ -550,6 +550,13 @@
 	}
 }
 
+- (void)willDestroyChannel:(IRCChannel *)channel
+{
+	if ([channel isPrivateMessageOwnedByZNC]) {
+		[self send:IRCPrivateCommandIndex("privmsg"), @"*znc", @"clearbuffer", [channel name], nil];
+	}
+}
+
 #pragma mark -
 #pragma mark Properties
 
