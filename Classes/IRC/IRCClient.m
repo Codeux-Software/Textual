@@ -2696,7 +2696,7 @@
 				}
 			}
 			
-			NSString *reason = [s getTokenAsString];
+			NSString *reason = [s trimmedString];
 			
 			if (NSObjectIsEmpty(reason)) {
 				reason = [TPCPreferences defaultKickMessage];
@@ -2909,7 +2909,7 @@
 					[self send:uppercaseCommand, nickname, [s string], nil];
 				} else {
 					if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("tempshun")]) {
-						NSString *reason = [s getTokenAsString];
+						NSString *reason = [s trimmedString];
 
 						if (NSObjectIsEmpty(reason)) {
 							reason = [TPCPreferences IRCopDefaultShunMessage];
