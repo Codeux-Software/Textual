@@ -38,7 +38,8 @@
 
 #import "TextualApplication.h"
 
-#define NSDictionaryNilValue(s)				(((s) == nil) ? [NSNull null] : (s))
+#define NSDictionaryNilValue(s)							(((s) == nil) ? [NSNull null] : (s))
+#define NSDictionaryNilValueSubstitue(s, r)				(((s) == nil) ? (r) : (s))
 
 @interface NSDictionary (TXDictionaryHelper)
 - (NSString *)stringForKey:(NSString *)key;
