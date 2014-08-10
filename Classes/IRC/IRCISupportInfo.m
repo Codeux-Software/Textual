@@ -81,7 +81,7 @@
 		@"v" : @(_channelUserModeValue)
 	};
 	
-	self.privateMessageNicknamePrefix = @"*";
+	self.privateMessageNicknamePrefix = nil;
 }
 
 - (void)update:(NSString *)configData client:(IRCClient *)client
