@@ -154,7 +154,7 @@
 					[c setEncryptionKey:messageString];
 				}
 			} else if ([commandString isEqualToString:@"DELKEY"]) {
-				[c setEncryptionKey:nil];
+				[c setEncryptionKey:NSStringEmptyPlaceholder];
 				
 				[client printDebugInformation:BLS(1004) channel:c];
 			} else if ([commandString isEqualToString:@"KEY"]) {
