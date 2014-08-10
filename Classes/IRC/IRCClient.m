@@ -552,8 +552,8 @@
 
 - (void)willDestroyChannel:(IRCChannel *)channel
 {
-	if ([channel isPrivateMessageOwnedByZNC]) {
-		[self send:IRCPrivateCommandIndex("privmsg"), @"*znc", @"clearbuffer", [channel name], nil];
+	if ([channel isPrivateMessageOwnedByZNC] == NO) {
+		[self send:IRCPrivateCommandIndex("privmsg"), [self nicknameWithZNCUserPrefix:@"status"], @"clearbuffer", [channel name], nil];
 	}
 }
 
@@ -1368,6 +1368,17 @@
 
 #pragma mark -
 #pragma mark ZNC Bouncer Accessories
+
+- (NSString *)nicknameWithZNCUserPrefix:(NSString *)nickname
+{
+	NSString *prefix = [[self supportInfo] privateMessageNicknamePrefix];
+	
+	if (prefix == nil) {
+		return [@"*" stringByAppendingString:nickname];
+	} else {
+		return [prefix stringByAppendingString:nickname];
+	}
+}
 
 - (BOOL)isSafeToPostNotificationForMessage:(IRCMessage *)m inChannel:(IRCChannel *)channel
 {
@@ -5706,11 +5717,11 @@
 		NSTimeInterval interval = [self lastMessageServerTimeWithCachedValue];
 		
 		if (interval == 0) {
-			[self send:IRCPrivateCommandIndex("privmsg"), @"*playback", @"play", @"*", @"0", nil];
+			[self send:IRCPrivateCommandIndex("privmsg"), [self nicknameWithZNCUserPrefix:@"playback"], @"play", @"*", @"0", nil];
 		} else {
 			NSString *timetosend = [NSString stringWithFormat:@"%.0f", interval];
 			
-			[self send:IRCPrivateCommandIndex("privmsg"), @"*playback", @"play", @"*", timetosend, nil];
+			[self send:IRCPrivateCommandIndex("privmsg"), [self nicknameWithZNCUserPrefix:@"playback"], @"play", @"*", timetosend, nil];
 		}
 	}
 
