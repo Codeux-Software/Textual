@@ -50,7 +50,7 @@
 @property (nonatomic, copy) NSString *networkNameActual;
 @property (nonatomic, copy) NSDictionary *userModePrefixes;
 @property (nonatomic, copy) NSArray *cachedConfiguration;
-@property (nonatomic, copy) NSString *privateMessageNicknamePrefix; // Defaults to *
+@property (nonatomic, copy) NSString *privateMessageNicknamePrefix;
 
 - (void)reset;
 
