@@ -41,20 +41,12 @@
 
 + (NSString *)encodeData:(NSData *)input
 {
-	if ([NSData instancesRespondToSelector:@selector(base64EncodedStringWithOptions:)]) {
-		return [input base64EncodedStringWithOptions:0];
-	} else {
-		return [input base64Encoding];
-	}
+	return [input base64EncodedStringWithOptions:0];
 }
 
 + (NSData *)decodeData:(NSString *)input
 {
-	if ([NSData instancesRespondToSelector:@selector(initWithBase64EncodedString:options:)]) {
-		return [[NSData alloc] initWithBase64EncodedString:input options:NSDataBase64DecodingIgnoreUnknownCharacters];
-	} else {
-		return [[NSData alloc] initWithBase64Encoding:input];
-	}
+	return [[NSData alloc] initWithBase64EncodedString:input options:NSDataBase64DecodingIgnoreUnknownCharacters];
 }
 
 @end

@@ -689,7 +689,7 @@
 			
 			NSDate *lastChangeDate = [item valueForAttribute:NSMetadataItemFSContentChangeDateKey];
 			
-			NSNumber *isDownloaded = [item valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey];
+			NSNumber *isDownloaded = [item valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusKey];
 			
 			/* ========================================================== */
 			
