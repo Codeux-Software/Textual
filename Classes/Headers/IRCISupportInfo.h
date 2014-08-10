@@ -50,7 +50,7 @@
 @property (nonatomic, copy) NSString *networkNameActual;
 @property (nonatomic, copy) NSDictionary *userModePrefixes;
 @property (nonatomic, copy) NSArray *cachedConfiguration;
-@property (nonatomic, copy) NSString *zncPrivateMessageNicknamePrefix; // Nickname prefix for private queries related to the ZNC bouncer (defaults to *)
+@property (nonatomic, copy) NSString *privateMessageNicknamePrefix; // Defaults to *
 
 - (void)reset;
 

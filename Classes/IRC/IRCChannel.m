@@ -185,11 +185,13 @@
 
 - (BOOL)isPrivateMessageOwnedByZNC
 {
-	if (self.config.type == IRCChannelPrivateMessageType) {
-		if (self.associatedClient.isZNCBouncerConnection) {
-			IRCISupportInfo *supportInfo = self.associatedClient.supportInfo;
+	if ([self isPrivateMessage]) {
+		IRCClient *u = [self associatedClient];
+
+		if ([u isZNCBouncerConnection]) {
+			IRCISupportInfo *supportInfo = [u supportInfo];
 			
-			if ([self.name hasPrefix:supportInfo.zncPrivateMessageNicknamePrefix]) {
+			if ([[self name] hasPrefix:[supportInfo privateMessageNicknamePrefix]]) {
 				return YES;
 			}
 		}
