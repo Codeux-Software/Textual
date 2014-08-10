@@ -3173,8 +3173,8 @@
 							@"path"				: scriptPath,
 							@"input"			: uncutInput,
 							@"completeTarget"	: @(completeTarget),
-							@"channel"			: NSDictionaryNilValue([selChannel name]),
-							@"target"			: NSDictionaryNilValue(targetChannelName)
+							@"channel"			: NSDictionaryNilValueSubstitue([selChannel name], NSStringEmptyPlaceholder),
+							@"target"			: NSDictionaryNilValueSubstitue(targetChannelName, NSStringEmptyPlaceholder)
 						};
 						
 						[self executeTextualCmdScript:inputInfo];

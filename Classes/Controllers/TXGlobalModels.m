@@ -55,6 +55,11 @@ BOOL NSObjectIsEmpty(id obj)
 		return ((NSInteger)objc_msgSend(obj, @selector(count)) < 1);
 	}
 	
+	/* Check for singleton. */
+	if ([obj isKindOfClass:[NSNull class]]) {
+		return YES;
+	}
+	
 	/* Check everything else. */
 	return (obj == nil || obj == NULL);
 }
