@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4C1DC5511580420500A47BC9"
+               BlueprintIdentifier = "4CDFA4061996EAB2007EA46E"
                BuildableName = "Textual 5.app"
-               BlueprintName = "Textual"
+               BlueprintName = "Textual (Trial)"
                ReferencedContainer = "container:Main Project (Textual).xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4C1DC5511580420500A47BC9"
+            BlueprintIdentifier = "4CDFA4061996EAB2007EA46E"
             BuildableName = "Textual 5.app"
-            BlueprintName = "Textual"
+            BlueprintName = "Textual (Trial)"
             ReferencedContainer = "container:Main Project (Textual).xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -51,9 +51,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4C1DC5511580420500A47BC9"
+            BlueprintIdentifier = "4CDFA4061996EAB2007EA46E"
             BuildableName = "Textual 5.app"
-            BlueprintName = "Textual"
+            BlueprintName = "Textual (Trial)"
             ReferencedContainer = "container:Main Project (Textual).xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -69,9 +69,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4C1DC5511580420500A47BC9"
+            BlueprintIdentifier = "4CDFA4061996EAB2007EA46E"
             BuildableName = "Textual 5.app"
-            BlueprintName = "Textual"
+            BlueprintName = "Textual (Trial)"
             ReferencedContainer = "container:Main Project (Textual).xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -81,6 +81,6 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release (Trial)"
-      revealArchiveInOrganizer = "NO">
+      revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
