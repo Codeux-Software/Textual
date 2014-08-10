@@ -191,12 +191,8 @@
 		if ([u isZNCBouncerConnection]) {
 			IRCISupportInfo *supportInfo = [u supportInfo];
 			
-			NSString *prefix = [supportInfo privateMessageNicknamePrefix];
-			
-			if (prefix) {
-				if ([[self name] hasPrefix:prefix]) {
-					return YES;
-				}
+			if ([[self name] hasPrefix:[supportInfo privateMessageNicknamePrefix]]) {
+				return YES;
 			}
 		}
 	}

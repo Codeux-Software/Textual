@@ -552,8 +552,12 @@
 
 - (void)willDestroyChannel:(IRCChannel *)channel
 {
-	if ([channel isPrivateMessageOwnedByZNC] == NO) {
-		[self send:IRCPrivateCommandIndex("privmsg"), [self nicknameWithZNCUserPrefix:@"status"], @"clearbuffer", [channel name], nil];
+	NSString *prefix = [[self supportInfo] privateMessageNicknamePrefix];
+	
+	if (prefix) {
+		if ([channel isPrivateMessageOwnedByZNC] == NO) {
+			[self send:IRCPrivateCommandIndex("privmsg"), [self nicknameWithZNCUserPrefix:@"status"], @"clearbuffer", [channel name], nil];
+		}
 	}
 }
 
