@@ -80,8 +80,9 @@
 		@"o" : @(_channelUserModeValue),
 		@"v" : @(_channelUserModeValue)
 	};
+	
+	self.zncPrivateMessageNicknamePrefix = @"*";
 }
-
 
 - (void)update:(NSString *)configData client:(IRCClient *)client
 {

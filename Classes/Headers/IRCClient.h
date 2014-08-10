@@ -159,6 +159,8 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 
 - (void)closeDialogs;
 
+- (void)willDestroyChannel:(IRCChannel *)channel; // Callback for IRCWorld
+
 @property (readonly, copy) NSString *uniqueIdentifier;
 
 @property (readonly, copy) NSString *networkName; // Only returns the actual network name or nil.

@@ -760,11 +760,15 @@
 {
 	IRCClient *u = [c associatedClient];
 	
-	if ([c isChannel] && forcePart) {
-		if ([u isLoggedIn] && [c isActive]) {
-			[u partChannel:c];
+	if ([u isLoggedIn] && [c isActive]) {
+		if ([c isChannel]) {
+			if (forcePart) {
+				[u partChannel:c];
+			}
 		}
 	}
+	
+	[u willDestroyChannel:c];
     
 	[c prepareForPermanentDestruction];
 	

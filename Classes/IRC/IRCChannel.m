@@ -183,6 +183,21 @@
 	return (self.config.type == IRCChannelPrivateMessageType);
 }
 
+- (BOOL)isPrivateMessageOwnedByZNC
+{
+	if (self.config.type == IRCChannelPrivateMessageType) {
+		if (self.associatedClient.isZNCBouncerConnection) {
+			IRCISupportInfo *supportInfo = self.associatedClient.supportInfo;
+			
+			if ([self.name hasPrefix:supportInfo.zncPrivateMessageNicknamePrefix]) {
+				return YES;
+			}
+		}
+	}
+	
+	return NO;
+}
+
 - (NSString *)channelTypeString
 {
 	if (self.config.type == IRCChannelPrivateMessageType) {

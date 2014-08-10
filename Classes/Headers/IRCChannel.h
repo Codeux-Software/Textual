@@ -71,6 +71,7 @@ typedef enum IRCChannelStatus : NSInteger {
 
 @property (getter=isChannel, readonly) BOOL channel;
 @property (getter=isPrivateMessage, readonly) BOOL privateMessage;
+@property (getter=isPrivateMessageOwnedByZNC, readonly) BOOL privateMessageOwnedByZNC; // For example: *status, *nickserv, etc.
 
 @property (readonly, copy) NSString *channelTypeString;
 
