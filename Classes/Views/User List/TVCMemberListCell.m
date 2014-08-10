@@ -738,7 +738,11 @@
 
 - (CALayer *)makeBackingLayer
 {
-	return [TVCMemberListCellMavericksTextFieldBackingLayer layer];
+	id newLayer = [TVCMemberListCellMavericksTextFieldBackingLayer layer];
+	
+	[newLayer setContentsScale:[[mainWindow() screen] backingScaleFactor]];
+
+	return newLayer;
 }
 
 @end
@@ -747,8 +751,11 @@
 
 - (void)drawInContext:(CGContextRef)ctx
 {
+	[self setContentsScale:[[mainWindow() screen] backingScaleFactor]];
+
 	CGContextSetShouldAntialias(ctx, true);
 	CGContextSetShouldSmoothFonts(ctx, true);
+	CGContextSetShouldSubpixelPositionFonts(ctx, true);
 	
 	[super drawInContext:ctx];
 }
