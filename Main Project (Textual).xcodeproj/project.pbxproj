@@ -1833,53 +1833,29 @@
 		4CDFA5F31996EB81007EA46E /* SystemInformation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C78926716C6259D0081E859 /* SystemInformation.framework */; };
 		4CDFA5F41996EB81007EA46E /* TCMPortMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; };
 		4CDFA6141996EC78007EA46E /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425516C5AF730005A59E /* AutoHyperlinks.framework */; };
-		4CDFA6151996EC78007EA46E /* AutoHyperlinks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425516C5AF730005A59E /* AutoHyperlinks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA6161996EC78007EA46E /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425616C5AF730005A59E /* BlowfishEncryption.framework */; };
-		4CDFA6171996EC78007EA46E /* BlowfishEncryption.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425616C5AF730005A59E /* BlowfishEncryption.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA6181996EC78007EA46E /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
-		4CDFA6191996EC78007EA46E /* Growl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA61A1996EC78007EA46E /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
-		4CDFA61B1996EC78007EA46E /* HockeySDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA61C1996EC78007EA46E /* SystemInformation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C78926716C6259D0081E859 /* SystemInformation.framework */; };
-		4CDFA61D1996EC78007EA46E /* SystemInformation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C78926716C6259D0081E859 /* SystemInformation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA61E1996EC78007EA46E /* TCMPortMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; };
-		4CDFA61F1996EC78007EA46E /* TCMPortMapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA6301996ECB3007EA46E /* TCMPortMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; };
-		4CDFA6311996ECB3007EA46E /* TCMPortMapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA6331996ECB5007EA46E /* SystemInformation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C78926716C6259D0081E859 /* SystemInformation.framework */; };
-		4CDFA6341996ECB5007EA46E /* SystemInformation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C78926716C6259D0081E859 /* SystemInformation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA6351996ECB8007EA46E /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
-		4CDFA6361996ECB8007EA46E /* HockeySDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA6371996ECBC007EA46E /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
-		4CDFA6381996ECBC007EA46E /* Growl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA6391996ECC0007EA46E /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425616C5AF730005A59E /* BlowfishEncryption.framework */; };
-		4CDFA63A1996ECC0007EA46E /* BlowfishEncryption.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425616C5AF730005A59E /* BlowfishEncryption.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA63B1996ECC3007EA46E /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425516C5AF730005A59E /* AutoHyperlinks.framework */; };
-		4CDFA63C1996ECC3007EA46E /* AutoHyperlinks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425516C5AF730005A59E /* AutoHyperlinks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA64A1996ECF1007EA46E /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425516C5AF730005A59E /* AutoHyperlinks.framework */; };
-		4CDFA64B1996ECF1007EA46E /* AutoHyperlinks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425516C5AF730005A59E /* AutoHyperlinks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA64C1996ECF1007EA46E /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425616C5AF730005A59E /* BlowfishEncryption.framework */; };
-		4CDFA64D1996ECF1007EA46E /* BlowfishEncryption.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425616C5AF730005A59E /* BlowfishEncryption.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA64E1996ECF1007EA46E /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
-		4CDFA64F1996ECF1007EA46E /* Growl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA6501996ECF1007EA46E /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
-		4CDFA6511996ECF1007EA46E /* HockeySDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA6521996ECF1007EA46E /* SystemInformation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C78926716C6259D0081E859 /* SystemInformation.framework */; };
-		4CDFA6531996ECF1007EA46E /* SystemInformation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C78926716C6259D0081E859 /* SystemInformation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA6541996ECF1007EA46E /* TCMPortMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; };
-		4CDFA6551996ECF1007EA46E /* TCMPortMapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA6571996ED01007EA46E /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425516C5AF730005A59E /* AutoHyperlinks.framework */; };
-		4CDFA6581996ED01007EA46E /* AutoHyperlinks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425516C5AF730005A59E /* AutoHyperlinks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA6591996ED01007EA46E /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425616C5AF730005A59E /* BlowfishEncryption.framework */; };
-		4CDFA65A1996ED01007EA46E /* BlowfishEncryption.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425616C5AF730005A59E /* BlowfishEncryption.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA65B1996ED01007EA46E /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
-		4CDFA65C1996ED01007EA46E /* Growl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA65D1996ED01007EA46E /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
-		4CDFA65E1996ED01007EA46E /* HockeySDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA65F1996ED01007EA46E /* SystemInformation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C78926716C6259D0081E859 /* SystemInformation.framework */; };
-		4CDFA6601996ED01007EA46E /* SystemInformation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C78926716C6259D0081E859 /* SystemInformation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CDFA6611996ED01007EA46E /* TCMPortMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; };
-		4CDFA6621996ED01007EA46E /* TCMPortMapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CE204F0196989FB00D7E220 /* TPCPreferencesUserDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE204EF196989FB00D7E220 /* TPCPreferencesUserDefaults.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CE204F1196989FB00D7E220 /* TPCPreferencesUserDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE204EF196989FB00D7E220 /* TPCPreferencesUserDefaults.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CE4B7761968B7E3003CBF67 /* liveresize.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CE4B7731968B7D3003CBF67 /* liveresize.js */; };
@@ -1890,6 +1866,30 @@
 		4CEA09C41875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */; };
 		4CEA09C51875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */; };
 		4CEA09C61875A734005D6184 /* TDCFileTransferDialogRemoteAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CEE7B8E1997D17300EE302B /* AutoHyperlinks.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C68425516C5AF730005A59E /* AutoHyperlinks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7B8F1997D17300EE302B /* BlowfishEncryption.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C68425616C5AF730005A59E /* BlowfishEncryption.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7B901997D17300EE302B /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7B911997D17300EE302B /* HockeySDK.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7B921997D17300EE302B /* SystemInformation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C78926716C6259D0081E859 /* SystemInformation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7B931997D17300EE302B /* TCMPortMapper.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7B961997D19700EE302B /* AutoHyperlinks.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C68425516C5AF730005A59E /* AutoHyperlinks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7B971997D19700EE302B /* BlowfishEncryption.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C68425616C5AF730005A59E /* BlowfishEncryption.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7B981997D19700EE302B /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7B991997D19700EE302B /* HockeySDK.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7B9A1997D19700EE302B /* SystemInformation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C78926716C6259D0081E859 /* SystemInformation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7B9B1997D19700EE302B /* TCMPortMapper.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7B9D1997D1A700EE302B /* AutoHyperlinks.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C68425516C5AF730005A59E /* AutoHyperlinks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7B9E1997D1A700EE302B /* BlowfishEncryption.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C68425616C5AF730005A59E /* BlowfishEncryption.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7B9F1997D1A700EE302B /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7BA01997D1A700EE302B /* HockeySDK.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7BA11997D1A700EE302B /* SystemInformation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C78926716C6259D0081E859 /* SystemInformation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7BA21997D1A700EE302B /* TCMPortMapper.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7BA41997D1B700EE302B /* AutoHyperlinks.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C68425516C5AF730005A59E /* AutoHyperlinks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7BA51997D1B700EE302B /* BlowfishEncryption.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C68425616C5AF730005A59E /* BlowfishEncryption.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7BA61997D1B700EE302B /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7BA71997D1B700EE302B /* HockeySDK.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7BA81997D1B700EE302B /* SystemInformation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C78926716C6259D0081E859 /* SystemInformation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4CEE7BA91997D1B700EE302B /* TCMPortMapper.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CF09D1A195D4AAF00A29486 /* IRCWorldCloudExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF09D19195D4AAF00A29486 /* IRCWorldCloudExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CF09D1B195D4AAF00A29486 /* IRCWorldCloudExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF09D19195D4AAF00A29486 /* IRCWorldCloudExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC11580469E00846B64 /* SystemConfiguration.framework */; };
@@ -2165,68 +2165,64 @@
 			name = "Copy Acknowledgements";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4CDFA6201996EC78007EA46E /* Embed Frameworks */ = {
+		4CEE7B8D1997D16700EE302B /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4CDFA61D1996EC78007EA46E /* SystemInformation.framework in Embed Frameworks */,
-				4CDFA61B1996EC78007EA46E /* HockeySDK.framework in Embed Frameworks */,
-				4CDFA6151996EC78007EA46E /* AutoHyperlinks.framework in Embed Frameworks */,
-				4CDFA6171996EC78007EA46E /* BlowfishEncryption.framework in Embed Frameworks */,
-				4CDFA6191996EC78007EA46E /* Growl.framework in Embed Frameworks */,
-				4CDFA61F1996EC78007EA46E /* TCMPortMapper.framework in Embed Frameworks */,
+				4CEE7B8E1997D17300EE302B /* AutoHyperlinks.framework in CopyFiles */,
+				4CEE7B8F1997D17300EE302B /* BlowfishEncryption.framework in CopyFiles */,
+				4CEE7B901997D17300EE302B /* Growl.framework in CopyFiles */,
+				4CEE7B911997D17300EE302B /* HockeySDK.framework in CopyFiles */,
+				4CEE7B921997D17300EE302B /* SystemInformation.framework in CopyFiles */,
+				4CEE7B931997D17300EE302B /* TCMPortMapper.framework in CopyFiles */,
 			);
-			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4CDFA6321996ECB3007EA46E /* Embed Frameworks */ = {
+		4CEE7B951997D18F00EE302B /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4CDFA63A1996ECC0007EA46E /* BlowfishEncryption.framework in Embed Frameworks */,
-				4CDFA6341996ECB5007EA46E /* SystemInformation.framework in Embed Frameworks */,
-				4CDFA6311996ECB3007EA46E /* TCMPortMapper.framework in Embed Frameworks */,
-				4CDFA6381996ECBC007EA46E /* Growl.framework in Embed Frameworks */,
-				4CDFA63C1996ECC3007EA46E /* AutoHyperlinks.framework in Embed Frameworks */,
-				4CDFA6361996ECB8007EA46E /* HockeySDK.framework in Embed Frameworks */,
+				4CEE7B961997D19700EE302B /* AutoHyperlinks.framework in CopyFiles */,
+				4CEE7B971997D19700EE302B /* BlowfishEncryption.framework in CopyFiles */,
+				4CEE7B981997D19700EE302B /* Growl.framework in CopyFiles */,
+				4CEE7B991997D19700EE302B /* HockeySDK.framework in CopyFiles */,
+				4CEE7B9A1997D19700EE302B /* SystemInformation.framework in CopyFiles */,
+				4CEE7B9B1997D19700EE302B /* TCMPortMapper.framework in CopyFiles */,
 			);
-			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4CDFA6561996ECF1007EA46E /* Embed Frameworks */ = {
+		4CEE7B9C1997D1A100EE302B /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4CDFA6531996ECF1007EA46E /* SystemInformation.framework in Embed Frameworks */,
-				4CDFA6511996ECF1007EA46E /* HockeySDK.framework in Embed Frameworks */,
-				4CDFA64B1996ECF1007EA46E /* AutoHyperlinks.framework in Embed Frameworks */,
-				4CDFA64D1996ECF1007EA46E /* BlowfishEncryption.framework in Embed Frameworks */,
-				4CDFA64F1996ECF1007EA46E /* Growl.framework in Embed Frameworks */,
-				4CDFA6551996ECF1007EA46E /* TCMPortMapper.framework in Embed Frameworks */,
+				4CEE7B9D1997D1A700EE302B /* AutoHyperlinks.framework in CopyFiles */,
+				4CEE7B9E1997D1A700EE302B /* BlowfishEncryption.framework in CopyFiles */,
+				4CEE7B9F1997D1A700EE302B /* Growl.framework in CopyFiles */,
+				4CEE7BA01997D1A700EE302B /* HockeySDK.framework in CopyFiles */,
+				4CEE7BA11997D1A700EE302B /* SystemInformation.framework in CopyFiles */,
+				4CEE7BA21997D1A700EE302B /* TCMPortMapper.framework in CopyFiles */,
 			);
-			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4CDFA6631996ED01007EA46E /* Embed Frameworks */ = {
+		4CEE7BA31997D1B000EE302B /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4CDFA6601996ED01007EA46E /* SystemInformation.framework in Embed Frameworks */,
-				4CDFA65E1996ED01007EA46E /* HockeySDK.framework in Embed Frameworks */,
-				4CDFA6581996ED01007EA46E /* AutoHyperlinks.framework in Embed Frameworks */,
-				4CDFA65A1996ED01007EA46E /* BlowfishEncryption.framework in Embed Frameworks */,
-				4CDFA65C1996ED01007EA46E /* Growl.framework in Embed Frameworks */,
-				4CDFA6621996ED01007EA46E /* TCMPortMapper.framework in Embed Frameworks */,
+				4CEE7BA41997D1B700EE302B /* AutoHyperlinks.framework in CopyFiles */,
+				4CEE7BA51997D1B700EE302B /* BlowfishEncryption.framework in CopyFiles */,
+				4CEE7BA61997D1B700EE302B /* Growl.framework in CopyFiles */,
+				4CEE7BA71997D1B700EE302B /* HockeySDK.framework in CopyFiles */,
+				4CEE7BA81997D1B700EE302B /* SystemInformation.framework in CopyFiles */,
+				4CEE7BA91997D1B700EE302B /* TCMPortMapper.framework in CopyFiles */,
 			);
-			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -4690,6 +4686,7 @@
 			buildConfigurationList = 4C0BA6D41990798800857343 /* Build configuration list for PBXNativeTarget "Textual (App Store)" */;
 			buildPhases = (
 				4C0BA4FF1990798800857343 /* Resources */,
+				4CEE7B9C1997D1A100EE302B /* CopyFiles */,
 				4C0BA5701990798800857343 /* Copy JavaScript Files */,
 				4C0BA57A1990798800857343 /* Headers */,
 				4C0BA6221990798800857343 /* Frameworks */,
@@ -4697,7 +4694,6 @@
 				4C0BA6CA1990798800857343 /* Build Extensions */,
 				4C0BA6CB1990798800857343 /* Copy Extensions */,
 				4C0BA6D21990798800857343 /* Copy Acknowledgements */,
-				4CDFA6631996ED01007EA46E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -4716,6 +4712,7 @@
 			buildConfigurationList = 4C1DC5701580420500A47BC9 /* Build configuration list for PBXNativeTarget "Textual (Standard Release)" */;
 			buildPhases = (
 				4C1DC5501580420500A47BC9 /* Resources */,
+				4CEE7B8D1997D16700EE302B /* CopyFiles */,
 				4CCF2F9815804BB9006FFE21 /* Copy JavaScript Files */,
 				4CCF2F9E15804C18006FFE21 /* Headers */,
 				4C1DC54F1580420500A47BC9 /* Frameworks */,
@@ -4723,7 +4720,6 @@
 				4C01BA101581104D007E2DAF /* Build Extensions */,
 				4C52AED515811C2000940619 /* Copy Extensions */,
 				4C9E534415B4C171000E84A9 /* Copy Acknowledgements */,
-				4CDFA6201996EC78007EA46E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -4742,12 +4738,12 @@
 			buildConfigurationList = 4C5BA4E116F1302F00A96CA2 /* Build configuration list for PBXNativeTarget "Textual (Debug)" */;
 			buildPhases = (
 				4C5BA37916F1302F00A96CA2 /* Resources */,
+				4CEE7B951997D18F00EE302B /* CopyFiles */,
 				4C5BA3D216F1302F00A96CA2 /* Copy JavaScript Files */,
 				4C5BA3D916F1302F00A96CA2 /* Headers */,
 				4C5BA45716F1302F00A96CA2 /* Frameworks */,
 				4C0444F316F1602900EBB665 /* Sources */,
 				4C5BA4DC16F1302F00A96CA2 /* Copy Acknowledgements */,
-				4CDFA6561996ECF1007EA46E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -4764,6 +4760,7 @@
 			buildConfigurationList = 4CDFA5E81996EAB2007EA46E /* Build configuration list for PBXNativeTarget "Textual (Trial)" */;
 			buildPhases = (
 				4CDFA40D1996EAB2007EA46E /* Resources */,
+				4CEE7BA31997D1B000EE302B /* CopyFiles */,
 				4CDFA47E1996EAB2007EA46E /* Copy JavaScript Files */,
 				4CDFA4891996EAB2007EA46E /* Headers */,
 				4CDFA5331996EAB2007EA46E /* Frameworks */,
@@ -4771,7 +4768,6 @@
 				4CDFA5DE1996EAB2007EA46E /* Build Extensions */,
 				4CDFA5DF1996EAB2007EA46E /* Copy Extensions */,
 				4CDFA5E61996EAB2007EA46E /* Copy Acknowledgements */,
-				4CDFA6321996ECB3007EA46E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -6424,13 +6420,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/.tmp/SharedBuildProducts",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 			};
 			name = Debug;
 		};
@@ -6438,13 +6428,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/.tmp/SharedBuildProducts",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 			};
 			name = Release;
 		};
@@ -6452,13 +6436,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/.tmp/SharedBuildProducts",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 			};
 			name = "Release (Trial)";
 		};
@@ -6466,13 +6444,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/.tmp/SharedBuildProducts",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 			};
 			name = "Release (App Store)";
 		};
@@ -6512,13 +6484,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-					"$(PROJECT_DIR)/.tmp/SharedBuildProducts",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 			};
 			name = Debug;
 		};
@@ -6526,13 +6492,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-					"$(PROJECT_DIR)/.tmp/SharedBuildProducts",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 			};
 			name = Release;
 		};
@@ -6540,13 +6500,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/.tmp/SharedBuildProducts",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 			};
 			name = Debug;
 		};
@@ -6554,13 +6508,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/.tmp/SharedBuildProducts",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 			};
 			name = Release;
 		};
@@ -6568,13 +6516,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/.tmp/SharedBuildProducts",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 			};
 			name = "Release (App Store)";
 		};
@@ -6598,13 +6540,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-					"$(PROJECT_DIR)/.tmp/SharedBuildProducts",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 			};
 			name = "Release (Trial)";
 		};
@@ -6612,13 +6548,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/.tmp/SharedBuildProducts",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 			};
 			name = "Release (Trial)";
 		};
@@ -6670,13 +6600,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-					"$(PROJECT_DIR)/.tmp/SharedBuildProducts",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 			};
 			name = "Release (App Store)";
 		};
@@ -6708,13 +6632,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/.tmp/SharedBuildProducts",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 			};
 			name = Debug;
 		};
@@ -6722,13 +6640,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/.tmp/SharedBuildProducts",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 			};
 			name = Release;
 		};
@@ -6736,13 +6648,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/.tmp/SharedBuildProducts",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 			};
 			name = "Release (Trial)";
 		};
@@ -6750,13 +6656,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/.tmp/SharedBuildProducts",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 			};
 			name = "Release (App Store)";
 		};
