@@ -101,6 +101,14 @@
 				
 				for (IRCUser *m in [ch sortedByChannelRankMemberList]) {
 					if ([m isEqual:myself]) {
+						if ([c hasIRCopAccess] == NO) {
+							if ([m isCop]) {
+								[c setHasIRCopAccess:YES];
+							
+								operCount++;
+							}
+						}
+
 						continue;
 					}
 				
