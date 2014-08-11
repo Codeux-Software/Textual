@@ -125,6 +125,8 @@
 				self.networkName = BLS(1151, value);
 			} else if ([vakey isEqualIgnoringCase:@"CHANTYPES"]) {
 				self.channelNamePrefixes = value;
+			} else if ([vakey isEqualIgnoringCase:@"ZNCPREFIX"]) {
+				self.privateMessageNicknamePrefix = value;
 			}
 		}
 
