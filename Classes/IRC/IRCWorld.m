@@ -81,7 +81,7 @@
 
 - (void)setupOtherServices
 {
-	[RZNotificationCenter() addObserver:self selector:@selector(userDefaultsDidChange:) name:NSUserDefaultsDidChangeNotification object:nil];
+	[RZNotificationCenter() addObserver:self selector:@selector(userDefaultsDidChange:) name:TPCPreferencesUserDefaultsDidChangeNotification object:nil];
 }
 
 - (NSMutableDictionary *)dictionaryValue
@@ -104,10 +104,6 @@
 - (void)save
 {
 	[TPCPreferences saveWorld:[self dictionaryValue]];
-	
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	[sharedCloudManager() synchronizeToCloud];
-#endif
 }
 
 - (void)prepareForApplicationTermination

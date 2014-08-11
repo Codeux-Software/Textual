@@ -397,6 +397,8 @@
 	}
 	
 	[self didChangeValueForKey:key];
+	
+	[RZNotificationCenter() postNotificationName:TPCPreferencesUserDefaultsDidChangeNotification object:self userInfo:@{@"changedKey" : key}];
 }
 
 @end

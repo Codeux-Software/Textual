@@ -49,6 +49,9 @@
  Certain state information such as saved frames should be saved there. */
 #define RZStandardUserDefualts()				[NSUserDefaults standardUserDefaults]
 
+/* The user info dictionary of this notification contains the changed key. */
+#define TPCPreferencesUserDefaultsDidChangeNotification			@"TPCPreferencesUserDefaultsDidChangeNotification"
+
 @interface TPCPreferencesUserDefaults : NSUserDefaults
 /* Our reading object will read from our own application container
  and the shared group container defined for Textual. */
