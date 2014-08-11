@@ -8026,8 +8026,6 @@
 			
 			NSString *secretKey = c.config.secretKey;
 
-			[c setStatus:IRCChannelStatusJoining];
-
 			if (secretKey) {
 				if (passKeys == NO) {
 					continue;
@@ -8049,6 +8047,8 @@
 			}
 
 			[channelList appendString:[c name]];
+			
+			[c setStatus:IRCChannelStatusJoining];
 
 			if (channelCount > [TPCPreferences autojoinMaxChannelJoins]) {
 				/* Send previous lists. */
