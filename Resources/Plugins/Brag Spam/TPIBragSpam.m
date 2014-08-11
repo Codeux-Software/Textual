@@ -91,6 +91,14 @@
 				
 				IRCUser *myself = [ch findMember:[c localNickname]];
 				
+				if ([c hasIRCopAccess] == NO) {
+					if ([myself isCop]) {
+						[c setHasIRCopAccess:YES];
+						
+						operCount++;
+					}
+				}
+				
 				if ([myself q] || [myself a] || [myself o]) {
 					chanOpCount++;
 				} else if ([myself h]) {
@@ -101,14 +109,6 @@
 				
 				for (IRCUser *m in [ch sortedByChannelRankMemberList]) {
 					if ([m isEqual:myself]) {
-						if ([c hasIRCopAccess] == NO) {
-							if ([m isCop]) {
-								[c setHasIRCopAccess:YES];
-							
-								operCount++;
-							}
-						}
-
 						continue;
 					}
 				
