@@ -2569,7 +2569,7 @@
 		
 		[u setChannelList:channels];
 		
-		[u updateConfig:[u copyOfStoredConfig] fromTheCloud:NO withSelectionUpdate:NO];
+		[u updateConfig:[u copyOfStoredConfig] withSelectionUpdate:NO];
 		
 		// Reload actual views.
 		[serverList reloadItem:u reloadChildren:YES];
