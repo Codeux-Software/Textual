@@ -61,6 +61,13 @@
 	return dict;
 }
 
+- (void)cacheContainerIsMissingActiveStyle:(NSNotification *)notification
+{
+	if ([TPCPreferences performValidationForKeyValues:NO]) {
+		[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleWithTableViewsAction];
+	}
+}
+
 - (void)destroyClientInCloud:(IRCClient *)client
 {
 	if (client) {

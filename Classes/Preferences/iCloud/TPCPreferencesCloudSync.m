@@ -657,6 +657,21 @@
 			NSURL *ubiqdPathURL = [NSURL fileURLWithPath:ubiqdPath];
 			
 			/* ========================================================== */
+			
+			/* Gather information about current style to use it for a comparison. */
+			__block BOOL isActiveStyleMissing = NO;
+			
+			NSString *activeStyleComparisonPath = nil;
+			
+			if ([themeController() storageLocation] == TPCThemeControllerStorageCloudLocation) {
+				/* Get active path for selected style. */
+				activeStyleComparisonPath = [themeController() path];
+				
+				/* Remove path prefix for active style. */
+				activeStyleComparisonPath = [activeStyleComparisonPath stringByDeletingPreifx:[cachePahtURL path]];
+			}
+			
+			/* ========================================================== */
 		
 			/* We will now enumrate through all existing cache files gathering a list of those that
 			 exist and their modification dates. This information is stored in a dictionary with the
@@ -832,6 +847,13 @@
 			
 			/* Time to destroy old caches. */
 			[cachedFiles enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+				/* Check if a file we are deleting matches the active style. */
+				if (activeStyleComparisonPath) {
+					if ([key isEqualToString:activeStyleComparisonPath]) {
+						isActiveStyleMissing = YES;
+					}
+				}
+				
 				/* Check the folder to see if anything left in the cache does exist in cloud. */
 				NSURL *ubiqdFolderLocation = [ubiqdPathURL URLByAppendingPathComponent:key];
 				NSURL *cacheFolderLocation = [cachePahtURL URLByAppendingPathComponent:key];
@@ -848,11 +870,8 @@
 			 theme to make sure the active still exists. */
 			[self performBlockOnMainThread:^{
 				if ([self isSafeToPerformPreferenceValidation]) {
-					/* Only perform update if the current theme location is in the cloud. */
-					if ([themeController() storageLocation] == TPCThemeControllerStorageCloudLocation) {
-						if ([TPCPreferences performValidationForKeyValues:NO]) {
-							[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleWithTableViewsAction];
-						}
+					if (isActiveStyleMissing) {
+						[RZNotificationCenter() postNotificationName:TPCPreferencesCloudSyncUbiquitousContainerCacheIsMissingSelectedStyleNotification object:nil];
 					}
 				} else {
 					if (isGatheringNotification) {
