@@ -82,6 +82,10 @@
 - (void)setupOtherServices
 {
 	[RZNotificationCenter() addObserver:self selector:@selector(userDefaultsDidChange:) name:TPCPreferencesUserDefaultsDidChangeNotification object:nil];
+	
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	[RZNotificationCenter() addObserver:self selector:@selector(cacheContainerIsMissingActiveStyle:) name:TPCPreferencesCloudSyncUbiquitousContainerCacheIsMissingSelectedStyleNotification object:nil];
+#endif
 }
 
 - (NSMutableDictionary *)dictionaryValue
