@@ -138,7 +138,9 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 - (void)setup:(id)seed;
 
 - (void)updateConfig:(IRCClientConfig *)seed;
-- (void)updateConfig:(IRCClientConfig *)seed fromTheCloud:(BOOL)isCloudUpdate withSelectionUpdate:(BOOL)reloadSelection;
+- (void)updateConfig:(IRCClientConfig *)seed withSelectionUpdate:(BOOL)reloadSelection;
+
+- (void)updateConfigFromTheCloud:(IRCClientConfig *)seed;
 
 // Use -copyOfStoredConfig to return the configuration that DOES NOT contain any private messages.
 // It is also a COPY, not the one used internally, which means it can be passed around and modified without

@@ -274,19 +274,8 @@
 	return [NSString stringWithFormat:@"<IRCClient [%@]: %@>", [self altNetworkName], [self networkAddress]];
 }
 
-- (void)updateConfig:(IRCClientConfig *)seed
+- (void)updateConfigFromTheCloud:(IRCClientConfig *)seed
 {
-	[self updateConfig:seed fromTheCloud:NO withSelectionUpdate:YES];
-}
-
-- (void)updateConfig:(IRCClientConfig *)seed fromTheCloud:(BOOL)isCloudUpdate withSelectionUpdate:(BOOL)reloadSelection
-{
-	/* Ignore if we have equality. */
-	NSAssertReturn([seed isEqualToClientConfiguration:_config] == NO);
-	
-	/* Did the ignore list change at all? */
-	BOOL ignoreListIsSame = NSObjectsAreEqual(self.config.ignoreList, seed.ignoreList);
-	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	/* It is important to know this value changed before seed update. */
 	BOOL syncToCloudIsSame = (self.config.excludedFromCloudSyncing == seed.excludedFromCloudSyncing);
@@ -297,26 +286,13 @@
 	 take the value stored locally, cache it into a local variable, allow the new
 	 seed to be applied, then apply that value back to the seed. This allows the
 	 user to define certificates on each machine. */
-	NSData *identitySSLCertificateInformation = nil;
-	
-	if (isCloudUpdate) {
-		identitySSLCertificateInformation = self.config.identitySSLCertificate;
-	}
-#endif
-	
-	/* Write all channel keychains before copying over new configuration. */
-	for (IRCChannelConfig *i in [seed channelList]) {
-		[i writeKeychainItemsToDisk];
-	}
-	
-	/* Populate new seed. */
-	self.config = seed; // Setter handles copy.
-	
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	NSData *identitySSLCertificateInformation = self.config.identitySSLCertificate;
+
+	/* Seed new configuration. */
+	[self updateConfig:seed withSelectionUpdate:YES];
+
 	/* Update new, local seed with cache SSL certificate. */
-	if (isCloudUpdate) {
-		self.config.identitySSLCertificate = identitySSLCertificateInformation;
-	}
+	self.config.identitySSLCertificate = identitySSLCertificateInformation;
 	
 	/* Maybe remove this client from deleted list (maybe). */
 	if ([TPCPreferences syncPreferencesToTheCloud]) {
@@ -326,8 +302,32 @@
 			}
 		}
 	}
+#else
+	[self updateConfig:seed withSelectionUpdate:YES];
 #endif
+}
+
+- (void)updateConfig:(IRCClientConfig *)seed
+{
+	[self updateConfig:seed withSelectionUpdate:YES];
+}
+
+- (void)updateConfig:(IRCClientConfig *)seed withSelectionUpdate:(BOOL)reloadSelection
+{
+	/* Ignore if we have equality. */
+	NSAssertReturn([seed isEqualToClientConfiguration:_config] == NO);
 	
+	/* Did the ignore list change at all? */
+	BOOL ignoreListIsSame = NSObjectsAreEqual(self.config.ignoreList, seed.ignoreList);
+	
+	/* Write all channel keychains before copying over new configuration. */
+	for (IRCChannelConfig *i in [seed channelList]) {
+		[i writeKeychainItemsToDisk];
+	}
+	
+	/* Populate new seed. */
+	self.config = seed; // Setter handles copy.
+
 	/* Begin normal operations. */
 	/* List of channels that are in current configuration. */
 	NSArray *channelConfigurations = self.config.channelList;
