@@ -38,10 +38,25 @@
 
 #import "TextualApplication.h"
 
+#define _groupItemLeadingConstraintQuirkCorrectedConstraint		5.0
+
 @implementation TVCServerListCell
 
 #pragma mark -
 #pragma mark Cell Drawing
+
+- (void)awakeFromNib
+{
+	/* On Mountain Lion and maybe earlier, NSOutlineView does not properly honor our 
+	 leading constraint on our group item resulting in the text field hugging the 
+	 disclosure triangle of the group view. This is a dirty hack that fixes this 
+	 by updating our leading constraint. */
+	if ([CSFWSystemInformation featureAvailableToOSXMavericks] == NO) {
+		if ( self.groupItemTextFieldLeadingConstraint) {
+			[self.groupItemTextFieldLeadingConstraint setConstant:_groupItemLeadingConstraintQuirkCorrectedConstraint];
+		}
+	}
+}
 
 - (BOOL)wantsUpdateLayer
 {
