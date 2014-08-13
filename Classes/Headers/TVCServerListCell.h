@@ -43,6 +43,7 @@
 @property (nonatomic, nweak) IBOutlet NSImageView *messageCountBadgeImageView;
 @property (nonatomic, nweak) IBOutlet NSLayoutConstraint *messageCountBadgeWidthConstraint;
 @property (nonatomic, nweak) IBOutlet NSLayoutConstraint *messageCountBadgeTrailingConstraint;
+@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *groupItemTextFieldLeadingConstraint;
 
 @property (readonly, copy) NSDictionary *drawingContext;
 
