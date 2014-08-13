@@ -2,11 +2,16 @@ Textual is a highly modified version of the open source project known as [LimeCh
 
 ## Building Textual
 
-Please be aware while it is within your right to compile Textual and redistribute it unlimited times; **we will not provide support for the building process as it encourages use of potentially unstable code**. General support for easy to answer questions related to the actual use of the application is still available. 
+
+It is asked out of kindness that those with the power to build Textual do not abuse it to freely distribute it to hundreds of users. Textual exists as an open source project for two reasons: The first reason is to allow the open source community as a whole to contribute. The second reason is to assist other Objective-C developers by showing certain solutions to tasks they may face. A lot of work has been put into the project by the original authors as well as those who have contributed. The copy of Textual in the Mac App Store helps fund the project. Therefore, what is asked above, is asked out of respect so that the project can continue to thrive.
+
+Please be aware while it is within your right to compile Textual and redistribute it unlimited times; **we will not provide support for the building process as it encourages use of potentially unstable code**. However, once built, general support for easy to answer questions related to the actual use of the application is still available at any time.
 
 <hr />
 
-The latest version of Textual requires two things to be built. One is a valid (does not need to be trusted) code signing certificate. The second is an installation of Xcode 6 or later on Mac OS Yosemite. 
+The latest version of Textual requires two things to be built. One is a valid (does not need to be trusted) code signing certificate. The second is an installation of Xcode 5 or later on Mac OS Mavericks.
+
+If building Textual on Mavericks, then the option in Xcode to continue after recieving a build error must be enabled. Textual builds an interface file which contains code which is specific to the Yosemite SDK. Therefore, building on Mavericks will result in this file creating an error. This file is not accessed on Mavericks once built so ignoring this warning by continuing the build is okay.
 
 If you are an Apple registered developer, then obtaining a signing certificate is not very hard. However, if you are not, a self-signed certificate for "code signing" will do just as well. The steps to produce one of these is very simple so Google is the best destination to check for the steps on making one of these.
 
