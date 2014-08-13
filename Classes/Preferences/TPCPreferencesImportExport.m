@@ -271,8 +271,10 @@
 	{
 		return YES; // Key has an ignored prefix.
 	}
-
-	return NO;
+	else
+	{
+		return NO;
+	}
 }
 
 + (NSDictionary *)exportedPreferencesDictionaryRepresentation

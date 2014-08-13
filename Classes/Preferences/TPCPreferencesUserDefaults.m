@@ -336,7 +336,21 @@
 		[key hasPrefix:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"])		/* Textual owned prefix. */
 	{
 		return YES;
-	} else {
+	}
+	else
+	{
+		return NO;
+	}
+}
+
+- (BOOL)keyIsSpecial:(NSString *)key
+{
+	if ([key hasPrefix:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"])
+	{
+		return YES;
+	}
+	else
+	{
 		return NO;
 	}
 }
@@ -351,7 +365,7 @@
 				NSDictionary *localDictionary = [_userDefaults dictionaryRepresentation];
 				
 				for (NSString *dictKey in localDictionary) {
-					if ([self keyIsExcludedFromGroupContainer:dictKey] == NO) {
+					if ([self keyIsExcludedFromGroupContainer:dictKey] == NO && [self keyIsSpecial:dictKey] == NO) {
 						if ([_groupDefaults objectForKey:dictKey] == nil) {
 							[_groupDefaults setObject:localDictionary[dictKey] forKey:dictKey];
 						}
