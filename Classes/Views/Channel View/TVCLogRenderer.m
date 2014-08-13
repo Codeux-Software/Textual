@@ -148,7 +148,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		}
 
 		if (attrArray & _rendererUnderlineFormatAttribute) {
-			[body addAttribute:NSUnderlineStyleAttributeName value:@(NSSingleUnderlineStyle) range:r];
+			[body addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:r];
 		}
 
 		if (attrArray & _rendererTextColorAttribute) {
