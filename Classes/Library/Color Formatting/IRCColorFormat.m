@@ -498,7 +498,7 @@
             }
             case IRCTextFormatterUnderlineEffect:
             {
-                newDict[NSUnderlineStyleAttributeName] = @(NSUnderlineStyleSingle);
+                newDict[NSUnderlineStyleAttributeName] = @(NSSingleUnderlineStyle);
                 
                 break;
             }

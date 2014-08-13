@@ -94,10 +94,12 @@
 	/* Group container will take priority. */
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 	
-	NSDictionary *groupDict = [_groupDefaults dictionaryRepresentation];
-	
-	for (NSString *key in groupDict) {
-		settings[key] = groupDict[key];
+	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+		NSDictionary *groupDict = [_groupDefaults dictionaryRepresentation];
+		
+		for (NSString *key in groupDict) {
+			settings[key] = groupDict[key];
+		}
 	}
 	
 	/* Default back to self. */
@@ -120,7 +122,11 @@
 
 - (void)registerDefaultsForGroupContainer:(NSDictionary *)registrationDictionary
 {
-	[_groupDefaults registerDefaults:registrationDictionary];
+	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+		[_groupDefaults registerDefaults:registrationDictionary];
+	} else {
+		[_userDefaults registerDefaults:registrationDictionary];
+	}
 }
 
 - (void)setObject:(id)value forKey:(NSString *)defaultName
@@ -161,10 +167,12 @@
 - (id)objectForKey:(NSString *)defaultName
 {
 	/* Group container will take priority. */
-	 id objectValue = [_groupDefaults objectForKey:defaultName];
-	
-	if (objectValue) {
-		return objectValue;
+	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+		 id objectValue = [_groupDefaults objectForKey:defaultName];
+		
+		if (objectValue) {
+			return objectValue;
+		}
 	}
 	
 	/* Default back to self. */
@@ -323,7 +331,9 @@
 		[key hasPrefix:@"Saved Window State —> Internal (v2) —> "] ||		/* Textual owned prefix. */
 		[key hasPrefix:@"Text Input Prompt Suppression -> "] ||				/* Textual owned prefix. */
 		[key hasPrefix:@"Textual Five Migration Tool ->"] ||				/* Textual owned prefix. */
-		[key hasPrefix:@"Internal Theme Settings Key-value Store -> "])		/* Textual owned prefix. */
+		[key hasPrefix:@"Internal Theme Settings Key-value Store -> "] ||	/* Textual owned prefix. */
+		
+		[key hasPrefix:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"])		/* Textual owned prefix. */
 	{
 		return YES;
 	} else {
@@ -333,7 +343,27 @@
 
 - (void)migrateValuesToGroupContainer
 {
-	;
+	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+		id usesGroupContainer = [_userDefaults objectForKey:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"];
+		
+		if (usesGroupContainer) { // make sure the key even exists (non-nil)
+			if ([usesGroupContainer boolValue] == NO) {
+				NSDictionary *localDictionary = [_userDefaults dictionaryRepresentation];
+				
+				for (NSString *dictKey in localDictionary) {
+					if ([self keyIsExcludedFromGroupContainer:dictKey] == NO) {
+						if ([_groupDefaults objectForKey:dictKey] == nil) {
+							[_groupDefaults setObject:localDictionary[dictKey] forKey:dictKey];
+						}
+					}
+				}
+			}
+		}
+		
+		[_userDefaults setBool:YES forKey:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"];
+	} else {
+		[_userDefaults setBool:NO forKey:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"];
+	}
 }
 
 @end
@@ -391,7 +421,11 @@
 	[self willChangeValueForKey:key];
 	
 	if ([self writesToGroupContainer]) {
-		[_groupDefaults setObject:value forKey:key];
+		if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+			[_groupDefaults setObject:value forKey:key];
+		} else {
+			[_userDefaults setObject:value forKey:key];
+		}
 	} else {
 		[_userDefaults setObject:value forKey:key];
 	}
