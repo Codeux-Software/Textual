@@ -61,6 +61,14 @@
 		
 		// ---- //
 		
+#ifndef TXSystemIsMacOSYosemiteOrNewer
+		if ([CSFWSystemInformation featureAvailableToOSXYosemite]){
+			NSAssert(NO, @"This copy of Textual was built on Mavericks and cannot be ran on Yosemite. Please rebuild it on Yosemite.");
+		}
+#endif
+		
+		// ---- //
+		
 #ifdef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
 		[self presentBetaTesterDialog];
 #endif

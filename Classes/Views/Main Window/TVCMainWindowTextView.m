@@ -95,6 +95,7 @@
 
 - (void)updateBackgroundColor
 {
+#ifdef TXSystemIsMacOSYosemiteOrNewer
 	/* Set background appearance. */
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 		/* Update button appearance. */
@@ -104,6 +105,7 @@
 			[self.segmentedController setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
 		}
 	}
+#endif
 
 	/* Use font color depending on appearance. */
 	NSColor *preferredFontColor = [self.backgroundView systemSpecificTextFieldTextFontColor];

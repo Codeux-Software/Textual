@@ -129,6 +129,7 @@
 
 - (void)updateBackgroundColor
 {
+#ifdef TXSystemIsMacOSYosemiteOrNewer
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 		self.usingVibrantDarkAppearance = [TPCPreferences invertSidebarColors];
 		
@@ -138,6 +139,9 @@
 			[self.channelViewBox setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
 		}
 	}
+#else
+	self.usingVibrantDarkAppearance = NO;
+#endif
 	
 	[self.memberList updateBackgroundColor];
 	[self.serverList updateBackgroundColor];
