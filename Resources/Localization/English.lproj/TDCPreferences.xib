@@ -163,6 +163,9 @@
         <customView id="Eyz-5p-IkU" userLabel="General">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <userGuides>
+                <userLayoutGuide location="50" affinity="minX"/>
+            </userGuides>
             <subviews>
                 <button id="dKD-ra-U21">
                     <rect key="frame" x="50" y="288" width="312" height="18"/>
@@ -263,7 +266,7 @@
                     </connections>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="1184.5" y="243"/>
+            <point key="canvasLocation" x="1505.5" y="352"/>
         </customView>
         <customView id="d6J-SH-Xgl" userLabel="Default Identity">
             <rect key="frame" x="0.0" y="0.0" width="567" height="406"/>
@@ -636,6 +639,9 @@
         <customView id="09H-hp-iIC" userLabel="Alerts">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <userGuides>
+                <userLayoutGuide location="118" affinity="minX"/>
+            </userGuides>
             <subviews>
                 <button id="GjT-uP-Qs3">
                     <rect key="frame" x="49" y="119" width="465" height="18"/>
@@ -649,7 +655,7 @@
                     </connections>
                 </button>
                 <button id="aAm-Wb-rMO">
-                    <rect key="frame" x="50" y="91" width="436" height="18"/>
+                    <rect key="frame" x="49" y="91" width="436" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Include public channel messages in the above mentioned badge count" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="NHa-ip-Ihi">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -794,17 +800,6 @@
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <button id="7gR-L1-aOU">
-                    <rect key="frame" x="53" y="40" width="465" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Display notifications when Textual is the selected application" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="rbi-o7-6Hw">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.PostNotificationsWhileInFocus" id="otB-pz-AGc"/>
-                    </connections>
-                </button>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="P5a-0i-uW9">
                     <rect key="frame" x="132" y="233" width="334" height="16"/>
                     <autoresizingMask key="autoresizingMask"/>
@@ -858,6 +853,17 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
+                <button id="7gR-L1-aOU">
+                    <rect key="frame" x="49" y="40" width="465" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Display notifications when Textual is the selected application" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="rbi-o7-6Hw">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.PostNotificationsWhileInFocus" id="otB-pz-AGc"/>
+                    </connections>
+                </button>
             </subviews>
             <point key="canvasLocation" x="317.5" y="-109"/>
         </customView>
@@ -1274,7 +1280,7 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="352" height="16"/>
+                                                    <size key="minSize" width="352" height="20"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="Strips away formatting such as ">
@@ -1364,7 +1370,7 @@
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="352" height="16"/>
+                                                    <size key="minSize" width="352" height="20"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
@@ -2247,6 +2253,9 @@
         <customView id="Fnm-DD-Hbc" userLabel="Keyboard &amp; Mouse">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <userGuides>
+                <userLayoutGuide location="55" affinity="minX"/>
+            </userGuides>
             <subviews>
                 <button id="6hg-qY-80F">
                     <rect key="frame" x="53" y="205" width="234" height="18"/>
@@ -2415,6 +2424,9 @@
         <customView id="egI-fh-Ox8" userLabel="Main Text Field">
             <rect key="frame" x="0.0" y="1" width="567" height="476"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <userGuides>
+                <userLayoutGuide location="52" affinity="minX"/>
+            </userGuides>
             <subviews>
                 <button id="eEF-gB-Apx">
                     <rect key="frame" x="52" y="354" width="186" height="18"/>
@@ -2834,6 +2846,9 @@
         <customView id="u96-CK-dYE" userLabel="Interface">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask"/>
+            <userGuides>
+                <userLayoutGuide location="55" affinity="minX"/>
+            </userGuides>
             <subviews>
                 <button id="ZwK-yE-OaM">
                     <rect key="frame" x="54" y="302" width="250" height="18"/>
@@ -2958,11 +2973,14 @@
                     </connections>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="1560.5" y="487"/>
+            <point key="canvasLocation" x="1502.5" y="244"/>
         </customView>
         <customView id="1YF-k7-FrW" userLabel="Command Scope">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <userGuides>
+                <userLayoutGuide location="55" affinity="minX"/>
+            </userGuides>
             <subviews>
                 <button id="tKc-zC-6Gt">
                     <rect key="frame" x="53" y="298" width="338" height="18"/>
