@@ -91,6 +91,7 @@
 /* These are all considered private. */
 
 @property (nonatomic, strong) IRCConnection *socket;
+@property (nonatomic, copy) TXEmtpyBlockDataType disconnectCallback;
 @property (nonatomic, assign) BOOL isInvokingISONCommandForFirstTime;
 @property (nonatomic, assign) BOOL timeoutWarningShownToUser;
 @property (nonatomic, assign) NSInteger tryingNicknameNumber;
@@ -3777,9 +3778,16 @@
 
 #pragma mark -
 
-- (void)ircConnectionDidDisconnect:(IRCConnection *)sender withError:(NSError *)distcError;
+- (void)ircConnectionDidDisconnect:(IRCConnection *)sender withError:(NSError *)distcError
 {
-	[self disconnect];
+	TXPerformBlockAsynchronouslyOnMainQueue(^{
+		[self _disconnect];
+		
+		if (self.disconnectCallback) {
+			self.disconnectCallback();
+			self.disconnectCallback = nil;
+		}
+	});
 }
 
 #pragma mark -
@@ -5814,13 +5822,17 @@
 			self.disconnectType = IRCClientDisconnectServerRedirectMode;
 
 			[self disconnect]; // No worry about gracefully disconnecting by using quit: since it is just a redirect.
-
+			
 			/* -disconnect would destroy this so we set them after… */
 			self.serverRedirectAddressTemporaryStore = address;
 			self.serverRedirectPortTemporaryStore = [portraw integerValue];
-
-			[self connect];
-
+			
+			__weak IRCClient *weakSelf = self;
+			
+			self.disconnectCallback = ^{
+				[weakSelf connect];
+			};
+			
 			break;
 		}
 		case 20: // RPL_(?????) — Legacy code. What goes here?
@@ -7318,7 +7330,9 @@
 		if (self.config.performDisconnectOnPongTimer) {
 			[self printDebugInformation:BLS(1137, (timeSpent / 60.0)) channel:nil];
 
-			[self disconnect];
+			[self performBlockOnMainThread:^{
+				[self disconnect];
+			}];
 		} else if (self.timeoutWarningShownToUser == NO) {
 			[self printDebugInformation:BLS(1138, (timeSpent / 60.0)) channel:nil];
 			
@@ -7380,9 +7394,15 @@
 
 - (void)onRetryTimer:(id)sender
 {
-	[self disconnect];
-	
-	[self connect:IRCClientConnectRetryMode];
+	[self performBlockOnMainThread:^{
+		[self disconnect];
+
+		__weak IRCClient *weakSelf = self;
+		
+		self.disconnectCallback = ^{
+			[weakSelf connect:IRCClientConnectRetryMode];
+		};
+	}];
 }
 
 #pragma mark -
@@ -7808,21 +7828,22 @@
 
 - (void)disconnect
 {
-	/* This does nothing if there was no previous call to performSelector:withObject:afterDelay:
-		but is super important to call if there was. */
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(disconnect) object:nil];
 
 	if ( self.socket) {
 		[self.socket close];
 	}
-
-	[self changeStateOff];
-
+	
 	if ([masterController() applicationIsTerminating]) {
-		 masterController().terminatingClientCount -= 1;
+		masterController().terminatingClientCount -= 1;
 	} else {
 		[self postEventToViewController:@"serverDisconnected"];
 	}
+}
+
+- (void)_disconnect
+{
+	[self changeStateOff];
 }
 
 - (void)quit

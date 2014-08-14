@@ -38,13 +38,10 @@
 
 #import "TextualApplication.h"
 
+#import "IRCConnectionPrivate.h"
+
 /* The actual socket is handled by IRCConnectionSocket.m,
  which is an extension of this class. */
-
-@interface IRCConnection ()
-@property (nonatomic, strong) NSMutableArray *sendQueue;
-@property (nonatomic, assign) NSInteger floodControlCurrentMessageCount;
-@end
 
 @implementation IRCConnection
 

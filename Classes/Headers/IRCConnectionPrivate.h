@@ -5,7 +5,6 @@
        | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
        |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 — 2014 Codeux Software & respective contributors.
      Please see Acknowledgements.pdf for additional information.
 
@@ -38,46 +37,13 @@
 
 #import "TextualApplication.h"
 
-@interface IRCConnection : NSObject
-@property (nonatomic, nweak) IRCClient *associatedClient;
-@property (nonatomic, strong) TLOTimer *floodTimer;
-@property (nonatomic, assign) BOOL isConnected;
-@property (nonatomic, assign) BOOL isConnecting;
-@property (nonatomic, assign) BOOL isReadyToSend;
-@property (nonatomic, assign) BOOL isSending;
-@property (nonatomic, assign) BOOL connectionPrefersIPv6;
-@property (nonatomic, assign) BOOL connectionUsesSSL;
-@property (nonatomic, assign) BOOL connectionUsesNormalSocks;
-@property (nonatomic, assign) BOOL connectionUsesSystemSocks;
-@property (nonatomic, assign) BOOL connectionUsesFloodControl;
-@property (nonatomic, assign) NSInteger floodControlDelayInterval;
-@property (nonatomic, assign) NSInteger floodControlMaximumMessageCount;
-@property (nonatomic, copy) NSString *serverAddress;
-@property (nonatomic, assign) NSInteger serverPort;
-@property (nonatomic, copy) NSString *proxyAddress;
-@property (nonatomic, copy) NSString *proxyPassword;
-@property (nonatomic, copy) NSString *proxyUsername;
-@property (nonatomic, assign) NSInteger proxyPort;
-@property (nonatomic, assign) NSInteger proxySocksVersion;
-@property (nonatomic, assign) BOOL isConnectedWithClientSideCertificate; // Consider this readonly
-
-- (void)open;
-- (void)close;
-
-- (void)sendLine:(NSString *)line;
-
-- (void)clearSendQueue;
-
-- (NSString *)convertFromCommonEncoding:(NSData *)data;
-- (NSData *)convertToCommonEncoding:(NSString *)data;
+@interface IRCConnection ()
+@property (nonatomic, strong) NSMutableArray *sendQueue;
+@property (nonatomic, assign) NSInteger floodControlCurrentMessageCount;
+@property (nonatomic, assign) BOOL lastDisconnectWasErroneous;
+@property (nonatomic, strong) dispatch_queue_t dispatchQueue;
+@property (nonatomic, strong) dispatch_queue_t socketQueue;
+@property (nonatomic, copy) NSData *bufferOverflowString;
+@property (nonatomic, strong) id socketConnection;
 @end
 
-@protocol IRCConnectionDelegate <NSObject>
-@required
-
-- (void)ircConnectionDidConnect:(IRCConnection *)sender;
-- (void)ircConnectionDidDisconnect:(IRCConnection *)sender withError:(NSError *)distcError;
-- (void)ircConnectionDidError:(NSString *)error;
-- (void)ircConnectionDidReceive:(NSString *)data;
-- (void)ircConnectionWillSend:(NSString *)line;
-@end

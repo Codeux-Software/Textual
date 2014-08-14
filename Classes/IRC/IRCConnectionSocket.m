@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+#import "IRCConnectionPrivate.h"
+
 #define _LF	0xa
 #define _CR	0xd
 
@@ -81,6 +83,8 @@
 {
     [self createDispatchQueue];
 
+	self.lastDisconnectWasErroneous = NO;
+	
 	self.isConnecting = YES;
 
 	if ([self useNewSocketEngine]) {
@@ -244,6 +248,10 @@
 	if ([self useNewSocketEngine] == NO) {
 		[self closeSocket];
 		[self destroySocket];
+		
+		if (self.lastDisconnectWasErroneous == NO) {
+			[self performSelector:@selector(tcpClientDidDisconnect:) withObject:nil];
+		}
 	}
 }
 
@@ -252,6 +260,10 @@
 	if ([self useNewSocketEngine]) {
 		[self closeSocket];
 		[self destroySocket];
+	}
+	
+	if (distcError) {
+		self.lastDisconnectWasErroneous = YES;
 	}
 
 	[self performSelector:@selector(tcpClientDidDisconnect:) withObject:distcError];
