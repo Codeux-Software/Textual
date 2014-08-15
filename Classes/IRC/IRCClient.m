@@ -4245,7 +4245,7 @@
 			}
 
 			/* Does the query for the sender already exist?… */
-			IRCChannel *c;
+			IRCChannel *c = nil;
 
 			if (isZNCprivmsg == YES) {
 				c = [self findChannel:target];
@@ -4255,14 +4255,26 @@
 
 			BOOL newPrivateMessage = NO;
 
-			if (c == nil && NSDissimilarObjects(type, TVCLogLineNoticeType)) {
-				if (isZNCprivmsg) {
-					c = [worldController() createPrivateMessage:target client:self];
-				} else {
-					c = [worldController() createPrivateMessage:sender client:self];
+			if (c == nil) {
+				BOOL createNewWindow = YES;
+				
+				if (type == TVCLogLineNoticeType) {
+					if ([TPCPreferences locationToSendNotices] == TXNoticeSendToQueryDestinationType) {
+						;
+					} else {
+						createNewWindow = NO;
+					}
 				}
-
-				newPrivateMessage = YES;
+				
+				if (createNewWindow) {
+					if (isZNCprivmsg) {
+						c = [worldController() createPrivateMessage:target client:self];
+					} else {
+						c = [worldController() createPrivateMessage:sender client:self];
+					}
+					
+					newPrivateMessage = YES;
+				}
 			}
 
 			/* Is the message encrypted? If so, decrypt. */
