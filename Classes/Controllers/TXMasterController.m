@@ -287,9 +287,15 @@
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
 {
 	if ([self queryTerminate]) {
-		self.applicationIsTerminating = YES;
+		TXPerformBlockAsynchronouslyOnMainQueue(^{
+			self.applicationIsTerminating = YES;
 
-		return NSTerminateNow;
+			[mainWindow() close];
+			
+			[self performApplicationTerminationStepOne];
+		});
+		
+		return NSTerminateLater;
 	} else {
 		return NSTerminateCancel;
 	}
@@ -320,11 +326,9 @@
 #endif
 }
 
-- (void)applicationWillTerminate:(NSNotification *)note
+- (void)performApplicationTerminationStepOne
 {
 	[mainWindow() prepareForApplicationTermination];
-	
-	[RZRunningApplication() hide];
 	
 	[RZWorkspaceNotificationCenter() removeObserver:self];
 
@@ -351,7 +355,7 @@
 			[RZMainRunLoop() runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
 		}
 	}
-	
+
 	[sharedPluginManager() unloadPlugins];
 	
 	[TXSharedApplication releaseSharedMutableSynchronizationSerialQueue];
@@ -361,6 +365,8 @@
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[sharedCloudManager() closeCloudSyncSession];
 #endif
+	
+	[NSApp replyToApplicationShouldTerminate:YES];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
@@ -417,7 +423,9 @@
 
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
 {
-	[self.mainWindow makeKeyAndOrderFront:nil];
+	if (self.applicationIsTerminating == NO) {
+		[self.mainWindow makeKeyAndOrderFront:nil];
+	}
 	
 	return YES;
 }
