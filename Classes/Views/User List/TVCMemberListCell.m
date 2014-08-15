@@ -394,7 +394,7 @@
 	/* Maybe set a default mark. */
 	if (mcstring == nil) {
 		if ([RZUserDefaults() boolForKey:@"DisplayUserListNoModeSymbol"]) {
-			mcstring = @"x";
+			mcstring = @"×";
 		} else {
 			mcstring = NSStringEmptyPlaceholder;
 		}
@@ -447,7 +447,7 @@
 		{
 			if ([mcstring isEqualToString:@"+"] ||
 				[mcstring isEqualToString:@"~"] ||
-				[mcstring isEqualToString:@"x"])
+				[mcstring isEqualToString:@"×"])
 			{
 				badgeTextPoint.y -= -(1.0);
 			}
@@ -474,7 +474,7 @@
 		{
 			if ([mcstring isEqualToString:@"+"] ||
 				[mcstring isEqualToString:@"~"] ||
-				[mcstring isEqualToString:@"x"])
+				[mcstring isEqualToString:@"×"])
 			{
 				badgeTextPoint.y -= -(2.0);
 			}
