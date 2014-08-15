@@ -94,6 +94,7 @@
 @property (nonatomic, copy) TXEmtpyBlockDataType disconnectCallback;
 @property (nonatomic, assign) BOOL isInvokingISONCommandForFirstTime;
 @property (nonatomic, assign) BOOL timeoutWarningShownToUser;
+@property (nonatomic, assign) BOOL isTerminating; // Is being destroyed
 @property (nonatomic, assign) NSInteger tryingNicknameNumber;
 @property (nonatomic, assign) NSUInteger CAPPausedStatus;
 @property (nonatomic, assign) NSUInteger lastWhoRequestChannelListIndex;
@@ -462,6 +463,8 @@
 - (void)prepareForApplicationTermination
 {
 	/* Archive server-time timestamp if certain conditions are met. */
+	self.isTerminating = YES;
+
 	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityServerTime]) {
 		if ([TPCPreferences logToDiskIsEnabled]) {
 			if (self.lastMessageServerTime > 0) {
@@ -487,6 +490,8 @@
 
 - (void)prepareForPermanentDestruction
 {
+	self.isTerminating = YES;
+
 	[self quit];
 	
 	[self closeDialogs];
@@ -3722,6 +3727,10 @@
 
 - (void)ircConnectionDidConnect:(IRCConnection *)sender
 {
+	if ([self isTerminating]) {
+		return; // No reason to show this.
+	}
+	
 	[self startRetryTimer];
 
 	/* If the address we are connecting to is not an IP address,
@@ -3778,7 +3787,7 @@
 
 - (void)ircConnectionDidDisconnect:(IRCConnection *)sender withError:(NSError *)distcError
 {
-	if ([masterController() applicationIsTerminating] == NO) {
+	if ([self isTerminating] == NO) {
 		TXPerformBlockAsynchronouslyOnMainQueue(^{
 			[self _disconnect];
 			
@@ -3794,13 +3803,17 @@
 
 - (void)ircConnectionDidError:(NSString *)error
 {
+	if ([self isTerminating]) {
+		return; // No reason to show this.
+	}
+	
 	[self printError:error forCommand:TVCLogLineDefaultRawCommandValue];
 }
 
 - (void)ircConnectionDidReceive:(NSString *)data
 {
-	if ([masterController() applicationIsTerminating]) {
-		return;
+	if ([self isTerminating]) {
+		return; // No reason to show this.
 	}
 	
 	NSAssertReturn(self.isConnected);
@@ -3980,6 +3993,10 @@
 
 - (void)ircConnectionWillSend:(NSString *)line
 {
+	if ([self isTerminating]) {
+		return; // No reason to show this.
+	}
+	
 	[self logToConsoleOutgoingTraffic:line];
 }
 
