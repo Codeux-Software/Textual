@@ -175,7 +175,8 @@
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 		if (self.truncationTimerScheduled) {
 			[self.backgroundTimer invalidate];
-
+			 self.backgroundTimer = nil;
+ 
 			self.truncationTimerScheduled = NO;
 		}
 	} else {
@@ -197,8 +198,8 @@
 		NSBackgroundActivityScheduler *scheduler = [[NSBackgroundActivityScheduler alloc] initWithIdentifier:[self backgroundActivityIdentifier]];
 
 		[scheduler setRepeats:YES];
-		[scheduler setInterval:(30 * 60)];
-		[scheduler setTolerance:(15 * 60)];
+		[scheduler setInterval:(15 * 60)];
+		[scheduler setTolerance:(5 * 60)];
 		
 		[scheduler setQualityOfService:NSQualityOfServiceBackground];
 		
@@ -213,7 +214,7 @@
 		}];
 		
 		self.backgroundTimer = scheduler;
-		
+	
 		self.truncationTimerScheduled = YES;
 	} else {
 		if (self.truncationTimerScheduled == NO) {
