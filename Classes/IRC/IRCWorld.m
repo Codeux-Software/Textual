@@ -724,7 +724,22 @@
 
 - (void)destroyClient:(IRCClient *)u bySkippingCloud:(BOOL)skipCloud
 {
-	[u prepareForPermanentDestruction];
+	/* It is not safe to destroy the client while connected. Therefore,
+	 we set a block to be performed on disconnect. */
+	if ([u isConnecting] || [u isConnected]) {
+		__weak IRCWorld *weakSelf = self;
+		__weak IRCClient *weakClient = u;
+		
+		[u setDisconnectCallback:^{
+			[weakSelf destroyClient:weakClient bySkippingCloud:skipCloud];
+		}];
+		
+		[u quit]; // Obviously we need to terminate it
+		
+		return; // Do not continue with operation. 
+	} else {
+		[u prepareForPermanentDestruction];
+	}
 	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if (skipCloud == NO) {

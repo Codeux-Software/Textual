@@ -101,6 +101,7 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 @property (nonatomic, strong) IRCISupportInfo *supportInfo;
 @property (nonatomic, assign) IRCClientConnectMode connectType;
 @property (nonatomic, assign) IRCClientDisconnectMode disconnectType;
+@property (nonatomic, copy) TXEmtpyBlockDataType disconnectCallback; // Changing this may break some things
 @property (nonatomic, assign) NSInteger connectDelay;
 @property (nonatomic, assign) BOOL inUserInvokedJoinRequest;
 @property (nonatomic, assign) BOOL inUserInvokedIsonRequest;
@@ -155,7 +156,7 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 - (NSMutableDictionary *)dictionaryValue:(BOOL)isCloudDictionary;
 
 - (void)prepareForApplicationTermination;
-- (void)prepareForPermanentDestruction;
+- (void)prepareForPermanentDestruction; // Call -quit before invoking this or you know, use IRCWorld
 
 - (void)preferencesChanged;
 
