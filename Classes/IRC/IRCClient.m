@@ -2738,13 +2738,13 @@
 			}
 			
 			if (self.isConnected) {
+				__weak IRCClient *weakSelf = self;
+				
+				self.disconnectCallback = ^{
+					[weakSelf connect];
+				};
+				
 				[self quit];
-			}
-
-			if (self.isQuitting) {
-				[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(connect) object:nil];
-
-				[self performSelector:@selector(connect) withObject:nil afterDelay:2.0];
 			} else {
 				[self connect];
 			}
@@ -5220,13 +5220,14 @@
 		([message hasPrefix:@"Closing Link:"] && [message hasSuffix:@"(Max SendQ exceeded)"]))
 	{
 		[mainWindow() select:self]; // Bring server to attention before popping view.
-
-        /* Cancel any active reconnect before asking if the user wants to do it. */
-        /* We cancel after 1.0 second to allow this popup prompt to be called and then 
-         for Textual to process the actual drop in socket. receiveError: is called before
-         our reconnect begins so we have to race it. */
-        [self performSelector:@selector(cancelReconnect) withObject:nil afterDelay:2.0];
-
+		
+		/* Cancel any active reconnect before asking if the user wants to do it. */
+		__weak IRCClient *weakSelf = self;
+		
+		self.disconnectCallback = ^{
+			[weakSelf cancelReconnect];
+		};
+		
         /* Prompt user about disconnect. */
         TLOPopupPrompts *prompt = [TLOPopupPrompts new];
 
