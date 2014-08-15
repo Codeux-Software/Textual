@@ -322,9 +322,9 @@
 
 - (void)applicationWillTerminate:(NSNotification *)note
 {
-	[RZRunningApplication() hide];
-
 	[mainWindow() prepareForApplicationTermination];
+	
+	[RZRunningApplication() hide];
 	
 	[RZWorkspaceNotificationCenter() removeObserver:self];
 
