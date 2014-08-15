@@ -53,8 +53,6 @@
 	/* Make sure we even have a selector to perform. */
 	if (aSelector == NULL) {
 		_insertError(NO, @"Cannot perform selector with a selector value of NULL")
-		
-		safeToPerform = NO;
 	} else {
 		/* It is important to check this. */
 		if ([self isKindOfClass:[WebUndefined class]]) {
