@@ -964,7 +964,11 @@
 
 - (BOOL)isOccluded
 {
-	return (([self occlusionState] & NSWindowOcclusionStateVisible) == 0);
+	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+		return (([self occlusionState] & NSWindowOcclusionStateVisible) == 0);
+	} else {
+		return NO;
+	}
 }
 
 - (BOOL)isInactive
