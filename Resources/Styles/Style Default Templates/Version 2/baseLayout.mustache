@@ -46,6 +46,13 @@
 				want, but we are trying to have some consistency between styles. 
 			}}
 
+			/* Print actions. */
+			@media print {
+				#topic_bar {
+					display: none;
+				}
+			}
+
 			/* Reserved lines. */
 			body div.line[command="-101"] .message {
 				font-family: "Menlo" !important;

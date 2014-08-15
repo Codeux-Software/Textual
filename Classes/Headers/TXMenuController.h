@@ -128,6 +128,7 @@
 	6884: "Anyone Can Join (-i)"
 	6885: "Manage All Modes"
 	691: "Add Channel…"
+	7306: "Print"
 	935: Menu Separator
 	936: Menu Separator
 	937: Menu Separator
@@ -186,6 +187,7 @@
 - (IBAction)showPreferencesDialog:(id)sender;
 
 - (IBAction)paste:(id)sender;
+- (IBAction)print:(id)sender;
 
 - (IBAction)searchGoogle:(id)sender;
 
