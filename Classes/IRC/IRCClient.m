@@ -91,7 +91,6 @@
 /* These are all considered private. */
 
 @property (nonatomic, strong) IRCConnection *socket;
-@property (nonatomic, copy) TXEmtpyBlockDataType disconnectCallback;
 @property (nonatomic, assign) BOOL isInvokingISONCommandForFirstTime;
 @property (nonatomic, assign) BOOL timeoutWarningShownToUser;
 @property (nonatomic, assign) BOOL isTerminating; // Is being destroyed
@@ -491,8 +490,6 @@
 - (void)prepareForPermanentDestruction
 {
 	self.isTerminating = YES;
-
-	[self quit];
 	
 	[self closeDialogs];
 	[self closeLogFile];
