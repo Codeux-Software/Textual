@@ -185,7 +185,7 @@
 	/* File truncation events are scheduled to happen at random 
 	 intervals so they are all not running at one time. */
 	if (self.truncationTimerScheduled == NO) {
-		NSInteger timeInterval = ((arc4random() % 601) + 600); // ~12 minutes
+		NSInteger timeInterval = ((arc4random() % 951) + 950); // ~15 minutes
 
 		[self performSelector:@selector(truncateFileToMatchDefinedMaximumLineCount)
 				   withObject:nil
