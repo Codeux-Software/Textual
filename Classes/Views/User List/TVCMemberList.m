@@ -385,7 +385,9 @@
 	
 	id rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
 	
-	[rowView setNeedsDisplay:YES];
+	if ([mainWindow() isOccluded] == NO) {
+		[rowView setNeedsDisplay:YES];
+	}
 }
 
 - (BOOL)allowsVibrancy

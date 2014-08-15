@@ -125,12 +125,14 @@
 {
 	NSAssertReturn(rowIndex >= 0);
 	
-	id rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
-	
-	BOOL isChildItem = [rowView isKindOfClass:[TVCServerListCellChildItem class]];
-	
-	if (isChildItem) {
-		[rowView populateMessageCountBadge];
+	if ([mainWindow() isOccluded] == NO) {
+		id rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
+		
+		BOOL isChildItem = [rowView isKindOfClass:[TVCServerListCellChildItem class]];
+		
+		if (isChildItem) {
+			[rowView populateMessageCountBadge];
+		}
 	}
 }
 
@@ -138,16 +140,18 @@
 {
 	NSAssertReturn(rowIndex >= 0);
 	
-	id rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
-	
-	BOOL isGroupItem = [rowView isKindOfClass:[TVCServerListCellGroupItem class]];
-	BOOL isChildItem = [rowView isKindOfClass:[TVCServerListCellChildItem class]];
-	
-	if (isGroupItem || isChildItem) {
-		if (isGroupItem) {
-			[rowView updateGroupDisclosureTriangle]; // Calls setNeedsDisplay: for item
-		} else {
-			[rowView setNeedsDisplay:YES];
+	if ([mainWindow() isOccluded] == NO) {
+		id rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
+		
+		BOOL isGroupItem = [rowView isKindOfClass:[TVCServerListCellGroupItem class]];
+		BOOL isChildItem = [rowView isKindOfClass:[TVCServerListCellChildItem class]];
+		
+		if (isGroupItem || isChildItem) {
+			if (isGroupItem) {
+				[rowView updateGroupDisclosureTriangle]; // Calls setNeedsDisplay: for item
+			} else {
+				[rowView setNeedsDisplay:YES];
+			}
 		}
 	}
 }

@@ -41,6 +41,10 @@
 #define _treeDragItemType		@"tree"
 #define _treeDragItemTypes		[NSArray arrayWithObject:_treeDragItemType]
 
+@interface TVCMainWindow ()
+@property (nonatomic, assign) NSTimeInterval lastKeyWindowStateChange;
+@end
+
 @implementation TVCMainWindow
 
 #pragma mark -
@@ -200,6 +204,15 @@
 	[TVCDockIcon updateDockIcon];
 }
 
+- (void)reloadSubviewDrawings
+{
+	[self.inputTextField windowDidChangeKeyState];
+	
+	[self.serverList windowDidChangeKeyState];
+	
+	[self.memberList windowDidChangeKeyState];
+}
+
 #pragma mark -
 #pragma mark NSWindow Delegate
 
@@ -208,24 +221,34 @@
 	[self reloadMainWindowFrameOnScreenChange];
 }
 
+- (void)windowDidChangeOcclusionState:(NSNotification *)notification
+{
+	if ([self isOccluded] == NO) {
+		/* We keep track of the last subview redraw so that we do 
+		 not draw too often. Current maximum is 1.0 second. */
+		NSTimeInterval timeDifference = ([NSDate epochTime] - [self lastKeyWindowStateChange]);
+		
+		if (timeDifference > 1.0f) {
+			[self reloadSubviewDrawings];
+		}
+	}
+}
+
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
+	self.lastKeyWindowStateChange = [NSDate epochTime];
+	
 	[self resetSelectedItemState];
-	
-	[self.inputTextField windowDidChangeKeyState];
-	
-	[self.serverList windowDidChangeKeyState];
-	
-	[self.memberList windowDidChangeKeyState];
+
+	[self reloadSubviewDrawings];
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification
 {
-	[self.inputTextField windowDidChangeKeyState];
-	
-	[self.serverList windowDidChangeKeyState];
-	
-	[self.memberList windowDidChangeKeyState];
+	self.lastKeyWindowStateChange = [NSDate epochTime];
+
+	[self reloadSubviewDrawings];
+
 	[self.memberList destroyUserInfoPopoverOnWindowKeyChange];
 }
 
@@ -937,6 +960,11 @@
 	if ([self makeFirstResponder:self] == NO) {
 		[super endEditingFor:object];
 	}
+}
+
+- (BOOL)isOccluded
+{
+	return (([self occlusionState] & NSWindowOcclusionStateVisible) == 0);
 }
 
 - (BOOL)isInactive
