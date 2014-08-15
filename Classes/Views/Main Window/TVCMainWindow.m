@@ -43,6 +43,7 @@
 
 @interface TVCMainWindow ()
 @property (nonatomic, assign) NSTimeInterval lastKeyWindowStateChange;
+@property (nonatomic, assign) BOOL lastKeyWindowRedrawFailedBecauseOfOcclusion;
 @end
 
 @implementation TVCMainWindow
@@ -224,12 +225,18 @@
 - (void)windowDidChangeOcclusionState:(NSNotification *)notification
 {
 	if ([self isOccluded] == NO) {
-		/* We keep track of the last subview redraw so that we do 
-		 not draw too often. Current maximum is 1.0 second. */
-		NSTimeInterval timeDifference = ([NSDate epochTime] - [self lastKeyWindowStateChange]);
-		
-		if (timeDifference > 1.0f) {
+		if (self.lastKeyWindowRedrawFailedBecauseOfOcclusion) {
 			[self reloadSubviewDrawings];
+			
+			self.lastKeyWindowRedrawFailedBecauseOfOcclusion = NO;
+		} else {
+			/* We keep track of the last subview redraw so that we do
+			 not draw too often. Current maximum is 1.0 second. */
+			NSTimeInterval timeDifference = ([NSDate epochTime] - [self lastKeyWindowStateChange]);
+			
+			if (timeDifference > 1.0f) {
+				[self reloadSubviewDrawings];
+			}
 		}
 	}
 }
@@ -240,7 +247,11 @@
 	
 	[self resetSelectedItemState];
 
-	[self reloadSubviewDrawings];
+	if ([self isOccluded]) {
+		self.lastKeyWindowRedrawFailedBecauseOfOcclusion = YES;
+	} else {
+		[self reloadSubviewDrawings];
+	}
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification
