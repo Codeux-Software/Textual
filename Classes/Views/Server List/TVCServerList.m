@@ -94,38 +94,63 @@
 
 - (void)reloadAllDrawings
 {
-	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
-		[self updateDrawingForRow:i];
-	}
+	[self reloadAllDrawings:NO];
 }
 
 - (void)updateDrawingForItem:(IRCTreeItem *)cellItem
 {
-	PointerIsEmptyAssert(cellItem);
-	
-	NSInteger rowIndex = [self rowForItem:cellItem];
-	
-	NSAssertReturn(rowIndex >= 0);
-	
-	[self updateDrawingForRow:rowIndex];
+	[self updateDrawingForItem:cellItem skipOcclusionCheck:NO];
 }
 
 - (void)updateMessageCountForItem:(IRCTreeItem *)cellItem
 {
+	[self updateMessageCountForItem:cellItem skipOcclusionCheck:NO];
+}
+
+- (void)updateMessageCountForRow:(NSInteger)rowIndex
+{
+	[self updateMessageCountForRow:rowIndex skipOcclusionCheck:NO];
+}
+
+- (void)updateDrawingForRow:(NSInteger)rowIndex
+{
+	[self updateDrawingForRow:rowIndex skipOcclusionCheck:NO];
+}
+
+- (void)reloadAllDrawings:(BOOL)skipOcclusionCheck
+{
+	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
+		[self updateDrawingForRow:i skipOcclusionCheck:skipOcclusionCheck];
+	}
+}
+
+- (void)updateDrawingForItem:(IRCTreeItem *)cellItem skipOcclusionCheck:(BOOL)skipOcclusionCheck
+{
 	PointerIsEmptyAssert(cellItem);
 	
 	NSInteger rowIndex = [self rowForItem:cellItem];
 	
 	NSAssertReturn(rowIndex >= 0);
 	
-	[self updateMessageCountForRow:rowIndex];
+	[self updateDrawingForRow:rowIndex skipOcclusionCheck:skipOcclusionCheck];
 }
 
-- (void)updateMessageCountForRow:(NSInteger)rowIndex
+- (void)updateMessageCountForItem:(IRCTreeItem *)cellItem skipOcclusionCheck:(BOOL)skipOcclusionCheck
+{
+	PointerIsEmptyAssert(cellItem);
+	
+	NSInteger rowIndex = [self rowForItem:cellItem];
+	
+	NSAssertReturn(rowIndex >= 0);
+	
+	[self updateMessageCountForRow:rowIndex skipOcclusionCheck:skipOcclusionCheck];
+}
+
+- (void)updateMessageCountForRow:(NSInteger)rowIndex skipOcclusionCheck:(BOOL)skipOcclusionCheck
 {
 	NSAssertReturn(rowIndex >= 0);
 	
-	if ([mainWindow() isOccluded] == NO) {
+	if (skipOcclusionCheck || (skipOcclusionCheck == NO && [mainWindow() isOccluded] == NO)) {
 		id rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
 		
 		BOOL isChildItem = [rowView isKindOfClass:[TVCServerListCellChildItem class]];
@@ -136,11 +161,11 @@
 	}
 }
 
-- (void)updateDrawingForRow:(NSInteger)rowIndex
+- (void)updateDrawingForRow:(NSInteger)rowIndex skipOcclusionCheck:(BOOL)skipOcclusionCheck
 {
 	NSAssertReturn(rowIndex >= 0);
 	
-	if ([mainWindow() isOccluded] == NO) {
+	if (skipOcclusionCheck || (skipOcclusionCheck == NO && [mainWindow() isOccluded] == NO)) {
 		id rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
 		
 		BOOL isGroupItem = [rowView isKindOfClass:[TVCServerListCellGroupItem class]];
@@ -252,7 +277,7 @@
 	[mainWindow() setTemporarilyDisablePreviousSelectionUpdates:NO];
 	[mainWindow() setTemporarilyIgnoreOutlineViewSelectionChanges:NO];
 	
-	[self reloadAllDrawings];
+	[self reloadAllDrawings:YES];
 }
 
 - (void)windowDidChangeKeyState
@@ -261,7 +286,7 @@
 		[[self backgroundView] setNeedsDisplay:YES];
 	}
 
-	[self reloadAllDrawings];
+	[self reloadAllDrawings:YES];
 }
 
 #pragma mark -

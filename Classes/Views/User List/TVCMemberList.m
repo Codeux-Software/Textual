@@ -373,19 +373,29 @@
 
 - (void)reloadAllDrawings
 {
-	/* Reload drawings for all rows. */
-	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
-		[self updateDrawingForRow:i];
-	}
+	[self reloadAllDrawings:NO];
 }
 
 - (void)updateDrawingForRow:(NSInteger)rowIndex
 {
+	[self updateDrawingForRow:rowIndex skipOcclusionCheck:NO];
+}
+
+- (void)reloadAllDrawings:(BOOL)skipOcclusionCheck
+{
+	/* Reload drawings for all rows. */
+	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
+		[self updateDrawingForRow:i skipOcclusionCheck:skipOcclusionCheck];
+	}
+}
+
+- (void)updateDrawingForRow:(NSInteger)rowIndex skipOcclusionCheck:(BOOL)skipOcclusionCheck
+{
 	NSAssertReturn(rowIndex >= 0);
 	
-	id rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
+	if (skipOcclusionCheck || (skipOcclusionCheck == NO && [mainWindow() isOccluded] == NO)) {
+		id rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
 	
-	if ([mainWindow() isOccluded] == NO) {
 		[rowView setNeedsDisplay:YES];
 	}
 }
@@ -488,7 +498,7 @@
 	
 	[self selectRowIndexes:selectedRows byExtendingSelection:NO];
 	
-	[self reloadAllDrawings];
+	[self reloadAllDrawings:YES];
 }
 
 - (void)windowDidChangeKeyState
@@ -497,7 +507,7 @@
 		[[self backgroundView] setNeedsDisplay:YES];
 	}
 	
-	[self reloadAllDrawings];
+	[self reloadAllDrawings:YES];
 }
 
 @end
