@@ -253,8 +253,6 @@
 #ifdef TEXTUAL_TRIAL_BINARY
 	[self.trialPeriodTimer stop];
 #endif
-
-	[self.socket close];
 }
 
 - (void)setup:(id)seed
@@ -3780,14 +3778,16 @@
 
 - (void)ircConnectionDidDisconnect:(IRCConnection *)sender withError:(NSError *)distcError
 {
-	TXPerformBlockAsynchronouslyOnMainQueue(^{
-		[self _disconnect];
-		
-		if (self.disconnectCallback) {
-			self.disconnectCallback();
-			self.disconnectCallback = nil;
-		}
-	});
+	if ([masterController() applicationIsTerminating] == NO) {
+		TXPerformBlockAsynchronouslyOnMainQueue(^{
+			[self _disconnect];
+			
+			if (self.disconnectCallback) {
+				self.disconnectCallback();
+				self.disconnectCallback = nil;
+			}
+		});
+	}
 }
 
 #pragma mark -
