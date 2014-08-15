@@ -1475,9 +1475,9 @@
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="pSQ-Ro-Ok1"/>
                         </constraints>
                         <holdingPriorities>
-                            <real value="255"/>
+                            <real value="335"/>
                             <real value="250"/>
-                            <real value="255"/>
+                            <real value="335"/>
                         </holdingPriorities>
                         <connections>
                             <outlet property="memberListWidthConstraint" destination="wR4-2T-o8C" id="q7F-Ba-hma"/>
@@ -1714,7 +1714,7 @@ There are no other limits. What you see, is what you get.</string>
                 <outlet property="memberList" destination="uZZ-ie-yHv" id="gm8-QW-Z2m"/>
                 <outlet property="serverList" destination="bhZ-Cj-KBM" id="QGQ-U3-gy6"/>
             </connections>
-            <point key="canvasLocation" x="2668" y="528.5"/>
+            <point key="canvasLocation" x="2919" y="519.5"/>
         </window>
         <customObject id="yyd-f5-aHb" userLabel="FormatTextController" customClass="TVCTextViewIRCFormattingMenu">
             <connections>
