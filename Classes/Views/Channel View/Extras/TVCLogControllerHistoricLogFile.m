@@ -40,6 +40,7 @@
 #define _maximumRowCountPerClient			1000
 
 @interface TVCLogControllerHistoricLogFile ()
+@property (nonatomic, strong) id backgroundTimer;
 @property (nonatomic, strong) NSFileHandle *fileHandle;
 @property (nonatomic, assign) BOOL truncationTimerScheduled;
 @end
@@ -76,7 +77,7 @@
 		/* Write to file. */
 		[self maybeReopen];
 
-		if (self.fileHandle) {
+		if ( self.fileHandle) {
 			[self.fileHandle writeData:jsondata];
 			[self.fileHandle writeData:[NSStringNewlinePlaceholder dataUsingEncoding:NSUTF8StringEncoding]];
 		} else {
@@ -171,12 +172,20 @@
 
 - (void)cancelAnyPreviouslyScheduledFileTruncationEvents
 {
-	if (self.truncationTimerScheduled) {
-		[NSObject cancelPreviousPerformRequestsWithTarget:self
-												 selector:@selector(truncateFileToMatchDefinedMaximumLineCount)
-												   object:nil];
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		if (self.truncationTimerScheduled) {
+			[self.backgroundTimer invalidate];
 
-		self.truncationTimerScheduled = NO;
+			self.truncationTimerScheduled = NO;
+		}
+	} else {
+		if (self.truncationTimerScheduled) {
+			[NSObject cancelPreviousPerformRequestsWithTarget:self
+													 selector:@selector(truncateFileToMatchDefinedMaximumLineCount)
+													   object:nil];
+
+			self.truncationTimerScheduled = NO;
+		}
 	}
 }
 
@@ -184,14 +193,38 @@
 {
 	/* File truncation events are scheduled to happen at random 
 	 intervals so they are all not running at one time. */
-	if (self.truncationTimerScheduled == NO) {
-		NSInteger timeInterval = ((arc4random() % 951) + 950); // ~15 minutes
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		NSBackgroundActivityScheduler *scheduler = [[NSBackgroundActivityScheduler alloc] initWithIdentifier:[self backgroundActivityIdentifier]];
 
-		[self performSelector:@selector(truncateFileToMatchDefinedMaximumLineCount)
-				   withObject:nil
-				   afterDelay:timeInterval];
-
+		[scheduler setRepeats:YES];
+		[scheduler setInterval:(30 * 60)];
+		[scheduler setTolerance:(15 * 60)];
+		
+		[scheduler setQualityOfService:NSQualityOfServiceBackground];
+		
+		__weak TVCLogControllerHistoricLogFile *weakSelf = self;
+		
+		[scheduler scheduleWithBlock:^(NSBackgroundActivityCompletionHandler completionHandler) {
+			if ( weakSelf) {
+				[weakSelf truncateFileToMatchDefinedMaximumLineCount];
+			}
+			
+			completionHandler(NSBackgroundActivityResultFinished);
+		}];
+		
+		self.backgroundTimer = scheduler;
+		
 		self.truncationTimerScheduled = YES;
+	} else {
+		if (self.truncationTimerScheduled == NO) {
+			NSInteger timeInterval = ((arc4random() % 951) + 950); // ~15 minutes
+
+			[self performSelector:@selector(truncateFileToMatchDefinedMaximumLineCount)
+					   withObject:nil
+					   afterDelay:timeInterval];
+
+			self.truncationTimerScheduled = YES;
+		}
 	}
 }
 
@@ -340,6 +373,22 @@
 
 #pragma mark -
 #pragma mark Private API
+
+- (NSString *)backgroundActivityIdentifier
+{
+	id client = [self.associatedController associatedClient];
+	id channel = [self.associatedController associatedChannel];
+	
+	NSString *combinedName;
+	
+	if (channel) {
+		combinedName = [NSString stringWithFormat:@"%@-%@", [client uniqueIdentifier], [channel uniqueIdentifier]];
+	} else {
+		combinedName = [NSString stringWithFormat:@"%@", [client uniqueIdentifier]];
+	}
+	
+	return [@"com.codeux.irc.textual5.TVCLogControllerHistoricLogBackgroundActivity.%@" stringByAppendingString:combinedName];
+}
 
 - (NSString *)writePath
 {
