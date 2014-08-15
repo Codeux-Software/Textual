@@ -70,6 +70,7 @@ typedef enum TXUserDoubleClickAction : NSInteger {
 typedef enum TXNoticeSendLocationType : NSInteger {
 	TXNoticeSendServerConsoleType = 0,
 	TXNoticeSendCurrentChannelType = 1,
+	TXNoticeSendToQueryDestinationType = 2,
 } TXNoticeSendLocationType;
 
 typedef enum TXCommandWKeyAction : NSInteger {

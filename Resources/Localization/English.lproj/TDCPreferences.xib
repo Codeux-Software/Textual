@@ -1280,7 +1280,7 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="352" height="20"/>
+                                                    <size key="minSize" width="352" height="16"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="Strips away formatting such as ">
@@ -1370,7 +1370,7 @@
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="352" height="20"/>
+                                                    <size key="minSize" width="352" height="16"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
@@ -2983,7 +2983,7 @@
             </userGuides>
             <subviews>
                 <button id="tKc-zC-6Gt">
-                    <rect key="frame" x="53" y="298" width="338" height="18"/>
+                    <rect key="frame" x="53" y="308" width="338" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="PkM-k2-Dgn">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2994,7 +2994,7 @@
                     </connections>
                 </button>
                 <button id="Y4Q-Ki-gfe">
-                    <rect key="frame" x="53" y="242" width="265" height="18"/>
+                    <rect key="frame" x="53" y="252" width="265" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="gih-NF-Noz">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3005,7 +3005,7 @@
                     </connections>
                 </button>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="jpk-VZ-jWK">
-                    <rect key="frame" x="68" y="243" width="298" height="16"/>
+                    <rect key="frame" x="68" y="253" width="298" height="16"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="ksl-Tw-sgp">
                         <rect key="frame" x="1" y="1" width="223" height="133"/>
@@ -3051,7 +3051,7 @@
                     </scroller>
                 </scrollView>
                 <button id="zY5-8K-Mie">
-                    <rect key="frame" x="53" y="156" width="452" height="32"/>
+                    <rect key="frame" x="53" y="166" width="452" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="ekF-Cf-Mjw">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3061,41 +3061,8 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.FocusSelectionOnMessageCommandExecution" id="O7w-61-9Do"/>
                     </connections>
                 </button>
-                <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" id="6AC-Oj-s1p">
-                    <rect key="frame" x="243" y="90" width="137" height="38"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    <size key="cellSize" width="137" height="18"/>
-                    <size key="intercellSpacing" width="4" height="2"/>
-                    <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="xxQ-T6-iej">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <cells>
-                        <column>
-                            <buttonCell type="radio" title="Network Console" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="z5q-kx-Kkh">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="titleBar" size="12"/>
-                                <connections>
-                                    <accessibilityConnection property="title" destination="xEg-Db-K0K" id="VZZ-8n-zTJ"/>
-                                </connections>
-                            </buttonCell>
-                            <buttonCell type="radio" title="Current Channel" imagePosition="left" alignment="left" inset="2" id="pyb-8n-QN7">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="titleBar" size="12"/>
-                                <connections>
-                                    <accessibilityConnection property="title" destination="xEg-Db-K0K" id="c9E-jI-QRc"/>
-                                </connections>
-                            </buttonCell>
-                        </column>
-                    </cells>
-                    <connections>
-                        <accessibilityConnection property="title" destination="xEg-Db-K0K" id="bBh-oz-2Sv"/>
-                        <binding destination="-2" name="selectedIndex" keyPath="self.userDefaultsValues.DestinationOfNonserverNotices" id="Fa3-zV-c8n"/>
-                    </connections>
-                </matrix>
                 <textField verticalHuggingPriority="750" id="xEg-Db-K0K">
-                    <rect key="frame" x="53" y="112" width="185" height="16"/>
+                    <rect key="frame" x="53" y="122" width="185" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Forward non-server notices to:" id="UgN-n4-JIQ">
                         <font key="font" metaFont="cellTitle"/>
@@ -3104,21 +3071,21 @@
                     </textFieldCell>
                 </textField>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="nlA-Ew-LSZ">
-                    <rect key="frame" x="70" y="143" width="442" height="5"/>
+                    <rect key="frame" x="70" y="153" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="vT0-4B-zbA">
-                    <rect key="frame" x="70" y="195" width="442" height="5"/>
+                    <rect key="frame" x="70" y="205" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="eNc-BO-Kmr">
-                    <rect key="frame" x="68" y="299" width="298" height="16"/>
+                    <rect key="frame" x="68" y="309" width="298" height="16"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="HUe-3X-e10">
                         <rect key="frame" x="1" y="1" width="223" height="133"/>
@@ -3192,7 +3159,7 @@
                     </scroller>
                 </scrollView>
                 <button id="fg1-OG-7A7">
-                    <rect key="frame" x="53" y="270" width="270" height="18"/>
+                    <rect key="frame" x="53" y="280" width="270" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="jGt-tN-qzV">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3203,7 +3170,7 @@
                     </connections>
                 </button>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="Sfr-Eg-Gsq">
-                    <rect key="frame" x="68" y="271" width="298" height="16"/>
+                    <rect key="frame" x="68" y="281" width="298" height="16"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="LcB-hi-wda">
                         <rect key="frame" x="1" y="1" width="223" height="133"/>
@@ -3249,7 +3216,7 @@
                     </scroller>
                 </scrollView>
                 <button id="HZq-oo-s5C">
-                    <rect key="frame" x="53" y="214" width="329" height="18"/>
+                    <rect key="frame" x="53" y="224" width="329" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="QcP-gl-hx4">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3260,7 +3227,7 @@
                     </connections>
                 </button>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="USP-zA-6Oz">
-                    <rect key="frame" x="68" y="215" width="298" height="16"/>
+                    <rect key="frame" x="68" y="225" width="298" height="16"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="mgn-d2-bSt">
                         <rect key="frame" x="1" y="1" width="223" height="133"/>
@@ -3306,7 +3273,7 @@
                     </scroller>
                 </scrollView>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="fPg-jm-hQt">
-                    <rect key="frame" x="68" y="164" width="334" height="16"/>
+                    <rect key="frame" x="68" y="174" width="334" height="16"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="RyE-yt-Oa8">
                         <rect key="frame" x="1" y="1" width="223" height="133"/>
@@ -3358,6 +3325,43 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
+                <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" id="6AC-Oj-s1p">
+                    <rect key="frame" x="244" y="80" width="136" height="58"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    <size key="cellSize" width="136" height="18"/>
+                    <size key="intercellSpacing" width="4" height="2"/>
+                    <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="xxQ-T6-iej">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <cells>
+                        <column>
+                            <buttonCell type="radio" title="Network Console" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="z5q-kx-Kkh">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="titleBar" size="12"/>
+                                <connections>
+                                    <accessibilityConnection property="title" destination="xEg-Db-K0K" id="VZZ-8n-zTJ"/>
+                                </connections>
+                            </buttonCell>
+                            <buttonCell type="radio" title="Current Channel" imagePosition="left" alignment="left" inset="2" id="pyb-8n-QN7">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="titleBar" size="12"/>
+                                <connections>
+                                    <accessibilityConnection property="title" destination="xEg-Db-K0K" id="c9E-jI-QRc"/>
+                                </connections>
+                            </buttonCell>
+                            <buttonCell type="radio" title="Private Message" imagePosition="left" alignment="left" inset="2" id="Nyc-Yz-lSg">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </column>
+                    </cells>
+                    <connections>
+                        <accessibilityConnection property="title" destination="xEg-Db-K0K" id="bBh-oz-2Sv"/>
+                        <binding destination="-2" name="selectedIndex" keyPath="self.userDefaultsValues.DestinationOfNonserverNotices" id="Fa3-zV-c8n"/>
+                    </connections>
+                </matrix>
             </subviews>
             <point key="canvasLocation" x="283.5" y="-3978"/>
         </customView>
