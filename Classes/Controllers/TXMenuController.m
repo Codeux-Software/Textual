@@ -199,6 +199,7 @@
 		case 6883: // "Invite Only (+i)"
 		case 6884: // "Anyone Can Join (-i)"
 		case 6885: // "Manage All Modes"
+		case 7306: // "Print"
 		case 51065: // "Toggle Visbility of Server List"
 		case 64611: // "Channel List…"
 		case 52694: // "Send file…"
@@ -1023,6 +1024,11 @@
             [[keyWindow firstResponder] performSelector:@selector(paste:) withObject:nil];
         }
     }
+}
+
+- (IBAction)print:(id)sender
+{
+	[[self currentWebView] print:sender];
 }
 
 - (void)closeWindow:(id)sender
