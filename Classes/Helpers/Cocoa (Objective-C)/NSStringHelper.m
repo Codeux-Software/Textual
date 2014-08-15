@@ -335,7 +335,7 @@
 
 - (NSString *)stringByDeletingPreifx:(NSString *)prefix
 {
-	if ([prefix length] > 0 && [self length] > [prefix length]) {
+	if ([prefix length] > 0 && [self length] >= [prefix length]) {
 		if ([self hasPrefix:prefix]) {
 			return [self substringFromIndex:[prefix length]];
 		}

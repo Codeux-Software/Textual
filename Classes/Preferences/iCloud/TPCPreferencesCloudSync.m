@@ -656,6 +656,8 @@
 			NSURL *cachePahtURL = [NSURL fileURLWithPath:cachePath];
 			NSURL *ubiqdPathURL = [NSURL fileURLWithPath:ubiqdPath];
 			
+			LogToConsole(@"iCloud: Updating cache for container at path: \"%@\"", [ubiqdPathURL path]);
+			
 			/* ========================================================== */
 			
 			/* Gather information about current style to use it for a comparison. */
@@ -732,6 +734,10 @@
 				/* Build some relevant path information. */
 				/* First the path to the file minus its path prefix. */
 				NSString *basicFilePath = [[fileURL path] stringByDeletingPreifx:[ubiqdPathURL path]];
+
+				if ([basicFilePath length] <= 0) {
+					continue;
+				}
 				
 				/* Then the actual folder in which the file is stored. */
 				NSString *basicFolderPath = [basicFilePath stringByDeletingLastPathComponent];
