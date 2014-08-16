@@ -1,7 +1,7 @@
 // 
 //  Author: Andreas Linde <mail@andreaslinde.de>
 // 
-//  Copyright (c) 2012-2013 HockeyApp, Bit Stadium GmbH. All rights reserved.
+//  Copyright (c) 2012-2014 HockeyApp, Bit Stadium GmbH. All rights reserved.
 //  See LICENSE.txt for author information.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,26 +25,89 @@
 #import <HockeySDK/BITHockeyManager.h>
 #import <HockeySDK/BITHockeyManagerDelegate.h>
 
+#import <HockeySDK/BITHockeyAttachment.h>
+
 #import <HockeySDK/BITCrashManager.h>
 #import <HockeySDK/BITCrashManagerDelegate.h>
+#import <HockeySDK/BITCrashDetails.h>
 
 #import <HockeySDK/BITSystemProfile.h>
 
+#import <HockeySDK/BITFeedbackManager.h>
+#import <HockeySDK/BITFeedbackWindowController.h>
 
-// hockey crash reporting api error domain
-typedef enum {
+
+// Notification message which HockeyManager is listening to, to retry requesting updated from the server
+#define BITHockeyNetworkDidBecomeReachableNotification @"BITHockeyNetworkDidBecomeReachable"
+
+extern NSString *const __attribute__((unused)) kBITDefaultUserID;
+extern NSString *const __attribute__((unused)) kBITDefaultUserName;
+extern NSString *const __attribute__((unused)) kBITDefaultUserEmail;
+
+/**
+ *  HockeySDK Crash Reporter error domain
+ */
+typedef NS_ENUM (NSInteger, BITCrashErrorReason) {
+  /**
+   *  Unknown error
+   */
   BITCrashErrorUnknown,
+  /**
+   *  API Server rejected app version
+   */
   BITCrashAPIAppVersionRejected,
+  /**
+   *  API Server returned empty response
+   */
   BITCrashAPIReceivedEmptyResponse,
+  /**
+   *  Connection error with status code
+   */
   BITCrashAPIErrorWithStatusCode
-} BITCrashErrorReason;
+};
 extern NSString *const __attribute__((unused)) kBITCrashErrorDomain;
 
 
-// HockeySDK
+/**
+ *  HockeySDK Feedback error domain
+ */
+typedef NS_ENUM(NSInteger, BITFeedbackErrorReason) {
+  /**
+   *  Unknown error
+   */
+  BITFeedbackErrorUnknown,
+  /**
+   *  API Server returned invalid status
+   */
+  BITFeedbackAPIServerReturnedInvalidStatus,
+  /**
+   *  API Server returned invalid data
+   */
+  BITFeedbackAPIServerReturnedInvalidData,
+  /**
+   *  API Server returned empty response
+   */
+  BITFeedbackAPIServerReturnedEmptyResponse,
+  /**
+   *  Authorization secret missing
+   */
+  BITFeedbackAPIClientAuthorizationMissingSecret,
+  /**
+   *  No internet connection
+   */
+  BITFeedbackAPIClientCannotCreateConnection
+};
+extern NSString *const __attribute__((unused)) kBITFeedbackErrorDomain;
 
-typedef enum {
-  BITHockeyErrorUnknown,
-  HockeyAPIClientMissingJSONLibrary
-} BITHockeyErrorReason;
+
+/**
+ *  HockeySDK global error domain
+ */
+typedef NS_ENUM(NSInteger, BITHockeyErrorReason) {
+  /**
+   *  Unknown error
+   */
+  BITHockeyErrorUnknown
+};
 extern NSString *const __attribute__((unused)) kBITHockeyErrorDomain;
+// HockeySDK

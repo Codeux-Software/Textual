@@ -49,7 +49,6 @@
 
 #ifdef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED
 	#define _hockeyAppApplicationIdentifier			@"93d6d315ace023a30793e8c52a02f920"
-	#define _hockeyAppApplicationCompanyName		@"Codeux Software"
 #endif
 
 @implementation TXMasterController
@@ -213,10 +212,7 @@
 - (void)awakeHockeyApp
 {
 #ifdef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED
-	[[BITHockeyManager sharedHockeyManager] configureWithIdentifier:_hockeyAppApplicationIdentifier
-														companyName:_hockeyAppApplicationCompanyName
-														   delegate:self];
-	
+	[[BITHockeyManager sharedHockeyManager] configureWithIdentifier:_hockeyAppApplicationIdentifier delegate:self];
 	[[BITHockeyManager sharedHockeyManager] startManager];
 #endif
 }

@@ -6,21 +6,21 @@
 	<dict>
 		<key>Resources/BITCrashReportUI.nib</key>
 		<data>
-		l9nFHkT9skEPnHX7X/5rY3fE7Nk=
+		K2+PnyDH+D4pT9bCyzW0gKPsULA=
 		</data>
 		<key>Resources/BITFeedbackWindowController.nib</key>
 		<data>
-		jaH8GWYRq0LKIiF2zou6TI4P1yA=
+		cxRJbe+8EnuQlhmSwuLvj++ysWM=
 		</data>
 		<key>Resources/Info.plist</key>
 		<data>
-		10R4Rgrnl95srn+wGrvv+pIe7Zg=
+		3lv6WlOxZdjlld3PkwXIWxfpSvU=
 		</data>
 		<key>Resources/de.lproj/HockeySDK.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ZLLNDrVFImfHXYwjJZMGiAJhsL0=
+			jo3EMuE0u4n2fAAoz4fIZAOmxg8=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -29,7 +29,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			n11gytziNWQn15cAfZWMdaS/+8Y=
+			R6ZVr6oAsRFLBjlCUTaaDvXCUFM=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -38,7 +38,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			M4jFsikHjHLQk3hXa3xM1q+2kkU=
+			Lhr8Fik+QVvV84vnZke4YFVbBC0=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -47,7 +47,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			hdsHlH0+VHdFhbkPJa8Aln6O0T4=
+			eZTpQasOiXMeujIm+H+jy1cylcg=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -56,7 +56,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			yzen5R1sXozhSczoN0JMDlKWM8Q=
+			TCTZtvLwG07cqw2xoajSKHpLpq0=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -65,7 +65,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			tz/yvbjm2dtN5PzNMZN86f5zzX8=
+			9L3urRuxyr0wZgk0neZGrJaQnFQ=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -74,7 +74,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			G8gNKH0fEEkJ5Sn7OGCE8XyqAe0=
+			LpcWW+B4F6iR+2x2NAzDkhVjL30=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -83,7 +83,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			+YZBs0Dv9I7A10EJBa8dcT8zm9g=
+			mc4S8tl/ei/+gv1fVyd/s3cCG5U=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -91,25 +91,46 @@
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>Frameworks/CrashReporter.framework</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			2JuruTxbeC/Fr3q3o6p6wYkkiqk=
+			</data>
+			<key>requirement</key>
+			<string>identifier "coop.plausible.CrashReporter" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = KYJ84ZC369</string>
+		</dict>
+		<key>Headers/BITCrashDetails.h</key>
+		<data>
+		+ujUsnxyL/Il5gSe2bnAZpVkZfY=
+		</data>
 		<key>Headers/BITCrashExceptionApplication.h</key>
 		<data>
-		4XJDqfzC7jytEEujMXVoQJRER6k=
+		TPNjCJ7UCcNT6fRxpjbCNF5Ndb0=
 		</data>
 		<key>Headers/BITCrashManager.h</key>
 		<data>
-		l+0SDJZa+XBm8CArkknNCg61aRA=
+		IIk4pN16xO83h0qhybmnLDht2SI=
 		</data>
 		<key>Headers/BITCrashManagerDelegate.h</key>
 		<data>
-		GSYEFnWlyc8STfRefMp+RqhAn+A=
+		IC3DV1YlLi/7nmp5rD8TKJcs6jA=
+		</data>
+		<key>Headers/BITCrashMetaData.h</key>
+		<data>
+		1v13IP1iJ9ba/1DJm8x7wOJ9oGI=
 		</data>
 		<key>Headers/BITFeedbackManager.h</key>
 		<data>
-		E18EVtWftzzW+DaWA4+pgLr/5fI=
+		DJS4Hsr1JEcJ298c859vfXbZnjM=
 		</data>
 		<key>Headers/BITFeedbackWindowController.h</key>
 		<data>
-		2iQdR8PFVWYjyiXNdWwZF+/ZVrU=
+		pKTuBmNYXxlTGcL20xnFbM4hgik=
+		</data>
+		<key>Headers/BITHockeyAttachment.h</key>
+		<data>
+		kmTpG5GlHjyVDxDosUKS2CP9gKI=
 		</data>
 		<key>Headers/BITHockeyBaseManager.h</key>
 		<data>
@@ -117,37 +138,37 @@
 		</data>
 		<key>Headers/BITHockeyManager.h</key>
 		<data>
-		+g1Q2Eab4jR1DbbMq0h+DZNWFic=
+		cTLX18Q0v9RDXeDysVjNFsG/Iys=
 		</data>
 		<key>Headers/BITHockeyManagerDelegate.h</key>
 		<data>
-		WFPahY1kHHTDakhHNkS8FboK7EI=
+		CcivljoZsfAQBkVXlXQI1ocSzdE=
 		</data>
 		<key>Headers/BITSystemProfile.h</key>
 		<data>
-		2Ck5HnhqR6FCyc6BqkOEC8NKMno=
+		6jyNwm2/1nlgIkONMe5B8k+sSfE=
 		</data>
 		<key>Headers/HockeySDK.h</key>
 		<data>
-		T9orrczn4wFbN8ygdr1KJKKFUms=
+		vsDVrDaLJDsCaXU9HftLlfKkj7s=
 		</data>
 		<key>Resources/BITCrashReportUI.nib</key>
 		<data>
-		l9nFHkT9skEPnHX7X/5rY3fE7Nk=
+		K2+PnyDH+D4pT9bCyzW0gKPsULA=
 		</data>
 		<key>Resources/BITFeedbackWindowController.nib</key>
 		<data>
-		jaH8GWYRq0LKIiF2zou6TI4P1yA=
+		cxRJbe+8EnuQlhmSwuLvj++ysWM=
 		</data>
 		<key>Resources/Info.plist</key>
 		<data>
-		10R4Rgrnl95srn+wGrvv+pIe7Zg=
+		3lv6WlOxZdjlld3PkwXIWxfpSvU=
 		</data>
 		<key>Resources/de.lproj/HockeySDK.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ZLLNDrVFImfHXYwjJZMGiAJhsL0=
+			jo3EMuE0u4n2fAAoz4fIZAOmxg8=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -156,7 +177,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			n11gytziNWQn15cAfZWMdaS/+8Y=
+			R6ZVr6oAsRFLBjlCUTaaDvXCUFM=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -165,7 +186,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			M4jFsikHjHLQk3hXa3xM1q+2kkU=
+			Lhr8Fik+QVvV84vnZke4YFVbBC0=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -174,7 +195,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			hdsHlH0+VHdFhbkPJa8Aln6O0T4=
+			eZTpQasOiXMeujIm+H+jy1cylcg=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -183,7 +204,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			yzen5R1sXozhSczoN0JMDlKWM8Q=
+			TCTZtvLwG07cqw2xoajSKHpLpq0=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -192,7 +213,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			tz/yvbjm2dtN5PzNMZN86f5zzX8=
+			9L3urRuxyr0wZgk0neZGrJaQnFQ=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -201,7 +222,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			G8gNKH0fEEkJ5Sn7OGCE8XyqAe0=
+			LpcWW+B4F6iR+2x2NAzDkhVjL30=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -210,7 +231,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			+YZBs0Dv9I7A10EJBa8dcT8zm9g=
+			mc4S8tl/ei/+gv1fVyd/s3cCG5U=
 			</data>
 			<key>optional</key>
 			<true/>

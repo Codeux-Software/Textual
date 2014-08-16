@@ -1,7 +1,7 @@
 /*
  * Author: Andreas Linde <mail@andreaslinde.de>
  *
- * Copyright (c) 2012-2013 HockeyApp, Bit Stadium GmbH.
+ * Copyright (c) 2012-2014 HockeyApp, Bit Stadium GmbH.
  * All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person
@@ -30,7 +30,7 @@
 #import "BITCrashManagerDelegate.h"
 
 @class BITHockeyManager;
-@class BITCrashManager;
+@class BITHockeyBaseManager;
 
 /**
  The `BITHockeyManagerDelegate` formal protocol defines methods further configuring
@@ -49,7 +49,7 @@
 
 /** Return the userid that should used in the SDK components
  
- Right now this is used by the `BITCrashMananger` to attach to a crash report.
+ Right now this is used by the `BITCrashMananger` to attach to a crash report and `BITFeedbackManager`.
  
  You can find out the component requesting the user name like this:
     - (NSString *)userNameForHockeyManager:(BITHockeyManager *)hockeyManager componentManager:(BITCrashManager *)componentManager {
@@ -64,15 +64,16 @@
  
  @param hockeyManager The `BITHockeyManager` HockeyManager instance invoking this delegate
  @param componentManager The `BITCrashManager` component instance invoking this delegate
+ @see [BITHockeyManager setUserID:]
  @see userNameForHockeyManager:componentManager:
  @see userEmailForHockeyManager:componentManager:
  */
-- (NSString *)userIDForHockeyManager:(BITHockeyManager *)hockeyManager componentManager:(BITCrashManager *)componentManager;
+- (NSString *)userIDForHockeyManager:(BITHockeyManager *)hockeyManager componentManager:(BITHockeyBaseManager *)componentManager;
 
 
 /** Return the user name that should used in the SDK components
  
- Right now this is used by the `BITCrashMananger` to attach to a crash report.
+ Right now this is used by the `BITCrashMananger` to attach to a crash report and `BITFeedbackManager`.
  
  You can find out the component requesting the user name like this:
     - (NSString *)userNameForHockeyManager:(BITHockeyManager *)hockeyManager componentManager:(BITCrashManager *)componentManager {
@@ -86,15 +87,16 @@
  
  @param hockeyManager The `BITHockeyManager` HockeyManager instance invoking this delegate
  @param componentManager The `BITCrashManager` component instance invoking this delegate
+ @see [BITHockeyManager setUserName:]
  @see userIDForHockeyManager:componentManager:
  @see userEmailForHockeyManager:componentManager:
  */
-- (NSString *)userNameForHockeyManager:(BITHockeyManager *)hockeyManager componentManager:(BITCrashManager *)componentManager;
+- (NSString *)userNameForHockeyManager:(BITHockeyManager *)hockeyManager componentManager:(BITHockeyBaseManager *)componentManager;
 
 
 /** Return the users email address that should used in the SDK components
  
- Right now this is used by the `BITCrashMananger` to attach to a crash report.
+ Right now this is used by the `BITCrashMananger` to attach to a crash report and `BITFeedbackManager`.
  
  You can find out the component requesting the user name like this:
     - (NSString *)userNameForHockeyManager:(BITHockeyManager *)hockeyManager componentManager:(BITCrashManager *)componentManager {
@@ -108,9 +110,10 @@
  
  @param hockeyManager The `BITHockeyManager` HockeyManager instance invoking this delegate
  @param componentManager The `BITCrashManager` component instance invoking this delegate
+ @see [BITHockeyManager setUserEmail:]
  @see userIDForHockeyManager:componentManager:
  @see userNameForHockeyManager:componentManager:
  */
-- (NSString *)userEmailForHockeyManager:(BITHockeyManager *)hockeyManager componentManager:(BITCrashManager *)componentManager;
+- (NSString *)userEmailForHockeyManager:(BITHockeyManager *)hockeyManager componentManager:(BITHockeyBaseManager *)componentManager;
 
 @end
