@@ -828,17 +828,6 @@ CQ
                                                 </binding>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Reset &quot;Don't Ask Me&quot; Warnings" id="2725">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="resetDoNotAskMePopupWarnings:" target="267" id="2729"/>
-                                                <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.TextualDeveloperEnvironment" id="Cmd-T1-KYa">
-                                                    <dictionary key="options">
-                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                    </dictionary>
-                                                </binding>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem title="Open &quot;Default IRC Client&quot; Dialog" id="2730">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
@@ -855,6 +844,28 @@ CQ
                                             <connections>
                                                 <action selector="openWelcomeSheet:" target="267" id="h8B-I6-6M2"/>
                                                 <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.TextualDeveloperEnvironment" id="Zof-qT-TyW">
+                                                    <dictionary key="options">
+                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Reset &quot;Don't Ask Me&quot; Warnings" id="2725">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="resetDoNotAskMePopupWarnings:" target="267" id="2729"/>
+                                                <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.TextualDeveloperEnvironment" id="Cmd-T1-KYa">
+                                                    <dictionary key="options">
+                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Simulate a Crash" id="DCt-W4-lfW">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="simulateCrash:" target="267" id="Rcz-bc-3ac"/>
+                                                <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.TextualDeveloperEnvironment" id="FcV-vq-tUE">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                     </dictionary>

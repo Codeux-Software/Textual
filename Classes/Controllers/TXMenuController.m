@@ -2796,6 +2796,14 @@
 	[worldController() informViewsThatTheSidebarInversionPreferenceDidChange];
 }
 
+#pragma mark -
+#pragma mark Developer Tools
+
+- (IBAction)simulateCrash:(id)sender
+{
+	[[[BITHockeyManager sharedHockeyManager] crashManager] generateTestCrash];
+}
+
 @end
 
 @implementation TXMenuControllerMainWindowProxy

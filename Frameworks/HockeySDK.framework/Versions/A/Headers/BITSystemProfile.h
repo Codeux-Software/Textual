@@ -1,7 +1,7 @@
 //
 //  Author: Thomas Dohmke <thomas@dohmke.de>
 //
-//  Copyright (c) 2012-2013 HockeyApp, Bit Stadium GmbH. All rights reserved.
+//  Copyright (c) 2012-2014 HockeyApp, Bit Stadium GmbH. All rights reserved.
 //  See LICENSE.txt for author information.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy

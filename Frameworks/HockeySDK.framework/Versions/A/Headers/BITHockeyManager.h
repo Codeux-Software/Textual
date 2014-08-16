@@ -1,7 +1,7 @@
 // 
 //  Author: Andreas Linde <mail@andreaslinde.de>
 // 
-//  Copyright (c) 2012-2013 HockeyApp, Bit Stadium GmbH. All rights reserved.
+//  Copyright (c) 2012-2014 HockeyApp, Bit Stadium GmbH. All rights reserved.
 //  See LICENSE.txt for author information.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,6 +23,7 @@
 //  THE SOFTWARE.
 
 @class BITCrashManager;
+@class BITFeedbackManager;
 @protocol BITHockeyManagerDelegate;
 
 /**
@@ -44,9 +45,7 @@
  Example:
  
      [[BITHockeyManager sharedHockeyManager]
-       configureWithIdentifier:@"<AppIdentifierFromHockeyApp>"
-       companyName:@"<YourCompanyName>"
-       crashReportManagerDelegate:self];
+       configureWithIdentifier:@"<AppIdentifierFromHockeyApp>"];
      [[BITHockeyManager sharedHockeyManager] startManager];
  
  @warning The SDK is **NOT** thread safe and has to be set up on the main thread!
@@ -54,22 +53,7 @@
  @warning You should **NOT** change any module configuration after calling `startManager`!
  
  */
-@interface BITHockeyManager : NSObject {
-@private
-  NSString *_appIdentifier;
-  NSString *_companyName;
-  NSString *_serverURL;
-  
-  BOOL _validAppIdentifier;
-  
-  BOOL _startManagerIsInvoked;
-  
-  BITCrashManager *_crashManager;
-  id <BITHockeyManagerDelegate> _delegate;
-  BOOL _disableCrashManager;
-  
-  BOOL _debugLogEnabled;
-}
+@interface BITHockeyManager : NSObject
 
 #pragma mark - Public Methods
 
@@ -87,28 +71,73 @@
 /**
  * Initializes the manager with a particular app identifier, company name and delegate
  *
+ * Initialize the manager with a HockeyApp app identifier.
+ *
+ * @see BITCrashManagerDelegate
+ * @see startManager
+ * @see configureWithIdentifier:delegate:
+ * @param appIdentifier The app identifier that should be used.
+ */
+- (void)configureWithIdentifier:(NSString *)appIdentifier;
+
+/**
+ * Initializes the manager with a particular app identifier, company name and delegate
+ *
+ * Initialize the manager with a HockeyApp app identifier and assign the class that
+ * implements the optional protocol `BITCrashManagerDelegate`.
+ *
+ * @see BITCrashManagerDelegate
+ * @see startManager
+ * @see configureWithIdentifier:
+ * @param appIdentifier The app identifier that should be used.
+ * @param delegate `nil` or the class implementing the optional protocols
+ */
+- (void)configureWithIdentifier:(NSString *)appIdentifier delegate:(id <BITHockeyManagerDelegate>) delegate;
+
+/**
+ * Initializes the manager with a particular app identifier, company name and delegate
+ *
  * Initialize the manager with a HockeyApp app identifier and assign the class that
  * implements the required protocol `BITCrashManagerDelegate`.
  *
  * @see BITCrashManagerDelegate
  * @see startManager
+ * @see configureWithIdentifier:
+ * @see configureWithIdentifier:delegate:
  * @param appIdentifier The app identifier that should be used.
- * @param companyName the company that should be shown in the UI
+ * @param companyName `nil` or the company name, this is not used anywhere any longer.
  * @param delegate `nil` or the class implementing the required protocols
  */
-- (void)configureWithIdentifier:(NSString *)appIdentifier companyName:(NSString *)companyName delegate:(id <BITHockeyManagerDelegate>) delegate;
+- (void)configureWithIdentifier:(NSString *)appIdentifier companyName:(NSString *)companyName delegate:(id <BITHockeyManagerDelegate>) delegate __attribute__((deprecated("Use configureWithIdentifier:delegate: instead")));
 
 /**
  * Starts the manager and runs all modules
  *
  * Call this after configuring the manager and setting up all modules.
  *
- * @see configureWithIdentifier:companyName:delegate:
+ * @see configureWithIdentifier:
+ * @see configureWithIdentifier:delegate:
  */
 - (void)startManager;
 
 
 #pragma mark - Public Properties
+
+///-----------------------------------------------------------------------------
+/// @name General
+///-----------------------------------------------------------------------------
+
+
+/**
+ * Set the delegate
+ *
+ * Defines the class that implements the optional protocol `BITHockeyManagerDelegate`.
+ *
+ * @see BITHockeyManagerDelegate
+ * @see BITCrashManagerDelegate
+ */
+@property (nonatomic, unsafe_unretained) id<BITHockeyManagerDelegate> delegate;
+
 
 ///-----------------------------------------------------------------------------
 /// @name Modules
@@ -128,7 +157,8 @@
  *
  * Returns the BITCrashManager instance initialized by BITHockeyManager
  *
- * @see configureWithIdentifier:companyName:delegate:
+ * @see configureWithIdentifier:
+ * @see configureWithIdentifier:delegate:
  * @see startManager
  * @see disableCrashManager
  */
@@ -149,6 +179,76 @@
 @property (nonatomic, getter = isCrashManagerDisabled) BOOL disableCrashManager;
 
 
+/**
+ Reference to the initialized BITFeedbackManager module
+ 
+ Returns the BITFeedbackManager instance initialized by BITHockeyManager
+ 
+ @see configureWithIdentifier:delegate:
+ @see configureWithBetaIdentifier:liveIdentifier:delegate:
+ @see startManager
+ @see disableFeedbackManager
+ */
+@property (nonatomic, strong, readonly) BITFeedbackManager *feedbackManager;
+
+
+/**
+ Flag the determines whether the Feedback Manager should be disabled
+ 
+ If this flag is enabled, then letting the user give feedback and
+ get responses will be turned off!
+ 
+ Please note that the Feedback Manager will be initialized anyway!
+ 
+ *Default*: _NO_
+ @see feedbackManager
+ */
+@property (nonatomic, getter = isFeedbackManagerDisabled) BOOL disableFeedbackManager;
+
+
+///-----------------------------------------------------------------------------
+/// @name Configuration
+///-----------------------------------------------------------------------------
+
+
+/** Set the userid that should used in the SDK components
+ 
+ Right now this is used by the `BITCrashMananger` to attach to a crash report and `BITFeedbackManager`.
+ 
+ Note: the value is persisted in the keychain! To remove old values, call this setter with a `nil` value.
+ 
+ @see [BITHockeyManagerDelegate userIDForHockeyManager:componentManager:]
+ @see setUserName:
+ @see setUserEmail:
+ */
+- (void)setUserID:(NSString *)userID;
+
+
+/** Set the user name that should used in the SDK components
+ 
+ Right now this is used by the `BITCrashMananger` to attach to a crash report and `BITFeedbackManager`.
+ 
+ Note: the value is persisted in the keychain! To remove old values, call this setter with a `nil` value.
+
+ @see [BITHockeyManagerDelegate userNameForHockeyManager:componentManager:]
+ @see setUserID:
+ @see setUserEmail:
+ */
+- (void)setUserName:(NSString *)userName;
+
+
+/** Set the users email address that should used in the SDK components
+ 
+ Right now this is used by the `BITCrashMananger` to attach to a crash report and `BITFeedbackManager`.
+ 
+ Note: the value is persisted in the keychain! To remove old values, call this setter with a `nil` value.
+
+ @see [BITHockeyManagerDelegate userEmailForHockeyManager:componentManager:]
+ @see setUserID:
+ @see setUserName:
+ */
+- (void)setUserEmail:(NSString *)userEmail;
+
 
 ///-----------------------------------------------------------------------------
 /// @name Debug Logging
@@ -164,5 +264,21 @@
  * *Default*: _NO_
  */
 @property (nonatomic, assign, getter=isDebugLogEnabled) BOOL debugLogEnabled;
+
+
+///-----------------------------------------------------------------------------
+/// @name Integration test
+///-----------------------------------------------------------------------------
+
+/**
+ Pings the server with the HockeyApp app identifiers used for initialization
+ 
+ Call this method once for debugging purposes to test if your SDK setup code
+ reaches the server successfully.
+ 
+ Once invoked, check the apps page on HockeyApp for a verification.
+ */
+- (void)testIdentifier;
+
 
 @end

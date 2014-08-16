@@ -313,6 +313,8 @@
 
 - (void)toggleMuteOnAllNotifcationsShortcut:(NSInteger)state;
 - (void)toggleMuteOnNotificationSoundsShortcut:(NSInteger)state;
+
+- (IBAction)simulateCrash:(id)sender;
 @end
 
 @interface TXMenuControllerMainWindowProxy : NSObject
