@@ -553,11 +553,11 @@
 
 - (void)willDestroyChannel:(IRCChannel *)channel
 {
-	NSString *prefix = [[self supportInfo] privateMessageNicknamePrefix];
-	
-	if (prefix) {
-		if ([channel isPrivateMessageOwnedByZNC] == NO) {
-			[self send:IRCPrivateCommandIndex("privmsg"), [self nicknameWithZNCUserPrefix:@"status"], @"clearbuffer", [channel name], nil];
+	if ([channel isPrivateMessage] &&
+		[channel isPrivateMessageOwnedByZNC] == NO)
+	{
+		if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCPlaybackModule]) {
+			[self send:IRCPrivateCommandIndex("privmsg"), [self nicknameWithZNCUserPrefix:@"playback"], @"clear", [channel name], nil];
 		}
 	}
 }
@@ -1373,6 +1373,21 @@
 
 #pragma mark -
 #pragma mark ZNC Bouncer Accessories
+
+- (BOOL)nicknameIsPrivateZNCUser:(NSString *)nickname
+{
+	if ([self isZNCBouncerConnection]) {
+		NSString *prefix = [[self supportInfo] privateMessageNicknamePrefix];
+		
+		if (prefix == nil) {
+			return [nickname hasPrefix:@"*"];
+		} else {
+			return [nickname hasPrefix:prefix];
+		}
+	} else {
+		return NO;
+	}
+}
 
 - (NSString *)nicknameWithZNCUserPrefix:(NSString *)nickname
 {
