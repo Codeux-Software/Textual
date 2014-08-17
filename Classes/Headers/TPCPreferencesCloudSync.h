@@ -59,6 +59,8 @@
 - (void)synchronizeToCloud; /* Manually sync. Not recommended to call. */
 - (void)synchronizeFromCloud; /* Manually sync. Not recommended to call. */
 
+- (void)syncEverythingNextSync;
+
 - (NSString *)ubiquitousContainerURLPath;
 
 - (BOOL)ubiquitousContainerIsAvailable;

@@ -1086,6 +1086,7 @@
 	} else {
 		[RZUbiquitousKeyValueStore() synchronize];
 		
+		[sharedCloudManager() syncEverythingNextSync];
 		[sharedCloudManager() synchronizeFromCloud];
 	}
 #endif
@@ -1098,6 +1099,7 @@
 		if ([TPCPreferences syncPreferencesToTheCloudLimitedToServers] == NO) {
 			[RZUbiquitousKeyValueStore() synchronize];
 			
+			[sharedCloudManager() syncEverythingNextSync];
 			[sharedCloudManager() synchronizeFromCloud];
 		}
 	}
