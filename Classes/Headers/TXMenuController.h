@@ -137,11 +137,9 @@
 	990003: "Previous Highlight"
  */
 
-@interface TXMenuController : NSObject <TDCAboutPanelDelegate, TDChannelSheetDelegate, TDCHighlightListSheetDelegate, TDCInviteSheetDelegate, TDCModeSheetDelegate, TDCNickSheetDelegate, TDCPreferencesControllerDelegate, TDCServerSheetDelegate, TDCTopicSheetDelegate, TDCWelcomeSheetDelegate>
-@property (nonatomic, copy) NSString *pointedUrl;
-@property (nonatomic, copy) NSString *pointedNickname;
-@property (nonatomic, copy) NSString *pointedChannelName;
+@interface TXMenuController : NSObject <TDCAboutPanelDelegate, TDChannelSheetDelegate, TDCHighlightListSheetDelegate, TDCInviteSheetDelegate, TDCModeSheetDelegate, TDCNickSheetDelegate, TDCPreferencesControllerDelegate, TDCServerSheetDelegate, TDCTopicSheetDelegate, TDCWelcomeSheetDelegate, NSMenuDelegate>
 @property (nonatomic, copy) NSString *currentSearchPhrase;
+@property (nonatomic, copy) NSString *pointedNickname; // Takes priority if sender of an action returns nil userInfo value
 @property (nonatomic, strong) TDCFileTransferDialog *fileTransferController;
 @property (nonatomic, nweak) IBOutlet NSMenu *navigationChannelList;
 @property (nonatomic, nweak) IBOutlet NSMenu *addServerMenu;
@@ -158,6 +156,7 @@
 @property (nonatomic, nweak) IBOutlet NSMenuItem *muteNotificationsDockMenuItem;
 @property (nonatomic, nweak) IBOutlet NSMenuItem *muteNotificationsSoundsFileMenuItem;
 @property (nonatomic, nweak) IBOutlet NSMenuItem *muteNotificationsSoundsDockMenuItem;
+@property (nonatomic, assign) BOOL memberListUserControlMenuOpen;
 
 - (void)setupOtherServices;
 
@@ -165,9 +164,9 @@
 
 - (void)prepareForApplicationTermination;
 
-- (NSArray *)selectedMembers:(NSMenuItem *)sender;
-- (BOOL)checkSelectedMembers:(NSMenuItem *)item;
-- (void)deselectMembers:(NSMenuItem *)sender;
+- (NSArray *)selectedMembers:(id)sender;
+- (BOOL)checkSelectedMembers:(id)item; // Returns whether a user is selected on user list
+- (void)deselectMembers:(id)sender;
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item;
 - (BOOL)validateMenuItemTag:(NSInteger)tag forItem:(NSMenuItem *)item;
