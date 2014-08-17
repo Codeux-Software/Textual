@@ -326,6 +326,8 @@
 {
 	[mainWindow() prepareForApplicationTermination];
 	
+	[[NSApplication sharedApplication] setDelegate:nil];
+	
 	[RZWorkspaceNotificationCenter() removeObserver:self];
 
 	[RZNotificationCenter() removeObserver:self];
@@ -367,7 +369,9 @@
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
 {
-	[self.mainWindow makeKeyAndOrderFront:nil];
+	if (self.applicationIsTerminating == NO) {
+		[self.mainWindow makeKeyAndOrderFront:nil];
+	}
 
 	return YES;
 }
