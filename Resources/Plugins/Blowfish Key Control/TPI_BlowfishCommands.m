@@ -135,7 +135,7 @@
 			
 			if ([commandString isEqualToString:@"SETKEY"]) {
 				if (NSObjectIsEmpty(messageString)) {
-					[c setEncryptionKey:nil];
+					[c setEncryptionKey:NSStringEmptyPlaceholder];
 					
 					[client printDebugInformation:BLS(1004) channel:c];
 				} else {
