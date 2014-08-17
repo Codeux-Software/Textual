@@ -1083,6 +1083,8 @@
 						   otherButton:nil
 						suppressionKey:nil
 					   suppressionText:nil];
+		
+		[sharedCloudManager() resetDataToSync];
 	} else {
 		[RZUbiquitousKeyValueStore() synchronize];
 		
@@ -1098,8 +1100,7 @@
 	if ([TPCPreferences syncPreferencesToTheCloud]) {
 		if ([TPCPreferences syncPreferencesToTheCloudLimitedToServers] == NO) {
 			[RZUbiquitousKeyValueStore() synchronize];
-			
-			[sharedCloudManager() syncEverythingNextSync];
+
 			[sharedCloudManager() synchronizeFromCloud];
 		}
 	}

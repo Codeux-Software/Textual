@@ -577,6 +577,15 @@
 	}
 }
 
+- (void)resetDataToSync
+{
+	[self setPushAllLocalKeysNextSync:NO];
+	
+	@synchronized([self unsavedLocalKeys]) {
+		[[self unsavedLocalKeys] removeAllObjects];
+	}
+}
+
 - (void)syncEverythingNextSync
 {
 	[self setPushAllLocalKeysNextSync:YES];
@@ -586,6 +595,11 @@
 {
 	/* Do not perform any actions during termination. */
 	if ([self applicationIsTerminating]) {
+		return; // Do not continue operation…
+	}
+	
+	/* We don't even want to sync if user doesn't want to. */
+	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
 		return; // Do not continue operation…
 	}
 
