@@ -724,27 +724,40 @@
 #pragma mark -
 #pragma mark Selected User(s)
 
-- (BOOL)checkSelectedMembers:(NSMenuItem *)item
+- (BOOL)checkSelectedMembers:(id)item
 {
 	return ([mainWindowMemberList() countSelectedRows] > 0);
 }
 
-- (NSArray *)selectedMembers:(NSMenuItem *)sender
+- (NSArray *)selectedMembers:(id)sender
 {
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
 	
-	NSMutableArray *ary = [NSMutableArray array];
-	
 	if (_noClientOrChannel || _notActive || _connectionNotLoggedIn || _isClient) {
-		return ary;
+		return @[];
 	} else {
 		NSIndexSet *indexes = [mainWindowMemberList() selectedRowIndexes];
 
-		BOOL indexEmpty = NSObjectIsEmpty(indexes);
-		BOOL pontrEmpty = NSObjectIsEmpty(self.pointedNickname);
-
-		if (indexEmpty == NO && pontrEmpty) {
+		NSString *pointedNickname = nil;
+		
+		if ([sender isKindOfClass:[NSMenuItem class]]) {
+			pointedNickname = [(NSMenuItem *)sender userInfo];
+		} else {
+			pointedNickname = [self pointedNickname];
+		}
+		
+		if (pointedNickname) {
+			IRCUser *m = [c findMember:pointedNickname];
+			
+			if (m) {
+				return @[m];
+			} else {
+				return nil;
+			}
+		} else {
+			NSMutableArray *ary = [NSMutableArray array];
+			
 			for (NSNumber *index in [indexes arrayFromIndexSet]) {
 				NSUInteger nindex = [index unsignedIntegerValue];
 				
@@ -754,25 +767,27 @@
 					[ary addObject:m];
 				}
 			}
-		} else {
-			if (pontrEmpty == NO) {
-				IRCUser *m = [c findMember:self.pointedNickname];
-				
-				if (m) {
-					[ary addObject:m];
-				}
-			}
+			
+			return [ary copy];
 		}
 	}
 	
-	return ary;
+	return nil;
 }
 
-- (void)deselectMembers:(NSMenuItem *)sender
+- (void)deselectMembers:(id)sender
 {
-	self.pointedNickname = nil;
+	if ([sender isKindOfClass:[NSMenuItem class]]) {
+		if ([[(NSMenuItem *)sender userInfo] length] > 0) {
+			return; // Nothing to deselect when our sender used userInfo
+		}
+	}
 	
-	[mainWindowMemberList() deselectAll:nil];
+	if ([self pointedNickname]) {
+		[self setPointedNickname:nil];
+	} else {
+		[mainWindowMemberList() deselectAll:sender];
+	}
 }
 
 #pragma mark -
@@ -1717,42 +1732,29 @@
 		TXUserDoubleClickAction action = [TPCPreferences userDoubleClickOption];
         
 		if (action == TXUserDoubleClickWhoisAction) {
-			[self whoisSelectedMembers:nil deselectPointedNickname:NO];
+			[self whoisSelectedMembers:sender];
 		} else if (action == TXUserDoubleClickPrivateMessageAction) {
-			[self memberStartPrivateMessage:nil deselectPointedNickname:NO];
+			[self memberStartPrivateMessage:sender];
 		} else if (action == TXUserDoubleClickInsertTextFieldAction) {
-			[self memberInsertNameIntoTextField:nil deselectPointedNickname:NO];
+			[self memberInsertNameIntoTextField:sender];
 		}
     }
 }
 
 - (void)memberInChannelViewDoubleClicked:(id)sender
 {
-    if (self.pointedNickname) {
-		TXUserDoubleClickAction action = [TPCPreferences userDoubleClickOption];
+	TXUserDoubleClickAction action = [TPCPreferences userDoubleClickOption];
 
-		if (action == TXUserDoubleClickWhoisAction) {
-			[self whoisSelectedMembers:nil deselectPointedNickname:YES];
-		} else if (action == TXUserDoubleClickPrivateMessageAction) {
-			[self memberStartPrivateMessage:nil deselectPointedNickname:YES];
-		} else if (action == TXUserDoubleClickInsertTextFieldAction) {
-			[self memberInsertNameIntoTextField:nil deselectPointedNickname:YES];
-		}
-    }
+	if (action == TXUserDoubleClickWhoisAction) {
+		[self whoisSelectedMembers:sender];
+	} else if (action == TXUserDoubleClickPrivateMessageAction) {
+		[self memberStartPrivateMessage:sender];
+	} else if (action == TXUserDoubleClickInsertTextFieldAction) {
+		[self memberInsertNameIntoTextField:sender];
+	}
 }
 
 - (void)memberInsertNameIntoTextField:(id)sender
-{
-	/* Each double click method gets a deselectPointedNickname: sent to it
-	 depending on whether it was double clicked within the channel view or
-	 the member list. The purposes of this is to only deselect self.pointedNickname
-	 if it was from within the channel view to allow the selection in the
-	 user list to remain unchanged. */
-
-	[self memberInsertNameIntoTextField:sender deselectPointedNickname:NO];
-}
-
-- (void)memberInsertNameIntoTextField:(id)sender deselectPointedNickname:(BOOL)deselectPointedNickname
 {
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
@@ -1802,11 +1804,7 @@
 	[textField updateTextColorInRange:selectedRange];
 	
 	/* Close users. */
-	if (deselectPointedNickname) {
-		self.pointedNickname = nil;
-	} else {
-		[self deselectMembers:sender];
-	}
+	[self deselectMembers:sender];
 	
 	/* Set focus to the input textfield. */
 	[textField focus];
@@ -1814,10 +1812,10 @@
 
 - (void)memberSendWhois:(id)sender
 {
-	[self whoisSelectedMembers:sender deselectPointedNickname:NO];
+	[self whoisSelectedMembers:sender];
 }
 
-- (void)whoisSelectedMembers:(id)sender deselectPointedNickname:(BOOL)deselectPointedNickname
+- (void)whoisSelectedMembers:(id)sender
 {
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
@@ -1830,19 +1828,10 @@
 		[u sendWhois:[m nickname]];
 	}
 
-	if (deselectPointedNickname) {
-		self.pointedNickname = nil;
-	} else {
-		[self deselectMembers:sender];
-	}
+	[self deselectMembers:sender];
 }
 
 - (void)memberStartPrivateMessage:(id)sender
-{
-	[self memberStartPrivateMessage:sender deselectPointedNickname:NO];
-}
-
-- (void)memberStartPrivateMessage:(id)sender deselectPointedNickname:(BOOL)deselectPointedNickname
 {
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
@@ -1857,11 +1846,7 @@
 		[mainWindow() select:cc];
 	}
 
-	if (deselectPointedNickname) {
-		self.pointedNickname = nil;
-	} else {
-		[self deselectMembers:sender];
-	}
+	[self deselectMembers:sender];
 }
 
 #pragma mark -
@@ -2024,16 +2009,26 @@
 
 - (void)copyUrl:(id)sender
 {
+	NSString *_pointedUrl = [(NSMenuItem *)sender userInfo];
+	
 	NSObjectIsEmptyAssert(_pointedUrl);
 
 	[RZPasteboard() setStringContent:_pointedUrl];
-		
-	_pointedUrl = nil;
 }
 
 - (void)joinClickedChannel:(id)sender
 {
-	NSObjectIsEmptyAssert(self.pointedChannelName);
+	NSString *_pointedChannelName = nil;
+	
+	if ([sender isKindOfClass:[NSMenuItem class]]) {
+		_pointedChannelName = [(NSMenuItem *)sender userInfo];
+	} else if ([sender isKindOfClass:[NSString class]]) {
+		_pointedChannelName = sender;
+	} else {
+		NSAssert(NO, @"Bad data type");
+	}
+	
+	NSObjectIsEmptyAssert(_pointedChannelName);
 	
 	IRCClient *u = [mainWindow() selectedClient];
 	
@@ -2043,9 +2038,7 @@
 
 	[u setInUserInvokedJoinRequest:YES];
 	
-	[u joinUnlistedChannel:self.pointedChannelName];
-		
-	self.pointedChannelName = nil;
+	[u joinUnlistedChannel:_pointedChannelName];
 }
 
 - (void)showChannelIgnoreList:(id)sender
@@ -2700,7 +2693,7 @@
 
 - (void)toggleFullscreen:(id)sender
 {
-	[mainWindow() toggleFullScreen:nil];
+	[mainWindow() toggleFullScreen:sender];
 }
 
 #pragma mark -

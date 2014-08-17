@@ -69,11 +69,9 @@
 
 - (void)channelDoubleClicked
 {
-	[menuController() setPointedChannelName:self.channelName];
+	[menuController() joinClickedChannel:self.channelName];
 
 	self.channelName = nil;
-	
-	[menuController() joinClickedChannel:nil];
 }
 
 - (void)nicknameDoubleClicked
@@ -105,24 +103,22 @@
 	
 	if (self.anchorURL)
 	{
-		[menuController() setPointedUrl:self.anchorURL];
-		
-		self.anchorURL = nil;
-
 		NSMenu *urlMenu = [menuController() tcopyURLMenu];
 		
 		for (NSMenuItem *item in [urlMenu itemArray]) {
-			[ary addObject:[item copy]];
+			NSMenuItem *newitem = [item copy];
+			
+			[newitem setUserInfo:self.anchorURL];
+			
+			[ary addObject:newitem];
 		}
+		
+		self.anchorURL = nil;
 		
 		return ary;
 	}
 	else if (self.nickname)
 	{
-		[menuController() setPointedNickname:self.nickname];
-
-		self.nickname = nil;
-
 		BOOL isIRCop = [[mainWindow() selectedClient] hasIRCopAccess];
 
 		NSMenu *memberMenu = [menuController() userControlMenu];
@@ -132,22 +128,30 @@
 				continue;
 			}
 			
-			[ary addObject:[item copy]];
+			NSMenuItem *newitem = [item copy];
+			
+			[newitem setUserInfo:self.nickname];
+			
+			[ary addObject:newitem];
 		}
+		
+		self.nickname = nil;
 		
 		return ary;
 	}
 	else if (self.channelName)
 	{
-		[menuController() setPointedChannelName:self.channelName];
-		
-		self.channelName = nil;
-
 		NSMenu *chanMenu = [menuController() joinChannelMenu];
 		
 		for (NSMenuItem *item in [chanMenu itemArray]) {
-			[ary addObject:[item copy]];
+			NSMenuItem *newitem = [item copy];
+			
+			[newitem setUserInfo:self.channelName];
+			
+			[ary addObject:newitem];
 		}
+		
+		self.channelName = nil;
 		
 		return ary;
 	}
