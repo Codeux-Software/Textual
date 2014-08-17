@@ -110,11 +110,7 @@
 
 - (void)closeSocket
 {
-	if (self.socketConnection) {
-		if ([self useNewSocketEngine]) {
-			[self.socketConnection setDelegate:nil];
-		}
-		
+	if ( self.socketConnection) {
 		[self.socketConnection disconnect];
 	}
 }
@@ -122,6 +118,7 @@
 - (void)destroySocket
 {
 	if ( self.socketConnection) {
+		[self.socketConnection setDelegate:nil];
 		 self.socketConnection = nil;
 	}
 	
