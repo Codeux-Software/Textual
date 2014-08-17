@@ -188,13 +188,7 @@
 	if ([self isPrivateMessage]) {
 		IRCClient *u = [self associatedClient];
 
-		if ([u isZNCBouncerConnection]) {
-			IRCISupportInfo *supportInfo = [u supportInfo];
-			
-			if ([[self name] hasPrefix:[supportInfo privateMessageNicknamePrefix]]) {
-				return YES;
-			}
-		}
+		return [u nicknameIsPrivateZNCUser:[self name]];
 	}
 	
 	return NO;

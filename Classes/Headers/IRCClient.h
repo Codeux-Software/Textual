@@ -196,6 +196,9 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 
 @property (readonly) NSTimeInterval lastMessageServerTimeWithCachedValue;
 
+- (BOOL)nicknameIsPrivateZNCUser:(NSString *)nickname;
+- (NSString *)nicknameWithZNCUserPrefix:(NSString *)nickname;
+
 - (void)reachabilityChanged:(BOOL)reachable;
 
 - (void)autoConnect:(NSInteger)delay afterWakeUp:(BOOL)afterWakeUp;

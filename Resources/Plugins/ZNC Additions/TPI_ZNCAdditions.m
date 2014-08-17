@@ -111,38 +111,30 @@
 	return @[@"privmsg"];
 }
 
-- (IRCMessage *)interceptServerInput:(IRCMessage *)input for:(IRCClient *)client
+- (IRCMessage *)interceptBufferExtrasPlaybackModule:(IRCMessage *)input senderInfo:(IRCPrefix *)senderInfo client:(IRCClient *)client
 {
-	/* Only do work if client is even detected as ZNC. */
-	if ([client isZNCBouncerConnection] == NO) {
-		return input;
-	}
+	NSString *s = [input paramAt:1];
 
-	/* Who is sending this message? */
-	IRCPrefix *senderInfo = [input sender];
+	if ([s hasPrefix:@"The playback buffer for ["]		&&
+		[s contains:@"] channels matching ["]			&& // This is much cleaner than regular expression…
+		[s hasSuffix:@"] has been cleared."])
+	{
+		return nil; // Ignore this event
+	}
 	
-	if (NSObjectsAreEqual([senderInfo nickname], @"*buffextras") == NO) {
-		return input;
-	}
+	return input;
+}
 
-	/* What type of message is this person sending? */
-	if (NSObjectsAreEqual([input command], IRCPrivateCommandIndex("privmsg")) == NO) {
-		return input;
-	}
-
-	/* Check our count. */
-	if (([input paramsCount] == 2) == NO) {
-		return input;
-	}
-
+- (IRCMessage *)interceptBufferExtrasZNCModule:(IRCMessage *)input senderInfo:(IRCPrefix *)senderInfo client:(IRCClient *)client
+{
 	/* Begin processing data. */
 	NSMutableArray *mutparams = [[input params] mutableCopy];
 	
 	NSMutableString *s = [mutparams[1] mutableCopy];
-
+	
 	/* Define user information. */
 	NSString *hostmask = [s getToken];
-
+	
 	if ([hostmask length] <= 0) {
 		return input;
 	}
@@ -154,12 +146,12 @@
 	[senderInfo setHostmask:hostmask];
 	
 	[senderInfo setIsServer:NO];
-
+	
 	if ([hostmask hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt]) {
 		[senderInfo setNickname:nicknameInt];
 		[senderInfo setUsername:usernameInt];
 		[senderInfo setAddress:addressInt];
-
+		
 		if (NSObjectsAreEqual([senderInfo nickname], [client localNickname])) {
 			return input; // Do not post these events for self.
 		}
@@ -168,21 +160,21 @@
 		
 		[senderInfo setIsServer:YES];
 	}
-
+	
 	/* Let Textual know to treat this message as a special event. */
 	[input setIsPrintOnlyMessage:YES];
-
+	
 	/* Start actual work. */
 	if ([s hasPrefix:@"is now known as "]) {
 		/* Begin nickname change. */
 		[s deleteCharactersInRange:NSMakeRange(0, [@"is now known as " length])];
-
+		
 		NSString *newNickname = [s getToken];
-
+		
 		NSObjectIsEmptyAssertReturn(newNickname, input);
-
+		
 		[input setCommand:IRCPrivateCommandIndex("nick")];
-
+		
 		[mutparams removeObjectAtIndex:1];
 		
 		[mutparams addObject:newNickname];
@@ -192,7 +184,7 @@
 	{
 		/* Begin channel join. */
 		[input setCommand:IRCPrivateCommandIndex("join")];
-
+		
 		[mutparams removeObjectAtIndex:1];
 		/* End channel join. */
 	}
@@ -200,15 +192,15 @@
 	{
 		/* Begin mode processing. */
 		[s deleteCharactersInRange:NSMakeRange(0, [@"set mode: " length])];
-
+		
 		[input setCommand:IRCPrivateCommandIndex("mode")];
-
+		
 		NSString *modesSet = [s getToken];
-
+		
 		NSObjectIsEmptyAssertReturn(modesSet, input);
-
+		
 		[mutparams removeObjectAtIndex:1];
-
+		
 		[mutparams addObject:modesSet];
 		[mutparams addObject:s];
 		/* End mode processing. */
@@ -218,9 +210,9 @@
 		/* Begin quit message. */
 		[s deleteCharactersInRange:NSMakeRange(0, [@"quit with message: [" length])];	// Remove front.
 		[s deleteCharactersInRange:NSMakeRange(([s length] - 1), 1)];					// Remove trailing character.
-
+		
 		[input setCommand:IRCPrivateCommandIndex("quit")];
-
+		
 		[mutparams removeObjectAtIndex:1];
 		
 		[mutparams addObject:s];
@@ -231,9 +223,9 @@
 		/* Begin part message. */
 		[s deleteCharactersInRange:NSMakeRange(0, [@"parted with message: [" length])];		// Remove front.
 		[s deleteCharactersInRange:NSMakeRange(([s length] - 1), 1)];						// Remove trailing character.
-
+		
 		[input setCommand:IRCPrivateCommandIndex("part")];
-
+		
 		[mutparams removeObjectAtIndex:1];
 		
 		[mutparams addObject:s];
@@ -244,19 +236,19 @@
 		/* Begin kick message. */
 		[s deleteCharactersInRange:NSMakeRange(0, [@"kicked " length])];	// Remove front.
 		[s deleteCharactersInRange:NSMakeRange(([s length] - 1), 1)];		// Remove trailing character.
-
+		
 		NSString *whoKicked = [s getToken];
-
+		
 		if (NSObjectIsEmpty(whoKicked) || [s hasPrefix:@"Reason: ["] == NO) {
 			return input;
 		}
-
+		
 		[s deleteCharactersInRange:NSMakeRange(0, [@"Reason: [" length])];
-
+		
 		[input setCommand:IRCPrivateCommandIndex("kick")];
-
+		
 		[mutparams removeObjectAtIndex:1];
-
+		
 		[mutparams addObject:whoKicked];
 		[mutparams addObject:s];
 		/* End kick message. */
@@ -265,14 +257,49 @@
 	{
 		/* Begin topic change. */
 		/* We get the latest topic on join so we tell Textual to ignore this line. */
-
+		
 		return nil;
 		/* End topic change. */
 	}
 	
 	[input setParams:mutparams];
-
+	
 	return input;
+}
+
+- (IRCMessage *)interceptServerInput:(IRCMessage *)input for:(IRCClient *)client
+{
+	/* Only do work if client is even detected as ZNC. */
+	if ([client isZNCBouncerConnection] == NO) {
+		return input;
+	}
+	
+	/* What type of message is this person sending? */
+	if (NSObjectsAreEqual([input command], IRCPrivateCommandIndex("privmsg")) == NO) {
+		return input;
+	}
+	
+	/* Check our count. */
+	if (([input paramsCount] == 2) == NO) {
+		return input;
+	}
+	
+	/* Who is sending this message? */
+	IRCPrefix *senderInfo = [input sender];
+	
+	NSString *senderNickname = [senderInfo nickname];
+	
+	if (NSObjectsAreEqual(senderNickname, [client nicknameWithZNCUserPrefix:@"buffextras"])) {
+		return [self interceptBufferExtrasZNCModule:input senderInfo:senderInfo client:client];
+	} else if (NSObjectsAreEqual(senderNickname, [client nicknameWithZNCUserPrefix:@"playback"])) {
+		if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityZNCPlaybackModule]) {
+			return [self interceptBufferExtrasPlaybackModule:input senderInfo:senderInfo client:client];
+		} else {
+			return input;
+		}
+	} else {
+		return input;
+	}
 }
 
 #pragma mark -
