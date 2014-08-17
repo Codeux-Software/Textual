@@ -345,7 +345,12 @@
 		
 		/* Continue normal work. */
 		[self setIsSyncingLocalKeysUpstream:YES];
-
+		
+		/* Compare to the remote. */
+		NSDictionary *remotedict = [RZUbiquitousKeyValueStore() dictionaryRepresentation];
+		
+		NSArray *remotedictkeys = [remotedict allKeys];
+		
 		/* Gather dictionary representation of all local preferences. */
 		NSMutableDictionary *changedValues = nil;
 		
@@ -354,6 +359,8 @@
 			
 			[self setPushAllLocalKeysNextSync:NO];
 		} else {
+			changedValues = [NSMutableDictionary dictionary];
+
 			@synchronized([self unsavedLocalKeys]) {
 				for (id objectKey in [self unsavedLocalKeys]) {
 					changedValues[objectKey] = [RZUserDefaults() objectForKey:objectKey];
@@ -363,11 +370,6 @@
 		
 		/* Remove keys to sync even if we are syncing all. */
 		[[self unsavedLocalKeys] removeAllObjects];
-
-		/* Compare to the remote. */
-		NSDictionary *remotedict = [RZUbiquitousKeyValueStore() dictionaryRepresentation];
-		
-		NSArray *remotedictkeys = [remotedict allKeys];
 
 		/* Get a copy of our defaults. */
 		NSDictionary *defaults = [TPCPreferences defaultPreferences];
