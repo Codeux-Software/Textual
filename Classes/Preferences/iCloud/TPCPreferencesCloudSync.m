@@ -358,10 +358,11 @@
 				for (id objectKey in [self unsavedLocalKeys]) {
 					changedValues[objectKey] = [RZUserDefaults() objectForKey:objectKey];
 				}
-				
-				[[self unsavedLocalKeys] removeAllObjects];
 			}
 		}
+		
+		/* Remove keys to sync even if we are syncing all. */
+		[[self unsavedLocalKeys] removeAllObjects];
 
 		/* Compare to the remote. */
 		NSDictionary *remotedict = [RZUbiquitousKeyValueStore() dictionaryRepresentation];
@@ -572,6 +573,11 @@
 		/* Do the work. */
 		[self syncPreferencesFromCloud:changedKeys];
 	}
+}
+
+- (void)syncEverythingNextSync
+{
+	[self setPushAllLocalKeysNextSync:YES];
 }
 
 - (void)localKeysDidChangeNotification:(NSNotification *)aNote
