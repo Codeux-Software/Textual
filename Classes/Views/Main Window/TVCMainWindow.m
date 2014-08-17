@@ -177,6 +177,8 @@
 	[self saveWindowState];
 
 	[self setDelegate:nil];
+	
+	[self close];
 }
 
 #pragma mark -

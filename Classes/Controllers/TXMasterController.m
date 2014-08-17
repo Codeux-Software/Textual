@@ -284,10 +284,6 @@
 {
 	if ([self queryTerminate]) {
 		TXPerformBlockAsynchronouslyOnMainQueue(^{
-			self.applicationIsTerminating = YES;
-
-			[mainWindow() close];
-			
 			[self performApplicationTerminationStepOne];
 		});
 		
@@ -324,6 +320,8 @@
 
 - (void)performApplicationTerminationStepOne
 {
+	[self setApplicationIsTerminating:YES];
+
 	[mainWindow() prepareForApplicationTermination];
 	
 	[[NSApplication sharedApplication] setDelegate:nil];
