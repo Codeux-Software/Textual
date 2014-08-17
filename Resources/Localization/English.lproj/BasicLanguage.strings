@@ -435,8 +435,8 @@
 "BasicLanguage[1134]" = "Disconnected from server due to trial period limit. Please consider purchasing Textual to continue or simply reconnect.";
 "BasicLanguage[1135]" = "Disconnected from server because the configured IRC server is not reachable";
 "BasicLanguage[1136]" = "Disconnected";
-"BasicLanguage[1137]" = "%ld minutes have elapsed since last response from this connection. Disconnecting due to timeout.";
-"BasicLanguage[1138]" = "%ld minutes have elapsed since last response from this connection. It is possible the connection is timing out.";
+"BasicLanguage[1137]" = "%.0f minutes have elapsed since last response from this connection. Disconnecting due to timeout.";
+"BasicLanguage[1138]" = "%.0f minutes have elapsed since last response from this connection. It is possible the connection is timing out.";
 "BasicLanguage[1139]" = "Message(%1$d): %2$@";
 "BasicLanguage[1140]" = "Connecting to [%1$@] on port %2$ld";
 "BasicLanguage[1141]" = "Connecting to [%1$@] on port %2$ld with the proxy [%3$@] on port %4$ld";
