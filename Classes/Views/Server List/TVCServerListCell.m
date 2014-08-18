@@ -711,6 +711,8 @@
 		BOOL isSelected = [mainWindowServerList() isRowSelected:rowIndex];
 		
 		[self updateGroupDisclosureTriangle:theButtonParent isSelected:isSelected setNeedsDisplay:YES];
+	} else {
+		[self setNeedsDisplay:YES];
 	}
 }
 

@@ -411,6 +411,7 @@
 		id selectedItem = [mainWindow() selectedItem];
 		
 		[mainWindow() setTemporarilyDisablePreviousSelectionUpdates:YES];
+		[mainWindow() setTemporarilyIgnoreOutlineViewSelectionChanges:YES];
 	
 		[mainWindowServerList() reloadItem:self reloadChildren:YES];
 
@@ -418,6 +419,7 @@
 		[mainWindow() adjustSelection];
 		
 		[mainWindow() setTemporarilyDisablePreviousSelectionUpdates:NO];
+		[mainWindow() setTemporarilyIgnoreOutlineViewSelectionChanges:NO];
 	}
 	
 	/* Update title. */
