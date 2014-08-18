@@ -423,16 +423,16 @@
 
 - (void)closePortMapping
 {
-	PointerIsEmptyAssert(self.portMapping);
-
 	TCMPortMapper *pm = [TCMPortMapper sharedInstance];
+	
+	[RZNotificationCenter() removeObserver:self name:TCMPortMapperDidStartWorkNotification object:pm];
+	[RZNotificationCenter() removeObserver:self name:TCMPortMapperDidFinishWorkNotification object:pm];
+	
+	PointerIsEmptyAssert(self.portMapping);
 
 	[pm removePortMapping:self.portMapping];
 
 	self.portMapping = nil;
-
-	[RZNotificationCenter() removeObserver:self name:TCMPortMapperDidStartWorkNotification object:pm];
-	[RZNotificationCenter() removeObserver:self name:TCMPortMapperDidFinishWorkNotification object:pm];
 }
 
 - (TCMPortMapping *)portMappingForSelf
