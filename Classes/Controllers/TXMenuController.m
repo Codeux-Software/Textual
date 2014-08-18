@@ -2794,7 +2794,9 @@
 
 - (IBAction)simulateCrash:(id)sender
 {
+#ifdef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED
 	[[[BITHockeyManager sharedHockeyManager] crashManager] generateTestCrash];
+#endif
 }
 
 @end
