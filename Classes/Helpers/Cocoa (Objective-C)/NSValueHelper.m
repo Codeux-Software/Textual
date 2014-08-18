@@ -39,7 +39,7 @@
 
 @implementation NSValue (TXValueHelper)
 
-+ (instancetype)valueWithPrimitive:(void *)value withType:(const char *)valueType
++ (id)valueWithPrimitive:(void *)value withType:(const char *)valueType
 {
 	/* See runtime.h header in Objective-C for return types. */
 	switch (*valueType) {
