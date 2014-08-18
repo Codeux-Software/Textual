@@ -4297,9 +4297,13 @@
 				
 				if (createNewWindow) {
 					if (isZNCprivmsg) {
-						c = [worldController() createPrivateMessage:target client:self];
+						if (NSObjectIsEmpty(target) == NO) {
+							c = [worldController() createPrivateMessage:target client:self];
+						}
 					} else {
-						c = [worldController() createPrivateMessage:sender client:self];
+						if (NSObjectIsEmpty(sender) == NO) {
+							c = [worldController() createPrivateMessage:sender client:self];
+						}
 					}
 					
 					newPrivateMessage = YES;
