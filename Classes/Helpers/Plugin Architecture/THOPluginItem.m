@@ -54,7 +54,7 @@
 	/* Begin version comparison. */
 	NSDictionary *bundleInfo = [bundle infoDictionary];
 	
-	NSString *comparisonVersion = [bundleInfo objectForKey:@"MinimumTextualVersion"];
+	NSString *comparisonVersion = bundleInfo[@"MinimumTextualVersion"];
 	
 	if (comparisonVersion == nil) {
 		LogToConsole(@"-------------- WARNING -------------- ");

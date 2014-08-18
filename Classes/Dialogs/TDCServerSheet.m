@@ -139,7 +139,7 @@
 #pragma clang diagnostic ignored "-Wincomplete-implementation"
 @implementation TDCServerSheet
 
-- (id)init
+- (instancetype)init
 {
 	if ((self = [super init])) {
 		/* Load our views. */
@@ -1378,7 +1378,7 @@
 				if (emptyKeyword) {
 					[self.mutableHighlightList removeObjectAtIndex:index];
 				} else {
-					[self.mutableHighlightList replaceObjectAtIndex:index withObject:match];
+					(self.mutableHighlightList)[index] = match;
 				}
 				
 				break;
@@ -1492,7 +1492,7 @@
 				if (emptyName) {
 					[self.mutableChannelList removeObjectAtIndex:index];
 				} else {
-					[self.mutableChannelList replaceObjectAtIndex:index withObject:config];
+					(self.mutableChannelList)[index] = config;
 				}
 				
 				break;
@@ -1629,7 +1629,7 @@
 				if (emptyHost) {
 					[self.mutableIgnoreList removeObjectAtIndex:index];
 				} else {
-					[self.mutableIgnoreList replaceObjectAtIndex:index withObject:ignore];
+					(self.mutableIgnoreList)[index] = ignore;
 				}
 				
 				break;

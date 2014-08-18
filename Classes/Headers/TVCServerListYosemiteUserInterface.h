@@ -40,61 +40,61 @@
 @interface TVCServerListYosemiteUserInterface : TVCServerListSharedUserInterface
 - (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected;
 
-- (NSInteger)serverCellRowHeight;
-- (NSInteger)channelCellRowHeight;
+@property (readonly) NSInteger serverCellRowHeight;
+@property (readonly) NSInteger channelCellRowHeight;
 
-- (NSColor *)rowSelectionColorForActiveWindow;
-- (NSColor *)rowSelectionColorForInactiveWindow;
+@property (readonly, copy) NSColor *rowSelectionColorForActiveWindow;
+@property (readonly, copy) NSColor *rowSelectionColorForInactiveWindow;
 
 - (NSString *)privateMessageStatusIconFilename:(BOOL)isActive;
 
-- (NSColor *)channelCellNormalItemTextColorForActiveWindow;
-- (NSColor *)channelCellNormalItemTextColorForInactiveWindow;
+@property (readonly, copy) NSColor *channelCellNormalItemTextColorForActiveWindow;
+@property (readonly, copy) NSColor *channelCellNormalItemTextColorForInactiveWindow;
 
-- (NSColor *)channelCellDisabledItemTextColorForActiveWindow;
-- (NSColor *)channelCellDisabledItemTextColorForInactiveWindow;
+@property (readonly, copy) NSColor *channelCellDisabledItemTextColorForActiveWindow;
+@property (readonly, copy) NSColor *channelCellDisabledItemTextColorForInactiveWindow;
 
-- (NSColor *)channelCellErroneousItemTextColorForActiveWindow;
-- (NSColor *)channelCellErroneousItemTextColorForInactiveWindow;
+@property (readonly, copy) NSColor *channelCellErroneousItemTextColorForActiveWindow;
+@property (readonly, copy) NSColor *channelCellErroneousItemTextColorForInactiveWindow;
 
-- (NSColor *)channelCellHighlightedItemTextColorForActiveWindow;
-- (NSColor *)channelCellHighlightedItemTextColorForInactiveWindow;
+@property (readonly, copy) NSColor *channelCellHighlightedItemTextColorForActiveWindow;
+@property (readonly, copy) NSColor *channelCellHighlightedItemTextColorForInactiveWindow;
 
-- (NSColor *)channelCellSelectedTextColorForActiveWindow;
-- (NSColor *)channelCellSelectedTextColorForInactiveWindow;
+@property (readonly, copy) NSColor *channelCellSelectedTextColorForActiveWindow;
+@property (readonly, copy) NSColor *channelCellSelectedTextColorForInactiveWindow;
 
-- (NSColor *)serverCellDisabledItemTextColorForActiveWindow;
-- (NSColor *)serverCellDisabledItemTextColorForInactiveWindow;
+@property (readonly, copy) NSColor *serverCellDisabledItemTextColorForActiveWindow;
+@property (readonly, copy) NSColor *serverCellDisabledItemTextColorForInactiveWindow;
 
-- (NSColor *)serverCellNormalItemTextColorForActiveWindow;
-- (NSColor *)serverCellNormalItemTextColorForInactiveWindow;
+@property (readonly, copy) NSColor *serverCellNormalItemTextColorForActiveWindow;
+@property (readonly, copy) NSColor *serverCellNormalItemTextColorForInactiveWindow;
 
-- (NSColor *)serverCellSelectedTextColorForActiveWindow;
-- (NSColor *)serverCellSelectedTextColorForInactiveWindow;
+@property (readonly, copy) NSColor *serverCellSelectedTextColorForActiveWindow;
+@property (readonly, copy) NSColor *serverCellSelectedTextColorForInactiveWindow;
 
-- (NSColor *)messageCountNormalBadgeTextColorForActiveWindow;
-- (NSColor *)messageCountNormalBadgeTextColorForInactiveWindow;
+@property (readonly, copy) NSColor *messageCountNormalBadgeTextColorForActiveWindow;
+@property (readonly, copy) NSColor *messageCountNormalBadgeTextColorForInactiveWindow;
 
-- (NSColor *)messageCountHighlightedBadgeTextColor;
+@property (readonly, copy) NSColor *messageCountHighlightedBadgeTextColor;
 
-- (NSColor *)messageCountSelectedBadgeTextColorForActiveWindow;;
-- (NSColor *)messageCountSelectedBadgeTextColorForInactiveWindow;
+@property (readonly, copy) NSColor *messageCountSelectedBadgeTextColorForActiveWindow;;
+@property (readonly, copy) NSColor *messageCountSelectedBadgeTextColorForInactiveWindow;
 
-- (NSColor *)messageCountNormalBadgeBackgroundColorForActiveWindow;
-- (NSColor *)messageCountNormalBadgeBackgroundColorForInactiveWindow;
+@property (readonly, copy) NSColor *messageCountNormalBadgeBackgroundColorForActiveWindow;
+@property (readonly, copy) NSColor *messageCountNormalBadgeBackgroundColorForInactiveWindow;
 
-- (NSColor *)messageCountSelectedBadgeBackgroundColorForActiveWindow;
-- (NSColor *)messageCountSelectedBadgeBackgroundColorForInactiveWindow;
+@property (readonly, copy) NSColor *messageCountSelectedBadgeBackgroundColorForActiveWindow;
+@property (readonly, copy) NSColor *messageCountSelectedBadgeBackgroundColorForInactiveWindow;
 
-- (NSColor *)messageCountHighlightedBadgeBackgroundColorForActiveWindow;
-- (NSColor *)messageCountHighlightedBadgeBackgroundColorForInactiveWindow;
+@property (readonly, copy) NSColor *messageCountHighlightedBadgeBackgroundColorForActiveWindow;
+@property (readonly, copy) NSColor *messageCountHighlightedBadgeBackgroundColorForInactiveWindow;
 
-- (NSFont *)messageCountBadgeFont;
+@property (readonly, copy) NSFont *messageCountBadgeFont;
 
-- (NSInteger)messageCountBadgeHeight;
-- (NSInteger)messageCountBadgeMinimumWidth;
-- (NSInteger)messageCountBadgePadding;
-- (NSInteger)messageCountBadgeRightMargin;
+@property (readonly) NSInteger messageCountBadgeHeight;
+@property (readonly) NSInteger messageCountBadgeMinimumWidth;
+@property (readonly) NSInteger messageCountBadgePadding;
+@property (readonly) NSInteger messageCountBadgeRightMargin;
 @end
 
 @interface TVCServerListLightYosemiteUserInterface : TVCServerListYosemiteUserInterface

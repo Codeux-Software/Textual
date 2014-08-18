@@ -25,19 +25,19 @@
 #import "TextualApplication.h"
 
 @interface NSObject (DDExtensions)
-- (id)iomt; // Invoke On Main Thread
-- (id)invokeOnThread:(NSThread *)thread;
-- (id)invokeOnMainThread;
-- (id)invokeInBackgroundThread;
-- (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone;
+- (id)iomt TEXTUAL_DEPRECATED("Use -performBlockOnMainThread: instead"); // Invoke On Main Thread
+- (id)invokeOnThread:(NSThread *)thread TEXTUAL_DEPRECATED("This method is considered unsafe and may be removed in a future update");
+- (id)invokeOnMainThread TEXTUAL_DEPRECATED("Use -performBlockOnMainThread: instead");
+- (id)invokeInBackgroundThread TEXTUAL_DEPRECATED("It is recommended to use GCD in place of this method. There is nothing functionally wrong with using this method however.");
+- (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone TEXTUAL_DEPRECATED("Use -performBlockOnMainThread: instead");
 
-- (void)performBlockOnMainThread:(TXEmtpyBlockDataType)block;
+- (void)performBlockOnMainThread:(TXEmtpyBlockDataType)block; // Performs a block synchronously (blocks) on the main thread
 
-+ (id)iomt; // Invoke On Main Thread
-+ (id)invokeOnThread:(NSThread *)thread;
-+ (id)invokeOnMainThread;
-+ (id)invokeInBackgroundThread;
-+ (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone;
++ (id)iomt TEXTUAL_DEPRECATED("Use -performBlockOnMainThread: instead"); // Invoke On Main Thread
++ (id)invokeOnThread:(NSThread *)thread TEXTUAL_DEPRECATED("This method is considered unsafe and may be removed in a future update");
++ (id)invokeOnMainThread TEXTUAL_DEPRECATED("Use -performBlockOnMainThread: instead");
++ (id)invokeInBackgroundThread TEXTUAL_DEPRECATED("It is recommended to use GCD in place of this method. There is nothing functionally wrong with using this method however.");
++ (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone TEXTUAL_DEPRECATED("Use -performBlockOnMainThread: instead");
 
-+ (void)performBlockOnMainThread:(TXEmtpyBlockDataType)block;
++ (void)performBlockOnMainThread:(TXEmtpyBlockDataType)block; // Performs a block synchronously (blocks) on the main thread
 @end

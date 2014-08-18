@@ -38,26 +38,26 @@
 #import "TextualApplication.h"
 
 @interface TVCMemberListYosemiteUserInterface : TVCMemberListSharedUserInterface
-- (NSInteger)cellRowHeight;
+@property (readonly) NSInteger cellRowHeight;
 
-- (NSColor *)normalCellTextColorForActiveWindow;
-- (NSColor *)normalCellTextColorForInactiveWindow;
+@property (readonly, copy) NSColor *normalCellTextColorForActiveWindow;
+@property (readonly, copy) NSColor *normalCellTextColorForInactiveWindow;
 
-- (NSColor *)awayUserCellTextColorForActiveWindow;
-- (NSColor *)awayUserCellTextColorForInactiveWindow;
+@property (readonly, copy) NSColor *awayUserCellTextColorForActiveWindow;
+@property (readonly, copy) NSColor *awayUserCellTextColorForInactiveWindow;
 
-- (NSColor *)selectedCellTextColorForActiveWindow;
-- (NSColor *)selectedCellTextColorForInactiveWindow;
+@property (readonly, copy) NSColor *selectedCellTextColorForActiveWindow;
+@property (readonly, copy) NSColor *selectedCellTextColorForInactiveWindow;
 
-- (NSColor *)userMarkBadgeNormalTextColor;
+@property (readonly, copy) NSColor *userMarkBadgeNormalTextColor;
 
-- (NSColor *)userMarkBadgeSelectedBackgroundColor;
-- (NSColor *)userMarkBadgeSelectedTextColor;
+@property (readonly, copy) NSColor *userMarkBadgeSelectedBackgroundColor;
+@property (readonly, copy) NSColor *userMarkBadgeSelectedTextColor;
 
-- (NSColor *)rowSelectionColorForActiveWindow;
-- (NSColor *)rowSelectionColorForInactiveWindow;
+@property (readonly, copy) NSColor *rowSelectionColorForActiveWindow;
+@property (readonly, copy) NSColor *rowSelectionColorForInactiveWindow;
 
-- (NSColor *)userMarkBadgeBackgroundColor;
+@property (readonly, copy) NSColor *userMarkBadgeBackgroundColor;
 @end
 
 @interface TVCMemberListLightYosemiteUserInterface : TVCMemberListYosemiteUserInterface

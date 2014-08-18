@@ -372,7 +372,7 @@
 			{
 				if (activationType == NSUserNotificationActivationTypeActionButtonClicked)
 				{
-					NSString *uniqueIdentifier = [context objectForKey:@"fileTransferUniqeIdentifier"];
+					NSString *uniqueIdentifier = context[@"fileTransferUniqeIdentifier"];
 					
 					TDCFileTransferDialogTransferController *transfer = [[menuController() fileTransferController] fileTransferFromUniqueIdentifier:uniqueIdentifier];
 					

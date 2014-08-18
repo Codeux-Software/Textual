@@ -178,7 +178,7 @@
 		} else {
 			NSDictionary *styleSettings = [RZStandardUserDefualts() dictionaryForKey:storeKey];
 			
-			return [styleSettings objectForKey:key];
+			return styleSettings[key];
 		}
 	}
 
@@ -212,7 +212,7 @@
 			if (removeValue) {
 				[styleSettings removeObjectForKey:objectKey];
 			} else {
-				[styleSettings setObject:objectValue forKey:objectKey];
+				styleSettings[objectKey] = objectValue;
 			}
 		
 			[RZStandardUserDefualts() setObject:[styleSettings copy] forKey:storeKey];

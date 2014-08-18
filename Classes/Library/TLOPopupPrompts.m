@@ -143,18 +143,13 @@
 	}
 	
 	NSArray *context = @[privateSuppressionKey, targetClass, NSStringFromSelector(actionSelector), @(isForcedSuppression)];
-
-	if (NSIsCurrentThreadMain()) {
+	
+	[self performBlockOnMainThread:^{
 		[alert beginSheetModalForWindow:window
 						  modalDelegate:[self class]
 						 didEndSelector:@selector(sheetWindowWithQuestionCallback:returnCode:contextInfo:)
 							contextInfo:(void *)CFBridgingRetain(context)];
-	} else {
-		[[alert invokeOnMainThread] beginSheetModalForWindow:window
-											   modalDelegate:[self class]
-											  didEndSelector:@selector(sheetWindowWithQuestionCallback:returnCode:contextInfo:)
-												 contextInfo:(void *)CFBridgingRetain(context)];
-	}
+	}];
 }
 
 + (void)popupPromptNilSelector:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert

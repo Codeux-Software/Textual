@@ -42,73 +42,73 @@
 
 - (NSString *)privateMessageStatusIconFilename:(BOOL)isActive selected:(BOOL)selected;
 
-- (NSInteger)serverCellRowHeight;
-- (NSInteger)channelCellRowHeight;
+@property (readonly) NSInteger serverCellRowHeight;
+@property (readonly) NSInteger channelCellRowHeight;
 
-- (NSColor *)serverListBackgroundColorForActiveWindow;
-- (NSColor *)serverListBackgroundColorForInactiveWindow;
+@property (readonly, copy) NSColor *serverListBackgroundColorForActiveWindow;
+@property (readonly, copy) NSColor *serverListBackgroundColorForInactiveWindow;
 
-- (NSImage *)channelRowSelectionImageForActiveWindow;
-- (NSImage *)channelRowSelectionImageForInactiveWindow;
+@property (readonly, copy) NSImage *channelRowSelectionImageForActiveWindow;
+@property (readonly, copy) NSImage *channelRowSelectionImageForInactiveWindow;
 
-- (NSImage *)serverRowSelectionImageForActiveWindow;
-- (NSImage *)serverRowSelectionImageForInactiveWindow;
+@property (readonly, copy) NSImage *serverRowSelectionImageForActiveWindow;
+@property (readonly, copy) NSImage *serverRowSelectionImageForInactiveWindow;
 
-- (NSFont *)messageCountBadgeFont;
+@property (readonly, copy) NSFont *messageCountBadgeFont;
 
-- (NSFont *)normalChannelCellFont;
-- (NSFont *)selectedChannelCellFont;
+@property (readonly, copy) NSFont *normalChannelCellFont;
+@property (readonly, copy) NSFont *selectedChannelCellFont;
 
-- (NSFont *)serverCellFont;
+@property (readonly, copy) NSFont *serverCellFont;
 
-- (NSColor *)messageCountBadgeAquaBackgroundColor;
-- (NSColor *)messageCountBadgeGraphtieBackgroundColor;
+@property (readonly, copy) NSColor *messageCountBadgeAquaBackgroundColor;
+@property (readonly, copy) NSColor *messageCountBadgeGraphtieBackgroundColor;
 
-- (NSColor *)messageCountHighlightedBadgeBackgroundColorForActiveWindow;
-- (NSColor *)messageCountHighlightedBadgeBackgroundColorForInactiveWindow;
+@property (readonly, copy) NSColor *messageCountHighlightedBadgeBackgroundColorForActiveWindow;
+@property (readonly, copy) NSColor *messageCountHighlightedBadgeBackgroundColorForInactiveWindow;
 
-- (NSColor *)messageCountNormalBadgeTextColorForActiveWindow;
-- (NSColor *)messageCountNormalBadgeTextColorForInactiveWindow;
+@property (readonly, copy) NSColor *messageCountNormalBadgeTextColorForActiveWindow;
+@property (readonly, copy) NSColor *messageCountNormalBadgeTextColorForInactiveWindow;
 
-- (NSColor *)messageCountHighlightedBadgeTextColor;
+@property (readonly, copy) NSColor *messageCountHighlightedBadgeTextColor;
 
-- (NSColor *)messageCountSelectedBadgeTextColorForActiveWindow;
-- (NSColor *)messageCountSelectedBadgeTextColorForInactiveWindow;
+@property (readonly, copy) NSColor *messageCountSelectedBadgeTextColorForActiveWindow;
+@property (readonly, copy) NSColor *messageCountSelectedBadgeTextColorForInactiveWindow;
 
-- (NSColor *)messageCountSelectedBadgeBackgroundColorForActiveWindow;
-- (NSColor *)messageCountSelectedBadgeBackgroundColorForInactiveWindow;
+@property (readonly, copy) NSColor *messageCountSelectedBadgeBackgroundColorForActiveWindow;
+@property (readonly, copy) NSColor *messageCountSelectedBadgeBackgroundColorForInactiveWindow;
 
-- (NSColor *)messageCountBadgeShadowColor;
+@property (readonly, copy) NSColor *messageCountBadgeShadowColor;
 
-- (NSColor *)serverCellNormalTextColor;
-- (NSColor *)serverCellDisabledTextColor;
+@property (readonly, copy) NSColor *serverCellNormalTextColor;
+@property (readonly, copy) NSColor *serverCellDisabledTextColor;
 
-- (NSColor *)serverCellNormalTextShadowColorForActiveWindow;
-- (NSColor *)serverCellNormalTextShadowColorForInactiveWindow;
+@property (readonly, copy) NSColor *serverCellNormalTextShadowColorForActiveWindow;
+@property (readonly, copy) NSColor *serverCellNormalTextShadowColorForInactiveWindow;
 
-- (NSColor *)serverCellSelectedTextColorForActiveWindow;
-- (NSColor *)serverCellSelectedTextColorForInactiveWindow;
+@property (readonly, copy) NSColor *serverCellSelectedTextColorForActiveWindow;
+@property (readonly, copy) NSColor *serverCellSelectedTextColorForInactiveWindow;
 
-- (NSColor *)serverCellSelectedTextShadowColorForActiveWindow;
-- (NSColor *)serverCellSelectedTextShadowColorForInactiveWindow;
+@property (readonly, copy) NSColor *serverCellSelectedTextShadowColorForActiveWindow;
+@property (readonly, copy) NSColor *serverCellSelectedTextShadowColorForInactiveWindow;
 
-- (NSColor *)channelCellNormalTextColor;
-- (NSColor *)channelCellDisabledTextColor;
+@property (readonly, copy) NSColor *channelCellNormalTextColor;
+@property (readonly, copy) NSColor *channelCellDisabledTextColor;
 
-- (NSColor *)channelCellNormalTextShadowColor;
+@property (readonly, copy) NSColor *channelCellNormalTextShadowColor;
 
-- (NSColor *)channelCellSelectedTextColorForActiveWindow;
-- (NSColor *)channelCellSelectedTextColorForInactiveWindow;
+@property (readonly, copy) NSColor *channelCellSelectedTextColorForActiveWindow;
+@property (readonly, copy) NSColor *channelCellSelectedTextColorForInactiveWindow;
 
-- (NSColor *)channelCellSelectedTextShadowColorForActiveWindow;
-- (NSColor *)channelCellSelectedTextShadowColorForInactiveWindow;
+@property (readonly, copy) NSColor *channelCellSelectedTextShadowColorForActiveWindow;
+@property (readonly, copy) NSColor *channelCellSelectedTextShadowColorForInactiveWindow;
 
-- (NSColor *)graphiteTextSelectionShadowColor;
+@property (readonly, copy) NSColor *graphiteTextSelectionShadowColor;
 
-- (NSInteger)messageCountBadgeHeight;
-- (NSInteger)messageCountBadgeMinimumWidth;
-- (NSInteger)messageCountBadgePadding;
-- (NSInteger)messageCountBadgeRightMargin;
+@property (readonly) NSInteger messageCountBadgeHeight;
+@property (readonly) NSInteger messageCountBadgeMinimumWidth;
+@property (readonly) NSInteger messageCountBadgePadding;
+@property (readonly) NSInteger messageCountBadgeRightMargin;
 @end
 
 @interface TVCServerListMavericksLightUserInterface : TVCServerListMavericksUserInterface

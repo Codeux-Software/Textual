@@ -139,11 +139,11 @@
 									; // Safe to continue…
 								} else {
 									if (usesTypeChecking) {
-										_insertError(NO, ([NSString stringWithFormat:@"Error: Performing %@ on %@: Mismatched argument type at index %lu — Expected type token: '%@', actual type token: '%@'", NSStringFromSelector(aSelector), NSStringFromClass([self class]), argumentIndex, [NSString stringWithUTF8String:expectedArgumentValue], [NSString stringWithUTF8String:actualArgumentValue]]));
+										_insertError(NO, ([NSString stringWithFormat:@"Error: Performing %@ on %@: Mismatched argument type at index %lu — Expected type token: '%@', actual type token: '%@'", NSStringFromSelector(aSelector), NSStringFromClass([self class]), argumentIndex, @(expectedArgumentValue), @(actualArgumentValue)]));
 										
 										safeToPerform = NO;
 									} else {
-										_insertError(YES, ([NSString stringWithFormat:@"Warning: Performing %@ on %@: Mismatched argument type at index %lu — Expected type token: '%@', actual type token: '%@' — Will send values anyways as strict type checking is disabled. The result of this mismatched type is undefined.", NSStringFromSelector(aSelector), NSStringFromClass([self class]), argumentIndex, [NSString stringWithUTF8String:expectedArgumentValue], [NSString stringWithUTF8String:actualArgumentValue]]));
+										_insertError(YES, ([NSString stringWithFormat:@"Warning: Performing %@ on %@: Mismatched argument type at index %lu — Expected type token: '%@', actual type token: '%@' — Will send values anyways as strict type checking is disabled. The result of this mismatched type is undefined.", NSStringFromSelector(aSelector), NSStringFromClass([self class]), argumentIndex, @(expectedArgumentValue), @(actualArgumentValue)]));
 									}
 								}
 								

@@ -39,7 +39,7 @@
 
 @implementation NSValue (TXValueHelper)
 
-+ (id)valueWithPrimitive:(void *)value withType:(const char *)valueType
++ (instancetype)valueWithPrimitive:(void *)value withType:(const char *)valueType
 {
 	/* See runtime.h header in Objective-C for return types. */
 	switch (*valueType) {
@@ -50,56 +50,56 @@
 		}
 		case _C_SHT:
 		{
-			return [NSNumber numberWithShort:(short)value];
+			return @((short)value);
 		}
 		case _C_USHT:
 		{
-			return [NSNumber numberWithUnsignedShort:(unsigned short)value];
+			return @((unsigned short)value);
 		}
 		case _C_INT:
 		{
-			return [NSNumber numberWithInt:(int)value];
+			return @((int)value);
 		}
 		case _C_UINT:
 		{
-			return [NSNumber numberWithUnsignedInt:(unsigned)value];
+			return @((unsigned)value);
 		}
 		case _C_LNG:
 		{
-			return [NSNumber numberWithLong:(long)value];
+			return @((long)value);
 		}
 		case _C_ULNG:
 		{
-			return [NSNumber numberWithUnsignedLong:(unsigned long)value];
+			return @((unsigned long)value);
 		}
 		case _C_LNG_LNG:
 		{
-			return [NSNumber numberWithLongLong:(long long)value];
+			return @((long long)value);
 		}
 		case _C_ULNG_LNG:
 		{
-			return [NSNumber numberWithUnsignedLongLong:(unsigned long long)value];
+			return @((unsigned long long)value);
 		}
 		case _C_FLT:
 		{
-			return [NSNumber numberWithFloat:*(float *)value];
+			return @(*(float *)value);
 		}
 		case _C_DBL:
 		{
-			return [NSNumber numberWithDouble:*(double *)value];
+			return @(*(double *)value);
 		}
 		case _C_UCHR:
 		{
-			return [NSNumber numberWithUnsignedChar:(unsigned char)value];
+			return @((unsigned char)value);
 		}
 		case _C_CHR:
 		{
 			if ((size_t)value == 1) {
-				return [NSNumber numberWithBool:YES];
+				return @(YES);
 			} else if (value == NULL) {
-				return [NSNumber numberWithBool:NO];
+				return @(NO);
 			} else {
-				return [NSNumber numberWithChar:(char)value];
+				return @((char)value);
 			}
 		}
 	}
