@@ -186,7 +186,7 @@ typedef void (^TXEmtpyBlockDataType)(void);
 
 /* Deprecation and symbol visibility. */
 #define TEXTUAL_EXTERN							__attribute__((visibility("default")))
-#define TEXTUAL_DEPRECATED						__attribute__((deprecated))
+#define TEXTUAL_DEPRECATED(reason)				__attribute__((deprecated((reason))))
 
 #define TEXTUAL_DEPRECATED_ASSERT				NSAssert1(NO, @"Deprecated Method: %s", __PRETTY_FUNCTION__);
 #define TEXTUAL_DEPRECATED_ASSERT_C				NSCAssert1(NO, @"Deprecated Method: %s", __PRETTY_FUNCTION__);

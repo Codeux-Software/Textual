@@ -74,9 +74,7 @@
 					senderInformation:(NSDictionary *)senderDict
 				   messageInformation:(NSDictionary *)messageDict
 {
-	if (NSIsCurrentThreadMain() == NO) {
-		[[self invokeOnMainThread] didReceiveServerInputOnClient:client senderInformation:senderDict messageInformation:messageDict];
-	} else {
+	[self performBlockOnMainThread:^{
 		NSString *person  = senderDict[@"senderNickname"];
 		NSString *message = messageDict[@"messageSequence"];
 
@@ -116,31 +114,29 @@
 				}
 			}
 		}
-	}
+	}];
 }
 
 - (void)userInputCommandInvokedOnClient:(IRCClient *)client
 						  commandString:(NSString *)commandString
 						  messageString:(NSString *)messageString
 {
-	if (NSIsCurrentThreadMain() == NO) {
-		[[self invokeOnMainThread] userInputCommandInvokedOnClient:client commandString:commandString messageString:messageString];
-	} else {
+	[self performBlockOnMainThread:^{
 		IRCChannel *c = [mainWindow() selectedChannelOn:client];
 		
 		if ([c isChannel] || [c isPrivateMessage]) {
-			messageString = [messageString trimAndGetFirstToken];
+			NSString *_messageString = [messageString trimAndGetFirstToken];
 
 			NSString *encryptionKey = [c encryptionKey];
 			
 			if ([commandString isEqualToString:@"SETKEY"]) {
-				if (NSObjectIsEmpty(messageString)) {
+				if (NSObjectIsEmpty(_messageString)) {
 					[c setEncryptionKey:NSStringEmptyPlaceholder];
 					
 					[client printDebugInformation:BLS(1004) channel:c];
 				} else {
 					if (encryptionKey) {
-						if ([encryptionKey isEqualToString:messageString] == NO) {
+						if ([encryptionKey isEqualToString:_messageString] == NO) {
 							[client printDebugInformation:BLS(1002) channel:c];
 						}
 					} else {
@@ -151,7 +147,7 @@
 						}
 					}
 					
-					[c setEncryptionKey:messageString];
+					[c setEncryptionKey:_messageString];
 				}
 			} else if ([commandString isEqualToString:@"DELKEY"]) {
 				[c setEncryptionKey:NSStringEmptyPlaceholder];
@@ -164,7 +160,7 @@
 					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1000]") channel:c];
 				}
 			} else if ([commandString isEqualToString:@"SETKEYMODE"]) {
-				if ([messageString isEqualIgnoringCase:@"CBC"]) {
+				if ([_messageString isEqualIgnoringCase:@"CBC"]) {
 					[c setEncryptionAlgorithm:CSFWBlowfishEncryptionCBCAlgorithm];
 					
 					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1020]") channel:c];
@@ -193,7 +189,7 @@
 							
 							NSString *requestMsg = nil;
 							
-							if ([messageString isEqualIgnoringCase:@"nocbc"]) {
+							if ([_messageString isEqualIgnoringCase:@"nocbc"]) {
 								requestMsg = [NSString stringWithFormat:@"%@%@", TXExchangeRequestPrefix, publicKey];
 							} else {
 								requestMsg = [NSString stringWithFormat:@"%@%@ CBC", TXExchangeRequestPrefix, publicKey];
@@ -215,7 +211,7 @@
 			
 			encryptionKey = nil;
 		}
-	}
+	}];
 }
 
 - (NSArray *)subscribedUserInputCommands

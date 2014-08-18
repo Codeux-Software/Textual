@@ -228,20 +228,20 @@
 
 /* Even though these methods are deprecated, they will still function 
  as they always have. They will however be removed in a future release. */
-- (void)pluginLoadedIntoMemory:(IRCWorld *)world TEXTUAL_DEPRECATED;
-- (void)pluginUnloadedFromMemory TEXTUAL_DEPRECATED;
+- (void)pluginLoadedIntoMemory:(IRCWorld *)world TEXTUAL_DEPRECATED("Use -pluginLoadedIntoMemory instead");
+- (void)pluginUnloadedFromMemory TEXTUAL_DEPRECATED("Use -pluginWillBeUnloadedFromMemory instead");
 
-- (NSArray *)pluginSupportsUserInputCommands TEXTUAL_DEPRECATED;
-- (NSArray *)pluginSupportsServerInputCommands TEXTUAL_DEPRECATED;
+- (NSArray *)pluginSupportsUserInputCommands TEXTUAL_DEPRECATED("Use -subscribedUserInputCommands instead");
+- (NSArray *)pluginSupportsServerInputCommands TEXTUAL_DEPRECATED("Use -subscribedServerInputCommands instead");
 
-- (NSView *)preferencesView TEXTUAL_DEPRECATED;
-- (NSString *)preferencesMenuItemName TEXTUAL_DEPRECATED;
+- (NSView *)preferencesView TEXTUAL_DEPRECATED("Use -pluginPreferencesPaneView instead");
+- (NSString *)preferencesMenuItemName TEXTUAL_DEPRECATED("Use -pluginPreferencesPaneMenuItemName instead");
 
 - (void)messageSentByUser:(IRCClient *)client
 				  message:(NSString *)messageString
-				  command:(NSString *)commandString TEXTUAL_DEPRECATED;
+				  command:(NSString *)commandString TEXTUAL_DEPRECATED("Use -userInputCommandInvokedOnClient:commandString:messageString: instead");
 
 - (void)messageReceivedByServer:(IRCClient *)client
 						 sender:(NSDictionary *)senderDict
-						message:(NSDictionary *)messageDict TEXTUAL_DEPRECATED;
+						message:(NSDictionary *)messageDict TEXTUAL_DEPRECATED("Use -didReceiveServerInputOnClient:senderInformation:messageInformation: instead");
 @end

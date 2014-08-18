@@ -45,31 +45,31 @@
 
 - (void)invalidateAllUserMarkBadgeCaches;
 
-- (NSColor *)memberListBackgroundColorForActiveWindow;
-- (NSColor *)memberListBackgroundColorForInactiveWindow;
+@property (readonly, copy) NSColor *memberListBackgroundColorForActiveWindow;
+@property (readonly, copy) NSColor *memberListBackgroundColorForInactiveWindow;
 
-- (NSColor *)userMarkBadgeBackgroundColor_Y;
-- (NSColor *)userMarkBadgeBackgroundColor_A;
-- (NSColor *)userMarkBadgeBackgroundColor_H;
-- (NSColor *)userMarkBadgeBackgroundColor_O;
-- (NSColor *)userMarkBadgeBackgroundColor_Q;
-- (NSColor *)userMarkBadgeBackgroundColor_V;
+@property (readonly, copy) NSColor *userMarkBadgeBackgroundColor_Y;
+@property (readonly, copy) NSColor *userMarkBadgeBackgroundColor_A;
+@property (readonly, copy) NSColor *userMarkBadgeBackgroundColor_H;
+@property (readonly, copy) NSColor *userMarkBadgeBackgroundColor_O;
+@property (readonly, copy) NSColor *userMarkBadgeBackgroundColor_Q;
+@property (readonly, copy) NSColor *userMarkBadgeBackgroundColor_V;
 
-- (NSColor *)userMarkBadgeBackgroundColor_YDefault;
-- (NSColor *)userMarkBadgeBackgroundColor_ADefault;
-- (NSColor *)userMarkBadgeBackgroundColor_HDefault;
-- (NSColor *)userMarkBadgeBackgroundColor_ODefault;
-- (NSColor *)userMarkBadgeBackgroundColor_QDefault;
-- (NSColor *)userMarkBadgeBackgroundColor_VDefault;
+@property (readonly, copy) NSColor *userMarkBadgeBackgroundColor_YDefault;
+@property (readonly, copy) NSColor *userMarkBadgeBackgroundColor_ADefault;
+@property (readonly, copy) NSColor *userMarkBadgeBackgroundColor_HDefault;
+@property (readonly, copy) NSColor *userMarkBadgeBackgroundColor_ODefault;
+@property (readonly, copy) NSColor *userMarkBadgeBackgroundColor_QDefault;
+@property (readonly, copy) NSColor *userMarkBadgeBackgroundColor_VDefault;
 
-- (NSFont *)userMarkBadgeFont;
-- (NSFont *)userMarkBadgeFontSelected;
+@property (readonly, copy) NSFont *userMarkBadgeFont;
+@property (readonly, copy) NSFont *userMarkBadgeFontSelected;
 
-- (NSFont *)userMarkBadgeFontForRetina;
-- (NSFont *)userMarkBadgeFontSelectedForRetina;
+@property (readonly, copy) NSFont *userMarkBadgeFontForRetina;
+@property (readonly, copy) NSFont *userMarkBadgeFontSelectedForRetina;
 
-- (NSInteger)userMarkBadgeHeight;
-- (NSInteger)userMarkBadgeWidth;
+@property (readonly) NSInteger userMarkBadgeHeight;
+@property (readonly) NSInteger userMarkBadgeWidth;
 @end
 
 @interface TVCMemberListMavericksUserInterfaceBackground : NSBox

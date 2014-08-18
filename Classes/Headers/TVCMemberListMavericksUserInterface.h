@@ -38,33 +38,33 @@
 #import "TextualApplication.h"
 
 @interface TVCMemberListMavericksUserInterface : TVCMemberListSharedUserInterface
-- (NSInteger)cellRowHeight;
+@property (readonly) NSInteger cellRowHeight;
 
-- (NSImage *)rowSelectionImageForActiveWindow;
-- (NSImage *)rowSelectionImageForInactiveWindow;
+@property (readonly, copy) NSImage *rowSelectionImageForActiveWindow;
+@property (readonly, copy) NSImage *rowSelectionImageForInactiveWindow;
 
-- (NSColor *)userMarkBadgeBackgroundColorForAqua;
-- (NSColor *)userMarkBadgeBackgroundColorForGraphite;
+@property (readonly, copy) NSColor *userMarkBadgeBackgroundColorForAqua;
+@property (readonly, copy) NSColor *userMarkBadgeBackgroundColorForGraphite;
 
-- (NSColor *)userMarkBadgeSelectedBackgroundColor;
+@property (readonly, copy) NSColor *userMarkBadgeSelectedBackgroundColor;
 
-- (NSColor *)userMarkBadgeNormalTextColor;
-- (NSColor *)userMarkBadgeSelectedTextColor;
+@property (readonly, copy) NSColor *userMarkBadgeNormalTextColor;
+@property (readonly, copy) NSColor *userMarkBadgeSelectedTextColor;
 
-- (NSColor *)userMarkBadgeShadowColor;
+@property (readonly, copy) NSColor *userMarkBadgeShadowColor;
 
-- (NSFont *)normalCellFont;
-- (NSFont *)selectedCellFont;
+@property (readonly, copy) NSFont *normalCellFont;
+@property (readonly, copy) NSFont *selectedCellFont;
 
-- (NSColor *)normalCellTextColor;
-- (NSColor *)awayUserCellTextColor;
-- (NSColor *)selectedCellTextColor;
+@property (readonly, copy) NSColor *normalCellTextColor;
+@property (readonly, copy) NSColor *awayUserCellTextColor;
+@property (readonly, copy) NSColor *selectedCellTextColor;
 
-- (NSColor *)normalCellTextShadowColor;
+@property (readonly, copy) NSColor *normalCellTextShadowColor;
 
-- (NSColor *)normalSelectedCellTextShadowColorForActiveWindow;
-- (NSColor *)normalSelectedCellTextShadowColorForInactiveWindow;
-- (NSColor *)graphiteSelectedCellTextShadowColorForActiveWindow;
+@property (readonly, copy) NSColor *normalSelectedCellTextShadowColorForActiveWindow;
+@property (readonly, copy) NSColor *normalSelectedCellTextShadowColorForInactiveWindow;
+@property (readonly, copy) NSColor *graphiteSelectedCellTextShadowColorForActiveWindow;
 @end
 
 @interface TVCMemberListMavericksLightUserInterface : TVCMemberListMavericksUserInterface

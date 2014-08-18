@@ -305,7 +305,7 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
  window is not owned by this client, then the message will be sent to the server console. */
 /* The method obviously does not work as expected so it has been marked as deprecated.
  However, it will remain functional for plugin authors who wish to use it. */
-- (void)sendPrivmsgToSelectedChannel:(NSString *)message TEXTUAL_DEPRECATED;
+- (void)sendPrivmsgToSelectedChannel:(NSString *)message TEXTUAL_DEPRECATED("Use sendPrivmsg:toChannel: instead");
 
 - (void)sendPrivmsg:(NSString *)message toChannel:(IRCChannel *)channel;
 - (void)sendAction:(NSString *)message toChannel:(IRCChannel *)channel;
