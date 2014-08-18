@@ -4284,32 +4284,6 @@
 
 			BOOL newPrivateMessage = NO;
 
-			if (c == nil) {
-				BOOL createNewWindow = YES;
-				
-				if (type == TVCLogLineNoticeType) {
-					if ([TPCPreferences locationToSendNotices] == TXNoticeSendToQueryDestinationType) {
-						;
-					} else {
-						createNewWindow = NO;
-					}
-				}
-				
-				if (createNewWindow) {
-					if (isZNCprivmsg) {
-						if (NSObjectIsEmpty(target) == NO) {
-							c = [worldController() createPrivateMessage:target client:self];
-						}
-					} else {
-						if (NSObjectIsEmpty(sender) == NO) {
-							c = [worldController() createPrivateMessage:sender client:self];
-						}
-					}
-					
-					newPrivateMessage = YES;
-				}
-			}
-
 			/* Is the message encrypted? If so, decrypt. */
 			isEncrypted = [self isMessageEncrypted:text channel:c];
 
@@ -4409,6 +4383,34 @@
                             }
                         }
                     }
+				}
+				
+				/* Place creation block last so ChanServ entry messages forwarded to a channel
+				 does not create a new private message beforehand. */
+				if (c == nil) {
+					BOOL createNewWindow = YES;
+					
+					if (type == TVCLogLineNoticeType) {
+						if ([TPCPreferences locationToSendNotices] == TXNoticeSendToQueryDestinationType) {
+							;
+						} else {
+							createNewWindow = NO;
+						}
+					}
+					
+					if (createNewWindow) {
+						if (isZNCprivmsg) {
+							if (NSObjectIsEmpty(target) == NO) {
+								c = [worldController() createPrivateMessage:target client:self];
+							}
+						} else {
+							if (NSObjectIsEmpty(sender) == NO) {
+								c = [worldController() createPrivateMessage:sender client:self];
+							}
+						}
+						
+						newPrivateMessage = YES;
+					}
 				}
 				
 				/* Post the notice. */
