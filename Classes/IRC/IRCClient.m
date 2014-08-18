@@ -4437,6 +4437,18 @@
 					 }];
 			} else {
 				/* Post regular message and inform Growl. */
+				if (c == nil) {
+					if (isZNCprivmsg) {
+						if (NSObjectIsEmpty(target) == NO) {
+							c = [worldController() createPrivateMessage:target client:self];
+						}
+					} else {
+						if (NSObjectIsEmpty(sender) == NO) {
+							c = [worldController() createPrivateMessage:sender client:self];
+						}
+					}
+				}
+				
 				[self printToWebView:c
 								type:type
 							 command:[m command]
