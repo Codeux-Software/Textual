@@ -38,5 +38,5 @@
 #import "TextualApplication.h"
 
 @interface NSValue (TXValueHelper)
-+ (instancetype)valueWithPrimitive:(void *)value withType:(const char *)valueType;
++ (id)valueWithPrimitive:(void *)value withType:(const char *)valueType;
 @end
