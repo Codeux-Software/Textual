@@ -207,29 +207,55 @@
 	CFRelease(settings);
 }
 
-- (void)useSocksProxyVersion:(NSInteger)version address:(NSString *)address port:(NSInteger)port username:(NSString *)username password:(NSString *)password
+- (void)useSocksProxyVersion:(IRCConnectionSocketProxyType)version address:(NSString *)address port:(NSInteger)port username:(NSString *)username password:(NSString *)password
 {
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 
-	if (version == 4) {
-		settings[(id)kCFStreamPropertySOCKSVersion] = (id)kCFStreamSocketSOCKSVersion4;
-	} else {
-		settings[(id)kCFStreamPropertySOCKSVersion] = (id)kCFStreamSocketSOCKSVersion5;
+	switch (version) {
+		case IRCConnectionSocketHTTPProxyType:
+		case IRCConnectionSocketHTTPSProxyType:
+		{
+			if (version == IRCConnectionSocketHTTPProxyType) {
+				settings[(id)kCFStreamPropertyHTTPProxyHost] = address;
+				settings[(id)kCFStreamPropertyHTTPProxyPort] = @(port);
+			} else {
+				settings[(id)kCFStreamPropertyHTTPSProxyHost] = address;
+				settings[(id)kCFStreamPropertyHTTPSProxyPort] = @(port);
+			}
+			
+			CFReadStreamSetProperty(theReadStream, kCFStreamPropertyHTTPProxy, (__bridge CFTypeRef)(settings));
+			CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertyHTTPProxy, (__bridge CFTypeRef)(settings));
+			
+			break;
+		}
+		case IRCConnectionSocketSocks4ProxyType:
+		case IRCConnectionSocketSocks5ProxyType:
+		{
+			if (version == IRCConnectionSocketSocks4ProxyType) {
+				settings[(id)kCFStreamPropertySOCKSVersion] = (id)kCFStreamSocketSOCKSVersion4;
+			} else {
+				settings[(id)kCFStreamPropertySOCKSVersion] = (id)kCFStreamSocketSOCKSVersion5;
+			}
+			
+			settings[(id)kCFStreamPropertySOCKSProxyHost] = address;
+			settings[(id)kCFStreamPropertySOCKSProxyPort] = @(port);
+			
+			if (NSObjectIsNotEmpty(username)) {
+				settings[(id)kCFStreamPropertySOCKSUser] = username;
+			}
+			
+			if (NSObjectIsNotEmpty(password)) {
+				settings[(id)kCFStreamPropertySOCKSPassword] = password;
+			}
+			
+			CFReadStreamSetProperty(theReadStream, kCFStreamPropertySOCKSProxy, (__bridge CFTypeRef)(settings));
+			CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySOCKSProxy, (__bridge CFTypeRef)(settings));
+		}
+		default:
+		{
+			break;
+		}
 	}
-
-	settings[(id)kCFStreamPropertySOCKSProxyHost] = address;
-	settings[(id)kCFStreamPropertySOCKSProxyPort] = @(port);
-
-	if (NSObjectIsNotEmpty(username)) {
-		settings[(id)kCFStreamPropertySOCKSUser] = username;
-	}
-	
-	if (NSObjectIsNotEmpty(password)) {
-		settings[(id)kCFStreamPropertySOCKSPassword] = password;
-	}
-	
-	CFReadStreamSetProperty(theReadStream, kCFStreamPropertySOCKSProxy, (__bridge CFTypeRef)(settings));
-	CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySOCKSProxy, (__bridge CFTypeRef)(settings));
 }
 
 @end

@@ -7833,7 +7833,9 @@
 		[self printDebugInformationToConsole:BLS(1142, socketAddress, socketPort)];
 	}
 	else if (self.config.proxyType == IRCConnectionSocketSocks4ProxyType ||
-			 self.config.proxyType == IRCConnectionSocketSocks5ProxyType)
+			 self.config.proxyType == IRCConnectionSocketSocks5ProxyType ||
+			 self.config.proxyType == IRCConnectionSocketHTTPProxyType ||
+			 self.config.proxyType == IRCConnectionSocketHTTPSProxyType)
 	{
 		self.socket.connectionUsesNormalSocks = YES;
 		

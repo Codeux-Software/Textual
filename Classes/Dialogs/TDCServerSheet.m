@@ -318,7 +318,9 @@
 			NSInteger proxyType = [self.proxyTypeButton selectedTag];
 			
 			if (proxyType == IRCConnectionSocketSocks4ProxyType ||
-				proxyType == IRCConnectionSocketSocks5ProxyType)
+				proxyType == IRCConnectionSocketSocks5ProxyType ||
+				proxyType == IRCConnectionSocketHTTPProxyType ||
+				proxyType == IRCConnectionSocketHTTPSProxyType)
 			{
 				return ([currentValue length] > 0);
 			} else {
@@ -341,7 +343,9 @@
 			NSInteger proxyType = [self.proxyTypeButton selectedTag];
 			
 			if (proxyType == IRCConnectionSocketSocks4ProxyType ||
-				proxyType == IRCConnectionSocketSocks5ProxyType)
+				proxyType == IRCConnectionSocketSocks5ProxyType ||
+				proxyType == IRCConnectionSocketHTTPProxyType ||
+				proxyType == IRCConnectionSocketHTTPSProxyType)
 			{
 				if ([currentValue isNumericOnly]) {
 					return ([currentValue length] < 7 && [currentValue integerValue] > 1);
@@ -1072,12 +1076,15 @@
 {
 	NSInteger tag = [self.proxyTypeButton selectedTag];
 	
-	BOOL enabled = (tag == IRCConnectionSocketSocks4ProxyType || tag == IRCConnectionSocketSocks5ProxyType);
+	BOOL httpsEnabled = (tag == IRCConnectionSocketHTTPProxyType || tag == IRCConnectionSocketHTTPSProxyType);
+	BOOL socksEnabled = (tag == IRCConnectionSocketSocks4ProxyType || tag == IRCConnectionSocketSocks5ProxyType);
+	
+	BOOL enabled = (httpsEnabled || socksEnabled);
 	
 	[self.proxyAddressField	setEnabled:enabled];
 	[self.proxyPortField setEnabled:enabled];
-	[self.proxyUsernameField setEnabled:enabled];
-	[self.proxyPasswordField setEnabled:enabled];
+	[self.proxyUsernameField setEnabled:socksEnabled];
+	[self.proxyPasswordField setEnabled:socksEnabled];
 	
 	[self updateSSLCertificatePage];
 	
