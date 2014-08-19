@@ -58,7 +58,7 @@
 @property (nonatomic, copy) NSString *proxyPassword;
 @property (nonatomic, copy) NSString *proxyUsername;
 @property (nonatomic, assign) NSInteger proxyPort;
-@property (nonatomic, assign) NSInteger proxySocksVersion;
+@property (nonatomic, assign) IRCConnectionSocketProxyType proxySocksVersion;
 @property (nonatomic, assign) BOOL isConnectedWithClientSideCertificate; // Consider this readonly
 
 - (void)open;

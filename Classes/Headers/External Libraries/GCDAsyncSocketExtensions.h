@@ -36,6 +36,7 @@
  *********************************************************************** */
 
 #import "RLMAsyncSocket.h" // superclass
+#import "IRCClientConfig.h" // typedef enum
 
 @interface GCDAsyncSocket (GCDsyncSocketExtensions)
 + (instancetype)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq;
@@ -57,8 +58,9 @@
 + (instancetype)socketWithDelegate:(id)delegate;
 
 - (void)useSSL;
+
 - (void)useSystemSocksProxy;
-- (void)useSocksProxyVersion:(NSInteger)version
+- (void)useSocksProxyVersion:(IRCConnectionSocketProxyType)version
 					 address:(NSString *)address
 						port:(NSInteger)port
 					username:(NSString *)username
