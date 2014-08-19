@@ -6051,9 +6051,17 @@
 		}
 		case 338: // RPL_WHOISACTUALLY (ircu, Bahamut)
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 3);
+			NSAssertReturnLoopBreak([m paramsCount] > 2);
 
-			NSString *text = [NSString stringWithFormat:@"%@ %@ %@", [m paramAt:1], [m sequence:3], [m paramAt:2]];
+			NSString *text = nil;
+			
+			if ([m paramsCount] == 3) {
+				text = [NSString stringWithFormat:@"%@ %@", [m paramAt:1], [m paramAt:2]];
+			} else {
+				/* I am not sure in what context this variant is used. It is legacy code from 
+				 earlier versions of Textual so it is better to keep it here. */
+				text = [NSString stringWithFormat:@"%@ %@ %@", [m paramAt:1], [m sequence:3], [m paramAt:2]];
+			}
 			
 			[self print:[mainWindow() selectedChannelOn:self]
 				   type:TVCLogLineDebugType
