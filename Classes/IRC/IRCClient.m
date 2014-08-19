@@ -6028,6 +6028,7 @@
 
 			break;
 		}
+		case 276: // RPL_? — (is using a client certificate, hybrid)
 		case 307: // RPL_WHOISREGNICK
 		case 310: // RPL_WHOISHELPOP
 		case 313: // RPL_WHOISOPERATOR
