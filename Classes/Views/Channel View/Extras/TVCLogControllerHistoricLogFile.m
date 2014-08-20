@@ -172,6 +172,7 @@
 
 - (void)cancelAnyPreviouslyScheduledFileTruncationEvents
 {
+#ifdef TXSystemIsMacOSYosemiteOrNewer
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 		if (self.truncationTimerScheduled) {
 			[self.backgroundTimer invalidate];
@@ -180,6 +181,8 @@
 			self.truncationTimerScheduled = NO;
 		}
 	} else {
+#endif
+		
 		if (self.truncationTimerScheduled) {
 			[NSObject cancelPreviousPerformRequestsWithTarget:self
 													 selector:@selector(truncateFileToMatchDefinedMaximumLineCount)
@@ -187,13 +190,18 @@
 
 			self.truncationTimerScheduled = NO;
 		}
+
+#ifdef TXSystemIsMacOSYosemiteOrNewer
 	}
+#endif
 }
 
 - (void)scheduleNextRandomFileTruncationEvent
 {
 	/* File truncation events are scheduled to happen at random 
 	 intervals so they are all not running at one time. */
+
+#ifdef TXSystemIsMacOSYosemiteOrNewer
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
 		NSBackgroundActivityScheduler *scheduler = [[NSBackgroundActivityScheduler alloc] initWithIdentifier:[self backgroundActivityIdentifier]];
 
@@ -217,6 +225,8 @@
 	
 		self.truncationTimerScheduled = YES;
 	} else {
+#endif
+
 		if (self.truncationTimerScheduled == NO) {
 			NSInteger timeInterval = ((arc4random() % 951) + 950); // ~15 minutes
 
@@ -226,7 +236,10 @@
 
 			self.truncationTimerScheduled = YES;
 		}
+
+#ifdef TXSystemIsMacOSYosemiteOrNewer
 	}
+#endif
 }
 
 - (void)truncateFileToMatchDefinedMaximumLineCount
