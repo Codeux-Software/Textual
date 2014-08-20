@@ -6,19 +6,19 @@
 
 TEXTUAL_PROJECT_ROOT = ${SRCROOT}/../../../
 
-OBJROOT = ${TEXTUAL_PROJECT_ROOT}/.tmp/SharedBuildResults
+OBJROOT = ${TEXTUAL_PROJECT_ROOT}/.tmp/SharedBuildResults-Extensions
 
 SYMROOT = ${OBJROOT}
 BUILD_DIR = ${OBJROOT}
 TARGET_TEMP_DIR = ${OBJROOT}
 SHARED_PRECOMPS_DIR = ${TEXTUAL_PROJECT_ROOT}/.tmp/SharedBuildPCH
-CONFIGURATION_BUILD_DIR = ${TEXTUAL_PROJECT_ROOT}/.tmp/SharedBuildProducts
+CONFIGURATION_BUILD_DIR = ${TEXTUAL_PROJECT_ROOT}/.tmp/SharedBuildProducts-Extensions
 
 CODE_SIGN_ENTITLEMENTS = ${TEXTUAL_PROJECT_ROOT}/Resources/Sandbox/Exceptions/Auxiliary.entitlements
 
 HEADER_SEARCH_PATHS = "${TEXTUAL_PROJECT_ROOT}/Classes/Headers/**"
 LIBRARY_SEARCH_PATHS = "${TEXTUAL_PROJECT_ROOT}/Frameworks/**"
-FRAMEWORK_SEARCH_PATHS = "${TEXTUAL_PROJECT_ROOT}/Frameworks/**" "${TEXTUAL_PROJECT_ROOT}/.tmp/SharedBuildProducts/**"
+FRAMEWORK_SEARCH_PATHS = "${TEXTUAL_PROJECT_ROOT}/Frameworks/**" "${TEXTUAL_PROJECT_ROOT}/.tmp/SharedBuildProducts-Frameworks/**"
 
 // The actual path of the copy of Textual being built is passed during during
 // the time that these are compiled. However, we still pass the installed

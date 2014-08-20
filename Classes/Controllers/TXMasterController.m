@@ -62,7 +62,7 @@
 		
 #ifndef TXSystemIsMacOSYosemiteOrNewer
 		if ([CSFWSystemInformation featureAvailableToOSXYosemite]){
-			NSAssert(NO, @"This copy of Textual was built on Mavericks and cannot be ran on Yosemite. Please rebuild it on Yosemite.");
+			NSAssert(NO, @"This copy of Textual was built on Mavericks and cannot be run on Yosemite. Please rebuild it on Yosemite.");
 		}
 #endif
 		
