@@ -9,7 +9,7 @@ Please be aware while it is within your right to compile Textual and redistribut
 
 <hr />
 
-The latest version of Textual requires two things to be built. One is a valid (does not need to be trusted) code signing certificate. The second is an installation of Xcode 5 or later on Mac OS Mavericks.
+The latest version of Textual requires two things to be built. One is a valid (does not need to be trusted) code signing certificate. The second is an installation of Xcode 6 or later on Mac OS Mavericks.
 
 If building Textual on Mavericks, then the option in Xcode to continue after recieving a build error must be enabled. Textual builds an interface file which contains code which is specific to the Yosemite SDK. Therefore, building on Mavericks will result in this file creating an error. This file is not accessed on Mavericks once built so ignoring this warning by continuing the build is okay.
 
