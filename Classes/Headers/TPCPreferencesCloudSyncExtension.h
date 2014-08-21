@@ -67,8 +67,6 @@ typedef enum TPCPreferencesKeyReloadActionMask : NSInteger {
 + (BOOL)syncPreferencesToTheCloudLimitedToServers;
 #endif
 
-+ (BOOL)performValidationForKeyValues:(BOOL)duringInitialization;
-
 + (void)performReloadActionForKeyValues:(NSArray *)prefKeys;
 + (void)performReloadActionForActionType:(TPCPreferencesKeyReloadActionMask)reloadAction;
 @end

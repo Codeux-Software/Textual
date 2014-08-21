@@ -40,6 +40,7 @@
 	#import <WebKit/WebKit.h>
 	#import <Security/Security.h>
 	#import <QuartzCore/QuartzCore.h>
+	#import <CoreServices/CoreServices.h>
 	#import <SystemConfiguration/SystemConfiguration.h>
 
 	#import <SecurityInterface/SFCertificatePanel.h>

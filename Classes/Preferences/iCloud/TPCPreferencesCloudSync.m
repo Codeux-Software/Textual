@@ -52,7 +52,6 @@
 @interface TPCPreferencesCloudSync ()
 @property (nonatomic, strong) id ubiquityIdentityToken;
 @property (nonatomic, assign) BOOL pushAllLocalKeysNextSync;
-@property (nonatomic, assign) BOOL isSafeToPerformPreferenceValidation;
 @property (nonatomic, strong) dispatch_queue_t workerQueue;
 @property (nonatomic, strong) NSTimer *cloudOneMinuteSyncTimer;
 @property (nonatomic, strong) NSTimer *cloudTenMinuteSyncTimer;
@@ -147,12 +146,8 @@
 		
 		/* Update monitor based on state of container path. */
 		[self performBlockOnMainThread:^{
-			[self setIsSafeToPerformPreferenceValidation:NO];
-			
 			if ([self cloudContainerNotificationQuery] == nil) {
 				if ([self ubiquitousContainerURL]) {
-					[self setIsSafeToPerformPreferenceValidation:(isCalledFromInit == NO)];
-				
 					[self startMonitoringUbiquitousContainer];
 				}
 			} else {
@@ -651,9 +646,6 @@
 #pragma mark -
 #pragma mark Container Updates
 
-/* This call has several layers of complexities on it. Therefore, it wont be used for anything
- more than copying to the cache. The actual detection of theme changes can be handled by the
- timers which they were designed to do. */
 - (void)cloudMetadataQueryDidUpdate:(NSNotification *)notification
 {
 	/* Do not perform any actions during termination. */
@@ -678,23 +670,8 @@
 			NSURL *cachePahtURL = [NSURL fileURLWithPath:cachePath];
 			NSURL *ubiqdPathURL = [NSURL fileURLWithPath:ubiqdPath];
 			
-			LogToConsole(@"iCloud: Updating cache for container at path: \"%@\"", [ubiqdPathURL path]);
-			
-			/* ========================================================== */
-			
-			/* Gather information about current style to use it for a comparison. */
-			__block BOOL isActiveStyleMissing = NO;
-			
-			NSString *activeStyleComparisonPath = nil;
-			
-			if ([themeController() storageLocation] == TPCThemeControllerStorageCloudLocation) {
-				/* Get active path for selected style. */
-				activeStyleComparisonPath = [themeController() path];
-				
-				/* Remove path prefix for active style. */
-				activeStyleComparisonPath = [activeStyleComparisonPath stringByDeletingPreifx:[cachePahtURL path]];
-			}
-			
+			DebugLogToConsole(@"iCloud: Updating cache for container at path: \"%@\"", [ubiqdPathURL path]);
+
 			/* ========================================================== */
 		
 			/* We will now enumrate through all existing cache files gathering a list of those that
@@ -705,7 +682,7 @@
 																		 options:NSDirectoryEnumerationSkipsHiddenFiles
 																	errorHandler:^(NSURL *url, NSError *error)
 																	{
-																		DebugLogToConsole(@"Enumeration Error: %@", [error localizedDescription]);
+																		LogToConsole(@"Enumeration Error: %@", [error localizedDescription]);
 																		
 																		return YES; // Continue regardless of error.
 																	}];
@@ -861,10 +838,9 @@
 						
 						if (updateError) {
 							LogToConsole(@"Error Copying Cached File: %@", [updateError localizedDescription]);
+						} else {
+							DebugLogToConsole(@"Cached file \"%@\" updated with the file \"%@\" (%@)", cachedFileLocation, fileURL, lastChangeDate);
 						}
-						
-						/* Debugging data. */
-						DebugLogToConsole(@"Cached file \"%@\" updated with the file \"%@\" (%@)", cachedFileLocation, fileURL, lastChangeDate);
 					}
 				}
 				
@@ -875,13 +851,6 @@
 			
 			/* Time to destroy old caches. */
 			[cachedFiles enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-				/* Check if a file we are deleting matches the active style. */
-				if (activeStyleComparisonPath) {
-					if ([key isEqualToString:activeStyleComparisonPath]) {
-						isActiveStyleMissing = YES;
-					}
-				}
-				
 				/* Check the folder to see if anything left in the cache does exist in cloud. */
 				NSURL *ubiqdFolderLocation = [ubiqdPathURL URLByAppendingPathComponent:key];
 				NSURL *cacheFolderLocation = [cachePahtURL URLByAppendingPathComponent:key];
@@ -897,17 +866,6 @@
 			/* After everything is updated, run a validation on the
 			 theme to make sure the active still exists. */
 			[self performBlockOnMainThread:^{
-				if ([self isSafeToPerformPreferenceValidation]) {
-					if (isActiveStyleMissing) {
-						[RZNotificationCenter() postNotificationName:TPCPreferencesCloudSyncUbiquitousContainerCacheIsMissingSelectedStyleNotification object:nil];
-					}
-				} else {
-					if (isGatheringNotification) {
-						[self setIsSafeToPerformPreferenceValidation:YES];
-					}
-				}
-				
-				/* Post notification. */
 				[RZNotificationCenter() postNotificationName:TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification object:nil];
 			}];
 		}
@@ -928,12 +886,12 @@
 	[RZNotificationCenter() addObserver:self
 							   selector:@selector(cloudMetadataQueryDidUpdate:)
 								   name:NSMetadataQueryDidFinishGatheringNotification
-								 object:nil];
+								 object:[self cloudContainerNotificationQuery]];
 	
 	[RZNotificationCenter() addObserver:self
 							   selector:@selector(cloudMetadataQueryDidUpdate:)
 								   name:NSMetadataQueryDidUpdateNotification
-								 object:nil];
+								 object:[self cloudContainerNotificationQuery]];
 	
 	[[self cloudContainerNotificationQuery] startQuery];
 }
@@ -944,10 +902,8 @@
 		[[self cloudContainerNotificationQuery] stopQuery];
 	}
 	
-    [RZNotificationCenter() removeObserver:self name:NSMetadataQueryDidUpdateNotification object:nil];
-    [RZNotificationCenter() removeObserver:self name:NSMetadataQueryDidFinishGatheringNotification object:nil];
-
-	[self setIsSafeToPerformPreferenceValidation:NO];
+    [RZNotificationCenter() removeObserver:self name:NSMetadataQueryDidUpdateNotification object:[self cloudContainerNotificationQuery]];
+    [RZNotificationCenter() removeObserver:self name:NSMetadataQueryDidFinishGatheringNotification object:[self cloudContainerNotificationQuery]];
 
 	[self setCloudContainerNotificationQuery:nil];
 }

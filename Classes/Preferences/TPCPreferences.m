@@ -864,9 +864,6 @@ static NSMutableArray *excludeKeywords = nil;
 		[RZStandardUserDefualts() setBool:NO forKey:@"System —> Built with iCloud Support"];
 	}
 #endif
-	
-	/* Validate some stuff. */
-	(void)[TPCPreferences performValidationForKeyValues:YES];
 
 	/* Setup loggin. */
 	[TPCPathInfo startUsingLogLocationSecurityScopedBookmark];
