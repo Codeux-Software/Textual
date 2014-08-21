@@ -616,6 +616,7 @@
 		4C36091E18B4E8A800243B3A /* TVCTextFieldWithValueValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C36091C18B4E8A800243B3A /* TVCTextFieldWithValueValidation.m */; };
 		4C38526219721E9100A6845C /* TDCSharedProtocolDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C38526119721E9100A6845C /* TDCSharedProtocolDefinitions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C38526319721E9100A6845C /* TDCSharedProtocolDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C38526119721E9100A6845C /* TDCSharedProtocolDefinitions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C38DB8A19A57C39005C98E8 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C38DB8919A57C39005C98E8 /* CoreServices.framework */; };
 		4C3E69881789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E69861789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m */; };
 		4C3E69891789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E69861789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m */; };
 		4C3E698A1789A31E00B1CB6B /* TVCLogControllerOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E69871789A31E00B1CB6B /* TVCLogControllerOperationQueue.m */; };
@@ -826,6 +827,9 @@
 		4C5FB0FB197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5FB0F9197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5FB0FD197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5FB0FC197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5FB0FE197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5FB0FC197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C66970619A65C3300E5B97B /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C38DB8919A57C39005C98E8 /* CoreServices.framework */; };
+		4C66970719A65C4300E5B97B /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C38DB8919A57C39005C98E8 /* CoreServices.framework */; };
+		4C66970819A65C4F00E5B97B /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C38DB8919A57C39005C98E8 /* CoreServices.framework */; };
 		4C69F49F18676C9400E6FCEC /* NSBundleHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C69F49E18676C9400E6FCEC /* NSBundleHelper.m */; };
 		4C69F4A018676C9400E6FCEC /* NSBundleHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C69F49E18676C9400E6FCEC /* NSBundleHelper.m */; };
 		4C69F4A618676CCE00E6FCEC /* NSBundleHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C69F4A518676CCE00E6FCEC /* NSBundleHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2263,6 +2267,7 @@
 		4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCTextFieldWithValueValidation.h; sourceTree = "<group>"; };
 		4C36091C18B4E8A800243B3A /* TVCTextFieldWithValueValidation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCTextFieldWithValueValidation.m; sourceTree = "<group>"; };
 		4C38526119721E9100A6845C /* TDCSharedProtocolDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCSharedProtocolDefinitions.h; sourceTree = "<group>"; };
+		4C38DB8919A57C39005C98E8 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		4C3E69861789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogControllerHistoricLogFile.m; sourceTree = "<group>"; };
 		4C3E69871789A31E00B1CB6B /* TVCLogControllerOperationQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogControllerOperationQueue.m; sourceTree = "<group>"; };
 		4C3E729617C39DD7008F2B08 /* THOUnicodeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THOUnicodeHelper.h; sourceTree = "<group>"; };
@@ -2726,6 +2731,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C66970819A65C4F00E5B97B /* CoreServices.framework in Frameworks */,
 				4CDFA65F1996ED01007EA46E /* SystemInformation.framework in Frameworks */,
 				4CDFA6611996ED01007EA46E /* TCMPortMapper.framework in Frameworks */,
 				4C0BA6231990798800857343 /* AppKit.framework in Frameworks */,
@@ -2749,6 +2755,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C66970619A65C3300E5B97B /* CoreServices.framework in Frameworks */,
 				4CDFA61C1996EC78007EA46E /* SystemInformation.framework in Frameworks */,
 				4C46CCC41580469E00846B64 /* AppKit.framework in Frameworks */,
 				4CBE542A1979F4EA00034B0C /* AudioToolbox.framework in Frameworks */,
@@ -2778,6 +2785,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C38DB8A19A57C39005C98E8 /* CoreServices.framework in Frameworks */,
 				4CDFA6521996ECF1007EA46E /* SystemInformation.framework in Frameworks */,
 				4CDFA6541996ECF1007EA46E /* TCMPortMapper.framework in Frameworks */,
 				4C5BA45816F1302F00A96CA2 /* AppKit.framework in Frameworks */,
@@ -2801,6 +2809,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C66970719A65C4300E5B97B /* CoreServices.framework in Frameworks */,
 				4CDFA6391996ECC0007EA46E /* BlowfishEncryption.framework in Frameworks */,
 				4CDFA5341996EAB2007EA46E /* AppKit.framework in Frameworks */,
 				4CDFA5361996EAB2007EA46E /* AudioToolbox.framework in Frameworks */,
@@ -3027,6 +3036,7 @@
 				4C46CCBB1580469E00846B64 /* AppKit.framework */,
 				4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */,
 				4C46CCBC1580469E00846B64 /* Cocoa.framework */,
+				4C38DB8919A57C39005C98E8 /* CoreServices.framework */,
 				4C46CCBE1580469E00846B64 /* Foundation.framework */,
 				4CF4D6B619837C1700FB5AF0 /* QuartzCore.framework */,
 				4C46CCC01580469E00846B64 /* Security.framework */,

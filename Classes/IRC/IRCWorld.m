@@ -82,10 +82,6 @@
 - (void)setupOtherServices
 {
 	[RZNotificationCenter() addObserver:self selector:@selector(userDefaultsDidChange:) name:TPCPreferencesUserDefaultsDidChangeNotification object:nil];
-	
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	[RZNotificationCenter() addObserver:self selector:@selector(cacheContainerIsMissingActiveStyle:) name:TPCPreferencesCloudSyncUbiquitousContainerCacheIsMissingSelectedStyleNotification object:nil];
-#endif
 }
 
 - (NSMutableDictionary *)dictionaryValue
@@ -418,7 +414,7 @@
 
 - (void)reloadTheme:(BOOL)reloadUserInterface
 {
-	[themeController() load];
+	[themeController() reload];
 	
 	@synchronized(self.clients) {
 		for (IRCClient *u in self.clients) {

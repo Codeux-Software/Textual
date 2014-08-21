@@ -52,7 +52,5 @@
 - (void)addClientToListOfDeletedClients:(NSString *)clientID;
 
 - (void)processCloudCientDeletionList:(NSArray *)deletedClients;
-
-- (void)cacheContainerIsMissingActiveStyle:(NSNotification *)notification;
 @end
 #endif

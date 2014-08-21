@@ -38,11 +38,18 @@
 
 #import "TextualApplication.h"
 
-#define TPCThemeControllerCustomStyleNameBasicPrefix			@"user"
-#define TPCThemeControllerCustomStyleNameCompletePrefix			@"user:"
+#define TPCThemeControllerReloadsStyleOnContentsDidChange		0
 
-#define TPCThemeControllerBundledStyleNameBasicPrefix			@"resource"
-#define TPCThemeControllerBundledStyleNameCompletePrefix		@"resource:"
+#define TPCThemeControllerCloudThemeNameBasicPrefix				@"cloud"
+#define TPCThemeControllerCloudThemeNameCompletePrefix			@"cloud:"
+
+#define TPCThemeControllerCustomThemeNameBasicPrefix			@"user"
+#define TPCThemeControllerCustomThemeNameCompletePrefix			@"user:"
+
+#define TPCThemeControllerBundledThemeNameBasicPrefix			@"resource"
+#define TPCThemeControllerBundledThemeNameCompletePrefix		@"resource:"
+
+#define TPCThemeControllerThemeListDidChangeNotification		@"TPCThemeControllerThemeListDidChangeNotification"
 
 typedef enum TPCThemeControllerStorageLocation : NSInteger {
 	TPCThemeControllerStorageBundleLocation,
@@ -56,32 +63,39 @@ typedef enum TPCThemeControllerStorageLocation : NSInteger {
 @property (nonatomic, copy) NSString *associatedThemeName;
 @property (nonatomic, copy) NSString *sharedCacheID;
 @property (nonatomic, strong) TPCThemeSettings *customSettings;
+@property (nonatomic, assign) TPCThemeControllerStorageLocation storageLocation;
 
 /* Calls for the active theme. */
-- (void)load;
+- (void)load; // Calling this more than once will throw an exception
+- (void)reload;
+
+@property (readonly, copy) NSDictionary *dictionaryOfAllThemes;
 
 @property (readonly, copy) NSString *path;
 @property (readonly, copy) NSString *actualPath; // Ignores iCloud cache and queries iCloud directly.
 
 @property (readonly, copy) NSString *name;
 
-@property (readonly) TPCThemeControllerStorageLocation storageLocation;
-
 @property (getter=isBundledTheme, readonly) BOOL bundledTheme;
 
-@property (readonly) BOOL actualPathForCurrentThemeIsEqualToCachedPath;
+- (void)copyActiveStyleToDestinationLocation:(TPCThemeControllerStorageLocation)destinationLocation reloadOnCopy:(BOOL)reloadOnCopy openNewPathOnCopy:(BOOL)openNewPathOnCopy;
+
+/* Returns YES if a theme reload was necessary. */
+- (BOOL)validateThemeAndRelaodIfNecessary;
 
 /* Calls for all themes. */
+/* A theme is considered existent if the designated design.css file and scripts.js for
+ it exists. Otherwise, the theme is considered nonexistent even if the folder exists. */
 + (BOOL)themeExists:(NSString *)themeName;
 
 + (NSString *)pathOfThemeWithName:(NSString *)themeName;
-+ (NSString *)pathOfThemeWithName:(NSString *)themeName skipCloudCache:(BOOL)ignoreCloudCache;
++ (NSString *)pathOfThemeWithName:(NSString *)themeName skipCloudCache:(BOOL)ignoreCloudCache storageLocation:(TPCThemeControllerStorageLocation *)storageLocation;
 
-+ (NSString *)buildResourceFilename:(NSString *)name;
-+ (NSString *)buildUserFilename:(NSString *)name;
++ (NSString *)buildFilename:(NSString *)name forStorageLocation:(TPCThemeControllerStorageLocation)storageLocation;
 
 + (NSString *)extractThemeSource:(NSString *)source;
 + (NSString *)extractThemeName:(NSString *)source;
 
-+ (TPCThemeControllerStorageLocation)storageLocationOfThemeWithName:(NSString *)themeName;
++ (TPCThemeControllerStorageLocation)expectedStorageLocationOfThemeWithName:(NSString *)themeName;
++ (TPCThemeControllerStorageLocation)actaulStorageLocationOfThemeWithName:(NSString *)themeName;
 @end
