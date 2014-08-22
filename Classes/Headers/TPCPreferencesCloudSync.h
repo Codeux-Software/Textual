@@ -61,6 +61,9 @@
 - (void)resetDataToSync;
 - (void)syncEverythingNextSync;
 
+- (void)pauseCloudContainerMetadataUpdates;
+- (void)resumeCloudContainerMetadataUpdates;
+
 - (NSString *)ubiquitousContainerURLPath;
 
 - (BOOL)ubiquitousContainerIsAvailable;

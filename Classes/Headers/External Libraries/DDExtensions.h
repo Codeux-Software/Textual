@@ -28,16 +28,18 @@
 - (id)iomt TEXTUAL_DEPRECATED("Use -performBlockOnMainThread: instead"); // Invoke On Main Thread
 - (id)invokeOnThread:(NSThread *)thread TEXTUAL_DEPRECATED("This method is considered unsafe and may be removed in a future update");
 - (id)invokeOnMainThread TEXTUAL_DEPRECATED("Use -performBlockOnMainThread: instead");
-- (id)invokeInBackgroundThread TEXTUAL_DEPRECATED("It is recommended to use GCD in place of this method. There is nothing functionally wrong with using this method however.");
+- (id)invokeInBackgroundThread TEXTUAL_DEPRECATED("Use performBlockOnGlobalQueue: instead");
 - (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone TEXTUAL_DEPRECATED("Use -performBlockOnMainThread: instead");
 
 - (void)performBlockOnMainThread:(TXEmtpyBlockDataType)block; // Performs a block synchronously (blocks) on the main thread
+- (void)performBlockOnGlobalQueue:(TXEmtpyBlockDataType)block; // Performs a block asynchronously on a global queue with a normal priority. Does not block.
 
 + (id)iomt TEXTUAL_DEPRECATED("Use -performBlockOnMainThread: instead"); // Invoke On Main Thread
 + (id)invokeOnThread:(NSThread *)thread TEXTUAL_DEPRECATED("This method is considered unsafe and may be removed in a future update");
 + (id)invokeOnMainThread TEXTUAL_DEPRECATED("Use -performBlockOnMainThread: instead");
-+ (id)invokeInBackgroundThread TEXTUAL_DEPRECATED("It is recommended to use GCD in place of this method. There is nothing functionally wrong with using this method however.");
++ (id)invokeInBackgroundThread TEXTUAL_DEPRECATED("Use performBlockOnGlobalQueue: instead");
 + (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone TEXTUAL_DEPRECATED("Use -performBlockOnMainThread: instead");
 
 + (void)performBlockOnMainThread:(TXEmtpyBlockDataType)block; // Performs a block synchronously (blocks) on the main thread
++ (void)performBlockOnGlobalQueue:(TXEmtpyBlockDataType)block; // Performs a block asynchronously on a global queue with a normal priority. Does not block.
 @end
