@@ -38,8 +38,6 @@
 
 #import "TextualApplication.h"
 
-#define TPCThemeControllerReloadsStyleOnContentsDidChange		0
-
 #define TPCThemeControllerCloudThemeNameBasicPrefix				@"cloud"
 #define TPCThemeControllerCloudThemeNameCompletePrefix			@"cloud:"
 
