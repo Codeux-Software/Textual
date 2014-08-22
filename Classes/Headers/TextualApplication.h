@@ -126,7 +126,6 @@
 	@class TPCThemeSettings;
 	@class TVCAnimatedContentNavigationOutlineView;
 	@class TVCBasicTableView;
-	@class TVCBasicTableViewSeparatorCell;
 	@class TVCDockIcon;
 	@class TVCImageURLoader;
 	@class TVCImageURLParser;
@@ -382,7 +381,6 @@
 	#import "TVCImageURLoader.h"
 	#import "TVCInputPromptDialog.h"
 	#import "TVCMainWindowTextView.h"
-	#import "TVCBasicTableViewSeparatorCell.h"
 	#import "TVCBasicTableView.h"
 	#import "TVCLogController.h"
 	#import "TVCLogControllerHistoricLogFile.h"
