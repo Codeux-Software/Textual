@@ -148,17 +148,90 @@
                             <rect key="frame" x="224" y="17" width="15" height="102"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
+                        <connections>
+                            <binding destination="-2" name="hidden" keyPath="self.localDefaultValues.TDCPreferencesControllerDidShowMountainLionDeprecationWarning" id="KxO-Lx-Uzg">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
                     </scrollView>
                     <customView focusRingType="none" id="4931">
                         <rect key="frame" x="175" y="8" width="567" height="406"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <connections>
+                            <binding destination="-2" name="hidden" keyPath="self.localDefaultValues.TDCPreferencesControllerDidShowMountainLionDeprecationWarning" id="4bi-7l-0uQ">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </customView>
+                    <customView wantsLayer="YES" id="Ltl-F2-Hb2">
+                        <rect key="frame" x="0.0" y="0.0" width="755" height="422"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="EH5-Mo-ANo">
+                                <rect key="frame" x="132" y="295" width="491" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Mountain Lion End-of-life Warning" id="S8v-eK-633">
+                                    <font key="font" metaFont="systemBold" size="30"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="-2" name="hidden" keyPath="self.localDefaultValues.TDCPreferencesControllerDidShowMountainLionDeprecationWarning" id="qGu-nw-aXy"/>
+                                </connections>
+                            </textField>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="naX-ON-RPS">
+                                <rect key="frame" x="158" y="136" width="438" height="136"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="Br4-RR-eup">
+                                    <font key="font" metaFont="system"/>
+                                    <string key="title">Support for OS X Mountain Lion is nearing an end in Textual.
+
+It is recommended that you upgrade to OS X Mavericks as soon as possible in order to continue using Textual and all the fantastic features that it provides.
+
+Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks which means that there is no reason not to upgrade!</string>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="-2" name="hidden" keyPath="self.localDefaultValues.TDCPreferencesControllerDidShowMountainLionDeprecationWarning" id="Nze-Wj-Sne"/>
+                                </connections>
+                            </textField>
+                            <button verticalHuggingPriority="750" id="1lK-zg-SNQ">
+                                <rect key="frame" x="296" y="85" width="163" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Hide Warning" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="TdB-rC-hD8">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onHideMountainLionDeprecationWarning:" target="-2" id="TaG-BD-PlK"/>
+                                    <binding destination="-2" name="hidden" keyPath="self.localDefaultValues.TDCPreferencesControllerDidShowMountainLionDeprecationWarning" id="s59-br-lht"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <animations/>
+                        <connections>
+                            <binding destination="-2" name="hidden" keyPath="self.localDefaultValues.TDCPreferencesControllerDidShowMountainLionDeprecationWarning" id="YGU-pt-RhN"/>
+                        </connections>
                     </customView>
                 </subviews>
+                <backgroundFilters>
+                    <ciFilter name="CIGaussianBlur">
+                        <configuration>
+                            <null key="inputImage"/>
+                            <real key="inputRadius" value="10"/>
+                        </configuration>
+                    </ciFilter>
+                </backgroundFilters>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="6064"/>
             </connections>
-            <point key="canvasLocation" x="2108" y="579"/>
+            <point key="canvasLocation" x="1771" y="553"/>
         </window>
         <customView id="Eyz-5p-IkU" userLabel="General">
             <rect key="frame" x="170" y="8" width="567" height="406"/>

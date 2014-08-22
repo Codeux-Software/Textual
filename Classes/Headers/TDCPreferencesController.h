@@ -114,6 +114,8 @@
 
 - (IBAction)onChangedMainInputTextFieldFontSize:(id)sender;
 
+- (IBAction)onHideMountainLionDeprecationWarning:(id)sender;
+
 - (IBAction)onFileTransferIPAddressDetectionMethodChanged:(id)sender;
 - (IBAction)onFileTransferDownloadDestinationFolderChanged:(id)sender;
 
