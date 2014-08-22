@@ -595,7 +595,10 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 						if ([[copyOperation themeName] isEqual:nameFromPath]) {
 							NSString *pathWithoutName = [path stringByDeletingLastPathComponent];
 							
-							if (([copyOperation destinationLocation] == TPCThemeControllerStorageCloudLocation && [pathWithoutName isEqual:[TPCPathInfo cloudCustomThemeCachedFolderPath]]) ||
+							if (
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+                                ([copyOperation destinationLocation] == TPCThemeControllerStorageCloudLocation && [pathWithoutName isEqual:[TPCPathInfo cloudCustomThemeCachedFolderPath]]) ||
+#endif
 								([copyOperation destinationLocation] == TPCThemeControllerStorageCustomLocation && [pathWithoutName isEqual:[TPCPathInfo customThemeFolderPath]]))
 							{
 								[copyOperation endOperation];
