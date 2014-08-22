@@ -762,14 +762,25 @@
 				BOOL cloudFileExists = [RZFileManager() fileExistsAtPath:[fileURL path]];
 				BOOL cachedFileExists = [RZFileManager() fileExistsAtPath:[cachedFileLocation path]];
 				
+				BOOL isDownloaded = NO;
+				
+				if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+					NSString *_isDownloaded = [item valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusKey];
+				
+					isDownloaded = (NSObjectsAreEqual(_isDownloaded, NSMetadataUbiquitousItemDownloadingStatusCurrent) ||
+									NSObjectsAreEqual(_isDownloaded, NSMetadataUbiquitousItemDownloadingStatusDownloaded));
+				} else {
+					NSNumber *_isDownloaded = [item valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey];
+					
+					isDownloaded = [_isDownloaded boolValue];
+				}
+				
 				NSDate *lastChangeDate = [item valueForAttribute:NSMetadataItemFSContentChangeDateKey];
 				
-				NSString *isDownloaded = [item valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusKey];
-
 				/* ========================================================== */
 				
 				/* Begin work. */
-				if (NSObjectsAreEqual(isDownloaded, NSMetadataUbiquitousItemDownloadingStatusNotDownloaded)) {
+				if (isDownloaded == NO) {
 					if (cachedFileExists) {
 						removeFromCacheArray = YES; // Do not delete cached file.
 					}
