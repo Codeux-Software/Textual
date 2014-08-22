@@ -133,4 +133,14 @@
 	TXPerformBlockSynchronouslyOnMainQueue(block);
 }
 
++ (void)performBlockOnGlobalQueue:(TXEmtpyBlockDataType)block
+{
+	TXPerformBlockAsynchronouslyOnGlobalQueue(block);
+}
+
+- (void)performBlockOnGlobalQueue:(TXEmtpyBlockDataType)block
+{
+	TXPerformBlockAsynchronouslyOnGlobalQueue(block);
+}
+
 @end

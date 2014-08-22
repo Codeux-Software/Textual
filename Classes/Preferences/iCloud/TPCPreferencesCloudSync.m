@@ -646,6 +646,16 @@
 #pragma mark -
 #pragma mark Container Updates
 
+- (void)pauseCloudContainerMetadataUpdates
+{
+	[[self cloudContainerNotificationQuery] disableUpdates];
+}
+
+- (void)resumeCloudContainerMetadataUpdates
+{
+	[[self cloudContainerNotificationQuery] enableUpdates];
+}
+
 - (void)cloudMetadataQueryDidUpdate:(NSNotification *)notification
 {
 	/* Do not perform any actions during termination. */
