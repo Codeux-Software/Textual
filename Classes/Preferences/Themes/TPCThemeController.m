@@ -563,9 +563,21 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 				 flags & kFSEventStreamEventFlagItemModified))
 			{
 				if ([path hasPrefix:[themeController() path]]) {
+					/* Recognize if one of these files were either deleted or modified. 
+					 If one was, then we set continue; to skip any further action and 
+					 update the theme based on deletion or modification status. */
 					_updateConditionForPath(@"design.css")
 					_updateConditionForPath(@"scripts.js")
 					_updateConditionForPath(@"Data/Settings/styleSettings.plist")
+					
+					/* Check status for generic files. */
+					if ([path hasSuffix:@".js"] ||
+						[path hasSuffix:@".css"])
+					{
+						activeThemeContentsWereModified = YES;
+						
+						continue; // Only thing we care about here…
+					}
 				}
 				
 				continue; // Only thing we care about here…
