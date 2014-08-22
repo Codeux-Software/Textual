@@ -231,7 +231,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
             <connections>
                 <outlet property="delegate" destination="-2" id="6064"/>
             </connections>
-            <point key="canvasLocation" x="1771" y="553"/>
+            <point key="canvasLocation" x="1627" y="618"/>
         </window>
         <customView id="Eyz-5p-IkU" userLabel="General">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -3500,7 +3500,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <rect key="frame" x="244" y="80" width="136" height="58"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    <size key="cellSize" width="136" height="18"/>
+                    <size key="cellSize" width="121" height="18"/>
                     <size key="intercellSpacing" width="4" height="2"/>
                     <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="xxQ-T6-iej">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3524,7 +3524,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                             </buttonCell>
                             <buttonCell type="radio" title="Private Message" imagePosition="left" alignment="left" inset="2" id="Nyc-Yz-lSg">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
+                                <font key="font" metaFont="cellTitle"/>
                             </buttonCell>
                         </column>
                     </cells>
