@@ -227,6 +227,10 @@
 	
 	[self onFileTransferIPAddressDetectionMethodChanged:nil];
 	
+	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+		[[TPCPreferencesUserDefaultsObjectProxy localDefaultValues] setValue:@(YES) forKey:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"];
+	}
+	
 	[RZNotificationCenter() addObserver:self
 							   selector:@selector(onCloudSyncControllerDidChangeThemeName:)
 								   name:TPCThemeControllerThemeListDidChangeNotification
@@ -859,6 +863,11 @@
 
 #pragma mark -
 #pragma mark Actions
+
+- (void)onHideMountainLionDeprecationWarning:(id)sender
+{
+	[[TPCPreferencesUserDefaultsObjectProxy localDefaultValues] setValue:@(YES) forKey:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"];
+}
 
 - (void)onChangedHighlightType:(id)sender
 {
