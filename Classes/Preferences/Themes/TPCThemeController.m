@@ -318,7 +318,7 @@
 		 nothing except try to recover by using the default one. */
 		if ([TPCThemeController themeExists:validatedTheme] == NO) {
 			if ( suggestedThemeName) {
-				*suggestedThemeName = [TXDefaultTextualChannelViewStyle copy];
+				*suggestedThemeName = [TXDefaultTextualChannelViewTheme copy];
 				
 				keyChanged = YES;
 			}
@@ -351,7 +351,7 @@
 				} else {
 					/* Revert back to the default theme if no recovery is possible. */
 					if ( suggestedThemeName) {
-						*suggestedThemeName = [TXDefaultTextualChannelViewStyle copy];
+						*suggestedThemeName = [TXDefaultTextualChannelViewTheme copy];
 						
 						keyChanged = YES;
 					}
@@ -385,7 +385,7 @@
 				} else {
 					/* Revert back to the default theme if no recovery is possible. */
 					if ( suggestedThemeName) {
-						*suggestedThemeName = [TXDefaultTextualChannelViewStyle copy];
+						*suggestedThemeName = [TXDefaultTextualChannelViewTheme copy];
 						
 						keyChanged = YES;
 					}
@@ -604,10 +604,9 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 
 			(void)[themeController() validateThemeAndRelaodIfNecessary];
 		} else if (activeThemeContentsWereModified) {
-			
-#if TPCThemeControllerReloadsStyleOnContentsDidChange == 1
-			[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleWithTableViewsAction];
-#endif
+			if ([TPCPreferences automaticallyReloadCustomThemesWhenTheyChange]) {
+				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleWithTableViewsAction];
+			}
 		}
 		
 		/* I should probably make this so it only posts when a the highest possible folder 

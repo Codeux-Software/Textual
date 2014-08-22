@@ -443,6 +443,11 @@
 	return [RZUserDefaults() doubleForKey:@"MainWindowTransparencyLevel"];
 }
 
++ (BOOL)automaticallyReloadCustomThemesWhenTheyChange
+{
+	return [RZUserDefaults() boolForKey:@"AutomaticallyReloadCustomThemesWhenTheyChange"];
+}
+
 #pragma mark -
 #pragma mark Completion Suffix
 

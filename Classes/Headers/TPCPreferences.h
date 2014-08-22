@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-#define TXDefaultTextualChannelViewStyle			@"resource:Simplified Light"
+#define TXDefaultTextualChannelViewTheme			@"resource:Simplified Light"
 #define TXDefaultTextualChannelViewFont				@"Lucida Grande"
 
 #define TXDefaultTextualTimestampFormat		TLOFileLoggerTwentyFourHourClockFormat
@@ -167,6 +167,8 @@ typedef enum TXFileTransferIPAddressDetectionMethod : NSInteger {
 + (BOOL)hideMainWindowSegmentedController;
 
 + (BOOL)reloadScrollbackOnLaunch;
+
++ (BOOL)automaticallyReloadCustomThemesWhenTheyChange;
 
 + (BOOL)autoJoinOnInvite;
 
