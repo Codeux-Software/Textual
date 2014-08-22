@@ -167,7 +167,7 @@
                             </binding>
                         </connections>
                     </customView>
-                    <customView wantsLayer="YES" id="Ltl-F2-Hb2">
+                    <customView id="Ltl-F2-Hb2">
                         <rect key="frame" x="0.0" y="0.0" width="755" height="422"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -219,19 +219,11 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         </connections>
                     </customView>
                 </subviews>
-                <backgroundFilters>
-                    <ciFilter name="CIGaussianBlur">
-                        <configuration>
-                            <null key="inputImage"/>
-                            <real key="inputRadius" value="10"/>
-                        </configuration>
-                    </ciFilter>
-                </backgroundFilters>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="6064"/>
             </connections>
-            <point key="canvasLocation" x="1627" y="618"/>
+            <point key="canvasLocation" x="1835" y="626"/>
         </window>
         <customView id="Eyz-5p-IkU" userLabel="General">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
