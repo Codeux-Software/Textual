@@ -171,18 +171,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="755" height="422"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="EH5-Mo-ANo">
-                                <rect key="frame" x="132" y="295" width="491" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Mountain Lion End-of-life Warning" id="S8v-eK-633">
-                                    <font key="font" metaFont="systemBold" size="30"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                                <connections>
-                                    <binding destination="-2" name="hidden" keyPath="self.localDefaultValues.TDCPreferencesControllerDidShowMountainLionDeprecationWarning" id="qGu-nw-aXy"/>
-                                </connections>
-                            </textField>
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="naX-ON-RPS">
                                 <rect key="frame" x="158" y="136" width="438" height="136"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -212,6 +200,18 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                     <binding destination="-2" name="hidden" keyPath="self.localDefaultValues.TDCPreferencesControllerDidShowMountainLionDeprecationWarning" id="s59-br-lht"/>
                                 </connections>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="EH5-Mo-ANo">
+                                <rect key="frame" x="-2" y="292" width="759" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Mountain Lion End-of-life Warning" id="S8v-eK-633">
+                                    <font key="font" metaFont="systemBold" size="25"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="-2" name="hidden" keyPath="self.localDefaultValues.TDCPreferencesControllerDidShowMountainLionDeprecationWarning" id="qGu-nw-aXy"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <animations/>
                         <connections>
