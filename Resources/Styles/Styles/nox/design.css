@@ -130,7 +130,6 @@ a:hover {
 	box-shadow: 0 1px 5px #777;
 	border-bottom: 1px solid #404040;
 	-webkit-transition: opacity 0.8s linear;
-	-webkit-font-smoothing: subpixel-antialiased;
 	text-shadow: 1px 1px rgba(10, 10, 10, 0.7);
 	background: rgba(60, 60, 60, 0.91);
 }
@@ -176,6 +175,7 @@ body img {
 
 .inlineImageCell .closeButton {
 	background: #000000;
+	cursor: pointer;
 	border-radius: 50%;
 	position: absolute;
 	box-sizing: border-box;
@@ -210,7 +210,6 @@ body[dir=ltr] div[ltype=action] .sender:before {
 	content: "●";
 
 }
-
 
 /* Historic / Log readback */
 .historic {
@@ -295,6 +294,10 @@ body div[ltype="privmsg"][highlight=true][encrypted="true"] {
 
 body div[ltype=privmsg] p[ltype=myself] .message {
 	color: #fff;
+}
+
+body div[ltype=privmsg] p span.effect[color-number=1]:not([bgcolor-number]) {
+	color: #fff;	/* make black text with no bg white for readability */
 }
 
 /* ACTION */
