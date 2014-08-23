@@ -423,6 +423,9 @@
 				[self setValue:obj forKey:key];
 			}
 		}];
+		
+		/* Sync changes. */
+		[RZUbiquitousKeyValueStore() synchronize];
 
 		/* Allow us to continue work. */
 		[self setIsSyncingLocalKeysUpstream:NO];
