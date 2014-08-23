@@ -750,6 +750,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 	[self setPathBeingCopiedTo:destinationPath];
 	
 	/* Now that we know where the files will go, we can begin copying them. */
+	NSURL *destinationURL = [NSURL fileURLWithPath:destinationPath];
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	/* If we are copying to the cloud, then we take special precautions. */
@@ -776,10 +777,6 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 	
 	/* We can now check if the theme already exists at the destination. */
 	if ([RZFileManager() fileExistsAtPath:destinationPath]) {
-		/* When deleting non-cache items, we actually move them to trash instead
-		 of outright deleting. For this, we have to convert the path into an NSURL. */
-		NSURL *destinationURL = [NSURL fileURLWithPath:destinationPath];
-		
 		/* Try to delete */
 		NSError *deletionError = nil;
 		
@@ -810,9 +807,36 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 	/* Perform copy operation. */
 	NSError *copyError;
 	
-	if ([RZFileManager() copyItemAtPath:[self pathBeingCopiedFrom] toPath:destinationPath error:&copyError] == NO) {
-		[self cancelOperationAndReportError:copyError];
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	if (isCloudCopy) {
+		/* When copying to iCloud, we copy the style to a temporary folder then have OS X 
+		 handle the transfer of said folder to iCloud on our behalf. */
+		NSString *fakeDestinationPath = [[TPCPathInfo applicationTemporaryFolderPath] stringByAppendingPathComponent:[NSString stringWithUUID]];
+		
+		NSURL *fakeDestinationPathURL = [NSURL fileURLWithPath:fakeDestinationPath];
+		
+		if ([RZFileManager() copyItemAtPath:[self pathBeingCopiedFrom] toPath:fakeDestinationPath error:&copyError] == NO) {
+			[self cancelOperationAndReportError:copyError];
+		} else {
+			if ([RZFileManager() setUbiquitous:YES itemAtURL:fakeDestinationPathURL destinationURL:destinationURL error:&copyError] == NO) {
+				[self cancelOperationAndReportError:copyError];
+			}
+		}
+		
+		/* Once the operation is completed, we can try to delete the temporary folder. */
+		/* As the folder is only a temporary one, we don't care if this process errors out. */
+		[RZFileManager() removeItemAtURL:fakeDestinationPathURL error:NULL];
+	} else {
+#endif
+		
+		if ([RZFileManager() copyItemAtPath:[self pathBeingCopiedFrom] toPath:destinationPath error:&copyError] == NO) {
+			[self cancelOperationAndReportError:copyError];
+		}
+		
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	}
+#endif
+	
 }
 
 - (void)maybeFinishWithFolderPath:(NSString *)path
