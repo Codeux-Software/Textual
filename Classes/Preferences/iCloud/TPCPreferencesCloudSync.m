@@ -358,7 +358,11 @@
 
 			@synchronized([self unsavedLocalKeys]) {
 				for (id objectKey in [self unsavedLocalKeys]) {
-					changedValues[objectKey] = [RZUserDefaults() objectForKey:objectKey];
+					id objectValue = [RZUserDefaults() objectForKey:objectKey];
+					
+					if (objectValue) {
+						changedValues[objectKey] = objectValue;
+					}
 				}
 			}
 		}
