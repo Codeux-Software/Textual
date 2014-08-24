@@ -17,8 +17,6 @@ for ZIPPED_PATH in $ZIPPED_BUNDLES; do
 		BUNDLENAME=$(basename $BUNDLE)
 		
 		DESTINATION="${USER_SCRIPT_PATH}${BUNDLENAME}"
-		
-		echo "${DESTINATION}" >> $HOME/text.txt
 	
 		rm -rf "${DESTINATION}"
 
