@@ -114,7 +114,7 @@
 				
 					BOOL addUser = NO;
 
-					if ([client hasIRCopAccess] && [m isCop] == NO) {
+					if ([c hasIRCopAccess] && [m isCop] == NO) {
 						addUser = YES;
 					} else if ([myself q] && [m q] == NO) {
 						addUser = YES;
