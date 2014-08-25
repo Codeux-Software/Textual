@@ -89,13 +89,11 @@
 {
 	[self popWindowSheetIfExists];
 	
-	for (NSString *windowKey in self.openWindowList) {
-		id windowObject = self.openWindowList[windowKey];
-		
+	[self.openWindowList enumerateKeysAndObjectsUsingBlock:^(id windowKey, id windowObject, BOOL *stop) {
 		if ([[windowObject class] isSubclassOfClass:[NSWindowController class]]) {
-			 [windowObject close];
+			[windowObject close];
 		}
-	}
+	}];
 	
 	self.openWindowList = nil;
 	
