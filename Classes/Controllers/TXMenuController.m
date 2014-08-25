@@ -488,7 +488,7 @@
 		}
         case 54092: // Developer Mode
         {
-            if ([RZUserDefaults() boolForKey:TXDeveloperEnvironmentToken] == YES) {
+            if ([RZStandardUserDefualts() boolForKey:TXDeveloperEnvironmentToken] == YES) {
                 [item setState:NSOnState];
             } else {  
                 [item setState:NSOffState];
@@ -2659,11 +2659,11 @@
 - (void)toggleDeveloperMode:(id)sender
 {
     if ([sender state] == NSOnState) {
-        [RZUserDefaults() setBool:NO forKey:TXDeveloperEnvironmentToken];
+        [RZStandardUserDefualts() setBool:NO forKey:TXDeveloperEnvironmentToken];
         
         [sender setState:NSOffState];
     } else {
-        [RZUserDefaults() setBool:YES forKey:TXDeveloperEnvironmentToken];
+        [RZStandardUserDefualts() setBool:YES forKey:TXDeveloperEnvironmentToken];
         
         [sender setState:NSOnState];
     }

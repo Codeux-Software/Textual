@@ -2604,9 +2604,9 @@
 
 				LogToConsole(@"%@", BLS(1176));
 			} else if ([uncutInput isEqualIgnoringCase:@"devmode on"]) {
-				[RZUserDefaults() setBool:YES forKey:TXDeveloperEnvironmentToken];
+				[RZStandardUserDefualts() setBool:YES forKey:TXDeveloperEnvironmentToken];
 			} else if ([uncutInput isEqualIgnoringCase:@"devmode off"]) {
-				[RZUserDefaults() setBool:NO forKey:TXDeveloperEnvironmentToken];
+				[RZStandardUserDefualts() setBool:NO forKey:TXDeveloperEnvironmentToken];
 			} else {
 				[self printDebugInformation:uncutInput];
 			}
@@ -5864,11 +5864,9 @@
 		{
             [self.supportInfo update:[m sequence:1] client:self];
             
-			if (self.rawModeEnabled || [RZUserDefaults() boolForKey:TXDeveloperEnvironmentToken]) {
-                NSArray *configRep = [self.supportInfo buildConfigurationRepresentation];
+			 NSArray *configRep = [self.supportInfo buildConfigurationRepresentation];
 
-                [self printDebugInformationToConsole:[configRep lastObject] forCommand:[m command]];
-            }
+			[self printDebugInformationToConsole:[configRep lastObject] forCommand:[m command]];
 
 			[mainWindow() reloadTreeGroup:self];
 
@@ -7513,8 +7511,6 @@
 
 - (void)outputTextualCmdScriptError:(NSString *)scriptPath input:(NSString *)scriptInput context:(NSDictionary *)userInfo error:(NSError *)originalError
 {
-	BOOL devmode = [RZUserDefaults() boolForKey:TXDeveloperEnvironmentToken];
-
 	NSString *script = [scriptPath lastPathComponent];
 
 	id errord;
@@ -7540,9 +7536,7 @@
 		scriptInput = @"(null)";
 	}
 
-	if (devmode) {
-		[self printDebugInformation:BLS(1196, script, scriptInput, errord)];
-	}
+	[self printDebugInformation:BLS(1196, script, scriptInput, errord)];
 
 	LogToConsole(BLS(1195), errorb);
 }
