@@ -184,7 +184,7 @@
 			}
 		}
 		
-		if ([RZUserDefaults() boolForKey:TXDeveloperEnvironmentToken]) {
+		if ([RZStandardUserDefualts() boolForKey:TXDeveloperEnvironmentToken]) {
 			[ary addObject:[NSMenuItem separatorItem]];
 			
 			if (inspectElementItem) {

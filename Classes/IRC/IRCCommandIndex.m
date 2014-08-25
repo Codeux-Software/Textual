@@ -113,7 +113,7 @@ static NSDictionary *IRCCommandIndexPrivateValues = nil;
 {
 	NSMutableArray *index = [NSMutableArray array];
 	
-	BOOL inDevMode = [RZUserDefaults() boolForKey:TXDeveloperEnvironmentToken];
+	BOOL inDevMode = [RZStandardUserDefualts() boolForKey:TXDeveloperEnvironmentToken];
 	
 	for (NSString *indexKey in IRCCommandIndexPublicValues) {
 		NSDictionary *indexInfo = IRCCommandIndexPublicValues[indexKey];
@@ -164,7 +164,7 @@ NSString *IRCPublicCommandIndex(const char *key)
 {
 	NSDictionary *searchPath = [IRCCommandIndex IRCCommandIndex:isPublic];
 	
-	BOOL inDevMode = [RZUserDefaults() boolForKey:TXDeveloperEnvironmentToken];
+	BOOL inDevMode = [RZStandardUserDefualts() boolForKey:TXDeveloperEnvironmentToken];
 	
 	for (NSString *indexKey in searchPath) {
 		NSDictionary *indexInfo = searchPath[indexKey];

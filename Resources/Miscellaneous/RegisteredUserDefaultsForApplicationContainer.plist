@@ -12,6 +12,8 @@
 	<true/>
 	<key>TextFieldTextReplacement</key>
 	<true/>
+	<key>TextualDeveloperEnvironment</key>
+	<false/>
 	<key>WebKitDeveloperExtras</key>
 	<true/>
 </dict>
