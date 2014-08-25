@@ -107,7 +107,7 @@
 					chanVopCount++;
 				}
 				
-				for (IRCUser *m in [ch sortedByChannelRankMemberList]) {
+				for (IRCUser *m in [ch memberList]) {
 					if ([m isEqual:myself]) {
 						continue;
 					}

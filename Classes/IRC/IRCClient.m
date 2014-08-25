@@ -546,7 +546,7 @@
 {
 	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify] == NO) {
 		if ([channel numberOfMembers] > [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
-			for (IRCUser *u in [channel sortedByChannelRankMemberList]) {
+			for (IRCUser *u in [channel memberList]) {
 				u.isAway = NO;
 			}
 		}
@@ -3012,7 +3012,7 @@
 		case 5049: // Command: NNCOLORESET
 		{
 			if (selChannel && [selChannel isChannel]) {
-				for (IRCUser *user in [selChannel sortedByChannelRankMemberList]) {
+				for (IRCUser *user in [selChannel memberList]) {
 					user.colorNumber = -1;
 				}
 			}

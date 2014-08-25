@@ -111,8 +111,11 @@ typedef enum IRCChannelStatus : NSInteger {
  the channels internal cache. IRCUser is not KVO based so if you modify a
  user returned, then do Textual the kindness of reloading that member in 
  the member list view. */
-@property (readonly, copy) NSArray *sortedByChannelRankMemberList;
-@property (readonly, copy) NSArray *sortedByNicknameLengthMemberList;
+@property (readonly, copy) NSArray *sortedByChannelRankMemberList TEXTUAL_DEPRECATED("Use -memberList instead");
+@property (readonly, copy) NSArray *sortedByNicknameLengthMemberList TEXTUAL_DEPRECATED("Use -memberListSortedByNicknameLength instead");
+
+@property (readonly, copy) NSArray *memberList; // Automatically sorted by channel rank
+@property (readonly, copy) NSArray *memberListSortedByNicknameLength; // Copy of member list automatically sorted by longest nickname to shortest nickname
 
 - (BOOL)memberRequiresRedraw:(IRCUser *)user1 comparedTo:(IRCUser *)user2;
 
