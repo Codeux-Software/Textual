@@ -793,6 +793,8 @@
 
 - (void)addWindowToWindowList:(id)window
 {
+	NSAssertReturn([masterController() applicationIsTerminating] == NO);
+
 	NSString *key = NSStringFromClass([window class]);
 
 	[self addWindowToWindowList:window
@@ -801,6 +803,8 @@
 
 - (void)addWindowToWindowList:(id)window withKeyValue:(NSString *)key
 {
+	NSAssertReturn([masterController() applicationIsTerminating] == NO);
+
 	@synchronized(self.openWindowList) {
 		[self.openWindowList setObjectWithoutOverride:window forKey:key];
 	}
@@ -808,6 +812,8 @@
 
 - (id)windowFromWindowList:(NSString *)windowClass
 {
+	NSAssertReturnR(([masterController() applicationIsTerminating] == NO), nil);
+
 	@synchronized(self.openWindowList) {
 		return self.openWindowList[windowClass];
 	}
@@ -815,6 +821,8 @@
 
 - (NSArray *)windowsFromWindowList:(NSArray *)windowClasses
 {
+	NSAssertReturnR(([masterController() applicationIsTerminating] == NO), nil);
+
 	@synchronized(self.openWindowList) {
 		NSMutableArray *returnedValues = [NSMutableArray array];
 		
@@ -832,6 +840,8 @@
 
 - (void)removeWindowFromWindowList:(NSString *)windowClass
 {
+	NSAssertReturn([masterController() applicationIsTerminating] == NO);
+
 	@synchronized(self.openWindowList) {
 		[self.openWindowList removeObjectForKey:windowClass];
 	}
@@ -839,6 +849,8 @@
 
 - (BOOL)popWindowViewIfExists:(NSString *)windowClass
 {
+	NSAssertReturnR(([masterController() applicationIsTerminating] == NO), NO);
+
 	id windowObject = [self windowFromWindowList:windowClass];
 
 	if (windowObject) {
@@ -854,6 +866,8 @@
 
 - (void)popWindowSheetIfExists
 {
+	NSAssertReturn([masterController() applicationIsTerminating] == NO);
+
 	/* Close any existing sheet by canceling the previous instance of it. */
 	NSWindow *attachedSheet = [mainWindow() attachedSheet];
 	
