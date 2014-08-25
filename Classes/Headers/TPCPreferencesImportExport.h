@@ -49,7 +49,7 @@
 + (void)import:(id)obj withKey:(id)key;
 
 + (void)importContentsOfDictionary:(NSDictionary *)aDict;
-+ (void)importWorldControllerClientConfiguratoin:(NSDictionary *)client isCloudBasedImport:(BOOL)isCloudImport;
++ (void)importWorldControllerClientConfiguration:(NSDictionary *)client isCloudBasedImport:(BOOL)isCloudImport;
 
 + (NSDictionary *)exportedPreferencesDictionaryRepresentation;
 @end
