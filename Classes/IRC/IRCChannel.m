@@ -685,7 +685,22 @@
 	return memberCount;
 }
 
-- (NSArray *)sortedByNicknameLengthMemberList
+- (NSArray *)memberList
+{
+	__block NSMutableArray *mutlist = [NSMutableArray array];
+	
+	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+		@synchronized(self.memberListStandardSortedContainer) {
+			for (IRCUser *user in self.memberListStandardSortedContainer) {
+				[mutlist addObject:user];
+			}
+		}
+	});
+	
+	return mutlist;
+}
+
+- (NSArray *)memberListSortedByNicknameLength
 {
 	__block NSMutableArray *mutlist = [NSMutableArray array];
 	
@@ -700,19 +715,14 @@
 	return mutlist;
 }
 
+- (NSArray *)sortedByNicknameLengthMemberList
+{
+	return [self memberListSortedByNicknameLength];
+}
+
 - (NSArray *)sortedByChannelRankMemberList
 {
-	__block NSMutableArray *mutlist = [NSMutableArray array];
-	
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		@synchronized(self.memberListStandardSortedContainer) {
-			for (IRCUser *user in self.memberListStandardSortedContainer) {
-				[mutlist addObject:user];
-			}
-		}
-	});
-	
-	return mutlist;
+	return [self memberList];
 }
 
 #pragma mark -

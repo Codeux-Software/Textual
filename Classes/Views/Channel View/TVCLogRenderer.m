@@ -794,7 +794,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 				NSMutableSet *mentionedUsers = [NSMutableSet set];
 
-				NSArray *sortedMembers = [channel sortedByNicknameLengthMemberList];
+				NSArray *sortedMembers = [channel memberListSortedByNicknameLength];
 
 				for (IRCUser *user in sortedMembers) {
 					start = 0;

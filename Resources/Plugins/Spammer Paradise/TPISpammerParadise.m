@@ -75,7 +75,7 @@
 	/* Build list of users and print it. */
 	NSMutableArray *users = [NSMutableArray array];
 
-	for (IRCUser *u in [channel sortedByChannelRankMemberList]) {
+	for (IRCUser *u in [channel memberList]) {
 		[users addObject:[u nickname]];
 	}
 
@@ -105,7 +105,7 @@
 	/* Build list of users. */
 	NSMutableArray *userlist = [NSMutableArray array];
 
-	for (IRCUser *user in [channel sortedByChannelRankMemberList]) {
+	for (IRCUser *user in [channel memberList]) {
 		NSString *userAddress = [user hostmask];
 
         NSObjectIsEmptyAssertLoopContinue(userAddress);
@@ -153,7 +153,7 @@
     NSMutableDictionary *allUsers = [NSMutableDictionary dictionary];
 
     /* Populate our list by matching an array of users to that of the address. */
-    for (IRCUser *user in [channel sortedByChannelRankMemberList]) {
+    for (IRCUser *user in [channel memberList]) {
         NSObjectIsEmptyAssertLoopContinue([user address]);
 
         NSArray *clones = [allUsers arrayForKey:[user address]];
