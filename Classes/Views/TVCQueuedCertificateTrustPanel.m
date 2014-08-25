@@ -73,25 +73,26 @@
 
 - (void)presentNextQueuedEntry
 {
-	/* Gather information. */
-	/* The oldest entry will be at index 0. */
-	NSArray *contextInfo = self.queuedEntries[0];
-
-	/* Build panel. */
-	SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
-
-	[panel setAlternateButtonTitle:BLS(1009)];
-
-	[panel setInformativeText:TXTLS(@"BasicLanguage[1229][2]")];
-
-	/* Begin sheet. */
-	[panel beginSheetForWindow:nil
-				 modalDelegate:self
-				didEndSelector:@selector(certificateSheetDidEnd:returnCode:contextInfo:)
-				   contextInfo:(__bridge void *)(contextInfo)
-						 trust:(__bridge SecTrustRef)(contextInfo[0])
-					   message:TXTLS(@"BasicLanguage[1229][1]")];
-
+	TXPerformBlockSynchronouslyOnMainQueue(^{
+		/* Gather information. */
+		/* The oldest entry will be at index 0. */
+		NSArray *contextInfo = self.queuedEntries[0];
+		
+		/* Build panel. */
+		SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
+		
+		[panel setAlternateButtonTitle:BLS(1009)];
+		
+		[panel setInformativeText:TXTLS(@"BasicLanguage[1229][2]")];
+		
+		/* Begin sheet. */
+		[panel beginSheetForWindow:nil
+					 modalDelegate:self
+					didEndSelector:@selector(certificateSheetDidEnd:returnCode:contextInfo:)
+					   contextInfo:(__bridge void *)(contextInfo)
+							 trust:(__bridge SecTrustRef)(contextInfo[0])
+						   message:TXTLS(@"BasicLanguage[1229][1]")];
+	});
 }
 
 - (void)certificateSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
