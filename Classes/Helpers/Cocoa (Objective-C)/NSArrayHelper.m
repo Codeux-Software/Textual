@@ -188,11 +188,12 @@
 		if ([objval respondsToSelector:comparison] == NO) {
 			return;
 		}
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-		if ((BOOL)[objval performSelector:comparison withObject:value]) {
-#pragma clang diagnostic pop
+		
+		IMP imp = [objval methodForSelector:comparison];
+		
+		BOOL (*comparisonResut)(id, SEL, id) = (void *)imp;
+		
+		if (comparisonResut(objval, comparison, value)) {
 			retval = idx;
 			
 			*stop = YES;
