@@ -77,6 +77,11 @@ TEXTUAL_EXTERN void TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(di
 TEXTUAL_EXTERN void TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block); // Uses default priority on queue.
 TEXTUAL_EXTERN void TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block);
 
+TEXTUAL_EXTERN void TXPerformDelayedBlockOnGlobalQueue(dispatch_block_t block, NSInteger seconds);
+TEXTUAL_EXTERN void TXPerformDelayedBlockOnMainQueue(dispatch_block_t block, NSInteger seconds);
+
+TEXTUAL_EXTERN void TXPerformDelayedBlockOnQueue(dispatch_queue_t queue, dispatch_block_t block, NSInteger seconds);
+
 TEXTUAL_EXTERN void TXPerformBlockSynchronouslyOnMainQueue(dispatch_block_t block);
 TEXTUAL_EXTERN void TXPerformBlockAsynchronouslyOnMainQueue(dispatch_block_t block);
 

@@ -375,6 +375,18 @@ void TXPerformBlockAsynchronouslyOnQueue(dispatch_queue_t queue, dispatch_block_
 	TXPerformBlockOnDispatchQueue(queue, block, TXPerformBlockOnDispatchQueueAsyncOperationType);
 }
 
+void TXPerformDelayedBlockOnGlobalQueue(dispatch_block_t block, NSInteger seconds)
+{
+	dispatch_queue_t workerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+	
+	TXPerformDelayedBlockOnQueue(workerQueue, block, seconds);
+}
+
+void TXPerformDelayedBlockOnMainQueue(dispatch_block_t block, NSInteger seconds)
+{
+	TXPerformDelayedBlockOnQueue(dispatch_get_main_queue(), block, seconds);
+}
+
 void TXPerformBlockOnDispatchQueue(dispatch_queue_t queue, dispatch_block_t block, TXPerformBlockOnDispatchQueueOperationType operationType)
 {
 	switch (operationType) {
@@ -403,6 +415,13 @@ void TXPerformBlockOnDispatchQueue(dispatch_queue_t queue, dispatch_block_t bloc
 			break;
 		}
 	}
+}
+
+void TXPerformDelayedBlockOnQueue(dispatch_queue_t queue, dispatch_block_t block, NSInteger seconds)
+{
+	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (seconds * NSEC_PER_SEC));
+
+	dispatch_after(popTime, queue, block);
 }
 
 #pragma mark -
