@@ -534,7 +534,7 @@
 			
 			if ([importedClients count] > 0) {
 				for (NSDictionary *seed in importedClients) {
-					[TPCPreferencesImportExport importWorldControllerClientConfiguratoin:seed isCloudBasedImport:YES];
+					[TPCPreferencesImportExport importWorldControllerClientConfiguration:seed isCloudBasedImport:YES];
 				}
 			}
 			

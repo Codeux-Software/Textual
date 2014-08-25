@@ -199,13 +199,13 @@
 			
 			/* Bleh, let's get this over with. */
 			[clientList enumerateObjectsUsingBlock:^(id objd, NSUInteger idx, BOOL *stop) {
-				[self importWorldControllerClientConfiguratoin:objd isCloudBasedImport:NO];
+				[self importWorldControllerClientConfiguration:objd isCloudBasedImport:NO];
 			}];
 		}
 	}
 }
 
-+ (void)importWorldControllerClientConfiguratoin:(NSDictionary *)client isCloudBasedImport:(BOOL)isCloudImport
++ (void)importWorldControllerClientConfiguration:(NSDictionary *)client isCloudBasedImport:(BOOL)isCloudImport
 {
 	/* Validate that shiznet. */
 	NSObjectIsEmptyAssert(client);
