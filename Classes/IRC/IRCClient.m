@@ -6028,7 +6028,7 @@
 
 			break;
 		}
-		case 276: // RPL_? — (is using a client certificate, hybrid)
+		case 276: // RPL_WHOIS? — (is using a client certificate, hybrid)
 		case 307: // RPL_WHOISREGNICK
 		case 310: // RPL_WHOISHELPOP
 		case 313: // RPL_WHOISOPERATOR
@@ -6036,6 +6036,8 @@
 		case 378: // RPL_WHOISHOST
 		case 379: // RPL_WHOISMODES
 		case 671: // RPL_WHOISSECURE
+		case 672: // RPL_WHOIS? — (is a CGI:IRC client from…, hybrid)
+		case 727: // RPL_WHOIS? — (is captured, hybrid)
 		{
 			NSAssertReturnLoopBreak([m paramsCount] > 2);
 
