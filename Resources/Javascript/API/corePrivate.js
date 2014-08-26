@@ -46,6 +46,8 @@
 /* Internal state. */
 Textual.nicknameDoubleClickTimer = null;
 
+Textual.scrollPositionIsPositionedAtBottomOfView = true;
+
 /* Loading screen. */
 Textual.fadeInLoadingScreen = function(bodyOp, topicOp)
 {
@@ -81,14 +83,46 @@ Textual.fadeOutLoadingScreen = function(bodyOp, topicOp)
 };
 
 /* Scrolling. */
-Textual.scrollToBottomOfView = function()
+Textual.scrollToBottomOfView = function(fireNotification)
 {
 	var documentBody = document.getElementById("body_home");
 
 	documentBody.scrollTop = documentBody.scrollHeight;
 
-	Textual.viewPositionMovedToBottom();
+	if (fireNotification === undefined || fireNotification === true) {
+		Textual.viewPositionMovedToBottom();
+	}
 };
+
+Textual.setupInternalScrollEventListener = function()
+{
+	var documentBody = document.getElementById("body_home");
+
+	documentBody.addEventListener("scroll", function() {
+		if (this.scrollTop < (this.scrollHeight - this.offsetHeight)) {
+			Textual.scrollPositionIsPositionedAtBottomOfView = false;
+		} else {
+			Textual.scrollPositionIsPositionedAtBottomOfView = true;
+		}
+	}, false);
+
+	var observer = new MutationObserver(function(mutations) {
+		mutations.forEach(function(mutation) {
+			Textual.maybeMovePositionBackToBottomOfView();
+		});    
+	});
+	 
+	var config = { attributes: true, subtree: true, childList: true, characterData: true };
+	 
+	observer.observe(documentBody, config);
+}
+
+Textual.maybeMovePositionBackToBottomOfView = function()
+{
+	if (Textual.scrollPositionIsPositionedAtBottomOfView) {
+		Textual.scrollToBottomOfView(false);
+	}
+}
 
 /* Resource management. */
 Textual.includeStyleResourceFile = function(file)

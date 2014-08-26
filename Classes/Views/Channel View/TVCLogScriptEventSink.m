@@ -158,8 +158,6 @@
 	 */
 
 	/* Do we have a properly formatted ID? */
-	BOOL isViewingBottom = [self.logController viewingBottom];
-
 	if ([object hasPrefix:@"inlineImage-"] == NO) {
 		object = [@"inlineImage-" stringByAppendingString:object];
 	}
@@ -184,10 +182,6 @@
 		[self.logController executeScriptCommand:@"didToggleInlineImageToHidden" withArguments:@[imageNode] onQueue:NO];
 	} else {
 		[self.logController executeScriptCommand:@"didToggleInlineImageToVisible" withArguments:@[imageNode] onQueue:NO];
-	}
-
-	if (isViewingBottom) {
-		[self.logController moveToBottom];
 	}
 }
 
