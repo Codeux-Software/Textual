@@ -77,6 +77,8 @@
 
 #import "TextualApplication.h"
 
+#import <objc/message.h>
+
 #define _isonCheckInterval			30
 #define _pingInterval				270
 #define _pongCheckInterval			30
