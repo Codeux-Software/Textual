@@ -10,7 +10,6 @@
 	padding: 0;
 	font-size: 100%;
 	word-wrap: break-word;
-	overflow: hidden;
 }
 
 body {
@@ -18,20 +17,16 @@ body {
 	height: 100%;
 	z-index: 100;
 	font-size: 12px;
+	overflow: hidden;
+	overflow-y: visible;
 	background-color: #2D2D2D; /* Tomorrow Night Eighties: Background */
 	font-family: "EspressoMono-Regular", "Menlo";
 }
 
-body div#body_container {
-	height: 100%;
-}
-
 #body_home {
-	overflow-y: scroll;
 	left: 0;
 	right: 0;
 	bottom: 0;
-	top: 0;
 	width: 100%;
 	z-index: 100;
 	max-height: 99.99%;
@@ -131,7 +126,7 @@ a:hover {
 	z-index: 400;
 	opacity: 0; /* Set by JavaScript */
 	color: #D1F1A9; /* Tomorrow Night Blue: Green */
-	position: absolute;
+	position: fixed;
 	padding: 2px 0.5em 3px;
 	background-color: rgba(113, 140, 00, 0.9); /* Tomorrow: Green 90% */
 	-webkit-transition: opacity 0.8s linear;
