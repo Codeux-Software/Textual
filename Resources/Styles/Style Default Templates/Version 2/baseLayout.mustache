@@ -3,9 +3,9 @@
 		{{#isChannelView}}
 			channelname="{{channelName}}" 
 		{{/isChannelView}}
-
+        
 		{{#isPrivateMessageView}}
-			channelname="{{channelName}}"
+			channelname="{{channelName}}" 
 		{{/isPrivateMessageView}}
 
 		{{! The operating system version declaration allows CSS selectors to target specific versions. }}
@@ -14,26 +14,26 @@
 		dir="{{textDirectionToken}}">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset={{userConfiguredTextEncoding}}">
-
+		
 		<link rel="stylesheet" type="text/css" href="{{activeStyleAbsolutePath}}design.css?u={{cacheToken}}">
-
+		
 		<script src="{{applicationResourcePath}}/JavaScript/API/core.js" type="text/javascript"></script>
 		<script src="{{applicationResourcePath}}/JavaScript/API/corePrivate.js" type="text/javascript"></script>
 		<script src="{{applicationResourcePath}}/JavaScript/API/liveresize.js" type="text/javascript"></script>
 		<script src="{{activeStyleAbsolutePath}}scripts.js?u={{cacheToken}}" type="text/javascript"></script>
-
+		
 		<style type="text/css">
 			html, body, body[type], body {
 				font-family: '{{userConfiguredFontName}}';
 				font-size: {{userConfiguredFontSize}}pt;
 			}
-
+			
 			{{#nicknameIndentationAvailable}}
 				body div#body_home p {
 					margin-left: {{predefinedTimestampWidth}}px;
 					text-indent: -{{predefinedTimestampWidth}}px;
 				}
-
+			
 				body .time {
 					width: {{predefinedTimestampWidth}}px;
 				}
@@ -41,9 +41,9 @@
 
 			{{!
 				The following CSS definitions exist for the internal use of Textual.
-				If you are a style developer reading this and plan on using custom
+				If you are a style developer reading this and plan on using custom 
 				templates, then DO NOT modify these. You can touch anything else you
-				want, but we are trying to have some consistency between styles.
+				want, but we are trying to have some consistency between styles. 
 			}}
 
 			/* Print actions. */
@@ -94,32 +94,29 @@
 			.effect[bgcolor-number='15'] { background-color: #cccccc; }
 		</style>
 	</head>
-
+	
 	<body viewtype="{{viewTypeToken}}"
-
+	
 		onload="Textual.viewBodyDidLoad()"
 
 		{{#isChannelView}}
-			channelname="{{channelName}}"
+			channelname="{{channelName}}" 
 		{{/isChannelView}}
-
+        
 		{{#isPrivateMessageView}}
-			channelname="{{channelName}}"
+			channelname="{{channelName}}" 
 		{{/isPrivateMessageView}}
-
+		
 		dir="{{textDirectionToken}}">
-			{{! The elements "body_home," "loading_screen," "topic_bar," and "mark" must always
+			{{! The elements "body_home," "loading_screen," "topic_bar," and "mark" must always 
 			    remain the same as the ID value of these elements are used internally by Textual. }}
-
+			
 			<div id="loading_screen">View is Loading…</div>
-
-			<div id="body_container">
-				<div id="body_home">{{! Filled at runtime. }}</div>
-
-				{{#isChannelView}}
-					<div id="topic_bar"
-					ondblclick="Textual.topicDoubleClicked()">{{{formattedTopicValue}}}</div>
-				{{/isChannelView}}
-			</div>
+			<div id="body_home">{{! Filled at runtime. }}</div>
+		
+			{{#isChannelView}}
+				<div id="topic_bar"
+ondblclick="Textual.topicDoubleClicked()">{{{formattedTopicValue}}}</div>
+			{{/isChannelView}}
 	</body>
 </html>
