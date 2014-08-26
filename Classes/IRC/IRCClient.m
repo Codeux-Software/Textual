@@ -4761,7 +4761,14 @@
 	}
 
 	if ([TPCPreferences showJoinLeave] || myself) {
-		NSString *text = BLS(1161, sendern, [m senderUsername], [m senderAddress]);
+		NSString *senderAddress = [m senderAddress];
+
+		/* Some networks allow formatting in the address of users. Therefore, 
+		 we must close the formatting if the user did not. */
+		senderAddress = [senderAddress stringByAppendingFormat:@"%C", 0x0F]; // Close all formatting
+
+		/* Format resulting message. */
+		NSString *text = BLS(1161, sendern, [m senderUsername], senderAddress);
 
 		[self print:c
 			   type:TVCLogLineJoinType
@@ -4822,6 +4829,8 @@
 		NSString *message = BLS(1163, sendern, [m senderUsername], [m senderAddress]);
 
 		if (NSObjectIsNotEmpty(comment)) {
+			comment = [comment stringByAppendingFormat:@"%C", 0x0F]; // Close all formatting
+
 			message = BLS(1164, message, comment);
 		}
 		
@@ -4882,6 +4891,8 @@
 			return;
 		}
 
+		comment = [comment stringByAppendingFormat:@"%C", 0x0F]; // Close all formatting
+
 		NSString *message = BLS(1162, sendern, targetu, comment);
 
 		[self print:c
@@ -4931,6 +4942,8 @@
 		if ([TLORegularExpression string:comment isMatchedByRegex:nsrgx]) {
 			comment = BLS(1149, comment);
 		}
+
+		comment = [comment stringByAppendingFormat:@"%C", 0x0F]; // Close all formatting
 
 		text = BLS(1150, text, comment);
 	}
