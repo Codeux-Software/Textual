@@ -71,6 +71,8 @@
 
 + (NSDictionary *)supportedStringEncodingsWithTitle:(BOOL)favorUTF8;
 
+- (NSString *)stringByAppendingIRCFormattingStop;
+
 - (NSString *)substringAfterIndex:(NSInteger)anIndex;
 - (NSString *)substringBeforeIndex:(NSInteger)anIndex;
 

@@ -161,6 +161,11 @@
 	return [self substringFromIndex:(anIndex - 1)];
 }
 
+- (NSString *)stringByAppendingIRCFormattingStop
+{
+	return [self stringByAppendingFormat:@"%C", 0x0F];
+}
+
 - (BOOL)isEqualIgnoringCase:(NSString *)other
 {
 	return ([self caseInsensitiveCompare:other] == NSOrderedSame);
