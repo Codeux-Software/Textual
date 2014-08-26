@@ -1,6 +1,6 @@
 // The MIT License
 // 
-// Copyright (c) 2013 Gwendal Roué
+// Copyright (c) 2014 Gwendal Roué
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,9 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
-#import "GRMustacheAvailabilityMacros.h"
+#ifndef GRMUSTACHE_FILTER
+#define GRMUSTACHE_FILTER
 
+#import "TextualApplication.h"
+
+#import "GRMustacheAvailabilityMacros.h"
 
 // =============================================================================
 #pragma mark - <GRMustacheFilter>
@@ -57,7 +60,7 @@
  *
  * @since v4.3
  */
-- (id)transformedValue:(id)object AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
+- (id)transformedValue:(id)object AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
 
 @end
 
@@ -94,7 +97,7 @@
  *
  * @see variadicFilterWithBlock:
  */
-+ (id<GRMustacheFilter>)filterWithBlock:(id(^)(id value))block AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
++ (id<GRMustacheFilter>)filterWithBlock:(id(^)(id value))block AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
 
 /**
  * Returns a GRMustacheFilter object that executes the provided block, given an
@@ -115,6 +118,8 @@
  *
  * @see filterWithBlock:
  */
-+ (id<GRMustacheFilter>)variadicFilterWithBlock:(id(^)(NSArray *arguments))block AVAILABLE_GRMUSTACHE_VERSION_6_0_AND_LATER;
++ (id<GRMustacheFilter>)variadicFilterWithBlock:(id(^)(NSArray *arguments))block AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
 
 @end
+
+#endif
