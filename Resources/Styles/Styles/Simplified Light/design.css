@@ -5,6 +5,7 @@
 	padding: 0;
 	font-size: 100%;
   	word-wrap: break-word;
+	overflow: hidden;
 }
 
 body {
@@ -33,6 +34,10 @@ body div#body_home {
 	position: absolute;
 	opacity: 0; /* Set by JavaScript */
 	-webkit-transition: opacity 0.8s linear;
+}
+
+body[viewtype=channel] div#body_home {
+	max-height: 96.5%;
 }
 
 body .line {

@@ -83,8 +83,7 @@ Textual.fadeOutLoadingScreen = function(bodyOp, topicOp)
 /* Scrolling. */
 Textual.scrollToBottomOfView = function()
 {
-    var bhe = document.getElementById("body_home");
-	bhe.lastChild.scrollIntoView(false);
+	document.body.scrollTop = document.body.scrollHeight;
 	
 	Textual.viewPositionMovedToBottom();
 };
