@@ -17,10 +17,12 @@ body {
 	height: 100%;
 	z-index: 100;
 	font-size: 12px;
-	overflow: hidden;
-	overflow-y: visible;
 	background-color: #FFFFFF; /* Tomorrow: Background */
 	font-family: "EspressoMono-Regular", "Menlo";
+}
+
+body div#body_container {
+	height: 100%;
 }
 
 #body_home {
@@ -29,14 +31,12 @@ body {
 	bottom: 0;
 	width: 100%;
 	z-index: 100;
-	max-height: 99.99%;
+	max-height: 100%;
+	padding-top: 1px;
+	overflow-y: scroll;
 	position: absolute;
 	opacity: 0; /* Set by JavaScript */
 	-webkit-transition: opacity 0.8s linear;
-}
-
-body[viewtype=channel] div#body_home {
-	max-height: 96.5%;
 }
 
 .line {
@@ -58,7 +58,7 @@ body[dir=rtl] .sender {
 /* @group Misc */
 
 #loading_screen {
-	position:absolute;
+	position: absolute;
 	top: 50%;
 	left: 50%;
 	margin-top: -11px;
@@ -131,7 +131,7 @@ a:hover {
 	z-index: 400;
 	opacity: 0; /* Set by JavaScript */
 	color: #718C00; /* Tomorrow Night Blue: Green */
-	position: fixed;
+	position: absolute;
 	padding: 2px 0.5em 3px;
 	background-color: rgba(209, 241, 169, 0.95); /* Tomorrow Night Blue: Green 95% */
 	-webkit-transition: opacity 0.8s linear;

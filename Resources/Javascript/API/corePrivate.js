@@ -83,8 +83,10 @@ Textual.fadeOutLoadingScreen = function(bodyOp, topicOp)
 /* Scrolling. */
 Textual.scrollToBottomOfView = function()
 {
-	document.body.scrollTop = document.body.scrollHeight;
-	
+	var documentBody = document.getElementById("body_home");
+
+	documentBody.scrollTop = documentBody.scrollHeight;
+
 	Textual.viewPositionMovedToBottom();
 };
 
@@ -121,7 +123,6 @@ Textual.includeScriptResourceFile = function(file)
 
 /* Contextual menu management and other resources.
 We do not recommend anyone try to override these. */
-
 Textual.openChannelNameContextualMenu = function()
 {
 	app.setChannelName(event.target.innerHTML);

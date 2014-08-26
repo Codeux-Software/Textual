@@ -462,11 +462,14 @@
 - (void)moveToTop
 {
 	NSAssertReturn(self.isLoaded);
+	
+	NSAssertReturn(self.reloadingBacklog == NO);
+	NSAssertReturn(self.reloadingHistory == NO);
 
 	DOMDocument *doc = [self mainFrameDocument];
 	PointerIsEmptyAssert(doc);
 
-	DOMElement *body = [doc body];
+	DOMElement *body = [doc getElementById:@"body_home"];
 	PointerIsEmptyAssert(body);
 
 	[body setValue:@0 forKey:@"scrollTop"];
@@ -478,14 +481,13 @@
 {
 	NSAssertReturn(self.isLoaded);
 
-	/* Do not move during reloads. */
 	NSAssertReturn(self.reloadingBacklog == NO);
 	NSAssertReturn(self.reloadingHistory == NO);
 
 	DOMDocument *doc = [self mainFrameDocument];
 	PointerIsEmptyAssert(doc);
 
-	DOMElement *body = [doc body];
+	DOMElement *body = [doc getElementById:@"body_home"];
 	PointerIsEmptyAssert(body);
 
 	[body setValue:[body valueForKey:@"scrollHeight"] forKey:@"scrollTop"];
@@ -500,17 +502,20 @@
 	DOMDocument *doc = [self mainFrameDocument];
 	PointerIsEmptyAssertReturn(doc, NO);
 
-	DOMElement *body = [doc body];
+	DOMElement *body = [doc getElementById:@"body_home"];
 	PointerIsEmptyAssertReturn(body, NO);
 
 	NSInteger viewHeight = [self.webView frame].size.height;
 
-	NSInteger height = [[body valueForKey:@"scrollHeight"] integerValue];
-	NSInteger scrtop = [[body valueForKey:@"scrollTop"] integerValue];
+	NSInteger offsetHeight = [[body valueForKey:@"offsetHeight"] integerValue];
+	NSInteger scrollHeight = [[body valueForKey:@"scrollHeight"] integerValue];
+	NSInteger scrollTop = [[body valueForKey:@"scrollTop"] integerValue];
 
 	NSAssertReturnR((viewHeight > 0), YES);
 
-	return ((scrtop + viewHeight) >= height);
+	BOOL isNotAtBottom = (scrollTop < (scrollHeight - offsetHeight));
+
+	return (isNotAtBottom == NO);
 }
 
 #pragma mark -
@@ -736,6 +741,9 @@
 	DOMDocument *doc = [self mainFrameDocument];
 	PointerIsEmptyAssertReturn(doc, NO);
 
+	DOMElement *body = [doc getElementById:@"body_home"];
+	PointerIsEmptyAssertReturn(body, NO);
+	
 	DOMElement *e = [doc getElementById:elementID];
 	PointerIsEmptyAssertReturn(e, NO);
 
@@ -751,15 +759,15 @@
 		t = (id)[t parentNode];
 	}
 
-	[doc.body setValue:@(y -  [self scrollbackCorrectionInit]) forKey:@"scrollTop"];
+	[body setValue:@(y -  [self scrollbackCorrectionInit]) forKey:@"scrollTop"];
 
 	return YES;
 }
 
-- (void)notifyDidBecomeVisible
+- (void)notifyDidBecomeVisible /* When the view is switched to. */
 {
 	[self moveToBottom];
-	
+
 	[self.webView clearSelection];
 }
 
@@ -1009,6 +1017,9 @@
 			NSDictionary *inlineImageMatches = [resultInfo dictionaryForKey:@"InlineImagesToValidate"];
 			
 			[self performBlockOnMainThread:^{
+				/* Record bottom position before append. */
+				BOOL isAtBottom = [self viewingBottom];
+
 				/* Record highlights. */
 				if (highlighted) {
 					@synchronized(self.highlightedLineNumbers) {
@@ -1029,7 +1040,12 @@
 																messageInfo:resultInfo[@"pluginDictionary"]
 															  isThemeReload:NO
 															isHistoryReload:NO];
-				
+
+				/* Update bottom position after append. */
+				if (isAtBottom) {
+					[self moveToBottom];
+				}
+
 				/* Limit lines. */
 				if (self.maximumLineCount > 0 && (self.activeLineCount - 10) > self.maximumLineCount) {
 					/* Only cut lines if our number is divisible by 5. This makes it so every
