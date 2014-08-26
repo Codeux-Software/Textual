@@ -4763,12 +4763,7 @@
 	if ([TPCPreferences showJoinLeave] || myself) {
 		NSString *senderAddress = [m senderAddress];
 
-		/* Some networks allow formatting in the address of users. Therefore, 
-		 we must close the formatting if the user did not. */
-		senderAddress = [senderAddress stringByAppendingFormat:@"%C", 0x0F]; // Close all formatting
-
-		/* Format resulting message. */
-		NSString *text = BLS(1161, sendern, [m senderUsername], senderAddress);
+		NSString *text = BLS(1161, sendern, [m senderUsername], [senderAddress stringByAppendingIRCFormattingStop]);
 
 		[self print:c
 			   type:TVCLogLineJoinType
@@ -4826,12 +4821,12 @@
 			return;
 		}
 
-		NSString *message = BLS(1163, sendern, [m senderUsername], [m senderAddress]);
+		NSString *senderAddress = [m senderAddress];
+
+		NSString *message = BLS(1163, sendern, [m senderUsername], [senderAddress stringByAppendingIRCFormattingStop]);
 
 		if (NSObjectIsNotEmpty(comment)) {
-			comment = [comment stringByAppendingFormat:@"%C", 0x0F]; // Close all formatting
-
-			message = BLS(1164, message, comment);
+			message = BLS(1164, message, [comment stringByAppendingIRCFormattingStop]);
 		}
 		
 		[self print:c
@@ -4891,9 +4886,7 @@
 			return;
 		}
 
-		comment = [comment stringByAppendingFormat:@"%C", 0x0F]; // Close all formatting
-
-		NSString *message = BLS(1162, sendern, targetu, comment);
+		NSString *message = BLS(1162, sendern, targetu, [comment stringByAppendingIRCFormattingStop]);
 
 		[self print:c
 			   type:TVCLogLineKickType
@@ -4933,7 +4926,9 @@
 	}
 
 	/* Continue. */
-	NSString *text = BLS(1153, sendern, [m senderUsername], [m senderAddress]);
+	NSString *senderAddress = [m senderAddress];
+
+	NSString *text = BLS(1153, sendern, [m senderUsername], [senderAddress stringByAppendingIRCFormattingStop]);
 
 	if (NSObjectIsNotEmpty(comment)) {
 		/* Crude regular expression for matching netsplits. */
@@ -4943,9 +4938,7 @@
 			comment = BLS(1149, comment);
 		}
 
-		comment = [comment stringByAppendingFormat:@"%C", 0x0F]; // Close all formatting
-
-		text = BLS(1150, text, comment);
+		text = BLS(1150, text, [comment stringByAppendingIRCFormattingStop]);
 	}
 	
 #define	_showQuitInChannel		([TPCPreferences showJoinLeave] && [ignoreChecks ignoreJPQE] == NO && c.config.ignoreJPQActivity == NO)
