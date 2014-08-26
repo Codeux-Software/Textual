@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+#import <objc/runtime.h>
+
 @implementation NSValue (TXValueHelper)
 
 + (id)valueWithPrimitive:(void *)value withType:(const char *)valueType

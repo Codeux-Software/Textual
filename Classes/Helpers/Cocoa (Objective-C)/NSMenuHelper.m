@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+#import <objc/runtime.h>
+
 @implementation NSMenu (TXMenuHelper)
 @end
 

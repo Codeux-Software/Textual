@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+#import <objc/runtime.h>
+
 @implementation NSObject (TXObjectHelper)
 
 - (id)performSelector:(SEL)aSelector withArguments:(NSArray *)arguments returnsPrimitives:(BOOL)returnsPrimitives usesTypeChecking:(BOOL)usesTypeChecking error:(NSArray **)errorMessages
