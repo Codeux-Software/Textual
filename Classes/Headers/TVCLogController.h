@@ -72,6 +72,8 @@
 - (void)moveToTop;
 - (void)moveToBottom;
 
+@property (readonly) BOOL viewingBottom;
+
 @property (readonly, copy) NSString *topicValue;
 - (void)setTopic:(NSString *)topic;
 
