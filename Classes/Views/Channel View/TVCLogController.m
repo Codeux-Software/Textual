@@ -1017,9 +1017,6 @@
 			NSDictionary *inlineImageMatches = [resultInfo dictionaryForKey:@"InlineImagesToValidate"];
 			
 			[self performBlockOnMainThread:^{
-				/* Record bottom position before append. */
-				BOOL isAtBottom = [self viewingBottom];
-
 				/* Record highlights. */
 				if (highlighted) {
 					@synchronized(self.highlightedLineNumbers) {
@@ -1040,11 +1037,6 @@
 																messageInfo:resultInfo[@"pluginDictionary"]
 															  isThemeReload:NO
 															isHistoryReload:NO];
-
-				/* Update bottom position after append. */
-				if (isAtBottom) {
-					[self moveToBottom];
-				}
 
 				/* Limit lines. */
 				if (self.maximumLineCount > 0 && (self.activeLineCount - 10) > self.maximumLineCount) {
@@ -1522,6 +1514,8 @@
 	} else {
 		[self executeQuickScriptCommand:@"viewFinishedReload" withArguments:@[]];
 	}
+
+	[self executeQuickScriptCommand:@"setupInternalScrollEventListener" withArguments:@[]];
 
 	self.isLoaded = YES;
 
