@@ -19,6 +19,10 @@ body {
     font-weight: 200;
 }
 
+p {
+	overflow: visible !important;
+}
+
  body .line {
 	clear: both;
   }
@@ -85,7 +89,6 @@ body[dir=ltr] .time {
 	-webkit-user-select: none;
 	font-weight: bold;
 	margin-right: 10px;
-	line-height: 22px;
 	font-style: normal;
 	text-align: right;
 }
@@ -176,7 +179,6 @@ body img {
 	float: left;
 	margin: 15px 15px 12px 10px;
 	min-width: 100px;
-	max-width: 90%;
 }
 
 .inlineImageCell .closeButton {
@@ -396,19 +398,17 @@ body span.message {
 	padding-right: 25px;
 	display: table-cell;
 	min-height: 22px;
-	line-height: 22px;
+	overflow: visible !important;
 }
 
 body div.event span.time {
 	color: #999;
-	line-height: 19px;
 	display: table-cell;
 }
 
 body div.event span.message {
 	min-height: 19px;
 	text-indent: -20px;
-	line-height: 19px;
 	padding-left: 0;
 }
 
