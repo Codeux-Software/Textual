@@ -121,8 +121,10 @@ Textual.setupInternalScrollEventListener = function()
 
 Textual.maybeMovePositionBackToBottomOfView = function()
 {
-	if (Textual.scrollPositionIsPositionedAtBottomOfView) {
-		Textual.scrollToBottomOfView(false);
+	if (app.isFrontmostView()) {
+		if (Textual.scrollPositionIsPositionedAtBottomOfView) {
+			Textual.scrollToBottomOfView(false);
+		}
 	}
 }
 

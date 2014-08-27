@@ -255,6 +255,11 @@
 	return [[self.logController associatedClient] localHostmask];
 }
 
+- (BOOL)isFrontmostView
+{
+	return ([mainWindow() selectedViewController] == self.logController);
+}
+
 - (BOOL)inlineImagesEnabledForView
 {
 	return [self.logController inlineImagesEnabledForView];
