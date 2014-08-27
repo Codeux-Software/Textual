@@ -89,6 +89,7 @@ body[dir=ltr] .time {
 	-webkit-user-select: none;
 	font-weight: bold;
 	margin-right: 10px;
+	line-height: 22px;
 	font-style: normal;
 	text-align: right;
 }
@@ -398,16 +399,19 @@ body span.message {
 	padding-right: 25px;
 	display: table-cell;
 	min-height: 22px;
+	line-height: 22px;
 	overflow: visible !important;
 }
 
 body div.event span.time {
 	color: #999;
+	line-height: 19px;
 	display: table-cell;
 }
 
 body div.event span.message {
 	min-height: 19px;
+	line-height: 19px;
 	text-indent: -20px;
 	padding-left: 0;
 }
