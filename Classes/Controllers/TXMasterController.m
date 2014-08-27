@@ -219,6 +219,8 @@
 
 #ifdef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
 	[self presentBetaTesterDialog];
+
+	[mainWindow() makeKeyAndOrderFront:nil];
 #endif
 
 	[self awakeHockeyApp];
