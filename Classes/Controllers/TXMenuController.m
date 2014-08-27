@@ -654,6 +654,11 @@
 	return RZUserDefaultsValueProxy();
 }
 
+- (id)localDefaultValues
+{
+	return [TPCPreferencesUserDefaultsObjectProxy localDefaultValues];
+}
+
 #pragma mark -
 #pragma mark Navigation Channel List
 
