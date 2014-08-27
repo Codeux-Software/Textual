@@ -68,12 +68,6 @@
 		
 		// ---- //
 		
-#ifdef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
-		[self presentBetaTesterDialog];
-#endif
-		
-		// ---- //
-		
 #if defined(DEBUG)
 		self.ghostModeIsOn = YES; // Do not use autoconnect during debug.
 #else
@@ -222,8 +216,11 @@
 #ifndef DEBUG
 	[self checkForOtherCopiesOfTextualRunning];
 #endif
-	
-	/* Register for HockeyApp. */
+
+#ifdef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
+	[self presentBetaTesterDialog];
+#endif
+
 	[self awakeHockeyApp];
 	
 	if ([worldController() clientCount] < 1) {
