@@ -106,6 +106,8 @@ Textual.setupInternalScrollEventListener = function()
 		}
 	}, false);
 
+	window.MutationObserver = (window.MutationObserver || window.WebKitMutationObserver);
+
 	var observer = new MutationObserver(function(mutations) {
 		mutations.forEach(function(mutation) {
 			Textual.maybeMovePositionBackToBottomOfView();
