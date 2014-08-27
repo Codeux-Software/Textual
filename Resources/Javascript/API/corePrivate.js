@@ -78,7 +78,9 @@ Textual.fadeOutLoadingScreen = function(bodyOp, topicOp)
 	Setting it to hidden makes it not copiable after it is not visible. */
 
 	setTimeout(function() {
-		lbe.style.display = "none";
+		var lbef = document.getElementById("loading_screen");
+
+		lbef.style.display = "none";
 	}, 5000);
 };
 
