@@ -821,7 +821,7 @@ CQ
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="2721">
                                             <connections>
-                                                <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.TextualDeveloperEnvironment" id="hN6-33-ZpE">
+                                                <binding destination="267" name="hidden" keyPath="self.localDefaultValuess.TextualDeveloperEnvironment" id="0q7-dJ-8b2">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                     </dictionary>
@@ -832,7 +832,7 @@ CQ
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="openDefaultIRCClientDialog:" target="267" id="Hpi-8N-lOk"/>
-                                                <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.TextualDeveloperEnvironment" id="hGF-Oa-0OO">
+                                                <binding destination="267" name="hidden" keyPath="self.localDefaultValues.TextualDeveloperEnvironment" id="JIz-UL-efi">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                     </dictionary>
@@ -843,7 +843,7 @@ CQ
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="openWelcomeSheet:" target="267" id="h8B-I6-6M2"/>
-                                                <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.TextualDeveloperEnvironment" id="Zof-qT-TyW">
+                                                <binding destination="267" name="hidden" keyPath="self.localDefaultValues.TextualDeveloperEnvironment" id="0fi-oH-YWm">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                     </dictionary>
@@ -854,7 +854,7 @@ CQ
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="resetDoNotAskMePopupWarnings:" target="267" id="2729"/>
-                                                <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.TextualDeveloperEnvironment" id="Cmd-T1-KYa">
+                                                <binding destination="267" name="hidden" keyPath="self.localDefaultValues.TextualDeveloperEnvironment" id="4jI-aw-iKQ">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                     </dictionary>
@@ -865,7 +865,7 @@ CQ
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="simulateCrash:" target="267" id="Rcz-bc-3ac"/>
-                                                <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.TextualDeveloperEnvironment" id="FcV-vq-tUE">
+                                                <binding destination="267" name="hidden" keyPath="self.localDefaultValues.TextualDeveloperEnvironment" id="fWR-Tg-jcs">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                     </dictionary>
@@ -874,7 +874,7 @@ CQ
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="3085">
                                             <connections>
-                                                <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.TextualDeveloperEnvironment" id="jL3-yt-yz3">
+                                                <binding destination="267" name="hidden" keyPath="self.localDefaultValues.TextualDeveloperEnvironment" id="drX-Xv-g8W">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                     </dictionary>
@@ -885,7 +885,7 @@ CQ
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="exportPreferences:" target="267" id="3091"/>
-                                                <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.TextualDeveloperEnvironment" id="Gws-Zn-gKG">
+                                                <binding destination="267" name="hidden" keyPath="self.localDefaultValues.TextualDeveloperEnvironment" id="N3G-OC-FeG">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                     </dictionary>
@@ -896,7 +896,7 @@ CQ
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="importPreferences:" target="267" id="3090"/>
-                                                <binding destination="267" name="hidden" keyPath="self.userDefaultsValues.TextualDeveloperEnvironment" id="pYY-A2-Oqk">
+                                                <binding destination="267" name="hidden" keyPath="self.localDefaultValues.TextualDeveloperEnvironment" id="CZ0-HW-aJv">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                     </dictionary>
