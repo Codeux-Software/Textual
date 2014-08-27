@@ -821,7 +821,7 @@ CQ
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="2721">
                                             <connections>
-                                                <binding destination="267" name="hidden" keyPath="self.localDefaultValuess.TextualDeveloperEnvironment" id="0q7-dJ-8b2">
+                                                <binding destination="267" name="hidden" keyPath="self.localDefaultValues.TextualDeveloperEnvironment" id="0nW-I6-O8D">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                     </dictionary>
