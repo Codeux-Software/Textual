@@ -7546,7 +7546,7 @@
 
 	[self printDebugInformation:BLS(1196, script, scriptInput, errord)];
 
-	LogToConsole(BLS(1195), errorb);
+	LogToConsole(BLS(1195, errorb));
 }
 
 - (void)postTextualCmdScriptResult:(NSString *)resultString to:(NSString *)destination
