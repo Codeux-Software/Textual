@@ -87,7 +87,7 @@
     return NSMakeRange(0, [self stringLength]);
 }
 
-- (NSInteger)stringLength
+- (NSUInteger)stringLength
 {
     return [[self string] length];
 }

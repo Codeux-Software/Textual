@@ -243,7 +243,7 @@ NSString *BLS(NSInteger key, ...)
 	va_list args;
 	va_start(args, key);
 	
-	NSString *resultKey = [NSString stringWithFormat:@"BasicLanguage[%i]", key];
+	NSString *resultKey = [NSString stringWithFormat:@"BasicLanguage[%li]", (long)key];
 	
 	NSString *result = TXLocalizedString(RZMainBundle(), resultKey, args);
 	

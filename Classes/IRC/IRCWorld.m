@@ -658,9 +658,9 @@
 		if ([target isClient]) {
 			i = [self.clients indexOfObjectIdenticalTo:target];
 			
-			NSInteger n = (i + 1);
+			NSUInteger n = (i + 1);
 			
-			if (0 <= n && n < [self.clients count]) {
+			if (n < [self.clients count]) {
 				sel = self.clients[n];
 			}
 			

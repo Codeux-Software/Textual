@@ -81,11 +81,11 @@ typedef enum TXConnectionProxyType : NSInteger {
 @property (nonatomic, assign) NSInteger fallbackEncoding;
 @property (nonatomic, assign) NSInteger primaryEncoding;
 @property (nonatomic, assign) IRCConnectionSocketProxyType proxyType;
-@property (nonatomic, strong) NSArray *alternateNicknames;
-@property (nonatomic, strong) NSArray *channelList;
-@property (nonatomic, strong) NSArray *ignoreList;
-@property (nonatomic, strong) NSArray *highlightList;
-@property (nonatomic, strong) NSArray *loginCommands;
+@property (nonatomic, copy) NSArray *alternateNicknames;
+@property (nonatomic, copy) NSArray *channelList;
+@property (nonatomic, copy) NSArray *ignoreList;
+@property (nonatomic, copy) NSArray *highlightList;
+@property (nonatomic, copy) NSArray *loginCommands;
 @property (nonatomic, copy) NSString *itemUUID; // Unique Identifier (UUID)
 @property (nonatomic, copy) NSString *clientName;
 @property (nonatomic, copy) NSString *nickname;

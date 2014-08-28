@@ -63,7 +63,7 @@ typedef enum IRCUserRank : NSInteger {
 @property (nonatomic, assign) BOOL InspIRCd_y_lower; // Channel mode (+y) for IRCop on InspIRCd-2.0
 @property (nonatomic, assign) BOOL isCop;
 @property (nonatomic, assign) BOOL isAway;
-@property (nonatomic, assign) CGFloat totalWeight;
+@property (readonly) CGFloat totalWeight;
 @property (nonatomic, assign) CGFloat incomingWeight;
 @property (nonatomic, assign) CGFloat outgoingWeight;
 @property (nonatomic, assign) CFAbsoluteTime lastWeightFade;

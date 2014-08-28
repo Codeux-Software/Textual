@@ -741,7 +741,7 @@
 			/* Go through each result item and do work. */
 			NSUInteger resultCount = [[self cloudContainerNotificationQuery] resultCount];
 			
-			for (int i = 0; i < resultCount; i++) {
+			for (NSUInteger i = 0; i < resultCount; i++) {
 				NSMetadataItem *item = [[self cloudContainerNotificationQuery] resultAtIndex:i];
 				
 				/* First thing first is to get the URL. */

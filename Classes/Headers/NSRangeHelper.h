@@ -40,4 +40,4 @@
 TEXTUAL_EXTERN NSRange NSEmptyRange();
 
 TEXTUAL_EXTERN BOOL NSRangeIsValid(NSRange r);
-TEXTUAL_EXTERN BOOL NSRangeIsValidInBounds(NSRange r, NSInteger maxLength);
+TEXTUAL_EXTERN BOOL NSRangeIsValidInBounds(NSRange r, NSUInteger maxLength);

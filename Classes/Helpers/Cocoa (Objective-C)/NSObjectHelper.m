@@ -105,7 +105,7 @@
 					{
 						; // Safe to continue…
 					} else {
-						_insertError(NO, ([NSString stringWithFormat:@"Error performing %@ on %@: Return type of %@ is a primitive but the value of returnsPrimitives is set to NO", NSStringFromSelector(aSelector), NSStringFromClass([self class])]));
+						_insertError(NO, ([NSString stringWithFormat:@"Error performing %1$@ on %2$@: Return type of %1$@ is a primitive but the value of returnsPrimitives is set to NO", NSStringFromSelector(aSelector), NSStringFromClass([self class])]));
 						
 						safeToPerform = NO;
 					}

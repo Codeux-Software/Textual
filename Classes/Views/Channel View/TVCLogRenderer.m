@@ -123,7 +123,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 // Begin renderer.										  //
 // ====================================================== //
 
-+ (id)renderAttributedRange:(NSMutableAttributedString *)body attributes:(attr_t)attrArray start:(NSInteger)rangeStart length:(NSInteger)rangeLength baseFont:(NSFont *)defaultFont
++ (id)renderAttributedRange:(NSMutableAttributedString *)body attributes:(attr_t)attrArray start:(NSUInteger)rangeStart length:(NSUInteger)rangeLength baseFont:(NSFont *)defaultFont
 {
 	NSRange r = NSMakeRange(rangeStart, rangeLength);
 
@@ -167,7 +167,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	return body;
 }
 
-+ (id)renderRange:(NSString *)body attributes:(attr_t)attrArray start:(NSInteger)rangeStart length:(NSInteger)rangeLength for:(TVCLogController *)logController context:(NSDictionary *)resultContext
++ (id)renderRange:(NSString *)body attributes:(attr_t)attrArray start:(NSUInteger)rangeStart length:(NSUInteger)rangeLength for:(TVCLogController *)logController context:(NSDictionary *)resultContext
 {
 	NSString *contentne = [body substringWithRange:NSMakeRange(rangeStart, rangeLength)];
 

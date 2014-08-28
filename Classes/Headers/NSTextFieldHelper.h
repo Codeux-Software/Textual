@@ -47,7 +47,7 @@
 @property (getter=isFocused, readonly) BOOL focused;
 
 @property (readonly) NSRange fullSelectionRange;
-@property (readonly) NSInteger stringLength;
+@property (readonly) NSUInteger stringLength;
 
 @property (readonly, strong) NSScrollView *scrollView;
 @end

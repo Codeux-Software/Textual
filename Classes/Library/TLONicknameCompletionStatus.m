@@ -51,7 +51,7 @@
 
 - (NSString *)trimNickname:(NSString *)nickname usingCharacterSet:(NSCharacterSet *)charset
 {
-	for (NSInteger i = 0; i < [nickname length]; i++) {
+	for (NSUInteger i = 0; i < [nickname length]; i++) {
 		UniChar c = [nickname characterAtIndex:i];
 
 		if ([charset characterIsMember:c]) {
@@ -506,7 +506,7 @@
 			BOOL addWhitespace = YES;
 
 			if ([completeSuffix isEqualToString:NSStringWhitespacePlaceholder]) {
-				NSInteger nextIndx = (self.lastCompletionCompletedRange.length + self.lastCompletionCompletedRange.location);
+				NSUInteger nextIndx = (self.lastCompletionCompletedRange.length + self.lastCompletionCompletedRange.location);
 				
 				if ([s length] > nextIndx) {
 					NSString *nextChar = [s stringCharacterAtIndex:nextIndx];
