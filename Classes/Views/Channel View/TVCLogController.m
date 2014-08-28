@@ -472,7 +472,7 @@
 	DOMElement *body = [doc getElementById:@"body_home"];
 	PointerIsEmptyAssert(body);
 
-	[body setValue:@0 forKey:@"scrollTop"];
+	[body setScrollTop:0];
 
 	[self executeQuickScriptCommand:@"viewPositionMovedToTop" withArguments:@[]];
 }
@@ -490,7 +490,7 @@
 	DOMElement *body = [doc getElementById:@"body_home"];
 	PointerIsEmptyAssert(body);
 
-	[body setValue:[body valueForKey:@"scrollHeight"] forKey:@"scrollTop"];
+	[body setScrollTop:[body scrollHeight]];
 
 	[self executeQuickScriptCommand:@"viewPositionMovedToBottom" withArguments:@[]];
 }
@@ -505,13 +505,9 @@
 	DOMElement *body = [doc getElementById:@"body_home"];
 	PointerIsEmptyAssertReturn(body, NO);
 
-	NSInteger viewHeight = [self.webView frame].size.height;
-
-	NSInteger offsetHeight = [[body valueForKey:@"offsetHeight"] integerValue];
-	NSInteger scrollHeight = [[body valueForKey:@"scrollHeight"] integerValue];
-	NSInteger scrollTop = [[body valueForKey:@"scrollTop"] integerValue];
-
-	NSAssertReturnR((viewHeight > 0), YES);
+	NSInteger offsetHeight = [body offsetHeight];
+	NSInteger scrollHeight = [body scrollHeight];
+	NSInteger scrollTop = [body scrollTop];
 
 	BOOL isNotAtBottom = (scrollTop < (scrollHeight - offsetHeight));
 
@@ -528,19 +524,21 @@
 	DOMDocument *doc = [self mainFrameDocument];
 	PointerIsEmptyAssert(doc);
 
-	DOMElement *e = [doc getElementById:@"mark"];
+	[self performBlockAndScrollAfterwards:^{
+		DOMElement *e = [doc getElementById:@"mark"];
 
-	while (e) {
-		[[e parentNode] removeChild:e];
+		while (e) {
+			[[e parentNode] removeChild:e];
 
-		e = [doc getElementById:@"mark"];
-	}
+			e = [doc getElementById:@"mark"];
+		}
 
-	NSString *html = [TVCLogRenderer renderTemplate:@"historyIndicator"];
+		NSString *html = [TVCLogRenderer renderTemplate:@"historyIndicator"];
 
-	[self appendToDocumentBody:html];
-	
-	[self executeQuickScriptCommand:@"historyIndicatorAddedToView" withArguments:@[]];
+		[self appendToDocumentBody:html];
+		
+		[self executeQuickScriptCommand:@"historyIndicatorAddedToView" withArguments:@[]];
+	}];
 }
 
 - (void)unmark
@@ -550,15 +548,17 @@
 	DOMDocument *doc = [self mainFrameDocument];
 	PointerIsEmptyAssert(doc);
 
-	DOMElement *e = [doc getElementById:@"mark"];
+	[self performBlockAndScrollAfterwards:^{
+		DOMElement *e = [doc getElementById:@"mark"];
 
-	while (e) {
-		[[e parentNode] removeChild:e];
+		while (e) {
+			[[e parentNode] removeChild:e];
 
-		e = [doc getElementById:@"mark"];
-	}
+			e = [doc getElementById:@"mark"];
+		}
 
-	[self executeQuickScriptCommand:@"historyIndicatorRemovedFromView" withArguments:@[]];
+		[self executeQuickScriptCommand:@"historyIndicatorRemovedFromView" withArguments:@[]];
+	}];
 }
 
 - (void)goToMark
@@ -753,13 +753,13 @@
 
 	while (t) {
 		if ([t isKindOfClass:[DOMElement class]]) {
-			y += [[t valueForKey:@"offsetTop"] integerValue];
+			y += [t offsetTop];
 		}
 
 		t = (id)[t parentNode];
 	}
 
-	[body setValue:@(y -  [self scrollbackCorrectionInit]) forKey:@"scrollTop"];
+	[body setScrollTop:(int)(y -  [self scrollbackCorrectionInit])];
 
 	return YES;
 }
@@ -773,13 +773,34 @@
 
 - (void)changeTextSize:(BOOL)bigger
 {
-	if (bigger) {
-		[self.webView makeTextLarger:nil];
-	} else {
-		[self.webView makeTextSmaller:nil];
-	}
+	[self performBlockAndScrollAfterwards:^{
+		if (bigger) {
+			[self.webView makeTextLarger:nil];
+		} else {
+			[self.webView makeTextSmaller:nil];
+		}
 
-	[self executeQuickScriptCommand:@"viewFontSizeChanged" withArguments:@[@(bigger)]];
+		[self executeQuickScriptCommand:@"viewFontSizeChanged" withArguments:@[@(bigger)]];
+	}];
+}
+
+- (void)performBlockAndScrollAfterwards:(TXEmtpyBlockDataType)block
+{
+	/* Performs a block and scrolls to the view back to the bottom if it
+	 was there before the block was performed. */
+	/* This only occurs if we are the focused view. When we are not, then
+	 when we become focused, a call to moveToBottom is automatically called. */
+	if ([mainWindow() selectedViewController] == self) {
+		BOOL isViewingBottom = [self viewingBottom];
+
+		block();
+
+		if (isViewingBottom) {
+			[self moveToBottom];
+		}
+	} else {
+		block();
+	}
 }
 
 #pragma mark -
@@ -899,9 +920,11 @@
 	n = (nodeList.length - self.maximumLineCount);
 
 	/* Remove old lines. */
-	for (NSInteger i = (n - 1); i >= 0; --i) {
-		[body removeChild:[nodeList item:(unsigned)i]];
-	}
+	[self performBlockAndScrollAfterwards:^{
+		for (NSInteger i = (n - 1); i >= 0; --i) {
+			[body removeChild:[nodeList item:(unsigned)i]];
+		}
+	}];
 
 	self.activeLineCount -= n;
 
@@ -1017,6 +1040,9 @@
 			NSDictionary *inlineImageMatches = [resultInfo dictionaryForKey:@"InlineImagesToValidate"];
 			
 			[self performBlockOnMainThread:^{
+				/* Record context information. */
+				BOOL isViewingBottom = [self viewingBottom];
+
 				/* Record highlights. */
 				if (highlighted) {
 					@synchronized(self.highlightedLineNumbers) {
@@ -1027,7 +1053,9 @@
 				}
 
 				/* Do the actual append to WebKit. */
-				[self appendToDocumentBody:html];
+				[self performBlockAndScrollAfterwards:^{
+					[self appendToDocumentBody:html];
+				}];
 
 				/* Inform the style of the new append. */
 				[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
@@ -1054,11 +1082,6 @@
 					TVCImageURLoader *loader = [TVCImageURLoader new];
 
 					[loader assesURL:nurl withID:inlineImageMatches[nurl] forController:self];
-				}
-
-				/* Maybe scroll to bottom. */
-				if ([mainWindow() selectedViewController] == self) {
-					[self executeQuickScriptCommand:@"maybeMovePositionBackToBottomOfView" withArguments:@[]];
 				}
 				
 				/* Log this log line. */
