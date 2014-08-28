@@ -266,13 +266,13 @@
 	}
 	
 	if ([TPCPreferences confirmQuit]) {
-		NSInteger result = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1000][1]")
-															   title:TXTLS(@"BasicLanguage[1000][2]") 
-													   defaultButton:TXTLS(@"BasicLanguage[1000][3]") 
-													 alternateButton:BLS(1009)
-													  suppressionKey:nil
-													 suppressionText:nil];
-		
+		BOOL result = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1000][1]")
+														  title:TXTLS(@"BasicLanguage[1000][2]")
+												  defaultButton:TXTLS(@"BasicLanguage[1000][3]")
+												alternateButton:BLS(1009)
+												 suppressionKey:nil
+												suppressionText:nil];
+
 		return result;
 	}
 	
