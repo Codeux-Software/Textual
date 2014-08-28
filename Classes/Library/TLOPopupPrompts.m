@@ -209,7 +209,7 @@
 		/* Return result. */
 		NSModalResponse response = [alert runModal];
 
-		if (response == NSModalResponseStop) {
+		if (response == NSAlertFirstButtonReturn) {
 			if (useSupression) {
 				if (isForcedSuppression) {
 					[RZStandardUserDefualts() setBool:YES forKey:privateSuppressionKey];
