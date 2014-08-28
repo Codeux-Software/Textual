@@ -1040,9 +1040,6 @@
 			NSDictionary *inlineImageMatches = [resultInfo dictionaryForKey:@"InlineImagesToValidate"];
 			
 			[self performBlockOnMainThread:^{
-				/* Record context information. */
-				BOOL isViewingBottom = [self viewingBottom];
-
 				/* Record highlights. */
 				if (highlighted) {
 					@synchronized(self.highlightedLineNumbers) {
