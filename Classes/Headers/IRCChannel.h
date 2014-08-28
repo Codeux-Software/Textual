@@ -48,7 +48,7 @@ typedef enum IRCChannelStatus : NSInteger {
 #define IRCChannelConfigurationWasUpdatedNotification	@"IRCChannelConfigurationWasUpdatedNotification"
 
 @interface IRCChannel : IRCTreeItem <NSOutlineViewDataSource, NSOutlineViewDelegate>
-@property (nonatomic, nweak) NSString *name;
+@property (readonly, copy) NSString *name;
 @property (nonatomic, copy) NSString *topic;
 @property (nonatomic, copy) IRCChannelConfig *config;
 @property (nonatomic, strong) IRCChannelMode *modeInfo;
@@ -64,6 +64,8 @@ typedef enum IRCChannelStatus : NSInteger {
 - (void)updateConfig:(IRCChannelConfig *)seed fireChangedNotification:(BOOL)fireChangedNotification;
 
 - (NSMutableDictionary *)dictionaryValue;
+
+- (void)setName:(NSString *)value;
 
 @property (readonly, copy) NSString *uniqueIdentifier;
 

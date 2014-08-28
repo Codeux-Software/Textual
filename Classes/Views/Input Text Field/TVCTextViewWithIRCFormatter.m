@@ -233,7 +233,9 @@
 	{
 		NSFont *oldfont = value;
 
-		if (NSDissimilarObjects([oldfont pointSize], newPointSize)) {
+		if (fabs([oldfont pointSize]) == fabs(newPointSize)) {
+			;
+		} else {
 			NSFont *font = [RZFontManager() convertFont:value toSize:newPointSize];
 
 			if (font) {
@@ -301,7 +303,7 @@
 	
 	NSRange lineRange;
 	
-	for (NSInteger i = 0; i < numberOfGlyphs; numberOfLines++) {
+	for (NSUInteger i = 0; i < numberOfGlyphs; numberOfLines++) {
 		[layoutManager lineFragmentRectForGlyphAtIndex:i effectiveRange:&lineRange];
 		
 		if (NSEqualRanges(blr, lineRange)) {
@@ -324,7 +326,7 @@
 	
 	NSRange lineRange;
 	
-	for (NSInteger i = 0; i < numberOfGlyphs; numberOfLines++) {
+	for (NSUInteger i = 0; i < numberOfGlyphs; numberOfLines++) {
 		[layoutManager lineFragmentRectForGlyphAtIndex:i effectiveRange:&lineRange];
 		
 		i = NSMaxRange(lineRange);
@@ -360,7 +362,7 @@
 	
 	NSRange lineRange;
 	
-	for (NSInteger i = 0; i < numberOfGlyphs; numberOfLines++) {
+	for (NSUInteger i = 0; i < numberOfGlyphs; numberOfLines++) {
 		NSRect r = [layoutManager lineFragmentRectForGlyphAtIndex:i effectiveRange:&lineRange];
 		
 		if ((totalLineHeight +  r.size.height) <= maximumHeight) {

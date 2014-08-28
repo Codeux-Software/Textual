@@ -256,9 +256,9 @@
 			
 			NSRange charRange;
 			
-			NSInteger colorChar         = 0;
-			NSInteger charCountIndex    = 0;
-			NSInteger rainbowArrayIndex = 0;
+			NSUInteger colorChar         = 0;
+			NSUInteger charCountIndex    = 0;
+			NSUInteger rainbowArrayIndex = 0;
 			
 			NSArray *colorCodes = @[@"4", @"7", @"8", @"3", @"12", @"2", @"6"];
 			
@@ -306,7 +306,7 @@
 			
 			NSRange charRange;
 			
-			NSInteger charCountIndex = 0;
+			NSUInteger charCountIndex = 0;
 			
 			while (1 == 1) {
 				/* Break when we reach the length of the selected range. */
@@ -354,9 +354,9 @@
 			
 			NSRange charRange;
 			
-			NSInteger colorChar         = 0;
-			NSInteger charCountIndex    = 0;
-			NSInteger rainbowArrayIndex = 0;
+			NSUInteger colorChar         = 0;
+			NSUInteger charCountIndex    = 0;
+			NSUInteger rainbowArrayIndex = 0;
 			
 			NSArray *colorCodes = @[@"6", @"2", @"12", @"9", @"8", @"7", @"4"];
 			
@@ -395,7 +395,7 @@
 			
 			NSRange charRange;
 			
-			NSInteger charCountIndex = 0;
+			NSUInteger charCountIndex = 0;
 
 			while (1 == 1) {
 				/* Break when we reach the length of the selected range. */

@@ -548,7 +548,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 		
 		NSArray *transformedPaths = (__bridge NSArray *)(eventPaths);
 
-		for (NSInteger i = 0; i < numEvents; i++) {
+		for (NSUInteger i = 0; i < numEvents; i++) {
 			FSEventStreamEventFlags flags = eventFlags[i];
 			
 			NSString *path = transformedPaths[i];

@@ -625,7 +625,7 @@
 - (NSTimeInterval)lastMessageServerTimeWithCachedValue
 {
 	if ([TPCPreferences logToDiskIsEnabled]) {
-		if (self.lastMessageServerTime == 0) {
+		if (fabs(self.lastMessageServerTime) == 0) {
 			double storedTime = self.config.cachedLastServerTimeCapacityReceivedAtTimestamp;
 
 			if (storedTime) {
@@ -5798,7 +5798,7 @@
 	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCPlaybackModule]) {
 		NSTimeInterval interval = [self lastMessageServerTimeWithCachedValue];
 		
-		if (interval == 0) {
+		if (fabs(interval) == 0) {
 			[self send:IRCPrivateCommandIndex("privmsg"), [self nicknameWithZNCUserPrefix:@"playback"], @"play", @"*", @"0", nil];
 		} else {
 			NSString *timetosend = [NSString stringWithFormat:@"%.0f", interval];
@@ -6498,7 +6498,7 @@
 
 #define _userModeSymbol(s)		([prefix isEqualTo:[self.supportInfo userModePrefixSymbol:(s)]])
 			
-			for (NSInteger i = 0; i < [flfields length]; i++) {
+			for (NSUInteger i = 0; i < [flfields length]; i++) {
 				NSString *prefix = [flfields stringCharacterAtIndex:i];
 				
 				if (_userModeSymbol(@"q")) {
@@ -6574,7 +6574,7 @@
 				
 				IRCUser *member = [IRCUser newUserOnClient:self withNickname:nil];
 
-				NSInteger i;
+				NSUInteger i;
 				
 				/* Apply modes. */
 				for (i = 0; i < [nickname length]; i++) {
@@ -8360,7 +8360,7 @@
 				NSInteger y = (a & 0xff); a >>= 8;
 				NSInteger z = (a & 0xff);
 				
-				hostAddress = [NSString stringWithFormat:@"%d.%d.%d.%d", z, y, x, w];
+				hostAddress = [NSString stringWithFormat:@"%ld.%ld.%ld.%ld",(long) z, (long)y, (long)x, (long)w];
 			} else {
 				hostAddress = section2;
 			}
@@ -8475,9 +8475,9 @@
 	NSString *trail;
 
 	if ([transferToken length] > 0) {
-		trail = [NSString stringWithFormat:@"%@ %@ %i %qi %@", escapedFileName, address, port, totalFilesize, transferToken];
+		trail = [NSString stringWithFormat:@"%@ %@ %li %qi %@", escapedFileName, address, (long)port, totalFilesize, transferToken];
 	} else {
-		trail = [NSString stringWithFormat:@"%@ %@ %i %qi", escapedFileName, address, port, totalFilesize];
+		trail = [NSString stringWithFormat:@"%@ %@ %li %qi", escapedFileName, address, (long)port, totalFilesize];
 	}
 	
 	[self sendCTCPQuery:nickname command:@"DCC SEND" text:trail];

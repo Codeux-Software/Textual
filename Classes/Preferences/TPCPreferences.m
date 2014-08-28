@@ -301,7 +301,7 @@
 	return [RZUserDefaults() boolForKey:@"CommandReturnSendsMessageAsAction"];
 }
 
-+ (BOOL)controlEnterSnedsMessage;
++ (BOOL)controlEnterSnedsMessage
 {
 	return [RZUserDefaults() boolForKey:@"ControlEnterSendsMessage"];
 }

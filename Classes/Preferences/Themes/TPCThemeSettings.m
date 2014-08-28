@@ -229,7 +229,7 @@
 
 - (void)loadApplicationStyleRespository:(NSInteger)version
 {
-	NSString *filename = [NSString stringWithFormat:@"/Style Default Templates/Version %i/", version];
+	NSString *filename = [NSString stringWithFormat:@"/Style Default Templates/Version %li/", (long)version];
 
 	NSString *dictPath = [[TPCPathInfo applicationResourcesFolderPath] stringByAppendingPathComponent:filename];
 

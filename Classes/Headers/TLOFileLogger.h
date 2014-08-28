@@ -54,7 +54,7 @@
 @property (nonatomic, nweak) IRCClient *client;
 @property (nonatomic, nweak) IRCChannel *channel;
 @property (nonatomic, copy) NSURL *filename;
-@property (nonatomic, copy) NSURL *fileWritePath;
+@property (readonly, copy) NSURL *fileWritePath;
 @property (nonatomic, strong) NSFileHandle *file;
 
 - (void)open;

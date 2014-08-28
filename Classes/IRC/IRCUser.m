@@ -221,21 +221,21 @@
 
 - (void)outgoingConversation
 {
-	CGFloat change = ((self.outgoingWeight == 0) ? 20 : 5);
+	CGFloat change = ((lrint(self.outgoingWeight) == 0) ? 20 : 5);
 
 	self.outgoingWeight += change;
 }
 
 - (void)incomingConversation
 {
-	CGFloat change = ((self.incomingWeight == 0) ? 100 : 20);
+	CGFloat change = ((lrint(self.incomingWeight) == 0) ? 100 : 20);
 
 	self.incomingWeight += change;
 }
 
 - (void)conversation
 {
-	CGFloat change = ((self.incomingWeight == 0) ? 4 : 1);
+	CGFloat change = ((lrint(self.incomingWeight) == 0) ? 4 : 1);
 
 	self.incomingWeight += change;
 }

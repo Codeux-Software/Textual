@@ -105,7 +105,7 @@
 	[self updateConfig:seed fireChangedNotification:YES];
 }
 
-- (void)updateConfig:(IRCChannelConfig *)seed fireChangedNotification:(BOOL)fireChangedNotification;
+- (void)updateConfig:(IRCChannelConfig *)seed fireChangedNotification:(BOOL)fireChangedNotification
 {
 	if (seed) {
 		/* We do not want to bother on equality. */
@@ -752,7 +752,7 @@
 	return [self findMember:nickname options:0];
 }
 
-- (IRCUser *)findMember:(NSString *)nickname options:(NSStringCompareOptions)mask;
+- (IRCUser *)findMember:(NSString *)nickname options:(NSStringCompareOptions)mask
 {
 	__block IRCUser *foundUser;
 	

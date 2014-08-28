@@ -73,10 +73,10 @@
 
 - (NSString *)stringByAppendingIRCFormattingStop;
 
-- (NSString *)substringAfterIndex:(NSInteger)anIndex;
-- (NSString *)substringBeforeIndex:(NSInteger)anIndex;
+- (NSString *)substringAfterIndex:(NSUInteger)anIndex;
+- (NSString *)substringBeforeIndex:(NSUInteger)anIndex;
 
-- (NSString *)stringCharacterAtIndex:(NSInteger)anIndex;
+- (NSString *)stringCharacterAtIndex:(NSUInteger)anIndex;
 
 - (NSString *)stringByDeletingPreifx:(NSString *)prefix;
 
@@ -96,7 +96,7 @@
 
 @property (readonly, copy) NSString *cleanedServerHostmask;
 
-- (NSInteger)compareWithWord:(NSString *)stringB matchGain:(NSInteger)gain missingCost:(NSInteger)cost;
+- (NSInteger)compareWithWord:(NSString *)stringB matchGain:(NSUInteger)gain missingCost:(NSUInteger)cost;
 
 - (BOOL)hasPrefixIgnoringCase:(NSString *)aString;
 
@@ -129,7 +129,7 @@
 
 @property (readonly, copy) NSString *stripIRCEffects;
 
-- (NSRange)rangeOfNextSegmentMatchingRegularExpression:(NSString *)regex startingAt:(NSInteger)start;
+- (NSRange)rangeOfNextSegmentMatchingRegularExpression:(NSString *)regex startingAt:(NSUInteger)start;
 
 @property (readonly, copy) NSString *encodeURIComponent;
 @property (readonly, copy) NSString *encodeURIFragment;
@@ -155,11 +155,11 @@
 
 @property (readonly, copy) NSString *stringWithValidURIScheme;
 
-- (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight forcedFont:(NSFont *)textFont;
+- (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight forcedFont:(NSFont *)textFont;
 
-- (CGFloat)pixelHeightInWidth:(NSInteger)width forcedFont:(NSFont *)font;
+- (CGFloat)pixelHeightInWidth:(NSUInteger)width forcedFont:(NSFont *)font;
 
-- (NSString *)base64EncodingWithLineLength:(NSInteger)lineLength;
+- (NSString *)base64EncodingWithLineLength:(NSUInteger)lineLength;
 
 @property (readonly, copy) NSString *string; // Returns self.
 
@@ -219,11 +219,11 @@
 
 @property (readonly, copy) NSArray *splitIntoLines;
 
-- (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight;
-- (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight forcedFont:(NSFont *)textFont;
+- (NSUInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight;
+- (NSUInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight forcedFont:(NSFont *)textFont;
 
-- (CGFloat)pixelHeightInWidth:(NSInteger)width;
-- (CGFloat)pixelHeightInWidth:(NSInteger)width forcedFont:(NSFont *)font;
+- (CGFloat)pixelHeightInWidth:(NSUInteger)width;
+- (CGFloat)pixelHeightInWidth:(NSUInteger)width forcedFont:(NSFont *)font;
 @end
 
 #pragma mark 

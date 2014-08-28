@@ -118,7 +118,6 @@
     return [TPCPreferences bounceDockIconForEvent:self.eventType];
 }
 
-
 - (void)setBounceDockIcon:(BOOL)value
 {
     [TPCPreferences setBounceDockIcon:value forEvent:self.eventType];

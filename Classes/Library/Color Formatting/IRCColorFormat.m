@@ -273,7 +273,7 @@
 		 the formatting characters into the math so any math checked against in the loop will 
 		 only be counted towards the actual characters. */
 
-		for (NSInteger i = 0; i < effectiveRange.length;) {
+		for (NSUInteger i = 0; i < effectiveRange.length;) {
 			NSInteger clocal = (effectiveRange.location + i);
 
 			NSRange charRange = [[base string] rangeOfComposedCharacterSequenceAtIndex:clocal];

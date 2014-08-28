@@ -48,5 +48,5 @@
 
 - (void)resetData;
 
-- (NSArray *)listEntriesWithFetchLimit:(NSInteger)maxEntryCount;
+- (NSArray *)listEntriesWithFetchLimit:(NSUInteger)maxEntryCount;
 @end

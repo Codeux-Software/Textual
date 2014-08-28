@@ -133,9 +133,9 @@
 		NSString *newFilename;
 
 		if ([filenameExtension length] > 0) {
-			newFilename = [NSString stringWithFormat:@"%@_%d.%@", nameWOExtension, i, filenameExtension];
+			newFilename = [NSString stringWithFormat:@"%@_%ld.%@", nameWOExtension, (long)i, filenameExtension];
 		} else {
-			newFilename = [NSString stringWithFormat:@"%@_%d", nameWOExtension, i];
+			newFilename = [NSString stringWithFormat:@"%@_%ld", nameWOExtension, (long)i];
 		}
 		
 		filepath = [self.path stringByAppendingPathComponent:newFilename];

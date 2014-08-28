@@ -48,7 +48,7 @@ BOOL NSRangeIsValid(NSRange r)
 	return NSDissimilarObjects(r.location, NSNotFound);
 }
 
-BOOL NSRangeIsValidInBounds(NSRange r, NSInteger maxLength)
+BOOL NSRangeIsValidInBounds(NSRange r, NSUInteger maxLength)
 {
 	NSAssertReturnR((r.location <= maxLength), NO);
 	NSAssertReturnR((r.length <= maxLength), NO);

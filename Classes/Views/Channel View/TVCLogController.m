@@ -273,7 +273,7 @@
 	return [themeController() baseURL];
 }
 
-- (TVCLogControllerOperationQueue *)printingQueue;
+- (TVCLogControllerOperationQueue *)printingQueue
 {
     return [self.associatedClient printingQueue];
 }
@@ -792,7 +792,7 @@
 	@synchronized(self.highlightedLineNumbers) {
 		NSObjectIsEmptyAssertReturn(self.highlightedLineNumbers, NO);
 
-		NSInteger lastHighlightIndex = -1;
+		NSUInteger lastHighlightIndex = NSNotFound;
 
 		if ([self.highlightedLineNumbers containsObject:self.lastVisitedHighlight]) {
 			lastHighlightIndex = [self.highlightedLineNumbers indexOfObject:self.lastVisitedHighlight];
@@ -827,7 +827,7 @@
 		NSObjectIsEmptyAssert(self.highlightedLineNumbers);
 
 		if ([self.highlightedLineNumbers containsObject:self.lastVisitedHighlight]) {
-			NSInteger hli_ci = [self.highlightedLineNumbers indexOfObject:self.lastVisitedHighlight];
+			NSUInteger hli_ci = [self.highlightedLineNumbers indexOfObject:self.lastVisitedHighlight];
 
 			if (hli_ci == ([self.highlightedLineNumbers count] - 1)) {
 				// Return method since the last highlight we

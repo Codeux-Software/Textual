@@ -208,7 +208,7 @@
 			
 			token = [token substringFromIndex:1];
 			
-			for (NSInteger i = 0; i < token.length; i++) {
+			for (NSUInteger i = 0; i < [token length]; i++) {
 				c = [token stringCharacterAtIndex:i];
 
 				if ([c isEqualToString:@"-"]) {
@@ -304,10 +304,10 @@
 
 	NSArray *allmodes = [str split:@","];
 
-	for (NSInteger i = 0; i < [allmodes count]; i++) {
+	for (NSUInteger i = 0; i < [allmodes count]; i++) {
 		NSString *modeset = allmodes[i];
 		
-		for (NSInteger j = 0; j < modeset.length; j++) {
+		for (NSUInteger j = 0; j < [modeset length]; j++) {
 			NSString *mode = [modeset stringCharacterAtIndex:j];
 
 			[channelModes setInteger:(i + 1) forKey:mode];

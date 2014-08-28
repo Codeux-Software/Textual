@@ -140,9 +140,9 @@
     return encodingList;
 }
 
-- (NSString *)stringCharacterAtIndex:(NSInteger)anIndex
+- (NSString *)stringCharacterAtIndex:(NSUInteger)anIndex
 {
-	if (anIndex > [self length] || anIndex < 0) {
+	if (anIndex > [self length]) {
 		return nil;
 	}
 	
@@ -151,12 +151,12 @@
 	return [NSString stringWithUniChar:strChar];
 }
 
-- (NSString *)substringAfterIndex:(NSInteger)anIndex
+- (NSString *)substringAfterIndex:(NSUInteger)anIndex
 {
 	return [self substringFromIndex:(anIndex + 1)];
 }
 
-- (NSString *)substringBeforeIndex:(NSInteger)anIndex
+- (NSString *)substringBeforeIndex:(NSUInteger)anIndex
 {
 	return [self substringFromIndex:(anIndex - 1)];
 }
@@ -264,7 +264,7 @@
 	return (prefixRange.location == 0 && prefixRange.length > 0);
 }
 
-- (NSInteger)compareWithWord:(NSString *)stringB matchGain:(NSInteger)gain missingCost:(NSInteger)cost
+- (NSInteger)compareWithWord:(NSString *)stringB matchGain:(NSUInteger)gain missingCost:(NSUInteger)cost
 {
 	// normalize strings
 	NSString *stringA = [NSString stringWithString:self];
@@ -273,8 +273,9 @@
 	stringB = [[stringB trim] lowercaseString];
 	
 	// Step 1
-	NSInteger k, i, j, change, *d, distance;
-	
+	NSInteger change, *d, distance;
+
+	NSUInteger k, i, j;
 	NSUInteger n = [stringA length];
 	NSUInteger m = [stringB length];
 	
@@ -632,7 +633,7 @@
 {
 	NSObjectIsEmptyAssertReturn(self, NO);
 	
-	for (NSInteger i = 0; i < [self length]; ++i) {
+	for (NSUInteger i = 0; i < [self length]; ++i) {
 		UniChar c = [self characterAtIndex:i];
 		
 		if (TXStringIsBase10Numeric(c) == NO) {
@@ -647,7 +648,7 @@
 {
 	NSObjectIsEmptyAssertReturn(self, NO);
 
-	for (NSInteger i = 0; i < [self length]; ++i) {
+	for (NSUInteger i = 0; i < [self length]; ++i) {
 		UniChar c = [self characterAtIndex:i];
 		
 		if (TXStringIsAlphabeticNumeric(c) == NO) {
@@ -864,9 +865,9 @@
 	return [NSString stringWithCharacters:buf length:pos];
 }
 
-- (NSRange)rangeOfNextSegmentMatchingRegularExpression:(NSString *)regex startingAt:(NSInteger)start
+- (NSRange)rangeOfNextSegmentMatchingRegularExpression:(NSString *)regex startingAt:(NSUInteger)start
 {
-	NSInteger stringLength = [self length];
+	NSUInteger stringLength = [self length];
 	
 	NSAssertReturnR((stringLength > start), NSEmptyRange());
 	
@@ -955,21 +956,21 @@
 	return [self stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
 }
 
-- (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight forcedFont:(NSFont *)textFont
+- (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight forcedFont:(NSFont *)textFont
 {
 	CGFloat boundHeight = [self pixelHeightInWidth:boundWidth forcedFont:textFont];
 	
 	return (boundHeight / lineHeight);
 }
 
-- (CGFloat)pixelHeightInWidth:(NSInteger)width forcedFont:(NSFont *)font
+- (CGFloat)pixelHeightInWidth:(NSUInteger)width forcedFont:(NSFont *)font
 {
 	NSAttributedString *base = [NSAttributedString emptyStringWithBase:self];
 
 	return [base pixelHeightInWidth:width forcedFont:font];
 }
 
-- (NSString *)base64EncodingWithLineLength:(NSInteger)lineLength
+- (NSString *)base64EncodingWithLineLength:(NSUInteger)lineLength
 {
 	NSData *baseData = [self dataUsingEncoding:NSUTF8StringEncoding];
 	
@@ -1121,7 +1122,7 @@
 		 to be at the end of the string or only have a space
 		 to our right side. Anything else invalidates group. */
 		if (slashesAreEven || slashCount == 0) {
-			NSInteger charIndex = (scanLocation + 1);
+			NSUInteger charIndex = (scanLocation + 1);
 
 			if ([originalString length] > charIndex) {
 				UniChar rightChar = [[originalString string] characterAtIndex:charIndex];
@@ -1465,24 +1466,24 @@
     return lines;
 }
 
-- (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight
+- (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight
 {
 	return [self wrappedLineCount:boundWidth lineMultiplier:lineHeight forcedFont:nil];
 }
 
-- (NSInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSInteger)lineHeight forcedFont:(NSFont *)textFont
+- (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight forcedFont:(NSFont *)textFont
 {	
 	CGFloat boundHeight = [self pixelHeightInWidth:boundWidth forcedFont:textFont];
 
 	return (boundHeight / lineHeight);
 }
 
-- (CGFloat)pixelHeightInWidth:(NSInteger)width
+- (CGFloat)pixelHeightInWidth:(NSUInteger)width
 {
 	return [self pixelHeightInWidth:width forcedFont:nil];
 }
 
-- (CGFloat)pixelHeightInWidth:(NSInteger)width forcedFont:(NSFont *)font
+- (CGFloat)pixelHeightInWidth:(NSUInteger)width forcedFont:(NSFont *)font
 {
 	NSMutableAttributedString *baseMutable = [self mutableCopy];
 	

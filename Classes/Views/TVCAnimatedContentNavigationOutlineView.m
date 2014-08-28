@@ -192,7 +192,8 @@
 	/* Update window size. */
 	NSRect contentViewFrame = [self.contentView frame];
 	
-	BOOL contentSizeDidntChange =  (contentViewFrame.size.height == newViewFinalFrame.size.height);
+	BOOL contentSizeDidntChange =  (fabs(contentViewFrame.size.height) == fabs(newViewFinalFrame.size.height));
+	
 	BOOL windowWillBecomeSmaller = (contentViewFrame.size.height >  newViewFinalFrame.size.height);
 	
 	/* Special condition to allow for smoother animations when going up

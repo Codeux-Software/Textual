@@ -43,8 +43,8 @@
 
 @interface TDCPreferencesSoundWrapper : NSObject
 @property (nonatomic, assign) TXNotificationType eventType;
-@property (nonatomic, nweak) NSString *displayName;
-@property (nonatomic, nweak) NSString *alertSound;
+@property (readonly, copy) NSString *displayName;
+@property (nonatomic, copy) NSString *alertSound;
 @property (nonatomic, assign) BOOL speakEvent;
 @property (nonatomic, assign) BOOL pushNotification;
 @property (nonatomic, assign) BOOL disabledWhileAway;

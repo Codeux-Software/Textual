@@ -187,11 +187,13 @@
 	BOOL isForcedSuppression = [suppressText isEqualToString:TLOPopupPromptSpecialSuppressionTextValue];
 
 	/* Pop dialog. */
-	NSAlert *alert = [NSAlert alertWithMessageText:titleText
-									 defaultButton:buttonDefault
-								   alternateButton:buttonAlternate
-									   otherButton:nil
-						 informativeTextWithFormat:bodyText];
+	NSAlert *alert = [NSAlert new];
+
+	[alert setMessageText:titleText];
+	[alert setInformativeText:bodyText];
+
+	[alert addButtonWithTitle:buttonDefault];
+	[alert addButtonWithTitle:buttonAlternate];
 
 	NSButton *suppressionButton = [alert suppressionButton];
 	
@@ -205,7 +207,9 @@
 
 	void(^runblock)(void) = ^{
 		/* Return result. */
-		if ([alert runModal] == NSAlertDefaultReturn) {
+		NSModalResponse response = [alert runModal];
+
+		if (response == NSModalResponseStop) {
 			if (useSupression) {
 				if (isForcedSuppression) {
 					[RZStandardUserDefualts() setBool:YES forKey:privateSuppressionKey];

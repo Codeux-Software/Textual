@@ -39,7 +39,7 @@
 
 @implementation NSBundle (TXBundleHelper)
 
-- (BOOL)loadCustomNibNamed:(NSString *)nibName owner:(id)owner topLevelObjects:(NSArray *__autoreleasing *)topLevelObjects;
+- (BOOL)loadCustomNibNamed:(NSString *)nibName owner:(id)owner topLevelObjects:(NSArray *__autoreleasing *)topLevelObjects
 {
 	return [self loadNibNamed:nibName owner:owner topLevelObjects:topLevelObjects];
 }

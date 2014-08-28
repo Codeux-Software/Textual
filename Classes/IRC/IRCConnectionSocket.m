@@ -310,13 +310,13 @@
 	}
 
 	while (1 == 1) {
-		NSData *data = [self readLine:&readBuffer];
+		NSData *rdata = [self readLine:&readBuffer];
 
-		if (data == nil) {
+		if (rdata == nil) {
 			break;
 		}
 
-		NSString *sdata = [self convertFromCommonEncoding:data];
+		NSString *sdata = [self convertFromCommonEncoding:rdata];
 
 		if (sdata == nil) {
 			break;
