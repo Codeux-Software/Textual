@@ -278,6 +278,12 @@ Textual.didToggleInlineImageToVisible = function(imageElement)
 	if (Textual.hasLiveResize()) {
 		var realImageElement = imageElement.querySelector("a .image");
 
-		realImageElement.addEventListener("mousedown", InlineImageLiveResize.onMouseDown, false);
+		realImageElement.onload = function() {
+			Textual.maybeMovePositionBackToBottomOfView();
+		}
+
+		realImageElement.onmousedown = function() {
+			InlineImageLiveResize.onMouseDown();
+		}
 	}
 };
