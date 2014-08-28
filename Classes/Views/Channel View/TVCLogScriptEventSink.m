@@ -255,11 +255,6 @@
 	return [[self.logController associatedClient] localHostmask];
 }
 
-- (BOOL)isFrontmostView
-{
-	return ([mainWindow() selectedViewController] == self.logController);
-}
-
 - (BOOL)inlineImagesEnabledForView
 {
 	return [self.logController inlineImagesEnabledForView];
@@ -278,11 +273,6 @@
 - (BOOL)sidebarInversionIsEnabled
 {
 	return [TPCPreferences invertSidebarColors];
-}
-
-- (void)scrollToBottomOfView
-{
-	[self.logController moveToBottom];
 }
 
 - (BOOL)styleSettingsSetValue:(NSArray *)arguments

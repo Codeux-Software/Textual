@@ -1037,7 +1037,6 @@
 																messageInfo:resultInfo[@"pluginDictionary"]
 															  isThemeReload:NO
 															isHistoryReload:NO];
-
 				/* Limit lines. */
 				if (self.maximumLineCount > 0 && (self.activeLineCount - 10) > self.maximumLineCount) {
 					/* Only cut lines if our number is divisible by 5. This makes it so every
@@ -1057,6 +1056,11 @@
 					[loader assesURL:nurl withID:inlineImageMatches[nurl] forController:self];
 				}
 
+				/* Maybe scroll to bottom. */
+				if ([mainWindow() selectedViewController] == self) {
+					[self executeQuickScriptCommand:@"maybeMovePositionBackToBottomOfView" withArguments:@[]];
+				}
+				
 				/* Log this log line. */
 				/* If the channel is encrypted, then we refuse to write to
 				 the actual historic log so there is no trace of the chatter
