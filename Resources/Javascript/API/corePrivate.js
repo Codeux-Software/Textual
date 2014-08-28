@@ -86,9 +86,15 @@ Textual.fadeOutLoadingScreen = function(bodyOp, topicOp)
 };
 
 /* Scrolling. */
-Textual.scrollToBottomOfView = function()
+Textual.scrollToBottomOfView = function(fireNotification)
 {
-	app.scrollToBottomOfView();
+	var documentBody = document.getElementById("body_home");
+
+	documentBody.scrollTop = documentBody.scrollHeight;
+
+	if (fireNotification === undefined || fireNotification === true) {
+		Textual.viewPositionMovedToBottom();
+	}
 };
 
 Textual.setupInternalScrollEventListener = function()
@@ -108,28 +114,14 @@ Textual.setupInternalScrollEventListener = function()
 			}
 		}
 	}, false);
-
-	window.MutationObserver = (window.MutationObserver || window.WebKitMutationObserver);
-
-	var observer = new MutationObserver(function(mutations) {
-		mutations.forEach(function(mutation) {
-			Textual.maybeMovePositionBackToBottomOfView();
-		});    
-	});
-	 
-	var config = { attributes: true, subtree: true, childList: true, characterData: true };
-	 
-	observer.observe(documentBody, config);
 }
 
 Textual.maybeMovePositionBackToBottomOfView = function()
 {
-	if (app.isFrontmostView()) {
-		if (Textual.scrollPositionIsPositionedAtBottomOfView) {
-			Textual.lastScrollingEventWasAutomated = true;
+	if (Textual.scrollPositionIsPositionedAtBottomOfView) {
+		Textual.lastScrollingEventWasAutomated = true;
 
-			Textual.scrollToBottomOfView(false);
-		}
+		Textual.scrollToBottomOfView(false);
 	}
 }
 
