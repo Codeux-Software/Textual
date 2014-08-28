@@ -280,6 +280,11 @@
 	return [TPCPreferences invertSidebarColors];
 }
 
+- (void)scrollToBottomOfView
+{
+	[self.logController moveToBottom];
+}
+
 - (BOOL)styleSettingsSetValue:(NSArray *)arguments
 {
 	id objectKey = nil;
