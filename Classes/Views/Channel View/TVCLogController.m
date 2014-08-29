@@ -518,21 +518,19 @@
 	DOMDocument *doc = [self mainFrameDocument];
 	PointerIsEmptyAssert(doc);
 
-	[self performBlockAndScrollAfterwards:^{
-		DOMElement *e = [doc getElementById:@"mark"];
+	DOMElement *e = [doc getElementById:@"mark"];
 
-		while (e) {
-			[[e parentNode] removeChild:e];
+	while (e) {
+		[[e parentNode] removeChild:e];
 
-			e = [doc getElementById:@"mark"];
-		}
+		e = [doc getElementById:@"mark"];
+	}
 
-		NSString *html = [TVCLogRenderer renderTemplate:@"historyIndicator"];
+	NSString *html = [TVCLogRenderer renderTemplate:@"historyIndicator"];
 
-		[self appendToDocumentBody:html];
-		
-		[self executeQuickScriptCommand:@"historyIndicatorAddedToView" withArguments:@[]];
-	}];
+	[self appendToDocumentBody:html];
+	
+	[self executeQuickScriptCommand:@"historyIndicatorAddedToView" withArguments:@[]];
 }
 
 - (void)unmark
@@ -542,17 +540,15 @@
 	DOMDocument *doc = [self mainFrameDocument];
 	PointerIsEmptyAssert(doc);
 
-	[self performBlockAndScrollAfterwards:^{
-		DOMElement *e = [doc getElementById:@"mark"];
+	DOMElement *e = [doc getElementById:@"mark"];
 
-		while (e) {
-			[[e parentNode] removeChild:e];
+	while (e) {
+		[[e parentNode] removeChild:e];
 
-			e = [doc getElementById:@"mark"];
-		}
+		e = [doc getElementById:@"mark"];
+	}
 
-		[self executeQuickScriptCommand:@"historyIndicatorRemovedFromView" withArguments:@[]];
-	}];
+	[self executeQuickScriptCommand:@"historyIndicatorRemovedFromView" withArguments:@[]];
 }
 
 - (void)goToMark
@@ -671,9 +667,7 @@
 - (void)reloadHistoryCompletionBlock:(NSArray *)objects
 {
 	if ([self viewIsEncrypted] == NO) {
-		[self performBlockAndScrollAfterwards:^{
-			[self reloadOldLines:YES withOldLines:objects];
-		}];
+		[self reloadOldLines:YES withOldLines:objects];
 	}
 
 	self.reloadingHistory = NO;
@@ -704,9 +698,7 @@
 - (void)reloadThemeCompletionBlock:(NSArray *)objects
 {
 	if ([self viewIsEncrypted] == NO) {
-		[self performBlockAndScrollAfterwards:^{
-			[self reloadOldLines:NO withOldLines:objects];
-		}];
+		[self reloadOldLines:NO withOldLines:objects];
 	}
 
 	self.reloadingBacklog = NO;
@@ -761,22 +753,13 @@
 
 - (void)changeTextSize:(BOOL)bigger
 {
-	[self performBlockAndScrollAfterwards:^{
-		if (bigger) {
-			[self.webView makeTextLarger:nil];
-		} else {
-			[self.webView makeTextSmaller:nil];
-		}
+	if (bigger) {
+		[self.webView makeTextLarger:nil];
+	} else {
+		[self.webView makeTextSmaller:nil];
+	}
 
-		[self executeQuickScriptCommand:@"viewFontSizeChanged" withArguments:@[@(bigger)]];
-	}];
-}
-
-- (void)performBlockAndScrollAfterwards:(TXEmtpyBlockDataType)block
-{
-	block();
-
-	[self executeQuickScriptCommand:@"maybeMovePositionBackToBottomOfView" withArguments:@[]];
+	[self executeQuickScriptCommand:@"viewFontSizeChanged" withArguments:@[@(bigger)]];
 }
 
 #pragma mark -
@@ -896,11 +879,9 @@
 	n = (nodeList.length - self.maximumLineCount);
 
 	/* Remove old lines. */
-	[self performBlockAndScrollAfterwards:^{
-		for (NSInteger i = (n - 1); i >= 0; --i) {
-			[body removeChild:[nodeList item:(unsigned)i]];
-		}
-	}];
+	for (NSInteger i = (n - 1); i >= 0; --i) {
+		[body removeChild:[nodeList item:(unsigned)i]];
+	}
 
 	self.activeLineCount -= n;
 
@@ -1026,9 +1007,7 @@
 				}
 
 				/* Do the actual append to WebKit. */
-				[self performBlockAndScrollAfterwards:^{
-					[self appendToDocumentBody:html];
-				}];
+				[self appendToDocumentBody:html];
 
 				/* Inform the style of the new append. */
 				[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
