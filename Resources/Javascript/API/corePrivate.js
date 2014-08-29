@@ -86,28 +86,6 @@ Textual.fadeOutLoadingScreen = function(bodyOp, topicOp)
 };
 
 /* Scrolling. */
-Textual.scrollToElementWithID = function(elementID)
-{
-	var choiceElement = document.getElementById(elementID);
-
-	if (choiceElement) {
-		choiceElement.scrollIntoView(false);
-	}
-};
-
-Textual.scrollToTopOfView = function(fireNotification)
-{
-	var documentBody = document.getElementById("body_home");
-
-	documentBody.scrollTop = 0;
-
-	if (fireNotification === undefined || fireNotification === true) {
-		Textual.viewPositionMovedToTop();
-	}
-
-	Textual.scrollPositionIsPositionedAtBottomOfView = false;
-};
-
 Textual.scrollToBottomOfView = function(fireNotification)
 {
 	var documentBody = document.getElementById("body_home");
