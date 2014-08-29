@@ -86,6 +86,28 @@ Textual.fadeOutLoadingScreen = function(bodyOp, topicOp)
 };
 
 /* Scrolling. */
+Textual.scrollToElementWithID = function(elementID)
+{
+	var choiceElement = document.getElementById(elementID);
+
+	if (choiceElement) {
+		choiceElement.scrollIntoView(false);
+	}
+};
+
+Textual.scrollToTopOfView = function(fireNotification)
+{
+	var documentBody = document.getElementById("body_home");
+
+	documentBody.scrollTop = 0;
+
+	if (fireNotification === undefined || fireNotification === true) {
+		Textual.viewPositionMovedToTop();
+	}
+
+	Textual.scrollPositionIsPositionedAtBottomOfView = false;
+};
+
 Textual.scrollToBottomOfView = function(fireNotification)
 {
 	var documentBody = document.getElementById("body_home");
@@ -95,6 +117,8 @@ Textual.scrollToBottomOfView = function(fireNotification)
 	if (fireNotification === undefined || fireNotification === true) {
 		Textual.viewPositionMovedToBottom();
 	}
+
+	Textual.scrollPositionIsPositionedAtBottomOfView = true;
 };
 
 Textual.setupInternalScrollEventListener = function()
@@ -104,8 +128,6 @@ Textual.setupInternalScrollEventListener = function()
 	documentBody.addEventListener("scroll", function() {
 		if (Textual.lastScrollingEventWasAutomated) {
 			Textual.lastScrollingEventWasAutomated = false;
-								  
-			Textual.scrollPositionIsPositionedAtBottomOfView = true;
 		} else {
 			if (this.scrollTop < (this.scrollHeight - this.offsetHeight)) {
 				Textual.scrollPositionIsPositionedAtBottomOfView = false;
@@ -114,7 +136,7 @@ Textual.setupInternalScrollEventListener = function()
 			}
 		}
 	}, false);
-}
+};
 
 Textual.maybeMovePositionBackToBottomOfView = function()
 {
@@ -123,7 +145,7 @@ Textual.maybeMovePositionBackToBottomOfView = function()
 
 		Textual.scrollToBottomOfView(false);
 	}
-}
+};
 
 /* Resource management. */
 Textual.includeStyleResourceFile = function(file)
