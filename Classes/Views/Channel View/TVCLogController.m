@@ -780,20 +780,10 @@
 
 - (void)performBlockAndScrollAfterwards:(TXEmtpyBlockDataType)block
 {
-	/* Performs a block and scrolls to the view back to the bottom if it
-	 was there before the block was performed. */
-	/* This only occurs if we are the focused view. When we are not, then
-	 when we become focused, a call to moveToBottom is automatically called. */
+	block();
+
 	if ([mainWindow() selectedViewController] == self) {
-		BOOL isViewingBottom = [self viewingBottom];
-
-		block();
-
-		if (isViewingBottom) {
-			[self moveToBottom];
-		}
-	} else {
-		block();
+		[self executeQuickScriptCommand:@"maybeMovePositionBackToBottomOfView" withArguments:@[]];
 	}
 }
 
