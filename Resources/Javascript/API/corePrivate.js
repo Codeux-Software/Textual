@@ -315,17 +315,13 @@ Textual.didToggleInlineImageToHidden = function(imageElement)
 
 Textual.didToggleInlineImageToVisible = function(imageElement)
 {
+	/* Start monitoring events for this image. */
 	if (Textual.hasLiveResize()) {
 		var realImageElement = imageElement.querySelector("a .image");
 
-		/* Scroll to bottom once image is loaded. */
-		realImageElement.onload = function() {
-			Textual.maybeMovePositionBackToBottomOfView();
-		}
-
-		/* Start monitoring events for this image. */
-		realImageElement.onmousedown = function() {
-			InlineImageLiveResize.onMouseDown();
-		}
+		realImageElement.addEventListener("mousedown", InlineImageLiveResize.onMouseDown, false);
 	}
+		
+	/* Scroll to bottom once image is loaded. */
+	realImageElement.addEventListener("load", Textual.maybeMovePositionBackToBottomOfView, false);	
 };
