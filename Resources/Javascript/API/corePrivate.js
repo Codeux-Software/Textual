@@ -127,8 +127,6 @@ Textual.setupInternalScrollEventListener = function()
 	/* Setup intial state. */
 	var documentBody = document.getElementById("body_home");
 
-	Textual.scrollEventsArePausedForView = (Textual.currentViewIsVisible() === false);
-
 	/* Add monitor for user invoked scroll events. */
 	documentBody.addEventListener("scroll", function() {
 		if (Textual.scrollEventsArePausedForView === false) {
@@ -146,6 +144,8 @@ Textual.setupInternalScrollEventListener = function()
 
 	/* Add monitor for when our view becomes occluded. */
 	document.hidden = (document.hidden || document.webkitHidden);
+
+	Textual.scrollEventsArePausedForView = (Textual.currentViewIsVisible() === false);
 
 	document.addEventListener("visibilitychange", Textual.currentViewVisibilityDidChange, false);
 	document.addEventListener("webkitvisibilitychange", Textual.currentViewVisibilityDidChange, false);
