@@ -461,32 +461,12 @@
 
 - (void)moveToTop
 {
-	NSAssertReturn(self.isLoaded);
-
-	DOMDocument *doc = [self mainFrameDocument];
-	PointerIsEmptyAssert(doc);
-
-	DOMElement *body = [doc getElementById:@"body_home"];
-	PointerIsEmptyAssert(body);
-
-	[body setScrollTop:0];
-
-	[self executeQuickScriptCommand:@"viewPositionMovedToTop" withArguments:@[]];
+	[self executeQuickScriptCommand:@"scrollToTopOfView" withArguments:@[@(YES)]];
 }
 
 - (void)moveToBottom
 {
-	NSAssertReturn(self.isLoaded);
-
-	DOMDocument *doc = [self mainFrameDocument];
-	PointerIsEmptyAssert(doc);
-
-	DOMElement *body = [doc getElementById:@"body_home"];
-	PointerIsEmptyAssert(body);
-
-	[body setScrollTop:[body scrollHeight]];
-
-	[self executeQuickScriptCommand:@"viewPositionMovedToBottom" withArguments:@[]];
+	[self executeQuickScriptCommand:@"scrollToBottomOfView" withArguments:@[@(YES)]];
 }
 
 - (BOOL)viewingBottom
@@ -730,30 +710,7 @@
 
 - (BOOL)jumpToElementID:(NSString *)elementID
 {
-	NSAssertReturnR(self.isLoaded, NO);
-
-	DOMDocument *doc = [self mainFrameDocument];
-	PointerIsEmptyAssertReturn(doc, NO);
-
-	DOMElement *body = [doc getElementById:@"body_home"];
-	PointerIsEmptyAssertReturn(body, NO);
-	
-	DOMElement *e = [doc getElementById:elementID];
-	PointerIsEmptyAssertReturn(e, NO);
-
-	NSInteger y = 0;
-
-	DOMElement *t = e;
-
-	while (t) {
-		if ([t isKindOfClass:[DOMElement class]]) {
-			y += [t offsetTop];
-		}
-
-		t = (id)[t parentNode];
-	}
-
-	[body setScrollTop:(int)(y -  [self scrollbackCorrectionInit])];
+	[self executeQuickScriptCommand:@"scrollToElementWithID" withArguments:@[elementID]];
 
 	return YES;
 }
