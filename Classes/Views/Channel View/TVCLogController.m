@@ -671,10 +671,8 @@
 - (void)reloadHistoryCompletionBlock:(NSArray *)objects
 {
 	if ([self viewIsEncrypted] == NO) {
-		[self reloadOldLines:YES withOldLines:objects];
-
-		[self performBlockOnMainThread:^{
-			[self moveToBottom];
+		[self performBlockAndScrollAfterwards:^{
+			[self reloadOldLines:YES withOldLines:objects];
 		}];
 	}
 
@@ -706,10 +704,8 @@
 - (void)reloadThemeCompletionBlock:(NSArray *)objects
 {
 	if ([self viewIsEncrypted] == NO) {
-		[self reloadOldLines:NO withOldLines:objects];
-		
-		[self performBlockOnMainThread:^{
-			[self moveToBottom];
+		[self performBlockAndScrollAfterwards:^{
+			[self reloadOldLines:NO withOldLines:objects];
 		}];
 	}
 
@@ -760,8 +756,6 @@
 
 - (void)notifyDidBecomeVisible /* When the view is switched to. */
 {
-	[self moveToBottom];
-
 	[self.webView clearSelection];
 }
 
@@ -782,9 +776,7 @@
 {
 	block();
 
-	if ([mainWindow() selectedViewController] == self) {
-		[self executeQuickScriptCommand:@"maybeMovePositionBackToBottomOfView" withArguments:@[]];
-	}
+	[self executeQuickScriptCommand:@"maybeMovePositionBackToBottomOfView" withArguments:@[]];
 }
 
 #pragma mark -
