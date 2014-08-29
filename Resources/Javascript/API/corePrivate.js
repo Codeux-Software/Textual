@@ -46,6 +46,7 @@
 /* Internal state. */
 Textual.nicknameDoubleClickTimer = null;
 
+Textual.scrollEventsArePausedForView = false;
 Textual.scrollPositionIsPositionedAtBottomOfView = true;
 Textual.lastScrollingEventWasAutomated = false;
 
@@ -99,29 +100,76 @@ Textual.scrollToBottomOfView = function(fireNotification)
 	Textual.scrollPositionIsPositionedAtBottomOfView = true;
 };
 
+Textual.currentViewIsVisible = function()
+{
+	if (document.hidden) {
+		return false;
+	} else {
+		return true;
+	}
+}
+
+Textual.currentViewVisibilityDidChange = function()
+{
+	if (Textual.currentViewIsVisible()) {
+		if (Textual.scrollEventsArePausedForView) {
+			Textual.scrollEventsArePausedForView = false;
+
+			Textual.maybeMovePositionBackToBottomOfView();
+		}
+	} else {
+		Textual.scrollEventsArePausedForView = true;
+	}
+}
+
 Textual.setupInternalScrollEventListener = function()
 {
+	/* Setup intial state. */
 	var documentBody = document.getElementById("body_home");
 
+	Textual.scrollEventsArePausedForView = (Textual.currentViewIsVisible() === false);
+
+	/* Add monitor for user invoked scroll events. */
 	documentBody.addEventListener("scroll", function() {
-		if (Textual.lastScrollingEventWasAutomated) {
-			Textual.lastScrollingEventWasAutomated = false;
-		} else {
-			if (this.scrollTop < (this.scrollHeight - this.offsetHeight)) {
-				Textual.scrollPositionIsPositionedAtBottomOfView = false;
+		if (Textual.scrollEventsArePausedForView === false) {
+			if (Textual.lastScrollingEventWasAutomated) {
+				Textual.lastScrollingEventWasAutomated = false;
 			} else {
-				Textual.scrollPositionIsPositionedAtBottomOfView = true;
+				if (this.scrollTop < (this.scrollHeight - this.offsetHeight)) {
+					Textual.scrollPositionIsPositionedAtBottomOfView = false;
+				} else {
+					Textual.scrollPositionIsPositionedAtBottomOfView = true;
+				}
 			}
 		}
 	}, false);
+
+	/* Add monitor for when our view becomes occluded. */
+	document.hidden = (document.hidden || document.webkitHidden);
+
+	document.addEventListener("visibilitychange", Textual.currentViewVisibilityDidChange, false);
+	document.addEventListener("webkitvisibilitychange", Textual.currentViewVisibilityDidChange, false);
+
+	/* Add monitor for when our view mutates. */
+	window.MutationObserver = (window.MutationObserver || window.WebKitMutationObserver);
+
+	var observer = new MutationObserver(function(mutations) {
+		Textual.maybeMovePositionBackToBottomOfView();
+	});
+
+	var config = { attributes: true, subtree: true, childList: true, characterData: true };
+	
+	observer.observe(documentBody, config);
 };
 
 Textual.maybeMovePositionBackToBottomOfView = function()
 {
-	if (Textual.scrollPositionIsPositionedAtBottomOfView) {
-		Textual.lastScrollingEventWasAutomated = true;
-
-		Textual.scrollToBottomOfView(false);
+	if (Textual.scrollEventsArePausedForView === false) {
+		if (Textual.scrollPositionIsPositionedAtBottomOfView) {
+			Textual.lastScrollingEventWasAutomated = true;
+	
+			Textual.scrollToBottomOfView(false);
+		}
 	}
 };
 
@@ -270,10 +318,12 @@ Textual.didToggleInlineImageToVisible = function(imageElement)
 	if (Textual.hasLiveResize()) {
 		var realImageElement = imageElement.querySelector("a .image");
 
+		/* Scroll to bottom once image is loaded. */
 		realImageElement.onload = function() {
 			Textual.maybeMovePositionBackToBottomOfView();
 		}
 
+		/* Start monitoring events for this image. */
 		realImageElement.onmousedown = function() {
 			InlineImageLiveResize.onMouseDown();
 		}
