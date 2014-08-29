@@ -462,9 +462,6 @@
 - (void)moveToTop
 {
 	NSAssertReturn(self.isLoaded);
-	
-	NSAssertReturn(self.reloadingBacklog == NO);
-	NSAssertReturn(self.reloadingHistory == NO);
 
 	DOMDocument *doc = [self mainFrameDocument];
 	PointerIsEmptyAssert(doc);
@@ -480,9 +477,6 @@
 - (void)moveToBottom
 {
 	NSAssertReturn(self.isLoaded);
-
-	NSAssertReturn(self.reloadingBacklog == NO);
-	NSAssertReturn(self.reloadingHistory == NO);
 
 	DOMDocument *doc = [self mainFrameDocument];
 	PointerIsEmptyAssert(doc);
