@@ -1540,7 +1540,6 @@
 	[[self printingQueue] updateReadinessState:self];
 	
 	[self setUpScroller];
-	[self moveToBottom];
 }
 
 - (void)postViwLoadedJavaScript
