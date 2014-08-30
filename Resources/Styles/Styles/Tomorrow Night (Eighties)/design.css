@@ -17,6 +17,7 @@ body {
 	height: 100%;
 	z-index: 100;
 	font-size: 12px;
+	overflow-x: hidden;
 	background-color: #2D2D2D; /* Tomorrow Night Eighties: Background */
 	font-family: "EspressoMono-Regular", "Menlo";
 }
