@@ -275,6 +275,11 @@
 	return [TPCPreferences invertSidebarColors];
 }
 
+- (BOOL)viewIsFrontmost
+{
+	return ([mainWindow() selectedViewController] == [self logController]);
+}
+
 - (BOOL)styleSettingsSetValue:(NSArray *)arguments
 {
 	id objectKey = nil;
