@@ -186,18 +186,8 @@ Textual.setupInternalScrollEventListener = function()
 		}
 	}, false);
 
-	/* Add monitor for when our view becomes occluded. */
-	if (typeof document.visibilityState === "undefined") {
-		console.log("Warning: This version of WebKit does not support visiblity checks.");
-	} else {
-		/* One of two of these will fire depending on whether we are on Yosemite or Mavericks. Mountain 
-		 Lion does not support visiblity state changes so we just pretend like we are always visible. */
-		document.addEventListener("visibilitychange", Textual.currentViewVisibilityDidChange, false);
-		document.addEventListener("webkitvisibilitychange", Textual.currentViewVisibilityDidChange, false);
-
-		/* Default state information for this view. */
-		Textual.scrollEventsArePausedForView = (Textual.currentViewIsVisible() === false);
-	}
+	/* Setup inital state of variable. */
+	Textual.scrollEventsArePausedForView = (Textual.currentViewIsVisible() === false);
 
 	/* Add monitor for when our view mutates. */
 	window.MutationObserver = (window.MutationObserver || window.WebKitMutationObserver);

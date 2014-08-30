@@ -751,6 +751,11 @@
 	[self.webView clearSelection];
 }
 
+- (void)notifyVisibilityStateDidChange
+{
+	[self executeQuickScriptCommand:@"currentViewVisibilityDidChange" withArguments:@[]];
+}
+
 - (void)changeTextSize:(BOOL)bigger
 {
 	if (bigger) {

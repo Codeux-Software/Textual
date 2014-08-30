@@ -53,6 +53,7 @@
 
 - (void)setUp;
 - (void)notifyDidBecomeVisible;
+- (void)notifyVisibilityStateDidChange;
 
 - (void)channelLevelEncryptionChanged;
 - (void)preferencesChanged;
