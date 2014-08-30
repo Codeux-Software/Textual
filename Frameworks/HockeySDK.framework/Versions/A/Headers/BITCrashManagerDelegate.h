@@ -25,8 +25,6 @@
 
 #import <Foundation/Foundation.h>
 
-@class BITHockeyAttachment;
-
 /**
  * The `BITCrashManagerDelegate` formal protocol defines methods further configuring
  * the behaviour of `BITCrashManager`.
@@ -36,14 +34,11 @@
 @optional
 
 /**
- * Not used any longer!
- *
- * In previous SDK versions this invoked once the user interface asking for crash details and if the data should be send is dismissed
+ *  Invoked once the user interface asking for crash details and if the data should be send is dismissed
  *
  * @param crashManager The `BITCrashManager` instance invoking the method
- * @deprecated The default crash report UI is not shown modal any longer, so this delegate is not being used any more!
  */
-- (void) showMainApplicationWindowForCrashManager:(BITCrashManager *)crashManager __attribute__((deprecated("The default crash report UI is not shown modal any longer, so this delegate is not being used any more!")));
+- (void) showMainApplicationWindowForCrashManager:(BITCrashManager *)crashManager;
 
 ///-----------------------------------------------------------------------------
 /// @name Additional meta data
@@ -54,29 +49,6 @@
  * @param crashManager The `BITCrashManager` instance invoking this delegate
  */
 -(NSString *)applicationLogForCrashManager:(BITCrashManager *)crashManager;
-
-/** Return a BITHockeyAttachment object providing an NSData object the crash report
- being processed should contain
- 
- Please limit your attachments to reasonable files to avoid high traffic costs for your users.
- 
- Example implementation:
- 
-     - (BITHockeyAttachment *)attachmentForCrashManager:(BITCrashManager *)crashManager {
-       NSData *data = [NSData dataWithContentsOfURL:@"mydatafile"];
- 
-       BITHockeyAttachment *attachment = [[BITHockeyAttachment alloc] initWithFilename:@"myfile.data"
-                                                                  hockeyAttachmentData:data
-                                                                          contentType:@"'application/octet-stream"];
-       return attachment;
-     }
- 
- @param crashManager The `BITCrashManager` instance invoking this delegate
- @see applicationLogForCrashManager:
- @see userNameForCrashManager:
- @see userEmailForCrashManager:
- */
--(BITHockeyAttachment *)attachmentForCrashManager:(BITCrashManager *)crashManager;
 
 ///-----------------------------------------------------------------------------
 /// @name Alert

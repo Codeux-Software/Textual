@@ -39,23 +39,11 @@
 #define BITHockeyFeedbackMessagesLoadingFinished @"BITHockeyFeedbackMessagesLoadingFinished"
 
 
-/**
- *  Defines behavior of the user data field
- */
-typedef NS_ENUM(NSInteger, BITFeedbackUserDataElement) {
-  /**
-   *  don't ask for this user data element at all
-   */
-  BITFeedbackUserDataElementDontShow = 0,
-  /**
-   *  the user may provide it, but does not have to
-   */
-  BITFeedbackUserDataElementOptional = 1,
-  /**
-   *  the user has to provide this to continue
-   */
-  BITFeedbackUserDataElementRequired = 2
-};
+typedef enum {
+  BITFeedbackUserDataElementDontShow = 0, // don't ask for this user data element at all
+  BITFeedbackUserDataElementOptional = 1, // the user may provide it, but does not have to
+  BITFeedbackUserDataElementRequired = 2 // the user has to provide this to continue
+} BITFeedbackUserDataElement;
 
 
 @class BITFeedbackMessage;
@@ -92,7 +80,33 @@ typedef NS_ENUM(NSInteger, BITFeedbackUserDataElement) {
  feedback message.
  */
 
-@interface BITFeedbackManager : BITHockeyBaseManager
+@interface BITFeedbackManager : BITHockeyBaseManager {
+@private
+  NSFileManager  *_fileManager;
+  NSString       *_feedbackDir;
+  NSString       *_settingsFile;
+  
+  NSMutableArray *_feedbackList;
+  NSString *_token;
+  
+  BOOL _disableFeedbackManager;
+  BOOL _didAskUserData;
+  
+  BITFeedbackUserDataElement _requireUserName;
+  BITFeedbackUserDataElement _requireUserEmail;
+  BOOL _showAlertOnIncomingMessages;
+  
+  NSDate *_lastCheck;
+  NSNumber *_lastMessageID;
+  
+  NSDate *_lastRefreshDate;
+  
+  BITFeedbackWindowController *_feedbackWindowController;
+  
+  BOOL _didSetupDidBecomeActiveNotifications;
+  BOOL _networkRequestInProgress;
+}
+
 
 ///-----------------------------------------------------------------------------
 /// @name General settings
