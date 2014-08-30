@@ -110,20 +110,40 @@ Textual.currentViewIsVisible = function()
 	} else {
 		return false;
 	}
-}
+};
+
+Textual.viewIsRelativeToBottom = function()
+{
+	if (this.scrollTop < (this.scrollHeight - this.offsetHeight)) {
+		return false;
+	} else {
+		return true;
+	}
+};
 
 Textual.currentViewVisibilityDidChange = function()
 {
 	if (Textual.currentViewIsVisible()) {
 		if (Textual.scrollEventsArePausedForView) {
+			/* Scroll to bottom of view if user is there. */
 			Textual.scrollEventsArePausedForView = false;
 
 			Textual.maybeMovePositionBackToBottomOfView();
+
+			/* Sometimes are view does not always scroll to the bottom when 
+			 we ask it to. Therefore, when our view state changes, we invoke
+			 a timer which will fire slightly after the first attempt to scroll
+			 to the bottom in an effort to actually do it. */
+			setTimeout(function() {
+				if (Textual.viewIsRelativeToBottom() === false) {
+					Textual.maybeMovePositionBackToBottomOfView();
+				}
+			}, 1000); // 1 second
 		}
 	} else {
 		Textual.scrollEventsArePausedForView = true;
 	}
-}
+};
 
 Textual.setupInternalScrollEventListener = function()
 {
@@ -135,7 +155,7 @@ Textual.setupInternalScrollEventListener = function()
 			if (Textual.lastScrollingEventWasAutomated) {
 				Textual.lastScrollingEventWasAutomated = false;
 			} else {
-				if (this.scrollTop < (this.scrollHeight - this.offsetHeight)) {
+				if (Textual.viewIsRelativeToBottom() === false) {
 					Textual.scrollPositionIsPositionedAtBottomOfView = false;
 				} else {
 					Textual.scrollPositionIsPositionedAtBottomOfView = true;
