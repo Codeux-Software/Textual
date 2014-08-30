@@ -160,7 +160,7 @@ Textual.currentViewVisibilityDidChange = function()
 				if (Textual.viewIsRelativeToBottom() === false) {
 					Textual.maybeMovePositionBackToBottomOfView();
 				}
-			}, 1500); // 1.5 second
+			}, 100); // 0.1 second
 		}
 	} else {
 		Textual.scrollEventsArePausedForView = true;
