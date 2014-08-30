@@ -89,23 +89,43 @@ Textual.fadeOutLoadingScreen = function(bodyOp, topicOp)
 /* Scrolling. */
 Textual.scrollToBottomOfView = function(fireNotification)
 {
-	var documentBody = document.getElementById("body_home");
+	/* It is important to check whether we are already at the
+	   bottom or not before trying to scroll because if we are
+	   actually already there and try to scroll, then the flag
+	   Textual.lastScrollingEventWasAutomated is never reset. */
+	/* A good thing about this design is that the function call 
+	   Textual.viewIsRelativeToBottom() will always return true
+	   until we have a scroller which means it elminates some
+	   unnecessary scrolling events at beginning of views. */
+	if (Textual.viewIsRelativeToBottom() === false) {
+		Textual.lastScrollingEventWasAutomated = true;
 
-	documentBody.scrollTop = documentBody.scrollHeight;
-
-	if (fireNotification === undefined || fireNotification === true) {
-		Textual.viewPositionMovedToBottom();
+		var documentBody = document.getElementById("body_home");
+	
+		documentBody.scrollTop = documentBody.scrollHeight;
+	
+		if (fireNotification === undefined || fireNotification === true) {
+			Textual.viewPositionMovedToBottom();
+		}
+	
+		Textual.scrollPositionIsPositionedAtBottomOfView = true;
 	}
-
-	Textual.scrollPositionIsPositionedAtBottomOfView = true;
 };
 
 Textual.currentViewIsVisible = function()
 {
-	/* We ask the internals of Textual wether this is the
-	 frontmost view (visible). We only rely on visiblity
-	 state events to bring us to this point. */
 	if (app.viewIsFrontmost()) {
+		return true;
+	} else {
+		return false;
+	}
+};
+
+Textual.viewHasVerticalScroller = function()
+{
+	var documentBody = document.getElementById("body_home");
+
+	if (documentBody.scrollHeight > documentBody.clientHeight) {
 		return true;
 	} else {
 		return false;
@@ -114,7 +134,9 @@ Textual.currentViewIsVisible = function()
 
 Textual.viewIsRelativeToBottom = function()
 {
-	if (this.scrollTop < (this.scrollHeight - this.offsetHeight)) {
+	var documentBody = document.getElementById("body_home");
+
+	if (documentBody.scrollTop < (documentBody.scrollHeight - documentBody.offsetHeight)) {
 		return false;
 	} else {
 		return true;
@@ -138,7 +160,7 @@ Textual.currentViewVisibilityDidChange = function()
 				if (Textual.viewIsRelativeToBottom() === false) {
 					Textual.maybeMovePositionBackToBottomOfView();
 				}
-			}, 1000); // 1 second
+			}, 1500); // 1.5 second
 		}
 	} else {
 		Textual.scrollEventsArePausedForView = true;
@@ -193,8 +215,6 @@ Textual.maybeMovePositionBackToBottomOfView = function()
 {
 	if (Textual.scrollEventsArePausedForView === false) {
 		if (Textual.scrollPositionIsPositionedAtBottomOfView) {
-			Textual.lastScrollingEventWasAutomated = true;
-	
 			Textual.scrollToBottomOfView(false);
 		}
 	}
