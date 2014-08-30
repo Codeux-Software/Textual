@@ -102,10 +102,10 @@ Textual.scrollToBottomOfView = function(fireNotification)
 
 Textual.currentViewIsVisible = function()
 {
-	if (document.hidden) {
-		return false;
-	} else {
+	if (document.visibilityState === "visible") {
 		return true;
+	} else {
+		return false;
 	}
 }
 
@@ -124,10 +124,9 @@ Textual.currentViewVisibilityDidChange = function()
 
 Textual.setupInternalScrollEventListener = function()
 {
-	/* Setup intial state. */
+	/* Add monitor for user invoked scroll events. */
 	var documentBody = document.getElementById("body_home");
 
-	/* Add monitor for user invoked scroll events. */
 	documentBody.addEventListener("scroll", function() {
 		if (Textual.scrollEventsArePausedForView === false) {
 			if (Textual.lastScrollingEventWasAutomated) {
@@ -143,12 +142,17 @@ Textual.setupInternalScrollEventListener = function()
 	}, false);
 
 	/* Add monitor for when our view becomes occluded. */
-	document.hidden = (document.hidden || document.webkitHidden);
+	if (typeof document.visibilityState === "undefined") {
+		console.log("Warning: This version of WebKit does not support visiblity checks.");
+	} else {
+		/* One of two of these will fire depending on whether we are on Yosemite or Mavericks. Mountain 
+		 Lion does not support visiblity state changes so we just pretend like we are always visible. */
+		document.addEventListener("visibilitychange", Textual.currentViewVisibilityDidChange, false);
+		document.addEventListener("webkitvisibilitychange", Textual.currentViewVisibilityDidChange, false);
 
-	Textual.scrollEventsArePausedForView = (Textual.currentViewIsVisible() === false);
-
-	document.addEventListener("visibilitychange", Textual.currentViewVisibilityDidChange, false);
-	document.addEventListener("webkitvisibilitychange", Textual.currentViewVisibilityDidChange, false);
+		/* Default state information for this view. */
+		Textual.scrollEventsArePausedForView = (Textual.currentViewIsVisible() === false);
+	}
 
 	/* Add monitor for when our view mutates. */
 	window.MutationObserver = (window.MutationObserver || window.WebKitMutationObserver);
