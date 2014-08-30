@@ -102,7 +102,10 @@ Textual.scrollToBottomOfView = function(fireNotification)
 
 Textual.currentViewIsVisible = function()
 {
-	if (document.visibilityState === "visible") {
+	/* We ask the internals of Textual wether this is the
+	 frontmost view (visible). We only rely on visiblity
+	 state events to bring us to this point. */
+	if (app.viewIsFrontmost()) {
 		return true;
 	} else {
 		return false;
