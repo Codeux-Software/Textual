@@ -12,6 +12,7 @@ body {
 	height: 100%;
  	z-index: 100;
 	font-size: 15pt;
+	overflow-x: hidden;
 	background-color: #242323;
 	font-family: "HelveticaNeue";
 }
