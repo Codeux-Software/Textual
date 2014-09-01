@@ -240,7 +240,9 @@ body div.line.selectedUser[highlight=false] {
 
 .historic
 {
-	opacity: 0.6;
+	font-weight: 200;
+	-webkit-filter: brightness(75%);
+	-webkit-filter: grayscale(90%);
 }
 
 /* NOTICE/CTCP/WALLOPS */
