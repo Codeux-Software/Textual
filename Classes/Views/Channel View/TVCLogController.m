@@ -46,7 +46,6 @@
 @property (nonatomic, assign) BOOL windowFrameObjectLoaded;
 @property (nonatomic, copy) NSString *lastVisitedHighlight;
 @property (nonatomic, strong) TVCLogScriptEventSink *webViewScriptSink;
-@property (nonatomic, strong) TVCWebViewAutoScroll *webViewAutoScroller;
 @property (nonatomic, strong) TVCLogControllerHistoricLogFile *historicLogFile;
 @property (nonatomic, assign) BOOL needsLimitNumberOfLines;
 @property (nonatomic, assign) NSInteger activeLineCount;
@@ -150,9 +149,7 @@
 	/* Create view. */
 	 self.webViewScriptSink = [TVCLogScriptEventSink new];
 	[self.webViewScriptSink setLogController:self];
-	
-	 self.webViewAutoScroller = [TVCWebViewAutoScroll new];
-	
+
 	 self.webView = [[TVCLogView alloc] initWithFrame:NSZeroRect];
 	
 	 self.webViewPolicy = [TVCLogPolicy new];
@@ -484,7 +481,7 @@
 	DOMElement *body = [doc getElementById:@"body_home"];
 	PointerIsEmptyAssert(body);
 
-	[(DOMElement *)[body lastChild] scrollIntoView:NO];
+	[(DOMElement *)[body lastChild] scrollIntoViewIfNeeded:YES];
 
 	[self executeQuickScriptCommand:@"viewPositionMovedToBottom" withArguments:@[]];
 }
@@ -729,28 +726,14 @@
 	DOMElement *e = [doc getElementById:elementID];
 	PointerIsEmptyAssertReturn(e, NO);
 
-	NSInteger y = 0;
-
-	DOMElement *t = e;
-
-	while (t) {
-		if ([t isKindOfClass:[DOMElement class]]) {
-			y += [t offsetTop];
-		}
-
-		t = (id)[t parentNode];
-	}
-
-	[body setScrollTop:(int)(y -  [self scrollbackCorrectionInit])];
+	[e scrollIntoViewIfNeeded:YES];
 
 	return YES;
 }
 
 - (void)notifyDidBecomeVisible /* When the view is switched to. */
 {
-	[self.webView clearSelection];
-
-	[self moveToBottom];
+	[self executeQuickScriptCommand:@"notifyDidBecomeVisible" withArguments:@[]];
 }
 
 - (void)changeTextSize:(BOOL)bigger
@@ -1419,34 +1402,6 @@
 }
 
 #pragma mark -
-
-- (void)setUpScroller
-{
-	WebFrameView *frame = [[self.webView mainFrame] frameView];
-	
-	PointerIsEmptyAssert(frame);
-	
-	[self.webViewAutoScroller setWebFrame:frame];
-
-	// ---- //
-
-	NSScrollView *scrollView = nil;
-
-	for (NSView *v in [frame subviews]) {
-		if ([v isKindOfClass:[NSScrollView class]]) {
-			scrollView = (NSScrollView *)v;
-
-			break;
-		}
-	}
-
-	PointerIsEmptyAssert(scrollView);
-
-	[scrollView setHasHorizontalScroller:NO];
-	[scrollView setHasVerticalScroller:NO];
-}
-
-#pragma mark -
 #pragma mark WebView Delegate
 
 /* Thanks to ePirat for this patch. It disables authentication dialogs for inline images. */
@@ -1501,8 +1456,6 @@
 	self.isLoaded = YES;
 
 	[[self printingQueue] updateReadinessState:self];
-	
-	[self setUpScroller];
 }
 
 - (void)postViwLoadedJavaScript

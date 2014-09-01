@@ -1564,9 +1564,6 @@
 	
 	/* Set content view to WebView. */
 	[self.channelViewBox setContentView:[log webView]];
-	
-	/* Allow selected WebView time to update. */
-	[log notifyDidBecomeVisible];
 
 	/* Prepare the member list for the selection. */
 	BOOL isClient = ([self.selectedItem isClient]);
@@ -1614,6 +1611,9 @@
 			[self.contentSplitView expandMemberList];
 		}
 	}
+
+	/* Allow selected WebView time to update. */
+	[log notifyDidBecomeVisible];
 	
 	/* Dimiss notification center. */
 	[sharedGrowlController() dismissNotificationsInNotificationCenterForClient:self.selectedClient channel:self.selectedChannel];
