@@ -484,7 +484,7 @@
 	DOMElement *body = [doc getElementById:@"body_home"];
 	PointerIsEmptyAssert(body);
 
-	[(DOMElement *)[body firstChild] scrollIntoView:YES];
+	[(DOMElement *)[body lastChild] scrollIntoView:YES];
 
 	[self executeQuickScriptCommand:@"viewPositionMovedToBottom" withArguments:@[]];
 }
