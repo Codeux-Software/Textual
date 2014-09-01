@@ -116,6 +116,17 @@ Textual.viewHasVerticalScroller = function()
 	}
 };
 
+Textual.viewIsRelativeToBottom = function()
+{
+	var documentBody = document.getElementById("body_home");
+
+	if (documentBody.scrollTop < (documentBody.scrollHeight - documentBody.offsetHeight)) {
+		return false;
+	} else {
+		return true;
+	}
+};
+
 Textual.setupInternalScrollEventListener = function()
 {
 	/* Add monitor for user invoked scroll events. */
@@ -152,6 +163,13 @@ Textual.maybeMovePositionBackToBottomOfView = function()
 			Textual.scrollToBottomOfView(false);
 		}
 	}
+};
+
+Textual.notifyDidBecomeVisible = function()
+{
+	window.getSelection().empty();
+
+	Textual.maybeMovePositionBackToBottomOfView();
 };
 
 /* Resource management. */

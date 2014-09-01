@@ -113,13 +113,12 @@
 
 			<div id="loading_screen">View is Loading…</div>
 
-			<div id="body_container">
-				<div id="body_home">{{! Filled at runtime. }}</div>
+				<div id="body_container">
+					{{#isChannelView}}
+						<div id="topic_bar" ondblclick="Textual.topicDoubleClicked()">{{{formattedTopicValue}}}</div>
+					{{/isChannelView}}
 
-				{{#isChannelView}}
-					<div id="topic_bar"
-					ondblclick="Textual.topicDoubleClicked()">{{{formattedTopicValue}}}</div>
-				{{/isChannelView}}
+				<div id="body_home">{{! Filled at runtime. }}</div>
 			</div>
 	</body>
 </html>
