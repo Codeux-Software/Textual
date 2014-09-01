@@ -469,7 +469,7 @@
 	DOMElement *body = [doc getElementById:@"body_home"];
 	PointerIsEmptyAssert(body);
 
-	[(DOMElement *)[body firstChild] scrollIntoView:NO];
+	[(DOMElement *)[body firstChild] scrollIntoView:YES];
 
 	[self executeQuickScriptCommand:@"viewPositionMovedToTop" withArguments:@[]];
 }
@@ -484,7 +484,7 @@
 	DOMElement *body = [doc getElementById:@"body_home"];
 	PointerIsEmptyAssert(body);
 
-	[(DOMElement *)[body lastChild] scrollIntoView:YES];
+	[(DOMElement *)[body lastChild] scrollIntoView:NO];
 
 	[self executeQuickScriptCommand:@"viewPositionMovedToBottom" withArguments:@[]];
 }
