@@ -1567,15 +1567,7 @@
 	
 	/* Allow selected WebView time to update. */
 	[log notifyDidBecomeVisible];
-	[log notifyVisibilityStateDidChange];
 
-	/* Get view of previous item and perform same operation. */
-	IRCTreeItem *oldSelection = self.previouslySelectedItem;
-
-	if (oldSelection) {
-		[[oldSelection viewController] notifyVisibilityStateDidChange];
-	}
-	
 	/* Prepare the member list for the selection. */
 	BOOL isClient = ([self.selectedItem isClient]);
 	BOOL isQuery = ([self.selectedItem isPrivateMessage]);

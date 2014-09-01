@@ -469,7 +469,7 @@
 	DOMElement *body = [doc getElementById:@"body_home"];
 	PointerIsEmptyAssert(body);
 
-	[body setScrollTop:0];
+	[(DOMElement *)[body firstChild] scrollIntoView:NO];
 
 	[self executeQuickScriptCommand:@"viewPositionMovedToTop" withArguments:@[]];
 }
@@ -484,7 +484,7 @@
 	DOMElement *body = [doc getElementById:@"body_home"];
 	PointerIsEmptyAssert(body);
 
-	[body setScrollTop:[body scrollHeight]];
+	[(DOMElement *)[body firstChild] scrollIntoView:YES];
 
 	[self executeQuickScriptCommand:@"viewPositionMovedToBottom" withArguments:@[]];
 }
@@ -749,11 +749,8 @@
 - (void)notifyDidBecomeVisible /* When the view is switched to. */
 {
 	[self.webView clearSelection];
-}
 
-- (void)notifyVisibilityStateDidChange
-{
-	[self executeQuickScriptCommand:@"currentViewVisibilityDidChange" withArguments:@[]];
+	[self moveToBottom];
 }
 
 - (void)changeTextSize:(BOOL)bigger
