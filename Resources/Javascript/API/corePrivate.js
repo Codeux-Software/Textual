@@ -46,7 +46,6 @@
 /* Internal state. */
 Textual.nicknameDoubleClickTimer = null;
 
-Textual.scrollEventsArePausedForView = false;
 Textual.scrollPositionIsPositionedAtBottomOfView = true;
 Textual.lastScrollingEventWasAutomated = false;
 
@@ -89,37 +88,16 @@ Textual.fadeOutLoadingScreen = function(bodyOp, topicOp)
 /* Scrolling. */
 Textual.scrollToBottomOfView = function(fireNotification)
 {
-	/* It is important to check whether we are already at the
-	   bottom or not before trying to scroll because if we are
-	   actually already there and try to scroll, then the flag
-	   Textual.lastScrollingEventWasAutomated is never reset. */
-	/* A good thing about this design is that the function call 
-	   Textual.viewIsRelativeToBottom() will always return true
-	   until we have a scroller which means it elminates some
-	   unnecessary scrolling events at beginning of views. */
-	if (Textual.viewIsRelativeToBottom() === false) {
-		Textual.lastScrollingEventWasAutomated = true;
+	Textual.lastScrollingEventWasAutomated = Textual.viewHasVerticalScroller();
 
-		var documentBody = document.getElementById("body_home");
+	var documentBody = document.getElementById("body_home");
 
-		var lastElement = documentBody.lastChild;
+	documentBody.lastChild.scrollIntoView(false); // Scroll into last child relative to bottom
 
-		lastElement.scrollIntoView(false); // Scroll into last child relative to bottom
+	Textual.scrollPositionIsPositionedAtBottomOfView = true;
 
-		Textual.scrollPositionIsPositionedAtBottomOfView = true;
-	
-		if (fireNotification === undefined || fireNotification === true) {
-			Textual.viewPositionMovedToBottom();
-		}
-	}
-};
-
-Textual.currentViewIsVisible = function()
-{
-	if (app.viewIsFrontmost()) {
-		return true;
-	} else {
-		return false;
+	if (fireNotification === undefined || fireNotification === true) {
+		Textual.viewPositionMovedToBottom();
 	}
 };
 
@@ -134,51 +112,22 @@ Textual.viewHasVerticalScroller = function()
 	}
 };
 
-Textual.viewIsRelativeToBottom = function()
-{
-	var documentBody = document.getElementById("body_home");
-
-	if (documentBody.scrollTop < (documentBody.scrollHeight - documentBody.offsetHeight)) {
-		return false;
-	} else {
-		return true;
-	}
-};
-
-Textual.currentViewVisibilityDidChange = function()
-{
-	if (Textual.currentViewIsVisible()) {
-		if (Textual.scrollEventsArePausedForView) {
-			Textual.scrollEventsArePausedForView = false;
-
-			Textual.maybeMovePositionBackToBottomOfView();
-		}
-	} else {
-		Textual.scrollEventsArePausedForView = true;
-	}
-};
-
 Textual.setupInternalScrollEventListener = function()
 {
 	/* Add monitor for user invoked scroll events. */
 	var documentBody = document.getElementById("body_home");
 
 	documentBody.addEventListener("scroll", function() {
-		if (Textual.scrollEventsArePausedForView === false) {
-			if (Textual.lastScrollingEventWasAutomated) {
-				Textual.lastScrollingEventWasAutomated = false;
+		if (Textual.lastScrollingEventWasAutomated) {
+			Textual.lastScrollingEventWasAutomated = false;
+		} else {
+			if (Textual.viewIsRelativeToBottom() === false) {
+				Textual.scrollPositionIsPositionedAtBottomOfView = false;
 			} else {
-				if (Textual.viewIsRelativeToBottom() === false) {
-					Textual.scrollPositionIsPositionedAtBottomOfView = false;
-				} else {
-					Textual.scrollPositionIsPositionedAtBottomOfView = true;
-				}
+				Textual.scrollPositionIsPositionedAtBottomOfView = true;
 			}
 		}
 	}, false);
-
-	/* Setup inital state of variable. */
-	Textual.scrollEventsArePausedForView = (Textual.currentViewIsVisible() === false);
 
 	/* Add monitor for when our view mutates. */
 	window.MutationObserver = (window.MutationObserver || window.WebKitMutationObserver);
@@ -194,7 +143,7 @@ Textual.setupInternalScrollEventListener = function()
 
 Textual.maybeMovePositionBackToBottomOfView = function()
 {
-	if (Textual.scrollEventsArePausedForView === false) {
+	if (app.viewIsFrontmost()) {
 		if (Textual.scrollPositionIsPositionedAtBottomOfView) {
 			Textual.scrollToBottomOfView(false);
 		}
