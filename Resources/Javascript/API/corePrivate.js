@@ -88,16 +88,20 @@ Textual.fadeOutLoadingScreen = function(bodyOp, topicOp)
 /* Scrolling. */
 Textual.scrollToBottomOfView = function(fireNotification)
 {
-	Textual.lastScrollingEventWasAutomated = Textual.viewHasVerticalScroller();
-
 	var documentBody = document.getElementById("body_home");
 
-	documentBody.lastChild.scrollIntoView(false); // Scroll into last child relative to bottom
+	var lastChild = documentBody.lastChild;
 
-	Textual.scrollPositionIsPositionedAtBottomOfView = true;
+	if (lastChild) {
+		Textual.lastScrollingEventWasAutomated = Textual.viewHasVerticalScroller();
 
-	if (fireNotification === undefined || fireNotification === true) {
-		Textual.viewPositionMovedToBottom();
+		lastChild.scrollIntoView(false); // Scroll into last child relative to bottom
+
+		Textual.scrollPositionIsPositionedAtBottomOfView = true;
+
+		if (fireNotification === undefined || fireNotification === true) {
+			Textual.viewPositionMovedToBottom();
+		}
 	}
 };
 
