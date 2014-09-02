@@ -931,22 +931,49 @@
 
 - (void)updateConnectionPage
 {
-	BOOL enabled = ([self.nicknameField valueIsValid]				&&
-					[self.awayNicknameField valueIsValid]			&&
-					[self.usernameField valueIsValid]				&&
-					[self.realnameField valueIsValid]				&&
-					[self.serverNameField valueIsValid]				&&
-					[self.serverAddressCombo valueIsValid]			&&
-					[self.serverPortField valueIsValid]				&&
-					[self.proxyAddressField valueIsValid]			&&
-					[self.proxyPortField valueIsValid]				&&
-					[self.normalLeavingCommentField valueIsValid]	&&
-					[self.sleepModeQuitMessageField valueIsValid]);
-	
-	[self.okButton setEnabled:enabled];
-	
-	[self.erroneousInputErrorImageView setHidden:enabled];
-	[self.erroneousInputErrorTextField setHidden:enabled];
+	/* This array is not saved as static because it would have to be cleared
+	 out anytime that the sheet closes. */
+	NSArray *fieldsToValidate = @[
+	   @{@"field" : self.nicknameField, @"errorLocalizationNumeric" : @"01"},
+	   @{@"field" : self.awayNicknameField, @"errorLocalizationNumeric" : @"02"},
+	   @{@"field" : self.usernameField, @"errorLocalizationNumeric" : @"03"},
+	   @{@"field" : self.realnameField, @"errorLocalizationNumeric" : @"04"},
+	   @{@"field" : self.serverNameField, @"errorLocalizationNumeric" : @"05"},
+	   @{@"field" : self.serverAddressCombo, @"errorLocalizationNumeric" : @"06"},
+	   @{@"field" : self.serverPortField, @"errorLocalizationNumeric" : @"07"},
+	   @{@"field" : self.proxyAddressField, @"errorLocalizationNumeric" : @"08"},
+	   @{@"field" : self.proxyPortField, @"errorLocalizationNumeric" : @"09"},
+	   @{@"field" : self.normalLeavingCommentField, @"errorLocalizationNumeric" : @"10"},
+	   @{@"field" : self.sleepModeQuitMessageField, @"errorLocalizationNumeric" : @"11"}
+	];
+
+	NSString *errorReason = nil;
+
+	for (NSDictionary *fieldToCheck in fieldsToValidate) {
+		id field = fieldToCheck[@"field"];
+
+		if ([field valueIsValid] == NO) {
+			errorReason = [NSString stringWithFormat:@"TDCServerSheet[1010][%@]", fieldToCheck[@"errorLocalizationNumeric"]];
+
+			break;
+		}
+	}
+
+	if (errorReason) {
+		[self.okButton setEnabled:NO];
+
+		[self.erroneousInputErrorImageView setHidden:NO];
+		[self.erroneousInputErrorTextField setHidden:NO];
+
+		[self.erroneousInputErrorTextField setStringValue:TXTLS(errorReason)];
+	} else {
+		[self.okButton setEnabled:YES];
+
+		[self.erroneousInputErrorImageView setHidden:YES];
+		[self.erroneousInputErrorTextField setHidden:YES];
+
+		[self.erroneousInputErrorTextField setStringValue:NSStringEmptyPlaceholder];
+	}
 }
 
 - (void)updateChannelsPage
