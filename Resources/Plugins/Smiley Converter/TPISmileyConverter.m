@@ -53,7 +53,9 @@
 - (void)pluginLoadedIntoMemory
 {
 	/* Load Interface. */
-	[TPIBundleFromClass() loadCustomNibNamed:@"TPISmileyConverter" owner:self topLevelObjects:nil];
+	[self performBlockOnMainThread:^{
+		[TPIBundleFromClass() loadCustomNibNamed:@"TPISmileyConverter" owner:self topLevelObjects:nil];
+	}];
 }
 
 - (id)userDefaultsValues
