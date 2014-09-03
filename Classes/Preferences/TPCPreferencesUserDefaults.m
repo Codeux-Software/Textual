@@ -74,21 +74,6 @@
 	return sharedSelf;
 }
 
-+ (NSUserDefaults *)accessbilityUserDefaults
-{
-	static id sharedSelf = nil;
-	
-	static dispatch_once_t onceToken;
-	
-	dispatch_once(&onceToken, ^{
-		 sharedSelf = [NSUserDefaults new];
-		
-		[sharedSelf addSuiteNamed:@"com.apple.universalaccess"];
-	});
-	
-	return sharedSelf;
-}
-
 - (NSDictionary *)dictionaryRepresentation
 {
 	/* Group container will take priority. */

@@ -39,17 +39,6 @@
 
 @implementation TXUserInterface
 
-+ (BOOL)userUsesReducedTransparencyOnYosemite
-{
-	id objectValue = [[TPCPreferencesUserDefaults accessbilityUserDefaults] objectForKey:@"reduceTransparency"];
-	
-	if (objectValue) {
-		return [objectValue boolValue];
-	} else {
-		return NO;
-	}
-}
-
 + (BOOL)runningInHighResolutionMode
 {
 	return [[[NSApp mainWindow] screen] runningInHighResolutionMode];

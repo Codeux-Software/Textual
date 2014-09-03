@@ -38,7 +38,5 @@
 #import "TextualApplication.h"
 
 @interface TXUserInterface : NSObject
-+ (BOOL)runningInHighResolutionMode;
-
 + (BOOL)userUsesReducedTransparencyOnYosemite;
 @end
