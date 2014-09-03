@@ -3,7 +3,6 @@
 * {
 	margin: 0;
 	padding: 0;
-	font-size: 100%;
 	-webkit-word-break: break-word;
 	word-wrap: break-word;
 	overflow: hidden;
@@ -14,7 +13,6 @@ body {
 	height: 100%;
  	z-index: 100;
 	font-size: 12px;
-	overflow-x: hidden;
 	background-color: #1d1d1d;
 	font-family: "Helvetica Neue";
     font-weight: 200;
@@ -28,7 +26,7 @@ p {
 	clear: both;
   }
 
-body div#body_container {
+body #body_container {
 	height: 100%;
 }
 
@@ -44,6 +42,7 @@ body div#body_container {
 	position: absolute;
 	opacity: 0; /* Set by JavaScript */
 	-webkit-transition: opacity 0.8s linear;
+	transition: opacity 0.8s linear;
 }
 
 #body_home {
@@ -62,6 +61,7 @@ body[dir=rtl] .senderContainer {
 /* Loading Screen */
 
 #loading_screen {
+	box-sizing: border-box;
 	position: fixed;
 	margin: auto;
 	top: 0; left: 0; right: 0; bottom: 0;
@@ -75,6 +75,8 @@ body[dir=rtl] .senderContainer {
 	padding-left: 10px;
 	opacity: 1; /* Set by JavaScript */
 	-webkit-transition: opacity 0.8s linear;
+	transition: opacity 0.8s linear;
+	transition: opacity 0.8s linear;
 }
 
 #loading_screen progress {
@@ -83,11 +85,12 @@ body[dir=rtl] .senderContainer {
 
 /* Time */
 body[dir=ltr] .time {
-    font-size: 10px !important;
+    font-size: 10px;
 	white-space: nowrap;
 	float: right;
 	color: #999;
 	-webkit-user-select: none;
+	user-select: none;
 	font-weight: bold;
 	margin-right: 10px;
 	line-height: 22px;
@@ -96,8 +99,6 @@ body[dir=ltr] .time {
 }
 
 /* Encryption Lock */
-.encryptionLock {
-}
 
 .encryptionLock img {
     z-index: 100;
@@ -131,7 +132,6 @@ a:hover {
 	top: 0;
 	left: 0;
 	right: 0;
-	top: 0;
 	padding-bottom: 5px;
 	opacity: 0; /* Set by JavaScript */
 	z-index: 400;
@@ -141,7 +141,9 @@ a:hover {
 	box-shadow: 0 1px 5px #777;
 	border-bottom: 1px solid #404040;
 	-webkit-transition: opacity 0.8s linear;
+	transition: opacity 0.8s linear;
 	text-shadow: 1px 1px rgba(10, 10, 10, 0.7);
+	background: #2b2b2b;
 	background: rgba(60, 60, 60, 0.91);
 }
 
@@ -178,7 +180,6 @@ body img {
 
 .inlineImageCell .image {
 	display: inline-block;
-	float: left;
 	margin: 15px 15px 12px 10px;
 	min-width: 100px;
 }
@@ -189,9 +190,9 @@ body img {
 	border-radius: 50%;
 	position: absolute;
 	box-sizing: border-box;
-	font-size: 20px !important;
-	font-family: "Helvetica Neue" !important;
-	font-weight: 100 !important;
+	font-size: 20px;
+	font-family: "Helvetica Neue";
+	font-weight: 100;
 	text-align: center;
 	line-height: 17px;
 	color: #fff;
@@ -211,12 +212,13 @@ div[id=mark] {
 	border-bottom: 1px solid;
 	border-color: #444;
 	-webkit-transition: 0.2s linear;
+	transition: 0.2s linear;
 }
 
 body[dir=ltr] div[ltype=action] .sender:before {
 	margin-right: 0.6em;
 	font-weight: bold;
-	font-size: 80% !important;
+	font-size: 80%;
 	content: "●";
 
 }
@@ -242,11 +244,12 @@ body div.line[ltype=wallops] {
 
 body div[ltype=ctcp] .senderContainer,
 body div[ltype=notice] .senderContainer {
+	box-sizing: border-box;
 	color: #f00;
 	font-weight: 700;
 	min-height:23px;
 	width: 134px;
-	padding-right:7px;
+	padding-right: 7px;
 	text-align:right;
 	display:inline-block;
 	overflow: auto;
@@ -269,6 +272,7 @@ body div.line[ltype=privmsg][highlight=false] {
 }
 
 body div[ltype=privmsg] .senderContainer {
+	box-sizing: border-box;
 	font-weight: 700;
 	min-height:23px;
 	width: 134px;
@@ -277,12 +281,17 @@ body div[ltype=privmsg] .senderContainer {
     background-color: #1d1d1d;
 	text-align:right;
 	display:inline-block;
-	overflow: auto;
+	overflow: hidden;
 	position: absolute;
 	top: 0;
 	bottom: 0;
 	left: 0;
 	text-overflow: ellipsis;
+}
+
+body .senderContainer .swrapper {
+	font-size: 0;
+	opacity: 0;
 }
 
 body div[ltype="privmsg"] .message {
@@ -291,28 +300,29 @@ body div[ltype="privmsg"] .message {
 }
 
 body div[ltype="privmsg"][encrypted="true"] {
-	background: repeating-linear-gradient(-45deg, rgba(79, 79, 79, 0.1), rgba(79, 79, 79, 0.1) 20px, rgba(68, 89, 63, 0.3) 20px, rgba(68, 89, 63, 0.3) 40px) !important;
+	background: repeating-linear-gradient(-45deg, rgba(79, 79, 79, 0.1), rgba(79, 79, 79, 0.1) 20px, rgba(68, 89, 63, 0.3) 20px, rgba(68, 89, 63, 0.3) 40px);
 }
 
 body div[ltype="privmsg"][encrypted="failed"] {
-	background: repeating-linear-gradient(-45deg, rgba(45, 6, 6, 0.2), rgba(45, 6, 6, 0.2) 20px, rgba(104, 15, 15, 0.2) 20px, rgba(104, 15, 15, 0.2) 40px) !important;
+	background: repeating-linear-gradient(-45deg, rgba(45, 6, 6, 0.2), rgba(45, 6, 6, 0.2) 20px, rgba(104, 15, 15, 0.2) 20px, rgba(104, 15, 15, 0.2) 40px);
 }
 
 body div[ltype="privmsg"][highlight=true][encrypted="true"] {
-	background: repeating-linear-gradient(-45deg, #3b5847, #3b5847 20px, rgba(68, 89, 63, 0.3) 20px, rgba(68, 89, 63, 0.3) 40px) !important;
+	background: repeating-linear-gradient(-45deg, #3b5847, #3b5847 20px, rgba(68, 89, 63, 0.3) 20px, rgba(68, 89, 63, 0.3) 40px);
 }
 
 body div[ltype=privmsg] p[ltype=myself] .message {
 	color: #fff;
 }
 
-body div[ltype=privmsg] p span.effect[color-number=1]:not([bgcolor-number]) {
+body div[ltype=privmsg] p .effect[color-number='1']:not([bgcolor-number])  {
 	color: #fff;	/* make black text with no bg white for readability */
 }
 
 /* ACTION */
 body div[ltype=action] .senderContainer {
 	position: absolute;
+	box-sizing: border-box;
 	top: 0;
 	bottom: 0;
 	left: 0;
@@ -334,7 +344,7 @@ body div.line[ltype=action] .message {
 }
 
 body div.line[ltype=action][highlight=true] .message {
-	color: #fff !important;
+	color: #fff;
 }
 
 /* DEBUG/INVITE */
@@ -357,7 +367,7 @@ body div.line[ltype=dccfiletransfer] .message,
 body div.line[ltype=rawhtml] .message ,
 body div.line[ltype=ctcp] .message {
 	text-indent: 0;
-    padding-left: 145px !important;
+    padding-left: 145px;
 }
 
 /* Message of the Day (MOTD) */
@@ -390,7 +400,7 @@ body div.line[command="376"] .message
 body div.line[command="720"] .message,
 body div.line[command="721"] .message,
 body div.line[command="722"] .message {
-	font-family: "Menlo" !important;
+	font-family: "Menlo";
 }
 
 /* GENERAL EVENT */
@@ -522,12 +532,12 @@ body div.line[ltype=action] .time:not(.selectedUser) {
     transition: color 0.5s;
 }
 
-body div.line.selectedUser[highlight=false] .time {
+body .line.selectedUser[highlight=false] .time {
     transition: color 0.5s ease-in;
 	color: #aaa;
 }
 
-body div.line.selectedUser[highlight=false] {
+body .line.selectedUser[highlight=false] {
     transition-property: background-color;
 	transition-duration: 0.5s, 0.5s, 0.5s;
   	z-index: 190;
