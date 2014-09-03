@@ -57,11 +57,6 @@
  and the shared group container defined for Textual. */
 + (TPCPreferencesUserDefaults *)sharedUserDefaults;
 
-/* Declares an object for reading the com.apple.universalaccess suite name. Writing to
- this object will do nothing to the accessbility object itself. Any changes written will
- be written to the application continer which means there is no reason to write to this. */
-+ (NSUserDefaults *)accessbilityUserDefaults;
-
 /* This class proxies these methods. */
 /* Depending on whether we are on Mavericks or later, these methods
  will either write to our group container or application container. */
