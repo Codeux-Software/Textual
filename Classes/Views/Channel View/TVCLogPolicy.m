@@ -108,7 +108,7 @@
 		for (NSMenuItem *item in [urlMenu itemArray]) {
 			NSMenuItem *newitem = [item copy];
 			
-			[newitem setUserInfo:self.anchorURL];
+			[newitem setUserInfo:self.anchorURL recursively:YES];
 			
 			[ary addObject:newitem];
 		}
@@ -130,7 +130,7 @@
 			
 			NSMenuItem *newitem = [item copy];
 			
-			[newitem setUserInfo:self.nickname];
+			[newitem setUserInfo:self.nickname recursively:YES];
 			
 			[ary addObject:newitem];
 		}
@@ -146,7 +146,7 @@
 		for (NSMenuItem *item in [chanMenu itemArray]) {
 			NSMenuItem *newitem = [item copy];
 			
-			[newitem setUserInfo:self.channelName];
+			[newitem setUserInfo:self.channelName recursively:YES];
 			
 			[ary addObject:newitem];
 		}

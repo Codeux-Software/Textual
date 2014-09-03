@@ -56,6 +56,21 @@ static void *_internalUserInfo = nil;
 	objc_setAssociatedObject(self, _internalUserInfo, userInfo, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
+- (void)setUserInfo:(NSString *)userInfo recursively:(BOOL)recursively
+{
+	if (recursively) {
+		if ([self hasSubmenu]) {
+			NSArray *subItems = [[self submenu] itemArray];
+
+			for (NSMenuItem *subItem in subItems) {
+				[subItem setUserInfo:userInfo recursively:YES];
+			}
+		}
+	}
+
+	[self setUserInfo:userInfo];
+}
+
 + (instancetype)menuItemWithTitle:(NSString *)aString target:(id)aTarget action:(SEL)aSelector
 {
 	return [self menuItemWithTitle:aString target:aTarget action:aSelector keyEquivalent:NSStringEmptyPlaceholder keyEquivalentMask:0];
