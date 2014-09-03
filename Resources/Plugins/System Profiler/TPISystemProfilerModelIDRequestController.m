@@ -44,21 +44,23 @@
 
 #define _requestTimeoutInterval			30.0
 
-#define _userDefaultsCacheName			@"Private Extension Store -> System Profiler Extension -> Cached Model Identifier Value"
+#define _userDefaultsModelCacheKey			@"Private Extension Store -> System Profiler Extension -> Cached Model Identifier Value"
+#define _userDefaultsSerialCacheKey			@"Private Extension Store -> System Profiler Extension -> Cached Serial Number Value"
 
 @interface TPISystemProfilerModelIDRequestController ()
 @property (nonatomic, strong) id internalObject;
 
-- (void)foundIdentifier:(NSString *)value;
+- (void)tearDownInternalObject;
 @end
 
 @interface TPISystemProfilerModelIDRequestControllerInternal : NSObject <NSXMLParserDelegate, NSURLConnectionDelegate>
-@property (nonatomic, assign) BOOL xmlParserIsOnTargetElement;
+@property (nonatomic, assign) BOOL xmlParserIsOnTargetElement; /* We are only targetting a single value so a BOOL is enough. */
 @property (nonatomic, strong) NSXMLParser *xmlParserObject;
 @property (nonatomic, strong) NSMutableString *xmlParsedTemporaryStore;
 @property (nonatomic, strong) NSMutableData *responseData;
 @property (nonatomic, strong) NSURLConnection *requestConnection;
 @property (nonatomic, strong) NSHTTPURLResponse *requestResponse;
+@property (nonatomic, copy) NSString *serialNumberValue;
 
 - (void)setupConnectionRequest;
 @end
@@ -83,34 +85,42 @@
 
 - (void)requestIdentifier
 {
-	id cachedValue = [RZStandardUserDefualts() objectForKey:_userDefaultsCacheName];
+	/* Check cache before requesting a new identifier */
+	NSString *currentSerial = [self serialNumberCharacters];
 
-	if (cachedValue == nil) {
-		[self setInternalObject:[TPISystemProfilerModelIDRequestControllerInternal new]];
+	id cachedValue = [RZStandardUserDefualts() objectForKey:_userDefaultsModelCacheKey];
 
-		[[self internalObject] setupConnectionRequest];
+	if (cachedValue) {
+		id cachedSerialNumber = [RZStandardUserDefualts() objectForKey:_userDefaultsSerialCacheKey];
+
+		if (cachedSerialNumber) {
+			if ([cachedSerialNumber isEqual:currentSerial]) {
+				return; // Matching serial numbers…
+			} else {
+				/* Invalidate cache. */
+				[RZStandardUserDefualts() removeObjectForKey:_userDefaultsModelCacheKey];
+
+				[RZStandardUserDefualts() removeObjectForKey:_userDefaultsSerialCacheKey];
+			}
+		}
 	}
+
+	/* Cached failed, check with Apple */
+	[self setInternalObject:[TPISystemProfilerModelIDRequestControllerInternal new]];
+
+	[[self internalObject] setSerialNumberValue:currentSerial];
+	[[self internalObject] setupConnectionRequest];
 }
 
 - (NSString *)cachedIdentifier
 {
-	return [RZStandardUserDefualts() objectForKey:_userDefaultsCacheName];
+	return [RZStandardUserDefualts() objectForKey:_userDefaultsModelCacheKey];
 }
 
-- (void)foundIdentifier:(NSString *)value
+- (void)tearDownInternalObject
 {
-	[RZStandardUserDefualts() setObject:value forKey:_userDefaultsCacheName];
+	[self setInternalObject:nil];
 }
-
-@end
-
-#pragma mark -
-#pragma mark Private Interface
-
-@implementation TPISystemProfilerModelIDRequestControllerInternal
-
-#pragma mark -
-#pragma mark Connection Delegate
 
 - (NSString *)serialNumberCharacters
 {
@@ -142,9 +152,26 @@
 	return serial;
 }
 
+@end
+
+@implementation TPISystemProfilerModelIDRequestControllerInternal
+
+#pragma mark -
+#pragma mark Private Interface
+
+- (void)tearDownInternalObject
+{
+	TXPerformBlockAsynchronouslyOnMainQueue(^{
+		[[TPISystemProfilerModelIDRequestController sharedController] tearDownInternalObject];
+	});
+}
+
+#pragma mark -
+#pragma mark Connection Delegate
+
 - (NSString *)addressSourceURL
 {
-	NSString *serialCode = [self serialNumberCharacters];
+	NSString *serialCode = [[TPISystemProfilerModelIDRequestController sharedController] serialNumberCharacters];
 
 	return [NSString stringWithFormat:@"http://support-sp.apple.com/sp/product?cc=%@&lang=en_US", serialCode];
 }
@@ -185,6 +212,8 @@
 
 	if (isValidResponse) {
 		[self didRecieveXMLData:[self responseData]];
+	} else {
+		[self tearDownInternalObject];
 	}
 
 	[self destroyConnectionRequest];
@@ -193,6 +222,8 @@
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
 	[self destroyConnectionRequest]; // Destroy the existing request.
+
+	[self tearDownInternalObject];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
@@ -232,6 +263,8 @@
 
 	[self setXmlParserObject:nil];
 	[self setXmlParsedTemporaryStore:nil];
+
+	[self tearDownInternalObject];
 }
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
@@ -251,7 +284,9 @@
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
 	if ([elementName isEqualToString:@"configCode"]) {
-		[[TPISystemProfilerModelIDRequestController sharedController] foundIdentifier:[self xmlParsedTemporaryStore]];
+		[RZStandardUserDefualts() setObject:[self xmlParsedTemporaryStore] forKey:_userDefaultsModelCacheKey];
+
+		[RZStandardUserDefualts() setObject:[self serialNumberValue] forKey:_userDefaultsSerialCacheKey];
 
 		[self setXmlParserIsOnTargetElement:NO];
 	}
