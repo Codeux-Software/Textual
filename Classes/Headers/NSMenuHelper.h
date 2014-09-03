@@ -45,6 +45,8 @@
 @end
 
 @interface NSMenuItem (TXMenuItemHelper)
+- (void)setUserInfo:(NSString *)userInfo recursively:(BOOL)recursively; // Setting recursively to YES will apply userInfo to this menu item as well as all items within its submenu if it has one
+
 + (instancetype)menuItemWithTitle:(NSString *)aString
 				 target:(id)aTarget
 				 action:(SEL)aSelector;
