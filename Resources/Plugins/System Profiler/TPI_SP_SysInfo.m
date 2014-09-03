@@ -37,6 +37,8 @@
 
 #import "TPI_SP_SysInfo.h"
 
+#import "TPISystemProfilerModelIDRequestController.h"
+
 #define _localVolumeBaseDirectory		@"/Volumes"
 #define _systemMemoryDivisor			1.073741824
 
@@ -278,21 +280,27 @@
 
 	/* Mac Model. */
 	if (NSObjectIsNotEmpty(_model)) {
-		NSDictionary *_all_models = [NSDictionary dictionaryWithContentsOfFile:[_bundle pathForResource:@"MacintoshModels" ofType:@"plist"]];
-
-		if (NSObjectIsEmpty(_all_models)) {
-			NSAssert(NO, @"_all_models");
-		}
-
 		NSString *_exact_model;
 
-		if ([_model hasPrefix:@"VMware"]) {
-			_exact_model = _all_models[@"VMware"];
-		} else {
-			_exact_model = [CSFWSystemInformation systemModelName];
+		NSString *_realModel = [[TPISystemProfilerModelIDRequestController sharedController] cachedIdentifier];
 
-			if ([_all_models containsKey:_model]) {
-				_exact_model = _all_models[_model];
+		if (_realModel) {
+			_exact_model = _realModel;
+		} else {
+			NSDictionary *_all_models = [NSDictionary dictionaryWithContentsOfFile:[_bundle pathForResource:@"MacintoshModels" ofType:@"plist"]];
+
+			if (NSObjectIsEmpty(_all_models)) {
+				NSAssert(NO, @"_all_models");
+			}
+
+			if ([_model hasPrefix:@"VMware"]) {
+				_exact_model = _all_models[@"VMware"];
+			} else {
+				_exact_model = [CSFWSystemInformation systemModelName];
+
+				if ([_all_models containsKey:_model]) {
+					_exact_model = _all_models[_model];
+				}
 			}
 		}
 

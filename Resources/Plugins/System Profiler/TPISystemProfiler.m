@@ -35,6 +35,7 @@
 
  *********************************************************************** */
 
+#import "TPISystemProfilerModelIDRequestController.h"
 #import "TPISystemProfiler.h"
 #import "TPI_SP_SysInfo.h"
 
@@ -50,15 +51,19 @@
 /* Allocation & Deallocation */
 - (void)pluginLoadedIntoMemory
 {
-	NSDictionary *defaults = @{
-	   @"System Profiler Extension -> Feature Disabled -> GPU Model" : @(YES),
-	   @"System Profiler Extension -> Feature Disabled -> Disk Information" : @(YES),
-	   @"System Profiler Extension -> Feature Disabled -> Screen Resolution" : @(YES)
-	};
-	
-	[RZUserDefaults() registerDefaults:defaults];
-	
-	[TPIBundleFromClass() loadCustomNibNamed:@"TPISystemProfiler" owner:self topLevelObjects:nil];
+	[self performBlockOnMainThread:^{
+		NSDictionary *defaults = @{
+		   @"System Profiler Extension -> Feature Disabled -> GPU Model" : @(YES),
+		   @"System Profiler Extension -> Feature Disabled -> Disk Information" : @(YES),
+		   @"System Profiler Extension -> Feature Disabled -> Screen Resolution" : @(YES)
+		};
+		
+		[RZUserDefaults() registerDefaults:defaults];
+		
+		[TPIBundleFromClass() loadCustomNibNamed:@"TPISystemProfiler" owner:self topLevelObjects:nil];
+
+		[[TPISystemProfilerModelIDRequestController sharedController] requestIdentifier];
+	}];
 }
 
 - (id)userDefaultsValues
