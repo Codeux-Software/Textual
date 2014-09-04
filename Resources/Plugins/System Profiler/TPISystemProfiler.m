@@ -55,7 +55,10 @@
 		NSDictionary *defaults = @{
 		   @"System Profiler Extension -> Feature Disabled -> GPU Model" : @(YES),
 		   @"System Profiler Extension -> Feature Disabled -> Disk Information" : @(YES),
-		   @"System Profiler Extension -> Feature Disabled -> Screen Resolution" : @(YES)
+		   @"System Profiler Extension -> Feature Disabled -> System Uptime" : @(YES),
+		   @"System Profiler Extension -> Feature Disabled -> Memory Information" : @(YES),
+		   @"System Profiler Extension -> Feature Disabled -> Screen Resolution" : @(YES),
+		   @"System Profiler Extension -> Feature Disabled -> Load Average" : @(YES)
 		};
 		
 		[RZUserDefaults() registerDefaults:defaults];
@@ -77,7 +80,7 @@
 /* Preference Pane */
 - (NSView *)pluginPreferencesPaneView
 {
-	return self.preferencePaneView;
+	return [self preferencePaneView];
 }
 
 - (NSString *)pluginPreferencesPaneMenuItemName
