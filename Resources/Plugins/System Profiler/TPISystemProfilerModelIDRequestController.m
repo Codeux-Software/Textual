@@ -147,6 +147,8 @@
 		serial = [serial substringFromIndex:([serial length] - 3)];
 	} else if ([serial length] == 12) {
 		serial = [serial substringFromIndex:([serial length] - 4)];
+	} else {
+		serial = nil;
 	}
 
 	return serial;
