@@ -873,6 +873,7 @@
 {
     if ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightRegularExpressionMatchType) {
         [[self highlightNicknameButton] setEnabled:NO];
+        [[self highlightNicknameButton] setState: NSOffState];
     } else {
         [[self highlightNicknameButton] setEnabled:YES];
     }
