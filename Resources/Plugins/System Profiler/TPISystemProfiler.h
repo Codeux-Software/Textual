@@ -38,4 +38,5 @@
 #include "SystemProfiler.h"
 
 @interface TPISystemProfiler : NSObject <THOPluginProtocol>
+- (IBAction)didChangePreferenceToUseRemoteRequestForModelID:(id)sender;
 @end
