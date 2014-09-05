@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6206.8" systemVersion="14A329f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6206.9" systemVersion="14A343f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1080" defaultVersion="1080" identifier="macosx"/>
         <development version="5100" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6206.8"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6206.9"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDChannelSheet">
@@ -496,16 +496,16 @@ Passphrase length is limited to 56 characters. Any characters that exceed this l
                 <popUpButton verticalHuggingPriority="750" id="wJA-xE-WhN">
                     <rect key="frame" x="91" y="213" width="231" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="Default" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="xj8-qa-tOq" id="l5W-tg-6hY">
+                    <popUpButtonCell key="cell" type="push" title="Electronic Codebook (ECB)" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="0bV-6Q-M7g" id="l5W-tg-6hY">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
                         <menu key="menu" id="bwJ-HS-537">
                             <items>
-                                <menuItem title="Default" state="on" id="xj8-qa-tOq">
+                                <menuItem title="Default" id="xj8-qa-tOq">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                 </menuItem>
                                 <menuItem isSeparatorItem="YES" id="Nbp-xf-MIy"/>
-                                <menuItem title="Electronic Codebok (ECB)" tag="1" id="0bV-6Q-M7g"/>
+                                <menuItem title="Electronic Codebook (ECB)" state="on" tag="1" id="0bV-6Q-M7g"/>
                                 <menuItem title="Cypher-block Chaining (CBC)" tag="2" id="zgR-Ea-XR7"/>
                             </items>
                         </menu>
