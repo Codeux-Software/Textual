@@ -65,7 +65,7 @@
 		
 		[TPIBundleFromClass() loadCustomNibNamed:@"TPISystemProfiler" owner:self topLevelObjects:nil];
 
-		[[TPISystemProfilerModelIDRequestController sharedController] requestIdentifier];
+		[self maybeRequestModelIDFromApple];
 	}];
 }
 
@@ -86,6 +86,26 @@
 - (NSString *)pluginPreferencesPaneMenuItemName
 {
 	return TPILocalizedString(@"BasicLanguage[1000]");
+}
+
+- (void)didChangePreferenceToUseRemoteRequestForModelID:(id)sender
+{
+	[self maybeRequestModelIDFromApple];
+}
+
+- (void)maybeRequestModelIDFromApple
+{
+	BOOL featureEnabled = [RZUserDefaults() boolForKey:@"System Profiler Extension -> Request Model Information from Apple"];
+
+	if (featureEnabled) {
+		static BOOL _performedRequest = NO;
+
+		if (_performedRequest == NO) {
+			_performedRequest = YES;
+
+			[[TPISystemProfilerModelIDRequestController sharedController] requestIdentifier];
+		}
+	}
 }
 
 #pragma mark -
