@@ -872,9 +872,9 @@
 - (void)onChangedHighlightType:(id)sender
 {
     if ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightRegularExpressionMatchType) {
-        [[self highlightNicknameButton] setEnabled:NO];
+        [[self highlightNicknameButton] setHidden:YES];
     } else {
-        [[self highlightNicknameButton] setEnabled:YES];
+        [[self highlightNicknameButton] setHidden:NO];
     }
 	
 	[[self addExcludeKeywordButton] setEnabled:YES];
