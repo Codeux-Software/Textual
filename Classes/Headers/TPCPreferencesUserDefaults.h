@@ -47,7 +47,7 @@
 
 /* Write to the standard user defaults to write directly to the application container.
  Certain state information such as saved frames should be saved there. */
-#define RZStandardUserDefualts()				[NSUserDefaults standardUserDefaults]
+#define RZStandardUserDefaults()				[NSUserDefaults standardUserDefaults]
 
 /* The user info dictionary of this notification contains the changed key. */
 #define TPCPreferencesUserDefaultsDidChangeNotification			@"TPCPreferencesUserDefaultsDidChangeNotification"

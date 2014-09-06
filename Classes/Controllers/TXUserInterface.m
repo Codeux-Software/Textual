@@ -46,7 +46,7 @@
 
 + (BOOL)systemWideDarkModeEnabledInYosemite
 {
-	id objectValue = [RZStandardUserDefualts() objectForKey:@"AppleInterfaceStyle"];
+	id objectValue = [RZStandardUserDefaults() objectForKey:@"AppleInterfaceStyle"];
 
 	if ([objectValue isEqualIgnoringCase:@"dark"]) {
 		return YES;
