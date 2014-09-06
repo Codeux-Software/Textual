@@ -44,4 +44,15 @@
 	return [[[NSApp mainWindow] screen] runningInHighResolutionMode];
 }
 
++ (BOOL)systemWideDarkModeEnabledInYosemite
+{
+	id objectValue = [RZStandardUserDefualts() objectForKey:@"AppleInterfaceStyle"];
+
+	if ([objectValue isEqualIgnoringCase:@"dark"]) {
+		return YES;
+	} else {
+		return NO;
+	}
+}
+
 @end
