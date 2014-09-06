@@ -197,8 +197,8 @@ Textual.styleSettingDidChange                       = function(changedKey) {};
 //									  a nickname for a private message, or blank for the console.
 
 // app.networkName()				— Returns the name of the client related to this view. If the actual network
-									  name of the connected server is known (e.g. "freenode IRC network"), then
-									  that is returned. Otherwise, the user configured name is returned.
+//									  name of the connected server is known (e.g. "freenode IRC network"), then
+//									  that is returned. Otherwise, the user configured name is returned.
 
 // app.serverAddress()				— Actual server address (e.g. verne.freenode.net) of the associated
 //									  server. This value is not available until raw numeric 005 is posted.
