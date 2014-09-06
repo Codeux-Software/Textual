@@ -245,6 +245,11 @@
 	return [[self.logController associatedClient] networkAddress];
 }
 
+- (NSString *)networkName
+{
+	return [[self.logController associatedClient] networkName];
+}
+
 - (NSString *)localUserNickname
 {
 	return [[self.logController associatedClient] localNickname];
