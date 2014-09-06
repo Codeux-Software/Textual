@@ -196,7 +196,7 @@ Textual.styleSettingDidChange                       = function(changedKey) {};
 // app.channelName()				— Channel name of associated channel. Can be an actual channel name,
 //									  a nickname for a private message, or blank for the console.
 
-// C				— Returns the name of the client related to this view. If the actual network
+// app.networkName()				— Returns the name of the client related to this view. If the actual network
 									  name of the connected server is known (e.g. "freenode IRC network"), then
 									  that is returned. Otherwise, the user configured name is returned.
 
