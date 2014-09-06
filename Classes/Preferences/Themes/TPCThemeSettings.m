@@ -176,7 +176,7 @@
 		if (storeKey == nil) {
 			*resultError = @"Empty key-value store name in styleSettings.plist — Set the key \"Key-value Store Name\" in styleSettings.plist as a string. The current style name is the recommended value.";
 		} else {
-			NSDictionary *styleSettings = [RZStandardUserDefualts() dictionaryForKey:storeKey];
+			NSDictionary *styleSettings = [RZStandardUserDefaults() dictionaryForKey:storeKey];
 			
 			return styleSettings[key];
 		}
@@ -197,7 +197,7 @@
 		} else {
 			BOOL removeValue = (objectValue == nil || [objectValue isEqual:[WebUndefined undefined]]);
 			
-			id styleSettings = [RZStandardUserDefualts() dictionaryForKey:storeKey];
+			id styleSettings = [RZStandardUserDefaults() dictionaryForKey:storeKey];
 			
 			if (styleSettings == nil) {
 				if (removeValue) {
@@ -215,7 +215,7 @@
 				styleSettings[objectKey] = objectValue;
 			}
 		
-			[RZStandardUserDefualts() setObject:[styleSettings copy] forKey:storeKey];
+			[RZStandardUserDefaults() setObject:[styleSettings copy] forKey:storeKey];
 				
 			return YES;
 		}
