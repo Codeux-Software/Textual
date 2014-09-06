@@ -2409,7 +2409,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </scroller>
                 </scrollView>
                 <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="JVk-Lv-4dl">
-                    <rect key="frame" x="45" y="280" width="477" height="44"/>
+                    <rect key="frame" x="60" y="280" width="446" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Zsm-ol-0H3">
                         <rect key="frame" x="1" y="1" width="223" height="133"/>
@@ -2420,7 +2420,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="textColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="477" height="44"/>
+                                <size key="minSize" width="446" height="44"/>
                                 <size key="maxSize" width="477" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="The following preferences exist for testing purposes. ">
@@ -2438,8 +2438,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment>
-                                        <string key="content"> They are presented under this particular preference pane as it has yet to be determined whether these features are valuable enough to be part of Textual as a whole.</string>
+                                    <fragment content=" They are presented here because enough feedback has yet to be received about them to make them an official features.">
                                         <attributes>
                                             <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
@@ -2448,7 +2447,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="477" height="44"/>
+                                <size key="minSize" width="446" height="44"/>
                                 <size key="maxSize" width="477" height="10000000"/>
                             </textView>
                         </subviews>
