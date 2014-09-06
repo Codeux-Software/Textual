@@ -2252,6 +2252,7 @@
 		4C211D5615BF21BA00E218DA /* libmustache.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmustache.a; path = "Frameworks/Mustache Templates/libmustache.a"; sourceTree = "<group>"; };
 		4C2645CB1989EAC40025FADF /* FormattingColor_Random.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = FormattingColor_Random.tif; sourceTree = "<group>"; };
 		4C2645CC1989EAC40025FADF /* FormattingColor_Random@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "FormattingColor_Random@2x.tif"; sourceTree = "<group>"; };
+		4C2991AA19BB9CC800B4E0E0 /* Provisioning Profile.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Provisioning Profile.xcconfig"; path = "Resources/Build Configurations/Provisioning Profile.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = ../../../../System/Library/Frameworks/SecurityInterface.framework; sourceTree = "<group>"; };
 		4C31D90C197CB2F5000CA4CC /* RegisteredUserDefaultsForApplicationContainer.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RegisteredUserDefaultsForApplicationContainer.plist; path = Resources/Miscellaneous/RegisteredUserDefaultsForApplicationContainer.plist; sourceTree = SOURCE_ROOT; };
 		4C31D90D197CB2F5000CA4CC /* RegisteredUserDefaultsForGroupContainer.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RegisteredUserDefaultsForGroupContainer.plist; path = Resources/Miscellaneous/RegisteredUserDefaultsForGroupContainer.plist; sourceTree = SOURCE_ROOT; };
@@ -2704,6 +2705,7 @@
 		4CE77C7C195E7A8A000DA30D /* IRCWorldPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCWorldPrivate.h; sourceTree = "<group>"; };
 		4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogRemoteAddress.h; sourceTree = "<group>"; };
 		4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogRemoteAddress.m; path = "Dialogs/File Transfers/TDCFileTransferDialogRemoteAddress.m"; sourceTree = "<group>"; };
+		4CEB348919BB98D9000349A1 /* FindProvisioningProfile.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = FindProvisioningProfile.sh; path = "Main Project (Textual).xcodeproj/FindProvisioningProfile.sh"; sourceTree = SOURCE_ROOT; };
 		4CF09D19195D4AAF00A29486 /* IRCWorldCloudExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCWorldCloudExtension.h; sourceTree = "<group>"; };
 		4CF4D6B619837C1700FB5AF0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4CFC40DE1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCPreferencesUserDefaults.m; path = Preferences/TPCPreferencesUserDefaults.m; sourceTree = "<group>"; };
@@ -3921,6 +3923,7 @@
 			isa = PBXGroup;
 			children = (
 				4C86B0121748B7B60028C7AE /* Code Signing Identity.xcconfig */,
+				4C2991AA19BB9CC800B4E0E0 /* Provisioning Profile.xcconfig */,
 				4C86B0111748B7B60028C7AE /* Shared App Store Release Configuration.xcconfig */,
 				4C86B0101748B7B60028C7AE /* Shared Debug Configuration.xcconfig */,
 				4C86B00F1748B7B60028C7AE /* Shared Developer ID Release Configuration.xcconfig */,
@@ -3970,6 +3973,7 @@
 				5D9B8EB9170A10F200919CB0 /* BuildExtensions.sh */,
 				5D9B8EB6170A0EB400919CB0 /* BuildFrameworks.sh */,
 				5D9B8EB7170A0EB400919CB0 /* CleanUpResources.sh */,
+				4CEB348919BB98D9000349A1 /* FindProvisioningProfile.sh */,
 				5D9B8EB8170A0EB400919CB0 /* UpdateVersionInfo.sh */,
 			);
 			name = "Build Scripts";

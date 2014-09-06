@@ -1,9 +1,8 @@
 #include "Shared Developer ID Release Configuration.xcconfig"
+#include "Provisioning Profile.xcconfig"
 
 CODE_SIGN_IDENTITY = 3rd Party Mac Developer Application
 OTHER_CODE_SIGN_FLAGS = --deep
 CODE_SIGN_ENTITLEMENTS = Resources/Sandbox/Exceptions/Textual.entitlements
-
-PROVISIONING_PROFILE = 23d982b8-19e6-44d2-8d73-4303bd074cb0
 
 GCC_PREPROCESSOR_DEFINITIONS = TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED=1 TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT=1 TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION=1
