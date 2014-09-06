@@ -39,4 +39,6 @@
 
 @interface TXUserInterface : NSObject
 + (BOOL)runningInHighResolutionMode;
+
++ (BOOL)systemWideDarkModeEnabledInYosemite;
 @end

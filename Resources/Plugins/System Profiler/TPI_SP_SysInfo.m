@@ -77,6 +77,14 @@
 		[resultString appendString:TPILocalizedString(@"BasicLanguage[1038]")];
 	}
 
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		if ([TXUserInterface systemWideDarkModeEnabledInYosemite]) {
+			[resultString appendString:TPILocalizedString(@"BasicLanguage[1051]")];
+		} else {
+			[resultString appendString:TPILocalizedString(@"BasicLanguage[1050]")];
+		}
+	}
+
 	return resultString;
 }
 
