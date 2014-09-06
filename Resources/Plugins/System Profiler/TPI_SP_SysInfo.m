@@ -65,7 +65,7 @@
 		[resultString appendString:TPILocalizedString(@"BasicLanguage[1035]", fname)];
 	}
 
-	if ([TPCPreferences invertSidebarColors]) {
+	if ([TPCPreferences invertSidebarColors] == NO) {
 		[resultString appendString:TPILocalizedString(@"BasicLanguage[1036]")];
 	} else {
 		[resultString appendString:TPILocalizedString(@"BasicLanguage[1037]")];
