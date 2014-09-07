@@ -134,7 +134,7 @@
 "TDCPreferencesController[1013]" = "Resource Files";
 
 "TDCPreferencesController[1014][1]" = "Preferred Selection";
-"TDCPreferencesController[1014][2]" = "The newly selected style \"%1$@\" has chosen to override the following preferences with ones that it prefers for the best viewing experience:\n\n%2$@";
+"TDCPreferencesController[1014][2]" = "The style named \"%1$@\" has chosen to override the following preferences with ones that it prefers for the best viewing experience:\n\n%2$@";
 
 "TDCPreferencesController[1015][1]" = "• Nickname Format";
 "TDCPreferencesController[1015][2]" = "• Timestamp Format";
@@ -680,9 +680,16 @@
 "BasicLanguage[1243][2]" = "Your copy of Textual has expired. Please download the latest release.";
 "BasicLanguage[1243][3]" = "OK";
 
+/* Incompatible style warning dialog. */
+"BasicLanguage[1246][1]" = "Incompatible Style";
+"BasicLanguage[1246][2]" = "The style named \"%1$@\" is not designed to work with this version of Textual. Continued use of this style may result in undefined behavior resulting in some features of Textual not functioning as expected.";
+"BasicLanguage[1246][3]" = "OK";
 
 
 
-/* Next unusued key: 1246 */
+
+
+
+/* Next unusued key: 1247 */
 
 

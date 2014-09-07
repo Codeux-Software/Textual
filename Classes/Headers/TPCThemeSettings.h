@@ -40,8 +40,11 @@
 
 #define TPCThemeSettingsDisabledIndentationOffset     -99
 
+#define TPCThemeSettingsLatestTemplateEngineVersion		3
+
 @interface TPCThemeSettings : NSObject
 @property (nonatomic, assign) BOOL forceInvertSidebarColors;
+@property (nonatomic, assign) BOOL usesIncompatibleTemplateEngineVersion;
 @property (nonatomic, copy) NSFont *channelViewFont;
 @property (nonatomic, copy) NSString *nicknameFormat;
 @property (nonatomic, copy) NSString *timestampFormat;

@@ -263,6 +263,8 @@
 
 	self.indentationOffset = TPCThemeSettingsDisabledIndentationOffset;
 
+	self.usesIncompatibleTemplateEngineVersion = NO;
+
 	/* Load style settings dictionary. */
 	BOOL didLoadDefaultTemplateRepository = NO;
 
@@ -295,16 +297,20 @@
 		/* Get style template version. */
 		NSInteger templateVersion = [self integerForKey:@"Template Engine Version" fromDictionary:styleSettings];
 
-		if (templateVersion == 2) {
-			[self loadApplicationStyleRespository:2];
+		if (templateVersion == TPCThemeSettingsLatestTemplateEngineVersion) {
+			[self loadApplicationStyleRespository:TPCThemeSettingsLatestTemplateEngineVersion];
 
 			didLoadDefaultTemplateRepository = YES;
+		} else {
+			self.usesIncompatibleTemplateEngineVersion = YES;
 		}
 	}
 
 	/* Fall back to the default repository. */
 	if (didLoadDefaultTemplateRepository == NO) {
-		[self loadApplicationStyleRespository:1];
+		self.usesIncompatibleTemplateEngineVersion = YES; /* A style must define its engine version. */
+
+		[self loadApplicationStyleRespository:TPCThemeSettingsLatestTemplateEngineVersion];
 	}
 
 	/* Inform our defaults controller about a few overrides. */
