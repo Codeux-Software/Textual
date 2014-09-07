@@ -18,6 +18,6 @@
 	<key>Force Invert Sidebars</key>
 	<true/>
 	<key>Template Engine Version</key>
-	<integer>2</integer>
+	<integer>3</integer>
 </dict>
 </plist>
