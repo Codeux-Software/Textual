@@ -18,7 +18,7 @@
 	<key>Underlying Window Color</key>
 	<string>#000000</string>
 	<key>Template Engine Version</key>
-	<integer>2</integer>
+	<integer>3</integer>
 	<key>Force Invert Sidebars</key>
 	<true/>
 </dict>
