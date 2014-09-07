@@ -238,6 +238,24 @@
 	
 	/* Reload theme settings. */
 	[[self customSettings] reloadWithPath:path];
+
+	/* Maybe present warning dialog. */
+	[self maybePresentCompatibilityWarningDialog];
+}
+
+- (void)maybePresentCompatibilityWarningDialog
+{
+	if ([[self customSettings] usesIncompatibleTemplateEngineVersion]) {
+		/* Use hash of name so the suppression is per-theme. */
+		NSString *suppressionKey = [NSString stringWithFormat:@"incompatible_theme_dialog_%lu", [[self associatedThemeName] hash]];
+
+		(void)[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1246][2]", [self name])
+												  title:TXTLS(@"BasicLanguage[1246][1]")
+										  defaultButton:TXTLS(@"BasicLanguage[1246][3]")
+										alternateButton:nil
+										 suppressionKey:suppressionKey
+										suppressionText:nil];
+	}
 }
 
 - (BOOL)validateThemeAndRelaodIfNecessary
