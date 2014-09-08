@@ -46,9 +46,6 @@
 /* Internal state. */
 Textual.nicknameDoubleClickTimer = null;
 
-Textual.scrollPositionIsPositionedAtBottomOfView = true;
-Textual.lastScrollingEventWasAutomated = false;
-
 /* Loading screen. */
 Textual.fadeInLoadingScreen = function(bodyOp, topicOp)
 {
@@ -88,80 +85,10 @@ Textual.fadeOutLoadingScreen = function(bodyOp, topicOp)
 /* Scrolling. */
 Textual.scrollToBottomOfView = function(fireNotification)
 {
-	var documentBody = document.getElementById("body_home");
+	document.body.scrollTop = document.body.scrollHeight;
 
-	var lastChild = documentBody.lastChild;
-
-	if (lastChild) {
-		Textual.lastScrollingEventWasAutomated = Textual.viewHasVerticalScroller();
-
-		lastChild.scrollIntoView(false); // Scroll into last child relative to bottom
-
-		Textual.scrollPositionIsPositionedAtBottomOfView = true;
-
-		if (fireNotification === undefined || fireNotification === true) {
-			Textual.viewPositionMovedToBottom();
-		}
-	}
-};
-
-Textual.viewHasVerticalScroller = function()
-{
-	var documentBody = document.getElementById("body_home");
-
-	if (documentBody.scrollHeight > documentBody.clientHeight) {
-		return true;
-	} else {
-		return false;
-	}
-};
-
-Textual.viewIsRelativeToBottom = function()
-{
-	var documentBody = document.getElementById("body_home");
-
-	if (documentBody.scrollTop < (documentBody.scrollHeight - documentBody.offsetHeight)) {
-		return false;
-	} else {
-		return true;
-	}
-};
-
-Textual.setupInternalScrollEventListener = function()
-{
-	/* Add monitor for user invoked scroll events. */
-	var documentBody = document.getElementById("body_home");
-
-	documentBody.addEventListener("scroll", function() {
-		if (Textual.lastScrollingEventWasAutomated) {
-			Textual.lastScrollingEventWasAutomated = false;
-		} else {
-			if (Textual.viewIsRelativeToBottom() === false) {
-				Textual.scrollPositionIsPositionedAtBottomOfView = false;
-			} else {
-				Textual.scrollPositionIsPositionedAtBottomOfView = true;
-			}
-		}
-	}, false);
-
-	/* Add monitor for when our view mutates. */
-	window.MutationObserver = (window.MutationObserver || window.WebKitMutationObserver);
-
-	var observer = new MutationObserver(function(mutations) {
-		Textual.maybeMovePositionBackToBottomOfView();
-	});
-
-	var config = { attributes: true, subtree: true, childList: true, characterData: true };
-	
-	observer.observe(documentBody, config);
-};
-
-Textual.maybeMovePositionBackToBottomOfView = function()
-{
-	if (app.viewIsFrontmost()) {
-		if (Textual.scrollPositionIsPositionedAtBottomOfView) {
-			Textual.scrollToBottomOfView(false);
-		}
+	if (fireNotification === undefined || fireNotification === true) {
+		Textual.viewPositionMovedToBottom();
 	}
 };
 
@@ -169,7 +96,7 @@ Textual.notifyDidBecomeVisible = function()
 {
 	window.getSelection().empty();
 
-	Textual.maybeMovePositionBackToBottomOfView();
+	Textual.scrollToBottomOfView();
 };
 
 /* Resource management. */
@@ -320,7 +247,4 @@ Textual.didToggleInlineImageToVisible = function(imageElement)
 
 		realImageElement.addEventListener("mousedown", InlineImageLiveResize.onMouseDown, false);
 	}
-		
-	/* Scroll to bottom once image is loaded. */
-	realImageElement.addEventListener("load", Textual.maybeMovePositionBackToBottomOfView, false);	
 };

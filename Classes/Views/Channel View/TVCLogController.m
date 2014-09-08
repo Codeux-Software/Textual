@@ -46,6 +46,7 @@
 @property (nonatomic, assign) BOOL windowFrameObjectLoaded;
 @property (nonatomic, copy) NSString *lastVisitedHighlight;
 @property (nonatomic, strong) TVCLogScriptEventSink *webViewScriptSink;
+@property (nonatomic, strong) TVCWebViewAutoScroll *webViewAutoScroller;
 @property (nonatomic, strong) TVCLogControllerHistoricLogFile *historicLogFile;
 @property (nonatomic, assign) BOOL needsLimitNumberOfLines;
 @property (nonatomic, assign) NSInteger activeLineCount;
@@ -149,6 +150,8 @@
 	/* Create view. */
 	 self.webViewScriptSink = [TVCLogScriptEventSink new];
 	[self.webViewScriptSink setLogController:self];
+
+	self.webViewAutoScroller = [TVCWebViewAutoScroll new];
 
 	 self.webView = [[TVCLogView alloc] initWithFrame:NSZeroRect];
 	
@@ -313,6 +316,11 @@
 	PointerIsEmptyAssertReturn(doc, nil);
 
 	return [doc getElementById:@"topic_bar"];
+}
+
+- (WebFrameView *)webFrameView
+{
+	return [[[self webView] mainFrame] frameView];
 }
 
 #pragma mark -
@@ -665,6 +673,10 @@
 {
 	if ([self viewIsEncrypted] == NO) {
 		[self reloadOldLines:YES withOldLines:objects];
+
+		[self performBlockOnMainThread:^{
+			[self moveToBottom];
+		}];
 	}
 
 	self.reloadingHistory = NO;
@@ -696,6 +708,10 @@
 {
 	if ([self viewIsEncrypted] == NO) {
 		[self reloadOldLines:NO withOldLines:objects];
+
+		[self performBlockOnMainThread:^{
+			[self moveToBottom];
+		}];
 	}
 
 	self.reloadingBacklog = NO;
@@ -1002,6 +1018,7 @@
 																messageInfo:resultInfo[@"pluginDictionary"]
 															  isThemeReload:NO
 															isHistoryReload:NO];
+
 				/* Limit lines. */
 				if (self.maximumLineCount > 0 && (self.activeLineCount - 10) > self.maximumLineCount) {
 					/* Only cut lines if our number is divisible by 5. This makes it so every
@@ -1451,9 +1468,9 @@
 		[self executeQuickScriptCommand:@"viewFinishedReload" withArguments:@[]];
 	}
 
-	[self executeQuickScriptCommand:@"setupInternalScrollEventListener" withArguments:@[]];
-
 	self.isLoaded = YES;
+
+	[self setUpScroller];
 
 	[[self printingQueue] updateReadinessState:self];
 }
@@ -1494,6 +1511,32 @@
 	if (self.windowScriptObjectLoaded) {
 		[self postViwLoadedJavaScript];
 	}
+}
+
+- (void)setUpScroller
+{
+	WebFrameView *frame = [[self.webView mainFrame] frameView];
+
+	PointerIsEmptyAssert(frame);
+
+	[self.webViewAutoScroller setWebFrame:frame];
+
+	// ---- //
+
+	NSScrollView *scrollView = nil;
+
+	for (NSView *v in [frame subviews]) {
+		if ([v isKindOfClass:[NSScrollView class]]) {
+			scrollView = (NSScrollView *)v;
+
+			break;
+		}
+	}
+
+	PointerIsEmptyAssert(scrollView);
+
+	[scrollView setHasHorizontalScroller:NO];
+	[scrollView setHasVerticalScroller:NO];
 }
 
 #pragma mark -
