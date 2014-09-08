@@ -12,13 +12,10 @@ body {
 	height: 100%;
  	z-index: 100;
 	font-size: 12px;
-	overflow-x: hidden;
+	overflow: hidden;
+	overflow-y: visible;
 	background-color: #fff;
 	font-family: "Lucida Grande";
-}
-
-body div#body_container {
-	height: 100%;
 }
 
 body div#body_home {
@@ -27,12 +24,14 @@ body div#body_home {
 	bottom: 0;
 	width: 100%;
 	z-index: 100;
-	max-height: 100%;
-	padding-top: 1px;
-	overflow-y: scroll;
+	max-height: 99.99%;
 	position: absolute;
 	opacity: 0; /* Set by JavaScript */
 	-webkit-transition: opacity 0.8s linear;
+}
+
+body[viewtype=channel] div#body_home {
+	max-height: 96.5%;
 }
 
 body .line {
@@ -112,7 +111,7 @@ a:hover {
 	z-index: 400;
 	opacity: 0; /* Set by JavaScript */
 	color: #FFFFFF;
-	position: absolute;
+	position: fixed;
 	padding: 2px 0.5em 3px;
 	box-shadow: 0 1px 5px #777;
 	border-bottom: 1px solid #61778F;

@@ -13,13 +13,10 @@ body {
 	height: 100%;
  	z-index: 100;
 	font-size: 11px;
-	overflow-x: hidden;
+	overflow: hidden;
+	overflow-y: visible;
 	background-color: #272822;
 	font-family: "Lucida Grande";
-}
-
-body div#body_container {
-	height: 100%;
 }
 
 body div#body_home {
@@ -29,9 +26,7 @@ body div#body_home {
 	opacity: 0;
 	width: 100%;
 	z-index: 100;
-	max-height: 100%;
-	padding-top: 1px;
-	overflow-y: scroll;
+	max-height: 99.99%;
 	position: absolute;
 	opacity: 0; /* Set by JavaScript */
 	-webkit-transition: opacity 0.8s linear;
@@ -118,7 +113,7 @@ a:hover {
 	opacity: 0; /* Set by JavaScript */
 	z-index: 400;
 	color: #555;
-	position: absolute;
+	position: fixed;
 	padding: 2px 0.5em 3px;
 	box-shadow: 0 1px 5px #444;
 	border-bottom: 1px solid #222;
