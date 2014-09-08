@@ -1866,6 +1866,14 @@
 		4CEA09C41875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */; };
 		4CEA09C51875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */; };
 		4CEA09C61875A734005D6184 /* TDCFileTransferDialogRemoteAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CEC551A19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEC551919BE6A000028DEF2 /* TVCWebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CEC551B19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEC551919BE6A000028DEF2 /* TVCWebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CEC551C19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEC551919BE6A000028DEF2 /* TVCWebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CEC551D19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEC551919BE6A000028DEF2 /* TVCWebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CEC552419BE6A220028DEF2 /* TVCWebViewAutoScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC552319BE6A220028DEF2 /* TVCWebViewAutoScroll.m */; };
+		4CEC552519BE6A220028DEF2 /* TVCWebViewAutoScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC552319BE6A220028DEF2 /* TVCWebViewAutoScroll.m */; };
+		4CEC552619BE6A220028DEF2 /* TVCWebViewAutoScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC552319BE6A220028DEF2 /* TVCWebViewAutoScroll.m */; };
+		4CEC552719BE6A220028DEF2 /* TVCWebViewAutoScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEC552319BE6A220028DEF2 /* TVCWebViewAutoScroll.m */; };
 		4CEE7B8E1997D17300EE302B /* AutoHyperlinks.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C68425516C5AF730005A59E /* AutoHyperlinks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CEE7B8F1997D17300EE302B /* BlowfishEncryption.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C68425616C5AF730005A59E /* BlowfishEncryption.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CEE7B901997D17300EE302B /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -2706,6 +2714,8 @@
 		4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogRemoteAddress.h; sourceTree = "<group>"; };
 		4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogRemoteAddress.m; path = "Dialogs/File Transfers/TDCFileTransferDialogRemoteAddress.m"; sourceTree = "<group>"; };
 		4CEB348919BB98D9000349A1 /* FindProvisioningProfile.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = FindProvisioningProfile.sh; path = "Main Project (Textual).xcodeproj/FindProvisioningProfile.sh"; sourceTree = SOURCE_ROOT; };
+		4CEC551919BE6A000028DEF2 /* TVCWebViewAutoScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCWebViewAutoScroll.h; sourceTree = "<group>"; };
+		4CEC552319BE6A220028DEF2 /* TVCWebViewAutoScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCWebViewAutoScroll.m; sourceTree = "<group>"; };
 		4CF09D19195D4AAF00A29486 /* IRCWorldCloudExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCWorldCloudExtension.h; sourceTree = "<group>"; };
 		4CF4D6B619837C1700FB5AF0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4CFC40DE1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCPreferencesUserDefaults.m; path = Preferences/TPCPreferencesUserDefaults.m; sourceTree = "<group>"; };
@@ -3334,6 +3344,7 @@
 				4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */,
 				4C8AF592158E99520026668C /* TVCTextFormatterMenu.h */,
 				4C8AF591158E99520026668C /* TVCTextViewWithIRCFormatter.h */,
+				4CEC551919BE6A000028DEF2 /* TVCWebViewAutoScroll.h */,
 				4C8AF595158E99520026668C /* TXGlobalModels.h */,
 				4C8AF596158E99520026668C /* TXMasterController.h */,
 				4C8AF597158E99520026668C /* TXMenuController.h */,
@@ -3463,6 +3474,7 @@
 				4C8AF5F1158E99520026668C /* TVCLogRenderer.m */,
 				4C8AF5F6158E99520026668C /* TVCLogScriptEventSink.m */,
 				4C8AF5F7158E99520026668C /* TVCLogView.m */,
+				4CEC552319BE6A220028DEF2 /* TVCWebViewAutoScroll.m */,
 			);
 			path = "Channel View";
 			sourceTree = "<group>";
@@ -4151,6 +4163,7 @@
 				4C0BA61C1990798800857343 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
 				4C0BA61D1990798800857343 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
 				4C77FF261991F02E00E8A7B8 /* NSObjectHelper.h in Headers */,
+				4CEC551A19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */,
 				4C0BA61E1990798800857343 /* TVCAnimatedContentNavigationOutlineView.h in Headers */,
 				4C77FF2E1992614500E8A7B8 /* NSValueHelper.h in Headers */,
 				4C0BA61F1990798800857343 /* TVCQueuedCertificateTrustPanel.h in Headers */,
@@ -4327,6 +4340,7 @@
 				4C5FB0FB197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
 				4C5FB0FE197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
 				4C38526319721E9100A6845C /* TDCSharedProtocolDefinitions.h in Headers */,
+				4CEC551B19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */,
 				4C77FF251991F02E00E8A7B8 /* NSObjectHelper.h in Headers */,
 				4C77FF2D1992614500E8A7B8 /* NSValueHelper.h in Headers */,
 				4C001C0B197A11E60061C2C5 /* TVCTextFieldComboBoxWithValueValidation.h in Headers */,
@@ -4500,6 +4514,7 @@
 				4CBFB2E81979AFBD005BB6B5 /* TVCMemberListSharedUserInterface.h in Headers */,
 				4CBFB2E51979AFAF005BB6B5 /* TVCMemberListYosemiteUserInterface.h in Headers */,
 				4C38526219721E9100A6845C /* TDCSharedProtocolDefinitions.h in Headers */,
+				4CEC551C19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */,
 				4C001C0A197A10E80061C2C5 /* TVCTextFieldComboBoxWithValueValidation.h in Headers */,
 				4C77661C19789F8E00759774 /* TVCServerListYosemiteUserInterface.h in Headers */,
 				4C5FB0FA197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
@@ -4680,6 +4695,7 @@
 				4CDFA5291996EAB2007EA46E /* TVCTextFieldComboBoxWithValueValidation.h in Headers */,
 				4CDFA52A1996EAB2007EA46E /* TVCServerListYosemiteUserInterface.h in Headers */,
 				4CDFA52B1996EAB2007EA46E /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
+				4CEC551D19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */,
 				4CDFA52C1996EAB2007EA46E /* NSValueHelper.h in Headers */,
 				4CDFA52D1996EAB2007EA46E /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
 				4CDFA52E1996EAB2007EA46E /* NSObjectHelper.h in Headers */,
@@ -5561,6 +5577,7 @@
 				4C77FF291992613100E8A7B8 /* NSValueHelper.m in Sources */,
 				4C0445A016F1603B00EBB665 /* IRCClient.m in Sources */,
 				4C0445A116F1603B00EBB665 /* IRCClientConfig.m in Sources */,
+				4CEC552519BE6A220028DEF2 /* TVCWebViewAutoScroll.m in Sources */,
 				4C0445A216F1603B00EBB665 /* IRCConnection.m in Sources */,
 				4C0445A316F1603C00EBB665 /* IRCConnectionSocket.m in Sources */,
 				4C0445A416F1603C00EBB665 /* IRCExtras.m in Sources */,
@@ -5718,6 +5735,7 @@
 				4C77FF2A1992613100E8A7B8 /* NSValueHelper.m in Sources */,
 				4C0BA6731990798800857343 /* IRCConnection.m in Sources */,
 				4C0BA6741990798800857343 /* IRCExtras.m in Sources */,
+				4CEC552419BE6A220028DEF2 /* TVCWebViewAutoScroll.m in Sources */,
 				4C0BA6751990798800857343 /* IRCISupportInfo.m in Sources */,
 				4C0BA6761990798800857343 /* IRCMessage.m in Sources */,
 				4C0BA6771990798800857343 /* IRCModeInfo.m in Sources */,
@@ -5875,6 +5893,7 @@
 				4C77FF281992613100E8A7B8 /* NSValueHelper.m in Sources */,
 				4C8AF6A9158E99520026668C /* IRCConnection.m in Sources */,
 				4C8AF6AA158E99520026668C /* IRCExtras.m in Sources */,
+				4CEC552619BE6A220028DEF2 /* TVCWebViewAutoScroll.m in Sources */,
 				4C8AF6AB158E99520026668C /* IRCISupportInfo.m in Sources */,
 				4C8AF6AC158E99520026668C /* IRCMessage.m in Sources */,
 				4C8AF6AD158E99520026668C /* IRCModeInfo.m in Sources */,
@@ -6032,6 +6051,7 @@
 				4CDFA5861996EAB2007EA46E /* NSValueHelper.m in Sources */,
 				4CDFA5871996EAB2007EA46E /* IRCConnection.m in Sources */,
 				4CDFA5881996EAB2007EA46E /* IRCExtras.m in Sources */,
+				4CEC552719BE6A220028DEF2 /* TVCWebViewAutoScroll.m in Sources */,
 				4CDFA5891996EAB2007EA46E /* IRCISupportInfo.m in Sources */,
 				4CDFA58A1996EAB2007EA46E /* IRCMessage.m in Sources */,
 				4CDFA58B1996EAB2007EA46E /* IRCModeInfo.m in Sources */,
