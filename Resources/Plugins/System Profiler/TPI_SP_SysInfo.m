@@ -728,7 +728,7 @@
 	}
 
 	if ([productVersion hasPrefix:@"10.10"]) {
-		return TPILocalizedString(@"BasicLanguage[1050]");
+		return TPILocalizedString(@"BasicLanguage[1052]");
 	}
 	
 	return nil;

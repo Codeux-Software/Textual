@@ -59,7 +59,7 @@
 "BasicLanguage[1015]" = "Lion";
 "BasicLanguage[1016]" = "Mountain Lion";
 "BasicLanguage[1017]" = "Mavericks";
-"BasicLanguage[1050]" = "Yosemite";
+"BasicLanguage[1052]" = "Yosemite";
 
 "BasicLanguage[1018]" = "%.2f GHz";
 "BasicLanguage[1019]" = "%.2f MHz"; // really?
