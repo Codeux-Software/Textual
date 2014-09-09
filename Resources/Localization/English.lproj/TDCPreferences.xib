@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6206.9" systemVersion="14A343f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment version="1080" defaultVersion="1080" identifier="macosx"/>
+        <deployment version="1080" identifier="macosx"/>
         <development version="5100" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6206.9"/>
     </dependencies>
@@ -1827,7 +1827,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                 <popUpButton verticalHuggingPriority="750" id="H7x-dV-MZS">
                     <rect key="frame" x="251" y="209" width="231" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="7JI-Be-FO7">
+                    <popUpButtonCell key="cell" type="push" title="Clear Destination" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="3" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="l8l-ff-FHu" id="7JI-Be-FO7">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="smallSystem"/>
                         <menu key="menu" title="OtherViews" showsStateColumn="NO" id="Zvg-8I-YWm">
@@ -1837,9 +1837,9 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                     <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                 </menuItem>
                                 <menuItem title="Select Destination…" tag="2" id="v2f-9c-gsp"/>
-                                <menuItem title="Clear Destination" tag="3" id="l8l-ff-FHu">
+                                <menuItem title="Clear Destination" state="on" tag="3" id="l8l-ff-FHu">
                                     <connections>
-                                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.LogTranscriptDestinationSecurityBookmark" id="oPP-VE-jxR">
+                                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.LogTranscriptDestinationSecurityBookmark_5" id="u9S-Eb-PHq">
                                             <dictionary key="options">
                                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                                             </dictionary>
