@@ -1274,6 +1274,15 @@
 	}
 }
 
+- (void)storeLastSelectedChannel
+{
+	if (self.temporarilyDisablePreviousSelectionUpdates == NO) {
+		if (self.selectedClient) {
+			self.selectedClient.lastSelectedChannel = self.selectedChannel;
+		}
+	}
+}
+
 - (IRCTreeItem *)previouslySelectedItem
 {
 	NSObjectIsEmptyAssertReturn(self.previousSelectedClientId, nil);
@@ -1308,12 +1317,11 @@
 		return;
 	}
 	
-	/* Store this item so we can move on. */
-	[self storePreviousSelection];
-	
 	/* We do support selecting nothing. */
 	if (item == nil) {
-		self.selectedItem = nil;
+		[self storePreviousSelection]; // -outlineViewSelectionDidChange: would normally do this
+
+		 self.selectedItem = nil;
 		
 		[self.channelViewBox setContentView:nil];
 		
@@ -1333,19 +1341,12 @@
 	if (isClient == NO) {
 		[[self.serverList animator] expandItem:u];
 	}
-	
+
 	/* We now move the actual selection. */
 	NSInteger i = [self.serverList rowForItem:item];
-	
+
 	if (i >= 0) {
 		[self.serverList selectItemAtIndex:i];
-		
-		/* Some internal state tracking. */
-		if (isClient) {
-			[u setLastSelectedChannel:nil];
-		} else {
-			[u setLastSelectedChannel:item];
-		}
 	}
 }
 
@@ -1611,6 +1612,9 @@
 			[self.contentSplitView expandMemberList];
 		}
 	}
+
+	/* Update client specific data. */
+	[self storeLastSelectedChannel];
 
 	/* Allow selected WebView time to update. */
 	[log notifyDidBecomeVisible];

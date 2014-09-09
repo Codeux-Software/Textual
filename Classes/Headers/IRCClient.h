@@ -127,7 +127,7 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 @property (nonatomic, assign) ClientIRCv3SupportedCapacities capacities;
 @property (nonatomic, nweak) NSArray *channelList; // channelList is actually a proxy setter/getter for internal storage.
 @property (nonatomic, copy) NSArray *cachedHighlights;
-@property (nonatomic, strong) IRCChannel *lastSelectedChannel;
+@property (nonatomic, strong) IRCChannel *lastSelectedChannel; // If this is the selected client, then the value of this property is the current selection. If the current client is not selected, then this value is either its previous selection or nil.
 @property (nonatomic, copy) NSString *preAwayNickname; // Nickname before away was set.
 @property (nonatomic, assign) NSTimeInterval lastMessageReceived;			// The time at which the last of any incoming data was received.
 @property (nonatomic, assign) NSTimeInterval lastMessageServerTime;			// The time of the last message received that contained a server-time CAP.
