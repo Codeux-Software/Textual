@@ -2573,6 +2573,8 @@
 	
 	[mainWindow() setTemporarilyDisablePreviousSelectionUpdates:YES];
 
+	[serverList beginUpdates];
+
 	for (IRCClient *u in [worldController() clientList]) {
 		NSMutableArray *channels = [[u channelList] mutableCopy];
 		
@@ -2590,6 +2592,8 @@
 		// Reload actual views.
 		[serverList reloadItem:u reloadChildren:YES];
 	}
+
+	[serverList endUpdates];
 	
 	[worldController() save];
 	
