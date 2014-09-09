@@ -414,8 +414,10 @@
 		
 		[mainWindow() setTemporarilyDisablePreviousSelectionUpdates:YES];
 		[mainWindow() setTemporarilyIgnoreOutlineViewSelectionChanges:YES];
-	
+
+		[mainWindowServerList() beginUpdates];
 		[mainWindowServerList() reloadItem:self reloadChildren:YES];
+		[mainWindowServerList() endUpdates];
 
 		[mainWindow() select:selectedItem];
 		[mainWindow() adjustSelection];
