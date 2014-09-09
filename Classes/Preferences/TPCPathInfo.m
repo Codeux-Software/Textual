@@ -283,7 +283,7 @@ static NSURL *logToDiskLocationResolvedBookmark;
 		return;
 	}
 	
-	NSData *bookmark = [RZUserDefaults() dataForKey:@"LogTranscriptDestinationSecurityBookmark"];
+	NSData *bookmark = [RZUserDefaults() dataForKey:@"LogTranscriptDestinationSecurityBookmark_5"];
 	
 	NSObjectIsEmptyAssert(bookmark);
 	
@@ -322,7 +322,7 @@ static NSURL *logToDiskLocationResolvedBookmark;
 	}
 	
 	/* Set new location. */
-	[RZUserDefaults() setObject:value forKey:@"LogTranscriptDestinationSecurityBookmark"];
+	[RZUserDefaults() setObject:value forKey:@"LogTranscriptDestinationSecurityBookmark_5"];
 	
 	/* Reset our folder. */
 	[TPCPathInfo startUsingLogLocationSecurityScopedBookmark];
