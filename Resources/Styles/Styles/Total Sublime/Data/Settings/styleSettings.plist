@@ -17,9 +17,12 @@
 	<integer>6</integer>
 	<key>Underlying Window Color</key>
 	<string>#000000</string>
-	<key>Template Engine Version</key>
-	<integer>3</integer>
 	<key>Force Invert Sidebars</key>
 	<true/>
+	<key>Template Engine Versions</key>
+	<dict>
+		<key>default</key>
+		<integer>3</integer>
+	</dict>
 </dict>
 </plist>
