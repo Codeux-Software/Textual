@@ -60,6 +60,18 @@ typedef uint32_t attr_t;
 									_rendererBackgroundColorAttribute			\
 								)
 
+static void resetRange(attr_t *attrBuf, NSInteger start, NSInteger len)
+{
+	attr_t *target = (attrBuf + start);
+	attr_t *end = (target + len);
+
+	while (target < end) {
+		*target = 0;
+
+		++target;
+	}
+}
+
 static void setFlag(attr_t *attrBuf, attr_t flag, NSInteger start, NSInteger len)
 {
 	attr_t *target = (attrBuf + start);
@@ -67,20 +79,6 @@ static void setFlag(attr_t *attrBuf, attr_t flag, NSInteger start, NSInteger len
 	
 	while (target < end) {
 		*target |= flag;
-		
-		++target;
-	}
-}
-
-static void removeFlag(attr_t *attrBuf, attr_t flag, NSInteger start, NSInteger len)
-{
-	attr_t *target = (attrBuf + start);
-	attr_t *end = (target + len);
-	
-	while (target < end) {
-		if (*target & flag) {
-			*target &= ~flag;
-		}
 		
 		++target;
 	}
@@ -557,11 +555,11 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				NSRange r = NSRangeFromString(rn[0]);
 
 				if (r.length >= 1) {
+					/* Do not allow IRC formatting in URL. */
+					resetRange(attrBuf, r.location, r.length);
+
 					/* Mark range as URL */
 					setFlag(attrBuf, _rendererURLAttribute, r.location, r.length);
-					
-					/* Do not allow IRC formatting in URL. */
-					removeFlag(attrBuf, _effectMask, r.location, r.length);
 					
 					if (isNormalMsg && [log inlineImagesEnabledForView]) {
 						/* Get URL from returned array. */
