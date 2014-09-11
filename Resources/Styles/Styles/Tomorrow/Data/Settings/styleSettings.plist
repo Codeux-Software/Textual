@@ -19,7 +19,10 @@
 	<string>#FFFFFF</string>
 	<key>Force Invert Sidebars</key>
 	<false/>
-	<key>Template Engine Version</key>
-	<integer>3</integer>
+	<key>Template Engine Versions</key>
+	<dict>
+		<key>default</key>
+		<integer>3</integer>
+	</dict>
 </dict>
 </plist>

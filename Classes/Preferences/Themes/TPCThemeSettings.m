@@ -37,6 +37,11 @@
 
 #import "TextualApplication.h"
 
+#import "BuildConfig.h"
+
+#define _templateEngineVersionMaximum			3
+#define _templateEngineVersionMinimum			3
+
 @interface TPCThemeSettings ()
 @property (nonatomic, strong) GRMustacheTemplateRepository *styleTemplateRepository;
 @property (nonatomic, strong) GRMustacheTemplateRepository *appTemplateRepository;
@@ -72,6 +77,11 @@
 - (double)doubleForKey:(NSString *)key fromDictionary:(NSDictionary *)dict
 {
 	return [dict doubleForKey:key];
+}
+
+- (NSDictionary *)dictionaryForKeys:(NSString *)key fromDictionary:(NSDictionary *)dict
+{
+	return [dict dictionaryForKey:key];
 }
 
 - (NSString *)stringForKey:(NSString *)key fromDictionary:(NSDictionary *)dict
@@ -263,10 +273,10 @@
 
 	self.indentationOffset = TPCThemeSettingsDisabledIndentationOffset;
 
-	self.usesIncompatibleTemplateEngineVersion = NO;
+	self.usesIncompatibleTemplateEngineVersion = YES;
 
 	/* Load style settings dictionary. */
-	BOOL didLoadDefaultTemplateRepository = NO;
+	NSInteger templateEngineVersion = TPCThemeSettingsLatestTemplateEngineVersion;
 
 	NSDictionary *styleSettings = nil;
 	
@@ -295,23 +305,29 @@
 		}
 
 		/* Get style template version. */
-		NSInteger templateVersion = [self integerForKey:@"Template Engine Version" fromDictionary:styleSettings];
+		NSDictionary *templateVersions = [self dictionaryForKeys:@"Template Engine Versions" fromDictionary:styleSettings];
 
-		if (templateVersion == TPCThemeSettingsLatestTemplateEngineVersion) {
-			[self loadApplicationStyleRespository:TPCThemeSettingsLatestTemplateEngineVersion];
+		if (templateVersions) {
+			NSInteger targetVersion = [templateVersions integerForKey:TXBundleBuildVersionForComparisons];
 
-			didLoadDefaultTemplateRepository = YES;
-		} else {
-			self.usesIncompatibleTemplateEngineVersion = YES;
+			if (NSNumberInRange(targetVersion, _templateEngineVersionMinimum, _templateEngineVersionMaximum)) {
+				templateEngineVersion = targetVersion;
+
+				self.usesIncompatibleTemplateEngineVersion = NO;
+			} else {
+				NSInteger defaultVersion = [templateVersions integerForKey:@"default"];
+
+				if (NSNumberInRange(defaultVersion, _templateEngineVersionMinimum, _templateEngineVersionMaximum)) {
+					templateEngineVersion = defaultVersion;
+
+					self.usesIncompatibleTemplateEngineVersion = NO;
+				}
+			}
 		}
 	}
 
 	/* Fall back to the default repository. */
-	if (didLoadDefaultTemplateRepository == NO) {
-		self.usesIncompatibleTemplateEngineVersion = YES; /* A style must define its engine version. */
-
-		[self loadApplicationStyleRespository:TPCThemeSettingsLatestTemplateEngineVersion];
-	}
+	[self loadApplicationStyleRespository:templateEngineVersion];
 
 	/* Inform our defaults controller about a few overrides. */
 	/* These setValue calls basically tell the NSUserDefaultsController for the "Preferences" 
