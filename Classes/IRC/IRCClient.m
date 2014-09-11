@@ -1810,6 +1810,14 @@
 	NSString *uncutInput = [s string];
 
 	switch ([IRCCommandIndex indexOfIRCommand:uppercaseCommand publicSearch:YES]) {
+		case 5101: // Command: AUTOJOIN
+		{
+			if (self.autojoinInProgress == NO && self.isAutojoined == NO) {
+				[self performAutoJoin:YES];
+			}
+
+			break;
+		}
 		case 5004: // Command: AWAY
 		{
 			if (NSObjectIsEmpty(uncutInput)) {
@@ -4382,7 +4390,7 @@
 								self.isWaitingForNickServ = NO;
                                 
                                 if ([TPCPreferences autojoinWaitsForNickServ]) {
-                                    if (self.isAutojoined == NO) {
+                                    if (self.isAutojoined == NO && self.autojoinInProgress == NO) {
                                         [self performAutoJoin];
                                     }
                                 }
@@ -7306,6 +7314,16 @@
 
 - (void)performAutoJoin
 {
+	[self performAutoJoin:NO];
+}
+
+- (void)performAutoJoin:(BOOL)userInitialized
+{
+	/* Ignore previous invocations of this method. */
+	if (self.autojoinInProgress || self.isAutojoined) {
+		return;
+	}
+
 	/* Ignore autojoin based on ZNC preferences. */
 	if (self.isZNCBouncerConnection && self.config.zncIgnoreConfiguredAutojoin) {
 		self.isAutojoined = YES;
@@ -7314,10 +7332,12 @@
 	}
 	
 	/* Do nothing unless certain conditions are met. */
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityIsIdentifiedWithSASL] == NO) {
-		if ([TPCPreferences autojoinWaitsForNickServ]) {
-			if (self.serverHasNickServ && self.isIdentifiedWithNickServ == NO) {
-				return;
+	if (userInitialized == NO) {
+		if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityIsIdentifiedWithSASL] == NO) {
+			if ([TPCPreferences autojoinWaitsForNickServ]) {
+				if (self.serverHasNickServ && self.isIdentifiedWithNickServ == NO) {
+					return;
+				}
 			}
 		}
 	}
@@ -7350,7 +7370,7 @@
 		[self quickJoin:ary];
 		
 		/* Update status later. */
-		[self performSelector:@selector(updateAutoJoinStatus) withObject:nil afterDelay:15.0];
+		[self performSelector:@selector(updateAutoJoinStatus) withObject:nil afterDelay:25.0];
 	}
 }
 
