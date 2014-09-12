@@ -206,7 +206,7 @@
 	
 	/* Complete the import. */
 	[d beginWithCompletionHandler:^(NSInteger returnCode) {
-		if (returnCode == NSOKButton) {
+		if (returnCode == NSModalResponseOK) {
 			if ([self import:url into:[d URL]]) {
 				/* Script was successfully installed. */
 				NSString *filename = [[[d URL] lastPathComponent] stringByDeletingPathExtension];

@@ -100,7 +100,7 @@
 	/* Inform callback of result. */
 	NSArray *contextArray = (__bridge NSArray *)contextInfo;
 
-	BOOL isTrusted = (returnCode == NSOKButton);
+	BOOL isTrusted = (returnCode == NSModalResponseOK);
 
 	TVCQueuedCertificateTrustPanelCompletionBlock completionBlock = contextArray[1];
 

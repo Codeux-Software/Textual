@@ -212,7 +212,7 @@
 				timeleft = (([self totalFilesize] - [self processedFilesize]) / [self currentSpeed]);
 				
 				if (timeleft > 0) {
-					remainingTime = TXHumanReadableTimeInterval(timeleft, YES, (NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit));
+					remainingTime = TXHumanReadableTimeInterval(timeleft, YES, (NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond));
 				}
 			}
 			

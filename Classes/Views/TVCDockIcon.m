@@ -76,7 +76,7 @@ static NSInteger _cachedHighlightCount = -1;
 
 	NSCalendar *sysCalendar = [NSCalendar currentCalendar];
 
-    NSDateComponents *breakdownInfo = [sysCalendar components:(NSDayCalendarUnit | NSMonthCalendarUnit) fromDate:[NSDate date]];
+    NSDateComponents *breakdownInfo = [sysCalendar components:(NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:[NSDate date]];
 
     /* The first public commit of Textual occured on July, 23, 2010. This is the day
      that we consider the birthday of the application. */

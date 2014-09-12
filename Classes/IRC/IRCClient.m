@@ -6143,9 +6143,13 @@
 			NSString *text = nil;
 
 			if (self.inUserInvokedWhowasRequest) {
-				NSString *timeInfo = [NSDateFormatter localizedStringFromDate:[NSDate dateWithNaturalLanguageString:serverInfo]
-																	dateStyle:NSDateFormatterLongStyle
-																	timeStyle:NSDateFormatterLongStyle];
+				NSDateFormatter *formatter = [NSDateFormatter new];
+
+				[formatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+				[formatter setDateStyle:NSDateFormatterLongStyle];
+				[formatter setTimeStyle:NSDateFormatterLongStyle];
+
+				NSString *timeInfo = [formatter stringForObjectValue:serverInfo];
 				
 				text = BLS(1169, nickname, serverHost, timeInfo);
 			} else {
