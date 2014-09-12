@@ -90,7 +90,7 @@
 
 + (NSString *)applicationAndSystemUptime
 {
-	NSInteger dateFormat = (NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit);
+	NSInteger dateFormat = (NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond);
 	
 	NSString *systemUptime = TXHumanReadableTimeInterval([TPI_SP_SysInfo systemUptime], NO, dateFormat);
 	NSString *textualUptime = TXHumanReadableTimeInterval([TPI_SP_SysInfo applicationUptime], NO, dateFormat);
@@ -107,7 +107,7 @@
 	return TPILocalizedString(@"BasicLanguage[1049]",
 				  TXFormattedNumber([worldController() messagesSent]),
 				  TXFormattedNumber([worldController() messagesReceived]),
-				  TXHumanReadableTimeInterval(lastMsg, YES, NSSecondCalendarUnit),
+				  TXHumanReadableTimeInterval(lastMsg, YES, NSCalendarUnitSecond),
 				  [TPI_SP_SysInfo formattedDiskSize:[worldController() bandwidthIn]],
 				  [TPI_SP_SysInfo formattedDiskSize:[worldController() bandwidthOut]]);
 }

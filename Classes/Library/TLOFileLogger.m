@@ -219,7 +219,7 @@
 	NSURL *buildPath = [self buildPath];
 	
 	if (buildPath) {
-		NSDate *datetime = [[NSDate date] dateWithCalendarFormat:@"%Y-%m-%d" timeZone:nil];
+		NSString *datetime = TXFormattedTimestamp([NSDate date], @"%Y-%m-%d");
 
 		NSString *filename = [NSString stringWithFormat:@"%@.txt", datetime];
 		

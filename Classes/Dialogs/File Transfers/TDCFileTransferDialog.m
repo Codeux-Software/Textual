@@ -484,7 +484,7 @@
 		[d setMessage:TXTLS(@"TDCFileTransferDialog[1021]")];
 		
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
-			if (result == NSOKButton) {
+			if (result == NSModalResponseOK) {
 				NSString *newPath = [d.URL path]; // Define path.
 				
 				for (TDCFileTransferDialogTransferController *e in incomingTransfers) {

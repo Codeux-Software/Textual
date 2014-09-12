@@ -1319,7 +1319,7 @@
 		
 		/* After the user has chose the identity, we have to update our config value
 		 here and not -save since -save has nothing to reference. */
-		if (returnCode == NSAlertDefaultReturn) {
+		if (returnCode == NSModalResponseOK) {
 			SecIdentityRef identity = [panel identity];
 			
 			CFDataRef certData;

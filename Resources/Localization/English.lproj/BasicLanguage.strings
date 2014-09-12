@@ -566,7 +566,6 @@
 "BasicLanguage[1204][MINUTE]" = "minutes";
 "BasicLanguage[1204][MONTH]" = "months";
 "BasicLanguage[1204][SECOND]" = "seconds";
-"BasicLanguage[1204][WEEK]" = "weeks";
 "BasicLanguage[1204][YEAR]" = "years";
 
 "BasicLanguage[1205][DAY]" = "day";
@@ -574,7 +573,6 @@
 "BasicLanguage[1205][MINUTE]" = "minute";
 "BasicLanguage[1205][MONTH]" = "month";
 "BasicLanguage[1205][SECOND]" = "second";
-"BasicLanguage[1205][WEEK]" = "week";
 "BasicLanguage[1205][YEAR]" = "year";
 
 /* User info popover. */

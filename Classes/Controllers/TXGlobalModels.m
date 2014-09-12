@@ -106,43 +106,38 @@ NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, N
 {
 	/* Default what we will return. */
 	if (orderMatrix == 0) {
-		orderMatrix = (NSYearCalendarUnit		|
-					   NSMonthCalendarUnit		|
-					   NSWeekCalendarUnit		|
-					   NSDayCalendarUnit		|
-					   NSHourCalendarUnit		|
-					   NSMinuteCalendarUnit		|
-					   NSSecondCalendarUnit);
+		orderMatrix = (NSCalendarUnitYear			|
+					   NSCalendarUnitMonth			|
+					   NSCalendarUnitDay			|
+					   NSCalendarUnitHour			|
+					   NSCalendarUnitMinute			|
+					   NSCalendarUnitSecond);
 	}
 	
 	/* Convert calander units to a text rep. */
 	NSMutableArray *orderStrings = [NSMutableArray array];
 	
-	if (orderMatrix & NSYearCalendarUnit) {
+	if (orderMatrix & NSCalendarUnitYear) {
 		[orderStrings addObject:@"year"];
 	}
 	
-	if (orderMatrix & NSMonthCalendarUnit) {
+	if (orderMatrix & NSCalendarUnitMonth) {
 		[orderStrings addObject:@"month"];
 	}
 	
-	if (orderMatrix & NSWeekCalendarUnit) {
-		[orderStrings addObject:@"week"];
-	}
-	
-	if (orderMatrix & NSDayCalendarUnit) {
+	if (orderMatrix & NSCalendarUnitDay) {
 		[orderStrings addObject:@"day"];
 	}
 	
-	if (orderMatrix & NSHourCalendarUnit) {
+	if (orderMatrix & NSCalendarUnitHour) {
 		[orderStrings addObject:@"hour"];
 	}
 	
-	if (orderMatrix & NSMinuteCalendarUnit) {
+	if (orderMatrix & NSCalendarUnitMinute) {
 		[orderStrings addObject:@"minute"];
 	}
 	
-	if (orderMatrix & NSSecondCalendarUnit) {
+	if (orderMatrix & NSCalendarUnitSecond) {
 		[orderStrings addObject:@"second"];
 	}
 	

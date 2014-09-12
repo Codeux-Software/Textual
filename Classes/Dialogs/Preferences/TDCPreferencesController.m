@@ -646,7 +646,7 @@
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
 			[[self fileTransferDownloadDestinationButton] selectItemAtIndex:0];
 			
-			if (returnCode == NSOKButton) {
+			if (returnCode == NSModalResponseOK) {
 				NSURL *pathURL = [d URLs][0];
 				
 				NSError *error = nil;
@@ -715,7 +715,7 @@
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
 			[[self transcriptFolderButton] selectItemAtIndex:0];
 
-			if (returnCode == NSOKButton) {
+			if (returnCode == NSModalResponseOK) {
 				NSURL *pathURL = [d URLs][0];
 
 				NSError *error = nil;

@@ -2308,7 +2308,7 @@
 	[d setCanCreateDirectories:NO];
 	
 	[d beginSheetModalForWindow:mainWindow() completionHandler:^(NSInteger returnCode) {
-		if (returnCode == NSOKButton) {
+		if (returnCode == NSModalResponseOK) {
 			[[self.fileTransferController fileTransferTable] beginUpdates];
 			
 			for (IRCUser *m in [self selectedMembers:sender]) {

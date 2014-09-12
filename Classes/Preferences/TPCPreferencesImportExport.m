@@ -76,7 +76,7 @@
 		[d setAllowsMultipleSelection:NO];
 
 		[d beginWithCompletionHandler:^(NSInteger returnCode) {
-			if (returnCode == NSOKButton) {
+			if (returnCode == NSModalResponseOK) {
 				NSURL *pathURL = [d URLs][0];
 
 				[self importPostflight:pathURL];
@@ -113,11 +113,11 @@
 		
 		/* Begin import. */
 		NSData *rawData = [NSData dataWithContentsOfURL:pathURL];
-		
-		NSDictionary *plist = [NSPropertyListSerialization propertyListFromData:rawData
-															   mutabilityOption:NSPropertyListImmutable
+
+		NSDictionary *plist = [NSPropertyListSerialization propertyListWithData:rawData
+																		options:NSPropertyListImmutable
 																		 format:NULL
-															   errorDescription:NULL];
+																		  error:NULL];
 		
 		/* Perform actual import if we have the dictionary. */
 		if (plist) {
@@ -312,16 +312,17 @@
 
 	/* The export will be saved as binary. Two reasons: 1) Discourages user from
 	 trying to tamper with stuff. 2) Smaller, faster. Mostly #1. */
-	NSString *parseError;
+	NSError *parseError;
 
 	/* Create the new property list. */
-	NSData *plist = [NSPropertyListSerialization dataFromPropertyList:mutsettings
+	NSData *plist = [NSPropertyListSerialization dataWithPropertyList:mutsettings
 															   format:NSPropertyListBinaryFormat_v1_0
-													 errorDescription:&parseError];
+															  options:0
+																error:&parseError];
 
 	/* Do the actual write. */
 	if (NSObjectIsEmpty(plist) || parseError) {
-		LogToConsole(@"Error Creating Property List: %@", parseError);
+		LogToConsole(@"Error Creating Property List: %@", [parseError localizedDescription]);
 		
 		return NO;
 	} else {
@@ -350,7 +351,7 @@
 	[d setMessage:BLS(1180)];
 
 	[d beginWithCompletionHandler:^(NSInteger returnCode) {
-		if (returnCode == NSOKButton) {
+		if (returnCode == NSModalResponseOK) {
 			(void)[self exportPostflightForURL:[d URL] filterJunk:YES];
 		}
 	}];

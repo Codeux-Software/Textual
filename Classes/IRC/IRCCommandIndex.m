@@ -56,11 +56,11 @@ static NSDictionary *IRCCommandIndexPrivateValues = nil;
 		
 		if (filePath) {
 			NSData *rawData = [NSData dataWithContentsOfURL:filePath];
-			
-			NSDictionary *plist = [NSPropertyListSerialization propertyListFromData:rawData
-																   mutabilityOption:NSPropertyListImmutable
+
+			NSDictionary *plist = [NSPropertyListSerialization propertyListWithData:rawData
+																			options:NSPropertyListImmutable
 																			 format:NULL
-																   errorDescription:NULL];
+																			  error:NULL];
 			
 			NSMutableDictionary *mutplist = [plist mutableCopy];
 			
@@ -74,12 +74,12 @@ static NSDictionary *IRCCommandIndexPrivateValues = nil;
 		
 		if (filePath) {
 			NSData *rawData = [NSData dataWithContentsOfURL:filePath];
-			
-			NSDictionary *plist = [NSPropertyListSerialization propertyListFromData:rawData
-																   mutabilityOption:NSPropertyListImmutable
+
+			NSDictionary *plist = [NSPropertyListSerialization propertyListWithData:rawData
+																			options:NSPropertyListImmutable
 																			 format:NULL
-																   errorDescription:NULL];
-			
+																			  error:NULL];
+
 			NSMutableDictionary *mutplist = [plist mutableCopy];
 			
 			[mutplist removeObjectForKey:_reservedSlotDictionaryKey];
