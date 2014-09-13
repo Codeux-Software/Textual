@@ -46,7 +46,9 @@
 
 + (NSString *)applicationConfiguredFontInformation
 {
-	return TPILocalizedString(@"BasicLanguage[1044]", [TPCPreferences themeChannelViewFontName], [TPCPreferences themeChannelViewFontSize]);
+	NSFont *thefont = [TPCPreferences themeChannelViewFont];
+
+	return TPILocalizedString(@"BasicLanguage[1044]", [thefont displayName], [thefont pointSize]);
 }
 
 + (NSString *)applicationActiveStyle
