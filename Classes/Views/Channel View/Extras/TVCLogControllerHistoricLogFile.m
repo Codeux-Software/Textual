@@ -203,27 +203,31 @@
 
 #ifdef TXSystemIsMacOSYosemiteOrNewer
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		NSBackgroundActivityScheduler *scheduler = [[NSBackgroundActivityScheduler alloc] initWithIdentifier:[self backgroundActivityIdentifier]];
+		@autoreleasepool {
+			NSString *taskID = [self backgroundActivityIdentifier];
 
-		[scheduler setRepeats:YES];
-		[scheduler setInterval:(15 * 60)];
-		[scheduler setTolerance:(5 * 60)];
-		
-		[scheduler setQualityOfService:NSQualityOfServiceBackground];
-		
-		__weak TVCLogControllerHistoricLogFile *weakSelf = self;
-		
-		[scheduler scheduleWithBlock:^(NSBackgroundActivityCompletionHandler completionHandler) {
-			if ( weakSelf) {
-				[weakSelf truncateFileToMatchDefinedMaximumLineCount];
-			}
+			NSBackgroundActivityScheduler *scheduler = [[NSBackgroundActivityScheduler alloc] initWithIdentifier:[taskID copy]];
+
+			[scheduler setRepeats:YES];
+			[scheduler setInterval:(15 * 60)];
+			[scheduler setTolerance:(5 * 60)];
 			
-			completionHandler(NSBackgroundActivityResultFinished);
-		}];
+			[scheduler setQualityOfService:NSQualityOfServiceBackground];
+			
+			__weak TVCLogControllerHistoricLogFile *weakSelf = self;
+			
+			[scheduler scheduleWithBlock:^(NSBackgroundActivityCompletionHandler completionHandler) {
+				if ( weakSelf) {
+					[weakSelf truncateFileToMatchDefinedMaximumLineCount];
+				}
+				
+				completionHandler(NSBackgroundActivityResultFinished);
+			}];
+			
+			self.backgroundTimer = scheduler;
 		
-		self.backgroundTimer = scheduler;
-	
-		self.truncationTimerScheduled = YES;
+			self.truncationTimerScheduled = YES;
+		}
 	} else {
 #endif
 
