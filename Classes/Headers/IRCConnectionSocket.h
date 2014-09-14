@@ -42,6 +42,8 @@
 - (void)openSocket;
 - (void)closeSocket;
 
+@property (readonly, copy) NSString *localizedSecureConnectionProtocolString;
+
 @property (readonly, copy) NSString *connectedAddress;
 
 - (void)write:(NSData *)data;

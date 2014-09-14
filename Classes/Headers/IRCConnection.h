@@ -80,4 +80,5 @@
 - (void)ircConnectionDidError:(NSString *)error;
 - (void)ircConnectionDidReceive:(NSString *)data;
 - (void)ircConnectionWillSend:(NSString *)line;
+- (void)ircConnectionDidSecureConnection;
 @end

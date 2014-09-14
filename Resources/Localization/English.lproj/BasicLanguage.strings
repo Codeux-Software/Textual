@@ -442,6 +442,7 @@
 "BasicLanguage[1128]" = "\002%1$@\002 changed the topic to \002%2$@\002";
 "BasicLanguage[1129]" = "Connection to host established";
 "BasicLanguage[1130]" = "Connection to host at [%@] established";
+"BasicLanguage[1249]" = "Connection secured using %@";
 "BasicLanguage[1131]" = "Disconnect for Sleep Mode";
 "BasicLanguage[1132]" = "Disconnected for server redirect";
 "BasicLanguage[1133]" = "Disconnected from server because of an untrusted SSL certificate";
@@ -687,17 +688,18 @@
 "BasicLanguage[1247][1]" = "Certificate Information";
 "BasicLanguage[1247][2]" = "Click the \"Show Certificate\" button to reveal the certificate used for this connection. If desired, modify the trust of the certificate using the provided user interface controls attached to the certificate.\n\nConnection protocol negotiated using this certificate: %@";
 
-"BasicLanguage[1248][1]" = "SSL 3.0";
-"BasicLanguage[1248][2]" = "SSL 2.0";
-"BasicLanguage[1248][3]" = "SSL 1.0";
-"BasicLanguage[1248][4]" = "TLS 1.0";
-"BasicLanguage[1248][5]" = "TLS 1.1";
-"BasicLanguage[1248][6]" = "TLS 1.2";
+/* Localized connection protocol names. */
+"BasicLanguage[1248][1]" = "Secure Sockets Layer (SSL), version 3.0";
+"BasicLanguage[1248][2]" = "Secure Sockets Layer (SSL), version 2.0";
+"BasicLanguage[1248][3]" = "Secure Sockets Layer (SSL), version 1.0";
+"BasicLanguage[1248][4]" = "Transport Layer Security (TLS), version 1.0";
+"BasicLanguage[1248][5]" = "Transport Layer Security (TLS), version 1.1";
+"BasicLanguage[1248][6]" = "Transport Layer Security (TLS), version 1.2";
 "BasicLanguage[1248][7]" = "Unknown";
 
 
 
 
-/* Next unusued key: 1249 */
+/* Next unusued key: 1250 */
 
 

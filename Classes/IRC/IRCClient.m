@@ -3751,6 +3751,15 @@
 	[mainWindow() reloadTreeGroup:self];
 }
 
+- (void)ircConnectionDidSecureConnection
+{
+	NSString *sslProtocolString = [self.socket localizedSecureConnectionProtocolString];
+
+	if (sslProtocolString) {
+		[self printDebugInformationToConsole:BLS(1249, sslProtocolString)];
+	}
+}
+
 - (void)ircConnectionDidConnect:(IRCConnection *)sender
 {
 	if ([self isTerminating]) {

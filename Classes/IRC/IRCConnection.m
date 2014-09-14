@@ -247,6 +247,11 @@
 	[self.associatedClient ircConnectionDidReceive:data];
 }
 
+- (void)tcpClientDidSecureConnection
+{
+	[self.associatedClient ircConnectionDidSecureConnection];
+}
+
 - (void)tcpClientDidSendData
 {
 	self.isSending = NO;
