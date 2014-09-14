@@ -119,33 +119,7 @@
 	return nil;
 }
 
-- (void)requestSSLTrustFor:(NSWindow *)docWindow
-			 modalDelegate:(id)adelegate
-			didEndSelector:(SEL)didEndSelector
-			   contextInfo:(void *)contextInfo
-			 defaultButton:(NSString *)defaultButton
-		   alternateButton:(NSString *)alternateButton
-{
-	SecTrustRef trust = [self sslCertificateTrustInformation];
-
-	PointerIsEmptyAssert(trust);
-
-	//DebugLogToConsole(@"SSL Trust Ref: %@", trust);
-
-	SFCertificatePanel *panel = [SFCertificatePanel sharedCertificatePanel];
-
-	[panel setDefaultButtonTitle:defaultButton];
-	[panel setAlternateButtonTitle:alternateButton];
-
-	[panel beginSheetForWindow:docWindow
-				 modalDelegate:adelegate
-				didEndSelector:didEndSelector
-				   contextInfo:contextInfo
-						 trust:trust
-					 showGroup:YES];
-}
-
-- (SecTrustRef)sslCertificateTrustInformation /* @private */
+- (SecTrustRef)sslCertificateTrustInformation
 {
 	__block SecTrustRef trust;
 
@@ -158,6 +132,21 @@
 	[self performBlock:block];
 
 	return trust;
+}
+
+- (SSLProtocol)sslNegotiatedProtocol
+{
+	__block SSLProtocol protocol;
+
+	dispatch_block_t block = ^{
+		OSStatus status = SSLGetNegotiatedProtocolVersion(self.sslContext, &protocol);
+
+#pragma unused(status)
+	};
+
+	[self performBlock:block];
+
+	return protocol;
 }
 
 @end

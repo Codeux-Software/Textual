@@ -46,12 +46,9 @@
 + (BOOL)badSSLCertificateErrorFound:(NSError *)error;
 + (NSString *)posixErrorStringFromError:(NSInteger)errorCode;
 
-- (void)requestSSLTrustFor:(NSWindow *)docWindow
-			 modalDelegate:(id)adelegate
-			didEndSelector:(SEL)didEndSelector
-			   contextInfo:(void *)contextInfo
-			 defaultButton:(NSString *)defaultButton
-		   alternateButton:(NSString *)alternateButton;
+- (SecTrustRef)sslCertificateTrustInformation;
+
+- (SSLProtocol)sslNegotiatedProtocol;
 @end
 
 @interface AsyncSocket (RLMAsyncSocketExtensions)
