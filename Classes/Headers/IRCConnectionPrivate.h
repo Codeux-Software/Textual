@@ -45,5 +45,12 @@
 @property (nonatomic, strong) dispatch_queue_t socketQueue;
 @property (nonatomic, copy) NSData *bufferOverflowString;
 @property (nonatomic, strong) id socketConnection;
+
+- (void)tcpClientDidConnect;
+- (void)tcpClientDidError:(NSString *)error;
+- (void)tcpClientDidDisconnect:(NSError *)distcError;
+- (void)tcpClientDidReceiveData:(NSString *)data;
+- (void)tcpClientDidSecureConnection;
+- (void)tcpClientDidSendData;
 @end
 

@@ -237,7 +237,7 @@
 	self.isConnecting = NO;
 	self.isConnected = YES;
 
-	[self performSelector:@selector(tcpClientDidConnect)];
+	[self tcpClientDidConnect];
 }
 
 - (void)onSocketDidDisconnect:(id)sock
@@ -247,7 +247,7 @@
 		[self destroySocket];
 		
 		if (self.lastDisconnectWasErroneous == NO) {
-			[self performSelector:@selector(tcpClientDidDisconnect:) withObject:nil];
+			[self tcpClientDidDisconnect:nil];
 		}
 	}
 }
@@ -263,7 +263,7 @@
 		self.lastDisconnectWasErroneous = YES;
 	}
 
-	[self performSelector:@selector(tcpClientDidDisconnect:) withObject:distcError];
+	[self tcpClientDidDisconnect:distcError];
 }
 
 - (void)onSocket:(id)sender willDisconnectWithError:(NSError *)error
@@ -286,7 +286,7 @@
 				errorMessage = [error localizedDescription];
 			}
 
-			[self performSelector:@selector(tcpClientDidError:) withObject:errorMessage];
+			[self tcpClientDidError:errorMessage];
 		}
 
 		[self onSocketDidDisconnect:sender withError:error];
@@ -323,7 +323,7 @@
 		}
 
 		TXPerformBlockSynchronouslyOnMainQueue(^{
-			[self performSelector:@selector(tcpClientDidReceiveData:) withObject:sdata];
+			[self tcpClientDidReceiveData:sdata];
 		});
 	}
 }
@@ -347,7 +347,12 @@
 
 - (void)onSocket:(id)sock didWriteDataWithTag:(long)tag
 {
-	[self performSelector:@selector(tcpClientDidSendData)];
+	[self tcpClientDidSendData];
+}
+
+- (void)socketDidSecure:(id)sock
+{
+	[self tcpClientDidSecureConnection];
 }
 
 #pragma mark -
@@ -384,13 +389,9 @@
 #pragma mark -
 #pragma mark SSL Certificate Trust Message
 
-- (void)openSSLCertificateTrustDialog
+- (NSString *)localizedSecureConnectionProtocolString
 {
 	if ([self useNewSocketEngine]) {
-		SecTrustRef trust = [self.socketConnection sslCertificateTrustInformation];
-
-		PointerIsEmptyAssert(trust);
-
 		SSLProtocol protocol = [self.socketConnection sslNegotiatedProtocol];
 
 		NSString *protocolString = nil;
@@ -403,18 +404,37 @@
 								}
 
 		switch (protocol) {
-			_defineCase(kSSLProtocol2, @"BasicLanguage[1248][2]")
-			_defineCase(kSSLProtocol3, @"BasicLanguage[1248][1]")
-			_defineCase(kTLSProtocol1, @"BasicLanguage[1248][4]")
-			_defineCase(kTLSProtocol11, @"BasicLanguage[1248][5]")
-			_defineCase(kTLSProtocol12, @"BasicLanguage[1248][6]")
+				_defineCase(kSSLProtocol2, @"BasicLanguage[1248][2]")
+				_defineCase(kSSLProtocol3, @"BasicLanguage[1248][1]")
+				_defineCase(kTLSProtocol1, @"BasicLanguage[1248][4]")
+				_defineCase(kTLSProtocol11, @"BasicLanguage[1248][5]")
+				_defineCase(kTLSProtocol12, @"BasicLanguage[1248][6]")
 
 			default:
 			{
-				protocolString = TXTLS(@"BasicLanguage[1248][7]");
-
 				break;
 			}
+		}
+
+#undef _defineCase
+
+		return protocolString;
+	} else {
+		return nil;
+	}
+}
+
+- (void)openSSLCertificateTrustDialog
+{
+	if ([self useNewSocketEngine]) {
+		SecTrustRef trust = [self.socketConnection sslCertificateTrustInformation];
+
+		PointerIsEmptyAssert(trust);
+
+		NSString *protocolString = [self localizedSecureConnectionProtocolString];
+
+		if (protocolString == nil) {
+			protocolString = TXTLS(@"BasicLanguage[1248][7]");
 		}
 
 		SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
