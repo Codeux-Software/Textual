@@ -387,12 +387,49 @@
 - (void)openSSLCertificateTrustDialog
 {
 	if ([self useNewSocketEngine]) {
-		[self.socketConnection requestSSLTrustFor:[NSApp mainWindow]
-									modalDelegate:nil
-								   didEndSelector:nil
-									  contextInfo:nil
-									defaultButton:BLS(1011)
-								  alternateButton:nil];
+		SecTrustRef trust = [self.socketConnection sslCertificateTrustInformation];
+
+		PointerIsEmptyAssert(trust);
+
+		SSLProtocol protocol = [self.socketConnection sslNegotiatedProtocol];
+
+		NSString *protocolString = nil;
+
+#define _defineCase(c, k)		case (c):										\
+								{												\
+										protocolString = TXTLS((k));			\
+																				\
+										break;									\
+								}
+
+		switch (protocol) {
+			_defineCase(kSSLProtocol2, @"BasicLanguage[1248][2]")
+			_defineCase(kSSLProtocol3, @"BasicLanguage[1248][1]")
+			_defineCase(kTLSProtocol1, @"BasicLanguage[1248][4]")
+			_defineCase(kTLSProtocol11, @"BasicLanguage[1248][5]")
+			_defineCase(kTLSProtocol12, @"BasicLanguage[1248][6]")
+
+			default:
+			{
+				protocolString = TXTLS(@"BasicLanguage[1248][7]");
+
+				break;
+			}
+		}
+
+		SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
+
+		[panel setDefaultButtonTitle:BLS(1011)];
+		[panel setAlternateButtonTitle:nil];
+
+		[panel setInformativeText:TXTLS(@"BasicLanguage[1247][2]", protocolString)];
+
+		[panel beginSheetForWindow:[NSApp mainWindow]
+					 modalDelegate:nil
+					didEndSelector:NULL
+					   contextInfo:NULL
+							 trust:trust
+						   message:TXTLS(@"BasicLanguage[1247][1]")];
 	}
 }
 

@@ -683,11 +683,21 @@
 "BasicLanguage[1246][2]" = "The style named \"%1$@\" is not designed to work with this version of Textual. Continued use of this style may result in undefined behavior resulting in some features of Textual not functioning as expected.";
 "BasicLanguage[1246][3]" = "OK";
 
+/* Certificate conext command dialog. */
+"BasicLanguage[1247][1]" = "Certificate Information";
+"BasicLanguage[1247][2]" = "Click the \"Show Certificate\" button to reveal the certificate used for this connection. If desired, modify the trust of the certificate using the provided user interface controls attached to the certificate.\n\nConnection protocol negotiated using this certificate: %@";
+
+"BasicLanguage[1248][1]" = "SSL 3.0";
+"BasicLanguage[1248][2]" = "SSL 2.0";
+"BasicLanguage[1248][3]" = "SSL 1.0";
+"BasicLanguage[1248][4]" = "TLS 1.0";
+"BasicLanguage[1248][5]" = "TLS 1.1";
+"BasicLanguage[1248][6]" = "TLS 1.2";
+"BasicLanguage[1248][7]" = "Unknown";
 
 
 
 
-
-/* Next unusued key: 1247 */
+/* Next unusued key: 1249 */
 
 
