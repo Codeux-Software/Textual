@@ -120,8 +120,10 @@
 
 	if (i >= 0 && [selectedRows containsIndex:i] == NO) {
 		[self selectItemAtIndex:i];
+	} else if (i == -1) {
+		return nil;
 	}
-	
+
 	return [menuController() userControlMenu];
 }
 
