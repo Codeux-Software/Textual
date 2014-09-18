@@ -37,10 +37,15 @@
 
 #import "TextualApplication.h"
 
+#define _usesBackgroundActivityTask			0
+
 #define _maximumRowCountPerClient			1000
 
 @interface TVCLogControllerHistoricLogFile ()
+#if _usesBackgroundActivityTask == 1
 @property (nonatomic, strong) id backgroundTimer;
+#endif
+
 @property (nonatomic, strong) NSFileHandle *fileHandle;
 @property (nonatomic, assign) BOOL truncationTimerScheduled;
 @end
@@ -172,15 +177,17 @@
 
 - (void)cancelAnyPreviouslyScheduledFileTruncationEvents
 {
-#ifdef TXSystemIsMacOSYosemiteOrNewer
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		if (self.truncationTimerScheduled) {
-			[self.backgroundTimer invalidate];
-			 self.backgroundTimer = nil;
- 
-			self.truncationTimerScheduled = NO;
-		}
-	} else {
+#if _usesBackgroundActivityTask == 1
+	#ifdef TXSystemIsMacOSYosemiteOrNewer
+		if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+			if (self.truncationTimerScheduled) {
+				[self.backgroundTimer invalidate];
+				 self.backgroundTimer = nil;
+	 
+				self.truncationTimerScheduled = NO;
+			}
+		} else {
+	#endif
 #endif
 		
 		if (self.truncationTimerScheduled) {
@@ -191,8 +198,10 @@
 			self.truncationTimerScheduled = NO;
 		}
 
-#ifdef TXSystemIsMacOSYosemiteOrNewer
-	}
+#if _usesBackgroundActivityTask == 1
+	#ifdef TXSystemIsMacOSYosemiteOrNewer
+		}
+	#endif
 #endif
 }
 
@@ -201,34 +210,36 @@
 	/* File truncation events are scheduled to happen at random 
 	 intervals so they are all not running at one time. */
 
-#ifdef TXSystemIsMacOSYosemiteOrNewer
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		@autoreleasepool {
-			NSString *taskID = [self backgroundActivityIdentifier];
+#if _usesBackgroundActivityTask == 1
+	#ifdef TXSystemIsMacOSYosemiteOrNewer
+		if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+			@autoreleasepool {
+				NSString *taskID = [self backgroundActivityIdentifier];
 
-			NSBackgroundActivityScheduler *scheduler = [[NSBackgroundActivityScheduler alloc] initWithIdentifier:[taskID copy]];
+				NSBackgroundActivityScheduler *scheduler = [[NSBackgroundActivityScheduler alloc] initWithIdentifier:[taskID copy]];
 
-			[scheduler setRepeats:YES];
-			[scheduler setInterval:(15 * 60)];
-			[scheduler setTolerance:(5 * 60)];
-			
-			[scheduler setQualityOfService:NSQualityOfServiceBackground];
-			
-			__weak TVCLogControllerHistoricLogFile *weakSelf = self;
-			
-			[scheduler scheduleWithBlock:^(NSBackgroundActivityCompletionHandler completionHandler) {
-				if ( weakSelf) {
-					[weakSelf truncateFileToMatchDefinedMaximumLineCount];
-				}
+				[scheduler setRepeats:YES];
+				[scheduler setInterval:(15 * 60)];
+				[scheduler setTolerance:(5 * 60)];
 				
-				completionHandler(NSBackgroundActivityResultFinished);
-			}];
+				[scheduler setQualityOfService:NSQualityOfServiceBackground];
+				
+				__weak TVCLogControllerHistoricLogFile *weakSelf = self;
+				
+				[scheduler scheduleWithBlock:^(NSBackgroundActivityCompletionHandler completionHandler) {
+					if ( weakSelf) {
+						[weakSelf truncateFileToMatchDefinedMaximumLineCount];
+					}
+					
+					completionHandler(NSBackgroundActivityResultFinished);
+				}];
+				
+				self.backgroundTimer = scheduler;
 			
-			self.backgroundTimer = scheduler;
-		
-			self.truncationTimerScheduled = YES;
-		}
-	} else {
+				self.truncationTimerScheduled = YES;
+			}
+		} else {
+	#endif
 #endif
 
 		if (self.truncationTimerScheduled == NO) {
@@ -241,8 +252,10 @@
 			self.truncationTimerScheduled = YES;
 		}
 
-#ifdef TXSystemIsMacOSYosemiteOrNewer
-	}
+#if _usesBackgroundActivityTask == 1
+	#ifdef TXSystemIsMacOSYosemiteOrNewer
+		}
+	#endif
 #endif
 }
 
@@ -392,6 +405,7 @@
 #pragma mark -
 #pragma mark Private API
 
+#if _usesBackgroundActivityTask == 1
 - (NSString *)backgroundActivityIdentifier
 {
 	id client = [self.associatedController associatedClient];
@@ -407,6 +421,7 @@
 	
 	return [@"com.codeux.irc.textual5.TVCLogControllerHistoricLogBackgroundActivity.%@" stringByAppendingString:combinedName];
 }
+#endif
 
 - (NSString *)writePath
 {
