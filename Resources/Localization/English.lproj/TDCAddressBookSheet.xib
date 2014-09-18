@@ -401,7 +401,7 @@ DQ
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Select one or more of the following items to ignore from this user:" id="exY-LJ-Izn">
                             <font key="font" metaFont="system"/>
-                            <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
