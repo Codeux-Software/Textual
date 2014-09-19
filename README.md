@@ -1,27 +1,34 @@
+## Introduction to Textual
+
 Textual is a highly modified version of the open source project known as [LimeChat](https://github.com/psychs/limechat) created by Satoshi Nakagawa. Much of the app uses the open standard of [WebKit](http://webkit.org/) which makes customization easy through the use of CSS 3 and HTML 5. [Plugins](http://www.codeux.com/textual/wiki/Writing-Plugins.wiki) written in Objective-C and [scripts](http://www.codeux.com/textual/wiki/Writing-Scripts.wiki) made with AppleScript (and other languages) are also supported.
 
-## Building Textual
-
+## Supporting Textual
 
 It is asked out of kindness that those with the power to build Textual do not abuse it to freely distribute it to hundreds of users. Textual exists as an open source project for two reasons: The first reason is to allow the open source community as a whole to contribute. The second reason is to assist other Objective-C developers by showing certain solutions to tasks they may face. A lot of work has been put into the project by the original authors as well as those who have contributed. The copy of Textual in the Mac App Store helps fund the project. Therefore, what is asked above, is asked out of respect so that the project can continue to thrive.
 
+## Note Regarding Support
+
 Please be aware while it is within your right to compile Textual and redistribute it unlimited times; **we will not provide support for the building process as it encourages use of potentially unstable code**. However, once built, general support for easy to answer questions related to the actual use of the application is still available at any time.
 
-<hr />
+## Note Regarding Code Signing
+
+**It is HIGHLY DISCOURAGED to turn off code signing.** Certain features rely on the fact that Textual is properly signed and is within a sandboxed enviornment. 
+
+For example, Textual uses securiry scoped bookmarks issued by the kernel to access certain resources outside of its sandbox. These bookmarks rely on the kernel knowing whether the copy of Textual that you are running is the same assigned to the bookmark. This is done using the code signing identity. Therefore, certain features such as logging to disk will never work without code signing because Textual wont be able to save the bookmark to the specified logging location.
+
+Another example is that Textual may have diffuclties accessing and assigning passwords when not code signed. This is a result of the OS X keychain internals relying on the trust defined by code signing identities. 
+
+## Building on Mavericks
+
+If building Textual on Mavericks, then **the option in Xcode to continue building after receiving a build error must be enabled**. Textual builds an interface file which contains code which is specific to the Yosemite SDK. Therefore, building on Mavericks will result in this file creating an error. This file is not accessed on Mavericks once built so ignoring this error by continuing the build is okay.
+
+## Building Textual
 
 The latest version of Textual requires two things to be built. One is a valid (does not need to be trusted) code signing certificate. The second is an installation of Xcode 5 or later on Mac OS Mavericks.
 
-If building Textual on Mavericks, then the option in Xcode to continue after receiving a build error must be enabled. Textual builds an interface file which contains code which is specific to the Yosemite SDK. Therefore, building on Mavericks will result in this file creating an error. This file is not accessed on Mavericks once built so ignoring this error by continuing the build is okay.
-
 If you are an Apple registered developer, then obtaining a signing certificate is not very hard. However, if you are not, a self-signed certificate for "code signing" will do just as well. The steps to produce one of these is very simple so Google is the best destination to check for the steps on making one of these.
 
-**It is HIGHLY DISCOURAGED to turn off code signing.** Doing so will introduce some very common bugs which are a result of Textual expecting to be within a code signed sandbox. One bug that will be  introduced is the inability to write log files to disk. Another is the possibility of Textual being denied write access for passwords. 
-
-These bugs are not intentionally built into Textual to discourage building. They are a result of Apple's own APIs being dependent on the fact that Textual is code signed. 
-
 As long as a self-signed certificate or an Apple Developer issued certificate is available with its name containing "Mac Developer", then the only thing required to build Textual is to open it and build it using the "Standard Release" build scheme. There are no other special instructions. 
-
-99% of build errors are related to code signing so making sure there is some type of certificate available for signing will normally result in a successful build every time.
 
 ## Original Limechat License
 
