@@ -52,6 +52,7 @@ typedef enum IRCUserRank : NSInteger {
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *username;
 @property (nonatomic, copy) NSString *address;
+@property (nonatomic, copy) NSString *realname;
 @property (nonatomic, assign) NSInteger colorNumber;
 @property (nonatomic, assign) BOOL q;
 @property (nonatomic, assign) BOOL a;

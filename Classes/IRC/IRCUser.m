@@ -348,6 +348,8 @@
 	self.username = [from username];
 	self.address = [from address];
 
+	self.realname = [from realname];
+
 	self.colorNumber = [from colorNumber];
 
 	self.q = [from q];
