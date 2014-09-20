@@ -41,6 +41,7 @@
 @property (nonatomic, nweak) IBOutlet NSTextField *nicknameField;
 @property (nonatomic, nweak) IBOutlet NSTextField *usernameField;
 @property (nonatomic, nweak) IBOutlet NSTextField *addressField;
+@property (nonatomic, nweak) IBOutlet NSTextField *realnameField;
 @property (nonatomic, nweak) IBOutlet NSTextField *privilegesField;
 @property (nonatomic, nweak) IBOutlet NSTextField *awayStatusField;
 @end
