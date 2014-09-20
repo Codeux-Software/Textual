@@ -547,13 +547,19 @@
 	NSString *username = [associatedUser username];
 	NSString *address = [associatedUser address];
 
+	NSString *realname = [associatedUser realname];
+
     if (NSObjectIsEmpty(username)) {
         username = BLS(1215);
     }
 
     if (NSObjectIsEmpty(address)) {
         address = BLS(1215);
-    }
+	}
+	
+	if (NSObjectIsEmpty(realname)) {
+		realname = BLS(1215);
+	}
 
     /* Where is our cell? */
 	NSInteger rowIndex = [self rowIndex];
@@ -565,6 +571,8 @@
 	[[userInfoPopover usernameField] setStringValue:username];
 	
 	[[userInfoPopover privilegesField] setStringValue:permissions];
+
+	[[userInfoPopover realnameField] setStringValue:realname];
 
 	/* Interestingly enough, some IRC networks allow formatting characters.
 	 That makes absolutely no sense, but let's support it in the pop up
