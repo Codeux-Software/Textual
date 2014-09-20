@@ -6471,6 +6471,7 @@
 			NSString *username = [m paramAt:2];
 			NSString *hostmask = [m paramAt:3];
 			NSString *flfields = [m paramAt:6];
+			NSString *realname = [m paramAt:7];
 
             BOOL isIRCop = NO;
             BOOL isAway = NO;
@@ -6501,7 +6502,7 @@
 			 user list requires a redraw. If it does, the only then is the user removed
 			 from the internal user list of the associated channel and readded. */
 			IRCUser *oldUser = [c findMember:nickname];
-			IRCUser *newUser;
+			IRCUser *newUser = nil;
 			
 			BOOL insertNewUser = NO;
 
@@ -6519,6 +6520,19 @@
 			[newUser setIsAway:isAway];
 			[newUser setIsCop:isIRCop];
 
+			/* Paramater 7 includes the hop count and real name because it begins with a :
+			 Therefore, we cut after the first space to get the real, real name value. */
+			NSInteger realnameFirstSpace = [realname stringPosition:NSStringWhitespacePlaceholder];
+
+			if (realnameFirstSpace > -1) {
+				if (realnameFirstSpace < [realname length]) {
+					realname = [realname substringAfterIndex:realnameFirstSpace];
+				}
+			}
+
+			[newUser setRealname:realname];
+
+			/* Update user modes */
 #define _userModeSymbol(s)		([prefix isEqualTo:[self.supportInfo userModePrefixSymbol:(s)]])
 			
 			for (NSUInteger i = 0; i < [flfields length]; i++) {
