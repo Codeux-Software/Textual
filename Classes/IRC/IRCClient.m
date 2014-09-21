@@ -6060,6 +6060,7 @@
 		case 335: // RPL_WHOISBOT
 		case 378: // RPL_WHOISHOST
 		case 379: // RPL_WHOISMODES
+		case 616: // RPL_WHOISHOST
 		case 671: // RPL_WHOISSECURE
 		case 672: // RPL_WHOIS? — (is a CGI:IRC client from…, hybrid)
 		case 727: // RPL_WHOIS? — (is captured, hybrid)
