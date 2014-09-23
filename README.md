@@ -30,6 +30,8 @@ If you are an Apple registered developer, then obtaining a signing certificate i
 
 As long as a self-signed certificate or an Apple Developer issued certificate is available with its name containing "Mac Developer", then the only thing required to build Textual is to open it and build it using the "Standard Release" build scheme. There are no other special instructions. 
 
+In Xcode 6 and above you need to edit Resources/Build Settings/Configurations/Code Signing Identity.xcconfig and replace "Mac Developer" with a different name. Xcode will fail to codesign using a self-signed certificate named "Mac Developer"
+
 ## Original Limechat License
 
 The source code of Limechat did not fall under its current GPL license at the time that the source code was forked in 2010. Its original license, at the time of the fork, is displayed below:
