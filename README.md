@@ -28,7 +28,9 @@ The latest version of Textual requires two things to be built. One is a valid (d
 
 If you are an Apple registered developer, then obtaining a signing certificate is not very hard. However, if you are not, a self-signed certificate for "code signing" will do just as well. The steps to produce one of these is very simple so Google is the best destination to check for the steps on making one of these.
 
-As long as a self-signed certificate or an Apple Developer issued certificate is available with its name containing "Mac Developer", then the only thing required to build Textual is to open it and build it using the "Standard Release" build scheme. There are no other special instructions. 
+As long as a self-signed certificate or an Apple Developer issued certificate is available with its name containing "Mac Developer", then the only thing required to build Textual is to open it and build it using the "Standard Release" build scheme. There are no other special instructions.
+
+In Xcode 6 and above you need to eddit Resources/Build Settings/Configurations/Code Signing Identity.xcconfig and replace "Mac Developer" with a different name. Xcode will fail to codesign using a self-signed certificate named "Mac Developer"
 
 ## Original Limechat License
 
