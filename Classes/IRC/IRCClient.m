@@ -4431,8 +4431,6 @@
 								c = [worldController() createPrivateMessage:sender client:self];
 							}
 						}
-						
-						newPrivateMessage = YES;
 					}
 				}
 				
@@ -4468,6 +4466,8 @@
 							c = [worldController() createPrivateMessage:sender client:self];
 						}
 					}
+
+					newPrivateMessage = YES;
 				}
 				
 				[self printToWebView:c
