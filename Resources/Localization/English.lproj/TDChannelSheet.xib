@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6206.9" systemVersion="14A343f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6246" systemVersion="14A361c" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment version="1080" defaultVersion="1080" identifier="macosx"/>
+        <deployment version="1080" identifier="macosx"/>
         <development version="5100" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6206.9"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6246"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDChannelSheet">
@@ -99,7 +99,7 @@ DQ
             <connections>
                 <outlet property="delegate" destination="-2" id="354"/>
             </connections>
-            <point key="canvasLocation" x="497.5" y="818.5"/>
+            <point key="canvasLocation" x="379.5" y="720.5"/>
         </window>
         <view id="109" userLabel="View">
             <rect key="frame" x="0.0" y="0.0" width="325" height="286"/>
@@ -286,11 +286,11 @@ DQ
             <point key="canvasLocation" x="415.5" y="1010.5"/>
         </view>
         <view id="147">
-            <rect key="frame" x="0.0" y="1" width="343" height="353"/>
+            <rect key="frame" x="0.0" y="1" width="343" height="299"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="IV7-Zt-7XT">
-                    <rect key="frame" x="38" y="212" width="267" height="92"/>
+                    <rect key="frame" x="38" y="205" width="267" height="45"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="i2q-Qt-P30">
                         <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
@@ -301,13 +301,11 @@ DQ
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="267" height="92"/>
+                                <size key="minSize" width="267" height="45"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment>
-                                        <string key="content">This passphrase will be used to encrypt and decrypt messages so that only those with it may be able to read the transmitted conversation.
-
-Passphrase length is limited to 56 characters. Any characters that exceed this limit will be truncated automatically.</string>
+                                        <string key="content">This passphrase will be used to encrypt and decrypt messages so that only those with it may be able to read the transmitted conversation.</string>
                                         <attributes>
                                             <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
@@ -316,7 +314,7 @@ Passphrase length is limited to 56 characters. Any characters that exceed this l
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="267" height="92"/>
+                                <size key="minSize" width="267" height="45"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                             </textView>
                         </subviews>
@@ -332,7 +330,7 @@ Passphrase length is limited to 56 characters. Any characters that exceed this l
                     </scroller>
                 </scrollView>
                 <textField verticalHuggingPriority="750" id="155">
-                    <rect key="frame" x="23" y="314" width="80" height="17"/>
+                    <rect key="frame" x="23" y="260" width="80" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Passphrase:" id="174">
                         <font key="font" metaFont="system"/>
@@ -341,7 +339,7 @@ Passphrase length is limited to 56 characters. Any characters that exceed this l
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="151" customClass="NSSecureTextField">
-                    <rect key="frame" x="109" y="312" width="209" height="22"/>
+                    <rect key="frame" x="109" y="258" width="209" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="178">
                         <font key="font" metaFont="system"/>
@@ -349,69 +347,15 @@ Passphrase length is limited to 56 characters. Any characters that exceed this l
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="b4H-ig-AYn">
-                    <rect key="frame" x="37" y="12" width="267" height="27"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="YGd-y2-Ras">
-                        <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="eQ1-x3-dtS">
-                                <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="267" height="27"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                                <attributedString key="textStorage">
-                                    <fragment content="See the ">
-                                        <attributes>
-                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" metaFont="smallSystem"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="Encrypting Chat">
-                                        <attributes>
-                                            <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" metaFont="smallSystem"/>
-                                            <url key="NSLink" string="http://www.codeux.com/textual/wiki/Encrypted-Chat.wiki"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=" wiki page for more information.">
-                                        <attributes>
-                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" metaFont="smallSystem"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="267" height="27"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="kgg-17-o8l">
-                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Zk0-ao-KOE">
-                        <rect key="frame" x="-100" y="-100" width="16" height="133"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                </scrollView>
                 <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="mL5-yH-ck1">
-                    <rect key="frame" x="20" y="47" width="303" height="5"/>
+                    <rect key="frame" x="20" y="45" width="303" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="oky-HV-Bq9">
-                    <rect key="frame" x="38" y="59" width="267" height="95"/>
+                    <rect key="frame" x="38" y="57" width="267" height="95"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="JFM-YA-v04">
                         <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
@@ -483,7 +427,7 @@ However, if backwards compatibility is not a concern, then it is highly recommen
                     </scroller>
                 </scrollView>
                 <popUpButton verticalHuggingPriority="750" id="wJA-xE-WhN">
-                    <rect key="frame" x="91" y="160" width="231" height="26"/>
+                    <rect key="frame" x="91" y="158" width="231" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="Electronic Codebook (ECB)" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="0bV-6Q-M7g" id="l5W-tg-6hY">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -501,14 +445,14 @@ However, if backwards compatibility is not a concern, then it is highly recommen
                     </popUpButtonCell>
                 </popUpButton>
                 <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="TMK-zQ-Spf">
-                    <rect key="frame" x="20" y="197" width="303" height="5"/>
+                    <rect key="frame" x="20" y="195" width="303" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <textField verticalHuggingPriority="750" id="eUD-Za-iXF">
-                    <rect key="frame" x="19" y="163" width="68" height="20"/>
+                    <rect key="frame" x="19" y="161" width="68" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Strength:" id="oEt-hm-1i1">
                         <font key="font" metaFont="system"/>
@@ -516,8 +460,62 @@ However, if backwards compatibility is not a concern, then it is highly recommen
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="b4H-ig-AYn">
+                    <rect key="frame" x="37" y="12" width="267" height="27"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="YGd-y2-Ras">
+                        <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="eQ1-x3-dtS">
+                                <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="minSize" width="267" height="27"/>
+                                <size key="maxSize" width="463" height="10000000"/>
+                                <attributedString key="textStorage">
+                                    <fragment content="See the ">
+                                        <attributes>
+                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" metaFont="smallSystem"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Encrypting Chat">
+                                        <attributes>
+                                            <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" metaFont="smallSystem"/>
+                                            <url key="NSLink" string="http://www.codeux.com/textual/wiki/Encrypted-Chat.wiki"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=" wiki page for more information.">
+                                        <attributes>
+                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" metaFont="smallSystem"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <size key="minSize" width="267" height="27"/>
+                                <size key="maxSize" width="463" height="10000000"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="kgg-17-o8l">
+                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Zk0-ao-KOE">
+                        <rect key="frame" x="-100" y="-100" width="16" height="133"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
             </subviews>
-            <point key="canvasLocation" x="524.5" y="576.5"/>
+            <point key="canvasLocation" x="524.5" y="549.5"/>
         </view>
     </objects>
 </document>
