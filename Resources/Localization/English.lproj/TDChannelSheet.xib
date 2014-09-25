@@ -286,11 +286,11 @@ DQ
             <point key="canvasLocation" x="415.5" y="1010.5"/>
         </view>
         <view id="147">
-            <rect key="frame" x="0.0" y="1" width="343" height="299"/>
+            <rect key="frame" x="0.0" y="0.0" width="343" height="300"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="IV7-Zt-7XT">
-                    <rect key="frame" x="38" y="205" width="267" height="45"/>
+                    <rect key="frame" x="38" y="206" width="267" height="45"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="i2q-Qt-P30">
                         <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
@@ -330,7 +330,7 @@ DQ
                     </scroller>
                 </scrollView>
                 <textField verticalHuggingPriority="750" id="155">
-                    <rect key="frame" x="23" y="260" width="80" height="17"/>
+                    <rect key="frame" x="23" y="261" width="80" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Passphrase:" id="174">
                         <font key="font" metaFont="system"/>
@@ -339,7 +339,7 @@ DQ
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="151" customClass="NSSecureTextField">
-                    <rect key="frame" x="109" y="258" width="209" height="22"/>
+                    <rect key="frame" x="109" y="259" width="209" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="178">
                         <font key="font" metaFont="system"/>
@@ -348,14 +348,14 @@ DQ
                     </textFieldCell>
                 </textField>
                 <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="mL5-yH-ck1">
-                    <rect key="frame" x="20" y="45" width="303" height="5"/>
+                    <rect key="frame" x="20" y="46" width="303" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="oky-HV-Bq9">
-                    <rect key="frame" x="38" y="57" width="267" height="95"/>
+                    <rect key="frame" x="38" y="58" width="267" height="95"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="JFM-YA-v04">
                         <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
@@ -427,7 +427,7 @@ However, if backwards compatibility is not a concern, then it is highly recommen
                     </scroller>
                 </scrollView>
                 <popUpButton verticalHuggingPriority="750" id="wJA-xE-WhN">
-                    <rect key="frame" x="91" y="158" width="231" height="26"/>
+                    <rect key="frame" x="91" y="159" width="231" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="Electronic Codebook (ECB)" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="0bV-6Q-M7g" id="l5W-tg-6hY">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -445,14 +445,14 @@ However, if backwards compatibility is not a concern, then it is highly recommen
                     </popUpButtonCell>
                 </popUpButton>
                 <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="TMK-zQ-Spf">
-                    <rect key="frame" x="20" y="195" width="303" height="5"/>
+                    <rect key="frame" x="20" y="196" width="303" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <textField verticalHuggingPriority="750" id="eUD-Za-iXF">
-                    <rect key="frame" x="19" y="161" width="68" height="20"/>
+                    <rect key="frame" x="19" y="162" width="68" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Strength:" id="oEt-hm-1i1">
                         <font key="font" metaFont="system"/>
