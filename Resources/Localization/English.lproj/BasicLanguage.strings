@@ -90,7 +90,7 @@
 "TDCServerSheet[1008]" = "No Certificate Selected";
 
 "TDCServerSheet[1009][1]" = "Select Identity";
-"TDCServerSheet[1009][2]" = "Below is a list of certificates (also known as \"identities\" or an \"identity\") which Textual has found within the Mac OS keychain. Please select the certificate which you would like sent to the configured IRC server \"%@\" upon connection. ";
+"TDCServerSheet[1009][2]" = "Below is a list of certificates (also known as \"identities\" or an \"identity\") which Textual has found within the OS X keychain. Please select the certificate which you would like sent to the configured IRC server \"%@\" upon connection. ";
 
 /* Welcome sheet help channel prompt for freenode servers. */
 "TDCWelcomeSheet[1000][1]" = "Connect to Support Channel";
@@ -492,7 +492,7 @@
 
 /* Raw mode messages. */
 "BasicLanguage[1174]" = "Raw mode has been disabled. Textual will no longer output raw data.";
-"BasicLanguage[1175]" = "Raw mode has been enabled. Textual will now output all data that it receives from and sends to the IRC server in the Mac OS X \"Console\" application. To disable, execute \"/debug raw off\"";
+"BasicLanguage[1175]" = "Raw mode has been enabled. Textual will now output all data that it receives from and sends to the IRC server in the OS X \"Console\" application. To disable, execute \"/debug raw off\"";
 "BasicLanguage[1176]" = "————————————— End Raw Mode Session —————————————";
 "BasicLanguage[1177]" = "————————————— Begin Raw Mode Session —————————————";
 
@@ -532,7 +532,7 @@
 "BasicLanguage[1189][2]" = "The extension \"%@\" has been successfully installed. The services defined by this extension will be available the next time Textual launches.";
 
 "BasicLanguage[1190][1]" = "Incompatiable System Version";
-"BasicLanguage[1190][2]" = "A file that you are trying to install cannot be used on this version of Mac OS X.";
+"BasicLanguage[1190][2]" = "A file that you are trying to install cannot be used on this version of OS X.";
 
 "BasicLanguage[1191][1]" = "Install Script?";
 "BasicLanguage[1191][2]" = "Would you like to install the script named \"%@\" so that it can be used by Textual?";
@@ -615,7 +615,7 @@
 
 /* Default IRC client prompt. */
 "BasicLanguage[1227][1]" = "Default IRC Client";
-"BasicLanguage[1227][2]" = "Textual is not set as the default IRC client for this copy of Mac OS X. Set it?";
+"BasicLanguage[1227][2]" = "Textual is not set as the default IRC client for this copy of OS X. Set it?";
 
 /* Set user cloak prompt. */
 "BasicLanguage[1228][1]" = "Set User vHost";
