@@ -55,6 +55,7 @@ typedef enum TXConnectionProxyType : NSInteger {
 @interface IRCClientConfig : NSObject <NSCopying>
 @property (nonatomic, assign) BOOL autoConnect;
 @property (nonatomic, assign) BOOL autoReconnect;
+@property (nonatomic, assign) BOOL autojoinWaitsForNickServ;
 @property (nonatomic, assign) BOOL autoSleepModeDisconnect;
 @property (nonatomic, assign) BOOL connectionPrefersIPv6;
 @property (nonatomic, assign) BOOL performPongTimer;
