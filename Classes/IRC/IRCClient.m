@@ -4398,7 +4398,7 @@
                                 self.isIdentifiedWithNickServ = YES;
 								self.isWaitingForNickServ = NO;
                                 
-                                if ([TPCPreferences autojoinWaitsForNickServ]) {
+                                if (self.config.autojoinWaitsForNickServ) {
                                     if (self.isAutojoined == NO && self.autojoinInProgress == NO) {
                                         [self performAutoJoin];
                                     }
@@ -5841,7 +5841,7 @@
 	[mainWindowTextField() updateSegmentedController];
 
 	/* Everything else. */
-	if ([TPCPreferences autojoinWaitsForNickServ] == NO || [self isCapacityEnabled:ClientIRCv3SupportedCapacityIsIdentifiedWithSASL]) {
+	if (self.config.autojoinWaitsForNickServ == NO || [self isCapacityEnabled:ClientIRCv3SupportedCapacityIsIdentifiedWithSASL]) {
 		[self performAutoJoin];
 	} else {
         /* If we wait for NickServ we set a timer of 3.0 seconds before performing auto join.
@@ -7362,7 +7362,7 @@
 	/* Do nothing unless certain conditions are met. */
 	if (userInitialized == NO) {
 		if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityIsIdentifiedWithSASL] == NO) {
-			if ([TPCPreferences autojoinWaitsForNickServ]) {
+			if (self.config.autojoinWaitsForNickServ) {
 				if (self.serverHasNickServ && self.isIdentifiedWithNickServ == NO) {
 					return;
 				}

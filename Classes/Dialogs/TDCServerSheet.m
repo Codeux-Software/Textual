@@ -56,6 +56,7 @@
 @property (nonatomic, nweak) IBOutlet NSButton *autoConnectCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *autoDisconnectOnSleepCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *autoReconnectCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *autojoinWaitsForNickServCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *connectionUsesSSLCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *deleteChannelButton;
 @property (nonatomic, nweak) IBOutlet NSButton *deleteHighlightButton;
@@ -671,6 +672,8 @@
 	[self.serverPasswordField setStringValue:self.config.serverPassword];
 	
 	/* Other paramaters. */
+	[self.autojoinWaitsForNickServCheck setState:self.config.autojoinWaitsForNickServ];
+
 	/* Auto connect status. */
 	[self.autoConnectCheck setState:self.config.autoConnect];
 	[self.autoReconnectCheck setState:self.config.autoReconnect];
@@ -864,7 +867,10 @@
 	}
 	
 	self.config.alternateNicknames = newAlternateNicknameList;
-	
+
+	/* Other paramaters. */
+	self.config.autojoinWaitsForNickServ = [self.autojoinWaitsForNickServCheck state];
+
 	/* Messages */
 	self.config.sleepModeLeavingComment	= [self.sleepModeQuitMessageField value];
 	self.config.normalLeavingComment = [self.normalLeavingCommentField value];

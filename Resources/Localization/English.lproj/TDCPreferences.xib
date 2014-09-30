@@ -233,7 +233,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
             </userGuides>
             <subviews>
                 <button id="dKD-ra-U21">
-                    <rect key="frame" x="50" y="288" width="312" height="18"/>
+                    <rect key="frame" x="50" y="275" width="312" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Request confirmation before quitting Textual" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="nXm-Y7-fZ3">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -244,7 +244,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </button>
                 <button id="UuQ-ZG-ozB">
-                    <rect key="frame" x="50" y="209" width="332" height="18"/>
+                    <rect key="frame" x="50" y="196" width="332" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Rejoin a channel after being kicked" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2Ak-mJ-q70">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -255,7 +255,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </button>
                 <button id="pdA-b6-BIw">
-                    <rect key="frame" x="50" y="181" width="302" height="18"/>
+                    <rect key="frame" x="50" y="168" width="302" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Automatically join a channel when invited" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="g1J-XE-6ta">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -266,7 +266,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </button>
                 <button id="XEZ-Sv-jfL">
-                    <rect key="frame" x="50" y="153" width="452" height="18"/>
+                    <rect key="frame" x="50" y="140" width="452" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Display the Message of the Day (MOTD) of a server upon connection" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="6Hr-zc-ebu">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -276,37 +276,15 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DisplayServerMessageOfTheDayOnConnect" id="rTn-VH-P0O"/>
                     </connections>
                 </button>
-                <button id="qJT-Ie-BD3">
-                    <rect key="frame" x="50" y="125" width="452" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Wait for NickServ identification before joining channels" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Pcv-fz-BnJ">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.AutojoinWaitsForNickservIdentification" id="Xql-4m-DZG"/>
-                    </connections>
-                </button>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="pH4-W2-1NV">
-                    <rect key="frame" x="65" y="241" width="442" height="5"/>
+                    <rect key="frame" x="65" y="228" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <button id="zMu-H1-M7w">
-                    <rect key="frame" x="50" y="97" width="260" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Toggle away status on display sleep" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="SAT-ip-owc">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SetAwayOnScreenSleep" id="wTj-0c-qtW"/>
-                    </connections>
-                </button>
                 <button id="bVD-Sa-BSk">
-                    <rect key="frame" x="50" y="260" width="312" height="18"/>
+                    <rect key="frame" x="50" y="247" width="312" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="check" title="Share data between devices using iCloud" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="wdb-hN-q1F">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -319,7 +297,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" tag="13" id="dqH-Sc-1ei">
-                    <rect key="frame" x="365" y="255" width="157" height="28"/>
+                    <rect key="frame" x="365" y="242" width="157" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="Manage iCloud" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="EEt-NX-Vln">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -328,6 +306,17 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <connections>
                         <action selector="onManageiCloudButtonClicked:" target="-2" id="1fB-rJ-kxy"/>
                         <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.System —&gt; Built with iCloud Support" id="48w-li-BcB"/>
+                    </connections>
+                </button>
+                <button id="zMu-H1-M7w">
+                    <rect key="frame" x="50" y="112" width="260" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Toggle away status on display sleep" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="SAT-ip-owc">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SetAwayOnScreenSleep" id="wTj-0c-qtW"/>
                     </connections>
                 </button>
             </subviews>

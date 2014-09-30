@@ -57,6 +57,11 @@
 		self.channelList				= @[];
 		self.ignoreList					= @[];
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+		self.autojoinWaitsForNickServ	= [TPCPreferences autojoinWaitsForNickServ]; // Use any previous value as default or NO if none
+#pragma clang diagnostic pop
+
 		self.cachedLastServerTimeCapacityReceivedAtTimestamp = 0;
 		
 		self.hideNetworkUnavailabilityNotices			= NO;
@@ -365,7 +370,9 @@
 		[dic assignStringTo:&_username forKey:@"identityUsername"];
 
 		[dic assignObjectTo:&_identitySSLCertificate forKey:@"IdentitySSLCertificate" performCopy:YES];
-		
+
+		[dic assignBoolTo:&_autojoinWaitsForNickServ forKey:@"autojoinWaitsForNickServIdentification"];
+
 		[dic assignStringTo:&_serverAddress forKey:@"serverAddress"];
 		
 		[dic assignIntegerTo:&_serverPort forKey:@"serverPort"];
@@ -522,6 +529,7 @@
 	[dic setBool:self.performPongTimer				forKey:@"performPongTimer"];
 	[dic setBool:self.invisibleMode					forKey:@"setInvisibleOnConnect"];
 	[dic setBool:self.connectionPrefersIPv6			forKey:@"DNSResolverPrefersIPv6"];
+	[dic setBool:self.autojoinWaitsForNickServ		forKey:@"autojoinWaitsForNickServIdentification"];
 
     [dic setBool:self.sidebarItemExpanded			forKey:@"serverListItemIsExpanded"];
 	
