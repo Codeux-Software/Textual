@@ -6476,6 +6476,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C86B0101748B7B60028C7AE /* Shared Debug Configuration.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = "Textual 5";
@@ -6492,6 +6493,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C86B00F1748B7B60028C7AE /* Shared Developer ID Release Configuration.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = "Textual 5";
@@ -6548,6 +6550,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C77A31F1748BCCF00D9BD05 /* Shared Trial Release Configuration.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = "Textual Trial";
@@ -6608,6 +6611,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C86B0111748B7B60028C7AE /* Shared App Store Release Configuration.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = "Textual 5";
