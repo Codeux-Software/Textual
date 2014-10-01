@@ -3872,6 +3872,8 @@
 	IRCMessage *m = [IRCMessage new];
 
 	[m parseLine:s forClient:self];
+	
+	PointerIsEmptyAssert(m.params); // If line was malformed, params will be nil.
 
     /* Intercept input. */
     m = [sharedPluginManager() processInterceptedServerInput:m for:self];
