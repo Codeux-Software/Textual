@@ -4,15 +4,18 @@ cd "${PROJECT_DIR}/Resources/"
 
 bundleVersionForComparisons=$(/usr/libexec/PlistBuddy -c "Print \"TXBundleVersionForComparisons\"" Info.plist)
 bundleVersionShort=$(/usr/libexec/PlistBuddy -c "Print \"CFBundleShortVersionString\"" Info.plist)
-bundleVersion=$(/usr/libexec/PlistBuddy -c "Print \"CFBundleVersion\"" Info.plist)
 bundleName=$(/usr/libexec/PlistBuddy -c "Print \"CFBundleName\"" Info.plist)
+
+bundleVersion=`date '+%m%d%y.%H'`
+
+/usr/libexec/PlistBuddy -c "Set \"CFBundleVersion\" \"${bundleVersion}\"" Info.plist
 
 gitBundle=`which git`
 gitDescribe=`"${gitBundle}" describe --long`
 gitRefInfo=$(echo $gitDescribe | grep -oE "([0-9]{1,3})\-([a-zA-Z0-9]{8})")
 gitCommitCount=`"${gitBundle}" rev-list HEAD --count`
 
-buildRef="${bundleVersionShort}-${gitRefInfo}-${TEXTUAL_GITREF_BUILD_ID}"
+buildRef="${bundleVersion}-${gitRefInfo}-${TEXTUAL_GITREF_BUILD_ID}"
 
 echo "Building Textual (Build Reference: ${gitRefInfo})"
 
