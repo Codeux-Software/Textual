@@ -50,7 +50,7 @@
 
 - (void)show
 {
-	NSString *bundleVersion = [TPCApplicationInfo applicationVersion];
+	NSString *bundleVersion = [TPCApplicationInfo applicationVersionShort];
 	
 	[self.versionInfoField setStringValue:TXTLS(@"TDCAboutPanel[1000]", bundleVersion)];
 

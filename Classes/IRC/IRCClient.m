@@ -2784,7 +2784,7 @@
 		{
 			NSString *gref = [TPCApplicationInfo gitBuildReference];
 			NSString *name = [TPCApplicationInfo applicationName];
-			NSString *vers = [TPCApplicationInfo applicationVersion];
+			NSString *vers = [TPCApplicationInfo applicationVersionShort];
 			NSString *code = [TPCApplicationInfo applicationVersionFlavor];
 			NSString *ccnt = [TPCApplicationInfo gitCommitCount];
 
@@ -4609,7 +4609,7 @@
 				[self sendCTCPReply:sendern command:command text:fakever];
 			} else {
 				NSString *name = [TPCApplicationInfo applicationName];
-				NSString *vers = [TPCApplicationInfo applicationVersion];
+				NSString *vers = [TPCApplicationInfo applicationVersionShort];
 				NSString *code = [TPCApplicationInfo applicationVersionFlavor];
 
 				NSString *textoc = BLS(1111, name, vers, code);
