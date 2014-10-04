@@ -2,24 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>LSApplicationCategoryType</key>
-	<string>public.app-category.social-networking</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleSignature</key>
-	<string>TXTL</string>
 	<key>CFBundleDisplayName</key>
 	<string>Textual IRC Client</string>
-	<key>CFBundleIdentifier</key>
-	<string>com.codeux.irc.textual5</string>
-	<key>CFBundleName</key>
-	<string>${PRODUCT_NAME}</string>
-	<key>CFBundleVersion</key>
-	<string>5.0.0 (Unstable)</string>
-	<key>CFBundleShortVersionString</key>
-	<string>5.0.0-git</string>
-	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2010 — 2014 Codeux Software</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -59,20 +43,18 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
 	<string>applicationIconYosemite.icns</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.codeux.irc.textual5</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
-	<key>NSMainNibFile</key>
-	<string>TXCMainMenu</string>
-	<key>LSMinimumSystemVersion</key>
-	<string>10.8.3</string>
-	<key>NSPrincipalClass</key>
-	<string>NSApplication</string>
-	<key>NSAppleScriptEnabled</key>
-	<true/>
-	<key>TXBundleBuildCodeName</key>
-	<string>Purple Mud</string>
-	<key>TXBundleVersionForComparisons</key>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
 	<string>5.0.0</string>
+	<key>CFBundleSignature</key>
+	<string>TXTL</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -90,17 +72,35 @@
 			</array>
 		</dict>
 	</array>
+	<key>CFBundleVersion</key>
+	<string>5.0.0</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.social-networking</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.8.3</string>
+	<key>NSAppleScriptEnabled</key>
+	<true/>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2010 — 2014 Codeux Software</string>
+	<key>NSMainNibFile</key>
+	<string>TXCMainMenu</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
 	<key>NSUbiquitousContainers</key>
 	<dict>
 		<key>iCloud.com.codeux.irc.textual5</key>
 		<dict>
-			<key>NSUbiquitousContainerName</key>
-			<string>Textual IRC Client</string>
 			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
 			<true/>
+			<key>NSUbiquitousContainerName</key>
+			<string>Textual IRC Client</string>
 			<key>NSUbiquitousContainerSupportedFolderLevels</key>
 			<string>Any</string>
 		</dict>
 	</dict>
+	<key>TXBundleBuildCodeName</key>
+	<string>Purple Mud</string>
+	<key>TXBundleVersionForComparisons</key>
+	<string>5.0.0</string>
 </dict>
 </plist>
