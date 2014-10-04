@@ -9,7 +9,7 @@ bundleVersionForComparisons=$(/usr/libexec/PlistBuddy -c "Print \"TXBundleVersio
 bundleVersionShort=$(/usr/libexec/PlistBuddy -c "Print \"CFBundleShortVersionString\"" Info.plist)
 bundleName=$(/usr/libexec/PlistBuddy -c "Print \"CFBundleName\"" Info.plist)
 
-bundleVersion=`date -r "${gitDateOfLastCommit}" "+%m%d%y.%H"`
+bundleVersion=`date -r "${gitDateOfLastCommit}" "+%y%m%d.%H"`
 
 
 /usr/libexec/PlistBuddy -c "Set \"CFBundleVersion\" \"${bundleVersion}\"" Info.plist
