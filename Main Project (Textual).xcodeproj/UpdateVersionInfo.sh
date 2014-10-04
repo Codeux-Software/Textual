@@ -2,15 +2,18 @@
 
 cd "${PROJECT_DIR}/Resources/"
 
+gitBundle=`which git`
+gitDateOfLastCommit=`"${gitBundle}" log -n1 --format="%at"`
+
 bundleVersionForComparisons=$(/usr/libexec/PlistBuddy -c "Print \"TXBundleVersionForComparisons\"" Info.plist)
 bundleVersionShort=$(/usr/libexec/PlistBuddy -c "Print \"CFBundleShortVersionString\"" Info.plist)
 bundleName=$(/usr/libexec/PlistBuddy -c "Print \"CFBundleName\"" Info.plist)
 
-bundleVersion=`date '+%m%d%y.%H'`
+bundleVersion=`date -r "${gitDateOfLastCommit}" "+%m%d%y.%H"`
+
 
 /usr/libexec/PlistBuddy -c "Set \"CFBundleVersion\" \"${bundleVersion}\"" Info.plist
 
-gitBundle=`which git`
 gitDescribe=`"${gitBundle}" describe --long`
 gitRefInfo=$(echo $gitDescribe | grep -oE "([0-9]{1,3})\-([a-zA-Z0-9]{8})")
 gitCommitCount=`"${gitBundle}" rev-list HEAD --count`
