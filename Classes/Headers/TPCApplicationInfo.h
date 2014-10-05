@@ -54,7 +54,6 @@
 
 + (NSString *)applicationVersion;
 + (NSString *)applicationVersionShort;
-+ (NSString *)applicationVersionFlavor;
 
 + (NSString *)applicationBundleIdentifier;
 

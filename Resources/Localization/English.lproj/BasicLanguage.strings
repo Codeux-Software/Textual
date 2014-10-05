@@ -418,11 +418,11 @@
 "BasicLanguage[1110][2]" = "No logs were found for this chat session";
 
 /* Version info. */
-"BasicLanguage[1111]" = "%1$@ IRC Client: www.textualapp.com — v%2$@ (Flavor: %3$@)";
+"BasicLanguage[1111]" = "%1$@ IRC Client: www.textualapp.com — v%2$@";
 
 /* /myversion/ command. */
 "BasicLanguage[1112]" = "%1$@ %2$@ (Build #%3$@)";
-"BasicLanguage[1113]" = "%1$@ %2$@ (Git Reference: %3$@) (Flavor: %4$@) (Build Date: %5$@)";
+"BasicLanguage[1113]" = "%1$@ %2$@ (Git Reference: %3$@) (Build Date: %5$@)";
 "BasicLanguage[1114]" = "\002Current Version:\002 %@";
 
 /* Miscellaneous messages related to IRC events. */

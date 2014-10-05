@@ -76,11 +76,6 @@
 	return [RZProcessInfo() processIdentifier];
 }
 
-+ (NSString *)applicationVersionFlavor
-{
-	return [RZMainBundle() infoDictionary][@"TXBundleBuildCodeName"];
-}
-
 + (NSString *)applicationBundleIdentifier
 {
 	return [RZMainBundle() bundleIdentifier];

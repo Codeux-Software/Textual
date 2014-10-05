@@ -2785,7 +2785,6 @@
 			NSString *gref = [TPCApplicationInfo gitBuildReference];
 			NSString *name = [TPCApplicationInfo applicationName];
 			NSString *vers = [TPCApplicationInfo applicationVersionShort];
-			NSString *code = [TPCApplicationInfo applicationVersionFlavor];
 			NSString *ccnt = [TPCApplicationInfo gitCommitCount];
 
 			if (NSObjectIsEmpty(gref)) {
@@ -2804,7 +2803,7 @@
 				
 				NSDate *apbd = [TPCApplicationInfo applicationBuildDate];
 				
-				text = BLS(1113, name, vers, gref, code, [dateFormatter stringFromDate:apbd]);
+				text = BLS(1113, name, vers, gref, [dateFormatter stringFromDate:apbd]);
 			} else {
 				text = BLS(1112, name, vers, ccnt);
 			}
@@ -4610,9 +4609,8 @@
 			} else {
 				NSString *name = [TPCApplicationInfo applicationName];
 				NSString *vers = [TPCApplicationInfo applicationVersionShort];
-				NSString *code = [TPCApplicationInfo applicationVersionFlavor];
 
-				NSString *textoc = BLS(1111, name, vers, code);
+				NSString *textoc = BLS(1111, name, vers);
 
 				[self sendCTCPReply:sendern command:command text:textoc];
 			}
