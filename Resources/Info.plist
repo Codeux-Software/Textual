@@ -98,8 +98,6 @@
 			<string>Any</string>
 		</dict>
 	</dict>
-	<key>TXBundleBuildCodeName</key>
-	<string>Purple Mud</string>
 	<key>TXBundleVersionForComparisons</key>
 	<string>5.0.0</string>
 </dict>
