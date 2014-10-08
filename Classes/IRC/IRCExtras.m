@@ -120,7 +120,7 @@
 		 testing-channel					— Connect to the #textual-testing channel.
 		 unsupervised-script-folder			— Open the unsupervised scripts folder.
 		 unsupervised-scripts-folder		— Same as unsupervised-script-folder except plural.
-		 wiki								— Open the homepage of our wiki.
+		 knowledge-base						— Open the homepage of our knowledge base.
 	 */
 
 	if ([addressScheme isEqualToString:@"textual"]) {
@@ -173,9 +173,9 @@
 		{
 			[RZWorkspace() openFile:[TPCPathInfo systemUnsupervisedScriptFolderPath]];
 		}
-		else if ([serverAddress isEqualToString:@"wiki"])
+		else if ([serverAddress isEqualToString:@"knowledge-base"])
 		{
-			[TLOpenLink openWithString:@"http://www.codeux.com/textual/wiki/"];
+			[TLOpenLink openWithString:@"http://www.codeux.com/textual/help/"];
 		}
 
 		return;

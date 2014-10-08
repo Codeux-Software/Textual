@@ -12,6 +12,6 @@ Only OS X Mountain Lion or later can read scripts from this folder.
 This is an unfortunate design flaw of the OS X sandbox that Textual
 cannot circumvent. 
 
-For more information, read the wiki:
+For more information, read the knowledge base:
 
-http://www.codeux.com/textual/wiki/Writing-Scripts.wiki
+http://www.codeux.com/textual/help/Writing-Scripts.kb
