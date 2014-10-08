@@ -3123,7 +3123,7 @@
 			}
 			else if (NSObjectsAreEqual(section1, @"features"))
 			{
-				[TLOpenLink openWithString:@"http://www.codeux.com/textual/wiki/Command-Reference.wiki?command=defaults"];
+				[TLOpenLink openWithString:@"http://www.codeux.com/textual/help/Command-Reference.kb?command=defaults"];
 			}
 			else if (NSObjectsAreEqual(section1, @"enable"))
 			{

@@ -1092,7 +1092,7 @@
 
 - (void)showScriptingDocumentation:(id)sender
 {
-	[RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/wiki/Writing-Scripts.wiki"]];
+	[RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/help/Writing-Scripts.kb"]];
 }
 
 - (void)searchGoogle:(id)sender
@@ -2514,20 +2514,20 @@
 	
 	if (_helpMenuLinks == nil) {
 		_helpMenuLinks = @{
-		   @(101) : @"http://www.codeux.com/textual/wiki/3rd-Party-Addons.wiki",
-		   @(102) : @"http://www.codeux.com/textual/wiki/Frequently-Asked-Questions.wiki",
-		   @(103) : @"http://www.codeux.com/textual/wiki/home.wiki",
-		   @(104) : @"http://www.codeux.com/textual/wiki/iCloud-Syncing.wiki",
-		   @(105) : @"http://www.codeux.com/textual/wiki/Encrypted-Chat.wiki",
-		   @(106) : @"http://www.codeux.com/textual/wiki/Command-Reference.wiki",
-		   @(107) : @"http://www.codeux.com/textual/wiki/Support.wiki",
-		   @(108) : @"http://www.codeux.com/textual/wiki/Keyboard-Shortcuts.wiki",
-		   @(109) : @"http://www.codeux.com/textual/wiki/Memory-Management.wiki",
-		   @(110) : @"http://www.codeux.com/textual/wiki/Text-Formatting.wiki",
-		   @(111) : @"http://www.codeux.com/textual/wiki/Styles.wiki",
-		   @(112) : @"http://www.codeux.com/textual/wiki/Using-CertFP.wiki",
-		   @(113) : @"http://www.codeux.com/textual/wiki/Connecting-to-ZNC-Bouncer.wiki",
-		   @(114) : @"http://www.codeux.com/textual/wiki/DCC-File-Transfer-Information.wiki"
+		   @(101) : @"http://www.codeux.com/textual/help/3rd-Party-Addons.kb",
+		   @(102) : @"http://www.codeux.com/textual/help/Frequently-Asked-Questions.kb",
+		   @(103) : @"http://www.codeux.com/textual/help/home.kb",
+		   @(104) : @"http://www.codeux.com/textual/help/iCloud-Syncing.kb",
+		   @(105) : @"http://www.codeux.com/textual/help/Encrypted-Chat.kb",
+		   @(106) : @"http://www.codeux.com/textual/help/Command-Reference.kb",
+		   @(107) : @"http://www.codeux.com/textual/help/Support.kb",
+		   @(108) : @"http://www.codeux.com/textual/help/Keyboard-Shortcuts.kb",
+		   @(109) : @"http://www.codeux.com/textual/help/Memory-Management.kb",
+		   @(110) : @"http://www.codeux.com/textual/help/Text-Formatting.kb",
+		   @(111) : @"http://www.codeux.com/textual/help/Styles.kb",
+		   @(112) : @"http://www.codeux.com/textual/help/Using-CertFP.kb",
+		   @(113) : @"http://www.codeux.com/textual/help/Connecting-to-ZNC-Bouncer.kb",
+		   @(114) : @"http://www.codeux.com/textual/help/DCC-File-Transfer-Information.kb"
 		};
 	}
 	
