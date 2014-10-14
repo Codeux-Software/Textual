@@ -2784,8 +2784,8 @@
 		{
 			NSString *gref = [TPCApplicationInfo gitBuildReference];
 			NSString *name = [TPCApplicationInfo applicationName];
+			NSString *ccnt = [TPCApplicationInfo applicationVersion];
 			NSString *vers = [TPCApplicationInfo applicationVersionShort];
-			NSString *ccnt = [TPCApplicationInfo gitCommitCount];
 
 			if (NSObjectIsEmpty(gref)) {
 				gref = BLS(1218);
