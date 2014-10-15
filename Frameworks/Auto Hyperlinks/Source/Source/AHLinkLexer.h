@@ -29,7 +29,6 @@ typedef enum {
 	AHParserInvalidURLStatus,
 	AHParserValidURLWithNormalSchemeStatus,
 	AHParserValidURLWithSlashlessSchemeStatus,
-	AHParserValidURLWithFileSchemeStatus,
 	AHParserValidURLWithDegeneratedSchemeStatus,
 	AHParserValidURLWithSpecialSchemeForRedditStatus,
 } AHParserStatus;

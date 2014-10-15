@@ -40,6 +40,7 @@ TLDs            ({ccTLD}|{sTLD}|{uTLD}|arpa|local)
 userAndPass     [^:@]+(:[^:@]+)?
 singleDomain    [_[:alnum:]\x80-\xf4-]+
 
+urlScheme		([a-z]{1})([a-z0-9\-\+\.]+)?
 urlPath         \/[^[:space:]]*
 urlSpec         ({singleDomain}\.)+{TLDs}(:[0-9]+)?{urlPath}?
 urlCSpec        {singleDomain}(\.{singleDomain})*(:[0-9]+)?{urlPath}?
@@ -87,30 +88,6 @@ ignoreable      (b\.sc|m\.in)
 
 {ignoreable}            { return AHParserInvalidURLStatus; }
 
-file:\/\/\/.*           { return AHParserValidURLWithFileSchemeStatus; }
-
-https?:\/\/             |
-s?ftp:\/\/              |
-feed:\/\/               |
-ssh:\/\/                |
-telnet:\/\/             |
-rts?p:\/\/              |
-ircs?:\/\/              |
-textual:\/\/            |
-nntp:\/\/               |
-cifs:\/\/               |
-smb:\/\/                |
-hydra:\/\/              |
-itms:\/\/               |
-see:\/\/                |
-afp:\/\/                |
-adiumxtra:\/\/          |
-webcal:\/\/             |
-svn(\+ssh)?:\/\/        |
-notes:\/\/              |
-gopher:\/\/             |
-x-man-page:\/\/         { yyextra = yyleng; BEGIN CANONICAL; }
-
 {urlSpec}               { return AHParserValidURLWithDegeneratedSchemeStatus; }
 
 {redditSpec}			{ return AHParserValidURLWithSpecialSchemeForRedditStatus; }
@@ -127,6 +104,8 @@ x-man-page:\/\/         { yyextra = yyleng; BEGIN CANONICAL; }
 {magnetSpec}			|
 {messageSpec}			|
 {spotifySpec}           { return AHParserValidURLWithSlashlessSchemeStatus; }
+
+{urlScheme}:\/\/\/?     { yyextra = yyleng; BEGIN CANONICAL; }
 
 .                       { return AHParserInvalidURLStatus; }
 %%
