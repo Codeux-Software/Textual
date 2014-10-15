@@ -2784,7 +2784,6 @@
 		{
 			NSString *gref = [TPCApplicationInfo gitBuildReference];
 			NSString *name = [TPCApplicationInfo applicationName];
-			NSString *ccnt = [TPCApplicationInfo applicationVersion];
 			NSString *vers = [TPCApplicationInfo applicationVersionShort];
 
 			if (NSObjectIsEmpty(gref)) {
@@ -2805,7 +2804,7 @@
 				
 				text = BLS(1113, name, vers, gref, [dateFormatter stringFromDate:apbd]);
 			} else {
-				text = BLS(1112, name, vers, ccnt);
+				text = BLS(1112, name, vers, gref);
 			}
 
 			if (PointerIsEmpty(selChannel)) {
