@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+#define TXDefaultIdentityNicknamePrefix						@"Guest" // see +populateDefaultNickname
+
 #define TXDefaultTextualChannelViewTheme			@"resource:Simplified Light"
 #define TXDefaultTextualChannelViewFont				@"Lucida Grande"
 

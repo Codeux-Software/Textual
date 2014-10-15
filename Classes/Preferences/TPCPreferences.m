@@ -43,6 +43,18 @@
 #pragma mark -
 #pragma mark Default Identity
 
++ (void)populateDefaultNickname
+{
+	/* On large IRC networks using "Guest" as the default nickname may create 
+	 conflicts as nickname guesses are exhausted while pending underscores to
+	 the value looking for the next available match. To help with this, a 
+	 random number is appended to the end of the default nickname. */
+
+	NSString *nickname = [NSString stringWithFormat:@"%@%lu", TXDefaultIdentityNicknamePrefix, TXRandomNumber(100)];
+
+	[RZUserDefaults() registerDefaultsForGroupContainer:@{@"DefaultIdentity -> Nickname" : nickname}];
+}
+
 + (NSString *)defaultNickname
 {
 	return [RZUserDefaults() objectForKey:@"DefaultIdentity -> Nickname"];
@@ -842,6 +854,8 @@ static NSMutableArray *excludeKeywords = nil;
 	
 	[RZUserDefaults() registerDefaultsForGroupContainer:groupDefaults];
 	[RZUserDefaults() registerDefaultsForApplicationContainer:localDefaults];
+
+	[TPCPreferences populateDefaultNickname];
 
 	[RZUserDefaultsValueProxy() addObserver:(id)self forKeyPath:@"Highlight List -> Primary Matches"  options:NSKeyValueObservingOptionNew context:NULL];
 	[RZUserDefaultsValueProxy() addObserver:(id)self forKeyPath:@"Highlight List -> Excluded Matches" options:NSKeyValueObservingOptionNew context:NULL];
