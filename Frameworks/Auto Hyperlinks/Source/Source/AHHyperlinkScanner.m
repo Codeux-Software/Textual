@@ -181,7 +181,6 @@ static NSArray					*encKeys						= nil;
 
 	if ((validStatus == AHParserValidURLWithNormalSchemeStatus ||
 	  	 validStatus == AHParserValidURLWithSlashlessSchemeStatus ||
-		 validStatus == AHParserValidURLWithFileSchemeStatus ||
 		(validStatus == AHParserValidURLWithSpecialSchemeForRedditStatus && useStrictChecking == NO) ||
 		(validStatus == AHParserValidURLWithDegeneratedSchemeStatus && useStrictChecking == NO)))
 	{
