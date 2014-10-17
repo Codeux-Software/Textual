@@ -18,19 +18,13 @@ For example, Textual uses securiry scoped bookmarks issued by the kernel to acce
 
 Another example is that Textual may have diffuclties accessing and assigning passwords when not code signed. This is a result of the OS X keychain internals relying on the trust defined by code signing identities. 
 
-## Building on Mavericks
-
-If building Textual on Mavericks, then **the option in Xcode to continue building after receiving a build error must be enabled**. Textual builds an interface file which contains code which is specific to the Yosemite SDK. Therefore, building on Mavericks will result in this file creating an error. This file is not accessed on Mavericks once built so ignoring this error by continuing the build is okay.
-
 ## Building Textual
 
-The latest version of Textual requires two things to be built. One is a valid (does not need to be trusted) code signing certificate. The second is an installation of Xcode 5 or later on Mac OS Mavericks.
+The latest version of Textual requires two things to be built. One is a valid (does not need to be trusted) code signing certificate. The second is an installation of Xcode with a copy of the OS X Yosemite SDK.
 
 If you are an Apple registered developer, then obtaining a signing certificate is not very hard. However, if you are not, a self-signed certificate for "code signing" will do just as well. The steps to produce one of these is very simple so Google is the best destination to check for the steps on making one of these.
 
 As long as a self-signed certificate or an Apple Developer issued certificate is available with its name containing "Mac Developer", then the only thing required to build Textual is to open it and build it using the "Standard Release" build scheme. There are no other special instructions. 
-
-In Xcode 6 and above you need to edit Resources/Build Settings/Configurations/Code Signing Identity.xcconfig and replace "Mac Developer" with a different name. Xcode will fail to codesign using a self-signed certificate named "Mac Developer"
 
 ## Original Limechat License
 
