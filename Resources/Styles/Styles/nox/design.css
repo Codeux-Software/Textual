@@ -213,22 +213,9 @@ body[dir=ltr] div[ltype=action] .sender:before {
 }
 
 /* Historic / Log readback */
-.historic {
-	font-weight: 200;
-	-webkit-filter: brightness(75%);
-	-webkit-filter: grayscale(90%);
-}
 
-/* NOTICE/CTCP/WALLOPS */
-body div.line[ltype=ctcp],
-body div.line[ltype=notice],
-body div.line[ltype=wallops] {
-  	z-index: 191;
-  	position: relative;
-	background-color: #2f3e53;
-	border-bottom: none;
-	border-top: none;
-	border-left: none;
+.historic {
+	opacity: 0.6;
 }
 
 body div[ltype=ctcp] .senderContainer,
