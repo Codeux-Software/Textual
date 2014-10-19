@@ -213,9 +213,20 @@ body[dir=ltr] div[ltype=action] .sender:before {
 }
 
 /* Historic / Log readback */
-
 .historic {
 	opacity: 0.6;
+}
+
+/* NOTICE/CTCP/WALLOPS */
+body div.line[ltype=ctcp],
+body div.line[ltype=notice],
+body div.line[ltype=wallops] {
+	z-index: 191;
+	position: relative;
+	background-color: #2f3e53;
+	border-bottom: none;
+	border-top: none;
+	border-left: none;
 }
 
 body div[ltype=ctcp] .senderContainer,
