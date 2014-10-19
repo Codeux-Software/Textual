@@ -194,17 +194,7 @@ div[id=mark] {
 /* Historic Line */
 
 .historic {
-	opacity: 1.0;
-	font-weight: 200;
-	-webkit-filter: brightness(75%);
-	-webkit-filter: grayscale(90%);
-}
-
-html[systemversion^="10.9"] .historic,
-html[systemversion^="10.8"] .historic {
 	opacity: 0.6;
-	font-weight: normal;
-	-webkit-filter: none;
 }
 
 /* NOTICE/CTCP/WALLOPS */
