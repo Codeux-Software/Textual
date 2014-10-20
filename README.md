@@ -12,11 +12,11 @@ Please be aware while it is within your right to compile Textual and redistribut
 
 ## Note Regarding Code Signing
 
-**It is HIGHLY DISCOURAGED to turn off code signing.** Certain features rely on the fact that Textual is properly signed and is within a sandboxed enviornment. 
+**It is HIGHLY DISCOURAGED to turn off code signing.** Certain features rely on the fact that Textual is properly signed and is within a sandboxed environment. 
 
-For example, Textual uses securiry scoped bookmarks issued by the kernel to access certain resources outside of its sandbox. These bookmarks rely on the kernel knowing whether the copy of Textual that you are running is the same assigned to the bookmark. This is done using the code signing identity. Therefore, certain features such as logging to disk will never work without code signing because Textual wont be able to save the bookmark to the specified logging location.
+For example, Textual uses security scoped bookmarks issued by the kernel to access certain resources outside of its sandbox. These bookmarks rely on the kernel knowing whether the copy of Textual that you are running is the same assigned to the bookmark. This is done using the code signing identity. Therefore, certain features such as logging to disk will never work without code signing because Textual wont be able to save the bookmark to the specified logging location.
 
-Another example is that Textual may have diffuclties accessing and assigning passwords when not code signed. This is a result of the OS X keychain internals relying on the trust defined by code signing identities. 
+Another example is that Textual may have difficulties accessing and assigning passwords when not code signed. This is a result of the OS X keychain internals relying on the trust defined by code signing identities. 
 
 ## Building Textual
 
